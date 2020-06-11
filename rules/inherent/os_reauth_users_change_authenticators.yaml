@@ -1,0 +1,26 @@
+id: os_reauth_users_change_authenticators
+title: "Require users to reauthenticate when changing authenticators"
+discussion: |
+  Without reauthentication, users may access resources or perform tasks for which they do not have authorization. When operating systems provide the capability to change user authenticators, it is critical the user reauthenticate.
+check: |
+  The technology supports this requirement and cannot be configured to be out of compliance. The technology inherently meets this requirement.
+fix: |
+  The technology inherently meets this requirement. No fix is required.
+references:
+  cce:
+    - CCE-84872-1
+  cci:
+    - CCI-002038
+  800-53r4:
+    - IA-11
+  disa_stig:
+    - AOSX-15-100033
+  srg:
+    - SRG-OS-000373-GPOS-00158
+macOS:
+  - "10.15"
+tags:
+  - STIG
+  - inherent
+mobileconfig: false
+mobileconfig_info:

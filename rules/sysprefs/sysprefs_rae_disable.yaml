@@ -1,0 +1,36 @@
+id: sysprefs_rae_disable
+title: "Disable Remote Apple Events"
+discussion: |
+  If the system does not require Remote Apple Events, support for Apple Remote Events is non-essential and must be disabled.
+check: |
+  /bin/launchctl print-disabled system | /usr/bin/grep -c '"com.apple.AEServer" => true'
+result:
+  integer: 1
+fix: |
+  [source,bash]
+  ----
+  /usr/sbin/systemsetup -setremoteappleevents off
+  /bin/launchctl disable system/com.apple.AEServer
+  ----
+  NOTE: Systemsetup with -setremoteappleevents flag will fail unless you grant Full Disk Access to systemsetup or it's parent process. Requires UAMDM.
+references:
+  cce:
+    - CCE-84841-6
+  cci: 
+    - CCI-000382
+  800-53r4: 
+    - CM-7(b)
+  srg: 
+    - SRG-OS-000096-GPOS-00050
+  disa_stig: 
+    - AOSX-14-002022
+macOS:
+  - "10.15"
+tags:
+  - cnssi-1253
+  - fisma-low
+  - fisma-moderate
+  - fisma-high
+  - STIG
+mobileconfig: false
+mobileconfig_info:

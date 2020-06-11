@@ -1,0 +1,32 @@
+id: sysprefs_token_removal_enforce
+title: "Configure user session lock when a smart token is removed"
+discussion: |
+  The screen lock must initiate when the smart token is removed from the system. 
+check: |
+  /usr/bin/profiles -P -o stdout | /usr/bin/grep -c 'tokenRemovalAction = 1'
+result:
+  integer: 1
+fix:
+  This is implemented by a Configuration Profile.
+references:
+  cce:
+    - CCE-84848-1
+  cci:
+    - CCI-000058
+  800-53r4: 
+    - AC-11(a)
+  srg: 
+    - SRG-OS-000030-GPOS-00011
+  disa_stig: 
+    - AOSX-14-000005
+macOS:
+  - "10.15"
+tags:
+  - cnssi-1253
+  - fisma-moderate
+  - fisma-high
+  - STIG
+mobileconfig: true
+mobileconfig_info:
+  com.apple.security.smartcard:
+    tokenRemovalAction: 1

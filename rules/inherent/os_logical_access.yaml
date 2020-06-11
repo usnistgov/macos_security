@@ -1,0 +1,30 @@
+id: os_logical_access
+title: "Enforce approved authorization for logical access"
+discussion: |
+  To mitigate the risk of unauthorized access to sensitive information by entities that have been issued certificates by DoD-approved PKIs, all DoD systems (e.g., web servers and web portals) must be properly configured to incorporate access control methods that do not rely solely on the possession of a certificate for access. Successful authentication must not automatically give an entity access to an asset or security boundary. Authorization procedures and controls must be implemented to ensure each authenticated entity also has a validated and current authorization. Authorization is the process of determining whether an entity, once authenticated, is permitted to access a specific asset. Information systems use access control policies and enforcement mechanisms to implement this requirement.Access control policies include: identity-based policies, role-based policies, and attribute-based policies. Access enforcement mechanisms include: access control lists, access control matrices, and cryptography. These policies and mechanisms must be employed by the application to control access between users (or processes acting on behalf of users) and objects (e.g., devices, files, records, processes, programs, and domains) in the information system.
+check: |
+  The technology supports this requirement and cannot be configured to be out of compliance. The technology inherently meets this requirement.
+fix: |
+  The technology inherently meets this requirement. No fix is required.
+references:
+  cce:
+    - CCE-84857-2
+  cci:
+    - CCI-000213
+  800-53r4:
+    - AC-3
+  disa_stig:
+    - AOSX-15-100006
+  srg:
+    - SRG-OS-000080-GPOS-00048
+macOS:
+  - "10.15"
+tags:
+  - cnssi-1253
+  - fisma-low
+  - fisma-moderate
+  - fisma-high
+  - STIG
+  - inherent
+mobileconfig: false
+mobileconfig_info:

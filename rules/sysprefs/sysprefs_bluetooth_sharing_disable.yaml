@@ -1,0 +1,48 @@
+id: sysprefs_bluetooth_sharing_disable
+title: "Disable Bluetooth Sharing"
+discussion: |
+  Bluetooth sharing allows users to wirelessly transmit files between the macOS and Bluetooth-enabled devices, including personally owned cellphones and tablets. A malicious user might introduce viruses or malware onto the system or extract sensitive files. 
+  
+  Disabling Bluetooth Sharing mitigates this risk.
+  
+  [NOTE] 
+  ====
+  The check and fix are for the currently logged in user. To get the currently logged in user, run the following.
+  [source,bash]
+  ----
+  CURRENT_USER=$( scutil <<< "show State:/Users/ConsoleUser" | awk '/Name :/ && ! /loginwindow/ { print $3 }' )
+  ----
+  ====
+check: |
+  /usr/bin/sudo -u "$CURRENT_USER" /usr/bin/defaults -currentHost read com.apple.Bluetooth PrefKeyServicesEnabled
+result:
+  boolean: 0
+fix: |
+  [source,bash]
+  ----
+  /usr/bin/sudo -u "$CURRENT_USER" /usr/bin/defaults -currentHost write com.apple.Bluetooth PrefKeyServicesEnabled -bool false
+  ----
+references:
+  cce:
+    - CCE-84827-5
+  cci: 
+    - N/A
+  800-53r4: 
+    - AC-18
+    - AC-18(4)
+    - CM-6(b)
+    - CM-7(1)
+  srg: 
+    - SRG-OS-000480-GPOS-00227
+  disa_stig: 
+    -
+macOS:
+  - "10.15"
+tags:
+  - cnssi-1253
+  - fisma-low
+  - fisma-moderate
+  - fisma-high
+mobileconfig: false
+mobileconfig_info:
+

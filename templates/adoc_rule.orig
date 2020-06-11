@@ -1,0 +1,37 @@
+### $rule_title
+
+[cols="15%h, 85%a"]
+|===
+
+|ID
+|$rule_id
+
+|Severity
+|$rule_severity
+
+|Discussion
+|$rule_discussion
+
+|Check
+|[source,bash]
+----
+$rule_check
+----
+
+|Fix
+|$rule_fix
+
+|CCI
+|$rule_cci
+
+|NIST SP 800-53 Rev 4
+|$rule_80053r4
+
+|DISA STIG
+|$rule_disa_stig
+
+|SRG
+|$rule_srg
+
+|===
+

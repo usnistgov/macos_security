@@ -1,0 +1,27 @@
+id: os_enforce_access_restrictions
+title: "Enforce access restrictions"
+discussion: |
+  The information system enforces access restrictions and supports auditing of the enforcement actions.
+check: |
+  The technology supports this requirement and cannot be configured to be out of compliance. The technology inherently meets this requirement.
+fix: |
+  The technology inherently meets this requirement. No fix is required.
+references:
+  cce:
+    - CCE-84854-9
+  cci:
+    - CCI-001813
+  800-53r4:
+    - CM-5(1)
+  disa_stig:
+    - AOSX-15-100029
+  srg:
+    - SRG-OS-000364-GPOS-00151
+macOS:
+  - "10.15"
+tags:
+  - fisma-high
+  - STIG
+  - inherent
+mobileconfig: false
+mobileconfig_info:

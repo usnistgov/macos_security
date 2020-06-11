@@ -1,0 +1,32 @@
+id: os_filevault_autologin_disable
+title: "Disable FileVault Automatic Login"
+discussion: |
+  The default behavior of macOS when FileVault is enabled is to pass-through your FileVault credentials to the login window. Disable automatic login if FileVault is enabled, so that both FileVault and loginwindow authentication are required.
+check: | 
+  /usr/bin/profiles -P -o stdout | /usr/bin/grep -c 'DisableFDEAutoLogin = 1'
+result:
+  integer: 1
+fix: |
+  This is implemented by a Configuration Profile.
+references:
+  cce:
+    - CCE-84754-1
+  800-53r4:
+    - AC-3
+  srg: 
+    - SRG-OS-000480-GPOS-00229
+  disa_stig:
+    - AOSX-14-002066
+  cci:
+    - CCI-000366
+macOS:
+  - "10.15"
+tags:
+  - cnssi-1253
+  - fisma-low
+  - fisma-moderate
+  - fisma-high
+mobileconfig: true
+mobileconfig_info:
+  com.apple.loginwindow:
+    DisableFDEAutoLogin: true

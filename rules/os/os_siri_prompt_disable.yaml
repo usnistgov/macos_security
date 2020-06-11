@@ -1,0 +1,39 @@
+id: os_siri_prompt_disable
+title: "Disable Siri Setup at login"
+discussion: |
+  The prompt to setup Siri at login must be disabled, as it might mislead users into enabling Siri.
+check: |
+  /usr/bin/profiles -P -o stdout | /usr/bin/grep -c 'SkipSiriSetup = 1'
+result:
+  integer: 1
+fix: |
+  This is implemented by a Configuration Profile.
+references:
+  cce:
+    - CCE-84791-3
+  cci:
+    - CCI-000381
+    - CCI-001774
+  800-53r4: 
+    - CM-6(b)
+    - CM-7(a)
+    - CM-5(5)(b)
+  srg: 
+    - SRG-OS-000480-GPOS-00227
+    - SRG-OS-000095-GPOS-00049
+    - SRG-OS-000370-GPOS-00155
+  disa_stig: 
+    - AOSX-14-002034
+    - AOSX-14-002039
+macOS:
+  - "10.15"
+tags:
+  - cnssi-1253
+  - fisma-low
+  - fisma-moderate
+  - fisma-high
+  - STIG
+mobileconfig: true
+mobileconfig_info:
+  com.apple.SetupAssistant.managed:
+    SkipSiriSetup: true

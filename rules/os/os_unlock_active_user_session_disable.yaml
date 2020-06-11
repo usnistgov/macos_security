@@ -1,0 +1,36 @@
+id: os_unlock_active_user_session_disable
+title: "Disable ability to log into another user's active and locked session"
+discussion: |
+  macOS has a privilege that can be granted to any user that will allow that user to unlock active user's sessions. Disabling the admins and/or user's ability to log into another user's active andlocked session prevents unauthorized persons from viewing potentially sensitive and/or personal information.
+check: |
+  /usr/bin/security authorizationdb read system.login.screensaver 2>&1 | grep -c 'use-login-window-ui'
+result:
+  integer: 1
+fix: |
+  [source,bash]
+  ----
+  /usr/bin/security authorizationdb write system.login.screensaver "use-login-window-ui"
+  ----
+references:
+  cce:
+    - CCE-84804-4
+  cci:
+    - N/A
+  800-53r4:
+    - IA-2
+    - IA-2(5)
+  disa_stig:
+    - N/A
+  srg:
+    - N/A
+  cci:
+    - N/A
+macOS:
+  - "10.15"
+tags:
+  - cnssi-1253
+  - fisma-low
+  - fisma-moderate
+  - fisma-high
+mobileconfig: false
+mobileconfig_info:

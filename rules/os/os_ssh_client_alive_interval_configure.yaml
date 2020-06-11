@@ -1,0 +1,35 @@
+id: os_ssh_client_alive_interval_configure
+title: "Configure SSH ClientAliveInterval option set to 900 or less"
+discussion: |
+  SSH should be configured to log users out after a 15-minute interval or less of inactivity.
+
+  NOTE: /etc/ssh/sshd_config will be automatically modified to its original state following any update or major upgrade to the operating system.
+check: |
+  /usr/bin/grep -c "^ClientAliveInterval 900" /etc/ssh/sshd_config
+result:
+  integer: 1
+fix: |
+  [source,bash]
+  ----
+  /usr/bin/sed -i.bak 's/.*ClientAliveInterval.*/ClientAliveInterval 900/' /etc/ssh/sshd_config; /bin/launchctl kickstart -k system/com.openssh.sshd
+  ----
+references:
+  cce:
+    - CCE-84793-9
+  cci: 
+    - CCI-001133
+  800-53r4: 
+    - SC-10
+  srg: 
+    - SRG-OS-000163-GPOS-00072
+  disa_stig: 
+    - AOSX-14-000051
+macOS:
+  - "10.15"
+tags:
+  - cnssi-1253
+  - fisma-moderate
+  - fisma-high
+  - STIG
+mobileconfig: false
+mobileconfig_info:

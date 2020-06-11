@@ -1,0 +1,33 @@
+id: sysprefs_apple_watch_unlock_disable
+title: "Prevent Apple Watch from terminating a session lock"
+discussion: |
+  Apple Watches are not an approved authenticator and their use should be disabled.
+check: |
+  /usr/bin/profiles -P -o stdout | /usr/bin/grep -c 'allowAutoUnlock = 0'
+result:
+  integer: 1
+fix: |
+  This is implemented by a Configuration Profile.
+references:
+  cce:
+    - CCE-84824-2
+  cci: 
+    - CCI-000056
+  800-53r4: 
+    - AC-11(b)
+  srg: 
+    - SRG-OS-000028-GPOS-00009
+  disa_stig: 
+    - AOSX-14-000001
+macOS:
+  - "10.15"
+  - "10.14"
+tags:
+  - cnssi-1253
+  - fisma-moderate
+  - fisma-high
+  - STIG
+mobileconfig: true
+mobileconfig_info:
+  com.apple.applicationaccess:
+    allowAutoUnlock: false

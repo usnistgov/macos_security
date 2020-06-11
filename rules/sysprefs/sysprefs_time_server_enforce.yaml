@@ -1,0 +1,37 @@
+id: sysprefs_time_server_enforce
+title: "Enable macOS Time Synchronization Daemon (timed)"
+discussion: |
+  The timed service must be enabled on all networked systems and configured to set time automatically from the approved time server.
+check: |
+  /usr/bin/profiles -P -o stdout | /usr/bin/grep -c 'TMAutomaticTimeOnlyEnabled = 1'
+result:
+  integer: 1
+fix: |
+  This is implemented by a Configuration Profile.
+references:
+  cce:
+    - CCE-84847-3
+  cci: 
+    - CCI-001891
+    - CCI-002046
+  800-53r4: 
+    - AU-8(1)(a)
+    - AU-8(1)(b)
+  srg: 
+    - SRG-OS-000355-GPOS-00143
+    - SRG-OS-000356-GPOS-00144
+  disa_stig: 
+    - AOSX-14-000014
+macOS:
+  - "10.15"
+tags:
+  - cnssi-1253
+  - fisma-moderate
+  - fisma-high
+  - STIG
+mobileconfig: true
+mobileconfig_info:
+  com.apple.ManagedClient.preferences:
+    com.apple.timed:
+      TMAutomaticTimeOnlyEnabled: true
+

@@ -1,0 +1,32 @@
+id: pwpolicy_simple_sequence_disable
+title: "Enforce password complexity by requiring that repeating, ascending, and descending character sequences in passcodes are not used."
+discussion: |
+  The use of repeating, ascending, and descending character sequences in passcodes is not allowed.
+check: | 
+  /usr/bin/profiles -P -o stdout | /usr/bin/grep -c 'allowSimple = 0' 
+result:
+  integer: 1
+fix: |
+  This is implemented by a Configuration Profile.
+references:
+  cce:
+    - CCE-84818-4
+  cci: 
+    - N/A
+  800-53r4: 
+  - IA-5(1)(a)
+  srg: 
+    - SRG-OS-000266-GPOS-00101
+  disa_stig: 
+    - N/A
+macOS:
+  - "10.15"
+tags:
+  - cnssi-1253
+  - fisma-low
+  - fisma-moderate
+  - fisma-high
+mobileconfig: true
+mobileconfig_info:
+  com.apple.mobiledevice.passwordpolicy:
+    allowSimple: false

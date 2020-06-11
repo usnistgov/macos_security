@@ -1,0 +1,36 @@
+id: sysprefs_location_services_disable
+title: "Disable Location Services"
+discussion: |
+  Configures the information system to provide only essential capabilities.
+  
+  If the system does not require Location Services, support it is non-essential and must be disabled.
+check: |
+  /usr/bin/defaults read /var/db/locationd/Library/Preferences/ByHost/com.apple.locationd.plist LocationServicesEnabled
+result:
+  integer: 0
+fix: |
+  [source,bash]
+  ----
+  /usr/bin/defaults write /var/db/locationd/Library/Preferences/ByHost/com.apple.locationd LocationServicesEnabled -int 0; /bin/launchctl kickstart -k system/com.apple.locationd
+  ----
+references:
+  cce:
+    - CCE-84838-2
+  cci: 
+    - CCI-000381
+  800-53r4: 
+    - CM-7(a)
+  srg: 
+    - SRG-OS-000095-GPOS-00049
+  disa_stig: 
+    - AOSX-14-002004
+macOS:
+  - "10.15"
+tags:
+  - cnssi-1253
+  - fisma-low
+  - fisma-moderate
+  - fisma-high
+  - STIG
+mobileconfig: false
+mobileconfig_info:

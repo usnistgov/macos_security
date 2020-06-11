@@ -1,0 +1,29 @@
+id: os_parental_controls_enable
+title: "Enable Parental Controls"
+discussion: |
+  Parental Control on macOS consists of many different payloads which are set individually depending on the type of control required. Enabling parental contols allows for further configuration of these restrictions.
+check: |
+  /usr/bin/profiles -P -o stdout | /usr/bin/grep -c 'familyControlsEnabled = 1'
+result:
+  integer: 1
+fix: |
+  This is implemented by a Configuration Profile.
+references:
+  cce:
+    - CCE-84773-1
+  cci: 
+    - CCI-001812
+  800-53r4: 
+    - CM-11(2)
+  srg: 
+    - SRG-OS-000362-GPOS-00149
+  disa_stig: 
+    - N/A
+macOS:
+  - "10.15"
+tags:
+  - STIG
+mobileconfig: true
+mobileconfig_info:
+  com.apple.applicationaccess.new:
+    familyControlsEnabled: true

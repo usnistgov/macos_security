@@ -1,0 +1,30 @@
+id: os_implement_cryptography
+title: "Implement approved cryptography to protect information"
+discussion: |
+  Use of weak or untested encryption algorithms undermines the purposes of utilizing encryption to protect data. The operating system must implement cryptographic modules adhering to the higher standards approved by the federal government since this provides assurance they have been tested and validated.
+check: |
+  The technology supports this requirement and cannot be configured to be out of compliance. The technology inherently meets this requirement using FIPS Validated Cryptographic Modules.
+fix: |
+  The technology inherently meets this requirement. No fix is required.
+references:
+  cce:
+    - CCE-84867-1
+  cci:
+    - CCI-002450
+  800-53r4:
+    - SC-13
+  disa_stig:
+    - AOSX-15-100035
+  srg:
+    - SRG-OS-000396-GPOS-00176
+macOS:
+  - "10.15"
+tags:
+  - cnssi-1253
+  - fisma-low
+  - fisma-moderate
+  - fisma-high
+  - STIG
+  - inherent
+mobileconfig: false
+mobileconfig_info:

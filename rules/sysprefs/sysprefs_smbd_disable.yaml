@@ -1,0 +1,35 @@
+id: sysprefs_smbd_disable
+title: "Disable Server Message Block (SMB) Sharing"
+discussion: |
+  If the system does not require SMB file sharing, support it is non-essential and must be disabled.
+check: |
+  /bin/launchctl print-disabled system | /usr/bin/grep -c '"com.apple.smbd" => true'
+result:
+  integer: 1
+fix: |
+  [source,bash]
+  ----
+  /bin/launchctl disable system/com.apple.smbd
+  ----
+  The system may need to be restarted for the update to take effect.
+references:
+  cce:
+    - CCE-84844-0
+  cci: 
+    - CCI-000381
+  800-53r4:
+    - CM-7(a)
+  srg:
+    - SRG-OS-000095-GPOS-00049
+  disa_stig:
+    - AOSX-14-002001
+macOS:
+  - "10.15"
+tags:
+  - cnssi-1253
+  - fisma-low
+  - fisma-moderate
+  - fisma-high
+  - STIG
+mobileconfig: false
+mobileconfig_info:

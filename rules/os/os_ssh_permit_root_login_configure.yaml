@@ -1,0 +1,33 @@
+id: os_ssh_permit_root_login_configure
+title: "Configure SSH to not allow root login"
+discussion: |
+  Administrator users must never log in directly as root. To assure individual accountability and prevent unauthorized access, logging in as root over a remote connection must be disabled. Administrators should only run commands as root after first authenticating with their individual user names and passwords.
+
+  NOTE: /etc/ssh/sshd_config will be automatically modified to its original state following any update or major upgrade to the operating system.
+check: |
+  /usr/bin/grep -c "^PermitRootLogin no" /etc/ssh/sshd_config
+result:
+  integer: 1
+fix: |
+  To ensure that "PermitRootLogin" is set disabled by sshd, run the following command: 
+  [source,bash]
+  ----
+  /usr/bin/sed -i.bak 's/^[\#]*PermitRootLogin.*/PermitRootLogin no/' /etc/ssh/sshd_config; /bin/launchctl kickstart -k system/com.openssh.sshd
+  ----
+references:
+  cce:
+    - CCE-84798-8
+  cci: 
+    - CCI-000770
+  800-53r4: 
+    - IA-2(5)
+  srg: 
+    - SRG-OS-000109-GPOS-00056
+  disa_stig: 
+    - AOSX-14-001100
+macOS:
+  - "10.15"
+tags:
+  - STIG
+mobileconfig: false
+mobileconfig_info:

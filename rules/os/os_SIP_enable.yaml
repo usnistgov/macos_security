@@ -1,0 +1,78 @@
+id: os_sip_enable
+title: "Ensure System Integrity Protection (SIP) is Enabled"
+discussion: |
+  System Integrity Protection (SIP) is vital to prevent unauthorized and unintended information transfer via shared system resources, protect audit tools from unauthorized access, modification, and deletion, limit privileges to change software resident within software libraries, limit the ability of non-privileged users to grant other users direct access to the contents of their home directories/folders.
+
+  SIP also ensures the presence of an audit record generation capability for defined auditable events for all operating system components, supports on-demand and after-the-fact reporting requirements, does not alter original content or time ordering of audit records, and does not alter original content or time ordering of audit records.
+check: |
+  /usr/bin/csrutil status | grep -c 'System Integrity Protection status: enabled.'
+result:
+  integer: 1
+fix: |
+  [source,bash]
+  ----
+  /usr/bin/csrutil enable
+  ----
+  NOTE: To reenable "System Integrity Protection", boot the affected system into "Recovery" mode, launch "Terminal" from the "Utilities" menu, and run the command.
+references:
+  cce:
+    - CCE-84790-5
+  cci: 
+    - CCI-000154
+    - CCI-000158
+    - CCI-000169
+    - CCI-001493
+    - CCI-001494
+    - CCI-001495
+    - CCI-001499
+    - CCI-001875
+    - CCI-001876
+    - CCI-001877
+    - CCI-001878
+    - CCI-001879
+    - CCI-001880
+    - CCI-001881
+    - CCI-001882
+  800-53r4: 
+    - AU-12
+    - AU-12(a)
+    - AU-6(4)
+    - AU-7(1)
+    - AU-7(a)
+    - AU-7(b)
+    - AU-9
+    - AU-9(3)
+    - CM-5(6)
+    - CM-6(b)
+    - SC-4
+  srg: 
+    - SRG-OS-000051-GPOS-00024
+    - SRG-OS-000054-GPOS-00025
+    - SRG-OS-000062-GPOS-00031
+    - SRG-OS-000122-GPOS-00063
+    - SRG-OS-000138-GPOS-00069
+    - SRG-OS-000256-GPOS-00097
+    - SRG-OS-000257-GPOS-00098
+    - SRG-OS-000258-GPOS-00099
+    - SRG-OS-000259-GPOS-00100
+    - SRG-OS-000348-GPOS-00136
+    - SRG-OS-000349-GPOS-00137
+    - SRG-OS-000350-GPOS-00138
+    - SRG-OS-000351-GPOS-00139
+    - SRG-OS-000352-GPOS-00140
+    - SRG-OS-000353-GPOS-00141
+    - SRG-OS-000354-GPOS-00142
+    - SRG-OS-000480-GPOS-00228
+    - SRG-OS-000480-GPOS-00230
+  disa_stig: 
+    - AOSX-14-005001
+macOS:
+  - "10.15"
+tags:
+  - cnssi-1253
+  - fisma-low
+  - fisma-moderate
+  - fisma-high
+  - STIG
+mobileconfig: false
+mobileconfig_info:

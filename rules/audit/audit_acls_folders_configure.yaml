@@ -1,0 +1,39 @@
+id: audit_acls_folders_configure
+title: "Configure Audit Log Folder to Not Contain Access Control Lists (ACLs)"
+discussion: |
+  The audit service must be configured to create log folders with the correct permissions to prevent normal users from reading audit logs. Audit logs contain sensitive data about the system and users. If log folders are set to be readable and writable only by root or administrative users with sudo, the risk is mitigated.  
+
+  The audit log folder must not contain ACLs.
+check: |
+  /bin/ls -lde $(/usr/bin/grep '^dir' /etc/security/audit_control | /usr/bin/awk -F: '{print $2}') | /usr/bin/awk '{print $1}' | /usr/bin/grep -c ":"
+result:
+  integer: 0
+fix: |
+  [source,bash]
+  ----
+  /bin/chmod -N $(/usr/bin/grep '^dir' /etc/security/audit_control | /usr/bin/awk -F: '{print $2}')
+  ----
+references:
+  cce:
+    - CCE-84704-6
+  cci:
+    - CCI-000162
+    - CCI-001314
+  800-53r4:
+    - AU-9
+    - SI-11(b)
+  srg:
+    - SRG-OS-000057-GPOS-00027
+    - SRG-OS-000206-GPOS-00084
+  disa_stig:
+    - AOSX-14-000030
+macOS:
+  - "10.15"
+tags:
+  - cnssi-1253
+  - fisma-low
+  - fisma-moderate
+  - fisma-high
+  - STIG
+mobileconfig:
+mobileconfig_info:

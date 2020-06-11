@@ -1,0 +1,65 @@
+id: auth_ssh_smartcard_enforce
+title: "Enforce Smartcard Authentication for SSH"
+discussion: |
+  To ensure accountability and prevent unauthorized access, users must utilize multifactor authentication.
+  
+  Enforce Smartcard Authentication for user login via SSH.
+
+  NOTE: Before applying this setting, please see the smartcard supplemental guidance.
+
+  NOTE: /etc/ssh/sshd_config will be automatically modified to its original state following any update or major upgrade to the operating system.
+check: |
+  /usr/bin/grep -Ec '^(PasswordAuthentication\s+no|ChallengeResponseAuthentication\s+no)' /etc/ssh/sshd_config
+result:
+  integer: 2
+fix: |
+  The following commands must be run to disable passcode based authentication for SSHD: 
+  [source,bash]
+  ----
+  /usr/bin/sed -i.bak_$(date "+%Y-%m-%d_%H:%M") "s|#PasswordAuthentication yes|PasswordAuthentication no|; s|#ChallengeResponseAuthentication yes|ChallengeResponseAuthentication no|" /etc/ssh/sshd_config; /bin/launchctl kickstart -k system/com.openssh.sshd
+  ----
+references:
+  cce:
+    - CCE-84729-3
+  cci:
+    - CCI-000187
+    - CCI-000765
+    - CCI-000766
+    - CCI-000767
+    - CCI-000768
+    - CCI-000877
+    - CCI-001948
+  800-53r4:
+    - IA-2
+    - IA-2(1)
+    - IA-2(2)
+    - IA-2(3)
+    - IA-2(4)
+    - IA-2(6)
+    - IA-2(11)
+    - IA-5(2)(b)
+    - IA-5(2)(c)
+    - MA-4(c)
+  srg: 
+    - SRG-OS-000068-GPOS-00036
+    - SRG-OS-000105-GPOS-00052
+    - SRG-OS-000106-GPOS-00053
+    - SRG-OS-000107-GPOS-00054
+    - SRG-OS-000108-GPOS-00055
+    - SRG-OS-000125-GPOS-00065
+    - SRG-OS-000375-GPOS-00160
+  disa_stig:
+    - AOSX-14-003020
+    - AOSX-14-003024
+    - AOSX-14-003005
+    - AOSX-14-003025
+macOS:
+  - "10.15"
+tags:
+  - cnssi-1253
+  - fisma-low
+  - fisma-moderate
+  - fisma-high
+  - STIG
+mobileconfig: false
+mobileconfig_info:

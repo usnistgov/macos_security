@@ -1,0 +1,39 @@
+id: audit_acls_files_configure
+title: "Configure Audit Service to Create Log Files and Folder which prevent unauthorized access"
+discussion: |
+  Audit information and audit tools must be configured to prevent unauthorized access, modification, and deletion. The audit service must be configured to create log files with the correct permissions to prevent normal users from reading audit logs. If log files are set to be readable and writable only by root or administrative users with sudo, the risk is mitigated.
+
+  The audit log files must not have access control list (ACL) privileges set.
+check: |
+  /bin/ls -le $(/usr/bin/awk -F: '/^dir/{print $2}' /etc/security/audit_control) | /usr/bin/awk '{print $1}' | /usr/bin/grep -c ":"
+result: 
+  integer: 0
+fix: |
+  [source,bash]
+  ----
+  /bin/chmod -RN $(/usr/bin/awk -F: '/^dir/{print $2}' /etc/security/audit_control)
+  ----
+references:
+  cce:
+    - CCE-84701-2
+  cci:
+    - CCI-000162
+    - CCI-001314
+  800-53r4:
+    - AU-9
+    - SI-11(b)
+  srg:
+    - SRG-OS-000057-GPOS-00027
+    - SRG-OS-000206-GPOS-00084
+  disa_stig:
+    - AOSX-14-000030
+macOS:
+  - "10.15"
+tags:
+  - cnssi-1253
+  - fisma-low
+  - fisma-moderate
+  - fisma-high
+  - STIG
+mobileconfig:
+mobileconfig_info:

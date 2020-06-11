@@ -1,0 +1,36 @@
+id: icloud_keychain_disable
+title: "Disable iCloud Keychain Sync"
+discussion: |
+  The macOS system's ability to automatically synchronize a user's passwords to their iCloud account must be disabled. Password management and synchronization shall be planned and controlled to approved storage.
+check: |
+  /usr/bin/profiles -P -o stdout | /usr/bin/grep -c 'allowCloudKeychainSync = 0'
+result:
+  integer: 1
+fix: |
+  This is implemented by a Configuration Profile.
+references:
+  cce:
+    - CCE-84735-0
+  cci:
+    - CCI-000381
+    - CCI-001774
+  800-53r4:
+    - CM-7(a)
+    - CM-7(5)(b)
+  srg:
+    - SRG-OS-000095-GPOS-00049
+    - SRG-OS-000370-GPOS-00155
+  disa_stig:
+    - AOSX-14-002040
+macOS:
+  - "10.15"
+tags:
+  - cnssi-1253
+  - fisma-low
+  - fisma-moderate
+  - fisma-high
+  - STIG
+mobileconfig: true
+mobileconfig_info:
+  com.apple.applicationaccess:
+    allowCloudKeychainSync: false

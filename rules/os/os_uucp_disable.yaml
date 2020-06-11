@@ -1,0 +1,36 @@
+id: os_uucp_disable
+title: "Disable the Unix-to-Unix Copy Protocol (UUCP) service"
+discussion: |
+  The system must not have the UUCP service active.
+check: |
+  /bin/launchctl print-disabled system | /usr/bin/grep -c '"com.apple.uucp" => true'
+result:
+  integer: 1
+fix: |
+  [source,bash]
+  ----
+  /bin/launchctl disable system/com.apple.uucp
+  ----
+  The system may need to be restarted for the update to take effect.
+references:
+  cce:
+    - CCE-84806-9
+  cci:
+    - CCI-000381
+  800-53r4:
+    - CM-7(a) 
+    - CM-7(b)
+  srg: 
+    - SRG-OS-000095-GPOS-00049
+  disa_stig: 
+    - AOSX-14-002006
+macOS:
+  - "10.15"
+tags:
+  - cnssi-1253
+  - fisma-low
+  - fisma-moderate
+  - fisma-high
+  - STIG
+mobileconfig: false
+mobileconfig_info:

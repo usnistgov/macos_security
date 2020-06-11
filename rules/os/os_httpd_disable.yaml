@@ -1,0 +1,34 @@
+id: os_httpd_disable
+title: "The macOS system must be configured to disable httpd."
+discussion:
+  Apache web server is a non-essential service built into macOS and must be disabled.
+check: |
+  /bin/launchctl print-disabled system | /usr/bin/grep -c '"org.apache.httpd" => true'
+result:
+  integer: 1
+fix: |
+  [source,bash]
+  ----
+  /bin/launchctl disable system/org.apache.httpd
+  ----
+references:
+  cce:
+    - CCE-84765-7
+  cci: 
+    - CCI-000381
+  800-53r4: 
+    - CM-7(a)
+  srg: 
+    - SRG-OS-000095-GPOS-00049
+  disa_stig: 
+    - AOSX-14-002008
+macOS:
+  - "10.15"
+tags:
+  - cnssi-1253
+  - fisma-low
+  - fisma-moderate
+  - fisma-high
+  - STIG
+mobileconfig: false
+mobileconfig_info:

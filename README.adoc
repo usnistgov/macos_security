@@ -1,0 +1,57 @@
+= macOS Security Compliance Project
+// settings:
+:idprefix:
+:idseparator: - 
+ifndef::env-github[:icons: font]
+ifdef::env-github[]
+:status:
+//:outfilesuffix: .adoc
+:caution-caption: :fire:
+:important-caption: :exclamation:
+:note-caption: :paperclip:
+:tip-caption: :bulb:
+:warning-caption: :warning:
+endif::[]
+:uri-org: https://github.com/usnistgov
+:uri-repo: {uri-org}/macos_security
+
+
+ifdef::status[]
+image:https://badgen.net/badge/icon/apple?icon=apple&label, link=[https://www.apple.com/]
+image:https://badgen.net/badge/icon/10.15?icon=apple&label, link=[https://www.apple.com/macos]
+endif::[]
+
+The macOS security compliance project is an link:LICENSE.md[open source] effort that can be used to create customized security baselines of technical security controls, which are mapped to various compliance frameworks such as: NIST 800-53, DISA STIG, FINRA, and HIPAA requirements. This is a joint project of federal operational IT Security staff from the National Institute of Standards (NIST), National Aeronautics and Space Administration (NASA), Defense Information Systems Agency (DISA), and Los Alamos National Laboratory (LANL).
+
+To learn more about the project, please see the {uri-repo}/wiki[wiki].
+
+== Usage
+
+Civilian agencies are to use the National Checklist Program as required by https://csrc.nist.gov/publications/detail/sp/800-70/rev-4/final[NIST 800-70].
+
+[NOTE]
+====
+Part 39 of the Federal Acquisition Regulations, section 39.101 paragraph (c) states, “In acquiring information technology, agencies shall include the appropriate information technology security policies and requirements, including use of common security configurations available from the National Institute of Standards and Technology’s website at https://checklists.nist.gov. Agency contracting officers should consult with the requiring official to ensure the appropriate standards are incorporated.”
+====
+
+== Authors
+
+[width="100%",cols="1,1"]
+|===
+|Bob Gendler|National Institute of Standards and Technology
+|Allen Golbig|National Aeronautics and Space Administration
+|Dan Brodjieski|Defense Information Systems Agency
+|Jason Blake|National Institute of Standards and Technology
+|Blair Heiserman|National Institute of Standards and Technology
+|Joshua Glemza|National Aeronautics and Space Administration
+|Elyse Anderson|National Aeronautics and Space Administration
+|Paige Ramsey|Los Alamos National Laboratory
+|===
+
+== Changelog
+
+Refer to the link:CHANGELOG.adoc[CHANGELOG] for a complete list of changes.
+
+== NIST Disclaimer
+
+Any identification of commercial or open-source software in this document is done so purely in order to specify the methodology adequately. Such identification is not intended to imply recommendation or endorsement by the National Institute of Standards and Technology, nor is it intended to imply that the software identified are necessarily the best available for the purpose.

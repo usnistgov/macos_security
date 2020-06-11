@@ -1,0 +1,36 @@
+id: os_system_wide_preferences_configure
+title: "Require an administrator password to access system-wide preferences"
+discussion: |
+  Some Preference Panes in System Preferences contain settings that affect the entire system. Requiring a password to unlock these system-wide settings reduces the risk of a non-authorized user modifying system configurations.
+check: |
+  /usr/bin/security authorizationdb read system.preferences 2> /dev/null |  grep -A 1 "<key>shared</key>" | grep -c "<false/>"
+result:
+  integer: 1
+fix: |
+  [source,bash]
+  ----
+  /usr/bin/security authorizationdb read system.preferences > /tmp/system.preferences.plist
+  /usr/libexec/PlistBuddy -c "Set :shared false" /tmp/system.preferences.plist
+  /usr/bin/security authorizationdb write system.preferences < /tmp/system.preferences.plist
+  ----
+references:
+  cce:
+    - CCE-84800-2
+  800-53r4:
+    - AC-6
+    - AC-6(1)
+    - AC-6(2)
+  disa_stig:
+    - N/A
+  srg:
+    - N/A
+  cci:
+    - N/A    
+macOS:
+  - "10.15"
+tags:
+  - cnssi-1253
+  - fisma-moderate
+  - fisma-high
+mobileconfig: false
+mobileconfig_info:

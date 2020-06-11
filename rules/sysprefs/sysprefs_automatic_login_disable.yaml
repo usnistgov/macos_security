@@ -1,0 +1,33 @@
+id: sysprefs_automatic_login_disable
+title: "Disable unattended or automatic logon to the system"
+discussion: |
+  When automatic logons are enabled, the default user account is automatically logged on at boot time without prompting the user for a password. Even if the screen is later locked, a malicious user would be able to reboot the computer to log on. Disabling automatic logons mitigates this risk.
+check: |
+  /usr/bin/profiles -P -o stdout | /usr/bin/grep -c '"com.apple.login.mcx.DisableAutoLoginClient" = 1'
+result:
+  integer: 1
+fix: |
+  This is implemented by a Configuration Profile.
+references:
+  cce:
+    - CCE-84825-9
+  cci:
+    - CCI-000366
+  800-53r4:
+    - CM-6(b)
+  srg:
+    - SRG-OS-000480-GPOS-00229
+  disa_stig:
+    - AOSX-14-002066
+macOS:
+  - "10.15"
+tags:
+  - cnssi-1253
+  - fisma-low
+  - fisma-moderate
+  - fisma-high
+  - STIG
+mobileconfig: true
+mobileconfig_info:
+  com.apple.loginwindow:
+    com.apple.login.mcx.DisableAutoLoginClient: true

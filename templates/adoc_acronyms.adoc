@@ -1,0 +1,25 @@
+== Acronyms and Definitions
+.Acronyms and Abbreviations
+[width="100%",cols="1,3"]
+|====
+|ABM|Apple Business Manager
+|AFP|Apple Filing Protocol
+|API|Application Programming Interface
+|ARD|Apple Remote Desktop
+|CA|Certificate Authority
+|DISA|Defense Information Systems Agency
+|FISMA|Federal Information Security Modernization Act
+|FPKI|Federal Public Key Infrastructure
+|MDM|Mobile Device Management
+|NASA|National Aeronautics and Space Administration
+|NIST|National Institute of Standards and Technology
+|NSA|National Security Agency
+|PIV|Personal Identity Verification
+|PIV-M|Personal Identity Verification Mandatory
+|PKI|Public Key Infrastructure
+|SIP|System Integrity Protection
+|SMB|Server Message Block
+|SSH|Secure Shell
+|STIG|Security Technical Implementation Guide
+|UAMDM|User Approved MDM
+|====

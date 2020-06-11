@@ -1,0 +1,33 @@
+id: os_uamdm_require
+title: "MDM is User Approved"
+discussion: |
+  User Approved MDM (UAMDM) grants additional privileges to Mobile Device Management software. UAMDM is required to manage certain security settings on a Mac enrolled outside of Device Enrollment via Apple Business Manager (ABM)/Apple School Manager (ASM). Currently these include:
+  * Whitlisting Approved Kernel Extensions
+  * Privacy Preferences Policy Control Payload
+  * ExtensibleSingleSignOn
+check: |
+  /usr/bin/profiles status -type enrollment | awk -F': ' 'END{print $2}' | grep -c "Yes"
+result:
+  integer: 1
+fix: |
+  Ensure that system is enrolled via UAMDM.
+references:
+  cce:
+    - CCE-84803-6
+  800-53r4:
+    - CM-6(b)
+  disa_stig:
+    - N/A
+  srg:
+    - N/A
+  cci:
+    - N/A    
+macOS:
+  - "10.15"
+tags:
+  - cnssi-1253
+  - fisma-low
+  - fisma-moderate
+  - fisma-high
+mobileconfig: false
+mobileconfig_info:

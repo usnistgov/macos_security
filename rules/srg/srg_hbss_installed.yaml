@@ -1,0 +1,34 @@
+id: srg_hbss_installed
+title: The macOS system must utilize an HBSS solution and implement all DoD required modules.
+discussion: |
+  The macOS system must employ automated mechanisms to determine the state of system components. The DoD requires the installation and use of an approved HBSS solution to be implemented on the operating system. For additional information, reference all applicable HBSS OPORDs and FRAGOs on SIPRNet.
+check: |
+  Verify that there is an approved HBSS solution installed on the system.
+  
+  If there is not an approved HBSS solution installed, this is a finding.
+  
+  Verify that all installed components of the HBSS Solution are at the DoD approved minimal version.
+  
+  If the installed components are not at the DoD approved minimal versions, this is a finding.
+fix: |
+  Install an approved HBSS solution onto the system and ensure that all components are at least updated to their DoD approved minimal versions.
+references:
+  cce:
+    - CCE-84892-9
+  cci:
+    - CCI-001233
+  800-53r4:
+    - SI-2(2)
+  srg:
+    - SRG-OS-000191-GPOS-00080
+  disa_stig:
+    - AOSX-14-000015
+macOS:
+  - "10.15"
+tags:
+  - cnssi-1253
+  - fisma-moderate
+  - fisma-high
+  - STIG
+mobileconfig:
+mobileconfig_info:

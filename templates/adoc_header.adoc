@@ -1,0 +1,76 @@
+= $profile_title
+:doctype: book
+// Document Setup
+// :pdf-fontsdir: ../templates/fonts/
+:pdf-stylesdir: ../templates/
+:stylesdir: ../templates/
+:pdf-style: asciidoctor-pdf.yml
+:stylesheet: asciidoctor.css
+:notitle:
+:numbered:
+:data-uri:
+:allow-uri-read:
+:icons: font
+:chapter-label:
+:source-highlighter: rouge
+// Table of Contents
+:toc: macro
+:toc-title: TABLE OF CONTENTS
+:toclevels: 4
+:sectnumlevels: 4
+:toc-placement!:
+// Title Page Variables
+:document-type:
+:document-identifier:  
+:document-title: $profile_title
+:document-subtitle: SECURITY COMPLIANCE
+:approved-date: 2020-XX-XX
+// document process versions: "Initial Draft", "Informal Draft", "Formal Draft", "Final Draft", "Baseline"
+:version: Baseline
+:revision-date: 2019-12-16
+
+
+// xrefstyle full shows the section number and title
+:xrefstyle: full
+
+// Do not show the footer for HTML
+ifdef::backend-html5[]
+:nofooter:
+endif::[]
+
+// An additional title is needed for PDF output
+ifdef::backend-pdf[]
+[colophon]
+= {nbsp}
+endif::[]
+
+// Title Page
+include::../templates/title_page.adoc[]
+
+toc::[]
+
+== Foreword
+
+The macOS security compliance project is an open source effort to provide a programmatic approach to generating security guidance. This project can be used to create customized security baselines of technical security controls by leveraging a library of atomic actions which are mapped to compliance requirements in existing security guides or used to develop customized guidance. Through the use of a library of atomic actions that enhance security, and mapping them back to existing guides and policies, a single project can support multiple security guides and regulated industry policies while also allowing for documentation and QA to be uniformly managed through a single effort. This approach simplifies, and radically accelerates, the updating of annual security guidance through a unification and standardization of effort.
+
+
+// Authors
+== Authors
+[width="100%",cols="1,3"]
+|===
+|Bob Gendler|National Institute of Standards and Technology
+|Allen Golbig|National Aeronautics and Space Administration
+|Dan Brodjieski|Defense Information Systems Agency
+|Jason Blake|National Institute of Standards and Technology
+|Blair Heiserman|National Institute of Standards and Technology
+|Joshua Glemza|National Aeronautics and Space Administration
+|Elyse Anderson|National Aeronautics and Space Administration
+|Paige Ramsey|Los Alamos National Laboratory
+|===
+
+// Acronyms
+include::../templates/adoc_acronyms.adoc[]
+
+// References
+include::../templates/adoc_additional_docs.adoc[]
+

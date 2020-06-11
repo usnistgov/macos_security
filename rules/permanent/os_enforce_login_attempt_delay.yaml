@@ -1,0 +1,30 @@
+id: os_enforce_login_attempt_delay
+title: "Enforce deal of 4 second delay between login attempts"
+discussion: |
+  Limiting the number of logon attempts over a certain time interval reduces the chances that an unauthorized user may gain access to an account.
+check: |
+  The technology does not support this requirement. This is an applicable-does not meet finding.
+fix: |
+  This requirement is a permanent finding and cannot be fixed. An appropriate mitigation for the system must be implemented, but this finding cannot be considered fixed.
+references:
+  cce:
+    - CCE-84907-5
+  cci:
+    - CCI-000366
+  800-53r4:
+    - CM-6(b)
+  disa_stig:
+    - AOSX-15-200025
+  srg:
+    - SRG-OS-000480-GPOS-00226
+macOS:
+  - "10.15"
+tags:
+  - cnssi-1253
+  - fisma-low
+  - fisma-moderate
+  - fisma-high
+  - STIG
+  - permanent
+mobileconfig: false
+mobileconfig_info:

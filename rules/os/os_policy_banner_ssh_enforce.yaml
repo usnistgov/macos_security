@@ -1,0 +1,42 @@
+id: os_policy_banner_ssh_enforce
+title: "Enforce SSH policy banner"
+discussion: |
+  Display of a standardized and approved use notification before granting access to the operating system ensures privacy and security notification verbiage used is consistent with applicable federal laws, Executive Orders, directives, policies, regulations, standards, and guidance.
+
+  System use notifications are required only for access via logon interfaces with human users and are not required when such human interfaces do not exist.
+
+  NOTE: /etc/ssh/sshd_config will be automatically modified to its original state following any update or major upgrade to the operating system.
+check: |
+  /usr/bin/grep -c "^Banner /etc/banner" /etc/ssh/sshd_config 
+result:
+  integer: 1
+fix: |
+  [source,bash]
+  ----
+  /usr/bin/sed -i.bak 's/^[\#]*Banner.*/Banner \/etc\/banner/' /etc/ssh/sshd_config
+  ----
+references:
+  cce:
+    - CCE-84779-8
+  cci: 
+    - CCI-000048
+    - CCI-000050
+  800-53r4: 
+    - AC-8(a)
+    - AC-8(b)
+  srg: 
+    - SRG-OS-000023-GPOS-00006
+    - SRG-OS-000024-GPOS-00007
+  disa_stig: 
+    - AOSX-14-000024
+macOS:
+  - "10.15"
+  - "10.14"
+tags:
+  - cnssi-1253
+  - fisma-low
+  - fisma-moderate
+  - fisma-high
+  - STIG
+mobileconfig: false
+mobileconfig_info:

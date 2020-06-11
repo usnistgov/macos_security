@@ -1,0 +1,38 @@
+id: os_ssh_fips_140_ciphers
+title: "Configure SSH to limit the ciphers to algorithims that are FIPS 140 validated"
+discussion: |
+  Unapproved mechanisms that are used for authentication to the cryptographic module are not verified and therefore cannot be relied upon to provide confidentiality or integrity, and system data may be compromised. Operating systems utilizing encryption are required to use FIPS compliant mechanisms for authenticating to cryptographic
+
+  NOTE: /etc/ssh/sshd_config will be automatically modified to its original state following any update or major upgrade to the operating system.
+check: |
+  /usr/bin/grep -c "^Ciphers aes256-ctr,aes192-ctr,aes128-ctr" /etc/ssh/sshd_config
+result:
+  integer: 1
+fix: |
+  [source,bash]
+  ----
+  /usr/bin/grep -q '^Ciphers' /etc/ssh/sshd_config && /usr/bin/sed -i.bak  's/.^Ciphers.*/Ciphers aes256-ctr,aes192-ctr,aes128-ctr/' /etc/ssh/sshd_config || /bin/echo 'Ciphers aes256-ctr,aes192-ctr,aes128-ctr' >> /etc/ssh/sshd_config; /bin/launchctl kickstart -k system/com.openssh.sshd
+  ----
+references:
+  cce:
+    - CCE-84794-7
+  cci: 
+    - CCI-001133
+  800-53r4: 
+    - AC-17(2)
+    - IA-7
+    - CM-6(b)
+  srg: 
+    - SRG-OS-000163-GPOS-00072
+  disa_stig: 
+    - AOSX-14-000053
+macOS:
+  - "10.15"
+tags:
+  - cnssi-1253
+  - fisma-low
+  - fisma-moderate
+  - fisma-high
+  - STIG
+mobileconfig: false
+mobileconfig_info:

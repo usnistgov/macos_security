@@ -1,0 +1,40 @@
+id: sysprefs_find_my_disable
+title: "Disable Find My service"
+discussion: |
+  Ensure that the Find My is not enabled. An MDM solution shall be used instead of a personal AppleID to use Find My features, such as Remote Lock and Remote Wipe.
+check: |
+  /usr/bin/profiles -P -o stdout | /usr/bin/grep -Ec '(allowCloudFMM = 0|allowFindMyDevice = 0|allowFindMyFriends = 0|DisableFMMiCloudSetting = 1)'
+result:
+  integer: 4
+fix: |
+  This is implemented by a Configuration Profile.
+references:
+  cce:
+    - CCE-84831-7
+  cci: 
+    - N/A
+  800-53r4: 
+    - CM-7(5)(b)
+    - CM-7(b)
+    - CM-8(8)
+  srg: 
+    - SRG-OS-000095-GPOS-00049
+    - SRG-OS-000370-GPOS-00155
+  disa_stig: 
+    - N/A
+macOS:
+  - "10.15"
+tags:
+  - cnssi-1253
+  - fisma-low
+  - fisma-moderate
+  - fisma-high
+mobileconfig: true
+mobileconfig_info:
+  com.apple.applicationaccess:
+    allowCloudFMM: false
+    allowFindMyDevice: false
+    allowFindMyFriends: false
+  com.apple.icloud.managed:
+    DisableFMMiCloudSetting: true
+  

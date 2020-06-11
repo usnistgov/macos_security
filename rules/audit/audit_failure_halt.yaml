@@ -1,0 +1,35 @@
+id: audit_failure_halt
+title: "Configure System to Shut Down Upon Audit Failure"
+discussion: |
+  The audit service should shut down the computer if it is unable to audit system events. Once audit failure occurs, user and system activity is no longer recorded and malicious activity could go undetected. Audit processing failures include software/hardware errors, failures in the audit capturing mechanisms, and audit storage capacity being reached or exceeded. Responses to audit failure depend on the nature of the failure mode.
+check: |
+  /usr/bin/grep -Ec "^policy.*ahlt" /etc/security/audit_control
+result:
+  integer: 1
+fix: |
+  Edit the "/etc/security/audit_control file" and change the value for policy to include the setting "ahlt".
+  [source,bash]
+  ----
+  /usr/bin/sed -i.bak '/^policy/ s/$/,ahlt/' /etc/security/audit_control; /usr/sbin/audit -s
+  ----
+references:
+  cce:
+    - CCE-84708-7
+  cci: 
+    - CCI-000140
+  800-53r4: 
+    - AU-5(b)
+  srg: 
+    - SRG-OS-000047-GPOS-00023
+  disa_stig: 
+    - AOSX-14-001010
+macOS:
+  - "10.15"
+tags:
+  - cnssi-1253
+  - fisma-low
+  - fisma-moderate
+  - fisma-high
+  - STIG
+mobileconfig: false
+mobileconfig_info:

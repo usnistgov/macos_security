@@ -1,0 +1,40 @@
+id: audit_flags_lo_configure
+title: 'Add "lo" Flag to audit_control Configuration'
+discussion: |
+  Frequently, an attacker that successfully gains access to a system has only gained access to an account with limited privileges, such as a guest account or a service account. The attacker must attempt to change to another user account with normal or elevated privileges in order to proceed. Auditing successful and unsuccessful attempts to switch to another user account and the escalation of privileges mitigates this risk.
+
+  The information system monitors and login and logout events.
+check: |
+  /usr/bin/grep -Ec "^flags*.lo" /etc/security/audit_control
+result:
+  integer: 1
+fix: |
+  [source,bash]
+  ----
+  /usr/bin/sed -i.bak '/^flags/ s/$/,lo/' /etc/security/audit_control; /usr/sbin/audit -s
+  ----
+references:
+  cce:
+    - CCE-84716-0
+  cci: 
+    - CCI-000067
+    - CCI-000172
+  800-53r4:
+    - AC-17(1)
+    - AU-12(c)
+  srg:
+    - SRG-OS-000032-GPOS-00013
+    - SRG-OS-000064-GPOS-00033
+    - SRG-OS-000462-GPOS-00206
+  disa_stig:
+    - AOSX-14-001002
+macOS:
+  - "10.15"
+tags:
+  - cnssi-1253
+  - fisma-low
+  - fisma-moderate
+  - fisma-high
+  - STIG
+mobileconfig: false
+mobileconfig_info:

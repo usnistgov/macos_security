@@ -1,0 +1,35 @@
+id: sysprefs_time_server_configure
+title: "Configured to use an authorized time server"
+discussion: |
+  Only approved time servers should be configured for use.
+check: |
+  /usr/bin/profiles -P -o stdout | /usr/bin/awk -F "= " '/timeServer/{print $2}' | /usr/bin/tr -d ';'
+result:
+  string: "time-a.nist.gov,time-b.nist.gov"
+fix: |
+  This is implemented by a Configuration Profile.
+references:
+  cce:
+    - CCE-84846-5
+  cci: 
+    - CCI-001891
+    - CCI-002046
+  800-53r4: 
+    - AU-8(1)(a)
+    - AU-8(1)(b)
+  srg: 
+    - SRG-OS-000355-GPOS-00143
+    - SRG-OS-000356-GPOS-00144
+  disa_stig: 
+    - AOSX-14-000014
+macOS:
+  - "10.15"
+tags:
+  - cnssi-1253
+  - fisma-moderate
+  - fisma-high
+  - STIG
+mobileconfig: true
+mobileconfig_info:
+  com.apple.MCX:
+    timeServer: "time-a.nist.gov,time-b.nist.gov"

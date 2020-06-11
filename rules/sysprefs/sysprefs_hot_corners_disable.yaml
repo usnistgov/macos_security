@@ -1,0 +1,38 @@
+id: sysprefs_hot_corners_disable
+title: "Disable Hot Corners"
+discussion: |
+  The information system conceals, via the session lock, information previously visible on the display with a publicly viewable image.
+  
+  Although hot comers can be used to initiate a session lock or launch useful applications, they can also be configured to disable an automatic session lock from initiating. Such a configuration introduces the risk that a user might forget to manually lock the screen before stepping away from the computer. 
+check: |
+  /usr/bin/profiles -P -o stdout | /usr/bin/grep -Ec '"wvous-bl-corner" = 0|"wvous-br-corner" = 0|"wvous-tl-corner" = 0|"wvous-tr-corner" = 0'
+result:
+  integer: 4
+fix: |
+  This is implemented by a Configuration Profile.
+references:
+  cce:
+    - CCE-84836-6
+  cci: 
+    - CCI-000060
+  800-53r4: 
+    - AC-11(1)
+  srg: 
+    - SRG-OS-000031-GPOS-00012
+  disa_stig: 
+    - AOSX-14-000007
+macOS:
+  - "10.15"
+tags:
+  - cnssi-1253
+  - fisma-moderate
+  - fisma-high
+  - STIG
+mobileconfig: true
+mobileconfig_info:
+  com.apple.ManagedClient.preferences:
+    com.apple.dock:
+      wvous-bl-corner: 0
+      wvous-br-corner: 0
+      wvous-tr-corner: 0
+      wvous-tl-corner: 0

@@ -1,0 +1,12 @@
+= Changelog
+
+This document provides a high-level view of the changes to the macOS Security Compliance Project.
+
+== [0.9.0] - 2020-06-11
+
+Initial Public release (PRE-RELEASE)
+
+
+
+
+

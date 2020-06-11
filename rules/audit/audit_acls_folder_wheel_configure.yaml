@@ -1,0 +1,36 @@
+id: audit_acls_folder_wheel_configure
+title: "Configure Audit Log Files Group ownership to Wheel"
+discussion: |
+  The audit service must be configured to create log files with permissions which prevent normal users from reading, modifying or deleting audit logs. If log files are set to only be readable and writable by root or administrative users with sudo, the risk is mitigated.
+
+  The audit log files must have the group ownership set to Wheel.
+check: |
+  /bin/ls -n $(/usr/bin/grep '^dir' /etc/security/audit_control | /usr/bin/awk -F: '{print $2}') | /usr/bin/awk '{s+=$4} END {print s}'
+result:
+  integer: 0
+fix: |
+  [source,bash]
+  ----
+  /usr/sbin/chown -R root $(/usr/bin/grep '^dir' /etc/security/audit_control | /usr/bin/awk -F: '{print $2}')
+  ----
+references:
+  cce:
+    - CCE-84703-8
+  cci:
+    - CCI-000162
+  800-53r4:
+    - AU-9
+  srg:
+    - SRG-OS-000057-GPOS-00027
+  disa_stig:
+    - AOSX-14-001012
+macOS:
+  - "10.15"
+tags:
+  - cnssi-1253
+  - fisma-low
+  - fisma-moderate
+  - fisma-high
+  - STIG
+mobileconfig:
+mobileconfig_info:

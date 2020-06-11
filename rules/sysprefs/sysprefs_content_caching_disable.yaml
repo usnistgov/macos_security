@@ -1,0 +1,32 @@
+id: sysprefs_content_caching_disable
+title: "Disable Content Caching service"
+discussion: |
+  Content caching is a macOS service that helps reduce Internet data usage and speed up software installation on Mac computers. Organization devices shall not be acting as a caching server. General purpose systems should not server as content caches, known designated systems may as their use can then be properly monitored.
+check: |
+  /usr/bin/profiles -P -o stdout | /usr/bin/grep -c 'allowContentCaching = 0'
+result:
+  integer: 1
+fix: |
+  This is implemented by a Configuration Profile.
+references:
+  cce:
+    - CCE-84828-3
+  cci: 
+    -
+  800-53r4:
+    - CM-7(b)
+  srg:
+    -
+  disa_stig:
+    -
+macOS:
+  - "10.15"
+tags:
+  - cnssi-1253
+  - fisma-low
+  - fisma-moderate
+  - fisma-high
+mobileconfig: true
+mobileconfig_info:
+  com.apple.applicationaccess:
+    allowContentCaching: false

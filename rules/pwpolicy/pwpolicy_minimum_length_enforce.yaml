@@ -1,0 +1,33 @@
+id: pwpolicy_minimum_length_enforce
+title: "Enforce a minimum 15-character password length"
+discussion: |
+  The minimum password length must be set to 15 characters. 
+check: |
+  /usr/bin/profiles -P -o stdout | /usr/bin/grep -c 'minLength = 15' 
+result:
+  integer: 1
+fix: |
+  This is implemented by a Configuration Profile.
+references:
+  cce:
+    - CCE-84816-8
+  cci: 
+    - CCI-000205
+  800-53r4: 
+    - IA-5(1)(a)
+  srg: 
+    - SRG-OS-000078-GPOS-00046
+  disa_stig: 
+    - AOSX-14-003010
+macOS:
+  - "10.15"
+tags:
+  - cnssi-1253
+  - fisma-low
+  - fisma-moderate
+  - fisma-high
+  - STIG
+mobileconfig: true
+mobileconfig_info:
+  com.apple.mobiledevice.passwordpolicy:
+    minLength: 15

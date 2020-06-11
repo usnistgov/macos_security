@@ -1,0 +1,33 @@
+id: pwpolicy_alpha_numeric_enforce
+title: "Enforce password complexity by requiring that at least 1 numeric character be used"
+discussion: |
+  macOS must require at least 1 numeric character be used when creating a password.
+check: | 
+  /usr/bin/profiles -P -o stdout | /usr/bin/grep -c "requireAlphanumeric = 1;"
+result:
+  integer: 1
+fix: |
+  This is implemented by a Configuration Profile.
+references:
+  cce:
+    - CCE-84811-9
+  cci: 
+    - CCI-000194
+  800-53r4: 
+    - IA-5(1)(a)
+  srg: 
+    - SRG-OS-000071-GPOS-00039
+  disa_stig: 
+    - AOSX-14-003007
+macOS:
+  - "10.15"
+tags:
+  - cnssi-1253
+  - fisma-low
+  - fisma-moderate
+  - fisma-high
+  - STIG
+mobileconfig: true
+mobileconfig_info:
+  com.apple.mobiledevice.passwordpolicy:
+    requireAlphanumeric: true

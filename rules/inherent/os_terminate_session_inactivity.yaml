@@ -1,0 +1,30 @@
+id: os_terminate_session_inactivity
+title: "Automatically terminate user session after inactivity"
+discussion: |
+  Automatic session termination addresses the termination of user-initiated logical sessions in contrast to the termination of network connections that are associated with communications sessions (i.e., network disconnect). A logical session (for local, network, and remote access) is initiated whenever a user (or process acting on behalf of a user) accesses an organizational information system. Such user sessions can be terminated (and thus terminate user access) without terminating network sessions.Session termination terminates all processes associated with a user's logical session except those processes that are specifically created by the user (i.e., session owner) to continue after the session is terminated.Conditions or trigger events requiring automatic session termination can include, for example, organization-defined periods of user inactivity, targeted responses to certain types of incidents, and time-of-day restrictions on information system use.This capability is typically reserved for specific operating system functionality where the system owner, data owner, or organization requires additional assurance.
+check: |
+  The technology supports this requirement and cannot be configured to be out of compliance. The technology inherently meets this requirement.
+fix: |
+  The technology inherently meets this requirement. No fix is required.
+references:
+  cce:
+    - CCE-84870-5
+  cci:
+    - CCI-002361
+  800-53r4:
+    - AC-12
+  disa_stig:
+    - AOSX-15-100019
+  srg:
+    - SRG-OS-000279-GPOS-00109
+macOS:
+  - "10.15"
+tags:
+  - cnssi-1253
+  - fisma-low
+  - fisma-moderate
+  - fisma-high
+  - STIG
+  - inherent
+mobileconfig: false
+mobileconfig_info:

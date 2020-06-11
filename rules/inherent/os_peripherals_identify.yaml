@@ -1,0 +1,31 @@
+id: os_peripherals_identify
+title: The macOS system must uniquely identify peripherals before establishing a connection.
+discussion: |
+  Without identifying devices, unidentified or unknown devices may be introduced, thereby facilitating malicious activity.
+  
+  Peripherals include, but are not limited to, such devices as flash drives, external storage, and printers.
+check: |
+  The technology supports this requirement and cannot be configured to be out of compliance. The technology inherently meets this requirement.
+fix: |
+  The technology inherently meets this requirement. No fix is required.
+references:
+  cce:
+    - CCE-84885-3
+  cci:
+    - CCI-000778
+  800-53r4:
+    - IA-3
+  srg:
+    - SRG-OS-000114-GPOS-00059
+  disa_stig:
+    - AOSX-14-002069
+macOS:
+  - "10.15"
+tags:
+  - cnssi-1253
+  - fisma-moderate
+  - fisma-high
+  - STIG
+  - inherent
+mobileconfig:
+mobileconfig_info:

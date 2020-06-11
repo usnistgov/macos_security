@@ -1,0 +1,63 @@
+id: sysprefs_ssh_enable
+title: "Enable SSH for remote access sessions"
+discussion: |
+  Remote acces sessions must use encrypted methods to protect unauthorized individuals from gaining access. SSH service must be enabled for remote access.
+check: |
+  /bin/launchctl print-disabled system | /usr/bin/grep -c '"com.openssh.sshd" => false'
+result:
+  integer: 1
+fix: |
+  [source,bash]
+  ----
+  /bin/launchctl enable system/com.openssh.sshd
+  ----
+references:
+  cce:
+    - CCE-84845-7
+  cci: 
+    - CCI-001941
+    - CCI-001942
+    - CCI-002890
+    - CCI-002420
+    - CCI-002421
+    - CCI-002422
+    - CCI-003123
+    - CCI-001453
+    - CCI-000068
+    - CCI-002418
+  800-53r4: 
+    - AC-17(2)
+    - AC-17(4)
+    - IA-2(8)
+    - IA-2(9)
+    - MA-4(6)
+    - SC-8
+    - SC-8(1)
+    - SC-8(2)
+  srg: 
+    - SRG-OS-000393-GPOS-00173
+    - SRG-OS-000394-GPOS-00174
+    - SRG-OS-000112-GPOS-00057
+    - SRG-OS-000113-GPOS-00058
+    - SRG-OS-000033-GPOS-00014
+    - SRG-OS-000423-GPOS-00187
+    - SRG-OS-000424-GPOS-00188
+    - SRG-OS-000425-GPOS-00189
+    - SRG-OS-000426-GPOS-00190
+    - SRG-OS-000033-GPOS-00014
+    - SRG-OS-000250-GPOS-00093
+  disa_stig: 
+    - AOSX-14-000040
+    - AOSX-14-004011
+    - AOSX-14-004010
+    - AOSX-14-000011
+    - AOSX-14-000010
+macOS:
+  - "10.15"
+tags:
+  - cnssi-1253
+  - fisma-moderate
+  - fisma-high
+  - STIG
+mobileconfig: false
+mobileconfig_info:

@@ -1,0 +1,27 @@
+=== $rule_title
+
+$rule_discussion
+
+$rule_check
+
+[cols="15%h, 85%a"]
+|===
+
+|ID
+|$rule_id
+
+|References
+|
+
+[cols="20%h,80%a"]
+[frame="none"]
+[grid="cols"]
+!===
+
+!800-53r4
+!$rule_80053r4
+
+!===
+
+|
+|===

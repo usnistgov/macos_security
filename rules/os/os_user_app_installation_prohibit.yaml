@@ -1,0 +1,31 @@
+id: os_user_app_installation_prohibit
+title: "Prohibit user installation of software into /Users/"
+discussion: |
+  Allowing regular users to install software, without explicit privileges, creates the risk that untested or potentially malicious software will be installed on the system. Explicit privileges (escalated or administrative privileges) provide the regular user with explicit capabilities and control that exceeds the rights of a regular user.
+check: |
+  /usr/bin/profiles -P -o stdout-xml | /usr/bin/sed -n '/pathBlackList/,/key/p' | /usr/bin/grep -c "/Users/"
+result:
+  integer: 1
+fix: |
+  This is implemented by a Configuration Profile.
+references:
+  cce:
+    - CCE-84805-1
+  cci:
+    - CCI-001812
+  800-53r4:
+    - CM-11(2)
+  srg:
+    - SRG-OS-000362-GPOS-00149
+  disa_stig:
+    - AOSX-14-002067
+macOS:
+  - "10.15"
+tags:
+  - STIG
+mobileconfig: true
+mobileconfig_info:
+  com.apple.applicationaccess.new:
+    familyControlsEnabled: true
+    pathBlackList: 
+      - "/Users/"

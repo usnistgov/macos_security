@@ -1,0 +1,54 @@
+id: pwpolicy_minimum_lifetime_enforce
+title: "Enforce 24 hours as the minimum password lifetime"
+discussion: |
+  macOS must enforce a minimum password lifetime limit of 24 hours.
+check: | 
+  /usr/bin/pwpolicy getaccountpolicies | /usr/bin/grep -v "Getting global account policies" | /usr/bin/xmllint --xpath '/plist/dict/array/dict/dict[key="policyAttributeMinimumLifetimeHours"]/integer' - | /usr/bin/awk -F '[<>]' '{print $3}'
+result:
+  integer: 24
+fix: |
+  This setting may be enforced using local policy or by a directory service.
+  
+  To set local policy to require a minimum password lifetime, edit the current password policy to contiain the following <dict> within the "policyCategoryPasswordContent":
+  
+  [source,xml]
+  ----
+  <dict>
+  <key>policyContent</key>
+  <string>policyAttributeLastPasswordChangeTime &lt; policyAttributeCurrentTime - (policyAttributeMinimumLifetimeHours * 60 * 60)</string>
+  <key>policyIdentifier</key>
+  <string>Minimum Password Lifetime</string>
+  <key>policyParameters</key>
+  <dict>
+  <key>policyAttributeMinimumLifetimeHours<key>
+  <integer>24</integer>
+  </dict>
+  </dict>
+  ----
+  After saving the file and exiting to the command prompt, run the following command to load the new policy file, substituting the path to the file in place of "/path/to/file".
+  
+  [source,bash]
+  ----
+  /usr/bin/pwpolicy setaccountpolicies /path/to/file
+  ----
+  NOTE: See pwpolicy_supplemental on more information on how to implement password policies on macOS.
+references:
+  cce:
+    - CCE-84817-6
+  cci: 
+    - N/A
+  800-53r4: 
+    - IA-5(1)(d)
+  disa_stig: 
+    - N/A
+  srg: 
+    - SRG-OS-000075-GPOS-00043
+macOS:
+  - "10.15"
+tags:
+  - cnssi-1253
+  - fisma-low
+  - fisma-moderate
+  - fisma-high
+mobileconfig: false
+mobileconfig_info:

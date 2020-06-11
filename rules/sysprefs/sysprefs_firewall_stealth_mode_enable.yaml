@@ -1,0 +1,36 @@
+id: sysprefs_firewall_stealth_mode_enable
+title: "Enable Firewall Stealth Mode"
+discussion: |
+  The information system prevents discovery of specific system components composing a managed interface. 
+  
+  When stealth mode is enabled, the Mac will not respond to any probing requests. All requests from authorized apps will still be authorized.
+check: |
+  /usr/libexec/ApplicationFirewall/socketfilterfw --getstealthmode | /usr/bin/grep -c "Stealth mode enabled"
+result:
+  integer: 1
+fix: |
+  [source,bash]
+  ----
+  /usr/libexec/ApplicationFirewall/socketfilterfw --setstealthmode on 
+  ----
+references:
+  cce:
+    - CCE-84833-3
+  800-53r4:
+    - CM-6(b)
+    - SC-7(16)
+  srg:
+    - N/A
+  cci:
+    - N/A
+  disa_stig:
+    - N/A
+macOS:
+  - "10.15"
+tags:
+  - cnssi-1253
+  - fisma-low
+  - fisma-moderate
+  - fisma-high
+mobileconfig: false
+mobileconfig_info:

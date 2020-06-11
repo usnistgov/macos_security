@@ -1,0 +1,37 @@
+id: pwpolicy_account_lockout_enforce
+title: "Enforce a limit of 3 consecutive failed logon attempts"
+discussion: |
+  The macOS must limit the number of failed attempts to a maximum of 3 attempts. The account must be locked for a period of time after the maximum failed attempts.
+check: |
+  /usr/bin/profiles -P -o stdout | /usr/bin/grep -c 'maxFailedAttempts = 3' 
+result:
+  integer: 1
+fix: |
+  This is implemented by a Configuration Profile.
+references:
+  cce:
+    - CCE-84809-3
+  cci:
+    - CCI-000044 
+    - CCI-002238
+  800-53r4: 
+    - AC-7(a)
+    - AC-7(b)
+  srg: 
+    - SRG-OS-000021-GPOS-00005
+    - SRG-OS-000329-GPOS-00128
+  disa_stig: 
+    - AOSX-14-000020
+    - AOSX-14-000022
+macOS:
+  - "10.15"
+tags:
+  - cnssi-1253
+  - fisma-low
+  - fisma-moderate
+  - fisma-high
+  - STIG
+mobileconfig: true
+mobileconfig_info:
+  com.apple.mobiledevice.passwordpolicy:
+    maxFailedAttempts: 3

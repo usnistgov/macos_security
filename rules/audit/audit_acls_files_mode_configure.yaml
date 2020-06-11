@@ -1,0 +1,35 @@
+id: audit_acls_files_mode_configure
+title: "Configure Audit Log Files to Mode 440 or Less Permissive"
+discussion: |
+  The audit service must be configured to create log files with permissions which prevent normal users from reading, modifying or deleting audit logs. If log files are set to be readable and writable only by root or administrative users with sudo, the risk is mitigated.
+
+  The audit log files must only be readable by the Root user and by the group Wheel.
+check: |
+  /bin/ls -l $(/usr/bin/grep '^dir' /etc/security/audit_control | awk -F: '{print $2}') | /usr/bin/awk '!/-r--r-----|current|total/{print $1}' | /usr/bin/wc -l | tr -d ' '
+result:
+  integer: 0
+fix: |
+  [source,bash]
+  ----
+  /bin/chmod 440 $(/usr/bin/grep '^dir' /etc/security/audit_control | awk -F: '{print $2}')
+  ----
+references:
+  cce:
+    - CCE-84702-0
+  cci: 
+    - CCI-000162
+  800-53r4: 
+    - AU-9
+  srg: 
+    - SRG-OS-000057-GPOS-00027
+  disa_stig: 
+    - AOSX-14-001016
+macOS:
+  - "10.15"
+tags:
+  - cnssi-1253
+  - fisma-low
+  - fisma-moderate
+  - fisma-high
+  - STIG
+mobileconfig:

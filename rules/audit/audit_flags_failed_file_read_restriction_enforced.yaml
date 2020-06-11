@@ -1,0 +1,48 @@
+id: audit_flags_failed_file_read_restriction_enforced
+title: "Configure System to Audit All Failed Read Actions on the System"
+discussion: |
+  By auditing access restriction enforcement, changes to application and OS configuration files can be audited. Without auditing the enforcement of access restrictions, it will be difficult to identify attempted attacks and an audit trail will not be available for forensic investigation.
+
+  Enforcement actions are the methods or mechanisms used to prevent unauthorized changes to configuration settings. Enforcement action methods may be as simple as denying access to a file based on the application of file permissions (access restriction). Audit items may consist of lists of actions blocked by access restrictions or changes identified after the fact.
+check: |
+  /usr/bin/grep -Ec "^flags.*-fr" /etc/security/audit_control
+result:
+  integer: 1
+fix: |
+  To set the file read failed audit flag to the recommended setting, run the following command to add the flag "-fr".
+  [source,bash]
+  ----
+  /usr/bin/sed -i.bak '/^flags/ s/$/,-fr/' /etc/security/audit_control;/usr/sbin/audit -s
+  ----
+references:
+  cce:
+    - CCE-84713-7
+  cci:
+    - CCI-000162
+  800-53r4: 
+    - AU-12(c)
+    - AU-9
+    - CM-5(1)
+  srg: 
+    - SRG-OS-000365-GPOS-00152
+    - SRG-OS-000458-GPOS-00203
+    - SRG-OS-000461-GPOS-00205
+    - SRG-OS-000463-GPOS-00207
+    - SRG-OS-000465-GPOS-00209
+    - SRG-OS-000466-GPOS-00210
+    - SRG-OS-000467-GPOS-00211
+    - SRG-OS-000468-GPOS-00212
+    - SRG-OS-000474-GPOS-00219
+    - SRG-OS-000057-GPOS-00027
+  disa_stig: 
+    - AOSX-14-001016
+macOS:
+  - "10.15"
+tags:
+  - cnssi-1253
+  - fisma-low
+  - fisma-moderate
+  - fisma-high
+  - STIG
+mobileconfig: false
+mobileconfig_info:

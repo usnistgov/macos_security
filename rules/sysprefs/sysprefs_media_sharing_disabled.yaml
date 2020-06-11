@@ -1,0 +1,28 @@
+id: sysprefs_media_sharing_disabled
+title: "Disable Media Sharing"
+discussion: |
+  When Media Sharing is enabled, the computer starts a network listening service that shares the contents of the user's music collection with other users in the same subnet. Unnecessary network services should always be disabled because they increase the attack surface of the system. Disabling Media Sharing mitigates this risk.
+check: |
+  pfctl -a '*' -sr &> /dev/null | grep -c "block drop log proto tcp from any to any port = 3689" 
+result:
+  integer: 1
+fix: |
+  NOTE: Even if the user enables this service, the firewall is configured to block access to it. See Firewall Supplemental which includes a script that has an example policy to implement this rule.
+references:
+  cce:
+    - CCE-84771-5
+  800-53r4:
+    - CM-7(b)
+  srg: 
+    - SRG-OS-000480-GPOS-00227
+  disa_stig:
+    - N/A
+  cci:
+    - N/A
+macOS:
+  - "10.15"
+tags:
+  - STIG
+mobileconfig: false
+mobileconfig_info:
+

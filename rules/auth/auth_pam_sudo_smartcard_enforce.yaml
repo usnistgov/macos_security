@@ -1,0 +1,54 @@
+id: auth_pam_sudo_smartcard_enforce
+title: "Enforce Multifactor Authentication for Priveledge Escalation through the sudo process"
+discussion: |
+  To assure accountability and prevent unauthenticated access, privileged users must utilize multifactor authentication to prevent potential misuse and compromise of the system.
+
+  Ensure that use of sudo to elevate privilege enforces mutlifactor authentication.
+
+  NOTE: /etc/pam.d/sudo will be automatically modified to its original state following any update or major upgrade to the operating system.
+check: |
+  /usr/bin/grep -Ec '^(auth\s+sufficient\s+pam_smartcard.so|auth\s+required\s+pam_deny.so)' /etc/pam.d/sudo
+result:
+  integer: 2
+fix: |
+  [source,bash]
+  ----
+
+  /bin/cat > /etc/pam.d/sudo << SUDO_END
+  # sudo: auth account password session
+  auth        sufficient    pam_smartcard.so
+  auth        required      pam_opendirectory.so
+  auth        required      pam_deny.so
+  account     required      pam_permit.so
+  password    required      pam_deny.so
+  session     required      pam_permit.so
+  SUDO_END
+
+  /bin/chmod 444 /etc/pam.d/sudo
+  /usr/sbin/chown root:wheel /etc/pam.d/sudo
+  ----
+references:
+  cce:
+    - CCE-84723-6
+  cci:
+    - CCI-000366
+  800-53r4: 
+    - IA-2(3)
+    - CM-6(b)
+  srg: 
+    - SRG-OS-000107-GPOS-00054
+    - SRG-OS-000480-GPOS-00227
+  disa_stig: 
+    - AOSX-14-003050
+    - AOSX-14-003051
+    - AOSX-14-003052
+macOS:
+  - "10.15"
+tags:
+  - cnssi-1253
+  - fisma-low
+  - fisma-moderate
+  - fisma-high
+  - STIG
+mobileconfig: false
+mobileconfig_info:

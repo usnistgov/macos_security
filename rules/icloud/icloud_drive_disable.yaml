@@ -1,0 +1,37 @@
+id: icloud_drive_disable
+title: "Disable iCloud Document Sync"
+discussion: |
+  The macOS built-in iCloud document synchronization service must disabled to prevent organizational data from being synchronized to personal or non-approved storage. Automated synchronization shall be planned and controlled to approved storage.
+check: |
+  /usr/bin/profiles -P -o stdout | /usr/bin/grep -c 'allowCloudDocumentSync = 0'
+result:
+  integer: 1
+fix: |
+  This is implemented by a Configuration Profile.
+references:
+  cce:
+    - CCE-84734-3
+  cci:
+    - CCI-000381
+    - CCI-001774
+  800-53r4:
+    - CM-7(a)
+    - CM-7(5)(b)
+  srg:
+    - SRG-OS-000095-GPOS-00049
+    - SRG-OS-000370-GPOS-00155
+  disa_stig:
+    - AOSX-14-002041
+    - AOSX-14-002049
+macOS:
+  - "10.15"
+tags:
+  - cnssi-1253
+  - fisma-low
+  - fisma-moderate
+  - fisma-high
+  - STIG
+mobileconfig: true
+mobileconfig_info:
+  com.apple.applicationaccess:
+    allowCloudDocumentSync: false

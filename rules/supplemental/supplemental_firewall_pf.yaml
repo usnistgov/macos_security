@@ -1,0 +1,112 @@
+id: supplemental_firewall_pf
+title: "Packet Filter (pf) Supplemental"
+discussion: |
+  macOS contains an application layer firewall (ALF) (https://support.apple.com/en-ca/HT201642) and a packet filter firewall (PF). The Application firewall can block incoming traffic on per-application basis and prevent applications from listening on network ports, but it cannot be configured to block outgoing traffic. The packet filter firewall can manipulate virtually any packet data and is highly configurable.
+
+  Included is a script that configures PF to match settings in the NIST 800-53 guideline. 
+
+  The script will make sure the application layer firewall is enabled, set logging to detailed, set built-in signed applications to automatically receive incoming connections, and set downloaded signed applications to automatically receive incoming connections. It will then create a custom rule set and copy com.apple.pfctl.plist from /System/Library/LaunchDaemons/ into the /Library/LaunchDaemons folder and name it 800-53.pfctl.plist. This is done to not conflict with the system's pf ruleset.
+
+  The custom pf rules are created at /etc/pf.anchors/800_53_pf_anchors.
+
+  The ruleset will block connections on the following ports:
+
+  [%header,width="100%",cols="3,7"]
+  |===
+  ^.^|Port
+  ^.^|Service
+
+  |548
+  |Apple File Protocol (AFP)
+
+  |1900
+  |Bonjour
+
+  |79
+  |Finger
+
+  |20, 21
+  |File Transfer Protocol (FTP)
+
+  |80
+  |HTTP
+
+  |icmp
+  |ping
+
+  |143
+  |Internet Message Access Protocol (IMAP)
+
+  |993
+  |Internet Message Access Protocol over SSL (IMAPS)
+
+  |3689
+  |Music Sharing
+
+  |5353
+  |mDNSResponder
+
+  |2049
+  |Network File System (NFS)
+
+  |49152
+  |Optical Media Sharing
+
+  |110
+  |Post Office Protocol (POP3)
+
+  |995
+  |Post Office Protocol Secure (POP3S)
+
+  |631
+  |Printer Sharing
+
+  |3031
+  |Remote Apple Events
+
+  |5900
+  |Screen Sharing
+
+  |137, 138, 138, 445
+  |Samba (SMB)
+
+  |25
+  |Simple Mail Transfer Protocol (SMTP)
+
+  |22
+  |Secure Shell (SSH)
+
+  |23
+  |Telnet
+
+  |69
+  |Trivial File Transfer Protocol (TFTP)
+
+  |540
+  |Unix-to-Unix Copy (UUCP)
+
+  |===
+
+  For more on configuring the packet filter firewall check out the man pages on pf.conf and pfctl.
+
+  [source,bash]
+  ----
+  include::../includes/enablePF-mscp.sh[]
+  ----
+check: |
+fix: |
+references:
+  cci:
+    - N/A
+  800-53r4: 
+    - N/A
+  srg: 
+    - N/A
+  disa_stig:
+    - N/A
+macOS:
+  - "10.15"
+tags:
+  - supplemental
+mobileconfig: false
+mobileconfig_info:

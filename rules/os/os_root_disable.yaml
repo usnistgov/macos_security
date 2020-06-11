@@ -1,0 +1,33 @@
+id: os_root_disable
+title: "Disable Root login"
+discussion: |
+  The macOS system must require individuals to be authenticated with an individual authenticator prior to using a group authenticator. Administrator users must never log in directlty as root. To assure individual accountability and prevent unauthorized access, logging in as root at the login window must be disabled. 
+check: |
+  /usr/bin/dscl . -read /Users/root UserShell 2>&1 | /usr/bin/grep -c "/usr/bin/false"
+result:
+  integer: 1
+fix: |
+  [source,bash]
+  ----
+  /usr/bin/dscl . -create /Users/root UserShell /usr/bin/false
+  ----
+references:
+  cce:
+    - CCE-84783-0
+  800-53r4:
+    - IA-2
+  disa_stig:
+    - N/A
+  srg:
+    - N/A
+  cci:
+    - N/A    
+macOS:
+  - "10.15"
+tags:
+  - cnssi-1253
+  - fisma-low
+  - fisma-moderate
+  - fisma-high
+mobileconfig: false
+mobileconfig_info:

@@ -1,0 +1,35 @@
+id: os_removable_media_disable
+title: "Disable removable USB storage devices"
+discussion: |
+  External hard drives, such as USB, must be disabled for users.
+check: |
+  /usr/bin/profiles -P -o stdout | /usr/bin/grep 'harddisk-external' -A3 | grep -Ec "eject|alert"
+result:
+  integer: 2
+fix: |
+  This is implemented by a Configuration Profile.
+references:
+  cce:
+    - CCE-84782-2
+  cci: 
+    - N/A
+  800-53r4: 
+    - MP-7(1)
+  srg: 
+    - SRG-OS-000480-GPOS-00227
+  disa_stig: 
+    - N/A
+macOS:
+  - "10.15"
+tags:
+  - cnssi-1253
+  - fisma-moderate
+  - fisma-high
+mobileconfig: true
+mobileconfig_info:
+  com.apple.systemuiserver:
+    mount-controls:
+      harddisk-external: 
+        - alert
+        - eject
+    

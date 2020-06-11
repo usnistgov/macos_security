@@ -1,0 +1,32 @@
+id: os_screensaver_loginwindow_enforce
+title: "Enforce screen saver at login window"
+discussion: |
+  A default screen saver must be configured to display at the login window and must not display any sensitive information.
+check: |
+  /usr/bin/profiles -P -o stdout  | /usr/bin/grep -c loginWindowModulePath
+result:
+  integer: 1
+fix: |
+  This is implemented by a Configuration Profile.
+references:
+  cce:
+    - CCE-84786-3
+  cci:
+    - CCI-000060
+  800-53r4:
+    - AC-11(1)
+  srg:
+    - SRG-OS-000031-GPOS-00012
+  disa_stig:
+    - AOSX-14-000006
+macOS:
+  - "10.15"
+tags:
+  - cnssi-1253
+  - fisma-moderate
+  - fisma-high
+  - STIG
+mobileconfig: true
+mobileconfig_info:
+  com.apple.screensaver:
+    loginWindowModulePath: "/System/Library/Screen Savers/Flurry.saver"

@@ -1,0 +1,39 @@
+id: sysprefs_firewall_enable
+title: "Enable macOS Application Firewall"
+discussion: |
+  The Application Firewall is the built-in firewall that comes with macOS and must be enabled. The information system enforces approved authorizations for controlling the flow of information within the system and between interconnected systems.
+check: |
+  /usr/libexec/ApplicationFirewall/socketfilterfw --getglobalstate | grep -c "Firewall is enabled"
+result:
+  integer: 1
+fix: |
+  [source,bash]
+  ----
+  /usr/libexec/ApplicationFirewall/socketfilterfw --setglobalstate on
+  ----
+references:
+  cce:
+    - CCE-84832-5
+  cci: 
+    - CCI-000366
+  800-53r4: 
+    - AC-4
+    - AC-6(1)
+    - AC-19
+    - CM-6(b)
+    - CM-7
+    - SC-7(12)
+  srg:
+    - SRG-OS-000480-GPOS-00232
+  disa_stig: 
+    - AOSX-14-005050
+macOS:
+  - "10.15"
+tags:
+  - cnssi-1253
+  - fisma-low
+  - fisma-moderate
+  - fisma-high
+  - STIG
+mobileconfig: false
+mobileconfig_info:

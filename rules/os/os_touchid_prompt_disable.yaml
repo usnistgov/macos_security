@@ -1,0 +1,32 @@
+id: os_touchid_prompt_disable
+title: "Disable TouchID prompt during Setup Assistant"
+discussion: |
+  The prompt for TouchID during Setup Assistant must be disabled, as it might mislead users into configuring TouchID for unlock during the initial setup.
+check: |
+  /usr/bin/profiles -P -o stdout | /usr/bin/grep -c 'SkipTouchIDSetup = 1'
+result:
+  integer: 1
+fix: |
+  This is implemented by a Configuration Profile.
+references:
+  cce:
+    - CCE-84802-8
+  cci:
+    - N/A
+  800-53r4: 
+    - CM-6(b)
+  srg: 
+    - SRG-OS-000480-GPOS-00227
+  disa_stig: 
+    - N/A
+macOS:
+  - "10.15"
+tags:
+  - cnssi-1253
+  - fisma-low
+  - fisma-moderate
+  - fisma-high
+mobileconfig: true
+mobileconfig_info:
+  com.apple.SetupAssistant.managed:
+    SkipTouchIDSetup: true

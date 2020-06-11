@@ -1,0 +1,55 @@
+id: auth_pam_su_smartcard_enforce
+title: "Enforce Multifactor Authentication for Privilege Escalation for the su process"
+discussion: |
+  To assure accountability and prevent unauthenticated access, privileged users must utilize multifactor authentication to prevent potential misuse and compromise of the system.
+
+  Ensure that use of su to elevate privilege enforces mutlifactor authentication.
+
+  NOTE: /etc/pam.d/su will be automatically modified to its original state following any update or major upgrade to the operating system.
+check: |
+  /usr/bin/grep -Ec '^(auth\s+sufficient\s+pam_smartcard.so|auth\s+required\s+pam_rootok.so)' /etc/pam.d/su
+result:
+  integer: 2
+fix: |
+  [source,bash]
+  ----
+  /bin/cat > /etc/pam.d/su << SU_END
+  # su: auth account password session
+  auth        sufficient    pam_smartcard.so
+  auth        required      pam_rootok.so
+  auth        required      pam_group.so no_warn group=admin,wheel ruser root_only fail_safe
+  account     required      pam_permit.so
+  account     required      pam_opendirectory.so no_check_shell
+  password    required      pam_opendirectory.so
+  session     required      pam_launchd.so
+  SU_END
+
+  # Fix new file ownership and permissions
+  /bin/chmod 644 /etc/pam.d/su
+  /usr/sbin/chown root:wheel /etc/pam.d/su
+  ----
+references:
+  cce:
+    - CCE-84722-8
+  cci:
+    - CCI-000366
+  800-53r4: 
+    - IA-2(3)
+    - CM-6(b)
+  srg: 
+    - SRG-OS-000107-GPOS-00054
+    - SRG-OS-000480-GPOS-00227
+  disa_stig: 
+    - AOSX-14-003050
+    - AOSX-14-003051
+    - AOSX-14-003052
+macOS:
+  - "10.15"
+tags:
+  - cnssi-1253
+  - fisma-low
+  - fisma-moderate
+  - fisma-high
+  - STIG
+mobileconfig: false
+mobileconfig_info:

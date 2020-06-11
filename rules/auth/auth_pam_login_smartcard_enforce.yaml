@@ -1,0 +1,60 @@
+id: auth_pam_login_smartcard_enforce
+title: "Enforce Multifactor Authentication for Login"
+discussion: |
+  Privileged users must utilize multifactor authentication to prevent potential misuse and compromise of the system.
+
+  Ensure that the login process enforces mutlifactor authentication.
+
+  NOTE: /etc/pam.d/login will be automatically modified to its original state following any update or major upgrade to the operating system.
+check: |
+  /usr/bin/grep -Ec '^(auth\s+sufficient\s+pam_smartcard.so|auth\s+required\s+pam_deny.so)' /etc/pam.d/login
+result:
+  integer: 2
+fix: |
+  [source,bash]
+  ----
+  /bin/cat > /etc/pam.d/login << LOGIN_END
+  # login: auth account password session
+  auth        sufficient    pam_smartcard.so
+  auth        optional      pam_krb5.so use_kcminit
+  auth        optional      pam_ntlm.so try_first_pass
+  auth        optional      pam_mount.so try_first_pass
+  auth        required      pam_opendirectory.so try_first_pass
+  auth        required      pam_deny.so
+  account     required      pam_nologin.so
+  account     required      pam_opendirectory.so
+  password    required      pam_opendirectory.so
+  session     required      pam_launchd.so
+  session     required      pam_uwtmp.so
+  session     optional      pam_mount.so
+  LOGIN_END
+
+
+  /bin/chmod 644 /etc/pam.d/login
+  /usr/sbin/chown root:wheel /etc/pam.d/login
+  ----
+references:
+  cce:
+    - CCE-84721-0
+  cci:
+    - CCI-000366
+  800-53r4: 
+    - IA-2(3)
+    - CM-6(b)
+  srg: 
+    - SRG-OS-000107-GPOS-00054
+    - SRG-OS-000480-GPOS-00227
+  disa_stig: 
+    - AOSX-14-003050
+    - AOSX-14-003051
+    - AOSX-14-003052
+macOS:
+  - "10.15"
+tags:
+  - cnssi-1253
+  - fisma-low
+  - fisma-moderate
+  - fisma-high
+  - STIG
+mobileconfig: false
+mobileconfig_info:

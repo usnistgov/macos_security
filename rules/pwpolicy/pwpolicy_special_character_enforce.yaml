@@ -1,0 +1,33 @@
+id: pwpolicy_special_character_enforce
+title: "Enforce password complexity by requiring that at least 1 special character be used"
+discussion: |
+  macOS must require at least 1 special character be used when creating a password. Special characters are those characters that are not alphanumeric. Examples include: ~ ! @ # $ % ^ *.
+check: | 
+  /usr/bin/profiles -P -o stdout | /usr/bin/awk '/minComplexChars/{sub(/;.*/,"");print $3}'
+result:
+  integer: 1
+fix: |
+  This is implemented by a Configuration Profile.
+references:
+  cce:
+    - CCE-84819-2
+  cci: 
+    - CCI-001619
+  800-53r4: 
+    - IA-5(1)(a)
+  srg: 
+    - SRG-OS-000266-GPOS-00101
+  disa_stig: 
+    - AOSX-14-003011
+macOS:
+  - "10.15"
+tags:
+  - cnssi-1253
+  - fisma-low
+  - fisma-moderate
+  - fisma-high
+  - STIG
+mobileconfig: true
+mobileconfig_info:
+  com.apple.mobiledevice.passwordpolicy:
+    minComplexChars: 1

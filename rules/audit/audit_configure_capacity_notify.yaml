@@ -1,0 +1,32 @@
+id: audit_configure_capacity_notify
+title: "Configure Audit Capacity Warning"
+discussion: |
+  The audit service must be configured to require a minimum percentage of free disk space in order to run. This ensures that audit will notify the administrator that action is required to free up more disk space for audit logs. 
+check: |
+  /usr/bin/grep -c "^minfree:25" /etc/security/audit_control
+result:
+  integer: 1
+fix: |
+  Edit the "/etc/security/audit_control" file and change the value for "minfree" to "25" using the following command: 
+  [source,bash]
+  ----
+  /usr/bin/sed -i.bak 's/.*minfree.*/minfree:25/' /etc/security/audit_control; /usr/sbin/audit -s 
+  ----
+references:
+  cce:
+    - CCE-84707-9
+  cci:
+    - CCI-001855
+  800-53r4: 
+    - AU-5(1)
+  srg: 
+    - SRG-OS-000343-GPOS-00134
+  disa_stig: 
+    - AOSX-14-001030
+macOS:
+  - "10.15"
+tags:
+  - fisma-high
+  - STIG
+mobileconfig: false
+mobileconfig_info:
