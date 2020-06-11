@@ -21,7 +21,7 @@ image:https://badgen.net/badge/icon/apple?icon=apple&label, link=[https://www.ap
 image:https://badgen.net/badge/icon/10.15?icon=apple&label, link=[https://www.apple.com/macos]
 endif::[]
 
-The macOS security compliance project is an link:LICENSE.md[open source] effort that can be used to create customized security baselines of technical security controls, which are mapped to various compliance frameworks such as: NIST 800-53, DISA STIG, FINRA, and HIPAA requirements. This is a joint project of federal operational IT Security staff from the National Institute of Standards (NIST), National Aeronautics and Space Administration (NASA), Defense Information Systems Agency (DISA), and Los Alamos National Laboratory (LANL).
+The macOS security compliance project is an link:LICENSE.md[open source] effort that can be used to create customized security baselines of technical security controls, which are mapped to various compliance frameworks such as: NIST 800-53, DISA STIG, FINRA, and HIPAA requirements. This is a joint project of federal operational IT Security staff from the National Institute of Standards and Technology (NIST), National Aeronautics and Space Administration (NASA), Defense Information Systems Agency (DISA), and Los Alamos National Laboratory (LANL).
 
 To learn more about the project, please see the {uri-repo}/wiki[wiki].
 
