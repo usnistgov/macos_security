@@ -25,7 +25,7 @@ The macOS security compliance project is an link:LICENSE.md[open source] effort 
 
 To learn more about the project, please see the {uri-repo}/wiki[wiki].
 
-If you are interested in supporting the development of the standard, refer to the link:CONTRIBUTING.adoc[contributor guidance] for more information.
+If you are interested in supporting the development of the project, refer to the link:CONTRIBUTING.adoc[contributor guidance] for more information.
 
 == Usage
 
