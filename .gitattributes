@@ -1,0 +1,2 @@
+*.yaml linguist-detectable=true
+*.adoc linguist-detectable=true
