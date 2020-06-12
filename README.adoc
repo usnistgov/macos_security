@@ -25,6 +25,8 @@ The macOS security compliance project is an link:LICENSE.md[open source] effort 
 
 To learn more about the project, please see the {uri-repo}/wiki[wiki].
 
+If you are interested in supporting the development of the standard, refer to the link:CONTRIBUTING.adoc[contributor guidance] for more information.
+
 == Usage
 
 Civilian agencies are to use the National Checklist Program as required by https://csrc.nist.gov/publications/detail/sp/800-70/rev-4/final[NIST 800-70].
