@@ -198,10 +198,10 @@ def main():
         manifests = yaml.load(r, Loader=yaml.SafeLoader)        
 
     # Output folder
-    mobileconfig_output_path = os.path.join(parent_dir, 'build', 'mobileconfigs')
+    mobileconfig_output_path = os.path.join(parent_dir, 'build', 'mobileconfigs', f'{baseline_name}')
     if not (os.path.isdir(mobileconfig_output_path)):
         try:
-            os.mkdir(mobileconfig_output_path)
+            os.makedirs(mobileconfig_output_path)
         except OSError:
             print ("Creation of the directory %s failed" % mobileconfig_output_path)
 
