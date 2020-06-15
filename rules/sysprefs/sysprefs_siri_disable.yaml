@@ -32,5 +32,5 @@ tags:
   - STIG
 mobileconfig: true
 mobileconfig_info:
-  com.apple.Siri:
+  com.apple.ironwood.support:
     "Ironwood Allowed": false
