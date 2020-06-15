@@ -30,8 +30,5 @@ tags:
   - fisma-moderate
   - fisma-high
   - STIG
-mobileconfig: true
+mobileconfig: false
 mobileconfig_info:
-  com.apple.ManagedClient.preferences:
-    com.apple.alf:
-      loggingenabled: true
