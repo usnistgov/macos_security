@@ -29,4 +29,5 @@ macOS:
 tags:
   - fisma-high
   - STIG
-mobileconfig:
+mobileconfig: false
+nmobileconfig_info:

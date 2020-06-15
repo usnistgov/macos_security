@@ -55,5 +55,5 @@ macOS:
   - "10.15"
 tags:
   - STIG
-mobileconfig:
+mobileconfig: false
 mobileconfig_info:
