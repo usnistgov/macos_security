@@ -3,7 +3,7 @@ title: "Disable Media Sharing"
 discussion: |
   When Media Sharing is enabled, the computer starts a network listening service that shares the contents of the user's music collection with other users in the same subnet. Unnecessary network services should always be disabled because they increase the attack surface of the system. Disabling Media Sharing mitigates this risk.
 check: |
-  /sbin/pfctl -a '*' -sr &> /dev/null | grep -c "block drop log proto tcp from any to any port = 3689" 
+  /sbin/pfctl -a '*' -sr &> /dev/null | /usr/bin/grep -c "block drop log proto tcp from any to any port = 3689" 
 result:
   integer: 1
 fix: |
