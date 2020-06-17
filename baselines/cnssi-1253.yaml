@@ -1,6 +1,6 @@
 title: "Apple macOS 10.15 (Catalina) Security Configuration - CNSSI"
 description: |
-  This guide describes the actions to take when securing a macOS 10.15 system against the CNSSI baseline.  
+  This guide describes the actions to take when securing a macOS 10.15 system against the CNSSI-1253 baseline.  
 profile:
   - section: "Auditing"
     rules:
