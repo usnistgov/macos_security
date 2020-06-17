@@ -143,6 +143,7 @@ class PayloadDict:
         """
         
         plistlib.dump(self.data, output_path)
+        print(f"Configuration profile written to {output_path.name}")
 
 def makeNewUUID():
     return str(uuid4())
@@ -291,6 +292,11 @@ def main():
 
         newProfile.finalizeAndSave(config_file)
         config_file.close()
+
+    print(f"""
+    CAUTION: These configuration profiles are intended to be evaluated in a TEST environment. Depending on your setup, applying a configuration profile (smartcards in particular) could leave your system in a state where no users may log on. Please use caution when applying configuration settings to your system(s). 
+    If you are already leveraging an MDM in your enviornment, many of these settings should be configured using the MDM tools already available to you.
+    """)
 
 if __name__ == "__main__":
     main()

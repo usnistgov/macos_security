@@ -369,7 +369,7 @@ compliance_script_file.write(zsh_check_footer)
 compliance_script_file.write(fix_function_string)
 compliance_script_file.write(zsh_fix_footer)
 
-
+print(f"Finished building {compliance_script_file.name}")
 
 # sp80053_controls = list( dict.fromkeys(sp80053_controls))
 # sp80053_controls.sort()
