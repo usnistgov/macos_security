@@ -188,10 +188,13 @@ for sections in profile_yaml['profile']:
     
         if "integer" in result:
             result_value=result['integer']
+            result_type = "integer"
         elif "boolean" in result:
             result_value=result['boolean']
+            result_type = "boolean"
         elif "string" in result:
             result_value=result['string']
+            result_type = "string"
         else:
             result_value = 'N/A'
             
@@ -205,11 +208,11 @@ for sections in profile_yaml['profile']:
                 mobileconfig_info = rule_yaml['mobileconfig_info']
                 for domain, settings in mobileconfig_info.items():
                     rulefix = (
-                        f"To implement the prescribed state via a configuration profile, the following keys should be for the ({domain}) payload type:\n\n")
+                        f"To implement the prescribed state via a configuration profile, the following keys should be set for the ({domain}) payload type:\n\n")
                     rulefix = rulefix + "[source,xml]\n\n"
                     for item in settings.items():
                         rulefix = rulefix + (f"<key>{item[0]}</key>\n")
-                        rulefix = rulefix + (f"{result_value}\n\n")
+                        rulefix = rulefix + (f"<{result_type}>{result_value}</{result_type}>\n")
 
         # process nist controls for grouping
         nist_80053r4.sort()
