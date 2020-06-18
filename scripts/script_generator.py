@@ -61,9 +61,12 @@ profile_name = results.baseline.name.replace(".yaml","")
 profile_name = profile_name.replace("../baselines/","")
 
 # Output files
-sp80053_output_file = open(parent_dir + '/build/'+profile_name+'_controls.txt', 'w')
+#sp80053_output_file = open(parent_dir + '/build/'+profile_name+'_controls.txt', 'w')
 compliance_script_file = open(parent_dir + '/build/'+profile_name+'_compliance.sh', 'w')
-sp80053_controls = []
+#sp80053_controls = []
+
+check_function_string = ""
+fix_function_string = ""
 
 
 
@@ -207,7 +210,7 @@ echo "$(date -u) Beginning {profile_name} baseline scan" >> "$audit_log"
 defaults write "$audit_plist" lastComplianceCheck "$(date)"
 """
 
-compliance_script_file.write(check_zsh_header)
+#compliance_script_file.write(check_zsh_header)
 
 # Read all rules in the section and output the check functions
 for sections in profile_yaml['profile']:
@@ -238,7 +241,7 @@ for sections in profile_yaml['profile']:
                 nist_80053r4 = 'N/A'
             else:
                 nist_80053r4 = rule_yaml['references']['800-53r4']
-                sp80053_controls.extend(rule_yaml['references']['800-53r4'])
+                #sp80053_controls.extend(rule_yaml['references']['800-53r4'])
             
             
         # group the controls
@@ -289,76 +292,7 @@ else
 fi
 """.format(rule_yaml['id'], nist_controls, check.strip(), result, result_value) 
 
-            compliance_script_file.write(zsh_check_text)
-
-# write the footer for the check functions
-zsh_check_footer = """
-lastComplianceScan=$(defaults read "$audit_plist" lastComplianceCheck)
-
-pause
-}
-
-run_fix(){
-
-if [[ ! -e "$audit_plist" ]]; then
-    echo "Audit plist doesn't exist, please run Audit Check First" >> "$audit_log"
-    echo "Audit plist doesn't exist, please run Audit Check First"
-    pause
-    show_menus
-    read_options
-fi
-
-
-ask 'THE SOFTWARE IS PROVIDED "AS IS" WITHOUT ANY WARRANTY OF ANY KIND, EITHER EXPRESSED, IMPLIED, OR STATUTORY, INCLUDING, BUT NOT LIMITED TO, ANY WARRANTY THAT THE SOFTWARE WILL CONFORM TO SPECIFICATIONS, ANY IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND FREEDOM FROM INFRINGEMENT, AND ANY WARRANTY THAT THE DOCUMENTATION WILL CONFORM TO THE SOFTWARE, OR ANY WARRANTY THAT THE SOFTWARE WILL BE ERROR FREE.  IN NO EVENT SHALL NIST BE LIABLE FOR ANY DAMAGES, INCLUDING, BUT NOT LIMITED TO, DIRECT, INDIRECT, SPECIAL OR CONSEQUENTIAL DAMAGES, ARISING OUT OF, RESULTING FROM, OR IN ANY WAY CONNECTED WITH THIS SOFTWARE, WHETHER OR NOT BASED UPON WARRANTY, CONTRACT, TORT, OR OTHERWISE, WHETHER OR NOT INJURY WAS SUSTAINED BY PERSONS OR PROPERTY OR OTHERWISE, AND WHETHER OR NOT LOSS WAS SUSTAINED FROM, OR AROSE OUT OF THE RESULTS OF, OR USE OF, THE SOFTWARE OR SERVICES PROVIDED HEREUNDER.' N
-
-if [[ $? != 0 ]]; then
-    show_menus
-    read_options
-fi
-
-# append to existing logfile
-echo "$(date -u) Beginning FISMA fixes" >> "$audit_log"
-
-
-"""
-compliance_script_file.write(zsh_check_footer)
-
-# Read all rules in the section and output the fix functions
-for sections in profile_yaml['profile']:
-    for profile_rule in sections['rules']:
-        for rule in glob.glob('../rules/*/{}.yaml'.format(profile_rule)):
-            rule_file = (os.path.basename(rule))
-
-            #check for custom rule
-            if rule_file in glob.glob1('../custom/rules/', '*.yaml'):
-                print(f"Custom settings found for rule: {rule_file}")
-                override_rule = os.path.join('../custom/rules', rule_file)
-                with open(override_rule) as r:
-                    rule_yaml = yaml.load(r, Loader=yaml.SafeLoader)
-            else:
-                with open(rule) as r:
-                    rule_yaml = yaml.load(r, Loader=yaml.SafeLoader)
-
-            if rule_yaml['id'].startswith("supplemental"):
-                #print "supplemental"
-                continue
-
-            # grab the 800-53 controls
-            try:
-                rule_yaml['references']['800-53r4']
-            except KeyError:
-                nist_80053r4 = 'N/A'
-            else:
-                nist_80053r4 = rule_yaml['references']['800-53r4']
-                sp80053_controls.extend(rule_yaml['references']['800-53r4'])
-
-        # group the controls
-            nist_80053r4.sort()
-            res = [list(i) for j, i in groupby(
-                nist_80053r4, lambda a: a.split('(')[0])]
-            nist_controls = ''
-            for i in res:
-                nist_controls += group_ulify(i)
+            check_function_string = check_function_string + zsh_check_text
 
             # print fix and result
             try:
@@ -386,9 +320,40 @@ else
 fi
 """
 
-                compliance_script_file.write(zsh_fix_text)
+                fix_function_string = fix_function_string + zsh_fix_text
 
 # write the footer for the check functions
+zsh_check_footer = """
+lastComplianceScan=$(defaults read "$audit_plist" lastComplianceCheck)
+echo "Results written to $audit_plist"
+
+pause
+}
+
+run_fix(){
+
+if [[ ! -e "$audit_plist" ]]; then
+    echo "Audit plist doesn't exist, please run Audit Check First" | tee -a "$audit_log"
+    pause
+    show_menus
+    read_options
+fi
+
+
+ask 'THE SOFTWARE IS PROVIDED "AS IS" WITHOUT ANY WARRANTY OF ANY KIND, EITHER EXPRESSED, IMPLIED, OR STATUTORY, INCLUDING, BUT NOT LIMITED TO, ANY WARRANTY THAT THE SOFTWARE WILL CONFORM TO SPECIFICATIONS, ANY IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND FREEDOM FROM INFRINGEMENT, AND ANY WARRANTY THAT THE DOCUMENTATION WILL CONFORM TO THE SOFTWARE, OR ANY WARRANTY THAT THE SOFTWARE WILL BE ERROR FREE.  IN NO EVENT SHALL NIST BE LIABLE FOR ANY DAMAGES, INCLUDING, BUT NOT LIMITED TO, DIRECT, INDIRECT, SPECIAL OR CONSEQUENTIAL DAMAGES, ARISING OUT OF, RESULTING FROM, OR IN ANY WAY CONNECTED WITH THIS SOFTWARE, WHETHER OR NOT BASED UPON WARRANTY, CONTRACT, TORT, OR OTHERWISE, WHETHER OR NOT INJURY WAS SUSTAINED BY PERSONS OR PROPERTY OR OTHERWISE, AND WHETHER OR NOT LOSS WAS SUSTAINED FROM, OR AROSE OUT OF THE RESULTS OF, OR USE OF, THE SOFTWARE OR SERVICES PROVIDED HEREUNDER. WOULD YOU LIKE TO CONTINUE? ' N
+
+if [[ $? != 0 ]]; then
+    show_menus
+    read_options
+fi
+
+# append to existing logfile
+echo "$(date -u) Beginning FISMA fixes" >> "$audit_log"
+
+
+"""
+
+# write the footer for the script
 zsh_fix_footer="""
 }
 while true; do
@@ -396,16 +361,24 @@ while true; do
     read_options
 done
 """
+
+#write out the compliance script
+compliance_script_file.write(check_zsh_header)
+compliance_script_file.write(check_function_string)
+compliance_script_file.write(zsh_check_footer)
+compliance_script_file.write(fix_function_string)
 compliance_script_file.write(zsh_fix_footer)
 
-sp80053_controls = list( dict.fromkeys(sp80053_controls))
-sp80053_controls.sort()
+print(f"Finished building {compliance_script_file.name}")
 
-sp80053_output_file.writelines("%s\n" % control for control in sp80053_controls)
+# sp80053_controls = list( dict.fromkeys(sp80053_controls))
+# sp80053_controls.sort()
+
+# sp80053_output_file.writelines("%s\n" % control for control in sp80053_controls)
 
 # make the compliance script executable
 os.chmod(compliance_script_file.name, 0o755)
 
 #fix_script_file.close()
 compliance_script_file.close()
-sp80053_output_file.close()
+#sp80053_output_file.close()
