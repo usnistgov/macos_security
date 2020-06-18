@@ -113,7 +113,7 @@ for sections in profile_yaml['profile']:
     # Read all rules in the section and output them
     
     for rule in sections['rules']:
-        print(rule)
+        # print(rule)
         rule_path = glob.glob('../rules/*/{}.yaml'.format(rule))
         rule_file = (os.path.basename(rule_path[0]))
 
@@ -173,6 +173,20 @@ for sections in profile_yaml['profile']:
         else:
             rulefix = rule_yaml['fix']#.replace('|', '\|')
   
+        # deteremine if configprofile
+        try:
+            rule_yaml['mobileconfig']
+        except KeyError:
+            pass
+        else:
+            if rule_yaml['mobileconfig']:
+                mobileconfig_info = rule_yaml['mobileconfig_info']
+                for domain, settings in mobileconfig_info.items():
+                    rulefix = (f"The following keys should be set in a configuration profile for the {domain} payload type of a configuration profile:\n")
+                    for item in settings.items():
+                        rulefix = rulefix + (f"{item[0]} : {item[1]}\n")
+                        
+                        
         try:
             rule_yaml['tags']
         except KeyError:
