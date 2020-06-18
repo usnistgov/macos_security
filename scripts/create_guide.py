@@ -172,20 +172,6 @@ for sections in profile_yaml['profile']:
             rulefix = "No fix Found"
         else:
             rulefix = rule_yaml['fix']#.replace('|', '\|')
-  
-        # deteremine if configprofile
-        try:
-            rule_yaml['mobileconfig']
-        except KeyError:
-            pass
-        else:
-            if rule_yaml['mobileconfig']:
-                mobileconfig_info = rule_yaml['mobileconfig_info']
-                for domain, settings in mobileconfig_info.items():
-                    rulefix = (f"To implement the prescribed state via a configuration profile, the following keys should be for the {domain} payload type:\n\n")
-                    for item in settings.items():
-                        rulefix = rulefix + (f"key: {item[0]}\n\n")
-                        rulefix = rulefix + (f"value: {item[1]}\n\n")
                         
                         
         try:
@@ -208,7 +194,23 @@ for sections in profile_yaml['profile']:
             result_value=result['string']
         else:
             result_value = 'N/A'
-        
+            
+        # deteremine if configprofile
+        try:
+            rule_yaml['mobileconfig']
+        except KeyError:
+            pass
+        else:
+            if rule_yaml['mobileconfig']:
+                mobileconfig_info = rule_yaml['mobileconfig_info']
+                for domain, settings in mobileconfig_info.items():
+                    rulefix = (
+                        f"To implement the prescribed state via a configuration profile, the following keys should be for the ({domain}) payload type:\n\n")
+                    rulefix = rulefix + "[source,xml]\n\n"
+                    for item in settings.items():
+                        rulefix = rulefix + (f"<key>{item[0]}</key>\n")
+                        rulefix = rulefix + (f"{result_value}\n\n")
+
         # process nist controls for grouping
         nist_80053r4.sort()
         res = [list(i) for j, i in groupby(nist_80053r4, lambda a: a.split('(')[0])]
