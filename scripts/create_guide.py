@@ -71,8 +71,8 @@ with open('../templates/adoc_footer.adoc') as adoc_footer_file:
 header_adoc = adoc_header_template.substitute(
     profile_title = profile_yaml['title'],
     description = profile_yaml['description'],
-    html_title = "macOS 10.15 (Catalina)",
-    html_subtitle = "Security Configuration - Baseline",
+    html_title = profile_yaml['title'].split(':')[0],
+    html_subtitle = profile_yaml['title'].split(':')[1],
     pdf_version = "0.9, 2020-06-17",
     html_version = "0.9, 2020-06-17",
     logo = "nist.png"
