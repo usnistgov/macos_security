@@ -294,8 +294,13 @@ def main():
         config_file.close()
 
     print(f"""
-    CAUTION: These configuration profiles are intended to be evaluated in a TEST environment. Depending on your setup, applying a configuration profile (smartcards in particular) could leave your system in a state where no users may log on. Please use caution when applying configuration settings to your system(s). 
-    If you are already leveraging an MDM in your enviornment, many of these settings should be configured using the MDM tools already available to you.
+    CAUTION: These configuration profiles are intended for evaluation in a TEST
+    environment. Certain configuration profiles (Smartcards), when applied could 
+    leave a system in a state where a user can no longer login with a password. 
+    Please use caution when applying configuration settings to a system.
+    
+    NOTE: If an MDM is already being leveraged, many of these profile settings may
+    be available through the vendor.
     """)
 
 if __name__ == "__main__":
