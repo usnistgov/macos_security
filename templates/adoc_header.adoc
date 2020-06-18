@@ -24,6 +24,7 @@ endif::[]
 :allow-uri-read:
 ifdef::backend-html5[]
 :notitle:
+:title: $html_header_title
 :document-title: $html_title
 :document-subtitle: $html_subtitle
 :version: $html_version
