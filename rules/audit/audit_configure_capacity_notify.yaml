@@ -7,7 +7,6 @@ check: |
 result:
   integer: 1
 fix: |
-  Edit the "/etc/security/audit_control" file and change the value for "minfree" to "25" using the following command: 
   [source,bash]
   ----
   /usr/bin/sed -i.bak 's/.*minfree.*/minfree:25/' /etc/security/audit_control; /usr/sbin/audit -s 

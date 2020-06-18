@@ -30,6 +30,5 @@ tags:
   - STIG
 mobileconfig: true
 mobileconfig_info:
-  com.apple.ManagedClient.preferences:
-    com.apple.AdLib:
-      forceLimitAdTracking: "1"
+  com.apple.AdLib:
+    forceLimitAdTracking: true
