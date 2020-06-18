@@ -17,7 +17,7 @@ ifdef::backend-pdf[]
 $pdf_version
 :pdf-theme: pdf
 :pdf-themesdir: ../templates
-:title-logo-image: image:../templates/images/$logo[pdfwidth=4.25in,align=center]
+:title-logo-image: image:$logo[pdfwidth=4.25in,align=center]
 :nofooter!:
 endif::[]
 :data-uri:
@@ -30,7 +30,7 @@ ifdef::backend-html5[]
 :version: $html_version
 [cols="55s"]
 |======
-|image:../templates/images/$logo[]
+|image:$logo[]
 |======
 
 [cols="^.^1s",width="100%"]

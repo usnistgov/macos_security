@@ -29,6 +29,8 @@ parser = argparse.ArgumentParser(
     description='Given a baseline, create an AsciiDoc guide.')
 parser.add_argument("baseline", default=None,
                     help="Baseline YAML file used to create the guide.", type=argparse.FileType('rt'))
+parser.add_argument("-l", "--logo", default=None,
+                    help="Full path to logo file to be inlcuded in the guide.", action="store")
 parser.add_argument("-o", "--output", default=None,
                     help="Output file", type=argparse.FileType('wt'))
 
@@ -36,6 +38,10 @@ try:
     results = parser.parse_args()
     output_basename = os.path.basename(results.baseline.name)
     output_filename = os.path.splitext(output_basename)[0]
+    if results.logo:
+        logo = results.logo
+    else:
+        logo = "../templates/images/nist.png"
     if results.output:
         output_file = results.output
     else:
@@ -76,7 +82,7 @@ header_adoc = adoc_header_template.substitute(
     html_subtitle = profile_yaml['title'].split(':')[1],
     pdf_version = "0.9, 2020-06-17",
     html_version = "0.9, 2020-06-17",
-    logo = "nist.png"
+    logo = logo
 
 )
 
