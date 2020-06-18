@@ -182,9 +182,10 @@ for sections in profile_yaml['profile']:
             if rule_yaml['mobileconfig']:
                 mobileconfig_info = rule_yaml['mobileconfig_info']
                 for domain, settings in mobileconfig_info.items():
-                    rulefix = (f"The following keys should be set in a configuration profile for the {domain} payload type of a configuration profile:\n")
+                    rulefix = (f"To implement the prescribed state via a configuration profile, the following keys should be for the {domain} payload type:\n\n")
                     for item in settings.items():
-                        rulefix = rulefix + (f"{item[0]} : {item[1]}\n")
+                        rulefix = rulefix + (f"key: {item[0]}\n\n")
+                        rulefix = rulefix + (f"value: {item[1]}\n\n")
                         
                         
         try:
