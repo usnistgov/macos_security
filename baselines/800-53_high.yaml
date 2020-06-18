@@ -1,4 +1,4 @@
-title: "Apple macOS 10.15 (Catalina) Security Configuration - High"
+title: "macOS 10.15 (Catalina): Security Configuration - 800-53 High"
 description: |
   This guide describes the actions to take when securing a macOS 10.15 system against the NIST SP 800-53 HIGH baseline.  
 profile:
@@ -30,7 +30,6 @@ profile:
       - auth_pam_sudo_smartcard_enforce
       - auth_smartcard_allow
       - auth_smartcard_certificate_trust_enforce_high
-      - auth_smartcard_certificate_trust_enforce_moderate
       - auth_smartcard_enforce
       - auth_ssh_smartcard_enforce
   - section: "SystemPreferences"

@@ -9,8 +9,7 @@ ASSOCIATED DOCUMENTS
     |====                                          <-- table opening tag
     |Document Number|Document Title                <-- header line
                                                    <-- empty line for readability (optional)
-    |NPR 2810.1|Security of Information Technology <--
-    |NASA-SPEC-0000|Super Special NASA Doc         <--
+
                                                    <-- empty line for readability (optional)
     |====                                          <-- table closing tag
 ////

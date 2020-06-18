@@ -428,3 +428,6 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 #footer-text{color:rgba(0,0,0,.6);font-size:.9em}}
 @media amzn-kf8{#header,#content,#footnotes,#footer{padding:0}}
 table.grid-all {border-collapse: collapse;}
+.doctitle{font-size:35px;text-align: center;}
+.docsub{font-size: 35px;text-align: center;}
+.docver{font-size: 25px;text-align: center;}
