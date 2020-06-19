@@ -23,6 +23,32 @@ def group_ulify(elements):
         string += str(s) + ", "
     return string[:-2]
 
+def format_mobileconfig_fix(mobileconfig):
+    for domain, settings in mobileconfig.items():
+        rulefix = (
+            f"Create a configuration profile containing the following keys in the ({domain}) payload type:\n\n")
+        rulefix = rulefix + "[source,xml]\n\n"
+        for item in settings.items():
+            rulefix = rulefix + (f"<key>{item[0]}</key>\n")
+            
+            if type(item[1]) == bool:
+                rulefix = rulefix + \
+                    (f"<{str(item[1]).lower()}/>\n")
+            elif type(item[1]) == list:
+                rulefix = rulefix + "<array>\n"
+                for setting in item[1]:
+                    rulefix = rulefix + \
+                    (f"<string>{setting}</string>\n")
+                rulefix = rulefix + "</array>\n"
+            elif type(item[1]) == int:
+                rulefix = rulefix + \
+                    (f"<integer>{item[1]}</integer>\n")
+            elif type(item[1]) == str:
+                rulefix = rulefix + \
+                    (f"<string>{item[1]}</string>\n")
+
+    return rulefix
+
 
 # Setup argparse
 parser = argparse.ArgumentParser(
@@ -205,14 +231,7 @@ for sections in profile_yaml['profile']:
             pass
         else:
             if rule_yaml['mobileconfig']:
-                mobileconfig_info = rule_yaml['mobileconfig_info']
-                for domain, settings in mobileconfig_info.items():
-                    rulefix = (
-                        f"To implement the prescribed state via a configuration profile, the following keys should be set for the ({domain}) payload type:\n\n")
-                    rulefix = rulefix + "[source,xml]\n\n"
-                    for item in settings.items():
-                        rulefix = rulefix + (f"<key>{item[0]}</key>\n")
-                        rulefix = rulefix + (f"<{result_type}>{result_value}</{result_type}>\n")
+                rulefix = format_mobileconfig_fix(rule_yaml['mobileconfig_info'])
 
         # process nist controls for grouping
         nist_80053r4.sort()
