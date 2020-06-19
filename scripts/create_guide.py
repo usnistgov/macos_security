@@ -24,31 +24,37 @@ def group_ulify(elements):
     return string[:-2]
 
 def format_mobileconfig_fix(mobileconfig):
+    
     rulefix = ""
     for domain, settings in mobileconfig.items():
-        rulefix = rulefix + (
-            f"Create a configuration profile containing the following keys in the ({domain}) payload type:\n\n")
-        rulefix = rulefix + "[source,xml]\n----\n"
-        for item in settings.items():
-            rulefix = rulefix + (f"<key>{item[0]}</key>\n")
-            
-            if type(item[1]) == bool:
-                rulefix = rulefix + \
-                    (f"<{str(item[1]).lower()}/>\n")
-            elif type(item[1]) == list:
-                rulefix = rulefix + "<array>\n"
-                for setting in item[1]:
-                    rulefix = rulefix + \
-                    (f"<string>{setting}</string>\n")
-                rulefix = rulefix + "</array>\n"
-            elif type(item[1]) == int:
-                rulefix = rulefix + \
-                    (f"<integer>{item[1]}</integer>\n")
-            elif type(item[1]) == str:
-                rulefix = rulefix + \
-                    (f"<string>{item[1]}</string>\n")
+        if domain == "com.apple.ManagedClient.preferences":
+            rulefix = rulefix + (f"NOTE: The following settings are in the ({domain}) payload. This payload requires the additional settings to be sub components of their defined domain.\n\n")
+            rulefix = rulefix + format_mobileconfig_fix(settings)
         
-        rulefix = rulefix + "----\n\n"
+        else:
+            rulefix = rulefix + (
+                f"Create a configuration profile containing the following keys in the ({domain}) payload type:\n\n")
+            rulefix = rulefix + "[source,xml]\n----\n"
+            for item in settings.items():
+                rulefix = rulefix + (f"<key>{item[0]}</key>\n")
+                
+                if type(item[1]) == bool:
+                    rulefix = rulefix + \
+                        (f"<{str(item[1]).lower()}/>\n")
+                elif type(item[1]) == list:
+                    rulefix = rulefix + "<array>\n"
+                    for setting in item[1]:
+                        rulefix = rulefix + \
+                        (f"    <string>{setting}</string>\n")
+                    rulefix = rulefix + "</array>\n"
+                elif type(item[1]) == int:
+                    rulefix = rulefix + \
+                        (f"<integer>{item[1]}</integer>\n")
+                elif type(item[1]) == str:
+                    rulefix = rulefix + \
+                        (f"<string>{item[1]}</string>\n")
+            
+            rulefix = rulefix + "----\n\n"
 
     return rulefix
 
