@@ -1,5 +1,5 @@
 id: supplemental_smartcard
-title: "[[scSupp]]Smartcard Supplemental"
+title: "Smartcard Supplemental"
 discussion: |
   macOS supports smartcards, such as U.S. Personal Identity Verification (PIV) cards and U.S. Department of Defense Common Access Cards (CAC). Smartcards can be used in macOS for the following:
 

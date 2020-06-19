@@ -1,5 +1,5 @@
 id: supplemental_firewall_pf
-title: "[[pfSupp]]Packet Filter (pf) Supplemental"
+title: "Packet Filter (pf) Supplemental"
 discussion: |
   macOS contains an application layer firewall (ALF) (https://support.apple.com/en-ca/HT201642) and a packet filter firewall (PF). The Application firewall can block incoming traffic on per-application basis and prevent applications from listening on network ports, but it cannot be configured to block outgoing traffic. The packet filter firewall can manipulate virtually any packet data and is highly configurable.
 

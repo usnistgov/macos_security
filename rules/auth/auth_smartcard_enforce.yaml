@@ -5,8 +5,6 @@ discussion: |
 
   When enforceSmartCard is set to true the smartcard must be used for login, authorization, and screen saver unlocking.
 
-  NOTE: Before applying this setting, please see the <<scSupp,Smartcard Supplemental>> guidance.
-
   CAUTION: enforceSmartCard will apply to the whole system. No users will be able to login with their password unless the profile is removed or a member of the NotEnforced group.
 check: |
   /usr/bin/profiles -P -o stdout | /usr/bin/grep -c 'enforceSmartCard = 1'

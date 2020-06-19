@@ -25,7 +25,7 @@ fix: |
   </dict>
   </dict>
   ----
-  NOTE: See <<pwSupp,Password Policy Supplemental>> on more information on how to implement password policies on macOS.
+  NOTE: See the password policy supplemental on more information on how to implement password policies on macOS.
 references:
   cce:
     - CCE-84821-8
