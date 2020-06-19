@@ -10,9 +10,13 @@ $rule_check
 
 If the result is not *$rule_result*, this is a finding.
 
+====
+**Remediation Description**
+
 Perform the following to configure the system to meet the requirements:
 
 $rule_fix
+====
 
 [cols="15%h, 85%a"]
 |===
