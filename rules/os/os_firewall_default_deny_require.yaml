@@ -9,7 +9,7 @@ check: |
 result:
   integer: 1
 fix: |
-  NOTE: See Firewall Supplemental which includes a script that has an example policy to implement this rule.
+  NOTE: See the firewall supplemental which includes a script that has an example policy to implement this rule.
 references:
   cce:
     - CCE-84756-6
@@ -31,4 +31,5 @@ tags:
   - fisma-moderate
   - fisma-high
   - STIG
-mobileconfig:
+mobileconfig: false
+nmobileconfig_info:

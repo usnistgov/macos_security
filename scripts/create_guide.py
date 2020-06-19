@@ -23,12 +23,50 @@ def group_ulify(elements):
         string += str(s) + ", "
     return string[:-2]
 
+def format_mobileconfig_fix(mobileconfig):
+    """Takes a list of domains and setting from a mobileconfig, and reformats it for the output of the fix section of the guide.
+    """
+    rulefix = ""
+    for domain, settings in mobileconfig.items():
+        if domain == "com.apple.ManagedClient.preferences":
+            rulefix = rulefix + (f"NOTE: The following settings are in the ({domain}) payload. This payload requires the additional settings to be sub-payloads within, containing their their defined payload types.\n\n")
+            rulefix = rulefix + format_mobileconfig_fix(settings)
+        
+        else:
+            rulefix = rulefix + (
+                f"Create a configuration profile containing the following keys in the ({domain}) payload type:\n\n")
+            rulefix = rulefix + "[source,xml]\n----\n"
+            for item in settings.items():
+                rulefix = rulefix + (f"<key>{item[0]}</key>\n")
+                
+                if type(item[1]) == bool:
+                    rulefix = rulefix + \
+                        (f"<{str(item[1]).lower()}/>\n")
+                elif type(item[1]) == list:
+                    rulefix = rulefix + "<array>\n"
+                    for setting in item[1]:
+                        rulefix = rulefix + \
+                        (f"    <string>{setting}</string>\n")
+                    rulefix = rulefix + "</array>\n"
+                elif type(item[1]) == int:
+                    rulefix = rulefix + \
+                        (f"<integer>{item[1]}</integer>\n")
+                elif type(item[1]) == str:
+                    rulefix = rulefix + \
+                        (f"<string>{item[1]}</string>\n")
+            
+            rulefix = rulefix + "----\n\n"
+
+    return rulefix
+
 
 # Setup argparse
 parser = argparse.ArgumentParser(
     description='Given a baseline, create an AsciiDoc guide.')
 parser.add_argument("baseline", default=None,
                     help="Baseline YAML file used to create the guide.", type=argparse.FileType('rt'))
+parser.add_argument("-l", "--logo", default=None,
+                    help="Full path to logo file to be inlcuded in the guide.", action="store")
 parser.add_argument("-o", "--output", default=None,
                     help="Output file", type=argparse.FileType('wt'))
 
@@ -36,6 +74,10 @@ try:
     results = parser.parse_args()
     output_basename = os.path.basename(results.baseline.name)
     output_filename = os.path.splitext(output_basename)[0]
+    if results.logo:
+        logo = results.logo
+    else:
+        logo = "../templates/images/nist.png"
     if results.output:
         output_file = results.output
     else:
@@ -70,7 +112,11 @@ with open('../templates/adoc_footer.adoc') as adoc_footer_file:
 # Create header
 header_adoc = adoc_header_template.substitute(
     profile_title = profile_yaml['title'],
-    description = profile_yaml['description']
+    description = profile_yaml['description'],
+    html_header_title=profile_yaml['title'],
+    html_title = profile_yaml['title'].split(':')[0],
+    html_subtitle = profile_yaml['title'].split(':')[1],
+    logo = logo
 )
 
 # Output header
@@ -103,7 +149,7 @@ for sections in profile_yaml['profile']:
     # Read all rules in the section and output them
     
     for rule in sections['rules']:
-        print(rule)
+        # print(rule)
         rule_path = glob.glob('../rules/*/{}.yaml'.format(rule))
         rule_file = (os.path.basename(rule_path[0]))
 
@@ -162,7 +208,8 @@ for sections in profile_yaml['profile']:
             rulefix = "No fix Found"
         else:
             rulefix = rule_yaml['fix']#.replace('|', '\|')
-  
+                        
+                        
         try:
             rule_yaml['tags']
         except KeyError:
@@ -177,13 +224,25 @@ for sections in profile_yaml['profile']:
     
         if "integer" in result:
             result_value=result['integer']
+            result_type = "integer"
         elif "boolean" in result:
             result_value=result['boolean']
+            result_type = "boolean"
         elif "string" in result:
             result_value=result['string']
+            result_type = "string"
         else:
             result_value = 'N/A'
-        
+            
+        # deteremine if configprofile
+        try:
+            rule_yaml['mobileconfig']
+        except KeyError:
+            pass
+        else:
+            if rule_yaml['mobileconfig']:
+                rulefix = format_mobileconfig_fix(rule_yaml['mobileconfig_info'])
+
         # process nist controls for grouping
         nist_80053r4.sort()
         res = [list(i) for j, i in groupby(nist_80053r4, lambda a: a.split('(')[0])]

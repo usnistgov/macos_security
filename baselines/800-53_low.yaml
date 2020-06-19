@@ -1,6 +1,6 @@
-title: "Apple macOS 10.15 (Catalina) Security Configuration - Low"
+title: "macOS 10.15 (Catalina): Security Configuration - 800-53 Low"
 description: |
-  This guide describes the actions to take when securing a macOS 10.15 system against the FISMA LOW baseline.  
+  This guide describes the actions to take when securing a macOS 10.15 system against the NIST SP 800-53 LOW baseline.  
 profile:
   - section: "Auditing"
     rules:
@@ -27,8 +27,6 @@ profile:
       - auth_pam_su_smartcard_enforce
       - auth_pam_sudo_smartcard_enforce
       - auth_smartcard_allow
-      - auth_smartcard_certificate_trust_enforce_high
-      - auth_smartcard_certificate_trust_enforce_moderate
       - auth_smartcard_enforce
       - auth_ssh_smartcard_enforce
   - section: "SystemPreferences"
@@ -52,16 +50,6 @@ profile:
       - sysprefs_screen_sharing_disable
       - sysprefs_siri_disable
       - sysprefs_smbd_disable
-  - section: "Permanent"
-    rules:
-      - audit_alert_processing_fail
-      - audit_enforce_dual_auth
-      - os_enforce_login_attempt_delay
-      - os_limit_invalid_logons
-      - os_protect_dos_attacks
-      - pwpolicy_50_percent
-      - pwpolicy_prevent_dictionary_words
-      - pwpolicy_force_password_change
   - section: "iCloud"
     rules:
       - icloud_addressbook_disable
@@ -75,22 +63,6 @@ profile:
       - icloud_keychain_disable
       - icloud_photos_disable
       - icloud_sync_disable
-  - section: "Inherent"
-    rules:
-      - audit_auditd_enabled
-      - os_implement_cryptography
-      - os_limit_auditable_events
-      - os_logical_access
-      - os_mfa_network_access
-      - os_obscure_password
-      - os_required_crypto_module
-      - os_store_encrypted_passwords
-      - os_terminate_session
-      - os_unique_identification
-  - section: "not_applicable"
-    rules:
-      - os_identify_non-org_users
-      - os_request_verification_name_resolution
   - section: "macOS"
     rules:
       - os_sip_enable
@@ -148,6 +120,32 @@ profile:
       - pwpolicy_simple_sequence_disable
       - pwpolicy_special_character_enforce
       - pwpolicy_upper_case_character_enforce
+  - section: "Inherent"
+    rules:
+      - audit_auditd_enabled
+      - os_implement_cryptography
+      - os_limit_auditable_events
+      - os_logical_access
+      - os_mfa_network_access
+      - os_obscure_password
+      - os_required_crypto_module
+      - os_store_encrypted_passwords
+      - os_terminate_session
+      - os_unique_identification
+  - section: "Permanent"
+    rules:
+      - audit_alert_processing_fail
+      - audit_enforce_dual_auth
+      - os_enforce_login_attempt_delay
+      - os_limit_invalid_logons
+      - os_protect_dos_attacks
+      - pwpolicy_50_percent
+      - pwpolicy_prevent_dictionary_words
+      - pwpolicy_force_password_change
+  - section: "not_applicable"
+    rules:
+      - os_identify_non-org_users
+      - os_request_verification_name_resolution
   - section: "Supplemental"
     rules:
       - supplemental_firewall_pf

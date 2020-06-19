@@ -7,7 +7,6 @@ check: |
 result:
   integer: 1
 fix: |
-  Edit the "/etc/security/audit_control file" and change the value for policy to include the setting "ahlt".
   [source,bash]
   ----
   /usr/bin/sed -i.bak '/^policy/ s/$/,ahlt/' /etc/security/audit_control; /usr/sbin/audit -s

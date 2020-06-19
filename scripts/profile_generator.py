@@ -143,6 +143,7 @@ class PayloadDict:
         """
         
         plistlib.dump(self.data, output_path)
+        print(f"Configuration profile written to {output_path.name}")
 
 def makeNewUUID():
     return str(uuid4())
@@ -198,10 +199,10 @@ def main():
         manifests = yaml.load(r, Loader=yaml.SafeLoader)        
 
     # Output folder
-    mobileconfig_output_path = os.path.join(parent_dir, 'build', 'mobileconfigs')
+    mobileconfig_output_path = os.path.join(parent_dir, 'build', 'mobileconfigs', f'{baseline_name}')
     if not (os.path.isdir(mobileconfig_output_path)):
         try:
-            os.mkdir(mobileconfig_output_path)
+            os.makedirs(mobileconfig_output_path)
         except OSError:
             print ("Creation of the directory %s failed" % mobileconfig_output_path)
 
@@ -291,6 +292,16 @@ def main():
 
         newProfile.finalizeAndSave(config_file)
         config_file.close()
+
+    print(f"""
+    CAUTION: These configuration profiles are intended for evaluation in a TEST
+    environment. Certain configuration profiles (Smartcards), when applied could 
+    leave a system in a state where a user can no longer login with a password. 
+    Please use caution when applying configuration settings to a system.
+    
+    NOTE: If an MDM is already being leveraged, many of these profile settings may
+    be available through the vendor.
+    """)
 
 if __name__ == "__main__":
     main()

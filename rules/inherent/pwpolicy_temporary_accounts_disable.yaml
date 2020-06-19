@@ -35,5 +35,5 @@ tags:
   - fisma-high
   - STIG
   - inherent
-mobileconfig:
+mobileconfig: false
 mobileconfig_info:
