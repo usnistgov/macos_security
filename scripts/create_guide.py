@@ -24,10 +24,11 @@ def group_ulify(elements):
     return string[:-2]
 
 def format_mobileconfig_fix(mobileconfig):
+    rulefix = ""
     for domain, settings in mobileconfig.items():
-        rulefix = (
+        rulefix = rulefix + (
             f"Create a configuration profile containing the following keys in the ({domain}) payload type:\n\n")
-        rulefix = rulefix + "[source,xml]\n\n"
+        rulefix = rulefix + "[source,xml]\n----\n"
         for item in settings.items():
             rulefix = rulefix + (f"<key>{item[0]}</key>\n")
             
@@ -46,6 +47,8 @@ def format_mobileconfig_fix(mobileconfig):
             elif type(item[1]) == str:
                 rulefix = rulefix + \
                     (f"<string>{item[1]}</string>\n")
+        
+        rulefix = rulefix + "----\n\n"
 
     return rulefix
 
