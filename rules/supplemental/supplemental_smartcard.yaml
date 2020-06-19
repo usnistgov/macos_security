@@ -26,22 +26,22 @@ discussion: |
 
   The following settings are available to manage smartcards (com.apple.security.smartcard):
 
-  [%header,cols="1,1,9"]
+  [%header,cols="2,1,7"]
   |===
   |Key
   |Type
   |Value
 
   <.^|userPairing
-  ^.^|Boolean
+  ^.^|bool
   |If false, users will not get the pairing dialog, although existing pairings will still work.
 
   <.^|allowSmartCard
-  ^.^|Boolean
+  ^.^|bool
   |If false, the SmartCard is disabled for logins, authorizations, and screensaver unlocking. It is still allowed for other functions, such as signing emails and web access. A restart is required for a change of setting to take effect.
 
   <.^|checkCertificateTrust
-  ^.^|Integer
+  ^.^|int
   a|Valid values are 0-3:
 
   - 0: certificate trust check is turned off
@@ -53,33 +53,33 @@ discussion: |
   - 3: certificate trust check is turned on, plus a hard revocation check is performed. Unless CRL/OCSP explicitly says “this certificate is OK”, the certificate is considered as invalid. This is the most secure value for this setting.
 
   <.^|oneCardPerUser
-  ^.^|Boolean
+  ^.^|bool
   |If true, a user can pair with only one smartcard, although existing pairings will be allowed if already set up.
 
   <.^|enforceSmartCard
-  ^.^|Boolean
+  ^.^|bool
   |If true, a user can only login or authenticate with a smartcard.
 
   <.^|tokenRemovalAction
-  ^.^|Integer
+  ^.^|int
   |If 1, enables screen saver when the smartcard is removed. 
 
   <.^|allowUnmappedUsers
-  ^.^|Integer
+  ^.^|int
   |If 1, allows users who are in a directory group to be exempt from smartcard only enforcement. The group allowed for exemption is defined in /private/etc/SmartcardLogin.plist
 
   |===
 
   A custom configuration profile (com.apple.loginwindow) should be created to disable automatic login when FileVault is enabled. This ensures that authorized users boot their Macs, enter a password at the pre-boot screen, which decrypts the boot volume, and then are presented with a login window where they can authenticate using a smartcard.
 
-  [%header,cols="1,1,9"]
+  [%header,cols="2,1,7"]
   |===
   |Key
   |Type
   |Value
 
   <.^|DisableFDEAutoLogin
-  ^.^|Boolean
+  ^.^|bool
   |If true, both EFI login password and loginwindow PIN are required
 
   |===

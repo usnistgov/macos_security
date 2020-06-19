@@ -24,11 +24,12 @@ def group_ulify(elements):
     return string[:-2]
 
 def format_mobileconfig_fix(mobileconfig):
-    
+    """Takes a list of domains and setting from a mobileconfig, and reformats it for the output of the fix section of the guide.
+    """
     rulefix = ""
     for domain, settings in mobileconfig.items():
         if domain == "com.apple.ManagedClient.preferences":
-            rulefix = rulefix + (f"NOTE: The following settings are in the ({domain}) payload. This payload requires the additional settings to be sub components of their defined domain.\n\n")
+            rulefix = rulefix + (f"NOTE: The following settings are in the ({domain}) payload. This payload requires the additional settings to be sub-payloads within, containing their their defined payload types.\n\n")
             rulefix = rulefix + format_mobileconfig_fix(settings)
         
         else:
