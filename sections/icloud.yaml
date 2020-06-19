@@ -1,3 +1,5 @@
   name: "iCloud"
   description: |
     This section reviews the configuration and enforcement of iCloud and the Apple ID service.
+
+    NOTE: The check/fix commands outlined in this section must be run with elevated privileges.
