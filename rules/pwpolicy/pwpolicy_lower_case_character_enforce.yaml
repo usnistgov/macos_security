@@ -31,7 +31,7 @@ fix: |
   ----
   /usr/bin/pwpolicy setaccountpolicies /path/to/file
   ----
-  NOTE: See pwpolicy_supplemental on more information on how to implement password policies on macOS.
+  NOTE: See <<pwSupp,Password Policy Supplemental>> on more information on how to implement password policies on macOS.
 references:
   cce:
     - CCE-84815-0

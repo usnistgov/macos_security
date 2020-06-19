@@ -5,8 +5,6 @@ discussion: |
   
   Enforce Smartcard Authentication for user login via SSH.
 
-  NOTE: Before applying this setting, please see the smartcard supplemental guidance.
-
   NOTE: /etc/ssh/sshd_config will be automatically modified to its original state following any update or major upgrade to the operating system.
 check: |
   /usr/bin/grep -Ec '^(PasswordAuthentication\s+no|ChallengeResponseAuthentication\s+no)' /etc/ssh/sshd_config
