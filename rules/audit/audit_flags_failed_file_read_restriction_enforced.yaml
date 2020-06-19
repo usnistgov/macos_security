@@ -9,7 +9,6 @@ check: |
 result:
   integer: 1
 fix: |
-  To set the file read failed audit flag to the recommended setting, run the following command to add the flag "-fr".
   [source,bash]
   ----
   /usr/bin/sed -i.bak '/^flags/ s/$/,-fr/' /etc/security/audit_control;/usr/sbin/audit -s

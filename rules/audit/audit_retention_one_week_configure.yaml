@@ -9,7 +9,7 @@ result:
 fix: |
   [source,bash]
   ----
-    /usr/bin/sed -i.bak 's/^expire-after.*/expire-after:7d/' /etc/security/audit_control; /usr/sbin/audit -s
+  /usr/bin/sed -i.bak 's/^expire-after.*/expire-after:7d/' /etc/security/audit_control; /usr/sbin/audit -s
   ----
 references:
   cce:
