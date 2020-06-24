@@ -91,7 +91,7 @@ discussion: |
 
   [source,bash]
   ----
-  include::../includes/enablePF-mscp.sh[]
+  include::../../includes/enablePF-mscp.sh[]
   ----
 check: |
 fix: |
