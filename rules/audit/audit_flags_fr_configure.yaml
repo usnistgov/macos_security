@@ -1,21 +1,21 @@
-id: audit_flags_file_attr_mod_access_restriction_enforced
-title: "Configure System to Audit All Change of Object Attributes"
+id: audit_flags_fr_configure
+title: "Configure System to Audit All Failed Read Actions on the System"
 discussion: |
   By auditing access restriction enforcement, changes to application and OS configuration files can be audited. Without auditing the enforcement of access restrictions, it will be difficult to identify attempted attacks and an audit trail will not be available for forensic investigation.
 
   Enforcement actions are the methods or mechanisms used to prevent unauthorized changes to configuration settings. Enforcement action methods may be as simple as denying access to a file based on the application of file permissions (access restriction). Audit items may consist of lists of actions blocked by access restrictions or changes identified after the fact.
 check: |
-  /usr/bin/grep -Ec "^flags.*fm" /etc/security/audit_control
+  /usr/bin/grep -Ec "^flags.*-fr" /etc/security/audit_control
 result:
   integer: 1
 fix: |
   [source,bash]
   ----
-  /usr/bin/sed -i.bak '/^flags/ s/$/,fm/' /etc/security/audit_control;/usr/sbin/audit -s
+  /usr/bin/sed -i.bak '/^flags/ s/$/,-fr/' /etc/security/audit_control;/usr/sbin/audit -s
   ----
 references:
   cce:
-    - CCE-84715-2
+    - CCE-84713-7
   cci:
     - CCI-000162
   800-53r4: 
