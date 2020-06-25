@@ -170,7 +170,6 @@ discussion: |
 
   [source,bash]
   /etc/pam.d/sudo
-  ----
   # sudo: auth account password session
   auth        sufficient    pam_smartcard.so
   auth        required      pam_opendirectory.so
@@ -178,11 +177,9 @@ discussion: |
   account     required      pam_permit.so
   password    required      pam_deny.so
   session     required      pam_permit.so
-  ----
 
   [source,bash]
   /etc/pam.d/su
-  ----
   # su: auth account password session
   auth        sufficient    pam_smartcard.so
   auth        required      pam_rootok.so
@@ -191,11 +188,9 @@ discussion: |
   account     required      pam_opendirectory.so no_check_shell
   password    required      pam_opendirectory.so
   session     required      pam_launchd.so
-  ----
 
   [source,bash]
   /etc/pam.d/login
-  ----
   # login: auth account password session
   auth        sufficient    pam_smartcard.so
   auth        optional      pam_krb5.so use_kcminit
@@ -209,7 +204,6 @@ discussion: |
   session     required      pam_launchd.so
   session     required      pam_uwtmp.so
   session     optional      pam_mount.so
-  ----
 check: |
 fix: |
 references:
