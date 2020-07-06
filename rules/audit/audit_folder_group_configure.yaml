@@ -9,6 +9,7 @@ check: |
 result:
   integer: 0
 fix: |
+  [source,bash]
   ----
   /usr/sbin/chgrp wheel $(/usr/bin/awk -F : '/^dir/{print $2}' /etc/security/audit_control)
   ----
