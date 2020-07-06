@@ -130,7 +130,7 @@ profile:
       - os_system_wide_preferences_configure
       - os_time_server_enabled
       - os_touchid_prompt_disable
-      - os_uamdm_require
+      - os_mdm_require
       - os_unlock_active_user_session_disable
       - os_uucp_disable
   - section: "PasswordPolicy"
