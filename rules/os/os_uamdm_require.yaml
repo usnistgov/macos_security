@@ -6,7 +6,7 @@ discussion: |
   * Privacy Preferences Policy Control Payload
   * ExtensibleSingleSignOn
 check: |
-  /usr/bin/profiles status -type enrollment | awk -F': ' 'END{print $2}' | grep -c "Yes"
+  /usr/bin/profiles status -type enrollment | /usr/bin/awk -F': ' 'END{print $2}' | /usr/bin/grep -c "Yes"
 result:
   integer: 1
 fix: |

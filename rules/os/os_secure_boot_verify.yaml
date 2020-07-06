@@ -4,7 +4,7 @@ discussion: |
   Full security is the default Secure Boot setting in macOS. During startup, the mac will verify the operating system before allowing the operating system to boot.
   Note - This will only return a proper result on a T2 Mac
 check: |
-  /usr/sbin/nvram 94b73556-2197-4702-82a8-3e1337dafbfb:AppleSecureBootPolicy | grep -c '%02'
+  /usr/sbin/nvram 94b73556-2197-4702-82a8-3e1337dafbfb:AppleSecureBootPolicy | /usr/bin/grep -c '%02'
 result: 
   integer: 1
 fix: |

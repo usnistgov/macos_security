@@ -5,13 +5,13 @@ discussion: |
 
   The audit log files must only be readable by the Root user and by the group Wheel.
 check: |
-  /bin/ls -l $(/usr/bin/grep '^dir' /etc/security/audit_control | awk -F: '{print $2}') | /usr/bin/awk '!/-r--r-----|current|total/{print $1}' | /usr/bin/wc -l | tr -d ' '
+  /bin/ls -l $(/usr/bin/grep '^dir' /etc/security/audit_control | /usr/bin/awk -F: '{print $2}') | /usr/bin/awk '!/-r--r-----|current|total/{print $1}' | /usr/bin/wc -l | /usr/bin/tr -d ' '
 result:
   integer: 0
 fix: |
   [source,bash]
   ----
-  /bin/chmod 440 $(/usr/bin/grep '^dir' /etc/security/audit_control | awk -F: '{print $2}')
+  /bin/chmod 440 $(/usr/bin/grep '^dir' /etc/security/audit_control | /usr/bin/awk -F: '{print $2}')
   ----
 references:
   cce:

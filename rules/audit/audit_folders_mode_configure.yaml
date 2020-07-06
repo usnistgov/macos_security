@@ -5,13 +5,13 @@ discussion: |
 
   The audit log folder must only allow read, write, and execute by Root.
 check: |
-  /usr/bin/stat -f %A $(/usr/bin/grep '^dir' /etc/security/audit_control | awk -F: '{print $2}')
+  /usr/bin/stat -f %A $(/usr/bin/grep '^dir' /etc/security/audit_control | /usr/bin/awk -F: '{print $2}')
 result:
   integer: 700
 fix: |
   [source,bash]
   ----
-  /bin/chmod 700 $(/usr/bin/grep '^dir' /etc/security/audit_control | awk -F: '{print $2}')
+  /bin/chmod 700 $(/usr/bin/grep '^dir' /etc/security/audit_control | /usr/bin/awk -F: '{print $2}')
   ----
 references:
   cce:
