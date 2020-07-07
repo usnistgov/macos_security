@@ -16,7 +16,7 @@ discussion: |
 check: |
   /usr/bin/sudo -u "$CURRENT_USER" /usr/bin/defaults -currentHost read com.apple.Bluetooth PrefKeyServicesEnabled
 result:
-  integer: 0
+  boolean: 0
 fix: |
   [source,bash]
   ----
