@@ -1,7 +1,7 @@
 id: os_mdm_require
 title: "MDM is User Approved"
 discussion: |
-    MDM grants additional privileges to Mobile Device Management software. User Approved MDM (UAMDM) is required to manage certain security settings on a Mac enrolled outside of Device Enrollment via Apple Business Manager (ABM)/Apple School Manager (ASM). Currently these include:
+  MDM grants additional privileges to Mobile Device Management software. User Approved MDM (UAMDM) is required to manage certain security settings on a Mac enrolled outside of Device Enrollment via Apple Business Manager (ABM)/Apple School Manager (ASM). Currently these include:
   * Whitlisting Approved Kernel Extensions
   * Privacy Preferences Policy Control Payload
   * ExtensibleSingleSignOn
