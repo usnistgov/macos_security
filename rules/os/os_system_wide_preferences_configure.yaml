@@ -3,7 +3,7 @@ title: "Require an administrator password to access system-wide preferences"
 discussion: |
   Some Preference Panes in System Preferences contain settings that affect the entire system. Requiring a password to unlock these system-wide settings reduces the risk of a non-authorized user modifying system configurations.
 check: |
-  /usr/bin/security authorizationdb read system.preferences 2> /dev/null |  grep -A 1 "<key>shared</key>" | grep -c "<false/>"
+  /usr/bin/security authorizationdb read system.preferences 2> /dev/null |  /usr/bin/grep -A 1 "<key>shared</key>" | /usr/bin/grep -c "<false/>"
 result:
   integer: 1
 fix: |

@@ -5,18 +5,17 @@ profile:
   - section: "Auditing"
     rules:
       - audit_acls_files_configure
-      - audit_acls_files_mode_configure
-      - audit_acls_folder_wheel_configure
+      - audit_files_mode_configure
       - audit_acls_folders_configure
-      - audit_acls_folders_mode_configure
+      - audit_folders_mode_configure
       - audit_failure_halt
       - audit_files_group_configure
       - audit_files_owner_configure
       - audit_flags_aa_configure
       - audit_flags_ad_configure
-      - audit_flags_failed_file_read_restriction_enforced
-      - audit_flags_failed_file_write_access_restriction_enforced
-      - audit_flags_file_attr_mod_access_restriction_enforced
+      - audit_flags_fr_configure
+      - audit_flags_fw_configure
+      - audit_flags_fm_configure
       - audit_flags_lo_configure
       - audit_folder_group_configure
       - audit_folder_owner_configure
@@ -103,7 +102,7 @@ profile:
       - os_ssh_fips_140_macs
       - os_sudoers_tty_configure
       - os_touchid_prompt_disable
-      - os_uamdm_require
+      - os_mdm_require
       - os_unlock_active_user_session_disable
       - os_uucp_disable
   - section: "PasswordPolicy"

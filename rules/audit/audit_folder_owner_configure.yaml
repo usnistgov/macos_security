@@ -5,10 +5,11 @@ discussion: |
 
   The audit log folder must be owned by Root.
 check: |
-  /bin/ls -dn $(/usr/bin/grep '^dir' /etc/security/audit_control | awk -F: '{print $2}') | awk '{print $3}'
+  /bin/ls -dn $(/usr/bin/grep '^dir' /etc/security/audit_control | /usr/bin/awk -F: '{print $2}') | /usr/bin/awk '{print $3}'
 result:
   integer: 0
 fix: |
+  [source,bash]
   ----
   /usr/sbin/chown root $(/usr/bin/awk -F : '/^dir/{print $2}' /etc/security/audit_control)
   ----

@@ -1,4 +1,4 @@
-id: audit_flags_failed_file_write_access_restriction_enforced
+id: audit_flags_fw_configure
 title: "Configure System to Audit All Failed Write Actions on the System"
 discussion: |
   By auditing access restriction enforcement, changes to application and OS configuration files can be audited. Without auditing the enforcement of access restrictions, it will be difficult to identify attempted attacks and an audit trail will not be available for forensic investigation.

@@ -5,7 +5,7 @@ discussion: |
 
   SIP also ensures the presence of an audit record generation capability for defined auditable events for all operating system components, supports on-demand and after-the-fact reporting requirements, does not alter original content or time ordering of audit records, and does not alter original content or time ordering of audit records.
 check: |
-  /usr/bin/csrutil status | grep -c 'System Integrity Protection status: enabled.'
+  /usr/bin/csrutil status | /usr/bin/grep -c 'System Integrity Protection status: enabled.'
 result:
   integer: 1
 fix: |

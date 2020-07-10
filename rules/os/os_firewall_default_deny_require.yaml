@@ -5,7 +5,7 @@ discussion: |
   
   If you are using a thrid-party firewall solution, this rule is N/A.  This rule checks for the built in pf packet filter configuration for the default deny rule. 
 check: |
-  /sbin/pfctl -a '*' -sr &> /dev/null | grep -c "block drop in all"
+  /sbin/pfctl -a '*' -sr &> /dev/null | /usr/bin/grep -c "block drop in all"
 result:
   integer: 1
 fix: |
@@ -32,4 +32,4 @@ tags:
   - fisma-high
   - STIG
 mobileconfig: false
-nmobileconfig_info:
+mobileconfig_info:

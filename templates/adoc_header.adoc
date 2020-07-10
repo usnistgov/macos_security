@@ -1,5 +1,5 @@
 :doctype: book
-:stylesdir: ../templates/
+:stylesdir: ../../templates/
 :stylesheet: asciidoctor.css
 :experimental:
 :reproducible:
@@ -15,8 +15,7 @@
 ifdef::backend-pdf[]
 = $profile_title
 v0.9, 2020-06-19
-:pdf-theme: pdf
-:pdf-themesdir: ../templates
+:pdf-themesdir: ../../templates
 :title-logo-image: image:$logo[pdfwidth=4.25in,align=center]
 :nofooter!:
 endif::[]
@@ -42,14 +41,14 @@ ifdef::backend-html5[]
 endif::[]
 
 // Foreword
-include::../templates/adoc_foreword.adoc[]
+include::../../templates/adoc_foreword.adoc[]
 
 // Authors
-include::../templates/adoc_authors.adoc[]
+include::../../templates/adoc_authors.adoc[]
 
 // Acronyms
-include::../templates/adoc_acronyms.adoc[]
+include::../../templates/adoc_acronyms.adoc[]
 
 // References
-include::../templates/adoc_additional_docs.adoc[]
+include::../../templates/adoc_additional_docs.adoc[]
 

@@ -5,10 +5,11 @@ discussion: |
 
   The audit log folder must have the group set to Wheel.
 check: |
-  /bin/ls -dn $(/usr/bin/grep '^dir' /etc/security/audit_control | awk -F: '{print $2}') | awk '{print $4}'
+  /bin/ls -dn $(/usr/bin/grep '^dir' /etc/security/audit_control | /usr/bin/awk -F: '{print $2}') | /usr/bin/awk '{print $4}'
 result:
   integer: 0
 fix: |
+  [source,bash]
   ----
   /usr/sbin/chgrp wheel $(/usr/bin/awk -F : '/^dir/{print $2}' /etc/security/audit_control)
   ----

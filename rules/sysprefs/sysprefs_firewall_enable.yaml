@@ -3,7 +3,7 @@ title: "Enable macOS Application Firewall"
 discussion: |
   The Application Firewall is the built-in firewall that comes with macOS and must be enabled. The information system enforces approved authorizations for controlling the flow of information within the system and between interconnected systems.
 check: |
-  /usr/libexec/ApplicationFirewall/socketfilterfw --getglobalstate | grep -c "Firewall is enabled"
+  /usr/libexec/ApplicationFirewall/socketfilterfw --getglobalstate | /usr/bin/grep -c "Firewall is enabled"
 result:
   integer: 1
 fix: |

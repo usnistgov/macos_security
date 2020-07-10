@@ -3,7 +3,7 @@ title: "Enforce a 60-day maximum password lifetime restriction"
 discussion: |
   The macOS must limit the lifetime of a password to a maxiumum of at least 60 days and force users to change their passwords.
 check: |
-  /usr/bin/profiles -P -o stdout | awk -F " = " '/maxPINAgeInDays/{sub(/;.*/,"");print $2}'
+  /usr/bin/profiles -P -o stdout | /usr/bin/awk -F " = " '/maxPINAgeInDays/{sub(/;.*/,"");print $2}'
 result:
   integer: 60
 fix: |

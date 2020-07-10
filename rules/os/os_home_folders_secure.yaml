@@ -3,14 +3,14 @@ title: "Secure User's Home Folders"
 discussion: |
   The default behavior of macOS is to allow all valid users into the top level of every other users home folder and restricts access to the Apple default folders within. The system should be configured to prevent access to the top-level folders in other user's home folders.
 check: |
-  /usr/bin/find /System/Volumes/Data/Users -mindepth 1 -maxdepth 1 -type d -perm -1 | grep -v "Shared" | grep -v "Guest" | wc -l | xargs
+  /usr/bin/find /System/Volumes/Data/Users -mindepth 1 -maxdepth 1 -type d -perm -1 | /usr/bin/grep -v "Shared" | /usr/bin/grep -v "Guest" | /usr/bin/wc -l | /usr/bin/xargs
 result:
   integer: 0
 fix: |
   [source,bash]
   ----
   IFS=$'\n'
-  for userDirs in $( find /System/Volumes/Data/Users -mindepth 1 -maxdepth 1 -type d -perm -1 | grep -v "Shared" | grep -v "Guest" ); do
+  for userDirs in $( /usr/bin/find /System/Volumes/Data/Users -mindepth 1 -maxdepth 1 -type d -perm -1 | /usr/bin/grep -v "Shared" | /usr/bin/grep -v "Guest" ); do
     /bin/chmod og-rwx "$userDirs"
   done
   unset IFS

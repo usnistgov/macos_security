@@ -3,7 +3,7 @@ title: "Disable Ad Tracking"
 discussion: |
   Ad tracking and targeted ads must be disabled.
 check: |
-  /usr/bin/profiles -P -o stdout | /usr/bin/grep -c '"forceLimitAdTracking" = 1'
+  /usr/bin/profiles -P -o stdout | /usr/bin/grep -c 'forceLimitAdTracking = 1;'
 result:
   integer: 1
 fix: |

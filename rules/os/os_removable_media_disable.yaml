@@ -3,7 +3,7 @@ title: "Disable removable USB storage devices"
 discussion: |
   External hard drives, such as USB, must be disabled for users.
 check: |
-  /usr/bin/profiles -P -o stdout | /usr/bin/grep 'harddisk-external' -A3 | grep -Ec "eject|alert"
+  /usr/bin/profiles -P -o stdout | /usr/bin/grep 'harddisk-external' -A3 | /usr/bin/grep -Ec "eject|alert"
 result:
   integer: 2
 fix: |
