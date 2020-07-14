@@ -131,6 +131,7 @@ profile:
       - os_store_encrypted_passwords
       - os_terminate_session
       - os_unique_identification
+      - pwpolicy_force_password_change
   - section: "Permanent"
     rules:
       - audit_alert_processing_fail
@@ -140,7 +141,6 @@ profile:
       - os_protect_dos_attacks
       - pwpolicy_50_percent
       - pwpolicy_prevent_dictionary_words
-      - pwpolicy_force_password_change
   - section: "not_applicable"
     rules:
       - os_identify_non-org_users

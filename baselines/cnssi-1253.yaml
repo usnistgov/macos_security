@@ -49,7 +49,6 @@ profile:
       - sysprefs_internet_sharing_disable
       - sysprefs_location_services_disable
       - sysprefs_loginwindow_prompt_username_password_enforce
-      - sysprefs_media_sharing_disabled      
       - sysprefs_password_hints_disable
       - sysprefs_rae_disable
       - sysprefs_screen_sharing_disable
@@ -60,23 +59,6 @@ profile:
       - sysprefs_time_server_enforce
       - sysprefs_token_removal_enforce
       - sysprefs_touchid_unlock_disable
-      - sysprefs_wifi_disable
-  - section: "Permanent"
-    rules:
-      - audit_alert_processing_fail
-      - audit_enforce_dual_auth
-      - os_enforce_login_attempt_delay
-      - os_limit_invalid_logons
-      - os_notify_account_created
-      - os_notify_account_disabled
-      - os_notify_account_enable
-      - os_notify_account_modified
-      - os_notify_account_removal
-      - os_protect_dos_attacks
-      - os_provide_automated_account_management
-      - pwpolicy_50_percent
-      - pwpolicy_prevent_dictionary_words
-      - pwpolicy_force_password_change
   - section: "iCloud"
     rules:
       - icloud_addressbook_disable
@@ -90,37 +72,8 @@ profile:
       - icloud_keychain_disable
       - icloud_photos_disable
       - icloud_sync_disable
-  - section: "Inherent"
-    rules:
-      - audit_auditd_enabled
-      - os_error_message
-      - os_implement_memory_protection
-      - os_implement_cryptography
-      - os_implement_random_address_space
-      - os_limit_auditable_events
-      - os_logical_access
-      - os_map_pki_identity
-      - os_mfa_network_access
-      - os_mfa_network_non-priv
-      - os_obscure_password
-      - os_prevent_priv_functions
-      - os_prevent_restricted_software
-      - os_prevent_unauthorized_disclosure
-      - os_remote_access_methods
-      - os_required_crypto_module
-      - os_separate_fuctionality
-      - os_store_encrypted_passwords
-      - os_terminate_session
-      - os_terminate_session_inactivity
-      - os_unique_identification
-  - section: "not_applicable"
-    rules:
-      - os_auth_peripherals
-      - os_identify_non-org_users
-      - os_request_verification_name_resolution
   - section: "macOS"
     rules:
-      - os_peripherals_identify
       - os_sip_enable
       - os_airdrop_disable
       - os_appleid_prompt_disable
@@ -179,15 +132,61 @@ profile:
       - pwpolicy_account_lockout_enforce
       - pwpolicy_account_lockout_timeout_enforce
       - pwpolicy_alpha_numeric_enforce
-      - pwpolicy_emergency_accounts_disable
       - pwpolicy_history_enforce
       - pwpolicy_lower_case_character_enforce
       - pwpolicy_minimum_length_enforce
       - pwpolicy_minimum_lifetime_enforce
       - pwpolicy_simple_sequence_disable
       - pwpolicy_special_character_enforce
-      - pwpolicy_temporary_accounts_disable
       - pwpolicy_upper_case_character_enforce
+  - section: "Inherent"
+    rules:
+      - audit_auditd_enabled
+      - os_error_message
+      - os_implement_memory_protection
+      - os_implement_cryptography
+      - os_implement_random_address_space
+      - os_limit_auditable_events
+      - os_logical_access
+      - os_map_pki_identity
+      - os_mfa_network_access
+      - os_mfa_network_non-priv
+      - os_obscure_password
+      - os_peripherals_identify
+      - os_prevent_priv_functions
+      - os_prevent_restricted_software
+      - os_prevent_unauthorized_disclosure
+      - os_remote_access_methods
+      - os_required_crypto_module
+      - os_separate_fuctionality
+      - os_store_encrypted_passwords
+      - os_terminate_session
+      - os_terminate_session_inactivity
+      - os_unique_identification
+      - pwpolicy_emergency_accounts_disable
+      - pwpolicy_force_password_change
+      - pwpolicy_temporary_accounts_disable
+  - section: "Permanent"
+    rules:
+      - audit_alert_processing_fail
+      - audit_enforce_dual_auth
+      - os_enforce_login_attempt_delay
+      - os_limit_invalid_logons
+      - os_notify_account_created
+      - os_notify_account_disabled
+      - os_notify_account_enable
+      - os_notify_account_modified
+      - os_notify_account_removal
+      - os_protect_dos_attacks
+      - os_provide_automated_account_management
+      - pwpolicy_50_percent
+      - pwpolicy_prevent_dictionary_words
+      - sysprefs_wifi_disable
+  - section: "not_applicable"
+    rules:
+      - os_auth_peripherals
+      - os_identify_non-org_users
+      - os_request_verification_name_resolution
   - section: "Supplemental"
     rules:
       - supplemental_firewall_pf
