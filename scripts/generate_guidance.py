@@ -930,6 +930,13 @@ def main():
         baseline_name = os.path.splitext(output_basename)[0].capitalize()
         file_dir = os.path.dirname(os.path.abspath(__file__))
         parent_dir = os.path.dirname(file_dir)
+
+        # stash current working directory
+        original_working_directory = os.getcwd()
+
+        # switch to the scripts directory
+        os.chdir(file_dir)
+
         if args.logo:
             logo = args.logo
         else:
@@ -1180,6 +1187,8 @@ def main():
     else:
         print("If you would like to generate the PDF file from the AsciiDoc file, install the ruby gem for asciidoctor-pdf")
 
+    # finally revert back to the prior directory
+    os.chdir(original_working_directory)
 
 if __name__ == "__main__":
     main()
