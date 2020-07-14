@@ -4,6 +4,7 @@ description: |
 profile:
   - section: "Auditing"
     rules:
+      - audit_auditd_enabled
       - audit_acls_files_configure
       - audit_files_mode_configure
       - audit_acls_folders_configure
@@ -180,7 +181,6 @@ profile:
       - os_verify_security_functions
   - section: "Inherent"
     rules:
-      - audit_auditd_enabled
       - os_allow_info_passed
       - os_change_security_attributes
       - os_crypto_audit

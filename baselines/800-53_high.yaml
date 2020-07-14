@@ -4,6 +4,7 @@ description: |
 profile:
   - section: "Auditing"
     rules:
+      - audit_auditd_enabled
       - audit_acls_files_configure
       - audit_files_mode_configure
       - audit_acls_folders_configure
@@ -147,7 +148,6 @@ profile:
       - pwpolicy_upper_case_character_enforce
   - section: "Inherent"
     rules:
-      - audit_auditd_enabled
       - os_crypto_audit
       - os_enforce_access_restrictions
       - os_error_message
