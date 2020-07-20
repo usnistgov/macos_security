@@ -29,9 +29,9 @@ profile:
       - auth_pam_su_smartcard_enforce
       - auth_pam_sudo_smartcard_enforce
       - auth_smartcard_allow
+      - auth_smartcard_enforce
       - auth_smartcard_certificate_trust_enforce_high
       - auth_smartcard_certificate_trust_enforce_moderate
-      - auth_smartcard_enforce
       - auth_ssh_smartcard_enforce
   - section: "SystemPreferences"
     rules:
@@ -50,6 +50,7 @@ profile:
       - sysprefs_gatekeeper_identified_developers_allowed
       - sysprefs_gatekeeper_override_disallow
       - sysprefs_hot_corners_disable
+      - sysprefs_improve_siri_dictation_disable
       - sysprefs_internet_sharing_disable
       - sysprefs_location_services_disable
       - sysprefs_loginwindow_prompt_username_password_enforce

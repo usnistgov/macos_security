@@ -42,6 +42,7 @@ profile:
       - sysprefs_firewall_stealth_mode_enable
       - sysprefs_gatekeeper_identified_developers_allowed
       - sysprefs_gatekeeper_override_disallow
+      - sysprefs_improve_siri_dictation_disable
       - sysprefs_internet_sharing_disable
       - sysprefs_location_services_disable
       - sysprefs_loginwindow_prompt_username_password_enforce
