@@ -278,15 +278,11 @@ def concatenate_payload_settings(settings):
     return [settings_dict]
 
 
-def generate_profiles(baseline_name, build_path, baseline_yaml):
+def generate_profiles(baseline_name, build_path, parent_dir, baseline_yaml):
     """Generate the configuration profiles for the rules in the provided baseline YAML file
     """
     organization = "macOS Security Compliance Project"
     displayname = f"macOS {baseline_name} Baseline settings"
-
-    # File path setup
-    file_dir = os.path.dirname(os.path.abspath(__file__))
-    parent_dir = os.path.dirname(file_dir)
 
     # import profile_manifests.plist
     manifests_file = os.path.join(
@@ -1161,7 +1157,7 @@ def main():
     
     if args.profiles:
         print("Generating configuration profiles...")
-        generate_profiles(baseline_name, build_path, baseline_yaml)
+        generate_profiles(baseline_name, build_path, parent_dir, baseline_yaml)
     
     if args.script:
         print("Generating compliance script...")
