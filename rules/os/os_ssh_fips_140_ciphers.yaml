@@ -1,5 +1,5 @@
 id: os_ssh_fips_140_ciphers
-title: "Configure SSH to limit the ciphers to algorithims that are FIPS 140 validated"
+title: "Configure SSH to limit the ciphers to algorithms that are FIPS 140 validated"
 discussion: |
   Unapproved mechanisms that are used for authentication to the cryptographic module are not verified and therefore cannot be relied upon to provide confidentiality or integrity, and system data may be compromised. Operating systems utilizing encryption are required to use FIPS compliant mechanisms for authenticating to cryptographic
 

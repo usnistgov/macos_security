@@ -1,5 +1,5 @@
 id: auth_pam_sudo_smartcard_enforce
-title: "Enforce Multifactor Authentication for Priveledge Escalation through the sudo process"
+title: "Enforce Multifactor Authentication for Privilege Escalation through the sudo process"
 discussion: |
   To assure accountability and prevent unauthenticated access, privileged users must utilize multifactor authentication to prevent potential misuse and compromise of the system.
 

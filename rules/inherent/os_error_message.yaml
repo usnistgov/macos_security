@@ -1,5 +1,5 @@
 id: os_error_message
-title: "Generate error messages without expoitable information"
+title: "Generate error messages without exploitable information"
 discussion: |
   Generates error messages that provide information necessary for corrective actions without revealing information that could be exploited by adversaries.
 check: |
