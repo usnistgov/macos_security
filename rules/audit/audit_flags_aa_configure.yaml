@@ -1,7 +1,11 @@
 id: audit_flags_aa_configure
-title: 'Add "aa" Flag to audit_control Configuration'
+title: 'Configure the Auditing System to Audit Authorization and Authentication Events'
 discussion: |
-  Without generating audit records that are specific to the security and mission needs of the organization, it would be difficult to establish, correlate, and investigate the events relating to an incident or identify those responsible for one. Audit records can be generated from various components within the information system (e.g., module or policy filter).
+  The auditing system _MUST_ be configured to flag authorization and authentication (aa) events.
+  
+  Authentication events contain information about the identity of a user, server, or client. Authorization events contain information about permissions, rights, and rules. If audit records do not include aa events, it is difficult to identify incidents and to correlate incidents to subsequent events. 
+  
+  Audit records can be generated from various components within the information system (e.g., via a module or policy filter).
 check: |
   /usr/bin/grep -Ec "^flags.*aa" /etc/security/audit_control 
 result:

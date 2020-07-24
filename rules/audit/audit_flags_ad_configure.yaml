@@ -1,7 +1,11 @@
 id: audit_flags_ad_configure
-title: 'Add "ad" Flag to audit_control Configuration'
+title: 'Configure the Auditing System to Audit Administrative Action Events'
 discussion: |
-  Without generating audit records that are specific to the security and mission needs of the organization, it would be difficult to establish, correlate, and investigate the events relating to an incident or identify those responsible for one. Audit records can be generated from various components within the information system (e.g., module or policy filter).
+  The auditing system _MUST_ be configured to flag administrative action (ad) events.
+
+  Administrative action events include changes made to the system (e.g. modifying authentication policies). If audit records do not include ad events, it is difficult to identify incidents and to correlate incidents to subsequent events. 
+
+  Audit records can be generated from various components within the information system (e.g., via a module or policy filter). 
 
   The information system audits the execution of privileged functions.
 check: |

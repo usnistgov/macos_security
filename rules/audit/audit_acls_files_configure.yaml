@@ -1,9 +1,9 @@
 id: audit_acls_files_configure
-title: "Configure Audit Service to Create Log Files and Folder which prevent unauthorized access"
+title: "Configure Audit Log Files to Not Contain ACLs"
 discussion: |
-  Audit information and audit tools must be configured to prevent unauthorized access, modification, and deletion. The audit service must be configured to create log files with the correct permissions to prevent normal users from reading audit logs. If log files are set to be readable and writable only by root or administrative users with sudo, the risk is mitigated.
-
-  The audit log files must not have access control list (ACL) privileges set.
+  The audit log files _MUST_ not contain access control lists (ACLs).
+  
+  This rule ensures that audit information and audit files are configured to be readable and writable only by the root user or users with elevated privileges, thereby preventing unauthorized access, modification, and deletion of files.
 check: |
   /bin/ls -le $(/usr/bin/awk -F: '/^dir/{print $2}' /etc/security/audit_control) | /usr/bin/awk '{print $1}' | /usr/bin/grep -c ":"
 result: 
