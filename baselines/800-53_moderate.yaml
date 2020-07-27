@@ -4,6 +4,7 @@ description: |
 profile:
   - section: "Auditing"
     rules:
+      - audit_auditd_enabled
       - audit_acls_files_configure
       - audit_files_mode_configure
       - audit_acls_folders_configure
@@ -26,8 +27,8 @@ profile:
       - auth_pam_su_smartcard_enforce
       - auth_pam_sudo_smartcard_enforce
       - auth_smartcard_allow
-      - auth_smartcard_certificate_trust_enforce_moderate
       - auth_smartcard_enforce
+      - auth_smartcard_certificate_trust_enforce_moderate
       - auth_ssh_smartcard_enforce
   - section: "SystemPreferences"
     rules:
@@ -46,6 +47,7 @@ profile:
       - sysprefs_gatekeeper_identified_developers_allowed
       - sysprefs_gatekeeper_override_disallow
       - sysprefs_hot_corners_disable
+      - sysprefs_improve_siri_dictation_disable
       - sysprefs_internet_sharing_disable
       - sysprefs_location_services_disable
       - sysprefs_loginwindow_prompt_username_password_enforce
@@ -59,7 +61,6 @@ profile:
       - sysprefs_time_server_enforce
       - sysprefs_token_removal_enforce
       - sysprefs_touchid_unlock_disable
-      - sysprefs_wifi_disable
   - section: "iCloud"
     rules:
       - icloud_addressbook_disable
@@ -75,7 +76,6 @@ profile:
       - icloud_sync_disable
   - section: "macOS"
     rules:
-      - os_peripherals_identify
       - os_sip_enable
       - os_airdrop_disable
       - os_appleid_prompt_disable
@@ -134,18 +134,15 @@ profile:
       - pwpolicy_account_lockout_enforce
       - pwpolicy_account_lockout_timeout_enforce
       - pwpolicy_alpha_numeric_enforce
-      - pwpolicy_emergency_accounts_disable
       - pwpolicy_history_enforce
       - pwpolicy_lower_case_character_enforce
       - pwpolicy_minimum_length_enforce
       - pwpolicy_minimum_lifetime_enforce
       - pwpolicy_simple_sequence_disable
       - pwpolicy_special_character_enforce
-      - pwpolicy_temporary_accounts_disable
       - pwpolicy_upper_case_character_enforce
   - section: "Inherent"
     rules:
-      - audit_auditd_enabled
       - os_error_message
       - os_implement_memory_protection
       - os_implement_cryptography
@@ -156,6 +153,7 @@ profile:
       - os_mfa_network_access
       - os_mfa_network_non-priv
       - os_obscure_password
+      - os_peripherals_identify
       - os_prevent_priv_functions
       - os_prevent_restricted_software
       - os_prevent_unauthorized_disclosure
@@ -166,6 +164,9 @@ profile:
       - os_terminate_session
       - os_terminate_session_inactivity
       - os_unique_identification
+      - pwpolicy_emergency_accounts_disable
+      - pwpolicy_force_password_change
+      - pwpolicy_temporary_accounts_disable
   - section: "Permanent"
     rules:
       - audit_alert_processing_fail
@@ -181,7 +182,7 @@ profile:
       - os_provide_automated_account_management
       - pwpolicy_50_percent
       - pwpolicy_prevent_dictionary_words
-      - pwpolicy_force_password_change
+      - sysprefs_wifi_disable
   - section: "not_applicable"
     rules:
       - os_auth_peripherals

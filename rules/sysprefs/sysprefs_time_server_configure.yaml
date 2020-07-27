@@ -3,14 +3,11 @@ title: "Configured to use an authorized time server"
 discussion: |
   Only approved time servers should be configured for use.
 check: |
-  /usr/sbin/systemsetup -getnetworktimeserver | /usr/bin/awk -F ": " '{print $2}'
+  /usr/bin/profiles -P -o stdout | /usr/bin/awk -F "= " '/timeServer/{print $2}' | /usr/bin/tr -d ';'
 result:
   string: "time-a.nist.gov,time-b.nist.gov"
 fix: |
-  [source,bash]
-  ----
-  /usr/sbin/systemsetup -setnetworktimeserver "time-a.nist.gov,time-b.nist.gov"
-  ----
+  This is implemented by a Configuration Profile.
 references:
   cce:
     - CCE-84846-5
@@ -32,5 +29,7 @@ tags:
   - fisma-moderate
   - fisma-high
   - STIG
-mobileconfig: false
+mobileconfig: true
 mobileconfig_info:
+  com.apple.MCX:
+    timeServer: "time-a.nist.gov,time-b.nist.gov"

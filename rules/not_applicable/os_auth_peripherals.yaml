@@ -1,5 +1,5 @@
 id: os_auth_peripherals
-title: "Must authenicate peripherals before establishing a connection"
+title: "Must authenticate peripherals before establishing a connection"
 discussion: |
   Without authenticating devices, unidentified or unknown devices may be introduced, thereby facilitating malicious activity. Peripherals include, but are not limited to, such devices as flash drives, external storage, and printers.
 check: |

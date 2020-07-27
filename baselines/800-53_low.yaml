@@ -4,6 +4,7 @@ description: |
 profile:
   - section: "Auditing"
     rules:
+      - audit_auditd_enabled
       - audit_acls_files_configure
       - audit_files_mode_configure
       - audit_acls_folders_configure
@@ -41,6 +42,7 @@ profile:
       - sysprefs_firewall_stealth_mode_enable
       - sysprefs_gatekeeper_identified_developers_allowed
       - sysprefs_gatekeeper_override_disallow
+      - sysprefs_improve_siri_dictation_disable
       - sysprefs_internet_sharing_disable
       - sysprefs_location_services_disable
       - sysprefs_loginwindow_prompt_username_password_enforce
@@ -121,7 +123,6 @@ profile:
       - pwpolicy_upper_case_character_enforce
   - section: "Inherent"
     rules:
-      - audit_auditd_enabled
       - os_implement_cryptography
       - os_limit_auditable_events
       - os_logical_access
@@ -131,6 +132,7 @@ profile:
       - os_store_encrypted_passwords
       - os_terminate_session
       - os_unique_identification
+      - pwpolicy_force_password_change
   - section: "Permanent"
     rules:
       - audit_alert_processing_fail
@@ -140,7 +142,6 @@ profile:
       - os_protect_dos_attacks
       - pwpolicy_50_percent
       - pwpolicy_prevent_dictionary_words
-      - pwpolicy_force_password_change
   - section: "not_applicable"
     rules:
       - os_identify_non-org_users

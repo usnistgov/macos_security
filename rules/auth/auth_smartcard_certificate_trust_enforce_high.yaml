@@ -9,7 +9,7 @@ discussion: |
 check: |
   /usr/bin/profiles -P -o stdout | /usr/bin/awk '/checkCertificateTrust/{print substr($3, 1, length($3)-1)}'
 result: 
-  intger: 3
+  integer: 3
 fix: |
   This is implemented by a Configuration Profile.
 references:

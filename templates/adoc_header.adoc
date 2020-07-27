@@ -16,7 +16,7 @@ ifdef::backend-pdf[]
 = $profile_title
 v0.9, 2020-06-19
 :pdf-themesdir: ../../templates
-:title-logo-image: image:$logo[pdfwidth=4.25in,align=center]
+:title-logo-image: image:$logo[align=center]
 :nofooter!:
 endif::[]
 :data-uri:

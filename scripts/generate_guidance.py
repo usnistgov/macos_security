@@ -72,6 +72,13 @@ def group_ulify(elements):
     return string[:-2]
 
 
+def group_ulify_comment(elements):
+    string = "\n * "
+    for s in elements:
+        string += str(s) + ", "
+    return string[:-2]
+
+
 def get_check_code(check_yaml):
     try:
         check_string = check_yaml.split("[source,bash]")[1]
@@ -278,15 +285,11 @@ def concatenate_payload_settings(settings):
     return [settings_dict]
 
 
-def generate_profiles(baseline_name, build_path, baseline_yaml):
+def generate_profiles(baseline_name, build_path, parent_dir, baseline_yaml):
     """Generate the configuration profiles for the rules in the provided baseline YAML file
     """
     organization = "macOS Security Compliance Project"
     displayname = f"macOS {baseline_name} Baseline settings"
-
-    # File path setup
-    file_dir = os.path.dirname(os.path.abspath(__file__))
-    parent_dir = os.path.dirname(file_dir)
 
     # import profile_manifests.plist
     manifests_file = os.path.join(
@@ -608,7 +611,7 @@ else
     echo "{0} FAILED..." | tee -a "$audit_log"
     defaults write "$audit_plist" {0} -bool YES
 fi
-    """.format(rule_yaml['id'], nist_controls, check.strip(), result, result_value)
+    """.format(rule_yaml['id'], nist_controls.replace("\n", "\n#"), check.strip(), result, result_value)
 
                 check_function_string = check_function_string + zsh_check_text
 
@@ -930,6 +933,13 @@ def main():
         baseline_name = os.path.splitext(output_basename)[0].capitalize()
         file_dir = os.path.dirname(os.path.abspath(__file__))
         parent_dir = os.path.dirname(file_dir)
+
+        # stash current working directory
+        original_working_directory = os.getcwd()
+
+        # switch to the scripts directory
+        os.chdir(file_dir)
+
         if args.logo:
             logo = args.logo
         else:
@@ -1154,7 +1164,7 @@ def main():
     
     if args.profiles:
         print("Generating configuration profiles...")
-        generate_profiles(baseline_name, build_path, baseline_yaml)
+        generate_profiles(baseline_name, build_path, parent_dir, baseline_yaml)
     
     if args.script:
         print("Generating compliance script...")
@@ -1180,6 +1190,8 @@ def main():
     else:
         print("If you would like to generate the PDF file from the AsciiDoc file, install the ruby gem for asciidoctor-pdf")
 
+    # finally revert back to the prior directory
+    os.chdir(original_working_directory)
 
 if __name__ == "__main__":
     main()
