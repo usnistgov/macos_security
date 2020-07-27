@@ -72,6 +72,13 @@ def group_ulify(elements):
     return string[:-2]
 
 
+def group_ulify_comment(elements):
+    string = "\n * "
+    for s in elements:
+        string += str(s) + ", "
+    return string[:-2]
+
+
 def get_check_code(check_yaml):
     try:
         check_string = check_yaml.split("[source,bash]")[1]
@@ -604,7 +611,7 @@ else
     echo "{0} FAILED..." | tee -a "$audit_log"
     defaults write "$audit_plist" {0} -bool YES
 fi
-    """.format(rule_yaml['id'], nist_controls, check.strip(), result, result_value)
+    """.format(rule_yaml['id'], nist_controls.replace("\n", "\n#"), check.strip(), result, result_value)
 
                 check_function_string = check_function_string + zsh_check_text
 
