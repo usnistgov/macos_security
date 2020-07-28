@@ -1,5 +1,5 @@
 id: audit_flags_aa_configure
-title: 'Configure the Auditing System to Audit Authorization and Authentication Events'
+title: "Configure System to Audit All Authorization and Authentication Events"
 discussion: |
   The auditing system _MUST_ be configured to flag authorization and authentication (aa) events.
   
