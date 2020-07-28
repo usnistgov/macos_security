@@ -21,7 +21,7 @@ profile:
       - audit_flags_lo_configure
       - audit_folder_group_configure
       - audit_folder_owner_configure
-      - audit_retention_one_week_configure
+      - audit_retention_configure
       - audit_settings_failure_notify
   - section: "Authentication"
     rules:
