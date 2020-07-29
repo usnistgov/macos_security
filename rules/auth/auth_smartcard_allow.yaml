@@ -1,9 +1,11 @@
 id: auth_smartcard_allow
 title: "Allow Smartcard Authentication"
 discussion: |
-  The use of smartcard credentials facilitates standardization and reduces the risk of unauthorized access. 
+  Smartcard authentication _MUST_ be allowed. 
+
+  The use of smartcard credentials facilitates standardization and reduces the risk of unauthorized access.
   
-  When enabled the smartcard can be used for login, authorization, and screen saver unlocking.
+  When enabled, the smartcard can be used for login, authorization, and screen saver unlocking.
 check: |
   /usr/bin/profiles -P -o stdout | /usr/bin/grep -c 'allowSmartCard = 1'
 result:
