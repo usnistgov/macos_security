@@ -558,7 +558,8 @@ defaults write "$audit_plist" lastComplianceCheck "$(date)"
 
                 if rule_yaml['id'].startswith("supplemental"):
                     continue
-
+                if "manual" in rule_yaml['tags']:
+                    continue
                 # grab the 800-53 controls
                 try:
                     rule_yaml['references']['800-53r4']

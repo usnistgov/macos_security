@@ -1,7 +1,7 @@
 id: sysprefs_improve_siri_dictation_disable
 title: "Disable sending Siri and Dictation information to Apple"
 discussion: |
-  The ability for APple to store and review audio of your Siri and Dictation interactions must be disabled.
+  The ability for Apple to store and review audio of your Siri and Dictation interactions must be disabled.
 check: |
   /usr/bin/profiles -P -o stdout | /usr/bin/grep -c '"Siri Data Sharing Opt-In Status" = 2;'
 result:
@@ -12,7 +12,6 @@ references:
   800-53r4: 
     - CM-7(b)
     - SC-7(10)
-    - SI-4
 macOS:
   - "10.15"
 tags:

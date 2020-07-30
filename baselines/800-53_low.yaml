@@ -29,6 +29,7 @@ profile:
       - auth_smartcard_allow
       - auth_smartcard_enforce
       - auth_ssh_smartcard_enforce
+      - auth_smartcard_trusted_authorities_configure
   - section: "SystemPreferences"
     rules:
       - sysprefs_ad_tracking_disable

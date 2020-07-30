@@ -1,0 +1,72 @@
+id: auth_smartcard_trusted_authorities_configure
+title: "Configure Smartcard Trusted Authorities"
+discussion: |
+  Limit Trusted  Authorities to authorized sources.
+Vendor Description: | 
+  It is possible to specify the Certificate Issuing Authorities used for the trust evaluation 
+  of smart card certificates. This trust works in conjunction with Certificate Trust settings 
+  (1, 2, or 3 required) and is also referred to as Certificate Pinning. Place SHA-256 
+  fingerprints of Certificate Authorities (as string values, comma delimited, and without spaces) 
+  in an array named TrustedAuthorities. Use the example /private/etc/SmartcardLogin.plist file 
+  below as guidance. When Certificate Pinning is used, only SmartCard certificates issued by 
+  Certificate Authorities in this list are evaluated as trusted. Please note that TrustedAuthorities 
+  are ignored when the checkCertificateTrust setting is set to 0 (off). Verify ownership is root 
+  and permissions are set to world readable after editing.
+  [source,xml]
+  ----
+  <?xml version="1.0" encoding="UTF-8"?>
+  <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+  <plist version="1.0">
+  <dict>
+      <key>AttributeMapping</key>
+      <dict>
+            <key>dsAttributeString</key>
+            <string>dsAttrTypeStandard:AltSecurityIdentities</string>
+            <key>fields</key>
+            <array>
+                  <string>NT Principal Name</string>
+            </array>
+            <key>formatString</key>
+            <string>Kerberos:$1</string>
+      </dict>
+      <key>TrustedAuthorities</key>
+      <array>
+            <string>SHA256_HASH_OF_CERTDOMAIN_1,SHA256_HASH_OF_CERTDOMAIN_2</string>
+      </array>
+  </dict>
+  </plist>
+  ----
+  Citation: link:https://support.apple.com/guide/deployment-reference-macos/advanced-smart-card-options-apd2969ad2d7/1/web/1[Apple]
+  Vendor Description content Copyright 2020 Apple Inc. All rights reserved.
+check: |
+  /usr/bin/defaults read /etc/SmartcardLogin.plist TrustedAuthorities
+result:
+  string: "If this list does not contain approved SHA-256 hashes, this is a finding."
+fix: |
+  To implement accepting smartcard credentials from only authorized sources
+  [source,bash]
+  ----
+  /usr/bin/defaults write /etc/SmartcardLogin.plist TrustedAuthorities -array-add "[TRUSTED AUTHORITY]"
+  ----
+  NOTE: allowSmartCard will apply to the whole system. Users from a non trusted authority will not be able to login
+references:
+  cce:
+    - CCE-84728-5
+  cci: 
+    - N/A
+  800-53r4: 
+    - IA-2(12)
+    - IA-5(2)(d)
+  srg: 
+    - SRG-OS-000384-GPOS-00167
+  disa_stig: 
+    - N/A
+macOS:
+  - "10.15"
+tags:
+  - fisma-low
+  - fisma-moderate
+  - fisma-high
+  - manual
+mobileconfig: false
+mobileconfig_info:
