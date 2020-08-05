@@ -1,7 +1,9 @@
 id: sysprefs_afp_disable
-title: "Disable Apple File (AFP) Sharing"
+title: "Disable Apple Filing Protocol Sharing"
 discussion: |
   If the system does not require AFP Sharing, support it is non-essential and must be disabled.
+
+  The information system _MUST_ be configured to provide only essential capabilities. Disabling AFP helps prevent the unauthorized connection of devices and the unauthorized transfer of information.
 check: |
   /bin/launchctl print-disabled system | /usr/bin/grep -c '"com.apple.AppleFileServer" => true'
 result:
