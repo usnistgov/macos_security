@@ -11,6 +11,8 @@ result:
 fix: |
   This is implemented by a Configuration Profile.
 references:
+  cce:
+    - CCE-84912-5
   800-53r4: 
     - CM-7(b)
     - SC-7(10)
