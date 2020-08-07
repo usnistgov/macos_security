@@ -1,7 +1,9 @@
 id: audit_flags_lo_configure
-title: 'Add "lo" Flag to audit_control Configuration'
+title: "Configure System to Audit All Log In and Log Out Events"
 discussion: |
-  Frequently, an attacker that successfully gains access to a system has only gained access to an account with limited privileges, such as a guest account or a service account. The attacker must attempt to change to another user account with normal or elevated privileges in order to proceed. Auditing successful and unsuccessful attempts to switch to another user account and the escalation of privileges mitigates this risk.
+  The audit system _MUST_ be configured to record all attempts to log in and out of the system (lo). 
+
+  Frequently, an attacker that successfully gains access to a system has only gained access to an account with limited privileges, such as a guest account or a service account. The attacker must attempt to change to another user account with normal or elevated privileges in order to proceed. Auditing both successful and unsuccessful attempts to switch to another user account (by way of monitoring login and logout events) mitigates this risk.
 
   The information system monitors and login and logout events.
 check: |

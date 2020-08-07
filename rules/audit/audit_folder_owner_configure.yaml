@@ -1,9 +1,11 @@
 id: audit_folder_owner_configure
 title: "Configure Audit Log Folders to be Owned by Root" 
 discussion: |
-  The audit service must be configured to create log files with the correct ownership to prevent normal users from reading audit logs. Audit logs contain sensitive data about the system and about users. If log files are set to be readable and writable only by root or administrative users with sudo, the risk is mitigated.
+  Audit log files _MUST_ be owned by root.
 
-  The audit log folder must be owned by Root.
+  The audit service _MUST_ be configured to create log files with the correct ownership to prevent normal users from reading audit logs.
+
+  Audit logs contain sensitive data about the system and users. If log files are set to only be readable and writable by system administrators, the risk is mitigated.
 check: |
   /bin/ls -dn $(/usr/bin/grep '^dir' /etc/security/audit_control | /usr/bin/awk -F: '{print $2}') | /usr/bin/awk '{print $3}'
 result:

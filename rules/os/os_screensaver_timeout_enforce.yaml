@@ -1,5 +1,5 @@
 id: os_screensaver_timeout_enforce
-title: "Enforce screen saver time out after 15 minutes of inactivity"
+title: "Enforce screen saver timeout after 15 minutes of inactivity"
 discussion: |
  The screen saver timeout should be set to 15 minutes of inactivity. 
 check: |

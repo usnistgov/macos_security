@@ -1,7 +1,9 @@
 id: sysprefs_internet_sharing_disable
 title: "Disable Internet Sharing"
 discussion: |
-  If the system does not require Internet Sharing, support it is non-essential and must be disabled.
+  If the system does not require Internet sharing, support for it is non-essential and _MUST_ be disabled.
+
+  The information system _MUST_ be configured to provide only essential capabilities. Disabling Internet sharing helps prevent the unauthorized connection of devices, unauthorized transfer of information, and unauthorized tunneling.
 check: |
   /usr/bin/profiles -P -o stdout | /usr/bin/grep -c 'forceInternetSharingOff = 1'
 result:

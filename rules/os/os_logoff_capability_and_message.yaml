@@ -15,8 +15,7 @@ references:
     - CCI-002363
     - CCI-002364
   800-53r4:
-    - AC-12(1)(a)
-    - AC-12(1)(b)
+    - AC-12(1)
   disa_stig:
     - AOSX-15-100020
     - AOSX-15-100021

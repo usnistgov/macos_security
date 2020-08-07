@@ -1,7 +1,9 @@
 id: icloud_bookmarks_disable
 title: "Disable iCloud Bookmarks"
 discussion: |
-  The macOS built-in Safari.app bookmark synchronization via the iCloud service must be disabled as it is not an organizationally approved cloud service.  Automated bookmark synchronization shall be planned and controlled to approved storage.
+  The macOS built-in Safari.app bookmark synchronization via the iCloud service _MUST_ be disabled.
+
+  Apple’s iCloud service does not provide an organization with enough control over the storage and access of data and, therefore, automated bookmark synchronization _MUST_ be controlled by an organization approved service.
 check: |
   /usr/bin/profiles -P -o stdout | /usr/bin/grep -c 'allowCloudBookmarks = 0'
 result:

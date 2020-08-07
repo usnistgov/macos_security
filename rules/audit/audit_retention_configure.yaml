@@ -1,9 +1,7 @@
-id: audit_retention_configure
+id: audit_retention_one_week_configure
 title: "Configure Audit Retention to a Minimum of 7 Days"
 discussion: |
-  The audit service _MUST_ be configured to require records be kept for seven days or longer before deletion, unless the system uses a central audit record storage facility. 
-  
-  When "expire-after" is set to "7d", the audit service will not delete audit logs until the log data is at least seven days old.
+  The audit service must be configured to require that records are kept for seven days or longer before deletion when there is no central audit record storage facility. When "expire-after" is set to "7d", the audit service will not delete audit logs until the log data is at least seven days old.
 check: |
   /usr/bin/awk -F: '/expire-after/{print $2}' /etc/security/audit_control
 result:

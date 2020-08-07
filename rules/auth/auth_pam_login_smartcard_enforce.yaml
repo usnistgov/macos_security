@@ -1,9 +1,9 @@
 id: auth_pam_login_smartcard_enforce
 title: "Enforce Multifactor Authentication for Login"
 discussion: |
-  Privileged users must utilize multifactor authentication to prevent potential misuse and compromise of the system.
-
-  Ensure that the login process enforces mutlifactor authentication.
+  The system _MUST_ be configured to enforce multifactor authentication.
+  
+  All users _MUST_ go through multifactor authentication to prevent unauthenticated access and potential compromise to the system.
 
   NOTE: /etc/pam.d/login will be automatically modified to its original state following any update or major upgrade to the operating system.
 check: |

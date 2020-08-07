@@ -20,7 +20,7 @@ profile:
       - audit_flags_lo_configure
       - audit_folder_group_configure
       - audit_folder_owner_configure
-      - audit_retention_one_week_configure
+      - audit_retention_configure
   - section: "Authentication"
     rules:
       - auth_pam_login_smartcard_enforce
@@ -29,6 +29,7 @@ profile:
       - auth_smartcard_allow
       - auth_smartcard_enforce
       - auth_ssh_smartcard_enforce
+      - auth_smartcard_trusted_authorities_configure
   - section: "SystemPreferences"
     rules:
       - sysprefs_ad_tracking_disable

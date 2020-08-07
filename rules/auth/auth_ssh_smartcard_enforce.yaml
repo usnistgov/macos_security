@@ -1,9 +1,9 @@
 id: auth_ssh_smartcard_enforce
 title: "Enforce Smartcard Authentication for SSH"
 discussion: |
-  To ensure accountability and prevent unauthorized access, users must utilize multifactor authentication.
-  
-  Enforce Smartcard Authentication for user login via SSH.
+  Smartcard Authentication _MUST_ be enforced for user login via Secure Shell (SSH).
+
+  All users _MUST_ go through multifactor authentication to prevent unauthenticated access and potential compromise to the system.
 
   NOTE: /etc/ssh/sshd_config will be automatically modified to its original state following any update or major upgrade to the operating system.
 check: |

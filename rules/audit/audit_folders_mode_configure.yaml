@@ -3,7 +3,7 @@ title: "Configure Audit Log Folders to Mode 700 or Less Permissive"
 discussion: |
   The audit log folder _MUST_ be configured to mode 700 or less permissive so that only the root user is able to read, write, and execute changes to folders. 
 
-  Because audit logs contain sensitive data about the system and users, the audit service MUST be configured to create log folders with the correct permissions to prevent normal users from reading audit logs. 
+  Because audit logs contain sensitive data about the system and users, the audit service _MUST_ be configured to mode 700 or less permissive; thereby preventing normal users from reading, modifying or deleting audit logs. 
 check: |
   /usr/bin/stat -f %A $(/usr/bin/grep '^dir' /etc/security/audit_control | /usr/bin/awk -F: '{print $2}')
 result:

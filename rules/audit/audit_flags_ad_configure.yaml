@@ -1,5 +1,5 @@
 id: audit_flags_ad_configure
-title: 'Configure the Auditing System to Audit Administrative Action Events'
+title: "Configure System to Audit All Administrative Action Events"
 discussion: |
   The auditing system _MUST_ be configured to flag administrative action (ad) events.
 

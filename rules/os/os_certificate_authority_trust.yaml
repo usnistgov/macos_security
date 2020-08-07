@@ -29,5 +29,6 @@ tags:
   - fisma-moderate
   - fisma-high
   - STIG
+  - manual
 mobileconfig: false
 mobileconfig_info:

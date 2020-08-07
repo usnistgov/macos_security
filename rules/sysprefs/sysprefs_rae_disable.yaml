@@ -1,7 +1,9 @@
 id: sysprefs_rae_disable
 title: "Disable Remote Apple Events"
 discussion: |
-  If the system does not require Remote Apple Events, support for Apple Remote Events is non-essential and must be disabled.
+  If the system does not require Remote Apple Events, support for Apple Remote Events is non-essential and _MUST_ be disabled.
+
+  The information system _MUST_ be configured to provide only essential capabilities. Disabling Remote Apple Events helps prevent the unauthorized connection of devices, the unauthorized transfer of information, and unauthorized tunneling. 
 check: |
   /bin/launchctl print-disabled system | /usr/bin/grep -c '"com.apple.AEServer" => true'
 result:

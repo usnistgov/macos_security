@@ -532,7 +532,7 @@ generate_report(){{
 
 view_report(){{
     
-    if [[ $lastComplianceScan == "" ]];then
+    if [[ $lastComplianceScan == "No scans have been run" ]];then
         echo "no report to run, please run new scan"
         pause
     else
@@ -558,7 +558,8 @@ defaults write "$audit_plist" lastComplianceCheck "$(date)"
 
                 if rule_yaml['id'].startswith("supplemental"):
                     continue
-
+                if "manual" in rule_yaml['tags']:
+                    continue
                 # grab the 800-53 controls
                 try:
                     rule_yaml['references']['800-53r4']
@@ -624,10 +625,12 @@ fi
                     fix_text = rule_yaml['fix'] or ["n/a"]
 
     # write the fixes
+
                 if "[source,bash]" in fix_text:
+                    nist_controls_commented = nist_controls.replace('\n', '\n#')
                     zsh_fix_text = f"""
 #####----- Rule: {rule_yaml['id']} -----#####
-## Addresses the following NIST 800-53 controls: {nist_controls}
+## Addresses the following NIST 800-53 controls: {nist_controls_commented}
 
 {rule_yaml['id']}_audit_score=$(defaults read $audit_plist {rule_yaml['id']})
 if [[ ${rule_yaml['id']}_audit_score == 1 ]]; then
