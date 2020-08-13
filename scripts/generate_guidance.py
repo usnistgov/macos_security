@@ -904,8 +904,9 @@ def create_args():
                         help="Generate configuration profiles for the rules.", action="store_true")
     parser.add_argument("-s", "--script", default=None,
                         help="Generate the compliance script for the rules.", action="store_true")
-    parser.add_argument("-t", "--tags", default=None,
-                        help="Include the tags in the references.", action="store_true")
+    # add gary argument to include tags for XCCDF generation, with a nod to Gary the SCAP guru
+    parser.add_argument("-g", "--gary", default=None,
+                        help=argparse.SUPPRESS, action="store_true")
     parser.add_argument("-x", "--xls", default=None,
                         help="Generate the excel (xls) document for the rules.", action="store_true")
     return parser.parse_args()
@@ -988,7 +989,7 @@ def main():
         adoc_footer_template = Template(adoc_footer_file.read())
 
     # set tag attribute
-    if args.tags:
+    if args.gary:
         adoc_tag_show=":show_tags:"
     else:
         adoc_tag_show=":show_tags!:"
