@@ -904,6 +904,8 @@ def create_args():
                         help="Generate configuration profiles for the rules.", action="store_true")
     parser.add_argument("-s", "--script", default=None,
                         help="Generate the compliance script for the rules.", action="store_true")
+    parser.add_argument("-t", "--tags", default=None,
+                        help="Include the tags in the references.", action="store_true")
     parser.add_argument("-x", "--xls", default=None,
                         help="Generate the excel (xls) document for the rules.", action="store_true")
     return parser.parse_args()
@@ -985,6 +987,12 @@ def main():
     with open('../templates/adoc_footer.adoc') as adoc_footer_file:
         adoc_footer_template = Template(adoc_footer_file.read())
 
+    # set tag attribute
+    if args.tags:
+        adoc_tag_show=":show_tags:"
+    else:
+        adoc_tag_show=":show_tags!:"
+
     # Create header
     header_adoc = adoc_header_template.substitute(
         profile_title=baseline_yaml['title'],
@@ -992,7 +1000,8 @@ def main():
         html_header_title=baseline_yaml['title'],
         html_title=baseline_yaml['title'].split(':')[0],
         html_subtitle=baseline_yaml['title'].split(':')[1],
-        logo=logo
+        logo=logo,
+        tag_attribute=adoc_tag_show
     )
 
     # Output header
@@ -1088,7 +1097,7 @@ def main():
             except KeyError:
                 tags = 'none'
             else:
-                tags = rule_yaml['tags']
+                tags = ulify(rule_yaml['tags'])
 
             try:
                 result = rule_yaml['result']
@@ -1152,6 +1161,7 @@ def main():
                     rule_cci=cci,
                     rule_80053r4=nist_controls,
                     rule_cce=cce,
+                    rule_tags=tags,
                     rule_srg=srg,
                     rule_result=result_value
                 )

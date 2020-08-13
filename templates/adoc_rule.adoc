@@ -38,6 +38,11 @@ $rule_fix
 !CCE
 !$rule_cce
 
+ifdef::show_tags[]
+!TAGS
+!$rule_tags
+endif::[]
+
 !===
 
 |
