@@ -1,9 +1,9 @@
 id: os_sip_enable
-title: "Ensure System Integrity Protection (SIP) is Enabled"
+title: "Ensure System Integrity Protection is Enabled"
 discussion: |
-  System Integrity Protection (SIP) is vital to prevent unauthorized and unintended information transfer via shared system resources, protect audit tools from unauthorized access, modification, and deletion, limit privileges to change software resident within software libraries, limit the ability of non-privileged users to grant other users direct access to the contents of their home directories/folders.
-
-  SIP also ensures the presence of an audit record generation capability for defined auditable events for all operating system components, supports on-demand and after-the-fact reporting requirements, does not alter original content or time ordering of audit records, and does not alter original content or time ordering of audit records.
+  System Integrity Protection (SIP) _MUST_ be enabled. 
+  
+  SIP is vital to protecting the integrity of the system as it prevents malicious users and software from making unauthorized and/or unintended modifications to protected files and folders; ensures the presence of an audit record generation capability for defined auditable events for all operating system components; protects audit tools from unauthorized access, modification, and deletion; restricts the root user account and limits the actions that the root user can perform on protected parts of the macOS; and prevents non-privileged users from granting other users direct access to the contents of their home directories and folders.
 check: |
   /usr/bin/csrutil status | /usr/bin/grep -c 'System Integrity Protection status: enabled.'
 result:
@@ -38,8 +38,7 @@ references:
     - AU-12(a)
     - AU-6(4)
     - AU-7(1)
-    - AU-7(a)
-    - AU-7(b)
+    - AU-7
     - AU-9
     - AU-9(3)
     - CM-5(6)

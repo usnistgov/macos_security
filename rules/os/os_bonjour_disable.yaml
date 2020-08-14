@@ -1,7 +1,7 @@
 id: os_bonjour_disable
-title: "Disable Bonjour multicast"
+title: "Disable Bonjour Multicast"
 discussion: |
-  Bonjour multicast advertising must be disabled to prevent the system from broadcasting its presence and available services.
+  Bonjour multicast advertising _MUST_ be disabled to prevent the system from broadcasting its presence and available services over network interfaces.
 check: |
   /usr/bin/profiles -P -o stdout | /usr/bin/grep -c 'NoMulticastAdvertisements = 1'
 result:

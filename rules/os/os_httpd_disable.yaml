@@ -1,7 +1,7 @@
 id: os_httpd_disable
-title: "The macOS system must be configured to disable httpd."
+title: "Disable the Built-in Web Server"
 discussion:
-  Apache web server is a non-essential service built into macOS and must be disabled.
+  The built-in web server is a non-essential service built into macOS and _MUST_ be disabled.
 check: |
   /bin/launchctl print-disabled system | /usr/bin/grep -c '"org.apache.httpd" => true'
 result:

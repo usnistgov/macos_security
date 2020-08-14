@@ -117,7 +117,6 @@ profile:
       - os_privacy_setup_prompt_disable
       - os_removable_media_disable
       - os_root_disable
-      - os_root_disable_sshd
       - os_screensaver_ask_for_password_delay_enforce
       - os_screensaver_loginwindow_enforce
       - os_screensaver_password_enforce

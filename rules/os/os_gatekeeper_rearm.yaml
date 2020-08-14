@@ -1,7 +1,7 @@
 id: os_gatekeeper_rearm
-title: "Enforce Gatekeeper 30 day rearm"
+title: "Enforce Gatekeeper 30 Day Automatic Rearm"
 discussion: |
-  If Gatekeeper is disabled, there is an automatic setting for to be re-enabled after 30 days.
+  Gatekeeper _MUST_ be configured to automatically rearm after 30 days if disabled.
 check: |
   /usr/bin/profiles -P -o stdout | /usr/bin/grep -c 'GKAutoRearm = 1'
 result:

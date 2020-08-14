@@ -1,7 +1,9 @@
 id: os_messages_app_disable
 title: "Disable Messages App"
 discussion: |
-  The macOS built-in Messages.app establishes a connection to Apple's iCloud service, despite using security controls to disable iCloud access.
+  The macOS built-in Messages.app _MUST_ be disabled. 
+
+  The Messages.app establishes a connection to Apple’s iCloud service, even when security controls to disable iCloud access have been put in place. 
 check: |
   /usr/bin/profiles -P -o stdout | /usr/bin/grep -A 20 familyControlsEnabled | /usr/bin/grep -c "/Applications/Messages.app"
 result:

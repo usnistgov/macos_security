@@ -1,7 +1,9 @@
 id: os_guest_access_afp_disable
-title: "Disable Guest Access to Shared Apple File Protocol (AFP) Folders"
+title: "Disable Guest Access to Shared Apple File Protocol Folders"
 discussion: |
-  Turning off guest access prevents anonymous users from accessing files shared via AFP. 
+  Guest access to shared Apple File Protocol (AFP) folders _MUST_ be disabled. 
+  
+  Turning off guest access prevents anonymous users from accessing files shared via AFP.
 check: | 
   /usr/bin/profiles -P -o stdout | /usr/bin/grep -c 'guestAccess = 0'
 result:

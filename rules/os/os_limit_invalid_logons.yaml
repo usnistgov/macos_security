@@ -13,8 +13,7 @@ references:
     - CCI-000044
     - CCI-002238
   800-53r4:
-    - AC-7(a)
-    - AC-7(b)
+    - AC-7
   disa_stig:
     - AOSX-15-200026
     - AOSX-15-200016

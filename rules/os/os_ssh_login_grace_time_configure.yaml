@@ -1,7 +1,7 @@
 id: os_ssh_login_grace_time_configure
-title: "Configure SSH to LoginGraceTime set to 30 or less"
+title: "Set Login Grace Time to 30 or Less"
 discussion: |
-  SSH should be configured to wait only 30 seconds before timing out logon attempts.
+  SSH MUST be configured to wait only 30 seconds before timing out logon attempts.
 
   NOTE: /etc/ssh/sshd_config will be automatically modified to its original state following any update or major upgrade to the operating system.
 check: |

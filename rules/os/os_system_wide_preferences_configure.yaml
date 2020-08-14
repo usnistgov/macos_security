@@ -1,6 +1,8 @@
 id: os_system_wide_preferences_configure
-title: "Require an administrator password to access system-wide preferences"
+title: "Require Administrator Password to Modify System-Wide Preferences"
 discussion: |
+  The system _MUST_ be configured to require an administrator password in order to modify the system-wide preferences in System Preferences. 
+
   Some Preference Panes in System Preferences contain settings that affect the entire system. Requiring a password to unlock these system-wide settings reduces the risk of a non-authorized user modifying system configurations.
 check: |
   /usr/bin/security authorizationdb read system.preferences 2> /dev/null |  /usr/bin/grep -A 1 "<key>shared</key>" | /usr/bin/grep -c "<false/>"

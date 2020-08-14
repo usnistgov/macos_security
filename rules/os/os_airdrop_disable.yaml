@@ -1,7 +1,9 @@
 id: os_airdrop_disable
 title: "Disable AirDrop"
 discussion:   
-  AirDrop allows you to share and receive files from other nearby Apple devices. AirDrop must be disabled to prevent file transfers to or from unauthorized devices.
+  AirDrop _MUST_ be disabled to prevent file transfers to or from unauthorized devices.
+  
+  AirDrop allows users to share and receive files from other nearby Apple devices. 
 check: |
   /usr/bin/profiles -P -o stdout | /usr/bin/grep -c 'DisableAirDrop = 1'
 result:

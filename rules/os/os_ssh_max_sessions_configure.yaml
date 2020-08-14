@@ -1,7 +1,9 @@
 id: os_ssh_max_sessions_configure
-title: "Configure SSH to limit the number of concurrent SSH sessions to 10"
+title: "Limit Concurrent SSH Sessions to Ten"
 discussion: |
-  The SSH deamon should be configured to allow only 10 concurrent SSH sessions to the system.
+  The SSH deamon _MUST_ be configured to allow only ten concurrent SSH sessions to the system.
+
+  Limiting the number of allowed users and sessions per user is helpful in reducing the risks related to Denial of Service attacks.
 
   NOTE: /etc/ssh/sshd_config will be automatically modified to its original state following any update or major upgrade to the operating system.
 check: |

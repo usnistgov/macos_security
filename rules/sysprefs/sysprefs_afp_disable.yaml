@@ -1,7 +1,7 @@
 id: sysprefs_afp_disable
 title: "Disable Apple Filing Protocol Sharing"
 discussion: |
-  If the system does not require AFP Sharing, support it is non-essential and must be disabled.
+  If the system does not require Apple Filing Protocol (AFP) Sharing, support it is non-essential and must be disabled.
 
   The information system _MUST_ be configured to provide only essential capabilities. Disabling AFP helps prevent the unauthorized connection of devices and the unauthorized transfer of information.
 check: |

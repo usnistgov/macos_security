@@ -1,7 +1,9 @@
 id: os_power_nap_disable
 title: "Disable Power Nap"
 discussion: |
-  Power Nap allows your Mac to perform actions while a Mac is asleep. This can interfere with USB power and may cause USB readers to stop functioning until a reboot. Power Nap should be disabled on all systems.
+  Power Nap _MUST_ be disabled.
+
+  Power Nap allows your Mac to perform actions while a Mac is asleep. This can interfere with USB power and may cause devices to stop functioning until a reboot and must therefore be disabled on all applicable systems. 
 
   The following Macs support Power Nap:
 

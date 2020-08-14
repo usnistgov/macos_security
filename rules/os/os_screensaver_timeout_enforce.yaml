@@ -1,7 +1,9 @@
 id: os_screensaver_timeout_enforce
-title: "Enforce screen saver timeout after 15 minutes of inactivity"
+title: "Enforce Screen Saver Timeout"
 discussion: |
- The screen saver timeout should be set to 15 minutes of inactivity. 
+  The screen saver timeout _MUST_ be set to 15 minutes. 
+  
+  This rule ensures that a full session lock is triggered after 15 minutes of inactivity.
 check: |
   /usr/bin/profiles -P -o stdout | /usr/bin/grep -c 'idleTime = 900'
 result:

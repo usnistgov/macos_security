@@ -1,7 +1,9 @@
 id: os_ssh_client_alive_interval_configure
 title: "Configure SSH ClientAliveInterval option set to 900 or less"
 discussion: |
-  SSH should be configured to log users out after a 15-minute interval or less of inactivity.
+  SSH _MUST_ be configured with an Active Client Alive Maximum Count set to 900 or less. 
+  
+  Setting the Active Client Alive Maximum Count to 900 (second) will log users out after a 15-minute interval of inactivity.
 
   NOTE: /etc/ssh/sshd_config will be automatically modified to its original state following any update or major upgrade to the operating system.
 check: |

@@ -99,7 +99,7 @@ profile:
       - os_privacy_setup_prompt_disable
       - os_removable_media_disable
       - os_root_disable
-      - os_root_disable_sshd
+      - os_ssh_permit_root_login_configure
       - os_siri_prompt_disable
       - os_ssh_fips_140_ciphers
       - os_ssh_fips_140_macs
