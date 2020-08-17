@@ -22,7 +22,7 @@ references:
   cci: 
     - CCI-000366
   800-53r4: 
-    - CM-6(b)
+    - CM-5
     - SI-7(15)
   srg: 
     - SRG-OS-000480-GPOS-00227
@@ -32,7 +32,6 @@ macOS:
   - "10.15"
 tags:
   - cnssi-1253
-  - fisma-low
   - fisma-moderate
   - fisma-high
   - STIG

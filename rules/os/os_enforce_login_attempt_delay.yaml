@@ -12,7 +12,7 @@ references:
   cci:
     - CCI-000366
   800-53r4:
-    - CM-6(b)
+    - AC-7
   disa_stig:
     - AOSX-15-200025
   srg:

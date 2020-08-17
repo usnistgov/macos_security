@@ -19,7 +19,7 @@ references:
   cci:
     - CCI-000366
   800-53r4:
-    - CM-6(b)
+    - IA-11
   srg:
     - SRG-OS-000480-GPOS-00227
   disa_stig:
@@ -28,9 +28,6 @@ macOS:
   - "10.15"
 tags:
   - cnssi-1253
-  - fisma-low
-  - fisma-moderate
-  - fisma-high
   - STIG
 mobileconfig: false
 mobileconfig_info:

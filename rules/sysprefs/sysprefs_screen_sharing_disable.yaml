@@ -21,7 +21,7 @@ references:
     - CCI-000366
   800-53r4: 
     - AC-17
-    - CM-6(b)
+    - CM-7
   srg: 
     - SRG-OS-000480-GPOS-00227
   disa_stig: 

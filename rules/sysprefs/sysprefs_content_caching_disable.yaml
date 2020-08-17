@@ -16,7 +16,7 @@ references:
   cci: 
     -
   800-53r4:
-    - CM-7(b)
+    - CM-7
   srg:
     -
   disa_stig:

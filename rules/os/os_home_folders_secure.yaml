@@ -24,7 +24,6 @@ references:
     - CCI-000366
   800-53r4:
     - AC-6
-    - CM-6(b)
   srg:
     - SRG-OS-000480-GPOS-00230
   disa_stig:
@@ -34,7 +33,6 @@ macOS:
   - "10.15"
 tags:
   - cnssi-1253
-  - fisma-low
   - fisma-moderate
   - fisma-high
   - STIG

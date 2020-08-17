@@ -27,7 +27,7 @@ references:
   800-53r4: 
     - AC-17(2)
     - IA-7
-    - CM-6(b)
+    - SC-13
   srg: 
     - SRG-OS-000163-GPOS-00072
   disa_stig: 

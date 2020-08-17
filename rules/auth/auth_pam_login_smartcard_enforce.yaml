@@ -40,7 +40,6 @@ references:
     - CCI-000366
   800-53r4: 
     - IA-2(3)
-    - CM-6(b)
   srg: 
     - SRG-OS-000107-GPOS-00054
     - SRG-OS-000480-GPOS-00227

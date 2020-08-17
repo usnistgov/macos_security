@@ -14,10 +14,8 @@ references:
   cce:
     - CCE-84763-2
   800-53r4:
-    - AC-18(3)
-    - CM-6(b)
-    - CM-7(a)
-    - CM-7(5)(b)
+    - AC-20
+    - CM-7
   disa_stig:
     - N/A
   srg: 

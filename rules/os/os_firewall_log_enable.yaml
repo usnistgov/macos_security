@@ -21,7 +21,8 @@ references:
   cci: 
     - CCI-000366
   800-53r4: 
-    - CM-6(b)
+    - SC-7
+    - AU-12
   srg: 
     - SRG-OS-000480-GPOS-00232
   disa_stig: 

@@ -30,7 +30,6 @@ references:
   800-53r4: 
     - AC-18
     - AC-18(4)
-    - CM-6(b)
     - CM-7(1)
   srg: 
     - SRG-OS-000480-GPOS-00227

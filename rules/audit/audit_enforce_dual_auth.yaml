@@ -13,7 +13,6 @@ references:
     - CCI-000366
     - CCI-001896
   800-53r4:
-    - CM-6(b)
     - AU-9(5)
   disa_stig:
     - AOSX-15-200018

@@ -17,9 +17,8 @@ references:
     - CCI-000381
     - CCI-001774
   800-53r4: 
-    - CM-6(b)
-    - CM-7(a)
-    - CM-5(5)(b)
+    - CM-7
+    - AC-20
   srg: 
     - SRG-OS-000480-GPOS-00227
     - SRG-OS-000095-GPOS-00049

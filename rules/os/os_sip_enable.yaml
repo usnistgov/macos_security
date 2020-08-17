@@ -42,7 +42,7 @@ references:
     - AU-9
     - AU-9(3)
     - CM-5(6)
-    - CM-6(b)
+    - CM-5
     - SC-4
   srg: 
     - SRG-OS-000051-GPOS-00024

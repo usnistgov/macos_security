@@ -17,7 +17,7 @@ references:
   cce:
     - CCE-84803-6
   800-53r4:
-    - CM-6(b)
+    - CM-2
   disa_stig:
     - N/A
   srg:
