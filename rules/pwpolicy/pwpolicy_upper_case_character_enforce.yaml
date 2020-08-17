@@ -1,7 +1,9 @@
 id: pwpolicy_upper_case_character_enforce
-title: "Enforce password complexity by requiring that at least 1 upper-case character be used"
+title: "Require Passwords Contain a Minimum of One Uppercase Character"
 discussion: |
-  macOS must require at least 1 upper-case character be used when creating a password.
+  The macOS _MUST_ be configured to require at least one uppercase character be used when a password is created.
+
+  This rule enforces password complexity by requiring users to set passwords that are less vulnerable to malicious users. 
 check: |
   /usr/bin/pwpolicy getaccountpolicies | /usr/bin/grep -v "Getting global account policies" | /usr/bin/xmllint --xpath '/plist/dict/array/dict/dict[key="minimumAlphaCharactersUpperCase"]/integer' - | /usr/bin/awk -F '[<>]' '{print $3}'
 result:

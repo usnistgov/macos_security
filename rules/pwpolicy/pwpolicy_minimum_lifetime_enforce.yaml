@@ -1,7 +1,7 @@
 id: pwpolicy_minimum_lifetime_enforce
-title: "Enforce 24 hours as the minimum password lifetime"
+title: "Set Minimum Password Lifetime to 24 Hours"
 discussion: |
-  macOS must enforce a minimum password lifetime limit of 24 hours.
+  The macOS _MUST_ be configured to enforce a minimum password lifetime limit of 24 hours.
 check: | 
   /usr/bin/pwpolicy getaccountpolicies | /usr/bin/grep -v "Getting global account policies" | /usr/bin/xmllint --xpath '/plist/dict/array/dict/dict[key="policyAttributeMinimumLifetimeHours"]/integer' - | /usr/bin/awk -F '[<>]' '{print $3}'
 result:

@@ -1,7 +1,11 @@
 id: pwpolicy_history_enforce
-title: "Prohibit password reuse a minimum of 5 previous passwords"
+title: "Prohibit Password Reuse for a Minimum of Five Generations"
 discussion: |
-  macOS must be configured to enforce a password history of at a minimum 5 previous passwords. It must not allow re-use of those 5 previous generations of passwords.
+  The macOS _MUST_ be configured to enforce a password history of at least five previous passwords when a password is created. 
+
+  This rule ensures that users are  not allowed to re-use a password that was used in any of the five previous password generations. 
+
+  Limiting password reuse protects against malicious users attempting to gain access to the system via brute-force hacking methods.
 check: | 
   /usr/bin/profiles -P -o stdout | /usr/bin/awk '/pinHistory/{sub(/;.*/,"");print $3}'
 result:
