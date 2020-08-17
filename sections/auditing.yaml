@@ -1,5 +1,5 @@
   name: "Auditing"
   description: |
-    This section reviews the configuration and enforcement of the OpenBSM settings.
+    This section contains the configuration and enforcement of the OpenBSM settings.
 
-    NOTE: The check/fix commands outlined in this section must be run with elevated privileges.
+    NOTE: The check/fix commands outlined in this section _MUST_ be run with elevated privileges. 
