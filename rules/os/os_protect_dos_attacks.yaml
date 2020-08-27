@@ -1,7 +1,11 @@
 id: os_protect_dos_attacks
-title: "Protect or limit effects of Denial of Service (DoS) attacks by ensuring rate-limiting measures on network interfaces"
+title: "Protect Against Denial of Service Attacks by Ensuring Rate-Limiting Measures on Network Interfaces"
 discussion: |
-  DoS is a condition when a resource is not available for legitimate users. When this occurs, the organization either cannot accomplish its mission or must operate at degraded capacity.This requirement addresses the configuration of the operating system to mitigate the impact of DoS attacks that have occurred or are ongoing on system availability. For each system, known and potential DoS attacks must be identified and solutions for each type implemented. A variety of technologies exist to limit or, in some cases, eliminate the effects of DoS attacks (e.g., limiting processes or establishing memory partitions). Employing increased capacity and bandwidth, combined with service redundancy, may reduce the susceptibility to some DoS attacks.
+  The macOS should be configured to prevent Denial of Service (DoS) attacks by enforcing rate-limiting measures on network interfaces. 
+  
+  DoS attacks leave authorized users unable to access information systems, devices, or other network resources due to the actions of a malicious cyber threat actor. When this occurs, the organization must operate at degraded capacity; often resulting in an inability to accomplish its mission. 
+
+  To prevent DoS attacks by ensuring rate-limiting measures on network interfaces, many operating systems can be integrated with enterprise-level firewalls that meet or exceed this requirement.
 check: |
   The technology does not support this requirement. This is an applicable-does not meet finding.
 fix: |
@@ -14,7 +18,7 @@ references:
   800-53r4:
     - SC-5
   disa_stig:
-    - AOSX-15-200022
+    - N/A
   srg:
     - SRG-OS-000420-GPOS-00186
 macOS:

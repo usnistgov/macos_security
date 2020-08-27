@@ -15,10 +15,12 @@ references:
     - CCE-84810-1
   cci: 
     - CCI-002238
+    - CCI-000366    
   800-53r4: 
-    - AC-7(b)
+    - AC-7
   srg: 
     - SRG-OS-000329-GPOS-00128
+    - SRG-OS-000480-GPOS-00226    
   disa_stig: 
     - AOSX-14-000021
 macOS:

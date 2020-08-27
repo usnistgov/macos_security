@@ -22,6 +22,7 @@ references:
     - CCI-002080
   800-53r4:
     - SC-7(5)
+    - AC-4
   srg:
     - SRG-OS-000480-GPOS-00231
   disa_stig:

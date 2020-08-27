@@ -23,7 +23,7 @@ references:
   cci: 
     - CCI-000048
   800-53r4: 
-    - AC-8(a)
+    - AC-8
   srg: 
     - SRG-OS-000023-GPOS-00006
   disa_stig: 

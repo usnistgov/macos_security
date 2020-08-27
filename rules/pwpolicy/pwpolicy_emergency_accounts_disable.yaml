@@ -18,7 +18,7 @@ references:
   cce:
     - CCE-84812-7
   cci:
-  - CCI-001682
+    - CCI-001682
   800-53r4: 
     - AC-2(2)
   srg: 

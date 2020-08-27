@@ -40,7 +40,8 @@ references:
   cci: 
    - CCI-000193
   800-53r4: 
-    - IA-5(1)(a)
+    - IA-5
+    - IA-5(1)
   disa_stig: 
     - N/A
   srg: 

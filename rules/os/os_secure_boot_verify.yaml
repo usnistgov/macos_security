@@ -16,9 +16,7 @@ references:
   cce:
     - CCE-84789-7
   800-53r4:
-    - SI-6(a)
-    - SI-6(b)
-    - SI-6(d)
+    - SI-6
   srg:
     - SRG-OS-000446-GPOS-00200
   disa_stig:

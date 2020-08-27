@@ -17,8 +17,8 @@ references:
   800-53r4:
     - AC-12(1)
   disa_stig:
-    - AOSX-15-100020
-    - AOSX-15-100021
+    - N/A
+    - N/A
   srg:
     - SRG-OS-000280-GPOS-00110
     - SRG-OS-000281-GPOS-00111

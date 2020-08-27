@@ -16,7 +16,7 @@ references:
   cci:
     - CCI-000058
   800-53r4: 
-    - AC-11(a)
+    - AC-11
   srg: 
     - SRG-OS-000030-GPOS-00011
   disa_stig: 

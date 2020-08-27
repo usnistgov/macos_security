@@ -34,6 +34,7 @@ references:
     - CCI-000366
   800-53r4: 
     - IA-2(3)
+    - IA-2(4)
   srg: 
     - SRG-OS-000107-GPOS-00054
     - SRG-OS-000480-GPOS-00227

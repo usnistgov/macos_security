@@ -1,7 +1,11 @@
 id: os_provide_automated_account_management
-title: "Provide automated mechanisms for account management functions"
+title: "Employ Automated Mechanisms for Account Management Functions"
 discussion: |
-  The organization employs automated mechanisms to support the management of information system accounts.
+  The organization should employ automated mechanisms to support the management of information system accounts.
+
+  The use of automated mechanisms prevents against human error and provide a faster and more efficient means of relaying time-sensitive information and account management.
+  
+  To employ automated mechanisms for account management functions, many operating systems can be integrated with an enterprise-level directory service that meets or exceeds this requirement.
 check: |
   The technology does not support this requirement. This is an applicable-does not meet finding.
 fix: |
@@ -14,7 +18,7 @@ references:
   800-53r4:
     - AC-2(1)
   disa_stig:
-    - AOSX-15-200001
+    - N/A
   srg:
     - SRG-OS-000001-GPOS-00001
 macOS:

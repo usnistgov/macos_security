@@ -14,7 +14,8 @@ references:
   cce:
     - CCE-84912-5
   800-53r4: 
-    - CM-7(b)
+    - CM-7
+    - AC-20
     - SC-7(10)
 macOS:
   - "10.15"

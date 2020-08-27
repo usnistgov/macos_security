@@ -21,7 +21,7 @@ references:
   cci:
     - CCI-000054
   800-53r4:
-    - AC-10
+    - N/A
   srg:
     - SRG-OS-000027-GPOS-00008
   disa_stig:
@@ -29,7 +29,6 @@ references:
 macOS:
   - "10.15"
 tags:
-  - fisma-high
   - STIG
 mobileconfig: false
 mobileconfig_info:

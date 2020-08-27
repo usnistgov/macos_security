@@ -14,8 +14,8 @@ references:
   800-53r4:
     - IA-11
   disa_stig:
-    - AOSX-15-100031
-    - AOSX-15-100032
+    - N/A
+    - N/A
   srg:
     - SRG-OS-000373-GPOS-00156
     - SRG-OS-000373-GPOS-00157

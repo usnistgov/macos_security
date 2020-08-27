@@ -16,9 +16,8 @@ references:
   cci: 
     - CCI-000382
   800-53r4: 
-    - CM-7(b)
-    - SC-7(10)
-    - SI-4
+    - AC-20
+    - SI-11
   srg: 
     - SRG-OS-000096-GPOS-00050
   disa_stig: 

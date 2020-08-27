@@ -14,7 +14,7 @@ references:
   800-53r4:
     - IA-2
   disa_stig:
-    - AOSX-15-100007
+    - N/A
   srg:
     - SRG-OS-000104-GPOS-00051
 macOS:

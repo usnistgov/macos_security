@@ -12,9 +12,9 @@ references:
   cci:
     - CCI-000171
   800-53r4:
-    - AU-12(b)
+    - AU-12
   disa_stig:
-    - AOSX-15-100002
+    - N/A
   srg:
     - SRG-OS-000063-GPOS-00032
 macOS:

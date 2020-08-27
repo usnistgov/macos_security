@@ -20,7 +20,7 @@ references:
   cci: 
     - N/A
   800-53r4:
-    - CM-7(a)
+    - AC-3
   srg:
     - N/A
   disa_stig:

@@ -16,7 +16,7 @@ references:
   cce:
     - CCE-84771-5
   800-53r4:
-    - CM-7(b)
+    - AC-3
   srg: 
     - SRG-OS-000480-GPOS-00227
   disa_stig:

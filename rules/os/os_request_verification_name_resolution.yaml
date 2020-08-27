@@ -17,10 +17,10 @@ references:
   800-53r4:
     - SC-21
   disa_stig:
-    - AOSX-15-300005
-    - AOSX-15-300006
-    - AOSX-15-300007
-    - AOSX-15-300008
+    - N/A
+    - N/A
+    - N/A
+    - N/A
   srg:
     - SRG-OS-000399-GPOS-00178
     - SRG-OS-000400-GPOS-00179

@@ -13,18 +13,16 @@ references:
     - CCI-002696
     - CCI-002699
   800-53r4:
-    - SI-6(a)
-    - SI-6(b)
+    - N/A
   disa_stig:
-    - AOSX-15-300009
-    - AOSX-15-300010
+    - N/A
+    - N/A
   srg:
     - SRG-OS-000445-GPOS-00199
     - SRG-OS-000446-GPOS-00200
 macOS:
   - "10.15"
 tags:
-  - fisma-high
   - STIG
   - n_a
 mobileconfig: false

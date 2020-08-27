@@ -1,5 +1,5 @@
 id: os_touchid_prompt_disable
-title: "Disable TouchID prompt during Setup Assistant"
+title: "Disable TouchID Prompt during Setup Assistant"
 discussion: |
   The prompt for TouchID during Setup Assistant _MUST_ be disabled.
 

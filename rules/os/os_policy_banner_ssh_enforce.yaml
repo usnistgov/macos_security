@@ -24,8 +24,7 @@ references:
     - CCI-000048
     - CCI-000050
   800-53r4: 
-    - AC-8(a)
-    - AC-8(b)
+    - AC-8
   srg: 
     - SRG-OS-000023-GPOS-00006
     - SRG-OS-000024-GPOS-00007

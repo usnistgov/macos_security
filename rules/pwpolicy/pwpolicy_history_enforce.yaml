@@ -18,8 +18,7 @@ references:
   cci: 
   - CCI-000200
   800-53r4: 
-    - IA-5(1)(e)
-    - IA-5(e)
+    - IA-5(1)
   srg: 
     - SRG-OS-000077-GPOS-00045
   disa_stig: 

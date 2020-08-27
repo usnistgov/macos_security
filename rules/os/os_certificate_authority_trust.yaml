@@ -15,7 +15,6 @@ references:
    - CCI-000185
    - CCI-002450
   800-53r4: 
-    - IA-5(2)(a)
     - SC-17
   disa_stig: 
    - AOSX-14-003001

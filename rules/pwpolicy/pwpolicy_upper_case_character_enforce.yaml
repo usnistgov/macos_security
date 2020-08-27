@@ -34,9 +34,10 @@ references:
   cci: 
     - CCI-000192
   800-53r4: 
-    - IA-5(1)(a)
+    - IA-5
+    - IA-5(1)
   disa_stig: 
-    - AOSX-15-200005
+    - N/A
   srg: 
     - SRG-OS-000069-GPOS-00037
 macOS:

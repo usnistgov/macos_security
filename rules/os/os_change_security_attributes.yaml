@@ -16,7 +16,7 @@ references:
   800-53r4:
     - AC-3(4)
   disa_stig:
-    - AOSX-15-100026
+    - N/A
   srg:
     - SRG-OS-000312-GPOS-00124
 macOS:

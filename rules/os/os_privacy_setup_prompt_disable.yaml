@@ -16,7 +16,7 @@ references:
   cci:
     - CCI-000381
   800-53r4: 
-    - AC-20
+    - N/A
   srg: 
     - SRG-OS-000480-GPOS-00227
     - SRG-OS-000095-GPOS-00049
@@ -26,9 +26,6 @@ macOS:
   - "10.15"
 tags:
   - cnssi-1253
-  - fisma-low
-  - fisma-moderate
-  - fisma-high
   - STIG
 mobileconfig: true
 mobileconfig_info:

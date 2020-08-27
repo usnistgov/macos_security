@@ -19,9 +19,9 @@ references:
     - CCE-84842-4
   cci: 
     - CCI-000366
-  800-53r4: 
+  800-53r4:
+    - AC-3
     - AC-17
-    - CM-7
   srg: 
     - SRG-OS-000480-GPOS-00227
   disa_stig: 

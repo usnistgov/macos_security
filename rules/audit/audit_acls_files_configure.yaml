@@ -21,7 +21,7 @@ references:
     - CCI-001314
   800-53r4:
     - AU-9
-    - SI-11(b)
+    - SI-11
   srg:
     - SRG-OS-000057-GPOS-00027
     - SRG-OS-000206-GPOS-00084

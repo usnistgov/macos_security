@@ -15,8 +15,9 @@ references:
     - CCE-84818-4
   cci: 
     - N/A
-  800-53r4: 
-  - IA-5(1)(a)
+  800-53r4:
+    - IA-5
+    - IA-5(1)
   srg: 
     - SRG-OS-000266-GPOS-00101
   disa_stig: 

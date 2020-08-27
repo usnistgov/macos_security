@@ -36,11 +36,7 @@ references:
     - CCI-001387
     - CCI-001388
   800-53r4: 
-    - AC-8(a)
-    - AC-8(b)
-    - AC-8(c)(1)
-    - AC-8(c)(2)
-    - AC-8(c)(3)
+    - AC-8
   srg: 
     - SRG-OS-000023-GPOS-00006
     - SRG-OS-000024-GPOS-00007
