@@ -18,6 +18,7 @@ references:
   800-53r4:
     - IA-5
     - IA-5(1)(b)
+    - IA-5(1)
   disa_stig:
     - N/A
   srg:

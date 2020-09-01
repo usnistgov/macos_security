@@ -40,7 +40,7 @@ references:
   cci: 
     - CCI-000795
   800-53r4: 
-    - IA-4(e)
+    - IA-4
   srg: 
     - SRG-OS-000118-GPOS-00060
   disa_stig: 

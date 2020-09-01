@@ -12,7 +12,7 @@ references:
   cci:
     - CCI-000879
   800-53r4:
-    - MA-4(e)
+    - MA-4
   disa_stig:
     - N/A
   srg:

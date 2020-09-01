@@ -16,7 +16,7 @@ references:
   cci:
     - N/A
   800-53r4: 
-    - CM-6(b)
+    - CM-6
   srg: 
     - SRG-OS-000480-GPOS-00227
   disa_stig: 
