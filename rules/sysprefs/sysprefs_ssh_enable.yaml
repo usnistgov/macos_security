@@ -1,5 +1,5 @@
 id: sysprefs_ssh_enable
-title: "Enable SSH for remote access sessions"
+title: "Enable SSH for Remote Access Sessions"
 discussion: |
   SSH service _MUST_ be enabled for remote access.
   

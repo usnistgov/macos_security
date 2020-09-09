@@ -1,5 +1,5 @@
 id: audit_acls_folders_configure
-title: "Configure Audit Log Folder to Not Contain ACLs"
+title: "Configure Audit Log Folder to Not Contain Access Control Lists"
 discussion: |
   The audit log folder _MUST_ not contain access control lists (ACLs).
 

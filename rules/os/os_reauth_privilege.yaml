@@ -15,7 +15,6 @@ references:
     - IA-11
   disa_stig:
     - N/A
-    - N/A
   srg:
     - SRG-OS-000373-GPOS-00156
     - SRG-OS-000373-GPOS-00157

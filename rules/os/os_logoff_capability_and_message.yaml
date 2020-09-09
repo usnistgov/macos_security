@@ -18,7 +18,6 @@ references:
     - AC-12(1)
   disa_stig:
     - N/A
-    - N/A
   srg:
     - SRG-OS-000280-GPOS-00110
     - SRG-OS-000281-GPOS-00111

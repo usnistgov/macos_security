@@ -19,6 +19,7 @@ profile:
       - audit_flags_fw_configure
       - audit_flags_fm_configure
       - audit_flags_lo_configure
+      - audit_flags_ex_configure
       - audit_folder_group_configure
       - audit_folder_owner_configure
       - audit_retention_configure
@@ -151,7 +152,6 @@ profile:
     rules:
       - os_crypto_audit
       - os_enforce_access_restrictions
-      - os_error_message
       - os_fail_secure_state
       - os_implement_memory_protection
       - os_implement_cryptography

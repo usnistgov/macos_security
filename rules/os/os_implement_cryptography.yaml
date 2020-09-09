@@ -1,7 +1,14 @@
 id: os_implement_cryptography
-title: "Implement approved cryptography to protect information"
+title: "Configure the System to Implement Approved Cryptography to Protect Information"
 discussion: |
-  Use of weak or untested encryption algorithms undermines the purposes of utilizing encryption to protect data. The operating system must implement cryptographic modules adhering to the higher standards approved by the federal government since this provides assurance they have been tested and validated.
+  The information system _MUST_ be configured to implement approved cryptography to protect information. 
+
+  Use of weak or untested encryption algorithms undermines the purposes of utilizing encryption to protect data. The operating system must implement cryptographic modules that adhere to the higher standards that have been tested, validated, and approved by the federal government. 
+
+  macOS Catalina is in process of receiving FIPS validation from the National Institute of Standards and Technology (NIST).
+
+  link:https://csrc.nist.gov/Projects/Cryptographic-Module-Validation-Program/Modules-In-Process/Modules-In-Process-List
+  link:https://support.apple.com/en-us/HT201159
 check: |
   The technology supports this requirement and cannot be configured to be out of compliance. The technology inherently meets this requirement using FIPS Validated Cryptographic Modules.
 fix: |

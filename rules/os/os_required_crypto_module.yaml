@@ -2,6 +2,11 @@ id: os_required_crypto_module
 title: "Must meet federal laws, Executive orders, directives, policies, regulations, standards, and guidance for authentication to a cryptographic module"
 discussion: |
   The information system implements mechanisms for authentication to a cryptographic module that meet the requirements of applicable federal laws, Executive Orders, directives, policies, regulations, standards, and guidance for such authentication.
+
+  macOS Catalina is in process of receiving FIPS validation from the National Institute of Standards and Technology (NIST).
+
+  link:https://csrc.nist.gov/Projects/Cryptographic-Module-Validation-Program/Modules-In-Process/Modules-In-Process-List
+  link:https://support.apple.com/en-us/HT201159
 check: |
   The technology supports this requirement and cannot be configured to be out of compliance. The technology inherently meets this requirement.
 fix: |

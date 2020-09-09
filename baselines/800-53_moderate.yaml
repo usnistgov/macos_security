@@ -18,6 +18,7 @@ profile:
       - audit_flags_fw_configure
       - audit_flags_fm_configure
       - audit_flags_lo_configure
+      - audit_flags_ex_configure
       - audit_folder_group_configure
       - audit_folder_owner_configure
       - audit_retention_configure
@@ -144,7 +145,6 @@ profile:
       - pwpolicy_upper_case_character_enforce
   - section: "Inherent"
     rules:
-      - os_error_message
       - os_implement_memory_protection
       - os_implement_cryptography
       - os_implement_random_address_space

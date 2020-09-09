@@ -18,9 +18,6 @@ references:
     - SC-21
   disa_stig:
     - N/A
-    - N/A
-    - N/A
-    - N/A
   srg:
     - SRG-OS-000399-GPOS-00178
     - SRG-OS-000400-GPOS-00179
@@ -34,6 +31,6 @@ tags:
   - fisma-moderate
   - fisma-high
   - STIG
-  - n_a
+  - permanent
 mobileconfig: false
 mobileconfig_info:

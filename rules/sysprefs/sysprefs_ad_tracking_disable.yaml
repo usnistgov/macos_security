@@ -14,14 +14,14 @@ references:
   cce:
     - CCE-84822-6
   cci: 
-    -
+    - N/A
   800-53r4: 
     - AC-20
     - CM-7
   srg: 
-    -
+    - N/A
   disa_stig: 
-    -
+    - N/A
 macOS:
   - "10.15"
 tags:

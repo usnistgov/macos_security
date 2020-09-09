@@ -1,5 +1,5 @@
 id: audit_acls_files_configure
-title: "Configure Audit Log Files to Not Contain ACLs"
+title: "Configure Audit Log Files to Not Contain Access Control Lists"
 discussion: |
   The audit log files _MUST_ not contain access control lists (ACLs).
   

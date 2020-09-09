@@ -1,7 +1,7 @@
 id: os_error_message
-title: "Generate error messages without exploitable information"
+title: "Generate Error Messages without Exploitable Information"
 discussion: |
-  Generates error messages that provide information necessary for corrective actions without revealing information that could be exploited by adversaries.
+  The information system _MUST_ generate error messages that provide the information necessary for corrective actions without revealing information that could be exploited by adversaries.
 check: |
   The technology supports this requirement and cannot be configured to be out of compliance. The technology inherently meets this requirement.
 fix: |
@@ -12,7 +12,7 @@ references:
   cci:
     - CCI-001312
   800-53r4:
-    - SI-11
+    - N/A
   disa_stig:
     - N/A
   srg:
@@ -20,9 +20,6 @@ references:
 macOS:
   - "10.15"
 tags:
-  - cnssi-1253
-  - fisma-moderate
-  - fisma-high
   - STIG
   - inherent
 mobileconfig: false
