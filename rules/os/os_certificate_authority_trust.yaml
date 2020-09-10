@@ -1,7 +1,7 @@
 id: os_certificate_authority_trust
-title: "The macOS system must issue or obtain public key certificates under an appropriate certificate policy from an approved service provider."
+title: "Issue or Obtain Public Key Certificates from an Approved Service Provider"
 discussion: |
-  The organization issues or obtains public key certificates from an approved service provider.
+  The organization _MUST_ issue or obtain public key certificates from an organization-approved service provider and ensure only approved trust anchors are in the System Keychain.
 check: |
   /usr/bin/security dump-keychain /Library/Keychains/System.keychain | /usr/bin/grep labl | awk -F'"' '{ print $4 }'
 result: 
@@ -15,7 +15,6 @@ references:
    - CCI-000185
    - CCI-002450
   800-53r4: 
-    - IA-5(2)(a)
     - SC-17
   disa_stig: 
    - AOSX-14-003001

@@ -1,7 +1,9 @@
 id: pwpolicy_minimum_length_enforce
-title: "Enforce a minimum 15-character password length"
+title: "Require a Minimum Password Length of 15 Characters"
 discussion: |
-  The minimum password length must be set to 15 characters. 
+  The macOS _MUST_ be configured to require a minimum of 15 characters be used when a password is created.
+
+  This rule enforces password complexity by requiring users to set passwords that are less vulnerable to malicious users. 
 check: |
   /usr/bin/profiles -P -o stdout | /usr/bin/grep -c 'minLength = 15' 
 result:
@@ -14,7 +16,8 @@ references:
   cci: 
     - CCI-000205
   800-53r4: 
-    - IA-5(1)(a)
+    - IA-5
+    - IA-5(1)
   srg: 
     - SRG-OS-000078-GPOS-00046
   disa_stig: 

@@ -1,9 +1,9 @@
 id: sysprefs_location_services_disable
 title: "Disable Location Services"
 discussion: |
-  Configures the information system to provide only essential capabilities.
+  Location Services _MUST_ be disabled. 
   
-  If the system does not require Location Services, support it is non-essential and must be disabled.
+  The information system _MUST_ be configured to provide only essential capabilities.  Disabling Location Services helps prevent the unauthorized connection of devices, unauthorized transfer of information, and unauthorized tunneling.
 check: |
   /usr/bin/defaults read /var/db/locationd/Library/Preferences/ByHost/com.apple.locationd.plist LocationServicesEnabled
 result:
@@ -19,7 +19,7 @@ references:
   cci: 
     - CCI-000381
   800-53r4: 
-    - CM-7(a)
+    - CM-7
   srg: 
     - SRG-OS-000095-GPOS-00049
   disa_stig: 

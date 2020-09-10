@@ -1,7 +1,9 @@
 id: sysprefs_token_removal_enforce
-title: "Configure user session lock when a smart token is removed"
+title: "Configure User Session Lock When a Smart Token is Removed"
 discussion: |
-  The screen lock must initiate when the smart token is removed from the system. 
+  The screen lock _MUST_ be configured to initiate automatically when the smart token is removed from the system.
+
+  Session locks are temporary actions taken when users stop work and move away from the immediate vicinity of the information system but do not want to log out because of the temporary nature of their absences. While a session lock is not an acceptable substitute for logging out of an information system for longer periods of time, they prevent a malicious user from accessing the information system when a user has removed their smart token. 
 check: |
   /usr/bin/profiles -P -o stdout | /usr/bin/grep -c 'tokenRemovalAction = 1'
 result:
@@ -14,7 +16,7 @@ references:
   cci:
     - CCI-000058
   800-53r4: 
-    - AC-11(a)
+    - AC-11
   srg: 
     - SRG-OS-000030-GPOS-00011
   disa_stig: 

@@ -1,8 +1,11 @@
 id: os_ir_support_disable
 title: "Disable Infrared (IR) support"
 discussion: |
-  IR support must be disabled to prevent users from controlling the system with IR devices. By default, if IR is enabled, the system will accept IR control from any remote device.
-  Note: This is only appliciable to Mac Mini systems with a model earlier than MacMini8,1. 
+  Infrared (IR) support _MUST_ be disabled to prevent users from controlling the system with IR devices. 
+  
+  By default, if IR is enabled, the system will accept IR control from any remote device. 
+  
+  Note: This is applicable only to models of Mac Mini systems earlier than Mac Mini8,1.
 check: |
   /usr/bin/profiles -P -o stdout | /usr/bin/grep -c 'DeviceEnabled = 0'
 result:
@@ -15,7 +18,8 @@ references:
   cci: 
     - CCI-000366
   800-53r4: 
-    - CM-6(b)
+    - CM-7
+    - AC-18
   srg: 
     - SRG-OS-000480-GPOS-00227
   disa_stig: 

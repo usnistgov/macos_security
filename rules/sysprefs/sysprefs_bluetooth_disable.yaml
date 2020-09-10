@@ -1,7 +1,7 @@
 id: sysprefs_bluetooth_disable
-title: "The macOS system must be configured with Bluetooth disabled when no device is paired"
+title: "Disable Bluetooth When no Approved Device is Connected"
 discussion: |
-  The macOS system must be configured to disable Bluetooth unless there is an approved paired device.
+  The macOS system _MUST_ be configured to disable Bluetooth unless there is an approved device connected.
 check: |
   /usr/bin/profiles -P -o stdout | /usr/bin/grep -c 'DisableBluetooth = 1'
 result:

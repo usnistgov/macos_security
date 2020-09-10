@@ -1,5 +1,5 @@
 id: audit_acls_folders_configure
-title: "Configure Audit Log Folder to Not Contain ACLs"
+title: "Configure Audit Log Folder to Not Contain Access Control Lists"
 discussion: |
   The audit log folder _MUST_ not contain access control lists (ACLs).
 
@@ -21,7 +21,7 @@ references:
     - CCI-001314
   800-53r4:
     - AU-9
-    - SI-11(b)
+    - SI-11
   srg:
     - SRG-OS-000057-GPOS-00027
     - SRG-OS-000206-GPOS-00084

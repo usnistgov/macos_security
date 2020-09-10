@@ -1,8 +1,11 @@
 id: os_secure_boot_verify
-title: "Ensure Secure Boot Level set to Full"
+title: "Ensure Secure Boot Level Set to Full"
 discussion: |
-  Full security is the default Secure Boot setting in macOS. During startup, the mac will verify the operating system before allowing the operating system to boot.
-  Note - This will only return a proper result on a T2 Mac
+  The Secure Boot security setting _MUST_ be set to full.
+
+  Full security is the default Secure Boot setting in macOS. During startup, when Secure Boot is set to full security, the Mac will verify the integrity of the operating system before allowing the operating system to boot. 
+
+  Note: This will only return a proper result on a T2 Mac
 check: |
   /usr/sbin/nvram 94b73556-2197-4702-82a8-3e1337dafbfb:AppleSecureBootPolicy | /usr/bin/grep -c '%02'
 result: 
@@ -13,9 +16,7 @@ references:
   cce:
     - CCE-84789-7
   800-53r4:
-    - SI-6(a)
-    - SI-6(b)
-    - SI-6(d)
+    - SI-6
   srg:
     - SRG-OS-000446-GPOS-00200
   disa_stig:

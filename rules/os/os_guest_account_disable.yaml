@@ -1,6 +1,8 @@
 id: os_guest_account_disable
-title: "The macOS system must disable the guest account."
+title: "Disable the Guest Account"
 discussion: |
+  Guest access _MUST_ be disabled. 
+  
   Turning off guest access prevents anonymous users from accessing files.
 check: |
   /usr/bin/profiles -P -o stdout | /usr/bin/grep -c 'DisableGuestAccount = 1'

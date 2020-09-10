@@ -21,7 +21,9 @@ references:
   cce:
     - CCE-84711-1
   800-53r4:
-    - AU-12(c)
+    - AU-2
+    - AU-12
+    - MA-4(1)
   srg:
     - SRG-OS-000470-GPOS-00214
     - SRG-OS-000472-GPOS-00217

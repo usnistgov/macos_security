@@ -1,7 +1,9 @@
 id: icloud_appleid_prefpane_disable
-title: "Disable the system preference pane for Apple ID"
+title: "Disable the System Preference Pane for Apple ID"
 discussion: |
-  The system preference panel for Apple ID must be disabled as it is not an organizationally approved cloud service.
+  The system preference pane for Apple ID _MUST_ be disabled.
+
+  Disabling the system preference pane prevents login to Apple ID and iCloud. 
 check: |
   /usr/bin/profiles -P -o stdout | /usr/bin/grep -c 'com.apple.preferences.AppleID'  
 result:
@@ -15,8 +17,9 @@ references:
     - CCI-000381
     - CCI-001774
   800-53r4: 
-    - CM-7(5)(b)
-    - CM-7(a)
+    - CM-7
+    - AC-20
+    - AC-20(1)
   srg: 
     - SRG-OS-000095-GPOS-00049
     - SRG-OS-000370-GPOS-00155

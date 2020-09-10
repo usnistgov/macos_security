@@ -1,7 +1,9 @@
 id: os_removable_media_disable
-title: "Disable removable USB storage devices"
+title: "Disable Removable Storage Devices"
 discussion: |
-  External hard drives, such as USB, must be disabled for users.
+  External hard drives, such as USB, _MUST_ be disabled for users.
+
+  Disabling removable storage devices reduces the risks and known vulnerabilities of such devices (e.g., malicious code insertion).
 check: |
   /usr/bin/profiles -P -o stdout | /usr/bin/grep 'harddisk-external' -A3 | /usr/bin/grep -Ec "eject|alert"
 result:

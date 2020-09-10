@@ -1,7 +1,9 @@
 id: os_parental_controls_enable
 title: "Enable Parental Controls"
 discussion: |
-  Parental Control on macOS consists of many different payloads which are set individually depending on the type of control required. Enabling parental contols allows for further configuration of these restrictions.
+  Parental Controls _MUST_ be enabled. 
+
+  Parental Controls on macOS consist of many different payloads, which are set individually depending on the type of control required. Enabling parental controls allows for further configuration of these restrictions.
 check: |
   /usr/bin/profiles -P -o stdout | /usr/bin/grep -c 'familyControlsEnabled = 1'
 result:

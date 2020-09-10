@@ -18,11 +18,10 @@ references:
   cce:
     - CCE-84726-9
   cci: 
-   - CCI-000186
+    - CCI-000186
   800-53r4: 
     - IA-2(12)
     - IA-5(2)
-    - IA-5(2)(d)
   srg: 
    - SRG-OS-000067-GPOS-00035
   disa_stig: 

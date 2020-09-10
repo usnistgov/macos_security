@@ -1,7 +1,9 @@
 id: pwpolicy_60_day_enforce
-title: "Enforce a 60-day maximum password lifetime restriction"
+title: "Restrict Maximum Password Lifetime to 60 Days"
 discussion: |
-  The macOS must limit the lifetime of a password to a maxiumum of at least 60 days and force users to change their passwords.
+  The macOS _MUST_ be configured to enforce a maximum password lifetime limit of at least 60 days. 
+
+  This rule ensures that users are forced to change their passwords frequently enough to prevent malicious users from gaining and maintaining access to the system.
 check: |
   /usr/bin/profiles -P -o stdout | /usr/bin/awk -F " = " '/maxPINAgeInDays/{sub(/;.*/,"");print $2}'
 result:
@@ -14,7 +16,8 @@ references:
   cci: 
     - CCI-000199
   800-53r4: 
-    - IA-5(1)(d)
+    - IA-5
+    - IA-5(1)
   srg: 
     - SRG-OS-000076-GPOS-00044
   disa_stig: 

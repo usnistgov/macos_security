@@ -1,0 +1,41 @@
+id: audit_flags_ex_configure
+title: "Configure System to Audit All Failed Program Execution on the System"
+discussion: |
+  The audit system _MUST_ be configured to record enforcement actions of access restrictions, including failed program execute (-ex) attempts.
+
+  Enforcement actions are the methods or mechanisms used to prevent unauthorized access and/or changes to configuration settings. One common and effective enforcement action method is using program execution restrictions (e.g., denying users access to execute certain processes). 
+  
+  This configuration ensures that audit lists include events in which program execution has failed. 
+  Without auditing the enforcement of program execution, it is difficult to identify attempted attacks, as there is no audit trail available for forensic investigation.
+check: |
+  /usr/bin/grep -Ec "^flags.*-ex" /etc/security/audit_control 
+result:
+  integer: 1
+fix: |
+  [source,bash]
+  ----
+  /usr/bin/sed -i.bak '/^flags/ s/$/,-ex/' /etc/security/audit_control; /usr/sbin/audit -s
+  ----
+references:
+  cci:
+    - N/A
+  cce:
+    - CCE-84913-3
+  800-53r4:
+    - AU-2
+    - AU-12
+    - CM-5(1)
+  srg:
+    - N/A
+  disa_stig:
+    - N/A
+macOS:
+  - "10.15"
+tags:
+  - cnssi-1253
+  - fisma-low
+  - fisma-moderate
+  - fisma-high
+  - STIG
+mobileconfig: false
+mobileconfig_info:

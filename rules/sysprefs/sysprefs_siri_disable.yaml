@@ -1,7 +1,9 @@
 id: sysprefs_siri_disable
 title: "Disable Siri"
 discussion: |
-  If the system does not require Siri, support for Siri is non-essential and must be disabled.
+  Support for Siri is non-essential and _MUST_ be disabled.
+
+  The information system _MUST_ be configured to provide only essential capabilities.
 check: |
   /usr/bin/profiles -P -o stdout | /usr/bin/grep -c '"Ironwood Allowed" = 0'
 result:
@@ -15,8 +17,8 @@ references:
     - CCI-000381
     - CCI-001774
   800-53r4: 
-    - CM-7(5)(b)
-    - CM-7(b)
+    - CM-7
+    - AC-20
   srg: 
     - SRG-OS-000095-GPOS-00049
     - SRG-OS-000370-GPOS-00155

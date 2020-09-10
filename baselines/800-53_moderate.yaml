@@ -18,6 +18,7 @@ profile:
       - audit_flags_fw_configure
       - audit_flags_fm_configure
       - audit_flags_lo_configure
+      - audit_flags_ex_configure
       - audit_folder_group_configure
       - audit_folder_owner_configure
       - audit_retention_configure
@@ -30,7 +31,6 @@ profile:
       - auth_smartcard_enforce
       - auth_smartcard_certificate_trust_enforce_moderate
       - auth_ssh_smartcard_enforce
-      - auth_smartcard_trusted_authorities_configure
   - section: "SystemPreferences"
     rules:
       - sysprefs_ad_tracking_disable
@@ -110,7 +110,7 @@ profile:
       - os_privacy_setup_prompt_disable
       - os_removable_media_disable
       - os_root_disable
-      - os_root_disable_sshd
+      - os_ssh_permit_root_login_configure
       - os_screensaver_ask_for_password_delay_enforce
       - os_screensaver_loginwindow_enforce
       - os_screensaver_password_enforce
@@ -144,10 +144,8 @@ profile:
       - pwpolicy_upper_case_character_enforce
   - section: "Inherent"
     rules:
-      - os_error_message
       - os_implement_memory_protection
       - os_implement_cryptography
-      - os_implement_random_address_space
       - os_limit_auditable_events
       - os_logical_access
       - os_map_pki_identity
@@ -172,8 +170,6 @@ profile:
     rules:
       - audit_alert_processing_fail
       - audit_enforce_dual_auth
-      - os_enforce_login_attempt_delay
-      - os_limit_invalid_logons
       - os_notify_account_created
       - os_notify_account_disabled
       - os_notify_account_enable

@@ -1,7 +1,9 @@
 id: sysprefs_diagnostics_reports_disable
-title: "Disable sending diagnostic and usage data to Apple"
+title: "Disable Sending Diagnostic and Usage Data to Apple"
 discussion: |
-  The ability to submit diagnostic data to Apple must be disabled.
+  The ability to submit diagnostic data to Apple _MUST_ be disabled.
+  
+  The information system _MUST_ be configured to provide only essential capabilities. Disabling the submission of diagnostic and usage information will mitigate the risk of unwanted data being sent to Apple. 
 check: |
   /usr/bin/profiles -P -o stdout | /usr/bin/grep -Ec '(allowDiagnosticSubmission = 0|AutoSubmit = 0)'
 result:
@@ -14,9 +16,8 @@ references:
   cci: 
     - CCI-000382
   800-53r4: 
-    - CM-7(b)
-    - SC-7(10)
-    - SI-4
+    - AC-20
+    - SI-11
   srg: 
     - SRG-OS-000096-GPOS-00050
   disa_stig: 

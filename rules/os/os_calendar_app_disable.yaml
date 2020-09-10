@@ -1,7 +1,7 @@
 id: os_calendar_app_disable
 title: "Disable Calendar.app"
 discussion: |
-  The macOS built-in Calendar.app can establish a connection to non-approved services. This control is in place to prevent inadvertent data transfers.
+  The macOS built-in Calendar.app _MUST_ be disabled as this application can establish a connection to non-approved services. This rule is in place to prevent inadvertent data transfers.
 check: 
   /usr/bin/profiles -P -o stdout | /usr/bin/grep -A 20 familyControlsEnabled | /usr/bin/grep -c "/Applications/Calendar.app"
 result:
@@ -15,8 +15,8 @@ references:
     - CCI-000381
     - CCI-001774
   800-53r4:
-    - CM-7(a)
-    - CM-7(5)(b)
+    - CM-7
+    - AC-20
   srg:
     - SRG-OS-000095-GPOS-00049
     - SRG-OS-000370-GPOS-00155

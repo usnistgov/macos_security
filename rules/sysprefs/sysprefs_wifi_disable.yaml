@@ -16,6 +16,7 @@ references:
     - CCI-001443
     - CCI-001444
   800-53r4: 
+    - AC-4
     - AC-18(1)
     - AC-18(3)
   disa_stig: 

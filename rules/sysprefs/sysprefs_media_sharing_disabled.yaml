@@ -1,7 +1,11 @@
 id: sysprefs_media_sharing_disabled
 title: "Disable Media Sharing"
 discussion: |
-  When Media Sharing is enabled, the computer starts a network listening service that shares the contents of the user's music collection with other users in the same subnet. Unnecessary network services should always be disabled because they increase the attack surface of the system. Disabling Media Sharing mitigates this risk.
+  Media sharing _MUST_ be disabled.
+
+  When Media Sharing is enabled, the computer starts a network listening service that shares the contents of the user’s music collection with other users in the same subnet. 
+
+  The information system _MUST_ be configured to provide only essential capabilities. Disabling Media Sharing helps prevent the unauthorized connection of devices and the unauthorized transfer of information. Disabling Media Sharing mitigates this risk.
 check: |
   /sbin/pfctl -a '*' -sr &> /dev/null | /usr/bin/grep -c "block drop log proto tcp from any to any port = 3689" 
 result:
@@ -12,7 +16,7 @@ references:
   cce:
     - CCE-84771-5
   800-53r4:
-    - CM-7(b)
+    - AC-3
   srg: 
     - SRG-OS-000480-GPOS-00227
   disa_stig:

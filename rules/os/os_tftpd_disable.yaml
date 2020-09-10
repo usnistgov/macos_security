@@ -1,7 +1,9 @@
 id: os_tftpd_disable
-title: "Disable Trvial File Transfer Protocol (TFTP) service"
+title: "Disable Trivial File Tansfer Protocol Service"
 discussion: |
-  If the system does not require acting as an TFTP server, support for TFTP is non-essential and TFTP services must be disabled.
+  If the system does not require Trivial File Tansfer Protocol (TFTP), support it is non-essential and _MUST_ be disabled.
+
+  The information system _MUST_ be configured to provide only essential capabilities. Disabling TFTP helps prevent the unauthorized connection of devices and the unauthorized transfer of information.  
 check: |
   /bin/launchctl print-disabled system | /usr/bin/grep -c '"com.apple.tftpd" => true'
 result:
@@ -18,7 +20,7 @@ references:
   cci: 
     - N/A
   800-53r4:
-    - CM-7(a)
+    - AC-3
   srg:
     - N/A
   disa_stig:

@@ -1,7 +1,7 @@
 id: os_nfsd_disable
-title: "Disable Network File System (NFS) service"
+title: "Disable Network File System Service"
 discussion: |
-  If the system does not require access to NFS file shares or is not acting as an NFS server, support for NFS is non-essential and NFS services must be disabled.
+  Support for Network File Systems (NFS) services is non-essential and, therefore, _MUST_ be disabled.
 check: |
   /bin/launchctl print-disabled system | /usr/bin/grep -c '"com.apple.nfsd" => true'
 result:
@@ -18,7 +18,7 @@ references:
   cci: 
     - CCI-000381
   800-53r4:
-    - CM-7(a)
+    - AC-3
   srg:
     - SRG-OS-000095-GPOS-00049
   disa_stig:

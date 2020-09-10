@@ -23,9 +23,11 @@ references:
   cci:
     - CCI-000162
   800-53r4: 
-    - AU-12(c)
+    - AU-2  
+    - AU-12
     - AU-9
     - CM-5(1)
+    - MA-4(1)
   srg: 
     - SRG-OS-000365-GPOS-00152
     - SRG-OS-000458-GPOS-00203

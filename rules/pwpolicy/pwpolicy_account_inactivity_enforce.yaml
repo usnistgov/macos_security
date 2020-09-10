@@ -1,7 +1,9 @@
 id: pwpolicy_account_inactivity_enforce
-title: "Disable accounts after 35 days of inactivity"
+title: "Disable Accounts after 35 Days of Inactivity"
 discussion: |
-  The macOS must disable accounts after 35 days of inactivity.
+  The macOS _MUST_ be configured to disable accounts after 35 days of inactivity.
+
+  This rule prevents malicious users from making use of unused accounts to gain access to the system while avoiding detection. 
 check: | 
   /usr/bin/pwpolicy getaccountpolicies | /usr/bin/grep -v "Getting global account policies" | /usr/bin/xmllint --xpath '/plist/dict/array/dict/dict[key="policyAttributeInactiveDays"]/integer' - | /usr/bin/awk -F '[<>]' '{print $3}'
 result:
@@ -38,7 +40,7 @@ references:
   cci: 
     - CCI-000795
   800-53r4: 
-    - IA-4(e)
+    - IA-4
   srg: 
     - SRG-OS-000118-GPOS-00060
   disa_stig: 

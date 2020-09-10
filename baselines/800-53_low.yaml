@@ -18,6 +18,7 @@ profile:
       - audit_flags_fw_configure
       - audit_flags_fm_configure
       - audit_flags_lo_configure
+      - audit_flags_ex_configure
       - audit_folder_group_configure
       - audit_folder_owner_configure
       - audit_retention_configure
@@ -29,7 +30,6 @@ profile:
       - auth_smartcard_allow
       - auth_smartcard_enforce
       - auth_ssh_smartcard_enforce
-      - auth_smartcard_trusted_authorities_configure
   - section: "SystemPreferences"
     rules:
       - sysprefs_ad_tracking_disable
@@ -99,7 +99,7 @@ profile:
       - os_privacy_setup_prompt_disable
       - os_removable_media_disable
       - os_root_disable
-      - os_root_disable_sshd
+      - os_ssh_permit_root_login_configure
       - os_siri_prompt_disable
       - os_ssh_fips_140_ciphers
       - os_ssh_fips_140_macs

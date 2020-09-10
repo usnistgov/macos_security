@@ -19,6 +19,7 @@ profile:
       - audit_flags_fw_configure
       - audit_flags_fm_configure
       - audit_flags_lo_configure
+      - audit_flags_ex_configure
       - audit_folder_group_configure
       - audit_folder_owner_configure
       - audit_retention_configure
@@ -32,7 +33,6 @@ profile:
       - auth_smartcard_enforce
       - auth_smartcard_certificate_trust_enforce_high
       - auth_ssh_smartcard_enforce
-      - auth_smartcard_trusted_authorities_configure
   - section: "SystemPreferences"
     rules:
       - sysprefs_ad_tracking_disable
@@ -113,8 +113,6 @@ profile:
       - os_power_nap_disable
       - os_privacy_setup_prompt_disable
       - os_removable_media_disable
-      - os_root_disable
-      - os_root_disable_sshd
       - os_screensaver_ask_for_password_delay_enforce
       - os_screensaver_loginwindow_enforce
       - os_screensaver_password_enforce
@@ -127,6 +125,7 @@ profile:
       - os_ssh_fips_140_macs
       - os_ssh_login_grace_time_configure
       - os_ssh_max_sessions_configure
+      - os_ssh_permit_root_login_configure
       - os_sudoers_tty_configure
       - os_system_wide_preferences_configure
       - os_time_server_enabled
@@ -152,7 +151,6 @@ profile:
     rules:
       - os_crypto_audit
       - os_enforce_access_restrictions
-      - os_error_message
       - os_fail_secure_state
       - os_implement_memory_protection
       - os_implement_cryptography

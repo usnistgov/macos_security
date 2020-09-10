@@ -1,7 +1,9 @@
 id: os_facetime_app_disable
 title: "Disable FaceTime.app"
 discussion: |
-  The macOS built-in FaceTime.app establishes a connection to Apple's iCloud service, despite using security controls to disable iCloud access.
+  The macOS built-in FaceTime.app _MUST_ be disabled. 
+
+  The FaceTime.app establishes a connection to Apple’s iCloud service, even when security controls have been put in place to disable iCloud access. 
 check: | 
   /usr/bin/profiles -P -o stdout | /usr/bin/grep -A 20 familyControlsEnabled | /usr/bin/grep -c "/Applications/FaceTime.app"
 result:
@@ -15,8 +17,8 @@ references:
     - CCI-000381
     - CCI-001774
   800-53r4:
-    - CM-7(a)
-    - CM-7(5)(b)
+    - CM-7
+    - AC-20
   srg:
     - SRG-OS-000095-GPOS-00049
     - SRG-OS-000370-GPOS-00155

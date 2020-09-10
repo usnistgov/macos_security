@@ -1,7 +1,7 @@
 id: os_screensaver_loginwindow_enforce
-title: "Enforce screen saver at login window"
+title: "Enforce Screen Saver at Login Window"
 discussion: |
-  A default screen saver must be configured to display at the login window and must not display any sensitive information.
+  A default screen saver _MUST_ be configured to display at the login window and _MUST_ not display any sensitive information.
 check: |
   /usr/bin/profiles -P -o stdout  | /usr/bin/grep -c loginWindowModulePath
 result:

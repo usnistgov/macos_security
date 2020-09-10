@@ -1,7 +1,9 @@
 id: icloud_sync_disable
 title: "Disable iCloud Desktop and Document Folder Sync"
 discussion: |
-  The macOS system's ability to automatically synchronize a user's desktop and documents folder to their iCloud Drive must be disabled. Automated file synchronization shall be planned and controlled to Agency approved storage.
+  The macOS system’s ability to automatically synchronize a user’s desktop and documents folder to their iCloud Drive _MUST_ be disabled.
+
+  Apple’s iCloud service does not provide an organization with enough control over the storage and access of data and, therefore, automated file synchronization _MUST_ be controlled by an organization approved service. 
 check: |
   /usr/bin/profiles -P -o stdout | /usr/bin/grep -c 'allowCloudDesktopAndDocuments = 0'
 result:
@@ -14,8 +16,9 @@ references:
   cci:
     - N/A
   800-53r4:
-    - CM-7(a)
-    - CM-7(5)(b)
+    - CM-7
+    - AC-20
+    - AC-20(1)
   srg:
     - SRG-OS-000095-GPOS-00049
     - SRG-OS-000370-GPOS-00155
