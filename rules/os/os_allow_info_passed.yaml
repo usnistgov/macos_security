@@ -5,7 +5,7 @@ discussion: |
 
   The macOS is a UNIX 03-compliant operating system, which allows owners of object to have discretion over who should be authorized to access information.
 
-  link:https://developer.apple.com/library/archive/documentation/Security/Conceptual/AuthenticationAndAuthorizationGuide/Permissions/Permissions.html
+  link:https://developer.apple.com/library/archive/documentation/Security/Conceptual/AuthenticationAndAuthorizationGuide/Permissions/Permissions.html[]
 check: |
   The technology supports this requirement and cannot be configured to be out of compliance. The technology inherently meets this requirement.
 fix: |

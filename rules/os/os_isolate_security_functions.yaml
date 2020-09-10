@@ -3,7 +3,7 @@ title: "Isolate security functions from non-security functions"
 discussion: |
   The information system _MUST_ be configured to isolate security functions from non-security functions. 
   
-  link:https://support.apple.com/guide/security/welcome/web
+  link:https://support.apple.com/guide/security/welcome/web[]
 check: |
   The technology supports this requirement and cannot be configured to be out of compliance. The technology inherently meets this requirement.
 fix: |
