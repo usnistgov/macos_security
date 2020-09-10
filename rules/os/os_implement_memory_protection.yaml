@@ -1,7 +1,7 @@
 id: os_implement_memory_protection
 title: "Configure the System to Protect Memory from Unauthorized Code Execution"
 discussion: |
-  The information system _MUST_ be configured to implement non-executable data to protect memory from code execution.
+  The information system _IS_ configured to implement non-executable data to protect memory from code execution.
 
   Some adversaries launch attacks with the intent of executing code in non-executable regions of memory or in memory locations that are prohibited (e.g., buffer overflow attacks). Security safeguards (e.g., data execution prevention and address space layout randomization) can be employed to protect non-executable regions of memory. Data execution prevention safeguards can either be hardware-enforced or software-enforced; hardware-enforced methods provide the greater strength of mechanism. 
 
