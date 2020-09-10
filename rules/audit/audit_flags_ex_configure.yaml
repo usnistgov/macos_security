@@ -14,7 +14,7 @@ result:
 fix: |
   [source,bash]
   ----
-  /usr/bin/sed -i.bak '/^flags/ s/$/,aa/' /etc/security/audit_control; /usr/sbin/audit -s
+  /usr/bin/sed -i.bak '/^flags/ s/$/,-ex/' /etc/security/audit_control; /usr/sbin/audit -s
   ----
 references:
   cci:
