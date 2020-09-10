@@ -8,7 +8,7 @@ discussion: |
   This configuration ensures that audit lists include events in which program execution has failed. 
   Without auditing the enforcement of program execution, it is difficult to identify attempted attacks, as there is no audit trail available for forensic investigation.
 check: |
-  /usr/bin/grep -Ec "^flags.*aa" /etc/security/audit_control 
+  /usr/bin/grep -Ec "^flags.*-ex" /etc/security/audit_control 
 result:
   integer: 1
 fix: |
