@@ -26,9 +26,13 @@ references:
   disa_stig: 
     - AOSX-14-002034
     - AOSX-14-002039
+  800-171r2:
+    - 3.1.20
+    - 3.4.6
 macOS:
   - "10.15"
 tags:
+  - 800-171
   - cnssi-1253
   - fisma-low
   - fisma-moderate

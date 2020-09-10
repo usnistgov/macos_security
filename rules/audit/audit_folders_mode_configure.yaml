@@ -28,9 +28,12 @@ references:
     - SRG-OS-000057-GPOS-00027
   disa_stig: 
     - AOSX-14-001017
+  800-171r2:
+    - 3.3.8
 macOS:
   - "10.15"
 tags:
+  - 800-171
   - cnssi-1253
   - fisma-low
   - fisma-moderate

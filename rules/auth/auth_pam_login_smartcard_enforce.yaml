@@ -48,9 +48,12 @@ references:
     - AOSX-14-003050
     - AOSX-14-003051
     - AOSX-14-003052
+  800-171r2:
+    - 3.5.3
 macOS:
   - "10.15"
 tags:
+  - 800-171
   - cnssi-1253
   - fisma-low
   - fisma-moderate

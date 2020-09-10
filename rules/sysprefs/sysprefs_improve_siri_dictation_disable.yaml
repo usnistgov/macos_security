@@ -17,9 +17,13 @@ references:
     - CM-7
     - AC-20
     - SC-7(10)
+  800-171r2:
+    - 3.1.20
+    - 3.4.6
 macOS:
   - "10.15"
 tags:
+  - 800-171
   - cnssi-1253
   - fisma-low
   - fisma-moderate

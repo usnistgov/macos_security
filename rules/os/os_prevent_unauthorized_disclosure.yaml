@@ -17,9 +17,12 @@ references:
     - N/A
   srg:
     - SRG-OS-000138-GPOS-00069
+  800-171r2:
+    - 3.13.4
 macOS:
   - "10.15"
 tags:
+  - 800-171
   - cnssi-1253
   - fisma-moderate
   - fisma-high
