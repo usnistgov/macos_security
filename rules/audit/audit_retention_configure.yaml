@@ -20,6 +20,7 @@ references:
     - CCI-001849
   800-53r4:
     - AU-4
+    - AU-11
   srg:
     - SRG-OS-000341-GPOS-00132
   disa_stig:
