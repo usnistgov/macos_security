@@ -5,7 +5,7 @@ discussion: |
   
   The Apple T2 Security Chip includes a dedicated Advanced Encryption Standard (AES) crypto engine built into the direct memory access (DMA) path between the flash storage and main system memory, which powers line-speed encrypted storage with FileVault and makes internal volume highly efficient. 
   
-  link:https://www.apple.com/euro/mac/shared/docs/Apple_T2_Security_Chip_Overview.pdf
+  link:https://www.apple.com/euro/mac/shared/docs/Apple_T2_Security_Chip_Overview.pdf[]
   
   NOTE: This will only apply to a Mac that includes a T2 security chip. 
 check: |

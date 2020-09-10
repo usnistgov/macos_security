@@ -768,7 +768,7 @@ def generate_xls(baseline_name, build_path, baseline_yaml):
         sheet1.col(3).width = 700 * 35
         mechanism = "Manual"
         if "[source,bash]" in rule.rule_fix:
-            mechanism = "Scipt"
+            mechanism = "Script"
         if "This is implemented by a Configuration Profile." in rule.rule_fix:
             mechanism = "Configuration Profile"
         if "inherent" in rule.rule_tags:
@@ -1131,17 +1131,17 @@ def main():
                     rule_id=rule_yaml['id'].replace('|', '\|'),
                     rule_discussion=rule_yaml['discussion'],
                 )
-            # elif ('permanent' in tags) or ('inherent' in tags) or ('n_a' in tags):
-            #     rule_adoc = adoc_rule_no_setting_template.substitute(
-            #         rule_title=rule_yaml['title'].replace('|', '\|'),
-            #         rule_id=rule_yaml['id'].replace('|', '\|'),
-            #         rule_discussion=rule_yaml['discussion'].replace('|', '\|'),
-            #         rule_check=rule_yaml['check'],  # .replace('|', '\|'),
-            #         rule_fix=rulefix,
-            #         rule_80053r4=nist_controls,
-            #         rule_disa_stig=disa_stig,
-            #         rule_srg=srg
-            #     )
+            elif ('permanent' in tags) or ('inherent' in tags) or ('n_a' in tags):
+                rule_adoc = adoc_rule_no_setting_template.substitute(
+                    rule_title=rule_yaml['title'].replace('|', '\|'),
+                    rule_id=rule_yaml['id'].replace('|', '\|'),
+                    rule_discussion=rule_yaml['discussion'].replace('|', '\|'),
+                    rule_check=rule_yaml['check'],  # .replace('|', '\|'),
+                    rule_fix=rulefix,
+                    rule_80053r4=nist_controls,
+                    rule_disa_stig=disa_stig,
+                    rule_srg=srg
+                )
             else:
                 rule_adoc = adoc_rule_template.substitute(
                     rule_title=rule_yaml['title'].replace('|', '\|'),

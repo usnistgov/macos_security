@@ -7,7 +7,7 @@ discussion: |
 
   Apple File System (APFS) is the default file system for Mac computers using macOS 10.13 and all later versions. APFS includes native encryption, safe document saves, stable snapshots, and crash protection; these features ensure that the macOS fails to safe state. 
 
-  link:https://developer.apple.com/videos/play/wwdc2017/715/
+  link:https://developer.apple.com/videos/play/wwdc2017/715/[]
 check: |
   The technology supports this requirement and cannot be configured to be out of compliance. The technology inherently meets this requirement.
 fix: |

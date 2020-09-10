@@ -5,7 +5,7 @@ discussion: |
   
   The macOS is a UNIX 03-compliant operating system which allows administrators of the system to grant privileges to other users.
 
-  link:https://support.apple.com/guide/mac-help/set-up-other-users-on-your-mac-mtusr001/mac
+  link:https://support.apple.com/guide/mac-help/set-up-other-users-on-your-mac-mtusr001/mac[]
 check: |
   The technology supports this requirement and cannot be configured to be out of compliance. The technology inherently meets this requirement.
 fix: |

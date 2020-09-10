@@ -146,7 +146,6 @@ profile:
     rules:
       - os_implement_memory_protection
       - os_implement_cryptography
-      - os_implement_random_address_space
       - os_limit_auditable_events
       - os_logical_access
       - os_map_pki_identity
@@ -171,8 +170,6 @@ profile:
     rules:
       - audit_alert_processing_fail
       - audit_enforce_dual_auth
-      - os_enforce_login_attempt_delay
-      - os_limit_invalid_logons
       - os_notify_account_created
       - os_notify_account_disabled
       - os_notify_account_enable
