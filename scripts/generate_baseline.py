@@ -148,6 +148,55 @@ def available_tags(all_rules):
         print(tag)
     return
 
+def output_baseline(rules, keyword):
+    inherent_rules = []
+    permanent_rules = []
+    na_rules = []
+    supplemental_rules = []
+    other_rules = []
+
+    for rule in rules:
+        if "inherent" in rule.rule_tags:
+            inherent_rules.append(rule.rule_id)
+        elif "permanent" in rule.rule_tags:
+            permanent_rules.append(rule.rule_id)
+        elif "n_a" in rule.rule_tags:
+            na_rules.append(rule.rule_id)
+        elif "supplemental" in rule.rule_tags:
+            supplemental_rules.append(rule.rule_id)
+        else:
+            other_rules.append(rule.rule_id)
+
+    print('title: "macOS 10.15 (Catalina): Security Configuration - {}"'.format(keyword))
+    print('description: |\n  This guide describes the actions to take when securing a macOS 10.15 system against the {} baseline.'.format(keyword))
+    print('profile:')
+
+    print('  - section: "All"')
+    print("    rules:")
+    for rule in other_rules:
+        print("      - {}".format(rule))
+    
+    print('    section: "Inherent"')
+    print("    rules:")
+    for rule in inherent_rules:
+        print("      - {}".format(rule))
+    
+    print('    section: "Permanent"')
+    print("    rules:")
+    for rule in permanent_rules:
+        print("      - {}".format(rule))
+    
+    print('    section: "Not Applicable"')
+    print("    rules:")
+    for rule in na_rules:
+        print("      - {}".format(rule))
+    
+    print('    section: "Supplemental"')
+    print("    rules:")
+    for rule in supplemental_rules:
+        print("      - {}".format(rule))
+
+
 def main():
 
     args = create_args()
@@ -188,8 +237,7 @@ def main():
         print("No rules found for the keyword provided, please verify from the following list:")
         available_tags(all_rules)
     else:
-        for rule in found_rules:
-            print(rule)
+        output_baseline(all_rules, args.keyword)
     # finally revert back to the prior directory
     os.chdir(original_working_directory)
 
