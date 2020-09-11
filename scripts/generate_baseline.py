@@ -154,6 +154,7 @@ def output_baseline(rules, keyword):
     na_rules = []
     supplemental_rules = []
     other_rules = []
+    sections = []
 
     for rule in rules:
         if "inherent" in rule.rule_tags:
@@ -166,35 +167,45 @@ def output_baseline(rules, keyword):
             supplemental_rules.append(rule.rule_id)
         else:
             other_rules.append(rule.rule_id)
+            section_name = rule.rule_id.split("_")[0]
+            if section_name not in sections:
+                sections.append(section_name)
 
     print('title: "macOS 10.15 (Catalina): Security Configuration - {}"'.format(keyword))
     print('description: |\n  This guide describes the actions to take when securing a macOS 10.15 system against the {} baseline.'.format(keyword))
     print('profile:')
 
-    print('  - section: "All"')
-    print("    rules:")
-    for rule in other_rules:
-        print("      - {}".format(rule))
+    if len(other_rules) > 0:
+        for section in sections:
+            print('  - section: "{}"'.format(section))
+            print("    rules:")
+            for rule in other_rules:
+                if rule.startswith(section):
+                    print("      - {}".format(rule))
     
-    print('    section: "Inherent"')
-    print("    rules:")
-    for rule in inherent_rules:
-        print("      - {}".format(rule))
-    
-    print('    section: "Permanent"')
-    print("    rules:")
-    for rule in permanent_rules:
-        print("      - {}".format(rule))
-    
-    print('    section: "Not Applicable"')
-    print("    rules:")
-    for rule in na_rules:
-        print("      - {}".format(rule))
-    
-    print('    section: "Supplemental"')
-    print("    rules:")
-    for rule in supplemental_rules:
-        print("      - {}".format(rule))
+    if len(inherent_rules) > 0:
+        print('  - section: "Inherent"')
+        print("    rules:")
+        for rule in inherent_rules:
+            print("      - {}".format(rule))
+
+    if len(permanent_rules) > 0:
+        print('  - section: "Permanent"')
+        print("    rules:")
+        for rule in permanent_rules:
+            print("      - {}".format(rule))
+
+    if len(na_rules) > 0:
+        print('  - section: "Not Applicable"')
+        print("    rules:")
+        for rule in na_rules:
+            print("      - {}".format(rule))
+
+    if len(supplemental_rules) > 0:
+        print('  - section: "Supplemental"')
+        print("    rules:")
+        for rule in supplemental_rules:
+            print("      - {}".format(rule))
 
 
 def main():
@@ -231,13 +242,16 @@ def main():
     found_rules = []
     for rule in all_rules:
         if args.keyword in rule.rule_tags:
-            found_rules.append(rule.rule_id)
+            found_rules.append(rule)
+        # assume all baselines will contain the supplemental rules
+        if "supplemental" in rule.rule_tags:
+            found_rules.append(rule)
     
     if len(found_rules) == 0:
         print("No rules found for the keyword provided, please verify from the following list:")
         available_tags(all_rules)
     else:
-        output_baseline(all_rules, args.keyword)
+        output_baseline(found_rules, args.keyword)
     # finally revert back to the prior directory
     os.chdir(original_working_directory)
 
