@@ -131,6 +131,21 @@ def create_args():
     
     return parser.parse_args()
 
+def section_title(section_name):
+    titles = {
+        "auth": "Authentication",
+        "audit": "Audit",
+        "os": "macOS",
+        "pwpolicy": "Password Policy",
+        "icloud": "iCloud",
+        "sysprefs": "System Preferences",
+        "srg": "DISA SRGs"
+    }
+    if section_name in titles:
+        return titles[section_name]
+    else:
+        return section_name
+
 def available_tags(all_rules):
     all_tags = []
     for rule in all_rules:
@@ -178,7 +193,7 @@ def output_baseline(rules, keyword):
 
     if len(other_rules) > 0:
         for section in sections:
-            output_text += ('  - section: "{}"\n'.format(section))
+            output_text += ('  - section: "{}"\n'.format(section_title(section)))
             output_text += ("    rules:\n")
             for rule in other_rules:
                 if rule.startswith(section):
