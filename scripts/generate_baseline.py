@@ -133,13 +133,13 @@ def create_args():
 
 def section_title(section_name):
     titles = {
-        "auth": "Authentication",
-        "audit": "Audit",
-        "os": "macOS",
-        "pwpolicy": "Password Policy",
-        "icloud": "iCloud",
-        "sysprefs": "System Preferences",
-        "srg": "DISA SRGs"
+        "auth": "authentication",
+        "audit": "auditing",
+        "os": "macos",
+        "pwpolicy": "passwordpolicy",
+        "icloud": "icloud",
+        "sysprefs": "systempreferences",
+        "srg": "disa_srg"
     }
     if section_name in titles:
         return titles[section_name]

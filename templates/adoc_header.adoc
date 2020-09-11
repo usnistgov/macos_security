@@ -12,6 +12,7 @@
 :xrefstyle: full
 :source-highlighter: rouge
 :nofooter:
+$nist171_attribute
 ifdef::backend-pdf[]
 = $profile_title
 v0.9, 2020-06-19

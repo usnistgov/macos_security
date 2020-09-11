@@ -35,6 +35,11 @@ $rule_fix
 !800-53r4
 !$rule_80053r4
 
+ifdef::show_171[]
+!800-171r2
+!$rule_800171
+endif::[]
+
 !CCE
 !$rule_cce
 

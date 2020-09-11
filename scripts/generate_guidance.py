@@ -994,6 +994,8 @@ def main():
     else:
         adoc_tag_show=":show_tags!:"
 
+    adoc_171_show=":show_171:"
+
     # Create header
     header_adoc = adoc_header_template.substitute(
         profile_title=baseline_yaml['title'],
@@ -1002,7 +1004,8 @@ def main():
         html_title=baseline_yaml['title'].split(':')[0],
         html_subtitle=baseline_yaml['title'].split(':')[1],
         logo=logo,
-        tag_attribute=adoc_tag_show
+        tag_attribute=adoc_tag_show,
+        nist171_attribute=adoc_171_show,
     )
 
     # Output header
@@ -1071,6 +1074,14 @@ def main():
             else:
                 #nist_80053r4 = ulify(rule_yaml['references']['800-53r4'])
                 nist_80053r4 = rule_yaml['references']['800-53r4']
+            
+            try:
+                rule_yaml['references']['800-171r2']
+            except KeyError:
+                nist_800171 = 'N/A'
+            else:
+                #nist_80053r4 = ulify(rule_yaml['references']['800-53r4'])
+                nist_800171 = ulify(rule_yaml['references']['800-171r2'])
 
             try:
                 rule_yaml['references']['disa_stig']
@@ -1149,6 +1160,7 @@ def main():
                     rule_check=rule_yaml['check'],  # .replace('|', '\|'),
                     rule_fix=rulefix,
                     rule_80053r4=nist_controls,
+                    rule_800171=nist_800171,
                     rule_disa_stig=disa_stig,
                     rule_srg=srg
                 )
@@ -1161,6 +1173,7 @@ def main():
                     rule_fix=rulefix,
                     rule_cci=cci,
                     rule_80053r4=nist_controls,
+                    rule_800171=nist_800171,
                     rule_cce=cce,
                     rule_tags=tags,
                     rule_srg=srg,
