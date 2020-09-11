@@ -1,7 +1,7 @@
 id: os_allow_info_passed
 title: "Allow Information Transfer with Other Operating Systems"
 discussion: |
-  The information system _MUST_ be configured to allow the transfer of information to and from other operating systems and users.
+  The information system _IS_ configured to allow the transfer of information to and from other operating systems and users.
 
   The macOS is a UNIX 03-compliant operating system, which allows owners of object to have discretion over who should be authorized to access information.
 

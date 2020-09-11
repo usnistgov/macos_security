@@ -1,7 +1,7 @@
 id: os_enforce_access_restrictions
 title: "Enforce Access Restrictions"
 discussion: |
-  The information system _MUST_ enforce access restrictions and support auditing of the enforcement actions.
+  The information system _IS_ configured to enforce access restrictions and support auditing of the enforcement actions.
   
   The inherent configuration of a macOS provides users with the ability to set their own permission settings to control who can view and alter files on the computer. 
 

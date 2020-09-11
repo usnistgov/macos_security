@@ -21,7 +21,6 @@ references:
 macOS:
   - "10.15"
 tags:
-  - cnssi-1253
   - STIG
   - inherent
 mobileconfig: false

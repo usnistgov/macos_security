@@ -1,6 +1,6 @@
-title: "macOS 10.15 (Catalina): Security Configuration - CNSSI-1253"
+title: "macOS 10.15 (Catalina): Security Configuration - 800-53 Moderate"
 description: |
-  This guide describes the actions to take when securing a macOS 10.15 system against the CNSSI-1253 baseline.  
+  This guide describes the actions to take when securing a macOS 10.15 system against the NIST SP 800-53 MODERATE baseline.  
 profile:
   - section: "Auditing"
     rules:
@@ -17,8 +17,8 @@ profile:
       - audit_flags_fr_configure
       - audit_flags_fw_configure
       - audit_flags_fm_configure
-      - audit_flags_ex_configure
       - audit_flags_lo_configure
+      - audit_flags_ex_configure
       - audit_folder_group_configure
       - audit_folder_owner_configure
       - audit_retention_configure
@@ -107,7 +107,6 @@ profile:
       - os_policy_banner_ssh_configure
       - os_policy_banner_ssh_enforce
       - os_power_nap_disable
-      - os_privacy_setup_prompt_disable
       - os_removable_media_disable
       - os_root_disable
       - os_ssh_permit_root_login_configure
@@ -144,36 +143,25 @@ profile:
       - pwpolicy_upper_case_character_enforce
   - section: "Inherent"
     rules:
-      - os_error_message
       - os_implement_memory_protection
       - os_implement_cryptography
-      - os_implement_random_address_space
-      - os_limit_auditable_events
       - os_logical_access
-      - os_map_pki_identity
-      - os_mfa_network_access
-      - os_mfa_network_non-priv
       - os_obscure_password
       - os_peripherals_identify
       - os_prevent_priv_functions
       - os_prevent_restricted_software
       - os_prevent_unauthorized_disclosure
-      - os_remote_access_methods
       - os_required_crypto_module
       - os_separate_fuctionality
       - os_store_encrypted_passwords
-      - os_terminate_session
       - os_terminate_session_inactivity
-      - os_unique_identification
       - pwpolicy_emergency_accounts_disable
       - pwpolicy_force_password_change
       - pwpolicy_temporary_accounts_disable
   - section: "Permanent"
     rules:
-      - audit_alert_processing_fail
       - audit_enforce_dual_auth
-      - os_enforce_login_attempt_delay
-      - os_limit_invalid_logons
+      - os_auth_peripherals
       - os_notify_account_created
       - os_notify_account_disabled
       - os_notify_account_enable
@@ -182,11 +170,9 @@ profile:
       - os_protect_dos_attacks
       - os_provide_automated_account_management
       - pwpolicy_50_percent
-      - pwpolicy_prevent_dictionary_words
       - sysprefs_wifi_disable
   - section: "not_applicable"
     rules:
-      - os_auth_peripherals
       - os_identify_non-org_users
       - os_request_verification_name_resolution
   - section: "Supplemental"

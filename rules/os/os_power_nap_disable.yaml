@@ -33,9 +33,12 @@ references:
     - N/A
   cci:
     - N/A    
+  800-171r2:
+    - 3.4.6
 macOS:
   - "10.15"
 tags:
+  - 800-171
   - cnssi-1253
   - fisma-low
   - fisma-moderate

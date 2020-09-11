@@ -30,10 +30,13 @@ references:
     - SRG-OS-000024-GPOS-00007
   disa_stig: 
     - AOSX-14-000024
+  800-171r2:
+    - 3.1.9
 macOS:
   - "10.15"
   - "10.14"
 tags:
+  - 800-171
   - cnssi-1253
   - fisma-low
   - fisma-moderate

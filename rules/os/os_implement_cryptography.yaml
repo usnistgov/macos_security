@@ -1,7 +1,7 @@
 id: os_implement_cryptography
 title: "Configure the System to Implement Approved Cryptography to Protect Information"
 discussion: |
-  The information system _MUST_ be configured to implement approved cryptography to protect information. 
+  The information system _IS_ configured to implement approved cryptography to protect information. 
 
   Use of weak or untested encryption algorithms undermines the purposes of utilizing encryption to protect data. The operating system must implement cryptographic modules that adhere to the higher standards that have been tested, validated, and approved by the federal government. 
 
@@ -24,9 +24,12 @@ references:
     - N/A
   srg:
     - SRG-OS-000396-GPOS-00176
+  800-171r2:
+    - 3.13.11
 macOS:
   - "10.15"
 tags:
+  - 800-171
   - cnssi-1253
   - fisma-low
   - fisma-moderate
