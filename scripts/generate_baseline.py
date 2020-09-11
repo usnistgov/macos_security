@@ -126,7 +126,7 @@ def create_args():
         description='Given a keyword tag, generate a generic baseline.yaml file containing rules with the tag.')
     parser.add_argument("-k", "--keyword", default=None,
                         help="Keyword tag to collect rules containing the tag.", action="store")
-    parser.add_argument("-t", "--tags", default=None,
+    parser.add_argument("-l", "--list_tags", default=None,
                         help="List the available keyword tags to search for.", action="store_true")
     
     return parser.parse_args()
@@ -155,6 +155,7 @@ def output_baseline(rules, keyword):
     supplemental_rules = []
     other_rules = []
     sections = []
+    output_text = ""
 
     for rule in rules:
         if "inherent" in rule.rule_tags:
@@ -171,41 +172,43 @@ def output_baseline(rules, keyword):
             if section_name not in sections:
                 sections.append(section_name)
 
-    print('title: "macOS 10.15 (Catalina): Security Configuration - {}"'.format(keyword))
-    print('description: |\n  This guide describes the actions to take when securing a macOS 10.15 system against the {} baseline.'.format(keyword))
-    print('profile:')
+    output_text = f'title: "macOS 10.15 (Catalina): Security Configuration - {keyword}"\n'
+    output_text += f'description: |\n  This guide describes the actions to take when securing a macOS 10.15 system against the {keyword} baseline.\n'
+    output_text += 'profile:\n'
 
     if len(other_rules) > 0:
         for section in sections:
-            print('  - section: "{}"'.format(section))
-            print("    rules:")
+            output_text += ('  - section: "{}"\n'.format(section))
+            output_text += ("    rules:\n")
             for rule in other_rules:
                 if rule.startswith(section):
-                    print("      - {}".format(rule))
+                    output_text += ("      - {}\n".format(rule))
     
     if len(inherent_rules) > 0:
-        print('  - section: "Inherent"')
-        print("    rules:")
+        output_text += ('  - section: "Inherent"\n')
+        output_text += ("    rules:\n")
         for rule in inherent_rules:
-            print("      - {}".format(rule))
+            output_text += ("      - {}\n".format(rule))
 
     if len(permanent_rules) > 0:
-        print('  - section: "Permanent"')
-        print("    rules:")
+        output_text += ('  - section: "Permanent"\n')
+        output_text += ("    rules:\n")
         for rule in permanent_rules:
-            print("      - {}".format(rule))
+            output_text += ("      - {}\n".format(rule))
 
     if len(na_rules) > 0:
-        print('  - section: "Not Applicable"')
-        print("    rules:")
+        output_text += ('  - section: "Not Applicable"\n')
+        output_text += ("    rules: \n")
         for rule in na_rules:
-            print("      - {}".format(rule))
+            output_text += ("      - {}\n".format(rule))
 
     if len(supplemental_rules) > 0:
-        print('  - section: "Supplemental"')
-        print("    rules:")
+        output_text += ('  - section: "Supplemental"\n')
+        output_text += ("    rules:\n")
         for rule in supplemental_rules:
-            print("      - {}".format(rule))
+            output_text += ("      - {}\n".format(rule))
+    
+    return output_text
 
 
 def main():
@@ -225,16 +228,17 @@ def main():
         # switch to the scripts directory
         os.chdir(file_dir)
 
-        if args.tags:
+        if args.list_tags:
             available_tags(all_rules)
             return
 
-        build_path = os.path.join(parent_dir, 'build', f'{args.keyword}')
-        # if not (os.path.isdir(build_path)):
-        #     try:
-        #         os.makedirs(build_path)
-        #     except OSError:
-        #         print(f"Creation of the directory {build_path} failed")
+        build_path = os.path.join(parent_dir, 'build', 'baselines')
+        if not (os.path.isdir(build_path)):
+            try:
+                os.makedirs(build_path)
+            except OSError:
+                print(f"Creation of the directory {build_path} failed")
+        baseline_output_file = open(f"{build_path}/{args.keyword}.yaml", 'w')
 
     except IOError as msg:
         parser.error(str(msg))
@@ -251,7 +255,7 @@ def main():
         print("No rules found for the keyword provided, please verify from the following list:")
         available_tags(all_rules)
     else:
-        output_baseline(found_rules, args.keyword)
+        baseline_output_file.write(output_baseline(found_rules, args.keyword))
     # finally revert back to the prior directory
     os.chdir(original_working_directory)
 
