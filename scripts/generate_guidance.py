@@ -1016,16 +1016,16 @@ def main():
         adoc_footer_template = Template(adoc_footer_file.read())
     
     with open(adoc_templates_dict['adoc_foreword']) as adoc_foreword_file:
-        adoc_foreword_template = adoc_foreword_file.read()
+        adoc_foreword_template = adoc_foreword_file.read() + "\n"
     
     with open(adoc_templates_dict['adoc_authors']) as adoc_authors_file:
-        adoc_authors_template = adoc_authors_file.read()
+        adoc_authors_template = adoc_authors_file.read() + "\n"
 
     with open(adoc_templates_dict['adoc_acronyms']) as adoc_acronyms_file:
-        adoc_acronyms_template = adoc_acronyms_file.read()
+        adoc_acronyms_template = adoc_acronyms_file.read() + "\n"
 
     with open(adoc_templates_dict['adoc_additional_docs']) as adoc_additional_docs_file:
-        adoc_additional_docs_template = adoc_additional_docs_file.read()
+        adoc_additional_docs_template = adoc_additional_docs_file.read() + "\n"
 
     # set tag attribute
     if args.gary:
