@@ -1164,6 +1164,7 @@ def main():
 
     # Output footer
     adoc_output_file.write(footer_adoc)
+    adoc_output_file.close()
     
     if args.profiles:
         print("Generating configuration profiles...")
