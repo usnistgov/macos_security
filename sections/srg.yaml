@@ -1,0 +1,5 @@
+  name: "DISA SRG"
+  description: |
+    This section contains rules and controls that are associated with DISA's security requirements guide for general purpose operating systems.
+
+    NOTE: The check/fix commands outlined in this section _MUST_ be run by a user with elevated privileges. 

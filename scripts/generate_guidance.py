@@ -4,7 +4,6 @@
 import types
 import sys
 import os.path
-import collections
 import plistlib
 import xlwt
 import io
@@ -18,6 +17,8 @@ from xlwt import Workbook
 from string import Template
 from itertools import groupby
 from uuid import uuid4
+from collections import namedtuple
+
 
 class MacSecurityRule():
     def __init__(self, title, rule_id, severity, discussion, check, fix, cci, cce, nist_controls, disa_stig, srg, tags, result_value, mobileconfig, mobileconfig_info):
@@ -139,6 +140,12 @@ def format_mobileconfig_fix(mobileconfig):
             rulefix = rulefix + "----\n\n"
 
     return rulefix
+
+class AdocTemplate:
+    def __init__(self, name, path, template_file):
+        self.name = name
+        self.path = path
+        self.template_file = template_file
 
 class PayloadDict:
     """Class to create and manipulate Configuration Profiles.
@@ -968,31 +975,70 @@ def main():
 
     baseline_yaml = yaml.load(args.baseline, Loader=yaml.SafeLoader)
 
+    adoc_templates = [ "adoc_rule", 
+                    "adoc_supplemental", 
+                    "adoc_rule_no_setting", 
+                    "adoc_section", 
+                    "adoc_header", 
+                    "adoc_footer", 
+                    "adoc_foreword", 
+                    "adoc_authors", 
+                    "adoc_acronyms", 
+                    "adoc_additional_docs"
+    ]
+    adoc_templates_dict = {}
 
+    for template in adoc_templates:
+        # custom template exists
+        if template + ".adoc" in glob.glob1('../custom/templates/', '*.adoc'):
+            print(f"Custom template found for : {template}")
+            adoc_templates_dict[template] = f"../custom/templates/{template}.adoc"
+        else:
+            adoc_templates_dict[template] = f"../templates/{template}.adoc"
+    
     # Setup AsciiDoc templates
-    with open('../templates/adoc_rule.adoc') as adoc_rule_file:
+    with open(adoc_templates_dict['adoc_rule']) as adoc_rule_file:
         adoc_rule_template = Template(adoc_rule_file.read())
 
-    with open('../templates/adoc_supplemental.adoc') as adoc_supplemental_file:
+    with open(adoc_templates_dict['adoc_supplemental']) as adoc_supplemental_file:
         adoc_supplemental_template = Template(adoc_supplemental_file.read())
 
-    with open('../templates/adoc_rule_no_setting.adoc') as adoc_rule_no_setting_file:
+    with open(adoc_templates_dict['adoc_rule_no_setting']) as adoc_rule_no_setting_file:
         adoc_rule_no_setting_template = Template(adoc_rule_no_setting_file.read())
 
-    with open('../templates/adoc_section.adoc') as adoc_section_file:
+    with open(adoc_templates_dict['adoc_section']) as adoc_section_file:
         adoc_section_template = Template(adoc_section_file.read())
 
-    with open('../templates/adoc_header.adoc') as adoc_header_file:
+    with open(adoc_templates_dict['adoc_header']) as adoc_header_file:
         adoc_header_template = Template(adoc_header_file.read())
 
-    with open('../templates/adoc_footer.adoc') as adoc_footer_file:
+    with open(adoc_templates_dict['adoc_footer']) as adoc_footer_file:
         adoc_footer_template = Template(adoc_footer_file.read())
+    
+    with open(adoc_templates_dict['adoc_foreword']) as adoc_foreword_file:
+        adoc_foreword_template = adoc_foreword_file.read()
+    
+    with open(adoc_templates_dict['adoc_authors']) as adoc_authors_file:
+        adoc_authors_template = adoc_authors_file.read()
+
+    with open(adoc_templates_dict['adoc_acronyms']) as adoc_acronyms_file:
+        adoc_acronyms_template = adoc_acronyms_file.read()
+
+    with open(adoc_templates_dict['adoc_additional_docs']) as adoc_additional_docs_file:
+        adoc_additional_docs_template = adoc_additional_docs_file.read()
 
     # set tag attribute
     if args.gary:
         adoc_tag_show=":show_tags:"
     else:
         adoc_tag_show=":show_tags!:"
+
+    if "STIG" in baseline_yaml['title']:
+        adoc_STIG_show=":show_STIG:"
+        adoc_SRG_show=":show_SRG:"
+    else:
+        adoc_STIG_show=":show_STIG!:"
+        adoc_SRG_show=":show_SRG!:"
 
     adoc_171_show=":show_171:"
 
@@ -1006,10 +1052,19 @@ def main():
         logo=logo,
         tag_attribute=adoc_tag_show,
         nist171_attribute=adoc_171_show,
+        stig_attribute=adoc_STIG_show,
+        srg_attribute=adoc_SRG_show,
     )
 
     # Output header
     adoc_output_file.write(header_adoc)
+
+    # write foreword, authors, acronyms, supporting docs
+    adoc_output_file.write(adoc_foreword_template)
+    adoc_output_file.write(adoc_authors_template)
+    adoc_output_file.write(adoc_acronyms_template)
+    adoc_output_file.write(adoc_additional_docs_template)
+
         
 
     # Create sections and rules
@@ -1078,7 +1133,7 @@ def main():
             try:
                 rule_yaml['references']['800-171r2']
             except KeyError:
-                nist_800171 = 'N/A'
+                nist_800171 = '• N/A'
             else:
                 #nist_80053r4 = ulify(rule_yaml['references']['800-53r4'])
                 nist_800171 = ulify(rule_yaml['references']['800-171r2'])
@@ -1174,6 +1229,7 @@ def main():
                     rule_cci=cci,
                     rule_80053r4=nist_controls,
                     rule_800171=nist_800171,
+                    rule_disa_stig=disa_stig,
                     rule_cce=cce,
                     rule_tags=tags,
                     rule_srg=srg,

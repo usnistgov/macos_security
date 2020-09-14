@@ -40,6 +40,16 @@ ifdef::show_171[]
 !$rule_800171
 endif::[]
 
+ifdef::show_STIG[]
+!DISA STIG(s)
+!$rule_disa_stig
+endif::[]
+
+ifdef::show_STIG[]
+!DISA SRG(s)
+!$rule_srg
+endif::[]
+
 !CCE
 !$rule_cce
 

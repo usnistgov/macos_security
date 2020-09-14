@@ -124,6 +124,8 @@ def create_args():
     """
     parser = argparse.ArgumentParser(
         description='Given a keyword tag, generate a generic baseline.yaml file containing rules with the tag.')
+    parser.add_argument("-c", "--controls", default=None,
+                        help="Output the 800-53 controls covered by the rules.", action="store_true")
     parser.add_argument("-k", "--keyword", default=None,
                         help="Keyword tag to collect rules containing the tag.", action="store")
     parser.add_argument("-l", "--list_tags", default=None,
@@ -139,12 +141,28 @@ def section_title(section_name):
         "pwpolicy": "passwordpolicy",
         "icloud": "icloud",
         "sysprefs": "systempreferences",
-        "srg": "disa_srg"
+        "srg": "srg"
     }
     if section_name in titles:
         return titles[section_name]
     else:
         return section_name
+
+def get_controls(all_rules):
+    all_controls = []
+    for rule in all_rules:
+        for control in rule.rule_80053r4:
+            if control not in all_controls:
+                all_controls.append(control)
+    
+    all_controls.sort()
+
+    # for control in all_controls:
+    #     print(control)
+    
+    return all_controls
+
+    
 
 def available_tags(all_rules):
     all_tags = []
@@ -212,7 +230,7 @@ def output_baseline(rules, keyword):
             output_text += ("      - {}\n".format(rule))
 
     if len(na_rules) > 0:
-        output_text += ('  - section: "Not Applicable"\n')
+        output_text += ('  - section: "not_applicable"\n')
         output_text += ("    rules: \n")
         for rule in na_rules:
             output_text += ("      - {}\n".format(rule))
@@ -245,6 +263,27 @@ def main():
 
         if args.list_tags:
             available_tags(all_rules)
+            return
+
+        if args.controls:
+            baselines_file = os.path.join(
+            parent_dir, 'includes', '800-53_baselines.yaml')
+
+
+            with open(baselines_file) as r:
+                baselines = yaml.load(r, Loader=yaml.SafeLoader)
+            
+            included_controls = get_controls(all_rules)
+            needed_controls = []
+        
+            for control in baselines['low']:
+                if control not in needed_controls:
+                    needed_controls.append(control)
+            
+            for n_control in needed_controls:
+                if n_control not in included_controls:
+                    print(f'{n_control} missing from any rule, needs a rule, or included in supplemental')
+
             return
 
         build_path = os.path.join(parent_dir, 'build', 'baselines')
