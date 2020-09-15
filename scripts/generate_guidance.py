@@ -1182,7 +1182,7 @@ def main():
         print('Generating HTML file from AsciiDoc...')
         cmd = f"/usr/local/bin/asciidoctor {adoc_output_file.name}"
         process = subprocess.Popen(cmd.split(), stdout=subprocess.PIPE)
-        output, error = process.communicate()
+        process.communicate()
     else:
         print("If you would like to generate the HTML file from the AsciiDoc file, install the ruby gem for asciidoctor")
     
@@ -1190,7 +1190,7 @@ def main():
         print('Generating PDF file from AsciiDoc...')
         cmd = f"/usr/local/bin/asciidoctor-pdf {adoc_output_file.name}"
         process = subprocess.Popen(cmd.split(), stdout=subprocess.PIPE)
-        output, error = process.communicate()
+        process.communicate()
     else:
         print("If you would like to generate the PDF file from the AsciiDoc file, install the ruby gem for asciidoctor-pdf")
 

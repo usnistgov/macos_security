@@ -1,7 +1,7 @@
 id: supplemental_controls
 title: "Out of Scope Supplemental"
 discussion: |
-  This supplemental provides controls that are out of scope for this project.
+  There are a number of technical controls that are met by making configuration changes in the operating system.  However, 800-53 represents a broad set of guidelines that attempt to address all aspects of an information system or systems within an organization. This document is focused on the technical implementation of the controls as they apply to a general purpose operating system, specifically macOS. The information in this supplemental represents the controls that are assigned to a baseline in 800-53 that cannot be addressed with a technical configuration of macOS. These controls can be best accomplished by administrative or procedural processes within an organization or integration into enterprise information systems which are configured to protect the systems within.
   
   [cols="15%h, 85%a"]
   |===
@@ -9,10 +9,7 @@ discussion: |
   |Family
   |Access Control (AC)
 
-  |Description
-  |placeholder.
-
-  |Controls
+  |Controls 
   |link:https://nvd.nist.gov/800-53/Rev4/control/AC-1[AC-1], link:https://nvd.nist.gov/800-53/Rev4/control/AC-2[AC-2], link:https://nvd.nist.gov/800-53/Rev4/control/AC-14[AC-14], link:https://nvd.nist.gov/800-53/Rev4/control/AC-22[AC-22]
 
   |=== 
@@ -22,9 +19,6 @@ discussion: |
 
   |Family
   |Awareness and Training (AT)
-
-  |Description
-  |placeholder. 
 
   |Controls
   |link:https://nvd.nist.gov/800-53/Rev4/control/AT-1[AT-1], link:https://nvd.nist.gov/800-53/Rev4/control/AT-2[AT-2], link:https://nvd.nist.gov/800-53/Rev4/control/AT-3[AT-3], link:https://nvd.nist.gov/800-53/Rev4/control/AT-4[AT-4]
@@ -36,9 +30,6 @@ discussion: |
   |Family
   |Audit and Accountability (AU)
 
-  |Description
-  |Placeholder
-
   |Controls
   |link:https://nvd.nist.gov/800-53/Rev4/control/AU-1[AU-1], link:https://nvd.nist.gov/800-53/Rev4/control/AU-6[AU-6]
   |=== 
@@ -48,9 +39,6 @@ discussion: |
 
   |Family
   |Security Assessment and Authorization (CA)
-
-  |Description
-  |Placeholder.
 
   |Controls
   |link:https://nvd.nist.gov/800-53/Rev4/control/CA-1[CA-1], link:https://nvd.nist.gov/800-53/Rev4/control/CA-2[CA-2], link:https://nvd.nist.gov/800-53/Rev4/control/CA-3[CA-3], link:https://nvd.nist.gov/800-53/Rev4/control/CA-5[CA-5], link:https://nvd.nist.gov/800-53/Rev4/control/CA-6[CA-6], link:https://nvd.nist.gov/800-53/Rev4/control/CA-7[CA-7], link:https://nvd.nist.gov/800-53/Rev4/control/CA-9[CA-9]
@@ -62,9 +50,6 @@ discussion: |
   |Family
   |Configuration Management (CM)
 
-  |Description
-  |placeholder. 
-
   |Controls
   |link:https://nvd.nist.gov/800-53/Rev4/control/CM-1[CM-1], link:https://nvd.nist.gov/800-53/Rev4/control/CM-4[CM-4], link:https://nvd.nist.gov/800-53/Rev4/control/CM-8[CM-8], link:https://nvd.nist.gov/800-53/Rev4/control/CM-10[CM-10], link:https://nvd.nist.gov/800-53/Rev4/control/CM-11[CM-11]
   |=== 
@@ -74,9 +59,6 @@ discussion: |
 
   |Family
   |Contingency Planning (CP)
-
-  |Description
-  |placeholder. 
 
   |Controls
   |link:https://nvd.nist.gov/800-53/Rev4/control/CP-1[CP-1], link:https://nvd.nist.gov/800-53/Rev4/control/CP-2[CP-2], link:https://nvd.nist.gov/800-53/Rev4/control/CP-3[CP-3], link:https://nvd.nist.gov/800-53/Rev4/control/CP-4[CP-4], link:https://nvd.nist.gov/800-53/Rev4/control/CP-9[CP-9], link:https://nvd.nist.gov/800-53/Rev4/control/CP-10[CP-10]
@@ -88,9 +70,6 @@ discussion: |
   |Family
   |Identification and Authentication (IA)
 
-  |Description
-  |placeholder. 
-
   |Controls
   |link:https://nvd.nist.gov/800-53/Rev4/control/IA-1[IA-1], link:https://nvd.nist.gov/800-53/Rev4/control/IA-8?baseline=low#enhancement-1[IA-8(1)],link:https://nvd.nist.gov/800-53/Rev4/control/IA-8?baseline=low#enhancement-2[IA-8(2)],link:https://nvd.nist.gov/800-53/Rev4/control/IA-8?baseline=low#enhancement-3[IA-8(3)],link:https://nvd.nist.gov/800-53/Rev4/control/IA-8?baseline=low#enhancement-4[IA-8(4)]
   |=== 
@@ -100,10 +79,6 @@ discussion: |
 
   |Family
   |Incident Response (IR)
-
-  |Description
-  |placeholder. 
-
 
   |Controls
   |link:https://nvd.nist.gov/800-53/Rev4/control/IR-1[IR-1], link:https://nvd.nist.gov/800-53/Rev4/control/IR-2[IR-2], link:https://nvd.nist.gov/800-53/Rev4/control/IR-4[IR-4], link:https://nvd.nist.gov/800-53/Rev4/control/IR-5[IR-5], link:https://nvd.nist.gov/800-53/Rev4/control/IR-6[IR-6], link:https://nvd.nist.gov/800-53/Rev4/control/IR-7[IR-7], link:https://nvd.nist.gov/800-53/Rev4/control/IR-8[IR-8],
@@ -115,9 +90,6 @@ discussion: |
   |Family
   |Maintenance (MA)
 
-  |Description
-  |placeholder. 
-
   |Controls
   |link:https://nvd.nist.gov/800-53/Rev4/control/MA-1[MA-1], link:https://nvd.nist.gov/800-53/Rev4/control/MA-2[MA-2], link:https://nvd.nist.gov/800-53/Rev4/control/MA-5[MA-5]
   |===
@@ -127,9 +99,6 @@ discussion: |
 
   |Family
   |Media Protection (MP)
-
-  |Description
-  |placeholder. 
 
   |Controls
   |link:https://nvd.nist.gov/800-53/Rev4/control/MP-1[MP-1], link:https://nvd.nist.gov/800-53/Rev4/control/MP-2[MP-2], link:https://nvd.nist.gov/800-53/Rev4/control/MP-6[MP-6], link:https://nvd.nist.gov/800-53/Rev4/control/MP-7[MP-7]
@@ -141,9 +110,6 @@ discussion: |
   |Family
   |Physical and Environmental Protection (PE)
 
-  |Description
-  |placeholder. 
-
   |Controls
   |link:https://nvd.nist.gov/800-53/Rev4/control/PE-1[PE-1], link:https://nvd.nist.gov/800-53/Rev4/control/PE-2[PE-2], link:https://nvd.nist.gov/800-53/Rev4/control/PE-3[PE-3], link:https://nvd.nist.gov/800-53/Rev4/control/PE-6[PE-6], link:https://nvd.nist.gov/800-53/Rev4/control/PE-8[PE-8], link:https://nvd.nist.gov/800-53/Rev4/control/PE-12[PE-12], link:https://nvd.nist.gov/800-53/Rev4/control/PE-13[PE-13], link:https://nvd.nist.gov/800-53/Rev4/control/PE-14[PE-14], link:https://nvd.nist.gov/800-53/Rev4/control/PE-15[PE-15],  link:https://nvd.nist.gov/800-53/Rev4/control/PE-16[PE-16]
   |=== 
@@ -153,9 +119,6 @@ discussion: |
 
   |Family
   |Planning (PL)
-
-  |Description
-  |placeholder. 
 
   |Controls
   |link:https://nvd.nist.gov/800-53/Rev4/control/PL-1[PL-1], link:https://nvd.nist.gov/800-53/Rev4/control/PL-2[PL-2], link:https://nvd.nist.gov/800-53/Rev4/control/PL-4[PL-4]
@@ -167,8 +130,6 @@ discussion: |
   |Family
   |Personnel Security (PS)
 
-  |Description
-  |placeholder. 
 
   |Controls
   |link:https://nvd.nist.gov/800-53/Rev4/control/PS-1[PS-1], link:https://nvd.nist.gov/800-53/Rev4/control/PS-2[PS-2], link:https://nvd.nist.gov/800-53/Rev4/control/PS-3[PS-3], link:https://nvd.nist.gov/800-53/Rev4/control/PS-4[PS-4], link:https://nvd.nist.gov/800-53/Rev4/control/PS-5[PS-5], link:https://nvd.nist.gov/800-53/Rev4/control/PS-6[PS-6], link:https://nvd.nist.gov/800-53/Rev4/control/PS-7[PS-7], link:https://nvd.nist.gov/800-53/Rev4/control/PS-8[PS-8]
@@ -180,9 +141,6 @@ discussion: |
   |Family
   |Risk Assessment (RA)
 
-  |Description
-  |placeholder. 
-
   |Controls
   |link:https://nvd.nist.gov/800-53/Rev4/control/RA-1[RA-1], link:https://nvd.nist.gov/800-53/Rev4/control/RA-2[RA-2], link:https://nvd.nist.gov/800-53/Rev4/control/RA-3[RA-3], link:https://nvd.nist.gov/800-53/Rev4/control/RA-5[RA-5]
   |===
@@ -192,9 +150,6 @@ discussion: |
 
   |Family
   |System and Services Acquisition (SA)
-
-  |Description
-  |placeholder. 
 
   |Controls
   |link:https://nvd.nist.gov/800-53/Rev4/control/SA-1[SA-1], link:https://nvd.nist.gov/800-53/Rev4/control/SA-2[SA-2], link:https://nvd.nist.gov/800-53/Rev4/control/SA-3[SA-3], link:https://nvd.nist.gov/800-53/Rev4/control/SA-4[SA-4], link:https://controlfreak.risk-redux.io/controls/SA-4%20(10)[SA-4(10)], link:https://nvd.nist.gov/800-53/Rev4/control/SA-5[SA-5], link:https://nvd.nist.gov/800-53/Rev4/control/SA-9[SA-9]
@@ -206,9 +161,6 @@ discussion: |
   |Family
   |System and Communications Protection (SC)
 
-  |Description
-  |placeholder. 
-
   |Controls
   |link:https://nvd.nist.gov/800-53/Rev4/control/SC-1[SC-1], link:https://nvd.nist.gov/800-53/Rev4/control/SC-12[SC-12], link:https://nvd.nist.gov/800-53/Rev4/control/SC-15[SC-15], link:https://nvd.nist.gov/800-53/Rev4/control/SC-20[SC-20], link:https://nvd.nist.gov/800-53/Rev4/control/SC-22[SC-22], link:https://nvd.nist.gov/800-53/Rev4/control/SC-39[SC-39]
   |===
@@ -218,9 +170,6 @@ discussion: |
 
   |Family
   |System and Information Integrity (SI)
-
-  |Description
-  |placeholder. 
 
   |Controls
   |link:https://nvd.nist.gov/800-53/Rev4/control/SI-1[SI-1], link:https://nvd.nist.gov/800-53/Rev4/control/SI-4[SI-4], link:https://nvd.nist.gov/800-53/Rev4/control/SI-5[SI-5], link:https://nvd.nist.gov/800-53/Rev4/control/SI-12[SI-12]
