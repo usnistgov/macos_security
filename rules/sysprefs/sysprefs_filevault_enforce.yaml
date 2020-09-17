@@ -15,9 +15,9 @@ discussion: |
   /usr/bin/fdesetup enable
   ----
   This will enable FileVault after prompting for a user name and password, and return the personal recovery key. 
-  There are a number of management features available when managing FileVault using the command line instead of a configuration profile. These are available in the manpage for fdesetup. Apple has depcrecated fdesetup command line tool from recognizing user name and password for seucirty reasons and may remove the ability in future versions of macOS.
+  There are a number of management features available when managing FileVault using the command line instead of a configuration profile. These are available in the manpage for fdesetup. Apple has deprecated fdesetup command line tool from recognizing user name and password for security reasons and may remove the ability in future versions of macOS.
   
-  When managing FileVault with a configuration profile you must deploy a profile with the payload type of com.apple.MCX.FileVault2. When using the key enable to enable FileVault with a configuraiton profile, you must include 1 of the following
+  When managing FileVault with a configuration profile you must deploy a profile with the payload type of com.apple.MCX.FileVault2. When using the key enable to enable FileVault with a configuration profile, you must include 1 of the following
   
   [source,xml]
   ----
@@ -40,7 +40,7 @@ discussion: |
   
   It's recommended that you use a Personal Recovery Key instead of an Institutional Key as it will generate a specific key for each device.  
 
-  Important to note, FileVault also only uses password based authentication and can not use a smartcard or any other multi factor authication.
+  Important to note, FileVault also only uses password based authentication and can not use a smartcard or any other multi factor authentication.
 check: |
   /usr/bin/fdesetup status | /usr/bin/grep -c "FileVault is On."
 result:
