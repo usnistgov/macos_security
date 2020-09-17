@@ -1,4 +1,4 @@
-id: os_screensaver_timeout_enforce
+id: sysprefs_screensaver_timeout_enforce
 title: "Enforce Screen Saver Timeout"
 discussion: |
   The screen saver timeout _MUST_ be set to 15 minutes. 

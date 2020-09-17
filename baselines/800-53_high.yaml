@@ -56,6 +56,9 @@ profile:
       - sysprefs_loginwindow_prompt_username_password_enforce   
       - sysprefs_password_hints_disable
       - sysprefs_rae_disable
+      - sysprefs_screensaver_ask_for_password_delay_enforce
+      - sysprefs_screensaver_password_enforce
+      - sysprefs_screensaver_timeout_enforce
       - sysprefs_screen_sharing_disable
       - sysprefs_siri_disable
       - sysprefs_smbd_disable
@@ -112,10 +115,7 @@ profile:
       - os_policy_banner_ssh_enforce
       - os_power_nap_disable
       - os_removable_media_disable
-      - os_screensaver_ask_for_password_delay_enforce
       - os_screensaver_loginwindow_enforce
-      - os_screensaver_password_enforce
-      - os_screensaver_timeout_enforce
       - os_secure_boot_verify
       - os_siri_prompt_disable
       - os_ssh_client_alive_count_max_configure
