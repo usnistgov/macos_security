@@ -181,9 +181,5 @@ profile:
       - supplemental_firewall_pf
       - supplemental_password_policy
       - supplemental_smartcard
-<<<<<<< HEAD
       - supplemental_controls
       
-=======
-      - supplemental_controls
->>>>>>> 661ffb1f9a07b8625b6a5dd2e53cec8a61582bad
