@@ -1,7 +1,7 @@
 id: pwpolicy_temporary_accounts_disable
 title: "Automatically Remove or Disable Temporary User Accounts within 72 Hours"
 discussion: |
-  An automated termination _MUST_ be set for 72 hours or less for all temporary accounts upon account creation. 
+  The macOS is able to be configured to set an automated termination for 72 hours or less for all temporary accounts upon account creation. 
 
   If temporary user accounts remain active when no longer needed or for an excessive period, these accounts may be targeted by attackers to gain unauthorized access. To mitigate this risk, automated termination of all temporary accounts _MUST_ be set to 72 hours (or less) when the temporary account is created.
 

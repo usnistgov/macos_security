@@ -103,6 +103,7 @@ profile:
       - os_mail_app_disable
       - os_messages_app_disable
       - os_nfsd_disable
+      - os_parental_controls_enable      
       - os_password_autofill_disable
       - os_password_proximity_disable
       - os_password_sharing_disable
@@ -147,9 +148,7 @@ profile:
       - os_implement_cryptography
       - os_logical_access
       - os_obscure_password
-      - os_peripherals_identify
       - os_prevent_priv_functions
-      - os_prevent_restricted_software
       - os_prevent_unauthorized_disclosure
       - os_required_crypto_module
       - os_separate_fuctionality

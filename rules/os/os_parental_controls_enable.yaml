@@ -3,6 +3,8 @@ title: "Enable Parental Controls"
 discussion: |
   Parental Controls _MUST_ be enabled. 
 
+  Control of program execution is a mechanism used to prevent execution of unauthorized programs. Some operating systems may provide a capability that runs counter to the mission or provides users with functionality that exceeds mission requirements. This includes functions and services installed at the operating system-level. Some of the programs, installed by default, may be harmful or may not be necessary to support essential organizational operations (e.g., key missions, functions). Removal of executable programs is not always possible; therefore, establishing a method of preventing program execution is critical to maintaining a secure system baseline.Methods for complying with this requirement include restricting execution of programs in certain environments, while preventing execution in other environments; or limiting execution of certain program functionality based on organization-defined criteria (e.g., privileges, subnets, sandboxed environments, or roles).
+
   Parental Controls on macOS consist of many different payloads, which are set individually depending on the type of control required. Enabling parental controls allows for further configuration of these restrictions.
 check: |
   /usr/bin/profiles -P -o stdout | /usr/bin/grep -c 'familyControlsEnabled = 1'
@@ -15,15 +17,24 @@ references:
     - CCE-84773-1
   cci: 
     - CCI-001812
+    - CCI-001764
   800-53r4: 
-    - CM-11(2)
+    - CM-7(2)
   srg: 
     - SRG-OS-000362-GPOS-00149
+    - SRG-OS-000368-GPOS-00154
   disa_stig: 
     - N/A
+  800-171r2:
+    - 3.4.7
 macOS:
   - "10.15"
 tags:
+  - STIG
+  - 800-171
+  - cnssi-1253
+  - fisma-moderate
+  - fisma-high
   - STIG
 mobileconfig: true
 mobileconfig_info:

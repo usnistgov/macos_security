@@ -128,7 +128,6 @@ profile:
       - os_ssh_fips_140_ciphers
       - os_ssh_fips_140_macs
       - os_ssh_login_grace_time_configure
-      - os_ssh_max_sessions_configure
       - os_ssh_permit_root_login_configure
       - os_sudoers_tty_configure
       - os_system_wide_preferences_configure
@@ -157,9 +156,7 @@ profile:
       - audit_alert_processing_fail
       - audit_enforce_dual_auth
       - audit_off_load_records
-      - os_enforce_login_attempt_delay
       - os_limit_dos_attacks
-      - os_limit_invalid_logons
       - os_notify_account_created
       - os_notify_account_disabled
       - os_notify_account_enable
@@ -176,10 +173,7 @@ profile:
     rules:
       - os_auth_peripherals
       - os_identify_non-org_users
-      - os_prohibit_cached_authenticators
-      - os_react_security_anomalies
       - os_request_verification_name_resolution
-      - os_verify_security_functions
   - section: "Inherent"
     rules:
       - os_allow_info_passed
@@ -191,7 +185,6 @@ profile:
       - os_grant_privs
       - os_implement_memory_protection
       - os_implement_cryptography
-      - os_implement_random_address_space
       - os_isolate_security_functions
       - os_limit_auditable_events
       - os_limit_gui_sessions
@@ -203,10 +196,8 @@ profile:
       - os_obscure_password
       - os_peripherals_identify
       - os_predictable_behavior
-      - os_preserve_information_on_crash
       - os_prevent_priv_execution
       - os_prevent_priv_functions
-      - os_prevent_restricted_software
       - os_prevent_unauthorized_disclosure
       - os_provide_disconnect_remote_access
       - os_reauth_privilege
