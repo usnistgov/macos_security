@@ -8,7 +8,9 @@ discussion: |
   macOS supports address space layout randomization (ASLR), position-independent executable (PIE), Stack Canaries, and NX stack and heap protection.
 
   link:https://developer.apple.com/library/archive/documentation/Darwin/Conceptual/64bitPorting/transition/transition.html[]
+  
   link:https://developer.apple.com/library/archive/qa/qa1788/_index.html[]
+
   link:https://www.apple.com/macos/security/[]
   
 check: |
