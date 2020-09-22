@@ -299,13 +299,14 @@ def main():
     
     found_rules = []
     for rule in all_rules:
-        if args.keyword in rule.rule_tags:
+        if args.keyword in rule.rule_tags or args.keyword == "all":
             found_rules.append(rule)
         # assume all baselines will contain the supplemental rules
         if "supplemental" in rule.rule_tags:
-            found_rules.append(rule)
+            if rule not in found_rules:
+                found_rules.append(rule)
     
-    if len(found_rules) == 0:
+    if args.keyword == None:
         print("No rules found for the keyword provided, please verify from the following list:")
         available_tags(all_rules)
     else:
