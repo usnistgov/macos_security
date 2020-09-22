@@ -216,6 +216,7 @@ profile:
       - pwpolicy_temporary_accounts_disable
   - section: "Supplemental"
     rules:
-      - supplemental_smartcard
       - supplemental_firewall_pf
       - supplemental_password_policy
+      - supplemental_smartcard
+      - supplemental_controls
