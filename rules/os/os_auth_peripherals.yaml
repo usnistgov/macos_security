@@ -24,8 +24,8 @@ macOS:
   - "10.15"
 tags:
   - cnssi-1253
-  - fisma-moderate
-  - fisma-high
+  - 800-53r4_moderate
+  - 800-53r4_high
   - STIG
   - permanent
 mobileconfig: false

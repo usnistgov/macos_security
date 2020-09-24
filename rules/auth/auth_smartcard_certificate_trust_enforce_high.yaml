@@ -29,7 +29,7 @@ references:
 macOS:
   - "10.15"
 tags:
-  - fisma-high
+  - 800-53r4_high
   - STIG
 mobileconfig: true
 mobileconfig_info:

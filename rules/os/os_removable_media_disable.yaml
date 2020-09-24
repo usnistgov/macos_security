@@ -28,8 +28,8 @@ macOS:
 tags:
   - 800-171
   - cnssi-1253
-  - fisma-moderate
-  - fisma-high
+  - 800-53r4_moderate
+  - 800-53r4_high
 mobileconfig: true
 mobileconfig_info:
   com.apple.systemuiserver:

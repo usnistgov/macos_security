@@ -26,6 +26,6 @@ references:
 macOS:
   - "10.15"
 tags:
-  - fisma-high
+  - 800-53r4_high
 mobileconfig: false
 mobileconfig_info:

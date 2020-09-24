@@ -30,7 +30,7 @@ macOS:
   - "10.15"
 tags:
   - cnssi-1253
-  - fisma-moderate
+  - 800-53r4_moderate
 mobileconfig: true
 mobileconfig_info:
   com.apple.security.smartcard:
