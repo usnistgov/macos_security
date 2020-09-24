@@ -1,4 +1,4 @@
-= macOS Security Compliance Project
+image::templates/images/macOSSCP_Banner_3100x500.png[]
 // settings:
 :idprefix:
 :idseparator: - 

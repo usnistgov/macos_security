@@ -1,7 +1,13 @@
-id: os_separate_functionality
-title: "Must separate user and system functionality"
+id: os_separate_fuctionality
+title: "Configure the System to Separate User and System Functionality"
 discussion: |
-  Operating system management functionality includes functions necessary for administration and requires privileged user access. Allowing non-privileged users to access operating system management functionality capabilities increases the risk that non-privileged users may obtain elevated privileges.Operating system management functionality includes functions necessary to administer console, network components, workstations, or servers and typically requires privileged user access.The separation of user functionality from information system management functionality is either physical or logical and is accomplished by using different computers, different central processing units, different instances of the operating system, different network addresses, different TCP/UDP ports, virtualization techniques, combinations of these methods, or other methods, as appropriate.An example of this type of separation is observed in web administrative interfaces that use separate authentication methods for users of any other information system resources. This may include isolating the administrative interface on a different security domain and with additional access controls.
+  The information system _IS_ configured to separate user and system functionality. 
+  
+  Operating system management functionality includes functions necessary for administration and requires privileged user access. Allowing non-privileged users to access operating system management functionality capabilities increases the risk that non-privileged users may obtain elevated privileges. Operating system management functionality includes functions necessary to administer console, network components, workstations, or servers and typically requires privileged user access. 
+  
+  The inherent configuration of the macOS allows only privileged users to access operating system management functionalities. 
+
+  link:https://developer.apple.com/library/archive/documentation/MacOSX/Conceptual/BPSystemStartup/Chapters/DesigningDaemons.html[]
 check: |
   The technology supports this requirement and cannot be configured to be out of compliance. The technology inherently meets this requirement.
 fix: |
