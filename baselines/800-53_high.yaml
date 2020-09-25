@@ -38,7 +38,6 @@ profile:
       - os_firewall_default_deny_require
       - os_ssh_client_alive_count_max_configure
       - os_firmware_password_require
-      - os_power_nap_disable
       - os_gatekeeper_rearm
       - os_root_disable
       - os_guest_account_disable
@@ -134,6 +133,7 @@ profile:
       - sysprefs_diagnostics_reports_disable
       - sysprefs_bluetooth_disable
       - sysprefs_loginwindow_prompt_username_password_enforce
+      - sysprefs_power_nap_disable
       - sysprefs_automatic_login_disable
       - sysprefs_apple_watch_unlock_disable
       - sysprefs_token_removal_enforce

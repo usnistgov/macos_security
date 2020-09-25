@@ -1,4 +1,4 @@
-id: os_power_nap_disable
+id: sysprefs_power_nap_disable
 title: "Disable Power Nap"
 discussion: |
   Power Nap _MUST_ be disabled.
