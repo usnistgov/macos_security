@@ -921,21 +921,24 @@ def create_args():
 def is_asciidoctor_installed():
     """Checks to see if the ruby gem for asciidoctor is installed
     """
-    cmd = "gem list asciidoctor -i"
+    #cmd = "gem list asciidoctor -i"
+    cmd = "which asciidoctor"
     process = subprocess.Popen(cmd.split(), stdout=subprocess.PIPE)
     output, error = process.communicate()
     
-    return process.returncode
+    # return path to asciidoctor
+    return output.decode("utf-8")
 
 
 def is_asciidoctor_pdf_installed():
     """Checks to see if the ruby gem for asciidoctor-pdf is installed
     """
-    cmd = "gem list asciidoctor-pdf -i"
+    #cmd = "gem list asciidoctor-pdf -i"
+    cmd = "which asciidoctor-pdf"
     process = subprocess.Popen(cmd.split(), stdout=subprocess.PIPE)
     output, error = process.communicate()
 
-    return process.returncode
+    return output.decode("utf-8")
 
 def main():
 
@@ -1074,11 +1077,11 @@ def main():
         if section_yaml_file in glob.glob1('../custom/sections/', '*.yaml'):
             print(f"Custom settings found for section: {sections['section']}")
             override_section = os.path.join(
-                '../custom/sections', sections['section'] + '.yaml')
+                f'../custom/sections/{section_yaml_file}')
             with open(override_section) as r:
                 section_yaml = yaml.load(r, Loader=yaml.SafeLoader)
         else:
-            with open('../sections/' + sections['section'] + '.yaml') as s:
+            with open(f'../sections/{section_yaml_file}') as s:
                 section_yaml = yaml.load(s, Loader=yaml.SafeLoader)
 
         # Read section info and output it
@@ -1258,17 +1261,19 @@ def main():
         print('Generating excel document...')
         generate_xls(baseline_name, build_path, baseline_yaml)
 
-    if is_asciidoctor_installed() == 0:
+    asciidoctor_path = is_asciidoctor_installed()
+    if asciidoctor_path != None:
         print('Generating HTML file from AsciiDoc...')
-        cmd = f"/usr/local/bin/asciidoctor {adoc_output_file.name}"
+        cmd = f"{asciidoctor_path} {adoc_output_file.name}"
         process = subprocess.Popen(cmd.split(), stdout=subprocess.PIPE)
         process.communicate()
     else:
         print("If you would like to generate the HTML file from the AsciiDoc file, install the ruby gem for asciidoctor")
     
-    if is_asciidoctor_pdf_installed() == 0:
+    asciidoctorPDF_path = is_asciidoctor_pdf_installed()
+    if asciidoctor_path != None:
         print('Generating PDF file from AsciiDoc...')
-        cmd = f"/usr/local/bin/asciidoctor-pdf {adoc_output_file.name}"
+        cmd = f"{asciidoctorPDF_path} {adoc_output_file.name}"
         process = subprocess.Popen(cmd.split(), stdout=subprocess.PIPE)
         process.communicate()
     else:
