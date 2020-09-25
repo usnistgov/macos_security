@@ -32,7 +32,6 @@ profile:
       - audit_acls_files_configure
   - section: "macos"
     rules:
-      - os_power_nap_disable
       - os_root_disable
       - os_policy_banner_ssh_enforce
       - os_password_proximity_disable
@@ -107,6 +106,7 @@ profile:
       - sysprefs_location_services_disable
       - sysprefs_diagnostics_reports_disable
       - sysprefs_loginwindow_prompt_username_password_enforce
+      - sysprefs_power_nap_disable
       - sysprefs_automatic_login_disable
       - sysprefs_screen_sharing_disable
       - sysprefs_siri_disable
