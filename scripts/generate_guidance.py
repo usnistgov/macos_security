@@ -922,7 +922,7 @@ def is_asciidoctor_installed():
     """Checks to see if the ruby gem for asciidoctor is installed
     """
     #cmd = "gem list asciidoctor -i"
-    cmd = "which ascixidoctor"
+    cmd = "which asciidoctor"
     process = subprocess.Popen(cmd.split(), stdout=subprocess.PIPE)
     output, error = process.communicate()
     
@@ -1271,7 +1271,7 @@ def main():
         print("If you would like to generate the HTML file from the AsciiDoc file, install the ruby gem for asciidoctor")
     
     asciidoctorPDF_path = is_asciidoctor_pdf_installed()
-    if asciidoctor_path != "":
+    if asciidoctorPDF_path != "":
         print('Generating PDF file from AsciiDoc...')
         cmd = f"{asciidoctorPDF_path} {adoc_output_file.name}"
         process = subprocess.Popen(cmd.split(), stdout=subprocess.PIPE)
