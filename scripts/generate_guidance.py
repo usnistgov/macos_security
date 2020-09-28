@@ -1106,7 +1106,11 @@ def main():
         for rule in sections['rules']:
             logging.debug(f'processing rule id: {rule}')
             rule_path = glob.glob('../rules/*/{}.yaml'.format(rule))
-            rule_file = (os.path.basename(rule_path[0]))
+            try:
+                rule_file = (os.path.basename(rule_path[0]))
+            except IndexError:
+                logging.debug(f'defined rule {rule} does not have valid yaml file, check that rule ID and filename match.')
+
 
             #check for custom rule
             if rule_file in glob.glob1('../custom/rules/', '*.yaml'):
