@@ -150,7 +150,6 @@ profile:
       - os_terminate_session_inactivity
       - os_store_encrypted_passwords
       - os_prevent_unauthorized_disclosure
-      - os_separate_fuctionality
       - pwpolicy_force_change_password_change
   - section: "Permanent"
     rules:
