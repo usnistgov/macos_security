@@ -158,6 +158,7 @@ profile:
       - sysprefs_password_hints_disable
       - sysprefs_bluetooth_sharing_disable
       - sysprefs_improve_siri_dictation_disable
+      - sysprefs_enforce_auto_logout
   - section: "Inherent"
     rules:
       - os_enforce_access_restrictions
@@ -176,7 +177,6 @@ profile:
       - os_implement_cryptography
       - os_remote_access_methods
       - os_obscure_password
-      - os_terminate_session_inactivity
       - os_predictable_behavior
       - os_reauth_users_change_authenticators
       - os_map_pki_identity

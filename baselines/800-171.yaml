@@ -141,13 +141,13 @@ profile:
       - sysprefs_password_hints_disable
       - sysprefs_bluetooth_sharing_disable
       - sysprefs_improve_siri_dictation_disable
+      - sysprefs_enforce_auto_logout
   - section: "Inherent"
     rules:
       - os_prevent_priv_functions
       - os_logical_access
       - os_implement_cryptography
       - os_obscure_password
-      - os_terminate_session_inactivity
       - os_store_encrypted_passwords
       - os_prevent_unauthorized_disclosure
       - pwpolicy_force_change_password_change

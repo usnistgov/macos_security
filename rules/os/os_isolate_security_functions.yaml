@@ -1,7 +1,7 @@
 id: os_isolate_security_functions
-title: "Isolate security functions from non-security functions"
+title: "Configure the System to Separate User and System Functionality"
 discussion: |
-  The information system _IS_ configured to to isolate security functions from non-security functions. 
+  The information system _IS_ configured to isolate security functions from non-security functions. 
   
   link:https://support.apple.com/guide/security/welcome/web[]
 check: |

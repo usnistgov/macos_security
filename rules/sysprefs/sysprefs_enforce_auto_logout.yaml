@@ -1,0 +1,37 @@
+id: sysprefs_enforce_auto_logout
+title: "Enforce Auto Logout After 24 Hours of Inactivity"
+discussion: |
+  Auto logout _MUST_ be configured to automatically terminate a user session and log out the after 86400 seconds (24 hours) of inactivity. 
+
+  NOTE:The maximum that macOS can be configured for autologoff is 86400 seconds (24 hours).
+check: |
+  /usr/bin/profiles -P -o stdout | /usr/bin/grep -c '"com.apple.autologout.AutoLogOutDelay" = 604800'
+fix: |
+    This is implemented by a Configuration Profile.
+references:
+  cce:
+    - CCE-84870-5
+  cci:
+    - CCI-002361
+  800-53r4:
+    - AC-12
+  disa_stig:
+    - N/A
+  srg:
+    - SRG-OS-000279-GPOS-00109
+  800-171r2:
+    - 3.1.11
+macOS:
+  - "10.15"
+tags:
+  - 800-171
+  - cnssi-1253
+  - 800-53r4_moderate
+  - 800-53r4_high
+  - STIG
+mobileconfig: true
+mobileconfig_info:
+  .GlobalPreferences:
+    com.apple.autologout.AutoLogOutDelay: 86400
+    
+

@@ -118,7 +118,6 @@ profile:
       - os_logical_access
       - os_implement_cryptography
       - os_obscure_password
-      - os_terminate_session_inactivity
       - os_required_crypto_module
       - os_store_encrypted_passwords
       - pwpolicy_force_change_password_change

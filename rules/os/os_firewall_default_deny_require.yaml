@@ -1,5 +1,5 @@
 id: os_firewall_default_deny_require
-title: "The macOS system must employ a deny-all, allow-by-exception firewall policy for allowing connections to other systems."
+title: "Control Connections to Other Systems via a Deny-All and Allow-by-Exception Firewall Policy"
 discussion: |
   A deny-all and allow-by-exception firewall policy _MUST_ be employed for managing connections to other systems. 
 
