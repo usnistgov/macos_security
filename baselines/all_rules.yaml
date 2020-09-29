@@ -12,10 +12,6 @@ profile:
       - auth_smartcard_certificate_trust_enforce_moderate
       - auth_smartcard_enforce
       - auth_pam_su_smartcard_enforce
-  - section: "srg"
-    rules:
-      - srg_filevault_user_account
-      - srg_anti_virus_installed
   - section: "auditing"
     rules:
       - audit_folder_group_configure
@@ -222,6 +218,10 @@ profile:
   - section: "not_applicable"
     rules: 
       - os_identify_non-org_users
+  - section: "srg"
+    rules:
+      - srg_filevault_user_account
+      - srg_anti_virus_installed      
   - section: "Supplemental"
     rules:
       - supplemental_firewall_pf
