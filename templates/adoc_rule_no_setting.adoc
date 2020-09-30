@@ -36,6 +36,11 @@ ifdef::show_STIG[]
 !$rule_srg
 endif::[]
 
+ifdef::show_tags[]
+!TAGS
+!$rule_tags
+endif::[]
+
 !===
 
 |
