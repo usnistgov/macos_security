@@ -178,6 +178,7 @@ profile:
   - section: "Supplemental"
     rules:
       - supplemental_firewall_pf
+      - supplemental_filevault
       - supplemental_password_policy
       - supplemental_smartcard
       - supplemental_controls
