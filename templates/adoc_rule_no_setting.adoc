@@ -37,6 +37,9 @@ ifdef::show_STIG[]
 endif::[]
 
 ifdef::show_tags[]
+!CCE
+!$rule_cce
+
 !TAGS
 !$rule_tags
 endif::[]

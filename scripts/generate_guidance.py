@@ -1222,6 +1222,7 @@ def main():
                     rule_80053r4=nist_controls,
                     rule_800171=nist_800171,
                     rule_disa_stig=disa_stig,
+                    rule_cce=cce,
                     rule_tags=tags,
                     rule_srg=srg
                 )
