@@ -1,7 +1,9 @@
 id: supplemental_controls
 title: "Out of Scope Supplemental"
 discussion: |
-  There are a number of technical controls that are met by making configuration changes in the operating system.  However, 800-53 represents a broad set of guidelines that attempt to address all aspects of an information system or systems within an organization. This document is focused on the technical implementation of the controls as they apply to a general purpose operating system, specifically macOS. The information in this supplemental represents the controls that are assigned to a baseline in 800-53 that cannot be addressed with a technical configuration of macOS. These controls can be best accomplished by administrative or procedural processes within an organization or integration into enterprise information systems which are configured to protect the systems within.
+  There are several requirements defined in National Institute of Standards and Technology (NIST) Special Publication (SP) 800-53, Recommended Security Controls for Federal Information Systems and Organizations, Revision 4 can be met by making configuration changes to the operating system. However, NIST SP 800-53 (Rev. 4) contains a broad set of guidelines that attempt to address all aspects of an information system or systems within an organization. Because the macOS Security Compliance Project is tailored specifically to macOS, some requirements defined in NIST SP 800-53 (Rev. 4) are not applicable. 
+
+  This supplemental contains those controls that are assigned to a baseline in NIST SP 800-53 (Rev. 4) which cannot be addressed with a technical configuration for macOS. These controls can be accomplished though administrative or procedural processes within an organization or via integration of the macOS system into enterprise information systems which are configured to protect the systems within.
   
   [cols="15%h, 85%a"]
   |===
