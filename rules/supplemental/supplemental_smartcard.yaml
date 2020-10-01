@@ -1,25 +1,35 @@
 id: supplemental_smartcard
 title: "Smartcard Supplemental"
 discussion: |
-  macOS supports smartcards, such as U.S. Personal Identity Verification (PIV) cards and U.S. Department of Defense Common Access Cards (CAC). Smartcards can be used in macOS for the following:
+  The supplemental guidance found in this section is applicable for the following rules:
 
-  * Authentication (Loginwindow, Screensaver, SSH, PKINIT, Safari, Finder, and PAM Authorization  (sudo, login, su) )
-  * Digital Encryption
-  * Digital Signing
-  * Remote Access (VPN:L2TP)
-  * Port-based Network Access Control (802.1X)
-  * Keychain Unlock
+    * auth_ssh_smartcard_enforce
+    * auth_smartcard_enforce
+    * auth_smartcard_certificate_trust_enforce_moderate
+    * auth_smartcard_certificate_trust_enforce_high
+    * auth_smartcard_allow
+    * auth_pam_sudo_smartcard_enforce
+    * auth_pam_su_smartcard_enforce
+    * auth_pam_login_smartcard_enforcelist of Rule IDs
+
+  macOS supports smartcards, such as U.S. Personal Identity Verification (PIV) cards and U.S. Department of Defense Common Access Cards (CAC). Smartcards can be used on a macOS for the following:
+  
+    * Authentication (Loginwindow, Screensaver, SSH, PKINIT, Safari, Finder, and PAM Authorization (sudo, login, su) )
+    * Digital Encryption
+    * Digital Signing
+    * Remote Access (VPN:L2TP)
+    * Port-based Network Access Control (802.1X)
+    * Keychain Unlock
 
   macOS has built-in support for USB CCID class-compliant smartcard readers.
   
   [discrete]
   ==== Smartcard Pairing
-
-  The default method for using smartcards in macOS is a method called "Local Account Pairing". This occurs when a user inserts their smartcard into the Mac. The user is prompted to pair their smartcard with their account. If a user receives a new smartcard, the previous card must be unpaired and the new card paired to the account. This does a fixed key mapping with the hash of a public key on the user's smartcard with a local account.
+  The default method for using smartcards in macOS is a method called "local account pairing". Local account pairing is automatically initiated when a user inserts a smartcard into the Mac. The user is prompted to pair their smartcard with their account. If a user receives a new smartcard, the previous card must be unpaired, and the new card paired to the account. Local account pairing employs fixed key mapping with the hash of a public key on the user’s smartcard with a local account.
 
   [discrete]
   ==== Smartcard Attribute Mapping
-  Smartcards can be used to authenticate against a directory using attribute mapping configured in /private/etc/SmartcardLogin.plist. This file takes precedence over local account pairing. Attribute mapping matches the configured certificate field values from the smart card to the value in a directory. This may be used with network accounts, mobile accounts, or local accounts.
+  Smartcards can be used to authenticate against a directory via attribute mapping configured in /private/etc/SmartcardLogin.plist. This file takes precedence over local account pairing. Attribute mapping matches the configured certificate field values from the smart card to the value in a directory. This may be used with network accounts, mobile accounts, or local accounts.
 
   [discrete]
   ==== Smartcard Management in macOS
@@ -48,9 +58,9 @@ discussion: |
 
   - 1: certificate trust check is turned on. Standard validity check is being performed but this does not include additional revocation checks.
 
-  - 2: certificate trust check is turned on, plus a soft revocation check is performed. Until the certificate is explicitly rejected by CRL/OCSP, it is considered as valid. This implies that unavailable/unreachable CRL/OCSP allows this check to succeed.
+  - 2: certificate trust check is turned on, and a soft revocation check is performed. Until the certificate is explicitly rejected by CRL/OCSP, it is considered valid. This implies that unavailable/unreachable CRL/OCSP allows this check to succeed.
 
-  - 3: certificate trust check is turned on, plus a hard revocation check is performed. Unless CRL/OCSP explicitly says “this certificate is OK”, the certificate is considered as invalid. This is the most secure value for this setting.
+  - 3: certificate trust check is turned on, plus a hard revocation check is performed. Unless CRL/OCSP explicitly states that “this certificate is OK”, the certificate is considered invalid. This is the most secure value for this setting.
 
   <.^|oneCardPerUser
   ^.^|bool
@@ -62,15 +72,15 @@ discussion: |
 
   <.^|tokenRemovalAction
   ^.^|int
-  |If 1, enables screen saver when the smartcard is removed. 
+  |If 1, the screen saver will automatically when the smartcard is removed.
 
   <.^|allowUnmappedUsers
   ^.^|int
-  |If 1, allows users who are in a directory group to be exempt from smartcard only enforcement. The group allowed for exemption is defined in /private/etc/SmartcardLogin.plist
+  |If 1, allows users who are in a directory group to be exempt from smartcard-only enforcement. The group allowed for exemption is defined in /private/etc/SmartcardLogin.plist
 
   |===
 
-  A custom configuration profile (com.apple.loginwindow) should be created to disable automatic login when FileVault is enabled. This ensures that authorized users boot their Macs, enter a password at the pre-boot screen, which decrypts the boot volume, and then are presented with a login window where they can authenticate using a smartcard.
+  A custom configuration profile (com.apple.loginwindow) should be created to disable automatic login when FileVault is enabled. This ensures that authorized users boot their Macs, enter a password at the pre-boot screen (which decrypts the boot volume), and are then presented with a login window where they can authenticate with a smartcard.
 
   [%header,cols="2,1,7"]
   |===
@@ -80,14 +90,13 @@ discussion: |
 
   <.^|DisableFDEAutoLogin
   ^.^|bool
-  |If true, both EFI login password and loginwindow PIN are required
+  |If true, both Extensible Firmware Interface (EFI) login password and loginwindow PIN are required.
 
   |===
 
   [discrete]
   ==== Trusted Authorities
-
-  In macOS you can specify which certificate authorities (CA) can be used for trust evaluation during smartcard authentication. Only CAs listed in the TrustedAuthorities section of the SmartcardLogin.plist will be evaluated as trusted. This setting only works if checkCertificateTrust is set to either 1, 2, or 3 in com.apple.security.smartcard.
+  The macOS allows users to specify which certificate authorities (CA) can be used for trust evaluation during smartcard authentication. Only CAs listed in the TrustedAuthorities section of the SmartcardLogin.plist will be evaluated as trusted. This setting only works if checkCertificateTrust is set to either 1, 2, or 3 in com.apple.security.smartcard.
 
   To get the SHA-256 hash in the correct format, run the following command within terminal:
   [source,bash]
@@ -126,9 +135,9 @@ discussion: |
   [discrete]
   ==== NotEnforcedGroup
 
-  Starting in macOS 10.15, enforcement on a system can be granularly configured by adding a field to /private/etc/SmartcardLogin.plist. The NotEnforcedGroup can be added to the file to list a Directory group that will not be included in smartcard enforcement. In order to activate this feature, enforceSmartCard and allowUnmappedUsers be applied via a configuration profile (com.apple.security.smartcard).
+  Starting in macOS 10.15, enforcement on a system can be granularly configured by adding a field to /private/etc/SmartcardLogin.plist. The NotEnforcedGroup can be added to the file to list a Directory group that will not be included in smartcard enforcement. In order to activate this feature, enforceSmartCard and allowUnmappedUsers must be applied via a configuration profile (com.apple.security.smartcard).
 
-  To configure the NotEnforcedGroup, the SmartcardLogin.plist should be minimally configured as below:
+  To configure the NotEnforcedGroup, the SmartcardLogin.plist should be minimally configured as follows:
   [source,xml]
   ----
   <?xml version="1.0" encoding="UTF-8"?>
