@@ -5,7 +5,7 @@ discussion: |
 
   NOTE:The maximum that macOS can be configured for autologoff is 86400 seconds (24 hours).
 check: |
-  /usr/bin/profiles -P -o stdout | /usr/bin/grep -c '"com.apple.autologout.AutoLogOutDelay" = 604800'
+  /usr/bin/profiles -P -o stdout | /usr/bin/grep -c '"com.apple.autologout.AutoLogOutDelay" = 86400'
 fix: |
     This is implemented by a Configuration Profile.
 references:
