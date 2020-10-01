@@ -368,9 +368,11 @@ def generate_profiles(baseline_name, build_path, parent_dir, baseline_yaml):
     # process the payloads from the yaml file and generate new config profile for each type
     for payload, settings in profile_types.items():
         if payload.startswith("."):
-            payload = "com.apple" + payload
-        mobileconfig_file_path = os.path.join(
-            mobileconfig_output_path, payload + '.mobileconfig')
+            mobileconfig_file_path = os.path.join(
+                mobileconfig_output_path, "com.apple" + payload + '.mobileconfig')
+        else:
+            mobileconfig_file_path = os.path.join(
+                mobileconfig_output_path, payload + '.mobileconfig')
         identifier = payload + f".{baseline_name}"
         description = "Configuration settings for the {} preference domain.".format(
             payload)
