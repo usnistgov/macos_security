@@ -10,8 +10,9 @@ discussion: |
   FileVault is described in detail here: link:https://support.apple.com/guide/security/when-filevault-is-turned-on-sec4c6dc1b6e/1/web/1[].
 
   FileVault can be enabled in two ways within the macOS. It can be managed using the fdesetup command or by a Configuration Profile. When enabling FileVault via either of the aforementioned methods, you will be required to enter a username and password, which must be a local OpenDirectory account with a valid SecureToken password.
-
-  1. Using the fdesetup Command:
+  
+  [discrete]
+  ==== Using the fdesetup Command
   When enabling FileVault via the command line in the Terminal application, you can run the following command.
   [source,bash]
   ----
@@ -21,7 +22,8 @@ discussion: |
   
   NOTE: Apple has deprecated fdesetup command line tool from recognizing user name and password for security reasons and may remove the ability in future versions of macOS. 
 
-  2. Using a Configuration Profile:
+  [discrete]
+  ==== Using a Configuration Profile
   
   When managing FileVault with a configuration profile, you must deploy a profile with the payload type com.apple.MCX.FileVault2. When using the Enable key to enable FileVault with a configuration profile, you must include 1 of the following:
   
