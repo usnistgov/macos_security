@@ -1,15 +1,21 @@
 XSLT		= java -jar ~/saxon/saxon-he-10.1.jar
-OSCAP		= ~/Projects/github/OpenSCAP/openscap/build/oscap_wrapper
 TIDY		= /usr/bin/tidy
+
+OSCAP		= ~/Projects/github/OpenSCAP/openscap/build/oscap_wrapper
 
 DIR		= ../build/All_rules
 
-all: tidy XCCDF datastream report
+all: inputs tidy XCCDF datastream report
 
 inputs:
+	# generate the HTML checklist document
+	../scripts/generate_guidance.py ../baselines/all_rules.yaml 2>/dev/null
+	# generate the related OVAL content
+	../scripts/yaml-to-oval.py ../baselines/all_rules.yaml
+	# outputs end up in ${DIR}
 
 tidy:
-	# de-louse the input
+	# de-louse the input HTML
 	${TIDY} --show-errors 0 \
 		--output-xml true \
 		--numeric-entities true \
