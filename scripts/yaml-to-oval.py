@@ -587,7 +587,7 @@ def main():
                         print(rule_yaml['id'] + " - No relevant oval test")
                         x += 1
                         continue
-                    if "firmwarepasswd" in command[3]:
+                    if "mdmclient" in command[3]:
                         print(rule_yaml['id'] + " - No relevant oval test")
                         x += 1
                         continue
