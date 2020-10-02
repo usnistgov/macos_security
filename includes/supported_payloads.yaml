@@ -110,3 +110,4 @@ payloads_types:
   - com.apple.smb.server
   - com.apple.AppleFileServer
   - com.apple.AdLib
+  - .GlobalPreferences
