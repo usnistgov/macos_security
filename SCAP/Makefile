@@ -1,8 +1,6 @@
 XSLT		= java -jar ~/saxon/saxon-he-10.1.jar
 TIDY		= /usr/bin/tidy
 
-OSCAP		= ~/Projects/github/OpenSCAP/openscap/build/oscap_wrapper
-
 DIR		= ../build/All_rules
 
 all: inputs tidy XCCDF datastream report
