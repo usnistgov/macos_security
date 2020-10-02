@@ -34,6 +34,7 @@ XCCDF:
 	       	-o:${DIR}/xccdf.xml \
 		SCAP-version=1.3 \
 		id-namespace=gov.nist.mscp.content \
+		benchmark-id-suffix=macOS_10.15 \
 		OVAL-URI=${DIR}/All_rules.xml
 	# the input OVAL document will be copied to a companion of the XCCDF document named 'oval.xml'
 	# a gratuitous OCIL document is provided

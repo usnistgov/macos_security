@@ -22,6 +22,8 @@
         </xd:desc>
     </xd:doc>
     <xsl:variable name="xccdf-namespace" as="xs:string" select="string-join(reverse(tokenize($id-namespace, '\.')), '.')"/>
+    <!-- (unique) suffix for <Benchmark> @id -->
+    <xsl:param name="benchmark-id-suffix" as="xs:string" required="true"/>
     <xd:doc xmlns:xd="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet">
         <xd:desc>
             <xd:p><xd:b>Created on:</xd:b> Jun 8, 2020</xd:p>
@@ -167,7 +169,7 @@
         <xsl:copy-of select="$LF"/>
         <xsl:copy-of select="$LF"/>
         <xsl:element name="Benchmark" namespace="http://checklists.nist.gov/xccdf/1.2">
-            <xsl:attribute name="id" expand-text="true">xccdf_{$xccdf-namespace}_benchmark_macOS_10.15</xsl:attribute>
+            <xsl:attribute name="id" expand-text="true">xccdf_{$xccdf-namespace}_benchmark_{$benchmark-id-suffix}</xsl:attribute>
             <xsl:attribute name="style" expand-text="true">SCAP_{$SCAP-version}</xsl:attribute>
             <xsl:attribute name="resolved" select="true()"/>
             <xsl:attribute name="xml:lang" select="'en'"/>
