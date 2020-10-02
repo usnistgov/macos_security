@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component id="macos-fisma_family_validation_content-cpe-oval.xml">
+    <!-- Insert OVAL family_test test -->
+    <oval_definitions xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:oval="http://oval.mitre.org/XMLSchema/oval-common-5" xmlns:oval-def="http://oval.mitre.org/XMLSchema/oval-definitions-5"
+        xmlns:macos-def="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos">
+        <generator>
+            <oval:schema_version>5.11.2</oval:schema_version>
+            <oval:timestamp>2020-04-15T17:05:02-05:00</oval:timestamp>
+            <terms_of_use>Copyright (c) 2020, Bob.</terms_of_use>
+            <oval:product_name>macOS Fisma Baseline Project</oval:product_name>
+        </generator>
+        <!-- ==================================================================================================== -->
+        <!-- ==========================================  DEFINITIONS  =========================================== -->
+        <!-- ==================================================================================================== -->
+        <definitions>
+            <definition id="oval:test:def:345" version="1" class="compliance">
+                <metadata>
+                    <title>Apple macOS 10.15 is installed</title>
+                    <affected family="macos">
+                        <platform>macOS</platform>
+                    </affected>
+                    <reference source="CPE" ref_id="cpe:/o:apple:mac_os_x:10.15"/>
+                    <description>The operating system installed on the system is Apple macOS Catalina (10.15).</description>
+                </metadata>
+                <criteria operator="AND">
+                    <criterion comment="The Installed Operating System is Part of the Mac OS Family" test_ref="oval:test:tst:2"/>
+                    <criterion comment="Apple Mac OS X version is greater than 10.14.0" test_ref="oval:test:tst:3"/>
+                </criteria>
+            </definition>
+        </definitions>
+        <!-- ==================================================================================================== -->
+        <!-- ==========================================  TESTS  ================================================= -->
+        <!-- ==================================================================================================== -->
+        <tests>
+            <family_test xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#independent" check="all" check_existence="only_one_exists"
+                comment="The Installed Operating System is Part of the Mac OS Family" id="oval:test:tst:2" version="1">
+                <object object_ref="oval:test:obj:3"/>
+                <state state_ref="oval:test:ste:4"/>
+            </family_test>
+            <plist510_test xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" check="all" check_existence="only_one_exists"
+                comment="Apple Mac OS X version is greater than 10.14.0" id="oval:test:tst:3" version="2">
+                <object object_ref="oval:test:obj:5"/>
+                <state state_ref="oval:test:ste:6"/>
+            </plist510_test>
+        </tests>
+        <!-- ==================================================================================================== -->
+        <!-- ==========================================  OBJECTS  =============================================== -->
+        <!-- ==================================================================================================== -->
+        <objects>
+            <family_object id="oval:test:obj:3" version="1" comment="This variable_object represents the family that the operating system belongs to."
+                xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#independent"/>
+            <plist510_object xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" comment="The OSX product version plist object."
+                id="oval:test:obj:5" version="1">
+                <key>ProductVersion</key>
+                <filepath>/System/Library/CoreServices/SystemVersion.plist</filepath>
+                <instance datatype="int" operation="equals">1</instance>
+            </plist510_object>
+        </objects>
+        <!-- ==================================================================================================== -->
+        <!-- ==========================================  STATES  ================================================ -->
+        <!-- ==================================================================================================== -->
+        <states>
+            <family_state id="oval:test:ste:4" version="1" comment="The OS is part of the macOS Family."
+                xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#independent">
+                <family>macos</family>
+            </family_state>
+            <plist510_state xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" comment="Is the value greater than 10.14"
+                id="oval:test:ste:6" version="1">
+                <value datatype="version" operation="greater than">10.14</value>
+            </plist510_state>
+        </states>
+    </oval_definitions>
+</component>
