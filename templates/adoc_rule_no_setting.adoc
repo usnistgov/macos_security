@@ -21,6 +21,29 @@ $rule_check
 !800-53r4
 !$rule_80053r4
 
+ifdef::show_171[]
+!800-171r2
+!$rule_800171
+endif::[]
+
+ifdef::show_STIG[]
+!DISA STIG(s)
+!$rule_disa_stig
+endif::[]
+
+ifdef::show_STIG[]
+!DISA SRG(s)
+!$rule_srg
+endif::[]
+
+ifdef::show_tags[]
+!CCE
+!$rule_cce
+
+!TAGS
+!$rule_tags
+endif::[]
+
 !===
 
 |

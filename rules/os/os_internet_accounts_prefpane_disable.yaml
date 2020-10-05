@@ -1,7 +1,7 @@
 id: os_internet_accounts_prefpane_disable
-title: "The macOS system must be configured to disable the system preference pane for Internet Accounts."
+title: "Disable the Internet Accounts System Preference Pane"
 discussion: |
-  The system preference panel's Internet Accounts must be disabled to prevent the addition of unauthorized internet accounts.
+  The Internet Accounts System Preference pane _MUST_ be disabled to prevent the addition of unauthorized internet accounts.
 check: |
   /usr/bin/profiles -P -o stdout | /usr/bin/grep -c 'com.apple.preferences.internetaccounts'  
 result:
@@ -14,20 +14,22 @@ references:
   cci: 
     - CCI-001774
   800-53r4: 
-    - CM-7(5)(b)
-    - CM-7(a)
+    - AC-20
   srg: 
     - SRG-OS-000095-GPOS-00049
     - SRG-OS-000370-GPOS-00155
   disa_stig: 
     - AOSX-14-002032
+  800-171r2:
+    - 3.1.20
 macOS:
   - "10.15"
 tags:
+  - 800-171
   - cnssi-1253
-  - fisma-low
-  - fisma-moderate
-  - fisma-high
+  - 800-53r4_low
+  - 800-53r4_moderate
+  - 800-53r4_high
   - STIG
 mobileconfig: true
 mobileconfig_info:

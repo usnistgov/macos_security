@@ -1,9 +1,9 @@
 id: audit_files_owner_configure
 title: "Configure Audit Log Files to be Owned by Root" 
 discussion: |
-  Audit log files MUST be owned by root.
+  Audit log files _MUST_ be owned by root.
   
-  The audit service MUST be configured to create log files with the correct ownership to prevent normal users from reading audit logs.
+  The audit service _MUST_ be configured to create log files with the correct ownership to prevent normal users from reading audit logs.
   
   Audit logs contain sensitive data about the system and users. If log files are set to only be readable and writable by system administrators, the risk is mitigated.
 check: |
@@ -26,13 +26,16 @@ references:
     - SRG-OS-000057-GPOS-00027
   disa_stig:
     - AOSX-14-001012
+  800-171r2:
+    - 3.3.8
 macOS:
   - "10.15"
 tags:
+  - 800-171
   - cnssi-1253
-  - fisma-low
-  - fisma-moderate
-  - fisma-high
+  - 800-53r4_low
+  - 800-53r4_moderate
+  - 800-53r4_high
   - STIG
 mobileconfig: false
 mobileconfig_info:

@@ -1,52 +1,15 @@
 id: sysprefs_filevault_enforce
 title: "Enforce FileVault"
 discussion: |
+  FileVault _MUST_ be enforced.
+
   The information system implements cryptographic mechanisms to protect the confidentiality and integrity of information stored on digital media during transport outside of controlled areas.
-  
-  FileVault full-disk encryption (FileVault 2) uses XTS-AES-128 encryption with a 256-bit key to help prevent unauthorized access to the information on your startup disk.
-
-  FileVault2 is described in https://support.apple.com/en-us/HT204837
-
-  FileVault can be enabled in two ways within the macOS. It can be managed using the fdesetup command or by a Configuration Profile. When enabling FileVault, the user name and password must be a local OpenDirectory account with a valid Secure Token password.
-  Using the command line in the Terminal application you can run the following command.
-  
-  [source,bash]
-  ----
-  /usr/bin/fdesetup enable
-  ----
-  This will enable FileVault after prompting for a user name and password, and return the personal recovery key. 
-  There are a number of management features available when managing FileVault using the command line instead of a configuration profile. These are available in the manpage for fdesetup. Apple has depcrecated fdesetup command line tool from recognizing user name and password for seucirty reasons and may remove the ability in future versions of macOS.
-  
-  When managing FileVault with a configuration profile you must deploy a profile with the payload type of com.apple.MCX.FileVault2. When using the key enable to enable FileVault with a configuraiton profile, you must include 1 of the following
-  
-  [source,xml]
-  ----
-  <key>Enable</key>
-  <string>On</string>
-  <key>Defer</key>
-  <true />
-  ----
-  [source,xml]
-  ----
-  <key>Enable</key>
-  <string>On</string>
-  <key>UserEntersMissingInfo</key>
-  <true/>
-  ----
-
-  If using the key UserEntersMissingInfo it will only work if installed through manual installation and will prompt for the user name and password. 
-  If using the Defer key it will prompt for the user name and password at logout.
-  If using a configuration profile you can escrow the Recovery Key to an MDM Server. Documentation for that can be found on link:https://developer.apple.com/documentation/devicemanagement/fderecoverykeyescrow[Apple's Developer site].
-  
-  It's recommended that you use a Personal Recovery Key instead of an Institutional Key as it will generate a specific key for each device.  
-
-  Important to note, FileVault also only uses password based authentication and can not use a smartcard or any other multi factor authication.
 check: |
   /usr/bin/fdesetup status | /usr/bin/grep -c "FileVault is On."
 result:
   integer: 1
 fix: |
-  NOTE: See discussion on remediation and how to enable FileVault.
+  NOTE: See the FileVault supplemental to implement this rule.
 references:
   cce:
     - CCE-84830-9
@@ -63,12 +26,15 @@ references:
     - SRG-OS-000405-GPOS-00184
   disa_stig: 
     - AOSX-14-005020
+  800-171r2:
+    - 3.13.16
 macOS:
   - "10.15"
 tags:
+  - 800-171
   - cnssi-1253
-  - fisma-moderate
-  - fisma-high
+  - 800-53r4_moderate
+  - 800-53r4_high
   - STIG
 mobileconfig: false
 mobileconfig_info:

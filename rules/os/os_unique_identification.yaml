@@ -12,18 +12,14 @@ references:
   cci:
     - CCI-000764
   800-53r4:
-    - IA-2
+    - N/A
   disa_stig:
-    - AOSX-15-100007
+    - N/A
   srg:
     - SRG-OS-000104-GPOS-00051
 macOS:
   - "10.15"
 tags:
-  - cnssi-1253
-  - fisma-low
-  - fisma-moderate
-  - fisma-high
   - STIG
   - inherent
 mobileconfig: false

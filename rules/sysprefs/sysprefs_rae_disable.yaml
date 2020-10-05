@@ -21,18 +21,22 @@ references:
   cci: 
     - CCI-000382
   800-53r4: 
-    - CM-7(b)
+    - AC-3
   srg: 
     - SRG-OS-000096-GPOS-00050
   disa_stig: 
     - AOSX-14-002022
+  800-171r2:
+    - 3.1.1
+    - 3.1.2
 macOS:
   - "10.15"
 tags:
+  - 800-171
   - cnssi-1253
-  - fisma-low
-  - fisma-moderate
-  - fisma-high
+  - 800-53r4_low
+  - 800-53r4_moderate
+  - 800-53r4_high
   - STIG
 mobileconfig: false
 mobileconfig_info:

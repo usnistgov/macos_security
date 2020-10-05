@@ -1,11 +1,11 @@
 id: os_auth_peripherals
 title: "Must authenticate peripherals before establishing a connection"
 discussion: |
-  Without authenticating devices, unidentified or unknown devices may be introduced, thereby facilitating malicious activity. Peripherals include, but are not limited to, such devices as flash drives, external storage, and printers.
+  Organizational devices requiring unique device-to-device identification and authentication may be defined by type, by device, or by a combination of type/device. Information systems typically use either shared known information (e.g., Media Access Control [MAC] or Transmission Control Protocol/Internet Protocol [TCP/IP] addresses) for device identification or organizational authentication solutions (e.g., IEEE 802.1x and Extensible Authentication Protocol [EAP], Radius server with EAP-Transport Layer Security [TLS] authentication, Kerberos) to identify/authenticate devices on local and/or wide area networks. Organizations determine the required strength of authentication mechanisms by the security categories of information systems. Because of the challenges of applying this control on large scale, organizations are encouraged to only apply the control to those limited number (and type) of devices that truly need to support this capability.
 check: |
-  This requirement is NA for this technology.
+  The technology does support this requirement, however, third party solutions are required to implement at an infrastructure level.
 fix: |
-  The requirement is NA. No fix is required.
+  This requirement is a permanent finding and can be fixed by implementing a third party solution. 
 references:
   cce:
     - CCE-84741-8
@@ -14,16 +14,19 @@ references:
   800-53r4:
     - IA-3
   disa_stig:
-    - AOSX-15-300002
+    - N/A
   srg:
     - SRG-OS-000378-GPOS-00163
+  800-171r2:
+    - 3.5.1
+    - 3.5.2      
 macOS:
   - "10.15"
 tags:
   - cnssi-1253
-  - fisma-moderate
-  - fisma-high
+  - 800-53r4_moderate
+  - 800-53r4_high
   - STIG
-  - n_a
+  - permanent
 mobileconfig: false
 mobileconfig_info:

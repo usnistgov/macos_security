@@ -1,6 +1,8 @@
 id: os_guest_account_disable
-title: "The macOS system must disable the guest account."
+title: "Disable the Guest Account"
 discussion: |
+  Guest access _MUST_ be disabled. 
+  
   Turning off guest access prevents anonymous users from accessing files.
 check: |
   /usr/bin/profiles -P -o stdout | /usr/bin/grep -c 'DisableGuestAccount = 1'
@@ -15,14 +17,19 @@ references:
     - CCI-001813
   800-53r4:
     - CM-5(1)
+    - IA-2
   srg:
     - SRG-OS-000364-GPOS-00151
   disa_stig:
     - AOSX-14-002063
+  800-171r2:
+    - 3.5.1
+    - 3.5.2
 macOS:
   - "10.15"
 tags:
-  - fisma-high
+  - 800-171
+  - 800-53r4_high
   - STIG
 mobileconfig: true
 mobileconfig_info:

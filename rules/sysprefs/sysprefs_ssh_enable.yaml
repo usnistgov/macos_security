@@ -1,5 +1,5 @@
 id: sysprefs_ssh_enable
-title: "Enable SSH for remote access sessions"
+title: "Enable SSH for Remote Access Sessions"
 discussion: |
   SSH service _MUST_ be enabled for remote access.
   
@@ -33,6 +33,7 @@ references:
     - IA-2(8)
     - IA-2(9)
     - MA-4(6)
+    - MA-4
     - SC-8
     - SC-8(1)
     - SC-8(2)
@@ -54,12 +55,19 @@ references:
     - AOSX-14-004010
     - AOSX-14-000011
     - AOSX-14-000010
+  800-171r2:
+    - 3.1.13
+    - 3.1.15
+    - 3.5.4
+    - 3.7.5
+    - 3.13.8
 macOS:
   - "10.15"
 tags:
+  - 800-171
   - cnssi-1253
-  - fisma-moderate
-  - fisma-high
+  - 800-53r4_moderate
+  - 800-53r4_high
   - STIG
 mobileconfig: false
 mobileconfig_info:
