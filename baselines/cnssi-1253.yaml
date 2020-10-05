@@ -1,4 +1,4 @@
-title: "macOS 10.15 (Catalina): Security Configuration - 800-53 Moderate"
+title: "macOS 10.15: Security Configuration - 800-53 Moderate"
 description: |
   This guide describes the actions to take when securing a macOS 10.15 system against the NIST SP 800-53 MODERATE baseline.  
 profile:

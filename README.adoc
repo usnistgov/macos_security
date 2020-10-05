@@ -21,7 +21,9 @@ image:https://badgen.net/badge/icon/apple?icon=apple&label, link=[https://www.ap
 image:https://badgen.net/badge/icon/10.15?icon=apple&label, link=[https://www.apple.com/macos]
 endif::[]
 
-The macOS Security Compliance Project is an link:LICENSE.md[open source] effort that can be used to create customized security baselines of technical security controls, which are mapped to various compliance frameworks such as: NIST 800-53, DISA STIG, FINRA, and HIPAA requirements. This is a joint project of federal operational IT Security staff from the National Institute of Standards and Technology (NIST), National Aeronautics and Space Administration (NASA), Defense Information Systems Agency (DISA), and Los Alamos National Laboratory (LANL).
+The macOS Security Compliance Project is an link:LICENSE.md[open source] to provide a programmatic approach to generating security guidance. The configuration settings in this document were derived from National Institute of Standards and Technology (NIST) Special Publication (SP) 800-53, _Recommended Security Controls for Federal Information Systems and Organizations_, Revision 4. This is a joint project of federal operational IT Security staff from the National Institute of Standards and Technology (NIST), National Aeronautics and Space Administration (NASA), Defense Information Systems Agency (DISA), and Los Alamos National Laboratory (LANL).
+
+This project can be used as a resource to easily create customized security baselines of technical security controls by leveraging a library of atomic actions which are mapped to the compliance requirements defined in NIST SP 800-53 (Rev. 4). It can also be used to develop customized guidance to meet the particular cybersecurity needs of any organization.  
 
 To learn more about the project, please see the {uri-repo}/wiki[wiki].
 
@@ -47,6 +49,7 @@ Part 39 of the Federal Acquisition Regulations, section 39.101 paragraph (c) sta
 |Blair Heiserman|National Institute of Standards and Technology
 |Joshua Glemza|National Aeronautics and Space Administration
 |Elyse Anderson|National Aeronautics and Space Administration
+|Gary Gapinski|National Aeronautics and Space Administration
 |Paige Ramsey|Los Alamos National Laboratory
 |===
 

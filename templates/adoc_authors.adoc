@@ -1,4 +1,4 @@
-=== Authors
+== Authors
 [width="100%",cols="1,3"]
 |===
 |Bob Gendler|National Institute of Standards and Technology
@@ -8,5 +8,6 @@
 |Blair Heiserman|National Institute of Standards and Technology
 |Joshua Glemza|National Aeronautics and Space Administration
 |Elyse Anderson|National Aeronautics and Space Administration
+|Gary Gapinski|National Aeronautics and Space Administration
 |Paige Ramsey|Los Alamos National Laboratory
 |===
