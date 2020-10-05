@@ -981,6 +981,9 @@ def main():
     
 
     baseline_yaml = yaml.load(args.baseline, Loader=yaml.SafeLoader)
+    version_file = os.path.join(parent_dir, "VERSION.yaml")
+    with open(version_file) as r:
+        version_yaml = yaml.load(r, Loader=yaml.SafeLoader)
 
     adoc_templates = [ "adoc_rule", 
                     "adoc_supplemental", 
@@ -1061,6 +1064,8 @@ def main():
         nist171_attribute=adoc_171_show,
         stig_attribute=adoc_STIG_show,
         srg_attribute=adoc_SRG_show,
+        version=version_yaml['version'],
+        release_date=version_yaml['date']
     )
 
     # Output header

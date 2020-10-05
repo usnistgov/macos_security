@@ -205,7 +205,7 @@ def output_baseline(rules, keyword):
             if section_name not in sections:
                 sections.append(section_name)
 
-    output_text = f'title: "macOS 10.15 (Catalina): Security Configuration - {keyword}"\n'
+    output_text = f'title: "macOS 10.15: Security Configuration - {keyword}"\n'
     output_text += f'description: |\n  This guide describes the actions to take when securing a macOS 10.15 system against the {keyword} baseline.\n'
     output_text += 'profile:\n'
 
