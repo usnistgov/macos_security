@@ -22,8 +22,8 @@ references:
     - AC-18(1)
     - AC-18(3)
   disa_stig: 
-    - AOSX-14-004020
-    - AOSX-14-000008
+    - AOSX-15-004020
+    - AOSX-15-000008
   srg: 
     - SRG-OS-000300-GPOS-00118
     - SRG-OS-000300-GPOS-00117

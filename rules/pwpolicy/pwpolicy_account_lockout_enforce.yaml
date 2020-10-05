@@ -22,8 +22,8 @@ references:
     - SRG-OS-000021-GPOS-00005
     - SRG-OS-000329-GPOS-00128
   disa_stig: 
-    - AOSX-14-000020
-    - AOSX-14-000022
+    - AOSX-15-000020
+    - AOSX-15-000022
   800-171r2:
     - 3.1.8
 macOS:

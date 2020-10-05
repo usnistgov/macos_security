@@ -22,7 +22,7 @@ from collections import namedtuple
 
 
 class MacSecurityRule():
-    def __init__(self, title, rule_id, severity, discussion, check, fix, cci, cce, nist_controls, disa_stig, srg, tags, result_value, mobileconfig, mobileconfig_info):
+    def __init__(self, title, rule_id, severity, discussion, check, fix, cci, cce, nist_controls, nist_171, disa_stig, srg, tags, result_value, mobileconfig, mobileconfig_info):
         self.rule_title = title
         self.rule_id = rule_id
         self.rule_severity = severity
@@ -32,6 +32,7 @@ class MacSecurityRule():
         self.rule_cci = cci
         self.rule_cce = cce
         self.rule_80053r4 = nist_controls
+        self.rule_800171 = nist_171
         self.rule_disa_stig = disa_stig
         self.rule_srg = srg
         self.rule_result_value = result_value
@@ -758,9 +759,10 @@ def generate_xls(baseline_name, build_path, baseline_yaml):
     sheet1.write(0, 6, "Check Result", headers)
     sheet1.write(0, 7, "Fix", headers)
     sheet1.write(0, 8, "800-53r4", headers)
-    sheet1.write(0, 9, "SRG", headers)
-    sheet1.write(0, 10, "DISA STIG", headers)
-    sheet1.write(0, 11, "CCI", headers)
+    sheet1.write(0, 9, "800-171", headers)
+    sheet1.write(0, 10, "SRG", headers)
+    sheet1.write(0, 11, "DISA STIG", headers)
+    sheet1.write(0, 12, "CCI", headers)
     sheet1.set_panes_frozen(True)
     sheet1.set_horz_split_pos(1)
     sheet1.set_vert_split_pos(2)
@@ -818,23 +820,30 @@ def generate_xls(baseline_name, build_path, baseline_yaml):
         sheet1.write(counter, 8, baseline_refs, topWrap)
         sheet1.col(8).width = 256 * 15
 
+        nist171_refs = (
+            str(rule.rule_800171)).strip('[]\'')
+        nist171_refs = nist171_refs.replace(", ", "\n").replace("\'", "")
+
+        sheet1.write(counter, 9, nist171_refs, topWrap)
+        sheet1.col(9).width = 256 * 15
+
         srg_refs = (str(rule.rule_srg)).strip('[]\'')
         srg_refs = srg_refs.replace(", ", "\n").replace("\'", "")
 
-        sheet1.write(counter, 9, srg_refs, topWrap)
-        sheet1.col(9).width = 500 * 15
+        sheet1.write(counter, 10, srg_refs, topWrap)
+        sheet1.col(10).width = 500 * 15
 
         disa_refs = (str(rule.rule_disa_stig)).strip('[]\'')
         disa_refs = srg_refs.replace(", ", "\n").replace("\'", "")
 
-        sheet1.write(counter, 10, disa_refs, topWrap)
-        sheet1.col(10).width = 500 * 15
+        sheet1.write(counter, 11, disa_refs, topWrap)
+        sheet1.col(11).width = 500 * 15
 
         cci = (str(rule.rule_cci)).strip('[]\'')
         cci = cci.replace(", ", "\n").replace("\'", "")
 
-        sheet1.write(counter, 11, cci, topWrap)
-        sheet1.col(11).width = 400 * 15
+        sheet1.write(counter, 12, cci, topWrap)
+        sheet1.col(12).width = 400 * 15
 
         tall_style = xlwt.easyxf('font:height 640;')  # 36pt
 
@@ -864,6 +873,7 @@ def create_rules(baseline_yaml):
                   'cci',
                   'cce',
                   '800-53r4',
+                  '800-171r2',
                   'srg']
 
     for sections in baseline_yaml['profile']:
@@ -893,6 +903,7 @@ def create_rules(baseline_yaml):
                                             rule_yaml['references']['cci'],
                                             rule_yaml['references']['cce'],
                                             rule_yaml['references']['800-53r4'],
+                                            rule_yaml['references']['800-171r2'],
                                             rule_yaml['references']['disa_stig'],
                                             rule_yaml['references']['srg'],
                                             rule_yaml['tags'],
