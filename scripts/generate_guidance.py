@@ -13,6 +13,7 @@ import yaml
 import re
 import argparse
 import subprocess
+import logging
 from xlwt import Workbook
 from string import Template
 from itertools import groupby
@@ -909,6 +910,8 @@ def create_args():
         description='Given a baseline, create guidance documents and files.')
     parser.add_argument("baseline", default=None,
                         help="Baseline YAML file used to create the guide.", type=argparse.FileType('rt'))
+    parser.add_argument("-d", "--debug", default=None,
+                        help=argparse.SUPPRESS, action="store_true")
     parser.add_argument("-l", "--logo", default=None,
                         help="Full path to logo file to be inlcuded in the guide.", action="store")
     parser.add_argument("-p", "--profiles", default=None,
@@ -947,6 +950,11 @@ def is_asciidoctor_pdf_installed():
 def main():
 
     args = create_args()
+    if args.debug:
+        logging.basicConfig(level=logging.DEBUG)
+    else:
+        logging.basicConfig(level=logging.WARNING)
+
     try:
         output_basename = os.path.basename(args.baseline.name)
         output_filename = os.path.splitext(output_basename)[0]
@@ -1105,9 +1113,13 @@ def main():
         # Read all rules in the section and output them
 
         for rule in sections['rules']:
-            # print(rule)
+            logging.debug(f'processing rule id: {rule}')
             rule_path = glob.glob('../rules/*/{}.yaml'.format(rule))
-            rule_file = (os.path.basename(rule_path[0]))
+            try:
+                rule_file = (os.path.basename(rule_path[0]))
+            except IndexError:
+                logging.debug(f'defined rule {rule} does not have valid yaml file, check that rule ID and filename match.')
+
 
             #check for custom rule
             if rule_file in glob.glob1('../custom/rules/', '*.yaml'):
