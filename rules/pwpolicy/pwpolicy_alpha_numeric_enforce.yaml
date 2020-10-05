@@ -21,7 +21,7 @@ references:
   srg: 
     - SRG-OS-000071-GPOS-00039
   disa_stig: 
-    - AOSX-14-003007
+    - AOSX-15-003007
   800-171r2:
     - 3.5.1
     - 3.5.2
