@@ -7,7 +7,7 @@ discussion: |
 check: |
   /usr/bin/profiles -P -o stdout | /usr/bin/grep -c '"com.apple.autologout.AutoLogOutDelay" = 86400'
 fix: |
-    This is implemented by a Configuration Profile.
+  This is implemented by a Configuration Profile.
 references:
   cce:
     - CCE-84870-5
