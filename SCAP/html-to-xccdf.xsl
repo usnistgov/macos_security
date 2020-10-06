@@ -190,7 +190,7 @@
                     </xsl:element>
                 </xsl:element>
             </xsl:element>
-            <xsl:element name="notice" namespace="http://checklists.nist.gov/xccdf/1.2">
+            <!--<xsl:element name="notice" namespace="http://checklists.nist.gov/xccdf/1.2">
                 <xsl:element name="div" namespace="http://www.w3.org/1999/xhtml">
                     <xsl:element name="p" namespace="http://www.w3.org/1999/xhtml">
                         <xsl:text>FIXME: what (if anything) should appear in the &lt;notice&gt; element? This is typically the location of legal disclaimers.</xsl:text>
@@ -199,7 +199,7 @@
                         <xsl:text>Example: Do not attempt to implement any of the settings in this guide without first testing them in a non-operational environment. The creators of this guidance assume no responsibility whatsoever for its use by other parties, and makes no guarantees, expressed or implied, about its quality, reliability, or any other characteristic.</xsl:text>
                     </xsl:element>
                 </xsl:element>
-            </xsl:element>
+            </xsl:element>-->
             <xsl:element name="front-matter" namespace="http://checklists.nist.gov/xccdf/1.2">
                 <xsl:element name="div" namespace="http://www.w3.org/1999/xhtml">
                     <xsl:element name="h2" namespace="http://www.w3.org/1999/xhtml">&lt;front-matter&gt;</xsl:element>
