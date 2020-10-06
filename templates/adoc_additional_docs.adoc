@@ -42,15 +42,15 @@ ASSOCIATED DOCUMENTS
 |===
 |Document Number
 |Document Title
-|link:https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Apple_OS_X_10-15_V1R2_STIG.zip/[CNSSI No. 1253]|_Security Categorization and Control Selection for National Security Systems_
+|link:https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Apple_OS_X_10-15_V1R2_STIG.zip[STIG Ver 1, Rel 2]|_Apple OS X 10.15 (Catalina) STIG_
 |===
 
 [%header, cols=2*a]
 .Committee on National Security Systems (CNSS)
 |===
 |Document Number
-|Document Title
-|link:https://www.cnss.gov/CNSS/openDoc.cfm?V04rT9KTjGMS9mpbc+M36g==[STIG Ver 1, Rel 2]|_Apple OS X 10.15 (Catalina) STIG_
+|Document Title 
+|link:https://www.cnss.gov/CNSS/issuances/Instructions.cfm[CNSSI No. 1253]|_Security Categorization and Control Selection for National Security Systems_
 |===
 
 === Non-Government Documents
