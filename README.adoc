@@ -1,4 +1,4 @@
-image::templates/images/macOSSCP_Banner_3100x500.png[]
+image::templates/images/mscp_banner.png[]
 // settings:
 :idprefix:
 :idseparator: - 
