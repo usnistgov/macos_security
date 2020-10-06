@@ -1,6 +1,8 @@
-id: srg_filevault_user_account
-title: The macOS system must be configured with a dedicated user account to decrypt the hard disk upon startup.
+id: os_filevault_user_account
+title: "Dedicated User Account to Decrypt the Hard Disk"
 discussion: |
+  The macOS system _MUST_ be configured with a dedicated user account to decrypt the hard disk upon startup.
+
   When "FileVault" and Multifactor Authentication are configured on the operating system, a dedicated user must be configured to ensure that the implemented Multifactor Authentication rules are enforced. If a dedicated user is not configured to decrypt the hard disk upon startup, the system will allow a user to bypass Multifactor Authentication rules during initial startup and first login.
 check: |
   Ensure that only one FileVault user is defined:

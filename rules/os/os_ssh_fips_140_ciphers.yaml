@@ -1,13 +1,11 @@
 id: os_ssh_fips_140_ciphers
-title: "Limit SSH to FIPS 140 Approved Ciphers"
+title: "Limit SSH to FIPS 140 Validated Ciphers"
 discussion: |
-  SSH _MUST_ be configured to limit the ciphers to algorithms that are FIPS 140 approved.
+  SSH _MUST_ be configured to limit the ciphers to algorithms that are FIPS 140 validated.
 
-  FIPS 140-2 is the current standard for approving and validating that mechanisms used to access cryptographic modules utilize authentication that meets federal requirements.
+  FIPS 140-2 is the current standard for validating that mechanisms used to access cryptographic modules utilize authentication that meet federal requirements.
 
-  Unapproved mechanisms that are used for authentication to the cryptographic module are not verified and therefore cannot be relied upon to provide confidentiality or integrity, and system data may be compromised. 
-
-  Operating systems utilizing encryption _MUST_ use FIPS compliant mechanisms for authenticating to cryptographic modules. 
+  Operating systems utilizing encryption _MUST_ use FIPS validated mechanisms for authenticating to cryptographic modules. 
 
   NOTE: /etc/ssh/sshd_config will be automatically modified to its original state following any update or major upgrade to the operating system.
 check: |
