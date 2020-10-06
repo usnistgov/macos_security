@@ -44,7 +44,7 @@ discussion: |
 
   If using the Defer key it will prompt for the user name and password at logout.
 
-  The UserEntersMissingInfo keywill only work if installed through manual installation, and it will prompt for the username and password immediately. 
+  The UserEntersMissingInfo key will only work if installed through manual installation, and it will prompt for the username and password immediately. 
 
   When using a configuration profile, you can escrow the Recovery key to a Mobile Device Management (MDM) server. Documentation for that can be found on Apple’s Developer site: link:https://developer.apple.com/documentation/devicemanagement/fderecoverykeyescrow[].
 

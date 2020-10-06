@@ -101,7 +101,7 @@ discussion: |
   To get the SHA-256 hash in the correct format, run the following command within terminal:
   [source,bash]
   ----
-  openssl x509 -noout -fingerprint -sha256 -inform pem -in <issuer cert> | awk -F '=' '{print $2}' |  sed 's/://g'
+  /usr/bin/openssl x509 -noout -fingerprint -sha256 -inform pem -in <issuer cert> | /usr/bin/awk -F '=' '{print $2}' |  /usr/bin/sed 's/://g'
   ----
 
   To configure Trusted Authorities, the SmartcardLogin.plist should be minimally configured as below:
