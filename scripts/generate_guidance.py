@@ -982,7 +982,7 @@ def main():
         if args.logo:
             logo = args.logo
         else:
-            logo = "../../templates/images/macOSSCP_Banner_3100x500.png"
+            logo = "../../templates/images/mscp_banner.png"
 
         build_path = os.path.join(parent_dir, 'build', f'{baseline_name}')
         if not (os.path.isdir(build_path)):
