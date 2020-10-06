@@ -44,7 +44,8 @@ datastream:
 		-xsl:xccdf-to-ds.xsl \
 		-o:${DIR}/datastream.xml \
 		SCAP-version=1.3 \
-		id-namespace=gov.nist.mscp.content
+		id-namespace=gov.nist.mscp.content \
+		datastream-id-suffix=macOS_10.15 \
 
 report:
 	# generate an XCCDF report for quality assurance
