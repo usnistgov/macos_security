@@ -1,7 +1,11 @@
 id: os_notify_account_disabled
-title: "Notify of account disabling actions"
+title: "Configure the System to Notify upon Account Disabled Actions"
 discussion: |
-  When operating system accounts are disabled, user accessibility is affected. Accounts are utilized for identifying individual operating system users or for identifying the operating system processes themselves.To detect and respond to events that affect user accessibility and system processing, operating systems must audit account disabling actions and, as required, notify System Administrators and ISSOs so they can investigate the event. Such a capability greatly reduces the risk that operating system accessibility will be negatively affected for extended periods of time and also provides logging that can be used for forensic purposes.To address access requirements, many operating systems can be integrated with enterprise-level authentication_access/auditing mechanisms that meet or exceed access control policy requirements.
+  The macOS should be configured to automatically notify system administrators and Information System Security Officers (ISSOs) when accounts are disabled.
+
+  When operating system accounts are disabled, user accessibility is affected. Accounts are utilized for identifying individual operating system users or for identifying the operating system processes themselves. To detect and respond to events that affect user accessibility and system processing, operating systems should audit account disabling actions and, as required, notify system administrators and ISSOs so they can investigate the event. Such a capability greatly reduces the risk that operating system accessibility will be negatively affected for extended periods of time and also provides logging that can be used for forensic purposes.
+
+  To enable notifications and audit logging of disabled accounts, many operating systems can be integrated with enterprise-level auditing mechanisms that meet or exceed this requirement. 
 check: |
   The technology does not support this requirement. This is an applicable-does not meet finding.
 fix: |
@@ -14,15 +18,15 @@ references:
   800-53r4:
     - AC-2(4)
   disa_stig:
-    - AOSX-15-200013
+    - N/A
   srg:
     - SRG-OS-000276-GPOS-00106
 macOS:
   - "10.15"
 tags:
   - cnssi-1253
-  - fisma-moderate
-  - fisma-high
+  - 800-53r4_moderate
+  - 800-53r4_high
   - STIG
   - permanent
 mobileconfig: false

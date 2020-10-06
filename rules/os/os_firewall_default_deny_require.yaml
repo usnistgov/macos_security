@@ -1,9 +1,13 @@
 id: os_firewall_default_deny_require
-title: "The macOS system must employ a deny-all, allow-by-exception firewall policy for allowing connections to other systems."
+title: "Control Connections to Other Systems via a Deny-All and Allow-by-Exception Firewall Policy"
 discussion: |
-  Failure to restrict network connectivity only to authorized systems permits inbound connections from malicious systems. It also permits outbound connections that may facilitate exfiltration of data.
-  
-  If you are using a thrid-party firewall solution, this rule is N/A.  This rule checks for the built in pf packet filter configuration for the default deny rule. 
+  A deny-all and allow-by-exception firewall policy _MUST_ be employed for managing connections to other systems. 
+
+  Organizations _MUST_ ensure the built-in packet filter firewall is configured correctly to employ the default deny rule.
+
+  Failure to restrict network connectivity to authorized systems permits inbound connections from malicious systems. It also permits outbound connections that may facilitate the exfiltration of data.
+
+  If you are using a third-party firewall solution, this setting does not apply. 
 check: |
   /sbin/pfctl -a '*' -sr &> /dev/null | /usr/bin/grep -c "block drop in all"
 result:
@@ -17,19 +21,22 @@ references:
     - CCI-000366
     - CCI-002080
   800-53r4:
-    - CM-6(b)
-    - CA-3(5)
+    - SC-7(5)
+    - AC-4
   srg:
     - SRG-OS-000480-GPOS-00231
   disa_stig:
-    - AOSX-14-005051
+    - AOSX-15-005051
+  800-171r2:
+    - 3.1.3
+    - 3.13.6
 macOS:
   - "10.15"
 tags:
+  - 800-171
   - cnssi-1253
-  - fisma-low
-  - fisma-moderate
-  - fisma-high
+  - 800-53r4_moderate
+  - 800-53r4_high
   - STIG
 mobileconfig: false
 mobileconfig_info:

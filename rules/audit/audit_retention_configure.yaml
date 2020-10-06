@@ -1,7 +1,9 @@
-id: audit_retention_one_week_configure
-title: "Configure Audit Retention to a Minimum of 7 Days"
+id: audit_retention_configure
+title: "Configure Audit Retention to a Minimum of Seven Days"
 discussion: |
-  The audit service must be configured to require that records are kept for seven days or longer before deletion when there is no central audit record storage facility. When "expire-after" is set to "7d", the audit service will not delete audit logs until the log data is at least seven days old.
+  The audit service _MUST_ be configured to require records be kept for seven days or longer before deletion, unless the system uses a central audit record storage facility. 
+  
+  When "expire-after" is set to "7d", the audit service will not delete audit logs until the log data is at least seven days old.
 check: |
   /usr/bin/awk -F: '/expire-after/{print $2}' /etc/security/audit_control
 result:
@@ -18,17 +20,18 @@ references:
     - CCI-001849
   800-53r4:
     - AU-4
+    - AU-11
   srg:
     - SRG-OS-000341-GPOS-00132
   disa_stig:
-    - AOSX-14-001029
+    - AOSX-15-001029
 macOS:
   - "10.15"
 tags:
   - cnssi-1253
-  - fisma-low
-  - fisma-moderate
-  - fisma-high
+  - 800-53r4_low
+  - 800-53r4_moderate
+  - 800-53r4_high
   - STIG
 mobileconfig: false
 mobileconfig_info:

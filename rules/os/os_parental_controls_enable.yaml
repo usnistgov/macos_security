@@ -1,7 +1,11 @@
 id: os_parental_controls_enable
 title: "Enable Parental Controls"
 discussion: |
-  Parental Control on macOS consists of many different payloads which are set individually depending on the type of control required. Enabling parental contols allows for further configuration of these restrictions.
+  Parental Controls _MUST_ be enabled. 
+  
+  Control of program execution is a mechanism used to prevent program execution of unauthorized programs, which is critical to maintaining a secure system baseline.
+
+  Parental Controls on the macOS consist of many different payloads, which are set individually depending on the type of control required. Enabling parental controls allows for further configuration of these restrictions.
 check: |
   /usr/bin/profiles -P -o stdout | /usr/bin/grep -c 'familyControlsEnabled = 1'
 result:
@@ -13,15 +17,24 @@ references:
     - CCE-84773-1
   cci: 
     - CCI-001812
+    - CCI-001764
   800-53r4: 
-    - CM-11(2)
+    - CM-7(2)
   srg: 
     - SRG-OS-000362-GPOS-00149
+    - SRG-OS-000368-GPOS-00154
   disa_stig: 
     - N/A
+  800-171r2:
+    - 3.4.7
 macOS:
   - "10.15"
 tags:
+  - STIG
+  - 800-171
+  - cnssi-1253
+  - 800-53r4_moderate
+  - 800-53r4_high
   - STIG
 mobileconfig: true
 mobileconfig_info:

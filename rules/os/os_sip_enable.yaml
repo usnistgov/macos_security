@@ -1,9 +1,9 @@
 id: os_sip_enable
-title: "Ensure System Integrity Protection (SIP) is Enabled"
+title: "Ensure System Integrity Protection is Enabled"
 discussion: |
-  System Integrity Protection (SIP) is vital to prevent unauthorized and unintended information transfer via shared system resources, protect audit tools from unauthorized access, modification, and deletion, limit privileges to change software resident within software libraries, limit the ability of non-privileged users to grant other users direct access to the contents of their home directories/folders.
-
-  SIP also ensures the presence of an audit record generation capability for defined auditable events for all operating system components, supports on-demand and after-the-fact reporting requirements, does not alter original content or time ordering of audit records, and does not alter original content or time ordering of audit records.
+  System Integrity Protection (SIP) _MUST_ be enabled. 
+  
+  SIP is vital to protecting the integrity of the system as it prevents malicious users and software from making unauthorized and/or unintended modifications to protected files and folders; ensures the presence of an audit record generation capability for defined auditable events for all operating system components; protects audit tools from unauthorized access, modification, and deletion; restricts the root user account and limits the actions that the root user can perform on protected parts of the macOS; and prevents non-privileged users from granting other users direct access to the contents of their home directories and folders.
 check: |
   /usr/bin/csrutil status | /usr/bin/grep -c 'System Integrity Protection status: enabled.'
 result:
@@ -33,17 +33,15 @@ references:
     - CCI-001880
     - CCI-001881
     - CCI-001882
-  800-53r4: 
-    - AU-12
-    - AU-12(a)
+  800-53r4:
+    - AC-3 
     - AU-6(4)
     - AU-7(1)
-    - AU-7(a)
-    - AU-7(b)
+    - AU-7
     - AU-9
     - AU-9(3)
     - CM-5(6)
-    - CM-6(b)
+    - CM-5
     - SC-4
   srg: 
     - SRG-OS-000051-GPOS-00024
@@ -65,14 +63,22 @@ references:
     - SRG-OS-000480-GPOS-00228
     - SRG-OS-000480-GPOS-00230
   disa_stig: 
-    - AOSX-14-005001
+    - AOSX-15-005001
+  800-171r2:
+    - 3.1.1
+    - 3.1.2
+    - 3.3.6
+    - 3.3.8
+    - 3.4.5
+    - 3.13.4
 macOS:
   - "10.15"
 tags:
+  - 800-171
   - cnssi-1253
-  - fisma-low
-  - fisma-moderate
-  - fisma-high
+  - 800-53r4_low
+  - 800-53r4_moderate
+  - 800-53r4_high
   - STIG
 mobileconfig: false
 mobileconfig_info:

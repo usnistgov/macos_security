@@ -1,7 +1,7 @@
 id: os_ssh_client_alive_count_max_configure
-title: "Configure SSH ClientAliveCountMax option set to 0"
+title: "Set SSH Active Client Alive Maximum to Zero"
 discussion: |
-  SSH should be configured with an Active Client Alive Maximum Count of 0. Terminating an idle session within a short time period reduces the window of opportunity for unauthorized personnel to take control of a management session enabled on the console or console port that has been left unattended. In addition, quickly terminating an idle session or an incomplete logon attempt will also free up resources committed by the managed network element.
+  SSH _MUST_ be configured with an Active Client Alive Maximum Count set to zero. Terminating an idle session within a short time period reduces the window of opportunity for unauthorized personnel to take control of a management session enabled on the console or console port that has been left unattended. In addition, quickly terminating an idle session or an incomplete login attempt will also free up resources committed by the managed network element.
 
   NOTE: /etc/ssh/sshd_config will be automatically modified to its original state following any update or major upgrade to the operating system.
 check: |
@@ -23,13 +23,16 @@ references:
   srg: 
     - SRG-OS-000163-GPOS-00072
   disa_stig: 
-    - AOSX-14-000052
+    - AOSX-15-000052
+  800-171r2:
+    - 3.13.9
 macOS:
   - "10.15"
 tags:
+  - 800-171
   - cnssi-1253
-  - fisma-moderate
-  - fisma-high
+  - 800-53r4_moderate
+  - 800-53r4_high
   - STIG
 mobileconfig: false
 mobileconfig_info:

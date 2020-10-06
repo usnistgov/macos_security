@@ -2,11 +2,29 @@
 
 This document provides a high-level view of the changes to the macOS Security Compliance Project.
 
+== [Catalina, Revision 1] - 2020-10-06
+
+* Rules
+** Added new rules
+** Better categorization
+** Added new supplementals 
+
+* Baselines
+** Added 800-171
+
+* Scripts
+** Added generate_guidance.py (consolidates older scripts)
+** Added generate_baseline.py
+** Added yaml-to-oval.py
+** Removed baseline_identify.py
+** Added debug support to generate_guidance.py
+
+* Miscellaneous
+** Additional customizations
+** Cleaned up rule language
+** Added SCAP artifacts
+** Added logo
+
 == [0.9.0] - 2020-06-19
 
 Initial Public release (PRE-RELEASE)
-
-
-
-
-

@@ -1,7 +1,11 @@
 id: os_notify_account_enable
-title: "Notify of account enabling actions"
+title: "Configure the System to Notify upon Account Enabled Actions "
 discussion: |
-  Once an attacker establishes initial access to a system, the attacker often attempts to create a persistent method of reestablishing access. One way to accomplish this is for the attacker to simply enable a new or disabled account. Notification of account enabling is one method for mitigating this risk. A comprehensive account management process will ensure an audit trail, which documents the creation of operating system user accounts and notifies System Administrators and ISSOs that it exists. Such a process greatly reduces the risk that accounts will be surreptitiously enabled and provides logging that can be used for forensic purposes. To detect and respond to events that affect user accessibility and application processing, operating systems must audit account enabling actions and, as required, notify the appropriate individuals so they can investigate the event. To address access requirements, many operating systems can be integrated with enterprise-level authentication_access/auditing mechanisms that meet or exceed access control policy requirements.
+  The macOS should be configured to automatically notify system administrators and Information System Security Officers (ISSOs) when accounts are enabled.
+
+  Once an attacker establishes initial access to a system, the attacker often attempts to create a persistent method of reestablishing and maintaining access by enabling a new or previously disabled account.  Configuring the information system to send a notification when  a new or disabled account is enabled is one method for mitigating this risk. A comprehensive account management process should not only notify when accounts are enabled, but also maintain an audit record of these actions.  Such a process greatly reduces the risk that accounts will be surreptitiously enabled and provides logging that can be used for forensic purposes. 
+
+  To enable notifications and audit logging of enabled accounts, many operating systems can be integrated with enterprise-level auditing mechanisms that meet or exceed this requirement. 
 check: |
   The technology does not support this requirement. This is an applicable-does not meet finding.
 fix: |
@@ -14,15 +18,15 @@ references:
   800-53r4:
     - AC-2(4)
   disa_stig:
-    - AOSX-15-200015
+    - N/A
   srg:
     - SRG-OS-000304-GPOS-00121
 macOS:
   - "10.15"
 tags:
   - cnssi-1253
-  - fisma-moderate
-  - fisma-high
+  - 800-53r4_moderate
+  - 800-53r4_high
   - STIG
   - permanent
 mobileconfig: false

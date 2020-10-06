@@ -4,7 +4,6 @@
 import types
 import sys
 import os.path
-import collections
 import plistlib
 import xlwt
 import io
@@ -14,13 +13,16 @@ import yaml
 import re
 import argparse
 import subprocess
+import logging
 from xlwt import Workbook
 from string import Template
 from itertools import groupby
 from uuid import uuid4
+from collections import namedtuple
+
 
 class MacSecurityRule():
-    def __init__(self, title, rule_id, severity, discussion, check, fix, cci, cce, nist_controls, disa_stig, srg, tags, result_value, mobileconfig, mobileconfig_info):
+    def __init__(self, title, rule_id, severity, discussion, check, fix, cci, cce, nist_controls, nist_171, disa_stig, srg, tags, result_value, mobileconfig, mobileconfig_info):
         self.rule_title = title
         self.rule_id = rule_id
         self.rule_severity = severity
@@ -30,6 +32,7 @@ class MacSecurityRule():
         self.rule_cci = cci
         self.rule_cce = cce
         self.rule_80053r4 = nist_controls
+        self.rule_800171 = nist_171
         self.rule_disa_stig = disa_stig
         self.rule_srg = srg
         self.rule_result_value = result_value
@@ -139,6 +142,12 @@ def format_mobileconfig_fix(mobileconfig):
             rulefix = rulefix + "----\n\n"
 
     return rulefix
+
+class AdocTemplate:
+    def __init__(self, name, path, template_file):
+        self.name = name
+        self.path = path
+        self.template_file = template_file
 
 class PayloadDict:
     """Class to create and manipulate Configuration Profiles.
@@ -360,8 +369,12 @@ def generate_profiles(baseline_name, build_path, parent_dir, baseline_yaml):
             print(error)
     # process the payloads from the yaml file and generate new config profile for each type
     for payload, settings in profile_types.items():
-        mobileconfig_file_path = os.path.join(
-            mobileconfig_output_path, payload + '.mobileconfig')
+        if payload.startswith("."):
+            mobileconfig_file_path = os.path.join(
+                mobileconfig_output_path, "com.apple" + payload + '.mobileconfig')
+        else:
+            mobileconfig_file_path = os.path.join(
+                mobileconfig_output_path, payload + '.mobileconfig')
         identifier = payload + f".{baseline_name}"
         description = "Configuration settings for the {} preference domain.".format(
             payload)
@@ -746,9 +759,10 @@ def generate_xls(baseline_name, build_path, baseline_yaml):
     sheet1.write(0, 6, "Check Result", headers)
     sheet1.write(0, 7, "Fix", headers)
     sheet1.write(0, 8, "800-53r4", headers)
-    sheet1.write(0, 9, "SRG", headers)
-    sheet1.write(0, 10, "DISA STIG", headers)
-    sheet1.write(0, 11, "CCI", headers)
+    sheet1.write(0, 9, "800-171", headers)
+    sheet1.write(0, 10, "SRG", headers)
+    sheet1.write(0, 11, "DISA STIG", headers)
+    sheet1.write(0, 12, "CCI", headers)
     sheet1.set_panes_frozen(True)
     sheet1.set_horz_split_pos(1)
     sheet1.set_vert_split_pos(2)
@@ -768,7 +782,7 @@ def generate_xls(baseline_name, build_path, baseline_yaml):
         sheet1.col(3).width = 700 * 35
         mechanism = "Manual"
         if "[source,bash]" in rule.rule_fix:
-            mechanism = "Scipt"
+            mechanism = "Script"
         if "This is implemented by a Configuration Profile." in rule.rule_fix:
             mechanism = "Configuration Profile"
         if "inherent" in rule.rule_tags:
@@ -806,23 +820,30 @@ def generate_xls(baseline_name, build_path, baseline_yaml):
         sheet1.write(counter, 8, baseline_refs, topWrap)
         sheet1.col(8).width = 256 * 15
 
+        nist171_refs = (
+            str(rule.rule_800171)).strip('[]\'')
+        nist171_refs = nist171_refs.replace(", ", "\n").replace("\'", "")
+
+        sheet1.write(counter, 9, nist171_refs, topWrap)
+        sheet1.col(9).width = 256 * 15
+
         srg_refs = (str(rule.rule_srg)).strip('[]\'')
         srg_refs = srg_refs.replace(", ", "\n").replace("\'", "")
 
-        sheet1.write(counter, 9, srg_refs, topWrap)
-        sheet1.col(9).width = 500 * 15
+        sheet1.write(counter, 10, srg_refs, topWrap)
+        sheet1.col(10).width = 500 * 15
 
         disa_refs = (str(rule.rule_disa_stig)).strip('[]\'')
         disa_refs = srg_refs.replace(", ", "\n").replace("\'", "")
 
-        sheet1.write(counter, 10, disa_refs, topWrap)
-        sheet1.col(10).width = 500 * 15
+        sheet1.write(counter, 11, disa_refs, topWrap)
+        sheet1.col(11).width = 500 * 15
 
         cci = (str(rule.rule_cci)).strip('[]\'')
         cci = cci.replace(", ", "\n").replace("\'", "")
 
-        sheet1.write(counter, 11, cci, topWrap)
-        sheet1.col(11).width = 400 * 15
+        sheet1.write(counter, 12, cci, topWrap)
+        sheet1.col(12).width = 400 * 15
 
         tall_style = xlwt.easyxf('font:height 640;')  # 36pt
 
@@ -852,6 +873,7 @@ def create_rules(baseline_yaml):
                   'cci',
                   'cce',
                   '800-53r4',
+                  '800-171r2',
                   'srg']
 
     for sections in baseline_yaml['profile']:
@@ -881,6 +903,7 @@ def create_rules(baseline_yaml):
                                             rule_yaml['references']['cci'],
                                             rule_yaml['references']['cce'],
                                             rule_yaml['references']['800-53r4'],
+                                            rule_yaml['references']['800-171r2'],
                                             rule_yaml['references']['disa_stig'],
                                             rule_yaml['references']['srg'],
                                             rule_yaml['tags'],
@@ -898,12 +921,17 @@ def create_args():
         description='Given a baseline, create guidance documents and files.')
     parser.add_argument("baseline", default=None,
                         help="Baseline YAML file used to create the guide.", type=argparse.FileType('rt'))
+    parser.add_argument("-d", "--debug", default=None,
+                        help=argparse.SUPPRESS, action="store_true")
     parser.add_argument("-l", "--logo", default=None,
                         help="Full path to logo file to be inlcuded in the guide.", action="store")
     parser.add_argument("-p", "--profiles", default=None,
                         help="Generate configuration profiles for the rules.", action="store_true")
     parser.add_argument("-s", "--script", default=None,
                         help="Generate the compliance script for the rules.", action="store_true")
+    # add gary argument to include tags for XCCDF generation, with a nod to Gary the SCAP guru
+    parser.add_argument("-g", "--gary", default=None,
+                        help=argparse.SUPPRESS, action="store_true")
     parser.add_argument("-x", "--xls", default=None,
                         help="Generate the excel (xls) document for the rules.", action="store_true")
     return parser.parse_args()
@@ -911,25 +939,33 @@ def create_args():
 def is_asciidoctor_installed():
     """Checks to see if the ruby gem for asciidoctor is installed
     """
-    cmd = "gem list asciidoctor -i"
+    #cmd = "gem list asciidoctor -i"
+    cmd = "which asciidoctor"
     process = subprocess.Popen(cmd.split(), stdout=subprocess.PIPE)
     output, error = process.communicate()
     
-    return process.returncode
+    # return path to asciidoctor
+    return output.decode("utf-8")
 
 
 def is_asciidoctor_pdf_installed():
     """Checks to see if the ruby gem for asciidoctor-pdf is installed
     """
-    cmd = "gem list asciidoctor-pdf -i"
+    #cmd = "gem list asciidoctor-pdf -i"
+    cmd = "which asciidoctor-pdf"
     process = subprocess.Popen(cmd.split(), stdout=subprocess.PIPE)
     output, error = process.communicate()
 
-    return process.returncode
+    return output.decode("utf-8")
 
 def main():
 
     args = create_args()
+    if args.debug:
+        logging.basicConfig(level=logging.DEBUG)
+    else:
+        logging.basicConfig(level=logging.WARNING)
+
     try:
         output_basename = os.path.basename(args.baseline.name)
         output_filename = os.path.splitext(output_basename)[0]
@@ -946,7 +982,7 @@ def main():
         if args.logo:
             logo = args.logo
         else:
-            logo = "../../templates/images/nist.png"
+            logo = "../../templates/images/mscp_banner.png"
 
         build_path = os.path.join(parent_dir, 'build', f'{baseline_name}')
         if not (os.path.isdir(build_path)):
@@ -964,26 +1000,76 @@ def main():
     
 
     baseline_yaml = yaml.load(args.baseline, Loader=yaml.SafeLoader)
+    version_file = os.path.join(parent_dir, "VERSION.yaml")
+    with open(version_file) as r:
+        version_yaml = yaml.load(r, Loader=yaml.SafeLoader)
 
+    adoc_templates = [ "adoc_rule", 
+                    "adoc_supplemental", 
+                    "adoc_rule_no_setting", 
+                    "adoc_section", 
+                    "adoc_header", 
+                    "adoc_footer", 
+                    "adoc_foreword", 
+                    "adoc_authors", 
+                    "adoc_acronyms", 
+                    "adoc_additional_docs"
+    ]
+    adoc_templates_dict = {}
 
+    for template in adoc_templates:
+        # custom template exists
+        if template + ".adoc" in glob.glob1('../custom/templates/', '*.adoc'):
+            print(f"Custom template found for : {template}")
+            adoc_templates_dict[template] = f"../custom/templates/{template}.adoc"
+        else:
+            adoc_templates_dict[template] = f"../templates/{template}.adoc"
+    
     # Setup AsciiDoc templates
-    with open('../templates/adoc_rule.adoc') as adoc_rule_file:
+    with open(adoc_templates_dict['adoc_rule']) as adoc_rule_file:
         adoc_rule_template = Template(adoc_rule_file.read())
 
-    with open('../templates/adoc_supplemental.adoc') as adoc_supplemental_file:
+    with open(adoc_templates_dict['adoc_supplemental']) as adoc_supplemental_file:
         adoc_supplemental_template = Template(adoc_supplemental_file.read())
 
-    with open('../templates/adoc_rule_no_setting.adoc') as adoc_rule_no_setting_file:
+    with open(adoc_templates_dict['adoc_rule_no_setting']) as adoc_rule_no_setting_file:
         adoc_rule_no_setting_template = Template(adoc_rule_no_setting_file.read())
 
-    with open('../templates/adoc_section.adoc') as adoc_section_file:
+    with open(adoc_templates_dict['adoc_section']) as adoc_section_file:
         adoc_section_template = Template(adoc_section_file.read())
 
-    with open('../templates/adoc_header.adoc') as adoc_header_file:
+    with open(adoc_templates_dict['adoc_header']) as adoc_header_file:
         adoc_header_template = Template(adoc_header_file.read())
 
-    with open('../templates/adoc_footer.adoc') as adoc_footer_file:
+    with open(adoc_templates_dict['adoc_footer']) as adoc_footer_file:
         adoc_footer_template = Template(adoc_footer_file.read())
+    
+    with open(adoc_templates_dict['adoc_foreword']) as adoc_foreword_file:
+        adoc_foreword_template = adoc_foreword_file.read() + "\n"
+    
+    with open(adoc_templates_dict['adoc_authors']) as adoc_authors_file:
+        adoc_authors_template = adoc_authors_file.read() + "\n"
+
+    with open(adoc_templates_dict['adoc_acronyms']) as adoc_acronyms_file:
+        adoc_acronyms_template = adoc_acronyms_file.read() + "\n"
+
+    with open(adoc_templates_dict['adoc_additional_docs']) as adoc_additional_docs_file:
+        adoc_additional_docs_template = adoc_additional_docs_file.read() + "\n"
+
+    # set tag attribute
+    if args.gary:
+        adoc_tag_show=":show_tags:"
+    else:
+        adoc_tag_show=":show_tags!:"
+
+    if "STIG" in baseline_yaml['title']:
+        adoc_STIG_show=":show_STIG:"
+        adoc_SRG_show=":show_SRG:"
+    else:
+        adoc_STIG_show=":show_STIG!:"
+        adoc_SRG_show=":show_SRG!:"
+
+    adoc_171_show=":show_171:"
 
     # Create header
     header_adoc = adoc_header_template.substitute(
@@ -992,11 +1078,24 @@ def main():
         html_header_title=baseline_yaml['title'],
         html_title=baseline_yaml['title'].split(':')[0],
         html_subtitle=baseline_yaml['title'].split(':')[1],
-        logo=logo
+        logo=logo,
+        tag_attribute=adoc_tag_show,
+        nist171_attribute=adoc_171_show,
+        stig_attribute=adoc_STIG_show,
+        srg_attribute=adoc_SRG_show,
+        version=version_yaml['version'],
+        release_date=version_yaml['date']
     )
 
     # Output header
     adoc_output_file.write(header_adoc)
+
+    # write foreword, authors, acronyms, supporting docs
+    adoc_output_file.write(adoc_foreword_template)
+    adoc_output_file.write(adoc_authors_template)
+    adoc_output_file.write(adoc_acronyms_template)
+    adoc_output_file.write(adoc_additional_docs_template)
+
         
 
     # Create sections and rules
@@ -1006,11 +1105,11 @@ def main():
         if section_yaml_file in glob.glob1('../custom/sections/', '*.yaml'):
             print(f"Custom settings found for section: {sections['section']}")
             override_section = os.path.join(
-                '../custom/sections', sections['section'] + '.yaml')
+                f'../custom/sections/{section_yaml_file}')
             with open(override_section) as r:
                 section_yaml = yaml.load(r, Loader=yaml.SafeLoader)
         else:
-            with open('../sections/' + sections['section'] + '.yaml') as s:
+            with open(f'../sections/{section_yaml_file}') as s:
                 section_yaml = yaml.load(s, Loader=yaml.SafeLoader)
 
         # Read section info and output it
@@ -1025,9 +1124,13 @@ def main():
         # Read all rules in the section and output them
 
         for rule in sections['rules']:
-            # print(rule)
+            logging.debug(f'processing rule id: {rule}')
             rule_path = glob.glob('../rules/*/{}.yaml'.format(rule))
-            rule_file = (os.path.basename(rule_path[0]))
+            try:
+                rule_file = (os.path.basename(rule_path[0]))
+            except IndexError:
+                logging.debug(f'defined rule {rule} does not have valid yaml file, check that rule ID and filename match.')
+
 
             #check for custom rule
             if rule_file in glob.glob1('../custom/rules/', '*.yaml'):
@@ -1061,6 +1164,14 @@ def main():
             else:
                 #nist_80053r4 = ulify(rule_yaml['references']['800-53r4'])
                 nist_80053r4 = rule_yaml['references']['800-53r4']
+            
+            try:
+                rule_yaml['references']['800-171r2']
+            except KeyError:
+                nist_800171 = '• N/A'
+            else:
+                #nist_80053r4 = ulify(rule_yaml['references']['800-53r4'])
+                nist_800171 = ulify(rule_yaml['references']['800-171r2'])
 
             try:
                 rule_yaml['references']['disa_stig']
@@ -1088,7 +1199,7 @@ def main():
             except KeyError:
                 tags = 'none'
             else:
-                tags = rule_yaml['tags']
+                tags = ulify(rule_yaml['tags'])
 
             try:
                 result = rule_yaml['result']
@@ -1131,17 +1242,20 @@ def main():
                     rule_id=rule_yaml['id'].replace('|', '\|'),
                     rule_discussion=rule_yaml['discussion'],
                 )
-            # elif ('permanent' in tags) or ('inherent' in tags) or ('n_a' in tags):
-            #     rule_adoc = adoc_rule_no_setting_template.substitute(
-            #         rule_title=rule_yaml['title'].replace('|', '\|'),
-            #         rule_id=rule_yaml['id'].replace('|', '\|'),
-            #         rule_discussion=rule_yaml['discussion'].replace('|', '\|'),
-            #         rule_check=rule_yaml['check'],  # .replace('|', '\|'),
-            #         rule_fix=rulefix,
-            #         rule_80053r4=nist_controls,
-            #         rule_disa_stig=disa_stig,
-            #         rule_srg=srg
-            #     )
+            elif ('permanent' in tags) or ('inherent' in tags) or ('n_a' in tags):
+                rule_adoc = adoc_rule_no_setting_template.substitute(
+                    rule_title=rule_yaml['title'].replace('|', '\|'),
+                    rule_id=rule_yaml['id'].replace('|', '\|'),
+                    rule_discussion=rule_yaml['discussion'].replace('|', '\|'),
+                    rule_check=rule_yaml['check'],  # .replace('|', '\|'),
+                    rule_fix=rulefix,
+                    rule_80053r4=nist_controls,
+                    rule_800171=nist_800171,
+                    rule_disa_stig=disa_stig,
+                    rule_cce=cce,
+                    rule_tags=tags,
+                    rule_srg=srg
+                )
             else:
                 rule_adoc = adoc_rule_template.substitute(
                     rule_title=rule_yaml['title'].replace('|', '\|'),
@@ -1151,7 +1265,10 @@ def main():
                     rule_fix=rulefix,
                     rule_cci=cci,
                     rule_80053r4=nist_controls,
+                    rule_800171=nist_800171,
+                    rule_disa_stig=disa_stig,
                     rule_cce=cce,
+                    rule_tags=tags,
                     rule_srg=srg,
                     rule_result=result_value
                 )
@@ -1164,6 +1281,7 @@ def main():
 
     # Output footer
     adoc_output_file.write(footer_adoc)
+    adoc_output_file.close()
     
     if args.profiles:
         print("Generating configuration profiles...")
@@ -1177,19 +1295,21 @@ def main():
         print('Generating excel document...')
         generate_xls(baseline_name, build_path, baseline_yaml)
 
-    if is_asciidoctor_installed() == 0:
+    asciidoctor_path = is_asciidoctor_installed()
+    if asciidoctor_path != "":
         print('Generating HTML file from AsciiDoc...')
-        cmd = f"/usr/local/bin/asciidoctor {adoc_output_file.name}"
+        cmd = f"{asciidoctor_path} {adoc_output_file.name}"
         process = subprocess.Popen(cmd.split(), stdout=subprocess.PIPE)
-        output, error = process.communicate()
+        process.communicate()
     else:
         print("If you would like to generate the HTML file from the AsciiDoc file, install the ruby gem for asciidoctor")
     
-    if is_asciidoctor_pdf_installed() == 0:
+    asciidoctorPDF_path = is_asciidoctor_pdf_installed()
+    if asciidoctorPDF_path != "":
         print('Generating PDF file from AsciiDoc...')
-        cmd = f"/usr/local/bin/asciidoctor-pdf {adoc_output_file.name}"
+        cmd = f"{asciidoctorPDF_path} {adoc_output_file.name}"
         process = subprocess.Popen(cmd.split(), stdout=subprocess.PIPE)
-        output, error = process.communicate()
+        process.communicate()
     else:
         print("If you would like to generate the PDF file from the AsciiDoc file, install the ruby gem for asciidoctor-pdf")
 

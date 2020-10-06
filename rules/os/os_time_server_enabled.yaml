@@ -1,7 +1,7 @@
 id: os_time_server_enabled
-title: "Enable time synchronization daemon (timed)"
+title: "Enable Time Synchronization Daemon"
 discussion: |
-  The macOS time synchronization daemon(timed) must be enabled for proper time synchronization to an authorized time server. 
+  The macOS time synchronization daemon (timed) _MUST_ be enabled for proper time synchronization to an authorized time server.
 check: |
   /bin/launchctl list | /usr/bin/grep -c com.apple.timed
 result:
@@ -18,19 +18,21 @@ references:
     - CCI-001891
     - CCI-002046
   800-53r4: 
-    - AU-8(1)(a)
-    - AU-8(1)(b)
+    - AU-8(1)
   srg: 
     - SRG-OS-000355-GPOS-00143
     - SRG-OS-000356-GPOS-00144
   disa_stig: 
-    - AOSX-14-000014
+    - AOSX-15-000014
+  800-171r2:
+    - 3.3.7
 macOS:
   - "10.15"
 tags:
+  - 800-171
   - cnssi-1253
-  - fisma-moderate
-  - fisma-high
+  - 800-53r4_moderate
+  - 800-53r4_high
   - STIG
 mobileconfig: false
 mobileconfig_info:

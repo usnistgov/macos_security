@@ -1,7 +1,7 @@
 id: os_gatekeeper_rearm
-title: "Enforce Gatekeeper 30 day rearm"
+title: "Enforce Gatekeeper 30 Day Automatic Rearm"
 discussion: |
-  If Gatekeeper is disabled, there is an automatic setting for to be re-enabled after 30 days.
+  Gatekeeper _MUST_ be configured to automatically rearm after 30 days if disabled.
 check: |
   /usr/bin/profiles -P -o stdout | /usr/bin/grep -c 'GKAutoRearm = 1'
 result:
@@ -14,18 +14,21 @@ references:
   cci: 
     - N/A
   800-53r4: 
-    - CM-6(b)
+    - CM-5
+    - SI-3
   srg: 
     - N/A
   disa_stig: 
     - N/A
+  800-171r2:
+    - 3.4.5
 macOS:
   - "10.15"
 tags:
+  - 800-171
   - cnssi-1253
-  - fisma-low
-  - fisma-moderate
-  - fisma-high
+  - 800-53r4_moderate
+  - 800-53r4_high
 mobileconfig: true
 mobileconfig_info:
   com.apple.ManagedClient.preferences:

@@ -30,12 +30,29 @@ ASSOCIATED DOCUMENTS
 |===
 
 [%header, cols=2*a]
+.National Institute of Standards and Technology (NIST)
+|===
+|Document Number
+|Document Title
+|link:https://csrc.nist.gov/publications/detail/sp/800-171/rev-2/final[NIST Special Publication 800-171]|_NIST Special Publication 800-171 Rev 2_
+|===
+
+[%header, cols=2*a]
 .Defense Information Systems Agency (DISA)
 |===
 |Document Number
 |Document Title
-|link:https://www.stigviewer.com/stig/apple_os_x_10.14_mojave/[STIG Ver 1, Rel 1]|_Apple OS X 10.14(Mojave) STIG_
+|link:https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Apple_OS_X_10-15_V1R2_STIG.zip[STIG Ver 1, Rel 2]|_Apple OS X 10.15 (Catalina) STIG_
 |===
+
+[%header, cols=2*a]
+.Committee on National Security Systems (CNSS)
+|===
+|Document Number
+|Document Title 
+|link:https://www.cnss.gov/CNSS/issuances/Instructions.cfm[CNSSI No. 1253]|_Security Categorization and Control Selection for National Security Systems_
+|===
+
 === Non-Government Documents
 [%header, cols=2*a]
 .Apple

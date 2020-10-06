@@ -1,7 +1,11 @@
 id: os_firewall_log_enable
-title: "The macOS firewall must have logging enabled."
+title: "Enable Firewall Logging"
 discussion: |
-  Firewall logging must be enabled. This ensures that malicious network activity will be logged to the system. The firewall is logged to Apple's Unified Logging with the subsystem com.apple.alf and the data is marked as private.
+  Firewall logging _MUST_ be enabled. 
+
+  Firewall logging ensures that malicious network activity will be logged to the system. 
+
+  NOTE: The firewall data is logged to Apple's Unified Logging with the subsystem com.apple.alf and the data is marked as private.
 check: |
   /usr/libexec/ApplicationFirewall/socketfilterfw --getloggingmode | /usr/bin/grep -c "Log mode is on"
 result:
@@ -17,18 +21,26 @@ references:
   cci: 
     - CCI-000366
   800-53r4: 
-    - CM-6(b)
+    - SC-7
+    - AU-12
   srg: 
     - SRG-OS-000480-GPOS-00232
   disa_stig: 
-    - AOSX-14-005050
+    - AOSX-15-005050
+  800-171r2:
+    - 3.3.1
+    - 3.3.2
+    - 3.13.1
+    - 3.13.2
+    - 3.13.5
 macOS:
   - "10.15"
 tags:
+  - 800-171
   - cnssi-1253
-  - fisma-low
-  - fisma-moderate
-  - fisma-high
+  - 800-53r4_low
+  - 800-53r4_moderate
+  - 800-53r4_high
   - STIG
 mobileconfig: false
 mobileconfig_info:

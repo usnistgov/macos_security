@@ -19,15 +19,19 @@ references:
   cci: 
     - CCI-001858
   800-53r4: 
+    - AU-5
     - AU-5(2)
   srg: 
     - SRG-OS-000344-GPOS-00135
   disa_stig: 
-    - AOSX-14-001031
+    - AOSX-15-001031
+  800-171r2:
+    - 3.3.4
 macOS:
   - "10.15"
 tags:
-  - fisma-high
+  - 800-171
+  - 800-53r4_high
   - STIG
 mobileconfig: false
 mobileconfig_info:

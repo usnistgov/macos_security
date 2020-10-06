@@ -19,6 +19,7 @@ references:
    - N/A
   800-53r4: 
    - IA-2(12)
+   - IA-5(11)
   srg: 
    - SRG-OS-000376-GPOS-00161
   disa_stig:
@@ -27,9 +28,9 @@ macOS:
   - "10.15"
 tags:
   - cnssi-1253
-  - fisma-low
-  - fisma-moderate
-  - fisma-high
+  - 800-53r4_low
+  - 800-53r4_moderate
+  - 800-53r4_high
 mobileconfig: true
 mobileconfig_info:
   com.apple.security.smartcard:

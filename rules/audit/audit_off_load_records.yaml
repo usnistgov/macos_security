@@ -1,7 +1,11 @@
 id: audit_off_load_records
-title: "Off-load audit records"
+title: "Off-Load Audit Records"
 discussion: |
-  Information stored in one location is vulnerable to accidental or incidental deletion or alteration.Off-loading is a common process in information systems with limited audit storage capacity.
+  Audit records should be off-loaded onto a different system or media from the system being audited.
+
+  Information stored in only one location is vulnerable to accidental or incidental deletion or alteration. Off-loading is a common process in information systems with limited audit storage capacity. 
+
+  To secure audit records by off-loading, many operating systems can be integrated with enterprise-level auditing mechanisms that meet or exceed this requirement. 
 check: |
   The technology does not support this requirement. This is an applicable-does not meet finding.
 fix: |
@@ -14,8 +18,7 @@ references:
   800-53r4:
     - AU-4(1)
   disa_stig:
-    - AOSX-15-200023
-    - AOSX-15-200017
+    - N/A
   srg:
     - SRG-OS-000479-GPOS-00224
     - SRG-OS-000342-GPOS-00133

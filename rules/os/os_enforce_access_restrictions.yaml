@@ -1,7 +1,11 @@
 id: os_enforce_access_restrictions
-title: "Enforce access restrictions"
+title: "Enforce Access Restrictions"
 discussion: |
-  The information system enforces access restrictions and supports auditing of the enforcement actions.
+  The information system _IS_ configured to enforce access restrictions and support auditing of the enforcement actions.
+  
+  The inherent configuration of a macOS provides users with the ability to set their own permission settings to control who can view and alter files on the computer. 
+
+  link:https://support.apple.com/guide/mac-help/change-permissions-for-files-folders-or-disks-mchlp1203/mac[]
 check: |
   The technology supports this requirement and cannot be configured to be out of compliance. The technology inherently meets this requirement.
 fix: |
@@ -14,13 +18,13 @@ references:
   800-53r4:
     - CM-5(1)
   disa_stig:
-    - AOSX-15-100029
+    - N/A
   srg:
     - SRG-OS-000364-GPOS-00151
 macOS:
   - "10.15"
 tags:
-  - fisma-high
+  - 800-53r4_high
   - STIG
   - inherent
 mobileconfig: false

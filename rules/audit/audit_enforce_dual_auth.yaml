@@ -1,7 +1,11 @@
 id: audit_enforce_dual_auth
-title: "Enforce dual authorization for movement or deletion of audit information"
+title: "Enforce Dual Authorization for Movement and Deletion of Audit Information"
 discussion: |
-  An authorized user may intentionally or accidentally move or delete audit records without those specific actions being authorized.All bulk manipulation of audit information must be authorized via automatic processes. Any manual manipulation of audit information must require dual authorization. Dual authorization mechanisms require the approval of two authorized individuals to execute.
+  All bulk manipulation of audit information should be authorized via automatic processes, and any manual manipulation of audit information should require dual authorization. In addition, dual authorization mechanisms should require the approval of two authorized individuals before being executed.
+  
+  An authorized user may intentionally or accidentally move or delete audit records without those specific actions being authorized, which would result in the loss of information that could, in the future, be critical for forensic investigation.
+  
+  To enforce dual authorization before audit information can be moved or deleted, many operating systems can be integrated with enterprise-level auditing mechanisms that meet or exceed this requirement. 
 check: |
   The technology does not support this requirement. This is an applicable-does not meet finding.
 fix: |
@@ -13,19 +17,14 @@ references:
     - CCI-000366
     - CCI-001896
   800-53r4:
-    - CM-6(b)
     - AU-9(5)
   disa_stig:
-    - AOSX-15-200018
+    - N/A
   srg:
     - SRG-OS-000360-GPOS-00147
 macOS:
   - "10.15"
 tags:
-  - cnssi-1253
-  - fisma-low
-  - fisma-moderate
-  - fisma-high
   - STIG
   - permanent
 mobileconfig: false

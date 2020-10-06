@@ -1,7 +1,9 @@
 id: os_icloud_storage_prompt_disable
-title: "Disable iCloud Storage setup at login" 
+title: "Disable iCloud Storage Setup during Setup Assistant" 
 discussion: |
-  The prompt for iCloud Storage Setup services must be disabled.
+  The prompt to set up iCloud storage services during Setup Assistant _MUST_ be disabled.
+  
+  The default behavior of macOS is to prompt new users to set up storage in iCloud. Disabling the iCloud storage setup prompt provides organizations more control over the storage of their data. 
 check: |
   /usr/bin/profiles -P -o stdout | /usr/bin/grep -c 'SkipiCloudStorageSetup = 1'
 result:
@@ -14,18 +16,21 @@ references:
   cci:
     - CCI-000381
   800-53r4: 
-    - CM-7(a)
+    - AC-20
   srg: 
     - SRG-OS-000095-GPOS-00049
   disa_stig: 
-    - AOSX-14-002037
+    - AOSX-15-002037
+  800-171r2:
+    - 3.1.20
 macOS:
   - "10.15"
 tags:
+  - 800-171
   - cnssi-1253
-  - fisma-low
-  - fisma-moderate
-  - fisma-high
+  - 800-53r4_low
+  - 800-53r4_moderate
+  - 800-53r4_high
   - STIG
 mobileconfig: true
 mobileconfig_info:
