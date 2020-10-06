@@ -220,8 +220,8 @@ profile:
       - os_identify_non-org_users
   - section: "srg"
     rules:
-      - srg_filevault_user_account
-      - srg_anti_virus_installed      
+      - os_filevault_user_account
+      - os_anti_virus_installed      
   - section: "Supplemental"
     rules:
       - supplemental_firewall_pf
