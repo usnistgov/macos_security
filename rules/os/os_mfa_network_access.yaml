@@ -1,0 +1,27 @@
+id: os_mfa_network_access
+title: "Enforce multifactor authentication for network access to privileged accounts"
+discussion: |
+  The information system implements multifactor authentication for network access to privileged accounts.
+check: |
+  For directory bound systems:
+  The technology supports this requirement and cannot be configured to be out of compliance. The technology inherently meets this requirement.
+fix: |
+  For directory bound systems, the technology inherently meets this requirement. No fix is required.
+references:
+  cce:
+    - CCE-84883-8
+  cci:
+    - CCI-000765
+  800-53r4:
+    - N/A
+  disa_stig:
+    - N/A
+  srg:
+    - SRG-OS-000105-GPOS-00052
+macOS:
+  - "10.15"
+tags:
+  - STIG
+  - inherent
+mobileconfig: false
+mobileconfig_info:

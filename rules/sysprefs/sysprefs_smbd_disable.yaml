@@ -1,7 +1,9 @@
 id: sysprefs_smbd_disable
-title: "Disable Server Message Block (SMB) Sharing"
+title: "Disable Server Message Block Sharing"
 discussion: |
-  If the system does not require SMB file sharing, support it is non-essential and must be disabled.
+  Support for Server Message Block (SMB) file sharing is non-essential and _MUST_ be disabled.
+
+  The information system _MUST_ be configured to provide only essential capabilities.
 check: |
   /bin/launchctl print-disabled system | /usr/bin/grep -c '"com.apple.smbd" => true'
 result:
@@ -18,18 +20,22 @@ references:
   cci: 
     - CCI-000381
   800-53r4:
-    - CM-7(a)
+    - AC-3
   srg:
     - SRG-OS-000095-GPOS-00049
   disa_stig:
-    - AOSX-14-002001
+    - AOSX-15-002001
+  800-171r2:
+    - 3.1.1
+    - 3.1.2
 macOS:
   - "10.15"
 tags:
+  - 800-171
   - cnssi-1253
-  - fisma-low
-  - fisma-moderate
-  - fisma-high
+  - 800-53r4_low
+  - 800-53r4_moderate
+  - 800-53r4_high
   - STIG
 mobileconfig: false
 mobileconfig_info:

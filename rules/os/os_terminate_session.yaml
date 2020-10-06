@@ -1,0 +1,26 @@
+id: os_terminate_session
+title: "Terminate all sessions and network connections when maintenance is completed"
+discussion: |
+  Terminates session and network connections when nonlocal maintenance is completed.
+check: |
+  The technology supports this requirement and cannot be configured to be out of compliance. The technology inherently meets this requirement.
+fix: |
+  The technology inherently meets this requirement. No fix is required.
+references:
+  cce:
+    - CCE-84881-2
+  cci:
+    - CCI-000879
+  800-53r4:
+    - N/A
+  disa_stig:
+    - N/A
+  srg:
+    - SRG-OS-000126-GPOS-00066
+macOS:
+  - "10.15"
+tags:
+  - STIG
+  - inherent
+mobileconfig: false
+mobileconfig_info:

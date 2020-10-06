@@ -1,7 +1,7 @@
 id: os_ssh_login_grace_time_configure
-title: "Configure SSH to LoginGraceTime set to 30 or less"
+title: "Set Login Grace Time to 30 or Less"
 discussion: |
-  SSH should be configured to wait only 30 seconds before timing out logon attempts.
+  SSH _MUST_ be configured to wait only 30 seconds before timing out logon attempts.
 
   NOTE: /etc/ssh/sshd_config will be automatically modified to its original state following any update or major upgrade to the operating system.
 check: |
@@ -23,13 +23,16 @@ references:
   srg: 
     - SRG-OS-000163-GPOS-00072
   disa_stig: 
-    - AOSX-14-000053
+    - AOSX-15-000053
+  800-171r2:
+    - 3.13.9
 macOS:
   - "10.15"
 tags:
+  - 800-171
   - cnssi-1253
-  - fisma-moderate
-  - fisma-high
+  - 800-53r4_moderate
+  - 800-53r4_high
   - STIG
 mobileconfig: false
 mobileconfig_info:

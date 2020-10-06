@@ -1,9 +1,11 @@
 id: auth_smartcard_allow
 title: "Allow Smartcard Authentication"
 discussion: |
-  The use of smartcard credentials facilitates standardization and reduces the risk of unauthorized access. 
+  Smartcard authentication _MUST_ be allowed. 
+
+  The use of smartcard credentials facilitates standardization and reduces the risk of unauthorized access.
   
-  When enabled the smartcard can be used for login, authorization, and screen saver unlocking.
+  When enabled, the smartcard can be used for login, authorization, and screen saver unlocking.
 check: |
   /usr/bin/profiles -P -o stdout | /usr/bin/grep -c 'allowSmartCard = 1'
 result:
@@ -17,6 +19,7 @@ references:
    - N/A
   800-53r4: 
    - IA-2(12)
+   - IA-5(11)
   srg: 
    - SRG-OS-000376-GPOS-00161
   disa_stig:
@@ -25,9 +28,9 @@ macOS:
   - "10.15"
 tags:
   - cnssi-1253
-  - fisma-low
-  - fisma-moderate
-  - fisma-high
+  - 800-53r4_low
+  - 800-53r4_moderate
+  - 800-53r4_high
 mobileconfig: true
 mobileconfig_info:
   com.apple.security.smartcard:

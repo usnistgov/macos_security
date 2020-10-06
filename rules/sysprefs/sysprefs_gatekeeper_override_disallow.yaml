@@ -1,9 +1,9 @@
 id: sysprefs_gatekeeper_override_disallow
-title: "Configure Gatekeeper to disallow end user override"
+title: "Configure Gatekeeper to Disallow End User Override"
 discussion: |
-  The information system implements cryptographic mechanisms to authenticate software prior to installation.
+  Gatekeeper _MUST_ be configured with a configuration profile to prevent normal users from overriding its settings. 
 
-  Gatekeeper must be configured with a configuration profile to prevent normal users from overriding its setting. If users are allowed to disable Gatekeeper or set it to a less restrictive setting, malware could be introduced into the system. Gatekeeper is a security feature that ensures applications must be digitally signed by an Apple-issued certificate in order to run. Digital signatures allow Mac macOS to verify the application has not been modified by a malicious third party.
+  If users are allowed to disable Gatekeeper or set it to a less restrictive setting, malware could be introduced into the system. 
 check: |
   /usr/bin/profiles -P -o stdout | /usr/bin/grep -c 'DisableOverride = 1'
 result:
@@ -22,19 +22,21 @@ references:
   cci: 
     - CCI-000366
   800-53r4: 
-    - CM-6(b)
+    - CM-5
     - SI-7(15)
   srg: 
     - SRG-OS-000480-GPOS-00227
   disa_stig: 
-    - AOSX-14-002061
+    - AOSX-15-002061
+  800-171r2:
+    - 3.4.5
 macOS:
   - "10.15"
 tags:
+  - 800-171
   - cnssi-1253
-  - fisma-low
-  - fisma-moderate
-  - fisma-high
+  - 800-53r4_moderate
+  - 800-53r4_high
   - STIG
 mobileconfig: true
 mobileconfig_info:

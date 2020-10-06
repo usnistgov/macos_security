@@ -2,18 +2,29 @@
 .Acronyms and Abbreviations
 [width="100%",cols="1,3"]
 |====
+|AES|Advanced Encryption Standard
 |ABM|Apple Business Manager
 |AFP|Apple Filing Protocol
+|ALF|Application Layer Firewall 
 |API|Application Programming Interface
 |ARD|Apple Remote Desktop
 |CA|Certificate Authority
+|CRL|Certificate Revocation List
 |DISA|Defense Information Systems Agency
+|DMA|Direct Memory Access
 |FISMA|Federal Information Security Modernization Act
 |FPKI|Federal Public Key Infrastructure
+|IR|Infrared
+|ISO|Information System Owner
+|ISSO|Information System Security Officer
 |MDM|Mobile Device Management
 |NASA|National Aeronautics and Space Administration
+|NFS|Network File System
 |NIST|National Institute of Standards and Technology
 |NSA|National Security Agency
+|OCSP|Online Certificate Status Protocol
+|OS|Operating System
+|PF|Packet Filter
 |PIV|Personal Identity Verification
 |PIV-M|Personal Identity Verification Mandatory
 |PKI|Public Key Infrastructure
@@ -22,4 +33,5 @@
 |SSH|Secure Shell
 |STIG|Security Technical Implementation Guide
 |UAMDM|User Approved MDM
+|UUCP|Unix-to-Unix Copy Protocol
 |====

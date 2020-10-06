@@ -1,34 +1,35 @@
 id: auth_smartcard_certificate_trust_enforce_high
 title: "Set Smartcard Certificate Trust to High"
 discussion: |
-  The macOS system must be configured to not allow access to users who are no longer authorized (users with revoked certificates). To prevent the use of untrusted certificates, the certificates on a smartcard card must meet the following criteria: its issuer has a system-trusted certificate, the certificate is not expired, its "valid-after" date is in the past, and it passes CRL and OCSP checking. 
+  The macOS system _MUST_ be configured to block access to users who are no longer authorized (i.e., users with revoked certificates).  
   
-  This is a hard revocation, a network connection is required. A verified positive response from the OSCP/CRL server is required for authentication to succeed.
+  To prevent the use of untrusted certificates, the certificates on a smartcard card _MUST_ meet the following criteria: its issuer has a system-trusted certificate, the certificate is not expired, its "valid-after" date is in the past, and it passes Certificate Revocation List (CRL) and Online Certificate Status Protocol (OCSP) checking.
+
+  By setting the smartcard certificate trust level to high, the system will execute a hard revocation, i.e., a network connection is required. A verified positive response from the OSCP/CRL server is required for authentication to succeed.
 
   NOTE: Before applying this setting, please see the smartcard supplemental guidance.
 check: |
   /usr/bin/profiles -P -o stdout | /usr/bin/awk '/checkCertificateTrust/{print substr($3, 1, length($3)-1)}'
 result: 
-  intger: 3
+  integer: 3
 fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
     - CCE-84725-1
   cci: 
-   - CCI-000186
+    - CCI-000186
   800-53r4: 
     - IA-2(12)
     - IA-5(2)
-    - IA-5(2)(d)
   srg: 
    - SRG-OS-000067-GPOS-00035
   disa_stig: 
-   - AOSX-14-003002
+   - AOSX-15-003002
 macOS:
   - "10.15"
 tags:
-  - fisma-high
+  - 800-53r4_high
   - STIG
 mobileconfig: true
 mobileconfig_info:

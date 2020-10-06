@@ -1,7 +1,9 @@
 id: os_privacy_setup_prompt_disable
-title: "Disable the Privacy Setup services at login"
+title: "Disable Privacy Setup Services During Setup Assistant"
 discussion: |
-  The prompt for Privacy Setup services must be disabled.
+  The prompt for Privacy Setup services during Setup Assistant _MUST_ be disabled.
+
+  Organizations _MUST_ apply organization-wide configuration settings. The macOS Privacy Setup services prompt guides new users through enabling their own specific privacy settings; this is not essential and, therefore, _MUST_ be disabled to prevent against the risk of individuals electing privacy settings with the potential to override organization-wide settings.
 check: |
   /usr/bin/profiles -P -o stdout | /usr/bin/grep -c 'SkipPrivacySetup = 1'
 result:
@@ -14,20 +16,15 @@ references:
   cci:
     - CCI-000381
   800-53r4: 
-    - CM-6(b)
-    - CM-7(a)
+    - N/A
   srg: 
     - SRG-OS-000480-GPOS-00227
     - SRG-OS-000095-GPOS-00049
   disa_stig: 
-    - AOSX-14-002036
+    - AOSX-15-002036
 macOS:
   - "10.15"
 tags:
-  - cnssi-1253
-  - fisma-low
-  - fisma-moderate
-  - fisma-high
   - STIG
 mobileconfig: true
 mobileconfig_info:

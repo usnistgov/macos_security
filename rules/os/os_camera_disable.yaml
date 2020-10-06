@@ -1,7 +1,7 @@
 id: os_camera_disable
 title: "Disable Camera"
 discussion: |
-  The macOS system must be configured to disable the camera. 
+  MacOS _MUST_ be configured to disable the camera.
 check: |
   /usr/bin/profiles -P -o stdout | /usr/bin/grep -c 'allowCamera = 0'
 result:
@@ -15,21 +15,15 @@ references:
     - CCI-000381
     - CCI-001774
   800-53r4:
-    - SC-15(3)
-    - CM-7(a)
-    - CM-7(5)(b)
+    - N/A
   srg: 
     - SRG-OS-000095-GPOS-00049
     - SRG-OS-000370-GPOS-00155
   disa_stig:
-    - AOSX-14-002017
+    - AOSX-15-002017
 macOS:
   - "10.15"
 tags:
-  - cnssi-1253
-  - fisma-low
-  - fisma-moderate
-  - fisma-high
   - STIG
 mobileconfig: true
 mobileconfig_info:

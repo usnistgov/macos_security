@@ -1,0 +1,27 @@
+id: os_reauth_privilege
+title: "Require users to reauthenticate for privilege escalation"
+discussion: |
+  Without reauthentication, users may access resources or perform tasks for which they do not have authorization. When operating systems provide the capability to escalate a functional capability, it is critical the user reauthenticate.
+check: |
+  The technology supports this requirement and cannot be configured to be out of compliance. The technology inherently meets this requirement.
+fix: |
+  The technology inherently meets this requirement. No fix is required.
+references:
+  cce:
+    - CCE-84890-3
+  cci:
+    - CCI-002038
+  800-53r4:
+    - IA-11
+  disa_stig:
+    - N/A
+  srg:
+    - SRG-OS-000373-GPOS-00156
+    - SRG-OS-000373-GPOS-00157
+macOS:
+  - "10.15"
+tags:
+  - STIG
+  - inherent
+mobileconfig: false
+mobileconfig_info:

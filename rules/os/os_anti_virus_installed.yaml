@@ -1,0 +1,28 @@
+id: os_anti_virus_installed
+title: "Must Use an Approved Antivirus Program"
+discussion: |
+  An approved antivirus product _MUST_ be installed and configured to run. 
+
+  Malicious software can establish a base on individual desktops and servers. Employing an automated mechanism to detect this type of software will aid in elimination of the software from the operating system.
+check: |
+  Ask the System Administrator (SA) or Information System Security Officer (ISSO) if an approved antivirus solution is loaded on the system. The antivirus solution may be bundled with an approved host-based security solution. 
+  If there is no local antivirus solution installed on the system, this is a finding.
+fix: |
+  Install an approved antivirus solution onto the system.
+references:
+  cce:
+    - CCE-84894-5
+  cci: 
+    - CCI-000366
+  800-53r4: 
+    - SI-2
+  srg: 
+    - SRG-OS-000480-GPOS-00227
+  disa_stig: 
+    - AOSX-15-002070
+macOS:
+  - "10.15"
+tags:
+  - STIG
+mobileconfig: false
+mobileconfig_info:

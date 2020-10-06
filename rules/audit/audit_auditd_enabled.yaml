@@ -1,11 +1,11 @@
 id: audit_auditd_enabled
-title: "Enable Security Auditing (auditd)"
+title: "Enable Security Auditing"
 discussion: |
-  Without establishing what type of events occurred, when they occurred, and by whom it would be difficult to establish, correlate, and investigate the events leading up to an outage or attack.
-
-  Audit record content that may be necessary to satisfy this requirement includes, for example, time stamps, source and destination addresses, user/process identifiers, event descriptions, success/fail indications, filenames involved, and access control or flow control rules invoked.
-
-  Associating event types with detected events in the operating system audit logs provides a means of investigating an attack, recognizing resource utilization or capacity thresholds, or identifying an improperly configured operating system.  
+  The information system _MUST_ be configured to generate audit records. 
+  
+  Audit records establish what types of events have occurred, when they occurred, and which users were involved. These records aid an organization in their efforts to establish, correlate, and investigate the events leading up to an outage or attack.
+  
+  The content required to be captured in an audit record varies based on the impact level of an organization’s system. Content that may be necessary to satisfy this requirement includes, for example, time stamps, source addresses, destination addresses, user identifiers, event descriptions, success/fail indications, filenames involved, and access or flow control rules invoked.
 
   The information system initiates session audits at system start-up.
 check: |
@@ -38,8 +38,6 @@ references:
     - AU-3
     - AU-3(1)
     - AU-8
-    - AU-8(a)
-    - AU-8(b)
     - AU-12
     - AU-12(3)
     - AU-14(1)
@@ -59,15 +57,19 @@ references:
     - SRG-OS-000358-GPOS-00145
     - SRG-OS-000359-GPOS-00146
   disa_stig: 
-    - AOSX-14-001003
+    - AOSX-15-001003
+  800-171r2:
+    - 3.3.1
+    - 3.3.2
+    - 3.3.7
 macOS:
   - "10.15"
 tags:
+  - 800-171
   - cnssi-1253
-  - fisma-low
-  - fisma-moderate
-  - fisma-high
+  - 800-53r4_low
+  - 800-53r4_moderate
+  - 800-53r4_high
   - STIG
-  - inherent
 mobileconfig: false
 mobileconfig_info:

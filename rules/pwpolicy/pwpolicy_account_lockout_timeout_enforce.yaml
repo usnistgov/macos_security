@@ -1,7 +1,9 @@
 id: pwpolicy_account_lockout_timeout_enforce
-title: "Enforce account lockout time period of 15 minutes after the maximum failed logon attempts"
+title: "Set Account Lockout Time to 15 Minutes"
 discussion: |
-  macOS must enforce a lockout time period of at least 15 minutes after the maxium failed logon attempts.
+  The macOS _MUST_ be configured to enforce a lockout time period of at least 15 minutes when the maximum number of failed logon attempts is reached.
+
+  This rule protects against malicious users attempting to gain access to the system via brute-force hacking methods. 
 check: |
   /usr/bin/profiles -P -o stdout | /usr/bin/grep -c 'minutesUntilFailedLoginReset = 15' 
 result:
@@ -13,19 +15,24 @@ references:
     - CCE-84810-1
   cci: 
     - CCI-002238
+    - CCI-000366    
   800-53r4: 
-    - AC-7(b)
+    - AC-7
   srg: 
     - SRG-OS-000329-GPOS-00128
+    - SRG-OS-000480-GPOS-00226    
   disa_stig: 
-    - AOSX-14-000021
+    - AOSX-15-000021
+  800-171r2:
+    - 3.1.8
 macOS:
   - "10.15"
 tags:
+  - 800-171
   - cnssi-1253
-  - fisma-low
-  - fisma-moderate
-  - fisma-high
+  - 800-53r4_low
+  - 800-53r4_moderate
+  - 800-53r4_high
   - STIG
 mobileconfig: true
 mobileconfig_info:

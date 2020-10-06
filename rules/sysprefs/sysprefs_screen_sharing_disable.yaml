@@ -1,7 +1,9 @@
 id: sysprefs_screen_sharing_disable
-title: "Disable Apple Remote Desktop (ARD) and Screen Sharing"
+title: "Disable Screen Sharing and Apple Remote Desktop"
 discussion: |
-  If the system does not require Screen Sharing or ARD, support for both is non-essential and must be disabled.
+  Support for both Screen Sharing and Apple Remote Desktop (ARD) is non-essential and _MUST_ be disabled.
+  
+  The information system _MUST_ be configured to provide only essential capabilities. Disabling screen sharing and ARD helps prevent the unauthorized connection of devices, the unauthorized transfer of information, and unauthorized tunneling.
 check: |
   /bin/launchctl print-disabled system | /usr/bin/grep -c '"com.apple.screensharing" => true'
 result:
@@ -17,20 +19,24 @@ references:
     - CCE-84842-4
   cci: 
     - CCI-000366
-  800-53r4: 
+  800-53r4:
+    - AC-3
     - AC-17
-    - CM-6(b)
   srg: 
     - SRG-OS-000480-GPOS-00227
   disa_stig: 
-    - AOSX-14-002050
+    - AOSX-15-002050
+  800-171r2:
+    - 3.1.1
+    - 3.1.2
 macOS:
   - "10.15"
 tags:
+  - 800-171
   - cnssi-1253
-  - fisma-low
-  - fisma-moderate
-  - fisma-high
+  - 800-53r4_low
+  - 800-53r4_moderate
+  - 800-53r4_high
   - STIG
 mobileconfig: false
 mobileconfig_info:

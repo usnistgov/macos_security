@@ -1,16 +1,18 @@
 id: os_home_folders_secure
 title: "Secure User's Home Folders"
 discussion: |
-  The default behavior of macOS is to allow all valid users into the top level of every other users home folder and restricts access to the Apple default folders within. The system should be configured to prevent access to the top-level folders in other user's home folders.
+  The system _MUST_ be configured to prevent access to other users’ home folders.
+  
+  The default behavior of macOS is to allow all valid users access to the the top level of every other user’s home folder while restricting access only to the Apple default folders within. 
 check: |
-  /usr/bin/find /System/Volumes/Data/Users -mindepth 1 -maxdepth 1 -type d -perm -1 | grep -v "Shared" | grep -v "Guest" | wc -l | xargs
+  /usr/bin/find /System/Volumes/Data/Users -mindepth 1 -maxdepth 1 -type d -perm -1 | /usr/bin/grep -v "Shared" | /usr/bin/grep -v "Guest" | /usr/bin/wc -l | /usr/bin/xargs
 result:
   integer: 0
 fix: |
   [source,bash]
   ----
   IFS=$'\n'
-  for userDirs in $( find /System/Volumes/Data/Users -mindepth 1 -maxdepth 1 -type d -perm -1 | grep -v "Shared" | grep -v "Guest" ); do
+  for userDirs in $( /usr/bin/find /System/Volumes/Data/Users -mindepth 1 -maxdepth 1 -type d -perm -1 | /usr/bin/grep -v "Shared" | /usr/bin/grep -v "Guest" ); do
     /bin/chmod og-rwx "$userDirs"
   done
   unset IFS
@@ -22,19 +24,20 @@ references:
     - CCI-000366
   800-53r4:
     - AC-6
-    - CM-6(b)
   srg:
     - SRG-OS-000480-GPOS-00230
   disa_stig:
-    - AOSX-14-002065
-    - AOSX-14-002068
+    - AOSX-15-002065
+    - AOSX-15-002068
+  800-171r2:
+    - 3.1.5
 macOS:
   - "10.15"
 tags:
+  - 800-171
   - cnssi-1253
-  - fisma-low
-  - fisma-moderate
-  - fisma-high
+  - 800-53r4_moderate
+  - 800-53r4_high
   - STIG
 mobileconfig: false
 mobileconfig_info:

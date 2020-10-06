@@ -1,9 +1,11 @@
 id: sysprefs_ad_tracking_disable
 title: "Disable Ad Tracking"
 discussion: |
-  Ad tracking and targeted ads must be disabled.
+  Ad tracking and targeted ads _MUST_ be disabled.
+
+  The information system _MUST_ be configured to provide only essential capabilities. Disabling ad tracking ensures that applications and advertisers are unable to track users’ interests and deliver targeted advertisements.  
 check: |
-  /usr/bin/profiles -P -o stdout | /usr/bin/grep -c '"forceLimitAdTracking" = 1'
+  /usr/bin/profiles -P -o stdout | /usr/bin/grep -c 'forceLimitAdTracking = 1;'
 result:
   integer: 1
 fix: |
@@ -12,21 +14,25 @@ references:
   cce:
     - CCE-84822-6
   cci: 
-    -
+    - N/A
   800-53r4: 
-    - CM-7(5)(b)
-    - CM-7(b)
+    - AC-20
+    - CM-7
   srg: 
-    -
+    - N/A
   disa_stig: 
-    -
+    - N/A
+  800-171r2:
+    - 3.1.20
+    - 3.4.6
 macOS:
   - "10.15"
 tags:
+  - 800-171
   - cnssi-1253
-  - fisma-low
-  - fisma-moderate
-  - fisma-high
+  - 800-53r4_low
+  - 800-53r4_moderate
+  - 800-53r4_high
   - STIG
 mobileconfig: true
 mobileconfig_info:

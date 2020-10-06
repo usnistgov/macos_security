@@ -1,9 +1,9 @@
 id: auth_pam_su_smartcard_enforce
-title: "Enforce Multifactor Authentication for Privilege Escalation for the su process"
+title: "Enforce Multifactor Authentication for the su Command"
 discussion: |
-  To assure accountability and prevent unauthenticated access, privileged users must utilize multifactor authentication to prevent potential misuse and compromise of the system.
-
-  Ensure that use of su to elevate privilege enforces mutlifactor authentication.
+  The system _MUST_ be configured such that, when the su command is used, multifactor authentication is enforced.
+  
+  All users _MUST_ go through multifactor authentication to prevent unauthenticated access and potential compromise to the system.
 
   NOTE: /etc/pam.d/su will be automatically modified to its original state following any update or major upgrade to the operating system.
 check: |
@@ -35,21 +35,25 @@ references:
     - CCI-000366
   800-53r4: 
     - IA-2(3)
-    - CM-6(b)
+    - IA-2(4)
+    - IA-5(11) 
   srg: 
     - SRG-OS-000107-GPOS-00054
     - SRG-OS-000480-GPOS-00227
   disa_stig: 
-    - AOSX-14-003050
-    - AOSX-14-003051
-    - AOSX-14-003052
+    - AOSX-15-003050
+    - AOSX-15-003051
+    - AOSX-15-003052
+  800-171r2:
+    - 3.5.3
 macOS:
   - "10.15"
 tags:
+  - 800-171
   - cnssi-1253
-  - fisma-low
-  - fisma-moderate
-  - fisma-high
+  - 800-53r4_low
+  - 800-53r4_moderate
+  - 800-53r4_high
   - STIG
 mobileconfig: false
 mobileconfig_info:

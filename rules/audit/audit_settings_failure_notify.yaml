@@ -1,9 +1,9 @@
 id: audit_settings_failure_notify
 title: "Configure Audit Failure Notification"
 discussion: |
-  The audit service should be configured to immediately print messages to the console or email administrator users when an auditing failure occurs. It is critical for the appropriate personnel to be aware if a system is at risk of failing to process audit logs as required. Without a real-time alert, security personnel may be unaware of an impending failure of the audit capability and system operation may be adversely affected.
+  The audit service _MUST_ be configured to immediately print messages to the console or email administrator users when an auditing failure occurs. 
 
-  If the argument "-s" is missing, or if "audit_warn" has not been otherwise modified to print errors to the console or send email alerts to the SA and ISSO, this is a finding.
+  It is critical for the appropriate personnel to be made aware immediately if a system is at risk of failing to process audit logs as required. Without a real-time alert, security personnel may be unaware of a potentially harmful failure in the auditing system’s capability, and system operation may be adversely affected. 
 check: |
   /usr/bin/grep -c "logger -s -p" /etc/security/audit_warn
 result:
@@ -19,15 +19,19 @@ references:
   cci: 
     - CCI-001858
   800-53r4: 
+    - AU-5
     - AU-5(2)
   srg: 
     - SRG-OS-000344-GPOS-00135
   disa_stig: 
-    - AOSX-14-001031
+    - AOSX-15-001031
+  800-171r2:
+    - 3.3.4
 macOS:
   - "10.15"
 tags:
-  - fisma-high
+  - 800-171
+  - 800-53r4_high
   - STIG
 mobileconfig: false
-nmobileconfig_info:
+mobileconfig_info:

@@ -1,0 +1,28 @@
+id: os_reauth_devices_change_authenticators
+title: "Require Devices to Reauthenticate when Changing Authenticators"
+discussion: |
+  The macOS should be configured to require users to reauthenticate when the device authenticator is changed. 
+  
+  Without reauthentication, users may access resources or perform tasks for which they are not authorization. When operating systems provide the capability to change device authenticators, it is critical the device reauthenticate.
+check: |
+  The technology does not support this requirement. This is an applicable-does not meet finding.
+fix: |
+  This requirement is a permanent finding and cannot be fixed. An appropriate mitigation for the system must be implemented, but this finding cannot be considered fixed.
+references:
+  cce:
+    - CCE-84896-0
+  cci:
+    - CCI-002039
+  800-53r4:
+    - IA-11
+  disa_stig:
+    - N/A
+  srg:
+    - SRG-OS-000374-GPOS-00159
+macOS:
+  - "10.15"
+tags:
+  - STIG
+  - permanent
+mobileconfig: false
+mobileconfig_info:

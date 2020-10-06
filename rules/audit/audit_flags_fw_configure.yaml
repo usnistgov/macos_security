@@ -1,0 +1,58 @@
+id: audit_flags_fw_configure
+title: "Configure System to Audit All Failed Write Actions on the System"
+discussion: |
+  The audit system _MUST_ be configured to record enforcement actions of access restrictions, including failed file write (-fw) attempts.
+  
+  Enforcement actions are the methods or mechanisms used to prevent unauthorized access and/or changes to configuration settings. One common and effective enforcement action method is using access restrictions (e.g., denying users access to edit a file by applying file permissions). 
+
+  This configuration ensures that audit lists include events in which enforcement actions prevent attempts to change a file. 
+  
+  Without auditing the enforcement of access restrictions, it is difficult to identify attempted attacks, as there is no audit trail available for forensic investigation.
+check: |
+  /usr/bin/grep -Ec "^flags.*-fw" /etc/security/audit_control
+result:
+  integer: 1
+fix: |
+  [source,bash]
+  ----
+  /usr/bin/sed -i.bak '/^flags/ s/$/,-fw/' /etc/security/audit_control;/usr/sbin/audit -s
+  ----
+references:
+  cce:
+    - CCE-84714-5
+  cci:
+    - CCI-000162
+  800-53r4: 
+    - AU-2  
+    - AU-12
+    - AU-9
+    - CM-5(1)
+    - MA-4(1)
+  srg: 
+    - SRG-OS-000365-GPOS-00152
+    - SRG-OS-000458-GPOS-00203
+    - SRG-OS-000461-GPOS-00205
+    - SRG-OS-000463-GPOS-00207
+    - SRG-OS-000465-GPOS-00209
+    - SRG-OS-000466-GPOS-00210
+    - SRG-OS-000467-GPOS-00211
+    - SRG-OS-000468-GPOS-00212
+    - SRG-OS-000474-GPOS-00219
+    - SRG-OS-000057-GPOS-00027
+  disa_stig: 
+    - AOSX-15-001016
+  800-171r2:
+    - 3.3.1
+    - 3.3.2
+    - 3.3.8
+macOS:
+  - "10.15"
+tags:
+  - 800-171
+  - cnssi-1253
+  - 800-53r4_low
+  - 800-53r4_moderate
+  - 800-53r4_high
+  - STIG
+mobileconfig: false
+mobileconfig_info:

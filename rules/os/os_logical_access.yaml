@@ -1,0 +1,38 @@
+id: os_logical_access
+title: "Enforce Approved Authorization for Logical Access"
+discussion: |
+  The information system _IS_ configured to enforce an approved authorization process before granting users logical access. 
+
+  The inherent configuration of the macOS does not grant users logical access without authorization. Authorization is achieved on the macOS through permissions, which are controlled at many levels, from the Mach and BSD components of the kernel, through higher levels of the operating system and, for networked applications, through the networking protocols. Permissions can be granted at the level of directories, subdirectories, files or applications, or specific data within files or functions within applications. 
+
+  link:https://developer.apple.com/library/archive/documentation/Security/Conceptual/AuthenticationAndAuthorizationGuide/Permissions/Permissions.html[]
+check: |
+  The technology supports this requirement and cannot be configured to be out of compliance. The technology inherently meets this requirement.
+fix: |
+  The technology inherently meets this requirement. No fix is required.
+references:
+  cce:
+    - CCE-84857-2
+  cci:
+    - CCI-000213
+  800-53r4:
+    - AC-3
+  disa_stig:
+    - N/A
+  srg:
+    - SRG-OS-000080-GPOS-00048
+  800-171r2:
+    - 3.1.1
+    - 3.1.2
+macOS:
+  - "10.15"
+tags:
+  - 800-171
+  - cnssi-1253
+  - 800-53r4_low
+  - 800-53r4_moderate
+  - 800-53r4_high
+  - STIG
+  - inherent
+mobileconfig: false
+mobileconfig_info:

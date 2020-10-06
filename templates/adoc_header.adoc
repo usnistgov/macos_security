@@ -1,5 +1,5 @@
 :doctype: book
-:stylesdir: ../templates/
+:stylesdir: ../../templates/
 :stylesheet: asciidoctor.css
 :experimental:
 :reproducible:
@@ -12,12 +12,14 @@
 :xrefstyle: full
 :source-highlighter: rouge
 :nofooter:
+$nist171_attribute
+$stig_attribute
+$srg_attribute
 ifdef::backend-pdf[]
 = $profile_title
-v0.9, 2020-06-19
-:pdf-theme: pdf
-:pdf-themesdir: ../templates
-:title-logo-image: image:$logo[pdfwidth=4.25in,align=center]
+$version ($release_date)
+:pdf-themesdir: ../../templates
+:title-logo-image: image:$logo[align=center]
 :nofooter!:
 endif::[]
 :data-uri:
@@ -27,7 +29,9 @@ ifdef::backend-html5[]
 :title: $html_header_title
 :document-title: $html_title
 :document-subtitle: $html_subtitle
-:version: v0.9, 2020-06-19
+:version: $version ($release_date)
+$tag_attribute
+
 [cols="55s"]
 |======
 |image:$logo[]
@@ -40,16 +44,3 @@ ifdef::backend-html5[]
 <br><br><br><br><br><br><br><br><br><br><br><br>+++
 |======
 endif::[]
-
-// Foreword
-include::../templates/adoc_foreword.adoc[]
-
-// Authors
-include::../templates/adoc_authors.adoc[]
-
-// Acronyms
-include::../templates/adoc_acronyms.adoc[]
-
-// References
-include::../templates/adoc_additional_docs.adoc[]
-
