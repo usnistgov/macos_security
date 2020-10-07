@@ -31,7 +31,7 @@
             <xd:p/>
         </xd:desc>
     </xd:doc>
-    <!-- target SCP version -->
+    <!-- target SCAP version -->
     <xd:doc xmlns:xd="http://www.oxygenxml.com/ns/doc/xsl">
         <xd:desc>
             <xd:p>target SCAP version</xd:p>
@@ -52,6 +52,13 @@
         </xd:desc>
     </xd:doc>
     <xsl:param name="include-all-rule-profile" as="xs:boolean" required="false" select="false()"/>
+    <!-- Gratuitous references to SCAP standards are not included by default -->
+    <xd:doc xmlns:xd="http://www.oxygenxml.com/ns/doc/xsl">
+        <xd:desc>
+            <xd:p>Gratuitous references to SCAP standards may be included</xd:p>
+        </xd:desc>
+    </xd:doc>
+    <xsl:param name="include-scap-references" as="xs:boolean" required="no" select="false()"/>
     <!-- Indent output document -->
     <xd:doc xmlns:xd="http://www.oxygenxml.com/ns/doc/xsl">
         <xd:desc>
@@ -59,7 +66,11 @@
         </xd:desc>
     </xd:doc>
     <xsl:param name="indent-output" as="xs:boolean" required="no" select="false()" static="true"/>
-    <!-- OVAL -->
+    <xd:doc xmlns:xd="http://www.oxygenxml.com/ns/doc/xsl">
+        <xd:desc>
+            <xd:p>Origin of related OVAL definitions</xd:p>
+        </xd:desc>
+    </xd:doc>
     <xsl:param name="OVAL-URI" as="xs:string" required="true"/>
     <xsl:variable name="OVAL-document" as="document-node()" select="doc(resolve-uri($OVAL-URI))"/>
     <xd:doc xmlns:xd="http://www.oxygenxml.com/ns/doc/xsl">
@@ -228,15 +239,17 @@
                         element).</xsl:element>
                 </xsl:element>
             </xsl:element>
-            <xsl:element name="reference" namespace="http://checklists.nist.gov/xccdf/1.2">
-                <xsl:attribute name="href">https://csrc.nist.gov/publications/detail/nistir/7275/rev-4/final</xsl:attribute>
-                <xsl:element name="title" namespace="http://purl.org/dc/elements/1.1/">
-                    <xsl:text>Specification for the Extensible Configuration Checklist Description Format (XCCDF) Version 1.2</xsl:text>
+            <xsl:if test="$include-scap-references">
+                <xsl:element name="reference" namespace="http://checklists.nist.gov/xccdf/1.2">
+                    <xsl:attribute name="href">https://csrc.nist.gov/publications/detail/nistir/7275/rev-4/final</xsl:attribute>
+                    <xsl:element name="title" namespace="http://purl.org/dc/elements/1.1/">
+                        <xsl:text>Specification for the Extensible Configuration Checklist Description Format (XCCDF) Version 1.2</xsl:text>
+                    </xsl:element>
+                    <xsl:element name="publisher" namespace="http://purl.org/dc/elements/1.1/">
+                        <xsl:text>National Institute of Standards and Technology</xsl:text>
+                    </xsl:element>
                 </xsl:element>
-                <xsl:element name="publisher" namespace="http://purl.org/dc/elements/1.1/">
-                    <xsl:text>National Institute of Standards and Technology</xsl:text>
-                </xsl:element>
-            </xsl:element>
+            </xsl:if>
             <xsl:choose>
                 <xsl:when test="$SCAP-version = 1.3">
                     <xsl:element name="reference" namespace="http://checklists.nist.gov/xccdf/1.2">
