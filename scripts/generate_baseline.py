@@ -257,9 +257,10 @@ def main():
         # stash current working directory
         original_working_directory = os.getcwd()
 
-        all_rules = collect_rules()
         # switch to the scripts directory
         os.chdir(file_dir)
+
+        all_rules = collect_rules()
 
         if args.list_tags:
             available_tags(all_rules)
