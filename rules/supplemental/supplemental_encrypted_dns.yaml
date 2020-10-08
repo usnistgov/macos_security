@@ -1,0 +1,20 @@
+id: supplemental_encrypted_dns
+title: "Encrypted DNS Supplemental"
+discussion: |
+check: |
+fix: |
+references:
+  cci:
+    - N/A
+  800-53r4: 
+    - N/A
+  srg: 
+    - N/A
+  disa_stig:
+    - N/A
+macOS:
+  - "11.0"
+tags:
+  - supplemental
+mobileconfig: false
+mobileconfig_info:

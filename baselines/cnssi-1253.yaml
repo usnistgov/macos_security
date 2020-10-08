@@ -62,6 +62,7 @@ profile:
       - os_httpd_disable
       - os_gatekeeper_enable
       - os_sip_enable
+      - os_authenticated_root_enable
       - os_removable_media_disable
       - os_guest_access_smb_disable
       - os_policy_banner_ssh_configure
@@ -112,7 +113,7 @@ profile:
     rules:
       - sysprefs_smbd_disable
       - sysprefs_firewall_stealth_mode_enable
-      - sysprefs_ad_tracking_disable
+      - sysprefs_personalized_advertising_disable
       - sysprefs_internet_sharing_disable
       - sysprefs_rae_disable
       - sysprefs_ssh_enable
@@ -144,6 +145,7 @@ profile:
       - sysprefs_bluetooth_sharing_disable
       - sysprefs_improve_siri_dictation_disable
       - sysprefs_enforce_auto_logout
+      - sysprefs_airdrop_share_extension_disable
   - section: "Inherent"
     rules:
       - os_prevent_priv_functions
@@ -177,6 +179,7 @@ profile:
       - os_identify_non-org_users
   - section: "Supplemental"
     rules:
+      - supplemental_encrypted_dns
       - supplemental_firewall_pf
       - supplemental_filevault
       - supplemental_password_policy

@@ -1,18 +1,18 @@
-id: sysprefs_ad_tracking_disable
-title: "Disable Ad Tracking"
+id: sysprefs_personalized_advertising_disable
+title: "Disable Personalized Advertising"
 discussion: |
   Ad tracking and targeted ads _MUST_ be disabled.
 
   The information system _MUST_ be configured to provide only essential capabilities. Disabling ad tracking ensures that applications and advertisers are unable to track users’ interests and deliver targeted advertisements.  
 check: |
-  /usr/bin/profiles -P -o stdout | /usr/bin/grep -c 'forceLimitAdTracking = 1;'
+  /usr/bin/profiles -P -o stdout | /usr/bin/grep -c 'allowApplePersonalizedAdvertising = 1;'
 result:
   integer: 1
 fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-    - CCE-84822-6
+    - CCE-22222-2
   cci: 
     - N/A
   800-53r4: 
@@ -26,7 +26,7 @@ references:
     - 3.1.20
     - 3.4.6
 macOS:
-  - "10.15"
+  - "11.0"
 tags:
   - 800-171
   - cnssi-1253
@@ -37,4 +37,4 @@ tags:
 mobileconfig: true
 mobileconfig_info:
   com.apple.AdLib:
-    forceLimitAdTracking: true
+    allowApplePersonalizedAdvertising: false
