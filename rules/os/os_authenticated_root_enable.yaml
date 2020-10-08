@@ -16,15 +16,15 @@ references:
   cce:
     - CCE-85298-8
   cci: 
-    -
+    - N/A
   800-53r4:
-    -
+    - N/A
   srg:
-    -
+    - N/A
   disa_stig:
-    -
+    - N/A
   800-171r2:
-    -
+    - N/A
 macOS:
   - "11.0"
 tags:

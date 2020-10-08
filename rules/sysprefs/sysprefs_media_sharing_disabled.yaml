@@ -15,6 +15,12 @@ fix: |
 references:
   cce:
     - CCE-85436-4
+  800-53r4:
+    - AC-3
+  srg: 
+    - SRG-OS-000480-GPOS-00227
+  disa_stig:
+    - N/A
   cci:
     - N/A
   800-171r2:

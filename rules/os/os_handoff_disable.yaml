@@ -13,6 +13,14 @@ fix: |
 references:
   cce:
     - CCE-85321-8
+  800-53r4:
+    - AC-3
+    - AC-20
+    - CM-7
+  disa_stig:
+    - N/A
+  srg: 
+    - N/A
   cci: 
     - N/A    
   800-171r2:

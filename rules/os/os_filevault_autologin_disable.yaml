@@ -13,6 +13,13 @@ fix: |
 references:
   cce:
     - CCE-85310-1
+  800-53r4:
+    - AC-3
+    - IA-5(13)
+  srg: 
+    - SRG-OS-000480-GPOS-00229
+  disa_stig:
+    - AOSX-15-002066
   cci:
     - CCI-000366
   800-171r2:

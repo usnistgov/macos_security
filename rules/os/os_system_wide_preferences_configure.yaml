@@ -18,6 +18,14 @@ fix: |
 references:
   cce:
     - CCE-85389-5
+  800-53r4:
+    - AC-6
+    - AC-6(1)
+    - AC-6(2)
+  disa_stig:
+    - N/A
+  srg:
+    - N/A
   cci:
     - N/A    
   800-171r2:
