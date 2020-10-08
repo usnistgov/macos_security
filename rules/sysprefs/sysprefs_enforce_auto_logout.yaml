@@ -11,7 +11,7 @@ fix: |
 references:
   cce:
     - CCE-85424-0
-    cci:
+  cci:
     - CCI-002361
   800-53r4:
     - AC-12

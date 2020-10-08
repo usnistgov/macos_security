@@ -13,7 +13,7 @@ fix: |
 references:
   cce:
     - CCE-85419-0
-    cci:
+  cci:
     - CCI-000366
   800-53r4:
     - IA-2

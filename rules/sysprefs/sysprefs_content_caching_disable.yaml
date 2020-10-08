@@ -13,7 +13,7 @@ fix: |
 references:
   cce:
     - CCE-85422-4
-    cci: 
+  cci: 
     - N/A
   800-53r4:
     - CM-7

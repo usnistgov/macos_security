@@ -16,7 +16,7 @@ fix: |
 references:
   cce:
     - CCE-85338-2
-    cci:
+  cci:
     - N/A    
   800-171r2:
     - 3.4.1

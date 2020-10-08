@@ -13,7 +13,7 @@ fix: |
 references:
   cce:
     - CCE-85334-1
-    cci:
+  cci:
     - CCI-000213
   800-53r4:
     - AC-3

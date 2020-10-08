@@ -13,7 +13,7 @@ fix: |
 references:
   cce:
     - CCE-85370-5
-    cci: 
+  cci: 
     - N/A
   800-53r4: 
     - MP-7(1)

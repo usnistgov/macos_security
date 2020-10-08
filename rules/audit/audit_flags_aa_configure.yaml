@@ -18,7 +18,7 @@ fix: |
 references:
   cce:
     - CCE-85261-6
-    cci:
+  cci:
     - N/A
   800-53r4:
     - AU-2

@@ -9,7 +9,7 @@ fix: |
 references:
   cce:
     - CCE-85365-5
-    cci:
+  cci:
     - CCI-002322
   800-53r4:
     - AC-17(9)

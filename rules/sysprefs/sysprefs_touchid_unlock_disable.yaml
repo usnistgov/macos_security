@@ -15,7 +15,7 @@ fix: |
 references:
   cce:
     - CCE-85451-3
-    cci: 
+  cci: 
     - CCI-000056
   800-53r4: 
     - AC-11

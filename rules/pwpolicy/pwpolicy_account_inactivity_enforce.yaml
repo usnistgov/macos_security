@@ -37,7 +37,7 @@ fix: |
 references:
   cce:
     - CCE-85401-8
-    cci: 
+  cci: 
     - CCI-000795
   800-53r4: 
     - IA-4

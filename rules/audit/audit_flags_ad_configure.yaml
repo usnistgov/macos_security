@@ -20,7 +20,7 @@ fix: |
 references:
   cce:
     - CCE-85262-4
-    cci: 
+  cci: 
     - CCI-000018
     - CCI-000172
     - CCI-001403

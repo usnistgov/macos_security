@@ -15,7 +15,7 @@ fix: |
 references:
   cce:
     - CCE-85360-6
-    cci:
+  cci:
     - CCI-002235
   800-53r4:
     - AC-6(10)

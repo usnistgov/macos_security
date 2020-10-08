@@ -11,7 +11,7 @@ fix: |
 references:
   cce:
     - CCE-85388-7
-    cci:
+  cci:
     - N/A
   800-53r4:
     - SC-34

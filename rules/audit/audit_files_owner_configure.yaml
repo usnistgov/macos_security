@@ -18,7 +18,7 @@ fix: |
 references:
   cce:
     - CCE-85260-8
-    cci:
+  cci:
     - CCI-000162
   800-53r4:
     - AU-9

@@ -18,7 +18,7 @@ fix: |
 references:
   cce:
     - CCE-85315-0
-    cci: 
+  cci: 
     - CCI-001749
   800-53r4: 
     - CM-5(3)

@@ -13,7 +13,7 @@ fix: |
 references:
   cce:
     - CCE-85423-2
-    cci: 
+  cci: 
     - CCI-000382
   800-53r4: 
     - AC-20

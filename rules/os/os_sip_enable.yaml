@@ -17,7 +17,7 @@ fix: |
 references:
   cce:
     - CCE-85378-8
-    cci: 
+  cci: 
     - CCI-000154
     - CCI-000158
     - CCI-000169

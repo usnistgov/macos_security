@@ -15,7 +15,7 @@ fix: |
 references:
   cce:
     - CCE-85298-8
-    cci: 
+  cci: 
     -
   800-53r4:
     -

@@ -17,7 +17,7 @@ fix: |
 references:
   cce:
     - CCE-85397-8
-    cci:
+  cci:
     - CCI-000381
   800-53r4:
     - AC-3

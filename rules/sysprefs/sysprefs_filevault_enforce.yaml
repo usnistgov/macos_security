@@ -13,7 +13,7 @@ fix: |
 references:
   cce:
     - CCE-85425-7
-    cci: 
+  cci: 
     - CCI-001199
     - CCI-002475
     - CCI-002476

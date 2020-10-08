@@ -11,7 +11,7 @@ fix: |
 references:
   cce:
     - CCE-85366-3
-    cci:
+  cci:
     - CCI-002039
   800-53r4:
     - IA-11

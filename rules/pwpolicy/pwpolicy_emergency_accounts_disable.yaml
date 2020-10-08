@@ -17,7 +17,7 @@ fix: |
 references:
   cce:
     - CCE-85405-9
-    cci:
+  cci:
     - CCI-001682
   800-53r4: 
     - AC-2(2)

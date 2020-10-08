@@ -9,7 +9,7 @@ fix: |
 references:
   cce:
     - CCE-85297-0
-    cci:
+  cci:
     - CCI-001958
   800-53r4:
     - IA-3

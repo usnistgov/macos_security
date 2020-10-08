@@ -15,7 +15,7 @@ fix: |
 references:
   cce:
     - CCE-85376-2
-    cci:
+  cci:
     - N/A
 macOS:
   - "11.0"

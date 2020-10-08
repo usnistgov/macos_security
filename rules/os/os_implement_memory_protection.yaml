@@ -20,7 +20,7 @@ fix: |
 references:
   cce:
     - CCE-85327-5
-    cci:
+  cci:
     - CCI-002824
   800-53r4:
     - SI-16

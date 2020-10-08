@@ -16,7 +16,7 @@ fix: |
 references:
   cce:
     - CCE-85428-1
-    cci:
+  cci:
     - N/A
   disa_stig:
     - N/A

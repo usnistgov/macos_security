@@ -2,6 +2,8 @@ id: sysprefs_airdrop_share_extension_disable
 title: "Disable AirDrop Share Extension"
 discussion: |
   AirDrop share extension _MUST_ be disabled.  
+
+  When AirDrop is disabled the ability to drop from a machine with Big Sur still exists within the Share menu. This disables the AirDrop share extension.
 check: |
   /usr/bin/profiles -P -o stdout | /usr/bin/awk '/DeniedExtensions/,/com.apple.NSExtension/' | /usr/bin/grep -c 'com.apple.share.AirDrop.send'
 result:
@@ -11,7 +13,7 @@ fix: |
 references:
   cce:
     - CCE-85417-4
-    cci: 
+  cci: 
     - CCI-000381
   800-53r4:
     - CM-7

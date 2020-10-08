@@ -16,7 +16,7 @@ fix: |
 references:
   cce:
     - CCE-85257-4
-    cci: 
+  cci: 
     - CCI-000140
   800-53r4: 
     - AU-5

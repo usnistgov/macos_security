@@ -9,7 +9,7 @@ fix: |
 references:
   cce:
     - CCE-85371-3
-    cci:
+  cci:
     - CCI-002617
   800-53r4:
     - SI-2(6)
