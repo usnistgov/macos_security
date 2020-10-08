@@ -5,7 +5,7 @@ discussion: |
 
   This rule ensures the uniformity of time stamps for information systems with multiple system clocks and systems connected over a network.
 check: |
-  /usr/bin/profiles -P -o stdout | /usr/bin/awk -F "= " '/timeServer/{print $2}' | /usr/bin/tr -d ';'
+  /usr/bin/profiles -P -o stdout | /usr/bin/awk -F "= " '/timeServer/{print $2}' | /usr/bin/tr -d ';' | /usr/bin/tr -d '"'
 result:
   string: "time-a.nist.gov,time-b.nist.gov"
 fix: |
