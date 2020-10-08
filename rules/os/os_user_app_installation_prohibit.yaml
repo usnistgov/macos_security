@@ -12,8 +12,8 @@ fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-    - CCE-84805-1
-  cci:
+    - CCE-85396-0
+    cci:
     - CCI-001812
   800-53r4:
     - CM-11(2)
@@ -22,7 +22,7 @@ references:
   disa_stig:
     - AOSX-15-002067
 macOS:
-  - "10.15"
+  - "11.0"
 tags:
   - STIG
 mobileconfig: true

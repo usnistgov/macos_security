@@ -16,8 +16,8 @@ fix: |
   The technology inherently meets this requirement. No fix is required.
 references:
   cce:
-    - CCE-84812-7
-  cci:
+    - CCE-85405-9
+    cci:
     - CCI-001682
   800-53r4: 
     - AC-2(2)
@@ -26,7 +26,7 @@ references:
   disa_stig:
     - AOSX-15-000013
 macOS:
-  - "10.15"
+  - "11.0"
 tags:
   - cnssi-1253
   - 800-53r4_moderate

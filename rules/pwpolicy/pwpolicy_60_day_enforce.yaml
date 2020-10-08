@@ -12,8 +12,8 @@ fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-    - CCE-84807-7
-  cci: 
+    - CCE-85400-0
+    cci: 
     - CCI-000199
   800-53r4: 
     - IA-5
@@ -30,7 +30,7 @@ references:
     - 3.5.9
     - 3.5.10
 macOS:
-  - "10.15"
+  - "11.0"
 tags:
   - 800-171
   - cnssi-1253

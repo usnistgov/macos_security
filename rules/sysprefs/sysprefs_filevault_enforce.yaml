@@ -12,8 +12,8 @@ fix: |
   NOTE: See the FileVault supplemental to implement this rule.
 references:
   cce:
-    - CCE-84830-9
-  cci: 
+    - CCE-85425-7
+    cci: 
     - CCI-001199
     - CCI-002475
     - CCI-002476
@@ -29,7 +29,7 @@ references:
   800-171r2:
     - 3.13.16
 macOS:
-  - "10.15"
+  - "11.0"
 tags:
   - 800-171
   - cnssi-1253

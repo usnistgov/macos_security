@@ -14,8 +14,8 @@ fix: |
   The technology inherently meets this requirement. No fix is required.
 references:
   cce:
-    - CCE-84877-0
-  cci:
+    - CCE-85373-9
+    cci:
     - CCI-000803
   800-53r4:
     - IA-7
@@ -24,7 +24,7 @@ references:
   srg:
     - SRG-OS-000120-GPOS-00061
 macOS:
-  - "10.15"
+  - "11.0"
 tags:
   - cnssi-1253
   - 800-53r4_low

@@ -15,8 +15,8 @@ fix: |
   ----
 references:
   cce:
-    - CCE-84845-7
-  cci: 
+    - CCE-85447-1
+    cci: 
     - CCI-001941
     - CCI-001942
     - CCI-002890
@@ -62,7 +62,7 @@ references:
     - 3.7.5
     - 3.13.8
 macOS:
-  - "10.15"
+  - "11.0"
 tags:
   - 800-171
   - cnssi-1253

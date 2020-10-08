@@ -9,8 +9,8 @@ fix: |
   For directory bound systems, the technology inherently meets this requirement. No fix is required.
 references:
   cce:
-    - CCE-84883-8
-  cci:
+    - CCE-85340-8
+    cci:
     - CCI-000765
   800-53r4:
     - N/A
@@ -19,7 +19,7 @@ references:
   srg:
     - SRG-OS-000105-GPOS-00052
 macOS:
-  - "10.15"
+  - "11.0"
 tags:
   - STIG
   - inherent

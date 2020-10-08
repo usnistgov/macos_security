@@ -14,17 +14,11 @@ fix: |
   NOTE: Boot into Recovery Mode and enable Full Secure Boot
 references:
   cce:
-    - CCE-84789-7
-  800-53r4:
-    - SI-6
-  srg:
-    - SRG-OS-000446-GPOS-00200
-  disa_stig:
-    - N/A
-  cci:
+    - CCE-85376-2
+    cci:
     - N/A
 macOS:
-  - "10.15"
+  - "11.0"
 tags:
   - 800-53r4_high
 mobileconfig: false

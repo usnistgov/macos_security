@@ -14,8 +14,8 @@ fix: |
   NOTE: To re-enable "Authenticated Root", boot the affected system into "Recovery" mode, launch "Terminal" from the "Utilities" menu, and run the command.
 references:
   cce:
-    - CCE-33333-3
-  cci: 
+    - CCE-85298-8
+    cci: 
     -
   800-53r4:
     -

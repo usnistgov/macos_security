@@ -10,8 +10,8 @@ fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-    - CCE-84750-9
-  cci: 
+    - CCE-85300-2
+    cci: 
     - CCI-000381
     - CCI-001774
   800-53r4:

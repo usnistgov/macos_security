@@ -18,8 +18,8 @@ fix: |
   ----
 references:
   cce:
-    - CCE-84798-8
-  cci: 
+    - CCE-85385-3
+    cci: 
     - CCI-000770
   800-53r4: 
     - IA-2(5)
@@ -28,7 +28,7 @@ references:
   disa_stig: 
     - AOSX-15-001100
 macOS:
-  - "10.15"
+  - "11.0"
 tags:
   - STIG
 mobileconfig: false

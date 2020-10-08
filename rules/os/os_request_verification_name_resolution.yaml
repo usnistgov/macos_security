@@ -8,8 +8,8 @@ fix: |
   The requirement is NA. No fix is required.
 references:
   cce:
-    - CCE-84745-9
-  cci:
+    - CCE-85372-1
+    cci:
     - CCI-002465
     - CCI-002466
     - CCI-002467
@@ -24,7 +24,7 @@ references:
     - SRG-OS-000401-GPOS-00180
     - SRG-OS-000402-GPOS-00181
 macOS:
-  - "10.15"
+  - "11.0"
 tags:
   - cnssi-1253
   - 800-53r4_low

@@ -10,8 +10,8 @@ fix: |
   Obtain the approved certificates from the appropriate authority and install them to the System Keychain.
 references:
   cce:
-    - CCE-84752-5
-  cci: 
+    - CCE-85302-8
+    cci: 
     - CCI-000185
     - CCI-002450
   800-53r4: 
@@ -22,7 +22,7 @@ references:
     - SRG-OS-000066-GPOS-00034
     - SRG-OS-000478-GPOS-00223
 macOS:
-  - "10.15"
+  - "11.0"
 tags:
   - cnssi-1253
   - 800-53r4_moderate

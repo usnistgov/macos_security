@@ -16,8 +16,8 @@ fix: |
   The system may need to be restarted for the update to take effect.
 references:
   cce:
-    - CCE-84823-4
-  cci: 
+    - CCE-85416-6
+    cci: 
     - CCI-000381
   800-53r4:
     - AC-3
@@ -29,7 +29,7 @@ references:
     - 3.1.1
     - 3.1.2
 macOS:
-  - "10.15"
+  - "11.0"
 tags:
   - 800-171
   - cnssi-1253

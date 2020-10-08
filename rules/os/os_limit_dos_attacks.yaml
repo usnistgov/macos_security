@@ -12,8 +12,8 @@ fix: |
   This requirement is a permanent finding and cannot be fixed. An appropriate mitigation for the system must be implemented, but this finding cannot be considered fixed.
 references:
   cce:
-    - CCE-84904-2
-  cci:
+    - CCE-85332-5
+    cci:
     - CCI-001095
   800-53r4:
     - SC-5(2)
@@ -22,7 +22,7 @@ references:
   srg:
     - SRG-OS-000142-GPOS-00071
 macOS:
-  - "10.15"
+  - "11.0"
 tags:
   - STIG
   - permanent

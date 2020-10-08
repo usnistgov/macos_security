@@ -16,8 +16,8 @@ fix: |
   NOTE: See the firewall supplemental which includes a script that has an example policy to implement this rule.
 references:
   cce:
-    - CCE-84756-6
-  cci:
+    - CCE-85312-7
+    cci:
     - CCI-000366
     - CCI-002080
   800-53r4:
@@ -31,7 +31,7 @@ references:
     - 3.1.3
     - 3.13.6
 macOS:
-  - "10.15"
+  - "11.0"
 tags:
   - 800-171
   - cnssi-1253

@@ -10,8 +10,8 @@ fix: |
   The technology inherently meets this requirement. No fix is required.
 references:
   cce:
-    - CCE-84855-6
-  cci:
+    - CCE-85333-3
+    cci:
     - CCI-000054
   800-53r4:
     - AC-10
@@ -20,7 +20,7 @@ references:
   srg:
     - SRG-OS-000027-GPOS-00008
 macOS:
-  - "10.15"
+  - "11.0"
 tags:
   - 800-53r4_high
   - STIG

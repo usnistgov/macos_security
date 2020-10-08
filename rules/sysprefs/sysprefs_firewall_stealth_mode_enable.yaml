@@ -15,14 +15,8 @@ fix: |
   ----
 references:
   cce:
-    - CCE-84833-3
-  800-53r4:
-    - SC-7
-    - CM-7
-    - SC-7(16)
-  srg:
-    - N/A
-  cci:
+    - CCE-85428-1
+    cci:
     - N/A
   disa_stig:
     - N/A
@@ -32,7 +26,7 @@ references:
     - 3.13.2
     - 3.13.5
 macOS:
-  - "10.15"
+  - "11.0"
 tags:
   - 800-171
   - cnssi-1253

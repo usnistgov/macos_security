@@ -15,21 +15,14 @@ fix: |
   Ensure that system is enrolled via UAMDM.
 references:
   cce:
-    - CCE-84803-6
-  800-53r4:
-    - CM-2
-    - CM-6
-  disa_stig:
-    - N/A
-  srg:
-    - N/A
-  cci:
+    - CCE-85338-2
+    cci:
     - N/A    
   800-171r2:
     - 3.4.1
     - 3.4.2
 macOS:
-  - "10.15"
+  - "11.0"
 tags:
   - 800-171
   - cnssi-1253

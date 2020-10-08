@@ -10,8 +10,8 @@ fix: |
   The technology inherently meets this requirement. No fix is required.
 references:
   cce:
-    - CCE-84859-8
-  cci:
+    - CCE-85335-8
+    cci:
     - CCI-002363
     - CCI-002364
   800-53r4:
@@ -22,7 +22,7 @@ references:
     - SRG-OS-000280-GPOS-00110
     - SRG-OS-000281-GPOS-00111
 macOS:
-  - "10.15"
+  - "11.0"
 tags:
   - STIG
   - inherent

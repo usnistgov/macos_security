@@ -12,8 +12,8 @@ fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-    - CCE-22222-2
-  cci: 
+    - CCE-85438-0
+    cci: 
     - N/A
   800-53r4: 
     - AC-20

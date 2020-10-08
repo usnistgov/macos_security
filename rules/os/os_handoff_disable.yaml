@@ -12,16 +12,8 @@ fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-    - CCE-84763-2
-  800-53r4:
-    - AC-3
-    - AC-20
-    - CM-7
-  disa_stig:
-    - N/A
-  srg: 
-    - N/A
-  cci: 
+    - CCE-85321-8
+    cci: 
     - N/A    
   800-171r2:
     - 3.1.1
@@ -29,7 +21,7 @@ references:
     - 3.1.20
     - 3.4.6
 macOS:
-  - "10.15"
+  - "11.0"
 tags:
   - 800-171
   - cnssi-1253
