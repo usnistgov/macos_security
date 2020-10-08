@@ -24,7 +24,7 @@ references:
   srg: 
     - SRG-OS-000344-GPOS-00135
   disa_stig: 
-    - AOSX-14-001031
+    - AOSX-15-001031
   800-171r2:
     - 3.3.4
 macOS:

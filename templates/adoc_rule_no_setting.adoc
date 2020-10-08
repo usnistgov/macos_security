@@ -36,6 +36,14 @@ ifdef::show_STIG[]
 !$rule_srg
 endif::[]
 
+ifdef::show_tags[]
+!CCE
+!$rule_cce
+
+!TAGS
+!$rule_tags
+endif::[]
+
 !===
 
 |

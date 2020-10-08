@@ -77,12 +77,14 @@ def main():
     for sections in profile_yaml['profile']:
         for profile_rule in sections['rules']:
             for rule_file in glob.glob('../rules/*/{}.yaml'.format(profile_rule)):
-        
+                
                 if "srg" in rule_file or "supplemental" in rule_file:
                     continue
                 with open(rule_file) as r:
                     rule_yaml = yaml.load(r, Loader=yaml.SafeLoader)
                 if "inherent" in rule_yaml['tags'] or "n_a" in rule_yaml['tags'] or "permanent" in rule_yaml['tags']:
+                    continue
+                if len(rule_yaml['tags']) < 2 and "STIG" in rule_yaml['tags']:
                     continue
                 if "manual" in rule_yaml['tags']:
                     print(rule_yaml['id'] + " - Manual Check")
@@ -587,7 +589,7 @@ def main():
                         print(rule_yaml['id'] + " - No relevant oval test")
                         x += 1
                         continue
-                    if "firmwarepasswd" in command[3]:
+                    if "mdmclient" in command[3]:
                         print(rule_yaml['id'] + " - No relevant oval test")
                         x += 1
                         continue

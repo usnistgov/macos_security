@@ -7,7 +7,7 @@ discussion: |
 
   Note: This will only return a proper result on a T2 Mac
 check: |
-  /usr/sbin/nvram 94b73556-2197-4702-82a8-3e1337dafbfb:AppleSecureBootPolicy | /usr/bin/grep -c '%02'
+  /usr/libexec/mdmclient QuerySecurityInfo | /usr/bin/grep -c "SecureBootLevel = full"
 result: 
   integer: 1
 fix: |

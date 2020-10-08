@@ -1,4 +1,4 @@
-title: "macOS 10.15 (Catalina): Security Configuration - 800-53 High"
+title: "macOS 10.15: Security Configuration - 800-53 High"
 description: |
   This guide describes the actions to take when securing a macOS 10.15 system against the NIST SP 800-53 HIGH baseline.  
 profile:
@@ -186,6 +186,7 @@ profile:
   - section: "Supplemental"
     rules:
       - supplemental_firewall_pf
+      - supplemental_filevault
       - supplemental_password_policy
       - supplemental_smartcard
       - supplemental_controls

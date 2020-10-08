@@ -1,11 +1,19 @@
 id: supplemental_firewall_pf
 title: "Packet Filter (pf) Supplemental"
 discussion: |
-  macOS contains an application layer firewall (ALF) (https://support.apple.com/en-ca/HT201642) and a packet filter firewall (PF). The Application firewall can block incoming traffic on per-application basis and prevent applications from listening on network ports, but it cannot be configured to block outgoing traffic. The packet filter firewall can manipulate virtually any packet data and is highly configurable.
+  The supplemental guidance found in this section is applicable for the following rules:
+  
+  *	os_firewall_default_deny_require
 
-  Included is a script that configures PF to match settings in the NIST 800-53 guideline. 
-
-  The script will make sure the application layer firewall is enabled, set logging to detailed, set built-in signed applications to automatically receive incoming connections, and set downloaded signed applications to automatically receive incoming connections. It will then create a custom rule set and copy com.apple.pfctl.plist from /System/Library/LaunchDaemons/ into the /Library/LaunchDaemons folder and name it 800-53.pfctl.plist. This is done to not conflict with the system's pf ruleset.
+  macOS contains an application layer firewall (ALF)  and a packet filter (PF) firewall.
+  
+    * The ALF can block incoming traffic on a per-application basis and prevent applications from gaining control of network ports, but it cannot be configured to block outgoing traffic.
+    ** More information on the ALF can be found here: https://support.apple.com/en-ca/HT201642 
+  
+    *  The PF firewall can manipulate virtually any packet data and is highly configurable. 
+    ** More information on the BF firewall can be found here: https://www.openbsd.org/faq/pf/index.html
+  
+  Below is a script that configures ALF and the PF firewall to meet the requirements defined in NIST SP 800-53 (Rev. 4). The script will make sure the application layer firewall is enabled, set logging to “detailed”, set built-in signed applications to automatically receive incoming connections, and set downloaded signed applications to automatically receive incoming connections. It will then create a custom rule set and copy com.apple.pfctl.plist from /System/Library/LaunchDaemons/ into the /Library/LaunchDaemons folder and name it 800-53.pfctl.plist. This is done to not conflict with the system’s pf ruleset.
 
   The custom pf rules are created at /etc/pf.anchors/800_53_pf_anchors.
 
@@ -87,7 +95,7 @@ discussion: |
 
   |===
 
-  For more on configuring the packet filter firewall check out the man pages on pf.conf and pfctl.
+  For more on configuring the PF firewall check out the man pages on pf.conf and pfctl.
 
   [source,bash]
   ----
