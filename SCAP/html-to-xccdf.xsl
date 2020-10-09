@@ -293,11 +293,21 @@
             <!--<xsl:element name="platform" namespace="http://checklists.nist.gov/xccdf/1.2">
                 <xsl:attribute name="idref"><xsl:text>cpe:/o:apple:mac_os_x:10.15</xsl:text></xsl:attribute>
             </xsl:element>-->
-            <xsl:element name="version" namespace="http://checklists.nist.gov/xccdf/1.2">
-                <xsl:attribute name="time" expand-text="true">{replace(//div[@class='docver'],'^.*,\s*','')}T00:00:00Z</xsl:attribute>
-                <xsl:attribute name="update" select="'https://github.com/usnistgov/macos_security'"/>
-                <xsl:value-of select="replace(//div[@class = 'docver'], ',\s*.*$', '')"/>
-            </xsl:element>
+            <xsl:analyze-string select="normalize-space(//div[@class = 'docver'])" regex="^(.+)\s\(([0-9-]+)\)$">
+                <xsl:matching-substring>
+                    <xsl:for-each select="(1, 2, 3)">
+                        <xsl:message expand-text="true">{regex-group(.)}</xsl:message>
+                    </xsl:for-each>
+                    <xsl:element name="version" namespace="http://checklists.nist.gov/xccdf/1.2">
+                        <xsl:attribute name="time" expand-text="true">{regex-group(2)}T00:00:00Z</xsl:attribute>
+                        <xsl:attribute name="update" select="'https://github.com/usnistgov/macos_security'"/>
+                        <xsl:value-of select="regex-group(1)"/>
+                    </xsl:element>
+                </xsl:matching-substring>
+                <xsl:non-matching-substring>
+                    <xsl:message expand-text="true" terminate="yes">Cannot make sense of document version {regex-group(0)}</xsl:message>
+                </xsl:non-matching-substring>
+            </xsl:analyze-string>
             <xsl:element name="metadata" namespace="http://checklists.nist.gov/xccdf/1.2">
                 <xsl:element name="creator" namespace="http://purl.org/dc/elements/1.1/">
                     <xsl:text>National Institute of Standards and Technology</xsl:text>
