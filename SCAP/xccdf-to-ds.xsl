@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xs="http://www.w3.org/2001/XMLSchema" exclude-result-prefixes="xs" version="3.0"
-    xmlns:ds="http://scap.nist.gov/schema/scap/source/1.2" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:cat="urn:oasis:names:tc:entity:xmlns:xml:catalog"
-    xmlns:xccdf="http://checklists.nist.gov/xccdf/1.2" xmlns:cpe="http://cpe.mitre.org/language/2.0" xmlns:uuid="java.util.UUID">
+   xmlns:cpe="http://cpe.mitre.org/language/2.0" xmlns:uuid="java.util.UUID">
     <!-- generate an SCAP datastream collection -->
     <!-- this transformation expects a single XCCDF 1.2 document and creates an SCAP datastream collection consisting of the XCCDF document and any related documents -->
     <!--  -->
     <xsl:param name="SCAP-version" as="xs:decimal" required="no" select="1.3"/>
     <!-- "namespace" for identifiers -->
-    <xsl:param name="id-namespace" as="xs:string" required="no" select="'scap.example.com'"/>
+    <xsl:param name="id-namespace" as="xs:string" required="yes"/>
     <xsl:variable name="dsc-namespace" as="xs:string" select="string-join(reverse(tokenize($id-namespace, '\.')), '.')"/>
     <!-- It is not necessary to emit namespaces. This transform takes pains to cite namespaces rather than prefixes to avoid prefix collisions. -->
     <xsl:param name="emit-namespaces" as="xs:boolean" required="no" select="false()"/>
@@ -25,15 +24,27 @@
     <xsl:output method="xml"/>
     <xsl:output use-when="$indent-output" indent="true"/>
     <!-- list of namespaces -->
-    <xsl:variable name="ns" as="element()*">
-        <!-- SCAP -->
-        <ns prefix="ds" namespace="http://scap.nist.gov/schema/scap/source/1.2" schema="http://scap.nist.gov/schema/scap/1.2/scap-source-data-stream_1.2.xsd"/>
-        <ns prefix="xlink" namespace="http://www.w3.org/1999/xlink"/>
-        <ns prefix="cat" namespace="urn:oasis:names:tc:entity:xmlns:xml:catalog"/>
-        <ns prefix="xsi" namespace="http://www.w3.org/2001/XMLSchema-instance"/>
-        <!-- XCCDF -->
-        <ns prefix="xccdf" namespace="http://checklists.nist.gov/xccdf/1.2" schema="http://scap.nist.gov/schema/xccdf/1.2/xccdf_1.2.xsd"/>
-        <!-- TODO: OVAL -->
+    <xsl:variable name="namespaces" as="element()*">
+        <scap version="1.2">
+            <!-- SCAP -->
+            <namespace prefix="ds" namespace="http://scap.nist.gov/schema/scap/source/1.2" schema="http://scap.nist.gov/schema/scap/1.2/scap-source-data-stream_1.2.xsd"/>
+            <namespace prefix="xlink" namespace="http://www.w3.org/1999/xlink"/>
+            <namespace prefix="cat" namespace="urn:oasis:names:tc:entity:xmlns:xml:catalog"/>
+            <namespace prefix="xsi" namespace="http://www.w3.org/2001/XMLSchema-instance"/>
+            <!-- XCCDF -->
+            <namespace prefix="xccdf" namespace="http://checklists.nist.gov/xccdf/1.2" schema="http://scap.nist.gov/schema/xccdf/1.2/xccdf_1.2.xsd"/>
+            <!-- TODO: OVAL -->
+        </scap>
+        <scap version="1.3">
+            <!-- SCAP -->
+            <namespace prefix="ds" namespace="http://scap.nist.gov/schema/scap/source/1.3" schema="https://csrc.nist.gov/schema/scap/1.3/scap-source-data-stream_1.3.xsd"/>
+            <namespace prefix="xlink" namespace="http://www.w3.org/1999/xlink"/>
+            <namespace prefix="cat" namespace="urn:oasis:names:tc:entity:xmlns:xml:catalog"/>
+            <namespace prefix="xsi" namespace="http://www.w3.org/2001/XMLSchema-instance"/>
+            <!-- XCCDF -->
+            <namespace prefix="xccdf" namespace="http://checklists.nist.gov/xccdf/1.2" schema="http://scap.nist.gov/schema/xccdf/1.2/xccdf_1.2.xsd"/>
+            <!-- TODO: OVAL -->
+        </scap>
     </xsl:variable>
     <!-- time stamp -->
     <xsl:variable name="Z" as="xs:duration" select="xs:dayTimeDuration('PT0H')"/>
@@ -46,30 +57,59 @@
     <xsl:variable name="XCCDF" as="document-node()" select="/"/>
     <xsl:variable name="LF" as="xs:string" select="'&#x0a;'"/>
     <xsl:template match="/">
-        <!--<xsl:processing-instruction name="xml-stylesheet"><xsl:text>type="text/xsl" href=""</xsl:text></xsl:processing-instruction>-->
-        <xsl:copy-of select="$LF"/>
-        <xsl:comment expand-text="true">this is an SCAP {$SCAP-version} datastream collection document</xsl:comment>
-        <xsl:copy-of select="$LF"/>
-        <xsl:comment expand-text="true">Created {$T}</xsl:comment>
-        <xsl:copy-of select="$LF"/>
-        <xsl:comment expand-text="true">using {static-base-uri()} with {resolve-uri(base-uri())} as input</xsl:comment>
-        <xsl:copy-of select="$LF"/>
-        <xsl:comment expand-text="true">The SCAP identifier "namespace" chosen for this data stream collection is «{$dsc-namespace}» («{$id-namespace}» reversed)</xsl:comment>
         <xsl:copy-of select="$LF"/>
         <xsl:copy-of select="$LF"/>
+        <xsl:comment expand-text="true"> This is an SCAP {$SCAP-version} datastream collection document </xsl:comment>
+        <xsl:copy-of select="$LF"/>
+        <xsl:comment expand-text="true"> Created {$T} </xsl:comment>
+        <xsl:copy-of select="$LF"/>
+        <xsl:comment expand-text="true"> using {static-base-uri()} with {resolve-uri(base-uri())} as input </xsl:comment>
+        <xsl:copy-of select="$LF"/>
+        <xsl:comment expand-text="true"> The SCAP identifier "namespace" chosen for this data stream collection is «{$dsc-namespace}» («{$id-namespace}» reversed) </xsl:comment>
+        <xsl:copy-of select="$LF"/>
+        <!-- See https://www.w3.org/TR/xml-model/ -->
+        <xsl:copy-of select="$LF"/>
+        <xsl:comment> See https://www.w3.org/TR/xml-model/ for an explanation of the following processing instruction </xsl:comment>
+        <xsl:copy-of select="$LF"/>
+        <xsl:processing-instruction name="xml-model">
+            <xsl:text>href="https://csrc.nist.gov/schema/scap/1.3/scap-source-data-stream_1.3.xsd"</xsl:text>
+            <xsl:text> </xsl:text>
+            <xsl:text>schematypens="http://www.w3.org/2001/XMLSchema"</xsl:text>
+            <xsl:text> </xsl:text>
+            <xsl:text>title="SCAP XML schema"</xsl:text>
+        </xsl:processing-instruction>
+        <!-- See https://www.w3.org/TR/xml-stylesheet/ -->
+        <xsl:copy-of select="$LF"/>
+        <xsl:if test="false()">
+            <xsl:copy-of select="$LF"/>
+            <xsl:comment> See https://www.w3.org/TR/xml-stylesheet/ for an explanation of the following processing instruction </xsl:comment>
+            <xsl:copy-of select="$LF"/>
+            <xsl:processing-instruction name="xml-stylesheet">
+                <xsl:text>type="text/xsl"</xsl:text>    
+                <xsl:text> </xsl:text>
+                <xsl:text>href=""</xsl:text>
+                <xsl:text> </xsl:text>
+                <xsl:text>title=""</xsl:text>
+            </xsl:processing-instruction>
+            <xsl:copy-of select="$LF"/>
+        </xsl:if>
         <!--<xsl:comment select="concat('The UUID chosen for this data stream collection is «', $dsc-unique-suffix, '» which ensures the preservation of Global Uniqueness™')"/>-->
         <!-- create the collection -->
+        <xsl:copy-of select="$LF"/>
         <xsl:element name="data-stream-collection" namespace="http://scap.nist.gov/schema/scap/source/1.2">
             <xsl:attribute name="id" expand-text="true">scap_{$dsc-namespace}_collection_{$datastream-id-suffix}</xsl:attribute>
             <xsl:attribute name="schematron-version" select="$SCAP-version"/>
             <xsl:if test="$emit-namespaces">
-                <xsl:for-each select="$ns">
+                <xsl:for-each select="$namespaces[@version = $SCAP-version]/namespace">
+                    <xsl:message expand-text="true">
+                        <xsl:namespace name="{@prefix}" select="@namespace"/>
+                    </xsl:message>
                     <xsl:namespace name="{@prefix}" select="@namespace"/>
                 </xsl:for-each>
             </xsl:if>
             <xsl:if test="$emit-schemaLocation">
                 <xsl:attribute name="schemaLocation" namespace="http://www.w3.org/2001/XMLSchema-instance">
-                    <xsl:for-each select="$ns[@schema]">
+                    <xsl:for-each select="$namespaces[@version = $SCAP-version]/namespace[@schema]">
                         <xsl:if test="
                                 (: separate pairs :)
                                 position() != 1">
