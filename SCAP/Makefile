@@ -1,5 +1,6 @@
 XSLT		= java -jar ~/saxon/saxon-he-10.1.jar
 TIDY		= /usr/bin/tidy
+VAL		= java -Djava.protocol.handler.pkgs=sun.net.www.protocol -jar ~/Projects/scapval/scapval-1.3.5.jar
 
 DIR		= ../build/All_rules
 
@@ -53,3 +54,8 @@ report:
 	$(XSLT) -s:${DIR}/xccdf.xml \
 		-xsl:xccdf-to-html.xsl \
 		-o:${DIR}/xccdf.html
+
+validate:
+	# validate the datastream using SCAP content validation tool
+	( cd ${DIR}; ${VAL} -scapversion 1.3 -online -file datastream.xml >scapval-report.txt )
+	# See ${DIR}/validation-report.html for results

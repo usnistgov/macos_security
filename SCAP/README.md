@@ -10,7 +10,7 @@ Steps:
 - Generate the SCAP data stream document using the XCCDF and OVAL documents.
 - Generate a report from the XCCDF document to be used for quality checking.
 
-These steps are connfigured within the Makefile.
+These steps are configured within the Makefile.
 
 ## Dependencies
 
@@ -20,8 +20,9 @@ The supplied Makefile relies on the following components:
 - Saxon 10 — [Saxon](https://www.saxonica.com/products/products.xml) is an [XSLT 3.0](https://www.w3.org/TR/xslt-30/) implementation. 
 The [HE](https://www.saxonica.com/products/PD10/HE.pdf) variant, which is open source, will suffice for the XSL transformations.
 
-## Optional utilities
-
-- NIST SCAP 1.3 Content Validation Tool (available [here](https://csrc.nist.gov/Projects/Security-Content-Automation-Protocol/SCAP-Releases/scap-1-3)).
+- SCAP Content Validation Tool — See 
+[SCAP Content Validation Tool](https://csrc.nist.gov/projects/security-content-automation-protocol/scap-releases/scap-1-3)
+under "Tools".
+Version 1.3.5 or later is required.
 
 
