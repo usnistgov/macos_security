@@ -196,9 +196,7 @@
             </xsl:element>
             <xsl:element name="description" namespace="http://checklists.nist.gov/xccdf/1.2">
                 <xsl:element name="div" namespace="http://www.w3.org/1999/xhtml">
-                    <xsl:element name="mark" namespace="http://www.w3.org/1999/xhtml">
-                        <xsl:value-of select="replace(/html/head/title, '\s-.*$', '')"/>
-                    </xsl:element>
+                    <xsl:value-of select="replace(/html/head/title, '\s-.*$', '')"/>
                 </xsl:element>
             </xsl:element>
             <!--<xsl:element name="notice" namespace="http://checklists.nist.gov/xccdf/1.2">
