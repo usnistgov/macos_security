@@ -295,9 +295,9 @@
             </xsl:element>-->
             <xsl:analyze-string select="normalize-space(//div[@class = 'docver'])" regex="^(.+)\s\(([0-9-]+)\)$">
                 <xsl:matching-substring>
-                    <xsl:for-each select="(1, 2, 3)">
+                    <!--<xsl:for-each select="(1, 2, 3)">
                         <xsl:message expand-text="true">{regex-group(.)}</xsl:message>
-                    </xsl:for-each>
+                    </xsl:for-each>-->
                     <xsl:element name="version" namespace="http://checklists.nist.gov/xccdf/1.2">
                         <xsl:attribute name="time" expand-text="true">{regex-group(2)}T00:00:00Z</xsl:attribute>
                         <xsl:attribute name="update" select="'https://github.com/usnistgov/macos_security'"/>
