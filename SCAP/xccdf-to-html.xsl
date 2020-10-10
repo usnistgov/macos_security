@@ -5,6 +5,9 @@
     <xsl:output encoding="UTF-8"/>
     <xsl:output indent="no"/>
     <xsl:strip-space elements="*"/>
+    <xsl:variable name="UTC" as="xs:duration" select="xs:dayTimeDuration('PT0H')"/>
+    <xsl:variable name="UTC-date" select="adjust-date-to-timezone(current-date(), $UTC)"/>
+    <xsl:variable name="UTC-datetime" select="adjust-dateTime-to-timezone(current-dateTime(), $UTC)"/>
     <xsl:template match="Benchmark">
         <xsl:text disable-output-escaping="yes">&lt;!DOCTYPE html></xsl:text>
         <html xmlns="http://www.w3.org/1999/xhtml">
@@ -143,6 +146,9 @@
                 <h1>
                     <xsl:value-of select="title"/>
                 </h1>
+                <p>
+                    <xsl:text expand-text="true">This report prepared {$UTC-datetime}.</xsl:text>
+                </p>
                 <div>ID: <code>
                         <xsl:value-of select="@id"/>
                     </code>
@@ -170,7 +176,8 @@
                     <xsl:text expand-text="true"> ({status/@date})</xsl:text>
                 </p>
                 <p>
-                    <xsl:copy-of select="description/child::node()"/>
+                    <xsl:text>Description: </xsl:text>
+                    <xsl:value-of select="description/child::node()"/>
                 </p>
                 <p>
                     <xsl:text expand-text="true">There are {count(//Rule)} rules. {count(//Rule[not(descendant::check[@system='http://oval.mitre.org/XMLSchema/oval-definitions-5'])])} lack an OVAL definition.</xsl:text>
