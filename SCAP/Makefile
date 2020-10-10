@@ -14,6 +14,7 @@ inputs:
 
 tidy:
 	# de-louse the input HTML
+	# DO NOT use the treacherous -indent option
 	${TIDY} --show-errors 0 \
 		--output-xml true \
 		--numeric-entities true \
@@ -45,7 +46,7 @@ datastream:
 		-o:${DIR}/datastream.xml \
 		SCAP-version=1.3 \
 		id-namespace=gov.nist.mscp.content \
-		datastream-id-suffix=macOS_10.15 \
+		datastream-id-suffix=macOS_10.15
 
 report:
 	# generate an XCCDF report for quality assurance
