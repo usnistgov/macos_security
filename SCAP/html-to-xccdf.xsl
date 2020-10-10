@@ -316,7 +316,7 @@
                 <xsl:element name="source" namespace="http://purl.org/dc/elements/1.1/">
                     <xsl:text>https://github.com/usnistgov/macos_security/releases/latest</xsl:text>
                 </xsl:element>
-                <xsl:for-each select="//div[@class = 'sect1'][h2/@id = '_foreword']//tbody/tr">
+                <xsl:for-each select="//div[@class = 'sect1'][h2/@id = '_authors']//tbody/tr">
                     <xsl:element name="contributor" namespace="http://purl.org/dc/elements/1.1/" expand-text="true">{td[1]/p} — {td[2]/p}</xsl:element>
                 </xsl:for-each>
             </xsl:element>
