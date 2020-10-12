@@ -8,7 +8,7 @@ all: inputs tidy XCCDF datastream report
 
 inputs:
 	# generate the HTML checklist document
-	../scripts/generate_guidance.py ../baselines/all_rules.yaml 2>/dev/null
+	../scripts/generate_guidance.py -g ../baselines/all_rules.yaml 2>/dev/null
 	# generate the related OVAL content
 	../scripts/yaml-to-oval.py ../baselines/all_rules.yaml
 	# outputs end up in ${DIR}
