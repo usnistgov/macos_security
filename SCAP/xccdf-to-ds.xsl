@@ -408,7 +408,6 @@
             </xsl:choose>
         </xsl:copy>
     </xsl:template>
-    <xsl:template mode="selective-copy" match="attribute::node()[local-name() = 'schemaLocation']"><!-- we spit on any kind of schemaLocation --></xsl:template>
     <xsl:template mode="selective-copy" match="attribute::node()">
         <xsl:copy-of select="."/>
     </xsl:template>
