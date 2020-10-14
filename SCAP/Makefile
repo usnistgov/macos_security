@@ -4,7 +4,7 @@ VAL		= java -Djava.protocol.handler.pkgs=sun.net.www.protocol -jar ~/Projects/sc
 
 DIR		= ../build/All_rules
 
-all: inputs tidy XCCDF datastream report
+all: inputs tidy XCCDF datastream validate report
 
 inputs:
 	# generate the HTML checklist document
