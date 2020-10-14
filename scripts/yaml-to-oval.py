@@ -8,12 +8,14 @@ import glob
 import re
 import warnings
 from pathlib import Path
+from datetime import datetime
 
 warnings.filterwarnings("ignore", category=DeprecationWarning) 
 
 
 def main():
-
+    now = datetime.now()
+    date_time_string = now.strftime("%Y-%m-%dT%H:%M:%S")
     output = ""
     parser = argparse.ArgumentParser(description='Given a profile, create oval checks.')
     parser.add_argument("baseline", default=None, help="Baseline YAML file used to create the oval.", type=argparse.FileType('rt'))
@@ -50,11 +52,10 @@ def main():
     ovalPrefix = '''<?xml version="1.0" encoding="UTF-8"?>
 <oval_definitions 
  xsi:schemaLocation=" 
- http://oval.mitre.org/XMLSchema/oval-definitions-5 oval-definitions-schema.xsd  
- http://oval.mitre.org/XMLSchema/oval-definitions-5#independent independent-definitions-schema.xsd  
- http://oval.mitre.org/XMLSchema/oval-common-5 oval-common-schema.xsd  
- http://oval.mitre.org/XMLSchema/oval-definitions-5#macos macos-definitions-schema.xsd
- http://oval.mitre.org/XMLSchema/oval-definitions-5#unix unix-definitions-schema.xsd" 
+ http://oval.mitre.org/XMLSchema/oval-definitions-5             https://raw.githubusercontent.com/OVALProject/Language/5.11.2/schemas/oval-definitions-schema.xsd
+ http://oval.mitre.org/XMLSchema/oval-definitions-5#independent https://raw.githubusercontent.com/OVALProject/Language/5.11.2/schemas/independent-definitions-schema.xsd  
+ http://oval.mitre.org/XMLSchema/oval-definitions-5#macos       https://raw.githubusercontent.com/OVALProject/Language/5.11.2/schemas/macos-definitions-schema.xsd
+ http://oval.mitre.org/XMLSchema/oval-definitions-5#unix        https://raw.githubusercontent.com/OVALProject/Language/5.11.2/schemas/unix-definitions-schema.xsd"
  xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5" 
  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  
  xmlns:oval="http://oval.mitre.org/XMLSchema/oval-common-5" 
@@ -63,11 +64,11 @@ def main():
  xmlns:unix-def="http://oval.mitre.org/XMLSchema/oval-definitions-5#unix"> 
         <generator>
             <oval:schema_version>5.11.2</oval:schema_version>
-             <oval:timestamp>2020-05-01T17:05:02-05:00</oval:timestamp>
-             <terms_of_use>Copyright (c) 2020, Bob.</terms_of_use>
+             <oval:timestamp>{}</oval:timestamp>
+             <terms_of_use>Copyright (c) 2020, NIST.</terms_of_use>
              <oval:product_name>macOS Security Compliance Project</oval:product_name>
         </generator>
-    '''
+    '''.format(date_time_string)
     oval_definition = ""
     oval_test = ""
     oval_object = ""
