@@ -50,10 +50,10 @@ def main():
     ovalPrefix = '''<?xml version="1.0" encoding="UTF-8"?>
 <oval_definitions 
  xsi:schemaLocation=" 
- http://oval.mitre.org/XMLSchema/oval-definitions-5 oval-definitions-schema.xsd  
- http://oval.mitre.org/XMLSchema/oval-definitions-5#independent independent-definitions-schema.xsd  
- http://oval.mitre.org/XMLSchema/oval-definitions-5#macos macos-definitions-schema.xsd
- http://oval.mitre.org/XMLSchema/oval-definitions-5#unix unix-definitions-schema.xsd"
+ http://oval.mitre.org/XMLSchema/oval-definitions-5             https://raw.githubusercontent.com/OVALProject/Language/5.11.2/schemas/oval-definitions-schema.xsd
+ http://oval.mitre.org/XMLSchema/oval-definitions-5#independent https://raw.githubusercontent.com/OVALProject/Language/5.11.2/schemas/independent-definitions-schema.xsd  
+ http://oval.mitre.org/XMLSchema/oval-definitions-5#macos       https://raw.githubusercontent.com/OVALProject/Language/5.11.2/schemas/macos-definitions-schema.xsd
+ http://oval.mitre.org/XMLSchema/oval-definitions-5#unix        https://raw.githubusercontent.com/OVALProject/Language/5.11.2/schemas/unix-definitions-schema.xsd"
  xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5" 
  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  
  xmlns:oval="http://oval.mitre.org/XMLSchema/oval-common-5" 
