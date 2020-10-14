@@ -2,6 +2,18 @@
 
 This document provides a high-level view of the changes to the macOS Security Compliance Project.
 
+== [Big Sur, Revision 1] - 
+
+* Rules
+** Added new rules
+** Added Encrypted DNS Supplemental
+
+* Baselines
+
+* Scripts 
+
+* Miscellaneous
+
 == [Catalina, Revision 1] - 2020-10-06
 
 * Rules

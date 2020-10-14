@@ -924,7 +924,7 @@ def create_args():
     parser.add_argument("-d", "--debug", default=None,
                         help=argparse.SUPPRESS, action="store_true")
     parser.add_argument("-l", "--logo", default=None,
-                        help="Full path to logo file to be inlcuded in the guide.", action="store")
+                        help="Full path to logo file to be included in the guide.", action="store")
     parser.add_argument("-p", "--profiles", default=None,
                         help="Generate configuration profiles for the rules.", action="store_true")
     parser.add_argument("-s", "--script", default=None,
