@@ -41,5 +41,5 @@ tags:
   - STIG
 mobileconfig: true
 mobileconfig_info:
-  com.apple.NetworkBrowser:
-    DisableAirDrop: true
+  com.apple.applicationaccess:
+    allowAirDrop: false

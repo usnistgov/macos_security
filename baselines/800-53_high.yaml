@@ -149,7 +149,6 @@ profile:
       - sysprefs_bluetooth_sharing_disable
       - sysprefs_improve_siri_dictation_disable
       - sysprefs_enforce_auto_logout
-      - sysprefs_airdrop_share_extension_disable
   - section: "Inherent"
     rules:
       - os_enforce_access_restrictions
