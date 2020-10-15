@@ -35,10 +35,13 @@ XCCDF:
 		SCAP-version=1.3 \
 		id-namespace=gov.nist.mscp.content \
 		benchmark-id-suffix=macOS_10.15 \
-		OVAL-URI=${DIR}/All_rules.xml
+		OVAL-URI=${DIR}/All_rules.xml \
+		include-CPE=1
 	# the input OVAL document will be copied to a companion of the XCCDF document named 'oval.xml'
 	# a gratuitous OCIL document is provided
-	cp ocil.xml ${DIR}
+	cp ocil.xml                 ${DIR}
+	cp macos-cpe-dictionary.xml ${DIR}
+	cp macos-cpe-oval.xml       ${DIR}
 
 datastream:
 	# generate the SCAP data stream collection document
@@ -47,7 +50,8 @@ datastream:
 		-o:${DIR}/datastream.xml \
 		SCAP-version=1.3 \
 		id-namespace=gov.nist.mscp.content \
-		datastream-id-suffix=macOS_10.15
+		datastream-id-suffix=macOS_10.15 \
+		include-CPE=1
 
 report:
 	# generate an XCCDF report for quality assurance

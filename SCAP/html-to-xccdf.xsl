@@ -44,7 +44,7 @@
             <xd:p>include CPE stuff</xd:p>
         </xd:desc>
     </xd:doc>
-    <xsl:param name="include-CPE" as="xs:boolean" required="false" select="false()"/>
+    <xsl:param name="include-CPE" as="xs:boolean" required="false" select="true()"/>
     <!-- include "all-rule" profile -->
     <xd:doc xmlns:xd="http://www.oxygenxml.com/ns/doc/xsl">
         <xd:desc>
@@ -210,6 +210,13 @@
                 </xsl:element>
             </xsl:element>-->
             <xsl:element name="front-matter" namespace="http://checklists.nist.gov/xccdf/1.2">
+                <xsl:if test="false()">
+                    <xsl:element name="div" namespace="http://www.w3.org/1999/xhtml">
+                        <xsl:element name="img" namespace="http://www.w3.org/1999/xhtml">
+                            <xsl:copy-of select="/html/body[1]/div[2]/div[1]/div[1]/table[1]/tbody[1]/tr[1]/td[1]/p[1]/strong[1]/span[1]/img[1]/attribute::node()"/>
+                        </xsl:element>
+                    </xsl:element>
+                </xsl:if>
                 <xsl:element name="div" namespace="http://www.w3.org/1999/xhtml">
                     <xsl:element name="h2" namespace="http://www.w3.org/1999/xhtml">&lt;front-matter&gt;</xsl:element>
                     <xsl:element name="h3" namespace="http://www.w3.org/1999/xhtml">Foreword</xsl:element>
@@ -283,11 +290,11 @@
                 </xsl:element>
             </xsl:if>
             <!-- See NIST IR7215 §6.2.5 ¶3-->
-            <!--<xsl:element name="platform" namespace="http://checklists.nist.gov/xccdf/1.2">
+            <xsl:element name="platform" namespace="http://checklists.nist.gov/xccdf/1.2">
                 <xsl:attribute name="idref">
                     <xsl:text>cpe:2.3:o:apple:mac_os_x:10.15:*:*:*:*:*:*:*</xsl:text>
                 </xsl:attribute>
-            </xsl:element>-->
+            </xsl:element>
             <!--<xsl:element name="platform" namespace="http://checklists.nist.gov/xccdf/1.2">
                 <xsl:attribute name="idref"><xsl:text>cpe:/o:apple:mac_os_x:10.15</xsl:text></xsl:attribute>
             </xsl:element>-->

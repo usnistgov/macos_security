@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xs="http://www.w3.org/2001/XMLSchema" exclude-result-prefixes="xs" version="3.0"
-   xmlns:cpe="http://cpe.mitre.org/language/2.0" xmlns:uuid="java.util.UUID">
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xs="http://www.w3.org/2001/XMLSchema" exclude-result-prefixes="xs" version="3.0" xmlns:cpe="http://cpe.mitre.org/language/2.0"
+    xmlns:uuid="java.util.UUID">
     <!-- generate an SCAP datastream collection -->
     <!-- this transformation expects a single XCCDF 1.2 document and creates an SCAP datastream collection consisting of the XCCDF document and any related documents -->
     <!--  -->
@@ -13,11 +13,7 @@
     <!-- It is not necessary to emit schema locations. This transform expects XML Catalog will be used to associate namespaces with schemata. -->
     <xsl:param name="emit-schemaLocation" as="xs:boolean" required="no" select="false()"/>
     <!-- CPE references are not included by default -->
-    <xsl:param name="include-CPE" as="xs:boolean" required="no" select="false()"/>
-    <!-- Gratuitous references to SCAP standards are not included by default -->
-    <xsl:param name="include-scap-references" as="xs:boolean" required="no" select="false()"/>
-    <!-- Gratuitous inclusion of self -->
-    <xsl:param name="include-self" as="xs:boolean" required="no" select="false()"/>
+    <xsl:param name="include-CPE" as="xs:boolean" required="no" select="true()"/>
     <!-- Indent output document -->
     <xsl:param name="indent-output" as="xs:boolean" required="no" select="false()" static="true"/>
     <xsl:strip-space elements="*"/>
@@ -266,23 +262,6 @@
                                 </xsl:element>
                             </xsl:for-each>
                         </xsl:for-each>
-                        <xsl:for-each select="distinct-values(//cpe:check-fact-ref/@href)" xpath-default-namespace="http://checklists.nist.gov/xccdf/1.2">
-                            <xsl:element name="component-ref" namespace="http://scap.nist.gov/schema/scap/source/1.2">
-                                <xsl:attribute name="id" select="concat('scap_', $dsc-namespace, '_cref_', $datastream-id-suffix, '_', 'cpe', '_', position())"/>
-                                <xsl:attribute name="type" namespace="http://www.w3.org/1999/xlink" select="'simple'"/>
-                                <xsl:attribute name="href" namespace="http://www.w3.org/1999/xlink">
-                                    <xsl:choose>
-                                        <xsl:when test="matches(., '^\w+:')">
-                                            <xsl:value-of select="."/>
-                                        </xsl:when>
-                                        <xsl:otherwise>
-                                            <xsl:text>#</xsl:text>
-                                            <xsl:value-of select="concat('scap_', $dsc-namespace, '_comp_', $datastream-id-suffix, '_', 'cpe', '_', position())"/>
-                                        </xsl:otherwise>
-                                    </xsl:choose>
-                                </xsl:attribute>
-                            </xsl:element>
-                        </xsl:for-each>
                     </xsl:if>
                     <!-- define all check components referenced from check-content-ref -->
                     <xsl:for-each select="distinct-values(//check-content-ref/@href)" xpath-default-namespace="http://checklists.nist.gov/xccdf/1.2">
@@ -303,40 +282,12 @@
                         </xsl:element>
                     </xsl:for-each>
                 </xsl:element>
-                <xsl:if test="$include-scap-references">
-                    <xsl:element name="extended-components" namespace="http://scap.nist.gov/schema/scap/source/1.2">
-                        <xsl:element name="component-ref" namespace="http://scap.nist.gov/schema/scap/source/1.2">
-                            <xsl:attribute name="id" select="concat('scap_', $dsc-namespace, '_cref_', $datastream-id-suffix, '_', 'SCAP')"/>
-                            <xsl:attribute name="type" namespace="http://www.w3.org/1999/xlink" select="'simple'"/>
-                            <xsl:attribute name="href" namespace="http://www.w3.org/1999/xlink">
-                                <xsl:text>https://scap.nist.gov/revision/1.2/index.html</xsl:text>
-                            </xsl:attribute>
-                            <xsl:comment expand-text="true">☚ Please refer to this for SCAP {$SCAP-version} information</xsl:comment>
-                        </xsl:element>
-                        <xsl:element name="component-ref" namespace="http://scap.nist.gov/schema/scap/source/1.2">
-                            <xsl:attribute name="id" select="concat('scap_', $dsc-namespace, '_cref_', $datastream-id-suffix, '_', 'XCCDF')"/>
-                            <xsl:attribute name="type" namespace="http://www.w3.org/1999/xlink" select="'simple'"/>
-                            <xsl:attribute name="href" namespace="http://www.w3.org/1999/xlink">
-                                <xsl:text>https://scap.nist.gov/specifications/xccdf/index.html</xsl:text>
-                            </xsl:attribute>
-                            <xsl:comment>☚ Please refer to this for XCCDF 1.2 information</xsl:comment>
-                        </xsl:element>
-                        <xsl:element name="component-ref" namespace="http://scap.nist.gov/schema/scap/source/1.2">
-                            <xsl:attribute name="id" select="concat('scap_', $dsc-namespace, '_cref_', $datastream-id-suffix, '_', 'OVAL_NG')"/>
-                            <xsl:attribute name="type" namespace="http://www.w3.org/1999/xlink" select="'simple'"/>
-                            <xsl:attribute name="href" namespace="http://www.w3.org/1999/xlink">
-                                <xsl:text>https://github.com/OVALProject/Language</xsl:text>
-                            </xsl:attribute>
-                            <xsl:comment>☚ Please refer to this for the latest OVAL information</xsl:comment>
-                        </xsl:element>
-                    </xsl:element>
-                </xsl:if>
             </xsl:element>
             <!-- include checklist component -->
             <xsl:element name="component" namespace="http://scap.nist.gov/schema/scap/source/1.2">
                 <xsl:attribute name="id" select="concat('scap_', $dsc-namespace, '_comp_', $datastream-id-suffix, '_', tokenize(base-uri(), '/')[last()])"/>
                 <xsl:attribute name="timestamp" select="$T"/>
-                <!--<xsl:comment expand-text="true">This is the content from «{base-uri()}»</xsl:comment>-->
+                <xsl:comment expand-text="true">This is the content from «{base-uri()}»</xsl:comment>
                 <xsl:copy-of select="/"/>
             </xsl:element>
             <!-- include all check components -->
@@ -349,43 +300,24 @@
                     <xsl:apply-templates mode="selective-copy" select="doc(resolve-uri(., $base))"/>
                 </xsl:element>
             </xsl:for-each>
-            <xsl:if test="$include-CPE and false()">
+            <xsl:if test="$include-CPE">
                 <!-- include all CPE components -->
                 <xsl:for-each select="//reference[. = 'platform-cpe-dictionary'][@href]" xpath-default-namespace="http://checklists.nist.gov/xccdf/1.2">
                     <xsl:element name="component" namespace="http://scap.nist.gov/schema/scap/source/1.2">
                         <xsl:attribute name="id" select="concat('scap_', $dsc-namespace, '_comp_', $datastream-id-suffix, '_', @href)"/>
                         <xsl:attribute name="timestamp" select="$T"/>
+                        <xsl:comment expand-text="true">This is the content from «{resolve-uri(@href, $base)}»</xsl:comment>
                         <xsl:copy-of select="doc(@href)"/>
                     </xsl:element>
-                    <xsl:for-each select="doc(@href)//check/@href" xpath-default-namespace="http://cpe.mitre.org/dictionary/2.0">
+                    <xsl:for-each select="distinct-values(doc(@href)//check/@href)" xpath-default-namespace="http://cpe.mitre.org/dictionary/2.0">
                         <xsl:element name="component" namespace="http://scap.nist.gov/schema/scap/source/1.2">
                             <xsl:attribute name="id" select="concat('scap_', $dsc-namespace, '_comp_', $datastream-id-suffix, '_', .)"/>
                             <xsl:attribute name="timestamp" select="$T"/>
+                            <xsl:comment expand-text="true">This is the content from «{resolve-uri(., $base)}»</xsl:comment>
                             <xsl:copy-of select="doc(.)"/>
                         </xsl:element>
                     </xsl:for-each>
                 </xsl:for-each>
-                <xsl:for-each select="distinct-values(//cpe:check-fact-ref/@href[not(matches(., '^\w+:'))])" xpath-default-namespace="http://checklists.nist.gov/xccdf/1.2">
-                    <xsl:element name="component" namespace="http://scap.nist.gov/schema/scap/source/1.2">
-                        <xsl:attribute name="id" select="concat('scap_', $dsc-namespace, '_comp_', $datastream-id-suffix, '_', 'cpe', '_', position())"/>
-                        <xsl:attribute name="timestamp" select="$T"/>
-                        <xsl:comment expand-text="true">This is the content from «{resolve-uri(., $base)}»</xsl:comment>
-                        <xsl:copy-of select="doc(resolve-uri(., $base))"/>
-                    </xsl:element>
-                </xsl:for-each>
-                <xsl:element name="component" namespace="http://scap.nist.gov/schema/scap/source/1.2">
-                    <xsl:attribute name="id" select="concat('scap_', $dsc-namespace, '_comp_', $datastream-id-suffix, '_', 'gratuitous&#xb7;cpe&#xb7;dictionary')"/>
-                    <xsl:attribute name="timestamp" select="$T"/>
-                    <xsl:copy-of select="doc(resolve-uri('cpe-dictionary.xml', $base))"/>
-                </xsl:element>
-            </xsl:if>
-            <xsl:if test="$include-self">
-                <xsl:comment>Gratuitous inclusion of this transform</xsl:comment>
-                <xsl:element name="extended-component" namespace="http://scap.nist.gov/schema/scap/source/1.2">
-                    <xsl:attribute name="id" select="concat('scap_', $dsc-namespace, '_ecomp_', $datastream-id-suffix, '_', 'transform')"/>
-                    <xsl:attribute name="timestamp" select="$T"/>
-                    <xsl:copy-of select="doc(static-base-uri())"/>
-                </xsl:element>
             </xsl:if>
         </xsl:element>
     </xsl:template>
