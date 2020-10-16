@@ -122,19 +122,29 @@
                 <xsl:attribute name="scap-version" select="$SCAP-version"/>
                 <xsl:attribute name="use-case">CONFIGURATION</xsl:attribute>
                 <xsl:if test="$include-CPE">
-                    <!-- create dictionaries -->
+                    <!--
+                        Create a <dictionaries> section
+                        Dictionaries are used only for CPE-related constructs
+                        An XML Catalog is needed to equate (XCCDF-relative) relative references with <component-refs>
+                        (The <component-refs> in turn reference <components>)
+                    -->
                     <xsl:if test="//reference[. = 'platform-cpe-dictionary'][@href]" xpath-default-namespace="http://checklists.nist.gov/xccdf/1.2">
                         <xsl:element name="dictionaries" namespace="http://scap.nist.gov/schema/scap/source/1.2">
                             <!-- create a reference for each CPE reference -->
                             <xsl:for-each select="//reference[. = 'platform-cpe-dictionary'][@href]" xpath-default-namespace="http://checklists.nist.gov/xccdf/1.2">
                                 <xsl:element name="component-ref" namespace="http://scap.nist.gov/schema/scap/source/1.2">
+                                    <!-- the @id is arbitrary -->
                                     <xsl:attribute name="id" expand-text="true">scap_{$dsc-namespace}_cref_{$datastream-id-suffix}_{@href}</xsl:attribute>
                                     <xsl:attribute name="type" namespace="http://www.w3.org/1999/xlink" select="'simple'"/>
+                                    <!-- the href should reference a subsequently produced <component>/@id -->
                                     <xsl:attribute name="href" namespace="http://www.w3.org/1999/xlink">
                                         <xsl:text>#</xsl:text>
                                         <xsl:value-of select="concat('scap_', $dsc-namespace, '_comp_', $datastream-id-suffix, '_', @href)"/>
                                     </xsl:attribute>
-                                    <!-- create a context catalog for any referenced check -->
+                                    <!-- 
+                                        Create a context catalog for any cpe-dictionary referenced check 
+                                        The catalog provides a mapping from a cpe-dictionary reference to the relative cpe-oval 
+                                    -->
                                     <xsl:variable name="cpe-list" as="document-node()" select="doc(@href)"/>
                                     <xsl:element name="catalog" namespace="urn:oasis:names:tc:entity:xmlns:xml:catalog">
                                         <!-- reference each check component -->
@@ -143,9 +153,10 @@
                                                 <xsl:attribute name="name">
                                                     <xsl:value-of select="."/>
                                                 </xsl:attribute>
+                                                <!-- the URI should reference a (subsequently-produced) <component-ref> which in turn referencves the component -->
                                                 <xsl:attribute name="uri">
-                                                    <xsl:text>#</xsl:text>
-                                                    <xsl:value-of select="concat('scap_', $dsc-namespace, '_cref_', $datastream-id-suffix, '_', 'dict', '_', position())"/>
+                                                    <xsl:text expand-text="true">#scap_{$dsc-namespace}_cref_{$datastream-id-suffix}_{.}</xsl:text>
+                                                    
                                                 </xsl:attribute>
                                             </xsl:element>
                                         </xsl:for-each>

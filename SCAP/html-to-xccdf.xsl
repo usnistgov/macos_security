@@ -288,13 +288,13 @@
                     <xsl:attribute name="href">macos-cpe-oval.xml</xsl:attribute>
                     <xsl:text>platform-cpe-oval</xsl:text>
                 </xsl:element>
+                <!-- See NIST IR7215 §6.2.5 ¶3-->
+                <xsl:element name="platform" namespace="http://checklists.nist.gov/xccdf/1.2">
+                    <xsl:attribute name="idref">
+                        <xsl:text>cpe:2.3:o:apple:mac_os_x:10.15:*:*:*:*:*:*:*</xsl:text>
+                    </xsl:attribute>
+                </xsl:element>
             </xsl:if>
-            <!-- See NIST IR7215 §6.2.5 ¶3-->
-            <xsl:element name="platform" namespace="http://checklists.nist.gov/xccdf/1.2">
-                <xsl:attribute name="idref">
-                    <xsl:text>cpe:2.3:o:apple:mac_os_x:10.15:*:*:*:*:*:*:*</xsl:text>
-                </xsl:attribute>
-            </xsl:element>
             <!--<xsl:element name="platform" namespace="http://checklists.nist.gov/xccdf/1.2">
                 <xsl:attribute name="idref"><xsl:text>cpe:/o:apple:mac_os_x:10.15</xsl:text></xsl:attribute>
             </xsl:element>-->
