@@ -607,7 +607,7 @@ defaults write "$audit_plist" lastComplianceCheck "$(date)"
                     logging.debug(f'Setting STIG reference for logging: {stig_ref}')
                     log_reference_id = stig_ref
                 else:
-                    log_reference_id= rule_yaml['id']
+                    log_reference_id = [rule_yaml['id']]
 
             # group the controls
                 nist_80053r4.sort()
