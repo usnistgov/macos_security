@@ -1,17 +1,17 @@
-id: sysprefs_ssh_enable
-title: "Enable SSH for Remote Access Sessions"
+id: sysprefs_ssh_disable
+title: "Disable SSH for Remote Access Sessions"
 discussion: |
-  SSH service _MUST_ be enabled for remote access.
+  SSH service _MUST_ be disabled for remote access.
   
-  Remote access sessions _MUST_ use encrypted methods to protect unauthorized individuals from gaining access. 
+  Remote access sessions _MUST_ use FIPS validated encrypted methods to protect unauthorized individuals from gaining access. 
 check: |
-  /bin/launchctl print-disabled system | /usr/bin/grep -c '"com.openssh.sshd" => false'
+  /bin/launchctl print-disabled system | /usr/bin/grep -c '"com.openssh.sshd" => true'
 result:
   integer: 1
 fix: |
   [source,bash]
   ----
-  /bin/launchctl enable system/com.openssh.sshd
+  /bin/launchctl disable system/com.openssh.sshd
   ----
 references:
   cce:
