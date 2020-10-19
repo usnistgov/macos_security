@@ -1,4 +1,4 @@
-id: os_ssh_permit_root_login_configure
+id: os_sshd_permit_root_login_configure
 title: "Disable Root Login for SSH"
 discussion: |
   To assure individual accountability and prevent unauthorized access, logging in as root via SSH _MUST_ be disabled. 
@@ -22,7 +22,7 @@ references:
   cci: 
     - CCI-000770
   800-53r4: 
-    - IA-2(5)
+    - N/A
   srg: 
     - SRG-OS-000109-GPOS-00056
   disa_stig: 

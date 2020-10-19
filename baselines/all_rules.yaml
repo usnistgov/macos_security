@@ -37,7 +37,7 @@ profile:
   - section: "macos"
     rules:
       - os_firewall_default_deny_require
-      - os_ssh_client_alive_count_max_configure
+      - os_ssh_server_alive_count_max_configure
       - os_firmware_password_require
       - os_gatekeeper_rearm
       - os_root_disable
@@ -53,7 +53,7 @@ profile:
       - os_password_autofill_disable
       - os_password_sharing_disable
       - os_ssh_fips_140_ciphers
-      - os_ssh_login_grace_time_configure
+      - os_sshd_login_grace_time_configure
       - os_privacy_setup_prompt_disable
       - os_secure_boot_verify
       - os_sudoers_tty_configure
@@ -86,12 +86,16 @@ profile:
       - os_camera_disable
       - os_guest_access_afp_disable
       - os_icloud_storage_prompt_disable
-      - os_ssh_permit_root_login_configure
+      - os_sshd_permit_root_login_configure
       - os_ir_support_disable
       - os_mail_app_disable
-      - os_ssh_client_alive_interval_configure
+      - os_ssh_server_alive_interval_configure
       - os_bonjour_disable
       - os_calendar_app_disable
+      - os_sshd_client_alive_count_max_configure
+      - os_sshd_client_alive_interval_configure
+      - os_sshd_fips_140_ciphers
+      - os_sshd_fips_140_macs
   - section: "passwordpolicy"
     rules:
       - pwpolicy_account_inactivity_enforce
@@ -127,6 +131,7 @@ profile:
       - sysprefs_internet_sharing_disable
       - sysprefs_rae_disable
       - sysprefs_ssh_enable
+      - sysprefs_ssh_disable
       - sysprefs_media_sharing_disabled
       - sysprefs_screensaver_password_enforce
       - sysprefs_gatekeeper_identified_developers_allowed

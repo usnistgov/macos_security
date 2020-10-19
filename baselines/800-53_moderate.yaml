@@ -34,7 +34,7 @@ profile:
   - section: "macos"
     rules:
       - os_firewall_default_deny_require
-      - os_ssh_client_alive_count_max_configure
+      - os_ssh_server_alive_count_max_configure
       - os_firmware_password_require
       - os_gatekeeper_rearm
       - os_root_disable
@@ -49,7 +49,6 @@ profile:
       - os_password_autofill_disable
       - os_password_sharing_disable
       - os_ssh_fips_140_ciphers
-      - os_ssh_login_grace_time_configure
       - os_uucp_disable
       - os_policy_banner_loginwindow_enforce
       - os_touchid_prompt_disable
@@ -79,7 +78,7 @@ profile:
       - os_icloud_storage_prompt_disable
       - os_ir_support_disable
       - os_mail_app_disable
-      - os_ssh_client_alive_interval_configure
+      - os_ssh_server_alive_interval_configure
       - os_bonjour_disable
       - os_calendar_app_disable
   - section: "passwordpolicy"
