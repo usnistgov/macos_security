@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
-# filename: generate_guidance.py
-# description: Process a given baseline, and output guidance files
+# filename: generate_baseline.py
+# description: Process a given keyword, and output a baseline file
 
 import os.path
 import glob
