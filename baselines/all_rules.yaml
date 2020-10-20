@@ -230,7 +230,6 @@ profile:
       - os_anti_virus_installed      
   - section: "Supplemental"
     rules:
-      - supplemental_encrypted_dns
       - supplemental_firewall_pf
       - supplemental_filevault
       - supplemental_password_policy

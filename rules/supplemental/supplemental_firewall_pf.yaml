@@ -113,7 +113,7 @@ references:
   disa_stig:
     - N/A
 macOS:
-  - "10.15"
+  - "11.0"
 tags:
   - supplemental
 mobileconfig: false

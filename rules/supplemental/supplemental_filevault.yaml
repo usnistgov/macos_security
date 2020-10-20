@@ -4,7 +4,7 @@ discussion: |
   The supplemental guidance found in this section is applicable for the following rules:
     * sysprefs_filevault_enforce
 
-  In macOS 10.15 the internal Apple File System (APFS) volume (including both system and data storage) can be protected by FileVault.
+  In macOS 11 the internal Apple File System (APFS) volume (including both system and data storage) can be protected by FileVault.
   NOTE: On non-T2 hardware, FileVault uses an AES-XTS data encryption algorithm to protect full volumes of internal and external storage. Macs with the T2 chip utilize the hardware security features of the chip.
 
   FileVault is described in detail here: link:https://support.apple.com/guide/security/when-filevault-is-turned-on-sec4c6dc1b6e/1/web/1[].
@@ -63,7 +63,7 @@ references:
   disa_stig:
     - N/A
 macOS:
-  - "10.15"
+  - "11.0"
 tags:
   - supplemental
 mobileconfig: false
