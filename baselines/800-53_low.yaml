@@ -111,6 +111,7 @@ profile:
       - sysprefs_password_hints_disable
       - sysprefs_bluetooth_sharing_disable
       - sysprefs_improve_siri_dictation_disable
+      - sysprefs_ssh_disable
   - section: "Inherent"
     rules:
       - os_logical_access
@@ -130,7 +131,6 @@ profile:
       - os_nonlocal_maintenance
   - section: "Supplemental"
     rules:
-      - supplemental_encrypted_dns
       - supplemental_firewall_pf
       - supplemental_filevault
       - supplemental_password_policy

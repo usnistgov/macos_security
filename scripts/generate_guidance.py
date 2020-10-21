@@ -426,7 +426,11 @@ def generate_script(baseline_name, build_path, baseline_yaml):
 
 ##  This script will attempt to audit all of the settings based on the installed profile.
 
-##  This script is provided as-is and should be fully tested on a system that is not in a production environment.  
+##  This script is provided as-is and should be fully tested on a system that is not in a production environment.
+
+###################  Variables  ###################
+
+pwpolicy_file=""
 
 ###################  COMMANDS START BELOW THIS LINE  ###################
 
@@ -643,6 +647,7 @@ defaults write "$audit_plist" lastComplianceCheck "$(date)"
 #####----- Rule: {0} -----#####
 ## Addresses the following NIST 800-53 controls: {1}
 #echo 'Running the command to check the settings for: {0} ...' | tee -a "$audit_log"
+unset result_value
 result_value=$({2})
 # expected result {3}
 
