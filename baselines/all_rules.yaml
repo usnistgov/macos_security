@@ -224,6 +224,7 @@ profile:
   - section: "not_applicable"
     rules: 
       - os_identify_non-org_users
+      - os_nonlocal_maintenance
   - section: "srg"
     rules:
       - os_filevault_user_account

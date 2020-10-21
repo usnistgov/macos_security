@@ -7,7 +7,6 @@ profile:
       - auth_pam_login_smartcard_enforce
       - auth_smartcard_allow
       - auth_pam_sudo_smartcard_enforce
-      - auth_ssh_smartcard_enforce
       - auth_smartcard_certificate_trust_enforce_moderate
       - auth_smartcard_enforce
       - auth_pam_su_smartcard_enforce
@@ -38,7 +37,6 @@ profile:
       - os_firmware_password_require
       - os_gatekeeper_rearm
       - os_root_disable
-      - os_policy_banner_ssh_enforce
       - os_password_proximity_disable
       - os_mdm_require
       - os_screensaver_loginwindow_enforce
@@ -64,7 +62,6 @@ profile:
       - os_authenticated_root_enable
       - os_removable_media_disable
       - os_guest_access_smb_disable
-      - os_policy_banner_ssh_configure
       - os_time_server_enabled
       - os_unlock_active_user_session_disable
       - os_internet_accounts_prefpane_disable
@@ -174,6 +171,7 @@ profile:
   - section: "not_applicable"
     rules: 
       - os_identify_non-org_users
+      - os_nonlocal_maintenance
   - section: "Supplemental"
     rules:
       - supplemental_encrypted_dns
