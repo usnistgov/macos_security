@@ -112,7 +112,7 @@ profile:
       - sysprefs_personalized_advertising_disable
       - sysprefs_internet_sharing_disable
       - sysprefs_rae_disable
-      - sysprefs_ssh_enable
+      - sysprefs_ssh_disable
       - sysprefs_screensaver_password_enforce
       - sysprefs_gatekeeper_identified_developers_allowed
       - sysprefs_gatekeeper_override_disallow
