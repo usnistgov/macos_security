@@ -543,6 +543,9 @@ def main():
                         x += 1
                         continue
                     if "csrutil" in command[3]:
+                        if "authenticated-root" in command[3]:
+                            print(rule_yaml['id'] + " - No relevant oval test")
+                            continue
                         oval_definition = oval_definition + '''
                         <definition id="oval:mscp:def:{}" version="1" class="compliance"> 
                         <metadata> 
