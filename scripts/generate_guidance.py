@@ -852,7 +852,7 @@ def generate_xls(baseline_name, build_path, baseline_yaml):
         sheet1.write(counter, 4, mechanism, top)
         sheet1.col(4).width = 256 * 25
 
-        sheet1.write(counter, 5, rule.rule_check, topWrap)
+        sheet1.write(counter, 5, rule.rule_check.replace("\|", "|"), topWrap)
         sheet1.col(5).width = 750 * 50
 
         sheet1.write(counter, 6, str(rule.rule_result_value), topWrap)
@@ -891,7 +891,7 @@ def generate_xls(baseline_name, build_path, baseline_yaml):
         sheet1.col(10).width = 500 * 15
 
         disa_refs = (str(rule.rule_disa_stig)).strip('[]\'')
-        disa_refs = srg_refs.replace(", ", "\n").replace("\'", "")
+        disa_refs = disa_refs.replace(", ", "\n").replace("\'", "")
 
         sheet1.write(counter, 11, disa_refs, topWrap)
         sheet1.col(11).width = 500 * 15
