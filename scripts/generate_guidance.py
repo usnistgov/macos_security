@@ -1141,6 +1141,7 @@ def main():
         stig_attribute=adoc_STIG_show,
         srg_attribute=adoc_SRG_show,
         version=version_yaml['version'],
+        os_version=version_yaml['os'],
         release_date=version_yaml['date']
     )
 
