@@ -13,16 +13,24 @@
     <xd:doc xmlns:xd="http://www.oxygenxml.com/ns/doc/xsl">
         <xd:desc>
             <xd:p>"namespace" for identifiers</xd:p>
+            <xd:p>See <xd:a href="https://csrc.nist.gov/publications/detail/nistir/7275/rev-4/final">NISTIR 7275r4 §6.2.3</xd:a> for an explanation of this value</xd:p>
         </xd:desc>
     </xd:doc>
     <xsl:param name="id-namespace" as="xs:string" required="no" select="'content.scap.example.com'" static="true"/>
     <xd:doc xmlns:xd="http://www.oxygenxml.com/ns/doc/xsl">
         <xd:desc>
             <xd:p>"namespace" reversed</xd:p>
+            <xd:p>See <xd:a href="https://csrc.nist.gov/publications/detail/nistir/7275/rev-4/final">NISTIR 7275r4 §6.2.3</xd:a> for an explanation of this value</xd:p>
         </xd:desc>
     </xd:doc>
     <xsl:variable name="xccdf-namespace" as="xs:string" select="string-join(reverse(tokenize($id-namespace, '\.')), '.')"/>
     <!-- (unique) suffix for <Benchmark> @id -->
+    <xd:doc xmlns:xd="http://www.oxygenxml.com/ns/doc/xsl">
+        <xd:desc>
+            <xd:p>Element Identifier suffix ("name")</xd:p>
+            <xd:p>See <xd:a href="https://csrc.nist.gov/publications/detail/nistir/7275/rev-4/final">NISTIR 7275r4 §6.2.3</xd:a> for an explanation of this value</xd:p>
+        </xd:desc>
+    </xd:doc>
     <xsl:param name="benchmark-id-suffix" as="xs:string" required="true"/>
     <xd:doc xmlns:xd="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet">
         <xd:desc>

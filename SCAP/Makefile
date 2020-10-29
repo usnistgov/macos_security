@@ -33,7 +33,7 @@ XCCDF:
 		-xsl:html-to-xccdf.xsl \
 	       	-o:${DIR}/xccdf.xml \
 		SCAP-version=1.3 \
-		id-namespace=gov.nist.mscp.content \
+		id-namespace=content.mscp.nist.gov \
 		benchmark-id-suffix=macOS_10.15 \
 		OVAL-URI=${DIR}/All_rules.xml \
 		include-CPE=1
@@ -49,7 +49,7 @@ datastream:
 		-xsl:xccdf-to-ds.xsl \
 		-o:${DIR}/datastream.xml \
 		SCAP-version=1.3 \
-		id-namespace=gov.nist.mscp.content \
+		id-namespace=content.mscp.nist.gov \
 		datastream-id-suffix=macOS_10.15 \
 		include-CPE=1
 
