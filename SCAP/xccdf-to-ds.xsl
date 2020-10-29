@@ -6,7 +6,9 @@
     <!--  -->
     <xsl:param name="SCAP-version" as="xs:decimal" required="no" select="1.3"/>
     <!-- "namespace" for identifiers -->
+    <!-- See NIST SP 800-126r3 §3.1.3 for an explanation of this value -->
     <xsl:param name="id-namespace" as="xs:string" required="yes"/>
+    <!-- See NIST SP 800-126r3 §3.1.3 for an explanation of this value -->
     <xsl:variable name="dsc-namespace" as="xs:string" select="string-join(reverse(tokenize($id-namespace, '\.')), '.')"/>
     <!-- It is not necessary to emit namespaces. This transform takes pains to cite namespaces rather than prefixes to avoid prefix collisions. -->
     <xsl:param name="emit-namespaces" as="xs:boolean" required="no" select="false()"/>
@@ -156,7 +158,6 @@
                                                 <!-- the URI should reference a (subsequently-produced) <component-ref> which in turn referencves the component -->
                                                 <xsl:attribute name="uri">
                                                     <xsl:text expand-text="true">#scap_{$dsc-namespace}_cref_{$datastream-id-suffix}_{.}</xsl:text>
-                                                    
                                                 </xsl:attribute>
                                             </xsl:element>
                                         </xsl:for-each>
