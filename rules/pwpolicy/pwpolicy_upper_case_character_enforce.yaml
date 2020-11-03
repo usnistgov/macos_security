@@ -27,6 +27,12 @@ fix: |
   </dict>
   </dict>
   ----
+  After saving the file and exiting to the command prompt, run the following command to load the new policy file, substituting the path to the file in place of "$pwpolicy_file".
+  
+  [source,bash]
+  ----
+  /usr/bin/pwpolicy setaccountpolicies $pwpolicy_file
+  ----
   NOTE: See the password policy supplemental on more information on how to implement password policies on macOS.
 references:
   cce:
