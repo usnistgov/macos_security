@@ -390,8 +390,8 @@
                             <xsl:apply-templates mode="html" select="child::div[@class = 'sectionbody']/div[@class != 'sect2']"/>
                         </xsl:element>
                     </xsl:element>
-                    <xsl:if test="descendant::div[matches(@class, 'admonitionblock')]">
-                        <xsl:for-each select="descendant::div[matches(@class, 'admonitionblock')]">
+                    <xsl:if test="child::div[@class = 'sectionbody']/child::div[matches(@class, 'admonitionblock')]">
+                        <xsl:for-each select="child::div[@class = 'sectionbody']/child::div[matches(@class, 'admonitionblock')]">
                             <xsl:element name="warning" namespace="http://checklists.nist.gov/xccdf/1.2">
                                 <xsl:attribute name="category" select="'general'"/>
                                 <xsl:apply-templates mode="warning" select="current()"/>
