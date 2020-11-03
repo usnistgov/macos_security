@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xs="http://www.w3.org/2001/XMLSchema" exclude-result-prefixes="xs" version="3.0" xmlns:cpe="http://cpe.mitre.org/language/2.0"
     xmlns:uuid="java.util.UUID">
     <!-- generate an SCAP datastream collection -->
@@ -61,7 +60,9 @@
         <xsl:copy-of select="$LF"/>
         <xsl:comment expand-text="true"> Created {$T} </xsl:comment>
         <xsl:copy-of select="$LF"/>
-        <xsl:comment expand-text="true"> using {static-base-uri()} with {resolve-uri(base-uri())} as input </xsl:comment>
+        <xsl:comment expand-text="true"> using {static-base-uri()} </xsl:comment>
+        <xsl:copy-of select="$LF"/>
+        <xsl:comment expand-text="true"> with {resolve-uri(base-uri())} as input </xsl:comment>
         <xsl:copy-of select="$LF"/>
         <xsl:comment expand-text="true"> The SCAP identifier "namespace" chosen for this data stream collection is «{$dsc-namespace}» («{$id-namespace}» reversed) </xsl:comment>
         <xsl:copy-of select="$LF"/>

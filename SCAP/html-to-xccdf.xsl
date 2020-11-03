@@ -153,9 +153,22 @@
         <!--<xsl:message expand-text="true" xpath-default-namespace="http://oval.mitre.org/XMLSchema/oval-definitions-5">{$OVAL-URI} contains {count($OVAL-document//node())} nodes</xsl:message>-->
         <xsl:copy-of select="$LF"/>
         <xsl:copy-of select="$LF"/>
-        <xsl:comment> See https://www.w3.org/TR/xml-model/ </xsl:comment>
+        <xsl:comment expand-text="true"> This is an SCAP {$SCAP-version} XCCDF document </xsl:comment>
         <xsl:copy-of select="$LF"/>
-        <!-- See https://www.w3.org/TR/xml-model/ -->
+        <xsl:comment expand-text="true"> Created {$UTC-datetime} </xsl:comment>
+        <xsl:copy-of select="$LF"/>
+        <xsl:comment expand-text="true"> using {static-base-uri()} </xsl:comment>
+        <xsl:copy-of select="$LF"/>
+        <xsl:comment expand-text="true"> with {resolve-uri(base-uri())} as input </xsl:comment>
+        <xsl:copy-of select="$LF"/>
+        <xsl:comment expand-text="true"> and {resolve-uri($OVAL-URI)} as OVAL input </xsl:comment>
+        <xsl:copy-of select="$LF"/>
+        <xsl:comment expand-text="true"> The SCAP identifier "namespace" chosen for this XCCDF document is «{$xccdf-namespace}» («{$id-namespace}» reversed) </xsl:comment>
+        <xsl:copy-of select="$LF"/>
+        <xsl:copy-of select="$LF"/>
+        <xsl:comment> See https://www.w3.org/TR/xml-model/ for an explanation of the following processing instructions </xsl:comment>
+        <xsl:copy-of select="$LF"/>
+        <!-- See https://www.w3.org/TR/xml-model/ for an explanation of the following processing instruction -->
         <xsl:processing-instruction name="xml-model">
             <xsl:text>href="https://csrc.nist.gov/schema/xccdf/1.2/xccdf_1.2.xsd"</xsl:text>
             <xsl:text> </xsl:text>
@@ -164,7 +177,7 @@
             <xsl:text>title="XCCDF XML schema"</xsl:text>
         </xsl:processing-instruction>
         <xsl:copy-of select="$LF"/>
-        <!-- See https://www.w3.org/TR/xml-model/ -->
+        <!-- See https://www.w3.org/TR/xml-model/ for an explanation of the following processing instruction -->
         <xsl:processing-instruction name="xml-model">
             <xsl:text>href="https://csrc.nist.gov/schema/xccdf/1.2/xccdf_1.2.sch"</xsl:text> 
             <xsl:text> </xsl:text>
@@ -177,15 +190,6 @@
         <!--<xsl:processing-instruction name="xml-stylesheet">
             <xsl:text>href="xccdf-to-html.xsl"</xsl:text>
         </xsl:processing-instruction>-->
-        <xsl:copy-of select="$LF"/>
-        <xsl:comment expand-text="true">this is an SCAP {$SCAP-version} XCCDF document</xsl:comment>
-        <xsl:copy-of select="$LF"/>
-        <xsl:comment expand-text="true">Created {$UTC-datetime}</xsl:comment>
-        <xsl:copy-of select="$LF"/>
-        <xsl:comment expand-text="true">using {static-base-uri()} with {resolve-uri(base-uri())} as input</xsl:comment>
-        <xsl:copy-of select="$LF"/>
-        <xsl:comment expand-text="true">and {resolve-uri($OVAL-URI)} as OVAL input</xsl:comment>
-        <xsl:copy-of select="$LF"/>
         <xsl:copy-of select="$LF"/>
         <xsl:element name="Benchmark" namespace="http://checklists.nist.gov/xccdf/1.2">
             <xsl:attribute name="id" expand-text="true">xccdf_{$xccdf-namespace}_benchmark_{$benchmark-id-suffix}</xsl:attribute>
