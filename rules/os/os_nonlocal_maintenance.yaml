@@ -1,0 +1,34 @@
+id: os_nonlocal_maintenance
+title: "Configure the System for Nonlocal Maintenance"
+discussion: |
+  Nonlocal maintenance and diagnostic activities are those activities conducted by individuals communicating through a network, either an external network or an internal network.  
+
+  If all remote login services are disabled this is not applicable to the system.
+check: |
+  This requirement is NA for this technology.
+fix: |
+  The requirement is NA. No fix is required.
+references:
+  cce:
+    - 
+  cci:
+    - N/A
+  800-53r4:
+    - MA-4
+  800-171r2:
+    - 3.7.5
+  disa_stig:
+    - N/A
+  srg:
+    - N/A
+macOS:
+  - "10.15"
+tags:
+  - 800-171
+  - cnssi-1253
+  - 800-53r4_low
+  - 800-53r4_moderate
+  - 800-53r4_high
+  - n_a
+mobileconfig: false
+mobileconfig_info:

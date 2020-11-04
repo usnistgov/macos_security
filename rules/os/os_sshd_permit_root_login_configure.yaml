@@ -1,7 +1,7 @@
-id: os_ssh_permit_root_login_configure
+id: os_sshd_permit_root_login_configure
 title: "Disable Root Login for SSH"
 discussion: |
-  To assure individual accountability and prevent unauthorized access, logging in as root via SSH _MUST_ be disabled. 
+  If SSH is enabled to assure individual accountability and prevent unauthorized access, logging in as root via SSH _MUST_ be disabled. 
   
   The macOS system MUST  require individuals to be authenticated with an individual authenticator prior to using a group authenticator, and administrator users _MUST_ never log in directly as root. 
   

@@ -7,30 +7,30 @@ discussion: |
   
   Operating systems utilizing encryption _MUST_ use FIPS validated mechanisms for authenticating to cryptographic modules. 
 
-  NOTE: /etc/ssh/sshd_config will be automatically modified to its original state following any update or major upgrade to the operating system.
+  NOTE: /etc/ssh/ssh_config will be automatically modified to its original state following any update or major upgrade to the operating system.
 check: |
-  /usr/bin/grep -c "^MACs hmac-sha2-256,hmac-sha2-512" /etc/ssh/sshd_config
+  /usr/bin/grep -c "^MACs hmac-sha2-256,hmac-sha2-512" /etc/ssh/ssh_config
 result:
   integer: 1
 fix: |
   [source,bash]
   ----
-  /usr/bin/grep -q '^MACs' /etc/ssh/sshd_config && /usr/bin/sed -i.bak  's/.*MACs.*/MACs hmac-sha2-256,hmac-sha2-512/' /etc/ssh/sshd_config || /bin/echo 'MACs hmac-sha2-256,hmac-sha2-512' >> /etc/ssh/sshd_config; /bin/launchctl kickstart -k system/com.openssh.sshd
+  /usr/bin/grep -q '^MACs' /etc/ssh/ssh_config && /usr/bin/sed -i.bak  's/.*MACs.*/MACs hmac-sha2-256,hmac-sha2-512/' /etc/ssh/ssh_config || /bin/echo 'MACs hmac-sha2-256,hmac-sha2-512' >> /etc/ssh/ssh_config
   ----
 references:
   cce:
-    - CCE-84795-4
+    - 
   cci: 
-    - CCI-001133
+    - N/A
   800-53r4: 
     - AC-17(2)
     - IA-7
     - SC-8(1)
     - SC-13
   srg: 
-    - SRG-OS-000163-GPOS-00072
+    - N/A
   disa_stig: 
-    - AOSX-15-000053
+    - N/A
   800-171r2:
     - 3.1.13
     - 3.13.8
