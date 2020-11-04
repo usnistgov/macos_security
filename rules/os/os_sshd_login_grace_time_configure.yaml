@@ -1,7 +1,7 @@
 id: os_sshd_login_grace_time_configure
 title: "Set Login Grace Time to 30 or Less"
 discussion: |
-  SSHD _MUST_ be configured to wait only 30 seconds before timing out logon attempts.
+  If SSHD is enabled then it _MUST_ be configured to wait only 30 seconds before timing out logon attempts.
 
   NOTE: /etc/ssh/sshd_config will be automatically modified to its original state following any update or major upgrade to the operating system.
 check: |
@@ -19,13 +19,13 @@ references:
   cci: 
     - CCI-001133
   800-53r4: 
-    - N/A
+    - SC-10
   srg: 
     - SRG-OS-000163-GPOS-00072
   disa_stig: 
     - AOSX-15-000053
   800-171r2:
-    - N/A
+    - 3.13.9
 macOS:
   - "11.0"
 tags:

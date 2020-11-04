@@ -1,7 +1,7 @@
 id: sysprefs_ssh_enable
 title: "Enable SSH Server for Remote Access Sessions"
 discussion: |
-  SSH service _MUST_ be enabled for remote access.
+  Remote access sessions _MUST_ use encrypted methods to protect unauthorized individuals from gaining access. 
 check: |
   /bin/launchctl print-disabled system | /usr/bin/grep -c '"com.openssh.sshd" => true'
 result:
