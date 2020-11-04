@@ -293,7 +293,7 @@ def main():
                 os.makedirs(build_path)
             except OSError:
                 print(f"Creation of the directory {build_path} failed")
-        baseline_output_file = open(f"{build_path}/{args.keyword}.yaml", 'w')
+        
 
     except IOError as msg:
         parser.error(str(msg))
@@ -315,6 +315,7 @@ def main():
         print("No rules found for the keyword provided, please verify from the following list:")
         available_tags(all_rules)
     else:
+        baseline_output_file = open(f"{build_path}/{args.keyword}.yaml", 'w')
         baseline_output_file.write(output_baseline(found_rules, version_yaml["os"], args.keyword))
     # finally revert back to the prior directory
     os.chdir(original_working_directory)
