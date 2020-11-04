@@ -205,7 +205,7 @@ profile:
       - audit_off_load_records
       - audit_enforce_dual_auth
       - audit_alert_processing_fail
-      - os_request_verification_name_resolution
+      - os_secure_name_resolution
       - os_reauth_devices_change_authenticators
       - os_notify_account_enable
       - os_provide_automated_account_management

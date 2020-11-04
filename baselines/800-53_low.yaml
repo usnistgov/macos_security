@@ -122,7 +122,7 @@ profile:
       - pwpolicy_force_change_password_change
   - section: "Permanent"
     rules:
-      - os_request_verification_name_resolution
+      - os_secure_name_resolution
       - os_protect_dos_attacks
       - pwpolicy_50_percent
   - section: "not_applicable"
