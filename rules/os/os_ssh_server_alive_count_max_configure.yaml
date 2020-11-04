@@ -15,7 +15,7 @@ fix: |
   ----
 references:
   cce:
-    - 
+    - CCE-84918-2
   cci: 
     - N/A
   800-53r4: 
