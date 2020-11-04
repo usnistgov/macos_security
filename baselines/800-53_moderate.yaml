@@ -159,7 +159,7 @@ profile:
       - pwpolicy_emergency_accounts_disable
   - section: "Permanent"
     rules:
-      - os_request_verification_name_resolution
+      - os_secure_name_resolution
       - os_notify_account_enable
       - os_provide_automated_account_management
       - os_notify_account_created
