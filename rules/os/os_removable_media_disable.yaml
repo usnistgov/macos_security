@@ -4,6 +4,7 @@ discussion: |
   External hard drives, such as USB, _MUST_ be disabled for users.
 
   Disabling removable storage devices reduces the risks and known vulnerabilities of such devices (e.g., malicious code insertion).
+  NOTE:Organizations may have a requirement to use external media, applying this rule will disable all removable media.
 check: |
   /usr/bin/profiles -P -o stdout | /usr/bin/grep 'harddisk-external' -A3 | /usr/bin/grep -Ec "eject|alert"
 result:

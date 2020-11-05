@@ -7,7 +7,8 @@ discussion: |
 
   Failure to restrict network connectivity to authorized systems permits inbound connections from malicious systems. It also permits outbound connections that may facilitate the exfiltration of data.
 
-  If you are using a third-party firewall solution, this setting does not apply. 
+  If you are using a third-party firewall solution, this setting does not apply.
+  IMPORTANT:Applying this rule may have undesirable and unknown effects on non network applications.
 check: |
   /sbin/pfctl -a '*' -sr &> /dev/null | /usr/bin/grep -c "block drop in all"
 result:
