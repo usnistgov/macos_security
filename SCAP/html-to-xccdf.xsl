@@ -1,156 +1,77 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xs="http://www.w3.org/2001/XMLSchema" exclude-result-prefixes="xs xccdf" version="3.0"
     xmlns:xccdf="http://checklists.nist.gov/xccdf/1.2" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:fn="local-function" xpath-default-namespace="">
-    <xd:doc xmlns:xd="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet">
-        <xd:desc>
-            <xd:p><xd:b>Created on:</xd:b> Jun 8, 2020</xd:p>
-            <xd:p><xd:b>Author:</xd:b> gapinski</xd:p>
-            <xd:p>See https://csrc.nist.gov/publications/detail/sp/800-126/rev-3/final 6.2.3§</xd:p>
-            <xd:p/>
-        </xd:desc>
-    </xd:doc>
+    <!-- CPE-related info -->
+    <xsl:param name="CPE-dictionary-URI" as="xs:string" required="false" select="'macos-cpe-dictionary.xml'"/>
+    <xsl:variable name="CPE-dictionary" as="document-node()" select="doc(resolve-uri($CPE-dictionary-URI))"/>
+    <xsl:param name="CPE-OVAL-URI" as="xs:string" required="false" select="'macos-cpe-oval.xml'"/>
+    <xsl:variable name="CPE-OVAL" as="document-node()" select="doc(resolve-uri($CPE-OVAL-URI))"/>
+    <xsl:variable name="os-version" as="xs:string" select="//span[@id = 'os']/@name"/>
+    <xsl:variable name="platform-CPE-name" as="xs:string">
+        <xsl:choose>
+            <xsl:when test="$os-version and $CPE-dictionary//*:cpe-item[matches(@name, concat($os-version, '$'))]">
+                <!-- namespace (there are two) wildcard required here -->
+                <xsl:value-of select="$CPE-dictionary//*:cpe-item[matches(@name, concat($os-version, '$'))]/*:cpe23-item/@name"/>
+            </xsl:when>
+            <xsl:otherwise>
+                <!-- use innocuous, promiscuous catch-all -->
+                <xsl:message terminate="yes">Cannot obtain valid platform specification from input</xsl:message>
+            </xsl:otherwise>
+        </xsl:choose>
+    </xsl:variable>
     <!-- "namespace" for identifiers -->
-    <xd:doc xmlns:xd="http://www.oxygenxml.com/ns/doc/xsl">
-        <xd:desc>
-            <xd:p>"namespace" for identifiers</xd:p>
-            <xd:p>See <xd:a href="https://csrc.nist.gov/publications/detail/nistir/7275/rev-4/final">NISTIR 7275r4 §6.2.3</xd:a> for an explanation of this value</xd:p>
-        </xd:desc>
-    </xd:doc>
     <xsl:param name="id-namespace" as="xs:string" required="no" select="'content.scap.example.com'" static="true"/>
-    <xd:doc xmlns:xd="http://www.oxygenxml.com/ns/doc/xsl">
-        <xd:desc>
-            <xd:p>"namespace" reversed</xd:p>
-            <xd:p>See <xd:a href="https://csrc.nist.gov/publications/detail/nistir/7275/rev-4/final">NISTIR 7275r4 §6.2.3</xd:a> for an explanation of this value</xd:p>
-        </xd:desc>
-    </xd:doc>
     <xsl:variable name="xccdf-namespace" as="xs:string" select="string-join(reverse(tokenize($id-namespace, '\.')), '.')"/>
-    <!-- (unique) suffix for <Benchmark> @id -->
-    <xd:doc xmlns:xd="http://www.oxygenxml.com/ns/doc/xsl">
-        <xd:desc>
-            <xd:p>Element Identifier suffix ("name")</xd:p>
-            <xd:p>See <xd:a href="https://csrc.nist.gov/publications/detail/nistir/7275/rev-4/final">NISTIR 7275r4 §6.2.3</xd:a> for an explanation of this value</xd:p>
-        </xd:desc>
-    </xd:doc>
-    <xsl:param name="benchmark-id-suffix" as="xs:string" required="true"/>
-    <xd:doc xmlns:xd="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet">
-        <xd:desc>
-            <xd:p><xd:b>Created on:</xd:b> Jun 8, 2020</xd:p>
-            <xd:p><xd:b>Author:</xd:b> gapinski</xd:p>
-            <xd:p/>
-        </xd:desc>
-    </xd:doc>
+    <!-- (cosmically unique) suffix for <Benchmark> @id -->
+    <xsl:param name="benchmark-id-suffix" as="xs:string" required="false" select="concat('macos_', $os-version)"/>
     <!-- target SCAP version -->
-    <xd:doc xmlns:xd="http://www.oxygenxml.com/ns/doc/xsl">
-        <xd:desc>
-            <xd:p>target SCAP version</xd:p>
-        </xd:desc>
-    </xd:doc>
     <xsl:param name="SCAP-version" as="xs:decimal" required="no" select="1.3"/>
     <!-- include CPE stuff -->
-    <xd:doc xmlns:xd="http://www.oxygenxml.com/ns/doc/xsl">
-        <xd:desc>
-            <xd:p>include CPE stuff</xd:p>
-        </xd:desc>
-    </xd:doc>
     <xsl:param name="include-CPE" as="xs:boolean" required="false" select="true()"/>
+    <!-- include OCIL stuff -->
+    <xsl:param name="include-OCIL" as="xs:boolean" required="false" select="false()"/>
     <!-- include "all-rule" profile -->
-    <xd:doc xmlns:xd="http://www.oxygenxml.com/ns/doc/xsl">
-        <xd:desc>
-            <xd:p>manufacture "all-rule" profile</xd:p>
-        </xd:desc>
-    </xd:doc>
     <xsl:param name="include-all-rule-profile" as="xs:boolean" required="false" select="false()"/>
     <!-- Gratuitous references to SCAP standards are not included by default -->
-    <xd:doc xmlns:xd="http://www.oxygenxml.com/ns/doc/xsl">
-        <xd:desc>
-            <xd:p>Gratuitous references to SCAP standards may be included</xd:p>
-        </xd:desc>
-    </xd:doc>
     <xsl:param name="include-scap-references" as="xs:boolean" required="no" select="false()"/>
     <!-- Indent output document -->
-    <xd:doc xmlns:xd="http://www.oxygenxml.com/ns/doc/xsl">
-        <xd:desc>
-            <xd:p>Indent output document</xd:p>
-        </xd:desc>
-    </xd:doc>
     <xsl:param name="indent-output" as="xs:boolean" required="no" select="false()" static="true"/>
-    <xd:doc xmlns:xd="http://www.oxygenxml.com/ns/doc/xsl">
-        <xd:desc>
-            <xd:p>Origin of related OVAL definitions</xd:p>
-        </xd:desc>
-    </xd:doc>
+    <!-- related OVAL -->
     <xsl:param name="OVAL-URI" as="xs:string" required="true"/>
     <xsl:variable name="OVAL-document" as="document-node()" select="doc(resolve-uri($OVAL-URI))"/>
-    <xd:doc xmlns:xd="http://www.oxygenxml.com/ns/doc/xsl">
-        <xd:desc>
-            <xd:p>UTC offset</xd:p>
-        </xd:desc>
-    </xd:doc>
+    <!-- timestamps relative to UTC (since not everyone is in $TZ) -->
     <xsl:variable name="UTC" as="xs:duration" select="xs:dayTimeDuration('PT0H')"/>
-    <xd:doc xmlns:xd="http://www.oxygenxml.com/ns/doc/xsl">
-        <xd:desc>
-            <xd:p>UTC date</xd:p>
-        </xd:desc>
-    </xd:doc>
     <xsl:variable name="UTC-date" select="adjust-date-to-timezone(current-date(), $UTC)"/>
-    <xd:doc xmlns:xd="http://www.oxygenxml.com/ns/doc/xsl">
-        <xd:desc>
-            <xd:p>UTC dateTime</xd:p>
-        </xd:desc>
-    </xd:doc>
     <xsl:variable name="UTC-datetime" select="adjust-dateTime-to-timezone(current-dateTime(), $UTC)"/>
-    <xd:doc xmlns:xd="http://www.oxygenxml.com/ns/doc/xsl">
-        <xd:desc>
-            <xd:p>Strip numeric prefix from titles</xd:p>
-        </xd:desc>
-        <xd:param name="title"/>
-        <xd:return/>
-    </xd:doc>
+    <!-- styrip numeric from titles -->
     <xsl:function name="fn:retitle" as="xs:string">
         <xsl:param name="title" as="xs:string"/>
         <xsl:value-of select="replace($title, '^\s*[0123456789.]+\s+', '')"/>
     </xsl:function>
-    <xd:doc xmlns:xd="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet">
-        <xd:desc>
-            <xd:p><xd:b>Created on:</xd:b> Jun 8, 2020</xd:p>
-            <xd:p><xd:b>Author:</xd:b> gapinski</xd:p>
-            <xd:p>Transform HTML-ized benchmark to XCCDF</xd:p>
-        </xd:desc>
-    </xd:doc>
+    <!-- strip space -->
     <xsl:strip-space elements="*"/>
+    <!-- except for pre -->
     <xsl:preserve-space elements="pre"/>
-    <xd:doc xmlns:xd="http://www.oxygenxml.com/ns/doc/xsl">
-        <xd:desc>
-            <xd:p/>
-        </xd:desc>
-    </xd:doc>
+    <!-- output is XML -->
     <xsl:output method="xml"/>
-    <xd:doc xmlns:xd="http://www.oxygenxml.com/ns/doc/xsl">
-        <xd:desc>
-            <xd:p>New line character</xd:p>
-        </xd:desc>
-    </xd:doc>
+    <!-- define line feed for brevity and clarity -->
     <xsl:variable name="LF" as="xs:string" select="'&#x0a;'"/>
-    <xd:doc xmlns:xd="http://www.oxygenxml.com/ns/doc/xsl">
-        <xd:desc>
-            <xd:p>Default output mode</xd:p>
-        </xd:desc>
-    </xd:doc>
+    <!-- optionally indent output for those needing indentation -->
     <xsl:output use-when="$indent-output" indent="true"/>
-    <xd:doc xmlns:xd="http://www.oxygenxml.com/ns/doc/xsl">
-        <xd:desc>
-            <xd:p>Create the XCCDF document</xd:p>
-        </xd:desc>
-    </xd:doc>
+    <!-- create the documents -->
     <xsl:template match="/">
-        <!--<xsl:message expand-text="true">OVAL input: {resolve-uri($OVAL-URI)}</xsl:message>-->
-        <!--<xsl:message expand-text="true">OVAL output: {resolve-uri('oval.xml', current-output-uri())}</xsl:message>-->
+        <!-- duplicate the CPE dictionary as a sibling of the generated XCCDF document -->
+        <xsl:result-document href="{resolve-uri($CPE-dictionary-URI, current-output-uri())}">
+            <xsl:copy-of select="$CPE-dictionary"/>
+        </xsl:result-document>
+        <!-- duplicate the CPE OVAL as a sibling of the generated XCCDF document -->
+        <xsl:result-document href="{resolve-uri($CPE-OVAL-URI, current-output-uri())}">
+            <xsl:copy-of select="$CPE-OVAL"/>
+        </xsl:result-document>
+        <!-- duplicate the OVAL as a sibling of the generated XCCDF document-->
         <xsl:result-document href="{resolve-uri('oval.xml', current-output-uri())}">
             <xsl:copy-of select="$OVAL-document"/>
         </xsl:result-document>
-        <!--<xsl:message expand-text="true">OVAL URI: {$OVAL-URI}</xsl:message>-->
-        <!--<xsl:message expand-text="true" xpath-default-namespace="http://oval.mitre.org/XMLSchema/oval-definitions-5">{$OVAL-URI} contains {count($OVAL-document//definition)} definitions</xsl:message>-->
-        <!--<xsl:message expand-text="true" xpath-default-namespace="http://oval.mitre.org/XMLSchema/oval-definitions-5">{$OVAL-URI} contains {count($OVAL-document//node())} nodes</xsl:message>-->
         <xsl:copy-of select="$LF"/>
         <xsl:copy-of select="$LF"/>
         <xsl:comment expand-text="true"> This is an SCAP {$SCAP-version} XCCDF document </xsl:comment>
@@ -294,22 +215,17 @@
             <xsl:if test="$include-CPE">
                 <xsl:element name="reference" namespace="http://checklists.nist.gov/xccdf/1.2">
                     <xsl:attribute name="href">macos-cpe-dictionary.xml</xsl:attribute>
-                    <xsl:text>platform-cpe-dictionary</xsl:text>
+                    <xsl:text>cpe-dictionary</xsl:text>
                 </xsl:element>
                 <xsl:element name="reference" namespace="http://checklists.nist.gov/xccdf/1.2">
                     <xsl:attribute name="href">macos-cpe-oval.xml</xsl:attribute>
-                    <xsl:text>platform-cpe-oval</xsl:text>
+                    <xsl:text>cpe-oval</xsl:text>
                 </xsl:element>
                 <!-- See NIST IR7215 §6.2.5 ¶3-->
                 <xsl:element name="platform" namespace="http://checklists.nist.gov/xccdf/1.2">
-                    <xsl:attribute name="idref">
-                        <xsl:text>cpe:2.3:o:apple:mac_os_x:10.15:*:*:*:*:*:*:*</xsl:text>
-                    </xsl:attribute>
+                    <xsl:attribute name="idref" select="$platform-CPE-name"/>
                 </xsl:element>
             </xsl:if>
-            <!--<xsl:element name="platform" namespace="http://checklists.nist.gov/xccdf/1.2">
-                <xsl:attribute name="idref"><xsl:text>cpe:/o:apple:mac_os_x:10.15</xsl:text></xsl:attribute>
-            </xsl:element>-->
             <xsl:analyze-string select="normalize-space(//div[@class = 'docver'])" regex="^(.+)\s\(([0-9-]+)\)$">
                 <xsl:matching-substring>
                     <!--<xsl:for-each select="(1, 2, 3)">
@@ -516,12 +432,14 @@
                             <xsl:choose>
                                 <xsl:when test="count($OVAL-definition) = 0">
                                     <xsl:comment> (no OVAL check(s) </xsl:comment>
-                                    <xsl:element name="check" namespace="http://checklists.nist.gov/xccdf/1.2">
-                                        <xsl:attribute name="system" select="'http://scap.nist.gov/schema/ocil/2'"/>
-                                        <xsl:element name="check-content-ref" namespace="http://checklists.nist.gov/xccdf/1.2">
-                                            <xsl:attribute name="href" select="$ocil"/>
+                                    <xsl:if test="$include-OCIL">
+                                        <xsl:element name="check" namespace="http://checklists.nist.gov/xccdf/1.2">
+                                            <xsl:attribute name="system" select="'http://scap.nist.gov/schema/ocil/2'"/>
+                                            <xsl:element name="check-content-ref" namespace="http://checklists.nist.gov/xccdf/1.2">
+                                                <xsl:attribute name="href" select="$ocil"/>
+                                            </xsl:element>
                                         </xsl:element>
-                                    </xsl:element>
+                                    </xsl:if>
                                 </xsl:when>
                                 <xsl:when test="count($OVAL-definition) = 1">
                                     <xsl:element name="check" namespace="http://checklists.nist.gov/xccdf/1.2">
@@ -553,13 +471,7 @@
             </xsl:for-each>
         </xsl:element>
     </xsl:template>
-    <xd:doc xmlns:xd="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet">
-        <xd:desc>
-            <xd:p><xd:b>Created on:</xd:b> Jun 8, 2020</xd:p>
-            <xd:p><xd:b>Author:</xd:b> gapinski</xd:p>
-            <xd:p>Transform non-namespaced HTML to namespaced HTML</xd:p>
-        </xd:desc>
-    </xd:doc>
+    <!-- Transform non-namespaced HTML to namespaced HTML -->
     <xsl:template mode="html" match="element()">
         <xsl:choose>
             <xsl:when test="name() = 'div' and matches(@class, 'exampleblock')"/>
@@ -587,13 +499,7 @@
             </xsl:otherwise>
         </xsl:choose>
     </xsl:template>
-    <xd:doc xmlns:xd="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet">
-        <xd:desc>
-            <xd:p><xd:b>Created on:</xd:b> Jun 8, 2020</xd:p>
-            <xd:p><xd:b>Author:</xd:b> gapinski</xd:p>
-            <xd:p>Transform non-namespaced HTML to namespaced HTML</xd:p>
-        </xd:desc>
-    </xd:doc>
+    <!-- Transform non-namespaced HTML to namespaced HTML -->
     <xsl:template mode="warning" match="element()">
         <xsl:choose>
             <xsl:when test="name() = 'div' and matches(@class, 'admonitionblock')">
@@ -623,13 +529,7 @@
             </xsl:otherwise>
         </xsl:choose>
     </xsl:template>
-    <xd:doc xmlns:xd="http://www.oxygenxml.com/ns/doc/xsl" scope="stylesheet">
-        <xd:desc>
-            <xd:p><xd:b>Created on:</xd:b> Jun 8, 2020</xd:p>
-            <xd:p><xd:b>Author:</xd:b> gapinski</xd:p>
-            <xd:p>Transform non-namespaced HTML to namespaced HTML</xd:p>
-        </xd:desc>
-    </xd:doc>
+    <!-- Transform non-namespaced HTML to namespaced HTML -->
     <xsl:template mode="fixtext" match="element()">
         <xsl:choose>
             <xsl:when test="name() = 'div' and matches(@class, 'exampleblock')">

@@ -46,14 +46,12 @@
     <!-- time stamp -->
     <xsl:variable name="Z" as="xs:duration" select="xs:dayTimeDuration('PT0H')"/>
     <xsl:variable name="T" select="adjust-dateTime-to-timezone(current-dateTime(), $Z)"/>
-    <!-- NIST has the obdurate idea that all sorts of IDs should be "globally unique"¹ — via fiat rather than technical means -->
-    <!-- This will guarantee that — generate a UUID! -->
-    <!--<xsl:variable name="dsc-unique-suffix" select="uuid:randomUUID()"/>-->
-    <xsl:param name="datastream-id-suffix" as="xs:string" required="true"/>
-    <!-- ¹ But only if one does not copy a document output and modify the copy -->
     <xsl:variable name="XCCDF" as="document-node()" select="/"/>
+    <xsl:variable name="datastream-id-suffix" as="xs:string" xpath-default-namespace="http://checklists.nist.gov/xccdf/1.2" select="substring-after($XCCDF/Benchmark/@id, '_benchmark_')"/>
     <xsl:variable name="LF" as="xs:string" select="'&#x0a;'"/>
     <xsl:template match="/">
+        <xsl:message expand-text="true">id: {$datastream-id-suffix}</xsl:message>
+        
         <xsl:copy-of select="$LF"/>
         <xsl:copy-of select="$LF"/>
         <xsl:comment expand-text="true"> This is an SCAP {$SCAP-version} datastream collection document </xsl:comment>
@@ -131,10 +129,10 @@
                         An XML Catalog is needed to equate (XCCDF-relative) relative references with <component-refs>
                         (The <component-refs> in turn reference <components>)
                     -->
-                    <xsl:if test="//reference[. = 'platform-cpe-dictionary'][@href]" xpath-default-namespace="http://checklists.nist.gov/xccdf/1.2">
+                    <xsl:if test="//reference[. = 'cpe-dictionary'][@href]" xpath-default-namespace="http://checklists.nist.gov/xccdf/1.2">
                         <xsl:element name="dictionaries" namespace="http://scap.nist.gov/schema/scap/source/1.2">
                             <!-- create a reference for each CPE reference -->
-                            <xsl:for-each select="//reference[. = 'platform-cpe-dictionary'][@href]" xpath-default-namespace="http://checklists.nist.gov/xccdf/1.2">
+                            <xsl:for-each select="//reference[. = 'cpe-dictionary'][@href]" xpath-default-namespace="http://checklists.nist.gov/xccdf/1.2">
                                 <xsl:element name="component-ref" namespace="http://scap.nist.gov/schema/scap/source/1.2">
                                     <!-- the @id is arbitrary -->
                                     <xsl:attribute name="id" expand-text="true">scap_{$dsc-namespace}_cref_{$datastream-id-suffix}_{@href}</xsl:attribute>
@@ -263,7 +261,7 @@
                     <!-- include CPE-related checks -->
                     <xsl:if test="$include-CPE">
                         <!-- define all check components referenced from CPE -->
-                        <xsl:for-each select="//reference[. = 'platform-cpe-dictionary'][@href]" xpath-default-namespace="http://checklists.nist.gov/xccdf/1.2">
+                        <xsl:for-each select="//reference[. = 'cpe-dictionary'][@href]" xpath-default-namespace="http://checklists.nist.gov/xccdf/1.2">
                             <xsl:for-each select="distinct-values(doc(@href)//check/@href)" xpath-default-namespace="http://cpe.mitre.org/dictionary/2.0">
                                 <xsl:element name="component-ref" namespace="http://scap.nist.gov/schema/scap/source/1.2">
                                     <xsl:attribute name="id" select="concat('scap_', $dsc-namespace, '_cref_', $datastream-id-suffix, '_', .)"/>
@@ -315,7 +313,7 @@
             </xsl:for-each>
             <xsl:if test="$include-CPE">
                 <!-- include all CPE components -->
-                <xsl:for-each select="//reference[. = 'platform-cpe-dictionary'][@href]" xpath-default-namespace="http://checklists.nist.gov/xccdf/1.2">
+                <xsl:for-each select="//reference[. = 'cpe-dictionary'][@href]" xpath-default-namespace="http://checklists.nist.gov/xccdf/1.2">
                     <xsl:element name="component" namespace="http://scap.nist.gov/schema/scap/source/1.2">
                         <xsl:attribute name="id" select="concat('scap_', $dsc-namespace, '_comp_', $datastream-id-suffix, '_', @href)"/>
                         <xsl:attribute name="timestamp" select="$T"/>
