@@ -1,7 +1,7 @@
 id: os_camera_disable
 title: "Disable Camera"
 discussion: |
-  MacOS _MUST_ be configured to disable the camera.
+  macOS _MUST_ be configured to disable the camera.
 check: |
   /usr/bin/profiles -P -o stdout | /usr/bin/grep -c 'allowCamera = 0'
 result:

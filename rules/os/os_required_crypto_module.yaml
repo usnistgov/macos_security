@@ -3,9 +3,9 @@ title: "Ensure all Federal Laws, Executive Orders, Directives, Policies, Regulat
 discussion: |
   The inherent configuration of the macOS _IS_ in compliance by implementing mechanisms for authentication to a cryptographic module that meet the requirements of all applicable federal laws, Executive Orders, directives, policies, regulations, standards, and guidance for such authentication
   
-  MacOS contains many open source projects that may use their own cryptographic libraries typically for the purposes of maintaining platform independence. These services are not covered by the Apple FIPS Validation of the CoreCrypto and CoreCrypto Kernel modules.
+  macOS contains many open source projects that may use their own cryptographic libraries typically for the purposes of maintaining platform independence. These services are not covered by the Apple FIPS Validation of the CoreCrypto and CoreCrypto Kernel modules.
 
-  MacOS Big Sur is in process of testing from an accredited laboratory to submit the National Institute of Standards and Technology (NIST) for FIPS validation.
+  macOS Big Sur is in process of testing from an accredited laboratory to submit the National Institute of Standards and Technology (NIST) for FIPS validation.
 
   link:https://csrc.nist.gov/Projects/cryptographic-module-validation-program/modules-in-process/IUT-List[]
   
