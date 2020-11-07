@@ -1,6 +1,6 @@
-XSLT		= java -jar ~/saxon/saxon-he-10.1.jar
-TIDY		= /usr/bin/tidy
-VAL		= java -Djava.protocol.handler.pkgs=sun.net.www.protocol -jar ~/Projects/scapval/scapval-1.3.5.jar
+XSLT		= /usr/local/bin/saxon
+TIDY		= /usr/local/bin/tidy
+VAL		= java -Djava.protocol.handler.pkgs=sun.net.www.protocol -jar /opt/scapval/scapval-1.3.5.jar
 
 DIR		= ../build/All_rules
 

@@ -27,6 +27,11 @@ The [HE](https://www.saxonica.com/products/PD10/HE.pdf) variant, which is open s
 under "Tools".
 Version 1.3.5 or later is required.
 
+### Makefile changes
+
+The Makefile has several variables defined for the components and these variable values will likely require
+alteration appropriate for the system on which the build takes place.
+
 ## SCAP References
 
 [Security Content Automation Protocol (SCAP) 1.3](https://csrc.nist.gov/projects/security-content-automation-protocol/scap-releases/scap-1-3 "SCAP 1.3")
@@ -36,10 +41,10 @@ That page has links to most of the SCAP-related normative documents.
 An SCAP data stream (typically) consists of several XML documents knit together in a containing XML document.
 The component documents are
 - An XCCDF document
-- An OVAL document referenced by the XCCDF document
-- An OCIL document referenced by the XCCDF document
+- Any OVAL documents referenced by the XCCDF document
+- Any OCIL documents referenced by the XCCDF document
 - A CPE dictionary document referenced by the XCCDF document
-- An OVAL document referenced by the CPE dictionary document
+- Any OVAL documents referenced by the CPE dictionary document
 
 [National Checklist Program for IT Products: Guidelines for Checklist Users and Developers](https://csrc.nist.gov/publications/detail/sp/800-70/rev-4/final "National Checklist Program (NCP)")
 
