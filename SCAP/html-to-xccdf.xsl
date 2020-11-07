@@ -6,16 +6,24 @@
     <xsl:variable name="CPE-dictionary" as="document-node()" select="doc(resolve-uri($CPE-dictionary-URI))"/>
     <xsl:param name="CPE-OVAL-URI" as="xs:string" required="false" select="'macos-cpe-oval.xml'"/>
     <xsl:variable name="CPE-OVAL" as="document-node()" select="doc(resolve-uri($CPE-OVAL-URI))"/>
-    <xsl:variable name="os-version" as="xs:string" select="//span[@id = 'os']/@name"/>
+    <xsl:variable name="os-version" as="xs:string">
+        <xsl:choose>
+            <xsl:when test="//span[@id = 'os']/@name">
+                <xsl:value-of select="//span[@id = 'os']/@name"/>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:message terminate="yes" expand-text="true">&#x0a;❗ Cannot obtain valid platform specification from input (missing input element span containing mame)&#x0a;</xsl:message>
+            </xsl:otherwise>
+        </xsl:choose>
+    </xsl:variable>
     <xsl:variable name="platform-CPE-name" as="xs:string">
         <xsl:choose>
-            <xsl:when test="$os-version and $CPE-dictionary//*:cpe-item[matches(@name, concat($os-version, '$'))]">
-                <!-- namespace (there are two) wildcard required here -->
+            <xsl:when test="$CPE-dictionary//*:cpe-item[matches(@name, concat($os-version, '$'))]">
+                <!-- note namespace (there are two) wildcard required here to avoid declaring in transform -->
                 <xsl:value-of select="$CPE-dictionary//*:cpe-item[matches(@name, concat($os-version, '$'))]/*:cpe23-item/@name"/>
             </xsl:when>
             <xsl:otherwise>
-                <!-- use innocuous, promiscuous catch-all -->
-                <xsl:message terminate="yes">Cannot obtain valid platform specification from input</xsl:message>
+                <xsl:message terminate="yes" expand-text="true">&#x0a;❗ Cannot obtain valid platform specification from input using the value «{$os-version}»&#x0a;</xsl:message>
             </xsl:otherwise>
         </xsl:choose>
     </xsl:variable>
@@ -60,6 +68,8 @@
     <xsl:output use-when="$indent-output" indent="true"/>
     <!-- create the documents -->
     <xsl:template match="/">
+        <xsl:message expand-text="true">benchmark-id-suffix: {$benchmark-id-suffix}</xsl:message>
+        <xsl:message expand-text="true">platform-CPE-name: {$platform-CPE-name}</xsl:message>
         <!-- duplicate the CPE dictionary as a sibling of the generated XCCDF document -->
         <xsl:result-document href="{resolve-uri($CPE-dictionary-URI, current-output-uri())}">
             <xsl:copy-of select="$CPE-dictionary"/>
@@ -214,11 +224,11 @@
             </xsl:choose>
             <xsl:if test="$include-CPE">
                 <xsl:element name="reference" namespace="http://checklists.nist.gov/xccdf/1.2">
-                    <xsl:attribute name="href">macos-cpe-dictionary.xml</xsl:attribute>
+                    <xsl:attribute name="href" select="$CPE-dictionary-URI"/>
                     <xsl:text>cpe-dictionary</xsl:text>
                 </xsl:element>
                 <xsl:element name="reference" namespace="http://checklists.nist.gov/xccdf/1.2">
-                    <xsl:attribute name="href">macos-cpe-oval.xml</xsl:attribute>
+                    <xsl:attribute name="href" select="$CPE-OVAL-URI"/>
                     <xsl:text>cpe-oval</xsl:text>
                 </xsl:element>
                 <!-- See NIST IR7215 §6.2.5 ¶3-->

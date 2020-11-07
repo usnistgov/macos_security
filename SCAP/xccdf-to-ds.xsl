@@ -50,8 +50,7 @@
     <xsl:variable name="datastream-id-suffix" as="xs:string" xpath-default-namespace="http://checklists.nist.gov/xccdf/1.2" select="substring-after($XCCDF/Benchmark/@id, '_benchmark_')"/>
     <xsl:variable name="LF" as="xs:string" select="'&#x0a;'"/>
     <xsl:template match="/">
-        <xsl:message expand-text="true">id: {$datastream-id-suffix}</xsl:message>
-        
+        <xsl:message expand-text="true">datastream-id-suffix: {$datastream-id-suffix}</xsl:message>
         <xsl:copy-of select="$LF"/>
         <xsl:copy-of select="$LF"/>
         <xsl:comment expand-text="true"> This is an SCAP {$SCAP-version} datastream collection document </xsl:comment>
