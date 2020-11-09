@@ -5,7 +5,7 @@ discussion: |
 
   [IMPORTANT]
   ====
-  Information System Security Officers (ISSOs) may make the risk-based decision not to disable Bluetooth, so as to maintain necessary functionality capabilities, but they are advised to first fully weigh the potential risks posed to their organization. 
+  Information System Security Officers (ISSOs) may make the risk-based decision not to disable Bluetooth, so as to maintain necessary functionality, but they are advised to first fully weigh the potential risks posed to their organization. 
   ====
 check: |
   /usr/bin/profiles -P -o stdout | /usr/bin/grep -c 'DisableBluetooth = 1'
