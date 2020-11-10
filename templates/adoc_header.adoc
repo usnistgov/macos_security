@@ -30,7 +30,6 @@ ifdef::backend-html5[]
 :document-title: $html_title
 :document-subtitle: $html_subtitle
 :version: $version ($release_date)
-:os: $os_version
 $tag_attribute
 
 [cols="55s"]
@@ -40,7 +39,7 @@ $tag_attribute
 
 [cols="^.^1s",width="100%"]
 |======
-|+++ <span id="os" name="+++{os}+++"></span><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+|+++<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <div class="doctitle">+++{document-title}+++</div><div class="docsub">+++{document-subtitle}+++</div><div class="docver">+++{version}+++</div><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <br><br><br><br><br><br><br><br><br><br><br><br>+++
 |======

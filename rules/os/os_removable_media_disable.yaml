@@ -1,14 +1,9 @@
 id: os_removable_media_disable
 title: "Disable Removable Storage Devices"
 discussion: |
-  Removable media, such as USB connected external hard drives, thumb drives, and optical media, _MUST_ be disabled for users.
-  
-  Disabling removable storage devices reduces the risks and known vulnerabilities of such devices (e.g., malicious code insertion)
-  
-  [IMPORTANT]
-  ====
-  Some organizations rely on the use of removable media for storing and sharing data. Information System Security Officers (ISSOs) may make the risk-based decision not to disable external hard drives to avoid losing this functionality, but they are advised to first fully weigh the potential risks posed to their organization.
-  ====
+  External hard drives, such as USB, _MUST_ be disabled for users.
+
+  Disabling removable storage devices reduces the risks and known vulnerabilities of such devices (e.g., malicious code insertion).
 check: |
   /usr/bin/profiles -P -o stdout | /usr/bin/grep 'harddisk-external' -A3 | /usr/bin/grep -Ec "eject|alert"
 result:

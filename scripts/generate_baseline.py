@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
-# filename: generate_baseline.py
-# description: Process a given keyword, and output a baseline file
+# filename: generate_guidance.py
+# description: Process a given baseline, and output guidance files
 
 import os.path
 import glob
@@ -120,7 +120,7 @@ def collect_rules():
     return all_rules
 
 def create_args():
-    """configure the arguments used in the script, returns the parsed arguments
+    """configure the arguments used in the script, returns the parsed arguements
     """
     parser = argparse.ArgumentParser(
         description='Given a keyword tag, generate a generic baseline.yaml file containing rules with the tag.')
@@ -181,7 +181,7 @@ def available_tags(all_rules):
         print(tag)
     return
 
-def output_baseline(rules, os, keyword):
+def output_baseline(rules, keyword):
     inherent_rules = []
     permanent_rules = []
     na_rules = []
@@ -205,8 +205,8 @@ def output_baseline(rules, os, keyword):
             if section_name not in sections:
                 sections.append(section_name)
 
-    output_text = f'title: "macOS {os}: Security Configuration - {keyword}"\n'
-    output_text += f'description: |\n  This guide describes the actions to take when securing a macOS {os} system against the {keyword} baseline.\n'
+    output_text = f'title: "macOS 10.15: Security Configuration - {keyword}"\n'
+    output_text += f'description: |\n  This guide describes the actions to take when securing a macOS 10.15 system against the {keyword} baseline.\n'
     output_text += 'profile:\n'
 
     if len(other_rules) > 0:
@@ -257,10 +257,9 @@ def main():
         # stash current working directory
         original_working_directory = os.getcwd()
 
+        all_rules = collect_rules()
         # switch to the scripts directory
         os.chdir(file_dir)
-    
-        all_rules = collect_rules()
 
         if args.list_tags:
             available_tags(all_rules)
@@ -293,15 +292,11 @@ def main():
                 os.makedirs(build_path)
             except OSError:
                 print(f"Creation of the directory {build_path} failed")
-        
+        baseline_output_file = open(f"{build_path}/{args.keyword}.yaml", 'w')
 
     except IOError as msg:
         parser.error(str(msg))
-
-    version_file = os.path.join(parent_dir, "VERSION.yaml")
-    with open(version_file) as r:
-        version_yaml = yaml.load(r, Loader=yaml.SafeLoader)   
-
+    
     found_rules = []
     for rule in all_rules:
         if args.keyword in rule.rule_tags or args.keyword == "all":
@@ -315,8 +310,7 @@ def main():
         print("No rules found for the keyword provided, please verify from the following list:")
         available_tags(all_rules)
     else:
-        baseline_output_file = open(f"{build_path}/{args.keyword}.yaml", 'w')
-        baseline_output_file.write(output_baseline(found_rules, version_yaml["os"], args.keyword))
+        baseline_output_file.write(output_baseline(found_rules, args.keyword))
     # finally revert back to the prior directory
     os.chdir(original_working_directory)
 

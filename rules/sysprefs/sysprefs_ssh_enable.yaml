@@ -1,6 +1,8 @@
 id: sysprefs_ssh_enable
 title: "Enable SSH for Remote Access Sessions"
 discussion: |
+  SSH service _MUST_ be enabled for remote access.
+  
   Remote access sessions _MUST_ use encrypted methods to protect unauthorized individuals from gaining access. 
 check: |
   /bin/launchctl print-disabled system | /usr/bin/grep -c '"com.openssh.sshd" => false'
@@ -62,6 +64,10 @@ references:
 macOS:
   - "10.15"
 tags:
+  - 800-171
+  - cnssi-1253
+  - 800-53r4_moderate
+  - 800-53r4_high
   - STIG
 mobileconfig: false
 mobileconfig_info:

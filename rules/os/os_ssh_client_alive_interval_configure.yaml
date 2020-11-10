@@ -1,7 +1,7 @@
-id: os_sshd_client_alive_interval_configure
-title: "Configure SSHD ClientAliveInterval option set to 900 or less"
+id: os_ssh_client_alive_interval_configure
+title: "Configure SSH ClientAliveInterval option set to 900 or less"
 discussion: |
-  If SSHD is enabled then it _MUST_ be configured with an Active Client Alive Maximum Count set to 900 or less. 
+  SSH _MUST_ be configured with an Active Client Alive Maximum Count set to 900 or less. 
   
   Setting the Active Client Alive Maximum Count to 900 (second) will log users out after a 15-minute interval of inactivity.
 
@@ -31,6 +31,10 @@ references:
 macOS:
   - "10.15"
 tags:
+  - 800-171
+  - cnssi-1253
+  - 800-53r4_moderate
+  - 800-53r4_high
   - STIG
 mobileconfig: false
 mobileconfig_info:

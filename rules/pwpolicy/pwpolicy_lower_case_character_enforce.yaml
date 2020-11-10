@@ -11,7 +11,7 @@ result:
 fix: |
   This setting may be enforced using local policy or by a directory service.
   
-  To set local policy to require at least 1 lowercase letter, edit the current password policy to contain the following <dict> within the "policyCategoryPasswordContent":
+  To set local policy to require at least 1 lowercase letter, edit the current password policy to contiain the following <dict> within the "policyCategoryPasswordContent":
   
   [source,xml]
   ----
@@ -31,7 +31,7 @@ fix: |
   
   [source,bash]
   ----
-  /usr/bin/pwpolicy setaccountpolicies $pwpolicy_file
+  /usr/bin/pwpolicy setaccountpolicies /path/to/file
   ----
   NOTE: See the password policy supplemental on more information on how to implement password policies on macOS.
 references:

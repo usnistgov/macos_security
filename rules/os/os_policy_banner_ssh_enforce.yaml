@@ -1,7 +1,7 @@
 id: os_policy_banner_ssh_enforce
 title: "Enforce SSH to Display Policy Banner"
 discussion: |
-  If the SSH server is enabled then it _MUST_ be configured to display a policy banner. 
+  SSH _MUST_ be configured to display a policy banner. 
 
   Displaying a standardized and approved use notification before granting access to the operating system ensures that users are provided with privacy and security notification verbiage that is consistent with applicable federal laws, Executive Orders, directives, policies, regulations, standards, and guidance.
 
@@ -34,7 +34,13 @@ references:
     - 3.1.9
 macOS:
   - "10.15"
+  - "10.14"
 tags:
+  - 800-171
+  - cnssi-1253
+  - 800-53r4_low
+  - 800-53r4_moderate
+  - 800-53r4_high
   - STIG
 mobileconfig: false
 mobileconfig_info:
