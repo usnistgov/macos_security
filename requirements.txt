@@ -1,3 +1,3 @@
 pyyaml==5.3.1
 lxml
-xlwt
+xlwt==1.3.0
