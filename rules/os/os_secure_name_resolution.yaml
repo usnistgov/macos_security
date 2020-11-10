@@ -1,11 +1,11 @@
-id: os_request_verification_name_resolution
+id: os_secure_name_resolution
 title: "Must request data origin authentication verification on the name/address resolution responses the system receives from authoritative sources"
 discussion: |
   The information system requests and performs data origin authentication and data integrity verification on the name/address resolution responses the system receives from authoritative sources.
 check: |
-  This requirement is NA for this technology.
+  The information system requests and performs data origin authentication and data integrity verification on the name/address resolution responses the system receives from authoritative sources.
 fix: |
-  The requirement is NA. No fix is required.
+  This requirement is a permanent finding and cannot be fixed. An appropriate mitigation for the system must be implemented, but this finding cannot be considered fixed.
 references:
   cce:
     - CCE-84745-9

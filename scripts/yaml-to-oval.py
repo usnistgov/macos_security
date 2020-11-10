@@ -8,12 +8,14 @@ import glob
 import re
 import warnings
 from pathlib import Path
+from datetime import datetime
 
 warnings.filterwarnings("ignore", category=DeprecationWarning) 
 
 
 def main():
-
+    now = datetime.now()
+    date_time_string = now.strftime("%Y-%m-%dT%H:%M:%S")
     output = ""
     parser = argparse.ArgumentParser(description='Given a profile, create oval checks.')
     parser.add_argument("baseline", default=None, help="Baseline YAML file used to create the oval.", type=argparse.FileType('rt'))
@@ -62,11 +64,11 @@ def main():
  xmlns:unix-def="http://oval.mitre.org/XMLSchema/oval-definitions-5#unix"> 
         <generator>
             <oval:schema_version>5.11.2</oval:schema_version>
-             <oval:timestamp>2020-05-01T17:05:02-05:00</oval:timestamp>
-             <terms_of_use>Copyright (c) 2020, Bob.</terms_of_use>
+             <oval:timestamp>{}</oval:timestamp>
+             <terms_of_use>Copyright (c) 2020, NIST.</terms_of_use>
              <oval:product_name>macOS Security Compliance Project</oval:product_name>
         </generator>
-    '''
+    '''.format(date_time_string)
     oval_definition = ""
     oval_test = ""
     oval_object = ""

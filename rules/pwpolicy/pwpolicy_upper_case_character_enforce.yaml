@@ -11,7 +11,7 @@ result:
 fix: |
   This setting may be enforced using local policy or by a directory service.
   
-  To set local policy to require at least 1 lowercase letter, edit the current password policy to contiain the following <dict> within the "policyCategoryPasswordContent":
+  To set local policy to require at least 1 lowercase letter, edit the current password policy to contain the following <dict> within the "policyCategoryPasswordContent":
   
   [source,xml]
   ----
