@@ -2,7 +2,7 @@
 
 This document provides a high-level view of the changes to the macOS Security Compliance Project.
 
-== [Big Sur, Revision 1] - 
+== [Big Sur, Revision 1] - 2020-11-10
 
 * Rules
 ** Added Rules
@@ -27,3 +27,6 @@ This document provides a high-level view of the changes to the macOS Security Co
 *** Added $pwpolicy_file variable
 ** yaml-to-oval
 *** Bug Fixes
+
+* Miscellaneous
+** Added SCAP generation scripts
