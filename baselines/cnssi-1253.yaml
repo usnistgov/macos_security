@@ -1,6 +1,6 @@
-title: "macOS 10.15: Security Configuration - cnssi-1253"
+title: "macOS 10.15: Security Configuration - CNSSI-1253"
 description: |
-  This guide describes the actions to take when securing a macOS 10.15 system against the cnssi-1253 baseline.
+  This guide describes the actions to take when securing a macOS 10.15 system against the CNSSI-1253 baseline.
 profile:
   - section: "authentication"
     rules:
@@ -152,8 +152,8 @@ profile:
       - os_required_crypto_module
       - os_store_encrypted_passwords
       - os_prevent_unauthorized_disclosure
-      - pwpolicy_force_password_change
       - pwpolicy_temporary_accounts_disable
+      - pwpolicy_force_password_change
       - pwpolicy_emergency_accounts_disable
   - section: "Permanent"
     rules:

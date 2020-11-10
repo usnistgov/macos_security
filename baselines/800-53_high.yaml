@@ -1,6 +1,6 @@
-title: "macOS 10.15: Security Configuration - 800-53r4_high"
+title: "macOS 10.15: Security Configuration - 800-53 High"
 description: |
-  This guide describes the actions to take when securing a macOS 10.15 system against the 800-53r4_high baseline.
+  This guide describes the actions to take when securing a macOS 10.15 system against the NIST SP 800-53 HIGH baseline.  
 profile:
   - section: "authentication"
     rules:
@@ -160,8 +160,8 @@ profile:
       - os_store_encrypted_passwords
       - os_prevent_unauthorized_disclosure
       - os_crypto_audit
-      - pwpolicy_force_password_change
       - pwpolicy_temporary_accounts_disable
+      - pwpolicy_force_password_change
       - pwpolicy_emergency_accounts_disable
   - section: "Permanent"
     rules:

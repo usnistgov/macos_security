@@ -1,6 +1,6 @@
-title: "macOS 10.15: Security Configuration - all"
+title: "macOS 10.15: Security Configuration - All Rules"
 description: |
-  This guide describes the actions to take when securing a macOS 10.15 system against the all baseline.
+  This guide describes the actions to take when securing a macOS 10.15 system using every available rule.  
 profile:
   - section: "authentication"
     rules:
@@ -198,8 +198,8 @@ profile:
       - os_error_message
       - os_crypto_audit
       - os_reauth_privilege
-      - pwpolicy_force_password_change
       - pwpolicy_temporary_accounts_disable
+      - pwpolicy_force_password_change
       - pwpolicy_emergency_accounts_disable
   - section: "Permanent"
     rules:
