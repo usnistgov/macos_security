@@ -48,7 +48,7 @@
             <family>macos</family>
         </family_state>
         <plist510_state xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" comment="Is the value is greater than or equal to 10.15" id="oval:gov.nist.mscp.content.cpe:ste:2" version="1">
-            <value datatype="version" operation="greater than or equal">10.14</value>
+            <value datatype="version" operation="greater than or equal">10.15</value>
         </plist510_state>
     </states>
 </oval_definitions>
