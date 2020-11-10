@@ -9,26 +9,26 @@
     <definitions>
         <definition id="oval:gov.nist.mscp.content.cpe.oval:def:1" version="1" class="inventory">
             <metadata>
-                <title>Apple macOS 10.15 is installed</title>
+                <title>Apple macOS 11.0 is installed</title>
                 <affected family="macos">
                     <platform>macOS</platform>
                 </affected>
-                <reference source="CPE" ref_id="cpe:/o:apple:mac_os_x:10.15"/>
-                <description>The operating system installed on the system is Apple macOS Catalina (10.15).</description>
+                <reference source="CPE" ref_id="cpe:/o:apple:macos:11.0"/>
+                <description>The operating system installed on the system is Apple macOS Big Sur (11.0).</description>
             </metadata>
             <criteria operator="AND">
                 <criterion comment="The Installed Operating System is Part of the Mac OS Family" test_ref="oval:gov.nist.mscp.content.cpe:tst:1"/>
-                <criterion comment="Apple Mac OS X version is greater than 10.14" test_ref="oval:gov.nist.mscp.content.cpe:tst:2"/>
+                <criterion comment="Apple macOS version is greater than or equal to 11.0" test_ref="oval:gov.nist.mscp.content.cpe:tst:2"/>
             </criteria>
         </definition>
     </definitions>
     <tests>
         <family_test xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#independent" check="all" check_existence="only_one_exists"
-            comment="The Installed Operating System is Part of the Mac OS Family" id="oval:gov.nist.mscp.content.cpe:tst:1" version="1">
+            comment="The Installed Operating System is Part of the macOS Family" id="oval:gov.nist.mscp.content.cpe:tst:1" version="1">
             <object object_ref="oval:gov.nist.mscp.content.cpe:obj:1"/>
             <state state_ref="oval:gov.nist.mscp.content.cpe:ste:1"/>
         </family_test>
-        <plist510_test xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" check="all" check_existence="only_one_exists" comment="Apple Mac OS X version is greater than 10.14"
+        <plist510_test xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" check="all" check_existence="only_one_exists" comment="Apple macOS version is greater than 11.0"
             id="oval:gov.nist.mscp.content.cpe:tst:2" version="2">
             <object object_ref="oval:gov.nist.mscp.content.cpe:obj:2"/>
             <state state_ref="oval:gov.nist.mscp.content.cpe:ste:2"/>
@@ -37,7 +37,7 @@
     <objects>
         <family_object id="oval:gov.nist.mscp.content.cpe:obj:1" version="1" comment="This variable_object represents the family that the operating system belongs to."
             xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#independent"/>
-        <plist510_object xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" comment="The OSX product version plist object." id="oval:gov.nist.mscp.content.cpe:obj:2" version="1">
+        <plist510_object xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" comment="The macOS product version plist object." id="oval:gov.nist.mscp.content.cpe:obj:2" version="1">
             <key>ProductVersion</key>
             <filepath>/System/Library/CoreServices/SystemVersion.plist</filepath>
             <instance datatype="int" operation="equals">1</instance>
@@ -47,8 +47,8 @@
         <family_state id="oval:gov.nist.mscp.content.cpe:ste:1" version="1" comment="The OS is part of the macOS Family." xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#independent">
             <family>macos</family>
         </family_state>
-        <plist510_state xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" comment="Is the value greater than 10.14" id="oval:gov.nist.mscp.content.cpe:ste:2" version="1">
-            <value datatype="version" operation="greater than">10.14</value>
+        <plist510_state xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" comment="Is the value is greater than or equal to 11.0" id="oval:gov.nist.mscp.content.cpe:ste:2" version="1">
+            <value datatype="version" operation="greater than or equal">11.0</value>
         </plist510_state>
     </states>
 </oval_definitions>

@@ -1,5 +1,5 @@
-XSLT		= java -jar ~/saxon/saxon-he-10.1.jar
-TIDY		= /usr/bin/tidy
+XSLT		= /usr/local/bin/saxon
+TIDY		= /usr/local/bin/tidy
 VAL		= java -Djava.protocol.handler.pkgs=sun.net.www.protocol -jar ~/Projects/scapval/scapval-1.3.5.jar
 
 DIR		= ../build/All_rules
@@ -34,7 +34,7 @@ XCCDF:
 	       	-o:${DIR}/xccdf.xml \
 		SCAP-version=1.3 \
 		id-namespace=content.mscp.nist.gov \
-		benchmark-id-suffix=macOS_10.15 \
+		benchmark-id-suffix=macOS_11.0 \
 		OVAL-URI=${DIR}/All_rules.xml \
 		include-CPE=1
 	# the input OVAL document will be copied to a companion of the XCCDF document named 'oval.xml'
@@ -50,7 +50,7 @@ datastream:
 		-o:${DIR}/datastream.xml \
 		SCAP-version=1.3 \
 		id-namespace=content.mscp.nist.gov \
-		datastream-id-suffix=macOS_10.15 \
+		datastream-id-suffix=macOS_11.0 \
 		include-CPE=1
 
 report:

@@ -1,0 +1,46 @@
+id: os_authenticated_root_enable
+title: "Enable Authenticated Root"
+discussion:   
+  Authenticated Root _MUST_ be enabled. 
+  
+  When Authenticated Root is enabled the macOS is booted from a signed volume that is cryptographically protected to prevent tampering with the system volume.
+check: |
+  /usr/bin/csrutil authenticated-root | /usr/bin/grep -c 'enabled'
+result:
+  integer: 1
+fix: |
+  [source,bash]
+  ----
+  /usr/bin/csrutil authenticated-root enable
+  ----
+  NOTE: To re-enable "Authenticated Root", boot the affected system into "Recovery" mode, launch "Terminal" from the "Utilities" menu, and run the command.
+references:
+  cce:
+    - CCE-85298-8
+  cci: 
+    - N/A
+  800-53r4:
+    - AC-3
+    - CM-5
+    - SC-34
+    - SI-7
+    - SI-7(6)
+  srg:
+    - N/A
+  disa_stig:
+    - N/A
+  800-171r2:
+    - 3.1.1
+    - 3.1.2
+    - 3.4.5
+macOS:
+  - "11.0"
+tags:
+  - 800-171
+  - cnssi-1253
+  - 800-53r4_low
+  - 800-53r4_moderate
+  - 800-53r4_high
+  - STIG
+mobileconfig: false
+mobileconfig_info:

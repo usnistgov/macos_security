@@ -12,7 +12,7 @@ fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-    - CCE-84737-6
+    - CCE-85289-7
   cci:
     - CCI-000381
     - CCI-001774
@@ -29,7 +29,7 @@ references:
     - 3.1.20
     - 3.4.6
 macOS:
-  - "10.15"
+  - "11.0"
 tags:
   - 800-171
   - cnssi-1253

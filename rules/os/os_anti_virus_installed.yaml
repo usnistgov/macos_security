@@ -11,7 +11,7 @@ fix: |
   Install an approved antivirus solution onto the system.
 references:
   cce:
-    - CCE-84894-5
+    - CCE-85295-4
   cci: 
     - CCI-000366
   800-53r4: 
@@ -21,7 +21,7 @@ references:
   disa_stig: 
     - AOSX-15-002070
 macOS:
-  - "10.15"
+  - "11.0"
 tags:
   - STIG
 mobileconfig: false

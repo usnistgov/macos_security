@@ -303,12 +303,12 @@
                 <!-- See NIST IR7215 §6.2.5 ¶3-->
                 <xsl:element name="platform" namespace="http://checklists.nist.gov/xccdf/1.2">
                     <xsl:attribute name="idref">
-                        <xsl:text>cpe:2.3:o:apple:mac_os_x:10.15:*:*:*:*:*:*:*</xsl:text>
+                        <xsl:text>cpe:2.3:o:apple:macos:11.0:*:*:*:*:*:*:*</xsl:text>
                     </xsl:attribute>
                 </xsl:element>
             </xsl:if>
             <!--<xsl:element name="platform" namespace="http://checklists.nist.gov/xccdf/1.2">
-                <xsl:attribute name="idref"><xsl:text>cpe:/o:apple:mac_os_x:10.15</xsl:text></xsl:attribute>
+                <xsl:attribute name="idref"><xsl:text>cpe:/o:apple:macos:11.0</xsl:text></xsl:attribute>
             </xsl:element>-->
             <xsl:analyze-string select="normalize-space(//div[@class = 'docver'])" regex="^(.+)\s\(([0-9-]+)\)$">
                 <xsl:matching-substring>

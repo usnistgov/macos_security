@@ -14,7 +14,7 @@ fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-    - CCE-84724-4
+    - CCE-85277-2
   cci: 
    - N/A
   800-53r4: 
@@ -25,7 +25,7 @@ references:
   disa_stig:
     - N/A
 macOS:
-  - "10.15"
+  - "11.0"
 tags:
   - cnssi-1253
   - 800-53r4_low

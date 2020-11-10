@@ -24,7 +24,7 @@ fix: |
   ----
 references:
   cce:
-    - CCE-84780-6
+    - CCE-85439-8
   800-53r4:
     - CM-7
   disa_stig:
@@ -36,7 +36,7 @@ references:
   800-171r2:
     - 3.4.6
 macOS:
-  - "10.15"
+  - "11.0"
 tags:
   - 800-171
   - cnssi-1253

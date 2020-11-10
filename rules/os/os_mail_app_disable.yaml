@@ -4,6 +4,11 @@ discussion: |
   The macOS built-in Mail.app _MUST_ be disabled. 
 
   The Mail.app contains functionality that can establish connections to Apple’s iCloud, even when security controls to disable iCloud access have been put in place.
+  
+  [IMPORTANT]
+  ====
+  Some organizations allow the use of the built-in Mail.app for organizational communication. Information System Security Officers (ISSOs) may make the risk-based decision not to disable the macOS built-in Mail.app to avoid losing this functionality, but they are advised to first fully weigh the potential risks posed to their organization.
+  ====
 check: |  
   /usr/bin/profiles -P -o stdout | /usr/bin/grep -A 20 familyControlsEnabled | /usr/bin/grep -c "/Applications/Mail.app"
 result:
@@ -12,7 +17,7 @@ fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-    - CCE-84769-9
+    - CCE-85336-6
   cci: 
     - CCI-000381
     - CCI-001774
@@ -28,7 +33,7 @@ references:
     - 3.1.20
     - 3.4.6
 macOS:
-  - "10.15"
+  - "11.0"
 tags:
   - 800-171
   - cnssi-1253

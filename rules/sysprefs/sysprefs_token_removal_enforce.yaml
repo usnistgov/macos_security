@@ -4,6 +4,11 @@ discussion: |
   The screen lock _MUST_ be configured to initiate automatically when the smart token is removed from the system.
 
   Session locks are temporary actions taken when users stop work and move away from the immediate vicinity of the information system but do not want to log out because of the temporary nature of their absences. While a session lock is not an acceptable substitute for logging out of an information system for longer periods of time, they prevent a malicious user from accessing the information system when a user has removed their smart token. 
+
+  [IMPORTANT]
+  ====
+  Information System Security Officers (ISSOs) may make the risk-based decision not to enforce a session lock when a smart token is removed, so as to maintain necessary workflow capabilities, but they are advised to first fully weigh the potential risks posed to their organization. 
+  ====
 check: |
   /usr/bin/profiles -P -o stdout | /usr/bin/grep -c 'tokenRemovalAction = 1'
 result:
@@ -12,7 +17,7 @@ fix:
   This is implemented by a Configuration Profile.
 references:
   cce:
-    - CCE-84848-1
+    - CCE-85450-5
   cci:
     - CCI-000058
   800-53r4: 
@@ -24,7 +29,7 @@ references:
   800-171r2:
     - 3.1.10
 macOS:
-  - "10.15"
+  - "11.0"
 tags:
   - 800-171
   - cnssi-1253

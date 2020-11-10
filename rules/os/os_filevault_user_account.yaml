@@ -44,7 +44,7 @@ fix: |
   # sudo fdesetup remove -user <username>
 references:
   cce:
-    - CCE-84893-7
+    - CCE-85311-9
   cci:
     - CCI-000014
   800-53r4:
@@ -54,7 +54,7 @@ references:
   disa_stig:
     - AOSX-15-000032
 macOS:
-  - "10.15"
+  - "11.0"
 tags:
   - STIG
 mobileconfig: false

@@ -19,7 +19,7 @@ fix: |
   ----
 references:
   cce:
-    - CCE-84764-0
+    - CCE-85322-6
   cci:
     - CCI-000366
   800-53r4:
@@ -32,7 +32,7 @@ references:
   800-171r2:
     - 3.1.5
 macOS:
-  - "10.15"
+  - "11.0"
 tags:
   - 800-171
   - cnssi-1253

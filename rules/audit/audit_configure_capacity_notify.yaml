@@ -15,7 +15,7 @@ fix: |
   ----
 references:
   cce:
-    - CCE-84707-9
+    - CCE-85255-8
   cci:
     - CCI-001855
   800-53r4: 
@@ -25,7 +25,7 @@ references:
   disa_stig: 
     - AOSX-15-001030
 macOS:
-  - "10.15"
+  - "11.0"
 tags:
   - 800-53r4_high
   - STIG

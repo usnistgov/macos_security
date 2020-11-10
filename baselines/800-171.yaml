@@ -1,12 +1,11 @@
-title: "macOS 10.15: Security Configuration - 800-171"
+title: "macOS 11.0: Security Configuration - 800-171"
 description: |
-  This guide describes the actions to take when securing a macOS 10.15 system against the NIST SP 800-171.
+  This guide describes the actions to take when securing a 11.0 system against the NIST SP 800-171.
 profile:
   - section: "authentication"
     rules:
       - auth_pam_login_smartcard_enforce
       - auth_pam_sudo_smartcard_enforce
-      - auth_ssh_smartcard_enforce
       - auth_smartcard_enforce
       - auth_pam_su_smartcard_enforce
   - section: "auditing"
@@ -32,12 +31,11 @@ profile:
   - section: "macos"
     rules:
       - os_firewall_default_deny_require
-      - os_ssh_client_alive_count_max_configure
+      - os_ssh_server_alive_count_max_configure
       - os_firmware_password_require
       - os_gatekeeper_rearm
       - os_root_disable
       - os_guest_account_disable
-      - os_policy_banner_ssh_enforce
       - os_password_proximity_disable
       - os_mdm_require
       - os_screensaver_loginwindow_enforce
@@ -48,7 +46,6 @@ profile:
       - os_password_autofill_disable
       - os_password_sharing_disable
       - os_ssh_fips_140_ciphers
-      - os_ssh_login_grace_time_configure
       - os_uucp_disable
       - os_policy_banner_loginwindow_enforce
       - os_touchid_prompt_disable
@@ -60,9 +57,9 @@ profile:
       - os_httpd_disable
       - os_gatekeeper_enable
       - os_sip_enable
+      - os_authenticated_root_enable
       - os_removable_media_disable
       - os_guest_access_smb_disable
-      - os_policy_banner_ssh_configure
       - os_time_server_enabled
       - os_unlock_active_user_session_disable
       - os_internet_accounts_prefpane_disable
@@ -75,7 +72,7 @@ profile:
       - os_icloud_storage_prompt_disable
       - os_ir_support_disable
       - os_mail_app_disable
-      - os_ssh_client_alive_interval_configure
+      - os_ssh_server_alive_interval_configure
       - os_bonjour_disable
       - os_calendar_app_disable
   - section: "passwordpolicy"
@@ -109,10 +106,10 @@ profile:
     rules:
       - sysprefs_smbd_disable
       - sysprefs_firewall_stealth_mode_enable
-      - sysprefs_ad_tracking_disable
+      - sysprefs_personalized_advertising_disable
       - sysprefs_internet_sharing_disable
       - sysprefs_rae_disable
-      - sysprefs_ssh_enable
+      - sysprefs_ssh_disable
       - sysprefs_media_sharing_disabled
       - sysprefs_screensaver_password_enforce
       - sysprefs_gatekeeper_identified_developers_allowed
@@ -155,6 +152,9 @@ profile:
     rules:
       - pwpolicy_50_percent
       - sysprefs_wifi_disable
+  - section: "not_applicable"
+    rules:
+      - os_nonlocal_maintenance
   - section: "Supplemental"
     rules:
       - supplemental_firewall_pf

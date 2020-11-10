@@ -5,14 +5,14 @@ discussion: |
 
   This rule ensures the uniformity of time stamps for information systems with multiple system clocks and systems connected over a network.
 check: |
-  /usr/bin/profiles -P -o stdout | /usr/bin/awk -F "= " '/timeServer/{print $2}' | /usr/bin/tr -d ';'
+  /usr/bin/profiles -P -o stdout | /usr/bin/awk -F "= " '/timeServer/{print $2}' | /usr/bin/tr -d ';' | /usr/bin/tr -d '"'
 result:
   string: "time-a.nist.gov,time-b.nist.gov"
 fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-    - CCE-84846-5
+    - CCE-85448-9
   cci: 
     - CCI-001891
     - CCI-002046
@@ -26,7 +26,7 @@ references:
   800-171r2:
     - 3.3.7
 macOS:
-  - "10.15"
+  - "11.0"
 tags:
   - 800-171
   - cnssi-1253

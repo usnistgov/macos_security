@@ -3,7 +3,7 @@ title: "Disable Login to Other User’s Active and Locked Sessions"
 discussion: |
   The ability to log in to another user’s active or locked session _MUST_ be disabled. 
   
-  MacOS has a privilege that can be granted to any user that will allow that user to unlock active user’s sessions. Disabling the admins and/or user’s ability to log into another user’s active andlocked session prevents unauthorized persons from viewing potentially sensitive and/or personal information.
+  macOS has a privilege that can be granted to any user that will allow that user to unlock active user’s sessions. Disabling the admins and/or user’s ability to log into another user’s active andlocked session prevents unauthorized persons from viewing potentially sensitive and/or personal information.
 check: |
   /usr/bin/security authorizationdb read system.login.screensaver 2>&1 | /usr/bin/grep -c 'use-login-window-ui'
 result:
@@ -15,7 +15,7 @@ fix: |
   ----
 references:
   cce:
-    - CCE-84804-4
+    - CCE-85395-2
   cci:
     - N/A
   800-53r4:
@@ -31,7 +31,7 @@ references:
     - 3.5.1
     - 3.5.2
 macOS:
-  - "10.15"
+  - "11.0"
 tags:
   - 800-171
   - cnssi-1253

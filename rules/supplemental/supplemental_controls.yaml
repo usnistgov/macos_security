@@ -1,7 +1,7 @@
 id: supplemental_controls
 title: "Out of Scope Supplemental"
 discussion: |
-  There are several requirements defined in National Institute of Standards and Technology (NIST) Special Publication (SP) 800-53, Recommended Security Controls for Federal Information Systems and Organizations, Revision 4 can be met by making configuration changes to the operating system. However, NIST SP 800-53 (Rev. 4) contains a broad set of guidelines that attempt to address all aspects of an information system or systems within an organization. Because the macOS Security Compliance Project is tailored specifically to macOS, some requirements defined in NIST SP 800-53 (Rev. 4) are not applicable. 
+  There are several requirements defined in National Institute of Standards and Technology (NIST) Special Publication (SP) 800-53, Recommended Security Controls for Federal Information Systems and Organizations, Revision 4 that can be met by making configuration changes to the operating system. However, NIST SP 800-53 (Rev. 4) contains a broad set of guidelines that attempt to address all aspects of an information system or systems within an organization. Because the macOS Security Compliance Project is tailored specifically to macOS, some requirements defined in NIST SP 800-53 (Rev. 4) are not applicable. 
 
   This supplemental contains those controls that are assigned to a baseline in NIST SP 800-53 (Rev. 4) which cannot be addressed with a technical configuration for macOS. These controls can be accomplished though administrative or procedural processes within an organization or via integration of the macOS system into enterprise information systems which are configured to protect the systems within.
   
@@ -12,7 +12,7 @@ discussion: |
   |Access Control (AC)
 
   |Controls 
-  |link:https://nvd.nist.gov/800-53/Rev4/control/AC-1[AC-1], link:https://nvd.nist.gov/800-53/Rev4/control/AC-2[AC-2], link:https://nvd.nist.gov/800-53/Rev4/control/AC-14[AC-14], link:https://nvd.nist.gov/800-53/Rev4/control/AC-22[AC-22]
+  |link:https://nvd.nist.gov/800-53/Rev4/control/AC-1[AC-1], link:https://nvd.nist.gov/800-53/Rev4/control/AC-2[AC-2], link:https://nvd.nist.gov/800-53/Rev4/control/AC-14[AC-14], link:https://nvd.nist.gov/800-53/Rev4/control/AC-17?#enhancement-4[AC-17(4)], link:https://nvd.nist.gov/800-53/Rev4/control/AC-22[AC-22]
 
   |=== 
 
@@ -73,7 +73,7 @@ discussion: |
   |Identification and Authentication (IA)
 
   |Controls
-  |link:https://nvd.nist.gov/800-53/Rev4/control/IA-1[IA-1], link:https://nvd.nist.gov/800-53/Rev4/control/IA-8?baseline=low#enhancement-1[IA-8(1)],link:https://nvd.nist.gov/800-53/Rev4/control/IA-8?baseline=low#enhancement-2[IA-8(2)],link:https://nvd.nist.gov/800-53/Rev4/control/IA-8?baseline=low#enhancement-3[IA-8(3)],link:https://nvd.nist.gov/800-53/Rev4/control/IA-8?baseline=low#enhancement-4[IA-8(4)]
+  |link:https://nvd.nist.gov/800-53/Rev4/control/IA-1[IA-1], link:https://nvd.nist.gov/800-53/Rev4/control/IA-8?#enhancement-1[IA-8(1)], link:https://nvd.nist.gov/800-53/Rev4/control/IA-8?#enhancement-2[IA-8(2)], link:https://nvd.nist.gov/800-53/Rev4/control/IA-8?#enhancement-3[IA-8(3)], link:https://nvd.nist.gov/800-53/Rev4/control/IA-8?#enhancement-4[IA-8(4)]
   |=== 
 
   [cols="15%h, 85%a"]
@@ -188,7 +188,7 @@ references:
   disa_stig:
     - N/A
 macOS:
-  - "10.15"
+  - "11.0"
 tags:
   - supplemental
 mobileconfig: false

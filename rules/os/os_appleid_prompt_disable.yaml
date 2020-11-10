@@ -3,7 +3,7 @@ title: "Disable Apple ID Setup during Setup Assistant"
 discussion: |
   The prompt for Apple ID setup during Setup Assistant _MUST_ be disabled. 
   
-  MacOS will automatically prompt new users to set up an Apple ID while they are going through Setup Assistant if this is not disabled, misleading new users to think they need to create Apple ID accounts upon their first login.
+  macOS will automatically prompt new users to set up an Apple ID while they are going through Setup Assistant if this is not disabled, misleading new users to think they need to create Apple ID accounts upon their first login.
 check: | 
   /usr/bin/profiles -P -o stdout | /usr/bin/grep -c 'SkipCloudSetup = 1'
 result:
@@ -12,7 +12,7 @@ fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-    - CCE-84748-3
+    - CCE-85296-2
   cci:
     - CCI-000381
   800-53r4: 
@@ -25,7 +25,7 @@ references:
   800-171r2:
     - 3.1.20
 macOS:
-  - "10.15"
+  - "11.0"
 tags:
   - 800-171
   - cnssi-1253

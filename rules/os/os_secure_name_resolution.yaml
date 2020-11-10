@@ -1,14 +1,14 @@
-id: os_request_verification_name_resolution
-title: "Must request data origin authentication verification on the name/address resolution responses the system receives from authoritative sources"
+id: os_secure_name_resolution
+title: "Secure Name Address Resolution Service"
 discussion: |
   The information system requests and performs data origin authentication and data integrity verification on the name/address resolution responses the system receives from authoritative sources.
 check: |
-  This requirement is NA for this technology.
+  The technology does not support this requirement. This is an applicable-does not meet finding.
 fix: |
-  The requirement is NA. No fix is required.
+  This requirement is a permanent finding and cannot be fixed. An appropriate mitigation for the system must be implemented, but this finding cannot be considered fixed.
 references:
   cce:
-    - CCE-84745-9
+    - CCE-85372-1
   cci:
     - CCI-002465
     - CCI-002466
@@ -24,7 +24,7 @@ references:
     - SRG-OS-000401-GPOS-00180
     - SRG-OS-000402-GPOS-00181
 macOS:
-  - "10.15"
+  - "11.0"
 tags:
   - cnssi-1253
   - 800-53r4_low

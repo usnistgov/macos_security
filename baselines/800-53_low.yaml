@@ -1,13 +1,12 @@
-title: "macOS 10.15: Security Configuration - 800-53 Low"
+title: "macOS 11.0: Security Configuration - 800-53 Low"
 description: |
-  This guide describes the actions to take when securing a macOS 10.15 system against the NIST SP 800-53 LOW baseline.  
+  This guide describes the actions to take when securing a macOS 11.0 system against the NIST SP 800-53 LOW baseline.  
 profile:
   - section: "authentication"
     rules:
       - auth_pam_login_smartcard_enforce
       - auth_smartcard_allow
       - auth_pam_sudo_smartcard_enforce
-      - auth_ssh_smartcard_enforce
       - auth_smartcard_enforce
       - auth_pam_su_smartcard_enforce
   - section: "auditing"
@@ -33,7 +32,6 @@ profile:
   - section: "macos"
     rules:
       - os_root_disable
-      - os_policy_banner_ssh_enforce
       - os_password_proximity_disable
       - os_mdm_require
       - os_handoff_disable
@@ -51,8 +49,8 @@ profile:
       - os_nfsd_disable
       - os_httpd_disable
       - os_sip_enable
+      - os_authenticated_root_enable
       - os_guest_access_smb_disable
-      - os_policy_banner_ssh_configure
       - os_unlock_active_user_session_disable
       - os_internet_accounts_prefpane_disable
       - os_siri_prompt_disable
@@ -96,7 +94,7 @@ profile:
     rules:
       - sysprefs_smbd_disable
       - sysprefs_firewall_stealth_mode_enable
-      - sysprefs_ad_tracking_disable
+      - sysprefs_personalized_advertising_disable
       - sysprefs_internet_sharing_disable
       - sysprefs_rae_disable
       - sysprefs_firewall_enable
@@ -113,6 +111,7 @@ profile:
       - sysprefs_password_hints_disable
       - sysprefs_bluetooth_sharing_disable
       - sysprefs_improve_siri_dictation_disable
+      - sysprefs_ssh_disable
   - section: "Inherent"
     rules:
       - os_logical_access
@@ -123,12 +122,13 @@ profile:
       - pwpolicy_force_change_password_change
   - section: "Permanent"
     rules:
-      - os_request_verification_name_resolution
+      - os_secure_name_resolution
       - os_protect_dos_attacks
       - pwpolicy_50_percent
   - section: "not_applicable"
     rules: 
       - os_identify_non-org_users
+      - os_nonlocal_maintenance
   - section: "Supplemental"
     rules:
       - supplemental_firewall_pf

@@ -1,13 +1,12 @@
-title: "macOS 10.15: Security Configuration - 800-53 High"
+title: "macOS 11.0: Security Configuration - 800-53 High"
 description: |
-  This guide describes the actions to take when securing a macOS 10.15 system against the NIST SP 800-53 HIGH baseline.  
+  This guide describes the actions to take when securing a macOS 11.0 system against the NIST SP 800-53 HIGH baseline.  
 profile:
   - section: "authentication"
     rules:
       - auth_pam_login_smartcard_enforce
       - auth_smartcard_allow
       - auth_pam_sudo_smartcard_enforce
-      - auth_ssh_smartcard_enforce
       - auth_smartcard_certificate_trust_enforce_high
       - auth_smartcard_enforce
       - auth_pam_su_smartcard_enforce
@@ -36,12 +35,11 @@ profile:
   - section: "macos"
     rules:
       - os_firewall_default_deny_require
-      - os_ssh_client_alive_count_max_configure
+      - os_ssh_server_alive_count_max_configure
       - os_firmware_password_require
       - os_gatekeeper_rearm
       - os_root_disable
       - os_guest_account_disable
-      - os_policy_banner_ssh_enforce
       - os_password_proximity_disable
       - os_mdm_require
       - os_screensaver_loginwindow_enforce
@@ -52,7 +50,6 @@ profile:
       - os_password_autofill_disable
       - os_password_sharing_disable
       - os_ssh_fips_140_ciphers
-      - os_ssh_login_grace_time_configure
       - os_secure_boot_verify
       - os_uucp_disable
       - os_policy_banner_loginwindow_enforce
@@ -66,9 +63,9 @@ profile:
       - os_httpd_disable
       - os_gatekeeper_enable
       - os_sip_enable
+      - os_authenticated_root_enable
       - os_removable_media_disable
       - os_guest_access_smb_disable
-      - os_policy_banner_ssh_configure
       - os_time_server_enabled
       - os_unlock_active_user_session_disable
       - os_internet_accounts_prefpane_disable
@@ -82,7 +79,7 @@ profile:
       - os_icloud_storage_prompt_disable
       - os_ir_support_disable
       - os_mail_app_disable
-      - os_ssh_client_alive_interval_configure
+      - os_ssh_server_alive_interval_configure
       - os_bonjour_disable
       - os_calendar_app_disable
   - section: "passwordpolicy"
@@ -116,10 +113,10 @@ profile:
     rules:
       - sysprefs_smbd_disable
       - sysprefs_firewall_stealth_mode_enable
-      - sysprefs_ad_tracking_disable
+      - sysprefs_personalized_advertising_disable
       - sysprefs_internet_sharing_disable
       - sysprefs_rae_disable
-      - sysprefs_ssh_enable
+      - sysprefs_ssh_disable
       - sysprefs_screensaver_password_enforce
       - sysprefs_gatekeeper_identified_developers_allowed
       - sysprefs_gatekeeper_override_disallow
@@ -168,7 +165,7 @@ profile:
       - pwpolicy_emergency_accounts_disable
   - section: "Permanent"
     rules:
-      - os_request_verification_name_resolution
+      - os_secure_name_resolution
       - os_notify_account_enable
       - os_provide_automated_account_management
       - os_notify_account_created
@@ -183,6 +180,7 @@ profile:
   - section: "not_applicable"
     rules: 
       - os_identify_non-org_users
+      - os_nonlocal_maintenance
   - section: "Supplemental"
     rules:
       - supplemental_firewall_pf

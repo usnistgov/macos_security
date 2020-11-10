@@ -428,6 +428,10 @@ def generate_script(baseline_name, build_path, baseline_yaml):
 
 ##  This script is provided as-is and should be fully tested on a system that is not in a production environment.  
 
+###################  Variables  ###################
+
+pwpolicy_file=""
+
 ###################  COMMANDS START BELOW THIS LINE  ###################
 
 ## Must be run as root
@@ -461,6 +465,11 @@ vared -p "Press [Enter] key to continue..." -c fackEnterKey
 }}
 
 ask() {{
+    # if fix flag is passed, assume YES for everything
+    if [[ $fix ]]; then
+        return 0
+    fi
+
     while true; do
 
         if [ "${{2:-}}" = "Y" ]; then
@@ -580,6 +589,29 @@ defaults write "$audit_plist" lastComplianceCheck "$(date)"
                     nist_80053r4 = 'N/A'
                 else:
                     nist_80053r4 = rule_yaml['references']['800-53r4']
+                
+                try:
+                    rule_yaml['references']['disa_stig']
+                except KeyError:
+                    stig_ref = rule_yaml['id']
+                else:
+                    if rule_yaml['references']['disa_stig'][0] == "N/A":
+                        stig_ref = [rule_yaml['id']]
+                    else:
+                        stig_ref = rule_yaml['references']['disa_stig']
+                    
+                try:
+                    rule_yaml['references']['ASCS']
+                except KeyError:
+                    ascs_ref = ''
+                else:
+                    ascs_ref = rule_yaml['references']['ASCS']
+            
+                if "STIG" in baseline_yaml['title']:
+                    logging.debug(f'Setting STIG reference for logging: {stig_ref}')
+                    log_reference_id = stig_ref
+                else:
+                    log_reference_id = [rule_yaml['id']]
 
             # group the controls
                 nist_80053r4.sort()
@@ -614,18 +646,19 @@ defaults write "$audit_plist" lastComplianceCheck "$(date)"
                 zsh_check_text = """
 #####----- Rule: {0} -----#####
 ## Addresses the following NIST 800-53 controls: {1}
-echo 'Running the command to check the settings for: {0} ...' | tee -a "$audit_log"
+#echo 'Running the command to check the settings for: {0} ...' | tee -a "$audit_log"
+unset result_value
 result_value=$({2})
 # expected result {3}
 
 if [[ $result_value == "{4}" ]]; then
-    echo "{0} passed..." | tee -a "$audit_log"
+    echo "$(date -u) {5} passed (Result: $result_value, Expected: "{3}")" | tee -a "$audit_log"
     defaults write "$audit_plist" {0} -bool NO
 else
-    echo "{0} FAILED..." | tee -a "$audit_log"
+    echo "$(date -u) {5} failed (Result: $result_value, Expected: "{3}")" | tee -a "$audit_log"
     defaults write "$audit_plist" {0} -bool YES
 fi
-    """.format(rule_yaml['id'], nist_controls.replace("\n", "\n#"), check.strip(), result, result_value)
+    """.format(rule_yaml['id'], nist_controls.replace("\n", "\n#"), check.strip(), result, result_value, ','.join(log_reference_id))
 
                 check_function_string = check_function_string + zsh_check_text
 
@@ -664,24 +697,33 @@ fi
 lastComplianceScan=$(defaults read "$audit_plist" lastComplianceCheck)
 echo "Results written to $audit_plist"
 
-pause
+if [[ ! $check ]];then
+    pause
+fi
+
 }
 
 run_fix(){
 
 if [[ ! -e "$audit_plist" ]]; then
     echo "Audit plist doesn't exist, please run Audit Check First" | tee -a "$audit_log"
-    pause
-    show_menus
-    read_options
+
+    if [[ ! $fix ]]; then
+        pause
+        show_menus
+        read_options
+    else 
+        exit 1
+    fi
 fi
 
+if [[ ! $fix ]]; then
+    ask 'THE SOFTWARE IS PROVIDED "AS IS" WITHOUT ANY WARRANTY OF ANY KIND, EITHER EXPRESSED, IMPLIED, OR STATUTORY, INCLUDING, BUT NOT LIMITED TO, ANY WARRANTY THAT THE SOFTWARE WILL CONFORM TO SPECIFICATIONS, ANY IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND FREEDOM FROM INFRINGEMENT, AND ANY WARRANTY THAT THE DOCUMENTATION WILL CONFORM TO THE SOFTWARE, OR ANY WARRANTY THAT THE SOFTWARE WILL BE ERROR FREE.  IN NO EVENT SHALL NIST BE LIABLE FOR ANY DAMAGES, INCLUDING, BUT NOT LIMITED TO, DIRECT, INDIRECT, SPECIAL OR CONSEQUENTIAL DAMAGES, ARISING OUT OF, RESULTING FROM, OR IN ANY WAY CONNECTED WITH THIS SOFTWARE, WHETHER OR NOT BASED UPON WARRANTY, CONTRACT, TORT, OR OTHERWISE, WHETHER OR NOT INJURY WAS SUSTAINED BY PERSONS OR PROPERTY OR OTHERWISE, AND WHETHER OR NOT LOSS WAS SUSTAINED FROM, OR AROSE OUT OF THE RESULTS OF, OR USE OF, THE SOFTWARE OR SERVICES PROVIDED HEREUNDER. WOULD YOU LIKE TO CONTINUE? ' N
 
-ask 'THE SOFTWARE IS PROVIDED "AS IS" WITHOUT ANY WARRANTY OF ANY KIND, EITHER EXPRESSED, IMPLIED, OR STATUTORY, INCLUDING, BUT NOT LIMITED TO, ANY WARRANTY THAT THE SOFTWARE WILL CONFORM TO SPECIFICATIONS, ANY IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND FREEDOM FROM INFRINGEMENT, AND ANY WARRANTY THAT THE DOCUMENTATION WILL CONFORM TO THE SOFTWARE, OR ANY WARRANTY THAT THE SOFTWARE WILL BE ERROR FREE.  IN NO EVENT SHALL NIST BE LIABLE FOR ANY DAMAGES, INCLUDING, BUT NOT LIMITED TO, DIRECT, INDIRECT, SPECIAL OR CONSEQUENTIAL DAMAGES, ARISING OUT OF, RESULTING FROM, OR IN ANY WAY CONNECTED WITH THIS SOFTWARE, WHETHER OR NOT BASED UPON WARRANTY, CONTRACT, TORT, OR OTHERWISE, WHETHER OR NOT INJURY WAS SUSTAINED BY PERSONS OR PROPERTY OR OTHERWISE, AND WHETHER OR NOT LOSS WAS SUSTAINED FROM, OR AROSE OUT OF THE RESULTS OF, OR USE OF, THE SOFTWARE OR SERVICES PROVIDED HEREUNDER. WOULD YOU LIKE TO CONTINUE? ' N
-
-if [[ $? != 0 ]]; then
-    show_menus
-    read_options
+    if [[ $? != 0 ]]; then
+        show_menus
+        read_options
+    fi
 fi
 
 # append to existing logfile
@@ -693,10 +735,25 @@ echo "$(date -u) Beginning FISMA fixes" >> "$audit_log"
     # write the footer for the script
     zsh_fix_footer = """
 }
-while true; do
-    show_menus
-    read_options
-done
+
+# check for command line arguments, if --check or --fix, then just do them.
+if (( # >= 2));then
+    echo "Too many arguments. Usage: $0 [--check| --fix]"
+    exit 1
+fi
+
+zparseopts -D -E -check=check -fix=fix
+
+if [[ $check ]];then
+    run_scan
+elif [[ $fix ]];then    
+    run_fix
+else
+    while true; do
+        show_menus
+        read_options
+    done
+fi
     """
 
     #write out the compliance script
@@ -795,7 +852,7 @@ def generate_xls(baseline_name, build_path, baseline_yaml):
         sheet1.write(counter, 4, mechanism, top)
         sheet1.col(4).width = 256 * 25
 
-        sheet1.write(counter, 5, rule.rule_check, topWrap)
+        sheet1.write(counter, 5, rule.rule_check.replace("\|", "|"), topWrap)
         sheet1.col(5).width = 750 * 50
 
         sheet1.write(counter, 6, str(rule.rule_result_value), topWrap)
@@ -834,7 +891,7 @@ def generate_xls(baseline_name, build_path, baseline_yaml):
         sheet1.col(10).width = 500 * 15
 
         disa_refs = (str(rule.rule_disa_stig)).strip('[]\'')
-        disa_refs = srg_refs.replace(", ", "\n").replace("\'", "")
+        disa_refs = disa_refs.replace(", ", "\n").replace("\'", "")
 
         sheet1.write(counter, 11, disa_refs, topWrap)
         sheet1.col(11).width = 500 * 15
@@ -924,7 +981,7 @@ def create_args():
     parser.add_argument("-d", "--debug", default=None,
                         help=argparse.SUPPRESS, action="store_true")
     parser.add_argument("-l", "--logo", default=None,
-                        help="Full path to logo file to be inlcuded in the guide.", action="store")
+                        help="Full path to logo file to be included in the guide.", action="store")
     parser.add_argument("-p", "--profiles", default=None,
                         help="Generate configuration profiles for the rules.", action="store_true")
     parser.add_argument("-s", "--script", default=None,
@@ -1084,6 +1141,7 @@ def main():
         stig_attribute=adoc_STIG_show,
         srg_attribute=adoc_SRG_show,
         version=version_yaml['version'],
+        os_version=version_yaml['os'],
         release_date=version_yaml['date']
     )
 

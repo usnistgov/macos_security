@@ -11,7 +11,7 @@ result:
 fix: |
   This setting may be enforced using local policy or by a directory service.
   
-  To set local policy to require a minimum password lifetime, edit the current password policy to contiain the following <dict> within the "policyCategoryPasswordContent":
+  To set local policy to require a minimum password lifetime, edit the current password policy to contain the following <dict> within the "policyCategoryPasswordContent":
   
   [source,xml]
   ----
@@ -27,16 +27,16 @@ fix: |
   </dict>
   </dict>
   ----
-  After saving the file and exiting to the command prompt, run the following command to load the new policy file, substituting the path to the file in place of "/path/to/file".
+  After saving the file and exiting to the command prompt, run the following command to load the new policy file, substituting the path to the file in place of "$pwpolicy_file".
   
   [source,bash]
   ----
-  /usr/bin/pwpolicy setaccountpolicies /path/to/file
+  /usr/bin/pwpolicy setaccountpolicies $pwpolicy_file
   ----
   NOTE: See the password policy supplemental on more information on how to implement password policies on macOS.
 references:
   cce:
-    - CCE-84817-6
+    - CCE-85410-9
   cci: 
     - N/A
   800-53r4: 
@@ -51,7 +51,7 @@ references:
     - 3.5.9
     - 3.5.10
 macOS:
-  - "10.15"
+  - "11.0"
 tags:
   - 800-171
   - cnssi-1253

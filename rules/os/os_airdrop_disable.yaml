@@ -12,7 +12,7 @@ fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-    - CCE-84747-5
+    - CCE-85293-9
   cci: 
     - CCI-000381
   800-53r4:
@@ -31,7 +31,7 @@ references:
     - 3.1.20
     - 3.4.6
 macOS:
-  - "10.15"
+  - "11.0"
 tags:
   - 800-171
   - cnssi-1253
@@ -41,5 +41,5 @@ tags:
   - STIG
 mobileconfig: true
 mobileconfig_info:
-  com.apple.NetworkBrowser:
-    DisableAirDrop: true
+  com.apple.applicationaccess:
+    allowAirDrop: false

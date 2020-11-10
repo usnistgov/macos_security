@@ -1,0 +1,43 @@
+id: os_sshd_fips_140_macs
+title: "Limit SSHD to FIPS 140 Validated Message Authentication Code Algorithms"
+discussion: |
+  If SSHD is enabled then it _MUST_ be configured to limit the Message Authentication Codes (MACs) to algorithms that are FIPS 140 validated.
+
+  FIPS 140-2 is the current standard for validating that mechanisms used to access cryptographic modules utilize authentication that meets federal requirements.
+  
+  Operating systems utilizing encryption _MUST_ use FIPS validated mechanisms for authenticating to cryptographic modules. 
+
+  NOTE: /etc/ssh/sshd_config will be automatically modified to its original state following any update or major upgrade to the operating system.
+check: |
+  /usr/bin/grep -c "^MACs hmac-sha2-256,hmac-sha2-512" /etc/ssh/sshd_config
+result:
+  integer: 1
+fix: |
+  [source,bash]
+  ----
+  /usr/bin/grep -q '^MACs' /etc/ssh/sshd_config && /usr/bin/sed -i.bak  's/.*MACs.*/MACs hmac-sha2-256,hmac-sha2-512/' /etc/ssh/sshd_config || /bin/echo 'MACs hmac-sha2-256,hmac-sha2-512' >> /etc/ssh/sshd_config; /bin/launchctl kickstart -k system/com.openssh.sshd
+  ----
+references:
+  cce:
+    - CCE-85453-9
+  cci: 
+    - CCI-001133
+  800-53r4: 
+    - AC-17(2)
+    - IA-7
+    - SC-8(1)
+    - SC-13
+  srg: 
+    - SRG-OS-000163-GPOS-00072
+  disa_stig: 
+    - AOSX-15-000053
+  800-171r2:
+    - 3.1.13
+    - 3.13.8
+    - 3.13.11
+macOS:
+  - "11.0"
+tags:
+  - STIG
+mobileconfig: false
+mobileconfig_info:

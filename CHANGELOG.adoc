@@ -2,29 +2,31 @@
 
 This document provides a high-level view of the changes to the macOS Security Compliance Project.
 
-== [Catalina, Revision 1] - 2020-10-06
+== [Big Sur, Revision 1] - 2020-11-10
 
 * Rules
-** Added new rules
-** Better categorization
-** Added new supplementals 
+** Added Rules
+*** os_authenticated_root_enable.yaml
+*** os_ssh_server_alive_count_max_configure.yaml
+*** os_ssh_server_alive_interval_configure.yaml
+*** sysprefs_personalized_advertising_disable.yaml
+*** sysprefs_ssh_disable.yaml
+** Deleted Rules
+*** sysprefs_ad_tracking_disable.yaml
+** Updated existing rules to reflect 11.0
+** Updated CCEs to existing rules
 
 * Baselines
-** Added 800-171
+** Added Big Sur rules to baseline yaml files
 
 * Scripts
-** Added generate_guidance.py (consolidates older scripts)
-** Added generate_baseline.py
-** Added yaml-to-oval.py
-** Removed baseline_identify.py
-** Added debug support to generate_guidance.py
+** generate_baseline
+*** Bug fixes
+** generate_guidance
+*** Added --check/--fix flags
+*** Added $pwpolicy_file variable
+** yaml-to-oval
+*** Bug Fixes
 
 * Miscellaneous
-** Additional customizations
-** Cleaned up rule language
-** Added SCAP artifacts
-** Added logo
-
-== [0.9.0] - 2020-06-19
-
-Initial Public release (PRE-RELEASE)
+** Added SCAP generation scripts
