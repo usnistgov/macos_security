@@ -5,9 +5,9 @@ discussion: |
 
   Use of weak or untested encryption algorithms undermines the purposes of utilizing encryption to protect data. The operating system must implement cryptographic modules that adhere to the higher standards that have been tested, validated, and approved by the federal government. 
 
-  macOS Catalina is in process of receiving FIPS validation from the National Institute of Standards and Technology (NIST).
+  macOS Big Sur has been submitted to an accredited laboratory for testing of the cryptographic module for FIPS 140-3 validation. Once complete the test will be submitted to the National Institute of Standards and Technology (NIST) for validation.
 
-  link:https://csrc.nist.gov/Projects/Cryptographic-Module-Validation-Program/Modules-In-Process/Modules-In-Process-List[]
+  link:https://csrc.nist.gov/Projects/cryptographic-module-validation-program/modules-in-process/IUT-List[]
   
   link:https://support.apple.com/en-us/HT201159[]
 check: |
