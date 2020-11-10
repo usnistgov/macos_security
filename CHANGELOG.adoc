@@ -2,15 +2,25 @@
 
 This document provides a high-level view of the changes to the macOS Security Compliance Project.
 
-== [Catalina, Revision 2] - 2020-10-XX
+== [Catalina, Revision 2] - 2020-11-10
 
 * Rules
-
-* Baselines
+** Added Rules
+*** os_ssh_server_alive_count_max_configure.yaml
+*** os_ssh_server_alive_interval_configure.yaml
+*** sysprefs_ssh_disable.yaml
 
 * Scripts
+** generate_baseline
+*** Bug fixes
+** generate_guidance
+*** Added --check/--fix flags
+*** Added $pwpolicy_file variable
+** yaml-to-oval
+*** Bug Fixes
 
 * Miscellaneous
+** Added SCAP generation scripts
 
 == [Catalina, Revision 1] - 2020-10-06
 
