@@ -33,6 +33,8 @@ fix: |
   ----
   /usr/bin/pwpolicy setaccountpolicies $pwpolicy_file
   ----
+  WARNING: This may not function properly in macOS Catalina versions prior to 10.15.7.
+
   NOTE: See the password policy supplemental on more information on how to implement password policies on macOS.
 references:
   cce:
