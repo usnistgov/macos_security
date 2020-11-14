@@ -83,7 +83,7 @@ def collect_rules():
                   'srg']
 
 
-    for rule in glob.glob('../rules/*/*.yaml'):
+    for rule in glob.glob('../rules/**/*.yaml',recursive=True) + glob.glob('../custom/rules/**/*.yaml',recursive=True):
         rule_yaml = get_rule_yaml(rule)
 
         for key in keys:
@@ -99,7 +99,7 @@ def collect_rules():
                     except:
                         #print "expected reference '{}' is missing in key '{}' for rule{}".format(reference, key, rule)
                         rule_yaml[key].update({reference: ["None"]})
-
+        
         all_rules.append(MacSecurityRule(rule_yaml['title'].replace('|', '\|'),
                                     rule_yaml['id'].replace('|', '\|'),
                                     rule_yaml['severity'].replace('|', '\|'),
@@ -200,7 +200,8 @@ def output_baseline(rules, os, keyword):
         elif "supplemental" in rule.rule_tags:
             supplemental_rules.append(rule.rule_id)
         else:
-            other_rules.append(rule.rule_id)
+            if rule.rule_id not in other_rules:
+                other_rules.append(rule.rule_id)
             section_name = rule.rule_id.split("_")[0]
             if section_name not in sections:
                 sections.append(section_name)

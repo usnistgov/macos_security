@@ -1184,6 +1184,9 @@ def main():
         for rule in sections['rules']:
             logging.debug(f'processing rule id: {rule}')
             rule_path = glob.glob('../rules/*/{}.yaml'.format(rule))
+            if not rule_path:
+                print(f"Rule file not found in library, checking in custom folder for rule: {rule}")
+                rule_path = glob.glob('../custom/rules/**/{}.yaml'.format(rule), recursive=True)
             try:
                 rule_file = (os.path.basename(rule_path[0]))
             except IndexError:
@@ -1191,9 +1194,9 @@ def main():
 
 
             #check for custom rule
-            if rule_file in glob.glob1('../custom/rules/', '*.yaml'):
+            if glob.glob('../custom/rules/**/{}'.format(rule_file), recursive=True):
                 print(f"Custom settings found for rule: {rule_file}")
-                override_rule = os.path.join('../custom/rules', rule_file)
+                override_rule = glob.glob('../custom/rules/**/{}'.format(rule_file), recursive=True)[0]
                 with open(override_rule) as r:
                     rule_yaml = yaml.load(r, Loader=yaml.SafeLoader)
             else:
