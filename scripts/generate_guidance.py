@@ -440,6 +440,9 @@ if [[ $EUID -ne 0 ]]; then
     exit 1
 fi
 
+# path to PlistBuddy
+plb="/usr/libexec/PlistBuddy"
+
 # get the currently logged in user
 CURRENT_USER=$(scutil <<< "show State:/Users/ConsoleUser" | awk '/Name :/ && ! /loginwindow/ {{ print $3 }}')
 
@@ -512,18 +515,20 @@ show_menus() {{
     echo "1. View Last Compliance Report"
     echo "2. Run New Compliance Scan"
     echo "3. Run Commands to remediate non-compliant settings"
-    echo "4. Exit"
+    echo "4. Configure exemptions for rules in baseline."
+    echo "5. Exit"
 }}
 
 # function to read options
 read_options(){{
     local choice
-    vared -p "Enter choice [ 1 - 4 ] " -c choice
+    vared -p "Enter choice [ 1 - 5 ] " -c choice
     case $choice in
         1) view_report ;;
         2) run_scan ;;
         3) run_fix ;;
-        4) exit 0;;
+        4) run_configure ;;
+        5) exit 0;;
         *) echo -e "${{RED}}Error: please choose an option 1-4...${{STD}}" && sleep 1
     esac
 }}
@@ -560,6 +565,10 @@ view_report(){{
     else
         generate_report
     fi
+}}
+
+run_configure(){{
+
 }}
 
 run_scan(){{
@@ -659,12 +668,18 @@ unset result_value
 result_value=$({2})
 # expected result {3}
 
-if [[ $result_value == "{4}" ]]; then
-    echo "$(date -u) {5} passed (Result: $result_value, Expected: "{3}")" | tee -a "$audit_log"
-    defaults write "$audit_plist" {0} -bool NO
-else
-    echo "$(date -u) {5} failed (Result: $result_value, Expected: "{3}")" | tee -a "$audit_log"
-    defaults write "$audit_plist" {0} -bool YES
+# check to see if rule is exempt
+unset exempt
+exempt=$($plb -c "print {0}:exempt" "$audit_plist")
+
+if [[ ! $exempt == 1 ]];then
+    if [[ $result_value == "{4}" ]]; then
+        echo "$(date -u) {5} passed (Result: $result_value, Expected: "{3}")" | tee -a "$audit_log"
+        defaults write "$audit_plist" {0} -dict-add finding -bool NO
+    else
+        echo "$(date -u) {5} failed (Result: $result_value, Expected: "{3}")" | tee -a "$audit_log"
+        defaults write "$audit_plist" {0} -dict-add finding -bool YES
+    fi
 fi
     """.format(rule_yaml['id'], nist_controls.replace("\n", "\n#"), check.strip(), result, result_value, ','.join(log_reference_id))
 
@@ -686,15 +701,21 @@ fi
 #####----- Rule: {rule_yaml['id']} -----#####
 ## Addresses the following NIST 800-53 controls: {nist_controls_commented}
 
-{rule_yaml['id']}_audit_score=$(defaults read $audit_plist {rule_yaml['id']})
-if [[ ${rule_yaml['id']}_audit_score == 1 ]]; then
-    ask '{rule_yaml['id']} - Run the command(s)-> {quotify(get_fix_code(rule_yaml['fix']).strip())} ' N
-    if [[ $? == 0 ]]; then
-        echo 'Running the command to configure the settings for: {rule_yaml['id']} ...' | tee -a "$audit_log"
-        {get_fix_code(rule_yaml['fix']).strip()}
+# check to see if rule is exempt
+unset exempt
+exempt=$($plb -c "print {0}:exempt" "$audit_plist")
+
+{rule_yaml['id']}_audit_score=$($plb -c "print {rule_yaml['id']}:finding" $audit_plist)
+if [[ ! $exempt == 1 ]];then
+    if [[ ${rule_yaml['id']}_audit_score == 1 ]]; then
+        ask '{rule_yaml['id']} - Run the command(s)-> {quotify(get_fix_code(rule_yaml['fix']).strip())} ' N
+        if [[ $? == 0 ]]; then
+            echo 'Running the command to configure the settings for: {rule_yaml['id']} ...' | tee -a "$audit_log"
+            {get_fix_code(rule_yaml['fix']).strip()}
+        fi
+    else
+        echo 'Settings for: {rule_yaml['id']} already configured, continuing...' | tee -a "$audit_log"
     fi
-else
-    echo 'Settings for: {rule_yaml['id']} already configured, continuing...' | tee -a "$audit_log"
 fi
     """
 
@@ -750,12 +771,14 @@ if (( # >= 2));then
     exit 1
 fi
 
-zparseopts -D -E -check=check -fix=fix
+zparseopts -D -E -check=check -fix=fix -configure=configure
 
 if [[ $check ]];then
     run_scan
 elif [[ $fix ]];then    
     run_fix
+elif [[ $configure ]];then
+    run_configure
 else
     while true; do
         show_menus
