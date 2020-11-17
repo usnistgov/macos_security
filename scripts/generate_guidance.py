@@ -411,6 +411,36 @@ def generate_profiles(baseline_name, build_path, parent_dir, baseline_yaml):
     be available through the vendor.
     """)
 
+def default_audit_plist(baseline_name, build_path, baseline_yaml):
+    """"Generate the default audit plist file to define exemptions
+    """
+    
+    # Output folder
+    plist_output_path = os.path.join(
+        f'{build_path}', 'preferences')
+    if not (os.path.isdir(plist_output_path)):
+        try:
+            os.makedirs(plist_output_path)
+        except OSError:
+            print("Creation of the directory %s failed" %
+                  plist_output_path)
+
+    plist_file_path = os.path.join(
+                plist_output_path, baseline_name + '.plist')
+
+    plist_file = open(plist_file_path, "wb")
+
+    plist_dict = {}
+
+    for sections in baseline_yaml['profile']:
+        for profile_rule in sections['rules']:
+            if profile_rule.startswith("supplemental"):
+                continue
+            plist_dict[profile_rule] = { "exempt": False }
+    
+    plistlib.dump(plist_dict, plist_file)
+
+
 def generate_script(baseline_name, build_path, baseline_yaml):
     """Generates the zsh script from the rules in the baseline YAML
     """
@@ -1393,6 +1423,7 @@ def main():
     if args.script:
         print("Generating compliance script...")
         generate_script(baseline_name, build_path, baseline_yaml)
+        default_audit_plist(baseline_name, build_path, baseline_yaml)
     
     if args.xls:
         print('Generating excel document...')
