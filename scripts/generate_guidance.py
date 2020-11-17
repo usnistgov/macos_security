@@ -426,7 +426,7 @@ def default_audit_plist(baseline_name, build_path, baseline_yaml):
                   plist_output_path)
 
     plist_file_path = os.path.join(
-                plist_output_path, baseline_name + '.plist')
+                plist_output_path, 'org.' + baseline_name + '.audit.plist')
 
     plist_file = open(plist_file_path, "wb")
 
@@ -701,8 +701,9 @@ result_value=$({2})
 # check to see if rule is exempt
 unset exempt
 exempt=$($plb -c "print {0}:exempt" "$audit_plist")
+exempt_reason=$($plb -c "print {0}:exempt_reason" "$audit_plist" 2&>/dev/null)
 
-if [[ ! $exempt == 1 ]];then
+if [[ ! $exempt == "true" ]];then
     if [[ $result_value == "{4}" ]]; then
         echo "$(date -u) {5} passed (Result: $result_value, Expected: "{3}")" | tee -a "$audit_log"
         defaults write "$audit_plist" {0} -dict-add finding -bool NO
@@ -710,6 +711,8 @@ if [[ ! $exempt == 1 ]];then
         echo "$(date -u) {5} failed (Result: $result_value, Expected: "{3}")" | tee -a "$audit_log"
         defaults write "$audit_plist" {0} -dict-add finding -bool YES
     fi
+elif [[ ! -z "$exempt_reason" ]];then
+    echo "$(date -u) {5} has an exemption (Reason: "$exempt_reason")" | tee -a "$audit_log"
 fi
     """.format(rule_yaml['id'], nist_controls.replace("\n", "\n#"), check.strip(), result, result_value, ','.join(log_reference_id))
 
@@ -734,9 +737,10 @@ fi
 # check to see if rule is exempt
 unset exempt
 exempt=$($plb -c "print {0}:exempt" "$audit_plist")
+exempt_reason=$($plb -c "print {0}:exempt_reason" "$audit_plist" 2&>/dev/null)
 
 {rule_yaml['id']}_audit_score=$($plb -c "print {rule_yaml['id']}:finding" $audit_plist)
-if [[ ! $exempt == 1 ]];then
+if [[ ! $exempt == "true" ]];then
     if [[ ${rule_yaml['id']}_audit_score == 1 ]]; then
         ask '{rule_yaml['id']} - Run the command(s)-> {quotify(get_fix_code(rule_yaml['fix']).strip())} ' N
         if [[ $? == 0 ]]; then
@@ -746,6 +750,8 @@ if [[ ! $exempt == 1 ]];then
     else
         echo 'Settings for: {rule_yaml['id']} already configured, continuing...' | tee -a "$audit_log"
     fi
+elif [[ ! -z "$exempt_reason" ]];then
+    echo "$(date -u) {rule_yaml['id']} has an exemption (Reason: "$exempt_reason")" | tee -a "$audit_log"
 fi
     """
 
