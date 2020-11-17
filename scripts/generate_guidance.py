@@ -575,12 +575,13 @@ defaults write "$audit_plist" lastComplianceCheck "$(date)"
     # Read all rules in the section and output the check functions
     for sections in baseline_yaml['profile']:
         for profile_rule in sections['rules']:
+            logging.debug(f"checking for rule file for {profile_rule}")
             if glob.glob('../custom/rules/**/{}.yaml'.format(profile_rule),recursive=True):
                 rule = glob.glob('../custom/rules/**/{}.yaml'.format(profile_rule),recursive=True)[0]
-                print(f"{rule}")
+                logging.debug(f"{rule}")
             elif glob.glob('../rules/*/{}.yaml'.format(profile_rule)):
                 rule = glob.glob('../rules/*/{}.yaml'.format(profile_rule))[0]
-                print(f"{rule}")
+                logging.debug(f"{rule}")
 
             #for rule in glob.glob('../rules/*/{}.yaml'.format(profile_rule)) + glob.glob('../custom/rules/**/{}.yaml'.format(profile_rule),recursive=True):
             rule_yaml = get_rule_yaml(rule)
