@@ -545,20 +545,18 @@ show_menus() {{
     echo "1. View Last Compliance Report"
     echo "2. Run New Compliance Scan"
     echo "3. Run Commands to remediate non-compliant settings"
-    echo "4. Configure exemptions for rules in baseline."
-    echo "5. Exit"
+    echo "4. Exit"
 }}
 
 # function to read options
 read_options(){{
     local choice
-    vared -p "Enter choice [ 1 - 5 ] " -c choice
+    vared -p "Enter choice [ 1 - 4 ] " -c choice
     case $choice in
         1) view_report ;;
         2) run_scan ;;
         3) run_fix ;;
-        4) run_configure ;;
-        5) exit 0;;
+        4) exit 0;;
         *) echo -e "${{RED}}Error: please choose an option 1-4...${{STD}}" && sleep 1
     esac
 }}
@@ -570,11 +568,13 @@ generate_report(){{
     results=$(/usr/libexec/PlistBuddy -c "Print" /Library/Preferences/org.{baseline_name}.audit.plist)
 
     while IFS= read -r line; do
-        if [[ "$line" =~ "true" ]]; then
-            non_compliant=$((non_compliant+1))
-        fi
-        if [[ "$line" =~ "false" ]]; then
-            compliant=$((compliant+1))
+        if [[ "$line" =~ "finding" ]];then
+            if [[ "$line" =~ "true" ]]; then
+                non_compliant=$((non_compliant+1))
+            fi
+            if [[ "$line" =~ "false" ]]; then
+                compliant=$((compliant+1))
+            fi
         fi
 
     done <<< "$results"
@@ -595,10 +595,6 @@ view_report(){{
     else
         generate_report
     fi
-}}
-
-run_configure(){{
-
 }}
 
 run_scan(){{
@@ -653,7 +649,7 @@ defaults write "$audit_plist" lastComplianceCheck "$(date)"
                 ascs_ref = ''
             else:
                 ascs_ref = rule_yaml['references']['ASCS']
-        
+            
             if "STIG" in baseline_yaml['title']:
                 logging.debug(f'Setting STIG reference for logging: {stig_ref}')
                 log_reference_id = stig_ref
@@ -736,12 +732,12 @@ fi
 
 # check to see if rule is exempt
 unset exempt
-exempt=$($plb -c "print {0}:exempt" "$audit_plist")
-exempt_reason=$($plb -c "print {0}:exempt_reason" "$audit_plist" 2&>/dev/null)
+exempt=$($plb -c "print {rule_yaml['id']}:exempt" "$audit_plist")
+exempt_reason=$($plb -c "print {rule_yaml['id']}:exempt_reason" "$audit_plist" 2&>/dev/null)
 
 {rule_yaml['id']}_audit_score=$($plb -c "print {rule_yaml['id']}:finding" $audit_plist)
 if [[ ! $exempt == "true" ]];then
-    if [[ ${rule_yaml['id']}_audit_score == 1 ]]; then
+    if [[ ${rule_yaml['id']}_audit_score == "true" ]]; then
         ask '{rule_yaml['id']} - Run the command(s)-> {quotify(get_fix_code(rule_yaml['fix']).strip())} ' N
         if [[ $? == 0 ]]; then
             echo 'Running the command to configure the settings for: {rule_yaml['id']} ...' | tee -a "$audit_log"
@@ -792,7 +788,7 @@ if [[ ! $fix ]]; then
 fi
 
 # append to existing logfile
-echo "$(date -u) Beginning FISMA fixes" >> "$audit_log"
+echo "$(date -u) Beginning remediation of non-compliant settings" >> "$audit_log"
 
 
     """
@@ -1062,6 +1058,8 @@ def create_args():
                         help="Full path to logo file to be included in the guide.", action="store")
     parser.add_argument("-p", "--profiles", default=None,
                         help="Generate configuration profiles for the rules.", action="store_true")
+    parser.add_argument("-r", "--reference", default=None,
+                        help="Use the reference ID instead of rule ID for identification.", action="store")
     parser.add_argument("-s", "--script", default=None,
                         help="Generate the compliance script for the rules.", action="store_true")
     # add gary argument to include tags for XCCDF generation, with a nod to Gary the SCAP guru
@@ -1104,7 +1102,7 @@ def main():
     try:
         output_basename = os.path.basename(args.baseline.name)
         output_filename = os.path.splitext(output_basename)[0]
-        baseline_name = os.path.splitext(output_basename)[0].capitalize()
+        baseline_name = os.path.splitext(output_basename)[0]#.capitalize()
         file_dir = os.path.dirname(os.path.abspath(__file__))
         parent_dir = os.path.dirname(file_dir)
 
