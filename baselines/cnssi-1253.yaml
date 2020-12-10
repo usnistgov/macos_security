@@ -106,6 +106,7 @@ profile:
       - icloud_addressbook_disable
   - section: "systempreferences"
     rules:
+      - sysprefs_media_sharing_disabled
       - sysprefs_smbd_disable
       - sysprefs_firewall_stealth_mode_enable
       - sysprefs_ad_tracking_disable
@@ -122,7 +123,7 @@ profile:
       - sysprefs_content_caching_disable
       - sysprefs_location_services_disable
       - sysprefs_time_server_configure
-      - sysprefs_enforce_auto_logout
+      - sysprefs_automatic_logout_enforce
       - sysprefs_power_nap_disable
       - sysprefs_diagnostics_reports_disable
       - sysprefs_bluetooth_disable
