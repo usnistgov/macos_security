@@ -6,12 +6,26 @@ discussion: |
   When Media Sharing is enabled, the computer starts a network listening service that shares the contents of the user’s music collection with other users in the same subnet. 
 
   The information system _MUST_ be configured to provide only essential capabilities. Disabling Media Sharing helps prevent the unauthorized connection of devices and the unauthorized transfer of information. Disabling Media Sharing mitigates this risk.
+  [NOTE] 
+  ====
+  The check and fix are for the currently logged in user. To get the currently logged in user, run the following.
+  [source,bash]
+  ----
+  CURRENT_USER=$( scutil <<< "show State:/Users/ConsoleUser" | awk '/Name :/ && ! /loginwindow/ { print $3 }' )
+  ----
+  ====
 check: |
-  /sbin/pfctl -a '*' -sr &> /dev/null | /usr/bin/grep -c "block drop log proto tcp from any to any port = 3689" 
+  /usr/bin/sudo -u "$CURRENT_USER" /usr/bin/defaults read com.apple.amp.mediasharingd | /usr/bin/grep -Ec '("public-sharing-enabled" = 0;|"home-sharing-enabled" = 0;)'
 result:
-  integer: 1
+  integer: 2
 fix: |
-  NOTE: Even if the user enables this service, the firewall is configured to block access to it. See Firewall Supplemental which includes a script that has an example policy to implement this rule.
+  [source,bash]
+  ----
+  /usr/bin/sudo -u "$CURRENT_USER" /usr/bin/defaults write com.apple.amp.mediasharingd public-sharing-enabled -int 0
+  /usr/bin/sudo -u "$CURRENT_USER" /usr/bin/defaults write com.apple.amp.mediasharingd home-sharing-enabled -int 0
+  /usr/bin/pkill -9 AMPLibraryAgent
+  /usr/bin/pkill -9 mediasharingd
+  ----
 references:
   cce:
     - CCE-84771-5
