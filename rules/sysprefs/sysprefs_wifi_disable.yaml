@@ -8,7 +8,8 @@ discussion: |
   NOTE: If the system requires Wi-Fi to connect to an authorized network, this is not applicable.
 check: |
   /usr/sbin/networksetup -listallnetworkservices | /usr/bin/grep -c "*Wi-Fi"
-result: 1
+result: 
+  integer: 1
 fix: |
   /usr/sbin/networksetup -setnetworkserviceenabled "Wi-Fi" off
 references:

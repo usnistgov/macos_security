@@ -30,7 +30,6 @@ macOS:
   - "11.0"
 tags:
   - 800-53r4_high
-
 mobileconfig: true
 mobileconfig_info:
   com.apple.security.smartcard:

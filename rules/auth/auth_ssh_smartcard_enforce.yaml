@@ -44,6 +44,6 @@ references:
 macOS:
   - "11.0"
 tags:
-
+  - none
 mobileconfig: false
 mobileconfig_info:
