@@ -48,7 +48,11 @@ references:
 macOS:
   - "11.0"
 tags:
-  - stig
-severity: "medium"
+  - 800-171
+  - cnssi-1253
+  - 800-53r4_low
+  - 800-53r4_moderate
+  - 800-53r4_high
+  - STIG
 mobileconfig: false
 mobileconfig_info:
