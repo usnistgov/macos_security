@@ -160,7 +160,7 @@ profile:
       - sysprefs_password_hints_disable
       - sysprefs_bluetooth_sharing_disable
       - sysprefs_improve_siri_dictation_disable
-      - sysprefs_enforce_auto_logout
+      - sysprefs_automatic_logout_enforce
   - section: "Inherent"
     rules:
       - os_enforce_access_restrictions

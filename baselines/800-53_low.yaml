@@ -92,6 +92,7 @@ profile:
       - icloud_addressbook_disable
   - section: "systempreferences"
     rules:
+      - sysprefs_media_sharing_disabled
       - sysprefs_smbd_disable
       - sysprefs_firewall_stealth_mode_enable
       - sysprefs_personalized_advertising_disable
