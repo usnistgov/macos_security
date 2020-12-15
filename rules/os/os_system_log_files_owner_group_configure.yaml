@@ -15,7 +15,6 @@ check: |
   If there are any system log files that are not owned by "root" and group-owned by "wheel" or admin, this is a finding.
 
   Service logs may be owned by the service user account or group.
-result:
 fix: |
   For any log file that returns an incorrect owner or group value, run the following command:
 
