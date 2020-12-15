@@ -25,7 +25,7 @@ references:
     - SRG-OS-000404-GPOS-00183
     - SRG-OS-000405-GPOS-00184
   disa_stig: 
-    - AOSX-15-005020
+    - APPL-11-005020
   800-171r2:
     - 3.13.16
 macOS:
@@ -35,6 +35,7 @@ tags:
   - cnssi-1253
   - 800-53r4_moderate
   - 800-53r4_high
-  - STIG
+  - stig
+severity: "medium"
 mobileconfig: false
 mobileconfig_info:

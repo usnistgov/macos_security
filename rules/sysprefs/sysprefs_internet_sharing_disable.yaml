@@ -21,7 +21,7 @@ references:
   srg: 
     - SRG-OS-000095-GPOS-00049
   disa_stig: 
-    - AOSX-15-002007
+    - APPL-11-002007
   800-171r2:
     - 3.1.3
     - 3.1.20
@@ -33,7 +33,8 @@ tags:
   - 800-53r4_low
   - 800-53r4_moderate
   - 800-53r4_high
-  - STIG
+  - stig
+severity: "medium"
 mobileconfig: true
 mobileconfig_info:
   com.apple.MCX:

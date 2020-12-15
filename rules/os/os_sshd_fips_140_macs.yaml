@@ -21,16 +21,21 @@ references:
   cce:
     - CCE-85453-9
   cci: 
-    - CCI-001133
+    - CCI-000087
+    - CCI-000068
+    - CCI-000803
+    - CCI-002890
+    - CCI-003123
   800-53r4: 
     - AC-17(2)
     - IA-7
     - SC-8(1)
     - SC-13
+    - MF-4(6)
   srg: 
-    - SRG-OS-000163-GPOS-00072
+    - SRG-OS-000033-GPOS-00014
   disa_stig: 
-    - AOSX-15-000053
+    - APPL-11-000055
   800-171r2:
     - 3.1.13
     - 3.13.8
@@ -38,6 +43,7 @@ references:
 macOS:
   - "11.0"
 tags:
-  - STIG
+  - stig
+severity: "medium"
 mobileconfig: false
 mobileconfig_info:

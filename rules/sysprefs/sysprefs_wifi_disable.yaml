@@ -1,45 +1,37 @@
 id: sysprefs_wifi_disable
-title: "Disable Wi-Fi When Connected to Ethernet"
+title: "Disable Wi-Fi Interface"
 discussion: |
-  The macOS should be configured to automatically disable Wi-Fi when connected to ethernet. 
+  The macOS system must be configured with Wi-Fi support software disabled. 
 
-  The use of Wi-Fi to connect to unauthorized networks may facilitate the exfiltration of mission data. Therefore, wireless networking capabilities internally embedded within information system components should be disabled when not intended to be used. 
+  Allowing devices and users to connect to or from the system without first authenticating them allows untrusted access and can lead to a compromise or attack. Since wireless communications can be intercepted  it is necessary to use encryption to protect the confidentiality of information in transit.Wireless technologies include  for example  microwave  packet radio (UHF/VHF)  802.11x  and Bluetooth. Wireless networks use authentication protocols (e.g.  EAP/TLS  PEAP)  which provide credential protection and mutual authentication.
 
   NOTE: If the system requires Wi-Fi to connect to an authorized network, this is not applicable.
 check: |
-  The technology does not support this requirement. This is an applicable-does not meet finding.
+  /usr/sbin/networksetup -listallnetworkservices | /usr/bin/grep -c "*Wi-Fi"
+result: 1
 fix: |
-  This requirement is a permanent finding and cannot be fixed. An appropriate mitigation for the system must be implemented, but this finding cannot be considered fixed.
+  /usr/sbin/networksetup -setnetworkserviceenabled "Wi-Fi" off
 references:
   cce:
-    - CCE-85452-1
+    - N/A
   cci:
-    - CCI-001967
-    - CCI-001443
-    - CCI-001444
+    - N/A
   800-53r4: 
     - AC-4
     - AC-18(1)
     - AC-18(3)
   disa_stig: 
-    - AOSX-15-004020
-    - AOSX-15-000008
+    - APPL-11-000008
   srg: 
+    - SRG-OS-000299-GPOS-00117
     - SRG-OS-000300-GPOS-00118
-    - SRG-OS-000300-GPOS-00117
-    - SRG-OS-000480-GPOS-00227
     - SRG-OS-000379-GPOS-00164
   800-171r2:
-    - 3.1.3
-    - 3.1.17
+    - N/A
 macOS:
   - "11.0"
 tags:
-  - 800-171
-  - cnssi-1253
-  - 800-53r4_moderate
-  - 800-53r4_high
-  - STIG
-  - permanent
+  - stig
+severity: "medium"
 mobileconfig: false
 mobileconfig_info:
