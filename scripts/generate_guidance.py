@@ -322,7 +322,7 @@ def generate_profiles(baseline_name, build_path, parent_dir, baseline_yaml):
 
     for sections in baseline_yaml['profile']:
         for profile_rule in sections['rules']:
-            for rule in glob.glob('../rules/*/{}.yaml'.format(profile_rule)):
+            for rule in glob.glob('../rules/*/{}.yaml'.format(profile_rule)) + glob.glob('../custom/rules/**/{}.yaml'.format(profile_rule),recursive=True):
                 rule_yaml = get_rule_yaml(rule)
     
                 if rule_yaml['mobileconfig']:
@@ -575,75 +575,83 @@ defaults write "$audit_plist" lastComplianceCheck "$(date)"
     # Read all rules in the section and output the check functions
     for sections in baseline_yaml['profile']:
         for profile_rule in sections['rules']:
-            for rule in glob.glob('../rules/*/{}.yaml'.format(profile_rule)):
-                rule_yaml = get_rule_yaml(rule)
+            logging.debug(f"checking for rule file for {profile_rule}")
+            if glob.glob('../custom/rules/**/{}.yaml'.format(profile_rule),recursive=True):
+                rule = glob.glob('../custom/rules/**/{}.yaml'.format(profile_rule),recursive=True)[0]
+                logging.debug(f"{rule}")
+            elif glob.glob('../rules/*/{}.yaml'.format(profile_rule)):
+                rule = glob.glob('../rules/*/{}.yaml'.format(profile_rule))[0]
+                logging.debug(f"{rule}")
 
-                if rule_yaml['id'].startswith("supplemental"):
-                    continue
-                if "manual" in rule_yaml['tags']:
-                    continue
-                # grab the 800-53 controls
-                try:
-                    rule_yaml['references']['800-53r4']
-                except KeyError:
-                    nist_80053r4 = 'N/A'
-                else:
-                    nist_80053r4 = rule_yaml['references']['800-53r4']
-                
-                try:
-                    rule_yaml['references']['disa_stig']
-                except KeyError:
-                    stig_ref = rule_yaml['id']
-                else:
-                    if rule_yaml['references']['disa_stig'][0] == "N/A":
-                        stig_ref = [rule_yaml['id']]
-                    else:
-                        stig_ref = rule_yaml['references']['disa_stig']
-                    
-                try:
-                    rule_yaml['references']['ASCS']
-                except KeyError:
-                    ascs_ref = ''
-                else:
-                    ascs_ref = rule_yaml['references']['ASCS']
+            #for rule in glob.glob('../rules/*/{}.yaml'.format(profile_rule)) + glob.glob('../custom/rules/**/{}.yaml'.format(profile_rule),recursive=True):
+            rule_yaml = get_rule_yaml(rule)
+
+            if rule_yaml['id'].startswith("supplemental"):
+                continue
+            if "manual" in rule_yaml['tags']:
+                continue
+            # grab the 800-53 controls
+            try:
+                rule_yaml['references']['800-53r4']
+            except KeyError:
+                nist_80053r4 = 'N/A'
+            else:
+                nist_80053r4 = rule_yaml['references']['800-53r4']
             
-                if "STIG" in baseline_yaml['title']:
-                    logging.debug(f'Setting STIG reference for logging: {stig_ref}')
-                    log_reference_id = stig_ref
+            try:
+                rule_yaml['references']['disa_stig']
+            except KeyError:
+                stig_ref = rule_yaml['id']
+            else:
+                if rule_yaml['references']['disa_stig'][0] == "N/A":
+                    stig_ref = [rule_yaml['id']]
                 else:
-                    log_reference_id = [rule_yaml['id']]
+                    stig_ref = rule_yaml['references']['disa_stig']
+                
+            try:
+                rule_yaml['references']['ASCS']
+            except KeyError:
+                ascs_ref = ''
+            else:
+                ascs_ref = rule_yaml['references']['ASCS']
+        
+            if "STIG" in baseline_yaml['title']:
+                logging.debug(f'Setting STIG reference for logging: {stig_ref}')
+                log_reference_id = stig_ref
+            else:
+                log_reference_id = [rule_yaml['id']]
 
-            # group the controls
-                nist_80053r4.sort()
-                res = [list(i) for j, i in groupby(
-                    nist_80053r4, lambda a: a.split('(')[0])]
-                nist_controls = ''
-                for i in res:
-                    nist_controls += group_ulify(i)
+        # group the controls
+            nist_80053r4.sort()
+            res = [list(i) for j, i in groupby(
+                nist_80053r4, lambda a: a.split('(')[0])]
+            nist_controls = ''
+            for i in res:
+                nist_controls += group_ulify(i)
 
-                # print checks and result
-                try:
-                    check = rule_yaml['check']
-                except KeyError:
-                    print("no check found for {}".format(rule_yaml['id']))
-                    continue
-                try:
-                    result = rule_yaml['result']
-                except KeyError:
-                    #print("no result found for {}".format(rule_yaml['id']))
-                    continue
+            # print checks and result
+            try:
+                check = rule_yaml['check']
+            except KeyError:
+                print("no check found for {}".format(rule_yaml['id']))
+                continue
+            try:
+                result = rule_yaml['result']
+            except KeyError:
+                #print("no result found for {}".format(rule_yaml['id']))
+                continue
 
-                if "integer" in result:
-                    result_value = result['integer']
-                elif "boolean" in result:
-                    result_value = result['boolean']
-                elif "string" in result:
-                    result_value = result['string']
-                else:
-                    continue
+            if "integer" in result:
+                result_value = result['integer']
+            elif "boolean" in result:
+                result_value = result['boolean']
+            elif "string" in result:
+                result_value = result['string']
+            else:
+                continue
 
-                # write the checks
-                zsh_check_text = """
+            # write the checks
+            zsh_check_text = """
 #####----- Rule: {0} -----#####
 ## Addresses the following NIST 800-53 controls: {1}
 #echo 'Running the command to check the settings for: {0} ...' | tee -a "$audit_log"
@@ -660,21 +668,21 @@ else
 fi
     """.format(rule_yaml['id'], nist_controls.replace("\n", "\n#"), check.strip(), result, result_value, ','.join(log_reference_id))
 
-                check_function_string = check_function_string + zsh_check_text
+            check_function_string = check_function_string + zsh_check_text
 
-                # print fix and result
-                try:
-                    rule_yaml['fix']
-                except KeyError:
-                    fix_text = 'N/A'
-                else:
-                    fix_text = rule_yaml['fix'] or ["n/a"]
+            # print fix and result
+            try:
+                rule_yaml['fix']
+            except KeyError:
+                fix_text = 'N/A'
+            else:
+                fix_text = rule_yaml['fix'] or ["n/a"]
 
-    # write the fixes
+# write the fixes
 
-                if "[source,bash]" in fix_text:
-                    nist_controls_commented = nist_controls.replace('\n', '\n#')
-                    zsh_fix_text = f"""
+            if "[source,bash]" in fix_text:
+                nist_controls_commented = nist_controls.replace('\n', '\n#')
+                zsh_fix_text = f"""
 #####----- Rule: {rule_yaml['id']} -----#####
 ## Addresses the following NIST 800-53 controls: {nist_controls_commented}
 
@@ -690,7 +698,7 @@ else
 fi
     """
 
-                    fix_function_string = fix_function_string + zsh_fix_text
+                fix_function_string = fix_function_string + zsh_fix_text
 
     # write the footer for the check functions
     zsh_check_footer = """
@@ -774,11 +782,14 @@ fi
 def get_rule_yaml(rule_file):
     """ Takes a rule file, checks for a custom version, and returns the yaml for the rule
     """
-    if os.path.basename(rule_file) in glob.glob1('../custom/rules/', '*.yaml'):
-        #print(f"Custom settings found for rule: {rule_file}")
-        override_rule = os.path.join(
-            '../custom/rules', os.path.basename(rule_file))
-        with open(override_rule) as r:
+    names = [os.path.basename(x) for x in glob.glob('../custom/rules/**/*.yaml', recursive=True)]
+    file_name = os.path.basename(rule_file)
+
+    if file_name in names:
+        print(f"Custom settings found for rule: {rule_file}")
+        override_path = glob.glob('../custom/rules/**/{}'.format(file_name, recursive=True))[0]
+        #override_rule = os.path.join('../custom/rules', os.path.basename(rule_file))
+        with open(override_path) as r:
             rule_yaml = yaml.load(r, Loader=yaml.SafeLoader)
     else:
         with open(rule_file) as r:
@@ -933,41 +944,49 @@ def create_rules(baseline_yaml):
                   '800-171r2',
                   'srg']
 
+
     for sections in baseline_yaml['profile']:
         for profile_rule in sections['rules']:
-            for rule in glob.glob('../rules/*/{}.yaml'.format(profile_rule)):
-                rule_yaml = get_rule_yaml(rule)
+            if glob.glob('../custom/rules/**/{}.yaml'.format(profile_rule),recursive=True):
+                rule = glob.glob('../custom/rules/**/{}.yaml'.format(profile_rule),recursive=True)[0]
+                print(f"{rule}")
+            elif glob.glob('../rules/*/{}.yaml'.format(profile_rule)):
+                rule = glob.glob('../rules/*/{}.yaml'.format(profile_rule))[0]
+                print(f"{rule}")
 
-                for key in keys:
-                    try:
-                        rule_yaml[key]
-                    except:
-                        #print "{} key missing ..for {}".format(key, rule)
-                        rule_yaml.update({key: "missing"})
-                    if key == "references":
-                        for reference in references:
-                            try:
-                                rule_yaml[key][reference]
-                            except:
-                                #print "expected reference '{}' is missing in key '{}' for rule{}".format(reference, key, rule)
-                                rule_yaml[key].update({reference: ["None"]})
-                all_rules.append(MacSecurityRule(rule_yaml['title'].replace('|', '\|'),
-                                            rule_yaml['id'].replace('|', '\|'),
-                                            rule_yaml['severity'].replace('|', '\|'),
-                                            rule_yaml['discussion'].replace('|', '\|'),
-                                            rule_yaml['check'].replace('|', '\|'),
-                                            rule_yaml['fix'].replace('|', '\|'),
-                                            rule_yaml['references']['cci'],
-                                            rule_yaml['references']['cce'],
-                                            rule_yaml['references']['800-53r4'],
-                                            rule_yaml['references']['800-171r2'],
-                                            rule_yaml['references']['disa_stig'],
-                                            rule_yaml['references']['srg'],
-                                            rule_yaml['tags'],
-                                            rule_yaml['result'],
-                                            rule_yaml['mobileconfig'],
-                                            rule_yaml['mobileconfig_info']
-                                            ))
+            #for rule in glob.glob('../rules/*/{}.yaml'.format(profile_rule)) + glob.glob('../custom/rules/**/{}.yaml'.format(profile_rule),recursive=True):
+            rule_yaml = get_rule_yaml(rule)
+
+            for key in keys:
+                try:
+                    rule_yaml[key]
+                except:
+                    #print "{} key missing ..for {}".format(key, rule)
+                    rule_yaml.update({key: "missing"})
+                if key == "references":
+                    for reference in references:
+                        try:
+                            rule_yaml[key][reference]
+                        except:
+                            #print "expected reference '{}' is missing in key '{}' for rule{}".format(reference, key, rule)
+                            rule_yaml[key].update({reference: ["None"]})
+            all_rules.append(MacSecurityRule(rule_yaml['title'].replace('|', '\|'),
+                                        rule_yaml['id'].replace('|', '\|'),
+                                        rule_yaml['severity'].replace('|', '\|'),
+                                        rule_yaml['discussion'].replace('|', '\|'),
+                                        rule_yaml['check'].replace('|', '\|'),
+                                        rule_yaml['fix'].replace('|', '\|'),
+                                        rule_yaml['references']['cci'],
+                                        rule_yaml['references']['cce'],
+                                        rule_yaml['references']['800-53r4'],
+                                        rule_yaml['references']['800-171r2'],
+                                        rule_yaml['references']['disa_stig'],
+                                        rule_yaml['references']['srg'],
+                                        rule_yaml['tags'],
+                                        rule_yaml['result'],
+                                        rule_yaml['mobileconfig'],
+                                        rule_yaml['mobileconfig_info']
+                                        ))
 
     return all_rules
 
@@ -1184,6 +1203,9 @@ def main():
         for rule in sections['rules']:
             logging.debug(f'processing rule id: {rule}')
             rule_path = glob.glob('../rules/*/{}.yaml'.format(rule))
+            if not rule_path:
+                print(f"Rule file not found in library, checking in custom folder for rule: {rule}")
+                rule_path = glob.glob('../custom/rules/**/{}.yaml'.format(rule), recursive=True)
             try:
                 rule_file = (os.path.basename(rule_path[0]))
             except IndexError:
@@ -1191,9 +1213,9 @@ def main():
 
 
             #check for custom rule
-            if rule_file in glob.glob1('../custom/rules/', '*.yaml'):
+            if glob.glob('../custom/rules/**/{}'.format(rule_file), recursive=True):
                 print(f"Custom settings found for rule: {rule_file}")
-                override_rule = os.path.join('../custom/rules', rule_file)
+                override_rule = glob.glob('../custom/rules/**/{}'.format(rule_file), recursive=True)[0]
                 with open(override_rule) as r:
                     rule_yaml = yaml.load(r, Loader=yaml.SafeLoader)
             else:
