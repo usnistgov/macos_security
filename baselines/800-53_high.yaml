@@ -162,7 +162,7 @@ profile:
       - os_prevent_unauthorized_disclosure
       - os_crypto_audit
       - pwpolicy_temporary_accounts_disable
-      - pwpolicy_force_change_password_change
+      - pwpolicy_force_password_change
       - pwpolicy_emergency_accounts_disable
   - section: "Permanent"
     rules:

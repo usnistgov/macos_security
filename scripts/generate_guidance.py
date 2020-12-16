@@ -411,6 +411,36 @@ def generate_profiles(baseline_name, build_path, parent_dir, baseline_yaml):
     be available through the vendor.
     """)
 
+def default_audit_plist(baseline_name, build_path, baseline_yaml):
+    """"Generate the default audit plist file to define exemptions
+    """
+    
+    # Output folder
+    plist_output_path = os.path.join(
+        f'{build_path}', 'preferences')
+    if not (os.path.isdir(plist_output_path)):
+        try:
+            os.makedirs(plist_output_path)
+        except OSError:
+            print("Creation of the directory %s failed" %
+                  plist_output_path)
+
+    plist_file_path = os.path.join(
+                plist_output_path, 'org.' + baseline_name + '.audit.plist')
+
+    plist_file = open(plist_file_path, "wb")
+
+    plist_dict = {}
+
+    for sections in baseline_yaml['profile']:
+        for profile_rule in sections['rules']:
+            if profile_rule.startswith("supplemental"):
+                continue
+            plist_dict[profile_rule] = { "exempt": False }
+    
+    plistlib.dump(plist_dict, plist_file)
+
+
 def generate_script(baseline_name, build_path, baseline_yaml):
     """Generates the zsh script from the rules in the baseline YAML
     """
@@ -439,6 +469,9 @@ if [[ $EUID -ne 0 ]]; then
     echo "This script must be run as root"
     exit 1
 fi
+
+# path to PlistBuddy
+plb="/usr/libexec/PlistBuddy"
 
 # get the currently logged in user
 CURRENT_USER=$(scutil <<< "show State:/Users/ConsoleUser" | awk '/Name :/ && ! /loginwindow/ {{ print $3 }}')
@@ -535,11 +568,13 @@ generate_report(){{
     results=$(/usr/libexec/PlistBuddy -c "Print" /Library/Preferences/org.{baseline_name}.audit.plist)
 
     while IFS= read -r line; do
-        if [[ "$line" =~ "true" ]]; then
-            non_compliant=$((non_compliant+1))
-        fi
-        if [[ "$line" =~ "false" ]]; then
-            compliant=$((compliant+1))
+        if [[ "$line" =~ "finding" ]];then
+            if [[ "$line" =~ "true" ]]; then
+                non_compliant=$((non_compliant+1))
+            fi
+            if [[ "$line" =~ "false" ]]; then
+                compliant=$((compliant+1))
+            fi
         fi
 
     done <<< "$results"
@@ -614,7 +649,7 @@ defaults write "$audit_plist" lastComplianceCheck "$(date)"
                 ascs_ref = ''
             else:
                 ascs_ref = rule_yaml['references']['ASCS']
-        
+            
             if "STIG" in baseline_yaml['title']:
                 logging.debug(f'Setting STIG reference for logging: {stig_ref}')
                 log_reference_id = stig_ref
@@ -659,12 +694,21 @@ unset result_value
 result_value=$({2})
 # expected result {3}
 
-if [[ $result_value == "{4}" ]]; then
-    echo "$(date -u) {5} passed (Result: $result_value, Expected: "{3}")" | tee -a "$audit_log"
-    defaults write "$audit_plist" {0} -bool NO
-else
-    echo "$(date -u) {5} failed (Result: $result_value, Expected: "{3}")" | tee -a "$audit_log"
-    defaults write "$audit_plist" {0} -bool YES
+# check to see if rule is exempt
+unset exempt
+exempt=$($plb -c "print {0}:exempt" "$audit_plist")
+exempt_reason=$($plb -c "print {0}:exempt_reason" "$audit_plist" 2&>/dev/null)
+
+if [[ ! $exempt == "true" ]];then
+    if [[ $result_value == "{4}" ]]; then
+        echo "$(date -u) {5} passed (Result: $result_value, Expected: "{3}")" | tee -a "$audit_log"
+        defaults write "$audit_plist" {0} -dict-add finding -bool NO
+    else
+        echo "$(date -u) {5} failed (Result: $result_value, Expected: "{3}")" | tee -a "$audit_log"
+        defaults write "$audit_plist" {0} -dict-add finding -bool YES
+    fi
+elif [[ ! -z "$exempt_reason" ]];then
+    echo "$(date -u) {5} has an exemption (Reason: "$exempt_reason")" | tee -a "$audit_log"
 fi
     """.format(rule_yaml['id'], nist_controls.replace("\n", "\n#"), check.strip(), result, result_value, ','.join(log_reference_id))
 
@@ -686,15 +730,24 @@ fi
 #####----- Rule: {rule_yaml['id']} -----#####
 ## Addresses the following NIST 800-53 controls: {nist_controls_commented}
 
-{rule_yaml['id']}_audit_score=$(defaults read $audit_plist {rule_yaml['id']})
-if [[ ${rule_yaml['id']}_audit_score == 1 ]]; then
-    ask '{rule_yaml['id']} - Run the command(s)-> {quotify(get_fix_code(rule_yaml['fix']).strip())} ' N
-    if [[ $? == 0 ]]; then
-        echo 'Running the command to configure the settings for: {rule_yaml['id']} ...' | tee -a "$audit_log"
-        {get_fix_code(rule_yaml['fix']).strip()}
+# check to see if rule is exempt
+unset exempt
+exempt=$($plb -c "print {rule_yaml['id']}:exempt" "$audit_plist")
+exempt_reason=$($plb -c "print {rule_yaml['id']}:exempt_reason" "$audit_plist" 2&>/dev/null)
+
+{rule_yaml['id']}_audit_score=$($plb -c "print {rule_yaml['id']}:finding" $audit_plist)
+if [[ ! $exempt == "true" ]];then
+    if [[ ${rule_yaml['id']}_audit_score == "true" ]]; then
+        ask '{rule_yaml['id']} - Run the command(s)-> {quotify(get_fix_code(rule_yaml['fix']).strip())} ' N
+        if [[ $? == 0 ]]; then
+            echo 'Running the command to configure the settings for: {rule_yaml['id']} ...' | tee -a "$audit_log"
+            {get_fix_code(rule_yaml['fix']).strip()}
+        fi
+    else
+        echo 'Settings for: {rule_yaml['id']} already configured, continuing...' | tee -a "$audit_log"
     fi
-else
-    echo 'Settings for: {rule_yaml['id']} already configured, continuing...' | tee -a "$audit_log"
+elif [[ ! -z "$exempt_reason" ]];then
+    echo "$(date -u) {rule_yaml['id']} has an exemption (Reason: "$exempt_reason")" | tee -a "$audit_log"
 fi
     """
 
@@ -735,7 +788,7 @@ if [[ ! $fix ]]; then
 fi
 
 # append to existing logfile
-echo "$(date -u) Beginning FISMA fixes" >> "$audit_log"
+echo "$(date -u) Beginning remediation of non-compliant settings" >> "$audit_log"
 
 
     """
@@ -750,12 +803,14 @@ if (( # >= 2));then
     exit 1
 fi
 
-zparseopts -D -E -check=check -fix=fix
+zparseopts -D -E -check=check -fix=fix -configure=configure
 
 if [[ $check ]];then
     run_scan
 elif [[ $fix ]];then    
     run_fix
+elif [[ $configure ]];then
+    run_configure
 else
     while true; do
         show_menus
@@ -1003,6 +1058,8 @@ def create_args():
                         help="Full path to logo file to be included in the guide.", action="store")
     parser.add_argument("-p", "--profiles", default=None,
                         help="Generate configuration profiles for the rules.", action="store_true")
+    parser.add_argument("-r", "--reference", default=None,
+                        help="Use the reference ID instead of rule ID for identification.", action="store")
     parser.add_argument("-s", "--script", default=None,
                         help="Generate the compliance script for the rules.", action="store_true")
     # add gary argument to include tags for XCCDF generation, with a nod to Gary the SCAP guru
@@ -1045,7 +1102,7 @@ def main():
     try:
         output_basename = os.path.basename(args.baseline.name)
         output_filename = os.path.splitext(output_basename)[0]
-        baseline_name = os.path.splitext(output_basename)[0].capitalize()
+        baseline_name = os.path.splitext(output_basename)[0]#.capitalize()
         file_dir = os.path.dirname(os.path.abspath(__file__))
         parent_dir = os.path.dirname(file_dir)
 
@@ -1370,6 +1427,7 @@ def main():
     if args.script:
         print("Generating compliance script...")
         generate_script(baseline_name, build_path, baseline_yaml)
+        default_audit_plist(baseline_name, build_path, baseline_yaml)
     
     if args.xls:
         print('Generating excel document...')
