@@ -1004,10 +1004,8 @@ def create_rules(baseline_yaml):
         for profile_rule in sections['rules']:
             if glob.glob('../custom/rules/**/{}.yaml'.format(profile_rule),recursive=True):
                 rule = glob.glob('../custom/rules/**/{}.yaml'.format(profile_rule),recursive=True)[0]
-                print(f"{rule}")
             elif glob.glob('../rules/*/{}.yaml'.format(profile_rule)):
                 rule = glob.glob('../rules/*/{}.yaml'.format(profile_rule))[0]
-                print(f"{rule}")
 
             #for rule in glob.glob('../rules/*/{}.yaml'.format(profile_rule)) + glob.glob('../custom/rules/**/{}.yaml'.format(profile_rule),recursive=True):
             rule_yaml = get_rule_yaml(rule)
