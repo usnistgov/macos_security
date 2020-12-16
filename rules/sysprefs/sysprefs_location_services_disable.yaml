@@ -7,7 +7,7 @@ discussion: |
 check: |
   /usr/bin/defaults read /var/db/locationd/Library/Preferences/ByHost/com.apple.locationd.plist LocationServicesEnabled
 result:
-  integer: 0
+  boolean: 0
 fix: |
   [source,bash]
   ----
