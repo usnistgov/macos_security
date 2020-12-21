@@ -1209,10 +1209,20 @@ def main():
                                 x += 1
                                 continue
                     if "awk" in command[3]:
+                        
                         awk_file = rule_yaml['check'].split("'")[2].strip(" ")
                         
                         awk_search = rule_yaml['check'].split("'")[1].split("/")[1]
+                        field_sep = rule_yaml['check'].split("-F")[1].split(" ")[0].replace('\"',"")
                         
+                        try: 
+                        
+                            awk_result = rule_yaml['result']['string']
+                            
+                        except: 
+                            
+                            awk_result = str(rule_yaml['result']['integer'])
+
                         oval_definition = oval_definition + '''
                 <definition id="oval:mscp:def:{}" version="1" class="compliance"> 
                         <metadata> 
@@ -1236,7 +1246,7 @@ def main():
                     <pattern operation="pattern match">{}</pattern>
                     <instance datatype="int">1</instance>
                 </textfilecontent54_object>
-                '''.format(x,rule_yaml['id'],awk_file.rstrip(),"^" + awk_search + ":" + rule_yaml['result']['string'])
+                '''.format(x,rule_yaml['id'],awk_file.rstrip(),"^" + awk_search + field_sep + awk_result)
                         x += 1
                         continue
                     if "grep" in command[3]:
