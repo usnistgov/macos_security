@@ -22,7 +22,7 @@ fix: |
   <string>Minimum Password Lifetime</string>
   <key>policyParameters</key>
   <dict>
-  <key>policyAttributeMinimumLifetimeHours<key>
+  <key>policyAttributeMinimumLifetimeHours</key>
   <integer>24</integer>
   </dict>
   </dict>

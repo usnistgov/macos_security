@@ -5,7 +5,7 @@ discussion: |
 
   Frequently, an attacker that successfully gains access to a system has only gained access to an account with limited privileges, such as a guest account or a service account. The attacker must attempt to change to another user account with normal or elevated privileges in order to proceed. Auditing both successful and unsuccessful attempts to switch to another user account (by way of monitoring login and logout events) mitigates this risk.
 
-  The information system monitors and login and logout events.
+  The information system monitors login and logout events.
 check: |
   /usr/bin/grep -Ec "^flags*.lo" /etc/security/audit_control
 result:
