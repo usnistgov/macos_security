@@ -25,7 +25,6 @@ references:
 macOS:
   - "11.0"
 tags:
-
   - permanent
 mobileconfig: false
 mobileconfig_info:

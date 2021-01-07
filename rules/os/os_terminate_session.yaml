@@ -20,7 +20,6 @@ references:
 macOS:
   - "11.0"
 tags:
-
   - inherent
 mobileconfig: false
 mobileconfig_info:
