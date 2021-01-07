@@ -13,18 +13,20 @@ references:
     - CCE-85301-0
   cci: 
     - CCI-000381
-    - CCI-001774
+    - CCI-001150
+    - CCI-001153
   800-53r4:
     - N/A
   srg: 
     - SRG-OS-000095-GPOS-00049
     - SRG-OS-000370-GPOS-00155
   disa_stig:
-    - AOSX-15-002017
+    - APPL-11-002017
 macOS:
   - "11.0"
 tags:
-  - STIG
+  - stig
+severity: "medium"
 mobileconfig: true
 mobileconfig_info:
   com.apple.applicationaccess:

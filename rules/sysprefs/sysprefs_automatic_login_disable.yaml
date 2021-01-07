@@ -21,7 +21,7 @@ references:
   srg:
     - SRG-OS-000480-GPOS-00229
   disa_stig:
-    - AOSX-15-002066
+    - APPL-11-002066
   800-171r2:
     - 3.5.1
     - 3.5.2
@@ -33,7 +33,8 @@ tags:
   - 800-53r4_low
   - 800-53r4_moderate
   - 800-53r4_high
-  - STIG
+  - stig
+severity: "medium"
 mobileconfig: true
 mobileconfig_info:
   com.apple.loginwindow:

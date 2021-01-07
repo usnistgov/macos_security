@@ -25,12 +25,11 @@ references:
   srg: 
    - SRG-OS-000067-GPOS-00035
   disa_stig: 
-   - AOSX-15-003002
+   - APPL-11-003002
 macOS:
   - "11.0"
 tags:
   - 800-53r4_high
-  - STIG
 mobileconfig: true
 mobileconfig_info:
   com.apple.security.smartcard:

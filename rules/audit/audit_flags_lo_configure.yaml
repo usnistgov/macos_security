@@ -28,10 +28,9 @@ references:
     - MA-4(1)
   srg:
     - SRG-OS-000032-GPOS-00013
-    - SRG-OS-000064-GPOS-00033
     - SRG-OS-000462-GPOS-00206
   disa_stig:
-    - AOSX-15-001002
+    - APPL-11-001002
   800-171r2:
     - 3.1.12
     - 3.3.1
@@ -44,6 +43,7 @@ tags:
   - 800-53r4_low
   - 800-53r4_moderate
   - 800-53r4_high
-  - STIG
+  - stig
+severity: "medium"
 mobileconfig: false
 mobileconfig_info:

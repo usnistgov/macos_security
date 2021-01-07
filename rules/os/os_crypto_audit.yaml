@@ -27,7 +27,7 @@ macOS:
   - "11.0"
 tags:
   - 800-53r4_high
-  - STIG
+
   - inherent
 mobileconfig: false
 mobileconfig_info:

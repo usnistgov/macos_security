@@ -18,13 +18,13 @@ references:
   cce:
     - CCE-85405-9
   cci:
-    - CCI-001682
+    - N/A
   800-53r4: 
     - AC-2(2)
   srg: 
-    - SRG-OS-00123-GPOS-00064
+    - N/A
   disa_stig:
-    - AOSX-15-000013
+    - N/A
 macOS:
   - "11.0"
 tags:

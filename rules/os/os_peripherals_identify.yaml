@@ -12,19 +12,17 @@ references:
   cce:
     - CCE-85354-9
   cci:
-    - CCI-000778
+    - N/A
   800-53r4:
     - N/A
   srg:
-    - SRG-OS-000114-GPOS-00059
+    - N/A
   disa_stig:
-    - AOSX-15-002069
   800-171r2:
     - N/A       
 macOS:
   - "11.0"
 tags:
-  - STIG
   - inherent
 mobileconfig: false
 mobileconfig_info:
