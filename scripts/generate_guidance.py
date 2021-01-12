@@ -268,7 +268,6 @@ class PayloadDict:
     def finalizeAndSave(self, output_path):
         """Perform last modifications and save to an output plist.
         """
-
         plistlib.dump(self.data, output_path)
         print(f"Configuration profile written to {output_path.name}")
 
@@ -294,7 +293,7 @@ def concatenate_payload_settings(settings):
     return [settings_dict]
 
 
-def generate_profiles(baseline_name, build_path, parent_dir, baseline_yaml):
+def generate_profiles(baseline_name, build_path, parent_dir, baseline_yaml, signing, hash=''):
     """Generate the configuration profiles for the rules in the provided baseline YAML file
     """
     organization = "macOS Security Compliance Project"
@@ -386,7 +385,7 @@ def generate_profiles(baseline_name, build_path, parent_dir, baseline_yaml):
                                  displayname=displayname,
                                  description=description)
 
-        config_file = open(mobileconfig_file_path, "wb")
+        
 
         if payload == "com.apple.ManagedClient.preferences":
             for item in settings:
@@ -398,9 +397,20 @@ def generate_profiles(baseline_name, build_path, parent_dir, baseline_yaml):
         else:
             newProfile.addNewPayload(payload, settings, baseline_name)
 
-        newProfile.finalizeAndSave(config_file)
-        config_file.close()
+        if signing:
+            unsigned_file_path=os.path.join(mobileconfig_file_path + ".unsigned")
+            unsigned_config_file = open(unsigned_file_path, "wb")
+            newProfile.finalizeAndSave(unsigned_config_file)
+            unsigned_config_file.close()
+            # sign the profiles
+            sign_config_profile(unsigned_file_path, mobileconfig_file_path, hash)
+            # delete the unsigned
 
+        else:
+            config_file = open(mobileconfig_file_path, "wb")
+            newProfile.finalizeAndSave(config_file)
+            config_file.close()
+            
     print(f"""
     CAUTION: These configuration profiles are intended for evaluation in a TEST
     environment. Certain configuration profiles (Smartcards), when applied could 
@@ -1065,6 +1075,8 @@ def create_args():
                         help=argparse.SUPPRESS, action="store_true")
     parser.add_argument("-x", "--xls", default=None,
                         help="Generate the excel (xls) document for the rules.", action="store_true")
+    parser.add_argument("-H", "--hash", default=None,
+                        help="sign the configuration profiles with subject key ID (hash value without spaces)")
     return parser.parse_args()
 
 def is_asciidoctor_installed():
@@ -1087,6 +1099,15 @@ def is_asciidoctor_pdf_installed():
     process = subprocess.Popen(cmd.split(), stdout=subprocess.PIPE)
     output, error = process.communicate()
 
+    return output.decode("utf-8")
+
+def sign_config_profile(in_file, out_file, hash):
+    """Signs the configuration profile using the identity associated with the provided hash
+    """
+    cmd = f"security cms -S -Z {hash} -i {in_file} -o {out_file}"
+    process = subprocess.Popen(cmd.split(), stdout=subprocess.PIPE)
+    output, error = process.communicate()
+    print(f"Signed Configuration profile written to {out_file}")
     return output.decode("utf-8")
 
 def main():
@@ -1125,6 +1146,10 @@ def main():
         print('Profile YAML:', args.baseline.name)
         print('Output path:', adoc_output_file.name)
 
+        if args.hash:
+            signing = True
+        else:
+            signing = False 
 
     except IOError as msg:
         parser.error(str(msg))
@@ -1420,7 +1445,7 @@ def main():
     
     if args.profiles:
         print("Generating configuration profiles...")
-        generate_profiles(baseline_name, build_path, parent_dir, baseline_yaml)
+        generate_profiles(baseline_name, build_path, parent_dir, baseline_yaml, signing, args.hash)
     
     if args.script:
         print("Generating compliance script...")
