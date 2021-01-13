@@ -14,6 +14,7 @@ import re
 import argparse
 import subprocess
 import logging
+import tempfile
 from xlwt import Workbook
 from string import Template
 from itertools import groupby
@@ -1119,6 +1120,22 @@ def is_asciidoctor_pdf_installed():
 
     return output.decode("utf-8")
 
+def verify_signing_hash(hash):
+    """Attempts to validate the existance of the certificate provided by the hash
+    """
+    with tempfile.NamedTemporaryFile(mode="w", delete=False) as in_file:
+        unsigned_tmp_file_path=in_file.name
+        in_file.write("temporary file for signing")
+    
+        cmd = f"security cms -S -Z {hash} -i {unsigned_tmp_file_path}"
+        FNULL = open(os.devnull, 'w')
+        process = subprocess.Popen(cmd.split(), stdout=FNULL, stderr=FNULL)
+        output, error = process.communicate()
+    if process.returncode == 0:
+        return True
+    else:
+        return False
+        
 def sign_config_profile(in_file, out_file, hash):
     """Signs the configuration profile using the identity associated with the provided hash
     """
@@ -1166,6 +1183,8 @@ def main():
 
         if args.hash:
             signing = True
+            if not verify_signing_hash(args.hash):
+                sys.exit('Cannot use the provided hash to sign.  Please make sure you provide the subject key ID hash from an installed certificate')
         else:
             signing = False 
 
