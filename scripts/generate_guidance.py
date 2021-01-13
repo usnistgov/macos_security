@@ -14,6 +14,7 @@ import re
 import argparse
 import subprocess
 import logging
+import tempfile
 from xlwt import Workbook
 from string import Template
 from itertools import groupby
@@ -268,7 +269,6 @@ class PayloadDict:
     def finalizeAndSave(self, output_path):
         """Perform last modifications and save to an output plist.
         """
-
         plistlib.dump(self.data, output_path)
         print(f"Configuration profile written to {output_path.name}")
 
@@ -294,7 +294,7 @@ def concatenate_payload_settings(settings):
     return [settings_dict]
 
 
-def generate_profiles(baseline_name, build_path, parent_dir, baseline_yaml):
+def generate_profiles(baseline_name, build_path, parent_dir, baseline_yaml, signing, hash=''):
     """Generate the configuration profiles for the rules in the provided baseline YAML file
     """
     organization = "macOS Security Compliance Project"
@@ -307,14 +307,24 @@ def generate_profiles(baseline_name, build_path, parent_dir, baseline_yaml):
         manifests = yaml.load(r, Loader=yaml.SafeLoader)
 
     # Output folder
-    mobileconfig_output_path = os.path.join(
-        f'{build_path}', 'mobileconfigs')
-    if not (os.path.isdir(mobileconfig_output_path)):
+    unsigned_mobileconfig_output_path = os.path.join(
+        f'{build_path}', 'mobileconfigs', 'unsigned')
+    if not (os.path.isdir(unsigned_mobileconfig_output_path)):
         try:
-            os.makedirs(mobileconfig_output_path)
+            os.makedirs(unsigned_mobileconfig_output_path)
         except OSError:
             print("Creation of the directory %s failed" %
-                  mobileconfig_output_path)
+                  unsigned_mobileconfig_output_path)
+    
+    if signing:
+        signed_mobileconfig_output_path = os.path.join(
+            f'{build_path}', 'mobileconfigs', 'signed')
+        if not (os.path.isdir(signed_mobileconfig_output_path)):
+            try:
+                os.makedirs(signed_mobileconfig_output_path)
+            except OSError:
+                print("Creation of the directory %s failed" %
+                    signed_mobileconfig_output_path)
 
     # setup lists and dictionaries
     profile_errors = []
@@ -370,11 +380,17 @@ def generate_profiles(baseline_name, build_path, parent_dir, baseline_yaml):
     # process the payloads from the yaml file and generate new config profile for each type
     for payload, settings in profile_types.items():
         if payload.startswith("."):
-            mobileconfig_file_path = os.path.join(
-                mobileconfig_output_path, "com.apple" + payload + '.mobileconfig')
+            unsigned_mobileconfig_file_path = os.path.join(
+                unsigned_mobileconfig_output_path, "com.apple" + payload + '.mobileconfig')
+            if signing:
+                signed_mobileconfig_file_path = os.path.join(
+                signed_mobileconfig_output_path, "com.apple" + payload + '.mobileconfig')
         else:
-            mobileconfig_file_path = os.path.join(
-                mobileconfig_output_path, payload + '.mobileconfig')
+            unsigned_mobileconfig_file_path = os.path.join(
+                unsigned_mobileconfig_output_path, payload + '.mobileconfig')
+            if signing:
+                signed_mobileconfig_file_path = os.path.join(
+                signed_mobileconfig_output_path, payload + '.mobileconfig')
         identifier = payload + f".{baseline_name}"
         description = "Configuration settings for the {} preference domain.".format(
             payload)
@@ -386,7 +402,7 @@ def generate_profiles(baseline_name, build_path, parent_dir, baseline_yaml):
                                  displayname=displayname,
                                  description=description)
 
-        config_file = open(mobileconfig_file_path, "wb")
+        
 
         if payload == "com.apple.ManagedClient.preferences":
             for item in settings:
@@ -398,9 +414,20 @@ def generate_profiles(baseline_name, build_path, parent_dir, baseline_yaml):
         else:
             newProfile.addNewPayload(payload, settings, baseline_name)
 
-        newProfile.finalizeAndSave(config_file)
-        config_file.close()
+        if signing:
+            unsigned_file_path=os.path.join(unsigned_mobileconfig_file_path)
+            unsigned_config_file = open(unsigned_file_path, "wb")
+            newProfile.finalizeAndSave(unsigned_config_file)
+            unsigned_config_file.close()
+            # sign the profiles
+            sign_config_profile(unsigned_file_path, signed_mobileconfig_file_path, hash)
+            # delete the unsigned
 
+        else:
+            config_file = open(unsigned_mobileconfig_file_path, "wb")
+            newProfile.finalizeAndSave(config_file)
+            config_file.close()
+            
     print(f"""
     CAUTION: These configuration profiles are intended for evaluation in a TEST
     environment. Certain configuration profiles (Smartcards), when applied could 
@@ -1050,6 +1077,8 @@ def create_args():
         description='Given a baseline, create guidance documents and files.')
     parser.add_argument("baseline", default=None,
                         help="Baseline YAML file used to create the guide.", type=argparse.FileType('rt'))
+    parser.add_argument("-c", "--clean", default=None,
+                        help=argparse.SUPPRESS, action="store_true")
     parser.add_argument("-d", "--debug", default=None,
                         help=argparse.SUPPRESS, action="store_true")
     parser.add_argument("-l", "--logo", default=None,
@@ -1065,6 +1094,8 @@ def create_args():
                         help=argparse.SUPPRESS, action="store_true")
     parser.add_argument("-x", "--xls", default=None,
                         help="Generate the excel (xls) document for the rules.", action="store_true")
+    parser.add_argument("-H", "--hash", default=None,
+                        help="sign the configuration profiles with subject key ID (hash value without spaces)")
     return parser.parse_args()
 
 def is_asciidoctor_installed():
@@ -1087,6 +1118,31 @@ def is_asciidoctor_pdf_installed():
     process = subprocess.Popen(cmd.split(), stdout=subprocess.PIPE)
     output, error = process.communicate()
 
+    return output.decode("utf-8")
+
+def verify_signing_hash(hash):
+    """Attempts to validate the existance of the certificate provided by the hash
+    """
+    with tempfile.NamedTemporaryFile(mode="w") as in_file:
+        unsigned_tmp_file_path=in_file.name
+        in_file.write("temporary file for signing")
+    
+        cmd = f"security cms -S -Z {hash} -i {unsigned_tmp_file_path}"
+        FNULL = open(os.devnull, 'w')
+        process = subprocess.Popen(cmd.split(), stdout=FNULL, stderr=FNULL)
+        output, error = process.communicate()
+    if process.returncode == 0:
+        return True
+    else:
+        return False
+        
+def sign_config_profile(in_file, out_file, hash):
+    """Signs the configuration profile using the identity associated with the provided hash
+    """
+    cmd = f"security cms -S -Z {hash} -i {in_file} -o {out_file}"
+    process = subprocess.Popen(cmd.split(), stdout=subprocess.PIPE)
+    output, error = process.communicate()
+    print(f"Signed Configuration profile written to {out_file}")
     return output.decode("utf-8")
 
 def main():
@@ -1125,6 +1181,12 @@ def main():
         print('Profile YAML:', args.baseline.name)
         print('Output path:', adoc_output_file.name)
 
+        if args.hash:
+            signing = True
+            if not verify_signing_hash(args.hash):
+                sys.exit('Cannot use the provided hash to sign.  Please make sure you provide the subject key ID hash from an installed certificate')
+        else:
+            signing = False 
 
     except IOError as msg:
         parser.error(str(msg))
@@ -1420,7 +1482,7 @@ def main():
     
     if args.profiles:
         print("Generating configuration profiles...")
-        generate_profiles(baseline_name, build_path, parent_dir, baseline_yaml)
+        generate_profiles(baseline_name, build_path, parent_dir, baseline_yaml, signing, args.hash)
     
     if args.script:
         print("Generating compliance script...")
