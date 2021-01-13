@@ -1123,7 +1123,7 @@ def is_asciidoctor_pdf_installed():
 def verify_signing_hash(hash):
     """Attempts to validate the existance of the certificate provided by the hash
     """
-    with tempfile.NamedTemporaryFile(mode="w", delete=False) as in_file:
+    with tempfile.NamedTemporaryFile(mode="w") as in_file:
         unsigned_tmp_file_path=in_file.name
         in_file.write("temporary file for signing")
     
