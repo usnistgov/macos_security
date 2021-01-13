@@ -306,14 +306,24 @@ def generate_profiles(baseline_name, build_path, parent_dir, baseline_yaml, sign
         manifests = yaml.load(r, Loader=yaml.SafeLoader)
 
     # Output folder
-    mobileconfig_output_path = os.path.join(
-        f'{build_path}', 'mobileconfigs')
-    if not (os.path.isdir(mobileconfig_output_path)):
+    unsigned_mobileconfig_output_path = os.path.join(
+        f'{build_path}', 'mobileconfigs', 'unsigned')
+    if not (os.path.isdir(unsigned_mobileconfig_output_path)):
         try:
-            os.makedirs(mobileconfig_output_path)
+            os.makedirs(unsigned_mobileconfig_output_path)
         except OSError:
             print("Creation of the directory %s failed" %
-                  mobileconfig_output_path)
+                  unsigned_mobileconfig_output_path)
+    
+    if signing:
+        signed_mobileconfig_output_path = os.path.join(
+            f'{build_path}', 'mobileconfigs', 'signed')
+        if not (os.path.isdir(signed_mobileconfig_output_path)):
+            try:
+                os.makedirs(signed_mobileconfig_output_path)
+            except OSError:
+                print("Creation of the directory %s failed" %
+                    signed_mobileconfig_output_path)
 
     # setup lists and dictionaries
     profile_errors = []
@@ -369,11 +379,17 @@ def generate_profiles(baseline_name, build_path, parent_dir, baseline_yaml, sign
     # process the payloads from the yaml file and generate new config profile for each type
     for payload, settings in profile_types.items():
         if payload.startswith("."):
-            mobileconfig_file_path = os.path.join(
-                mobileconfig_output_path, "com.apple" + payload + '.mobileconfig')
+            unsigned_mobileconfig_file_path = os.path.join(
+                unsigned_mobileconfig_output_path, "com.apple" + payload + '.mobileconfig')
+            if signing:
+                signed_mobileconfig_file_path = os.path.join(
+                signed_mobileconfig_output_path, "com.apple" + payload + '.mobileconfig')
         else:
-            mobileconfig_file_path = os.path.join(
-                mobileconfig_output_path, payload + '.mobileconfig')
+            unsigned_mobileconfig_file_path = os.path.join(
+                unsigned_mobileconfig_output_path, payload + '.mobileconfig')
+            if signing:
+                signed_mobileconfig_file_path = os.path.join(
+                signed_mobileconfig_output_path, payload + '.mobileconfig')
         identifier = payload + f".{baseline_name}"
         description = "Configuration settings for the {} preference domain.".format(
             payload)
@@ -398,16 +414,16 @@ def generate_profiles(baseline_name, build_path, parent_dir, baseline_yaml, sign
             newProfile.addNewPayload(payload, settings, baseline_name)
 
         if signing:
-            unsigned_file_path=os.path.join(mobileconfig_file_path + ".unsigned")
+            unsigned_file_path=os.path.join(unsigned_mobileconfig_file_path)
             unsigned_config_file = open(unsigned_file_path, "wb")
             newProfile.finalizeAndSave(unsigned_config_file)
             unsigned_config_file.close()
             # sign the profiles
-            sign_config_profile(unsigned_file_path, mobileconfig_file_path, hash)
+            sign_config_profile(unsigned_file_path, signed_mobileconfig_file_path, hash)
             # delete the unsigned
 
         else:
-            config_file = open(mobileconfig_file_path, "wb")
+            config_file = open(unsigned_mobileconfig_file_path, "wb")
             newProfile.finalizeAndSave(config_file)
             config_file.close()
             
@@ -1060,6 +1076,8 @@ def create_args():
         description='Given a baseline, create guidance documents and files.')
     parser.add_argument("baseline", default=None,
                         help="Baseline YAML file used to create the guide.", type=argparse.FileType('rt'))
+    parser.add_argument("-c", "--clean", default=None,
+                        help=argparse.SUPPRESS, action="store_true")
     parser.add_argument("-d", "--debug", default=None,
                         help=argparse.SUPPRESS, action="store_true")
     parser.add_argument("-l", "--logo", default=None,
