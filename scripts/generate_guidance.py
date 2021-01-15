@@ -512,6 +512,11 @@ YELLOW='\e[33m'
 
 # setup files
 audit_plist_managed="/Library/Managed Preferences/org.{baseline_name}.audit.plist"
+
+if [[ ! -e "$audit_plist_managed" ]];then
+    audit_plist_managed="/Library/Preferences/org.{baseline_name}.audit.plist"
+fi
+
 audit_plist="/Library/Preferences/org.{baseline_name}.audit.plist"
 audit_log="/Library/Logs/{baseline_name}_baseline.log"
 
@@ -628,7 +633,13 @@ view_report(){{
 
 run_scan(){{
 # append to existing logfile
-echo "$(date -u) Beginning {baseline_name} baseline scan" >> "$audit_log"
+if [[ $(/usr/bin/tail -n 1 "$audit_log" 2>/dev/null) = *"Remediation complete" ]]; then
+ 	echo "$(date -u) Beginning {baseline_name} baseline scan" >> "$audit_log"
+else
+ 	echo "$(date -u) Beginning {baseline_name} baseline scan" > "$audit_log"
+fi
+
+#echo "$(date -u) Beginning {baseline_name} baseline scan" >> "$audit_log"
 
 # run mcxrefresh
 /usr/bin/mcxrefresh -u $CURR_USER_UID
@@ -729,10 +740,10 @@ result_value=$({2})
 # check to see if rule is exempt
 unset exempt
 unset exempt_reason
-exempt=$($plb -c "print {0}:exempt" "$audit_plist_managed")
-exempt_reason=$($plb -c "print {0}:exempt_reason" "$audit_plist_managed" 2&>/dev/null)
+exempt=$($plb -c "print {0}:exempt" "$audit_plist_managed" 2>/dev/null)
+exempt_reason=$($plb -c "print {0}:exempt_reason" "$audit_plist_managed" 2>/dev/null)
 
-if [[ ! $exempt == "true" ]];then
+if [[ ! $exempt == "true" ]] || [[ -z $exempt ]];then
     if [[ $result_value == "{4}" ]]; then
         echo "$(date -u) {5} passed (Result: $result_value, Expected: "{3}")" | tee -a "$audit_log"
         defaults write "$audit_plist" {0} -dict-add finding -bool NO
@@ -743,6 +754,7 @@ if [[ ! $exempt == "true" ]];then
 elif [[ ! -z "$exempt_reason" ]];then
     echo "$(date -u) {5} has an exemption (Reason: "$exempt_reason")" | tee -a "$audit_log"
     defaults write "$audit_plist" {0} -dict-add finding -bool NO
+    /bin/sleep 1
 fi
     """.format(rule_yaml['id'], nist_controls.replace("\n", "\n#"), check.strip(), result, result_value, ','.join(log_reference_id))
 
@@ -767,11 +779,11 @@ fi
 # check to see if rule is exempt
 unset exempt
 unset exempt_reason
-exempt=$($plb -c "print {rule_yaml['id']}:exempt" "$audit_plist_managed")
-exempt_reason=$($plb -c "print {rule_yaml['id']}:exempt_reason" "$audit_plist_managed" 2&>/dev/null)
+exempt=$($plb -c "print {rule_yaml['id']}:exempt" "$audit_plist_managed" 2>/dev/null)
+exempt_reason=$($plb -c "print {rule_yaml['id']}:exempt_reason" "$audit_plist_managed" 2>/dev/null)
 
 {rule_yaml['id']}_audit_score=$($plb -c "print {rule_yaml['id']}:finding" $audit_plist)
-if [[ ! $exempt == "true" ]];then
+if [[ ! $exempt == "true" ]] || [[ -z $exempt ]];then
     if [[ ${rule_yaml['id']}_audit_score == "true" ]]; then
         ask '{rule_yaml['id']} - Run the command(s)-> {quotify(get_fix_code(rule_yaml['fix']).strip())} ' N
         if [[ $? == 0 ]]; then
@@ -833,6 +845,8 @@ echo "$(date -u) Beginning remediation of non-compliant settings" >> "$audit_log
 
     # write the footer for the script
     zsh_fix_footer = """
+echo "$(date -u) Remediation complete" >> "$audit_log"
+
 }
 
 # check for command line arguments, if --check or --fix, then just do them.
