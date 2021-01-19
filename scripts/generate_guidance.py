@@ -267,11 +267,22 @@ class PayloadDict:
         self._addPayload(payload_dict, baseline_name)
 
     def finalizeAndSave(self, output_path):
-        """Perform last modifications and save to an output plist.
+        """Perform last modifications and save to configuration profile.
         """
         plistlib.dump(self.data, output_path)
         print(f"Configuration profile written to {output_path.name}")
 
+    def finalizeAndSavePlist(self, output_path):
+        """Perform last modifications and save to an output plist.
+        """
+        settings_dict = {}
+        for i in self.data['PayloadContent']:
+            for k,v in i.items():
+                if not k.startswith("Payload"):
+                    settings_dict[k] = v
+        
+        plistlib.dump(settings_dict, output_path)
+        print(f"Settings plist written to {output_path.name}")
 
 def makeNewUUID():
     return str(uuid4())
@@ -326,6 +337,14 @@ def generate_profiles(baseline_name, build_path, parent_dir, baseline_yaml, sign
                 print("Creation of the directory %s failed" %
                     signed_mobileconfig_output_path)
 
+    settings_plist_output_path = os.path.join(
+        f'{build_path}', 'mobileconfigs', 'preferences')
+    if not (os.path.isdir(settings_plist_output_path)):
+        try:
+            os.makedirs(settings_plist_output_path)
+        except OSError:
+            print("Creation of the directory %s failed" %
+                  settings_plist_output_path)
     # setup lists and dictionaries
     profile_errors = []
     profile_types = {}
@@ -382,12 +401,16 @@ def generate_profiles(baseline_name, build_path, parent_dir, baseline_yaml, sign
         if payload.startswith("."):
             unsigned_mobileconfig_file_path = os.path.join(
                 unsigned_mobileconfig_output_path, "com.apple" + payload + '.mobileconfig')
+            settings_plist_file_path = os.path.join(
+                settings_plist_output_path, "com.apple" + payload + '.plist')
             if signing:
                 signed_mobileconfig_file_path = os.path.join(
                 signed_mobileconfig_output_path, "com.apple" + payload + '.mobileconfig')
         else:
             unsigned_mobileconfig_file_path = os.path.join(
                 unsigned_mobileconfig_output_path, payload + '.mobileconfig')
+            settings_plist_file_path = os.path.join(
+                settings_plist_output_path, payload + '.plist')
             if signing:
                 signed_mobileconfig_file_path = os.path.join(
                 signed_mobileconfig_output_path, payload + '.mobileconfig')
@@ -425,7 +448,9 @@ def generate_profiles(baseline_name, build_path, parent_dir, baseline_yaml, sign
 
         else:
             config_file = open(unsigned_mobileconfig_file_path, "wb")
+            settings_config_file = open(settings_plist_file_path, "wb")
             newProfile.finalizeAndSave(config_file)
+            newProfile.finalizeAndSavePlist(settings_config_file)
             config_file.close()
             
     print(f"""
