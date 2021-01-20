@@ -30,12 +30,10 @@ references:
 macOS:
   - "10.15"
 tags:
-  - STIG
   - 800-171
   - cnssi-1253
   - 800-53r4_moderate
   - 800-53r4_high
-  - STIG
 mobileconfig: true
 mobileconfig_info:
   com.apple.applicationaccess.new:

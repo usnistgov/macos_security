@@ -34,7 +34,6 @@ tags:
   - cnssi-1253
   - 800-53r4_moderate
   - 800-53r4_high
-  - STIG
 mobileconfig: true
 mobileconfig_info:
   com.apple.ManagedClient.preferences:

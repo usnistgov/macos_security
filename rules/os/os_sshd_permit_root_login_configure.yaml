@@ -30,6 +30,5 @@ references:
 macOS:
   - "10.15"
 tags:
-  - STIG
 mobileconfig: false
 mobileconfig_info:

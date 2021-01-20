@@ -79,6 +79,5 @@ tags:
   - 800-53r4_low
   - 800-53r4_moderate
   - 800-53r4_high
-  - STIG
 mobileconfig: false
 mobileconfig_info:

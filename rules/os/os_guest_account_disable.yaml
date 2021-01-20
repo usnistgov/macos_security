@@ -30,7 +30,6 @@ macOS:
 tags:
   - 800-171
   - 800-53r4_high
-  - STIG
 mobileconfig: true
 mobileconfig_info:
   com.apple.ManagedClient.preferences:

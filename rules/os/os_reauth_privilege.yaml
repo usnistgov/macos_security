@@ -21,7 +21,6 @@ references:
 macOS:
   - "10.15"
 tags:
-  - STIG
   - inherent
 mobileconfig: false
 mobileconfig_info:

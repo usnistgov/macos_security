@@ -25,7 +25,6 @@ references:
 macOS:
   - "10.15"
 tags:
-  - STIG
 mobileconfig: true
 mobileconfig_info:
   com.apple.SetupAssistant.managed:
