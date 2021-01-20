@@ -275,14 +275,45 @@ class PayloadDict:
     def finalizeAndSavePlist(self, output_path):
         """Perform last modifications and save to an output plist.
         """
+        output_file_path = output_path.name
+        preferences_path = os.path.dirname(output_file_path)
+
         settings_dict = {}
         for i in self.data['PayloadContent']:
-            for k,v in i.items():
-                if not k.startswith("Payload"):
-                    settings_dict[k] = v
+            if i['PayloadType'] == "com.apple.ManagedClient.preferences":
+                for key, value in i['PayloadContent'].items():
+                    domain=key
+                    preferences_output_file = os.path.join(preferences_path, domain + ".plist")
+                    if not os.path.exists(preferences_output_file):
+                        with open(preferences_output_file, 'w'): pass
+                    with open (preferences_output_file, 'rb') as fp:
+                        try:
+                            settings_dict = plistlib.load(fp)
+                        except:
+                            settings_dict = {}
+                    with open(preferences_output_file, 'wb') as fp:
+                        for setting in value['Forced']:
+                            for key, value in setting['mcx_preference_settings'].items():
+                                settings_dict[key] = value
+                    
+                        #preferences_output_path = open(preferences_output_file, 'wb')
+                        plistlib.dump(settings_dict, fp)
+                        print(f"Settings plist written to {preferences_output_file}")
+                    settings_dict.clear()
+            else:
+                if os.path.exists(output_file_path):
+                    with open (output_file_path, 'rb') as fp:
+                        try:
+                            settings_dict = plistlib.load(fp)
+                        except:
+                            settings_dict = {}
+                for key,value in i.items():
+                    if not key.startswith("Payload"):
+                        settings_dict[key] = value
         
-        plistlib.dump(settings_dict, output_path)
-        print(f"Settings plist written to {output_path.name}")
+                plistlib.dump(settings_dict, output_path)
+                print(f"Settings plist written to {output_path.name}")
+            
 
 def makeNewUUID():
     return str(uuid4())
