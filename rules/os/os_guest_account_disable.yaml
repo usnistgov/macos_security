@@ -34,6 +34,5 @@ tags:
 severity: "high"
 mobileconfig: true
 mobileconfig_info:
-  com.apple.ManagedClient.preferences:
-    com.apple.MCX:
-      DisableGuestAccount: true
+  com.apple.MCX:
+    DisableGuestAccount: true
