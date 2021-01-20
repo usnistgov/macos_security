@@ -1,5 +1,5 @@
 id: os_mdm_require
-title: "Enforce Enrollment in Mobile Devicement Management"
+title: "Enforce Enrollment in Mobile Device Management"
 discussion: |
   You _MUST_ enroll your Mac in a Mobile Device Management (MDM) software.
   
