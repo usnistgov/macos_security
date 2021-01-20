@@ -8,7 +8,7 @@ discussion: |
   * Privacy Preferences Policy Control Payload
   * ExtensibleSingleSignOn
 check: |
-  /usr/bin/profiles status -type enrollment | /usr/bin/awk -F': ' 'END{print $2}' | /usr/bin/grep -c "Yes"
+  /usr/bin/profiles status -type enrollment | /usr/bin/awk -F: '/MDM enrollment/ {print $2}' | /usr/bin/grep -c "Yes (User Approved)"
 result:
   integer: 1
 fix: |
