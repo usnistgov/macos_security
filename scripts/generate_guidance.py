@@ -277,6 +277,7 @@ class PayloadDict:
         """
         output_file_path = output_path.name
         preferences_path = os.path.dirname(output_file_path)
+        
 
         settings_dict = {}
         for i in self.data['PayloadContent']:
@@ -300,6 +301,10 @@ class PayloadDict:
                         plistlib.dump(settings_dict, fp)
                         print(f"Settings plist written to {preferences_output_file}")
                     settings_dict.clear()
+                    try:
+                        os.unlink(output_file_path)
+                    except:
+                        continue
             else:
                 if os.path.exists(output_file_path):
                     with open (output_file_path, 'rb') as fp:
