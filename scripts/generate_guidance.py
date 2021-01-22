@@ -567,7 +567,7 @@ CURR_USER_UID=$(/usr/bin/id -u $CURR_USER)
 
 # configure colors for text
 RED='\e[31m'
-STD='\033[0;0;39m'
+STD='\e[39m'
 GREEN='\e[32m'
 YELLOW='\e[33m'
 
