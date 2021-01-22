@@ -59,7 +59,6 @@ macOS:
   - "10.15"
 tags:
   - stig
-severity: 
-  - "medium"
+severity: "medium"
 mobileconfig: false
 mobileconfig_info:

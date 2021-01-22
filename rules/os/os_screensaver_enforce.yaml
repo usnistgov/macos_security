@@ -25,8 +25,7 @@ macOS:
   - "10.15"
 tags:
   - stig
-severity:
-  - "medium"
+severity: "medium"
 mobileconfig: true
 mobileconfig_info:
   com.apple.screensaver.user:
