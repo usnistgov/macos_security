@@ -30,7 +30,7 @@ references:
   srg: 
     - SRG-OS-000163-GPOS-00072
   disa_stig: 
-    - AOSX-15-
+    - AOSX-15-000055
   800-171r2:
     - 3.1.13
     - 3.13.8
@@ -38,5 +38,7 @@ references:
 macOS:
   - "10.15"
 tags:
+  - stig
+severity: "medium"
 mobileconfig: false
 mobileconfig_info:
