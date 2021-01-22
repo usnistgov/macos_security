@@ -18,13 +18,13 @@ references:
   cce:
     - CCE-84853-1
   cci: 
-    - N/A
+    - CCI-000197
   800-53r4:
     - AC-3
   srg:
-    - N/A
+    - SRG-OS-000074-GPOS-00042
   disa_stig:
-    - N/A
+    - AOSX-15-002038
   800-171r2:
     - 3.1.1
     - 3.1.2
@@ -36,5 +36,7 @@ tags:
   - 800-53r4_low
   - 800-53r4_moderate
   - 800-53r4_high
+  - stig
+severity: "medium"
 mobileconfig: false
 mobileconfig_info:

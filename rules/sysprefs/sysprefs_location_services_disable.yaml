@@ -34,5 +34,7 @@ tags:
   - 800-53r4_low
   - 800-53r4_moderate
   - 800-53r4_high
+  - stig
+severity: "medium"
 mobileconfig: false
 mobileconfig_info:

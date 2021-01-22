@@ -22,12 +22,13 @@ references:
     - SRG-OS-000066-GPOS-00034
     - SRG-OS-000478-GPOS-00223
 macOS:
-  - "11.0"
+  - "10.15"
 tags:
   - cnssi-1253
   - 800-53r4_moderate
   - 800-53r4_high
   - manual
+  - stig
 severity: "high"
 mobileconfig: false
 mobileconfig_info:

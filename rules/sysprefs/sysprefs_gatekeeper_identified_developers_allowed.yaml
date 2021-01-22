@@ -23,7 +23,6 @@ references:
     - CM-5
     - SI-7(15)
   srg: 
-    - SRG-OS-000366-GPOS-00153
     - SRG-OS-000480-GPOS-00227
   disa_stig: 
     - AOSX-15-002060
@@ -36,6 +35,8 @@ tags:
   - cnssi-1253
   - 800-53r4_moderate
   - 800-53r4_high
+  - stig
+severity: "medium"
 mobileconfig: true
 mobileconfig_info:
   com.apple.systempolicy.control:

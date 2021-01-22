@@ -15,7 +15,6 @@ references:
     - CCE-84735-0
   cci:
     - CCI-000381
-    - CCI-001774
   800-53r4:
     - CM-7
     - AC-20
@@ -36,6 +35,8 @@ tags:
   - 800-53r4_low
   - 800-53r4_moderate
   - 800-53r4_high
+  - stig
+severity: "medium"
 mobileconfig: true
 mobileconfig_info:
   com.apple.applicationaccess:

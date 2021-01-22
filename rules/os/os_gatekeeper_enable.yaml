@@ -38,6 +38,8 @@ tags:
   - cnssi-1253
   - 800-53r4_moderate
   - 800-53r4_high
+  - stig
+severity: "high"
 mobileconfig: true
 mobileconfig_info:
   com.apple.systempolicy.control:
