@@ -10,13 +10,13 @@ references:
   cce:
     - CCE-84892-9
   cci:
-    - CCI-001233
+    - N/A
   800-53r4:
     - SI-2(2)
   srg:
-    - SRG-OS-000191-GPOS-00080
+    - N/A
   disa_stig:
-    - AOSX-15-000015
+    - N/A
 macOS:
   - "10.15"
 tags:
@@ -24,6 +24,5 @@ tags:
   - 800-53r4_moderate
   - 800-53r4_high
   - permanent  
-  - STIG
 mobileconfig: false
 mobileconfig_info:

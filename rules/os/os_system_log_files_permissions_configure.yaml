@@ -1,0 +1,41 @@
+id: os_system_log_files_permissions_configure
+title: "Configure System Log Files set to mode 640 or less permissive."
+discussion: |
+  System logs should only be readable by root or admin users. System logs frequently contain sensitive information that could be used by an attacker. Setting the correct permissions mitigates this risk.
+check: |
+  The following commands check for log files that exist on the system and print the path to the log with the corresponding permissions. Run them from inside "/var/log":
+
+  /usr/bin/sudo stat -f '%A:%N' $(/usr/bin/grep -v '^#' /etc/newsyslog.conf | awk '{ print $1 }') 2> /dev/null
+  
+  /usr/bin/sudo stat -f '%A:%N' $(/usr/bin/grep -e '^>' /etc/asl.conf /etc/asl/* | awk '{ print $2 }') 2> /dev/null
+
+  Each command may return zero or more files. If the permissions on log files are not "640" or less permissive, this is a finding.
+fix: |
+  For any log file that returns an incorrect permission value, run the following command:
+
+  /usr/bin/sudo chmod 640 [log file]
+
+  [log file] is the full path to the log file in question. If the file is managed by "newsyslog", find the configuration line in the directory "/etc/newsyslog.d/" or the file "/etc/newsyslog.conf" and edit the mode column to be "640" or less permissive. 
+
+  If the file is managed by "aslmanager", find the configuration line in the directory "/etc/asl/" or the file "/etc/asl.conf" and add or edit the mode option to be "mode=0640" or less permissive.
+references:
+  cce:
+    - N/A
+  cci:
+    - CCI-001314
+  800-53r4:
+    - SI-11
+  srg:
+    - SRG-OS-000206-GPOS-00084
+  disa_stig:
+    - AOSX-15-004002
+  800-171r2:
+    - N/A
+macOS:
+  - "10.15"
+tags:
+  - manual
+  - stig
+severity: "medium"
+mobileconfig: false
+mobileconfig_info:

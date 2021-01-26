@@ -18,13 +18,12 @@ references:
   srg:
     - SRG-OS-000114-GPOS-00059
   disa_stig:
-    - AOSX-15-002069
+    - N/A
   800-171r2:
     - N/A       
 macOS:
   - "10.15"
 tags:
-  - STIG
   - inherent
 mobileconfig: false
 mobileconfig_info:

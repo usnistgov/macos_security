@@ -23,6 +23,8 @@ references:
 macOS:
   - "10.15"
 tags:
-  - STIG
+  - manual
+  - stig
+severity: "high"
 mobileconfig: false
 mobileconfig_info:

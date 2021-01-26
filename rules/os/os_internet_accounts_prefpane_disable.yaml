@@ -17,6 +17,7 @@ references:
   cce:
     - CCE-84767-3
   cci: 
+    - CCI-000381
     - CCI-001774
   800-53r4: 
     - AC-20
@@ -35,7 +36,8 @@ tags:
   - 800-53r4_low
   - 800-53r4_moderate
   - 800-53r4_high
-  - STIG
+  - stig
+severity: "medium"
 mobileconfig: true
 mobileconfig_info:
   com.apple.systempreferences:

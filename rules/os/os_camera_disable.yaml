@@ -24,7 +24,8 @@ references:
 macOS:
   - "10.15"
 tags:
-  - STIG
+  - stig
+severity: "medium"
 mobileconfig: true
 mobileconfig_info:
   com.apple.applicationaccess:

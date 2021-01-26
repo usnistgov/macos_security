@@ -37,11 +37,8 @@ references:
     - IA-2(4)
     - IA-5(11)
   srg: 
-    - SRG-OS-000107-GPOS-00054
     - SRG-OS-000480-GPOS-00227
   disa_stig: 
-    - AOSX-15-003050
-    - AOSX-15-003051
     - AOSX-15-003052
   800-171r2:
     - 3.5.3
@@ -53,6 +50,7 @@ tags:
   - 800-53r4_low
   - 800-53r4_moderate
   - 800-53r4_high
-  - STIG
+  - stig
+severity: "medium"
 mobileconfig: false
 mobileconfig_info:

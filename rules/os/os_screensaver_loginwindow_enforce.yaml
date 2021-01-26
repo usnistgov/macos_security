@@ -12,13 +12,13 @@ references:
   cce:
     - CCE-84786-3
   cci:
-    - CCI-000060
+    - N/A
   800-53r4:
     - AC-11(1)
   srg:
-    - SRG-OS-000031-GPOS-00012
+    - N/A
   disa_stig:
-    - AOSX-15-000006
+    - N/A
   800-171r2:
     - 3.1.10
 macOS:
@@ -28,7 +28,6 @@ tags:
   - cnssi-1253
   - 800-53r4_moderate
   - 800-53r4_high
-  - STIG
 mobileconfig: true
 mobileconfig_info:
   com.apple.screensaver:

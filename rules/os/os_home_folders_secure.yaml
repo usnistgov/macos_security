@@ -25,9 +25,8 @@ references:
   800-53r4:
     - AC-6
   srg:
-    - SRG-OS-000480-GPOS-00230
+    - SRG-OS-000480-GPOS-00228
   disa_stig:
-    - AOSX-15-002065
     - AOSX-15-002068
   800-171r2:
     - 3.1.5
@@ -38,6 +37,7 @@ tags:
   - cnssi-1253
   - 800-53r4_moderate
   - 800-53r4_high
-  - STIG
+  - stig
+severity: "medium"
 mobileconfig: false
 mobileconfig_info:

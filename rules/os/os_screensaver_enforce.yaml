@@ -1,0 +1,32 @@
+id: os_screensaver_enforce
+title: "Enforce Screen Saver"
+discussion: |
+  A default screen saver _MUST_ be configured to display and _MUST_ not display any sensitive information.
+check: |
+  /usr/bin/profiles -P -o stdout  | /usr/bin/grep -c modulePath
+result:
+  integer: 1
+fix: |
+  This is implemented by a Configuration Profile.
+references:
+  cce:
+    - N/A
+  cci:
+    - CCI-000060
+  800-53r4:
+    - AC-11(1)
+  srg:
+    - SRG-OS-000031-GPOS-00012
+  disa_stig:
+    - AOSX-15-000006
+  800-171r2:
+    - N/A
+macOS:
+  - "10.15"
+tags:
+  - stig
+severity: "medium"
+mobileconfig: true
+mobileconfig_info:
+  com.apple.screensaver.user:
+    modulePath: "/System/Library/Screen Savers/Flurry.saver"

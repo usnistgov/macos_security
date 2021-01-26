@@ -1341,12 +1341,10 @@ def main():
     else:
         adoc_tag_show=":show_tags!:"
 
-    if "STIG" in baseline_yaml['title']:
+    if "stig" in baseline_yaml['title'].lower():
         adoc_STIG_show=":show_STIG:"
-        adoc_SRG_show=":show_SRG:"
     else:
         adoc_STIG_show=":show_STIG!:"
-        adoc_SRG_show=":show_SRG!:"
 
     adoc_171_show=":show_171:"
 
@@ -1361,7 +1359,6 @@ def main():
         tag_attribute=adoc_tag_show,
         nist171_attribute=adoc_171_show,
         stig_attribute=adoc_STIG_show,
-        srg_attribute=adoc_SRG_show,
         version=version_yaml['version'],
         os_version=version_yaml['os'],
         release_date=version_yaml['date']

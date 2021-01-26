@@ -46,7 +46,7 @@ references:
   cce:
     - CCE-84893-7
   cci:
-    - CCI-000014
+    - CCI-000366
   800-53r4:
     - N/A
   srg:
@@ -56,6 +56,7 @@ references:
 macOS:
   - "10.15"
 tags:
-  - STIG
+  - stig
+severity: "medium"
 mobileconfig: false
 mobileconfig_info:
