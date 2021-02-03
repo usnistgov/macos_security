@@ -75,7 +75,6 @@ profile:
       - os_ssh_fips_140_macs
       - os_home_folders_secure
       - os_facetime_app_disable
-      - os_guest_access_afp_disable
       - os_icloud_storage_prompt_disable
       - os_ir_support_disable
       - os_mail_app_disable

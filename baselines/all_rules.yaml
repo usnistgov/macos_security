@@ -84,7 +84,6 @@ profile:
       - os_home_folders_secure
       - os_facetime_app_disable
       - os_camera_disable
-      - os_guest_access_afp_disable
       - os_icloud_storage_prompt_disable
       - os_sshd_permit_root_login_configure
       - os_ir_support_disable

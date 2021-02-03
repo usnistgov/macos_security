@@ -61,6 +61,7 @@ profile:
       - os_sip_enable
       - os_authenticated_root_enable
       - os_removable_media_disable
+      - os_guest_account_disable
       - os_guest_access_smb_disable
       - os_time_server_enabled
       - os_unlock_active_user_session_disable
@@ -71,7 +72,6 @@ profile:
       - os_ssh_fips_140_macs
       - os_home_folders_secure
       - os_facetime_app_disable
-      - os_guest_access_afp_disable
       - os_icloud_storage_prompt_disable
       - os_ir_support_disable
       - os_mail_app_disable
