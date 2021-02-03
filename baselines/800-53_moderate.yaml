@@ -61,6 +61,7 @@ profile:
       - os_gatekeeper_enable
       - os_sip_enable
       - os_removable_media_disable
+      - os_guest_account_disable
       - os_guest_access_smb_disable
       - os_time_server_enabled
       - os_unlock_active_user_session_disable
