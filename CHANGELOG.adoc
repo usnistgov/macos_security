@@ -2,6 +2,29 @@
 
 This document provides a high-level view of the changes to the macOS Security Compliance Project.
 
+== [Big Sur, Revision 2] - 2021-02-16
+
+* Rules
+** Fixed Rules
+
+* Baselines
+** Added DISA-STIG
+
+* Scripts
+** generate_guidance
+*** Bug fixes
+*** Custom rules support added
+*** Added ability to signed configuration profiles
+*** Added plist generation for rules
+*** Generates preferences files for compliance script
+*** Compliance script enhancements
+**** Exemption support
+**** Modified plist behavior
+**** Log rotation
+** yaml-to-oval
+*** Bug fixes
+
+
 == [Big Sur, Revision 1] - 2020-11-10
 
 * Rules
