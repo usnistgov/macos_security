@@ -85,7 +85,7 @@ def main():
                     rule_yaml = yaml.load(r, Loader=yaml.SafeLoader)
                 if "inherent" in rule_yaml['tags'] or "n_a" in rule_yaml['tags'] or "permanent" in rule_yaml['tags']:
                     continue
-                if len(rule_yaml['tags']) < 2 and "STIG" in rule_yaml['tags']:
+                if len(rule_yaml['tags']) < 2 and "stig" in rule_yaml['tags']:
                     continue
                 if "manual" in rule_yaml['tags']:
                     print(rule_yaml['id'] + " - Manual Check")

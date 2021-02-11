@@ -18,6 +18,7 @@ references:
   srg:
     - N/A
   disa_stig:
+    - N/A
   800-171r2:
     - N/A       
 macOS:
