@@ -1471,6 +1471,13 @@ def main():
                 srg = ulify(rule_yaml['references']['srg'])
 
             try:
+                rule_yaml['references']['custom']
+            except KeyError:
+                continue
+            else:
+                print(f"Found Custom:rule_name{rule_yaml['id']}")
+
+            try:
                 rule_yaml['fix']
             except KeyError:
                 rulefix = "No fix Found"
