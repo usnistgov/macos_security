@@ -1086,9 +1086,10 @@ def generate_xls(baseline_name, build_path, baseline_yaml):
 
         if rule.rule_custom_refs != ['None']:
             for title, ref in rule.rule_custom_refs.items():
-                sheet1.write(0, column_counter, title, headers )
+                sheet1.write(0, column_counter, title, headers )    
                 sheet1.col(column_counter).width = 512 * 25
-                added_ref = (str(ref))
+                added_ref = (str(ref)).strip('[]\'')
+                added_ref = added_ref.replace(", ", "\n").replace("\'", "")
                 sheet1.write(counter, column_counter, added_ref, topWrap)
                 column_counter = column_counter + 1
 
