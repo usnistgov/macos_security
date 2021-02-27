@@ -53,8 +53,7 @@ endif::[]
 !CCE
 !$rule_cce
 
-!Additional References
-!$rule_custom_refs
+$rule_custom_refs
 
 ifdef::show_tags[]
 !TAGS

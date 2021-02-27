@@ -1234,9 +1234,7 @@ def sign_config_profile(in_file, out_file, hash):
 def parse_custom_references(reference):
     string = "\n"
     for item in reference:
-        print(f'reference title is {item}')
-        print(f'reference value is {reference[item]}')
-        string += "* " + str(reference[item]) + "\n"
+        string += "!" + str(item) + "!* " + str(reference[item]) + "\n"
     return string
 
 
@@ -1559,6 +1557,7 @@ def main():
                     rule_srg=srg
                 )
             elif custom_refs:
+                print(custom_refs)
                 rule_adoc = adoc_rule_custom_refs_template.substitute(
                     rule_title=rule_yaml['title'].replace('|', '\|'),
                     rule_id=rule_yaml['id'].replace('|', '\|'),
