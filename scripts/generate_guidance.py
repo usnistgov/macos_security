@@ -23,7 +23,7 @@ from collections import namedtuple
 
 
 class MacSecurityRule():
-    def __init__(self, title, rule_id, severity, discussion, check, fix, cci, cce, nist_controls, nist_171, disa_stig, srg, tags, result_value, mobileconfig, mobileconfig_info):
+    def __init__(self, title, rule_id, severity, discussion, check, fix, cci, cce, nist_controls, nist_171, disa_stig, srg, custom_refs, tags, result_value, mobileconfig, mobileconfig_info):
         self.rule_title = title
         self.rule_id = rule_id
         self.rule_severity = severity
@@ -36,6 +36,7 @@ class MacSecurityRule():
         self.rule_800171 = nist_171
         self.rule_disa_stig = disa_stig
         self.rule_srg = srg
+        self.rule_custom_refs = custom_refs
         self.rule_result_value = result_value
         self.rule_tags = tags
         self.rule_mobileconfig = mobileconfig
@@ -952,11 +953,12 @@ def get_rule_yaml(rule_file):
     """
     names = [os.path.basename(x) for x in glob.glob('../custom/rules/**/*.yaml', recursive=True)]
     file_name = os.path.basename(rule_file)
-
     if file_name in names:
         print(f"Custom settings found for rule: {rule_file}")
-        override_path = glob.glob('../custom/rules/**/{}'.format(file_name, recursive=True))[0]
-        #override_rule = os.path.join('../custom/rules', os.path.basename(rule_file))
+        try:
+            override_path = glob.glob('../custom/rules/**/{}'.format(file_name, recursive=True))[0]
+        except IndexError:
+            override_path = glob.glob('../custom/rules/{}'.format(file_name, recursive=True))[0]
         with open(override_path) as r:
             rule_yaml = yaml.load(r, Loader=yaml.SafeLoader)
     else:
@@ -981,11 +983,12 @@ def generate_xls(baseline_name, build_path, baseline_yaml):
 
     wb = Workbook()
 
-    sheet1 = wb.add_sheet('Sheet 1')
+    sheet1 = wb.add_sheet('Sheet 1', cell_overwrite_ok=True)
     topWrap = xlwt.easyxf("align: vert top; alignment: wrap True")
     top = xlwt.easyxf("align: vert top")
     headers = xlwt.easyxf("font: bold on")
     counter = 1
+    column_counter = 13
     sheet1.write(0, 0, "CCE", headers)
     sheet1.write(0, 1, "Rule ID", headers)
     sheet1.write(0, 2, "Title", headers)
@@ -1081,6 +1084,14 @@ def generate_xls(baseline_name, build_path, baseline_yaml):
         sheet1.write(counter, 12, cci, topWrap)
         sheet1.col(12).width = 400 * 15
 
+        if rule.rule_custom_refs != ['None']:
+            for title, ref in rule.rule_custom_refs.items():
+                sheet1.write(0, column_counter, title, headers )
+                sheet1.col(column_counter).width = 512 * 25
+                added_ref = (str(ref))
+                sheet1.write(counter, column_counter, added_ref, topWrap)
+                column_counter = column_counter + 1
+
         tall_style = xlwt.easyxf('font:height 640;')  # 36pt
 
         sheet1.row(counter).set_style(tall_style)
@@ -1110,7 +1121,8 @@ def create_rules(baseline_yaml):
                   'cce',
                   '800-53r4',
                   '800-171r2',
-                  'srg']
+                  'srg',
+                  'custom']
 
 
     for sections in baseline_yaml['profile']:
@@ -1148,6 +1160,7 @@ def create_rules(baseline_yaml):
                                         rule_yaml['references']['800-171r2'],
                                         rule_yaml['references']['disa_stig'],
                                         rule_yaml['references']['srg'],
+                                        rule_yaml['references']['custom'],
                                         rule_yaml['tags'],
                                         rule_yaml['result'],
                                         rule_yaml['mobileconfig'],
@@ -1557,7 +1570,6 @@ def main():
                     rule_srg=srg
                 )
             elif custom_refs:
-                print(custom_refs)
                 rule_adoc = adoc_rule_custom_refs_template.substitute(
                     rule_title=rule_yaml['title'].replace('|', '\|'),
                     rule_id=rule_yaml['id'].replace('|', '\|'),
