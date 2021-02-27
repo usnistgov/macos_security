@@ -1231,6 +1231,15 @@ def sign_config_profile(in_file, out_file, hash):
     print(f"Signed Configuration profile written to {out_file}")
     return output.decode("utf-8")
 
+def parse_custom_references(reference):
+    string = "\n"
+    for item in reference:
+        print(f'reference title is {item}')
+        print(f'reference value is {reference[item]}')
+        string += "* " + str(reference[item]) + "\n"
+    return string
+
+
 def main():
 
     args = create_args()
@@ -1286,6 +1295,7 @@ def main():
     adoc_templates = [ "adoc_rule", 
                     "adoc_supplemental", 
                     "adoc_rule_no_setting", 
+                    "adoc_rule_custom_refs",
                     "adoc_section", 
                     "adoc_header", 
                     "adoc_footer", 
@@ -1313,6 +1323,9 @@ def main():
 
     with open(adoc_templates_dict['adoc_rule_no_setting']) as adoc_rule_no_setting_file:
         adoc_rule_no_setting_template = Template(adoc_rule_no_setting_file.read())
+    
+    with open(adoc_templates_dict['adoc_rule_custom_refs']) as adoc_rule_custom_refs_file:
+        adoc_rule_custom_refs_template = Template(adoc_rule_custom_refs_file.read())
 
     with open(adoc_templates_dict['adoc_section']) as adoc_section_file:
         adoc_section_template = Template(adoc_section_file.read())
@@ -1473,9 +1486,9 @@ def main():
             try:
                 rule_yaml['references']['custom']
             except KeyError:
-                continue
+                custom_refs = ''
             else:
-                print(f"Found Custom:rule_name{rule_yaml['id']}")
+                custom_refs = parse_custom_references(rule_yaml['references']['custom'])
 
             try:
                 rule_yaml['fix']
@@ -1525,7 +1538,6 @@ def main():
             nist_controls = ''
             for i in res:
                 nist_controls += group_ulify(i)
-
             if 'supplemental' in tags:
                 rule_adoc = adoc_supplemental_template.substitute(
                     rule_title=rule_yaml['title'].replace('|', '\|'),
@@ -1545,6 +1557,23 @@ def main():
                     rule_cce=cce,
                     rule_tags=tags,
                     rule_srg=srg
+                )
+            elif custom_refs:
+                rule_adoc = adoc_rule_custom_refs_template.substitute(
+                    rule_title=rule_yaml['title'].replace('|', '\|'),
+                    rule_id=rule_yaml['id'].replace('|', '\|'),
+                    rule_discussion=rule_yaml['discussion'].replace('|', '\|'),
+                    rule_check=rule_yaml['check'],  # .replace('|', '\|'),
+                    rule_fix=rulefix,
+                    rule_cci=cci,
+                    rule_80053r4=nist_controls,
+                    rule_800171=nist_800171,
+                    rule_disa_stig=disa_stig,
+                    rule_cce=cce,
+                    rule_custom_refs=custom_refs,
+                    rule_tags=tags,
+                    rule_srg=srg,
+                    rule_result=result_value
                 )
             else:
                 rule_adoc = adoc_rule_template.substitute(
