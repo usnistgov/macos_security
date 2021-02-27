@@ -1248,7 +1248,12 @@ def sign_config_profile(in_file, out_file, hash):
 def parse_custom_references(reference):
     string = "\n"
     for item in reference:
-        string += "!" + str(item) + "!* " + str(reference[item]) + "\n"
+        if isinstance(reference[item], list):
+            string += "!" + str(item) + "\n!\n"
+            for i in reference[item]:
+                string += "* " + str(i) + "\n"
+        else:
+            string += "!" + str(item) + "!* " + str(reference[item]) + "\n"
     return string
 
 
