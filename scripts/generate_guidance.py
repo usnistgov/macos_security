@@ -759,17 +759,17 @@ defaults write "$audit_plist" lastComplianceCheck "$(date)"
                 try: 
                     rule_yaml['references'][reference]
                 except KeyError:
-                    log_reference_id = [rule_yaml['id']]
+                    try: 
+                        rule_yaml['references']['custom'][reference]
+                    except KeyError:
+                        log_reference_id = [rule_yaml['id']]
+                    else:
+                        log_reference_id = rule_yaml['references']['custom'][reference] + [rule_yaml['id']]
                 else:
                     log_reference_id = rule_yaml['references'][reference] + [rule_yaml['id']]
+                    
                 
-                try: 
-                    rule_yaml['references']['custom'][reference]
-                except KeyError:
-                    log_reference_id = [rule_yaml['id']]
-                else:
-                    log_reference_id = rule_yaml['references']['custom'][reference] + [rule_yaml['id']]
-
+                
         # group the controls
             nist_80053r4.sort()
             res = [list(i) for j, i in groupby(
