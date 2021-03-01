@@ -764,11 +764,16 @@ defaults write "$audit_plist" lastComplianceCheck "$(date)"
                     except KeyError:
                         log_reference_id = [rule_yaml['id']]
                     else:
-                        log_reference_id = rule_yaml['references']['custom'][reference] + [rule_yaml['id']]
+                        if isinstance(rule_yaml['references']['custom'][reference], list):
+                            log_reference_id = rule_yaml['references']['custom'][reference] + [rule_yaml['id']]
+                        else:
+                            log_reference_id = [rule_yaml['references']['custom'][reference]] + [rule_yaml['id']]
                 else:
-                    log_reference_id = rule_yaml['references'][reference] + [rule_yaml['id']]
-                    
-                
+                    if isinstance(rule_yaml['references'][reference], list):
+                        log_reference_id = rule_yaml['references'][reference] + [rule_yaml['id']]
+                    else:
+                            log_reference_id = [rule_yaml['references'][reference]] + [rule_yaml['id']]
+                            
                 
         # group the controls
             nist_80053r4.sort()
@@ -827,7 +832,7 @@ elif [[ ! -z "$exempt_reason" ]];then
     defaults write "$audit_plist" {0} -dict-add finding -bool NO
     /bin/sleep 1
 fi
-    """.format(rule_yaml['id'], nist_controls.replace("\n", "\n#"), check.strip(), result, result_value, ':'.join(log_reference_id))
+    """.format(rule_yaml['id'], nist_controls.replace("\n", "\n#"), check.strip(), result, result_value, ' '.join(log_reference_id))
 
             check_function_string = check_function_string + zsh_check_text
 
