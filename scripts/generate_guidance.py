@@ -738,28 +738,22 @@ defaults write "$audit_plist" lastComplianceCheck "$(date)"
             else:
                 nist_80053r4 = rule_yaml['references']['800-53r4']
             
-            try:
-                rule_yaml['references']['disa_stig']
-            except KeyError:
-                stig_ref = rule_yaml['id']
-            else:
-                if rule_yaml['references']['disa_stig'][0] == "N/A":
-                    stig_ref = [rule_yaml['id']]
-                else:
-                    stig_ref = rule_yaml['references']['disa_stig']
-                
-            try:
-                rule_yaml['references']['ASCS']
-            except KeyError:
-                ascs_ref = ''
-            else:
-                ascs_ref = rule_yaml['references']['ASCS']
-            
-            if "STIG" in baseline_yaml['title']:
-                logging.debug(f'Setting STIG reference for logging: {stig_ref}')
-                log_reference_id = stig_ref
-            else:
-                log_reference_id = [rule_yaml['id']]
+            #try:
+            #    rule_yaml['references']['disa_stig']
+            #except KeyError:
+            #    stig_ref = rule_yaml['id']
+            #else:
+            #    if rule_yaml['references']['disa_stig'][0] == "N/A":
+            #        stig_ref = [rule_yaml['id']]
+            #    else:
+            #        stig_ref = rule_yaml['references']['disa_stig']
+            #
+            #if "STIG" in baseline_yaml['title']:
+            #    logging.debug(f'Setting STIG reference for logging: {stig_ref}')
+            #    log_reference_id = stig_ref
+            #else:
+            #    log_reference_id = [rule_yaml['id']]
+            log_reference_id = [rule_yaml['id']]
 
         # group the controls
             nist_80053r4.sort()
@@ -1186,7 +1180,7 @@ def create_args():
     parser.add_argument("-p", "--profiles", default=None,
                         help="Generate configuration profiles for the rules.", action="store_true")
     parser.add_argument("-r", "--reference", default=None,
-                        help="Use the reference ID instead of rule ID for identification.", action="store")
+                        help="Use the reference ID instead of rule ID for identification.")
     parser.add_argument("-s", "--script", default=None,
                         help="Generate the compliance script for the rules.", action="store_true")
     # add gary argument to include tags for XCCDF generation, with a nod to Gary the SCAP guru
@@ -1221,7 +1215,7 @@ def is_asciidoctor_pdf_installed():
     return output.decode("utf-8")
 
 def verify_signing_hash(hash):
-    """Attempts to validate the existance of the certificate provided by the hash
+    """Attempts to validate the existence of the certificate provided by the hash
     """
     with tempfile.NamedTemporaryFile(mode="w") as in_file:
         unsigned_tmp_file_path=in_file.name
@@ -1371,14 +1365,15 @@ def main():
     else:
         adoc_tag_show=":show_tags!:"
 
-    if "STIG" in baseline_yaml['title']:
+    if "STIG" in baseline_yaml['title'].upper():
         adoc_STIG_show=":show_STIG:"
-        adoc_SRG_show=":show_SRG:"
     else:
         adoc_STIG_show=":show_STIG!:"
-        adoc_SRG_show=":show_SRG!:"
 
-    adoc_171_show=":show_171:"
+    if "800" in baseline_yaml['title']:
+         adoc_171_show=":show_171:"
+     else:
+         adoc_171_show=":show_171!:"
 
     # Create header
     header_adoc = adoc_header_template.substitute(
@@ -1538,7 +1533,7 @@ def main():
             else:
                 result_value = 'N/A'
 
-            # deteremine if configprofile
+            # determine if configprofile
             try:
                 rule_yaml['mobileconfig']
             except KeyError:

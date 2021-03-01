@@ -45,11 +45,6 @@ ifdef::show_STIG[]
 !$rule_disa_stig
 endif::[]
 
-ifdef::show_STIG[]
-!DISA SRG(s)
-!$rule_srg
-endif::[]
-
 !CCE
 !$rule_cce
 
