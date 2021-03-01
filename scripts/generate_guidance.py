@@ -530,7 +530,7 @@ def default_audit_plist(baseline_name, build_path, baseline_yaml):
     plistlib.dump(plist_dict, plist_file)
 
 
-def generate_script(baseline_name, build_path, baseline_yaml):
+def generate_script(baseline_name, build_path, baseline_yaml, reference):
     """Generates the zsh script from the rules in the baseline YAML
     """
     compliance_script_file = open(
@@ -753,7 +753,22 @@ defaults write "$audit_plist" lastComplianceCheck "$(date)"
             #    log_reference_id = stig_ref
             #else:
             #    log_reference_id = [rule_yaml['id']]
-            log_reference_id = [rule_yaml['id']]
+            if reference == "default":
+                log_reference_id = [rule_yaml['id']]
+            else:
+                try: 
+                    rule_yaml['references'][reference]
+                except KeyError:
+                    log_reference_id = [rule_yaml['id']]
+                else:
+                    log_reference_id = rule_yaml['references'][reference] + [rule_yaml['id']]
+                
+                try: 
+                    rule_yaml['references']['custom'][reference]
+                except KeyError:
+                    log_reference_id = [rule_yaml['id']]
+                else:
+                    log_reference_id = rule_yaml['references']['custom'][reference] + [rule_yaml['id']]
 
         # group the controls
             nist_80053r4.sort()
@@ -812,7 +827,7 @@ elif [[ ! -z "$exempt_reason" ]];then
     defaults write "$audit_plist" {0} -dict-add finding -bool NO
     /bin/sleep 1
 fi
-    """.format(rule_yaml['id'], nist_controls.replace("\n", "\n#"), check.strip(), result, result_value, ','.join(log_reference_id))
+    """.format(rule_yaml['id'], nist_controls.replace("\n", "\n#"), check.strip(), result, result_value, ':'.join(log_reference_id))
 
             check_function_string = check_function_string + zsh_check_text
 
@@ -1292,7 +1307,14 @@ def main():
             if not verify_signing_hash(args.hash):
                 sys.exit('Cannot use the provided hash to sign.  Please make sure you provide the subject key ID hash from an installed certificate')
         else:
-            signing = False 
+            signing = False
+
+        if args.reference:
+            use_custom_reference = True
+            log_reference = args.reference
+        else:
+            log_reference = "default"
+            use_custom_reference = False 
 
     except IOError as msg:
         parser.error(str(msg))
@@ -1372,7 +1394,7 @@ def main():
 
     if "800" in baseline_yaml['title']:
          adoc_171_show=":show_171:"
-     else:
+    else:
          adoc_171_show=":show_171!:"
 
     # Create header
@@ -1386,7 +1408,6 @@ def main():
         tag_attribute=adoc_tag_show,
         nist171_attribute=adoc_171_show,
         stig_attribute=adoc_STIG_show,
-        srg_attribute=adoc_SRG_show,
         version=version_yaml['version'],
         os_version=version_yaml['os'],
         release_date=version_yaml['date']
@@ -1620,7 +1641,7 @@ def main():
     
     if args.script:
         print("Generating compliance script...")
-        generate_script(baseline_name, build_path, baseline_yaml)
+        generate_script(baseline_name, build_path, baseline_yaml, log_reference)
         default_audit_plist(baseline_name, build_path, baseline_yaml)
     
     if args.xls:
