@@ -2,7 +2,21 @@
 
 $rule_discussion
 
+To check the state of the system, run the following command(s):
+[source,bash]
+----
 $rule_check
+----
+
+If the result is not *$rule_result*, this is a finding.
+
+====
+**Remediation Description**
+
+Perform the following to configure the system to meet the requirements:
+
+$rule_fix
+====
 
 [cols="15%h, 85%a"]
 |===
@@ -31,10 +45,12 @@ ifdef::show_STIG[]
 !$rule_disa_stig
 endif::[]
 
-ifdef::show_tags[]
 !CCE
 !$rule_cce
 
+$rule_custom_refs
+
+ifdef::show_tags[]
 !TAGS
 !$rule_tags
 endif::[]

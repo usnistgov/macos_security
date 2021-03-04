@@ -2,7 +2,7 @@
 
 This document provides a high-level view of the changes to the macOS Security Compliance Project.
 
-== [Big Sur, Revision 2] - 2021-02-16
+== [Big Sur, Revision 2] - 2021-03-XX
 
 * Rules
 ** Fixed Rules
@@ -21,6 +21,7 @@ This document provides a high-level view of the changes to the macOS Security Co
 **** Exemption support
 **** Modified plist behavior
 **** Log rotation
+*** Added Custom References
 ** yaml-to-oval
 *** Bug fixes
 
