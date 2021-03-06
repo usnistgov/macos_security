@@ -970,9 +970,9 @@ def get_rule_yaml(rule_file):
     if file_name in names:
         print(f"Custom settings found for rule: {rule_file}")
         try:
-            override_path = glob.glob('../custom/rules/**/{}'.format(file_name, recursive=True))[0]
+            override_path = glob.glob('../custom/rules/**/{}'.format(file_name), recursive=True)[0]
         except IndexError:
-            override_path = glob.glob('../custom/rules/{}'.format(file_name, recursive=True))[0]
+            override_path = glob.glob('../custom/rules/{}'.format(file_name), recursive=True)[0]
         with open(override_path) as r:
             rule_yaml = yaml.load(r, Loader=yaml.SafeLoader)
     else:
