@@ -23,7 +23,7 @@ from collections import namedtuple
 
 
 class MacSecurityRule():
-    def __init__(self, title, rule_id, severity, discussion, check, fix, cci, cce, nist_controls, nist_171, disa_stig, srg, tags, result_value, mobileconfig, mobileconfig_info):
+    def __init__(self, title, rule_id, severity, discussion, check, fix, cci, cce, nist_controls, nist_171, disa_stig, srg, custom_refs, tags, result_value, mobileconfig, mobileconfig_info):
         self.rule_title = title
         self.rule_id = rule_id
         self.rule_severity = severity
@@ -36,6 +36,7 @@ class MacSecurityRule():
         self.rule_800171 = nist_171
         self.rule_disa_stig = disa_stig
         self.rule_srg = srg
+        self.rule_custom_refs = custom_refs
         self.rule_result_value = result_value
         self.rule_tags = tags
         self.rule_mobileconfig = mobileconfig
@@ -529,7 +530,7 @@ def default_audit_plist(baseline_name, build_path, baseline_yaml):
     plistlib.dump(plist_dict, plist_file)
 
 
-def generate_script(baseline_name, build_path, baseline_yaml):
+def generate_script(baseline_name, build_path, baseline_yaml, reference):
     """Generates the zsh script from the rules in the baseline YAML
     """
     compliance_script_file = open(
@@ -737,29 +738,43 @@ defaults write "$audit_plist" lastComplianceCheck "$(date)"
             else:
                 nist_80053r4 = rule_yaml['references']['800-53r4']
             
-            try:
-                rule_yaml['references']['disa_stig']
-            except KeyError:
-                stig_ref = rule_yaml['id']
-            else:
-                if rule_yaml['references']['disa_stig'][0] == "N/A":
-                    stig_ref = [rule_yaml['id']]
-                else:
-                    stig_ref = rule_yaml['references']['disa_stig']
-                
-            try:
-                rule_yaml['references']['ASCS']
-            except KeyError:
-                ascs_ref = ''
-            else:
-                ascs_ref = rule_yaml['references']['ASCS']
-            
-            if "STIG" in baseline_yaml['title']:
-                logging.debug(f'Setting STIG reference for logging: {stig_ref}')
-                log_reference_id = stig_ref
-            else:
+            #try:
+            #    rule_yaml['references']['disa_stig']
+            #except KeyError:
+            #    stig_ref = rule_yaml['id']
+            #else:
+            #    if rule_yaml['references']['disa_stig'][0] == "N/A":
+            #        stig_ref = [rule_yaml['id']]
+            #    else:
+            #        stig_ref = rule_yaml['references']['disa_stig']
+            #
+            #if "STIG" in baseline_yaml['title']:
+            #    logging.debug(f'Setting STIG reference for logging: {stig_ref}')
+            #    log_reference_id = stig_ref
+            #else:
+            #    log_reference_id = [rule_yaml['id']]
+            if reference == "default":
                 log_reference_id = [rule_yaml['id']]
-
+            else:
+                try: 
+                    rule_yaml['references'][reference]
+                except KeyError:
+                    try: 
+                        rule_yaml['references']['custom'][reference]
+                    except KeyError:
+                        log_reference_id = [rule_yaml['id']]
+                    else:
+                        if isinstance(rule_yaml['references']['custom'][reference], list):
+                            log_reference_id = rule_yaml['references']['custom'][reference] + [rule_yaml['id']]
+                        else:
+                            log_reference_id = [rule_yaml['references']['custom'][reference]] + [rule_yaml['id']]
+                else:
+                    if isinstance(rule_yaml['references'][reference], list):
+                        log_reference_id = rule_yaml['references'][reference] + [rule_yaml['id']]
+                    else:
+                            log_reference_id = [rule_yaml['references'][reference]] + [rule_yaml['id']]
+                            
+                
         # group the controls
             nist_80053r4.sort()
             res = [list(i) for j, i in groupby(
@@ -817,7 +832,7 @@ elif [[ ! -z "$exempt_reason" ]];then
     defaults write "$audit_plist" {0} -dict-add finding -bool NO
     /bin/sleep 1
 fi
-    """.format(rule_yaml['id'], nist_controls.replace("\n", "\n#"), check.strip(), result, result_value, ','.join(log_reference_id))
+    """.format(rule_yaml['id'], nist_controls.replace("\n", "\n#"), check.strip(), result, result_value, ' '.join(log_reference_id))
 
             check_function_string = check_function_string + zsh_check_text
 
@@ -952,11 +967,12 @@ def get_rule_yaml(rule_file):
     """
     names = [os.path.basename(x) for x in glob.glob('../custom/rules/**/*.yaml', recursive=True)]
     file_name = os.path.basename(rule_file)
-
     if file_name in names:
         print(f"Custom settings found for rule: {rule_file}")
-        override_path = glob.glob('../custom/rules/**/{}'.format(file_name, recursive=True))[0]
-        #override_rule = os.path.join('../custom/rules', os.path.basename(rule_file))
+        try:
+            override_path = glob.glob('../custom/rules/**/{}'.format(file_name, recursive=True))[0]
+        except IndexError:
+            override_path = glob.glob('../custom/rules/{}'.format(file_name, recursive=True))[0]
         with open(override_path) as r:
             rule_yaml = yaml.load(r, Loader=yaml.SafeLoader)
     else:
@@ -981,11 +997,12 @@ def generate_xls(baseline_name, build_path, baseline_yaml):
 
     wb = Workbook()
 
-    sheet1 = wb.add_sheet('Sheet 1')
+    sheet1 = wb.add_sheet('Sheet 1', cell_overwrite_ok=True)
     topWrap = xlwt.easyxf("align: vert top; alignment: wrap True")
     top = xlwt.easyxf("align: vert top")
     headers = xlwt.easyxf("font: bold on")
     counter = 1
+    column_counter = 13
     sheet1.write(0, 0, "CCE", headers)
     sheet1.write(0, 1, "Rule ID", headers)
     sheet1.write(0, 2, "Title", headers)
@@ -1081,6 +1098,15 @@ def generate_xls(baseline_name, build_path, baseline_yaml):
         sheet1.write(counter, 12, cci, topWrap)
         sheet1.col(12).width = 400 * 15
 
+        if rule.rule_custom_refs != ['None']:
+            for title, ref in rule.rule_custom_refs.items():
+                sheet1.write(0, column_counter, title, headers )    
+                sheet1.col(column_counter).width = 512 * 25
+                added_ref = (str(ref)).strip('[]\'')
+                added_ref = added_ref.replace(", ", "\n").replace("\'", "")
+                sheet1.write(counter, column_counter, added_ref, topWrap)
+                column_counter = column_counter + 1
+
         tall_style = xlwt.easyxf('font:height 640;')  # 36pt
 
         sheet1.row(counter).set_style(tall_style)
@@ -1110,7 +1136,8 @@ def create_rules(baseline_yaml):
                   'cce',
                   '800-53r4',
                   '800-171r2',
-                  'srg']
+                  'srg',
+                  'custom']
 
 
     for sections in baseline_yaml['profile']:
@@ -1148,6 +1175,7 @@ def create_rules(baseline_yaml):
                                         rule_yaml['references']['800-171r2'],
                                         rule_yaml['references']['disa_stig'],
                                         rule_yaml['references']['srg'],
+                                        rule_yaml['references']['custom'],
                                         rule_yaml['tags'],
                                         rule_yaml['result'],
                                         rule_yaml['mobileconfig'],
@@ -1172,7 +1200,7 @@ def create_args():
     parser.add_argument("-p", "--profiles", default=None,
                         help="Generate configuration profiles for the rules.", action="store_true")
     parser.add_argument("-r", "--reference", default=None,
-                        help="Use the reference ID instead of rule ID for identification.", action="store")
+                        help="Use the reference ID instead of rule ID for identification.")
     parser.add_argument("-s", "--script", default=None,
                         help="Generate the compliance script for the rules.", action="store_true")
     # add gary argument to include tags for XCCDF generation, with a nod to Gary the SCAP guru
@@ -1207,7 +1235,7 @@ def is_asciidoctor_pdf_installed():
     return output.decode("utf-8")
 
 def verify_signing_hash(hash):
-    """Attempts to validate the existance of the certificate provided by the hash
+    """Attempts to validate the existence of the certificate provided by the hash
     """
     with tempfile.NamedTemporaryFile(mode="w") as in_file:
         unsigned_tmp_file_path=in_file.name
@@ -1230,6 +1258,18 @@ def sign_config_profile(in_file, out_file, hash):
     output, error = process.communicate()
     print(f"Signed Configuration profile written to {out_file}")
     return output.decode("utf-8")
+
+def parse_custom_references(reference):
+    string = "\n"
+    for item in reference:
+        if isinstance(reference[item], list):
+            string += "!" + str(item) + "\n!\n"
+            for i in reference[item]:
+                string += "* " + str(i) + "\n"
+        else:
+            string += "!" + str(item) + "!* " + str(reference[item]) + "\n"
+    return string
+
 
 def main():
 
@@ -1272,7 +1312,14 @@ def main():
             if not verify_signing_hash(args.hash):
                 sys.exit('Cannot use the provided hash to sign.  Please make sure you provide the subject key ID hash from an installed certificate')
         else:
-            signing = False 
+            signing = False
+
+        if args.reference:
+            use_custom_reference = True
+            log_reference = args.reference
+        else:
+            log_reference = "default"
+            use_custom_reference = False 
 
     except IOError as msg:
         parser.error(str(msg))
@@ -1286,6 +1333,7 @@ def main():
     adoc_templates = [ "adoc_rule", 
                     "adoc_supplemental", 
                     "adoc_rule_no_setting", 
+                    "adoc_rule_custom_refs",
                     "adoc_section", 
                     "adoc_header", 
                     "adoc_footer", 
@@ -1313,6 +1361,9 @@ def main():
 
     with open(adoc_templates_dict['adoc_rule_no_setting']) as adoc_rule_no_setting_file:
         adoc_rule_no_setting_template = Template(adoc_rule_no_setting_file.read())
+    
+    with open(adoc_templates_dict['adoc_rule_custom_refs']) as adoc_rule_custom_refs_file:
+        adoc_rule_custom_refs_template = Template(adoc_rule_custom_refs_file.read())
 
     with open(adoc_templates_dict['adoc_section']) as adoc_section_file:
         adoc_section_template = Template(adoc_section_file.read())
@@ -1341,12 +1392,15 @@ def main():
     else:
         adoc_tag_show=":show_tags!:"
 
-    if "stig" in baseline_yaml['title'].lower():
+    if "STIG" in baseline_yaml['title'].upper():
         adoc_STIG_show=":show_STIG:"
     else:
         adoc_STIG_show=":show_STIG!:"
 
-    adoc_171_show=":show_171:"
+    if "800" in baseline_yaml['title']:
+         adoc_171_show=":show_171:"
+    else:
+         adoc_171_show=":show_171!:"
 
     # Create header
     header_adoc = adoc_header_template.substitute(
@@ -1468,6 +1522,13 @@ def main():
                 srg = ulify(rule_yaml['references']['srg'])
 
             try:
+                rule_yaml['references']['custom']
+            except KeyError:
+                custom_refs = ''
+            else:
+                custom_refs = parse_custom_references(rule_yaml['references']['custom'])
+
+            try:
                 rule_yaml['fix']
             except KeyError:
                 rulefix = "No fix Found"
@@ -1498,7 +1559,7 @@ def main():
             else:
                 result_value = 'N/A'
 
-            # deteremine if configprofile
+            # determine if configprofile
             try:
                 rule_yaml['mobileconfig']
             except KeyError:
@@ -1515,7 +1576,6 @@ def main():
             nist_controls = ''
             for i in res:
                 nist_controls += group_ulify(i)
-
             if 'supplemental' in tags:
                 rule_adoc = adoc_supplemental_template.substitute(
                     rule_title=rule_yaml['title'].replace('|', '\|'),
@@ -1535,6 +1595,23 @@ def main():
                     rule_cce=cce,
                     rule_tags=tags,
                     rule_srg=srg
+                )
+            elif custom_refs:
+                rule_adoc = adoc_rule_custom_refs_template.substitute(
+                    rule_title=rule_yaml['title'].replace('|', '\|'),
+                    rule_id=rule_yaml['id'].replace('|', '\|'),
+                    rule_discussion=rule_yaml['discussion'].replace('|', '\|'),
+                    rule_check=rule_yaml['check'],  # .replace('|', '\|'),
+                    rule_fix=rulefix,
+                    rule_cci=cci,
+                    rule_80053r4=nist_controls,
+                    rule_800171=nist_800171,
+                    rule_disa_stig=disa_stig,
+                    rule_cce=cce,
+                    rule_custom_refs=custom_refs,
+                    rule_tags=tags,
+                    rule_srg=srg,
+                    rule_result=result_value
                 )
             else:
                 rule_adoc = adoc_rule_template.substitute(
@@ -1569,7 +1646,7 @@ def main():
     
     if args.script:
         print("Generating compliance script...")
-        generate_script(baseline_name, build_path, baseline_yaml)
+        generate_script(baseline_name, build_path, baseline_yaml, log_reference)
         default_audit_plist(baseline_name, build_path, baseline_yaml)
     
     if args.xls:
