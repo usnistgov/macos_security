@@ -478,6 +478,8 @@ def generate_profiles(baseline_name, build_path, parent_dir, baseline_yaml, sign
             unsigned_file_path=os.path.join(unsigned_mobileconfig_file_path)
             unsigned_config_file = open(unsigned_file_path, "wb")
             newProfile.finalizeAndSave(unsigned_config_file)
+            settings_config_file = open(settings_plist_file_path, "wb")
+            newProfile.finalizeAndSavePlist(settings_config_file)
             unsigned_config_file.close()
             # sign the profiles
             sign_config_profile(unsigned_file_path, signed_mobileconfig_file_path, hash)
