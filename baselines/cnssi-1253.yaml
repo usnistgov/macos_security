@@ -154,7 +154,7 @@ profile:
       - os_store_encrypted_passwords
       - os_prevent_unauthorized_disclosure
       - pwpolicy_temporary_accounts_disable
-      - pwpolicy_force_change_password_change
+      - pwpolicy_force_password_change
       - pwpolicy_emergency_accounts_disable
   - section: "Permanent"
     rules:

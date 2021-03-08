@@ -120,7 +120,7 @@ profile:
       - os_obscure_password
       - os_required_crypto_module
       - os_store_encrypted_passwords
-      - pwpolicy_force_change_password_change
+      - pwpolicy_force_password_change
   - section: "Permanent"
     rules:
       - os_secure_name_resolution
