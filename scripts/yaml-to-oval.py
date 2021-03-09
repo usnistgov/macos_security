@@ -85,11 +85,13 @@ def main():
                     rule_yaml = yaml.load(r, Loader=yaml.SafeLoader)
                 if "inherent" in rule_yaml['tags'] or "n_a" in rule_yaml['tags'] or "permanent" in rule_yaml['tags']:
                     continue
-                if len(rule_yaml['tags']) < 2 and "stig" in rule_yaml['tags']:
+                if rule_yaml['check'][0] != "/" and "[source,bash]" not in rule_yaml['fix']:
+                    print(rule_yaml['id'] + " - Manual Check")
                     continue
                 if "manual" in rule_yaml['tags']:
                     print(rule_yaml['id'] + " - Manual Check")
                     continue
+                
                 if "os_home_folders_secure" in rule_file:
                     oval_definition = oval_definition + '''
                             <definition id="oval:mscp:def:{}" version="1" class="compliance"> 
@@ -236,7 +238,7 @@ def main():
                     </plist510_object>
                         <plist510_object xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" comment="{}_object" id="oval:mscp:obj:{}" version="1">
                         <key>{}</key>
-                    <filepath datatype="string" operation="equals" var_ref="oval:mscp:var:{}"/>
+                    <filepath datatype="string" operation="equals" var_check="at least one" var_ref="oval:mscp:var:{}"/>
                     <instance datatype="int" operation="equals">1</instance>
                 </plist510_object> 
                                         '''.format(x+1999,key,x,key,x)
@@ -416,7 +418,7 @@ def main():
                     <instance datatype="int" operation="equals">1</instance>
                 </plist510_object>
                 <plist511_object xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" comment="{}_object" id="oval:mscp:obj:{}" version="1">
-                    <filepath datatype="string" operation="equals" var_ref="oval:mscp:var:{}"/>
+                    <filepath datatype="string" operation="equals" var_check="at least one" var_ref="oval:mscp:var:{}"/>
                     <xpath>boolean(plist/dict/array/string/text() = "{}")</xpath>
                 </plist511_object>  
                 '''.format(x+1999,rule_yaml['id'],x,x,str(value).strip('[]').strip("'"))
@@ -715,7 +717,110 @@ def main():
                 </systemsetup_state>'''.format(rule_yaml['id'],x,state_test)
 
 
-                
+
+
+                    abc = 0
+                    if "defaults" in rule_yaml['check'] and "grep" in rule_yaml['check'] and "CURRENT_USER" in rule_yaml['check']:
+
+                        regex = r"(?<=\()(.*?)(?=\))"
+
+                        test_str = rule_yaml['check'].split("grep")[1]
+
+                        matches = re.finditer(regex, test_str, re.MULTILINE)
+                        matchy_match = ""
+                        for matchNum, match in enumerate(matches, start=1):
+                            matchy_match = match.group()
+                        
+                        
+                        oval_definition = oval_definition + '''
+                            <definition id="oval:mscp:def:{}" version="1" class="compliance"> 
+                        <metadata> 
+                            <title>{}</title> 
+                            <reference source="CCE" ref_id="{}"/>
+                            <reference source="macos_security" ref_id="{}"/>
+                            <description>{}</description> 
+                        </metadata> 
+                    <criteria>
+                        '''.format(x,rule_yaml['title'],rule_yaml['references']['cce'][0],rule_yaml['id'],rule_yaml['discussion'],rule_yaml['id'],x)
+                        
+                        for multi_grep in matchy_match.split("|"):
+                            
+                            oval_definition = oval_definition + '''
+                            <criterion comment="{}" test_ref="oval:mscp:tst:{}" />
+                            '''.format(rule_yaml['id']+"_"+str(abc),x)
+                            
+                            oval_test = oval_test + '''
+                            <plist510_test xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" check="all" check_existence="any_exist" comment="{}_test" id="oval:mscp:tst:{}" version="2">
+                    <object object_ref="oval:mscp:obj:{}" />
+                    <state state_ref="oval:mscp:ste:{}" />
+                </plist510_test>'''.format(rule_yaml['id']+"_"+str(abc),x,x,x)
+
+                            key = matchy_match.split("|")[abc].split(" = ")[0].replace("\"","")
+                            value = matchy_match.split("|")[abc].split(" = ")[1].replace(";","")
+                            if "$CURRENT_USER" in rule_yaml['check']:
+                                
+
+                                oval_object = oval_object + '''
+                                <accountinfo_object xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" comment="home directory" id="oval:mscp:obj:{}" version="1">
+                    <username operation="pattern match">.*</username>
+                    <filter action="include" xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5">oval:mscp:ste:{}</filter>
+                </accountinfo_object>
+                '''.format(x+1999,x+1999)
+
+                                oval_state = oval_state + '''
+                            <accountinfo_state xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" comment="home directory state" id="oval:mscp:ste:{}" version="1">
+                    <username operation="pattern match">^[^_\s].*</username>
+                    <uid datatype="int" operation="not equal">0</uid>
+                    <gid datatype="int" operation="not equal">0</gid>
+                    <login_shell operation="not equal">/usr/bin/false</login_shell>
+                </accountinfo_state>'''.format(x+1999)
+                                plist = rule_yaml['check'].split("read")[1].split()[0].replace(".plist","")
+
+                                
+
+                                oval_variable = oval_variable + '''
+            <local_variable id="oval:mscp:var:{}" version="1" datatype="string" comment="uuid variable">
+                <concat>
+                    <object_component object_ref="oval:mscp:obj:{}" item_field="home_dir"/>
+                    <literal_component datatype="string">/Library/Preferences/{}.</literal_component>                    
+                    <literal_component datatype="string">plist</literal_component>
+                </concat>
+            </local_variable>'''.format(x,x+1999,plist)
+
+            
+                            oval_object = oval_object + '''
+                    <plist510_object xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" comment="{}_object" id="oval:mscp:obj:{}" version="1">
+                <key>{}</key>
+                    <filepath datatype="string" operation="equals" var_check="at least one" var_ref="oval:mscp:var:{}"/>
+                    <instance datatype="int" operation="equals">1</instance>
+                </plist510_object>'''.format(rule_yaml['id']+"_"+str(abc),x,key,x)
+
+                            oval_datatype = ""
+                            try:
+                                int(value)
+                                
+                                oval_datatype = "int"     
+                            except:
+                                if value.lower() == "true" or value.lower == "false":
+                                    oval_datatype = "boolean"
+                                
+                                else:
+                                    oval_datatype = "string"
+                            oval_state = oval_state + '''
+                <plist510_state xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" comment="{}_state" id="oval:mscp:ste:{}" version="1">
+                <value datatype="{}" operation="equals">{}</value>
+                </plist510_state>'''.format(rule_yaml['id']+"_"+str(abc),x,oval_datatype,value)
+                            
+                            abc =+ 1
+                            x = x+1
+                        oval_definition = oval_definition + '''</criteria>
+                </definition>'''
+                        oval_definition = re.sub('(?=\n\[NOTE\])(?s)(.*)\=\n<', '<', oval_definition)
+                        
+                        x = x+1
+                        break
+
+                            
                     if "defaults" in rule_yaml['check']:
                         
                         oval_definition = oval_definition + '''
@@ -730,7 +835,7 @@ def main():
                         <criterion comment="{}" test_ref="oval:mscp:tst:{}" />
                     </criteria>
                 </definition> '''.format(x,rule_yaml['title'],rule_yaml['references']['cce'][0],rule_yaml['id'],rule_yaml['discussion'],rule_yaml['id'],x)
-
+                        
                         oval_test = oval_test + '''
                             <plist510_test xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" check="all" check_existence="only_one_exists" comment="{}_test" id="oval:mscp:tst:{}" version="2">
                     <object object_ref="oval:mscp:obj:{}" />
@@ -760,7 +865,7 @@ def main():
                 
                 <plist510_object xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" comment="{}_object" id="oval:mscp:obj:{}" version="1">
                 <key>{}</key>
-                    <filepath datatype="string" operation="equals" var_ref="oval:mscp:var:{}"/>
+                    <filepath datatype="string" operation="equals" var_check="at least one" var_ref="oval:mscp:var:{}"/>
                     <instance datatype="int" operation="equals">1</instance>
                 </plist510_object>
                 '''.format(x+1999,x+1999,rule_yaml['id'],x,key,x)
@@ -792,7 +897,7 @@ def main():
                                 oval_object = oval_object + '''
                 <plist510_object xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" comment="{}_object" id="oval:mscp:obj:{}" version="1">
                 <key>{}</key>
-                    <filepath datatype="string" operation="equals" var_ref="oval:mscp:var:{}"/>
+                    <filepath datatype="string" operation="equals" var_check="at least one" var_ref="oval:mscp:var:{}"/>
                     <instance datatype="int" operation="equals">1</instance>
                 </plist510_object>'''.format(rule_yaml['id'],x,key,x)
                                 
@@ -825,7 +930,7 @@ def main():
                 <plist510_state xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" comment="{}_state" id="oval:mscp:ste:{}" version="1">
                 <value datatype="{}" operation="equals">{}</value>
                 </plist510_state>'''.format(rule_yaml['id'],x,oval_datatype,value)
-                        
+                        oval_definition = re.sub('(?=\n\[NOTE\])(?s)(.*)\=\n<', '<', oval_definition)
                         x = x+1
                     
                         
@@ -1409,8 +1514,8 @@ def main():
         
 
         total_oval = ovalPrefix + "\n<definitions>\n" + oval_definition + "\n</definitions>\n<tests>\n" + oval_test + "\n</tests>\n<objects>\n" + oval_object + "\n</objects>\n<states>\n"+ oval_state +"\n</states>\n<variables>\n" + oval_variable + "\n</variables>\n</oval_definitions>"
-        
-        final_oval = re.sub('(?=\n\[NOTE\])(?s)(.*)\=\n<', '<', total_oval)
+        final_oval = re.sub('(?=\n\[NOTE\])(?s)(.*)\=\n$.*', '<', total_oval)
+        # final_oval = re.sub('(?=\n\[NOTE\])(?s)(.*)\=\n<', '<', total_oval)
         
         oval_file = output
 
