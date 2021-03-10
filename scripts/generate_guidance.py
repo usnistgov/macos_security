@@ -528,21 +528,35 @@ read_options(){{
     esac
 }}
 
-generate_report(){{
-    non_compliant=0
+get_compliant(){{
     compliant=0
+    results=$(/usr/libexec/PlistBuddy -c "Print" /Library/Preferences/org.{baseline_name}.audit.plist)
 
+    while IFS= read -r line; do
+        if [[ "$line" =~ "false" ]]; then
+            compliant=$((compliant+1))
+        fi
+
+    done <<< "$results"
+    echo "$compliant"
+}}
+
+get_non_compliant(){{
+    non_compliant=0
     results=$(/usr/libexec/PlistBuddy -c "Print" /Library/Preferences/org.{baseline_name}.audit.plist)
 
     while IFS= read -r line; do
         if [[ "$line" =~ "true" ]]; then
             non_compliant=$((non_compliant+1))
         fi
-        if [[ "$line" =~ "false" ]]; then
-            compliant=$((compliant+1))
-        fi
-
     done <<< "$results"
+    echo "$non_compliant"
+}}
+
+generate_report(){{
+    non_compliant=$(get_non_compliant)
+    compliant=$(get_compliant)
+
     total=$((non_compliant + compliant))
     percentage=$(printf %.2f $(( compliant * 100. / total )) )
     echo
@@ -553,13 +567,21 @@ generate_report(){{
 }}
 
 view_report(){{
-    
     if [[ $lastComplianceScan == "No scans have been run" ]];then
         echo "no report to run, please run new scan"
         pause
     else
         generate_report
     fi
+}}
+
+# Designed for use with MDM - single unformatted output of the Compliance Report
+run_stats(){{
+    non_compliant=$(get_non_compliant)
+    compliant=$(get_compliant)
+    total=$((non_compliant + compliant))
+    percentage=$(printf %.2f $(( compliant * 100. / total )) )
+    echo "PASSED: $compliant FAILED: $non_compliant, $percentage percent compliant!"
 }}
 
 run_scan(){{
@@ -742,12 +764,18 @@ if (( # >= 2));then
     exit 1
 fi
 
-zparseopts -D -E -check=check -fix=fix
+zparseopts -D -E -check=check -fix=fix -stats=stats -compliant=compliant -non_compliant=non_compliant
 
 if [[ $check ]];then
     run_scan
 elif [[ $fix ]];then    
     run_fix
+elif [[ $stats ]];then    
+    run_stats
+elif [[ $compliant ]];then    
+    get_compliant
+elif [[ $non_compliant ]];then    
+    get_non_compliant
 else
     while true; do
         show_menus
