@@ -60,6 +60,8 @@ references:
   cci:
     - CCI-000016
     - CCI-001682
+  800-53r5:
+    - AC-2(2)
   800-53r4:
     - AC-2(2)
   srg:

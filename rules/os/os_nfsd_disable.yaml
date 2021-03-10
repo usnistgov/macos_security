@@ -17,6 +17,8 @@ references:
     - CCE-85342-4
   cci: 
     - CCI-000381
+  800-53r5:
+    - AC-3
   800-53r4:
     - AC-3
   srg:

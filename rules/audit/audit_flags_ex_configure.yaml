@@ -21,6 +21,8 @@ references:
     - CCE-85263-2
   cci:
     - N/A    
+  800-53r5:
+    - AU-12
   800-53r4:
     - AU-2
     - AU-12

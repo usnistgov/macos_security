@@ -19,6 +19,8 @@ references:
     - CCE-85441-4
   cci: 
     - CCI-000366
+  800-53r5:
+    - AC-3
   800-53r4:
     - AC-3
     - AC-17

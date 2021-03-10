@@ -11,6 +11,8 @@ references:
     - CCE-85371-3
   cci:
     - CCI-002617
+  800-53r5:
+    - SI-2(6)
   800-53r4:
     - SI-2(6)
   disa_stig:

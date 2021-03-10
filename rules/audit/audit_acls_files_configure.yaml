@@ -19,6 +19,8 @@ references:
   cci:
     - CCI-000162
     - CCI-001314
+  800-53r5:
+    - SI-11
   800-53r4:
     - AU-9
     - SI-11

@@ -18,6 +18,9 @@ references:
     - CCE-85447-1
   cci: 
     - N/A
+  800-53r5:
+    - IA-2(8)
+    - AC-3
   800-53r4:
     - AC-3 
     - CM-7

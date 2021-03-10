@@ -17,6 +17,8 @@ references:
   cci: 
     - CCI-001891
     - CCI-002046
+  800-53r5:
+    - SC-45(1)
   800-53r4: 
     - AU-8(1)
   srg: 

@@ -21,6 +21,8 @@ references:
     - CCE-85385-3
   cci: 
     - CCI-000770
+  800-53r5:
+    - IA-2(5)
   800-53r4: 
     - IA-2(5)
   srg: 

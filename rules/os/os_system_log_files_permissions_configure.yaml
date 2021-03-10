@@ -23,6 +23,8 @@ references:
     - N/A
   cci:
     - CCI-001314
+  800-53r5:
+    - SI-11
   800-53r4:
     - SI-11
   srg:

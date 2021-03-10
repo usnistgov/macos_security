@@ -13,6 +13,9 @@ fix: |
 references:
   cce:
     - CCE-85310-1
+  800-53r5:
+    - AC-3
+    - IA-5(13)
   800-53r4:
     - AC-2(11)
     - AC-3

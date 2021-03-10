@@ -20,6 +20,8 @@ references:
     - CCE-85370-5
   cci: 
     - N/A
+  800-53r5:
+    - MP-7
   800-53r4: 
     - MP-7(1)
   srg: 

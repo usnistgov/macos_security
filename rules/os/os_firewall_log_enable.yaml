@@ -20,6 +20,8 @@ references:
     - CCE-85313-5
   cci: 
     - N/A
+  800-53r5:
+    - AU-12
   800-53r4: 
     - SC-7
     - AU-12

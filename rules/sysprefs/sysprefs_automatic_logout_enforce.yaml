@@ -18,6 +18,8 @@ references:
     - CCE-85424-0
   cci:
     - CCI-002361
+  800-53r5:
+    - AC-12
   800-53r4:
     - AC-12
   disa_stig:

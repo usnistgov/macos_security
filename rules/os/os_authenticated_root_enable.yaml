@@ -19,6 +19,11 @@ references:
     - CCE-85298-8
   cci: 
     - N/A
+  800-53r5:
+    - AC-3
+    - CM-5
+    - SC-34
+    - SI-7(6)
   800-53r4:
     - AC-3
     - CM-5

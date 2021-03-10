@@ -18,6 +18,9 @@ references:
     - CCE-85395-2
   cci:
     - N/A
+  800-53r5:
+    - IA-2
+    - IA-2(5)
   800-53r4:
     - IA-2
     - IA-2(5)

@@ -14,6 +14,8 @@ references:
     - CCI-002466
     - CCI-002467
     - CCI-002468
+  800-53r5:
+    - SC-21
   800-53r4:
     - SC-21
   disa_stig:

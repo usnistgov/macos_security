@@ -35,6 +35,8 @@ references:
     - CCI-001386
     - CCI-001387
     - CCI-001388
+  800-53r5:
+    - AC-8
   800-53r4: 
     - AC-8
   srg: 

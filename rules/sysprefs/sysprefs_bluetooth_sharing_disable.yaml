@@ -27,6 +27,9 @@ references:
     - CCE-85421-6
   cci: 
     - N/A
+  800-53r5:
+    - AC-3
+    - AC-18(4)
   800-53r4: 
     - AC-3
     - AC-18

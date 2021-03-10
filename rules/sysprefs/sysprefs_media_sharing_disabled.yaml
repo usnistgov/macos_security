@@ -17,6 +17,8 @@ fix: |
 references:
   cce:
     - CCE-85436-4
+  800-53r5:
+    - AC-3
   800-53r4:
     - AC-3
   srg: 

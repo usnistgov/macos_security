@@ -17,6 +17,8 @@ references:
     - CCE-85414-1
   cci:
     - N/A
+  800-53r5:
+    - AC-2(2)
   800-53r4:
     - AC-2(2)
   srg:

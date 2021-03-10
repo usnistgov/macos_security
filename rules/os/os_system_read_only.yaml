@@ -13,6 +13,8 @@ references:
     - CCE-85388-7
   cci:
     - N/A
+  800-53r5:
+    - SC-34
   800-53r4:
     - SC-34
     - SI-7
