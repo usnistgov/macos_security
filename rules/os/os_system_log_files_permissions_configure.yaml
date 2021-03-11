@@ -36,6 +36,8 @@ references:
 macOS:
   - "11.0"
 tags:
+  - 800-53r5_moderate
+  - 800-53r5_high
   - manual
   - stig
 severity: "medium"

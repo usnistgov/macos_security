@@ -30,10 +30,14 @@ references:
 macOS:
   - "11.0"
 tags:
-  - cnssi-1253
+  - 800-53r5_privacy
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_high
   - 800-53r4_low
   - 800-53r4_moderate
   - 800-53r4_high
+  - cnssi-1253
   - stig
 severity: "medium"
 mobileconfig: false
