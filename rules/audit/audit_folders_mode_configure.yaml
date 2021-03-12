@@ -20,6 +20,8 @@ references:
     - CCI-000162
     - CCI-000163
     - CCI-000164
+  800-53r5:
+    - AU-9
   800-53r4: 
     - AU-9
   srg: 

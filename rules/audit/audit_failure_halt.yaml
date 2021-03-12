@@ -18,6 +18,8 @@ references:
     - CCE-85257-4
   cci: 
     - CCI-000140
+  800-53r5:
+    - AU-5
   800-53r4: 
     - AU-5
   srg: 

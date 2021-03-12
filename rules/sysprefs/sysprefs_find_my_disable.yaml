@@ -17,6 +17,8 @@ references:
     - CCE-85426-5
   cci: 
     - N/A
+  800-53r5:
+    - AC-20
   800-53r4: 
     - CM-7
     - AC-20

@@ -17,6 +17,8 @@ references:
     - CCE-85451-3
   cci: 
     - CCI-000056
+  800-53r5:
+    - AC-11
   800-53r4: 
     - AC-11
   srg: 

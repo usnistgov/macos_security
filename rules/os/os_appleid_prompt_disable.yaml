@@ -15,6 +15,8 @@ references:
     - CCE-85296-2
   cci:
     - CCI-000381
+  800-53r5:
+    - AC-20
   800-53r4: 
     - AC-20
   srg: 

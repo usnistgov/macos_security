@@ -17,6 +17,8 @@ references:
     - CCE-85360-6
   cci:
     - CCI-002235
+  800-53r5:
+    - AC-6(10)
   800-53r4:
     - AC-6(10)
   disa_stig:

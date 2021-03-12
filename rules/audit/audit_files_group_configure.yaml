@@ -20,6 +20,8 @@ references:
     - CCE-85258-2
   cci:
     - CCI-000162
+  800-53r5:
+    - AU-9
   800-53r4:
     - AU-9
   srg:
