@@ -1,4 +1,4 @@
-image::templates/images/mscp_banner.png[]
+image::templates/images/mscp_banner_outline.png[]
 // settings:
 :idprefix:
 :idseparator: - 
@@ -50,7 +50,6 @@ Part 39 of the Federal Acquisition Regulations, section 39.101 paragraph (c) sta
 |Joshua Glemza|National Aeronautics and Space Administration
 |Elyse Anderson|National Aeronautics and Space Administration
 |Gary Gapinski|National Aeronautics and Space Administration
-|Paige Ramsey|Los Alamos National Laboratory
 |===
 
 == Changelog
