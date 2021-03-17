@@ -35,6 +35,7 @@ references:
     - CCI-001882
   800-53r5:
     - AC-3
+    - AU-9
     - AU-9(3)
     - CM-5
     - CM-5(6)

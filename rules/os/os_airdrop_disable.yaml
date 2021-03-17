@@ -21,7 +21,6 @@ references:
   800-53r4:
     - CM-7
     - AC-3
-    - AC-18
     - AC-20
   srg:
     - SRG-OS-000095-GPOS-00049

@@ -19,6 +19,7 @@ references:
   cci: 
     - CCI-002418
   800-53r5:
+    - AC-18
     - AC-18(3)
     - SC-8
     - AC-18(3)
