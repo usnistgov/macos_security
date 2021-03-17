@@ -478,6 +478,8 @@ def generate_profiles(baseline_name, build_path, parent_dir, baseline_yaml, sign
             unsigned_file_path=os.path.join(unsigned_mobileconfig_file_path)
             unsigned_config_file = open(unsigned_file_path, "wb")
             newProfile.finalizeAndSave(unsigned_config_file)
+            settings_config_file = open(settings_plist_file_path, "wb")
+            newProfile.finalizeAndSavePlist(settings_config_file)
             unsigned_config_file.close()
             # sign the profiles
             sign_config_profile(unsigned_file_path, signed_mobileconfig_file_path, hash)
@@ -1221,7 +1223,7 @@ def is_asciidoctor_installed():
     output, error = process.communicate()
     
     # return path to asciidoctor
-    return output.decode("utf-8")
+    return output.decode("utf-8").strip()
 
 
 def is_asciidoctor_pdf_installed():
@@ -1232,7 +1234,7 @@ def is_asciidoctor_pdf_installed():
     process = subprocess.Popen(cmd.split(), stdout=subprocess.PIPE)
     output, error = process.communicate()
 
-    return output.decode("utf-8")
+    return output.decode("utf-8").strip()
 
 def verify_signing_hash(hash):
     """Attempts to validate the existence of the certificate provided by the hash
@@ -1656,8 +1658,8 @@ def main():
     asciidoctor_path = is_asciidoctor_installed()
     if asciidoctor_path != "":
         print('Generating HTML file from AsciiDoc...')
-        cmd = f"{asciidoctor_path} {adoc_output_file.name}"
-        process = subprocess.Popen(cmd.split(), stdout=subprocess.PIPE)
+        cmd = f"{asciidoctor_path} \'{adoc_output_file.name}\'"
+        process = subprocess.Popen(cmd, stdout=subprocess.PIPE, shell=True)
         process.communicate()
     else:
         print("If you would like to generate the HTML file from the AsciiDoc file, install the ruby gem for asciidoctor")
@@ -1665,8 +1667,8 @@ def main():
     asciidoctorPDF_path = is_asciidoctor_pdf_installed()
     if asciidoctorPDF_path != "":
         print('Generating PDF file from AsciiDoc...')
-        cmd = f"{asciidoctorPDF_path} {adoc_output_file.name}"
-        process = subprocess.Popen(cmd.split(), stdout=subprocess.PIPE)
+        cmd = f"{asciidoctorPDF_path} \'{adoc_output_file.name}\'"
+        process = subprocess.Popen(cmd, stdout=subprocess.PIPE, shell=True)
         process.communicate()
     else:
         print("If you would like to generate the PDF file from the AsciiDoc file, install the ruby gem for asciidoctor-pdf")

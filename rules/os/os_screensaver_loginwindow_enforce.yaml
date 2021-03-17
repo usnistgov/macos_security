@@ -12,7 +12,7 @@ references:
   cce:
     - CCE-85375-4
   cci:
-    - CCI-000060*
+    - CCI-000060
   800-53r4:
     - AC-11(1)
   srg:
