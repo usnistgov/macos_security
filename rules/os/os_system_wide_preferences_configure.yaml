@@ -23,11 +23,11 @@ references:
     - AC-6(1)
     - AC-6(2)
   disa_stig:
-    - N/A
+    - APPL-11-002069
   srg:
-    - N/A
+    - SRG-OS-000378-GPOS-00163
   cci:
-    - N/A    
+    - CCI-001958
   800-171r2:
     - 3.1.5
     - 3.1.6
@@ -38,5 +38,7 @@ tags:
   - cnssi-1253
   - 800-53r4_moderate
   - 800-53r4_high
+  - stig
+severity: "medium"
 mobileconfig: false
 mobileconfig_info:

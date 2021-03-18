@@ -13,7 +13,7 @@ result:
 fix: |
   [source,bash]
   ----
-  /usr/bin/sed -i.bak 's/.*ServerAliveInterval.*/ServerAliveInterval 900/' /etc/ssh/ssh_config
+  /usr/bin/grep -q '^ServerAliveInterval' /etc/ssh/ssh_config && /usr/bin/sed -i.bak  's/.*ServerAliveInterval.*/ServerAliveInterval 900/' /etc/ssh/ssh_config || /bin/echo 'ServerAliveInterval 900' >> /etc/ssh/ssh_config
   ----
 references:
   cce:
@@ -35,6 +35,6 @@ tags:
   - cnssi-1253
   - 800-53r4_moderate
   - 800-53r4_high
-  - STIG
+
 mobileconfig: false
 mobileconfig_info:

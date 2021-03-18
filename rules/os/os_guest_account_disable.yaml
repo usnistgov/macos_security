@@ -16,12 +16,12 @@ references:
   cci:
     - CCI-001813
   800-53r4:
-    - CM-5(1)
-    - IA-2
+    - AC-2
+    - AC-2(9)
   srg:
     - SRG-OS-000364-GPOS-00151
   disa_stig:
-    - AOSX-15-002063
+    - APPL-11-002063
   800-171r2:
     - 3.5.1
     - 3.5.2
@@ -29,10 +29,13 @@ macOS:
   - "11.0"
 tags:
   - 800-171
+  - cnssi-1253
+  - 800-53r4_low
+  - 800-53r4_moderate
   - 800-53r4_high
-  - STIG
+  - stig
+severity: "high"
 mobileconfig: true
 mobileconfig_info:
-  com.apple.ManagedClient.preferences:
-    com.apple.MCX:
-      DisableGuestAccount: true
+  com.apple.MCX:
+    DisableGuestAccount: true

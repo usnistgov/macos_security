@@ -111,3 +111,4 @@ payloads_types:
   - com.apple.AppleFileServer
   - com.apple.AdLib
   - .GlobalPreferences
+  - com.apple.preferences.sharing.SharingPrefsExtension

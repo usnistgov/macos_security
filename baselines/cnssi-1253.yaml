@@ -61,6 +61,7 @@ profile:
       - os_sip_enable
       - os_authenticated_root_enable
       - os_removable_media_disable
+      - os_guest_account_disable
       - os_guest_access_smb_disable
       - os_time_server_enabled
       - os_unlock_active_user_session_disable
@@ -71,7 +72,6 @@ profile:
       - os_ssh_fips_140_macs
       - os_home_folders_secure
       - os_facetime_app_disable
-      - os_guest_access_afp_disable
       - os_icloud_storage_prompt_disable
       - os_ir_support_disable
       - os_mail_app_disable
@@ -107,6 +107,7 @@ profile:
       - icloud_addressbook_disable
   - section: "systempreferences"
     rules:
+      - sysprefs_media_sharing_disabled
       - sysprefs_smbd_disable
       - sysprefs_firewall_stealth_mode_enable
       - sysprefs_personalized_advertising_disable
@@ -140,7 +141,7 @@ profile:
       - sysprefs_password_hints_disable
       - sysprefs_bluetooth_sharing_disable
       - sysprefs_improve_siri_dictation_disable
-      - sysprefs_enforce_auto_logout
+      - sysprefs_automatic_logout_enforce
   - section: "Inherent"
     rules:
       - os_prevent_priv_functions
@@ -153,7 +154,7 @@ profile:
       - os_store_encrypted_passwords
       - os_prevent_unauthorized_disclosure
       - pwpolicy_temporary_accounts_disable
-      - pwpolicy_force_change_password_change
+      - pwpolicy_force_password_change
       - pwpolicy_emergency_accounts_disable
   - section: "Permanent"
     rules:

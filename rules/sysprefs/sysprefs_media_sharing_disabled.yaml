@@ -6,12 +6,14 @@ discussion: |
   When Media Sharing is enabled, the computer starts a network listening service that shares the contents of the user’s music collection with other users in the same subnet. 
 
   The information system _MUST_ be configured to provide only essential capabilities. Disabling Media Sharing helps prevent the unauthorized connection of devices and the unauthorized transfer of information. Disabling Media Sharing mitigates this risk.
+
+  NOTE: The Media Sharing preference panel will still allow "Home Sharing" and "Share media with guests" to be checked but the service will not be enabled.
 check: |
-  /sbin/pfctl -a '*' -sr &> /dev/null | /usr/bin/grep -c "block drop log proto tcp from any to any port = 3689" 
+  /usr/bin/profiles -P -o stdout | /usr/bin/grep -Ec '(homeSharingUIStatus = 0|legacySharingUIStatus = 0|mediaSharingUIStatus = 1)'
 result:
   integer: 1
 fix: |
-  NOTE: Even if the user enables this service, the firewall is configured to block access to it. See Firewall Supplemental which includes a script that has an example policy to implement this rule.
+  This is implemented by a Configuration Profile.
 references:
   cce:
     - CCE-85436-4
@@ -30,7 +32,12 @@ macOS:
   - "11.0"
 tags:
   - 800-171
-  - STIG
-mobileconfig: false
+  - 800-53r4_low
+  - 800-53r4_moderate
+  - 800-53r4_high
+mobileconfig: true
 mobileconfig_info:
-
+  com.apple.preferences.sharing.SharingPrefsExtension:
+    homeSharingUIStatus: 0
+    legacySharingUIStatus: 0
+    mediaSharingUIStatus: 0

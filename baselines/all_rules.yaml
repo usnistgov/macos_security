@@ -84,7 +84,6 @@ profile:
       - os_home_folders_secure
       - os_facetime_app_disable
       - os_camera_disable
-      - os_guest_access_afp_disable
       - os_icloud_storage_prompt_disable
       - os_sshd_permit_root_login_configure
       - os_ir_support_disable
@@ -160,7 +159,7 @@ profile:
       - sysprefs_password_hints_disable
       - sysprefs_bluetooth_sharing_disable
       - sysprefs_improve_siri_dictation_disable
-      - sysprefs_enforce_auto_logout
+      - sysprefs_automatic_logout_enforce
   - section: "Inherent"
     rules:
       - os_enforce_access_restrictions
@@ -198,7 +197,7 @@ profile:
       - os_crypto_audit
       - os_reauth_privilege
       - pwpolicy_temporary_accounts_disable
-      - pwpolicy_force_change_password_change
+      - pwpolicy_force_password_change
       - pwpolicy_emergency_accounts_disable
   - section: "Permanent"
     rules:

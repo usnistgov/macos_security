@@ -11,7 +11,7 @@ result:
 fix: |
   [source,bash]
   ----
-  /usr/bin/sed -i.bak 's/.*ServerAliveCountMax.*/ServerAliveCountMax 0/' /etc/ssh/ssh_config
+  /usr/bin/grep -q '^ServerAliveCountMax' /etc/ssh/ssh_config && /usr/bin/sed -i.bak  's/.*ServerAliveCountMax.*/ServerAliveCountMax 0/' /etc/ssh/ssh_config || /bin/echo 'ServerAliveCountMax 0' >> /etc/ssh/ssh_config
   ----
 references:
   cce:
@@ -33,6 +33,6 @@ tags:
   - cnssi-1253
   - 800-53r4_moderate
   - 800-53r4_high
-  - STIG
+
 mobileconfig: false
 mobileconfig_info:

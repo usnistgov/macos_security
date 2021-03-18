@@ -1,0 +1,46 @@
+id: os_system_log_files_owner_group_configure
+title: "Configure System Log Files to be Owned by Root and Group-Owned by Wheel or Admin" 
+discussion: |
+  System logs should only be readable by root or admin users. System logs frequently contain sensitive information that could be used by an attacker. Setting the correct owner mitigates this risk.
+check: |
+  Some system log files are controlled by "newsyslog" and "aslmanager".
+
+  The following commands check for log files that exist on the system and print the path to the log with the corresponding ownership. Run them from inside "/var/log". 
+
+  /usr/bin/sudo stat -f '%Su:%Sg:%N' $(/usr/bin/grep -v '^#' /etc/newsyslog.conf | awk '{ print $1 }') 2> /dev/null
+  /usr/bin/sudo stat -f '%Su:%Sg:%N' $(/usr/bin/grep -e '^>' /etc/asl.conf /etc/asl/* | awk '{ print $2 }') 2> /dev/null
+
+  Each command may return zero or more files. 
+
+  If there are any system log files that are not owned by "root" and group-owned by "wheel" or admin, this is a finding.
+
+  Service logs may be owned by the service user account or group.
+fix: |
+  For any log file that returns an incorrect owner or group value, run the following command:
+
+  /usr/bin/sudo chown root:wheel [log file]
+
+  [log file] is the full path to the log file in question. If the file is managed by "newsyslog", find the configuration line in the directory "/etc/newsyslog.d/" or the file "/etc/newsyslog.conf" and ensure that the owner:group column is set to "root:wheel" or the appropriate service user account and group. 
+
+  If the file is managed by "aslmanager", find the configuration line in the directory "/etc/asl/" or the file "/etc/asl.conf" and ensure that "uid" and "gid" options are either not present or are set to a service user account and group respectively.
+references:
+  cce:
+    - N/A
+  cci:
+    - CCI-001314
+  800-53r4:
+    - SI-11
+  srg:
+    - SRG-OS-000206-GPOS-00084
+  disa_stig:
+    - APPL-11-004001
+  800-171r2:
+    - N/A
+macOS:
+  - "11.0"
+tags:
+  - manual
+  - stig
+severity: "medium"
+mobileconfig: false
+mobileconfig_info:

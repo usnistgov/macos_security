@@ -18,7 +18,7 @@ references:
   srg:
     - SRG-OS-000031-GPOS-00012
   disa_stig:
-    - AOSX-15-000006
+    - APPL-11-000006
   800-171r2:
     - 3.1.10
 macOS:
@@ -28,7 +28,8 @@ tags:
   - cnssi-1253
   - 800-53r4_moderate
   - 800-53r4_high
-  - STIG
+  - stig
+severity: "low"
 mobileconfig: true
 mobileconfig_info:
   com.apple.screensaver:

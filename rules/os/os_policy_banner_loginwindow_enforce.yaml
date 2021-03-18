@@ -36,18 +36,24 @@ references:
     - CCI-001387
     - CCI-001388
   800-53r4: 
-    - N/A
+    - AC-8
   srg: 
     - SRG-OS-000023-GPOS-00006
     - SRG-OS-000024-GPOS-00007
     - SRG-OS-000228-GPOS-00088
   disa_stig: 
-    - AOSX-15-000025
+    - APPL-11-000025
   800-171r2:
-    - N/A
+    - 3.1.9
 macOS:
   - "11.0"
 tags:
-  - STIG
+  - 800-171
+  - cnssi-1253
+  - 800-53r4_low
+  - 800-53r4_moderate
+  - 800-53r4_high
+  - stig
+severity: "medium"
 mobileconfig: false
 mobileconfig_info:

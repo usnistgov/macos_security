@@ -50,6 +50,7 @@ profile:
       - os_httpd_disable
       - os_sip_enable
       - os_authenticated_root_enable
+      - os_guest_account_disable
       - os_guest_access_smb_disable
       - os_unlock_active_user_session_disable
       - os_internet_accounts_prefpane_disable
@@ -57,7 +58,6 @@ profile:
       - os_appleid_prompt_disable
       - os_ssh_fips_140_macs
       - os_facetime_app_disable
-      - os_guest_access_afp_disable
       - os_icloud_storage_prompt_disable
       - os_ir_support_disable
       - os_mail_app_disable
@@ -92,6 +92,7 @@ profile:
       - icloud_addressbook_disable
   - section: "systempreferences"
     rules:
+      - sysprefs_media_sharing_disabled
       - sysprefs_smbd_disable
       - sysprefs_firewall_stealth_mode_enable
       - sysprefs_personalized_advertising_disable
@@ -119,7 +120,7 @@ profile:
       - os_obscure_password
       - os_required_crypto_module
       - os_store_encrypted_passwords
-      - pwpolicy_force_change_password_change
+      - pwpolicy_force_password_change
   - section: "Permanent"
     rules:
       - os_secure_name_resolution

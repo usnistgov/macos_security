@@ -23,11 +23,12 @@ references:
   srg: 
     - SRG-OS-000343-GPOS-00134
   disa_stig: 
-    - AOSX-15-001030
+    - APPL-11-001030
 macOS:
   - "11.0"
 tags:
   - 800-53r4_high
-  - STIG
+  - stig
+severity: "medium"
 mobileconfig: false
 mobileconfig_info:

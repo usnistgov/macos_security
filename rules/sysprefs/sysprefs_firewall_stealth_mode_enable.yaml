@@ -26,11 +26,11 @@ references:
     - CM-7
     - SC-7(16)
   srg:
-    - N/A
+    - SRG-OS-000480-GPOS-00232
   cci:
-    - N/A
+    - CCI-000366
   disa_stig:
-    - N/A
+    - APPL-11-005050
   800-171r2:
     - 3.4.6
     - 3.13.1
@@ -44,5 +44,7 @@ tags:
   - 800-53r4_low
   - 800-53r4_moderate
   - 800-53r4_high
+  - stig
+severity: "medium"
 mobileconfig: false
 mobileconfig_info:

@@ -14,7 +14,8 @@ references:
   cce:
     - CCE-85319-2
   800-53r4:
-    - IA-2
+    - AC-2
+    - AC-2(9)
   disa_stig:
     - N/A
   srg: 

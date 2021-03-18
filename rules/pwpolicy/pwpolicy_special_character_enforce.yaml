@@ -23,7 +23,7 @@ references:
   srg: 
     - SRG-OS-000266-GPOS-00101
   disa_stig: 
-    - AOSX-15-003011
+    - APPL-11-003011
   800-171r2:
     - 3.5.1
     - 3.5.2
@@ -39,7 +39,8 @@ tags:
   - 800-53r4_low
   - 800-53r4_moderate
   - 800-53r4_high
-  - STIG
+  - stig
+severity: "medium"
 mobileconfig: true
 mobileconfig_info:
   com.apple.mobiledevice.passwordpolicy:
