@@ -23,7 +23,7 @@ from collections import namedtuple
 
 
 class MacSecurityRule():
-    def __init__(self, title, rule_id, severity, discussion, check, fix, cci, cce, nist_controls, nist_171, disa_stig, srg, custom_refs, tags, result_value, mobileconfig, mobileconfig_info):
+    def __init__(self, title, rule_id, severity, discussion, check, fix, cci, cce, nist_controls, nist_171, disa_stig, srg, custom_refs, tags, result_value, mobileconfig, mobileconfig_info, customized):
         self.rule_title = title
         self.rule_id = rule_id
         self.rule_severity = severity
@@ -41,6 +41,7 @@ class MacSecurityRule():
         self.rule_tags = tags
         self.rule_mobileconfig = mobileconfig
         self.rule_mobileconfig_info = mobileconfig_info
+        self.rule_customized = customized
 
     def create_asciidoc(self, adoc_rule_template):
         """Pass an AsciiDoc template as file object to return formatted AsciiDOC"""
@@ -389,7 +390,7 @@ def generate_profiles(baseline_name, build_path, parent_dir, baseline_yaml, sign
     for sections in baseline_yaml['profile']:
         for profile_rule in sections['rules']:
             for rule in glob.glob('../rules/*/{}.yaml'.format(profile_rule)) + glob.glob('../custom/rules/**/{}.yaml'.format(profile_rule),recursive=True):
-                rule_yaml = get_rule_yaml(rule)
+                rule_yaml = get_rule_yaml(rule, False)
     
                 if rule_yaml['mobileconfig']:
                     for payload_type, info in rule_yaml['mobileconfig_info'].items():
@@ -720,13 +721,15 @@ defaults write "$audit_plist" lastComplianceCheck "$(date)"
             logging.debug(f"checking for rule file for {profile_rule}")
             if glob.glob('../custom/rules/**/{}.yaml'.format(profile_rule),recursive=True):
                 rule = glob.glob('../custom/rules/**/{}.yaml'.format(profile_rule),recursive=True)[0]
+                custom=True
                 logging.debug(f"{rule}")
             elif glob.glob('../rules/*/{}.yaml'.format(profile_rule)):
                 rule = glob.glob('../rules/*/{}.yaml'.format(profile_rule))[0]
+                custom=False
                 logging.debug(f"{rule}")
 
             #for rule in glob.glob('../rules/*/{}.yaml'.format(profile_rule)) + glob.glob('../custom/rules/**/{}.yaml'.format(profile_rule),recursive=True):
-            rule_yaml = get_rule_yaml(rule)
+            rule_yaml = get_rule_yaml(rule, custom)
 
             if rule_yaml['id'].startswith("supplemental"):
                 continue
@@ -964,12 +967,26 @@ fi
     #fix_script_file.close()
     compliance_script_file.close()
 
-def get_rule_yaml(rule_file):
+def get_rule_yaml(rule_file, custom=False):
     """ Takes a rule file, checks for a custom version, and returns the yaml for the rule
     """
+    resulting_yaml = {}
     names = [os.path.basename(x) for x in glob.glob('../custom/rules/**/*.yaml', recursive=True)]
     file_name = os.path.basename(rule_file)
-    if file_name in names:
+    # if file_name in names:
+    #     print(f"Custom settings found for rule: {rule_file}")
+    #     try:
+    #         override_path = glob.glob('../custom/rules/**/{}'.format(file_name), recursive=True)[0]
+    #     except IndexError:
+    #         override_path = glob.glob('../custom/rules/{}'.format(file_name), recursive=True)[0]
+    #     with open(override_path) as r:
+    #         rule_yaml = yaml.load(r, Loader=yaml.SafeLoader)
+    #     r.close()
+    # else:
+    #     with open(rule_file) as r:
+    #         rule_yaml = yaml.load(r, Loader=yaml.SafeLoader)
+    #     r.close()
+    if custom:
         print(f"Custom settings found for rule: {rule_file}")
         try:
             override_path = glob.glob('../custom/rules/**/{}'.format(file_name), recursive=True)[0]
@@ -980,7 +997,34 @@ def get_rule_yaml(rule_file):
     else:
         with open(rule_file) as r:
             rule_yaml = yaml.load(r, Loader=yaml.SafeLoader)
-    return rule_yaml
+    
+    try:
+        og_rule_path = glob.glob('../rules/**/{}'.format(file_name), recursive=True)[0]
+    except IndexError:
+        #assume this is a completely new rule
+        og_rule_path = glob.glob('../custom/rules/**/{}'.format(file_name), recursive=True)[0]
+    
+    # get original/default rule yaml for comparison
+    with open(og_rule_path) as og:
+        og_rule_yaml = yaml.load(og, Loader=yaml.SafeLoader)
+    og.close()
+
+    for yaml_field in og_rule_yaml:
+        try:
+            if og_rule_yaml[yaml_field] == rule_yaml[yaml_field]:
+                #print("using default data in yaml field {}".format(yaml_field))
+                resulting_yaml[yaml_field] = og_rule_yaml[yaml_field]
+            else:
+                print('using CUSTOM value for yaml field {} in rule {}'.format(yaml_field, file_name))
+                resulting_yaml[yaml_field] = rule_yaml[yaml_field]
+                if 'customized' in resulting_yaml:
+                    resulting_yaml['customized'].append("customized {}".format(yaml_field))
+                else:
+                    resulting_yaml['customized'] = ["customized {}".format(yaml_field)]
+        except KeyError:
+            resulting_yaml[yaml_field] = og_rule_yaml[yaml_field]
+
+    return resulting_yaml
 
 
 def generate_xls(baseline_name, build_path, baseline_yaml):
@@ -1004,7 +1048,7 @@ def generate_xls(baseline_name, build_path, baseline_yaml):
     top = xlwt.easyxf("align: vert top")
     headers = xlwt.easyxf("font: bold on")
     counter = 1
-    column_counter = 13
+    column_counter = 14
     sheet1.write(0, 0, "CCE", headers)
     sheet1.write(0, 1, "Rule ID", headers)
     sheet1.write(0, 2, "Title", headers)
@@ -1018,6 +1062,7 @@ def generate_xls(baseline_name, build_path, baseline_yaml):
     sheet1.write(0, 10, "SRG", headers)
     sheet1.write(0, 11, "DISA STIG", headers)
     sheet1.write(0, 12, "CCI", headers)
+    sheet1.write(0, 13, "Modifed Rule", headers)
     sheet1.set_panes_frozen(True)
     sheet1.set_horz_split_pos(1)
     sheet1.set_vert_split_pos(2)
@@ -1100,6 +1145,12 @@ def generate_xls(baseline_name, build_path, baseline_yaml):
         sheet1.write(counter, 12, cci, topWrap)
         sheet1.col(12).width = 400 * 15
 
+        customized = (str(rule.rule_customized)).strip('[]\'')
+        customized = customized.replace(", ", "\n").replace("\'", "")
+
+        sheet1.write(counter, 13, customized, topWrap)
+        sheet1.col(13).width = 400 * 15
+
         if rule.rule_custom_refs != ['None']:
             for title, ref in rule.rule_custom_refs.items():
                 sheet1.write(0, column_counter, title, headers )    
@@ -1132,7 +1183,8 @@ def create_rules(baseline_yaml):
             'id',
             'references',
             'result',
-            'discussion']
+            'discussion',
+            'customized']
     references = ['disa_stig',
                   'cci',
                   'cce',
@@ -1146,18 +1198,20 @@ def create_rules(baseline_yaml):
         for profile_rule in sections['rules']:
             if glob.glob('../custom/rules/**/{}.yaml'.format(profile_rule),recursive=True):
                 rule = glob.glob('../custom/rules/**/{}.yaml'.format(profile_rule),recursive=True)[0]
+                custom=True
             elif glob.glob('../rules/*/{}.yaml'.format(profile_rule)):
                 rule = glob.glob('../rules/*/{}.yaml'.format(profile_rule))[0]
+                custom=False
 
             #for rule in glob.glob('../rules/*/{}.yaml'.format(profile_rule)) + glob.glob('../custom/rules/**/{}.yaml'.format(profile_rule),recursive=True):
-            rule_yaml = get_rule_yaml(rule)
+            rule_yaml = get_rule_yaml(rule, custom)
 
             for key in keys:
                 try:
                     rule_yaml[key]
                 except:
                     #print "{} key missing ..for {}".format(key, rule)
-                    rule_yaml.update({key: "missing"})
+                    rule_yaml.update({key: ""})
                 if key == "references":
                     for reference in references:
                         try:
@@ -1181,7 +1235,8 @@ def create_rules(baseline_yaml):
                                         rule_yaml['tags'],
                                         rule_yaml['result'],
                                         rule_yaml['mobileconfig'],
-                                        rule_yaml['mobileconfig_info']
+                                        rule_yaml['mobileconfig_info'],
+                                        rule_yaml['customized']
                                         ))
 
     return all_rules
@@ -1467,16 +1522,17 @@ def main():
             except IndexError:
                 logging.debug(f'defined rule {rule} does not have valid yaml file, check that rule ID and filename match.')
 
-
             #check for custom rule
             if glob.glob('../custom/rules/**/{}'.format(rule_file), recursive=True):
                 print(f"Custom settings found for rule: {rule_file}")
-                override_rule = glob.glob('../custom/rules/**/{}'.format(rule_file), recursive=True)[0]
-                with open(override_rule) as r:
-                    rule_yaml = yaml.load(r, Loader=yaml.SafeLoader)
+                #override_rule = glob.glob('../custom/rules/**/{}'.format(rule_file), recursive=True)[0]
+                rule_location = glob.glob('../custom/rules/**/{}'.format(rule_file), recursive=True)[0]
+                custom=True
             else:
-                with open(rule_path[0]) as r:
-                    rule_yaml = yaml.load(r, Loader=yaml.SafeLoader)
+                rule_location = rule_path[0]
+                custom=False
+            
+            rule_yaml = get_rule_yaml(rule_location, custom)
 
             # Determine if the references exist and set accordingly
             try:
