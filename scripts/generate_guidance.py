@@ -1049,6 +1049,7 @@ def generate_xls(baseline_name, build_path, baseline_yaml):
     headers = xlwt.easyxf("font: bold on")
     counter = 1
     column_counter = 14
+    custom_ref_column = {}
     sheet1.write(0, 0, "CCE", headers)
     sheet1.write(0, 1, "Rule ID", headers)
     sheet1.write(0, 2, "Title", headers)
@@ -1153,12 +1154,16 @@ def generate_xls(baseline_name, build_path, baseline_yaml):
 
         if rule.rule_custom_refs != ['None']:
             for title, ref in rule.rule_custom_refs.items():
-                sheet1.write(0, column_counter, title, headers )    
-                sheet1.col(column_counter).width = 512 * 25
+                if title not in custom_ref_column:
+                    print("Current column counter: {}, processing Rule: {} adding title: {}".format(column_counter, rule.rule_id, title))
+                    custom_ref_column[title] = column_counter
+                    column_counter = column_counter + 1
+                    sheet1.write(0, custom_ref_column[title], title, headers)    
+                    sheet1.col(custom_ref_column[title]).width = 512 * 25
                 added_ref = (str(ref)).strip('[]\'')
                 added_ref = added_ref.replace(", ", "\n").replace("\'", "")
-                sheet1.write(counter, column_counter, added_ref, topWrap)
-                column_counter = column_counter + 1
+                sheet1.write(counter, custom_ref_column[title], added_ref, topWrap)
+                
 
         tall_style = xlwt.easyxf('font:height 640;')  # 36pt
 
@@ -1628,12 +1633,13 @@ def main():
                         rule_yaml['mobileconfig_info'])
 
             # process nist controls for grouping
-            nist_80053r4.sort()
-            res = [list(i) for j, i in groupby(
-                nist_80053r4, lambda a: a.split('(')[0])]
-            nist_controls = ''
-            for i in res:
-                nist_controls += group_ulify(i)
+            if not nist_80053r4 == "N/A":
+                nist_80053r4.sort()
+                res = [list(i) for j, i in groupby(
+                    nist_80053r4, lambda a: a.split('(')[0])]
+                nist_controls = ''
+                for i in res:
+                    nist_controls += group_ulify(i)
             if 'supplemental' in tags:
                 rule_adoc = adoc_supplemental_template.substitute(
                     rule_title=rule_yaml['title'].replace('|', '\|'),
