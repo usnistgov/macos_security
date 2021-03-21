@@ -100,7 +100,6 @@ profile:
       - sysprefs_rae_disable
       - sysprefs_firewall_enable
       - sysprefs_find_my_disable
-      - sysprefs_afp_disable
       - sysprefs_content_caching_disable
       - sysprefs_location_services_disable
       - sysprefs_diagnostics_reports_disable
