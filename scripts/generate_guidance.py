@@ -1029,6 +1029,10 @@ def get_rule_yaml(rule_file, custom=False):
                         resulting_yaml['references'][ref] = og_rule_yaml['references'][ref]
             if "custom" in rule_yaml['references']:
                 resulting_yaml['references']['custom'] = rule_yaml['references']['custom']
+                if 'customized' in resulting_yaml:
+                    resulting_yaml['customized'].append("customized references")
+                else:
+                    resulting_yaml['customized'] = ["customized references"]
         
         else: 
             try:
