@@ -27,6 +27,9 @@ fix: |
 references:
   cce:
     - CCE-85338-2
+  800-53r5:
+    - CM-2
+    - CM-6
   800-53r4:
     - CM-2
     - CM-6

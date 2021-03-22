@@ -26,6 +26,7 @@ references:
     - AU-12
     - AU-2
     - AU-9
+    - CM-5(1)
   800-53r4: 
     - AU-2  
     - AU-12

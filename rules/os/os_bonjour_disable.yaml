@@ -13,6 +13,8 @@ references:
     - CCE-85299-6
   cci: 
     - CCI-000381
+  800-53r5:
+    - CM-7
   800-53r4: 
     - CM-7
   srg: 
