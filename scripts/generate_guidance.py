@@ -781,12 +781,13 @@ defaults write "$audit_plist" lastComplianceCheck "$(date)"
                             
                 
         # group the controls
-            nist_80053r4.sort()
-            res = [list(i) for j, i in groupby(
-                nist_80053r4, lambda a: a.split('(')[0])]
-            nist_controls = ''
-            for i in res:
-                nist_controls += group_ulify(i)
+            if not nist_80053r4 == "N/A":
+                nist_80053r4.sort()
+                res = [list(i) for j, i in groupby(
+                    nist_80053r4, lambda a: a.split('(')[0])]
+                nist_controls = ''
+                for i in res:
+                    nist_controls += group_ulify(i)
 
             # print checks and result
             try:
@@ -1003,11 +1004,11 @@ def get_rule_yaml(rule_file, custom=False):
     except IndexError:
         #assume this is a completely new rule
         og_rule_path = glob.glob('../custom/rules/**/{}'.format(file_name), recursive=True)[0]
+        resulting_yaml['customized'] = ["customized rule"]
     
     # get original/default rule yaml for comparison
     with open(og_rule_path) as og:
         og_rule_yaml = yaml.load(og, Loader=yaml.SafeLoader)
-    og.close()
 
     for yaml_field in og_rule_yaml:
         try:
