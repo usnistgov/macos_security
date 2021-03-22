@@ -19,6 +19,8 @@ references:
     - CCE-85326-7
   cci:
     - CCI-002450
+  800-53r5:
+    - SC-13
   800-53r4:
     - SC-13
   disa_stig:

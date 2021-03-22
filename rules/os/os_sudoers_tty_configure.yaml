@@ -18,6 +18,8 @@ references:
     - CCE-85387-9
   cci:
     - CCI-000366
+  800-53r5:
+    - IA-11
   800-53r4:
     - IA-11
   srg:

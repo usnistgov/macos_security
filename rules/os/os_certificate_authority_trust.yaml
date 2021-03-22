@@ -14,6 +14,8 @@ references:
   cci: 
     - CCI-000185
     - CCI-002450
+  800-53r5:
+    - SC-17
   800-53r4: 
     - SC-17
   disa_stig: 

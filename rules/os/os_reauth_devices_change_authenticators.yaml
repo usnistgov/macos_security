@@ -13,6 +13,8 @@ references:
     - CCE-85366-3
   cci:
     - CCI-002039
+  800-53r5:
+    - IA-11
   800-53r4:
     - IA-11
   disa_stig:

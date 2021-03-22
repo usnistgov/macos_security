@@ -33,6 +33,7 @@ references:
     - AU-12
     - AC-2(4)
     - AU-2
+    - MA-4(1)
   800-53r4:
     - AU-2
     - AC-2(4)

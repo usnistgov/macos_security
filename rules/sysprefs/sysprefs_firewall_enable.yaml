@@ -22,6 +22,7 @@ references:
     - AC-4
     - SC-7(12)
     - CM-7
+    - SC-7
   800-53r4: 
     - AC-4
     - AC-6(1)
