@@ -1027,6 +1027,8 @@ def get_rule_yaml(rule_file, custom=False):
                         resulting_yaml['references'][ref] = rule_yaml['references'][ref]
                     except KeyError:
                         resulting_yaml['references'][ref] = og_rule_yaml['references'][ref]
+            if "custom" in rule_yaml['references']:
+                resulting_yaml['references']['custom'] = rule_yaml['references']['custom']
         
         else: 
             try:
