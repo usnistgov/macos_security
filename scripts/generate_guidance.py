@@ -1011,19 +1011,37 @@ def get_rule_yaml(rule_file, custom=False):
         og_rule_yaml = yaml.load(og, Loader=yaml.SafeLoader)
 
     for yaml_field in og_rule_yaml:
-        try:
-            if og_rule_yaml[yaml_field] == rule_yaml[yaml_field]:
-                #print("using default data in yaml field {}".format(yaml_field))
-                resulting_yaml[yaml_field] = og_rule_yaml[yaml_field]
-            else:
-                print('using CUSTOM value for yaml field {} in rule {}'.format(yaml_field, file_name))
-                resulting_yaml[yaml_field] = rule_yaml[yaml_field]
-                if 'customized' in resulting_yaml:
-                    resulting_yaml['customized'].append("customized {}".format(yaml_field))
+        #print('processing field {} for rule {}'.format(yaml_field, file_name))
+        if yaml_field == "references":
+            if not 'references' in resulting_yaml:
+                resulting_yaml['references'] = {}
+            for ref in og_rule_yaml['references']:
+                try:
+                    if og_rule_yaml['references'][ref] == rule_yaml['references'][ref]:
+                        resulting_yaml['references'][ref] = og_rule_yaml['references'][ref]
+                    else:
+                        resulting_yaml['references'][ref] = rule_yaml['references'][ref]
+                except KeyError:
+                    #  reference not found in original rule yaml, trying to use reference from custom rule
+                    try:
+                        resulting_yaml['references'][ref] = rule_yaml['references'][ref]
+                    except KeyError:
+                        resulting_yaml['references'][ref] = og_rule_yaml['references'][ref]
+        
+        else: 
+            try:
+                if og_rule_yaml[yaml_field] == rule_yaml[yaml_field]:
+                    #print("using default data in yaml field {}".format(yaml_field))
+                    resulting_yaml[yaml_field] = og_rule_yaml[yaml_field]
                 else:
-                    resulting_yaml['customized'] = ["customized {}".format(yaml_field)]
-        except KeyError:
-            resulting_yaml[yaml_field] = og_rule_yaml[yaml_field]
+                    #print('using CUSTOM value for yaml field {} in rule {}'.format(yaml_field, file_name))
+                    resulting_yaml[yaml_field] = rule_yaml[yaml_field]
+                    if 'customized' in resulting_yaml:
+                        resulting_yaml['customized'].append("customized {}".format(yaml_field))
+                    else:
+                        resulting_yaml['customized'] = ["customized {}".format(yaml_field)]
+            except KeyError:
+                resulting_yaml[yaml_field] = og_rule_yaml[yaml_field]
 
     return resulting_yaml
 
@@ -1156,7 +1174,6 @@ def generate_xls(baseline_name, build_path, baseline_yaml):
         if rule.rule_custom_refs != ['None']:
             for title, ref in rule.rule_custom_refs.items():
                 if title not in custom_ref_column:
-                    print("Current column counter: {}, processing Rule: {} adding title: {}".format(column_counter, rule.rule_id, title))
                     custom_ref_column[title] = column_counter
                     column_counter = column_counter + 1
                     sheet1.write(0, custom_ref_column[title], title, headers)    
@@ -1216,14 +1233,15 @@ def create_rules(baseline_yaml):
                 try:
                     rule_yaml[key]
                 except:
-                    #print "{} key missing ..for {}".format(key, rule)
+                    #print("{} key missing ..for {}".format(key, rule))
                     rule_yaml.update({key: ""})
                 if key == "references":
                     for reference in references:
                         try:
                             rule_yaml[key][reference]
+                            #print("FOUND reference {} for key {} for rule {}".format(reference, key, rule))
                         except:
-                            #print "expected reference '{}' is missing in key '{}' for rule{}".format(reference, key, rule)
+                            #print("expected reference '{}' is missing in key '{}' for rule{}".format(reference, key, rule))
                             rule_yaml[key].update({reference: ["None"]})
             all_rules.append(MacSecurityRule(rule_yaml['title'].replace('|', '\|'),
                                         rule_yaml['id'].replace('|', '\|'),
@@ -1497,7 +1515,7 @@ def main():
         section_yaml_file = sections['section'].lower() + '.yaml'
         #check for custom section
         if section_yaml_file in glob.glob1('../custom/sections/', '*.yaml'):
-            print(f"Custom settings found for section: {sections['section']}")
+            #print(f"Custom settings found for section: {sections['section']}")
             override_section = os.path.join(
                 f'../custom/sections/{section_yaml_file}')
             with open(override_section) as r:
