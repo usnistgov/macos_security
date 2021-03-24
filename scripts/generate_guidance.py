@@ -1665,6 +1665,9 @@ def main():
                 nist_controls = ''
                 for i in res:
                     nist_controls += group_ulify(i)
+            else:
+                nist_controls = "N/A"
+                
             if 'supplemental' in tags:
                 rule_adoc = adoc_supplemental_template.substitute(
                     rule_title=rule_yaml['title'].replace('|', '\|'),
