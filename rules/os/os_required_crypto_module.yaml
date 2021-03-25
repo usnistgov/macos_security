@@ -5,9 +5,11 @@ discussion: |
 
   macOS contains many open source projects that may use their own cryptographic libraries typically for the purposes of maintaining platform independence. These services are not covered by the Apple FIPS Validation of the CoreCrypto and CoreCrypto Kernel modules.
 
-  macOS Catalina is in process of receiving FIPS validation from the National Institute of Standards and Technology (NIST).
+  macOS Catalina has received FIPS validation from the National Institute of Standards and Technology (NIST).
 
-  link:https://csrc.nist.gov/Projects/Cryptographic-Module-Validation-Program/Modules-In-Process/Modules-In-Process-List[]
+  link:https://csrc.nist.gov/projects/cryptographic-module-validation-program/certificate/3858[]
+  link:https://csrc.nist.gov/projects/cryptographic-module-validation-program/certificate/3859[]
+  link:https://csrc.nist.gov/projects/cryptographic-module-validation-program/certificate/3811[]
   
   link:https://support.apple.com/en-us/HT201159[]
 check: |
