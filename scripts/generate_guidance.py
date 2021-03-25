@@ -1577,7 +1577,7 @@ def main():
             try:
                 rule_yaml['references']['cce']
             except KeyError:
-                cce = 'N/A'
+                cce = '- N/A'
             else:
                 cce = ulify(rule_yaml['references']['cce'])
 
@@ -1592,7 +1592,7 @@ def main():
             try:
                 rule_yaml['references']['800-171r2']
             except KeyError:
-                nist_800171 = '• N/A'
+                nist_800171 = '- N/A'
             else:
                 #nist_80053r4 = ulify(rule_yaml['references']['800-53r4'])
                 nist_800171 = ulify(rule_yaml['references']['800-171r2'])
@@ -1600,14 +1600,14 @@ def main():
             try:
                 rule_yaml['references']['disa_stig']
             except KeyError:
-                disa_stig = 'N/A'
+                disa_stig = '- N/A'
             else:
                 disa_stig = ulify(rule_yaml['references']['disa_stig'])
 
             try:
                 rule_yaml['references']['srg']
             except KeyError:
-                srg = 'N/A'
+                srg = '- N/A'
             else:
                 srg = ulify(rule_yaml['references']['srg'])
 
@@ -1668,7 +1668,7 @@ def main():
                 for i in res:
                     nist_controls += group_ulify(i)
             else:
-                nist_controls = "N/A"
+                nist_controls = "- N/A"
 
             if 'supplemental' in tags:
                 rule_adoc = adoc_supplemental_template.substitute(
