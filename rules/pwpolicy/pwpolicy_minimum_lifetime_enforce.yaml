@@ -39,8 +39,6 @@ references:
     - CCE-85410-9
   cci: 
     - N/A
-  800-53r5:
-    - IA-5(1)
   800-53r4: 
     - IA-5(1)
   disa_stig: 
