@@ -24,6 +24,8 @@ references:
     - CM-5
     - SC-34
     - SI-7(6)
+    - SI-7
+    - MA-4(1)
   800-53r4:
     - AC-3
     - CM-5

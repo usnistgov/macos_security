@@ -1,5 +1,5 @@
 id: os_directory_services_configured
-title: The macOS system must be integrated into a directory services infrastructure.
+title: "The macOS system must be integrated into a directory services infrastructure."
 discussion: |
   Distinct user account databases on each separate system cause problems with username and password policy enforcement. Most approved directory services infrastructure solutions allow centralized management of users and passwords.
 check: |

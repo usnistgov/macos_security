@@ -20,6 +20,7 @@ references:
     - CCI-000381
   800-53r5:
     - CM-7
+    - SC-7(10)    
   800-53r4: 
     - CM-7
   srg: 

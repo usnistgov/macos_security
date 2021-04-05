@@ -20,6 +20,7 @@ references:
     - AC-20
     - AC-20(1)
     - CM-7
+    - SC-7(10)
   800-53r4:
     - CM-7
     - AC-20

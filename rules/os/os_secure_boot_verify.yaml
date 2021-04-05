@@ -15,6 +15,9 @@ fix: |
 references:
   cce:
     - CCE-85376-2
+  800-53r5:
+    - SI-7
+    - SI-6
   800-53r4:
     - SI-6
   srg:

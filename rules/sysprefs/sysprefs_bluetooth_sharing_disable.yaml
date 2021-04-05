@@ -33,7 +33,6 @@ references:
     - CM-7
   800-53r4: 
     - AC-3
-    - AC-18
     - AC-18(4)
     - CM-7(1)
   srg: 

@@ -19,6 +19,7 @@ references:
     - CCI-001082
   800-53r5:
     - SC-2
+    - MA-4(1)
   800-53r4:
     - SC-2
   disa_stig:

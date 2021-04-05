@@ -24,6 +24,7 @@ references:
     - CM-14
     - CM-5
     - SI-7(15)
+    - SI-3
   800-53r4: 
     - CM-5(3)
     - CM-5

@@ -16,6 +16,7 @@ references:
   cci:
     - CCI-001813
   800-53r5:
+    - AC-2
     - AC-2(9)
   800-53r4:
     - AC-2
