@@ -46,19 +46,62 @@ class MacSecurityRule():
         return rule_adoc
 
 
-def get_rule_yaml(rule_file):
+def get_rule_yaml(rule_file, custom=False):
     """ Takes a rule file, checks for a custom version, and returns the yaml for the rule
     """
-    if os.path.basename(rule_file) in glob.glob1('../custom/rules/', '*.yaml'):
-        #print(f"Custom settings found for rule: {rule_file}")
-        override_rule = os.path.join(
-            '../custom/rules', os.path.basename(rule_file))
-        with open(override_rule) as r:
+    resulting_yaml = {}
+    names = [os.path.basename(x) for x in glob.glob('../custom/rules/**/*.yaml', recursive=True)]
+    file_name = os.path.basename(rule_file)
+    # if file_name in names:
+    #     print(f"Custom settings found for rule: {rule_file}")
+    #     try:
+    #         override_path = glob.glob('../custom/rules/**/{}'.format(file_name), recursive=True)[0]
+    #     except IndexError:
+    #         override_path = glob.glob('../custom/rules/{}'.format(file_name), recursive=True)[0]
+    #     with open(override_path) as r:
+    #         rule_yaml = yaml.load(r, Loader=yaml.SafeLoader)
+    #     r.close()
+    # else:
+    #     with open(rule_file) as r:
+    #         rule_yaml = yaml.load(r, Loader=yaml.SafeLoader)
+    #     r.close()
+    if custom:
+        print(f"Custom settings found for rule: {rule_file}")
+        try:
+            override_path = glob.glob('../custom/rules/**/{}'.format(file_name), recursive=True)[0]
+        except IndexError:
+            override_path = glob.glob('../custom/rules/{}'.format(file_name), recursive=True)[0]
+        with open(override_path) as r:
             rule_yaml = yaml.load(r, Loader=yaml.SafeLoader)
     else:
         with open(rule_file) as r:
             rule_yaml = yaml.load(r, Loader=yaml.SafeLoader)
-    return rule_yaml
+    
+    try:
+        og_rule_path = glob.glob('../rules/**/{}'.format(file_name), recursive=True)[0]
+    except IndexError:
+        #assume this is a completely new rule
+        og_rule_path = glob.glob('../custom/rules/**/{}'.format(file_name), recursive=True)[0]
+    
+    # get original/default rule yaml for comparison
+    with open(og_rule_path) as og:
+        og_rule_yaml = yaml.load(og, Loader=yaml.SafeLoader)
+    og.close()
+
+    for yaml_field in og_rule_yaml:
+        try:
+            if og_rule_yaml[yaml_field] == rule_yaml[yaml_field]:
+                resulting_yaml[yaml_field] = og_rule_yaml[yaml_field]
+            else:
+                resulting_yaml[yaml_field] = rule_yaml[yaml_field]
+                if 'customized' in resulting_yaml:
+                    resulting_yaml['customized'].append("customized {}".format(yaml_field))
+                else:
+                    resulting_yaml['customized'] = ["customized {}".format(yaml_field)]
+        except KeyError:
+            resulting_yaml[yaml_field] = og_rule_yaml[yaml_field]
+
+    return resulting_yaml
 
 def collect_rules():
     """Takes a baseline yaml file and parses the rules, returns a list of containing rules
@@ -84,8 +127,7 @@ def collect_rules():
 
 
     for rule in glob.glob('../rules/**/*.yaml',recursive=True) + glob.glob('../custom/rules/**/*.yaml',recursive=True):
-        rule_yaml = get_rule_yaml(rule)
-
+        rule_yaml = get_rule_yaml(rule, custom=False)
         for key in keys:
             try:
                 rule_yaml[key]
@@ -97,7 +139,7 @@ def collect_rules():
                     try:
                         rule_yaml[key][reference]
                     except:
-                        #print "expected reference '{}' is missing in key '{}' for rule{}".format(reference, key, rule)
+                        #print("expected reference '{}' is missing in key '{}' for rule{}".format(reference, key, rule))
                         rule_yaml[key].update({reference: ["None"]})
         
         all_rules.append(MacSecurityRule(rule_yaml['title'].replace('|', '\|'),
