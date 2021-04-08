@@ -1,0 +1,35 @@
+id: os_config_data_install_enforce
+title: "Enforce Installation of XProtect, MRT, and Gatekeeper Updates Automatically"
+discussion:   
+  This setting enforces definition updates for XProtect, MRT, and Gatekeeper; with this setting in place, new malware and adware that Apple has added to the list of malware or untrusted software will not execute. These updates do not require the computer to be restarted.
+check: |
+  /usr/bin/profiles -P -o stdout | /usr/bin/grep -c 'ConfigDataInstall = 1'
+result:
+  integer: 1
+fix: |
+  This is implemented by a Configuration Profile.
+references:
+  cce:
+    - CCE-85460-4
+  cci: 
+    - N/A
+  800-53r5:
+    - SI-3
+  800-53r4:
+    - N/A
+  srg:
+    - N/A
+  disa_stig:
+    - N/A
+  800-171r2:
+    - N/A
+macOS:
+  - "11.0"
+tags:
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_high
+mobileconfig: true
+mobileconfig_info:
+  com.apple.softwareupdate:
+    configdatainstall: true
