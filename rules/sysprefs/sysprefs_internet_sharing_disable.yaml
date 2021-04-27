@@ -5,7 +5,7 @@ discussion: |
 
   The information system _MUST_ be configured to provide only essential capabilities. Disabling Internet sharing helps prevent the unauthorized connection of devices, unauthorized transfer of information, and unauthorized tunneling.
 check: |
-  /usr/bin/profiles -P -o stdout | /usr/bin/grep -c 'forceInternetSharingOff = 1'
+  /usr/bin/profiles -P -o stdout | /usr/bin/grep -c "forceInternetSharingOff = 1"
 result:
   integer: 1
 fix: |
