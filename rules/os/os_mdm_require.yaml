@@ -19,7 +19,7 @@ discussion: |
   * Query list and delete local users
 
 check: |
-  /usr/bin/profiles status -type enrollment | /usr/bin/awk -F: '/MDM enrollment/ {print $2}' | /usr/bin/grep -c "Yes (User Approved)"
+  /usr/bin/profiles status -type enrollment | /usr/bin/awk -F: "/MDM enrollment/ {print $2}" | /usr/bin/grep -c "Yes (User Approved)"
 result:
   integer: 1
 fix: |
