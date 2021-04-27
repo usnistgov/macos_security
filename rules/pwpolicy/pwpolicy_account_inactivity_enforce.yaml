@@ -5,7 +5,7 @@ discussion: |
 
   This rule prevents malicious users from making use of unused accounts to gain access to the system while avoiding detection. 
 check: | 
-  /usr/bin/pwpolicy getaccountpolicies | /usr/bin/grep -v "Getting global account policies" | /usr/bin/xmllint --xpath '/plist/dict/array/dict/dict[key="policyAttributeInactiveDays"]/integer' - | /usr/bin/awk -F '[<>]' '{print $3}'
+  /usr/bin/pwpolicy getaccountpolicies | /usr/bin/grep -v "Getting global account policies" | /usr/bin/xmllint --xpath '/plist/dict/array/dict/dict[key="policyAttributeInactiveDays"]/integer' - | /usr/bin/awk -F "[<>]" "{print $3}"
 result:
   integer: 35
 fix: |
