@@ -660,23 +660,41 @@ read_options(){{
     esac
 }}
 
-generate_report(){{
-    non_compliant=0
+# Generate the Compliant and Non-Compliant counts. Returns: Array (Compliant, Non-Compliant)
+compliance_count(){{
     compliant=0
+    non_compliant=0
 
     results=$(/usr/libexec/PlistBuddy -c "Print" /Library/Preferences/org.{baseline_name}.audit.plist)
 
     while IFS= read -r line; do
-        if [[ "$line" =~ "finding" ]];then
-            if [[ "$line" =~ "true" ]]; then
-                non_compliant=$((non_compliant+1))
-            fi
-            if [[ "$line" =~ "false" ]]; then
-                compliant=$((compliant+1))
-            fi
+        if [[ "$line" =~ "false" ]]; then
+            compliant=$((compliant+1))
         fi
-
+        if [[ "$line" =~ "true" ]]; then
+            non_compliant=$((non_compliant+1))
+        fi
     done <<< "$results"
+    
+    # Enable output of just the compliant or non-compliant numbers. 
+    if [[ $1 = "compliant" ]]
+    then
+        echo $compliant
+    elif [[ $1 = "non-compliant" ]]
+    then
+        echo $non_compliant
+    else # no matching args output the array
+        array=($compliant $non_compliant)
+        echo ${{array[@]}}
+    fi
+}}
+
+generate_report(){{
+    count=($(compliance_count))
+
+    compliant=${{count[1]}}
+    non_compliant=${{count[2]}}
+    
     total=$((non_compliant + compliant))
     percentage=$(printf %.2f $(( compliant * 100. / total )) )
     echo
@@ -687,13 +705,23 @@ generate_report(){{
 }}
 
 view_report(){{
-    
     if [[ $lastComplianceScan == "No scans have been run" ]];then
         echo "no report to run, please run new scan"
         pause
     else
         generate_report
     fi
+}}
+
+# Designed for use with MDM - single unformatted output of the Compliance Report
+generate_stats(){{
+    count=($(compliance_count))
+    compliant=${{count[1]}}
+    non_compliant=${{count[2]}}
+    
+    total=$((non_compliant + compliant))
+    percentage=$(printf %.2f $(( compliant * 100. / total )) )
+    echo "PASSED: $compliant FAILED: $non_compliant, $percentage percent compliant!"
 }}
 
 run_scan(){{
@@ -939,12 +967,18 @@ if (( # >= 2));then
     exit 1
 fi
 
-zparseopts -D -E -check=check -fix=fix -configure=configure
+zparseopts -D -E -check=check -fix=fix -configure=configure -stats=stats -compliant=compliant -non_compliant=non_compliant
 
 if [[ $check ]];then
     run_scan
 elif [[ $fix ]];then    
     run_fix
+elif [[ $stats ]];then    
+    generate_stats
+elif [[ $compliant ]];then    
+    compliance_count "compliant"
+elif [[ $non_compliant ]];then    
+    compliance_count "non-compliant"
 elif [[ $configure ]];then
     run_configure
 else
