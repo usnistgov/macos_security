@@ -11,7 +11,7 @@ discussion: |
   
   NOTE: enforceSmartcard requires allowSmartcard to be set to true in order to work.
 check: |
-  /usr/bin/profiles -P -o stdout | /usr/bin/grep -c 'enforceSmartCard = 1'
+  /usr/bin/profiles -P -o stdout | /usr/bin/grep -c "enforceSmartCard = 1"
 result:
   integer: 1
 fix: |
