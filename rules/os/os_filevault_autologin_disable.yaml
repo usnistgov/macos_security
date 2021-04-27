@@ -5,7 +5,7 @@ discussion: |
   
   The default behavior of macOS when FileVault is enabled is to automatically log in to the computer once successfully passing your FileVault credentials. 
 check: | 
-  /usr/bin/profiles -P -o stdout | /usr/bin/grep -c 'DisableFDEAutoLogin = 1'
+  /usr/bin/profiles -P -o stdout | /usr/bin/grep -c "DisableFDEAutoLogin = 1"
 result:
   integer: 1
 fix: |
