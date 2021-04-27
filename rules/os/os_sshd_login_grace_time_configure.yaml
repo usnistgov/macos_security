@@ -11,7 +11,7 @@ result:
 fix: |
   [source,bash]
   ----
-  /usr/bin/sed -i.bak 's/.*LoginGraceTime.*/LoginGraceTime 30/' /etc/ssh/sshd_config; /bin/launchctl kickstart -k system/com.openssh.sshd
+  /usr/bin/sed -i.bak "s/.*LoginGraceTime.*/LoginGraceTime 30/" /etc/ssh/sshd_config; /bin/launchctl kickstart -k system/com.openssh.sshd
   ----
 references:
   cce:
