@@ -5,7 +5,7 @@ discussion: |
   
   Allowing regular users to install software, without explicit privileges, presents the risk of untested and potentially malicious software being installed on the system. Explicit privileges (escalated or administrative privileges) provide the regular user with explicit capabilities and control that exceeds the rights of a regular user.
 check: |
-  /usr/bin/profiles -P -o stdout-xml | /usr/bin/sed -n '/pathBlackList/,/key/p' | /usr/bin/grep -c "/Users/"
+  /usr/bin/profiles -P -o stdout-xml | /usr/bin/sed -n "/pathBlackList/,/key/p" | /usr/bin/grep -c "/Users/"
 result:
   integer: 1
 fix: |
