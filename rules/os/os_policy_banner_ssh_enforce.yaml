@@ -15,7 +15,7 @@ result:
 fix: |
   [source,bash]
   ----
-  /usr/bin/sed -i.bak 's/^[\#]*Banner.*/Banner \/etc\/banner/' /etc/ssh/sshd_config
+  /usr/bin/sed -i.bak "s/^[\#]*Banner.*/Banner \/etc\/banner/" /etc/ssh/sshd_config
   ----
 references:
   cce:
