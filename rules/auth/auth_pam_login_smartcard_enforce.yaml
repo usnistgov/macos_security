@@ -7,7 +7,7 @@ discussion: |
 
   NOTE: /etc/pam.d/login will be automatically modified to its original state following any update or major upgrade to the operating system.
 check: |
-  /usr/bin/grep -Ec '^(auth\s+sufficient\s+pam_smartcard.so|auth\s+required\s+pam_deny.so)' /etc/pam.d/login
+  /usr/bin/grep -Ec "^(auth\s+sufficient\s+pam_smartcard.so|auth\s+required\s+pam_deny.so)" /etc/pam.d/login
 result:
   integer: 2
 fix: |
