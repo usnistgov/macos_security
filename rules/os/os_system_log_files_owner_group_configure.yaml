@@ -7,8 +7,8 @@ check: |
 
   The following commands check for log files that exist on the system and print the path to the log with the corresponding ownership. Run them from inside "/var/log". 
 
-  /usr/bin/sudo stat -f '%Su:%Sg:%N' $(/usr/bin/grep -v '^#' /etc/newsyslog.conf | awk '{ print $1 }') 2> /dev/null
-  /usr/bin/sudo stat -f '%Su:%Sg:%N' $(/usr/bin/grep -e '^>' /etc/asl.conf /etc/asl/* | awk '{ print $2 }') 2> /dev/null
+  /usr/bin/sudo stat -f "%Su:%Sg:%N" $(/usr/bin/grep -v "^#" /etc/newsyslog.conf | awk "{ print $1 }") 2> /dev/null
+  /usr/bin/sudo stat -f "%Su:%Sg:%N" $(/usr/bin/grep -e "^>" /etc/asl.conf /etc/asl/* | awk "{ print $2 }") 2> /dev/null
 
   Each command may return zero or more files. 
 
