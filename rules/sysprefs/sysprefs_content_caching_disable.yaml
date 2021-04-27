@@ -5,7 +5,7 @@ discussion: |
 
   Content caching is a macOS service that helps reduce Internet data usage and speed up software installation on Mac computers. It is not recommended for devices furnished to employees to act as a caching server. 
 check: |
-  /usr/bin/profiles -P -o stdout | /usr/bin/grep -c 'allowContentCaching = 0'
+  /usr/bin/profiles -P -o stdout | /usr/bin/grep -c "allowContentCaching = 0"
 result:
   integer: 1
 fix: |
