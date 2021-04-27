@@ -7,8 +7,8 @@ check: |
 
   The following commands check for log files that exist on the system and print the path to the log with the corresponding ownership. Run them from inside "/var/log". 
 
-  /usr/bin/sudo stat -f "%Su:%Sg:%N" $(/usr/bin/grep -v "^#" /etc/newsyslog.conf | awk "{ print $1 }") 2> /dev/null
-  /usr/bin/sudo stat -f "%Su:%Sg:%N" $(/usr/bin/grep -e "^>" /etc/asl.conf /etc/asl/* | awk "{ print $2 }") 2> /dev/null
+  /usr/bin/sudo /usr/bin/stat -f "%Su:%Sg:%N" $(/usr/bin/grep -v "^#" /etc/newsyslog.conf | /usr/bin/awk "{ print $1 }") 2> /dev/null
+  /usr/bin/sudo /usr/bin/stat -f "%Su:%Sg:%N" $(/usr/bin/grep -e "^>" /etc/asl.conf /etc/asl/* | /usr/bin/awk "{ print $2 }") 2> /dev/null
 
   Each command may return zero or more files. 
 
@@ -18,7 +18,7 @@ check: |
 fix: |
   For any log file that returns an incorrect owner or group value, run the following command:
 
-  /usr/bin/sudo chown root:wheel [log file]
+  /usr/bin/sudo /usr/sbin/chown root:wheel [log file]
 
   [log file] is the full path to the log file in question. If the file is managed by "newsyslog", find the configuration line in the directory "/etc/newsyslog.d/" or the file "/etc/newsyslog.conf" and ensure that the owner:group column is set to "root:wheel" or the appropriate service user account and group. 
 
