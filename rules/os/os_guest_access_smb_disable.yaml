@@ -5,7 +5,7 @@ discussion: |
   
   Turning off guest access prevents anonymous users from accessing files shared via SMB.
 check: |
-  /usr/bin/profiles -P -o stdout | /usr/bin/grep -c 'AllowGuestAccess = 0'
+  /usr/bin/profiles -P -o stdout | /usr/bin/grep -c "AllowGuestAccess = 0"
 result:
   integer: 1
 fix: |
