@@ -11,7 +11,7 @@ result:
 fix: |
   [source,bash]
   ----
-  /usr/bin/sed -i.bak 's/.*minfree.*/minfree:25/' /etc/security/audit_control; /usr/sbin/audit -s 
+  /usr/bin/sed -i.bak "s/.*minfree.*/minfree:25/" /etc/security/audit_control; /usr/sbin/audit -s 
   ----
 references:
   cce:
