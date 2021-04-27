@@ -5,7 +5,7 @@ discussion: |
 
   Apple’s iCloud service does not provide an organization with enough control over the storage and access of data and, therefore, automated file synchronization _MUST_ be controlled by an organization approved service. 
 check: |
-  /usr/bin/profiles -P -o stdout | /usr/bin/grep -c 'allowCloudDesktopAndDocuments = 0'
+  /usr/bin/profiles -P -o stdout | /usr/bin/grep -c "allowCloudDesktopAndDocuments = 0"
 result:
   integer: 1
 fix: |
