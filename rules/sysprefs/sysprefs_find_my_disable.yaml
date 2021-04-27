@@ -7,7 +7,7 @@ discussion: |
  
   Apple’s Find My service uses a personal AppleID for authentication. Organizations should rely on MDM solutions, which have much more secure authentication requirements, to perform remote lock and remote wipe.
 check: |
-  /usr/bin/profiles -P -o stdout | /usr/bin/grep -Ec '(allowFindMyDevice = 0|allowFindMyFriends = 0|DisableFMMiCloudSetting = 1)'
+  /usr/bin/profiles -P -o stdout | /usr/bin/grep -Ec "(allowFindMyDevice = 0|allowFindMyFriends = 0|DisableFMMiCloudSetting = 1)"
 result:
   integer: 3
 fix: |
