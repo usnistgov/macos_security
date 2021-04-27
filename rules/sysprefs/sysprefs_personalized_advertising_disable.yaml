@@ -5,7 +5,7 @@ discussion: |
 
   The information system _MUST_ be configured to provide only essential capabilities. Disabling ad tracking ensures that applications and advertisers are unable to track users’ interests and deliver targeted advertisements.  
 check: |
-  /usr/bin/profiles -P -o stdout | /usr/bin/grep -c 'allowApplePersonalizedAdvertising = 0;'
+  /usr/bin/profiles -P -o stdout | /usr/bin/grep -c "allowApplePersonalizedAdvertising = 0;"
 result:
   integer: 1
 fix: |
