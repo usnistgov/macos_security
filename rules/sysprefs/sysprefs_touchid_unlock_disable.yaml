@@ -7,7 +7,7 @@ discussion: |
   
   The system _MUST_ remain locked until the user establishes access using an authorized identification and authentication method. 
 check: |
-  /usr/bin/profiles -P -o stdout | /usr/bin/grep -c 'allowFingerprintForUnlock = 0'
+  /usr/bin/profiles -P -o stdout | /usr/bin/grep -c "allowFingerprintForUnlock = 0"
 result:
   integer: 1
 fix: |
