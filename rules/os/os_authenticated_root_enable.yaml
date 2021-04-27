@@ -5,7 +5,7 @@ discussion:
   
   When Authenticated Root is enabled the macOS is booted from a signed volume that is cryptographically protected to prevent tampering with the system volume.
 check: |
-  /usr/bin/csrutil authenticated-root | /usr/bin/grep -c 'enabled'
+  /usr/bin/csrutil authenticated-root | /usr/bin/grep -c "enabled"
 result:
   integer: 1
 fix: |
