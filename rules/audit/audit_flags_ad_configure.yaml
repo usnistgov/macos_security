@@ -15,7 +15,7 @@ result:
 fix: |
   [source,bash]
   ----
-  /usr/bin/sed -i.bak '/^flags/ s/$/,ad/' /etc/security/audit_control; /usr/sbin/audit -s
+  /usr/bin/sed -i.bak "/^flags/ s/$/,ad/" /etc/security/audit_control; /usr/sbin/audit -s
   ----
 references:
   cce:
