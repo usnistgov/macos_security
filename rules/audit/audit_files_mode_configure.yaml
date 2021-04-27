@@ -3,13 +3,13 @@ title: "Configure Audit Log Files to Mode 440 or Less Permissive"
 discussion: |
   The audit service _MUST_ be configured to create log files that are readable only by the root user and group wheel. To achieve this, audit log files _MUST_ be configured to mode 440 or less permissive; thereby preventing normal users from reading, modifying or deleting audit logs. 
 check: |
-  /bin/ls -l $(/usr/bin/grep '^dir' /etc/security/audit_control | /usr/bin/awk -F: '{print $2}') | /usr/bin/awk '!/-r--r-----|current|total/{print $1}' | /usr/bin/wc -l | /usr/bin/tr -d ' '
+  /bin/ls -l $(/usr/bin/grep "^dir" /etc/security/audit_control | /usr/bin/awk -F: "{print $2}") | /usr/bin/awk "!/-r--r-----|current|total/{print $1}" | /usr/bin/wc -l | /usr/bin/tr -d " "
 result:
   integer: 0
 fix: |
   [source,bash]
   ----
-  /bin/chmod 440 $(/usr/bin/grep '^dir' /etc/security/audit_control | /usr/bin/awk -F: '{print $2}')/*
+  /bin/chmod 440 $(/usr/bin/grep "^dir" /etc/security/audit_control | /usr/bin/awk -F: "{print $2}")/*
   ----
 references:
   cce:
