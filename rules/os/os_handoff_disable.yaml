@@ -5,7 +5,7 @@ discussion: |
 
   Handoff allows you to continue working on a document or project when the user switches from one Apple device to another. Disabling Handoff prevents data transfers to unauthorized devices.
 check: |
-  /usr/bin/profiles -P -o stdout | /usr/bin/grep -c 'allowActivityContinuation = 0'
+  /usr/bin/profiles -P -o stdout | /usr/bin/grep -c "allowActivityContinuation = 0"
 result:
   integer: 1
 fix: |
