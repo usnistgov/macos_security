@@ -5,13 +5,13 @@ discussion: |
   
   When "expire-after" is set to "7d", the audit service will not delete audit logs until the log data is at least seven days old.
 check: |
-  /usr/bin/awk -F: '/expire-after/{print $2}' /etc/security/audit_control
+  /usr/bin/awk -F: "/expire-after/{print $2}" /etc/security/audit_control
 result:
   string: 7d
 fix: |
   [source,bash]
   ----
-  /usr/bin/sed -i.bak 's/^expire-after.*/expire-after:7d/' /etc/security/audit_control; /usr/sbin/audit -s
+  /usr/bin/sed -i.bak "s/^expire-after.*/expire-after:7d/" /etc/security/audit_control; /usr/sbin/audit -s
   ----
 references:
   cce:
