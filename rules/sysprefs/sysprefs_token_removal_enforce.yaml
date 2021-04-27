@@ -10,7 +10,7 @@ discussion: |
   Information System Security Officers (ISSOs) may make the risk-based decision not to enforce a session lock when a smart token is removed, so as to maintain necessary workflow capabilities, but they are advised to first fully weigh the potential risks posed to their organization. 
   ====
 check: |
-  /usr/bin/profiles -P -o stdout | /usr/bin/grep -c 'tokenRemovalAction = 1'
+  /usr/bin/profiles -P -o stdout | /usr/bin/grep -c "tokenRemovalAction = 1"
 result:
   integer: 1
 fix:
