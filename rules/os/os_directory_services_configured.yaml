@@ -7,7 +7,7 @@ check: |
   
   To determine if the system is integrated to a directory service, ask the System Administrator (SA) or Information System Security Officer (ISSO) or run the following command:
   
-  /usr/bin/sudo dscl localhost -list . | /usr/bin/grep -vE '(Contact | Search | Local)'
+  /usr/bin/sudo dscl localhost -list . | /usr/bin/grep -vE "(Contact | Search | Local)"
   
   If nothing is returned, or if the system is not integrated into a directory service infrastructure, this is a finding.
 fix: |
