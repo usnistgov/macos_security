@@ -14,7 +14,7 @@ fix: |
   To ensure that "PermitRootLogin" is set disabled by sshd, run the following command: 
   [source,bash]
   ----
-  /usr/bin/sed -i.bak 's/^[\#]*PermitRootLogin.*/PermitRootLogin no/' /etc/ssh/sshd_config; /bin/launchctl kickstart -k system/com.openssh.sshd
+  /usr/bin/sed -i.bak "s/^[\#]*PermitRootLogin.*/PermitRootLogin no/" /etc/ssh/sshd_config; /bin/launchctl kickstart -k system/com.openssh.sshd
   ----
 references:
   cce:
