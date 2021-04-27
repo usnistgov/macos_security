@@ -7,7 +7,7 @@ discussion: |
 
   NOTE: /etc/pam.d/su will be automatically modified to its original state following any update or major upgrade to the operating system.
 check: |
-  /usr/bin/grep -Ec '^(auth\s+sufficient\s+pam_smartcard.so|auth\s+required\s+pam_rootok.so)' /etc/pam.d/su
+  /usr/bin/grep -Ec "^(auth\s+sufficient\s+pam_smartcard.so|auth\s+required\s+pam_rootok.so)" /etc/pam.d/su
 result:
   integer: 2
 fix: |
