@@ -3,7 +3,7 @@ title: "Enforce Gatekeeper 30 Day Automatic Rearm"
 discussion: |
   Gatekeeper _MUST_ be configured to automatically rearm after 30 days if disabled.
 check: |
-  /usr/bin/profiles -P -o stdout | /usr/bin/grep -c 'GKAutoRearm = 1'
+  /usr/bin/profiles -P -o stdout | /usr/bin/grep -c "GKAutoRearm = 1"
 result:
   integer: 1
 fix: |
