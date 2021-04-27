@@ -3,7 +3,7 @@ title: "Disable Camera"
 discussion: |
   macOS _MUST_ be configured to disable the camera.
 check: |
-  /usr/bin/profiles -P -o stdout | /usr/bin/grep -c 'allowCamera = 0'
+  /usr/bin/profiles -P -o stdout | /usr/bin/grep -c "allowCamera = 0"
 result:
   integer: 1
 fix: |
