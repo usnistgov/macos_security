@@ -15,7 +15,7 @@ result:
 fix: |
   [source,bash]
   ----
-  /usr/bin/grep -q '^MACs' /etc/ssh/ssh_config && /usr/bin/sed -i.bak  's/.*MACs.*/MACs hmac-sha2-256,hmac-sha2-512/' /etc/ssh/ssh_config || /bin/echo 'MACs hmac-sha2-256,hmac-sha2-512' >> /etc/ssh/ssh_config
+  /usr/bin/grep -q "^MACs" /etc/ssh/ssh_config && /usr/bin/sed -i.bak  "s/.*MACs.*/MACs hmac-sha2-256,hmac-sha2-512/" /etc/ssh/ssh_config || /bin/echo "MACs hmac-sha2-256,hmac-sha2-512" >> /etc/ssh/ssh_config
   ----
 references:
   cce:
