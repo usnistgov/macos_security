@@ -5,7 +5,7 @@ discussion: |
 
   This rule enforces password complexity by requiring users to set passwords that are less vulnerable to malicious users.
 check: | 
-  /usr/bin/profiles -P -o stdout | /usr/bin/grep -c 'allowSimple = 0' 
+  /usr/bin/profiles -P -o stdout | /usr/bin/grep -c "allowSimple = 0"
 result:
   integer: 1
 fix: |
