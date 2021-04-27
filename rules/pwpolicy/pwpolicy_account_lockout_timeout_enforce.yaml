@@ -5,7 +5,7 @@ discussion: |
 
   This rule protects against malicious users attempting to gain access to the system via brute-force hacking methods. 
 check: |
-  /usr/bin/profiles -P -o stdout | /usr/bin/grep -c 'minutesUntilFailedLoginReset = 15' 
+  /usr/bin/profiles -P -o stdout | /usr/bin/grep -c "minutesUntilFailedLoginReset = 15"
 result:
   integer: 1
 fix: |
