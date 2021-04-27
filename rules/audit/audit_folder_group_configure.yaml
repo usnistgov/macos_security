@@ -7,13 +7,13 @@ discussion: |
 
   Audit logs contain sensitive data about the system and users. If log files are set to be readable and writable only by system administrators, the risk is mitigated.
 check: |
-  /bin/ls -dn $(/usr/bin/grep '^dir' /etc/security/audit_control | /usr/bin/awk -F: '{print $2}') | /usr/bin/awk '{print $4}'
+  /bin/ls -dn $(/usr/bin/grep "^dir" /etc/security/audit_control | /usr/bin/awk -F: "{print $2}") | /usr/bin/awk "{print $4}"
 result:
   integer: 0
 fix: |
   [source,bash]
   ----
-  /usr/bin/chgrp wheel $(/usr/bin/awk -F : '/^dir/{print $2}' /etc/security/audit_control)
+  /usr/bin/chgrp wheel $(/usr/bin/awk -F : "/^dir/{print $2}" /etc/security/audit_control)
   ----
 references:
   cce:
