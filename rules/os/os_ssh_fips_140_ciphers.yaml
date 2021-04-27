@@ -15,7 +15,7 @@ result:
 fix: |
   [source,bash]
   ----
-  /usr/bin/grep -q '^Ciphers' /etc/ssh/ssh_config && /usr/bin/sed -i.bak  's/.^Ciphers.*/Ciphers aes256-ctr,aes192-ctr,aes128-ctr/' /etc/ssh/ssh_config || /bin/echo 'Ciphers aes256-ctr,aes192-ctr,aes128-ctr' >> /etc/ssh/ssh_config
+  /usr/bin/grep -q "^Ciphers" /etc/ssh/ssh_config && /usr/bin/sed -i.bak  "s/.^Ciphers.*/Ciphers aes256-ctr,aes192-ctr,aes128-ctr/" /etc/ssh/ssh_config || /bin/echo "Ciphers aes256-ctr,aes192-ctr,aes128-ctr" >> /etc/ssh/ssh_config
   ----
 references:
   cce:
