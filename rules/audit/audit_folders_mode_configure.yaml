@@ -5,13 +5,13 @@ discussion: |
 
   Because audit logs contain sensitive data about the system and users, the audit service _MUST_ be configured to mode 700 or less permissive; thereby preventing normal users from reading, modifying or deleting audit logs. 
 check: |
-  /usr/bin/stat -f %A $(/usr/bin/grep '^dir' /etc/security/audit_control | /usr/bin/awk -F: '{print $2}')
+  /usr/bin/stat -f %A $(/usr/bin/grep "^dir" /etc/security/audit_control | /usr/bin/awk -F: "{print $2}")
 result:
   integer: 700
 fix: |
   [source,bash]
   ----
-  /bin/chmod 700 $(/usr/bin/grep '^dir' /etc/security/audit_control | /usr/bin/awk -F: '{print $2}')
+  /bin/chmod 700 $(/usr/bin/grep "^dir" /etc/security/audit_control | /usr/bin/awk -F: "{print $2}")
   ----
 references:
   cce:
