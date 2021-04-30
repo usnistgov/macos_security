@@ -5,7 +5,7 @@ discussion:
   
   AirDrop allows users to share and receive files from other nearby Apple devices. 
 check: |
-  /usr/bin/profiles -P -o stdout | /usr/bin/grep -c 'DisableAirDrop = 1'
+  /usr/bin/profiles -P -o stdout | /usr/bin/grep -c 'allowAirDrop = 0'
 result:
   integer: 1
 fix: |
