@@ -120,7 +120,6 @@ profile:
       - sysprefs_screensaver_timeout_enforce
       - sysprefs_firewall_enable
       - sysprefs_find_my_disable
-      - sysprefs_afp_disable
       - sysprefs_content_caching_disable
       - sysprefs_location_services_disable
       - sysprefs_time_server_configure
