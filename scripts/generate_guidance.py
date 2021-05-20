@@ -1694,7 +1694,7 @@ def main():
                 rule_adoc = adoc_rule_custom_refs_template.substitute(
                     rule_title=rule_yaml['title'].replace('|', '\|'),
                     rule_id=rule_yaml['id'].replace('|', '\|'),
-                    rule_discussion=rule_yaml['discussion'].replace('|', '\|'),
+                    rule_discussion=rule_yaml['discussion'],#.replace('|', '\|'),
                     rule_check=rule_yaml['check'],  # .replace('|', '\|'),
                     rule_fix=rulefix,
                     rule_cci=cci,
