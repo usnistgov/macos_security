@@ -1,13 +1,13 @@
 id: sysprefs_screensaver_timeout_enforce
 title: "Enforce Screen Saver Timeout"
 discussion: |
-  The screen saver timeout _MUST_ be set to 15 minutes. 
+  The screen saver timeout _MUST_ be set to 15 minutes or a shorter length of time. 
   
-  This rule ensures that a full session lock is triggered after 15 minutes of inactivity.
+  This rule ensures that a full session lock is triggered within no more than 15 minutes of inactivity.
 check: |
-  /usr/bin/profiles -P -o stdout | /usr/bin/grep -c 'idleTime = 900'
+  /usr/bin/profiles -P -o stdout | /usr/bin/egrep -o -e "idleTime\s=\s([^;]+)" | /usr/bin/awk '{ if ($3 <= 900) {print "Yes"}}'
 result:
-  integer: 1
+  string: "Yes"
 fix: |
   This is implemented by a Configuration Profile.
 references:
