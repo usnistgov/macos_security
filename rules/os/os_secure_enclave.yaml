@@ -1,0 +1,29 @@
+id: os_secure_enclave
+title: "Protected Storage for Cryptographic Keys"
+discussion: |
+  Macs with Apple Silicon or T2 processors provide protected storage for cryptographic keys.
+  
+  link:https://support.apple.com/guide/security/secure-enclave-sec59b0b31ff/1/web/1[]
+check: |
+  The technology supports this requirement and cannot be configured to be out of compliance. The technology inherently meets this requirement.
+fix: |
+  The technology inherently meets this requirement. No fix is required.
+references:
+  cce:
+    - N/A
+  cci:
+    - N/A
+  800-53r5:
+    - SC-28(3)
+  800-53r4:
+    - N/A
+  disa_stig:
+    - N/A
+  srg:
+    - N/A
+macOS:
+  - "11.0"
+tags:
+  - inherent
+mobileconfig: false
+mobileconfig_info:
