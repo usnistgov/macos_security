@@ -1,0 +1,37 @@
+id: os_configdatainstall_enforce
+title: "Enforce XProtect, MRT, and Gatekeepr updates"
+discussion: |
+  Software Update _MUST_ be configured to update XProtect, MRT, and Gatekeepr automatically.
+
+  Apple issues the updates for XProtect and MRT automatically based on the latest threat intelligence available. By default, macOS checks for these updates daily. Notarization updates are distributed using CloudKit sync and are much more frequent.
+check: |
+  /usr/bin/profiles -P -o stdout | /usr/bin/grep -c 'ConfigDataInstall = 1'
+result:
+  integer: 1
+fix: |
+  This is implemented by a Configuration Profile.
+references:
+  cce:
+    - N/A
+  cci:
+    - N/A
+  800-53r5:
+    - SI-3
+  800-53r4:
+    - N/A
+  srg:
+    - N/A
+  disa_stig:
+    - N/A
+  800-171r2:
+    - N/A
+macOS:
+  - "11.0"
+tags:
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_high
+mobileconfig: true
+mobileconfig_info:
+  com.apple.softwareupdate:
+    ConfigDataInstall: true

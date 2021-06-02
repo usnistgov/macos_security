@@ -1,7 +1,20 @@
-id: os_verify_remote_disconnection
-title: "Verify remote disconnection of sessions"
+id: os_malicious_code_prevention
+title: "Malicious Code Prevention"
 discussion: |
-  XProtect and MRT
+  Apple provides layers of protection to help ensure that apps are free of known malware and haven’t been tampered with. The macOS implements malicious code protection mechasims by quarantining files downloaded from the internet, preventing and blocking excution of known malware, and finally remediating and removing malware that has executed. 
+
+  This  first layer of defense is designed to inhibit the distribution of malware, and prevent it from launching even once—this is the goal of the App Store, and Gatekeeper combined with Notarization. macOS includes built-in antivirus technology called XProtect for the signature-based detection of malware. The system uses YARA signatures, a tool used to conduct signature-based detection of malware, which Apple updates regularly. Apple monitors for new malware infections and strains, and updates signatures automatically—independent from system updates—to help defend a Mac from malware infections. XProtect automatically detects and blocks the execution of known malware. In macOS 10.15 or later, XProtect checks for known malicious content whenever:
+  * An app is first launched
+  * An app has been changed (in the file system)
+  * XProtect signatures are updated
+
+  The next layer of defense is to help ensure that if malware appears on any Mac, it’s quickly identified and blocked, both to halt spread and to remediate the Mac systems it’s already gained a foothold on. XProtect adds to this defense, along with Gatekeeper and Notarization.
+
+  Finally, Malware Removal Tool (MRT) acts to remediate malware that has managed to successfully execute. Should malware make its way onto a Mac, macOS also includes technology to remediate infections. MRT is an engine in macOS that remediates infections based on updates automatically delivered from Apple. MRT removes malware upon receiving updated information, and it continues to check for infections on restart and login. MRT doesn’t automatically reboot the Mac.
+
+  link:https://support.apple.com/guide/security/protecting-against-malware-sec469d47bd8/1/web/1[]
+  
+  link:https://support.apple.com/guide/security/app-security-overview-sec35dd877d0/web[]
 check: |
   The technology supports this requirement and cannot be configured to be out of compliance. The technology inherently meets this requirement.
 fix: |
