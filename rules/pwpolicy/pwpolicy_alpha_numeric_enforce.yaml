@@ -16,7 +16,6 @@ references:
   cci: 
     - CCI-000194
   800-53r5:
-    - IA-5
     - IA-5(1)
   800-53r4: 
     - IA-5
