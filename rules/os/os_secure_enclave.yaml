@@ -1,7 +1,9 @@
 id: os_secure_enclave
 title: "Protected Storage for Cryptographic Keys"
 discussion: |
-  Macs with Apple Silicon or T2 processors provide protected storage for cryptographic keys.
+  A system _IS_ configured to provide protected storage for cryptographic keys either by hardware protected key store or an organizationally defined safeguard.
+  
+  Macs with Apple Silicon or T2 processors provide protected storage for cryptographic keys via the secure enclave.
   
   link:https://support.apple.com/guide/security/secure-enclave-sec59b0b31ff/1/web/1[]
 check: |
