@@ -1,7 +1,7 @@
 id: audit_flags_fm_configure
-title: "Configure System to Audit All Change of Object Attributes"
+title: "Configure System to Audit All Failed Change of Object Attributes"
 discussion: |
-  The audit system _MUST_ be configured to record enforcement actions of attempts to modify file attributes (fm). 
+  The audit system _MUST_ be configured to record enforcement actions of failed attempts to modify file attributes (fm). 
 
   Enforcement actions are the methods or mechanisms used to prevent unauthorized changes to configuration settings. One common and effective enforcement action method is using access restrictions (i.e., denying modifications to a file by applying file permissions). 
   
@@ -9,13 +9,13 @@ discussion: |
 
   Without auditing the enforcement of access restrictions, it is difficult to identify attempted attacks, as there is no audit trail available for forensic investigation.
 check: |
-  /usr/bin/grep -Ec "^flags.*fm" /etc/security/audit_control
+  /usr/bin/grep -Ec "^flags.*-fm" /etc/security/audit_control
 result:
   integer: 1
 fix: |
   [source,bash]
   ----
-  /usr/bin/sed -i.bak '/^flags/ s/$/,fm/' /etc/security/audit_control;/usr/sbin/audit -s
+  /usr/bin/sed -i.bak '/^flags/ s/$/,-fm/' /etc/security/audit_control;/usr/sbin/audit -s
   ----
 references:
   cce:
