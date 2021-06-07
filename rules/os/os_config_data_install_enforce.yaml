@@ -12,11 +12,12 @@ fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-    - CCE-85460-4
+    - N/A
   cci: 
     - N/A
   800-53r5:
     - SI-3
+    - SI-2(5)
   800-53r4:
     - N/A
   srg:
