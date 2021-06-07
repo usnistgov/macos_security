@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+import sys
 import csv
 import os
 import io
@@ -8,6 +9,14 @@ import yaml
 import re
 import argparse
 from pathlib import Path
+
+def sort_nicely( l ):
+# """ Sort the given list in the way that humans expect.
+# """
+    convert = lambda text: int(text) if text.isdigit() else text
+    alphanum_key = lambda key: [ convert(c) for c in re.split('([0-9]+)', key) ]
+    l.sort( key=alphanum_key )
+
 
 def main():
     nist_header = ""
@@ -21,12 +30,14 @@ def main():
 
     home = str(Path.home())
 
-    parser = argparse.ArgumentParser(description='Easily crosswalk NIST 800-53r4 to other compliance baselines')
+    parser = argparse.ArgumentParser(description='Easily crosswalk to other compliance baselines')
     parser.add_argument("CSV", default=None, help="CSV to crosswalk from 800-53", type=argparse.FileType('rt'))
+    parser.add_argument("-f", "--framework", default="800-53r4", help="Specificy framework for the source", action="store")
     
     try:
         results = parser.parse_args()
         print("Crosswalk CSV: " + results.CSV.name)
+        print("Source compliance framework: " + str(results.framework))
 
 
     except IOError as msg:
@@ -61,9 +72,11 @@ def main():
    
         with open(results.CSV.name, newline='',encoding='utf-8-sig') as csvfile:
             reader = csv.DictReader(csvfile,dialect='excel')
-
+    
             for row in reader:
-                
+           
+                if results.framework != nist_header:
+                    sys.exit(str(results.framework) + " not found in CSV")
 
                 if "N/A" in row[nist_header]:
                     continue
@@ -72,20 +85,26 @@ def main():
 
                 duplicate = ""
                 csv_duplicate = ""
-                
                 for control in controls:
-                    for yaml_control in rule_yaml['references']['800-53r4']:
-                        if duplicate == yaml_control.split("(")[0]:
-                            continue
-                        if csv_duplicate == str(row[other_header]):
-                            continue
-
-                        if control.replace(" ",'') == yaml_control:
-                            duplicate = yaml_control.split("(")[0]
-                            csv_duplicate = str(row[other_header])
-                            control_array.append(str(row[other_header]))
+                        
+                        try:
+                            rule_yaml['references']
                             
+                            for yaml_control in rule_yaml['references'][results.framework]:
+                                if duplicate == yaml_control.split("(")[0]:
+                                    continue
+                                if csv_duplicate == str(row[other_header]):
+                                    continue
 
+                                if control.replace(" ",'') == yaml_control:
+                                    duplicate = yaml_control.split("(")[0]
+                                    csv_duplicate = str(row[other_header])
+                                    control_array.append(str(row[other_header]))
+                                    print(rule_yaml['id'] + " - " + str(results.framework) + " " + yaml_control + " maps to " + other_header + " " + str(row[other_header]))
+                                
+                        except:
+                            continue            
+                    
         if len(control_array) == 0:
             continue
         
@@ -108,8 +127,55 @@ tags:
         if os.path.isdir("../build/" + other_header + "/rules/" + sub_directory) == False:
             os.mkdir("../build/" + other_header + "/rules/" + sub_directory)
         
-        with open("../build/" + other_header + "/rules/" + sub_directory + "/" + rule_yaml['id'] + ".yaml", 'w') as fw:
-            fw.write(custom_rule)
+        try: 
+            with open("../build/" + other_header + "/rules/" + sub_directory + "/" + rule_yaml['id'] + ".yaml", 'w') as r:
+                custom_yaml = r.read()
+
+                custom_yaml = custom_yaml.replace(other_header + ": ", custom_rule)
+                with open("../build/" + other_header + "/rules/" + sub_directory + "/" + rule_yaml['id'] + ".yaml", 'w') as fw:
+                    fw.write(custom_yaml)
+        except:
+                with open("../build/" + other_header + "/rules/" + sub_directory + "/" + rule_yaml['id'] + ".yaml", 'w') as fw:
+                    fw.write(custom_rule)
+
+    
+    for rule in glob.glob("../build/" + other_header + "/rules/*/*"):
+        if "supplemental" in rule or "srg" in rule:
+            continue
+        
+        with open(rule) as r:
+            custom_rule_yaml = yaml.load(r, Loader=yaml.SafeLoader)
+        othercontrols = []
+        
+        if other_header in custom_rule_yaml['references']['custom']:
+            
+            for control in custom_rule_yaml['references']['custom'][other_header]:
+                
+                if str(control) in othercontrols:
+                    continue
+                else:
+                    
+                    othercontrols.append(str(control))
+
+            sort_nicely(othercontrols)
+
+            refs = "    "
+
+            custom_rule = '''references:
+  custom:
+    {}:'''.format(other_header)
+        
+        for control in othercontrols:
+            custom_rule = custom_rule + '''
+      - {}'''.format(control)
+        
+        custom_rule = custom_rule + '''
+tags:
+  - {}'''.format(other_header)
+        
+        with open(rule, 'w') as rite:
+            rite.write(custom_rule) 
+                
 
     audit = []
     auth = []
@@ -258,12 +324,14 @@ profile:'''.format(other_header,other_header)
       - supplemental_smartcard
     '''
 
-    if os.path.isdir("../build/" + other_header + "/baseline/") == False:
-        os.mkdir("../build/" + other_header + "/baseline")
+    
 
-    with open("../build/" + other_header + "/baseline/" + other_header.lower() + ".yaml",'w') as fw:
+    if os.path.isdir("../build/" + other_header.lower() + "/baseline/") == False:
+        os.mkdir("../build/" + other_header.lower() + "/baseline")
+
+    with open("../build/" + other_header.lower() + "/baseline/" + other_header.lower() + ".yaml",'w') as fw:
         fw.write(full_baseline)
-        print(other_header + ".yaml baseline file created in build/" + other_header.lower() + "/baseline/")
+        print(other_header.lower() + ".yaml baseline file created in build/" + other_header.lower() + "/baseline/")
                 
     print("Move all of the folders in rules into the custom folder.")
 if __name__ == "__main__":
