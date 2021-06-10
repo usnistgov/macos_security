@@ -19,6 +19,10 @@ def sort_nicely( l ):
 
 
 def main():
+    file_dir = os.path.dirname(os.path.abspath(__file__))
+    
+    os.chdir(file_dir)    
+
     nist_header = ""
     other_header = ""
     sub_directory = ""
@@ -99,8 +103,10 @@ def main():
                                 if control.replace(" ",'') == yaml_control:
                                     duplicate = yaml_control.split("(")[0]
                                     csv_duplicate = str(row[other_header])
-                                    control_array.append(str(row[other_header]))
-                                    print(rule_yaml['id'] + " - " + str(results.framework) + " " + yaml_control + " maps to " + other_header + " " + str(row[other_header]))
+                                    row_array = str(row[other_header]).split(",")
+                                    for item in row_array:
+                                        control_array.append(item)
+                                        print(rule_yaml['id'] + " - " + str(results.framework) + " " + yaml_control + " maps to " + other_header + " " + item)
                                 
                         except:
                             continue            
@@ -325,6 +331,7 @@ profile:'''.format(other_header,other_header)
     '''
 
     
+
 
     if os.path.isdir("../build/" + other_header.lower() + "/baseline/") == False:
         os.mkdir("../build/" + other_header.lower() + "/baseline")
