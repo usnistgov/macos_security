@@ -11,7 +11,7 @@ discussion: |
 
   NOTE: We recommend changing the line "43127:AUE_MAC_SYSCALL:mac_syscall(2):ad" to "43127:AUE_MAC_SYSCALL:mac_syscall(2):zz" in the file /etc/security/audit_event. This will prevent sandbox violations from being audited by the ad flag. 
 check: |
-  /usr/bin/grep -Ec "^flags.*ad" /etc/security/audit_control
+  /usr/bin/grep -Ec "^flags.*[^-]ad" /etc/security/audit_control
 result:
   integer: 1
 fix: |
