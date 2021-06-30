@@ -7,7 +7,7 @@ discussion: |
   
   Audit records can be generated from various components within the information system (e.g., via a module or policy filter).
 check: |
-  /usr/bin/grep -Ec "^flags.*[^-]aa" /etc/security/audit_control 
+  /usr/bin/awk -F':' '/^flags/ { print $NF }' /etc/security/audit_control | /usr/bin/tr ',' '\n' | /usr/bin/grep -Ec 'aa'
 result:
   integer: 1
 fix: |

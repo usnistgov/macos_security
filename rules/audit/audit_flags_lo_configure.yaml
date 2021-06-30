@@ -7,7 +7,7 @@ discussion: |
 
   The information system monitors login and logout events.
 check: |
-  /usr/bin/grep -Ec "^flags*.[^-]lo" /etc/security/audit_control
+  /usr/bin/awk -F':' '/^flags/ { print $NF }' /etc/security/audit_control | /usr/bin/tr ',' '\n' | /usr/bin/grep -Ec 'lo'
 result:
   integer: 1
 fix: |
