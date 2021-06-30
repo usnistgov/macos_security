@@ -6,6 +6,8 @@ discussion: |
   Special characters are those characters that are not alphanumeric. Examples include: ~ ! @ # $ % ^ *.
   
   This rule enforces password complexity by requiring users to set passwords that are less vulnerable to malicious users.
+  
+  NOTE: The guidance for password based authentication in NIST 800-53 (Rev 5) and NIST 800-63B state that complexity rules should be organizationally defined. The values defined are based off of common complexity values. But your organization may define its own password complexity rules.
 check: | 
   /usr/bin/profiles -P -o stdout | /usr/bin/awk '/minComplexChars/{sub(/;.*/,"");print $3}'
 result:
