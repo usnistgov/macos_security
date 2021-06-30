@@ -4,6 +4,8 @@ discussion: |
   If FileVault is enabled, automatic login _MUST_ be disabled, so that both FileVault and login window authentication are required.
   
   The default behavior of macOS when FileVault is enabled is to automatically log in to the computer once successfully passing your FileVault credentials. 
+
+  NOTE: DisableFDEAutoLogin does not have to be set on Apple Silicon based macOS systems that are smartcard enforced as smartcards are available at pre-boot.
 check: | 
   /usr/bin/profiles -P -o stdout | /usr/bin/grep -c 'DisableFDEAutoLogin = 1'
 result:
