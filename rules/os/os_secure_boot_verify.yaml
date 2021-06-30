@@ -5,7 +5,7 @@ discussion: |
 
   Full security is the default Secure Boot setting in macOS. During startup, when Secure Boot is set to full security, the Mac will verify the integrity of the operating system before allowing the operating system to boot. 
 
-  Note: This will only return a proper result on a T2 Mac
+  Note: This will only return a proper result on a T2 or Apple Silicon Macs.
 check: |
   /usr/libexec/mdmclient QuerySecurityInfo | /usr/bin/grep -c "SecureBootLevel = full"
 result: 

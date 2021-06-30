@@ -6,10 +6,14 @@ discussion: |
   Macs with Apple Silicon or T2 processors provide protected storage for cryptographic keys via the secure enclave.
   
   link:https://support.apple.com/guide/security/secure-enclave-sec59b0b31ff/1/web/1[]
+
+  Note: This will only return a proper result on a T2 or Apple Silicon Macs.
 check: |
-  The technology supports this requirement and cannot be configured to be out of compliance. The technology inherently meets this requirement.
+  /usr/sbin/ioreg -w 0 -c AppleSEPManager | /usr/bin/grep -q 'AppleSEPManager'; /bin/echo $?
+result:
+  integer: 0
 fix: |
-  The technology inherently meets this requirement. No fix is required.
+  The hardware does not support the requirement. 
 references:
   cce:
     - N/A
