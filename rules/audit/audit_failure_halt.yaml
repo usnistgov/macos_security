@@ -5,7 +5,7 @@ discussion: |
 
   Once audit failure occurs, user and system activity are no longer recorded, and malicious activity could go undetected. Audit processing failures can occur due to software/hardware errors, failures in the audit capturing mechanisms, and audit storage capacity being reached or exceeded. 
 check: |
-   /usr/bin/awk -F':' '/^policy/ {print $NF}' audit_control | /usr/bin/tr ',' '\n' | /usr/bin/grep -Ec 'ahlt' 
+  /usr/bin/awk -F':' '/^policy/ {print $NF}' audit_control | /usr/bin/tr ',' '\n' | /usr/bin/grep -Ec 'ahlt' 
 result:
   integer: 1
 fix: |
