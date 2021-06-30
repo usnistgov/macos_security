@@ -18,7 +18,7 @@ ASSOCIATED DOCUMENTS
 |===
 |Document Number
 |Document Title
-|link:https://nvd.nist.gov/800-53[NIST Special Publication 800-53 Rev 4]|_NIST Special Publication 800-53 Rev 4_
+|link:https://nvd.nist.gov/800-53[NIST Special Publication 800-53 Rev 5]|_NIST Special Publication 800-53 Rev 5_
 |===
 
 [%header, cols=2*a]
@@ -42,7 +42,7 @@ ASSOCIATED DOCUMENTS
 |===
 |Document Number
 |Document Title
-|link:https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Apple_OS_X_10-15_V1R2_STIG.zip[STIG Ver 1, Rel 2]|_Apple OS X 10.15 (Catalina) STIG_
+|link:https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Apple_macOS_11_V1R2_STIG.zip[STIG Ver 1, Rel 2]|_Apple macOS 11 (Big Sur) STIG_
 |===
 
 [%header, cols=2*a]
