@@ -11,7 +11,7 @@ result:
 fix: |
   [source,bash]
   ----
-  /usr/bin/defaults write /Library/Preferences/SystemConfiguration/com.apple.smb.server AllowGuestAccess -bool false
+  /usr/sbin/sysadminctl -smbGuestAccess off
   ----
 references:
   cce:
