@@ -31,5 +31,5 @@ tags:
   - 800-53r5_high
 mobileconfig: true
 mobileconfig_info:
-  com.apple.softwareupdate:
+  com.apple.SoftwareUpdate:
     criticalUpdateInstall: true
