@@ -58,5 +58,7 @@ tags:
   - 800-53r4_low
   - 800-53r4_moderate
   - 800-53r4_high
+  - 800-53r5_moderate
+  - 800-53r5_high
 mobileconfig: false
 mobileconfig_info:
