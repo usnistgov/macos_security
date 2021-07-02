@@ -3,7 +3,7 @@ title: "Smartcard Supplemental"
 discussion: |
   The supplemental guidance found in this section is applicable for the following rules:
 
-    * auth_ssh_smartcard_enforce
+    * auth_ssh_passwordauthentication_disable
     * auth_smartcard_enforce
     * auth_smartcard_certificate_trust_enforce_moderate
     * auth_smartcard_certificate_trust_enforce_high
