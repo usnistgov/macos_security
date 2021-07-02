@@ -48,9 +48,9 @@ references:
   cci:
     - CCI-002143
   800-53r5:
-    - AC-2(11)
+    - N/A
   800-53r4:
-    - AC-2(11)
+    - N/A
   srg:
     - SRG-OS-000480-GPOS-00227
   disa_stig:

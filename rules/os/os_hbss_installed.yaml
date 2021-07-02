@@ -15,7 +15,7 @@ references:
   cci: 
     - CCI-001233
   800-53r5: 
-    - SI-2(2)
+    - N/A
   800-53r4: 
     - SI-2(2)
   srg: 
