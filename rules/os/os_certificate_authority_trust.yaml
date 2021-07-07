@@ -3,7 +3,7 @@ title: "Issue or Obtain Public Key Certificates from an Approved Service Provide
 discussion: |
   The organization _MUST_ issue or obtain public key certificates from an organization-approved service provider and ensure only approved trust anchors are in the System Keychain.
 check: |
-  /usr/bin/security dump-keychain /Library/Keychains/System.keychain | /usr/bin/grep labl | awk -F'"' '{ print $4 }'
+  /usr/bin/security dump-keychain /Library/Keychains/System.keychain | /usr/bin/awk -F'"' '/labl/ {print $4}'
 result: 
   string: "a list containing approved root certificates"
 fix: |
