@@ -3,14 +3,14 @@ title: "Smartcard Supplemental"
 discussion: |
   The supplemental guidance found in this section is applicable for the following rules:
 
-    * auth_ssh_passwordauthentication_disable
+    * auth_ssh_password_authentication_disable
     * auth_smartcard_enforce
     * auth_smartcard_certificate_trust_enforce_moderate
     * auth_smartcard_certificate_trust_enforce_high
     * auth_smartcard_allow
     * auth_pam_sudo_smartcard_enforce
     * auth_pam_su_smartcard_enforce
-    * auth_pam_login_smartcard_enforcelist of Rule IDs
+    * auth_pam_login_smartcard_enforce
 
   macOS supports smartcards, such as U.S. Personal Identity Verification (PIV) cards and U.S. Department of Defense Common Access Cards (CAC). Smartcards can be used on a macOS for the following:
   
@@ -94,6 +94,8 @@ discussion: |
 
   |===
 
+  NOTE: DisableFDEAutoLogin does not have to be set on Apple Silicon based macOS systems that are smartcard enforced as smartcards are available at pre-boot.
+
   [discrete]
   ==== Trusted Authorities
   The macOS allows users to specify which certificate authorities (CA) can be used for trust evaluation during smartcard authentication. Only CAs listed in the TrustedAuthorities section of the SmartcardLogin.plist will be evaluated as trusted. This setting only works if checkCertificateTrust is set to either 1, 2, or 3 in com.apple.security.smartcard.
@@ -125,8 +127,7 @@ discussion: |
       </dict>
       <key>TrustedAuthorities</key>
     <array>
-        <string>SHA256_HASH_OF_CERTDOMAIN_1</string>
-        <string>SHA256_HASH_OF_CERTDOMAIN_2</string>
+        <string>SHA256_HASH_OF_CERTDOMAIN_1,SHA256_HASH_OF_CERTDOMAIN_2</string>
     </array>
   </dict>
   </plist>
@@ -157,8 +158,7 @@ discussion: |
       </dict>
       <key>TrustedAuthorities</key>
     <array>
-        <string>SHA256_HASH_OF_CERTDOMAIN_1</string>
-        <string>SHA256_HASH_OF_CERTDOMAIN_2</string>
+        <string>SHA256_HASH_OF_CERTDOMAIN_1,SHA256_HASH_OF_CERTDOMAIN_2</string>
     </array>
       <key>NotEnforcedGroup</key>
       <string>GROUPGOESHERE</key>
