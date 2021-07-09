@@ -44,7 +44,6 @@ profile:
       - os_apple_mobile_file_integrity_enforce
       - os_gatekeeper_rearm
       - os_root_disable
-      - os_guest_account_disable
       - os_policy_banner_ssh_enforce
       - os_password_proximity_disable
       - os_mdm_require
@@ -148,6 +147,7 @@ profile:
       - sysprefs_ssh_disable
       - sysprefs_screensaver_password_enforce
       - sysprefs_critical_update_install_enforce
+      - sysprefs_guest_account_disable
       - sysprefs_gatekeeper_identified_developers_allowed
       - sysprefs_gatekeeper_override_disallow
       - sysprefs_screensaver_timeout_enforce
