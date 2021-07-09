@@ -11,6 +11,8 @@ discussion: |
   ====
 check: |
   /usr/bin/profiles -P -o stdout | /usr/bin/grep -c '"com.apple.autologout.AutoLogOutDelay" = 86400'
+result:
+  integer: 1
 fix: |
   This is implemented by a Configuration Profile.
 references:

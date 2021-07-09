@@ -1,4 +1,4 @@
-id: os_guest_account_disable
+id: sysprefs_guest_account_disable
 title: "Disable the Guest Account"
 discussion: |
   Guest access _MUST_ be disabled. 

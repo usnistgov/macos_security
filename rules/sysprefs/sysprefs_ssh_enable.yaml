@@ -15,38 +15,15 @@ references:
   cce:
     - CCE-85447-1
   cci: 
-    - CCI-001941
-    - CCI-001942
-    - CCI-002890
-    - CCI-002420
-    - CCI-002421
-    - CCI-002422
-    - CCI-003123
-    - CCI-001453
-    - CCI-000068
-    - CCI-002418
+    - N/A
   800-53r5:
     - N/A
   800-53r4: 
     - N/A
   srg: 
-    - SRG-OS-000393-GPOS-00173
-    - SRG-OS-000394-GPOS-00174
-    - SRG-OS-000112-GPOS-00057
-    - SRG-OS-000113-GPOS-00058
-    - SRG-OS-000033-GPOS-00014
-    - SRG-OS-000423-GPOS-00187
-    - SRG-OS-000424-GPOS-00188
-    - SRG-OS-000425-GPOS-00189
-    - SRG-OS-000426-GPOS-00190
-    - SRG-OS-000033-GPOS-00014
-    - SRG-OS-000250-GPOS-00093
+    - N/A
   disa_stig: 
-    - APPL-11-000040
-    - APPL-11-004011
-    - APPL-11-004010
-    - APPL-11-000011
-    - APPL-11-000010
+    - N/A
   800-171r2:
     - N/A
 macOS:
