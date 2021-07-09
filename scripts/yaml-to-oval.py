@@ -843,6 +843,7 @@ def main():
                 </plist510_test>'''.format(rule_yaml['id'],x,x,x)
 
                         plist = rule_yaml['check'].split("read")[1].split()[0].replace(".plist","")
+                        
                         if "ByHost" in rule_yaml['fix'] or "currentHost" in rule_yaml['fix']:
                             oval_object = oval_object + '''
                                         <systemprofiler_object xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" comment="{}" id="oval:mscp:obj:{}" version="1">
@@ -890,7 +891,7 @@ def main():
 
 
                             else:
-
+                                
                                 check_length = len(rule_yaml['check'].split())
                                 key = rule_yaml['check'].split()[check_length-1]
 
@@ -910,6 +911,15 @@ def main():
                 </concat>
             </local_variable>'''.format(x,plist,x+999)
                         
+                        else:
+                            
+                            plist_key = rule_yaml['check'].split(" ")[3].rstrip()
+                            oval_object = oval_object + '''
+                            <plist510_object xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" comment="{}_object" id="oval:mscp:obj:{}" version="1">
+                            <key>{}</key>
+                            <filepath>{}</filepath>
+                            <instance datatype="int" operation="equals">1</instance>
+                            </plist510_object>'''.format(rule_yaml['id'],x,plist_key,plist)
                         
                         datatype = ""
                         for key in rule_yaml['result']:
