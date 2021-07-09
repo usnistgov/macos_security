@@ -25,6 +25,8 @@ references:
     - CCI-001453
     - CCI-000068
     - CCI-002418
+  800-53r5:
+    - N/A
   800-53r4: 
     - N/A
   srg: 
