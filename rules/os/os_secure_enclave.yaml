@@ -16,7 +16,7 @@ fix: |
   The hardware does not support the requirement. 
 references:
   cce:
-    - N/A
+    - CCE-85471-1
   cci:
     - N/A
   800-53r5:

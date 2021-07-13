@@ -11,7 +11,7 @@ fix: |
   Install the approved HBSS solution onto the system.
 references:
   cce:
-    - N/A
+    - CCE-85467-9
   cci: 
     - CCI-001233
   800-53r5: 
