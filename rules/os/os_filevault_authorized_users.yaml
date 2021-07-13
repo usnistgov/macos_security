@@ -5,16 +5,21 @@ discussion: |
 check: |
   /usr/bin/fdesetup list | /usr/bin/awk -F',' '{print $1}'
 result: 
-  string: "a list containing usernames that can unlock FileVault"
+  string: "a list containing authorized users that can unlock FileVault"
 fix: |
-  Remove the secure token from any account that is not authorized to unlock FileVault.
+  Remove the user that is not authorized to unlock FileVault using the fdesetup command.
+
+  [source,bash]
+  ----
+  /usr/bin/fdesetup remove -user NOT_AUTHORIZED_USERNAME
+  ----
 references:
   cce:
     - CCE-85311-9
   cci:
     - CCI-002143
   800-53r5:
-    - AU-2(11)
+    - AC-2(11)
   800-53r4:
     - N/A
   srg:
@@ -26,6 +31,7 @@ macOS:
 tags:
   - 800-53r5_high
   - stig
+  - manual
 severity: "medium"
 mobileconfig: false
 mobileconfig_info:
