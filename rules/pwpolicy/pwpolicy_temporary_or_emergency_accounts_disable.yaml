@@ -25,7 +25,7 @@ check: |
 
   To check if the password policy is configured to disable a temporary or emergency account after 72 hours, run the following command to output the password policy to the screen, substituting the correct user name in place of username:
 
-  /usr/bin/sudo /usr/bin/pwpolicy -u username getaccountpolicies | tail -n +2
+  /usr/bin/pwpolicy -u username getaccountpolicies | tail -n +2
 
   If there is no output, and password policy is not controlled by a directory service, this is a finding.
 
@@ -53,7 +53,7 @@ fix: |
 
   After saving the file and exiting to the command prompt, run the following command to load the new policy file, substituting the correct user name in place of "username" and the path to the file in place of "/path/to/file".
 
-  /usr/bin/sudo /usr/bin/pwpolicy -u username setaccountpolicies /path/to/file
+  /usr/bin/pwpolicy -u username setaccountpolicies /path/to/file
 references:
   cce:
     - CCE-85414-1
