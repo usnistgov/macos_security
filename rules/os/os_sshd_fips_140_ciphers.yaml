@@ -7,7 +7,7 @@ discussion: |
 
   Operating systems utilizing encryption _MUST_ use FIPS validated mechanisms for authenticating to cryptographic modules. 
 
-  NOTE: /etc/ssh/sshd_config will be a
+  NOTE: /etc/ssh/sshd_config will be automatically modified to its original state following any update or major upgrade to the operating system.
 check: |
   /usr/bin/grep -c "^Ciphers aes256-ctr,aes192-ctr,aes128-ctr" /etc/ssh/sshd_config
 result:
