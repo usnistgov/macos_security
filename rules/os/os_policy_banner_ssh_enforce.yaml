@@ -1,7 +1,7 @@
 id: os_policy_banner_ssh_enforce
 title: "Enforce SSH to Display Policy Banner"
 discussion: |
-  If the SSH server is enabled then it _MUST_ be configured to display a policy banner. 
+  SSH _MUST_ be configured to display a policy banner. 
 
   Displaying a standardized and approved use notification before granting access to the operating system ensures that users are provided with privacy and security notification verbiage that is consistent with applicable federal laws, Executive Orders, directives, policies, regulations, standards, and guidance.
 
@@ -23,6 +23,8 @@ references:
   cci: 
     - CCI-000048
     - CCI-000050
+  800-53r5:
+    - AC-8
   800-53r4: 
     - AC-8
   srg: 

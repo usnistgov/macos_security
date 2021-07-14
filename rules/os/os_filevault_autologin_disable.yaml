@@ -13,6 +13,10 @@ fix: |
 references:
   cce:
     - CCE-84754-1
+  800-53r5:
+    - AC-3
+    - IA-5(13)
+    - AC-2(11)
   800-53r4:
     - AC-3
     - IA-5(13)
@@ -28,6 +32,9 @@ references:
 macOS:
   - "10.15"
 tags:
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_high
   - 800-171
   - cnssi-1253
   - 800-53r4_low

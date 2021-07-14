@@ -33,6 +33,15 @@ references:
     - CCI-001880
     - CCI-001881
     - CCI-001882
+  800-53r5:
+    - AC-3
+    - AU-9
+    - AU-9(3)
+    - CM-5
+    - CM-5(6)
+    - SC-4
+    - SI-2
+    - SI-7
   800-53r4:
     - AC-3 
     - AU-6(4)
@@ -74,6 +83,9 @@ references:
 macOS:
   - "10.15"
 tags:
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_high
   - 800-171
   - cnssi-1253
   - 800-53r4_low

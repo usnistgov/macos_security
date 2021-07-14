@@ -11,6 +11,8 @@ references:
     - CCE-84887-9
   cci:
     - CCI-001312
+  800-53r5:
+    - N/A
   800-53r4:
     - N/A
   disa_stig:

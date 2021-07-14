@@ -17,6 +17,10 @@ references:
     - CCE-84724-4
   cci: 
    - N/A
+  800-53r5:
+    - IA-2(1)
+    - IA-2(2)
+    - IA-2(12)
   800-53r4: 
    - IA-2(12)
    - IA-5(11)
@@ -27,6 +31,9 @@ references:
 macOS:
   - "10.15"
 tags:
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_high
   - cnssi-1253
   - 800-53r4_low
   - 800-53r4_moderate

@@ -11,6 +11,10 @@ fix: |
 references:
   cce:
     - CCE-84851-5
+  800-53r5:
+    - SC-34
+    - MA-4(1)
+    - SI-7
   800-53r4:
     - SC-34
     - SI-7
@@ -21,6 +25,8 @@ references:
 macOS:
   - "10.15"
 tags:
+  - 800-53r5_moderate
+  - 800-53r5_high
   - 800-53r4_moderate
   - 800-53r4_high
 mobileconfig: false

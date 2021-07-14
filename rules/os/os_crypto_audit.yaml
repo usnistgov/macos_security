@@ -17,6 +17,8 @@ references:
     - CCE-84889-5
   cci:
     - CCI-001496
+  800-53r5:
+    - AU-9(3)
   800-53r4:
     - AU-9(3)
   disa_stig:
@@ -26,6 +28,7 @@ references:
 macOS:
   - "10.15"
 tags:
+  - 800-53r5_high
   - 800-53r4_high
   - inherent
 mobileconfig: false

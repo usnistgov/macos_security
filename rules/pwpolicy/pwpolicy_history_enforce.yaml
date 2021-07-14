@@ -6,6 +6,8 @@ discussion: |
   This rule ensures that users are  not allowed to re-use a password that was used in any of the five previous password generations. 
 
   Limiting password reuse protects against malicious users attempting to gain access to the system via brute-force hacking methods.
+
+  NOTE: The guidance for password based authentication in NIST 800-53 (Rev 5) and NIST 800-63B state that complexity rules should be organizationally defined. The values defined are based off of common complexity values. But your organization may define its own password complexity rules.
 check: | 
   /usr/bin/profiles -P -o stdout | /usr/bin/awk '/pinHistory/{sub(/;.*/,"");print $3}'
 result:
@@ -17,6 +19,8 @@ references:
     - CCE-84814-3
   cci: 
   - CCI-000200
+  800-53r5:
+    - IA-5(1)
   800-53r4: 
     - IA-5(1)
   srg: 
@@ -31,6 +35,9 @@ references:
 macOS:
   - "10.15"
 tags:
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_high
   - 800-171
   - cnssi-1253
   - 800-53r4_low

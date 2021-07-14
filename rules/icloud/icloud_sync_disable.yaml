@@ -15,6 +15,11 @@ references:
     - CCE-84740-0
   cci:
     - N/A
+  800-53r5:
+    - AC-20
+    - AC-20(1)
+    - CM-7
+    - SC-7(10)
   800-53r4:
     - CM-7
     - AC-20
@@ -30,6 +35,9 @@ references:
 macOS:
   - "10.15"
 tags:
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_high
   - 800-171
   - cnssi-1253
   - 800-53r4_low

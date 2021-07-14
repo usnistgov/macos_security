@@ -5,7 +5,7 @@ discussion:
   
   AirDrop allows users to share and receive files from other nearby Apple devices. 
 check: |
-  /usr/bin/profiles -P -o stdout | /usr/bin/grep -c 'DisableAirDrop = 1'
+  /usr/bin/profiles -P -o stdout | /usr/bin/grep -c 'allowAirDrop = 0'
 result:
   integer: 1
 fix: |
@@ -15,6 +15,10 @@ references:
     - CCE-84747-5
   cci: 
     - CCI-000381
+  800-53r5:
+    - AC-3
+    - AC-20
+    - CM-7
   800-53r4:
     - CM-7
     - AC-3
@@ -33,6 +37,9 @@ references:
 macOS:
   - "10.15"
 tags:
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_high
   - 800-171
   - cnssi-1253
   - 800-53r4_low
@@ -42,5 +49,5 @@ tags:
 severity: "medium"
 mobileconfig: true
 mobileconfig_info:
-  com.apple.NetworkBrowser:
-    DisableAirDrop: true
+  com.apple.applicationaccess:
+    allowAirDrop: false

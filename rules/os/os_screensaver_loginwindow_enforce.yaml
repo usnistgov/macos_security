@@ -13,6 +13,8 @@ references:
     - CCE-84786-3
   cci:
     - N/A
+  800-53r5:
+    - AC-11(1)
   800-53r4:
     - AC-11(1)
   srg:
@@ -24,6 +26,8 @@ references:
 macOS:
   - "10.15"
 tags:
+  - 800-53r5_moderate
+  - 800-53r5_high
   - 800-171
   - cnssi-1253
   - 800-53r4_moderate

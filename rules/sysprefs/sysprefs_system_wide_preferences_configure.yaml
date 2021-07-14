@@ -1,4 +1,4 @@
-id: os_system_wide_preferences_configure
+id: sysprefs_system_wide_preferences_configure
 title: "Require Administrator Password to Modify System-Wide Preferences"
 discussion: |
   The system _MUST_ be configured to require an administrator password in order to modify the system-wide preferences in System Preferences. 
@@ -17,27 +17,33 @@ fix: |
   ----
 references:
   cce:
-    - CCE-84800-2
+    - CCE-84937-2
+  800-53r5:
+    - AC-6
+    - AC-6(2)
+    - AC-6(1)
   800-53r4:
     - AC-6
     - AC-6(1)
     - AC-6(2)
   disa_stig:
-    - AOSX-15-002069
+    - APPL-11-002069
   srg:
-    - SRG-OS-000114-GPOS-00059
+    - SRG-OS-000378-GPOS-00163
   cci:
-    - CCI-000778
+    - CCI-001958
   800-171r2:
     - 3.1.5
     - 3.1.6
 macOS:
   - "10.15"
 tags:
-  - 800-171
-  - cnssi-1253
+  - 800-53r5_moderate
+  - 800-53r5_high
   - 800-53r4_moderate
   - 800-53r4_high
+  - 800-171
+  - cnssi-1253
   - stig
 severity: "medium"
 mobileconfig: false

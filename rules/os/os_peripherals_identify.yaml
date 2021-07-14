@@ -13,6 +13,8 @@ references:
     - CCE-84885-3
   cci:
     - CCI-000778
+  800-53r5:
+    - N/A
   800-53r4:
     - N/A
   srg:
