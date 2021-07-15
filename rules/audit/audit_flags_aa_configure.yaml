@@ -21,6 +21,7 @@ references:
   cce:
     - CCE-84711-1
   800-53r5:
+    - AC-2(12)
     - AU-12
     - AU-2
     - MA-4(1)
