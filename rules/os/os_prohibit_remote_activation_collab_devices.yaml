@@ -18,7 +18,7 @@ fix: |
   The technology paritally inherently meets this requirement. An appropriate mitigation for the system must be implemented.
 references:
   cce:
-    - N/A
+    - CCE-85480-2
   800-53r5:
     - SC-15
   800-53r4:
