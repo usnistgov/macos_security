@@ -22,6 +22,7 @@ references:
     - AC-4
     - SC-7(12)
     - CM-7
+    - CM-7(1)
     - SC-7
   800-53r4: 
     - AC-4
@@ -29,6 +30,7 @@ references:
     - AC-19
     - SC-7
     - CM-7
+    - CM-7(1)
     - SC-7(12)
   srg:
     - SRG-OS-000480-GPOS-00232

@@ -17,10 +17,12 @@ references:
     - AC-3
     - AC-20
     - CM-7
+    - CM-7(1)
   800-53r4:
     - AC-3
     - AC-20
     - CM-7
+    - CM-7(1)
   disa_stig:
     - N/A
   srg: 

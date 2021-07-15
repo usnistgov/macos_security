@@ -22,10 +22,12 @@ references:
     - IA-2(8)
     - AC-3
     - CM-7
+    - CM-7(1)
     - AC-17
   800-53r4:
     - AC-3 
     - CM-7
+    - CM-7(1)
     - IA-2(8)
     - IA-2(9)
   srg: 

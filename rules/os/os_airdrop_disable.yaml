@@ -19,8 +19,10 @@ references:
     - AC-3
     - AC-20
     - CM-7
+    - CM-7(1)
   800-53r4:
     - CM-7
+    - CM-7(1)
     - AC-3
     - AC-18
     - AC-20
