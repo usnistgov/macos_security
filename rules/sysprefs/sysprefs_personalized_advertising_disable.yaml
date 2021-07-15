@@ -18,10 +18,12 @@ references:
   800-53r5:
     - AC-20
     - CM-7
+    - CM-7(1)
     - SC-7(10)    
   800-53r4: 
     - AC-20
     - CM-7
+    - CM-7(1)
   srg: 
     - N/A
   disa_stig: 

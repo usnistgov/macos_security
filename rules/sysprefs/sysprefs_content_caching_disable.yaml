@@ -17,8 +17,10 @@ references:
     - N/A
   800-53r5:
     - CM-7
+    - CM-7(1)
   800-53r4:
     - CM-7
+    - CM-7(1)
   srg:
     - N/A
   disa_stig:

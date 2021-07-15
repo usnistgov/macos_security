@@ -23,11 +23,13 @@ references:
     - CCE-85428-1
   800-53r5:
     - CM-7
+    - CM-7(1)
     - SC-7(16)
     - SC-7
   800-53r4:
     - SC-7
     - CM-7
+    - CM-7(1)
     - SC-7(16)
   srg:
     - SRG-OS-000480-GPOS-00232

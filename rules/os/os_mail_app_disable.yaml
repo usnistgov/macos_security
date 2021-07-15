@@ -23,8 +23,10 @@ references:
   800-53r5:
     - AC-20
     - CM-7
+    - CM-7(1)
   800-53r4:
     - CM-7
+    - CM-7(1)
     - AC-20
   srg:
     - SRG-OS-000095-GPOS-00049
