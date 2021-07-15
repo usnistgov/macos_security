@@ -22,6 +22,7 @@ references:
     - CCI-002361
   800-53r5:
     - AC-12
+    - AC-2(5)
   800-53r4:
     - AC-12
   disa_stig:
