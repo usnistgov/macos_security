@@ -22,6 +22,7 @@ references:
     - CCI-001133
   800-53r5:
     - SC-10
+    - AC-12
   800-53r4: 
     - SC-10
   srg: 
