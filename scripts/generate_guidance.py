@@ -23,7 +23,7 @@ from collections import namedtuple
 
 
 class MacSecurityRule():
-    def __init__(self, title, rule_id, severity, discussion, check, fix, cci, cce, nist_controls, nist_171, disa_stig, srg, custom_refs, tags, result_value, mobileconfig, mobileconfig_info, customized):
+    def __init__(self, title, rule_id, severity, discussion, check, fix, cci, cce, nist_controls, nist_171, disa_stig, srg, custom_refs, tags, result_value, mobileconfig, mobileconfig_info):
         self.rule_title = title
         self.rule_id = rule_id
         self.rule_severity = severity
@@ -32,7 +32,7 @@ class MacSecurityRule():
         self.rule_fix = fix
         self.rule_cci = cci
         self.rule_cce = cce
-        self.rule_80053r4 = nist_controls
+        self.rule_80053r5 = nist_controls
         self.rule_800171 = nist_171
         self.rule_disa_stig = disa_stig
         self.rule_srg = srg
@@ -41,7 +41,6 @@ class MacSecurityRule():
         self.rule_tags = tags
         self.rule_mobileconfig = mobileconfig
         self.rule_mobileconfig_info = mobileconfig_info
-        self.rule_customized = customized
 
     def create_asciidoc(self, adoc_rule_template):
         """Pass an AsciiDoc template as file object to return formatted AsciiDOC"""
@@ -54,7 +53,7 @@ class MacSecurityRule():
             rule_check=self.rule_check,
             rule_fix=self.rule_fix,
             rule_cci=self.rule_cci,
-            rule_80053r4=self.rule_80053r4,
+            rule_80053r5=self.rule_80053r5,
             rule_disa_stig=self.rule_disa_stig,
             rule_srg=self.rule_srg,
             rule_result=self.rule_result_value
@@ -390,7 +389,7 @@ def generate_profiles(baseline_name, build_path, parent_dir, baseline_yaml, sign
     for sections in baseline_yaml['profile']:
         for profile_rule in sections['rules']:
             for rule in glob.glob('../rules/*/{}.yaml'.format(profile_rule)) + glob.glob('../custom/rules/**/{}.yaml'.format(profile_rule),recursive=True):
-                rule_yaml = get_rule_yaml(rule, False)
+                rule_yaml = get_rule_yaml(rule)
     
                 if rule_yaml['mobileconfig']:
                     for payload_type, info in rule_yaml['mobileconfig_info'].items():
@@ -721,15 +720,13 @@ defaults write "$audit_plist" lastComplianceCheck "$(date)"
             logging.debug(f"checking for rule file for {profile_rule}")
             if glob.glob('../custom/rules/**/{}.yaml'.format(profile_rule),recursive=True):
                 rule = glob.glob('../custom/rules/**/{}.yaml'.format(profile_rule),recursive=True)[0]
-                custom=True
                 logging.debug(f"{rule}")
             elif glob.glob('../rules/*/{}.yaml'.format(profile_rule)):
                 rule = glob.glob('../rules/*/{}.yaml'.format(profile_rule))[0]
-                custom=False
                 logging.debug(f"{rule}")
 
             #for rule in glob.glob('../rules/*/{}.yaml'.format(profile_rule)) + glob.glob('../custom/rules/**/{}.yaml'.format(profile_rule),recursive=True):
-            rule_yaml = get_rule_yaml(rule, custom)
+            rule_yaml = get_rule_yaml(rule)
 
             if rule_yaml['id'].startswith("supplemental"):
                 continue
@@ -737,11 +734,11 @@ defaults write "$audit_plist" lastComplianceCheck "$(date)"
                 continue
             # grab the 800-53 controls
             try:
-                rule_yaml['references']['800-53r4']
+                rule_yaml['references']['800-53r5']
             except KeyError:
-                nist_80053r4 = 'N/A'
+                nist_80053r5 = 'N/A'
             else:
-                nist_80053r4 = rule_yaml['references']['800-53r4']
+                nist_80053r5 = rule_yaml['references']['800-53r5']
             
             #try:
             #    rule_yaml['references']['disa_stig']
@@ -781,15 +778,12 @@ defaults write "$audit_plist" lastComplianceCheck "$(date)"
                             
                 
         # group the controls
-            if not nist_80053r4 == "N/A":
-                nist_80053r4.sort()
-                res = [list(i) for j, i in groupby(
-                    nist_80053r4, lambda a: a.split('(')[0])]
-                nist_controls = ''
-                for i in res:
-                    nist_controls += group_ulify(i)
-            else:
-                nist_controls = "N/A"
+            nist_80053r5.sort()
+            res = [list(i) for j, i in groupby(
+                nist_80053r5, lambda a: a.split('(')[0])]
+            nist_controls = ''
+            for i in res:
+                nist_controls += group_ulify(i)
 
             # print checks and result
             try:
@@ -970,88 +964,23 @@ fi
     #fix_script_file.close()
     compliance_script_file.close()
 
-def get_rule_yaml(rule_file, custom=False):
+def get_rule_yaml(rule_file):
     """ Takes a rule file, checks for a custom version, and returns the yaml for the rule
     """
-    resulting_yaml = {}
     names = [os.path.basename(x) for x in glob.glob('../custom/rules/**/*.yaml', recursive=True)]
     file_name = os.path.basename(rule_file)
-    # if file_name in names:
-    #     print(f"Custom settings found for rule: {rule_file}")
-    #     try:
-    #         override_path = glob.glob('../custom/rules/**/{}'.format(file_name), recursive=True)[0]
-    #     except IndexError:
-    #         override_path = glob.glob('../custom/rules/{}'.format(file_name), recursive=True)[0]
-    #     with open(override_path) as r:
-    #         rule_yaml = yaml.load(r, Loader=yaml.SafeLoader)
-    #     r.close()
-    # else:
-    #     with open(rule_file) as r:
-    #         rule_yaml = yaml.load(r, Loader=yaml.SafeLoader)
-    #     r.close()
-    if custom:
+    if file_name in names:
         print(f"Custom settings found for rule: {rule_file}")
         try:
-            override_path = glob.glob('../custom/rules/**/{}'.format(file_name), recursive=True)[0]
+            override_path = glob.glob('../custom/rules/**/{}'.format(file_name, recursive=True))[0]
         except IndexError:
-            override_path = glob.glob('../custom/rules/{}'.format(file_name), recursive=True)[0]
+            override_path = glob.glob('../custom/rules/{}'.format(file_name, recursive=True))[0]
         with open(override_path) as r:
             rule_yaml = yaml.load(r, Loader=yaml.SafeLoader)
     else:
         with open(rule_file) as r:
             rule_yaml = yaml.load(r, Loader=yaml.SafeLoader)
-    
-    try:
-        og_rule_path = glob.glob('../rules/**/{}'.format(file_name), recursive=True)[0]
-    except IndexError:
-        #assume this is a completely new rule
-        og_rule_path = glob.glob('../custom/rules/**/{}'.format(file_name), recursive=True)[0]
-        resulting_yaml['customized'] = ["customized rule"]
-    
-    # get original/default rule yaml for comparison
-    with open(og_rule_path) as og:
-        og_rule_yaml = yaml.load(og, Loader=yaml.SafeLoader)
-
-    for yaml_field in og_rule_yaml:
-        #print('processing field {} for rule {}'.format(yaml_field, file_name))
-        if yaml_field == "references":
-            if not 'references' in resulting_yaml:
-                resulting_yaml['references'] = {}
-            for ref in og_rule_yaml['references']:
-                try:
-                    if og_rule_yaml['references'][ref] == rule_yaml['references'][ref]:
-                        resulting_yaml['references'][ref] = og_rule_yaml['references'][ref]
-                    else:
-                        resulting_yaml['references'][ref] = rule_yaml['references'][ref]
-                except KeyError:
-                    #  reference not found in original rule yaml, trying to use reference from custom rule
-                    try:
-                        resulting_yaml['references'][ref] = rule_yaml['references'][ref]
-                    except KeyError:
-                        resulting_yaml['references'][ref] = og_rule_yaml['references'][ref]
-            if "custom" in rule_yaml['references']:
-                resulting_yaml['references']['custom'] = rule_yaml['references']['custom']
-                if 'customized' in resulting_yaml:
-                    resulting_yaml['customized'].append("customized references")
-                else:
-                    resulting_yaml['customized'] = ["customized references"]
-        
-        else: 
-            try:
-                if og_rule_yaml[yaml_field] == rule_yaml[yaml_field]:
-                    #print("using default data in yaml field {}".format(yaml_field))
-                    resulting_yaml[yaml_field] = og_rule_yaml[yaml_field]
-                else:
-                    #print('using CUSTOM value for yaml field {} in rule {}'.format(yaml_field, file_name))
-                    resulting_yaml[yaml_field] = rule_yaml[yaml_field]
-                    if 'customized' in resulting_yaml:
-                        resulting_yaml['customized'].append("customized {}".format(yaml_field))
-                    else:
-                        resulting_yaml['customized'] = ["customized {}".format(yaml_field)]
-            except KeyError:
-                resulting_yaml[yaml_field] = og_rule_yaml[yaml_field]
-
-    return resulting_yaml
+    return rule_yaml
 
 
 def generate_xls(baseline_name, build_path, baseline_yaml):
@@ -1075,8 +1004,7 @@ def generate_xls(baseline_name, build_path, baseline_yaml):
     top = xlwt.easyxf("align: vert top")
     headers = xlwt.easyxf("font: bold on")
     counter = 1
-    column_counter = 14
-    custom_ref_column = {}
+    column_counter = 13
     sheet1.write(0, 0, "CCE", headers)
     sheet1.write(0, 1, "Rule ID", headers)
     sheet1.write(0, 2, "Title", headers)
@@ -1085,12 +1013,11 @@ def generate_xls(baseline_name, build_path, baseline_yaml):
     sheet1.write(0, 5, "Check", headers)
     sheet1.write(0, 6, "Check Result", headers)
     sheet1.write(0, 7, "Fix", headers)
-    sheet1.write(0, 8, "800-53r4", headers)
+    sheet1.write(0, 8, "800-53r5", headers)
     sheet1.write(0, 9, "800-171", headers)
     sheet1.write(0, 10, "SRG", headers)
     sheet1.write(0, 11, "DISA STIG", headers)
     sheet1.write(0, 12, "CCI", headers)
-    sheet1.write(0, 13, "Modifed Rule", headers)
     sheet1.set_panes_frozen(True)
     sheet1.set_horz_split_pos(1)
     sheet1.set_vert_split_pos(2)
@@ -1142,7 +1069,7 @@ def generate_xls(baseline_name, build_path, baseline_yaml):
         sheet1.col(7).width = 1000 * 50
 
         baseline_refs = (
-            str(rule.rule_80053r4)).strip('[]\'')
+            str(rule.rule_80053r5)).strip('[]\'')
         baseline_refs = baseline_refs.replace(", ", "\n").replace("\'", "")
 
         sheet1.write(counter, 8, baseline_refs, topWrap)
@@ -1173,23 +1100,14 @@ def generate_xls(baseline_name, build_path, baseline_yaml):
         sheet1.write(counter, 12, cci, topWrap)
         sheet1.col(12).width = 400 * 15
 
-        customized = (str(rule.rule_customized)).strip('[]\'')
-        customized = customized.replace(", ", "\n").replace("\'", "")
-
-        sheet1.write(counter, 13, customized, topWrap)
-        sheet1.col(13).width = 400 * 15
-
         if rule.rule_custom_refs != ['None']:
             for title, ref in rule.rule_custom_refs.items():
-                if title not in custom_ref_column:
-                    custom_ref_column[title] = column_counter
-                    column_counter = column_counter + 1
-                    sheet1.write(0, custom_ref_column[title], title, headers)    
-                    sheet1.col(custom_ref_column[title]).width = 512 * 25
+                sheet1.write(0, column_counter, title, headers )    
+                sheet1.col(column_counter).width = 512 * 25
                 added_ref = (str(ref)).strip('[]\'')
                 added_ref = added_ref.replace(", ", "\n").replace("\'", "")
-                sheet1.write(counter, custom_ref_column[title], added_ref, topWrap)
-                
+                sheet1.write(counter, column_counter, added_ref, topWrap)
+                column_counter = column_counter + 1
 
         tall_style = xlwt.easyxf('font:height 640;')  # 36pt
 
@@ -1214,12 +1132,11 @@ def create_rules(baseline_yaml):
             'id',
             'references',
             'result',
-            'discussion',
-            'customized']
+            'discussion']
     references = ['disa_stig',
                   'cci',
                   'cce',
-                  '800-53r4',
+                  '800-53r5',
                   '800-171r2',
                   'srg',
                   'custom']
@@ -1229,27 +1146,24 @@ def create_rules(baseline_yaml):
         for profile_rule in sections['rules']:
             if glob.glob('../custom/rules/**/{}.yaml'.format(profile_rule),recursive=True):
                 rule = glob.glob('../custom/rules/**/{}.yaml'.format(profile_rule),recursive=True)[0]
-                custom=True
             elif glob.glob('../rules/*/{}.yaml'.format(profile_rule)):
                 rule = glob.glob('../rules/*/{}.yaml'.format(profile_rule))[0]
-                custom=False
 
             #for rule in glob.glob('../rules/*/{}.yaml'.format(profile_rule)) + glob.glob('../custom/rules/**/{}.yaml'.format(profile_rule),recursive=True):
-            rule_yaml = get_rule_yaml(rule, custom)
+            rule_yaml = get_rule_yaml(rule)
 
             for key in keys:
                 try:
                     rule_yaml[key]
                 except:
-                    #print("{} key missing ..for {}".format(key, rule))
-                    rule_yaml.update({key: ""})
+                    #print "{} key missing ..for {}".format(key, rule)
+                    rule_yaml.update({key: "missing"})
                 if key == "references":
                     for reference in references:
                         try:
                             rule_yaml[key][reference]
-                            #print("FOUND reference {} for key {} for rule {}".format(reference, key, rule))
                         except:
-                            #print("expected reference '{}' is missing in key '{}' for rule{}".format(reference, key, rule))
+                            #print "expected reference '{}' is missing in key '{}' for rule{}".format(reference, key, rule)
                             rule_yaml[key].update({reference: ["None"]})
             all_rules.append(MacSecurityRule(rule_yaml['title'].replace('|', '\|'),
                                         rule_yaml['id'].replace('|', '\|'),
@@ -1259,7 +1173,7 @@ def create_rules(baseline_yaml):
                                         rule_yaml['fix'].replace('|', '\|'),
                                         rule_yaml['references']['cci'],
                                         rule_yaml['references']['cce'],
-                                        rule_yaml['references']['800-53r4'],
+                                        rule_yaml['references']['800-53r5'],
                                         rule_yaml['references']['800-171r2'],
                                         rule_yaml['references']['disa_stig'],
                                         rule_yaml['references']['srg'],
@@ -1267,8 +1181,7 @@ def create_rules(baseline_yaml):
                                         rule_yaml['tags'],
                                         rule_yaml['result'],
                                         rule_yaml['mobileconfig'],
-                                        rule_yaml['mobileconfig_info'],
-                                        rule_yaml['customized']
+                                        rule_yaml['mobileconfig_info']
                                         ))
 
     return all_rules
@@ -1310,7 +1223,7 @@ def is_asciidoctor_installed():
     output, error = process.communicate()
     
     # return path to asciidoctor
-    return output.decode("utf-8").strip()
+    return output.decode("utf-8")
 
 
 def is_asciidoctor_pdf_installed():
@@ -1321,7 +1234,7 @@ def is_asciidoctor_pdf_installed():
     process = subprocess.Popen(cmd.split(), stdout=subprocess.PIPE)
     output, error = process.communicate()
 
-    return output.decode("utf-8").strip()
+    return output.decode("utf-8")
 
 def verify_signing_hash(hash):
     """Attempts to validate the existence of the certificate provided by the hash
@@ -1523,7 +1436,7 @@ def main():
         section_yaml_file = sections['section'].lower() + '.yaml'
         #check for custom section
         if section_yaml_file in glob.glob1('../custom/sections/', '*.yaml'):
-            #print(f"Custom settings found for section: {sections['section']}")
+            print(f"Custom settings found for section: {sections['section']}")
             override_section = os.path.join(
                 f'../custom/sections/{section_yaml_file}')
             with open(override_section) as r:
@@ -1554,17 +1467,16 @@ def main():
             except IndexError:
                 logging.debug(f'defined rule {rule} does not have valid yaml file, check that rule ID and filename match.')
 
+
             #check for custom rule
             if glob.glob('../custom/rules/**/{}'.format(rule_file), recursive=True):
                 print(f"Custom settings found for rule: {rule_file}")
-                #override_rule = glob.glob('../custom/rules/**/{}'.format(rule_file), recursive=True)[0]
-                rule_location = glob.glob('../custom/rules/**/{}'.format(rule_file), recursive=True)[0]
-                custom=True
+                override_rule = glob.glob('../custom/rules/**/{}'.format(rule_file), recursive=True)[0]
+                with open(override_rule) as r:
+                    rule_yaml = yaml.load(r, Loader=yaml.SafeLoader)
             else:
-                rule_location = rule_path[0]
-                custom=False
-            
-            rule_yaml = get_rule_yaml(rule_location, custom)
+                with open(rule_path[0]) as r:
+                    rule_yaml = yaml.load(r, Loader=yaml.SafeLoader)
 
             # Determine if the references exist and set accordingly
             try:
@@ -1577,37 +1489,37 @@ def main():
             try:
                 rule_yaml['references']['cce']
             except KeyError:
-                cce = '- N/A'
+                cce = 'N/A'
             else:
                 cce = ulify(rule_yaml['references']['cce'])
 
             try:
-                rule_yaml['references']['800-53r4']
+                rule_yaml['references']['800-53r5']
             except KeyError:
-                nist_80053r4 = 'N/A'
+                nist_80053r5 = 'N/A'
             else:
-                #nist_80053r4 = ulify(rule_yaml['references']['800-53r4'])
-                nist_80053r4 = rule_yaml['references']['800-53r4']
+                #nist_80053r5 = ulify(rule_yaml['references']['800-53r5'])
+                nist_80053r5 = rule_yaml['references']['800-53r5']
             
             try:
                 rule_yaml['references']['800-171r2']
             except KeyError:
-                nist_800171 = '- N/A'
+                nist_800171 = '• N/A'
             else:
-                #nist_80053r4 = ulify(rule_yaml['references']['800-53r4'])
+                #nist_80053r5 = ulify(rule_yaml['references']['800-53r5'])
                 nist_800171 = ulify(rule_yaml['references']['800-171r2'])
 
             try:
                 rule_yaml['references']['disa_stig']
             except KeyError:
-                disa_stig = '- N/A'
+                disa_stig = 'N/A'
             else:
                 disa_stig = ulify(rule_yaml['references']['disa_stig'])
 
             try:
                 rule_yaml['references']['srg']
             except KeyError:
-                srg = '- N/A'
+                srg = 'N/A'
             else:
                 srg = ulify(rule_yaml['references']['srg'])
 
@@ -1660,16 +1572,12 @@ def main():
                         rule_yaml['mobileconfig_info'])
 
             # process nist controls for grouping
-            if not nist_80053r4 == "N/A":
-                nist_80053r4.sort()
-                res = [list(i) for j, i in groupby(
-                    nist_80053r4, lambda a: a.split('(')[0])]
-                nist_controls = ''
-                for i in res:
-                    nist_controls += group_ulify(i)
-            else:
-                nist_controls = "- N/A"
-
+            nist_80053r5.sort()
+            res = [list(i) for j, i in groupby(
+                nist_80053r5, lambda a: a.split('(')[0])]
+            nist_controls = ''
+            for i in res:
+                nist_controls += group_ulify(i)
             if 'supplemental' in tags:
                 rule_adoc = adoc_supplemental_template.substitute(
                     rule_title=rule_yaml['title'].replace('|', '\|'),
@@ -1683,7 +1591,7 @@ def main():
                     rule_discussion=rule_yaml['discussion'].replace('|', '\|'),
                     rule_check=rule_yaml['check'],  # .replace('|', '\|'),
                     rule_fix=rulefix,
-                    rule_80053r4=nist_controls,
+                    rule_80053r5=nist_controls,
                     rule_800171=nist_800171,
                     rule_disa_stig=disa_stig,
                     rule_cce=cce,
@@ -1698,7 +1606,7 @@ def main():
                     rule_check=rule_yaml['check'],  # .replace('|', '\|'),
                     rule_fix=rulefix,
                     rule_cci=cci,
-                    rule_80053r4=nist_controls,
+                    rule_80053r5=nist_controls,
                     rule_800171=nist_800171,
                     rule_disa_stig=disa_stig,
                     rule_cce=cce,
@@ -1715,7 +1623,7 @@ def main():
                     rule_check=rule_yaml['check'],  # .replace('|', '\|'),
                     rule_fix=rulefix,
                     rule_cci=cci,
-                    rule_80053r4=nist_controls,
+                    rule_80053r5=nist_controls,
                     rule_800171=nist_800171,
                     rule_disa_stig=disa_stig,
                     rule_cce=cce,
@@ -1750,8 +1658,8 @@ def main():
     asciidoctor_path = is_asciidoctor_installed()
     if asciidoctor_path != "":
         print('Generating HTML file from AsciiDoc...')
-        cmd = f"{asciidoctor_path} \'{adoc_output_file.name}\'"
-        process = subprocess.Popen(cmd, stdout=subprocess.PIPE, shell=True)
+        cmd = f"{asciidoctor_path} {adoc_output_file.name}"
+        process = subprocess.Popen(cmd.split(), stdout=subprocess.PIPE)
         process.communicate()
     else:
         print("If you would like to generate the HTML file from the AsciiDoc file, install the ruby gem for asciidoctor")
@@ -1759,8 +1667,8 @@ def main():
     asciidoctorPDF_path = is_asciidoctor_pdf_installed()
     if asciidoctorPDF_path != "":
         print('Generating PDF file from AsciiDoc...')
-        cmd = f"{asciidoctorPDF_path} \'{adoc_output_file.name}\'"
-        process = subprocess.Popen(cmd, stdout=subprocess.PIPE, shell=True)
+        cmd = f"{asciidoctorPDF_path} {adoc_output_file.name}"
+        process = subprocess.Popen(cmd.split(), stdout=subprocess.PIPE)
         process.communicate()
     else:
         print("If you would like to generate the PDF file from the AsciiDoc file, install the ruby gem for asciidoctor-pdf")

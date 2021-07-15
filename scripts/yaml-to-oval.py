@@ -837,12 +837,13 @@ def main():
                 </definition> '''.format(x,rule_yaml['title'],rule_yaml['references']['cce'][0],rule_yaml['id'],rule_yaml['discussion'],rule_yaml['id'],x)
                         
                         oval_test = oval_test + '''
-                            <plist510_test xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" check="all" check_existence="any_exist" comment="{}_test" id="oval:mscp:tst:{}" version="2">
+                            <plist510_test xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" check="all" check_existence="only_one_exists" comment="{}_test" id="oval:mscp:tst:{}" version="2">
                     <object object_ref="oval:mscp:obj:{}" />
                     <state state_ref="oval:mscp:ste:{}" />
                 </plist510_test>'''.format(rule_yaml['id'],x,x,x)
 
                         plist = rule_yaml['check'].split("read")[1].split()[0].replace(".plist","")
+                        
                         if "ByHost" in rule_yaml['fix'] or "currentHost" in rule_yaml['fix']:
                             oval_object = oval_object + '''
                                         <systemprofiler_object xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" comment="{}" id="oval:mscp:obj:{}" version="1">
@@ -890,7 +891,7 @@ def main():
 
 
                             else:
-
+                                
                                 check_length = len(rule_yaml['check'].split())
                                 key = rule_yaml['check'].split()[check_length-1]
 
@@ -910,6 +911,15 @@ def main():
                 </concat>
             </local_variable>'''.format(x,plist,x+999)
                         
+                        else:
+                            
+                            plist_key = rule_yaml['check'].split(" ")[3].rstrip()
+                            oval_object = oval_object + '''
+                            <plist510_object xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" comment="{}_object" id="oval:mscp:obj:{}" version="1">
+                            <key>{}</key>
+                            <filepath>{}</filepath>
+                            <instance datatype="int" operation="equals">1</instance>
+                            </plist510_object>'''.format(rule_yaml['id'],x,plist_key,plist)
                         
                         datatype = ""
                         for key in rule_yaml['result']:
@@ -1314,20 +1324,36 @@ def main():
                                 x += 1
                                 continue
                     if "awk" in command[3]:
+                        awk_file = ""
+                        awk_search = ""
+                        field_sep = ""
                         
-                        awk_file = rule_yaml['check'].split("'")[2].strip(" ")
-                        
-                        awk_search = rule_yaml['check'].split("'")[1].split("/")[1]
-                        field_sep = rule_yaml['check'].split("-F")[1].split(" ")[0].replace('\"',"")
-                        
-                        try: 
-                        
-                            awk_result = rule_yaml['result']['string']
+                        if "grep -qE" in rule_yaml['fix']:
+                            awk_file = rule_yaml['fix'].split(" ")[3].strip(" ")
+                            awk_search = rule_yaml['fix'].split(" ")[2].strip("\"")
                             
-                        except: 
-                            
-                            awk_result = str(rule_yaml['result']['integer'])
+                        elif "grep" in rule_yaml['check']:
 
+                            awk_file = rule_yaml['check'].split("|")[0].split(" ")[-2]
+                            awk_search = rule_yaml['check'].split("|")[-1].split(" ")[-2].strip("\'")
+                            
+                        else:
+                            awk_file = rule_yaml['check'].split("'")[2].strip(" ")
+                            awk_search = rule_yaml['check'].split("'")[1].split("/")[1]
+                            field_sep = rule_yaml['check'].split("-F")[1].split(" ")[0].replace('\"',"")
+               
+                            try: 
+                        
+                                awk_result = rule_yaml['result']['string']
+                            
+                            except: 
+                            
+                                awk_result = str(rule_yaml['result']['integer'])
+                            
+                            awk_search = "^" + awk_search + field_sep + awk_result
+ 
+
+                        
                         oval_definition = oval_definition + '''
                 <definition id="oval:mscp:def:{}" version="1" class="compliance"> 
                         <metadata> 
@@ -1351,7 +1377,7 @@ def main():
                     <pattern operation="pattern match">{}</pattern>
                     <instance datatype="int">1</instance>
                 </textfilecontent54_object>
-                '''.format(x,rule_yaml['id'],awk_file.rstrip(),"^" + awk_search + field_sep + awk_result)
+                '''.format(x,rule_yaml['id'],awk_file.rstrip(), awk_search)
                         x += 1
                         continue
                     if "grep" in command[3]:
