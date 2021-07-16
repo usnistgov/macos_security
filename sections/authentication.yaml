@@ -1,5 +1,5 @@
   name: "Authentication"
   description: |
-    This section contains the configuration and enforcement of smartcard authentication settings.
+    This section contains the configuration of authentication settings, including the enforcement of smartcard authentication.  
 
     NOTE: The check/fix commands outlined in this section must be run with elevated privileges.
