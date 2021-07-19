@@ -1,9 +1,11 @@
 id: os_authenticated_root_enable
 title: "Enable Authenticated Root"
-discussion:   
+discussion: |
   Authenticated Root _MUST_ be enabled. 
   
   When Authenticated Root is enabled the macOS is booted from a signed volume that is cryptographically protected to prevent tampering with the system volume.
+
+  Note: Authenticated Root is enabled by default on macOS systems.
 check: |
   /usr/bin/csrutil authenticated-root | /usr/bin/grep -c 'enabled'
 result:
