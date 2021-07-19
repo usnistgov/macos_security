@@ -3,7 +3,9 @@ title: "Disable Unix-to-Unix Copy Protocol Service"
 discussion: |
   The system _MUST_ not have the Unix-to-Unix Copy Protocol (UUCP) service active.
 
-  UUCP, a set of programs that enable the sending of files between different UNIX systems as well as sending commands to be executed on another system, is not essential and _MUST_ be disabled in order to prevent the unauthorized connection of devices, transfer of information, and tunneling. 
+  UUCP, a set of programs that enable the sending of files between different UNIX systems as well as sending commands to be executed on another system, is not essential and _MUST_ be disabled in order to prevent the unauthorized connection of devices, transfer of information, and tunneling.
+
+  Note: UUCP service is disabled at startup by default macOS.
 check: |
   /bin/launchctl print-disabled system | /usr/bin/grep -c '"com.apple.uucp" => true'
 result:
