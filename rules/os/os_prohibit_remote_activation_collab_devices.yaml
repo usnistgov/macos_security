@@ -15,7 +15,7 @@ discussion: |
 check: |
   The technology partially supports this requirement and cannot be configured to be in full compliance.
 fix: |
-  The technology paritally inherently meets this requirement. An appropriate mitigation for the system must be implemented.
+  The technology partially meets this requirement. An appropriate mitigation for the system must be implemented for full compliance.
 references:
   cce:
     - CCE-85480-2
@@ -30,7 +30,6 @@ references:
 macOS:
   - "11.0"
 tags:
-  - inherent
   - permanent
   - 800-53r5_low
   - 800-53r5_moderate
