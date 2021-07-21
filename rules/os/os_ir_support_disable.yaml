@@ -5,7 +5,7 @@ discussion: |
   
   By default, if IR is enabled, the system will accept IR control from any remote device. 
   
-  Note: This is applicable only to models of Mac Mini systems earlier than Mac Mini8,1.
+  NOTE: This is applicable only to models of Mac Mini systems earlier than Mac Mini8,1.
 check: |
   /usr/bin/profiles -P -o stdout | /usr/bin/grep -c 'DeviceEnabled = 0'
 result:
