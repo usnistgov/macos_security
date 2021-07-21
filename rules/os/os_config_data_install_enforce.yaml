@@ -7,7 +7,7 @@ discussion: |
   
   link:https://support.apple.com/en-us/HT207005[]
 
-  Note: Software update will automatically update XProtect, MRT, and Gatekeeper by default in the macOS.
+  NOTE: Software update will automatically update XProtect, MRT, and Gatekeeper by default in the macOS.
 check: |
   /usr/bin/profiles -P -o stdout | /usr/bin/grep -c 'ConfigDataInstall = 1'
 result:
