@@ -338,7 +338,7 @@ profile:'''.format(other_header,other_header)
 
     with open("../build/" + other_header.lower() + "/baseline/" + other_header.lower() + ".yaml",'w') as fw:
         fw.write(full_baseline)
-        print(other_header.lower() + ".yaml baseline file created in build/" + other_header.lower() + "/baseline/")
+        print(other_header.lower() + ".yaml baseline file created in build/" + other_header + "/baseline/")
                 
     print("Move all of the folders in rules into the custom folder.")
 if __name__ == "__main__":
