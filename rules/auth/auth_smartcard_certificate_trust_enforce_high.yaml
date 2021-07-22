@@ -19,6 +19,9 @@ references:
     - CCE-85278-0
   cci: 
     - CCI-000186
+  800-53r5:
+    - IA-5(2)
+    - SC-17
   800-53r4: 
     - IA-2(12)
     - IA-5(2)
@@ -30,6 +33,7 @@ macOS:
   - "11.0"
 tags:
   - 800-53r4_high
+  - 800-53r5_high
 mobileconfig: true
 mobileconfig_info:
   com.apple.security.smartcard:

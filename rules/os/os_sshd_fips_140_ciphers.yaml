@@ -7,7 +7,7 @@ discussion: |
 
   Operating systems utilizing encryption _MUST_ use FIPS validated mechanisms for authenticating to cryptographic modules. 
 
-  NOTE: /etc/ssh/sshd_config will be a
+  NOTE: /etc/ssh/sshd_config will be automatically modified to its original state following any update or major upgrade to the operating system.
 check: |
   /usr/bin/grep -c "^Ciphers aes256-ctr,aes192-ctr,aes128-ctr" /etc/ssh/sshd_config
 result:
@@ -26,6 +26,11 @@ references:
     - CCI-000087
     - CCI-003123
     - CCI-002890
+  800-53r5:
+    - AC-17(2)
+    - IA-7
+    - SC-13
+    - SC-8(1)
   800-53r4: 
     - AC-17(2)
     - IA-7

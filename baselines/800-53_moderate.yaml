@@ -42,7 +42,6 @@ profile:
       - os_screensaver_loginwindow_enforce
       - os_handoff_disable
       - os_firewall_log_enable
-      - os_system_wide_preferences_configure
       - os_tftpd_disable
       - os_password_autofill_disable
       - os_password_sharing_disable
@@ -141,6 +140,7 @@ profile:
       - sysprefs_bluetooth_sharing_disable
       - sysprefs_improve_siri_dictation_disable
       - sysprefs_automatic_logout_enforce
+      - sysprefs_system_wide_preferences_configure
   - section: "Inherent"
     rules:
       - os_prevent_priv_functions

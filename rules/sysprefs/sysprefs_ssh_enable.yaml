@@ -3,7 +3,7 @@ title: "Enable SSH Server for Remote Access Sessions"
 discussion: |
   Remote access sessions _MUST_ use encrypted methods to protect unauthorized individuals from gaining access. 
 check: |
-  /bin/launchctl print-disabled system | /usr/bin/grep -c '"com.openssh.sshd" => true'
+  /bin/launchctl print-disabled system | /usr/bin/grep -c '"com.openssh.sshd" => false'
 result:
   integer: 1
 fix: |
@@ -15,6 +15,8 @@ references:
   cce:
     - CCE-85447-1
   cci: 
+    - N/A
+  800-53r5:
     - N/A
   800-53r4: 
     - N/A

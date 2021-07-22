@@ -20,6 +20,8 @@ references:
     - CCE-85450-5
   cci:
     - CCI-000058
+  800-53r5:
+    - AC-11
   800-53r4: 
     - AC-11
   srg: 
@@ -31,10 +33,12 @@ references:
 macOS:
   - "11.0"
 tags:
-  - 800-171
-  - cnssi-1253
+  - 800-53r5_moderate
+  - 800-53r5_high
   - 800-53r4_moderate
   - 800-53r4_high
+  - 800-171
+  - cnssi-1253
   - stig
 severity: "medium"
 mobileconfig: true

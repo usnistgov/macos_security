@@ -2,6 +2,56 @@
 
 This document provides a high-level view of the changes to the macOS Security Compliance Project.
 
+== [Big Sur, Revision 3] - 2021-07-22
+
+* Rules
+** Added Rules
+*** audit_record_reduction_report_generation.yaml
+*** audit_records_processing.yaml
+*** os_access_control_mobile_devices.yaml
+*** os_apple_mobile_file_integrity_enforce.yaml
+*** os_application_sandboxing.yaml
+*** os_asl_log_files_owner_group_configure.yaml
+*** os_asl_log_files_permissions_configure.yaml
+*** os_config_data_install_enforce.yaml
+*** os_filevault_authorized_users.yaml
+*** os_information_validation.yaml
+*** os_malicious_code_prevention.yaml
+*** os_managed_access_control_points.yaml
+*** os_newsyslog_files_owner_group_configure.yaml
+*** os_newsyslog_files_permissions_configure.yaml
+*** os_non_repudiation.yaml
+*** os_pii_deidentification.yaml
+*** os_pii_quality_control.yaml
+*** os_privacy_priciple_minimization.yaml
+*** os_prohibit_remote_activation_collab_devices.yaml
+*** os_secure_enclave.yaml
+*** sysprefs_critical_update_install_enforce.yaml
+** Renamed Rules
+*** auth_ssh_password_authentication_disable.yaml
+*** sysprefs_guest_access_smb_disable.yaml
+*** sysprefs_guest_account_disable.yaml
+*** sysprefs_system_wide_preferences_configure.yaml
+** Deleted Rules
+*** os_filevault_user_account.yaml
+*** os_system_log_files_owner_group_configure.yaml
+*** os_system_log_files_permissions_configure.yaml
+** Bug Fixes
+
+* Baselines
+** Added NIST 800-53 Rev 5 (Low, Moderate, High and Privacy)
+** Modified the All Rules
+
+* Scripts
+** generate_guidanace
+*** Bug fixes
+** generate_baseline
+*** Added `-k all_rules` to generate a baseline containing all the rules 
+*** Bug fixes
+** yaml-to-oval
+*** Bug fixes
+** Added generate_mapping.py to generate custom rules from a mapping between compliance frameworks
+
 == [Big Sur, Revision 2] - 2021-03-18
 
 * Rules

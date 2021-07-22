@@ -39,7 +39,9 @@ references:
     - CCE-85401-8
   cci: 
     - CCI-000795
-  800-53r4: 
+  800-53r5:
+    - AC-2(3)
+  800-53r4:
     - IA-4
   srg: 
     - SRG-OS-000118-GPOS-00060
@@ -56,5 +58,7 @@ tags:
   - 800-53r4_low
   - 800-53r4_moderate
   - 800-53r4_high
+  - 800-53r5_moderate
+  - 800-53r5_high
 mobileconfig: false
 mobileconfig_info:

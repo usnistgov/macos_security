@@ -198,9 +198,6 @@ def get_controls(all_rules):
                 all_controls.append(control)
     
     all_controls.sort()
-
-    # for control in all_controls:
-    #     print(control)
     
     return all_controls
 
@@ -216,7 +213,7 @@ def available_tags(all_rules):
     for tag in all_tags:
         if tag not in available_tags:
             available_tags.append(tag)
-
+    available_tags.append("all_rules")
     available_tags.sort()
 
     for tag in available_tags:
@@ -346,7 +343,7 @@ def main():
 
     found_rules = []
     for rule in all_rules:
-        if args.keyword in rule.rule_tags or args.keyword == "all":
+        if args.keyword in rule.rule_tags or args.keyword == "all_rules":
             found_rules.append(rule)
         # assume all baselines will contain the supplemental rules
         if "supplemental" in rule.rule_tags:

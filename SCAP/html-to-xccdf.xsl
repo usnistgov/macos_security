@@ -344,7 +344,7 @@
             <xsl:for-each select="distinct-values(//div[@class = 'sect2']//table//table//tr[th/p = 'TAGS']/td//p)">
                 <xsl:choose>
                     <!-- WARNING: the following will break when tag names are changed -->
-                    <xsl:when test="matches(., '^800-53r4')">
+                    <xsl:when test="matches(., '^800-53r5')">
                         <!--<xsl:message expand-text="true">{.} {count($ROOT//div[@class = 'sect2'][descendant::table/tbody/tr/th/p='ID'][descendant::table/descendant::tr[th/p = 'tags']/td//p = current()])}</xsl:message>-->
                         <xsl:element name="Profile" namespace="http://checklists.nist.gov/xccdf/1.2">
                             <xsl:attribute name="id" expand-text="true">xccdf_{$xccdf-namespace}_profile_{.}</xsl:attribute>

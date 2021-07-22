@@ -41,7 +41,6 @@ profile:
       - os_anti_virus_installed
       - os_screensaver_loginwindow_enforce
       - os_sshd_key_exchange_algorithm_configure
-      - os_system_wide_preferences_configure
       - os_tftpd_disable
       - os_sshd_client_alive_interval_configure
       - os_system_log_files_owner_group_configure
@@ -126,6 +125,7 @@ profile:
       - sysprefs_siri_disable
       - sysprefs_filevault_enforce
       - sysprefs_password_hints_disable
+      - sysprefs_system_wide_preferences_configure
   - section: "Supplemental"
     rules:
       - supplemental_firewall_pf

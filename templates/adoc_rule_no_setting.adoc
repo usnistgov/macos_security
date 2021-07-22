@@ -18,8 +18,8 @@ $rule_check
 [grid="cols"]
 !===
 
-!800-53r4
-!$rule_80053r4
+!800-53r5
+!$rule_80053r5
 
 ifdef::show_171[]
 !800-171r2

@@ -18,6 +18,8 @@ references:
   cci: 
     - CCI-001812
     - CCI-001764
+  800-53r5:
+    - CM-7(2)
   800-53r4: 
     - CM-7(2)
   srg: 
@@ -30,11 +32,12 @@ references:
 macOS:
   - "11.0"
 tags:
-  - 800-171
-  - cnssi-1253
+  - 800-53r5_moderate
+  - 800-53r5_high
   - 800-53r4_moderate
   - 800-53r4_high
-
+  - 800-171
+  - cnssi-1253
 mobileconfig: true
 mobileconfig_info:
   com.apple.applicationaccess.new:

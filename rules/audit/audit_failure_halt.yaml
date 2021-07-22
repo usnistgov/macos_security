@@ -5,19 +5,21 @@ discussion: |
 
   Once audit failure occurs, user and system activity are no longer recorded, and malicious activity could go undetected. Audit processing failures can occur due to software/hardware errors, failures in the audit capturing mechanisms, and audit storage capacity being reached or exceeded. 
 check: |
-  /usr/bin/grep -Ec "^policy.*ahlt" /etc/security/audit_control
+  /usr/bin/awk -F':' '/^policy/ {print $NF}' /etc/security/audit_control | /usr/bin/tr ',' '\n' | /usr/bin/grep -Ec 'ahlt' 
 result:
   integer: 1
 fix: |
   [source,bash]
   ----
-  /usr/bin/sed -i.bak '/^policy/ s/$/,ahlt/' /etc/security/audit_control; /usr/sbin/audit -s
+  /usr/bin/sed -i.bak 's/^policy.*/policy: ahlt,argv/' /etc/security/audit_control; /usr/sbin/audit -s
   ----
 references:
   cce:
     - CCE-85257-4
   cci: 
     - CCI-000140
+  800-53r5:
+    - AU-5
   800-53r4: 
     - AU-5
   srg: 
@@ -29,11 +31,14 @@ references:
 macOS:
   - "11.0"
 tags:
-  - 800-171
-  - cnssi-1253
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_high
   - 800-53r4_low
   - 800-53r4_moderate
   - 800-53r4_high
+  - 800-171
+  - cnssi-1253
   - stig
 severity: "medium"
 mobileconfig: false
