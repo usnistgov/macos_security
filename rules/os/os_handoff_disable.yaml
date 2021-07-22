@@ -13,10 +13,16 @@ fix: |
 references:
   cce:
     - CCE-84763-2
+  800-53r5:
+    - AC-3
+    - AC-20
+    - CM-7
+    - CM-7(1)
   800-53r4:
     - AC-3
     - AC-20
     - CM-7
+    - CM-7(1)
   disa_stig:
     - N/A
   srg: 
@@ -31,6 +37,9 @@ references:
 macOS:
   - "10.15"
 tags:
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_high
   - 800-171
   - cnssi-1253
   - 800-53r4_low

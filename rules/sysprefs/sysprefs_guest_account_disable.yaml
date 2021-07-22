@@ -1,4 +1,4 @@
-id: os_guest_account_disable
+id: sysprefs_guest_account_disable
 title: "Disable the Guest Account"
 discussion: |
   Guest access _MUST_ be disabled. 
@@ -12,9 +12,10 @@ fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-    - CCE-84762-4
-  cci:
-    - CCI-001813
+    - CCE-84939-8
+  800-53r5:
+    - AC-2
+    - AC-2(9)
   800-53r4:
     - AC-2
     - AC-2(9)
@@ -28,11 +29,14 @@ references:
 macOS:
   - "10.15"
 tags:
-  - 800-171
-  - cnssi-1253
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_high
   - 800-53r4_low
   - 800-53r4_moderate
   - 800-53r4_high
+  - 800-171
+  - cnssi-1253
   - stig
 severity: "high"
 mobileconfig: true

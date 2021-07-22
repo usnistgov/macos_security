@@ -1,28 +1,35 @@
 id: audit_flags_fd_configure
-title: "Configure System to Audit All Failed Deletion Actions on the System"
+title: "Configure System to Audit All Deletions of Object Attributes"
 discussion: |
-  The audit system _MUST_ be configured to record enforcement actions of access restrictions, including failed file deletion (-fd) attempts. 
+  The audit system _MUST_ be configured to record enforcement actions of attempts to delete file attributes (fd). 
 
-  Enforcement actions are the methods or mechanisms used to prevent unauthorized access and/or changes to configuration settings. One common and effective enforcement action method is using access restrictions (e.g., denying access to a file by applying file permissions). 
-
+  ***Enforcement actions are the methods or mechanisms used to prevent unauthorized changes to configuration settings. One common and effective enforcement action method is using access restrictions (i.e., denying modifications to a file by applying file permissions). 
+  
   This configuration ensures that audit lists include events in which enforcement actions prevent attempts to delete a file. 
 
   Without auditing the enforcement of access restrictions, it is difficult to identify attempted attacks, as there is no audit trail available for forensic investigation.
 check: |
-  /usr/bin/grep -Ec "^flags.*-fd" /etc/security/audit_control
+  /usr/bin/awk -F':' '/^flags/ { print $NF }' /etc/security/audit_control | /usr/bin/tr ',' '\n' | /usr/bin/grep -Ec '\-fd'
 result:
   integer: 1
 fix: |
   [source,bash]
   ----
-  /usr/bin/sed -i.bak '/^flags/ s/$/,-fd/' /etc/security/audit_control;/usr/sbin/audit -s
+  /usr/bin/grep -qE "^flags.*-fd" /etc/security/audit_control || /usr/bin/sed -i.bak '/^flags/ s/$/,-fd/' /etc/security/audit_control;/usr/sbin/audit -s
   ----
 references:
   cce:
-    - N/A
+    - CCE-84922-4
   cci:
     - CCI-000172
     - CCI-001814
+  800-53r5:
+    - AC-2(12)
+    - AU-12
+    - AU-2
+    - AU-9
+    - CM-5(1)
+    - MA-4(1)
   800-53r4: 
     - AU-2  
     - AU-12
@@ -47,6 +54,10 @@ references:
 macOS:
   - "10.15"
 tags:
+  - 800-53r5_privacy
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_high
   - stig
 severity: "medium"
 mobileconfig: false

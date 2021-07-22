@@ -20,6 +20,9 @@ references:
     - CCE-84870-5
   cci:
     - CCI-002361
+  800-53r5:
+    - AC-12
+    - AC-2(5)
   800-53r4:
     - AC-12
   disa_stig:
@@ -31,6 +34,8 @@ references:
 macOS:
   - "10.15"
 tags:
+  - 800-53r5_moderate
+  - 800-53r5_high
   - 800-171
   - cnssi-1253
   - 800-53r4_moderate

@@ -18,6 +18,11 @@ references:
     - CCE-84834-1
   cci:
     - CCI-000366
+  800-53r5:
+    - CM-14
+    - CM-5
+    - SI-7(15)
+    - SI-7(1)
   800-53r4: 
     - CM-5(3)
     - CM-5
@@ -31,6 +36,9 @@ references:
 macOS:
   - "10.15"
 tags:
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_high
   - 800-171
   - cnssi-1253
   - 800-53r4_moderate

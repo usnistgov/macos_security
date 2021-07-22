@@ -32,7 +32,7 @@ class MacSecurityRule():
         self.rule_fix = fix
         self.rule_cci = cci
         self.rule_cce = cce
-        self.rule_80053r4 = nist_controls
+        self.rule_80053r5 = nist_controls
         self.rule_800171 = nist_171
         self.rule_disa_stig = disa_stig
         self.rule_srg = srg
@@ -54,7 +54,7 @@ class MacSecurityRule():
             rule_check=self.rule_check,
             rule_fix=self.rule_fix,
             rule_cci=self.rule_cci,
-            rule_80053r4=self.rule_80053r4,
+            rule_80053r5=self.rule_80053r5,
             rule_disa_stig=self.rule_disa_stig,
             rule_srg=self.rule_srg,
             rule_result=self.rule_result_value
@@ -660,23 +660,41 @@ read_options(){{
     esac
 }}
 
-generate_report(){{
-    non_compliant=0
+# Generate the Compliant and Non-Compliant counts. Returns: Array (Compliant, Non-Compliant)
+compliance_count(){{
     compliant=0
+    non_compliant=0
 
     results=$(/usr/libexec/PlistBuddy -c "Print" /Library/Preferences/org.{baseline_name}.audit.plist)
-
+    
     while IFS= read -r line; do
-        if [[ "$line" =~ "finding" ]];then
-            if [[ "$line" =~ "true" ]]; then
-                non_compliant=$((non_compliant+1))
-            fi
-            if [[ "$line" =~ "false" ]]; then
-                compliant=$((compliant+1))
-            fi
+        if [[ "$line" =~ "false" ]]; then
+            compliant=$((compliant+1))
         fi
-
+        if [[ "$line" =~ "true" ]]; then
+            non_compliant=$((non_compliant+1))
+        fi
     done <<< "$results"
+    
+    # Enable output of just the compliant or non-compliant numbers. 
+    if [[ $1 = "compliant" ]]
+    then
+        echo $compliant
+    elif [[ $1 = "non-compliant" ]]
+    then
+        echo $non_compliant
+    else # no matching args output the array
+        array=($compliant $non_compliant)
+        echo ${{array[@]}}
+    fi
+}}
+
+
+generate_report(){{
+    count=($(compliance_count))
+    compliant=${{count[1]}}
+    non_compliant=${{count[2]}}
+    
     total=$((non_compliant + compliant))
     percentage=$(printf %.2f $(( compliant * 100. / total )) )
     echo
@@ -694,6 +712,17 @@ view_report(){{
     else
         generate_report
     fi
+}}
+
+# Designed for use with MDM - single unformatted output of the Compliance Report
+generate_stats(){{
+    count=($(compliance_count))
+    compliant=${{count[1]}}
+    non_compliant=${{count[2]}}
+    
+    total=$((non_compliant + compliant))
+    percentage=$(printf %.2f $(( compliant * 100. / total )) )
+    echo "PASSED: $compliant FAILED: $non_compliant, $percentage percent compliant!"
 }}
 
 run_scan(){{
@@ -737,11 +766,11 @@ defaults write "$audit_plist" lastComplianceCheck "$(date)"
                 continue
             # grab the 800-53 controls
             try:
-                rule_yaml['references']['800-53r4']
+                rule_yaml['references']['800-53r5']
             except KeyError:
-                nist_80053r4 = 'N/A'
+                nist_80053r5 = 'N/A'
             else:
-                nist_80053r4 = rule_yaml['references']['800-53r4']
+                nist_80053r5 = rule_yaml['references']['800-53r5']
             
             #try:
             #    rule_yaml['references']['disa_stig']
@@ -781,10 +810,10 @@ defaults write "$audit_plist" lastComplianceCheck "$(date)"
                             
                 
         # group the controls
-            if not nist_80053r4 == "N/A":
-                nist_80053r4.sort()
+            if not nist_80053r5 == "N/A":
+                nist_80053r5.sort()
                 res = [list(i) for j, i in groupby(
-                    nist_80053r4, lambda a: a.split('(')[0])]
+                    nist_80053r5, lambda a: a.split('(')[0])]
                 nist_controls = ''
                 for i in res:
                     nist_controls += group_ulify(i)
@@ -939,14 +968,18 @@ if (( # >= 2));then
     exit 1
 fi
 
-zparseopts -D -E -check=check -fix=fix -configure=configure
+zparseopts -D -E -check=check -fix=fix -stats=stats -compliant=compliant -non_compliant=non_compliant
 
 if [[ $check ]];then
     run_scan
 elif [[ $fix ]];then    
     run_fix
-elif [[ $configure ]];then
-    run_configure
+elif [[ $stats ]];then    
+    generate_stats
+elif [[ $compliant ]];then    
+    compliance_count "compliant"
+elif [[ $non_compliant ]];then    
+    compliance_count "non-compliant"
 else
     while true; do
         show_menus
@@ -1085,7 +1118,7 @@ def generate_xls(baseline_name, build_path, baseline_yaml):
     sheet1.write(0, 5, "Check", headers)
     sheet1.write(0, 6, "Check Result", headers)
     sheet1.write(0, 7, "Fix", headers)
-    sheet1.write(0, 8, "800-53r4", headers)
+    sheet1.write(0, 8, "800-53r5", headers)
     sheet1.write(0, 9, "800-171", headers)
     sheet1.write(0, 10, "SRG", headers)
     sheet1.write(0, 11, "DISA STIG", headers)
@@ -1142,7 +1175,7 @@ def generate_xls(baseline_name, build_path, baseline_yaml):
         sheet1.col(7).width = 1000 * 50
 
         baseline_refs = (
-            str(rule.rule_80053r4)).strip('[]\'')
+            str(rule.rule_80053r5)).strip('[]\'')
         baseline_refs = baseline_refs.replace(", ", "\n").replace("\'", "")
 
         sheet1.write(counter, 8, baseline_refs, topWrap)
@@ -1219,7 +1252,7 @@ def create_rules(baseline_yaml):
     references = ['disa_stig',
                   'cci',
                   'cce',
-                  '800-53r4',
+                  '800-53r5',
                   '800-171r2',
                   'srg',
                   'custom']
@@ -1259,7 +1292,7 @@ def create_rules(baseline_yaml):
                                         rule_yaml['fix'].replace('|', '\|'),
                                         rule_yaml['references']['cci'],
                                         rule_yaml['references']['cce'],
-                                        rule_yaml['references']['800-53r4'],
+                                        rule_yaml['references']['800-53r5'],
                                         rule_yaml['references']['800-171r2'],
                                         rule_yaml['references']['disa_stig'],
                                         rule_yaml['references']['srg'],
@@ -1582,19 +1615,19 @@ def main():
                 cce = ulify(rule_yaml['references']['cce'])
 
             try:
-                rule_yaml['references']['800-53r4']
+                rule_yaml['references']['800-53r5']
             except KeyError:
-                nist_80053r4 = 'N/A'
+                nist_80053r5 = 'N/A'
             else:
-                #nist_80053r4 = ulify(rule_yaml['references']['800-53r4'])
-                nist_80053r4 = rule_yaml['references']['800-53r4']
+                #nist_80053r5 = ulify(rule_yaml['references']['800-53r5'])
+                nist_80053r5 = rule_yaml['references']['800-53r5']
             
             try:
                 rule_yaml['references']['800-171r2']
             except KeyError:
                 nist_800171 = '- N/A'
             else:
-                #nist_80053r4 = ulify(rule_yaml['references']['800-53r4'])
+                #nist_80053r5 = ulify(rule_yaml['references']['800-53r5'])
                 nist_800171 = ulify(rule_yaml['references']['800-171r2'])
 
             try:
@@ -1660,10 +1693,10 @@ def main():
                         rule_yaml['mobileconfig_info'])
 
             # process nist controls for grouping
-            if not nist_80053r4 == "N/A":
-                nist_80053r4.sort()
+            if not nist_80053r5 == "N/A":
+                nist_80053r5.sort()
                 res = [list(i) for j, i in groupby(
-                    nist_80053r4, lambda a: a.split('(')[0])]
+                    nist_80053r5, lambda a: a.split('(')[0])]
                 nist_controls = ''
                 for i in res:
                     nist_controls += group_ulify(i)
@@ -1683,7 +1716,7 @@ def main():
                     rule_discussion=rule_yaml['discussion'].replace('|', '\|'),
                     rule_check=rule_yaml['check'],  # .replace('|', '\|'),
                     rule_fix=rulefix,
-                    rule_80053r4=nist_controls,
+                    rule_80053r5=nist_controls,
                     rule_800171=nist_800171,
                     rule_disa_stig=disa_stig,
                     rule_cce=cce,
@@ -1694,11 +1727,11 @@ def main():
                 rule_adoc = adoc_rule_custom_refs_template.substitute(
                     rule_title=rule_yaml['title'].replace('|', '\|'),
                     rule_id=rule_yaml['id'].replace('|', '\|'),
-                    rule_discussion=rule_yaml['discussion'].replace('|', '\|'),
+                    rule_discussion=rule_yaml['discussion'],#.replace('|', '\|'),
                     rule_check=rule_yaml['check'],  # .replace('|', '\|'),
                     rule_fix=rulefix,
                     rule_cci=cci,
-                    rule_80053r4=nist_controls,
+                    rule_80053r5=nist_controls,
                     rule_800171=nist_800171,
                     rule_disa_stig=disa_stig,
                     rule_cce=cce,
@@ -1715,7 +1748,7 @@ def main():
                     rule_check=rule_yaml['check'],  # .replace('|', '\|'),
                     rule_fix=rulefix,
                     rule_cci=cci,
-                    rule_80053r4=nist_controls,
+                    rule_80053r5=nist_controls,
                     rule_800171=nist_800171,
                     rule_disa_stig=disa_stig,
                     rule_cce=cce,

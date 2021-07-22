@@ -23,6 +23,9 @@ references:
     - CCI-001954
     - CCI-001991
     - CCI-002470
+  800-53r5:
+    - IA-5(2)
+    - SC-17
   800-53r4: 
     - IA-2(12)
     - IA-5(2)
@@ -37,6 +40,7 @@ references:
 macOS:
   - "10.15"
 tags:
+  - 800-53r5_moderate
   - cnssi-1253
   - 800-53r4_moderate
   - stig

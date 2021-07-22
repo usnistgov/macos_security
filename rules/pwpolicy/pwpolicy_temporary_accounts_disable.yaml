@@ -17,6 +17,8 @@ references:
     - CCE-84820-0
   cci:
     - N/A
+  800-53r5:
+    - AC-2(2)
   800-53r4:
     - AC-2(2)
   srg:
@@ -26,6 +28,8 @@ references:
 macOS:
   - "10.15"
 tags:
+  - 800-53r5_moderate
+  - 800-53r5_high
   - cnssi-1253
   - 800-53r4_moderate
   - 800-53r4_high
