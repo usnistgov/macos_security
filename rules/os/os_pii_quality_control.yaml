@@ -1,4 +1,4 @@
-id: os_personally_identifiable_info_quality_operations
+id: os_pii_quality_control
 title: "Personally Identifiable Information Quality Operations"
 discussion: |
   Check the accuracy, relevance, timeliness, and completeness of personally identifiable information across the information life cycle organization-defined frequency and correct or delete inaccurate or outdated personally identifiable information.
