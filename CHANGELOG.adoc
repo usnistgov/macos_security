@@ -46,11 +46,11 @@ This document provides a high-level view of the changes to the macOS Security Co
 ** generate_guidanace
 *** Bug fixes
 ** generate_baseline
-*** Added `-k all` to generate a baseline containing all the rules 
+*** Added `-k all_rules` to generate a baseline containing all the rules 
 *** Bug fixes
 ** yaml-to-oval
 *** Bug fixes
-** Added generate_mapping.py
+** Added generate_mapping.py to generate custom rules from a mapping between compliance frameworks
 
 == [Big Sur, Revision 2] - 2021-03-18
 
