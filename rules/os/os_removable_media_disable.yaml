@@ -20,6 +20,8 @@ references:
     - CCE-84782-2
   cci: 
     - N/A
+  800-53r5:
+    - MP-7
   800-53r4: 
     - MP-7(1)
   srg: 
@@ -31,6 +33,9 @@ references:
 macOS:
   - "10.15"
 tags:
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_high
   - 800-171
   - cnssi-1253
   - 800-53r4_moderate

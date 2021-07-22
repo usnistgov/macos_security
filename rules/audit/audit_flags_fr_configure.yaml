@@ -9,13 +9,13 @@ discussion: |
 
   Without auditing the enforcement of access restrictions, it is difficult to identify attempted attacks, as there is no audit trail available for forensic investigation.
 check: |
-  /usr/bin/grep -Ec "^flags.*-fr" /etc/security/audit_control
+  /usr/bin/awk -F':' '/^flags/ { print $NF }' /etc/security/audit_control | /usr/bin/tr ',' '\n' | /usr/bin/grep -Ec '\-fr'
 result:
   integer: 1
 fix: |
   [source,bash]
   ----
-  /usr/bin/sed -i.bak '/^flags/ s/$/,-fr/' /etc/security/audit_control;/usr/sbin/audit -s
+  /usr/bin/grep -qE "^flags.*-fr" /etc/security/audit_control || /usr/bin/sed -i.bak '/^flags/ s/$/,-fr/' /etc/security/audit_control;/usr/sbin/audit -s
   ----
 references:
   cce:
@@ -23,6 +23,13 @@ references:
   cci:
     - CCI-000172
     - CCI-001814
+  800-53r5:
+    - AC-2(12)
+    - AU-12
+    - AU-2
+    - AU-9
+    - CM-5(1)
+    - MA-4(1)
   800-53r4: 
     - AU-2  
     - AU-12
@@ -49,6 +56,10 @@ references:
 macOS:
   - "10.15"
 tags:
+  - 800-53r5_privacy
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_high
   - 800-171
   - cnssi-1253
   - 800-53r4_low

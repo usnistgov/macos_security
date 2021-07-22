@@ -5,7 +5,7 @@ discussion: |
   
   By default, if IR is enabled, the system will accept IR control from any remote device. 
   
-  Note: This is applicable only to models of Mac Mini systems earlier than Mac Mini8,1.
+  NOTE: This is applicable only to models of Mac Mini systems earlier than Mac Mini8,1.
 check: |
   /usr/bin/profiles -P -o stdout | /usr/bin/grep -c 'DeviceEnabled = 0'
 result:
@@ -17,8 +17,13 @@ references:
     - CCE-84768-1
   cci: 
     - CCI-000366
+  800-53r5:
+    - AC-18
+    - CM-7
+    - CM-7(1)
   800-53r4: 
     - CM-7
+    - CM-7(1)
     - AC-18
   srg: 
     - SRG-OS-000480-GPOS-00227
@@ -30,6 +35,9 @@ references:
 macOS:
   - "10.15"
 tags:
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_high
   - 800-171
   - cnssi-1253
   - 800-53r4_low

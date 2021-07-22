@@ -4,6 +4,8 @@ discussion: |
   The macOS _MUST_ be configured to require at least one lower-case character be used when a password is created.
   
   This rule enforces password complexity by requiring users to set passwords that are less vulnerable to malicious users. 
+
+  NOTE: The guidance for password based authentication in NIST 800-53 (Rev 5) and NIST 800-63B state that complexity rules should be organizationally defined. The values defined are based off of common complexity values. But your organization may define its own password complexity rules.
 check: |
   /usr/bin/pwpolicy getaccountpolicies | /usr/bin/grep -v "Getting global account policies" | /usr/bin/xmllint --xpath '/plist/dict/array/dict/dict[key="minimumAlphaCharactersLowerCase"]/integer' - | /usr/bin/awk -F '[<>]' '{print $3}'
 result:
@@ -39,6 +41,8 @@ references:
     - CCE-84815-0
   cci: 
    - CCI-000193
+  800-53r5:
+    - IA-5(1)
   800-53r4: 
     - IA-5
     - IA-5(1)
@@ -56,6 +60,9 @@ references:
 macOS:
   - "10.15"
 tags:
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_high
   - 800-171
   - cnssi-1253
   - 800-53r4_low

@@ -4,6 +4,8 @@ discussion: |
   System Integrity Protection (SIP) _MUST_ be enabled. 
   
   SIP is vital to protecting the integrity of the system as it prevents malicious users and software from making unauthorized and/or unintended modifications to protected files and folders; ensures the presence of an audit record generation capability for defined auditable events for all operating system components; protects audit tools from unauthorized access, modification, and deletion; restricts the root user account and limits the actions that the root user can perform on protected parts of the macOS; and prevents non-privileged users from granting other users direct access to the contents of their home directories and folders.
+
+  NOTE: SIP is enabled by default in macOS.
 check: |
   /usr/bin/csrutil status | /usr/bin/grep -c 'System Integrity Protection status: enabled.'
 result:
@@ -33,6 +35,15 @@ references:
     - CCI-001880
     - CCI-001881
     - CCI-001882
+  800-53r5:
+    - AC-3
+    - AU-9
+    - AU-9(3)
+    - CM-5
+    - CM-5(6)
+    - SC-4
+    - SI-2
+    - SI-7
   800-53r4:
     - AC-3 
     - AU-6(4)
@@ -74,6 +85,9 @@ references:
 macOS:
   - "10.15"
 tags:
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_high
   - 800-171
   - cnssi-1253
   - 800-53r4_low

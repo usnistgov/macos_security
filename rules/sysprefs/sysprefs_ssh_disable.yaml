@@ -18,9 +18,16 @@ references:
     - CCE-84920-8
   cci: 
     - N/A
+  800-53r5:
+    - IA-2(8)
+    - AC-3
+    - CM-7
+    - CM-7(1)
+    - AC-17
   800-53r4:
     - AC-3 
     - CM-7
+    - CM-7(1)
     - IA-2(8)
     - IA-2(9)
   srg: 
@@ -35,6 +42,9 @@ references:
 macOS:
   - "10.15"
 tags:
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_high
   - 800-171
   - cnssi-1253
   - 800-53r4_low

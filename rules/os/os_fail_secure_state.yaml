@@ -18,6 +18,8 @@ references:
   cci:
     - CCI-001190
     - CCI-001665
+  800-53r5:
+    - SC-24
   800-53r4:
     - SC-24
   disa_stig:
@@ -28,6 +30,7 @@ references:
 macOS:
   - "10.15"
 tags:
+  - 800-53r5_high
   - 800-53r4_high
   - inherent
 mobileconfig: false

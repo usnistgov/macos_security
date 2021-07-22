@@ -7,7 +7,7 @@ ASSOCIATED DOCUMENTS
   Example:
     [%header, cols=2*a]                            <-- table format block
     |====                                          <-- table opening tag
-    |Document Number|Document Title                <-- header line
+    |Document Number or Descriptor|Document Title                <-- header line
                                                    <-- empty line for readability (optional)
 
                                                    <-- empty line for readability (optional)
@@ -16,39 +16,25 @@ ASSOCIATED DOCUMENTS
 [%header, cols=2*a]
 .National Institute of Standards and Technology (NIST)
 |===
-|Document Number
+|Document Number or Descriptor
 |Document Title
-|link:https://nvd.nist.gov/800-53[NIST Special Publication 800-53 Rev 4]|_NIST Special Publication 800-53 Rev 4_
-|===
-
-[%header, cols=2*a]
-.National Institute of Standards and Technology (NIST)
-|===
-|Document Number
-|Document Title
+|link:https://nvd.nist.gov/800-53[NIST Special Publication 800-53 Rev 5]|_NIST Special Publication 800-53 Rev 5_
 |link:https://www.nist.gov/itl/tig/projects/special-publication-800-63[NIST Special Publication 800-63]|_NIST Special Publication 800-63_
-|===
-
-[%header, cols=2*a]
-.National Institute of Standards and Technology (NIST)
-|===
-|Document Number
-|Document Title
 |link:https://csrc.nist.gov/publications/detail/sp/800-171/rev-2/final[NIST Special Publication 800-171]|_NIST Special Publication 800-171 Rev 2_
 |===
 
 [%header, cols=2*a]
 .Defense Information Systems Agency (DISA)
 |===
-|Document Number
+|Document Number or Descriptor
 |Document Title
-|link:https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Apple_OS_X_10-15_V1R2_STIG.zip[STIG Ver 1, Rel 2]|_Apple OS X 10.15 (Catalina) STIG_
+|link:https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Apple_OS_X_10-15_V1R4_STIG.zip[STIG Ver 1, Rel 4]|_Apple OS X 10.15 (Catalina) STIG_
 |===
 
 [%header, cols=2*a]
 .Committee on National Security Systems (CNSS)
 |===
-|Document Number
+|Document Number or Descriptor
 |Document Title 
 |link:https://www.cnss.gov/CNSS/issuances/Instructions.cfm[CNSSI No. 1253]|_Security Categorization and Control Selection for National Security Systems_
 |===
@@ -57,15 +43,11 @@ ASSOCIATED DOCUMENTS
 [%header, cols=2*a]
 .Apple
 |===
-|Document Number
+|Document Number or Descriptor
 |Document Title
+|link:https://support.apple.com/guide/security/welcome/web[Apple Platform Security Guide]|_Apple Platform Security_
+|link:https://support.apple.com/guide/deployment-reference-macos/welcome/web[Deployment Reference for Mac]|_Deployment Reference_
 |link:https://support.apple.com/guide/mdm/welcome/web[Mobile Device Management Settings]|_Mobile Device Management Settings_
-|===
-
-[%header, cols=2*a]
-.Apple
-|===
-|Document Number
-|Document Title
-|link:https://developer.apple.com/documentation/devicemanagement/profile-specific_payload_keys[Apple Developer]|_Profile-Specific Payload Keys_
+|link:https://developer.apple.com/documentation/devicemanagement/profile-specific_payload_keys[AProfile-Specific Payload Keys]|_Profile-Specific Payload Keys_
+|link:https://support.apple.com/guide/sccc/welcome/web[Security Certifications and Compliance Center]|_Security Certifications and Compliance Center_
 |===

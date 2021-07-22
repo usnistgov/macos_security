@@ -20,8 +20,13 @@ references:
     - CCE-84769-9
   cci: 
     - CCI-000381
+  800-53r5:
+    - AC-20
+    - CM-7
+    - CM-7(1)
   800-53r4:
     - CM-7
+    - CM-7(1)
     - AC-20
   srg:
     - SRG-OS-000095-GPOS-00049
@@ -33,6 +38,9 @@ references:
 macOS:
   - "10.15"
 tags:
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_high
   - 800-171
   - cnssi-1253
   - 800-53r4_low

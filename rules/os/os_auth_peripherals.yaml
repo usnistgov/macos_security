@@ -11,6 +11,8 @@ references:
     - CCE-84741-8
   cci:
     - CCI-001958
+  800-53r5:
+    - IA-3
   800-53r4:
     - IA-3
   disa_stig:
@@ -23,6 +25,8 @@ references:
 macOS:
   - "10.15"
 tags:
+  - 800-53r5_moderate
+  - 800-53r5_high
   - cnssi-1253
   - 800-53r4_moderate
   - 800-53r4_high
