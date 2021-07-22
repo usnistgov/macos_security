@@ -1,4 +1,4 @@
-id: os_guest_access_afp_disable
+id: sysprefs_guest_access_afp_disable
 title: "Disable Guest Access to Shared Apple File Protocol Folders"
 discussion: |
   Guest access to shared Apple File Protocol (AFP) folders _MUST_ be disabled. 
