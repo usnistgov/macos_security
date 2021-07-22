@@ -23,7 +23,7 @@ This document provides a high-level view of the changes to the macOS Security Co
 *** os_non_repudiation.yaml
 *** os_pii_deidentification.yaml
 *** os_pii_quality_control.yaml
-*** os_privacy_priciple_minimization.yaml
+*** os_privacy_principle_minimization.yaml
 *** os_prohibit_remote_activation_collab_devices.yaml
 *** os_secure_enclave.yaml
 *** sysprefs_critical_update_install_enforce.yaml
