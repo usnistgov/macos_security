@@ -918,6 +918,8 @@ def main():
             </local_variable>'''.format(x,plist,x+999)
                         
                         else:
+                            if plist[-6:] != ".plist":
+                                plist = plist + ".plist"
                             
                             plist_key = rule_yaml['check'].split(" ")[3].rstrip()
                             oval_object = oval_object + '''
@@ -1119,8 +1121,8 @@ def main():
                     <object object_ref="oval:mscp:obj:{}"/>
                     <state state_ref="oval:mscp:ste:{}"/>
                 </file_test>'''.format(x,rule_yaml['id'],x,x)
-
-                        if "-" in fix_command and "R" in fix_command:
+                        
+                        if "-" in fix_command and "R" in fix_command or rule_yaml['fix'].split("\n")[2][-1] == "*":
                             behavior = '<behaviors recurse="directories" recurse_direction="down" max_depth="-1" recurse_file_system="local"></behaviors>'
                             if "audit" in rule_file:
                                 filename = '<filename datatype="string" operation="not equal">current</filename>'
@@ -1242,7 +1244,7 @@ def main():
                                 state_test = state_test + '''
                 <oread datatype="boolean">false</oread>
                 <owrite datatype="boolean">false</owrite>
-                <oexec datatype="boolean">true</oexec>'''        
+                <oexec datatype="boolean">false</oexec>'''        
                             if perms[2] == "1":
                                 state_test = state_test + '''
                 <oread datatype="boolean">false</oread>
