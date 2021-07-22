@@ -91,7 +91,13 @@ def main():
                 if "manual" in rule_yaml['tags']:
                     print(rule_yaml['id'] + " - Manual Check")
                     continue
-                
+
+                if "newsyslog.conf" in rule_yaml['check'] or "asl.conf" in rule_yaml['check']:
+                    print(rule_yaml['id'] + " - Manual Check Required")
+                    continue
+                if "/usr/bin/pwpolicy getaccountpolicies" in rule_yaml['check']:
+                    print(rule_yaml['id'] + " - pwpolicy getaccountpolicies - no relevant oval")
+                    continue
                 if "os_home_folders_secure" in rule_file:
                     oval_definition = oval_definition + '''
                             <definition id="oval:mscp:def:{}" version="1" class="compliance"> 
