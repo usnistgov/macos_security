@@ -1,4 +1,4 @@
-id: os_de_identification
+id: os_pii_deidentification
 title: "Remove Elements of Personally Identifiable Information from Datasets"
 discussion: |
   Remove the following elements of personally identifiable information from datasets: organization-defined elements of personally identifiable information and evaluate organization-defined frequency for effectiveness of de-identification.

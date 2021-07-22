@@ -2,7 +2,7 @@
 
 This document provides a high-level view of the changes to the macOS Security Compliance Project.
 
-== [Big Sur, Revision 3] - 2021-07-XX
+== [Big Sur, Revision 3] - 2021-07-22
 
 * Rules
 ** Added Rules
@@ -14,7 +14,6 @@ This document provides a high-level view of the changes to the macOS Security Co
 *** os_asl_log_files_owner_group_configure.yaml
 *** os_asl_log_files_permissions_configure.yaml
 *** os_config_data_install_enforce.yaml
-*** os_de_identification.yaml
 *** os_filevault_authorized_users.yaml
 *** os_information_validation.yaml
 *** os_malicious_code_prevention.yaml
@@ -22,7 +21,8 @@ This document provides a high-level view of the changes to the macOS Security Co
 *** os_newsyslog_files_owner_group_configure.yaml
 *** os_newsyslog_files_permissions_configure.yaml
 *** os_non_repudiation.yaml
-*** os_personally_identifiable_info_quality_operations.yaml
+*** os_pii_deidentification.yaml
+*** os_pii_quality_control.yaml
 *** os_privacy_priciple_minimization.yaml
 *** os_prohibit_remote_activation_collab_devices.yaml
 *** os_secure_enclave.yaml
@@ -39,7 +39,7 @@ This document provides a high-level view of the changes to the macOS Security Co
 ** Bug Fixes
 
 * Baselines
-** Added NIST 800-53 Rev 5 (Low, Moderate, and High)
+** Added NIST 800-53 Rev 5 (Low, Moderate, High and Privacy)
 ** Modified the All Rules
 
 * Scripts
@@ -52,7 +52,7 @@ This document provides a high-level view of the changes to the macOS Security Co
 *** Bug fixes
 ** Added generate_mapping.py
 
-== [Big Sur, Revision 2] - 2021-03-XX
+== [Big Sur, Revision 2] - 2021-03-18
 
 * Rules
 ** Fixed Rules
