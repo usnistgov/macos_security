@@ -918,11 +918,8 @@ def main():
             </local_variable>'''.format(x,plist,x+999)
                         
                         else:
-<<<<<<< HEAD
                             if plist[-6:] != ".plist":
                                 plist = plist + ".plist"
-=======
->>>>>>> 417b9abf5db5f588934c637797a41124fc753efa
                             
                             plist_key = rule_yaml['check'].split(" ")[3].rstrip()
                             oval_object = oval_object + '''
@@ -1356,15 +1353,9 @@ def main():
                             try: 
                         
                                 awk_result = rule_yaml['result']['string']
-<<<<<<< HEAD
                             
                             except: 
                             
-=======
-                            
-                            except: 
-                            
->>>>>>> 417b9abf5db5f588934c637797a41124fc753efa
                                 awk_result = str(rule_yaml['result']['integer'])
                             
                             awk_search = "^" + awk_search + field_sep + awk_result
