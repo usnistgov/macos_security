@@ -4,7 +4,7 @@ discussion: |
   The supplemental guidance found in this section is applicable for the following rules:
     * sysprefs_filevault_enforce
 
-  In macOS 11 the internal Apple File System (APFS) data volume can be protected by FileVault. The system volume is always cryptographically protected (T2) and is a read-only volume.
+  In macOS 10.15 the internal Apple File System (APFS) volume (including both system and data storage) can be protected by FileVault.
   
   NOTE: FileVault uses an AES-XTS data encryption algorithm to protect full volumes of internal and external storage. Macs with a secure enclave (T2) utilize the hardware security features of the architecture.
 
@@ -19,14 +19,15 @@ discussion: |
   ----
   /usr/bin/fdesetup enable
   ----
-  Running this command will prompt you for a username and password and then enable FileVault and return the personal recovery key. There are a number of management features available when managing FileVault via the command line that are not available when using a configuration profile. More information on these management features is available in the man page for fdesetup. 
   
-  NOTE: Apple has deprecated fdesetup command line tool from recognizing user name and password for security reasons and may remove the ability in future versions of macOS. 
+  Running this command will prompt you for a username and password and then enable FileVault and return the personal recovery key. There are a number of management features available when managing FileVault via the command line that are not available when using a configuration profile. More information on these management features is available in the man page for `fdesetup`. 
+  
+  NOTE: Apple has deprecated `fdesetup` command line tool from recognizing user name and password for security reasons and may remove the ability in future versions of macOS. 
 
   [discrete]
   ==== Using a Configuration Profile
   
-  When managing FileVault with a configuration profile, you must deploy a profile with the payload type com.apple.MCX.FileVault2. When using the Enable key to enable FileVault with a configuration profile, you must include 1 of the following:
+  When managing FileVault with a configuration profile, you must deploy a profile with the payload type `com.apple.MCX.FileVault2`. When using the Enable key to enable FileVault with a configuration profile, you must include 1 of the following:
   
   [source,xml]
   ----
@@ -45,11 +46,11 @@ discussion: |
 
   If using the Defer key it will prompt for the user name and password at logout.
 
-  The UserEntersMissingInfo key will only work if installed through manual installation, and it will prompt for the username and password immediately. 
+  The `UserEntersMissingInfo` key will only work if installed through manual installation, and it will prompt for the username and password immediately. 
 
   When using a configuration profile, you can escrow the Recovery key to a Mobile Device Management (MDM) server. Documentation for that can be found on Apple’s Developer site: link:https://developer.apple.com/documentation/devicemanagement/fderecoverykeyescrow[].
 
-  It’s recommended that you use a Personal Recovery key instead of an Institutional key as it will generate a specific key for each device. You can find more guidance on choosing a recover key here: link:https://docs.jamf.com/technical-papers/jamf-pro/administering-filevault-macos/10.7.1/Choosing_a_Recovery_Key.html[].
+  It’s recommended that you use a Personal Recovery key instead of an Institutional key as it will generate a specific key for each device.
 
   NOTE: FileVault currently only uses password-based authentication and cannot be done using a smartcard or any other type of multi-factor authentication. 
 check: |
