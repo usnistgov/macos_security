@@ -10,7 +10,7 @@ discussion: |
 
   FileVault is described in detail here: link:https://support.apple.com/guide/security/volume-encryption-with-filevault-sec4c6dc1b6e/web[].
 
-  FileVault can be enabled in two ways within the macOS. It can be managed using the fdesetup command or by a Configuration Profile. When enabling FileVault via either of the aforementioned methods, you will be required to enter a username and password, which must be a local OpenDirectory account with a valid SecureToken password.
+  FileVault can be enabled in two ways within the macOS. It can be managed using the fdesetup command or by a Configuration Profile. When enabling FileVault via either of the aforementioned methods, you will be required to enter a username and password, which must be a local Open Directory account with a valid SecureToken password.
   
   [discrete]
   ==== Using the fdesetup Command
@@ -19,14 +19,14 @@ discussion: |
   ----
   /usr/bin/fdesetup enable
   ----
-  Running this command will prompt you for a username and password and then enable FileVault and return the personal recovery key. There are a number of management features available when managing FileVault via the command line that are not available when using a configuration profile. More information on these management features is available in the man page for fdesetup. 
+  Running this command will prompt you for a username and password and then enable FileVault and return the personal recovery key. There are a number of management features available when managing FileVault via the command line that are not available when using a configuration profile. More information on these management features is available in the man page for `fdesetup`. 
   
-  NOTE: Apple has deprecated fdesetup command line tool from recognizing user name and password for security reasons and may remove the ability in future versions of macOS. 
+  NOTE: Apple has deprecated `fdesetup` command line tool from recognizing user name and password for security reasons and may remove the ability in future versions of macOS. 
 
   [discrete]
   ==== Using a Configuration Profile
   
-  When managing FileVault with a configuration profile, you must deploy a profile with the payload type com.apple.MCX.FileVault2. When using the Enable key to enable FileVault with a configuration profile, you must include 1 of the following:
+  When managing FileVault with a configuration profile, you must deploy a profile with the payload type `com.apple.MCX.FileVault2`. When using the Enable key to enable FileVault with a configuration profile, you must include 1 of the following:
   
   [source,xml]
   ----
@@ -45,7 +45,7 @@ discussion: |
 
   If using the Defer key it will prompt for the user name and password at logout.
 
-  The UserEntersMissingInfo key will only work if installed through manual installation, and it will prompt for the username and password immediately. 
+  The `UserEntersMissingInfo` key will only work if installed through manual installation, and it will prompt for the username and password immediately. 
 
   When using a configuration profile, you can escrow the Recovery key to a Mobile Device Management (MDM) server. Documentation for that can be found on Apple’s Developer site: link:https://developer.apple.com/documentation/devicemanagement/fderecoverykeyescrow[].
 
