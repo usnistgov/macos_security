@@ -14,7 +14,7 @@ discussion: |
 
   macOS supports smartcards, such as U.S. Personal Identity Verification (PIV) cards and U.S. Department of Defense Common Access Cards (CAC). Smartcards can be used on a macOS for the following:
   
-    * Authentication (Loginwindow, Screensaver, SSH, PKINIT, Safari, Finder, and PAM Authorization (sudo, login, su) )
+    * Authentication (Loginwindow, Screensaver, SSH, PKINIT, Safari, Finder, and PAM Authorization (`sudo`, `login`, and `su`) )
     * Digital Encryption
     * Digital Signing
     * Remote Access (VPN:L2TP)
@@ -220,7 +220,7 @@ discussion: |
   [discrete]
   ==== Pluggable Authentication Module (PAM)
 
-  Terminal sessions in macOS can be configured for smartcard enforcement by modifying the PAM modules for sudo, su, and login.
+  Terminal sessions in macOS can be configured for smartcard enforcement by modifying the PAM modules for `sudo`, `su`, and `login`.
 
   [source,bash]
   ----
