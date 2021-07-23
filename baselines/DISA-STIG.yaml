@@ -6,7 +6,6 @@ profile:
     rules:
       - auth_pam_login_smartcard_enforce
       - auth_pam_sudo_smartcard_enforce
-      - auth_ssh_smartcard_enforce
       - auth_smartcard_certificate_trust_enforce_moderate
       - auth_smartcard_enforce
       - auth_pam_su_smartcard_enforce
@@ -35,29 +34,28 @@ profile:
   - section: "macos"
     rules:
       - os_sshd_login_grace_time_configure
+      - os_newsyslog_files_owner_group_configure
       - os_firmware_password_require
-      - os_filevault_user_account
-      - os_guest_account_disable
       - os_policy_banner_ssh_enforce
       - os_anti_virus_installed
-      - os_screensaver_enforce
-      - os_system_wide_preferences_configure
+      - os_sshd_key_exchange_algorithm_configure
       - os_tftpd_disable
       - os_sshd_client_alive_interval_configure
-      - os_system_log_files_owner_group_configure
+      - os_asl_log_files_permissions_configure
       - os_sshd_client_alive_count_max_configure
       - os_privacy_setup_prompt_disable
+      - os_filevault_authorized_users
       - os_sudoers_tty_configure
       - os_uucp_disable
       - os_policy_banner_loginwindow_enforce
       - os_user_app_installation_prohibit
-      - os_system_log_files_permissions_configure
       - os_hbss_installed
       - os_messages_app_disable
       - os_airdrop_disable
       - os_nfsd_disable
       - os_sshd_permit_root_login_configure
       - os_httpd_disable
+      - os_asl_log_files_owner_group_configure
       - os_gatekeeper_enable
       - os_sip_enable
       - os_policy_banner_ssh_configure
@@ -69,6 +67,7 @@ profile:
       - os_sshd_fips_140_ciphers
       - os_sshd_fips_140_macs
       - os_certificate_authority_trust
+      - os_newsyslog_files_permissions_configure
       - os_home_folders_secure
       - os_facetime_app_disable
       - os_camera_disable
@@ -103,9 +102,11 @@ profile:
       - sysprefs_smbd_disable
       - sysprefs_firewall_stealth_mode_enable
       - sysprefs_internet_sharing_disable
+      - sysprefs_system_wide_preferences_configure
       - sysprefs_rae_disable
       - sysprefs_ssh_enable
       - sysprefs_screensaver_password_enforce
+      - sysprefs_guest_account_disable
       - sysprefs_gatekeeper_identified_developers_allowed
       - sysprefs_gatekeeper_override_disallow
       - sysprefs_screensaver_timeout_enforce
@@ -124,6 +125,7 @@ profile:
       - sysprefs_screen_sharing_disable
       - sysprefs_hot_corners_disable
       - sysprefs_siri_disable
+      - sysprefs_screensaver_enforce
       - sysprefs_filevault_enforce
       - sysprefs_password_hints_disable
   - section: "Supplemental"

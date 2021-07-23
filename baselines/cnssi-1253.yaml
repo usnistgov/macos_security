@@ -42,7 +42,6 @@ profile:
       - os_handoff_disable
       - os_firewall_log_enable
       - os_ssh_server_alive_interval_configure
-      - os_system_wide_preferences_configure
       - os_tftpd_disable
       - os_password_autofill_disable
       - os_password_sharing_disable
@@ -61,8 +60,6 @@ profile:
       - os_gatekeeper_enable
       - os_sip_enable
       - os_removable_media_disable
-      - os_guest_account_disable
-      - os_guest_access_smb_disable
       - os_time_server_enabled
       - os_unlock_active_user_session_disable
       - os_internet_accounts_prefpane_disable
@@ -72,7 +69,6 @@ profile:
       - os_ssh_fips_140_macs
       - os_home_folders_secure
       - os_facetime_app_disable
-      - os_guest_access_afp_disable
       - os_icloud_storage_prompt_disable
       - os_ir_support_disable
       - os_mail_app_disable
@@ -107,14 +103,19 @@ profile:
       - icloud_addressbook_disable
   - section: "systempreferences"
     rules:
-      - sysprefs_media_sharing_disabled
+      - sysprefs_automatic_logout_enforce
       - sysprefs_smbd_disable
       - sysprefs_firewall_stealth_mode_enable
       - sysprefs_ad_tracking_disable
       - sysprefs_internet_sharing_disable
+      - sysprefs_system_wide_preferences_configure
       - sysprefs_rae_disable
+      - sysprefs_guest_access_smb_disable
+      - sysprefs_media_sharing_disabled
       - sysprefs_ssh_disable
       - sysprefs_screensaver_password_enforce
+      - sysprefs_guest_account_disable
+      - sysprefs_guest_access_afp_disable
       - sysprefs_gatekeeper_identified_developers_allowed
       - sysprefs_gatekeeper_override_disallow
       - sysprefs_screensaver_timeout_enforce
@@ -124,7 +125,6 @@ profile:
       - sysprefs_content_caching_disable
       - sysprefs_location_services_disable
       - sysprefs_time_server_configure
-      - sysprefs_automatic_logout_enforce
       - sysprefs_power_nap_disable
       - sysprefs_diagnostics_reports_disable
       - sysprefs_bluetooth_disable
@@ -133,6 +133,7 @@ profile:
       - sysprefs_apple_watch_unlock_disable
       - sysprefs_token_removal_enforce
       - sysprefs_screensaver_ask_for_password_delay_enforce
+      - sysprefs_wifi_disable
       - sysprefs_time_server_enforce
       - sysprefs_touchid_unlock_disable
       - sysprefs_screen_sharing_disable
@@ -170,7 +171,7 @@ profile:
       - os_notify_account_disabled
       - os_protect_dos_attacks
       - pwpolicy_50_percent
-      - sysprefs_wifi_disable
+      - sysprefs_wifi_disable_when_connected_to_ethernet
   - section: "not_applicable"
     rules: 
       - os_nonlocal_maintenance
