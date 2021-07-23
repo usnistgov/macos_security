@@ -487,7 +487,7 @@
                                                 </xsl:when>
                                             </xsl:choose>
                                         </xsl:attribute>
-                                        <xsl:text>NIST SP 800-53r5</xsl:text>
+                                        <xsl:text>NIST SP 800-53r5 </xsl:text>
                                         <xsl:value-of select="."/>
                                     </xsl:element>
                                 </xsl:for-each>
