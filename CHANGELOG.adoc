@@ -2,7 +2,7 @@
 
 This document provides a high-level view of the changes to the macOS Security Compliance Project.
 
-== [Catalina, Revision 4] - 2021-07-22
+== [Catalina, Revision 4] - 2021-07-26
 
 * Rules
 ** Added Rules
