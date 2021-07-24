@@ -1,6 +1,6 @@
-title: "macOS 11.0: Security Configuration - all"
+title: "macOS 11: Security Configuration - All Rules"
 description: |
-  This guide describes the actions to take when securing a macOS 11.0 system against the all baseline.
+  This guide describes the actions to take when securing a macOS 11 system against the all_rules baseline.
 profile:
   - section: "authentication"
     rules:
@@ -184,6 +184,7 @@ profile:
       - os_verify_remote_disconnection
       - os_logoff_capability_and_message
       - os_fail_secure_state
+      - os_application_sandboxing
       - os_limit_auditable_events
       - os_prevent_priv_execution
       - os_allow_info_passed
@@ -229,6 +230,7 @@ profile:
       - os_notify_account_created
       - os_notify_account_modified
       - os_notify_account_removal
+      - os_prohibit_remote_activation_collab_devices
       - os_auth_peripherals
       - os_limit_dos_attacks
       - os_continuous_monitoring
@@ -240,9 +242,15 @@ profile:
       - sysprefs_wifi_disable_when_connected_to_ethernet
   - section: "not_applicable"
     rules: 
+      - os_information_validation
+      - os_privacy_principle_minimization
       - os_access_control_mobile_devices
+      - os_managed_access_control_points
+      - os_pii_deidentification
       - os_nonlocal_maintenance
       - os_identify_non-org_users
+      - os_pii_quality_control
+      - os_non_repudiation
   - section: "Supplemental"
     rules:
       - supplemental_firewall_pf

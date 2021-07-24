@@ -1,6 +1,6 @@
-title: "macOS 11.0: Security Configuration - CNSSI-1253"
+title: "macOS 11: Security Configuration - CNSSI-1253"
 description: |
-  This guide describes the actions to take when securing a macOS 11.0 system against the CNSSI-1253 baseline.  
+  This guide describes the actions to take when securing a macOS 11 system against the CNSSI-1253 baseline.
 profile:
   - section: "authentication"
     rules:
@@ -33,7 +33,6 @@ profile:
   - section: "macos"
     rules:
       - os_firewall_default_deny_require
-      - os_ssh_server_alive_count_max_configure
       - os_firmware_password_require
       - os_gatekeeper_rearm
       - os_root_disable
@@ -42,10 +41,12 @@ profile:
       - os_screensaver_loginwindow_enforce
       - os_handoff_disable
       - os_firewall_log_enable
+      - os_ssh_server_alive_interval_configure
       - os_tftpd_disable
       - os_password_autofill_disable
       - os_password_sharing_disable
       - os_ssh_fips_140_ciphers
+      - os_authenticated_root_enable
       - os_sudoers_tty_configure
       - os_uucp_disable
       - os_policy_banner_loginwindow_enforce
@@ -54,14 +55,12 @@ profile:
       - os_messages_app_disable
       - os_airdrop_disable
       - os_parental_controls_enable
+      - os_ssh_server_alive_count_max_configure
       - os_nfsd_disable
       - os_httpd_disable
       - os_gatekeeper_enable
       - os_sip_enable
-      - os_authenticated_root_enable
       - os_removable_media_disable
-      - os_guest_account_disable
-      - os_guest_access_smb_disable
       - os_time_server_enabled
       - os_unlock_active_user_session_disable
       - os_internet_accounts_prefpane_disable
@@ -74,7 +73,6 @@ profile:
       - os_icloud_storage_prompt_disable
       - os_ir_support_disable
       - os_mail_app_disable
-      - os_ssh_server_alive_interval_configure
       - os_bonjour_disable
       - os_calendar_app_disable
   - section: "passwordpolicy"
@@ -106,14 +104,17 @@ profile:
       - icloud_addressbook_disable
   - section: "systempreferences"
     rules:
-      - sysprefs_media_sharing_disabled
+      - sysprefs_automatic_logout_enforce
       - sysprefs_smbd_disable
       - sysprefs_firewall_stealth_mode_enable
-      - sysprefs_personalized_advertising_disable
       - sysprefs_internet_sharing_disable
+      - sysprefs_system_wide_preferences_configure
       - sysprefs_rae_disable
+      - sysprefs_personalized_advertising_disable
+      - sysprefs_guest_access_smb_disable
       - sysprefs_ssh_disable
       - sysprefs_screensaver_password_enforce
+      - sysprefs_guest_account_disable
       - sysprefs_gatekeeper_identified_developers_allowed
       - sysprefs_gatekeeper_override_disallow
       - sysprefs_screensaver_timeout_enforce
@@ -122,14 +123,15 @@ profile:
       - sysprefs_content_caching_disable
       - sysprefs_location_services_disable
       - sysprefs_time_server_configure
+      - sysprefs_power_nap_disable
       - sysprefs_diagnostics_reports_disable
       - sysprefs_bluetooth_disable
       - sysprefs_loginwindow_prompt_username_password_enforce
-      - sysprefs_power_nap_disable      
       - sysprefs_automatic_login_disable
       - sysprefs_apple_watch_unlock_disable
       - sysprefs_token_removal_enforce
       - sysprefs_screensaver_ask_for_password_delay_enforce
+      - sysprefs_wifi_disable
       - sysprefs_time_server_enforce
       - sysprefs_touchid_unlock_disable
       - sysprefs_screen_sharing_disable
@@ -139,14 +141,13 @@ profile:
       - sysprefs_password_hints_disable
       - sysprefs_bluetooth_sharing_disable
       - sysprefs_improve_siri_dictation_disable
-      - sysprefs_automatic_logout_enforce
-      - sysprefs_system_wide_preferences_configure
   - section: "Inherent"
     rules:
       - os_prevent_priv_functions
       - os_logical_access
       - os_implement_memory_protection
       - os_implement_cryptography
+      - os_separate_functionality
       - os_obscure_password
       - os_map_pki_identity
       - os_required_crypto_module
@@ -157,9 +158,9 @@ profile:
       - pwpolicy_emergency_accounts_disable
   - section: "Permanent"
     rules:
-      - os_secure_name_resolution
       - os_notify_account_enable
       - os_provide_automated_account_management
+      - os_secure_name_resolution
       - os_notify_account_created
       - os_notify_account_modified
       - os_notify_account_removal
@@ -168,16 +169,15 @@ profile:
       - os_notify_account_disabled
       - os_protect_dos_attacks
       - pwpolicy_50_percent
-      - sysprefs_wifi_disable
+      - sysprefs_wifi_disable_when_connected_to_ethernet
   - section: "not_applicable"
     rules: 
-      - os_identify_non-org_users
       - os_nonlocal_maintenance
+      - os_identify_non-org_users
   - section: "Supplemental"
     rules:
       - supplemental_firewall_pf
       - supplemental_filevault
       - supplemental_password_policy
-      - supplemental_smartcard
       - supplemental_controls
-      
+      - supplemental_smartcard
