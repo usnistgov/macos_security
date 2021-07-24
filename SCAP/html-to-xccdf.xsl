@@ -474,7 +474,7 @@
                                 <xsl:for-each select="tokenize(., ',\s+')">
                                     <xsl:element name="reference" namespace="http://checklists.nist.gov/xccdf/1.2">
                                         <xsl:attribute name="href">
-                                            <xsl:text>https://nvd.nist.gov/800-53/Rev4/control/</xsl:text>
+                                            <xsl:text>https://nvd.nist.gov/800-53/Rev5/control/</xsl:text>
                                             <xsl:choose>
                                                 <xsl:when test="matches(., '[A-Z]{2}-\d+$')">
                                                     <xsl:value-of select="."/>
@@ -487,7 +487,7 @@
                                                 </xsl:when>
                                             </xsl:choose>
                                         </xsl:attribute>
-                                        <xsl:text>NIST SP 800-53r4 </xsl:text>
+                                        <xsl:text>NIST SP 800-53r5 </xsl:text>
                                         <xsl:value-of select="."/>
                                     </xsl:element>
                                 </xsl:for-each>

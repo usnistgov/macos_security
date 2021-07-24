@@ -2,7 +2,7 @@
 
 This document provides a high-level view of the changes to the macOS Security Compliance Project.
 
-== [Big Sur, Revision 3] - 2021-07-22
+== [Big Sur, Revision 3] - 2021-07-26
 
 * Rules
 ** Added Rules
