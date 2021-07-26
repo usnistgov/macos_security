@@ -2,7 +2,6 @@ title: "macOS 11: Security Configuration - NIST 800-171 Rev 2"
 description: |
   This guide describes the actions to take when securing a macOS 11 system against the 800-171 Rev 2 baseline.
 profile:
-profile:
   - section: "authentication"
     rules:
       - auth_pam_login_smartcard_enforce
