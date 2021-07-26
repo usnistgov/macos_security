@@ -40,6 +40,7 @@ This document provides a high-level view of the changes to the macOS Security Co
 
 * Baselines
 ** Added NIST 800-53 Rev 5 (Low, Moderate, High, and Privacy)
+** Removed NIST 800-53 Rev 5 (Low, Moderate, and High)
 ** Modified existing baselines
 
 * Scripts
