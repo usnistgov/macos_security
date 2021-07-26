@@ -44,7 +44,7 @@ This document provides a high-level view of the changes to the macOS Security Co
 
 * Scripts
 ** generate_guidanace
-*** Bug fixes
+*** Added additional flags to the compliance scipt generated  (--stats, --compliant, --non_compliant) link:https://github.com/usnistgov/macos_security/pull/64[#64]
 ** generate_baseline
 *** Added `-k all_rules` to generate a baseline containing all the rules 
 *** Bug fixes
