@@ -18,6 +18,8 @@ references:
     - CCE-85380-4
   cci: 
     - N/A
+  800-53r5:
+    - SC-10
   800-53r4: 
     - SC-10
   srg: 
@@ -29,10 +31,11 @@ references:
 macOS:
   - "11.0"
 tags:
-  - 800-171
-  - cnssi-1253
+  - 800-53r5_moderate
+  - 800-53r5_high
   - 800-53r4_moderate
   - 800-53r4_high
-
+  - 800-171
+  - cnssi-1253
 mobileconfig: false
 mobileconfig_info:

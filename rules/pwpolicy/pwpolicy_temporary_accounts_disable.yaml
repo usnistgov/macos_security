@@ -17,6 +17,8 @@ references:
     - CCE-85414-1
   cci:
     - N/A
+  800-53r5:
+    - AC-2(2)
   800-53r4:
     - AC-2(2)
   srg:
@@ -26,9 +28,11 @@ references:
 macOS:
   - "11.0"
 tags:
-  - cnssi-1253
+  - 800-53r5_moderate
+  - 800-53r5_high
   - 800-53r4_moderate
   - 800-53r4_high
+  - cnssi-1253
   - inherent
 mobileconfig: false
 mobileconfig_info:

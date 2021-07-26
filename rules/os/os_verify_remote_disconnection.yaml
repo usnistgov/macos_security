@@ -11,6 +11,8 @@ references:
     - CCE-85398-6
   cci:
     - CCI-002891
+  800-53r5:
+    - MA-4(7)
   800-53r4:
     - MA-4(7)
   disa_stig:

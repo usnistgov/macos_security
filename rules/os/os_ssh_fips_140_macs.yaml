@@ -26,6 +26,11 @@ references:
     - CCI-000803
     - CCI-002890
     - CCI-003123
+  800-53r5:
+    - AC-17(2)
+    - IA-7
+    - SC-13
+    - SC-8(1)
   800-53r4: 
     - AC-17(2)
     - IA-7
@@ -47,11 +52,14 @@ references:
 macOS:
   - "11.0"
 tags:
-  - 800-171
-  - cnssi-1253
+  - 800-53r5_moderate
+  - 800-53r5_high
+  - 800-53r5_low
   - 800-53r4_low
   - 800-53r4_moderate
   - 800-53r4_high
+  - 800-171
+  - cnssi-1253
   - stig
 severity: "medium"
 mobileconfig: false

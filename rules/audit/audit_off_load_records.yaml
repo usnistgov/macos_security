@@ -15,6 +15,8 @@ references:
     - CCE-85271-5
   cci:
     - CCI-001851
+  800-53r5:
+    - AU-4(1)
   800-53r4:
     - AU-4(1)
   disa_stig:

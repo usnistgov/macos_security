@@ -5,7 +5,7 @@ discussion: |
   
   *	os_firewall_default_deny_require
 
-  macOS contains an application layer firewall (ALF)  and a packet filter (PF) firewall.
+  macOS contains an application layer firewall (ALF) and a packet filter (PF) firewall.
   
     * The ALF can block incoming traffic on a per-application basis and prevent applications from gaining control of network ports, but it cannot be configured to block outgoing traffic.
     ** More information on the ALF can be found here: https://support.apple.com/en-ca/HT201642 
@@ -13,9 +13,9 @@ discussion: |
     *  The PF firewall can manipulate virtually any packet data and is highly configurable. 
     ** More information on the BF firewall can be found here: https://www.openbsd.org/faq/pf/index.html
   
-  Below is a script that configures ALF and the PF firewall to meet the requirements defined in NIST SP 800-53 (Rev. 4). The script will make sure the application layer firewall is enabled, set logging to “detailed”, set built-in signed applications to automatically receive incoming connections, and set downloaded signed applications to automatically receive incoming connections. It will then create a custom rule set and copy com.apple.pfctl.plist from /System/Library/LaunchDaemons/ into the /Library/LaunchDaemons folder and name it 800-53.pfctl.plist. This is done to not conflict with the system’s pf ruleset.
+  Below is a script that configures ALF and the PF firewall to meet the requirements defined in NIST SP 800-53 (Rev. 5). The script will make sure the application layer firewall is enabled, set logging to “detailed”, set built-in signed applications to automatically receive incoming connections, and set downloaded signed applications to automatically receive incoming connections. It will then create a custom rule set and copy `com.apple.pfctl.plis` from `/System/Library/LaunchDaemons/` into the `/Library/LaunchDaemons` folder and name it `800-53.pfctl.plist`. This is done to not conflict with the system’s pf ruleset.
 
-  The custom pf rules are created at /etc/pf.anchors/800_53_pf_anchors.
+  The custom pf rules are created at `/etc/pf.anchors/800_53_pf_anchors`.
 
   The ruleset will block connections on the following ports:
 
@@ -95,7 +95,7 @@ discussion: |
 
   |===
 
-  For more on configuring the PF firewall check out the man pages on pf.conf and pfctl.
+  For more on configuring the PF firewall check out the man pages on `pf.conf` and `pfctl`.
 
   [source,bash]
   ----
@@ -106,6 +106,8 @@ fix: |
 references:
   cci:
     - N/A
+  800-53r5: 
+    - N/A    
   800-53r4: 
     - N/A
   srg: 

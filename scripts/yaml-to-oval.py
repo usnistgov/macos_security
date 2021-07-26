@@ -91,7 +91,13 @@ def main():
                 if "manual" in rule_yaml['tags']:
                     print(rule_yaml['id'] + " - Manual Check")
                     continue
-                
+
+                if "newsyslog.conf" in rule_yaml['check'] or "asl.conf" in rule_yaml['check']:
+                    print(rule_yaml['id'] + " - Manual Check Required")
+                    continue
+                if "/usr/bin/pwpolicy getaccountpolicies" in rule_yaml['check']:
+                    print(rule_yaml['id'] + " - pwpolicy getaccountpolicies - no relevant oval")
+                    continue
                 if "os_home_folders_secure" in rule_file:
                     oval_definition = oval_definition + '''
                             <definition id="oval:mscp:def:{}" version="1" class="compliance"> 
@@ -843,6 +849,7 @@ def main():
                 </plist510_test>'''.format(rule_yaml['id'],x,x,x)
 
                         plist = rule_yaml['check'].split("read")[1].split()[0].replace(".plist","")
+                        
                         if "ByHost" in rule_yaml['fix'] or "currentHost" in rule_yaml['fix']:
                             oval_object = oval_object + '''
                                         <systemprofiler_object xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" comment="{}" id="oval:mscp:obj:{}" version="1">
@@ -890,7 +897,7 @@ def main():
 
 
                             else:
-
+                                
                                 check_length = len(rule_yaml['check'].split())
                                 key = rule_yaml['check'].split()[check_length-1]
 
@@ -910,6 +917,17 @@ def main():
                 </concat>
             </local_variable>'''.format(x,plist,x+999)
                         
+                        else:
+                            if plist[-6:] != ".plist":
+                                plist = plist + ".plist"
+                            
+                            plist_key = rule_yaml['check'].split(" ")[3].rstrip()
+                            oval_object = oval_object + '''
+                            <plist510_object xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" comment="{}_object" id="oval:mscp:obj:{}" version="1">
+                            <key>{}</key>
+                            <filepath>{}</filepath>
+                            <instance datatype="int" operation="equals">1</instance>
+                            </plist510_object>'''.format(rule_yaml['id'],x,plist_key,plist)
                         
                         datatype = ""
                         for key in rule_yaml['result']:
@@ -1103,8 +1121,8 @@ def main():
                     <object object_ref="oval:mscp:obj:{}"/>
                     <state state_ref="oval:mscp:ste:{}"/>
                 </file_test>'''.format(x,rule_yaml['id'],x,x)
-
-                        if "-" in fix_command and "R" in fix_command:
+                        
+                        if "-" in fix_command and "R" in fix_command or rule_yaml['fix'].split("\n")[2][-1] == "*":
                             behavior = '<behaviors recurse="directories" recurse_direction="down" max_depth="-1" recurse_file_system="local"></behaviors>'
                             if "audit" in rule_file:
                                 filename = '<filename datatype="string" operation="not equal">current</filename>'
@@ -1226,7 +1244,7 @@ def main():
                                 state_test = state_test + '''
                 <oread datatype="boolean">false</oread>
                 <owrite datatype="boolean">false</owrite>
-                <oexec datatype="boolean">true</oexec>'''        
+                <oexec datatype="boolean">false</oexec>'''        
                             if perms[2] == "1":
                                 state_test = state_test + '''
                 <oread datatype="boolean">false</oread>
@@ -1314,20 +1332,36 @@ def main():
                                 x += 1
                                 continue
                     if "awk" in command[3]:
+                        awk_file = ""
+                        awk_search = ""
+                        field_sep = ""
                         
-                        awk_file = rule_yaml['check'].split("'")[2].strip(" ")
-                        
-                        awk_search = rule_yaml['check'].split("'")[1].split("/")[1]
-                        field_sep = rule_yaml['check'].split("-F")[1].split(" ")[0].replace('\"',"")
-                        
-                        try: 
-                        
-                            awk_result = rule_yaml['result']['string']
+                        if "grep -qE" in rule_yaml['fix']:
+                            awk_file = rule_yaml['fix'].split(" ")[3].strip(" ")
+                            awk_search = rule_yaml['fix'].split(" ")[2].strip("\"")
                             
-                        except: 
-                            
-                            awk_result = str(rule_yaml['result']['integer'])
+                        elif "grep" in rule_yaml['check']:
 
+                            awk_file = rule_yaml['check'].split("|")[0].split(" ")[-2]
+                            awk_search = rule_yaml['check'].split("|")[-1].split(" ")[-2].strip("\'")
+                            
+                        else:
+                            awk_file = rule_yaml['check'].split("'")[2].strip(" ")
+                            awk_search = rule_yaml['check'].split("'")[1].split("/")[1]
+                            field_sep = rule_yaml['check'].split("-F")[1].split(" ")[0].replace('\"',"")
+               
+                            try: 
+                        
+                                awk_result = rule_yaml['result']['string']
+                            
+                            except: 
+                            
+                                awk_result = str(rule_yaml['result']['integer'])
+                            
+                            awk_search = "^" + awk_search + field_sep + awk_result
+ 
+
+                        
                         oval_definition = oval_definition + '''
                 <definition id="oval:mscp:def:{}" version="1" class="compliance"> 
                         <metadata> 
@@ -1351,7 +1385,7 @@ def main():
                     <pattern operation="pattern match">{}</pattern>
                     <instance datatype="int">1</instance>
                 </textfilecontent54_object>
-                '''.format(x,rule_yaml['id'],awk_file.rstrip(),"^" + awk_search + field_sep + awk_result)
+                '''.format(x,rule_yaml['id'],awk_file.rstrip(), awk_search)
                         x += 1
                         continue
                     if "grep" in command[3]:

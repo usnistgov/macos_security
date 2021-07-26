@@ -18,6 +18,8 @@ references:
     - CCE-85456-2
   cci: 
     - CCI-001133
+  800-53r5:
+    - SC-10
   800-53r4: 
     - SC-10
   srg: 

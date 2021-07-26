@@ -7,7 +7,7 @@ discussion: |
 
   When enforceSmartCard is set to “true”, the smartcard must be used for login, authorization, and unlocking the screensaver.
 
-  CAUTION: enforceSmartCard will apply to the whole system. No users will be able to login with their password unless the profile is removed or a member of the NotEnforced group.
+  CAUTION: enforceSmartCard will apply to the whole system. No users will be able to login with their password unless the profile is removed or a user is exempt from smartcard enforcement.
   
   NOTE: enforceSmartcard requires allowSmartcard to be set to true in order to work.
 check: |
@@ -23,6 +23,14 @@ references:
     - CCI-000187
     - CCI-000767
     - CCI-000768
+  800-53r5:
+    - IA-2(1)
+    - IA-2(2)
+    - IA-2(6)
+    - IA-2
+    - IA-5(2)
+    - IA-2(12)
+    - IA-2(8)
   800-53r4:
     - IA-2
     - IA-2(1)
@@ -46,11 +54,14 @@ references:
 macOS:
   - "11.0"
 tags:
-  - 800-171
-  - cnssi-1253
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_high
   - 800-53r4_low
   - 800-53r4_moderate
   - 800-53r4_high
+  - 800-171
+  - cnssi-1253
   - stig
 severity: "high"
 mobileconfig: true

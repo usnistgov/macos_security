@@ -15,8 +15,14 @@ references:
     - CCE-85432-3
   cci:
     - N/A
+  800-53r5:
+    - AC-20
+    - CM-7
+    - CM-7(1)
+    - SC-7(10)
   800-53r4: 
     - CM-7
+    - CM-7(1)
     - AC-20
     - SC-7(10)
   800-171r2:
@@ -25,11 +31,14 @@ references:
 macOS:
   - "11.0"
 tags:
-  - 800-171
-  - cnssi-1253
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_high
   - 800-53r4_low
   - 800-53r4_moderate
   - 800-53r4_high
+  - 800-171
+  - cnssi-1253
 mobileconfig: true
 mobileconfig_info:
   com.apple.assistant.support:

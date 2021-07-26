@@ -13,6 +13,8 @@ references:
     - CCE-85366-3
   cci:
     - CCI-002039
+  800-53r5:
+    - IA-11
   800-53r4:
     - IA-11
   disa_stig:
@@ -22,6 +24,9 @@ references:
 macOS:
   - "11.0"
 tags:
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_high
   - permanent
 mobileconfig: false
 mobileconfig_info:

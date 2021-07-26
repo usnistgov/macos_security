@@ -3,18 +3,18 @@ title: "Smartcard Supplemental"
 discussion: |
   The supplemental guidance found in this section is applicable for the following rules:
 
-    * auth_ssh_smartcard_enforce
+    * auth_ssh_password_authentication_disable
     * auth_smartcard_enforce
     * auth_smartcard_certificate_trust_enforce_moderate
     * auth_smartcard_certificate_trust_enforce_high
     * auth_smartcard_allow
     * auth_pam_sudo_smartcard_enforce
     * auth_pam_su_smartcard_enforce
-    * auth_pam_login_smartcard_enforcelist of Rule IDs
+    * auth_pam_login_smartcard_enforce
 
   macOS supports smartcards, such as U.S. Personal Identity Verification (PIV) cards and U.S. Department of Defense Common Access Cards (CAC). Smartcards can be used on a macOS for the following:
   
-    * Authentication (Loginwindow, Screensaver, SSH, PKINIT, Safari, Finder, and PAM Authorization (sudo, login, su) )
+    * Authentication (Loginwindow, Screensaver, SSH, PKINIT, Safari, Finder, and PAM Authorization (`sudo`, `login`, and `su`) )
     * Digital Encryption
     * Digital Signing
     * Remote Access (VPN:L2TP)
@@ -29,7 +29,7 @@ discussion: |
 
   [discrete]
   ==== Smartcard Attribute Mapping
-  Smartcards can be used to authenticate against a directory via attribute mapping configured in /private/etc/SmartcardLogin.plist. This file takes precedence over local account pairing. Attribute mapping matches the configured certificate field values from the smart card to the value in a directory. This may be used with network accounts, mobile accounts, or local accounts.
+  Smartcards can be used to authenticate against a directory via attribute mapping configured in `/private/etc/SmartcardLogin.plist`. This file takes precedence over local account pairing. Attribute mapping matches the configured certificate field values from the smart card to the value in a directory. This may be used with network accounts, mobile accounts, or local accounts.
 
   [discrete]
   ==== Smartcard Management in macOS
@@ -80,7 +80,7 @@ discussion: |
 
   |===
 
-  A custom configuration profile (com.apple.loginwindow) should be created to disable automatic login when FileVault is enabled. This ensures that authorized users boot their Macs, enter a password at the pre-boot screen (which decrypts the boot volume), and are then presented with a login window where they can authenticate with a smartcard.
+  A custom configuration profile (`com.apple.loginwindow`) should be created to disable automatic login when FileVault is enabled. This ensures that authorized users boot their Macs, enter a password at the pre-boot screen (which decrypts the boot volume), and are then presented with a login window where they can authenticate with a smartcard.
 
   [%header,cols="2,1,7"]
   |===
@@ -94,9 +94,11 @@ discussion: |
 
   |===
 
+  NOTE: DisableFDEAutoLogin does not have to be set on Apple Silicon based macOS systems that are smartcard enforced as smartcards are available at pre-boot.
+
   [discrete]
   ==== Trusted Authorities
-  The macOS allows users to specify which certificate authorities (CA) can be used for trust evaluation during smartcard authentication. Only CAs listed in the TrustedAuthorities section of the SmartcardLogin.plist will be evaluated as trusted. This setting only works if checkCertificateTrust is set to either 1, 2, or 3 in com.apple.security.smartcard.
+  The macOS allows users to specify which certificate authorities (CA) can be used for trust evaluation during smartcard authentication. Only CAs listed in the TrustedAuthorities section of the SmartcardLogin.plist will be evaluated as trusted. This setting only works if `checkCertificateTrust` is set to either 1, 2, or 3 in `com.apple.security.smartcard`.
 
   To get the SHA-256 hash in the correct format, run the following command within terminal:
   [source,bash]
@@ -104,7 +106,7 @@ discussion: |
   /usr/bin/openssl x509 -noout -fingerprint -sha256 -inform pem -in <issuer cert> | /usr/bin/awk -F '=' '{print $2}' |  /usr/bin/sed 's/://g'
   ----
 
-  To configure Trusted Authorities, the SmartcardLogin.plist should be minimally configured as below:
+  To configure Trusted Authorities, the `SmartcardLogin.plist` should be minimally configured as below:
 
   [source,xml]
   ----
@@ -125,19 +127,21 @@ discussion: |
       </dict>
       <key>TrustedAuthorities</key>
     <array>
-        <string>SHA256_HASH_OF_CERTDOMAIN_1</string>
-        <string>SHA256_HASH_OF_CERTDOMAIN_2</string>
+        <string>SHA256_HASH_OF_CERTDOMAIN_1,SHA256_HASH_OF_CERTDOMAIN_2</string>
     </array>
   </dict>
   </plist>
   ----
 
   [discrete]
-  ==== NotEnforcedGroup
+  ==== Smartcard Enforcement Exemption
+  
+  [discrete]
+  ===== Group Exemption
 
-  Starting in macOS 10.15, enforcement on a system can be granularly configured by adding a field to /private/etc/SmartcardLogin.plist. The NotEnforcedGroup can be added to the file to list a Directory group that will not be included in smartcard enforcement. In order to activate this feature, enforceSmartCard and allowUnmappedUsers must be applied via a configuration profile (com.apple.security.smartcard).
+  Starting in macOS 10.15, enforcement on a system can be granularly configured by adding a field to `/private/etc/SmartcardLogin.plist`. The `NotEnforcedGroup` can be added to the file to list a Directory group that will not be included in smartcard enforcement. In order to activate this feature, `enforceSmartCard` and `allowUnmappedUsers` must be applied via a configuration profile (`com.apple.security.smartcard`).
 
-  To configure the NotEnforcedGroup, the SmartcardLogin.plist should be minimally configured as follows:
+  To configure the `NotEnforcedGroup`, the `SmartcardLogin.plist` should be minimally configured as follows:
   [source,xml]
   ----
   <?xml version="1.0" encoding="UTF-8"?>
@@ -157,25 +161,66 @@ discussion: |
       </dict>
       <key>TrustedAuthorities</key>
     <array>
-        <string>SHA256_HASH_OF_CERTDOMAIN_1</string>
-        <string>SHA256_HASH_OF_CERTDOMAIN_2</string>
+        <string>SHA256_HASH_OF_CERTDOMAIN_1,SHA256_HASH_OF_CERTDOMAIN_2</string>
     </array>
       <key>NotEnforcedGroup</key>
-      <string>GROUPGOESHERE</key>
+      <string>EXEMPTGROUP</key>
   </dict>
   </plist>
   ----
 
-  Once a system is configured for the NotEnforcedGroup a user can be added to the assigned group by running the following:
+  Once a system is configured for the `NotEnforcedGroup` a user can be added to the assigned group by running the following:
   [source,bash]
   ----
   /usr/sbin/dseditgroup -o edit -a <exempt_user> -t user <notenforcegroup>
   ----
 
   [discrete]
+  ===== User Exemption
+
+  Alternatively, if a single user needs to be exempt for a period of time, `kDSNativeAttrTypePrefix:SmartCardEnforcement` can be set in the user's Open Directory record. The following values can be set:
+
+  * 0 - The system default is respected.
+  * 1 - Smartcard enforcement is enabled.
+  * 2 - Smartcard enforcement is disabled. 
+
+  NOTE: In Active Directory environments, the value of the `userAccountControl` attribute is respected.
+
+  Run the following command to set the exemption when booted from macOS:
+  [source,bash]
+  ----
+  /usr/bin/dscl . -append /Users/<username> SmartCardEnforcement 2
+  ----
+
+  Run the following command to set the exemption when booted from Recovery:
+  [source,bash]
+  ----
+  /usr/bin/defaults write /Volumes/Macintosh\ HD/var/db/dslocal/nodes/Default/users/<username> SmartCardEnforcement -array-add 2
+  ----
+  NOTE: When booted to recovery on an Apple Silicon Mac, run the following after setting the exemption.
+  `/usr/sbin/diskutil apfs updatePreboot /Volumes/Macintosh\ HD`
+
+  [discrete]
+  ===== Temporary Exemption
+
+  On an Apple Silicon Mac, if a temporary exemption is needed, `security filevault skip-sc-enforcement` will disable smartcard enforcement on next boot only. 
+
+  Run the following command to set the temporary exemption when booted from Recovery:
+  [source,bash]
+  ----
+  /usr/bin/security filevault skip-sc-enforcement <data volume UUID> set
+  ----
+  
+  To obtain the `data volume UUID` run the following:
+  [source,bash]
+  ----
+  /usr/sbin/diskutil apfs listGroups | /usr/bin/awk -F: '/ Data/ { getline; gsub(/ /,""); print $2}'
+  ----
+  
+  [discrete]
   ==== Pluggable Authentication Module (PAM)
 
-  Terminal sessions in macOS can be configured for smartcard enforcement by modifying the PAM modules for sudo, su, and login.
+  Terminal sessions in macOS can be configured for smartcard enforcement by modifying the PAM modules for `sudo`, `su`, and `login`.
 
   [source,bash]
   ----
@@ -223,6 +268,8 @@ check: |
 fix: |
 references:
   cci:
+    - N/A
+  800-53r5: 
     - N/A
   800-53r4: 
     - N/A

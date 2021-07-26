@@ -16,6 +16,9 @@ references:
   cci: 
     - CCI-001891
     - CCI-002046
+  800-53r5:
+    - AU-12(1)
+    - SC-45(1)
   800-53r4: 
     - AU-8(1)
   srg: 
@@ -30,6 +33,9 @@ macOS:
 tags:
   - 800-171
   - cnssi-1253
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_high
   - 800-53r4_moderate
   - 800-53r4_high
   - stig

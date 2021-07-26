@@ -27,15 +27,20 @@ references:
     - CCE-85421-6
   cci: 
     - N/A
+  800-53r5:
+    - AC-3
+    - AC-18(4)
+    - CM-7
+    - CM-7(1)
   800-53r4: 
     - AC-3
-    - AC-18
     - AC-18(4)
+    - CM-7
     - CM-7(1)
   srg: 
     - SRG-OS-000480-GPOS-00227
   disa_stig: 
-    -
+    - N/A
   800-171r2:
     - 3.1.1
     - 3.1.2
@@ -44,11 +49,14 @@ references:
 macOS:
   - "11.0"
 tags:
-  - 800-171
-  - cnssi-1253
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_high
   - 800-53r4_low
   - 800-53r4_moderate
   - 800-53r4_high
+  - 800-171
+  - cnssi-1253
 mobileconfig: false
 mobileconfig_info:
 

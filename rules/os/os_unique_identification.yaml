@@ -1,7 +1,7 @@
 id: os_unique_identification
-title: "Identify and authenticate organizational users and processes"
+title: "Uniquely Identify Users and Processes"
 discussion: |
-  The information system uniquely identifies and authenticates organizational users (or processes acting on behalf of organizational users).
+  The macOS is a UNIX 03-compliant operating system. The system uniquely identifies and authenticates organizational users or processes.
 check: |
   The technology supports this requirement and cannot be configured to be out of compliance. The technology inherently meets this requirement.
 fix: |
@@ -11,6 +11,8 @@ references:
     - CCE-85394-5
   cci:
     - CCI-000764
+  800-53r5:
+    - IA-4
   800-53r4:
     - N/A
   disa_stig:
@@ -20,6 +22,9 @@ references:
 macOS:
   - "11.0"
 tags:
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_high
   - inherent
 mobileconfig: false
 mobileconfig_info:
