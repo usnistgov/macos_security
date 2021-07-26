@@ -17,7 +17,7 @@ fix: |
   ----
 references:
   cce:
-    - CCE-85313-5
+    - N/A
   cci: 
     - N/A
   800-53r5:
@@ -37,7 +37,7 @@ references:
     - 3.13.2
     - 3.13.5
 macOS:
-  - "11.0"
+  - "12.0"
 tags:
   - 800-53r5_low
   - 800-53r5_moderate

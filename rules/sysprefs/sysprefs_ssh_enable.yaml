@@ -13,7 +13,7 @@ fix: |
   ----
 references:
   cce:
-    - CCE-85447-1
+    - N/A
   cci: 
     - N/A
   800-53r5:
@@ -27,7 +27,7 @@ references:
   800-171r2:
     - N/A
 macOS:
-  - "11.0"
+  - "12.0"
 tags:
   - none
 mobileconfig: false

@@ -18,7 +18,7 @@ fix: |
   ----
 references:
   cce:
-    - CCE-85473-7
+    - N/A
   cci:
     - N/A
   800-53r5:
@@ -31,7 +31,7 @@ references:
     - AC-18(1)
     - AC-18(3)
   disa_stig: 
-    - APPL-11-000008
+    - APPL-12-XXXXXX
   srg: 
     - SRG-OS-000299-GPOS-00117
     - SRG-OS-000300-GPOS-00118
@@ -39,7 +39,7 @@ references:
   800-171r2:
     - N/A
 macOS:
-  - "11.0"
+  - "12.0"
 tags:
   - stig
   - manual

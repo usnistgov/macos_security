@@ -17,7 +17,7 @@ fix: |
   ----
 references:
   cce:
-    - CCE-85389-5
+    - N/A
   800-53r5:
     - AC-6
     - AC-6(2)
@@ -27,7 +27,7 @@ references:
     - AC-6(1)
     - AC-6(2)
   disa_stig:
-    - APPL-11-002069
+    - APPL-12-XXXXXX
   srg:
     - SRG-OS-000378-GPOS-00163
   cci:
@@ -36,7 +36,7 @@ references:
     - 3.1.5
     - 3.1.6
 macOS:
-  - "11.0"
+  - "12.0"
 tags:
   - 800-53r5_moderate
   - 800-53r5_high

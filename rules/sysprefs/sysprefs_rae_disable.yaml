@@ -17,7 +17,7 @@ fix: |
   NOTE: Systemsetup with -setremoteappleevents flag will fail unless you grant Full Disk Access to systemsetup or it's parent process. Requires UAMDM.
 references:
   cce:
-    - CCE-85440-6
+    - N/A
   cci: 
     - CCI-000382
   800-53r5:
@@ -28,12 +28,12 @@ references:
   srg: 
     - SRG-OS-000096-GPOS-00050
   disa_stig: 
-    - APPL-11-002022
+    - APPL-12-XXXXXX
   800-171r2:
     - 3.1.1
     - 3.1.2
 macOS:
-  - "11.0"
+  - "12.0"
 tags:
   - 800-53r5_low
   - 800-53r5_moderate

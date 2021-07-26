@@ -12,7 +12,7 @@ fix: |
   This requirement is a permanent finding and cannot be fixed. An appropriate mitigation for the system must be implemented, but this finding cannot be considered fixed.
 references:
   cce:
-    - CCE-85332-5
+    - N/A
   cci:
     - CCI-001095
   800-53r5:
@@ -24,7 +24,7 @@ references:
   srg:
     - SRG-OS-000142-GPOS-00071
 macOS:
-  - "11.0"
+  - "12.0"
 tags:
   - permanent
 mobileconfig: false

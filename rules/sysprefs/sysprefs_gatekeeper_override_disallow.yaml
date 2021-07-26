@@ -18,7 +18,7 @@ fix: |
   NOTE - This will apply to the whole system
 references:
   cce:
-    - CCE-85430-7
+    - N/A
   cci: 
     - CCI-000366
   800-53r5:
@@ -30,11 +30,11 @@ references:
   srg: 
     - SRG-OS-000480-GPOS-00227
   disa_stig: 
-    - APPL-11-002061
+    - APPL-12-XXXXXX
   800-171r2:
     - 3.4.5
 macOS:
-  - "11.0"
+  - "12.0"
 tags:
   - 800-53r5_low
   - 800-53r5_moderate

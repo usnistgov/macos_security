@@ -18,7 +18,7 @@ endif::[]
 
 ifdef::status[]
 image:https://badgen.net/badge/icon/apple?icon=apple&label[link="https://www.apple.com/"]
-image:https://badgen.net/badge/icon/11.0?icon=apple&label[link="https://www.apple.com/macos"]
+image:https://badgen.net/badge/icon/12.0?icon=apple&label[link="https://www.apple.com/macos"]
 endif::[]
 
 The macOS Security Compliance Project is an link:LICENSE.md[open source] effort to provide a programmatic approach to generating security guidance. The configuration settings in this document were derived from National Institute of Standards and Technology (NIST) Special Publication (SP) 800-53, _Security and Privacy Controls for Information Systems and Organizations_, Revision 5. This is a joint project of federal operational IT Security staff from the National Institute of Standards and Technology (NIST), National Aeronautics and Space Administration (NASA), Defense Information Systems Agency (DISA), and Los Alamos National Laboratory (LANL).

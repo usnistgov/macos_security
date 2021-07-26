@@ -1,7 +1,6 @@
-title: "macOS 11: Security Configuration - NIST 800-171 Rev 2"
+title: "macOS 12: Security Configuration - NIST 800-171 Rev 2"
 description: |
-  This guide describes the actions to take when securing a macOS 11 system against the 800-171 Rev 2 baseline.
-profile:
+  This guide describes the actions to take when securing a macOS 12 system against the 800-171 Rev 2 baseline.
 profile:
   - section: "authentication"
     rules:

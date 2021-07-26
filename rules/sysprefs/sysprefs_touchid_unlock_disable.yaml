@@ -14,7 +14,7 @@ fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-    - CCE-85451-3
+    - N/A
   cci: 
     - CCI-000056
   800-53r5:
@@ -24,11 +24,11 @@ references:
   srg: 
     - SRG-OS-000028-GPOS-00009
   disa_stig: 
-    - APPL-11-000001
+    - APPL-12-XXXXXX
   800-171r2:
     - 3.1.10
 macOS:
-  - "11.0"
+  - "12.0"
 tags:
   - 800-53r5_moderate
   - 800-53r5_high

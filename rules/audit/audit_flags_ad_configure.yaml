@@ -21,7 +21,7 @@ fix: |
   ----
 references:
   cce:
-    - CCE-85262-4
+    - N/A
   cci: 
     - CCI-000018
     - CCI-000172
@@ -56,13 +56,13 @@ references:
     - SRG-OS-000476-GPOS-00221
     - SRG-OS-000477-GPOS-00222
   disa_stig:
-    - APPL-11-001001
+    - APPL-12-XXXXXX
   800-171r2:
     - 3.1.7
     - 3.3.1
     - 3.3.2
 macOS:
-  - "11.0"
+  - "12.0"
 tags:
   - 800-53r5_privacy
   - 800-53r4_low

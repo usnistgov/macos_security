@@ -8,7 +8,7 @@ fix: |
   The technology inherently meets this requirement. No fix is required.
 references:
   cce:
-    - CCE-85307-7
+    - N/A
   cci:
     - CCI-001312
   800-53r5:
@@ -20,7 +20,7 @@ references:
   srg:
     - SRG-OS-000205-GPOS-00083
 macOS:
-  - "11.0"
+  - "12.0"
 tags:
   - inherent
 mobileconfig: false

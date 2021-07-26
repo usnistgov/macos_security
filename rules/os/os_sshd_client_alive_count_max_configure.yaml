@@ -15,7 +15,7 @@ fix: |
   ----
 references:
   cce:
-    - CCE-85456-2
+    - N/A
   cci: 
     - CCI-001133
   800-53r5:
@@ -25,11 +25,11 @@ references:
   srg: 
     - SRG-OS-000163-GPOS-00072
   disa_stig: 
-    - APPL-11-000052
+    - APPL-12-XXXXXX
   800-171r2:
     - 3.13.9
 macOS:
-  - "11.0"
+  - "12.0"
 tags:
   - stig
 severity: "medium"

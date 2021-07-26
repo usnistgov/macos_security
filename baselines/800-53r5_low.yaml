@@ -1,6 +1,6 @@
-title: "macOS 11 Security Configuration:NIST SP 800-53 Rev 5 Low Impact Security Baseline"
+title: "macOS 12 Security Configuration:NIST SP 800-53 Rev 5 Low Impact Security Baseline"
 description: |
-  This guide describes the actions to take when securing a macOS 11 system against the NIST SP 800-53 Rev. 5 Low-Impact Security Baseline.
+  This guide describes the actions to take when securing a macOS 12 system against the NIST SP 800-53 Rev. 5 Low-Impact Security Baseline.
 profile:
   - section: "authentication"
     rules:

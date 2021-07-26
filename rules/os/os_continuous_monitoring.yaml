@@ -8,7 +8,7 @@ fix: |
   This requirement is a permanent finding and cannot be fixed. An appropriate mitigation for the system must be implemented, but this finding cannot be considered fixed.
 references:
   cce:
-    - CCE-85304-4
+    - N/A
   cci:
     - CCI-001233
   800-53r5:
@@ -18,9 +18,9 @@ references:
   srg:
     - SRG-OS-000191-GPOS-00080
   disa_stig:
-    - APPL-11-000015
+    - APPL-12-XXXXXX
 macOS:
-  - "11.0"
+  - "12.0"
 tags:
   - cnssi-1253
   - 800-53r5_moderate
