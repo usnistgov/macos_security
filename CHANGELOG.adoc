@@ -39,12 +39,12 @@ This document provides a high-level view of the changes to the macOS Security Co
 ** Bug Fixes
 
 * Baselines
-** Added NIST 800-53 Rev 5 (Low, Moderate, High and Privacy)
+** Added NIST 800-53 Rev 5 (Low, Moderate, High, and Privacy)
 ** Modified existing baselines
 
 * Scripts
 ** generate_guidanace
-*** Added additional flags to the compliance scipt generated  (--stats, --compliant, --non_compliant) link:https://github.com/usnistgov/macos_security/pull/64[#64]
+*** Added additional flags to the compliance scipt generated (--stats, --compliant, and --non_compliant) link:https://github.com/usnistgov/macos_security/pull/64[#64]
 ** generate_baseline
 *** Added `-k all_rules` to generate a baseline containing all the rules 
 *** Bug fixes
