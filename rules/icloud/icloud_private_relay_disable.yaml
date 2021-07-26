@@ -1,0 +1,48 @@
+id: icloud_private_relay_disable
+title: "Disable iCloud Private Relay"
+discussion: |
+check: |
+  /usr/bin/profiles -P -o stdout | /usr/bin/grep -c 'allowCloudPrivateRelay = 0'
+result:
+  integer: 1
+fix: |
+  This is implemented by a Configuration Profile.
+references:
+  cce:
+    - N/A
+  cci:
+    - N/A
+  800-53r5:
+    - AC-20
+    - AC-20(1)
+    - CM-7
+    - CM-7(1)
+    - SC-7(10)    
+  800-53r4:
+    - CM-7
+    - CM-7(1)
+    - AC-20
+    - AC-20(1)
+  srg:
+    - N/A
+  disa_stig:
+    - APPL-12-XXXXXX
+  800-171r2:
+    - N/A
+macOS:
+  - "12.0"
+tags:
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_high
+  - 800-53r4_low
+  - 800-53r4_moderate
+  - 800-53r4_high
+  - 800-171
+  - cnssi-1253
+  - stig
+severity: "medium"
+mobileconfig: true
+mobileconfig_info:
+  com.apple.applicationaccess:
+    allowCloudPrivateRelay: false
