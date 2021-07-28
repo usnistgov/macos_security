@@ -51,3 +51,11 @@ ASSOCIATED DOCUMENTS
 |link:https://developer.apple.com/documentation/devicemanagement/profile-specific_payload_keys[Profile-Specific Payload Keys]|_Profile-Specific Payload Keys_
 |link:https://support.apple.com/guide/sccc/welcome/web[Security Certifications and Compliance Center]|_Security Certifications and Compliance Center_
 |===
+
+[%header, cols=2*a]
+.Center for Internet Security
+|===
+|Document Number or Descriptor
+|Document Title
+|link:https://www.cisecurity.org/benchmark/apple_os/[Apple macOS 11.0]|_CIS Apple macOS 11.0 Benchmark version 1.2.0_
+|===
