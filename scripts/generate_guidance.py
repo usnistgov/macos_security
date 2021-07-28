@@ -1512,10 +1512,10 @@ def main():
         adoc_foreword_template = adoc_foreword_file.read() + "\n"
 
     with open(adoc_templates_dict['adoc_scope']) as adoc_scope_file:
-        adoc_scope_template = adoc_scope_file.read() + "\n"
+        adoc_scope_template = Template(adoc_scope_file.read() +"\n")
     
     with open(adoc_templates_dict['adoc_authors']) as adoc_authors_file:
-        adoc_authors_template = adoc_authors_file.read() + "\n"
+        adoc_authors_template = Template(adoc_authors_file.read() + "\n")
 
     with open(adoc_templates_dict['adoc_acronyms']) as adoc_acronyms_file:
         adoc_acronyms_template = adoc_acronyms_file.read() + "\n"
@@ -1561,13 +1561,23 @@ def main():
         release_date=version_yaml['date']
     )
 
+    # Create scope
+    scope_adoc = adoc_scope_template.substitute(
+        scope_description=baseline_yaml['description']
+    )
+
+    # Create author
+    authors_adoc = adoc_authors_template.substitute(
+        authors_list=baseline_yaml['authors']
+    )
+
     # Output header
     adoc_output_file.write(header_adoc)
 
     # write foreword, authors, acronyms, supporting docs
     adoc_output_file.write(adoc_foreword_template)
-    adoc_output_file.write(adoc_scope_template)
-    adoc_output_file.write(adoc_authors_template)
+    adoc_output_file.write(scope_adoc)
+    adoc_output_file.write(authors_adoc)
     adoc_output_file.write(adoc_acronyms_template)
     adoc_output_file.write(adoc_additional_docs_template)
 

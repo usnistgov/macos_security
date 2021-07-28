@@ -1,6 +1,10 @@
 title: "macOS 11.0: Security Configuration - CIS Controls Version 8"
 description: |
   This guide describes the actions to take when securing a macOS 11.0 system against the CIS Controls version 8 baseline.
+authors: |
+  |===
+  |Edward Byrd|Center for Internet Security
+  |===
 profile:
   - section: "authentication"
     rules:
