@@ -39,6 +39,9 @@ references:
     - N/A    
   800-171r2:
     - 3.4.6
+  cisv8:
+    - 4.1
+    - 12.2
 macOS:
   - "11.0"
 tags:
@@ -50,5 +53,6 @@ tags:
   - 800-53r4_high
   - 800-171
   - cnssi-1253
+  - cisv8
 mobileconfig: false
 mobileconfig_info:

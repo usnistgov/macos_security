@@ -27,6 +27,8 @@ references:
     - SRG-OS-000400-GPOS-00179
     - SRG-OS-000401-GPOS-00180
     - SRG-OS-000402-GPOS-00181
+  cisv8:
+    - 4.9
 macOS:
   - "11.0"
 tags:
@@ -38,5 +40,6 @@ tags:
   - 800-53r4_high
   - cnssi-1253
   - permanent
+  - cisv8
 mobileconfig: false
 mobileconfig_info:

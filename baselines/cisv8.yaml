@@ -1,0 +1,127 @@
+title: "macOS 11.0: Security Configuration - CIS Controls Version 8"
+description: |
+  This guide describes the actions to take when securing a macOS 11.0 system against the CIS Controls version 8 baseline.
+profile:
+  - section: "authentication"
+    rules:
+      - auth_pam_login_smartcard_enforce
+      - auth_smartcard_allow
+      - auth_pam_sudo_smartcard_enforce
+      - auth_smartcard_enforce
+      - auth_pam_su_smartcard_enforce
+      - auth_ssh_password_authentication_disable
+  - section: "auditing"
+    rules:
+      - audit_flags_fd_configure
+      - audit_flags_fm_configure
+      - audit_auditd_enabled
+      - audit_flags_ad_configure
+      - audit_flags_ex_configure
+      - audit_flags_aa_configure
+      - audit_retention_configure
+      - audit_flags_fr_configure
+      - audit_flags_lo_configure
+      - audit_flags_fw_configure
+  - section: "macos"
+    rules:
+      - os_apple_mobile_file_integrity_enforce
+      - os_password_proximity_disable
+      - os_mdm_require
+      - os_handoff_disable
+      - os_firewall_log_enable
+      - os_tftpd_disable
+      - os_password_autofill_disable
+      - os_password_sharing_disable
+      - os_authenticated_root_enable
+      - os_config_data_install_enforce
+      - os_privacy_setup_prompt_disable
+      - os_uucp_disable
+      - os_touchid_prompt_disable
+      - os_filevault_autologin_disable
+      - os_messages_app_disable
+      - os_airdrop_disable
+      - os_nfsd_disable
+      - os_httpd_disable
+      - os_gatekeeper_enable
+      - os_sip_enable
+      - os_removable_media_disable
+      - os_internet_accounts_prefpane_disable
+      - os_siri_prompt_disable
+      - os_appleid_prompt_disable
+      - os_facetime_app_disable
+      - os_icloud_storage_prompt_disable
+      - os_ir_support_disable
+      - os_mail_app_disable
+      - os_bonjour_disable
+      - os_calendar_app_disable
+  - section: "passwordpolicy"
+    rules:
+      - pwpolicy_history_enforce
+      - pwpolicy_account_lockout_enforce
+      - pwpolicy_simple_sequence_disable
+      - pwpolicy_lower_case_character_enforce
+      - pwpolicy_account_lockout_timeout_enforce
+      - pwpolicy_special_character_enforce
+      - pwpolicy_alpha_numeric_enforce
+      - pwpolicy_minimum_length_enforce
+      - pwpolicy_upper_case_character_enforce
+      - pwpolicy_60_day_enforce
+      - pwpolicy_minimum_lifetime_enforce
+  - section: "icloud"
+    rules:
+      - icloud_photos_disable
+      - icloud_reminders_disable
+      - icloud_sync_disable
+      - icloud_appleid_prefpane_disable
+      - icloud_keychain_disable
+      - icloud_notes_disable
+      - icloud_drive_disable
+      - icloud_bookmarks_disable
+      - icloud_mail_disable
+      - icloud_calendar_disable
+      - icloud_addressbook_disable
+  - section: "systempreferences"
+    rules:
+      - sysprefs_smbd_disable
+      - sysprefs_firewall_stealth_mode_enable
+      - sysprefs_internet_sharing_disable
+      - sysprefs_rae_disable
+      - sysprefs_personalized_advertising_disable
+      - sysprefs_guest_access_smb_disable
+      - sysprefs_media_sharing_disabled
+      - sysprefs_ssh_disable
+      - sysprefs_critical_update_install_enforce
+      - sysprefs_guest_account_disable
+      - sysprefs_firewall_enable
+      - sysprefs_find_my_disable
+      - sysprefs_content_caching_disable
+      - sysprefs_location_services_disable
+      - sysprefs_power_nap_disable
+      - sysprefs_diagnostics_reports_disable
+      - sysprefs_bluetooth_disable
+      - sysprefs_wifi_disable
+      - sysprefs_screen_sharing_disable
+      - sysprefs_siri_disable
+      - sysprefs_bluetooth_sharing_disable
+      - sysprefs_improve_siri_dictation_disable
+  - section: "Inherent"
+    rules:
+      - os_logical_access
+      - os_obscure_password
+      - os_unique_identification
+      - os_malicious_code_prevention
+      - os_store_encrypted_passwords
+      - pwpolicy_force_password_change
+  - section: "Permanent"
+    rules:
+      - os_secure_name_resolution
+  - section: "not_applicable"
+    rules: 
+      - os_access_control_mobile_devices
+  - section: "Supplemental"
+    rules:
+      - supplemental_firewall_pf
+      - supplemental_filevault
+      - supplemental_password_policy
+      - supplemental_controls
+      - supplemental_smartcard

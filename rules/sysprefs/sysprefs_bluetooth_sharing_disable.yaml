@@ -46,6 +46,11 @@ references:
     - 3.1.2
     - 3.1.16
     - 3.4.7
+  cisv8:
+    - 3.3
+    - 4.1
+    - 6.7
+    - 12.2
 macOS:
   - "11.0"
 tags:
@@ -57,6 +62,7 @@ tags:
   - 800-53r4_high
   - 800-171
   - cnssi-1253
+  - cisv8
 mobileconfig: false
 mobileconfig_info:
 
