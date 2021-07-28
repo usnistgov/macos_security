@@ -9,6 +9,7 @@
 |API|Application Programming Interface
 |ARD|Apple Remote Desktop
 |CA|Certificate Authority
+|CIS|Center for Internet Security
 |CRL|Certificate Revocation List
 |DISA|Defense Information Systems Agency
 |DMA|Direct Memory Access
