@@ -668,10 +668,10 @@ compliance_count(){{
     results=$(/usr/libexec/PlistBuddy -c "Print" /Library/Preferences/org.{baseline_name}.audit.plist)
     
     while IFS= read -r line; do
-        if [[ "$line" =~ "false" ]]; then
+        if [[ "$line" =~ "finding = false" ]]; then
             compliant=$((compliant+1))
         fi
-        if [[ "$line" =~ "true" ]]; then
+        if [[ "$line" =~ "finding = true" ]]; then
             non_compliant=$((non_compliant+1))
         fi
     done <<< "$results"
@@ -1062,13 +1062,17 @@ def get_rule_yaml(rule_file, custom=False):
                         resulting_yaml['references'][ref] = rule_yaml['references'][ref]
                     except KeyError:
                         resulting_yaml['references'][ref] = og_rule_yaml['references'][ref]
-            if "custom" in rule_yaml['references']:
-                resulting_yaml['references']['custom'] = rule_yaml['references']['custom']
-                if 'customized' in resulting_yaml:
-                    resulting_yaml['customized'].append("customized references")
-                else:
-                    resulting_yaml['customized'] = ["customized references"]
-        
+                try: 
+                    if "custom" in rule_yaml['references']:
+                        resulting_yaml['references']['custom'] = rule_yaml['references']['custom']
+                        if 'customized' in resulting_yaml:
+                            if 'customized references' not in resulting_yaml['customized']:
+                                resulting_yaml['customized'].append("customized references")
+                        else:
+                            resulting_yaml['customized'] = ["customized references"]
+                except:
+                    pass
+            
         else: 
             try:
                 if og_rule_yaml[yaml_field] == rule_yaml[yaml_field]:
