@@ -19,7 +19,7 @@ references:
   800-53r4: 
     - SC-17
   disa_stig: 
-    - APPL-11-003001
+    - AOSX-15-003001
   srg: 
     - SRG-OS-000066-GPOS-00034
     - SRG-OS-000478-GPOS-00223

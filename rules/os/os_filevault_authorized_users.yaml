@@ -23,7 +23,7 @@ references:
   srg:
     - SRG-OS-000480-GPOS-00227
   disa_stig:
-    - APPL-11-000032
+    - AOSX-15-000032
 macOS:
   - "10.15"
 tags:
