@@ -16,9 +16,9 @@ fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-    - CCE-85278-0
+    - N/A
   cci: 
-    - CCI-000186
+    - N/A
   800-53r5:
     - IA-5(2)
     - SC-17
@@ -26,9 +26,9 @@ references:
     - IA-2(12)
     - IA-5(2)
   srg: 
-   - SRG-OS-000067-GPOS-00035
+   - N/A
   disa_stig: 
-   - APPL-11-003002
+   - N/A
 macOS:
   - "11.0"
 tags:
