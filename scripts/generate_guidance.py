@@ -668,10 +668,10 @@ compliance_count(){{
     results=$(/usr/libexec/PlistBuddy -c "Print" /Library/Preferences/org.{baseline_name}.audit.plist)
     
     while IFS= read -r line; do
-        if [[ "$line" =~ "false" ]]; then
+        if [[ "$line" =~ "finding = false" ]]; then
             compliant=$((compliant+1))
         fi
-        if [[ "$line" =~ "true" ]]; then
+        if [[ "$line" =~ "finding = true" ]]; then
             non_compliant=$((non_compliant+1))
         fi
     done <<< "$results"
