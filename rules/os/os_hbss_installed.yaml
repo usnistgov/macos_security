@@ -22,6 +22,9 @@ references:
     - SRG-OS-000191-GPOS-00080
   disa_stig: 
     - APPL-11-000015
+  cisv8:
+    - 10.6
+    - 10.7
 macOS:
   - "11.0"
 tags:

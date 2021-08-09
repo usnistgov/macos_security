@@ -27,6 +27,7 @@ references:
     - APPL-11-002036
   cisv8:
     - 4.1
+    - 4.8
     - 12.2
 macOS:
   - "11.0"

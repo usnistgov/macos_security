@@ -85,6 +85,7 @@ references:
     - 7.3
     - 7.4
     - 7.7
+    - 10.5
 macOS:
   - "11.0"
 tags:

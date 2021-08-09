@@ -24,6 +24,8 @@ references:
   srg:
     - SRG-OS-000479-GPOS-00224
     - SRG-OS-000342-GPOS-00133
+  cisv8:
+    - 8.9
 macOS:
   - "11.0"
 tags:

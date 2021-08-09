@@ -50,6 +50,8 @@ references:
   800-171r2:
     - 3.5.5
     - 3.5.6
+  cisv8:
+    - 5.3
 macOS:
   - "11.0"
 tags:
