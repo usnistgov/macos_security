@@ -33,6 +33,7 @@ references:
     - 3.13.16
   cisv8:
     - 3.6
+    - 3.11
 macOS:
   - "11.0"
 tags:
