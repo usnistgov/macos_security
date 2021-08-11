@@ -1,7 +1,7 @@
 id: os_hbss_installed
-title: "Must Use HBSS"
+title: "Must Use Host Based Security Solution"
 discussion: |
-  The approved HBSS solution _MUST_ be installed and configured to run. 
+  The approved Host Based Security Solution (HBSS) solution _MUST_ be installed and configured to run. 
 
   The macOS system must employ automated mechanisms to determine the state of system components. The DoD requires the installation and use of an approved HBSS solution to be implemented on the operating system. For additional information, reference all applicable HBSS OPORDs and FRAGOs on SIPRNET.
 check: |
@@ -18,11 +18,16 @@ references:
     - N/A
   800-53r4: 
     - SI-2(2)
+    - SI-3
   srg: 
     - SRG-OS-000191-GPOS-00080
   disa_stig: 
     - APPL-11-000015
   cisv8:
+    - 10.1
+    - 10.2
+    - 10.3
+    - 10.4
     - 10.6
     - 10.7
 macOS:
