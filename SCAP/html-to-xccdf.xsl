@@ -341,28 +341,26 @@
             </xsl:element>
             <!--<xsl:element name="model" namespace="http://checklists.nist.gov/xccdf/1.2"/>-->
             <xsl:variable name="ROOT" as="document-node()" select="root()"/>
-            <xsl:for-each select="distinct-values(//div[@class = 'sect2']//table//table//tr[th/p = 'TAGS']/td//p)">
-                <xsl:choose>
-                    <!-- WARNING: the following will break when tag names are changed -->
-                    <xsl:when test="matches(., '^800-53r5')">
-                        <!--<xsl:message expand-text="true">{.} {count($ROOT//div[@class = 'sect2'][descendant::table/tbody/tr/th/p='ID'][descendant::table/descendant::tr[th/p = 'tags']/td//p = current()])}</xsl:message>-->
-                        <xsl:element name="Profile" namespace="http://checklists.nist.gov/xccdf/1.2">
-                            <xsl:attribute name="id" expand-text="true">xccdf_{$xccdf-namespace}_profile_{.}</xsl:attribute>
-                            <xsl:element name="title" namespace="http://checklists.nist.gov/xccdf/1.2" expand-text="true">{.}</xsl:element>
-                            <xsl:element name="description" namespace="http://checklists.nist.gov/xccdf/1.2">
-                                <xsl:text expand-text="true">This profile selects all rules tagged as {.}.</xsl:text>
-                            </xsl:element>
-                            <xsl:for-each select="$ROOT//div[@class = 'sect2'][descendant::table/tbody/tr/th/p = 'ID'][descendant::table/descendant::tr[th/p = 'TAGS']/td//p = current()]">
-                                <xsl:variable name="id" as="xs:string" select="table/tbody/tr[1]/td//p"/>
-                                <xsl:element name="select" namespace="http://checklists.nist.gov/xccdf/1.2">
-                                    <xsl:attribute name="idref" expand-text="true">xccdf_{$xccdf-namespace}_rule_{$id}</xsl:attribute>
-                                    <xsl:attribute name="selected" select="true()"/>
-                                </xsl:element>
-                            </xsl:for-each>
+            <xsl:variable name="tags" as="xs:string*" select="distinct-values(//div[@class = 'sect2']//table//table//tr[th/p = 'TAGS']/td//p)"/>
+            <xsl:variable name="unwanted-tags" as="xs:string*" select="('inherent', 'permanent', 'n_a', 'none', 'manual')"/>
+            <xsl:variable name="desired-tags" as="xs:string*" select="sort($tags[not(. = $unwanted-tags)])"/>
+            <xsl:comment expand-text="true"> Profiles for {$desired-tags} </xsl:comment>
+            <xsl:for-each select="$desired-tags">
+                <!--<xsl:message expand-text="true">{.} {count($ROOT//div[@class = 'sect2'][descendant::table/tbody/tr/th/p='ID'][descendant::table/descendant::tr[th/p = 'tags']/td//p = current()])}</xsl:message>-->
+                <xsl:element name="Profile" namespace="http://checklists.nist.gov/xccdf/1.2">
+                    <xsl:attribute name="id" expand-text="true">xccdf_{$xccdf-namespace}_profile_{.}</xsl:attribute>
+                    <xsl:element name="title" namespace="http://checklists.nist.gov/xccdf/1.2" expand-text="true">{.}</xsl:element>
+                    <xsl:element name="description" namespace="http://checklists.nist.gov/xccdf/1.2">
+                        <xsl:text expand-text="true">This profile selects all rules tagged as {.}.</xsl:text>
+                    </xsl:element>
+                    <xsl:for-each select="$ROOT//div[@class = 'sect2'][descendant::table/tbody/tr/th/p = 'ID'][descendant::table/descendant::tr[th/p = 'TAGS']/td//p = current()]">
+                        <xsl:variable name="id" as="xs:string" select="table/tbody/tr[1]/td//p"/>
+                        <xsl:element name="select" namespace="http://checklists.nist.gov/xccdf/1.2">
+                            <xsl:attribute name="idref" expand-text="true">xccdf_{$xccdf-namespace}_rule_{$id}</xsl:attribute>
+                            <xsl:attribute name="selected" select="true()"/>
                         </xsl:element>
-                    </xsl:when>
-                    <xsl:otherwise> </xsl:otherwise>
-                </xsl:choose>
+                    </xsl:for-each>
+                </xsl:element>
             </xsl:for-each>
             <xsl:if test="$include-all-rule-profile">
                 <!--<xsl:message expand-text="true">{count($ROOT//div[@class = 'sect2'][descendant::table/tbody/tr/th/p='ID'])} rules</xsl:message>-->
