@@ -389,46 +389,56 @@ def generate_profiles(baseline_name, build_path, parent_dir, baseline_yaml, sign
 
     for sections in baseline_yaml['profile']:
         for profile_rule in sections['rules']:
-            for rule in glob.glob('../rules/*/{}.yaml'.format(profile_rule)) + glob.glob('../custom/rules/**/{}.yaml'.format(profile_rule),recursive=True):
-                rule_yaml = get_rule_yaml(rule, False)
+            logging.debug(f"checking for rule file for {profile_rule}")
+            if glob.glob('../custom/rules/**/{}.yaml'.format(profile_rule),recursive=True):
+                rule = glob.glob('../custom/rules/**/{}.yaml'.format(profile_rule),recursive=True)[0]
+                custom=True
+                logging.debug(f"{rule}")
+            elif glob.glob('../rules/*/{}.yaml'.format(profile_rule)):
+                rule = glob.glob('../rules/*/{}.yaml'.format(profile_rule))[0]
+                custom=False
+                logging.debug(f"{rule}")
+
+            #for rule in glob.glob('../rules/*/{}.yaml'.format(profile_rule)) + glob.glob('../custom/rules/**/{}.yaml'.format(profile_rule),recursive=True):
+            rule_yaml = get_rule_yaml(rule, custom)
     
-                if rule_yaml['mobileconfig']:
-                    for payload_type, info in rule_yaml['mobileconfig_info'].items():
-                        try:
-                            if payload_type not in manifests['payloads_types']:
-                                profile_errors.append(rule)
-                                raise ValueError(
-                                    "{}: Payload Type is not supported".format(payload_type))
-                            else:
-                                pass
-                        except (KeyError, ValueError) as e:
+            if rule_yaml['mobileconfig']:
+                for payload_type, info in rule_yaml['mobileconfig_info'].items():
+                    try:
+                        if payload_type not in manifests['payloads_types']:
                             profile_errors.append(rule)
-                            #print(e)
-                            pass
-
-                        try:
-                            if isinstance(info, list):
-                                raise ValueError(
-                                    "Payload key is non-conforming")
-                            else:
-                                pass
-                        except (KeyError, ValueError) as e:
-                            profile_errors.append(rule)
-                            #print(e)
-                            pass
-
-                        if payload_type == "com.apple.ManagedClient.preferences":
-                            for payload_domain, settings in info.items():
-                                for key, value in settings.items():
-                                    payload_settings = (
-                                        payload_domain, key, value)
-                                    profile_types.setdefault(
-                                        payload_type, []).append(payload_settings)
+                            raise ValueError(
+                                "{}: Payload Type is not supported".format(payload_type))
                         else:
-                            for profile_key, key_value in info.items():
-                                payload_settings = {profile_key: key_value}
+                            pass
+                    except (KeyError, ValueError) as e:
+                        profile_errors.append(rule)
+                        #print(e)
+                        pass
+
+                    try:
+                        if isinstance(info, list):
+                            raise ValueError(
+                                "Payload key is non-conforming")
+                        else:
+                            pass
+                    except (KeyError, ValueError) as e:
+                        profile_errors.append(rule)
+                        #print(e)
+                        pass
+
+                    if payload_type == "com.apple.ManagedClient.preferences":
+                        for payload_domain, settings in info.items():
+                            for key, value in settings.items():
+                                payload_settings = (
+                                    payload_domain, key, value)
                                 profile_types.setdefault(
                                     payload_type, []).append(payload_settings)
+                    else:
+                        for profile_key, key_value in info.items():
+                            payload_settings = {profile_key: key_value}
+                            profile_types.setdefault(
+                                payload_type, []).append(payload_settings)
 
     if len(profile_errors) > 0:
         print("There are errors in the following files, please correct the .yaml file(s)!")
