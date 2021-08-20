@@ -7,14 +7,11 @@ discussion: |
 
   NOTE: The firewall data is logged to Apple's Unified Logging with the subsystem com.apple.alf and the data is marked as private.
 check: |
-  /usr/libexec/ApplicationFirewall/socketfilterfw --getloggingmode | /usr/bin/grep -c "Log mode is on"
+  /usr/bin/profiles -P -o stdout | /usr/bin/grep -c 'EnableLogging = 1'
 result:
   integer: 1
 fix: |
-  [source,bash]
-  ----
-  /usr/libexec/ApplicationFirewall/socketfilterfw --setloggingmode on
-  ----
+  This is implemented by a Configuration Profile.
 references:
   cce:
     - N/A
@@ -47,5 +44,7 @@ tags:
   - 800-53r4_high
   - 800-171
   - cnssi-1253
-mobileconfig: false
+mobileconfig: true
 mobileconfig_info:
+  com.apple.security.firewall:
+    EnableLogging: true

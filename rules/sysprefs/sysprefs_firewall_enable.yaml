@@ -5,14 +5,11 @@ discussion: |
 
   When the macOS Application Firewall is enabled, the flow of information within the information system and between interconnected systems will be controlled by approved authorizations.
 check: |
-  /usr/libexec/ApplicationFirewall/socketfilterfw --getglobalstate | /usr/bin/grep -c "Firewall is enabled"
+  /usr/bin/profiles -P -o stdout | /usr/bin/grep -c 'EnableFirewall = 1'
 result:
   integer: 1
 fix: |
-  [source,bash]
-  ----
-  /usr/libexec/ApplicationFirewall/socketfilterfw --setglobalstate on
-  ----
+  This is implemented by a Configuration Profile.
 references:
   cce:
     - N/A
@@ -57,5 +54,7 @@ tags:
   - cnssi-1253
   - stig
 severity: "medium"
-mobileconfig: false
+mobileconfig: true
 mobileconfig_info:
+  com.apple.security.firewall:
+    EnableFirewall: true
