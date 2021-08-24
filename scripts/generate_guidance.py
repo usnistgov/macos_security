@@ -533,7 +533,7 @@ def default_audit_plist(baseline_name, build_path, baseline_yaml):
     plistlib.dump(plist_dict, plist_file)
 
 
-def generate_script(baseline_name, build_path, baseline_yaml, reference):
+def generate_script(baseline_name, build_path, baseline_yaml, reference, variables):
     """Generates the zsh script from the rules in the baseline YAML
     """
     compliance_script_file = open(
@@ -542,6 +542,7 @@ def generate_script(baseline_name, build_path, baseline_yaml, reference):
     check_function_string = ""
     fix_function_string = ""
 
+    pwpolicy_file = variables["pwpolicy_file"]
 
     # create header of fix zsh script
     check_zsh_header = f"""#!/bin/zsh
@@ -552,7 +553,7 @@ def generate_script(baseline_name, build_path, baseline_yaml, reference):
 
 ###################  Variables  ###################
 
-pwpolicy_file=""
+pwpolicy_file="{pwpolicy_file}"
 
 ###################  COMMANDS START BELOW THIS LINE  ###################
 
@@ -1332,6 +1333,8 @@ def create_args():
                         help="Generate the excel (xls) document for the rules.", action="store_true")
     parser.add_argument("-H", "--hash", default=None,
                         help="sign the configuration profiles with subject key ID (hash value without spaces)")
+    parser.add_argument("--pwpolicy_file", default="",
+                        help="File contining the password policy")
     return parser.parse_args()
 
 def is_asciidoctor_installed():
@@ -1773,7 +1776,8 @@ def main():
     
     if args.script:
         print("Generating compliance script...")
-        generate_script(baseline_name, build_path, baseline_yaml, log_reference)
+        variables = {'pwpolicy_file': args.pwpolicy_file}
+        generate_script(baseline_name, build_path, baseline_yaml, log_reference, variables)
         default_audit_plist(baseline_name, build_path, baseline_yaml)
     
     if args.xls:
