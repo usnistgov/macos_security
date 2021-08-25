@@ -31,7 +31,7 @@ references:
   800-171r2:
     - 3.8.8
   cisv8:
-    - 3.9
+    - N/A
 macOS:
   - "11.0"
 tags:

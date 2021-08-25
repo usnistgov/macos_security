@@ -55,7 +55,6 @@ references:
     - 3.3.8
   cisv8:
     - 3.14
-    - 8.1
     - 8.2
     - 8.5
 macOS:

@@ -39,7 +39,6 @@ references:
     - 3.3.2
   cisv8:
     - 3.14
-    - 8.1
     - 8.2
     - 8.5
 macOS:
