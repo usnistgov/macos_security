@@ -11,7 +11,7 @@ fix: |
   Install an approved antivirus solution onto the system.
 references:
   cce:
-    - N/A
+    - CCE-90900-2
   cci: 
     - CCI-000366
   800-53r5:

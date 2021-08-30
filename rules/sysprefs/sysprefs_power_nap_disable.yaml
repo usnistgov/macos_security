@@ -24,7 +24,7 @@ fix: |
   ----
 references:
   cce:
-    - N/A
+    - CCE-91069-5
   800-53r5:
     - CM-7
     - CM-7(1)

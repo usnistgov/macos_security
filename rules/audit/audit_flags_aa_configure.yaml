@@ -17,7 +17,7 @@ fix: |
   ----
 references:
   cce:
-    - N/A
+    - CCE-90861-6
   cci:
     - CCI-000172
   800-53r5:

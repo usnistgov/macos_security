@@ -15,7 +15,7 @@ fix: |
   ----
 references:
   cce:
-    - N/A
+    - CCE-91059-6
   800-53r5:
     - AC-2(9)
     - AC-2

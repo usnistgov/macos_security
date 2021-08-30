@@ -14,7 +14,7 @@ fix: |
   The technology inherently meets this requirement. No fix is required.
 references:
   cce:
-    - N/A
+    - CCE-90999-4
   cci:
     - CCI-001082
   800-53r5:

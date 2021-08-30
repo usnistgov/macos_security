@@ -12,7 +12,7 @@ fix: |
    NOTE: The SetRecoveryLock command can be used to set a Recovery Lock password.
 references:
   cce:
-    - N/A
+    - CCE-90989-5
   cci:
     - N/A
   800-53r5:

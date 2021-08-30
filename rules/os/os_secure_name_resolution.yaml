@@ -10,7 +10,7 @@ fix: |
   This requirement is a permanent finding and cannot be fixed. An appropriate mitigation for the system must be implemented, but this finding cannot be considered fixed.
 references:
   cce:
-    - N/A
+    - CCE-90998-6
   cci:
     - CCI-002465
     - CCI-002466

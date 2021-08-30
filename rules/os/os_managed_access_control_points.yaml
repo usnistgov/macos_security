@@ -10,7 +10,7 @@ fix: |
   The requirement is NA. No fix is required.
 references:
   cce:
-    - N/A
+    - CCE-90948-1
   cci:
     - N/A
   800-53r5:

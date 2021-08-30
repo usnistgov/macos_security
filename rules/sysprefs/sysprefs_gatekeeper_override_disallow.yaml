@@ -18,7 +18,7 @@ fix: |
   NOTE - This will apply to the whole system
 references:
   cce:
-    - N/A
+    - CCE-91058-8
   cci: 
     - CCI-000366
   800-53r5:
