@@ -27,10 +27,10 @@ references:
     - CM-5(3)
     - CM-5
     - SI-7(15)
-  srg: 
+  srg:
     - SRG-OS-000480-GPOS-00227
   disa_stig: 
-    - APPL-12-XXXXXX
+    - N/A
   800-171r2:
     - 3.4.5
 macOS:

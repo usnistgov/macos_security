@@ -22,7 +22,7 @@ references:
     - AC-17
   800-53r4:
     - AC-3
-  srg: 
+  srg:
     - SRG-OS-000480-GPOS-00227
   disa_stig:
     - N/A

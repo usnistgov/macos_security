@@ -21,11 +21,11 @@ references:
     - SC-45(1)
   800-53r4: 
     - AU-8(1)
-  srg: 
+  srg:
     - SRG-OS-000355-GPOS-00143
     - SRG-OS-000356-GPOS-00144
   disa_stig: 
-    - APPL-12-XXXXXX
+    - N/A
   800-171r2:
     - 3.3.7
 macOS:

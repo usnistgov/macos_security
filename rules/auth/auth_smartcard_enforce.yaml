@@ -41,12 +41,12 @@ references:
     - IA-2(11)
     - IA-5(2)
     - IA-5(11)
-  srg: 
+  srg:
     - SRG-OS-000068-GPOS-00036
     - SRG-OS-000107-GPOS-00054
     - SRG-OS-000108-GPOS-00055
   disa_stig:
-    - APPL-12-XXXXXX
+    - N/A
   800-171r2:
     - 3.5.1
     - 3.5.2

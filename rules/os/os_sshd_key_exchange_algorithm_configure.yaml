@@ -36,7 +36,7 @@ references:
     - IA-7
     - AC-17(2)
     - MA-4(6)
-  srg: 
+  srg:
     - SRG-OS-000033-GPOS-00014
     - SRG-OS-000120-GPOS-00061
     - SRG-OS-000125-GPOS-00065
@@ -44,7 +44,7 @@ references:
     - SRG-OS-000393-GPOS-00173
     - SRG-OS-000394-GPOS-00174
   disa_stig: 
-    - APPL-12-XXXXXX
+    - N/A
   800-171r2:
     - N/A
 macOS:

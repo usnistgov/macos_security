@@ -25,7 +25,7 @@ references:
     - CM-7(1)
   disa_stig:
     - N/A
-  srg: 
+  srg:
     - N/A
   cci: 
     - N/A    

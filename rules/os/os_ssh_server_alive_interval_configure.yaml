@@ -25,7 +25,7 @@ references:
     - AC-12
   800-53r4: 
     - SC-10
-  srg: 
+  srg:
     - N/A
   disa_stig: 
     - N/A

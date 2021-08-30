@@ -37,7 +37,7 @@ references:
     - AC-18(4)
     - CM-7
     - CM-7(1)
-  srg: 
+  srg:
     - SRG-OS-000480-GPOS-00227
   disa_stig: 
     - N/A

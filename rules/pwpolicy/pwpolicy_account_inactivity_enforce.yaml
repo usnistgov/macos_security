@@ -43,7 +43,7 @@ references:
     - AC-2(3)
   800-53r4:
     - IA-4
-  srg: 
+  srg:
     - SRG-OS-000118-GPOS-00060
   disa_stig: 
     - N/A

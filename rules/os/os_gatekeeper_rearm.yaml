@@ -18,7 +18,7 @@ references:
   800-53r4: 
     - CM-5
     - SI-3
-  srg: 
+  srg:
     - N/A
   disa_stig: 
     - N/A

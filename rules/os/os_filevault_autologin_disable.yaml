@@ -23,10 +23,10 @@ references:
     - AC-2(11)
     - AC-3
     - IA-5(13)
-  srg: 
+  srg:
     - SRG-OS-000480-GPOS-00227
   disa_stig:
-    - APPL-12-XXXXXX
+    - N/A
   cci:
     - CCI-002143
   800-171r2:

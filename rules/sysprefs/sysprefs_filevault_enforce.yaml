@@ -23,12 +23,12 @@ references:
   800-53r4: 
     - SC-28
     - SC-28(1)
-  srg: 
+  srg:
     - SRG-OS-000185-GPOS-00079
     - SRG-OS-000404-GPOS-00183
     - SRG-OS-000405-GPOS-00184
   disa_stig: 
-    - APPL-12-XXXXXX
+    - N/A
   800-171r2:
     - 3.13.16
 macOS:

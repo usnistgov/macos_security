@@ -20,10 +20,10 @@ references:
     - IA-11
   800-53r4: 
     - AC-11
-  srg: 
+  srg:
     - SRG-OS-000029-GPOS-00010
   disa_stig: 
-    - APPL-12-XXXXXX
+    - N/A
   800-171r2:
     - 3.1.10
 macOS:

@@ -22,7 +22,7 @@ references:
     - CM-7(2)
   800-53r4: 
     - CM-7(2)
-  srg: 
+  srg:
     - SRG-OS-000362-GPOS-00149
     - SRG-OS-000368-GPOS-00154
   disa_stig: 

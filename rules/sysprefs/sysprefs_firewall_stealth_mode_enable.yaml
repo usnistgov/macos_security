@@ -33,7 +33,7 @@ references:
   cci:
     - CCI-000366
   disa_stig:
-    - APPL-12-XXXXXX
+    - N/A
   800-171r2:
     - 3.4.6
     - 3.13.1

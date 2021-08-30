@@ -37,10 +37,10 @@ references:
     - SC-8(1)
     - SC-13
     - MF-4(6)
-  srg: 
+  srg:
     - SRG-OS-000033-GPOS-00014
   disa_stig: 
-    - APPL-12-XXXXXX
+    - N/A
   800-171r2:
     - 3.1.13
     - 3.13.8

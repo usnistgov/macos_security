@@ -17,7 +17,7 @@ references:
     - SI-2
   800-53r4: 
     - N/A
-  srg: 
+  srg:
     - N/A
   disa_stig: 
     - N/A

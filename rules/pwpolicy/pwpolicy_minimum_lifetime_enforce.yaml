@@ -47,7 +47,7 @@ references:
     - IA-5(1)
   disa_stig: 
     - N/A
-  srg: 
+  srg:
     - SRG-OS-000075-GPOS-00043
   800-171r2:
     - 3.5.7

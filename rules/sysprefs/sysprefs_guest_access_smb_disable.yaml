@@ -24,7 +24,7 @@ references:
     - AC-2(9)
   disa_stig:
     - N/A
-  srg: 
+  srg:
     - N/A
   cci: 
     - N/A    

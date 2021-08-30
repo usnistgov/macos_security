@@ -22,10 +22,10 @@ references:
     - AU-5
   800-53r4: 
     - AU-5
-  srg: 
+  srg:
     - SRG-OS-000047-GPOS-00023
   disa_stig: 
-    - APPL-12-XXXXXX
+    - N/A
   800-171r2:
     - 3.3.4
 macOS:

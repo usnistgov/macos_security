@@ -31,8 +31,8 @@ references:
     - AC-18(1)
     - AC-18(3)
   disa_stig: 
-    - APPL-12-XXXXXX
-  srg: 
+    - N/A
+  srg:
     - SRG-OS-000299-GPOS-00117
     - SRG-OS-000300-GPOS-00118
     - SRG-OS-000379-GPOS-00164

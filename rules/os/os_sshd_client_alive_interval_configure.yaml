@@ -25,10 +25,10 @@ references:
     - AC-12
   800-53r4: 
     - SC-10
-  srg: 
+  srg:
     - SRG-OS-000163-GPOS-00072
   disa_stig: 
-    - APPL-12-XXXXXX
+    - N/A
   800-171r2:
     - 3.13.9
 macOS:

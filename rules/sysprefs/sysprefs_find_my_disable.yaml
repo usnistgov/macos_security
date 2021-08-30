@@ -25,7 +25,7 @@ references:
     - CM-7
     - CM-7(1)
     - AC-20
-  srg: 
+  srg:
     - SRG-OS-000095-GPOS-00049
     - SRG-OS-000370-GPOS-00155
   disa_stig: 

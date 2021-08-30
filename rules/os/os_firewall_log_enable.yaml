@@ -23,7 +23,7 @@ references:
   800-53r4: 
     - SC-7
     - AU-12
-  srg: 
+  srg:
     - N/A
   disa_stig: 
     - N/A

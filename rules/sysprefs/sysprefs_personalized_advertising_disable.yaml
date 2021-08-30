@@ -24,7 +24,7 @@ references:
     - AC-20
     - CM-7
     - CM-7(1)
-  srg: 
+  srg:
     - N/A
   disa_stig: 
     - N/A

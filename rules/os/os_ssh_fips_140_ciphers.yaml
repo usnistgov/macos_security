@@ -32,7 +32,7 @@ references:
     - IA-7
     - SC-8(1)
     - SC-13
-  srg: 
+  srg:
     - N/A
   disa_stig: 
     - N/A

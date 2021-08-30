@@ -22,10 +22,10 @@ references:
   800-53r4: 
     - IA-5
     - IA-5(1)
-  srg: 
+  srg:
     - SRG-OS-000071-GPOS-00039
   disa_stig: 
-    - APPL-12-XXXXXX
+    - N/A
   800-171r2:
     - 3.5.1
     - 3.5.2

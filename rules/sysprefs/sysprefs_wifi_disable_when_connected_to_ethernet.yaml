@@ -25,7 +25,7 @@ references:
     - AC-18(3)
   disa_stig: 
     - N/A
-  srg: 
+  srg:
     - N/A
   800-171r2:
     - 3.1.3
