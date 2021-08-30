@@ -19,7 +19,7 @@ references:
   800-53r4: 
     - SI-2(2)
   srg:
-    - SRG-OS-000191-GPOS-00080
+    - N/A
   disa_stig: 
     - N/A
 macOS:

@@ -26,7 +26,7 @@ references:
     - AC-18(3)
     - SC-8
   srg:
-    - SRG-OS-000481-GPOS-000481
+    - N/A
   disa_stig: 
     - N/A
   800-171r2:

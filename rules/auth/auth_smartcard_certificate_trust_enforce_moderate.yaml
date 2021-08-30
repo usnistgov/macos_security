@@ -30,11 +30,7 @@ references:
     - IA-2(12)
     - IA-5(2)
   srg:
-    - SRG-OS-000376-GPOS-00161
-    - SRG-OS-000377-GPOS-00162
-    - SRG-OS-000384-GPOS-00167
-    - SRG-OS-000403-GPOS-00182
-    - SRG-OS-000067-GPOS-00035
+    - N/A
   disa_stig: 
    - APPL-12-XXXXXX
 macOS:

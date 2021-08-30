@@ -25,7 +25,7 @@ references:
   800-53r4:
     - AU-9
   srg:
-    - SRG-OS-000057-GPOS-00027
+    - N/A
   disa_stig:
     - N/A
   800-171r2:

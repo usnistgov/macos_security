@@ -23,7 +23,7 @@ references:
     - IA-5
     - IA-5(1)
   srg:
-    - SRG-OS-000071-GPOS-00039
+    - N/A
   disa_stig: 
     - N/A
   800-171r2:

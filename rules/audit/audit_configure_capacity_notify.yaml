@@ -23,8 +23,8 @@ references:
   800-53r4: 
     - AU-5(1)
   srg:
-    - SRG-OS-000343-GPOS-00134
-  disa_stig: 
+    - N/A
+  disa_stig:
     - N/A
 macOS:
   - "12.0"

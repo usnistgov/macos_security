@@ -29,9 +29,7 @@ references:
   disa_stig:
     - N/A
   srg:
-    - SRG-OS-000378-GPOS-00163
-  cci:
-    - CCI-001958
+    - N/A
   800-171r2:
     - 3.1.5
     - 3.1.6

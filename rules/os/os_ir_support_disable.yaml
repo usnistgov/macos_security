@@ -26,7 +26,7 @@ references:
     - CM-7(1)
     - AC-18
   srg:
-    - SRG-OS-000480-GPOS-00227
+    - N/A
   disa_stig: 
     - AOSX-13-000075
   800-171r2:

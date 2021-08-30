@@ -23,7 +23,7 @@ references:
   800-53r4: 
     - SC-10
   srg:
-    - SRG-OS-000163-GPOS-00072
+    - N/A
   disa_stig: 
     - N/A
   800-171r2:

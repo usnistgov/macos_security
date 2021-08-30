@@ -29,7 +29,7 @@ references:
     - AC-3
     - IA-5(1)
   srg:
-    - SRG-OS-000074-GPOS-00042
+    - N/A
   disa_stig:
     - N/A
   800-171r2:

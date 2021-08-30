@@ -26,9 +26,9 @@ references:
     - IA-2(12)
     - IA-5(2)
   srg:
-   - SRG-OS-000067-GPOS-00035
+    - N/A
   disa_stig: 
-   - APPL-12-XXXXXX
+    - N/A
 macOS:
   - "12.0"
 tags:

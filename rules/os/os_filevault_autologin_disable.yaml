@@ -24,7 +24,7 @@ references:
     - AC-3
     - IA-5(13)
   srg:
-    - SRG-OS-000480-GPOS-00227
+    - N/A
   disa_stig:
     - N/A
   cci:

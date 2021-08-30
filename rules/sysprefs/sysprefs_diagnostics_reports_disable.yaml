@@ -23,7 +23,7 @@ references:
     - AC-20
     - SI-11
   srg:
-    - SRG-OS-000096-GPOS-00050
+    - N/A
   disa_stig: 
     - N/A
   800-171r2:

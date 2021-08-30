@@ -32,7 +32,7 @@ references:
     - SI-3
     - SI-7(15)
   srg:
-    - SRG-OS-000366-GPOS-00153
+    - N/A
   disa_stig: 
     - N/A
   800-171r2:

@@ -29,9 +29,7 @@ references:
     - CM-7(1)
     - SC-7(16)
   srg:
-    - SRG-OS-000480-GPOS-00232
-  cci:
-    - CCI-000366
+    - N/A
   disa_stig:
     - N/A
   800-171r2:

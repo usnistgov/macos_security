@@ -20,7 +20,7 @@ references:
   800-53r4:
     - CM-11(2)
   srg:
-    - SRG-OS-000362-GPOS-00149
+    - N/A
   disa_stig:
     - N/A
 macOS:

@@ -32,7 +32,7 @@ references:
     - SC-7(5)
     - AC-4
   srg:
-    - SRG-OS-000480-GPOS-00231
+    - N/A
   disa_stig:
     - N/A
   800-171r2:

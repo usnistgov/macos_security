@@ -65,8 +65,7 @@ references:
   800-53r4:
     - AC-2(2)
   srg:
-    - SRG-OS-000002-GPOS-00002
-    - SRG-OS-000123-GPOS-00064
+    - N/A
   disa_stig:
     - N/A
 macOS:

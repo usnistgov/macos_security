@@ -30,7 +30,7 @@ references:
     - CM-7(1)
     - SC-7(12)
   srg:
-    - SRG-OS-000480-GPOS-00232
+    - N/A
   disa_stig: 
     - N/A
   800-171r2:

@@ -25,7 +25,7 @@ references:
     - AU-4
     - AU-11
   srg:
-    - SRG-OS-000341-GPOS-00132
+    - N/A
   disa_stig:
     - N/A
 macOS:

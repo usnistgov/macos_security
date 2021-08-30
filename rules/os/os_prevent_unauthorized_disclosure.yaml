@@ -22,7 +22,7 @@ references:
   disa_stig:
     - N/A
   srg:
-    - SRG-OS-000138-GPOS-00069
+    - N/A
   800-171r2:
     - 3.13.4
 macOS:

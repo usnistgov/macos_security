@@ -23,7 +23,7 @@ references:
   800-53r4:
     - SI-6
   srg:
-    - SRG-OS-000446-GPOS-00200
+    - N/A
   disa_stig:
     - N/A
   cci:

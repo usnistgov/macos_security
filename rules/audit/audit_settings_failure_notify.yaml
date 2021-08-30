@@ -25,8 +25,8 @@ references:
     - AU-5
     - AU-5(2)
   srg:
-    - SRG-OS-000344-GPOS-00135
-  disa_stig: 
+    - N/A
+  disa_stig:
     - N/A
   800-171r2:
     - 3.3.4

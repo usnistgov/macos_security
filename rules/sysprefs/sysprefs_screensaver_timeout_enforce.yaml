@@ -21,7 +21,7 @@ references:
   800-53r4: 
     - AC-11
   srg:
-    - SRG-OS-000029-GPOS-00010
+    - N/A
   disa_stig: 
     - N/A
   800-171r2:

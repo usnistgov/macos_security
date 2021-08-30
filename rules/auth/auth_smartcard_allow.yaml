@@ -16,16 +16,16 @@ references:
   cce:
     - CCE-90880-6
   cci: 
-   - N/A
+    - N/A
   800-53r5:
     - IA-2(1)
     - IA-2(2)
     - IA-2(12)
   800-53r4: 
-   - IA-2(12)
-   - IA-5(11)
+    - IA-2(12)
+    - IA-5(11)
   srg:
-   - SRG-OS-000376-GPOS-00161
+    - N/A
   disa_stig:
     - N/A
 macOS:

@@ -23,7 +23,7 @@ references:
   800-53r4:
     - SI-11
   srg:
-    - SRG-OS-000206-GPOS-00084
+    - N/A
   disa_stig:
     - N/A
   800-171r2:

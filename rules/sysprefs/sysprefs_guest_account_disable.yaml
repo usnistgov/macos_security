@@ -22,7 +22,7 @@ references:
     - AC-2
     - AC-2(9)
   srg:
-    - SRG-OS-000364-GPOS-00151
+    - N/A
   disa_stig:
     - N/A
   800-171r2:

@@ -24,7 +24,7 @@ references:
   800-53r4: 
     - IA-5(1)
   srg:
-    - SRG-OS-000077-GPOS-00045
+    - N/A
   disa_stig: 
     - N/A
   800-171r2:

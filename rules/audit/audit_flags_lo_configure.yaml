@@ -33,8 +33,7 @@ references:
     - AU-12
     - MA-4(1)
   srg:
-    - SRG-OS-000032-GPOS-00013
-    - SRG-OS-000462-GPOS-00206
+    - N/A
   disa_stig:
     - N/A
   800-171r2:

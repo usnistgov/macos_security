@@ -23,7 +23,7 @@ references:
   disa_stig:
     - N/A
   srg:
-    - SRG-OS-000360-GPOS-00147
+    - N/A
 macOS:
   - "12.0"
 tags:

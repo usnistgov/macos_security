@@ -20,7 +20,7 @@ references:
   800-53r4: 
     - AC-7
   srg:
-    - SRG-OS-000329-GPOS-00128
+    - N/A
   disa_stig: 
     - N/A
   800-171r2:

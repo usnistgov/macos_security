@@ -36,17 +36,8 @@ references:
     - CM-5(1)
     - MA-4(1)
   srg:
-    - SRG-OS-000365-GPOS-00152
-    - SRG-OS-000458-GPOS-00203
-    - SRG-OS-000461-GPOS-00205
-    - SRG-OS-000463-GPOS-00207
-    - SRG-OS-000465-GPOS-00209
-    - SRG-OS-000466-GPOS-00210
-    - SRG-OS-000467-GPOS-00211
-    - SRG-OS-000468-GPOS-00212
-    - SRG-OS-000474-GPOS-00219
-    - SRG-OS-000057-GPOS-00027
-  disa_stig: 
+    - N/A
+  disa_stig:
     - N/A
   800-171r2:
     - 3.3.1
