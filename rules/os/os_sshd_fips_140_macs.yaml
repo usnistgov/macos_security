@@ -48,7 +48,7 @@ references:
 macOS:
   - "12.0"
 tags:
-
+  - none
 severity: "medium"
 mobileconfig: false
 mobileconfig_info:
