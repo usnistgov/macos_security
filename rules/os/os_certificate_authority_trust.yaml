@@ -25,12 +25,11 @@ references:
 macOS:
   - "12.0"
 tags:
-  - 800-53r5_moderate
-  - 800-53r5_high
-  - 800-53r4_moderate
-  - 800-53r4_high
-  - cnssi-1253
-  - stig
+  - 800-53r5_moderate 
+  - 800-53r5_high 
+  - 800-53r4_moderate 
+  - 800-53r4_high 
+  - cnssi-1253 
   - manual
 severity: "high"
 mobileconfig: false

@@ -26,7 +26,7 @@ references:
 macOS:
   - "12.0"
 tags:
-  - stig
+
 severity: "medium"
 mobileconfig: true
 mobileconfig_info:

@@ -27,7 +27,6 @@ macOS:
   - 11.0
 tags:
   - manual
-  - stig
 severity: "high"
 mobileconfig:
 mobileconfig_info:

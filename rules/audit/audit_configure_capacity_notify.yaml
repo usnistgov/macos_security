@@ -29,9 +29,8 @@ references:
 macOS:
   - "12.0"
 tags:
-  - 800-53r5_high
+  - 800-53r5_high 
   - 800-53r4_high
-  - stig
 severity: "medium"
 mobileconfig: false
 mobileconfig_info:
