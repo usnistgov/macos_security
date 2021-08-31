@@ -30,4 +30,4 @@ tags:
 mobileconfig: true
 mobileconfig_info:
   com.apple.SoftwareUpdate:
-    criticalUpdateInstall: true
+    CriticalUpdateInstall: true
