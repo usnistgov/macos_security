@@ -11,7 +11,7 @@ discussion: |
 check: |
   /usr/bin/profiles -P -o stdout | /usr/bin/grep -Ec '(homeSharingUIStatus = 0|legacySharingUIStatus = 0|mediaSharingUIStatus = 0)'
 result:
-  integer: 1
+  integer: 3
 fix: |
   This is implemented by a Configuration Profile.
 references:
