@@ -9,7 +9,7 @@ discussion: |
 check: |
   /usr/bin/profiles -P -o stdout | /usr/bin/grep -Ec '(EnableLogging = 1|LoggingOption = detail)'
 result:
-  integer: 1
+  integer: 2
 fix: |
   This is implemented by a Configuration Profile.
 references:
