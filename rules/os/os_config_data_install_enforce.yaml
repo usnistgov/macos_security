@@ -39,4 +39,4 @@ tags:
 mobileconfig: true
 mobileconfig_info:
   com.apple.SoftwareUpdate:
-    configdatainstall: true
+    ConfigDataInstall: true
