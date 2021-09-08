@@ -40,7 +40,6 @@ references:
     - 4.8
     - 6.7
     - 12.2
-    - 15.2
 macOS:
   - "11.0"
 tags:

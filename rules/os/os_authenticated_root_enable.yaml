@@ -44,7 +44,6 @@ references:
     - 3.4.5
   cisv8:
     - 3.3
-    - 6.7
 macOS:
   - "11.0"
 tags:
