@@ -26,5 +26,6 @@ macOS:
   - "11.0"
 tags:
   - inherent
+  - cisv8
 mobileconfig: false
 mobileconfig_info:

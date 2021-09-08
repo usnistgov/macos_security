@@ -44,6 +44,7 @@ tags:
   - 800-171
   - cnssi-1253
   - stig
+  - cisv8
 severity: "medium"
 mobileconfig: false
 mobileconfig_info:

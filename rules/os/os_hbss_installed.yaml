@@ -35,6 +35,7 @@ macOS:
 tags:
   - manual
   - stig
+  - cisv8
 severity: "medium"
 mobileconfig: false
 mobileconfig_info:

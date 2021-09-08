@@ -62,5 +62,6 @@ tags:
   - 800-53r4_high
   - 800-53r5_moderate
   - 800-53r5_high
+  - cisv8
 mobileconfig: false
 mobileconfig_info:
