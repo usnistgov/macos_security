@@ -848,20 +848,22 @@ defaults write "$audit_plist" lastComplianceCheck "$(date)"
             zsh_check_text = """
 #####----- Rule: {0} -----#####
 ## Addresses the following NIST 800-53 controls: {1}
-#echo 'Running the command to check the settings for: {0} ...' | tee -a "$audit_log"
-unset result_value
-result_value=$({2})
-# expected result {3}
 rule_arch="{6}"
+if [[ "$arch" == "$rule_arch" ]] || [[ -z "$rule_arch" ]]; then
+    #echo 'Running the command to check the settings for: {0} ...' | tee -a "$audit_log"
+    unset result_value
+    result_value=$({2})
+    # expected result {3}
 
-# check to see if rule is exempt
-unset exempt
-unset exempt_reason
-exempt=$($plb -c "print {0}:exempt" "$audit_plist_managed" 2>/dev/null)
-exempt_reason=$($plb -c "print {0}:exempt_reason" "$audit_plist_managed" 2>/dev/null)
+
+    # check to see if rule is exempt
+    unset exempt
+    unset exempt_reason
+    exempt=$($plb -c "print {0}:exempt" "$audit_plist_managed" 2>/dev/null)
+    exempt_reason=$($plb -c "print {0}:exempt_reason" "$audit_plist_managed" 2>/dev/null)
 
 
-if [[ "$arch" == "$rule_arch" ]] || [[ -z "$rule_arch" ]]; then 
+ 
     if [[ ! $exempt == "true" ]] || [[ -z $exempt ]];then
         if [[ $result_value == "{4}" ]]; then
             echo "$(date -u) {5} passed (Result: $result_value, Expected: "{3}")" | tee -a "$audit_log"
