@@ -16,7 +16,7 @@ profile:
       - audit_folder_group_configure
       - audit_failure_halt
       - audit_acls_folders_configure
-      - audit_flags_fm_configure
+      - audit_flags_fm_failed_configure
       - audit_auditd_enabled
       - audit_flags_ad_configure
       - audit_flags_ex_configure
