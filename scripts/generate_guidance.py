@@ -877,6 +877,7 @@ if [[ "$arch" == "$rule_arch" ]] || [[ -z "$rule_arch" ]]; then
     fi
 else
     echo "$(date -u) {5} does not apply to this architechture" | tee -a "$audit_log"
+    defaults write "$audit_plist" {0} -dict-add finding -bool NO
 fi
     """.format(rule_yaml['id'], nist_controls.replace("\n", "\n#"), check.strip(), result, result_value, ' '.join(log_reference_id), arch)
 
