@@ -6,6 +6,8 @@ discussion: |
   Single user mode, recovery mode, the Startup Manager, and several other tools are available on macOS by holding down specific key combinations during startup. Setting a recovery lock restricts access to these tools.
 
   NOTE: Recovery lock passwords are not supported on Intel devices.
+
+  NOTE: This feature was added in macOS Big Sur version 11.5.
 check: |
   /usr/libexec/mdmclient QuerySecurityInfo | /usr/bin/grep -c "IsRecoveryLockedEnabled = 1"
 result: 
@@ -28,7 +30,7 @@ references:
   800-171r2:
     - 3.1.5
 macOS:
-  - 11.0
+  - "11.0"
 tags:
   - 800-53r5_moderate 
   - 800-53r5_high 
