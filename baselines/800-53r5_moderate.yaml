@@ -85,6 +85,7 @@ profile:
       - os_mail_app_disable
       - os_bonjour_disable
       - os_calendar_app_disable
+      - os_recovery_lock_enable
   - section: "passwordpolicy"
     rules:
       - pwpolicy_account_inactivity_enforce
