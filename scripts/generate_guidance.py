@@ -567,7 +567,7 @@ plb="/usr/libexec/PlistBuddy"
 
 # get the currently logged in user
 CURRENT_USER=$(scutil <<< "show State:/Users/ConsoleUser" | awk '/Name :/ && ! /loginwindow/ {{ print $3 }}')
-CURR_USER_UID=$(/usr/bin/id -u $CURR_USER)
+CURR_USER_UID=$(/usr/bin/id -u $CURRENT_USER)
 
 # configure colors for text
 RED='\e[31m'
