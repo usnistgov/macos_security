@@ -1123,7 +1123,7 @@ def main():
                 </file_test>'''.format(x,rule_yaml['id'],x,x)
                         
                         if "-" in fix_command and "R" in fix_command or rule_yaml['fix'].split("\n")[2][-1] == "*":
-                            behavior = '<behaviors recurse="directories" recurse_direction="down" max_depth="-1" recurse_file_system="local"></behaviors>'
+                            behavior = '<behaviors recurse="symlinks and directories" recurse_direction="down" max_depth="-1" recurse_file_system="local"></behaviors>'
                             if "audit" in rule_file:
                                 filename = '<filename datatype="string" operation="not equal">current</filename>'
                         else:
