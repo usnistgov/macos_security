@@ -348,8 +348,15 @@ def main():
                     <instance datatype="int" operation="equals">1</instance>
                 </plist510_object>
                 '''.format(rule_yaml['id'],x,key,payload_type)
-                            
                         
+                                    state_kind = ""
+                                    if type(value) == bool:
+                                        state_kind = "boolean"
+                                    elif type(value) == int:
+                                        state_kind = "int"
+                                    elif type(value) == str:
+                                        state_kind = "string"
+
                                     oval_state = oval_state + '''
                             <plist510_state xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" comment="{}_state" id="oval:mscp:ste:{}" version="1">
                 <value datatype="{}" operation="equals">{}</value>
