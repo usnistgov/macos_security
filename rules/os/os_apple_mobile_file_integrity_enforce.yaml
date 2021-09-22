@@ -31,7 +31,6 @@ references:
     - N/A
   cisv8:
     - 10.1
-    - 10.2
     - 10.4
     - 10.5
 macOS:

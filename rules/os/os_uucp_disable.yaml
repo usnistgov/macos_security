@@ -37,7 +37,6 @@ references:
     - 3.3
     - 4.1
     - 4.8
-    - 6.7
 macOS:
   - "11.0"
 tags:
