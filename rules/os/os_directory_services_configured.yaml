@@ -23,10 +23,13 @@ references:
     - N/A
   disa_stig:
     - N/A
+  cisv8:
+    - 6.7
 macOS:
   - 11.0
 tags:
   - manual
+  - cisv8
 severity: "high"
 mobileconfig:
 mobileconfig_info:

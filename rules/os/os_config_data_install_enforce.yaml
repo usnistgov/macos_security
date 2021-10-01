@@ -30,12 +30,17 @@ references:
     - N/A
   800-171r2:
     - N/A
+  cisv8:
+    - 10.1
+    - 10.2
+    - 10.4
 macOS:
   - "12.0"
 tags:
   - 800-53r5_low
   - 800-53r5_moderate
   - 800-53r5_high
+  - cisv8
 mobileconfig: true
 mobileconfig_info:
   com.apple.SoftwareUpdate:

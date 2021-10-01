@@ -30,6 +30,8 @@ references:
     - N/A
   800-171r2:
     - 3.3.7
+  cisv8:
+    - 8.4
 macOS:
   - "12.0"
 tags:
@@ -40,6 +42,7 @@ tags:
   - 800-53r5_high 
   - 800-53r4_moderate 
   - 800-53r4_high
+  - cisv8
 severity: "medium"
 mobileconfig: false
 mobileconfig_info:
