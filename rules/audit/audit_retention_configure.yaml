@@ -28,6 +28,9 @@ references:
     - SRG-OS-000341-GPOS-00132
   disa_stig:
     - AOSX-15-001029
+  cisv8:
+    - 8.3
+    - 8.1
 macOS:
   - "10.15"
 tags:
@@ -40,6 +43,7 @@ tags:
   - 800-53r4_moderate
   - 800-53r4_high
   - stig
+  - cisv8
 severity: "medium"
 mobileconfig: false
 mobileconfig_info:

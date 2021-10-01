@@ -22,11 +22,17 @@ references:
     - SRG-OS-000191-GPOS-00080
   disa_stig: 
     - AOSX-15-000015
+  cisv8:
+    - 10.1
+    - 10.2
+    - 10.6
+    - 10.7
 macOS:
   - "10.15"
 tags:
   - manual
   - stig
+  - cisv8
 severity: "medium"
 mobileconfig: false
 mobileconfig_info:

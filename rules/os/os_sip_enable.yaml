@@ -82,6 +82,10 @@ references:
     - 3.3.8
     - 3.4.5
     - 3.13.4
+  cisv8:
+    - 2.6
+    - 3.3
+    - 10.5
 macOS:
   - "10.15"
 tags:
@@ -94,6 +98,7 @@ tags:
   - 800-53r4_moderate
   - 800-53r4_high
   - stig
+  - cisv8
 severity: "medium"
 mobileconfig: false
 mobileconfig_info:
