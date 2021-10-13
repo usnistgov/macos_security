@@ -2,8 +2,12 @@ title: "macOS 11.0: Security Configuration - CIS Controls Version 8"
 description: |
   This guide describes the actions to take when securing a macOS 11.0 system against the CIS Controls version 8 baseline.
 authors: |
+  CIS Critical Security Controls® (CIS Controls®) are referenced with the permission and support of the Center for Internet Security® (CIS®)
   |===
   |Edward Byrd|Center for Internet Security
+  |Bob Gendler|National Institute of Standards and Technology
+  |Dan Brodjieski|National Aeronautics and Space Administration
+  |Allen Golbig|JAMF
   |===
 profile:
   - section: "authentication"
@@ -29,6 +33,8 @@ profile:
   - section: "macos"
     rules:
       - os_apple_mobile_file_integrity_enforce
+      - os_gatekeeper_rearm
+      - os_root_disable
       - os_password_proximity_disable
       - os_mdm_require
       - os_handoff_disable
@@ -41,17 +47,20 @@ profile:
       - os_privacy_setup_prompt_disable
       - os_uucp_disable
       - os_touchid_prompt_disable
+      - os_hbss_installed
       - os_filevault_autologin_disable
       - os_messages_app_disable
       - os_airdrop_disable
+      - os_parental_controls_enable
       - os_nfsd_disable
       - os_httpd_disable
       - os_gatekeeper_enable
       - os_sip_enable
-      - os_removable_media_disable
+      - os_time_server_enabled
       - os_internet_accounts_prefpane_disable
       - os_siri_prompt_disable
       - os_appleid_prompt_disable
+      - os_directory_services_configured
       - os_facetime_app_disable
       - os_icloud_storage_prompt_disable
       - os_ir_support_disable
@@ -60,6 +69,7 @@ profile:
       - os_calendar_app_disable
   - section: "passwordpolicy"
     rules:
+      - pwpolicy_account_inactivity_enforce
       - pwpolicy_history_enforce
       - pwpolicy_account_lockout_enforce
       - pwpolicy_simple_sequence_disable
@@ -96,16 +106,20 @@ profile:
       - sysprefs_ssh_disable
       - sysprefs_critical_update_install_enforce
       - sysprefs_guest_account_disable
+      - sysprefs_screensaver_timeout_enforce
       - sysprefs_firewall_enable
       - sysprefs_find_my_disable
       - sysprefs_content_caching_disable
       - sysprefs_location_services_disable
+      - sysprefs_time_server_configure
       - sysprefs_power_nap_disable
       - sysprefs_diagnostics_reports_disable
       - sysprefs_bluetooth_disable
       - sysprefs_wifi_disable
+      - sysprefs_time_server_enforce
       - sysprefs_screen_sharing_disable
       - sysprefs_siri_disable
+      - sysprefs_filevault_enforce
       - sysprefs_bluetooth_sharing_disable
       - sysprefs_improve_siri_dictation_disable
   - section: "Inherent"
@@ -115,10 +129,12 @@ profile:
       - os_unique_identification
       - os_malicious_code_prevention
       - os_store_encrypted_passwords
+      - os_mfa_network_access
       - pwpolicy_force_password_change
   - section: "Permanent"
     rules:
       - os_secure_name_resolution
+      - os_auth_peripherals
   - section: "not_applicable"
     rules: 
       - os_access_control_mobile_devices
