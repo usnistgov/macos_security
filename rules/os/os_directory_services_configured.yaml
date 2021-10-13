@@ -13,6 +13,8 @@ check: |
 fix: |
   Integrate the system into an existing directory services infrastructure.
 references:
+  cce:
+    - CCE-85493-5
   cci:
     - CCI-000366
   800-53r5:
