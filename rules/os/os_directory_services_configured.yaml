@@ -13,6 +13,8 @@ check: |
 fix: |
   Integrate the system into an existing directory services infrastructure.
 references:
+  cce:
+    - CCE-85493-5
   cci:
     - CCI-000366
   800-53r5:
@@ -26,7 +28,7 @@ references:
   cisv8:
     - 6.7
 macOS:
-  - 11.0
+  - "12.0"
 tags:
   - manual
   - cisv8
