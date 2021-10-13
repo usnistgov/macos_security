@@ -348,8 +348,15 @@ def main():
                     <instance datatype="int" operation="equals">1</instance>
                 </plist510_object>
                 '''.format(rule_yaml['id'],x,key,payload_type)
-                            
                         
+                                    state_kind = ""
+                                    if type(value) == bool:
+                                        state_kind = "boolean"
+                                    elif type(value) == int:
+                                        state_kind = "int"
+                                    elif type(value) == str:
+                                        state_kind = "string"
+
                                     oval_state = oval_state + '''
                             <plist510_state xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" comment="{}_state" id="oval:mscp:ste:{}" version="1">
                 <value datatype="{}" operation="equals">{}</value>
@@ -1123,7 +1130,7 @@ def main():
                 </file_test>'''.format(x,rule_yaml['id'],x,x)
                         
                         if "-" in fix_command and "R" in fix_command or rule_yaml['fix'].split("\n")[2][-1] == "*":
-                            behavior = '<behaviors recurse="directories" recurse_direction="down" max_depth="-1" recurse_file_system="local"></behaviors>'
+                            behavior = '<behaviors recurse="symlinks and directories" recurse_direction="down" max_depth="-1" recurse_file_system="local"></behaviors>'
                             if "audit" in rule_file:
                                 filename = '<filename datatype="string" operation="not equal">current</filename>'
                         else:
