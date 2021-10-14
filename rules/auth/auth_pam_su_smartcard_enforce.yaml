@@ -47,6 +47,10 @@ references:
     - AOSX-15-003051
   800-171r2:
     - 3.5.3
+  cisv8:
+    - 6.3
+    - 6.4
+    - 6.5
 macOS:
   - "10.15"
 tags:
@@ -59,6 +63,7 @@ tags:
   - 800-53r4_moderate
   - 800-53r4_high
   - stig
+  - cisv8
 severity: "medium"
 mobileconfig: false
 mobileconfig_info:

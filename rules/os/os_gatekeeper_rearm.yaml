@@ -24,6 +24,8 @@ references:
     - N/A
   800-171r2:
     - 3.4.5
+  cisv8:
+    - 10.5
 macOS:
   - "10.15"
 tags:
@@ -34,6 +36,7 @@ tags:
   - cnssi-1253
   - 800-53r4_moderate
   - 800-53r4_high
+  - cisv8
 mobileconfig: true
 mobileconfig_info:
   com.apple.ManagedClient.preferences:

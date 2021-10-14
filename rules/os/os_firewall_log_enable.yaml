@@ -36,6 +36,10 @@ references:
     - 3.13.1
     - 3.13.2
     - 3.13.5
+  cisv8:
+    - 4.5
+    - 8.2
+    - 8.5
 macOS:
   - "10.15"
 tags:
@@ -47,5 +51,6 @@ tags:
   - 800-53r4_low
   - 800-53r4_moderate
   - 800-53r4_high
+  - cisv8
 mobileconfig: false
 mobileconfig_info:

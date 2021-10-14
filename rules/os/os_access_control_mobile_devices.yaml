@@ -21,6 +21,8 @@ references:
     - N/A
   srg:
     - N/A
+  cisv8:
+    - 6.4
 macOS:
   - "10.15"
 tags:
@@ -28,5 +30,6 @@ tags:
   - 800-53r5_moderate
   - 800-53r5_high
   - n_a
+  - cisv8
 mobileconfig: false
 mobileconfig_info:
