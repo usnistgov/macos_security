@@ -1,6 +1,17 @@
 title: "macOS 11 Security Configuration:NIST SP 800-53 Rev 5 High Impact Security Baseline"
 description: |
   This guide describes the actions to take when securing a macOS 11 system against the NIST SP 800-53 Rev. 5 High-Impact Security Baseline.
+authors: |
+  |===
+  |Bob Gendler|National Institute of Standards and Technology
+  |Allen Golbig|National Aeronautics and Space Administration
+  |Dan Brodjieski|Defense Information Systems Agency
+  |Jason Blake|National Institute of Standards and Technology
+  |Blair Heiserman|National Institute of Standards and Technology
+  |Joshua Glemza|National Aeronautics and Space Administration
+  |Elyse Anderson|National Aeronautics and Space Administration
+  |Gary Gapinski|National Aeronautics and Space Administration
+  |===
 profile:
   - section: "authentication"
     rules:

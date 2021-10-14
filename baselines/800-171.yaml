@@ -1,6 +1,12 @@
 title: "macOS 11: Security Configuration - NIST 800-171 Rev 2"
 description: |
   This guide describes the actions to take when securing a macOS 11 system against the 800-171 Rev 2 baseline.
+authors: |
+  |===
+  |Bob Gendler|National Institute of Standards and Technology
+  |Jason Blake|National Institute of Standards and Technology
+  |Blair Heiserman|National Institute of Standards and Technology
+  |===
 profile:
   - section: "authentication"
     rules:

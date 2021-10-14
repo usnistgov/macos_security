@@ -31,6 +31,8 @@ references:
     - APPL-11-000014
   800-171r2:
     - 3.3.7
+  cisv8:
+    - 8.4
 macOS:
   - "11.0"
 tags:
@@ -42,6 +44,7 @@ tags:
   - 800-53r4_moderate
   - 800-53r4_high
   - stig
+  - cisv8
 severity: "medium"
 mobileconfig: false
 mobileconfig_info:

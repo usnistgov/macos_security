@@ -4,7 +4,7 @@
     <generator>
         <oval:product_name>macOS Security Compliance Project</oval:product_name>
         <oval:schema_version>5.11.2</oval:schema_version>
-        <oval:timestamp>2020-10-15T15:35:10Z</oval:timestamp>
+        <oval:timestamp>2021-09-16T15:35:10Z</oval:timestamp>
     </generator>
     <definitions>
         <definition id="oval:gov.nist.mscp.content.cpe.oval:def:1" version="1" class="inventory">

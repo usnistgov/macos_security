@@ -1,6 +1,10 @@
 title: "macOS 11: Security Configuration - CNSSI-1253"
 description: |
   This guide describes the actions to take when securing a macOS 11 system against the CNSSI-1253 baseline.
+authors: |
+  |===
+  |Ekkehard Koch|Los Alamos National Laboratory
+  |===
 profile:
   - section: "authentication"
     rules:

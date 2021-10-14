@@ -1,5 +1,9 @@
 == Authors
 [width="100%",cols="1,3"]
+
+$authors_list
+
+////
 |===
 |Bob Gendler|National Institute of Standards and Technology
 |Allen Golbig|National Aeronautics and Space Administration
@@ -10,3 +14,4 @@
 |Elyse Anderson|National Aeronautics and Space Administration
 |Gary Gapinski|National Aeronautics and Space Administration
 |===
+////
