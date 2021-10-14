@@ -1,6 +1,12 @@
 title: "macOS 12.0: Security Configuration - All Rules"
 description: |
   This guide describes the actions to take when securing a macOS 12.0 system against the all_rules baseline.
+authors: |
+  |===
+  |Bob Gendler|National Institute of Standards and Technology
+  |Dan Brodjieski|National Aeronautics and Space Administration
+  |Allen Golbig|JAMF
+  |===  
 profile:
   - section: "authentication"
     rules:
@@ -40,7 +46,6 @@ profile:
     rules:
       - os_airdrop_disable
       - os_anti_virus_installed
-      - os_apple_mobile_file_integrity_enforce
       - os_appleid_prompt_disable
       - os_asl_log_files_owner_group_configure
       - os_asl_log_files_permissions_configure
