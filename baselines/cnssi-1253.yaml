@@ -40,6 +40,7 @@ profile:
     rules:
       - os_airdrop_disable
       - os_appleid_prompt_disable
+      - os_authenticated_root_enable
       - os_bonjour_disable
       - os_calendar_app_disable
       - os_certificate_authority_trust
@@ -65,6 +66,7 @@ profile:
       - os_password_proximity_disable
       - os_password_sharing_disable
       - os_policy_banner_loginwindow_enforce
+      - os_recovery_lock_enable
       - os_removable_media_disable
       - os_root_disable
       - os_screensaver_loginwindow_enforce
@@ -109,8 +111,6 @@ profile:
       - icloud_sync_disable
   - section: "systempreferences"
     rules:
-      - sysprefs_ad_tracking_disable
-      - sysprefs_afp_disable
       - sysprefs_apple_watch_unlock_disable
       - sysprefs_automatic_login_disable
       - sysprefs_automatic_logout_enforce
@@ -124,7 +124,6 @@ profile:
       - sysprefs_firewall_stealth_mode_enable
       - sysprefs_gatekeeper_identified_developers_allowed
       - sysprefs_gatekeeper_override_disallow
-      - sysprefs_guest_access_afp_disable
       - sysprefs_guest_access_smb_disable
       - sysprefs_guest_account_disable
       - sysprefs_hot_corners_disable
@@ -132,8 +131,8 @@ profile:
       - sysprefs_internet_sharing_disable
       - sysprefs_location_services_disable
       - sysprefs_loginwindow_prompt_username_password_enforce
-      - sysprefs_media_sharing_disabled
       - sysprefs_password_hints_disable
+      - sysprefs_personalized_advertising_disable
       - sysprefs_power_nap_disable
       - sysprefs_rae_disable
       - sysprefs_screen_sharing_disable
