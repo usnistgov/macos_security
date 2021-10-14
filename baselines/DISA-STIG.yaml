@@ -1,9 +1,11 @@
 title: "macOS 11.0: Security Configuration - DISA STIG"
 description: |
-  This guide describes the actions to take when securing a macOS 11 system against the DISA STIG baseline.
+  This guide describes the actions to take when securing a macOS 11.0 system against the DISA STIG baseline.
 authors: |
   |===
-  |Dan Brodjieski|Defense Information Systems Agency
+  |Dan Brodjieski|National Aeronautics and Space Administration
+  |Allen Golbig|Jamf
+  |Bob Gendler|National Institute of Standards and Technology
   |===
 profile:
   - section: "authentication"

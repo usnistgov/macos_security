@@ -1,17 +1,12 @@
-title: "macOS 11: Security Configuration - All Rules"
+title: "macOS 11.0: Security Configuration - All Rules"
 description: |
-  This guide describes the actions to take when securing a macOS 11 system against the all_rules baseline.
+  This guide describes the actions to take when securing a macOS 11.0 system against the all_rules baseline.
 authors: |
   |===
   |Bob Gendler|National Institute of Standards and Technology
-  |Allen Golbig|National Aeronautics and Space Administration
-  |Dan Brodjieski|Defense Information Systems Agency
-  |Jason Blake|National Institute of Standards and Technology
-  |Blair Heiserman|National Institute of Standards and Technology
-  |Joshua Glemza|National Aeronautics and Space Administration
-  |Elyse Anderson|National Aeronautics and Space Administration
-  |Gary Gapinski|National Aeronautics and Space Administration
-  |===
+  |Dan Brodjieski|National Aeronautics and Space Administration
+  |Allen Golbig|Jamf
+  |===  
 profile:
   - section: "authentication"
     rules:
