@@ -342,7 +342,7 @@
             <!--<xsl:element name="model" namespace="http://checklists.nist.gov/xccdf/1.2"/>-->
             <xsl:variable name="ROOT" as="document-node()" select="root()"/>
             <xsl:variable name="tags" as="xs:string*" select="distinct-values(//div[@class = 'sect2']//table//table//tr[th/p = 'TAGS']/td//p)"/>
-            <xsl:variable name="unwanted-tags" as="xs:string*" select="('inherent', 'permanent', 'n_a', 'none', 'manual', 'i386', 'oarm64', 'supplemental')"/>
+            <xsl:variable name="unwanted-tags" as="xs:string*" select="('inherent', 'permanent', 'n_a', 'none', 'manual', 'i386', 'arm64', 'supplemental')"/>
             <xsl:variable name="desired-tags" as="xs:string*" select="sort($tags[not(. = $unwanted-tags)])"/>
             <xsl:comment expand-text="true"> Profiles for {$desired-tags} </xsl:comment>
             <xsl:for-each select="$desired-tags">
