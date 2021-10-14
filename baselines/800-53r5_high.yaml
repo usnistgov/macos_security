@@ -1,204 +1,210 @@
 title: "macOS 10.15 Security Configuration:NIST SP 800-53 Rev 5 High Impact Security Baseline"
 description: |
   This guide describes the actions to take when securing a macOS 10.15 system against the NIST SP 800-53 Rev. 5 High-Impact Security Baseline.
+authors: |
+  |===
+  |Bob Gendler|National Institute of Standards and Technology
+  |Dan Brodjieski|National Aeronautics and Space Administration
+  |Allen Golbig|Jamf
+  |===
 profile:
   - section: "authentication"
     rules:
       - auth_pam_login_smartcard_enforce
-      - auth_smartcard_allow
+      - auth_pam_su_smartcard_enforce
       - auth_pam_sudo_smartcard_enforce
+      - auth_smartcard_allow
       - auth_smartcard_certificate_trust_enforce_high
       - auth_smartcard_enforce
-      - auth_pam_su_smartcard_enforce
   - section: "auditing"
     rules:
-      - audit_flags_fd_configure
-      - audit_folder_group_configure
-      - audit_failure_halt
+      - audit_acls_files_configure
       - audit_acls_folders_configure
-      - audit_flags_fm_configure
       - audit_auditd_enabled
+      - audit_configure_capacity_notify
+      - audit_failure_halt
+      - audit_files_group_configure
+      - audit_files_mode_configure
+      - audit_files_owner_configure
+      - audit_flags_aa_configure
       - audit_flags_ad_configure
       - audit_flags_ex_configure
-      - audit_files_mode_configure
-      - audit_flags_aa_configure
-      - audit_files_owner_configure
-      - audit_retention_configure
+      - audit_flags_fd_configure
+      - audit_flags_fm_configure
       - audit_flags_fr_configure
-      - audit_settings_failure_notify
-      - audit_folder_owner_configure
-      - audit_flags_lo_configure
       - audit_flags_fw_configure
+      - audit_flags_lo_configure
+      - audit_folder_group_configure
+      - audit_folder_owner_configure
       - audit_folders_mode_configure
-      - audit_configure_capacity_notify
-      - audit_files_group_configure
-      - audit_acls_files_configure
+      - audit_retention_configure
+      - audit_settings_failure_notify
   - section: "macos"
     rules:
-      - os_newsyslog_files_owner_group_configure
-      - os_firewall_default_deny_require
-      - os_firmware_password_require
-      - os_apple_mobile_file_integrity_enforce
-      - os_gatekeeper_rearm
-      - os_root_disable
-      - os_password_proximity_disable
-      - os_mdm_require
-      - os_screensaver_loginwindow_enforce
-      - os_handoff_disable
-      - os_firewall_log_enable
-      - os_ssh_server_alive_interval_configure
-      - os_tftpd_disable
-      - os_password_autofill_disable
-      - os_asl_log_files_permissions_configure
-      - os_password_sharing_disable
-      - os_ssh_fips_140_ciphers
-      - os_config_data_install_enforce
-      - os_filevault_authorized_users
-      - os_secure_boot_verify
-      - os_sudoers_tty_configure
-      - os_uucp_disable
-      - os_policy_banner_loginwindow_enforce
-      - os_touchid_prompt_disable
-      - os_filevault_autologin_disable
-      - os_messages_app_disable
       - os_airdrop_disable
-      - os_parental_controls_enable
-      - os_system_read_only
-      - os_ssh_server_alive_count_max_configure
-      - os_nfsd_disable
-      - os_httpd_disable
-      - os_asl_log_files_owner_group_configure
-      - os_gatekeeper_enable
-      - os_sip_enable
-      - os_removable_media_disable
-      - os_unlock_active_user_session_disable
-      - os_internet_accounts_prefpane_disable
-      - os_siri_prompt_disable
+      - os_apple_mobile_file_integrity_enforce
       - os_appleid_prompt_disable
-      - os_certificate_authority_trust
-      - os_newsyslog_files_permissions_configure
-      - os_ssh_fips_140_macs
-      - os_home_folders_secure
-      - os_facetime_app_disable
-      - os_icloud_storage_prompt_disable
-      - os_ir_support_disable
-      - os_mail_app_disable
+      - os_asl_log_files_owner_group_configure
+      - os_asl_log_files_permissions_configure
       - os_bonjour_disable
       - os_calendar_app_disable
+      - os_certificate_authority_trust
+      - os_config_data_install_enforce
+      - os_facetime_app_disable
+      - os_filevault_authorized_users
+      - os_filevault_autologin_disable
+      - os_firewall_default_deny_require
+      - os_firewall_log_enable
+      - os_firmware_password_require
+      - os_gatekeeper_enable
+      - os_gatekeeper_rearm
+      - os_handoff_disable
+      - os_home_folders_secure
+      - os_httpd_disable
+      - os_icloud_storage_prompt_disable
+      - os_internet_accounts_prefpane_disable
+      - os_ir_support_disable
+      - os_mail_app_disable
+      - os_mdm_require
+      - os_messages_app_disable
+      - os_newsyslog_files_owner_group_configure
+      - os_newsyslog_files_permissions_configure
+      - os_nfsd_disable
+      - os_parental_controls_enable
+      - os_password_autofill_disable
+      - os_password_proximity_disable
+      - os_password_sharing_disable
+      - os_policy_banner_loginwindow_enforce
+      - os_removable_media_disable
+      - os_root_disable
+      - os_screensaver_loginwindow_enforce
+      - os_secure_boot_verify
+      - os_sip_enable
+      - os_siri_prompt_disable
+      - os_ssh_fips_140_ciphers
+      - os_ssh_fips_140_macs
+      - os_ssh_server_alive_count_max_configure
+      - os_ssh_server_alive_interval_configure
+      - os_sudoers_tty_configure
+      - os_system_read_only
+      - os_tftpd_disable
+      - os_touchid_prompt_disable
+      - os_unlock_active_user_session_disable
+      - os_uucp_disable
   - section: "passwordpolicy"
     rules:
-      - pwpolicy_account_inactivity_enforce
-      - pwpolicy_history_enforce
-      - pwpolicy_temporary_or_emergency_accounts_disable
-      - pwpolicy_account_lockout_enforce
-      - pwpolicy_simple_sequence_disable
-      - pwpolicy_lower_case_character_enforce
-      - pwpolicy_account_lockout_timeout_enforce
-      - pwpolicy_special_character_enforce
-      - pwpolicy_alpha_numeric_enforce
-      - pwpolicy_minimum_length_enforce
-      - pwpolicy_upper_case_character_enforce
       - pwpolicy_60_day_enforce
+      - pwpolicy_account_inactivity_enforce
+      - pwpolicy_account_lockout_enforce
+      - pwpolicy_account_lockout_timeout_enforce
+      - pwpolicy_alpha_numeric_enforce
+      - pwpolicy_history_enforce
+      - pwpolicy_lower_case_character_enforce
+      - pwpolicy_minimum_length_enforce
       - pwpolicy_minimum_lifetime_enforce
+      - pwpolicy_simple_sequence_disable
+      - pwpolicy_special_character_enforce
+      - pwpolicy_temporary_or_emergency_accounts_disable
+      - pwpolicy_upper_case_character_enforce
   - section: "icloud"
     rules:
+      - icloud_addressbook_disable
+      - icloud_appleid_prefpane_disable
+      - icloud_bookmarks_disable
+      - icloud_calendar_disable
+      - icloud_drive_disable
+      - icloud_keychain_disable
+      - icloud_mail_disable
+      - icloud_notes_disable
       - icloud_photos_disable
       - icloud_reminders_disable
       - icloud_sync_disable
-      - icloud_appleid_prefpane_disable
-      - icloud_keychain_disable
-      - icloud_notes_disable
-      - icloud_drive_disable
-      - icloud_bookmarks_disable
-      - icloud_mail_disable
-      - icloud_calendar_disable
-      - icloud_addressbook_disable
   - section: "systempreferences"
     rules:
-      - sysprefs_automatic_logout_enforce
-      - sysprefs_smbd_disable
-      - sysprefs_firewall_stealth_mode_enable
       - sysprefs_ad_tracking_disable
-      - sysprefs_internet_sharing_disable
-      - sysprefs_system_wide_preferences_configure
-      - sysprefs_rae_disable
-      - sysprefs_guest_access_smb_disable
-      - sysprefs_media_sharing_disabled
-      - sysprefs_ssh_disable
-      - sysprefs_screensaver_password_enforce
+      - sysprefs_afp_disable
+      - sysprefs_apple_watch_unlock_disable
+      - sysprefs_automatic_login_disable
+      - sysprefs_automatic_logout_enforce
+      - sysprefs_bluetooth_disable
+      - sysprefs_bluetooth_sharing_disable
+      - sysprefs_content_caching_disable
       - sysprefs_critical_update_install_enforce
-      - sysprefs_guest_account_disable
-      - sysprefs_guest_access_afp_disable
+      - sysprefs_diagnostics_reports_disable
+      - sysprefs_filevault_enforce
+      - sysprefs_find_my_disable
+      - sysprefs_firewall_enable
+      - sysprefs_firewall_stealth_mode_enable
       - sysprefs_gatekeeper_identified_developers_allowed
       - sysprefs_gatekeeper_override_disallow
-      - sysprefs_screensaver_timeout_enforce
-      - sysprefs_firewall_enable
-      - sysprefs_find_my_disable
-      - sysprefs_afp_disable
-      - sysprefs_content_caching_disable
-      - sysprefs_location_services_disable
-      - sysprefs_power_nap_disable
-      - sysprefs_diagnostics_reports_disable
-      - sysprefs_bluetooth_disable
-      - sysprefs_loginwindow_prompt_username_password_enforce
-      - sysprefs_automatic_login_disable
-      - sysprefs_apple_watch_unlock_disable
-      - sysprefs_token_removal_enforce
-      - sysprefs_screensaver_ask_for_password_delay_enforce
-      - sysprefs_wifi_disable
-      - sysprefs_touchid_unlock_disable
-      - sysprefs_screen_sharing_disable
+      - sysprefs_guest_access_afp_disable
+      - sysprefs_guest_access_smb_disable
+      - sysprefs_guest_account_disable
       - sysprefs_hot_corners_disable
-      - sysprefs_siri_disable
-      - sysprefs_filevault_enforce
-      - sysprefs_password_hints_disable
-      - sysprefs_bluetooth_sharing_disable
       - sysprefs_improve_siri_dictation_disable
+      - sysprefs_internet_sharing_disable
+      - sysprefs_location_services_disable
+      - sysprefs_loginwindow_prompt_username_password_enforce
+      - sysprefs_media_sharing_disabled
+      - sysprefs_password_hints_disable
+      - sysprefs_power_nap_disable
+      - sysprefs_rae_disable
+      - sysprefs_screen_sharing_disable
+      - sysprefs_screensaver_ask_for_password_delay_enforce
+      - sysprefs_screensaver_password_enforce
+      - sysprefs_screensaver_timeout_enforce
+      - sysprefs_siri_disable
+      - sysprefs_smbd_disable
+      - sysprefs_ssh_disable
+      - sysprefs_system_wide_preferences_configure
+      - sysprefs_token_removal_enforce
+      - sysprefs_touchid_unlock_disable
+      - sysprefs_wifi_disable
   - section: "Inherent"
     rules:
       - audit_record_reduction_report_generation
-      - os_enforce_access_restrictions
-      - os_limit_gui_sessions
-      - os_prevent_priv_functions
-      - os_logical_access
-      - os_fail_secure_state
       - os_application_sandboxing
-      - os_implement_memory_protection
-      - os_implement_cryptography
-      - os_separate_functionality
-      - os_obscure_password
-      - os_prohibit_remote_activation_collab_devices
-      - os_unique_identification
-      - os_isolate_security_functions
-      - os_required_crypto_module
-      - os_malicious_code_prevention
-      - os_store_encrypted_passwords
-      - os_prevent_unauthorized_disclosure
       - os_crypto_audit
-      - pwpolicy_temporary_accounts_disable
-      - pwpolicy_force_password_change
+      - os_enforce_access_restrictions
+      - os_fail_secure_state
+      - os_implement_cryptography
+      - os_implement_memory_protection
+      - os_isolate_security_functions
+      - os_limit_gui_sessions
+      - os_logical_access
+      - os_malicious_code_prevention
+      - os_obscure_password
+      - os_prevent_priv_functions
+      - os_prevent_unauthorized_disclosure
+      - os_prohibit_remote_activation_collab_devices
+      - os_required_crypto_module
+      - os_separate_functionality
+      - os_store_encrypted_passwords
+      - os_unique_identification
       - pwpolicy_emergency_accounts_disable
+      - pwpolicy_force_password_change
+      - pwpolicy_temporary_accounts_disable
   - section: "Permanent"
     rules:
       - audit_records_processing
-      - os_provide_automated_account_management
-      - os_secure_name_resolution
       - os_auth_peripherals
       - os_continuous_monitoring
       - os_protect_dos_attacks
+      - os_provide_automated_account_management
+      - os_secure_name_resolution
       - sysprefs_wifi_disable_when_connected_to_ethernet
   - section: "not_applicable"
     rules: 
-      - os_information_validation
       - os_access_control_mobile_devices
-      - os_managed_access_control_points
-      - os_nonlocal_maintenance
       - os_identify_non-org_users
+      - os_information_validation
+      - os_managed_access_control_points
       - os_non_repudiation
+      - os_nonlocal_maintenance
   - section: "Supplemental"
     rules:
-      - supplemental_firewall_pf
-      - supplemental_filevault
-      - supplemental_password_policy
       - supplemental_controls
+      - supplemental_filevault
+      - supplemental_firewall_pf
+      - supplemental_password_policy
       - supplemental_smartcard
