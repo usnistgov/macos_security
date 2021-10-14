@@ -20,7 +20,7 @@ references:
   800-53r5:
     - N/A
   800-53r4:
-    - CM-6(b)
+    - N/A
   srg:
     - N/A
   disa_stig:
