@@ -6,9 +6,11 @@
 |ABM|Apple Business Manager
 |AFP|Apple Filing Protocol
 |ALF|Application Layer Firewall 
+|AO|Authorizing Official
 |API|Application Programming Interface
 |ARD|Apple Remote Desktop
 |CA|Certificate Authority
+|CIS|Center for Internet Security
 |CRL|Certificate Revocation List
 |DISA|Defense Information Systems Agency
 |DMA|Direct Memory Access
@@ -31,6 +33,7 @@
 |SIP|System Integrity Protection
 |SMB|Server Message Block
 |SSH|Secure Shell
+|SSP|System Security Plan
 |STIG|Security Technical Implementation Guide
 |UAMDM|User Approved MDM
 |UUCP|Unix-to-Unix Copy Protocol

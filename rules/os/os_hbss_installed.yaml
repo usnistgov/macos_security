@@ -22,10 +22,16 @@ references:
     - N/A
   disa_stig: 
     - N/A
+  cisv8:
+    - 10.1
+    - 10.2
+    - 10.6
+    - 10.7
 macOS:
   - "12.0"
 tags:
   - manual
+  - cisv8
 severity: "medium"
 mobileconfig: false
 mobileconfig_info:

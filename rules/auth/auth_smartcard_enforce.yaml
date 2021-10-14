@@ -49,6 +49,10 @@ references:
     - 3.5.1
     - 3.5.2
     - 3.5.3
+  cisv8:
+    - 6.3
+    - 6.4
+    - 6.5
 macOS:
   - "12.0"
 tags:
@@ -60,6 +64,7 @@ tags:
   - 800-53r4_high 
   - 800-171 
   - cnssi-1253
+  - cisv8
 severity: "high"
 mobileconfig: true
 mobileconfig_info:

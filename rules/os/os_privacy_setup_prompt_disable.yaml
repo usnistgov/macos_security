@@ -25,10 +25,14 @@ references:
     - N/A
   disa_stig: 
     - N/A
+  cisv8:
+    - 4.1
+    - 4.8
 macOS:
   - "12.0"
 tags:
   - none
+  - cisv8
 severity: "medium"
 mobileconfig: true
 mobileconfig_info:

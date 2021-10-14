@@ -23,6 +23,8 @@ references:
     - N/A
   srg:
     - N/A
+  cisv8:
+    - 8.9
 macOS:
   - "12.0"
 tags:

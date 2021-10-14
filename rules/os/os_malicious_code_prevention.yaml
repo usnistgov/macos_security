@@ -45,6 +45,10 @@ references:
     - N/A
   srg:
     - N/A
+  cisv8:
+    - 10.1
+    - 10.2
+    - 10.5
 macOS:
   - "12.0"
 tags:
@@ -52,5 +56,6 @@ tags:
   - 800-53r5_low
   - 800-53r5_moderate
   - 800-53r5_high
+  - cisv8
 mobileconfig: false
 mobileconfig_info:
