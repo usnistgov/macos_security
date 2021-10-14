@@ -9,7 +9,7 @@
     <generator>
         <product_name>macOS Security Compliance Project</product_name>
         <schema_version>2.3</schema_version>
-        <timestamp>2020-10-15T15:35:10Z</timestamp>
+        <timestamp>2021-09-16T15:35:10Z</timestamp>
     </generator>
     <cpe-item name="cpe:/o:apple:macos:11.0">
         <title xml:lang="en-US">Apple macOS 11.0</title>

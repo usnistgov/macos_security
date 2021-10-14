@@ -1836,13 +1836,17 @@ def main():
         print("If you would like to generate the HTML file from the AsciiDoc file, install the ruby gem for asciidoctor")
     
     asciidoctorPDF_path = is_asciidoctor_pdf_installed()
-    if asciidoctorPDF_path != "":
-        print('Generating PDF file from AsciiDoc...')
-        cmd = f"{asciidoctorPDF_path} \'{adoc_output_file.name}\'"
-        process = subprocess.Popen(cmd, stdout=subprocess.PIPE, shell=True)
-        process.communicate()
-    else:
-        print("If you would like to generate the PDF file from the AsciiDoc file, install the ruby gem for asciidoctor-pdf")
+
+    # Don't create PDF if we are generating SCAP
+    if not args.gary:
+        asciidoctorPDF_path = is_asciidoctor_pdf_installed()
+        if asciidoctorPDF_path != "":
+            print('Generating PDF file from AsciiDoc...')
+            cmd = f"{asciidoctorPDF_path} \'{adoc_output_file.name}\'"
+            process = subprocess.Popen(cmd, stdout=subprocess.PIPE, shell=True)
+            process.communicate()
+        else:
+            print("If you would like to generate the PDF file from the AsciiDoc file, install the ruby gem for asciidoctor-pdf")
 
     # finally revert back to the prior directory
     os.chdir(original_working_directory)
