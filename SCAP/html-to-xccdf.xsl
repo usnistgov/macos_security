@@ -303,7 +303,7 @@
                 <!-- See NIST IR7215 §6.2.5 ¶3-->
                 <xsl:element name="platform" namespace="http://checklists.nist.gov/xccdf/1.2">
                     <xsl:attribute name="idref">
-                        <xsl:text>cpe:2.3:o:apple:macos:11.0:*:*:*:*:*:*:*</xsl:text>
+                        <xsl:text>cpe:2.3:o:apple:macos:12.0:*:*:*:*:*:*:*</xsl:text>
                     </xsl:attribute>
                 </xsl:element>
             </xsl:if>
@@ -342,7 +342,7 @@
             <!--<xsl:element name="model" namespace="http://checklists.nist.gov/xccdf/1.2"/>-->
             <xsl:variable name="ROOT" as="document-node()" select="root()"/>
             <xsl:variable name="tags" as="xs:string*" select="distinct-values(//div[@class = 'sect2']//table//table//tr[th/p = 'TAGS']/td//p)"/>
-            <xsl:variable name="unwanted-tags" as="xs:string*" select="('inherent', 'permanent', 'n_a', 'none', 'manual')"/>
+            <xsl:variable name="unwanted-tags" as="xs:string*" select="('inherent', 'permanent', 'n_a', 'none', 'manual', 'i386', 'oarm64', 'supplemental')"/>
             <xsl:variable name="desired-tags" as="xs:string*" select="sort($tags[not(. = $unwanted-tags)])"/>
             <xsl:comment expand-text="true"> Profiles for {$desired-tags} </xsl:comment>
             <xsl:for-each select="$desired-tags">
