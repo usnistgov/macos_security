@@ -28,7 +28,6 @@ references:
 macOS:
   - "12.0"
 tags:
-  - manual
   - cisv8
 severity: "high"
 mobileconfig:
