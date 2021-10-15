@@ -28,7 +28,6 @@ references:
 macOS:
   - "10.15"
 tags:
-  - manual
   - stig
   - cisv8
 severity: "high"
