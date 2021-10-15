@@ -2,7 +2,7 @@ id: os_directory_services_configured
 title: "Integrate System into a Directory Services Infrastructure"
 discussion: |
   The macOS system _MUST_ be integrated into a directory services infrastructure. 
-  
+
   A directory service infrastructure enables centralized user and rights management, as well as centralized control over computer and user configurations. Integrating the macOS systems used throughout an organization into a directory services infrastructure ensures more administrator oversight and security than allowing distinct user account databases to exist on each separate system.
 check: |
   /usr/bin/dscl localhost -list . | /usr/bin/grep -vE '(Contact|Search|Local|^$)'; /bin/echo $?
@@ -28,7 +28,6 @@ references:
 macOS:
   - 11.0
 tags:
-  - manual
   - stig
   - cisv8
 severity: "high"
