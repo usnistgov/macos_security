@@ -2,7 +2,7 @@
 
 This document provides a high-level view of the changes to the macOS Security Compliance Project.
 
-== [Monterey, Revision 1] - 2021-10-XX
+== [Monterey, Revision 1] - 2021-10-18
 
 * Rules
 ** Added Rules
@@ -12,7 +12,6 @@ This document provides a high-level view of the changes to the macOS Security Co
 *** sysprefs_airplay_receiver_disable
 ** Updated existing rules rules to reflect 12.0
 ** Updated CCEs to existing rules
-
 ** Bug fixes
 
 * Baselines
