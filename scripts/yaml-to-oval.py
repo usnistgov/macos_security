@@ -734,7 +734,7 @@ def main():
 
                     abc = 0
                     if "defaults" in rule_yaml['check'] and "grep" in rule_yaml['check'] and "CURRENT_USER" in rule_yaml['check']:
-
+                        
                         regex = r"(?<=\()(.*?)(?=\))"
 
                         test_str = rule_yaml['check'].split("grep")[1]
@@ -850,7 +850,7 @@ def main():
                 </definition> '''.format(x,rule_yaml['title'],rule_yaml['references']['cce'][0],rule_yaml['id'],rule_yaml['discussion'],rule_yaml['id'],x)
                         
                         oval_test = oval_test + '''
-                            <plist510_test xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" check="all" check_existence="only_one_exists" comment="{}_test" id="oval:mscp:tst:{}" version="2">
+                            <plist510_test xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" check="all" check_existence="all_exist" comment="{}_test" id="oval:mscp:tst:{}" version="2">
                     <object object_ref="oval:mscp:obj:{}" />
                     <state state_ref="oval:mscp:ste:{}" />
                 </plist510_test>'''.format(rule_yaml['id'],x,x,x)
@@ -858,6 +858,7 @@ def main():
                         plist = rule_yaml['check'].split("read")[1].split()[0].replace(".plist","")
                         
                         if "ByHost" in rule_yaml['fix'] or "currentHost" in rule_yaml['fix']:
+                            
                             oval_object = oval_object + '''
                                         <systemprofiler_object xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" comment="{}" id="oval:mscp:obj:{}" version="1">
                 <data_type>SPHardwareDataType</data_type>
