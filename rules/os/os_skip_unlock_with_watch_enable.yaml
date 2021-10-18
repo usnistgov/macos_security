@@ -1,4 +1,4 @@
-id: os_skip_unlock_with_watch_enabled
+id: os_skip_unlock_with_watch_enable
 title: "Disable Unlock with Apple Watch During Setup Assistant"
 discussion: |
   The prompt for Apple Watch unlock setup during Setup Assistant _MUST_ be disabled. 

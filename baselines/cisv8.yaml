@@ -62,7 +62,7 @@ profile:
       - os_root_disable
       - os_sip_enable
       - os_siri_prompt_disable
-      - os_skip_unlock_with_watch_enabled
+      - os_skip_unlock_with_watch_enable
       - os_tftpd_disable
       - os_time_server_enabled
       - os_touchid_prompt_disable
