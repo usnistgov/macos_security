@@ -35,4 +35,5 @@ This document provides a high-level view of the changes to the macOS Security Co
 *** Bug fixes
 
 * SCAP
-** Bug fixes
+** Renames datastream.xml to match macOS version and guidance version
+** Includes SCAP profiles for all supported baselines
