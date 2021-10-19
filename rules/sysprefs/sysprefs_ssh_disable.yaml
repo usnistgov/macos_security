@@ -19,8 +19,6 @@ references:
   cci: 
     - N/A
   800-53r5:
-    - IA-2(8)
-    - AC-3
     - CM-7
     - CM-7(1)
     - AC-17
@@ -28,8 +26,6 @@ references:
     - AC-3 
     - CM-7
     - CM-7(1)
-    - IA-2(8)
-    - IA-2(9)
   srg:
     - N/A
   disa_stig: 
@@ -38,21 +34,12 @@ references:
     - 3.1.1
     - 3.1.2
     - 3.4.6
-    - 3.5.4
   cisv8:
     - 4.1
     - 4.8
 macOS:
   - "12.0"
 tags:
-  - 800-53r5_low 
-  - 800-53r5_moderate 
-  - 800-53r5_high 
-  - 800-53r4_low 
-  - 800-53r4_moderate 
-  - 800-53r4_high 
-  - 800-171 
-  - cnssi-1253
   - cisv8
 severity: "medium"
 mobileconfig: false
