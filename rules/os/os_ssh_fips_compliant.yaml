@@ -7,7 +7,7 @@ discussion: |
 
   Operating systems utilizing encryption _MUST_ use FIPS validated mechanisms for authenticating to cryptographic modules. 
 
-  NOTE:For more information on FIPS compliance with the version of SSH included in the macOS, the manual page apple_ssh_and_fips has additional information.
+  NOTE: For more information on FIPS compliance with the version of SSH included in the macOS, the manual page apple_ssh_and_fips has additional information.
 check: |
   fips_ssh_config="Host *
   Ciphers aes128-gcm@openssh.com
