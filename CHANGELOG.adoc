@@ -30,7 +30,8 @@ This document provides a high-level view of the changes to the macOS Security Co
 *** Bug fixes
 
 * SCAP
-** Bug fixes
+** Included SCAP 1.3 datastream file only
+** Removed macos-cpe-dictionary.xml, macos-cpe-oval.xml, ocil.xml, oval.xml, xccdf.html, and xccdf.xml
 
 == [Big Sur, Revision 3] - 2021-07-26
 
