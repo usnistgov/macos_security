@@ -1550,10 +1550,9 @@ def main():
                     <object object_ref="oval:mscp:obj:{}"/>
                 </launchd_test>'''.format(x,rule_yaml['id'],x)
 
-                            
-                            s = command[5].split()[2]
-                            domain = re.search('"(.*?)"', s).group(1)
-                            
+                            domain = command[5].split()[2]
+                            domain = domain.replace('"','').replace("'",'')
+
                             oval_object = oval_object + '''
                 <launchd_object id="oval:mscp:obj:{}" version="1" comment="{}_object" xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos">
                     <label>{}</label>
