@@ -1398,12 +1398,16 @@ def main():
                         continue
                     if "grep" in command[3]:
                         
-                        if "bannerText" in rule_yaml['check']:
+                        if "bannerText" in rule_yaml['check'] or "fips_" in rule_yaml['check']:
                             
-                            matches = re.findall(r'(?=\=")(?s)(.*)\."',rule_yaml['check'])
-                            matches = str(matches).replace('="',"").replace("[","").replace("]","").replace("'","")
-                            matches = matches + "."
-                            matches = matches.replace(".","\.").replace(")","\)").replace("(","\(")
+                            text_to_find = rule_yaml['check'].split("=")[1].split('"')[1]
+                            
+                            # matches = re.findall(r'(?=\=")(?s)(.*)\."',rule_yaml['check'])
+                            
+                            # matches = str(matches).replace('="',"").replace("[","").replace("]","").replace("'","")
+                            # matches = matches + "."
+                            # matches = matches.replace(".","\.").replace(")","\)").replace("(","\(")
+                            matches = text_to_find.replace(".","\.").replace(")","\)").replace("(","\(").replace("*","\*")
                             
                             oval_definition = oval_definition + '''
             <definition id="oval:mscp:def:{}" version="1" class="compliance"> 
@@ -1422,12 +1426,15 @@ def main():
                 <object object_ref="oval:mscp:obj:{}"/>
             </textfilecontent54_test>
             '''.format(x, rule_yaml['id'], x)
+                            
+                            file_path = rule_yaml["check"].split(" ")[-1].rstrip()
+                            
                             oval_object = oval_object + '''
                     <textfilecontent54_object id="oval:mscp:obj:{}" version="1" comment="{}_object" xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#independent">
                 <filepath>{}</filepath>
                 <pattern operation="pattern match">{}</pattern>
                 <instance datatype="int">1</instance>
-            </textfilecontent54_object>'''.format(x,rule_yaml['id'],"/etc/banner",matches)
+            </textfilecontent54_object>'''.format(x,rule_yaml['id'],file_path,matches)
 
                             x += 1
                             continue
@@ -1475,7 +1482,7 @@ def main():
                     
                     if "launchctl" in command[2]:
                         
-                        if "disable" in command[2]:
+                        if "disable" in command[2] and "=> true" in rule_yaml['check']:
                             oval_definition = oval_definition + '''
                 <definition id="oval:mscp:def:{}" version="1" class="compliance"> 
                     <metadata> 
@@ -1543,9 +1550,9 @@ def main():
                     <object object_ref="oval:mscp:obj:{}"/>
                 </launchd_test>'''.format(x,rule_yaml['id'],x)
 
-                            
                             domain = command[5].split()[2]
-                            
+                            domain = domain.replace('"','').replace("'",'')
+
                             oval_object = oval_object + '''
                 <launchd_object id="oval:mscp:obj:{}" version="1" comment="{}_object" xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos">
                     <label>{}</label>
