@@ -15,6 +15,7 @@ profile:
       - auth_pam_sudo_smartcard_enforce
       - auth_smartcard_allow
       - auth_smartcard_enforce
+      - auth_ssh_password_authentication_disable
   - section: "auditing"
     rules:
       - audit_acls_files_configure
@@ -68,8 +69,8 @@ profile:
       - os_sip_enable
       - os_siri_prompt_disable
       - os_skip_unlock_with_watch_enable
-      - os_ssh_fips_140_ciphers
-      - os_ssh_fips_140_macs
+      - os_ssh_fips_compliant
+      - os_sshd_fips_compliant
       - os_sudoers_tty_configure
       - os_tftpd_disable
       - os_time_server_enabled
@@ -132,7 +133,7 @@ profile:
       - sysprefs_screensaver_timeout_enforce
       - sysprefs_siri_disable
       - sysprefs_smbd_disable
-      - sysprefs_ssh_disable
+      - sysprefs_ssh_enable
       - sysprefs_time_server_configure
       - sysprefs_time_server_enforce
       - sysprefs_wifi_disable

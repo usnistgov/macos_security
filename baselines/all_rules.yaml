@@ -7,6 +7,13 @@ authors: |
   |Dan Brodjieski|National Aeronautics and Space Administration
   |Allen Golbig|Jamf
   |===  
+title: "macOS 12.0: Security Configuration - all_rules"
+description: |
+  This guide describes the actions to take when securing a macOS 12.0 system against the all_rules baseline.
+authors: |
+  |===
+  |Name|Organization
+  |===
 profile:
   - section: "authentication"
     rules:
@@ -93,14 +100,12 @@ profile:
       - os_sip_enable
       - os_siri_prompt_disable
       - os_skip_unlock_with_watch_enable
-      - os_ssh_fips_140_ciphers
-      - os_ssh_fips_140_macs
+      - os_ssh_fips_compliant
       - os_ssh_server_alive_count_max_configure
       - os_ssh_server_alive_interval_configure
       - os_sshd_client_alive_count_max_configure
       - os_sshd_client_alive_interval_configure
-      - os_sshd_fips_140_ciphers
-      - os_sshd_fips_140_macs
+      - os_sshd_fips_compliant
       - os_sshd_key_exchange_algorithm_configure
       - os_sshd_login_grace_time_configure
       - os_sshd_permit_root_login_configure
