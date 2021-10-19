@@ -2,6 +2,34 @@
 
 This document provides a high-level view of the changes to the macOS Security Compliance Project.
 
+== [Catalina, Revision 5] - 2021-10-18
+
+* Rules
+** Modified Rules
+*** os_directory_services_configured
+** Bug fixes
+
+* Baselines
+** Added CIS v8
+** Modify existing baselines
+** Added author field
+
+* Scripts
+** generate_guidanace
+*** Bug fixes
+*** Added architecture check
+*** Updated support for author & scope sections
+*** When generating SCAP content, pdf file will no longer be created
+** generate_baseline
+*** Bug fixes
+*** Rules are now sorted alphabetically
+*** Added support for author field in baselines
+** yaml-to-oval
+*** Bug fixes
+
+* SCAP
+** Bug fixes
+
 == [Catalina, Revision 4] - 2021-07-26
 
 * Rules
