@@ -9,9 +9,19 @@ This document provides a high-level view of the changes to the macOS Security Co
 *** icloud_private_relay_disable
 *** os_recovery_lock_enable
 *** os_skip_unlock_with_watch_enable
+*** os_ssh_fips_compliant
+*** os_sshd_fips_compliant
 *** sysprefs_airplay_receiver_disable
 ** Modified Rules
+*** auth_ssh_password_authentication_disable
 *** os_directory_services_configured
+*** sysprefs_ssh_disable
+*** sysprefs_ssh_enable
+** Deleted Rules
+*** os_ssh_fips_140_ciphers
+*** os_ssh_fips_140_macs
+*** os_sshd_fips_140_ciphers
+*** os_sshd_fips_140_macs
 ** Updated existing rules rules to reflect 12.0
 ** Updated CCEs to existing rules
 ** Bug fixes
