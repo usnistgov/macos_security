@@ -42,14 +42,14 @@ Part 39 of the Federal Acquisition Regulations, section 39.101 paragraph (c) sta
 
 [width="100%",cols="1,1"]
 |===
-|Bob Gendler|National Institute of Standards and Technology
-|Allen Golbig|National Aeronautics and Space Administration
-|Dan Brodjieski|Defense Information Systems Agency
-|Jason Blake|National Institute of Standards and Technology
-|Blair Heiserman|National Institute of Standards and Technology
-|Joshua Glemza|National Aeronautics and Space Administration
-|Elyse Anderson|National Aeronautics and Space Administration
-|Gary Gapinski|National Aeronautics and Space Administration
+|Bob Gendler|NIST
+|Allen Golbig|Jamf
+|Dan Brodjieski|NASA
+|Jason Blake|NIST
+|Blair Heiserman|NIST
+|Joshua Glemza|NASA
+|Elyse Anderson|NASA
+|Gary Gapinski|NASA
 |===
 
 == Changelog
