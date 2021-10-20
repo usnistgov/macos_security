@@ -2,7 +2,7 @@
 
 This document provides a high-level view of the changes to the macOS Security Compliance Project.
 
-== [Monterey, Revision 1] - 2021-10-18
+== [Monterey, Revision 1] - 2021-10-20
 
 * Rules
 ** Added Rules
@@ -15,6 +15,7 @@ This document provides a high-level view of the changes to the macOS Security Co
 ** Modified Rules
 *** auth_ssh_password_authentication_disable
 *** os_directory_services_configured
+*** os_prohibit_remote_activation_collab_devices
 *** sysprefs_ssh_disable
 *** sysprefs_ssh_enable
 ** Deleted Rules
