@@ -36,7 +36,7 @@ XCCDF:
 	       	-o:${DIR}/xccdf.xml \
 		SCAP-version=1.3 \
 		id-namespace=content.mscp.nist.gov \
-		benchmark-id-suffix=macOS_11.0 \
+		benchmark-id-suffix=macOS_12.0 \
 		OVAL-URI=${DIR}/All_rules.xml \
 		include-CPE=1
 	# the input OVAL document will be copied to a companion of the XCCDF document named 'oval.xml'

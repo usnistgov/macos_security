@@ -308,7 +308,7 @@
                 </xsl:element>
             </xsl:if>
             <!--<xsl:element name="platform" namespace="http://checklists.nist.gov/xccdf/1.2">
-                <xsl:attribute name="idref"><xsl:text>cpe:/o:apple:macos:11.0</xsl:text></xsl:attribute>
+                <xsl:attribute name="idref"><xsl:text>cpe:/o:apple:macos:12.0</xsl:text></xsl:attribute>
             </xsl:element>-->
             <xsl:analyze-string select="normalize-space(//div[@class = 'docver'])" regex="^(.+)\s\(([0-9-]+)\)$">
                 <xsl:matching-substring>
