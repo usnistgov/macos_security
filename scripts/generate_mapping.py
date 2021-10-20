@@ -235,7 +235,7 @@ tags:
 
     full_baseline = '''title: "macOS 12 (Monterey): Security Configuration - {}"
 description: |
-  This guide describes the actions to take when securing a macOS 11 system against the {}.
+  This guide describes the actions to take when securing a macOS 12 system against the {}.
 authors: |
   |===
   |Name|Organization
