@@ -52,7 +52,7 @@ datastream:
 		-o:${DIR}/datastream.xml \
 		SCAP-version=1.3 \
 		id-namespace=content.mscp.nist.gov \
-		datastream-id-suffix=macOS_11.0 \
+		datastream-id-suffix=macOS_12.0 \
 		include-CPE=1
 
 report:
