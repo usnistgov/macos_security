@@ -21,7 +21,7 @@ fix: |
   ----
 references:
   cce:
-    - CCE-85472-9
+    - CCE-91011-7
   cci: 
     - CCI-000803
     - CCI-000068
@@ -36,21 +36,16 @@ references:
     - IA-7
     - AC-17(2)
     - MA-4(6)
-  srg: 
-    - SRG-OS-000033-GPOS-00014
-    - SRG-OS-000120-GPOS-00061
-    - SRG-OS-000125-GPOS-00065
-    - SRG-OS-000250-GPOS-00093
-    - SRG-OS-000393-GPOS-00173
-    - SRG-OS-000394-GPOS-00174
+  srg:
+    - N/A
   disa_stig: 
-    - APPL-11-000056
+    - N/A
   800-171r2:
     - N/A
 macOS:
-  - "11.0"
+  - "12.0"
 tags:
-  - stig
+  - none
 severity: "medium"
 mobileconfig: false
 mobileconfig_info:

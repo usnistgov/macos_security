@@ -38,7 +38,7 @@ fix: |
   NOTE: See the password policy supplemental on more information on how to implement password policies on macOS.
 references:
   cce:
-    - CCE-85415-8
+    - CCE-91043-0
   cci: 
     - CCI-000192
   800-53r5:
@@ -48,8 +48,8 @@ references:
     - IA-5(1)
   disa_stig: 
     - N/A
-  srg: 
-    - SRG-OS-000069-GPOS-00037
+  srg:
+    - N/A
   800-171r2:
     - 3.5.1
     - 3.5.2
@@ -57,8 +57,10 @@ references:
     - 3.5.8
     - 3.5.9
     - 3.5.10
+  cisv8:
+    - 5.2
 macOS:
-  - "11.0"
+  - "12.0"
 tags:
   - 800-171
   - cnssi-1253
@@ -68,5 +70,6 @@ tags:
   - 800-53r5_low
   - 800-53r5_moderate
   - 800-53r5_high
+  - cisv8
 mobileconfig: false
 mobileconfig_info:

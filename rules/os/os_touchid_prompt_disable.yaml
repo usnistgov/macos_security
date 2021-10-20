@@ -12,22 +12,24 @@ fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-    - CCE-85393-7
+    - CCE-91020-8
   cci:
     - N/A
   800-53r5: 
     - CM-6
   800-53r4: 
     - CM-6
-  srg: 
-    - SRG-OS-000480-GPOS-00227
+  srg:
+    - N/A
   disa_stig: 
     - N/A
   800-171r2:
     - 3.4.1
     - 3.4.2
+  cisv8:
+    - 4.1
 macOS:
-  - "11.0"
+  - "12.0"
 tags:
   - 800-53r5_low
   - 800-53r5_moderate
@@ -37,6 +39,7 @@ tags:
   - 800-53r4_high
   - 800-171
   - cnssi-1253
+  - cisv8
 mobileconfig: true
 mobileconfig_info:
   com.apple.SetupAssistant.managed:

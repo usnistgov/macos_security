@@ -10,17 +10,14 @@ discussion: |
   Enabling firewall stealth mode may prevent certain remote mechanisms used for maintenance and compliance scanning from properly functioning. Information System Security Officers (ISSOs) are advised to first fully weigh the potential risks posed to their organization before opting not to enable stealth mode.
   ====
 check: |
-  /usr/libexec/ApplicationFirewall/socketfilterfw --getstealthmode | /usr/bin/grep -c "Stealth mode enabled"
+  /usr/bin/profiles -P -o stdout | /usr/bin/grep -c 'EnableStealthMode = 1'
 result:
   integer: 1
 fix: |
-  [source,bash]
-  ----
-  /usr/libexec/ApplicationFirewall/socketfilterfw --setstealthmode on 
-  ----
+  This is implemented by a Configuration Profile.
 references:
   cce:
-    - CCE-85428-1
+    - CCE-91056-2
   800-53r5:
     - CM-7
     - CM-7(1)
@@ -32,28 +29,32 @@ references:
     - CM-7(1)
     - SC-7(16)
   srg:
-    - SRG-OS-000480-GPOS-00232
-  cci:
-    - CCI-000366
+    - N/A
   disa_stig:
-    - APPL-11-005050
+    - N/A
   800-171r2:
     - 3.4.6
     - 3.13.1
     - 3.13.2
     - 3.13.5
+  cisv8:
+    - 4.1
+    - 4.5
+    - 4.8
 macOS:
-  - "11.0"
+  - "12.0"
 tags:
-  - 800-53r5_low
-  - 800-53r5_moderate
-  - 800-53r5_high
-  - 800-53r4_low
-  - 800-53r4_moderate
-  - 800-53r4_high
-  - 800-171
+  - 800-53r5_low 
+  - 800-53r5_moderate 
+  - 800-53r5_high 
+  - 800-53r4_low 
+  - 800-53r4_moderate 
+  - 800-53r4_high 
+  - 800-171 
   - cnssi-1253
-  - stig
+  - cisv8
 severity: "medium"
-mobileconfig: false
+mobileconfig: true
 mobileconfig_info:
+  com.apple.security.firewall:
+    EnableStealthMode: true

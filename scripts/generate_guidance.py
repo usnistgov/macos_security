@@ -23,7 +23,7 @@ from collections import namedtuple
 
 
 class MacSecurityRule():
-    def __init__(self, title, rule_id, severity, discussion, check, fix, cci, cce, nist_controls, nist_171, disa_stig, srg, custom_refs, tags, result_value, mobileconfig, mobileconfig_info, customized):
+    def __init__(self, title, rule_id, severity, discussion, check, fix, cci, cce, nist_controls, nist_171, disa_stig, srg, cisv8, custom_refs, tags, result_value, mobileconfig, mobileconfig_info, customized):
         self.rule_title = title
         self.rule_id = rule_id
         self.rule_severity = severity
@@ -36,6 +36,7 @@ class MacSecurityRule():
         self.rule_800171 = nist_171
         self.rule_disa_stig = disa_stig
         self.rule_srg = srg
+        self.rule_cisv8 = cisv8
         self.rule_custom_refs = custom_refs
         self.rule_result_value = result_value
         self.rule_tags = tags
@@ -56,6 +57,7 @@ class MacSecurityRule():
             rule_cci=self.rule_cci,
             rule_80053r5=self.rule_80053r5,
             rule_disa_stig=self.rule_disa_stig,
+            rule_cisv8=self.rule_cisv8,
             rule_srg=self.rule_srg,
             rule_result=self.rule_result_value
         )
@@ -389,34 +391,46 @@ def generate_profiles(baseline_name, build_path, parent_dir, baseline_yaml, sign
 
     for sections in baseline_yaml['profile']:
         for profile_rule in sections['rules']:
-            for rule in glob.glob('../rules/*/{}.yaml'.format(profile_rule)) + glob.glob('../custom/rules/**/{}.yaml'.format(profile_rule),recursive=True):
-                rule_yaml = get_rule_yaml(rule, False)
+            logging.debug(f"checking for rule file for {profile_rule}")
+            if glob.glob('../custom/rules/**/{}.yaml'.format(profile_rule),recursive=True):
+                rule = glob.glob('../custom/rules/**/{}.yaml'.format(profile_rule),recursive=True)[0]
+                custom=True
+                logging.debug(f"{rule}")
+            elif glob.glob('../rules/*/{}.yaml'.format(profile_rule)):
+                rule = glob.glob('../rules/*/{}.yaml'.format(profile_rule))[0]
+                custom=False
+                logging.debug(f"{rule}")
+
+            #for rule in glob.glob('../rules/*/{}.yaml'.format(profile_rule)) + glob.glob('../custom/rules/**/{}.yaml'.format(profile_rule),recursive=True):
+            rule_yaml = get_rule_yaml(rule, custom)
     
-                if rule_yaml['mobileconfig']:
-                    for payload_type, info in rule_yaml['mobileconfig_info'].items():
-                        try:
-                            if payload_type not in manifests['payloads_types']:
-                                profile_errors.append(rule)
-                                raise ValueError(
-                                    "{}: Payload Type is not supported".format(payload_type))
-                            else:
-                                pass
-                        except (KeyError, ValueError) as e:
+            if rule_yaml['mobileconfig']:
+                for payload_type, info in rule_yaml['mobileconfig_info'].items():
+                    valid = True
+                    try:
+                        if payload_type not in manifests['payloads_types']:
                             profile_errors.append(rule)
-                            #print(e)
+                            raise ValueError(
+                                "{}: Payload Type is not supported".format(payload_type))
+                        else:
                             pass
+                    except (KeyError, ValueError) as e:
+                        profile_errors.append(rule)
+                        logging.debug(e)
+                        valid = False
 
-                        try:
-                            if isinstance(info, list):
-                                raise ValueError(
-                                    "Payload key is non-conforming")
-                            else:
-                                pass
-                        except (KeyError, ValueError) as e:
-                            profile_errors.append(rule)
-                            #print(e)
+                    try:
+                        if isinstance(info, list):
+                            raise ValueError(
+                                "Payload key is non-conforming")
+                        else:
                             pass
-
+                    except (KeyError, ValueError) as e:
+                        profile_errors.append(rule)
+                        logging.debug(e)
+                        valid = False
+                    
+                    if valid:
                         if payload_type == "com.apple.ManagedClient.preferences":
                             for payload_domain, settings in info.items():
                                 for key, value in settings.items():
@@ -569,6 +583,9 @@ plb="/usr/libexec/PlistBuddy"
 CURRENT_USER=$(scutil <<< "show State:/Users/ConsoleUser" | awk '/Name :/ && ! /loginwindow/ {{ print $3 }}')
 CURR_USER_UID=$(/usr/bin/id -u $CURR_USER)
 
+# get system architecture
+arch=$(/usr/bin/arch)
+
 # configure colors for text
 RED='\e[31m'
 STD='\e[39m'
@@ -668,10 +685,10 @@ compliance_count(){{
     results=$(/usr/libexec/PlistBuddy -c "Print" /Library/Preferences/org.{baseline_name}.audit.plist)
     
     while IFS= read -r line; do
-        if [[ "$line" =~ "false" ]]; then
+        if [[ "$line" =~ "finding = false" ]]; then
             compliant=$((compliant+1))
         fi
-        if [[ "$line" =~ "true" ]]; then
+        if [[ "$line" =~ "finding = true" ]]; then
             non_compliant=$((non_compliant+1))
         fi
     done <<< "$results"
@@ -742,8 +759,6 @@ fi
 defaults write "$audit_plist" lastComplianceCheck "$(date)"
     """
 
-    #compliance_script_file.write(check_zsh_header)
-
     # Read all rules in the section and output the check functions
     for sections in baseline_yaml['profile']:
         for profile_rule in sections['rules']:
@@ -757,13 +772,20 @@ defaults write "$audit_plist" lastComplianceCheck "$(date)"
                 custom=False
                 logging.debug(f"{rule}")
 
-            #for rule in glob.glob('../rules/*/{}.yaml'.format(profile_rule)) + glob.glob('../custom/rules/**/{}.yaml'.format(profile_rule),recursive=True):
             rule_yaml = get_rule_yaml(rule, custom)
 
             if rule_yaml['id'].startswith("supplemental"):
                 continue
             if "manual" in rule_yaml['tags']:
                 continue
+
+            if "arm64" in rule_yaml['tags']:
+                arch="arm64"
+            elif "intel" in rule_yaml['tags']:
+                arch="i386"
+            else:
+                arch=""
+            
             # grab the 800-53 controls
             try:
                 rule_yaml['references']['800-53r5']
@@ -772,21 +794,6 @@ defaults write "$audit_plist" lastComplianceCheck "$(date)"
             else:
                 nist_80053r5 = rule_yaml['references']['800-53r5']
             
-            #try:
-            #    rule_yaml['references']['disa_stig']
-            #except KeyError:
-            #    stig_ref = rule_yaml['id']
-            #else:
-            #    if rule_yaml['references']['disa_stig'][0] == "N/A":
-            #        stig_ref = [rule_yaml['id']]
-            #    else:
-            #        stig_ref = rule_yaml['references']['disa_stig']
-            #
-            #if "STIG" in baseline_yaml['title']:
-            #    logging.debug(f'Setting STIG reference for logging: {stig_ref}')
-            #    log_reference_id = stig_ref
-            #else:
-            #    log_reference_id = [rule_yaml['id']]
             if reference == "default":
                 log_reference_id = [rule_yaml['id']]
             else:
@@ -845,31 +852,40 @@ defaults write "$audit_plist" lastComplianceCheck "$(date)"
             zsh_check_text = """
 #####----- Rule: {0} -----#####
 ## Addresses the following NIST 800-53 controls: {1}
-#echo 'Running the command to check the settings for: {0} ...' | tee -a "$audit_log"
-unset result_value
-result_value=$({2})
-# expected result {3}
+rule_arch="{6}"
+if [[ "$arch" == "$rule_arch" ]] || [[ -z "$rule_arch" ]]; then
+    #echo 'Running the command to check the settings for: {0} ...' | tee -a "$audit_log"
+    unset result_value
+    result_value=$({2})
+    # expected result {3}
 
-# check to see if rule is exempt
-unset exempt
-unset exempt_reason
-exempt=$($plb -c "print {0}:exempt" "$audit_plist_managed" 2>/dev/null)
-exempt_reason=$($plb -c "print {0}:exempt_reason" "$audit_plist_managed" 2>/dev/null)
 
-if [[ ! $exempt == "true" ]] || [[ -z $exempt ]];then
-    if [[ $result_value == "{4}" ]]; then
-        echo "$(date -u) {5} passed (Result: $result_value, Expected: "{3}")" | tee -a "$audit_log"
+    # check to see if rule is exempt
+    unset exempt
+    unset exempt_reason
+    exempt=$($plb -c "print {0}:exempt" "$audit_plist_managed" 2>/dev/null)
+    exempt_reason=$($plb -c "print {0}:exempt_reason" "$audit_plist_managed" 2>/dev/null)
+
+
+ 
+    if [[ ! $exempt == "true" ]] || [[ -z $exempt ]];then
+        if [[ $result_value == "{4}" ]]; then
+            echo "$(date -u) {5} passed (Result: $result_value, Expected: "{3}")" | tee -a "$audit_log"
+            defaults write "$audit_plist" {0} -dict-add finding -bool NO
+        else
+            echo "$(date -u) {5} failed (Result: $result_value, Expected: "{3}")" | tee -a "$audit_log"
+            defaults write "$audit_plist" {0} -dict-add finding -bool YES
+        fi
+    elif [[ ! -z "$exempt_reason" ]];then
+        echo "$(date -u) {5} has an exemption (Reason: "$exempt_reason")" | tee -a "$audit_log"
         defaults write "$audit_plist" {0} -dict-add finding -bool NO
-    else
-        echo "$(date -u) {5} failed (Result: $result_value, Expected: "{3}")" | tee -a "$audit_log"
-        defaults write "$audit_plist" {0} -dict-add finding -bool YES
+        /bin/sleep 1
     fi
-elif [[ ! -z "$exempt_reason" ]];then
-    echo "$(date -u) {5} has an exemption (Reason: "$exempt_reason")" | tee -a "$audit_log"
+else
+    echo "$(date -u) {5} does not apply to this architechture" | tee -a "$audit_log"
     defaults write "$audit_plist" {0} -dict-add finding -bool NO
-    /bin/sleep 1
 fi
-    """.format(rule_yaml['id'], nist_controls.replace("\n", "\n#"), check.strip(), result, result_value, ' '.join(log_reference_id))
+    """.format(rule_yaml['id'], nist_controls.replace("\n", "\n#"), check.strip(), result, result_value, ' '.join(log_reference_id), arch)
 
             check_function_string = check_function_string + zsh_check_text
 
@@ -1062,13 +1078,17 @@ def get_rule_yaml(rule_file, custom=False):
                         resulting_yaml['references'][ref] = rule_yaml['references'][ref]
                     except KeyError:
                         resulting_yaml['references'][ref] = og_rule_yaml['references'][ref]
-            if "custom" in rule_yaml['references']:
-                resulting_yaml['references']['custom'] = rule_yaml['references']['custom']
-                if 'customized' in resulting_yaml:
-                    resulting_yaml['customized'].append("customized references")
-                else:
-                    resulting_yaml['customized'] = ["customized references"]
-        
+                try: 
+                    if "custom" in rule_yaml['references']:
+                        resulting_yaml['references']['custom'] = rule_yaml['references']['custom']
+                        if 'customized' in resulting_yaml:
+                            if 'customized references' not in resulting_yaml['customized']:
+                                resulting_yaml['customized'].append("customized references")
+                        else:
+                            resulting_yaml['customized'] = ["customized references"]
+                except:
+                    pass
+            
         else: 
             try:
                 if og_rule_yaml[yaml_field] == rule_yaml[yaml_field]:
@@ -1108,7 +1128,7 @@ def generate_xls(baseline_name, build_path, baseline_yaml):
     top = xlwt.easyxf("align: vert top")
     headers = xlwt.easyxf("font: bold on")
     counter = 1
-    column_counter = 14
+    column_counter = 15
     custom_ref_column = {}
     sheet1.write(0, 0, "CCE", headers)
     sheet1.write(0, 1, "Rule ID", headers)
@@ -1122,8 +1142,9 @@ def generate_xls(baseline_name, build_path, baseline_yaml):
     sheet1.write(0, 9, "800-171", headers)
     sheet1.write(0, 10, "SRG", headers)
     sheet1.write(0, 11, "DISA STIG", headers)
-    sheet1.write(0, 12, "CCI", headers)
-    sheet1.write(0, 13, "Modifed Rule", headers)
+    sheet1.write(0, 12, "CIS Controls v8", headers)
+    sheet1.write(0, 13, "CCI", headers)
+    sheet1.write(0, 14, "Modifed Rule", headers)
     sheet1.set_panes_frozen(True)
     sheet1.set_horz_split_pos(1)
     sheet1.set_vert_split_pos(2)
@@ -1203,14 +1224,20 @@ def generate_xls(baseline_name, build_path, baseline_yaml):
         cci = (str(rule.rule_cci)).strip('[]\'')
         cci = cci.replace(", ", "\n").replace("\'", "")
 
-        sheet1.write(counter, 12, cci, topWrap)
-        sheet1.col(12).width = 400 * 15
+        cisv8_refs = (str(rule.rule_cisv8)).strip('[]\'')
+        cisv8_refs = cisv8_refs.replace(", ", "\n").replace("\'", "")
+
+        sheet1.write(counter, 12, cisv8_refs, topWrap)
+        sheet1.col(12).width = 500 * 15
+
+        sheet1.write(counter, 13, cci, topWrap)
+        sheet1.col(13).width = 400 * 15
 
         customized = (str(rule.rule_customized)).strip('[]\'')
         customized = customized.replace(", ", "\n").replace("\'", "")
 
-        sheet1.write(counter, 13, customized, topWrap)
-        sheet1.col(13).width = 400 * 15
+        sheet1.write(counter, 14, customized, topWrap)
+        sheet1.col(14).width = 400 * 15
 
         if rule.rule_custom_refs != ['None']:
             for title, ref in rule.rule_custom_refs.items():
@@ -1254,6 +1281,7 @@ def create_rules(baseline_yaml):
                   'cce',
                   '800-53r5',
                   '800-171r2',
+                  'cisv8',
                   'srg',
                   'custom']
 
@@ -1296,6 +1324,7 @@ def create_rules(baseline_yaml):
                                         rule_yaml['references']['800-171r2'],
                                         rule_yaml['references']['disa_stig'],
                                         rule_yaml['references']['srg'],
+                                        rule_yaml['references']['cisv8'],
                                         rule_yaml['references']['custom'],
                                         rule_yaml['tags'],
                                         rule_yaml['result'],
@@ -1459,7 +1488,8 @@ def main():
                     "adoc_section", 
                     "adoc_header", 
                     "adoc_footer", 
-                    "adoc_foreword", 
+                    "adoc_foreword",
+                    "adoc_scope", 
                     "adoc_authors", 
                     "adoc_acronyms", 
                     "adoc_additional_docs"
@@ -1498,9 +1528,12 @@ def main():
     
     with open(adoc_templates_dict['adoc_foreword']) as adoc_foreword_file:
         adoc_foreword_template = adoc_foreword_file.read() + "\n"
+
+    with open(adoc_templates_dict['adoc_scope']) as adoc_scope_file:
+        adoc_scope_template = Template(adoc_scope_file.read() +"\n")
     
     with open(adoc_templates_dict['adoc_authors']) as adoc_authors_file:
-        adoc_authors_template = adoc_authors_file.read() + "\n"
+        adoc_authors_template = Template(adoc_authors_file.read() + "\n")
 
     with open(adoc_templates_dict['adoc_acronyms']) as adoc_acronyms_file:
         adoc_acronyms_template = adoc_acronyms_file.read() + "\n"
@@ -1519,6 +1552,11 @@ def main():
     else:
         adoc_STIG_show=":show_STIG!:"
 
+    if "CIS" in baseline_yaml['title'].upper():
+        adoc_cisv8_show=":show_cisv8:"
+    else:
+        adoc_cisv8_show=":show_cisv8!:"
+
     if "800" in baseline_yaml['title']:
          adoc_171_show=":show_171:"
     else:
@@ -1535,9 +1573,20 @@ def main():
         tag_attribute=adoc_tag_show,
         nist171_attribute=adoc_171_show,
         stig_attribute=adoc_STIG_show,
+        cisv8_attribute=adoc_cisv8_show,
         version=version_yaml['version'],
         os_version=version_yaml['os'],
         release_date=version_yaml['date']
+    )
+
+    # Create scope
+    scope_adoc = adoc_scope_template.substitute(
+        scope_description=baseline_yaml['description']
+    )
+
+    # Create author
+    authors_adoc = adoc_authors_template.substitute(
+        authors_list=baseline_yaml['authors']
     )
 
     # Output header
@@ -1545,7 +1594,8 @@ def main():
 
     # write foreword, authors, acronyms, supporting docs
     adoc_output_file.write(adoc_foreword_template)
-    adoc_output_file.write(adoc_authors_template)
+    adoc_output_file.write(scope_adoc)
+    adoc_output_file.write(authors_adoc)
     adoc_output_file.write(adoc_acronyms_template)
     adoc_output_file.write(adoc_additional_docs_template)
 
@@ -1638,6 +1688,13 @@ def main():
                 disa_stig = ulify(rule_yaml['references']['disa_stig'])
 
             try:
+                rule_yaml['references']['cisv8']
+            except KeyError:
+                cisv8 = '- N/A'
+            else:
+                cisv8 = ulify(rule_yaml['references']['cisv8'])
+
+            try:
                 rule_yaml['references']['srg']
             except KeyError:
                 srg = '- N/A'
@@ -1719,6 +1776,7 @@ def main():
                     rule_80053r5=nist_controls,
                     rule_800171=nist_800171,
                     rule_disa_stig=disa_stig,
+                    rule_cisv8=cisv8,
                     rule_cce=cce,
                     rule_tags=tags,
                     rule_srg=srg
@@ -1734,6 +1792,7 @@ def main():
                     rule_80053r5=nist_controls,
                     rule_800171=nist_800171,
                     rule_disa_stig=disa_stig,
+                    rule_cisv8=cisv8,
                     rule_cce=cce,
                     rule_custom_refs=custom_refs,
                     rule_tags=tags,
@@ -1751,6 +1810,7 @@ def main():
                     rule_80053r5=nist_controls,
                     rule_800171=nist_800171,
                     rule_disa_stig=disa_stig,
+                    rule_cisv8=cisv8,
                     rule_cce=cce,
                     rule_tags=tags,
                     rule_srg=srg,
@@ -1790,13 +1850,17 @@ def main():
         print("If you would like to generate the HTML file from the AsciiDoc file, install the ruby gem for asciidoctor")
     
     asciidoctorPDF_path = is_asciidoctor_pdf_installed()
-    if asciidoctorPDF_path != "":
-        print('Generating PDF file from AsciiDoc...')
-        cmd = f"{asciidoctorPDF_path} \'{adoc_output_file.name}\'"
-        process = subprocess.Popen(cmd, stdout=subprocess.PIPE, shell=True)
-        process.communicate()
-    else:
-        print("If you would like to generate the PDF file from the AsciiDoc file, install the ruby gem for asciidoctor-pdf")
+
+    # Don't create PDF if we are generating SCAP
+    if not args.gary:
+        asciidoctorPDF_path = is_asciidoctor_pdf_installed()
+        if asciidoctorPDF_path != "":
+            print('Generating PDF file from AsciiDoc...')
+            cmd = f"{asciidoctorPDF_path} \'{adoc_output_file.name}\'"
+            process = subprocess.Popen(cmd, stdout=subprocess.PIPE, shell=True)
+            process.communicate()
+        else:
+            print("If you would like to generate the PDF file from the AsciiDoc file, install the ruby gem for asciidoctor-pdf")
 
     # finally revert back to the prior directory
     os.chdir(original_working_directory)

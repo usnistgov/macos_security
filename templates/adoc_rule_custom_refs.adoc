@@ -45,6 +45,11 @@ ifdef::show_STIG[]
 !$rule_disa_stig
 endif::[]
 
+ifdef::show_CISv8[]
+!CIS Controls V8
+!$rule_cisv8
+endif::[]
+
 !CCE
 !$rule_cce
 

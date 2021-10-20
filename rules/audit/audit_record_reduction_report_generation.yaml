@@ -12,21 +12,21 @@ fix: |
   The technology inherently meets this requirement. No fix is required.
 references:
   cce:
-    - CCE-85461-2
+    - CCE-90873-1
   cci: 
     - N/A
   800-53r5:
     - AU-7
   800-53r4: 
     - N/A
-  srg: 
+  srg:
     - N/A
-  disa_stig: 
+  disa_stig:
     - N/A
   800-171r2:
     - N/A
 macOS:
-  - "11.0"
+  - "12.0"
 tags:
   - 800-53r5_high
   - 800-53r4_high

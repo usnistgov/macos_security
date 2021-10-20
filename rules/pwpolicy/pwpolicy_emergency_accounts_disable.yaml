@@ -16,19 +16,19 @@ fix: |
   The technology inherently meets this requirement. No fix is required.
 references:
   cce:
-    - CCE-85405-9
+    - CCE-91032-3
   cci:
     - N/A
   800-53r5:
     - AC-2(2)
   800-53r4: 
     - AC-2(2)
-  srg: 
+  srg:
     - N/A
   disa_stig:
     - N/A
 macOS:
-  - "11.0"
+  - "12.0"
 tags:
   - 800-53r5_moderate
   - 800-53r5_high

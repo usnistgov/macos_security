@@ -9,21 +9,21 @@ discussion: |
 
   NOTE: The Media Sharing preference panel will still allow "Home Sharing" and "Share media with guests" to be checked but the service will not be enabled.
 check: |
-  /usr/bin/profiles -P -o stdout | /usr/bin/grep -Ec '(homeSharingUIStatus = 0|legacySharingUIStatus = 0|mediaSharingUIStatus = 1)'
+  /usr/bin/profiles -P -o stdout | /usr/bin/grep -Ec '(homeSharingUIStatus = 0|legacySharingUIStatus = 0|mediaSharingUIStatus = 0)'
 result:
-  integer: 1
+  integer: 3
 fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-    - CCE-85436-4
+    - CCE-91066-1
   800-53r5:
     - AC-3
     - AC-17
   800-53r4:
     - AC-3
-  srg: 
-    - SRG-OS-000480-GPOS-00227
+  srg:
+    - N/A
   disa_stig:
     - N/A
   cci:
@@ -31,8 +31,11 @@ references:
   800-171r2:
     - 3.1.1
     - 3.1.2
+  cisv8:
+    - 4.1
+    - 4.8
 macOS:
-  - "11.0"
+  - "12.0"
 tags:
   - 800-53r5_low
   - 800-53r5_moderate
@@ -41,6 +44,7 @@ tags:
   - 800-53r4_moderate
   - 800-53r4_high
   - 800-171
+  - cisv8
 mobileconfig: true
 mobileconfig_info:
   com.apple.preferences.sharing.SharingPrefsExtension:

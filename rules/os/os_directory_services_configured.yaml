@@ -1,33 +1,34 @@
 id: os_directory_services_configured
-title: "The macOS system must be integrated into a directory services infrastructure."
+title: "Integrate System into a Directory Services Infrastructure"
 discussion: |
-  Distinct user account databases on each separate system cause problems with username and password policy enforcement. Most approved directory services infrastructure solutions allow centralized management of users and passwords.
+  The macOS system _MUST_ be integrated into a directory services infrastructure. 
+
+  A directory service infrastructure enables centralized user and rights management, as well as centralized control over computer and user configurations. Integrating the macOS systems used throughout an organization into a directory services infrastructure ensures more administrator oversight and security than allowing distinct user account databases to exist on each separate system.
 check: |
-  If the system is using a mandatory Smart Card Policy, this is Not Applicable. 
-  
-  To determine if the system is integrated to a directory service, ask the System Administrator (SA) or Information System Security Officer (ISSO) or run the following command:
-  
-  /usr/bin/dscl localhost -list . | /usr/bin/grep -vE '(Contact|Search|Local|^$)'
-  
-  If nothing is returned, or if the system is not integrated into a directory service infrastructure, this is a finding.
+  /usr/bin/dscl localhost -list . | /usr/bin/grep -vE '(Contact|Search|Local|^$)'; /bin/echo $?
+result:
+  integer: 0  
 fix: |
   Integrate the system into an existing directory services infrastructure.
 references:
+  cce:
+    - CCE-91087-7
   cci:
     - CCI-000366
   800-53r5:
     - N/A
   800-53r4:
-    - CM-6(b)
+    - N/A
   srg:
-    - SRG-OS-000480-GPOS-00227
+    - N/A
   disa_stig:
-    - APPL-11-000016
+    - N/A
+  cisv8:
+    - 6.7
 macOS:
-  - 11.0
+  - "12.0"
 tags:
-  - manual
-  - stig
+  - cisv8
 severity: "high"
 mobileconfig:
 mobileconfig_info:

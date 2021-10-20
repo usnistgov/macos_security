@@ -14,7 +14,7 @@ fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-    - CCE-85426-5
+    - CCE-91054-7
   cci: 
     - N/A
   800-53r5:
@@ -25,16 +25,19 @@ references:
     - CM-7
     - CM-7(1)
     - AC-20
-  srg: 
-    - SRG-OS-000095-GPOS-00049
-    - SRG-OS-000370-GPOS-00155
+  srg:
+    - N/A
   disa_stig: 
     - N/A
   800-171r2:
     - 3.1.20
     - 3.4.6
+  cisv8:
+    - 4.1
+    - 4.8
+    - 15.3
 macOS:
-  - "11.0"
+  - "12.0"
 tags:
   - 800-53r5_low
   - 800-53r5_moderate
@@ -44,6 +47,7 @@ tags:
   - 800-53r4_high
   - 800-171
   - cnssi-1253
+  - cisv8
 mobileconfig: true
 mobileconfig_info:
   com.apple.applicationaccess:

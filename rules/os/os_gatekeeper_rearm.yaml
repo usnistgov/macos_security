@@ -10,7 +10,7 @@ fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-    - CCE-85316-8
+    - CCE-90927-5
   cci: 
     - N/A
   800-53r5:
@@ -18,14 +18,16 @@ references:
   800-53r4: 
     - CM-5
     - SI-3
-  srg: 
+  srg:
     - N/A
   disa_stig: 
     - N/A
   800-171r2:
     - 3.4.5
+  cisv8:
+    - 10.5
 macOS:
-  - "11.0"
+  - "12.0"
 tags:
   - 800-53r5_low
   - 800-53r5_moderate
@@ -34,6 +36,7 @@ tags:
   - 800-53r4_high
   - 800-171
   - cnssi-1253
+  - cisv8
 mobileconfig: true
 mobileconfig_info:
   com.apple.ManagedClient.preferences:

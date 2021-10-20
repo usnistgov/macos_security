@@ -15,7 +15,7 @@ fix: |
   ----
 references:
   cce:
-    - CCE-85387-9
+    - CCE-91015-8
   cci:
     - CCI-000366
   800-53r5:
@@ -24,17 +24,16 @@ references:
   800-53r4:
     - IA-11
   srg:
-    - SRG-OS-000480-GPOS-00227
+    - N/A
   disa_stig:
-    - APPL-11-004021
+    - N/A
 macOS:
-  - "11.0"
+  - "12.0"
 tags:
-  - 800-53r5_low
-  - 800-53r5_moderate
-  - 800-53r5_high
+  - 800-53r5_low 
+  - 800-53r5_moderate 
+  - 800-53r5_high 
   - cnssi-1253
-  - stig
 severity: "high"
 mobileconfig: false
 mobileconfig_info:

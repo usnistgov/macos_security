@@ -17,7 +17,7 @@ fix: |
   ----
 references:
   cce:
-    - CCE-85381-2
+    - CCE-91006-7
   cci: 
     - N/A
   800-53r5:
@@ -25,14 +25,14 @@ references:
     - AC-12
   800-53r4: 
     - SC-10
-  srg: 
+  srg:
     - N/A
   disa_stig: 
     - N/A
   800-171r2:
     - 3.13.9
 macOS:
-  - "11.0"
+  - "12.0"
 tags:
   - 800-53r5_moderate
   - 800-53r5_high

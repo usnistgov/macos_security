@@ -16,7 +16,7 @@ fix: |
   The hardware does not support the requirement. 
 references:
   cce:
-    - CCE-85471-1
+    - CCE-90997-8
   cci:
     - N/A
   800-53r5:
@@ -28,7 +28,7 @@ references:
   srg:
     - N/A
 macOS:
-  - "11.0"
+  - "12.0"
 tags:
   - inherent
 mobileconfig: false

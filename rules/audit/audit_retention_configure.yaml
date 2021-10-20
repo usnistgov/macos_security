@@ -15,7 +15,7 @@ fix: |
   ----
 references:
   cce:
-    - CCE-85272-3
+    - CCE-90875-6
   cci:
     - CCI-001849
   800-53r5:
@@ -25,21 +25,24 @@ references:
     - AU-4
     - AU-11
   srg:
-    - SRG-OS-000341-GPOS-00132
+    - N/A
   disa_stig:
-    - APPL-11-001029
+    - N/A
+  cisv8:
+    - 8.3
+    - 8.1
 macOS:
-  - "11.0"
+  - "12.0"
 tags:
-  - 800-53r5_privacy
-  - 800-53r4_low
-  - 800-53r4_moderate
-  - 800-53r4_high
-  - 800-53r5_low
-  - 800-53r5_moderate
-  - 800-53r5_high
+  - 800-53r5_privacy 
+  - 800-53r4_low 
+  - 800-53r4_moderate 
+  - 800-53r4_high 
+  - 800-53r5_low 
+  - 800-53r5_moderate 
+  - 800-53r5_high 
   - cnssi-1253
-  - stig
+  - cisv8
 severity: "medium"
 mobileconfig: false
 mobileconfig_info:

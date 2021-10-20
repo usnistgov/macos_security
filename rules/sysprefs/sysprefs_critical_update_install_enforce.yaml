@@ -10,26 +10,31 @@ fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-    - CCE-85459-6
+    - CCE-91051-3
   cci: 
     - N/A
   800-53r5:
     - SI-2
   800-53r4: 
     - N/A
-  srg: 
+  srg:
     - N/A
   disa_stig: 
     - N/A
   800-171r2:
     - N/A
+  cisv8:
+    - 7.3
+    - 7.4
+    - 7.7
 macOS:
-  - "11.0"
+  - "12.0"
 tags:
   - 800-53r5_low
   - 800-53r5_moderate
   - 800-53r5_high
+  - cisv8
 mobileconfig: true
 mobileconfig_info:
   com.apple.SoftwareUpdate:
-    criticalUpdateInstall: true
+    CriticalUpdateInstall: true

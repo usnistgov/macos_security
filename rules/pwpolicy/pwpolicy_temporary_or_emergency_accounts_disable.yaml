@@ -56,7 +56,7 @@ fix: |
   /usr/bin/pwpolicy -u username setaccountpolicies /path/to/file
 references:
   cce:
-    - CCE-85414-1
+    - CCE-91042-2
   cci:
     - CCI-000016
     - CCI-001682
@@ -65,19 +65,17 @@ references:
   800-53r4:
     - AC-2(2)
   srg:
-    - SRG-OS-000002-GPOS-00002
-    - SRG-OS-000123-GPOS-00064
+    - N/A
   disa_stig:
-    - APPL-11-000012
+    - N/A
 macOS:
-  - "11.0"
+  - "12.0"
 tags:
-  - 800-53r5_moderate
-  - 800-53r5_high
-  - 800-53r4_moderate
-  - 800-53r4_high
+  - 800-53r5_moderate 
+  - 800-53r5_high 
+  - 800-53r4_moderate 
+  - 800-53r4_high 
   - manual
-  - stig
 severity: "medium"
 mobileconfig: false
 mobileconfig_info:

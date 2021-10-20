@@ -12,7 +12,7 @@ fix: |
   NOTE: To remount the System volume as Read Only, rebooting the computer will mount it as Read Only. 
 references:
   cce:
-    - CCE-85388-7
+    - CCE-91016-6
   cci:
     - N/A
   800-53r5:
@@ -27,7 +27,7 @@ references:
   disa_stig:
     - N/A
 macOS:
-  - "11.0"
+  - "12.0"
 tags:
   - 800-53r5_moderate
   - 800-53r5_high

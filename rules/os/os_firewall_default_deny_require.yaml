@@ -21,7 +21,7 @@ fix: |
   NOTE: See the firewall supplemental which includes a script that has an example policy to implement this rule.
 references:
   cce:
-    - CCE-85312-7
+    - CCE-90923-4
   cci:
     - CCI-000366
     - CCI-002080
@@ -32,14 +32,14 @@ references:
     - SC-7(5)
     - AC-4
   srg:
-    - SRG-OS-000480-GPOS-00231
+    - N/A
   disa_stig:
-    - APPL-11-005051
+    - N/A
   800-171r2:
     - 3.1.3
     - 3.13.6
 macOS:
-  - "11.0"
+  - "12.0"
 tags:
   - 800-53r5_moderate
   - 800-53r5_high

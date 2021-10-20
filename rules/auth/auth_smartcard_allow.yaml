@@ -14,22 +14,26 @@ fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-    - CCE-85277-2
+    - CCE-90880-6
   cci: 
-   - N/A
+    - N/A
   800-53r5:
     - IA-2(1)
     - IA-2(2)
     - IA-2(12)
   800-53r4: 
-   - IA-2(12)
-   - IA-5(11)
-  srg: 
-   - SRG-OS-000376-GPOS-00161
+    - IA-2(12)
+    - IA-5(11)
+  srg:
+    - N/A
   disa_stig:
     - N/A
+  cisv8:
+    - 6.3
+    - 6.4
+    - 6.5
 macOS:
-  - "11.0"
+  - "12.0"
 tags:
   - 800-53r5_low
   - 800-53r5_moderate
@@ -38,6 +42,7 @@ tags:
   - 800-53r4_moderate
   - 800-53r4_high
   - cnssi-1253
+  - cisv8
 mobileconfig: true
 mobileconfig_info:
   com.apple.security.smartcard:

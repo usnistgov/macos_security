@@ -16,7 +16,7 @@ fix: |
   The technology inherently meets this requirement. No fix is required.
 references:
   cce:
-    - CCE-85326-7
+    - CCE-90935-8
   cci:
     - CCI-002450
   800-53r5:
@@ -26,11 +26,11 @@ references:
   disa_stig:
     - N/A
   srg:
-    - SRG-OS-000396-GPOS-00176
+    - N/A
   800-171r2:
     - 3.13.11
 macOS:
-  - "11.0"
+  - "12.0"
 tags:
   - 800-53r5_low
   - 800-53r5_moderate

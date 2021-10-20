@@ -12,7 +12,7 @@ fix: |
   NOTE: See the FileVault supplemental to implement this rule.
 references:
   cce:
-    - CCE-85425-7
+    - CCE-91053-9
   cci: 
     - CCI-001199
     - CCI-002475
@@ -23,24 +23,25 @@ references:
   800-53r4: 
     - SC-28
     - SC-28(1)
-  srg: 
-    - SRG-OS-000185-GPOS-00079
-    - SRG-OS-000404-GPOS-00183
-    - SRG-OS-000405-GPOS-00184
+  srg:
+    - N/A
   disa_stig: 
-    - APPL-11-005020
+    - N/A
   800-171r2:
     - 3.13.16
+  cisv8:
+    - 3.6
+    - 3.11
 macOS:
-  - "11.0"
+  - "12.0"
 tags:
-  - 800-53r5_moderate
-  - 800-53r5_high
-  - 800-53r4_moderate
-  - 800-53r4_high
-  - 800-171
+  - 800-53r5_moderate 
+  - 800-53r5_high 
+  - 800-53r4_moderate 
+  - 800-53r4_high 
+  - 800-171 
   - cnssi-1253
-  - stig
+  - cisv8
 severity: "medium"
 mobileconfig: false
 mobileconfig_info:

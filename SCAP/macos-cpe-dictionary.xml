@@ -9,14 +9,14 @@
     <generator>
         <product_name>macOS Security Compliance Project</product_name>
         <schema_version>2.3</schema_version>
-        <timestamp>2020-10-15T15:35:10Z</timestamp>
+        <timestamp>2021-09-16T15:35:10Z</timestamp>
     </generator>
-    <cpe-item name="cpe:/o:apple:macos:11.0">
-        <title xml:lang="en-US">Apple macOS 11.0</title>
+    <cpe-item name="cpe:/o:apple:macos:12.0">
+        <title xml:lang="en-US">Apple macOS 12.0</title>
         <notes xml:lang="en-US">
-            <note>This CPE Name represents macOS 11.0</note>
+            <note>This CPE Name represents macOS 12.0</note>
         </notes>
         <check href="macos-cpe-oval.xml" system="http://oval.mitre.org/XMLSchema/oval-definitions-5">oval:gov.nist.mscp.content.cpe.oval:def:1</check>
-        <cpe-23:cpe23-item name="cpe:2.3:o:apple:macos:11.0:*:*:*:*:*:*:*"/>
+        <cpe-23:cpe23-item name="cpe:2.3:o:apple:macos:12.0:*:*:*:*:*:*:*"/>
     </cpe-item>
 </cpe-list>

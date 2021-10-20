@@ -10,7 +10,7 @@ fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-    - CCE-85301-0
+    - CCE-90910-1
   cci: 
     - CCI-000381
     - CCI-001150
@@ -19,15 +19,14 @@ references:
     - N/A
   800-53r4:
     - N/A
-  srg: 
-    - SRG-OS-000095-GPOS-00049
-    - SRG-OS-000370-GPOS-00155
+  srg:
+    - N/A
   disa_stig:
-    - APPL-11-002017
+    - N/A
 macOS:
-  - "11.0"
+  - "12.0"
 tags:
-  - stig
+  - none
 severity: "medium"
 mobileconfig: true
 mobileconfig_info:

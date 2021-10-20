@@ -15,7 +15,7 @@ fix: |
   ----
 references:
   cce:
-    - CCE-85374-7
+    - CCE-90994-5
   cci:
     - N/A    
   800-53r5:
@@ -27,8 +27,10 @@ references:
   800-171r2:
     - 3.5.1
     - 3.5.2
+  cisv8:
+    - 4.7
 macOS:
-  - "11.0"
+  - "12.0"
 tags:
   - 800-53r5_low
   - 800-53r5_moderate
@@ -38,5 +40,6 @@ tags:
   - 800-53r4_high
   - 800-171
   - cnssi-1253
+  - cisv8
 mobileconfig: false
 mobileconfig_info:

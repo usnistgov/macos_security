@@ -18,7 +18,7 @@ fix: |
   The system may need to be restarted for the update to take effect.
 references:
   cce:
-    - CCE-85391-1
+    - CCE-91018-2
   cci: 
     - CCI-000197
   800-53r5:
@@ -29,24 +29,28 @@ references:
     - AC-3
     - IA-5(1)
   srg:
-    - SRG-OS-000074-GPOS-00042
+    - N/A
   disa_stig:
-    - APPL-11-002038
+    - N/A
   800-171r2:
     - 3.1.1
     - 3.1.2
+  cisv8:
+    - 3.3
+    - 3.1
+    - 5.2
 macOS:
-  - "11.0"
+  - "12.0"
 tags:
-  - 800-53r5_low
-  - 800-53r5_moderate
-  - 800-53r5_high
-  - 800-53r4_low
-  - 800-53r4_moderate
-  - 800-53r4_high
-  - 800-171
+  - 800-53r5_low 
+  - 800-53r5_moderate 
+  - 800-53r5_high 
+  - 800-53r4_low 
+  - 800-53r4_moderate 
+  - 800-53r4_high 
+  - 800-171 
   - cnssi-1253
-  - stig
+  - cisv8
 severity: "high"
 mobileconfig: false
 mobileconfig_info:

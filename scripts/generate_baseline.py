@@ -247,7 +247,15 @@ def output_baseline(rules, os, keyword):
 
     output_text = f'title: "macOS {os}: Security Configuration - {keyword}"\n'
     output_text += f'description: |\n  This guide describes the actions to take when securing a macOS {os} system against the {keyword} baseline.\n'
+    output_text += f'authors: |\n  |===\n  |Name|Organization\n  |===\n'
     output_text += 'profile:\n'
+    
+    # sort the rules
+    other_rules.sort()
+    inherent_rules.sort()
+    permanent_rules.sort()
+    na_rules.sort()
+    supplemental_rules.sort()
 
     if len(other_rules) > 0:
         for section in sections:

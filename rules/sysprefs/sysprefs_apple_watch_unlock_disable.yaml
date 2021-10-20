@@ -12,29 +12,28 @@ fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-    - CCE-85418-2
+    - CCE-91045-5
   cci: 
     - CCI-000056
   800-53r5:
     - AC-11
   800-53r4: 
     - AC-11
-  srg: 
-    - SRG-OS-000028-GPOS-00009
+  srg:
+    - N/A
   disa_stig: 
-    - APPL-11-000001
+    - N/A
   800-171r2:
     - 3.1.10
 macOS:
-  - "11.0"
+  - "12.0"
 tags:
-  - 800-53r5_moderate
-  - 800-53r5_high
-  - 800-53r4_moderate
-  - 800-53r4_high
-  - 800-171
+  - 800-53r5_moderate 
+  - 800-53r5_high 
+  - 800-53r4_moderate 
+  - 800-53r4_high 
+  - 800-171 
   - cnssi-1253
-  - stig
 severity: "medium"
 mobileconfig: true
 mobileconfig_info:
