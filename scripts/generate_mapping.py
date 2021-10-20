@@ -233,9 +233,9 @@ tags:
                     sysprefs.append(rule_id)
                     continue
 
-    full_baseline = '''title: "macOS 11 (Big Sur): Security Configuration - {}"
+    full_baseline = '''title: "macOS 10.15 (Catalina): Security Configuration - {}"
 description: |
-  This guide describes the actions to take when securing a macOS 11 system against the {}.
+  This guide describes the actions to take when securing a macOS 10.15 system against the {}.
 authors: |
   |===
   |Name|Organization
