@@ -175,6 +175,7 @@ profile:
       - os_obscure_password
       - os_prevent_priv_functions
       - os_prevent_unauthorized_disclosure
+      - os_prohibit_remote_activation_collab_devices
       - os_reauth_users_change_authenticators
       - os_required_crypto_module
       - os_separate_functionality
@@ -188,7 +189,6 @@ profile:
       - audit_records_processing
       - os_auth_peripherals
       - os_continuous_monitoring
-      - os_prohibit_remote_activation_collab_devices
       - os_protect_dos_attacks
       - os_provide_automated_account_management
       - os_reauth_devices_change_authenticators

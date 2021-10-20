@@ -144,6 +144,7 @@ profile:
       - os_logical_access
       - os_malicious_code_prevention
       - os_obscure_password
+      - os_prohibit_remote_activation_collab_devices
       - os_reauth_users_change_authenticators
       - os_required_crypto_module
       - os_store_encrypted_passwords
@@ -151,7 +152,6 @@ profile:
       - pwpolicy_force_password_change
   - section: "Permanent"
     rules:
-      - os_prohibit_remote_activation_collab_devices
       - os_protect_dos_attacks
       - os_reauth_devices_change_authenticators
       - os_secure_name_resolution

@@ -217,6 +217,7 @@ profile:
       - os_prevent_priv_execution
       - os_prevent_priv_functions
       - os_prevent_unauthorized_disclosure
+      - os_prohibit_remote_activation_collab_devices
       - os_provide_disconnect_remote_access
       - os_reauth_privilege
       - os_reauth_users_change_authenticators
@@ -247,7 +248,6 @@ profile:
       - os_notify_account_modified
       - os_notify_account_removal
       - os_notify_unauthorized_baseline_change
-      - os_prohibit_remote_activation_collab_devices
       - os_protect_dos_attacks
       - os_provide_automated_account_management
       - os_reauth_devices_change_authenticators
