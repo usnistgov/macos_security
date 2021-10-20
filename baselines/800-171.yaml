@@ -3,7 +3,9 @@ description: |
   This guide describes the actions to take when securing a macOS 11.0 system against the 800-171 baseline.
 authors: |
   |===
-  |Name|Organization
+  |Bob Gendler|National Institute of Standards and Technology
+  |Dan Brodjieski|National Aeronautics and Space Administration
+  |Allen Golbig|Jamf
   |===
 profile:
   - section: "authentication"
