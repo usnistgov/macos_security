@@ -233,9 +233,13 @@ tags:
                     sysprefs.append(rule_id)
                     continue
 
-    full_baseline = '''title: "macOS 11 (Big Sur): Security Configuration - {}"
+    full_baseline = '''title: "macOS 12 (Monterey): Security Configuration - {}"
 description: |
-  This guide describes the actions to take when securing a macOS 11 system against the {}.
+  This guide describes the actions to take when securing a macOS 12 system against the {}.
+authors: |
+  |===
+  |Name|Organization
+  |===
 profile:'''.format(other_header,other_header)
     
     if len(audit) != 0:
