@@ -5,6 +5,8 @@ discussion: |
   
   All users _MUST_ go through multifactor authentication to prevent unauthenticated access and potential compromise to the system.
 
+  IMPORTANT: Modification of Pluggable Authentication Modules (PAM) now require user authorization, or use of a Privacy Preferences Policy Control (PPPC) profile from MDM that authorizes modifying system administrator files or full disk access.
+
   NOTE: /etc/pam.d/su will be automatically modified to its original state following any update or major upgrade to the operating system.
 check: |
   /usr/bin/grep -Ec '^(auth\s+sufficient\s+pam_smartcard.so|auth\s+required\s+pam_rootok.so)' /etc/pam.d/su
