@@ -12,7 +12,7 @@ inputs:
 	# generate the HTML checklist document
 	../scripts/generate_guidance.py -g ../baselines/all_rules.yaml 2>/dev/null
 	# generate the related OVAL content
-	../scripts/yaml-to-oval.py ../baselines/all_rules.yaml
+	../scripts/generate_oval.py ../baselines/all_rules.yaml
 	# outputs end up in ${DIR}
 
 tidy:
@@ -36,7 +36,7 @@ XCCDF:
 	       	-o:${DIR}/xccdf.xml \
 		SCAP-version=1.3 \
 		id-namespace=content.mscp.nist.gov \
-		benchmark-id-suffix=macOS_12.0 \
+		benchmark-id-suffix=macOS_${OS} \
 		OVAL-URI=${DIR}/All_rules.xml \
 		include-CPE=1
 	# the input OVAL document will be copied to a companion of the XCCDF document named 'oval.xml'
@@ -52,7 +52,7 @@ datastream:
 		-o:${DIR}/datastream.xml \
 		SCAP-version=1.3 \
 		id-namespace=content.mscp.nist.gov \
-		datastream-id-suffix=macOS_12.0 \
+		datastream-id-suffix=macOS_${OS} \
 		include-CPE=1
 
 report:
