@@ -6,7 +6,10 @@ DIR		= ../build/All_rules
 VERSION	= $(shell ./version.sh)
 OS = $(shell ./os.sh)
 
-all: inputs tidy XCCDF datastream report beautify
+all: generate_cpe inputs tidy XCCDF datastream report beautify
+
+generate_cpe: 
+	./generate_cpe.sh
 
 inputs:
 	# generate the HTML checklist document
