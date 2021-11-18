@@ -50,7 +50,7 @@ references:
     - IA-7
     - SC-8(1)
     - SC-13
-    - MF-4(6)
+    - MA-4(6)
   srg:
     - N/A
   disa_stig: 

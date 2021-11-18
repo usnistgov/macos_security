@@ -36,7 +36,7 @@ def main():
 
     parser = argparse.ArgumentParser(description='Easily generate custom rules from compliance framework mappings')
     parser.add_argument("CSV", default=None, help="CSV to create custom rule files from a mapping.", type=argparse.FileType('rt'))
-    parser.add_argument("-f", "--framework", default="800-53r5", help="Specificy framework for the source. If no framework is specified, the default is 800-53r5.", action="store")
+    parser.add_argument("-f", "--framework", default="800-53r5", help="Specify framework for the source. If no framework is specified, the default is 800-53r5.", action="store")
     
     try:
         results = parser.parse_args()
