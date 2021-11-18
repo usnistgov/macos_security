@@ -11,9 +11,13 @@ discussion: |
   
   NOTE: enforceSmartcard requires allowSmartcard to be set to true in order to work.
 check: |
-  /usr/bin/profiles -P -o stdout | /usr/bin/grep -c 'enforceSmartCard = 1'
+  /usr/bin/osascript -l JavaScript << EOS
+  ObjC.import('Foundation')
+  ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('com.apple.security.smartcard')\
+  .objectForKey('enforceSmartCard'))
+  EOS
 result:
-  integer: 1
+  boolean: true
 fix: |
   This is implemented by a Configuration Profile.
 references:
