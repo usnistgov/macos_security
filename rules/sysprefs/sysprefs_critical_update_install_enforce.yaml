@@ -3,7 +3,11 @@ title: "Enforce Critical Security Updates to be Installed"
 discussion: |
   Ensure that security updates are installed as soon as they are available from Apple. 
 check: |
-  /usr/bin/profiles -P -o stdout | /usr/bin/grep -c 'CriticalUpdateInstall = 1'
+  /usr/bin/osascript -l JavaScript << EOS
+  ObjC.import('Foundation')
+  ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('com.apple.SoftwareUpdate')\
+  .objectForKey('CriticalUpdateInstall'))
+  EOS
 result:
   integer: 1
 fix: |

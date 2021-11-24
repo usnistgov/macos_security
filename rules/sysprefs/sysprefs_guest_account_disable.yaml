@@ -5,7 +5,11 @@ discussion: |
   
   Turning off guest access prevents anonymous users from accessing files.
 check: |
-  /usr/bin/profiles -P -o stdout | /usr/bin/grep -c 'DisableGuestAccount = 1'
+  /usr/bin/osascript -l JavaScript << EOS
+  ObjC.import('Foundation')
+  ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('com.apple.MCX')\
+  .objectForKey('DisableGuestAccount'))
+  EOS
 result:
   integer: 1
 fix: |

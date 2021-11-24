@@ -5,7 +5,11 @@ discussion: |
 
   Apple’s iCloud service does not provide an organization with enough control over the storage and access of data and, therefore, automated mail synchronization _MUST_ be controlled by an organization approved service.
 check: |
-  /usr/bin/profiles -P -o stdout | /usr/bin/grep -c 'allowCloudMail = 0'
+  /usr/bin/osascript -l JavaScript << EOS
+  ObjC.import('Foundation')
+  ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess')\
+  .objectForKey('allowCloudMail'))
+  EOS
 result:
   integer: 1
 fix: |

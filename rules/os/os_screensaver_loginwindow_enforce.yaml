@@ -3,7 +3,11 @@ title: "Enforce Screen Saver at Login Window"
 discussion: |
   A default screen saver _MUST_ be configured to display at the login window and _MUST_ not display any sensitive information.
 check: |
-  /usr/bin/profiles -P -o stdout  | /usr/bin/grep -c loginWindowModulePath
+  /usr/bin/osascript -l JavaScript << EOS
+  ObjC.import('Foundation')
+  ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('com.apple.screensaver')\
+  .objectForKey('loginWindowModulePath'))
+  EOS
 result:
   integer: 1
 fix: |

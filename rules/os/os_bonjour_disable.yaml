@@ -3,7 +3,11 @@ title: "Disable Bonjour Multicast"
 discussion: |
   Bonjour multicast advertising _MUST_ be disabled to prevent the system from broadcasting its presence and available services over network interfaces.
 check: |
-  /usr/bin/profiles -P -o stdout | /usr/bin/grep -c 'NoMulticastAdvertisements = 1'
+  /usr/bin/osascript -l JavaScript << EOS
+  ObjC.import('Foundation')
+  ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('com.apple.mDNSResponder')\
+  .objectForKey('NoMulticastAdvertisements'))
+  EOS
 result:
   integer: 1
 fix: |

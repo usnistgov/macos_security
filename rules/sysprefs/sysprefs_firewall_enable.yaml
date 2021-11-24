@@ -5,7 +5,11 @@ discussion: |
 
   When the macOS Application Firewall is enabled, the flow of information within the information system and between interconnected systems will be controlled by approved authorizations.
 check: |
-  /usr/bin/profiles -P -o stdout | /usr/bin/grep -c 'EnableFirewall = 1'
+  /usr/bin/osascript -l JavaScript << EOS
+  ObjC.import('Foundation')
+  ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('com.apple.security.firewall')\
+  .objectForKey('EnableFirewall'))
+  EOS
 result:
   integer: 1
 fix: |

@@ -3,7 +3,11 @@ title: "Enforce Gatekeeper 30 Day Automatic Rearm"
 discussion: |
   Gatekeeper _MUST_ be configured to automatically rearm after 30 days if disabled.
 check: |
-  /usr/bin/profiles -P -o stdout | /usr/bin/grep -c 'GKAutoRearm = 1'
+  /usr/bin/osascript -l JavaScript << EOS
+  ObjC.import('Foundation')
+  ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('com.apple.ManagedClient.preferences')\
+  .objectForKey('com.apple.security'))
+  EOS
 result:
   integer: 1
 fix: |

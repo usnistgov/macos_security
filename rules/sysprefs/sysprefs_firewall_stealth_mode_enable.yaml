@@ -10,7 +10,11 @@ discussion: |
   Enabling firewall stealth mode may prevent certain remote mechanisms used for maintenance and compliance scanning from properly functioning. Information System Security Officers (ISSOs) are advised to first fully weigh the potential risks posed to their organization before opting not to enable stealth mode.
   ====
 check: |
-  /usr/bin/profiles -P -o stdout | /usr/bin/grep -c 'EnableStealthMode = 1'
+  /usr/bin/osascript -l JavaScript << EOS
+  ObjC.import('Foundation')
+  ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('com.apple.security.firewall')\
+  .objectForKey('EnableStealthMode'))
+  EOS
 result:
   integer: 1
 fix: |

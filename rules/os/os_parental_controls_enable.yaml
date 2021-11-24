@@ -7,7 +7,11 @@ discussion: |
 
   Parental Controls on the macOS consist of many different payloads, which are set individually depending on the type of control required. Enabling parental controls allows for further configuration of these restrictions.
 check: |
-  /usr/bin/profiles -P -o stdout | /usr/bin/grep -c 'familyControlsEnabled = 1'
+  /usr/bin/osascript -l JavaScript << EOS
+  ObjC.import('Foundation')
+  ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess.new')\
+  .objectForKey('familyControlsEnabled'))
+  EOS
 result:
   integer: 1
 fix: |

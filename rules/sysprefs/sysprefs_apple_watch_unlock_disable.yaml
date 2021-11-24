@@ -5,7 +5,11 @@ discussion: |
 
   Disabling Apple watches is a necessary step to ensuring that the information system retains a session lock until the user reestablishes access using an authorized identification and authentication procedures.
 check: |
-  /usr/bin/profiles -P -o stdout | /usr/bin/grep -c 'allowAutoUnlock = 0'
+  /usr/bin/osascript -l JavaScript << EOS
+  ObjC.import('Foundation')
+  ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess')\
+  .objectForKey('allowAutoUnlock'))
+  EOS
 result:
   integer: 1
 fix: |

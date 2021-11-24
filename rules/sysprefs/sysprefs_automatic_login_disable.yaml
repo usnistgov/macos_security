@@ -5,7 +5,11 @@ discussion: |
 
   When automatic logons are enabled, the default user account is automatically logged on at boot time without prompting the user for a password. Even if the screen is later locked, a malicious user would be able to reboot the computer and find it already logged in. Disabling automatic logons mitigates this risk.
 check: |
-  /usr/bin/profiles -P -o stdout | /usr/bin/grep -c '"com.apple.login.mcx.DisableAutoLoginClient" = 1'
+  /usr/bin/osascript -l JavaScript << EOS
+  ObjC.import('Foundation')
+  ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('com.apple.loginwindow')\
+  .objectForKey('com.apple.login.mcx.DisableAutoLoginClient'))
+  EOS
 result:
   integer: 1
 fix: |

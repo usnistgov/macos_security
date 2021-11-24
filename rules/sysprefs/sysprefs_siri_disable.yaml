@@ -5,7 +5,11 @@ discussion: |
 
   The information system _MUST_ be configured to provide only essential capabilities.
 check: |
-  /usr/bin/profiles -P -o stdout | /usr/bin/grep -c '"Ironwood Allowed" = 0'
+  /usr/bin/osascript -l JavaScript << EOS
+  ObjC.import('Foundation')
+  ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('com.apple.ironwood.support')\
+  .objectForKey('Ironwood Allowed'))
+  EOS
 result:
   integer: 1
 fix: |
