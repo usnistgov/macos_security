@@ -3,7 +3,7 @@
 $rule_discussion
 
 To check the state of the system, run the following command(s):
-[source,bash]
+[source,bash,options="nowrap"]
 ----
 $rule_check
 ----
