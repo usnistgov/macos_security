@@ -14,7 +14,7 @@ check: |
   ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('com.apple.security.smartcard')\
   .objectForKey('checkCertificateTrust'))
   EOS
-result: 
+result:
   integer: 3
 fix: |
   This is implemented by a Configuration Profile.
