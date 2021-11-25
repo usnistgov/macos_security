@@ -16,7 +16,7 @@ check: |
   .objectForKey('com.apple.autologout.AutoLogOutDelay'))
   EOS
 result:
-  integer: 1
+  integer: 86400
 fix: |
   This is implemented by a Configuration Profile.
 references:

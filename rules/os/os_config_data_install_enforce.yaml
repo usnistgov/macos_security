@@ -15,7 +15,7 @@ check: |
   .objectForKey('ConfigDataInstall'))
   EOS
 result:
-  integer: 1
+  string: "true"
 fix: |
   This is implemented by a Configuration Profile.
 references:

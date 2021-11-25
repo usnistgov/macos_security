@@ -11,7 +11,7 @@ check: |
   .objectForKey('DisableGuestAccount'))
   EOS
 result:
-  integer: 1
+  string: "true"
 fix: |
   This is implemented by a Configuration Profile.
 references:

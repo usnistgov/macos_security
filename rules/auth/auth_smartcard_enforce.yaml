@@ -17,7 +17,7 @@ check: |
   .objectForKey('enforceSmartCard'))
   EOS
 result:
-  boolean: true
+  string: "true"
 fix: |
   This is implemented by a Configuration Profile.
 references:

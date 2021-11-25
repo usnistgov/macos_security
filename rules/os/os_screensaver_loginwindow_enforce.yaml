@@ -9,7 +9,7 @@ check: |
   .objectForKey('loginWindowModulePath'))
   EOS
 result:
-  integer: 1
+  string: "/System/Library/Screen Savers/Flurry.saver"
 fix: |
   This is implemented by a Configuration Profile.
 references:

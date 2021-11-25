@@ -11,7 +11,7 @@ check: |
   .objectForKey('maxFailedAttempts'))
   EOS
 result:
-  integer: 1
+  integer: 3
 fix: |
   This is implemented by a Configuration Profile.
 references:
