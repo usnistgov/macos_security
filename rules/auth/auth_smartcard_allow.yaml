@@ -8,9 +8,8 @@ discussion: |
   When enabled, the smartcard can be used for login, authorization, and screen saver unlocking.
 check: |
   /usr/bin/osascript -l JavaScript << EOS
-  ObjC.import('Foundation')
-  ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('com.apple.security.smartcard')\
-  .objectForKey('allowSmartCard'))
+  $.NSUserDefaults.alloc.initWithSuiteName('com.apple.security.smartcard')\
+  .objectForKey('allowSmartCard').js
   EOS
 result:
   string: "true"

@@ -11,9 +11,8 @@ discussion: |
   ====
 check: |
   /usr/bin/osascript -l JavaScript << EOS
-  ObjC.import('Foundation')
-  ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('com.apple.security.firewall')\
-  .objectForKey('EnableStealthMode'))
+  $.NSUserDefaults.alloc.initWithSuiteName('com.apple.security.firewall')\
+  .objectForKey('EnableStealthMode').js
   EOS
 result:
   string: "true"

@@ -4,9 +4,8 @@ discussion: |
   macOS _MUST_ be configured to disable the camera.
 check: |
   /usr/bin/osascript -l JavaScript << EOS
-  ObjC.import('Foundation')
-  ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess')\
-  .objectForKey('allowCamera'))
+  $.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess')\
+  .objectForKey('allowCamera').js
   EOS
 result:
   string: "false"

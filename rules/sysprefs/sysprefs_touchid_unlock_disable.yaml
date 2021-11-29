@@ -8,9 +8,8 @@ discussion: |
   The system _MUST_ remain locked until the user establishes access using an authorized identification and authentication method. 
 check: |
   /usr/bin/osascript -l JavaScript << EOS
-  ObjC.import('Foundation')
-  ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess')\
-  .objectForKey('allowFingerprintForUnlock'))
+  $.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess')\
+  .objectForKey('allowFingerprintForUnlock').js
   EOS
 result:
   string: "false"

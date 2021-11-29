@@ -6,9 +6,8 @@ discussion: |
   If users are allowed to disable Gatekeeper or set it to a less restrictive setting, malware could be introduced into the system. 
 check: |
   /usr/bin/osascript -l JavaScript << EOS
-  ObjC.import('Foundation')
-  ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('com.apple.systempolicy.managed')\
-  .objectForKey('DisableOverride'))
+  $.NSUserDefaults.alloc.initWithSuiteName('com.apple.systempolicy.managed')\
+  .objectForKey('DisableOverride').js
   EOS
 result:
   string: "true"

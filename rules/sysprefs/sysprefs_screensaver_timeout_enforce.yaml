@@ -6,9 +6,8 @@ discussion: |
   This rule ensures that a full session lock is triggered within no more than 15 minutes of inactivity.
 check: |
   /usr/bin/osascript -l JavaScript << EOS
-  ObjC.import('Foundation')
-  ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('com.apple.screensaver')\
-  .objectForKey('idleTime'))
+  $.NSUserDefaults.alloc.initWithSuiteName('com.apple.screensaver')\
+  .objectForKey('idleTime').js
   EOS
 result:
   integer: 900

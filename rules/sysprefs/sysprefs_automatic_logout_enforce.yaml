@@ -11,9 +11,8 @@ discussion: |
   ====
 check: |
   /usr/bin/osascript -l JavaScript << EOS
-  ObjC.import('Foundation')
-  ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('.GlobalPreferences')\
-  .objectForKey('com.apple.autologout.AutoLogOutDelay'))
+  $.NSUserDefaults.alloc.initWithSuiteName('.GlobalPreferences')\
+  .objectForKey('com.apple.autologout.AutoLogOutDelay').js
   EOS
 result:
   integer: 86400

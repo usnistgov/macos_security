@@ -10,9 +10,8 @@ discussion: |
   NOTE: Software update will automatically update XProtect, MRT, and Gatekeeper by default in the macOS.
 check: |
   /usr/bin/osascript -l JavaScript << EOS
-  ObjC.import('Foundation')
-  ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('com.apple.SoftwareUpdate')\
-  .objectForKey('ConfigDataInstall'))
+  $.NSUserDefaults.alloc.initWithSuiteName('com.apple.SoftwareUpdate')\
+  .objectForKey('ConfigDataInstall').js
   EOS
 result:
   string: "true"

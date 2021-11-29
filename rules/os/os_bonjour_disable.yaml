@@ -4,9 +4,8 @@ discussion: |
   Bonjour multicast advertising _MUST_ be disabled to prevent the system from broadcasting its presence and available services over network interfaces.
 check: |
   /usr/bin/osascript -l JavaScript << EOS
-  ObjC.import('Foundation')
-  ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('com.apple.mDNSResponder')\
-  .objectForKey('NoMulticastAdvertisements'))
+  $.NSUserDefaults.alloc.initWithSuiteName('com.apple.mDNSResponder')\
+  .objectForKey('NoMulticastAdvertisements').js
   EOS
 result:
   string: "true"

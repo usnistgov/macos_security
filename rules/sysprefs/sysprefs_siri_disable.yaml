@@ -6,9 +6,8 @@ discussion: |
   The information system _MUST_ be configured to provide only essential capabilities.
 check: |
   /usr/bin/osascript -l JavaScript << EOS
-  ObjC.import('Foundation')
-  ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('com.apple.ironwood.support')\
-  .objectForKey('Ironwood Allowed'))
+  $.NSUserDefaults.alloc.initWithSuiteName('com.apple.ironwood.support')\
+  .objectForKey('Ironwood Allowed').js
   EOS
 result:
   string: "false"

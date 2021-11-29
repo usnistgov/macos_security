@@ -6,9 +6,8 @@ discussion: |
   The information system _MUST_ be configured to provide only essential capabilities. Disabling ad tracking ensures that applications and advertisers are unable to track users’ interests and deliver targeted advertisements.  
 check: |
   /usr/bin/osascript -l JavaScript << EOS
-  ObjC.import('Foundation')
-  ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('com.apple.AdLib')\
-  .objectForKey('allowApplePersonalizedAdvertising'))
+  $.NSUserDefaults.alloc.initWithSuiteName('com.apple.AdLib')\
+  .objectForKey('allowApplePersonalizedAdvertising').js
   EOS
 result:
   string: "false"

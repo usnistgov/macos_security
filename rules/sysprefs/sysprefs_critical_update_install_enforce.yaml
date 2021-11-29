@@ -4,9 +4,8 @@ discussion: |
   Ensure that security updates are installed as soon as they are available from Apple. 
 check: |
   /usr/bin/osascript -l JavaScript << EOS
-  ObjC.import('Foundation')
-  ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('com.apple.SoftwareUpdate')\
-  .objectForKey('CriticalUpdateInstall'))
+  $.NSUserDefaults.alloc.initWithSuiteName('com.apple.SoftwareUpdate')\
+  .objectForKey('CriticalUpdateInstall').js
   EOS
 result:
   string: "true"

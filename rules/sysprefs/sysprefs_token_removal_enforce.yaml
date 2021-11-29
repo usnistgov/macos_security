@@ -11,9 +11,8 @@ discussion: |
   ====
 check: |
   /usr/bin/osascript -l JavaScript << EOS
-  ObjC.import('Foundation')
-  ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('com.apple.security.smartcard')\
-  .objectForKey('tokenRemovalAction'))
+  $.NSUserDefaults.alloc.initWithSuiteName('com.apple.security.smartcard')\
+  .objectForKey('tokenRemovalAction').js
   EOS
 result:
   integer: 1

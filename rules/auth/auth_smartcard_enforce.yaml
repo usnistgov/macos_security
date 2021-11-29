@@ -12,9 +12,8 @@ discussion: |
   NOTE: enforceSmartcard requires allowSmartcard to be set to true in order to work.
 check: |
   /usr/bin/osascript -l JavaScript << EOS
-  ObjC.import('Foundation')
-  ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('com.apple.security.smartcard')\
-  .objectForKey('enforceSmartCard'))
+  $.NSUserDefaults.alloc.initWithSuiteName('com.apple.security.smartcard')\
+  .objectForKey('enforceSmartCard').js
   EOS
 result:
   string: "true"

@@ -4,9 +4,8 @@ discussion: |
   A default screen saver _MUST_ be configured to display at the login window and _MUST_ not display any sensitive information.
 check: |
   /usr/bin/osascript -l JavaScript << EOS
-  ObjC.import('Foundation')
-  ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('com.apple.screensaver')\
-  .objectForKey('loginWindowModulePath'))
+  $.NSUserDefaults.alloc.initWithSuiteName('com.apple.screensaver')\
+  .objectForKey('loginWindowModulePath').js
   EOS
 result:
   string: "/System/Library/Screen Savers/Flurry.saver"

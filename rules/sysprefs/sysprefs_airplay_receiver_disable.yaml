@@ -8,9 +8,8 @@ discussion: |
   The information system _MUST_ be configured to provide only essential capabilities.
 check: |
   /usr/bin/osascript -l JavaScript << EOS
-  ObjC.import('Foundation')
-  ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('com.apple.controlcenter')\
-  .objectForKey('AirplayRecieverEnabled'))
+  $.NSUserDefaults.alloc.initWithSuiteName('com.apple.controlcenter')\
+  .objectForKey('AirplayRecieverEnabled').js
   EOS
 result:
   string: "false"
