@@ -227,51 +227,50 @@ def main():
                         '''.format(x,rule_yaml['title'],rule_yaml['references']['cce'][0],rule_yaml['id'],rule_yaml['discussion'].rstrip(),rule_yaml['id'],x)
 
                                     oval_test = oval_test + '''
-                        <plist510_test xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" check="all" check_existence="only_one_exists" comment="{}_test" id="oval:mscp:tst:{}" version="2">
+                        <plist511_test xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" check="all" check_existence="only_one_exists" comment="{}_test" id="oval:mscp:tst:{}" version="2">
                             <object object_ref="oval:mscp:obj:{}" />
                             <state state_ref="oval:mscp:ste:{}" />
-                        </plist510_test>
+                        </plist511_test>
                     
                     
                     '''.format(rule_yaml['id'],x,x,x)
                                     if payload_domain == "com.apple.dock":
                                         
                                         oval_object = oval_object + '''
-                    <plist510_object xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" version="1" comment="find a username" id="oval:mscp:obj:{}">
-                        <key>lastUserName</key>
+                    <plist511_object xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" version="1" comment="find a username" id="oval:mscp:obj:{}">
                         <filepath>/Library/Preferences/com.apple.loginwindow.plist</filepath>
-                        <instance datatype="int" operation="equals">1</instance>
-                    </plist510_object>
-                        <plist510_object xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" comment="{}_object" id="oval:mscp:obj:{}" version="1">
-                        <key>{}</key>
+                        <xpath>/plist/dict/key[string()="lastUserName"]/following-sibling::*[1]/text()</xpath>
+                    </plist511_object>
+                        <plist511_object xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" comment="{}_object" id="oval:mscp:obj:{}" version="1">
                     <filepath datatype="string" operation="equals" var_check="at least one" var_ref="oval:mscp:var:{}"/>
+                    <xpath>/plist/dict/key[string()="{}"]/following-sibling::*[1]/text()</xpath>
                     <instance datatype="int" operation="equals">1</instance>
-                </plist510_object> 
-                                        '''.format(x+1999,key,x,key,x)
+                </plist511_object> 
+                                        '''.format(x+1999,key,x,x,key)
 
                                         oval_variable = oval_variable + '''
             <local_variable id="oval:mscp:var:{}" version="1" datatype="string" comment="user managed pref variable">
                 <concat>
                         <literal_component datatype="string">/Library/Managed Preferences/</literal_component>
-                        <object_component object_ref="oval:mscp:obj:{}" item_field="value"/>
+                        <object_component object_ref="oval:mscp:obj:{}" item_field="value_of"/>
                         <literal_component datatype="string">/com.apple.dock.plist</literal_component>
                 </concat>
             </local_variable>'''.format(x,x+1999)
 
                                     else:
                                         oval_object = oval_object + '''
-                            <plist510_object xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" comment="{}_object" id="oval:mscp:obj:{}" version="1">
+                            <plist511_object xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" comment="{}_object" id="oval:mscp:obj:{}" version="1">
                             <key>{}</key>
                                 <filepath>/Library/Managed Preferences/{}.plist</filepath>
                                 <instance datatype="int" operation="equals">1</instance>
-                            </plist510_object>
+                            </plist511_object>
                             '''.format(rule_yaml['id'],x,key,payload_domain)
                                         
                                     
                                     oval_state = oval_state + '''
-                                        <plist510_state xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" comment="{}_state" id="oval:mscp:ste:{}" version="1">
-                            <value datatype="{}" operation="equals">{}</value>
-                            </plist510_state>
+                                        <plist511_state xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" comment="{}_state" id="oval:mscp:ste:{}" version="1">
+                            <value_of datatype="{}" operation="equals">{}</value_of>
+                            </plist511_state>
                             '''.format(rule_yaml['id'],x,state_kind,value)
                                     x += 1
 
