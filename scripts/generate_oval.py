@@ -1549,7 +1549,7 @@ def main():
                             oval_object = oval_object + '''
                 <plist511_object xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" comment="{}_plist_object" id="oval:mscp:obj:{}" version="1">
                     <filepath>/var/db/com.apple.xpc.launchd/disabled.plist</filepath>
-                    <xpath>//*[contains(text(), "{}")]/following-sibling::*[1]/text()</xpath>
+                    <xpath>name(//*[contains(text(), "{}")]/following-sibling::*[1])</xpath>
                 </plist511_object>
                 <launchd_object id="oval:mscp:obj:{}" version="1" comment="{}_launchctl_object" xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos">
                     <label>{}</label>
