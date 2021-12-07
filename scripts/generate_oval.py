@@ -493,11 +493,16 @@ def main():
                             
                             oval_object = oval_object + '''
                 <plist511_object xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" comment="{}_object" id="oval:mscp:obj:{}" version="1">
-                    <filepath>/Library/Managed Preferences/{}.plist</filepath>
-                    <xpath>//*[contains(text(), "{}")]/following-sibling::*[1]/text()</xpath>
-                </plist511_object>
-                '''.format(rule_yaml['id'],x,payload_type,key)
-                            
+                    <filepath>/Library/Managed Preferences/{}.plist</filepath>'''.format(rule_yaml['id'],x,payload_type)
+                    
+                            if state_kind == "boolean":
+                                oval_object = oval_object + '''
+                    <xpath>name(//*[contains(text(), "{}")]/following-sibling::*[1])</xpath>
+                </plist511_object>'''.format(key)
+                            else:
+                                oval_object = oval_object + '''
+                                <xpath>//*[contains(text(), "{}")]/following-sibling::*[1]/text()</xpath>
+                </plist511_object>'''.format(key)
                         
                             oval_state = oval_state + '''
                             <plist511_state xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" comment="{}_state" id="oval:mscp:ste:{}" version="1">
