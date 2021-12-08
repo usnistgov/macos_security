@@ -8,13 +8,18 @@ discussion: |
   Apple’s Find My service uses a personal AppleID for authentication. Organizations should rely on MDM solutions, which have much more secure authentication requirements, to perform remote lock and remote wipe.
 check: |
   /usr/bin/osascript -l JavaScript << EOS
-  let pref1 = ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess').objectForKey('allowFindMyDevice'))
-  let pref2 = ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess').objectForKey('allowFindMyFriends'))
-  let pref3 = ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('com.apple.icloud.managed').objectForKey('DisableFMMiCloudSetting'))
-  if ( pref1 == false && pref2 == false && pref3 == true ) {
-    console.log("true")
-  } else {
-    console.log("false")
+  function run() {
+    let pref1 = ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess')\
+  .objectForKey('allowFindMyDevice'))
+    let pref2 = ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess')\
+  .objectForKey('allowFindMyFriends'))
+    let pref3 = ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('com.apple.icloud.managed')\
+  .objectForKey('DisableFMMiCloudSetting'))
+    if ( pref1 == false && pref2 == false && pref3 == true ) {
+      return("true")
+    } else {
+      return("false")
+    }
   }
   EOS
 result:
