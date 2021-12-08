@@ -9,6 +9,7 @@ import re
 import warnings
 from pathlib import Path
 from datetime import datetime
+import shutil
 
 warnings.filterwarnings("ignore", category=DeprecationWarning) 
 
@@ -38,7 +39,7 @@ def main():
             except OSError:
                 print(f"Creation of the directory {build_path} failed")
         print('Profile YAML:', results.baseline.name)
-        print('Output path:', output)
+        print('Output path:', output.lower())
         
        
         
@@ -1600,10 +1601,21 @@ def main():
         final_oval = re.sub('(?=\n\[NOTE\])(?s)(.*)\=\n$.*', '<', total_oval)
         # final_oval = re.sub('(?=\n\[NOTE\])(?s)(.*)\=\n<', '<', total_oval)
         
-        oval_file = output
+        oval_file = output.lower()
 
-        with open(oval_file,'w') as rite:
+        with open(oval_file + "temp",'w') as rite:
             rite.write(final_oval)
+            cmd = shutil.which('xmllint')
+            if cmd == None:
+                try:
+                    os.rename(oval_file + "temp", oval_file)
+                except:
+                    print("Error writing Oval file.")
+            else:
+                cmd = cmd + " " + oval_file + "temp --format --output " + oval_file
+                os.popen(cmd).read()
+                if os.path.exists(oval_file):
+                    os.remove(oval_file + "temp")
     
 if __name__ == "__main__":
     main()
