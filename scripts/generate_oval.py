@@ -10,6 +10,7 @@ import warnings
 from pathlib import Path
 from datetime import datetime
 import shutil
+from time import sleep
 
 warnings.filterwarnings("ignore", category=DeprecationWarning) 
 
@@ -26,7 +27,7 @@ def main():
         
         output_basename = os.path.basename(results.baseline.name)
         output_filename = os.path.splitext(output_basename)[0]
-        baseline_name = os.path.splitext(output_basename)[0].capitalize()
+        baseline_name = os.path.splitext(output_basename)[0]
         file_dir = os.path.dirname(os.path.abspath(__file__))
         parent_dir = os.path.dirname(file_dir)
         
@@ -39,7 +40,7 @@ def main():
             except OSError:
                 print(f"Creation of the directory {build_path} failed")
         print('Profile YAML:', results.baseline.name)
-        print('Output path:', output.lower())
+        print('Output path:', output)
         
        
         
@@ -1601,11 +1602,12 @@ def main():
         final_oval = re.sub('(?=\n\[NOTE\])(?s)(.*)\=\n$.*', '<', total_oval)
         # final_oval = re.sub('(?=\n\[NOTE\])(?s)(.*)\=\n<', '<', total_oval)
         
-        oval_file = output.lower()
+        oval_file = output
 
         with open(oval_file + "temp",'w') as rite:
             rite.write(final_oval)
             cmd = shutil.which('xmllint')
+            rite.close()
             if cmd == None:
                 try:
                     os.rename(oval_file + "temp", oval_file)
@@ -1613,9 +1615,11 @@ def main():
                     print("Error writing Oval file.")
             else:
                 cmd = cmd + " " + oval_file + "temp --format --output " + oval_file
+                
                 os.popen(cmd).read()
                 if os.path.exists(oval_file):
                     os.remove(oval_file + "temp")
+                    # print('removed')
     
 if __name__ == "__main__":
     main()
