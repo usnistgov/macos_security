@@ -1438,12 +1438,7 @@ def main():
                         if "bannerText" in rule_yaml['check'] or "fips_" in rule_yaml['check']:
                             
                             text_to_find = rule_yaml['check'].split("=")[1].split('"')[1]
-                            
-                            # matches = re.findall(r'(?=\=")(?s)(.*)\."',rule_yaml['check'])
-                            
-                            # matches = str(matches).replace('="',"").replace("[","").replace("]","").replace("'","")
-                            # matches = matches + "."
-                            # matches = matches.replace(".","\.").replace(")","\)").replace("(","\(")
+
                             matches = text_to_find.replace(".","\.").replace(")","\)").replace("(","\(").replace("*","\*")
                             
                             oval_definition = oval_definition + '''
@@ -1600,7 +1595,6 @@ def main():
 
         total_oval = ovalPrefix + "\n<definitions>\n" + oval_definition + "\n</definitions>\n<tests>\n" + oval_test + "\n</tests>\n<objects>\n" + oval_object + "\n</objects>\n<states>\n"+ oval_state +"\n</states>\n<variables>\n" + oval_variable + "\n</variables>\n</oval_definitions>"
         final_oval = re.sub('(?=\n\[NOTE\])(?s)(.*)\=\n$.*', '<', total_oval)
-        # final_oval = re.sub('(?=\n\[NOTE\])(?s)(.*)\=\n<', '<', total_oval)
         
         oval_file = output
 
@@ -1619,7 +1613,6 @@ def main():
                 os.popen(cmd).read()
                 if os.path.exists(oval_file):
                     os.remove(oval_file + "temp")
-                    # print('removed')
     
 if __name__ == "__main__":
     main()
