@@ -1,14 +1,14 @@
-id: os_hbss_installed
-title: "Must Use Host Based Security Solution"
+id: os_ESS_installed
+title: "Must Use Endpoint Security Solutions"
 discussion: |
-  The approved Host Based Security Solution (HBSS) solution _MUST_ be installed and configured to run. 
+  The approved Endpoint Security Solutions (ESS) _MUST_ be installed and configured to run. 
 
-  The macOS system must employ automated mechanisms to determine the state of system components. The DoD requires the installation and use of an approved HBSS solution to be implemented on the operating system. For additional information, reference all applicable HBSS OPORDs and FRAGOs on SIPRNET.
+  The macOS system must employ automated mechanisms to determine the state of system components. The DoD requires the installation and use of an approved ESS solution to be implemented on the operating system. For additional information, reference all applicable ESS OPORDs and FRAGOs on SIPRNET.
 check: |
-  Ask the System Administrator (SA) or Information System Security Officer (ISSO) if the approved HBSS solution is loaded on the system. 
-  If the installed components of the HBSS solution are not at the DoD approved minimal versions, this is a finding.
+  Ask the System Administrator (SA) or Information System Security Officer (ISSO) if the approved ESS solution is loaded on the system. 
+  If the installed components of the ESS solution are not at the DoD approved minimal versions, this is a finding.
 fix: |
-  Install the approved HBSS solution onto the system.
+  Install the approved ESS solution onto the system.
 references:
   cce:
     - CCE-85467-9

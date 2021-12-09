@@ -55,7 +55,7 @@ profile:
       - os_filevault_autologin_disable
       - os_firmware_password_require
       - os_gatekeeper_enable
-      - os_hbss_installed
+      - os_ESS_installed
       - os_home_folders_secure
       - os_httpd_disable
       - os_icloud_storage_prompt_disable
