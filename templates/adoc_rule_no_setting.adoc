@@ -31,6 +31,16 @@ ifdef::show_STIG[]
 !$rule_disa_stig
 endif::[]
 
+ifdef::show_CIS_LVL1[]
+!CIS Level 1
+!$rule_cis_lvl1
+endif::[]
+
+ifdef::show_CIS_LVL2[]
+!CIS Level 2
+!$rule_cis_lvl2
+endif::[]
+
 ifdef::show_CISv8[]
 !CIS Controls V8
 !$rule_cisv8

@@ -23,6 +23,10 @@ references:
     - N/A
   800-171r2:
     - N/A
+  cis_lvl1:
+    - 1.5
+  cis_lvl2:
+    - N/A
   cisv8:
     - 7.3
     - 7.4
@@ -33,6 +37,7 @@ tags:
   - 800-53r5_low
   - 800-53r5_moderate
   - 800-53r5_high
+  - cis_lvl1
   - cisv8
 mobileconfig: true
 mobileconfig_info:

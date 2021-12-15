@@ -23,7 +23,7 @@ from collections import namedtuple
 
 
 class MacSecurityRule():
-    def __init__(self, title, rule_id, severity, discussion, check, fix, cci, cce, nist_controls, nist_171, disa_stig, srg, cisv8, custom_refs, tags, result_value, mobileconfig, mobileconfig_info, customized):
+    def __init__(self, title, rule_id, severity, discussion, check, fix, cci, cce, nist_controls, nist_171, disa_stig, srg, cis_lvl1, cis_lvl2, cisv8, custom_refs, tags, result_value, mobileconfig, mobileconfig_info, customized):
         self.rule_title = title
         self.rule_id = rule_id
         self.rule_severity = severity
@@ -36,6 +36,8 @@ class MacSecurityRule():
         self.rule_800171 = nist_171
         self.rule_disa_stig = disa_stig
         self.rule_srg = srg
+        self.rule_cis_lvl1 = cis_lvl1
+        self.rule_cis_lvl2 = cis_lvl2
         self.rule_cisv8 = cisv8
         self.rule_custom_refs = custom_refs
         self.rule_result_value = result_value
@@ -57,6 +59,8 @@ class MacSecurityRule():
             rule_cci=self.rule_cci,
             rule_80053r5=self.rule_80053r5,
             rule_disa_stig=self.rule_disa_stig,
+            rule_cis_lvl1=self.rule_cis_lvl1,
+            rule_cis_lvl2=self.rule_cis_lvl2,
             rule_cisv8=self.rule_cisv8,
             rule_srg=self.rule_srg,
             rule_result=self.rule_result_value
@@ -1142,9 +1146,11 @@ def generate_xls(baseline_name, build_path, baseline_yaml):
     sheet1.write(0, 9, "800-171", headers)
     sheet1.write(0, 10, "SRG", headers)
     sheet1.write(0, 11, "DISA STIG", headers)
-    sheet1.write(0, 12, "CIS Controls v8", headers)
-    sheet1.write(0, 13, "CCI", headers)
-    sheet1.write(0, 14, "Modifed Rule", headers)
+    sheet1.write(0, 12, "CIS Level 1", headers)
+    sheet1.write(0, 13, "CIS Level 2", headers)
+    sheet1.write(0, 14, "CIS Controls v8", headers)
+    sheet1.write(0, 15, "CCI", headers)
+    sheet1.write(0, 16, "Modifed Rule", headers)
     sheet1.set_panes_frozen(True)
     sheet1.set_horz_split_pos(1)
     sheet1.set_vert_split_pos(2)
@@ -1221,22 +1227,34 @@ def generate_xls(baseline_name, build_path, baseline_yaml):
         sheet1.write(counter, 11, disa_refs, topWrap)
         sheet1.col(11).width = 500 * 15
 
-        cci = (str(rule.rule_cci)).strip('[]\'')
-        cci = cci.replace(", ", "\n").replace("\'", "")
+        cislvl1_refs = (str(rule.rule_cis_lvl1)).strip('[]\'')
+        cislvl1_refs = cislvl1_refs.replace(", ", "\n").replace("\'", "")
+
+        sheet1.write(counter, 12, cislvl1_refs, topWrap)
+        sheet1.col(12).width = 500 * 15
+
+        cislvl2_refs = (str(rule.rule_cis_lvl2)).strip('[]\'')
+        cislvl2_refs = cislvl2_refs.replace(", ", "\n").replace("\'", "")
+
+        sheet1.write(counter, 13, cislvl2_refs, topWrap)
+        sheet1.col(12).width = 500 * 15            
 
         cisv8_refs = (str(rule.rule_cisv8)).strip('[]\'')
         cisv8_refs = cisv8_refs.replace(", ", "\n").replace("\'", "")
 
-        sheet1.write(counter, 12, cisv8_refs, topWrap)
+        sheet1.write(counter, 14, cisv8_refs, topWrap)
         sheet1.col(12).width = 500 * 15
 
-        sheet1.write(counter, 13, cci, topWrap)
+        cci = (str(rule.rule_cci)).strip('[]\'')
+        cci = cci.replace(", ", "\n").replace("\'", "")
+
+        sheet1.write(counter, 15, cci, topWrap)
         sheet1.col(13).width = 400 * 15
 
         customized = (str(rule.rule_customized)).strip('[]\'')
         customized = customized.replace(", ", "\n").replace("\'", "")
 
-        sheet1.write(counter, 14, customized, topWrap)
+        sheet1.write(counter, 16, customized, topWrap)
         sheet1.col(14).width = 400 * 15
 
         if rule.rule_custom_refs != ['None']:
@@ -1281,6 +1299,8 @@ def create_rules(baseline_yaml):
                   'cce',
                   '800-53r5',
                   '800-171r2',
+                  'cis_lvl1',
+                  'cis_lvl2',
                   'cisv8',
                   'srg',
                   'custom']
@@ -1324,6 +1344,8 @@ def create_rules(baseline_yaml):
                                         rule_yaml['references']['800-171r2'],
                                         rule_yaml['references']['disa_stig'],
                                         rule_yaml['references']['srg'],
+                                        rule_yaml['references']['cis_lvl1'],
+                                        rule_yaml['references']['cis_lvl2'],
                                         rule_yaml['references']['cisv8'],
                                         rule_yaml['references']['custom'],
                                         rule_yaml['tags'],
@@ -1552,7 +1574,17 @@ def main():
     else:
         adoc_STIG_show=":show_STIG!:"
 
-    if "CIS" in baseline_yaml['title'].upper():
+    if "LEVEL 1" in baseline_yaml['title'].upper():
+        adoc_cis_lvl1_show=":show_cis_lvl1:"
+    else:
+        adoc_cis_lvl1_show=":show_cis_lvl1!:"
+
+    if "LEVEL 2" in baseline_yaml['title'].upper():
+        adoc_cis_lvl2_show=":show_cis_lvl2:"
+    else:
+        adoc_cis_lvl2_show=":show_cis_lvl2!:"
+
+    if "CIS CONTROLS" in baseline_yaml['title'].upper():
         adoc_cisv8_show=":show_cisv8:"
     else:
         adoc_cisv8_show=":show_cisv8!:"
@@ -1573,6 +1605,8 @@ def main():
         tag_attribute=adoc_tag_show,
         nist171_attribute=adoc_171_show,
         stig_attribute=adoc_STIG_show,
+        cislvl1_attribute=adoc_cis_lvl1_show,
+        cislvl2_attribute=adoc_cis_lvl2_show,
         cisv8_attribute=adoc_cisv8_show,
         version=version_yaml['version'],
         os_version=version_yaml['os'],
@@ -1669,7 +1703,6 @@ def main():
             except KeyError:
                 nist_80053r5 = 'N/A'
             else:
-                #nist_80053r5 = ulify(rule_yaml['references']['800-53r5'])
                 nist_80053r5 = rule_yaml['references']['800-53r5']
             
             try:
@@ -1677,7 +1710,6 @@ def main():
             except KeyError:
                 nist_800171 = '- N/A'
             else:
-                #nist_80053r5 = ulify(rule_yaml['references']['800-53r5'])
                 nist_800171 = ulify(rule_yaml['references']['800-171r2'])
 
             try:
@@ -1686,6 +1718,20 @@ def main():
                 disa_stig = '- N/A'
             else:
                 disa_stig = ulify(rule_yaml['references']['disa_stig'])
+
+            try:
+                rule_yaml['references']['cis_lvl1']
+            except KeyError:
+                cis_lvl1 = '- N/A'
+            else:
+                cis_lvl1 = ulify(rule_yaml['references']['cis_lvl1'])
+
+            try:
+                rule_yaml['references']['cis_lvl2']
+            except KeyError:
+                cis_lvl2 = '- N/A'
+            else:
+                cis_lvl2 = ulify(rule_yaml['references']['cis_lvl2'])
 
             try:
                 rule_yaml['references']['cisv8']
@@ -1776,6 +1822,8 @@ def main():
                     rule_80053r5=nist_controls,
                     rule_800171=nist_800171,
                     rule_disa_stig=disa_stig,
+                    rule_cis_lvl1=cis_lvl1,
+                    rule_cis_lvl2=cis_lvl2,
                     rule_cisv8=cisv8,
                     rule_cce=cce,
                     rule_tags=tags,
@@ -1792,6 +1840,8 @@ def main():
                     rule_80053r5=nist_controls,
                     rule_800171=nist_800171,
                     rule_disa_stig=disa_stig,
+                    rule_cis_lvl1=cis_lvl1,
+                    rule_cis_lvl2=cis_lvl2,
                     rule_cisv8=cisv8,
                     rule_cce=cce,
                     rule_custom_refs=custom_refs,
@@ -1810,6 +1860,8 @@ def main():
                     rule_80053r5=nist_controls,
                     rule_800171=nist_800171,
                     rule_disa_stig=disa_stig,
+                    rule_cis_lvl1=cis_lvl1,
+                    rule_cis_lvl2=cis_lvl2,
                     rule_cisv8=cisv8,
                     rule_cce=cce,
                     rule_tags=tags,
