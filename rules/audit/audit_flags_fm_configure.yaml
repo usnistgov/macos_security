@@ -42,6 +42,10 @@ references:
     - N/A
   800-171r2:
     - N/A
+  cis_lvl1:
+    - N/A
+  cis_lvl2:
+    - 3.2
   cisv8:
     - 3.14
     - 8.2
@@ -50,6 +54,7 @@ macOS:
   - "12.0"
 tags:
   - stig
+  - cis_lvl2
   - cisv8
 severity: "medium"
 mobileconfig: false
