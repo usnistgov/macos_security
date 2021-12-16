@@ -1,0 +1,39 @@
+id: sysprefs_wifi_menu_enable
+title: "Enable Wifi Menu"
+discussion: |
+  The WiFi menu _MUST_ be enabled.
+check: |
+  /usr/bin/profiles -P -o stdout | /usr/bin/grep -c 'WiFi = 18'
+result:
+  integer: 1
+fix: |
+  This is implemented by a Configuration Profile.
+references:
+  cce:
+    - N/A
+  cci: 
+    - N/A
+  800-53r5:
+    - N/A
+  800-53r4: 
+    - N/A
+  srg:
+    - N/A
+  disa_stig: 
+    - N/A
+  800-171r2:
+    - N/A
+  cis_lvl1:
+    - 4.2
+  cis_lvl2:
+    - N/A
+  cisv8:
+    - N/A  
+macOS:
+  - "12.0"
+tags:
+  - cis_lvl1
+mobileconfig: true
+mobileconfig_info:
+  com.apple.controlcenter:
+    WiFi: 18
