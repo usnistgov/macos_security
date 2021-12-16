@@ -65,6 +65,10 @@ references:
     - 3.3.8
     - 3.4.5
     - 3.13.4
+  cis_lvl1: 
+    - 5.1.2
+  cis_lvl2:
+    - N/A
   cisv8:
     - 2.6
     - 3.3
