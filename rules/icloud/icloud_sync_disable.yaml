@@ -33,6 +33,10 @@ references:
   800-171r2:
     - 3.1.20
     - 3.4.6
+  cis_lvl1:
+    - N/A
+  cis_lvl2:
+    - 2.6.1.4
   cisv8:
     - 4.1
     - 4.8
@@ -48,6 +52,7 @@ tags:
   - 800-53r4_high
   - 800-171
   - cnssi-1253
+  - cis_lvl2
   - cisv8
 mobileconfig: true
 mobileconfig_info:
