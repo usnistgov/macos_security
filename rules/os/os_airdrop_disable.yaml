@@ -35,6 +35,10 @@ references:
     - 3.1.16
     - 3.1.20
     - 3.4.6
+  cis_lvl1:
+    - 2.4.11
+  cis_lvl2:
+    - N/A
   cisv8:
     - 4.1
     - 4.8
@@ -50,6 +54,7 @@ tags:
   - 800-53r4_high 
   - 800-171 
   - cnssi-1253
+  - cis_lvl2
   - cisv8
 severity: "medium"
 mobileconfig: true
