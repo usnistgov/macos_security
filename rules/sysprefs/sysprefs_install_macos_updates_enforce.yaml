@@ -1,0 +1,41 @@
+id: sysprefs_install_macos_updates_enforce
+title: "Enforce macOS Updates are Automatically Installed"
+discussion: |
+  Software Update _MUST_ be configured to enforce automatic installation of macOS updates is enabled.
+check: |
+  /usr/bin/profiles -P -o stdout | /usr/bin/grep -c 'AutomaticallyInstallMacOSUpdates = 1'
+result:
+  integer: 1
+fix: |
+  This is implemented by a Configuration Profile.
+references:
+  cce:
+    - N/A
+  cci: 
+    - N/A
+  800-53r5:
+    - N/A
+  800-53r4:
+    - N/A
+  srg:
+    - N/A
+  disa_stig:
+    - N/A
+  800-171r2:
+    - N/A
+  cis_lvl1:
+    - 1.6
+  cis_lvl2:
+    - N/A
+  cisv8:
+    - 7.3
+    - 7.4
+macOS:
+  - "12.0"
+tags:
+  - cis_lvl1
+  - cisv8
+mobileconfig: true
+mobileconfig_info:
+  com.apple.SoftwareUpdate:
+    AutomaticallyInstallMacOSUpdates: true
