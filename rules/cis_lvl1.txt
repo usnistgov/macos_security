@@ -1,8 +1,4 @@
 Recommendation #	Title
-	Install Updates, Patches and Additional Security Software
-1.1	Ensure All Apple-provided Software Is Current
-1.2	Ensure Auto Update Is Enabled
-	System Preferences
 	Bluetooth
 2.1.1	Ensure Bluetooth Is Disabled If No Devices Are Paired
 2.1.2	Ensure Show Bluetooth Status in Menu Bar Is Enabled
@@ -12,7 +8,6 @@ Recommendation #	Title
 	Desktop & Screen Saver
 2.3.3	Audit Lock Screen and Start Screen Saver Tools
 	Sharing
-
 2.4.4	Ensure Printer Sharing Is Disabled
 2.4.6	Ensure DVD or CD Sharing Is Disabled
 2.4.9	Ensure Remote Management Is Disabled
@@ -20,14 +15,9 @@ Recommendation #	Title
 	Encryption
 2.5.1.2	Ensure all user storage APFS volumes are encrypted
 2.5.1.3	Ensure all user storage CoreStorage volumes are encrypted
-	Firewall
-2.5.6	Ensure Limit Ad Tracking Is Enabled
-	Apple ID
-	iCloud
 	Time Machine
 2.7.2	Ensure Time Machine Volumes Are Encrypted
 2.8	Ensure Wake for Network Access Is Disabled
-2.9	Ensure Power Nap Is Disabled
 2.10	Ensure Secure Keyboard Entry terminal.app is Enabled
 2.11	Ensure EFI Version Is Valid and Checked Regularly
 2.12	Audit Automatic Actions for Optical Media
@@ -37,15 +27,12 @@ Recommendation #	Title
 2.16	Audit Notification System Preference Settings
 2.17	Audit Passwords System Preference Setting
 	Logging and Auditing
-3.1	Ensure Security Auditing Is Enabled
 3.3	Ensure install.log Is Retained for 365 or More Days and No Maximum Size
 3.4	Ensure Security Auditing Retention Is Enabled
 3.5	Ensure Access to Audit Records Is Controlled
 	File System Permissions and Access Controls
-5.1.2	Ensure System Integrity Protection Status (SIPS) Is Enabled
 5.1.3	Ensure Apple Mobile File Integrity Is Enabled
 5.1.4	Ensure Library Validation Is Enabled
-5.1.5	Ensure Sealed System Volume (SSV) Is Enabled
 5.1.6	Ensure Appropriate Permissions Are Enabled for System Wide Applications
 5.1.7	Ensure No World Writable Files Exist in the System Folder
 	Password Management
@@ -58,10 +45,6 @@ Recommendation #	Title
 5.14	Ensure Users' Accounts Do Not Have a Password Hint
 	User Accounts and Environment
 	Accounts Preferences Action Items
-6.1.1	Ensure Login Window Displays as Name and Password Is Enabled
-6.1.2	Ensure Show Password Hints Is Disabled
-6.1.3	Ensure Guest Account Is Disabled
-6.1.4	Ensure Guest Access to Shared Folders Is Disabled
 6.1.5	Ensure the Guest Home Folder Does Not Exist
 6.2	Ensure Show All Filename Extensions Setting is Enabled
 6.3	Ensure Automatic Opening of Safe Files in Safari Is Disabled
