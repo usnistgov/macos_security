@@ -1,7 +1,6 @@
 Recommendation #	Title
 	Bluetooth
 2.1.1	Ensure Bluetooth Is Disabled If No Devices Are Paired
-2.1.2	Ensure Show Bluetooth Status in Menu Bar Is Enabled
 	Date & Time
 2.2.1	Ensure "Set time and date automatically" Is Enabled
 2.2.2	Ensure time set is within appropriate limits
@@ -43,9 +42,7 @@ Recommendation #	Title
 5.4	Ensure a Separate Timestamp Is Enabled for Each User/tty Combo
 5.12	Ensure a Custom Message for the Login Screen Is Enabled
 5.14	Ensure Users' Accounts Do Not Have a Password Hint
-	User Accounts and Environment
 	Accounts Preferences Action Items
 6.1.5	Ensure the Guest Home Folder Does Not Exist
 6.2	Ensure Show All Filename Extensions Setting is Enabled
 6.3	Ensure Automatic Opening of Safe Files in Safari Is Disabled
-	Appendix: Additional Considerations
