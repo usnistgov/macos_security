@@ -16,8 +16,6 @@ Recommendation #	Title
 2.5.1.3	Ensure all user storage CoreStorage volumes are encrypted
 	Time Machine
 2.7.2	Ensure Time Machine Volumes Are Encrypted
-2.8	Ensure Wake for Network Access Is Disabled
-2.10	Ensure Secure Keyboard Entry terminal.app is Enabled
 2.11	Ensure EFI Version Is Valid and Checked Regularly
 2.12	Audit Automatic Actions for Optical Media
 2.13	Audit Siri Settings

@@ -1,0 +1,40 @@
+id: os_terminal_secure_keyboard_enable
+title: "Ensure Secure Keyboard Entry Terminal.app is Enabled"
+discussion: |
+  Secure keyboard entry _MUST_ be enabled in Terminal.app. 
+check: |
+  /usr/bin/profiles -P -o stdout | /usr/bin/grep -c 'SecureKeyboardEntry = 1'
+result:
+  integer: 1
+fix: |
+  This is implemented by a Configuration Profile.
+references:
+  cce:
+    - N/A
+  800-53r5:
+    - N/A
+  800-53r4:
+    - N/A
+  disa_stig:
+    - N/A
+  srg:
+    - N/A
+  cci: 
+    - N/A    
+  800-171r2:
+    - N/A
+  cis_lvl1:
+    - 2.10
+  cis_lvl2:
+    - N/A
+  cisv8:
+    - 4.8
+macOS:
+  - "12.0"
+tags:
+  - cis_lvl1
+  - cisv8
+mobileconfig: true
+mobileconfig_info:
+  com.apple.Terminal:
+    SecureKeyboardEntry: false

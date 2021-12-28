@@ -1,0 +1,42 @@
+id: sysprefs_computer_name_audit
+title: "Audit Computer Name"
+discussion: |
+  The organization _MUST_ audit a systems computer name.
+check: |
+  /usr/sbin/scutil --get ComputerName
+result: 
+  string: "an organizations approved computer name."
+fix: |
+  Set the computer name back to an approved naming convention.
+
+  [source,bash]
+  ----
+  /usr/sbin/scutil --set ComputerName <approved_scheme>
+  ----
+references:
+  cce:
+    - N/A
+  cci: 
+    - N/A
+  800-53r5:
+    - N/A
+  800-53r4: 
+    - N/A
+  disa_stig: 
+    - N/A
+  srg:
+    - N/A
+  cis_lvl1:
+    - N/A
+  cis lvl2:
+    - 1.7
+  cisv8: 
+    - 1.1
+macOS:
+  - "12.0"
+tags:
+  - cis_lvl2
+  - cisv8
+  - manual
+mobileconfig: false
+mobileconfig_info:

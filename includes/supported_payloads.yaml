@@ -22,6 +22,7 @@ payloads_types:
   - com.apple.SubmitDiagInfo
   - com.apple.SystemConfiguration
   - com.apple.TCC.configuration-profile-policy
+  - com.apple.Terminal
   - com.apple.TextEdit
   - com.apple.TimeMachine
   - com.apple.airplay

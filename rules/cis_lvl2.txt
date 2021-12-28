@@ -1,5 +1,4 @@
 Recommendation #	Title
-1.7	Audit Computer Name
 2.3.2	Ensure Screen Saver Corners Are Secure
 	Security & Privacy
 2.5.4	Audit Location Services Access
