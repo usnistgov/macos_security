@@ -22,11 +22,14 @@ references:
     - N/A
   disa_stig: 
     - N/A
-  cisv8:
-    - 10.1
-    - 10.2
-    - 10.6
-    - 10.7
+  cis:
+    benchmark:
+      - N/A
+    v8:
+      - 10.1
+      - 10.2
+      - 10.6
+      - 10.7
 macOS:
   - "12.0"
 tags:
