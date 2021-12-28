@@ -30,14 +30,13 @@ references:
     - N/A
   800-171r2:
     - N/A
-  cis_lvl1:
-    - 1.5
-  cis_lvl2:
-    - N/A
-  cisv8:
-    - 10.1
-    - 10.2
-    - 10.4
+  cis:
+    benchmark:
+      - 1.5 (level 1)
+    v8:
+      - 10.1
+      - 10.2
+      - 10.4
 macOS:
   - "12.0"
 tags:
