@@ -1,0 +1,43 @@
+Recommendation #	Title
+	Install Updates, Patches and Additional Security Software
+1.7	Audit Computer Name
+	System Preferences
+	Bluetooth
+	Date & Time
+	Desktop & Screen Saver
+2.3.2	Ensure Screen Saver Corners Are Secure
+	Sharing
+	Security & Privacy
+2.5.3	Ensure Location Services Is Enabled
+2.5.4	Audit Location Services Access
+2.5.7	Audit Camera Privacy and Confidentiality
+	Encryption
+	Firewall
+	iCloud
+2.6.1.1	Audit iCloud Configuration
+2.6.1.2	Audit iCloud Keychain
+2.6.1.3	Audit iCloud Drive
+	Apple ID
+2.6.2	Audit App Store Password Settings
+	Time Machine
+2.7.1	Ensure Backup Up Automatically is Enabled
+	Logging and Auditing
+3.2	Ensure Security Auditing Flags Are Configured Per Local Organizational Requirements
+3.7	Audit Software Inventory
+	Network Configurations
+4.3	Audit Network Specific Locations
+4.6	Audit Wi-Fi Settings
+	System Access, Authentication and Authorization
+	File System Permissions and Access Controls
+5.1.8	Ensure No World Writable Files Exist in the Library Folder
+	Password Management
+5.2.4	Ensure Complex Password Must Contain Numeric Character Is Configured
+5.5	Ensure login keychain is locked when the computer sleeps
+5.9	Ensure system is set to hibernate
+5.13	Ensure a Login Window Banner Exists
+5.15	Ensure Fast User Switching Is Disabled
+	User Accounts and Environment
+	Accounts Preferences Action Items
+	Appendix: Additional Considerations
+7.1	Extensible Firmware Interface (EFI) password
+7.2	FileVault and Local Account Password Reset using AppleID
