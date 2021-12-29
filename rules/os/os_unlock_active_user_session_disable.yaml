@@ -50,5 +50,7 @@ tags:
   - 800-171
   - cnssi-1253
   - cis_lvl1
+  - cis_lvl2
+  - cisv8
 mobileconfig: false
 mobileconfig_info:

@@ -32,7 +32,7 @@ references:
     benchmark:
       - 5.7 (level 1)
     v8:
-    - N/A
+      - 4.7
 macOS:
   - "12.0"
 tags:
@@ -45,6 +45,8 @@ tags:
   - 800-171 
   - cnssi-1253
   - cis_lvl1
+  - cis_lvl2
+  - cisv8
 severity: "medium"
 mobileconfig: true
 mobileconfig_info:

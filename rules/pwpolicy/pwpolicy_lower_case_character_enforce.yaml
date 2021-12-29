@@ -59,7 +59,7 @@ references:
     - 3.5.10
   cis:
     benchmark:
-      - 5.2.6 (level 1)
+      - 5.2.6 (level 2)
     v8:
       - 5.2
 macOS:
