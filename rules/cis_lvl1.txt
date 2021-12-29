@@ -33,7 +33,6 @@ Recommendation #	Title
 5.1.6	Ensure Appropriate Permissions Are Enabled for System Wide Applications
 5.1.7	Ensure No World Writable Files Exist in the System Folder
 	Password Management
-5.2.1	Ensure Password Account Lockout Threshold Is Configured
 5.2.7	Ensure Password Age Is Configured
 5.2.8	Ensure Password History Is Configured
 5.3	Ensure the Sudo Timeout Period Is Set to Zero

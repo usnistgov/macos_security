@@ -35,11 +35,10 @@ references:
     - 3.5.8
     - 3.5.9
     - 3.5.10
-  cis_lvl1:
-    - N/A
-  cis_lvl2:
-    - 5.2.5
-  cisv8:
+  cis:
+    benchmark:
+      - 5.2.5 (level 2)
+    v8:
     - 5.2
 macOS:
   - "12.0"

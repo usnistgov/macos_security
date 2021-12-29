@@ -54,7 +54,10 @@ references:
     - 3.5.8
     - 3.5.9
     - 3.5.10
-  cisv8:
+  cis:
+    benchmark:
+      - N/A
+    v8:
     - 4.7
 macOS:
   - "12.0"
