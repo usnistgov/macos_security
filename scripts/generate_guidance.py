@@ -1225,10 +1225,10 @@ def generate_xls(baseline_name, build_path, baseline_yaml):
         cis = ""
         if rule.rule_cis != ['None']:
             for title, ref in rule.rule_cis.items():
-                if title == "benchmark":
+                if title.lower() == "benchmark":
                     sheet1.write(counter, 12, ref, topWrap)
                     sheet1.col(12).width = 500 * 15
-                if title == "v8":
+                if title.lower() == "v8":
                     cis = (str(ref).strip('[]\''))
                     cis = cis.replace(", ", "\n")
                     sheet1.write(counter, 13, cis, topWrap)
@@ -1432,7 +1432,7 @@ def parse_cis_references(reference):
     string = "\n"
     for item in reference:
         if isinstance(reference[item], list):
-            string += "!CIS " + str(item) + "\n!\n"
+            string += "!CIS " + str(item).title() + "\n!\n"
             string += "* "
             for i in reference[item]:
                 string += str(i) + ", "
