@@ -5,8 +5,6 @@ Recommendation #	Title
 2.2.2	Ensure time set is within appropriate limits
 	Desktop & Screen Saver
 2.3.3	Audit Lock Screen and Start Screen Saver Tools
-	Sharing
-2.4.9	Ensure Remote Management Is Disabled
 	Security & Privacy
 	Encryption
 2.5.1.2	Ensure all user storage APFS volumes are encrypted
