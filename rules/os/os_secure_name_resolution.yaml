@@ -24,8 +24,11 @@ references:
     - N/A
   srg:
     - N/A
-  cisv8:
-    - 4.9
+  cis:
+    benchmark:
+      - N/A
+    v8:
+      - 4.9
 macOS:
   - "12.0"
 tags:
