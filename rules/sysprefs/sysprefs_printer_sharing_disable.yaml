@@ -32,7 +32,7 @@ references:
   cis:
     benchmark: 
       - 2.4.4 (level 1)
-    cisv8:
+    v8:
       - 4.1
       - 4.8
 macOS:
