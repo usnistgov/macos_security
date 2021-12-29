@@ -3,8 +3,6 @@ Recommendation #	Title
 	Security & Privacy
 2.5.4	Audit Location Services Access
 2.5.7	Audit Camera Privacy and Confidentiality
-	Encryption
-	Firewall
 	iCloud
 2.6.1.1	Audit iCloud Configuration
 2.6.1.2	Audit iCloud Keychain
@@ -14,7 +12,6 @@ Recommendation #	Title
 	Time Machine
 2.7.1	Ensure Backup Up Automatically is Enabled
 	Logging and Auditing
-3.2	Ensure Security Auditing Flags Are Configured Per Local Organizational Requirements
 3.7	Audit Software Inventory
 	Network Configurations
 4.3	Audit Network Specific Locations
@@ -26,8 +23,6 @@ Recommendation #	Title
 5.5	Ensure login keychain is locked when the computer sleeps
 5.9	Ensure system is set to hibernate
 5.15	Ensure Fast User Switching Is Disabled
-	User Accounts and Environment
-	Accounts Preferences Action Items
 	Appendix: Additional Considerations
 7.1	Extensible Firmware Interface (EFI) password
 7.2	FileVault and Local Account Password Reset using AppleID

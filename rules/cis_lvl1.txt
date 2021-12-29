@@ -2,7 +2,6 @@ Recommendation #	Title
 	Bluetooth
 2.1.1	Ensure Bluetooth Is Disabled If No Devices Are Paired
 	Date & Time
-2.2.1	Ensure "Set time and date automatically" Is Enabled
 2.2.2	Ensure time set is within appropriate limits
 	Desktop & Screen Saver
 2.3.3	Audit Lock Screen and Start Screen Saver Tools
@@ -33,8 +32,6 @@ Recommendation #	Title
 5.1.6	Ensure Appropriate Permissions Are Enabled for System Wide Applications
 5.1.7	Ensure No World Writable Files Exist in the System Folder
 	Password Management
-5.2.7	Ensure Password Age Is Configured
-5.2.8	Ensure Password History Is Configured
 5.3	Ensure the Sudo Timeout Period Is Set to Zero
 5.4	Ensure a Separate Timestamp Is Enabled for Each User/tty Combo
 5.12	Ensure a Custom Message for the Login Screen Is Enabled
