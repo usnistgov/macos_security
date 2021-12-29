@@ -6,7 +6,6 @@ Recommendation #	Title
 	Desktop & Screen Saver
 2.3.3	Audit Lock Screen and Start Screen Saver Tools
 	Sharing
-2.4.6	Ensure DVD or CD Sharing Is Disabled
 2.4.9	Ensure Remote Management Is Disabled
 	Security & Privacy
 	Encryption
