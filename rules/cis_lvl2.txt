@@ -19,10 +19,8 @@ Recommendation #	Title
 	File System Permissions and Access Controls
 5.1.8	Ensure No World Writable Files Exist in the Library Folder
 	Password Management
-5.2.4	Ensure Complex Password Must Contain Numeric Character Is Configured
 5.5	Ensure login keychain is locked when the computer sleeps
 5.9	Ensure system is set to hibernate
-5.15	Ensure Fast User Switching Is Disabled
 	Appendix: Additional Considerations
 7.1	Extensible Firmware Interface (EFI) password
 7.2	FileVault and Local Account Password Reset using AppleID

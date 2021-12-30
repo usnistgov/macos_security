@@ -20,19 +20,14 @@ Recommendation #	Title
 2.17	Audit Passwords System Preference Setting
 	Logging and Auditing
 3.3	Ensure install.log Is Retained for 365 or More Days and No Maximum Size
-3.4	Ensure Security Auditing Retention Is Enabled
-3.5	Ensure Access to Audit Records Is Controlled
 	File System Permissions and Access Controls
 5.1.3	Ensure Apple Mobile File Integrity Is Enabled
 5.1.4	Ensure Library Validation Is Enabled
 5.1.6	Ensure Appropriate Permissions Are Enabled for System Wide Applications
 5.1.7	Ensure No World Writable Files Exist in the System Folder
 	Password Management
-5.3	Ensure the Sudo Timeout Period Is Set to Zero
-5.4	Ensure a Separate Timestamp Is Enabled for Each User/tty Combo
 5.12	Ensure a Custom Message for the Login Screen Is Enabled
 5.14	Ensure Users' Accounts Do Not Have a Password Hint
 	Accounts Preferences Action Items
 6.1.5	Ensure the Guest Home Folder Does Not Exist
 6.2	Ensure Show All Filename Extensions Setting is Enabled
-6.3	Ensure Automatic Opening of Safe Files in Safari Is Disabled

@@ -30,7 +30,7 @@ references:
     - N/A
   cis:
     benchmark:
-      - 3.4 (level 1)
+      - N/A
     v8:
       - 8.3
       - 8.1
@@ -45,8 +45,6 @@ tags:
   - 800-53r5_moderate 
   - 800-53r5_high 
   - cnssi-1253
-  - cis_lvl1
-  - cis_lvl2
   - cisv8
 severity: "medium"
 mobileconfig: false
