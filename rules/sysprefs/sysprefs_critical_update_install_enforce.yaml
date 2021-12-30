@@ -23,14 +23,13 @@ references:
     - N/A
   800-171r2:
     - N/A
-  cis_lvl1:
-    - 1.5
-  cis_lvl2:
-    - N/A
-  cisv8:
-    - 7.3
-    - 7.4
-    - 7.7
+  cis:
+    benchmark:
+      - 1.5 (level 1)
+    v8:
+      - 7.3
+      - 7.4
+      - 7.7
 macOS:
   - "12.0"
 tags:
@@ -38,6 +37,7 @@ tags:
   - 800-53r5_moderate
   - 800-53r5_high
   - cis_lvl1
+  - cis_lvl2
   - cisv8
 mobileconfig: true
 mobileconfig_info:
