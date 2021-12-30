@@ -33,6 +33,7 @@ macOS:
 tags:
   - cis_lvl2
   - cisv8
+  - cis_manual
 mobileconfig: true
 mobileconfig_info:
   .GlobalPreferences:
