@@ -5,13 +5,13 @@ discussion: |
 
   This rule ensures that the "sudo" command will prompt for the administrator’s password at least once in each newly opened terminal window. This prevents a malicious user from taking advantage of an unlocked computer or an abandoned logon session by bypassing the normal password prompt requirement. Without the "tty_tickets" option, all open local and remote logon sessions would be authenticated to use sudo without a password for the duration of the configured password timeout window.
 check: |
-  /usr/bin/grep -Ec "^Defaults tty_tickets" /etc/sudoers
+  /usr/bin/find /etc/sudoers* -type f -exec /usr/bin/grep -E "^Defaults\s+\!tty_tickets" '{}' \; | /usr/bin/wc -l | /usr/bin/xargs
 result:
-  integer: 1
+  integer: 0
 fix: |
   [source,bash]
   ----
-  /bin/cp /etc/sudoers /etc/sudoers.bk; /bin/echo "Defaults tty_tickets" >> /etc/sudoers
+  /usr/bin/find /etc/sudoers* -type f -exec sed -i '' '/!tty_tickets/d' '{}' \;
   ----
 references:
   cce:
@@ -42,6 +42,5 @@ tags:
   - cis_lvl1
   - cis_lvl2
   - cisv8
-severity: "high"
 mobileconfig: false
 mobileconfig_info:
