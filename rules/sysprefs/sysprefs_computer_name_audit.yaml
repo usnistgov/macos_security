@@ -5,7 +5,7 @@ discussion: |
 check: |
   /usr/sbin/scutil --get ComputerName
 result: 
-  string: "an organizations approved computer name."
+  string: "an organization's approved computer name."
 fix: |
   Set the computer name back to an approved naming convention.
 
@@ -36,6 +36,7 @@ macOS:
 tags:
   - cis_lvl2
   - cisv8
+  - cis_manual
   - manual
 mobileconfig: false
 mobileconfig_info:

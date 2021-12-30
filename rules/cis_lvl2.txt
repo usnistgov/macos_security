@@ -1,7 +1,5 @@
 Recommendation #	Title
-2.3.2	Ensure Screen Saver Corners Are Secure
 	Security & Privacy
-2.5.4	Audit Location Services Access
 2.5.7	Audit Camera Privacy and Confidentiality
 	iCloud
 2.6.1.1	Audit iCloud Configuration
