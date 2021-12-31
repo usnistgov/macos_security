@@ -1,0 +1,41 @@
+id: os_show_filename_extensions_enable
+title: "Enable Show All Filename Extensions"
+discussion: |
+  Show all filename extensions _MUST_ be enabled in the Finder.
+check: |
+  /usr/bin/defaults read /Users/"$CURRENT_USER"/Library/Preferences/.GlobalPreferences AppleShowAllExtensions 2>/dev/null
+result:
+  integer: 1
+fix: |
+  [source,bash]
+  ----
+  /usr/bin/sudo -u "$CURRENT_USER" /usr/bin/defaults write /Users/"$CURRENT_USER"/Library/Preferences/.GlobalPreferences AppleShowAllExtensions -bool true
+  ----
+references:
+  cce:
+    - N/A
+  cci:
+    - N/A
+  800-53r5:
+    - N/A
+  800-53r4:
+    - N/A
+  srg:
+    - N/A
+  disa_stig:
+    - N/A
+  800-171r2:
+    - N/A
+  cis:
+    benchmark:
+      - 6.2 (level 1)
+    v8:
+      - 2.3
+macOS:
+  - "12.0"
+tags:
+  - cis_lvl1
+  - cis_lvl2
+  - cisv8
+mobileconfig: false
+mobileconfig_info:
