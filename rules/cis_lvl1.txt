@@ -1,8 +1,6 @@
 Recommendation #	Title
 	Bluetooth
 2.1.1	Ensure Bluetooth Is Disabled If No Devices Are Paired
-	Date & Time
-2.2.2	Ensure time set is within appropriate limits
 	Desktop & Screen Saver
 2.3.3	Audit Lock Screen and Start Screen Saver Tools
 	Security & Privacy
