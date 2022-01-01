@@ -646,9 +646,16 @@ def main():
 
                         oval_object = oval_object + '''
                 <plist511_object xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" comment="{}_object" id="oval:mscp:obj:{}" version="1">
-                    <filepath>/Library/Preferences/com.apple.PowerManagement.plist</filepath>
-                    <xpath>boolean(plist/dict[key="AC Power"]/dict[key="DarkWakeBackgroundTasks"]/integer/text() = "0")</xpath>
-                </plist511_object>'''.format(rule_yaml['id'],x)
+                    <filepath>/Library/Preferences/com.apple.PowerManagement.plist</filepath>'''.format(rule_yaml['id'],x)
+                        pmset_key = str()
+                        if "powernap" in rule_yaml['check']:
+                            pmset_key = "DarkWakeBackgroundTasks"
+                        if "womp" in rule_yaml['check']:
+                            pmset_key = "Wake On LAN"
+
+                        oval_object = oval_object + '''
+                    <xpath>boolean(plist/dict[key="AC Power"]/dict[key="{}"]/integer/text() = "{}")</xpath>
+                </plist511_object>'''.format(pmset_key,rule_yaml['fix'].split("----")[1].replace("\n","")[-1])
 
                         oval_state = oval_state + '''
                             <plist511_state xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" comment="{}_state" id="oval:mscp:ste:{}" version="1">
@@ -996,7 +1003,7 @@ def main():
                         oval_definition = re.sub('(?=\n\[NOTE\])(?s)(.*)\=\n<', '<', oval_definition)
                         x = x+1
                     
-                        
+                        continue
                     if "security" in command[3]:
                         if rule_yaml['check'].split()[1] == "authorizationdb":
                             check = rule_yaml['check'].split("|")
@@ -1440,7 +1447,7 @@ def main():
                 '''.format(x,rule_yaml['id'],awk_file.rstrip(), awk_search)
                         x += 1
                         continue
-                    if "grep" in command[3]:
+                    if "grep" in command[3] and not "pgrep" in command[3]:
                         
                         if "bannerText" in rule_yaml['check'] or "fips_" in rule_yaml['check']:
                             
@@ -1480,6 +1487,9 @@ def main():
                         else:
                             
                             s = rule_yaml['check']
+                            print(rule_yaml['id'])
+                            print(s)
+                            
                             try: 
                                 
                                 grep_search = re.search('"(.*?)"', s).group(1)
@@ -1519,9 +1529,9 @@ def main():
                             x += 1
                             continue
                     
-                    if "launchctl" in command[2]:
+                    if "launchctl" in command[2] or "launchctl" in rule_yaml['fix']:
                         
-                        if "disable" in command[2] and "=> true" in rule_yaml['check']:
+                        if "disable" in command[2] and "=> true" in rule_yaml['check'] or "unload -w" in rule_yaml['fix']:
                             oval_definition = oval_definition + '''
                 <definition id="oval:mscp:def:{}" version="1" class="compliance"> 
                     <metadata> 
@@ -1546,9 +1556,13 @@ def main():
                 
                 </launchd_test>'''.format(rule_yaml['id'],x,x,x,x+999,rule_yaml['id'],x+999)
                             
-                            s = command[5].split()[2]
-                            domain = re.search('"(.*?)"', s).group(1)
-                            
+                            domain = str()
+                            if "launchctl" not in rule_yaml['check']:
+                                domain = rule_yaml['fix'].split()[4].split('/')[4].replace(".plist","")
+                                
+                            else:
+                                s = command[5].split()[2]
+                                domain = re.search('"(.*?)"', s).group(1)
                             
                             oval_object = oval_object + '''
                 <plist511_object xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" comment="{}_plist_object" id="oval:mscp:obj:{}" version="1">
@@ -1568,6 +1582,40 @@ def main():
                 <plist511_state xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" comment="{}_plist_state" id="oval:mscp:ste:{}" version="1">
                     <value_of datatype="boolean" operation="equals">{}</value_of>
                 </plist511_state>'''.format(rule_yaml['id'],x,status)
+                        
+                        elif "launchctl unload" in rule_yaml['fix']:
+                            oval_definition = oval_definition + '''
+                <definition id="oval:mscp:def:{}" version="1" class="compliance"> 
+                    <metadata> 
+                            <title>{}</title> 
+                            <reference source="CCE" ref_id="{}"/>
+                            <reference source="macos_security" ref_id="{}"/>
+                            <description>{}</description> 
+                    </metadata> 
+                    <criteria operator="AND">
+                        <criterion comment="{}_launchctl" test_ref="oval:mscp:tst:{}" />
+                    </criteria>
+                </definition> '''.format(x,rule_yaml['title'],rule_yaml['references']['cce'][0],rule_yaml['id'],rule_yaml['discussion'].rstrip(),rule_yaml['id'],x,rule_yaml['id'],x+999)
+
+                            oval_test = oval_test + '''
+                <launchd_test id="oval:mscp:tst:{}" version="1" comment="{}_launchctl_test" check_existence="none_exist" check="none satisfy" xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos">
+                    <object object_ref="oval:mscp:obj:{}"/>
+                </launchd_test>'''.format(x,rule_yaml['id'],x)
+                            
+                            domain = str()
+                            
+                            if "launchctl" not in rule_yaml['check']:
+                                domain = rule_yaml['fix'].split()[4].split('/')[4].replace(".plist","")
+                                
+                            else:
+                                s = command[5].split()[2]
+                                domain = re.search('"(.*?)"', s).group(1)
+                            
+                            oval_object = oval_object + '''
+                <launchd_object id="oval:mscp:obj:{}" version="1" comment="{}_launchctl_object" xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos">
+                    <label>{}</label>
+                </launchd_object>'''.format(x, rule_yaml['id'],domain)
+                        
                         else:
                             
                             oval_definition = oval_definition + '''
