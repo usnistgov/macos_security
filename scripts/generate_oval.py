@@ -71,11 +71,11 @@ def main():
              <oval:product_name>macOS Security Compliance Project</oval:product_name>
         </generator>
     '''.format(date_time_string)
-    oval_definition = ""
-    oval_test = ""
-    oval_object = ""
-    oval_state = ""
-    oval_variable = ""
+    oval_definition = str()
+    oval_test = str()
+    oval_object = str()
+    oval_state = str()
+    oval_variable = str()
     print()
     for sections in profile_yaml['profile']:
         for profile_rule in sections['rules']:
@@ -1646,9 +1646,14 @@ def main():
                         x += 1
                         continue    
             
+        total_oval = ovalPrefix + "\n<definitions>\n" + oval_definition + "\n</definitions>\n<tests>\n" + oval_test + "\n</tests>\n<objects>\n" + oval_object + "\n</objects>\n"
+        if oval_state != "":
+            total_oval = total_oval + "<states>\n" + oval_state + "\n</states>\n"
+        if oval_variable != "":
+            total_oval = total_oval + "\n<variables>\n" + oval_variable + "\n</variables>\n"
         
-
-        total_oval = ovalPrefix + "\n<definitions>\n" + oval_definition + "\n</definitions>\n<tests>\n" + oval_test + "\n</tests>\n<objects>\n" + oval_object + "\n</objects>\n<states>\n"+ oval_state +"\n</states>\n<variables>\n" + oval_variable + "\n</variables>\n</oval_definitions>"
+        total_oval = total_oval + "\n</oval_definitions>"
+        
         final_oval = re.sub('(?=\n\[NOTE\])(?s)(.*)\=\n$.*', '<', total_oval)
         
         oval_file = output
