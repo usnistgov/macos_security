@@ -1,6 +1,4 @@
 Recommendation #	Title
-	Bluetooth
-2.1.1	Ensure Bluetooth Is Disabled If No Devices Are Paired
 	Desktop & Screen Saver
 2.3.3	Audit Lock Screen and Start Screen Saver Tools
 	Security & Privacy
@@ -9,7 +7,6 @@ Recommendation #	Title
 2.5.1.3	Ensure all user storage CoreStorage volumes are encrypted
 	Time Machine
 2.7.2	Ensure Time Machine Volumes Are Encrypted
-2.11	Ensure EFI Version Is Valid and Checked Regularly
 2.12	Audit Automatic Actions for Optical Media
 2.13	Audit Siri Settings
 2.14	Audit Sidecar Settings
@@ -28,4 +25,4 @@ Recommendation #	Title
 5.14	Ensure Users' Accounts Do Not Have a Password Hint
 	Accounts Preferences Action Items
 6.1.5	Ensure the Guest Home Folder Does Not Exist
-6.2	Ensure Show All Filename Extensions Setting is Enabled
+6.2 Ensure Show All Filename Extensions Setting is Enabled
