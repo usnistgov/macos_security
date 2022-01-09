@@ -13,8 +13,6 @@ Recommendation #	Title
 2.15	Audit Touch ID and Wallet & Apple Pay Settings
 2.16	Audit Notification System Preference Settings
 2.17	Audit Passwords System Preference Setting
-	Logging and Auditing
-3.3	Ensure install.log Is Retained for 365 or More Days and No Maximum Size
 	File System Permissions and Access Controls
 5.1.3	Ensure Apple Mobile File Integrity Is Enabled
 5.1.4	Ensure Library Validation Is Enabled
