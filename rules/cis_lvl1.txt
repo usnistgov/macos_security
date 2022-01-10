@@ -23,4 +23,3 @@ Recommendation #	Title
 5.14	Ensure Users' Accounts Do Not Have a Password Hint
 	Accounts Preferences Action Items
 6.1.5	Ensure the Guest Home Folder Does Not Exist
-6.2 Ensure Show All Filename Extensions Setting is Enabled
