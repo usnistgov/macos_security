@@ -1,6 +1,4 @@
 Recommendation #	Title
-	Time Machine
-2.7.1	Ensure Backup Up Automatically is Enabled
 	File System Permissions and Access Controls
 5.1.8	Ensure No World Writable Files Exist in the Library Folder
 	Password Management
