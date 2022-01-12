@@ -9,7 +9,7 @@ result:
 fix: |
   [source,bash]
   ----
-  //bin/chmod 440 /etc/security/audit_control
+  /bin/chmod 440 /etc/security/audit_control
   ----
 references:
   cce:
