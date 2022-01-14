@@ -1,6 +1,4 @@
 Recommendation #	Title
-Time Machine
-2.7.2	Ensure Time Machine Volumes Are Encrypted
 	File System Permissions and Access Controls
 5.1.6	Ensure Appropriate Permissions Are Enabled for System Wide Applications
 5.1.7	Ensure No World Writable Files Exist in the System Folder
