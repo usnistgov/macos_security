@@ -3,25 +3,17 @@ title: "Ensure Time Machine Volumes are Encrypted"
 discussion: |
   Time Machine volumes _MUST_ be encrypted. 
 check: |
-  tmdestination=$(/usr/bin/tmutil destinationinfo 2>/dev/null | /usr/bin/awk -F': ' '/Name/{print $2}')
-  if [[ "$tmdestination" = "" ]]; then
-      echo "1"
-  else
-      tmVolMounted=$(/usr/sbin/diskutil info "${tmdestination}" 2>&1 | /usr/bin/awk '/Mounted/{print $2}')
-      tmVolEncrypted=$(/usr/sbin/diskutil info "${tmdestination}" 2>&1 | /usr/bin/awk '/FileVault/{print $2}')
-
-      if [[ "$tmVolMounted" = "Yes" && "$tmVolEncrypted" = "Yes" ]]; then
-          echo "1"
-      else
-          if [[ "$tmVolMounted" = "" ]]; then
-              echo "1"
-          else
-              echo "0"
-          fi
-      fi
-  fi
+  error_count=0
+  for tm in $(/usr/bin/tmutil destinationinfo 2>/dev/null| /usr/bin/awk -F': ' '/Name/{print $2}'); do
+    tmMounted=$(/usr/sbin/diskutil info "${tm}" 2>/dev/null | /usr/bin/awk '/Mounted/{print $2}')
+    tmEncrypted=$(/usr/sbin/diskutil info "${tm}" 2>/dev/null | /usr/bin/awk '/FileVault/{print $2}')
+    if [[ "$tmMounted" = "Yes" && "$tmEncrypted" = "No" ]]; then
+        ((error_count++))
+    fi
+  done
+  echo "$error_count"
 result: 
-  integer: 1
+  integer: 0
 fix: |
   . Go to System Preferences -> Time Machine
   . Click *Select Disk*
