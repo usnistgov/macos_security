@@ -2,17 +2,41 @@ id: os_hibernate_mode_enable
 title: "Enable Hibernate Mode"
 discussion: |
   Hibernate mode _MUST_ be enabled. 
+  Hibernation writes FileVault keys to disk and requires FileVault to be unlocked prior to the OS being available.
+  
+  Mac systems should be set to hibernate after sleeping for a risk-acceptable time period. The default value for "standbydelay" is three hours (10800 seconds). This value is likely appropriate for most desktops. 
+  If Mac desktops are deployed in unmonitored, less physically secure areas with confidential data this value might be adjusted. The desktop or would have to retain power so that the running OS or physical RAM could be attacked however.
+  MacBooks should also be set to a hibernate mode that removes power from the RAM. This will stop the possibility of cold boot attacks on the system.
 
   NOTE: Hibernate mode is not fully supported on Apple Silicon devices. This rule is only applicable to Intel devices.
 check: |
-  
-result: 
-  integer: 1
+  error_count=0
+  hibernateStandbyLowValue=$(/usr/bin/pmset -g | grep standbydelaylow 2>&1 | awk '{print $2}')
+  hibernateStandbyHighValue=$(/usr/bin/pmset -g | grep standbydelayhigh 2>&1 | awk '{print $2}')
+  hibernateStandbyThreshValue=$(/usr/bin/pmset -g | grep highstandbythreshold 2>&1 | awk '{print $2}')
+  hibernateMode=$(/usr/bin/pmset -b -g | grep hibernatemode 2>&1 | awk '{print $2}')
+  macType=$(/usr/sbin/system_profiler SPHardwareDataType 2>&1 | grep -c MacBook)
+  if [[ "$macType" -ge 0 ]]; then
+    if [[ "$hibernateStandbyLowValue" == "" ]] || [[ "$hibernateStandbyLowValue" -gt 600 ]]; then
+      ((error_count++))
+    fi
+    if [[ "$hibernateStandbyHighValue" == "" ]] || [[ "$hibernateStandbyHighValue" -gt 600 ]]; then
+      ((error_count++))
+    fi
+    if [[ "$hibernateStandbyThreshValue" == "" ]] || [[ "$hibernateStandbyThreshValue" -lt 90 ]]; then
+      ((error_count++))
+    fi
+  fi
+  echo "$error_count"
+result:
+  integer: 0
 fix: |
-   [source,bash]
-   ----
-
-   ----
+  [source,bash]
+  ----
+  pmset -a standbydelayhigh 600
+  pmset -a standbydelaylow 600
+  pmset -a highstandbythreshold 90
+  ----
 references:
   cce:
     - N/A

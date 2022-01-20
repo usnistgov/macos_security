@@ -1,5 +1,3 @@
 Recommendation #	Title
 	File System Permissions and Access Controls
-5.1.8	Ensure No World Writable Files Exist in the Library Folder
 	Password Management
-5.9	Ensure system is set to hibernate

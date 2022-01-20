@@ -1,0 +1,37 @@
+id: os_hibernate_mode_DestroyFVKeyOnStandby
+title: "Enable Hibernate Mode:DestroyFVKeyOnStandby"
+discussion: |
+  Destroy FV key on hibernate _MUST_ be enabled. 
+
+check: |
+  /usr/bin/profiles -P -o stdout | /usr/bin/grep -c 'DestroyFVKeyOnStandby = 1'
+result:
+  integer: 1
+fix: |
+  This is implemented by a Configuration Profile.
+references:
+  cce:
+    - N/A
+  cci:
+    - N/A
+  800-53r5:
+    - N/A
+  800-53r4:
+    - N/A
+  srg:
+    - N/A
+  disa_stig:
+    - N/A
+  800-171r2:
+    - N/A
+  cis:
+    benchmark:
+      -5.9 (level 2)
+macOS:
+  - "12.0"
+tags:
+  - cis_lvl2
+mobileconfig: false
+mobileconfig_info:
+  com.apple.MCX:
+    DestroyFVKeyOnStandby: true

@@ -1,0 +1,40 @@
+id: os_system_wide_applications
+title: "Ensure Appropriate Permissions Are Enabled for System Wide Applications"
+discussion: |
+  Applications in the System Applications Directory (/Applications) should be world executable since that is their reason to be on the system. They should not be world-writable and allow any process or user to alter them for other processes or users to then execute modified versions.
+check: |
+  /usr/bin/find /Applications -iname "*\.app" -type d -perm -2 -ls | wc -l | xargs
+result:
+  integer: 0
+fix: |
+  [source,bash]
+  ----
+  IFS=$'\n'
+  for apps in $( /usr/bin/find /Applications -iname "*\.app" -type d -perm -2 ); do
+    chmod -R o-w "$apps"
+  done
+  ----
+references:
+  cce:
+    - N/A
+  cci:
+    - N/A
+  800-53r5:
+    - N/A
+  800-53r4:
+    - N/A
+  srg:
+    - N/A
+  disa_stig:
+    - N/A
+  800-171r2:
+    - N/A
+  cis:
+    benchmark:
+      -5.1.6 (level 1)
+macOS:
+  - "12.0"
+tags:
+  - cis_lvl2
+mobileconfig: false
+mobileconfig_info:
