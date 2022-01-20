@@ -1,3 +1,0 @@
-Recommendation #	Title
-	File System Permissions and Access Controls
-	Password Management

@@ -1,8 +1,7 @@
-id: os_hibernate_mode_DestroyFVKeyOnStandby
-title: "Enable Hibernate Mode:DestroyFVKeyOnStandby"
+id: os_hibernate_mode_destroyfvkeyonstandby_enable
+title: "Enable DestroyFVKeyOnStandby on Hibernate"
 discussion: |
-  Destroy FV key on hibernate _MUST_ be enabled. 
-
+  DestroyFVKeyOnStandby on hibernate _MUST_ be enabled. 
 check: |
   /usr/bin/profiles -P -o stdout | /usr/bin/grep -c 'DestroyFVKeyOnStandby = 1'
 result:
@@ -30,6 +29,7 @@ references:
 macOS:
   - "12.0"
 tags:
+  - cis_lvl1
   - cis_lvl2
 mobileconfig: false
 mobileconfig_info:
