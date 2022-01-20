@@ -3,7 +3,7 @@ title: "Ensure Extensible Firmware Interface Version is Valid"
 discussion: |
   The macOS Extensible Firmware Interface (EFI) _MUST_ be checked to ensure it is a known good version from Apple.
 check: |
-  if /usr/sbin/ioreg -w 0 -c AppleSEPManager | grep -q AppleSEPManager; then echo "1"; else /usr/libexec/firmwarecheckers/eficheck/eficheck --integrity-check | /usr/bin/grep -c "No changes detected"; fi
+  if /usr/sbin/ioreg -w 0 -c AppleSEPManager | /usr/bin/grep -q AppleSEPManager; then echo "1"; else /usr/libexec/firmwarecheckers/eficheck/eficheck --integrity-check | /usr/bin/grep -c "No changes detected"; fi
 result:
   integer: 1
 fix: |
@@ -15,7 +15,6 @@ references:
     - N/A    
   800-53r5:
     - N/A
-
   800-53r4:
     - N/A
   800-171r2:
@@ -31,5 +30,6 @@ tags:
   - cis_lvl1
   - cis_lvl2
   - cisv8
+  - i386
 mobileconfig: false
 mobileconfig_info:
