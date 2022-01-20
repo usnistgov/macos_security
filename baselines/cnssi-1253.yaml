@@ -7,13 +7,6 @@ authors: |
   |Ekkehard Koch|
   |Bob Gendler|National Institute of Standards and Technology
   |===
-title: "macOS 12.0: Security Configuration - cnssi-1253"
-description: |
-  This guide describes the actions to take when securing a macOS 12.0 system against the cnssi-1253 baseline.
-authors: |
-  |===
-  |Name|Organization
-  |===
 profile:
   - section: "authentication"
     rules:
