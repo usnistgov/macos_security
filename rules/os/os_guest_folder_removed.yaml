@@ -1,10 +1,6 @@
 id: os_guest_folder_removed
 title: "Remove Guest Folder if Present"
-<<<<<<< HEAD
-discussion:   
-=======
 discussion: |  
->>>>>>> 7937b70b142c54723d7c635c387a4efd46b526da
   The guest folder _MUST_ be deleted if present.
 check: |
   /bin/ls /Users/ | /usr/bin/grep -c "Guest"
