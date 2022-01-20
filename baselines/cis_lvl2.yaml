@@ -1,0 +1,122 @@
+title: "macOS 12.0: Security Configuration - CIS Benchmarks"
+description: |
+  This guide describes the actions to take when securing a macOS 12.0 system against the CIS Benchmarks (Level 1 and 2)
+authors: |
+  The CIS Benchmarks are referenced with the permission and support of the Center for Internet Security® (CIS®)
+  |===
+  |Edward Byrd|Center for Internet Security
+  |Ron Colvin|Center for Internet Security
+  |===
+profile:
+  - section: "auditing"
+    rules:
+      - audit_acls_files_configure
+      - audit_acls_folders_configure
+      - audit_auditd_enabled
+      - audit_control_acls_configure
+      - audit_control_group_configure
+      - audit_control_mode_configure
+      - audit_control_owner_configure
+      - audit_files_group_configure
+      - audit_files_mode_configure
+      - audit_files_owner_configure
+      - audit_flags_configure
+      - audit_folder_group_configure
+      - audit_folder_owner_configure
+      - audit_folders_mode_configure
+      - audit_retention_configure_sixty_days
+  - section: "macos"
+    rules:
+      - os_airdrop_disable
+      - os_authenticated_root_enable
+      - os_bonjour_disable
+      - os_config_data_install_enforce
+      - os_efi_integrity_validated
+      - os_firewall_log_enable
+      - os_gatekeeper_enable
+      - os_guest_folder_removed
+      - os_hibernate_mode_destroyfvkeyonstandby_enable
+      - os_hibernate_mode_enable
+      - os_home_folders_secure
+      - os_httpd_disable
+      - os_install_log_retention_configure
+      - os_library_validation_enabled
+      - os_mobile_file_integrity_enable
+      - os_nfsd_disable
+      - os_password_hint_remove
+      - os_policy_banner_loginwindow_enforce
+      - os_root_disable
+      - os_safari_open_safe_downloads_disable
+      - os_show_filename_extensions_enable
+      - os_sudo_timeout_configure
+      - os_sudoers_timestamp_type_configure
+      - os_sudoers_tty_configure
+      - os_terminal_secure_keyboard_enable
+      - os_time_offset_limit_configure
+      - os_unlock_active_user_session_disable
+  - section: "passwordpolicy"
+    rules:
+      - pwpolicy_account_lockout_enforce_five
+      - pwpolicy_alpha_numeric_enforce
+      - pwpolicy_history_enforce_fifteen
+      - pwpolicy_lower_case_character_enforce
+      - pwpolicy_minimum_length_enforce
+      - pwpolicy_special_character_enforce
+      - pwpolicy_upper_case_character_enforce
+  - section: "icloud"
+    rules:
+      - icloud_sync_disable
+  - section: "systempreferences"
+    rules:
+      - sysprefs_airplay_receiver_disable
+      - sysprefs_automatic_login_disable
+      - sysprefs_bluetooth_menu_enable
+      - sysprefs_bluetooth_sharing_disable
+      - sysprefs_bluetooth_unpaired_disable
+      - sysprefs_cd_dvd_sharing_disable
+      - sysprefs_content_caching_disable
+      - sysprefs_critical_update_install_enforce
+      - sysprefs_diagnostics_reports_disable
+      - sysprefs_filevault_enforce
+      - sysprefs_firewall_enable
+      - sysprefs_firewall_stealth_mode_enable
+      - sysprefs_guest_access_smb_disable
+      - sysprefs_guest_account_disable
+      - sysprefs_hot_corners_secure
+      - sysprefs_install_macos_updates_enforce
+      - sysprefs_internet_sharing_disable
+      - sysprefs_location_services_audit
+      - sysprefs_location_services_enable
+      - sysprefs_loginwindow_loginwindowtext_enable
+      - sysprefs_loginwindow_prompt_username_password_enforce
+      - sysprefs_media_sharing_disabled
+      - sysprefs_password_hints_disable
+      - sysprefs_personalized_advertising_disable
+      - sysprefs_power_nap_disable
+      - sysprefs_printer_sharing_disable
+      - sysprefs_rae_disable
+      - sysprefs_remote_management_disable
+      - sysprefs_screen_sharing_disable
+      - sysprefs_screensaver_ask_for_password_delay_enforce
+      - sysprefs_screensaver_timeout_enforce
+      - sysprefs_smbd_disable
+      - sysprefs_software_update_app_update_enforce
+      - sysprefs_software_update_download_enforce
+      - sysprefs_software_update_enforce
+      - sysprefs_softwareupdate_current
+      - sysprefs_ssh_disable
+      - sysprefs_system_wide_preferences_configure
+      - sysprefs_time_machine_auto_backup_enable
+      - sysprefs_time_machine_encrypted_configure
+      - sysprefs_time_server_configure
+      - sysprefs_time_server_enforce
+      - sysprefs_wake_network_access_disable
+      - sysprefs_wifi_menu_enable
+  - section: "Supplemental"
+    rules:
+      - supplemental_cis_manual
+      - supplemental_controls
+      - supplemental_filevault
+      - supplemental_firewall_pf
+      - supplemental_password_policy
+      - supplemental_smartcard
