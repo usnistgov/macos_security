@@ -1,4 +1,2 @@
 Recommendation #	Title
 	File System Permissions and Access Controls
-5.1.6	Ensure Appropriate Permissions Are Enabled for System Wide Applications
-5.1.7	Ensure No World Writable Files Exist in the System Folder
