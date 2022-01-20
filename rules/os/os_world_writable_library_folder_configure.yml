@@ -3,7 +3,7 @@ title: "Ensure No World Writable Files Exist in the Library Folder"
 discussion: |
   Folders in /System/Volumes/Data/Library _MUST_ not be world-writable.
 
-  NOTE: Some vendors are known to create world-wriatable folders to the System Library folder. You may need to add more exclusions to this check and fix to match your environment.
+  NOTE: Some vendors are known to create world-writable folders to the System Library folder. You may need to add more exclusions to this check and fix to match your environment.
 check: |
   /usr/bin/find /System/Volumes/Data/Library -type d -perm -2 -ls | /usr/bin/grep -v Caches | /usr/bin/grep -v /Preferences/Audio/Data | /usr/bin/wc -l | /usr/bin/xargs
 result:
