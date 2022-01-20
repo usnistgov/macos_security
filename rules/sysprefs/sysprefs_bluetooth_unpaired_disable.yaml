@@ -3,9 +3,9 @@ title: "Disable Bluetooth When No Devices are Paired"
 discussion: |
   Bluetooth _MUST_ be disabled when no devices are paired. 
 check: |
-  isPaired=$(/usr/sbin/system_profiler SPBluetoothDataType 2>/dev/null | /usr/bin/grep -cm1 'Connected: Yes')
-  if [[ "$isPaired" != 1 ]]; then 
-      powerState=$(/usr/bin/defaults read /Library/Preferences/com.apple.Bluetooth ControllerPowerState)
+  isPaired=$(/usr/sbin/system_profiler SPBluetoothDataType 2>/dev/null | grep -c 'Connected: Yes')
+  if [[ "$isPaired" = "0" ]]; then 
+      powerState=$(system_profiler SPBluetoothDataType 2>/dev/null | grep -c 'State: On')
       /bin/echo "$powerState"
   else
       /bin/echo "0"
@@ -15,7 +15,7 @@ result:
 fix: |
   [source,bash]
   ----
-  /usr/bin/defaults write /Library/Preferences/com.apple.Bluetooth ControllerPowerState -int 0
+  /usr/bin/defaults write /private/var/root/Library/Preferences/com.apple.BTServer.plist defaultPoweredState off
   /usr/bin/killall -HUP bluetoothd
   ----
 references:
