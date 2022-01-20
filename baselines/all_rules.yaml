@@ -6,13 +6,6 @@ authors: |
   |Bob Gendler|National Institute of Standards and Technology
   |Dan Brodjieski|National Aeronautics and Space Administration
   |Allen Golbig|Jamf
-  |===  
-title: "macOS 12.0: Security Configuration - all_rules"
-description: |
-  This guide describes the actions to take when securing a macOS 12.0 system against the all_rules baseline.
-authors: |
-  |===
-  |Name|Organization
   |===
 profile:
   - section: "authentication"
