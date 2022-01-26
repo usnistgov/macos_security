@@ -87,14 +87,22 @@ def main():
                     rule_yaml = yaml.load(r, Loader=yaml.SafeLoader)
                 if "inherent" in rule_yaml['tags'] or "n_a" in rule_yaml['tags'] or "permanent" in rule_yaml['tags']:
                     continue
+                if "time_machine" in rule_yaml['id'] and "encrypted" in rule_yaml['id']:
+                    print(rule_yaml['id'] + " - Manual Check Required")
+                    continue
+                if "bluetooth" in rule_yaml['id'] and "unpaired" in rule_yaml['id']:
+                    print(rule_yaml['id'] + " - Manual Check Required")
+                    continue
                 if rule_yaml['check'][0] != "/" and "[source,bash]" not in rule_yaml['fix']:
                     print(rule_yaml['id'] + " - Manual Check")
                     continue
                 if "manual" in rule_yaml['tags']:
                     print(rule_yaml['id'] + " - Manual Check")
                     continue
-
-                if "newsyslog.conf" in rule_yaml['check'] or "asl.conf" in rule_yaml['check']:
+                if "eficheck" in rule_yaml['check']:
+                    print(rule_yaml['id'] + " - eficheck - no relevant oval")
+                    continue
+                if "newsyslog.conf" in rule_yaml['check'] or "asl.conf" in rule_yaml['check'] or "aslmanager" in rule_yaml['check']:
                     print(rule_yaml['id'] + " - Manual Check Required")
                     continue
                 if "/usr/bin/pwpolicy getaccountpolicies" in rule_yaml['check']:
