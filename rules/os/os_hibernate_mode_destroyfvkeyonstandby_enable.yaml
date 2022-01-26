@@ -31,7 +31,7 @@ macOS:
 tags:
   - cis_lvl1
   - cis_lvl2
-mobileconfig: false
+mobileconfig: true
 mobileconfig_info:
   com.apple.MCX:
     DestroyFVKeyOnStandby: true
