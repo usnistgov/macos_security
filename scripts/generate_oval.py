@@ -636,6 +636,119 @@ def main():
                         print(rule_yaml['id'] + " - No relevant oval test")
                         x += 1
                         continue
+
+                    
+                    if "pmset" in command[3] and "standby" in rule_yaml['check']:
+                        oval_definition = oval_definition + '''
+                            <definition id="oval:mscp:def:{}" version="1" class="compliance"> 
+                        <metadata> 
+                            <title>{}</title> 
+                            <reference source="CCE" ref_id="{}"/>
+                            <reference source="macos_security" ref_id="{}"/>
+                            <description>{}</description> 
+                        </metadata> 
+                    <criteria>
+                        <criterion comment="{}" test_ref="oval:mscp:tst:{}" />
+                        <criterion comment="{}" test_ref="oval:mscp:tst:{}" />
+                        <criterion comment="{}" test_ref="oval:mscp:tst:{}" />
+                    </criteria>
+                </definition> '''.format(x,rule_yaml['title'],rule_yaml['references']['cce'][0],rule_yaml['id'],rule_yaml['discussion'],rule_yaml['id'] +"_standbydelayhigh",x, rule_yaml['id'] +"_standbydelaylow",x+877, rule_yaml['id'] +"_highstandbythreshold",x+888)
+                        
+                        
+                        oval_test = oval_test + '''
+                <plist511_test xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" check="all" check_existence="at_least_one_exists" comment="{}_test" id="oval:mscp:tst:{}" version="2">
+                    <object object_ref="oval:mscp:obj:{}" />
+                    <state state_ref="oval:mscp:ste:{}" />
+                </plist511_test>'''.format(rule_yaml['id'] + "_standbydelayhigh",x,x,x)
+
+                        oval_test = oval_test + '''
+                <plist511_test xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" check="all" check_existence="at_least_one_exists" comment="{}_test" id="oval:mscp:tst:{}" version="2">
+                    <object object_ref="oval:mscp:obj:{}" />
+                    <state state_ref="oval:mscp:ste:{}" />
+                </plist511_test>'''.format(rule_yaml['id'] + "_standbydelaylow",x+877,x+877,x+877)
+                        
+                        oval_test = oval_test + '''
+                <plist511_test xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" check="all" check_existence="at_least_one_exists" comment="{}_test" id="oval:mscp:tst:{}" version="2">
+                    <object object_ref="oval:mscp:obj:{}" />
+                    <state state_ref="oval:mscp:ste:{}" />
+                </plist511_test>'''.format(rule_yaml['id'] + "_highstandbythreshold",x+888,x+888,x+888)
+
+                        
+                        standbydelayhigh = str()
+                        standbydelaylow = str()
+                        highstandbythreshold = str()
+
+                        for line in rule_yaml['fix'].split("----")[1].split("\n"):
+                            if line == "":
+                                continue
+                            if "standbydelayhigh" in line:
+                                standbydelayhigh = line.split(" ")[-1].rstrip()
+                            if "standbydelaylow" in line:
+                                standbydelaylow = line.split(" ")[-1].rstrip()
+                            if "highstandbythreshold" in line:
+                                highstandbythreshold = line.split(" ")[-1].rstrip()
+                            
+                        oval_object = oval_object + '''
+                                        <systemprofiler_object xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" comment="{}" id="oval:mscp:obj:{}" version="1">
+                <data_type>SPHardwareDataType</data_type>
+
+                    <xpath>//*[contains(text(), "platform_UUID")]/following-sibling::string[position()=1]/text()</xpath>
+                </systemprofiler_object> '''.format("hardware UUID",x+999)
+
+                        oval_variable = oval_variable + '''       
+            <local_variable id="oval:mscp:var:{}" version="1" datatype="string" comment="uuid variable">
+                <concat>
+                    <literal_component datatype="string">/Library/Preferences/com.apple.PowerManagement.</literal_component>
+                    <object_component object_ref="oval:mscp:obj:{}" item_field="value_of"/>
+                    <literal_component datatype="string">.plist</literal_component>
+                </concat>
+            </local_variable>'''.format(x,x+999)
+
+                        oval_object = oval_object + '''
+                <plist511_object xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" comment="{}_object" id="oval:mscp:obj:{}" version="1">
+                    <filepath datatype="string" operation="equals" var_check="at least one" var_ref="oval:mscp:var:{}"/>'''.format(rule_yaml['id'] + "_standbydelayhigh",x,x)
+                
+                        oval_object = oval_object + '''
+                    <xpath>boolean(plist/dict[key="AC Power"]/dict[key="{}"]/integer/text() = "{}")</xpath>
+                </plist511_object>'''.format("High Standby Delay",standbydelayhigh)
+                    
+
+                        oval_object = oval_object + '''
+                <plist511_object xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" comment="{}_object" id="oval:mscp:obj:{}" version="1">
+                    <filepath datatype="string" operation="equals" var_check="at least one" var_ref="oval:mscp:var:{}"/>'''.format(rule_yaml['id'] + "_standbydelaylow",x+877, x)
+                
+                        oval_object = oval_object + '''
+                    <xpath>boolean(plist/dict[key="AC Power"]/dict[key="{}"]/integer/text() = "{}")</xpath>
+                </plist511_object>'''.format("Standby Delay",standbydelaylow)
+
+                        oval_object = oval_object + '''
+                <plist511_object xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" comment="{}_object" id="oval:mscp:obj:{}" version="1">
+                    <filepath datatype="string" operation="equals" var_check="at least one" var_ref="oval:mscp:var:{}"/>'''.format(rule_yaml['id'] + "_highstandbythreshold",x+888, x)
+                        
+                        oval_object = oval_object + '''
+                    <xpath>boolean(plist/dict[key="AC Power"]/dict[key="{}"]/integer/text() = "{}")</xpath>
+                </plist511_object>'''.format("Standby Battery Threshold",highstandbythreshold)
+                        
+                        oval_state = oval_state + '''
+                            <plist511_state xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" comment="{}_state" id="oval:mscp:ste:{}" version="1">
+                <value_of datatype="boolean" operation="equals">true</value_of>
+                </plist511_state>'''.format(rule_yaml['id'] + "_standbydelayhigh",x)
+
+                        oval_state = oval_state + '''
+                            <plist511_state xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" comment="{}_state" id="oval:mscp:ste:{}" version="1">
+                <value_of datatype="boolean" operation="equals">true</value_of>
+                </plist511_state>'''.format(rule_yaml['id'] + "_standbydelaylow",x+877)
+
+                        oval_state = oval_state + '''
+                            <plist511_state xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" comment="{}_state" id="oval:mscp:ste:{}" version="1">
+                <value_of datatype="boolean" operation="equals">true</value_of>
+                </plist511_state>'''.format(rule_yaml['id'] + "_highstandbythreshold",x+888)
+
+                        x += 1
+                        continue
+
+
+
                     if "pmset" in command[3]:
                         oval_definition = oval_definition + '''
                             <definition id="oval:mscp:def:{}" version="1" class="compliance"> 
@@ -656,7 +769,7 @@ def main():
                     <object object_ref="oval:mscp:obj:{}" />
                     <state state_ref="oval:mscp:ste:{}" />
                 </plist511_test>'''.format(rule_yaml['id'],x,x,x)
-
+                        
                         oval_object = oval_object + '''
                 <plist511_object xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" comment="{}_object" id="oval:mscp:obj:{}" version="1">
                     <filepath>/Library/Preferences/com.apple.PowerManagement.plist</filepath>'''.format(rule_yaml['id'],x)
