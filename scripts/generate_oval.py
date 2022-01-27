@@ -111,6 +111,9 @@ def main():
                 if "/usr/bin/pwpolicy getaccountpolicies" in rule_yaml['check']:
                     print(rule_yaml['id'] + " - pwpolicy getaccountpolicies - no relevant oval")
                     continue
+                if "find" in rule_yaml['check'].split(" ")[0]:
+                    print(rule_yaml['id'] + " - no relevant oval")
+                    continue
                 if "os_home_folders_secure" in rule_file:
                     oval_definition = oval_definition + '''
                             <definition id="oval:mscp:def:{}" version="1" class="compliance"> 
