@@ -96,6 +96,9 @@ def main():
                 if rule_yaml['check'][0] != "/" and "[source,bash]" not in rule_yaml['fix']:
                     print(rule_yaml['id'] + " - Manual Check")
                     continue
+                if "hint" in rule_yaml['check'] and "dscl" in rule_yaml['check']:
+                    print(rule_yaml['id'] + " - no relevant oval")
+                    continue
                 if "manual" in rule_yaml['tags']:
                     print(rule_yaml['id'] + " - Manual Check")
                     continue
@@ -1371,12 +1374,42 @@ def main():
                 </authorizationdb_state>'''.format(rule_yaml['id'],x,key)
                         x += 1
                         continue
+                    if "/bin/rm" in rule_yaml['fix'] and "/bin/ls" in rule_yaml['check']:
+                        oval_definition = oval_definition + '''
+                        <definition id="oval:mscp:def:{}" version="1" class="compliance"> 
+                        <metadata> 
+                            <title>{}</title> 
+                            <reference source="CCE" ref_id="{}"/>
+                            <reference source="macos_security" ref_id="{}"/>
+                            <description>{}</description> 
+                        </metadata> 
+                    <criteria> 
+                        <criterion comment="{}" test_ref="oval:mscp:tst:{}" />
+                    
+                    </criteria> 
+                </definition> '''.format(x,rule_yaml['title'],rule_yaml['references']['cce'][0],rule_yaml['id'],rule_yaml['discussion'],rule_yaml['id'],x)
+                        oval_test = oval_test + '''
+                                <file_test id="oval:mscp:tst:{}" version="1" comment="{}_test" check_existence="none_exist" check="none satisfy" xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#unix">
+                    <object object_ref="oval:mscp:obj:{}"/>
+                </file_test>'''.format(x,rule_yaml['id'],x)
+
+                        path = rule_yaml['fix'].split("----")[1].split(" ")[-1]
+                        
+                        oval_object = oval_object + '''
+                <file_object id="oval:mscp:obj:{}" version="1" comment="{}_object" xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#unix">
+                    <path>{}</path>
+                    <filename xsi:nil="true" />            
+                </file_object>'''.format(x,rule_yaml['id'],path.rstrip())
+
+                        continue
+
+                    
                     if "ls" in command[2] or "stat" in command[3].split()[0]:
                         if '/Library/Security/PolicyBanner.rtf' in rule_yaml['check']:
                             
                             
                             oval_definition = oval_definition + '''
-                                    <definition id="oval:mscp:def:{}" version="1" class="compliance"> 
+                        <definition id="oval:mscp:def:{}" version="1" class="compliance"> 
                         <metadata> 
                             <title>{}</title> 
                             <reference source="CCE" ref_id="{}"/>
@@ -1413,6 +1446,7 @@ def main():
                         config_file = str()
                         oval_variable_need = bool()
                         if "grep" in s.split()[3]:
+                            print(s.split()[3])
                             oval_variable_need = True
                             grep_search = re.search('\((.*?)\)', s).group(1)
                         
