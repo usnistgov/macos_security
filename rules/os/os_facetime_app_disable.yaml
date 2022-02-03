@@ -5,7 +5,20 @@ discussion: |
 
   The FaceTime.app establishes a connection to Apple’s iCloud service, even when security controls have been put in place to disable iCloud access. 
 check: | 
-  /usr/bin/profiles -P -o stdout | /usr/bin/grep -A 20 familyControlsEnabled | /usr/bin/grep -c "/Applications/FaceTime.app"
+  /usr/bin/osascript -l JavaScript << EOS
+  function run() {
+    let pref1 = ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess.new')\
+    .objectForKey('familyControlsEnabled'))
+    let pathlist = $.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess.new')\
+    .objectForKey('pathBlackList').js
+    for ( let app in pathlist ) {
+        if ( ObjC.unwrap(pathlist[app]) == "/Applications/FaceTime.app" && pref1 == true ){
+            return("true")
+        }
+    }
+    return("false")
+    }
+  EOS
 result:
   integer: 1
 fix: |

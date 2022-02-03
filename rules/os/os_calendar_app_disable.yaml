@@ -8,7 +8,20 @@ discussion: |
   Some organizations allow the use of the built-in Calendar.app for organizational communication. Information System Security Officers (ISSOs) may make the risk-based decision not to disable the macOS built-in Mail.app to avoid losing this functionality, but they are advised to first fully weigh the potential risks posed to their organization.
   ====
 check: 
-  /usr/bin/profiles -P -o stdout | /usr/bin/grep -A 20 familyControlsEnabled | /usr/bin/grep -c "/Applications/Calendar.app"
+  /usr/bin/osascript -l JavaScript << EOS
+  function run() {
+    let pref1 = ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess.new')\
+    .objectForKey('familyControlsEnabled'))
+    let pathlist = $.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess.new')\
+    .objectForKey('pathBlackList').js
+    for ( let app in pathlist ) {
+        if ( ObjC.unwrap(pathlist[app]) == "/Applications/Calendar.app" && pref1 == true ){
+            return("true")
+        }
+    }
+    return("false")
+    }
+  EOS
 result:
   integer: 1
 fix: |

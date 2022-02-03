@@ -7,9 +7,21 @@ discussion: |
 
   NOTE: The firewall data is logged to Apple's Unified Logging with the subsystem `com.apple.alf` and the data is marked as private. In order to enable private data, review the `com.apple.alf.private_data.mobileconfig` file in the project's `includes` folder. 
 check: |
-  /usr/bin/profiles -P -o stdout | /usr/bin/grep -Ec '(EnableLogging = 1|LoggingOption = detail)'
+  osascript -l JavaScript << EOS
+  function run() {
+  let pref1 = $.NSUserDefaults.alloc.initWithSuiteName('com.apple.security.firewall')\
+  .objectForKey('EnableLogging').js
+  let pref2 = $.NSUserDefaults.alloc.initWithSuiteName('com.apple.security.firewall')\
+  .objectForKey('LoggingOption').js
+  if ( pref1 == true && pref2 == "detail" ){
+      return("true")
+  } else {
+      return("false")
+  }
+  }
+  EOS
 result:
-  integer: 2
+  string: "true"
 fix: |
   This is implemented by a Configuration Profile.
 references:
