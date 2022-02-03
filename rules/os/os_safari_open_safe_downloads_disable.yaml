@@ -4,6 +4,8 @@ discussion: |
   Open "safe" files after downloading _MUST_ be disabled in Safari. 
 check: |
   /usr/bin/profiles -P -o stdout | /usr/bin/grep -c 'AutoOpenSafeDownloads = 0'
+result:
+  integer: 1
 fix: |
   This is implemented by a Configuration Profile.
 references:
