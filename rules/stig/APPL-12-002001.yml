@@ -1,0 +1,28 @@
+rule_id: MSCP RULE
+title: The macOS system must be configured to disable SMB File Sharing unless it is
+  required.
+discussion: File Sharing is usually non-essential and must be disabled if not required.
+  Enabling any service increases the attack surface for an intruder. By disabling
+  unnecessary services, the attack surface is minimized.
+check: /bin/launchctl print-disabled system | /usr/bin/grep com.apple.smbd
+result: '[''If the results do not show the following, this is a finding:'', '''',
+  ''"com.apple.smbd" => true'']'
+fix: 'To disable the SMB File Sharing service, run the following command:
+
+
+  /usr/bin/sudo /bin/launchctl disable system/com.apple.smbd
+
+
+  The system may need to be restarted for the update to take effect.'
+references:
+  srg:
+  - SRG-OS-000095-GPOS-00049
+  disa_stig:
+  - APPL-12-002001
+  cci:
+  - CCI-000381
+macOS:
+- '12'
+tags:
+- stig
+severity: medium

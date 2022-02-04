@@ -1,0 +1,25 @@
+rule_id: MSCP RULE
+title: The macOS system must enforce a 60-day maximum password lifetime restriction.
+discussion: 'Any password, no matter how complex, can eventually be cracked. Therefore,
+  passwords need to be changed periodically.
+
+
+  One method of minimizing this risk is to use complex passwords and periodically
+  change them. If the operating system does not limit the lifetime of passwords and
+  force users to change their passwords, there is the risk that the operating system
+  passwords could be compromised.'
+check: /usr/sbin/system_profiler SPConfigurationProfileDataType | /usr/bin/grep maxPINAgeInDays
+result: '[''If "maxPINAgeInDays" is set a value greater than "60", this is a finding.'']'
+fix: This setting is enforced using the "Passcode Policy" configuration profile.
+references:
+  srg:
+  - SRG-OS-000076-GPOS-00044
+  disa_stig:
+  - APPL-12-003008
+  cci:
+  - CCI-000199
+macOS:
+- '12'
+tags:
+- stig
+severity: medium

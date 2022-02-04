@@ -1,0 +1,29 @@
+rule_id: MSCP RULE
+title: The macOS system must be configured to disable the Network File System (NFS)
+  daemon unless it is required.
+discussion: If the system does not require access to NFS file shares or is not acting
+  as an NFS server, support for NFS is non-essential and NFS services must be disabled.
+  NFS is a network file system protocol supported by UNIX-like operating systems.
+  Enabling any service increases the attack surface for an intruder. By disabling
+  unnecessary services, the attack surface is minimized.
+check: ''
+result: '['''', ''"com.apple.nfsd" => true'']'
+fix: 'To disable the NFS daemon, run the following command:
+
+
+  /usr/bin/sudo /bin/launchctl disable system/com.apple.nfsd
+
+
+  The system may need to be restarted for the update to take effect.'
+references:
+  srg:
+  - SRG-OS-000095-GPOS-00049
+  disa_stig:
+  - APPL-12-002003
+  cci:
+  - CCI-000381
+macOS:
+- '12'
+tags:
+- stig
+severity: medium

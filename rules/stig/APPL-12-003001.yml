@@ -1,0 +1,40 @@
+rule_id: MSCP RULE
+title: The macOS system must issue or obtain public key certificates under an appropriate
+  certificate policy from an approved service provider.
+discussion: 'DoD-approved certificates must be installed to the System Keychain so
+  they will be available to all users.
+
+
+  For user certificates, each organization obtains certificates from an approved,
+  shared service provider, as required by OMB policy. For federal agencies operating
+  a legacy public key infrastructure cross-certified with the Federal Bridge Certification
+  Authority at medium assurance or higher, this Certification Authority will suffice.
+  This control focuses on certificates with a visibility external to the information
+  system and does not include certificates related to internal system operations;
+  for example, application-specific time services. Use of weak or untested encryption
+  algorithms undermines the purposes of utilizing encryption to protect data. The
+  operating system must implement cryptographic modules adhering to the higher standards
+  approved by the federal government since this provides assurance they have been
+  tested and validated.
+
+
+  '
+check: /usr/bin/sudo /usr/bin/security dump-keychain | /usr/bin/grep labl | awk -F\"
+  '{ print $4 }'
+result: '[''If this list contains unapproved certificates, this is a finding.'']'
+fix: Obtain the approved DOD certificates from the appropriate authority. Use Keychain
+  Access from "/Applications/Utilities" to add certificates to the System Keychain.
+references:
+  srg:
+  - SRG-OS-000066-GPOS-00034
+  - SRG-OS-000478-GPOS-00223
+  disa_stig:
+  - APPL-12-003001
+  cci:
+  - CCI-000185
+  - CCI-002450
+macOS:
+- '12'
+tags:
+- stig
+severity: high

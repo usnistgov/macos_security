@@ -1,0 +1,36 @@
+rule_id: MSCP RULE
+title: The macOS system must use multifactor authentication for local access to privileged
+  and non-privileged accounts.
+discussion: "Without the use of multifactor authentication, the ease of access to\
+  \ privileged and non-privileged functions is greatly increased.\n\nMultifactor authentication\
+  \ requires using two or more factors to achieve authentication.\n\nFactors include:\
+  \ \n1) something a user knows (e.g., password/PIN);\n2) something a user has (e.g.,\
+  \ cryptographic identification device, token); and\n3) something a user is (e.g.,\
+  \ biometric).\n\nA privileged account is defined as an information system account\
+  \ with authorizations of a privileged user.\n\nLocal access is defined as access\
+  \ to an organizational information system by a user (or process acting on behalf\
+  \ of a user) communicating through a direct connection without the use of a network.\n\
+  \nThe DoD CAC with DoD-approved PKI is an example of multifactor authentication.\n\
+  \n"
+check: /usr/sbin/system_profiler SPConfigurationProfileDataType | /usr/bin/grep enforceSmartCard
+result: '[''If the results do not show "enforceSmartCard=1", this is a finding.'']'
+fix: "This setting is enforced using the \"Smart Card Policy\" configuration profile.\
+  \ \n\nNote: Before applying the \"Smart Card Policy\", the supplemental guidance\
+  \ provided with the STIG must be consulted to ensure continued access to the operating\
+  \ system."
+references:
+  srg:
+  - SRG-OS-000107-GPOS-00054
+  - SRG-OS-000108-GPOS-00055
+  - SRG-OS-000068-GPOS-00036
+  disa_stig:
+  - APPL-12-003020
+  cci:
+  - CCI-000187
+  - CCI-000767
+  - CCI-000768
+macOS:
+- '12'
+tags:
+- stig
+severity: high

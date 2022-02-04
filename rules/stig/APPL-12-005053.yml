@@ -1,0 +1,25 @@
+rule_id: MSCP RULE
+title: The macOS system must restrict the ability of individuals to write to external
+  optical media.
+discussion: External writeable media devices must be disabled for users. External
+  optical media devices can be used to exfiltrate sensitive data if an approved data-loss
+  prevention (DLP) solution is not installed.
+check: $ /usr/sbin/system_profiler SPConfigurationProfileDataType | /usr/bin/grep
+  'BurnSupport'
+result: '[''BurnSupport = off;'', '''', ''If the command does not return a line, this
+  is a finding.'', "If ''BurnSupport'' is set to a value other than ''off'' and is
+  not documented with the Information System Security Officer (ISSO) as an operational
+  requirement, this is a finding."]'
+fix: This setting is enforced using the "Restrictions Policy" configuration profile.
+references:
+  srg:
+  - SRG-OS-000480-GPOS-00227
+  disa_stig:
+  - APPL-12-005053
+  cci:
+  - CCI-000366
+macOS:
+- '12'
+tags:
+- stig
+severity: low
