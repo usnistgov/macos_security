@@ -28,9 +28,9 @@ references:
     - CM-5
     - SI-7(15)
   srg:
-    - N/A
-  disa_stig: 
-    - N/A
+    - SRG-OS-000480-GPOS-00227
+  disa_stig:
+    - APPL-12-002060
   800-171r2:
     - 3.4.5
 macOS:
@@ -43,6 +43,7 @@ tags:
   - 800-53r4_high 
   - 800-171 
   - cnssi-1253
+  - stig
 severity: "medium"
 mobileconfig: true
 mobileconfig_info:

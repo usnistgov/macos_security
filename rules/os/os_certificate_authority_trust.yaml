@@ -18,10 +18,8 @@ references:
     - SC-17
   800-53r4: 
     - SC-17
-  disa_stig: 
-    - N/A
-  srg:
-    - N/A
+  disa_stig:
+    - APPL-12-003001
 macOS:
   - "12.0"
 tags:
@@ -31,6 +29,7 @@ tags:
   - 800-53r4_high 
   - cnssi-1253 
   - manual
+  - stig
 severity: "high"
 mobileconfig: false
 mobileconfig_info:

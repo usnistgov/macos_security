@@ -27,7 +27,7 @@ references:
     - AC-18
   srg:
     - N/A
-  disa_stig: 
+  disa_stig:
     - AOSX-13-000075
   800-171r2:
     - 3.1.16

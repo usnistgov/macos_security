@@ -18,9 +18,9 @@ references:
   800-53r4:
     - AC-11(1)
   srg:
-    - N/A
+    - SRG-OS-000031-GPOS-00012
   disa_stig:
-    - N/A
+    - APPL-12-000006
   800-171r2:
     - 3.1.10
 macOS:
@@ -32,6 +32,7 @@ tags:
   - 800-53r4_high 
   - 800-171 
   - cnssi-1253
+  - stig
 severity: "low"
 mobileconfig: true
 mobileconfig_info:

@@ -37,15 +37,21 @@ references:
     - AC-17(2)
     - MA-4(6)
   srg:
-    - N/A
-  disa_stig: 
-    - N/A
+    - SRG-OS-000033-GPOS-00014
+    - SRG-OS-000120-GPOS-00061
+    - SRG-OS-000125-GPOS-00065
+    - SRG-OS-000250-GPOS-00093
+    - SRG-OS-000393-GPOS-00173
+    - SRG-OS-000394-GPOS-00174
+  disa_stig:
+    - APPL-12-000056
   800-171r2:
     - N/A
 macOS:
   - "12.0"
 tags:
   - none
+  - stig
 severity: "medium"
 mobileconfig: false
 mobileconfig_info:

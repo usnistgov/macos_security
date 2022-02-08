@@ -22,9 +22,10 @@ references:
   800-53r4: 
     - AU-8(1)
   srg:
-    - N/A
-  disa_stig: 
-    - N/A
+    - SRG-OS-000355-GPOS-00143
+    - SRG-OS-000356-GPOS-00144
+  disa_stig:
+    - APPL-12-000014
   800-171r2:
     - 3.3.7
   cisv8:
@@ -40,6 +41,7 @@ tags:
   - 800-53r4_moderate 
   - 800-53r4_high
   - cisv8
+  - stig
 severity: "medium"
 mobileconfig: true
 mobileconfig_info:

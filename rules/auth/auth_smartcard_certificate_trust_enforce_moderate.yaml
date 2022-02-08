@@ -31,7 +31,7 @@ references:
     - IA-5(2)
   srg:
     - N/A
-  disa_stig: 
+  disa_stig:
    - APPL-12-XXXXXX
 macOS:
   - "12.0"

@@ -45,7 +45,7 @@ references:
     - IA-4
   srg:
     - N/A
-  disa_stig: 
+  disa_stig:
     - N/A
   800-171r2:
     - 3.5.5

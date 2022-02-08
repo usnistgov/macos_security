@@ -21,9 +21,9 @@ references:
   800-53r4: 
     - AC-11
   srg:
-    - N/A
-  disa_stig: 
-    - N/A
+    - SRG-OS-000029-GPOS-00010
+  disa_stig:
+    - APPL-12-000004
   800-171r2:
     - 3.1.10
   cisv8:
@@ -39,6 +39,7 @@ tags:
   - 800-171 
   - cnssi-1253
   - cisv8
+  - stig
 severity: "medium"
 mobileconfig: true
 mobileconfig_info:
