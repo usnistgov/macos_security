@@ -65,10 +65,9 @@ references:
   800-53r4:
     - AC-2(2)
   srg:
-    - SRG-OS-000002-GPOS-00002
-    - SRG-OS-000123-GPOS-00064
+    - N/A
   disa_stig:
-    - APPL-12-000012
+    - N/A
 macOS:
   - "12.0"
 tags:
@@ -77,7 +76,6 @@ tags:
   - 800-53r4_moderate 
   - 800-53r4_high 
   - manual
-  - stig
 severity: "medium"
 mobileconfig: false
 mobileconfig_info:

@@ -28,10 +28,9 @@ references:
     - AC-20
     - AC-20(1)
   srg:
-    - SRG-OS-000095-GPOS-00049
-    - SRG-OS-000370-GPOS-00155
+    - N/A
   disa_stig:
-    - APPL-12-002015
+    - N/A
   800-171r2:
     - 3.1.20
     - 3.4.6
@@ -51,7 +50,6 @@ tags:
   - 800-171 
   - cnssi-1253
   - cisv8
-  - stig
 severity: "low"
 mobileconfig: true
 mobileconfig_info:

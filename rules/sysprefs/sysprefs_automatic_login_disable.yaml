@@ -22,9 +22,9 @@ references:
     - IA-2
     - IA-5(13)
   srg:
-    - SRG-OS-000480-GPOS-00229
+    - N/A
   disa_stig:
-    - APPL-12-002066
+    - N/A
   800-171r2:
     - 3.5.1
     - 3.5.2
@@ -39,7 +39,6 @@ tags:
   - 800-53r4_high 
   - 800-171 
   - cnssi-1253
-  - stig
 severity: "medium"
 mobileconfig: true
 mobileconfig_info:

@@ -22,9 +22,9 @@ references:
   800-53r4:
     - SI-11
   srg:
-    - SRG-OS-000206-GPOS-00084
+    - N/A
   disa_stig:
-    - APPL-12-004002
+    - N/A
   800-171r2:
     - N/A
 macOS:
@@ -32,7 +32,6 @@ macOS:
 tags:
   - 800-53r5_moderate 
   - 800-53r5_high
-  - stig
 severity: "medium"
 mobileconfig: false
 mobileconfig_info:
