@@ -18,16 +18,16 @@ references:
   cce:
     - CCE-90913-5
   cci: 
-    - N/A
+    - CCI-000366
   800-53r5:
     - SI-3
     - SI-2(5)
   800-53r4:
     - N/A
   srg:
-    - N/A
+    - SRG-OS-000480-GPOS-00227
   disa_stig:
-    - N/A
+    - APPL-12-002070
   800-171r2:
     - N/A
   cisv8:
@@ -41,6 +41,8 @@ tags:
   - 800-53r5_moderate
   - 800-53r5_high
   - cisv8
+  - stig
+severity: "high"
 mobileconfig: true
 mobileconfig_info:
   com.apple.SoftwareUpdate:
