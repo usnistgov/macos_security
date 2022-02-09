@@ -57,6 +57,7 @@ profile:
       - os_certificate_authority_trust
       - os_config_data_install_enforce
       - os_directory_services_configured
+      - os_ess_installed
       - os_facetime_app_disable
       - os_filevault_authorized_users
       - os_filevault_autologin_disable
@@ -66,7 +67,6 @@ profile:
       - os_gatekeeper_enable
       - os_gatekeeper_rearm
       - os_handoff_disable
-      - os_ESS_installed
       - os_home_folders_secure
       - os_httpd_disable
       - os_icloud_storage_prompt_disable
