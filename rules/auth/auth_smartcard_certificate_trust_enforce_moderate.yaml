@@ -19,10 +19,10 @@ references:
     - CCE-90882-2
   cci: 
     - CCI-000186
-    - CCI-002470
-    - CCI-001991
     - CCI-001953
     - CCI-001954
+    - CCI-001991
+    - CCI-002470
   800-53r5:
     - IA-5(2)
     - SC-17
@@ -30,15 +30,20 @@ references:
     - IA-2(12)
     - IA-5(2)
   srg:
-    - N/A
+    - SRG-OS-000376-GPOS-00161
+    - SRG-OS-000377-GPOS-00162
+    - SRG-OS-000384-GPOS-00167
+    - SRG-OS-000403-GPOS-00182
+    - SRG-OS-000067-GPOS-00035
   disa_stig:
-   - APPL-12-XXXXXX
+    - APPL-12-001060
 macOS:
   - "12.0"
 tags:
   - 800-53r4_moderate 
   - 800-53r5_moderate 
   - cnssi-1253
+  - stig
 severity: "medium"
 mobileconfig: true
 mobileconfig_info:
