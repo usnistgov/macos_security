@@ -41,4 +41,3 @@ mobileconfig_info:
       blankcd: 
         - alert
         - eject
-    

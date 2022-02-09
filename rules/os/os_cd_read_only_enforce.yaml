@@ -40,4 +40,3 @@ mobileconfig_info:
     mount-controls:
       cd: 
         - read-only
-    
