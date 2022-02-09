@@ -290,6 +290,7 @@ def main():
 
                             continue
                         for key, value in info.items():
+
                             if key == "familyControlsEnabled":
                                 xpath_search = ""
                                 if len(info) > 1:
@@ -383,43 +384,203 @@ def main():
 
                                     x = x + 1
                                     continue
-                            
-                            if payload_type == "com.apple.systemuiserver" and key == "mount-controls":
+                            if payload_type == "com.apple.finder":
                                 oval_definition = oval_definition + '''
-                    <definition id="oval:mscp:def:{}" version="1" class="compliance"> 
+                        <definition id="oval:mscp:def:{}" version="1" class="compliance"> 
                         <metadata> 
-                            <title>{}</title> 
+                            <title>{}</title>
                             <reference source="CCE" ref_id="{}"/>
                             <reference source="macos_security" ref_id="{}"/>
                             <description>{}</description> 
                         </metadata> 
-                    <criteria>
+                    <criteria> 
                         <criterion comment="{}" test_ref="oval:mscp:tst:{}" />
-        
-                    </criteria>
-                </definition> '''.format(x,rule_yaml['title'],rule_yaml['references']['cce'][0],rule_yaml['id'],rule_yaml['discussion'],rule_yaml['id'],x)
+                    </criteria> 
+                </definition>
+                '''.format(x,rule_yaml['title'],rule_yaml['references']['cce'][0],rule_yaml['id'],rule_yaml['discussion'].rstrip(),rule_yaml['id'],x)
 
                                 oval_test = oval_test + '''
-
-            <plist511_test xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" check="all" check_existence="any_exist" comment="{}_test" id="oval:mscp:tst:{}" version="2">
+                <plist511_test xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" check="all" check_existence="only_one_exists" comment="{}_test" id="oval:mscp:tst:{}" version="2">
                     <object object_ref="oval:mscp:obj:{}" />
                     <state state_ref="oval:mscp:ste:{}" />
-                </plist511_test>'''.format(rule_yaml['id'],x,x,x)
+                </plist511_test>
+            '''.format(rule_yaml['id'],x,x,x)
 
                                 oval_object = oval_object + '''
-                                <plist511_object xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" comment="{}_object" id="oval:mscp:obj:{}" version="1">
-                <filepath>/Library/Managed Preferences/com.apple.systemuiserver.plist</filepath>
-                <xpath>/plist/dict/dict/array/string/text()</xpath>
-                </plist511_object>  '''.format(rule_yaml['id'],x)
+                <plist511_object xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" version="1" comment="find a username" id="oval:mscp:obj:{}">
+                    <filepath>/Library/Preferences/com.apple.loginwindow.plist</filepath>
+                    <xpath>/plist/dict/key[string()="lastUserName"]/following-sibling::*[1]/text()</xpath>
+                </plist511_object>
+                <plist511_object xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" comment="{}_object" id="oval:mscp:obj:{}" version="1">
+                    <filepath datatype="string" operation="equals" var_check="at least one" var_ref="oval:mscp:var:{}"/>
+                '''.format(x+1999,rule_yaml['id'],x,x)
+                                                        
+                                state_kind = ""
+                                if type(value) == bool:
+                                    oval_object = oval_object + '''
+<xpath>name(//*[contains(text(), "{}")]/following-sibling::*[1])</xpath>
+</plist511_object>'''.format(key)
+                                    state_kind = "boolean"
+                                elif type(value) == int:
+                                    state_kind = "int"
+                                    oval_object = oval_object + '''
+<xpath>//*[contains(text(), "{}")]/following-sibling::*[1]/text()</xpath>
+</plist511_object>'''.format(key)
+                                elif type(value) == str:
+                                    state_kind = "string"
+                                    oval_object = oval_object + '''
+<xpath>//*[contains(text(), "{}")]/following-sibling::*[1]/text()</xpath>
+</plist511_object>'''.format(key)
 
                                 oval_state = oval_state + '''
-                                    <plist511_state xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" comment="{}_state" id="oval:mscp:ste:{}" version="1">
-                <value_of datatype="string" operation="pattern match">deny</value_of>
-                
-                </plist511_state>'''.format(rule_yaml['id'],x)
-                                x = x + 1
+                        <plist511_state xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" comment="{}_state" id="oval:mscp:ste:{}" version="1">
+            <value_of datatype="{}" operation="equals">{}</value_of>
+            </plist511_state>
+            '''.format(rule_yaml['id'],x,state_kind,value)
+
+
+                                oval_variable = oval_variable +           '''    
+                <local_variable id="oval:mscp:var:{}" version="1" datatype="string" comment="user managed pref">
+                    <concat>
+                        <literal_component datatype="string">/Library/Managed Preferences/</literal_component>
+                        <object_component object_ref="oval:mscp:obj:{}" item_field="value_of"/>
+                        <literal_component datatype="string">/com.apple.finder.plist</literal_component>
+                    </concat>
+                </local_variable>'''.format(x,x+1999)
+                                x += 1
                                 continue
-                            if payload_type == "com.apple.systempreferences" and key == "DisabledPreferencePanes": 
+                            
+                            if payload_type == "com.apple.DiscRecording":
+                                oval_definition = oval_definition + '''
+                        <definition id="oval:mscp:def:{}" version="1" class="compliance"> 
+                        <metadata> 
+                            <title>{}</title>
+                            <reference source="CCE" ref_id="{}"/>
+                            <reference source="macos_security" ref_id="{}"/>
+                            <description>{}</description> 
+                        </metadata> 
+                    <criteria> 
+                        <criterion comment="{}" test_ref="oval:mscp:tst:{}" />
+                    </criteria> 
+                </definition>
+                '''.format(x,rule_yaml['title'],rule_yaml['references']['cce'][0],rule_yaml['id'],rule_yaml['discussion'].rstrip(),rule_yaml['id'],x)
+
+                                oval_test = oval_test + '''
+                <plist511_test xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" check="all" check_existence="only_one_exists" comment="{}_test" id="oval:mscp:tst:{}" version="2">
+                    <object object_ref="oval:mscp:obj:{}" />
+                    <state state_ref="oval:mscp:ste:{}" />
+                </plist511_test>
+            '''.format(rule_yaml['id'],x,x,x)
+
+                                oval_object = oval_object + '''
+                <plist511_object xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" version="1" comment="find a username" id="oval:mscp:obj:{}">
+                    <filepath>/Library/Preferences/com.apple.loginwindow.plist</filepath>
+                    <xpath>/plist/dict/key[string()="lastUserName"]/following-sibling::*[1]/text()</xpath>
+                </plist511_object>
+                <plist511_object xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" comment="{}_object" id="oval:mscp:obj:{}" version="1">
+                    <filepath datatype="string" operation="equals" var_check="at least one" var_ref="oval:mscp:var:{}"/>
+                '''.format(x+1999,rule_yaml['id'],x,x)
+                                
+                                state_kind = ""
+                                if type(value) == bool:
+                                    oval_object = oval_object + '''
+<xpath>name(//*[contains(text(), "{}")]/following-sibling::*[1])</xpath>
+</plist511_object>'''.format(key)
+                                    state_kind = "boolean"
+                                elif type(value) == int:
+                                    state_kind = "int"
+                                    oval_object = oval_object + '''
+<xpath>//*[contains(text(), "{}")]/following-sibling::*[1]/text()</xpath>
+</plist511_object>'''.format(key)
+                                elif type(value) == str:
+                                    state_kind = "string"
+                                    oval_object = oval_object + '''
+<xpath>//*[contains(text(), "{}")]/following-sibling::*[1]/text()</xpath>
+</plist511_object>'''.format(key)
+
+                                oval_state = oval_state + '''
+                        <plist511_state xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" comment="{}_state" id="oval:mscp:ste:{}" version="1">
+            <value_of datatype="{}" operation="equals">{}</value_of>
+            </plist511_state>
+            '''.format(rule_yaml['id'],x,state_kind,value)
+
+
+                                oval_variable = oval_variable +           '''    
+                <local_variable id="oval:mscp:var:{}" version="1" datatype="string" comment="user managed pref">
+                    <concat>
+                        <literal_component datatype="string">/Library/Managed Preferences/</literal_component>
+                        <object_component object_ref="oval:mscp:obj:{}" item_field="value_of"/>
+                        <literal_component datatype="string">/com.apple.DiscRecording.plist</literal_component>
+                    </concat>
+                </local_variable>'''.format(x,x+1999)
+                                x += 1
+                                continue      
+                            if payload_type == "com.apple.Safari" and key == "AutoOpenSafeDownloads":
+                                oval_definition = oval_definition + '''
+                        <definition id="oval:mscp:def:{}" version="1" class="compliance"> 
+                        <metadata> 
+                            <title>{}</title>
+                            <reference source="CCE" ref_id="{}"/>
+                            <reference source="macos_security" ref_id="{}"/>
+                            <description>{}</description> 
+                        </metadata> 
+                    <criteria> 
+                        <criterion comment="{}" test_ref="oval:mscp:tst:{}" />
+                    </criteria> 
+                </definition>
+                '''.format(x,rule_yaml['title'],rule_yaml['references']['cce'][0],rule_yaml['id'],rule_yaml['discussion'].rstrip(),rule_yaml['id'],x)
+
+                                oval_test = oval_test + '''
+                <plist511_test xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" check="all" check_existence="only_one_exists" comment="{}_test" id="oval:mscp:tst:{}" version="2">
+                    <object object_ref="oval:mscp:obj:{}" />
+                    <state state_ref="oval:mscp:ste:{}" />
+                </plist511_test>
+            '''.format(rule_yaml['id'],x,x,x)
+
+                                oval_object = oval_object + '''
+                <plist511_object xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" version="1" comment="find a username" id="oval:mscp:obj:{}">
+                    <filepath>/Library/Preferences/com.apple.loginwindow.plist</filepath>
+                    <xpath>/plist/dict/key[string()="lastUserName"]/following-sibling::*[1]/text()</xpath>
+                </plist511_object>
+                <plist511_object xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" comment="{}_object" id="oval:mscp:obj:{}" version="1">
+                    <filepath datatype="string" operation="equals" var_check="at least one" var_ref="oval:mscp:var:{}"/>
+                '''.format(x+1999,rule_yaml['id'],x,x)
+                                
+                                state_kind = ""
+                                if type(value) == bool:
+                                    oval_object = oval_object + '''
+<xpath>name(//*[contains(text(), "{}")]/following-sibling::*[1])</xpath>
+</plist511_object>'''.format(key)
+                                    state_kind = "boolean"
+                                elif type(value) == int:
+                                    state_kind = "int"
+                                    oval_object = oval_object + '''
+<xpath>//*[contains(text(), "{}")]/following-sibling::*[1]/text()</xpath>
+</plist511_object>'''.format(key)
+                                elif type(value) == str:
+                                    state_kind = "string"
+                                    oval_object = oval_object + '''
+<xpath>//*[contains(text(), "{}")]/following-sibling::*[1]/text()</xpath>
+</plist511_object>'''.format(key)
+
+                                oval_state = oval_state + '''
+                        <plist511_state xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" comment="{}_state" id="oval:mscp:ste:{}" version="1">
+            <value_of datatype="{}" operation="equals">{}</value_of>
+            </plist511_state>
+            '''.format(rule_yaml['id'],x,state_kind,value)
+
+
+                                oval_variable = oval_variable +           '''    
+                <local_variable id="oval:mscp:var:{}" version="1" datatype="string" comment="user managed pref">
+                    <concat>
+                        <literal_component datatype="string">/Library/Managed Preferences/</literal_component>
+                        <object_component object_ref="oval:mscp:obj:{}" item_field="value_of"/>
+                        <literal_component datatype="string">/com.apple.Safari.plist</literal_component>
+                    </concat>
+                </local_variable>'''.format(x,x+1999)
+                                x += 1
+                                continue                                                       
+                            if payload_type == "com.apple.systempreferences" and key == "DisabledPreferencePanes" or payload_type == "com.apple.systempreferences" and key == "HiddenPreferencePanes": 
                                 
                                 oval_definition = oval_definition + '''
                         <definition id="oval:mscp:def:{}" version="1" class="compliance"> 
@@ -449,18 +610,18 @@ def main():
                 </plist511_object>
                 <plist511_object xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" comment="{}_object" id="oval:mscp:obj:{}" version="1">
                     <filepath datatype="string" operation="equals" var_check="at least one" var_ref="oval:mscp:var:{}"/>
-                    <xpath>boolean(plist/dict/array/string/text() = "{}")</xpath>
+                    <xpath>/plist/dict/key[string()="{}"]/following-sibling::*[1]/string[string()="{}"]/text()</xpath>
                 </plist511_object>  
-                '''.format(x+1999,rule_yaml['id'],x,x,str(value).strip('[]').strip("'"))
+                '''.format(x+1999,rule_yaml['id'],x,x,key,str(value).strip('[]').strip("'"))
                                 
                         
                                 oval_state = oval_state + '''
             
                 <plist511_state xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" comment="{}_state" id="oval:mscp:ste:{}" version="1">
-                <value_of datatype="boolean" operation="equals">true</value_of>
+                <value_of datatype="string" operation="equals">{}</value_of>
                 </plist511_state>
             
-                '''.format(rule_yaml['id'],x)
+                '''.format(rule_yaml['id'],x,str(value).strip('[]').strip("'"))
 
                                 oval_variable = oval_variable +           '''    
                 <local_variable id="oval:mscp:var:{}" version="1" datatype="string" comment="user managed pref">
