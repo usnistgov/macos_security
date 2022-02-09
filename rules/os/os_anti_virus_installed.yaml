@@ -12,7 +12,7 @@ fix: |
   /usr/bin/sudo /bin/launchctl enable system/com.apple.mrt
 references:
   cce:
-    - CCE-90900-2
+    - N/A
   cci: 
     - CCI-000366
   800-53r5:
@@ -22,9 +22,9 @@ references:
   srg:
     - SRG-OS-000480-GPOS-00227
   disa_stig:
-    - APPL-12-002070
+    - APPL-11-002070
 macOS:
-  - "12.0"
+  - "11.0"
 tags:
   - stig
 severity: "high"

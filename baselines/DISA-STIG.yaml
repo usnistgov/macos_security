@@ -50,18 +50,15 @@ profile:
       - os_camera_disable
       - os_certificate_authority_trust
       - os_directory_services_configured
-      - os_facetime_app_disable
+      - os_ess_installed
       - os_filevault_authorized_users
       - os_filevault_autologin_disable
       - os_firmware_password_require
       - os_gatekeeper_enable
-      - os_ESS_installed
       - os_home_folders_secure
       - os_httpd_disable
       - os_icloud_storage_prompt_disable
       - os_internet_accounts_prefpane_disable
-      - os_mail_app_disable
-      - os_messages_app_disable
       - os_newsyslog_files_owner_group_configure
       - os_newsyslog_files_permissions_configure
       - os_nfsd_disable
@@ -69,6 +66,7 @@ profile:
       - os_policy_banner_ssh_configure
       - os_policy_banner_ssh_enforce
       - os_privacy_setup_prompt_disable
+      - os_removable_media_disable
       - os_screensaver_loginwindow_enforce
       - os_sip_enable
       - os_siri_prompt_disable
