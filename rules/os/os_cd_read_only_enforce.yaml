@@ -1,23 +1,21 @@
-id: os_removable_media_disable
-title: "Disable Removable Storage Devices"
+id: os_cd_read_only_enforce
+title: "Enforce CD Read Only"
 discussion: |
-  Removable media, such as USB connected external hard drives, thumb drives, and optical media, _MUST_ be disabled for users.
-  
-  Disabling removable storage devices reduces the risks and known vulnerabilities of such devices (e.g., malicious code insertion)
+  CD media _MUST_ be set to read only.
   
   [IMPORTANT]
   ====
   Some organizations rely on the use of removable media for storing and sharing data. Information System Security Officers (ISSOs) may make the risk-based decision not to disable external hard drives to avoid losing this functionality, but they are advised to first fully weigh the potential risks posed to their organization.
   ====
 check: |
-  /usr/bin/profiles -P -o stdout | /usr/bin/grep 'harddisk-external' -A3 | /usr/bin/grep -Ec "eject|alert"
+  /usr/bin/profiles -P -o stdout | /usr/bin/grep ' cd =' -A1 | /usr/bin/grep -Ec "read-only"
 result:
-  integer: 2
+  integer: 1
 fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-    - CCE-90991-1
+    - N/A
   cci: 
     - CCI-000366
     - CCI-001967
@@ -35,18 +33,11 @@ references:
 macOS:
   - "12.0"
 tags:
-  - 800-53r5_low
-  - 800-53r5_moderate
-  - 800-53r5_high
-  - 800-53r4_moderate
-  - 800-53r4_high
-  - 800-171
-  - cnssi-1253
+  - stig
 mobileconfig: true
 mobileconfig_info:
   com.apple.systemuiserver:
     mount-controls:
-      harddisk-external: 
-        - alert
-        - eject
+      cd: 
+        - read-only
     
