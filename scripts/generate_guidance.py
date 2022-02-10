@@ -849,7 +849,7 @@ defaults write "$audit_plist" lastComplianceCheck "$(date)"
             if "integer" in result:
                 result_value = result['integer']
             elif "boolean" in result:
-                result_value = result['boolean']
+                result_value = str(result['boolean']).lower()
             elif "string" in result:
                 result_value = result['string']
             else:
@@ -863,7 +863,7 @@ rule_arch="{6}"
 if [[ "$arch" == "$rule_arch" ]] || [[ -z "$rule_arch" ]]; then
     #echo 'Running the command to check the settings for: {0} ...' | tee -a "$audit_log"
     unset result_value
-    result_value=$({2})
+    result_value=$({2}\n)
     # expected result {3}
 
 
@@ -892,7 +892,7 @@ else
     echo "$(date -u) {5} does not apply to this architechture" | tee -a "$audit_log"
     defaults write "$audit_plist" {0} -dict-add finding -bool NO
 fi
-    """.format(rule_yaml['id'], nist_controls.replace("\n", "\n#"), check.strip(), result, result_value, ' '.join(log_reference_id), arch)
+    """.format(rule_yaml['id'], nist_controls.replace("\n", "\n#"), check.strip(), str(result).lower(), result_value, ' '.join(log_reference_id), arch)
 
             check_function_string = check_function_string + zsh_check_text
 

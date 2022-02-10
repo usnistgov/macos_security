@@ -9,9 +9,12 @@ discussion: |
 
   NOTE: Software update will automatically update XProtect, MRT, and Gatekeeper by default in the macOS.
 check: |
-  /usr/bin/profiles -P -o stdout | /usr/bin/grep -c 'ConfigDataInstall = 1'
+  /usr/bin/osascript -l JavaScript << EOS
+  $.NSUserDefaults.alloc.initWithSuiteName('com.apple.SoftwareUpdate')\
+  .objectForKey('ConfigDataInstall').js
+  EOS
 result:
-  integer: 1
+  string: "true"
 fix: |
   This is implemented by a Configuration Profile.
 references:

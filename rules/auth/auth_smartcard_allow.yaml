@@ -7,9 +7,12 @@ discussion: |
   
   When enabled, the smartcard can be used for login, authorization, and screen saver unlocking.
 check: |
-  /usr/bin/profiles -P -o stdout | /usr/bin/grep -c 'allowSmartCard = 1'
+  /usr/bin/osascript -l JavaScript << EOS
+  $.NSUserDefaults.alloc.initWithSuiteName('com.apple.security.smartcard')\
+  .objectForKey('allowSmartCard').js
+  EOS
 result:
-  integer: 1
+  string: "true"
 fix: |
   This is implemented by a Configuration Profile.
 references:

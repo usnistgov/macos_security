@@ -5,7 +5,20 @@ discussion: |
 
   The Messages.app establishes a connection to Apple's iCloud service, even when security controls to disable iCloud access have been put in place. 
 check: |
-  /usr/bin/profiles -P -o stdout | /usr/bin/grep -A 20 familyControlsEnabled | /usr/bin/grep -c "/Applications/Messages.app"
+  /usr/bin/osascript -l JavaScript << EOS
+  function run() {
+    let pref1 = ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess.new')\
+    .objectForKey('familyControlsEnabled'))
+    let pathlist = $.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess.new')\
+    .objectForKey('pathBlackList').js
+    for ( let app in pathlist ) {
+        if ( ObjC.unwrap(pathlist[app]) == "/Applications/Messages.app" && pref1 == true ){
+            return("true")
+        }
+    }
+    return("false")
+    }
+  EOS
 result:
   integer: 1
 fix: |

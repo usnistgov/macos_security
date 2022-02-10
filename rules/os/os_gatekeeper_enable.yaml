@@ -9,7 +9,7 @@ discussion: |
 check: | 
   /usr/sbin/spctl --status | /usr/bin/grep -c "assessments enabled"
 result:
-  integer: 1
+  string: "true"
 fix: |
   [source,bash]
   ----

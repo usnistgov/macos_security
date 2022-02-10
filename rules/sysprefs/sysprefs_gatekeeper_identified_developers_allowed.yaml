@@ -5,7 +5,10 @@ discussion: |
   
   Gatekeeper settings must be configured correctly to only allow the system to run applications downloaded from the Mac App Store or applications signed with a valid Apple Developer ID code. Administrator users will still have the option to override these settings on a per-app basis. Gatekeeper is a security feature that ensures that applications must be digitally signed by an Apple-issued certificate in order to run. Digital signatures allow the macOS to verify that the application has not been modified by a malicious third party.
 check: |
-  /usr/sbin/spctl --status --verbose | /usr/bin/grep -c "developer id enabled"
+  /usr/bin/osascript -l JavaScript << EOS
+  $.NSUserDefaults.alloc.initWithSuiteName('com.apple.systempolicy.control')\
+  .objectForKey('AllowIdentifiedDevelopers').js
+  EOS
 result: 
   integer: 1
 fix: |

@@ -7,9 +7,12 @@ discussion: |
   
   NOTE: This is applicable only to models of Mac Mini systems earlier than Mac Mini8,1.
 check: |
-  /usr/bin/profiles -P -o stdout | /usr/bin/grep -c 'DeviceEnabled = 0'
+  osascript -l JavaScript << EOS
+  $.NSUserDefaults.alloc.initWithSuiteName('com.apple.driver.AppleIRController')\
+  .objectForKey('DeviceEnabled').js
+  EOS
 result:
-  integer: 1
+  string: "false"
 fix: |
   This is implemented by a Configuration Profile.
 references:

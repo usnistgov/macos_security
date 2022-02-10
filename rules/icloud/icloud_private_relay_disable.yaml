@@ -5,9 +5,12 @@ discussion: |
 
   Network administrators can also prevent the use of this feature by blocking DNS resolution of mask.icloud.com and mask-h2.icloud.com.
 check: |
-  /usr/bin/profiles -P -o stdout | /usr/bin/grep -c 'allowCloudPrivateRelay = 0'
+  /usr/bin/osascript -l JavaScript << EOS
+  $.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess')\
+  .objectForKey('allowCloudPrivateRelay').js
+  EOS
 result:
-  integer: 1
+  string: "false"
 fix: |
   This is implemented by a Configuration Profile.
 references:

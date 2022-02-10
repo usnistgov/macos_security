@@ -10,9 +10,12 @@ discussion: |
   Some organizations rely on the use of removable media for storing and sharing data. Information System Security Officers (ISSOs) may make the risk-based decision not to disable external hard drives to avoid losing this functionality, but they are advised to first fully weigh the potential risks posed to their organization.
   ====
 check: |
-  /usr/bin/profiles -P -o stdout | /usr/bin/grep 'harddisk-external' -A3 | /usr/bin/grep -Ec "eject|alert"
+  /usr/bin/osascript -l JavaScript << EOS
+  $.NSUserDefaults.alloc.initWithSuiteName('com.apple.systemuiserver')\
+  .objectForKey('mount-controls').js
+  EOS
 result:
-  integer: 2
+  string: "harddisk-external:deny"
 fix: |
   This is implemented by a Configuration Profile.
 references:
