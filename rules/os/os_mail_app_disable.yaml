@@ -3,7 +3,7 @@ title: "Disable Mail App"
 discussion: |
   The macOS built-in Mail.app _MUST_ be disabled. 
 
-  The Mail.app contains functionality that can establish connections to Apple’s iCloud, even when security controls to disable iCloud access have been put in place.
+  The Mail.app contains functionality that can establish connections to Apple's iCloud, even when security controls to disable iCloud access have been put in place.
   
   [IMPORTANT]
   ====

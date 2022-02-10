@@ -1,9 +1,9 @@
 id: icloud_mail_disable
 title: "Disable iCloud Mail"
 discussion: |
-  The macOS built-in Mail.app connection to Apple’s iCloud service _MUST_ be disabled.
+  The macOS built-in Mail.app connection to Apple's iCloud service _MUST_ be disabled.
 
-  Apple’s iCloud service does not provide an organization with enough control over the storage and access of data and, therefore, automated mail synchronization _MUST_ be controlled by an organization approved service.
+  Apple's iCloud service does not provide an organization with enough control over the storage and access of data and, therefore, automated mail synchronization _MUST_ be controlled by an organization approved service.
 check: |
   /usr/bin/profiles -P -o stdout | /usr/bin/grep -c 'allowCloudMail = 0'
 result:
