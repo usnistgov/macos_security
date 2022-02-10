@@ -3,7 +3,7 @@ title: "Configure Audit Flags"
 discussion: |
   The auditing system _MUST_ be configured with at least the minimal flags of fm, ad, -ex, aa, -fr, lo, and -fw.
 check: |
-  /usr/bin/sed -n 's/^flags://p' test_file | /usr/bin/grep -ce 'fm,ad,\-ex,aa,\-fr,lo,\-fw'
+  /usr/bin/sed -n 's/^flags://p' /etc/security/audit_control | /usr/bin/grep -ce 'fm,ad,\-ex,aa,\-fr,lo,\-fw'
 result:
   integer: 1
 fix: |
