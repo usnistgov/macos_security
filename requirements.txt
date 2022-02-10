@@ -1,3 +1,2 @@
 pyyaml
-lxml
 xlwt
