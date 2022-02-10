@@ -31,7 +31,7 @@ references:
   800-171r2:
     - 3.1.20
     - 3.4.6
-  cis
+  cis:
     benchmark:
       - N/A
     v8:
