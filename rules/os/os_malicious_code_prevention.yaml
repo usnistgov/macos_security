@@ -12,7 +12,7 @@ discussion: |
       *	an app has been changed (in the file system), and
       *	XProtect signatures are updated.
   *	YARA: another built-in tool (inherent to all Macs), which conducts signature-based detection of malware. Apple updates YARA rules regularly.
-  *	Gatekeeper: a security feature inherent to all Macs; Gatekeeper scans apps to detect malware and/or revocations of a developer’s signing certificate and prevents unsafe apps from running.
+  *	Gatekeeper: a security feature inherent to all Macs; Gatekeeper scans apps to detect malware and/or revocations of a developer's signing certificate and prevents unsafe apps from running.
   *	Notarization: Apple performs regular, automated scans to detect signs of malicious content and to verify developer ID-signed software; when no issues are found, Apple notarizes the software and delivers the results of scans to the system owner. 
 
   2. The second layer of defense targets malware that manages to appear on a Mac before it runs; the aim is to quickly identify and block any malware present on a Mac in order to prevent the malware from running and further spreading. 
@@ -23,7 +23,7 @@ discussion: |
 
   3.  The third layer of defense targets infected Mac system(s); the aim is to remediate Macs on which malware has managed to successfully execute. 
   The following mechanism is inherent to the macOS design and constitutes the third layer of protection against malicious code: 
-  *	Apple’s Malware Removal Tool (MRT): a technology included on all macOS systems. MRT is an agent that remediates based on automatic updates delivered from Apple. MRT will remove the malware upon receiving updated information and check for malware on restart and login.
+  *	Apple's Malware Removal Tool (MRT): a technology included on all macOS systems. MRT is an agent that remediates based on automatic updates delivered from Apple. MRT will remove the malware upon receiving updated information and check for malware on restart and login.
 
   link:https://support.apple.com/guide/security/protecting-against-malware-sec469d47bd8/1/web/1[]
   
@@ -45,10 +45,13 @@ references:
     - N/A
   srg:
     - N/A
-  cisv8:
-    - 10.1
-    - 10.2
-    - 10.5
+  cis:
+    benchmark:
+      - N/A
+    v8:
+      - 10.1
+      - 10.2
+      - 10.5
 macOS:
   - "12.0"
 tags:

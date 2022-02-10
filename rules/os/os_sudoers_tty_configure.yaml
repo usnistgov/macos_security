@@ -3,15 +3,15 @@ title: "Configure Sudoers to Authenticate Users on a Per -tty Basis"
 discussion: |
   The file /etc/sudoers _MUST_ be configured to include tty_tickets.
 
-  This rule ensures that the "sudo" command will prompt for the administrator’s password at least once in each newly opened terminal window. This prevents a malicious user from taking advantage of an unlocked computer or an abandoned logon session by bypassing the normal password prompt requirement. Without the "tty_tickets" option, all open local and remote logon sessions would be authenticated to use sudo without a password for the duration of the configured password timeout window.
+  This rule ensures that the "sudo" command will prompt for the administrator's password at least once in each newly opened terminal window. This prevents a malicious user from taking advantage of an unlocked computer or an abandoned logon session by bypassing the normal password prompt requirement. Without the "tty_tickets" option, all open local and remote logon sessions would be authenticated to use sudo without a password for the duration of the configured password timeout window.
 check: |
-  /usr/bin/grep -Ec "^Defaults tty_tickets" /etc/sudoers
+  /usr/bin/find /etc/sudoers* -type f -exec /usr/bin/grep -E "^Defaults\s+\!tty_tickets" '{}' \; | /usr/bin/wc -l | /usr/bin/xargs
 result:
-  integer: 1
+  integer: 0
 fix: |
   [source,bash]
   ----
-  /bin/cp /etc/sudoers /etc/sudoers.bk; /bin/echo "Defaults tty_tickets" >> /etc/sudoers
+  /usr/bin/find /etc/sudoers* -type f -exec sed -i '' '/!tty_tickets/d' '{}' \;
   ----
 references:
   cce:
@@ -27,6 +27,11 @@ references:
     - SRG-OS-000480-GPOS-00227
   disa_stig:
     - APPL-12-004021
+  cis:
+    benchmark:
+      - 5.4 (level 1)
+    v8:
+      - 4.3
 macOS:
   - "12.0"
 tags:
@@ -34,6 +39,9 @@ tags:
   - 800-53r5_moderate 
   - 800-53r5_high 
   - cnssi-1253
+  - cis_lvl1
+  - cis_lvl2
+  - cisv8
   - stig
 severity: "high"
 mobileconfig: false

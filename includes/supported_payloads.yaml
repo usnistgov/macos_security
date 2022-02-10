@@ -22,6 +22,7 @@ payloads_types:
   - com.apple.SubmitDiagInfo
   - com.apple.SystemConfiguration
   - com.apple.TCC.configuration-profile-policy
+  - com.apple.Terminal
   - com.apple.TextEdit
   - com.apple.TimeMachine
   - com.apple.airplay
@@ -86,6 +87,7 @@ payloads_types:
   - com.apple.security.FDERecoveryRedirect
   - com.apple.security.certificatetransparency
   - com.apple.security.firewall
+  - com.apple.security.libraryvalidation
   - com.apple.security.pem
   - com.apple.security.pkcs1
   - com.apple.security.pkcs12

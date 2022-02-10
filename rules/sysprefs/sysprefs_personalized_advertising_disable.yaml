@@ -3,7 +3,7 @@ title: "Disable Personalized Advertising"
 discussion: |
   Ad tracking and targeted ads _MUST_ be disabled.
 
-  The information system _MUST_ be configured to provide only essential capabilities. Disabling ad tracking ensures that applications and advertisers are unable to track users’ interests and deliver targeted advertisements.  
+  The information system _MUST_ be configured to provide only essential capabilities. Disabling ad tracking ensures that applications and advertisers are unable to track users' interests and deliver targeted advertisements.  
 check: |
   /usr/bin/profiles -P -o stdout | /usr/bin/grep -c 'allowApplePersonalizedAdvertising = 0;'
 result:
@@ -31,9 +31,12 @@ references:
   800-171r2:
     - 3.1.20
     - 3.4.6
-  cisv8:
-    - 4.1
-    - 4.8
+  cis:
+    benchmark:
+      - 2.5.6 (level 1)
+    v8:
+      - 4.1
+      - 4.8
 macOS:
   - "12.0"
 tags:
@@ -45,6 +48,8 @@ tags:
   - 800-53r4_high
   - 800-171
   - cnssi-1253
+  - cis_lvl1
+  - cis_lvl2
   - cisv8
 mobileconfig: true
 mobileconfig_info:

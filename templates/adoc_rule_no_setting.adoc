@@ -31,9 +31,8 @@ ifdef::show_STIG[]
 !$rule_disa_stig
 endif::[]
 
-ifdef::show_CISv8[]
-!CIS Controls V8
-!$rule_cisv8
+ifdef::show_CIS[]
+$rule_cis
 endif::[]
 
 ifdef::show_tags[]

@@ -5,7 +5,7 @@ discussion: |
   
   Audit records establish what types of events have occurred, when they occurred, and which users were involved. These records aid an organization in their efforts to establish, correlate, and investigate the events leading up to an outage or attack.
   
-  The content required to be captured in an audit record varies based on the impact level of an organization’s system. Content that may be necessary to satisfy this requirement includes, for example, time stamps, source addresses, destination addresses, user identifiers, event descriptions, success/fail indications, filenames involved, and access or flow control rules invoked.
+  The content required to be captured in an audit record varies based on the impact level of an organization's system. Content that may be necessary to satisfy this requirement includes, for example, time stamps, source addresses, destination addresses, user identifiers, event descriptions, success/fail indications, filenames involved, and access or flow control rules invoked.
 
   The information system initiates session audits at system start-up.
 
@@ -74,9 +74,12 @@ references:
     - 3.3.1
     - 3.3.2
     - 3.3.7
-  cisv8:
-    - 8.2
-    - 8.5
+  cis:
+    benchmark:
+      - 3.1 (level 1)
+    v8:
+      - 8.2
+      - 8.5
 macOS:
   - "12.0"
 tags:
@@ -88,6 +91,8 @@ tags:
   - 800-53r4_high 
   - 800-171 
   - cnssi-1253
+  - cis_lvl1
+  - cis_lvl2
   - cisv8
   - stig
 severity: "medium"

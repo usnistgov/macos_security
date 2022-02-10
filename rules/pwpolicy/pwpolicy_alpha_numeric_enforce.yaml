@@ -33,7 +33,11 @@ references:
     - 3.5.8
     - 3.5.9
     - 3.5.10
-  cisv8:
+  cis:
+    benchmark:
+      - 5.2.3 (level 2)
+      - 5.2.4 (level 2)
+    v8:
     - 5.2
 macOS:
   - "12.0"
@@ -46,6 +50,7 @@ tags:
   - 800-53r5_low 
   - 800-53r5_moderate 
   - 800-53r5_high
+  - cis_lvl2
   - cisv8
   - stig
 severity: "medium"

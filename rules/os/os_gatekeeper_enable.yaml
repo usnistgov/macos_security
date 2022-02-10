@@ -37,10 +37,13 @@ references:
     - APPL-12-002064
   800-171r2:
     - 3.4.5
-  cisv8:
-    - 10.1
-    - 10.2
-    - 10.5
+  cis:
+    benchmark:
+      - 2.5.2.1 (level 1)
+    v8:
+      - 10.1
+      - 10.2
+      - 10.5
 macOS:
   - "12.0"
 tags:
@@ -51,6 +54,8 @@ tags:
   - 800-53r4_high 
   - 800-171 
   - cnssi-1253
+  - cis_lvl1
+  - cis_lvl2
   - cisv8
   - stig
 severity: "high"

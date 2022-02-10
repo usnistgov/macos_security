@@ -14,7 +14,7 @@
 :nofooter:
 $nist171_attribute
 $stig_attribute
-$cisv8_attribute
+$cis_attribute
 ifdef::backend-pdf[]
 = $profile_title
 $version ($release_date)
