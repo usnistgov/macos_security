@@ -1,0 +1,30 @@
+rule_id: MSCP RULE
+title: The macOS system must be configured with system log files set to mode 640 or
+  less permissive.
+discussion: System logs should only be readable by root or admin users. System logs
+  frequently contain sensitive information that could be used by an attacker. Setting
+  the correct permissions mitigates this risk.
+check: /usr/bin/sudo stat -f '%A:%N' $(/usr/bin/grep -v '^#' /etc/newsyslog.conf |
+  awk '{ print $1 }') 2> /dev/null
+result: '['''', ''Each command may return zero or more files. If the permissions on
+  log files are not "640" or less permissive, this is a finding.'']'
+fix: "For any log file that returns an incorrect permission value, run the following\
+  \ command:\n\n/usr/bin/sudo chmod 640 [log file]\n\n[log file] is the full path\
+  \ to the log file in question. If the file is managed by \"newsyslog\", find the\
+  \ configuration line in the directory \"/etc/newsyslog.d/\" or the file \"/etc/newsyslog.conf\"\
+  \ and edit the mode column to be \"640\" or less permissive. \n\nIf the file is\
+  \ managed by \"aslmanager\", find the configuration line in the directory \"/etc/asl/\"\
+  \ or the file \"/etc/asl.conf\" and add or edit the mode option to be \"mode=0640\"\
+  \ or less permissive."
+references:
+  srg:
+  - SRG-OS-000206-GPOS-00084
+  disa_stig:
+  - APPL-12-004002
+  cci:
+  - CCI-001314
+macOS:
+- '12'
+tags:
+- stig
+severity: medium

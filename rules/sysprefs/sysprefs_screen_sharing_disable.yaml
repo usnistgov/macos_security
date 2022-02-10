@@ -26,9 +26,9 @@ references:
     - AC-3
     - AC-17
   srg:
-    - N/A
-  disa_stig: 
-    - N/A
+    - SRG-OS-000480-GPOS-00227
+  disa_stig:
+    - APPL-12-002050
   800-171r2:
     - 3.1.1
     - 3.1.2
@@ -47,6 +47,7 @@ tags:
   - 800-171 
   - cnssi-1253
   - cisv8
+  - stig
 severity: "medium"
 mobileconfig: false
 mobileconfig_info:

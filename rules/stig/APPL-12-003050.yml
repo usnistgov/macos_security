@@ -1,0 +1,41 @@
+rule_id: MSCP RULE
+title: The macOS system must be configured so that the login command requires smart
+  card authentication.
+discussion: 'Configuring the operating system to implement organization-wide security
+  implementation guides and security checklists ensures compliance with federal standards
+  and establishes a common security baseline across DoD that reflects the most restrictive
+  security posture consistent with operational requirements.
+
+
+  Configuration settings are the set of parameters that can be changed in hardware,
+  software, or firmware components of the system that affect the security posture
+  and/or functionality of the system. Security-related parameters are those parameters
+  impacting the security state of the system, including the parameters required to
+  satisfy other security control requirements. Security-related parameters include,
+  for example: registry settings; account, file, directory permission settings; and
+  settings for functions, ports, protocols, services, and remote connections.'
+check: '# cat /etc/pam.d/login | grep -i pam_smartcard.so'
+result: '[''If the text that returns does not include the line, "auth sufficient pam_smartcard.so"
+  at the TOP of the listing, this is a finding.'']'
+fix: "Make a backup of the PAM LOGIN settings using the following command:\nsudo cp\
+  \ /etc/pam.d/login /etc/pam.d/login_backup_`date \"+%Y-%m-%d_%H:%M\"`\n\nReplace\
+  \ the contents of \"/etc/pam.d/login\" with the following:\n\n# login: auth account\
+  \ password session\nauth\t\tsufficient\t pam_smartcard.so\nauth    optional    pam_krb5.so\
+  \ use_kcminit\nauth    optional    pam_ntlm.so try_first_pass\nauth    optional\
+  \    pam_mount.so try_first_pass\nauth    required    pam_opendirectory.so try_first_pass\n\
+  auth    required    pam_deny.so\naccount  required    pam_nologin.so\naccount  required\
+  \    pam_opendirectory.so\npassword  required    pam_opendirectory.so\nsession \
+  \ required    pam_launchd.so\nsession  required    pam_uwtmp.so\nsession  optional\
+  \    pam_mount.so"
+references:
+  srg:
+  - SRG-OS-000480-GPOS-00227
+  disa_stig:
+  - APPL-12-003050
+  cci:
+  - CCI-000366
+macOS:
+- '12'
+tags:
+- stig
+severity: medium

@@ -27,7 +27,7 @@ references:
     - IA-5(2)
   srg:
     - N/A
-  disa_stig: 
+  disa_stig:
     - N/A
 macOS:
   - "12.0"

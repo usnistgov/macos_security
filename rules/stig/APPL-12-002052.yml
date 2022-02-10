@@ -1,0 +1,34 @@
+rule_id: MSCP RULE
+title: The macOS system must be configured to disable the system preference pane for
+  Wallet and ApplePay.
+discussion: "It is detrimental for operating systems to provide, or install by default,\
+  \ functionality exceeding requirements or mission objectives. These unnecessary\
+  \ capabilities or services are often overlooked and therefore may remain unsecured.\
+  \ They increase the risk to the platform by providing additional attack vectors.\n\
+  \nOperating systems are capable of providing a wide variety of functions and services.\
+  \ Some of the functions and services, provided by default, may not be necessary\
+  \ to support essential organizational operations (e.g., key missions, functions).\
+  \ \n\nExamples of non-essential capabilities include but are not limited to games,\
+  \ software packages, tools, and demonstration software not related to requirements\
+  \ or providing a wide array of functionality not required for every mission but\
+  \ that cannot be disabled.\n\nThe Wallet & ApplePay Preference Pane must be disabled.\n\
+  \n"
+check: /usr/sbin/system_profiler SPConfigurationProfileDataType | /usr/bin/grep -A
+  6 -E 'DisabledPreferencePanes|HiddenPreferencePanes'
+result: '[''If the return is not two arrays (HiddenPreferencePanes and DisabledPreferencePanes)
+  each containing: "com.apple.preferences.wallet", this is a finding.'']'
+fix: This setting is enforced using the "Restrictions Policy" configuration profile.
+references:
+  srg:
+  - SRG-OS-000370-GPOS-00155
+  - SRG-OS-000095-GPOS-00049
+  disa_stig:
+  - APPL-12-002052
+  cci:
+  - CCI-001774
+  - CCI-000381
+macOS:
+- '12'
+tags:
+- stig
+severity: medium

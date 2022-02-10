@@ -23,7 +23,7 @@ references:
     - AC-4
     - AC-18(1)
     - AC-18(3)
-  disa_stig: 
+  disa_stig:
     - N/A
   srg:
     - N/A

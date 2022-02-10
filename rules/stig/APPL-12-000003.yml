@@ -1,0 +1,22 @@
+rule_id: MSCP RULE
+title: The macOS system must initiate the session lock no more than five seconds after
+  a screen saver is started.
+discussion: A screen saver must be enabled and set to require a password to unlock.
+  An excessive grace period impacts the ability for a session to be truly locked,
+  requiring authentication to unlock.
+check: /usr/sbin/system_profiler SPConfigurationProfileDataType | /usr/bin/grep askForPasswordDelay
+result: '[''If there is no result, or if "askForPasswordDelay" is not set to "5.0"
+  or less, this is a finding.'']'
+fix: This setting is enforced using the "Login Window Policy" configuration profile.
+references:
+  srg:
+  - SRG-OS-000028-GPOS-00009
+  disa_stig:
+  - APPL-12-000003
+  cci:
+  - CCI-000056
+macOS:
+- '12'
+tags:
+- stig
+severity: medium

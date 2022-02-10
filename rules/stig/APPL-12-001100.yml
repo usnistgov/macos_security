@@ -1,0 +1,26 @@
+rule_id: MSCP RULE
+title: The macOS system must require individuals to be authenticated with an individual
+  authenticator prior to using a group authenticator.
+discussion: Administrator users must never log in directly as root. To assure individual
+  accountability and prevent unauthorized access, logging in as root over a remote
+  connection must be disabled. Administrators should only run commands as root after
+  first authenticating with their individual user names and passwords.
+check: /usr/bin/grep ^PermitRootLogin /etc/ssh/sshd_config
+result: '[''If there is no result, or the result is set to "yes", this is a finding.'']'
+fix: 'To ensure that "PermitRootLogin" is disabled by sshd, run the following command:
+
+
+  /usr/bin/sudo /usr/bin/sed -i.bak ''s/^[\#]*PermitRootLogin.*/PermitRootLogin no/''
+  /etc/ssh/sshd_config'
+references:
+  srg:
+  - SRG-OS-000109-GPOS-00056
+  disa_stig:
+  - APPL-12-001100
+  cci:
+  - CCI-000770
+macOS:
+- '12'
+tags:
+- stig
+severity: medium
