@@ -10,7 +10,7 @@ check: |
   .objectForKey('idleTime').js
   EOS
 result:
-  integer: 900
+  integer: 1200
 fix: |
   This is implemented by a Configuration Profile.
 references:

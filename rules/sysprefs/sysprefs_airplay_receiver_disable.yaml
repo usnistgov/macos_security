@@ -35,8 +35,8 @@ references:
     benchmark:
       - 2.4.13 (level 1)
     v8:
-    - 4.1
-    - 4.8 
+      - 4.1
+      - 4.8 
 macOS:
   - "12.0"
 tags:

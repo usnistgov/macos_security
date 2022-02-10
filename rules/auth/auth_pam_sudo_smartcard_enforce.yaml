@@ -48,10 +48,13 @@ references:
     - APPL-12-003052
   800-171r2:
     - 3.5.3
-  cisv8:
-    - 6.3
-    - 6.4
-    - 6.5
+  cis:
+    benchmark:
+      - N/A
+    v8:
+      - 6.3
+      - 6.4
+      - 6.5
 macOS:
   - "12.0"
 tags:

@@ -29,6 +29,8 @@ references:
   cis:
     benchmark:
       - 6.1.5 (level 1)
+    v8: 
+      - N/A
 macOS:
   - "12.0"
 tags:

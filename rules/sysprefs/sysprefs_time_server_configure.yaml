@@ -34,8 +34,8 @@ references:
   cis:
     benchmark:
       - 2.2.1 (level 1)
-  cisv8:
-    - 8.4
+    v8:
+      - 8.4
 macOS:
   - "12.0"
 tags:
