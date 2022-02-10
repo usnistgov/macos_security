@@ -1,0 +1,23 @@
+rule_id: MSCP RULE
+title: The macOS system logon window must be configured to prompt for username and
+  password, rather than show a list of users.
+discussion: The logon window must be configured to prompt all users for both a username
+  and a password. By default, the system displays a list of known users at the logon
+  screen. This gives an advantage to an attacker with physical access to the system,
+  as the attacker would only have to guess the password for one of the listed accounts.
+check: /usr/sbin/system_profiler SPConfigurationProfileDataType | /usr/bin/grep SHOWFULLNAME
+result: '[''If there is no result, or "SHOWFULLNAME" is not set to "1", this is a
+  finding.'']'
+fix: This setting is enforced using the "Login Window Policy" configuration profile.
+references:
+  srg:
+  - SRG-OS-000480-GPOS-00229
+  disa_stig:
+  - APPL-12-005052
+  cci:
+  - CCI-000366
+macOS:
+- '12'
+tags:
+- stig
+severity: low

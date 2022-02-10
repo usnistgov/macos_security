@@ -1,0 +1,23 @@
+rule_id: MSCP RULE
+title: The macOS system must utilize an ESS solution and implement all DoD required
+  modules.
+discussion: The macOS system must employ automated mechanisms to determine the state
+  of system components. The DoD requires the installation and use of an approved HBSS
+  solution to be implemented on the operating system. For additional information,
+  reference all applicable HBSS OPORDs and FRAGOs on SIPRNET.
+check: Unable to parse the check text
+result: Unable to parse the check text
+fix: Install an approved ESS solution onto the system and ensure that all components
+  are at least updated to their DoD approved minimal versions.
+references:
+  srg:
+  - SRG-OS-000191-GPOS-00080
+  disa_stig:
+  - APPL-12-000015
+  cci:
+  - CCI-001233
+macOS:
+- '12'
+tags:
+- stig
+severity: medium

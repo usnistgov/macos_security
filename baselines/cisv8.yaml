@@ -45,7 +45,7 @@ profile:
       - os_gatekeeper_enable
       - os_gatekeeper_rearm
       - os_handoff_disable
-      - os_hbss_installed
+      - os_ess_installed
       - os_httpd_disable
       - os_icloud_storage_prompt_disable
       - os_internet_accounts_prefpane_disable

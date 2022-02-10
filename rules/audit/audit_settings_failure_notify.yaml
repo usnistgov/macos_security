@@ -25,9 +25,9 @@ references:
     - AU-5
     - AU-5(2)
   srg:
-    - N/A
+    - SRG-OS-000344-GPOS-00135
   disa_stig:
-    - N/A
+    - APPL-12-001031
   800-171r2:
     - 3.3.4
 macOS:
@@ -38,6 +38,7 @@ tags:
   - 800-53r4_high 
   - 800-53r5_high 
   - 800-171
+  - stig
 severity: "medium"
 mobileconfig: false
 mobileconfig_info:

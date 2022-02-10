@@ -388,6 +388,7 @@ def generate_profiles(baseline_name, build_path, parent_dir, baseline_yaml, sign
     # setup lists and dictionaries
     profile_errors = []
     profile_types = {}
+    mount_controls = {}
 
     for sections in baseline_yaml['profile']:
         for profile_rule in sections['rules']:
@@ -431,7 +432,13 @@ def generate_profiles(baseline_name, build_path, parent_dir, baseline_yaml, sign
                         valid = False
                     
                     if valid:
-                        if payload_type == "com.apple.ManagedClient.preferences":
+                        if payload_type == "com.apple.systemuiserver":
+                            for setting_key, setting_value in info['mount-controls'].items():
+                                mount_controls[setting_key] = setting_value
+                                payload_settings = {"mount-controls": mount_controls}
+                                profile_types.setdefault(
+                                    payload_type, []).append(payload_settings)
+                        elif payload_type == "com.apple.ManagedClient.preferences":
                             for payload_domain, settings in info.items():
                                 for key, value in settings.items():
                                     payload_settings = (

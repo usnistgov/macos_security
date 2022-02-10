@@ -33,9 +33,10 @@ references:
     - AU-12
     - MA-4(1)
   srg:
-    - N/A
+    - SRG-OS-000032-GPOS-00013
+    - SRG-OS-000462-GPOS-00206
   disa_stig:
-    - N/A
+    - APPL-12-001002
   800-171r2:
     - 3.1.12
     - 3.3.1
@@ -52,6 +53,8 @@ tags:
   - 800-53r5_high 
   - 800-171 
   - cnssi-1253
+  - cisv8
+  - stig
 severity: "medium"
 mobileconfig: false
 mobileconfig_info:

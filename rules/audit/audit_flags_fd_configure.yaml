@@ -37,9 +37,18 @@ references:
     - CM-5(1)
     - MA-4(1)
   srg:
-    - N/A
+    - SRG-OS-000064-GPOS-00033
+    - SRG-OS-000365-GPOS-00152
+    - SRG-OS-000458-GPOS-00203
+    - SRG-OS-000461-GPOS-00205
+    - SRG-OS-000463-GPOS-00207
+    - SRG-OS-000465-GPOS-00209
+    - SRG-OS-000466-GPOS-00210
+    - SRG-OS-000467-GPOS-00211
+    - SRG-OS-000468-GPOS-00212
+    - SRG-OS-000474-GPOS-00219
   disa_stig:
-    - N/A
+    - APPL-12-001020
   800-171r2:
     - N/A
 macOS:
@@ -49,6 +58,8 @@ tags:
   - 800-53r5_low 
   - 800-53r5_moderate 
   - 800-53r5_high
+  - cisv8
+  - stig
 severity: "medium"
 mobileconfig: false
 mobileconfig_info:

@@ -20,13 +20,15 @@ references:
   800-53r4:
     - N/A
   srg:
-    - N/A
+    - SRG-OS-000095-GPOS-00049
+    - SRG-OS-000370-GPOS-00155
   disa_stig:
-    - N/A
+    - APPL-12-002017
 macOS:
   - "12.0"
 tags:
   - none
+  - stig
 severity: "medium"
 mobileconfig: true
 mobileconfig_info:

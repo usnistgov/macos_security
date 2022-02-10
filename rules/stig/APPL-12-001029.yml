@@ -1,0 +1,34 @@
+rule_id: MSCP RULE
+title: The macOS system must allocate audit record storage capacity to store at least
+  one week's worth of audit records when audit records are not immediately sent to
+  a central audit record storage facility.
+discussion: The audit service must be configured to require that records are kept
+  for seven days or longer before deletion when there is no central audit record storage
+  facility. When "expire-after" is set to "7d", the audit service will not delete
+  audit logs until the log data is at least seven days old.
+check: /usr/bin/sudo /usr/bin/grep ^expire-after /etc/security/audit_control
+result: '[''If this returns no results, or does not contain "7d" or a larger value,
+  this is a finding.'']'
+fix: 'Edit the "/etc/security/audit_control" file and change the value for "expire-after"
+  to the amount of time audit logs should be kept for the system. Use the following
+  command to set the "expire-after" value to "7d":
+
+
+  /usr/bin/sudo /usr/bin/sed -i.bak ''s/.*expire-after.*/expire-after:7d/'' /etc/security/audit_control;
+  /usr/bin/sudo /usr/sbin/audit -s
+
+
+  A text editor may also be used to implement the required updates to the "/etc/security/audit_control"
+  file.'
+references:
+  srg:
+  - SRG-OS-000341-GPOS-00132
+  disa_stig:
+  - APPL-12-001029
+  cci:
+  - CCI-001849
+macOS:
+- '12'
+tags:
+- stig
+severity: medium

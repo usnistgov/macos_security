@@ -24,9 +24,9 @@ references:
   800-53r4:
     - IA-11
   srg:
-    - N/A
+    - SRG-OS-000480-GPOS-00227
   disa_stig:
-    - N/A
+    - APPL-12-004021
   cis:
     benchmark:
       - 5.4 (level 1)
@@ -42,5 +42,7 @@ tags:
   - cis_lvl1
   - cis_lvl2
   - cisv8
+  - stig
+severity: "high"
 mobileconfig: false
 mobileconfig_info:

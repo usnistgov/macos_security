@@ -1,0 +1,35 @@
+rule_id: MSCP RULE
+title: The macOS system must be configured with dedicated user accounts to decrypt
+  the hard disk upon startup.
+discussion: When "FileVault" and Multifactor Authentication are configured on the
+  operating system, a dedicated user must be configured to ensure that the implemented
+  Multifactor Authentication rules are enforced. If a dedicated user is not configured
+  to decrypt the hard disk upon startup, the system will allow a user to bypass Multifactor
+  Authentication rules during initial startup and first login.
+check: $ sudo fdesetup list
+result: "['fvuser,85F41F44-22B3-6CB7-85A1-BCC2EA2B887A', '', 'If any unauthorized\
+  \ users are listed, this is a finding.', '', 'Verify that the shell for authorized\
+  \ FileVault users is set to \u201C/usr/bin/false\u201D, which prevents console logins:',\
+  \ '', '$ sudo dscl . read /Users/<FileVault_User> UserShell', '', 'UserShell: /usr/bin/false',\
+  \ '', 'If the FileVault users\\' shell is not set to \"/usr/bin/false\", this is\
+  \ a finding.']"
+fix: "Note: In previous versions of macOS, this setting was implemented differently.\
+  \ Systems that used the previous method should prepare the system for the new method\
+  \ by creating a new unlock user, verifying its ability to unlock FileVault after\
+  \ reboot, then deleting the old FileVault unlock user. \n\n\nDisable the login ability\
+  \ of the newly created user account:\n\n$ sudo /usr/bin/dscl . change /Users/<FileVault_User>\
+  \ UserShell </path/to/current/shell> /usr/bin/false\n\nRemove all FileVault login\
+  \ access from each user account defined on the system that is not a designated FileVault\
+  \ user:\n\n$ sudo fdesetup remove -user <username>"
+references:
+  srg:
+  - SRG-OS-000480-GPOS-00227
+  disa_stig:
+  - APPL-12-000032
+  cci:
+  - CCI-002143
+macOS:
+- '12'
+tags:
+- stig
+severity: medium

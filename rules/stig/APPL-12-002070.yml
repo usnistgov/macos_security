@@ -1,0 +1,41 @@
+rule_id: MSCP RULE
+title: The macOS system must use an approved antivirus program.
+discussion: 'An approved antivirus product must be installed and configured to run.
+
+
+  Malicious software can establish a base on individual desktops and servers. Employing
+  an automated mechanism to detect this type of software will aid in elimination of
+  the software from the operating system.'
+check: /bin/launchctl print-disabled system | grep mrt
+result: '[''If the results show "com.apple.mrt" => false", the MRT Service is running.'',
+  '''', ''If the MRT service is running, verify that it is configured to update automatically
+  by using the following command:'', '''', ''/usr/sbin/system_profiler SPConfigurationProfileDataType
+  | /usr/bin/grep ConfigDataInstall'', '''', ''If, "ConfigDataInstall = 1" is not
+  returned, this is a finding.'', '''', ''If the MRT service is not running, ask the
+  System Administrator (SA) or Information System Security Officer (ISSO) if an approved
+  antivirus solution is loaded on the system. The antivirus solution may be bundled
+  with an approved host-based security solution.'', '''', ''If there is no local antivirus
+  solution installed on the system, this is a finding.'']'
+fix: 'Enable the MRT service:
+
+
+  /usr/bin/sudo /bin/launchctl enable system/com.apple.mrt
+
+
+  Installing the "Restrictions Policy" will configure the MRT Service to update automatically.
+
+
+  If the MRT Service is not being used, install an approved antivirus solution onto
+  the system.'
+references:
+  srg:
+  - SRG-OS-000480-GPOS-00227
+  disa_stig:
+  - APPL-12-002070
+  cci:
+  - CCI-000366
+macOS:
+- '12'
+tags:
+- stig
+severity: high

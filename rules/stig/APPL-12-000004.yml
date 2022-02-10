@@ -1,0 +1,29 @@
+rule_id: MSCP RULE
+title: The macOS system must initiate a session lock after a 15-minute period of inactivity.
+discussion: 'A screen saver must be enabled and set to require a password to unlock.
+  The timeout should be set to 15 minutes of inactivity. This mitigates the risk that
+  a user might forget to manually lock the screen before stepping away from the computer.
+
+
+  A session time-out lock is a temporary action taken when a user stops work and moves
+  away from the immediate physical vicinity of the information system but does not
+  log out because of the temporary nature of the absence. Rather than relying on the
+  user to manually lock their operating system session prior to vacating the vicinity,
+  operating systems need to be able to identify when a user''s session has idled and
+  take action to initiate the session lock.'
+check: /usr/sbin/system_profiler SPConfigurationProfileDataType | /usr/bin/grep loginWindowIdleTime
+result: '[''If there is no result, or if "loginWindowIdleTime" is not set to "900"
+  seconds or less, this is a finding.'']'
+fix: This setting is enforced using the "Login Window Policy" configuration profile.
+references:
+  srg:
+  - SRG-OS-000029-GPOS-00010
+  disa_stig:
+  - APPL-12-000004
+  cci:
+  - CCI-000057
+macOS:
+- '12'
+tags:
+- stig
+severity: medium

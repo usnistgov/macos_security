@@ -32,9 +32,9 @@ references:
     - SI-3
     - SI-7(15)
   srg:
-    - N/A
-  disa_stig: 
-    - N/A
+    - SRG-OS-000366-GPOS-00153
+  disa_stig:
+    - APPL-12-002064
   800-171r2:
     - 3.4.5
   cis:
@@ -57,6 +57,7 @@ tags:
   - cis_lvl1
   - cis_lvl2
   - cisv8
+  - stig
 severity: "high"
 mobileconfig: true
 mobileconfig_info:

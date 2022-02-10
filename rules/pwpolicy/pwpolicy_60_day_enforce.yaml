@@ -23,9 +23,9 @@ references:
     - IA-5
     - IA-5(1)
   srg:
-    - N/A
-  disa_stig: 
-    - N/A
+    - SRG-OS-000076-GPOS-00044
+  disa_stig:
+    - APPL-12-003008
   800-171r2:
     - 3.5.1
     - 3.5.2
@@ -50,6 +50,7 @@ tags:
   - 800-53r5_moderate 
   - 800-53r5_high
   - cisv8
+  - stig
 severity: "medium"
 mobileconfig: true
 mobileconfig_info:

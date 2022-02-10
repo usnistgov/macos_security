@@ -1,0 +1,29 @@
+rule_id: MSCP RULE
+title: The macOS system must be configured with system log files owned by root and
+  group-owned by wheel or admin.
+discussion: System logs should only be readable by root or admin users. System logs
+  frequently contain sensitive information that could be used by an attacker. Setting
+  the correct owner mitigates this risk.
+check: Unable to parse the check text
+result: Unable to parse the check text
+fix: "For any log file that returns an incorrect owner or group value, run the following\
+  \ command:\n\n/usr/bin/sudo chown root:wheel [log file]\n\n[log file] is the full\
+  \ path to the log file in question. If the file is managed by \"newsyslog\", find\
+  \ the configuration line in the directory \"/etc/newsyslog.d/\" or the file \"/etc/newsyslog.conf\"\
+  \ and ensure that the owner:group column is set to \"root:wheel\" or the appropriate\
+  \ service user account and group. \n\nIf the file is managed by \"aslmanager\",\
+  \ find the configuration line in the directory \"/etc/asl/\" or the file \"/etc/asl.conf\"\
+  \ and ensure that \"uid\" and \"gid\" options are either not present or are set\
+  \ to a service user account and group respectively."
+references:
+  srg:
+  - SRG-OS-000206-GPOS-00084
+  disa_stig:
+  - APPL-12-004001
+  cci:
+  - CCI-001314
+macOS:
+- '12'
+tags:
+- stig
+severity: medium

@@ -27,9 +27,7 @@ references:
     - AC-6(1)
     - AC-6(2)
   disa_stig:
-    - N/A
-  srg:
-    - N/A
+    - APPL-12-002069
   800-171r2:
     - 3.1.5
     - 3.1.6
@@ -47,9 +45,13 @@ tags:
   - 800-53r4_high 
   - 800-171 
   - cnssi-1253
+<<<<<<< HEAD
   - cis_lvl1
   - cis_lvl2
   - cisv8
+=======
+  - stig
+>>>>>>> dev_mont_stig
 severity: "medium"
 mobileconfig: false
 mobileconfig_info:

@@ -1,0 +1,23 @@
+rule_id: MSCP RULE
+title: The macOS system must be configured to disable hot corners.
+discussion: Although hot corners can be used to initiate a session lock or launch
+  useful applications, they can also be configured to disable an automatic session
+  lock from initiating. Such a configuration introduces the risk that a user might
+  forget to manually lock the screen before stepping away from the computer.
+check: /usr/sbin/system_profiler SPConfigurationProfileDataType | /usr/bin/grep wvous
+result: '[''If the return is null, or does not equal:'', ''"wvous-bl-corner = 0'',
+  ''wvous-br-corner = 0;'', ''wvous-tl-corner = 0;'', ''wvous-tr-corner = 0;" '',
+  ''this is a finding.'']'
+fix: This setting is enforced using the "Custom Policy" configuration profile.
+references:
+  srg:
+  - SRG-OS-000031-GPOS-00012
+  disa_stig:
+  - APPL-12-000007
+  cci:
+  - CCI-000060
+macOS:
+- '12'
+tags:
+- stig
+severity: medium

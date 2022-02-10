@@ -25,9 +25,9 @@ references:
     - AU-4
     - AU-11
   srg:
-    - N/A
+    - SRG-OS-000341-GPOS-00132
   disa_stig:
-    - N/A
+    - APPL-12-001029
   cis:
     benchmark:
       - N/A
@@ -46,6 +46,7 @@ tags:
   - 800-53r5_high 
   - cnssi-1253
   - cisv8
+  - stig
 severity: "medium"
 mobileconfig: false
 mobileconfig_info:
