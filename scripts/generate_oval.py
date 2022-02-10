@@ -1266,8 +1266,10 @@ def main():
                         </plist511_state>'''.format(rule_yaml['id'],x+modifier,n.replace('"',""))
                                         if modifier == 0:
                                             modifier = 4999
+                                x = x + 1
                                 continue
-                            except:        
+                            except:      
+                                x = x + 1  
                                 continue
                         
 
@@ -1570,7 +1572,7 @@ def main():
                     <path>{}</path>
                     <filename xsi:nil="true" />            
                 </file_object>'''.format(x,rule_yaml['id'],path.rstrip())
-
+                        x += 1
                         continue
 
                     
@@ -1611,26 +1613,25 @@ def main():
                 </file_object>'''.format(x,rule_yaml['id'],x+2999,rule_yaml['id'])
                             x = x + 1
                             continue
-                        
+                    
                         s = rule_yaml['check']
                         config_file = str()
                         oval_variable_need = bool()
-                        if "grep" in s.split()[3]:
+                        if "grep" in s.split()[2]:
+                            
                             
                             oval_variable_need = True
                             grep_search = re.search('\((.*?)\)', s).group(1)
                         
                             substring = grep_search.split("|")[0]
                             regex = re.search('\'(.*?)\'', substring).group(1)
-                        
+                            
                             try:
                                 regex = re.search('/(.*?)/', regex).group(1)
                             except:
                                 regex = regex
 
-                            config_file = substring = grep_search.split("|")[0].split()[-1]
-                            
-                        
+                            config_file = substring = grep_search.split("|")[0].split()[-1]                    
 
                             oval_object = oval_object + '''
                 <textfilecontent54_object xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#independent" version="1" comment="{}_var_object" id="oval:mscp:obj:{}">
@@ -1648,7 +1649,6 @@ def main():
                         else:
                             oval_variable_need = False
                             config_file = s.split()[2]
-                            
 
                         s = rule_yaml['fix']
 
