@@ -3,9 +3,12 @@ title: "Enable Bluetooth Menu"
 discussion: |
   The bluetooth menu _MUST_ be enabled.
 check: |
-  /usr/bin/profiles -P -o stdout | /usr/bin/grep -c 'Bluetooth = 18'
+  /usr/bin/osascript -l JavaScript << EOS
+  $.NSUserDefaults.alloc.initWithSuiteName('com.apple.controlcenter')\
+  .objectForKey('Bluetooth').js
+  EOS
 result:
-  integer: 1
+  integer: 18
 fix: |
   This is implemented by a Configuration Profile.
 references:

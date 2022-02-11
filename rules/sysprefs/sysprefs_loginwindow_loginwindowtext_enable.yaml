@@ -3,9 +3,12 @@ title: "Configure Login Window to Show A Custom Message"
 discussion: |
   The login window _MUST_ be configured to show a custom access warning message. 
 check: |
-  /usr/bin/profiles -P -o stdout | /usr/bin/grep -c 'LoginwindowText'
-result: 
-  integer: 1
+  /usr/bin/osascript -l JavaScript << EOS
+  $.NSUserDefaults.alloc.initWithSuiteName('com.apple.loginwindow')\
+  .objectForKey('LoginwindowText').js
+  EOS
+result:
+  string: "Approved message goes here"
 fix: |
   This is implemented by a Configuration Profile.
 references:

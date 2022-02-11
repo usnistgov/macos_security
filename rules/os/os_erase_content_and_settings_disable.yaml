@@ -3,9 +3,12 @@ title: "Disable Erase Content and Settings"
 discussion:   
   Erase Content and Settings _MUST_ be disabled.
 check: |
-  /usr/bin/profiles -P -o stdout | /usr/bin/grep -c 'allowEraseContentAndSettings = 0'
+  /usr/bin/osascript -l JavaScript << EOS
+  $.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess')\
+  .objectForKey('allowEraseContentAndSettings').js
+  EOS
 result:
-  integer: 1
+  string: "false"
 fix: |
   This is implemented by a Configuration Profile.
 references:
