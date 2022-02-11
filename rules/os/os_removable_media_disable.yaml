@@ -11,11 +11,11 @@ discussion: |
   ====
 check: |
   /usr/bin/osascript -l JavaScript << EOS
-  $.NSUserDefaults.alloc.initWithSuiteName('com.apple.systemuiserver')\
-  .objectForKey('mount-controls').js
+  ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('com.apple.systemuiserver')\
+  .objectForKey('mount-controls'))["harddisk-external"]
   EOS
 result:
-  string: "harddisk-external:deny"
+  string: "deny,eject"
 fix: |
   This is implemented by a Configuration Profile.
 references:

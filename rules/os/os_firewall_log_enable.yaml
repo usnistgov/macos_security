@@ -9,15 +9,15 @@ discussion: |
 check: |
   osascript -l JavaScript << EOS
   function run() {
-  let pref1 = $.NSUserDefaults.alloc.initWithSuiteName('com.apple.security.firewall')\
-  .objectForKey('EnableLogging').js
-  let pref2 = $.NSUserDefaults.alloc.initWithSuiteName('com.apple.security.firewall')\
-  .objectForKey('LoggingOption').js
-  if ( pref1 == true && pref2 == "detail" ){
+    let pref1 = $.NSUserDefaults.alloc.initWithSuiteName('com.apple.security.firewall')\
+    .objectForKey('EnableLogging').js
+    let pref2 = $.NSUserDefaults.alloc.initWithSuiteName('com.apple.security.firewall')\
+    .objectForKey('LoggingOption').js
+    if ( pref1 == true && pref2 == "detail" ){
       return("true")
-  } else {
+    } else {
       return("false")
-  }
+    }
   }
   EOS
 result:
