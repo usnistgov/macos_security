@@ -11,17 +11,17 @@ discussion: |
 check: |
   osascript -l JavaScript << EOS
   function run() {
-  let pref1 = ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('com.apple.preferences.sharing.SharingPrefsExtension')\
-  .objectForKey('homeSharingUIStatus'))
-  let pref2 = ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('com.apple.preferences.sharing.SharingPrefsExtension')\
-  .objectForKey('legacySharingUIStatus'))
-  let pref3 = ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('com.apple.preferences.sharing.SharingPrefsExtension')\
-  .objectForKey('mediaSharingUIStatus'))
-  if ( pref1 == 0 && pref2 == 0 && pref3 == 0 ) {
-  return("true")
-  } else {
-  return("false")
-  }
+    let pref1 = ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('com.apple.preferences.sharing.SharingPrefsExtension')\
+    .objectForKey('homeSharingUIStatus'))
+    let pref2 = ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('com.apple.preferences.sharing.SharingPrefsExtension')\
+    .objectForKey('legacySharingUIStatus'))
+    let pref3 = ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('com.apple.preferences.sharing.SharingPrefsExtension')\
+    .objectForKey('mediaSharingUIStatus'))
+    if ( pref1 == 0 && pref2 == 0 && pref3 == 0 ) {
+      return("true")
+    } else {
+      return("false")
+    }
   }
   EOS
 result:
