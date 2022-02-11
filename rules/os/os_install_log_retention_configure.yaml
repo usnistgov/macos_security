@@ -5,7 +5,7 @@ discussion: |
 check: |
   /usr/sbin/aslmanager -dd 2>&1 | /usr/bin/awk '/\/var\/log\/install.log/ {count++} /Processing module com.apple.install/,/Finished/ { for (i=1;i<=NR;i++) { if ($i == "TTL" && $(i+2) >= 365) { ttl="True" }; if ($i == "MAX") {max="True"}}} END{if (count==1 && ttl="True" && max != "True") { print "Yes" } else { print "No" }}'
 result:
-  string: Yes
+  string: "Yes"
 fix: |
   [source,bash]
   ----
