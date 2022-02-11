@@ -7,8 +7,8 @@ discussion: |
 check: |
   softwareupdate_date_epoch=$(/bin/date -j -f "%Y-%m-%d" "$(/usr/bin/defaults read /Library/Preferences/com.apple.SoftwareUpdate.plist LastFullSuccessfulDate | /usr/bin/awk '{print $1}')" "+%s")
   thirty_days_epoch=$(/bin/date -v -30d "+%s")
-  if [[ $softwareupdate_date_epoch -gt $thirty_days_epoch ]]; then
-    /usr/bin/defaults read /Library/Preferences/com.apple.SoftwareUpdate.plist LastUpdatesAvailable
+  if [[ $softwareupdate_date_epoch -lt $thirty_days_epoch ]]; then
+    /bin/echo "0"
   else
     /bin/echo "1"
   fi
