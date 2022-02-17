@@ -28,7 +28,7 @@ references:
     - N/A
   cis:
     benchmark:
-      - 5.9 (level 2
+      - 5.9 (level 2)
     v8: 
       - N/A
 macOS:
