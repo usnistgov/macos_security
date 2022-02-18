@@ -81,7 +81,7 @@ references:
     - 3.13.4
   cis:
     benchmark:
-      - 5.1.2
+      - 5.18 (level 1)
     v8:
       - 2.6
       - 3.3
@@ -98,6 +98,8 @@ tags:
   - 800-171 
   - cnssi-1253
   - cisv8
+  - cis_lvl1
+  - cis_lvl2
   - stig
 severity: "medium"
 mobileconfig: false
