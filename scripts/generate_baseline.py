@@ -54,19 +54,7 @@ def get_rule_yaml(rule_file, custom=False):
     resulting_yaml = {}
     names = [os.path.basename(x) for x in glob.glob('../custom/rules/**/*.yaml', recursive=True)]
     file_name = os.path.basename(rule_file)
-    # if file_name in names:
-    #     print(f"Custom settings found for rule: {rule_file}")
-    #     try:
-    #         override_path = glob.glob('../custom/rules/**/{}'.format(file_name), recursive=True)[0]
-    #     except IndexError:
-    #         override_path = glob.glob('../custom/rules/{}'.format(file_name), recursive=True)[0]
-    #     with open(override_path) as r:
-    #         rule_yaml = yaml.load(r, Loader=yaml.SafeLoader)
-    #     r.close()
-    # else:
-    #     with open(rule_file) as r:
-    #         rule_yaml = yaml.load(r, Loader=yaml.SafeLoader)
-    #     r.close()
+
     if custom:
         print(f"Custom settings found for rule: {rule_file}")
         try:
@@ -175,6 +163,8 @@ def create_args():
                         help="Keyword tag to collect rules containing the tag.", action="store")
     parser.add_argument("-l", "--list_tags", default=None,
                         help="List the available keyword tags to search for.", action="store_true")
+    parser.add_argument("-t", "--tailor", default=None,
+                        help="Customize the baseline to your organizations values.", action="store_true")
     
     return parser.parse_args()
 
@@ -295,34 +285,57 @@ def output_baseline(rules, os, keyword):
     return output_text
 
 def write_odv_custom_rule(rule, odv):
-    print(f"writing custom rule for {rule.rule_id} to include value {odv}")
+    print(f"Writing custom rule for {rule.rule_id} to include value {odv}")
+    odv_yaml = f'odv: {odv}'
+    odv_output_file = open(f"../custom/rules/{rule.rule_id}.yaml", 'w')
+    odv_output_file.write(odv_yaml)    
     return
+
+def remove_odv_custom_rule(rule):
+    if os.path.exists(f"../custom/rules/{rule.rule_id}.yaml"):
+        os.remove(f"../custom/rules/{rule.rule_id}.yaml")
+    
 
 def odv_query(rules):
     print("Inclusion of any given rule is a risk-based-decision (RBD).  While each rule is mapped to a 800-53 control, deploying it in your organization should be part of the decision making process. \nYou will be prompted to include each rule, and for those with specific organizational defined values (ODV), you will be prompted for those as well.\n")
     included_rules = []
+    queried_rule_ids = []
+    
+
     for rule in rules:
+        get_odv = False
+          
+       
         if "supplemental" in rule.rule_tags:
             include = "Y"
         else:
-            include = str(input(f"Would you like to include the rule for \"{rule.rule_id}\" in your benchmark? [Y/n]: ") or "Y")
+            if rule.rule_id not in queried_rule_ids:
+                include = str(input(f"Would you like to include the rule for \"{rule.rule_id}\" in your benchmark? [Y/n]: ") or "Y")
+                queried_rule_ids.append(rule.rule_id)
+                get_odv = True
+                # remove custom ODVs if there, they will be re-written if needed
+                remove_odv_custom_rule(rule)
         if include.upper() == "Y":
             included_rules.append(rule)
             if rule.rule_odv == "missing":
                 continue
-            else:
-                odv = input(f"Enter the ODV for \"{rule.rule_id}\" (default: {rule.rule_odv}) ")
+            elif get_odv:
+                if isinstance(rule.rule_odv, int):
+                    odv = int(input(f"Enter the ODV for \"{rule.rule_id}\" (default: {rule.rule_odv}) ") or rule.rule_odv)
+                elif isinstance(rule.rule_odv, bool):
+                    odv = bool(input(f"Enter the ODV for \"{rule.rule_id}\" (default: {rule.rule_odv}) ") or rule.rule_odv)
+                else:
+                    odv = input(f"Enter the ODV for \"{rule.rule_id}\" (default: {rule.rule_odv}) ")
                 if odv and odv != rule.rule_odv:
-                    write_odv_custom_rule(rule, odv)   
+                    write_odv_custom_rule(rule, odv)
+
+     
     return included_rules
 
 def main():
 
     args = create_args()
     try:
-        # output_basename = os.path.basename(args.baseline.name)
-        # output_filename = os.path.splitext(output_basename)[0]
-        # baseline_name = os.path.splitext(output_basename)[0].capitalize()
         file_dir = os.path.dirname(os.path.abspath(__file__))
         parent_dir = os.path.dirname(file_dir)
 
@@ -385,11 +398,14 @@ def main():
     if args.keyword == None:
         print("No rules found for the keyword provided, please verify from the following list:")
         available_tags(all_rules)
-    else:
+    elif args.tailor:
         # prompt for inclusion, add ODV
         odv_baseline_rules = odv_query(found_rules)
         baseline_output_file = open(f"{build_path}/{args.keyword}.yaml", 'w')
         baseline_output_file.write(output_baseline(odv_baseline_rules, version_yaml["os"], args.keyword))
+    else:
+        baseline_output_file = open(f"{build_path}/{args.keyword}.yaml", 'w')
+        baseline_output_file.write(output_baseline(found_rules, version_yaml["os"], args.keyword))
     # finally revert back to the prior directory
     os.chdir(original_working_directory)
 
