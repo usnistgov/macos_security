@@ -144,7 +144,6 @@ def collect_rules():
                     except:
                         #print("expected reference '{}' is missing in key '{}' for rule{}".format(reference, key, rule))
                         rule_yaml[key].update({reference: ["None"]})
-        
         all_rules.append(MacSecurityRule(rule_yaml['title'].replace('|', '\|'),
                                     rule_yaml['id'].replace('|', '\|'),
                                     rule_yaml['severity'].replace('|', '\|'),
@@ -301,18 +300,21 @@ def write_odv_custom_rule(rule, odv):
 
 def odv_query(rules):
     print("Inclusion of any given rule is a risk-based-decision (RBD).  While each rule is mapped to a 800-53 control, deploying it in your organization should be part of the decision making process. \nYou will be prompted to include each rule, and for those with specific organizational defined values (ODV), you will be prompted for those as well.\n")
+    included_rules = []
     for rule in rules:
         if "supplemental" in rule.rule_tags:
-            continue
-        include = input(f"Would you like to include the rule for \"{rule.rule_id}\" in your benchmark? [Y/n]: ")
+            include = "Y"
+        else:
+            include = str(input(f"Would you like to include the rule for \"{rule.rule_id}\" in your benchmark? [Y/n]: ") or "Y")
         if include.upper() == "Y":
+            included_rules.append(rule)
             if rule.rule_odv == "missing":
                 continue
             else:
                 odv = input(f"Enter the ODV for \"{rule.rule_id}\" (default: {rule.rule_odv}) ")
-                write_odv_custom_rule(rule, odv)
-        
-    return
+                if odv and odv != rule.rule_odv:
+                    write_odv_custom_rule(rule, odv)   
+    return included_rules
 
 def main():
 
@@ -387,7 +389,7 @@ def main():
         # prompt for inclusion, add ODV
         odv_baseline_rules = odv_query(found_rules)
         baseline_output_file = open(f"{build_path}/{args.keyword}.yaml", 'w')
-        baseline_output_file.write(output_baseline(found_rules, version_yaml["os"], args.keyword))
+        baseline_output_file.write(output_baseline(odv_baseline_rules, version_yaml["os"], args.keyword))
     # finally revert back to the prior directory
     os.chdir(original_working_directory)
 
