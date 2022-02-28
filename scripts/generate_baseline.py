@@ -2,6 +2,7 @@
 # filename: generate_guidance.py
 # description: Process a given keyword, and output a baseline file
 
+from operator import truediv
 import os.path
 import glob
 import os
@@ -10,7 +11,7 @@ import argparse
 
 
 class MacSecurityRule():
-    def __init__(self, title, rule_id, severity, discussion, check, fix, cci, cce, nist_controls, disa_stig, srg, tags, result_value, mobileconfig, mobileconfig_info):
+    def __init__(self, title, rule_id, severity, discussion, check, fix, cci, cce, nist_controls, disa_stig, srg, odv, tags, result_value, mobileconfig, mobileconfig_info):
         self.rule_title = title
         self.rule_id = rule_id
         self.rule_severity = severity
@@ -22,6 +23,7 @@ class MacSecurityRule():
         self.rule_80053r4 = nist_controls
         self.rule_disa_stig = disa_stig
         self.rule_srg = srg
+        self.rule_odv = odv
         self.rule_result_value = result_value
         self.rule_tags = tags
         self.rule_mobileconfig = mobileconfig
@@ -114,6 +116,7 @@ def collect_rules():
             'title',
             'check',
             'fix',
+            'odv',
             'tags',
             'id',
             'references',
@@ -153,6 +156,7 @@ def collect_rules():
                                     rule_yaml['references']['800-53r4'],
                                     rule_yaml['references']['disa_stig'],
                                     rule_yaml['references']['srg'],
+                                    rule_yaml['odv'],
                                     rule_yaml['tags'],
                                     rule_yaml['result'],
                                     rule_yaml['mobileconfig'],
@@ -291,6 +295,24 @@ def output_baseline(rules, os, keyword):
     
     return output_text
 
+def write_odv_custom_rule(rule, odv):
+    print(f"writing custom rule for {rule.rule_id} to include value {odv}")
+    return
+
+def odv_query(rules):
+    print("Inclusion of any given rule is a risk-based-decision (RBD).  While each rule is mapped to a 800-53 control, deploying it in your organization should be part of the decision making process. \nYou will be prompted to include each rule, and for those with specific organizational defined values (ODV), you will be prompted for those as well.\n")
+    for rule in rules:
+        if "supplemental" in rule.rule_tags:
+            continue
+        include = input(f"Would you like to include the rule for \"{rule.rule_id}\" in your benchmark? [Y/n]: ")
+        if include.upper() == "Y":
+            if rule.rule_odv == "missing":
+                continue
+            else:
+                odv = input(f"Enter the ODV for \"{rule.rule_id}\" (default: {rule.rule_odv}) ")
+                write_odv_custom_rule(rule, odv)
+        
+    return
 
 def main():
 
@@ -362,6 +384,8 @@ def main():
         print("No rules found for the keyword provided, please verify from the following list:")
         available_tags(all_rules)
     else:
+        # prompt for inclusion, add ODV
+        odv_baseline_rules = odv_query(found_rules)
         baseline_output_file = open(f"{build_path}/{args.keyword}.yaml", 'w')
         baseline_output_file.write(output_baseline(found_rules, version_yaml["os"], args.keyword))
     # finally revert back to the prior directory

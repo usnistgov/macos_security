@@ -1,16 +1,16 @@
 id: sysprefs_screensaver_timeout_enforce
 title: "Enforce Screen Saver Timeout"
 discussion: |
-  The screen saver timeout _MUST_ be set to 20 minutes or a shorter length of time. 
+  The screen saver timeout _MUST_ be set to $ODV minutes or a shorter length of time. 
   
-  This rule ensures that a full session lock is triggered within no more than 20 minutes of inactivity.
+  This rule ensures that a full session lock is triggered within no more than $ODV minutes of inactivity.
 check: |
   /usr/bin/osascript -l JavaScript << EOS
   $.NSUserDefaults.alloc.initWithSuiteName('com.apple.screensaver')\
   .objectForKey('idleTime').js
   EOS
 result:
-  integer: 1200
+  integer: $ODV
 fix: |
   This is implemented by a Configuration Profile.
 references:
@@ -36,6 +36,7 @@ references:
       - 4.3
 macOS:
   - "12.0"
+odv: 1200
 tags:
   - 800-53r5_moderate 
   - 800-53r5_high 
@@ -48,8 +49,9 @@ tags:
   - cis_lvl2
   - cisv8
   - stig
+  - test
 severity: "medium"
 mobileconfig: true
 mobileconfig_info:
   com.apple.screensaver:
-    idleTime: 1200
+    idleTime: $ODV
