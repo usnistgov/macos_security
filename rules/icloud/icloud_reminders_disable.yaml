@@ -41,7 +41,7 @@ references:
   cis:
     benchmark:
       - N/A
-    cisv8:
+    v8:
       - 4.1
       - 4.8
       - 15.3
