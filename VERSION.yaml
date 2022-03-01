@@ -1,3 +1,4 @@
 os: "11.0"
-version: "Big Sur Guidance, Revision 4"
-date: "2021-10-20"
+version: "Big Sur Guidance, Revision 5"
+cpe: o:apple:macos:11.0
+date: "XXXX-XX-XX"
