@@ -33,6 +33,11 @@ references:
     - APPL-11-002068
   800-171r2:
     - 3.1.5
+  cis:
+    benchmark:
+      - 5.1.1 (level 1)
+    v8:
+      - N/A
 macOS:
   - "11.0"
 tags:
@@ -43,6 +48,8 @@ tags:
   - 800-171
   - cnssi-1253
   - stig
+  - cis_lvl1
+  - cis_lvl2
 severity: "medium"
 mobileconfig: false
 mobileconfig_info:

@@ -5,9 +5,12 @@ discussion: |
   
   The default behavior of macOS is to prompt new users to set up storage in iCloud. Disabling the iCloud storage setup prompt provides organizations more control over the storage of their data. 
 check: |
-  /usr/bin/profiles -P -o stdout | /usr/bin/grep -c 'SkipiCloudStorageSetup = 1'
+  /usr/bin/osascript -l JavaScript << EOS
+  $.NSUserDefaults.alloc.initWithSuiteName('com.apple.SetupAssistant.managed')\
+  .objectForKey('SkipiCloudStorageSetup').js
+  EOS
 result:
-  integer: 1
+  string: "true"
 fix: |
   This is implemented by a Configuration Profile.
 references:
@@ -25,9 +28,12 @@ references:
     - APPL-11-002037
   800-171r2:
     - 3.1.20
-  cisv8:
-    - 4.1
-    - 4.8
+  cis:
+    benchmark:
+      - N/A
+    v8:
+      - 4.1
+      - 4.8
 macOS:
   - "11.0"
 tags:

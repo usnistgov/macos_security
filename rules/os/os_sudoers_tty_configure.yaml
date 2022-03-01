@@ -27,6 +27,11 @@ references:
     - SRG-OS-000480-GPOS-00227
   disa_stig:
     - APPL-11-004021
+  cis:
+    benchmark:
+      - 5.4 (level 1)
+    v8:
+      - 4.3
 macOS:
   - "11.0"
 tags:
@@ -35,6 +40,8 @@ tags:
   - 800-53r5_high
   - cnssi-1253
   - stig
+  - cis_lvl1
+  - cis_lvl2
 severity: "high"
 mobileconfig: false
 mobileconfig_info:

@@ -37,10 +37,13 @@ references:
     - APPL-11-002064
   800-171r2:
     - 3.4.5
-  cisv8:
-    - 10.1
-    - 10.2
-    - 10.5
+  cis:
+    benchmark:
+      - 2.5.2.1 (level 1)
+    v8:
+      - 10.1
+      - 10.2
+      - 10.5
 macOS:
   - "11.0"
 tags:
@@ -53,6 +56,8 @@ tags:
   - cnssi-1253
   - stig
   - cisv8
+  - cis_lvl1
+  - cis_lvl2
 severity: "high"
 mobileconfig: true
 mobileconfig_info:

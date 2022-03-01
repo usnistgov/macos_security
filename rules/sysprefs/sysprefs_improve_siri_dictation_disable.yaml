@@ -5,9 +5,12 @@ discussion: |
 
   The information system _MUST_ be configured to provide only essential capabilities. Disabling the submission of Siri and Dictation information will mitigate the risk of unwanted data being sent to Apple. 
 check: |
-  /usr/bin/profiles -P -o stdout | /usr/bin/grep -c '"Siri Data Sharing Opt-In Status" = 2;'
+  /usr/bin/osascript -l JavaScript << EOS
+  $.NSUserDefaults.alloc.initWithSuiteName('com.apple.assistant.support')\
+  .objectForKey('Siri Data Sharing Opt-In Status').js
+  EOS
 result:
-  integer: 1
+  integer: 2
 fix: |
   This is implemented by a Configuration Profile.
 references:
@@ -28,9 +31,12 @@ references:
   800-171r2:
     - 3.1.20
     - 3.4.6
-  cisv8:
-    - 4.1
-    - 4.8
+  cis:
+    benchmark:
+      - N/A
+    v8:
+      - 4.1
+      - 4.8
 macOS:
   - "11.0"
 tags:

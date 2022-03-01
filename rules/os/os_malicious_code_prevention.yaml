@@ -45,10 +45,13 @@ references:
     - N/A
   srg:
     - N/A
-  cisv8:
-    - 10.1
-    - 10.2
-    - 10.5
+  cis:
+    benchmark:
+      - N/A
+    v8:
+      - 10.1
+      - 10.2
+      - 10.5
 macOS:
   - "11.0"
 tags:

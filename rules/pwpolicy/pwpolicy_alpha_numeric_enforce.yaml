@@ -7,9 +7,12 @@ discussion: |
 
   NOTE: The guidance for password based authentication in NIST 800-53 (Rev 5) and NIST 800-63B state that complexity rules should be organizationally defined. The values defined are based off of common complexity values. But your organization may define its own password complexity rules.
 check: | 
-  /usr/bin/profiles -P -o stdout | /usr/bin/grep -c "requireAlphanumeric = 1;"
+  /usr/bin/osascript -l JavaScript << EOS
+  $.NSUserDefaults.alloc.initWithSuiteName('com.apple.mobiledevice.passwordpolicy')\
+  .objectForKey('requireAlphanumeric').js
+  EOS
 result:
-  integer: 1
+  string: "true"
 fix: |
   This is implemented by a Configuration Profile.
 references:
@@ -33,8 +36,12 @@ references:
     - 3.5.8
     - 3.5.9
     - 3.5.10
-  cisv8:
-    - 5.2
+  cis:
+    benchmark:
+      - 5.2.3 (level 2)
+      - 5.2.4 (level 2)
+    v8:
+      - 5.2
 macOS:
   - "11.0"
 tags:
@@ -48,6 +55,7 @@ tags:
   - 800-53r5_high
   - stig
   - cisv8
+  - cis_lvl2
 severity: "medium"
 mobileconfig: true
 mobileconfig_info:

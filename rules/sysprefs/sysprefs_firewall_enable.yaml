@@ -44,10 +44,13 @@ references:
     - 3.13.1
     - 3.13.2
     - 3.13.5
-  cisv8:
-    - 4.1
-    - 4.5
-    - 13.10
+  cis:
+    benchmark: 
+      - 2.5.2.2 (level 1)
+    v8: 
+      - 4.1
+      - 4.5
+      - 13.1
 macOS:
   - "11.0"
 tags:
@@ -61,6 +64,8 @@ tags:
   - cnssi-1253
   - stig
   - cisv8
+  - cis_lvl1
+  - cis_lvl2
 severity: "medium"
 mobileconfig: false
 mobileconfig_info:

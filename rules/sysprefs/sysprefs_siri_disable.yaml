@@ -5,9 +5,12 @@ discussion: |
 
   The information system _MUST_ be configured to provide only essential capabilities.
 check: |
-  /usr/bin/profiles -P -o stdout | /usr/bin/grep -c '"Ironwood Allowed" = 0'
+  /usr/bin/osascript -l JavaScript << EOS
+  $.NSUserDefaults.alloc.initWithSuiteName('com.apple.ironwood.support')\
+  .objectForKey('Ironwood Allowed').js
+  EOS
 result:
-  integer: 1
+  string: "false"
 fix: |
   This is implemented by a Configuration Profile.
 references:
@@ -33,9 +36,12 @@ references:
   800-171r2:
     - 3.1.20
     - 3.4.6
-  cisv8:
-    - 4.1
-    - 4.8
+  cis:
+    benchmark:
+      - N/A
+    v8:
+      - 4.1
+      - 4.8
 macOS:
   - "11.0"
 tags:

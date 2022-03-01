@@ -23,7 +23,7 @@ from collections import namedtuple
 
 
 class MacSecurityRule():
-    def __init__(self, title, rule_id, severity, discussion, check, fix, cci, cce, nist_controls, nist_171, disa_stig, srg, cisv8, custom_refs, tags, result_value, mobileconfig, mobileconfig_info, customized):
+    def __init__(self, title, rule_id, severity, discussion, check, fix, cci, cce, nist_controls, nist_171, disa_stig, srg, cis, custom_refs, tags, result_value, mobileconfig, mobileconfig_info, customized):
         self.rule_title = title
         self.rule_id = rule_id
         self.rule_severity = severity
@@ -36,7 +36,7 @@ class MacSecurityRule():
         self.rule_800171 = nist_171
         self.rule_disa_stig = disa_stig
         self.rule_srg = srg
-        self.rule_cisv8 = cisv8
+        self.rule_cis = cis
         self.rule_custom_refs = custom_refs
         self.rule_result_value = result_value
         self.rule_tags = tags
@@ -57,7 +57,7 @@ class MacSecurityRule():
             rule_cci=self.rule_cci,
             rule_80053r5=self.rule_80053r5,
             rule_disa_stig=self.rule_disa_stig,
-            rule_cisv8=self.rule_cisv8,
+            rule_cis=self.rule_cis,
             rule_srg=self.rule_srg,
             rule_result=self.rule_result_value
         )
@@ -388,6 +388,7 @@ def generate_profiles(baseline_name, build_path, parent_dir, baseline_yaml, sign
     # setup lists and dictionaries
     profile_errors = []
     profile_types = {}
+    mount_controls = {}
 
     for sections in baseline_yaml['profile']:
         for profile_rule in sections['rules']:
@@ -406,6 +407,7 @@ def generate_profiles(baseline_name, build_path, parent_dir, baseline_yaml, sign
     
             if rule_yaml['mobileconfig']:
                 for payload_type, info in rule_yaml['mobileconfig_info'].items():
+                    valid = True
                     try:
                         if payload_type not in manifests['payloads_types']:
                             profile_errors.append(rule)
@@ -415,8 +417,8 @@ def generate_profiles(baseline_name, build_path, parent_dir, baseline_yaml, sign
                             pass
                     except (KeyError, ValueError) as e:
                         profile_errors.append(rule)
-                        #print(e)
-                        pass
+                        logging.debug(e)
+                        valid = False
 
                     try:
                         if isinstance(info, list):
@@ -426,21 +428,28 @@ def generate_profiles(baseline_name, build_path, parent_dir, baseline_yaml, sign
                             pass
                     except (KeyError, ValueError) as e:
                         profile_errors.append(rule)
-                        #print(e)
-                        pass
-
-                    if payload_type == "com.apple.ManagedClient.preferences":
-                        for payload_domain, settings in info.items():
-                            for key, value in settings.items():
-                                payload_settings = (
-                                    payload_domain, key, value)
+                        logging.debug(e)
+                        valid = False
+                    
+                    if valid:
+                        if payload_type == "com.apple.systemuiserver":
+                            for setting_key, setting_value in info['mount-controls'].items():
+                                mount_controls[setting_key] = setting_value
+                                payload_settings = {"mount-controls": mount_controls}
                                 profile_types.setdefault(
                                     payload_type, []).append(payload_settings)
-                    else:
-                        for profile_key, key_value in info.items():
-                            payload_settings = {profile_key: key_value}
-                            profile_types.setdefault(
-                                payload_type, []).append(payload_settings)
+                        elif payload_type == "com.apple.ManagedClient.preferences":
+                            for payload_domain, settings in info.items():
+                                for key, value in settings.items():
+                                    payload_settings = (
+                                        payload_domain, key, value)
+                                    profile_types.setdefault(
+                                        payload_type, []).append(payload_settings)
+                        else:
+                            for profile_key, key_value in info.items():
+                                payload_settings = {profile_key: key_value}
+                                profile_types.setdefault(
+                                    payload_type, []).append(payload_settings)
 
     if len(profile_errors) > 0:
         print("There are errors in the following files, please correct the .yaml file(s)!")
@@ -579,7 +588,7 @@ plb="/usr/libexec/PlistBuddy"
 
 # get the currently logged in user
 CURRENT_USER=$(scutil <<< "show State:/Users/ConsoleUser" | awk '/Name :/ && ! /loginwindow/ {{ print $3 }}')
-CURR_USER_UID=$(/usr/bin/id -u $CURR_USER)
+CURR_USER_UID=$(/usr/bin/id -u $CURRENT_USER)
 
 # get system architecture
 arch=$(/usr/bin/arch)
@@ -840,7 +849,7 @@ defaults write "$audit_plist" lastComplianceCheck "$(date)"
             if "integer" in result:
                 result_value = result['integer']
             elif "boolean" in result:
-                result_value = result['boolean']
+                result_value = str(result['boolean']).lower()
             elif "string" in result:
                 result_value = result['string']
             else:
@@ -854,7 +863,7 @@ rule_arch="{6}"
 if [[ "$arch" == "$rule_arch" ]] || [[ -z "$rule_arch" ]]; then
     #echo 'Running the command to check the settings for: {0} ...' | tee -a "$audit_log"
     unset result_value
-    result_value=$({2})
+    result_value=$({2}\n)
     # expected result {3}
 
 
@@ -883,7 +892,7 @@ else
     echo "$(date -u) {5} does not apply to this architechture" | tee -a "$audit_log"
     defaults write "$audit_plist" {0} -dict-add finding -bool NO
 fi
-    """.format(rule_yaml['id'], nist_controls.replace("\n", "\n#"), check.strip(), result, result_value, ' '.join(log_reference_id), arch)
+    """.format(rule_yaml['id'], nist_controls.replace("\n", "\n#"), check.strip(), str(result).lower(), result_value, ' '.join(log_reference_id), arch)
 
             check_function_string = check_function_string + zsh_check_text
 
@@ -1126,7 +1135,7 @@ def generate_xls(baseline_name, build_path, baseline_yaml):
     top = xlwt.easyxf("align: vert top")
     headers = xlwt.easyxf("font: bold on")
     counter = 1
-    column_counter = 15
+    column_counter = 16
     custom_ref_column = {}
     sheet1.write(0, 0, "CCE", headers)
     sheet1.write(0, 1, "Rule ID", headers)
@@ -1140,9 +1149,10 @@ def generate_xls(baseline_name, build_path, baseline_yaml):
     sheet1.write(0, 9, "800-171", headers)
     sheet1.write(0, 10, "SRG", headers)
     sheet1.write(0, 11, "DISA STIG", headers)
-    sheet1.write(0, 12, "CIS Controls v8", headers)
-    sheet1.write(0, 13, "CCI", headers)
-    sheet1.write(0, 14, "Modifed Rule", headers)
+    sheet1.write(0, 12, "CIS Benchmark", headers)
+    sheet1.write(0, 13, "CIS v8", headers)    
+    sheet1.write(0, 14, "CCI", headers)
+    sheet1.write(0, 15, "Modifed Rule", headers)
     sheet1.set_panes_frozen(True)
     sheet1.set_horz_split_pos(1)
     sheet1.set_vert_split_pos(2)
@@ -1219,22 +1229,28 @@ def generate_xls(baseline_name, build_path, baseline_yaml):
         sheet1.write(counter, 11, disa_refs, topWrap)
         sheet1.col(11).width = 500 * 15
 
+        cis = ""
+        if rule.rule_cis != ['None']:
+            for title, ref in rule.rule_cis.items():
+                if title.lower() == "benchmark":
+                    sheet1.write(counter, 12, ref, topWrap)
+                    sheet1.col(12).width = 500 * 15
+                if title.lower() == "v8":
+                    cis = (str(ref).strip('[]\''))
+                    cis = cis.replace(", ", "\n")
+                    sheet1.write(counter, 13, cis, topWrap)
+                    sheet1.col(13).width = 500 * 15
+
         cci = (str(rule.rule_cci)).strip('[]\'')
         cci = cci.replace(", ", "\n").replace("\'", "")
 
-        cisv8_refs = (str(rule.rule_cisv8)).strip('[]\'')
-        cisv8_refs = cisv8_refs.replace(", ", "\n").replace("\'", "")
-
-        sheet1.write(counter, 12, cisv8_refs, topWrap)
-        sheet1.col(12).width = 500 * 15
-
-        sheet1.write(counter, 13, cci, topWrap)
+        sheet1.write(counter, 14, cci, topWrap)
         sheet1.col(13).width = 400 * 15
 
         customized = (str(rule.rule_customized)).strip('[]\'')
         customized = customized.replace(", ", "\n").replace("\'", "")
 
-        sheet1.write(counter, 14, customized, topWrap)
+        sheet1.write(counter, 15, customized, topWrap)
         sheet1.col(14).width = 400 * 15
 
         if rule.rule_custom_refs != ['None']:
@@ -1279,7 +1295,7 @@ def create_rules(baseline_yaml):
                   'cce',
                   '800-53r5',
                   '800-171r2',
-                  'cisv8',
+                  'cis',
                   'srg',
                   'custom']
 
@@ -1322,7 +1338,7 @@ def create_rules(baseline_yaml):
                                         rule_yaml['references']['800-171r2'],
                                         rule_yaml['references']['disa_stig'],
                                         rule_yaml['references']['srg'],
-                                        rule_yaml['references']['cisv8'],
+                                        rule_yaml['references']['cis'],
                                         rule_yaml['references']['custom'],
                                         rule_yaml['tags'],
                                         rule_yaml['result'],
@@ -1415,6 +1431,19 @@ def parse_custom_references(reference):
             string += "!" + str(item) + "\n!\n"
             for i in reference[item]:
                 string += "* " + str(i) + "\n"
+        else:
+            string += "!" + str(item) + "!* " + str(reference[item]) + "\n"
+    return string
+
+def parse_cis_references(reference):
+    string = "\n"
+    for item in reference:
+        if isinstance(reference[item], list):
+            string += "!CIS " + str(item).title() + "\n!\n"
+            string += "* "
+            for i in reference[item]:
+                string += str(i) + ", "
+            string = string[:-2] + "\n"
         else:
             string += "!" + str(item) + "!* " + str(reference[item]) + "\n"
     return string
@@ -1551,9 +1580,9 @@ def main():
         adoc_STIG_show=":show_STIG!:"
 
     if "CIS" in baseline_yaml['title'].upper():
-        adoc_cisv8_show=":show_cisv8:"
+        adoc_cis_show=":show_cis:"
     else:
-        adoc_cisv8_show=":show_cisv8!:"
+        adoc_cis_show=":show_cis!:"
 
     if "800" in baseline_yaml['title']:
          adoc_171_show=":show_171:"
@@ -1571,7 +1600,7 @@ def main():
         tag_attribute=adoc_tag_show,
         nist171_attribute=adoc_171_show,
         stig_attribute=adoc_STIG_show,
-        cisv8_attribute=adoc_cisv8_show,
+        cis_attribute=adoc_cis_show,
         version=version_yaml['version'],
         os_version=version_yaml['os'],
         release_date=version_yaml['date']
@@ -1667,7 +1696,6 @@ def main():
             except KeyError:
                 nist_80053r5 = 'N/A'
             else:
-                #nist_80053r5 = ulify(rule_yaml['references']['800-53r5'])
                 nist_80053r5 = rule_yaml['references']['800-53r5']
             
             try:
@@ -1675,7 +1703,6 @@ def main():
             except KeyError:
                 nist_800171 = '- N/A'
             else:
-                #nist_80053r5 = ulify(rule_yaml['references']['800-53r5'])
                 nist_800171 = ulify(rule_yaml['references']['800-171r2'])
 
             try:
@@ -1686,11 +1713,11 @@ def main():
                 disa_stig = ulify(rule_yaml['references']['disa_stig'])
 
             try:
-                rule_yaml['references']['cisv8']
+                rule_yaml['references']['cis']
             except KeyError:
-                cisv8 = '- N/A'
+                cis = '- N/A'
             else:
-                cisv8 = ulify(rule_yaml['references']['cisv8'])
+                cis = parse_cis_references(rule_yaml['references']['cis'])
 
             try:
                 rule_yaml['references']['srg']
@@ -1774,7 +1801,7 @@ def main():
                     rule_80053r5=nist_controls,
                     rule_800171=nist_800171,
                     rule_disa_stig=disa_stig,
-                    rule_cisv8=cisv8,
+                    rule_cis=cis,
                     rule_cce=cce,
                     rule_tags=tags,
                     rule_srg=srg
@@ -1790,7 +1817,7 @@ def main():
                     rule_80053r5=nist_controls,
                     rule_800171=nist_800171,
                     rule_disa_stig=disa_stig,
-                    rule_cisv8=cisv8,
+                    rule_cis=cis,
                     rule_cce=cce,
                     rule_custom_refs=custom_refs,
                     rule_tags=tags,
@@ -1808,7 +1835,7 @@ def main():
                     rule_80053r5=nist_controls,
                     rule_800171=nist_800171,
                     rule_disa_stig=disa_stig,
-                    rule_cisv8=cisv8,
+                    rule_cis=cis,
                     rule_cce=cce,
                     rule_tags=tags,
                     rule_srg=srg,
