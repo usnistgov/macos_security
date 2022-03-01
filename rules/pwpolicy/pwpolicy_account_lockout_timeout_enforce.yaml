@@ -5,9 +5,12 @@ discussion: |
 
   This rule protects against malicious users attempting to gain access to the system via brute-force hacking methods. 
 check: |
-  /usr/bin/profiles -P -o stdout | /usr/bin/grep -c 'minutesUntilFailedLoginReset = 15' 
+  /usr/bin/osascript -l JavaScript << EOS
+  $.NSUserDefaults.alloc.initWithSuiteName('com.apple.mobiledevice.passwordpolicy')\
+  .objectForKey('minutesUntilFailedLoginReset').js
+  EOS
 result:
-  integer: 1
+  integer: 15
 fix: |
   This is implemented by a Configuration Profile.
 references:

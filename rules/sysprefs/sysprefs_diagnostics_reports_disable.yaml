@@ -5,9 +5,21 @@ discussion: |
   
   The information system _MUST_ be configured to provide only essential capabilities. Disabling the submission of diagnostic and usage information will mitigate the risk of unwanted data being sent to Apple. 
 check: |
-  /usr/bin/profiles -P -o stdout | /usr/bin/grep -Ec '(allowDiagnosticSubmission = 0|AutoSubmit = 0)'
+  osascript -l JavaScript << EOS
+  function run() {
+  let pref1 = $.NSUserDefaults.alloc.initWithSuiteName('com.apple.SubmitDiagInfo')\
+  .objectForKey('AutoSubmit').js
+  let pref2 = $.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess')\
+  .objectForKey('allowDiagnosticSubmission').js
+  if ( pref1 == false && pref2 == false ){
+      return("true")
+  } else {
+      return("false")
+  }
+  }
+  EOS
 result:
-  integer: 2
+  string: "true"
 fix: |
   This is implemented by a Configuration Profile.
 references:

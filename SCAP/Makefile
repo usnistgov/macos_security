@@ -6,13 +6,16 @@ DIR		= ../build/All_rules
 VERSION	= $(shell ./version.sh)
 OS = $(shell ./os.sh)
 
-all: inputs tidy XCCDF datastream report beautify
+all: generate_cpe inputs tidy XCCDF datastream report beautify
+
+generate_cpe: 
+	./generate_cpe.sh
 
 inputs:
 	# generate the HTML checklist document
 	../scripts/generate_guidance.py -g ../baselines/all_rules.yaml 2>/dev/null
 	# generate the related OVAL content
-	../scripts/yaml-to-oval.py ../baselines/all_rules.yaml
+	../scripts/generate_oval.py ../baselines/all_rules.yaml
 	# outputs end up in ${DIR}
 
 tidy:
@@ -36,8 +39,8 @@ XCCDF:
 	       	-o:${DIR}/xccdf.xml \
 		SCAP-version=1.3 \
 		id-namespace=content.mscp.nist.gov \
-		benchmark-id-suffix=macOS_11.0 \
-		OVAL-URI=${DIR}/All_rules.xml \
+		benchmark-id-suffix=macOS_${OS} \
+		OVAL-URI=${DIR}/all_rules.xml \
 		include-CPE=1
 	# the input OVAL document will be copied to a companion of the XCCDF document named 'oval.xml'
 	# a gratuitous OCIL document is provided
@@ -52,7 +55,7 @@ datastream:
 		-o:${DIR}/datastream.xml \
 		SCAP-version=1.3 \
 		id-namespace=content.mscp.nist.gov \
-		datastream-id-suffix=macOS_10.15 \
+		datastream-id-suffix=macOS_${OS} \
 		include-CPE=1
 
 report:

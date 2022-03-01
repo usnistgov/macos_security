@@ -1,3 +1,4 @@
 os: "10.15"
-version: "Catalina Guidance, Revision 5"
-date: "2021-10-20"
+version: "Catalina Guidance, Revision 6"
+cpe: o:apple:mac_os_x:10.15
+date: "XXXX-XX-XX"
