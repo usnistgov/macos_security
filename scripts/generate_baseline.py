@@ -304,9 +304,10 @@ def odv_query(rules):
 
     for rule in rules:
         get_odv = False
-          
        
-        if "supplemental" in rule.rule_tags:
+        _always_include = ['supplemental', 'inherent']
+        if any(tag in rule.rule_tags for tag in _always_include):
+            print(f"Including rule {rule.rule_id} by default")
             include = "Y"
         else:
             if rule.rule_id not in queried_rule_ids:
