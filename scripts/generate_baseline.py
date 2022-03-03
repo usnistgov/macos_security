@@ -296,8 +296,13 @@ def remove_odv_custom_rule(rule):
         os.remove(f"../custom/rules/{rule.rule_id}.yaml")
     
 
-def odv_query(rules):
+def odv_query(rules, keyword):
     print("Inclusion of any given rule is a risk-based-decision (RBD).  While each rule is mapped to a 800-53 control, deploying it in your organization should be part of the decision making process. \nYou will be prompted to include each rule, and for those with specific organizational defined values (ODV), you will be prompted for those as well.\n")
+    
+    _established_benchmarks = ['stig', 'cis_lvl1', 'cis_lvl2']
+    if any(bm in keyword for bm in _established_benchmarks):
+        print(f"WARNING: You are attempting to tailor an already established benchmark.  Excluding rules or modifying ODVs may not meet the compliance of the established benchmark.\n")
+            
     included_rules = []
     queried_rule_ids = []
     
@@ -401,7 +406,7 @@ def main():
         available_tags(all_rules)
     elif args.tailor:
         # prompt for inclusion, add ODV
-        odv_baseline_rules = odv_query(found_rules)
+        odv_baseline_rules = odv_query(found_rules, args.keyword)
         baseline_output_file = open(f"{build_path}/{args.keyword}.yaml", 'w')
         baseline_output_file.write(output_baseline(odv_baseline_rules, version_yaml["os"], args.keyword))
     else:
