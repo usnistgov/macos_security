@@ -1,4 +1,4 @@
-id: os_system_wide_applications
+id: os_system_wide_applications_configure
 title: "Ensure Appropriate Permissions Are Enabled for System Wide Applications"
 discussion: |
   Applications in the System Applications Directory (/Applications) _MUST_ not be world-writable.
