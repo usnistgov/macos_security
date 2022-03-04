@@ -24,7 +24,7 @@ references:
   cis:
     benchmark:
       - 6.3 (level 1)
-    v8:
+    controls v8:
       - 9
 macOS:
   - "12.0"

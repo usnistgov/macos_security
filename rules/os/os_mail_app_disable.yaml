@@ -51,7 +51,7 @@ references:
   cis:
     benchmark:
       - N/A
-    v8:
+    controls v8:
       - 4.1
       - 4.8
 macOS:

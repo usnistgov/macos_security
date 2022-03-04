@@ -40,7 +40,7 @@ references:
     benchmark:
       - 5.2.3 (level 2)
       - 5.2.4 (level 2)
-    v8:
+    controls v8:
       - 5.2
 macOS:
   - "12.0"
