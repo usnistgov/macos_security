@@ -53,6 +53,7 @@ profile:
       - os_time_offset_limit_configure
       - os_unlock_active_user_session_disable
       - os_world_writable_library_folder_configure
+      - os_world_writable_system_folder_configure
   - section: "passwordpolicy"
     rules:
       - pwpolicy_account_lockout_enforce_five
