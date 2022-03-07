@@ -1,4 +1,4 @@
-id: os_world_writable_library_folder_configure
+id: os_system_wide_applications_configure
 title: "Ensure Appropriate Permissions Are Enabled for System Wide Applications"
 discussion: |
   Applications in the System Applications Directory (/Applications) _MUST_ not be world-writable.
@@ -36,6 +36,7 @@ macOS:
   - "11.0"
 tags:
   - cis_lvl1
+  - cis_lvl2
   - cisv8
 mobileconfig: false
 mobileconfig_info:
