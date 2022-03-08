@@ -57,8 +57,11 @@ references:
     - 3.5.8
     - 3.5.9
     - 3.5.10
-  cisv8:
-    - 5.2
+  cis:
+    benchmark:
+      - 5.2.6 (level 2)
+    v8:
+      - 5.2
 macOS:
   - "11.0"
 tags:
@@ -71,5 +74,6 @@ tags:
   - 800-53r5_moderate
   - 800-53r5_high
   - cisv8
+  - cis_lvl2
 mobileconfig: false
 mobileconfig_info:

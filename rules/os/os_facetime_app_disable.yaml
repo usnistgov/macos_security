@@ -5,17 +5,29 @@ discussion: |
 
   The FaceTime.app establishes a connection to Apple’s iCloud service, even when security controls have been put in place to disable iCloud access. 
 check: | 
-  /usr/bin/profiles -P -o stdout | /usr/bin/grep -A 20 familyControlsEnabled | /usr/bin/grep -c "/Applications/FaceTime.app"
+  /usr/bin/osascript -l JavaScript << EOS
+  function run() {
+    let pref1 = ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess.new')\
+    .objectForKey('familyControlsEnabled'))
+    let pathlist = $.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess.new')\
+    .objectForKey('pathBlackList').js
+    for ( let app in pathlist ) {
+        if ( ObjC.unwrap(pathlist[app]) == "/Applications/FaceTime.app" && pref1 == true ){
+            return("true")
+        }
+    }
+    return("false")
+    }
+  EOS
 result:
-  integer: 1
+  string: "true"
 fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
     - CCE-85308-5
   cci: 
-    - CCI-000381
-    - CCI-001774
+    - N/A
   800-53r5:
     - AC-20
     - CM-7
@@ -25,16 +37,18 @@ references:
     - CM-7(1)
     - AC-20
   srg:
-    - SRG-OS-000095-GPOS-00049
-    - SRG-OS-000370-GPOS-00155
+    - N/A
   disa_stig:
-    - APPL-11-002010
+    - N/A
   800-171r2:
     - 3.1.20
     - 3.4.6
-  cisv8:
-    - 4.1
-    - 4.8
+  cis:
+    benchmark:
+      - N/A
+    v8:
+      - 4.1
+      - 4.8
 macOS:
   - "11.0"
 tags:
@@ -46,7 +60,6 @@ tags:
   - 800-53r4_high
   - 800-171
   - cnssi-1253
-  - stig
   - cisv8
 severity: "low"
 mobileconfig: true

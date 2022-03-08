@@ -257,13 +257,6 @@ def output_baseline(rules, os, keyword):
     na_rules.sort()
     supplemental_rules.sort()
 
-    # sort the rules
-    other_rules.sort()
-    inherent_rules.sort()
-    permanent_rules.sort()
-    na_rules.sort()
-    supplemental_rules.sort()
-
     if len(other_rules) > 0:
         for section in sections:
             output_text += ('  - section: "{}"\n'.format(section_title(section)))

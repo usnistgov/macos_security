@@ -3,9 +3,12 @@ title: "Disable Camera"
 discussion: |
   macOS _MUST_ be configured to disable the camera.
 check: |
-  /usr/bin/profiles -P -o stdout | /usr/bin/grep -c 'allowCamera = 0'
+  /usr/bin/osascript -l JavaScript << EOS
+  $.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess')\
+  .objectForKey('allowCamera').js
+  EOS
 result:
-  integer: 1
+  string: "false"
 fix: |
   This is implemented by a Configuration Profile.
 references:

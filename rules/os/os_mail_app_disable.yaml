@@ -10,16 +10,29 @@ discussion: |
   Some organizations allow the use of the built-in Mail.app for organizational communication. Information System Security Officers (ISSOs) may make the risk-based decision not to disable the macOS built-in Mail.app to avoid losing this functionality, but they are advised to first fully weigh the potential risks posed to their organization.
   ====
 check: |  
-  /usr/bin/profiles -P -o stdout | /usr/bin/grep -A 20 familyControlsEnabled | /usr/bin/grep -c "/Applications/Mail.app"
+  /usr/bin/osascript -l JavaScript << EOS
+  function run() {
+    let pref1 = ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess.new')\
+    .objectForKey('familyControlsEnabled'))
+    let pathlist = $.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess.new')\
+    .objectForKey('pathBlackList').js
+    for ( let app in pathlist ) {
+        if ( ObjC.unwrap(pathlist[app]) == "/Applications/Mail.app" && pref1 == true ){
+            return("true")
+        }
+    }
+    return("false")
+    }
+  EOS
 result:
-  integer: 1
+  string: "true"
 fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
     - CCE-85336-6
   cci: 
-    - CCI-000381
+    - N/A
   800-53r5:
     - AC-20
     - CM-7
@@ -29,16 +42,18 @@ references:
     - CM-7(1)
     - AC-20
   srg:
-    - SRG-OS-000095-GPOS-00049
-    - SRG-OS-000370-GPOS-00155
+    - N/A
   disa_stig:
-    - APPL-11-002019
+    - N/A
   800-171r2:
     - 3.1.20
     - 3.4.6
-  cisv8:
-    - 4.1
-    - 4.8
+  cis:
+    benchmark:
+      - N/A
+    v8:
+      - 4.1
+      - 4.8
 macOS:
   - "11.0"
 tags:
@@ -50,7 +65,6 @@ tags:
   - 800-53r4_high
   - 800-171
   - cnssi-1253
-  - stig
   - cisv8
 severity: "medium"
 mobileconfig: true

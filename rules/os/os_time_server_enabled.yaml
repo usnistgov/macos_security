@@ -31,8 +31,11 @@ references:
     - APPL-11-000014
   800-171r2:
     - 3.3.7
-  cisv8:
-    - 8.4
+  cis:
+    benchmark:
+      - N/A
+    v8:
+      - 8.4
 macOS:
   - "11.0"
 tags:

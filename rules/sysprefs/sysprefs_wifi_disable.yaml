@@ -38,9 +38,12 @@ references:
     - SRG-OS-000379-GPOS-00164
   800-171r2:
     - N/A
-  cisv8:
-    - 4.2
-    - 12.6
+  cis:
+    benchmark:
+      - N/A
+    v8:
+      - 4.2
+      - 12.6
 macOS:
   - "11.0"
 tags:

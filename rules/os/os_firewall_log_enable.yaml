@@ -36,10 +36,13 @@ references:
     - 3.13.1
     - 3.13.2
     - 3.13.5
-  cisv8:
-    - 4.5
-    - 8.2
-    - 8.5
+  cis:
+    benchmark:
+      - 3.6 (level 1)
+    v8:
+      - 4.5
+      - 8.2
+      - 8.5
 macOS:
   - "11.0"
 tags:
@@ -52,5 +55,7 @@ tags:
   - 800-171
   - cnssi-1253
   - cisv8
+  - cis_lvl1
+  - cis_lvl2
 mobileconfig: false
 mobileconfig_info:

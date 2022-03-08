@@ -28,9 +28,12 @@ references:
     - SRG-OS-000341-GPOS-00132
   disa_stig:
     - APPL-11-001029
-  cisv8:
-    - 8.3
-    - 8.10
+  cis:
+    benchmark:
+      - N/A
+    v8:
+      - 8.3
+      - 8.1
 macOS:
   - "11.0"
 tags:

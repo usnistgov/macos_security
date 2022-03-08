@@ -5,9 +5,12 @@ discussion:
   
   AirDrop allows users to share and receive files from other nearby Apple devices. 
 check: |
-  /usr/bin/profiles -P -o stdout | /usr/bin/grep -c 'allowAirDrop = 0'
+  /usr/bin/osascript -l JavaScript << EOS
+  $.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess')\
+  .objectForKey('allowAirDrop').js
+  EOS
 result:
-  integer: 1
+  string: "false"
 fix: |
   This is implemented by a Configuration Profile.
 references:
@@ -35,10 +38,13 @@ references:
     - 3.1.16
     - 3.1.20
     - 3.4.6
-  cisv8:
-    - 4.1
-    - 4.8
-    - 6.7
+  cis:
+    benchmark:
+      - 2.4.11 (level 1)
+    v8:
+      - 4.1
+      - 4.8
+      - 6.7
 macOS:
   - "11.0"
 tags:
@@ -52,6 +58,8 @@ tags:
   - cnssi-1253
   - stig
   - cisv8
+  - cis_lvl1
+  - cis_lvl2
 severity: "medium"
 mobileconfig: true
 mobileconfig_info:

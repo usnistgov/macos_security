@@ -5,7 +5,10 @@ discussion: |
 
   This rule ensures the uniformity of time stamps for information systems with multiple system clocks and systems connected over a network.
 check: |
-  /usr/bin/profiles -P -o stdout | /usr/bin/awk -F "= " '/timeServer/{print $2}' | /usr/bin/tr -d ';' | /usr/bin/tr -d '"'
+  /usr/bin/osascript -l JavaScript << EOS
+  $.NSUserDefaults.alloc.initWithSuiteName('com.apple.MCX')\
+  .objectForKey('timeServer').js
+  EOS
 result:
   string: "time-a.nist.gov,time-b.nist.gov"
 fix: |
@@ -28,8 +31,11 @@ references:
     - APPL-11-000014
   800-171r2:
     - 3.3.7
-  cisv8:
-    - 8.4
+  cis:
+    benchmark:
+      - 2.2.1 (level 1)
+    v8:
+      - 8.4
 macOS:
   - "11.0"
 tags:
@@ -42,6 +48,8 @@ tags:
   - 800-53r4_high
   - stig
   - cisv8
+  - cis_lvl1
+  - cis_lvl2
 severity: "medium"
 mobileconfig: true
 mobileconfig_info:

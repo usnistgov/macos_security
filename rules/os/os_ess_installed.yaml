@@ -1,4 +1,4 @@
-id: os_ESS_installed
+id: os_ess_installed
 title: "Must Use Endpoint Security Solutions"
 discussion: |
   The approved Endpoint Security Solutions (ESS) _MUST_ be installed and configured to run. 

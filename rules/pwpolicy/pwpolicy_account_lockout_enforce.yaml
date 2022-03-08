@@ -5,9 +5,12 @@ discussion: |
 
   This rule protects against malicious users attempting to gain access to the system via brute-force hacking methods. 
 check: |
-  /usr/bin/profiles -P -o stdout | /usr/bin/grep -c 'maxFailedAttempts = 3' 
+  /usr/bin/osascript -l JavaScript << EOS
+  $.NSUserDefaults.alloc.initWithSuiteName('com.apple.mobiledevice.passwordpolicy')\
+  .objectForKey('maxFailedAttempts').js
+  EOS
 result:
-  integer: 1
+  integer: 3
 fix: |
   This is implemented by a Configuration Profile.
 references:
@@ -25,8 +28,11 @@ references:
     - APPL-11-000022
   800-171r2:
     - 3.1.8
-  cisv8:
-    - 4.10
+  cis:
+    benchmark:
+      - N/A
+    v8:
+      - 6.2
 macOS:
   - "11.0"
 tags:

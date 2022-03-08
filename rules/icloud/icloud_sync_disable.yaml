@@ -5,9 +5,12 @@ discussion: |
 
   Apple’s iCloud service does not provide an organization with enough control over the storage and access of data and, therefore, automated file synchronization _MUST_ be controlled by an organization approved service. 
 check: |
-  /usr/bin/profiles -P -o stdout | /usr/bin/grep -c 'allowCloudDesktopAndDocuments = 0'
+  /usr/bin/osascript -l JavaScript << EOS
+  $.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess')\
+  .objectForKey('allowCloudDesktopAndDocuments').js
+  EOS
 result:
-  integer: 1
+  string: "false"
 fix: |
   This is implemented by a Configuration Profile.
 references:
@@ -34,10 +37,13 @@ references:
   800-171r2:
     - 3.1.20
     - 3.4.6
-  cisv8:
-    - 4.1
-    - 4.8
-    - 15.3
+  cis:
+    benchmark:
+      - 2.6.1.4 (level 2)
+    v8:
+      - 4.1
+      - 4.8
+      - 15.3
 macOS:
   - "11.0"
 tags:
@@ -50,6 +56,7 @@ tags:
   - 800-171
   - cnssi-1253
   - cisv8
+  - cis_lvl2
 mobileconfig: true
 mobileconfig_info:
   com.apple.applicationaccess:
