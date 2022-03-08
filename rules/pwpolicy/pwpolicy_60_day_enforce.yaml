@@ -5,7 +5,10 @@ discussion: |
 
   This rule ensures that users are forced to change their passwords frequently enough to prevent malicious users from gaining and maintaining access to the system.
 check: |
-  /usr/bin/profiles -P -o stdout | /usr/bin/awk -F " = " '/maxPINAgeInDays/{sub(/;.*/,"");print $2}'
+  /usr/bin/osascript -l JavaScript << EOS
+  $.NSUserDefaults.alloc.initWithSuiteName('com.apple.mobiledevice.passwordpolicy')\
+  .objectForKey('maxPINAgeInDays').js
+  EOS
 result:
   integer: 60
 fix: |
