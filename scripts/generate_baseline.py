@@ -286,14 +286,35 @@ def output_baseline(rules, os, keyword):
 
 def write_odv_custom_rule(rule, odv):
     print(f"Writing custom rule for {rule.rule_id} to include value {odv}")
-    odv_yaml = f'odv: {odv}'
-    odv_output_file = open(f"../custom/rules/{rule.rule_id}.yaml", 'w')
-    odv_output_file.write(odv_yaml)    
+    if os.path.exists(f"../custom/rules/{rule.rule_id}.yaml"):
+        with open(f"../custom/rules/{rule.rule_id}.yaml") as f:
+            rule_yaml = yaml.load(f, Loader=yaml.SafeLoader)
+    else:
+        rule_yaml = {}
+
+    # add odv to rule_yaml    
+    rule_yaml['odv'] = {"custom" : odv}
+    with open(f"../custom/rules/{rule.rule_id}.yaml", 'w') as f:
+      yaml.dump(rule_yaml, f, explicit_start=True)    
+    
     return
 
 def remove_odv_custom_rule(rule):
-    if os.path.exists(f"../custom/rules/{rule.rule_id}.yaml"):
-        os.remove(f"../custom/rules/{rule.rule_id}.yaml")
+    print("attempting to remove ODV")
+    odv_yaml = {}
+    try:
+        with open(f"../custom/rules/{rule.rule_id}.yaml") as f:
+            odv_yaml = yaml.load(f, Loader=yaml.SafeLoader)
+            odv_yaml.pop('odv', None)
+    except:
+        pass
+
+    if odv_yaml:
+        with open(f"../custom/rules/{rule.rule_id}.yaml", 'w') as f:
+            yaml.dump(odv_yaml, f, explicit_start=True)
+    else:
+        if os.path.exists(f"../custom/rules/{rule.rule_id}.yaml"):
+            os.remove(f"../custom/rules/{rule.rule_id}.yaml")
     
 
 def odv_query(rules, keyword):
@@ -302,6 +323,9 @@ def odv_query(rules, keyword):
     _established_benchmarks = ['stig', 'cis_lvl1', 'cis_lvl2']
     if any(bm in keyword for bm in _established_benchmarks):
         print(f"WARNING: You are attempting to tailor an already established benchmark.  Excluding rules or modifying ODVs may not meet the compliance of the established benchmark.\n")
+        benchmark = keyword
+    else:
+        benchmark = "default"
             
     included_rules = []
     queried_rule_ids = []
@@ -326,13 +350,13 @@ def odv_query(rules, keyword):
             if rule.rule_odv == "missing":
                 continue
             elif get_odv:
-                if isinstance(rule.rule_odv, int):
-                    odv = int(input(f"Enter the ODV for \"{rule.rule_id}\" (default: {rule.rule_odv}) ") or rule.rule_odv)
-                elif isinstance(rule.rule_odv, bool):
-                    odv = bool(input(f"Enter the ODV for \"{rule.rule_id}\" (default: {rule.rule_odv}) ") or rule.rule_odv)
+                if isinstance(rule.rule_odv[benchmark], int):
+                    odv = int(input(f"Enter the ODV for \"{rule.rule_id}\" (default: {rule.rule_odv[benchmark]}) ") or rule.rule_odv[benchmark])
+                elif isinstance(rule.rule_odv[benchmark], bool):
+                    odv = bool(input(f"Enter the ODV for \"{rule.rule_id}\" (default: {rule.rule_odv[benchmark]}) ") or rule.rule_odv[benchmark])
                 else:
-                    odv = input(f"Enter the ODV for \"{rule.rule_id}\" (default: {rule.rule_odv}) ")
-                if odv and odv != rule.rule_odv:
+                    odv = input(f"Enter the ODV for \"{rule.rule_id}\" (default: {rule.rule_odv[benchmark]}) ") or rule.rule_odv[benchmark]
+                if odv and odv != rule.rule_odv[benchmark]:
                     write_odv_custom_rule(rule, odv)
 
      

@@ -1029,13 +1029,16 @@ fi
 
 def fill_in_odv(resulting_yaml):
     fields_to_process = ['title', 'discussion', 'check', 'fix']
-
     _has_odv = False
-    try:
-        odv = str(resulting_yaml['odv'])
-        _has_odv = True
-    except:
-        pass
+    if "odv" in resulting_yaml:
+        try:
+            odv = str(resulting_yaml['odv']['custom'])
+            _has_odv = True
+        except:
+            odv = str(resulting_yaml['odv']['default'])
+            _has_odv = True
+        else:
+            pass
 
     if _has_odv:
         for field in fields_to_process:
