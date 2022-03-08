@@ -1048,10 +1048,11 @@ def fill_in_odv(resulting_yaml):
         for result_value in resulting_yaml['result']:
             resulting_yaml['result'][result_value] = odv
         
-        for mobileconfig_type in resulting_yaml['mobileconfig_info']:
-            if isinstance(resulting_yaml['mobileconfig_info'][mobileconfig_type], dict):
-                for mobileconfig_value in resulting_yaml['mobileconfig_info'][mobileconfig_type]:
-                    resulting_yaml['mobileconfig_info'][mobileconfig_type][mobileconfig_value] = odv
+        if resulting_yaml['mobileconfig_info']:
+            for mobileconfig_type in resulting_yaml['mobileconfig_info']:
+                if isinstance(resulting_yaml['mobileconfig_info'][mobileconfig_type], dict):
+                    for mobileconfig_value in resulting_yaml['mobileconfig_info'][mobileconfig_type]:
+                        resulting_yaml['mobileconfig_info'][mobileconfig_type][mobileconfig_value] = odv
                 
             
                 

@@ -37,10 +37,10 @@ references:
 macOS:
   - "12.0"
 odv:
-  default: "org_value"
-  stig: "7d"
-  cis_lvl1: "60d or 1G"
-  cis_lvl2: "60d or 1G"
+  default: "org_value:string"
+  stig: 7d
+  cis_lvl1: 60d or 1G
+  cis_lvl2: 60d or 1G
 tags:
   - 800-53r5_privacy 
   - 800-53r4_low 

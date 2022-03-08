@@ -300,7 +300,6 @@ def write_odv_custom_rule(rule, odv):
     return
 
 def remove_odv_custom_rule(rule):
-    print("attempting to remove ODV")
     odv_yaml = {}
     try:
         with open(f"../custom/rules/{rule.rule_id}.yaml") as f:
@@ -316,6 +315,36 @@ def remove_odv_custom_rule(rule):
         if os.path.exists(f"../custom/rules/{rule.rule_id}.yaml"):
             os.remove(f"../custom/rules/{rule.rule_id}.yaml")
     
+def sanitised_input(prompt, type_=None, range_=None, default_=None):
+    while True:
+        ui = input(prompt) or default_
+        if type_ is not None:
+            try:
+                ui = type_(ui)
+            except ValueError:
+                print("Input type must be {0}.".format(type_.__name__))
+                continue
+        if type_ is str:
+            if ui.isnumeric():
+                print("Input type must be {0}.".format(type_.__name__))
+                continue
+
+        if range_ is not None and ui not in range_:
+            if isinstance(range_, range):
+                template = "Input must be between {0.start} and {0.stop}."
+                print(template.format(range_))
+            else:
+                template = "Input must be {0}."
+                if len(range_) == 1:
+                    print(template.format(*range_))
+                else:
+                    expected = " or ".join((
+                        ", ".join(str(x) for x in range_[:-1]),
+                        str(range_[-1])
+                    ))
+                    print(template.format(expected))
+        else:
+            return ui
 
 def odv_query(rules, keyword):
     print("Inclusion of any given rule is a risk-based-decision (RBD).  While each rule is mapped to a 800-53 control, deploying it in your organization should be part of the decision making process. \nYou will be prompted to include each rule, and for those with specific organizational defined values (ODV), you will be prompted for those as well.\n")
@@ -336,11 +365,11 @@ def odv_query(rules, keyword):
        
         _always_include = ['supplemental', 'inherent']
         if any(tag in rule.rule_tags for tag in _always_include):
-            print(f"Including rule {rule.rule_id} by default")
+            #print(f"Including rule {rule.rule_id} by default")
             include = "Y"
         else:
             if rule.rule_id not in queried_rule_ids:
-                include = str(input(f"Would you like to include the rule for \"{rule.rule_id}\" in your benchmark? [Y/n]: ") or "Y")
+                include = sanitised_input(f"Would you like to include the rule for \"{rule.rule_id}\" in your benchmark? [Y/n]: ", str.lower, range_=('y', 'n'), default_="y")
                 queried_rule_ids.append(rule.rule_id)
                 get_odv = True
                 # remove custom ODVs if there, they will be re-written if needed
@@ -350,14 +379,24 @@ def odv_query(rules, keyword):
             if rule.rule_odv == "missing":
                 continue
             elif get_odv:
-                if isinstance(rule.rule_odv[benchmark], int):
-                    odv = int(input(f"Enter the ODV for \"{rule.rule_id}\" (default: {rule.rule_odv[benchmark]}) ") or rule.rule_odv[benchmark])
-                elif isinstance(rule.rule_odv[benchmark], bool):
-                    odv = bool(input(f"Enter the ODV for \"{rule.rule_id}\" (default: {rule.rule_odv[benchmark]}) ") or rule.rule_odv[benchmark])
+                if benchmark == "default":
+                    if "integer" in rule.rule_odv[benchmark]:
+                        odv = sanitised_input(f"Enter the ODV for \"{rule.rule_id}\" ({rule.rule_odv[benchmark]}) ", int, default_="x")
+                    elif "bool" in rule.rule_odv[benchmark]:
+                        odv = sanitised_input(f"Enter the ODV for \"{rule.rule_id}\" ({rule.rule_odv[benchmark]}) ", bool, default_)
+                    else:
+                        odv = sanitised_input(f"Enter the ODV for \"{rule.rule_id}\" ({rule.rule_odv[benchmark]}) ", str, default_=12)
+                    if odv and odv != rule.rule_odv[benchmark]:
+                        write_odv_custom_rule(rule, odv)
                 else:
-                    odv = input(f"Enter the ODV for \"{rule.rule_id}\" (default: {rule.rule_odv[benchmark]}) ") or rule.rule_odv[benchmark]
-                if odv and odv != rule.rule_odv[benchmark]:
-                    write_odv_custom_rule(rule, odv)
+                    if isinstance(rule.rule_odv[benchmark], int):
+                        odv = sanitised_input(f"Enter the ODV for \"{rule.rule_id}\" (default: {rule.rule_odv[benchmark]}) ", int, default_=rule.rule_odv[benchmark])
+                    elif isinstance(rule.rule_odv[benchmark], bool):
+                        odv = sanitised_input(f"Enter the ODV for \"{rule.rule_id}\" (default: {rule.rule_odv[benchmark]}) ", bool, default_=rule.rule_odv[benchmark])
+                    else:
+                        odv = sanitised_input(f"Enter the ODV for \"{rule.rule_id}\" (default: {rule.rule_odv[benchmark]}) ", str, default_=rule.rule_odv[benchmark])
+                    if odv and odv != rule.rule_odv[benchmark]:
+                        write_odv_custom_rule(rule, odv)
 
      
     return included_rules
