@@ -43,15 +43,18 @@ references:
     - IA-2(4)
     - IA-5(11)
   srg:
-    - N/A
-  disa_stig: 
-    - N/A
+    - SRG-OS-000480-GPOS-00227
+  disa_stig:
+    - APPL-12-003052
   800-171r2:
     - 3.5.3
-  cisv8:
-    - 6.3
-    - 6.4
-    - 6.5
+  cis:
+    benchmark:
+      - N/A
+    controls v8:
+      - 6.3
+      - 6.4
+      - 6.5
 macOS:
   - "12.0"
 tags:
@@ -64,6 +67,7 @@ tags:
   - 800-171 
   - cnssi-1253
   - cisv8
+  - stig
 severity: "medium"
 mobileconfig: false
 mobileconfig_info:

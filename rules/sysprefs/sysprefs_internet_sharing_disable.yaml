@@ -5,9 +5,12 @@ discussion: |
 
   The information system _MUST_ be configured to provide only essential capabilities. Disabling Internet sharing helps prevent the unauthorized connection of devices, unauthorized transfer of information, and unauthorized tunneling.
 check: |
-  /usr/bin/profiles -P -o stdout | /usr/bin/grep -c 'forceInternetSharingOff = 1'
+  /usr/bin/osascript -l JavaScript << EOS
+  $.NSUserDefaults.alloc.initWithSuiteName('com.apple.MCX')\
+  .objectForKey('forceInternetSharingOff').js
+  EOS
 result:
-  integer: 1
+  string: "true"
 fix: |
   This is implemented by a Configuration Profile.
 references:
@@ -22,15 +25,18 @@ references:
     - AC-4
     - AC-20
   srg:
-    - N/A
-  disa_stig: 
-    - N/A
+    - SRG-OS-000095-GPOS-00049
+  disa_stig:
+    - APPL-12-002007
   800-171r2:
     - 3.1.3
     - 3.1.20
-  cisv8:
-    - 4.1
-    - 4.8
+  cis:
+    benchmark: 
+      - 2.4.2 (level 1)
+    controls v8: 
+      - 4.1
+      - 4.8
 macOS:
   - "12.0"
 tags:
@@ -42,7 +48,10 @@ tags:
   - 800-53r5_high 
   - 800-171 
   - cnssi-1253
+  - cis_lvl1
+  - cis_lvl2
   - cisv8
+  - stig
 severity: "medium"
 mobileconfig: true
 mobileconfig_info:

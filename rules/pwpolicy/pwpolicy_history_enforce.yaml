@@ -9,7 +9,10 @@ discussion: |
 
   NOTE: The guidance for password based authentication in NIST 800-53 (Rev 5) and NIST 800-63B state that complexity rules should be organizationally defined. The values defined are based off of common complexity values. But your organization may define its own password complexity rules.
 check: | 
-  /usr/bin/profiles -P -o stdout | /usr/bin/awk '/pinHistory/{sub(/;.*/,"");print $3}'
+  /usr/bin/osascript -l JavaScript << EOS
+  $.NSUserDefaults.alloc.initWithSuiteName('com.apple.mobiledevice.passwordpolicy')\
+  .objectForKey('pinHistory').js
+  EOS
 result:
   integer: 5
 fix: |
@@ -24,16 +27,19 @@ references:
   800-53r4: 
     - IA-5(1)
   srg:
-    - N/A
-  disa_stig: 
-    - N/A
+    - SRG-OS-000077-GPOS-00045
+  disa_stig:
+    - APPL-12-003009
   800-171r2:
     - 3.5.7
     - 3.5.8
     - 3.5.9
     - 3.5.10
-  cisv8:
-    - 5.2
+  cis:
+    benchmark:
+      - N/A
+    controls v8:
+      - 5.2
 macOS:
   - "12.0"
 tags:
@@ -46,6 +52,7 @@ tags:
   - 800-53r5_moderate 
   - 800-53r5_high
   - cisv8
+  - stig
 severity: "medium"
 mobileconfig: true
 mobileconfig_info:

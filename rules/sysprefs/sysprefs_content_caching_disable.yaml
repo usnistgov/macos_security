@@ -5,9 +5,12 @@ discussion: |
 
   Content caching is a macOS service that helps reduce Internet data usage and speed up software installation on Mac computers. It is not recommended for devices furnished to employees to act as a caching server. 
 check: |
-  /usr/bin/profiles -P -o stdout | /usr/bin/grep -c 'allowContentCaching = 0'
+  /usr/bin/osascript -l JavaScript << EOS
+  $.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess')\
+  .objectForKey('allowContentCaching').js
+  EOS
 result:
-  integer: 1
+  string: "false"
 fix: |
   This is implemented by a Configuration Profile.
 references:
@@ -27,9 +30,12 @@ references:
     - N/A
   800-171r2:
     - 3.4.6
-  cisv8:
-    - 4.1
-    - 4.8
+  cis:
+    benchmark:
+      - 2.4.10 (level 2)
+    controls v8:
+      - 4.1
+      - 4.8
 macOS:
   - "12.0"
 tags:
@@ -41,6 +47,7 @@ tags:
   - 800-53r4_high
   - 800-171
   - cnssi-1253
+  - cis_lvl2
   - cisv8
 mobileconfig: true
 mobileconfig_info:

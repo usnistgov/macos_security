@@ -26,15 +26,18 @@ references:
     - AC-20
     - AC-20(1)
   srg:
-    - N/A
-  disa_stig: 
-    - N/A
+    - SRG-OS-000370-GPOS-00155
+  disa_stig:
+    - APPL-12-002031
   800-171r2:
     - 3.1.20
     - 3.4.6
-  cisv8:
-    - 4.1
-    - 4.8
+  cis:
+    benchmark:
+      - N/A
+    controls v8:
+      - 4.1
+      - 4.8
 macOS:
   - "12.0"
 tags:
@@ -47,6 +50,7 @@ tags:
   - 800-171 
   - cnssi-1253
   - cisv8
+  - stig
 severity: "high"
 mobileconfig: true
 mobileconfig_info:

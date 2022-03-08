@@ -5,9 +5,12 @@ discussion: |
 
   This rule ensures the uniformity of time stamps for information systems with multiple system clocks and systems connected over a network.
 check: |
-  /usr/bin/profiles -P -o stdout | /usr/bin/grep -c 'TMAutomaticTimeOnlyEnabled = 1'
+  osascript -l JavaScript << EOS
+  $.NSUserDefaults.alloc.initWithSuiteName('com.apple.timed')\
+  .objectForKey('TMAutomaticTimeOnlyEnabled').js
+  EOS
 result:
-  integer: 1
+  string: "true"
 fix: |
   This is implemented by a Configuration Profile.
 references:
@@ -22,13 +25,17 @@ references:
   800-53r4: 
     - AU-8(1)
   srg:
-    - N/A
-  disa_stig: 
-    - N/A
+    - SRG-OS-000355-GPOS-00143
+    - SRG-OS-000356-GPOS-00144
+  disa_stig:
+    - APPL-12-000014
   800-171r2:
     - 3.3.7
-  cisv8:
-    - 8.4
+  cis:
+    benchmark:
+      - 2.2.1 (level 1)
+    controls v8:
+      - 8.4
 macOS:
   - "12.0"
 tags:
@@ -39,7 +46,10 @@ tags:
   - 800-53r5_high 
   - 800-53r4_moderate 
   - 800-53r4_high
+  - cis_lvl1
+  - cis_lvl2
   - cisv8
+  - stig
 severity: "medium"
 mobileconfig: true
 mobileconfig_info:

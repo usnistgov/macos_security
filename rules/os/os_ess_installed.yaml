@@ -1,0 +1,33 @@
+id: os_ess_installed
+title: "Must Use ESS"
+discussion: |
+  The approved ESS solution _MUST_ be installed and configured to run. 
+
+  The macOS system must employ automated mechanisms to determine the state of system components. The DoD requires the installation and use of an approved ESS solution to be implemented on the operating system. For additional information, reference all applicable ESS OPORDs and FRAGOs on SIPRNET.
+check: |
+  Ask the System Administrator (SA) or Information System Security Officer (ISSO) if the approved ESS solution is loaded on the system. 
+  If the installed components of the ESS solution are not at the DoD approved minimal versions, this is a finding.
+fix: |
+  Install the approved ESS solution onto the system.
+references:
+  cce:
+    - CCE-90930-9
+  cci: 
+    - CCI-001233
+  800-53r5: 
+    - N/A
+  800-53r4: 
+    - SI-2(2)
+  srg:
+    - SRG-OS-000191-GPOS-00080
+  disa_stig:
+    - APPL-12-000015
+macOS:
+  - "12.0"
+tags:
+  - manual
+  - cisv8
+  - stig
+severity: "medium"
+mobileconfig: false
+mobileconfig_info:

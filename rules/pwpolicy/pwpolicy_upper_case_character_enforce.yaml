@@ -46,7 +46,7 @@ references:
   800-53r4: 
     - IA-5
     - IA-5(1)
-  disa_stig: 
+  disa_stig:
     - N/A
   srg:
     - N/A
@@ -57,8 +57,11 @@ references:
     - 3.5.8
     - 3.5.9
     - 3.5.10
-  cisv8:
-    - 5.2
+  cis:
+    benchmark:
+      - 5.2.6 (level 2)
+    controls v8:
+      - 5.2
 macOS:
   - "12.0"
 tags:
@@ -70,6 +73,7 @@ tags:
   - 800-53r5_low
   - 800-53r5_moderate
   - 800-53r5_high
+  - cis_lvl2
   - cisv8
 mobileconfig: false
 mobileconfig_info:

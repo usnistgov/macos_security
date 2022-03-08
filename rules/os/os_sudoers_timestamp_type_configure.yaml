@@ -1,0 +1,46 @@
+id: os_sudoers_timestamp_type_configure
+title: "Configure Sudoers Timestamp Type"
+discussion: |
+  The file /etc/sudoers _MUST_ be configured to not include a timestamp_type of global or ppid.
+
+  This rule ensures that the "sudo" command will prompt for the administrator's password at least once in each newly opened terminal window. This prevents a malicious user from taking advantage of an unlocked computer or an abandoned logon session by bypassing the normal password prompt requirement.
+check: |
+  /usr/bin/find /etc/sudoers* -type f -exec /usr/bin/grep -E '(^Defaults\s+timestamp_type=global|^Defaults\s+timestamp_type=ppid)' '{}' \; | /usr/bin/wc -l | /usr/bin/xargs
+result:
+  integer: 0
+fix: |
+  [source,bash]
+  ----
+  /usr/bin/find /etc/sudoers* -type f -exec sed -i '' '/timestamp_type/d' '{}' \;
+  ----
+references:
+  cce:
+    - CCE-91015-8
+  cci:
+    - CCI-000366
+  800-53r5:
+    - CM-5(1)
+    - IA-11
+  800-53r4:
+    - IA-11
+  srg:
+    - N/A
+  disa_stig:
+    - N/A
+  cis:
+    benchmark:
+      - 5.4 (level 1)
+    controls v8:
+      - 4.3
+macOS:
+  - "12.0"
+tags:
+  - 800-53r5_low 
+  - 800-53r5_moderate 
+  - 800-53r5_high 
+  - cnssi-1253
+  - cis_lvl1
+  - cis_lvl2
+  - cisv8
+mobileconfig: false
+mobileconfig_info:
