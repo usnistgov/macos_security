@@ -1,17 +1,17 @@
 id: audit_retention_configure
-title: "Configure Audit Retention to a Minimum of Seven Days"
+title: "Configure Audit Retention to $ODV"
 discussion: |
-  The audit service _MUST_ be configured to require records be kept for seven days or longer before deletion, unless the system uses a central audit record storage facility. 
+  The audit service _MUST_ be configured to require records be kept for a organizational defined value before deletion, unless the system uses a central audit record storage facility. 
   
-  When "expire-after" is set to "7d", the audit service will not delete audit logs until the log data is at least seven days old.
+  When "expire-after" is set to "$ODV", the audit service will not delete audit logs until the log data criteria is met.
 check: |
   /usr/bin/awk -F: '/expire-after/{print $2}' /etc/security/audit_control
 result:
-  string: 7d
+  string: $ODV
 fix: |
   [source,bash]
   ----
-  /usr/bin/sed -i.bak 's/^expire-after.*/expire-after:7d/' /etc/security/audit_control; /usr/sbin/audit -s
+  /usr/bin/sed -i.bak 's/^expire-after.*/expire-after:$ODV/' /etc/security/audit_control; /usr/sbin/audit -s
   ----
 references:
   cce:
@@ -30,12 +30,17 @@ references:
     - APPL-12-001029
   cis:
     benchmark:
-      - N/A
+      - 3.4 (level 1)
     v8:
       - 8.3
       - 8.1
 macOS:
   - "12.0"
+odv:
+  default: "org_value"
+  stig: "7d"
+  cis_lvl1: "60d or 1G"
+  cis_lvl2: "60d or 1G"
 tags:
   - 800-53r5_privacy 
   - 800-53r4_low 
@@ -45,8 +50,11 @@ tags:
   - 800-53r5_moderate 
   - 800-53r5_high 
   - cnssi-1253
+  - cis_lvl1
+  - cis_lvl2
   - cisv8
   - stig
+  - test
 severity: "medium"
 mobileconfig: false
 mobileconfig_info:
