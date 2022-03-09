@@ -27,13 +27,9 @@ discussion: |
   2.6.1.1 Audit iCloud Configuration +
   2.6.1.2 Audit iCloud Keychain +
   2.6.1.3 Audit iCloud Drive +
-  2.6.2 Audit App Store Password Settings +
   2.12 Audit Automatic Actions for Optical Media +
   2.13 Audit Siri Settings +
   2.14 Audit Sidecar Settings +
-  2.15 Audit Touch ID and Wallet & Apple Pay Settings +
-  2.16 Audit Notification System Preference Settings +
-  2.17 Audit Passwords System Preference Setting +
   |===
 
   [cols="15%h, 85%a"]
