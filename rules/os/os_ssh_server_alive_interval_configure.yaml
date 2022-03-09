@@ -1,19 +1,19 @@
 id: os_ssh_server_alive_interval_configure
-title: "Configure SSH ServerAliveInterval option set to 900 or less"
+title: "Configure SSH ServerAliveInterval option set to $ODV"
 discussion: |
-  SSH _MUST_ be configured with an Active Server Alive Maximum Count set to 900 or less. 
+  SSH _MUST_ be configured with an Active Server Alive Maximum Count set to $ODV. 
   
-  Setting the Active Server Alive Maximum Count to 900 (second) will log users out after a 15-minute interval of inactivity.
+  Setting the Active Server Alive Maximum Count to $ODV (seconds) will log users out after an organization defined value interval of inactivity.
 
   NOTE: /etc/ssh/ssh_config will be automatically modified to its original state following any update or major upgrade to the operating system.
 check: |
-  /usr/bin/grep -c "^ServerAliveInterval 900" /etc/ssh/ssh_config
+  /usr/bin/awk '/^ServerAliveInterval/{print $2}' /etc/ssh/ssh_config
 result:
-  integer: 1
+  integer: $ODV
 fix: |
   [source,bash]
   ----
-  /usr/bin/grep -q '^ServerAliveInterval' /etc/ssh/ssh_config && /usr/bin/sed -i.bak  's/.*ServerAliveInterval.*/ServerAliveInterval 900/' /etc/ssh/ssh_config || /bin/echo 'ServerAliveInterval 900' >> /etc/ssh/ssh_config
+  /usr/bin/grep -q '^ServerAliveInterval' /etc/ssh/ssh_config && /usr/bin/sed -i.bak  's/.*ServerAliveInterval.*/ServerAliveInterval $ODV/' /etc/ssh/ssh_config || /bin/echo 'ServerAliveInterval $ODV' >> /etc/ssh/ssh_config
   ----
 references:
   cce:
@@ -33,6 +33,8 @@ references:
     - 3.13.9
 macOS:
   - "12.0"
+odv:
+  default: "org_value:integer"
 tags:
   - 800-53r5_moderate
   - 800-53r5_high
@@ -40,5 +42,6 @@ tags:
   - 800-53r4_high
   - 800-171
   - cnssi-1253
+  - test
 mobileconfig: false
 mobileconfig_info:

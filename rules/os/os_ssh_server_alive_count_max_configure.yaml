@@ -1,17 +1,17 @@
 id: os_ssh_server_alive_count_max_configure
-title: "Set SSH Active Server Alive Maximum to Zero"
+title: "Set SSH Active Server Alive Maximum to $ODV"
 discussion: |
-  SSH _MUST_ be configured with an Active Server Alive Maximum Count set to zero. Terminating an idle session within a short time period reduces the window of opportunity for unauthorized personnel to take control of a management session enabled on the console or console port that has been left unattended. In addition, quickly terminating an idle session or an incomplete login attempt will also free up resources committed by the managed network element.
+  SSH _MUST_ be configured with an Active Server Alive Maximum Count set to $ODV. Terminating an idle session within a short time period reduces the window of opportunity for unauthorized personnel to take control of a management session enabled on the console or console port that has been left unattended. In addition, quickly terminating an idle session or an incomplete login attempt will also free up resources committed by the managed network element.
 
   NOTE: /etc/ssh/ssh_config will be automatically modified to its original state following any update or major upgrade to the operating system.
 check: |
-  /usr/bin/grep -c "^ServerAliveCountMax 0" /etc/ssh/ssh_config
+  /usr/bin/awk '/^ServerAliveCountMax/{print $2}' /etc/ssh/ssh_config
 result:
-  integer: 1
+  integer: $ODV
 fix: |
   [source,bash]
   ----
-  /usr/bin/grep -q '^ServerAliveCountMax' /etc/ssh/ssh_config && /usr/bin/sed -i.bak  's/.*ServerAliveCountMax.*/ServerAliveCountMax 0/' /etc/ssh/ssh_config || /bin/echo 'ServerAliveCountMax 0' >> /etc/ssh/ssh_config
+  /usr/bin/grep -q '^ServerAliveCountMax' /etc/ssh/ssh_config && /usr/bin/sed -i.bak  's/.*ServerAliveCountMax.*/ServerAliveCountMax $ODV/' /etc/ssh/ssh_config || /bin/echo 'ServerAliveCountMax $ODV' >> /etc/ssh/ssh_config
   ----
 references:
   cce:
@@ -30,6 +30,8 @@ references:
     - 3.13.9
 macOS:
   - "12.0"
+odv:
+  default: "org_vaule:integer"
 tags:
   - 800-53r5_moderate
   - 800-53r5_high
@@ -37,5 +39,6 @@ tags:
   - 800-53r4_high
   - 800-171
   - cnssi-1253
+  - test
 mobileconfig: false
 mobileconfig_info:

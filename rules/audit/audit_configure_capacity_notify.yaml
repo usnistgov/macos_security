@@ -5,13 +5,13 @@ discussion: |
 
   This rule ensures that the system administrator is notified in advance that action is required to free up more disk space for audit logs.
 check: |
-  /usr/bin/grep -c "^minfree:25" /etc/security/audit_control
+  /usr/bin/awk -F: '/^minfree/{print $2}' /etc/security/audit_control
 result:
-  integer: 1
+  integer: $ODV
 fix: |
   [source,bash]
   ----
-  /usr/bin/sed -i.bak 's/.*minfree.*/minfree:25/' /etc/security/audit_control; /usr/sbin/audit -s 
+  /usr/bin/sed -i.bak 's/.*minfree.*/minfree:$ODV/' /etc/security/audit_control; /usr/sbin/audit -s 
   ----
 references:
   cce:
@@ -28,10 +28,14 @@ references:
     - APPL-12-001030
 macOS:
   - "12.0"
+odv:
+  default: "org_value:integer"
+  stig: 25
 tags:
   - 800-53r5_high 
   - 800-53r4_high
   - stig
+  - test
 severity: "medium"
 mobileconfig: false
 mobileconfig_info:
