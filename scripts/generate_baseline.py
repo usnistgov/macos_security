@@ -379,6 +379,7 @@ def odv_query(rules, keyword):
             if rule.rule_odv == "missing":
                 continue
             elif get_odv:
+                print(f'{rule.rule_odv["hint"]}')
                 if benchmark == "default":
                     if "integer" in rule.rule_odv[benchmark]:
                         odv = sanitised_input(f"Enter the ODV for \"{rule.rule_id}\" ({rule.rule_odv[benchmark]}) ", int, default_="x")

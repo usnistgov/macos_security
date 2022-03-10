@@ -29,7 +29,8 @@ references:
 macOS:
   - "12.0"
 odv:
-  default: "org_value:integer"
+  hint: "percentage of free space"
+  default: "org_value[integer]"
   stig: 25
 tags:
   - 800-53r5_high 
