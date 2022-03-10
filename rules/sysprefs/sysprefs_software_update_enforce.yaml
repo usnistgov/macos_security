@@ -13,7 +13,7 @@ fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-    - N/A
+    - CCE-85533-8
   800-53r5:
     - SI-2(5)
   800-53r4:

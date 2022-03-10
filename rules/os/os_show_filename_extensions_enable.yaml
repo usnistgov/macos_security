@@ -22,7 +22,7 @@ fix: |
   ----
 references:
   cce:
-    - N/A
+    - CCE-85511-4
   800-53r5:
     - N/A
   800-53r4:
