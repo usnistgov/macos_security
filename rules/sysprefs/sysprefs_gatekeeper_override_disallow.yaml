@@ -12,13 +12,7 @@ check: |
 result:
   string: "true"
 fix: |
-  To implement the prescribed state with a Configuration Profile, create a configuration profile (com.apple.systempolicy.managed) with the following key DisableOverride set to true
-  [source,xml]
-  ----
-  <key>DisableOverride</key>
-  <true/>
-  ----
-  NOTE - This will apply to the whole system
+  This is implemented by a Configuration Profile.
 references:
   cce:
     - CCE-91058-8
