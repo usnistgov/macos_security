@@ -3,9 +3,9 @@ title: "Disable Find My Service"
 discussion: |
   The Find My service _MUST_ be disabled.
 
-  A Mobile Device Management (MDM) solution _MUST_ be used to carry out remote locking and wiping instead of Apple’s Find My service.
+  A Mobile Device Management (MDM) solution _MUST_ be used to carry out remote locking and wiping instead of Apple's Find My service.
  
-  Apple’s Find My service uses a personal AppleID for authentication. Organizations should rely on MDM solutions, which have much more secure authentication requirements, to perform remote lock and remote wipe.
+  Apple's Find My service uses a personal AppleID for authentication. Organizations should rely on MDM solutions, which have much more secure authentication requirements, to perform remote lock and remote wipe.
 check: |
   /usr/bin/osascript -l JavaScript << EOS
   function run() {
