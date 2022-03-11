@@ -5,17 +5,14 @@ discussion: |
 
   If users are allowed to disable Gatekeeper or set it to a less restrictive setting, malware could be introduced into the system. 
 check: |
-  /usr/bin/profiles -P -o stdout | /usr/bin/grep -c 'DisableOverride = 1'
+  /usr/bin/osascript -l JavaScript << EOS
+  $.NSUserDefaults.alloc.initWithSuiteName('com.apple.systempolicy.managed')\
+  .objectForKey('DisableOverride').js
+  EOS
 result:
-  integer: 1
+  string: "true"
 fix: |
-  To implement the prescribed state with a Configuration Profile, create a configuration profile (com.apple.systempolicy.managed) with the following key DisableOverride set to true
-  [source,xml]
-  ----
-  <key>DisableOverride</key>
-  <true/>
-  ----
-  NOTE - This will apply to the whole system
+  This is implemented by a Configuration Profile.
 references:
   cce:
     - CCE-84835-8

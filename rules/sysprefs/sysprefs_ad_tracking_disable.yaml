@@ -5,9 +5,12 @@ discussion: |
 
   The information system _MUST_ be configured to provide only essential capabilities. Disabling ad tracking ensures that applications and advertisers are unable to track users’ interests and deliver targeted advertisements.  
 check: |
-  /usr/bin/profiles -P -o stdout | /usr/bin/grep -c 'forceLimitAdTracking = 1;'
+  /usr/bin/osascript -l JavaScript << EOS
+  $.NSUserDefaults.alloc.initWithSuiteName('com.apple.AdLib')\
+  .objectForKey('forceLimitAdTracking').js
+  EOS
 result:
-  integer: 1
+  string: "true"
 fix: |
   This is implemented by a Configuration Profile.
 references:
