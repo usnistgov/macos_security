@@ -1,7 +1,7 @@
 id: sysprefs_touchid_unlock_disable
 title: "Disable TouchID for Unlocking the Device"
 discussion: |
-  TouchID enables the ability to unlock a Mac system with a user’s fingerprint. 
+  TouchID enables the ability to unlock a Mac system with a user's fingerprint. 
   
   TouchID _MUST_ be disabled for "Unlocking your Mac" on all macOS devices that are capable of using Touch ID. 
   

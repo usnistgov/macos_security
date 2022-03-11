@@ -5,7 +5,7 @@ discussion: |
 
   DoS attacks leave authorized users unable to access information systems, devices, or other network resources due to the actions of a malicious cyber threat actor. When this occurs, the organization must operate at degraded capacity; often resulting in an inability to accomplish its mission. 
 
-  To limit the impact of DoS attacks, organizations may choose to employ increased capacity and service redundancy, which has the potential to reduce systems’ susceptibility to some DoS attacks. Managing excess capacity may include, for example, establishing selected usage priorities, quotas, or partitioning. Many operating systems can be integrated with enterprise-level firewalls and networking equipment that meet or exceed this requirement.
+  To limit the impact of DoS attacks, organizations may choose to employ increased capacity and service redundancy, which has the potential to reduce systems' susceptibility to some DoS attacks. Managing excess capacity may include, for example, establishing selected usage priorities, quotas, or partitioning. Many operating systems can be integrated with enterprise-level firewalls and networking equipment that meet or exceed this requirement.
 check: |
   The technology does not support this requirement. This is an applicable-does not meet finding.
 fix: |
