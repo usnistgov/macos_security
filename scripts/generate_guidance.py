@@ -1531,6 +1531,17 @@ def main():
         else:
             adoc_templates_dict[template] = f"../templates/{template}.adoc"
     
+    # check for custom PDF theme (must have theme in the name and end with .yml)
+    pdf_theme="mscp-theme.yml"
+    themes = glob.glob('../custom/templates/*theme*.yml')
+    if len(themes) > 1 :
+        print("Found muliple custom themes in directory, only one can exist, using default")
+    elif len(themes) == 1 :
+        print(f"Found custom PDF theme: {themes[0]}")
+        pdf_theme = themes[0]
+        
+
+
     # Setup AsciiDoc templates
     with open(adoc_templates_dict['adoc_rule']) as adoc_rule_file:
         adoc_rule_template = Template(adoc_rule_file.read())
@@ -1597,6 +1608,7 @@ def main():
         html_title=baseline_yaml['title'].split(':')[0],
         html_subtitle=baseline_yaml['title'].split(':')[1],
         logo=logo,
+        pdf_theme=pdf_theme,
         tag_attribute=adoc_tag_show,
         nist171_attribute=adoc_171_show,
         stig_attribute=adoc_STIG_show,

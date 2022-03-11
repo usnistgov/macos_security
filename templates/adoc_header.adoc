@@ -18,7 +18,8 @@ $cis_attribute
 ifdef::backend-pdf[]
 = $profile_title
 $version ($release_date)
-:pdf-themesdir: ../../templates
+:pdf-themesdir: ../templates
+:pdf-theme: $pdf_theme
 :title-logo-image: image:$logo[align=center]
 :nofooter!:
 endif::[]
