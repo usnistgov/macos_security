@@ -15,14 +15,21 @@ header:
     center:
       content: $header_recto_center_content
 footer:
-  height: 0.45in
+  height: 0.60in
+  lines: 2
   recto:
     right:
-      content: ~
+      content: |-
+        {page-number}    
     center: 
-      content: '{page-number} of {page-count}'
+      content: |-
+        {proj-title} +
+        macOS Security Compliance Project - {version}
   verso:
     left:
-      content: ~
+      content: |-
+        {page-number}
     center:
-      content: '{page-number} of {page-count}'
+      content: |-
+        {proj-title} +
+        macOS Security Compliance Project - {version}
