@@ -20,16 +20,16 @@ footer:
   recto:
     right:
       content: |-
-        {page-number}    
+        *{page-number}*   
     center: 
       content: |-
         {proj-title} +
-        macOS Security Compliance Project - {version}
+        macOS Security Compliance Project - _{version}_
   verso:
     left:
       content: |-
-        {page-number}
+        *{page-number}*
     center:
       content: |-
         {proj-title} +
-        macOS Security Compliance Project - {version}
+        macOS Security Compliance Project - _{version}_
