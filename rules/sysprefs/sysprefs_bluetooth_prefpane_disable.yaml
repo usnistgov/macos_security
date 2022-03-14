@@ -1,5 +1,5 @@
 id: sysprefs_bluetooth_prefpane_disable
-title: "Hide the Bluetooth System Preference Pane"
+title: "Disable the Bluetooth System Preference Pane"
 discussion: |
   The Bluetooth System Preference pane _MUST_ be disabled to prevent access to the bluetooth configuration.
 
