@@ -6,8 +6,7 @@ CREATIONDATE=$(date -j -f "%a %b %d %T %Z %Y" "$(date)" "+%Y-%m-%dT%TZ")
 
 /bin/cat > macos-cpe-oval.xml << EOO
 <?xml version="1.0" encoding="UTF-8"?>
-<oval_definitions xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:oval="http://oval.mitre.org/XMLSchema/oval-common-5"
-    xsi:schemaLocation=" http://oval.mitre.org/XMLSchema/oval-definitions-5 https://raw.githubusercontent.com/OVALProject/Language/5.11.2/schemas/oval-definitions-schema.xsd http://oval.mitre.org/XMLSchema/oval-definitions-5#independent https://raw.githubusercontent.com/OVALProject/Language/5.11.2/schemas/independent-definitions-schema.xsd http://oval.mitre.org/XMLSchema/oval-definitions-5#macos https://raw.githubusercontent.com/OVALProject/Language/5.11.2/schemas/macos-definitions-schema.xsd http://oval.mitre.org/XMLSchema/oval-definitions-5#unix https://raw.githubusercontent.com/OVALProject/Language/5.11.2/schemas/unix-definitions-schema.xsd">
+<oval_definitions xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:oval="http://oval.mitre.org/XMLSchema/oval-common-5" xsi:schemaLocation=" http://oval.mitre.org/XMLSchema/oval-definitions-5 https://raw.githubusercontent.com/OVALProject/Language/5.11.2/schemas/oval-definitions-schema.xsd http://oval.mitre.org/XMLSchema/oval-definitions-5#independent https://raw.githubusercontent.com/OVALProject/Language/5.11.2/schemas/independent-definitions-schema.xsd http://oval.mitre.org/XMLSchema/oval-definitions-5#macos https://raw.githubusercontent.com/OVALProject/Language/5.11.2/schemas/macos-definitions-schema.xsd http://oval.mitre.org/XMLSchema/oval-definitions-5#unix https://raw.githubusercontent.com/OVALProject/Language/5.11.2/schemas/unix-definitions-schema.xsd">
     <generator>
         <oval:product_name>macOS Security Compliance Project</oval:product_name>
         <oval:schema_version>5.11.2</oval:schema_version>
@@ -35,28 +34,27 @@ CREATIONDATE=$(date -j -f "%a %b %d %T %Z %Y" "$(date)" "+%Y-%m-%dT%TZ")
             <object object_ref="oval:gov.nist.mscp.content.cpe:obj:1"/>
             <state state_ref="oval:gov.nist.mscp.content.cpe:ste:1"/>
         </family_test>
-        <plist510_test xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" check="all" check_existence="only_one_exists" comment="Apple macOS version is greater than $OS"
+        <plist511_test xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" check="all" check_existence="only_one_exists" comment="Apple macOS version is greater than $OS"
             id="oval:gov.nist.mscp.content.cpe:tst:2" version="2">
             <object object_ref="oval:gov.nist.mscp.content.cpe:obj:2"/>
             <state state_ref="oval:gov.nist.mscp.content.cpe:ste:2"/>
-        </plist510_test>
+        </plist511_test>
     </tests>
     <objects>
         <family_object id="oval:gov.nist.mscp.content.cpe:obj:1" version="1" comment="This variable_object represents the family that the operating system belongs to."
             xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#independent"/>
-        <plist510_object xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" comment="The macOS product version plist object." id="oval:gov.nist.mscp.content.cpe:obj:2" version="1">
-            <key>ProductVersion</key>
+        <plist511_object xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" comment="The macOS product version plist object." id="oval:gov.nist.mscp.content.cpe:obj:2" version="1">
             <filepath>/System/Library/CoreServices/SystemVersion.plist</filepath>
-            <instance datatype="int" operation="equals">1</instance>
-        </plist510_object>
+            <xpath>//*[contains(text(), "ProductVersion")]/following-sibling::*[1]/text()</xpath>
+        </plist511_object>
     </objects>
     <states>
         <family_state id="oval:gov.nist.mscp.content.cpe:ste:1" version="1" comment="The OS is part of the macOS Family." xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#independent">
             <family>macos</family>
         </family_state>
-        <plist510_state xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" comment="Is the value is greater than or equal to $OS" id="oval:gov.nist.mscp.content.cpe:ste:2" version="1">
-            <value datatype="version" operation="greater than or equal">$OS</value>
-        </plist510_state>
+        <plist511_state xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" comment="Is the value is greater than or equal to $OS" id="oval:gov.nist.mscp.content.cpe:ste:2" version="1">
+            <value_of datatype="version" operation="greater than or equal">$OS</value_of>
+        </plist511_state>
     </states>
 </oval_definitions>
 
