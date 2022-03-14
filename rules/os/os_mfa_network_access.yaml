@@ -20,8 +20,11 @@ references:
     - N/A
   srg:
     - SRG-OS-000105-GPOS-00052
-  cisv8:
-    - 5.6
+  cis:
+    benchmark:
+      - N/A
+    controls v8:
+      - 5.6
 macOS:
   - "10.15"
 tags:

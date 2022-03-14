@@ -24,10 +24,13 @@ references:
     - N/A
   800-171r2:
     - N/A
-  cisv8:
-    - 7.3
-    - 7.4
-    - 7.7
+  cis:
+    benchmark:
+      - N/A
+    controls v8:
+      - 7.3
+      - 7.4
+      - 7.7
 macOS:
   - "10.15"
 tags:

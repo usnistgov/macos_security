@@ -39,10 +39,13 @@ references:
     - 3.1.16
     - 3.1.20
     - 3.4.6
-  cisv8:
-    - 4.1
-    - 4.8
-    - 6.7
+  cis:
+    benchmark:
+      - N/A
+    controls v8:
+      - 4.1
+      - 4.8
+      - 6.7
 macOS:
   - "10.15"
 tags:

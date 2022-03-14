@@ -51,10 +51,13 @@ references:
     - AOSX-15-001020
   800-171r2:
     - N/A
-  cisv8:
-    - 3.14
-    - 8.2
-    - 8.5
+  cis:
+    benchmark:
+      - N/A
+    controls v8:
+      - 3.14
+      - 8.2
+      - 8.5
 macOS:
   - "10.15"
 tags:

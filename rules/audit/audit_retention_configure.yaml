@@ -28,9 +28,12 @@ references:
     - SRG-OS-000341-GPOS-00132
   disa_stig:
     - AOSX-15-001029
-  cisv8:
-    - 8.3
-    - 8.1
+  cis:
+    benchmark:
+      - N/A
+    controls v8:
+      - 8.3
+      - 8.1
 macOS:
   - "10.15"
 tags:
