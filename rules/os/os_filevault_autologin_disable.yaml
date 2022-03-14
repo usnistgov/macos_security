@@ -5,7 +5,7 @@ discussion: |
   
   The default behavior of macOS when FileVault is enabled is to automatically log in to the computer once successfully passing your FileVault credentials. 
 check: | 
-  osascript -l JavaScript << EOS
+  /usr/bin/osascript -l JavaScript << EOS
   $.NSUserDefaults.alloc.initWithSuiteName('com.apple.loginwindow')\
   .objectForKey('DisableFDEAutoLogin').js
   EOS
