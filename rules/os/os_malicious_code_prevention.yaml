@@ -48,7 +48,7 @@ references:
   cis:
     benchmark:
       - N/A
-    v8:
+    controls v8:
       - 10.1
       - 10.2
       - 10.5
