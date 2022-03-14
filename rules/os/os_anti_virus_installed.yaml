@@ -9,7 +9,7 @@ check: |
 result:
   integer: 1
 fix: |
-  /usr/bin/sudo /bin/launchctl enable system/com.apple.mrt
+  /bin/launchctl enable system/com.apple.mrt
 references:
   cce:
     - CCE-90900-2
