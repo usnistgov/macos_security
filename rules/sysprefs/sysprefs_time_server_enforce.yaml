@@ -5,7 +5,7 @@ discussion: |
 
   This rule ensures the uniformity of time stamps for information systems with multiple system clocks and systems connected over a network.
 check: |
-  osascript -l JavaScript << EOS
+  /usr/bin/osascript -l JavaScript << EOS
   $.NSUserDefaults.alloc.initWithSuiteName('com.apple.timed')\
   .objectForKey('TMAutomaticTimeOnlyEnabled').js
   EOS
