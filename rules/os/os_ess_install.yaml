@@ -1,4 +1,4 @@
-id: os_ESS_installed
+id: os_ess_installed
 title: "Must Use ESS"
 discussion: |
   The approved ESS solution _MUST_ be installed and configured to run. 
