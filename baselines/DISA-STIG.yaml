@@ -58,7 +58,6 @@ profile:
       - os_home_folders_secure
       - os_httpd_disable
       - os_icloud_storage_prompt_disable
-      - os_internet_accounts_prefpane_disable
       - os_newsyslog_files_owner_group_configure
       - os_newsyslog_files_permissions_configure
       - os_nfsd_disable
@@ -110,6 +109,7 @@ profile:
       - sysprefs_apple_watch_unlock_disable
       - sysprefs_automatic_login_disable
       - sysprefs_bluetooth_disable
+      - sysprefs_bluetooth_prefpane_disable
       - sysprefs_bluetooth_prefpane_hide
       - sysprefs_diagnostics_reports_disable
       - sysprefs_filevault_enforce
@@ -118,6 +118,7 @@ profile:
       - sysprefs_gatekeeper_identified_developers_allowed
       - sysprefs_guest_account_disable
       - sysprefs_hot_corners_disable
+      - sysprefs_internet_accounts_prefpane_disable
       - sysprefs_internet_accounts_prefpane_hide
       - sysprefs_internet_sharing_disable
       - sysprefs_location_services_disable

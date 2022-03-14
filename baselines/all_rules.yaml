@@ -24,12 +24,17 @@ profile:
       - audit_acls_folders_configure
       - audit_auditd_enabled
       - audit_configure_capacity_notify
+      - audit_control_acls_configure
+      - audit_control_group_configure
+      - audit_control_mode_configure
+      - audit_control_owner_configure
       - audit_failure_halt
       - audit_files_group_configure
       - audit_files_mode_configure
       - audit_files_owner_configure
       - audit_flags_aa_configure
       - audit_flags_ad_configure
+      - audit_flags_configure
       - audit_flags_ex_configure
       - audit_flags_fd_configure
       - audit_flags_fm_configure
@@ -40,6 +45,7 @@ profile:
       - audit_folder_owner_configure
       - audit_folders_mode_configure
       - audit_retention_configure
+      - audit_retention_configure_sixty_days
       - audit_settings_failure_notify
   - section: "macos"
     rules:
@@ -57,6 +63,7 @@ profile:
       - os_certificate_authority_trust
       - os_config_data_install_enforce
       - os_directory_services_configured
+      - os_efi_integrity_validated
       - os_ess_installed
       - os_facetime_app_disable
       - os_filevault_authorized_users
@@ -66,20 +73,26 @@ profile:
       - os_firmware_password_require
       - os_gatekeeper_enable
       - os_gatekeeper_rearm
+      - os_guest_folder_removed
       - os_handoff_disable
+      - os_hibernate_mode_destroyfvkeyonstandby_enable
+      - os_hibernate_mode_enable
       - os_home_folders_secure
       - os_httpd_disable
       - os_icloud_storage_prompt_disable
-      - os_internet_accounts_prefpane_disable
+      - os_install_log_retention_configure
       - os_ir_support_disable
+      - os_library_validation_enabled
       - os_mail_app_disable
       - os_mdm_require
       - os_messages_app_disable
+      - os_mobile_file_integrity_enable
       - os_newsyslog_files_owner_group_configure
       - os_newsyslog_files_permissions_configure
       - os_nfsd_disable
       - os_parental_controls_enable
       - os_password_autofill_disable
+      - os_password_hint_remove
       - os_password_proximity_disable
       - os_password_sharing_disable
       - os_policy_banner_loginwindow_enforce
@@ -89,8 +102,10 @@ profile:
       - os_recovery_lock_enable
       - os_removable_media_disable
       - os_root_disable
+      - os_safari_open_safe_downloads_disable
       - os_screensaver_loginwindow_enforce
       - os_secure_boot_verify
+      - os_show_filename_extensions_enable
       - os_sip_enable
       - os_siri_prompt_disable
       - os_ssh_fips_140_ciphers
@@ -104,22 +119,31 @@ profile:
       - os_sshd_key_exchange_algorithm_configure
       - os_sshd_login_grace_time_configure
       - os_sshd_permit_root_login_configure
+      - os_sudo_timeout_configure
+      - os_sudoers_timestamp_type_configure
       - os_sudoers_tty_configure
       - os_system_read_only
+      - os_system_wide_applications_configure
+      - os_terminal_secure_keyboard_enable
       - os_tftpd_disable
+      - os_time_offset_limit_configure
       - os_time_server_enabled
       - os_touchid_prompt_disable
       - os_unlock_active_user_session_disable
       - os_user_app_installation_prohibit
       - os_uucp_disable
+      - os_world_writable_library_folder_configure
+      - os_world_writable_system_folder_configure
   - section: "passwordpolicy"
     rules:
       - pwpolicy_60_day_enforce
       - pwpolicy_account_inactivity_enforce
       - pwpolicy_account_lockout_enforce
+      - pwpolicy_account_lockout_enforce_five
       - pwpolicy_account_lockout_timeout_enforce
       - pwpolicy_alpha_numeric_enforce
       - pwpolicy_history_enforce
+      - pwpolicy_history_enforce_fifteen
       - pwpolicy_lower_case_character_enforce
       - pwpolicy_minimum_length_enforce
       - pwpolicy_minimum_lifetime_enforce
@@ -146,8 +170,12 @@ profile:
       - sysprefs_automatic_login_disable
       - sysprefs_automatic_logout_enforce
       - sysprefs_bluetooth_disable
+      - sysprefs_bluetooth_menu_enable
+      - sysprefs_bluetooth_prefpane_disable
       - sysprefs_bluetooth_prefpane_hide
       - sysprefs_bluetooth_sharing_disable
+      - sysprefs_bluetooth_unpaired_disable
+      - sysprefs_cd_dvd_sharing_disable
       - sysprefs_content_caching_disable
       - sysprefs_critical_update_install_enforce
       - sysprefs_diagnostics_reports_disable
@@ -160,16 +188,24 @@ profile:
       - sysprefs_guest_access_smb_disable
       - sysprefs_guest_account_disable
       - sysprefs_hot_corners_disable
+      - sysprefs_hot_corners_secure
       - sysprefs_improve_siri_dictation_disable
+      - sysprefs_install_macos_updates_enforce
+      - sysprefs_internet_accounts_prefpane_disable
       - sysprefs_internet_accounts_prefpane_hide
       - sysprefs_internet_sharing_disable
+      - sysprefs_location_services_audit
       - sysprefs_location_services_disable
+      - sysprefs_location_services_enable
+      - sysprefs_loginwindow_loginwindowtext_enable
       - sysprefs_loginwindow_prompt_username_password_enforce
       - sysprefs_media_sharing_disabled
       - sysprefs_password_hints_disable
       - sysprefs_personalized_advertising_disable
       - sysprefs_power_nap_disable
+      - sysprefs_printer_sharing_disable
       - sysprefs_rae_disable
+      - sysprefs_remote_management_disable
       - sysprefs_screen_sharing_disable
       - sysprefs_screensaver_ask_for_password_delay_enforce
       - sysprefs_screensaver_password_enforce
@@ -178,18 +214,26 @@ profile:
       - sysprefs_siri_prefpane_disable
       - sysprefs_siri_prefpane_hide
       - sysprefs_smbd_disable
+      - sysprefs_software_update_app_update_enforce
+      - sysprefs_software_update_download_enforce
+      - sysprefs_software_update_enforce
+      - sysprefs_softwareupdate_current
       - sysprefs_ssh_disable
       - sysprefs_ssh_enable
       - sysprefs_system_wide_preferences_configure
+      - sysprefs_time_machine_auto_backup_enable
+      - sysprefs_time_machine_encrypted_configure
       - sysprefs_time_server_configure
       - sysprefs_time_server_enforce
       - sysprefs_token_removal_enforce
       - sysprefs_touchid_prefpane_disable
       - sysprefs_touchid_prefpane_hide
       - sysprefs_touchid_unlock_disable
+      - sysprefs_wake_network_access_disable
       - sysprefs_wallet_applepay_prefpane_disable
       - sysprefs_wallet_applepay_prefpane_hide
       - sysprefs_wifi_disable
+      - sysprefs_wifi_menu_enable
   - section: "Inherent"
     rules:
       - audit_record_reduction_report_generation

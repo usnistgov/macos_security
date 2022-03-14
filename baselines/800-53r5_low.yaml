@@ -54,7 +54,6 @@ profile:
       - os_handoff_disable
       - os_httpd_disable
       - os_icloud_storage_prompt_disable
-      - os_internet_accounts_prefpane_disable
       - os_ir_support_disable
       - os_mail_app_disable
       - os_mdm_require
@@ -70,6 +69,8 @@ profile:
       - os_siri_prompt_disable
       - os_ssh_fips_140_ciphers
       - os_ssh_fips_140_macs
+      - os_sudo_timeout_configure
+      - os_sudoers_timestamp_type_configure
       - os_sudoers_tty_configure
       - os_tftpd_disable
       - os_time_server_enabled
@@ -107,6 +108,7 @@ profile:
       - sysprefs_automatic_login_disable
       - sysprefs_bluetooth_disable
       - sysprefs_bluetooth_sharing_disable
+      - sysprefs_cd_dvd_sharing_disable
       - sysprefs_content_caching_disable
       - sysprefs_critical_update_install_enforce
       - sysprefs_diagnostics_reports_disable
@@ -118,6 +120,7 @@ profile:
       - sysprefs_guest_access_smb_disable
       - sysprefs_guest_account_disable
       - sysprefs_improve_siri_dictation_disable
+      - sysprefs_internet_accounts_prefpane_disable
       - sysprefs_internet_sharing_disable
       - sysprefs_location_services_disable
       - sysprefs_loginwindow_prompt_username_password_enforce
@@ -125,7 +128,9 @@ profile:
       - sysprefs_password_hints_disable
       - sysprefs_personalized_advertising_disable
       - sysprefs_power_nap_disable
+      - sysprefs_printer_sharing_disable
       - sysprefs_rae_disable
+      - sysprefs_remote_management_disable
       - sysprefs_screen_sharing_disable
       - sysprefs_screensaver_timeout_enforce
       - sysprefs_siri_disable
