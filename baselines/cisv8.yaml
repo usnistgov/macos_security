@@ -39,12 +39,12 @@ profile:
       - os_calendar_app_disable
       - os_config_data_install_enforce
       - os_directory_services_configured
+      - os_ess_installed
       - os_facetime_app_disable
       - os_firewall_log_enable
       - os_gatekeeper_enable
       - os_gatekeeper_rearm
       - os_handoff_disable
-      - os_ESS_installed
       - os_httpd_disable
       - os_icloud_storage_prompt_disable
       - os_internet_accounts_prefpane_disable
