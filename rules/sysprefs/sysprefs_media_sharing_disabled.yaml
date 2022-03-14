@@ -9,7 +9,7 @@ discussion: |
 
   NOTE: The Media Sharing preference panel will still allow "Home Sharing" and "Share media with guests" to be checked but the service will not be enabled.
 check: |
-  osascript -l JavaScript << EOS
+  /usr/bin/osascript -l JavaScript << EOS
   function run() {
     let pref1 = ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('com.apple.preferences.sharing.SharingPrefsExtension')\
     .objectForKey('homeSharingUIStatus'))
