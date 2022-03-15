@@ -14,7 +14,7 @@ profile:
       - auth_pam_su_smartcard_enforce
       - auth_pam_sudo_smartcard_enforce
       - auth_smartcard_enforce
-      - auth_smartcard_enable
+      - auth_smartcard_allow
       - auth_ssh_password_authentication_disable
   - section: "auditing"
     rules:
