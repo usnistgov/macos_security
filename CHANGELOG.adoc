@@ -2,6 +2,89 @@
 
 This document provides a high-level view of the changes to the macOS Security Compliance Project.
 
+== [Big Sur, Revision 5] - 2022-03-16
+
+* Rules
+** Added Rules
+*** audit_control_acls_configure
+*** audit_control_group_configure
+*** audit_control_mode_configure
+*** audit_control_owner_configure
+*** audit_flags_configure
+*** audit_retention_configure_sixty_days
+*** os_application_sandbox
+*** os_blank_bluray_disable
+*** os_blank_cd_disable
+*** os_blank_dvd_disable
+*** os_bluray_read_only_enforce
+*** os_burn_support_disable
+*** os_cd_read_only_enforce
+*** os_disk_image_disable
+*** os_dvdram_disable
+*** os_efi_integrity_validated
+*** os_erase_content_and_settings_disabled
+*** os_guest_folder_removed
+*** os_hibernate_mode_destroyfvkeyonstandby_enable
+*** os_hibernate_mode_enable
+*** os_install_log_retention_configure
+*** os_library_validation_enabled
+*** os_mobile_file_integrity_enable
+*** os_password_hint_remove
+*** os_safari_open_safe_downloads
+*** os_show_filename_extensions_enable
+*** os_skip_screen_time_prompt_enable
+*** os_sudo_timeout_configure
+*** os_system_wide_applications_configure
+*** os_terminal_secure_keyboard_enable
+*** os_time_offset_limit_configure
+*** os_world_writable_library_folder_configure
+*** os_world_writable_system_folder_configure
+*** pwpolicy_account_lockout_enforce_five
+*** pwpolicy_history_enforce_fifteen
+*** supplemental_cis_manual
+*** sysprefs_bluetooth_menu_enable
+*** sysprefs_bluetooth_unpaired_disable
+*** sysprefs_cd_dvd_sharing_disable
+*** sysprefs_hot_corners_secure
+*** sysprefs_install_macos_updates_enforce
+*** sysprefs_location_services_audit
+*** sysprefs_location_services_enable
+*** sysprefs_loginwindow_loginwindowtext_enable
+*** sysprefs_printer_sharing_disable
+*** sysprefs_remote_management_disable
+*** sysprefs_software_update_app_update_enforce.yaml
+*** sysprefs_software_update_download_enforce.yaml
+*** sysprefs_software_update_enforce.yaml
+*** sysprefs_softwareupdate_current.yaml
+*** sysprefs_time_machine_auto_backup_enable.yaml
+*** sysprefs_time_machine_encrypted_configure.yaml
+*** sysprefs_wake_network_access_disable.yaml
+*** sysprefs_wifi_menu_enable.yaml
+** Modified Rules
+*** sysprefs_airplay_receiver_disable
+*** Updated checks for configuration profiles
+** Bug Fixes
+
+* Baselines
+** Added CIS Level 1 & 2
+** Added DISA STIG
+
+* Scripts
+** generate_guidance
+*** Added support for CIS
+*** Bug Fixes
+** generate_baseline
+*** Bug Fixes
+** generate_mappings
+*** Bug Fixes
+** generate_oval
+*** Renamed Script
+*** plist510 tests updated to plist511
+*** Bug Fixes
+
+* SCAP
+** Bug Fixes
+
 == [Big Sur, Revision 4] - 2021-10-20
 
 * Rules
