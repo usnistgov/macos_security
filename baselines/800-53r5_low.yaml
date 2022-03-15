@@ -65,7 +65,6 @@ profile:
       - os_policy_banner_loginwindow_enforce
       - os_policy_banner_ssh_configure
       - os_policy_banner_ssh_enforce
-      - os_removable_media_disable
       - os_root_disable
       - os_sip_enable
       - os_siri_prompt_disable

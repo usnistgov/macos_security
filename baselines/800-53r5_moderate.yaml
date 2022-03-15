@@ -171,7 +171,6 @@ profile:
       - sysprefs_system_wide_preferences_configure
       - sysprefs_time_server_configure
       - sysprefs_time_server_enforce
-      - sysprefs_token_removal_enforce
       - sysprefs_touchid_unlock_disable
       - sysprefs_wifi_disable
   - section: "Inherent"

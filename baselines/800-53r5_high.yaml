@@ -78,7 +78,6 @@ profile:
       - os_policy_banner_ssh_configure
       - os_policy_banner_ssh_enforce
       - os_recovery_lock_enable
-      - os_removable_media_disable
       - os_root_disable
       - os_screensaver_loginwindow_enforce
       - os_secure_boot_verify
