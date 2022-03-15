@@ -2,6 +2,27 @@
 
 This document provides a high-level view of the changes to the macOS Security Compliance Project.
 
+== [Catalina, Revision 6] - 2022-03-16
+* Rules 
+** Modified Rules
+*** Updated checks for configuration profiles
+** Bug Fixes
+
+* Scripts
+** generate_guidance
+*** Bug Fixes
+** generate_baseline
+*** Bug Fixes
+** generate_mappings
+*** Bug Fixes
+** generate_oval
+*** Renamed Script
+*** plist510 tests updated to plist511
+*** Bug Fixes
+
+* SCAP
+** Bug Fixes
+
 == [Catalina, Revision 5] - 2021-10-20
 
 * Rules
