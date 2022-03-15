@@ -61,7 +61,6 @@ This document provides a high-level view of the changes to the macOS Security Co
 *** sysprefs_wake_network_access_disable.yaml
 *** sysprefs_wifi_menu_enable.yaml
 ** Modified Rules
-*** sysprefs_airplay_receiver_disable
 *** Updated checks for configuration profiles
 ** Bug Fixes
 
