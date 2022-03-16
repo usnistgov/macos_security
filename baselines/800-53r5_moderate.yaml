@@ -7,7 +7,7 @@ authors: |
   |Dan Brodjieski|National Aeronautics and Space Administration
   |Allen Golbig|Jamf
   |===
-ofile:
+profile:
   - section: "authentication"
     rules:
       - auth_pam_login_smartcard_enforce
