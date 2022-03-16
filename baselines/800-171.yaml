@@ -14,7 +14,7 @@ profile:
       - auth_pam_su_smartcard_enforce
       - auth_pam_sudo_smartcard_enforce
       - auth_smartcard_enforce
-      - auth_smartcard_allow
+      - auth_smartcard_allow
   - section: "auditing"
     rules:
       - audit_acls_files_configure
