@@ -28,7 +28,7 @@ ASSOCIATED DOCUMENTS
 |===
 |Document Number or Descriptor
 |Document Title
-|link:https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Apple_OS_X_10-15_V1R7_STIG.zip[STIG Ver 1, Rel 7]|_ Apple macOS 10.15 STIG_
+|link:https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Apple_OS_X_10-15_V1R7_STIG.zip[STIG Ver 1, Rel 7]|_Apple macOS 10.15 STIG_
 |===
 
 [%header, cols=2*a]
@@ -57,5 +57,5 @@ ASSOCIATED DOCUMENTS
 |===
 |Document Number or Descriptor
 |Document Title
-|link:https://www.cisecurity.org/benchmark/apple_os/[Apple macOS 12.0]|_CIS Apple macOS 12.0 Benchmark version 1.0_
+|link:https://www.cisecurity.org/benchmark/apple_os/[Apple macOS 10.15]|_CIS Apple macOS 10.15 Benchmark_
 |===
