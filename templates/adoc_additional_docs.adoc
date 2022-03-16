@@ -28,7 +28,7 @@ ASSOCIATED DOCUMENTS
 |===
 |Document Number or Descriptor
 |Document Title
-|link:https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Apple_macOS_11_V1R2_STIG.zip[STIG Ver 1, Rel 2]|_Apple macOS 11 (Big Sur) STIG_
+|link:https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Apple_macOS_11_V1R5_STIG.zip[STIG Ver 1, Rel 5]|_Apple macOS 11 (Big Sur) STIG_
 |===
 
 [%header, cols=2*a]
