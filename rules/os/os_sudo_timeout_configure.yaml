@@ -1,0 +1,44 @@
+id: os_sudo_timeout_configure
+title: "Configure Sudo Timeout Period to Zero"
+discussion: |
+  The file /etc/sudoers _MUST_ include a timestamp_timout of zero.
+check: |
+  /usr/bin/find /etc/sudoers* -type f -exec /usr/bin/grep -E "^Defaults\s+timestamp_timeout=0" '{}' \; | /usr/bin/wc -l | /usr/bin/xargs
+result:
+  integer: 1
+fix: |
+  [source,bash]
+  ----
+  /usr/bin/find /etc/sudoers* -type f -exec sed -i '' '/timestamp_timeout/d' '{}' \;
+  /bin/echo "Defaults timestamp_timeout=0" >> /etc/sudoers.d/mscp
+  ----
+references:
+  cce:
+    - CCE-91116-4
+  cci:
+    - N/A
+  800-53r5:
+    - N/A
+  800-53r4:
+    - N/A
+  srg:
+    - N/A
+  disa_stig:
+    - N/A
+  cis:
+    benchmark:
+      - 5.3 (level 1)
+    controls v8:
+      - 4.3
+macOS:
+  - "12.0"
+tags:
+  - 800-53r5_low 
+  - 800-53r5_moderate 
+  - 800-53r5_high 
+  - cnssi-1253
+  - cis_lvl1
+  - cis_lvl2
+  - cisv8
+mobileconfig: false
+mobileconfig_info:

@@ -1,0 +1,41 @@
+id: os_time_offset_limit_configure
+title: "Ensure Time Offset Within Limits"
+discussion: |
+  The macOS system time  _MUST_ be monitored to not drift more than four minutes and thirty seconds.
+check: |
+  /usr/bin/sntp $(/usr/sbin/systemsetup -getnetworktimeserver | /usr/bin/awk '{print $4}') | /usr/bin/awk -F'.' '/\+\/\-/{if (substr($1,2) >= 270) {print "No"} else {print "Yes"}}'
+result:
+  string: "Yes"
+fix: |
+  [source,bash]
+  ----
+  /usr/bin/sntp -Ss $(/usr/sbin/systemsetup -getnetworktimeserver | /usr/bin/awk '{print $4}')
+  ----
+references:
+  cce:
+    - CCE-91119-8
+  cci: 
+    - N/A    
+  800-53r5:
+    - N/A
+  800-53r4: 
+    - N/A
+  srg:
+    - N/A
+  disa_stig: 
+    - N/A
+  800-171r2:
+    - N/A
+  cis:
+    benchmark:
+      - 2.2.2 (level 1)
+    controls v8:
+      - 8.4
+macOS:
+  - "12.0"
+tags:
+  - cis_lvl1
+  - cis_lvl2
+  - cisv8
+mobileconfig: false
+mobileconfig_info:

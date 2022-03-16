@@ -1,0 +1,46 @@
+id: os_install_log_retention_configure
+title: "Configure Install.log Retention to 365 Days or More"
+discussion: |
+  The install.log _MUST_ be configured to require records be kept for 365 days or longer before deletion, unless the system uses a central audit record storage facility. 
+check: |
+  /usr/sbin/aslmanager -dd 2>&1 | /usr/bin/awk '/\/var\/log\/install.log/ {count++} /Processing module com.apple.install/,/Finished/ { for (i=1;i<=NR;i++) { if ($i == "TTL" && $(i+2) >= 365) { ttl="True" }; if ($i == "MAX") {max="True"}}} END{if (count > 1) { print "Multiple config files for /var/log/install, manually remove"} else if (ttl != "True") { print "TTL not configured" } else if (max == "True") { print "Max Size is configured, must be removed" } else { print "Yes" }}'
+result:
+  string: "Yes"
+fix: |
+  [source,bash]
+  ----
+  /usr/bin/sed -i '' "s/\* file \/var\/log\/install.log.*/\* file \/var\/log\/install.log format='\$\(\(Time\)\(JZ\)\) \$Host \$\(Sender\)\[\$\(PID\\)\]: \$Message' rotate=utc compress file_max=50M size_only ttl=365/g" /etc/asl/com.apple.install
+  ----  
+
+  NOTE: If there are multiple configuration files in /etc/asl that are set to process the file /var/log/install.log, these files will have to be manually removed.
+references:
+  cce:
+    - CCE-91107-3
+  cci:
+    - N/A
+  800-53r5:
+    - AU-11
+    - AU-4
+  800-53r4:
+    - AU-11
+    - AU-4
+  srg:
+    - N/A
+  disa_stig:
+    - N/A
+  800-171r2:
+    - N/A
+  cis:
+    benchmark:
+      - 3.3 (level 1)
+    controls v8:
+      - 8.1
+      - 8.3
+macOS:
+  - "12.0"
+tags:
+  - cis_lvl1
+  - cis_lvl2
+  - cisv8
+mobileconfig: false
+mobileconfig_info:

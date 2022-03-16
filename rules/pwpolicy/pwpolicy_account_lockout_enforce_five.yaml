@@ -1,0 +1,46 @@
+id: pwpolicy_account_lockout_enforce_five
+title: "Limit Consecutive Failed Login Attempts to Five"
+discussion: |
+  The macOS _MUST_ be configured to limit the number of failed login attempts to a maximum of five. When the maximum number of failed attempts is reached, the account _MUST_ be locked for a period of time after.
+
+  This rule protects against malicious users attempting to gain access to the system via brute-force hacking methods. 
+check: |
+  /usr/bin/osascript -l JavaScript << EOS
+  $.NSUserDefaults.alloc.initWithSuiteName('com.apple.mobiledevice.passwordpolicy')\
+  .objectForKey('maxFailedAttempts').js
+  EOS
+result:
+  integer: 5
+fix: |
+  This is implemented by a Configuration Profile.
+references:
+  cce:
+    - CCE-91122-2
+  cci:
+    - N/A
+  800-53r5:
+    - AC-7
+  800-53r4: 
+    - AC-7
+  srg:
+    - N/A
+  disa_stig: 
+    - N/A
+  800-171r2:
+    - 3.1.8
+  cis:
+    benchmark:
+      - 5.2.1 (level 1)
+    controls v8:
+      - 6.2
+macOS:
+  - "12.0"
+tags:
+  - cis_lvl1
+  - cis_lvl2
+  - cisv8
+severity: "medium"
+mobileconfig: true
+mobileconfig_info:
+  com.apple.mobiledevice.passwordpolicy:
+    maxFailedAttempts: 5

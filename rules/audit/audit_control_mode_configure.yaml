@@ -1,0 +1,41 @@
+id: audit_control_mode_configure
+title: "Configure Audit_Control Owner to Mode 440 or Less Permissive"
+discussion: |
+  /etc/security/audit_control _MUST_ be configured so that it is readable only by the root user and group wheel.
+check: |
+  /bin/ls -l /etc/security/audit_control | awk '!/-r--r-----|current|total/{print $1}' | /usr/bin/wc -l | /usr/bin/xargs
+result:
+  integer: 0
+fix: |
+  [source,bash]
+  ----
+  /bin/chmod 440 /etc/security/audit_control
+  ----
+references:
+  cce:
+    - CCE-91090-1
+  cci:
+    - N/A
+  800-53r5:
+    - AU-9
+  800-53r4:
+    - AU-9
+  srg:
+    - N/A
+  disa_stig:
+    - N/A
+  800-171r2:
+    - N/A
+  cis:
+    benchmark:
+      - 3.5 (level 1)
+    controls v8:
+      - 3.3
+macOS:
+  - "12.0"
+tags:
+  - cis_lvl1
+  - cis_lvl2
+  - cisv8
+mobileconfig: false
+mobileconfig_info:

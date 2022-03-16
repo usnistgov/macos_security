@@ -1,0 +1,45 @@
+id: audit_retention_configure_sixty_days
+title: "Configure Audit Retention to a Minimum of Sixty Days or One Gigabyte"
+discussion: |
+  The audit service _MUST_ be configured to require records be kept for sixty days or longer before deletion, unless the system uses a central audit record storage facility. 
+  
+  When "expire-after" is set to "60d", the audit service will not delete audit logs until the log data is at least sixty days old.
+check: |
+  /usr/bin/awk -F: '/expire-after/{print $2}' /etc/security/audit_control
+result:
+  string: 60d or 1G
+fix: |
+  [source,bash]
+  ----
+  /usr/bin/sed -i.bak 's/^expire-after.*/expire-after:60d or 1G/' /etc/security/audit_control; /usr/sbin/audit -s
+  ----
+references:
+  cce:
+    - CCE-91093-5
+  cci:
+    - N/A
+  800-53r5:
+    - AU-11
+    - AU-4
+  800-53r4:
+    - AU-4
+    - AU-11
+  srg:
+    - N/A
+  disa_stig:
+    - N/A
+  cis:
+    benchmark:
+      - 3.4 (level 1)
+    controls v8:
+      - 8.3
+      - 8.1
+macOS:
+  - "12.0"
+tags:
+  - cis_lvl1
+  - cis_lvl2
+  - cisv8
+severity: "medium"
+mobileconfig: false
+mobileconfig_info:

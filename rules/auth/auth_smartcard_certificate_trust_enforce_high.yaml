@@ -9,8 +9,11 @@ discussion: |
 
   NOTE: Before applying this setting, please see the smartcard supplemental guidance.
 check: |
-  /usr/bin/profiles -P -o stdout | /usr/bin/awk '/checkCertificateTrust/{print substr($3, 1, length($3)-1)}'
-result: 
+  /usr/bin/osascript -l JavaScript << EOS
+  $.NSUserDefaults.alloc.initWithSuiteName('com.apple.security.smartcard')\
+  .objectForKey('checkCertificateTrust').js
+  EOS
+result:
   integer: 3
 fix: |
   This is implemented by a Configuration Profile.
@@ -27,7 +30,7 @@ references:
     - IA-5(2)
   srg:
     - N/A
-  disa_stig: 
+  disa_stig:
     - N/A
 macOS:
   - "12.0"

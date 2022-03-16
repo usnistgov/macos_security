@@ -1,0 +1,44 @@
+id: sysprefs_software_update_app_update_enforce
+title: "Enforce Software Update App Update Updates Automatically"
+discussion: |
+  Software Update _MUST_ be configured to enforce automatic updates of App Updates is enabled.
+check: |
+  /usr/bin/osascript -l JavaScript << EOS
+  $.NSUserDefaults.alloc.initWithSuiteName('com.apple.SoftwareUpdate')\
+  .objectForKey('AutomaticallyInstallAppUpdates').js
+  EOS
+result:
+  string: "true"
+fix: |
+  This is implemented by a Configuration Profile.
+references:
+  cce:
+    - CCE-91138-8
+  cci: 
+    - N/A
+  800-53r5:
+    - N/A
+  800-53r4:
+    - N/A
+  srg:
+    - N/A
+  disa_stig:
+    - N/A
+  800-171r2:
+    - N/A
+  cis:
+    benchmark:
+      - 1.4 (level 1)
+    controls v8:
+      - 7.3
+      - 7.4
+macOS:
+  - "12.0"
+tags:
+  - cis_lvl1
+  - cis_lvl2
+  - cisv8
+mobileconfig: true
+mobileconfig_info:
+  com.apple.SoftwareUpdate:
+    AutomaticallyInstallAppUpdates: true

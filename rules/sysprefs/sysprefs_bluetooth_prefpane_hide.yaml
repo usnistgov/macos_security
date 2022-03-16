@@ -1,0 +1,36 @@
+id: sysprefs_bluetooth_prefpane_hide
+title: "Hide the Bluetooth System Preference Pane"
+discussion: |
+  The Bluetooth System Preference pane _MUST_ be hidden to prevent access to the bluetooth configuration.
+
+check: |
+  /usr/bin/profiles -P -o stdout | /usr/bin/grep -c 'com.apple.preferences.Bluetooth' | /usr/bin/awk '{ if ($1 >= 2) {print "1"} else {print "0"}}'
+result:
+  integer: 1
+fix: |
+  This is implemented by a Configuration Profile.
+references:
+  cce:
+    - CCE-91125-5
+  cci: 
+    - CCI-002418
+  800-53r5:
+    - N/A
+  800-53r4: 
+    - SC-8
+  srg: 
+    - SRG-OS-000481-GPOS-000481
+  disa_stig: 
+    - APPL-12-002062
+  800-171r2:
+    - N/A
+macOS:
+  - "12.0"
+tags:
+  - stig
+severity: "medium"
+mobileconfig: true
+mobileconfig_info:
+  com.apple.systempreferences:
+    HiddenPreferencePanes: 
+      - com.apple.preferences.Bluetooth

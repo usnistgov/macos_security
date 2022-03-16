@@ -5,9 +5,12 @@ discussion: |
   
   macOS will automatically prompt new users to set up an Apple ID while they are going through Setup Assistant if this is not disabled, misleading new users to think they need to create Apple ID accounts upon their first login.
 check: | 
-  /usr/bin/profiles -P -o stdout | /usr/bin/grep -c 'SkipCloudSetup = 1'
+  /usr/bin/osascript -l JavaScript << EOS
+  $.NSUserDefaults.alloc.initWithSuiteName('com.apple.SetupAssistant.managed')\
+  .objectForKey('SkipCloudSetup').js
+  EOS
 result:
-  integer: 1
+  string: "true"
 fix: |
   This is implemented by a Configuration Profile.
 references:
@@ -20,14 +23,17 @@ references:
   800-53r4: 
     - AC-20
   srg:
-    - N/A
-  disa_stig: 
-    - N/A
+    - SRG-OS-000095-GPOS-00049
+  disa_stig:
+    - APPL-12-002035
   800-171r2:
     - 3.1.20
-  cisv8:
-    - 4.1
-    - 4.8
+  cis:
+    benchmark:
+      - N/A
+    controls v8:
+      - 4.1
+      - 4.8
 macOS:
   - "12.0"
 tags:
@@ -40,6 +46,7 @@ tags:
   - 800-171 
   - cnssi-1253
   - cisv8
+  - stig
 severity: "medium"
 mobileconfig: true
 mobileconfig_info:

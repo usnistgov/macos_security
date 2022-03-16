@@ -1,0 +1,38 @@
+id: sysprefs_location_services_audit
+title: "Audit Location Services"
+discussion: |
+  The organization _MUST_ audit which applications have access to location services.
+check: |
+  sudo /usr/libexec/PlistBuddy -c print /var/db/locationd/clients.plist | grep Dict | awk '(NR>1) { print $1 }' 
+result: 
+  string: "a list containing approved applications."
+fix: |
+  Review the list of applications and remove any unauthorized applications from System Prefrences->Security & Privacy->Privacy->Location Services.
+references:
+  cce:
+    - CCE-91131-3
+  cci: 
+    - N/A
+  800-53r5:
+    - N/A
+  800-53r4: 
+    - N/A
+  disa_stig: 
+    - N/A
+  srg:
+    - N/A
+  cis:
+    benchmark:
+      - 2.5.4 (level 2)
+    controls v8: 
+      - 2.3
+      - 4.1
+macOS:
+  - "12.0"
+tags:
+  - cis_lvl2
+  - cisv8
+  - cis_manual
+  - manual
+mobileconfig: false
+mobileconfig_info:

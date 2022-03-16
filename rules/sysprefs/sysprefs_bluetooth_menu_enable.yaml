@@ -1,0 +1,44 @@
+id: sysprefs_bluetooth_menu_enable
+title: "Enable Bluetooth Menu"
+discussion: |
+  The bluetooth menu _MUST_ be enabled.
+check: |
+  /usr/bin/osascript -l JavaScript << EOS
+  $.NSUserDefaults.alloc.initWithSuiteName('com.apple.controlcenter')\
+  .objectForKey('Bluetooth').js
+  EOS
+result:
+  integer: 18
+fix: |
+  This is implemented by a Configuration Profile.
+references:
+  cce:
+    - CCE-91124-8
+  cci: 
+    - N/A
+  800-53r5:
+    - N/A
+  800-53r4: 
+    - N/A
+  srg:
+    - N/A
+  disa_stig: 
+    - N/A
+  800-171r2:
+    - N/A
+  cis:
+    benchmark:
+      - 2.1.2 (level 1)
+    controls v8:
+      - 4.8
+      - 13.9  
+macOS:
+  - "12.0"
+tags:
+  - cis_lvl1
+  - cis_lvl2
+  - cisv8
+mobileconfig: true
+mobileconfig_info:
+  com.apple.controlcenter:
+    Bluetooth: 18

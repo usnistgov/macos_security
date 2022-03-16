@@ -8,9 +8,12 @@ discussion: |
   Information System Security Officers (ISSOs) may make the risk-based decision not to disable Bluetooth, so as to maintain necessary functionality, but they are advised to first fully weigh the potential risks posed to their organization. 
   ====
 check: |
-  /usr/bin/profiles -P -o stdout | /usr/bin/grep -c 'DisableBluetooth = 1'
+  /usr/bin/osascript -l JavaScript << EOS
+  $.NSUserDefaults.alloc.initWithSuiteName('com.apple.MCXBluetooth')\
+  .objectForKey('DisableBluetooth').js
+  EOS
 result:
-  integer: 1
+  string: "true"
 fix: |
   This is implemented by a Configuration Profile.
 references:
@@ -26,15 +29,19 @@ references:
     - AC-18(3)
     - SC-8
   srg:
-    - N/A
-  disa_stig: 
-    - N/A
+    - SRG-OS-000481-GPOS-000481
+    - SRG-OS-000319-GPOS-00164
+  disa_stig:
+    - APPL-12-002062
   800-171r2:
     - 3.13.8
-  cisv8:
-    - 4.8
-    - 12.6
-    - 13.9
+  cis:
+    benchmark:
+      - N/A
+    controls v8:
+      - 4.8
+      - 12.6
+      - 13.9
 macOS:
   - "12.0"
 tags:
@@ -46,6 +53,7 @@ tags:
   - 800-171 
   - cnssi-1253
   - cisv8
+  - stig
 severity: "low"
 mobileconfig: true
 mobileconfig_info:

@@ -45,13 +45,16 @@ references:
     - IA-4
   srg:
     - N/A
-  disa_stig: 
+  disa_stig:
     - N/A
   800-171r2:
     - 3.5.5
     - 3.5.6
-  cisv8:
-    - 5.3
+  cis:
+    benchmark:
+      - N/A
+    controls v8:
+      - 5.3
 macOS:
   - "12.0"
 tags:

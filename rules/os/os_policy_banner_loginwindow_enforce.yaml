@@ -40,11 +40,18 @@ references:
   800-53r4: 
     - AC-8
   srg:
-    - N/A
-  disa_stig: 
-    - N/A
+    - SRG-OS-000023-GPOS-00006
+    - SRG-OS-000024-GPOS-00007
+    - SRG-OS-000228-GPOS-00088
+  disa_stig:
+    - APPL-12-000025
   800-171r2:
     - 3.1.9
+  cis:
+    benchmark:
+      - 5.13 (level 2)
+    controls v8:
+      - N/A
 macOS:
   - "12.0"
 tags:
@@ -56,6 +63,8 @@ tags:
   - 800-53r4_high 
   - 800-171 
   - cnssi-1253
+  - cis_lvl2
+  - stig
 severity: "medium"
 mobileconfig: false
 mobileconfig_info:

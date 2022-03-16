@@ -1,0 +1,53 @@
+id: sysprefs_bluetooth_unpaired_disable
+title: "Disable Bluetooth When No Devices are Paired"
+discussion: |
+  Bluetooth _MUST_ be disabled when no devices are paired. 
+check: |
+  isPaired=$(/usr/sbin/system_profiler SPBluetoothDataType 2>/dev/null | /usr/bin/grep -c 'Connected: Yes')
+  if [[ "$isPaired" = "0" ]]; then 
+      powerState=$(/usr/sbin/system_profiler SPBluetoothDataType 2>/dev/null | /usr/bin/grep -c 'State: On')
+      /bin/echo "$powerState"
+  else
+      /bin/echo "0"
+  fi
+result:
+  integer: 0
+fix: |
+  [source,bash]
+  ----
+  /usr/bin/defaults write /private/var/root/Library/Preferences/com.apple.BTServer.plist defaultPoweredState off
+  /usr/bin/killall -HUP bluetoothd
+  ----
+references:
+  cce:
+    - CCE-91126-3
+  cci: 
+    - N/A
+  800-53r5:
+    - AC-18
+    - SC-8
+    - AC-18(3)
+  800-53r4: 
+    - AC-18(3)
+    - SC-8
+  srg:
+    - N/A
+  disa_stig: 
+    - N/A
+  800-171r2:
+    - N/A
+  cis:
+    benchmark:
+      - 2.1.1 (level 1)
+    controls v8:
+      - 4.8
+      - 12.6
+      - 13.9
+macOS:
+  - "12.0"
+tags:
+  - cis_lvl1
+  - cis_lvl2
+  - cisv8
+mobileconfig: false
+mobileconfig_info:

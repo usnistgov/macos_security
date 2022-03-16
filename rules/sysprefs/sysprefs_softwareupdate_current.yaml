@@ -1,0 +1,52 @@
+id: sysprefs_softwareupdate_current
+title: "Ensure Software Update is Updated and Current"
+discussion: |
+  Make sure Software Update is updated and current.
+
+  NOTE: Automatic fix can cause unplanned restarts and may lose work.
+check: |
+  softwareupdate_date_epoch=$(/bin/date -j -f "%Y-%m-%d" "$(/usr/bin/defaults read /Library/Preferences/com.apple.SoftwareUpdate.plist LastFullSuccessfulDate | /usr/bin/awk '{print $1}')" "+%s")
+  thirty_days_epoch=$(/bin/date -v -30d "+%s")
+  if [[ $softwareupdate_date_epoch -lt $thirty_days_epoch ]]; then
+    /bin/echo "0"
+  else
+    /bin/echo "1"
+  fi
+result:
+  integer: 1
+fix: |
+  [source,bash]
+  ----
+  /usr/sbin/softwareupdate -i -a -R
+  ----
+  NOTE - This will apply to the whole system
+references:
+  cce:
+    - CCE-91141-2
+  cci: 
+    - N/A
+  800-53r5:
+    - N/A
+  800-53r4:
+    - N/A
+  srg:
+    - N/A
+  disa_stig: 
+    - N/A
+  800-171r2:
+    - N/A
+  cis:
+    benchmark:
+      - 1.1 (level 1)
+    controls v8:
+      - 7.3
+      - 7.4
+macOS:
+  - "12.0"
+tags:
+  - cis_lvl1
+  - cis_lvl2
+  - cisv8
+severity: "medium"
+mobileconfig: false
+mobileconfig_info:

@@ -1,0 +1,51 @@
+id: os_cd_read_only_enforce
+title: "Enforce CD Read Only"
+discussion: |
+  CD media _MUST_ be set to read only.
+  
+  [IMPORTANT]
+  ====
+  Some organizations rely on the use of removable media for storing and sharing data. Information System Security Officers (ISSOs) may make the risk-based decision not to disable external hard drives to avoid losing this functionality, but they are advised to first fully weigh the potential risks posed to their organization.
+  ====
+
+  [IMPORTANT]
+  ====
+  Apple has deprecated the use of media mount controls, using these controls may not work as expected. Third party software may be required to fullfill the compliance requirements.
+  ====
+check: |
+  /usr/bin/osascript -l JavaScript << EOS
+  ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('com.apple.systemuiserver')\
+  .objectForKey('mount-controls'))["cd"]
+  EOS
+result:
+  string: "read-only"
+fix: |
+  This is implemented by a Configuration Profile.
+references:
+  cce:
+    - CCE-91099-2
+  cci: 
+    - CCI-000366
+    - CCI-001967
+  800-53r5:
+    - MP-7
+  800-53r4: 
+    - MP-7(1)
+  srg:
+    - SRG-OS-000480-GPOS-00227
+    - SRG-OS-000319-GPOS-00164
+  disa_stig:
+    - APPL-12-005051
+  800-171r2:
+    - 3.8.8
+macOS:
+  - "12.0"
+tags:
+  - stig
+severity: "medium"
+mobileconfig: true
+mobileconfig_info:
+  com.apple.systemuiserver:
+    mount-controls:
+      cd: 
+        - read-only

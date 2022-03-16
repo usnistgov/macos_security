@@ -1,0 +1,44 @@
+id: os_world_writable_system_folder_configure
+title: "Ensure No World Writable Files Exist in the System Folder"
+discussion: |
+  Folders in /System/Volumes/Data/System _MUST_ not be world-writable.
+check: |
+  /usr/bin/find /System/Volumes/Data/System -type d -perm -2 -ls | /usr/bin/grep -v "Drop Box" | /usr/bin/wc -l | /usr/bin/xargs
+result:
+  integer: 0
+fix: |
+  [source,bash]
+  ----
+  IFS=$'\n'
+  for sysPermissions in $( /usr/bin/find /System/Volumes/Data/System -type d -perm -2 | /usr/bin/grep -v "Drop Box" ); do
+    /bin/chmod -R o-w "$sysPermissions"
+  done
+  ----
+references:
+  cce:
+    - CCE-91121-4
+  cci:
+    - N/A
+  800-53r5:
+    - N/A
+  800-53r4:
+    - N/A
+  srg:
+    - N/A
+  disa_stig:
+    - N/A
+  800-171r2:
+    - N/A
+  cis:
+    benchmark:
+      - 5.1.7 (level 1)
+    controls v8:
+      - 3.3
+macOS:
+  - "12.0"
+tags:
+  - cis_lvl1
+  - cis_lvl2
+  - cisv8
+mobileconfig: false
+mobileconfig_info:

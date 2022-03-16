@@ -1,0 +1,39 @@
+id: os_burn_support_disable
+title: "Disable Burn Support"
+discussion:   
+  Burn support _MUST_ be disabled.
+
+  [IMPORTANT]
+  ====
+  Some organizations rely on the use of removable media for storing and sharing data. Information System Security Officers (ISSOs) may make the risk-based decision not to disable external hard drives to avoid losing this functionality, but they are advised to first fully weigh the potential risks posed to their organization.
+  ====
+check: |
+  /usr/bin/profiles -P -o stdout | /usr/bin/grep -Ec '(ProhibitBurn = 0|BurnSupport = "off")'
+result:
+  integer: 2
+fix: |
+  This is implemented by a Configuration Profile.
+references:
+  cce:
+    - CCE-91098-4
+  cci: 
+    - CCI-000366
+  800-53r5:
+    - MP-7
+  800-53r4: 
+    - MP-7(1)
+  srg:
+    - SRG-OS-000480-GPOS-00227
+  disa_stig:
+    - APPL-12-005053
+macOS:
+  - "12.0"
+tags:
+  - stig
+severity: "low"
+mobileconfig: true
+mobileconfig_info:
+  com.apple.finder:
+    ProhibitBurn: true
+  com.apple.DiscRecording:
+    BurnSupport: "off"

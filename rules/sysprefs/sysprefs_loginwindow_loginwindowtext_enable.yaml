@@ -1,0 +1,40 @@
+id: sysprefs_loginwindow_loginwindowtext_enable
+title: "Configure Login Window to Show A Custom Message"
+discussion: |
+  The login window _MUST_ be configured to show a custom access warning message. 
+check: |
+  /usr/bin/osascript -l JavaScript << EOS
+  $.NSUserDefaults.alloc.initWithSuiteName('com.apple.loginwindow')\
+  .objectForKey('LoginwindowText').js
+  EOS
+result:
+  string: "Approved message goes here"
+fix: |
+  This is implemented by a Configuration Profile.
+references:
+  cce:
+    - CCE-91133-9
+  cci: 
+    - N/A
+  800-53r5:
+    - N/A
+  800-53r4: 
+    - N/A
+  srg:
+    - N/A
+  disa_stig: 
+    - N/A
+  800-171r2:
+    - N/A
+  cis:
+    benchmark: 
+      - 6.1.1 (level 1)
+macOS:
+  - "12.0"
+tags:
+  - cis_lvl1
+  - cis_lvl2
+mobileconfig: true
+mobileconfig_info:
+  com.apple.loginwindow:
+    LoginwindowText: "Approved message goes here"

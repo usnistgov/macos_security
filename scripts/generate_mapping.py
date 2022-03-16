@@ -36,7 +36,7 @@ def main():
 
     parser = argparse.ArgumentParser(description='Easily generate custom rules from compliance framework mappings')
     parser.add_argument("CSV", default=None, help="CSV to create custom rule files from a mapping.", type=argparse.FileType('rt'))
-    parser.add_argument("-f", "--framework", default="800-53r5", help="Specificy framework for the source. If no framework is specified, the default is 800-53r5.", action="store")
+    parser.add_argument("-f", "--framework", default="800-53r5", help="Specify framework for the source. If no framework is specified, the default is 800-53r5.", action="store")
     
     try:
         results = parser.parse_args()
@@ -94,23 +94,45 @@ def main():
                         try:
                             rule_yaml['references']
                             
-                            for yaml_control in rule_yaml['references'][results.framework]:
-                                if duplicate == yaml_control.split("(")[0]:
-                                    continue
-                                if csv_duplicate == str(row[other_header]):
-                                    continue
-
-                                if control.replace(" ",'') == yaml_control:
-                                    duplicate = yaml_control.split("(")[0]
-                                    csv_duplicate = str(row[other_header])
-                                    row_array = str(row[other_header]).split(",")
-                                    for item in row_array:
-                                        control_array.append(item)
-                                        print(rule_yaml['id'] + " - " + str(results.framework) + " " + yaml_control + " maps to " + other_header + " " + item)
+                            if "/" in str(results.framework):
                                 
+                                framework_main = results.framework.split("/")[0]
+                                framework_sub = results.framework.split("/")[1]
+                                
+                                for yaml_control in rule_yaml['references'][framework_main][framework_sub]:
+                                    if duplicate == str(yaml_control).split("(")[0]:
+                                        continue
+                                    if csv_duplicate == str(row[other_header]):
+                                        
+                                        continue
+                                    if control.replace(" ",'') == str(yaml_control):
+                                        
+                                        duplicate = str(yaml_control).split("(")[0]
+                                        csv_duplicate = str(row[other_header])
+                                        
+                                        row_array = str(row[other_header]).split(",")
+                                        for item in row_array:
+                                            control_array.append(item)
+                                            print(rule_yaml['id'] + " - " + str(results.framework) + " " + str(yaml_control) + " maps to " + other_header + " " + item)
+                            else:
+
+                                for yaml_control in rule_yaml['references'][results.framework]:
+                                    if duplicate == str(yaml_control).split("(")[0]:
+                                        continue
+                                    if csv_duplicate == str(row[other_header]):
+                                        continue
+
+                                    if control.replace(" ",'') == str(yaml_control):
+                                        duplicate = str(yaml_control).split("(")[0]
+                                        csv_duplicate = str(row[other_header])
+                                        row_array = str(row[other_header]).split(",")
+                                        for item in row_array:
+                                            control_array.append(item)
+                                            print(rule_yaml['id'] + " - " + str(results.framework) + " " + str(yaml_control) + " maps to " + other_header + " " + item)
+                                    
                         except:
-                            continue            
-                    
+                            continue
+                                       
         if len(control_array) == 0:
             continue
         

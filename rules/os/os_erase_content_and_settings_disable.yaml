@@ -1,0 +1,37 @@
+id: os_erase_content_and_settings_disable
+title: "Disable Erase Content and Settings"
+discussion:   
+  Erase Content and Settings _MUST_ be disabled.
+check: |
+  /usr/bin/osascript -l JavaScript << EOS
+  $.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess')\
+  .objectForKey('allowEraseContentAndSettings').js
+  EOS
+result:
+  string: "false"
+fix: |
+  This is implemented by a Configuration Profile.
+references:
+  cce:
+    - CCE-91103-2
+  cci: 
+    - CCI-000381
+  800-53r5:
+    - CM-7
+    - CM-7(1)
+  800-53r4:
+    - CM-7
+    - CM-7(1)
+  srg:
+    - SRG-OS-000095-GPOS-00049
+  disa_stig:
+    - APPL-12-005061
+macOS:
+  - "12.0"
+tags:
+  - stig
+severity: "medium"
+mobileconfig: true
+mobileconfig_info:
+  com.apple.applicationaccess:
+    allowEraseContentAndSettings: false

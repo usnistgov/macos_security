@@ -1,0 +1,42 @@
+id: os_hibernate_mode_destroyfvkeyonstandby_enable
+title: "Enable DestroyFVKeyOnStandby on Hibernate"
+discussion: |
+  DestroyFVKeyOnStandby on hibernate _MUST_ be enabled. 
+check: |
+  /usr/bin/osascript -l JavaScript << EOS
+  $.NSUserDefaults.alloc.initWithSuiteName('com.apple.MCX')\
+  .objectForKey('DestroyFVKeyOnStandby').js
+  EOS
+result:
+  string: "true"
+fix: |
+  This is implemented by a Configuration Profile.
+references:
+  cce:
+    - CCE-91105-7
+  cci:
+    - N/A
+  800-53r5:
+    - N/A
+  800-53r4:
+    - N/A
+  srg:
+    - N/A
+  disa_stig:
+    - N/A
+  800-171r2:
+    - N/A
+  cis:
+    benchmark:
+      - 5.9 (level 2)
+    controls v8: 
+      - N/A
+macOS:
+  - "12.0"
+tags:
+  - cis_lvl1
+  - cis_lvl2
+mobileconfig: true
+mobileconfig_info:
+  com.apple.MCX:
+    DestroyFVKeyOnStandby: true

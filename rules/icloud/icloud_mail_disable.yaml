@@ -1,13 +1,16 @@
 id: icloud_mail_disable
 title: "Disable iCloud Mail"
 discussion: |
-  The macOS built-in Mail.app connection to Apple’s iCloud service _MUST_ be disabled.
+  The macOS built-in Mail.app connection to Apple's iCloud service _MUST_ be disabled.
 
-  Apple’s iCloud service does not provide an organization with enough control over the storage and access of data and, therefore, automated mail synchronization _MUST_ be controlled by an organization approved service.
+  Apple's iCloud service does not provide an organization with enough control over the storage and access of data and, therefore, automated mail synchronization _MUST_ be controlled by an organization approved service.
 check: |
-  /usr/bin/profiles -P -o stdout | /usr/bin/grep -c 'allowCloudMail = 0'
+  /usr/bin/osascript -l JavaScript << EOS
+  $.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess')\
+  .objectForKey('allowCloudMail').js
+  EOS
 result:
-  integer: 1
+  string: "false"
 fix: |
   This is implemented by a Configuration Profile.
 references:
@@ -28,16 +31,20 @@ references:
     - AC-20
     - AC-20(1)
   srg:
-    - N/A
+    - SRG-OS-000095-GPOS-00049
+    - SRG-OS-000370-GPOS-00155
   disa_stig:
-    - N/A
+    - APPL-12-002015
   800-171r2:
     - 3.1.20
     - 3.4.6
-  cisv8:
-    - 4.1
-    - 4.8
-    - 15.3
+  cis:
+    benchmark:
+      - N/A
+    controls v8:
+      - 4.1
+      - 4.8
+      - 15.3
 macOS:
   - "12.0"
 tags:
@@ -50,6 +57,7 @@ tags:
   - 800-171 
   - cnssi-1253
   - cisv8
+  - stig
 severity: "low"
 mobileconfig: true
 mobileconfig_info:

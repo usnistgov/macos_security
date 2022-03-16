@@ -9,37 +9,42 @@ discussion: |
   ====
   Some organizations rely on the use of removable media for storing and sharing data. Information System Security Officers (ISSOs) may make the risk-based decision not to disable external hard drives to avoid losing this functionality, but they are advised to first fully weigh the potential risks posed to their organization.
   ====
+
+  [IMPORTANT]
+  ====
+  Apple has deprecated the use of media mount controls, using these controls may not work as expected. Third party software may be required to fullfill the compliance requirements.
+  ====
 check: |
-  /usr/bin/profiles -P -o stdout | /usr/bin/grep 'harddisk-external' -A3 | /usr/bin/grep -Ec "eject|alert"
+  /usr/bin/osascript -l JavaScript << EOS
+  ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('com.apple.systemuiserver')\
+  .objectForKey('mount-controls'))["harddisk-external"]
+  EOS
 result:
-  integer: 2
+  string: "deny,eject"
 fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
     - CCE-90991-1
   cci: 
-    - N/A
+    - CCI-000366
+    - CCI-001967
   800-53r5:
     - MP-7
   800-53r4: 
     - MP-7(1)
   srg:
-    - N/A
-  disa_stig: 
-    - N/A
+    - SRG-OS-000480-GPOS-00227
+    - SRG-OS-000319-GPOS-00164
+  disa_stig:
+    - APPL-12-005051
   800-171r2:
     - 3.8.8
 macOS:
   - "12.0"
 tags:
-  - 800-53r5_low
-  - 800-53r5_moderate
-  - 800-53r5_high
-  - 800-53r4_moderate
-  - 800-53r4_high
-  - 800-171
-  - cnssi-1253
+  - stig
+severity: "medium"
 mobileconfig: true
 mobileconfig_info:
   com.apple.systemuiserver:

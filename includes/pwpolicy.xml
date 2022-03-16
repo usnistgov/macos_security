@@ -102,9 +102,9 @@
       </dict>
       <dict>
         <key>policyContent</key>
-        <string>policyAttributePassword matches '(.*[A-Z].*){1,}+'</string>
+        <string>policyAttributePassword matches '(.*[A-Za-z].*){1,}+'</string>
         <key>policyIdentifier</key>
-        <string>Must have at least 1 uppercase letter</string>
+        <string>Must have at least 1 Letter</string>
         <key>policyParameters</key>
         <dict>
           <key>minimumAlphaCharacters</key>

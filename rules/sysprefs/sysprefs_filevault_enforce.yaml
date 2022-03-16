@@ -24,14 +24,19 @@ references:
     - SC-28
     - SC-28(1)
   srg:
-    - N/A
-  disa_stig: 
-    - N/A
+    - SRG-OS-000185-GPOS-00079
+    - SRG-OS-000404-GPOS-00183
+    - SRG-OS-000405-GPOS-00184
+  disa_stig:
+    - APPL-12-005020
   800-171r2:
     - 3.13.16
-  cisv8:
-    - 3.6
-    - 3.11
+  cis:
+    benchmark: 
+      - 2.5.5.1 (level 1)
+    controls v8: 
+      - 3.6
+      - 3.11
 macOS:
   - "12.0"
 tags:
@@ -41,7 +46,10 @@ tags:
   - 800-53r4_high 
   - 800-171 
   - cnssi-1253
+  - cis_lvl1
+  - cis_lvl2
   - cisv8
+  - stig
 severity: "medium"
 mobileconfig: false
 mobileconfig_info:

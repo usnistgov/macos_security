@@ -5,6 +5,8 @@ discussion: |
   
   All users _MUST_ go through multifactor authentication to prevent unauthenticated access and potential compromise to the system.
 
+  IMPORTANT: Modification of Pluggable Authentication Modules (PAM) now require user authorization, or use of a Privacy Preferences Policy Control (PPPC) profile from MDM that authorizes modifying system administrator files or full disk access.
+
   NOTE: /etc/pam.d/login will be automatically modified to its original state following any update or major upgrade to the operating system.
 check: |
   /usr/bin/grep -Ec '^(auth\s+sufficient\s+pam_smartcard.so|auth\s+required\s+pam_deny.so)' /etc/pam.d/login
@@ -47,15 +49,18 @@ references:
     - IA-2(4)
     - IA-5(11)    
   srg:
-    - N/A
-  disa_stig: 
-    - N/A
+    - SRG-OS-000480-GPOS-00227
+  disa_stig:
+    - APPL-12-003050
   800-171r2:
     - 3.5.3
-  cisv8:
-    - 6.3
-    - 6.4
-    - 6.5
+  cis:
+    benchmark:
+      - N/A
+    controls v8:
+      - 6.3
+      - 6.4
+      - 6.5
 macOS:
   - "12.0"
 tags:
@@ -68,6 +73,7 @@ tags:
   - 800-171 
   - cnssi-1253
   - cisv8
+  - stig
 severity: "medium"
 mobileconfig: false
 mobileconfig_info:

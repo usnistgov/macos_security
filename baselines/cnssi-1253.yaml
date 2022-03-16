@@ -7,13 +7,6 @@ authors: |
   |Ekkehard Koch|
   |Bob Gendler|National Institute of Standards and Technology
   |===
-title: "macOS 12.0: Security Configuration - cnssi-1253"
-description: |
-  This guide describes the actions to take when securing a macOS 12.0 system against the cnssi-1253 baseline.
-authors: |
-  |===
-  |Name|Organization
-  |===
 profile:
   - section: "authentication"
     rules:
@@ -63,7 +56,6 @@ profile:
       - os_home_folders_secure
       - os_httpd_disable
       - os_icloud_storage_prompt_disable
-      - os_internet_accounts_prefpane_disable
       - os_ir_support_disable
       - os_mail_app_disable
       - os_mdm_require
@@ -74,8 +66,9 @@ profile:
       - os_password_proximity_disable
       - os_password_sharing_disable
       - os_policy_banner_loginwindow_enforce
+      - os_policy_banner_ssh_configure
+      - os_policy_banner_ssh_enforce
       - os_recovery_lock_enable
-      - os_removable_media_disable
       - os_root_disable
       - os_screensaver_loginwindow_enforce
       - os_sip_enable
@@ -84,7 +77,12 @@ profile:
       - os_ssh_fips_compliant
       - os_ssh_server_alive_count_max_configure
       - os_ssh_server_alive_interval_configure
+      - os_sshd_client_alive_count_max_configure
+      - os_sshd_client_alive_interval_configure
       - os_sshd_fips_compliant
+      - os_sshd_key_exchange_algorithm_configure
+      - os_sudo_timeout_configure
+      - os_sudoers_timestamp_type_configure
       - os_sudoers_tty_configure
       - os_tftpd_disable
       - os_time_server_enabled
@@ -126,6 +124,7 @@ profile:
       - sysprefs_automatic_logout_enforce
       - sysprefs_bluetooth_disable
       - sysprefs_bluetooth_sharing_disable
+      - sysprefs_cd_dvd_sharing_disable
       - sysprefs_content_caching_disable
       - sysprefs_diagnostics_reports_disable
       - sysprefs_filevault_enforce
@@ -138,6 +137,7 @@ profile:
       - sysprefs_guest_account_disable
       - sysprefs_hot_corners_disable
       - sysprefs_improve_siri_dictation_disable
+      - sysprefs_internet_accounts_prefpane_disable
       - sysprefs_internet_sharing_disable
       - sysprefs_location_services_disable
       - sysprefs_loginwindow_prompt_username_password_enforce
@@ -145,6 +145,7 @@ profile:
       - sysprefs_personalized_advertising_disable
       - sysprefs_power_nap_disable
       - sysprefs_rae_disable
+      - sysprefs_remote_management_disable
       - sysprefs_screen_sharing_disable
       - sysprefs_screensaver_ask_for_password_delay_enforce
       - sysprefs_screensaver_password_enforce

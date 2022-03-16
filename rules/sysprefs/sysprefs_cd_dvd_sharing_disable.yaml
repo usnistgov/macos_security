@@ -1,0 +1,52 @@
+id: sysprefs_cd_dvd_sharing_disable
+title: "Disable CD/DVD Sharing"
+discussion: |
+  CD/DVD Sharing _MUST_ be disabled. 
+check: |
+  /usr/bin/pgrep -q ODSAgent; /bin/echo $?
+result:
+  integer: 1
+fix: |
+  [source,bash]
+  ----
+  /bin/launchctl unload /System/Library/LaunchDaemons/com.apple.ODSAgent.plist
+  ----
+references:
+  cce:
+    - CCE-91127-1
+  cci: 
+    - N/A
+  800-53r5:
+    - CM-7
+    - CM-7(1)
+  800-53r4: 
+    - CM-7
+    - CM-7(1)
+  srg:
+    - N/A
+  disa_stig: 
+    - N/A
+  800-171r2:
+    - N/A
+  cis:
+    benchmark: 
+      - 2.4.6 (level 1)
+    controls v8:
+      - 4.1
+      - 4.8
+macOS:
+  - "12.0"
+tags:
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_high
+  - 800-53r4_low
+  - 800-53r4_moderate
+  - 800-53r4_high
+  - cnssi-1253
+  - cis_lvl1
+  - cis_lvl2
+  - cisv8
+mobileconfig: false
+mobileconfig_info:
+

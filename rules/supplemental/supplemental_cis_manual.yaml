@@ -1,0 +1,98 @@
+id: supplemental_cis_manual
+title: " CIS Manual Recommendations"
+discussion: |
+  List of CIS recommendations that are manual check in the CIS macOS Benchmark.
+
+  [cols="15%h, 85%a"]
+  |===
+
+  |Section
+  |Install Updates, Patches and Additional Security Software
+
+  |Recommendations
+  |1.7 Audit Computer Name
+  |===
+  
+  [cols="15%h, 85%a"]
+  |===
+  |Section
+  |System Preferences
+
+  |Recommendations
+  |2.3.3 Audit Lock Screen and Start Screen Saver Tools +
+  2.5.1.2 Ensure all user storage APFS volumes are encrypted +
+  2.5.1.3 Ensure all user storage CoreStorage volumes are encrypted +
+  2.5.4 Audit Location Services Access +
+  2.5.7 Audit Camera Privacy and Confidentiality +
+  2.6.1.1 Audit iCloud Configuration +
+  2.6.1.2 Audit iCloud Keychain +
+  2.6.1.3 Audit iCloud Drive +
+  2.6.2 Audit App Store Password Settings +
+  2.12 Audit Automatic Actions for Optical Media +
+  2.13 Audit Siri Settings +
+  2.14 Audit Sidecar Settings +
+  2.15 Audit Touch ID and Wallet & Apple Pay Settings +
+  2.16 Audit Notification System Preference Settings +
+  2.17 Audit Passwords System Preference Setting +
+  |===
+
+  [cols="15%h, 85%a"]
+  |===
+  |Section
+  |Logging and Auditing
+
+  |Recommendations
+  |3.7 Audit Software Inventory
+  |===
+
+  [cols="15%h, 85%a"]
+  |===
+  |Section
+  |Network Configurations
+
+  |Recommendations
+  |4.3 Audit Network Specific Locations +
+  4.6 Audit Wi-Fi Settings +
+  |===
+
+  [cols="15%h, 85%a"]
+  |===
+  |Section
+  |System Access, Authentication and Authorization
+
+  |Recommendations
+  |5.2.3 Ensure Complex Password Must Contain Alphabetic Characters Is Configured +
+  5.2.4 Ensure Complex Password Must Contain Numeric Character Is Configured +
+  5.2.6 Ensure Complex Password Must Contain Uppercase and Lowercase Characters Is Configured +
+  5.5 Ensure login keychain is locked when the computer sleeps +
+  5.15 Ensure Fast User Switching Is Disabled +
+  |===
+
+  [cols="15%h, 85%a"]
+  |===
+  |Section
+  |Appendix: Additional Considerations
+
+  |Recommendations
+  |7.1 Extensible Firmware Interface (EFI) password +
+  7.2 FileVault and Local Account Password Reset using AppleID +
+  |===
+check: |
+fix: |
+references:
+  cci:
+    - N/A
+  800-53r5: 
+    - N/A    
+  800-53r4: 
+    - N/A
+  srg:
+    - N/A
+  disa_stig:
+    - N/A
+macOS:
+  - "12.0"
+tags:
+  - supplemental
+mobileconfig: false
+mobileconfig_info:

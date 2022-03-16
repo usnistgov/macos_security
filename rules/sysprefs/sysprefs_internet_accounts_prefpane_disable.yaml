@@ -1,0 +1,59 @@
+id: sysprefs_internet_accounts_prefpane_disable
+title: "Disable the Internet Accounts System Preference Pane"
+discussion: |
+  The Internet Accounts System Preference pane _MUST_ be disabled to prevent the addition of unauthorized internet accounts.
+
+  [IMPORTANT]
+  ====
+  Some organizations may allow the use and configuration of the built-in Mail.app, Calendar.app, and Contacts.app for organizational communication. Information System Security Officers (ISSOs) may make the risk-based decision not to disable the Internet Accounts System Preference pane to avoid losing this functionality, but they are advised to first fully weigh the potential risks posed to their organization.
+  ====
+check: |
+  /usr/bin/profiles -P -o stdout | /usr/bin/grep -c 'com.apple.preferences.internetaccounts' | /usr/bin/awk '{ if ($1 >= 2) {print "1"} else {print "0"}}' 
+result:
+  integer: 1
+fix: |
+  This is implemented by a Configuration Profile.
+references:
+  cce:
+    - CCE-90938-2
+  cci: 
+    - CCI-001774
+    - CCI-000381
+  800-53r5:
+    - CM-7(5)
+    - AC-20
+  800-53r4: 
+    - AC-20
+    - CM-7(5)
+  srg:
+    - SRG-OS-000370-GPOS-00155
+    - SRG-OS-000095-GPOS-00049
+  disa_stig:
+    - APPL-12-002032
+  800-171r2:
+    - 3.1.20
+  cis:
+    benchmark:
+      - N/A
+    controls v8:
+      - 4.8
+      - 15.2
+macOS:
+  - "12.0"
+tags:
+  - 800-53r5_low 
+  - 800-53r4_low 
+  - 800-53r4_moderate 
+  - 800-53r4_high 
+  - 800-53r5_moderate 
+  - 800-53r5_high 
+  - 800-171 
+  - cnssi-1253
+  - cisv8
+  - stig
+severity: "medium"
+mobileconfig: true
+mobileconfig_info:
+  com.apple.systempreferences:
+    DisabledPreferencePanes: 
+      - com.apple.preferences.internetaccounts

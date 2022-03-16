@@ -4,7 +4,7 @@
     <generator>
         <oval:product_name>macOS Security Compliance Project</oval:product_name>
         <oval:schema_version>5.11.2</oval:schema_version>
-        <oval:timestamp>2021-09-16T15:35:10Z</oval:timestamp>
+        <oval:timestamp>2022-02-10T12:16:51Z</oval:timestamp>
     </generator>
     <definitions>
         <definition id="oval:gov.nist.mscp.content.cpe.oval:def:1" version="1" class="inventory">
@@ -14,7 +14,7 @@
                     <platform>macOS</platform>
                 </affected>
                 <reference source="CPE" ref_id="cpe:/o:apple:macos:12.0"/>
-                <description>The operating system installed on the system is Apple macOS Big Sur (12.0).</description>
+                <description>The operating system installed on the system is Apple macOS (12.0).</description>
             </metadata>
             <criteria operator="AND">
                 <criterion comment="The Installed Operating System is Part of the Mac OS Family" test_ref="oval:gov.nist.mscp.content.cpe:tst:1"/>
@@ -28,27 +28,27 @@
             <object object_ref="oval:gov.nist.mscp.content.cpe:obj:1"/>
             <state state_ref="oval:gov.nist.mscp.content.cpe:ste:1"/>
         </family_test>
-        <plist510_test xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" check="all" check_existence="only_one_exists" comment="Apple macOS version is greater than 12.0"
+        <plist511_test xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" check="all" check_existence="only_one_exists" comment="Apple macOS version is greater than 12.0"
             id="oval:gov.nist.mscp.content.cpe:tst:2" version="2">
             <object object_ref="oval:gov.nist.mscp.content.cpe:obj:2"/>
             <state state_ref="oval:gov.nist.mscp.content.cpe:ste:2"/>
-        </plist510_test>
+        </plist511_test>
     </tests>
     <objects>
         <family_object id="oval:gov.nist.mscp.content.cpe:obj:1" version="1" comment="This variable_object represents the family that the operating system belongs to."
             xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#independent"/>
-        <plist510_object xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" comment="The macOS product version plist object." id="oval:gov.nist.mscp.content.cpe:obj:2" version="1">
-            <key>ProductVersion</key>
+        <plist511_object xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" comment="The macOS product version plist object." id="oval:gov.nist.mscp.content.cpe:obj:2" version="1">
             <filepath>/System/Library/CoreServices/SystemVersion.plist</filepath>
-            <instance datatype="int" operation="equals">1</instance>
-        </plist510_object>
+            <xpath>//*[contains(text(), "ProductVersion")]/following-sibling::*[1]/text()</xpath>
+        </plist511_object>
     </objects>
     <states>
         <family_state id="oval:gov.nist.mscp.content.cpe:ste:1" version="1" comment="The OS is part of the macOS Family." xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#independent">
             <family>macos</family>
         </family_state>
-        <plist510_state xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" comment="Is the value is greater than or equal to 12.0" id="oval:gov.nist.mscp.content.cpe:ste:2" version="1">
+        <plist511_state xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" comment="Is the value is greater than or equal to 12.0" id="oval:gov.nist.mscp.content.cpe:ste:2" version="1">
             <value datatype="version" operation="greater than or equal">12.0</value>
-        </plist510_state>
+        </plist511_state>
     </states>
 </oval_definitions>
+

@@ -20,8 +20,11 @@ references:
     - N/A
   srg:
     - N/A
-  cisv8:
-    - 5.6
+  cis:
+    benchmark:
+      - N/A
+    controls v8:
+      - 5.6
 macOS:
   - "12.0"
 tags:

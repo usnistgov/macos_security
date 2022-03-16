@@ -1,0 +1,44 @@
+id: os_system_wide_applications_configure
+title: "Ensure Appropriate Permissions Are Enabled for System Wide Applications"
+discussion: |
+  Applications in the System Applications Directory (/Applications) _MUST_ not be world-writable.
+check: |
+  /usr/bin/find /Applications -iname "*\.app" -type d -perm -2 -ls | /usr/bin/wc -l | /usr/bin/xargs
+result:
+  integer: 0
+fix: |
+  [source,bash]
+  ----
+  IFS=$'\n'
+  for apps in $( /usr/bin/find /Applications -iname "*\.app" -type d -perm -2 ); do
+    /bin/chmod -R o-w "$apps"
+  done
+  ----
+references:
+  cce:
+    - CCE-91117-2
+  cci:
+    - N/A
+  800-53r5:
+    - N/A
+  800-53r4:
+    - N/A
+  srg:
+    - N/A
+  disa_stig:
+    - N/A
+  800-171r2:
+    - N/A
+  cis:
+    benchmark:
+      - 5.1.6 (level 1)
+    controls v8:
+      - 3.3
+macOS:
+  - "12.0"
+tags:
+  - cis_lvl1
+  - cis_lvl2
+  - cisv8
+mobileconfig: false
+mobileconfig_info:

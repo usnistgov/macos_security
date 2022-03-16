@@ -3,13 +3,27 @@ title: "Disable Find My Service"
 discussion: |
   The Find My service _MUST_ be disabled.
 
-  A Mobile Device Management (MDM) solution _MUST_ be used to carry out remote locking and wiping instead of Apple’s Find My service.
+  A Mobile Device Management (MDM) solution _MUST_ be used to carry out remote locking and wiping instead of Apple's Find My service.
  
-  Apple’s Find My service uses a personal AppleID for authentication. Organizations should rely on MDM solutions, which have much more secure authentication requirements, to perform remote lock and remote wipe.
+  Apple's Find My service uses a personal AppleID for authentication. Organizations should rely on MDM solutions, which have much more secure authentication requirements, to perform remote lock and remote wipe.
 check: |
-  /usr/bin/profiles -P -o stdout | /usr/bin/grep -Ec '(allowFindMyDevice = 0|allowFindMyFriends = 0|DisableFMMiCloudSetting = 1)'
+  /usr/bin/osascript -l JavaScript << EOS
+  function run() {
+    let pref1 = ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess')\
+  .objectForKey('allowFindMyDevice'))
+    let pref2 = ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess')\
+  .objectForKey('allowFindMyFriends'))
+    let pref3 = ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('com.apple.icloud.managed')\
+  .objectForKey('DisableFMMiCloudSetting'))
+    if ( pref1 == false && pref2 == false && pref3 == true ) {
+      return("true")
+    } else {
+      return("false")
+    }
+  }
+  EOS
 result:
-  integer: 3
+  string: "true"
 fix: |
   This is implemented by a Configuration Profile.
 references:
@@ -27,15 +41,18 @@ references:
     - AC-20
   srg:
     - N/A
-  disa_stig: 
+  disa_stig:
     - N/A
   800-171r2:
     - 3.1.20
     - 3.4.6
-  cisv8:
-    - 4.1
-    - 4.8
-    - 15.3
+  cis:
+    benchmark:
+      - N/A
+    controls v8:
+      - 4.1
+      - 4.8
+      - 15.3
 macOS:
   - "12.0"
 tags:

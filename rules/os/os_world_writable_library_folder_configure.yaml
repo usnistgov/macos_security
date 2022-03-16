@@ -1,0 +1,45 @@
+id: os_world_writable_library_folder_configure
+title: "Ensure No World Writable Files Exist in the Library Folder"
+discussion: |
+  Folders in /System/Volumes/Data/Library _MUST_ not be world-writable.
+
+  NOTE: Some vendors are known to create world-writable folders to the System Library folder. You may need to add more exclusions to this check and fix to match your environment.
+check: |
+  /usr/bin/find /System/Volumes/Data/Library -type d -perm -2 -ls | /usr/bin/grep -v Caches | /usr/bin/grep -v /Preferences/Audio/Data | /usr/bin/wc -l | /usr/bin/xargs
+result:
+  integer: 0
+fix: |
+  [source,bash]
+  ----
+  IFS=$'\n'
+  for libPermissions in $( /usr/bin/find /System/Volumes/Data/Library -type d -perm -2 | /usr/bin/grep -v Caches | /usr/bin/grep -v /Preferences/Audio/Data ); do
+    /bin/chmod -R o-w "$libPermissions"
+  done
+  ----
+references:
+  cce:
+    - CCE-91120-6
+  cci:
+    - N/A
+  800-53r5:
+    - N/A
+  800-53r4:
+    - N/A
+  srg:
+    - N/A
+  disa_stig:
+    - N/A
+  800-171r2:
+    - N/A
+  cis:
+    benchmark:
+      - 5.1.8 (level 2)
+    controls v8:
+      - 3.3
+macOS:
+  - "12.0"
+tags:
+  - cis_lvl2
+  - cisv8
+mobileconfig: false
+mobileconfig_info:

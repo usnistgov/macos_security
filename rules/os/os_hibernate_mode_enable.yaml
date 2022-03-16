@@ -1,0 +1,62 @@
+id: os_hibernate_mode_enable
+title: "Enable Hibernate Mode"
+discussion: |
+  Hibernate mode _MUST_ be enabled. 
+
+  NOTE: Hibernate mode is not fully supported on Apple Silicon devices. This rule is only applicable to Intel devices.
+check: |
+  error_count=0
+  hibernateStandbyLowValue=$(/usr/bin/pmset -g | /usr/bin/grep standbydelaylow 2>&1 | /usr/bin/awk '{print $2}')
+  hibernateStandbyHighValue=$(/usr/bin/pmset -g | /usr/bin/grep standbydelayhigh 2>&1 | /usr/bin/awk '{print $2}')
+  hibernateStandbyThreshValue=$(/usr/bin/pmset -g | /usr/bin/grep highstandbythreshold 2>&1 | /usr/bin/awk '{print $2}')
+  hibernateMode=$(/usr/bin/pmset -b -g | /usr/bin/grep hibernatemode 2>&1 | /usr/bin/awk '{print $2}')
+  macType=$(/usr/sbin/system_profiler SPHardwareDataType 2>&1 | /usr/bin/grep -c MacBook)
+  if [[ "$macType" -ge 0 ]]; then
+    if [[ "$hibernateStandbyLowValue" == "" ]] || [[ "$hibernateStandbyLowValue" -gt 600 ]]; then
+      ((error_count++))
+    fi
+    if [[ "$hibernateStandbyHighValue" == "" ]] || [[ "$hibernateStandbyHighValue" -gt 600 ]]; then
+      ((error_count++))
+    fi
+    if [[ "$hibernateStandbyThreshValue" == "" ]] || [[ "$hibernateStandbyThreshValue" -lt 90 ]]; then
+      ((error_count++))
+    fi
+  fi
+  echo "$error_count"
+result:
+  integer: 0
+fix: |
+  [source,bash]
+  ----
+  /usr/bin/pmset -a standbydelayhigh 600
+  /usr/bin/pmset -a standbydelaylow 600
+  /usr/bin/pmset -a highstandbythreshold 90
+  ----
+references:
+  cce:
+    - CCE-91106-5
+  cci:
+    - N/A
+  800-53r5:
+    - N/A
+  800-53r4:
+    - N/A
+  srg:
+    - N/A
+  disa_stig:
+    - N/A
+  800-171r2:
+    - N/A
+  cis:
+    benchmark:
+      - 5.9 (level 2)
+    controls v8:
+      - N/A
+macOS:
+  - "12.0"
+tags:
+  - cis_lvl1
+  - cis_lvl2
+  - i386
+mobileconfig: false
+mobileconfig_info:

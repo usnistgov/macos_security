@@ -1,0 +1,35 @@
+id: os_efi_integrity_validated
+title: "Ensure Extensible Firmware Interface Version is Valid"
+discussion: |
+  The macOS Extensible Firmware Interface (EFI) _MUST_ be checked to ensure it is a known good version from Apple.
+check: |
+  if /usr/sbin/ioreg -w 0 -c AppleSEPManager | /usr/bin/grep -q AppleSEPManager; then echo "1"; else /usr/libexec/firmwarecheckers/eficheck/eficheck --integrity-check | /usr/bin/grep -c "No changes detected"; fi
+result:
+  integer: 1
+fix: |
+  Install a known good version of macOS.
+references:
+  cce:
+    - CCE-91102-4
+  cci:
+    - N/A    
+  800-53r5:
+    - N/A
+  800-53r4:
+    - N/A
+  800-171r2:
+    - N/A
+  cis:
+    benchmark:
+      - 2.11 (level 1)
+    controls v8:
+      - 2.2
+macOS:
+  - "12.0"
+tags:
+  - cis_lvl1
+  - cis_lvl2
+  - cisv8
+  - i386
+mobileconfig: false
+mobileconfig_info:

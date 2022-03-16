@@ -1,0 +1,51 @@
+id: audit_flags_configure
+title: "Configure Audit Flags"
+discussion: |
+  The auditing system _MUST_ be configured with at least the minimal flags of fm, ad, -ex, aa, -fr, lo, and -fw.
+check: |
+  /usr/bin/sed -n 's/^flags://p' /etc/security/audit_control | /usr/bin/grep -ce 'fm,ad,\-ex,aa,\-fr,lo,\-fw'
+result:
+  integer: 1
+fix: |
+  [source,bash]
+  ----
+  /usr/bin/sed -i '' 's/^flags:.*/flags:fm,ad,\-ex,aa,\-fr,lo,\-fw/' /etc/security/audit_control; /usr/sbin/audit -s
+  ----
+
+  NOTE: NOTE: This fix will replace the contents of the flags: line in `/etc/security/audit_control`, if you have customized the flags, your changes may be overwritten.
+references:
+  cce:
+    - CCE-91092-7
+  cci:
+    - N/A
+  800-53r5:
+    - AC-2(12)
+    - AU-12
+    - AU-2
+    - MA-4(1)
+    - CM-5(1)
+  800-53r4:
+    - AU-2
+    - AU-12
+    - MA-4(1)
+  srg:
+    - N/A
+  disa_stig:
+    - N/A
+  800-171r2:
+    - N/A
+  cis:
+    benchmark:
+      - 3.2 (level 2)
+    controls v8:
+      - 3.14
+      - 8.2
+      - 8.5
+macOS:
+  - "12.0"
+tags:
+  - cis_lvl2
+  - cisv8
+severity: "medium"
+mobileconfig: false
+mobileconfig_info:

@@ -1,0 +1,51 @@
+id: pwpolicy_history_enforce_fifteen
+title: "Prohibit Password Reuse for a Minimum of Fifteen Generations"
+discussion: |
+  The macOS _MUST_ be configured to enforce a password history of at least fifteen previous passwords when a password is created. 
+
+  This rule ensures that users are  not allowed to re-use a password that was used in any of the fifteen previous password generations. 
+
+  Limiting password reuse protects against malicious users attempting to gain access to the system via brute-force hacking methods.
+check: |
+  /usr/bin/osascript -l JavaScript << EOS
+  $.NSUserDefaults.alloc.initWithSuiteName('com.apple.mobiledevice.passwordpolicy')\
+  .objectForKey('pinHistory').js
+  EOS
+result:
+  integer: 15
+fix: |
+  This is implemented by a Configuration Profile.
+references:
+  cce:
+    - CCE-91123-0
+  cci: 
+    - N/A
+  800-53r5:
+    - IA-5(1)
+  800-53r4: 
+    - IA-5(1)
+  srg:
+    - N/A
+  disa_stig: 
+    - N/A
+  800-171r2:
+    - 3.5.7
+    - 3.5.8
+    - 3.5.9
+    - 3.5.10
+  cis:
+    benchmark:
+      - 5.2.8 (level 1)
+    controls v8:
+      - 5.2
+macOS:
+  - "12.0"
+tags:
+  - cis_lvl1
+  - cis_lvl2
+  - cisv8
+severity: "medium"
+mobileconfig: true
+mobileconfig_info:
+  com.apple.mobiledevice.passwordpolicy:
+    pinHistory: 15

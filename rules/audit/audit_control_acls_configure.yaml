@@ -1,0 +1,41 @@
+id: audit_control_acls_configure
+title: "Configure Audit_Control to Not Contain Access Control Lists"
+discussion: |
+  /etc/security/audit_control _MUST_ not contain Access Control Lists (ACLs).
+check: |
+  /bin/ls -le /etc/security/audit_control | /usr/bin/awk '{print $1}' | /usr/bin/grep -c ":"
+result: 
+  integer: 0
+fix: |
+  [source,bash]
+  ----
+  /bin/chmod -N /etc/security/audit_control
+  ----
+references:
+  cce:
+    - CCE-91088-5
+  cci:
+    - N/A
+  800-53r5:
+    - AU-9
+  800-53r4:
+    - AU-9
+  srg:
+    - N/A
+  disa_stig:
+    - N/A
+  800-171r2:
+    - N/A
+  cis:
+    benchmark:
+      - 3.5 (level 1)
+    controls v8:
+      - 3.3
+macOS:
+  - "12.0"
+tags:
+  - cis_lvl1
+  - cis_lvl2
+  - cisv8
+mobileconfig: false
+mobileconfig_info:
