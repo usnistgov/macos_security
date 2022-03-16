@@ -1235,7 +1235,7 @@ def generate_xls(baseline_name, build_path, baseline_yaml):
                 if title.lower() == "benchmark":
                     sheet1.write(counter, 12, ref, topWrap)
                     sheet1.col(12).width = 500 * 15
-                if title.lower() == "v8":
+                if title.lower() == "controls v8":
                     cis = (str(ref).strip('[]\''))
                     cis = cis.replace(", ", "\n")
                     sheet1.write(counter, 13, cis, topWrap)
