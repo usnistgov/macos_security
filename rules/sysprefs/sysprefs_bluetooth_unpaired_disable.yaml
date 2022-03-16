@@ -37,7 +37,7 @@ references:
   cis:
     benchmark:
       - 2.1.1 (level 1)
-    v8:
+    controls v8:
       - 4.8
       - 12.6
       - 13.9

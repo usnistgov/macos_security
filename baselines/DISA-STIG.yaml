@@ -1,6 +1,6 @@
 title: "macOS 11.0: Security Configuration - DISA STIG"
 description: |
-  This guide describes the actions to take when securing a macOS 11.0 system against the DISA STIG baseline.
+  This guide describes the actions to take when securing a macOS system against the Apple macOS 11 (Big Sur) STIG - Ver 1, Rel 5.
 authors: |
   |===
   |Dan Brodjieski|National Aeronautics and Space Administration
@@ -44,12 +44,20 @@ profile:
       - os_appleid_prompt_disable
       - os_asl_log_files_owner_group_configure
       - os_asl_log_files_permissions_configure
+      - os_blank_bluray_disable
+      - os_blank_cd_disable
+      - os_blank_dvd_disable
       - os_bluetooth_prefpane_disable
+      - os_bluray_read_only_enforce
       - os_bonjour_disable
+      - os_burn_support_disable
       - os_calendar_app_disable
       - os_camera_disable
+      - os_cd_read_only_enforce
       - os_certificate_authority_trust
       - os_directory_services_configured
+      - os_disk_image_disable
+      - os_dvdram_disable
       - os_ess_installed
       - os_filevault_authorized_users
       - os_filevault_autologin_disable
@@ -58,7 +66,6 @@ profile:
       - os_home_folders_secure
       - os_httpd_disable
       - os_icloud_storage_prompt_disable
-      - os_internet_accounts_prefpane_disable
       - os_newsyslog_files_owner_group_configure
       - os_newsyslog_files_permissions_configure
       - os_nfsd_disable
@@ -110,6 +117,7 @@ profile:
       - sysprefs_apple_watch_unlock_disable
       - sysprefs_automatic_login_disable
       - sysprefs_bluetooth_disable
+      - sysprefs_bluetooth_prefpane_disable
       - sysprefs_bluetooth_prefpane_hide
       - sysprefs_diagnostics_reports_disable
       - sysprefs_filevault_enforce
@@ -118,6 +126,7 @@ profile:
       - sysprefs_gatekeeper_identified_developers_allowed
       - sysprefs_guest_account_disable
       - sysprefs_hot_corners_disable
+      - sysprefs_internet_accounts_prefpane_disable
       - sysprefs_internet_accounts_prefpane_hide
       - sysprefs_internet_sharing_disable
       - sysprefs_location_services_disable

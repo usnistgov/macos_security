@@ -989,7 +989,6 @@ def main():
                     <plist511_object xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" comment="{}_object" id="oval:mscp:obj:{}" version="1">
                     <filepath>/Library/Preferences/com.apple.alf.plist</filepath>
                     <xpath>//*[contains(text(), "{}")]/following-sibling::*[1]/text()</xpath>
-                    <instance datatype="int" operation="equals">1</instance>
                 </plist511_object>'''.format(rule_yaml['id'],x,firewall_variable)
 
                         oval_state = oval_state + '''

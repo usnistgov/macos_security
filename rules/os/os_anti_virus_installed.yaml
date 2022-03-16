@@ -9,7 +9,10 @@ check: |
 result:
   integer: 1
 fix: |
+  [source,bash]
+  ----
   /bin/launchctl enable system/com.apple.mrt
+  ----
 references:
   cce:
     - CCE-85501-5

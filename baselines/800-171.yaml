@@ -14,6 +14,7 @@ profile:
       - auth_pam_su_smartcard_enforce
       - auth_pam_sudo_smartcard_enforce
       - auth_smartcard_enforce
+      - auth_smartcard_allow
   - section: "auditing"
     rules:
       - audit_acls_files_configure
@@ -52,7 +53,6 @@ profile:
       - os_home_folders_secure
       - os_httpd_disable
       - os_icloud_storage_prompt_disable
-      - os_internet_accounts_prefpane_disable
       - os_ir_support_disable
       - os_mail_app_disable
       - os_mdm_require
@@ -124,6 +124,7 @@ profile:
       - sysprefs_guest_account_disable
       - sysprefs_hot_corners_disable
       - sysprefs_improve_siri_dictation_disable
+      - sysprefs_internet_accounts_prefpane_disable
       - sysprefs_internet_sharing_disable
       - sysprefs_location_services_disable
       - sysprefs_loginwindow_prompt_username_password_enforce
