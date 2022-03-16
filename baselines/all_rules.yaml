@@ -56,13 +56,21 @@ profile:
       - os_asl_log_files_owner_group_configure
       - os_asl_log_files_permissions_configure
       - os_authenticated_root_enable
+      - os_blank_bluray_disable
+      - os_blank_cd_disable
+      - os_blank_dvd_disable
       - os_bluetooth_prefpane_disable
+      - os_bluray_read_only_enforce
       - os_bonjour_disable
+      - os_burn_support_disable
       - os_calendar_app_disable
       - os_camera_disable
+      - os_cd_read_only_enforce
       - os_certificate_authority_trust
       - os_config_data_install_enforce
       - os_directory_services_configured
+      - os_disk_image_disable
+      - os_dvdram_disable
       - os_efi_integrity_validated
       - os_ess_installed
       - os_facetime_app_disable
@@ -313,6 +321,7 @@ profile:
       - os_privacy_principle_minimization
   - section: "Supplemental"
     rules:
+      - supplemental_cis_manual
       - supplemental_controls
       - supplemental_filevault
       - supplemental_firewall_pf

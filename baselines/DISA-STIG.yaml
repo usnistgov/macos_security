@@ -44,12 +44,20 @@ profile:
       - os_appleid_prompt_disable
       - os_asl_log_files_owner_group_configure
       - os_asl_log_files_permissions_configure
+      - os_blank_bluray_disable
+      - os_blank_cd_disable
+      - os_blank_dvd_disable
       - os_bluetooth_prefpane_disable
+      - os_bluray_read_only_enforce
       - os_bonjour_disable
+      - os_burn_support_disable
       - os_calendar_app_disable
       - os_camera_disable
+      - os_cd_read_only_enforce
       - os_certificate_authority_trust
       - os_directory_services_configured
+      - os_disk_image_disable
+      - os_dvdram_disable
       - os_ess_installed
       - os_filevault_authorized_users
       - os_filevault_autologin_disable
