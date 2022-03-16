@@ -2,7 +2,7 @@
 
 This document provides a high-level view of the changes to the macOS Security Compliance Project.
 
-== [Monterey, Revision 2] - 2022-03-XX
+== [Monterey, Revision 2] - 2022-03-16
 
 * Rules
 ** Added Rules
