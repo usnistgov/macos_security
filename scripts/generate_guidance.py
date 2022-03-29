@@ -985,12 +985,6 @@ echo "$(date -u) Remediation complete" >> "$audit_log"
 
 }
 
-# check for command line arguments, if --check or --fix, then just do them.
-if (( # >= 2));then
-    echo "Too many arguments. Usage: $0 [--check| --fix]"
-    exit 1
-fi
-
 zparseopts -D -E -check=check -fix=fix -stats=stats -compliant=compliant -non_compliant=non_compliant
 
 if [[ $check ]];then
