@@ -44,7 +44,8 @@ references:
 macOS:
   - "12.0"
 odv:
-  default: "org_value:integer"
+  hint: "number of days"
+  default: "org_value[integer]"
   stig: 60
 tags:
   - 800-171 

@@ -1,19 +1,19 @@
 id: os_sshd_client_alive_interval_configure
-title: "Configure SSHD ClientAliveInterval option set to 900 or less"
+title: "Configure SSHD ClientAliveInterval option set to $ODV"
 discussion: |
-  If SSHD is enabled then it _MUST_ be configured with an Active Client Alive Maximum Count set to 900 or less. 
+  If SSHD is enabled then it _MUST_ be configured with an Active Client Alive Maximum Count set to $ODV. 
   
-  Setting the Active Client Alive Maximum Count to 900 (second) will log users out after a 15-minute interval of inactivity.
+  Setting the Active Client Alive Maximum Count to $ODV (seconds) will log users out after an organizational defined interval of inactivity.
 
   NOTE: /etc/ssh/sshd_config will be automatically modified to its original state following any update or major upgrade to the operating system.
 check: |
-  /usr/bin/grep -c "^ClientAliveInterval 900" /etc/ssh/sshd_config
+  /usr/bin/grep -c "^ClientAliveInterval $ODV" /etc/ssh/sshd_config
 result:
   integer: 1
 fix: |
   [source,bash]
   ----
-  /usr/bin/sed -i.bak 's/.*ClientAliveInterval.*/ClientAliveInterval 900/' /etc/ssh/sshd_config; /bin/launchctl kickstart -k system/com.openssh.sshd
+  /usr/bin/sed -i.bak 's/.*ClientAliveInterval.*/ClientAliveInterval $ODV/' /etc/ssh/sshd_config; /bin/launchctl kickstart -k system/com.openssh.sshd
   ----
 references:
   cce:
@@ -33,9 +33,13 @@ references:
     - 3.13.9
 macOS:
   - "12.0"
+odv:
+  hint: "number of seconds"
+  default: "org_value[integer]"
 tags:
   - none
   - stig
+  - test
 severity: "medium"
 mobileconfig: false
 mobileconfig_info:

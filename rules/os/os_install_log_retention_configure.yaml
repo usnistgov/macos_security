@@ -38,8 +38,9 @@ references:
       - 8.3
 macOS:
   - "12.0"
-odv: 
-  default: "org_value:integer"
+odv:
+  hint: "number of days"
+  default: "org_value[integer]"
   cis_lvl1: 365
   cis_lvl2: 365
 tags:

@@ -40,7 +40,7 @@ odv:
   default: "org_value:integer"
   stig: 900
   cis_lvl1: 900
-  cis_lvl2: 200
+  cis_lvl2: 900
 tags:
   - 800-53r5_moderate 
   - 800-53r5_high 

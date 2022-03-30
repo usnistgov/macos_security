@@ -1,16 +1,16 @@
 id: os_sudo_timeout_configure
-title: "Configure Sudo Timeout Period to Zero"
+title: "Configure Sudo Timeout Period to $ODV"
 discussion: |
-  The file /etc/sudoers _MUST_ include a timestamp_timout of zero.
+  The file /etc/sudoers _MUST_ include a timestamp_timout of $ODV.
 check: |
-  /usr/bin/find /etc/sudoers* -type f -exec /usr/bin/grep -E "^Defaults\s+timestamp_timeout=0" '{}' \; | /usr/bin/wc -l | /usr/bin/xargs
+  /usr/bin/find /etc/sudoers* -type f -exec /usr/bin/grep -E "^Defaults\s+timestamp_timeout=$ODV" '{}' \; | /usr/bin/wc -l | /usr/bin/xargs
 result:
   integer: 1
 fix: |
   [source,bash]
   ----
   /usr/bin/find /etc/sudoers* -type f -exec sed -i '' '/timestamp_timeout/d' '{}' \;
-  /bin/echo "Defaults timestamp_timeout=0" >> /etc/sudoers.d/mscp
+  /bin/echo "Defaults timestamp_timeout=$ODV" >> /etc/sudoers.d/mscp
   ----
 references:
   cce:
@@ -32,6 +32,11 @@ references:
       - 4.3
 macOS:
   - "12.0"
+odv:
+  hint: "number of minutes"
+  default: "org_value[integer]"
+  cis_lvl1: 0
+  cis_lvl2: 0
 tags:
   - 800-53r5_low 
   - 800-53r5_moderate 
@@ -40,5 +45,6 @@ tags:
   - cis_lvl1
   - cis_lvl2
   - cisv8
+  - test
 mobileconfig: false
 mobileconfig_info:

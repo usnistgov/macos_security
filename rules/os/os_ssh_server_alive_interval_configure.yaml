@@ -34,7 +34,8 @@ references:
 macOS:
   - "12.0"
 odv:
-  default: "org_value:integer"
+  hint: "number of seconds"
+  default: "org_value[integer]"
 tags:
   - 800-53r5_moderate
   - 800-53r5_high
