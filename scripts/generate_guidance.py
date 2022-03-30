@@ -1563,11 +1563,6 @@ def main():
         adoc_additional_docs_template = adoc_additional_docs_file.read() + "\n"
 
     # set tag attribute
-    if args.gary:
-        adoc_tag_show=":show_tags:"
-    else:
-        adoc_tag_show=":show_tags!:"
-
     if "STIG" in baseline_yaml['title'].upper():
         adoc_STIG_show=":show_STIG:"
     else:
@@ -1582,6 +1577,14 @@ def main():
          adoc_171_show=":show_171:"
     else:
          adoc_171_show=":show_171!:"
+    
+    if args.gary:
+        adoc_tag_show=":show_tags:"
+        adoc_STIG_show=":show_STIG:"
+        adoc_cis_show=":show_cis:"
+        adoc_171_show=":show_171:"
+    else:
+        adoc_tag_show=":show_tags!:"
 
     # Create header
     header_adoc = adoc_header_template.substitute(
