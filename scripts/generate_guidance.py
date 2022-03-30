@@ -1712,7 +1712,7 @@ def main():
             try:
                 rule_yaml['references']['cis']
             except KeyError:
-                cis = '- N/A'
+                cis = ""
             else:
                 cis = parse_cis_references(rule_yaml['references']['cis'])
 
