@@ -381,12 +381,22 @@ def odv_query(rules, keyword):
             elif get_odv:
                 if benchmark == "default":
                     print(f'{rule.rule_odv["hint"]} Recommended Setting {rule.rule_odv["default"]}.')
-                    odv = sanitised_input(f"Enter the ODV for \"{rule.rule_id}\": ")
-                    if odv and odv != rule.rule_odv[benchmark]:
+                    if "integer" in rule.rule_odv["default"]:
+                         odv = sanitised_input(f"Enter the ODV for \"{rule.rule_id}\": ", int, default_=rule.rule_odv["default"])
+                    elif "bool" in rule.rule_odv["default"]:
+                         odv = sanitised_input(f"Enter the ODV for \"{rule.rule_id}\": ", bool, default_=rule.rule_odv["default"])
+                    else:
+                         odv = sanitised_input(f"Enter the ODV for \"{rule.rule_id}\": ", str, default_=rule.rule_odv["default"])
+                    if odv and odv != rule.rule_odv["default"]:
                         write_odv_custom_rule(rule, odv)
                 else:
                     print(f'{rule.rule_odv["hint"]} Recommended Setting {rule.rule_odv[benchmark]}.')
-                    odv = sanitised_input(f"Enter the ODV for \"{rule.rule_id}\": ")
+                    if isinstance(rule.rule_odv[benchmark], int):
+                         odv = sanitised_input(f"Enter the ODV for \"{rule.rule_id}\": ", int, default_=rule.rule_odv[benchmark])
+                    elif isinstance(rule.rule_odv[benchmark], bool):
+                         odv = sanitised_input(f"Enter the ODV for \"{rule.rule_id}\": ", bool, default_=rule.rule_odv[benchmark])
+                    else:
+                         odv = sanitised_input(f"Enter the ODV for \"{rule.rule_id}\": ", str, default_=rule.rule_odv[benchmark])
                     if odv and odv != rule.rule_odv[benchmark]:
                         write_odv_custom_rule(rule, odv)
     return included_rules
