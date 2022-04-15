@@ -381,9 +381,9 @@ def odv_query(rules, keyword):
             elif get_odv:
                 if benchmark == "default":
                     print(f'{rule.rule_odv["hint"]} Recommended Setting {rule.rule_odv["default"]}.')
-                    if "integer" in rule.rule_odv["default"]:
+                    if isinstance(rule.rule_odv["default"], int):
                          odv = sanitised_input(f"Enter the ODV for \"{rule.rule_id}\": ", int, default_=rule.rule_odv["default"])
-                    elif "bool" in rule.rule_odv["default"]:
+                    elif isinstance(rule.rule_odv["default"], bool):
                          odv = sanitised_input(f"Enter the ODV for \"{rule.rule_id}\": ", bool, default_=rule.rule_odv["default"])
                     else:
                          odv = sanitised_input(f"Enter the ODV for \"{rule.rule_id}\": ", str, default_=rule.rule_odv["default"])
