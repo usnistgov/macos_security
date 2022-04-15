@@ -1027,12 +1027,12 @@ fi
     #fix_script_file.close()
     compliance_script_file.close()
 
-def fill_in_odv(resulting_yaml):
+def fill_in_odv(resulting_yaml, baseline_name):
     fields_to_process = ['title', 'discussion', 'check', 'fix']
     _has_odv = False
     if "odv" in resulting_yaml:
         try:
-            odv = str(resulting_yaml['odv']['custom'])
+            odv = str(resulting_yaml['odv'][baseline_name])
             _has_odv = True
         except:
             odv = str(resulting_yaml['odv']['default'])
@@ -1057,7 +1057,7 @@ def fill_in_odv(resulting_yaml):
             
                 
     
-def get_rule_yaml(rule_file, custom=False):
+def get_rule_yaml(rule_file, custom=False, baseline_name=""):
     """ Takes a rule file, checks for a custom version, and returns the yaml for the rule
     """
     global resulting_yaml 
@@ -1143,7 +1143,7 @@ def get_rule_yaml(rule_file, custom=False):
             except KeyError:
                 resulting_yaml[yaml_field] = og_rule_yaml[yaml_field]
     
-    fill_in_odv(resulting_yaml)
+    fill_in_odv(resulting_yaml, baseline_name)
 
     return resulting_yaml
 
@@ -1710,7 +1710,7 @@ def main():
                 rule_location = rule_path[0]
                 custom=False
             
-            rule_yaml = get_rule_yaml(rule_location, custom)
+            rule_yaml = get_rule_yaml(rule_location, custom, baseline_name)
 
             # Determine if the references exist and set accordingly
             try:
