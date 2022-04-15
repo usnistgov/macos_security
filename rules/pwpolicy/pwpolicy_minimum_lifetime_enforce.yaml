@@ -63,7 +63,7 @@ macOS:
   - "12.0"
 odv:
   hint: "number of hours"
-  default: "org_value[integer]"
+  default: 24
 tags:
   - 800-171
   - cnssi-1253

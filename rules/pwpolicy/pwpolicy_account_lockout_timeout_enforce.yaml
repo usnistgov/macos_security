@@ -37,7 +37,7 @@ macOS:
   - "12.0"
 odv:
   hint: "number of minutes"
-  default: "org_value[integer]"
+  default: 15
   stig: 15
 tags:
   - 800-171 

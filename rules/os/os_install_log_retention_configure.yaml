@@ -39,8 +39,8 @@ references:
 macOS:
   - "12.0"
 odv:
-  hint: "number of days"
-  default: "org_value[integer]"
+  hint: "Number of days."
+  default: 365
   cis_lvl1: 365
   cis_lvl2: 365
 tags:

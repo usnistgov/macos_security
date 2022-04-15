@@ -379,27 +379,16 @@ def odv_query(rules, keyword):
             if rule.rule_odv == "missing":
                 continue
             elif get_odv:
-                print(f'{rule.rule_odv["hint"]}')
                 if benchmark == "default":
-                    if "integer" in rule.rule_odv[benchmark]:
-                        odv = sanitised_input(f"Enter the ODV for \"{rule.rule_id}\" ({rule.rule_odv[benchmark]}) ", int, default_="x")
-                    elif "bool" in rule.rule_odv[benchmark]:
-                        odv = sanitised_input(f"Enter the ODV for \"{rule.rule_id}\" ({rule.rule_odv[benchmark]}) ", bool, default_)
-                    else:
-                        odv = sanitised_input(f"Enter the ODV for \"{rule.rule_id}\" ({rule.rule_odv[benchmark]}) ", str, default_=12)
+                    print(f'{rule.rule_odv["hint"]} Recommended Setting {rule.rule_odv["default"]}.')
+                    odv = sanitised_input(f"Enter the ODV for \"{rule.rule_id}\": ")
                     if odv and odv != rule.rule_odv[benchmark]:
                         write_odv_custom_rule(rule, odv)
                 else:
-                    if isinstance(rule.rule_odv[benchmark], int):
-                        odv = sanitised_input(f"Enter the ODV for \"{rule.rule_id}\" (default: {rule.rule_odv[benchmark]}) ", int, default_=rule.rule_odv[benchmark])
-                    elif isinstance(rule.rule_odv[benchmark], bool):
-                        odv = sanitised_input(f"Enter the ODV for \"{rule.rule_id}\" (default: {rule.rule_odv[benchmark]}) ", bool, default_=rule.rule_odv[benchmark])
-                    else:
-                        odv = sanitised_input(f"Enter the ODV for \"{rule.rule_id}\" (default: {rule.rule_odv[benchmark]}) ", str, default_=rule.rule_odv[benchmark])
+                    print(f'{rule.rule_odv["hint"]} Recommended Setting {rule.rule_odv[benchmark]}.')
+                    odv = sanitised_input(f"Enter the ODV for \"{rule.rule_id}\": ")
                     if odv and odv != rule.rule_odv[benchmark]:
                         write_odv_custom_rule(rule, odv)
-
-     
     return included_rules
 
 def main():
