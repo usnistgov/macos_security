@@ -1034,9 +1034,13 @@ def fill_in_odv(resulting_yaml, baseline_name):
         try:
             odv = str(resulting_yaml['odv'][baseline_name])
             _has_odv = True
-        except:
-            odv = str(resulting_yaml['odv']['default'])
-            _has_odv = True
+        except KeyError:
+            try:
+                odv = str(resulting_yaml['odv']['custom'])
+                _has_odv = True
+            except KeyError:
+                odv = str(resulting_yaml['odv']['default'])
+                _has_odv = True
         else:
             pass
 
