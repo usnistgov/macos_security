@@ -31,12 +31,10 @@ references:
 macOS:
   - "12.0"
 odv:
-  hint: "number of seconds"
-  default: 30
+  hint: "Number of seconds."
+  stig: 30
 tags:
-  - none
   - stig
-  - test
 severity: "medium"
 mobileconfig: false
 mobileconfig_info:

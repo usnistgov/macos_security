@@ -44,7 +44,7 @@ references:
 macOS:
   - "12.0"
 odv:
-  hint: "number of days"
+  hint: "Number of days."
   default: 60
   stig: 60
 tags:
@@ -58,7 +58,6 @@ tags:
   - 800-53r5_high
   - cisv8
   - stig
-  - test
 severity: "medium"
 mobileconfig: true
 mobileconfig_info:

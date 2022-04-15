@@ -36,7 +36,7 @@ references:
 macOS:
   - "12.0"
 odv:
-  hint: "number of failed attempts"
+  hint: "Number of failed attempts."
   default: 3
   stig: 3
   cis_lvl1: 5
@@ -54,7 +54,6 @@ tags:
   - cis_lvl2
   - cisv8
   - stig
-  - test
 severity: "medium"
 mobileconfig: true
 mobileconfig_info:

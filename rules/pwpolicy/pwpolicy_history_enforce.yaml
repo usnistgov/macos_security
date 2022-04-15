@@ -43,7 +43,7 @@ references:
 macOS:
   - "12.0"
 odv: 
-  hint: "number of previous passwords"
+  hint: "Number of previous passwords."
   default: 5
   stig: 5
   cis_lvl1: 15
@@ -61,7 +61,6 @@ tags:
   - cis_lvl2
   - cisv8
   - stig
-  - test
 severity: "medium"
 mobileconfig: true
 mobileconfig_info:

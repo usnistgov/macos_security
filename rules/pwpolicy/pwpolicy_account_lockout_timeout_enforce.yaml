@@ -36,7 +36,7 @@ references:
 macOS:
   - "12.0"
 odv:
-  hint: "number of minutes"
+  hint: "Number of minutes."
   default: 15
   stig: 15
 tags:
@@ -50,8 +50,7 @@ tags:
   - 800-53r5_high
   - cisv8
   - stig
-  - test
-severity: "medium"
+\severity: "medium"
 mobileconfig: true
 mobileconfig_info:
   com.apple.mobiledevice.passwordpolicy:

@@ -29,14 +29,13 @@ references:
 macOS:
   - "12.0"
 odv:
-  hint: "Percentage of free space"
+  hint: "Percentage of free space."
   default: 25
   stig: 25
 tags:
   - 800-53r5_high 
   - 800-53r4_high
   - stig
-  - test
 severity: "medium"
 mobileconfig: false
 mobileconfig_info:

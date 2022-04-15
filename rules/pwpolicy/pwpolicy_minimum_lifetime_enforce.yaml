@@ -62,7 +62,7 @@ references:
 macOS:
   - "12.0"
 odv:
-  hint: "number of hours"
+  hint: "Number of hours."
   default: 24
 tags:
   - 800-171
@@ -74,6 +74,5 @@ tags:
   - 800-53r5_moderate
   - 800-53r5_high
   - cisv8
-  - test
 mobileconfig: false
 mobileconfig_info:

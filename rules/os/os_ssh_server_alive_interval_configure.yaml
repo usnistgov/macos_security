@@ -34,7 +34,7 @@ references:
 macOS:
   - "12.0"
 odv:
-  hint: "number of seconds"
+  hint: "Number of seconds."
   default: 900
 tags:
   - 800-53r5_moderate
@@ -43,6 +43,5 @@ tags:
   - 800-53r4_high
   - 800-171
   - cnssi-1253
-  - test
 mobileconfig: false
 mobileconfig_info:
