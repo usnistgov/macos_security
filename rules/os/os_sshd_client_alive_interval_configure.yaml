@@ -35,6 +35,7 @@ macOS:
   - "12.0"
 odv:
   hint: "Number of seconds."
+  default: 900
   stig: 900
 tags:
   - stig

@@ -35,6 +35,7 @@ macOS:
   - "12.0"
 odv: 
   hint: "Organization's approved message."
+  default: Center for Internet Security Test Message
   cis_lvl1: Center for Internet Security Test Message
   cis_lvl2: Center for Internet Security Test Message
 tags:
