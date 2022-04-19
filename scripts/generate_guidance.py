@@ -788,7 +788,7 @@ defaults write "$audit_plist" lastComplianceCheck "$(date)"
 
             if "arm64" in rule_yaml['tags']:
                 arch="arm64"
-            elif "intel" in rule_yaml['tags']:
+            elif "i386" in rule_yaml['tags']:
                 arch="i386"
             else:
                 arch=""
