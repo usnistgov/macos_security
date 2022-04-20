@@ -37,4 +37,4 @@ mobileconfig: true
 mobileconfig_info:
   com.apple.systempreferences:
     HiddenPreferencePanes: 
-      - com.apple.preferences.speech
+      - com.apple.preference.speech
