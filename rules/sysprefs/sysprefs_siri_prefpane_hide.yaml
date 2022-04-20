@@ -5,7 +5,7 @@ discussion: |
 
   HIding the system preference pane prevents the users from configuring Siri. 
 check: |
-  /usr/bin/profiles -P -o stdout | /usr/bin/grep -c 'com.apple.preferences.speech' | /usr/bin/awk '{ if ($1 >= 2) {print "1"} else {print "0"}}' 
+  /usr/bin/profiles -P -o stdout | /usr/bin/grep -c 'com.apple.preference.speech' | /usr/bin/awk '{ if ($1 >= 2) {print "1"} else {print "0"}}' 
 result:
   integer: 1
 fix: |
@@ -37,4 +37,4 @@ mobileconfig: true
 mobileconfig_info:
   com.apple.systempreferences:
     HiddenPreferencePanes: 
-      - com.apple.preferences.speech
+      - com.apple.preference.speech
