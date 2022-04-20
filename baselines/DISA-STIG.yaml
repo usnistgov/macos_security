@@ -47,7 +47,6 @@ profile:
       - os_blank_bluray_disable
       - os_blank_cd_disable
       - os_blank_dvd_disable
-      - os_bluetooth_prefpane_disable
       - os_bluray_read_only_enforce
       - os_bonjour_disable
       - os_burn_support_disable
