@@ -41,7 +41,7 @@ profile:
   - section: "macos"
     rules:
       - os_airdrop_disable
-      - os_apple_mobile_file_integrity_enforce
+      - os_mobile_file_integrity_enable
       - os_appleid_prompt_disable
       - os_asl_log_files_owner_group_configure
       - os_asl_log_files_permissions_configure

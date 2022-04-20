@@ -40,7 +40,7 @@ profile:
   - section: "macos"
     rules:
       - os_airdrop_disable
-      - os_apple_mobile_file_integrity_enforce
+      - os_mobile_file_integrity_enable
       - os_appleid_prompt_disable
       - os_authenticated_root_enable
       - os_bonjour_disable

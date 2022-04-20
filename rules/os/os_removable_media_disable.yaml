@@ -20,7 +20,7 @@ check: |
   .objectForKey('mount-controls'))["harddisk-external"]
   EOS
 result:
-  string: "deny,eject"
+  string: "deny"
 fix: |
   This is implemented by a Configuration Profile.
 references:
