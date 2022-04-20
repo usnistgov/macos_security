@@ -342,7 +342,7 @@
                 <xsl:when test="not(reference)">
                     <xsl:variable name="file" as="xs:string" select="tokenize(base-uri(), '/')[last()]"/>
                     <xsl:for-each select="$XCCDF//Rule[descendant::check-content-ref[matches(@href, $file)]]" xpath-default-namespace="http://checklists.nist.gov/xccdf/1.2">
-                        <xsl:for-each select="ident[@system = 'http://cce.mitre.org/']">
+                        <xsl:for-each select="ident[@system = 'https://ncp.nist.gov/cce']">
                             <xsl:element name="reference" namespace="http://oval.mitre.org/XMLSchema/oval-definitions-5">
                                 <xsl:attribute name="source" select="'http://cce.mitre.org'"/>
                                 <xsl:attribute name="ref_id" select="."/>

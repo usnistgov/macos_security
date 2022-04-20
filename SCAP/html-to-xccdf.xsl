@@ -561,7 +561,7 @@
                                     <!-- has CCE -->
                                     <xsl:for-each select="descendant::tr[th/p = 'CCE']/td//li/p">
                                         <xsl:element name="ident" namespace="http://checklists.nist.gov/xccdf/1.2">
-                                            <xsl:attribute name="system" select="'http://cce.mitre.org/'"/>
+                                            <xsl:attribute name="system" select="'https://ncp.nist.gov/cce'"/>
                                             <xsl:value-of select="."/>
                                         </xsl:element>
                                     </xsl:for-each>
