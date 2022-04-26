@@ -7,14 +7,15 @@ discussion: |
 check: |
   /usr/bin/osascript -l JavaScript << EOS
   function run() {
-     let timeout = ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('com.apple.screensaver')\
-   .objectForKey('idleTime'))
-     if ( timeout <= 1200 ) {
-       return("true")
-     } else {
-       return("false")
-     }
-   }
+    let timeout = ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('com.apple.screensaver')\
+    .objectForKey('idleTime'))
+    if ( timeout <= 1200 ) {
+      return("true")
+    } else {
+      return("false")
+    }
+  }
+  EOS
 result:
   string: "true"
 fix: |
