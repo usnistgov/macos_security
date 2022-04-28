@@ -7,13 +7,27 @@ discussion: |
 
   NOTE: /etc/ssh/ssh_config will be automatically modified to its original state following any update or major upgrade to the operating system.
 check: |
-  /usr/bin/grep -c "^ServerAliveInterval 900" /etc/ssh/ssh_config
+  ret="pass"
+  for u in $(/usr/bin/dscl . -list /Users UniqueID | /usr/bin/awk '$2 > 500 {print $1}'); do
+    sshCheck=$(/usr/bin/sudo -u $u /usr/bin/ssh -G . | /usr/bin/grep -c "^serveraliveinterval 900")
+    if [[ "$sshCheck" == "0" ]]; then
+      ret="fail"
+      break
+    fi
+  done
+  /bin/echo $ret
 result:
-  integer: 1
+  string: pass
 fix: |
   [source,bash]
   ----
-  /usr/bin/grep -q '^ServerAliveInterval' /etc/ssh/ssh_config && /usr/bin/sed -i.bak  's/.*ServerAliveInterval.*/ServerAliveInterval 900/' /etc/ssh/ssh_config || /bin/echo 'ServerAliveInterval 900' >> /etc/ssh/ssh_config
+  for u in $(/usr/bin/dscl . -list /Users UniqueID | /usr/bin/awk '$2 > 500 {print $1}'); do 
+    config=$(/usr/bin/sudo -u $u /usr/bin/ssh -Gv . 2>&1 | /usr/bin/awk '/Reading configuration data/ {print $NF}'| /usr/bin/tr -d '\r')
+    configarray=( ${(f)config} )
+    for c in $configarray; do
+      /usr/bin/sudo -u $u /usr/bin/grep -q '^ServerAliveInterval' "$c" && /usr/bin/sed -i '' 's/.*ServerAliveInterval.*/ServerAliveInterval 900/' "$c" || /bin/echo 'ServerAliveInterval 900' >> "$c"
+    done
+  done
   ----
 references:
   cce:
