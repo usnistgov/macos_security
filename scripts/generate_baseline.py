@@ -347,7 +347,7 @@ def sanitised_input(prompt, type_=None, range_=None, default_=None):
             return ui
 
 def odv_query(rules, keyword):
-    print("Inclusion of any given rule is a risk-based-decision (RBD).  While each rule is mapped to a 800-53 control, deploying it in your organization should be part of the decision making process. \nYou will be prompted to include each rule, and for those with specific organizational defined values (ODV), you will be prompted for those as well.\n")
+    print("The inclusion of any given rule is a risk-based-decision (RBD).  While each rule is mapped to an 800-53 control, deploying it in your organization should be part of the decision-making process. \nYou will be prompted to include each rule, and for those with specific organizational defined values (ODV), you will be prompted for those as well.\n")
     
     _established_benchmarks = ['stig', 'cis_lvl1', 'cis_lvl2']
     if any(bm in keyword for bm in _established_benchmarks):
@@ -380,23 +380,23 @@ def odv_query(rules, keyword):
                 continue
             elif get_odv:
                 if benchmark == "default":
-                    print(f'{rule.rule_odv["hint"]} Recommended Setting {rule.rule_odv["default"]}.')
+                    print(f'{rule.rule_odv["hint"]}')
                     if isinstance(rule.rule_odv["default"], int):
-                         odv = sanitised_input(f"Enter the ODV for \"{rule.rule_id}\": ", int, default_=rule.rule_odv["default"])
+                         odv = sanitised_input(f'Enter the ODV for \"{rule.rule_id}\" or press Enter for the default value ({rule.rule_odv["default"]}): ', int, default_=rule.rule_odv["default"])
                     elif isinstance(rule.rule_odv["default"], bool):
-                         odv = sanitised_input(f"Enter the ODV for \"{rule.rule_id}\": ", bool, default_=rule.rule_odv["default"])
+                         odv = sanitised_input(f'Enter the ODV for \"{rule.rule_id}\" or press Enter for the default value ({rule.rule_odv["default"]}): ', bool, default_=rule.rule_odv["default"])
                     else:
-                         odv = sanitised_input(f"Enter the ODV for \"{rule.rule_id}\": ", str, default_=rule.rule_odv["default"])
+                         odv = sanitised_input(f'Enter the ODV for \"{rule.rule_id}\" or press Enter for the default value ({rule.rule_odv["default"]}): ', str, default_=rule.rule_odv["default"])
                     if odv and odv != rule.rule_odv["default"]:
                         write_odv_custom_rule(rule, odv)
                 else:
-                    print(f'{rule.rule_odv["hint"]} Recommended Setting {rule.rule_odv[benchmark]}.')
+                    print(f'{rule.rule_odv["hint"]}')
                     if isinstance(rule.rule_odv[benchmark], int):
-                         odv = sanitised_input(f"Enter the ODV for \"{rule.rule_id}\": ", int, default_=rule.rule_odv[benchmark])
+                         odv = sanitised_input(f'Enter the ODV for \"{rule.rule_id}\" or press Enter for the default value ({rule.rule_odv[benchmark]}): ', int, default_=rule.rule_odv[benchmark])
                     elif isinstance(rule.rule_odv[benchmark], bool):
-                         odv = sanitised_input(f"Enter the ODV for \"{rule.rule_id}\": ", bool, default_=rule.rule_odv[benchmark])
+                         odv = sanitised_input(f'Enter the ODV for \"{rule.rule_id}\" or press Enter for the default value ({rule.rule_odv[benchmark]}): ', bool, default_=rule.rule_odv[benchmark])
                     else:
-                         odv = sanitised_input(f"Enter the ODV for \"{rule.rule_id}\": ", str, default_=rule.rule_odv[benchmark])
+                         odv = sanitised_input(f'Enter the ODV for \"{rule.rule_id}\" or press Enter for the default value ({rule.rule_odv[benchmark]}): ', str, default_=rule.rule_odv[benchmark])
                     if odv and odv != rule.rule_odv[benchmark]:
                         write_odv_custom_rule(rule, odv)
     return included_rules
