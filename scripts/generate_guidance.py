@@ -592,13 +592,6 @@ STD='\e[39m'
 GREEN='\e[32m'
 YELLOW='\e[33m'
 
-# setup files
-audit_plist_managed="/Library/Managed Preferences/org.{baseline_name}.audit.plist"
-
-if [[ ! -e "$audit_plist_managed" ]];then
-    audit_plist_managed="/Library/Preferences/org.{baseline_name}.audit.plist"
-fi
-
 audit_plist="/Library/Preferences/org.{baseline_name}.audit.plist"
 audit_log="/Library/Logs/{baseline_name}_baseline.log"
 
@@ -860,15 +853,22 @@ if [[ "$arch" == "$rule_arch" ]] || [[ -z "$rule_arch" ]]; then
     # check to see if rule is exempt
     unset exempt
     unset exempt_reason
-    exempt=$($plb -c "print {0}:exempt" "$audit_plist_managed" 2>/dev/null)
-    exempt_reason=$($plb -c "print {0}:exempt_reason" "$audit_plist_managed" 2>/dev/null)
+    
+    exempt=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.{7}.audit').objectForKey('{0}'))["exempt"]      
+EOS
+)
+    exempt_reason=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.{7}.audit').objectForKey('{0}'))["exempt_reason"]      
+EOS
+)
    
     if [[ $result_value == "{4}" ]]; then
         /bin/echo "$(date -u) {5} passed (Result: $result_value, Expected: "{3}")" | /usr/bin/tee -a "$audit_log"
         /usr/bin/defaults write "$audit_plist" {0} -dict-add finding -bool NO
         /usr/bin/logger "mSCP: {7} - {5} passed (Result: $result_value, Expected: "{3}")"
     else
-        if [[ ! $exempt == "true" ]] || [[ -z $exempt ]];then
+        if [[ ! $exempt == "1" ]] || [[ -z $exempt ]];then
             /bin/echo "$(date -u) {5} failed (Result: $result_value, Expected: "{3}")" | /usr/bin/tee -a "$audit_log"
             /usr/bin/defaults write "$audit_plist" {0} -dict-add finding -bool YES
             /usr/bin/logger "mSCP: {7} - {5} failed (Result: $result_value, Expected: "{3}")"
@@ -908,11 +908,19 @@ fi
 # check to see if rule is exempt
 unset exempt
 unset exempt_reason
-exempt=$($plb -c "print {rule_yaml['id']}:exempt" "$audit_plist_managed" 2>/dev/null)
-exempt_reason=$($plb -c "print {rule_yaml['id']}:exempt_reason" "$audit_plist_managed" 2>/dev/null)
+
+exempt=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.{baseline_name}.audit').objectForKey('{rule_yaml['id']}'))["exempt"]      
+EOS
+)
+
+exempt_reason=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.{baseline_name}.audit').objectForKey('{rule_yaml['id']}'))["exempt_reason"]      
+EOS
+)
 
 {rule_yaml['id']}_audit_score=$($plb -c "print {rule_yaml['id']}:finding" $audit_plist)
-if [[ ! $exempt == "true" ]] || [[ -z $exempt ]];then
+if [[ ! $exempt == "1" ]] || [[ -z $exempt ]];then
     if [[ ${rule_yaml['id']}_audit_score == "true" ]]; then
         ask '{rule_yaml['id']} - Run the command(s)-> {quotify(get_fix_code(rule_yaml['fix']).strip())} ' N
         if [[ $? == 0 ]]; then
