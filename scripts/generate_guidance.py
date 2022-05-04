@@ -579,7 +579,7 @@ pwpolicy_file=""
 
 ## Must be run as root
 if [[ $EUID -ne 0 ]]; then
-    echo "This script must be run as root"
+    /bin/echo "This script must be run as root"
     exit 1
 fi
 
@@ -598,13 +598,6 @@ RED='\e[31m'
 STD='\e[39m'
 GREEN='\e[32m'
 YELLOW='\e[33m'
-
-# setup files
-audit_plist_managed="/Library/Managed Preferences/org.{baseline_name}.audit.plist"
-
-if [[ ! -e "$audit_plist_managed" ]];then
-    audit_plist_managed="/Library/Preferences/org.{baseline_name}.audit.plist"
-fi
 
 audit_plist="/Library/Preferences/org.{baseline_name}.audit.plist"
 audit_log="/Library/Logs/{baseline_name}_baseline.log"
@@ -640,7 +633,7 @@ ask() {{
         fi
 
         # Ask the question - use /dev/tty in case stdin is redirected from somewhere else
-        printf "${{YELLOW}} $1 [$prompt] ${{STD}}"
+        /usr/bin/printf "${{YELLOW}} $1 [$prompt] ${{STD}}"
         read REPLY
         
         # Default?
@@ -659,16 +652,16 @@ ask() {{
 
 # function to display menus
 show_menus() {{
-    clear
-    echo "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"	
-    echo "        M A I N - M E N U"
-    echo "  macOS Security Compliance Tool"
-    echo "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
-    echo "Last compliance scan: $lastComplianceScan\n"
-    echo "1. View Last Compliance Report"
-    echo "2. Run New Compliance Scan"
-    echo "3. Run Commands to remediate non-compliant settings"
-    echo "4. Exit"
+    /usr/bin/clear
+    /bin/echo "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"	
+    /bin/echo "        M A I N - M E N U"
+    /bin/echo "  macOS Security Compliance Tool"
+    /bin/echo "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+    /bin/echo "Last compliance scan: $lastComplianceScan\n"
+    /bin/echo "1. View Last Compliance Report"
+    /bin/echo "2. Run New Compliance Scan"
+    /bin/echo "3. Run Commands to remediate non-compliant settings"
+    /bin/echo "4. Exit"
 }}
 
 # function to read options
@@ -703,13 +696,13 @@ compliance_count(){{
     # Enable output of just the compliant or non-compliant numbers. 
     if [[ $1 = "compliant" ]]
     then
-        echo $compliant
+        /bin/echo $compliant
     elif [[ $1 = "non-compliant" ]]
     then
-        echo $non_compliant
+        /bin/echo $non_compliant
     else # no matching args output the array
         array=($compliant $non_compliant)
-        echo ${{array[@]}}
+        /bin/echo ${{array[@]}}
     fi
 }}
 
@@ -721,17 +714,17 @@ generate_report(){{
     
     total=$((non_compliant + compliant))
     percentage=$(printf %.2f $(( compliant * 100. / total )) )
-    echo
-    echo "Number of tests passed: ${{GREEN}}$compliant${{STD}}"
-    echo "Number of test FAILED: ${{RED}}$non_compliant${{STD}}"
-    echo "You are ${{YELLOW}}$percentage%${{STD}} percent compliant!"
+    /bin/echo
+    /bin/echo "Number of tests passed: ${{GREEN}}$compliant${{STD}}"
+    /bin/echo "Number of test FAILED: ${{RED}}$non_compliant${{STD}}"
+    /bin/echo "You are ${{YELLOW}}$percentage%${{STD}} percent compliant!"
     pause
 }}
 
 view_report(){{
     
     if [[ $lastComplianceScan == "No scans have been run" ]];then
-        echo "no report to run, please run new scan"
+        /bin/echo "no report to run, please run new scan"
         pause
     else
         generate_report
@@ -746,24 +739,22 @@ generate_stats(){{
     
     total=$((non_compliant + compliant))
     percentage=$(printf %.2f $(( compliant * 100. / total )) )
-    echo "PASSED: $compliant FAILED: $non_compliant, $percentage percent compliant!"
+    /bin/echo "PASSED: $compliant FAILED: $non_compliant, $percentage percent compliant!"
 }}
 
 run_scan(){{
 # append to existing logfile
 if [[ $(/usr/bin/tail -n 1 "$audit_log" 2>/dev/null) = *"Remediation complete" ]]; then
- 	echo "$(date -u) Beginning {baseline_name} baseline scan" >> "$audit_log"
+ 	/bin/echo "$(date -u) Beginning {baseline_name} baseline scan" >> "$audit_log"
 else
- 	echo "$(date -u) Beginning {baseline_name} baseline scan" > "$audit_log"
+ 	/bin/echo "$(date -u) Beginning {baseline_name} baseline scan" > "$audit_log"
 fi
-
-#echo "$(date -u) Beginning {baseline_name} baseline scan" >> "$audit_log"
 
 # run mcxrefresh
 /usr/bin/mcxrefresh -u $CURR_USER_UID
 
 # write timestamp of last compliance check
-defaults write "$audit_plist" lastComplianceCheck "$(date)"
+/usr/bin/defaults write "$audit_plist" lastComplianceCheck "$(date)"
     """
 
     # Read all rules in the section and output the check functions
@@ -843,7 +834,6 @@ defaults write "$audit_plist" lastComplianceCheck "$(date)"
             try:
                 result = rule_yaml['result']
             except KeyError:
-                #print("no result found for {}".format(rule_yaml['id']))
                 continue
 
             if "integer" in result:
@@ -870,27 +860,37 @@ if [[ "$arch" == "$rule_arch" ]] || [[ -z "$rule_arch" ]]; then
     # check to see if rule is exempt
     unset exempt
     unset exempt_reason
-    exempt=$($plb -c "print {0}:exempt" "$audit_plist_managed" 2>/dev/null)
-    exempt_reason=$($plb -c "print {0}:exempt_reason" "$audit_plist_managed" 2>/dev/null)
-
-
- 
-    if [[ ! $exempt == "true" ]] || [[ -z $exempt ]];then
-        if [[ $result_value == "{4}" ]]; then
-            echo "$(date -u) {5} passed (Result: $result_value, Expected: "{3}")" | tee -a "$audit_log"
-            defaults write "$audit_plist" {0} -dict-add finding -bool NO
+    
+    exempt=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.{7}.audit').objectForKey('{0}'))["exempt"]      
+EOS
+)
+    exempt_reason=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.{7}.audit').objectForKey('{0}'))["exempt_reason"]      
+EOS
+)
+   
+    if [[ $result_value == "{4}" ]]; then
+        /bin/echo "$(date -u) {5} passed (Result: $result_value, Expected: "{3}")" | /usr/bin/tee -a "$audit_log"
+        /usr/bin/defaults write "$audit_plist" {0} -dict-add finding -bool NO
+        /usr/bin/logger "mSCP: {7} - {5} passed (Result: $result_value, Expected: "{3}")"
+    else
+        if [[ ! $exempt == "1" ]] || [[ -z $exempt ]];then
+            /bin/echo "$(date -u) {5} failed (Result: $result_value, Expected: "{3}")" | /usr/bin/tee -a "$audit_log"
+            /usr/bin/defaults write "$audit_plist" {0} -dict-add finding -bool YES
+            /usr/bin/logger "mSCP: {7} - {5} failed (Result: $result_value, Expected: "{3}")"
         else
-            echo "$(date -u) {5} failed (Result: $result_value, Expected: "{3}")" | tee -a "$audit_log"
-            defaults write "$audit_plist" {0} -dict-add finding -bool YES
+            /bin/echo "$(date -u) {5} failed (Result: $result_value, Expected: "{3}") - Exemption Allowed (Reason: "$exempt_reason")" | /usr/bin/tee -a "$audit_log"
+            /usr/bin/defaults write "$audit_plist" {0} -dict-add finding -bool NO
+            /usr/bin/logger "mSCP: {7} - {5} failed (Result: $result_value, Expected: "{3}") - Exemption Allowed (Reason: "$exempt_reason")"
+            /bin/sleep 1
         fi
-    elif [[ ! -z "$exempt_reason" ]];then
-        echo "$(date -u) {5} has an exemption (Reason: "$exempt_reason")" | tee -a "$audit_log"
-        defaults write "$audit_plist" {0} -dict-add finding -bool NO
-        /bin/sleep 1
     fi
+        
+    
 else
-    echo "$(date -u) {5} does not apply to this architechture" | tee -a "$audit_log"
-    defaults write "$audit_plist" {0} -dict-add finding -bool NO
+    /bin/echo "$(date -u) {5} does not apply to this architechture" | tee -a "$audit_log"
+    /usr/bin/defaults write "$audit_plist" {0} -dict-add finding -bool NO
 fi
     """.format(rule_yaml['id'], nist_controls.replace("\n", "\n#"), check.strip(), str(result).lower(), result_value, ' '.join(log_reference_id), arch)
 
@@ -915,22 +915,30 @@ fi
 # check to see if rule is exempt
 unset exempt
 unset exempt_reason
-exempt=$($plb -c "print {rule_yaml['id']}:exempt" "$audit_plist_managed" 2>/dev/null)
-exempt_reason=$($plb -c "print {rule_yaml['id']}:exempt_reason" "$audit_plist_managed" 2>/dev/null)
+
+exempt=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.{baseline_name}.audit').objectForKey('{rule_yaml['id']}'))["exempt"]      
+EOS
+)
+
+exempt_reason=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.{baseline_name}.audit').objectForKey('{rule_yaml['id']}'))["exempt_reason"]      
+EOS
+)
 
 {rule_yaml['id']}_audit_score=$($plb -c "print {rule_yaml['id']}:finding" $audit_plist)
-if [[ ! $exempt == "true" ]] || [[ -z $exempt ]];then
+if [[ ! $exempt == "1" ]] || [[ -z $exempt ]];then
     if [[ ${rule_yaml['id']}_audit_score == "true" ]]; then
         ask '{rule_yaml['id']} - Run the command(s)-> {quotify(get_fix_code(rule_yaml['fix']).strip())} ' N
         if [[ $? == 0 ]]; then
-            echo 'Running the command to configure the settings for: {rule_yaml['id']} ...' | tee -a "$audit_log"
+            /bin/echo 'Running the command to configure the settings for: {rule_yaml['id']} ...' | /usr/bin/tee -a "$audit_log"
             {get_fix_code(rule_yaml['fix']).strip()}
         fi
     else
-        echo 'Settings for: {rule_yaml['id']} already configured, continuing...' | tee -a "$audit_log"
+        /bin/echo 'Settings for: {rule_yaml['id']} already configured, continuing...' | /usr/bin/tee -a "$audit_log"
     fi
 elif [[ ! -z "$exempt_reason" ]];then
-    echo "$(date -u) {rule_yaml['id']} has an exemption (Reason: "$exempt_reason")" | tee -a "$audit_log"
+    /bin/echo "$(date -u) {rule_yaml['id']} has an exemption, remediation skipped (Reason: "$exempt_reason")" | /usr/bin/tee -a "$audit_log"
 fi
     """
 
@@ -939,7 +947,7 @@ fi
     # write the footer for the check functions
     zsh_check_footer = """
 lastComplianceScan=$(defaults read "$audit_plist" lastComplianceCheck)
-echo "Results written to $audit_plist"
+/bin/echo "Results written to $audit_plist"
 
 if [[ ! $check ]];then
     pause
@@ -950,7 +958,7 @@ fi
 run_fix(){
 
 if [[ ! -e "$audit_plist" ]]; then
-    echo "Audit plist doesn't exist, please run Audit Check First" | tee -a "$audit_log"
+    /bin/echo "Audit plist doesn't exist, please run Audit Check First" | tee -a "$audit_log"
 
     if [[ ! $fix ]]; then
         pause
@@ -971,7 +979,7 @@ if [[ ! $fix ]]; then
 fi
 
 # append to existing logfile
-echo "$(date -u) Beginning remediation of non-compliant settings" >> "$audit_log"
+/bin/echo "$(date -u) Beginning remediation of non-compliant settings" >> "$audit_log"
 
 # run mcxrefresh 
 /usr/bin/mcxrefresh -u $CURR_USER_UID
@@ -981,13 +989,13 @@ echo "$(date -u) Beginning remediation of non-compliant settings" >> "$audit_log
 
     # write the footer for the script
     zsh_fix_footer = """
-echo "$(date -u) Remediation complete" >> "$audit_log"
+/bin/echo "$(date -u) Remediation complete" >> "$audit_log"
 
 }
 
 # check for command line arguments, if --check or --fix, then just do them.
 if (( # >= 2));then
-    echo "Too many arguments. Usage: $0 [--check| --fix]"
+    /bin/echo "Too many arguments. Usage: $0 [--check| --fix]"
     exit 1
 fi
 
@@ -1032,19 +1040,7 @@ def get_rule_yaml(rule_file, custom=False):
     resulting_yaml = {}
     names = [os.path.basename(x) for x in glob.glob('../custom/rules/**/*.yaml', recursive=True)]
     file_name = os.path.basename(rule_file)
-    # if file_name in names:
-    #     print(f"Custom settings found for rule: {rule_file}")
-    #     try:
-    #         override_path = glob.glob('../custom/rules/**/{}'.format(file_name), recursive=True)[0]
-    #     except IndexError:
-    #         override_path = glob.glob('../custom/rules/{}'.format(file_name), recursive=True)[0]
-    #     with open(override_path) as r:
-    #         rule_yaml = yaml.load(r, Loader=yaml.SafeLoader)
-    #     r.close()
-    # else:
-    #     with open(rule_file) as r:
-    #         rule_yaml = yaml.load(r, Loader=yaml.SafeLoader)
-    #     r.close()
+
     if custom:
         print(f"Custom settings found for rule: {rule_file}")
         try:
