@@ -892,7 +892,7 @@ else
     /bin/echo "$(date -u) {5} does not apply to this architechture" | tee -a "$audit_log"
     /usr/bin/defaults write "$audit_plist" {0} -dict-add finding -bool NO
 fi
-    """.format(rule_yaml['id'], nist_controls.replace("\n", "\n#"), check.strip(), str(result).lower(), result_value, ' '.join(log_reference_id), arch)
+    """.format(rule_yaml['id'], nist_controls.replace("\n", "\n#"), check.strip(), str(result).lower(), result_value, ' '.join(log_reference_id), arch, baseline_name)
 
             check_function_string = check_function_string + zsh_check_text
 
