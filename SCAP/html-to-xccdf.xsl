@@ -303,12 +303,12 @@
                 <!-- See NIST IR7215 §6.2.5 ¶3-->
                 <xsl:element name="platform" namespace="http://checklists.nist.gov/xccdf/1.2">
                     <xsl:attribute name="idref">
-                        <xsl:text>cpe:2.3:o:apple:macos:11.0:*:*:*:*:*:*:*</xsl:text>
+                        <xsl:text>cpe:2.3:o:apple:macos:12.0:*:*:*:*:*:*:*</xsl:text>
                     </xsl:attribute>
                 </xsl:element>
             </xsl:if>
             <!--<xsl:element name="platform" namespace="http://checklists.nist.gov/xccdf/1.2">
-                <xsl:attribute name="idref"><xsl:text>cpe:/o:apple:macos:11.0</xsl:text></xsl:attribute>
+                <xsl:attribute name="idref"><xsl:text>cpe:/o:apple:macos:12.0</xsl:text></xsl:attribute>
             </xsl:element>-->
             <xsl:analyze-string select="normalize-space(//div[@class = 'docver'])" regex="^(.+)\s\(([0-9-]+)\)$">
                 <xsl:matching-substring>
@@ -467,36 +467,101 @@
                                 <xsl:text>ruleID=</xsl:text>
                                 <xsl:value-of select="$id"/>
                             </xsl:element>-->
-                            <!-- FIXME: imprecise selector -->
-                            <xsl:for-each select="table/tbody/tr[2]/td/div/table/tbody/tr[1]/td//li/p">
-                                <xsl:for-each select="tokenize(., ',\s+')">
-                                    <xsl:element name="reference" namespace="http://checklists.nist.gov/xccdf/1.2">
-                                        <xsl:attribute name="href">
-                                            <xsl:text>https://nvd.nist.gov/800-53/Rev5/control/</xsl:text>
-                                            <xsl:choose>
-                                                <xsl:when test="matches(., '[A-Z]{2}-\d+$')">
-                                                    <xsl:value-of select="."/>
-                                                </xsl:when>
-                                                <xsl:when test="matches(., '[A-Z]{2}-\d+\([a-z]\)$')">
-                                                    <xsl:value-of select="replace(., '\([a-z]\)$', '')"/>
-                                                </xsl:when>
-                                                <xsl:when test="matches(., '[A-Z]{2}-\d+\(\d+\).*$')">
-                                                    <xsl:value-of select="replace(., '\((\d+)\).*$', '#enhancement-$1')"/>
-                                                </xsl:when>
-                                            </xsl:choose>
-                                        </xsl:attribute>
-                                        <xsl:text>NIST SP 800-53r5 </xsl:text>
-                                        <xsl:value-of select="."/>
-                                    </xsl:element>
+
+
+                            <xsl:if test="CSRCfixesURIs">
+                                <!-- FIXME: imprecise selector -->
+                                <xsl:variable name="href-prefix" as="xs:string"
+                                    select="'https://csrc.nist.gov/Projects/risk-management/sp800-53-controls/release-search#/control?version=5.1&amp;number='"/>
+                                <xsl:for-each select="table/tbody/tr[2]/td/div/table/tbody/tr[1]/td//li/p">
+                                    <xsl:for-each select="tokenize(., ',\s+')">
+                                        <xsl:element name="reference" namespace="http://checklists.nist.gov/xccdf/1.2">
+                                            <xsl:attribute name="href">
+                                                <!-- the following generates a URI which is not a valid xs:anyURI -->
+                                                <xsl:text>https://csrc.nist.gov/Projects/risk-management/sp800-53-controls/release-search#/control?version=5.1&amp;number=</xsl:text>
+                                                <xsl:choose>
+                                                    <xsl:when test="matches(., '[A-Z]{2}-\d+$')">
+                                                        <xsl:value-of select="."/>
+                                                    </xsl:when>
+                                                    <xsl:when test="matches(., '[A-Z]{2}-\d+\([a-z]\)$')">
+                                                        <xsl:value-of select="replace(., '\([a-z]\)$', '')"/>
+                                                    </xsl:when>
+                                                    <xsl:when test="matches(., '[A-Z]{2}-\d+\(\d+\).*$')">
+                                                        <xsl:value-of select="replace(., '\((\d+)\).*$', '#enhancement-$1')"/>
+                                                    </xsl:when>
+                                                </xsl:choose>
+                                            </xsl:attribute>
+                                            <xsl:text>NIST SP 800-53r5 </xsl:text>
+                                            <xsl:value-of select="."/>
+                                        </xsl:element>
+                                    </xsl:for-each>
                                 </xsl:for-each>
+                            </xsl:if>
+
+
+                            <!-- FIXME: imprecise selectors -->
+                            <xsl:for-each select="table/tbody/tr[2]/td/div/table/tbody/tr">
+
+                                <xsl:variable name="cite" as="xs:string" select="th/p"/>
+                                <xsl:variable name="refs" as="xs:string*" select="td//li/p"/>
+
+                                <xsl:choose>
+
+                                    <xsl:when test="$refs = 'N/A'"><!-- ignore --></xsl:when>
+
+                                    <xsl:when test="$cite eq '800-53r5'">
+                                        <xsl:element name="reference" namespace="http://checklists.nist.gov/xccdf/1.2">
+                                            <xsl:attribute name="href">https://csrc.nist.gov/publications/detail/sp/800-53/rev-5/final</xsl:attribute>
+                                            <xsl:text>NIST SP 800-53r5: </xsl:text>
+                                            <xsl:value-of select="$refs"/>
+                                        </xsl:element>
+                                    </xsl:when>
+
+                                    <xsl:when test="$cite eq '800-171r2'">
+                                        <xsl:element name="reference" namespace="http://checklists.nist.gov/xccdf/1.2">
+                                            <xsl:attribute name="href">https://csrc.nist.gov/publications/detail/sp/800-171/rev-2/final</xsl:attribute>
+                                            <xsl:text>NIST SP 800-171r2: </xsl:text>
+                                            <xsl:value-of select="$refs"/>
+                                        </xsl:element>
+                                    </xsl:when>
+
+                                    <xsl:when test="$cite eq 'DISA STIG(s)'">
+                                        <xsl:element name="reference" namespace="http://checklists.nist.gov/xccdf/1.2">
+                                            <xsl:attribute name="href">https://public.cyber.mil/stigs/downloads/</xsl:attribute>
+                                            <xsl:text>DISA STIG(s): </xsl:text>
+                                            <xsl:value-of select="$refs"/>
+                                        </xsl:element>
+                                    </xsl:when>
+
+                                    <xsl:when test="$cite eq 'CIS Benchmark'">
+                                        <xsl:element name="reference" namespace="http://checklists.nist.gov/xccdf/1.2">
+                                            <xsl:attribute name="href">https://www.cisecurity.org/cis-benchmarks/</xsl:attribute>
+                                            <xsl:text>CIS Benchmark: </xsl:text>
+                                            <xsl:value-of select="$refs"/>
+                                        </xsl:element>
+                                    </xsl:when>
+
+                                    <xsl:when test="$cite eq 'CIS Controls V8'">
+                                        <xsl:element name="reference" namespace="http://checklists.nist.gov/xccdf/1.2">
+                                            <xsl:attribute name="href">https://www.cisecurity.org/controls</xsl:attribute>
+                                            <xsl:text>CIS Controls V8: </xsl:text>
+                                            <xsl:value-of select="$refs"/>
+                                        </xsl:element>
+                                    </xsl:when>
+
+                                    <xsl:otherwise><!-- do nothing --></xsl:otherwise>
+
+                                </xsl:choose>
+
                             </xsl:for-each>
+
                             <!-- FIXME: imprecise selector -->
                             <xsl:choose>
                                 <xsl:when test="descendant::tr[th/p = 'CCE']">
                                     <!-- has CCE -->
                                     <xsl:for-each select="descendant::tr[th/p = 'CCE']/td//li/p">
                                         <xsl:element name="ident" namespace="http://checklists.nist.gov/xccdf/1.2">
-                                            <xsl:attribute name="system" select="'http://cce.mitre.org/'"/>
+                                            <xsl:attribute name="system" select="'https://ncp.nist.gov/cce'"/>
                                             <xsl:value-of select="."/>
                                         </xsl:element>
                                     </xsl:for-each>
