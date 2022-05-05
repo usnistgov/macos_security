@@ -2,6 +2,7 @@
 # filename: generate_guidance.py
 # description: Process a given keyword, and output a baseline file
 
+from operator import truediv
 import os.path
 import glob
 import os
@@ -10,7 +11,7 @@ import argparse
 
 
 class MacSecurityRule():
-    def __init__(self, title, rule_id, severity, discussion, check, fix, cci, cce, nist_controls, disa_stig, srg, tags, result_value, mobileconfig, mobileconfig_info):
+    def __init__(self, title, rule_id, severity, discussion, check, fix, cci, cce, nist_controls, disa_stig, srg, odv, tags, result_value, mobileconfig, mobileconfig_info):
         self.rule_title = title
         self.rule_id = rule_id
         self.rule_severity = severity
@@ -22,6 +23,7 @@ class MacSecurityRule():
         self.rule_80053r4 = nist_controls
         self.rule_disa_stig = disa_stig
         self.rule_srg = srg
+        self.rule_odv = odv
         self.rule_result_value = result_value
         self.rule_tags = tags
         self.rule_mobileconfig = mobileconfig
@@ -52,19 +54,7 @@ def get_rule_yaml(rule_file, custom=False):
     resulting_yaml = {}
     names = [os.path.basename(x) for x in glob.glob('../custom/rules/**/*.yaml', recursive=True)]
     file_name = os.path.basename(rule_file)
-    # if file_name in names:
-    #     print(f"Custom settings found for rule: {rule_file}")
-    #     try:
-    #         override_path = glob.glob('../custom/rules/**/{}'.format(file_name), recursive=True)[0]
-    #     except IndexError:
-    #         override_path = glob.glob('../custom/rules/{}'.format(file_name), recursive=True)[0]
-    #     with open(override_path) as r:
-    #         rule_yaml = yaml.load(r, Loader=yaml.SafeLoader)
-    #     r.close()
-    # else:
-    #     with open(rule_file) as r:
-    #         rule_yaml = yaml.load(r, Loader=yaml.SafeLoader)
-    #     r.close()
+
     if custom:
         print(f"Custom settings found for rule: {rule_file}")
         try:
@@ -114,6 +104,7 @@ def collect_rules():
             'title',
             'check',
             'fix',
+            'odv',
             'tags',
             'id',
             'references',
@@ -141,7 +132,6 @@ def collect_rules():
                     except:
                         #print("expected reference '{}' is missing in key '{}' for rule{}".format(reference, key, rule))
                         rule_yaml[key].update({reference: ["None"]})
-        
         all_rules.append(MacSecurityRule(rule_yaml['title'].replace('|', '\|'),
                                     rule_yaml['id'].replace('|', '\|'),
                                     rule_yaml['severity'].replace('|', '\|'),
@@ -153,6 +143,7 @@ def collect_rules():
                                     rule_yaml['references']['800-53r4'],
                                     rule_yaml['references']['disa_stig'],
                                     rule_yaml['references']['srg'],
+                                    rule_yaml['odv'],
                                     rule_yaml['tags'],
                                     rule_yaml['result'],
                                     rule_yaml['mobileconfig'],
@@ -172,6 +163,8 @@ def create_args():
                         help="Keyword tag to collect rules containing the tag.", action="store")
     parser.add_argument("-l", "--list_tags", default=None,
                         help="List the available keyword tags to search for.", action="store_true")
+    parser.add_argument("-t", "--tailor", default=None,
+                        help="Customize the baseline to your organizations values.", action="store_true")
     
     return parser.parse_args()
 
@@ -291,14 +284,127 @@ def output_baseline(rules, os, keyword):
     
     return output_text
 
+def write_odv_custom_rule(rule, odv):
+    print(f"Writing custom rule for {rule.rule_id} to include value {odv}")
+    if os.path.exists(f"../custom/rules/{rule.rule_id}.yaml"):
+        with open(f"../custom/rules/{rule.rule_id}.yaml") as f:
+            rule_yaml = yaml.load(f, Loader=yaml.SafeLoader)
+    else:
+        rule_yaml = {}
+
+    # add odv to rule_yaml    
+    rule_yaml['odv'] = {"custom" : odv}
+    with open(f"../custom/rules/{rule.rule_id}.yaml", 'w') as f:
+      yaml.dump(rule_yaml, f, explicit_start=True)    
+    
+    return
+
+def remove_odv_custom_rule(rule):
+    odv_yaml = {}
+    try:
+        with open(f"../custom/rules/{rule.rule_id}.yaml") as f:
+            odv_yaml = yaml.load(f, Loader=yaml.SafeLoader)
+            odv_yaml.pop('odv', None)
+    except:
+        pass
+
+    if odv_yaml:
+        with open(f"../custom/rules/{rule.rule_id}.yaml", 'w') as f:
+            yaml.dump(odv_yaml, f, explicit_start=True)
+    else:
+        if os.path.exists(f"../custom/rules/{rule.rule_id}.yaml"):
+            os.remove(f"../custom/rules/{rule.rule_id}.yaml")
+    
+def sanitised_input(prompt, type_=None, range_=None, default_=None):
+    while True:
+        ui = input(prompt) or default_
+        if type_ is not None:
+            try:
+                ui = type_(ui)
+            except ValueError:
+                print("Input type must be {0}.".format(type_.__name__))
+                continue
+        if type_ is str:
+            if ui.isnumeric():
+                print("Input type must be {0}.".format(type_.__name__))
+                continue
+
+        if range_ is not None and ui not in range_:
+            if isinstance(range_, range):
+                template = "Input must be between {0.start} and {0.stop}."
+                print(template.format(range_))
+            else:
+                template = "Input must be {0}."
+                if len(range_) == 1:
+                    print(template.format(*range_))
+                else:
+                    expected = " or ".join((
+                        ", ".join(str(x) for x in range_[:-1]),
+                        str(range_[-1])
+                    ))
+                    print(template.format(expected))
+        else:
+            return ui
+
+def odv_query(rules, keyword):
+    print("The inclusion of any given rule is a risk-based-decision (RBD).  While each rule is mapped to an 800-53 control, deploying it in your organization should be part of the decision-making process. \nYou will be prompted to include each rule, and for those with specific organizational defined values (ODV), you will be prompted for those as well.\n")
+    
+    _established_benchmarks = ['stig', 'cis_lvl1', 'cis_lvl2']
+    if any(bm in keyword for bm in _established_benchmarks):
+        print(f"WARNING: You are attempting to tailor an already established benchmark.  Excluding rules or modifying ODVs may not meet the compliance of the established benchmark.\n")
+        benchmark = keyword
+    else:
+        benchmark = "default"
+            
+    included_rules = []
+    queried_rule_ids = []
+    
+
+    for rule in rules:
+        get_odv = False
+       
+        _always_include = ['supplemental', 'inherent']
+        if any(tag in rule.rule_tags for tag in _always_include):
+            #print(f"Including rule {rule.rule_id} by default")
+            include = "Y"
+        else:
+            if rule.rule_id not in queried_rule_ids:
+                include = sanitised_input(f"Would you like to include the rule for \"{rule.rule_id}\" in your benchmark? [Y/n]: ", str.lower, range_=('y', 'n'), default_="y")
+                queried_rule_ids.append(rule.rule_id)
+                get_odv = True
+                # remove custom ODVs if there, they will be re-written if needed
+                remove_odv_custom_rule(rule)
+        if include.upper() == "Y":
+            included_rules.append(rule)
+            if rule.rule_odv == "missing":
+                continue
+            elif get_odv:
+                if benchmark == "default":
+                    print(f'{rule.rule_odv["hint"]}')
+                    if isinstance(rule.rule_odv["default"], int):
+                         odv = sanitised_input(f'Enter the ODV for \"{rule.rule_id}\" or press Enter for the default value ({rule.rule_odv["default"]}): ', int, default_=rule.rule_odv["default"])
+                    elif isinstance(rule.rule_odv["default"], bool):
+                         odv = sanitised_input(f'Enter the ODV for \"{rule.rule_id}\" or press Enter for the default value ({rule.rule_odv["default"]}): ', bool, default_=rule.rule_odv["default"])
+                    else:
+                         odv = sanitised_input(f'Enter the ODV for \"{rule.rule_id}\" or press Enter for the default value ({rule.rule_odv["default"]}): ', str, default_=rule.rule_odv["default"])
+                    if odv and odv != rule.rule_odv["default"]:
+                        write_odv_custom_rule(rule, odv)
+                else:
+                    print(f'{rule.rule_odv["hint"]}')
+                    if isinstance(rule.rule_odv[benchmark], int):
+                         odv = sanitised_input(f'Enter the ODV for \"{rule.rule_id}\" or press Enter for the default value ({rule.rule_odv[benchmark]}): ', int, default_=rule.rule_odv[benchmark])
+                    elif isinstance(rule.rule_odv[benchmark], bool):
+                         odv = sanitised_input(f'Enter the ODV for \"{rule.rule_id}\" or press Enter for the default value ({rule.rule_odv[benchmark]}): ', bool, default_=rule.rule_odv[benchmark])
+                    else:
+                         odv = sanitised_input(f'Enter the ODV for \"{rule.rule_id}\" or press Enter for the default value ({rule.rule_odv[benchmark]}): ', str, default_=rule.rule_odv[benchmark])
+                    if odv and odv != rule.rule_odv[benchmark]:
+                        write_odv_custom_rule(rule, odv)
+    return included_rules
 
 def main():
 
     args = create_args()
     try:
-        # output_basename = os.path.basename(args.baseline.name)
-        # output_filename = os.path.splitext(output_basename)[0]
-        # baseline_name = os.path.splitext(output_basename)[0].capitalize()
         file_dir = os.path.dirname(os.path.abspath(__file__))
         parent_dir = os.path.dirname(file_dir)
 
@@ -361,6 +467,11 @@ def main():
     if args.keyword == None:
         print("No rules found for the keyword provided, please verify from the following list:")
         available_tags(all_rules)
+    elif args.tailor:
+        # prompt for inclusion, add ODV
+        odv_baseline_rules = odv_query(found_rules, args.keyword)
+        baseline_output_file = open(f"{build_path}/{args.keyword}.yaml", 'w')
+        baseline_output_file.write(output_baseline(odv_baseline_rules, version_yaml["os"], args.keyword))
     else:
         baseline_output_file = open(f"{build_path}/{args.keyword}.yaml", 'w')
         baseline_output_file.write(output_baseline(found_rules, version_yaml["os"], args.keyword))
