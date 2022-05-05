@@ -339,10 +339,10 @@
             </code>
         </div>
         <xsl:choose>
-            <xsl:when test="ident[@system = 'http://cce.mitre.org/']">
+            <xsl:when test="ident[@system = 'https://ncp.nist.gov/cce']">
                 <p>
                     <code>
-                        <xsl:value-of select="ident[@system = 'http://cce.mitre.org/']"/>
+                        <xsl:value-of select="ident[@system = 'https://ncp.nist.gov/cce']"/>
                     </code>
                 </p>
             </xsl:when>
