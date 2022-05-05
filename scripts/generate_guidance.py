@@ -780,7 +780,7 @@ fi
 
             if "arm64" in rule_yaml['tags']:
                 arch="arm64"
-            elif "intel" in rule_yaml['tags']:
+            elif "i386" in rule_yaml['tags']:
                 arch="i386"
             else:
                 arch=""
@@ -993,12 +993,6 @@ fi
 /bin/echo "$(date -u) Remediation complete" >> "$audit_log"
 
 }
-
-# check for command line arguments, if --check or --fix, then just do them.
-if (( # >= 2));then
-    /bin/echo "Too many arguments. Usage: $0 [--check| --fix]"
-    exit 1
-fi
 
 zparseopts -D -E -check=check -fix=fix -stats=stats -compliant=compliant -non_compliant=non_compliant
 
@@ -1616,11 +1610,6 @@ def main():
         adoc_additional_docs_template = adoc_additional_docs_file.read() + "\n"
 
     # set tag attribute
-    if args.gary:
-        adoc_tag_show=":show_tags:"
-    else:
-        adoc_tag_show=":show_tags!:"
-
     if "STIG" in baseline_yaml['title'].upper():
         adoc_STIG_show=":show_STIG:"
     else:
@@ -1635,6 +1624,14 @@ def main():
          adoc_171_show=":show_171:"
     else:
          adoc_171_show=":show_171!:"
+    
+    if args.gary:
+        adoc_tag_show=":show_tags:"
+        adoc_STIG_show=":show_STIG:"
+        adoc_cis_show=":show_cis:"
+        adoc_171_show=":show_171:"
+    else:
+        adoc_tag_show=":show_tags!:"
 
     # Create header
     header_adoc = adoc_header_template.substitute(
@@ -1763,7 +1760,7 @@ def main():
             try:
                 rule_yaml['references']['cis']
             except KeyError:
-                cis = '- N/A'
+                cis = ""
             else:
                 cis = parse_cis_references(rule_yaml['references']['cis'])
 
