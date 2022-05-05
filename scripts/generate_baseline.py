@@ -2,7 +2,6 @@
 # filename: generate_guidance.py
 # description: Process a given keyword, and output a baseline file
 
-from operator import truediv
 import os.path
 import glob
 import os
