@@ -31,13 +31,12 @@ references:
   cis:
     benchmark:
       - N/A
-    v8:
+    controls v8:
       - 4.1
       - 4.8
 macOS:
   - "12.0"
 tags:
-  - none
   - cisv8
   - stig
 severity: "medium"

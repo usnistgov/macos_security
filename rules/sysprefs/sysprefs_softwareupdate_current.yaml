@@ -22,7 +22,7 @@ fix: |
   NOTE - This will apply to the whole system
 references:
   cce:
-    - N/A
+    - CCE-91141-2
   cci: 
     - N/A
   800-53r5:
@@ -38,7 +38,7 @@ references:
   cis:
     benchmark:
       - 1.1 (level 1)
-    v8:
+    controls v8:
       - 7.3
       - 7.4
 macOS:

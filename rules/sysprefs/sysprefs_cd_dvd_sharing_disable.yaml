@@ -13,7 +13,7 @@ fix: |
   ----
 references:
   cce:
-    - N/A
+    - CCE-91127-1
   cci: 
     - N/A
   800-53r5:
@@ -31,7 +31,7 @@ references:
   cis:
     benchmark: 
       - 2.4.6 (level 1)
-    v8:
+    controls v8:
       - 4.1
       - 4.8
 macOS:

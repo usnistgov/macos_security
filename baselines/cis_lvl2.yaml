@@ -1,11 +1,12 @@
 title: "macOS 12.0: Security Configuration - CIS Benchmarks"
 description: |
-  This guide describes the actions to take when securing a macOS 12.0 system against the CIS Benchmarks (Level 1 and 2)
+  This guide describes the actions to take when securing a macOS system against the CIS Apple macOS 12.0 Monterey v1.0.0 Benchmark (Level 1 and 2)
 authors: |
   The CIS Benchmarks are referenced with the permission and support of the Center for Internet Security® (CIS®)
   |===
   |Edward Byrd|Center for Internet Security
   |Ron Colvin|Center for Internet Security
+  |Allen Golbig|Jamf  
   |===
 profile:
   - section: "auditing"
@@ -48,12 +49,16 @@ profile:
       - os_root_disable
       - os_safari_open_safe_downloads_disable
       - os_show_filename_extensions_enable
+      - os_sip_enable
       - os_sudo_timeout_configure
       - os_sudoers_timestamp_type_configure
       - os_sudoers_tty_configure
+      - os_system_wide_applications_configure
       - os_terminal_secure_keyboard_enable
       - os_time_offset_limit_configure
       - os_unlock_active_user_session_disable
+      - os_world_writable_library_folder_configure
+      - os_world_writable_system_folder_configure
   - section: "passwordpolicy"
     rules:
       - pwpolicy_account_lockout_enforce_five
@@ -115,7 +120,6 @@ profile:
   - section: "Supplemental"
     rules:
       - supplemental_cis_manual
-      - supplemental_controls
       - supplemental_filevault
       - supplemental_firewall_pf
       - supplemental_password_policy

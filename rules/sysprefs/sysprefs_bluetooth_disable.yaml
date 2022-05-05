@@ -8,7 +8,7 @@ discussion: |
   Information System Security Officers (ISSOs) may make the risk-based decision not to disable Bluetooth, so as to maintain necessary functionality, but they are advised to first fully weigh the potential risks posed to their organization. 
   ====
 check: |
-  osascript -l JavaScript << EOS
+  /usr/bin/osascript -l JavaScript << EOS
   $.NSUserDefaults.alloc.initWithSuiteName('com.apple.MCXBluetooth')\
   .objectForKey('DisableBluetooth').js
   EOS
@@ -38,7 +38,7 @@ references:
   cis:
     benchmark:
       - N/A
-    v8:
+    controls v8:
       - 4.8
       - 12.6
       - 13.9

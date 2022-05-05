@@ -15,7 +15,7 @@ fix: |
   NOTE: NOTE: This fix will replace the contents of the flags: line in `/etc/security/audit_control`, if you have customized the flags, your changes may be overwritten.
 references:
   cce:
-    - N/A
+    - CCE-91092-7
   cci:
     - N/A
   800-53r5:
@@ -37,7 +37,7 @@ references:
   cis:
     benchmark:
       - 3.2 (level 2)
-    v8:
+    controls v8:
       - 3.14
       - 8.2
       - 8.5

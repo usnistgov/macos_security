@@ -7,7 +7,7 @@ discussion: |
 
   NOTE: DisableFDEAutoLogin does not have to be set on Apple Silicon based macOS systems that are smartcard enforced as smartcards are available at pre-boot.
 check: | 
-  osascript -l JavaScript << EOS
+  /usr/bin/osascript -l JavaScript << EOS
   $.NSUserDefaults.alloc.initWithSuiteName('com.apple.loginwindow')\
   .objectForKey('DisableFDEAutoLogin').js
   EOS
@@ -36,7 +36,7 @@ references:
   cis:
     benchmark:
       - N/A
-    v8:
+    controls v8:
       - 3.3
       - 6.7
 macOS:

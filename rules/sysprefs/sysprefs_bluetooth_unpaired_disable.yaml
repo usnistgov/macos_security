@@ -20,7 +20,7 @@ fix: |
   ----
 references:
   cce:
-    - N/A
+    - CCE-91126-3
   cci: 
     - N/A
   800-53r5:
@@ -39,7 +39,7 @@ references:
   cis:
     benchmark:
       - 2.1.1 (level 1)
-    v8:
+    controls v8:
       - 4.8
       - 12.6
       - 13.9

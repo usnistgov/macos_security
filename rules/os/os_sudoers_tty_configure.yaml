@@ -30,7 +30,7 @@ references:
   cis:
     benchmark:
       - 5.4 (level 1)
-    v8:
+    controls v8:
       - 4.3
 macOS:
   - "12.0"

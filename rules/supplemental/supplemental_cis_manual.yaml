@@ -1,7 +1,7 @@
 id: supplemental_cis_manual
-title: "CIS Manual Controls"
+title: " CIS Manual Recommendations"
 discussion: |
-  List of CIS controls that are manual checks.
+  List of CIS recommendations that are manual check in the CIS macOS Benchmark.
 
   [cols="15%h, 85%a"]
   |===
@@ -9,7 +9,7 @@ discussion: |
   |Section
   |Install Updates, Patches and Additional Security Software
 
-  |Controls
+  |Recommendations
   |1.7 Audit Computer Name
   |===
   
@@ -18,7 +18,7 @@ discussion: |
   |Section
   |System Preferences
 
-  |Controls
+  |Recommendations
   |2.3.3 Audit Lock Screen and Start Screen Saver Tools +
   2.5.1.2 Ensure all user storage APFS volumes are encrypted +
   2.5.1.3 Ensure all user storage CoreStorage volumes are encrypted +
@@ -41,7 +41,7 @@ discussion: |
   |Section
   |Logging and Auditing
 
-  |Controls
+  |Recommendations
   |3.7 Audit Software Inventory
   |===
 
@@ -50,7 +50,7 @@ discussion: |
   |Section
   |Network Configurations
 
-  |Controls
+  |Recommendations
   |4.3 Audit Network Specific Locations +
   4.6 Audit Wi-Fi Settings +
   |===
@@ -60,7 +60,7 @@ discussion: |
   |Section
   |System Access, Authentication and Authorization
 
-  |Controls
+  |Recommendations
   |5.2.3 Ensure Complex Password Must Contain Alphabetic Characters Is Configured +
   5.2.4 Ensure Complex Password Must Contain Numeric Character Is Configured +
   5.2.6 Ensure Complex Password Must Contain Uppercase and Lowercase Characters Is Configured +
@@ -73,7 +73,7 @@ discussion: |
   |Section
   |Appendix: Additional Considerations
 
-  |Controls
+  |Recommendations
   |7.1 Extensible Firmware Interface (EFI) password +
   7.2 FileVault and Local Account Password Reset using AppleID +
   |===

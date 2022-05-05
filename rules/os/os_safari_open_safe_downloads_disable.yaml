@@ -3,14 +3,14 @@ title: "Disable Automatic Opening of Safe Files in Safari"
 discussion: |
   Open "safe" files after downloading _MUST_ be disabled in Safari. 
 check: |
-  /usr/bin/profiles -P -o stdout | /usr/bin/grep -c 'AutoOpenSafeDownloads = 0'
+  /usr/bin/profiles -P -o stdout | /usr/bin/grep -c 'AutoOpenSafeDownloads = 0' | /usr/bin/awk '{ if ($1 >= 1) {print "1"} else {print "0"}}'
 result:
   integer: 1
 fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-    - N/A
+    - CCE-91111-5
   cci:
     - N/A
   800-53r5:
@@ -24,7 +24,7 @@ references:
   cis:
     benchmark:
       - 6.3 (level 1)
-    v8:
+    controls v8:
       - 9
 macOS:
   - "12.0"

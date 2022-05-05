@@ -22,7 +22,7 @@ fix: |
   . Click *Use Disk*
 references:
   cce:
-    - N/A
+    - CCE-91143-8
   cci: 
     - N/A
   800-53r5:
@@ -38,7 +38,7 @@ references:
   cis:
     benchmark: 
       - 2.7.2 (level 2)
-    v8:
+    controls v8:
       - 3.6
       - 3.11
       - 11.2

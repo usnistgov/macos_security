@@ -5,14 +5,14 @@ discussion: |
 
   Hiding the system preference pane prevents the users from configuring Touch ID. 
 check: |
-  /usr/bin/profiles -P -o stdout | /usr/bin/grep -c 'com.apple.preferences.password'  
+  /usr/bin/profiles -P -o stdout | /usr/bin/grep -c 'com.apple.preferences.password' | /usr/bin/awk '{ if ($1 >= 1) {print "1"} else {print "0"}}'
 result:
   integer: 1
 fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-    - N/A
+    - CCE-91145-3
   cci: 
     - CCI-001774
     - CCI-000381

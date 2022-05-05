@@ -7,6 +7,11 @@ discussion: |
   ====
   Some organizations rely on the use of removable media for storing and sharing data. Information System Security Officers (ISSOs) may make the risk-based decision not to disable external hard drives to avoid losing this functionality, but they are advised to first fully weigh the potential risks posed to their organization.
   ====
+
+  [IMPORTANT]
+  ====
+  Apple has deprecated the use of media mount controls, using these controls may not work as expected. Third party software may be required to fullfill the compliance requirements.
+  ====
 check: |
   /usr/bin/osascript -l JavaScript << EOS
   ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('com.apple.systemuiserver')\
@@ -18,7 +23,7 @@ fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-    - N/A
+    - CCE-91097-6
   cci: 
     - CCI-000366
     - CCI-001967

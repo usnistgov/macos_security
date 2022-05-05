@@ -13,7 +13,7 @@ fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-    - N/A
+    - CCE-91124-8
   cci: 
     - N/A
   800-53r5:
@@ -29,7 +29,7 @@ references:
   cis:
     benchmark:
       - 2.1.2 (level 1)
-    v8:
+    controls v8:
       - 4.8
       - 13.9  
 macOS:
