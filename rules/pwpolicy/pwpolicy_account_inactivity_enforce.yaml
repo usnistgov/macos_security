@@ -1,17 +1,17 @@
 id: pwpolicy_account_inactivity_enforce
-title: "Disable Accounts after 35 Days of Inactivity"
+title: "Disable Accounts after $ODV Days of Inactivity"
 discussion: |
-  The macOS _MUST_ be configured to disable accounts after 35 days of inactivity.
+  The macOS _MUST_ be configured to disable accounts after $ODV days of inactivity.
 
   This rule prevents malicious users from making use of unused accounts to gain access to the system while avoiding detection. 
 check: | 
   /usr/bin/pwpolicy getaccountpolicies | /usr/bin/grep -v "Getting global account policies" | /usr/bin/xmllint --xpath '/plist/dict/array/dict/dict[key="policyAttributeInactiveDays"]/integer' - | /usr/bin/awk -F '[<>]' '{print $3}'
 result:
-  integer: 35
+  integer: $ODV
 fix: |
   This setting may be enforced using local policy or by a directory service.
   
-  To set local policy to disable an inactive user after 35 days, edit the current password policy to contain the following <dict> within the "policyCategoryAuthentication":
+  To set local policy to disable an inactive user after $ODV days, edit the current password policy to contain the following <dict> within the "policyCategoryAuthentication":
   
   [source,xml]
   ----
@@ -23,7 +23,7 @@ fix: |
   <key>policyParameters</key>
   <dict>
   <key>policyAttributeInactiveDays<key>
-  <integer>35</integer>
+  <integer>$ODV</integer>
   </dict>
   </dict>
   ----
@@ -57,6 +57,9 @@ references:
       - 5.3
 macOS:
   - "11.0"
+odv:
+  hint: "Number of days."
+  default: 35
 tags:
   - 800-171
   - cnssi-1253
