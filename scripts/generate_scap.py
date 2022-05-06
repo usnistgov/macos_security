@@ -31,7 +31,8 @@ def generate_scap(all_rules, all_baselines):
     now = datetime.now()
     date_time_string = now.strftime("%Y-%m-%dT%H:%M:%S")
 
-    output = "../build/scap.xml"
+    filenameversion = version_yaml['version'].split(",")[1].replace(" ", "_")[1:]
+    output = "../build/macOS_{0}_Security_Compliance_Benchmark-{1}.xml".format(version_yaml['os'],filenameversion)
     oval_definition = str()
     oval_test = str()
     oval_object = str()
