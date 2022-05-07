@@ -2360,9 +2360,9 @@ Administration</contributor>
         # scap_profiles = scap_profiles + '''</Profile>'''
     for k in generated_baselines.keys():
         scap_profiles = scap_profiles + '''
-        <Profile id="xccdf_gov.nist.mscp.content_profile_{0}">
+        <Profile id="xccdf_gov.nist.mscp.content_profile_{1}">
                 <title>{0}</title>
-                <description>This profile selects all rules tagged as {0}.</description>'''.format(k)
+                <description>This profile selects all rules tagged as {0}.</description>'''.format(k, k.replace(" ","_"))
         for v in generated_baselines[k]:
             scap_profiles = scap_profiles + '''
                 <select idref="xccdf_gov.nist.mscp.content_rule_{0}" selected="true"/>'''.format(v)
