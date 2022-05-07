@@ -228,6 +228,12 @@ Administration</contributor>
                     for v8controls in rule_yaml['references']['cis']['controls v8']:
                         references = references + str(v8controls) + ", "
                     references = references[:-2] + "</reference>"
+            
+            cce = str()
+            if "cce" not in rule_yaml['references'] or rule_yaml['references']['cce'] == "N/A":
+                cce = "CCE-11111-1"
+            else:
+                cce = rule_yaml['references']['cce'][0]
 
             xccdf_rules = xccdf_rules + '''
             <Rule id="xccdf_gov.nist.mscp.content_rule_{0}" selected="false" role="full" severity="{1}" weight="1.0">
@@ -237,7 +243,7 @@ Administration</contributor>
 {4}
 {5}</description>{9}<ident system="https://ncp.nist.gov/cce">{6}</ident>
             <fixtext>{7}</fixtext>{8}</Rule>
-            '''.format(rule_yaml['id'] + "_" + odv_label, severity, rule_yaml['title'], rule_yaml['discussion'].replace("<","&lt;").replace(">","&gt;").replace("&","&amp;"), rule_yaml['check'].replace("<","&lt;").replace(">","&gt;").replace("&","&amp;"), result, rule_yaml['references']['cce'][0],rule_yaml['fix'].replace("<","&lt;").replace(">","&gt;").replace("&","&amp;"), check, references)
+            '''.format(rule_yaml['id'] + "_" + odv_label, severity, rule_yaml['title'], rule_yaml['discussion'].replace("<","&lt;").replace(">","&gt;").replace("&","&amp;"), rule_yaml['check'].replace("<","&lt;").replace(">","&gt;").replace("&","&amp;"), result, cce,rule_yaml['fix'].replace("<","&lt;").replace(">","&gt;").replace("&","&amp;"), check, references)
                 
 
 
@@ -306,7 +312,7 @@ Administration</contributor>
                 <criteria>
                     <criterion comment="{}" test_ref="oval:mscp:tst:{}" />
                 </criteria>
-            </definition> '''.format(x,rule_yaml['title'],rule_yaml['references']['cce'][0],rule_yaml['id'] + "_" + odv_label, rule_yaml['discussion'],rule_yaml['id'] + "_" + odv_label,x)
+            </definition> '''.format(x,rule_yaml['title'],cce,rule_yaml['id'] + "_" + odv_label, rule_yaml['discussion'],rule_yaml['id'] + "_" + odv_label,x)
 
                 oval_test = oval_test + '''
                     <file_test xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#unix" check="all" check_existence="all_exist" comment="{}_test" id="oval:mscp:tst:{}" version="2">
@@ -373,7 +379,7 @@ Administration</contributor>
                     <criterion comment="{}" test_ref="oval:mscp:tst:{}" />
 
                 </criteria>
-            </definition>'''.format(x,rule_yaml['title'],rule_yaml['references']['cce'][0],rule_yaml['id'] + "_" + odv_label,rule_yaml['discussion'].rstrip(),rule_yaml['id'] + "_" + odv_label,x)
+            </definition>'''.format(x,rule_yaml['title'],cce,rule_yaml['id'] + "_" + odv_label,rule_yaml['discussion'].rstrip(),rule_yaml['id'] + "_" + odv_label,x)
 
                         oval_test = oval_test + '''
             <gatekeeper_test xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" check="all" check_existence="only_one_exists" comment="{}_test" id="oval:mscp:tst:{}" version="2">
@@ -421,7 +427,7 @@ Administration</contributor>
                             <criterion comment="{}" test_ref="oval:mscp:tst:{}" />
                         </criteria> 
                     </definition>
-                    '''.format(x,rule_yaml['title'],rule_yaml['references']['cce'][0],rule_yaml['id'] + "_" + odv_label,rule_yaml['discussion'].rstrip(),rule_yaml['id'] + "_" + odv_label,x)
+                    '''.format(x,rule_yaml['title'],cce,rule_yaml['id'] + "_" + odv_label,rule_yaml['discussion'].rstrip(),rule_yaml['id'] + "_" + odv_label,x)
 
                                 oval_test = oval_test + '''
                     <plist511_test xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" check="all" check_existence="only_one_exists" comment="{}_test" id="oval:mscp:tst:{}" version="2">
@@ -489,7 +495,7 @@ Administration</contributor>
                     <criterion comment="{}" test_ref="oval:mscp:tst:{}" />
                 </criteria> 
             </definition>
-            '''.format(x,rule_yaml['title'],rule_yaml['references']['cce'][0],rule_yaml['id'] + "_" + odv_label,rule_yaml['discussion'].rstrip(),rule_yaml['id'] + "_" + odv_label,x)
+            '''.format(x,rule_yaml['title'],cce,rule_yaml['id'] + "_" + odv_label,rule_yaml['discussion'].rstrip(),rule_yaml['id'] + "_" + odv_label,x)
 
                                 oval_test = oval_test + '''
             <plist511_test xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" check="all" check_existence="only_one_exists" comment="{}_test" id="oval:mscp:tst:{}" version="2">
@@ -527,7 +533,7 @@ Administration</contributor>
                     <criterion comment="{}" test_ref="oval:mscp:tst:{}" />
                 </criteria> 
             </definition>
-            '''.format(x,rule_yaml['title'],rule_yaml['references']['cce'][0],rule_yaml['id'] + "_" + odv_label,rule_yaml['discussion'].rstrip(),rule_yaml['id'] + "_" + odv_label,x)
+            '''.format(x,rule_yaml['title'],cce,rule_yaml['id'] + "_" + odv_label,rule_yaml['discussion'].rstrip(),rule_yaml['id'] + "_" + odv_label,x)
 
                                 oval_test = oval_test + '''
             <plist511_test xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" check="all" check_existence="only_one_exists" comment="{}_test" id="oval:mscp:tst:{}" version="2">
@@ -578,7 +584,7 @@ Administration</contributor>
                     <criterion comment="{}" test_ref="oval:mscp:tst:{}" />
                 </criteria> 
             </definition>
-            '''.format(x,rule_yaml['title'],rule_yaml['references']['cce'][0],rule_yaml['id'] + "_" + odv_label,rule_yaml['discussion'].rstrip(),rule_yaml['id'] + "_" + odv_label,x)
+            '''.format(x,rule_yaml['title'],cce,rule_yaml['id'] + "_" + odv_label,rule_yaml['discussion'].rstrip(),rule_yaml['id'] + "_" + odv_label,x)
 
                             oval_test = oval_test + '''
             <plist511_test xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" check="all" check_existence="only_one_exists" comment="{}_test" id="oval:mscp:tst:{}" version="2">
@@ -644,7 +650,7 @@ Administration</contributor>
                     <criterion comment="{}" test_ref="oval:mscp:tst:{}" />
                 </criteria> 
             </definition>
-            '''.format(x,rule_yaml['title'],rule_yaml['references']['cce'][0],rule_yaml['id'] + "_" + odv_label,rule_yaml['discussion'].rstrip(),rule_yaml['id'] + "_" + odv_label,x)
+            '''.format(x,rule_yaml['title'],cce,rule_yaml['id'] + "_" + odv_label,rule_yaml['discussion'].rstrip(),rule_yaml['id'] + "_" + odv_label,x)
 
                             oval_test = oval_test + '''
             <plist511_test xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" check="all" check_existence="only_one_exists" comment="{}_test" id="oval:mscp:tst:{}" version="2">
@@ -709,7 +715,7 @@ Administration</contributor>
                     <criterion comment="{}" test_ref="oval:mscp:tst:{}" />
                 </criteria> 
             </definition>
-            '''.format(x,rule_yaml['title'],rule_yaml['references']['cce'][0],rule_yaml['id'] + "_" + odv_label,rule_yaml['discussion'].rstrip(),rule_yaml['id'] + "_" + odv_label,x)
+            '''.format(x,rule_yaml['title'],cce,rule_yaml['id'] + "_" + odv_label,rule_yaml['discussion'].rstrip(),rule_yaml['id'] + "_" + odv_label,x)
 
                             oval_test = oval_test + '''
             <plist511_test xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" check="all" check_existence="only_one_exists" comment="{}_test" id="oval:mscp:tst:{}" version="2">
@@ -775,7 +781,7 @@ Administration</contributor>
                     <criterion comment="{}" test_ref="oval:mscp:tst:{}" />
                 </criteria> 
             </definition>
-            '''.format(x,rule_yaml['title'],rule_yaml['references']['cce'][0],rule_yaml['id'] + "_" + odv_label,rule_yaml['discussion'].rstrip(),rule_yaml['id'] + "_" + odv_label,x)
+            '''.format(x,rule_yaml['title'],cce,rule_yaml['id'] + "_" + odv_label,rule_yaml['discussion'].rstrip(),rule_yaml['id'] + "_" + odv_label,x)
 
                             oval_test = oval_test + '''
             <plist511_test xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" check="all" check_existence="only_one_exists" comment="{}_test" id="oval:mscp:tst:{}" version="2">
@@ -839,7 +845,7 @@ Administration</contributor>
                     <criterion comment="{}" test_ref="oval:mscp:tst:{}" />
                 </criteria> 
             </definition>
-            '''.format(x,rule_yaml['title'],rule_yaml['references']['cce'][0],rule_yaml['id'] + "_" + odv_label,rule_yaml['discussion'].rstrip(),rule_yaml['id'] + "_" + odv_label,x)
+            '''.format(x,rule_yaml['title'],cce,rule_yaml['id'] + "_" + odv_label,rule_yaml['discussion'].rstrip(),rule_yaml['id'] + "_" + odv_label,x)
 
                         oval_test = oval_test + '''
             <plist511_test xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" check="all" check_existence="only_one_exists" comment="{}_test" id="oval:mscp:tst:{}" version="2">
@@ -905,7 +911,7 @@ Administration</contributor>
                     <criterion comment="com.apple.syspolicy.kernel-extension-policy" test_ref="oval:mscp:tst:{}" />
                     <criterion comment="com.apple.TCC.configuration-profile-policy" test_ref="oval:mscp:tst:{}" />
                 </criteria> 
-            </definition>'''.format(x,rule_yaml['title'],rule_yaml['references']['cce'][0],rule_yaml['id'] + "_" + odv_label,rule_yaml['discussion'],x,x+899,x+799)
+            </definition>'''.format(x,rule_yaml['title'],cce,rule_yaml['id'] + "_" + odv_label,rule_yaml['discussion'],x,x+899,x+799)
 
                         oval_test = oval_test + '''
                             <file_test id="oval:mscp:tst:{}" version="1" comment="com.apple.extensiblesso_test" check_existence="all_exist" check="all" xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#unix">
@@ -949,7 +955,7 @@ Administration</contributor>
                     <criterion comment="{}" test_ref="oval:mscp:tst:{}" />
                 </criteria>
             </definition>
-            '''.format(x,rule_yaml['title'],rule_yaml['references']['cce'][0],rule_yaml['id'] + "_" + odv_label,rule_yaml['discussion'],rule_yaml['id'] + "_" + odv_label,x)
+            '''.format(x,rule_yaml['title'],cce,rule_yaml['id'] + "_" + odv_label,rule_yaml['discussion'],rule_yaml['id'] + "_" + odv_label,x)
 
                     oval_test = oval_test + '''
                         <systemprofiler_test xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" check="all" check_existence="only_one_exists" comment="{}_test" id="oval:mscp:tst:{}" version="2">
@@ -1012,7 +1018,7 @@ Administration</contributor>
                     <criterion comment="{}" test_ref="oval:mscp:tst:{}" />
                     <criterion comment="{}" test_ref="oval:mscp:tst:{}" />
                 </criteria>
-            </definition> '''.format(x,rule_yaml['title'],rule_yaml['references']['cce'][0],rule_yaml['id'] + "_" + odv_label,rule_yaml['discussion'],rule_yaml['id'] +"_standbydelayhigh",x, rule_yaml['id'] +"_standbydelaylow",x+877, rule_yaml['id'] +"_highstandbythreshold",x+888)
+            </definition> '''.format(x,rule_yaml['title'],cce,rule_yaml['id'] + "_" + odv_label,rule_yaml['discussion'],rule_yaml['id'] +"_standbydelayhigh",x, rule_yaml['id'] +"_standbydelaylow",x+877, rule_yaml['id'] +"_highstandbythreshold",x+888)
                     
                     
                     oval_test = oval_test + '''
@@ -1122,7 +1128,7 @@ Administration</contributor>
                     <criterion comment="{}" test_ref="oval:mscp:tst:{}" />
 
                 </criteria>
-            </definition> '''.format(x,rule_yaml['title'],rule_yaml['references']['cce'][0],rule_yaml['id'] + "_" + odv_label,rule_yaml['discussion'],rule_yaml['id'] + "_" + odv_label,x)
+            </definition> '''.format(x,rule_yaml['title'],cce,rule_yaml['id'] + "_" + odv_label,rule_yaml['discussion'],rule_yaml['id'] + "_" + odv_label,x)
                     
                     oval_test = oval_test + '''
             <plist511_test xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" check="all" check_existence="at_least_one_exists" comment="{}_test" id="oval:mscp:tst:{}" version="2">
@@ -1163,7 +1169,7 @@ Administration</contributor>
 
                 </criteria>
             </definition>
-            '''.format(x,rule_yaml['title'],rule_yaml['references']['cce'][0],rule_yaml['id'] + "_" + odv_label,rule_yaml['discussion'],rule_yaml['id'] + "_" + odv_label,x)
+            '''.format(x,rule_yaml['title'],cce,rule_yaml['id'] + "_" + odv_label,rule_yaml['discussion'],rule_yaml['id'] + "_" + odv_label,x)
                     oval_test = oval_test + '''
             <plist511_test xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" check="all" check_existence="only_one_exists" comment="{}_test" id="oval:mscp:tst:{}" version="2">
                 <object object_ref="oval:mscp:obj:{}" />
@@ -1204,7 +1210,7 @@ Administration</contributor>
                     <criterion comment="{}" test_ref="oval:mscp:tst:{}" />
 
                 </criteria>
-            </definition> '''.format(x,rule_yaml['title'],rule_yaml['references']['cce'][0],rule_yaml['id'] + "_" + odv_label,rule_yaml['discussion'],rule_yaml['id'] + "_" + odv_label,x)
+            </definition> '''.format(x,rule_yaml['title'],cce,rule_yaml['id'] + "_" + odv_label,rule_yaml['discussion'],rule_yaml['id'] + "_" + odv_label,x)
 
                     oval_test = oval_test + '''
                     <systemsetup_test xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" check="all" check_existence="only_one_exists" comment="{}_test" id="oval:mscp:tst:{}" version="2">
@@ -1253,7 +1259,7 @@ Administration</contributor>
                         <description>{}</description> 
                     </metadata> 
                 <criteria>
-                    '''.format(x,rule_yaml['title'],rule_yaml['references']['cce'][0],rule_yaml['id'] + "_" + odv_label,rule_yaml['discussion'],rule_yaml['id'] + "_" + odv_label,x)
+                    '''.format(x,rule_yaml['title'],cce,rule_yaml['id'] + "_" + odv_label,rule_yaml['discussion'],rule_yaml['id'] + "_" + odv_label,x)
                     
                     for multi_grep in matchy_match.split("|"):
                         
@@ -1355,7 +1361,7 @@ Administration</contributor>
                     <criterion comment="{}_3" test_ref="oval:mscp:tst:{}" />
                     <criterion comment="{}_4" test_ref="oval:mscp:tst:{}" />
                 </criteria>
-            </definition> '''.format(x,rule_yaml['title'],rule_yaml['references']['cce'][0],rule_yaml['id'] + "_" + odv_label,rule_yaml['discussion'],rule_yaml['id'] + "_" + odv_label,x,rule_yaml['id'] + "_" + odv_label,x+5000,rule_yaml['id'] + "_" + odv_label,x+5001,rule_yaml['id'] + "_" + odv_label,x+5002)
+            </definition> '''.format(x,rule_yaml['title'],cce,rule_yaml['id'] + "_" + odv_label,rule_yaml['discussion'],rule_yaml['id'] + "_" + odv_label,x,rule_yaml['id'] + "_" + odv_label,x+5000,rule_yaml['id'] + "_" + odv_label,x+5001,rule_yaml['id'] + "_" + odv_label,x+5002)
                     
                         oval_test = oval_test + '''
                         <plist511_test xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" check="all" check_existence="all_exist" comment="{}_1_test" id="oval:mscp:tst:{}" version="2">
@@ -1477,7 +1483,7 @@ Administration</contributor>
                 <criteria>
                     <criterion comment="{}" test_ref="oval:mscp:tst:{}" />
                 </criteria>
-            </definition> '''.format(x,rule_yaml['title'],rule_yaml['references']['cce'][0],rule_yaml['id'] + "_" + odv_label,rule_yaml['discussion'],rule_yaml['id'] + "_" + odv_label,x)
+            </definition> '''.format(x,rule_yaml['title'],cce,rule_yaml['id'] + "_" + odv_label,rule_yaml['discussion'],rule_yaml['id'] + "_" + odv_label,x)
                     
                     oval_test = oval_test + '''
                         <plist511_test xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" check="all" check_existence="all_exist" comment="{}_test" id="oval:mscp:tst:{}" version="2">
@@ -1685,7 +1691,7 @@ Administration</contributor>
                     <criterion comment="{}" test_ref="oval:mscp:tst:{}" />
 
                 </criteria>
-            </definition> '''.format(x,rule_yaml['title'],rule_yaml['references']['cce'][0],rule_yaml['id'] + "_" + odv_label,rule_yaml['discussion'],rule_yaml['id'] + "_" + odv_label,x)
+            </definition> '''.format(x,rule_yaml['title'],cce,rule_yaml['id'] + "_" + odv_label,rule_yaml['discussion'],rule_yaml['id'] + "_" + odv_label,x)
 
                             oval_test = oval_test + '''
                                 <authorizationdb_test xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" check="all" check_existence="only_one_exists" comment="{}_test" id="oval:mscp:tst:{}" version="2">
@@ -1718,7 +1724,7 @@ Administration</contributor>
                 <criteria>
                     <criterion comment="{}" test_ref="oval:mscp:tst:{}" />
                 </criteria>
-            </definition> '''.format(x,rule_yaml['title'],rule_yaml['references']['cce'][0],rule_yaml['id'] + "_" + odv_label,rule_yaml['discussion'],rule_yaml['id'] + "_" + odv_label,x)
+            </definition> '''.format(x,rule_yaml['title'],cce,rule_yaml['id'] + "_" + odv_label,rule_yaml['discussion'],rule_yaml['id'] + "_" + odv_label,x)
 
                             oval_test = oval_test + '''
             <authorizationdb_test xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" check="all" check_existence="only_one_exists" comment="{}_test" id="oval:mscp:tst:{}" version="2">
@@ -1751,7 +1757,7 @@ Administration</contributor>
                     <criterion comment="{}" test_ref="oval:mscp:tst:{}" />
                 
                 </criteria> 
-            </definition> '''.format(x,rule_yaml['title'],rule_yaml['references']['cce'][0],rule_yaml['id'] + "_" + odv_label,rule_yaml['discussion'],rule_yaml['id'] + "_" + odv_label,x)
+            </definition> '''.format(x,rule_yaml['title'],cce,rule_yaml['id'] + "_" + odv_label,rule_yaml['discussion'],rule_yaml['id'] + "_" + odv_label,x)
                     oval_test = oval_test + '''
                             <file_test id="oval:mscp:tst:{}" version="1" comment="{}_test" check_existence="none_exist" check="none satisfy" xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#unix">
                 <object object_ref="oval:mscp:obj:{}"/>
@@ -1784,7 +1790,7 @@ Administration</contributor>
                     <criterion comment="{}_rtf_enforce" test_ref="oval:mscp:tst:{}" />
                     <criterion comment="{}_rtfd_enforce" test_ref="oval:mscp:tst:{}" />
                 </criteria> 
-            </definition> '''.format(x,rule_yaml['title'],rule_yaml['references']['cce'][0],rule_yaml['id'] + "_" + odv_label,rule_yaml['discussion'],rule_yaml['id'] + "_" + odv_label,x,rule_yaml['id'] + "_" + odv_label,x+2999)
+            </definition> '''.format(x,rule_yaml['title'],cce,rule_yaml['id'] + "_" + odv_label,rule_yaml['discussion'],rule_yaml['id'] + "_" + odv_label,x,rule_yaml['id'] + "_" + odv_label,x+2999)
 
                         oval_test = oval_test + '''
                             <file_test id="oval:mscp:tst:{}" version="1" comment="{}_rtf_test" check_existence="all_exist" check="all" xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#unix">
@@ -1859,7 +1865,7 @@ Administration</contributor>
                     <criterion comment="{}" test_ref="oval:mscp:tst:{}" />
                 </criteria> 
             </definition> 
-        '''.format(x,rule_yaml['title'],rule_yaml['references']['cce'][0],rule_yaml['id'] + "_" + odv_label,rule_yaml['discussion'].rstrip(),rule_yaml['id'] + "_" + odv_label,x)
+        '''.format(x,rule_yaml['title'],cce,rule_yaml['id'] + "_" + odv_label,rule_yaml['discussion'].rstrip(),rule_yaml['id'] + "_" + odv_label,x)
 
                     oval_test = oval_test + '''
             <file_test id="oval:mscp:tst:{}" version="1" comment="{}_test" check_existence="all_exist" check="all" xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#unix">
@@ -2065,7 +2071,7 @@ Administration</contributor>
                     <criterion comment="{}" test_ref="oval:mscp:tst:{}" />
                 </criteria>
             </definition> 
-            '''.format(x,rule_yaml['title'],rule_yaml['references']['cce'][0],rule_yaml['id'] + "_" + odv_label,rule_yaml['discussion'],rule_yaml['id'] + "_" + odv_label,x)
+            '''.format(x,rule_yaml['title'],cce,rule_yaml['id'] + "_" + odv_label,rule_yaml['discussion'],rule_yaml['id'] + "_" + odv_label,x)
                             
                             oval_test = oval_test + '''
             <accountinfo_test xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" check="all" check_existence="only_one_exists" comment="{}_test" id="oval:mscp:tst:{}" version="2">
@@ -2137,7 +2143,7 @@ Administration</contributor>
                 <criteria> 
                     <criterion comment="{}" test_ref="oval:mscp:tst:{}" />
                 </criteria> 
-            </definition> '''.format(x,rule_yaml['title'],rule_yaml['references']['cce'][0],rule_yaml['id'] + "_" + odv_label,rule_yaml['discussion'].rstrip(),rule_yaml['id'] + "_" + odv_label,x)
+            </definition> '''.format(x,rule_yaml['title'],cce,rule_yaml['id'] + "_" + odv_label,rule_yaml['discussion'].rstrip(),rule_yaml['id'] + "_" + odv_label,x)
                     oval_test = oval_test + '''
                     <textfilecontent54_test id="oval:mscp:tst:{}" version="1" comment="{}_test" check_existence="all_exist" check="all" xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#independent">
                 <object object_ref="oval:mscp:obj:{}"/>
@@ -2171,7 +2177,7 @@ Administration</contributor>
             <criteria> 
                 <criterion comment="{}" test_ref="oval:mscp:tst:{}" />
             </criteria> 
-        </definition> '''.format(x,rule_yaml['title'],rule_yaml['references']['cce'][0],rule_yaml['id'] + "_" + odv_label,rule_yaml['discussion'].rstrip(),rule_yaml['id'] + "_" + odv_label,x)
+        </definition> '''.format(x,rule_yaml['title'],cce,rule_yaml['id'] + "_" + odv_label,rule_yaml['discussion'].rstrip(),rule_yaml['id'] + "_" + odv_label,x)
                         oval_test = oval_test + '''
                 <textfilecontent54_test id="oval:mscp:tst:{}" version="1" comment="{}_test" check_existence="all_exist" check="all" xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#independent">
             <object object_ref="oval:mscp:obj:{}"/>
@@ -2216,7 +2222,7 @@ Administration</contributor>
                 <criteria> 
                     <criterion comment="{}" test_ref="oval:mscp:tst:{}" />
                 </criteria> 
-            </definition> '''.format(x,rule_yaml['title'],rule_yaml['references']['cce'][0],rule_yaml['id'] + "_" + odv_label,rule_yaml['discussion'].rstrip(),rule_yaml['id'] + "_" + odv_label,x)
+            </definition> '''.format(x,rule_yaml['title'],cce,rule_yaml['id'] + "_" + odv_label,rule_yaml['discussion'].rstrip(),rule_yaml['id'] + "_" + odv_label,x)
                         oval_test = oval_test + '''
                     <textfilecontent54_test id="oval:mscp:tst:{}" version="1" comment="{}_test" check_existence="all_exist" check="all" xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#independent">
                 <object object_ref="oval:mscp:obj:{}"/>
@@ -2247,7 +2253,7 @@ Administration</contributor>
                     <criterion comment="{}_plist" test_ref="oval:mscp:tst:{}" />
                     <criterion comment="{}_launchctl" test_ref="oval:mscp:tst:{}" />
                 </criteria>
-            </definition> '''.format(x,rule_yaml['title'],rule_yaml['references']['cce'][0],rule_yaml['id'] + "_" + odv_label,rule_yaml['discussion'].rstrip(),rule_yaml['id'] + "_" + odv_label,x,rule_yaml['id'] + "_" + odv_label,x+999)
+            </definition> '''.format(x,rule_yaml['title'],cce,rule_yaml['id'] + "_" + odv_label,rule_yaml['discussion'].rstrip(),rule_yaml['id'] + "_" + odv_label,x,rule_yaml['id'] + "_" + odv_label,x+999)
 
                         oval_test = oval_test + '''
             <plist511_test xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" check="all" check_existence="only_one_exists" comment="{}_plist_test" id="oval:mscp:tst:{}" version="2">
@@ -2298,7 +2304,7 @@ Administration</contributor>
                 <criteria>
                     <criterion comment="{}_launchctl" test_ref="oval:mscp:tst:{}" />
                 </criteria>
-            </definition> '''.format(x,rule_yaml['title'],rule_yaml['references']['cce'][0],rule_yaml['id'] + "_" + odv_label,rule_yaml['discussion'].rstrip(),rule_yaml['id'] + "_" + odv_label,x,rule_yaml['id'] + "_" + odv_label,x+999)
+            </definition> '''.format(x,rule_yaml['title'],cce,rule_yaml['id'] + "_" + odv_label,rule_yaml['discussion'].rstrip(),rule_yaml['id'] + "_" + odv_label,x,rule_yaml['id'] + "_" + odv_label,x+999)
 
                         oval_test = oval_test + '''
             <launchd_test id="oval:mscp:tst:{}" version="1" comment="{}_launchctl_test" check_existence="none_exist" check="none satisfy" xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos">
@@ -2332,7 +2338,7 @@ Administration</contributor>
                 <criteria> 
                     <criterion comment="{}" test_ref="oval:mscp:tst:{}" />
                 </criteria> 
-            </definition> '''.format(x,rule_yaml['title'],rule_yaml['references']['cce'][0],rule_yaml['id'] + "_" + odv_label,rule_yaml['discussion'].rstrip(),rule_yaml['id'] + "_" + odv_label,x)
+            </definition> '''.format(x,rule_yaml['title'],cce,rule_yaml['id'] + "_" + odv_label,rule_yaml['discussion'].rstrip(),rule_yaml['id'] + "_" + odv_label,x)
 
                         oval_test = oval_test + '''
             <launchd_test id="oval:mscp:tst:{}" version="1" comment="{}_test" check_existence="all_exist" check="all" xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos">
@@ -2520,9 +2526,10 @@ must be run with elevated privileges.
             if os.path.exists(scap_file):
                 os.remove(scap_file + "temp")    
 
-def get_rule_yaml(rule_file, custom=False):
+def get_rule_yaml(rule_file, custom=False, baseline_name=""):
     """ Takes a rule file, checks for a custom version, and returns the yaml for the rule
     """
+    global resulting_yaml 
     resulting_yaml = {}
     names = [os.path.basename(x) for x in glob.glob('../custom/rules/**/*.yaml', recursive=True)]
     file_name = os.path.basename(rule_file)
@@ -2542,28 +2549,94 @@ def get_rule_yaml(rule_file, custom=False):
     try:
         og_rule_path = glob.glob('../rules/**/{}'.format(file_name), recursive=True)[0]
     except IndexError:
+        #assume this is a completely new rule
         og_rule_path = glob.glob('../custom/rules/**/{}'.format(file_name), recursive=True)[0]
+        resulting_yaml['customized'] = ["customized rule"]
     
+    # get original/default rule yaml for comparison
     with open(og_rule_path) as og:
         og_rule_yaml = yaml.load(og, Loader=yaml.SafeLoader)
-    og.close()
 
     for yaml_field in og_rule_yaml:
-        try:
-            if og_rule_yaml[yaml_field] == rule_yaml[yaml_field]:
-                resulting_yaml[yaml_field] = og_rule_yaml[yaml_field]
-            else:
-                resulting_yaml[yaml_field] = rule_yaml[yaml_field]
-                if 'customized' in resulting_yaml:
-                    resulting_yaml['customized'].append("customized {}".format(yaml_field))
+        #print('processing field {} for rule {}'.format(yaml_field, file_name))
+        if yaml_field == "references":
+            if not 'references' in resulting_yaml:
+                resulting_yaml['references'] = {}
+            for ref in og_rule_yaml['references']:
+                try:
+                    if og_rule_yaml['references'][ref] == rule_yaml['references'][ref]:
+                        resulting_yaml['references'][ref] = og_rule_yaml['references'][ref]
+                    else:
+                        resulting_yaml['references'][ref] = rule_yaml['references'][ref]
+                except KeyError:
+                    #  reference not found in original rule yaml, trying to use reference from custom rule
+                    try:
+                        resulting_yaml['references'][ref] = rule_yaml['references'][ref]
+                    except KeyError:
+                        resulting_yaml['references'][ref] = og_rule_yaml['references'][ref]
+                try: 
+                    if "custom" in rule_yaml['references']:
+                        resulting_yaml['references']['custom'] = rule_yaml['references']['custom']
+                        if 'customized' in resulting_yaml:
+                            if 'customized references' not in resulting_yaml['customized']:
+                                resulting_yaml['customized'].append("customized references")
+                        else:
+                            resulting_yaml['customized'] = ["customized references"]
+                except:
+                    pass
+            
+        else: 
+            try:
+                if og_rule_yaml[yaml_field] == rule_yaml[yaml_field]:
+                    #print("using default data in yaml field {}".format(yaml_field))
+                    resulting_yaml[yaml_field] = og_rule_yaml[yaml_field]
                 else:
-                    resulting_yaml['customized'] = ["customized {}".format(yaml_field)]
-        except KeyError:
-            resulting_yaml[yaml_field] = og_rule_yaml[yaml_field]
+                    #print('using CUSTOM value for yaml field {} in rule {}'.format(yaml_field, file_name))
+                    resulting_yaml[yaml_field] = rule_yaml[yaml_field]
+                    if 'customized' in resulting_yaml:
+                        resulting_yaml['customized'].append("customized {}".format(yaml_field))
+                    else:
+                        resulting_yaml['customized'] = ["customized {}".format(yaml_field)]
+            except KeyError:
+                resulting_yaml[yaml_field] = og_rule_yaml[yaml_field]
+    
+    fill_in_odv(resulting_yaml, baseline_name)
 
     return resulting_yaml
 
+def fill_in_odv(resulting_yaml, baseline_name):
+    fields_to_process = ['title', 'discussion', 'check', 'fix']
+    _has_odv = False
+    if "odv" in resulting_yaml:
+        try:
+            odv = str(resulting_yaml['odv'][baseline_name])
+            _has_odv = True
+        except KeyError:
+            try:
+                odv = str(resulting_yaml['odv']['custom'])
+                _has_odv = True
+            except KeyError:
+                odv = str(resulting_yaml['odv']['default'])
+                _has_odv = True
+        else:
+            pass
 
+    if _has_odv:
+        for field in fields_to_process:
+            if "$ODV" in resulting_yaml[field]:
+                resulting_yaml[field]=resulting_yaml[field].replace("$ODV", odv)
+        
+        for result_value in resulting_yaml['result']:
+            resulting_yaml['result'][result_value] = odv
+        
+        if resulting_yaml['mobileconfig_info']:
+            for mobileconfig_type in resulting_yaml['mobileconfig_info']:
+                if isinstance(resulting_yaml['mobileconfig_info'][mobileconfig_type], dict):
+                    for mobileconfig_value in resulting_yaml['mobileconfig_info'][mobileconfig_type]:
+                        resulting_yaml['mobileconfig_info'][mobileconfig_type][mobileconfig_value] = odv
+                
+            
+                
 class MacSecurityRule():
     def __init__(self, title, rule_id, severity, discussion, check, fix, cci, cce, nist_controls, disa_stig, srg, odv, tags, result_value, mobileconfig, mobileconfig_info):
         self.rule_title = title
