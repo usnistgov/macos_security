@@ -2584,7 +2584,14 @@ def get_rule_yaml(rule_file, custom=False, baseline_name=""):
                             resulting_yaml['customized'] = ["customized references"]
                 except:
                     pass
-            
+        elif yaml_field == "tags":
+            # try to concatenate tags from both original yaml and custom yaml
+            if og_rule_yaml["tags"] == rule_yaml["tags"]:
+                    #print("using default data in yaml field {}".format("tags"))
+                resulting_yaml['tags'] = og_rule_yaml['tags']
+            else:
+                #print("Found custom tags... concatenating them")
+                resulting_yaml['tags'] = og_rule_yaml['tags'] + rule_yaml['tags']    
         else: 
             try:
                 if og_rule_yaml[yaml_field] == rule_yaml[yaml_field]:
