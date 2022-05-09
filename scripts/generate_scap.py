@@ -69,7 +69,7 @@ def generate_scap(all_rules, all_baselines):
   </data-stream>
   <component id="scap_gov.nist.mscp.content_comp_macOS_{1}_xccdf.xml" timestamp="{0}">
     <Benchmark xmlns="http://checklists.nist.gov/xccdf/1.2" id="xccdf_gov.nist.mscp.content_benchmark_macOS_{1}" style="SCAP_1.3" resolved="true" xml:lang="en">
-      <status date="2022-05-03Z">draft</status>
+      <status date="{0}">draft</status>
       <title>macOS {1}: Security Configuration</title>
       <description>
         <div xmlns="http://www.w3.org/1999/xhtml">macOS {1}: Security Configuration</div>
@@ -2792,8 +2792,6 @@ def main():
     all_rules = collect_rules()
 
     all_baselines = available_tags(all_rules)
-
-    
     generate_scap(all_rules, all_baselines)
 
     os.chdir(original_working_directory)
