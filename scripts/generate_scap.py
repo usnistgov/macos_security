@@ -19,7 +19,6 @@ def replace_ocil(xccdf, x):
     regex = r'''([\r\n].*?)(?:=?\r|\n)(.*?(?:def:{}\").*)'''.format(x)
     substr = '''<check system="http://scap.nist.gov/schema/ocil/2"><check-content-ref href="ocil.xml"/>'''
     result = re.sub(regex, substr, xccdf, 0, re.MULTILINE)
-    # print(result)
     return result
 
 def generate_scap(all_rules, all_baselines):
@@ -69,7 +68,7 @@ def generate_scap(all_rules, all_baselines):
   </data-stream>
   <component id="scap_gov.nist.mscp.content_comp_macOS_{1}_xccdf.xml" timestamp="{0}">
     <Benchmark xmlns="http://checklists.nist.gov/xccdf/1.2" id="xccdf_gov.nist.mscp.content_benchmark_macOS_{1}" style="SCAP_1.3" resolved="true" xml:lang="en">
-      <status date="{0}">draft</status>
+      <status date="{4}">draft</status>
       <title>macOS {1}: Security Configuration</title>
       <description>
         <div xmlns="http://www.w3.org/1999/xhtml">macOS {1}: Security Configuration</div>
@@ -94,30 +93,26 @@ Technology</contributor>
 Administration</contributor>
         <contributor xmlns="http://purl.org/dc/elements/1.1/">Allen Golbig - Jamf</contributor>
       </metadata>
-    '''.format(date_time_string, version_yaml['os'], version_yaml['cpe'], version_yaml['version'])
+    '''.format(date_time_string, version_yaml['os'], version_yaml['cpe'], version_yaml['version'],date_time_string.split("T")[0] + "Z")
 
-
-
-    
     generated_baselines = {}
+    
     for rule in all_rules:
         
-        loop = 1
-        if rule.rule_odv != "missing":
-            loop = len(rule.rule_odv)
-            
-        if glob.glob('../custom/rules/**/{}.yaml'.format(rule.rule_id),recursive=True):
-            rule_file = glob.glob('../custom/rules/**/{}.yaml'.format(rule.rule_id),recursive=True)[0]
+        if glob.glob('../custom/rules/**/{}.yaml'.format(rule),recursive=True):
+            rule_file = glob.glob('../custom/rules/**/{}.yaml'.format(rule),recursive=True)[0]
             custom=True
     
-        elif glob.glob('../rules/*/{}.yaml'.format(rule.rule_id)):
-            rule_file = glob.glob('../rules/*/{}.yaml'.format(rule.rule_id))[0]
+        elif glob.glob('../rules/*/{}.yaml'.format(rule)):
+            rule_file = glob.glob('../rules/*/{}.yaml'.format(rule))[0]
             custom=False
         odv_label = str()
-        for a in range(0, loop):
-            
-            rule_yaml = get_rule_yaml(rule_file, custom)
+        rule_yaml = get_rule_yaml(rule_file, custom)
+        loop = 1
+        if "odv" in rule_yaml:
+            loop = len(rule_yaml['odv'])
 
+        for a in range(0, loop):
             try:           
                 
                 odv_label = list(rule_yaml['odv'].keys())[a]
@@ -2608,7 +2603,7 @@ def get_rule_yaml(rule_file, custom=False, baseline_name=""):
                 resulting_yaml[yaml_field] = og_rule_yaml[yaml_field]
     
     fill_in_odv(resulting_yaml, baseline_name)
-
+    
     return resulting_yaml
 
 def fill_in_odv(resulting_yaml, baseline_name):
@@ -2720,7 +2715,6 @@ def collect_rules():
                     try:
                         rule_yaml[key][reference]
                     except:
-                        #print("expected reference '{}' is missing in key '{}' for rule{}".format(reference, key, rule))
                         rule_yaml[key].update({reference: ["None"]})
 
         if "n_a" in rule_yaml['tags']:
@@ -2740,7 +2734,7 @@ def collect_rules():
         if "arm64" in rule_yaml['tags']:
             rule_yaml['tags'].remove("arm64")
 
-
+        
         all_rules.append(MacSecurityRule(rule_yaml['title'].replace('|', '\|'),
                                     rule_yaml['id'].replace('|', '\|'),
                                     rule_yaml['severity'].replace('|', '\|'),
@@ -2758,7 +2752,6 @@ def collect_rules():
                                     rule_yaml['mobileconfig'],
                                     rule_yaml['mobileconfig_info']
                                     ))
-
     return all_rules
 
 def available_tags(all_rules):
@@ -2797,9 +2790,16 @@ def main():
     os.chdir(file_dir)
 
     all_rules = collect_rules()
+    
+    all_rules_pruned = []
+
+    for rule in all_rules:
+        if rule.rule_id not in all_rules_pruned:
+            all_rules_pruned.append(rule.rule_id)
+
 
     all_baselines = available_tags(all_rules)
-    generate_scap(all_rules, all_baselines)
+    generate_scap(all_rules_pruned, all_baselines)
 
     os.chdir(original_working_directory)
 
