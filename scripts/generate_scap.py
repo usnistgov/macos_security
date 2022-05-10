@@ -45,25 +45,27 @@ def generate_scap(all_rules, all_baselines):
     
 
     scapPrefix = '''<?xml version="1.0" encoding="UTF-8"?>
-<data-stream-collection xmlns="http://scap.nist.gov/schema/scap/source/1.2" id="scap_gov.nist.mscp.content_collection_macOs_{1}" schematron-version="1.3">
-  <data-stream timestamp="{0}" id="scap_gov.nist.mscp.content_datastream_macOs_{1}" scap-version="1.3" use-case="CONFIGURATION">
+<data-stream-collection xmlns="http://scap.nist.gov/schema/scap/source/1.2" id="scap_gov.nist.mscp.content_collection_macOS_{1}" schematron-version="1.3">
+  <data-stream timestamp="{0}" id="scap_gov.nist.mscp.content_datastream_macOS_{1}" scap-version="1.3" use-case="CONFIGURATION">
     <dictionaries>
-      <component-ref xmlns:ns0="http://www.w3.org/1999/xlink" id="scap_gov.nist.mscp.content_cref_macOs_{1}_macos-cpe-dictionary.xml" ns0:type="simple" ns0:href="#scap_gov.nist.mscp.content_comp_macOs_{1}_macos-cpe-dictionary.xml">
+      <component-ref xmlns:ns0="http://www.w3.org/1999/xlink" id="scap_gov.nist.mscp.content_cref_macOS_{1}_macOS-cpe-dictionary.xml" ns0:type="simple" ns0:href="#scap_gov.nist.mscp.content_comp_macOS_{1}_macOS-cpe-dictionary.xml">
         <catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog">
-          <uri name="macos-cpe-oval.xml" uri="#scap_gov.nist.mscp.content_cref_macOs_{1}_macos-cpe-oval.xml"/>
+          <uri name="macOS-cpe-oval.xml" uri="#scap_gov.nist.mscp.content_cref_macOS_{1}_macOS-cpe-oval.xml"/>
         </catalog>
       </component-ref>
     </dictionaries>
     <checklists>
-      <component-ref xmlns:ns0="http://www.w3.org/1999/xlink" id="scap_gov.nist.mscp.content_cref_macOs_{1}_xccdf.xml" ns0:type="simple" ns0:href="#scap_gov.nist.mscp.content_comp_macOs_{1}_xccdf.xml">
+      <component-ref xmlns:ns0="http://www.w3.org/1999/xlink" id="scap_gov.nist.mscp.content_cref_macOS_{1}_xccdf.xml" ns0:type="simple" ns0:href="#scap_gov.nist.mscp.content_comp_macOS_{1}_xccdf.xml">
         <catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog">
-          <uri name="oval.xml" uri="#scap_gov.nist.mscp.content_cref_macOs_{1}_check_1"/>
+            <uri name="oval.xml" uri="#scap_gov.nist.mscp.content_cref_macOS_{1}_check_1"/>
+            <uri name="ocil.xml" uri="#scap_gov.nist.mscp.content_cref_macOS_{1}_check_2"/>
         </catalog>
       </component-ref>
     </checklists>
     <checks>
-      <component-ref xmlns:ns0="http://www.w3.org/1999/xlink" id="scap_gov.nist.mscp.content_cref_macOs_{1}_macos-cpe-oval.xml" ns0:type="simple" ns0:href="#scap_gov.nist.mscp.content_comp_macOs_{1}_macos-cpe-oval.xml"/>
-      <component-ref xmlns:ns0="http://www.w3.org/1999/xlink" id="scap_gov.nist.mscp.content_cref_macOs_{1}_check_1" ns0:type="simple" ns0:href="#scap_gov.nist.mscp.content_comp_macOs_{1}_check_1"/>
+      <component-ref xmlns:ns0="http://www.w3.org/1999/xlink" id="scap_gov.nist.mscp.content_cref_macOS_{1}_macOS-cpe-oval.xml" ns0:type="simple" ns0:href="#scap_gov.nist.mscp.content_comp_macOS_{1}_macOS-cpe-oval.xml"/>
+      <component-ref xmlns:ns0="http://www.w3.org/1999/xlink" id="scap_gov.nist.mscp.content_cref_macOS_{1}_check_1" ns0:type="simple" ns0:href="#scap_gov.nist.mscp.content_comp_macOS_{1}_check_1"/>
+      <component-ref xmlns:ns0="http://www.w3.org/1999/xlink" id="scap_gov.nist.mscp.content_cref_macOS_{1}_check_2" ns0:type="simple" ns0:href="#scap_gov.nist.mscp.content_comp_macOS_{1}_check_2"/>
     </checks>
   </data-stream>
   <component id="scap_gov.nist.mscp.content_comp_macOS_{1}_xccdf.xml" timestamp="{0}">
@@ -79,18 +81,16 @@ def generate_scap(all_rules, all_baselines):
         <title xmlns="http://purl.org/dc/elements/1.1/">Security Content Automation Protocol</title>
         <publisher xmlns="http://purl.org/dc/elements/1.1/">National Institute of Standards and Technology</publisher>
       </reference>
-      <reference href="macos-cpe-dictionary.xml">platform-cpe-dictionary</reference>
-      <reference href="macos-cpe-oval.xml">platform-cpe-oval</reference>
+      <reference href="macOS-cpe-dictionary.xml">platform-cpe-dictionary</reference>
+      <reference href="macOS-cpe-oval.xml">platform-cpe-oval</reference>
       <platform idref="cpe:2.3:{2}:*:*:*:*:*:*:*"/>
-      <version time="{0}" update="https://github.com/usnistgov/macos_security">{3}</version>
+      <version time="{0}" update="https://github.com/usnistgov/macOS_security">{3}</version>
       <metadata>
         <creator xmlns="http://purl.org/dc/elements/1.1/">National Institute of Standards and Technology</creator>
         <publisher xmlns="http://purl.org/dc/elements/1.1/">National Institute of Standards and Technology</publisher>
-        <source xmlns="http://purl.org/dc/elements/1.1/">https://github.com/usnistgov/macos_security/releases/latest</source>
-        <contributor xmlns="http://purl.org/dc/elements/1.1/">Bob Gendler - National Institute of Standards and
-Technology</contributor>
-        <contributor xmlns="http://purl.org/dc/elements/1.1/">Dan Brodjieski - National Aeronautics and Space
-Administration</contributor>
+        <source xmlns="http://purl.org/dc/elements/1.1/">https://github.com/usnistgov/macOS_security/releases/latest</source>
+        <contributor xmlns="http://purl.org/dc/elements/1.1/">Bob Gendler - National Institute of Standards and Technology</contributor>
+        <contributor xmlns="http://purl.org/dc/elements/1.1/">Dan Brodjieski - National Aeronautics and Space Administration</contributor>
         <contributor xmlns="http://purl.org/dc/elements/1.1/">Allen Golbig - Jamf</contributor>
       </metadata>
     '''.format(date_time_string, version_yaml['os'], version_yaml['cpe'], version_yaml['version'],date_time_string.split("T")[0] + "Z")
@@ -184,12 +184,14 @@ Administration</contributor>
             else:
                 severity = "unknown"
             check = str()
-            if "inherent" not in rule_yaml['tags'] or "n_a" in rule_yaml['tags'] or "permenant" in rule_yaml['tags']:
+            if "inherent" in rule_yaml['tags'] or "n_a" in rule_yaml['tags'] or "permenant" in rule_yaml['tags']:
                 check = '''
             <check system="http://scap.nist.gov/schema/ocil/2">
-            <check-content-ref href="ocil.xml"/></check>'''.format(x)
+            <check-content-ref href="ocil.xml"/></check>'''
             else:
-                check = ""
+                check = '''<check system="http://oval.mitre.org/XMLSchema/oval-definitions-5">
+            <check-content-ref href="oval.xml" name="oval:mscp:def:{0}"/>
+            </check>'''.format(x)
             references = str()
             
             if "800-53r5" in rule_yaml['references'] and rule_yaml['references']['800-53r5'][0] != "N/A":
@@ -236,8 +238,11 @@ Administration</contributor>
             <description>{3}
 
 {4}
-{5}</description>{9}<ident system="https://ncp.nist.gov/cce">{6}</ident>
-            <fixtext>{7}</fixtext>{8}</Rule>
+{5}</description>{9}
+<ident system="https://ncp.nist.gov/cce">{6}</ident>
+            <fixtext>{7}</fixtext>
+            {8}
+            </Rule>
             '''.format(rule_yaml['id'] + "_" + odv_label, severity, rule_yaml['title'], rule_yaml['discussion'].replace("<","&lt;").replace(">","&gt;").replace("&","&amp;"), rule_yaml['check'].replace("<","&lt;").replace(">","&gt;").replace("&","&amp;"), result, cce,rule_yaml['fix'].replace("<","&lt;").replace(">","&gt;").replace("&","&amp;"), check, references)
                 
 
@@ -301,7 +306,7 @@ Administration</contributor>
                     <metadata> 
                         <title>{}</title> 
                         <reference source="CCE" ref_id="{}"/>
-                        <reference source="macos_security" ref_id="{}"/>
+                        <reference source="macOS_security" ref_id="{}"/>
                         <description>{}</description> 
                     </metadata> 
                 <criteria>
@@ -367,7 +372,7 @@ Administration</contributor>
                     <metadata> 
                         <title>{}</title>
                         <reference source="CCE" ref_id="{}"/>
-                        <reference source="macos_security" ref_id="{}"/>
+                        <reference source="macOS_security" ref_id="{}"/>
                         <description>{}</description> 
                     </metadata> 
                 <criteria>
@@ -415,7 +420,7 @@ Administration</contributor>
                             <metadata> 
                                 <title>{}</title>
                                 <reference source="CCE" ref_id="{}"/>
-                                <reference source="macos_security" ref_id="{}"/>
+                                <reference source="macOS_security" ref_id="{}"/>
                                 <description>{}</description> 
                             </metadata> 
                         <criteria> 
@@ -483,7 +488,7 @@ Administration</contributor>
                     <metadata> 
                         <title>{}</title> 
                         <reference source="CCE" ref_id="{}"/>
-                        <reference source="macos_security" ref_id="{}"/>
+                        <reference source="macOS_security" ref_id="{}"/>
                         <description>{}</description> 
                     </metadata> 
                 <criteria> 
@@ -521,7 +526,7 @@ Administration</contributor>
                     <metadata> 
                         <title>{}</title> 
                         <reference source="CCE" ref_id="{}"/>
-                        <reference source="macos_security" ref_id="{}"/>
+                        <reference source="macOS_security" ref_id="{}"/>
                         <description>{}</description> 
                     </metadata> 
                 <criteria> 
@@ -572,7 +577,7 @@ Administration</contributor>
                     <metadata> 
                         <title>{}</title>
                         <reference source="CCE" ref_id="{}"/>
-                        <reference source="macos_security" ref_id="{}"/>
+                        <reference source="macOS_security" ref_id="{}"/>
                         <description>{}</description> 
                     </metadata> 
                 <criteria> 
@@ -638,7 +643,7 @@ Administration</contributor>
                     <metadata> 
                         <title>{}</title>
                         <reference source="CCE" ref_id="{}"/>
-                        <reference source="macos_security" ref_id="{}"/>
+                        <reference source="macOS_security" ref_id="{}"/>
                         <description>{}</description> 
                     </metadata> 
                 <criteria> 
@@ -703,7 +708,7 @@ Administration</contributor>
                     <metadata> 
                         <title>{}</title>
                         <reference source="CCE" ref_id="{}"/>
-                        <reference source="macos_security" ref_id="{}"/>
+                        <reference source="macOS_security" ref_id="{}"/>
                         <description>{}</description> 
                     </metadata> 
                 <criteria> 
@@ -769,7 +774,7 @@ Administration</contributor>
                     <metadata> 
                         <title>{}</title>
                         <reference source="CCE" ref_id="{}"/>
-                        <reference source="macos_security" ref_id="{}"/>
+                        <reference source="macOS_security" ref_id="{}"/>
                         <description>{}</description> 
                     </metadata> 
                 <criteria> 
@@ -833,7 +838,7 @@ Administration</contributor>
                     <metadata> 
                         <title>{}</title>
                         <reference source="CCE" ref_id="{}"/>
-                        <reference source="macos_security" ref_id="{}"/>
+                        <reference source="macOS_security" ref_id="{}"/>
                         <description>{}</description> 
                     </metadata> 
                 <criteria> 
@@ -898,7 +903,7 @@ Administration</contributor>
                 <metadata> 
                         <title>{}</title>
                         <reference source="CCE" ref_id="{}"/>
-                        <reference source="macos_security" ref_id="{}"/>
+                        <reference source="macOS_security" ref_id="{}"/>
                         <description>{}</description> 
                     </metadata> 
                 <criteria operator="OR">
@@ -943,7 +948,7 @@ Administration</contributor>
                     <metadata> 
                         <title>{}</title> 
                         <reference source="CCE" ref_id="{}"/>
-                        <reference source="macos_security" ref_id="{}"/>
+                        <reference source="macOS_security" ref_id="{}"/>
                         <description>{}</description> 
                     </metadata> 
                 <criteria>
@@ -1005,7 +1010,7 @@ Administration</contributor>
                     <metadata> 
                         <title>{}</title> 
                         <reference source="CCE" ref_id="{}"/>
-                        <reference source="macos_security" ref_id="{}"/>
+                        <reference source="macOS_security" ref_id="{}"/>
                         <description>{}</description> 
                     </metadata> 
                 <criteria>
@@ -1116,7 +1121,7 @@ Administration</contributor>
                     <metadata> 
                         <title>{}</title> 
                         <reference source="CCE" ref_id="{}"/>
-                        <reference source="macos_security" ref_id="{}"/>
+                        <reference source="macOS_security" ref_id="{}"/>
                         <description>{}</description> 
                     </metadata> 
                 <criteria>
@@ -1156,7 +1161,7 @@ Administration</contributor>
                     <metadata> 
                         <title>{}</title> 
                         <reference source="CCE" ref_id="{}"/>
-                        <reference source="macos_security" ref_id="{}"/>
+                        <reference source="macOS_security" ref_id="{}"/>
                         <description>{}</description> 
                     </metadata> 
                 <criteria>
@@ -1198,7 +1203,7 @@ Administration</contributor>
                     <metadata> 
                         <title>{}</title> 
                         <reference source="CCE" ref_id="{}"/>
-                        <reference source="macos_security" ref_id="{}"/>
+                        <reference source="macOS_security" ref_id="{}"/>
                         <description>{}</description> 
                     </metadata> 
                 <criteria>
@@ -1250,7 +1255,7 @@ Administration</contributor>
                     <metadata> 
                         <title>{}</title> 
                         <reference source="CCE" ref_id="{}"/>
-                        <reference source="macos_security" ref_id="{}"/>
+                        <reference source="macOS_security" ref_id="{}"/>
                         <description>{}</description> 
                     </metadata> 
                 <criteria>
@@ -1347,7 +1352,7 @@ Administration</contributor>
                     <metadata> 
                         <title>{}</title> 
                         <reference source="CCE" ref_id="{}"/>
-                        <reference source="macos_security" ref_id="{}"/>
+                        <reference source="macOS_security" ref_id="{}"/>
                         <description>{}</description> 
                     </metadata> 
                 <criteria operator="AND">
@@ -1472,7 +1477,7 @@ Administration</contributor>
                     <metadata> 
                         <title>{}</title> 
                         <reference source="CCE" ref_id="{}"/>
-                        <reference source="macos_security" ref_id="{}"/>
+                        <reference source="macOS_security" ref_id="{}"/>
                         <description>{}</description> 
                     </metadata> 
                 <criteria>
@@ -1679,7 +1684,7 @@ Administration</contributor>
                     <metadata> 
                         <title>{}</title> 
                         <reference source="CCE" ref_id="{}"/>
-                        <reference source="macos_security" ref_id="{}"/>
+                        <reference source="macOS_security" ref_id="{}"/>
                         <description>{}</description> 
                     </metadata> 
                 <criteria>
@@ -1713,7 +1718,7 @@ Administration</contributor>
                     <metadata> 
                         <title>{}</title> 
                         <reference source="CCE" ref_id="{}"/>
-                        <reference source="macos_security" ref_id="{}"/>
+                        <reference source="macOS_security" ref_id="{}"/>
                         <description>{}</description> 
                     </metadata> 
                 <criteria>
@@ -1745,7 +1750,7 @@ Administration</contributor>
                     <metadata> 
                         <title>{}</title> 
                         <reference source="CCE" ref_id="{}"/>
-                        <reference source="macos_security" ref_id="{}"/>
+                        <reference source="macOS_security" ref_id="{}"/>
                         <description>{}</description> 
                     </metadata> 
                 <criteria> 
@@ -1778,7 +1783,7 @@ Administration</contributor>
                     <metadata> 
                         <title>{}</title> 
                         <reference source="CCE" ref_id="{}"/>
-                        <reference source="macos_security" ref_id="{}"/>
+                        <reference source="macOS_security" ref_id="{}"/>
                         <description>{}</description> 
                     </metadata> 
                 <criteria operator="OR"> 
@@ -1853,7 +1858,7 @@ Administration</contributor>
                     <metadata> 
                         <title>{}</title> 
                         <reference source="CCE" ref_id="{}"/>
-                        <reference source="macos_security" ref_id="{}"/>
+                        <reference source="macOS_security" ref_id="{}"/>
                         <description>{}</description> 
                     </metadata> 
                 <criteria> 
@@ -2059,7 +2064,7 @@ Administration</contributor>
                     <metadata> 
                         <title>{}</title> 
                         <reference source="CCE" ref_id="{}"/>
-                        <reference source="macos_security" ref_id="{}"/>
+                        <reference source="macOS_security" ref_id="{}"/>
                         <description>{}</description> 
                     </metadata> 
                 <criteria>
@@ -2132,7 +2137,7 @@ Administration</contributor>
                     <metadata> 
                         <title>{}</title> 
                         <reference source="CCE" ref_id="{}"/>
-                        <reference source="macos_security" ref_id="{}"/>
+                        <reference source="macOS_security" ref_id="{}"/>
                         <description>{}</description> 
                     </metadata> 
                 <criteria> 
@@ -2166,7 +2171,7 @@ Administration</contributor>
                 <metadata> 
                     <title>{}</title> 
                     <reference source="CCE" ref_id="{}"/>
-                    <reference source="macos_security" ref_id="{}"/>
+                    <reference source="macOS_security" ref_id="{}"/>
                     <description>{}</description> 
                 </metadata>
             <criteria> 
@@ -2211,7 +2216,7 @@ Administration</contributor>
                     <metadata> 
                         <title>{}</title> 
                         <reference source="CCE" ref_id="{}"/>
-                        <reference source="macos_security" ref_id="{}"/>
+                        <reference source="macOS_security" ref_id="{}"/>
                         <description>{}</description> 
                     </metadata> 
                 <criteria> 
@@ -2241,7 +2246,7 @@ Administration</contributor>
                 <metadata> 
                         <title>{}</title> 
                         <reference source="CCE" ref_id="{}"/>
-                        <reference source="macos_security" ref_id="{}"/>
+                        <reference source="macOS_security" ref_id="{}"/>
                         <description>{}</description> 
                 </metadata> 
                 <criteria operator="AND">
@@ -2293,7 +2298,7 @@ Administration</contributor>
                 <metadata> 
                         <title>{}</title> 
                         <reference source="CCE" ref_id="{}"/>
-                        <reference source="macos_security" ref_id="{}"/>
+                        <reference source="macOS_security" ref_id="{}"/>
                         <description>{}</description> 
                 </metadata> 
                 <criteria>
@@ -2327,7 +2332,7 @@ Administration</contributor>
                     <metadata> 
                         <title>{}</title> 
                         <reference source="CCE" ref_id="{}"/>
-                        <reference source="macos_security" ref_id="{}"/>
+                        <reference source="macOS_security" ref_id="{}"/>
                         <description>{}</description> 
                     </metadata> 
                 <criteria> 
@@ -2367,7 +2372,7 @@ Administration</contributor>
 
     
     total_scap = scapPrefix + scap_profiles + '''
-    <Group id="xccdf_gov.nist.mscp.content_group_authentication">
+    <Group id="xccdf_gov.nist.mscp.content_group_all_rules">
         <title>All rules</title>
         <description>
          All the rules
@@ -2378,7 +2383,7 @@ must be run with elevated privileges.
         </warning>''' + xccdf_rules + '''      
         </Group>  </Benchmark>
   </component>  
-  <component id="scap_gov.nist.mscp.content_comp_macOS_11.0_check_1" timestamp="{0}">
+  <component id="scap_gov.nist.mscp.content_comp_macOS_{1}_check_1" timestamp="{0}">
     <oval_definitions xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="   http://oval.mitre.org/XMLSchema/oval-definitions-5             https://raw.githubusercontent.com/OVALProject/Language/5.11.2/schemas/oval-definitions-schema.xsd  http://oval.mitre.org/XMLSchema/oval-definitions-5#independent https://raw.githubusercontent.com/OVALProject/Language/5.11.2/schemas/independent-definitions-schema.xsd    http://oval.mitre.org/XMLSchema/oval-definitions-5#macos       https://raw.githubusercontent.com/OVALProject/Language/5.11.2/schemas/macos-definitions-schema.xsd  http://oval.mitre.org/XMLSchema/oval-definitions-5#unix        https://raw.githubusercontent.com/OVALProject/Language/5.11.2/schemas/unix-definitions-schema.xsd">
       <generator>
         <oval:schema_version xmlns:oval="http://oval.mitre.org/XMLSchema/oval-common-5">5.11.2</oval:schema_version>
@@ -2386,7 +2391,7 @@ must be run with elevated privileges.
         <terms_of_use>Copyright (c) 2020, NIST.</terms_of_use>
         <oval:product_name xmlns:oval="http://oval.mitre.org/XMLSchema/oval-common-5">macOS Security Compliance Project</oval:product_name>
       </generator>
-'''.format(date_time_string)
+'''.format(date_time_string,version_yaml['os'])
     total_oval = "\n<definitions>\n" + oval_definition + "\n</definitions>\n<tests>\n" + oval_test + "\n</tests>\n<objects>\n" + oval_object + "\n</objects>\n"
     # total_oval = ovalPrefix + "\n<definitions>\n" + oval_definition + "\n</definitions>\n<tests>\n" + oval_test + "\n</tests>\n<objects>\n" + oval_object + "\n</objects>\n"
     if oval_state != "":
@@ -2433,7 +2438,7 @@ must be run with elevated privileges.
       </questions>
     </ocil>
   </component>
-       <component id="scap_gov.nist.mscp.content_comp_macOS_{2}_macos-cpe-dictionary.xml" timestamp="{0}">
+       <component id="scap_gov.nist.mscp.content_comp_macOS_{2}_macOS-cpe-dictionary.xml" timestamp="{0}">
     <?xml-model href="https://scap.nist.gov/schema/cpe/2.3/cpe-dictionary_2.3.xsd" schematypens="http://www.w3.org/2001/XMLSchema" title="CPE XML schema"?>
     <cpe-list xmlns="http://cpe.mitre.org/dictionary/2.0" xmlns:cpe-23="http://scap.nist.gov/schema/cpe-extension/2.3">
       <generator>
@@ -2446,12 +2451,12 @@ must be run with elevated privileges.
         <notes xml:lang="en-US">
           <note>This CPE Name represents macOS {2}</note>
         </notes>
-        <check href="macos-cpe-oval.xml" system="http://oval.mitre.org/XMLSchema/oval-definitions-5">oval:gov.nist.mscp.content.cpe.oval:def:1</check>
+        <check href="macOS-cpe-oval.xml" system="http://oval.mitre.org/XMLSchema/oval-definitions-5">oval:gov.nist.mscp.content.cpe.oval:def:1</check>
         <cpe-23:cpe23-item name="cpe:2.3:{1}:*:*:*:*:*:*:*"/>
       </cpe-item>
     </cpe-list>
   </component>
-  <component id="scap_gov.nist.mscp.content_comp_macOS_{2}_macos-cpe-oval.xml" timestamp="{0}">
+  <component id="scap_gov.nist.mscp.content_comp_macOS_{2}_macOS-cpe-oval.xml" timestamp="{0}">
     <oval_definitions xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5" xmlns:oval="http://oval.mitre.org/XMLSchema/oval-common-5" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation=" http://oval.mitre.org/XMLSchema/oval-definitions-5 https://raw.githubusercontent.com/OVALProject/Language/5.11.2/schemas/oval-definitions-schema.xsd http://oval.mitre.org/XMLSchema/oval-definitions-5#independent https://raw.githubusercontent.com/OVALProject/Language/5.11.2/schemas/independent-definitions-schema.xsd http://oval.mitre.org/XMLSchema/oval-definitions-5#macos https://raw.githubusercontent.com/OVALProject/Language/5.11.2/schemas/macos-definitions-schema.xsd http://oval.mitre.org/XMLSchema/oval-definitions-5#unix https://raw.githubusercontent.com/OVALProject/Language/5.11.2/schemas/unix-definitions-schema.xsd">
       <generator>
         <oval:product_name>macOS Security Compliance Project</oval:product_name>
