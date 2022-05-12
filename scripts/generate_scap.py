@@ -107,12 +107,17 @@ def generate_scap(all_rules, all_baselines):
             rule_file = glob.glob('../rules/*/{}.yaml'.format(rule))[0]
             custom=False
         odv_label = str()
-        rule_yaml = get_rule_yaml(rule_file, custom)
+        og_rule_yaml = get_rule_yaml(rule_file, custom)
+        
+
         loop = 1
-        if "odv" in rule_yaml:
-            loop = len(rule_yaml['odv'])
+        if "odv" in og_rule_yaml:
+            loop = len(og_rule_yaml['odv'])
 
         for a in range(0, loop):
+            
+            rule_yaml = get_rule_yaml(rule_file, custom)
+
             try:           
                 
                 odv_label = list(rule_yaml['odv'].keys())[a]
@@ -2607,40 +2612,40 @@ def get_rule_yaml(rule_file, custom=False, baseline_name=""):
             except KeyError:
                 resulting_yaml[yaml_field] = og_rule_yaml[yaml_field]
     
-    fill_in_odv(resulting_yaml, baseline_name)
+    # fill_in_odv(resulting_yaml, baseline_name)
     
     return resulting_yaml
 
-def fill_in_odv(resulting_yaml, baseline_name):
-    fields_to_process = ['title', 'discussion', 'check', 'fix']
-    _has_odv = False
-    if "odv" in resulting_yaml:
-        try:
-            odv = str(resulting_yaml['odv'][baseline_name])
-            _has_odv = True
-        except KeyError:
-            try:
-                odv = str(resulting_yaml['odv']['custom'])
-                _has_odv = True
-            except KeyError:
-                odv = str(resulting_yaml['odv']['default'])
-                _has_odv = True
-        else:
-            pass
+# def fill_in_odv(resulting_yaml, baseline_name):
+#     fields_to_process = ['title', 'discussion', 'check', 'fix']
+#     _has_odv = False
+#     if "odv" in resulting_yaml:
+#         try:
+#             odv = str(resulting_yaml['odv'][baseline_name])
+#             _has_odv = True
+#         except KeyError:
+#             try:
+#                 odv = str(resulting_yaml['odv']['custom'])
+#                 _has_odv = True
+#             except KeyError:
+#                 odv = str(resulting_yaml['odv']['default'])
+#                 _has_odv = True
+#         else:
+#             pass
 
-    if _has_odv:
-        for field in fields_to_process:
-            if "$ODV" in resulting_yaml[field]:
-                resulting_yaml[field]=resulting_yaml[field].replace("$ODV", odv)
+#     if _has_odv:
+#         for field in fields_to_process:
+#             if "$ODV" in resulting_yaml[field]:
+#                 resulting_yaml[field]=resulting_yaml[field].replace("$ODV", odv)
         
-        for result_value in resulting_yaml['result']:
-            resulting_yaml['result'][result_value] = odv
+#         for result_value in resulting_yaml['result']:
+#             resulting_yaml['result'][result_value] = odv
         
-        if resulting_yaml['mobileconfig_info']:
-            for mobileconfig_type in resulting_yaml['mobileconfig_info']:
-                if isinstance(resulting_yaml['mobileconfig_info'][mobileconfig_type], dict):
-                    for mobileconfig_value in resulting_yaml['mobileconfig_info'][mobileconfig_type]:
-                        resulting_yaml['mobileconfig_info'][mobileconfig_type][mobileconfig_value] = odv
+#         if resulting_yaml['mobileconfig_info']:
+#             for mobileconfig_type in resulting_yaml['mobileconfig_info']:
+#                 if isinstance(resulting_yaml['mobileconfig_info'][mobileconfig_type], dict):
+#                     for mobileconfig_value in resulting_yaml['mobileconfig_info'][mobileconfig_type]:
+#                         resulting_yaml['mobileconfig_info'][mobileconfig_type][mobileconfig_value] = odv
                 
             
                 
