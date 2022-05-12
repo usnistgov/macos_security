@@ -2125,7 +2125,6 @@ def generate_scap(all_rules, all_baselines):
                         try: 
                     
                             awk_result = rule_yaml['result']['string']
-                            # print(awk_result)
 
                         except: 
                             
@@ -2361,8 +2360,6 @@ def generate_scap(all_rules, all_baselines):
                     continue    
         
         
-
-        # scap_profiles = scap_profiles + '''</Profile>'''
     for k in generated_baselines.keys():
         scap_profiles = scap_profiles + '''
         <Profile id="xccdf_gov.nist.mscp.content_profile_{1}">
@@ -2373,8 +2370,6 @@ def generate_scap(all_rules, all_baselines):
                 <select idref="xccdf_gov.nist.mscp.content_rule_{0}" selected="true"/>'''.format(v)
         scap_profiles = scap_profiles + '''
         </Profile>'''
-    # print(scap_profiles)
-
     
     total_scap = scapPrefix + scap_profiles + '''
     <Group id="xccdf_gov.nist.mscp.content_group_all_rules">
@@ -2398,7 +2393,6 @@ must be run with elevated privileges.
       </generator>
 '''.format(date_time_string,version_yaml['os'])
     total_oval = "\n<definitions>\n" + oval_definition + "\n</definitions>\n<tests>\n" + oval_test + "\n</tests>\n<objects>\n" + oval_object + "\n</objects>\n"
-    # total_oval = ovalPrefix + "\n<definitions>\n" + oval_definition + "\n</definitions>\n<tests>\n" + oval_test + "\n</tests>\n<objects>\n" + oval_object + "\n</objects>\n"
     if oval_state != "":
         total_oval = total_oval + "<states>\n" + oval_state + "\n</states>\n"
     if oval_variable != "":
@@ -2512,9 +2506,7 @@ must be run with elevated privileges.
     </oval_definitions>
   </component>
 </data-stream-collection>'''.format(date_time_string,version_yaml['cpe'],version_yaml['os'])
-    # print(total_scap)
     scap_file = output
-    # print(scap_file)
     with open(scap_file + "temp",'w') as rite:
         rite.write(total_scap)
         cmd = shutil.which('xmllint')
@@ -2554,16 +2546,13 @@ def get_rule_yaml(rule_file, custom=False, baseline_name=""):
     try:
         og_rule_path = glob.glob('../rules/**/{}'.format(file_name), recursive=True)[0]
     except IndexError:
-        #assume this is a completely new rule
         og_rule_path = glob.glob('../custom/rules/**/{}'.format(file_name), recursive=True)[0]
         resulting_yaml['customized'] = ["customized rule"]
     
-    # get original/default rule yaml for comparison
     with open(og_rule_path) as og:
         og_rule_yaml = yaml.load(og, Loader=yaml.SafeLoader)
 
     for yaml_field in og_rule_yaml:
-        #print('processing field {} for rule {}'.format(yaml_field, file_name))
         if yaml_field == "references":
             if not 'references' in resulting_yaml:
                 resulting_yaml['references'] = {}
@@ -2574,7 +2563,6 @@ def get_rule_yaml(rule_file, custom=False, baseline_name=""):
                     else:
                         resulting_yaml['references'][ref] = rule_yaml['references'][ref]
                 except KeyError:
-                    #  reference not found in original rule yaml, trying to use reference from custom rule
                     try:
                         resulting_yaml['references'][ref] = rule_yaml['references'][ref]
                     except KeyError:
@@ -2590,20 +2578,15 @@ def get_rule_yaml(rule_file, custom=False, baseline_name=""):
                 except:
                     pass
         elif yaml_field == "tags":
-            # try to concatenate tags from both original yaml and custom yaml
             if og_rule_yaml["tags"] == rule_yaml["tags"]:
-                    #print("using default data in yaml field {}".format("tags"))
                 resulting_yaml['tags'] = og_rule_yaml['tags']
             else:
-                #print("Found custom tags... concatenating them")
                 resulting_yaml['tags'] = og_rule_yaml['tags'] + rule_yaml['tags']    
         else: 
             try:
                 if og_rule_yaml[yaml_field] == rule_yaml[yaml_field]:
-                    #print("using default data in yaml field {}".format(yaml_field))
                     resulting_yaml[yaml_field] = og_rule_yaml[yaml_field]
                 else:
-                    #print('using CUSTOM value for yaml field {} in rule {}'.format(yaml_field, file_name))
                     resulting_yaml[yaml_field] = rule_yaml[yaml_field]
                     if 'customized' in resulting_yaml:
                         resulting_yaml['customized'].append("customized {}".format(yaml_field))
@@ -2611,43 +2594,9 @@ def get_rule_yaml(rule_file, custom=False, baseline_name=""):
                         resulting_yaml['customized'] = ["customized {}".format(yaml_field)]
             except KeyError:
                 resulting_yaml[yaml_field] = og_rule_yaml[yaml_field]
-    
-    # fill_in_odv(resulting_yaml, baseline_name)
-    
+        
     return resulting_yaml
-
-# def fill_in_odv(resulting_yaml, baseline_name):
-#     fields_to_process = ['title', 'discussion', 'check', 'fix']
-#     _has_odv = False
-#     if "odv" in resulting_yaml:
-#         try:
-#             odv = str(resulting_yaml['odv'][baseline_name])
-#             _has_odv = True
-#         except KeyError:
-#             try:
-#                 odv = str(resulting_yaml['odv']['custom'])
-#                 _has_odv = True
-#             except KeyError:
-#                 odv = str(resulting_yaml['odv']['default'])
-#                 _has_odv = True
-#         else:
-#             pass
-
-#     if _has_odv:
-#         for field in fields_to_process:
-#             if "$ODV" in resulting_yaml[field]:
-#                 resulting_yaml[field]=resulting_yaml[field].replace("$ODV", odv)
-        
-#         for result_value in resulting_yaml['result']:
-#             resulting_yaml['result'][result_value] = odv
-        
-#         if resulting_yaml['mobileconfig_info']:
-#             for mobileconfig_type in resulting_yaml['mobileconfig_info']:
-#                 if isinstance(resulting_yaml['mobileconfig_info'][mobileconfig_type], dict):
-#                     for mobileconfig_value in resulting_yaml['mobileconfig_info'][mobileconfig_type]:
-#                         resulting_yaml['mobileconfig_info'][mobileconfig_type][mobileconfig_value] = odv
-                
-            
+     
                 
 class MacSecurityRule():
     def __init__(self, title, rule_id, severity, discussion, check, fix, cci, cce, nist_controls, disa_stig, srg, odv, tags, result_value, mobileconfig, mobileconfig_info):
@@ -2690,7 +2639,6 @@ def collect_rules():
     """Takes a baseline yaml file and parses the rules, returns a list of containing rules
     """
     all_rules = []
-    #expected keys and references
     keys = ['mobileconfig',
             'macOS',
             'severity',
@@ -2718,7 +2666,6 @@ def collect_rules():
             try:
                 rule_yaml[key]
             except:
-                #print "{} key missing ..for {}".format(key, rule)
                 rule_yaml.update({key: "missing"})
             if key == "references":
                 for reference in references:
@@ -2793,10 +2740,8 @@ def main():
     file_dir = os.path.dirname(os.path.abspath(__file__))
     parent_dir = os.path.dirname(file_dir)
 
-    # stash current working directory
     original_working_directory = os.getcwd()
 
-    # switch to the scripts directory
     os.chdir(file_dir)
 
     all_rules = collect_rules()
