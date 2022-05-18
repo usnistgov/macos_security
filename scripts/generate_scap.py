@@ -42,7 +42,7 @@ def generate_scap(all_rules, all_baselines):
     scap_groups = str()
     xccdf_rules = str()
     x = 1
-    
+    d = 1
 
     scapPrefix = '''<?xml version="1.0" encoding="UTF-8"?>
 <data-stream-collection xmlns="http://scap.nist.gov/schema/scap/source/1.2" id="scap_gov.nist.mscp.content_collection_macOS_{1}" schematron-version="1.3">
@@ -73,7 +73,7 @@ def generate_scap(all_rules, all_baselines):
       <status date="{4}">draft</status>
       <title>macOS {1}: Security Configuration</title>
       <description>
-        <div xmlns="http://www.w3.org/1999/xhtml">macOS {1}: Security Configuration</div>
+        macOS {1}: Security Configuration
       </description>
       
       
@@ -84,11 +84,11 @@ def generate_scap(all_rules, all_baselines):
       <reference href="macOS-cpe-dictionary.xml">platform-cpe-dictionary</reference>
       <reference href="macOS-cpe-oval.xml">platform-cpe-oval</reference>
       <platform idref="cpe:2.3:{2}:*:*:*:*:*:*:*"/>
-      <version time="{0}" update="https://github.com/usnistgov/macOS_security">{3}</version>
+      <version time="{0}" update="https://github.com/usnistgov/macos_security">{3}</version>
       <metadata>
         <creator xmlns="http://purl.org/dc/elements/1.1/">National Institute of Standards and Technology</creator>
         <publisher xmlns="http://purl.org/dc/elements/1.1/">National Institute of Standards and Technology</publisher>
-        <source xmlns="http://purl.org/dc/elements/1.1/">https://github.com/usnistgov/macOS_security/releases/latest</source>
+        <source xmlns="http://purl.org/dc/elements/1.1/">https://github.com/usnistgov/macos_security/releases/latest</source>
         <contributor xmlns="http://purl.org/dc/elements/1.1/">Bob Gendler - National Institute of Standards and Technology</contributor>
         <contributor xmlns="http://purl.org/dc/elements/1.1/">Dan Brodjieski - National Aeronautics and Space Administration</contributor>
         <contributor xmlns="http://purl.org/dc/elements/1.1/">Allen Golbig - Jamf</contributor>
@@ -231,6 +231,19 @@ def generate_scap(all_rules, all_baselines):
                         references = references + str(v8controls) + ", "
                     references = references[:-2] + "</reference>"
             
+            for k,v in rule_yaml['references'].items():
+                if k == "cci" or k == "srg":
+                    continue
+                if k == "custom":
+                    
+                    
+                    for i,u in rule_yaml['references']['custom'].items():
+                        references = references + '<reference href="#">{0}: '.format(i)
+                        for refs in rule_yaml['references']['custom'][i]:
+                            references = references + '{0}, '.format(str(refs))
+                        references = references[:-2] +  "</reference>"
+
+
             cce = str()
             if "cce" not in rule_yaml['references'] or rule_yaml['references']['cce'] == "N/A":
                 cce = "CCE-11111-1"
@@ -241,18 +254,20 @@ def generate_scap(all_rules, all_baselines):
             <Rule id="xccdf_gov.nist.mscp.content_rule_{0}" selected="false" role="full" severity="{1}" weight="1.0">
             <title>{2}</title>
             <description>{3}
-
-{4}
-{5}</description>{9}
-<ident system="https://ncp.nist.gov/cce">{6}</ident>
+            
+            {4}
+            
+            {5}</description>{9}
+            <ident system="https://ncp.nist.gov/cce">{6}</ident>
             <fixtext>{7}</fixtext>
             {8}
             </Rule>
-            '''.format(rule_yaml['id'] + "_" + odv_label, severity, rule_yaml['title'], rule_yaml['discussion'].replace("<","&lt;").replace(">","&gt;").replace("&","&amp;"), rule_yaml['check'].replace("<","&lt;").replace(">","&gt;").replace("&","&amp;"), result, cce,rule_yaml['fix'].replace("<","&lt;").replace(">","&gt;").replace("&","&amp;"), check, references)
+            '''.format(rule_yaml['id'] + "_" + odv_label, severity, rule_yaml['title'], rule_yaml['discussion'].replace("<","&lt;").replace(">","&gt;").replace("&","&amp;").rstrip(), rule_yaml['check'].replace("<","&lt;").replace(">","&gt;").replace("&","&amp;").rstrip(), result, cce,rule_yaml['fix'].replace("<","&lt;").replace(">","&gt;").replace("&","&amp;"), check, references)
                 
 
 
             if "inherent" in rule_yaml['tags'] or "n_a" in rule_yaml['tags'] or "permanent" in rule_yaml['tags']:
+                xccdf_rules = replace_ocil(xccdf_rules,x)
                 x += 1
                 continue
             if "time_machine" in rule_yaml['id'] and "encrypted" in rule_yaml['id']:
@@ -311,7 +326,7 @@ def generate_scap(all_rules, all_baselines):
                     <metadata> 
                         <title>{}</title> 
                         <reference source="CCE" ref_id="{}"/>
-                        <reference source="macOS_security" ref_id="{}"/>
+                        <reference source="macos_security" ref_id="{}"/>
                         <description>{}</description> 
                     </metadata> 
                 <criteria>
@@ -368,6 +383,7 @@ def generate_scap(all_rules, all_baselines):
                 if "spctl" in rule_yaml['check']:
                     
                     if "verbose" in rule_yaml['check']:
+                        xccdf_rules = replace_ocil(xccdf_rules,x)
                         x = x + 1
                         continue
                     else:
@@ -377,7 +393,7 @@ def generate_scap(all_rules, all_baselines):
                     <metadata> 
                         <title>{}</title>
                         <reference source="CCE" ref_id="{}"/>
-                        <reference source="macOS_security" ref_id="{}"/>
+                        <reference source="macos_security" ref_id="{}"/>
                         <description>{}</description> 
                     </metadata> 
                 <criteria>
@@ -410,6 +426,18 @@ def generate_scap(all_rules, all_baselines):
                         continue
                     if payload_type == "com.apple.ManagedClient.preferences":
                         for payload_domain, settings in info.items():
+                            oval_definition = oval_definition + '''
+                            <definition id="oval:mscp:def:{}" version="1" class="compliance"> 
+                            <metadata> 
+                                <title>{}</title>
+                                <reference source="CCE" ref_id="{}"/>
+                                <reference source="macos_security" ref_id="{}"/>
+                                <description>{}</description> 
+                            </metadata>'''.format(x,rule_yaml['title'],cce,rule_yaml['id'] + "_" + odv_label,rule_yaml['discussion'].rstrip())
+                            if len(settings) > 1:
+                                oval_definition = oval_definition + '''<criteria operator="AND">'''
+                            else:
+                                oval_definition = oval_definition + '''<criteria>'''
                             
                             for key, value in settings.items():
                                 state_kind = ""
@@ -419,20 +447,9 @@ def generate_scap(all_rules, all_baselines):
                                     state_kind = "int"
                                 elif type(value) == str:
                                     state_kind = "string"
-
-                                oval_definition = oval_definition + '''
-                            <definition id="oval:mscp:def:{}" version="1" class="compliance"> 
-                            <metadata> 
-                                <title>{}</title>
-                                <reference source="CCE" ref_id="{}"/>
-                                <reference source="macOS_security" ref_id="{}"/>
-                                <description>{}</description> 
-                            </metadata> 
-                        <criteria> 
-                            <criterion comment="{}" test_ref="oval:mscp:tst:{}" />
-                        </criteria> 
-                    </definition>
-                    '''.format(x,rule_yaml['title'],cce,rule_yaml['id'] + "_" + odv_label,rule_yaml['discussion'].rstrip(),rule_yaml['id'] + "_" + odv_label,x)
+                                
+                                dz = d + 5000
+                                oval_definition = oval_definition + '''<criterion comment="{}" test_ref="oval:mscp:tst:{}" />'''.format(rule_yaml['id'] + '_' + odv_label + "_" + str(d), dz)
 
                                 oval_test = oval_test + '''
                     <plist511_test xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" check="all" check_existence="only_one_exists" comment="{}_test" id="oval:mscp:tst:{}" version="2">
@@ -441,7 +458,7 @@ def generate_scap(all_rules, all_baselines):
                     </plist511_test>
                 
                 
-                '''.format(rule_yaml['id'] + "_" + odv_label,x,x,x)
+                '''.format(rule_yaml['id'] + "_" + odv_label + "_" + str(d),dz,dz,dz)
                                 if payload_domain == "com.apple.dock":
                                     
                                     oval_object = oval_object + '''
@@ -452,7 +469,7 @@ def generate_scap(all_rules, all_baselines):
                     <plist511_object xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" comment="{}_object" id="oval:mscp:obj:{}" version="1">
                 <filepath datatype="string" operation="equals" var_check="at least one" var_ref="oval:mscp:var:{}"/>
                 <xpath>//*[contains(text(), "{}")]/following-sibling::*[1]/text()</xpath>
-            </plist511_object>'''.format(x+1999,key,x,x,key)
+            </plist511_object>'''.format(x+1999,key,dz,x,key)
 
                                     oval_variable = oval_variable + '''
         <local_variable id="oval:mscp:var:{}" version="1" datatype="string" comment="user managed pref variable">
@@ -470,16 +487,17 @@ def generate_scap(all_rules, all_baselines):
                             <xpath>//*[contains(text(), "{}")]/following-sibling::*[1]/text()</xpath>
 
                         </plist511_object>
-                        '''.format(rule_yaml['id'] + "_" + odv_label,x,payload_domain,key)
+                        '''.format(rule_yaml['id'] + "_" + odv_label,dz,payload_domain,key)
                                     
                                 
                                 oval_state = oval_state + '''
                                     <plist511_state xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" comment="{}_state" id="oval:mscp:ste:{}" version="1">
                         <value_of datatype="{}" operation="equals">{}</value_of>
                         </plist511_state>
-                        '''.format(rule_yaml['id'] + "_" + odv_label,x,state_kind,value)
+                        '''.format(rule_yaml['id'] + "_" + odv_label,dz,state_kind,value)
+                                d += 1
                                 x += 1
-
+                        oval_definition = oval_definition + '''</criteria> </definition>'''
                         continue
                     for key, value in info.items():
 
@@ -493,7 +511,7 @@ def generate_scap(all_rules, all_baselines):
                     <metadata> 
                         <title>{}</title> 
                         <reference source="CCE" ref_id="{}"/>
-                        <reference source="macOS_security" ref_id="{}"/>
+                        <reference source="macos_security" ref_id="{}"/>
                         <description>{}</description> 
                     </metadata> 
                 <criteria> 
@@ -531,7 +549,7 @@ def generate_scap(all_rules, all_baselines):
                     <metadata> 
                         <title>{}</title> 
                         <reference source="CCE" ref_id="{}"/>
-                        <reference source="macOS_security" ref_id="{}"/>
+                        <reference source="macos_security" ref_id="{}"/>
                         <description>{}</description> 
                     </metadata> 
                 <criteria> 
@@ -582,7 +600,7 @@ def generate_scap(all_rules, all_baselines):
                     <metadata> 
                         <title>{}</title>
                         <reference source="CCE" ref_id="{}"/>
-                        <reference source="macOS_security" ref_id="{}"/>
+                        <reference source="macos_security" ref_id="{}"/>
                         <description>{}</description> 
                     </metadata> 
                 <criteria> 
@@ -648,7 +666,7 @@ def generate_scap(all_rules, all_baselines):
                     <metadata> 
                         <title>{}</title>
                         <reference source="CCE" ref_id="{}"/>
-                        <reference source="macOS_security" ref_id="{}"/>
+                        <reference source="macos_security" ref_id="{}"/>
                         <description>{}</description> 
                     </metadata> 
                 <criteria> 
@@ -713,7 +731,7 @@ def generate_scap(all_rules, all_baselines):
                     <metadata> 
                         <title>{}</title>
                         <reference source="CCE" ref_id="{}"/>
-                        <reference source="macOS_security" ref_id="{}"/>
+                        <reference source="macos_security" ref_id="{}"/>
                         <description>{}</description> 
                     </metadata> 
                 <criteria> 
@@ -779,7 +797,7 @@ def generate_scap(all_rules, all_baselines):
                     <metadata> 
                         <title>{}</title>
                         <reference source="CCE" ref_id="{}"/>
-                        <reference source="macOS_security" ref_id="{}"/>
+                        <reference source="macos_security" ref_id="{}"/>
                         <description>{}</description> 
                     </metadata> 
                 <criteria> 
@@ -843,7 +861,7 @@ def generate_scap(all_rules, all_baselines):
                     <metadata> 
                         <title>{}</title>
                         <reference source="CCE" ref_id="{}"/>
-                        <reference source="macOS_security" ref_id="{}"/>
+                        <reference source="macos_security" ref_id="{}"/>
                         <description>{}</description> 
                     </metadata> 
                 <criteria> 
@@ -908,7 +926,7 @@ def generate_scap(all_rules, all_baselines):
                 <metadata> 
                         <title>{}</title>
                         <reference source="CCE" ref_id="{}"/>
-                        <reference source="macOS_security" ref_id="{}"/>
+                        <reference source="macos_security" ref_id="{}"/>
                         <description>{}</description> 
                     </metadata> 
                 <criteria operator="OR">
@@ -953,7 +971,7 @@ def generate_scap(all_rules, all_baselines):
                     <metadata> 
                         <title>{}</title> 
                         <reference source="CCE" ref_id="{}"/>
-                        <reference source="macOS_security" ref_id="{}"/>
+                        <reference source="macos_security" ref_id="{}"/>
                         <description>{}</description> 
                     </metadata> 
                 <criteria>
@@ -1015,7 +1033,7 @@ def generate_scap(all_rules, all_baselines):
                     <metadata> 
                         <title>{}</title> 
                         <reference source="CCE" ref_id="{}"/>
-                        <reference source="macOS_security" ref_id="{}"/>
+                        <reference source="macos_security" ref_id="{}"/>
                         <description>{}</description> 
                     </metadata> 
                 <criteria>
@@ -1126,7 +1144,7 @@ def generate_scap(all_rules, all_baselines):
                     <metadata> 
                         <title>{}</title> 
                         <reference source="CCE" ref_id="{}"/>
-                        <reference source="macOS_security" ref_id="{}"/>
+                        <reference source="macos_security" ref_id="{}"/>
                         <description>{}</description> 
                     </metadata> 
                 <criteria>
@@ -1166,7 +1184,7 @@ def generate_scap(all_rules, all_baselines):
                     <metadata> 
                         <title>{}</title> 
                         <reference source="CCE" ref_id="{}"/>
-                        <reference source="macOS_security" ref_id="{}"/>
+                        <reference source="macos_security" ref_id="{}"/>
                         <description>{}</description> 
                     </metadata> 
                 <criteria>
@@ -1208,7 +1226,7 @@ def generate_scap(all_rules, all_baselines):
                     <metadata> 
                         <title>{}</title> 
                         <reference source="CCE" ref_id="{}"/>
-                        <reference source="macOS_security" ref_id="{}"/>
+                        <reference source="macos_security" ref_id="{}"/>
                         <description>{}</description> 
                     </metadata> 
                 <criteria>
@@ -1260,7 +1278,7 @@ def generate_scap(all_rules, all_baselines):
                     <metadata> 
                         <title>{}</title> 
                         <reference source="CCE" ref_id="{}"/>
-                        <reference source="macOS_security" ref_id="{}"/>
+                        <reference source="macos_security" ref_id="{}"/>
                         <description>{}</description> 
                     </metadata> 
                 <criteria>
@@ -1357,7 +1375,7 @@ def generate_scap(all_rules, all_baselines):
                     <metadata> 
                         <title>{}</title> 
                         <reference source="CCE" ref_id="{}"/>
-                        <reference source="macOS_security" ref_id="{}"/>
+                        <reference source="macos_security" ref_id="{}"/>
                         <description>{}</description> 
                     </metadata> 
                 <criteria operator="AND">
@@ -1482,7 +1500,7 @@ def generate_scap(all_rules, all_baselines):
                     <metadata> 
                         <title>{}</title> 
                         <reference source="CCE" ref_id="{}"/>
-                        <reference source="macOS_security" ref_id="{}"/>
+                        <reference source="macos_security" ref_id="{}"/>
                         <description>{}</description> 
                     </metadata> 
                 <criteria>
@@ -1689,7 +1707,7 @@ def generate_scap(all_rules, all_baselines):
                     <metadata> 
                         <title>{}</title> 
                         <reference source="CCE" ref_id="{}"/>
-                        <reference source="macOS_security" ref_id="{}"/>
+                        <reference source="macos_security" ref_id="{}"/>
                         <description>{}</description> 
                     </metadata> 
                 <criteria>
@@ -1723,7 +1741,7 @@ def generate_scap(all_rules, all_baselines):
                     <metadata> 
                         <title>{}</title> 
                         <reference source="CCE" ref_id="{}"/>
-                        <reference source="macOS_security" ref_id="{}"/>
+                        <reference source="macos_security" ref_id="{}"/>
                         <description>{}</description> 
                     </metadata> 
                 <criteria>
@@ -1755,7 +1773,7 @@ def generate_scap(all_rules, all_baselines):
                     <metadata> 
                         <title>{}</title> 
                         <reference source="CCE" ref_id="{}"/>
-                        <reference source="macOS_security" ref_id="{}"/>
+                        <reference source="macos_security" ref_id="{}"/>
                         <description>{}</description> 
                     </metadata> 
                 <criteria> 
@@ -1788,7 +1806,7 @@ def generate_scap(all_rules, all_baselines):
                     <metadata> 
                         <title>{}</title> 
                         <reference source="CCE" ref_id="{}"/>
-                        <reference source="macOS_security" ref_id="{}"/>
+                        <reference source="macos_security" ref_id="{}"/>
                         <description>{}</description> 
                     </metadata> 
                 <criteria operator="OR"> 
@@ -1863,7 +1881,7 @@ def generate_scap(all_rules, all_baselines):
                     <metadata> 
                         <title>{}</title> 
                         <reference source="CCE" ref_id="{}"/>
-                        <reference source="macOS_security" ref_id="{}"/>
+                        <reference source="macos_security" ref_id="{}"/>
                         <description>{}</description> 
                     </metadata> 
                 <criteria> 
@@ -2069,7 +2087,7 @@ def generate_scap(all_rules, all_baselines):
                     <metadata> 
                         <title>{}</title> 
                         <reference source="CCE" ref_id="{}"/>
-                        <reference source="macOS_security" ref_id="{}"/>
+                        <reference source="macos_security" ref_id="{}"/>
                         <description>{}</description> 
                     </metadata> 
                 <criteria>
@@ -2141,7 +2159,7 @@ def generate_scap(all_rules, all_baselines):
                     <metadata> 
                         <title>{}</title> 
                         <reference source="CCE" ref_id="{}"/>
-                        <reference source="macOS_security" ref_id="{}"/>
+                        <reference source="macos_security" ref_id="{}"/>
                         <description>{}</description> 
                     </metadata> 
                 <criteria> 
@@ -2175,7 +2193,7 @@ def generate_scap(all_rules, all_baselines):
                 <metadata> 
                     <title>{}</title> 
                     <reference source="CCE" ref_id="{}"/>
-                    <reference source="macOS_security" ref_id="{}"/>
+                    <reference source="macos_security" ref_id="{}"/>
                     <description>{}</description> 
                 </metadata>
             <criteria> 
@@ -2220,7 +2238,7 @@ def generate_scap(all_rules, all_baselines):
                     <metadata> 
                         <title>{}</title> 
                         <reference source="CCE" ref_id="{}"/>
-                        <reference source="macOS_security" ref_id="{}"/>
+                        <reference source="macos_security" ref_id="{}"/>
                         <description>{}</description> 
                     </metadata> 
                 <criteria> 
@@ -2250,7 +2268,7 @@ def generate_scap(all_rules, all_baselines):
                 <metadata> 
                         <title>{}</title> 
                         <reference source="CCE" ref_id="{}"/>
-                        <reference source="macOS_security" ref_id="{}"/>
+                        <reference source="macos_security" ref_id="{}"/>
                         <description>{}</description> 
                 </metadata> 
                 <criteria operator="AND">
@@ -2302,7 +2320,7 @@ def generate_scap(all_rules, all_baselines):
                 <metadata> 
                         <title>{}</title> 
                         <reference source="CCE" ref_id="{}"/>
-                        <reference source="macOS_security" ref_id="{}"/>
+                        <reference source="macos_security" ref_id="{}"/>
                         <description>{}</description> 
                 </metadata> 
                 <criteria>
@@ -2336,7 +2354,7 @@ def generate_scap(all_rules, all_baselines):
                     <metadata> 
                         <title>{}</title> 
                         <reference source="CCE" ref_id="{}"/>
-                        <reference source="macOS_security" ref_id="{}"/>
+                        <reference source="macos_security" ref_id="{}"/>
                         <description>{}</description> 
                     </metadata> 
                 <criteria> 
@@ -2378,8 +2396,7 @@ def generate_scap(all_rules, all_baselines):
          All the rules
         </description>
         <warning category="general">
-          The check/fix commands outlined in this section
-must be run with elevated privileges.
+          The check/fix commands outlined in this section must be run with elevated privileges.
         </warning>''' + xccdf_rules + '''      
         </Group>  </Benchmark>
   </component>  
@@ -2691,7 +2708,6 @@ def collect_rules():
         if "arm64" in rule_yaml['tags']:
             rule_yaml['tags'].remove("arm64")
 
-        
         all_rules.append(MacSecurityRule(rule_yaml['title'].replace('|', '\|'),
                                     rule_yaml['id'].replace('|', '\|'),
                                     rule_yaml['severity'].replace('|', '\|'),
