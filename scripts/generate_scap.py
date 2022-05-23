@@ -13,6 +13,7 @@ from pathlib import Path
 from datetime import datetime
 import shutil
 from time import sleep
+import argparse
 
 warnings.filterwarnings("ignore", category=DeprecationWarning) 
 def replace_ocil(xccdf, x):
@@ -21,8 +22,32 @@ def replace_ocil(xccdf, x):
     result = re.sub(regex, substr, xccdf, 0, re.MULTILINE)
     return result
 
-def generate_scap(all_rules, all_baselines):
 
+def create_args():
+    
+    parser = argparse.ArgumentParser(
+        description="Easily generate xccdf, oval, or scap datastream. If no option is defined, it will generate an scap datastream file.")
+    parser.add_argument("-x", "--xccdf", default=None,
+                        help="Generate an xccdf file.", action="store_true")
+    parser.add_argument("-o", "--oval", default=None,
+                        help="Generate an oval file of the checks.", action="store_true")
+
+
+    return parser.parse_args()
+
+def generate_scap(all_rules, all_baselines, args):
+
+    export_as = ""
+
+    if args.xccdf:
+        export_as = "xccdf"
+    
+    if args.oval:
+        export_as = "oval"
+
+    if not any(vars(args).values()):
+        export_as = "scap"
+    
     version_file = "../VERSION.yaml"
     with open(version_file) as r:
         version_yaml = yaml.load(r, Loader=yaml.SafeLoader)
@@ -31,18 +56,61 @@ def generate_scap(all_rules, all_baselines):
     date_time_string = now.strftime("%Y-%m-%dT%H:%M:%S")
 
     filenameversion = version_yaml['version'].split(",")[1].replace(" ", "_")[1:]
-    output = "../build/macOS_{0}_Security_Compliance_Benchmark-{1}.xml".format(version_yaml['os'],filenameversion)
+    output = "../build/macOS_{0}_Security_Compliance_Benchmark-{1}".format(version_yaml['os'],filenameversion)
+
+    if export_as == "xccdf":
+        output = output + "_xccdf.xml"
+    
+    if export_as == "oval":
+        output = output + "_oval.xml"
+
+    if export_as == "scap":
+        output = output + ".xml"
+
     oval_definition = str()
     oval_test = str()
     oval_object = str()
     oval_state = str()
     oval_variable = str()
-    scap_profiles = str()
+    xccdf_profiles = str()
     total_scap = str()
     scap_groups = str()
     xccdf_rules = str()
     x = 1
     d = 1
+
+    ovalPrefix = '''<?xml version="1.0" encoding="UTF-8"?>
+    <oval_definitions xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="   http://oval.mitre.org/XMLSchema/oval-definitions-5             https://raw.githubusercontent.com/OVALProject/Language/5.11.2/schemas/oval-definitions-schema.xsd  http://oval.mitre.org/XMLSchema/oval-definitions-5#independent https://raw.githubusercontent.com/OVALProject/Language/5.11.2/schemas/independent-definitions-schema.xsd    http://oval.mitre.org/XMLSchema/oval-definitions-5#macos       https://raw.githubusercontent.com/OVALProject/Language/5.11.2/schemas/macos-definitions-schema.xsd  http://oval.mitre.org/XMLSchema/oval-definitions-5#unix        https://raw.githubusercontent.com/OVALProject/Language/5.11.2/schemas/unix-definitions-schema.xsd">
+      <generator>
+        <oval:schema_version xmlns:oval="http://oval.mitre.org/XMLSchema/oval-common-5">5.11.2</oval:schema_version>
+        <oval:timestamp xmlns:oval="http://oval.mitre.org/XMLSchema/oval-common-5">{0}</oval:timestamp>
+        <terms_of_use>Copyright (c) 2020, NIST.</terms_of_use>
+        <oval:product_name xmlns:oval="http://oval.mitre.org/XMLSchema/oval-common-5">macOS Security Compliance Project</oval:product_name>
+      </generator>'''.format(date_time_string)
+
+    xccdfPrefix = '''<?xml version="1.0" encoding="UTF-8"?>
+    <Benchmark xmlns="http://checklists.nist.gov/xccdf/1.2" id="xccdf_gov.nist.mscp.content_benchmark_macOS_{1}" style="SCAP_1.3" resolved="true" xml:lang="en">
+      <status date="{3}">draft</status>
+      <title>macOS {1}: Security Configuration</title>
+      <description>
+        macOS {1}: Security Configuration
+      </description>
+      
+      
+      <reference href="https://csrc.nist.gov/projects/security-content-automation-protocol/scap-releases/scap-1-3">
+        <title xmlns="http://purl.org/dc/elements/1.1/">Security Content Automation Protocol</title>
+        <publisher xmlns="http://purl.org/dc/elements/1.1/">National Institute of Standards and Technology</publisher>
+      </reference>
+      <version time="{0}" update="https://github.com/usnistgov/macos_security">{2}</version>
+      <metadata>
+        <creator xmlns="http://purl.org/dc/elements/1.1/">National Institute of Standards and Technology</creator>
+        <publisher xmlns="http://purl.org/dc/elements/1.1/">National Institute of Standards and Technology</publisher>
+        <source xmlns="http://purl.org/dc/elements/1.1/">https://github.com/usnistgov/macos_security/releases/latest</source>
+        <contributor xmlns="http://purl.org/dc/elements/1.1/">Bob Gendler - National Institute of Standards and Technology</contributor>
+        <contributor xmlns="http://purl.org/dc/elements/1.1/">Dan Brodjieski - National Aeronautics and Space Administration</contributor>
+        <contributor xmlns="http://purl.org/dc/elements/1.1/">Allen Golbig - Jamf</contributor>
+      </metadata>
+    '''.format(date_time_string, version_yaml['os'], version_yaml['version'],date_time_string.split("T")[0] + "Z")
 
     scapPrefix = '''<?xml version="1.0" encoding="UTF-8"?>
 <data-stream-collection xmlns="http://scap.nist.gov/schema/scap/source/1.2" id="scap_gov.nist.mscp.content_collection_macOS_{1}" schematron-version="1.3">
@@ -188,13 +256,13 @@ def generate_scap(all_rules, all_baselines):
                 severity = rule_yaml['severity']
             else:
                 severity = "unknown"
-            check = str()
+            check_rule = str()
             if "inherent" in rule_yaml['tags'] or "n_a" in rule_yaml['tags'] or "permenant" in rule_yaml['tags']:
-                check = '''
+                check_rule = '''
             <check system="http://scap.nist.gov/schema/ocil/2">
             <check-content-ref href="ocil.xml"/></check>'''
             else:
-                check = '''<check system="http://oval.mitre.org/XMLSchema/oval-definitions-5">
+                check_rule = '''<check system="http://oval.mitre.org/XMLSchema/oval-definitions-5">
             <check-content-ref href="oval.xml" name="oval:mscp:def:{0}"/>
             </check>'''.format(x)
             references = str()
@@ -250,7 +318,8 @@ def generate_scap(all_rules, all_baselines):
             else:
                 cce = rule_yaml['references']['cce'][0]
 
-            xccdf_rules = xccdf_rules + '''
+            if export_as == "scap":
+                xccdf_rules = xccdf_rules + '''
             <Rule id="xccdf_gov.nist.mscp.content_rule_{0}" selected="false" role="full" severity="{1}" weight="1.0">
             <title>{2}</title>
             <description>{3}
@@ -262,7 +331,22 @@ def generate_scap(all_rules, all_baselines):
             <fixtext>{7}</fixtext>
             {8}
             </Rule>
-            '''.format(rule_yaml['id'] + "_" + odv_label, severity, rule_yaml['title'], rule_yaml['discussion'].replace("<","&lt;").replace(">","&gt;").replace("&","&amp;").rstrip(), rule_yaml['check'].replace("<","&lt;").replace(">","&gt;").replace("&","&amp;").rstrip(), result, cce,rule_yaml['fix'].replace("<","&lt;").replace(">","&gt;").replace("&","&amp;"), check, references)
+            '''.format(rule_yaml['id'] + "_" + odv_label, severity, rule_yaml['title'], rule_yaml['discussion'].replace("<","&lt;").replace(">","&gt;").replace("&","&amp;").rstrip(), rule_yaml['check'].replace("<","&lt;").replace(">","&gt;").replace("&","&amp;").rstrip(), result, cce,rule_yaml['fix'].replace("<","&lt;").replace(">","&gt;").replace("&","&amp;"), check_rule, references)
+
+            if export_as == "xccdf":
+                xccdf_rules = xccdf_rules + '''
+            <Rule id="xccdf_gov.nist.mscp.content_rule_{0}" selected="false" role="full" severity="{1}" weight="1.0">
+            <title>{2}</title>
+            <description>{3}
+            
+            {4}
+            
+            {5}</description>{8}
+            <ident system="https://ncp.nist.gov/cce">{6}</ident>
+            <fixtext>{7}</fixtext>
+            
+            </Rule>
+            '''.format(rule_yaml['id'] + "_" + odv_label, severity, rule_yaml['title'], rule_yaml['discussion'].replace("<","&lt;").replace(">","&gt;").replace("&","&amp;").rstrip(), rule_yaml['check'].replace("<","&lt;").replace(">","&gt;").replace("&","&amp;").rstrip(), result, cce,rule_yaml['fix'].replace("<","&lt;").replace(">","&gt;").replace("&","&amp;"), references)
                 
 
 
@@ -2379,17 +2463,29 @@ def generate_scap(all_rules, all_baselines):
         
         
     for k in generated_baselines.keys():
-        scap_profiles = scap_profiles + '''
+        xccdf_profiles = xccdf_profiles + '''
         <Profile id="xccdf_gov.nist.mscp.content_profile_{1}">
                 <title>{0}</title>
                 <description>This profile selects all rules tagged as {0}.</description>'''.format(k, k.replace(" ","_"))
         for v in generated_baselines[k]:
-            scap_profiles = scap_profiles + '''
+            xccdf_profiles = xccdf_profiles + '''
                 <select idref="xccdf_gov.nist.mscp.content_rule_{0}" selected="true"/>'''.format(v)
-        scap_profiles = scap_profiles + '''
+        xccdf_profiles = xccdf_profiles + '''
         </Profile>'''
     
-    total_scap = scapPrefix + scap_profiles + '''
+
+    total_xccdf = xccdfPrefix + xccdf_profiles + '''
+    <Group id="xccdf_gov.nist.mscp.content_group_all_rules">
+        <title>All rules</title>
+        <description>
+         All the rules
+        </description>
+        <warning category="general">
+          The check/fix commands outlined in this section must be run with elevated privileges.
+        </warning>''' + xccdf_rules + '''      
+        </Group>  </Benchmark>'''
+
+    total_scap = scapPrefix + xccdf_profiles + '''
     <Group id="xccdf_gov.nist.mscp.content_group_all_rules">
         <title>All rules</title>
         <description>
@@ -2525,7 +2621,14 @@ def generate_scap(all_rules, all_baselines):
 </data-stream-collection>'''.format(date_time_string,version_yaml['cpe'],version_yaml['os'])
     scap_file = output
     with open(scap_file + "temp",'w') as rite:
-        rite.write(total_scap)
+        if export_as == "scap":
+            rite.write(total_scap)
+        elif export_as == "xccdf":
+            rite.write(total_xccdf)
+        elif export_as == "oval":
+            total_oval = ovalPrefix + total_oval
+            rite.write(total_oval)
+
         cmd = shutil.which('xmllint')
         rite.close()
         if cmd == None:
@@ -2753,6 +2856,9 @@ def get_controls(all_rules):
     return all_controls
 
 def main():
+
+    args = create_args()
+
     file_dir = os.path.dirname(os.path.abspath(__file__))
     parent_dir = os.path.dirname(file_dir)
 
@@ -2770,7 +2876,7 @@ def main():
 
 
     all_baselines = available_tags(all_rules)
-    generate_scap(all_rules_pruned, all_baselines)
+    generate_scap(all_rules_pruned, all_baselines, args)
 
     os.chdir(original_working_directory)
 
