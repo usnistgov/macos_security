@@ -31,7 +31,10 @@ def create_args():
                         help="Generate an xccdf file.", action="store_true")
     parser.add_argument("-o", "--oval", default=None,
                         help="Generate an oval file of the checks.", action="store_true")
-
+    parser.add_argument("-l", "--list_tags", default=None,
+                        help="List the available keyword tags to search for.", action="store_true")
+    parser.add_argument("-b", "--baseline", default="None",
+                        help="Choose a baseline to generate an xml file for, if none is specified it will generate for every rule found.", action="store")
 
     return parser.parse_args()
 
@@ -45,7 +48,7 @@ def generate_scap(all_rules, all_baselines, args):
     if args.oval:
         export_as = "oval"
 
-    if not any(vars(args).values()):
+    if args.oval == None and args.xccdf == None:
         export_as = "scap"
     
     version_file = "../VERSION.yaml"
@@ -181,6 +184,9 @@ def generate_scap(all_rules, all_baselines, args):
         loop = 1
         if "odv" in og_rule_yaml:
             loop = len(og_rule_yaml['odv'])
+            if args.baseline:
+                loop = 1
+            
 
         for a in range(0, loop):
             
@@ -189,6 +195,9 @@ def generate_scap(all_rules, all_baselines, args):
             try:           
                 
                 odv_label = list(rule_yaml['odv'].keys())[a]
+
+                if args.baseline:
+                    odv_label = args.baseline
             
                 if odv_label == "hint":
                     continue
@@ -2874,8 +2883,24 @@ def main():
         if rule.rule_id not in all_rules_pruned:
             all_rules_pruned.append(rule.rule_id)
 
+    if args.list_tags:
+        for tag in available_tags(all_rules):
+            print(tag)
+        exit(0)
+    all_baselines = []
 
-    all_baselines = available_tags(all_rules)
+    if args.baseline:
+        all_baselines = [args.baseline]
+        for rule in all_rules:
+            if rule.rule_id not in all_rules_pruned and args.baseline in rule.rule_tags:
+                all_rules_pruned.append(rule.rule_id)
+
+    if all_baselines == ['None']:
+        all_baselines = available_tags(all_rules)
+        for rule in all_rules:
+            if rule.rule_id not in all_rules_pruned:
+                all_rules_pruned.append(rule.rule_id)
+
     generate_scap(all_rules_pruned, all_baselines, args)
 
     os.chdir(original_working_directory)
