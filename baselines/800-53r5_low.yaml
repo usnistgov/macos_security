@@ -40,7 +40,6 @@ profile:
   - section: "macos"
     rules:
       - os_airdrop_disable
-      - os_mobile_file_integrity_enable
       - os_appleid_prompt_disable
       - os_authenticated_root_enable
       - os_bonjour_disable
@@ -58,6 +57,7 @@ profile:
       - os_mail_app_disable
       - os_mdm_require
       - os_messages_app_disable
+      - os_mobile_file_integrity_enable
       - os_nfsd_disable
       - os_password_autofill_disable
       - os_password_proximity_disable
@@ -79,12 +79,12 @@ profile:
       - os_uucp_disable
   - section: "passwordpolicy"
     rules:
-      - pwpolicy_60_day_enforce
       - pwpolicy_account_lockout_enforce
       - pwpolicy_account_lockout_timeout_enforce
       - pwpolicy_alpha_numeric_enforce
       - pwpolicy_history_enforce
       - pwpolicy_lower_case_character_enforce
+      - pwpolicy_max_lifetime_enforce
       - pwpolicy_minimum_length_enforce
       - pwpolicy_minimum_lifetime_enforce
       - pwpolicy_simple_sequence_disable

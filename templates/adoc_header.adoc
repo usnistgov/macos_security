@@ -7,7 +7,12 @@
 :chapter-label:
 :listing-caption: Listing
 :sectnums:
+ifdef::backend-html5[]
 :toc: preamble
+endif::[]
+ifdef::backend-pdf[]
+:toc: []
+endif::[]
 :toclevels: 4
 :xrefstyle: full
 :source-highlighter: rouge

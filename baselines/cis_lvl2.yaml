@@ -25,7 +25,7 @@ profile:
       - audit_folder_group_configure
       - audit_folder_owner_configure
       - audit_folders_mode_configure
-      - audit_retention_configure_sixty_days
+      - audit_retention_configure
   - section: "macos"
     rules:
       - os_airdrop_disable
@@ -61,9 +61,9 @@ profile:
       - os_world_writable_system_folder_configure
   - section: "passwordpolicy"
     rules:
-      - pwpolicy_account_lockout_enforce_five
+      - pwpolicy_account_lockout_enforce
       - pwpolicy_alpha_numeric_enforce
-      - pwpolicy_history_enforce_fifteen
+      - pwpolicy_history_enforce
       - pwpolicy_lower_case_character_enforce
       - pwpolicy_minimum_length_enforce
       - pwpolicy_special_character_enforce
