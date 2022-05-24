@@ -8,7 +8,7 @@ check: |
   .objectForKey('LoginwindowText').js
   EOS
 result:
-  string: "Approved message goes here"
+  string: $ODV
 fix: |
   This is implemented by a Configuration Profile.
 references:
@@ -29,10 +29,16 @@ references:
       - 6.1.1 (level 1)
 macOS:
   - "11.0"
+odv: 
+  hint: "Organization's approved message."
+  default: Center for Internet Security Test Message
+  cis_lvl1: Center for Internet Security Test Message
+  cis_lvl2: Center for Internet Security Test Message
 tags:
   - cis_lvl1
   - cis_lvl2
+  - cisv8
 mobileconfig: true
 mobileconfig_info:
   com.apple.loginwindow:
-    LoginwindowText: "Approved message goes here"
+    LoginwindowText: $ODV
