@@ -1,7 +1,7 @@
 id: pwpolicy_minimum_length_enforce
-title: "Require a Minimum Password Length of 15 Characters"
+title: "Require a Minimum Password Length of $ODV Characters"
 discussion: |
-  The macOS _MUST_ be configured to require a minimum of 15 characters be used when a password is created.
+  The macOS _MUST_ be configured to require a minimum of $ODV characters be used when a password is created.
 
   This rule enforces password complexity by requiring users to set passwords that are less vulnerable to malicious users. 
 
@@ -12,7 +12,7 @@ check: |
   .objectForKey('minLength').js
   EOS
 result:
-  integer: 15
+  integer: $ODV
 fix: |
   This is implemented by a Configuration Profile.
 references:
@@ -43,6 +43,12 @@ references:
       - 5.2
 macOS:
   - "12.0"
+odv:
+  hint: "Minimum password length."
+  default: 15
+  stig: 15
+  cis_lvl1: 15
+  cis_lvl2: 15
 tags:
   - 800-171 
   - cnssi-1253 
@@ -60,4 +66,4 @@ severity: "medium"
 mobileconfig: true
 mobileconfig_info:
   com.apple.mobiledevice.passwordpolicy:
-    minLength: 15
+    minLength: $ODV

@@ -1,7 +1,7 @@
 id: pwpolicy_minimum_lifetime_enforce
-title: "Set Minimum Password Lifetime to 24 Hours"
+title: "Set Minimum Password Lifetime to $ODV Hours"
 discussion: |
-  The macOS _MUST_ be configured to enforce a minimum password lifetime limit of 24 hours.
+  The macOS _MUST_ be configured to enforce a minimum password lifetime limit of $ODV hours.
 
   This rule discourages users from cycling through their previous passwords to get back to a preferred one.
 
@@ -9,7 +9,7 @@ discussion: |
 check: | 
   /usr/bin/pwpolicy getaccountpolicies | /usr/bin/grep -v "Getting global account policies" | /usr/bin/xmllint --xpath '/plist/dict/array/dict/dict[key="policyAttributeMinimumLifetimeHours"]/integer' - | /usr/bin/awk -F '[<>]' '{print $3}'
 result:
-  integer: 24
+  integer: $ODV
 fix: |
   This setting may be enforced using local policy or by a directory service.
   
@@ -25,7 +25,7 @@ fix: |
   <key>policyParameters</key>
   <dict>
   <key>policyAttributeMinimumLifetimeHours</key>
-  <integer>24</integer>
+  <integer>$ODV</integer>
   </dict>
   </dict>
   ----
@@ -61,6 +61,9 @@ references:
       - 4.7
 macOS:
   - "12.0"
+odv:
+  hint: "Number of hours."
+  default: 24
 tags:
   - 800-171
   - cnssi-1253

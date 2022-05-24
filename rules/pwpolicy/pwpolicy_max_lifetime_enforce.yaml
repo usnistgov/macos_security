@@ -1,7 +1,7 @@
-id: pwpolicy_60_day_enforce
-title: "Restrict Maximum Password Lifetime to 60 Days"
+id: pwpolicy_max_lifetime_enforce
+title: "Restrict Maximum Password Lifetime to $ODV Days"
 discussion: |
-  The macOS _MUST_ be configured to enforce a maximum password lifetime limit of at least 60 days. 
+  The macOS _MUST_ be configured to enforce a maximum password lifetime limit of at least $ODV days. 
 
   This rule ensures that users are forced to change their passwords frequently enough to prevent malicious users from gaining and maintaining access to the system.
 
@@ -12,7 +12,7 @@ check: |
   .objectForKey('maxPINAgeInDays').js
   EOS
 result:
-  integer: 60
+  integer: $ODV
 fix: |
   This is implemented by a Configuration Profile.
 references:
@@ -43,6 +43,10 @@ references:
       - 4.7
 macOS:
   - "12.0"
+odv:
+  hint: "Number of days."
+  default: 60
+  stig: 60
 tags:
   - 800-171 
   - cnssi-1253 
@@ -58,4 +62,4 @@ severity: "medium"
 mobileconfig: true
 mobileconfig_info:
   com.apple.mobiledevice.passwordpolicy:
-    maxPINAgeInDays: 60
+    maxPINAgeInDays: $ODV

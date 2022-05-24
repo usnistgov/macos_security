@@ -1,7 +1,7 @@
 id: pwpolicy_account_lockout_timeout_enforce
-title: "Set Account Lockout Time to 15 Minutes"
+title: "Set Account Lockout Time to $ODV Minutes"
 discussion: |
-  The macOS _MUST_ be configured to enforce a lockout time period of at least 15 minutes when the maximum number of failed logon attempts is reached.
+  The macOS _MUST_ be configured to enforce a lockout time period of at least $ODV minutes when the maximum number of failed logon attempts is reached.
 
   This rule protects against malicious users attempting to gain access to the system via brute-force hacking methods. 
 check: |
@@ -10,7 +10,7 @@ check: |
   .objectForKey('minutesUntilFailedLoginReset').js
   EOS
 result:
-  integer: 15
+  integer: $ODV
 fix: |
   This is implemented by a Configuration Profile.
 references:
@@ -35,6 +35,10 @@ references:
       - 4.1
 macOS:
   - "12.0"
+odv:
+  hint: "Number of minutes."
+  default: 15
+  stig: 15
 tags:
   - 800-171 
   - cnssi-1253 
@@ -46,8 +50,8 @@ tags:
   - 800-53r5_high
   - cisv8
   - stig
-severity: "medium"
+\severity: "medium"
 mobileconfig: true
 mobileconfig_info:
   com.apple.mobiledevice.passwordpolicy:
-    minutesUntilFailedLoginReset: 15
+    minutesUntilFailedLoginReset: $ODV

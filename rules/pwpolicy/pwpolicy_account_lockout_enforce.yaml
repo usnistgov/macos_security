@@ -1,7 +1,7 @@
 id: pwpolicy_account_lockout_enforce
-title: "Limit Consecutive Failed Login Attempts to Three"
+title: "Limit Consecutive Failed Login Attempts to $ODV"
 discussion: |
-  The macOS _MUST_ be configured to limit the number of failed login attempts to a maximum of three. When the maximum number of failed attempts is reached, the account _MUST_ be locked for a period of time after.
+  The macOS _MUST_ be configured to limit the number of failed login attempts to a maximum of $ODV. When the maximum number of failed attempts is reached, the account _MUST_ be locked for a period of time after.
 
   This rule protects against malicious users attempting to gain access to the system via brute-force hacking methods. 
 check: |
@@ -10,7 +10,7 @@ check: |
   .objectForKey('maxFailedAttempts').js
   EOS
 result:
-  integer: 3
+  integer: $ODV
 fix: |
   This is implemented by a Configuration Profile.
 references:
@@ -30,11 +30,17 @@ references:
     - 3.1.8
   cis:
     benchmark:
-      - N/A
+      - 5.2.1 (level 1)
     controls v8:
       - 6.2
 macOS:
   - "12.0"
+odv:
+  hint: "Number of failed attempts."
+  default: 3
+  stig: 3
+  cis_lvl1: 5
+  cis_lvl2: 5
 tags:
   - 800-171 
   - cnssi-1253 
@@ -44,10 +50,12 @@ tags:
   - 800-53r5_low 
   - 800-53r5_moderate 
   - 800-53r5_high
+  - cis_lvl1
+  - cis_lvl2
   - cisv8
   - stig
 severity: "medium"
 mobileconfig: true
 mobileconfig_info:
   com.apple.mobiledevice.passwordpolicy:
-    maxFailedAttempts: 3
+    maxFailedAttempts: $ODV

@@ -1,15 +1,15 @@
 id: os_ssh_server_alive_interval_configure
-title: "Configure SSH ServerAliveInterval option set to 900 or less"
+title: "Configure SSH ServerAliveInterval option set to $ODV"
 discussion: |
-  SSH _MUST_ be configured with an Active Server Alive Maximum Count set to 900 or less. 
+  SSH _MUST_ be configured with an Active Server Alive Maximum Count set to $ODV. 
   
-  Setting the Active Server Alive Maximum Count to 900 (second) will log users out after a 15-minute interval of inactivity.
+  Setting the Active Server Alive Maximum Count to $ODV (seconds) will log users out after an organization defined value interval of inactivity.
 
   NOTE: /etc/ssh/ssh_config will be automatically modified to its original state following any update or major upgrade to the operating system.
 check: |
   ret="pass"
   for u in $(/usr/bin/dscl . -list /Users UniqueID | /usr/bin/awk '$2 > 500 {print $1}'); do
-    sshCheck=$(/usr/bin/sudo -u $u /usr/bin/ssh -G . | /usr/bin/grep -c "^serveraliveinterval 900")
+    sshCheck=$(/usr/bin/sudo -u $u /usr/bin/ssh -G . | /usr/bin/grep -c "^serveraliveinterval $ODV")
     if [[ "$sshCheck" == "0" ]]; then
       ret="fail"
       break
@@ -25,7 +25,7 @@ fix: |
     config=$(/usr/bin/sudo -u $u /usr/bin/ssh -Gv . 2>&1 | /usr/bin/awk '/Reading configuration data/ {print $NF}'| /usr/bin/tr -d '\r')
     configarray=( ${(f)config} )
     for c in $configarray; do
-      /usr/bin/sudo -u $u /usr/bin/grep -q '^ServerAliveInterval' "$c" && /usr/bin/sed -i '' 's/.*ServerAliveInterval.*/ServerAliveInterval 900/' "$c" || /bin/echo 'ServerAliveInterval 900' >> "$c"
+      /usr/bin/sudo -u $u /usr/bin/grep -q '^ServerAliveInterval' "$c" && /usr/bin/sed -i '' 's/.*ServerAliveInterval.*/ServerAliveInterval $ODV/' "$c" || /bin/echo 'ServerAliveInterval $ODV' >> "$c"
     done
   done
   ----
@@ -47,6 +47,9 @@ references:
     - 3.13.9
 macOS:
   - "12.0"
+odv:
+  hint: "Number of seconds."
+  default: 900
 tags:
   - 800-53r5_moderate
   - 800-53r5_high
