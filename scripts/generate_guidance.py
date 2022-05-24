@@ -773,19 +773,22 @@ fi
                 logging.debug(f"{rule}")
 
             rule_yaml = get_rule_yaml(rule, custom)
+            
 
             if rule_yaml['id'].startswith("supplemental"):
                 continue
-            if "manual" in rule_yaml['tags']:
-                continue
-
-            if "arm64" in rule_yaml['tags']:
-                arch="arm64"
-            elif "i386" in rule_yaml['tags']:
-                arch="i386"
-            else:
-                arch=""
             
+            arch=""
+            if "tags" in rule_yaml:
+                if "manual" in rule_yaml['tags']:
+                    continue
+                if "arm64" in rule_yaml['tags']:
+                    arch="arm64"
+                elif "i386" in rule_yaml['tags']:
+                    arch="i386"
+                else:
+                    arch=""
+                
             # grab the 800-53 controls
             try:
                 rule_yaml['references']['800-53r5']
