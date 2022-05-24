@@ -19,8 +19,8 @@ fix: |
   [source,bash]
   ----
   bannerText="$ODV"
-  /bin/mkdir /Library/Security/PolicyBanner.rtf
-  /usr/bin/textutil -convert rtf -output /Library/Security/PolicyBanner.rtf/TXT.rtf -stdin <<EOF              
+  /bin/mkdir /Library/Security/PolicyBanner.rtfd
+  /usr/bin/textutil -convert rtf -output /Library/Security/PolicyBanner.rtfd/TXT.rtf -stdin <<EOF              
   $bannerText
   EOF
   ----

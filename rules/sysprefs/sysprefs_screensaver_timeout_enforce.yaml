@@ -9,7 +9,7 @@ check: |
   function run() {
     let timeout = ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('com.apple.screensaver')\
   .objectForKey('idleTime'))
-    if ( timeout <= 1200 ) {
+    if ( timeout <= $ODV ) {
       return("true")
     } else {
       return("false")
