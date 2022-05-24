@@ -76,7 +76,6 @@ profile:
       - os_policy_banner_ssh_configure
       - os_policy_banner_ssh_enforce
       - os_recovery_lock_enable
-      - os_removable_media_disable
       - os_root_disable
       - os_screensaver_loginwindow_enforce
       - os_secure_boot_verify
@@ -101,13 +100,13 @@ profile:
       - os_uucp_disable
   - section: "passwordpolicy"
     rules:
-      - pwpolicy_60_day_enforce
       - pwpolicy_account_inactivity_enforce
       - pwpolicy_account_lockout_enforce
       - pwpolicy_account_lockout_timeout_enforce
       - pwpolicy_alpha_numeric_enforce
       - pwpolicy_history_enforce
       - pwpolicy_lower_case_character_enforce
+      - pwpolicy_max_lifetime_enforce
       - pwpolicy_minimum_length_enforce
       - pwpolicy_minimum_lifetime_enforce
       - pwpolicy_simple_sequence_disable
@@ -171,6 +170,7 @@ profile:
       - sysprefs_system_wide_preferences_configure
       - sysprefs_time_server_configure
       - sysprefs_time_server_enforce
+      - sysprefs_token_removal_enforce
       - sysprefs_touchid_unlock_disable
       - sysprefs_wifi_disable
   - section: "Inherent"

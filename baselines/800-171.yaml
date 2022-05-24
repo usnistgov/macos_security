@@ -14,7 +14,6 @@ profile:
       - auth_pam_su_smartcard_enforce
       - auth_pam_sudo_smartcard_enforce
       - auth_smartcard_enforce
-      - auth_smartcard_allow
       - auth_ssh_password_authentication_disable
   - section: "auditing"
     rules:
@@ -85,13 +84,13 @@ profile:
       - os_uucp_disable
   - section: "passwordpolicy"
     rules:
-      - pwpolicy_60_day_enforce
       - pwpolicy_account_inactivity_enforce
       - pwpolicy_account_lockout_enforce
       - pwpolicy_account_lockout_timeout_enforce
       - pwpolicy_alpha_numeric_enforce
       - pwpolicy_history_enforce
       - pwpolicy_lower_case_character_enforce
+      - pwpolicy_max_lifetime_enforce
       - pwpolicy_minimum_length_enforce
       - pwpolicy_minimum_lifetime_enforce
       - pwpolicy_simple_sequence_disable

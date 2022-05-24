@@ -35,7 +35,6 @@ profile:
       - audit_folder_owner_configure
       - audit_folders_mode_configure
       - audit_retention_configure
-      - audit_retention_configure_sixty_days
   - section: "macos"
     rules:
       - os_airdrop_disable
@@ -90,15 +89,13 @@ profile:
       - os_world_writable_system_folder_configure
   - section: "passwordpolicy"
     rules:
-      - pwpolicy_60_day_enforce
       - pwpolicy_account_inactivity_enforce
       - pwpolicy_account_lockout_enforce
-      - pwpolicy_account_lockout_enforce_five
       - pwpolicy_account_lockout_timeout_enforce
       - pwpolicy_alpha_numeric_enforce
       - pwpolicy_history_enforce
-      - pwpolicy_history_enforce_fifteen
       - pwpolicy_lower_case_character_enforce
+      - pwpolicy_max_lifetime_enforce
       - pwpolicy_minimum_length_enforce
       - pwpolicy_minimum_lifetime_enforce
       - pwpolicy_simple_sequence_disable
@@ -142,6 +139,7 @@ profile:
       - sysprefs_internet_sharing_disable
       - sysprefs_location_services_audit
       - sysprefs_location_services_enable
+      - sysprefs_loginwindow_loginwindowtext_enable
       - sysprefs_loginwindow_prompt_username_password_enforce
       - sysprefs_media_sharing_disabled
       - sysprefs_password_hints_disable
@@ -187,6 +185,8 @@ profile:
       - os_access_control_mobile_devices
   - section: "Supplemental"
     rules:
+      - supplemental_cis_manual
+      - supplemental_controls
       - supplemental_filevault
       - supplemental_firewall_pf
       - supplemental_password_policy
