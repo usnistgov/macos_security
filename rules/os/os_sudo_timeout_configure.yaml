@@ -3,7 +3,7 @@ title: "Configure Sudo Timeout Period to $ODV"
 discussion: |
   The file /etc/sudoers _MUST_ include a timestamp_timout of $ODV.
 check: |
-  /usr/bin/find /etc/sudoers* -type f -exec /usr/bin/grep -E "^Defaults\s+timestamp_timeout=$ODV" '{}' \; | /usr/bin/wc -l | /usr/bin/xargs
+  /usr/bin/sudo /usr/bin/sudo -V | /usr/bin/grep -c "Authentication timestamp timeout: 0.0 minutes"
 result:
   integer: 1
 fix: |

@@ -6,11 +6,18 @@ discussion: |
   This rule ensures that a full session lock is triggered within no more than $ODV seconds of inactivity.
 check: |
   /usr/bin/osascript -l JavaScript << EOS
-  $.NSUserDefaults.alloc.initWithSuiteName('com.apple.screensaver')\
-  .objectForKey('idleTime').js
+  function run() {
+    let timeout = ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('com.apple.screensaver')\
+  .objectForKey('idleTime'))
+    if ( timeout <= 1200 ) {
+      return("true")
+    } else {
+      return("false")
+    }
+  }
   EOS
 result:
-  integer: $ODV
+  string: "true"
 fix: |
   This is implemented by a Configuration Profile.
 references:
