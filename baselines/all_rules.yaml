@@ -51,7 +51,6 @@ profile:
     rules:
       - os_airdrop_disable
       - os_anti_virus_installed
-      - os_apple_mobile_file_integrity_enforce
       - os_appleid_prompt_disable
       - os_asl_log_files_owner_group_configure
       - os_asl_log_files_permissions_configure
@@ -59,7 +58,6 @@ profile:
       - os_blank_bluray_disable
       - os_blank_cd_disable
       - os_blank_dvd_disable
-      - os_bluetooth_prefpane_disable
       - os_bluray_read_only_enforce
       - os_bonjour_disable
       - os_burn_support_disable
