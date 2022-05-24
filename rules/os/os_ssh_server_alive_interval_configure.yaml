@@ -3,7 +3,7 @@ title: "Configure SSH ServerAliveInterval option set to $ODV"
 discussion: |
   SSH _MUST_ be configured with an Active Server Alive Maximum Count set to $ODV. 
   
-  Setting the Active Server Alive Maximum Count to $ODV (seconds) will log users out after an organization defined value interval of inactivity.
+  Setting the Active Server Alive Maximum Count to $ODV will log users out after a $ODV seconds interval of inactivity.
 
   NOTE: /etc/ssh/ssh_config will be automatically modified to its original state following any update or major upgrade to the operating system.
 check: |
