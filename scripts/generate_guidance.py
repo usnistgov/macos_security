@@ -841,7 +841,6 @@ fi
             except KeyError:
                 continue
 
-            print(rule_yaml)
             if "integer" in result:
                 result_value = result['integer']
             elif "boolean" in result:
@@ -1064,7 +1063,7 @@ def fill_in_odv(resulting_yaml, baseline_name):
             for mobileconfig_type in resulting_yaml['mobileconfig_info']:
                 if isinstance(resulting_yaml['mobileconfig_info'][mobileconfig_type], dict):
                     for mobileconfig_value in resulting_yaml['mobileconfig_info'][mobileconfig_type]:
-                        if "$ODV" in mobileconfig_value:
+                        if "$ODV" in str(resulting_yaml['mobileconfig_info'][mobileconfig_type][mobileconfig_value]):
                             resulting_yaml['mobileconfig_info'][mobileconfig_type][mobileconfig_value] = odv
                 
             
