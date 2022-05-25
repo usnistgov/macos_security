@@ -779,15 +779,15 @@ fi
                 continue
             
             arch=""
-            if "tags" in rule_yaml:
+            try:
                 if "manual" in rule_yaml['tags']:
                     continue
                 if "arm64" in rule_yaml['tags']:
                     arch="arm64"
                 elif "i386" in rule_yaml['tags']:
                     arch="i386"
-                else:
-                    arch=""
+            except:
+                pass
                 
             # grab the 800-53 controls
             try:
@@ -1062,7 +1062,8 @@ def fill_in_odv(resulting_yaml, baseline_name):
             for mobileconfig_type in resulting_yaml['mobileconfig_info']:
                 if isinstance(resulting_yaml['mobileconfig_info'][mobileconfig_type], dict):
                     for mobileconfig_value in resulting_yaml['mobileconfig_info'][mobileconfig_type]:
-                        resulting_yaml['mobileconfig_info'][mobileconfig_type][mobileconfig_value] = odv
+                        if "$ODV" in str(resulting_yaml['mobileconfig_info'][mobileconfig_type][mobileconfig_value]):
+                            resulting_yaml['mobileconfig_info'][mobileconfig_type][mobileconfig_value] = odv
                 
             
                 
@@ -1127,13 +1128,15 @@ def get_rule_yaml(rule_file, custom=False, baseline_name=""):
                     pass
         elif yaml_field == "tags":
             # try to concatenate tags from both original yaml and custom yaml
-            if "tags" in rule_yaml:
+            try:
                 if og_rule_yaml["tags"] == rule_yaml["tags"]:
-                        #print("using default data in yaml field {}".format("tags"))
-                        resulting_yaml['tags'] = og_rule_yaml['tags']
+                    #print("using default data in yaml field {}".format("tags"))
+                    resulting_yaml['tags'] = og_rule_yaml['tags']
                 else:
                     #print("Found custom tags... concatenating them")
                     resulting_yaml['tags'] = og_rule_yaml['tags'] + rule_yaml['tags']
+            except KeyError:
+                pass
         else: 
             try:
                 if og_rule_yaml[yaml_field] == rule_yaml[yaml_field]:
