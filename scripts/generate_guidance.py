@@ -1056,7 +1056,7 @@ def fill_in_odv(resulting_yaml, baseline_name):
                 resulting_yaml[field]=resulting_yaml[field].replace("$ODV", odv)
         
         for result_value in resulting_yaml['result']:
-            if "$ODV" in result_value:
+            if "$ODV" in str(resulting_yaml['result'][result_value]):
                 resulting_yaml['result'][result_value] = odv
         
         if resulting_yaml['mobileconfig_info']:
