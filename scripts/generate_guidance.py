@@ -777,7 +777,7 @@ fi
 
             if rule_yaml['id'].startswith("supplemental"):
                 continue
-            
+
             arch=""
             try:
                 if "manual" in rule_yaml['tags']:
@@ -841,6 +841,7 @@ fi
             except KeyError:
                 continue
 
+            print(rule_yaml)
             if "integer" in result:
                 result_value = result['integer']
             elif "boolean" in result:
@@ -1056,13 +1057,14 @@ def fill_in_odv(resulting_yaml, baseline_name):
                 resulting_yaml[field]=resulting_yaml[field].replace("$ODV", odv)
         
         for result_value in resulting_yaml['result']:
-            resulting_yaml['result'][result_value] = odv
+            if "$ODV" in result_value:
+                resulting_yaml['result'][result_value] = odv
         
         if resulting_yaml['mobileconfig_info']:
             for mobileconfig_type in resulting_yaml['mobileconfig_info']:
                 if isinstance(resulting_yaml['mobileconfig_info'][mobileconfig_type], dict):
                     for mobileconfig_value in resulting_yaml['mobileconfig_info'][mobileconfig_type]:
-                        if "$ODV" in str(resulting_yaml['mobileconfig_info'][mobileconfig_type][mobileconfig_value]):
+                        if "$ODV" in mobileconfig_value:
                             resulting_yaml['mobileconfig_info'][mobileconfig_type][mobileconfig_value] = odv
                 
             
@@ -1136,7 +1138,7 @@ def get_rule_yaml(rule_file, custom=False, baseline_name=""):
                     #print("Found custom tags... concatenating them")
                     resulting_yaml['tags'] = og_rule_yaml['tags'] + rule_yaml['tags']
             except KeyError:
-                pass
+                resulting_yaml['tags'] = og_rule_yaml['tags']
         else: 
             try:
                 if og_rule_yaml[yaml_field] == rule_yaml[yaml_field]:
