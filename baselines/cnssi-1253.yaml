@@ -7,7 +7,6 @@ authors: |
   |Ekkehard Koch|
   |Bob Gendler|National Institute of Standards and Technology
   |===
-parent_values: recommended
 profile:
   - section: "authentication"
     rules:

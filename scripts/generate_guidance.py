@@ -1041,7 +1041,7 @@ def fill_in_odv(resulting_yaml, parent_values):
                 odv = str(resulting_yaml['odv']['custom'])
                 _has_odv = True
             except KeyError:
-                odv = str(resulting_yaml['odv']['default'])
+                odv = str(resulting_yaml['odv']['recommended'])
                 _has_odv = True
         else:
             pass
@@ -1546,7 +1546,10 @@ def main():
     
 
     baseline_yaml = yaml.load(args.baseline, Loader=yaml.SafeLoader)
-    parent_values = baseline_yaml['parent_values']
+    try:
+        parent_values = baseline_yaml['parent_values']
+    except KeyError:
+        parent_values = "recommended"
     version_file = os.path.join(parent_dir, "VERSION.yaml")
     with open(version_file) as r:
         version_yaml = yaml.load(r, Loader=yaml.SafeLoader)
