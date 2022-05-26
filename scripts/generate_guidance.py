@@ -713,9 +713,9 @@ generate_report(){{
     total=$((non_compliant + compliant))
     percentage=$(printf %.2f $(( compliant * 100. / total )) )
     /bin/echo
-    /bin/echo "Number of tests passed: ${{GREEN}}$compliant${{STD}}"
-    /bin/echo "Number of test FAILED: ${{RED}}$non_compliant${{STD}}"
-    /bin/echo "You are ${{YELLOW}}$percentage%${{STD}} percent compliant!"
+    echo "Number of tests passed: ${{GREEN}}$compliant${{STD}}"
+    echo "Number of test FAILED: ${{RED}}$non_compliant${{STD}}"
+    echo "You are ${{YELLOW}}$percentage%${{STD}} percent compliant!"
     pause
 }}
 
