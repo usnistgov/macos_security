@@ -37,7 +37,7 @@ macOS:
   - "12.0"
 odv:
   hint: "Number of minutes."
-  default: 15
+  recommended: 15
   stig: 15
 tags:
   - 800-171 

@@ -45,7 +45,7 @@ macOS:
   - "12.0"
 odv:
   hint: "Minimum password length."
-  default: 15
+  recommended: 15
   stig: 15
   cis_lvl1: 15
   cis_lvl2: 15

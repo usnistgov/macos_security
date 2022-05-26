@@ -212,7 +212,7 @@ def available_tags(all_rules):
         print(tag)
     return
 
-def output_baseline(rules, os, keyword):
+def output_baseline(rules, os, keyword, benchmark="recommended"):
     inherent_rules = []
     permanent_rules = []
     na_rules = []
@@ -240,6 +240,7 @@ def output_baseline(rules, os, keyword):
     output_text = f'title: "macOS {os}: Security Configuration - {keyword}"\n'
     output_text += f'description: |\n  This guide describes the actions to take when securing a macOS {os} system against the {keyword} baseline.\n'
     output_text += f'authors: |\n  |===\n  |Name|Organization\n  |===\n'
+    output_text += f'parent_values: "{benchmark}"\n'
     output_text += 'profile:\n'
     
     # sort the rules
@@ -345,16 +346,12 @@ def sanitised_input(prompt, type_=None, range_=None, default_=None):
         else:
             return ui
 
-def odv_query(rules, keyword):
+def odv_query(rules, benchmark):
     print("The inclusion of any given rule is a risk-based-decision (RBD).  While each rule is mapped to an 800-53 control, deploying it in your organization should be part of the decision-making process. \nYou will be prompted to include each rule, and for those with specific organizational defined values (ODV), you will be prompted for those as well.\n")
     
-    _established_benchmarks = ['stig', 'cis_lvl1', 'cis_lvl2']
-    if any(bm in keyword for bm in _established_benchmarks):
+    if not benchmark == "recommended":
         print(f"WARNING: You are attempting to tailor an already established benchmark.  Excluding rules or modifying ODVs may not meet the compliance of the established benchmark.\n")
-        benchmark = keyword
-    else:
-        benchmark = "default"
-            
+        
     included_rules = []
     queried_rule_ids = []
     
@@ -378,15 +375,15 @@ def odv_query(rules, keyword):
             if rule.rule_odv == "missing":
                 continue
             elif get_odv:
-                if benchmark == "default":
+                if benchmark == "recommended":
                     print(f'{rule.rule_odv["hint"]}')
-                    if isinstance(rule.rule_odv["default"], int):
-                         odv = sanitised_input(f'Enter the ODV for \"{rule.rule_id}\" or press Enter for the default value ({rule.rule_odv["default"]}): ', int, default_=rule.rule_odv["default"])
-                    elif isinstance(rule.rule_odv["default"], bool):
-                         odv = sanitised_input(f'Enter the ODV for \"{rule.rule_id}\" or press Enter for the default value ({rule.rule_odv["default"]}): ', bool, default_=rule.rule_odv["default"])
+                    if isinstance(rule.rule_odv["recommended"], int):
+                         odv = sanitised_input(f'Enter the ODV for \"{rule.rule_id}\" or press Enter for the recommended value ({rule.rule_odv["recommended"]}): ', int, default_=rule.rule_odv["recommended"])
+                    elif isinstance(rule.rule_odv["recommended"], bool):
+                         odv = sanitised_input(f'Enter the ODV for \"{rule.rule_id}\" or press Enter for the recommended value ({rule.rule_odv["recommended"]}): ', bool, default_=rule.rule_odv["recommended"])
                     else:
-                         odv = sanitised_input(f'Enter the ODV for \"{rule.rule_id}\" or press Enter for the default value ({rule.rule_odv["default"]}): ', str, default_=rule.rule_odv["default"])
-                    if odv and odv != rule.rule_odv["default"]:
+                         odv = sanitised_input(f'Enter the ODV for \"{rule.rule_id}\" or press Enter for the recommended value ({rule.rule_odv["recommended"]}): ', str, default_=rule.rule_odv["recommended"])
+                    if odv and odv != rule.rule_odv["recommended"]:
                         write_odv_custom_rule(rule, odv)
                 else:
                     print(f'{rule.rule_odv["hint"]}')
@@ -467,10 +464,17 @@ def main():
         print("No rules found for the keyword provided, please verify from the following list:")
         available_tags(all_rules)
     elif args.tailor:
+        _established_benchmarks = ['stig', 'cis_lvl1', 'cis_lvl2']
+        if any(bm in args.keyword for bm in _established_benchmarks):
+            benchmark = args.keyword
+        else:
+            benchmark = "recommended"
+        # prompt for name of benchmark to be used for filename
+        tailored_filename = sanitised_input(f'Enter a name for your tailored benchmark or press Enter for the default value ({args.keyword}): ', str, default_=args.keyword)
         # prompt for inclusion, add ODV
-        odv_baseline_rules = odv_query(found_rules, args.keyword)
-        baseline_output_file = open(f"{build_path}/{args.keyword}.yaml", 'w')
-        baseline_output_file.write(output_baseline(odv_baseline_rules, version_yaml["os"], args.keyword))
+        odv_baseline_rules = odv_query(found_rules, benchmark)
+        baseline_output_file = open(f"{build_path}/{tailored_filename}.yaml", 'w')
+        baseline_output_file.write(output_baseline(odv_baseline_rules, version_yaml["os"], args.keyword, benchmark))
     else:
         baseline_output_file = open(f"{build_path}/{args.keyword}.yaml", 'w')
         baseline_output_file.write(output_baseline(found_rules, version_yaml["os"], args.keyword))

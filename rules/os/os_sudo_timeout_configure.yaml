@@ -34,7 +34,7 @@ macOS:
   - "12.0"
 odv:
   hint: "Number of minutes."
-  default: 0
+  recommended: 0
   cis_lvl1: 0
   cis_lvl2: 0
 tags:

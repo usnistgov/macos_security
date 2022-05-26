@@ -46,7 +46,7 @@ macOS:
   - "12.0"
 odv:
   hint: "Number of seconds."
-  default: 0 
+  recommended: 0 
 tags:
   - 800-53r5_moderate
   - 800-53r5_high

@@ -1,13 +1,10 @@
 #!/usr/bin/env python3
 # filename: generate_guidance.py
 # description: Process a given baseline, and output guidance files
-import types
 import sys
 import os.path
 import plistlib
-from unittest import result
 import xlwt
-import io
 import glob
 import os
 import yaml
@@ -20,7 +17,6 @@ from xlwt import Workbook
 from string import Template
 from itertools import groupby
 from uuid import uuid4
-from collections import namedtuple
 
 
 class MacSecurityRule():
@@ -1033,12 +1029,12 @@ fi
     #fix_script_file.close()
     compliance_script_file.close()
 
-def fill_in_odv(resulting_yaml, baseline_name):
+def fill_in_odv(resulting_yaml, parent_values):
     fields_to_process = ['title', 'discussion', 'check', 'fix']
     _has_odv = False
     if "odv" in resulting_yaml:
         try:
-            odv = str(resulting_yaml['odv'][baseline_name])
+            odv = str(resulting_yaml['odv'][parent_values])
             _has_odv = True
         except KeyError:
             try:
@@ -1069,7 +1065,7 @@ def fill_in_odv(resulting_yaml, baseline_name):
             
                 
     
-def get_rule_yaml(rule_file, custom=False, baseline_name=""):
+def get_rule_yaml(rule_file, custom=False, parent_values="recommended"):
     """ Takes a rule file, checks for a custom version, and returns the yaml for the rule
     """
     global resulting_yaml 
@@ -1153,7 +1149,7 @@ def get_rule_yaml(rule_file, custom=False, baseline_name=""):
             except KeyError:
                 resulting_yaml[yaml_field] = og_rule_yaml[yaml_field]
     
-    fill_in_odv(resulting_yaml, baseline_name)
+    fill_in_odv(resulting_yaml, parent_values)
 
     return resulting_yaml
 
@@ -1550,6 +1546,7 @@ def main():
     
 
     baseline_yaml = yaml.load(args.baseline, Loader=yaml.SafeLoader)
+    parent_values = baseline_yaml['parent_values']
     version_file = os.path.join(parent_dir, "VERSION.yaml")
     with open(version_file) as r:
         version_yaml = yaml.load(r, Loader=yaml.SafeLoader)
@@ -1735,7 +1732,7 @@ def main():
                 rule_location = rule_path[0]
                 custom=False
             
-            rule_yaml = get_rule_yaml(rule_location, custom, baseline_name)
+            rule_yaml = get_rule_yaml(rule_location, custom, parent_values)
 
             # Determine if the references exist and set accordingly
             try:
