@@ -10,10 +10,7 @@ check: |
 result:
   string: "false"
 fix: |
-  [source,bash]
-  ----
   This is implemented by a Configuration Profile.
-  ----
 references:
   cce:
     - CCE-91108-1
