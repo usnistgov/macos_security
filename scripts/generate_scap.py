@@ -223,20 +223,20 @@ def generate_scap(all_rules, all_baselines, args):
                                     resulting_yaml['mobileconfig_info'][mobileconfig_type][mobileconfig_value] = rule_yaml['mobileconfig_info'][mobileconfig_type][mobileconfig_value].replace("$ODV",odv_value)
 
             except:
-                odv_label = "default"
+                odv_label = "recommended"
                 
             for baseline in all_baselines:
                     found_rules = []
                     for tag in rule_yaml['tags']:
                         if tag == baseline:
-                            if odv_label != "default" and odv_label == tag or odv_label == "custom":
+                            if odv_label != "recommended" and odv_label == tag or odv_label == "custom":
                             
                                 if baseline in generated_baselines:
                                     generated_baselines[baseline].append(rule_yaml['id'] + "_" + odv_label)
                                 else:
                                     generated_baselines[baseline] = [rule_yaml['id'] + "_" + odv_label]
                                 continue
-                            elif odv_label == "default" or odv_label == "custom":
+                            elif odv_label == "recommended" or odv_label == "custom":
                                 
                                 if "odv" in rule_yaml:
                                     if baseline not in rule_yaml['odv']:
