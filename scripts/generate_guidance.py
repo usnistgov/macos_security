@@ -631,7 +631,7 @@ ask() {{
         fi
 
         # Ask the question - use /dev/tty in case stdin is redirected from somewhere else
-        /usr/bin/printf "${{YELLOW}} $1 [$prompt] ${{STD}}"
+        printf "${{YELLOW}} $1 [$prompt] ${{STD}}"
         read REPLY
         
         # Default?
