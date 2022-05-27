@@ -355,6 +355,7 @@ def odv_query(rules, benchmark):
     included_rules = []
     queried_rule_ids = []
     
+    include_all = False
 
     for rule in rules:
         get_odv = False
@@ -363,13 +364,21 @@ def odv_query(rules, benchmark):
         if any(tag in rule.rule_tags for tag in _always_include):
             #print(f"Including rule {rule.rule_id} by default")
             include = "Y"
+        elif include_all:
+            include = "Y"
+            get_odv = True
+            queried_rule_ids.append(rule.rule_id)
+            remove_odv_custom_rule(rule)
         else:
             if rule.rule_id not in queried_rule_ids:
-                include = sanitised_input(f"Would you like to include the rule for \"{rule.rule_id}\" in your benchmark? [Y/n]: ", str.lower, range_=('y', 'n'), default_="y")
+                include = sanitised_input(f"Would you like to include the rule for \"{rule.rule_id}\" in your benchmark? [Y/n/all]: ", str.lower, range_=('y', 'n', 'all'), default_="y")
                 queried_rule_ids.append(rule.rule_id)
                 get_odv = True
                 # remove custom ODVs if there, they will be re-written if needed
                 remove_odv_custom_rule(rule)
+                if include.upper() == "ALL":
+                    include_all = True
+                    include = "y"
         if include.upper() == "Y":
             included_rules.append(rule)
             if rule.rule_odv == "missing":
@@ -386,7 +395,7 @@ def odv_query(rules, benchmark):
                     if odv and odv != rule.rule_odv["recommended"]:
                         write_odv_custom_rule(rule, odv)
                 else:
-                    print(f'{rule.rule_odv["hint"]}')
+                    print(f'\nODV value: {rule.rule_odv["hint"]}')
                     if isinstance(rule.rule_odv[benchmark], int):
                          odv = sanitised_input(f'Enter the ODV for \"{rule.rule_id}\" or press Enter for the default value ({rule.rule_odv[benchmark]}): ', int, default_=rule.rule_odv[benchmark])
                     elif isinstance(rule.rule_odv[benchmark], bool):
