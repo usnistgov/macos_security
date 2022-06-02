@@ -184,9 +184,9 @@ def generate_scap(all_rules, all_baselines, args):
         loop = 1
         if "odv" in og_rule_yaml:
             loop = len(og_rule_yaml['odv'])
-            if args.baseline:
-                loop = 1
             
+            if args.baseline != "None":
+                loop = 1
 
         for a in range(0, loop):
             
@@ -196,7 +196,7 @@ def generate_scap(all_rules, all_baselines, args):
                 
                 odv_label = list(rule_yaml['odv'].keys())[a]
 
-                if args.baseline:
+                if args.baseline != "None":
                     odv_label = args.baseline
             
                 if odv_label == "hint":
@@ -219,24 +219,24 @@ def generate_scap(all_rules, all_baselines, args):
                     for mobileconfig_type in rule_yaml['mobileconfig_info']:
                         if isinstance(rule_yaml['mobileconfig_info'][mobileconfig_type], dict):
                             for mobileconfig_value in rule_yaml['mobileconfig_info'][mobileconfig_type]:
-                                if "$ODV" == rule_yaml['mobileconfig_info'][mobileconfig_type][mobileconfig_value]:
-                                    rule_yaml['mobileconfig_info'][mobileconfig_type][mobileconfig_value] = rule_yaml['mobileconfig_info'][mobileconfig_type][mobileconfig_value].replace("$ODV",odv_value)
+                                if "$ODV" in str(resulting_yaml['mobileconfig_info'][mobileconfig_type][mobileconfig_value]):
+                                    resulting_yaml['mobileconfig_info'][mobileconfig_type][mobileconfig_value] = rule_yaml['mobileconfig_info'][mobileconfig_type][mobileconfig_value].replace("$ODV",odv_value)
 
             except:
-                odv_label = "default"
+                odv_label = "recommended"
                 
             for baseline in all_baselines:
                     found_rules = []
                     for tag in rule_yaml['tags']:
                         if tag == baseline:
-                            if odv_label != "default" and odv_label == tag:
+                            if odv_label != "recommended" and odv_label == tag or odv_label == "custom":
                             
                                 if baseline in generated_baselines:
                                     generated_baselines[baseline].append(rule_yaml['id'] + "_" + odv_label)
                                 else:
                                     generated_baselines[baseline] = [rule_yaml['id'] + "_" + odv_label]
                                 continue
-                            elif odv_label == "default":
+                            elif odv_label == "recommended" or odv_label == "custom":
                                 
                                 if "odv" in rule_yaml:
                                     if baseline not in rule_yaml['odv']:
@@ -2707,10 +2707,16 @@ def get_rule_yaml(rule_file, custom=False, baseline_name=""):
                 except:
                     pass
         elif yaml_field == "tags":
-            if og_rule_yaml["tags"] == rule_yaml["tags"]:
+            # try to concatenate tags from both original yaml and custom yaml
+            try:
+                if og_rule_yaml["tags"] == rule_yaml["tags"]:
+                    #print("using default data in yaml field {}".format("tags"))
+                    resulting_yaml['tags'] = og_rule_yaml['tags']
+                else:
+                    #print("Found custom tags... concatenating them")
+                    resulting_yaml['tags'] = og_rule_yaml['tags'] + rule_yaml['tags']
+            except KeyError:
                 resulting_yaml['tags'] = og_rule_yaml['tags']
-            else:
-                resulting_yaml['tags'] = og_rule_yaml['tags'] + rule_yaml['tags']    
         else: 
             try:
                 if og_rule_yaml[yaml_field] == rule_yaml[yaml_field]:

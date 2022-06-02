@@ -59,7 +59,7 @@ macOS:
   - "12.0"
 odv:
   hint: "Number of days."
-  default: 35
+  recommended: 35
 tags:
   - 800-171
   - cnssi-1253
