@@ -365,10 +365,11 @@ def odv_query(rules, benchmark):
             #print(f"Including rule {rule.rule_id} by default")
             include = "Y"
         elif include_all:
-            include = "Y"
-            get_odv = True
-            queried_rule_ids.append(rule.rule_id)
-            remove_odv_custom_rule(rule)
+            if rule.rule_id not in queried_rule_ids:
+                include = "Y"
+                get_odv = True
+                queried_rule_ids.append(rule.rule_id)
+                remove_odv_custom_rule(rule)
         else:
             if rule.rule_id not in queried_rule_ids:
                 include = sanitised_input(f"Would you like to include the rule for \"{rule.rule_id}\" in your benchmark? [Y/n/all]: ", str.lower, range_=('y', 'n', 'all'), default_="y")
@@ -395,6 +396,7 @@ def odv_query(rules, benchmark):
                     if odv and odv != rule.rule_odv["recommended"]:
                         write_odv_custom_rule(rule, odv)
                 else:
+                    print(f'\ngetting odv for: {rule.rule_id}')
                     print(f'\nODV value: {rule.rule_odv["hint"]}')
                     if isinstance(rule.rule_odv[benchmark], int):
                          odv = sanitised_input(f'Enter the ODV for \"{rule.rule_id}\" or press Enter for the default value ({rule.rule_odv[benchmark]}): ', int, default_=rule.rule_odv[benchmark])
@@ -468,7 +470,7 @@ def main():
         if "supplemental" in rule.rule_tags:
             if rule not in found_rules:
                 found_rules.append(rule)
-    
+
     if args.keyword == None:
         print("No rules found for the keyword provided, please verify from the following list:")
         available_tags(all_rules)
