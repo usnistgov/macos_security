@@ -365,10 +365,11 @@ def odv_query(rules, benchmark):
             #print(f"Including rule {rule.rule_id} by default")
             include = "Y"
         elif include_all:
-            include = "Y"
-            get_odv = True
-            queried_rule_ids.append(rule.rule_id)
-            remove_odv_custom_rule(rule)
+            if rule.rule_id not in queried_rule_ids:
+                include = "Y"
+                get_odv = True
+                queried_rule_ids.append(rule.rule_id)
+                remove_odv_custom_rule(rule)
         else:
             if rule.rule_id not in queried_rule_ids:
                 include = sanitised_input(f"Would you like to include the rule for \"{rule.rule_id}\" in your benchmark? [Y/n/all]: ", str.lower, range_=('y', 'n', 'all'), default_="y")
