@@ -30,7 +30,7 @@ macOS:
   - "11.0"
 odv:
   hint: "Percentage of free space."
-  default: 25
+  recommended: 25
   stig: 25
 tags:
   - 800-53r5_high

@@ -45,7 +45,7 @@ macOS:
   - "11.0"
 odv: 
   hint: "Number of seconds."
-  default: 1200
+  recommended: 1200
   stig: 900
   cis_lvl1: 1200
   cis_lvl2: 1200 

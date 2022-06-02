@@ -63,7 +63,7 @@ macOS:
   - "11.0"
 odv:
   hint: "Number of hours."
-  default: 24
+  recommended: 24
 tags:
   - 800-171
   - cnssi-1253

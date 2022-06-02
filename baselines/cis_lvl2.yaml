@@ -8,6 +8,7 @@ authors: |
   |Ron Colvin|Center for Internet Security
   |Allen Golbig|Jamf  
   |===
+parent_values: "cis_lvl2"
 profile:
   - section: "auditing"
     rules:

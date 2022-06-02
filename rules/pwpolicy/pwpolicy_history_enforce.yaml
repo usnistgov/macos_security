@@ -44,7 +44,7 @@ macOS:
   - "11.0"
 odv: 
   hint: "Number of previous passwords."
-  default: 5
+  recommended: 5
   stig: 5
   cis_lvl1: 15
   cis_lvl2: 15
