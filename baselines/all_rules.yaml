@@ -6,7 +6,8 @@ authors: |
   |Bob Gendler|National Institute of Standards and Technology
   |Dan Brodjieski|National Aeronautics and Space Administration
   |Allen Golbig|Jamf
-  |===  
+  |===
+parent_values: recommended  
 profile:
   - section: "authentication"
     rules:
