@@ -61,7 +61,7 @@ macOS:
   - "10.15"
 odv:
   hint: "Number of days."
-  default: 35
+  recommended: 35
 tags:
   - 800-53r5_moderate
   - 800-53r5_high

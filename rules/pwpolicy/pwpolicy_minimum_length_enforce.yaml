@@ -45,7 +45,7 @@ macOS:
   - "10.15"
 odv:
   hint: "Minimum password length."
-  default: 15
+  recommended: 15
   stig: 15
 tags:
   - 800-53r5_low

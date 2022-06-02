@@ -38,7 +38,7 @@ macOS:
   - "10.15"
 odv:
   hint: "See man audit_control for possible values."
-  default: 7d
+  recommended: 7d
   stig: 7d
 tags:
   - 800-53r5_privacy

@@ -40,7 +40,7 @@ macOS:
   - "10.15"
 odv:
   hint: "Number of failed attempts."
-  default: 3
+  recommended: 3
   stig: 3
 tags:
   - 800-53r5_low

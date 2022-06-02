@@ -38,7 +38,7 @@ macOS:
   - "10.15"
 odv: 
   hint: "Number of seconds."
-  default: 1200
+  recommended: 1200
   stig: 900
 tags:
   - 800-53r5_moderate

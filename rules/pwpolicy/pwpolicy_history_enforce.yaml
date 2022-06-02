@@ -44,7 +44,7 @@ macOS:
   - "10.15"
 odv: 
   hint: "Number of previous passwords."
-  default: 5
+  recommended: 5
   stig: 5
 tags:
   - 800-53r5_low

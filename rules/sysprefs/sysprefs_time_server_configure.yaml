@@ -40,7 +40,7 @@ macOS:
   - "10.15"
 odv:
   hint: "Name of timeserver(s) separated by commas."
-  default: "time-a.nist.gov,time-b.nist.gov"
+  recommended: "time-a.nist.gov,time-b.nist.gov"
   stig: "time-a.nist.gov,time-b.nist.gov"
 tags:
   - 800-171

@@ -43,7 +43,7 @@ macOS:
   - "10.15"
 odv:
   hint: "Number of days."
-  default: 60
+  recommended: 60
   stig: 60
 tags:
   - 800-53r5_low
