@@ -10,7 +10,7 @@ check: |
   .objectForKey('timeServer').js
   EOS
 result:
-  string: "time-a.nist.gov,time-b.nist.gov"
+  string: $ODV
 fix: |
   This is implemented by a Configuration Profile.
 references:
@@ -38,6 +38,10 @@ references:
       - 8.4
 macOS:
   - "10.15"
+odv:
+  hint: "Name of timeserver(s) separated by commas."
+  default: "time-a.nist.gov,time-b.nist.gov"
+  stig: "time-a.nist.gov,time-b.nist.gov"
 tags:
   - 800-171
   - cnssi-1253
@@ -49,4 +53,4 @@ severity: "medium"
 mobileconfig: true
 mobileconfig_info:
   com.apple.MCX:
-    timeServer: "time-a.nist.gov,time-b.nist.gov"
+    timeServer: $ODV

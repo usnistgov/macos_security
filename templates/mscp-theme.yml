@@ -1,0 +1,35 @@
+extends: default
+header:
+  font_color: 999999
+  height: 0.5in
+  recto:
+    columns: "<40% =20% >40%"
+    right:
+      content: ~
+    center:
+      content: ~
+  verso:
+    columns: $header_recto_columns
+    left:
+      content: $header_recto_right_content
+    center:
+      content: $header_recto_center_content
+footer:
+  height: 0.60in
+  lines: 2
+  recto:
+    right:
+      content: |-
+        *{page-number}*   
+    center: 
+      content: |-
+        {proj-title} +
+        macOS Security Compliance Project - _{version}_
+  verso:
+    left:
+      content: |-
+        *{page-number}*
+    center:
+      content: |-
+        {proj-title} +
+        macOS Security Compliance Project - _{version}_
