@@ -48,6 +48,11 @@ def main():
         
         parser.error(str(msg))
     
+
+    version_file = "../VERSION.yaml"
+    with open(version_file) as r:
+        version_yaml = yaml.load(r, Loader=yaml.SafeLoader)
+
     for rule in glob.glob('../rules/*/*.yaml'):
         sub_directory = rule.split(".yaml")[0].split("/")[2]
         
@@ -254,15 +259,17 @@ tags:
                 if "/sysprefs/" in rule:
                     sysprefs.append(rule_id)
                     continue
-
-    full_baseline = '''title: "macOS 12 (Monterey): Security Configuration - {}"
+    
+    
+    full_baseline = '''title: "macOS {2} ({3}): Security Configuration - {0}"
 description: |
-  This guide describes the actions to take when securing a macOS 12 system against the {}.
+  This guide describes the actions to take when securing a macOS {2} system against the {1}.
 authors: |
   |===
   |Name|Organization
   |===
-profile:'''.format(other_header,other_header)
+parent_values: recommended  
+profile:'''.format(other_header,other_header,version_yaml['os'],version_yaml['version'].split(" ")[0])
     
     if len(audit) != 0:
         
@@ -358,14 +365,16 @@ profile:'''.format(other_header,other_header)
 
     
 
+    try:
+        if os.path.isdir("../build/" + other_header.lower() + "/baseline/") == False:
+            os.mkdir("../build/" + other_header.lower() + "/baseline")
 
-    if os.path.isdir("../build/" + other_header.lower() + "/baseline/") == False:
-        os.mkdir("../build/" + other_header.lower() + "/baseline")
-
-    with open("../build/" + other_header.lower() + "/baseline/" + other_header.lower() + ".yaml",'w') as fw:
-        fw.write(full_baseline)
-        print(other_header.lower() + ".yaml baseline file created in build/" + other_header + "/baseline/")
-                
-    print("Move all of the folders in rules into the custom folder.")
+        with open("../build/" + other_header.lower() + "/baseline/" + other_header.lower() + ".yaml",'w') as fw:
+            fw.write(full_baseline)
+            print(other_header.lower() + ".yaml baseline file created in build/" + other_header + "/baseline/")
+                    
+        print("Move all of the folders in rules into the custom folder.")
+    except:
+        print("No controls mapped were found in rule files.")
 if __name__ == "__main__":
     main()
