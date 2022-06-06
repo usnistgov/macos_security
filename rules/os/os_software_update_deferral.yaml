@@ -1,5 +1,5 @@
 id: os_software_update_deferral
-title: "Ensure Software Update Deferment Is Less Than or Equal to 30 Days Draft"
+title: "Ensure Software Update Deferment Is Less Than or Equal to 30 Days"
 discussion: |
   Software updates _MUST_ be deferred for $ODV days or less.
 check: |
