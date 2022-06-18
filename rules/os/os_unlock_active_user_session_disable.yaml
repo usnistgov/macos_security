@@ -33,7 +33,7 @@ references:
     - 3.5.2
   cis:
     benchmark:
-      - 5.11 (level 1)
+      - 5.9 (level 1)
     controls v8:
       - 4.3
 macOS:
