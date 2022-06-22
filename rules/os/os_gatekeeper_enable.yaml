@@ -13,7 +13,7 @@ result:
 fix: |
   [source,bash]
   ----
-  /usr/sbin/spctl --master-enable
+  /usr/sbin/spctl --global-enable
   ----
 references:
   cce:
