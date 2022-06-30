@@ -26,10 +26,10 @@ discussion: |
   2.6.1.2 Audit iCloud Drive +
   2.6.2 Audit App Store Password Settings +
   2.10 Audit Siri Settings +
-  2.11 Audit Touch ID and Wallet & Apple Pay Settings +
-  2.12 Audit Notification and Focus Settings +
-  2.13 Audit Passwords System Preference Setting +
-  2.14 Audit Universal Control Settings +
+  2.11 Audit Universal Control Settings +
+  2.12 Audit Touch ID and Wallet & Apple Pay Settings +
+  2.13 Audit Notification & Focus Settings +
+  2.14 Audit Passwords System Preference Setting +
   |===
 
   [cols="15%h, 85%a"]
@@ -48,11 +48,8 @@ discussion: |
 
   |Recommendations
   |5.2.3 Ensure Complex Password Must Contain Alphabetic Characters Is Configured +
-  5.2.4 Ensure Complex Password Must Contain Numeric Character Is Configured +
-  5.2.5 Ensure Complex Password Must Contain Special Character Is Configured +
-  5.2.6 Ensure Complex Password Must Contain Uppercase and Lowercase Characters Is Configured +
   5.5 Ensure login keychain is locked when the computer sleeps +
-  5.12 Ensure Fast User Switching Is Disabled +
+  5.10 Ensure Fast User Switching Is Disabled +
   |===
 check: |
 fix: |
