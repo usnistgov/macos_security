@@ -47,9 +47,7 @@ discussion: |
   |System Access, Authentication and Authorization
 
   |Recommendations
-  |5.2.3 Ensure Complex Password Must Contain Alphabetic Characters Is Configured +
-  5.5 Ensure login keychain is locked when the computer sleeps +
-  5.10 Ensure Fast User Switching Is Disabled +
+  |5.10 Ensure Fast User Switching Is Disabled +
   |===
 check: |
 fix: |
