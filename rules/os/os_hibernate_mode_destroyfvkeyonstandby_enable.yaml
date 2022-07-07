@@ -26,7 +26,7 @@ references:
     - N/A
   cis:
     benchmark:
-      - 5.9 (level 2)
+      - 2.8.3  (level 2)
     controls v8: 
       - N/A
 macOS:

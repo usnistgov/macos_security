@@ -29,16 +29,13 @@ references:
     - N/A
   cis:
     benchmark:
-      - 5.1.4 (level 1)
+      - N/A
     controls v8:
-      - 2.3
-      - 2.6
+      - N/A
 macOS:
   - "11.0"
 tags:
-  - cis_lvl1
-  - cis_lvl2
-  - cisv8
+  - none
 mobileconfig: true
 mobileconfig_info:
   com.apple.security.libraryvalidation:
