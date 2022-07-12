@@ -42,7 +42,7 @@ references:
     controls v8:
       - 4.3
 macOS:
-  - "12.0"
+  - "13.0"
 odv: 
   hint: "Number of seconds."
   recommended: 1200

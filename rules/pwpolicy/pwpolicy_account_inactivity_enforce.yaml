@@ -56,7 +56,7 @@ references:
     controls v8:
       - 5.3
 macOS:
-  - "12.0"
+  - "13.0"
 odv:
   hint: "Number of days."
   recommended: 35

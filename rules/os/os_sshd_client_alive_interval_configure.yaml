@@ -32,7 +32,7 @@ references:
   800-171r2:
     - 3.13.9
 macOS:
-  - "12.0"
+  - "13.0"
 odv:
   hint: "Number of seconds."
   recommended: 900

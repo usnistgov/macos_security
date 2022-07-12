@@ -24,7 +24,7 @@ references:
   800-171r2:
     - N/A
 macOS:
-  - "12.0"
+  - "13.0"
 tags:
   - 800-53r5_high
   - 800-53r4_high

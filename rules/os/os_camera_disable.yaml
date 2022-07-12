@@ -28,7 +28,7 @@ references:
   disa_stig:
     - APPL-12-002017
 macOS:
-  - "12.0"
+  - "13.0"
 tags:
   - stig
 severity: "medium"

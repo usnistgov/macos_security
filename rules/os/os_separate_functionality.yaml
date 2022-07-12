@@ -29,7 +29,7 @@ references:
   800-171r2:
     - 3.13.3
 macOS:
-  - "12.0"
+  - "13.0"
 tags:
   - 800-53r5_moderate
   - 800-53r5_high

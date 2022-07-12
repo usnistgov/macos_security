@@ -42,7 +42,7 @@ references:
       - 8.2
       - 8.5
 macOS:
-  - "12.0"
+  - "13.0"
 tags:
   - cis_lvl2
   - cisv8

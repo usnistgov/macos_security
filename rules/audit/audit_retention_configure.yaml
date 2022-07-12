@@ -35,7 +35,7 @@ references:
       - 8.3
       - 8.1
 macOS:
-  - "12.0"
+  - "13.0"
 odv:
   hint: "See man audit_control for possible values."
   recommended: 7d

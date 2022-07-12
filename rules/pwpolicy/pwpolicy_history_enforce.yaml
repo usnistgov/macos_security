@@ -41,7 +41,7 @@ references:
     controls v8:
       - 5.2
 macOS:
-  - "12.0"
+  - "13.0"
 odv: 
   hint: "Number of previous passwords."
   recommended: 5

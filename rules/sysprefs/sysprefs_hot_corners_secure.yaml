@@ -44,7 +44,7 @@ references:
     controls v8:
       - 4.3
 macOS:
-  - "12.0"
+  - "13.0"
 tags:
   - cis_lvl2
   - cisv8
