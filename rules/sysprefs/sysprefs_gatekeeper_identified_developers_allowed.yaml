@@ -34,7 +34,7 @@ references:
   800-171r2:
     - 3.4.5
 macOS:
-  - "12.0"
+  - "13.0"
 tags:
   - 800-53r5_low 
   - 800-53r5_moderate 

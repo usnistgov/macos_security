@@ -43,7 +43,7 @@ references:
       - 4.2
       - 12.6
 macOS:
-  - "12.0"
+  - "13.0"
 tags:
   - manual 
   - cnssi-1253 

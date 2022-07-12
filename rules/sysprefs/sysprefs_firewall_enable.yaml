@@ -52,7 +52,7 @@ references:
       - 4.5
       - 13.1
 macOS:
-  - "12.0"
+  - "13.0"
 tags:
   - 800-53r5_low 
   - 800-53r4_low 

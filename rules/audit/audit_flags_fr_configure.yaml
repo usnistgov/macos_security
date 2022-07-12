@@ -54,7 +54,7 @@ references:
     - 3.3.2
     - 3.3.8
 macOS:
-  - "12.0"
+  - "13.0"
 tags:
   - 800-53r5_privacy 
   - 800-53r4_low 

@@ -23,7 +23,7 @@ references:
   disa_stig:
     - APPL-12-000015
 macOS:
-  - "12.0"
+  - "13.0"
 tags:
   - manual
   - cisv8
