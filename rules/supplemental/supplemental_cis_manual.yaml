@@ -24,7 +24,7 @@ discussion: |
   2.5.4 Audit Location Services Access +
   2.6.1.1 Audit iCloud Keychain +
   2.6.1.2 Audit iCloud Drive +
-  2.6.2Audit App Store Password Settings +
+  2.6.2 Audit App Store Password Settings +
   2.10 Audit Siri Settings +
   2.11 Audit Sidecar Settings +
   2.12 Audit Touch ID and Wallet & Apple Pay Settings +
