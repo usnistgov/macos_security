@@ -3,23 +3,29 @@ title: "Enable Hibernate Mode"
 discussion: |
   Hibernate mode _MUST_ be enabled. 
 
-  NOTE: Hibernate mode is not fully supported on Apple Silicon devices. This rule is only applicable to Intel devices.
+  NOTE: Hibernate mode will disable instate wake on Apple Silicon laptops.
 check: |
   error_count=0
-  hibernateStandbyLowValue=$(/usr/bin/pmset -g | /usr/bin/grep standbydelaylow 2>&1 | /usr/bin/awk '{print $2}')
-  hibernateStandbyHighValue=$(/usr/bin/pmset -g | /usr/bin/grep standbydelayhigh 2>&1 | /usr/bin/awk '{print $2}')
-  hibernateStandbyThreshValue=$(/usr/bin/pmset -g | /usr/bin/grep highstandbythreshold 2>&1 | /usr/bin/awk '{print $2}')
-  hibernateMode=$(/usr/bin/pmset -b -g | /usr/bin/grep hibernatemode 2>&1 | /usr/bin/awk '{print $2}')
-  macType=$(/usr/sbin/system_profiler SPHardwareDataType 2>&1 | /usr/bin/grep -c MacBook)
-  if [[ "$macType" -ge 0 ]]; then
-    if [[ "$hibernateStandbyLowValue" == "" ]] || [[ "$hibernateStandbyLowValue" -gt 600 ]]; then
-      ((error_count++))
-    fi
-    if [[ "$hibernateStandbyHighValue" == "" ]] || [[ "$hibernateStandbyHighValue" -gt 600 ]]; then
-      ((error_count++))
-    fi
-    if [[ "$hibernateStandbyThreshValue" == "" ]] || [[ "$hibernateStandbyThreshValue" -lt 90 ]]; then
-      ((error_count++))
+  if /usr/sbin/ioreg -rd1 -c IOPlatformExpertDevice 2>&1 | /usr/bin/grep -q "MacBook"; then
+    if [[ "$(/usr/sbin/sysctl -n machdep.cpu.brand_string)" =~ "Intel" ]]; then
+        hibernateStandbyLowValue=$(/usr/bin/pmset -g | /usr/bin/grep standbydelaylow 2>&1 | /usr/bin/awk '{print $2}')
+        hibernateStandbyHighValue=$(/usr/bin/pmset -g | /usr/bin/grep standbydelayhigh 2>&1 | /usr/bin/awk '{print $2}')
+        hibernateStandbyThreshValue=$(/usr/bin/pmset -g | /usr/bin/grep highstandbythreshold 2>&1 | /usr/bin/awk '{print $2}')
+        hibernateMode=$(/usr/bin/pmset -b -g | /usr/bin/grep hibernatemode 2>&1 | /usr/bin/awk '{print $2}')
+        
+        if [[ "$hibernateStandbyLowValue" == "" ]] || [[ "$hibernateStandbyLowValue" -gt 600 ]]; then
+            ((error_count++))
+        fi
+        if [[ "$hibernateStandbyHighValue" == "" ]] || [[ "$hibernateStandbyHighValue" -gt 600 ]]; then
+            ((error_count++))
+        fi
+        if [[ "$hibernateStandbyThreshValue" == "" ]] || [[ "$hibernateStandbyThreshValue" -lt 90 ]]; then
+            ((error_count++))
+        fi
+    else
+        if [[ "$(/usr/bin/pmset -g | /usr/bin/grep standbydelay 2>&1 | /usr/bin/awk '{print $2}')" -gt 900 ]]; then
+            ((error_count++))
+        fi
     fi
   fi
   echo "$error_count"
@@ -28,9 +34,13 @@ result:
 fix: |
   [source,bash]
   ----
-  /usr/bin/pmset -a standbydelayhigh 600
-  /usr/bin/pmset -a standbydelaylow 600
-  /usr/bin/pmset -a highstandbythreshold 90
+  if [[ "$(/usr/sbin/sysctl -n machdep.cpu.brand_string)" =~ "Intel" ]]; then
+    /usr/bin/pmset -a standbydelayhigh 600
+    /usr/bin/pmset -a standbydelaylow 600
+    /usr/bin/pmset -a highstandbythreshold 90
+  else
+    /usr/bin/pmset -a standbydelay 900
+  fi
   ----
 references:
   cce:
@@ -57,6 +67,5 @@ macOS:
 tags:
   - cis_lvl1
   - cis_lvl2
-  - i386
 mobileconfig: false
 mobileconfig_info:
