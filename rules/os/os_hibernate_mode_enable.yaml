@@ -3,7 +3,7 @@ title: "Enable Hibernate Mode"
 discussion: |
   Hibernate mode _MUST_ be enabled. 
 
-  NOTE: Hibernate mode is not fully supported on Apple Silicon devices. This rule is only applicable to Intel devices.
+  NOTE: Hibernate mode will disable instate wake on Apple Silicon laptops.
 check: |
   error_count=0
   if /usr/sbin/ioreg -rd1 -c IOPlatformExpertDevice 2>&1 | /usr/bin/grep -q "MacBook"; then
