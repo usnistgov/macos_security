@@ -65,6 +65,5 @@ macOS:
 tags:
   - cis_lvl1
   - cis_lvl2
-  - i386
 mobileconfig: false
 mobileconfig_info:
