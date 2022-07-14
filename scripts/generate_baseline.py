@@ -473,12 +473,13 @@ def main():
     if args.keyword == None:
         print("No rules found for the keyword provided, please verify from the following list:")
         available_tags(all_rules)
-    elif args.tailor:
+    else:
         _established_benchmarks = ['stig', 'cis_lvl1', 'cis_lvl2']
         if any(bm in args.keyword for bm in _established_benchmarks):
             benchmark = args.keyword
         else:
             benchmark = "recommended"
+    if args.tailor:
         # prompt for name of benchmark to be used for filename
         tailored_filename = sanitised_input(f'Enter a name for your tailored benchmark or press Enter for the default value ({args.keyword}): ', str, default_=args.keyword)
         # prompt for inclusion, add ODV
@@ -487,7 +488,8 @@ def main():
         baseline_output_file.write(output_baseline(odv_baseline_rules, version_yaml["os"], args.keyword, benchmark))
     else:
         baseline_output_file = open(f"{build_path}/{args.keyword}.yaml", 'w')
-        baseline_output_file.write(output_baseline(found_rules, version_yaml["os"], args.keyword))
+        baseline_output_file.write(output_baseline(found_rules, version_yaml["os"], args.keyword, benchmark))
+    
     # finally revert back to the prior directory
     os.chdir(original_working_directory)
 
