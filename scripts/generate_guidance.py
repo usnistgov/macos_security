@@ -600,12 +600,6 @@ YELLOW='\e[33m'
 audit_plist="/Library/Preferences/org.{baseline_name}.audit.plist"
 audit_log="/Library/Logs/{baseline_name}_baseline.log"
 
-lastComplianceScan=$(defaults read /Library/Preferences/org.{baseline_name}.audit.plist lastComplianceCheck)
-
-if [[ $lastComplianceScan == "" ]];then
-    lastComplianceScan="No scans have been run"
-fi
-
 # pause function
 pause(){{
 vared -p "Press [Enter] key to continue..." -c fackEnterKey
@@ -650,6 +644,12 @@ ask() {{
 
 # function to display menus
 show_menus() {{
+    lastComplianceScan=$(defaults read /Library/Preferences/org.{baseline_name}.audit.plist lastComplianceCheck)
+
+    if [[ $lastComplianceScan == "" ]];then
+        lastComplianceScan="No scans have been run"
+    fi
+
     /usr/bin/clear
     /bin/echo "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
     /bin/echo "        M A I N - M E N U"
@@ -673,6 +673,12 @@ read_options(){{
         4) exit 0;;
         *) echo -e "${{RED}}Error: please choose an option 1-4...${{STD}}" && sleep 1
     esac
+}}
+
+# function to reset and remove plist file.  Used to clear out any previous findings
+reset_plist(){{
+    echo "Clearing results from /Library/Preferences/org.{baseline_name}.audit.plist"
+    defaults delete /Library/Preferences/org.{baseline_name}.audit.plist
 }}
 
 # Generate the Compliant and Non-Compliant counts. Returns: Array (Compliant, Non-Compliant)
@@ -994,7 +1000,9 @@ fi
 
 }
 
-zparseopts -D -E -check=check -fix=fix -stats=stats -compliant=compliant -non_compliant=non_compliant
+zparseopts -D -E -check=check -fix=fix -stats=stats -compliant=compliant -non_compliant=non_compliant -reset=reset
+
+if [[ $reset ]]; then reset_plist; fi
 
 if [[ $check ]] || [[ $fix ]] || [[ $stats ]] || [[ $compliant ]] || [[ $non_compliant ]]; then
     if [[ $fix ]]; then run_fix; fi
