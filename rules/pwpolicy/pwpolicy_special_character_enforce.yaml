@@ -11,7 +11,7 @@ discussion: |
 check: | 
   /usr/bin/pwpolicy -getaccountpolicies 2> /dev/null | /usr/bin/tail +2 | /usr/bin/xmllint --xpath 'boolean(//*[contains(text(),"policyAttributePassword matches '\''(.*[^a-zA-Z0-9].*){$ODV,}'\''")])' -  
 result:
-  string: true
+  string: "true"
 fix: |
   This is implemented by a Configuration Profile.
 references:
