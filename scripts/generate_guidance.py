@@ -1415,6 +1415,7 @@ def create_args():
                         help="sign the configuration profiles with subject key ID (hash value without spaces)")
     return parser.parse_args()
 
+
 def is_asciidoctor_installed():
     """Checks to see if the ruby gem for asciidoctor is installed
     """
@@ -1928,10 +1929,21 @@ def main():
         cmd = f"{asciidoctor_path} \'{adoc_output_file.name}\'"
         process = subprocess.Popen(cmd, stdout=subprocess.PIPE, shell=True)
         process.communicate()
+    elif os.path.exists('../bin/asciidoctor'):
+        print('Generating HTML file from AsciiDoc...')
+        cmd = f"'../bin/asciidoctor' \'{adoc_output_file.name}\'"
+        process = subprocess.Popen(cmd, stdout=subprocess.PIPE, shell=True)
+        process.communicate()
+    elif not os.path.exists('../bin/asciidoctor'):
+        print('Installing gem requirements - asciidoctor, asciidoctor-pdf, and rouge...')
+        cmd = ['/usr/bin/bundle', 'install', '--gemfile', '../Gemfile', '--binstubs', '--path', 'mscp_gems']
+        subprocess.run(cmd)
+        print('Generating HTML file from AsciiDoc...')
+        cmd = f"'../bin/asciidoctor' \'{adoc_output_file.name}\'"
+        process = subprocess.Popen(cmd, stdout=subprocess.PIPE, shell=True)
+        process.communicate()
     else:
-        print("If you would like to generate the HTML file from the AsciiDoc file, install the ruby gem for asciidoctor")
-
-    asciidoctorPDF_path = is_asciidoctor_pdf_installed()
+        print("If you would like to generate the PDF file from the AsciiDoc file, install the ruby gem for asciidoctor")
 
     # Don't create PDF if we are generating SCAP
     if not args.gary:
@@ -1939,6 +1951,11 @@ def main():
         if asciidoctorPDF_path != "":
             print('Generating PDF file from AsciiDoc...')
             cmd = f"{asciidoctorPDF_path} \'{adoc_output_file.name}\'"
+            process = subprocess.Popen(cmd, stdout=subprocess.PIPE, shell=True)
+            process.communicate()
+        elif os.path.exists('../bin/asciidoctor-pdf'):
+            print('Generating PDF file from AsciiDoc...')
+            cmd = f"'../bin/asciidoctor-pdf' \'{adoc_output_file.name}\'"
             process = subprocess.Popen(cmd, stdout=subprocess.PIPE, shell=True)
             process.communicate()
         else:
