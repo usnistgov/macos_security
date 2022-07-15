@@ -24,16 +24,6 @@ fix: |
   ----
 references:
   cce:
-    - CCE-91069-5
-  800-53r5:
-    - CM-7
-    - CM-7(1)
-  800-53r4:
-    - CM-7
-    - CM-7(1)
-  disa_stig:
-    - N/A
-  srg:
     - N/A
   cci:
     - N/A    

@@ -38,7 +38,7 @@ fix: |
   NOTE: See the password policy supplemental on more information on how to implement password policies on macOS.
 references:
   cce:
-    - CCE-91043-0
+    - N/A
   cci: 
     - CCI-000192
   800-53r5:

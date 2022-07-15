@@ -13,14 +13,6 @@ fix: |
   ----
 references:
   cce:
-    - CCE-91146-1
-  800-53r5:
-    - N/A
-  800-53r4:
-    - N/A
-  disa_stig:
-    - N/A
-  srg:
     - N/A
   cci:
     - N/A    

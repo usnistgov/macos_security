@@ -10,7 +10,7 @@ fix: |
   Review the list of applications and remove any unauthorized applications from System Prefrences->Security & Privacy->Privacy->Location Services.
 references:
   cce:
-    - CCE-91131-3
+    - N/A
   cci: 
     - N/A
   800-53r5:
