@@ -17,7 +17,7 @@ fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-    - CCE-90922-6
+    - N/A
   800-53r5:
     - AC-3
     - IA-5(13)
