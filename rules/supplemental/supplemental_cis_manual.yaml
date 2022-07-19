@@ -10,7 +10,7 @@ discussion: |
   |Install Updates, Patches and Additional Security Software
 
   |Controls
-  |1.7 Audit Computer Name
+  |1.8 Audit Computer Name
   |===
   
   [cols="15%h, 85%a"]
@@ -19,17 +19,16 @@ discussion: |
   |System Preferences
 
   |Controls
-  |2.3.3 Audit Lock Screen and Start Screen Saver Tools +
-  2.5.1.2 Ensure all user storage APFS volumes are encrypted +
+  |2.5.1.2 Ensure all user storage APFS volumes are encrypted +
   2.5.1.3 Ensure all user storage CoreStorage volumes are encrypted +
   2.5.4 Audit Location Services Access +
-  2.5.7 Audit Camera Privacy and Confidentiality +
-  2.6.1.1 Audit iCloud Configuration +
-  2.6.1.2 Audit iCloud Keychain +
-  2.6.1.3 Audit iCloud Drive +
-  2.12 Audit Automatic Actions for Optical Media +
-  2.13 Audit Siri Settings +
-  2.14 Audit Sidecar Settings +
+  2.6.1.1 Audit iCloud Keychain +
+  2.6.1.2 Audit iCloud Drive +
+  2.6.2 Audit App Store Password Settings +
+  2.10 Audit Siri Settings +
+  2.11 Audit Sidecar Settings +
+  2.12 Audit Touch ID and Wallet & Apple Pay Settings +
+  2.13 Audit Notification Settings +
   |===
 
   [cols="15%h, 85%a"]
@@ -44,34 +43,10 @@ discussion: |
   [cols="15%h, 85%a"]
   |===
   |Section
-  |Network Configurations
-
-  |Controls
-  |4.3 Audit Network Specific Locations +
-  4.6 Audit Wi-Fi Settings +
-  |===
-
-  [cols="15%h, 85%a"]
-  |===
-  |Section
   |System Access, Authentication and Authorization
 
   |Controls
-  |5.2.3 Ensure Complex Password Must Contain Alphabetic Characters Is Configured +
-  5.2.4 Ensure Complex Password Must Contain Numeric Character Is Configured +
-  5.2.6 Ensure Complex Password Must Contain Uppercase and Lowercase Characters Is Configured +
-  5.5 Ensure login keychain is locked when the computer sleeps +
-  5.15 Ensure Fast User Switching Is Disabled +
-  |===
-
-  [cols="15%h, 85%a"]
-  |===
-  |Section
-  |Appendix: Additional Considerations
-
-  |Controls
-  |7.1 Extensible Firmware Interface (EFI) password +
-  7.2 FileVault and Local Account Password Reset using AppleID +
+  |5.10 Ensure Fast User Switching Is Disabled +
   |===
 check: |
 fix: |
