@@ -13,15 +13,15 @@ result:
 fix: |
   This setting may be enforced using local policy or by a directory service.
   
-  To set local policy to require at least 1 lowercase letter, edit the current password policy to contain the following <dict> within the "policyCategoryPasswordContent":
+  To set local policy to require at least $ODV lowercase letter, edit the current password policy to contain the following <dict> within the "policyCategoryPasswordContent":
   
   [source,xml]
   ----
   <dict>
   <key>policyContent</key>
-  <string>policyAttributePassword matches &apos;(.*[a-z].*){1,}+&apos;</string>
+  <string>policyAttributePassword matches &apos;(.*[a-z].*){$ODV,}+&apos;</string>
   <key>policyIdentifier</key>
-  <string>Must have at least 1 lowercase letter</string>
+  <string>Must have at least $ODV lowercase letter</string>
   <key>policyParameters</key>
   <dict>
   <key>minimumAlphaCharactersLowerCase</key>
