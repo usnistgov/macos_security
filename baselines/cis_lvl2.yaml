@@ -42,7 +42,6 @@ profile:
       - os_home_folders_secure
       - os_httpd_disable
       - os_install_log_retention_configure
-      - os_library_validation_enabled
       - os_mobile_file_integrity_enable
       - os_nfsd_disable
       - os_password_hint_remove
@@ -51,6 +50,7 @@ profile:
       - os_safari_open_safe_downloads_disable
       - os_show_filename_extensions_enable
       - os_sip_enable
+      - os_software_update_deferral
       - os_sudo_timeout_configure
       - os_sudoers_timestamp_type_configure
       - os_sudoers_tty_configure
@@ -66,6 +66,7 @@ profile:
       - pwpolicy_alpha_numeric_enforce
       - pwpolicy_history_enforce
       - pwpolicy_lower_case_character_enforce
+      - pwpolicy_max_lifetime_enforce
       - pwpolicy_minimum_length_enforce
       - pwpolicy_special_character_enforce
       - pwpolicy_upper_case_character_enforce
@@ -77,7 +78,6 @@ profile:
       - sysprefs_automatic_login_disable
       - sysprefs_bluetooth_menu_enable
       - sysprefs_bluetooth_sharing_disable
-      - sysprefs_bluetooth_unpaired_disable
       - sysprefs_cd_dvd_sharing_disable
       - sysprefs_content_caching_disable
       - sysprefs_critical_update_install_enforce
@@ -90,7 +90,6 @@ profile:
       - sysprefs_hot_corners_secure
       - sysprefs_install_macos_updates_enforce
       - sysprefs_internet_sharing_disable
-      - sysprefs_location_services_audit
       - sysprefs_location_services_enable
       - sysprefs_loginwindow_loginwindowtext_enable
       - sysprefs_loginwindow_prompt_username_password_enforce
@@ -103,6 +102,7 @@ profile:
       - sysprefs_remote_management_disable
       - sysprefs_screen_sharing_disable
       - sysprefs_screensaver_ask_for_password_delay_enforce
+      - sysprefs_screensaver_password_enforce
       - sysprefs_screensaver_timeout_enforce
       - sysprefs_smbd_disable
       - sysprefs_software_update_app_update_enforce
