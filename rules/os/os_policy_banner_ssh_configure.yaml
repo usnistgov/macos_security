@@ -7,8 +7,11 @@ discussion: |
 
   System use notifications are required only for access via login interfaces with human users and are not required when such human interfaces do not exist.
 check: |
-  bannerText=$ODV"
-  /usr/bin/grep -c "$bannerText" /etc/banner
+  compliant=1
+  if [[ "$(/bin/cat /etc/banner)" != "$ODV" ]]; then
+    compliant=0
+  fi
+  echo "$compliant"
 result:
   integer: 1
 fix: |
