@@ -6,7 +6,7 @@ check: |
   /usr/bin/osascript -l JavaScript << EOS
   function run() {
     let timeout = ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess')\
-  .objectForKey('enforcedSoftwareUpdateDelay'))
+  .objectForKey('enforcedSoftwareUpdateDelay')) || 0
     if ( timeout <= $ODV ) {
       return("true")
     } else {
