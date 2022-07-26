@@ -116,7 +116,7 @@ def collect_rules():
                   'srg']
 
 
-    for rule in glob.glob('../rules/**/*.yaml',recursive=True) + glob.glob('../custom/rules/**/*.yaml',recursive=True):
+    for rule in sorted(glob.glob('../rules/**/*.yaml',recursive=True)) + sorted(glob.glob('../custom/rules/**/*.yaml',recursive=True)):
         rule_yaml = get_rule_yaml(rule, custom=False)
         for key in keys:
             try:
