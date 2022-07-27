@@ -483,9 +483,9 @@ def main():
         # prompt for name of benchmark to be used for filename
         tailored_filename = sanitised_input(f'Enter a name for your tailored benchmark or press Enter for the default value ({args.keyword}): ', str, default_=args.keyword)
         if tailored_filename == args.keyword:
-            _kw = args.keyword.upper() + " (tailored)"
+            _kw = args.keyword.upper()
         else:
-            _kw = f"{tailored_filename.upper()} (tailored from {args.keyword.upper()})"
+            _kw = tailored_filename.upper()
         # prompt for inclusion, add ODV
         odv_baseline_rules = odv_query(found_rules, benchmark)
         baseline_output_file = open(f"{build_path}/{tailored_filename}.yaml", 'w')
