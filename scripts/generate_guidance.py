@@ -1646,7 +1646,7 @@ def main():
     else:
         adoc_tag_show=":show_tags!:"
 
-    if "tailored from" in baseline_yaml['title']:
+    if "Tailored from" in baseline_yaml['title']:
         s=baseline_yaml['title'].split(':')[1]
         adoc_html_subtitle = s.split('(')[0]
         adoc_html_subtitle2 = s[s.find('(')+1:s.find(')')]
