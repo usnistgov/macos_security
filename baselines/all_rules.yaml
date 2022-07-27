@@ -114,6 +114,7 @@ profile:
       - os_show_filename_extensions_enable
       - os_sip_enable
       - os_siri_prompt_disable
+      - os_software_update_deferral
       - os_ssh_fips_140_ciphers
       - os_ssh_fips_140_macs
       - os_ssh_server_alive_count_max_configure
@@ -198,7 +199,6 @@ profile:
       - sysprefs_internet_accounts_prefpane_disable
       - sysprefs_internet_accounts_prefpane_hide
       - sysprefs_internet_sharing_disable
-      - sysprefs_location_services_audit
       - sysprefs_location_services_disable
       - sysprefs_location_services_enable
       - sysprefs_loginwindow_loginwindowtext_enable
