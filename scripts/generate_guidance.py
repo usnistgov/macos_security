@@ -1646,13 +1646,20 @@ def main():
     else:
         adoc_tag_show=":show_tags!:"
 
-    # Create header
+    if "tailored" in baseline_yaml['title']:
+        adoc_tailored=":tailored:"
+        adoc_html_title="allen's face"
+    else:
+        adoc_tailored=":tailored!:"
+        adoc_html_title="dan's face"
+    # Create header    
     header_adoc = adoc_header_template.substitute(
         profile_title=baseline_yaml['title'],
         description=baseline_yaml['description'],
         html_header_title=baseline_yaml['title'],
-        html_title=baseline_yaml['title'].split(':')[0],
+        html_title=adoc_html_title,
         html_subtitle=baseline_yaml['title'].split(':')[1],
+        tailored=adoc_tailored,
         logo=logo,
         pdf_theme=pdf_theme,
         tag_attribute=adoc_tag_show,

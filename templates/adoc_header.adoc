@@ -25,6 +25,7 @@ $cis_attribute
 :proj-title: $html_header_title
 :document-title: $html_title
 :document-subtitle: $html_subtitle
+:document-tailored: $tailored
 ifdef::backend-pdf[]
 = $profile_title
 $version ($release_date)

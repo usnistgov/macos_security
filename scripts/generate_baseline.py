@@ -485,7 +485,7 @@ def main():
         if tailored_filename == args.keyword:
             _kw = args.keyword.upper()
         else:
-            _kw = tailored_filename.upper()
+            _kw = f"{tailored_filename.upper()} (tailored from {args.keyword.upper()})"
         # prompt for inclusion, add ODV
         odv_baseline_rules = odv_query(found_rules, benchmark)
         baseline_output_file = open(f"{build_path}/{tailored_filename}.yaml", 'w')
