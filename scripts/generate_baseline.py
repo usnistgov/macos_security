@@ -483,7 +483,7 @@ def main():
         # prompt for name of benchmark to be used for filename
         tailored_filename = sanitised_input(f'Enter a name for your tailored benchmark or press Enter for the default value ({args.keyword}): ', str, default_=args.keyword)
         if tailored_filename == args.keyword:
-            _kw = args.keyword.upper()
+            _kw = f"{args.keyword.upper()} (tailored)"
         else:
             _kw = f"{tailored_filename.upper()} (tailored from {args.keyword.upper()})"
         # prompt for inclusion, add ODV
