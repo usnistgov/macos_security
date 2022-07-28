@@ -7,7 +7,7 @@ discussion: |
 
   NOTE: Recovery lock passwords are not supported on Intel devices. This rule is only applicable to Apple Silicon devices.
 check: |
-  /usr/libexec/mdmclient QuerySecurityInfo | /usr/bin/grep -c "IsRecoveryLockedEnabled = 1"
+  /usr/libexec/mdmclient QuerySecurityInfo | /usr/bin/grep -c "IsRecoveryLockEnabled = 1"
 result: 
   integer: 1
 fix: |
