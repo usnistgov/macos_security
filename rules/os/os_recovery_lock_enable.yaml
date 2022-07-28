@@ -9,7 +9,7 @@ discussion: |
 
   NOTE: This feature was added in macOS Big Sur version 11.5.
 check: |
-  /usr/libexec/mdmclient QuerySecurityInfo | /usr/bin/grep -c "IsRecoveryLockedEnabled = 1"
+  /usr/libexec/mdmclient QuerySecurityInfo | /usr/bin/grep -c "IsRecoveryLockEnabled = 1"
 result: 
   integer: 1
 fix: |
