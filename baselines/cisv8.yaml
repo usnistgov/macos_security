@@ -57,7 +57,6 @@ profile:
       - os_icloud_storage_prompt_disable
       - os_install_log_retention_configure
       - os_ir_support_disable
-      - os_library_validation_enabled
       - os_mail_app_disable
       - os_mdm_require
       - os_messages_app_disable
@@ -122,7 +121,6 @@ profile:
       - sysprefs_bluetooth_disable
       - sysprefs_bluetooth_menu_enable
       - sysprefs_bluetooth_sharing_disable
-      - sysprefs_bluetooth_unpaired_disable
       - sysprefs_cd_dvd_sharing_disable
       - sysprefs_content_caching_disable
       - sysprefs_critical_update_install_enforce
@@ -138,7 +136,6 @@ profile:
       - sysprefs_install_macos_updates_enforce
       - sysprefs_internet_accounts_prefpane_disable
       - sysprefs_internet_sharing_disable
-      - sysprefs_location_services_audit
       - sysprefs_location_services_enable
       - sysprefs_loginwindow_loginwindowtext_enable
       - sysprefs_loginwindow_prompt_username_password_enforce
@@ -151,6 +148,7 @@ profile:
       - sysprefs_remote_management_disable
       - sysprefs_screen_sharing_disable
       - sysprefs_screensaver_ask_for_password_delay_enforce
+      - sysprefs_screensaver_password_enforce
       - sysprefs_screensaver_timeout_enforce
       - sysprefs_siri_disable
       - sysprefs_smbd_disable
