@@ -1646,13 +1646,22 @@ def main():
     else:
         adoc_tag_show=":show_tags!:"
 
-    # Create header
+    if "Tailored from" in baseline_yaml['title']:
+        s=baseline_yaml['title'].split(':')[1]
+        adoc_html_subtitle = s.split('(')[0]
+        adoc_html_subtitle2 = s[s.find('(')+1:s.find(')')]
+        adoc_document_subtitle2 = f':document-subtitle2: {adoc_html_subtitle2}'
+    else:
+        adoc_html_subtitle=baseline_yaml['title'].split(':')[1]
+        adoc_document_subtitle2 = ':document-subtitle2:'
+    
+    # Create header    
     header_adoc = adoc_header_template.substitute(
-        profile_title=baseline_yaml['title'],
         description=baseline_yaml['description'],
         html_header_title=baseline_yaml['title'],
         html_title=baseline_yaml['title'].split(':')[0],
-        html_subtitle=baseline_yaml['title'].split(':')[1],
+        html_subtitle=adoc_html_subtitle,
+        document_subtitle2=adoc_document_subtitle2,
         logo=logo,
         pdf_theme=pdf_theme,
         tag_attribute=adoc_tag_show,
