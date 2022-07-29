@@ -1030,14 +1030,23 @@ def fill_in_odv(resulting_yaml, parent_values):
     _has_odv = False
     if "odv" in resulting_yaml:
         try:
-            odv = str(resulting_yaml['odv'][parent_values])
+            if type(resulting_yaml['odv'][parent_values]) == int:
+                odv = resulting_yaml['odv'][parent_values]
+            else:
+                odv = str(resulting_yaml['odv'][parent_values])
             _has_odv = True
         except KeyError:
             try:
-                odv = str(resulting_yaml['odv']['custom'])
+                if type(resulting_yaml['odv']['custom']) == int:
+                    odv = resulting_yaml['odv']['custom']
+                else:
+                    odv = str(resulting_yaml['odv']['custom'])
                 _has_odv = True
             except KeyError:
-                odv = str(resulting_yaml['odv']['recommended'])
+                if type(resulting_yaml['odv']['recommended']) == int:
+                    odv = resulting_yaml['odv']['recommended']
+                else:
+                    odv = str(resulting_yaml['odv']['recommended'])
                 _has_odv = True
         else:
             pass
@@ -1045,7 +1054,7 @@ def fill_in_odv(resulting_yaml, parent_values):
     if _has_odv:
         for field in fields_to_process:
             if "$ODV" in resulting_yaml[field]:
-                resulting_yaml[field]=resulting_yaml[field].replace("$ODV", odv)
+                resulting_yaml[field]=resulting_yaml[field].replace("$ODV", str(odv))
 
         for result_value in resulting_yaml['result']:
             if "$ODV" in str(resulting_yaml['result'][result_value]):
