@@ -1030,14 +1030,23 @@ def fill_in_odv(resulting_yaml, parent_values):
     _has_odv = False
     if "odv" in resulting_yaml:
         try:
-            odv = str(resulting_yaml['odv'][parent_values])
+            if type(resulting_yaml['odv'][parent_values]) == int:
+                odv = resulting_yaml['odv'][parent_values]
+            else:
+                odv = str(resulting_yaml['odv'][parent_values])
             _has_odv = True
         except KeyError:
             try:
-                odv = str(resulting_yaml['odv']['custom'])
+                if type(resulting_yaml['odv']['custom']) == int:
+                    odv = resulting_yaml['odv']['custom']
+                else:
+                    odv = str(resulting_yaml['odv']['custom'])
                 _has_odv = True
             except KeyError:
-                odv = str(resulting_yaml['odv']['recommended'])
+                if type(resulting_yaml['odv']['recommended']) == int:
+                    odv = resulting_yaml['odv']['recommended']
+                else:
+                    odv = str(resulting_yaml['odv']['recommended'])
                 _has_odv = True
         else:
             pass
@@ -1045,7 +1054,7 @@ def fill_in_odv(resulting_yaml, parent_values):
     if _has_odv:
         for field in fields_to_process:
             if "$ODV" in resulting_yaml[field]:
-                resulting_yaml[field]=resulting_yaml[field].replace("$ODV", odv)
+                resulting_yaml[field]=resulting_yaml[field].replace("$ODV", str(odv))
 
         for result_value in resulting_yaml['result']:
             if "$ODV" in str(resulting_yaml['result'][result_value]):
@@ -1646,13 +1655,22 @@ def main():
     else:
         adoc_tag_show=":show_tags!:"
 
-    # Create header
+    if "Tailored from" in baseline_yaml['title']:
+        s=baseline_yaml['title'].split(':')[1]
+        adoc_html_subtitle = s.split('(')[0]
+        adoc_html_subtitle2 = s[s.find('(')+1:s.find(')')]
+        adoc_document_subtitle2 = f':document-subtitle2: {adoc_html_subtitle2}'
+    else:
+        adoc_html_subtitle=baseline_yaml['title'].split(':')[1]
+        adoc_document_subtitle2 = ':document-subtitle2:'
+    
+    # Create header    
     header_adoc = adoc_header_template.substitute(
-        profile_title=baseline_yaml['title'],
         description=baseline_yaml['description'],
         html_header_title=baseline_yaml['title'],
         html_title=baseline_yaml['title'].split(':')[0],
-        html_subtitle=baseline_yaml['title'].split(':')[1],
+        html_subtitle=adoc_html_subtitle,
+        document_subtitle2=adoc_document_subtitle2,
         logo=logo,
         pdf_theme=pdf_theme,
         tag_attribute=adoc_tag_show,
