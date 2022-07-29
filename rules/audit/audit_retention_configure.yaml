@@ -40,8 +40,8 @@ odv:
   hint: "See man audit_control for possible values."
   recommended: 7d
   stig: 7d
-  cis_lvl1: 60d or 1G
-  cis_lvl2: 60d or 1G
+  cis_lvl1: 60d OR 1G
+  cis_lvl2: 60d OR 1G
 tags:
   - 800-53r5_privacy
   - 800-53r4_low
