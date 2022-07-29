@@ -479,20 +479,20 @@ def main():
             benchmark = args.keyword
         else:
             benchmark = "recommended"
-    if args.tailor:
-        # prompt for name of benchmark to be used for filename
-        tailored_filename = sanitised_input(f'Enter a name for your tailored benchmark or press Enter for the default value ({args.keyword}): ', str, default_=args.keyword)
-        if tailored_filename == args.keyword:
-            _kw = f"{args.keyword.upper()} (Tailored)"
+        if args.tailor:
+            # prompt for name of benchmark to be used for filename
+            tailored_filename = sanitised_input(f'Enter a name for your tailored benchmark or press Enter for the default value ({args.keyword}): ', str, default_=args.keyword)
+            if tailored_filename == args.keyword:
+                _kw = f"{args.keyword.upper()} (Tailored)"
+            else:
+                _kw = f"{tailored_filename.upper()} (Tailored from {args.keyword.upper()})"
+            # prompt for inclusion, add ODV
+            odv_baseline_rules = odv_query(found_rules, benchmark)
+            baseline_output_file = open(f"{build_path}/{tailored_filename}.yaml", 'w')
+            baseline_output_file.write(output_baseline(odv_baseline_rules, version_yaml["os"], _kw, benchmark))
         else:
-            _kw = f"{tailored_filename.upper()} (Tailored from {args.keyword.upper()})"
-        # prompt for inclusion, add ODV
-        odv_baseline_rules = odv_query(found_rules, benchmark)
-        baseline_output_file = open(f"{build_path}/{tailored_filename}.yaml", 'w')
-        baseline_output_file.write(output_baseline(odv_baseline_rules, version_yaml["os"], _kw, benchmark))
-    else:
-        baseline_output_file = open(f"{build_path}/{args.keyword}.yaml", 'w')
-        baseline_output_file.write(output_baseline(found_rules, version_yaml["os"], args.keyword.upper(), benchmark))
+            baseline_output_file = open(f"{build_path}/{args.keyword}.yaml", 'w')
+            baseline_output_file.write(output_baseline(found_rules, version_yaml["os"], args.keyword.upper(), benchmark))
     
     # finally revert back to the prior directory
     os.chdir(original_working_directory)
