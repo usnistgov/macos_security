@@ -30,15 +30,6 @@ fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-    - CCE-91066-1
-  800-53r5:
-    - AC-3
-    - AC-17
-  800-53r4:
-    - AC-3
-  srg:
-    - N/A
-  disa_stig:
     - N/A
   cci:
     - N/A

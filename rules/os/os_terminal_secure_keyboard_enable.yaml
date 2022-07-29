@@ -13,14 +13,6 @@ fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-    - CCE-91118-0
-  800-53r5:
-    - N/A
-  800-53r4:
-    - N/A
-  disa_stig:
-    - N/A
-  srg:
     - N/A
   cci: 
     - N/A    

@@ -15,16 +15,6 @@ fix: |
   ----
 references:
   cce:
-    - CCE-91059-6
-  800-53r5:
-    - AC-2(9)
-    - AC-2
-  800-53r4:
-    - AC-2
-    - AC-2(9)
-  disa_stig:
-    - N/A
-  srg:
     - N/A
   cci: 
     - N/A    

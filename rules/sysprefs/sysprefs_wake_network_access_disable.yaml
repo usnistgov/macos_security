@@ -3,7 +3,7 @@ title: "Ensure Wake for Network Access Is Disabled"
 discussion: |
   Wake for network access _MUST_ be disabled.
 check: |
-  /usr/bin/pmset -g custom | /usr/bin/awk '/womp/{print $2}'
+  /usr/bin/pmset -g custom | /usr/bin/awk '/womp/ { sum+=$2 } END {print sum}'
 result:
   integer: 0
 fix: |
@@ -13,14 +13,6 @@ fix: |
   ----
 references:
   cce:
-    - CCE-91146-1
-  800-53r5:
-    - N/A
-  800-53r4:
-    - N/A
-  disa_stig:
-    - N/A
-  srg:
     - N/A
   cci:
     - N/A    

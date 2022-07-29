@@ -22,7 +22,7 @@ fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-    - CCE-91074-5
+    - N/A
   cci: 
     - CCI-000057
   800-53r5:
@@ -61,7 +61,6 @@ tags:
   - cis_lvl2
   - cisv8
   - stig
-  - test
 severity: "medium"
 mobileconfig: true
 mobileconfig_info:
