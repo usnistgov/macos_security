@@ -212,7 +212,7 @@ def available_tags(all_rules):
         print(tag)
     return
 
-def output_baseline(rules, os, keyword, benchmark="recommended"):
+def output_baseline(rules, os, keyword, benchmark, authors, expanded_title):
     inherent_rules = []
     permanent_rules = []
     na_rules = []
@@ -236,10 +236,18 @@ def output_baseline(rules, os, keyword, benchmark="recommended"):
             section_name = rule.rule_id.split("_")[0]
             if section_name not in sections:
                 sections.append(section_name)
-
-    output_text = f'title: "macOS {os}: Security Configuration - {keyword}"\n'
-    output_text += f'description: |\n  This guide describes the actions to take when securing a macOS {os} system against the {keyword} baseline.\n'
-    output_text += f'authors: |\n  |===\n  |Name|Organization\n  |===\n'
+    if keyword:
+        output_text = f'title: "macOS {os}: Security Configuration - {expanded_title} {keyword}"\n'
+        output_text += f'description: |\n  This guide describes the actions to take when securing a macOS {os} system against the {expanded_title} {keyword} security baseline.\n'
+    else:
+        output_text = f'title: "macOS {os}: Security Configuration - {expanded_title}"\n'
+        output_text += f'description: |\n  This guide describes the actions to take when securing a macOS {os} system against the {expanded_title} security baseline.\n'
+    
+    # process authors
+    output_text += f'authors: |\n'
+    for author in authors:
+        output_text += f'  {author}\n'
+    
     output_text += f'parent_values: "{benchmark}"\n'
     output_text += 'profile:\n'
     
@@ -457,6 +465,12 @@ def main():
     except IOError as msg:
         parser.error(str(msg))
 
+    # import mscp-data
+    mscp_data_file = os.path.join(
+            parent_dir, 'includes', 'mscp-data.yaml')
+    with open(mscp_data_file) as r:
+        mscp_data_yaml = yaml.load(r, Loader=yaml.SafeLoader)
+
     version_file = os.path.join(parent_dir, "VERSION.yaml")
     with open(version_file) as r:
         version_yaml = yaml.load(r, Loader=yaml.SafeLoader)   
@@ -479,16 +493,32 @@ def main():
             benchmark = args.keyword
         else:
             benchmark = "recommended"
-    if args.tailor:
-        # prompt for name of benchmark to be used for filename
-        tailored_filename = sanitised_input(f'Enter a name for your tailored benchmark or press Enter for the default value ({args.keyword}): ', str, default_=args.keyword)
-        # prompt for inclusion, add ODV
-        odv_baseline_rules = odv_query(found_rules, benchmark)
-        baseline_output_file = open(f"{build_path}/{tailored_filename}.yaml", 'w')
-        baseline_output_file.write(output_baseline(odv_baseline_rules, version_yaml["os"], args.keyword, benchmark))
-    else:
-        baseline_output_file = open(f"{build_path}/{args.keyword}.yaml", 'w')
-        baseline_output_file.write(output_baseline(found_rules, version_yaml["os"], args.keyword, benchmark))
+        
+        if mscp_data_yaml['authors'][args.keyword]:
+            authors = mscp_data_yaml['authors'][args.keyword]
+        else:
+            authors = "|\n  |===\n  |Name|Organization\n  |===\n"
+        
+        if mscp_data_yaml['titles'][args.keyword]:
+            expanded_title = mscp_data_yaml['titles'][args.keyword]
+        else:
+            expanded_title = args.keyword
+        
+        _kw = ""
+        if args.tailor:
+            # prompt for name of benchmark to be used for filename
+            tailored_filename = sanitised_input(f'Enter a name for your tailored benchmark or press Enter for the default value ({args.keyword}): ', str, default_=args.keyword)
+            if tailored_filename == args.keyword:
+                _kw = f"{args.keyword.upper()} (Tailored)"
+            else:
+                _kw = f" (Tailored from {args.keyword.upper()})"
+            # prompt for inclusion, add ODV
+            odv_baseline_rules = odv_query(found_rules, benchmark)
+            baseline_output_file = open(f"{build_path}/{tailored_filename}.yaml", 'w')
+            baseline_output_file.write(output_baseline(odv_baseline_rules, version_yaml["os"], _kw, benchmark, authors, expanded_title))
+        else:
+            baseline_output_file = open(f"{build_path}/{args.keyword}.yaml", 'w')
+            baseline_output_file.write(output_baseline(found_rules, version_yaml["os"], _kw, benchmark, authors, expanded_title))
     
     # finally revert back to the prior directory
     os.chdir(original_working_directory)
