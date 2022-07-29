@@ -1,6 +1,6 @@
-title: "macOS 12.0: Security Configuration - CIS Controls Version 8"
+title: "macOS 13.0: Security Configuration - CIS Controls Version 8"
 description: |
-  This guide describes the actions to take when securing a macOS 12.0 system against the CIS Controls version 8 baseline.
+  This guide describes the actions to take when securing a macOS 13.0 system against the CIS Controls version 8 baseline.
 authors: |
   CIS Critical Security Controls® (CIS Controls®) are referenced with the permission and support of the Center for Internet Security® (CIS®)
   |===

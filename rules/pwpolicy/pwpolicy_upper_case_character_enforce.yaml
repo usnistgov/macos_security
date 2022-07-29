@@ -7,25 +7,25 @@ discussion: |
   
   NOTE: The guidance for password based authentication in NIST 800-53 (Rev 5) and NIST 800-63B state that complexity rules should be organizationally defined. The values defined are based off of common complexity values. But your organization may define its own password complexity rules.
 check: |
-  /usr/bin/pwpolicy getaccountpolicies | /usr/bin/grep -v "Getting global account policies" | /usr/bin/xmllint --xpath '/plist/dict/array/dict/dict[key="minimumAlphaCharactersUpperCase"]/integer' - | /usr/bin/awk -F '[<>]' '{print $3}'
+  /usr/bin/pwpolicy -getaccountpolicies 2> /dev/null | /usr/bin/tail +2 | /usr/bin/xmllint --xpath '//dict/key[text()="minimumAlphaCharactersUpperCase"]/following-sibling::integer[1]/text()' - | /usr/bin/awk '{ if ($1 >= $ODV ) {print "yes"} else {print "no"}}' 
 result:
-  integer: 1
+  string: "yes"
 fix: |
   This setting may be enforced using local policy or by a directory service.
   
-  To set local policy to require at least 1 lowercase letter, edit the current password policy to contain the following <dict> within the "policyCategoryPasswordContent":
+  To set local policy to require at least $ODV lowercase letter, edit the current password policy to contain the following <dict> within the "policyCategoryPasswordContent":
   
   [source,xml]
   ----
   <dict>
   <key>policyContent</key>
-  <string>policyAttributePassword matches &apos;(.*[A-Z].*){1,}+&apos;</string>
+  <string>policyAttributePassword matches &apos;(.*[A-Z].*){$ODV,}+&apos;</string>
   <key>policyIdentifier</key>
-  <string>Must have at least 1 uppercase letter</string>
+  <string>Must have at least $ODV uppercase letter</string>
   <key>policyParameters</key>
   <dict>
   <key>minimumAlphaCharactersUpperCase</key>
-  <integer>1</integer>
+  <integer>$ODV</integer>
   </dict>
   </dict>
   ----
