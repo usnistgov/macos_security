@@ -193,7 +193,18 @@ def get_controls(all_rules):
     
     return all_controls
 
-    
+def parse_authors(authors_from_yaml):
+    author_block = ""
+    #  |\n  |===\n  |Name|Organization\n  |===\n
+    if "preamble" in authors_from_yaml.keys():
+        preamble = authors_from_yaml['preamble']
+        author_block += f'{preamble}\n  '
+        
+    author_block += "|===\n  "
+    for name in authors_from_yaml['names']:
+        author_block += f'|{name}\n  '
+    author_block += "|===\n"
+    return author_block
 
 def available_tags(all_rules):
     all_tags = []
@@ -243,11 +254,13 @@ def output_baseline(rules, os, keyword, benchmark, authors, expanded_title):
         output_text = f'title: "macOS {os}: Security Configuration - {expanded_title}"\n'
         output_text += f'description: |\n  This guide describes the actions to take when securing a macOS {os} system against the {expanded_title} security baseline.\n'
     
-    # process authors
-    output_text += f'authors: |\n'
-    for author in authors:
-        output_text += f'  {author}\n'
+    # # process authors
+    # output_text += f'authors: |\n'
+    # for author in authors:
+    #     output_text += f'  {author}\n'
     
+    output_text += f'authors: |\n  {authors}'
+
     output_text += f'parent_values: "{benchmark}"\n'
     output_text += 'profile:\n'
     
@@ -495,14 +508,14 @@ def main():
             benchmark = "recommended"
         
         if mscp_data_yaml['authors'][args.keyword]:
-            authors = mscp_data_yaml['authors'][args.keyword]
+            authors = parse_authors(mscp_data_yaml['authors'][args.keyword])
         else:
             authors = "|\n  |===\n  |Name|Organization\n  |===\n"
         
         if mscp_data_yaml['titles'][args.keyword]:
-            expanded_title = mscp_data_yaml['titles'][args.keyword]
+            title = mscp_data_yaml['titles'][args.keyword]
         else:
-            expanded_title = args.keyword
+            title = args.keyword
         
         _kw = ""
         if args.tailor:
@@ -515,10 +528,10 @@ def main():
             # prompt for inclusion, add ODV
             odv_baseline_rules = odv_query(found_rules, benchmark)
             baseline_output_file = open(f"{build_path}/{tailored_filename}.yaml", 'w')
-            baseline_output_file.write(output_baseline(odv_baseline_rules, version_yaml["os"], _kw, benchmark, authors, expanded_title))
+            baseline_output_file.write(output_baseline(odv_baseline_rules, version_yaml["os"], _kw, benchmark, authors, title))
         else:
             baseline_output_file = open(f"{build_path}/{args.keyword}.yaml", 'w')
-            baseline_output_file.write(output_baseline(found_rules, version_yaml["os"], _kw, benchmark, authors, expanded_title))
+            baseline_output_file.write(output_baseline(found_rules, version_yaml["os"], _kw, benchmark, authors, title))
     
     # finally revert back to the prior directory
     os.chdir(original_working_directory)

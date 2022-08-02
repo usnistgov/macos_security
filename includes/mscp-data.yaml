@@ -1,69 +1,60 @@
 ---
 authors:
   all_rules: 
-    - "|==="
-    - "|Bob Gendler|National Institute of Standards and Technology"
-    - "|Dan Brodjieski|National Aeronautics and Space Administration"
-    - "|Allen Golbig|Jamf"
-    - "|==="
+    names:
+      - Bob Gendler|National Institute of Standards and Technology
+      - Dan Brodjieski|National Aeronautics and Space Administration
+      - Allen Golbig|Jamf
   800-53r5_high: 
-    - "|==="
-    - "|Bob Gendler|National Institute of Standards and Technology"
-    - "|Dan Brodjieski|National Aeronautics and Space Administration"
-    - "|Allen Golbig|Jamf"
-    - "|==="
+    names:
+      - Bob Gendler|National Institute of Standards and Technology
+      - Dan Brodjieski|National Aeronautics and Space Administration
+      - Allen Golbig|Jamf
   800-53r5_moderate: 
-    - "|==="
-    - "|Bob Gendler|National Institute of Standards and Technology"
-    - "|Dan Brodjieski|National Aeronautics and Space Administration"
-    - "|Allen Golbig|Jamf"
-    - "|==="
+    names:
+      - Bob Gendler|National Institute of Standards and Technology
+      - Dan Brodjieski|National Aeronautics and Space Administration
+      - Allen Golbig|Jamf
   800-53r5_low:
-    - "|==="
-    - "|Bob Gendler|National Institute of Standards and Technology"
-    - "|Dan Brodjieski|National Aeronautics and Space Administration"
-    - "|Allen Golbig|Jamf"
-    - "|==="
+    names:
+      - Bob Gendler|National Institute of Standards and Technology
+      - Dan Brodjieski|National Aeronautics and Space Administration
+      - Allen Golbig|Jamf
   800-171: 
-    - "|==="
-    - "|Bob Gendler|National Institute of Standards and Technology"
-    - "|Dan Brodjieski|National Aeronautics and Space Administration"
-    - "|Allen Golbig|Jamf"
-    - "|==="
+    names:
+      - Bob Gendler|National Institute of Standards and Technology
+      - Dan Brodjieski|National Aeronautics and Space Administration
+      - Allen Golbig|Jamf
   cis_lvl1: 
-    - "The CIS Benchmarks are referenced with the permission and support of the Center for Internet Security® (CIS®)"
-    - "|==="
-    - "|Edward Byrd|Center for Internet Security"
-    - "|Ron Colvin|Center for Internet Security"
-    - "|Allen Golbig|Jamf"
-    - "|==="
+    preamble: The CIS Benchmarks are referenced with the permission and support of the Center for Internet Security® (CIS®)
+    names:
+      - Edward Byrd|Center for Internet Security
+      - Ron Colvin|Center for Internet Security
+      - Allen Golbig|Jamf
   cis_lvl2:
-    - "The CIS Benchmarks are referenced with the permission and support of the Center for Internet Security® (CIS®)"
-    - "|==="
-    - "|Edward Byrd|Center for Internet Security"
-    - "|Ron Colvin|Center for Internet Security"
-    - "|Allen Golbig|Jamf"
-    - "|==="
+    preamble: The CIS Benchmarks are referenced with the permission and support of the Center for Internet Security® (CIS®)
+    names:
+      - Edward Byrd|Center for Internet Security
+      - Ron Colvin|Center for Internet Security
+      - Allen Golbig|Jamf
   cisv8:
-    - "CIS Critical Security Controls® (CIS Controls®) are referenced with the permission and support of the Center for Internet Security® (CIS®)"
-    - "|==="
-    - "|Edward Byrd|Center for Internet Security"
-    - "|Bob Gendler|National Institute of Standards and Technology"
-    - "|Dan Brodjieski|National Aeronautics and Space Administration"
-    - "|Allen Golbig|Jamf"
-    - "|==="
+    preamble: CIS Critical Security Controls® (CIS Controls®) are referenced with the permission and support of the Center for Internet Security® (CIS®)
+    names:
+      - Edward Byrd|Center for Internet Security
+      - Bob Gendler|National Institute of Standards and Technology
+      - Dan Brodjieski|National Aeronautics and Space Administration
+      - Allen Golbig|Jamf
   cnssi-1253:
-    - "|==="
-    - "|Rob Lamb|Los Alamos National Laboratory"
-    - "|Ekkehard Koch|"
-    - "|Bob Gendler|National Institute of Standards and Technology"
-    - "|==="
+    names:
+      - Rob Lamb|Los Alamos National Laboratory
+      - Ekkehard Koch|
+      - Bob Gendler|National Institute of Standards and Technology
   stig:
-    - "|==="
-    - "|Dan Brodjieski|National Aeronautics and Space Administration"
-    - "|Allen Golbig|Jamf"
-    - "|Bob Gendler|National Institute of Standards and Technology"
-    - "|==="
+    preamble: This is some text to include in the Author Block
+    names: 
+      - Dan Brodjieski|National Aeronautics and Space Administration
+      - Allen Golbig|Jamf
+      - Bob Gendler|National Institute of Standards and Technology
 titles:
   800-53r5_high: NIST SP 800-53 Rev 5 High Impact
   800-53r5_moderate: NIST SP 800-53 Rev 5 Moderate Impact
