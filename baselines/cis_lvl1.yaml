@@ -61,7 +61,7 @@ profile:
       - pwpolicy_account_lockout_enforce
       - pwpolicy_history_enforce
       - pwpolicy_minimum_length_enforce
-  - section: "systempreferences"
+  - section: "systemsettings"
     rules:
       - system_settings_airplay_receiver_disable
       - system_settings_automatic_login_disable

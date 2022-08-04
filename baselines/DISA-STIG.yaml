@@ -116,7 +116,7 @@ profile:
       - icloud_notes_disable
       - icloud_photos_disable
       - icloud_reminders_disable
-  - section: "systempreferences"
+  - section: "systemsettings"
     rules:
       - system_settings_apple_watch_unlock_disable
       - system_settings_automatic_login_disable

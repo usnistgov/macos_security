@@ -115,7 +115,7 @@ profile:
       - icloud_photos_disable
       - icloud_reminders_disable
       - icloud_sync_disable
-  - section: "systempreferences"
+  - section: "systemsettings"
     rules:
       - system_settings_airplay_receiver_disable
       - system_settings_automatic_login_disable

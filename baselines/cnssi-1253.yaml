@@ -117,7 +117,7 @@ profile:
       - icloud_private_relay_disable
       - icloud_reminders_disable
       - icloud_sync_disable
-  - section: "systempreferences"
+  - section: "systemsettings"
     rules:
       - system_settings_apple_watch_unlock_disable
       - system_settings_automatic_login_disable
