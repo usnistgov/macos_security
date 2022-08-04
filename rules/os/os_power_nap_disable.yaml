@@ -1,9 +1,9 @@
-id: sysprefs_power_nap_disable
+id: os_power_nap_disable
 title: "Disable Power Nap"
 discussion: |
   Power Nap _MUST_ be disabled.
 
-  Power Nap allows your Mac to perform actions while a Mac is asleep. This can interfere with USB power and may cause devices to stop functioning until a reboot and must therefore be disabled on all applicable systems. 
+  NOTE: Power Nap allows your Mac to perform actions while a Mac is asleep. This can interfere with USB power and may cause devices such as smartcards to stop functioning until a reboot and must therefore be disabled on all applicable systems. 
 
   The following Macs support Power Nap:
 
@@ -28,7 +28,7 @@ references:
   cci:
     - N/A    
   800-171r2:
-    - 3.4.6
+    - N/A
   cis:
     benchmark:
       - 2.9 (level 1)
@@ -38,14 +38,6 @@ references:
 macOS:
   - "13.0"
 tags:
-  - 800-53r5_low
-  - 800-53r5_moderate
-  - 800-53r5_high
-  - 800-53r4_low
-  - 800-53r4_moderate
-  - 800-53r4_high
-  - 800-171
-  - cnssi-1253
   - cis_lvl1
   - cis_lvl2
   - cisv8
