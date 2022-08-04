@@ -1,4 +1,4 @@
-id: sysprefs_smbd_disable
+id: system_settings_smbd_disable
 title: "Disable Server Message Block Sharing"
 discussion: |
   Support for Server Message Block (SMB) file sharing is non-essential and _MUST_ be disabled.

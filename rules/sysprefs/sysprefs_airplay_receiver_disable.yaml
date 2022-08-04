@@ -1,4 +1,4 @@
-id: sysprefs_airplay_receiver_disable
+id: system_settings_airplay_receiver_disable
 title: "Disable Airplay Receiver"
 discussion: |
   Airplay Receiver allows you to send content from another Apple device to be displayed on the screen as it's being played from your other device.  

@@ -1,4 +1,4 @@
-id: sysprefs_automatic_login_disable
+id: system_settings_automatic_login_disable
 title: "Disable Unattended or Automatic Logon to the System"
 discussion: |
   Automatic logon _MUST_ be disabled.

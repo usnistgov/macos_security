@@ -1,4 +1,4 @@
-id: sysprefs_time_server_configure
+id: system_settings_time_server_configure
 title: "Configure macOS to Use an Authorized Time Server"
 discussion: |
   Approved time servers _MUST_ be the only servers configured for use.

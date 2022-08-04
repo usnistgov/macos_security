@@ -1,4 +1,4 @@
-id: sysprefs_wallet_applepay_prefpane_disable
+id: system_settings_wallet_applepay_prefpane_disable
 title: "Disable the System Preference Pane for Wallet and Apple Pay"
 discussion: |
   The system preference pane for Wallet and Apple Pay _MUST_ be disabled.

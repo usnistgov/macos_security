@@ -320,7 +320,7 @@ tags:
     icloud = []
     os_section = []
     pwpolicy = []
-    sysprefs = []
+    system_settings = []
     inherent = []
     na = []
     perm = []
@@ -361,8 +361,8 @@ tags:
                 if "/pwpolicy/" in rule:
                     pwpolicy.append(rule_id)
                     continue
-                if "/sysprefs/" in rule:
-                    sysprefs.append(rule_id)
+                if "/system_settings/" in rule:
+                    system_settings.append(rule_id)
                     continue
     
     
@@ -396,13 +396,13 @@ profile:'''.format(other_header,other_header,version_yaml['os'],version_yaml['ve
             full_baseline = full_baseline + '''
       - {}'''.format(rule)
 
-    if len(sysprefs) != 0:
+    if len(system_settings) != 0:
         full_baseline = full_baseline + '''
   - section: "SystemPreferences"
     rules:'''
-        sysprefs.sort()
+        system_settings.sort()
     
-        for rule in sysprefs:
+        for rule in system_settings:
             full_baseline = full_baseline + '''
       - {}'''.format(rule)
 

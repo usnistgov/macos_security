@@ -1,4 +1,4 @@
-id: sysprefs_install_macos_updates_enforce
+id: system_settings_install_macos_updates_enforce
 title: "Enforce macOS Updates are Automatically Installed"
 discussion: |
   Software Update _MUST_ be configured to enforce automatic installation of macOS updates is enabled.

@@ -1,4 +1,4 @@
-id: sysprefs_critical_update_install_enforce
+id: system_settings_critical_update_install_enforce
 title: "Enforce Critical Security Updates to be Installed"
 discussion: |
   Ensure that security updates are installed as soon as they are available from Apple. 

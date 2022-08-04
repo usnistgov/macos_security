@@ -1,4 +1,4 @@
-id: sysprefs_software_update_download_enforce
+id: system_settings_software_update_download_enforce
 title: "Enforce Software Update Downloads Updates Automatically"
 discussion: |
   Software Update _MUST_ be configured to enforce automatic downloads of updates is enabled.

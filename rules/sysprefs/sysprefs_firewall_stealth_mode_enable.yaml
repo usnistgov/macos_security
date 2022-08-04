@@ -1,4 +1,4 @@
-id: sysprefs_firewall_stealth_mode_enable
+id: system_settings_firewall_stealth_mode_enable
 title: "Enable Firewall Stealth Mode"
 discussion: |
   Firewall Stealth Mode _MUST_ be enabled. 

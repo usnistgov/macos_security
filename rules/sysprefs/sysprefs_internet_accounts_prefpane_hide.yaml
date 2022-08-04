@@ -1,4 +1,4 @@
-id: sysprefs_internet_accounts_prefpane_hide
+id: system_settings_internet_accounts_prefpane_hide
 title: "Hide the Internet Accounts System Preference Pane"
 discussion: |
   The Internet Accounts System Preference pane _MUST_ be hidden to prevent the addition of unauthorized internet accounts.

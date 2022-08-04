@@ -1,4 +1,4 @@
-id: sysprefs_gatekeeper_identified_developers_allowed
+id: system_settings_gatekeeper_identified_developers_allowed
 title: "Apply Gatekeeper Settings to Block Applications from Unidentified Developers"
 discussion: |
   The information system implements cryptographic mechanisms to authenticate software prior to installation.

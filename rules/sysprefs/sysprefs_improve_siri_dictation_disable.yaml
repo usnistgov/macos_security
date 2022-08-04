@@ -1,4 +1,4 @@
-id: sysprefs_improve_siri_dictation_disable
+id: system_settings_improve_siri_dictation_disable
 title: "Disable Sending Siri and Dictation Information to Apple"
 discussion: |
   The ability for Apple to store and review audio of your Siri and Dictation interactions _MUST_ be disabled.

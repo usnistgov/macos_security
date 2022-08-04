@@ -1,4 +1,4 @@
-id: sysprefs_wifi_disable
+id: system_settings_wifi_disable
 title: "Disable Wi-Fi Interface"
 discussion: |
   The macOS system must be configured with Wi-Fi support software disabled if not connected to an authorized trusted network. 

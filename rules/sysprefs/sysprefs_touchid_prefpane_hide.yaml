@@ -1,4 +1,4 @@
-id: sysprefs_touchid_prefpane_hide
+id: system_settings_touchid_prefpane_hide
 title: "Hide the System Preference Pane for Touch ID"
 discussion: |
   The system preference pane for Touch ID _MUST_ be hidden.

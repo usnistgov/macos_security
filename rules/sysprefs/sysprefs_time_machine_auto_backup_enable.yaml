@@ -1,4 +1,4 @@
-id: sysprefs_time_machine_auto_backup_enable
+id: system_settings_time_machine_auto_backup_enable
 title: "Configure Time Machine for Automatic Backups"
 discussion: |
   Automatic backups _MUST_ be enabled when using Time Machine. 

@@ -1,4 +1,4 @@
-id: sysprefs_find_my_disable
+id: system_settings_find_my_disable
 title: "Disable Find My Service"
 discussion: |
   The Find My service _MUST_ be disabled.

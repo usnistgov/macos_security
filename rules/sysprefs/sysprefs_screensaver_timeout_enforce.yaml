@@ -1,4 +1,4 @@
-id: sysprefs_screensaver_timeout_enforce
+id: system_settings_screensaver_timeout_enforce
 title: "Enforce Screen Saver Timeout"
 discussion: |
   The screen saver timeout _MUST_ be set to $ODV seconds or a shorter length of time. 

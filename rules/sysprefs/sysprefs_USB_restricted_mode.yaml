@@ -1,4 +1,4 @@
-id: sysprefs_USB_restricted_mode
+id: system_settings_USB_restricted_mode
 title: "USB Devices Must be Authorized Before Allowing"
 discussion: |
   USB devices connected to a Mac _MUST_ be authorized.

@@ -1,4 +1,4 @@
-id: sysprefs_bluetooth_sharing_disable
+id: system_settings_bluetooth_sharing_disable
 title: "Disable Bluetooth Sharing"
 discussion: |
   Bluetooth Sharing _MUST_ be disabled. 

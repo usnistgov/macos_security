@@ -1,4 +1,4 @@
-id: sysprefs_system_wide_preferences_configure
+id: system_settings_system_wide_preferences_configure
 title: "Require Administrator Password to Modify System-Wide Preferences"
 discussion: |
   The system _MUST_ be configured to require an administrator password in order to modify the system-wide preferences in System Preferences. 

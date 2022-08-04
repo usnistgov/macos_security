@@ -1,4 +1,4 @@
-id: sysprefs_ssh_disable
+id: system_settings_ssh_disable
 title: "Disable SSH Server for Remote Access Sessions"
 discussion: |
   SSH service _MUST_ be disabled for remote access.

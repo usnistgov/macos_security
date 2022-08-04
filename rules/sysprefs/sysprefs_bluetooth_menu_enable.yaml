@@ -1,4 +1,4 @@
-id: sysprefs_bluetooth_menu_enable
+id: system_settings_bluetooth_menu_enable
 title: "Enable Bluetooth Menu"
 discussion: |
   The bluetooth menu _MUST_ be enabled.

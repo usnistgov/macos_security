@@ -1,4 +1,4 @@
-id: sysprefs_siri_prefpane_hide
+id: system_settings_siri_prefpane_hide
 title: "Hide the System Preference Pane for Siri"
 discussion: |
   The system preference pane for Siri _MUST_ be hidden.

@@ -174,7 +174,7 @@ def section_title(section_name):
         "os": "macos",
         "pwpolicy": "passwordpolicy",
         "icloud": "icloud",
-        "sysprefs": "systempreferences",
+        "system_settings": "systempreferences",
         "srg": "srg"
     }
     if section_name in titles:

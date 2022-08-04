@@ -1,4 +1,4 @@
-id: sysprefs_printer_sharing_disable
+id: system_settings_printer_sharing_disable
 title: "Disable Printer Sharing"
 discussion: |
   Printer Sharing _MUST_ be disabled. 

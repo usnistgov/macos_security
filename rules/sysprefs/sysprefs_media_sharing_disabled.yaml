@@ -1,4 +1,4 @@
-id: sysprefs_media_sharing_disabled
+id: system_settings_media_sharing_disabled
 title: "Disable Media Sharing"
 discussion: |
   Media sharing _MUST_ be disabled.

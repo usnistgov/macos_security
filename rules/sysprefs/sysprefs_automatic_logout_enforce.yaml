@@ -1,4 +1,4 @@
-id: sysprefs_automatic_logout_enforce
+id: system_settings_automatic_logout_enforce
 title: "Enforce Auto Logout After 24 Hours of Inactivity"
 discussion: |
   Auto logout _MUST_ be configured to automatically terminate a user session and log out the after 86400 seconds (24 hours) of inactivity. 

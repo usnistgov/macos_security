@@ -1,4 +1,4 @@
-id: sysprefs_loginwindow_loginwindowtext_enable
+id: system_settings_loginwindow_loginwindowtext_enable
 title: "Configure Login Window to Show A Custom Message"
 discussion: |
   The login window _MUST_ be configured to show a custom access warning message. 

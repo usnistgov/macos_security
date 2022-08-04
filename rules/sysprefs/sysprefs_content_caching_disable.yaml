@@ -1,4 +1,4 @@
-id: sysprefs_content_caching_disable
+id: system_settings_content_caching_disable
 title: "Disable Content Caching Service"
 discussion: |
   Content caching _MUST_ be disabled. 

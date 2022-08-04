@@ -1,4 +1,4 @@
-id: sysprefs_diagnostics_reports_disable
+id: system_settings_diagnostics_reports_disable
 title: "Disable Sending Diagnostic and Usage Data to Apple"
 discussion: |
   The ability to submit diagnostic data to Apple _MUST_ be disabled.

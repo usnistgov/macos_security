@@ -1,4 +1,4 @@
-id: sysprefs_software_update_enforce
+id: system_settings_software_update_enforce
 title: "Enforce Software Update Automatically"
 discussion: |
   Software Update _MUST_ be configured to enforce automatic update is enabled.

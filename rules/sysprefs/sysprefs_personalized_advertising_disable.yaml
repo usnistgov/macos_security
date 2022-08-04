@@ -1,4 +1,4 @@
-id: sysprefs_personalized_advertising_disable
+id: system_settings_personalized_advertising_disable
 title: "Disable Personalized Advertising"
 discussion: |
   Ad tracking and targeted ads _MUST_ be disabled.

@@ -1,4 +1,4 @@
-id: sysprefs_screen_sharing_disable
+id: system_settings_screen_sharing_disable
 title: "Disable Screen Sharing and Apple Remote Desktop"
 discussion: |
   Support for both Screen Sharing and Apple Remote Desktop (ARD) is non-essential and _MUST_ be disabled.

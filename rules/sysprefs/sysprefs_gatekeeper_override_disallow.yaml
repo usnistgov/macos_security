@@ -1,4 +1,4 @@
-id: sysprefs_gatekeeper_override_disallow
+id: system_settings_gatekeeper_override_disallow
 title: "Configure Gatekeeper to Disallow End User Override"
 discussion: |
   Gatekeeper _MUST_ be configured with a configuration profile to prevent normal users from overriding its settings. 

@@ -1,4 +1,4 @@
-id: sysprefs_location_services_audit
+id: system_settings_location_services_audit
 title: "Audit Location Services"
 discussion: |
   The organization _MUST_ audit which applications have access to location services.

@@ -1,4 +1,4 @@
-id: sysprefs_apple_watch_unlock_disable
+id: system_settings_apple_watch_unlock_disable
 title: "Prevent Apple Watch from Terminating a Session Lock"
 discussion: |
   Apple Watches are not an approved authenticator and their use _MUST_ be disabled.

@@ -1,4 +1,4 @@
-id: sysprefs_guest_access_smb_disable
+id: system_settings_guest_access_smb_disable
 title: "Disable Guest Access to Shared SMB Folders"
 discussion: |
   Guest access to shared Server Message Block (SMB) folders _MUST_ be disabled. 

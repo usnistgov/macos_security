@@ -131,52 +131,52 @@ profile:
       - icloud_private_relay_disable
       - icloud_reminders_disable
       - icloud_sync_disable
-  - section: "systempreferences"
+  - section: "systemsettings"
     rules:
-      - sysprefs_airplay_receiver_disable
-      - sysprefs_apple_watch_unlock_disable
-      - sysprefs_automatic_login_disable
-      - sysprefs_automatic_logout_enforce
-      - sysprefs_bluetooth_disable
-      - sysprefs_bluetooth_sharing_disable
-      - sysprefs_cd_dvd_sharing_disable
-      - sysprefs_content_caching_disable
-      - sysprefs_critical_update_install_enforce
-      - sysprefs_diagnostics_reports_disable
-      - sysprefs_filevault_enforce
-      - sysprefs_find_my_disable
-      - sysprefs_firewall_enable
-      - sysprefs_firewall_stealth_mode_enable
-      - sysprefs_gatekeeper_identified_developers_allowed
-      - sysprefs_gatekeeper_override_disallow
-      - sysprefs_guest_access_smb_disable
-      - sysprefs_guest_account_disable
-      - sysprefs_hot_corners_disable
-      - sysprefs_improve_siri_dictation_disable
-      - sysprefs_internet_accounts_prefpane_disable
-      - sysprefs_internet_sharing_disable
-      - sysprefs_location_services_disable
-      - sysprefs_loginwindow_prompt_username_password_enforce
-      - sysprefs_media_sharing_disabled
-      - sysprefs_password_hints_disable
-      - sysprefs_personalized_advertising_disable
-      - sysprefs_power_nap_disable
-      - sysprefs_printer_sharing_disable
-      - sysprefs_rae_disable
-      - sysprefs_remote_management_disable
-      - sysprefs_screen_sharing_disable
-      - sysprefs_screensaver_ask_for_password_delay_enforce
-      - sysprefs_screensaver_password_enforce
-      - sysprefs_screensaver_timeout_enforce
-      - sysprefs_siri_disable
-      - sysprefs_smbd_disable
-      - sysprefs_ssh_enable
-      - sysprefs_system_wide_preferences_configure
-      - sysprefs_time_server_configure
-      - sysprefs_time_server_enforce
-      - sysprefs_token_removal_enforce
-      - sysprefs_touchid_unlock_disable
-      - sysprefs_wifi_disable
+      - system_settings_airplay_receiver_disable
+      - system_settings_apple_watch_unlock_disable
+      - system_settings_automatic_login_disable
+      - system_settings_automatic_logout_enforce
+      - system_settings_bluetooth_disable
+      - system_settings_bluetooth_sharing_disable
+      - system_settings_cd_dvd_sharing_disable
+      - system_settings_content_caching_disable
+      - system_settings_critical_update_install_enforce
+      - system_settings_diagnostics_reports_disable
+      - system_settings_filevault_enforce
+      - system_settings_find_my_disable
+      - system_settings_firewall_enable
+      - system_settings_firewall_stealth_mode_enable
+      - system_settings_gatekeeper_identified_developers_allowed
+      - system_settings_gatekeeper_override_disallow
+      - system_settings_guest_access_smb_disable
+      - system_settings_guest_account_disable
+      - system_settings_hot_corners_disable
+      - system_settings_improve_siri_dictation_disable
+      - system_settings_internet_accounts_prefpane_disable
+      - system_settings_internet_sharing_disable
+      - system_settings_location_services_disable
+      - system_settings_loginwindow_prompt_username_password_enforce
+      - system_settings_media_sharing_disabled
+      - system_settings_password_hints_disable
+      - system_settings_personalized_advertising_disable
+      - system_settings_power_nap_disable
+      - system_settings_printer_sharing_disable
+      - system_settings_rae_disable
+      - system_settings_remote_management_disable
+      - system_settings_screen_sharing_disable
+      - system_settings_screensaver_ask_for_password_delay_enforce
+      - system_settings_screensaver_password_enforce
+      - system_settings_screensaver_timeout_enforce
+      - system_settings_siri_disable
+      - system_settings_smbd_disable
+      - system_settings_ssh_enable
+      - system_settings_system_wide_preferences_configure
+      - system_settings_time_server_configure
+      - system_settings_time_server_enforce
+      - system_settings_token_removal_enforce
+      - system_settings_touchid_unlock_disable
+      - system_settings_wifi_disable
   - section: "Inherent"
     rules:
       - audit_record_reduction_report_generation
@@ -211,7 +211,7 @@ profile:
       - os_provide_automated_account_management
       - os_reauth_devices_change_authenticators
       - os_secure_name_resolution
-      - sysprefs_wifi_disable_when_connected_to_ethernet
+      - system_settings_wifi_disable_when_connected_to_ethernet
   - section: "not_applicable"
     rules: 
       - os_access_control_mobile_devices

@@ -1,4 +1,4 @@
-id: sysprefs_wifi_menu_enable
+id: system_settings_wifi_menu_enable
 title: "Enable Wifi Menu"
 discussion: |
   The WiFi menu _MUST_ be enabled.

@@ -1,4 +1,4 @@
-id: sysprefs_firewall_enable
+id: system_settings_firewall_enable
 title: "Enable macOS Application Firewall"
 discussion: |
   The macOS Application Firewall is the built-in firewall that comes with macOS, and it _MUST_ be enabled. 

@@ -1,4 +1,4 @@
-id: sysprefs_remote_management_disable
+id: system_settings_remote_management_disable
 title: "Disable Remote Management"
 discussion: |
   Remote Management _MUST_ be disabled. 

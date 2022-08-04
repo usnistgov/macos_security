@@ -1,4 +1,4 @@
-id: sysprefs_bluetooth_unpaired_disable
+id: system_settings_bluetooth_unpaired_disable
 title: "Disable Bluetooth When No Devices are Paired"
 discussion: |
   Bluetooth _MUST_ be disabled when no devices are paired. 

@@ -1,4 +1,4 @@
-id: sysprefs_softwareupdate_current
+id: system_settings_softwareupdate_current
 title: "Ensure Software Update is Updated and Current"
 discussion: |
   Make sure Software Update is updated and current.

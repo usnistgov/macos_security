@@ -1,4 +1,4 @@
-id: sysprefs_internet_sharing_disable
+id: system_settings_internet_sharing_disable
 title: "Disable Internet Sharing"
 discussion: |
   If the system does not require Internet sharing, support for it is non-essential and _MUST_ be disabled.

@@ -1,4 +1,4 @@
-id: sysprefs_filevault_enforce
+id: system_settings_filevault_enforce
 title: "Enforce FileVault"
 discussion: |
   FileVault _MUST_ be enforced.

@@ -1,4 +1,4 @@
-id: sysprefs_location_services_enable
+id: system_settings_location_services_enable
 title: "Enable Location Services"
 discussion: |
   Location Services _MUST_ be enabled.   

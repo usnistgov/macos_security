@@ -1,4 +1,4 @@
-id: sysprefs_token_removal_enforce
+id: system_settings_token_removal_enforce
 title: "Configure User Session Lock When a Smart Token is Removed"
 discussion: |
   The screen lock _MUST_ be configured to initiate automatically when the smart token is removed from the system.
