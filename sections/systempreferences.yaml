@@ -1,5 +1,0 @@
-  name: "System Preferences"
-  description: |
-    This section contains the configuration and enforcement of the settings within the macOS System Preferences application.
-
-    NOTE: The check/fix commands outlined in this section _MUST_ be run by a user with elevated privileges. 

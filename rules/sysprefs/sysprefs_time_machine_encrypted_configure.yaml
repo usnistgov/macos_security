@@ -15,7 +15,7 @@ check: |
 result: 
   integer: 0
 fix: |
-  . Go to System Preferences -> Time Machine
+  . Go to System Settings -> Time Machine
   . Click *Select Disk*
   . Select existing Backup Disk under *Available Disks*
   . Click *Encrypt Backups*
