@@ -398,7 +398,7 @@ profile:'''.format(other_header,other_header,version_yaml['os'],version_yaml['ve
 
     if len(system_settings) != 0:
         full_baseline = full_baseline + '''
-  - section: "SystemPreferences"
+  - section: "System Settings"
     rules:'''
         system_settings.sort()
     
