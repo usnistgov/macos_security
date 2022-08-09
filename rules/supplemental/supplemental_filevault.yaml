@@ -2,7 +2,7 @@ id: supplemental_filevault
 title: "FileVault Supplemental"
 discussion: |
   The supplemental guidance found in this section is applicable for the following rules:
-    * sysprefs_filevault_enforce
+    * system_settings_filevault_enforce
 
   In macOS 11 the internal Apple File System (APFS) data volume can be protected by FileVault. The system volume is always cryptographically protected (T2 and Apple Silicon) and is a read-only volume.
   

@@ -1,0 +1,45 @@
+id: os_power_nap_disable
+title: "Disable Power Nap"
+discussion: |
+  Power Nap _MUST_ be disabled.
+
+  NOTE: Power Nap allows your Mac to perform actions while a Mac is asleep. This can interfere with USB power and may cause devices such as smartcards to stop functioning until a reboot and must therefore be disabled on all applicable systems. 
+
+  The following Macs support Power Nap:
+
+  * MacBook (Early 2015 and later)
+  * MacBook Air (Late 2010 and later)
+  * MacBook Pro (all models with Retina display)
+  * Mac mini (Late 2012 and later)
+  * iMac (Late 2012 and later)
+  * Mac Pro (Late 2013 and later)
+check: |
+  /usr/bin/pmset -g custom | /usr/bin/awk '/powernap/ { sum+=$2 } END {print sum}'
+result:
+  integer: 0
+fix: |
+  [source,bash]
+  ----
+  /usr/bin/pmset -a powernap 0
+  ----
+references:
+  cce:
+    - N/A
+  cci:
+    - N/A    
+  800-171r2:
+    - N/A
+  cis:
+    benchmark:
+      - 2.9 (level 1)
+    controls v8:
+      - 4.1
+      - 4.8
+macOS:
+  - "13.0"
+tags:
+  - cis_lvl1
+  - cis_lvl2
+  - cisv8
+mobileconfig: false
+mobileconfig_info:

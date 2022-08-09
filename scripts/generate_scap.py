@@ -1462,7 +1462,7 @@ def generate_scap(all_rules, all_baselines, args):
                         
                 if "defaults" in rule_yaml['check']:
                     
-                    if rule_yaml['id'] == "sysprefs_hot_corners_secure":
+                    if rule_yaml['id'] == "system_settings_hot_corners_secure":
                         oval_definition = oval_definition + '''
                         <definition id="oval:mscp:def:{}" version="1" class="compliance"> 
                     <metadata> 
