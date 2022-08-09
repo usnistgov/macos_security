@@ -9,16 +9,8 @@ authors: |
   |Dan Brodjieski|National Aeronautics and Space Administration
   |Allen Golbig|Jamf
   |===
-parent_values: recommended
+parent_values: "recommended"
 profile:
-  - section: "authentication"
-    rules:
-      - auth_pam_login_smartcard_enforce
-      - auth_pam_su_smartcard_enforce
-      - auth_pam_sudo_smartcard_enforce
-      - auth_smartcard_allow
-      - auth_smartcard_enforce
-      - auth_ssh_password_authentication_disable
   - section: "auditing"
     rules:
       - audit_acls_files_configure
@@ -36,6 +28,27 @@ profile:
       - audit_folder_owner_configure
       - audit_folders_mode_configure
       - audit_retention_configure
+  - section: "authentication"
+    rules:
+      - auth_pam_login_smartcard_enforce
+      - auth_pam_su_smartcard_enforce
+      - auth_pam_sudo_smartcard_enforce
+      - auth_smartcard_allow
+      - auth_smartcard_enforce
+      - auth_ssh_password_authentication_disable
+  - section: "icloud"
+    rules:
+      - icloud_addressbook_disable
+      - icloud_appleid_prefpane_disable
+      - icloud_bookmarks_disable
+      - icloud_calendar_disable
+      - icloud_drive_disable
+      - icloud_keychain_disable
+      - icloud_mail_disable
+      - icloud_notes_disable
+      - icloud_photos_disable
+      - icloud_reminders_disable
+      - icloud_sync_disable
   - section: "macos"
     rules:
       - os_airdrop_disable
@@ -68,6 +81,7 @@ profile:
       - os_password_hint_remove
       - os_password_proximity_disable
       - os_password_sharing_disable
+      - os_power_nap_disable
       - os_privacy_setup_prompt_disable
       - os_root_disable
       - os_safari_open_safe_downloads_disable
@@ -102,19 +116,6 @@ profile:
       - pwpolicy_simple_sequence_disable
       - pwpolicy_special_character_enforce
       - pwpolicy_upper_case_character_enforce
-  - section: "icloud"
-    rules:
-      - icloud_addressbook_disable
-      - icloud_appleid_prefpane_disable
-      - icloud_bookmarks_disable
-      - icloud_calendar_disable
-      - icloud_drive_disable
-      - icloud_keychain_disable
-      - icloud_mail_disable
-      - icloud_notes_disable
-      - icloud_photos_disable
-      - icloud_reminders_disable
-      - icloud_sync_disable
   - section: "systemsettings"
     rules:
       - system_settings_airplay_receiver_disable
@@ -145,7 +146,6 @@ profile:
       - system_settings_media_sharing_disabled
       - system_settings_password_hints_disable
       - system_settings_personalized_advertising_disable
-      - system_settings_power_nap_disable
       - system_settings_printer_sharing_disable
       - system_settings_rae_disable
       - system_settings_remote_management_disable
