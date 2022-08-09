@@ -704,17 +704,39 @@ compliance_count(){{
     fi
 }}
 
+exempt_count(){{
+    exempt=0
+
+    if [[ -e "/Library/Managed Preferences/org.{baseline_name}.audit.plist" ]];then
+        mscp_prefs="/Library/Managed Preferences/org.{baseline_name}.audit.plist"
+    else
+        mscp_prefs="/Library/Preferences/org.{baseline_name}.audit.plist"
+    fi
+
+    results=$(/usr/libexec/PlistBuddy -c "Print" "$mscp_prefs")
+
+    while IFS= read -r line; do
+        if [[ "$line" =~ "exempt = true" ]]; then
+            exempt=$((exempt+1))
+        fi
+    done <<< "$results"
+
+    /bin/echo $exempt
+}}
+
 
 generate_report(){{
     count=($(compliance_count))
+    exempt_rules=$(exempt_count)
     compliant=${{count[1]}}
     non_compliant=${{count[2]}}
 
-    total=$((non_compliant + compliant))
+    total=$((non_compliant + compliant - exempt_rules))
     percentage=$(printf %.2f $(( compliant * 100. / total )) )
     /bin/echo
     echo "Number of tests passed: ${{GREEN}}$compliant${{STD}}"
     echo "Number of test FAILED: ${{RED}}$non_compliant${{STD}}"
+    echo "Number of exempt rules: ${{YELLOW}}$exempt_rules${{STD}}"
     echo "You are ${{YELLOW}}$percentage%${{STD}} percent compliant!"
     pause
 }}
@@ -882,7 +904,7 @@ EOS
             /usr/bin/logger "mSCP: {7} - {5} failed (Result: $result_value, Expected: "{3}")"
         else
             /bin/echo "$(date -u) {5} failed (Result: $result_value, Expected: "{3}") - Exemption Allowed (Reason: "$exempt_reason")" | /usr/bin/tee -a "$audit_log"
-            /usr/bin/defaults write "$audit_plist" {0} -dict-add finding -bool NO
+            /usr/bin/defaults write "$audit_plist" {0} -dict-add finding -bool YES
             /usr/bin/logger "mSCP: {7} - {5} failed (Result: $result_value, Expected: "{3}") - Exemption Allowed (Reason: "$exempt_reason")"
             /bin/sleep 1
         fi
