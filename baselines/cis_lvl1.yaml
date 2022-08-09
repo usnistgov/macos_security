@@ -8,7 +8,7 @@ authors: |
   |Ron Colvin|Center for Internet Security
   |Allen Golbig|Jamf
   |===
-parent_values: cis_lvl1
+parent_values: "cis_lvl1"
 profile:
   - section: "auditing"
     rules:
@@ -44,6 +44,7 @@ profile:
       - os_mobile_file_integrity_enable
       - os_nfsd_disable
       - os_password_hint_remove
+      - os_power_nap_disable
       - os_root_disable
       - os_safari_open_safe_downloads_disable
       - os_show_filename_extensions_enable
@@ -81,7 +82,6 @@ profile:
       - system_settings_loginwindow_prompt_username_password_enforce
       - system_settings_password_hints_disable
       - system_settings_personalized_advertising_disable
-      - system_settings_power_nap_disable
       - system_settings_printer_sharing_disable
       - system_settings_rae_disable
       - system_settings_remote_management_disable
