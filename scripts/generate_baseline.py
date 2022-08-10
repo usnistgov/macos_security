@@ -175,8 +175,10 @@ def section_title(section_name):
         "pwpolicy": "passwordpolicy",
         "icloud": "icloud",
         "sysprefs": "systempreferences",
+        "system_settings": "systemsettings",
         "srg": "srg"
     }
+    
     if section_name in titles:
         return titles[section_name]
     else:
@@ -233,7 +235,10 @@ def output_baseline(rules, os, keyword, benchmark):
         else:
             if rule.rule_id not in other_rules:
                 other_rules.append(rule.rule_id)
-            section_name = rule.rule_id.split("_")[0]
+            if "system_settings" in rule.rule_id:
+                 section_name = rule.rule_id.split("_")[0]+"_"+rule.rule_id.split("_")[1]
+            else:
+                 section_name = rule.rule_id.split("_")[0]
             if section_name not in sections:
                 sections.append(section_name)
 
