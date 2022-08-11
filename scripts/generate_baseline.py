@@ -372,7 +372,10 @@ def odv_query(rules, benchmark):
                 remove_odv_custom_rule(rule)
         else:
             if rule.rule_id not in queried_rule_ids:
-                include = sanitised_input(f"Would you like to include the rule for \"{rule.rule_id}\" in your benchmark? [Y/n/all]: ", str.lower, range_=('y', 'n', 'all'), default_="y")
+                include = sanitised_input(f"Would you like to include the rule for \"{rule.rule_id}\" in your benchmark? [Y/n/all/?]: ", str.lower, range_=('y', 'n', 'all', '?'), default_="y")
+                if include == "?":
+                    print(f'Rule Details: \n{rule.rule_discussion}')
+                    include = sanitised_input(f"Would you like to include the rule for \"{rule.rule_id}\" in your benchmark? [Y/n/all]: ", str.lower, range_=('y', 'n', 'all'), default_="y")
                 queried_rule_ids.append(rule.rule_id)
                 get_odv = True
                 # remove custom ODVs if there, they will be re-written if needed
