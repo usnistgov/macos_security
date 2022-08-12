@@ -1897,21 +1897,6 @@ def main():
                     rule_id=rule_yaml['id'].replace('|', '\|'),
                     rule_discussion=rule_yaml['discussion'],
                 )
-            elif ('permanent' in tags) or ('inherent' in tags) or ('n_a' in tags):
-                rule_adoc = adoc_rule_no_setting_template.substitute(
-                    rule_title=rule_yaml['title'].replace('|', '\|'),
-                    rule_id=rule_yaml['id'].replace('|', '\|'),
-                    rule_discussion=rule_yaml['discussion'].replace('|', '\|'),
-                    rule_check=rule_yaml['check'],  # .replace('|', '\|'),
-                    rule_fix=rulefix,
-                    rule_80053r5=nist_controls,
-                    rule_800171=nist_800171,
-                    rule_disa_stig=disa_stig,
-                    rule_cis=cis,
-                    rule_cce=cce,
-                    rule_tags=tags,
-                    rule_srg=srg
-                )
             elif custom_refs:
                 rule_adoc = adoc_rule_custom_refs_template.substitute(
                     rule_title=rule_yaml['title'].replace('|', '\|'),
@@ -1929,6 +1914,21 @@ def main():
                     rule_tags=tags,
                     rule_srg=srg,
                     rule_result=result_value
+                )
+            elif ('permanent' in tags) or ('inherent' in tags) or ('n_a' in tags):
+                rule_adoc = adoc_rule_no_setting_template.substitute(
+                    rule_title=rule_yaml['title'].replace('|', '\|'),
+                    rule_id=rule_yaml['id'].replace('|', '\|'),
+                    rule_discussion=rule_yaml['discussion'].replace('|', '\|'),
+                    rule_check=rule_yaml['check'],  # .replace('|', '\|'),
+                    rule_fix=rulefix,
+                    rule_80053r5=nist_controls,
+                    rule_800171=nist_800171,
+                    rule_disa_stig=disa_stig,
+                    rule_cis=cis,
+                    rule_cce=cce,
+                    rule_tags=tags,
+                    rule_srg=srg
                 )
             else:
                 rule_adoc = adoc_rule_template.substitute(
