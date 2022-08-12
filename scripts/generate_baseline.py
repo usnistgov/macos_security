@@ -176,6 +176,7 @@ def section_title(section_name):
         "icloud": "icloud",
         "sysprefs": "systempreferences",
         "system_settings": "systemsettings",
+        "sys_prefs": "systempreferences",
         "srg": "srg"
     }
     
