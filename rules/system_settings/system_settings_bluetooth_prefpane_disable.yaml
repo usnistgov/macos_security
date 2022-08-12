@@ -1,7 +1,7 @@
 id: system_settings_bluetooth_prefpane_disable
 title: "Disable the Bluetooth System Preference Pane"
 discussion: |
-  The Bluetooth System Preference pane _MUST_ be disabled to prevent access to the bluetooth configuration.
+  The Bluetooth System Preference pane _MUST_ be disabled to prevent access to the bluetooth configuration. This will also hide the Bluetooth System Setting.
 
 check: |
   /usr/bin/profiles -P -o stdout | /usr/bin/grep -c 'com.apple.preferences.Bluetooth' | /usr/bin/awk '{ if ($1 >= 2) {print "1"} else {print "0"}}'
