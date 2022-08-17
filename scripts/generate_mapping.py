@@ -321,6 +321,7 @@ tags:
     os_section = []
     pwpolicy = []
     system_settings = []
+    sysprefs = []
     inherent = []
     na = []
     perm = []
@@ -364,6 +365,9 @@ tags:
                 if "/system_settings/" in rule:
                     system_settings.append(rule_id)
                     continue
+                if "/sysprefs/" in rule:
+                    sysprefs.append(rule_id)
+                    continue
     
     
     full_baseline = '''title: "macOS {2} ({3}): Security Configuration - {0}"
@@ -393,6 +397,16 @@ profile:'''.format(other_header,other_header,version_yaml['os'],version_yaml['ve
         auth.sort()
     
         for rule in auth:
+            full_baseline = full_baseline + '''
+      - {}'''.format(rule)
+
+    if len(sysprefs) != 0:
+        full_baseline = full_baseline + '''
+  - section: "SystemPreferences"
+    rules:'''
+        sysprefs.sort()
+    
+        for rule in sysprefs:
             full_baseline = full_baseline + '''
       - {}'''.format(rule)
 

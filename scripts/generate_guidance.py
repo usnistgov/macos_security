@@ -346,9 +346,7 @@ def concatenate_payload_settings(settings):
 def generate_profiles(baseline_name, build_path, parent_dir, baseline_yaml, signing, hash=''):
     """Generate the configuration profiles for the rules in the provided baseline YAML file
     """
-    organization = "macOS Security Compliance Project"
-    displayname = f"macOS {baseline_name} Baseline settings"
-
+    
     # import profile_manifests.plist
     manifests_file = os.path.join(
         parent_dir, 'includes', 'supported_payloads.yaml')
@@ -474,6 +472,9 @@ def generate_profiles(baseline_name, build_path, parent_dir, baseline_yaml, sign
         identifier = payload + f".{baseline_name}"
         description = "Configuration settings for the {} preference domain.".format(
             payload)
+        
+        organization = "macOS Security Compliance Project"
+        displayname = f"[{baseline_name}] {payload} settings"
 
         newProfile = PayloadDict(identifier=identifier,
                                  uuid=False,
@@ -1897,21 +1898,6 @@ def main():
                     rule_id=rule_yaml['id'].replace('|', '\|'),
                     rule_discussion=rule_yaml['discussion'],
                 )
-            elif ('permanent' in tags) or ('inherent' in tags) or ('n_a' in tags):
-                rule_adoc = adoc_rule_no_setting_template.substitute(
-                    rule_title=rule_yaml['title'].replace('|', '\|'),
-                    rule_id=rule_yaml['id'].replace('|', '\|'),
-                    rule_discussion=rule_yaml['discussion'].replace('|', '\|'),
-                    rule_check=rule_yaml['check'],  # .replace('|', '\|'),
-                    rule_fix=rulefix,
-                    rule_80053r5=nist_controls,
-                    rule_800171=nist_800171,
-                    rule_disa_stig=disa_stig,
-                    rule_cis=cis,
-                    rule_cce=cce,
-                    rule_tags=tags,
-                    rule_srg=srg
-                )
             elif custom_refs:
                 rule_adoc = adoc_rule_custom_refs_template.substitute(
                     rule_title=rule_yaml['title'].replace('|', '\|'),
@@ -1929,6 +1915,21 @@ def main():
                     rule_tags=tags,
                     rule_srg=srg,
                     rule_result=result_value
+                )
+            elif ('permanent' in tags) or ('inherent' in tags) or ('n_a' in tags):
+                rule_adoc = adoc_rule_no_setting_template.substitute(
+                    rule_title=rule_yaml['title'].replace('|', '\|'),
+                    rule_id=rule_yaml['id'].replace('|', '\|'),
+                    rule_discussion=rule_yaml['discussion'].replace('|', '\|'),
+                    rule_check=rule_yaml['check'],  # .replace('|', '\|'),
+                    rule_fix=rulefix,
+                    rule_80053r5=nist_controls,
+                    rule_800171=nist_800171,
+                    rule_disa_stig=disa_stig,
+                    rule_cis=cis,
+                    rule_cce=cce,
+                    rule_tags=tags,
+                    rule_srg=srg
                 )
             else:
                 rule_adoc = adoc_rule_template.substitute(

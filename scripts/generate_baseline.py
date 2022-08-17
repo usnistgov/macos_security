@@ -176,8 +176,10 @@ def section_title(section_name):
         "icloud": "icloud",
         "sysprefs": "systempreferences",
         "system_settings": "systemsettings",
+        "sys_prefs": "systempreferences",
         "srg": "srg"
     }
+    
     if section_name in titles:
         return titles[section_name]
     else:
