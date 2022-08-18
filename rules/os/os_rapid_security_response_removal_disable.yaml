@@ -17,15 +17,17 @@ references:
   cci: 
     - N/A
   800-53r5:
-    - N/A   
-  800-53r4: 
-    - N/A
+    - SI-2
+    - SI-2(5)
+    - SI-3
   srg:
     - N/A
   disa_stig:
     - N/A
   800-171r2:
-    - N/A
+    - 3.14.1
+    - 3.14.2
+    - 3.13.3
   cis:
     benchmark:
       - N/A
@@ -34,7 +36,10 @@ references:
 macOS:
   - "13.0"
 tags:
-  - N/A
+  - 800-53r5_low 
+  - 800-53r5_moderate 
+  - 800-53r5_high 
+  - 800-171
 mobileconfig: true
 mobileconfig_info:
   com.apple.applicationaccess:

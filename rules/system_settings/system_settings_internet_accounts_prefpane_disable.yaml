@@ -1,7 +1,7 @@
 id: system_settings_internet_accounts_prefpane_disable
 title: "Disable the Internet Accounts System Preference Pane"
 discussion: |
-  The Internet Accounts System Preference pane _MUST_ be disabled to prevent the addition of unauthorized internet accounts.
+  The Internet Accounts System Preference pane _MUST_ be disabled to prevent the addition of unauthorized internet accounts. This will also hide the Internet Accounts System Setting.
 
   [IMPORTANT]
   ====
