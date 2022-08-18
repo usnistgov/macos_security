@@ -13,11 +13,11 @@ import argparse
 import subprocess
 import logging
 import tempfile
+from datetime import date
 from xlwt import Workbook
 from string import Template
 from itertools import groupby
 from uuid import uuid4
-
 
 class MacSecurityRule():
     def __init__(self, title, rule_id, severity, discussion, check, fix, cci, cce, nist_controls, nist_171, disa_stig, srg, cis, custom_refs, odv, tags, result_value, mobileconfig, mobileconfig_info, customized):
@@ -470,7 +470,8 @@ def generate_profiles(baseline_name, build_path, parent_dir, baseline_yaml, sign
                 signed_mobileconfig_file_path = os.path.join(
                 signed_mobileconfig_output_path, payload + '.mobileconfig')
         identifier = payload + f".{baseline_name}"
-        description = "Configuration settings for the {} preference domain.".format(
+        created = date.today()
+        description = "Created: {}\nConfiguration settings for the {} preference domain.".format(created,
             payload)
         
         organization = "macOS Security Compliance Project"
