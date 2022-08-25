@@ -5,7 +5,7 @@ discussion: |
   
   macOS contains many open source projects that may use their own cryptographic libraries typically for the purposes of maintaining platform independence. These services are not covered by the Apple FIPS Validation of the CoreCrypto and CoreCrypto Kernel modules.
 
-  macOS Big Sur is in process of testing from an accredited laboratory to submit the National Institute of Standards and Technology (NIST) for FIPS validation.
+  macOS Monterey is in process of testing from an accredited laboratory to submit the National Institute of Standards and Technology (NIST) for FIPS validation.
 
   link:https://csrc.nist.gov/Projects/cryptographic-module-validation-program/modules-in-process/IUT-List[]
   
