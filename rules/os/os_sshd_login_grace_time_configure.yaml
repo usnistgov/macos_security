@@ -5,14 +5,30 @@ discussion: |
 
   NOTE: /etc/ssh/sshd_config will be automatically modified to its original state following any update or major upgrade to the operating system.
 check: |
-  /usr/bin/grep -c "^LoginGraceTime $ODV" /etc/ssh/sshd_config
+  /usr/sbin/sshd -T | /usr/bin/awk '/logingracetime/{print $2}'
 result:
-  integer: 1
+  integer: $ODV
 fix: |
   [source,bash]
   ----
-  /usr/bin/sed -i.bak 's/.*LoginGraceTime.*/LoginGraceTime $ODV/' /etc/ssh/sshd_config; /bin/launchctl kickstart -k system/com.openssh.sshd
-  ----
+  include_dir=$(/usr/bin/awk '/^Include/ {print $2}' /etc/ssh/sshd_config | /usr/bin/tr -d '*')
+
+  if [[ -z $include_dir ]]; then
+    /usr/bin/sed -i.bk "1s/.*/Include \/etc\/ssh\/sshd_config.d\/\*/" /etc/ssh/sshd_config
+  fi
+
+  echo "logingracetime $ODV" >> "${include_dir}01-mscp-sshd.conf"
+
+  for file in $(ls ${include_dir}); do
+    if [[ "$file" == "100-macos.conf" ]]; then
+        continue
+    fi
+    if [[ "$file" == "01-mscp-sshd.conf" ]]; then
+        break
+    fi
+    /bin/mv ${include_dir}${file} ${include_dir}20-${file}
+  done
+  ----  
 references:
   cce:
     - N/A
