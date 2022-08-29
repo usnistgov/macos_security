@@ -45,7 +45,7 @@ fix: |
   ----   
 references:
   cce:
-    - N/A
+    - CCE-91890-4
   cci: 
     - CCI-000087
     - CCI-000068

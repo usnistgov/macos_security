@@ -21,7 +21,7 @@ fix: |
   NOTE: See the firewall supplemental which includes a script that has an example policy to implement this rule.
 references:
   cce:
-    - N/A
+    - CCE-91790-6
   cci:
     - CCI-000366
     - CCI-002080

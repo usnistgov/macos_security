@@ -12,7 +12,7 @@ fix: |
   NOTE: See the FileVault supplemental to implement this rule.
 references:
   cce:
-    - N/A
+    - CCE-91946-4
   cci: 
     - CCI-001199
     - CCI-002475
