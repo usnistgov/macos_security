@@ -3,9 +3,12 @@ title: "Enable Location Services"
 discussion: |
   Location Services _MUST_ be enabled.   
 check: |
-  /usr/bin/defaults read /var/db/locationd/Library/Preferences/ByHost/com.apple.locationd.plist LocationServicesEnabled
+  /usr/bin/sudo -u _locationd /usr/bin/osascript -l JavaScript << EOS
+  $.NSUserDefaults.alloc.initWithSuiteName('com.apple.locationd')\
+  .objectForKey('LocationServicesEnabled').js
+  EOS
 result:
-  boolean: 1
+  string: "true"
 fix: |
   [source,bash]
   ----

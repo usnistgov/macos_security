@@ -5,9 +5,12 @@ discussion: |
   
   The information system _MUST_ be configured to provide only essential capabilities.  Disabling Location Services helps prevent the unauthorized connection of devices, unauthorized transfer of information, and unauthorized tunneling.
 check: |
-  /usr/bin/defaults read /var/db/locationd/Library/Preferences/ByHost/com.apple.locationd.plist LocationServicesEnabled
+  /usr/bin/sudo -u _locationd /usr/bin/osascript -l JavaScript << EOS
+  $.NSUserDefaults.alloc.initWithSuiteName('com.apple.locationd')\
+  .objectForKey('LocationServicesEnabled').js
+  EOS
 result:
-  boolean: 0
+  string: "false"
 fix: |
   [source,bash]
   ----
