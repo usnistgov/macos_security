@@ -61,6 +61,7 @@ profile:
       - os_bonjour_disable
       - os_calendar_app_disable
       - os_config_data_install_enforce
+      - os_config_profile_ui_install_disable
       - os_facetime_app_disable
       - os_filevault_autologin_disable
       - os_firewall_log_enable
@@ -80,13 +81,14 @@ profile:
       - os_policy_banner_loginwindow_enforce
       - os_policy_banner_ssh_configure
       - os_policy_banner_ssh_enforce
+      - os_rapid_security_response_allow
+      - os_rapid_security_response_removal_disable
       - os_root_disable
       - os_sip_enable
       - os_siri_prompt_disable
       - os_skip_unlock_with_watch_enable
       - os_ssh_fips_compliant
       - os_sshd_fips_compliant
-      - os_sshd_key_exchange_algorithm_configure
       - os_sudo_timeout_configure
       - os_sudoers_timestamp_type_configure
       - os_sudoers_tty_configure
@@ -143,6 +145,7 @@ profile:
       - system_settings_ssh_enable
       - system_settings_time_server_configure
       - system_settings_time_server_enforce
+      - system_settings_usb_restricted_mode
       - system_settings_wifi_disable
   - section: "Inherent"
     rules:

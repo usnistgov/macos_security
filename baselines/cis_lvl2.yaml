@@ -55,6 +55,7 @@ profile:
       - os_safari_open_safe_downloads_disable
       - os_show_filename_extensions_enable
       - os_sip_enable
+      - os_software_update_deferral
       - os_sudo_timeout_configure
       - os_sudoers_timestamp_type_configure
       - os_sudoers_tty_configure
