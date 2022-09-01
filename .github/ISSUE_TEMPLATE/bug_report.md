@@ -25,6 +25,10 @@ Before opening a new issue, make sure to search for keywords in the issues filte
 
 (macOS Version and build)
 
+### Intel or Apple Silicon
+
+(Intel based process or Apple Silicon Mac)
+
 ### What is the current *bug* behavior?
 
 (What actually happens)

@@ -57,6 +57,7 @@ profile:
       - os_authenticated_root_enable
       - os_bonjour_disable
       - os_calendar_app_disable
+      - os_config_profile_ui_install_disable
       - os_facetime_app_disable
       - os_filevault_autologin_disable
       - os_firewall_default_deny_require
@@ -80,6 +81,8 @@ profile:
       - os_policy_banner_loginwindow_enforce
       - os_policy_banner_ssh_configure
       - os_policy_banner_ssh_enforce
+      - os_rapid_security_response_allow
+      - os_rapid_security_response_removal_disable
       - os_recovery_lock_enable
       - os_root_disable
       - os_screensaver_loginwindow_enforce

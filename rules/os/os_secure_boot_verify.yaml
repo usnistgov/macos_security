@@ -14,7 +14,7 @@ fix: |
   NOTE: Boot into Recovery Mode and enable Full Secure Boot
 references:
   cce:
-    - N/A
+    - CCE-91873-0
   cci:
     - N/A
 macOS:
