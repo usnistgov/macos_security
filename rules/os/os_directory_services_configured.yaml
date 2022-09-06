@@ -34,5 +34,5 @@ tags:
   - stig
   - cisv8
 severity: "high"
-mobileconfig:
+mobileconfig: false
 mobileconfig_info:
