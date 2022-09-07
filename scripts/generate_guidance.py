@@ -116,9 +116,8 @@ def format_mobileconfig_fix(mobileconfig):
     for domain, settings in mobileconfig.items():
         if domain == "com.apple.ManagedClient.preferences":
             rulefix = rulefix + \
-                (f"NOTE: The following settings are in the ({domain}) payload. This payload requires the additional settings to be sub-payloads within, containing their their defined payload types.\n\n")
+                (f"NOTE: The following settings are in the ({domain}) payload. This payload requires the additional settings to be sub-payloads within, containing their defined payload types.\n\n")
             rulefix = rulefix + format_mobileconfig_fix(settings)
-
         else:
             rulefix = rulefix + (
                 f"Create a configuration profile containing the following keys in the ({domain}) payload type:\n\n")
@@ -141,6 +140,17 @@ def format_mobileconfig_fix(mobileconfig):
                 elif type(item[1]) == str:
                     rulefix = rulefix + \
                         (f"<string>{item[1]}</string>\n")
+                elif type(item[1]) == dict:
+                    rulefix = rulefix + "<dict>\n"
+                    for k,v in item[1].items():
+                        rulefix = rulefix + \
+                                (f"    <key>{k}</key>\n")
+                        rulefix = rulefix + "    <array>\n"
+                        for setting in v:
+                            rulefix = rulefix + \
+                                (f"        <string>{setting}</string>\n")
+                        rulefix = rulefix + "    </array>\n"
+                    rulefix = rulefix + "</dict>\n"
 
             rulefix = rulefix + "----\n\n"
 
