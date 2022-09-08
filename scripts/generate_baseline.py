@@ -116,7 +116,7 @@ def collect_rules():
                   'srg']
 
 
-    for rule in glob.glob('../rules/**/*.yaml',recursive=True) + glob.glob('../custom/rules/**/*.yaml',recursive=True):
+    for rule in sorted(glob.glob('../rules/**/*.yaml',recursive=True)) + sorted(glob.glob('../custom/rules/**/*.yaml',recursive=True)):
         rule_yaml = get_rule_yaml(rule, custom=False)
         for key in keys:
             try:
@@ -175,8 +175,11 @@ def section_title(section_name):
         "pwpolicy": "passwordpolicy",
         "icloud": "icloud",
         "sysprefs": "systempreferences",
+        "system_settings": "systemsettings",
+        "sys_prefs": "systempreferences",
         "srg": "srg"
     }
+    
     if section_name in titles:
         return titles[section_name]
     else:
@@ -244,7 +247,10 @@ def output_baseline(rules, os, keyword, benchmark, authors, expanded_title):
         else:
             if rule.rule_id not in other_rules:
                 other_rules.append(rule.rule_id)
-            section_name = rule.rule_id.split("_")[0]
+            if "system_settings" in rule.rule_id:
+                 section_name = rule.rule_id.split("_")[0]+"_"+rule.rule_id.split("_")[1]
+            else:
+                 section_name = rule.rule_id.split("_")[0]
             if section_name not in sections:
                 sections.append(section_name)
     if keyword:
@@ -381,7 +387,7 @@ def odv_query(rules, benchmark):
     for rule in rules:
         get_odv = False
        
-        _always_include = ['supplemental', 'inherent']
+        _always_include = ['inherent']
         if any(tag in rule.rule_tags for tag in _always_include):
             #print(f"Including rule {rule.rule_id} by default")
             include = "Y"
@@ -393,7 +399,10 @@ def odv_query(rules, benchmark):
                 remove_odv_custom_rule(rule)
         else:
             if rule.rule_id not in queried_rule_ids:
-                include = sanitised_input(f"Would you like to include the rule for \"{rule.rule_id}\" in your benchmark? [Y/n/all]: ", str.lower, range_=('y', 'n', 'all'), default_="y")
+                include = sanitised_input(f"Would you like to include the rule for \"{rule.rule_id}\" in your benchmark? [Y/n/all/?]: ", str.lower, range_=('y', 'n', 'all', '?'), default_="y")
+                if include == "?":
+                    print(f'Rule Details: \n{rule.rule_discussion}')
+                    include = sanitised_input(f"Would you like to include the rule for \"{rule.rule_id}\" in your benchmark? [Y/n/all]: ", str.lower, range_=('y', 'n', 'all'), default_="y")
                 queried_rule_ids.append(rule.rule_id)
                 get_odv = True
                 # remove custom ODVs if there, they will be re-written if needed

@@ -13,11 +13,11 @@ import argparse
 import subprocess
 import logging
 import tempfile
+from datetime import date
 from xlwt import Workbook
 from string import Template
 from itertools import groupby
 from uuid import uuid4
-
 
 class MacSecurityRule():
     def __init__(self, title, rule_id, severity, discussion, check, fix, cci, cce, nist_controls, nist_171, disa_stig, srg, cis, custom_refs, odv, tags, result_value, mobileconfig, mobileconfig_info, customized):
@@ -116,9 +116,8 @@ def format_mobileconfig_fix(mobileconfig):
     for domain, settings in mobileconfig.items():
         if domain == "com.apple.ManagedClient.preferences":
             rulefix = rulefix + \
-                (f"NOTE: The following settings are in the ({domain}) payload. This payload requires the additional settings to be sub-payloads within, containing their their defined payload types.\n\n")
+                (f"NOTE: The following settings are in the ({domain}) payload. This payload requires the additional settings to be sub-payloads within, containing their defined payload types.\n\n")
             rulefix = rulefix + format_mobileconfig_fix(settings)
-
         else:
             rulefix = rulefix + (
                 f"Create a configuration profile containing the following keys in the ({domain}) payload type:\n\n")
@@ -141,6 +140,17 @@ def format_mobileconfig_fix(mobileconfig):
                 elif type(item[1]) == str:
                     rulefix = rulefix + \
                         (f"<string>{item[1]}</string>\n")
+                elif type(item[1]) == dict:
+                    rulefix = rulefix + "<dict>\n"
+                    for k,v in item[1].items():
+                        rulefix = rulefix + \
+                                (f"    <key>{k}</key>\n")
+                        rulefix = rulefix + "    <array>\n"
+                        for setting in v:
+                            rulefix = rulefix + \
+                                (f"        <string>{setting}</string>\n")
+                        rulefix = rulefix + "    </array>\n"
+                    rulefix = rulefix + "</dict>\n"
 
             rulefix = rulefix + "----\n\n"
 
@@ -346,9 +356,7 @@ def concatenate_payload_settings(settings):
 def generate_profiles(baseline_name, build_path, parent_dir, baseline_yaml, signing, hash=''):
     """Generate the configuration profiles for the rules in the provided baseline YAML file
     """
-    organization = "macOS Security Compliance Project"
-    displayname = f"macOS {baseline_name} Baseline settings"
-
+    
     # import profile_manifests.plist
     manifests_file = os.path.join(
         parent_dir, 'includes', 'supported_payloads.yaml')
@@ -472,8 +480,12 @@ def generate_profiles(baseline_name, build_path, parent_dir, baseline_yaml, sign
                 signed_mobileconfig_file_path = os.path.join(
                 signed_mobileconfig_output_path, payload + '.mobileconfig')
         identifier = payload + f".{baseline_name}"
-        description = "Configuration settings for the {} preference domain.".format(
+        created = date.today()
+        description = "Created: {}\nConfiguration settings for the {} preference domain.".format(created,
             payload)
+        
+        organization = "macOS Security Compliance Project"
+        displayname = f"[{baseline_name}] {payload} settings"
 
         newProfile = PayloadDict(identifier=identifier,
                                  uuid=False,
@@ -600,12 +612,6 @@ YELLOW='\e[33m'
 audit_plist="/Library/Preferences/org.{baseline_name}.audit.plist"
 audit_log="/Library/Logs/{baseline_name}_baseline.log"
 
-lastComplianceScan=$(defaults read /Library/Preferences/org.{baseline_name}.audit.plist lastComplianceCheck)
-
-if [[ $lastComplianceScan == "" ]];then
-    lastComplianceScan="No scans have been run"
-fi
-
 # pause function
 pause(){{
 vared -p "Press [Enter] key to continue..." -c fackEnterKey
@@ -650,6 +656,12 @@ ask() {{
 
 # function to display menus
 show_menus() {{
+    lastComplianceScan=$(defaults read /Library/Preferences/org.{baseline_name}.audit.plist lastComplianceCheck)
+
+    if [[ $lastComplianceScan == "" ]];then
+        lastComplianceScan="No scans have been run"
+    fi
+
     /usr/bin/clear
     /bin/echo "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
     /bin/echo "        M A I N - M E N U"
@@ -673,6 +685,12 @@ read_options(){{
         4) exit 0;;
         *) echo -e "${{RED}}Error: please choose an option 1-4...${{STD}}" && sleep 1
     esac
+}}
+
+# function to reset and remove plist file.  Used to clear out any previous findings
+reset_plist(){{
+    echo "Clearing results from /Library/Preferences/org.{baseline_name}.audit.plist"
+    defaults delete /Library/Preferences/org.{baseline_name}.audit.plist
 }}
 
 # Generate the Compliant and Non-Compliant counts. Returns: Array (Compliant, Non-Compliant)
@@ -704,17 +722,39 @@ compliance_count(){{
     fi
 }}
 
+exempt_count(){{
+    exempt=0
+
+    if [[ -e "/Library/Managed Preferences/org.{baseline_name}.audit.plist" ]];then
+        mscp_prefs="/Library/Managed Preferences/org.{baseline_name}.audit.plist"
+    else
+        mscp_prefs="/Library/Preferences/org.{baseline_name}.audit.plist"
+    fi
+
+    results=$(/usr/libexec/PlistBuddy -c "Print" "$mscp_prefs")
+
+    while IFS= read -r line; do
+        if [[ "$line" =~ "exempt = true" ]]; then
+            exempt=$((exempt+1))
+        fi
+    done <<< "$results"
+
+    /bin/echo $exempt
+}}
+
 
 generate_report(){{
     count=($(compliance_count))
+    exempt_rules=$(exempt_count)
     compliant=${{count[1]}}
     non_compliant=${{count[2]}}
 
-    total=$((non_compliant + compliant))
+    total=$((non_compliant + compliant - exempt_rules))
     percentage=$(printf %.2f $(( compliant * 100. / total )) )
     /bin/echo
     echo "Number of tests passed: ${{GREEN}}$compliant${{STD}}"
     echo "Number of test FAILED: ${{RED}}$non_compliant${{STD}}"
+    echo "Number of exempt rules: ${{YELLOW}}$exempt_rules${{STD}}"
     echo "You are ${{YELLOW}}$percentage%${{STD}} percent compliant!"
     pause
 }}
@@ -882,7 +922,7 @@ EOS
             /usr/bin/logger "mSCP: {7} - {5} failed (Result: $result_value, Expected: "{3}")"
         else
             /bin/echo "$(date -u) {5} failed (Result: $result_value, Expected: "{3}") - Exemption Allowed (Reason: "$exempt_reason")" | /usr/bin/tee -a "$audit_log"
-            /usr/bin/defaults write "$audit_plist" {0} -dict-add finding -bool NO
+            /usr/bin/defaults write "$audit_plist" {0} -dict-add finding -bool YES
             /usr/bin/logger "mSCP: {7} - {5} failed (Result: $result_value, Expected: "{3}") - Exemption Allowed (Reason: "$exempt_reason")"
             /bin/sleep 1
         fi
@@ -994,7 +1034,9 @@ fi
 
 }
 
-zparseopts -D -E -check=check -fix=fix -stats=stats -compliant=compliant -non_compliant=non_compliant
+zparseopts -D -E -check=check -fix=fix -stats=stats -compliant=compliant -non_compliant=non_compliant -reset=reset
+
+if [[ $reset ]]; then reset_plist; fi
 
 if [[ $check ]] || [[ $fix ]] || [[ $stats ]] || [[ $compliant ]] || [[ $non_compliant ]]; then
     if [[ $fix ]]; then run_fix; fi
@@ -1030,14 +1072,23 @@ def fill_in_odv(resulting_yaml, parent_values):
     _has_odv = False
     if "odv" in resulting_yaml:
         try:
-            odv = str(resulting_yaml['odv'][parent_values])
+            if type(resulting_yaml['odv'][parent_values]) == int:
+                odv = resulting_yaml['odv'][parent_values]
+            else:
+                odv = str(resulting_yaml['odv'][parent_values])
             _has_odv = True
         except KeyError:
             try:
-                odv = str(resulting_yaml['odv']['custom'])
+                if type(resulting_yaml['odv']['custom']) == int:
+                    odv = resulting_yaml['odv']['custom']
+                else:
+                    odv = str(resulting_yaml['odv']['custom'])
                 _has_odv = True
             except KeyError:
-                odv = str(resulting_yaml['odv']['recommended'])
+                if type(resulting_yaml['odv']['recommended']) == int:
+                    odv = resulting_yaml['odv']['recommended']
+                else:
+                    odv = str(resulting_yaml['odv']['recommended'])
                 _has_odv = True
         else:
             pass
@@ -1045,7 +1096,7 @@ def fill_in_odv(resulting_yaml, parent_values):
     if _has_odv:
         for field in fields_to_process:
             if "$ODV" in resulting_yaml[field]:
-                resulting_yaml[field]=resulting_yaml[field].replace("$ODV", odv)
+                resulting_yaml[field]=resulting_yaml[field].replace("$ODV", str(odv))
 
         for result_value in resulting_yaml['result']:
             if "$ODV" in str(resulting_yaml['result'][result_value]):
@@ -1646,13 +1697,22 @@ def main():
     else:
         adoc_tag_show=":show_tags!:"
 
-    # Create header
+    if "Tailored from" in baseline_yaml['title']:
+        s=baseline_yaml['title'].split(':')[1]
+        adoc_html_subtitle = s.split('(')[0]
+        adoc_html_subtitle2 = s[s.find('(')+1:s.find(')')]
+        adoc_document_subtitle2 = f':document-subtitle2: {adoc_html_subtitle2}'
+    else:
+        adoc_html_subtitle=baseline_yaml['title'].split(':')[1]
+        adoc_document_subtitle2 = ':document-subtitle2:'
+    
+    # Create header    
     header_adoc = adoc_header_template.substitute(
-        profile_title=baseline_yaml['title'],
         description=baseline_yaml['description'],
         html_header_title=baseline_yaml['title'],
         html_title=baseline_yaml['title'].split(':')[0],
-        html_subtitle=baseline_yaml['title'].split(':')[1],
+        html_subtitle=adoc_html_subtitle,
+        document_subtitle2=adoc_document_subtitle2,
         logo=logo,
         pdf_theme=pdf_theme,
         tag_attribute=adoc_tag_show,
@@ -1849,21 +1909,6 @@ def main():
                     rule_id=rule_yaml['id'].replace('|', '\|'),
                     rule_discussion=rule_yaml['discussion'],
                 )
-            elif ('permanent' in tags) or ('inherent' in tags) or ('n_a' in tags):
-                rule_adoc = adoc_rule_no_setting_template.substitute(
-                    rule_title=rule_yaml['title'].replace('|', '\|'),
-                    rule_id=rule_yaml['id'].replace('|', '\|'),
-                    rule_discussion=rule_yaml['discussion'].replace('|', '\|'),
-                    rule_check=rule_yaml['check'],  # .replace('|', '\|'),
-                    rule_fix=rulefix,
-                    rule_80053r5=nist_controls,
-                    rule_800171=nist_800171,
-                    rule_disa_stig=disa_stig,
-                    rule_cis=cis,
-                    rule_cce=cce,
-                    rule_tags=tags,
-                    rule_srg=srg
-                )
             elif custom_refs:
                 rule_adoc = adoc_rule_custom_refs_template.substitute(
                     rule_title=rule_yaml['title'].replace('|', '\|'),
@@ -1881,6 +1926,21 @@ def main():
                     rule_tags=tags,
                     rule_srg=srg,
                     rule_result=result_value
+                )
+            elif ('permanent' in tags) or ('inherent' in tags) or ('n_a' in tags):
+                rule_adoc = adoc_rule_no_setting_template.substitute(
+                    rule_title=rule_yaml['title'].replace('|', '\|'),
+                    rule_id=rule_yaml['id'].replace('|', '\|'),
+                    rule_discussion=rule_yaml['discussion'].replace('|', '\|'),
+                    rule_check=rule_yaml['check'],  # .replace('|', '\|'),
+                    rule_fix=rulefix,
+                    rule_80053r5=nist_controls,
+                    rule_800171=nist_800171,
+                    rule_disa_stig=disa_stig,
+                    rule_cis=cis,
+                    rule_cce=cce,
+                    rule_tags=tags,
+                    rule_srg=srg
                 )
             else:
                 rule_adoc = adoc_rule_template.substitute(

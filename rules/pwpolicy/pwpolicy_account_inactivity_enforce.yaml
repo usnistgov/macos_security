@@ -5,7 +5,7 @@ discussion: |
 
   This rule prevents malicious users from making use of unused accounts to gain access to the system while avoiding detection. 
 check: | 
-  /usr/bin/pwpolicy getaccountpolicies | /usr/bin/grep -v "Getting global account policies" | /usr/bin/xmllint --xpath '/plist/dict/array/dict/dict[key="policyAttributeInactiveDays"]/integer' - | /usr/bin/awk -F '[<>]' '{print $3}'
+  /usr/bin/pwpolicy -getaccountpolicies 2> /dev/null | /usr/bin/tail +2 | /usr/bin/xmllint --xpath '//dict/key[text()="policyAttributeInactiveDays"]/following-sibling::integer[1]/text()' -
 result:
   integer: $ODV
 fix: |
@@ -68,6 +68,6 @@ tags:
   - 800-53r4_high
   - 800-53r5_moderate
   - 800-53r5_high
-  - cisv8
+  - cisv8  
 mobileconfig: false
 mobileconfig_info:
