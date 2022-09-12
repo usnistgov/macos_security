@@ -127,6 +127,7 @@ profile:
       - sysprefs_guest_account_disable
       - sysprefs_improve_siri_dictation_disable
       - sysprefs_internet_accounts_prefpane_disable
+      - sysprefs_internet_accounts_prefpane_hide
       - sysprefs_internet_sharing_disable
       - sysprefs_location_services_disable
       - sysprefs_loginwindow_prompt_username_password_enforce
@@ -164,7 +165,7 @@ profile:
       - os_reauth_devices_change_authenticators
       - os_secure_name_resolution
   - section: "not_applicable"
-    rules: 
+    rules:
       - os_access_control_mobile_devices
       - os_identify_non-org_users
       - os_nonlocal_maintenance

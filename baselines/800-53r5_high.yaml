@@ -154,6 +154,7 @@ profile:
       - sysprefs_hot_corners_disable
       - sysprefs_improve_siri_dictation_disable
       - sysprefs_internet_accounts_prefpane_disable
+      - sysprefs_internet_accounts_prefpane_hide
       - sysprefs_internet_sharing_disable
       - sysprefs_location_services_disable
       - sysprefs_loginwindow_prompt_username_password_enforce
@@ -213,7 +214,7 @@ profile:
       - os_secure_name_resolution
       - sysprefs_wifi_disable_when_connected_to_ethernet
   - section: "not_applicable"
-    rules: 
+    rules:
       - os_access_control_mobile_devices
       - os_identify_non-org_users
       - os_information_validation

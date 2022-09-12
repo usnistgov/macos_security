@@ -131,6 +131,7 @@ profile:
       - sysprefs_hot_corners_disable
       - sysprefs_improve_siri_dictation_disable
       - sysprefs_internet_accounts_prefpane_disable
+      - sysprefs_internet_accounts_prefpane_hide
       - sysprefs_internet_sharing_disable
       - sysprefs_location_services_disable
       - sysprefs_loginwindow_prompt_username_password_enforce
@@ -166,7 +167,7 @@ profile:
       - pwpolicy_50_percent
       - sysprefs_wifi_disable_when_connected_to_ethernet
   - section: "not_applicable"
-    rules: 
+    rules:
       - os_nonlocal_maintenance
   - section: "Supplemental"
     rules:

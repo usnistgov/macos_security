@@ -135,6 +135,7 @@ profile:
       - sysprefs_improve_siri_dictation_disable
       - sysprefs_install_macos_updates_enforce
       - sysprefs_internet_accounts_prefpane_disable
+      - sysprefs_internet_accounts_prefpane_hide
       - sysprefs_internet_sharing_disable
       - sysprefs_location_services_enable
       - sysprefs_loginwindow_loginwindowtext_enable
@@ -180,7 +181,7 @@ profile:
       - os_auth_peripherals
       - os_secure_name_resolution
   - section: "not_applicable"
-    rules: 
+    rules:
       - os_access_control_mobile_devices
   - section: "Supplemental"
     rules:
