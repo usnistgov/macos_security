@@ -23,7 +23,7 @@ check: |
     }
   EOS
 result:
-  string: "false"
+  string: "true"
 fix: |
   This is implemented by a Configuration Profile.
 references:
