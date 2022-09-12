@@ -5,7 +5,7 @@ discussion: |
 
   Hiding the system preference pane prevents the users from configuring Wallet and Apple Pay. 
 check: |
-  /usr/bin/profiles -P -o stdout | /usr/bin/grep -c 'com.apple.preferences.wallet' | /usr/bin/awk '{ if ($1 >= 2) {print "1"} else {print "0"}}' 
+  /usr/bin/profiles show -output stdout-xml | /usr/bin/xmllint --xpath 'string(//*[contains(text(), "HiddenPreferencePanes")]/following-sibling::*[1])' - | /usr/bin/grep -c com.apple.preferences.wallet
 result:
   integer: 1
 fix: |
