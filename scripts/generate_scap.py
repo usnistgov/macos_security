@@ -1350,15 +1350,21 @@ def generate_scap(all_rules, all_baselines, args):
             <object object_ref="oval:mscp:obj:{}"/>
         </textfilecontent54_test>
         '''.format(x+5000, rule_yaml['id'] + "_" + odv_label, x+5000)
-                    regex = r"(?<=grep).*$"
-                    matches = re.finditer(regex, rule_yaml['check'], re.MULTILINE)
-                    matchy_match = ""
-                    for matchNum, match in enumerate(matches, start=1):
-                        matchy_match = match.group()
-                                
-                    sshd_config_pattern = matchy_match.split('"')[1]
+                    sshd_config_pattern = ""
+                    if "grep" in rule_yaml['check']:
+                        regex = r"(?<=grep).*$"
+                        matches = re.finditer(regex, rule_yaml['check'], re.MULTILINE)
+                        matchy_match = ""
+                        for matchNum, match in enumerate(matches, start=1):
+                            matchy_match = match.group()
+                                                 
+                        sshd_config_pattern = matchy_match.split('"')[1]
                     
-
+                    if "awk" in rule_yaml['check']:
+                        matchy_match = rule_yaml['check'].split("'")[1].split("/")[1]
+                        for item in rule_yaml['result']:
+                            sshd_config_pattern = matchy_match + " " + str(rule_yaml['result'][item])
+                    
                     oval_object = oval_object + '''
                 <textfilecontent54_object id="oval:mscp:obj:{}" version="1" comment="{}_object" xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#independent">
                 <behaviors ignore_case="true"/>
