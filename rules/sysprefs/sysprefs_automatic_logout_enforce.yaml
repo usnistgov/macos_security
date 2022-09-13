@@ -1,4 +1,4 @@
-id: system_settings_automatic_logout_enforce
+id: sysprefs_automatic_logout_enforce
 title: "Enforce Auto Logout After $ODV Seconds of Inactivity"
 discussion: |
   Auto logout _MUST_ be configured to automatically terminate a user session and log out the after $ODV seconds of inactivity. 
