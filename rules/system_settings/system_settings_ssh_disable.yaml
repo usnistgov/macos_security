@@ -5,7 +5,7 @@ discussion: |
   
   Remote access sessions _MUST_ use FIPS validated encrypted methods to protect unauthorized individuals from gaining access. 
 check: |
-  /bin/launchctl print-disabled system | /usr/bin/grep -c '"com.openssh.sshd" => true'
+  /bin/launchctl print-disabled system | /usr/bin/grep -c '"com.openssh.sshd" => disabled'
 result:
   integer: 1
 fix: |
