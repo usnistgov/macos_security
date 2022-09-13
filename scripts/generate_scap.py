@@ -2568,7 +2568,7 @@ def generate_scap(all_rules, all_baselines, args):
                         continue
                 
                 if "launchctl" in command[2] or "launchctl" in rule_yaml['fix']:
-                    if "disable" in command[2] and "=> true" in rule_yaml['check'] or "unload -w" in rule_yaml['fix']:
+                    if "disable" in command[2] and "=> true" in rule_yaml['check'] or "unload -w" in rule_yaml['fix'] or "disable" in command[2] and "=> disabled" in rule_yaml['check']:
                         oval_definition = oval_definition + '''
             <definition id="oval:mscp:def:{}" version="1" class="compliance"> 
                 <metadata> 
