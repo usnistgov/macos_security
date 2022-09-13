@@ -1,13 +1,13 @@
 id: sysprefs_automatic_logout_enforce
-title: "Enforce Auto Logout After 24 Hours of Inactivity"
+title: "Enforce Auto Logout After $ODV Seconds of Inactivity"
 discussion: |
-  Auto logout _MUST_ be configured to automatically terminate a user session and log out the after 86400 seconds (24 hours) of inactivity. 
+  Auto logout _MUST_ be configured to automatically terminate a user session and log out the after $ODV seconds of inactivity. 
 
-  NOTE:The maximum that macOS can be configured for autologoff is 86400 seconds (24 hours).
+  NOTE:The maximum that macOS can be configured for autologoff is $ODV seconds.
 
   [IMPORTANT]
   ====
-  The 24-hour automatic logout may cause disruptions to an organization's workflow and/or loss of data. Information System Security Officers (ISSOs) are advised to first fully weigh the potential risks posed to their organization before opting to disable the 24-hour automatic logout setting.
+  The automatic logout may cause disruptions to an organization's workflow and/or loss of data. Information System Security Officers (ISSOs) are advised to first fully weigh the potential risks posed to their organization before opting to disable the automatic logout setting.
   ====
 check: |
   /usr/bin/osascript -l JavaScript << EOS
@@ -15,7 +15,7 @@ check: |
   .objectForKey('com.apple.autologout.AutoLogOutDelay').js
   EOS
 result:
-  integer: 86400
+  integer: $ODV
 fix: |
   This is implemented by a Configuration Profile.
 references:
@@ -36,6 +36,9 @@ references:
     - 3.1.11
 macOS:
   - "11.0"
+odv:
+  hint: "Number of seconds"
+  recommended: 86400
 tags:
   - 800-53r5_moderate
   - 800-53r5_high
@@ -46,6 +49,4 @@ tags:
 mobileconfig: true
 mobileconfig_info:
   .GlobalPreferences:
-    com.apple.autologout.AutoLogOutDelay: 86400
-    
-
+    com.apple.autologout.AutoLogOutDelay: $ODV
