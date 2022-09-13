@@ -1286,7 +1286,7 @@ def generate_xls(baseline_name, build_path, baseline_yaml):
             # sheet1.write(counter, 7, str(
             #     configProfile(rule_file)), topWrap)
         else:
-            sheet1.write(counter, 7, str(rule.rule_fix), topWrap)
+            sheet1.write(counter, 7, str(rule.rule_fix.replace("\|", "|")), topWrap)
 
         sheet1.col(7).width = 1000 * 50
 
