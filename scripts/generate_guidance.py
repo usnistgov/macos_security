@@ -1034,16 +1034,16 @@ fi
 
 }
 
-zparseopts -D -E -check=check -fix=fix -stats=stats -compliant=compliant -non_compliant=non_compliant -reset=reset
+zparseopts -D -E -check=check -fix=fix -stats=stats -compliant=compliant_opt -non_compliant=non_compliant_opt -reset=reset
 
 if [[ $reset ]]; then reset_plist; fi
 
-if [[ $check ]] || [[ $fix ]] || [[ $stats ]] || [[ $compliant ]] || [[ $non_compliant ]]; then
+if [[ $check ]] || [[ $fix ]] || [[ $stats ]] || [[ $compliant_opt ]] || [[ $non_compliant_opt ]]; then
     if [[ $fix ]]; then run_fix; fi
     if [[ $check ]]; then run_scan; fi
     if [[ $stats ]];then generate_stats; fi
-    if [[ $compliant ]];then compliance_count "compliant"; fi
-    if [[ $non_compliant ]];then compliance_count "non-compliant"; fi
+    if [[ $compliant_opt ]];then compliance_count "compliant"; fi
+    if [[ $non_compliant_opt ]];then compliance_count "non-compliant"; fi
 else
     while true; do
         show_menus
