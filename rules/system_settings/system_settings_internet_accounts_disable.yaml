@@ -1,21 +1,21 @@
-id: system_settings_internet_accounts_prefpane_disable
+id: system_settings_internet_accounts_disable
 title: "Disable the Internet Accounts System Preference Pane"
 discussion: |
-  The Internet Accounts System Preference pane _MUST_ be disabled to prevent the addition of unauthorized internet accounts. This will also hide the Internet Accounts System Setting.
+  The Internet Accounts System Setting _MUST_ be disabled to prevent the addition of unauthorized internet accounts.
 
   [IMPORTANT]
   ====
   Some organizations may allow the use and configuration of the built-in Mail.app, Calendar.app, and Contacts.app for organizational communication. Information System Security Officers (ISSOs) may make the risk-based decision not to disable the Internet Accounts System Preference pane to avoid losing this functionality, but they are advised to first fully weigh the potential risks posed to their organization.
   ====
 check: |
-  /usr/bin/profiles show -output stdout-xml | /usr/bin/xmllint --xpath 'string(//*[contains(text(), "DisabledPreferencePanes")]/following-sibling::*[1])' - | /usr/bin/grep -c com.apple.preferences.internetaccounts
+  /usr/bin/profiles show -output stdout-xml | /usr/bin/xmllint --xpath 'string(//*[contains(text(), "DisabledSystemSettings")]/following-sibling::*[1])' - | /usr/bin/grep -c com.apple.Internet-Accounts-Settings.extension
 result:
   integer: 1
 fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-    - CCE-91958-9
+    - N/A
   cci: 
     - CCI-001774
     - CCI-000381
@@ -55,5 +55,5 @@ severity: "medium"
 mobileconfig: true
 mobileconfig_info:
   com.apple.systempreferences:
-    DisabledPreferencePanes: 
-      - com.apple.preferences.internetaccounts
+    DisabledSystemSettings: 
+      - com.apple.Internet-Accounts-Settings.extension

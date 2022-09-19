@@ -39,7 +39,7 @@ profile:
   - section: "icloud"
     rules:
       - icloud_addressbook_disable
-      - icloud_appleid_prefpane_disable
+      - icloud_appleid_system_settings_disable
       - icloud_bookmarks_disable
       - icloud_calendar_disable
       - icloud_drive_disable
@@ -91,7 +91,6 @@ profile:
       - os_skip_unlock_with_watch_enable
       - os_sudo_timeout_configure
       - os_sudoers_timestamp_type_configure
-      - os_sudoers_tty_configure
       - os_system_wide_applications_configure
       - os_terminal_secure_keyboard_enable
       - os_tftpd_disable
@@ -137,7 +136,7 @@ profile:
       - system_settings_hot_corners_secure
       - system_settings_improve_siri_dictation_disable
       - system_settings_install_macos_updates_enforce
-      - system_settings_internet_accounts_prefpane_disable
+      - system_settings_internet_accounts_disable
       - system_settings_internet_sharing_disable
       - system_settings_location_services_audit
       - system_settings_location_services_enable

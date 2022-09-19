@@ -1,18 +1,18 @@
-id: icloud_appleid_prefpane_disable
-title: "Disable the System Preference Pane for Apple ID"
+id: icloud_appleid_system_settings_disable
+title: "Disable the System Setting for Apple ID"
 discussion: |
-  The system preference pane for Apple ID _MUST_ be disabled.
+  The system setting for Apple ID _MUST_ be disabled.
 
-  Disabling the system preference pane prevents login to Apple ID and iCloud. 
+  Disabling the system setting prevents login to Apple ID and iCloud. 
 check: |
-  /usr/bin/profiles show -output stdout-xml | /usr/bin/xmllint --xpath 'string(//*[contains(text(), "DisabledPreferencePanes")]/following-sibling::*[1])' - | /usr/bin/grep -c com.apple.preferences.AppleIDPrefPane
+  /usr/bin/profiles show -output stdout-xml | /usr/bin/xmllint --xpath 'string(//*[contains(text(), "DisabledSystemSettings")]/following-sibling::*[1])' - | /usr/bin/grep -c com.apple.systempreferences.AppleIDSettings
 result:
   integer: 1
 fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-    - CCE-91742-7
+    - N/A
   cci: 
     - CCI-001774
   800-53r5:
@@ -50,10 +50,9 @@ tags:
   - 800-171 
   - cnssi-1253
   - cisv8
-  - stig
 severity: "high"
 mobileconfig: true
 mobileconfig_info:
   com.apple.systempreferences:
-    DisabledPreferencePanes: 
-      - com.apple.preferences.AppleIDPrefPane
+    DisabledSystemSettings: 
+      - com.apple.systempreferences.AppleIDSettings

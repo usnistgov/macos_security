@@ -116,9 +116,8 @@ def format_mobileconfig_fix(mobileconfig):
     for domain, settings in mobileconfig.items():
         if domain == "com.apple.ManagedClient.preferences":
             rulefix = rulefix + \
-                (f"NOTE: The following settings are in the ({domain}) payload. This payload requires the additional settings to be sub-payloads within, containing their their defined payload types.\n\n")
+                (f"NOTE: The following settings are in the ({domain}) payload. This payload requires the additional settings to be sub-payloads within, containing their defined payload types.\n\n")
             rulefix = rulefix + format_mobileconfig_fix(settings)
-
         else:
             rulefix = rulefix + (
                 f"Create a configuration profile containing the following keys in the ({domain}) payload type:\n\n")
@@ -141,6 +140,17 @@ def format_mobileconfig_fix(mobileconfig):
                 elif type(item[1]) == str:
                     rulefix = rulefix + \
                         (f"<string>{item[1]}</string>\n")
+                elif type(item[1]) == dict:
+                    rulefix = rulefix + "<dict>\n"
+                    for k,v in item[1].items():
+                        rulefix = rulefix + \
+                                (f"    <key>{k}</key>\n")
+                        rulefix = rulefix + "    <array>\n"
+                        for setting in v:
+                            rulefix = rulefix + \
+                                (f"        <string>{setting}</string>\n")
+                        rulefix = rulefix + "    </array>\n"
+                    rulefix = rulefix + "</dict>\n"
 
             rulefix = rulefix + "----\n\n"
 
@@ -1024,16 +1034,16 @@ fi
 
 }
 
-zparseopts -D -E -check=check -fix=fix -stats=stats -compliant=compliant -non_compliant=non_compliant -reset=reset
+zparseopts -D -E -check=check -fix=fix -stats=stats -compliant=compliant_opt -non_compliant=non_compliant_opt -reset=reset
 
 if [[ $reset ]]; then reset_plist; fi
 
-if [[ $check ]] || [[ $fix ]] || [[ $stats ]] || [[ $compliant ]] || [[ $non_compliant ]]; then
+if [[ $check ]] || [[ $fix ]] || [[ $stats ]] || [[ $compliant_opt ]] || [[ $non_compliant_opt ]]; then
     if [[ $fix ]]; then run_fix; fi
     if [[ $check ]]; then run_scan; fi
     if [[ $stats ]];then generate_stats; fi
-    if [[ $compliant ]];then compliance_count "compliant"; fi
-    if [[ $non_compliant ]];then compliance_count "non-compliant"; fi
+    if [[ $compliant_opt ]];then compliance_count "compliant"; fi
+    if [[ $non_compliant_opt ]];then compliance_count "non-compliant"; fi
 else
     while true; do
         show_menus
@@ -1276,7 +1286,7 @@ def generate_xls(baseline_name, build_path, baseline_yaml):
             # sheet1.write(counter, 7, str(
             #     configProfile(rule_file)), topWrap)
         else:
-            sheet1.write(counter, 7, str(rule.rule_fix), topWrap)
+            sheet1.write(counter, 7, str(rule.rule_fix.replace("\|", "|")), topWrap)
 
         sheet1.col(7).width = 1000 * 50
 

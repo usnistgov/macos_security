@@ -190,7 +190,7 @@ def generate_scap(all_rules, all_baselines, args):
         for a in range(0, loop):
             
             rule_yaml = get_rule_yaml(rule_file, custom)
-            
+
             try:           
                 
                 # # odv_label = list(rule_yaml['odv'].keys())[a]
@@ -210,6 +210,8 @@ def generate_scap(all_rules, all_baselines, args):
                 # if odv_label == "hint":
                 #     continue
                 
+                
+
                 odv_value = str(rule_yaml['odv'][odv_label])
                 rule_yaml['title'] = rule_yaml['title'].replace("$ODV",str(odv_value))
                 rule_yaml['discussion'] = rule_yaml['discussion'].replace("$ODV",odv_value)
@@ -260,7 +262,8 @@ def generate_scap(all_rules, all_baselines, args):
                                     else:
                                         generated_baselines[baseline] = [rule_yaml['id'] + "_" + odv_label]
 
-            
+            if odv_label == "hint":
+                continue
             result = str()
             if "result" in rule_yaml:
                 result = "\nResult: {}".format(rule_yaml['result'])
@@ -891,7 +894,7 @@ def generate_scap(all_rules, all_baselines, args):
             </local_variable>'''.format(x,x+1999)
                             x += 1
                             continue                                                       
-                        if payload_type == "com.apple.systempreferences" and key == "DisabledPreferencePanes" or payload_type == "com.apple.systempreferences" and key == "HiddenPreferencePanes": 
+                        if payload_type == "com.apple.systempreferences" and key == "DisabledPreferencePanes" or payload_type == "com.apple.systempreferences" and key == "HiddenPreferencePanes" or payload_type == "com.apple.systempreferences" and key == "DisabledSystemSettings": 
                             
                             oval_definition = oval_definition + '''
                     <definition id="oval:mscp:def:{}" version="1" class="compliance"> 
@@ -1236,6 +1239,188 @@ def generate_scap(all_rules, all_baselines, args):
 
                     x += 1
                     continue
+                if "sudo -V" in rule_yaml['check']:
+                    
+                    
+                    if "grep" in rule_yaml['check'].split("|")[1]:
+                        oval_definition = oval_definition + '''
+                        <definition id="oval:mscp:def:{}" version="1" class="compliance"> 
+                    <metadata> 
+                        <title>{}</title> 
+                        <reference source="CCE" ref_id="{}"/>
+                        <reference source="macos_security" ref_id="{}"/>
+                        <description>{}</description> 
+                    </metadata> 
+                <criteria operator="OR">
+                    <criterion comment="{}" test_ref="oval:mscp:tst:{}" />
+                    <criterion comment="{}_sudoers.d" test_ref="oval:mscp:tst:{}"/>
+                </criteria>
+            </definition> '''.format(x,rule_yaml['title'],cce,rule_yaml['id'] + "_" + odv_label,rule_yaml['discussion'],rule_yaml['id'] + "_" + odv_label,x,rule_yaml['id'] + "_" + odv_label, x, rule_yaml['id'] + "_" + odv_label,x+5051)
+                    
+                        oval_test = oval_test + '''
+                <textfilecontent54_test id="oval:mscp:tst:{}" version="1" comment="{}_test" check_existence="all_exist" check="all" xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#independent">
+            <object object_ref="oval:mscp:obj:{}"/>
+        </textfilecontent54_test>
+        '''.format(x, rule_yaml['id'] + "_" + odv_label, x)
+                    
+                        oval_test = oval_test + '''
+                <textfilecontent54_test id="oval:mscp:tst:{}" version="1" comment="{}_sudoers.d_test" check_existence="all_exist" check="all" xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#independent">
+            <object object_ref="oval:mscp:obj:{}"/>
+        </textfilecontent54_test>
+        '''.format(x+5051, rule_yaml['id'] + "_" + odv_label, x+5051)
+
+                        check_string = rule_yaml['fix'].split("echo")[1].split('"')[1]
+                        
+                        oval_object = oval_object + '''
+                    <textfilecontent54_object id="oval:mscp:obj:{}" version="1" comment="{}_object" xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#independent">
+                    <behaviors ignore_case="true"/>
+                    <filepath>/etc/sudoers</filepath>
+                    <pattern operation="pattern match">{}</pattern>
+                    <instance datatype="int">1</instance>
+                </textfilecontent54_object>'''.format(x, rule_yaml['id'] + "_" + odv_label, check_string)
+
+
+                        oval_object = oval_object + '''
+                <textfilecontent54_object id="oval:mscp:obj:{}" version="1" comment="{}__sudoers.d_object" xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#independent">
+                <behaviors ignore_case="true"/>
+                <path>/etc/sudoers.d/</path>
+                <filename operation="pattern match">*</filename>
+                <pattern operation="pattern match">{}</pattern>
+                <instance datatype="int">1</instance>
+            </textfilecontent54_object>'''.format(x+5051, rule_yaml['id'] + "_" + odv_label, check_string)
+                    
+                
+                        x = x + 1
+                        continue
+
+                    if "awk" in rule_yaml['check'].split("|")[1]:
+                        if "timestamp_type" in rule_yaml['fix'] and rule_yaml['result']['string'] == "tty":
+                            oval_definition = oval_definition + '''
+                        <definition id="oval:mscp:def:{}" version="1" class="compliance"> 
+                    <metadata> 
+                        <title>{}</title> 
+                        <reference source="CCE" ref_id="{}"/>
+                        <reference source="macos_security" ref_id="{}"/>
+                        <description>{}</description> 
+                    </metadata> 
+                <criteria operator="AND">
+                    <criterion comment="{}" test_ref="oval:mscp:tst:{}" />
+                    <criterion comment="{}_sudoers.d" test_ref="oval:mscp:tst:{}"/>
+                    <criterion comment="{}_tty_ticket" test_ref="oval:mscp:tst:{}" />
+                    <criterion comment="{}_sudoers.d_tty_ticket" test_ref="oval:mscp:tst:{}"/>
+                </criteria>
+            </definition> '''.format(x,rule_yaml['title'],cce,rule_yaml['id'] + "_" + odv_label,rule_yaml['discussion'],rule_yaml['id'] + "_" + odv_label,x,rule_yaml['id'] + "_" + odv_label, x+8000, rule_yaml['id'] + "_" + odv_label,x+8001, rule_yaml['id'] + "_" + odv_label,x+8002,rule_yaml['id'] + "_" + odv_label,x+8003)
+                    
+                            oval_test = oval_test + '''
+                    <textfilecontent54_test id="oval:mscp:tst:{}" version="1" comment="{}_test" check_existence="none_exist" check="all" xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#independent">
+                <object object_ref="oval:mscp:obj:{}"/>
+            </textfilecontent54_test>
+            '''.format(x, rule_yaml['id'] + "_" + odv_label, x)
+                        
+                            oval_test = oval_test + '''
+                    <textfilecontent54_test id="oval:mscp:tst:{}" version="1" comment="{}_sudoers.d_test" check_existence="none_exist" check="all" xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#independent">
+                <object object_ref="oval:mscp:obj:{}"/>
+            </textfilecontent54_test>
+            '''.format(x+8000, rule_yaml['id'] + "_" + odv_label, x+8000)
+
+                            oval_test = oval_test + '''
+                    <textfilecontent54_test id="oval:mscp:tst:{}" version="1" comment="{}_sudoers.d_test" check_existence="none_exist" check="all" xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#independent">
+                <object object_ref="oval:mscp:obj:{}"/>
+            </textfilecontent54_test>
+            '''.format(x+8001, rule_yaml['id'] + "_" + odv_label, x+8001)
+
+                            oval_test = oval_test + '''
+                    <textfilecontent54_test id="oval:mscp:tst:{}" version="1" comment="{}_sudoers.d_test" check_existence="none_exist" check="all" xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#independent">
+                <object object_ref="oval:mscp:obj:{}"/>
+            </textfilecontent54_test>
+            '''.format(x+8002, rule_yaml['id'] + "_" + odv_label, x+8002)
+
+                            
+                            oval_object = oval_object + '''
+                        <textfilecontent54_object id="oval:mscp:obj:{}" version="1" comment="{}_object" xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#independent">
+                        <behaviors ignore_case="true"/>
+                        <filepath>/etc/sudoers</filepath>
+                        <pattern operation="pattern match">timestamp_type</pattern>
+                        <instance datatype="int">1</instance>
+                    </textfilecontent54_object>'''.format(x, rule_yaml['id'] + "_" + odv_label)
+
+
+                            oval_object = oval_object + '''
+                    <textfilecontent54_object id="oval:mscp:obj:{}" version="1" comment="{}__sudoers.d_object" xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#independent">
+                    <behaviors ignore_case="true"/>
+                    <path>/etc/sudoers.d/</path>
+                    <filename operation="pattern match">*</filename>
+                    <pattern operation="pattern match">timestamp_type</pattern>
+                    <instance datatype="int">1</instance>
+                </textfilecontent54_object>'''.format(x+8000, rule_yaml['id'] + "_" + odv_label)
+
+                            oval_object = oval_object + '''
+                    <textfilecontent54_object id="oval:mscp:obj:{}" version="1" comment="{}__sudoers.d_object" xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#independent">
+                    <behaviors ignore_case="true"/>
+                    <path>/etc/sudoers.d/</path>
+                    <filename operation="pattern match">*</filename>
+                    <pattern operation="pattern match">!tty_tickets</pattern>
+                    <instance datatype="int">1</instance>
+                </textfilecontent54_object>'''.format(x+8001, rule_yaml['id'] + "_" + odv_label)
+                            oval_object = oval_object + '''
+                    <textfilecontent54_object id="oval:mscp:obj:{}" version="1" comment="{}__sudoers.d_object" xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#independent">
+                    <behaviors ignore_case="true"/>
+                    <path>/etc/sudoers.d/</path>
+                    <filename operation="pattern match">*</filename>
+                    <pattern operation="pattern match">!tty_tickets</pattern>
+                    <instance datatype="int">1</instance>
+                </textfilecontent54_object>'''.format(x+8002, rule_yaml['id'] + "_" + odv_label)
+                            x = x + 1
+                            continue
+                        else:
+                            check_string = "Defaults.*.timestamp_type={}".format(rule_yaml['result']['string'])
+                            
+                            oval_definition = oval_definition + '''
+                        <definition id="oval:mscp:def:{}" version="1" class="compliance"> 
+                    <metadata> 
+                        <title>{}</title> 
+                        <reference source="CCE" ref_id="{}"/>
+                        <reference source="macos_security" ref_id="{}"/>
+                        <description>{}</description> 
+                    </metadata> 
+                <criteria operator="OR">
+                    <criterion comment="{}" test_ref="oval:mscp:tst:{}" />
+                    <criterion comment="{}_sudoers.d" test_ref="oval:mscp:tst:{}"/>
+                </criteria>
+            </definition> '''.format(x,rule_yaml['title'],cce,rule_yaml['id'] + "_" + odv_label,rule_yaml['discussion'],rule_yaml['id'] + "_" + odv_label,x,rule_yaml['id'] + "_" + odv_label, x+8000, rule_yaml['id'] + "_" + odv_label,x+8001, rule_yaml['id'] + "_" + odv_label,x+8002,rule_yaml['id'] + "_" + odv_label,x+8003)
+                    
+                            oval_test = oval_test + '''
+                    <textfilecontent54_test id="oval:mscp:tst:{}" version="1" comment="{}_test" check_existence="at_least_one_exists" check="all" xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#independent">
+                <object object_ref="oval:mscp:obj:{}"/>
+            </textfilecontent54_test>
+            '''.format(x, rule_yaml['id'] + "_" + odv_label, x)
+                        
+                            oval_test = oval_test + '''
+                    <textfilecontent54_test id="oval:mscp:tst:{}" version="1" comment="{}_sudoers.d_test" check_existence="at_least_one_exists" check="all" xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#independent">
+                <object object_ref="oval:mscp:obj:{}"/>
+            </textfilecontent54_test>
+            '''.format(x+5000, rule_yaml['id'] + "_" + odv_label, x+7000)
+
+                            oval_object = oval_object + '''
+                        <textfilecontent54_object id="oval:mscp:obj:{}" version="1" comment="{}_object" xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#independent">
+                        <behaviors ignore_case="true"/>
+                        <filepath>/etc/sudoers</filepath>
+                        <pattern operation="pattern match">{}</pattern>
+                        <instance datatype="int">1</instance>
+                    </textfilecontent54_object>'''.format(x, rule_yaml['id'] + "_" + odv_label, check_string)
+
+                        
+                            oval_object = oval_object + '''
+                    <textfilecontent54_object id="oval:mscp:obj:{}" version="1" comment="{}__sudoers.d_object" xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#independent">
+                    <behaviors ignore_case="true"/>
+                    <path>/etc/sudoers.d/</path>
+                    <filename operation="pattern match">*</filename>
+                    <pattern operation="pattern match">{}</pattern>
+                    <instance datatype="int">1</instance>
+                </textfilecontent54_object>'''.format(x+7000, rule_yaml['id'] + "_" + odv_label, check_string)
+
+                        x = x + 1
+                        continue
 
                 if "ssh_config" in rule_yaml['discussion'] and "dscl" in rule_yaml['check']:
                     
@@ -1265,6 +1450,11 @@ def generate_scap(all_rules, all_baselines, args):
             <object object_ref="oval:mscp:obj:{}"/>
         </textfilecontent54_test>
         '''.format(x+5000, rule_yaml['id'] + "_" + odv_label, x+5000)
+                    oval_test = oval_test + '''
+                <textfilecontent54_test id="oval:mscp:tst:{}" version="1" comment="{}_ssh_config.d_test" check_existence="all_exist" check="all" xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#independent">
+            <object object_ref="oval:mscp:obj:{}"/>
+        </textfilecontent54_test>
+        '''.format(x+5001, rule_yaml['id'] + "_" + odv_label, x+5001)
                     regex = r"(?<=grep).*$"
                     matches = re.finditer(regex, rule_yaml['check'], re.MULTILINE)
                     matchy_match = ""
@@ -1286,14 +1476,14 @@ def generate_scap(all_rules, all_baselines, args):
                     oval_object = oval_object + '''
                 <textfilecontent54_object id="oval:mscp:obj:{}" version="1" comment="{}__ssh_config.d_object" xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#independent">
                 <behaviors ignore_case="true"/>
-                <file>/etc/ssh/ssh_config.d/</file>
+                <path>/etc/ssh/ssh_config.d/</path>
                 <filename operation="pattern match">*</filename>
                 <pattern operation="pattern match">{}</pattern>
                 <instance datatype="int">1</instance>
             </textfilecontent54_object>'''.format(x+5000, rule_yaml['id'] + "_" + odv_label, ssh_config_pattern)
                     
                     oval_object = oval_object + '''
-            <textfilecontent54_object xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#unix" comment="{}_.ssh_object" id="oval:mscp:obj:{}" version="1">
+            <textfilecontent54_object xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#independent" id="oval:mscp:obj:{}" version="1" comment="{}_.ssh_object" >
             <filepath var_ref="oval:mscp:var:{}"></filepath>
             <pattern operation="pattern match">{}</pattern>
             <instance datatype="int">1</instance>
@@ -1304,7 +1494,7 @@ def generate_scap(all_rules, all_baselines, args):
             <accountinfo_object xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" comment="user home directory" id="oval:mscp:obj:{}" version="1">
                 <username operation="pattern match">.*</username>
                 <filter action="include" xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5">oval:mscp:ste:{}</filter>
-            </accountinfo_object>'''.format(rule_yaml['id'] + "_" + odv_label,x+5001,x,ssh_config_pattern,x+999,x+999)
+            </accountinfo_object>'''.format(x+5001,rule_yaml['id'] + "_" + odv_label,x,ssh_config_pattern,x+999,x+999)
                 
                     oval_state = oval_state + '''
                        <accountinfo_state xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" comment="accountinfo_state" id="oval:mscp:ste:{}" version="1">
@@ -1323,7 +1513,57 @@ def generate_scap(all_rules, all_baselines, args):
         </local_variable>'''.format(x,x+999)
                     x = x + 1
                     continue
+                if "sshd -T" in rule_yaml['check'] and "fips" in rule_yaml['check']:
+                    fipslist = rule_yaml['check'].split("\n")[0].split("(")[1].replace(")","").replace('" "',"\n").replace('"',"")
+                    
+                    
+                    oval_definition = oval_definition + '''
+                        <definition id="oval:mscp:def:{}" version="1" class="compliance"> 
+                    <metadata> 
+                        <title>{}</title> 
+                        <reference source="CCE" ref_id="{}"/>
+                        <reference source="macos_security" ref_id="{}"/>
+                        <description>{}</description> 
+                    </metadata> 
+                <criteria operator="OR">
+                    <criterion comment="{}" test_ref="oval:mscp:tst:{}" />
+                    <criterion comment="{}_sshd_config.d" test_ref="oval:mscp:tst:{}"/>
+                </criteria>
+            </definition> '''.format(x,rule_yaml['title'],cce,rule_yaml['id'] + "_" + odv_label,rule_yaml['discussion'],rule_yaml['id'] + "_" + odv_label,x,rule_yaml['id'] + "_" + odv_label, x+5000, rule_yaml['id'] + "_" + odv_label,x+5001)
+                    
+                    oval_test = oval_test + '''
+                <textfilecontent54_test id="oval:mscp:tst:{}" version="1" comment="{}_test" check_existence="all_exist" check="all" xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#independent">
+            <object object_ref="oval:mscp:obj:{}"/>
+        </textfilecontent54_test>
+        '''.format(x, rule_yaml['id'] + "_" + odv_label, x)
+                    
+                    oval_test = oval_test + '''
+                <textfilecontent54_test id="oval:mscp:tst:{}" version="1" comment="{}_sshd_config.d_test" check_existence="all_exist" check="all" xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#independent">
+            <object object_ref="oval:mscp:obj:{}"/>
+        </textfilecontent54_test>
+        '''.format(x+5000, rule_yaml['id'] + "_" + odv_label, x+5000)
+                    
+                    oval_object = oval_object + '''
+                <textfilecontent54_object id="oval:mscp:obj:{}" version="1" comment="{}_object" xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#independent">
+                <behaviors ignore_case="true"/>
+                <filepath>/etc/ssh/sshd_config</filepath>
+                <pattern operation="pattern match">{}</pattern>
+                <instance datatype="int">1</instance>
+            </textfilecontent54_object>'''.format(x, rule_yaml['id'] + "_" + odv_label, fipslist)
 
+
+                    oval_object = oval_object + '''
+                <textfilecontent54_object id="oval:mscp:obj:{}" version="1" comment="{}__sshd_config.d_object" xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#independent">
+                <behaviors ignore_case="true"/>
+                <path>/etc/ssh/sshd_config.d/</path>
+                <filename operation="pattern match">*</filename>
+                <pattern operation="pattern match">{}</pattern>
+                <instance datatype="int">1</instance>
+            </textfilecontent54_object>'''.format(x+5000, rule_yaml['id'] + "_" + odv_label, fipslist)
+                    
+                    x = x + 1
+                    
+                    continue
                 if "sshd -T" in rule_yaml['check']:
                     oval_definition = oval_definition + '''
                         <definition id="oval:mscp:def:{}" version="1" class="compliance"> 
@@ -1350,15 +1590,21 @@ def generate_scap(all_rules, all_baselines, args):
             <object object_ref="oval:mscp:obj:{}"/>
         </textfilecontent54_test>
         '''.format(x+5000, rule_yaml['id'] + "_" + odv_label, x+5000)
-                    regex = r"(?<=grep).*$"
-                    matches = re.finditer(regex, rule_yaml['check'], re.MULTILINE)
-                    matchy_match = ""
-                    for matchNum, match in enumerate(matches, start=1):
-                        matchy_match = match.group()
-                                
-                    sshd_config_pattern = matchy_match.split('"')[1]
+                    sshd_config_pattern = ""
+                    if "grep" in rule_yaml['check']:
+                        regex = r"(?<=grep).*$"
+                        matches = re.finditer(regex, rule_yaml['check'], re.MULTILINE)
+                        matchy_match = ""
+                        for matchNum, match in enumerate(matches, start=1):
+                            matchy_match = match.group()
+                                                 
+                        sshd_config_pattern = matchy_match.split('"')[1]
                     
-
+                    if "awk" in rule_yaml['check']:
+                        matchy_match = rule_yaml['check'].split("'")[1].split("/")[1]
+                        for item in rule_yaml['result']:
+                            sshd_config_pattern = matchy_match + " " + str(rule_yaml['result'][item])
+                    
                     oval_object = oval_object + '''
                 <textfilecontent54_object id="oval:mscp:obj:{}" version="1" comment="{}_object" xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#independent">
                 <behaviors ignore_case="true"/>
@@ -1371,7 +1617,7 @@ def generate_scap(all_rules, all_baselines, args):
                     oval_object = oval_object + '''
                 <textfilecontent54_object id="oval:mscp:obj:{}" version="1" comment="{}__sshd_config.d_object" xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#independent">
                 <behaviors ignore_case="true"/>
-                <file>/etc/ssh/sshd_config.d/</file>
+                <path>/etc/ssh/sshd_config.d/</path>
                 <filename operation="pattern match">*</filename>
                 <pattern operation="pattern match">{}</pattern>
                 <instance datatype="int">1</instance>
@@ -2589,6 +2835,203 @@ def generate_scap(all_rules, all_baselines, args):
                 <label>{}</label>
             </launchd_object>'''.format(x, rule_yaml['id'] + "_" + odv_label,domain)
                     
+
+
+
+                    elif "defaults write" in rule_yaml['fix']:
+                        oval_definition = oval_definition + '''
+                            <definition id="oval:mscp:def:{}" version="1" class="compliance"> 
+                        <metadata> 
+                            <title>{}</title> 
+                            <reference source="CCE" ref_id="{}"/>
+                            <reference source="macos_security" ref_id="{}"/>
+                            <description>{}</description> 
+                        </metadata> 
+                    <criteria>
+                        <criterion comment="{}" test_ref="oval:mscp:tst:{}" />
+                    </criteria>
+                </definition> '''.format(x,rule_yaml['title'],cce,rule_yaml['id'] + "_" + odv_label,rule_yaml['discussion'],rule_yaml['id'] + "_" + odv_label,x)
+                        
+                        oval_test = oval_test + '''
+                            <plist511_test xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" check="all" check_existence="all_exist" comment="{}_test" id="oval:mscp:tst:{}" version="2">
+                    <object object_ref="oval:mscp:obj:{}" />
+                    <state state_ref="oval:mscp:ste:{}" />
+                </plist511_test>'''.format(rule_yaml['id'] + "_" + odv_label,x,x,x)
+                        plist = rule_yaml['fix'].split(" ")[2].replace(".plist","")
+                        # plist = rule_yaml['check'].split("read")[1].split()[0].replace(".plist","")
+                        
+                        if "ByHost" in rule_yaml['fix'] or "currentHost" in rule_yaml['fix']:
+                            
+                            oval_object = oval_object + '''
+                                        <systemprofiler_object xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" comment="{}" id="oval:mscp:obj:{}" version="1">
+                <data_type>SPHardwareDataType</data_type>
+
+                    <xpath>//*[contains(text(), "platform_UUID")]/following-sibling::string[position()=1]/text()</xpath>
+                </systemprofiler_object> '''.format("hardware UUID",x+999)
+
+                            if "$CURRENT_USER" in rule_yaml['check']:
+                                
+                                
+                                
+                                key = rule_yaml['fix'].split("defaults")[1].split(" ")[3]
+                                
+                                oval_object = oval_object + '''
+                                <accountinfo_object xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" comment="home directory" id="oval:mscp:obj:{}" version="1">
+                    <username operation="pattern match">.*</username>
+                    <filter action="include" xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5">oval:mscp:ste:{}</filter>
+                </accountinfo_object>
+                
+                <plist511_object xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" comment="{}_object" id="oval:mscp:obj:{}" version="1">
+                    <filepath datatype="string" operation="equals" var_check="at least one" var_ref="oval:mscp:var:{}"/>    
+                '''.format(x+1999,x+1999,rule_yaml['id'] + "_" + odv_label,x,x)
+                                
+                                if rule_yaml['fix'].split("defaults")[1].split(" ")[4] == "-bool":
+                                    rule_yaml['result']['boolean']
+                                    oval_object = oval_object + '''
+                            <xpath>name(//*[contains(text(), "{}")]/following-sibling::*[1])</xpath>
+        </plist511_object>'''.format(key)
+                                else:
+                                    
+                                    oval_object = oval_object + '''<xpath>//*[contains(text(), "{}")]/following-sibling::*[1]/text()</xpath>
+                </plist511_object>'''.format(key)
+                                oval_state = oval_state + '''
+                            <accountinfo_state xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" comment="home directory state" id="oval:mscp:ste:{}" version="1">
+                    <username operation="pattern match">^[^_\s].*</username>
+                    <uid datatype="int" operation="not equal">0</uid>
+                    <gid datatype="int" operation="not equal">0</gid>
+                    <login_shell operation="not equal">/usr/bin/false</login_shell>
+                </accountinfo_state>'''.format(x+1999)
+                                
+                                oval_variable = oval_variable + '''
+            <local_variable id="oval:mscp:var:{}" version="1" datatype="string" comment="uuid variable">
+                <concat>
+                    <object_component object_ref="oval:mscp:obj:{}" item_field="home_dir"/>
+                    <literal_component datatype="string">/Library/Preferences/ByHost/{}.</literal_component>
+                    <object_component object_ref="oval:mscp:obj:{}" item_field="value_of"/>
+                    <literal_component datatype="string">.plist</literal_component>
+                </concat>
+            </local_variable>'''.format(x,x+1999,plist,x+999)
+
+                            
+
+                            else:
+                                
+                                
+                                key = rule_yaml['fix'].split("defaults")[1].split(" ")[3]
+
+                                oval_object = oval_object + '''
+                <plist511_object xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" comment="{}_object" id="oval:mscp:obj:{}" version="1">
+                    <filepath datatype="string" operation="equals" var_check="at least one" var_ref="oval:mscp:var:{}"/>
+                    '''.format(rule_yaml['id'] + "_" + odv_label,x,x)
+
+                                
+                                if rule_yaml['fix'].split("defaults")[1].split(" ")[4] == "-bool":
+                                    
+                                    oval_object = oval_object + '''
+                            <xpath>name(//*[contains(text(), "{}")]/following-sibling::*[1])</xpath>
+                </plist511_object>'''.format(key)
+                                else:
+                                    oval_object = oval_object + '''
+                                <xpath>//*[contains(text(), "{}")]/following-sibling::*[1]/text()</xpath>
+                </plist511_object>'''.format(key)
+                                
+                                oval_variable = oval_variable + '''       
+            <local_variable id="oval:mscp:var:{}" version="1" datatype="string" comment="uuid variable">
+                <concat>
+                    <literal_component datatype="string">{}.</literal_component>
+                    <object_component object_ref="oval:mscp:obj:{}" item_field="value_of"/>
+                    <literal_component datatype="string">.plist</literal_component>
+                </concat>
+            </local_variable>'''.format(x,plist,x+999)
+                        
+                        elif "$CURRENT_USER" in rule_yaml['check']:
+                            
+                                
+                            check_length = len(rule_yaml['check'].split())
+                            key = rule_yaml['fix'].split("defaults")[1].split(" ")[3]
+                            
+                            oval_object = oval_object + '''
+                            <accountinfo_object xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" comment="home directory" id="oval:mscp:obj:{}" version="1">
+                <username operation="pattern match">.*</username>
+                <filter action="include" xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5">oval:mscp:ste:{}</filter>
+            </accountinfo_object>
+            
+            <plist511_object xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" comment="{}_object" id="oval:mscp:obj:{}" version="1">
+                <filepath datatype="string" operation="equals" var_check="at least one" var_ref="oval:mscp:var:{}"/>    
+            '''.format(x+1999,x+1999,rule_yaml['id'] + "_" + odv_label,x,x)
+                            
+                            if rule_yaml['fix'].split("defaults")[1].split(" ")[4] == "-bool":
+                                
+                                oval_object = oval_object + '''
+                        <xpath>name(//*[contains(text(), "{}")]/following-sibling::*[1])</xpath>
+        </plist511_object>'''.format(key)
+                            else:
+                                
+                                oval_object = oval_object + '''<xpath>//*[contains(text(), "{}")]/following-sibling::*[1]/text()</xpath>
+            </plist511_object>'''.format(key)
+                            oval_state = oval_state + '''
+                        <accountinfo_state xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" comment="home directory state" id="oval:mscp:ste:{}" version="1">
+                <username operation="pattern match">^[^_\s].*</username>
+                <uid datatype="int" operation="not equal">0</uid>
+                <gid datatype="int" operation="not equal">0</gid>
+                <login_shell operation="not equal">/usr/bin/false</login_shell>
+            </accountinfo_state>'''.format(x+1999)
+                            
+                            oval_variable = oval_variable + '''
+        <local_variable id="oval:mscp:var:{}" version="1" datatype="string" comment="uuid variable">
+            <concat>
+                <object_component object_ref="oval:mscp:obj:{}" item_field="home_dir"/>
+                <literal_component datatype="string">/Library/Preferences/{}.</literal_component>
+                <literal_component datatype="string">plist</literal_component>
+            </concat>
+        </local_variable>'''.format(x,x+1999,plist,x+999)
+
+                        else:
+                            
+                            if plist[-6:] != ".plist":
+                                plist = plist + ".plist"
+                            plist_key = rule_yaml['fix'].split("defaults")[1].split(" ")[3]
+                            
+                            oval_object = oval_object + '''
+                            <plist511_object xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" comment="{}_object" id="oval:mscp:obj:{}" version="1">
+                            <filepath>{}</filepath>'''.format(rule_yaml['id'] + "_" + odv_label,x,plist)
+                            
+                            try:
+                                rule_yaml['result']['boolean']
+                                oval_object = oval_object + '''
+                            <xpath>name(//*[contains(text(), "{}")]/following-sibling::*[1])</xpath>
+                            </plist511_object>'''.format(plist_key)
+                            except:
+                                oval_object = oval_object + '''
+                                <xpath>//*[contains(text(), "{}")]/following-sibling::*[1]/text()</xpath>
+                            </plist511_object>'''.format(plist_key)
+                            
+                            
+                        datatype = ""
+                        plist_key = rule_yaml['fix'].split("defaults")[1].split(" ")[3]
+                        
+                        oval_datatype = rule_yaml['fix'].split("defaults")[1].split(" ")[4].replace("-","")
+
+                        if oval_datatype == "integer":
+                            oval_datatype = "int"
+                        
+                        if oval_datatype == "bool":
+                            oval_datatype = "boolean"
+
+                        value = rule_yaml['fix'].split("defaults")[1].split(" ")[5].replace(";","")
+                            
+                        oval_state = oval_state + '''
+                <plist511_state xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" comment="{}_state" id="oval:mscp:ste:{}" version="1">
+                <value_of datatype="{}" operation="equals">{}</value_of>
+                </plist511_state>'''.format(rule_yaml['id'] + "_" + odv_label,x,oval_datatype,value)
+                        oval_definition = re.sub('(?=\n\[NOTE\])(?s)(.*)\=\n<', '<', oval_definition)
+
+
+                        x = x+1
+                
+                        continue
+
+
                     else:
                         
                         oval_definition = oval_definition + '''
@@ -2608,7 +3051,7 @@ def generate_scap(all_rules, all_baselines, args):
             <launchd_test id="oval:mscp:tst:{}" version="1" comment="{}_test" check_existence="all_exist" check="all" xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos">
                 <object object_ref="oval:mscp:obj:{}"/>
             </launchd_test>'''.format(x,rule_yaml['id'] + "_" + odv_label,x)
-
+                        
                         domain = command[5].split()[2]
                         domain = domain.replace('"','').replace("'",'')
 

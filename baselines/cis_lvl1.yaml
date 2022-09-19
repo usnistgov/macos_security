@@ -52,7 +52,6 @@ profile:
       - os_software_update_deferral
       - os_sudo_timeout_configure
       - os_sudoers_timestamp_type_configure
-      - os_sudoers_tty_configure
       - os_system_wide_applications_configure
       - os_terminal_secure_keyboard_enable
       - os_time_offset_limit_configure
