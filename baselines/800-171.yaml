@@ -39,7 +39,7 @@ profile:
   - section: "icloud"
     rules:
       - icloud_addressbook_disable
-      - icloud_appleid_syssetting_disable
+      - icloud_appleid_system_settings_disable
       - icloud_bookmarks_disable
       - icloud_calendar_disable
       - icloud_drive_disable
