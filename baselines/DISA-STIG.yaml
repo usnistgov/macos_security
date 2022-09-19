@@ -41,7 +41,7 @@ profile:
   - section: "icloud"
     rules:
       - icloud_addressbook_disable
-      - icloud_appleid_prefpane_disable
+      - icloud_appleid_syssetting_disable
       - icloud_bookmarks_disable
       - icloud_calendar_disable
       - icloud_drive_disable
@@ -101,8 +101,8 @@ profile:
       - os_sshd_key_exchange_algorithm_configure
       - os_sshd_login_grace_time_configure
       - os_sshd_permit_root_login_configure
-      - os_sudoers_tty_configure
       - os_tftpd_disable
+      - os_sudoers_timestamp_type_configure
       - os_time_server_enabled
       - os_touchid_prompt_disable
       - os_uucp_disable

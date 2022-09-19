@@ -42,7 +42,7 @@ profile:
   - section: "icloud"
     rules:
       - icloud_addressbook_disable
-      - icloud_appleid_prefpane_disable
+      - icloud_appleid_syssetting_disable
       - icloud_bookmarks_disable
       - icloud_calendar_disable
       - icloud_drive_disable
@@ -107,7 +107,6 @@ profile:
       - os_sshd_fips_compliant
       - os_sudo_timeout_configure
       - os_sudoers_timestamp_type_configure
-      - os_sudoers_tty_configure
       - os_system_read_only
       - os_tftpd_disable
       - os_time_server_enabled
@@ -151,7 +150,7 @@ profile:
       - system_settings_guest_account_disable
       - system_settings_hot_corners_disable
       - system_settings_improve_siri_dictation_disable
-      - system_settings_internet_accounts_prefpane_disable
+      - system_settings_internet_accounts_disable
       - system_settings_internet_sharing_disable
       - system_settings_location_services_disable
       - system_settings_loginwindow_prompt_username_password_enforce
