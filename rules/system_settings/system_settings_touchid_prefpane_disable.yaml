@@ -5,7 +5,6 @@ discussion: |
 
   Disabling the system preference pane prevents the users from configuring Touch ID. This will also hide the TouchID System Setting.
 check: |
-  /usr/bin/profiles -P -o stdout | /usr/bin/grep -c 'com.apple.preferences.password' | /usr/bin/awk '{ if ($1 >= 2) {print "1"} else {print "0"}}'
   /usr/bin/profiles show -output stdout-xml | /usr/bin/xmllint --xpath 'string(//*[contains(text(), "DisabledPreferencePanes")]/following-sibling::*[1])' - | /usr/bin/grep -c com.apple.preferences.password
 result:
   integer: 1
