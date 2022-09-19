@@ -89,6 +89,7 @@ profile:
       - os_time_server_enabled
       - os_user_app_installation_prohibit
       - os_uucp_disable
+      - os_sudoers_timestamp_type_configure
   - section: "passwordpolicy"
     rules:
       - pwpolicy_account_lockout_enforce
