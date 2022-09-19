@@ -83,7 +83,6 @@ profile:
       - os_sshd_key_exchange_algorithm_configure
       - os_sudo_timeout_configure
       - os_sudoers_timestamp_type_configure
-      - os_sudoers_tty_configure
       - os_tftpd_disable
       - os_time_server_enabled
       - os_touchid_prompt_disable
