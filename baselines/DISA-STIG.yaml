@@ -93,6 +93,7 @@ profile:
       - os_time_server_enabled
       - os_touchid_prompt_disable
       - os_uucp_disable
+      - os_sudoers_timestamp_type_configure
   - section: "passwordpolicy"
     rules:
       - pwpolicy_account_lockout_enforce
