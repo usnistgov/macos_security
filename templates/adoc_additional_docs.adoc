@@ -28,7 +28,7 @@ ASSOCIATED DOCUMENTS
 |===
 |Document Number or Descriptor
 |Document Title
-|link:https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Apple_macOS_12_V1R1_STIG.zip[STIG Ver 1, Rel 1]|_Apple macOS 12 (Monterey) STIG_
+|link:https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Apple_macOS_12_V1R3_STIG.zip[STIG Ver 1, Rel 3]|_Apple macOS 12 (Monterey) STIG_
 |===
 
 [%header, cols=2*a]
@@ -48,6 +48,7 @@ ASSOCIATED DOCUMENTS
 |link:https://support.apple.com/guide/security/welcome/web[Apple Platform Security Guide]|_Apple Platform Security_
 |link:https://support.apple.com/guide/deployment/welcome/web[Apple Platform Deployment]|_Apple Platform Deployment_
 |link:https://developer.apple.com/documentation/devicemanagement/profile-specific_payload_keys[Profile-Specific Payload Keys]|_Profile-Specific Payload Keys_
+|link:https://github.com/apple/device-management/tree/release[Apple Device Management GitHub]
 |link:https://support.apple.com/guide/sccc/welcome/web[Security Certifications and Compliance Center]|_Security Certifications and Compliance Center_
 |===
 

@@ -14,7 +14,7 @@ references:
   cce:
     - N/A
   cci: 
-    - CCI-001774
+    - N/A
   800-53r5:
     - AC-20
     - AC-20(1)
@@ -26,9 +26,9 @@ references:
     - AC-20
     - AC-20(1)
   srg:
-    - SRG-OS-000370-GPOS-00155
+    - N/A
   disa_stig:
-    - APPL-12-002031
+    - N/A
   800-171r2:
     - 3.1.20
     - 3.4.6
