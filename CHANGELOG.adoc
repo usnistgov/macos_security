@@ -7,6 +7,7 @@ This document provides a high-level view of the changes to the macOS Security Co
 * Rules
 ** Added ODV support
 ** Added Rules
+*** icloud_appleid_system_settings_disable
 *** os_config_profile_ui_install_disable
 *** os_firewall_ui_disable
 *** os_power_nap_enable
@@ -14,6 +15,7 @@ This document provides a high-level view of the changes to the macOS Security Co
 *** os_rapid_security_response_removal_disable
 *** os_software_update_deferral
 *** system_settings_USB_restricted_mode
+*** system_settings_internet_accounts_disable
 ** Modified Rules
 *** os_power_nap_disable
 *** os_ssh_fips_compliant
@@ -28,6 +30,7 @@ This document provides a high-level view of the changes to the macOS Security Co
 *** os_sshd_login_grace_time_configure
 *** os_sshd_permit_root_login_configure
 *** os_sudo_timeout_configure
+*** os_sudoers_timestamp_type_configure
 *** pwpolicy_account_inactivity_enforce.yaml
 *** pwpolicy_account_lockout_enforce.yaml
 *** pwpolicy_account_lockout_timeout_enforce.yaml
@@ -41,6 +44,8 @@ This document provides a high-level view of the changes to the macOS Security Co
 *** pwpolicy_special_character_enforce.yaml
 *** pwpolicy_upper_case_character_enforce.yaml
 *** System Preferences -> System Settings
+** Deleted Rules
+*** os_sudoers_tty_configure
 ** Bug Fixes
 
 * Baselines

@@ -1,4 +1,4 @@
-id: icloud_appleid_syssetting_disable
+id: icloud_appleid_system_settings_disable
 title: "Disable the System Setting for Apple ID"
 discussion: |
   The system setting for Apple ID _MUST_ be disabled.
