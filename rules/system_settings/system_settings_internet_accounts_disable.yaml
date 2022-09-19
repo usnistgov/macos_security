@@ -17,8 +17,7 @@ references:
   cce:
     - N/A
   cci: 
-    - CCI-001774
-    - CCI-000381
+    - N/A
   800-53r5:
     - CM-7(5)
     - AC-20
@@ -26,10 +25,9 @@ references:
     - AC-20
     - CM-7(5)
   srg:
-    - SRG-OS-000370-GPOS-00155
-    - SRG-OS-000095-GPOS-00049
+    - N/A
   disa_stig:
-    - APPL-12-002032
+    - N/A
   800-171r2:
     - 3.1.20
   cis:
@@ -50,7 +48,6 @@ tags:
   - 800-171 
   - cnssi-1253
   - cisv8
-  - stig
 severity: "medium"
 mobileconfig: true
 mobileconfig_info:
