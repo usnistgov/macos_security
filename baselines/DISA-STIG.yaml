@@ -85,7 +85,6 @@ profile:
       - os_sshd_key_exchange_algorithm_configure
       - os_sshd_login_grace_time_configure
       - os_sshd_permit_root_login_configure
-      - os_sudoers_tty_configure
       - os_tftpd_disable
       - os_time_server_enabled
       - os_user_app_installation_prohibit
