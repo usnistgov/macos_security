@@ -243,6 +243,28 @@ discussion: |
   session     required      pam_uwtmp.so
   session     optional      pam_mount.so
   ----
+
+  [discrete]
+  ==== Screen Sharing and Screen Recording
+  macOS will disable support for TouchID, Watch, or Smartcard authentication when being watched or recorded. This can cause certain portions of the system to not recognize your smartcard. 
+  
+  In Unified Logging you'll notice an entry such as
+  [source,bash]
+  ----
+  2022-07-14 16:45:46.880038-0400 0x2F97 Info 0xC8D2 1600 SecurityAgent: (SecurityAgent) [com.apple.Authorization:SecurityAgent] Screen is being watched, no Touch ID, Watch or SmartCard support is allowed
+  ----
+  This can be remediated by writing the preference domain com.apple.authorization with the key ignoreARD.
+
+  `defaults write com.apple.Authorization ignoreARD -bool true`
+
+  Or applied system wide with a configuration profile named `com.apple.security.authorization.mobileconfig` in the project's `includes` folder.
+  [source,xml]
+  ----
+  <key>PayloadType</key>
+  <string>com.apple.security.authorization</string>
+  <key>ignoreArd</key>
+  <true/>
+  ----    
 check: |
 fix: |
 references:
