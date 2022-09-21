@@ -236,7 +236,7 @@ def output_baseline(rules, os, keyword, benchmark):
         else:
             if rule.rule_id not in other_rules:
                 other_rules.append(rule.rule_id)
-            if "system_settings" in rule.rule_id:
+            if rule.rule_id.startswith("system_settings"):
                  section_name = rule.rule_id.split("_")[0]+"_"+rule.rule_id.split("_")[1]
             else:
                  section_name = rule.rule_id.split("_")[0]
