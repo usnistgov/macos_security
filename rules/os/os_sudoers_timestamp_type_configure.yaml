@@ -11,7 +11,7 @@ result:
 fix: |
   [source,bash]
   ----
-  /usr/bin/find /etc/sudoers* -type f -exec sed -i '' '/timestamp_type/d; /!tty_tickets/d' '{}' \
+  /usr/bin/find /etc/sudoers* -type f -exec sed -i '' '/timestamp_type/d; /!tty_tickets/d' '{}' \;
   ----
 references:
   cce:
