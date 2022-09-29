@@ -3,7 +3,7 @@ title: "Disable Network File System Service"
 discussion: |
   Support for Network File Systems (NFS) services is non-essential and, therefore, _MUST_ be disabled.
 check: |
-  /bin/launchctl print-disabled system | /usr/bin/grep -c '"com.apple.nfsd" => true'
+  /bin/launchctl print-disabled system | /usr/bin/grep -c '"com.apple.nfsd" => disabled'
 result:
   integer: 1
 fix: |

@@ -5,7 +5,7 @@ discussion: |
 
   NOTE: The built in web server service is disabled at startup by default macOS.
 check: |
-  /bin/launchctl print-disabled system | /usr/bin/grep -c '"org.apache.httpd" => true'
+  /bin/launchctl print-disabled system | /usr/bin/grep -c '"org.apache.httpd" => disabled'
 result:
   integer: 1
 fix: |
