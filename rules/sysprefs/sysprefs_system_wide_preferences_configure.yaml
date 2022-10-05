@@ -12,7 +12,7 @@ fix: |
   [source,bash]
   ----
   /usr/bin/security authorizationdb read system.preferences > /tmp/system.preferences.plist
-  key_value=$(/usr/libexec/PlistBuddy -c "Print :shared" /tmp/system.preferences.plist)
+  key_value=$(/usr/libexec/PlistBuddy -c "Print :shared" /tmp/system.preferences.plist 2>&1)
   if [[ "$key_value" == *"Does Not Exist"* ]]; then
     /usr/libexec/PlistBuddy -c "Add :shared bool false" /tmp/system.preferences.plist
   else
