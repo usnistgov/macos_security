@@ -15,8 +15,9 @@ fix: |
   key_value=$(/usr/libexec/PlistBuddy -c "Print :shared" /tmp/system.preferences.plist)
   if [[ "$key_value" == *"Does Not Exist"* ]]; then
     /usr/libexec/PlistBuddy -c "Add :shared bool false" /tmp/system.preferences.plist
+  else
+    /usr/libexec/PlistBuddy -c "Set :shared false" /tmp/system.preferences.plist
   fi
-  /usr/libexec/PlistBuddy -c "Set :shared false" /tmp/system.preferences.plist
   /usr/bin/security authorizationdb write system.preferences < /tmp/system.preferences.plist
   ----
 references:
