@@ -236,7 +236,7 @@ def output_baseline(rules, os, keyword, benchmark):
         else:
             if rule.rule_id not in other_rules:
                 other_rules.append(rule.rule_id)
-            if rule.rule_id.startswith("system_settings"):
+            if "system_settings" in rule.rule_id:
                  section_name = rule.rule_id.split("_")[0]+"_"+rule.rule_id.split("_")[1]
             else:
                  section_name = rule.rule_id.split("_")[0]
@@ -292,6 +292,9 @@ def output_baseline(rules, os, keyword, benchmark):
 
 def write_odv_custom_rule(rule, odv):
     print(f"Writing custom rule for {rule.rule_id} to include value {odv}")
+    
+    if not os.path.exists("../custom/rules"):
+        os.makedirs("../custom/rules")
     if os.path.exists(f"../custom/rules/{rule.rule_id}.yaml"):
         with open(f"../custom/rules/{rule.rule_id}.yaml") as f:
             rule_yaml = yaml.load(f, Loader=yaml.SafeLoader)

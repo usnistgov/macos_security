@@ -23,7 +23,13 @@ profile:
       - audit_files_group_configure
       - audit_files_mode_configure
       - audit_files_owner_configure
-      - audit_flags_configure
+      - audit_flags_aa_configure
+      - audit_flags_ad_configure
+      - audit_flags_ex_configure
+      - audit_flags_fm_failed_configure
+      - audit_flags_fr_configure
+      - audit_flags_fw_configure
+      - audit_flags_lo_configure
       - audit_folder_group_configure
       - audit_folder_owner_configure
       - audit_folders_mode_configure

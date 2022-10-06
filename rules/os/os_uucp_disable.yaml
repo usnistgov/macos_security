@@ -7,7 +7,7 @@ discussion: |
 
   NOTE: UUCP service is disabled at startup by default macOS.
 check: |
-  /bin/launchctl print-disabled system | /usr/bin/grep -c '"com.apple.uucp" => true'
+  /bin/launchctl print-disabled system | /usr/bin/grep -c '"com.apple.uucp" => disabled'
 result:
   integer: 1
 fix: |

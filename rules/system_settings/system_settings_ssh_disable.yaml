@@ -5,14 +5,16 @@ discussion: |
   
   Remote access sessions _MUST_ use FIPS validated encrypted methods to protect unauthorized individuals from gaining access. 
 check: |
-  /bin/launchctl print-disabled system | /usr/bin/grep -c '"com.openssh.sshd" => true'
+  /bin/launchctl print-disabled system | /usr/bin/grep -c '"com.openssh.sshd" => disabled'
 result:
   integer: 1
 fix: |
   [source,bash]
   ----
+  /usr/sbin/systemsetup -f -setremotelogin off >/dev/null
   /bin/launchctl disable system/com.openssh.sshd
   ----
+  NOTE: Systemsetup with -setremotelogin flag will fail unless you grant Full Disk Access to systemsetup or it's parent process. Requires supervision.
 references:
   cce:
     - CCE-91984-5

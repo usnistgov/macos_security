@@ -5,7 +5,7 @@ discussion: |
 
   The information system _MUST_ be configured to provide only essential capabilities.
 check: |
-  /bin/launchctl print-disabled system | /usr/bin/grep -c '"com.apple.smbd" => true'
+  /bin/launchctl print-disabled system | /usr/bin/grep -c '"com.apple.smbd" => disabled'
 result:
   integer: 1
 fix: |
