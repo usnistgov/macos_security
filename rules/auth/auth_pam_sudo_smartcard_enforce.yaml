@@ -1,6 +1,13 @@
 id: auth_pam_sudo_smartcard_enforce
 title: "Enforce Multifactor Authentication for Privilege Escalation Through the sudo Command"
-discussion: "The system _MUST_ be configured to enforce multifactor authentication when the sudo command is used to elevate privilege. \n\nAll users _MUST_ go through multifactor authentication to prevent unauthenticated access and potential compromise to the system.\n\nIMPORTANT: Modification of Pluggable Authentication Modules (PAM) now require user authorization, or use of a Privacy Preferences Policy Control (PPPC) profile from MDM that authorizes modifying system administrator files or full disk access.\n\nNOTE: /etc/pam.d/sudo will be automatically modified to its original state following any update or major upgrade to the operating system.\n"
+discussion: |
+  The system _MUST_ be configured to enforce multifactor authentication when the sudo command is used to elevate privilege. 
+
+  All users _MUST_ go through multifactor authentication to prevent unauthenticated access and potential compromise to the system.
+
+  IMPORTANT: Modification of Pluggable Authentication Modules (PAM) now require user authorization, or use of a Privacy Preferences Policy Control (PPPC) profile from MDM that authorizes modifying system administrator files or full disk access.
+
+  NOTE: /etc/pam.d/sudo will be automatically modified to its original state following any update or major upgrade to the operating system.
 check: |
   /usr/bin/grep -Ec '^(auth\s+sufficient\s+pam_smartcard.so|auth\s+required\s+pam_deny.so)' /etc/pam.d/sudo
 result:

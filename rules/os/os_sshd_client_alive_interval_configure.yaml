@@ -1,6 +1,11 @@
 id: os_sshd_client_alive_interval_configure
 title: "Configure SSHD ClientAliveInterval option set to $ODV"
-discussion: "If SSHD is enabled then it _MUST_ be configured with an Active Client Alive Maximum Count set to $ODV. \n\nSetting the Active Client Alive Maximum Count to $ODV (seconds) will log users out after an organizational defined interval of inactivity.\n\nNOTE: /etc/ssh/sshd_config will be automatically modified to its original state following any update or major upgrade to the operating system.\n"
+discussion: |
+  If SSHD is enabled then it _MUST_ be configured with an Active Client Alive Maximum Count set to $ODV. 
+
+  Setting the Active Client Alive Maximum Count to $ODV (seconds) will log users out after an organizational defined interval of inactivity.
+
+  NOTE: /etc/ssh/sshd_config will be automatically modified to its original state following any update or major upgrade to the operating system.
 check: |
   /usr/bin/grep -c "^ClientAliveInterval $ODV" /etc/ssh/sshd_config
 result:

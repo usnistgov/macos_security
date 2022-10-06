@@ -1,6 +1,9 @@
 id: sysprefs_ssh_disable
 title: "Disable SSH Server for Remote Access Sessions"
-discussion: "SSH service _MUST_ be disabled for remote access.\n\nRemote access sessions _MUST_ use FIPS validated encrypted methods to protect unauthorized individuals from gaining access. \n"
+discussion: |
+  SSH service _MUST_ be disabled for remote access.
+
+  Remote access sessions _MUST_ use FIPS validated encrypted methods to protect unauthorized individuals from gaining access. 
 check: |
   /bin/launchctl print-disabled system | /usr/bin/grep -c '"com.openssh.sshd" => true'
 result:

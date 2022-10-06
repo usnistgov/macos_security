@@ -1,6 +1,9 @@
 id: os_icloud_storage_prompt_disable
 title: "Disable iCloud Storage Setup during Setup Assistant"
-discussion: "The prompt to set up iCloud storage services during Setup Assistant _MUST_ be disabled.\n\nThe default behavior of macOS is to prompt new users to set up storage in iCloud. Disabling the iCloud storage setup prompt provides organizations more control over the storage of their data. \n"
+discussion: |
+  The prompt to set up iCloud storage services during Setup Assistant _MUST_ be disabled.
+
+  The default behavior of macOS is to prompt new users to set up storage in iCloud. Disabling the iCloud storage setup prompt provides organizations more control over the storage of their data. 
 check: |
   /usr/bin/osascript -l JavaScript << EOS
   $.NSUserDefaults.alloc.initWithSuiteName('com.apple.SetupAssistant.managed')\

@@ -1,6 +1,9 @@
 id: sysprefs_firewall_enable
 title: "Enable macOS Application Firewall"
-discussion: "The macOS Application Firewall is the built-in firewall that comes with macOS, and it _MUST_ be enabled. \n\nWhen the macOS Application Firewall is enabled, the flow of information within the information system and between interconnected systems will be controlled by approved authorizations.\n"
+discussion: |
+  The macOS Application Firewall is the built-in firewall that comes with macOS, and it _MUST_ be enabled. 
+
+  When the macOS Application Firewall is enabled, the flow of information within the information system and between interconnected systems will be controlled by approved authorizations.
 check: |
   /usr/bin/osascript -l JavaScript << EOS
   $.NSUserDefaults.alloc.initWithSuiteName('com.apple.security.firewall')\

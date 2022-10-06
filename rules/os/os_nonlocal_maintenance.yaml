@@ -1,6 +1,7 @@
 id: os_nonlocal_maintenance
 title: "Configure the System for Nonlocal Maintenance"
-discussion: "Nonlocal maintenance and diagnostic activities are those activities conducted by individuals communicating through a network, either an external network or an internal network.  \n"
+discussion: |
+  Nonlocal maintenance and diagnostic activities are those activities conducted by individuals communicating through a network, either an external network or an internal network.  
 check: |
   This requirement is NA for this technology.
 fix: |

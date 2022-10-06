@@ -1,6 +1,9 @@
 id: icloud_keychain_disable
 title: "Disable iCloud Keychain Sync"
-discussion: "The macOS system's ability to automatically synchronize a user's passwords to their iCloud account _MUST_ be disabled. \n\nApple's iCloud service does not provide an organization with enough control over the storage and access of data and, therefore, password management and synchronization _MUST_ be controlled by an organization approved service. \n"
+discussion: |
+  The macOS system's ability to automatically synchronize a user's passwords to their iCloud account _MUST_ be disabled. 
+
+  Apple's iCloud service does not provide an organization with enough control over the storage and access of data and, therefore, password management and synchronization _MUST_ be controlled by an organization approved service. 
 check: |
   /usr/bin/osascript -l JavaScript << EOS
   $.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess')\

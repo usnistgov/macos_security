@@ -1,6 +1,13 @@
 id: audit_flags_fr_configure
 title: "Configure System to Audit All Failed Read Actions on the System"
-discussion: "The audit system _MUST_ be configured to record enforcement actions of access restrictions, including failed file read (-fr) attempts. \n\nEnforcement actions are the methods or mechanisms used to prevent unauthorized access and/or changes to configuration settings. One common and effective enforcement action method is using access restrictions (e.g., denying access to a file by applying file permissions). \n\nThis configuration ensures that audit lists include events in which enforcement actions prevent attempts to read a file. \n\nWithout auditing the enforcement of access restrictions, it is difficult to identify attempted attacks, as there is no audit trail available for forensic investigation.\n"
+discussion: |
+  The audit system _MUST_ be configured to record enforcement actions of access restrictions, including failed file read (-fr) attempts. 
+
+  Enforcement actions are the methods or mechanisms used to prevent unauthorized access and/or changes to configuration settings. One common and effective enforcement action method is using access restrictions (e.g., denying access to a file by applying file permissions). 
+
+  This configuration ensures that audit lists include events in which enforcement actions prevent attempts to read a file. 
+
+  Without auditing the enforcement of access restrictions, it is difficult to identify attempted attacks, as there is no audit trail available for forensic investigation.
 check: |
   /usr/bin/awk -F':' '/^flags/ { print $NF }' /etc/security/audit_control | /usr/bin/tr ',' '\n' | /usr/bin/grep -Ec '\-fr'
 result:

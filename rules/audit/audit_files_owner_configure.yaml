@@ -6,7 +6,8 @@ discussion: |
   The audit service _MUST_ be configured to create log files with the correct ownership to prevent normal users from reading audit logs.
 
   Audit logs contain sensitive data about the system and users. If log files are set to only be readable and writable by system administrators, the risk is mitigated.
-check: "/bin/ls -n $(/usr/bin/grep '^dir' /etc/security/audit_control | /usr/bin/awk -F: '{print $2}') | /usr/bin/awk '{s+=$3} END {print s}'  \n"
+check: |
+  /bin/ls -n $(/usr/bin/grep '^dir' /etc/security/audit_control | /usr/bin/awk -F: '{print $2}') | /usr/bin/awk '{s+=$3} END {print s}' 
 result:
   integer: 0
 fix: |

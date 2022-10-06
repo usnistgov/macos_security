@@ -1,6 +1,14 @@
 id: os_mail_app_disable
 title: "Disable Mail App"
-discussion: "The macOS built-in Mail.app _MUST_ be disabled. \n\nThe Mail.app contains functionality that can establish connections to Apple's iCloud, even when security controls to disable iCloud access have been put in place.\n\n[IMPORTANT]\n====\nSome organizations allow the use of the built-in Mail.app for organizational communication. Information System Security Officers (ISSOs) may make the risk-based decision not to disable the macOS built-in Mail.app to avoid losing this functionality, but they are advised to first fully weigh the potential risks posed to their organization.\n====\n"
+discussion: |
+  The macOS built-in Mail.app _MUST_ be disabled. 
+
+  The Mail.app contains functionality that can establish connections to Apple's iCloud, even when security controls to disable iCloud access have been put in place.
+
+  [IMPORTANT]  
+  ====
+  Some organizations allow the use of the built-in Mail.app for organizational communication. Information System Security Officers (ISSOs) may make the risk-based decision not to disable the macOS built-in Mail.app to avoid losing this functionality, but they are advised to first fully weigh the potential risks posed to their organization.  
+  ====
 check: |
   /usr/bin/osascript -l JavaScript << EOS
   function run() {

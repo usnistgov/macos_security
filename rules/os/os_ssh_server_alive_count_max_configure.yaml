@@ -16,7 +16,17 @@ check: |
   /bin/echo $ret
 result:
   string: pass
-fix: "[source,bash]\n----\nfor u in $(/usr/bin/dscl . -list /Users UniqueID | /usr/bin/awk '$2 > 500 {print $1}'); do \n  config=$(/usr/bin/sudo -u $u /usr/bin/ssh -Gv . 2>&1 | /usr/bin/awk '/Reading configuration data/ {print $NF}'| /usr/bin/tr -d '\\r')\n  configarray=( ${(f)config} )\n  for c in $configarray; do\n    /usr/bin/sudo -u $u /usr/bin/grep -q '^ServerAliveCountMax' \"$c\" && /usr/bin/sed -i '' 's/.*ServerAliveCountMax.*/ServerAliveCountMax $ODV/' \"$c\" || /bin/echo 'ServerAliveCountMax $ODV' >> \"$c\"\n  done\ndone\n----\n"
+fix: |
+  [source,bash]
+  ----
+  for u in $(/usr/bin/dscl . -list /Users UniqueID | /usr/bin/awk '$2 > 500 {print $1}'); do 
+    config=$(/usr/bin/sudo -u $u /usr/bin/ssh -Gv . 2>&1 | /usr/bin/awk '/Reading configuration data/ {print $NF}'| /usr/bin/tr -d '\\r')
+    configarray=( ${(f)config} )
+    for c in $configarray; do
+      /usr/bin/sudo -u $u /usr/bin/grep -q '^ServerAliveCountMax' "$c" && /usr/bin/sed -i '' 's/.*ServerAliveCountMax.*/ServerAliveCountMax $ODV/' "$c" || /bin/echo 'ServerAliveCountMax $ODV' >> "$c"
+    done
+  done
+  ----
 references:
   cce:
     - CCE-91005-9

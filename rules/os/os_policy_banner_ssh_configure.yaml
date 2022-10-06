@@ -1,6 +1,11 @@
 id: os_policy_banner_ssh_configure
 title: "Display Policy Banner at Remote Login"
-discussion: "Remote login service _MUST_ be configured to display a policy banner at login. \n\nDisplaying a standardized and approved use notification before granting access to the operating system ensures that users are provided with privacy and security notification verbiage that is consistent with applicable federal laws, Executive Orders, directives, policies, regulations, standards, and guidance.\n\nSystem use notifications are required only for access via login interfaces with human users and are not required when such human interfaces do not exist.\n"
+discussion: |
+  Remote login service _MUST_ be configured to display a policy banner at login. 
+
+  Displaying a standardized and approved use notification before granting access to the operating system ensures that users are provided with privacy and security notification verbiage that is consistent with applicable federal laws, Executive Orders, directives, policies, regulations, standards, and guidance.
+
+  System use notifications are required only for access via login interfaces with human users and are not required when such human interfaces do not exist.
 check: |
   compliant=1
   if [[ "$(/bin/cat /etc/banner)" != "$ODV" ]]; then
@@ -9,7 +14,12 @@ check: |
   echo "$compliant"
 result:
   integer: 1
-fix: "[source,bash]\n----\nbannerText=\"$ODV\"\n/bin/echo \"${bannerText}\" > /etc/banner\n----   \n"
+fix: |
+  [source,bash]
+  ----
+  bannerText="$ODV"
+  /bin/echo "${bannerText}" > /etc/banner
+  ----
 references:
   cce:
     - CCE-90974-7
