@@ -35,7 +35,6 @@ profile:
       - audit_files_owner_configure
       - audit_flags_aa_configure
       - audit_flags_ad_configure
-      - audit_flags_configure
       - audit_flags_ex_configure
       - audit_flags_fd_configure
       - audit_flags_fm_configure
