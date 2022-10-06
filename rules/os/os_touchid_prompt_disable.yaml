@@ -18,9 +18,9 @@ references:
     - CCE-91020-8
   cci:
     - CCI-000381
-  800-53r5: 
+  800-53r5:
     - CM-6
-  800-53r4: 
+  800-53r4:
     - CM-6
   srg:
     - SRG-OS-000095-GPOS-00049
@@ -34,6 +34,8 @@ references:
       - N/A
     controls v8:
       - 4.1
+  cmmc:
+    - CM.L2-3.4.2
 macOS:
   - "12.0"
 tags:
@@ -47,6 +49,8 @@ tags:
   - cnssi-1253
   - cisv8
   - stig
+  - cmmc_lvl2
+  - cmmc_lvl3
 severity: "medium"
 mobileconfig: true
 mobileconfig_info:

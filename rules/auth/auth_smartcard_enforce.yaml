@@ -8,7 +8,7 @@ discussion: |
   When enforceSmartCard is set to "true", the smartcard must be used for login, authorization, and unlocking the screensaver.
 
   CAUTION: enforceSmartCard will apply to the whole system. No users will be able to login with their password unless the profile is removed or a user is exempt from smartcard enforcement.
-  
+
   NOTE: enforceSmartcard requires allowSmartcard to be set to true in order to work.
 check: |
   /usr/bin/osascript -l JavaScript << EOS
@@ -61,19 +61,25 @@ references:
       - 6.3
       - 6.4
       - 6.5
+  cmmc:
+    - IA.L1-3.5.1
+    - IA.L1-3.5.2
 macOS:
   - "12.0"
 tags:
-  - 800-53r5_low 
-  - 800-53r5_moderate 
-  - 800-53r5_high 
-  - 800-53r4_low 
-  - 800-53r4_moderate 
-  - 800-53r4_high 
-  - 800-171 
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_high
+  - 800-53r4_low
+  - 800-53r4_moderate
+  - 800-53r4_high
+  - 800-171
   - cnssi-1253
   - cisv8
   - stig
+  - cmmc_lvl1
+  - cmmc_lvl2
+  - cmmc_lvl3
 severity: "high"
 mobileconfig: true
 mobileconfig_info:

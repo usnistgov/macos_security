@@ -16,13 +16,13 @@ fix: |
 references:
   cce:
     - CCE-91080-2
-  cci: 
+  cci:
     - CCI-001891
     - CCI-002046
   800-53r5:
     - AU-12(1)
     - SC-45(1)
-  800-53r4: 
+  800-53r4:
     - AU-8(1)
   srg:
     - SRG-OS-000355-GPOS-00143
@@ -36,6 +36,8 @@ references:
       - 2.2.1 (level 1)
     controls v8:
       - 8.4
+  cmmc:
+    - AU.L2-3.3.7
 macOS:
   - "12.0"
 odv:
@@ -45,17 +47,19 @@ odv:
   cis_lvl1: "time.apple.com"
   cis_lvl2: "time.apple.com"
 tags:
-  - 800-171 
-  - cnssi-1253 
-  - 800-53r5_low 
-  - 800-53r5_moderate 
-  - 800-53r5_high 
-  - 800-53r4_moderate 
+  - 800-171
+  - cnssi-1253
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_high
+  - 800-53r4_moderate
   - 800-53r4_high
   - cis_lvl1
   - cis_lvl2
   - cisv8
   - stig
+  - cmmc_lvl2
+  - cmmc_lvl3
 severity: "medium"
 mobileconfig: true
 mobileconfig_info:

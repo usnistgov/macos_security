@@ -4,7 +4,7 @@ discussion: |
   Software Update _MUST_ be configured to update XProtect, MRT, and Gatekeepr automatically.
 
   This setting enforces definition updates for XProtect and Gatekeeper; with this setting in place, new malware and adware that Apple has added to the list of malware or untrusted software will not execute. These updates do not require the computer to be restarted.
-  
+
   link:https://support.apple.com/en-us/HT207005[]
 
   NOTE: Software update will automatically update XProtect and Gatekeeper by default in the macOS.
@@ -20,7 +20,7 @@ fix: |
 references:
   cce:
     - CCE-90913-5
-  cci: 
+  cci:
     - CCI-000366
   800-53r5:
     - SI-3
@@ -40,6 +40,10 @@ references:
       - 10.1
       - 10.2
       - 10.4
+  cmmc:
+    - SI.L1-3.14.1
+    - SI.L1-3.14.2
+    - SI.L1-3.14.4
 macOS:
   - "12.0"
 tags:
@@ -50,6 +54,9 @@ tags:
   - cis_lvl2
   - cisv8
   - stig
+  - cmmc_lvl1
+  - cmmc_lvl2
+  - cmmc_lvl3
 severity: "high"
 mobileconfig: true
 mobileconfig_info:

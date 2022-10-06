@@ -23,7 +23,7 @@ references:
     - AC-20
     - CM-7
     - CM-7(1)
-  800-53r4: 
+  800-53r4:
     - CM-7
     - CM-7(1)
     - AC-20
@@ -41,19 +41,24 @@ references:
     controls v8:
       - 4.1
       - 4.8
+  cmmc:
+    - AC.L1-3.1.20
 macOS:
   - "12.0"
 tags:
-  - 800-53r5_low 
-  - 800-53r5_moderate 
-  - 800-53r5_high 
-  - 800-53r4_low 
-  - 800-53r4_moderate 
-  - 800-53r4_high 
-  - 800-171 
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_high
+  - 800-53r4_low
+  - 800-53r4_moderate
+  - 800-53r4_high
+  - 800-171
   - cnssi-1253
   - cisv8
   - stig
+  - cmmc_lvl1
+  - cmmc_lvl2
+  - cmmc_lvl3
 severity: "medium"
 mobileconfig: true
 mobileconfig_info:

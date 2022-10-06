@@ -1,9 +1,6 @@
 id: icloud_addressbook_disable
 title: "Disable iCloud Address Book"
-discussion: |
-  The macOS built-in Contacts.app connection to Apple's iCloud service _MUST_ be disabled. 
-
-  Apple's iCloud service does not provide an organization with enough control over the storage and access of data, and, therefore, automated contact synchronization _MUST_ be controlled by an organization approved service.
+discussion: "The macOS built-in Contacts.app connection to Apple's iCloud service _MUST_ be disabled. \n\nApple's iCloud service does not provide an organization with enough control over the storage and access of data, and, therefore, automated contact synchronization _MUST_ be controlled by an organization approved service.\n"
 check: |
   /usr/bin/osascript -l JavaScript << EOS
   $.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess')\
@@ -45,19 +42,24 @@ references:
       - 4.1
       - 4.8
       - 15.3
+  cmmc:
+    - AC.L1-3.1.20
 macOS:
   - "12.0"
 tags:
-  - 800-53r5_low 
-  - 800-53r5_moderate 
-  - 800-53r5_high 
-  - 800-53r4_low 
-  - 800-53r4_moderate 
-  - 800-53r4_high 
-  - 800-171 
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_high
+  - 800-53r4_low
+  - 800-53r4_moderate
+  - 800-53r4_high
+  - 800-171
   - cnssi-1253
   - cisv8
   - stig
+  - cmmc_lvl1
+  - cmmc_lvl2
+  - cmmc_lvl3
 severity: "low"
 mobileconfig: true
 mobileconfig_info:

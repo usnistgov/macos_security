@@ -1,15 +1,7 @@
 id: sysprefs_bluetooth_unpaired_disable
 title: "Disable Bluetooth When No Devices are Paired"
-discussion: |
-  Bluetooth _MUST_ be disabled when no devices are paired. 
-check: |
-  isPaired=$(/usr/sbin/system_profiler SPBluetoothDataType 2>/dev/null | /usr/bin/grep -c 'Connected: Yes')
-  if [[ "$isPaired" = "0" ]]; then 
-      powerState=$(/usr/sbin/system_profiler SPBluetoothDataType 2>/dev/null | /usr/bin/grep -c 'State: On')
-      /bin/echo "$powerState"
-  else
-      /bin/echo "0"
-  fi
+discussion: "Bluetooth _MUST_ be disabled when no devices are paired. \n"
+check: "isPaired=$(/usr/sbin/system_profiler SPBluetoothDataType 2>/dev/null | /usr/bin/grep -c 'Connected: Yes')\nif [[ \"$isPaired\" = \"0\" ]]; then \n    powerState=$(/usr/sbin/system_profiler SPBluetoothDataType 2>/dev/null | /usr/bin/grep -c 'State: On')\n    /bin/echo \"$powerState\"\nelse\n    /bin/echo \"0\"\nfi\n"
 result:
   integer: 0
 fix: |
@@ -21,18 +13,18 @@ fix: |
 references:
   cce:
     - CCE-91126-3
-  cci: 
+  cci:
     - N/A
   800-53r5:
     - AC-18
     - SC-8
     - AC-18(3)
-  800-53r4: 
+  800-53r4:
     - AC-18(3)
     - SC-8
   srg:
     - N/A
-  disa_stig: 
+  disa_stig:
     - N/A
   800-171r2:
     - N/A
@@ -41,9 +33,13 @@ references:
       - N/A
     controls v8:
       - N/A
+  cmmc:
+    - AC.L2-3.1.16
 macOS:
   - "12.0"
 tags:
   - none
+  - cmmc_lvl2
+  - cmmc_lvl3
 mobileconfig: false
 mobileconfig_info:

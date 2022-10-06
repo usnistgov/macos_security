@@ -2,7 +2,7 @@ id: audit_records_processing
 title: "Audit Record Reduction and Report Generation"
 discussion: |
   The macOS should be configured to provide and implement the capability to process, sort, and search audit records for events of interest based on organizationally defined fields.
-  
+
   Events of interest can be identified by the content of audit records, including system resources involved, information objects accessed, identities of individuals, event types, event locations, event dates and times, Internet Protocol addresses involved, or event success or failure. Organizations may define event criteria to any degree of granularity required, such as locations selectable by a general networking location or by specific system component.
 check: |
   The technology does not support this requirement. This is an applicable-does not meet finding.
@@ -11,11 +11,11 @@ fix: |
 references:
   cce:
     - CCE-90874-9
-  cci: 
+  cci:
     - N/A
   800-53r5:
     - AU-7(1)
-  800-53r4: 
+  800-53r4:
     - N/A
   srg:
     - N/A
@@ -23,6 +23,8 @@ references:
     - N/A
   800-171r2:
     - N/A
+  cmmc:
+    - AU.L2-3.3.6
 macOS:
   - "12.0"
 tags:
@@ -30,5 +32,7 @@ tags:
   - 800-53r4_high
   - 800-53r5_moderate
   - permanent
+  - cmmc_lvl2
+  - cmmc_lvl3
 mobileconfig: false
 mobileconfig_info:

@@ -1,9 +1,6 @@
 id: sysprefs_diagnostics_reports_disable
 title: "Disable Sending Diagnostic and Usage Data to Apple"
-discussion: |
-  The ability to submit diagnostic data to Apple _MUST_ be disabled.
-  
-  The information system _MUST_ be configured to provide only essential capabilities. Disabling the submission of diagnostic and usage information will mitigate the risk of unwanted data being sent to Apple. 
+discussion: "The ability to submit diagnostic data to Apple _MUST_ be disabled.\n\nThe information system _MUST_ be configured to provide only essential capabilities. Disabling the submission of diagnostic and usage information will mitigate the risk of unwanted data being sent to Apple. \n"
 check: |
   /usr/bin/osascript -l JavaScript << EOS
   function run() {
@@ -25,13 +22,13 @@ fix: |
 references:
   cce:
     - CCE-91052-1
-  cci: 
+  cci:
     - CCI-000382
   800-53r5:
     - SI-11
     - AC-20
     - SC-7(10)
-  800-53r4: 
+  800-53r4:
     - AC-20
     - SI-11
   srg:
@@ -41,25 +38,30 @@ references:
   800-171r2:
     - 3.1.20
   cis:
-    benchmark: 
+    benchmark:
       - 2.5.5 (level 2)
-    controls v8: 
+    controls v8:
       - 4.1
       - 4.8
+  cmmc:
+    - AC.L1-3.1.20
 macOS:
   - "12.0"
 tags:
-  - 800-53r5_low 
-  - 800-53r4_low 
-  - 800-53r4_moderate 
-  - 800-53r4_high 
-  - 800-53r5_moderate 
-  - 800-53r5_high 
-  - 800-171 
+  - 800-53r5_low
+  - 800-53r4_low
+  - 800-53r4_moderate
+  - 800-53r4_high
+  - 800-53r5_moderate
+  - 800-53r5_high
+  - 800-171
   - cnssi-1253
   - cis_lvl2
   - cisv8
   - stig
+  - cmmc_lvl1
+  - cmmc_lvl2
+  - cmmc_lvl3
 severity: "medium"
 mobileconfig: true
 mobileconfig_info:

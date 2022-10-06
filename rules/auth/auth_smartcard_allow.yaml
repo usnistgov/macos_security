@@ -1,11 +1,6 @@
 id: auth_smartcard_allow
 title: "Allow Smartcard Authentication"
-discussion: |
-  Smartcard authentication _MUST_ be allowed. 
-
-  The use of smartcard credentials facilitates standardization and reduces the risk of unauthorized access.
-  
-  When enabled, the smartcard can be used for login, authorization, and screen saver unlocking.
+discussion: "Smartcard authentication _MUST_ be allowed. \n\nThe use of smartcard credentials facilitates standardization and reduces the risk of unauthorized access.\n\nWhen enabled, the smartcard can be used for login, authorization, and screen saver unlocking.\n"
 check: |
   /usr/bin/osascript -l JavaScript << EOS
   $.NSUserDefaults.alloc.initWithSuiteName('com.apple.security.smartcard')\
@@ -18,13 +13,13 @@ fix: |
 references:
   cce:
     - CCE-90880-6
-  cci: 
+  cci:
     - N/A
   800-53r5:
     - IA-2(1)
     - IA-2(2)
     - IA-2(12)
-  800-53r4: 
+  800-53r4:
     - IA-2(12)
     - IA-5(11)
   srg:
@@ -38,6 +33,8 @@ references:
       - 6.3
       - 6.4
       - 6.5
+  cmmc:
+    - IA.L2-3.5.3
 macOS:
   - "12.0"
 tags:
@@ -49,6 +46,8 @@ tags:
   - 800-53r4_high
   - cnssi-1253
   - cisv8
+  - cmmc_lvl2
+  - cmmc_lvl3
 mobileconfig: true
 mobileconfig_info:
   com.apple.security.smartcard:

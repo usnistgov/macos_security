@@ -1,12 +1,6 @@
 id: audit_flags_ex_configure
 title: "Configure System to Audit All Failed Program Execution on the System"
-discussion: |
-  The audit system _MUST_ be configured to record enforcement actions of access restrictions, including failed program execute (-ex) attempts.
-
-  Enforcement actions are the methods or mechanisms used to prevent unauthorized access and/or changes to configuration settings. One common and effective enforcement action method is using program execution restrictions (e.g., denying users access to execute certain processes). 
-  
-  This configuration ensures that audit lists include events in which program execution has failed. 
-  Without auditing the enforcement of program execution, it is difficult to identify attempted attacks, as there is no audit trail available for forensic investigation.
+discussion: "The audit system _MUST_ be configured to record enforcement actions of access restrictions, including failed program execute (-ex) attempts.\n\nEnforcement actions are the methods or mechanisms used to prevent unauthorized access and/or changes to configuration settings. One common and effective enforcement action method is using program execution restrictions (e.g., denying users access to execute certain processes). \n\nThis configuration ensures that audit lists include events in which program execution has failed. \nWithout auditing the enforcement of program execution, it is difficult to identify attempted attacks, as there is no audit trail available for forensic investigation.\n"
 check: |
   /usr/bin/awk -F':' '/^flags/ { print $NF }' /etc/security/audit_control | /usr/bin/tr ',' '\n' | /usr/bin/grep -Ec '\-ex'
 result:
@@ -20,7 +14,7 @@ references:
   cce:
     - CCE-90863-2
   cci:
-    - N/A    
+    - N/A
   800-53r5:
     - AC-2(12)
     - AU-12
@@ -43,7 +37,11 @@ references:
     controls v8:
       - 3.14
       - 8.2
-      - 8.5     
+      - 8.5
+  cmmc:
+    - AU.L2-3.3.3
+    - AU.L2-3.3.6
+    - SI.L2-3.14.3
 macOS:
   - "12.0"
 tags:
@@ -58,5 +56,7 @@ tags:
   - cnssi-1253
   - cisv8
   - cis_lvl2
+  - cmmc_lvl2
+  - cmmc_lvl3
 mobileconfig: false
 mobileconfig_info:

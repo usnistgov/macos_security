@@ -1,7 +1,6 @@
 id: sysprefs_printer_sharing_disable
 title: "Disable Printer Sharing"
-discussion: |
-  Printer Sharing _MUST_ be disabled. 
+discussion: "Printer Sharing _MUST_ be disabled. \n"
 check: |
   /usr/sbin/cupsctl | /usr/bin/grep -c "_share_printers=0"
 result:
@@ -15,26 +14,29 @@ fix: |
 references:
   cce:
     - CCE-91134-7
-  cci: 
+  cci:
     - N/A
   800-53r5:
     - CM-7
     - CM-7(1)
-  800-53r4: 
+  800-53r4:
     - CM-7
     - CM-7(1)
   srg:
     - N/A
-  disa_stig: 
+  disa_stig:
     - N/A
   800-171r2:
     - N/A
   cis:
-    benchmark: 
+    benchmark:
       - 2.4.4 (level 1)
     controls v8:
       - 4.1
       - 4.8
+  cmmc:
+    - CM.L2-3.4.6
+    - CM.L2-3.4.7
 macOS:
   - "12.0"
 tags:
@@ -47,6 +49,7 @@ tags:
   - cis_lvl1
   - cis_lvl2
   - cisv8
+  - cmmc_lvl2
+  - cmmc_lvl3
 mobileconfig: false
 mobileconfig_info:
-

@@ -1,18 +1,6 @@
 id: sysprefs_bluetooth_sharing_disable
 title: "Disable Bluetooth Sharing"
-discussion: |
-  Bluetooth Sharing _MUST_ be disabled. 
-
-  Bluetooth Sharing allows users to wirelessly transmit files between the macOS and Bluetooth-enabled devices, including personally owned cellphones and tablets. A malicious user might introduce viruses or malware onto the system or extract sensitive files via Bluetooth Sharing. When Bluetooth Sharing is disabled, this risk is mitigated. 
-  
-  [NOTE] 
-  ====
-  The check and fix are for the currently logged in user. To get the currently logged in user, run the following.
-  [source,bash]
-  ----
-  CURRENT_USER=$( /usr/sbin/scutil <<< "show State:/Users/ConsoleUser" | /usr/bin/awk '/Name :/ && ! /loginwindow/ { print $3 }' )
-  ----
-  ====
+discussion: "Bluetooth Sharing _MUST_ be disabled. \n\nBluetooth Sharing allows users to wirelessly transmit files between the macOS and Bluetooth-enabled devices, including personally owned cellphones and tablets. A malicious user might introduce viruses or malware onto the system or extract sensitive files via Bluetooth Sharing. When Bluetooth Sharing is disabled, this risk is mitigated. \n\n[NOTE] \n====\nThe check and fix are for the currently logged in user. To get the currently logged in user, run the following.\n[source,bash]\n----\nCURRENT_USER=$( /usr/sbin/scutil <<< \"show State:/Users/ConsoleUser\" | /usr/bin/awk '/Name :/ && ! /loginwindow/ { print $3 }' )\n----\n====\n"
 check: |
   /usr/bin/sudo -u "$CURRENT_USER" /usr/bin/defaults -currentHost read com.apple.Bluetooth PrefKeyServicesEnabled
 result:
@@ -25,14 +13,14 @@ fix: |
 references:
   cce:
     - CCE-91049-7
-  cci: 
+  cci:
     - N/A
   800-53r5:
     - AC-3
     - AC-18(4)
     - CM-7
     - CM-7(1)
-  800-53r4: 
+  800-53r4:
     - AC-3
     - AC-18(4)
     - CM-7
@@ -53,6 +41,8 @@ references:
       - 3.3
       - 4.1
       - 4.8
+  cmmc:
+    - AC.L1-3.1.1
 macOS:
   - "12.0"
 tags:
@@ -67,6 +57,8 @@ tags:
   - cis_lvl1
   - cis_lvl2
   - cisv8
+  - cmmc_lvl1
+  - cmmc_lvl2
+  - cmmc_lvl3
 mobileconfig: false
 mobileconfig_info:
-

@@ -1,18 +1,6 @@
 id: os_firewall_default_deny_require
 title: "Control Connections to Other Systems via a Deny-All and Allow-by-Exception Firewall Policy"
-discussion: |
-  A deny-all and allow-by-exception firewall policy _MUST_ be employed for managing connections to other systems. 
-
-  Organizations _MUST_ ensure the built-in packet filter firewall is configured correctly to employ the default deny rule.
-
-  Failure to restrict network connectivity to authorized systems permits inbound connections from malicious systems. It also permits outbound connections that may facilitate the exfiltration of data.
-
-  If you are using a third-party firewall solution, this setting does not apply. 
-
-  [IMPORTANT]
-  ====
-  Configuring the built-in packet filter firewall to employ the default deny rule has the potential to interfere with applications on the system in an unpredictable manner. Information System Security Officers (ISSOs) may make the risk-based decision not to configure the built-in packet filter firewall to employ the default deny rule to avoid losing functionality, but they are advised to first fully weigh the potential risks posed to their organization.
-  ====
+discussion: "A deny-all and allow-by-exception firewall policy _MUST_ be employed for managing connections to other systems. \n\nOrganizations _MUST_ ensure the built-in packet filter firewall is configured correctly to employ the default deny rule.\n\nFailure to restrict network connectivity to authorized systems permits inbound connections from malicious systems. It also permits outbound connections that may facilitate the exfiltration of data.\n\nIf you are using a third-party firewall solution, this setting does not apply. \n\n[IMPORTANT]\n====\nConfiguring the built-in packet filter firewall to employ the default deny rule has the potential to interfere with applications on the system in an unpredictable manner. Information System Security Officers (ISSOs) may make the risk-based decision not to configure the built-in packet filter firewall to employ the default deny rule to avoid losing functionality, but they are advised to first fully weigh the potential risks posed to their organization.\n====\n"
 check: |
   /sbin/pfctl -a '*' -sr &> /dev/null | /usr/bin/grep -c "block drop in all"
 result:
@@ -38,6 +26,9 @@ references:
   800-171r2:
     - 3.1.3
     - 3.13.6
+  cmmc:
+    - AC.L2-3.1.3
+    - SC.L2-3.13.6
 macOS:
   - "12.0"
 tags:
@@ -47,5 +38,7 @@ tags:
   - 800-53r4_high
   - 800-171
   - cnssi-1253
+  - cmmc_lvl2
+  - cmmc_lvl3
 mobileconfig: false
 mobileconfig_info:

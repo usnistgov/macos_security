@@ -1,13 +1,6 @@
 id: sysprefs_media_sharing_disabled
 title: "Disable Media Sharing"
-discussion: |
-  Media sharing _MUST_ be disabled.
-
-  When Media Sharing is enabled, the computer starts a network listening service that shares the contents of the user's music collection with other users in the same subnet. 
-
-  The information system _MUST_ be configured to provide only essential capabilities. Disabling Media Sharing helps prevent the unauthorized connection of devices and the unauthorized transfer of information. Disabling Media Sharing mitigates this risk.
-
-  NOTE: The Media Sharing preference panel will still allow "Home Sharing" and "Share media with guests" to be checked but the service will not be enabled.
+discussion: "Media sharing _MUST_ be disabled.\n\nWhen Media Sharing is enabled, the computer starts a network listening service that shares the contents of the user's music collection with other users in the same subnet. \n\nThe information system _MUST_ be configured to provide only essential capabilities. Disabling Media Sharing helps prevent the unauthorized connection of devices and the unauthorized transfer of information. Disabling Media Sharing mitigates this risk.\n\nNOTE: The Media Sharing preference panel will still allow \"Home Sharing\" and \"Share media with guests\" to be checked but the service will not be enabled.\n"
 check: |
   /usr/bin/osascript -l JavaScript << EOS
   function run() {
@@ -51,6 +44,8 @@ references:
     controls v8:
       - 4.1
       - 4.8
+  cmmc:
+    - AC.L1-3.1.1
 macOS:
   - "12.0"
 tags:
@@ -63,6 +58,9 @@ tags:
   - 800-171
   - cis_lvl2
   - cisv8
+  - cmmc_lvl1
+  - cmmc_lvl2
+  - cmmc_lvl3
 mobileconfig: true
 mobileconfig_info:
   com.apple.preferences.sharing.SharingPrefsExtension:

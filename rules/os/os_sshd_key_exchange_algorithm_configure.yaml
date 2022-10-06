@@ -22,7 +22,7 @@ fix: |
 references:
   cce:
     - CCE-91011-7
-  cci: 
+  cci:
     - CCI-000803
     - CCI-000068
     - CCI-000087
@@ -32,7 +32,7 @@ references:
     - AC-17(2)
     - IA-7
     - MA-4(6)
-  800-53r4: 
+  800-53r4:
     - IA-7
     - AC-17(2)
     - MA-4(6)
@@ -47,17 +47,21 @@ references:
     - APPL-12-000056
   800-171r2:
     - N/A
+  cmmc:
+    - AC.L2-3.1.13
 macOS:
   - "12.0"
 tags:
-  - 800-53r5_low 
-  - 800-53r5_moderate 
-  - 800-53r5_high 
-  - 800-53r4_low 
-  - 800-53r4_moderate 
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_high
+  - 800-53r4_low
+  - 800-53r4_moderate
   - 800-53r4_high
   - cnssi-1253
   - stig
+  - cmmc_lvl2
+  - cmmc_lvl3
 severity: "medium"
 mobileconfig: false
 mobileconfig_info:

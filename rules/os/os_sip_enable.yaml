@@ -1,11 +1,6 @@
 id: os_sip_enable
 title: "Ensure System Integrity Protection is Enabled"
-discussion: |
-  System Integrity Protection (SIP) _MUST_ be enabled. 
-  
-  SIP is vital to protecting the integrity of the system as it prevents malicious users and software from making unauthorized and/or unintended modifications to protected files and folders; ensures the presence of an audit record generation capability for defined auditable events for all operating system components; protects audit tools from unauthorized access, modification, and deletion; restricts the root user account and limits the actions that the root user can perform on protected parts of the macOS; and prevents non-privileged users from granting other users direct access to the contents of their home directories and folders.
-
-  NOTE: SIP is enabled by default in macOS.
+discussion: "System Integrity Protection (SIP) _MUST_ be enabled. \n\nSIP is vital to protecting the integrity of the system as it prevents malicious users and software from making unauthorized and/or unintended modifications to protected files and folders; ensures the presence of an audit record generation capability for defined auditable events for all operating system components; protects audit tools from unauthorized access, modification, and deletion; restricts the root user account and limits the actions that the root user can perform on protected parts of the macOS; and prevents non-privileged users from granting other users direct access to the contents of their home directories and folders.\n\nNOTE: SIP is enabled by default in macOS.\n"
 check: |
   /usr/bin/csrutil status | /usr/bin/grep -c 'System Integrity Protection status: enabled.'
 result:
@@ -19,7 +14,7 @@ fix: |
 references:
   cce:
     - CCE-91000-0
-  cci: 
+  cci:
     - CCI-000154
     - CCI-000158
     - CCI-000169
@@ -45,7 +40,7 @@ references:
     - SI-2
     - SI-7
   800-53r4:
-    - AC-3 
+    - AC-3
     - AU-6(4)
     - AU-7(1)
     - AU-7
@@ -86,21 +81,28 @@ references:
       - 2.6
       - 3.3
       - 10.5
+  cmmc:
+    - AC.L1-3.1.1
+    - SI.L1-3.14.1
+    - SI.L1-3.14.4
 macOS:
   - "12.0"
 tags:
-  - 800-53r5_low 
-  - 800-53r5_moderate 
-  - 800-53r5_high 
-  - 800-53r4_low 
-  - 800-53r4_moderate 
-  - 800-53r4_high 
-  - 800-171 
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_high
+  - 800-53r4_low
+  - 800-53r4_moderate
+  - 800-53r4_high
+  - 800-171
   - cnssi-1253
   - cisv8
   - cis_lvl1
   - cis_lvl2
   - stig
+  - cmmc_lvl1
+  - cmmc_lvl2
+  - cmmc_lvl3
 severity: "medium"
 mobileconfig: false
 mobileconfig_info:

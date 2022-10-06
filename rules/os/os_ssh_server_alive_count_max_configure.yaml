@@ -16,25 +16,15 @@ check: |
   /bin/echo $ret
 result:
   string: pass
-fix: |
-  [source,bash]
-  ----
-  for u in $(/usr/bin/dscl . -list /Users UniqueID | /usr/bin/awk '$2 > 500 {print $1}'); do 
-    config=$(/usr/bin/sudo -u $u /usr/bin/ssh -Gv . 2>&1 | /usr/bin/awk '/Reading configuration data/ {print $NF}'| /usr/bin/tr -d '\r')
-    configarray=( ${(f)config} )
-    for c in $configarray; do
-      /usr/bin/sudo -u $u /usr/bin/grep -q '^ServerAliveCountMax' "$c" && /usr/bin/sed -i '' 's/.*ServerAliveCountMax.*/ServerAliveCountMax $ODV/' "$c" || /bin/echo 'ServerAliveCountMax $ODV' >> "$c"
-    done
-  done
-  ----
+fix: "[source,bash]\n----\nfor u in $(/usr/bin/dscl . -list /Users UniqueID | /usr/bin/awk '$2 > 500 {print $1}'); do \n  config=$(/usr/bin/sudo -u $u /usr/bin/ssh -Gv . 2>&1 | /usr/bin/awk '/Reading configuration data/ {print $NF}'| /usr/bin/tr -d '\\r')\n  configarray=( ${(f)config} )\n  for c in $configarray; do\n    /usr/bin/sudo -u $u /usr/bin/grep -q '^ServerAliveCountMax' \"$c\" && /usr/bin/sed -i '' 's/.*ServerAliveCountMax.*/ServerAliveCountMax $ODV/' \"$c\" || /bin/echo 'ServerAliveCountMax $ODV' >> \"$c\"\n  done\ndone\n----\n"
 references:
   cce:
     - CCE-91005-9
-  cci: 
+  cci:
     - N/A
   800-53r5:
     - SC-10
-  800-53r4: 
+  800-53r4:
     - SC-10
   srg:
     - N/A
@@ -42,11 +32,13 @@ references:
     - N/A
   800-171r2:
     - 3.13.9
+  cmmc:
+    - SC.L2-3.13.9
 macOS:
   - "12.0"
 odv:
   hint: "Number of seconds."
-  recommended: 0 
+  recommended: 0
 tags:
   - 800-53r5_moderate
   - 800-53r5_high
@@ -54,5 +46,7 @@ tags:
   - 800-53r4_high
   - 800-171
   - cnssi-1253
+  - cmmc_lvl2
+  - cmmc_lvl3
 mobileconfig: false
 mobileconfig_info:

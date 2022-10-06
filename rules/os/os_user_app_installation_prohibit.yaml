@@ -1,9 +1,6 @@
 id: os_user_app_installation_prohibit
 title: "Prohibit User Installation of Software into /Users/"
-discussion: |
-  Users _MUST_ not be allowed to install software into /Users/. 
-  
-  Allowing regular users to install software, without explicit privileges, presents the risk of untested and potentially malicious software being installed on the system. Explicit privileges (escalated or administrative privileges) provide the regular user with explicit capabilities and control that exceeds the rights of a regular user.
+discussion: "Users _MUST_ not be allowed to install software into /Users/. \n\nAllowing regular users to install software, without explicit privileges, presents the risk of untested and potentially malicious software being installed on the system. Explicit privileges (escalated or administrative privileges) provide the regular user with explicit capabilities and control that exceeds the rights of a regular user.\n"
 check: |
   /usr/bin/osascript -l JavaScript << EOS
   function run() {
@@ -36,14 +33,18 @@ references:
     - N/A
   disa_stig:
     - N/A
+  cmmc:
+    - CM.L2-3.4.9
 macOS:
   - "12.0"
 tags:
   - none
+  - cmmc_lvl2
+  - cmmc_lvl3
 severity: "medium"
 mobileconfig: true
 mobileconfig_info:
   com.apple.applicationaccess.new:
     familyControlsEnabled: true
-    pathBlackList: 
+    pathBlackList:
       - "/Users/"

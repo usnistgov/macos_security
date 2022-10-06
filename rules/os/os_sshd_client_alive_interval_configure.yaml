@@ -1,11 +1,6 @@
 id: os_sshd_client_alive_interval_configure
 title: "Configure SSHD ClientAliveInterval option set to $ODV"
-discussion: |
-  If SSHD is enabled then it _MUST_ be configured with an Active Client Alive Maximum Count set to $ODV. 
-  
-  Setting the Active Client Alive Maximum Count to $ODV (seconds) will log users out after an organizational defined interval of inactivity.
-
-  NOTE: /etc/ssh/sshd_config will be automatically modified to its original state following any update or major upgrade to the operating system.
+discussion: "If SSHD is enabled then it _MUST_ be configured with an Active Client Alive Maximum Count set to $ODV. \n\nSetting the Active Client Alive Maximum Count to $ODV (seconds) will log users out after an organizational defined interval of inactivity.\n\nNOTE: /etc/ssh/sshd_config will be automatically modified to its original state following any update or major upgrade to the operating system.\n"
 check: |
   /usr/bin/grep -c "^ClientAliveInterval $ODV" /etc/ssh/sshd_config
 result:
@@ -18,12 +13,12 @@ fix: |
 references:
   cce:
     - CCE-91008-3
-  cci: 
+  cci:
     - CCI-001133
   800-53r5:
     - SC-10
     - AC-12
-  800-53r4: 
+  800-53r4:
     - SC-10
   srg:
     - SRG-OS-000163-GPOS-00072
@@ -31,6 +26,9 @@ references:
     - APPL-12-000051
   800-171r2:
     - 3.13.9
+  cmmc:
+    - AC.L2-3.1.11
+    - SC.L2-3.13.9
 macOS:
   - "12.0"
 odv:
@@ -40,11 +38,13 @@ odv:
 tags:
   - 800-53r5_moderate
   - 800-53r5_high
-  - 800-53r4_moderate 
-  - 800-53r4_high 
+  - 800-53r4_moderate
+  - 800-53r4_high
   - 800-171
   - cnssi-1253
   - stig
+  - cmmc_lvl2
+  - cmmc_lvl3
 severity: "medium"
 mobileconfig: false
 mobileconfig_info:

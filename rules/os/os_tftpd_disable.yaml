@@ -1,11 +1,6 @@
 id: os_tftpd_disable
 title: "Disable Trivial File Tansfer Protocol Service"
-discussion: |
-  If the system does not require Trivial File Tansfer Protocol (TFTP), support it is non-essential and _MUST_ be disabled.
-
-  The information system _MUST_ be configured to provide only essential capabilities. Disabling TFTP helps prevent the unauthorized connection of devices and the unauthorized transfer of information.  
-
-  NOTE: TFTP service is disabled at startup by default macOS.
+discussion: "If the system does not require Trivial File Tansfer Protocol (TFTP), support it is non-essential and _MUST_ be disabled.\n\nThe information system _MUST_ be configured to provide only essential capabilities. Disabling TFTP helps prevent the unauthorized connection of devices and the unauthorized transfer of information.  \n\nNOTE: TFTP service is disabled at startup by default macOS.\n"
 check: |
   /bin/launchctl print-disabled system | /usr/bin/grep -c '"com.apple.tftpd" => true'
 result:
@@ -19,7 +14,7 @@ fix: |
 references:
   cce:
     - CCE-91018-2
-  cci: 
+  cci:
     - CCI-000197
   800-53r5:
     - AC-3
@@ -42,19 +37,24 @@ references:
       - 3.3
       - 3.1
       - 5.2
+  cmmc:
+    - AC.L1-3.1.1
 macOS:
   - "12.0"
 tags:
-  - 800-53r5_low 
-  - 800-53r5_moderate 
-  - 800-53r5_high 
-  - 800-53r4_low 
-  - 800-53r4_moderate 
-  - 800-53r4_high 
-  - 800-171 
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_high
+  - 800-53r4_low
+  - 800-53r4_moderate
+  - 800-53r4_high
+  - 800-171
   - cnssi-1253
   - cisv8
   - stig
+  - cmmc_lvl1
+  - cmmc_lvl2
+  - cmmc_lvl3
 severity: "high"
 mobileconfig: false
 mobileconfig_info:

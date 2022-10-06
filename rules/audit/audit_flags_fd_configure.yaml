@@ -1,13 +1,6 @@
 id: audit_flags_fd_configure
 title: "Configure System to Audit All Deletions of Object Attributes"
-discussion: |
-  The audit system _MUST_ be configured to record enforcement actions of attempts to delete file attributes (fd). 
-
-  ***Enforcement actions are the methods or mechanisms used to prevent unauthorized changes to configuration settings. One common and effective enforcement action method is using access restrictions (i.e., denying modifications to a file by applying file permissions). 
-  
-  This configuration ensures that audit lists include events in which enforcement actions prevent attempts to delete a file. 
-
-  Without auditing the enforcement of access restrictions, it is difficult to identify attempted attacks, as there is no audit trail available for forensic investigation.
+discussion: "The audit system _MUST_ be configured to record enforcement actions of attempts to delete file attributes (fd). \n\n***Enforcement actions are the methods or mechanisms used to prevent unauthorized changes to configuration settings. One common and effective enforcement action method is using access restrictions (i.e., denying modifications to a file by applying file permissions). \n\nThis configuration ensures that audit lists include events in which enforcement actions prevent attempts to delete a file. \n\nWithout auditing the enforcement of access restrictions, it is difficult to identify attempted attacks, as there is no audit trail available for forensic investigation.\n"
 check: |
   /usr/bin/awk -F':' '/^flags/ { print $NF }' /etc/security/audit_control | /usr/bin/tr ',' '\n' | /usr/bin/grep -Ec '\-fd'
 result:
@@ -30,8 +23,8 @@ references:
     - AU-9
     - CM-5(1)
     - MA-4(1)
-  800-53r4: 
-    - AU-2  
+  800-53r4:
+    - AU-2
     - AU-12
     - AU-9
     - CM-5(1)
@@ -51,14 +44,21 @@ references:
     - APPL-12-001020
   800-171r2:
     - N/A
+  cmmc:
+    - AU.L2-3.3.3
+    - AU.L2-3.3.6
+    - AU.L2-3.3.8
+    - SI.L2-3.14.3
 macOS:
   - "12.0"
 tags:
-  - 800-53r5_privacy 
-  - 800-53r5_low 
-  - 800-53r5_moderate 
+  - 800-53r5_privacy
+  - 800-53r5_low
+  - 800-53r5_moderate
   - 800-53r5_high
   - stig
+  - cmmc_lvl2
+  - cmmc_lvl3
 severity: "medium"
 mobileconfig: false
 mobileconfig_info:

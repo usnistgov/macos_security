@@ -1,11 +1,6 @@
 id: os_logical_access
 title: "Enforce Approved Authorization for Logical Access"
-discussion: |
-  The information system _IS_ configured to enforce an approved authorization process before granting users logical access. 
-
-  The inherent configuration of the macOS does not grant users logical access without authorization. Authorization is achieved on the macOS through permissions, which are controlled at many levels, from the Mach and BSD components of the kernel, through higher levels of the operating system and, for networked applications, through the networking protocols. Permissions can be granted at the level of directories, subdirectories, files or applications, or specific data within files or functions within applications. 
-
-  link:https://developer.apple.com/library/archive/documentation/Security/Conceptual/AuthenticationAndAuthorizationGuide/Permissions/Permissions.html[]
+discussion: "The information system _IS_ configured to enforce an approved authorization process before granting users logical access. \n\nThe inherent configuration of the macOS does not grant users logical access without authorization. Authorization is achieved on the macOS through permissions, which are controlled at many levels, from the Mach and BSD components of the kernel, through higher levels of the operating system and, for networked applications, through the networking protocols. Permissions can be granted at the level of directories, subdirectories, files or applications, or specific data within files or functions within applications. \n\nlink:https://developer.apple.com/library/archive/documentation/Security/Conceptual/AuthenticationAndAuthorizationGuide/Permissions/Permissions.html[]\n"
 check: |
   The technology supports this requirement and cannot be configured to be out of compliance. The technology inherently meets this requirement.
 fix: |
@@ -32,6 +27,8 @@ references:
     controls v8:
       - 3.3
       - 6.7
+  cmmc:
+    - AC.L1-3.1.1
 macOS:
   - "12.0"
 tags:
@@ -45,5 +42,8 @@ tags:
   - cnssi-1253
   - inherent
   - cisv8
+  - cmmc_lvl1
+  - cmmc_lvl2
+  - cmmc_lvl3
 mobileconfig: false
 mobileconfig_info:

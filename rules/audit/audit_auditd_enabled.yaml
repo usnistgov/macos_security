@@ -1,15 +1,6 @@
 id: audit_auditd_enabled
 title: "Enable Security Auditing"
-discussion: |
-  The information system _MUST_ be configured to generate audit records. 
-  
-  Audit records establish what types of events have occurred, when they occurred, and which users were involved. These records aid an organization in their efforts to establish, correlate, and investigate the events leading up to an outage or attack.
-  
-  The content required to be captured in an audit record varies based on the impact level of an organization's system. Content that may be necessary to satisfy this requirement includes, for example, time stamps, source addresses, destination addresses, user identifiers, event descriptions, success/fail indications, filenames involved, and access or flow control rules invoked.
-
-  The information system initiates session audits at system start-up.
-
-  NOTE: Security auditing is enabled by default on macOS.
+discussion: "The information system _MUST_ be configured to generate audit records. \n\nAudit records establish what types of events have occurred, when they occurred, and which users were involved. These records aid an organization in their efforts to establish, correlate, and investigate the events leading up to an outage or attack.\n\nThe content required to be captured in an audit record varies based on the impact level of an organization's system. Content that may be necessary to satisfy this requirement includes, for example, time stamps, source addresses, destination addresses, user identifiers, event descriptions, success/fail indications, filenames involved, and access or flow control rules invoked.\n\nThe information system initiates session audits at system start-up.\n\nNOTE: Security auditing is enabled by default on macOS.\n"
 check: |
   /bin/launchctl list | /usr/bin/grep -c com.apple.auditd
 result:
@@ -22,7 +13,7 @@ fix: |
 references:
   cce:
     - CCE-90854-1
-  cci: 
+  cci:
     - CCI-000130
     - CCI-000131
     - CCI-000132
@@ -45,8 +36,8 @@ references:
     - AU-12(3)
     - AU-14(1)
     - MA-4(1)
-    - CM-5(1)    
-  800-53r4: 
+    - CM-5(1)
+  800-53r4:
     - AU-3
     - AU-3(1)
     - AU-8
@@ -80,21 +71,26 @@ references:
     controls v8:
       - 8.2
       - 8.5
+  cmmc:
+    - AU.L2-3.3.2
+    - AU.L2-3.3.6
 macOS:
   - "12.0"
 tags:
-  - 800-53r5_low 
-  - 800-53r5_moderate 
-  - 800-53r5_high 
-  - 800-53r4_low 
-  - 800-53r4_moderate 
-  - 800-53r4_high 
-  - 800-171 
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_high
+  - 800-53r4_low
+  - 800-53r4_moderate
+  - 800-53r4_high
+  - 800-171
   - cnssi-1253
   - cis_lvl1
   - cis_lvl2
   - cisv8
   - stig
+  - cmmc_lvl2
+  - cmmc_lvl3
 severity: "medium"
 mobileconfig: false
 mobileconfig_info:

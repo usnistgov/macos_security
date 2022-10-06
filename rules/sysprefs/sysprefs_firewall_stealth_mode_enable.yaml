@@ -1,14 +1,6 @@
 id: sysprefs_firewall_stealth_mode_enable
 title: "Enable Firewall Stealth Mode"
-discussion: |
-  Firewall Stealth Mode _MUST_ be enabled. 
-
-  When stealth mode is enabled, the Mac will not respond to any probing requests, and only requests from authorized applications will still be authorized.
-  
-  [IMPORTANT]
-  ====
-  Enabling firewall stealth mode may prevent certain remote mechanisms used for maintenance and compliance scanning from properly functioning. Information System Security Officers (ISSOs) are advised to first fully weigh the potential risks posed to their organization before opting not to enable stealth mode.
-  ====
+discussion: "Firewall Stealth Mode _MUST_ be enabled. \n\nWhen stealth mode is enabled, the Mac will not respond to any probing requests, and only requests from authorized applications will still be authorized.\n\n[IMPORTANT]\n====\nEnabling firewall stealth mode may prevent certain remote mechanisms used for maintenance and compliance scanning from properly functioning. Information System Security Officers (ISSOs) are advised to first fully weigh the potential risks posed to their organization before opting not to enable stealth mode.\n====\n"
 check: |
   /usr/bin/osascript -l JavaScript << EOS
   $.NSUserDefaults.alloc.initWithSuiteName('com.apple.security.firewall')\
@@ -41,27 +33,32 @@ references:
     - 3.13.2
     - 3.13.5
   cis:
-    benchmark: 
+    benchmark:
       - 2.5.2.2 (level 1)
-    controls v8: 
+    controls v8:
       - 4.1
       - 4.5
       - 4.8
+  cmmc:
+    - SC.L1-3.13.1
 macOS:
   - "12.0"
 tags:
-  - 800-53r5_low 
-  - 800-53r5_moderate 
-  - 800-53r5_high 
-  - 800-53r4_low 
-  - 800-53r4_moderate 
-  - 800-53r4_high 
-  - 800-171 
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_high
+  - 800-53r4_low
+  - 800-53r4_moderate
+  - 800-53r4_high
+  - 800-171
   - cnssi-1253
   - cis_lvl1
   - cis_lvl2
   - cisv8
   - stig
+  - cmmc_lvl1
+  - cmmc_lvl2
+  - cmmc_lvl3
 severity: "medium"
 mobileconfig: true
 mobileconfig_info:

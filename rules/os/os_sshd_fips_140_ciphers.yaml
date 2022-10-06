@@ -1,13 +1,6 @@
 id: os_sshd_fips_140_ciphers
 title: "Limit SSHD to FIPS 140 Validated Ciphers"
-discussion: |
-  If SSHD is enabled then it _MUST_ be configured to limit the ciphers to algorithms that are FIPS 140 validated.
-
-  FIPS 140-2 is the current standard for validating that mechanisms used to access cryptographic modules utilize authentication that meet federal requirements.
-
-  Operating systems utilizing encryption _MUST_ use FIPS validated mechanisms for authenticating to cryptographic modules. 
-
-  NOTE: /etc/ssh/sshd_config will be automatically modified to its original state following any update or major upgrade to the operating system.
+discussion: "If SSHD is enabled then it _MUST_ be configured to limit the ciphers to algorithms that are FIPS 140 validated.\n\nFIPS 140-2 is the current standard for validating that mechanisms used to access cryptographic modules utilize authentication that meet federal requirements.\n\nOperating systems utilizing encryption _MUST_ use FIPS validated mechanisms for authenticating to cryptographic modules. \n\nNOTE: /etc/ssh/sshd_config will be automatically modified to its original state following any update or major upgrade to the operating system.\n"
 check: |
   /usr/bin/grep -c "^Ciphers aes256-ctr,aes192-ctr,aes128-ctr" /etc/ssh/sshd_config
 result:
@@ -20,7 +13,7 @@ fix: |
 references:
   cce:
     - CCE-91114-9
-  cci: 
+  cci:
     - CCI-000803
     - CCI-000068
     - CCI-003123
@@ -30,29 +23,36 @@ references:
     - IA-7
     - SC-13
     - SC-8(1)
-  800-53r4: 
+  800-53r4:
     - AC-17(2)
     - IA-7
     - SC-8(1)
     - SC-13
     - MA-4(6)
-  srg: 
+  srg:
     - SRG-OS-000033-GPOS-00014
     - SRG-OS-000120-GPOS-00061
     - SRG-OS-000125-GPOS-00065
     - SRG-OS-000250-GPOS-00093
     - SRG-OS-000393-GPOS-00173
     - SRG-OS-000394-GPOS-00174
-  disa_stig: 
+  disa_stig:
     - APPL-12-000054
   800-171r2:
     - 3.1.13
     - 3.13.8
     - 3.13.11
+  cmmc:
+    - AC.L2-3.1.13
+    - MP.L2-3.8.6
+    - SC.L2-3.13.8
+    - SC.L2-3.13.11
 macOS:
   - "12.0"
 tags:
   - stig
+  - cmmc_lvl2
+  - cmmc_lvl3
 severity: "medium"
 mobileconfig: false
 mobileconfig_info:

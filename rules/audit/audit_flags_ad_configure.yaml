@@ -1,15 +1,6 @@
 id: audit_flags_ad_configure
 title: "Configure System to Audit All Administrative Action Events"
-discussion: |
-  The auditing system _MUST_ be configured to flag administrative action (ad) events.
-
-  Administrative action events include changes made to the system (e.g. modifying authentication policies). If audit records do not include ad events, it is difficult to identify incidents and to correlate incidents to subsequent events. 
-
-  Audit records can be generated from various components within the information system (e.g., via a module or policy filter). 
-
-  The information system audits the execution of privileged functions.
-
-  NOTE: We recommend changing the line "43127:AUE_MAC_SYSCALL:mac_syscall(2):ad" to "43127:AUE_MAC_SYSCALL:mac_syscall(2):zz" in the file /etc/security/audit_event. This will prevent sandbox violations from being audited by the ad flag. 
+discussion: "The auditing system _MUST_ be configured to flag administrative action (ad) events.\n\nAdministrative action events include changes made to the system (e.g. modifying authentication policies). If audit records do not include ad events, it is difficult to identify incidents and to correlate incidents to subsequent events. \n\nAudit records can be generated from various components within the information system (e.g., via a module or policy filter). \n\nThe information system audits the execution of privileged functions.\n\nNOTE: We recommend changing the line \"43127:AUE_MAC_SYSCALL:mac_syscall(2):ad\" to \"43127:AUE_MAC_SYSCALL:mac_syscall(2):zz\" in the file /etc/security/audit_event. This will prevent sandbox violations from being audited by the ad flag. \n"
 check: |
   /usr/bin/awk -F':' '/^flags/ { print $NF }' /etc/security/audit_control | /usr/bin/tr ',' '\n' | /usr/bin/grep -Ec 'ad'
 result:
@@ -22,7 +13,7 @@ fix: |
 references:
   cce:
     - CCE-90862-4
-  cci: 
+  cci:
     - CCI-000018
     - CCI-000172
     - CCI-001403
@@ -37,7 +28,7 @@ references:
     - AC-2(4)
     - AU-2
     - MA-4(1)
-    - CM-5(1)    
+    - CM-5(1)
   800-53r4:
     - AU-2
     - AC-2(4)
@@ -67,22 +58,28 @@ references:
     controls v8:
       - 3.14
       - 8.2
-      - 8.5     
+      - 8.5
+  cmmc:
+    - AU.L2-3.3.3
+    - AU.L2-3.3.6
+    - SI.L2-3.14.3
 macOS:
   - "12.0"
 tags:
-  - 800-53r5_privacy 
-  - 800-53r4_low 
-  - 800-53r4_moderate 
-  - 800-53r4_high 
-  - 800-53r5_moderate 
-  - 800-53r5_high 
-  - 800-53r5_low 
-  - 800-171 
+  - 800-53r5_privacy
+  - 800-53r4_low
+  - 800-53r4_moderate
+  - 800-53r4_high
+  - 800-53r5_moderate
+  - 800-53r5_high
+  - 800-53r5_low
+  - 800-171
   - cnssi-1253
   - stig
   - cis_lvl2
   - cisv8
+  - cmmc_lvl2
+  - cmmc_lvl3
 severity: "medium"
 mobileconfig: false
 mobileconfig_info:

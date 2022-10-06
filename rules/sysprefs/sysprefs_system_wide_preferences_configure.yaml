@@ -1,9 +1,6 @@
 id: sysprefs_system_wide_preferences_configure
 title: "Require Administrator Password to Modify System-Wide Preferences"
-discussion: |
-  The system _MUST_ be configured to require an administrator password in order to modify the system-wide preferences in System Preferences. 
-
-  Some Preference Panes in System Preferences contain settings that affect the entire system. Requiring a password to unlock these system-wide settings reduces the risk of a non-authorized user modifying system configurations.
+discussion: "The system _MUST_ be configured to require an administrator password in order to modify the system-wide preferences in System Preferences. \n\nSome Preference Panes in System Preferences contain settings that affect the entire system. Requiring a password to unlock these system-wide settings reduces the risk of a non-authorized user modifying system configurations.\n"
 check: |
   /usr/bin/security authorizationdb read system.preferences 2> /dev/null |  /usr/bin/grep -A 1 "<key>shared</key>" | /usr/bin/grep -c "<false/>"
 result:
@@ -41,19 +38,24 @@ references:
       - 2.5.9 (level 1)
     controls v8:
       - 4.1
+  cmmc:
+    - AC.L1-3.1.1
 macOS:
   - "12.0"
 tags:
-  - 800-53r5_moderate 
-  - 800-53r5_high 
-  - 800-53r4_moderate 
-  - 800-53r4_high 
-  - 800-171 
+  - 800-53r5_moderate
+  - 800-53r5_high
+  - 800-53r4_moderate
+  - 800-53r4_high
+  - 800-171
   - cnssi-1253
   - cis_lvl1
   - cis_lvl2
   - cisv8
   - stig
+  - cmmc_lvl1
+  - cmmc_lvl2
+  - cmmc_lvl3
 severity: "medium"
 mobileconfig: false
 mobileconfig_info:

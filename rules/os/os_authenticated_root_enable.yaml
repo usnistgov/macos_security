@@ -1,11 +1,6 @@
 id: os_authenticated_root_enable
 title: "Enable Authenticated Root"
-discussion: |
-  Authenticated Root _MUST_ be enabled. 
-  
-  When Authenticated Root is enabled the macOS is booted from a signed volume that is cryptographically protected to prevent tampering with the system volume.
-
-  NOTE: Authenticated Root is enabled by default on macOS systems.
+discussion: "Authenticated Root _MUST_ be enabled. \n\nWhen Authenticated Root is enabled the macOS is booted from a signed volume that is cryptographically protected to prevent tampering with the system volume.\n\nNOTE: Authenticated Root is enabled by default on macOS systems.\n"
 check: |
   /usr/bin/csrutil authenticated-root | /usr/bin/grep -c 'enabled'
 result:
@@ -19,7 +14,7 @@ fix: |
 references:
   cce:
     - CCE-90907-7
-  cci: 
+  cci:
     - N/A
   800-53r5:
     - AC-3
@@ -47,6 +42,8 @@ references:
       - 5.1.4 (level 1)
     controls v8:
       - 3.3
+  cmmc:
+    - AC.L1-3.1.1
 macOS:
   - "12.0"
 tags:
@@ -61,5 +58,8 @@ tags:
   - cis_lvl1
   - cis_lvl2
   - cisv8
+  - cmmc_lvl1
+  - cmmc_lvl2
+  - cmmc_lvl3
 mobileconfig: false
 mobileconfig_info:

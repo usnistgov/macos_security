@@ -1,9 +1,6 @@
 id: sysprefs_guest_account_disable
 title: "Disable the Guest Account"
-discussion: |
-  Guest access _MUST_ be disabled. 
-  
-  Turning off guest access prevents anonymous users from accessing files.
+discussion: "Guest access _MUST_ be disabled. \n\nTurning off guest access prevents anonymous users from accessing files.\n"
 check: |
   /usr/bin/osascript -l JavaScript << EOS
   $.NSUserDefaults.alloc.initWithSuiteName('com.apple.MCX')\
@@ -32,27 +29,32 @@ references:
     - 3.5.1
     - 3.5.2
   cis:
-    benchmark: 
+    benchmark:
       - 6.1.3 (level 1)
-    controls v8: 
+    controls v8:
       - 5.2
       - 5.3
       - 6.8
+  cmmc:
+    - AC.L1-3.1.2
 macOS:
   - "12.0"
 tags:
-  - 800-53r5_low 
-  - 800-53r5_moderate 
-  - 800-53r5_high 
-  - 800-53r4_low 
-  - 800-53r4_moderate 
-  - 800-53r4_high 
-  - 800-171 
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_high
+  - 800-53r4_low
+  - 800-53r4_moderate
+  - 800-53r4_high
+  - 800-171
   - cnssi-1253
   - cis_lvl1
   - cis_lvl2
   - cisv8
   - stig
+  - cmmc_lvl1
+  - cmmc_lvl2
+  - cmmc_lvl3
 severity: "high"
 mobileconfig: true
 mobileconfig_info:

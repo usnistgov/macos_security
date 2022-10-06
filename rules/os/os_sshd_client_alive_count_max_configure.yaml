@@ -16,11 +16,11 @@ fix: |
 references:
   cce:
     - CCE-91007-5
-  cci: 
+  cci:
     - CCI-001133
   800-53r5:
     - SC-10
-  800-53r4: 
+  800-53r4:
     - SC-10
   srg:
     - SRG-OS-000163-GPOS-00072
@@ -28,6 +28,8 @@ references:
     - APPL-12-000052
   800-171r2:
     - 3.13.9
+  cmmc:
+    - SC.L2-3.13.9
 macOS:
   - "12.0"
 odv:
@@ -35,13 +37,15 @@ odv:
   recommended: 0
   stig: 0
 tags:
-  - 800-53r5_moderate 
+  - 800-53r5_moderate
   - 800-53r5_high
-  - 800-53r4_moderate 
+  - 800-53r4_moderate
   - 800-53r4_high
   - 800-171
   - cnssi-1253
   - stig
+  - cmmc_lvl2
+  - cmmc_lvl3
 severity: "medium"
 mobileconfig: false
 mobileconfig_info:

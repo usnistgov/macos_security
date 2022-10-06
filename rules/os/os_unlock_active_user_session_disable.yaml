@@ -1,9 +1,6 @@
 id: os_unlock_active_user_session_disable
 title: "Disable Login to Other User's Active and Locked Sessions"
-discussion: |
-  The ability to log in to another user's active or locked session _MUST_ be disabled. 
-  
-  macOS has a privilege that can be granted to any user that will allow that user to unlock active user's sessions. Disabling the admins and/or user's ability to log into another user's active andlocked session prevents unauthorized persons from viewing potentially sensitive and/or personal information.
+discussion: "The ability to log in to another user's active or locked session _MUST_ be disabled. \n\nmacOS has a privilege that can be granted to any user that will allow that user to unlock active user's sessions. Disabling the admins and/or user's ability to log into another user's active andlocked session prevents unauthorized persons from viewing potentially sensitive and/or personal information.\n"
 check: |
   /usr/bin/security authorizationdb read system.login.screensaver 2>&1 | /usr/bin/grep -c 'use-login-window-ui'
 result:
@@ -36,6 +33,9 @@ references:
       - 5.7 (level 1)
     controls v8:
       - 4.3
+  cmmc:
+    - IA.L1-3.5.1
+    - IA.L1-3.5.2
 macOS:
   - "12.0"
 tags:
@@ -50,5 +50,8 @@ tags:
   - cis_lvl1
   - cis_lvl2
   - cisv8
+  - cmmc_lvl1
+  - cmmc_lvl2
+  - cmmc_lvl3
 mobileconfig: false
 mobileconfig_info:

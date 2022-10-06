@@ -1,10 +1,7 @@
 id: os_facetime_app_disable
 title: "Disable FaceTime.app"
-discussion: |
-  The macOS built-in FaceTime.app _MUST_ be disabled. 
-
-  The FaceTime.app establishes a connection to Apple's iCloud service, even when security controls have been put in place to disable iCloud access. 
-check: | 
+discussion: "The macOS built-in FaceTime.app _MUST_ be disabled. \n\nThe FaceTime.app establishes a connection to Apple's iCloud service, even when security controls have been put in place to disable iCloud access. \n"
+check: |
   /usr/bin/osascript -l JavaScript << EOS
   function run() {
     let pref1 = ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess.new')\
@@ -26,7 +23,7 @@ fix: |
 references:
   cce:
     - CCE-90919-2
-  cci: 
+  cci:
     - CCI-000381
     - CCI-001774
   800-53r5:
@@ -50,22 +47,27 @@ references:
     controls v8:
       - 4.1
       - 4.8
+  cmmc:
+    - AC.L1-3.1.20
 macOS:
   - "12.0"
 tags:
-  - 800-53r5_low 
-  - 800-53r5_moderate 
-  - 800-53r5_high 
-  - 800-53r4_low 
-  - 800-53r4_moderate 
-  - 800-53r4_high 
-  - 800-171 
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_high
+  - 800-53r4_low
+  - 800-53r4_moderate
+  - 800-53r4_high
+  - 800-171
   - cnssi-1253
   - cisv8
+  - cmmc_lvl1
+  - cmmc_lvl2
+  - cmmc_lvl3
 severity: "low"
 mobileconfig: true
 mobileconfig_info:
   com.apple.applicationaccess.new:
     familyControlsEnabled: true
-    pathBlackList: 
+    pathBlackList:
       - /Applications/FaceTime.app
