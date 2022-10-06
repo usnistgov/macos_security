@@ -2,7 +2,7 @@ id: sysprefs_smbd_disable
 title: "Disable Server Message Block Sharing"
 discussion: |
   Support for Server Message Block (SMB) file sharing is non-essential and _MUST_ be disabled.
-
+  
   The information system _MUST_ be configured to provide only essential capabilities.
 check: |
   /bin/launchctl print-disabled system | /usr/bin/grep -c '"com.apple.smbd" => true'

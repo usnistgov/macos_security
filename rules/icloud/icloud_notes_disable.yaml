@@ -2,7 +2,7 @@ id: icloud_notes_disable
 title: "Disable iCloud Notes"
 discussion: |
   The macOS built-in Notes.app connection to Apple's iCloud service _MUST_ be disabled. 
-
+  
   Apple's iCloud service does not provide an organization with enough control over the storage and access of data and, therefore, automated Notes synchronization _MUST_ be controlled by an organization approved service.
 check: |
   /usr/bin/osascript -l JavaScript << EOS

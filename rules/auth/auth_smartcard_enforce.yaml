@@ -2,13 +2,13 @@ id: auth_smartcard_enforce
 title: "Enforce Smartcard Authentication"
 discussion: |
   Smartcard authentication _MUST_ be enforced.
-
+  
   The use of smartcard credentials facilitates standardization and reduces the risk of unauthorized access.
-
+  
   When enforceSmartCard is set to "true", the smartcard must be used for login, authorization, and unlocking the screensaver.
-
+  
   CAUTION: enforceSmartCard will apply to the whole system. No users will be able to login with their password unless the profile is removed or a user is exempt from smartcard enforcement.
-
+  
   NOTE: enforceSmartcard requires allowSmartcard to be set to true in order to work.
 check: |
   /usr/bin/osascript -l JavaScript << EOS

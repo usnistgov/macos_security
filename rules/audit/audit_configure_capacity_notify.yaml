@@ -2,7 +2,7 @@ id: audit_configure_capacity_notify
 title: "Configure Audit Capacity Warning"
 discussion: |
   The audit service _MUST_ be configured to notify the system administrator when the amount of free disk space remaining reaches an organization defined value. 
-
+  
   This rule ensures that the system administrator is notified in advance that action is required to free up more disk space for audit logs.
 check: |
   /usr/bin/awk -F: '/^minfree/{print $2}' /etc/security/audit_control

@@ -2,9 +2,9 @@ id: pwpolicy_max_lifetime_enforce
 title: "Restrict Maximum Password Lifetime to $ODV Days"
 discussion: |
   The macOS _MUST_ be configured to enforce a maximum password lifetime limit of at least $ODV days. 
-
+  
   This rule ensures that users are forced to change their passwords frequently enough to prevent malicious users from gaining and maintaining access to the system.
-
+  
   NOTE: The guidance for password based authentication in NIST 800-53 (Rev 5) and NIST 800-63B state that complexity rules should be organizationally defined. The values defined are based off of common complexity values. But your organization may define its own password complexity rules.
 check: |
   /usr/bin/pwpolicy -getaccountpolicies 2> /dev/null | /usr/bin/tail +2 | /usr/bin/xmllint --xpath '//dict/key[text()="policyAttributeExpiresEveryNDays"]/following-sibling::*[1]/text()' -

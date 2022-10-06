@@ -2,7 +2,7 @@ id: icloud_drive_disable
 title: "Disable iCloud Document Sync"
 discussion: |
   The macOS built-in iCloud document synchronization service _MUST_ be disabled to prevent organizational data from being synchronized to personal or non-approved storage. 
-
+  
   Apple's iCloud service does not provide an organization with enough control over the storage and access of data and, therefore, automated document synchronization _MUST_ be controlled by an organization approved service. 
 check: |
   /usr/bin/osascript -l JavaScript << EOS

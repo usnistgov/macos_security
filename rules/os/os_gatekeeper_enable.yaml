@@ -2,9 +2,9 @@ id: os_gatekeeper_enable
 title: "Enable Gatekeeper"
 discussion: |
   Gatekeeper _MUST_ be enabled. 
-
+  
   Gatekeeper is a security feature that ensures that applications are digitally signed by an Apple-issued certificate before they are permitted to run. Digital signatures allow the macOS host to verify that the application has not been modified by a malicious third party.
-
+  
   Administrator users will still have the option to override these settings on a case-by-case basis.
 check: |
   /usr/sbin/spctl --status | /usr/bin/grep -c "assessments enabled"

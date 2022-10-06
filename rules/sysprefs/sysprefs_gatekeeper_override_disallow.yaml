@@ -2,7 +2,7 @@ id: sysprefs_gatekeeper_override_disallow
 title: "Configure Gatekeeper to Disallow End User Override"
 discussion: |
   Gatekeeper _MUST_ be configured with a configuration profile to prevent normal users from overriding its settings. 
-
+  
   If users are allowed to disable Gatekeeper or set it to a less restrictive setting, malware could be introduced into the system. 
 check: |
   /usr/bin/osascript -l JavaScript << EOS

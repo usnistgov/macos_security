@@ -2,7 +2,7 @@ id: sysprefs_internet_accounts_prefpane_hide
 title: "Hide the Internet Accounts System Preference Pane"
 discussion: |
   The Internet Accounts System Preference pane _MUST_ be hidden to prevent the addition of unauthorized internet accounts.
-
+  
   [IMPORTANT]
   ====
   Some organizations may allow the use and configuration of the built-in Mail.app, Calendar.app, and Contacts.app for organizational communication. Information System Security Officers (ISSOs) may make the risk-based decision not to disable the Internet Accounts System Preference pane to avoid losing this functionality, but they are advised to first fully weigh the potential risks posed to their organization.

@@ -2,9 +2,9 @@ id: sysprefs_firewall_stealth_mode_enable
 title: "Enable Firewall Stealth Mode"
 discussion: |
   Firewall Stealth Mode _MUST_ be enabled. 
-
+  
   When stealth mode is enabled, the Mac will not respond to any probing requests, and only requests from authorized applications will still be authorized.
-
+  
   [IMPORTANT]
   ====
   Enabling firewall stealth mode may prevent certain remote mechanisms used for maintenance and compliance scanning from properly functioning. Information System Security Officers (ISSOs) are advised to first fully weigh the potential risks posed to their organization before opting not to enable stealth mode.

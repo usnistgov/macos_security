@@ -4,7 +4,7 @@ discussion: |
   Parental Controls _MUST_ be enabled. 
   
   Control of program execution is a mechanism used to prevent program execution of unauthorized programs, which is critical to maintaining a secure system baseline.
-
+  
   Parental Controls on the macOS consist of many different payloads, which are set individually depending on the type of control required. Enabling parental controls allows for further configuration of these restrictions.
 check: |
   /usr/bin/osascript -l JavaScript << EOS

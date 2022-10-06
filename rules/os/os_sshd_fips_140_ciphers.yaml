@@ -2,11 +2,11 @@ id: os_sshd_fips_140_ciphers
 title: "Limit SSHD to FIPS 140 Validated Ciphers"
 discussion: |
   If SSHD is enabled then it _MUST_ be configured to limit the ciphers to algorithms that are FIPS 140 validated.
-
+  
   FIPS 140-2 is the current standard for validating that mechanisms used to access cryptographic modules utilize authentication that meet federal requirements.
-
+  
   Operating systems utilizing encryption _MUST_ use FIPS validated mechanisms for authenticating to cryptographic modules. 
-
+  
   NOTE: /etc/ssh/sshd_config will be automatically modified to its original state following any update or major upgrade to the operating system.
 check: |
   /usr/bin/grep -c "^Ciphers aes256-ctr,aes192-ctr,aes128-ctr" /etc/ssh/sshd_config

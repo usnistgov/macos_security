@@ -2,7 +2,7 @@ id: os_user_app_installation_prohibit
 title: "Prohibit User Installation of Software into /Users/"
 discussion: |
   Users _MUST_ not be allowed to install software into /Users/. 
-
+  
   Allowing regular users to install software, without explicit privileges, presents the risk of untested and potentially malicious software being installed on the system. Explicit privileges (escalated or administrative privileges) provide the regular user with explicit capabilities and control that exceeds the rights of a regular user.
 check: |
   /usr/bin/osascript -l JavaScript << EOS

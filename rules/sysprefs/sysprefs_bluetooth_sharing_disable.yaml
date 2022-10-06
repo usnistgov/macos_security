@@ -2,9 +2,9 @@ id: sysprefs_bluetooth_sharing_disable
 title: "Disable Bluetooth Sharing"
 discussion: |
   Bluetooth Sharing _MUST_ be disabled. 
-
+  
   Bluetooth Sharing allows users to wirelessly transmit files between the macOS and Bluetooth-enabled devices, including personally owned cellphones and tablets. A malicious user might introduce viruses or malware onto the system or extract sensitive files via Bluetooth Sharing. When Bluetooth Sharing is disabled, this risk is mitigated. 
-
+  
   [NOTE] 
   ====
   The check and fix are for the currently logged in user. To get the currently logged in user, run the following.

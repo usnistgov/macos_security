@@ -2,7 +2,7 @@ id: sysprefs_screen_sharing_disable
 title: "Disable Screen Sharing and Apple Remote Desktop"
 discussion: |
   Support for both Screen Sharing and Apple Remote Desktop (ARD) is non-essential and _MUST_ be disabled.
-
+  
   The information system _MUST_ be configured to provide only essential capabilities. Disabling screen sharing and ARD helps prevent the unauthorized connection of devices, the unauthorized transfer of information, and unauthorized tunneling.
 check: |
   /bin/launchctl print-disabled system | /usr/bin/grep -c '"com.apple.screensharing" => true'

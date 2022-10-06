@@ -2,7 +2,7 @@ id: sysprefs_guest_account_disable
 title: "Disable the Guest Account"
 discussion: |
   Guest access _MUST_ be disabled. 
-
+  
   Turning off guest access prevents anonymous users from accessing files.
 check: |
   /usr/bin/osascript -l JavaScript << EOS

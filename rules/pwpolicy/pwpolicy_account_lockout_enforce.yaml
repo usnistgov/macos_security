@@ -2,7 +2,7 @@ id: pwpolicy_account_lockout_enforce
 title: "Limit Consecutive Failed Login Attempts to $ODV"
 discussion: |
   The macOS _MUST_ be configured to limit the number of failed login attempts to a maximum of $ODV. When the maximum number of failed attempts is reached, the account _MUST_ be locked for a period of time after.
-
+  
   This rule protects against malicious users attempting to gain access to the system via brute-force hacking methods. 
 check: |
   /usr/bin/pwpolicy -getaccountpolicies 2> /dev/null | /usr/bin/tail +2 | /usr/bin/xmllint --xpath '//dict/key[text()="policyAttributeMaximumFailedAuthentications"]/following-sibling::integer[1]/text()' - | /usr/bin/awk '{ if ($1 <= $ODV) {print "yes"} else {print "no"}}'

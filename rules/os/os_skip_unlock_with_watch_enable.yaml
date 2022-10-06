@@ -2,7 +2,7 @@ id: os_skip_unlock_with_watch_enable
 title: "Disable Unlock with Apple Watch During Setup Assistant"
 discussion: |
   The prompt for Apple Watch unlock setup during Setup Assistant _MUST_ be disabled. 
-
+  
   Disabling Apple watches is a necessary step to ensuring that the information system retains a session lock until the user reestablishes access using an authorized identification and authentication procedures.
 check: |
   /usr/bin/osascript -l JavaScript << EOS

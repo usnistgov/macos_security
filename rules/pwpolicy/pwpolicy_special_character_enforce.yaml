@@ -2,11 +2,11 @@ id: pwpolicy_special_character_enforce
 title: "Require Passwords Contain a Minimum of One Special Character"
 discussion: |
   The macOS _MUST_ be configured to require at least one special character be used when a password is created.
-
+  
   Special characters are those characters that are not alphanumeric. Examples include: ~ ! @ # $ % ^ *.
-
+  
   This rule enforces password complexity by requiring users to set passwords that are less vulnerable to malicious users.
-
+  
   NOTE: The guidance for password based authentication in NIST 800-53 (Rev 5) and NIST 800-63B state that complexity rules should be organizationally defined. The values defined are based off of common complexity values. But your organization may define its own password complexity rules.
 check: |
   /usr/bin/pwpolicy -getaccountpolicies 2> /dev/null | /usr/bin/tail +2 | /usr/bin/xmllint --xpath 'boolean(//*[contains(text(),"policyAttributePassword matches '\\''(.*[^a-zA-Z0-9].*){$ODV,}'\\''")])' - 

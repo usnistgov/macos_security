@@ -2,7 +2,7 @@ id: os_hibernate_mode_enable
 title: "Enable Hibernate Mode"
 discussion: |
   Hibernate mode _MUST_ be enabled. 
-
+  
   NOTE: Hibernate mode will disable instate wake on Apple Silicon laptops.
 check: |
   error_count=0
