@@ -2,15 +2,15 @@ id: os_policy_banner_loginwindow_enforce
 title: "Display Policy Banner at Login Window"
 discussion: |
   Displaying a standardized and approved use notification before granting access to the operating system ensures that users are provided with privacy and security notification verbiage that is consistent with applicable federal laws, Executive Orders, directives, policies, regulations, standards, and guidance.
-  
+
   System use notifications are required only for access via login interfaces with human users and are not required when such human interfaces do not exist.
-  
+
   The policy banner will show if a "PolicyBanner.rtf" or "PolicyBanner.rtfd" exists in the "/Library/Security" folder.
   NOTE: 
     The banner text of the document _MUST_ read:
-  
+
     "$ODV"
-    
+  
 check: |
   /bin/ls -ld /Library/Security/PolicyBanner.rtf* | /usr/bin/wc -l | /usr/bin/tr -d ' '
 result:
@@ -20,7 +20,7 @@ fix: |
   ----
   bannerText="$ODV"
   /bin/mkdir /Library/Security/PolicyBanner.rtfd
-  /usr/bin/textutil -convert rtf -output /Library/Security/PolicyBanner.rtfd/TXT.rtf -stdin <<EOF              
+  /usr/bin/textutil -convert rtf -output /Library/Security/PolicyBanner.rtfd/TXT.rtf -stdin <<EOF            
   $bannerText
   EOF
   ----

@@ -2,7 +2,7 @@ id: sysprefs_siri_prefpane_disable
 title: "Disable the System Preference Pane for Siri"
 discussion: |
   The system preference pane for Siri _MUST_ be disabled.
-  
+
   Disabling the system preference pane prevents the users from configuring Siri. 
 check: |
   /usr/bin/profiles show -output stdout-xml | /usr/bin/xmllint --xpath 'string(//*[contains(text(), "DisabledPreferencePanes")]/following-sibling::*[1])' - | /usr/bin/grep -c com.apple.preference.speech

@@ -2,7 +2,7 @@ id: os_facetime_app_disable
 title: "Disable FaceTime.app"
 discussion: |
   The macOS built-in FaceTime.app _MUST_ be disabled. 
-  
+
   The FaceTime.app establishes a connection to Apple's iCloud service, even when security controls have been put in place to disable iCloud access. 
 check: |
   /usr/bin/osascript -l JavaScript << EOS

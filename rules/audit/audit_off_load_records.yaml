@@ -2,9 +2,9 @@ id: audit_off_load_records
 title: "Off-Load Audit Records"
 discussion: |
   Audit records should be off-loaded onto a different system or media from the system being audited.
-  
+
   Information stored in only one location is vulnerable to accidental or incidental deletion or alteration. Off-loading is a common process in information systems with limited audit storage capacity. 
-  
+
   To secure audit records by off-loading, many operating systems can be integrated with enterprise-level auditing mechanisms that meet or exceed this requirement. 
 check: |
   The technology does not support this requirement. This is an applicable-does not meet finding.

@@ -2,7 +2,7 @@ id: os_sshd_login_grace_time_configure
 title: "Set Login Grace Time to $ODV"
 discussion: |
   If SSHD is enabled then it _MUST_ be configured to wait only $ODV seconds before timing out logon attempts.
-  
+
   NOTE: /etc/ssh/sshd_config will be automatically modified to its original state following any update or major upgrade to the operating system.
 check: |
   /usr/bin/grep -c "^LoginGraceTime $ODV" /etc/ssh/sshd_config

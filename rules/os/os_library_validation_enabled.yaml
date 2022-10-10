@@ -1,6 +1,6 @@
 id: os_library_validation_enabled
 title: "Enable Library Validation"
-discussion:   
+discussion: 
   Library validation  _MUST_ be enabled.
 check: |
   /usr/bin/osascript -l JavaScript << EOS

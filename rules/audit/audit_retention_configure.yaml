@@ -2,7 +2,7 @@ id: audit_retention_configure
 title: "Configure Audit Retention to $ODV"
 discussion: |
   The audit service _MUST_ be configured to require records be kept for a organizational defined value before deletion, unless the system uses a central audit record storage facility. 
-  
+
   When "expire-after" is set to "$ODV", the audit service will not delete audit logs until the log data criteria is met.
 check: |
   /usr/bin/awk -F: '/expire-after/{print $2}' /etc/security/audit_control

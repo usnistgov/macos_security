@@ -2,9 +2,9 @@ id: pwpolicy_lower_case_character_enforce
 title: "Require Passwords Contain a Minimum of One Lowercase Character"
 discussion: |
   The macOS _MUST_ be configured to require at least one lower-case character be used when a password is created.
-  
+
   This rule enforces password complexity by requiring users to set passwords that are less vulnerable to malicious users. 
-  
+
   NOTE: The guidance for password based authentication in NIST 800-53 (Rev 5) and NIST 800-63B state that complexity rules should be organizationally defined. The values defined are based off of common complexity values. But your organization may define its own password complexity rules.
 check: |
   /usr/bin/pwpolicy -getaccountpolicies 2> /dev/null | /usr/bin/tail +2 | /usr/bin/xmllint --xpath '//dict/key[text()="minimumAlphaCharactersLowerCase"]/following-sibling::integer[1]/text()' - | /usr/bin/awk '{ if ($1 >= $ODV ) {print "yes"} else {print "no"}}'
@@ -12,9 +12,9 @@ result:
   string: "yes"
 fix: |
   This setting may be enforced using local policy or by a directory service.
-  
+
   To set local policy to require at least $ODV lowercase letter, edit the current password policy to contain the following <dict> within the "policyCategoryPasswordContent":
-  
+
   [source,xml]
   ----
   <dict>
@@ -30,7 +30,7 @@ fix: |
   </dict>
   ----
   After saving the file and exiting to the command prompt, run the following command to load the new policy file, substituting the path to the file in place of "$pwpolicy_file".
-  
+
   [source,bash]
   ----
   /usr/bin/pwpolicy setaccountpolicies $pwpolicy_file

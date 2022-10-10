@@ -2,7 +2,7 @@ id: os_time_server_enabled
 title: "Enable Time Synchronization Daemon"
 discussion: |
   The macOS time synchronization daemon (timed) _MUST_ be enabled for proper time synchronization to an authorized time server.
-  
+
   NOTE: The time synchronization daemon is enabled by default on macOS.
 check: |
   /bin/launchctl list | /usr/bin/grep -c com.apple.timed

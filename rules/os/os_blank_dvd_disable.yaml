@@ -2,12 +2,12 @@ id: os_blank_dvd_disable
 title: "Disable Blank DVD"
 discussion: |
   Blank DVD media _MUST_ be disabled.
-  
+
   [IMPORTANT]
   ====
   Some organizations rely on the use of removable media for storing and sharing data. Information System Security Officers (ISSOs) may make the risk-based decision not to disable external hard drives to avoid losing this functionality, but they are advised to first fully weigh the potential risks posed to their organization.
   ====
-  
+
   [IMPORTANT]
   ====
   Apple has deprecated the use of media mount controls, using these controls may not work as expected. Third party software may be required to fullfill the compliance requirements.

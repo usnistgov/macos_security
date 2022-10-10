@@ -1,7 +1,7 @@
 id: sysprefs_location_services_enable
 title: "Enable Location Services"
 discussion: |
-  Location Services _MUST_ be enabled.   
+  Location Services _MUST_ be enabled. 
 check: |
   /usr/bin/defaults read /var/db/locationd/Library/Preferences/ByHost/com.apple.locationd.plist LocationServicesEnabled
 result:
@@ -17,7 +17,7 @@ references:
   cci: 
     - N/A
   800-53r5:
-    - N/A    
+    - N/A  
   800-53r4: 
     - N/A
   srg:

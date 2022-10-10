@@ -2,7 +2,7 @@ id: os_show_filename_extensions_enable
 title: "Enable Show All Filename Extensions"
 discussion: |
   Show all filename extensions _MUST_ be enabled in the Finder.
-  
+
   [NOTE] 
   ====
   The check and fix are for the currently logged in user. To get the currently logged in user, run the following.

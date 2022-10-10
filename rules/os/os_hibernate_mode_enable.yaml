@@ -2,7 +2,7 @@ id: os_hibernate_mode_enable
 title: "Enable Hibernate Mode"
 discussion: |
   Hibernate mode _MUST_ be enabled. 
-  
+
   NOTE: Hibernate mode will disable instate wake on Apple Silicon laptops.
 check: |
   error_count=0
@@ -12,7 +12,7 @@ check: |
         hibernateStandbyHighValue=$(/usr/bin/pmset -g | /usr/bin/grep standbydelayhigh 2>&1 | /usr/bin/awk '{print $2}')
         hibernateStandbyThreshValue=$(/usr/bin/pmset -g | /usr/bin/grep highstandbythreshold 2>&1 | /usr/bin/awk '{print $2}')
         hibernateMode=$(/usr/bin/pmset -b -g | /usr/bin/grep hibernatemode 2>&1 | /usr/bin/awk '{print $2}')
-        
+      
         if [[ "$hibernateStandbyLowValue" == "" ]] || [[ "$hibernateStandbyLowValue" -gt 600 ]]; then
             ((error_count++))
         fi

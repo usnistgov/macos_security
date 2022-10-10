@@ -2,7 +2,7 @@ id: os_managed_access_control_points
 title: "Managed Access Control Points"
 discussion: |
   Route remote accesses through authorized and managed network access control points.
-  
+
   Organizations consider the Trusted Internet Connections (TIC) initiative requirements for external network connections since limiting the number of access control points for remote access reduces attack surfaces.
 check: |
   This requirement is NA for this technology.

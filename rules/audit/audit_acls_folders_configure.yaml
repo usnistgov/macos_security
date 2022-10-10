@@ -2,7 +2,7 @@ id: audit_acls_folders_configure
 title: "Configure Audit Log Folder to Not Contain Access Control Lists"
 discussion: |
   The audit log folder _MUST_ not contain access control lists (ACLs).
-  
+
   Audit logs contain sensitive data about the system and users. This rule ensures that the audit service is configured to create log folders that are readable and writable only by system administrators in order to prevent normal users from reading audit logs.
 check: |
   /bin/ls -lde $(/usr/bin/grep '^dir' /etc/security/audit_control | /usr/bin/awk -F: '{print $2}') | /usr/bin/awk '{print $1}' | /usr/bin/grep -c ":"

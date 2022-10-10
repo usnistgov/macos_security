@@ -2,7 +2,7 @@ id: audit_settings_failure_notify
 title: "Configure Audit Failure Notification"
 discussion: |
   The audit service _MUST_ be configured to immediately print messages to the console or email administrator users when an auditing failure occurs. 
-  
+
   It is critical for the appropriate personnel to be made aware immediately if a system is at risk of failing to process audit logs as required. Without a real-time alert, security personnel may be unaware of a potentially harmful failure in the auditing system's capability, and system operation may be adversely affected. 
 check: |
   /usr/bin/grep -c "logger -s -p" /etc/security/audit_warn

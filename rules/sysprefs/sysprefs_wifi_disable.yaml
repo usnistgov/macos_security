@@ -2,9 +2,9 @@ id: sysprefs_wifi_disable
 title: "Disable Wi-Fi Interface"
 discussion: |
   The macOS system must be configured with Wi-Fi support software disabled if not connected to an authorized trusted network. 
-  
+
   Allowing devices and users to connect to or from the system without first authenticating them allows untrusted access and can lead to a compromise or attack. Since wireless communications can be intercepted  it is necessary to use encryption to protect the confidentiality of information in transit.Wireless technologies include  for example  microwave  packet radio (UHF/VHF)  802.11x  and Bluetooth. Wireless networks use authentication protocols (e.g.  EAP/TLS  PEAP)  which provide credential protection and mutual authentication.
-  
+
   NOTE: If the system requires Wi-Fi to connect to an authorized network, this is not applicable.
 check: |
   /usr/sbin/networksetup -listallnetworkservices | /usr/bin/grep -c "*Wi-Fi"

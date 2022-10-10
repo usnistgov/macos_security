@@ -2,7 +2,7 @@ id: sysprefs_softwareupdate_current
 title: "Ensure Software Update is Updated and Current"
 discussion: |
   Make sure Software Update is updated and current.
-  
+
   NOTE: Automatic fix can cause unplanned restarts and may lose work.
 check: |
   softwareupdate_date_epoch=$(/bin/date -j -f "%Y-%m-%d" "$(/usr/bin/defaults read /Library/Preferences/com.apple.SoftwareUpdate.plist LastFullSuccessfulDate | /usr/bin/awk '{print $1}')" "+%s")

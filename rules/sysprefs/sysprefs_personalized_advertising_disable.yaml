@@ -2,8 +2,8 @@ id: sysprefs_personalized_advertising_disable
 title: "Disable Personalized Advertising"
 discussion: |
   Ad tracking and targeted ads _MUST_ be disabled.
-  
-  The information system _MUST_ be configured to provide only essential capabilities. Disabling ad tracking ensures that applications and advertisers are unable to track users' interests and deliver targeted advertisements.  
+
+  The information system _MUST_ be configured to provide only essential capabilities. Disabling ad tracking ensures that applications and advertisers are unable to track users' interests and deliver targeted advertisements.
 check: |
   /usr/bin/osascript -l JavaScript << EOS
   $.NSUserDefaults.alloc.initWithSuiteName('com.apple.AdLib')\
