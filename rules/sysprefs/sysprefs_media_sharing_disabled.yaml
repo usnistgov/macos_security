@@ -51,6 +51,9 @@ references:
     controls v8:
       - 4.1
       - 4.8
+  cmmc:
+    - AC.L1-3.1.1
+    - TBD - 3.14.3e
 macOS:
   - "12.0"
 tags:
@@ -63,6 +66,9 @@ tags:
   - 800-171
   - cis_lvl2
   - cisv8
+  - cmmc_lvl3
+  - cmmc_lvl2
+  - cmmc_lvl1
 mobileconfig: true
 mobileconfig_info:
   com.apple.preferences.sharing.SharingPrefsExtension:

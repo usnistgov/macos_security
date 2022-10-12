@@ -52,6 +52,8 @@ references:
       - 5.8 (level 2)
     controls v8:
       - N/A
+  cmmc:
+    - AC.L2-3.1.9
 macOS:
   - "12.0"
 odv:
@@ -78,6 +80,8 @@ tags:
   - cnssi-1253
   - cis_lvl2
   - stig
+  - cmmc_lvl3
+  - cmmc_lvl2
 severity: "medium"
 mobileconfig: false
 mobileconfig_info:

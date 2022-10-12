@@ -39,6 +39,9 @@ references:
     controls v8:
       - 3.3
       - 6.7
+  cmmc:
+    - AC.L1-3.1.1
+    - TBD - 3.14.3e
 macOS:
   - "12.0"
 tags:
@@ -52,6 +55,9 @@ tags:
   - cnssi-1253
   - cisv8
   - stig
+  - cmmc_lvl3
+  - cmmc_lvl2
+  - cmmc_lvl1
 severity: "medium"
 mobileconfig: true
 mobileconfig_info:

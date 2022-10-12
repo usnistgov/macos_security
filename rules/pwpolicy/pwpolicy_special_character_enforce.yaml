@@ -40,6 +40,10 @@ references:
       - 5.2.5 (level 2)
     controls v8:
       - 5.2
+  cmmc:
+    - IA.L2-3.5.7
+    - IA.L2-3.5.8
+    - IA.L2-3.5.9
 macOS:
   - "12.0"
 odv:
@@ -60,6 +64,8 @@ tags:
   - cis_lvl2
   - cisv8
   - stig
+  - cmmc_lvl3
+  - cmmc_lvl2
 severity: "medium"
 mobileconfig: true
 mobileconfig_info:

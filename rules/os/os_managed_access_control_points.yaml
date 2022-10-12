@@ -23,11 +23,15 @@ references:
     - N/A
   srg:
     - N/A
+  cmmc:
+    - AC.L2-3.1.14
 macOS:
   - "12.0"
 tags:
   - 800-53r5_moderate
   - 800-53r5_high
   - n_a
+  - cmmc_lvl3
+  - cmmc_lvl2
 mobileconfig: false
 mobileconfig_info:

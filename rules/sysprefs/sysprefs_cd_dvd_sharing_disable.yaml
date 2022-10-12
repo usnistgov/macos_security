@@ -34,6 +34,9 @@ references:
     controls v8:
       - 4.1
       - 4.8
+  cmmc:
+    - CM.L2-3.4.6
+    - CM.L2-3.4.7
 macOS:
   - "12.0"
 tags:
@@ -47,6 +50,7 @@ tags:
   - cis_lvl1
   - cis_lvl2
   - cisv8
+  - cmmc_lvl3
+  - cmmc_lvl2
 mobileconfig: false
 mobileconfig_info:
-

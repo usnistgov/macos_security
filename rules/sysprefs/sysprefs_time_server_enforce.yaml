@@ -36,6 +36,8 @@ references:
       - 2.2.1 (level 1)
     controls v8:
       - 8.4
+  cmmc:
+    - AU.L2-3.3.7
 macOS:
   - "12.0"
 tags:
@@ -50,10 +52,11 @@ tags:
   - cis_lvl2
   - cisv8
   - stig
+  - cmmc_lvl3
+  - cmmc_lvl2
 severity: "medium"
 mobileconfig: true
 mobileconfig_info:
   com.apple.ManagedClient.preferences:
     com.apple.timed:
       TMAutomaticTimeOnlyEnabled: true
-

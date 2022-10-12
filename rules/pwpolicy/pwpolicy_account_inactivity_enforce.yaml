@@ -10,9 +10,9 @@ result:
   integer: $ODV
 fix: |
   This setting may be enforced using local policy or by a directory service.
-  
+
   To set local policy to disable an inactive user after $ODV days, edit the current password policy to contain the following <dict> within the "policyCategoryAuthentication":
-  
+
   [source,xml]
   ----
   <dict>
@@ -55,6 +55,8 @@ references:
       - N/A
     controls v8:
       - 5.3
+  cmmc:
+    - IA.L2-3.5.6
 macOS:
   - "12.0"
 odv:
@@ -69,5 +71,7 @@ tags:
   - 800-53r5_moderate
   - 800-53r5_high
   - cisv8  
+  - cmmc_lvl3
+  - cmmc_lvl2
 mobileconfig: false
 mobileconfig_info:

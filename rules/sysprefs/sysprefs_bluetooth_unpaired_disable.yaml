@@ -41,9 +41,13 @@ references:
       - N/A
     controls v8:
       - N/A
+  cmmc:
+    - AC.L2-3.1.16
 macOS:
   - "12.0"
 tags:
   - none
+  - cmmc_lvl3
+  - cmmc_lvl2
 mobileconfig: false
 mobileconfig_info:

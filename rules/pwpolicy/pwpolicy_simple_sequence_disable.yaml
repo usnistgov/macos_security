@@ -38,6 +38,10 @@ references:
       - N/A
     controls v8:
       - 5.2
+  cmmc:
+    - IA.L2-3.5.7
+    - IA.L2-3.5.8
+    - IA.L2-3.5.9
 macOS:
   - "12.0"
 tags:
@@ -50,6 +54,8 @@ tags:
   - 800-53r5_moderate
   - 800-53r5_high 
   - cisv8
+  - cmmc_lvl3
+  - cmmc_lvl2
 mobileconfig: true
 mobileconfig_info:
   com.apple.mobiledevice.passwordpolicy:

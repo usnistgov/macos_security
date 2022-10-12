@@ -36,10 +36,14 @@ references:
     - N/A
   disa_stig:
     - N/A
+  cmmc:
+    - CM.L2-3.4.9
 macOS:
   - "12.0"
 tags:
   - none
+  - cmmc_lvl3
+  - cmmc_lvl2
 severity: "medium"
 mobileconfig: true
 mobileconfig_info:

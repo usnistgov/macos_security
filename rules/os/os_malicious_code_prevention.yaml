@@ -52,6 +52,11 @@ references:
       - 10.1
       - 10.2
       - 10.5
+  cmmc:
+    - SI.L1-3.14.1
+    - SI.L1-3.14.2
+    - SI.L1-3.14.4
+    - TBD - 3.13.1e
 macOS:
   - "12.0"
 tags:
@@ -60,5 +65,8 @@ tags:
   - 800-53r5_moderate
   - 800-53r5_high
   - cisv8
+  - cmmc_lvl3
+  - cmmc_lvl2
+  - cmmc_lvl1
 mobileconfig: false
 mobileconfig_info:

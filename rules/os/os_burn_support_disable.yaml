@@ -1,6 +1,6 @@
 id: os_burn_support_disable
 title: "Disable Burn Support"
-discussion:   
+discussion: |
   Burn support _MUST_ be disabled.
 
   [IMPORTANT]
@@ -26,10 +26,16 @@ references:
     - SRG-OS-000480-GPOS-00227
   disa_stig:
     - APPL-12-005053
+  cmmc:
+    - MP.L2-3.8.7
+    - MP.L2-3.8.8
+    - TBD - 3.14.5e
 macOS:
   - "12.0"
 tags:
   - stig
+  - cmmc_lvl3
+  - cmmc_lvl2
 severity: "low"
 mobileconfig: true
 mobileconfig_info:

@@ -31,6 +31,9 @@ references:
     - APPL-12-000051
   800-171r2:
     - 3.13.9
+  cmmc:
+    - AC.L2-3.1.11
+    - SC.L2-3.13.9
 macOS:
   - "12.0"
 odv:
@@ -45,6 +48,8 @@ tags:
   - 800-171
   - cnssi-1253
   - stig
+  - cmmc_lvl3
+  - cmmc_lvl2
 severity: "medium"
 mobileconfig: false
 mobileconfig_info:

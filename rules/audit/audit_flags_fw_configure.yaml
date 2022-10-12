@@ -59,6 +59,12 @@ references:
       - 3.14
       - 8.2
       - 8.5     
+  cmmc:
+    - AU.L2-3.3.3
+    - AU.L2-3.3.6
+    - AU.L2-3.3.8
+    - SI.L2-3.14.3
+    - TBD - 3.14.2e
 macOS:
   - "12.0"
 tags:
@@ -73,6 +79,8 @@ tags:
   - cnssi-1253
   - stig
   - cis_lvl2
+  - cmmc_lvl3
+  - cmmc_lvl2
 severity: "medium"
 mobileconfig: false
 mobileconfig_info:

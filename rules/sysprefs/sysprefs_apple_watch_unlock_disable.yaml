@@ -28,6 +28,8 @@ references:
     - APPL-12-000001
   800-171r2:
     - 3.1.10
+  cmmc:
+    - AC.L2-3.1.10
 macOS:
   - "12.0"
 tags:
@@ -38,6 +40,8 @@ tags:
   - 800-171 
   - cnssi-1253
   - stig
+  - cmmc_lvl3
+  - cmmc_lvl2
 severity: "medium"
 mobileconfig: true
 mobileconfig_info:

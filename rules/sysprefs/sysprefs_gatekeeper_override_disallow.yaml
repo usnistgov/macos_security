@@ -30,6 +30,8 @@ references:
     - N/A
   800-171r2:
     - 3.4.5
+  cmmc:
+    - CM.L2-3.4.5
 macOS:
   - "12.0"
 tags:
@@ -40,9 +42,10 @@ tags:
   - 800-53r4_high 
   - 800-171 
   - cnssi-1253
+  - cmmc_lvl3
+  - cmmc_lvl2
 severity: "medium"
 mobileconfig: true
 mobileconfig_info:
   com.apple.systempolicy.managed:
     DisableOverride: true
-    

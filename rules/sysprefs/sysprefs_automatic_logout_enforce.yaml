@@ -34,6 +34,9 @@ references:
     - N/A
   800-171r2:
     - 3.1.11
+  cmmc:
+    - AC.L2-3.1.10
+    - AC.L2-3.1.11
 macOS:
   - "12.0"
 odv:
@@ -46,6 +49,8 @@ tags:
   - 800-53r4_high
   - 800-171
   - cnssi-1253
+  - cmmc_lvl3
+  - cmmc_lvl2
 mobileconfig: true
 mobileconfig_info:
   .GlobalPreferences:

@@ -60,6 +60,13 @@ references:
     - 3.1.13
     - 3.13.8
     - 3.13.11
+  cmmc:
+    - AC.L2-3.1.13
+    - MP.L2-3.8.6
+    - SC.L2-3.13.8
+    - SC.L2-3.13.11
+    - TBD - 3.14.1e
+    - TBD - 3.14.5e
 macOS:
   - "12.0"
 tags:
@@ -71,5 +78,7 @@ tags:
   - 800-53r4_high
   - 800-171
   - cnssi-1253
+  - cmmc_lvl3
+  - cmmc_lvl2
 mobileconfig: false
 mobileconfig_info:

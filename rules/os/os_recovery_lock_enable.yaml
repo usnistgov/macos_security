@@ -27,6 +27,10 @@ references:
     - N/A
   800-171r2:
     - 3.1.5
+  cmmc:
+    - AC.L1-3.1.1
+    - AC.L2-3.1.5
+    - TBD - 3.14.3e
 macOS:
   - "12.0"
 tags:
@@ -37,6 +41,9 @@ tags:
   - 800-171 
   - cnssi-1253
   - arm64
+  - cmmc_lvl3
+  - cmmc_lvl2
+  - cmmc_lvl1
 severity: "medium"
 mobileconfig: false
 mobileconfig_info:

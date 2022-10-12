@@ -47,6 +47,11 @@ references:
       - 4.1
       - 4.5
       - 4.8
+  cmmc:
+    - CM.L2-3.4.6
+    - CM.L2-3.4.7
+    - SC.L1-3.13.1
+    - TBD - 3.13.4e
 macOS:
   - "12.0"
 tags:
@@ -62,6 +67,9 @@ tags:
   - cis_lvl2
   - cisv8
   - stig
+  - cmmc_lvl3
+  - cmmc_lvl2
+  - cmmc_lvl1
 severity: "medium"
 mobileconfig: true
 mobileconfig_info:
