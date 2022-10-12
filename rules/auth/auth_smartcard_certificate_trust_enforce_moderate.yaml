@@ -40,6 +40,8 @@ references:
     - SRG-OS-000067-GPOS-00035
   disa_stig:
     - APPL-12-001060
+  cmmc:
+    - SC.L2-3.13.10
 macOS:
   - "13.0"
 tags:
@@ -47,6 +49,8 @@ tags:
   - 800-53r5_moderate 
   - cnssi-1253
   - stig
+  - cmmc_lvl2
+  - cmmc_lvl3
 severity: "medium"
 mobileconfig: true
 mobileconfig_info:

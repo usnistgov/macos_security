@@ -43,11 +43,15 @@ references:
       - 4.8
       - 12.6
       - 13.9
+  cmmc:
+    - AC.L2-3.1.16
 macOS:
   - "13.0"
 tags:
   - cis_lvl1
   - cis_lvl2
   - cisv8
+  - cmmc_lvl2
+  - cmmc_lvl3
 mobileconfig: false
 mobileconfig_info:

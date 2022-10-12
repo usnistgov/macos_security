@@ -28,6 +28,9 @@ references:
     - N/A
   800-171r2:
     - 3.13.3
+  cmmc:
+    - SC.L2-3.13.3
+    - TBD - 3.14.3e
 macOS:
   - "13.0"
 tags:
@@ -38,5 +41,7 @@ tags:
   - 800-171
   - cnssi-1253
   - inherent
+  - cmmc_lvl2
+  - cmmc_lvl3
 mobileconfig: false
 mobileconfig_info:

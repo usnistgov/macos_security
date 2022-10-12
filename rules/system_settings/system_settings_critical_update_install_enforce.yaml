@@ -33,6 +33,9 @@ references:
       - 7.3
       - 7.4
       - 7.7
+  cmmc:
+    - SI.L1-3.14.1
+    - SI.L1-3.14.4
 macOS:
   - "13.0"
 tags:
@@ -42,6 +45,9 @@ tags:
   - cis_lvl1
   - cis_lvl2
   - cisv8
+  - cmmc_lvl2
+  - cmmc_lvl3
+  - cmmc_lvl1
 mobileconfig: true
 mobileconfig_info:
   com.apple.SoftwareUpdate:

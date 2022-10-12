@@ -38,6 +38,8 @@ references:
       - 6.3
       - 6.4
       - 6.5
+  cmmc:
+    - IA.L2-3.5.3
 macOS:
   - "13.0"
 tags:
@@ -49,6 +51,8 @@ tags:
   - 800-53r4_high
   - cnssi-1253
   - cisv8
+  - cmmc_lvl2
+  - cmmc_lvl3
 mobileconfig: true
 mobileconfig_info:
   com.apple.security.smartcard:

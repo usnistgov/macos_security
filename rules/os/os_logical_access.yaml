@@ -32,6 +32,9 @@ references:
     controls v8:
       - 3.3
       - 6.7
+  cmmc:
+    - AC.L1-3.1.1
+    - TBD - 3.14.3e
 macOS:
   - "13.0"
 tags:
@@ -45,5 +48,8 @@ tags:
   - cnssi-1253
   - inherent
   - cisv8
+  - cmmc_lvl2
+  - cmmc_lvl3
+  - cmmc_lvl1
 mobileconfig: false
 mobileconfig_info:

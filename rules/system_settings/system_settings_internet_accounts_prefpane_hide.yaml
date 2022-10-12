@@ -32,10 +32,16 @@ references:
     - APPL-12-002032
   800-171r2:
     - 3.1.20
+  cmmc:
+    - AC.L1-3.1.20
+    - CM.L2-3.4.8
 macOS:
   - "13.0"
 tags:
   - stig
+  - cmmc_lvl2
+  - cmmc_lvl3
+  - cmmc_lvl1
 severity: "medium"
 mobileconfig: true
 mobileconfig_info:

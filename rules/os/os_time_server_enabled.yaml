@@ -36,6 +36,8 @@ references:
       - N/A
     controls v8:
       - 8.4
+  cmmc:
+    - AU.L2-3.3.7
 macOS:
   - "13.0"
 tags:
@@ -48,6 +50,8 @@ tags:
   - 800-53r4_high
   - cisv8
   - stig
+  - cmmc_lvl2
+  - cmmc_lvl3
 severity: "medium"
 mobileconfig: false
 mobileconfig_info:

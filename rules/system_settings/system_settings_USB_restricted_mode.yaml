@@ -31,12 +31,18 @@ references:
       - N/A
     controls v8:
       - N/A
+  cmmc:
+    - MP.L2-3.8.7
+    - MP.L2-3.8.8
+    - TBD - 3.14.5e
 macOS:
   - "13.0"
 tags:
   - 800-53r5_low
   - 800-53r5_moderate
   - 800-53r5_high
+  - cmmc_lvl2
+  - cmmc_lvl3
 mobileconfig: true
 mobileconfig_info:
   com.apple.applicationaccess:

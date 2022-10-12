@@ -52,6 +52,10 @@ references:
       - 4.5
       - 8.2
       - 8.5
+  cmmc:
+    - AU.L2-3.3.6
+    - SC.L1-3.13.1
+    - TBD - 3.13.4e
 macOS:
   - "13.0"
 tags:
@@ -66,6 +70,9 @@ tags:
   - cis_lvl1
   - cis_lvl2
   - cisv8
+  - cmmc_lvl2
+  - cmmc_lvl3
+  - cmmc_lvl1
 mobileconfig: true
 mobileconfig_info:
   com.apple.security.firewall:

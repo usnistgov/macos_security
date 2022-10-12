@@ -27,6 +27,8 @@ references:
     - N/A
   srg:
     - N/A
+  cmmc:
+    - SC.L2-3.13.12
 macOS:
   - "13.0"
 tags:
@@ -34,5 +36,7 @@ tags:
   - 800-53r5_low
   - 800-53r5_moderate
   - 800-53r5_high
+  - cmmc_lvl2
+  - cmmc_lvl3
 mobileconfig: false
 mobileconfig_info:

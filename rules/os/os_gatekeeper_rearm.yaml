@@ -32,6 +32,8 @@ references:
       - N/A
     controls v8:
       - 10.5
+  cmmc:
+    - CM.L2-3.4.5
 macOS:
   - "13.0"
 tags:
@@ -43,6 +45,8 @@ tags:
   - 800-171
   - cnssi-1253
   - cisv8
+  - cmmc_lvl2
+  - cmmc_lvl3
 mobileconfig: true
 mobileconfig_info:
   com.apple.ManagedClient.preferences:

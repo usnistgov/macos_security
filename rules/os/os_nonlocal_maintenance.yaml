@@ -21,6 +21,8 @@ references:
     - N/A
   srg:
     - N/A
+  cmmc:
+    - MA.L2-3.7.5
 macOS:
   - "13.0"
 tags:
@@ -33,5 +35,7 @@ tags:
   - 800-171
   - cnssi-1253
   - n_a
+  - cmmc_lvl2
+  - cmmc_lvl3
 mobileconfig: false
 mobileconfig_info:

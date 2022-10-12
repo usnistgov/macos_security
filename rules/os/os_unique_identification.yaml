@@ -25,6 +25,8 @@ references:
     controls v8:
       - 5.1
       - 6.1
+  cmmc:
+    - IA.L2-3.5.5
 macOS:
   - "13.0"
 tags:
@@ -33,5 +35,7 @@ tags:
   - 800-53r5_high
   - inherent
   - cisv8
+  - cmmc_lvl2
+  - cmmc_lvl3
 mobileconfig: false
 mobileconfig_info:

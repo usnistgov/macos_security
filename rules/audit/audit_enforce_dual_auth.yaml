@@ -24,9 +24,12 @@ references:
     - N/A
   srg:
     - N/A
+  cmmc:
+    - TBD - 3.1.1e
 macOS:
   - "13.0"
 tags:
   - permanent
+  - cmmc_lvl3
 mobileconfig: false
 mobileconfig_info:

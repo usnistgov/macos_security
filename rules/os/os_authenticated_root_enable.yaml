@@ -47,6 +47,12 @@ references:
       - 5.1.5 (level 1)
     controls v8:
       - 3.3
+  cmmc:
+    - AC.L1-3.1.1
+    - CM.L2-3.4.5
+    - SC.L2-3.13.11
+    - TBD - 3.14.1e
+    - TBD - 3.14.3e
 macOS:
   - "13.0"
 tags:
@@ -61,5 +67,8 @@ tags:
   - cis_lvl1
   - cis_lvl2
   - cisv8
+  - cmmc_lvl2
+  - cmmc_lvl3
+  - cmmc_lvl1
 mobileconfig: false
 mobileconfig_info:

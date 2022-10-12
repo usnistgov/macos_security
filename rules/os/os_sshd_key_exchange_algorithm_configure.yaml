@@ -63,10 +63,14 @@ references:
     - APPL-12-000056
   800-171r2:
     - N/A
+  cmmc:
+    - AC.L2-3.1.13
 macOS:
   - "13.0"
 tags:
   - stig
+  - cmmc_lvl2
+  - cmmc_lvl3
 severity: "medium"
 mobileconfig: false
 mobileconfig_info:

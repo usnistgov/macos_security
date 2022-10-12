@@ -34,6 +34,9 @@ references:
     - APPL-12-002004
   800-171r2:
     - 3.4.6
+  cmmc:
+    - CM.L2-3.4.6
+    - CM.L2-3.4.7
 macOS:
   - "13.0"
 tags:
@@ -46,6 +49,8 @@ tags:
   - 800-171 
   - cnssi-1253
   - stig
+  - cmmc_lvl2
+  - cmmc_lvl3
 severity: "medium"
 mobileconfig: false
 mobileconfig_info:
