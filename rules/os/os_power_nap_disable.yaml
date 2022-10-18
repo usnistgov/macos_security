@@ -31,7 +31,7 @@ references:
     - N/A
   cis:
     benchmark:
-      - 2.9 (level 1)
+      - 2.9.1 (level 1)
     controls v8:
       - 4.1
       - 4.8
@@ -41,5 +41,6 @@ tags:
   - cis_lvl1
   - cis_lvl2
   - cisv8
+  - i386
 mobileconfig: false
 mobileconfig_info:
