@@ -20,7 +20,7 @@ references:
   cce:
     - CCE-91718-7
   cci:
-    - N/A    
+    - N/A   
   800-53r5:
     - AC-2(12)
     - AU-12

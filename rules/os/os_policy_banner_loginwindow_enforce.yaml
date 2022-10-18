@@ -28,23 +28,15 @@ references:
   cce:
     - CCE-91845-8
   cci: 
-    - CCI-000048
-    - CCI-000050
-    - CCI-001384
-    - CCI-001385
-    - CCI-001386
-    - CCI-001387
-    - CCI-001388
+    - N/A
   800-53r5:
     - AC-8
   800-53r4: 
     - AC-8
   srg:
-    - SRG-OS-000023-GPOS-00006
-    - SRG-OS-000024-GPOS-00007
-    - SRG-OS-000228-GPOS-00088
+    - N/A
   disa_stig:
-    - APPL-12-000025
+    - N/A
   800-171r2:
     - 3.1.9
   cis:

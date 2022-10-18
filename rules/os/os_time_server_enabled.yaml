@@ -17,18 +17,16 @@ references:
   cce:
     - CCE-91904-3
   cci: 
-    - CCI-001891
-    - CCI-002046
+    - N/A
   800-53r5:
     - AU-12(1)
     - SC-45(1)
   800-53r4: 
     - AU-8(1)
   srg:
-    - SRG-OS-000355-GPOS-00143
-    - SRG-OS-000356-GPOS-00144
+    - N/A
   disa_stig:
-    - APPL-12-000014
+    - N/A
   800-171r2:
     - 3.3.7
   cis:

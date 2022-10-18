@@ -20,7 +20,7 @@ references:
   cce:
     - CCE-91936-5
   cci: 
-    - CCI-002418
+    - N/A
   800-53r5:
     - AC-18
     - SC-8
@@ -29,10 +29,9 @@ references:
     - AC-18(3)
     - SC-8
   srg:
-    - SRG-OS-000481-GPOS-000481
-    - SRG-OS-000319-GPOS-00164
+    - N/A
   disa_stig:
-    - APPL-12-002062
+    - N/A
   800-171r2:
     - 3.13.8
   cis:

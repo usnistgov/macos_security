@@ -18,16 +18,16 @@ references:
   cce:
     - CCE-91927-4
   cci: 
-    - CCI-001619
+    - N/A
   800-53r5:
     - IA-5(1)
   800-53r4: 
     - IA-5
     - IA-5(1)
   srg:
-    - SRG-OS-000266-GPOS-00101
+    - N/A
   disa_stig:
-    - APPL-12-003011
+    - N/A
   800-171r2:
     - 3.5.1
     - 3.5.2

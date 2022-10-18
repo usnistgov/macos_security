@@ -32,9 +32,9 @@ references:
     - CM-7(1)
     - SC-7(16)
   srg:
-    - SRG-OS-000480-GPOS-00232
+    - N/A
   disa_stig:
-    - APPL-12-005050
+    - N/A
   800-171r2:
     - 3.4.6
     - 3.13.1

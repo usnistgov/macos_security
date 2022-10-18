@@ -26,7 +26,7 @@ references:
   cce:
     - CCE-91945-6
   cci: 
-    - CCI-000382
+    - N/A
   800-53r5:
     - SI-11
     - AC-20
@@ -35,9 +35,9 @@ references:
     - AC-20
     - SI-11
   srg:
-    - SRG-OS-000096-GPOS-00050
+    - N/A
   disa_stig:
-    - APPL-12-002021
+    - N/A
   800-171r2:
     - 3.1.20
   cis:

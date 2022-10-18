@@ -14,7 +14,7 @@ references:
   cce:
     - CCE-91925-8
   cci:
-    - CCI-000366
+    - N/A
   800-53r5:
     - N/A
   800-53r4:

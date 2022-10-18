@@ -20,21 +20,7 @@ references:
   cce:
     - CCE-91878-9
   cci: 
-    - CCI-000154
-    - CCI-000158
-    - CCI-000169
-    - CCI-001493
-    - CCI-001494
-    - CCI-001495
-    - CCI-001499
-    - CCI-001875
-    - CCI-001876
-    - CCI-001877
-    - CCI-001878
-    - CCI-001879
-    - CCI-001880
-    - CCI-001881
-    - CCI-001882
+    - N/A
   800-53r5:
     - AC-3
     - AU-9
@@ -55,23 +41,9 @@ references:
     - CM-5
     - SC-4
   srg:
-    - SRG-OS-000051-GPOS-00024
-    - SRG-OS-000054-GPOS-00025
-    - SRG-OS-000062-GPOS-00031
-    - SRG-OS-000122-GPOS-00063
-    - SRG-OS-000256-GPOS-00097
-    - SRG-OS-000257-GPOS-00098
-    - SRG-OS-000258-GPOS-00099
-    - SRG-OS-000259-GPOS-00100
-    - SRG-OS-000348-GPOS-00136
-    - SRG-OS-000349-GPOS-00137
-    - SRG-OS-000350-GPOS-00138
-    - SRG-OS-000351-GPOS-00139
-    - SRG-OS-000352-GPOS-00140
-    - SRG-OS-000353-GPOS-00141
-    - SRG-OS-000354-GPOS-00142
+    - N/A
   disa_stig:
-    - APPL-12-005001
+    - N/A
   800-171r2:
     - 3.1.1
     - 3.1.2

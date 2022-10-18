@@ -38,7 +38,7 @@ references:
   cce:
     - CCE-91914-2
   cci: 
-    - CCI-000795
+    - N/A
   800-53r5:
     - AC-2(3)
   800-53r4:

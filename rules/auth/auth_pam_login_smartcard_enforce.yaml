@@ -39,7 +39,7 @@ references:
   cce:
     - CCE-91733-6
   cci:
-    - CCI-000366
+    - N/A
   800-53r5:
     - IA-2(1)
     - IA-2(2)
@@ -49,9 +49,9 @@ references:
     - IA-2(4)
     - IA-5(11)    
   srg:
-    - SRG-OS-000480-GPOS-00227
+    - N/A
   disa_stig:
-    - APPL-12-003050
+    - N/A
   800-171r2:
     - 3.5.3
   cis:

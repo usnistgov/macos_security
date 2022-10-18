@@ -13,15 +13,15 @@ references:
   cce:
     - CCE-91785-6
   cci: 
-    - CCI-001233
+    - N/A
   800-53r5: 
     - N/A
   800-53r4: 
     - SI-2(2)
   srg:
-    - SRG-OS-000191-GPOS-00080
+    - N/A
   disa_stig:
-    - APPL-12-000015
+    - N/A
 macOS:
   - "13.0"
 tags:

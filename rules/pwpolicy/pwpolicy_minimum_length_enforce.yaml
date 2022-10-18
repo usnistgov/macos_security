@@ -16,16 +16,16 @@ references:
   cce:
     - CCE-91923-3
   cci: 
-    - CCI-000205
+    - N/A
   800-53r5:
     - IA-5(1)
   800-53r4: 
     - IA-5
     - IA-5(1)
   srg:
-    - SRG-OS-000078-GPOS-00046
+    - N/A
   disa_stig:
-    - APPL-12-003010
+    - N/A
   800-171r2:
     - 3.5.1
     - 3.5.2

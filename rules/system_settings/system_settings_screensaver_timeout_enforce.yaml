@@ -24,16 +24,16 @@ references:
   cce:
     - CCE-91975-3
   cci: 
-    - CCI-000057
+    - N/A
   800-53r5:
     - AC-11
     - IA-11
   800-53r4: 
     - AC-11
   srg:
-    - SRG-OS-000029-GPOS-00010
+    - N/A
   disa_stig:
-    - APPL-12-000004
+    - N/A
   800-171r2:
     - 3.1.10
   cis:

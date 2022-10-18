@@ -21,16 +21,15 @@ references:
   cce:
     - CCE-91800-3
   cci:
-    - CCI-000366
+    - N/A
   800-53r5:
     - AC-6
   800-53r4:
     - AC-6
   srg:
-    - SRG-OS-000480-GPOS-00228
-    - SRG-OS-000480-GPOS-00230
+    - N/A
   disa_stig:
-    - APPL-12-002068
+    - N/A
   800-171r2:
     - 3.1.5
   cis:

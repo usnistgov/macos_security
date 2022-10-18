@@ -21,7 +21,7 @@ references:
   cce:
     - CCE-91737-7
   cci: 
-    - CCI-000186
+    - N/A
   800-53r5:
     - IA-5(2)
     - SC-17

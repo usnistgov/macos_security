@@ -35,16 +35,16 @@ references:
   cce:
     - CCE-91887-0
   cci: 
-    - CCI-001133
+    - N/A
   800-53r5:
     - SC-10
     - AC-12
   800-53r4: 
     - SC-10
   srg:
-    - SRG-OS-000163-GPOS-00072
+    - N/A
   disa_stig:
-    - APPL-12-000051
+    - N/A
   800-171r2:
     - 3.13.9
 macOS:

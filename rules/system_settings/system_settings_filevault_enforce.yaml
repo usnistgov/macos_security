@@ -14,9 +14,7 @@ references:
   cce:
     - CCE-91946-4
   cci: 
-    - CCI-001199
-    - CCI-002475
-    - CCI-002476
+    - N/A
   800-53r5:
     - SC-28
     - SC-28(1)
@@ -24,11 +22,9 @@ references:
     - SC-28
     - SC-28(1)
   srg:
-    - SRG-OS-000185-GPOS-00079
-    - SRG-OS-000404-GPOS-00183
-    - SRG-OS-000405-GPOS-00184
+    - N/A
   disa_stig:
-    - APPL-12-005020
+    - N/A
   800-171r2:
     - 3.13.16
   cis:

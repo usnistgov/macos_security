@@ -21,7 +21,7 @@ references:
   cce:
     - CCE-91805-2
   cci:
-    - CCI-002824
+    - N/A
   800-53r5:
     - SI-16
   800-53r4:

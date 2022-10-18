@@ -17,7 +17,7 @@ references:
   cce:
     - CCE-91950-6
   cci:
-    - CCI-000366
+    - N/A
   800-53r5:
     - CM-14
     - CM-5
@@ -28,9 +28,9 @@ references:
     - CM-5
     - SI-7(15)
   srg:
-    - SRG-OS-000480-GPOS-00227
+    - N/A
   disa_stig:
-    - APPL-12-002060
+    - N/A
   800-171r2:
     - 3.4.5
 macOS:

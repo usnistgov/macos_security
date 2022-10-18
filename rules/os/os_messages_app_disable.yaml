@@ -27,8 +27,7 @@ references:
   cce:
     - CCE-91821-9
   cci: 
-    - CCI-000381
-    - CCI-001774
+    - N/A
   800-53r5:
     - AC-20
     - CM-7

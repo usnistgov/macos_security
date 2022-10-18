@@ -17,7 +17,7 @@ references:
   cce:
     - CCE-91731-0
   cci:
-    - CCI-001849
+    - N/A
   800-53r5:
     - AU-11
     - AU-4
@@ -25,9 +25,9 @@ references:
     - AU-4
     - AU-11
   srg:
-    - SRG-OS-000341-GPOS-00132
+    - N/A
   disa_stig:
-    - APPL-12-001029
+    - N/A
   cis:
     benchmark:
       - 3.4 (level 1)

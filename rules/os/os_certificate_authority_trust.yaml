@@ -12,14 +12,13 @@ references:
   cce:
     - CCE-91772-4
   cci: 
-    - CCI-000185
-    - CCI-002450
+    - N/A
   800-53r5:
     - SC-17
   800-53r4: 
     - SC-17
   disa_stig:
-    - APPL-12-003001
+    - N/A
 macOS:
   - "13.0"
 tags:

@@ -37,11 +37,7 @@ references:
   cce:
     - CCE-91883-9
   cci: 
-    - CCI-000087
-    - CCI-000068
-    - CCI-000803
-    - CCI-002890
-    - CCI-003123
+    - N/A
   800-53r5:
     - AC-17(2)
     - IA-7

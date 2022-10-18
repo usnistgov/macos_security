@@ -58,17 +58,15 @@ references:
   cce:
     - CCE-91929-0
   cci:
-    - CCI-000016
-    - CCI-001682
+    - N/A
   800-53r5:
     - AC-2(2)
   800-53r4:
     - AC-2(2)
   srg:
-    - SRG-OS-000002-GPOS-00002
-    - SRG-OS-000123-GPOS-00064
+    - N/A
   disa_stig:
-    - APPL-12-000012
+    - N/A
 macOS:
   - "13.0"
 tags:

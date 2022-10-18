@@ -21,15 +21,15 @@ references:
   cce:
     - CCE-91846-6
   cci: 
-    - CCI-000048
+    - N/A
   800-53r5:
     - AC-8
   800-53r4: 
     - AC-8
   srg:
-    - SRG-OS-000023-GPOS-00006
+    - N/A
   disa_stig:
-    - APPL-12-000023
+    - N/A
   800-171r2:
     - 3.1.9
 macOS:

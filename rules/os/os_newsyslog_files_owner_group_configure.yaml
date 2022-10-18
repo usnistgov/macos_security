@@ -17,15 +17,15 @@ references:
   cce:
     - CCE-91825-0
   cci:
-    - CCI-001314
+    - N/A
   800-53r5:
     - SI-11
   800-53r4:
     - SI-11
   srg:
-    - SRG-OS-000206-GPOS-00084
+    - N/A
   disa_stig:
-    - APPL-12-004001
+    - N/A
   800-171r2:
     - N/A
 macOS:

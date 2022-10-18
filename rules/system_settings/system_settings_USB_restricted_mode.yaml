@@ -20,7 +20,7 @@ references:
   cce:
     - CCE-91931-6
   cci:
-    - N/A   
+    - N/A  
   800-53r5:
     - MP-7
     - SC-41 

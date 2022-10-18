@@ -17,7 +17,7 @@ references:
   cce:
     - CCE-91732-8
   cci: 
-    - CCI-001858
+    - N/A
   800-53r5:
     - AU-5(2)
     - AU-5
@@ -25,9 +25,9 @@ references:
     - AU-5
     - AU-5(2)
   srg:
-    - SRG-OS-000344-GPOS-00135
+    - N/A
   disa_stig:
-    - APPL-12-001031
+    - N/A
   800-171r2:
     - 3.3.4
 macOS:

@@ -19,7 +19,7 @@ references:
   cce:
     - CCE-91808-6
   cci: 
-    - CCI-000366
+    - N/A
   800-53r5:
     - AC-18
     - CM-7

@@ -17,15 +17,15 @@ references:
   cce:
     - CCE-91702-1
   cci:
-    - CCI-000162
+    - N/A
   800-53r5:
     - AU-9
   800-53r4:
     - AU-9
   srg:
-    - SRG-OS-000057-GPOS-00027
+    - N/A
   disa_stig:
-    - APPL-12-000031
+    - N/A
   800-171r2:
     - 3.3.8
   cis:
