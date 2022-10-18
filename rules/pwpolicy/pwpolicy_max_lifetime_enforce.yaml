@@ -43,7 +43,6 @@ macOS:
 odv:
   hint: "Number of days."
   recommended: 60
-  stig: 60
 tags:
   - 800-171 
   - cnssi-1253 
@@ -54,7 +53,6 @@ tags:
   - 800-53r5_moderate 
   - 800-53r5_high
   - cisv8
-  - stig
 severity: "medium"
 mobileconfig: true
 mobileconfig_info:

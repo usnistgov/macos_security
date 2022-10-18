@@ -54,7 +54,7 @@ references:
 macOS:
   - "13.0"
 tags:
-  - stig
+  - none
 severity: "medium"
 mobileconfig: false
 mobileconfig_info:

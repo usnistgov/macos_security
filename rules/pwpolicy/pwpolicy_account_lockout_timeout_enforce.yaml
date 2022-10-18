@@ -35,7 +35,6 @@ macOS:
 odv:
   hint: "Number of minutes."
   recommended: 15
-  stig: 15
 tags:
   - 800-171 
   - cnssi-1253 
@@ -46,7 +45,6 @@ tags:
   - 800-53r5_moderate 
   - 800-53r5_high
   - cisv8
-  - stig
 \severity: "medium"
 mobileconfig: true
 mobileconfig_info:

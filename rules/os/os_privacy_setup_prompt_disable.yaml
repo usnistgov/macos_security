@@ -38,7 +38,6 @@ macOS:
   - "13.0"
 tags:
   - cisv8
-  - stig
 severity: "medium"
 mobileconfig: true
 mobileconfig_info:

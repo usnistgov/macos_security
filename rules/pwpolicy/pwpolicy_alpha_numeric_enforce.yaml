@@ -52,7 +52,6 @@ tags:
   - 800-53r5_high
   - cis_lvl2
   - cisv8
-  - stig
 severity: "medium"
 mobileconfig: true
 mobileconfig_info:

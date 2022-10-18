@@ -47,7 +47,6 @@ tags:
   - 800-53r4_moderate 
   - 800-53r4_high
   - cisv8
-  - stig
 severity: "medium"
 mobileconfig: false
 mobileconfig_info:

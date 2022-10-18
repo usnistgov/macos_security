@@ -41,7 +41,6 @@ macOS:
 odv:
   hint: "Name of timeserver(s) separated by commas."
   recommended: "time-a.nist.gov,time-b.nist.gov"
-  stig: "time-a.nist.gov,time-b.nist.gov"
   cis_lvl1: "time.apple.com"
   cis_lvl2: "time.apple.com"
 tags:
@@ -55,7 +54,6 @@ tags:
   - cis_lvl1
   - cis_lvl2
   - cisv8
-  - stig
 severity: "medium"
 mobileconfig: true
 mobileconfig_info:

@@ -80,7 +80,6 @@ tags:
   - 800-53r5_low 
   - 800-171 
   - cnssi-1253
-  - stig
   - cis_lvl2
   - cisv8
 severity: "medium"

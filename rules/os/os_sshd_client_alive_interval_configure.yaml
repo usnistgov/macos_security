@@ -52,7 +52,6 @@ macOS:
 odv:
   hint: "Number of seconds."
   recommended: 900
-  stig: 900
 tags:
   - 800-53r5_moderate
   - 800-53r5_high
@@ -60,7 +59,6 @@ tags:
   - 800-53r4_high 
   - 800-171
   - cnssi-1253
-  - stig
 severity: "medium"
 mobileconfig: false
 mobileconfig_info:

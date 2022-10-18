@@ -29,7 +29,6 @@ tags:
   - 800-53r4_high 
   - cnssi-1253 
   - manual
-  - stig
 severity: "high"
 mobileconfig: false
 mobileconfig_info:

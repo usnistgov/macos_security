@@ -39,7 +39,6 @@ macOS:
 odv:
   hint: "See man audit_control for possible values."
   recommended: 7d
-  stig: 7d
   cis_lvl1: 60d OR 1G
   cis_lvl2: 60d OR 1G
 tags:
@@ -54,7 +53,6 @@ tags:
   - cis_lvl1
   - cis_lvl2
   - cisv8
-  - stig
 severity: "medium"
 mobileconfig: false
 mobileconfig_info:

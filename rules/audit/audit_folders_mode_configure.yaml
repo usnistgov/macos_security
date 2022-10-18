@@ -51,7 +51,6 @@ tags:
   - cis_lvl1
   - cis_lvl2
   - cisv8
-  - stig
 severity: "medium"
 mobileconfig: false
 mobileconfig_info:

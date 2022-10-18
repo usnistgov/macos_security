@@ -31,11 +31,9 @@ macOS:
 odv:
   hint: "Percentage of free space."
   recommended: 25
-  stig: 25
 tags:
   - 800-53r5_high 
   - 800-53r4_high
-  - stig
 severity: "medium"
 mobileconfig: false
 mobileconfig_info:

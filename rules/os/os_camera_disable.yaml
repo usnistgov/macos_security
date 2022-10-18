@@ -30,7 +30,7 @@ references:
 macOS:
   - "13.0"
 tags:
-  - stig
+  - none
 severity: "medium"
 mobileconfig: true
 mobileconfig_info:

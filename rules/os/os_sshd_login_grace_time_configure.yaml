@@ -49,9 +49,8 @@ macOS:
 odv:
   hint: "Number of seconds."
   recommended: 30
-  stig: 30
 tags:
-  - stig
+  - none
 severity: "medium"
 mobileconfig: false
 mobileconfig_info:
