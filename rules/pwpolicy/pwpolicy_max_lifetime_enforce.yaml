@@ -35,7 +35,7 @@ references:
     - 3.5.10
   cis:
     benchmark:
-      - N/A
+      - 5.2.7
     controls v8:
       - 4.7
 macOS:
@@ -43,6 +43,8 @@ macOS:
 odv:
   hint: "Number of days."
   recommended: 60
+  cis_lvl1: 365
+  cis_lvl2: 365
 tags:
   - 800-171 
   - cnssi-1253 
