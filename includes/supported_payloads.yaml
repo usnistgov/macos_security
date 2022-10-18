@@ -115,3 +115,4 @@ payloads_types:
   - .GlobalPreferences
   - com.apple.preferences.sharing.SharingPrefsExtension
   - com.apple.controlcenter
+  - com.apple.locationmenu
