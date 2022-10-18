@@ -208,6 +208,7 @@ profile:
       - system_settings_location_services_audit
       - system_settings_location_services_disable
       - system_settings_location_services_enable
+      - system_settings_location_services_menu_enforce
       - system_settings_loginwindow_loginwindowtext_enable
       - system_settings_loginwindow_prompt_username_password_enforce
       - system_settings_media_sharing_disabled
