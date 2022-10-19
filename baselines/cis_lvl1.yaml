@@ -40,7 +40,6 @@ profile:
       - os_home_folders_secure
       - os_httpd_disable
       - os_install_log_retention_configure
-      - os_library_validation_enabled
       - os_mobile_file_integrity_enable
       - os_nfsd_disable
       - os_password_hint_remove
