@@ -8,7 +8,7 @@ check: |
   authDBs=("system.preferences" "system.preferences.energysaver" "system.preferences.network" "system.preferences.printing" "system.preferences.sharing" "system.preferences.softwareupdate" "system.preferences.startupdisk" "system.preferences.timemachine")
   result="1"
   for section in $authDBs; do
-    if [[ $(/usr/bin/security authorizationdb read "$section" 2> /dev/null |  /usr/bin/grep -A 1 "<key>shared</key>" | /usr/bin/grep -c "<false/>") -ne 1 ]]; then
+    if [[ $(/usr/bin/security -q authorizationdb read "$section" | /usr/bin/xmllint -xpath 'name(//*[contains(text(), "shared")]/following-sibling::*[1])' -) != "false" ]]; then
       result="0"
     fi
   done
