@@ -20,7 +20,7 @@ references:
   cce:
     - CCE-91962-1
   cci: 
-    - CCI-000381
+    - N/A
   800-53r5:
     - CM-7
     - CM-7(1)
@@ -29,9 +29,9 @@ references:
     - CM-7
     - CM-7(1)
   srg:
-    - SRG-OS-000095-GPOS-00049
+    - N/A
   disa_stig:
-    - APPL-12-002004
+    - N/A
   800-171r2:
     - 3.4.6
 macOS:
@@ -45,7 +45,6 @@ tags:
   - 800-53r4_high 
   - 800-171 
   - cnssi-1253
-  - stig
 severity: "medium"
 mobileconfig: false
 mobileconfig_info:

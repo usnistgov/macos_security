@@ -49,9 +49,8 @@ profile:
       - auth_ssh_password_authentication_disable
   - section: "icloud"
     rules:
-      - icloud_appleid_system_settings_disable
       - icloud_addressbook_disable
-      - icloud_appleid_prefpane_disable
+      - icloud_appleid_system_settings_disable
       - icloud_bookmarks_disable
       - icloud_calendar_disable
       - icloud_drive_disable
@@ -186,8 +185,6 @@ profile:
       - system_settings_automatic_logout_enforce
       - system_settings_bluetooth_disable
       - system_settings_bluetooth_menu_enable
-      - system_settings_bluetooth_prefpane_disable
-      - system_settings_bluetooth_prefpane_hide
       - system_settings_bluetooth_sharing_disable
       - system_settings_bluetooth_unpaired_disable
       - system_settings_cd_dvd_sharing_disable
@@ -206,12 +203,12 @@ profile:
       - system_settings_hot_corners_secure
       - system_settings_improve_siri_dictation_disable
       - system_settings_install_macos_updates_enforce
-      - system_settings_internet_accounts_prefpane_disable
-      - system_settings_internet_accounts_prefpane_hide
+      - system_settings_internet_accounts_disable
       - system_settings_internet_sharing_disable
       - system_settings_location_services_audit
       - system_settings_location_services_disable
       - system_settings_location_services_enable
+      - system_settings_location_services_menu_enforce
       - system_settings_loginwindow_loginwindowtext_enable
       - system_settings_loginwindow_prompt_username_password_enforce
       - system_settings_media_sharing_disabled
@@ -225,8 +222,6 @@ profile:
       - system_settings_screensaver_password_enforce
       - system_settings_screensaver_timeout_enforce
       - system_settings_siri_disable
-      - system_settings_siri_prefpane_disable
-      - system_settings_siri_prefpane_hide
       - system_settings_smbd_disable
       - system_settings_software_update_app_update_enforce
       - system_settings_software_update_download_enforce
@@ -240,16 +235,11 @@ profile:
       - system_settings_time_server_configure
       - system_settings_time_server_enforce
       - system_settings_token_removal_enforce
-      - system_settings_touchid_prefpane_disable
-      - system_settings_touchid_prefpane_hide
       - system_settings_touchid_unlock_disable
       - system_settings_usb_restricted_mode
       - system_settings_wake_network_access_disable
-      - system_settings_wallet_applepay_prefpane_disable
-      - system_settings_wallet_applepay_prefpane_hide
       - system_settings_wifi_disable
       - system_settings_wifi_menu_enable
-      - system_settings_internet_accounts_disable
   - section: "Inherent"
     rules:
       - audit_record_reduction_report_generation

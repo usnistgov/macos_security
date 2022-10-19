@@ -34,7 +34,7 @@ references:
   cce:
     - CCE-91734-4
   cci:
-    - CCI-000366
+    - N/A
   800-53r5:
     - IA-2(1)
     - IA-2(2)
@@ -44,9 +44,9 @@ references:
     - IA-2(4)
     - IA-5(11) 
   srg:
-    - SRG-OS-000480-GPOS-00227
+    - N/A
   disa_stig:
-    - APPL-12-003051
+    - N/A
   800-171r2:
     - 3.5.3
   cis:
@@ -68,7 +68,6 @@ tags:
   - 800-171 
   - cnssi-1253
   - cisv8
-  - stig
 severity: "medium"
 mobileconfig: false
 mobileconfig_info:

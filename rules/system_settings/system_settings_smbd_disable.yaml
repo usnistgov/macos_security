@@ -18,22 +18,22 @@ references:
   cce:
     - CCE-91979-5
   cci: 
-    - CCI-000381
+    - N/A
   800-53r5:
     - AC-3
     - AC-17
   800-53r4:
     - AC-3
   srg:
-    - SRG-OS-000095-GPOS-00049
+    - N/A
   disa_stig:
-    - APPL-12-002001
+    - N/A
   800-171r2:
     - 3.1.1
     - 3.1.2
   cis:
     benchmark:
-      - 2.4.8 (level 1)
+      - 2.3.3.3 (level 1)
     controls v8:
       - 4.1
       - 4.8
@@ -51,7 +51,6 @@ tags:
   - cis_lvl1
   - cis_lvl2
   - cisv8
-  - stig
 severity: "medium"
 mobileconfig: false
 mobileconfig_info:

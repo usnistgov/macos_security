@@ -10,7 +10,7 @@ references:
   cce:
     - CCE-91850-8
   cci:
-    - CCI-002754
+    - N/A
   800-53r5:
     - SI-10(3)
   800-53r4:

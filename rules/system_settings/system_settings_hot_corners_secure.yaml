@@ -40,7 +40,7 @@ references:
     - N/A
   cis:
     benchmark:
-      - 2.3.2 (level 2)
+      - 2.7.1 (level 2)
     controls v8:
       - 4.3
 macOS:

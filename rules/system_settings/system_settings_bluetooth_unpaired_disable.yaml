@@ -38,7 +38,7 @@ references:
     - N/A
   cis:
     benchmark:
-      - 2.1.1 (level 1)
+      - N/A
     controls v8:
       - 4.8
       - 12.6
@@ -46,8 +46,6 @@ references:
 macOS:
   - "13.0"
 tags:
-  - cis_lvl1
-  - cis_lvl2
-  - cisv8
+  - none
 mobileconfig: false
 mobileconfig_info:

@@ -1,0 +1,41 @@
+id: system_settings_location_services_menu_enforce
+title: "Enable Location Services"
+discussion: |
+  Location Services menu item _MUST_ be enabled.
+check: |
+  /usr/bin/osascript -l JavaScript << EOS
+  $.NSUserDefaults.alloc.initWithSuiteName('com.apple.locationmenu')\
+  .objectForKey('ShowSystemServices').js
+  EOS
+result:
+  string: "true"
+fix: |
+  This is implemented by a Configuration Profile.
+references:
+  cce:
+    - CCE-91963-9
+  cci: 
+    - N/A
+  800-53r5:
+    - N/A    
+  800-53r4: 
+    - N/A
+  srg:
+    - N/A
+  disa_stig: 
+    - N/A
+  800-171r2:
+    - N/A
+  cis:
+    benchmark: 
+      - 2.6.1.2 (level 2)
+    controls v8: 
+      - N/A
+macOS:
+  - "13.0"
+tags:
+  - cis_lvl2
+mobileconfig: true
+mobileconfig_info:
+  com.apple.locationmenu:
+    ShowSystemServices: true

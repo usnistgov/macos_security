@@ -33,15 +33,15 @@ references:
   cce:
     - CCE-91886-2
   cci: 
-    - CCI-001133
+    - N/A
   800-53r5:
     - SC-10
   800-53r4: 
     - SC-10
   srg:
-    - SRG-OS-000163-GPOS-00072
+    - N/A
   disa_stig:
-    - APPL-12-000052
+    - N/A
   800-171r2:
     - 3.13.9
 macOS:
@@ -49,7 +49,6 @@ macOS:
 odv:
   hint: "Number of seconds."
   recommended: 0
-  stig: 0
 tags:
   - 800-53r5_moderate 
   - 800-53r5_high
@@ -57,7 +56,6 @@ tags:
   - 800-53r4_high
   - 800-171
   - cnssi-1253
-  - stig
 severity: "medium"
 mobileconfig: false
 mobileconfig_info:

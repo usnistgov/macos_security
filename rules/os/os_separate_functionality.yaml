@@ -16,7 +16,7 @@ references:
   cce:
     - CCE-91876-3
   cci:
-    - CCI-001082
+    - N/A
   800-53r5:
     - SC-2
     - MA-4(1)

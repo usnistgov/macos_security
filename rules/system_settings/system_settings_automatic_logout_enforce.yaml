@@ -22,7 +22,7 @@ references:
   cce:
     - CCE-91935-7
   cci:
-    - CCI-002361
+    - N/A
   800-53r5:
     - AC-12
     - AC-2(5)

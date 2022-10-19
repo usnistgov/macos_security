@@ -17,7 +17,7 @@ references:
   cce:
     - CCE-91731-0
   cci:
-    - CCI-001849
+    - N/A
   800-53r5:
     - AU-11
     - AU-4
@@ -25,9 +25,9 @@ references:
     - AU-4
     - AU-11
   srg:
-    - SRG-OS-000341-GPOS-00132
+    - N/A
   disa_stig:
-    - APPL-12-001029
+    - N/A
   cis:
     benchmark:
       - 3.4 (level 1)
@@ -39,9 +39,8 @@ macOS:
 odv:
   hint: "See man audit_control for possible values."
   recommended: 7d
-  stig: 7d
-  cis_lvl1: 60d OR 1G
-  cis_lvl2: 60d OR 1G
+  cis_lvl1: 60d OR 5G
+  cis_lvl2: 60d OR 5G
 tags:
   - 800-53r5_privacy 
   - 800-53r4_low 
@@ -54,7 +53,6 @@ tags:
   - cis_lvl1
   - cis_lvl2
   - cisv8
-  - stig
 severity: "medium"
 mobileconfig: false
 mobileconfig_info:

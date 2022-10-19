@@ -17,19 +17,19 @@ references:
   cce:
     - CCE-91896-1
   cci:
-    - CCI-000366
+    - N/A
   800-53r5:
     - CM-5(1)
     - IA-11
   800-53r4:
     - IA-11
   srg:
-    - SRG-OS-000480-GPOS-00227
+    - N/A
   disa_stig:
-    - APPL-12-004021
+    - N/A
   cis:
     benchmark:
-      - 5.4 (level 1)
+      - 5.5 (level 1)
     controls v8:
       - 4.3
 macOS:
@@ -42,6 +42,5 @@ tags:
   - cis_lvl1
   - cis_lvl2
   - cisv8
-  - stig
 mobileconfig: false
 mobileconfig_info:

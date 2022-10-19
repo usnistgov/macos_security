@@ -16,7 +16,7 @@ references:
   cce:
     - CCE-91852-4
   cci:
-    - CCI-002235
+    - N/A
   800-53r5:
     - AC-6(10)
   800-53r4:

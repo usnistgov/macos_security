@@ -16,16 +16,16 @@ references:
   cce:
     - CCE-91917-5
   cci: 
-    - CCI-000194
+    - N/A
   800-53r5:
     - IA-5(1)
   800-53r4: 
     - IA-5
     - IA-5(1)
   srg:
-    - SRG-OS-000071-GPOS-00039
+    - N/A
   disa_stig:
-    - APPL-12-003007
+    - N/A
   800-171r2:
     - 3.5.1
     - 3.5.2
@@ -52,7 +52,6 @@ tags:
   - 800-53r5_high
   - cis_lvl2
   - cisv8
-  - stig
 severity: "medium"
 mobileconfig: true
 mobileconfig_info:

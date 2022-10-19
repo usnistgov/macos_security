@@ -10,7 +10,7 @@ references:
   cce:
     - CCE-91906-8
   cci:
-    - CCI-000764
+    - N/A
   800-53r5:
     - IA-4
   800-53r4:

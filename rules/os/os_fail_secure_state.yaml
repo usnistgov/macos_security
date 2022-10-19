@@ -16,8 +16,7 @@ references:
   cce:
     - CCE-91787-2
   cci:
-    - CCI-001190
-    - CCI-001665
+    - N/A
   800-53r5:
     - SC-24
   800-53r4:

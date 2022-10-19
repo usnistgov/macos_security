@@ -27,23 +27,21 @@ references:
   cce:
     - CCE-91867-2
   cci: 
-    - CCI-000366
-    - CCI-001967
+    - N/A
   800-53r5:
     - MP-7
   800-53r4: 
     - MP-7(1)
   srg:
-    - SRG-OS-000480-GPOS-00227
-    - SRG-OS-000319-GPOS-00164
+    - N/A
   disa_stig:
-    - APPL-12-005051
+    - N/A
   800-171r2:
     - 3.8.8
 macOS:
   - "13.0"
 tags:
-  - stig
+  - none
 severity: "medium"
 mobileconfig: true
 mobileconfig_info:

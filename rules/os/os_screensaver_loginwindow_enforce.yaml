@@ -15,15 +15,15 @@ references:
   cce:
     - CCE-91872-2
   cci:
-    - CCI-000060
+    - N/A
   800-53r5:
     - AC-11(1)
   800-53r4:
     - AC-11(1)
   srg:
-    - SRG-OS-000031-GPOS-00012
+    - N/A
   disa_stig:
-    - APPL-12-000006
+    - N/A
   800-171r2:
     - 3.1.10
 macOS:
@@ -35,7 +35,6 @@ tags:
   - 800-53r4_high 
   - 800-171 
   - cnssi-1253
-  - stig
 severity: "low"
 mobileconfig: true
 mobileconfig_info:
