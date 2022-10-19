@@ -5,20 +5,31 @@ discussion: |
 
   Some Preference Panes in System Settings contain settings that affect the entire system. Requiring a password to unlock these system-wide settings reduces the risk of a non-authorized user modifying system configurations.
 check: |
-  /usr/bin/security authorizationdb read system.preferences 2> /dev/null |  /usr/bin/grep -A 1 "<key>shared</key>" | /usr/bin/grep -c "<false/>"
+  authDBs=("system.preferences" "system.preferences.energysaver" "system.preferences.network" "system.preferences.printing" "system.preferences.sharing" "system.preferences.softwareupdate" "system.preferences.startupdisk" "system.preferences.timemachine")
+  result="1"
+  for section in $authDBs; do
+    if [[ $(/usr/bin/security authorizationdb read "$section" 2> /dev/null |  /usr/bin/grep -A 1 "<key>shared</key>" | /usr/bin/grep -c "<false/>") -ne 1 ]]; then
+      result="0"
+    fi
+  done
+  echo $result
 result:
   integer: 1
 fix: |
   [source,bash]
   ----
-  /usr/bin/security authorizationdb read system.preferences > /tmp/system.preferences.plist
-  key_value=$(/usr/libexec/PlistBuddy -c "Print :shared" /tmp/system.preferences.plist 2>&1)
-  if [[ "$key_value" == *"Does Not Exist"* ]]; then
-    /usr/libexec/PlistBuddy -c "Add :shared bool false" /tmp/system.preferences.plist
-  else
-    /usr/libexec/PlistBuddy -c "Set :shared false" /tmp/system.preferences.plist
-  fi
-  /usr/bin/security authorizationdb write system.preferences < /tmp/system.preferences.plist
+  authDBs=("system.preferences" "system.preferences.energysaver" "system.preferences.network" "system.preferences.printing" "system.preferences.sharing" "system.preferences.softwareupdate" "system.preferences.startupdisk" "system.preferences.timemachine")
+
+  for section in $authDBs; do
+  /usr/bin/security -q authorizationdb read "$section" > "/tmp/$section.plist"
+  key_value=$(/usr/libexec/PlistBuddy -c "Print :shared" "/tmp/$section.plist" 2>&1)
+  	if [[ "$key_value" == *"Does Not Exist"* ]]; then
+    		/usr/libexec/PlistBuddy -c "Add :shared bool false" "/tmp/$section.plist"
+  	else
+    		/usr/libexec/PlistBuddy -c "Set :shared false" "/tmp/$section.plist"
+  	fi
+    	/usr/bin/security -q authorizationdb write "$section" < "/tmp/$section.plist"
+  done
   ----
 references:
   cce:
@@ -32,7 +43,7 @@ references:
     - AC-6(1)
     - AC-6(2)
   disa_stig:
-    - N/A
+    - APPL-12-002069
   800-171r2:
     - 3.1.5
     - 3.1.6
@@ -44,8 +55,15 @@ references:
 macOS:
   - "13.0"
 tags:
+  - 800-53r5_moderate 
+  - 800-53r5_high 
+  - 800-53r4_moderate 
+  - 800-53r4_high 
+  - 800-171 
+  - cnssi-1253
   - cis_lvl1
   - cis_lvl2
+  - cisv8
 severity: "medium"
 mobileconfig: false
 mobileconfig_info:
