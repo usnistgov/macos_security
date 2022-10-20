@@ -43,6 +43,7 @@ This document provides a high-level view of the changes to the macOS Security Co
 *** pwpolicy_simple_sequence_disable.yaml
 *** pwpolicy_special_character_enforce.yaml
 *** pwpolicy_upper_case_character_enforce.yaml
+*** system_settings_system_wide_preferences_configure
 *** System Preferences -> System Settings
 ** Deleted Rules
 *** os_sudoers_tty_configure
@@ -66,6 +67,9 @@ This document provides a high-level view of the changes to the macOS Security Co
 ** generate_mappings
 *** Bug Fixes
 ** generate_scap
+*** Added support for ODV
+*** Added support for new checks
+*** Generate scap, xccdf, or oval
 *** Bug Fixes
 
-* SCAP
+
