@@ -25,11 +25,13 @@
 |NIST|National Institute of Standards and Technology
 |NSA|National Security Agency
 |OCSP|Online Certificate Status Protocol
+|ODV|Organization Defined Values
 |OS|Operating System
 |PF|Packet Filter
 |PIV|Personal Identity Verification
 |PIV-M|Personal Identity Verification Mandatory
 |PKI|Public Key Infrastructure
+|RBD|Risk Based Decision
 |SIP|System Integrity Protection
 |SMB|Server Message Block
 |SSH|Secure Shell
