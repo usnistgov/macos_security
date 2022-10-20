@@ -25,11 +25,13 @@
 |NIST|National Institute of Standards and Technology
 |NSA|National Security Agency
 |OCSP|Online Certificate Status Protocol
+|ODV|Organization Defined Values
 |OS|Operating System
 |PF|Packet Filter
 |PIV|Personal Identity Verification
 |PIV-M|Personal Identity Verification Mandatory
 |PKI|Public Key Infrastructure
+|RBD|Risk Based Decision
 |SIP|System Integrity Protection
 |SMB|Server Message Block
 |SSH|Secure Shell
@@ -37,4 +39,10 @@
 |STIG|Security Technical Implementation Guide
 |UAMDM|User Approved MDM
 |UUCP|Unix-to-Unix Copy Protocol
+|====
+.Definitions
+[width="100%",cols="1,3"]
+|====
+|Baseline|Baselines are a catalog of settings that can be used to create security benchmarks.
+|Benchmark|Benchmarks are a defined list of settings with values that an organization has defined.
 |====

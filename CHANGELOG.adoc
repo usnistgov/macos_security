@@ -2,6 +2,36 @@
 
 This document provides a high-level view of the changes to the macOS Security Compliance Project.
 
+== [Big Sur, Revision 6] - 2022-10-20
+
+* Rules
+** Added Organization Defined Value (ODV) support
+** Added Rules
+** Modified Rules
+*** os_sudoers_timestamp_type_configure
+*** sysprefs_automatic_logout_enforce
+*** system_wide_preferences_configure
+** Removed Rules
+*** audit_flags_configure
+*** os_sudoers_tty_configure
+** Bug fixes
+
+* Baselines
+** Added parent_value field
+** Updated all baselines
+
+* Scripts
+** generate_guidance
+*** Added ruby gem installation
+*** Bug Fixes
+** generate_baseline
+** Added tailoring function
+*** Bug Fixes
+** generate_mappings
+*** Bug Fixes
+** generate_scap
+*** Bug Fixes
+
 == [Big Sur, Revision 5] - 2022-03-16
 
 * Rules

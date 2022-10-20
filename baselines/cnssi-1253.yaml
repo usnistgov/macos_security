@@ -9,14 +9,6 @@ authors: |
   |===
 parent_values: "recommended"
 profile:
-  - section: "authentication"
-    rules:
-      - auth_pam_login_smartcard_enforce
-      - auth_pam_su_smartcard_enforce
-      - auth_pam_sudo_smartcard_enforce
-      - auth_smartcard_allow
-      - auth_smartcard_certificate_trust_enforce_moderate
-      - auth_smartcard_enforce
   - section: "auditing"
     rules:
       - audit_acls_files_configure
@@ -37,6 +29,27 @@ profile:
       - audit_folder_owner_configure
       - audit_folders_mode_configure
       - audit_retention_configure
+  - section: "authentication"
+    rules:
+      - auth_pam_login_smartcard_enforce
+      - auth_pam_su_smartcard_enforce
+      - auth_pam_sudo_smartcard_enforce
+      - auth_smartcard_allow
+      - auth_smartcard_certificate_trust_enforce_moderate
+      - auth_smartcard_enforce
+  - section: "icloud"
+    rules:
+      - icloud_addressbook_disable
+      - icloud_appleid_prefpane_disable
+      - icloud_bookmarks_disable
+      - icloud_calendar_disable
+      - icloud_drive_disable
+      - icloud_keychain_disable
+      - icloud_mail_disable
+      - icloud_notes_disable
+      - icloud_photos_disable
+      - icloud_reminders_disable
+      - icloud_sync_disable
   - section: "macos"
     rules:
       - os_airdrop_disable
@@ -97,19 +110,6 @@ profile:
       - pwpolicy_simple_sequence_disable
       - pwpolicy_special_character_enforce
       - pwpolicy_upper_case_character_enforce
-  - section: "icloud"
-    rules:
-      - icloud_addressbook_disable
-      - icloud_appleid_prefpane_disable
-      - icloud_bookmarks_disable
-      - icloud_calendar_disable
-      - icloud_drive_disable
-      - icloud_keychain_disable
-      - icloud_mail_disable
-      - icloud_notes_disable
-      - icloud_photos_disable
-      - icloud_reminders_disable
-      - icloud_sync_disable
   - section: "systempreferences"
     rules:
       - sysprefs_apple_watch_unlock_disable
@@ -187,6 +187,7 @@ profile:
       - os_nonlocal_maintenance
   - section: "Supplemental"
     rules:
+      - supplemental_cis_manual
       - supplemental_controls
       - supplemental_filevault
       - supplemental_firewall_pf
