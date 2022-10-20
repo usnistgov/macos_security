@@ -51,7 +51,6 @@ profile:
       - os_home_folders_secure
       - os_httpd_disable
       - os_install_log_retention_configure
-      - os_library_validation_enabled
       - os_mobile_file_integrity_enable
       - os_nfsd_disable
       - os_password_hint_remove
@@ -97,7 +96,6 @@ profile:
       - system_settings_hot_corners_secure
       - system_settings_install_macos_updates_enforce
       - system_settings_internet_sharing_disable
-      - system_settings_location_services_audit
       - system_settings_location_services_enable
       - system_settings_location_services_menu_enforce
       - system_settings_loginwindow_loginwindowtext_enable

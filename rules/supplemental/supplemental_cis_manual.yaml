@@ -9,7 +9,7 @@ discussion: |
   |System Settings
 
   |Recommendations
-  |  2.1.1.1 Audit iCloud Keychain +
+  |2.1.1.1 Audit iCloud Keychain +
   2.1.1.2 Audit iCloud Drive + 
   2.1.2 Audit App Store Password Settings +
   2.3.3.12 Ensure Computer Name Does Not Contain PII or Protected Organizational Information +
@@ -42,7 +42,9 @@ discussion: |
   5.2.4 Ensure Complex Password Must Contain Numeric Character Is Configured +
   5.2.5 Ensure Complex Password Must Contain Special Character Is Configured +
   5.2.6 Ensure Complex Password Must Contain Uppercase and Lowercase Characters Is Configured +
-  5.5 Ensure login keychain is locked when the computer sleeps +
+  5.3.1 Ensure All User Storage APFS Volumes are Encrypted +
+  5.3.2 Ensure All User Storage CoreStorage Volumes are Encrypted +
+  5.5 Ensure Login Keychain is Locked when the Computer Sleeps +
   |===
 
   [cols="15%h, 85%a"]
