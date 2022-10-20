@@ -33,6 +33,9 @@ profile:
       - audit_folder_owner_configure
       - audit_folders_mode_configure
       - audit_retention_configure
+  - section: "icloud"
+    rules:
+      - icloud_sync_disable
   - section: "macos"
     rules:
       - os_airdrop_disable
@@ -75,9 +78,6 @@ profile:
       - pwpolicy_minimum_length_enforce
       - pwpolicy_special_character_enforce
       - pwpolicy_upper_case_character_enforce
-  - section: "icloud"
-    rules:
-      - icloud_sync_disable
   - section: "systempreferences"
     rules:
       - sysprefs_airplay_receiver_disable
