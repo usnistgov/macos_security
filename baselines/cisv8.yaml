@@ -145,7 +145,6 @@ profile:
       - system_settings_install_macos_updates_enforce
       - system_settings_internet_accounts_disable
       - system_settings_internet_sharing_disable
-      - system_settings_location_services_audit
       - system_settings_location_services_enable
       - system_settings_loginwindow_loginwindowtext_enable
       - system_settings_loginwindow_prompt_username_password_enforce
