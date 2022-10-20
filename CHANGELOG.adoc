@@ -2,7 +2,7 @@
 
 This document provides a high-level view of the changes to the macOS Security Compliance Project.
 
-== [Ventura, Revision 1] - 2022-XX-XX
+== [Ventura, Revision 1] - 2022-10-20
 
 * Rules
 ** Added ODV support
