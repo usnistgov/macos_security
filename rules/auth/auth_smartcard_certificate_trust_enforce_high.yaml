@@ -19,9 +19,9 @@ fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-    - CCE-90881-4
+    - CCE-91737-7
   cci: 
-    - CCI-000186
+    - N/A
   800-53r5:
     - IA-5(2)
     - SC-17
@@ -33,7 +33,7 @@ references:
   disa_stig:
     - N/A
 macOS:
-  - "12.0"
+  - "13.0"
 tags:
   - 800-53r4_high
   - 800-53r5_high

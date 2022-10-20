@@ -1,35 +1,32 @@
 id: pwpolicy_history_enforce
-title: "Prohibit Password Reuse for a Minimum of Five Generations"
+title: "Prohibit Password Reuse for a Minimum of $ODV Generations"
 discussion: |
-  The macOS _MUST_ be configured to enforce a password history of at least five previous passwords when a password is created. 
+  The macOS _MUST_ be configured to enforce a password history of at least $ODV previous passwords when a password is created. 
 
-  This rule ensures that users are  not allowed to re-use a password that was used in any of the five previous password generations. 
+  This rule ensures that users are  not allowed to re-use a password that was used in any of the $ODV previous password generations. 
 
   Limiting password reuse protects against malicious users attempting to gain access to the system via brute-force hacking methods.
 
   NOTE: The guidance for password based authentication in NIST 800-53 (Rev 5) and NIST 800-63B state that complexity rules should be organizationally defined. The values defined are based off of common complexity values. But your organization may define its own password complexity rules.
 check: | 
-  /usr/bin/osascript -l JavaScript << EOS
-  $.NSUserDefaults.alloc.initWithSuiteName('com.apple.mobiledevice.passwordpolicy')\
-  .objectForKey('pinHistory').js
-  EOS
+  /usr/bin/pwpolicy -getaccountpolicies 2> /dev/null | /usr/bin/tail +2 | /usr/bin/xmllint --xpath '//dict/key[text()="policyAttributePasswordHistoryDepth"]/following-sibling::*[1]/text()' - | /usr/bin/awk '{ if ($1 >= $ODV ) {print "yes"} else {print "no"}}'
 result:
-  integer: 5
+  string: "yes"
 fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-    - CCE-91034-9
+    - CCE-91920-9
   cci: 
-    - CCI-000200
+    - N/A
   800-53r5:
     - IA-5(1)
   800-53r4: 
     - IA-5(1)
   srg:
-    - SRG-OS-000077-GPOS-00045
+    - N/A
   disa_stig:
-    - APPL-12-003009
+    - N/A
   800-171r2:
     - 3.5.7
     - 3.5.8
@@ -37,11 +34,16 @@ references:
     - 3.5.10
   cis:
     benchmark:
-      - N/A
+      - 5.2.8 (level 1)
     controls v8:
       - 5.2
 macOS:
-  - "12.0"
+  - "13.0"
+odv: 
+  hint: "Number of previous passwords."
+  recommended: 5
+  cis_lvl1: 15
+  cis_lvl2: 15
 tags:
   - 800-171 
   - cnssi-1253 
@@ -51,10 +53,11 @@ tags:
   - 800-53r5_low 
   - 800-53r5_moderate 
   - 800-53r5_high
+  - cis_lvl1
+  - cis_lvl2
   - cisv8
-  - stig
 severity: "medium"
 mobileconfig: true
 mobileconfig_info:
   com.apple.mobiledevice.passwordpolicy:
-    pinHistory: 5
+    pinHistory: $ODV

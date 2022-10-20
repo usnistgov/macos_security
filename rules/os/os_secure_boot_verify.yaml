@@ -14,22 +14,11 @@ fix: |
   NOTE: Boot into Recovery Mode and enable Full Secure Boot
 references:
   cce:
-    - CCE-90996-0
-  800-53r5:
-    - SI-7
-    - SI-7(1)
-    - SI-7(5)
-    - SI-6
-  800-53r4:
-    - SI-6
-  srg:
-    - N/A
-  disa_stig:
-    - N/A
+    - CCE-91873-0
   cci:
     - N/A
 macOS:
-  - "12.0"
+  - "13.0"
 tags:
   - 800-53r5_high
   - 800-53r5_moderate

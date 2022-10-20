@@ -1,0 +1,50 @@
+id: system_settings_filevault_enforce
+title: "Enforce FileVault"
+discussion: |
+  FileVault _MUST_ be enforced.
+
+  The information system implements cryptographic mechanisms to protect the confidentiality and integrity of information stored on digital media during transport outside of controlled areas.
+check: |
+  /usr/bin/fdesetup status | /usr/bin/grep -c "FileVault is On."
+result:
+  integer: 1
+fix: |
+  NOTE: See the FileVault supplemental to implement this rule.
+references:
+  cce:
+    - CCE-91946-4
+  cci: 
+    - N/A
+  800-53r5:
+    - SC-28
+    - SC-28(1)
+  800-53r4: 
+    - SC-28
+    - SC-28(1)
+  srg:
+    - N/A
+  disa_stig:
+    - N/A
+  800-171r2:
+    - 3.13.16
+  cis:
+    benchmark: 
+      - 2.6.5 (level 1)
+    controls v8: 
+      - 3.6
+      - 3.11
+macOS:
+  - "13.0"
+tags:
+  - 800-53r5_moderate 
+  - 800-53r5_high 
+  - 800-53r4_moderate 
+  - 800-53r4_high 
+  - 800-171 
+  - cnssi-1253
+  - cis_lvl1
+  - cis_lvl2
+  - cisv8
+severity: "medium"
+mobileconfig: false
+mobileconfig_info:

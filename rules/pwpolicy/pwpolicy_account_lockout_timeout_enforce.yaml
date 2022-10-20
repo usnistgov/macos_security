@@ -1,31 +1,28 @@
 id: pwpolicy_account_lockout_timeout_enforce
-title: "Set Account Lockout Time to 15 Minutes"
+title: "Set Account Lockout Time to $ODV Minutes"
 discussion: |
-  The macOS _MUST_ be configured to enforce a lockout time period of at least 15 minutes when the maximum number of failed logon attempts is reached.
+  The macOS _MUST_ be configured to enforce a lockout time period of at least $ODV minutes when the maximum number of failed logon attempts is reached.
 
   This rule protects against malicious users attempting to gain access to the system via brute-force hacking methods. 
 check: |
-  /usr/bin/osascript -l JavaScript << EOS
-  $.NSUserDefaults.alloc.initWithSuiteName('com.apple.mobiledevice.passwordpolicy')\
-  .objectForKey('minutesUntilFailedLoginReset').js
-  EOS
+  /usr/bin/pwpolicy -getaccountpolicies 2> /dev/null | /usr/bin/tail +2 | /usr/bin/xmllint --xpath '//dict/key[text()="autoEnableInSeconds"]/following-sibling::integer[1]/text()' - | /usr/bin/awk '{ if ($1/60 >= $ODV ) {print "yes"} else {print "no"}}' 
 result:
-  integer: 15
+  string: "yes"
 fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-    - CCE-91030-7
+    - CCE-91916-7
   cci: 
-    - CCI-002238
+    - N/A
   800-53r5:
     - AC-7
   800-53r4: 
     - AC-7
   srg:
-    - SRG-OS-000329-GPOS-00128
+    - N/A
   disa_stig:
-    - APPL-12-000022
+    - N/A
   800-171r2:
     - 3.1.8
   cis:
@@ -34,7 +31,10 @@ references:
     controls v8:
       - 4.1
 macOS:
-  - "12.0"
+  - "13.0"
+odv:
+  hint: "Number of minutes."
+  recommended: 15
 tags:
   - 800-171 
   - cnssi-1253 
@@ -45,9 +45,8 @@ tags:
   - 800-53r5_moderate 
   - 800-53r5_high
   - cisv8
-  - stig
-severity: "medium"
+\severity: "medium"
 mobileconfig: true
 mobileconfig_info:
   com.apple.mobiledevice.passwordpolicy:
-    minutesUntilFailedLoginReset: 15
+    minutesUntilFailedLoginReset: $ODV

@@ -10,13 +10,10 @@ check: |
 result:
   string: "false"
 fix: |
-  [source,bash]
-  ----
   This is implemented by a Configuration Profile.
-  ----
 references:
   cce:
-    - CCE-91108-1
+    - CCE-91810-2
   cci: 
     - N/A
   800-53r5:
@@ -31,15 +28,13 @@ references:
     - N/A
   cis:
     benchmark:
-      - 5.1.4 (level 1)
+      - N/A
     controls v8:
       - 2.3
       - 2.6
 macOS:
-  - "12.0"
+  - "13.0"
 tags:
-  - cis_lvl1
-  - cis_lvl2
   - cisv8
 mobileconfig: true
 mobileconfig_info:

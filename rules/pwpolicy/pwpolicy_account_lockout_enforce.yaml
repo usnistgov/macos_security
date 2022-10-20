@@ -1,40 +1,42 @@
 id: pwpolicy_account_lockout_enforce
-title: "Limit Consecutive Failed Login Attempts to Three"
+title: "Limit Consecutive Failed Login Attempts to $ODV"
 discussion: |
-  The macOS _MUST_ be configured to limit the number of failed login attempts to a maximum of three. When the maximum number of failed attempts is reached, the account _MUST_ be locked for a period of time after.
+  The macOS _MUST_ be configured to limit the number of failed login attempts to a maximum of $ODV. When the maximum number of failed attempts is reached, the account _MUST_ be locked for a period of time after.
 
   This rule protects against malicious users attempting to gain access to the system via brute-force hacking methods. 
 check: |
-  /usr/bin/osascript -l JavaScript << EOS
-  $.NSUserDefaults.alloc.initWithSuiteName('com.apple.mobiledevice.passwordpolicy')\
-  .objectForKey('maxFailedAttempts').js
-  EOS
+  /usr/bin/pwpolicy -getaccountpolicies 2> /dev/null | /usr/bin/tail +2 | /usr/bin/xmllint --xpath '//dict/key[text()="policyAttributeMaximumFailedAuthentications"]/following-sibling::integer[1]/text()' - | /usr/bin/awk '{ if ($1 <= $ODV) {print "yes"} else {print "no"}}'
 result:
-  integer: 3
+  string: "yes"
 fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-    - CCE-91029-9
+    - CCE-91915-9
   cci:
-    - CCI-002238
+    - N/A
   800-53r5:
     - AC-7
   800-53r4: 
     - AC-7
   srg:
-    - SRG-OS-000329-GPOS-00128
+    - N/A
   disa_stig:
-    - APPL-12-000022
+    - N/A
   800-171r2:
     - 3.1.8
   cis:
     benchmark:
-      - N/A
+      - 5.2.1 (level 1)
     controls v8:
       - 6.2
 macOS:
-  - "12.0"
+  - "13.0"
+odv:
+  hint: "Number of failed attempts."
+  recommended: 3
+  cis_lvl1: 5
+  cis_lvl2: 5
 tags:
   - 800-171 
   - cnssi-1253 
@@ -44,10 +46,11 @@ tags:
   - 800-53r5_low 
   - 800-53r5_moderate 
   - 800-53r5_high
+  - cis_lvl1
+  - cis_lvl2
   - cisv8
-  - stig
 severity: "medium"
 mobileconfig: true
 mobileconfig_info:
   com.apple.mobiledevice.passwordpolicy:
-    maxFailedAttempts: 3
+    maxFailedAttempts: $ODV

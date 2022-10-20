@@ -5,9 +5,9 @@ discussion: |
 
   Use of weak or untested encryption algorithms undermines the purposes of utilizing encryption to protect data. The operating system must implement cryptographic modules that adhere to the higher standards that have been tested, validated, and approved by the federal government. 
 
-  macOS Big Sur has been submitted to the National Institute of Standards and Technology (NIST) and is in review for the cryptographic module for FIPS 140-3 validation.
+  Apple is committed to the FIPS validation process and historically has always submitted and validated the cryptographic modules in macOS. macOS Ventura will be submitted for FIPS validation.
 
-  link:https://csrc.nist.gov/Projects/cryptographic-module-validation-program/modules-in-process/Modules-In-Process-List[]
+  link:https://csrc.nist.gov/Projects/cryptographic-module-validation-program/validated-modules[]
   
   link:https://support.apple.com/en-us/HT201159[]
 check: |
@@ -16,9 +16,9 @@ fix: |
   The technology inherently meets this requirement. No fix is required.
 references:
   cce:
-    - CCE-90935-8
+    - CCE-91804-5
   cci:
-    - CCI-002450
+    - N/A
   800-53r5:
     - SC-13
   800-53r4:
@@ -30,7 +30,7 @@ references:
   800-171r2:
     - 3.13.11
 macOS:
-  - "12.0"
+  - "13.0"
 tags:
   - 800-53r5_low
   - 800-53r5_moderate

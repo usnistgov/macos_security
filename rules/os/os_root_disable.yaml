@@ -15,9 +15,9 @@ fix: |
   ----
 references:
   cce:
-    - CCE-90994-5
+    - CCE-91870-6
   cci:
-    - N/A    
+    - N/A   
   800-53r5:
     - IA-2
     - IA-2(5)
@@ -33,7 +33,7 @@ references:
     controls v8:
       - 4.7
 macOS:
-  - "12.0"
+  - "13.0"
 tags:
   - 800-53r5_low
   - 800-53r5_moderate

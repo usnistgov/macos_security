@@ -17,9 +17,9 @@ fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-    - CCE-90939-0
+    - CCE-91808-6
   cci: 
-    - CCI-000366
+    - N/A
   800-53r5:
     - AC-18
     - CM-7
@@ -43,7 +43,7 @@ references:
       - 4.8
       - 12.6
 macOS:
-  - "12.0"
+  - "13.0"
 tags:
   - 800-53r5_low
   - 800-53r5_moderate

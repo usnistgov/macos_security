@@ -12,27 +12,26 @@ fix: |
   Integrate the system into an existing directory services infrastructure.
 references:
   cce:
-    - CCE-91087-7
+    - CCE-91778-1
   cci:
-    - CCI-000366
+    - N/A
   800-53r5:
     - N/A
   800-53r4:
     - N/A
   srg:
-    - SRG-OS-000480-GPOS-00227
+    - N/A
   disa_stig:
-    - APPL-12-000016
+    - N/A
   cis:
     benchmark:
       - N/A
     controls v8:
       - 6.7
 macOS:
-  - "12.0"
+  - "13.0"
 tags:
   - cisv8
-  - stig
 severity: "high"
-mobileconfig:
+mobileconfig: false
 mobileconfig_info:

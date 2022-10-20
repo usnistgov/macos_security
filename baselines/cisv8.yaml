@@ -1,6 +1,8 @@
-title: "macOS 12.0: Security Configuration - CIS Controls Version 8"
+title: "macOS 13.0: Security Configuration - CIS Controls Version 8"
 description: |
-  This guide describes the actions to take when securing a macOS 12.0 system against the CIS Controls version 8 baseline.
+  This guide describes the actions to take when securing a macOS 13.0 system against the CIS Controls version 8 baseline.
+
+  Information System Security Officers and benchmark creators can use this catalog of settings in order to assist them in security benchmark creation. This list is a catalog, not a checklist or benchmark, and satisfaction of every item is not likely to be possible or sensible in many operational scenarios.
 authors: |
   CIS Critical Security Controls® (CIS Controls®) are referenced with the permission and support of the Center for Internet Security® (CIS®)
   |===
@@ -9,15 +11,8 @@ authors: |
   |Dan Brodjieski|National Aeronautics and Space Administration
   |Allen Golbig|Jamf
   |===
+parent_values: "recommended"
 profile:
-  - section: "authentication"
-    rules:
-      - auth_pam_login_smartcard_enforce
-      - auth_pam_su_smartcard_enforce
-      - auth_pam_sudo_smartcard_enforce
-      - auth_smartcard_allow
-      - auth_smartcard_enforce
-      - auth_ssh_password_authentication_disable
   - section: "auditing"
     rules:
       - audit_acls_files_configure
@@ -30,12 +25,38 @@ profile:
       - audit_files_group_configure
       - audit_files_mode_configure
       - audit_files_owner_configure
-      - audit_flags_configure
+      - audit_flags_aa_configure
+      - audit_flags_ad_configure
+      - audit_flags_ex_configure
+      - audit_flags_fm_failed_configure
+      - audit_flags_fr_configure
+      - audit_flags_fw_configure
+      - audit_flags_lo_configure
       - audit_folder_group_configure
       - audit_folder_owner_configure
       - audit_folders_mode_configure
       - audit_retention_configure
-      - audit_retention_configure_sixty_days
+  - section: "authentication"
+    rules:
+      - auth_pam_login_smartcard_enforce
+      - auth_pam_su_smartcard_enforce
+      - auth_pam_sudo_smartcard_enforce
+      - auth_smartcard_allow
+      - auth_smartcard_enforce
+      - auth_ssh_password_authentication_disable
+  - section: "icloud"
+    rules:
+      - icloud_addressbook_disable
+      - icloud_appleid_system_settings_disable
+      - icloud_bookmarks_disable
+      - icloud_calendar_disable
+      - icloud_drive_disable
+      - icloud_keychain_disable
+      - icloud_mail_disable
+      - icloud_notes_disable
+      - icloud_photos_disable
+      - icloud_reminders_disable
+      - icloud_sync_disable
   - section: "macos"
     rules:
       - os_airdrop_disable
@@ -68,6 +89,7 @@ profile:
       - os_password_hint_remove
       - os_password_proximity_disable
       - os_password_sharing_disable
+      - os_power_nap_disable
       - os_privacy_setup_prompt_disable
       - os_root_disable
       - os_safari_open_safe_downloads_disable
@@ -77,7 +99,6 @@ profile:
       - os_skip_unlock_with_watch_enable
       - os_sudo_timeout_configure
       - os_sudoers_timestamp_type_configure
-      - os_sudoers_tty_configure
       - os_system_wide_applications_configure
       - os_terminal_secure_keyboard_enable
       - os_tftpd_disable
@@ -90,84 +111,67 @@ profile:
       - os_world_writable_system_folder_configure
   - section: "passwordpolicy"
     rules:
-      - pwpolicy_60_day_enforce
       - pwpolicy_account_inactivity_enforce
       - pwpolicy_account_lockout_enforce
-      - pwpolicy_account_lockout_enforce_five
       - pwpolicy_account_lockout_timeout_enforce
       - pwpolicy_alpha_numeric_enforce
       - pwpolicy_history_enforce
-      - pwpolicy_history_enforce_fifteen
       - pwpolicy_lower_case_character_enforce
+      - pwpolicy_max_lifetime_enforce
       - pwpolicy_minimum_length_enforce
       - pwpolicy_minimum_lifetime_enforce
       - pwpolicy_simple_sequence_disable
       - pwpolicy_special_character_enforce
       - pwpolicy_upper_case_character_enforce
-  - section: "icloud"
+  - section: "systemsettings"
     rules:
-      - icloud_addressbook_disable
-      - icloud_appleid_prefpane_disable
-      - icloud_bookmarks_disable
-      - icloud_calendar_disable
-      - icloud_drive_disable
-      - icloud_keychain_disable
-      - icloud_mail_disable
-      - icloud_notes_disable
-      - icloud_photos_disable
-      - icloud_reminders_disable
-      - icloud_sync_disable
-  - section: "systempreferences"
-    rules:
-      - sysprefs_airplay_receiver_disable
-      - sysprefs_automatic_login_disable
-      - sysprefs_bluetooth_disable
-      - sysprefs_bluetooth_menu_enable
-      - sysprefs_bluetooth_sharing_disable
-      - sysprefs_bluetooth_unpaired_disable
-      - sysprefs_cd_dvd_sharing_disable
-      - sysprefs_content_caching_disable
-      - sysprefs_critical_update_install_enforce
-      - sysprefs_diagnostics_reports_disable
-      - sysprefs_filevault_enforce
-      - sysprefs_find_my_disable
-      - sysprefs_firewall_enable
-      - sysprefs_firewall_stealth_mode_enable
-      - sysprefs_guest_access_smb_disable
-      - sysprefs_guest_account_disable
-      - sysprefs_hot_corners_secure
-      - sysprefs_improve_siri_dictation_disable
-      - sysprefs_install_macos_updates_enforce
-      - sysprefs_internet_accounts_prefpane_disable
-      - sysprefs_internet_sharing_disable
-      - sysprefs_location_services_audit
-      - sysprefs_location_services_enable
-      - sysprefs_loginwindow_prompt_username_password_enforce
-      - sysprefs_media_sharing_disabled
-      - sysprefs_password_hints_disable
-      - sysprefs_personalized_advertising_disable
-      - sysprefs_power_nap_disable
-      - sysprefs_printer_sharing_disable
-      - sysprefs_rae_disable
-      - sysprefs_remote_management_disable
-      - sysprefs_screen_sharing_disable
-      - sysprefs_screensaver_ask_for_password_delay_enforce
-      - sysprefs_screensaver_timeout_enforce
-      - sysprefs_siri_disable
-      - sysprefs_smbd_disable
-      - sysprefs_software_update_app_update_enforce
-      - sysprefs_software_update_download_enforce
-      - sysprefs_software_update_enforce
-      - sysprefs_softwareupdate_current
-      - sysprefs_ssh_disable
-      - sysprefs_system_wide_preferences_configure
-      - sysprefs_time_machine_auto_backup_enable
-      - sysprefs_time_machine_encrypted_configure
-      - sysprefs_time_server_configure
-      - sysprefs_time_server_enforce
-      - sysprefs_wake_network_access_disable
-      - sysprefs_wifi_disable
-      - sysprefs_wifi_menu_enable
+      - system_settings_airplay_receiver_disable
+      - system_settings_automatic_login_disable
+      - system_settings_bluetooth_disable
+      - system_settings_bluetooth_menu_enable
+      - system_settings_bluetooth_sharing_disable
+      - system_settings_cd_dvd_sharing_disable
+      - system_settings_content_caching_disable
+      - system_settings_critical_update_install_enforce
+      - system_settings_diagnostics_reports_disable
+      - system_settings_filevault_enforce
+      - system_settings_find_my_disable
+      - system_settings_firewall_enable
+      - system_settings_firewall_stealth_mode_enable
+      - system_settings_guest_access_smb_disable
+      - system_settings_guest_account_disable
+      - system_settings_hot_corners_secure
+      - system_settings_improve_siri_dictation_disable
+      - system_settings_install_macos_updates_enforce
+      - system_settings_internet_accounts_disable
+      - system_settings_internet_sharing_disable
+      - system_settings_location_services_enable
+      - system_settings_loginwindow_loginwindowtext_enable
+      - system_settings_loginwindow_prompt_username_password_enforce
+      - system_settings_media_sharing_disabled
+      - system_settings_password_hints_disable
+      - system_settings_personalized_advertising_disable
+      - system_settings_printer_sharing_disable
+      - system_settings_rae_disable
+      - system_settings_remote_management_disable
+      - system_settings_screen_sharing_disable
+      - system_settings_screensaver_ask_for_password_delay_enforce
+      - system_settings_screensaver_timeout_enforce
+      - system_settings_siri_disable
+      - system_settings_smbd_disable
+      - system_settings_software_update_app_update_enforce
+      - system_settings_software_update_download_enforce
+      - system_settings_software_update_enforce
+      - system_settings_softwareupdate_current
+      - system_settings_ssh_disable
+      - system_settings_system_wide_preferences_configure
+      - system_settings_time_machine_auto_backup_enable
+      - system_settings_time_machine_encrypted_configure
+      - system_settings_time_server_configure
+      - system_settings_time_server_enforce
+      - system_settings_wake_network_access_disable
+      - system_settings_wifi_disable
+      - system_settings_wifi_menu_enable
   - section: "Inherent"
     rules:
       - os_logical_access
@@ -187,6 +191,8 @@ profile:
       - os_access_control_mobile_devices
   - section: "Supplemental"
     rules:
+      - supplemental_cis_manual
+      - supplemental_controls
       - supplemental_filevault
       - supplemental_firewall_pf
       - supplemental_password_policy

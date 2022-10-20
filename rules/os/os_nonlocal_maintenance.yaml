@@ -8,7 +8,7 @@ fix: |
   The requirement is NA. No fix is required.
 references:
   cce:
-    - CCE-90958-0
+    - CCE-91829-2
   cci:
     - N/A
   800-53r5:
@@ -22,7 +22,7 @@ references:
   srg:
     - N/A
 macOS:
-  - "12.0"
+  - "13.0"
 tags:
   - 800-53r5_low
   - 800-53r5_moderate

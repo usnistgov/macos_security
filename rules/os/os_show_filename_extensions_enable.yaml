@@ -8,7 +8,7 @@ discussion: |
   The check and fix are for the currently logged in user. To get the currently logged in user, run the following.
   [source,bash]
   ----
-  CURRENT_USER=$( scutil <<< "show State:/Users/ConsoleUser" | awk '/Name :/ && ! /loginwindow/ { print $3 }' )
+  CURRENT_USER=$( /usr/sbin/scutil <<< "show State:/Users/ConsoleUser" | /usr/bin/awk '/Name :/ && ! /loginwindow/ { print $3 }' )
   ----
   ====
 check: |
@@ -22,7 +22,7 @@ fix: |
   ----
 references:
   cce:
-    - CCE-91112-3
+    - CCE-91877-1
   cci:
     - N/A
   800-53r5:
@@ -37,11 +37,11 @@ references:
     - N/A
   cis:
     benchmark:
-      - 6.2 (level 1)
+      - 6.1.1 (level 1)
     controls v8:
       - 2.3
 macOS:
-  - "12.0"
+  - "13.0"
 tags:
   - cis_lvl1
   - cis_lvl2

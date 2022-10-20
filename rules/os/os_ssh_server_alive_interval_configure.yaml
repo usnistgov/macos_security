@@ -1,23 +1,37 @@
 id: os_ssh_server_alive_interval_configure
-title: "Configure SSH ServerAliveInterval option set to 900 or less"
+title: "Configure SSH ServerAliveInterval option set to $ODV"
 discussion: |
-  SSH _MUST_ be configured with an Active Server Alive Maximum Count set to 900 or less. 
+  SSH _MUST_ be configured with an Active Server Alive Maximum Count set to $ODV. 
   
-  Setting the Active Server Alive Maximum Count to 900 (second) will log users out after a 15-minute interval of inactivity.
+  Setting the Active Server Alive Maximum Count to $ODV will log users out after a $ODV seconds interval of inactivity.
 
   NOTE: /etc/ssh/ssh_config will be automatically modified to its original state following any update or major upgrade to the operating system.
 check: |
-  /usr/bin/grep -c "^ServerAliveInterval 900" /etc/ssh/ssh_config
+  ret="pass"
+  for u in $(/usr/bin/dscl . -list /Users UniqueID | /usr/bin/awk '$2 > 500 {print $1}'); do
+    sshCheck=$(/usr/bin/sudo -u $u /usr/bin/ssh -G . | /usr/bin/grep -c "^serveraliveinterval $ODV")
+    if [[ "$sshCheck" == "0" ]]; then
+      ret="fail"
+      break
+    fi
+  done
+  /bin/echo $ret
 result:
-  integer: 1
+  string: pass
 fix: |
   [source,bash]
   ----
-  /usr/bin/grep -q '^ServerAliveInterval' /etc/ssh/ssh_config && /usr/bin/sed -i.bak  's/.*ServerAliveInterval.*/ServerAliveInterval 900/' /etc/ssh/ssh_config || /bin/echo 'ServerAliveInterval 900' >> /etc/ssh/ssh_config
+  for u in $(/usr/bin/dscl . -list /Users UniqueID | /usr/bin/awk '$2 > 500 {print $1}'); do 
+    config=$(/usr/bin/sudo -u $u /usr/bin/ssh -Gv . 2>&1 | /usr/bin/awk '/Reading configuration data/ {print $NF}'| /usr/bin/tr -d '\r')
+    configarray=( ${(f)config} )
+    for c in $configarray; do
+      /usr/bin/sudo -u $u /usr/bin/grep -q '^ServerAliveInterval' "$c" && /usr/bin/sed -i '' 's/.*ServerAliveInterval.*/ServerAliveInterval $ODV/' "$c" || /bin/echo 'ServerAliveInterval $ODV' >> "$c"
+    done
+  done
   ----
 references:
   cce:
-    - CCE-91006-7
+    - CCE-91885-4
   cci: 
     - N/A
   800-53r5:
@@ -32,7 +46,10 @@ references:
   800-171r2:
     - 3.13.9
 macOS:
-  - "12.0"
+  - "13.0"
+odv:
+  hint: "Number of seconds."
+  recommended: 900
 tags:
   - 800-53r5_moderate
   - 800-53r5_high

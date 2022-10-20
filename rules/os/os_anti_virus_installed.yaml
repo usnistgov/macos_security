@@ -5,31 +5,32 @@ discussion: |
 
   Malicious software can establish a base on individual desktops and servers. Employing an automated mechanism to detect this type of software will aid in elimination of the software from the operating system.'
 check: |
-  /bin/launchctl print-disabled system | /usr/bin/grep -c '"com.apple.mrt" => false'
+  /bin/launchctl list | /usr/bin/grep -cE "(com.apple.XprotectFramework.PluginService|com.apple.XProtect.daemon.scan)"
 result:
-  integer: 1
+  integer: 2
 fix: |
   [source,bash]
   ----
-  /bin/launchctl enable system/com.apple.mrt
+  /bin/launchctl load -w /Library/Apple/System/Library/LaunchDaemons/com.apple.XProtect.daemon.scan.plist
+  /bin/launchctl load -w /Library/Apple/System/Library/LaunchDaemons/com.apple.XprotectFramework.PluginService.plist
   ----
 references:
   cce:
-    - CCE-90900-2
+    - CCE-91756-7
   cci: 
-    - CCI-000366
+    - N/A
   800-53r5:
     - N/A
   800-53r4: 
     - SI-2
   srg:
-    - SRG-OS-000480-GPOS-00227
+    - N/A
   disa_stig:
-    - APPL-12-002070
+    - N/A
 macOS:
-  - "12.0"
+  - "13.0"
 tags:
-  - stig
+  - none
 severity: "high"
 mobileconfig: false
 mobileconfig_info:

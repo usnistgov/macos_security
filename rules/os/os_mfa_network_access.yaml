@@ -9,9 +9,9 @@ fix: |
   For directory bound systems, the technology inherently meets this requirement. No fix is required.
 references:
   cce:
-    - CCE-90952-3
+    - CCE-91822-7
   cci:
-    - CCI-000765
+    - N/A
   800-53r5:
     - N/A
   800-53r4:
@@ -26,7 +26,7 @@ references:
     controls v8:
       - 5.6
 macOS:
-  - "12.0"
+  - "13.0"
 tags:
   - inherent
   - cisv8

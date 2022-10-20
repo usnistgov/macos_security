@@ -25,9 +25,9 @@ fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-    - CCE-91023-2
+    - CCE-91908-4
   cci:
-    - CCI-001812
+    - N/A
   800-53r5:
     - CM-11(2)
   800-53r4:
@@ -37,7 +37,7 @@ references:
   disa_stig:
     - N/A
 macOS:
-  - "12.0"
+  - "13.0"
 tags:
   - none
 severity: "medium"

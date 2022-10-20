@@ -8,9 +8,9 @@ fix: |
   The technology inherently meets this requirement. No fix is required.
 references:
   cce:
-    - CCE-90976-2
+    - CCE-91850-8
   cci:
-    - CCI-002754
+    - N/A
   800-53r5:
     - SI-10(3)
   800-53r4:
@@ -20,7 +20,7 @@ references:
   srg:
     - N/A
 macOS:
-  - "12.0"
+  - "13.0"
 tags:
   - inherent
 mobileconfig: false

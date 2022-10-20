@@ -13,13 +13,13 @@ result:
 fix: |
   [source,bash]
   ----
-  /usr/sbin/spctl --master-enable
+  /usr/sbin/spctl --global-enable
   ----
 references:
   cce:
-    - CCE-90926-7
+    - CCE-91793-0
   cci: 
-    - CCI-001749
+    - N/A
   800-53r5:
     - CM-14
     - CM-5
@@ -32,20 +32,20 @@ references:
     - SI-3
     - SI-7(15)
   srg:
-    - SRG-OS-000366-GPOS-00153
+    - N/A
   disa_stig:
-    - APPL-12-002064
+    - N/A
   800-171r2:
     - 3.4.5
   cis:
     benchmark:
-      - 2.5.2.1 (level 1)
+      - 2.6.4 (level 1)
     controls v8:
       - 10.1
       - 10.2
       - 10.5
 macOS:
-  - "12.0"
+  - "13.0"
 tags:
   - 800-53r5_low 
   - 800-53r5_moderate 
@@ -57,7 +57,6 @@ tags:
   - cis_lvl1
   - cis_lvl2
   - cisv8
-  - stig
 severity: "high"
 mobileconfig: true
 mobileconfig_info:

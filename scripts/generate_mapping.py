@@ -10,6 +10,92 @@ import re
 import argparse
 from pathlib import Path
 
+
+def get_rule_yaml(rule_file, custom=False):
+
+    global resulting_yaml
+    resulting_yaml = {}
+    names = [os.path.basename(x) for x in glob.glob('../custom/rules/**/*.yaml', recursive=True)]
+    file_name = os.path.basename(rule_file)
+
+    if custom:
+        print(f"Custom settings found for rule: {rule_file}")
+        try:
+            override_path = glob.glob('../custom/rules/**/{}'.format(file_name), recursive=True)[0]
+        except IndexError:
+            override_path = glob.glob('../custom/rules/{}'.format(file_name), recursive=True)[0]
+        with open(override_path) as r:
+            rule_yaml = yaml.load(r, Loader=yaml.SafeLoader)
+    else:
+        with open(rule_file) as r:
+            rule_yaml = yaml.load(r, Loader=yaml.SafeLoader)
+
+    try:
+        og_rule_path = glob.glob('../rules/**/{}'.format(file_name), recursive=True)[0]
+    except IndexError:
+        #assume this is a completely new rule
+        og_rule_path = glob.glob('../custom/rules/**/{}'.format(file_name), recursive=True)[0]
+        resulting_yaml['customized'] = ["customized rule"]
+
+    # get original/default rule yaml for comparison
+    with open(og_rule_path) as og:
+        og_rule_yaml = yaml.load(og, Loader=yaml.SafeLoader)
+
+    for yaml_field in og_rule_yaml:
+        #print('processing field {} for rule {}'.format(yaml_field, file_name))
+        if yaml_field == "references":
+            if not 'references' in resulting_yaml:
+                resulting_yaml['references'] = {}
+            for ref in og_rule_yaml['references']:
+                try:
+                    if og_rule_yaml['references'][ref] == rule_yaml['references'][ref]:
+                        resulting_yaml['references'][ref] = og_rule_yaml['references'][ref]
+                    else:
+                        resulting_yaml['references'][ref] = rule_yaml['references'][ref]
+                except KeyError:
+                    #  reference not found in original rule yaml, trying to use reference from custom rule
+                    try:
+                        resulting_yaml['references'][ref] = rule_yaml['references'][ref]
+                    except KeyError:
+                        resulting_yaml['references'][ref] = og_rule_yaml['references'][ref]
+                try:
+                    if "custom" in rule_yaml['references']:
+                        resulting_yaml['references']['custom'] = rule_yaml['references']['custom']
+                        if 'customized' in resulting_yaml:
+                            if 'customized references' not in resulting_yaml['customized']:
+                                resulting_yaml['customized'].append("customized references")
+                        else:
+                            resulting_yaml['customized'] = ["customized references"]
+                except:
+                    pass
+        elif yaml_field == "tags":
+            # try to concatenate tags from both original yaml and custom yaml
+            try:
+                if og_rule_yaml["tags"] == rule_yaml["tags"]:
+                    #print("using default data in yaml field {}".format("tags"))
+                    resulting_yaml['tags'] = og_rule_yaml['tags']
+                else:
+                    #print("Found custom tags... concatenating them")
+                    resulting_yaml['tags'] = og_rule_yaml['tags'] + rule_yaml['tags']
+            except KeyError:
+                resulting_yaml['tags'] = og_rule_yaml['tags']
+        else:
+            try:
+                if og_rule_yaml[yaml_field] == rule_yaml[yaml_field]:
+                    #print("using default data in yaml field {}".format(yaml_field))
+                    resulting_yaml[yaml_field] = og_rule_yaml[yaml_field]
+                else:
+                    #print('using CUSTOM value for yaml field {} in rule {}'.format(yaml_field, file_name))
+                    resulting_yaml[yaml_field] = rule_yaml[yaml_field]
+                    if 'customized' in resulting_yaml:
+                        resulting_yaml['customized'].append("customized {}".format(yaml_field))
+                    else:
+                        resulting_yaml['customized'] = ["customized {}".format(yaml_field)]
+            except KeyError:
+                resulting_yaml[yaml_field] = og_rule_yaml[yaml_field]
+
+    return resulting_yaml
+
 def sort_nicely( l ):
 # """ Sort the given list in the way that humans expect.
 # """
@@ -48,17 +134,26 @@ def main():
         
         parser.error(str(msg))
     
-    for rule in glob.glob('../rules/*/*.yaml'):
+
+    version_file = "../VERSION.yaml"
+    with open(version_file) as r:
+        version_yaml = yaml.load(r, Loader=yaml.SafeLoader)
+
+    for rule in glob.glob('../rules/**/*.yaml',recursive=True) + glob.glob('../custom/rules/**/*.yaml',recursive=True):
+
         sub_directory = rule.split(".yaml")[0].split("/")[2]
         
         if "supplemental" in rule or "srg" in rule:
             continue
         
-        with open(rule) as r:
-            rule_yaml = yaml.load(r, Loader=yaml.SafeLoader)
-      
+        # with open(rule) as r:
+        #     rule_yaml = yaml.load(r, Loader=yaml.SafeLoader)
+        rule_yaml = get_rule_yaml(rule, custom=False)
         
         control_array = []
+        # print("----------------------")
+        # print(rule_yaml)
+        # print()
         with open(results.CSV.name, newline='',encoding='utf-8-sig') as csvfile:
             csv_reader = csv.DictReader(csvfile,dialect='excel')
             modded_reader = csv_reader
@@ -92,6 +187,7 @@ def main():
                 for control in controls:
                         
                         try:
+                            
                             rule_yaml['references']
                             
                             if "/" in str(results.framework):
@@ -99,7 +195,13 @@ def main():
                                 framework_main = results.framework.split("/")[0]
                                 framework_sub = results.framework.split("/")[1]
                                 
-                                for yaml_control in rule_yaml['references'][framework_main][framework_sub]:
+                                references = []
+                                if "custom" not in rule_yaml['references']:
+                                    references = rule_yaml['references'][framework_main][framework_sub]
+                                else:
+                                    references = rule_yaml['references']['custom'][framework_main][framework_sub]
+                                
+                                for yaml_control in references:
                                     if duplicate == str(yaml_control).split("(")[0]:
                                         continue
                                     if csv_duplicate == str(row[other_header]):
@@ -114,9 +216,17 @@ def main():
                                         for item in row_array:
                                             control_array.append(item)
                                             print(rule_yaml['id'] + " - " + str(results.framework) + " " + str(yaml_control) + " maps to " + other_header + " " + item)
+
+
                             else:
+                                
+                                references = []
+                                if "custom" not in rule_yaml['references']:
+                                    references = rule_yaml['references'][results.framework]
+                                else:
+                                    references = rule_yaml['references']['custom'][results.framework]
 
-                                for yaml_control in rule_yaml['references'][results.framework]:
+                                for yaml_control in references:
                                     if duplicate == str(yaml_control).split("(")[0]:
                                         continue
                                     if csv_duplicate == str(row[other_header]):
@@ -129,7 +239,7 @@ def main():
                                         for item in row_array:
                                             control_array.append(item)
                                             print(rule_yaml['id'] + " - " + str(results.framework) + " " + str(yaml_control) + " maps to " + other_header + " " + item)
-                                    
+                            
                         except:
                             continue
                                        
@@ -210,6 +320,7 @@ tags:
     icloud = []
     os_section = []
     pwpolicy = []
+    system_settings = []
     sysprefs = []
     inherent = []
     na = []
@@ -251,18 +362,23 @@ tags:
                 if "/pwpolicy/" in rule:
                     pwpolicy.append(rule_id)
                     continue
+                if "/system_settings/" in rule:
+                    system_settings.append(rule_id)
+                    continue
                 if "/sysprefs/" in rule:
                     sysprefs.append(rule_id)
                     continue
-
-    full_baseline = '''title: "macOS 12 (Monterey): Security Configuration - {}"
+    
+    
+    full_baseline = '''title: "macOS {2} ({3}): Security Configuration - {0}"
 description: |
-  This guide describes the actions to take when securing a macOS 12 system against the {}.
+  This guide describes the actions to take when securing a macOS {2} system against the {1}.
 authors: |
   |===
   |Name|Organization
   |===
-profile:'''.format(other_header,other_header)
+parent_values: recommended  
+profile:'''.format(other_header,other_header,version_yaml['os'],version_yaml['version'].split(" ")[0])
     
     if len(audit) != 0:
         
@@ -291,6 +407,16 @@ profile:'''.format(other_header,other_header)
         sysprefs.sort()
     
         for rule in sysprefs:
+            full_baseline = full_baseline + '''
+      - {}'''.format(rule)
+
+    if len(system_settings) != 0:
+        full_baseline = full_baseline + '''
+  - section: "SystemSettings"
+    rules:'''
+        system_settings.sort()
+    
+        for rule in system_settings:
             full_baseline = full_baseline + '''
       - {}'''.format(rule)
 
@@ -358,14 +484,16 @@ profile:'''.format(other_header,other_header)
 
     
 
+    try:
+        if os.path.isdir("../build/" + other_header.lower() + "/baseline/") == False:
+            os.mkdir("../build/" + other_header.lower() + "/baseline")
 
-    if os.path.isdir("../build/" + other_header.lower() + "/baseline/") == False:
-        os.mkdir("../build/" + other_header.lower() + "/baseline")
-
-    with open("../build/" + other_header.lower() + "/baseline/" + other_header.lower() + ".yaml",'w') as fw:
-        fw.write(full_baseline)
-        print(other_header.lower() + ".yaml baseline file created in build/" + other_header + "/baseline/")
-                
-    print("Move all of the folders in rules into the custom folder.")
+        with open("../build/" + other_header.lower() + "/baseline/" + other_header.lower() + ".yaml",'w') as fw:
+            fw.write(full_baseline)
+            print(other_header.lower() + ".yaml baseline file created in build/" + other_header + "/baseline/")
+                    
+        print("Move all of the folders in rules into the custom folder.")
+    except:
+        print("No controls mapped were found in rule files.")
 if __name__ == "__main__":
     main()

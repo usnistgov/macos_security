@@ -1,37 +1,56 @@
 id: os_sshd_login_grace_time_configure
-title: "Set Login Grace Time to 30 or Less"
+title: "Set Login Grace Time to $ODV"
 discussion: |
-  If SSHD is enabled then it _MUST_ be configured to wait only 30 seconds before timing out logon attempts.
+  If SSHD is enabled then it _MUST_ be configured to wait only $ODV seconds before timing out logon attempts.
 
   NOTE: /etc/ssh/sshd_config will be automatically modified to its original state following any update or major upgrade to the operating system.
 check: |
-  /usr/bin/grep -c "^LoginGraceTime 30" /etc/ssh/sshd_config
+  /usr/sbin/sshd -T | /usr/bin/awk '/logingracetime/{print $2}'
 result:
-  integer: 1
+  integer: $ODV
 fix: |
   [source,bash]
   ----
-  /usr/bin/sed -i.bak 's/.*LoginGraceTime.*/LoginGraceTime 30/' /etc/ssh/sshd_config; /bin/launchctl kickstart -k system/com.openssh.sshd
-  ----
+  include_dir=$(/usr/bin/awk '/^Include/ {print $2}' /etc/ssh/sshd_config | /usr/bin/tr -d '*')
+
+  if [[ -z $include_dir ]]; then
+    /usr/bin/sed -i.bk "1s/.*/Include \/etc\/ssh\/sshd_config.d\/\*/" /etc/ssh/sshd_config
+  fi
+
+  echo "logingracetime $ODV" >> "${include_dir}01-mscp-sshd.conf"
+
+  for file in $(ls ${include_dir}); do
+    if [[ "$file" == "100-macos.conf" ]]; then
+        continue
+    fi
+    if [[ "$file" == "01-mscp-sshd.conf" ]]; then
+        break
+    fi
+    /bin/mv ${include_dir}${file} ${include_dir}20-${file}
+  done
+  ----  
 references:
   cce:
-    - CCE-91012-5
+    - CCE-91892-0
   cci: 
-    - CCI-001133
+    - N/A
   800-53r5:
     - SC-10
   800-53r4: 
     - SC-10
   srg:
-    - SRG-OS-000163-GPOS-00072
+    - N/A
   disa_stig:
-    - APPL-12-000053
+    - N/A
   800-171r2:
     - 3.13.9
 macOS:
-  - "12.0"
+  - "13.0"
+odv:
+  hint: "Number of seconds."
+  recommended: 30
 tags:
-  - stig
+  - none
 severity: "medium"
 mobileconfig: false
 mobileconfig_info:

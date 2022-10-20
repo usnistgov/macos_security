@@ -1,35 +1,54 @@
 id: os_sshd_client_alive_count_max_configure
-title: "Set SSHD Active Client Alive Maximum to Zero"
+title: "Set SSHD Active Client Alive Maximum to $ODV"
 discussion: |
-  If SSHD is enabled it _MUST_ be configured with an Active Client Alive Maximum Count set to zero. Terminating an idle session within a short time period reduces the window of opportunity for unauthorized personnel to take control of a management session enabled on the console or console port that has been left unattended. In addition, quickly terminating an idle session or an incomplete login attempt will also free up resources committed by the managed network element.
+  If SSHD is enabled it _MUST_ be configured with an Active Client Alive Maximum Count set to $ODV. Terminating an idle session within a short time period reduces the window of opportunity for unauthorized personnel to take control of a management session enabled on the console or console port that has been left unattended. In addition, quickly terminating an idle session or an incomplete login attempt will also free up resources committed by the managed network element.
 
   NOTE: /etc/ssh/sshd_config will be automatically modified to its original state following any update or major upgrade to the operating system.
 check: |
-  /usr/bin/grep -c "^ClientAliveCountMax 0" /etc/ssh/sshd_config
+  /usr/sbin/sshd -T | /usr/bin/awk '/clientalivecountmax/{print $2}'
 result:
-  integer: 1
+  integer: $ODV
 fix: |
   [source,bash]
   ----
-  /usr/bin/sed -i.bak 's/.*ClientAliveCountMax.*/ClientAliveCountMax 0/' /etc/ssh/sshd_config; /bin/launchctl kickstart -k system/com.openssh.sshd
+  include_dir=$(/usr/bin/awk '/^Include/ {print $2}' /etc/ssh/sshd_config | /usr/bin/tr -d '*')
+
+  if [[ -z $include_dir ]]; then
+    /usr/bin/sed -i.bk "1s/.*/Include \/etc\/ssh\/sshd_config.d\/\*/" /etc/ssh/sshd_config
+  fi
+
+  echo "clientalivecountmax $ODV" >> "${include_dir}01-mscp-sshd.conf"
+
+  for file in $(ls ${include_dir}); do
+    if [[ "$file" == "100-macos.conf" ]]; then
+        continue
+    fi
+    if [[ "$file" == "01-mscp-sshd.conf" ]]; then
+        break
+    fi
+    /bin/mv ${include_dir}${file} ${include_dir}20-${file}
+  done
   ----
 references:
   cce:
-    - CCE-91007-5
+    - CCE-91886-2
   cci: 
-    - CCI-001133
+    - N/A
   800-53r5:
     - SC-10
   800-53r4: 
     - SC-10
   srg:
-    - SRG-OS-000163-GPOS-00072
+    - N/A
   disa_stig:
-    - APPL-12-000052
+    - N/A
   800-171r2:
     - 3.13.9
 macOS:
-  - "12.0"
+  - "13.0"
+odv:
+  hint: "Number of seconds."
+  recommended: 0
 tags:
   - 800-53r5_moderate 
   - 800-53r5_high
@@ -37,7 +56,6 @@ tags:
   - 800-53r4_high
   - 800-171
   - cnssi-1253
-  - stig
 severity: "medium"
 mobileconfig: false
 mobileconfig_info:

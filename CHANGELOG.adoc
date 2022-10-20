@@ -2,132 +2,74 @@
 
 This document provides a high-level view of the changes to the macOS Security Compliance Project.
 
-== [Monterey, Revision 2] - 2022-03-16
+== [Ventura, Revision 1] - 2022-10-20
 
 * Rules
+** Added ODV support
 ** Added Rules
-*** audit_control_acls_configure
-*** audit_control_group_configure
-*** audit_control_mode_configure
-*** audit_control_owner_configure
-*** audit_flags_configure
-*** audit_retention_configure_sixty_days
-*** os_application_sandbox
-*** os_blank_bluray_disable
-*** os_blank_cd_disable
-*** os_blank_dvd_disable
-*** os_bluray_read_only_enforce
-*** os_burn_support_disable
-*** os_cd_read_only_enforce
-*** os_disk_image_disable
-*** os_dvdram_disable
-*** os_efi_integrity_validated
-*** os_erase_content_and_settings_disabled
-*** os_guest_folder_removed
-*** os_hibernate_mode_destroyfvkeyonstandby_enable
-*** os_hibernate_mode_enable
-*** os_install_log_retention_configure
-*** os_library_validation_enabled
-*** os_mobile_file_integrity_enable
-*** os_password_hint_remove
-*** os_safari_open_safe_downloads
-*** os_show_filename_extensions_enable
-*** os_skip_screen_time_prompt_enable
-*** os_sudo_timeout_configure
-*** os_system_wide_applications_configure
-*** os_terminal_secure_keyboard_enable
-*** os_time_offset_limit_configure
-*** os_world_writable_library_folder_configure
-*** os_world_writable_system_folder_configure
-*** pwpolicy_account_lockout_enforce_five
-*** pwpolicy_history_enforce_fifteen
-*** supplemental_cis_manual
-*** sysprefs_bluetooth_menu_enable
-*** sysprefs_bluetooth_unpaired_disable
-*** sysprefs_cd_dvd_sharing_disable
-*** sysprefs_hot_corners_secure
-*** sysprefs_install_macos_updates_enforce
-*** sysprefs_location_services_audit
-*** sysprefs_location_services_enable
-*** sysprefs_loginwindow_loginwindowtext_enable
-*** sysprefs_printer_sharing_disable
-*** sysprefs_remote_management_disable
-*** sysprefs_software_update_app_update_enforce.yaml
-*** sysprefs_software_update_download_enforce.yaml
-*** sysprefs_software_update_enforce.yaml
-*** sysprefs_softwareupdate_current.yaml
-*** sysprefs_time_machine_auto_backup_enable.yaml
-*** sysprefs_time_machine_encrypted_configure.yaml
-*** sysprefs_wake_network_access_disable.yaml
-*** sysprefs_wifi_menu_enable.yaml
+*** icloud_appleid_system_settings_disable
+*** os_config_profile_ui_install_disable
+*** os_firewall_ui_disable
+*** os_power_nap_enable
+*** os_rapid_security_response_allow
+*** os_rapid_security_response_removal_disable
+*** os_software_update_deferral
+*** system_settings_USB_restricted_mode
+*** system_settings_internet_accounts_disable
 ** Modified Rules
-*** sysprefs_airplay_receiver_disable
-*** Updated checks for configuration profiles
+*** os_power_nap_disable
+*** os_ssh_fips_compliant
+*** os_ssh_server_alive_count_max_configure
+*** os_ssh_server_alive_interval_configure
+*** os_sshd_client_alive_count_max_configure
+*** os_sshd_client_alive_interval_configure
+*** os_sshd_fips_140_ciphers
+*** os_sshd_fips_140_macs
+*** os_sshd_fips_compliant
+*** os_sshd_key_exchange_algorithm_configure
+*** os_sshd_login_grace_time_configure
+*** os_sshd_permit_root_login_configure
+*** os_sudo_timeout_configure
+*** os_sudoers_timestamp_type_configure
+*** pwpolicy_account_inactivity_enforce.yaml
+*** pwpolicy_account_lockout_enforce.yaml
+*** pwpolicy_account_lockout_timeout_enforce.yaml
+*** pwpolicy_alpha_numeric_enforce.yaml
+*** pwpolicy_history_enforce.yaml
+*** pwpolicy_lower_case_character_enforce.yaml
+*** pwpolicy_max_lifetime_enforce.yaml
+*** pwpolicy_minimum_length_enforce.yaml
+*** pwpolicy_minimum_lifetime_enforce.yaml
+*** pwpolicy_simple_sequence_disable.yaml
+*** pwpolicy_special_character_enforce.yaml
+*** pwpolicy_upper_case_character_enforce.yaml
+*** system_settings_system_wide_preferences_configure
+*** System Preferences -> System Settings
+** Deleted Rules
+*** os_sudoers_tty_configure
 ** Bug Fixes
 
 * Baselines
-** Added CIS Level 1 & 2
-** Added DISA STIG
+** Modified existing baselines
+** Added parent_values
 
 * Scripts
 ** generate_guidance
-*** Added support for CIS
+*** Added ODV support
+*** Added Ruby gem generation
+*** Added support for fix/check in compliance script
+*** Added unified log support to compliance script
 *** Bug Fixes
 ** generate_baseline
+*** Added ODV support
+*** Added tailoring support
 *** Bug Fixes
 ** generate_mappings
 *** Bug Fixes
-** generate_oval
-*** Renamed Script
-*** plist510 tests updated to plist511
+** generate_scap
+*** Added support for ODV
+*** Added support for new checks
+*** Generate scap, xccdf, or oval
 *** Bug Fixes
 
-* SCAP
-** Bug Fixes
 
-== [Monterey, Revision 1] - 2021-10-20
-
-* Rules
-** Added Rules
-*** icloud_private_relay_disable
-*** os_recovery_lock_enable
-*** os_skip_unlock_with_watch_enable
-*** os_ssh_fips_compliant
-*** os_sshd_fips_compliant
-*** sysprefs_airplay_receiver_disable
-** Modified Rules
-*** auth_ssh_password_authentication_disable
-*** os_directory_services_configured
-*** os_prohibit_remote_activation_collab_devices
-*** sysprefs_ssh_disable
-*** sysprefs_ssh_enable
-** Deleted Rules
-*** os_ssh_fips_140_ciphers
-*** os_ssh_fips_140_macs
-*** os_sshd_fips_140_ciphers
-*** os_sshd_fips_140_macs
-** Updated existing rules rules to reflect 12.0
-** Updated CCEs to existing rules
-** Bug fixes
-
-* Baselines
-** Added CIS v8
-** Modified existing baselines
-*** Added author field
-
-* Scripts
-** generate_guidanace
-*** Bug fixes
-*** Added architecture check
-*** Updated support for author & scope sections
-*** When generating SCAP content, pdf file will no longer be created
-** generate_baseline
-*** Bug fixes
-*** Rules are now sorted alphabetically
-*** Added support for author field in baselines
-** yaml-to-oval
-*** Bug fixes
-
-* SCAP
-** Renames datastream.xml to match macOS version and guidance version
-** Includes SCAP profiles for all supported baselines

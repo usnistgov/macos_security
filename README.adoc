@@ -18,10 +18,14 @@ endif::[]
 
 ifdef::status[]
 image:https://badgen.net/badge/icon/apple?icon=apple&label[link="https://www.apple.com/"]
-image:https://badgen.net/badge/icon/12.0?icon=apple&label[link="https://www.apple.com/macos"]
+image:https://badgen.net/badge/icon/13.0?icon=apple&label[link="https://www.apple.com/macos"]
 endif::[]
 
 The macOS Security Compliance Project is an link:LICENSE.md[open source] effort to provide a programmatic approach to generating security guidance. The configuration settings in this document were derived from National Institute of Standards and Technology (NIST) Special Publication (SP) 800-53, _Security and Privacy Controls for Information Systems and Organizations_, Revision 5. This is a joint project of federal operational IT Security staff from the National Institute of Standards and Technology (NIST), National Aeronautics and Space Administration (NASA), Defense Information Systems Agency (DISA), and Los Alamos National Laboratory (LANL).
+
+This project is the technical implementation of NIST Special Publication, 800-219 https://csrc.nist.gov/publications/detail/sp/800-219/final[Automated Secure Configuration Guidance from the macOS Security Compliance Project (mSCP)].  NIST Special Publication 800-219 is the official guidance from for automated secure configuration for macOS.
+
+Apple acknowledges the macOS Security Compliance Project with information on their https://support.apple.com/guide/sccc/macos-security-compliance-project-sccc22685bb2/web[Security Certifications and Compliance Center] page.
 
 This project can be used as a resource to easily create customized security baselines of technical security controls by leveraging a library of atomic actions which are mapped to the compliance requirements defined in NIST SP 800-53 (Rev. 5). It can also be used to develop customized guidance to meet the particular cybersecurity needs of any organization.  
 
@@ -45,6 +49,7 @@ Part 39 of the Federal Acquisition Regulations, section 39.101 paragraph (c) sta
 |Bob Gendler|NIST
 |Allen Golbig|Jamf
 |Dan Brodjieski|NASA
+|John Mahlman IV|Leidos
 |Jason Blake|NIST
 |Blair Heiserman|NIST
 |Joshua Glemza|NASA
@@ -54,7 +59,7 @@ Part 39 of the Federal Acquisition Regulations, section 39.101 paragraph (c) sta
 
 == Changelog
 
-Refer to the link:CHANGELOG.adoc[CHANGELOG] for a complete list of changes.
+Refer to the link:CHANGELOG.adoc[CHANGELOG] for a complete list of changes. 
 
 == NIST Disclaimer
 

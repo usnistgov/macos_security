@@ -11,23 +11,35 @@ discussion: |
 
   NOTE: /etc/ssh/sshd_config will be automatically modified to its original state following any update or major upgrade to the operating system.
 check: |
-  /usr/bin/grep -c "^KexAlgorithms diffie-hellman-group-exchange-sha256" /etc/ssh/sshd_config
+  /usr/sbin/sshd -T | /usr/bin/grep -ci "^KexAlgorithms diffie-hellman-group-exchange-sha256"
 result:
   integer: 1
 fix: |
   [source,bash]
   ----
-  /usr/bin/grep -q '^KexAlgorithms' /etc/ssh/sshd_config && /usr/bin/sed -i.bak 's/.*KexAlgorithms.*/KexAlgorithms diffie-hellman-group-exchange-sha256/' /etc/ssh/sshd_config || /bin/echo 'KexAlgorithms diffie-hellman-group-exchange-sha256' >> /etc/ssh/sshd_config; /bin/launchctl kickstart -k system/com.openssh.sshd
-  ----
+  include_dir=$(/usr/bin/awk '/^Include/ {print $2}' /etc/ssh/sshd_config | /usr/bin/tr -d '*')
+
+  if [[ -z $include_dir ]]; then
+    /usr/bin/sed -i.bk "1s/.*/Include \/etc\/ssh\/sshd_config.d\/\*/" /etc/ssh/sshd_config
+  fi
+
+  echo "KexAlgorithms diffie-hellman-group-exchange-sha256" >> "${include_dir}01-mscp-sshd.conf"
+
+  for file in $(ls ${include_dir}); do
+    if [[ "$file" == "100-macos.conf" ]]; then
+        continue
+    fi
+    if [[ "$file" == "01-mscp-sshd.conf" ]]; then
+        break
+    fi
+    /bin/mv ${include_dir}${file} ${include_dir}20-${file}
+  done
+  ----  
 references:
   cce:
-    - CCE-91011-7
+    - CCE-91891-2
   cci: 
-    - CCI-000803
-    - CCI-000068
-    - CCI-000087
-    - CCI-003123
-    - CCI-002890
+    - N/A
   800-53r5:
     - AC-17(2)
     - IA-7
@@ -37,27 +49,15 @@ references:
     - AC-17(2)
     - MA-4(6)
   srg:
-    - SRG-OS-000033-GPOS-00014
-    - SRG-OS-000120-GPOS-00061
-    - SRG-OS-000125-GPOS-00065
-    - SRG-OS-000250-GPOS-00093
-    - SRG-OS-000393-GPOS-00173
-    - SRG-OS-000394-GPOS-00174
+    - N/A
   disa_stig:
-    - APPL-12-000056
+    - N/A
   800-171r2:
     - N/A
 macOS:
-  - "12.0"
+  - "13.0"
 tags:
-  - 800-53r5_low 
-  - 800-53r5_moderate 
-  - 800-53r5_high 
-  - 800-53r4_low 
-  - 800-53r4_moderate 
-  - 800-53r4_high
-  - cnssi-1253
-  - stig
+  - none
 severity: "medium"
 mobileconfig: false
 mobileconfig_info:

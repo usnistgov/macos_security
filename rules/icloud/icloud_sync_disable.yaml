@@ -15,7 +15,7 @@ fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-    - CCE-90896-2
+    - CCE-91752-6
   cci:
     - N/A
   800-53r5:
@@ -38,13 +38,13 @@ references:
     - 3.4.6
   cis:
     benchmark:
-      - 2.6.1.4 (level 2)
+      - 2.1.1.3 (level 2)
     controls v8:
       - 4.1
       - 4.8
       - 15.3
 macOS:
-  - "12.0"
+  - "13.0"
 tags:
   - 800-53r5_low
   - 800-53r5_moderate

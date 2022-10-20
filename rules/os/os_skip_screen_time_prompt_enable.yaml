@@ -13,9 +13,9 @@ fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-    - CCE-91113-1
+    - CCE-91880-5
   cci: 
-    - CCI-000381
+    - N/A
   800-53r5:
     - CM-7
     - CM-7(1)
@@ -23,13 +23,13 @@ references:
     - CM-7
     - CM-7(1)
   srg:
-    - SRG-OS-000095-GPOS-00049
+    - N/A
   disa_stig:
-    - APPL-12-005055
+    - N/A
 macOS:
-  - "12.0"
+  - "13.0"
 tags:
-  - stig
+  - none
 severity: "low"
 mobileconfig: true
 mobileconfig_info:

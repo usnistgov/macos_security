@@ -9,22 +9,35 @@ discussion: |
 
   NOTE: /etc/ssh/sshd_config will be automatically modified to its original state following any update or major upgrade to the operating system.
 check: |
-  /usr/bin/grep -c "^MACs hmac-sha2-256,hmac-sha2-512" /etc/ssh/sshd_config
+  /usr/sbin/sshd -T | /usr/bin/grep -ci "^MACs hmac-sha2-256,hmac-sha2-512"
 result:
   integer: 1
 fix: |
   [source,bash]
   ----
-  /usr/bin/grep -q '^MACs' /etc/ssh/sshd_config && /usr/bin/sed -i.bak  's/.*MACs.*/MACs hmac-sha2-256,hmac-sha2-512/' /etc/ssh/sshd_config || /bin/echo 'MACs hmac-sha2-256,hmac-sha2-512' >> /etc/ssh/sshd_config; /bin/launchctl kickstart -k system/com.openssh.sshd
-  ----
+  include_dir=$(/usr/bin/awk '/^Include/ {print $2}' /etc/ssh/sshd_config | /usr/bin/tr -d '*')
+
+  if [[ -z $include_dir ]]; then
+    /usr/bin/sed -i.bk "1s/.*/Include \/etc\/ssh\/sshd_config.d\/\*/" /etc/ssh/sshd_config
+  fi
+
+  echo "MACs hmac-sha2-256,hmac-sha2-512" >> "${include_dir}01-mscp-sshd.conf"
+
+  for file in $(ls ${include_dir}); do
+    if [[ "$file" == "100-macos.conf" ]]; then
+        continue
+    fi
+    if [[ "$file" == "01-mscp-sshd.conf" ]]; then
+        break
+    fi
+    /bin/mv ${include_dir}${file} ${include_dir}20-${file}
+  done
+  ----  
 references:
   cce:
-    - CCE-91115-6
+    - CCE-91889-6
   cci: 
-    - CCI-000068
-    - CCI-000803
-    - CCI-003123
-    - CCI-002890
+    - N/A
   800-53r5:
     - AC-17(2)
     - IA-7
@@ -37,22 +50,17 @@ references:
     - SC-13
     - MA-4(6)
   srg: 
-    - SRG-OS-000033-GPOS-00014
-    - SRG-OS-000120-GPOS-00061
-    - SRG-OS-000125-GPOS-00065
-    - SRG-OS-000250-GPOS-00093
-    - SRG-OS-000393-GPOS-00173
-    - SRG-OS-000394-GPOS-00174
+    - N/A
   disa_stig: 
-    - APPL-12-000055
+    - N/A
   800-171r2:
     - 3.1.13
     - 3.13.8
     - 3.13.11
 macOS:
-  - "12.0"
+  - "13.0"
 tags:
-  - stig
+  - none
 severity: "medium"
 mobileconfig: false
 mobileconfig_info:

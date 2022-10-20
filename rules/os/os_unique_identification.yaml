@@ -8,9 +8,9 @@ fix: |
   The technology inherently meets this requirement. No fix is required.
 references:
   cce:
-    - CCE-91021-6
+    - CCE-91906-8
   cci:
-    - CCI-000764
+    - N/A
   800-53r5:
     - IA-4
   800-53r4:
@@ -26,7 +26,7 @@ references:
       - 5.1
       - 6.1
 macOS:
-  - "12.0"
+  - "13.0"
 tags:
   - 800-53r5_low
   - 800-53r5_moderate
