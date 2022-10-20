@@ -50,6 +50,7 @@ references:
     - SC-13
     - MA-4(6)
   srg: 
+    - N/A
   disa_stig: 
     - N/A
   800-171r2:
