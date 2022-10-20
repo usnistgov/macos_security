@@ -15,7 +15,6 @@ ASSOCIATED DOCUMENTS
 ////
 [%header, cols=2*a]
 .National Institute of Standards and Technology (NIST)
-.National Institute of Standards and Technology (NIST)
 |===
 |Document Number or Descriptor
 |Document Title
@@ -53,7 +52,6 @@ ASSOCIATED DOCUMENTS
 |link:https://developer.apple.com/documentation/devicemanagement/profile-specific_payload_keys[Profile-Specific Payload Keys]|_Profile-Specific Payload Keys_
 |link:https://support.apple.com/guide/sccc/welcome/web[Security Certifications and Compliance Center]|_Security Certifications and Compliance Center_
 |===
-
 [%header, cols=2*a]
 .Center for Internet Security
 |===
