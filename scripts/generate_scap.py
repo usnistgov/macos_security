@@ -2254,7 +2254,57 @@ def generate_scap(all_rules, all_baselines, args):
                                 <authorizationdb_state xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" comment="{}_test" id="oval:mscp:ste:{}" version="1">
                 <value_of>{}</value_of>
             </authorizationdb_state>'''.format(rule_yaml['id'] + "_" + odv_label,x,key)
-                    x += 1
+                    
+                    else:
+                        if "authorizationdb" in rule_yaml['check']:
+                            regex = r"=\(.*.\)"
+                            matchy_match = []
+                            matches = re.finditer(regex, rule_yaml['check'], re.MULTILINE)
+                            for matchNum, match in enumerate(matches, start=1):
+                                matchy_match = match.group().replace('=(',"").replace(")","").replace('"','').split()
+                            
+                            oval_definition = oval_definition + '''
+                                <definition id="oval:mscp:def:{}" version="1" class="compliance"> 
+                    <metadata> 
+                        <title>{}</title> 
+                        <reference source="CCE" ref_id="{}"/>
+                        <reference source="macos_security" ref_id="{}"/>
+                        <description>{}</description> 
+                    </metadata> 
+                <criteria operator="AND">'''.format(x,rule_yaml['title'],cce,rule_yaml['id'] + "_" + odv_label,rule_yaml['discussion'])
+
+                            for match in matchy_match:
+                                
+                                oval_definition = oval_definition + '''
+                            <criterion comment="{}" test_ref="oval:mscp:tst:{}" />
+                            '''.format(rule_yaml['id'] + "+" + match, x)
+                                oval_test = oval_test + '''
+                                <authorizationdb_test xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" check="all" check_existence="only_one_exists" comment="{}_test" id="oval:mscp:tst:{}" version="2">
+                <object object_ref="oval:mscp:obj:{}" />
+                <state state_ref="oval:mscp:ste:{}" />
+            </authorizationdb_test>'''.format(match,x,x,x)
+                                key="shared"
+                                value=""
+                                if "false" in rule_yaml["check"]: 
+                                    value="false"
+                                else:
+                                    value="true"
+
+                                oval_object = oval_object + '''
+                                <authorizationdb_object xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" comment="{}_object" id="oval:mscp:obj:{}" version="1">
+                <right_name>{}</right_name>
+                <xpath>boolean(//key[text()="{}"]/following-sibling::{})</xpath>
+            </authorizationdb_object>  '''.format(match,x,match,key,value)
+
+                                oval_state = oval_state  + '''
+                <authorizationdb_state xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" comment="{}_state" id="oval:mscp:ste:{}" version="1">
+                
+            <value_of datatype="boolean" operation="equals">true</value_of>
+            </authorizationdb_state>'''.format(match,x)
+                                x += 1
+                            
+                            oval_definition = oval_definition + "</criteria></definition>"
+
                     continue
                 if "/bin/rm" in rule_yaml['fix'] and "/bin/ls" in rule_yaml['check']:
                     oval_definition = oval_definition + '''
