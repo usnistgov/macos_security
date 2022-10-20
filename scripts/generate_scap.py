@@ -2304,7 +2304,7 @@ def generate_scap(all_rules, all_baselines, args):
                                 x += 1
                             
                             oval_definition = oval_definition + "</criteria></definition>"
-
+                    x += 1
                     continue
                 if "/bin/rm" in rule_yaml['fix'] and "/bin/ls" in rule_yaml['check']:
                     oval_definition = oval_definition + '''
