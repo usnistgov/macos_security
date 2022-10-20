@@ -47,10 +47,9 @@ ASSOCIATED DOCUMENTS
 |Document Number or Descriptor
 |Document Title
 |link:https://support.apple.com/guide/security/welcome/web[Apple Platform Security Guide]|_Apple Platform Security_
-|link:https://support.apple.com/guide/deployment-reference-macos/welcome/web[Deployment Reference for Mac]|_Deployment Reference_
-|link:https://support.apple.com/guide/mdm/welcome/web[Mobile Device Management Settings]|_Mobile Device Management Settings_
-|link:https://developer.apple.com/documentation/devicemanagement/profile-specific_payload_keys[Profile-Specific Payload Keys]|_Profile-Specific Payload Keys_
+|link:https://support.apple.com/guide/deployment/welcome/web[Apple Platform Deployment]|_Apple Platform Deployment_
 |link:https://support.apple.com/guide/sccc/welcome/web[Security Certifications and Compliance Center]|_Security Certifications and Compliance Center_
+|link:https://developer.apple.com/documentation/devicemanagement/profile-specific_payload_keys[Profile-Specific Payload Keys]|_Profile-Specific Payload Keys_
 |===
 [%header, cols=2*a]
 .Center for Internet Security
