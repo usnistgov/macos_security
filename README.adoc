@@ -59,7 +59,7 @@ Part 39 of the Federal Acquisition Regulations, section 39.101 paragraph (c) sta
 
 == Changelog
 
-Refer to the link:CHANGELOG.adoc[CHANGELOG] for a complete list of changes.
+Refer to the link:CHANGELOG.adoc[CHANGELOG] for a complete list of changes. 
 
 == NIST Disclaimer
 
