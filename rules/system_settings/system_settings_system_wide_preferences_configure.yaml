@@ -43,7 +43,7 @@ references:
     - AC-6(1)
     - AC-6(2)
   disa_stig:
-    - APPL-12-002069
+    - N/A
   800-171r2:
     - 3.1.5
     - 3.1.6
