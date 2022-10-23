@@ -112,3 +112,5 @@ payloads_types:
   - com.apple.AdLib
   - .GlobalPreferences
   - com.apple.preferences.sharing.SharingPrefsExtension
+  - com.apple.controlcenter
+  - com.apple.Terminal
