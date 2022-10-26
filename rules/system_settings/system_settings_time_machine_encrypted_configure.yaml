@@ -41,7 +41,7 @@ references:
     controls v8:
       - 3.6
       - 3.11
-      - 11.2
+      - 11.3
 macOS:
   - "13.0"
 tags:
