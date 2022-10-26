@@ -32,12 +32,12 @@ references:
   800-53r5:
     - CM-2
     - CM-6
-   800-53r4:
+  800-53r4:
     - CM-2
     - CM-6
-   disa_stig:
+  disa_stig:
     - N/A
-   srg:
+  srg:
     - N/A   
   800-171r2:
     - 3.4.1
