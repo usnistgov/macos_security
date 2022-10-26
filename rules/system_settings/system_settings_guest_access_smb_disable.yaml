@@ -21,6 +21,16 @@ references:
   800-171r2:
     - 3.5.1
     - 3.5.2
+  800-53r5:
+    - AC-2(9)
+    - AC-2
+  800-53r4:
+    - AC-2
+    - AC-2(9)
+  disa_stig:
+    - N/A
+  srg:
+    - N/A
   cis:
     benchmark: 
       - 2.12.2 (level 1)

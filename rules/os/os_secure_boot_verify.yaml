@@ -17,6 +17,17 @@ references:
     - CCE-91873-0
   cci:
     - N/A
+  800-53r5:
+    - SI-7
+    - SI-7(1)
+    - SI-7(5)
+    - SI-6
+  800-53r4:
+    - SI-6
+  srg:
+    - N/A
+  disa_stig:
+    - N/A
 macOS:
   - "13.0"
 tags:
