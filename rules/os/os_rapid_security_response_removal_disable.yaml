@@ -1,5 +1,5 @@
 id: os_rapid_security_response_removal_disable
-title: "Disable user ability from being able to undo the responses"
+title: "Disable User Ability from Being Able to Undo Rapid Security Responses"
 discussion: |
   Rapid security response (RSR) mechanism _MUST_ be enabled and the ability for the user to disable RSR _MUST_ be disabled. 
 check: |
