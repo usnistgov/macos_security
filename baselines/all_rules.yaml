@@ -188,7 +188,6 @@ profile:
       - system_settings_bluetooth_disable
       - system_settings_bluetooth_menu_enable
       - system_settings_bluetooth_sharing_disable
-      - system_settings_bluetooth_unpaired_disable
       - system_settings_cd_dvd_sharing_disable
       - system_settings_content_caching_disable
       - system_settings_critical_update_install_enforce
