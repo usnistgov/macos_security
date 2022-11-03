@@ -45,7 +45,6 @@ macOS:
 odv:
   hint: "Number of special characters."
   recommended: 1
-  cis_lvl1: 1
   cis_lvl2: 1
 tags:
   - 800-171 
