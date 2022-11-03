@@ -5,7 +5,7 @@ discussion: |
 
   Disabling the system preference pane prevents the users from configuring Touch ID. 
 check: |
-  /usr/bin/profiles show -output stdout-xml | /usr/bin/xmllint --xpath 'string(//*[contains(text(), "DisabledPreferencePanes")]/following-sibling::*[1])' - | /usr/bin/grep -c com.apple.preferences.password
+  /usr/bin/profiles show -output stdout-xml | /usr/bin/xmllint --xpath '//key[text()="DisabledPreferencePanes"]/following-sibling::*[1]' - | /usr/bin/grep -c com.apple.preferences.password 
 result:
   integer: 1
 fix: |

@@ -5,7 +5,7 @@ discussion: |
 
   Disabling the system preference pane prevents the users from configuring Siri. 
 check: |
-  /usr/bin/profiles show -output stdout-xml | /usr/bin/xmllint --xpath 'string(//*[contains(text(), "DisabledPreferencePanes")]/following-sibling::*[1])' - | /usr/bin/grep -c com.apple.preference.speech
+  /usr/bin/profiles show -output stdout-xml | /usr/bin/xmllint --xpath '//key[text()="HiddenPreferencePanes"]/following-sibling::*[1]' - | /usr/bin/grep -c com.apple.preference.speech
 result:
   integer: 1
 fix: |
