@@ -35,8 +35,6 @@ profile:
       - os_firewall_log_enable
       - os_gatekeeper_enable
       - os_guest_folder_removed
-      - os_hibernate_mode_destroyfvkeyonstandby_enable
-      - os_hibernate_mode_enable
       - os_home_folders_secure
       - os_httpd_disable
       - os_install_log_retention_configure
