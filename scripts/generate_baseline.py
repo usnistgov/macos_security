@@ -268,6 +268,9 @@ def output_baseline(rules, os, keyword, benchmark, authors, expanded_title):
         output_text = f'title: "macOS {os}: Security Configuration - {expanded_title}"\n'
         output_text += f'description: |\n  This guide describes the actions to take when securing a macOS {os} system against the {expanded_title} security baseline.\n'
     
+    if benchmark == "recommended":
+        output_text += "\n  Information System Security Officers and benchmark creators can use this catalog of settings in order to assist them in security benchmark creation. This list is a catalog, not a checklist or benchmark, and satisfaction of every item is not likely to be possible or sensible in many operational scenarios.\n"
+  
     # # process authors
     output_text += f'authors: |\n  {authors}'
 
