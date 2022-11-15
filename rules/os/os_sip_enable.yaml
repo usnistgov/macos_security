@@ -55,8 +55,8 @@ references:
     benchmark:
       - 5.1.2 (level 1)
     controls v8:
+      - 2.3
       - 2.6
-      - 3.3
       - 10.5
 macOS:
   - "13.0"

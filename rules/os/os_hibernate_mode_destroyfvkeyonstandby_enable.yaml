@@ -30,11 +30,13 @@ references:
     benchmark:
       - 2.9.3 (level 2)
     controls v8: 
-      - N/A
+      - 4.1
 macOS:
   - "13.0"
 tags:
   - cis_lvl2
+  - cisv8
+  - i386
 mobileconfig: true
 mobileconfig_info:
   com.apple.MCX:

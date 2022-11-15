@@ -35,9 +35,7 @@ references:
     benchmark: 
       - 2.12.2 (level 1)
     controls v8: 
-      - 5.2
-      - 6.2
-      - 6.8
+      - 3.3
 macOS:
   - "13.0"
 tags:
