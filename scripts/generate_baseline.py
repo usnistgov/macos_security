@@ -196,6 +196,14 @@ def get_controls(all_rules):
     
     return all_controls
 
+def append_authors(authors, name, org):
+    author_block = authors
+    author_block += "  Security configuration tailored by:\n  "
+    author_block += "|===\n  "
+    author_block += f"|{name}|{org}\n  "
+    author_block += "|===\n"
+    return author_block
+
 def parse_authors(authors_from_yaml):
     author_block = ""
     #  |\n  |===\n  |Name|Organization\n  |===\n
@@ -261,10 +269,6 @@ def output_baseline(rules, os, keyword, benchmark, authors, expanded_title):
         output_text += f'description: |\n  This guide describes the actions to take when securing a macOS {os} system against the {expanded_title} security baseline.\n'
     
     # # process authors
-    # output_text += f'authors: |\n'
-    # for author in authors:
-    #     output_text += f'  {author}\n'
-    
     output_text += f'authors: |\n  {authors}'
 
     output_text += f'parent_values: "{benchmark}"\n'
@@ -530,6 +534,9 @@ def main():
         if args.tailor:
             # prompt for name of benchmark to be used for filename
             tailored_filename = sanitised_input(f'Enter a name for your tailored benchmark or press Enter for the default value ({args.keyword}): ', str, default_=args.keyword)
+            custom_author_name = sanitised_input('Enter your name: ')
+            custom_author_org = sanitised_input('Enter your organization: ')
+            authors = append_authors(authors, custom_author_name, custom_author_org)
             if tailored_filename == args.keyword:
                 _kw = f"{args.keyword.upper()} (Tailored)"
             else:
