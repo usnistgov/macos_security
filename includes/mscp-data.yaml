@@ -50,7 +50,6 @@ authors:
       - Ekkehard Koch|
       - Bob Gendler|National Institute of Standards and Technology
   stig:
-    preamble: This is some text to include in the Author Block
     names: 
       - Dan Brodjieski|National Aeronautics and Space Administration
       - Allen Golbig|Jamf
