@@ -11,8 +11,10 @@ result:
 fix: |
   [source,bash]
   ----
+  /usr/sbin/systemsetup -f -setremotelogin off >/dev/null
   /bin/launchctl disable system/com.openssh.sshd
   ----
+  NOTE: Systemsetup with -setremotelogin flag will fail unless you grant Full Disk Access to systemsetup or it's parent process. Requires supervision.
 references:
   cce:
     - CCE-91077-8

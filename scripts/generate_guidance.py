@@ -409,7 +409,7 @@ def generate_profiles(baseline_name, build_path, parent_dir, baseline_yaml, sign
                 logging.debug(f"{rule}")
 
             #for rule in glob.glob('../rules/*/{}.yaml'.format(profile_rule)) + glob.glob('../custom/rules/**/{}.yaml'.format(profile_rule),recursive=True):
-            rule_yaml = get_rule_yaml(rule, custom)
+            rule_yaml = get_rule_yaml(rule, baseline_yaml, custom)
 
             if rule_yaml['mobileconfig']:
                 for payload_type, info in rule_yaml['mobileconfig_info'].items():
@@ -808,7 +808,7 @@ fi
                 custom=False
                 logging.debug(f"{rule}")
 
-            rule_yaml = get_rule_yaml(rule, custom)
+            rule_yaml = get_rule_yaml(rule, baseline_yaml, custom)
 
 
             if rule_yaml['id'].startswith("supplemental"):
@@ -1034,16 +1034,16 @@ fi
 
 }
 
-zparseopts -D -E -check=check -fix=fix -stats=stats -compliant=compliant -non_compliant=non_compliant -reset=reset
+zparseopts -D -E -check=check -fix=fix -stats=stats -compliant=compliant_opt -non_compliant=non_compliant_opt -reset=reset
 
 if [[ $reset ]]; then reset_plist; fi
 
-if [[ $check ]] || [[ $fix ]] || [[ $stats ]] || [[ $compliant ]] || [[ $non_compliant ]]; then
+if [[ $check ]] || [[ $fix ]] || [[ $stats ]] || [[ $compliant_opt ]] || [[ $non_compliant_opt ]]; then
     if [[ $fix ]]; then run_fix; fi
     if [[ $check ]]; then run_scan; fi
     if [[ $stats ]];then generate_stats; fi
-    if [[ $compliant ]];then compliance_count "compliant"; fi
-    if [[ $non_compliant ]];then compliance_count "non-compliant"; fi
+    if [[ $compliant_opt ]];then compliance_count "compliant"; fi
+    if [[ $non_compliant_opt ]];then compliance_count "non-compliant"; fi
 else
     while true; do
         show_menus
@@ -1112,13 +1112,19 @@ def fill_in_odv(resulting_yaml, parent_values):
 
 
 
-def get_rule_yaml(rule_file, custom=False, parent_values="recommended"):
+def get_rule_yaml(rule_file, baseline_yaml, custom=False,):
     """ Takes a rule file, checks for a custom version, and returns the yaml for the rule
     """
     global resulting_yaml
     resulting_yaml = {}
     names = [os.path.basename(x) for x in glob.glob('../custom/rules/**/*.yaml', recursive=True)]
     file_name = os.path.basename(rule_file)
+    
+    # get parent values
+    try:
+        parent_values = baseline_yaml['parent_values']
+    except KeyError:
+        parent_values = "recommended"
 
     if custom:
         print(f"Custom settings found for rule: {rule_file}")
@@ -1286,7 +1292,7 @@ def generate_xls(baseline_name, build_path, baseline_yaml):
             # sheet1.write(counter, 7, str(
             #     configProfile(rule_file)), topWrap)
         else:
-            sheet1.write(counter, 7, str(rule.rule_fix), topWrap)
+            sheet1.write(counter, 7, str(rule.rule_fix.replace("\|", "|")), topWrap)
 
         sheet1.col(7).width = 1000 * 50
 
@@ -1398,7 +1404,7 @@ def create_rules(baseline_yaml):
                 custom=False
 
             #for rule in glob.glob('../rules/*/{}.yaml'.format(profile_rule)) + glob.glob('../custom/rules/**/{}.yaml'.format(profile_rule),recursive=True):
-            rule_yaml = get_rule_yaml(rule, custom)
+            rule_yaml = get_rule_yaml(rule, baseline_yaml, custom)
 
             for key in keys:
                 try:
@@ -1594,10 +1600,6 @@ def main():
 
 
     baseline_yaml = yaml.load(args.baseline, Loader=yaml.SafeLoader)
-    try:
-        parent_values = baseline_yaml['parent_values']
-    except KeyError:
-        parent_values = "recommended"
     version_file = os.path.join(parent_dir, "VERSION.yaml")
     with open(version_file) as r:
         version_yaml = yaml.load(r, Loader=yaml.SafeLoader)
@@ -1792,7 +1794,7 @@ def main():
                 rule_location = rule_path[0]
                 custom=False
 
-            rule_yaml = get_rule_yaml(rule_location, custom, parent_values)
+            rule_yaml = get_rule_yaml(rule_location, baseline_yaml, custom)
 
             # Determine if the references exist and set accordingly
             try:

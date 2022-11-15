@@ -1,24 +1,16 @@
 title: "macOS 12.0: Security Configuration - All Rules"
 description: |
   This guide describes the actions to take when securing a macOS 12.0 system against the all_rules baseline.
+
+  Information System Security Officers and benchmark creators can use this catalog of settings in order to assist them in security benchmark creation. This list is a catalog, not a checklist or benchmark, and satisfaction of every item is not likely to be possible or sensible in many operational scenarios.
 authors: |
   |===
   |Bob Gendler|National Institute of Standards and Technology
   |Dan Brodjieski|National Aeronautics and Space Administration
   |Allen Golbig|Jamf
   |===  
-parent_values: recommended
+parent_values: "recommended"
 profile:
-  - section: "authentication"
-    rules:
-      - auth_pam_login_smartcard_enforce
-      - auth_pam_su_smartcard_enforce
-      - auth_pam_sudo_smartcard_enforce
-      - auth_smartcard_allow
-      - auth_smartcard_certificate_trust_enforce_high
-      - auth_smartcard_certificate_trust_enforce_moderate
-      - auth_smartcard_enforce
-      - auth_ssh_password_authentication_disable
   - section: "auditing"
     rules:
       - audit_acls_files_configure
@@ -35,7 +27,6 @@ profile:
       - audit_files_owner_configure
       - audit_flags_aa_configure
       - audit_flags_ad_configure
-      - audit_flags_configure
       - audit_flags_ex_configure
       - audit_flags_fd_configure
       - audit_flags_fm_configure
@@ -48,6 +39,30 @@ profile:
       - audit_folders_mode_configure
       - audit_retention_configure
       - audit_settings_failure_notify
+  - section: "authentication"
+    rules:
+      - auth_pam_login_smartcard_enforce
+      - auth_pam_su_smartcard_enforce
+      - auth_pam_sudo_smartcard_enforce
+      - auth_smartcard_allow
+      - auth_smartcard_certificate_trust_enforce_high
+      - auth_smartcard_certificate_trust_enforce_moderate
+      - auth_smartcard_enforce
+      - auth_ssh_password_authentication_disable
+  - section: "icloud"
+    rules:
+      - icloud_addressbook_disable
+      - icloud_appleid_prefpane_disable
+      - icloud_bookmarks_disable
+      - icloud_calendar_disable
+      - icloud_drive_disable
+      - icloud_keychain_disable
+      - icloud_mail_disable
+      - icloud_notes_disable
+      - icloud_photos_disable
+      - icloud_private_relay_disable
+      - icloud_reminders_disable
+      - icloud_sync_disable
   - section: "macos"
     rules:
       - os_airdrop_disable
@@ -132,7 +147,6 @@ profile:
       - os_sshd_permit_root_login_configure
       - os_sudo_timeout_configure
       - os_sudoers_timestamp_type_configure
-      - os_sudoers_tty_configure
       - os_system_read_only
       - os_system_wide_applications_configure
       - os_terminal_secure_keyboard_enable
@@ -160,20 +174,6 @@ profile:
       - pwpolicy_special_character_enforce
       - pwpolicy_temporary_or_emergency_accounts_disable
       - pwpolicy_upper_case_character_enforce
-  - section: "icloud"
-    rules:
-      - icloud_addressbook_disable
-      - icloud_appleid_prefpane_disable
-      - icloud_bookmarks_disable
-      - icloud_calendar_disable
-      - icloud_drive_disable
-      - icloud_keychain_disable
-      - icloud_mail_disable
-      - icloud_notes_disable
-      - icloud_photos_disable
-      - icloud_private_relay_disable
-      - icloud_reminders_disable
-      - icloud_sync_disable
   - section: "systempreferences"
     rules:
       - sysprefs_airplay_receiver_disable

@@ -22,11 +22,20 @@ profile:
       - audit_files_group_configure
       - audit_files_mode_configure
       - audit_files_owner_configure
-      - audit_flags_configure
+      - audit_flags_aa_configure
+      - audit_flags_ad_configure
+      - audit_flags_ex_configure
+      - audit_flags_fm_failed_configure
+      - audit_flags_fr_configure
+      - audit_flags_fw_configure
+      - audit_flags_lo_configure
       - audit_folder_group_configure
       - audit_folder_owner_configure
       - audit_folders_mode_configure
       - audit_retention_configure
+  - section: "icloud"
+    rules:
+      - icloud_sync_disable
   - section: "macos"
     rules:
       - os_airdrop_disable
@@ -53,7 +62,6 @@ profile:
       - os_software_update_deferral
       - os_sudo_timeout_configure
       - os_sudoers_timestamp_type_configure
-      - os_sudoers_tty_configure
       - os_system_wide_applications_configure
       - os_terminal_secure_keyboard_enable
       - os_time_offset_limit_configure
@@ -70,9 +78,6 @@ profile:
       - pwpolicy_minimum_length_enforce
       - pwpolicy_special_character_enforce
       - pwpolicy_upper_case_character_enforce
-  - section: "icloud"
-    rules:
-      - icloud_sync_disable
   - section: "systempreferences"
     rules:
       - sysprefs_airplay_receiver_disable
