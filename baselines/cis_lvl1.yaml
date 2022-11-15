@@ -43,7 +43,11 @@ profile:
       - os_password_hint_remove
       - os_power_nap_disable
       - os_root_disable
+      - os_safari_advertising_privacy_protection_enable
       - os_safari_open_safe_downloads_disable
+      - os_safari_prevent_cross-site_tracking_enable
+      - os_safari_show_full_website_address_enable
+      - os_safari_warn_fraudulent_website_enable
       - os_show_filename_extensions_enable
       - os_sip_enable
       - os_software_update_deferral
@@ -58,6 +62,7 @@ profile:
     rules:
       - pwpolicy_account_lockout_enforce
       - pwpolicy_history_enforce
+      - pwpolicy_max_lifetime_enforce
       - pwpolicy_minimum_length_enforce
   - section: "systemsettings"
     rules:
