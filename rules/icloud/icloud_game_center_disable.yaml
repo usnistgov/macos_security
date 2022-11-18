@@ -59,4 +59,3 @@ mobileconfig: true
 mobileconfig_info:
   com.apple.applicationaccess:
     allowGameCenter: false
-    allowAddingGameCenterFriends: false
