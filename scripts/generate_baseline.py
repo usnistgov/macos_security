@@ -197,15 +197,16 @@ def get_controls(all_rules):
     return all_controls
 
 def append_authors(authors, name, org):
-    author_block = authors
+    author_block = f"*{org}*\n\n"
     author_block += "  Security configuration tailored by:\n  "
     author_block += "|===\n  "
     author_block += f"|{name}|{org}\n  "
-    author_block += "|===\n"
+    author_block += "|===\n  "
+    author_block += authors
     return author_block
 
 def parse_authors(authors_from_yaml):
-    author_block = ""
+    author_block = "*macOS Security Compliance Project*\n\n  "
     #  |\n  |===\n  |Name|Organization\n  |===\n
     if "preamble" in authors_from_yaml.keys():
         preamble = authors_from_yaml['preamble']
