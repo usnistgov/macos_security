@@ -589,7 +589,7 @@ pwpolicy_file=""
 
 ## Must be run as root
 if [[ $EUID -ne 0 ]]; then
-    /bin/echo "This script must be run as root"
+    echo "This script must be run as root"
     exit 1
 fi
 
@@ -663,15 +663,15 @@ show_menus() {{
     fi
 
     /usr/bin/clear
-    /bin/echo "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
-    /bin/echo "        M A I N - M E N U"
-    /bin/echo "  macOS Security Compliance Tool"
-    /bin/echo "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
-    /bin/echo "Last compliance scan: $lastComplianceScan\n"
-    /bin/echo "1. View Last Compliance Report"
-    /bin/echo "2. Run New Compliance Scan"
-    /bin/echo "3. Run Commands to remediate non-compliant settings"
-    /bin/echo "4. Exit"
+    echo "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+    echo "        M A I N - M E N U"
+    echo "  macOS Security Compliance Tool"
+    echo "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+    echo "Last compliance scan: $lastComplianceScan\n"
+    echo "1. View Last Compliance Report"
+    echo "2. Run New Compliance Scan"
+    echo "3. Run Commands to remediate non-compliant settings"
+    echo "4. Exit"
 }}
 
 # function to read options
@@ -712,13 +712,13 @@ compliance_count(){{
     # Enable output of just the compliant or non-compliant numbers.
     if [[ $1 = "compliant" ]]
     then
-        /bin/echo $compliant
+        echo $compliant
     elif [[ $1 = "non-compliant" ]]
     then
-        /bin/echo $non_compliant
+        echo $non_compliant
     else # no matching args output the array
         array=($compliant $non_compliant)
-        /bin/echo ${{array[@]}}
+        echo ${{array[@]}}
     fi
 }}
 
@@ -739,7 +739,7 @@ exempt_count(){{
         fi
     done <<< "$results"
 
-    /bin/echo $exempt
+    echo $exempt
 }}
 
 
@@ -751,7 +751,7 @@ generate_report(){{
 
     total=$((non_compliant + compliant - exempt_rules))
     percentage=$(printf %.2f $(( compliant * 100. / total )) )
-    /bin/echo
+    echo
     echo "Number of tests passed: ${{GREEN}}$compliant${{STD}}"
     echo "Number of test FAILED: ${{RED}}$non_compliant${{STD}}"
     echo "Number of exempt rules: ${{YELLOW}}$exempt_rules${{STD}}"
@@ -762,7 +762,7 @@ generate_report(){{
 view_report(){{
 
     if [[ $lastComplianceScan == "No scans have been run" ]];then
-        /bin/echo "no report to run, please run new scan"
+        echo "no report to run, please run new scan"
         pause
     else
         generate_report
@@ -777,15 +777,15 @@ generate_stats(){{
 
     total=$((non_compliant + compliant))
     percentage=$(printf %.2f $(( compliant * 100. / total )) )
-    /bin/echo "PASSED: $compliant FAILED: $non_compliant, $percentage percent compliant!"
+    echo "PASSED: $compliant FAILED: $non_compliant, $percentage percent compliant!"
 }}
 
 run_scan(){{
 # append to existing logfile
 if [[ $(/usr/bin/tail -n 1 "$audit_log" 2>/dev/null) = *"Remediation complete" ]]; then
- 	/bin/echo "$(date -u) Beginning {baseline_name} baseline scan" >> "$audit_log"
+ 	echo "$(date -u) Beginning {baseline_name} baseline scan" >> "$audit_log"
 else
- 	/bin/echo "$(date -u) Beginning {baseline_name} baseline scan" > "$audit_log"
+ 	echo "$(date -u) Beginning {baseline_name} baseline scan" > "$audit_log"
 fi
 
 # run mcxrefresh
@@ -832,9 +832,16 @@ fi
                 nist_80053r5 = 'N/A'
             else:
                 nist_80053r5 = rule_yaml['references']['800-53r5']
+            
+            cis_ref = ['cis', 'cis_lvl1', 'cis_lvl2', 'cisv8']
 
             if reference == "default":
                 log_reference_id = [rule_yaml['id']]
+            elif reference in cis_ref:
+                if "v8" in reference:
+                    log_reference_id = [f"CIS Controls-{', '.join(map(str,rule_yaml['references']['cis']['controls v8']))}"]
+                else:
+                    log_reference_id = [f"CIS-{rule_yaml['references']['cis']['benchmark'][0]}"]
             else:
                 try:
                     rule_yaml['references'][reference]
@@ -853,8 +860,6 @@ fi
                         log_reference_id = rule_yaml['references'][reference] + [rule_yaml['id']]
                     else:
                             log_reference_id = [rule_yaml['references'][reference]] + [rule_yaml['id']]
-
-
         # group the controls
             if not nist_80053r5 == "N/A":
                 nist_80053r5.sort()
@@ -912,16 +917,16 @@ EOS
 )
 
     if [[ $result_value == "{4}" ]]; then
-        /bin/echo "$(date -u) {5} passed (Result: $result_value, Expected: "{3}")" | /usr/bin/tee -a "$audit_log"
+        echo "$(date -u) {5} passed (Result: $result_value, Expected: "{3}")" | /usr/bin/tee -a "$audit_log"
         /usr/bin/defaults write "$audit_plist" {0} -dict-add finding -bool NO
         /usr/bin/logger "mSCP: {7} - {5} passed (Result: $result_value, Expected: "{3}")"
     else
         if [[ ! $exempt == "1" ]] || [[ -z $exempt ]];then
-            /bin/echo "$(date -u) {5} failed (Result: $result_value, Expected: "{3}")" | /usr/bin/tee -a "$audit_log"
+            echo "$(date -u) {5} failed (Result: $result_value, Expected: "{3}")" | /usr/bin/tee -a "$audit_log"
             /usr/bin/defaults write "$audit_plist" {0} -dict-add finding -bool YES
             /usr/bin/logger "mSCP: {7} - {5} failed (Result: $result_value, Expected: "{3}")"
         else
-            /bin/echo "$(date -u) {5} failed (Result: $result_value, Expected: "{3}") - Exemption Allowed (Reason: "$exempt_reason")" | /usr/bin/tee -a "$audit_log"
+            echo "$(date -u) {5} failed (Result: $result_value, Expected: "{3}") - Exemption Allowed (Reason: "$exempt_reason")" | /usr/bin/tee -a "$audit_log"
             /usr/bin/defaults write "$audit_plist" {0} -dict-add finding -bool YES
             /usr/bin/logger "mSCP: {7} - {5} failed (Result: $result_value, Expected: "{3}") - Exemption Allowed (Reason: "$exempt_reason")"
             /bin/sleep 1
@@ -930,7 +935,7 @@ EOS
 
 
 else
-    /bin/echo "$(date -u) {5} does not apply to this architechture" | tee -a "$audit_log"
+    echo "$(date -u) {5} does not apply to this architechture" | tee -a "$audit_log"
     /usr/bin/defaults write "$audit_plist" {0} -dict-add finding -bool NO
 fi
     """.format(rule_yaml['id'], nist_controls.replace("\n", "\n#"), check.strip(), str(result).lower(), result_value, ' '.join(log_reference_id), arch, baseline_name)
@@ -972,14 +977,14 @@ if [[ ! $exempt == "1" ]] || [[ -z $exempt ]];then
     if [[ ${rule_yaml['id']}_audit_score == "true" ]]; then
         ask '{rule_yaml['id']} - Run the command(s)-> {quotify(get_fix_code(rule_yaml['fix']).strip())} ' N
         if [[ $? == 0 ]]; then
-            /bin/echo 'Running the command to configure the settings for: {rule_yaml['id']} ...' | /usr/bin/tee -a "$audit_log"
+            echo 'Running the command to configure the settings for: {rule_yaml['id']} ...' | /usr/bin/tee -a "$audit_log"
             {get_fix_code(rule_yaml['fix']).strip()}
         fi
     else
-        /bin/echo 'Settings for: {rule_yaml['id']} already configured, continuing...' | /usr/bin/tee -a "$audit_log"
+        echo 'Settings for: {rule_yaml['id']} already configured, continuing...' | /usr/bin/tee -a "$audit_log"
     fi
 elif [[ ! -z "$exempt_reason" ]];then
-    /bin/echo "$(date -u) {rule_yaml['id']} has an exemption, remediation skipped (Reason: "$exempt_reason")" | /usr/bin/tee -a "$audit_log"
+    echo "$(date -u) {rule_yaml['id']} has an exemption, remediation skipped (Reason: "$exempt_reason")" | /usr/bin/tee -a "$audit_log"
 fi
     """
 
@@ -988,7 +993,7 @@ fi
     # write the footer for the check functions
     zsh_check_footer = """
 lastComplianceScan=$(defaults read "$audit_plist" lastComplianceCheck)
-/bin/echo "Results written to $audit_plist"
+echo "Results written to $audit_plist"
 
 if [[ ! $check ]];then
     pause
@@ -999,7 +1004,7 @@ fi
 run_fix(){
 
 if [[ ! -e "$audit_plist" ]]; then
-    /bin/echo "Audit plist doesn't exist, please run Audit Check First" | tee -a "$audit_log"
+    echo "Audit plist doesn't exist, please run Audit Check First" | tee -a "$audit_log"
 
     if [[ ! $fix ]]; then
         pause
@@ -1020,7 +1025,7 @@ if [[ ! $fix ]]; then
 fi
 
 # append to existing logfile
-/bin/echo "$(date -u) Beginning remediation of non-compliant settings" >> "$audit_log"
+echo "$(date -u) Beginning remediation of non-compliant settings" >> "$audit_log"
 
 # run mcxrefresh
 /usr/bin/mcxrefresh -u $CURR_USER_UID
@@ -1030,7 +1035,7 @@ fi
 
     # write the footer for the script
     zsh_fix_footer = """
-/bin/echo "$(date -u) Remediation complete" >> "$audit_log"
+echo "$(date -u) Remediation complete" >> "$audit_log"
 
 }
 
