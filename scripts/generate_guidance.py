@@ -585,11 +585,20 @@ def generate_script(baseline_name, build_path, baseline_yaml, reference):
 
 pwpolicy_file=""
 
+###################  DEBUG MODE - hold shift when running the script  ###################
+
+shiftKeyDown=$(osascript -l JavaScript -e "ObjC.import('Cocoa'); ($.NSEvent.modifierFlags & $.NSEventModifierFlagShift) > 1")
+
+if [[ $shiftKeyDown == "true" ]]; then
+    echo "-----DEBUG-----"
+    set -o xtrace -o verbose
+fi
+
 ###################  COMMANDS START BELOW THIS LINE  ###################
 
 ## Must be run as root
 if [[ $EUID -ne 0 ]]; then
-    /bin/echo "This script must be run as root"
+    echo "This script must be run as root"
     exit 1
 fi
 
