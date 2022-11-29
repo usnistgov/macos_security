@@ -1,7 +1,7 @@
 id: os_dvdram_disable
-title: "Disable Blank CD"
+title: "Disable DVD-RAM"
 discussion: |
-  Blank CD media _MUST_ be disabled.
+  DVD-RAM media _MUST_ be disabled.
   
   [IMPORTANT]
   ====
