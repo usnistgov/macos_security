@@ -98,6 +98,8 @@ profile:
       - os_uucp_disable
       - os_world_writable_library_folder_configure
       - os_world_writable_system_folder_configure
+      - os_hibernate_mode_enable
+      - os_hibernate_mode_destroyfvkeyonstandby_enable
   - section: "passwordpolicy"
     rules:
       - pwpolicy_account_inactivity_enforce
