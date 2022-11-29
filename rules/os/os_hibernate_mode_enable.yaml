@@ -7,11 +7,11 @@ discussion: |
 check: |
   error_count=0
   if /usr/sbin/ioreg -rd1 -c IOPlatformExpertDevice 2>&1 | /usr/bin/grep -q "MacBook"; then
+    hibernateMode=$(/usr/bin/pmset -b -g | /usr/bin/grep hibernatemode 2>&1 | /usr/bin/awk '{print $2}')
     if [[ "$(/usr/sbin/sysctl -n machdep.cpu.brand_string)" =~ "Intel" ]]; then
         hibernateStandbyLowValue=$(/usr/bin/pmset -g | /usr/bin/grep standbydelaylow 2>&1 | /usr/bin/awk '{print $2}')
         hibernateStandbyHighValue=$(/usr/bin/pmset -g | /usr/bin/grep standbydelayhigh 2>&1 | /usr/bin/awk '{print $2}')
         hibernateStandbyThreshValue=$(/usr/bin/pmset -g | /usr/bin/grep highstandbythreshold 2>&1 | /usr/bin/awk '{print $2}')
-        hibernateMode=$(/usr/bin/pmset -b -g | /usr/bin/grep hibernatemode 2>&1 | /usr/bin/awk '{print $2}')
         
         if [[ "$hibernateStandbyLowValue" == "" ]] || [[ "$hibernateStandbyLowValue" -gt 600 ]]; then
             ((error_count++))
@@ -27,6 +27,9 @@ check: |
             ((error_count++))
         fi
     fi
+    if [[ "$hibernateMode" == "" ]] || [[ "$hibernateMode" != 25 ]]; then
+      ((error_count++))
+    fi
   fi
   echo "$error_count"
 result:
@@ -34,6 +37,7 @@ result:
 fix: |
   [source,bash]
   ----
+  /usr/bin/pmset -a hibernatemode 25
   if [[ "$(/usr/sbin/sysctl -n machdep.cpu.brand_string)" =~ "Intel" ]]; then
     /usr/bin/pmset -a standbydelayhigh 600
     /usr/bin/pmset -a standbydelaylow 600
