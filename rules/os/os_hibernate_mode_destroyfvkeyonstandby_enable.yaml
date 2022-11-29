@@ -36,7 +36,6 @@ macOS:
 tags:
   - cis_lvl2
   - cisv8
-  - i386
 mobileconfig: true
 mobileconfig_info:
   com.apple.MCX:
