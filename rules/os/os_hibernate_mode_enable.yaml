@@ -63,10 +63,11 @@ references:
     benchmark:
       - 2.8.3 (level 2)
     controls v8:
-      - N/A
+      - 4.1
 macOS:
   - "11.0"
 tags:
   - cis_lvl2
+  - cisv8
 mobileconfig: false
 mobileconfig_info:
