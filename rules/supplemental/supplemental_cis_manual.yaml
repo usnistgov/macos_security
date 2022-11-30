@@ -40,14 +40,6 @@ discussion: |
   |3.7 Audit Software Inventory
   |===
 
-  [cols="15%h, 85%a"]
-  |===
-  |Section
-  |System Access, Authentication and Authorization
-
-  |Controls
-  |5.10 Ensure Fast User Switching Is Disabled +
-  |===
 check: |
 fix: |
 references:
