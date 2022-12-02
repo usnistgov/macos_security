@@ -196,7 +196,26 @@ def get_controls(all_rules):
     
     return all_controls
 
-    
+def append_authors(authors, name, org):
+    author_block = "*Security configuration tailored by:*\n  "
+    author_block += "|===\n  "
+    author_block += f"|{name}|{org}\n  "
+    author_block += "|===\n  "
+    author_block += authors
+    return author_block
+
+def parse_authors(authors_from_yaml):
+    author_block = "*macOS Security Compliance Project*\n\n  "
+    #  |\n  |===\n  |Name|Organization\n  |===\n
+    if "preamble" in authors_from_yaml.keys():
+        preamble = authors_from_yaml['preamble']
+        author_block += f'{preamble}\n  '
+        
+    author_block += "|===\n  "
+    for name in authors_from_yaml['names']:
+        author_block += f'|{name}\n  '
+    author_block += "|===\n"
+    return author_block
 
 def available_tags(all_rules):
     all_tags = []
@@ -215,7 +234,7 @@ def available_tags(all_rules):
         print(tag)
     return
 
-def output_baseline(rules, os, keyword, benchmark):
+def output_baseline(rules, os, baseline_tailored_string, benchmark, authors, full_title):
     inherent_rules = []
     permanent_rules = []
     na_rules = []
@@ -242,10 +261,19 @@ def output_baseline(rules, os, keyword, benchmark):
                  section_name = rule.rule_id.split("_")[0]
             if section_name not in sections:
                 sections.append(section_name)
+    if baseline_tailored_string:
+        output_text = f'title: "macOS {os}: Security Configuration -{full_title} {baseline_tailored_string}"\n'
+        output_text += f'description: |\n  This guide describes the actions to take when securing a macOS {os} system against the{full_title} {baseline_tailored_string} security baseline.\n'
+    else:
+        output_text = f'title: "macOS {os}: Security Configuration -{full_title}"\n'
+        output_text += f'description: |\n  This guide describes the actions to take when securing a macOS {os} system against the{full_title} security baseline.\n'
+    
+    if benchmark == "recommended":
+        output_text += "\n  Information System Security Officers and benchmark creators can use this catalog of settings in order to assist them in security benchmark creation. This list is a catalog, not a checklist or benchmark, and satisfaction of every item is not likely to be possible or sensible in many operational scenarios.\n"
+  
+    # # process authors
+    output_text += f'authors: |\n  {authors}'
 
-    output_text = f'title: "macOS {os}: Security Configuration - {keyword}"\n'
-    output_text += f'description: |\n  This guide describes the actions to take when securing a macOS {os} system against the {keyword} baseline.\n'
-    output_text += f'authors: |\n  |===\n  |Name|Organization\n  |===\n'
     output_text += f'parent_values: "{benchmark}"\n'
     output_text += 'profile:\n'
     
@@ -469,6 +497,12 @@ def main():
     except IOError as msg:
         parser.error(str(msg))
 
+    # import mscp-data
+    mscp_data_file = os.path.join(
+            parent_dir, 'includes', 'mscp-data.yaml')
+    with open(mscp_data_file) as r:
+        mscp_data_yaml = yaml.load(r, Loader=yaml.SafeLoader)
+
     version_file = os.path.join(parent_dir, "VERSION.yaml")
     with open(version_file) as r:
         version_yaml = yaml.load(r, Loader=yaml.SafeLoader)   
@@ -491,20 +525,37 @@ def main():
             benchmark = args.keyword
         else:
             benchmark = "recommended"
+        
+        if mscp_data_yaml['authors'][args.keyword]:
+            authors = parse_authors(mscp_data_yaml['authors'][args.keyword])
+        else:
+            authors = "|\n  |===\n  |Name|Organization\n  |===\n"
+        
+        if mscp_data_yaml['titles'][args.keyword] and not args.tailor:
+            full_title = f" {mscp_data_yaml['titles'][args.keyword]}"
+        elif args.tailor:
+            full_title = ""
+        else:
+            full_title = f" {args.keyword}"
+        
+        baseline_tailored_string = ""
         if args.tailor:
             # prompt for name of benchmark to be used for filename
             tailored_filename = sanitised_input(f'Enter a name for your tailored benchmark or press Enter for the default value ({args.keyword}): ', str, default_=args.keyword)
+            custom_author_name = sanitised_input('Enter your name: ')
+            custom_author_org = sanitised_input('Enter your organization: ')
+            authors = append_authors(authors, custom_author_name, custom_author_org)
             if tailored_filename == args.keyword:
-                _kw = f"{args.keyword.upper()} (Tailored)"
+                baseline_tailored_string = f"{args.keyword.upper()} (Tailored)"
             else:
-                _kw = f"{tailored_filename.upper()} (Tailored from {args.keyword.upper()})"
+                baseline_tailored_string = f"{tailored_filename.upper()} (Tailored from {args.keyword.upper()})"
             # prompt for inclusion, add ODV
             odv_baseline_rules = odv_query(found_rules, benchmark)
             baseline_output_file = open(f"{build_path}/{tailored_filename}.yaml", 'w')
-            baseline_output_file.write(output_baseline(odv_baseline_rules, version_yaml["os"], _kw, benchmark))
+            baseline_output_file.write(output_baseline(odv_baseline_rules, version_yaml["os"], baseline_tailored_string, benchmark, authors, full_title))
         else:
             baseline_output_file = open(f"{build_path}/{args.keyword}.yaml", 'w')
-            baseline_output_file.write(output_baseline(found_rules, version_yaml["os"], args.keyword.upper(), benchmark))
+            baseline_output_file.write(output_baseline(found_rules, version_yaml["os"], baseline_tailored_string, benchmark, authors, full_title))
     
     # finally revert back to the prior directory
     os.chdir(original_working_directory)
