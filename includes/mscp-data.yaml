@@ -55,6 +55,7 @@ authors:
       - Allen Golbig|Jamf
       - Bob Gendler|National Institute of Standards and Technology
 titles:
+  all_rules: All Rules
   800-53r5_high: NIST SP 800-53 Rev 5 High Impact
   800-53r5_moderate: NIST SP 800-53 Rev 5 Moderate Impact
   800-53r5_low: NIST SP 800-53 Rev 5 Low Impact
