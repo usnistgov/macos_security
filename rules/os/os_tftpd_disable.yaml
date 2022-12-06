@@ -1,7 +1,7 @@
 id: os_tftpd_disable
-title: "Disable Trivial File Tansfer Protocol Service"
+title: "Disable Trivial File Transfer Protocol Service"
 discussion: |
-  If the system does not require Trivial File Tansfer Protocol (TFTP), support it is non-essential and _MUST_ be disabled.
+  If the system does not require Trivial File Transfer Protocol (TFTP), support it is non-essential and _MUST_ be disabled.
 
   The information system _MUST_ be configured to provide only essential capabilities. Disabling TFTP helps prevent the unauthorized connection of devices and the unauthorized transfer of information.  
 
