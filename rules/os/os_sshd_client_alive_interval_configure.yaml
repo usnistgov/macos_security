@@ -7,7 +7,7 @@ discussion: |
 
   NOTE: /etc/ssh/sshd_config will be automatically modified to its original state following any update or major upgrade to the operating system.
 check: |
-  /usr/bin/grep -c "^ClientAliveInterval $ODV" /etc/ssh/sshd_config
+  /usr/bin/grep -c "^ClientAliveInterval $ODV" /etc/ssh/sshd_config*
 result:
   integer: 1
 fix: |
