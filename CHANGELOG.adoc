@@ -10,6 +10,9 @@ This document provides a high-level view of the changes to the macOS Security Co
 *** os_hibernate_mode_enable
 *** os_tftpd_disable
 *** sysprefs_automatic_logout_enforce
+*** sysprefs_bluetooth_prefpane_disable
+*** sysprefs_bluetooth_prefpane_hide
+*** sysprefs_bluetooth_disable
 *** sysprefs_time_server_configure
 ** Bug fixes
 

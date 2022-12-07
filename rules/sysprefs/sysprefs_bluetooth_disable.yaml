@@ -29,7 +29,7 @@ references:
     - AC-18(3)
     - SC-8
   srg: 
-    - SRG-OS-000481-GPOS-000481
+    - SRG-OS-000481-GPOS-00481
   disa_stig: 
     - APPL-11-002062
   800-171r2:

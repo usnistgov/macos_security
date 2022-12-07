@@ -43,6 +43,6 @@
 .Definitions
 [width="100%",cols="1,3"]
 |====
-|Baseline|Baselines are a catalog of settings that can be used to create security benchmarks.
+|Baseline|A baseline is a predefined set of controls (also referred to as "a catalog" of settings) that address the protection needs of an organization's information systems. A baseline serves as a starting point for the creation of security benchmarks.
 |Benchmark|Benchmarks are a defined list of settings with values that an organization has defined.
 |====
