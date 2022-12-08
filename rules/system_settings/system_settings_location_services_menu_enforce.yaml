@@ -30,7 +30,8 @@ references:
     benchmark: 
       - 2.6.1.2 (level 2)
     controls v8: 
-      - N/A
+      - 4.1
+      - 4.8
 macOS:
   - "13.0"
 tags:

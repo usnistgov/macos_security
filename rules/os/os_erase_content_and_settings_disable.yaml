@@ -1,6 +1,6 @@
 id: os_erase_content_and_settings_disable
 title: "Disable Erase Content and Settings"
-discussion:   
+discussion: |
   Erase Content and Settings _MUST_ be disabled.
 check: |
   /usr/bin/osascript -l JavaScript << EOS

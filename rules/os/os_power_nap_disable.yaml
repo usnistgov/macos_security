@@ -26,7 +26,17 @@ references:
   cce:
     - CCE-91848-2
   cci:
-    - N/A   
+    - N/A
+  800-53r5:
+    - CM-7
+    - CM-7(1)
+  800-53r4:
+    - CM-7
+    - CM-7(1)
+  disa_stig:
+    - N/A
+  srg:
+    - N/A
   800-171r2:
     - N/A
   cis:

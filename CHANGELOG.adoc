@@ -2,6 +2,43 @@
 
 This document provides a high-level view of the changes to the macOS Security Compliance Project.
 
+== [Ventura, Revision 1.1] - 2022-12-08
+
+* Rules
+** Added Rules
+*** icloud_game_center_disable
+*** os_safari_advertising_privacy_protection_enable
+*** os_safari_prevent_cross-site_tracking_enable
+*** os_safari_show_full_website_address_enable
+*** os_safari_warn_fraudulent_website_enable
+** Modified Rules
+*** os_dvdram_disable
+*** os_hibernate_mode_enable
+*** os_rapid_security_response_removal_disable
+*** os_tftpd_disable
+*** system_settings_automatic_logout_enforce
+*** system_settings_internet_accounts_disable
+*** system_settings_ssh_enable
+*** system_settings_system_wide_preferences_configure
+*** system_settings_time_server_configure
+*** system_settings_time_server_enforce
+*** supplemental_cis_manual
+** Bug fixes
+
+* Baselines
+** Updated all baselines
+
+* Scripts
+** generate_guidance
+*** Added custom references to compliance check script
+*** Added debug option
+*** Bug Fixes
+** generate_baseline
+*** Added author function
+*** Bug Fixes
+** generate_mapping
+*** Bug Fixes
+
 == [Ventura, Revision 1] - 2022-10-20
 
 * Rules

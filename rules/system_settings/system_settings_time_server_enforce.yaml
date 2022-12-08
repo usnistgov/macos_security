@@ -1,7 +1,7 @@
 id: system_settings_time_server_enforce
-title: "Enable macOS Time Synchronization Daemon (timed)"
+title: "Enforce macOS Time Synchronization"
 discussion: |
-  The timed service _MUST_ be enabled on all networked systems and configured to set time automatically from the approved time server.
+  Time synchronization _MUST_ be enforced on all networked systems.
 
   This rule ensures the uniformity of time stamps for information systems with multiple system clocks and systems connected over a network.
 check: |

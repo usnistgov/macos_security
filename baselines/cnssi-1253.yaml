@@ -1,4 +1,4 @@
-title: "macOS 12: Security Configuration - CNSSI-1253"
+title: "macOS 13: Security Configuration - CNSSI-1253"
 description: |
   This guide describes the actions to take when securing a macOS 13 system against the CNSSI-1253 baseline.
 
@@ -47,6 +47,7 @@ profile:
       - icloud_bookmarks_disable
       - icloud_calendar_disable
       - icloud_drive_disable
+      - icloud_game_center_disable
       - icloud_keychain_disable
       - icloud_mail_disable
       - icloud_notes_disable

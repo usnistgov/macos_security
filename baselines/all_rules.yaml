@@ -56,6 +56,7 @@ profile:
       - icloud_bookmarks_disable
       - icloud_calendar_disable
       - icloud_drive_disable
+      - icloud_game_center_disable
       - icloud_keychain_disable
       - icloud_mail_disable
       - icloud_notes_disable
@@ -130,7 +131,11 @@ profile:
       - os_recovery_lock_enable
       - os_removable_media_disable
       - os_root_disable
+      - os_safari_advertising_privacy_protection_enable
       - os_safari_open_safe_downloads_disable
+      - os_safari_prevent_cross-site_tracking_enable
+      - os_safari_show_full_website_address_enable
+      - os_safari_warn_fraudulent_website_enable
       - os_screensaver_loginwindow_enforce
       - os_secure_boot_verify
       - os_show_filename_extensions_enable
@@ -188,7 +193,6 @@ profile:
       - system_settings_bluetooth_disable
       - system_settings_bluetooth_menu_enable
       - system_settings_bluetooth_sharing_disable
-      - system_settings_bluetooth_unpaired_disable
       - system_settings_cd_dvd_sharing_disable
       - system_settings_content_caching_disable
       - system_settings_critical_update_install_enforce

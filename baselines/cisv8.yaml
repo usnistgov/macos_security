@@ -51,6 +51,7 @@ profile:
       - icloud_bookmarks_disable
       - icloud_calendar_disable
       - icloud_drive_disable
+      - icloud_game_center_disable
       - icloud_keychain_disable
       - icloud_mail_disable
       - icloud_notes_disable
@@ -74,6 +75,8 @@ profile:
       - os_gatekeeper_enable
       - os_gatekeeper_rearm
       - os_handoff_disable
+      - os_hibernate_mode_destroyfvkeyonstandby_enable
+      - os_hibernate_mode_enable
       - os_httpd_disable
       - os_icloud_storage_prompt_disable
       - os_install_log_retention_configure
@@ -92,7 +95,11 @@ profile:
       - os_power_nap_disable
       - os_privacy_setup_prompt_disable
       - os_root_disable
+      - os_safari_advertising_privacy_protection_enable
       - os_safari_open_safe_downloads_disable
+      - os_safari_prevent_cross-site_tracking_enable
+      - os_safari_show_full_website_address_enable
+      - os_safari_warn_fraudulent_website_enable
       - os_show_filename_extensions_enable
       - os_sip_enable
       - os_siri_prompt_disable

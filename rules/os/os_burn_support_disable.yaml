@@ -1,6 +1,6 @@
 id: os_burn_support_disable
 title: "Disable Burn Support"
-discussion:   
+discussion: |
   Burn support _MUST_ be disabled.
 
   [IMPORTANT]

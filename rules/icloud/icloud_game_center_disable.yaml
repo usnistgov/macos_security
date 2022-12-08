@@ -1,0 +1,61 @@
+id: icloud_game_center_disable
+title: "Disable iCloud Game Center"
+discussion: |
+  This works only with supervised devices (MDM) and allows to disable Apple Game Center. The rationale is Game Center is using Apple ID and will shared data on AppleID based services, therefore, Game Center _MUST_ be disabled.
+  This setting also prohibits functionality of adding friends to Game Center.
+check: |
+  /usr/bin/osascript -l JavaScript << EOS
+  $.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess')\
+  .objectForKey('allowGameCenter').js
+  EOS
+result:
+  string: "false"
+fix: |
+  This is implemented by a Configuration Profile.
+references:
+  cce:
+    - CCE-92001-7
+  cci:
+    - N/A
+  800-53r5:
+    - AC-20
+    - AC-20(1)
+    - CM-7
+    - CM-7(1)
+    - SC-7(10)    
+  800-53r4:
+    - CM-7
+    - CM-7(1)
+    - AC-20
+    - AC-20(1)
+  srg:
+    - N/A
+  disa_stig:
+    - N/A
+  800-171r2:
+    - 3.1.20
+    - 3.4.6
+  cis:
+    benchmark:
+      - N/A
+    controls v8:
+      - 4.1
+      - 4.8
+      - 15.3    
+macOS:
+  - "13.0"
+tags:
+  - 800-53r5_low 
+  - 800-53r5_moderate 
+  - 800-53r5_high 
+  - 800-53r4_low 
+  - 800-53r4_moderate 
+  - 800-53r4_high 
+  - 800-171
+  - cisv8 
+  - cnssi-1253
+severity: "medium"
+mobileconfig: true
+mobileconfig_info:
+  com.apple.applicationaccess:
+    allowGameCenter: false

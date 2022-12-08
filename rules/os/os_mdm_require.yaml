@@ -28,6 +28,16 @@ references:
   cce:
     - CCE-91820-1
   cci:
+    - N/A
+  800-53r5:
+    - CM-2
+    - CM-6
+  800-53r4:
+    - CM-2
+    - CM-6
+  disa_stig:
+    - N/A
+  srg:
     - N/A   
   800-171r2:
     - 3.4.1

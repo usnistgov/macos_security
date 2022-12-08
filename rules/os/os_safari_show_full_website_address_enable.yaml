@@ -1,0 +1,38 @@
+id: os_safari_show_full_website_address_enable
+title: "Ensure Show Full Website Address in Safari Is Enabled"
+discussion: |
+  Show full website address _MUST_ be enabled in Safari. 
+check: |
+  /usr/bin/profiles -P -o stdout | /usr/bin/grep -c 'ShowFullURLInSmartSearchField = 1' | /usr/bin/awk '{ if ($1 >= 1) {print "1"} else {print "0"}}'
+result:
+  integer: 1
+fix: |
+  This is implemented by a Configuration Profile.
+references:
+  cce:
+    - CCE-92004-1
+  cci:
+    - N/A
+  800-53r5:
+    - N/A
+  800-53r4:
+    - N/A
+  disa_stig:
+    - N/A
+  srg:
+    - N/A
+  cis:
+    benchmark:
+      - 6.3.7 (level 1)
+    controls v8:
+      - 9.1
+macOS:
+  - "13.0"
+tags:
+  - cis_lvl1
+  - cis_lvl2
+  - cisv8
+mobileconfig: true
+mobileconfig_info:
+  com.apple.Safari:
+    ShowFullURLInSmartSearchField: true

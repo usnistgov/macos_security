@@ -13,7 +13,6 @@ discussion: |
   2.1.1.2 Audit iCloud Drive + 
   2.1.2 Audit App Store Password Settings +
   2.3.3.12 Ensure Computer Name Does Not Contain PII or Protected Organizational Information +
-  2.4.3 Audit Fast User Switching +
   2.5.1 Audit Siri Settings +
   2.6.1.3 Audit Location Services Access +
   2.6.6 Audit Lockdown Mode +
@@ -53,11 +52,8 @@ discussion: |
   |Applications
 
   |6.2.1 Ensure Protect Mail Activity in Mail Is Enabled +
-  6.3.2 Ensure Warn When Visiting A Fradulent Website in Safari Is Enabled +
-  6.3.3 Ensure Prevent Cross-site Tracking in Safari Is Enabled +
-  6.3.4 Audit Hide IP Address in Safari Setting +
-  6.3.5 Ensure Advertising Privacy Protection in Safari Is Enabled +
-  6.3.6 Ensure Show Full Website Address in Safari Is Enabled +
+  6.3.2 Audit History and Remove History Items +
+  6.3.5 Audit Hide IP Address in Safari Setting +
   6.3.7 Audit History and Remove History Items +
   |===
 check: |

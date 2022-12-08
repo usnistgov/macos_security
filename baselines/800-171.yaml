@@ -45,6 +45,7 @@ profile:
       - icloud_bookmarks_disable
       - icloud_calendar_disable
       - icloud_drive_disable
+      - icloud_game_center_disable
       - icloud_keychain_disable
       - icloud_mail_disable
       - icloud_notes_disable

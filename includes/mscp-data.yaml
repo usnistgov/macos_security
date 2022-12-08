@@ -1,0 +1,61 @@
+---
+authors:
+  all_rules: 
+    names:
+      - Bob Gendler|National Institute of Standards and Technology
+      - Dan Brodjieski|National Aeronautics and Space Administration
+      - Allen Golbig|Jamf
+  800-53r5_high:
+    names:
+      - Bob Gendler|National Institute of Standards and Technology
+      - Dan Brodjieski|National Aeronautics and Space Administration
+      - Allen Golbig|Jamf
+  800-53r5_moderate: 
+    names:
+      - Bob Gendler|National Institute of Standards and Technology
+      - Dan Brodjieski|National Aeronautics and Space Administration
+      - Allen Golbig|Jamf
+  800-53r5_low:
+    names:
+      - Bob Gendler|National Institute of Standards and Technology
+      - Dan Brodjieski|National Aeronautics and Space Administration
+      - Allen Golbig|Jamf
+  800-171: 
+    names:
+      - Bob Gendler|National Institute of Standards and Technology
+      - Dan Brodjieski|National Aeronautics and Space Administration
+      - Allen Golbig|Jamf
+  cis_lvl1: 
+    preamble: The CIS Benchmarks are referenced with the permission and support of the Center for Internet Security® (CIS®)
+    names:
+      - Edward Byrd|Center for Internet Security
+      - Ron Colvin|Center for Internet Security
+      - Allen Golbig|Jamf
+  cis_lvl2:
+    preamble: The CIS Benchmarks are referenced with the permission and support of the Center for Internet Security® (CIS®)
+    names:
+      - Edward Byrd|Center for Internet Security
+      - Ron Colvin|Center for Internet Security
+      - Allen Golbig|Jamf
+  cisv8:
+    preamble: CIS Critical Security Controls® (CIS Controls®) are referenced with the permission and support of the Center for Internet Security® (CIS®)
+    names:
+      - Edward Byrd|Center for Internet Security
+      - Bob Gendler|National Institute of Standards and Technology
+      - Dan Brodjieski|National Aeronautics and Space Administration
+      - Allen Golbig|Jamf
+  cnssi-1253:
+    names:
+      - Rob Lamb|Los Alamos National Laboratory
+      - Ekkehard Koch|
+      - Bob Gendler|National Institute of Standards and Technology
+titles:
+  all_rules: All Rules
+  800-53r5_high: NIST SP 800-53 Rev 5 High Impact
+  800-53r5_moderate: NIST SP 800-53 Rev 5 Moderate Impact
+  800-53r5_low: NIST SP 800-53 Rev 5 Low Impact
+  800-171: NIST 800-171 Rev 2
+  cis_lvl1: CIS Apple macOS 13.0 Ventura v1.0.0 Benchmark (Level 1)
+  cis_lvl2: CIS Apple macOS 13.0 Ventura v1.0.0 Benchmark (Level 2)
+  cisv8: CIS Controls Version 8
+  cnssi-1253: Committee on National Security Systems Instruction No. 1253

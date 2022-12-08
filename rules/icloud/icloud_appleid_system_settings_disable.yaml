@@ -5,7 +5,7 @@ discussion: |
 
   Disabling the system setting prevents login to Apple ID and iCloud. 
 check: |
-  /usr/bin/profiles show -output stdout-xml | /usr/bin/xmllint --xpath 'string(//*[contains(text(), "DisabledSystemSettings")]/following-sibling::*[1])' - | /usr/bin/grep -c com.apple.systempreferences.AppleIDSettings
+  /usr/bin/profiles show -output stdout-xml | /usr/bin/xmllint --xpath '//key[text()="DisabledSystemSettings"]/following-sibling::*[1]' - | /usr/bin/grep -c com.apple.systempreferences.AppleIDSettings
 result:
   integer: 1
 fix: |

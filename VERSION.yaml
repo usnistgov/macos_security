@@ -1,4 +1,4 @@
 os: "13.0"
-version: "Ventura Guidance, Revision 1"
+version: "Ventura Guidance, Revision 1.1"
 cpe: o:apple:macos:13.0
-date: "2022-10-20"
+date: "2022-12-07"

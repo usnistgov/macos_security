@@ -8,7 +8,7 @@ discussion: |
   Some organizations may allow the use and configuration of the built-in Mail.app, Calendar.app, and Contacts.app for organizational communication. Information System Security Officers (ISSOs) may make the risk-based decision not to disable the Internet Accounts System Preference pane to avoid losing this functionality, but they are advised to first fully weigh the potential risks posed to their organization.
   ====
 check: |
-  /usr/bin/profiles show -output stdout-xml | /usr/bin/xmllint --xpath 'string(//*[contains(text(), "DisabledSystemSettings")]/following-sibling::*[1])' - | /usr/bin/grep -c com.apple.Internet-Accounts-Settings.extension
+  /usr/bin/profiles show -output stdout-xml | /usr/bin/xmllint --xpath '//key[text()="DisabledSystemSettings"]/following-sibling::*[1]' - | /usr/bin/grep -c com.apple.Internet-Accounts-Settings.extension
 result:
   integer: 1
 fix: |
