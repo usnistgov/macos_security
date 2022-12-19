@@ -20,7 +20,7 @@ from itertools import groupby
 from uuid import uuid4
 
 class MacSecurityRule():
-    def __init__(self, title, rule_id, severity, discussion, check, fix, cci, cce, nist_controls, nist_171, disa_stig, srg, cis, custom_refs, odv, tags, result_value, mobileconfig, mobileconfig_info, customized):
+    def __init__(self, title, rule_id, severity, discussion, check, fix, cci, cce, nist_controls, nist_171, disa_stig, srg, cis, cmmc, custom_refs, odv, tags, result_value, mobileconfig, mobileconfig_info, customized):
         self.rule_title = title
         self.rule_id = rule_id
         self.rule_severity = severity
@@ -34,6 +34,7 @@ class MacSecurityRule():
         self.rule_disa_stig = disa_stig
         self.rule_srg = srg
         self.rule_cis = cis
+        self.rule_cmmc = cmmc
         self.rule_custom_refs = custom_refs
         self.rule_odv = odv
         self.rule_result_value = result_value
@@ -56,6 +57,7 @@ class MacSecurityRule():
             rule_80053r5=self.rule_80053r5,
             rule_disa_stig=self.rule_disa_stig,
             rule_cis=self.rule_cis,
+            rule_cmmc=self.rule_cmmc,
             rule_srg=self.rule_srg,
             rule_result=self.rule_result_value
         )
@@ -1242,7 +1244,7 @@ def generate_xls(baseline_name, build_path, baseline_yaml):
     top = xlwt.easyxf("align: vert top")
     headers = xlwt.easyxf("font: bold on")
     counter = 1
-    column_counter = 16
+    column_counter = 17
     custom_ref_column = {}
     sheet1.write(0, 0, "CCE", headers)
     sheet1.write(0, 1, "Rule ID", headers)
@@ -1258,8 +1260,9 @@ def generate_xls(baseline_name, build_path, baseline_yaml):
     sheet1.write(0, 11, "DISA STIG", headers)
     sheet1.write(0, 12, "CIS Benchmark", headers)
     sheet1.write(0, 13, "CIS v8", headers)
-    sheet1.write(0, 14, "CCI", headers)
-    sheet1.write(0, 15, "Modifed Rule", headers)
+    sheet1.write(0, 14, "CMMC", headers)
+    sheet1.write(0, 15, "CCI", headers)
+    sheet1.write(0, 16, "Modifed Rule", headers)
     sheet1.set_panes_frozen(True)
     sheet1.set_horz_split_pos(1)
     sheet1.set_vert_split_pos(2)
@@ -1347,18 +1350,24 @@ def generate_xls(baseline_name, build_path, baseline_yaml):
                     cis = cis.replace(", ", "\n")
                     sheet1.write(counter, 13, cis, topWrap)
                     sheet1.col(13).width = 500 * 15
+        
+        cmmc_refs = (str(rule.rule_cmmc)).strip('[]\'')
+        cmmc_refs = cmmc_refs.replace(", ", "\n").replace("\'", "")
+
+        sheet1.write(counter, 14, cmmc_refs, topWrap)
+        sheet1.col(14).width = 500 * 15
 
         cci = (str(rule.rule_cci)).strip('[]\'')
         cci = cci.replace(", ", "\n").replace("\'", "")
 
-        sheet1.write(counter, 14, cci, topWrap)
-        sheet1.col(13).width = 400 * 15
+        sheet1.write(counter, 15, cci, topWrap)
+        sheet1.col(15).width = 400 * 15
 
         customized = (str(rule.rule_customized)).strip('[]\'')
         customized = customized.replace(", ", "\n").replace("\'", "")
 
-        sheet1.write(counter, 15, customized, topWrap)
-        sheet1.col(14).width = 400 * 15
+        sheet1.write(counter, 16, customized, topWrap)
+        sheet1.col(16).width = 400 * 15
 
         if rule.rule_custom_refs != ['None']:
             for title, ref in rule.rule_custom_refs.items():
@@ -1404,6 +1413,7 @@ def create_rules(baseline_yaml):
                   '800-53r5',
                   '800-171r2',
                   'cis',
+                  'cmmc',
                   'srg',
                   'custom']
 
@@ -1447,6 +1457,7 @@ def create_rules(baseline_yaml):
                                         rule_yaml['references']['disa_stig'],
                                         rule_yaml['references']['srg'],
                                         rule_yaml['references']['cis'],
+                                        rule_yaml['references']['cmmc'],
                                         rule_yaml['references']['custom'],
                                         rule_yaml['odv'],
                                         rule_yaml['tags'],
@@ -1558,6 +1569,7 @@ def parse_cis_references(reference):
             string += "!" + str(item) + "!* " + str(reference[item]) + "\n"
     return string
 
+# Might have to do something similar to above for cmmc
 
 def main():
 
@@ -1700,6 +1712,11 @@ def main():
     else:
         adoc_cis_show=":show_cis!:"
 
+    if "CMMC" in baseline_yaml['title'].upper():
+        adoc_cmmc_show=":show_CMMC:"
+    else:
+        adoc_cmmc_show=":show_CMMC!:"
+
     if "800" in baseline_yaml['title']:
          adoc_171_show=":show_171:"
     else:
@@ -1709,6 +1726,7 @@ def main():
         adoc_tag_show=":show_tags:"
         adoc_STIG_show=":show_STIG:"
         adoc_cis_show=":show_cis:"
+        adoc_cmmc_show=":show_CMMC:"
         adoc_171_show=":show_171:"
     else:
         adoc_tag_show=":show_tags!:"
@@ -1735,6 +1753,7 @@ def main():
         nist171_attribute=adoc_171_show,
         stig_attribute=adoc_STIG_show,
         cis_attribute=adoc_cis_show,
+        cmmc_attribute=adoc_cmmc_show,
         version=version_yaml['version'],
         os_version=version_yaml['os'],
         release_date=version_yaml['date']
@@ -1854,6 +1873,13 @@ def main():
                 cis = parse_cis_references(rule_yaml['references']['cis'])
 
             try:
+                rule_yaml['references']['cmmc']
+            except KeyError:
+                cmmc = ""
+            else:
+                cmmc = ulify(rule_yaml['references']['cmmc'])
+
+            try:
                 rule_yaml['references']['srg']
             except KeyError:
                 srg = '- N/A'
@@ -1937,6 +1963,7 @@ def main():
                     rule_800171=nist_800171,
                     rule_disa_stig=disa_stig,
                     rule_cis=cis,
+                    rule_cmmc=cmmc,
                     rule_cce=cce,
                     rule_custom_refs=custom_refs,
                     rule_tags=tags,
@@ -1954,6 +1981,7 @@ def main():
                     rule_800171=nist_800171,
                     rule_disa_stig=disa_stig,
                     rule_cis=cis,
+                    rule_cmmc=cmmc,
                     rule_cce=cce,
                     rule_tags=tags,
                     rule_srg=srg
@@ -1970,6 +1998,7 @@ def main():
                     rule_800171=nist_800171,
                     rule_disa_stig=disa_stig,
                     rule_cis=cis,
+                    rule_cmmc=cmmc,
                     rule_cce=cce,
                     rule_tags=tags,
                     rule_srg=srg,

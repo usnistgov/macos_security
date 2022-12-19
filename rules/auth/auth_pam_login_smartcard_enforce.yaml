@@ -61,6 +61,10 @@ references:
       - 6.3
       - 6.4
       - 6.5
+  cmmc:
+    - IA.L2-3.5.3
+    - IA.L2-3.5.4
+    - TBD - 3.5.1e
 macOS:
   - "13.0"
 tags:
@@ -73,6 +77,8 @@ tags:
   - 800-171 
   - cnssi-1253
   - cisv8
+  - cmmc_lvl3
+  - cmmc_lvl2
 severity: "medium"
 mobileconfig: false
 mobileconfig_info:

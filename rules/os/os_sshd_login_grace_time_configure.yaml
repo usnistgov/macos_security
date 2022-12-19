@@ -44,6 +44,8 @@ references:
     - N/A
   800-171r2:
     - 3.13.9
+  cmmc:
+    - SC.L2-3.13.9
 macOS:
   - "13.0"
 odv:
@@ -51,6 +53,8 @@ odv:
   recommended: 30
 tags:
   - none
+  - cmmc_lvl3
+  - cmmc_lvl2
 severity: "medium"
 mobileconfig: false
 mobileconfig_info:
