@@ -1,6 +1,8 @@
 title: "macOS 13.0 (Ventura): Security Configuration - US CMMC 2.0 Level 1"
 description: |
   This guide describes the actions to take when securing a macOS 13.0 system against the US CMMC 2.0 Level 1.
+
+  Information System Security Officers and benchmark creators can use this catalog of settings in order to assist them in security benchmark creation. This list is a catalog, not a checklist or benchmark, and satisfaction of every item is not likely to be possible or sensible in many operational scenarios.
 authors: |
   |===
   |John Mahlman|Leidos
