@@ -193,7 +193,6 @@ profile:
     rules:
       - audit_record_reduction_report_generation
       - os_implement_cryptography
-      - os_isolate_security_functions
       - os_logical_access
       - os_malicious_code_prevention
       - os_obscure_password
@@ -206,7 +205,6 @@ profile:
       - pwpolicy_force_password_change
   - section: "Permanent"
     rules:
-      - audit_enforce_dual_auth
       - audit_records_processing
       - system_settings_wifi_disable_when_connected_to_ethernet
   - section: "not_applicable"

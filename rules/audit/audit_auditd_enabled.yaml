@@ -55,6 +55,9 @@ references:
     controls v8:
       - 8.2
       - 8.5
+  cmmc:
+    - AU.L2-3.3.2
+    - AU.L2-3.3.6
 macOS:
   - "13.0"
 tags:
@@ -69,6 +72,8 @@ tags:
   - cis_lvl1
   - cis_lvl2
   - cisv8
+  - cmmc_lvl3
+  - cmmc_lvl2
 severity: "medium"
 mobileconfig: false
 mobileconfig_info:

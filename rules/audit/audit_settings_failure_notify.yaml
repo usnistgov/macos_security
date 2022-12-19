@@ -30,6 +30,8 @@ references:
     - N/A
   800-171r2:
     - 3.3.4
+  cmmc:
+    - AU.L2-3.3.4
 macOS:
   - "13.0"
 tags:
@@ -38,6 +40,8 @@ tags:
   - 800-53r4_high 
   - 800-53r5_high 
   - 800-171
+  - cmmc_lvl3
+  - cmmc_lvl2
 severity: "medium"
 mobileconfig: false
 mobileconfig_info:
