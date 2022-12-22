@@ -196,6 +196,7 @@ profile:
     rules:
       - audit_record_reduction_report_generation
       - os_implement_cryptography
+      - os_isolate_security_functions
       - os_logical_access
       - os_malicious_code_prevention
       - os_obscure_password
