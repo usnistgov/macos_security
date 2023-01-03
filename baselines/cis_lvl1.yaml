@@ -92,6 +92,7 @@ profile:
       - sysprefs_softwareupdate_current
       - sysprefs_ssh_disable
       - sysprefs_system_wide_preferences_configure
+      - sysprefs_time_machine_encrypted_configure
       - sysprefs_time_server_configure
       - sysprefs_time_server_enforce
       - sysprefs_wake_network_access_disable
