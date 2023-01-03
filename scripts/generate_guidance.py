@@ -986,11 +986,11 @@ if [[ ! $exempt == "1" ]] || [[ -z $exempt ]];then
     if [[ ${rule_yaml['id']}_audit_score == "true" ]]; then
         ask '{rule_yaml['id']} - Run the command(s)-> {quotify(get_fix_code(rule_yaml['fix']).strip())} ' N
         if [[ $? == 0 ]]; then
-            echo 'Running the command to configure the settings for: {rule_yaml['id']} ...' | /usr/bin/tee -a "$audit_log"
+            echo "$(date -u) Running the command to configure the settings for: {rule_yaml['id']} ..." | /usr/bin/tee -a "$audit_log"
             {get_fix_code(rule_yaml['fix']).strip()}
         fi
     else
-        echo 'Settings for: {rule_yaml['id']} already configured, continuing...' | /usr/bin/tee -a "$audit_log"
+        echo "$(date -u) Settings for: {rule_yaml['id']} already configured, continuing..." | /usr/bin/tee -a "$audit_log"
     fi
 elif [[ ! -z "$exempt_reason" ]];then
     echo "$(date -u) {rule_yaml['id']} has an exemption, remediation skipped (Reason: "$exempt_reason")" | /usr/bin/tee -a "$audit_log"
