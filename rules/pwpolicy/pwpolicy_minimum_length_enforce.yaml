@@ -1,59 +1,42 @@
 id: pwpolicy_minimum_length_enforce
-title: "Require a Minimum Password Length of $ODV Characters"
+title: "Require a Minimum Passcode Length of $ODV Characters"
 discussion: |
-  The macOS _MUST_ be configured to require a minimum of $ODV characters be used when a password is created.
+  The iOS _MUST_ be configured to require a minimum of $ODV characters be used when a passcode is created.
 
-  This rule enforces password complexity by requiring users to set passwords that are less vulnerable to malicious users. 
-
-  NOTE: The guidance for password based authentication in NIST 800-53 (Rev 5) and NIST 800-63B state that complexity rules should be organizationally defined. The values defined are based off of common complexity values. But your organization may define its own password complexity rules.
-check: |
-  /usr/bin/pwpolicy -getaccountpolicies 2> /dev/null | /usr/bin/tail +2 | /usr/bin/xmllint --xpath 'boolean(//*[contains(text(),"policyAttributePassword matches '\''.{$ODV,}'\''")])' -    
-result:
-  string: "true"
+  This rule enforces passcode complexity by requiring users to set passcode that are less vulnerable to malicious users. 
+check: " " 
 fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-    - CCE-91923-3
+    - N/A
   cci: 
     - N/A
   800-53r5:
-    - IA-5(1)
+    - N/A
   800-53r4: 
-    - IA-5
-    - IA-5(1)
+    - N/A
   srg:
     - N/A
   disa_stig:
     - N/A
   800-171r2:
-    - 3.5.1
-    - 3.5.2
-    - 3.5.7
-    - 3.5.8
-    - 3.5.9
-    - 3.5.10
+    - N/A
   cis:
     benchmark:
-      - 5.2.2 (level 1)
+      - 2.4.3 (level 1)
+      - 3.4.3 (level 1)
     controls v8:
       - 5.2
-macOS:
-  - "13.0"
+ios:
+  - "16.0"
 odv:
-  hint: "Minimum password length."
-  recommended: 15
-  cis_lvl1: 15
-  cis_lvl2: 15
+  hint: "Minimum passcode length."
+  recommended: 6
+  cis_lvl1: 6
+  cis_lvl2: 6
 tags:
-  - 800-171 
-  - cnssi-1253 
-  - 800-53r4_low 
-  - 800-53r4_moderate 
-  - 800-53r4_high 
-  - 800-53r5_low 
-  - 800-53r5_moderate 
-  - 800-53r5_high
+  - ios
   - cis_lvl1
   - cis_lvl2
   - cisv8

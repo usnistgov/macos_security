@@ -1,0 +1,41 @@
+id: system_settings_handoff_disable
+title: "Disable Handoff"
+discussion: |
+  Handoff _MUST_ be disabled. 
+
+  Handoff allows you to continue working on a document or project when the user switches from one Apple device to another. Disabling Handoff prevents data transfers to unauthorized devices.
+check: " "
+fix: |
+  This is implemented by a Configuration Profile.
+references:
+  cce:
+    - N/A
+  cci: 
+    - N/A
+  800-53r5:
+    - N/A
+  800-53r4:
+    - N/A
+  disa_stig:
+    - N/A
+  srg:
+    - N/A
+  800-171r2:
+    - N/A
+  cis:
+    benchmark:
+      - 2.2.1.11 (level 2)
+      - 3.2.1.24 (level 2)
+    controls v8:
+      - 3.3
+ios:
+  - "16.0"
+tags:
+  - ios
+  - cis_lvl2
+  - cisv8
+severity: "low"
+mobileconfig: true
+mobileconfig_info:
+  com.apple.applicationaccess:
+    allowActivityContinuation: false

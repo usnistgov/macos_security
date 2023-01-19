@@ -140,6 +140,9 @@ def format_mobileconfig_fix(mobileconfig):
                 elif type(item[1]) == str:
                     rulefix = rulefix + \
                         (f"<string>{item[1]}</string>\n")
+                elif type(item[1]) == float:
+                    rulefix = rulefix + \
+                        (f"<real>{item[1]}</real>\n")
                 elif type(item[1]) == dict:
                     rulefix = rulefix + "<dict>\n"
                     for k,v in item[1].items():
@@ -1111,10 +1114,11 @@ def fill_in_odv(resulting_yaml, parent_values):
         for field in fields_to_process:
             if "$ODV" in resulting_yaml[field]:
                 resulting_yaml[field]=resulting_yaml[field].replace("$ODV", str(odv))
-
-        for result_value in resulting_yaml['result']:
-            if "$ODV" in str(resulting_yaml['result'][result_value]):
-                resulting_yaml['result'][result_value] = odv
+        
+        if not 'ios' in resulting_yaml['tags']:
+            for result_value in resulting_yaml['result']:
+                if "$ODV" in str(resulting_yaml['result'][result_value]):
+                    resulting_yaml['result'][result_value] = odv
 
         if resulting_yaml['mobileconfig_info']:
             for mobileconfig_type in resulting_yaml['mobileconfig_info']:
@@ -1287,7 +1291,7 @@ def generate_xls(baseline_name, build_path, baseline_yaml):
         if "permanent" in rule.rule_tags:
             mechanism = "The control is not able to be configure to meet the requirement.  It is recommended to implement a third-party solution to meet the control."
         if "not_applicable" in rule.rule_tags:
-            mechanism = " The control is not applicable when configuring a macOS system."
+            mechanism = " The control is not applicable when configuring a iOS system."
 
         sheet1.write(counter, 4, mechanism, top)
         sheet1.col(4).width = 256 * 25
@@ -1386,7 +1390,7 @@ def create_rules(baseline_yaml):
     all_rules = []
     #expected keys and references
     keys = ['mobileconfig',
-            'macOS',
+            'ios',
             'severity',
             'title',
             'check',
@@ -1621,6 +1625,7 @@ def main():
     adoc_templates = [ "adoc_rule",
                     "adoc_supplemental",
                     "adoc_rule_no_setting",
+                    "adoc_rule_ios",
                     "adoc_rule_custom_refs",
                     "adoc_section",
                     "adoc_header",
@@ -1661,6 +1666,9 @@ def main():
 
     with open(adoc_templates_dict['adoc_rule_no_setting']) as adoc_rule_no_setting_file:
         adoc_rule_no_setting_template = Template(adoc_rule_no_setting_file.read())
+
+    with open(adoc_templates_dict['adoc_rule_ios']) as adoc_rule_ios_file:
+        adoc_rule_ios_template = Template(adoc_rule_ios_file.read())
 
     with open(adoc_templates_dict['adoc_rule_custom_refs']) as adoc_rule_custom_refs_file:
         adoc_rule_custom_refs_template = Template(adoc_rule_custom_refs_file.read())
@@ -1945,6 +1953,21 @@ def main():
                 )
             elif ('permanent' in tags) or ('inherent' in tags) or ('n_a' in tags):
                 rule_adoc = adoc_rule_no_setting_template.substitute(
+                    rule_title=rule_yaml['title'].replace('|', '\|'),
+                    rule_id=rule_yaml['id'].replace('|', '\|'),
+                    rule_discussion=rule_yaml['discussion'].replace('|', '\|'),
+                    rule_check=rule_yaml['check'],  # .replace('|', '\|'),
+                    rule_fix=rulefix,
+                    rule_80053r5=nist_controls,
+                    rule_800171=nist_800171,
+                    rule_disa_stig=disa_stig,
+                    rule_cis=cis,
+                    rule_cce=cce,
+                    rule_tags=tags,
+                    rule_srg=srg
+                )
+            elif ('ios' in tags):
+                rule_adoc = adoc_rule_ios_template.substitute(
                     rule_title=rule_yaml['title'].replace('|', '\|'),
                     rule_id=rule_yaml['id'].replace('|', '\|'),
                     rule_discussion=rule_yaml['discussion'].replace('|', '\|'),

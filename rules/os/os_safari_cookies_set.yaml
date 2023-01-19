@@ -1,0 +1,40 @@
+id: "os_safari_cookies_set"
+title: "Ensure Accept cookies is set to From websites I visit or From current website only"
+discussion: |
+  Acceptance of cookies _MUST_ be only from sites visited.
+check: " "
+fix: |
+  This is implemented by a Configuration Profile.
+references:
+  cce:
+    - N/A
+  cci: 
+    - N/A
+  800-53r5:
+    - N/A
+  800-53r4: 
+    - N/A
+  srg:
+    - N/A
+  disa_stig: 
+    - N/A
+  800-171r2:
+    - N/A
+  cis:
+    benchmark:
+      - 2.2.2.2 (level 1)
+      - 3.2.2.2 (level 1)
+    v8:
+      - 9.4
+iOS:
+  - "16.0"
+tags:
+  - ios
+  - cis_lvl1
+  - cis_lvl2
+  - cisv8
+severity: ""
+mobileconfig: true
+mobileconfig_info:
+  com.apple.applicationaccess:
+    safariAcceptCookies: 1.5

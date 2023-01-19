@@ -1,51 +1,42 @@
 id: pwpolicy_account_lockout_enforce
 title: "Limit Consecutive Failed Login Attempts to $ODV"
 discussion: |
-  The macOS _MUST_ be configured to limit the number of failed login attempts to a maximum of $ODV. When the maximum number of failed attempts is reached, the account _MUST_ be locked for a period of time after.
+  The iOS _MUST_ be configured to limit the number of failed login attempts to a maximum of $ODV.
 
   This rule protects against malicious users attempting to gain access to the system via brute-force hacking methods. 
-check: |
-  /usr/bin/pwpolicy -getaccountpolicies 2> /dev/null | /usr/bin/tail +2 | /usr/bin/xmllint --xpath '//dict/key[text()="policyAttributeMaximumFailedAuthentications"]/following-sibling::integer[1]/text()' - | /usr/bin/awk '{ if ($1 <= $ODV) {print "yes"} else {print "no"}}'
-result:
-  string: "yes"
+check: " "
 fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-    - CCE-91915-9
+    - N/A
   cci:
     - N/A
   800-53r5:
-    - AC-7
+    - N/A
   800-53r4: 
-    - AC-7
+    - N/A
   srg:
     - N/A
   disa_stig:
     - N/A
   800-171r2:
-    - 3.1.8
+    - N/A
   cis:
     benchmark:
-      - 5.2.1 (level 1)
+      - 2.4.6 (level 1)
+      - 3.4.6 (level 1)
     controls v8:
-      - 6.2
-macOS:
-  - "13.0"
+      - 4.3
+ios:
+  - "16.0"
 odv:
   hint: "Number of failed attempts."
-  recommended: 3
-  cis_lvl1: 5
-  cis_lvl2: 5
+  recommended: 6
+  cis_lvl1: 6
+  cis_lvl2: 6
 tags:
-  - 800-171 
-  - cnssi-1253 
-  - 800-53r4_low 
-  - 800-53r4_moderate 
-  - 800-53r4_high 
-  - 800-53r5_low 
-  - 800-53r5_moderate 
-  - 800-53r5_high
+  - ios
   - cis_lvl1
   - cis_lvl2
   - cisv8

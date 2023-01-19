@@ -98,7 +98,7 @@ def collect_rules():
     all_rules = []
     #expected keys and references
     keys = ['mobileconfig',
-            'macOS',
+            'ios',
             'severity',
             'title',
             'check',
@@ -171,7 +171,7 @@ def section_title(section_name):
     titles = {
         "auth": "authentication",
         "audit": "auditing",
-        "os": "macos",
+        "os": "ios",
         "pwpolicy": "passwordpolicy",
         "icloud": "icloud",
         "sysprefs": "systempreferences",
@@ -262,11 +262,11 @@ def output_baseline(rules, os, baseline_tailored_string, benchmark, authors, ful
             if section_name not in sections:
                 sections.append(section_name)
     if baseline_tailored_string:
-        output_text = f'title: "macOS {os}: Security Configuration -{full_title} {baseline_tailored_string}"\n'
-        output_text += f'description: |\n  This guide describes the actions to take when securing a macOS {os} system against the{full_title} {baseline_tailored_string} security baseline.\n'
+        output_text = f'title: "iOS {os}: Security Configuration -{full_title} {baseline_tailored_string}"\n'
+        output_text += f'description: |\n  This guide describes the actions to take when securing a iOS {os} system against the{full_title} {baseline_tailored_string} security baseline.\n'
     else:
-        output_text = f'title: "macOS {os}: Security Configuration -{full_title}"\n'
-        output_text += f'description: |\n  This guide describes the actions to take when securing a macOS {os} system against the{full_title} security baseline.\n'
+        output_text = f'title: "iOS {os}: Security Configuration -{full_title}"\n'
+        output_text += f'description: |\n  This guide describes the actions to take when securing a iOS {os} system against the{full_title} security baseline.\n'
     
     if benchmark == "recommended":
         output_text += "\n  Information System Security Officers and benchmark creators can use this catalog of settings in order to assist them in security benchmark creation. This list is a catalog, not a checklist or benchmark, and satisfaction of every item is not likely to be possible or sensible in many operational scenarios.\n"

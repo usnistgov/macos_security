@@ -1,0 +1,39 @@
+id: "os_allow_untrusted_tls_disable"
+title: "Ensure Allow users to accept untrusted TLS certificates is set to Disabled"
+discussion: |
+  Untrusted TLS certificated _MUST_ be disabled.
+check: " "
+fix: |
+  This is implemented by a Configuration Profile.
+references:
+  cce:
+    - N/A
+  cci: 
+    - N/A
+  800-53r5:
+    - N/A
+  800-53r4: 
+    - N/A
+  srg:
+    - N/A
+  disa_stig: 
+    - N/A
+  800-171r2:
+    - N/A
+  cis:
+    benchmark:
+      - 2.2.1.6 (level 2)
+      - 3.1.1.13 (level 2)
+    v8:
+      - 4.1
+ioS:
+  - "16.0"
+tags:
+  - ioS
+  - cis_lvl2
+  - cisv8
+severity: ""
+mobileconfig: true
+mobileconfig_info:
+  com.apple.applicationaccess:
+    allowUntrustedTLSPrompt: false
