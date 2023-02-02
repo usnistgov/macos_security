@@ -56,5 +56,5 @@ tags:
   - cisv8
 mobileconfig: true
 mobileconfig_info:
-  com.apple.AdLib:
+  com.apple.applicationaccess:
     allowApplePersonalizedAdvertising: false
