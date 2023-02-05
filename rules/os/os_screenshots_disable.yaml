@@ -1,38 +1,37 @@
-id: icloud_sync_disable
-title: "Ensure Allow iCloud documents & data is set to Disabled"
+id: "os_screenshots_disable"
+title: "Ensure Allow screenshots and screen recording is set to Disabled"
 discussion: |
-  Institutionally owned devices _MUST_ not sync data through iCloud.
+  Screenshots and screen recordings on iOS _MUST_ be disabled.
 check: " "
 fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
     - N/A
-  cci:
+  cci: 
     - N/A
   800-53r5:
-    - N/A    
-  800-53r4:
+    - N/A
+  800-53r4: 
     - N/A
   srg:
     - N/A
-  disa_stig:
+  disa_stig: 
     - N/A
   800-171r2:
     - N/A
   cis:
     benchmark:
-      - 3.2.1.5 (level 1)
+      - 3.2.1.1 (level 2)
     controls v8:
-      - 2.3
-ios:
+      - 3.3
+iOS:
   - "16.0"
 tags:
   - ios
-  - cis_lvl1
   - cis_lvl2
   - cisv8
 mobileconfig: true
 mobileconfig_info:
   com.apple.applicationaccess:
-    allowCloudDocumentSync: false
+    allowScreenShot: false

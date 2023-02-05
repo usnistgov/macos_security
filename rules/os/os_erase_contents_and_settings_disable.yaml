@@ -1,30 +1,30 @@
-id: icloud_sync_disable
-title: "Ensure Allow iCloud documents & data is set to Disabled"
+id: "os_erase_contents_and_settings_disable"
+title: "Ensure Allow Erase All Content and Settings is set to Disabled"
 discussion: |
-  Institutionally owned devices _MUST_ not sync data through iCloud.
+  Erase all contents and settings _MUST_ be disabled on institutionally owned iOS devices.
 check: " "
 fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
     - N/A
-  cci:
+  cci: 
     - N/A
   800-53r5:
-    - N/A    
-  800-53r4:
+    - N/A
+  800-53r4: 
     - N/A
   srg:
     - N/A
-  disa_stig:
+  disa_stig: 
     - N/A
   800-171r2:
     - N/A
   cis:
     benchmark:
-      - 3.2.1.5 (level 1)
-    controls v8:
-      - 2.3
+      - 3.2.1.12 (level 1)
+    v8:
+      - 4.1
 ios:
   - "16.0"
 tags:
@@ -35,4 +35,4 @@ tags:
 mobileconfig: true
 mobileconfig_info:
   com.apple.applicationaccess:
-    allowCloudDocumentSync: false
+    allowEraseContentAndSettings: false
