@@ -64,6 +64,11 @@ references:
       - 5.2
 macOS:
   - "13.0"
+odv:
+  hint: "Number of special characters."
+  recommended: 1
+  cis_lvl1: 1
+  cis_lvl2: 1  
 tags:
   - 800-171
   - cnssi-1253
