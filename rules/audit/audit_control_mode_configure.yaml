@@ -3,7 +3,7 @@ title: "Configure Audit_Control Owner to Mode 440 or Less Permissive"
 discussion: |
   /etc/security/audit_control _MUST_ be configured so that it is readable only by the root user and group wheel.
 check: |
-  /bin/ls -l /etc/security/audit_control | awk '!/-r--[r-]-----|current|total/{print $1}' | /usr/bin/wc -l | /usr/bin/xargs
+  /bin/ls -l /etc/security/audit_control | /usr/bin/awk '!/-r--[r-]-----|current|total/{print $1}' | /usr/bin/wc -l | /usr/bin/xargs
 result:
   integer: 0
 fix: |
