@@ -42,7 +42,11 @@ profile:
       - os_nfsd_disable
       - os_password_hint_remove
       - os_root_disable
+      - os_safari_advertising_privacy_protection_enable
       - os_safari_open_safe_downloads_disable
+      - os_safari_prevent_cross-site_tracking_enable
+      - os_safari_show_full_website_address_enable
+      - os_safari_warn_fraudulent_website_enable
       - os_show_filename_extensions_enable
       - os_sip_enable
       - os_software_update_deferral

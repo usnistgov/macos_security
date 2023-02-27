@@ -125,7 +125,11 @@ profile:
       - os_recovery_lock_enable
       - os_removable_media_disable
       - os_root_disable
+      - os_safari_advertising_privacy_protection_enable
       - os_safari_open_safe_downloads_disable
+      - os_safari_prevent_cross-site_tracking_enable
+      - os_safari_show_full_website_address_enable
+      - os_safari_warn_fraudulent_website_enable
       - os_screensaver_loginwindow_enforce
       - os_secure_boot_verify
       - os_show_filename_extensions_enable
