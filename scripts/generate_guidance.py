@@ -606,7 +606,7 @@ fi
 plb="/usr/libexec/PlistBuddy"
 
 # get the currently logged in user
-CURRENT_USER=$(scutil <<< "show State:/Users/ConsoleUser" | awk '/Name :/ && ! /loginwindow/ {{ print $3 }}')
+CURRENT_USER=$( /usr/sbin/scutil <<< "show State:/Users/ConsoleUser" | /usr/bin/awk '/Name :/ && ! /loginwindow/ {{ print $3 }}')
 CURR_USER_UID=$(/usr/bin/id -u $CURRENT_USER)
 
 # get system architecture
