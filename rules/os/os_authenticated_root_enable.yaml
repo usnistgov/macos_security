@@ -6,6 +6,8 @@ discussion: |
   When Authenticated Root is enabled the macOS is booted from a signed volume that is cryptographically protected to prevent tampering with the system volume.
 
   NOTE: Authenticated Root is enabled by default on macOS systems.
+  
+  WARNING: If more than one partition with macOS is detected, the csrutil command will hang awaiting input.
 check: |
   /usr/bin/csrutil authenticated-root | /usr/bin/grep -c 'enabled'
 result:
