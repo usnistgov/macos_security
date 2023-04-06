@@ -11,7 +11,7 @@ discussion: |
 
   NOTE: /etc/ssh/sshd_config will be automatically modified to its original state following any update or major upgrade to the operating system.
 check: |
-  /usr/sbin/sshd -T | /usr/bin/grep -ci "^KexAlgorithms diffie-hellman-group-exchange-sha256"
+  [ -z "$(find /etc/ssh/ -name ssh_host\*key)" ] && echo "1" || { /usr/sbin/sshd -T | /usr/bin/grep -ci "^KexAlgorithms diffie-hellman-group-exchange-sha256" ;}
 result:
   integer: 1
 fix: |

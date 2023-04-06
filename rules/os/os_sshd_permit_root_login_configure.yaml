@@ -7,7 +7,7 @@ discussion: |
   
   NOTE: /etc/ssh/sshd_config will be automatically modified to its original state following any update or major upgrade to the operating system.
 check: |
-  /usr/sbin/sshd -T | /usr/bin/awk '/permitrootlogin/{print $2}'
+  [ -z "$(find /etc/ssh/ -name ssh_host\*key)" ] && echo "no" || { /usr/sbin/sshd -T | /usr/bin/awk '/permitrootlogin/{print $2}' ;}
 result:
   string: "no"
 fix: |
