@@ -11,7 +11,7 @@ discussion: |
 check: |
   fips_sshd_config=("Ciphers aes128-gcm@openssh.com" "HostbasedAcceptedAlgorithms ecdsa-sha2-nistp256,ecdsa-sha2-nistp256-cert-v01@openssh.com" "HostKeyAlgorithms ecdsa-sha2-nistp256,ecdsa-sha2-nistp256-cert-v01@openssh.com" "KexAlgorithms ecdh-sha2-nistp256" "MACs hmac-sha2-256" "PubkeyAcceptedAlgorithms ecdsa-sha2-nistp256,ecdsa-sha2-nistp256-cert-v01@openssh.com" "CASignatureAlgorithms ecdsa-sha2-nistp256")
   total=0
-  [ -z "$(find /etc/ssh/ -name ssh_host\*key)" ] && total=7 \
+  [ -z "$(/usr/bin/find /etc/ssh/ -name ssh_host\*key)" ] && total=7 \
     || { for config in $fips_sshd_config; do
           total=$(expr $(/usr/sbin/sshd -T | /usr/bin/grep -ci "$config") + $total)
         done ;}
