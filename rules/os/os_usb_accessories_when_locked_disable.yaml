@@ -1,0 +1,39 @@
+id: "os_usb_accessories_when_locked_disable"
+title: "Ensure Allow USB accessories while the device is locked is set to Disabled"
+discussion: |
+  USB devices _MUST_ not be allowed to connect while the device is locked.
+check: " "
+fix: |
+  This is implemented by a Configuration Profile.
+references:
+  cce:
+    - N/A
+  cci: 
+    - N/A
+  800-53r5:
+    - N/A
+  800-53r4: 
+    - N/A
+  srg:
+    - N/A
+  disa_stig: 
+    - N/A
+  800-171r2:
+    - N/A
+  cis:
+    benchmark:
+      - 3.2.1.19 (level 1)
+    v8:
+      - 1.2
+iOS:
+  - "16.0"
+tags:
+  - ios
+  - cis_lvl1
+  - cis_lvl2
+  - cisv8
+severity: ""
+mobileconfig: true
+mobileconfig_info:
+  com.apple.applicationaccess:
+    allowUSBRestrictedMode: false
