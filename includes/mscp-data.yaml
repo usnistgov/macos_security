@@ -62,6 +62,6 @@ titles:
   800-171: NIST 800-171 Rev 2
   cis_lvl1: CIS Apple macOS 13.0 Ventura v1.0.0 Benchmark (Level 1)
   cis_lvl2: CIS Apple macOS 13.0 Ventura v1.0.0 Benchmark (Level 2)
-  ios: CIS Apple iOS 16 v1.0.0 Benchmark (Level 1)
+  ios: CIS Apple iOS 16 v1.1.0 Benchmark (Level 1)
   cisv8: CIS Controls Version 8
   cnssi-1253: Committee on National Security Systems Instruction No. 1253
