@@ -1591,14 +1591,17 @@ def generate_scap(all_rules, all_baselines, args):
         </textfilecontent54_test>
         '''.format(x+5000, rule_yaml['id'] + "_" + odv_label, x+5000)
                     sshd_config_pattern = ""
-                    if "grep" in rule_yaml['check']:
+                    if "grep" in rule_yaml['check']:                        
                         regex = r"(?<=grep).*$"
                         matches = re.finditer(regex, rule_yaml['check'], re.MULTILINE)
                         matchy_match = ""
                         for matchNum, match in enumerate(matches, start=1):
                             matchy_match = match.group()
-                                                 
-                        sshd_config_pattern = matchy_match.split('"')[1]
+                        sshd_config_pattern = ""
+                        if '"' in matchy_match:
+                            sshd_config_pattern = matchy_match.split('"')[1]
+                        elif "'" in matchy_match:
+                            sshd_config_pattern = matchy_match.split("'")[1]
                     
                     if "awk" in rule_yaml['check']:
                         matchy_match = rule_yaml['check'].split("'")[1].split("/")[1]
