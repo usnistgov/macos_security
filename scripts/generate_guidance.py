@@ -1036,6 +1036,9 @@ fi
 # append to existing logfile
 echo "$(date -u) Beginning remediation of non-compliant settings" >> "$audit_log"
 
+# remove uchg on audit_control
+/usr/bin/chflags nouchg /etc/security/audit_control
+
 # run mcxrefresh
 /usr/bin/mcxrefresh -u $CURR_USER_UID
 
