@@ -1587,6 +1587,7 @@ def main():
 
         if args.logo:
             logo = args.logo
+            pdf_logo_path = logo
         else:
             logo = "../../templates/images/mscp_banner.png"
             pdf_logo_path = "../templates/images/mscp_banner.png"
