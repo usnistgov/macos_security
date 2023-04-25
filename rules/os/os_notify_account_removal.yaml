@@ -26,7 +26,6 @@ references:
 macOS:
   - "11.0"
 tags:
-  - cnssi-1253
   - 800-53r4_moderate
   - 800-53r4_high
   - permanent

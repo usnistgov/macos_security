@@ -45,7 +45,6 @@ macOS:
 tags:
   - 800-53r4_moderate
   - 800-53r5_moderate
-  - cnssi-1253
   - stig
 severity: "medium"
 mobileconfig: true

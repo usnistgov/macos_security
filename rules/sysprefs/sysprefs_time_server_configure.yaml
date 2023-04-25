@@ -46,7 +46,6 @@ odv:
   cis_lvl2: "time.apple.com"
 tags:
   - 800-171
-  - cnssi-1253
   - 800-53r5_low
   - 800-53r5_moderate
   - 800-53r5_high
