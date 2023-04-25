@@ -62,12 +62,10 @@ profile:
       - os_appleid_prompt_disable
       - os_authenticated_root_enable
       - os_bonjour_disable
-      - os_calendar_app_disable
       - os_config_data_install_enforce
       - os_directory_services_configured
       - os_efi_integrity_validated
       - os_ess_installed
-      - os_facetime_app_disable
       - os_filevault_autologin_disable
       - os_firewall_log_enable
       - os_gatekeeper_enable
@@ -79,9 +77,7 @@ profile:
       - os_icloud_storage_prompt_disable
       - os_install_log_retention_configure
       - os_ir_support_disable
-      - os_mail_app_disable
       - os_mdm_require
-      - os_messages_app_disable
       - os_mobile_file_integrity_enable
       - os_nfsd_disable
       - os_parental_controls_enable
@@ -196,6 +192,7 @@ profile:
       - os_access_control_mobile_devices
   - section: "Supplemental"
     rules:
+      - supplemental_cis_manual
       - supplemental_controls
       - supplemental_filevault
       - supplemental_firewall_pf
