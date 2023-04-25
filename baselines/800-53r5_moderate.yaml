@@ -62,10 +62,8 @@ profile:
       - os_asl_log_files_permissions_configure
       - os_authenticated_root_enable
       - os_bonjour_disable
-      - os_calendar_app_disable
       - os_certificate_authority_trust
       - os_config_data_install_enforce
-      - os_facetime_app_disable
       - os_filevault_autologin_disable
       - os_firewall_default_deny_require
       - os_firewall_log_enable
@@ -77,9 +75,7 @@ profile:
       - os_httpd_disable
       - os_icloud_storage_prompt_disable
       - os_ir_support_disable
-      - os_mail_app_disable
       - os_mdm_require
-      - os_messages_app_disable
       - os_mobile_file_integrity_enable
       - os_newsyslog_files_owner_group_configure
       - os_newsyslog_files_permissions_configure
@@ -90,7 +86,6 @@ profile:
       - os_password_sharing_disable
       - os_policy_banner_loginwindow_enforce
       - os_recovery_lock_enable
-      - os_removable_media_disable
       - os_root_disable
       - os_screensaver_loginwindow_enforce
       - os_secure_boot_verify
