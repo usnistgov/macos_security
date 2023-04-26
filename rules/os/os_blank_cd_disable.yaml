@@ -10,7 +10,7 @@ discussion: |
 
   [IMPORTANT]
   ====
-  Apple has deprecated the use of media mount controls, using these controls may not work as expected. Third party software may be required to fullfill the compliance requirements.
+  Apple has deprecated the use of link:https://github.com/apple/device-management/blob/eb51fb0cb9626cac4717858556912c257a734ce0/mdm/profiles/com.apple.systemuiserver.yaml#L4-L8[media mount controls], using these controls may not work as expected. Third party software may be required to fulfill the compliance requirements.
   ====
 check: |
   /usr/bin/osascript -l JavaScript << EOS

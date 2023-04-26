@@ -39,7 +39,6 @@ tags:
   - 800-53r4_moderate 
   - 800-53r4_high 
   - 800-171 
-  - cnssi-1253
   - arm64
   - manual
   - cmmc_lvl3

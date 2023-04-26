@@ -33,7 +33,6 @@ tags:
   - 800-53r4_moderate 
   - 800-53r4_high 
   - 800-171 
-  - cnssi-1253
 severity: "medium"
 mobileconfig: true
 mobileconfig_info:

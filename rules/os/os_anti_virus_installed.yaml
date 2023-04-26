@@ -5,7 +5,7 @@ discussion: |
 
   Malicious software can establish a base on individual desktops and servers. Employing an automated mechanism to detect this type of software will aid in elimination of the software from the operating system.'
 check: |
-  /bin/launchctl list | /usr/bin/grep -cE "(com.apple.XprotectFramework.PluginService|com.apple.XProtect.daemon.scan)"
+  /bin/launchctl list | /usr/bin/grep -cE "(com.apple.XprotectFramework.PluginService$|com.apple.XProtect.daemon.scan$)"
 result:
   integer: 2
 fix: |

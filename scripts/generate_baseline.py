@@ -526,12 +526,12 @@ def main():
         else:
             benchmark = "recommended"
         
-        if mscp_data_yaml['authors'][args.keyword]:
+        if args.keyword in mscp_data_yaml['authors']:
             authors = parse_authors(mscp_data_yaml['authors'][args.keyword])
         else:
-            authors = "|\n  |===\n  |Name|Organization\n  |===\n"
+            authors = "|===\n  |Name|Organization\n  |===\n"
         
-        if mscp_data_yaml['titles'][args.keyword] and not args.tailor:
+        if args.keyword in mscp_data_yaml['titles'] and not args.tailor:
             full_title = f" {mscp_data_yaml['titles'][args.keyword]}"
         elif args.tailor:
             full_title = ""
