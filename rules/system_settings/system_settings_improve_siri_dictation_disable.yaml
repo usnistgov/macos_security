@@ -3,7 +3,7 @@ title: "Disable Sending Siri and Dictation Information to Apple"
 discussion: |
   The ability for Apple to store and review audio of your Siri and Dictation interactions _MUST_ be disabled.
 
-  The information system _MUST_ be configured to provide only essential capabilities. Disabling the submission of Siri and Dictation information will mitigate the risk of unwanted data being sent to Apple. 
+  The information system _MUST_ be configured to provide only essential capabilities. Disabling the submission of Siri and Dictation information will mitigate the risk of unwanted data being sent to Apple.
 check: |
   /usr/bin/osascript -l JavaScript << EOS
   $.NSUserDefaults.alloc.initWithSuiteName('com.apple.assistant.support')\
@@ -17,13 +17,13 @@ references:
   cce:
     - CCE-91956-3
   cci:
-    - N/A
+    - CCI-000382
   800-53r5:
     - AC-20
     - CM-7
     - CM-7(1)
     - SC-7(10)
-  800-53r4: 
+  800-53r4:
     - CM-7
     - CM-7(1)
     - AC-20
@@ -31,6 +31,10 @@ references:
   800-171r2:
     - 3.1.20
     - 3.4.6
+  srg:
+    - SRG-OS-000096-GPOS-00050
+  disa_stig:
+    - APPL-13-002021
   cis:
     benchmark:
       - N/A
@@ -47,7 +51,9 @@ tags:
   - 800-53r4_moderate
   - 800-53r4_high
   - 800-171
+  - cnssi-1253
   - cisv8
+  - stig
 mobileconfig: true
 mobileconfig_info:
   com.apple.assistant.support:

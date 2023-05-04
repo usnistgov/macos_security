@@ -28,20 +28,20 @@ fix: |
     fi
     /bin/mv ${include_dir}${file} ${include_dir}20-${file}
   done
-  ----  
+  ----
 references:
   cce:
     - CCE-91892-0
-  cci: 
-    - N/A
+  cci:
+    - CCI-001133
   800-53r5:
     - SC-10
-  800-53r4: 
+  800-53r4:
     - SC-10
   srg:
-    - N/A
+    - SRG-OS-000163-GPOS-00072
   disa_stig:
-    - N/A
+    - APPL-13-000053
   800-171r2:
     - 3.13.9
 macOS:
@@ -49,8 +49,9 @@ macOS:
 odv:
   hint: "Number of seconds."
   recommended: 30
+  stig: 30
 tags:
-  - none
+  - stig
 severity: "medium"
 mobileconfig: false
 mobileconfig_info:

@@ -2,7 +2,7 @@ id: auth_pam_su_smartcard_enforce
 title: "Enforce Multifactor Authentication for the su Command"
 discussion: |
   The system _MUST_ be configured such that, when the su command is used, multifactor authentication is enforced.
-  
+
   All users _MUST_ go through multifactor authentication to prevent unauthenticated access and potential compromise to the system.
 
   IMPORTANT: Modification of Pluggable Authentication Modules (PAM) now require user authorization, or use of a Privacy Preferences Policy Control (PPPC) profile from MDM that authorizes modifying system administrator files or full disk access.
@@ -34,19 +34,19 @@ references:
   cce:
     - CCE-91734-4
   cci:
-    - N/A
+    -  CCI-000366
   800-53r5:
     - IA-2(1)
     - IA-2(2)
     - IA-2(8)
-  800-53r4: 
+  800-53r4:
     - IA-2(3)
     - IA-2(4)
-    - IA-5(11) 
+    - IA-5(11)
   srg:
-    - N/A
+    - SRG-OS-000480-GPOS-00227
   disa_stig:
-    - N/A
+    - APPL-13-003051
   800-171r2:
     - 3.5.3
   cis:
@@ -59,14 +59,16 @@ references:
 macOS:
   - "13.0"
 tags:
-  - 800-53r5_low 
-  - 800-53r5_moderate 
-  - 800-53r5_high 
-  - 800-53r4_low 
-  - 800-53r4_moderate 
-  - 800-53r4_high 
-  - 800-171 
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_high
+  - 800-53r4_low
+  - 800-53r4_moderate
+  - 800-53r4_high
+  - 800-171
+  - cnssi-1253
   - cisv8
+  - stig
 severity: "medium"
 mobileconfig: false
 mobileconfig_info:

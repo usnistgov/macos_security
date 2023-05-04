@@ -16,15 +16,15 @@ references:
   cce:
     - CCE-91895-3
   cci:
-    - N/A
+    - CCI-002038
   800-53r5:
     - N/A
   800-53r4:
     - N/A
   srg:
-    - N/A
+    - SRG-OS-000373-GPOS-00156
   disa_stig:
-    - N/A
+    - APPL-13-004022
   cis:
     benchmark:
       - 5.4 (level 1)
@@ -38,11 +38,13 @@ odv:
   cis_lvl1: 0
   cis_lvl2: 0
 tags:
-  - 800-53r5_low 
-  - 800-53r5_moderate 
-  - 800-53r5_high 
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_high
+  - cnssi-1253
   - cis_lvl1
   - cis_lvl2
   - cisv8
+  - stig
 mobileconfig: false
 mobileconfig_info:

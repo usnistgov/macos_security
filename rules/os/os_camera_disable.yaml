@@ -14,20 +14,22 @@ fix: |
 references:
   cce:
     - CCE-91770-8
-  cci: 
-    - N/A
+  cci:
+    - CCI-000381
+    - CCI-001774
   800-53r5:
     - N/A
   800-53r4:
     - N/A
   srg:
-    - N/A
+    - SRG-OS-000095-GPOS-00049
+    - SRG-OS-000370-GPOS-00155
   disa_stig:
-    - N/A
+    - APPL-13-002017
 macOS:
   - "13.0"
 tags:
-  - none
+  - stig
 severity: "medium"
 mobileconfig: true
 mobileconfig_info:

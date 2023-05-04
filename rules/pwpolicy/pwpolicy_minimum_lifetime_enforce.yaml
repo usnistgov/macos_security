@@ -66,6 +66,7 @@ odv:
   recommended: 24
 tags:
   - 800-171
+  - cnssi-1253
   - 800-53r4_low
   - 800-53r4_moderate
   - 800-53r4_high

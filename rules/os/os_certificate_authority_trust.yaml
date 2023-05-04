@@ -4,29 +4,34 @@ discussion: |
   The organization _MUST_ issue or obtain public key certificates from an organization-approved service provider and ensure only approved trust anchors are in the System Keychain.
 check: |
   /usr/bin/security dump-keychain /Library/Keychains/System.keychain | /usr/bin/awk -F'"' '/labl/ {print $4}'
-result: 
+result:
   string: "a list containing approved root certificates"
 fix: |
   Obtain the approved certificates from the appropriate authority and install them to the System Keychain.
 references:
   cce:
     - CCE-91772-4
-  cci: 
-    - N/A
+  cci:
+    - CCI-000185
+    - CCI-002450
   800-53r5:
     - SC-17
-  800-53r4: 
+  800-53r4:
     - SC-17
+  srg:
+    - SRG-OS-000066-GPOS-00034
   disa_stig:
-    - N/A
+    - APPL-13-003001
 macOS:
   - "13.0"
 tags:
-  - 800-53r5_moderate 
-  - 800-53r5_high 
-  - 800-53r4_moderate 
-  - 800-53r4_high 
+  - 800-53r5_moderate
+  - 800-53r5_high
+  - 800-53r4_moderate
+  - 800-53r4_high
+  - cnssi-1253
   - manual
+  - stig
 severity: "high"
 mobileconfig: false
 mobileconfig_info:
