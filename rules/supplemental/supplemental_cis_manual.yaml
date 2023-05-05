@@ -6,6 +6,18 @@ discussion: |
   [cols="15%h, 85%a"]
   |===
   |Section
+  |General
+
+  |Recommendations
+  |2.1.1 Ensure a Consent Message has been Configured +
+  2.1.2 Ensure Controls when the profile can be removed is set to Always +
+  3.1.1 Ensure Controls when the profile can be removed is set to Never
+  |===
+
+
+  [cols="15%h, 85%a"]
+  |===
+  |Section
   |Restrictions
 
   |Recommendations
