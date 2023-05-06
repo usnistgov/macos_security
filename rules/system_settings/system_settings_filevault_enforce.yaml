@@ -5,7 +5,17 @@ discussion: |
 
   The information system implements cryptographic mechanisms to protect the confidentiality and integrity of information stored on digital media during transport outside of controlled areas.
 check: |
-  /usr/bin/fdesetup status | /usr/bin/grep -c "FileVault is On."
+  dontAllowDisable=$(/usr/bin/osascript -l JavaScript << EOS
+  $.NSUserDefaults.alloc.initWithSuiteName('com.apple.MCX')\
+  .objectForKey('dontAllowFDEDisable').js
+  EOS
+  )
+  fileVault=$(/usr/bin/fdesetup status | /usr/bin/grep -c "FileVault is On.")
+  if [[ "$dontAllowDisable" == "true" ]] && [[ "$fileVault" == 1 ]]; then
+    echo "1"
+  else
+    echo "0"
+  fi
 result:
   integer: 1
 fix: |
@@ -41,10 +51,11 @@ tags:
   - 800-53r4_moderate 
   - 800-53r4_high 
   - 800-171 
-  - cnssi-1253
   - cis_lvl1
   - cis_lvl2
   - cisv8
 severity: "medium"
-mobileconfig: false
+mobileconfig: true
 mobileconfig_info:
+  com.apple.MCX:
+    dontAllowFDEDisable: true

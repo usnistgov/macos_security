@@ -9,8 +9,15 @@ discussion: |
   ====
 check: |
   /usr/bin/osascript -l JavaScript << EOS
-  $.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess')\
-  .objectForKey('allowUSBRestrictedMode').js
+    function run() {
+      let pref1 = ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess')\
+    .objectForKey('allowUSBRestrictedMode'))
+      if ( pref1 == false ) {
+        return("false")
+      } else {
+        return("true")
+      }
+    }
   EOS
 result:
   string: "true"

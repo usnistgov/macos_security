@@ -602,11 +602,19 @@ if [[ $EUID -ne 0 ]]; then
     exit 1
 fi
 
+ssh_key_check=0
+if /usr/sbin/sshd -T &2> /dev/null; then
+    ssh_key_check=0
+else
+    /usr/bin/ssh-keygen -q -N "" -t rsa -b 4096 -f /etc/ssh/ssh_host_rsa_key
+    ssh_key_check=1
+fi
+
 # path to PlistBuddy
 plb="/usr/libexec/PlistBuddy"
 
 # get the currently logged in user
-CURRENT_USER=$(scutil <<< "show State:/Users/ConsoleUser" | awk '/Name :/ && ! /loginwindow/ {{ print $3 }}')
+CURRENT_USER=$( /usr/sbin/scutil <<< "show State:/Users/ConsoleUser" | /usr/bin/awk '/Name :/ && ! /loginwindow/ {{ print $3 }}')
 CURR_USER_UID=$(/usr/bin/id -u $CURRENT_USER)
 
 # get system architecture
@@ -628,7 +636,7 @@ vared -p "Press [Enter] key to continue..." -c fackEnterKey
 
 ask() {{
     # if fix flag is passed, assume YES for everything
-    if [[ $fix ]]; then
+    if [[ $fix ]] || [[ $cfc ]]; then
         return 0
     fi
 
@@ -986,11 +994,11 @@ if [[ ! $exempt == "1" ]] || [[ -z $exempt ]];then
     if [[ ${rule_yaml['id']}_audit_score == "true" ]]; then
         ask '{rule_yaml['id']} - Run the command(s)-> {quotify(get_fix_code(rule_yaml['fix']).strip())} ' N
         if [[ $? == 0 ]]; then
-            echo 'Running the command to configure the settings for: {rule_yaml['id']} ...' | /usr/bin/tee -a "$audit_log"
+            echo "$(date -u) Running the command to configure the settings for: {rule_yaml['id']} ..." | /usr/bin/tee -a "$audit_log"
             {get_fix_code(rule_yaml['fix']).strip()}
         fi
     else
-        echo 'Settings for: {rule_yaml['id']} already configured, continuing...' | /usr/bin/tee -a "$audit_log"
+        echo "$(date -u) Settings for: {rule_yaml['id']} already configured, continuing..." | /usr/bin/tee -a "$audit_log"
     fi
 elif [[ ! -z "$exempt_reason" ]];then
     echo "$(date -u) {rule_yaml['id']} has an exemption, remediation skipped (Reason: "$exempt_reason")" | /usr/bin/tee -a "$audit_log"
@@ -1004,7 +1012,7 @@ fi
 lastComplianceScan=$(defaults read "$audit_plist" lastComplianceCheck)
 echo "Results written to $audit_plist"
 
-if [[ ! $check ]];then
+if [[ ! $check ]] && [[ ! $cfc ]];then
     pause
 fi
 
@@ -1024,7 +1032,7 @@ if [[ ! -e "$audit_plist" ]]; then
     fi
 fi
 
-if [[ ! $fix ]]; then
+if [[ ! $fix ]] && [[ ! $cfc ]]; then
     ask 'THE SOFTWARE IS PROVIDED "AS IS" WITHOUT ANY WARRANTY OF ANY KIND, EITHER EXPRESSED, IMPLIED, OR STATUTORY, INCLUDING, BUT NOT LIMITED TO, ANY WARRANTY THAT THE SOFTWARE WILL CONFORM TO SPECIFICATIONS, ANY IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND FREEDOM FROM INFRINGEMENT, AND ANY WARRANTY THAT THE DOCUMENTATION WILL CONFORM TO THE SOFTWARE, OR ANY WARRANTY THAT THE SOFTWARE WILL BE ERROR FREE.  IN NO EVENT SHALL NIST BE LIABLE FOR ANY DAMAGES, INCLUDING, BUT NOT LIMITED TO, DIRECT, INDIRECT, SPECIAL OR CONSEQUENTIAL DAMAGES, ARISING OUT OF, RESULTING FROM, OR IN ANY WAY CONNECTED WITH THIS SOFTWARE, WHETHER OR NOT BASED UPON WARRANTY, CONTRACT, TORT, OR OTHERWISE, WHETHER OR NOT INJURY WAS SUSTAINED BY PERSONS OR PROPERTY OR OTHERWISE, AND WHETHER OR NOT LOSS WAS SUSTAINED FROM, OR AROSE OUT OF THE RESULTS OF, OR USE OF, THE SOFTWARE OR SERVICES PROVIDED HEREUNDER. WOULD YOU LIKE TO CONTINUE? ' N
 
     if [[ $? != 0 ]]; then
@@ -1035,6 +1043,9 @@ fi
 
 # append to existing logfile
 echo "$(date -u) Beginning remediation of non-compliant settings" >> "$audit_log"
+
+# remove uchg on audit_control
+/usr/bin/chflags nouchg /etc/security/audit_control
 
 # run mcxrefresh
 /usr/bin/mcxrefresh -u $CURR_USER_UID
@@ -1048,13 +1059,14 @@ echo "$(date -u) Remediation complete" >> "$audit_log"
 
 }
 
-zparseopts -D -E -check=check -fix=fix -stats=stats -compliant=compliant_opt -non_compliant=non_compliant_opt -reset=reset
+zparseopts -D -E -check=check -fix=fix -stats=stats -compliant=compliant_opt -non_compliant=non_compliant_opt -reset=reset -cfc=cfc
 
 if [[ $reset ]]; then reset_plist; fi
 
-if [[ $check ]] || [[ $fix ]] || [[ $stats ]] || [[ $compliant_opt ]] || [[ $non_compliant_opt ]]; then
+if [[ $check ]] || [[ $fix ]] || [[ $cfc ]] || [[ $stats ]] || [[ $compliant_opt ]] || [[ $non_compliant_opt ]]; then
     if [[ $fix ]]; then run_fix; fi
     if [[ $check ]]; then run_scan; fi
+    if [[ $cfc ]]; then run_scan; run_fix; run_scan; fi
     if [[ $stats ]];then generate_stats; fi
     if [[ $compliant_opt ]];then compliance_count "compliant"; fi
     if [[ $non_compliant_opt ]];then compliance_count "non-compliant"; fi
@@ -1063,6 +1075,12 @@ else
         show_menus
         read_options
     done
+fi
+
+if [[ "$ssh_key_check -ne 0 ]]; then
+    /bin/rm /etc/ssh/ssh_host_rsa_key
+    /bin/rm /etc/ssh/ssh_host_rsa_key.public
+    ssh_key_check=0
 fi
     """
 

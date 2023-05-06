@@ -6,8 +6,17 @@ discussion: |
   Turning off guest access prevents anonymous users from accessing files.
 check: |
   /usr/bin/osascript -l JavaScript << EOS
-  $.NSUserDefaults.alloc.initWithSuiteName('com.apple.MCX')\
-  .objectForKey('DisableGuestAccount').js
+  function run() {
+    let pref1 = ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('com.apple.MCX')\
+  .objectForKey('DisableGuestAccount'))
+    let pref2 = ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('com.apple.MCX')\
+  .objectForKey('EnableGuestAccount'))
+    if ( pref1 == true && pref2 == false ) {
+      return("true")
+    } else {
+      return("false")
+    }
+  }
   EOS
 result:
   string: "true"
@@ -48,7 +57,6 @@ tags:
   - 800-53r4_moderate 
   - 800-53r4_high 
   - 800-171 
-  - cnssi-1253
   - cis_lvl1
   - cis_lvl2
   - cisv8
@@ -57,3 +65,4 @@ mobileconfig: true
 mobileconfig_info:
   com.apple.MCX:
     DisableGuestAccount: true
+    EnableGuestAccount: false
