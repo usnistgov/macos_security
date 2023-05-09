@@ -151,6 +151,7 @@ discussion: |
   4.4 Ensure Software Update returns Your software is up to date + 
   4.5 Review iCloud Private Relay settings +
   4.6 Review Mail Privacy Protection settings +
+  4.8 Ensure Find My iPhone/iPad is set to Enabled on end user-owned devices +
   4.9 Ensure the latest iOS device architecture is used by high-value targets
   |===
 check: |
