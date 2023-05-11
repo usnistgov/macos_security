@@ -148,9 +148,11 @@ discussion: |
   4.1.3 Review Lockdown Mode + 
   4.1.4 Ensure "App Privacy Report" is enabled +
   4.2 Ensure device is not obviously jailbroken or compromised +
+  4.3 Ensure Install iOS Updates of Automatic Updates is set to Enabled +
   4.4 Ensure Software Update returns Your software is up to date + 
   4.5 Review iCloud Private Relay settings +
   4.6 Review Mail Privacy Protection settings +
+  4.7 Ensure Automatic Downloads of App Updates is set to Enabled +
   4.8 Ensure Find My iPhone/iPad is set to Enabled on end user-owned devices +
   4.9 Ensure the latest iOS device architecture is used by high-value targets
   |===
