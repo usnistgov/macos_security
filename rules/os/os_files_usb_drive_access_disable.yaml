@@ -1,4 +1,4 @@
-id: "os_files_usb_drive_acces_disable"
+id: "os_files_usb_drive_access_disable"
 title: "Ensure Allow USB drive access in Files app is set to Disabled"
 discussion: |
   USB drive acces in Files app _MUST_ be disabled.

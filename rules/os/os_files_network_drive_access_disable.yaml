@@ -1,4 +1,4 @@
-id: "os_files_network_drive_acces_disable"
+id: "os_files_network_drive_access_disable"
 title: "Ensure Allow network drive access in Files app is set to Disabled"
 discussion: |
   Network drive acces in Files app _MUST_ be disabled.
