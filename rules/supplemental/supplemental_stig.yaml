@@ -2,7 +2,7 @@
 id: supplemental_stig
 title: "DISA STIG Supplemental"
 discussion: |
-  This supplemental lists DISA STIG controls that when applied may not produce the intended result. Where there are discrepencies between the DISA STIG and the macOS Security Compliance Project, the recommendations are outlined below.
+  This supplemental contains DISA STIG controls that may not produce intended results when applied. Where discrepancies exist between the DISA STIG and macOS Security Compliance Project guidelines, the appropriate recommendations are outlined below.
   
   [cols="20%h, 80%a"]
   |===
