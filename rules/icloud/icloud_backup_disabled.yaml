@@ -29,8 +29,8 @@ ios:
   - "16.0"
 tags:
   - ios
-  - cis_lvl1
-  - cis_lvl2
+  - cis_lvl1_enterprise
+  - cis_lvl2_enterprise
   - cisv8
 mobileconfig: true
 mobileconfig_info:
