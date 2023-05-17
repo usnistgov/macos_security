@@ -11,7 +11,15 @@ references:
   cci: 
     - N/A
   800-53r5:
-    - N/A
+    - CM-1
+    - CM-2
+    - CM-6
+    - CM-7
+    - CM-7(1)
+    - CM-9
+    - SA-3
+    - SA-8
+    - SA-10
   800-53r4: 
     - N/A
   srg:
@@ -32,6 +40,7 @@ tags:
   - cis_lvl1
   - cis_lvl2
   - cisv8
+  - 800-53r5
 mobileconfig: true
 mobileconfig_info:
   com.apple.applicationaccess:

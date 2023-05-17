@@ -11,7 +11,10 @@ references:
   cci: 
     - N/A
   800-53r5:
-    - N/A
+    - AC-3
+    - AC-5
+    - AC-6
+    - MP-2
   800-53r4: 
     - N/A
   srg:
@@ -33,6 +36,7 @@ tags:
   - cis_lvl1
   - cis_lvl2
   - cisv8
+  - 800-53r5
 severity: ""
 mobileconfig: true
 mobileconfig_info:
