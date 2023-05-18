@@ -23,7 +23,7 @@ references:
     - N/A
   cis:
     benchmark:
-      - 3.2.1.20 (level 2)
+      - 3.2.1.20 (level 2 - Institutionally-Owned Devices)
     v8:
       - 4.8
 iOS:
