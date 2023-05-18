@@ -71,8 +71,8 @@ authors:
       - Allen Golbig|Jamf
 titles:
   all_rules: All Rules
-  cis_lvl1_byod: CIS Apple iOS 16 v1.1.0 Benchmark (Level 1) - BYOD
-  cis_lvl2_byod: CIS Apple iOS 16 v1.1.0 Benchmark (Level 2) - BYOD
-  cis_lvl1_enterprise: CIS Apple iOS 16 v1.1.0 Benchmark (Level 1) - Enterprise
-  cis_lvl2_enterprise: CIS Apple iOS 16 v1.1.0 Benchmark (Level 2) - Enterprise
+  cis_lvl1_byod: CIS Apple iOS 16 v1.1.0 Benchmark (Level 1) - End-User Owned Devices
+  cis_lvl2_byod: CIS Apple iOS 16 v1.1.0 Benchmark (Level 2) - End-User Owned Devices
+  cis_lvl1_enterprise: CIS Apple iOS 16 v1.1.0 Benchmark (Level 1) - Institutionally-Owned Devices
+  cis_lvl2_enterprise: CIS Apple iOS 16 v1.1.0 Benchmark (Level 2) - Institutionally-Owned Devices
   cisv8: CIS Controls Version 8

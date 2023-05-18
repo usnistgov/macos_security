@@ -1344,8 +1344,14 @@ def generate_xls(baseline_name, build_path, baseline_yaml):
         if rule.rule_cis != ['None']:
             for title, ref in rule.rule_cis.items():
                 if title.lower() == "benchmark":
-                    sheet1.write(counter, 12, ref, topWrap)
-                    sheet1.col(12).width = 500 * 15
+                    if "byod" in baseline_name:
+                        r = [ x for x in ref if x.startswith("2")]
+                        sheet1.write(counter, 12, r, topWrap)
+                        sheet1.col(12).width = 500 * 15
+                    elif "enterprise" in baseline_name:
+                        r = [ x for x in ref if x.startswith("3")]
+                        sheet1.write(counter, 12, r, topWrap)
+                        sheet1.col(12).width = 500 * 15
                 if title.lower() == "controls v8":
                     cis = (str(ref).strip('[]\''))
                     cis = cis.replace(", ", "\n")
@@ -1549,14 +1555,23 @@ def parse_custom_references(reference):
             string += "!" + str(item) + "!* " + str(reference[item]) + "\n"
     return string
 
-def parse_cis_references(reference):
+def parse_cis_references(reference, title):
     string = "\n"
     for item in reference:
         if isinstance(reference[item], list):
             string += "!CIS " + str(item).title() + "\n!\n"
             string += "* "
-            for i in reference[item]:
-                string += str(i) + ", "
+            if item == "benchmark":
+                for i in reference[item]:
+                    if "End-User" in title:
+                        if i.startswith("2"):
+                            string += str(i) + ", "
+                    elif "Institutionally" in title:
+                        if i.startswith("3"):
+                            string += str(i) + ", "
+            else:
+                for i in reference[item]:
+                    string += str(i) + ", "
             string = string[:-2] + "\n"
         else:
             string += "!" + str(item) + "!* " + str(reference[item]) + "\n"
@@ -1859,7 +1874,7 @@ def main():
             except KeyError:
                 cis = ""
             else:
-                cis = parse_cis_references(rule_yaml['references']['cis'])
+                cis = parse_cis_references(rule_yaml['references']['cis'], baseline_yaml['title'])
 
             try:
                 rule_yaml['references']['srg']
