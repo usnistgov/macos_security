@@ -529,9 +529,7 @@ def generate_profiles(baseline_name, build_path, parent_dir, baseline_yaml, sign
 
     print(f"""
     CAUTION: These configuration profiles are intended for evaluation in a TEST
-    environment. Certain configuration profiles (Smartcards), when applied could
-    leave a system in a state where a user can no longer login with a password.
-    Please use caution when applying configuration settings to a system.
+    environment.
 
     NOTE: If an MDM is already being leveraged, many of these profile settings may
     be available through the vendor.
@@ -565,524 +563,6 @@ def default_audit_plist(baseline_name, build_path, baseline_yaml):
             plist_dict[profile_rule] = { "exempt": False }
 
     plistlib.dump(plist_dict, plist_file)
-
-
-def generate_script(baseline_name, build_path, baseline_yaml, reference):
-    """Generates the zsh script from the rules in the baseline YAML
-    """
-    compliance_script_file = open(
-        build_path + '/' + baseline_name + '_compliance.sh', 'w')
-
-    check_function_string = ""
-    fix_function_string = ""
-
-
-    # create header of fix zsh script
-    check_zsh_header = f"""#!/bin/zsh
-
-##  This script will attempt to audit all of the settings based on the installed profile.
-
-##  This script is provided as-is and should be fully tested on a system that is not in a production environment.
-
-###################  Variables  ###################
-
-pwpolicy_file=""
-
-###################  DEBUG MODE - hold shift when running the script  ###################
-
-shiftKeyDown=$(osascript -l JavaScript -e "ObjC.import('Cocoa'); ($.NSEvent.modifierFlags & $.NSEventModifierFlagShift) > 1")
-
-if [[ $shiftKeyDown == "true" ]]; then
-    echo "-----DEBUG-----"
-    set -o xtrace -o verbose
-fi
-
-###################  COMMANDS START BELOW THIS LINE  ###################
-
-## Must be run as root
-if [[ $EUID -ne 0 ]]; then
-    echo "This script must be run as root"
-    exit 1
-fi
-
-# path to PlistBuddy
-plb="/usr/libexec/PlistBuddy"
-
-# get the currently logged in user
-CURRENT_USER=$(scutil <<< "show State:/Users/ConsoleUser" | awk '/Name :/ && ! /loginwindow/ {{ print $3 }}')
-CURR_USER_UID=$(/usr/bin/id -u $CURRENT_USER)
-
-# get system architecture
-arch=$(/usr/bin/arch)
-
-# configure colors for text
-RED='\e[31m'
-STD='\e[39m'
-GREEN='\e[32m'
-YELLOW='\e[33m'
-
-audit_plist="/Library/Preferences/org.{baseline_name}.audit.plist"
-audit_log="/Library/Logs/{baseline_name}_baseline.log"
-
-# pause function
-pause(){{
-vared -p "Press [Enter] key to continue..." -c fackEnterKey
-}}
-
-ask() {{
-    # if fix flag is passed, assume YES for everything
-    if [[ $fix ]]; then
-        return 0
-    fi
-
-    while true; do
-
-        if [ "${{2:-}}" = "Y" ]; then
-            prompt="Y/n"
-            default=Y
-        elif [ "${{2:-}}" = "N" ]; then
-            prompt="y/N"
-            default=N
-        else
-            prompt="y/n"
-            default=
-        fi
-
-        # Ask the question - use /dev/tty in case stdin is redirected from somewhere else
-        printf "${{YELLOW}} $1 [$prompt] ${{STD}}"
-        read REPLY
-
-        # Default?
-        if [ -z "$REPLY" ]; then
-            REPLY=$default
-        fi
-
-        # Check if the reply is valid
-        case "$REPLY" in
-            Y*|y*) return 0 ;;
-            N*|n*) return 1 ;;
-        esac
-
-    done
-}}
-
-# function to display menus
-show_menus() {{
-    lastComplianceScan=$(defaults read /Library/Preferences/org.{baseline_name}.audit.plist lastComplianceCheck)
-
-    if [[ $lastComplianceScan == "" ]];then
-        lastComplianceScan="No scans have been run"
-    fi
-
-    /usr/bin/clear
-    echo "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
-    echo "        M A I N - M E N U"
-    echo "  macOS Security Compliance Tool"
-    echo "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
-    echo "Last compliance scan: $lastComplianceScan\n"
-    echo "1. View Last Compliance Report"
-    echo "2. Run New Compliance Scan"
-    echo "3. Run Commands to remediate non-compliant settings"
-    echo "4. Exit"
-}}
-
-# function to read options
-read_options(){{
-    local choice
-    vared -p "Enter choice [ 1 - 4 ] " -c choice
-    case $choice in
-        1) view_report ;;
-        2) run_scan ;;
-        3) run_fix ;;
-        4) exit 0;;
-        *) echo -e "${{RED}}Error: please choose an option 1-4...${{STD}}" && sleep 1
-    esac
-}}
-
-# function to reset and remove plist file.  Used to clear out any previous findings
-reset_plist(){{
-    echo "Clearing results from /Library/Preferences/org.{baseline_name}.audit.plist"
-    defaults delete /Library/Preferences/org.{baseline_name}.audit.plist
-}}
-
-# Generate the Compliant and Non-Compliant counts. Returns: Array (Compliant, Non-Compliant)
-compliance_count(){{
-    compliant=0
-    non_compliant=0
-
-    results=$(/usr/libexec/PlistBuddy -c "Print" /Library/Preferences/org.{baseline_name}.audit.plist)
-
-    while IFS= read -r line; do
-        if [[ "$line" =~ "finding = false" ]]; then
-            compliant=$((compliant+1))
-        fi
-        if [[ "$line" =~ "finding = true" ]]; then
-            non_compliant=$((non_compliant+1))
-        fi
-    done <<< "$results"
-
-    # Enable output of just the compliant or non-compliant numbers.
-    if [[ $1 = "compliant" ]]
-    then
-        echo $compliant
-    elif [[ $1 = "non-compliant" ]]
-    then
-        echo $non_compliant
-    else # no matching args output the array
-        array=($compliant $non_compliant)
-        echo ${{array[@]}}
-    fi
-}}
-
-exempt_count(){{
-    exempt=0
-
-    if [[ -e "/Library/Managed Preferences/org.{baseline_name}.audit.plist" ]];then
-        mscp_prefs="/Library/Managed Preferences/org.{baseline_name}.audit.plist"
-    else
-        mscp_prefs="/Library/Preferences/org.{baseline_name}.audit.plist"
-    fi
-
-    results=$(/usr/libexec/PlistBuddy -c "Print" "$mscp_prefs")
-
-    while IFS= read -r line; do
-        if [[ "$line" =~ "exempt = true" ]]; then
-            exempt=$((exempt+1))
-        fi
-    done <<< "$results"
-
-    echo $exempt
-}}
-
-
-generate_report(){{
-    count=($(compliance_count))
-    exempt_rules=$(exempt_count)
-    compliant=${{count[1]}}
-    non_compliant=${{count[2]}}
-
-    total=$((non_compliant + compliant - exempt_rules))
-    percentage=$(printf %.2f $(( compliant * 100. / total )) )
-    echo
-    echo "Number of tests passed: ${{GREEN}}$compliant${{STD}}"
-    echo "Number of test FAILED: ${{RED}}$non_compliant${{STD}}"
-    echo "Number of exempt rules: ${{YELLOW}}$exempt_rules${{STD}}"
-    echo "You are ${{YELLOW}}$percentage%${{STD}} percent compliant!"
-    pause
-}}
-
-view_report(){{
-
-    if [[ $lastComplianceScan == "No scans have been run" ]];then
-        echo "no report to run, please run new scan"
-        pause
-    else
-        generate_report
-    fi
-}}
-
-# Designed for use with MDM - single unformatted output of the Compliance Report
-generate_stats(){{
-    count=($(compliance_count))
-    compliant=${{count[1]}}
-    non_compliant=${{count[2]}}
-
-    total=$((non_compliant + compliant))
-    percentage=$(printf %.2f $(( compliant * 100. / total )) )
-    echo "PASSED: $compliant FAILED: $non_compliant, $percentage percent compliant!"
-}}
-
-run_scan(){{
-# append to existing logfile
-if [[ $(/usr/bin/tail -n 1 "$audit_log" 2>/dev/null) = *"Remediation complete" ]]; then
- 	echo "$(date -u) Beginning {baseline_name} baseline scan" >> "$audit_log"
-else
- 	echo "$(date -u) Beginning {baseline_name} baseline scan" > "$audit_log"
-fi
-
-# run mcxrefresh
-/usr/bin/mcxrefresh -u $CURR_USER_UID
-
-# write timestamp of last compliance check
-/usr/bin/defaults write "$audit_plist" lastComplianceCheck "$(date)"
-    """
-
-    # Read all rules in the section and output the check functions
-    for sections in baseline_yaml['profile']:
-        for profile_rule in sections['rules']:
-            logging.debug(f"checking for rule file for {profile_rule}")
-            if glob.glob('../custom/rules/**/{}.yaml'.format(profile_rule),recursive=True):
-                rule = glob.glob('../custom/rules/**/{}.yaml'.format(profile_rule),recursive=True)[0]
-                custom=True
-                logging.debug(f"{rule}")
-            elif glob.glob('../rules/*/{}.yaml'.format(profile_rule)):
-                rule = glob.glob('../rules/*/{}.yaml'.format(profile_rule))[0]
-                custom=False
-                logging.debug(f"{rule}")
-
-            rule_yaml = get_rule_yaml(rule, baseline_yaml, custom)
-
-
-            if rule_yaml['id'].startswith("supplemental"):
-                continue
-
-            arch=""
-            try:
-                if "manual" in rule_yaml['tags']:
-                    continue
-                if "arm64" in rule_yaml['tags']:
-                    arch="arm64"
-                elif "i386" in rule_yaml['tags']:
-                    arch="i386"
-            except:
-                pass
-
-            # grab the 800-53 controls
-            try:
-                rule_yaml['references']['800-53r5']
-            except KeyError:
-                nist_80053r5 = 'N/A'
-            else:
-                nist_80053r5 = rule_yaml['references']['800-53r5']
-            
-            cis_ref = ['cis', 'cis_lvl1', 'cis_lvl2', 'cisv8']
-
-            if reference == "default":
-                log_reference_id = [rule_yaml['id']]
-            elif reference in cis_ref:
-                if "v8" in reference:
-                    log_reference_id = [f"CIS Controls-{', '.join(map(str,rule_yaml['references']['cis']['controls v8']))}"]
-                else:
-                    log_reference_id = [f"CIS-{rule_yaml['references']['cis']['benchmark'][0]}"]
-            else:
-                try:
-                    rule_yaml['references'][reference]
-                except KeyError:
-                    try:
-                        rule_yaml['references']['custom'][reference]
-                    except KeyError:
-                        log_reference_id = [rule_yaml['id']]
-                    else:
-                        if isinstance(rule_yaml['references']['custom'][reference], list):
-                            log_reference_id = rule_yaml['references']['custom'][reference] + [rule_yaml['id']]
-                        else:
-                            log_reference_id = [rule_yaml['references']['custom'][reference]] + [rule_yaml['id']]
-                else:
-                    if isinstance(rule_yaml['references'][reference], list):
-                        log_reference_id = rule_yaml['references'][reference] + [rule_yaml['id']]
-                    else:
-                            log_reference_id = [rule_yaml['references'][reference]] + [rule_yaml['id']]
-        # group the controls
-            if not nist_80053r5 == "N/A":
-                nist_80053r5.sort()
-                res = [list(i) for j, i in groupby(
-                    nist_80053r5, lambda a: a.split('(')[0])]
-                nist_controls = ''
-                for i in res:
-                    nist_controls += group_ulify(i)
-            else:
-                nist_controls = "N/A"
-
-            # print checks and result
-            try:
-                check = rule_yaml['check']
-            except KeyError:
-                print("no check found for {}".format(rule_yaml['id']))
-                continue
-            try:
-                result = rule_yaml['result']
-            except KeyError:
-                continue
-
-            if "integer" in result:
-                result_value = result['integer']
-            elif "boolean" in result:
-                result_value = str(result['boolean']).lower()
-            elif "string" in result:
-                result_value = result['string']
-            else:
-                continue
-
-            # write the checks
-            zsh_check_text = """
-#####----- Rule: {0} -----#####
-## Addresses the following NIST 800-53 controls: {1}
-rule_arch="{6}"
-if [[ "$arch" == "$rule_arch" ]] || [[ -z "$rule_arch" ]]; then
-    #echo 'Running the command to check the settings for: {0} ...' | tee -a "$audit_log"
-    unset result_value
-    result_value=$({2}\n)
-    # expected result {3}
-
-
-    # check to see if rule is exempt
-    unset exempt
-    unset exempt_reason
-
-    exempt=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.{7}.audit').objectForKey('{0}'))["exempt"]
-EOS
-)
-    exempt_reason=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.{7}.audit').objectForKey('{0}'))["exempt_reason"]
-EOS
-)
-
-    if [[ $result_value == "{4}" ]]; then
-        echo "$(date -u) {5} passed (Result: $result_value, Expected: "{3}")" | /usr/bin/tee -a "$audit_log"
-        /usr/bin/defaults write "$audit_plist" {0} -dict-add finding -bool NO
-        /usr/bin/logger "mSCP: {7} - {5} passed (Result: $result_value, Expected: "{3}")"
-    else
-        if [[ ! $exempt == "1" ]] || [[ -z $exempt ]];then
-            echo "$(date -u) {5} failed (Result: $result_value, Expected: "{3}")" | /usr/bin/tee -a "$audit_log"
-            /usr/bin/defaults write "$audit_plist" {0} -dict-add finding -bool YES
-            /usr/bin/logger "mSCP: {7} - {5} failed (Result: $result_value, Expected: "{3}")"
-        else
-            echo "$(date -u) {5} failed (Result: $result_value, Expected: "{3}") - Exemption Allowed (Reason: "$exempt_reason")" | /usr/bin/tee -a "$audit_log"
-            /usr/bin/defaults write "$audit_plist" {0} -dict-add finding -bool YES
-            /usr/bin/logger "mSCP: {7} - {5} failed (Result: $result_value, Expected: "{3}") - Exemption Allowed (Reason: "$exempt_reason")"
-            /bin/sleep 1
-        fi
-    fi
-
-
-else
-    echo "$(date -u) {5} does not apply to this architechture" | tee -a "$audit_log"
-    /usr/bin/defaults write "$audit_plist" {0} -dict-add finding -bool NO
-fi
-    """.format(rule_yaml['id'], nist_controls.replace("\n", "\n#"), check.strip(), str(result).lower(), result_value, ' '.join(log_reference_id), arch, baseline_name)
-
-            check_function_string = check_function_string + zsh_check_text
-
-            # print fix and result
-            try:
-                rule_yaml['fix']
-            except KeyError:
-                fix_text = 'N/A'
-            else:
-                fix_text = rule_yaml['fix'] or ["n/a"]
-
-# write the fixes
-
-            if "[source,bash]" in fix_text:
-                nist_controls_commented = nist_controls.replace('\n', '\n#')
-                zsh_fix_text = f"""
-#####----- Rule: {rule_yaml['id']} -----#####
-## Addresses the following NIST 800-53 controls: {nist_controls_commented}
-
-# check to see if rule is exempt
-unset exempt
-unset exempt_reason
-
-exempt=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.{baseline_name}.audit').objectForKey('{rule_yaml['id']}'))["exempt"]
-EOS
-)
-
-exempt_reason=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.{baseline_name}.audit').objectForKey('{rule_yaml['id']}'))["exempt_reason"]
-EOS
-)
-
-{rule_yaml['id']}_audit_score=$($plb -c "print {rule_yaml['id']}:finding" $audit_plist)
-if [[ ! $exempt == "1" ]] || [[ -z $exempt ]];then
-    if [[ ${rule_yaml['id']}_audit_score == "true" ]]; then
-        ask '{rule_yaml['id']} - Run the command(s)-> {quotify(get_fix_code(rule_yaml['fix']).strip())} ' N
-        if [[ $? == 0 ]]; then
-            echo 'Running the command to configure the settings for: {rule_yaml['id']} ...' | /usr/bin/tee -a "$audit_log"
-            {get_fix_code(rule_yaml['fix']).strip()}
-        fi
-    else
-        echo 'Settings for: {rule_yaml['id']} already configured, continuing...' | /usr/bin/tee -a "$audit_log"
-    fi
-elif [[ ! -z "$exempt_reason" ]];then
-    echo "$(date -u) {rule_yaml['id']} has an exemption, remediation skipped (Reason: "$exempt_reason")" | /usr/bin/tee -a "$audit_log"
-fi
-    """
-
-                fix_function_string = fix_function_string + zsh_fix_text
-
-    # write the footer for the check functions
-    zsh_check_footer = """
-lastComplianceScan=$(defaults read "$audit_plist" lastComplianceCheck)
-echo "Results written to $audit_plist"
-
-if [[ ! $check ]];then
-    pause
-fi
-
-}
-
-run_fix(){
-
-if [[ ! -e "$audit_plist" ]]; then
-    echo "Audit plist doesn't exist, please run Audit Check First" | tee -a "$audit_log"
-
-    if [[ ! $fix ]]; then
-        pause
-        show_menus
-        read_options
-    else
-        exit 1
-    fi
-fi
-
-if [[ ! $fix ]]; then
-    ask 'THE SOFTWARE IS PROVIDED "AS IS" WITHOUT ANY WARRANTY OF ANY KIND, EITHER EXPRESSED, IMPLIED, OR STATUTORY, INCLUDING, BUT NOT LIMITED TO, ANY WARRANTY THAT THE SOFTWARE WILL CONFORM TO SPECIFICATIONS, ANY IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND FREEDOM FROM INFRINGEMENT, AND ANY WARRANTY THAT THE DOCUMENTATION WILL CONFORM TO THE SOFTWARE, OR ANY WARRANTY THAT THE SOFTWARE WILL BE ERROR FREE.  IN NO EVENT SHALL NIST BE LIABLE FOR ANY DAMAGES, INCLUDING, BUT NOT LIMITED TO, DIRECT, INDIRECT, SPECIAL OR CONSEQUENTIAL DAMAGES, ARISING OUT OF, RESULTING FROM, OR IN ANY WAY CONNECTED WITH THIS SOFTWARE, WHETHER OR NOT BASED UPON WARRANTY, CONTRACT, TORT, OR OTHERWISE, WHETHER OR NOT INJURY WAS SUSTAINED BY PERSONS OR PROPERTY OR OTHERWISE, AND WHETHER OR NOT LOSS WAS SUSTAINED FROM, OR AROSE OUT OF THE RESULTS OF, OR USE OF, THE SOFTWARE OR SERVICES PROVIDED HEREUNDER. WOULD YOU LIKE TO CONTINUE? ' N
-
-    if [[ $? != 0 ]]; then
-        show_menus
-        read_options
-    fi
-fi
-
-# append to existing logfile
-echo "$(date -u) Beginning remediation of non-compliant settings" >> "$audit_log"
-
-# run mcxrefresh
-/usr/bin/mcxrefresh -u $CURR_USER_UID
-
-
-    """
-
-    # write the footer for the script
-    zsh_fix_footer = """
-echo "$(date -u) Remediation complete" >> "$audit_log"
-
-}
-
-zparseopts -D -E -check=check -fix=fix -stats=stats -compliant=compliant_opt -non_compliant=non_compliant_opt -reset=reset
-
-if [[ $reset ]]; then reset_plist; fi
-
-if [[ $check ]] || [[ $fix ]] || [[ $stats ]] || [[ $compliant_opt ]] || [[ $non_compliant_opt ]]; then
-    if [[ $fix ]]; then run_fix; fi
-    if [[ $check ]]; then run_scan; fi
-    if [[ $stats ]];then generate_stats; fi
-    if [[ $compliant_opt ]];then compliance_count "compliant"; fi
-    if [[ $non_compliant_opt ]];then compliance_count "non-compliant"; fi
-else
-    while true; do
-        show_menus
-        read_options
-    done
-fi
-    """
-
-    #write out the compliance script
-    compliance_script_file.write(check_zsh_header)
-    compliance_script_file.write(check_function_string)
-    compliance_script_file.write(zsh_check_footer)
-    compliance_script_file.write(fix_function_string)
-    compliance_script_file.write(zsh_fix_footer)
-
-    print(f"Finished building {compliance_script_file.name}")
-
-    # make the compliance script executable
-    os.chmod(compliance_script_file.name, 0o755)
-
-    #fix_script_file.close()
-    compliance_script_file.close()
 
 def fill_in_odv(resulting_yaml, parent_values):
     fields_to_process = ['title', 'discussion', 'check', 'fix']
@@ -1246,24 +726,22 @@ def generate_xls(baseline_name, build_path, baseline_yaml):
     top = xlwt.easyxf("align: vert top")
     headers = xlwt.easyxf("font: bold on")
     counter = 1
-    column_counter = 16
+    column_counter = 14
     custom_ref_column = {}
     sheet1.write(0, 0, "CCE", headers)
     sheet1.write(0, 1, "Rule ID", headers)
     sheet1.write(0, 2, "Title", headers)
     sheet1.write(0, 3, "Discussion", headers)
     sheet1.write(0, 4, "Mechanism", headers)
-    sheet1.write(0, 5, "Check", headers)
-    sheet1.write(0, 6, "Check Result", headers)
-    sheet1.write(0, 7, "Fix", headers)
-    sheet1.write(0, 8, "800-53r5", headers)
-    sheet1.write(0, 9, "800-171", headers)
-    sheet1.write(0, 10, "SRG", headers)
-    sheet1.write(0, 11, "DISA STIG", headers)
-    sheet1.write(0, 12, "CIS Benchmark", headers)
-    sheet1.write(0, 13, "CIS v8", headers)
-    sheet1.write(0, 14, "CCI", headers)
-    sheet1.write(0, 15, "Modifed Rule", headers)
+    sheet1.write(0, 5, "Fix", headers)
+    sheet1.write(0, 6, "800-53r5", headers)
+    sheet1.write(0, 7, "800-171", headers)
+    sheet1.write(0, 8, "SRG", headers)
+    sheet1.write(0, 9, "DISA STIG", headers)
+    sheet1.write(0, 10, "CIS Benchmark", headers)
+    sheet1.write(0, 11, "CIS v8", headers)
+    sheet1.write(0, 12, "CCI", headers)
+    sheet1.write(0, 13, "Modifed Rule", headers)
     sheet1.set_panes_frozen(True)
     sheet1.set_horz_split_pos(1)
     sheet1.set_vert_split_pos(2)
@@ -1296,49 +774,39 @@ def generate_xls(baseline_name, build_path, baseline_yaml):
         sheet1.write(counter, 4, mechanism, top)
         sheet1.col(4).width = 256 * 25
 
-        sheet1.write(counter, 5, rule.rule_check.replace("\|", "|"), topWrap)
-        sheet1.col(5).width = 750 * 50
-
-        sheet1.write(counter, 6, str(rule.rule_result_value), topWrap)
-        sheet1.col(6).width = 256 * 25
-
         if rule.rule_mobileconfig:
-            sheet1.write(counter, 7, format_mobileconfig_fix(
+            sheet1.write(counter, 5, format_mobileconfig_fix(
                 rule.rule_mobileconfig_info), topWrap)
-            #print(format_mobileconfig_fix(rule.rule_mobileconfig_info))
-
-            # sheet1.write(counter, 7, str(
-            #     configProfile(rule_file)), topWrap)
         else:
-            sheet1.write(counter, 7, str(rule.rule_fix.replace("\|", "|")), topWrap)
+            sheet1.write(counter, 5, str(rule.rule_fix.replace("\|", "|")), topWrap)
 
-        sheet1.col(7).width = 1000 * 50
+        sheet1.col(5).width = 1000 * 50
 
         baseline_refs = (
             str(rule.rule_80053r5)).strip('[]\'')
         baseline_refs = baseline_refs.replace(", ", "\n").replace("\'", "")
 
-        sheet1.write(counter, 8, baseline_refs, topWrap)
-        sheet1.col(8).width = 256 * 15
+        sheet1.write(counter, 6, baseline_refs, topWrap)
+        sheet1.col(6).width = 256 * 15
 
         nist171_refs = (
             str(rule.rule_800171)).strip('[]\'')
         nist171_refs = nist171_refs.replace(", ", "\n").replace("\'", "")
 
-        sheet1.write(counter, 9, nist171_refs, topWrap)
-        sheet1.col(9).width = 256 * 15
+        sheet1.write(counter, 7, nist171_refs, topWrap)
+        sheet1.col(7).width = 256 * 15
 
         srg_refs = (str(rule.rule_srg)).strip('[]\'')
         srg_refs = srg_refs.replace(", ", "\n").replace("\'", "")
 
-        sheet1.write(counter, 10, srg_refs, topWrap)
-        sheet1.col(10).width = 500 * 15
+        sheet1.write(counter, 8, srg_refs, topWrap)
+        sheet1.col(8).width = 500 * 15
 
         disa_refs = (str(rule.rule_disa_stig)).strip('[]\'')
         disa_refs = disa_refs.replace(", ", "\n").replace("\'", "")
 
-        sheet1.write(counter, 11, disa_refs, topWrap)
-        sheet1.col(11).width = 500 * 15
+        sheet1.write(counter, 9, disa_refs, topWrap)
+        sheet1.col(9).width = 500 * 15
 
         cis = ""
         if rule.rule_cis != ['None']:
@@ -1346,29 +814,29 @@ def generate_xls(baseline_name, build_path, baseline_yaml):
                 if title.lower() == "benchmark":
                     if "byod" in baseline_name:
                         r = [ x for x in ref if x.startswith("2")]
-                        sheet1.write(counter, 12, r, topWrap)
-                        sheet1.col(12).width = 500 * 15
+                        sheet1.write(counter, 20, r, topWrap)
+                        sheet1.col(10).width = 500 * 15
                     elif "enterprise" in baseline_name:
                         r = [ x for x in ref if x.startswith("3")]
-                        sheet1.write(counter, 12, r, topWrap)
-                        sheet1.col(12).width = 500 * 15
+                        sheet1.write(counter, 10, r, topWrap)
+                        sheet1.col(10).width = 500 * 15
                 if title.lower() == "controls v8":
                     cis = (str(ref).strip('[]\''))
                     cis = cis.replace(", ", "\n")
-                    sheet1.write(counter, 13, cis, topWrap)
-                    sheet1.col(13).width = 500 * 15
+                    sheet1.write(counter, 11, cis, topWrap)
+                    sheet1.col(11).width = 500 * 15
 
         cci = (str(rule.rule_cci)).strip('[]\'')
         cci = cci.replace(", ", "\n").replace("\'", "")
 
-        sheet1.write(counter, 14, cci, topWrap)
-        sheet1.col(13).width = 400 * 15
+        sheet1.write(counter, 12, cci, topWrap)
+        sheet1.col(12).width = 400 * 15
 
         customized = (str(rule.rule_customized)).strip('[]\'')
         customized = customized.replace(", ", "\n").replace("\'", "")
 
-        sheet1.write(counter, 15, customized, topWrap)
-        sheet1.col(14).width = 400 * 15
+        sheet1.write(counter, 13, customized, topWrap)
+        sheet1.col(1).width = 400 * 15
 
         if rule.rule_custom_refs != ['None']:
             for title, ref in rule.rule_custom_refs.items():
@@ -1483,10 +951,6 @@ def create_args():
                         help="Full path to logo file to be included in the guide.", action="store")
     parser.add_argument("-p", "--profiles", default=None,
                         help="Generate configuration profiles for the rules.", action="store_true")
-    parser.add_argument("-r", "--reference", default=None,
-                        help="Use the reference ID instead of rule ID for identification.")
-    parser.add_argument("-s", "--script", default=None,
-                        help="Generate the compliance script for the rules.", action="store_true")
     # add gary argument to include tags for XCCDF generation, with a nod to Gary the SCAP guru
     parser.add_argument("-g", "--gary", default=None,
                         help=argparse.SUPPRESS, action="store_true")
@@ -1621,12 +1085,8 @@ def main():
         else:
             signing = False
 
-        if args.reference:
-            use_custom_reference = True
-            log_reference = args.reference
-        else:
-            log_reference = "default"
-            use_custom_reference = False
+        log_reference = "default"
+        use_custom_reference = False
 
     except IOError as msg:
         parser.error(str(msg))
@@ -2027,11 +1487,6 @@ def main():
     if args.profiles:
         print("Generating configuration profiles...")
         generate_profiles(baseline_name, build_path, parent_dir, baseline_yaml, signing, args.hash)
-
-    if args.script:
-        print("Generating compliance script...")
-        generate_script(baseline_name, build_path, baseline_yaml, log_reference)
-        default_audit_plist(baseline_name, build_path, baseline_yaml)
 
     if args.xls:
         print('Generating excel document...')
