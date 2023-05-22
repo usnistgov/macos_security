@@ -36,6 +36,8 @@ $rule_cis
 endif::[]
 
 ifdef::show_CMMC[]
+!CMMC
+!
 $rule_cmmc
 endif::[]
 
