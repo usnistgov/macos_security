@@ -19,7 +19,8 @@ discussion: |
   2.8.1 Audit Universal Control Settings +
   2.11.2 Audit Touch ID and Wallet & Apple Pay Settings +  
   2.13.1 Audit Passwords System Preference Setting +
-  2.14.1 Audit Notification & Focus Settings +  
+  2.14.1 Audit Game Center Settings +
+  2.15.1 Audit Notification & Focus Settings +  
   |===
 
   [cols="15%h, 85%a"]
