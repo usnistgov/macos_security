@@ -1,5 +1,5 @@
-id: os_home_folders_secure
-title: "Secure User's Home Folders"
+id: os_home_folders_default
+title: "Configure User's Home Folders to Apple's Default"
 discussion: |
   The system _MUST_ be configured to prevent access to other user's home folders.
   
@@ -19,30 +19,31 @@ fix: |
   ----
 references:
   cce:
-    - CCE-91800-3
+    - N/A
   cci:
     - N/A
   800-53r5:
-    - N/A
+    - AC-6
   800-53r4:
-    - N/A
+    - AC-6
   srg:
     - N/A
   disa_stig:
     - N/A
   800-171r2:
-    - 3.1.5
+    - N/A
   cis:
     benchmark:
-      - 5.1.1 (level 1)
+      - N/A
     controls v8:
-      - 3.3
+      - N/A
 macOS:
   - "13.0"
 tags:
-  - 800-171 
-  - cis_lvl1
-  - cis_lvl2
-  - cisv8
+  - 800-53r5_moderate 
+  - 800-53r5_high 
+  - 800-53r4_moderate 
+  - 800-53r4_high 
+severity: ""
 mobileconfig: false
 mobileconfig_info:
