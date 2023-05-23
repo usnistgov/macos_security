@@ -155,8 +155,7 @@ profile:
       - system_settings_wallet_applepay_prefpane_hide
   - section: "Supplemental"
     rules:
-      - supplemental_controls
+      - supplemental_stig
       - supplemental_filevault
-      - supplemental_firewall_pf
       - supplemental_password_policy
       - supplemental_smartcard
