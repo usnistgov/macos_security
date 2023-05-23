@@ -1,7 +1,11 @@
 id: os_sshd_client_alive_count_max_configure
 title: "Set SSHD Active Client Alive Maximum to $ODV"
 discussion: |
-  If SSHD is enabled it _MUST_ be configured with an Active Client Alive Maximum Count set to $ODV. Terminating an idle session within a short time period reduces the window of opportunity for unauthorized personnel to take control of a management session enabled on the console or console port that has been left unattended. In addition, quickly terminating an idle session or an incomplete login attempt will also free up resources committed by the managed network element.
+  If SSHD is enabled it _MUST_ be configured with the Client Alive Maximum Count set to $ODV.
+
+  This will set the number of client alive messages which may be sent without the SSH server receiving any messages back from the client.  If this threshold is reached while client alive messages are being sent, the SSH server will disconnect the client, terminating the session.  The client alive messages are sent through the encrypted channel and therefore will not be spoofable.  The client alive mechanism is valuable when the client or server depend on knowing when a connection has become unresponsive.
+
+  NOTE: This setting is not intended to manage idle user sessions where there is no input from the client. Its purpose is to monitor for interruptions in network connectivity and force the session to terminate after the connection appears to be broken.
 
   NOTE: /etc/ssh/sshd_config will be automatically modified to its original state following any update or major upgrade to the operating system.
 check: |
@@ -33,15 +37,15 @@ references:
   cce:
     - CCE-91886-2
   cci: 
-    - N/A
+    - CCI-001133
   800-53r5:
     - SC-10
   800-53r4: 
     - SC-10
   srg:
-    - N/A
+    - SRG-OS-000163-GPOS-00072
   disa_stig:
-    - N/A
+    - APPL-13-000052
   800-171r2:
     - 3.13.9
 macOS:
@@ -49,12 +53,14 @@ macOS:
 odv:
   hint: "Number of seconds."
   recommended: 0
+  stig: 1
 tags:
   - 800-53r5_moderate 
   - 800-53r5_high
   - 800-53r4_moderate 
   - 800-53r4_high
   - 800-171
+  - stig
 severity: "medium"
 mobileconfig: false
 mobileconfig_info:
