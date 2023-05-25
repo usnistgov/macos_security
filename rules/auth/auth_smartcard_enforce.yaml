@@ -79,3 +79,4 @@ mobileconfig: true
 mobileconfig_info:
   com.apple.security.smartcard:
     enforceSmartCard: true
+    allowSmartCard: true

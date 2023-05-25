@@ -69,3 +69,4 @@ mobileconfig: true
 mobileconfig_info:
   com.apple.security.firewall:
     EnableStealthMode: true
+    EnableFirewall: true

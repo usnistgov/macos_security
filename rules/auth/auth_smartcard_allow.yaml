@@ -18,8 +18,10 @@ fix: |
 references:
   cce:
     - CCE-91736-9
-  cci: 
-    - N/A
+  cci:
+    - CCI-000187
+    - CCI-000767
+    - CCI-000768
   800-53r5:
     - IA-2(1)
     - IA-2(2)
@@ -28,9 +30,11 @@ references:
     - IA-2(12)
     - IA-5(11)
   srg:
-    - N/A
+    - SRG-OS-000068-GPOS-00036
+    - SRG-OS-000107-GPOS-00054
+    - SRG-OS-000108-GPOS-00055
   disa_stig:
-    - N/A
+    - APPL-13-003020
   cis:
     benchmark:
       - N/A
@@ -49,6 +53,7 @@ tags:
   - 800-53r4_high
   - cnssi-1253
   - cisv8
+  - stig
 mobileconfig: true
 mobileconfig_info:
   com.apple.security.smartcard:
