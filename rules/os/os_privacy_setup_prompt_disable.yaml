@@ -41,7 +41,6 @@ macOS:
   - "13.0"
 tags:
   - cisv8
-  - cmmc_lvl3
   - cmmc_lvl2
 severity: "medium"
 mobileconfig: true

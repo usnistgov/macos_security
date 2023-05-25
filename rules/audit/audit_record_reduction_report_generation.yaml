@@ -34,7 +34,6 @@ tags:
   - 800-53r4_high
   - 800-53r5_moderate
   - inherent
-  - cmmc_lvl3
   - cmmc_lvl2
 mobileconfig: false
 mobileconfig_info:

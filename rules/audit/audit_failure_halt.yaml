@@ -40,7 +40,6 @@ tags:
   - 800-53r4_moderate 
   - 800-53r4_high 
   - 800-171 
-  - cmmc_lvl3
   - cmmc_lvl2
 severity: "medium"
 mobileconfig: false

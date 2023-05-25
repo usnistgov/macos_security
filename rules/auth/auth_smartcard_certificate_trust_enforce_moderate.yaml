@@ -39,7 +39,6 @@ macOS:
 tags:
   - 800-53r4_moderate 
   - 800-53r5_moderate 
-  - cmmc_lvl3
   - cmmc_lvl2
 severity: "medium"
 mobileconfig: true

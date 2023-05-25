@@ -30,7 +30,6 @@ references:
     - 3.13.3
   cmmc:
     - SC.L2-3.13.3
-    - TBD - 3.14.3e
 macOS:
   - "13.0"
 tags:
@@ -40,7 +39,6 @@ tags:
   - 800-53r4_high
   - 800-171
   - inherent
-  - cmmc_lvl3
   - cmmc_lvl2
 mobileconfig: false
 mobileconfig_info:

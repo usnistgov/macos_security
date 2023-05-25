@@ -60,7 +60,6 @@ tags:
   - 800-53r5_high
   - cis_lvl2
   - cisv8
-  - cmmc_lvl3
   - cmmc_lvl2
 severity: "medium"
 mobileconfig: true

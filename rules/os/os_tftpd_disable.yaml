@@ -47,7 +47,6 @@ references:
     - IA.L2-3.5.7
     - IA.L2-3.5.8
     - IA.L2-3.5.9
-    - TBD - 3.14.3e
 macOS:
   - "13.0"
 tags:
@@ -59,7 +58,6 @@ tags:
   - 800-53r4_high 
   - 800-171 
   - cisv8
-  - cmmc_lvl3
   - cmmc_lvl2
   - cmmc_lvl1
 severity: "high"

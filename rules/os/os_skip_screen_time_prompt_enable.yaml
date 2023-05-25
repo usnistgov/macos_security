@@ -32,7 +32,6 @@ references:
 macOS:
   - "13.0"
 tags:
-  - cmmc_lvl3
   - cmmc_lvl2
 severity: "low"
 mobileconfig: true

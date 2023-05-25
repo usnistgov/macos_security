@@ -55,7 +55,6 @@ tags:
   - cis_lvl2
   - cisv8
   - i386
-  - cmmc_lvl3
   - cmmc_lvl2
 mobileconfig: false
 mobileconfig_info:

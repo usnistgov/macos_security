@@ -46,7 +46,6 @@ references:
     - AU.L2-3.3.6
     - AU.L2-3.3.8
     - SI.L2-3.14.3
-    - TBD - 3.14.2e
 macOS:
   - "13.0"
 tags:
@@ -54,7 +53,6 @@ tags:
   - 800-53r5_low 
   - 800-53r5_moderate 
   - 800-53r5_high
-  - cmmc_lvl3
   - cmmc_lvl2
 severity: "medium"
 mobileconfig: false

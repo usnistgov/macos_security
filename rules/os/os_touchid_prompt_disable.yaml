@@ -36,9 +36,6 @@ references:
       - 4.1
   cmmc:
     - CM.L2-3.4.2
-    - TBD - 3.4.1e
-    - TBD - 3.4.2e
-    - TBD - 3.14.3e
 macOS:
   - "13.0"
 tags:
@@ -50,7 +47,6 @@ tags:
   - 800-53r4_high
   - 800-171
   - cisv8
-  - cmmc_lvl3
   - cmmc_lvl2
 severity: "medium"
 mobileconfig: true

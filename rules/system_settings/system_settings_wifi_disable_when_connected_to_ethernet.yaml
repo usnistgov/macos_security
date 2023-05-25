@@ -33,8 +33,6 @@ references:
   cmmc:
     - AC.L2-3.1.3
     - AC.L2-3.1.17
-    - TBD - 3.1.3e
-    - TBD - 3.14.3e
 macOS:
   - "13.0"
 tags:
@@ -44,7 +42,6 @@ tags:
   - 800-53r4_high
   - 800-171
   - permanent
-  - cmmc_lvl3
   - cmmc_lvl2
 mobileconfig: false
 mobileconfig_info:

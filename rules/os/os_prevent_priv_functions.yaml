@@ -38,7 +38,6 @@ tags:
   - 800-53r4_high
   - 800-171
   - inherent
-  - cmmc_lvl3
   - cmmc_lvl2
 mobileconfig: false
 mobileconfig_info:

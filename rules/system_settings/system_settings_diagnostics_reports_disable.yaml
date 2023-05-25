@@ -60,7 +60,6 @@ tags:
   - 800-171 
   - cis_lvl2
   - cisv8
-  - cmmc_lvl3
   - cmmc_lvl2
   - cmmc_lvl1
 severity: "medium"

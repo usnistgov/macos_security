@@ -51,7 +51,6 @@ references:
     - CM.L2-3.4.6
     - CM.L2-3.4.7
     - SC.L1-3.13.1
-    - TBD - 3.13.4e
 macOS:
   - "13.0"
 tags:
@@ -65,7 +64,6 @@ tags:
   - cis_lvl1
   - cis_lvl2
   - cisv8
-  - cmmc_lvl3
   - cmmc_lvl2
   - cmmc_lvl1
 severity: "medium"

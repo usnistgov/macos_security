@@ -33,7 +33,6 @@ macOS:
   - "13.0"
 tags:
   - none
-  - cmmc_lvl3
   - cmmc_lvl2
 severity: "medium"
 mobileconfig: true

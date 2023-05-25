@@ -46,7 +46,6 @@ tags:
   - 800-53r5_moderate 
   - 800-53r5_high
   - cisv8
-  - cmmc_lvl3
   - cmmc_lvl2
 \severity: "medium"
 mobileconfig: true
