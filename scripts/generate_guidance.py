@@ -1077,7 +1077,7 @@ else
     done
 fi
 
-if [[ "$ssh_key_check -ne 0 ]]; then
+if [[ "$ssh_key_check" -ne 0 ]]; then
     /bin/rm /etc/ssh/ssh_host_rsa_key
     /bin/rm /etc/ssh/ssh_host_rsa_key.public
     ssh_key_check=0
