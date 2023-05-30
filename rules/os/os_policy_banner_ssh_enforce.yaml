@@ -32,6 +32,7 @@ fix: |
     fi
     /bin/mv ${include_dir}${file} ${include_dir}20-${file}
   done
+  ----
 references:
   cce:
     - CCE-90975-4
