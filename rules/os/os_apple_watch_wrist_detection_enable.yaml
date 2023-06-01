@@ -20,7 +20,7 @@ references:
   srg:
     - N/A
   disa_stig: 
-    - N/A
+    - AIOS-16-011800
   800-171r2:
     - N/A
   cis:
@@ -39,8 +39,9 @@ tags:
   - cis_lvl2_enterprise
   - cisv8
   - 800-53r5
-severity: ""
-mobileconfig: false
+  - stig
+severity: "low"
+mobileconfig: true
 mobileconfig_info:
   com.apple.applicationaccess:
     forceWatchWristDetection: true

@@ -17,7 +17,7 @@ references:
   srg:
     - N/A
   disa_stig:
-    - AIOS-16-007300
+    - AIOS-16-003000
   800-171r2:
     - N/A
   cis:
@@ -32,6 +32,8 @@ tags:
   - cis_lvl1_enterprise
   - cis_lvl2_enterprise
   - cisv8
+  - stig
+severity: "medium"
 mobileconfig: true
 mobileconfig_info:
   com.apple.applicationaccess:
