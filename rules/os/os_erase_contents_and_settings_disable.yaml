@@ -11,18 +11,10 @@ references:
   cci: 
     - N/A
   800-53r5:
-    - CM-1
-    - CM-2
     - CM-6
     - CM-7
     - CM-7(1)
-    - CM-9
-    - SA-3
-    - SA-8
-    - SA-10
-  800-53r4: 
-    - N/A
-  srg:
+  sfr:
     - N/A
   disa_stig: 
     - N/A
@@ -36,11 +28,13 @@ references:
 ios:
   - "16.0"
 tags:
-  - ios
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_high
   - cis_lvl1_enterprise
   - cis_lvl2_enterprise
   - cisv8
-  - 800-53r5
+severity: ""
 mobileconfig: true
 mobileconfig_info:
   com.apple.applicationaccess:

@@ -1,4 +1,4 @@
-id: "os_airdrop_unmanaged_destination_enable"
+id: os_airdrop_unmanaged_destination_enable
 title: "Ensure Treat AirDrop as unmanaged destination is set to Enabled"
 discussion: |
   AirDrop _MUST_ be treated as an unmanaged destination.
@@ -9,18 +9,17 @@ references:
   cce:
     - N/A
   cci: 
-    - N/A
+    - CCI-000366
+    - CCI-002008
   800-53r5:
     - AC-3
     - AC-5
     - AC-6
     - MP-2
-  800-53r4: 
-    - N/A
-  srg:
-    - N/A
+  sfr:
+    - 'FMT_SMF_EXT.1.1 #47'
   disa_stig: 
-    - N/A
+    - AIOS-16-011500
   800-171r2:
     - N/A
   cis:
@@ -32,13 +31,14 @@ references:
 ios:
   - "16.0"
 tags:
-  - ios
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_high
   - cis_lvl1_byod
   - cis_lvl2_byod
   - cis_lvl1_enterprise
   - cis_lvl2_enterprise
   - cisv8
-  - 800-53r5
 severity: ""
 mobileconfig: true
 mobileconfig_info:

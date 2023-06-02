@@ -1,4 +1,4 @@
-id: "os_allow_documents_managed_sources_unmanaged_destinations_disable"
+id: os_allow_documents_managed_sources_unmanaged_destinations_disable
 title: "Ensure Allow documents from managed sources in unmanaged destinations is set to Disabled"
 discussion: |
   Documents from managed sources _MUST_ not be allowed in unmanaged destinations.
@@ -9,18 +9,19 @@ references:
   cce:
     - N/A
   cci: 
-    - N/A
+    - CCI-002233
+    - CCI-002530
   800-53r5:
     - AC-3
     - AC-5
     - AC-6
     - MP-2
-  800-53r4: 
-    - N/A
-  srg:
-    - N/A
+    - SC-39
+  sfr:
+    - 'FMT_SMF_EXT.1.1 #42'
+    - 'FDP_ACF_EXT.1.2'
   disa_stig: 
-    - N/A
+    - AIOS-16-009700
   800-171r2:
     - N/A
   cis:
@@ -32,14 +33,16 @@ references:
 iOS:
   - "16.0"
 tags:
-  - ios
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_high
   - cis_lvl1_byod
   - cis_lvl2_byod
   - cis_lvl1_enterprise
   - cis_lvl2_enterprise
   - cisv8
   - 800-53r5
-severity: ""
+severity: "medium"
 mobileconfig: true
 mobileconfig_info:
   com.apple.applicationaccess:

@@ -10,15 +10,19 @@ references:
   cce:
     - N/A
   cci:
-    - N/A
+    - CCI-000097
+    - CCI-000366
+    - CCI-000370
   800-53r5:
-    - N/A   
-  800-53r4:
-    - N/A
-  srg:
-    - N/A
+    - AC-20
+    - AC-20(1)
+    - CM-7
+    - CM-7(1)
+    - SC-7(10)
+  sfr:
+    - 'FMT_MOF_EXT.1.2 #40'
   disa_stig:
-    - N/A
+    - AIOS-16-003300
   800-171r2:
     - N/A
   cis:
@@ -31,10 +35,13 @@ references:
 ios:
   - "16.0"
 tags:
-  - ios
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_high
   - cis_lvl1_enterprise
   - cis_lvl2_enterprise
   - cisv8
+severity: ""
 mobileconfig: true
 mobileconfig_info:
   com.apple.applicationaccess:

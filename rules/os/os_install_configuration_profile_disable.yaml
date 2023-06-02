@@ -1,5 +1,5 @@
 id: "os_install_configuration_profile_disable"
-title: "Ensure Allow installing configuration profiles is set to Disabled"
+title: "Ensure Allow Installing Configuration Profiles is Set to Disabled"
 discussion: |
   Configuration profiles _MUST_ be installed via an organization's MDM.
 check: " "
@@ -11,15 +11,9 @@ references:
   cci: 
     - N/A
   800-53r5:
-    - CM-1
-    - CM-2
     - CM-6
     - CM-7
     - CM-7(1)
-    - CM-9
-    - SA-3
-    - SA-8
-    - SA-10
   800-53r4: 
     - N/A
   srg:
@@ -36,7 +30,6 @@ references:
 iOS:
   - "16.0"
 tags:
-  - ios
   - cis_lvl1_enterprise
   - cis_lvl2_enterprise
   - cisv8
