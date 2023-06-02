@@ -35,7 +35,8 @@ tags:
   - cis_lvl2_byod
   - cis_lvl2_enterprise
   - cisv8
-severity: "low"
+severity: ""
+supervised: false
 mobileconfig: true
 mobileconfig_info:
   com.apple.applicationaccess:

@@ -33,6 +33,7 @@ references:
 iOS:
   - "16.0"
 tags:
+  - ios
   - 800-53r5_low
   - 800-53r5_moderate
   - 800-53r5_high
@@ -43,6 +44,7 @@ tags:
   - cisv8
   - 800-53r5
 severity: "medium"
+supervised: false
 mobileconfig: true
 mobileconfig_info:
   com.apple.applicationaccess:

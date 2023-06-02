@@ -28,11 +28,13 @@ references:
 ios:
   - "16.0"
 tags:
+  - ios
   - 800-53r5_moderate
   - 800-53r5_high
   - cis_lvl2_enterprise
   - cisv8
 severity: "medium"
+supervised: true
 mobileconfig: true
 mobileconfig_info:
   com.apple.applicationaccess:

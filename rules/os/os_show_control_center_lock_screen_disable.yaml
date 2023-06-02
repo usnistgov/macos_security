@@ -40,7 +40,8 @@ tags:
   - cisv8
   - 800-53r5
 severity: ""
-mobileconfig: false
+supervised: false
+mobileconfig: true
 mobileconfig_info:
   com.apple.applicationaccess:
     allowLockScreenControlCenter: false

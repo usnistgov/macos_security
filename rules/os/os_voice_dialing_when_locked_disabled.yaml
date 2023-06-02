@@ -9,13 +9,11 @@ references:
   cce:
     - N/A
   cci:
-    - N/A
+    - CCI-000366
   800-53r5:
     - N/A
-  800-53r4:
-    - N/A
-  srg:
-    - N/A
+  sfr:
+    - 'FMT_SMF_EXT.1.1 #8b'
   disa_stig:
     - AIOS-16-007300
   800-171r2:
@@ -37,6 +35,7 @@ tags:
   - cisv8
   - stig
 severity: "medium"
+supervised: false
 mobileconfig: true
 mobileconfig_info:
   com.apple.applicationaccess:

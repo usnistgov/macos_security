@@ -35,6 +35,8 @@ tags:
   - cis_lvl1_enterprise
   - cis_lvl2_enterprise
   - cisv8
+severity: ""
+supervised: false
 mobileconfig: true
 mobileconfig_info:
   com.apple.applicationaccess:

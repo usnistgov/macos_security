@@ -45,6 +45,7 @@ tags:
   - cisv8
   - 800-53r5
 severity: ""
+supervised: false
 mobileconfig: true
 mobileconfig_info:
   com.apple.mobiledevice.passwordpolicy:

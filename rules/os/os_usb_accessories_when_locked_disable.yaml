@@ -34,6 +34,7 @@ tags:
   - cisv8
   - 800-53r5
 severity: ""
+supervised: true
 mobileconfig: true
 mobileconfig_info:
   com.apple.applicationaccess:

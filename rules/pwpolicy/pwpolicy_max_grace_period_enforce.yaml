@@ -31,6 +31,11 @@ references:
       - 4.3
 iOS:
   - "16.0"
+odv:
+  hint: "Maximum Grace Period in Minutes."
+  recommended: 0
+  cis_lvl1: 0
+  cis_lvl2: 0
 tags:
   - ios
   - cis_lvl1_byod
@@ -40,7 +45,8 @@ tags:
   - cisv8
   - 800-53r5
 severity: ""
+supervised: false
 mobileconfig: true
 mobileconfig_info:
   com.apple.mobiledevice.passwordpolicy:
-    maxInactivity: 0
+    maxGracePeriod: $ODV
