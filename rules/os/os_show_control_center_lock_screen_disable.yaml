@@ -15,9 +15,7 @@ references:
     - AC-11
     - AC-11(1)
     - AC-12
-  800-53r4: 
-    - N/A
-  srg:
+  sfr:
     - N/A
   disa_stig: 
     - N/A
@@ -38,7 +36,6 @@ tags:
   - cis_lvl1_enterprise
   - cis_lvl2_enterprise
   - cisv8
-  - 800-53r5
 severity: ""
 supervised: false
 mobileconfig: true

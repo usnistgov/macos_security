@@ -9,18 +9,14 @@ references:
   cce:
     - N/A
   cci: 
-    - N/A
+    - CCI-000057
   800-53r5:
-    - AC-2(5)
     - AC-11
-    - AC-11(1)
-    - AC-12
-  800-53r4: 
-    - N/A
-  srg:
-    - N/A
+    - IA-11
+  sfr:
+    - 'FMT_SMF_EXT.1.1 #2b'
   disa_stig: 
-    - N/A
+    - AIOS-16-006800
   800-171r2:
     - N/A
   cis:
@@ -36,15 +32,19 @@ odv:
   recommended: 2
   cis_lvl1: 2
   cis_lvl2: 2
+  stig: 5
 tags:
   - ios
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_high
   - cis_lvl1_byod
   - cis_lvl2_byod
   - cis_lvl1_enterprise
   - cis_lvl2_enterprise
   - cisv8
-  - 800-53r5
-severity: ""
+  - stig
+severity: "medium"
 supervised: false
 mobileconfig: true
 mobileconfig_info:

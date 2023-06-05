@@ -11,12 +11,8 @@ references:
   cci: 
     - N/A
   800-53r5:
-    - CM-10
-    - CM-11
-    - SC-18
-  800-53r4: 
-    - N/A
-  srg:
+    - PM-20(01)
+  sfr:
     - N/A
   disa_stig: 
     - N/A
@@ -32,12 +28,12 @@ ios:
   - "16.0"
 tags:
   - ios
+  - 800-53r5_privacy
   - cis_lvl1_byod
   - cis_lvl2_byod
   - cis_lvl1_enterprise
   - cis_lvl2_enterprise
   - cisv8
-  - 800-53r5
 severity: ""
 supervised: false
 mobileconfig: true

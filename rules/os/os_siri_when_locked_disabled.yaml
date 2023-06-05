@@ -1,5 +1,5 @@
 id: os_siri_when_locked_disabled
-title: "Ensure Allow Siri dialing while device is locked is set to Disabled"
+title: "Ensure Allow Siri while device is locked is set to Disabled"
 discussion: |
   Accessing Siri while the device is locked _MUST_ be disabled.
 check: " "
@@ -9,15 +9,16 @@ references:
   cce:
     - N/A
   cci:
-    - N/A
+    - CCI-000366
   800-53r5:
-    - N/A
-  800-53r4:
-    - N/A
-  srg:
-    - N/A
+    - AC-20
+    - CM-7
+    - CM-7(1)
+    - SC-7(10)
+  sfr:
+    - 'FMT_SMF_EXT.1.1 #8b'
   disa_stig:
-    - N/A
+    - AIOS-16-007200
   800-171r2:
     - N/A
   cis:
@@ -30,12 +31,16 @@ ios:
   - "16.0"
 tags:
   - ios
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_high
   - cis_lvl1_byod
   - cis_lvl2_byod
   - cis_lvl1_enterprise
   - cis_lvl2_enterprise
   - cisv8
-severity: ""
+  - stig
+severity: "medium"
 supervised: false
 mobileconfig: true
 mobileconfig_info:

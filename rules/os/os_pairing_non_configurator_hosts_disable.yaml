@@ -13,9 +13,8 @@ references:
   800-53r5:
     - CM-6
     - CM-7
-  800-53r4: 
-    - N/A
-  srg:
+    - CM-7(1)
+  sfr:
     - N/A
   disa_stig: 
     - N/A
@@ -30,9 +29,11 @@ iOS:
   - "16.0"
 tags:
   - ios
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_high
   - cis_lvl2_enterprise
   - cisv8
-  - 800-53r5
 severity: ""
 supervised: true
 mobileconfig: true
