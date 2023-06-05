@@ -12,9 +12,9 @@ references:
     - N/A
   800-53r5:
     - AC-3
-    - AC-5
-    - AC-6
     - MP-2
+    - SC-7(10)
+    - SC-39
   sfr:
     - N/A
   disa_stig: 

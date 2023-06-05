@@ -12,10 +12,8 @@ references:
     - CCI-000381
   800-53r5:
     - AC-3
-    - AC-5
-    - AC-6
     - CM-7
-    - MP-2
+    - CM-7(1)
   sfr:
     - 'FMT_SMF_EXT.1.1 #47'
   disa_stig: 
