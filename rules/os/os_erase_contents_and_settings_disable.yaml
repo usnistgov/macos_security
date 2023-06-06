@@ -1,4 +1,4 @@
-id: "os_erase_contents_and_settings_disable"
+id: os_erase_contents_and_settings_disable
 title: "Ensure Allow Erase All Content and Settings is set to Disabled"
 discussion: |
   Erase all contents and settings _MUST_ be disabled on institutionally owned iOS devices.

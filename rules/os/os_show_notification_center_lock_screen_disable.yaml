@@ -1,4 +1,4 @@
-id: "os_show_notification_center_lock_screen_disable"
+id: os_show_notification_center_lock_screen_disable
 title: "Ensure Show Notification Center in Lock screen is set to Disabled"
 discussion: |
   Notification Center _MUST_ be disabled in the lock screen.

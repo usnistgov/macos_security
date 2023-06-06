@@ -1,4 +1,4 @@
-id: "os_screenshots_disable"
+id: os_screenshots_disable
 title: "Ensure Allow screenshots and screen recording is set to Disabled"
 discussion: |
   Screenshots and screen recordings on iOS _MUST_ be disabled.

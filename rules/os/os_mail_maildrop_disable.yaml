@@ -1,4 +1,4 @@
-id: "os_mail_maildrop_disable"
+id: os_mail_maildrop_disable
 title: "Ensure Allow Mail Drop is set to Disabled"
 discussion: |
   Mail Drop _MUST_ be disabled.

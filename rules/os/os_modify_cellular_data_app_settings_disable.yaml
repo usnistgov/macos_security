@@ -1,4 +1,4 @@
-id: "os_modify_cellular_data_app_settings_disable"
+id: os_modify_cellular_data_app_settings_disable
 title: "Ensure Allow modifying cellular data app settings is set to Disabled"
 discussion: |
   The ability to modify cellular data app settings _MUST_ be disabled.

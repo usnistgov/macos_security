@@ -1,4 +1,4 @@
-id: "os_pairing_non_configurator_hosts_disable"
+id: os_pairing_non_configurator_hosts_disable
 title: "Ensure Allow pairing with non-Configurator hosts is set to Disabled"
 discussion: |
   Host pairing with a non-Configurator host _MUST_ be disabled.

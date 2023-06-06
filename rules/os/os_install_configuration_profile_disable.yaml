@@ -1,4 +1,4 @@
-id: "os_install_configuration_profile_disable"
+id: os_install_configuration_profile_disable
 title: "Ensure Allow Installing Configuration Profiles is Set to Disabled"
 discussion: |
   Configuration profiles _MUST_ be installed via an organization's MDM.

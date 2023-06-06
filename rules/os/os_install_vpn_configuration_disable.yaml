@@ -1,4 +1,4 @@
-id: "os_install_vpn_configuration_disable"
+id: os_install_vpn_configuration_disable
 title: "Ensure Allow adding VPN configurations is set to Disabled"
 discussion: |
   VPN configurations _MUST_ be installed via an organization's MDM.

@@ -1,4 +1,4 @@
-id: "os_show_control_center_lock_screen_disable"
+id: os_show_control_center_lock_screen_disable
 title: "Ensure Show Control Center in Lock screen is set to Disabled"
 discussion: |
   Control Center _MUST_ be disabled in the lock screen.

@@ -1,10 +1,8 @@
-id: Apple_iOS/iPadOS_16_must_not_allow_backup_to_remote_systems_(iCloud_Photo_Sharing,_also_known_as_Shared_Photo_Streams).
-title: Apple iOS/iPadOS 16 must not allow backup to remote systems (iCloud Photo Sharing, also known as Shared Photo Streams).
+id: icloud_shared_photo_stream_disable
+title: "Ensure Shared Photo Stream is set to Disabled"
 discussion: |-
   If a user is able to configure the security setting, the user could inadvertently or maliciously set it to a value that poses unacceptable risk to DoD information systems. An adversary could exploit vulnerabilities created by the weaker configuration to compromise DoD sensitive information.
-
-  SFR ID: FMT_MOF_EXT.1.2 #40
-check: ''
+check: ' '
 fix: This is implemented by a Configuration Profile
 references:
   cce:
@@ -34,7 +32,8 @@ tags:
   - ios
   - stig
 severity: medium
+supervised: false
 mobileconfig: 'true'
 mobileconfig_info:
-  payload_domain:
-    key: value
+  com.apple.applicationaccess:
+    allowSharedStream: false

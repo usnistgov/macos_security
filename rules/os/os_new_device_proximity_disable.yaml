@@ -1,4 +1,4 @@
-id: "os_new_device_proximity_disable"
+id: os_new_device_proximity_disable
 title: "Ensure Allow setting up new nearby devices is set to Disabled"
 discussion: |
   The setting up of new nearby devices _MUST_ be disabled.

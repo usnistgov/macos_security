@@ -1,4 +1,4 @@
-id: "os_usb_accessories_when_locked_disable"
+id: os_usb_accessories_when_locked_disable
 title: "Ensure Allow USB accessories while the device is locked is set to Disabled"
 discussion: |
   USB devices _MUST_ not be allowed to connect while the device is locked.
