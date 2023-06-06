@@ -1,0 +1,36 @@
+id: Apple_iOS/iPadOS_16_must_not_display_notifications_(calendar_information)_when_the_device_is_locked.
+title: Apple iOS/iPadOS 16 must not display notifications (calendar information) when the device is locked.
+discussion: |-
+  Many mobile devices display notifications on the lock screen so users can obtain relevant information in a timely manner without having to frequently unlock the phone to determine if there are new notifications. However, in many cases, these notifications can contain sensitive information. When they are available on the lock screen, an adversary can see them merely by being in close physical proximity to the device. Configuring the MOS to not send notifications to the lock screen mitigates this risk.
+
+  SFR ID: FMT_SMF_EXT.1.1 #18
+check: ''
+fix: This is implemented by a Configuration Profile
+references:
+  cce:
+    - N/A
+  cci:
+    - CCI-000060
+  800-53r5:
+    - AC-11 (1)
+  sfr:
+    - 'FMT_SMF_EXT.1.1 #18'
+  disa_stig:
+    - AIOS-16-007600
+  800-171r2:
+    - N/A
+  cis:
+    benchmark:
+      - N/A
+    controls:
+      - N/A
+iOS:
+  - '16.0'
+tags:
+  - ios
+  - stig
+severity: medium
+mobileconfig: 'true'
+mobileconfig_info:
+  payload_domain:
+    key: value

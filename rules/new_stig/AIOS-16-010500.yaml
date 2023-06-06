@@ -1,0 +1,40 @@
+id: Apple_iOS/iPadOS_16_must_implement_the_management_setting:_limit_Ad_Tracking.
+title: 'Apple iOS/iPadOS 16 must implement the management setting: limit Ad Tracking.'
+discussion: |-
+  Ad Tracking refers to the advertisers' ability to categorize the device and spam the user with ads that are most relevant to the user's preferences. By not "Force limiting ad tracking", advertising companies are able to gather information about the user and device's browsing habits. If "Limit Ad Tracking" is not limited, a database of browsing habits of DoD devices can be gathered and stored under no supervision of the DoD. By limiting ad tracking, this setting does not completely mitigate the risk, but it limits the amount of information gathering.
+
+  SFR ID: FMT_SMF_EXT.1.1 #47
+check: ''
+fix: This is implemented by a Configuration Profile
+references:
+  cce:
+    - N/A
+  cci:
+    - CCI-000366
+    - CCI-000370
+    - CCI-001199
+  800-53r5:
+    - CM-6 b
+    - CM-6 (1)
+    - SC-28
+  sfr:
+    - 'FMT_SMF_EXT.1.1 #47'
+  disa_stig:
+    - AIOS-16-010500
+  800-171r2:
+    - N/A
+  cis:
+    benchmark:
+      - N/A
+    controls:
+      - N/A
+iOS:
+  - '16.0'
+tags:
+  - ios
+  - stig
+severity: low
+mobileconfig: 'true'
+mobileconfig_info:
+  payload_domain:
+    key: value

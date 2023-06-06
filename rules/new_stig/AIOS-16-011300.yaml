@@ -1,0 +1,36 @@
+id: Apple_iOS/iPadOS_16_must_implement_the_management_setting:_use_SSL_for_Exchange_ActiveSync.
+title: 'Apple iOS/iPadOS 16 must implement the management setting: use SSL for Exchange ActiveSync.'
+discussion: |-
+  Exchange email messages are a form of data in transit and thus are vulnerable to eavesdropping and man-in-the-middle attacks. Secure Sockets Layer (SSL), also referred to as Transport Layer Security (TLS), provides encryption and authentication services that mitigate the risk of breach.
+
+  SFR ID: FMT_SMF_EXT.1.1 #47
+check: ''
+fix: This is implemented by a Configuration Profile
+references:
+  cce:
+    - N/A
+  cci:
+    - CCI-000764
+  800-53r5:
+    - IA-2
+  sfr:
+    - 'FMT_SMF_EXT.1.1 #47'
+  disa_stig:
+    - AIOS-16-011300
+  800-171r2:
+    - N/A
+  cis:
+    benchmark:
+      - N/A
+    controls:
+      - N/A
+iOS:
+  - '16.0'
+tags:
+  - ios
+  - stig
+severity: medium
+mobileconfig: 'true'
+mobileconfig_info:
+  payload_domain:
+    key: value

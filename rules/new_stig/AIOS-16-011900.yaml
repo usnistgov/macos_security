@@ -1,0 +1,40 @@
+id: Apple_iOS/iPadOS_16_users_must_complete_required_training.
+title: Apple iOS/iPadOS 16 users must complete required training.
+discussion: |-
+  The security posture on iOS devices requires the device user to configure several required policy rules on their device. User-Based Enforcement (UBE) is required for these controls. In addition, if the authorizing official (AO) has approved users' full access to the Apple App Store, users must receive training on risks. If a user is not aware of their responsibilities and does not comply with UBE requirements, the security posture of the iOS mobile device and DoD sensitive data may become compromised.
+
+  SFR ID: NA
+check: ''
+fix: This is implemented by a Configuration Profile
+references:
+  cce:
+    - N/A
+  cci:
+    - CCI-000366
+    - CCI-000370
+    - CCI-000381
+  800-53r5:
+    - CM-6 b
+    - CM-6 (1)
+    - CM-7 a
+  sfr:
+    - NA
+  disa_stig:
+    - AIOS-16-011900
+  800-171r2:
+    - N/A
+  cis:
+    benchmark:
+      - N/A
+    controls:
+      - N/A
+iOS:
+  - '16.0'
+tags:
+  - ios
+  - stig
+severity: medium
+mobileconfig: 'true'
+mobileconfig_info:
+  payload_domain:
+    key: value

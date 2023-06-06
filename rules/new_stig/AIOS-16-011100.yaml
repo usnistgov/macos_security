@@ -1,0 +1,38 @@
+id: Apple_iOS/iPadOS_16_must_implement_the_management_setting:_Disable_Allow_Shared_Albums.
+title: 'Apple iOS/iPadOS 16 must implement the management setting: Disable Allow Shared Albums.'
+discussion: |-
+  Storing data with a non-DoD cloud provider may leave the data vulnerable to breach. Disabling non-DoD cloud services mitigates this risk.
+
+  Note: If the authorizing official (AO) has approved the use/storage of DoD data in one or more personal (unmanaged) apps, allowing unrestricted activity by the user in downloading and installing personal (unmanaged) apps on the iOS 14 device may not be warranted due to the risk of possible loss of or unauthorized access to DoD data.
+
+  SFR ID: FMT_SMF_EXT.1.1 #47
+check: ''
+fix: This is implemented by a Configuration Profile
+references:
+  cce:
+    - N/A
+  cci:
+    - CCI-000381
+  800-53r5:
+    - CM-7 a
+  sfr:
+    - 'FMT_SMF_EXT.1.1 #47'
+  disa_stig:
+    - AIOS-16-011100
+  800-171r2:
+    - N/A
+  cis:
+    benchmark:
+      - N/A
+    controls:
+      - N/A
+iOS:
+  - '16.0'
+tags:
+  - ios
+  - stig
+severity: medium
+mobileconfig: 'true'
+mobileconfig_info:
+  payload_domain:
+    key: value

@@ -1,0 +1,42 @@
+id: Apple_iOS/iPadOS_16_must_implement_the_management_setting:_Disable_AirDrop.
+title: 'Apple iOS/iPadOS 16 must implement the management setting: Disable AirDrop.'
+discussion: |-
+  AirDrop is a way to send contact information or photos to other users with this same feature enabled. This feature enables a possible attack vector for adversaries to exploit. Once the attacker has gained access to the information broadcast by this feature, the attacker may distribute this sensitive information very quickly and without DoD's control or awareness. By disabling this feature, the risk of mass data exfiltration will be mitigated.
+
+  Note: If the site uses Apple's optional Automatic Device Enrollment, this control is available as a supervised MDM control.
+
+  SFR ID: FMT_SMF_EXT.1.1 #47
+check: ''
+fix: This is implemented by a Configuration Profile
+references:
+  cce:
+    - N/A
+  cci:
+    - CCI-000366
+    - CCI-000097
+    - CCI-000370
+  800-53r5:
+    - CM-6 b
+    - AC-20 (2)
+    - CM-6 (1)
+  sfr:
+    - 'FMT_SMF_EXT.1.1 #47'
+  disa_stig:
+    - AIOS-16-012500
+  800-171r2:
+    - N/A
+  cis:
+    benchmark:
+      - N/A
+    controls:
+      - N/A
+iOS:
+  - '16.0'
+tags:
+  - ios
+  - stig
+severity: low
+mobileconfig: 'true'
+mobileconfig_info:
+  payload_domain:
+    key: value

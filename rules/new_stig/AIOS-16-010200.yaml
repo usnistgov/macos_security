@@ -1,0 +1,36 @@
+id: Apple_iOS/iPadOS_16_must_be_configured_to_disable_ad_hoc_wireless_client-to-client_connection_capability.
+title: Apple iOS/iPadOS 16 must be configured to disable ad hoc wireless client-to-client connection capability.
+discussion: |-
+  Ad hoc wireless client-to-client connections allow mobile devices to communicate with each other directly, circumventing network security policies and making the traffic invisible. This could allow the exposure of sensitive DoD data and increase the risk of downloading and installing malware on the DoD mobile device.
+
+  SFR ID: FMT_SMF_EXT.1.1/WLAN
+check: ''
+fix: This is implemented by a Configuration Profile
+references:
+  cce:
+    - N/A
+  cci:
+    - CCI-002536
+  800-53r5:
+    - SC-40
+  sfr:
+    - FMT_SMF_EXT.1.1/WLAN
+  disa_stig:
+    - AIOS-16-010200
+  800-171r2:
+    - N/A
+  cis:
+    benchmark:
+      - N/A
+    controls:
+      - N/A
+iOS:
+  - '16.0'
+tags:
+  - ios
+  - stig
+severity: medium
+mobileconfig: 'true'
+mobileconfig_info:
+  payload_domain:
+    key: value

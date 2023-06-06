@@ -1,0 +1,38 @@
+id: Apple_iOS/iPadOS_16_must_[selection:_remove_Enterprise_application,_remove_all_noncore_applications_(any_nonfactory-installed_application)]_upon_unenrollment_from_MDM.
+title: 'Apple iOS/iPadOS 16 must [selection: remove Enterprise application, remove all noncore applications (any nonfactory-installed application)] upon unenrollment from MDM.'
+discussion: |-
+  When a mobile device is no longer going to be managed by MDM technologies, its protected/sensitive data must be sanitized because it will no longer be protected by the MDM software, putting it at much greater risk of unauthorized access and disclosure. At least one of the two options must be selected.
+
+  SFR ID: FMT_SMF_EXT.2.1
+check: ''
+fix: This is implemented by a Configuration Profile
+references:
+  cce:
+    - N/A
+  cci:
+    - CCI-000366
+    - CCI-001033
+  800-53r5:
+    - CM-6 b
+    - MP-6 (3)
+  sfr:
+    - FMT_SMF_EXT.2.1
+  disa_stig:
+    - AIOS-16-005000
+  800-171r2:
+    - N/A
+  cis:
+    benchmark:
+      - N/A
+    controls:
+      - N/A
+iOS:
+  - '16.0'
+tags:
+  - ios
+  - stig
+severity: medium
+mobileconfig: 'true'
+mobileconfig_info:
+  payload_domain:
+    key: value
