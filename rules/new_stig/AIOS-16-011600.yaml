@@ -4,9 +4,7 @@ discussion: |-
   Apple's Family Sharing service allows Apple iOS/iPadOS users to create a Family Group whose members have several shared capabilities, including the ability to lock, wipe, play a sound on, or locate the iPhone and iPads of other members. Each member of the group must be invited to the group and accept that invitation. A DoD user's iPhone and iPad may be inadvertently or maliciously wiped by another member of the Family Group. This poses a risk that the user could be without a mobile device for a period of time or lose sensitive information that has not been backed up to other storage media. Configuring iPhone and iPads so their associated Apple IDs are not members of Family Groups mitigates this risk.
 
   Note: If the site uses Apple's optional Automatic Device Enrollment, this control is available as a supervised MDM control.
-
-  SFR ID: FMT_SMF_EXT.1.1 #47
-check: ''
+check: ' '
 fix: This is implemented by a Configuration Profile
 references:
   cce:
@@ -35,8 +33,7 @@ iOS:
 tags:
   - ios
   - stig
+  - manual
 severity: low
-mobileconfig: 'true'
+mobileconfig: false
 mobileconfig_info:
-  payload_domain:
-    key: value
