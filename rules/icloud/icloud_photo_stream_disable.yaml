@@ -1,4 +1,4 @@
-id: os_photo_stream_disable
+id: icloud_photo_stream_disable
 title: "Ensure Photo Stream is set to Disabled"
 discussion: |
   If a user is able to configure the security setting, the user could inadvertently or maliciously set it to a value that poses unacceptable risk to DoD information systems. An adversary could exploit vulnerabilities created by the weaker configuration to compromise DoD sensitive information.
@@ -31,9 +31,9 @@ iOS:
 tags:
   - ios
   - stig
-severity: medium
+severity: "medium"
 supervised: false
-mobileconfig: 'true'
+mobileconfig: true
 mobileconfig_info:
   com.apple.applicationaccess: 
     allowPhotoStream: false

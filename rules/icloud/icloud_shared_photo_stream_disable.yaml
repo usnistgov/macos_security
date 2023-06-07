@@ -31,9 +31,9 @@ iOS:
 tags:
   - ios
   - stig
-severity: medium
+severity: "medium"
 supervised: false
-mobileconfig: 'true'
+mobileconfig: true
 mobileconfig_info:
   com.apple.applicationaccess:
     allowSharedStream: false
