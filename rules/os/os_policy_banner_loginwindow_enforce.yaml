@@ -6,11 +6,13 @@ discussion: |
   System use notifications are required only for access via login interfaces with human users and are not required when such human interfaces do not exist.
 
   The policy banner will show if a "PolicyBanner.rtf" or "PolicyBanner.rtfd" exists in the "/Library/Security" folder.
-  NOTE:
-    The banner text of the document _MUST_ read:
+  
+  The banner text of the document _MUST_ read:
 
-    "$ODV"
-
+  [source,text]
+  ----
+  $ODV
+  ----
 check: |
   /bin/ls -ld /Library/Security/PolicyBanner.rtf* | /usr/bin/wc -l | /usr/bin/tr -d ' '
 result:
