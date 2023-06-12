@@ -23,9 +23,9 @@ references:
   cci:
     - N/A
   800-53r5:
-    - N/A
+    - AC-6
   800-53r4:
-    - N/A
+    - AC-6
   srg:
     - N/A
   disa_stig:
@@ -40,7 +40,10 @@ references:
 macOS:
   - "13.0"
 tags:
-  - 800-171 
+  - 800-53r5_moderate 
+  - 800-53r5_high 
+  - 800-53r4_moderate 
+  - 800-53r4_high - 800-171 
   - cis_lvl1
   - cis_lvl2
   - cisv8
