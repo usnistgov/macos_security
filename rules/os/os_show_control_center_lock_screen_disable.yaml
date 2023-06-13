@@ -11,10 +11,7 @@ references:
   cci: 
     - N/A
   800-53r5:
-    - AC-2(5)
-    - AC-11
     - AC-11(1)
-    - AC-12
   sfr:
     - N/A
   disa_stig: 
@@ -31,6 +28,8 @@ iOS:
   - "16.0"
 tags:
   - ios
+  - 800-53r5_moderate
+  - 800-53r5_high
   - cis_lvl1_byod
   - cis_lvl2_byod
   - cis_lvl1_enterprise
