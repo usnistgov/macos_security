@@ -78,7 +78,7 @@ profile:
       - os_firmware_password_require
       - os_gatekeeper_enable
       - os_handoff_disable
-      - os_home_folders_secure
+      - os_home_folders_default
       - os_httpd_disable
       - os_icloud_storage_prompt_disable
       - os_newsyslog_files_owner_group_configure
