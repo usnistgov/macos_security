@@ -13,7 +13,7 @@ result:
 fix: |
   [source,bash]
   ----
-  /usr/sbin/chown root $(/usr/bin/awk -F : '/^dir/{print $2}' /etc/security/audit_control)
+  /usr/sbin/chown root /var/audit
   ----
 references:
   cce:
