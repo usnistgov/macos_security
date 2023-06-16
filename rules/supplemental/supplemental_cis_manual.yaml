@@ -43,6 +43,18 @@ discussion: |
   [cols="15%h, 85%a"]
   |===
   |Section
+  |System Access, Authentication and Authorization
+
+  |Recommendations
+  |5.2.3 Ensure Complex Password Must Contain Alphabetic Characters Is Configured +
+  5.2.4 Ensure Complex Password Must Contain Numeric Character Is Configured +
+  5.2.5 Ensure Complex Password Must Contain Special Character Is Configured +
+  5.2.6 Ensure Complex Password Must Contain Uppercase and Lowercase Characters Is Configured +
+  |===
+
+  [cols="15%h, 85%a"]
+  |===
+  |Section
   |Applications
 
   |Recommendations
