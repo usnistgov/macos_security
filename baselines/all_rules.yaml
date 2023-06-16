@@ -98,8 +98,9 @@ profile:
       - os_gatekeeper_rearm
       - os_guest_folder_removed
       - os_handoff_disable
+      - os_hibernate_mode_apple_silicon_enable
       - os_hibernate_mode_destroyfvkeyonstandby_enable
-      - os_hibernate_mode_enable
+      - os_hibernate_mode_intel_enable
       - os_home_folders_secure
       - os_httpd_disable
       - os_icloud_storage_prompt_disable
