@@ -10,7 +10,7 @@ discussion: |
   |Install Updates, Patches and Additional Security Software
 
   |Recommendations
-  |1.8 Audit Computer Name
+  |1.8 Ensure Computer Name Does Not Contain PII or Protected Organizational Information
   |===
   
   [cols="15%h, 85%a"]
@@ -25,11 +25,11 @@ discussion: |
   2.6.1.1 Audit iCloud Keychain +
   2.6.1.2 Audit iCloud Drive +
   2.6.2 Audit App Store Password Settings +
-  2.10 Audit Siri Settings +
-  2.11 Audit Universal Control Settings +
-  2.12 Audit Touch ID and Wallet & Apple Pay Settings +
-  2.13 Audit Notification & Focus Settings +
-  2.14 Audit Passwords System Preference Setting +
+  2.11 Audit Siri Settings +
+  2.12 Audit Universal Control Settings +
+  2.13 Audit Touch ID +
+  2.14 Audit Notification & Focus Settings +
+  2.15 Audit Passwords System Preference Setting +
   |===
 
   [cols="15%h, 85%a"]
