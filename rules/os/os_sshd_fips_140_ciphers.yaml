@@ -21,7 +21,7 @@ fix: |
     /usr/bin/sed -i.bk "1s/.*/Include \/etc\/ssh\/sshd_config.d\/\*/" /etc/ssh/sshd_config
   fi
 
-  echo "Ciphers aes256-ctr,aes192-ctr,aes128-ctr" >> "${include_dir}01-mscp-sshd.conf"
+  /usr/bin/grep -qxF 'Ciphers aes256-ctr,aes192-ctr,aes128-ctr' "${include_dir}01-mscp-sshd.conf" 2>/dev/null || echo "Ciphers aes256-ctr,aes192-ctr,aes128-ctr" >> "${include_dir}01-mscp-sshd.conf"
 
   for file in $(ls ${include_dir}); do
     if [[ "$file" == "100-macos.conf" ]]; then
