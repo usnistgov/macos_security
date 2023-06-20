@@ -23,7 +23,7 @@ fix: |
     /usr/bin/sed -i.bk "1s/.*/Include \/etc\/ssh\/sshd_config.d\/\*/" /etc/ssh/sshd_config
   fi
 
-  grep -qxF 'KexAlgorithms diffie-hellman-group-exchange-sha256' "${include_dir}01-mscp-sshd.conf" 2>/dev/null || echo "KexAlgorithms diffie-hellman-group-exchange-sha256" >> "${include_dir}01-mscp-sshd.conf"
+  /usr/bin/grep -qxF 'KexAlgorithms diffie-hellman-group-exchange-sha256' "${include_dir}01-mscp-sshd.conf" 2>/dev/null || echo "KexAlgorithms diffie-hellman-group-exchange-sha256" >> "${include_dir}01-mscp-sshd.conf"
 
   for file in $(ls ${include_dir}); do
     if [[ "$file" == "100-macos.conf" ]]; then
