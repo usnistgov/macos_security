@@ -32,7 +32,7 @@ ifdef::backend-pdf[]
 $version ($release_date)
 :pdf-themesdir: ../templates
 :pdf-theme: $pdf_theme
-:title-logo-image: image:$logo[align=center]
+:title-logo-image: image:data:image/png;base64,$pdflogo[align=center]
 :nofooter!:
 endif::[]
 :data-uri:
