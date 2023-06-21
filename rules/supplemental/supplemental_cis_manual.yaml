@@ -9,8 +9,8 @@ discussion: |
   |Section
   |Install Updates, Patches and Additional Security Software
 
-  |Controls
-  |1.8 Audit Computer Name
+  |Recommendations
+  |1.8 Ensure Computer Name Does Not Contain PII or Protected Organizational Information
   |===
   
   [cols="15%h, 85%a"]
@@ -25,10 +25,10 @@ discussion: |
   2.6.1.1 Audit iCloud Keychain +
   2.6.1.2 Audit iCloud Drive +
   2.6.2 Audit App Store Password Settings +
-  2.10 Audit Siri Settings +
-  2.11 Audit Sidecar Settings +
-  2.12 Audit Touch ID and Wallet & Apple Pay Settings +
-  2.13 Audit Notification Settings +
+  2.11 Audit Siri Settings +
+  2.12 Audit Sidecar Settings +
+  2.13 Audit Touch ID +
+  2.14 Audit Notification & Focus Settings +
   |===
 
   [cols="15%h, 85%a"]
@@ -38,6 +38,30 @@ discussion: |
 
   |Controls
   |3.7 Audit Software Inventory
+  |===
+
+  [cols="15%h, 85%a"]
+  |===
+  |Section
+  |System Access, Authentication and Authorization
+
+  |Recommendations
+  |5.2.3 Ensure Complex Password Must Contain Alphabetic Characters Is Configured +
+  5.2.4 Ensure Complex Password Must Contain Numeric Character Is Configured +
+  5.2.5 Ensure Complex Password Must Contain Special Character Is Configured +
+  5.2.6 Ensure Complex Password Must Contain Uppercase and Lowercase Characters Is Configured +
+  |===
+
+  [cols="15%h, 85%a"]
+  |===
+  |Section
+  |Applications
+
+  |Recommendations
+  |7.1.1 Ensure Protect Mail Activity in Mail is Enabled
+  7.2.2 Audit History and Remove History Items
+  7.2.3 Audit Passwords System Preference Setting
+  7.2.6 Audit Hide IP Address in Safari Setting
   |===
 
 check: |
