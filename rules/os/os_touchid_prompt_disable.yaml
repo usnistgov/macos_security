@@ -45,6 +45,9 @@ tags:
   - 800-53r4_high
   - 800-171
   - cisv8
+  - cnssi-1253_moderate
+  - cnssi-1253_low
+  - cnssi-1253_high
 severity: "medium"
 mobileconfig: true
 mobileconfig_info:

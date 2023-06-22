@@ -48,6 +48,9 @@ tags:
   - 800-53r4_moderate
   - 800-53r4_high
   - cisv8
+  - cnssi-1253_moderate
+  - cnssi-1253_low
+  - cnssi-1253_high
 mobileconfig: true
 mobileconfig_info:
   com.apple.security.smartcard:
