@@ -1,8 +1,8 @@
 id: system_settings_location_services_disable
 title: "Disable Location Services"
 discussion: |
-  Location Services _MUST_ be disabled. 
-  
+  Location Services _MUST_ be disabled.
+
   The information system _MUST_ be configured to provide only essential capabilities.  Disabling Location Services helps prevent the unauthorized connection of devices, unauthorized transfer of information, and unauthorized tunneling.
 check: |
   /usr/bin/sudo -u _locationd /usr/bin/osascript -l JavaScript << EOS
@@ -19,19 +19,19 @@ fix: |
 references:
   cce:
     - CCE-91962-1
-  cci: 
-    - N/A
+  cci:
+    - CCI-000381
   800-53r5:
     - CM-7
     - CM-7(1)
-    - SC-7(10)    
-  800-53r4: 
+    - SC-7(10)
+  800-53r4:
     - CM-7
     - CM-7(1)
   srg:
-    - N/A
+    - SRG-OS-000095-GPOS-00049
   disa_stig:
-    - N/A
+    - APPL-13-002004
   800-171r2:
     - 3.4.6
   cmmc:
@@ -51,6 +51,7 @@ tags:
   - cnssi-1253_low
   - cnssi-1253_high
   - cmmc_lvl2
+  - stig
 severity: "medium"
 mobileconfig: false
 mobileconfig_info:

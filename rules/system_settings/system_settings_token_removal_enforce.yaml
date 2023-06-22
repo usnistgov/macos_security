@@ -3,11 +3,11 @@ title: "Configure User Session Lock When a Smart Token is Removed"
 discussion: |
   The screen lock _MUST_ be configured to initiate automatically when the smart token is removed from the system.
 
-  Session locks are temporary actions taken when users stop work and move away from the immediate vicinity of the information system but do not want to log out because of the temporary nature of their absences. While a session lock is not an acceptable substitute for logging out of an information system for longer periods of time, they prevent a malicious user from accessing the information system when a user has removed their smart token. 
+  Session locks are temporary actions taken when users stop work and move away from the immediate vicinity of the information system but do not want to log out because of the temporary nature of their absences. While a session lock is not an acceptable substitute for logging out of an information system for longer periods of time, they prevent a malicious user from accessing the information system when a user has removed their smart token.
 
   [IMPORTANT]
   ====
-  Information System Security Officers (ISSOs) may make the risk-based decision not to enforce a session lock when a smart token is removed, so as to maintain necessary workflow capabilities, but they are advised to first fully weigh the potential risks posed to their organization. 
+  Information System Security Officers (ISSOs) may make the risk-based decision not to enforce a session lock when a smart token is removed, so as to maintain necessary workflow capabilities, but they are advised to first fully weigh the potential risks posed to their organization.
   ====
 check: |
   /usr/bin/osascript -l JavaScript << EOS
@@ -22,15 +22,15 @@ references:
   cce:
     - CCE-91991-0
   cci:
-    - N/A
+    - CCI-000058
   800-53r5:
     - AC-11
-  800-53r4: 
+  800-53r4:
     - AC-11
   srg:
-    - N/A
+    - SRG-OS-000030-GPOS-00011
   disa_stig:
-    - N/A
+    - APPL-13-000005
   800-171r2:
     - 3.1.10
   cmmc:
@@ -47,6 +47,13 @@ tags:
   - cnssi-1253_low
   - cnssi-1253_high
   - cmmc_lvl2
+  - 800-53r5_moderate
+  - 800-53r5_high
+  - 800-53r4_moderate
+  - 800-53r4_high
+  - 800-171
+  - cnssi-1253
+  - stig
 severity: "medium"
 mobileconfig: true
 mobileconfig_info:

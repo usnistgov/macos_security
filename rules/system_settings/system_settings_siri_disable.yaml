@@ -16,21 +16,23 @@ fix: |
 references:
   cce:
     - CCE-91976-1
-  cci: 
-    - N/A
+  cci:
+    - CCI-000381
+    - CCI-001774
   800-53r5:
     - AC-20
     - CM-7
     - CM-7(1)
-    - SC-7(10)    
-  800-53r4: 
+    - SC-7(10)
+  800-53r4:
     - CM-7
     - CM-7(1)
     - AC-20
   srg:
-    - N/A
+    - SRG-OS-000095-GPOS-00049
+    - SRG-OS-000370-GPOS-00155
   disa_stig:
-    - N/A
+    - APPL-13-002020
   800-171r2:
     - 3.1.20
     - 3.4.6
@@ -47,19 +49,21 @@ references:
 macOS:
   - "13.0"
 tags:
-  - 800-53r5_low 
-  - 800-53r5_moderate 
-  - 800-53r5_high 
-  - 800-53r4_low 
-  - 800-53r4_moderate 
-  - 800-53r4_high 
-  - 800-171 
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_high
+  - 800-53r4_low
+  - 800-53r4_moderate
+  - 800-53r4_high
+  - 800-171
+  - cnssi-1253
   - cisv8
   - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
   - cmmc_lvl2
   - cmmc_lvl1
+  - stig
 severity: "medium"
 mobileconfig: true
 mobileconfig_info:

@@ -13,7 +13,7 @@ discussion: |
     * auth_pam_login_smartcard_enforce
 
   macOS supports smartcards, such as U.S. Personal Identity Verification (PIV) cards and U.S. Department of Defense Common Access Cards (CAC). Smartcards can be used on a macOS for the following:
-  
+
     * Authentication (Loginwindow, Screensaver, SSH, PKINIT, Safari, Finder, and PAM Authorization (`sudo`, `login`, and `su`) )
     * Digital Encryption
     * Digital Signing
@@ -22,7 +22,7 @@ discussion: |
     * Keychain Unlock
 
   macOS has built-in support for USB CCID class-compliant smartcard readers.
-  
+
   [discrete]
   ==== Smartcard Pairing
   The default method for using smartcards in macOS is a method called "local account pairing". Local account pairing is automatically initiated when a user inserts a smartcard into the Mac. The user is prompted to pair their smartcard with their account. If a user receives a new smartcard, the previous card must be unpaired, and the new card paired to the account. Local account pairing employs fixed key mapping with the hash of a public key on the user's smartcard with a local account.
@@ -135,7 +135,7 @@ discussion: |
 
   [discrete]
   ==== Smartcard Enforcement Exemption
-  
+
   [discrete]
   ===== Group Exemption
 
@@ -182,7 +182,7 @@ discussion: |
 
   * 0 - The system default is respected.
   * 1 - Smartcard enforcement is enabled.
-  * 2 - Smartcard enforcement is disabled. 
+  * 2 - Smartcard enforcement is disabled.
 
   NOTE: In Active Directory environments, the value of the `userAccountControl` attribute is respected.
 
@@ -203,20 +203,20 @@ discussion: |
   [discrete]
   ===== Temporary Exemption
 
-  On an Apple Silicon Mac, if a temporary exemption is needed, `security filevault skip-sc-enforcement` will disable smartcard enforcement on next boot only. 
+  On an Apple Silicon Mac, if a temporary exemption is needed, `security filevault skip-sc-enforcement` will disable smartcard enforcement on next boot only.
 
   Run the following command to set the temporary exemption when booted from Recovery:
   [source,bash]
   ----
   /usr/bin/security filevault skip-sc-enforcement <data volume UUID> set
   ----
-  
+
   To obtain the `data volume UUID` run the following:
   [source,bash]
   ----
   /usr/sbin/diskutil apfs listGroups | /usr/bin/awk -F: '/ Data/ { getline; gsub(/ /,""); print $2}'
   ----
-  
+
   [discrete]
   ==== Pluggable Authentication Module (PAM)
 
@@ -267,8 +267,8 @@ discussion: |
 
   [discrete]
   ==== Screen Sharing and Screen Recording
-  macOS will disable support for TouchID, Watch, or Smartcard authentication when being watched or recorded. This can cause certain portions of the system to not recognize your smartcard. 
-  
+  macOS will disable support for TouchID, Watch, or Smartcard authentication when being watched or recorded. This can cause certain portions of the system to not recognize your smartcard.
+
   In Unified Logging you'll notice an entry such as
   [source,bash]
   ----
@@ -285,15 +285,15 @@ discussion: |
   <string>com.apple.security.authorization</string>
   <key>ignoreArd</key>
   <true/>
-  ----  
+  ----
 check: |
 fix: |
 references:
   cci:
     - N/A
-  800-53r5: 
+  800-53r5:
     - N/A
-  800-53r4: 
+  800-53r4:
     - N/A
   srg:
     - N/A

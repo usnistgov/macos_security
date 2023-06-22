@@ -2,8 +2,8 @@ id: os_home_folders_secure
 title: "Secure User's Home Folders"
 discussion: |
   The system _MUST_ be configured to prevent access to other user's home folders.
-  
-  The default behavior of macOS is to allow all valid users access to the the top level of every other user's home folder while restricting access only to the Apple default folders within. 
+ 
+  The default behavior of macOS is to allow all valid users access to the the top level of every other user's home folder while restricting access only to the Apple default folders within.
 check: |
   /usr/bin/find /System/Volumes/Data/Users -mindepth 1 -maxdepth 1 -type d ! \( -perm 700 -o -perm 711 \) | /usr/bin/grep -v "Shared" | /usr/bin/grep -v "Guest" | /usr/bin/wc -l | /usr/bin/xargs
 result:
@@ -43,11 +43,12 @@ references:
 macOS:
   - "13.0"
 tags:
-  - 800-53r5_moderate 
-  - 800-53r5_high 
-  - 800-53r4_moderate 
-  - 800-53r4_high 
-  - 800-171 
+  - 800-53r5_moderate
+  - 800-53r5_high
+  - 800-53r4_moderate
+  - 800-53r4_high
+  - 800-171
+  - cnssi-1253
   - cis_lvl1
   - cis_lvl2
   - cisv8

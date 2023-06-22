@@ -1,10 +1,10 @@
 id: os_sshd_permit_root_login_configure
 title: "Disable Root Login for SSH"
 discussion: |
-  If SSH is enabled to assure individual accountability and prevent unauthorized access, logging in as root via SSH _MUST_ be disabled. 
-  
-  The macOS system MUST  require individuals to be authenticated with an individual authenticator prior to using a group authenticator, and administrator users _MUST_ never log in directly as root. 
-  
+  If SSH is enabled to assure individual accountability and prevent unauthorized access, logging in as root via SSH _MUST_ be disabled.
+
+  The macOS system MUST  require individuals to be authenticated with an individual authenticator prior to using a group authenticator, and administrator users _MUST_ never log in directly as root.
+
   NOTE: /etc/ssh/sshd_config will be automatically modified to its original state following any update or major upgrade to the operating system.
 check: |
   /usr/sbin/sshd -T | /usr/bin/awk '/permitrootlogin/{print $2}'
@@ -30,28 +30,29 @@ fix: |
     fi
     /bin/mv ${include_dir}${file} ${include_dir}20-${file}
   done
-  ----    
+  ----
 references:
   cce:
     - CCE-91893-8
-  cci: 
-    - N/A
+  cci:
+    - CCI-000770
   800-53r5:
     - IA-2(5)
-  800-53r4: 
+  800-53r4:
     - IA-2(5)
   srg:
-    - N/A
+    - SRG-OS-000109-GPOS-00056
   disa_stig:
-    - N/A
+    - APPL-13-001100
 macOS:
   - "13.0"
 tags:
-  - 800-53r5_high 
+  - 800-53r5_high
   - 800-53r4_high
   - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
+  - stig
 severity: "medium"
 mobileconfig: false
 mobileconfig_info:

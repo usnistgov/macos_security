@@ -52,5 +52,6 @@ tags:
   - cnssi-1253_low
   - cnssi-1253_high
   - cmmc_lvl2
+  - cnssi-1253
 mobileconfig: false
 mobileconfig_info:

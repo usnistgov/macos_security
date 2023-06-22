@@ -36,16 +36,18 @@ fix: |
 references:
   cce:
     - CCE-91847-4
-  cci: 
-    - N/A
+  cci:
+    - CCI-000048
+    - CCI-000050
   800-53r5:
     - AC-8
-  800-53r4: 
+  800-53r4:
     - AC-8
   srg:
-    - N/A
+    - SRG-OS-000023-GPOS-00006
+    - SRG-OS-000024-GPOS-00007
   disa_stig:
-    - N/A
+    - APPL-13-000024
   800-171r2:
     - 3.1.9
   cmmc:
@@ -64,6 +66,7 @@ tags:
   - cnssi-1253_low
   - cnssi-1253_high
   - cmmc_lvl2
+  - stig
 severity: "medium"
 mobileconfig: false
 mobileconfig_info:

@@ -1,10 +1,10 @@
 id: audit_auditd_enabled
 title: "Enable Security Auditing"
 discussion: |
-  The information system _MUST_ be configured to generate audit records. 
-  
+  The information system _MUST_ be configured to generate audit records.
+
   Audit records establish what types of events have occurred, when they occurred, and which users were involved. These records aid an organization in their efforts to establish, correlate, and investigate the events leading up to an outage or attack.
-  
+
   The content required to be captured in an audit record varies based on the impact level of an organization's system. Content that may be necessary to satisfy this requirement includes, for example, time stamps, source addresses, destination addresses, user identifiers, event descriptions, success/fail indications, filenames involved, and access or flow control rules invoked.
 
   The information system initiates session audits at system start-up.
@@ -37,8 +37,20 @@ fix: |
 references:
   cce:
     - CCE-91704-7
-  cci: 
-    - N/A
+  cci:
+    - CCI-000130
+    - CCI-000131
+    - CCI-000132
+    - CCI-000133
+    - CCI-000134
+    - CCI-000135
+    - CCI-000159
+    - CCI-001464
+    - CCI-001487
+    - CCI-001889
+    - CCI-001890
+    - CCI-001914
+    - CCI-002130
   800-53r5:
     - AU-3
     - AU-3(1)
@@ -48,8 +60,8 @@ references:
     - AU-12(3)
     - AU-14(1)
     - MA-4(1)
-    - CM-5(1)    
-  800-53r4: 
+    - CM-5(1)   
+  800-53r4:
     - AU-3
     - AU-3(1)
     - AU-8
@@ -57,9 +69,22 @@ references:
     - AU-12(3)
     - AU-14(1)
   srg:
-    - N/A
+    - SRG-OS-000037-GPOS-00015
+    - SRG-OS-000038-GPOS-00016
+    - SRG-OS-000039-GPOS-00017
+    - SRG-OS-000040-GPOS-00018
+    - SRG-OS-000041-GPOS-00019
+    - SRG-OS-000042-GPOS-00020
+    - SRG-OS-000042-GPOS-00021
+    - SRG-OS-000055-GPOS-00026
+    - SRG-OS-000254-GPOS-00095
+    - SRG-OS-000255-GPOS-00096
+    - SRG-OS-000303-GPOS-00120
+    - SRG-OS-000337-GPOS-00129
+    - SRG-OS-000358-GPOS-00145
+    - SRG-OS-000359-GPOS-00146
   disa_stig:
-    - N/A
+    - APPL-13-001003
   800-171r2:
     - 3.3.1
     - 3.3.2
@@ -76,13 +101,14 @@ references:
 macOS:
   - "13.0"
 tags:
-  - 800-53r5_low 
-  - 800-53r5_moderate 
-  - 800-53r5_high 
-  - 800-53r4_low 
-  - 800-53r4_moderate 
-  - 800-53r4_high 
-  - 800-171 
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_high
+  - 800-53r4_low
+  - 800-53r4_moderate
+  - 800-53r4_high
+  - 800-171
+  - cnssi-1253
   - cis_lvl1
   - cis_lvl2
   - cisv8
@@ -90,6 +116,7 @@ tags:
   - cnssi-1253_low
   - cnssi-1253_high
   - cmmc_lvl2
+  - stig
 severity: "medium"
 mobileconfig: false
 mobileconfig_info:

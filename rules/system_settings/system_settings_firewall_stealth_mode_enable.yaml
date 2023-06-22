@@ -1,10 +1,10 @@
 id: system_settings_firewall_stealth_mode_enable
 title: "Enable Firewall Stealth Mode"
 discussion: |
-  Firewall Stealth Mode _MUST_ be enabled. 
+  Firewall Stealth Mode _MUST_ be enabled.
 
   When stealth mode is enabled, the Mac will not respond to any probing requests, and only requests from authorized applications will still be authorized.
-  
+
   [IMPORTANT]
   ====
   Enabling firewall stealth mode may prevent certain remote mechanisms used for maintenance and compliance scanning from properly functioning. Information System Security Officers (ISSOs) are advised to first fully weigh the potential risks posed to their organization before opting not to enable stealth mode.
@@ -33,6 +33,8 @@ fix: |
 references:
   cce:
     - CCE-91949-8
+  cci:
+    - CCI-000366
   800-53r5:
     - CM-7
     - CM-7(1)
@@ -44,18 +46,18 @@ references:
     - CM-7(1)
     - SC-7(16)
   srg:
-    - N/A
+    - SRG-OS-000480-GPOS-00232
   disa_stig:
-    - N/A
+    - APPL-13-005050
   800-171r2:
     - 3.4.6
     - 3.13.1
     - 3.13.2
     - 3.13.5
   cis:
-    benchmark: 
+    benchmark:
       - 2.2.2 (level 1)
-    controls v8: 
+    controls v8:
       - 4.1
       - 4.5
       - 4.8
@@ -66,13 +68,14 @@ references:
 macOS:
   - "13.0"
 tags:
-  - 800-53r5_low 
-  - 800-53r5_moderate 
-  - 800-53r5_high 
-  - 800-53r4_low 
-  - 800-53r4_moderate 
-  - 800-53r4_high 
-  - 800-171 
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_high
+  - 800-53r4_low
+  - 800-53r4_moderate
+  - 800-53r4_high
+  - 800-171
+  - cnssi-1253
   - cis_lvl1
   - cis_lvl2
   - cisv8
@@ -81,8 +84,10 @@ tags:
   - cnssi-1253_high
   - cmmc_lvl2
   - cmmc_lvl1
+  - stig
 severity: "medium"
 mobileconfig: true
 mobileconfig_info:
   com.apple.security.firewall:
     EnableStealthMode: true
+    EnableFirewall: true

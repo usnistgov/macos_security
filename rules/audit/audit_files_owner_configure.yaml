@@ -2,9 +2,9 @@ id: audit_files_owner_configure
 title: "Configure Audit Log Files to be Owned by Root" 
 discussion: |
   Audit log files _MUST_ be owned by root.
-  
+
   The audit service _MUST_ be configured to create log files with the correct ownership to prevent normal users from reading audit logs.
-  
+
   Audit logs contain sensitive data about the system and users. If log files are set to only be readable and writable by system administrators, the risk is mitigated.
 check: |
   /bin/ls -n $(/usr/bin/grep '^dir' /etc/security/audit_control | /usr/bin/awk -F: '{print $2}') | /usr/bin/awk '{s+=$3} END {print s}'  
@@ -19,15 +19,15 @@ references:
   cce:
     - CCE-91714-6
   cci:
-    - N/A
+    - CCI-000162
   800-53r5:
     - AU-9
   800-53r4:
     - AU-9
   srg:
-    - N/A
+    - SRG-OS-000057-GPOS-00027
   disa_stig:
-    - N/A
+    - APPL-13-001012
   800-171r2:
     - 3.3.8
   cis:
@@ -40,20 +40,25 @@ references:
 macOS:
   - "13.0"
 tags:
-  - 800-53r5_low 
-  - 800-53r5_moderate 
-  - 800-53r5_high 
-  - 800-53r4_low 
-  - 800-53r4_moderate 
-  - 800-53r4_high 
-  - 800-171 
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_high
+  - 800-53r4_low
+  - 800-53r4_moderate
+  - 800-53r4_high
+  - 800-171
+  - cnssi-1253
   - cis_lvl1
   - cis_lvl2
   - cisv8
+<<<<<<< HEAD
   - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
   - cmmc_lvl2
+=======
+  - stig
+>>>>>>> dev_ventura_stig
 severity: "medium"
 mobileconfig: false
 mobileconfig_info:

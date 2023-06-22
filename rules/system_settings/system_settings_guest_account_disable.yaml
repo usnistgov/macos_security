@@ -1,8 +1,8 @@
 id: system_settings_guest_account_disable
 title: "Disable the Guest Account"
 discussion: |
-  Guest access _MUST_ be disabled. 
-  
+  Guest access _MUST_ be disabled.
+
   Turning off guest access prevents anonymous users from accessing files.
 check: |
   /usr/bin/osascript -l JavaScript << EOS
@@ -26,7 +26,7 @@ references:
   cce:
     - CCE-91953-0
   cci:
-    - N/A
+    - CCI-001813
   800-53r5:
     - AC-2
     - AC-2(9)
@@ -34,16 +34,16 @@ references:
     - AC-2
     - AC-2(9)
   srg:
-    - N/A
+    - SRG-OS-000364-GPOS-00151
   disa_stig:
-    - N/A
+    - APPL-13-002063
   800-171r2:
     - 3.5.1
     - 3.5.2
   cis:
-    benchmark: 
+    benchmark:
       - 2.12.1 (level 1)
-    controls v8: 
+    controls v8:
       - 5.2
       - 6.2
       - 6.8
@@ -52,13 +52,14 @@ references:
 macOS:
   - "13.0"
 tags:
-  - 800-53r5_low 
-  - 800-53r5_moderate 
-  - 800-53r5_high 
-  - 800-53r4_low 
-  - 800-53r4_moderate 
-  - 800-53r4_high 
-  - 800-171 
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_high
+  - 800-53r4_low
+  - 800-53r4_moderate
+  - 800-53r4_high
+  - 800-171
+  - cnssi-1253
   - cis_lvl1
   - cis_lvl2
   - cisv8
@@ -67,6 +68,7 @@ tags:
   - cnssi-1253_high
   - cmmc_lvl2
   - cmmc_lvl1
+  - stig
 severity: "high"
 mobileconfig: true
 mobileconfig_info:
