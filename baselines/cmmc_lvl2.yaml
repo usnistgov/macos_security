@@ -1,9 +1,11 @@
-title: "macOS 13.0 (Ventura): Security Configuration - US CMMC 2.0 Level 2"
+title: "macOS 13.0: Security Configuration - US CMMC 2.0 Level 2"
 description: |
-  This guide describes the actions to take when securing a macOS 13.0 system against the US CMMC 2.0 Level 2.
+  This guide describes the actions to take when securing a macOS 13.0 system against the US CMMC 2.0 Level 2 security baseline.
 
   Information System Security Officers and benchmark creators can use this catalog of settings in order to assist them in security benchmark creation. This list is a catalog, not a checklist or benchmark, and satisfaction of every item is not likely to be possible or sensible in many operational scenarios.
 authors: |
+  *macOS Security Compliance Project*
+
   |===
   |John Mahlman|Leidos
   |Bob Gendler|National Institute of Standards and Technology
@@ -74,7 +76,6 @@ profile:
       - os_bluray_read_only_enforce
       - os_bonjour_disable
       - os_burn_support_disable
-      - os_calendar_app_disable
       - os_cd_read_only_enforce
       - os_certificate_authority_trust
       - os_config_data_install_enforce
@@ -82,7 +83,6 @@ profile:
       - os_disk_image_disable
       - os_dvdram_disable
       - os_erase_content_and_settings_disable
-      - os_facetime_app_disable
       - os_filevault_autologin_disable
       - os_firewall_default_deny_require
       - os_firewall_log_enable
@@ -95,9 +95,7 @@ profile:
       - os_icloud_storage_prompt_disable
       - os_install_log_retention_configure
       - os_ir_support_disable
-      - os_mail_app_disable
       - os_mdm_require
-      - os_messages_app_disable
       - os_nfsd_disable
       - os_password_autofill_disable
       - os_password_hint_remove
@@ -122,8 +120,6 @@ profile:
       - os_ssh_server_alive_interval_configure
       - os_sshd_client_alive_count_max_configure
       - os_sshd_client_alive_interval_configure
-      - os_sshd_fips_140_ciphers
-      - os_sshd_fips_140_macs
       - os_sshd_fips_compliant
       - os_sshd_key_exchange_algorithm_configure
       - os_sshd_login_grace_time_configure
@@ -185,6 +181,7 @@ profile:
       - system_settings_siri_disable
       - system_settings_smbd_disable
       - system_settings_ssh_disable
+      - system_settings_ssh_enable
       - system_settings_system_wide_preferences_configure
       - system_settings_time_server_configure
       - system_settings_time_server_enforce
@@ -217,8 +214,10 @@ profile:
       - os_nonlocal_maintenance
   - section: "Supplemental"
     rules:
+      - supplemental_cis_manual
       - supplemental_controls
       - supplemental_filevault
       - supplemental_firewall_pf
       - supplemental_password_policy
       - supplemental_smartcard
+      - supplemental_stig

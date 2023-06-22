@@ -1,14 +1,16 @@
 title: "macOS 13.0: Security Configuration - All Rules"
 description: |
-  This guide describes the actions to take when securing a macOS 13.0 system against the all_rules baseline.
+  This guide describes the actions to take when securing a macOS 13.0 system against the All Rules security baseline.
 
   Information System Security Officers and benchmark creators can use this catalog of settings in order to assist them in security benchmark creation. This list is a catalog, not a checklist or benchmark, and satisfaction of every item is not likely to be possible or sensible in many operational scenarios.
 authors: |
+  *macOS Security Compliance Project*
+
   |===
   |Bob Gendler|National Institute of Standards and Technology
   |Dan Brodjieski|National Aeronautics and Space Administration
   |Allen Golbig|Jamf
-  |===  
+  |===
 parent_values: "recommended"
 profile:
   - section: "auditing"
@@ -52,6 +54,7 @@ profile:
   - section: "icloud"
     rules:
       - icloud_addressbook_disable
+      - icloud_appleid_preference_pane_disable
       - icloud_appleid_system_settings_disable
       - icloud_bookmarks_disable
       - icloud_calendar_disable
@@ -102,6 +105,7 @@ profile:
       - os_handoff_disable
       - os_hibernate_mode_destroyfvkeyonstandby_enable
       - os_hibernate_mode_enable
+      - os_home_folders_default
       - os_home_folders_secure
       - os_httpd_disable
       - os_icloud_storage_prompt_disable
@@ -137,6 +141,7 @@ profile:
       - os_safari_show_full_website_address_enable
       - os_safari_warn_fraudulent_website_enable
       - os_screensaver_loginwindow_enforce
+      - os_screensaver_timeout_loginwindow_enforce
       - os_secure_boot_verify
       - os_show_filename_extensions_enable
       - os_sip_enable
@@ -188,10 +193,12 @@ profile:
     rules:
       - system_settings_airplay_receiver_disable
       - system_settings_apple_watch_unlock_disable
+      - system_settings_assistant_disable
       - system_settings_automatic_login_disable
       - system_settings_automatic_logout_enforce
       - system_settings_bluetooth_disable
       - system_settings_bluetooth_menu_enable
+      - system_settings_bluetooth_prefpane_disable
       - system_settings_bluetooth_sharing_disable
       - system_settings_cd_dvd_sharing_disable
       - system_settings_content_caching_disable
@@ -210,6 +217,7 @@ profile:
       - system_settings_improve_siri_dictation_disable
       - system_settings_install_macos_updates_enforce
       - system_settings_internet_accounts_disable
+      - system_settings_internet_accounts_preference_pane_disable
       - system_settings_internet_sharing_disable
       - system_settings_location_services_disable
       - system_settings_location_services_enable
@@ -227,6 +235,7 @@ profile:
       - system_settings_screensaver_password_enforce
       - system_settings_screensaver_timeout_enforce
       - system_settings_siri_disable
+      - system_settings_siri_prefpane_disable
       - system_settings_smbd_disable
       - system_settings_software_update_app_update_enforce
       - system_settings_software_update_download_enforce
@@ -240,9 +249,12 @@ profile:
       - system_settings_time_server_configure
       - system_settings_time_server_enforce
       - system_settings_token_removal_enforce
+      - system_settings_touch_id_pane_disable
       - system_settings_touchid_unlock_disable
       - system_settings_usb_restricted_mode
       - system_settings_wake_network_access_disable
+      - system_settings_wallet_applepay_prefpane_disable
+      - system_settings_wallet_applepay_prefpane_hide
       - system_settings_wifi_disable
       - system_settings_wifi_menu_enable
   - section: "Inherent"
@@ -330,3 +342,4 @@ profile:
       - supplemental_firewall_pf
       - supplemental_password_policy
       - supplemental_smartcard
+      - supplemental_stig

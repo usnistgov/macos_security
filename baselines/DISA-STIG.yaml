@@ -1,4 +1,4 @@
-title: "macOS 13.0: Security Configuration - Apple macOS 13 (Ventura) STIG - Ver 1, Rel 1"
+title: "macOS 13.0: Security Configuration - Apple macOS 13 (Ventura) DISA STIG - Ver 1, Rel 1"
 description: |
   This guide describes the actions to take when securing a macOS 13.0 system against the Apple macOS 13 (Ventura) STIG - Ver 1, Rel 1 security baseline.
 authors: |
@@ -6,8 +6,8 @@ authors: |
 
   |===
   |Dan Brodjieski|National Aeronautics and Space Administration
-  |Bob Gendler|National Institute of Standards and Technology
   |Allen Golbig|Jamf
+  |Bob Gendler|National Institute of Standards and Technology
   |===
 parent_values: "stig"
 profile:
@@ -31,13 +31,13 @@ profile:
       - audit_folder_group_configure
       - audit_folder_owner_configure
       - audit_folders_mode_configure
-      - audit_retention_configure
       - audit_settings_failure_notify
   - section: "authentication"
     rules:
       - auth_pam_login_smartcard_enforce
       - auth_pam_su_smartcard_enforce
       - auth_pam_sudo_smartcard_enforce
+      - auth_smartcard_allow
       - auth_smartcard_certificate_trust_enforce_moderate
       - auth_smartcard_enforce
   - section: "icloud"
@@ -114,6 +114,7 @@ profile:
       - pwpolicy_account_lockout_timeout_enforce
       - pwpolicy_alpha_numeric_enforce
       - pwpolicy_history_enforce
+      - pwpolicy_max_lifetime_enforce
       - pwpolicy_minimum_length_enforce
       - pwpolicy_simple_sequence_disable
       - pwpolicy_special_character_enforce
@@ -127,6 +128,7 @@ profile:
       - system_settings_bluetooth_prefpane_disable
       - system_settings_diagnostics_reports_disable
       - system_settings_filevault_enforce
+      - system_settings_firewall_enable
       - system_settings_firewall_stealth_mode_enable
       - system_settings_gatekeeper_identified_developers_allowed
       - system_settings_guest_account_disable
@@ -155,7 +157,10 @@ profile:
       - system_settings_wallet_applepay_prefpane_hide
   - section: "Supplemental"
     rules:
-      - supplemental_stig
+      - supplemental_cis_manual
+      - supplemental_controls
       - supplemental_filevault
+      - supplemental_firewall_pf
       - supplemental_password_policy
       - supplemental_smartcard
+      - supplemental_stig

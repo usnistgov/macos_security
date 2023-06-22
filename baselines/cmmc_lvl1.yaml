@@ -1,9 +1,11 @@
-title: "macOS 13.0 (Ventura): Security Configuration - US CMMC 2.0 Level 1"
+title: "macOS 13.0: Security Configuration - US CMMC 2.0 Level 1"
 description: |
-  This guide describes the actions to take when securing a macOS 13.0 system against the US CMMC 2.0 Level 1.
+  This guide describes the actions to take when securing a macOS 13.0 system against the US CMMC 2.0 Level 1 security baseline.
 
   Information System Security Officers and benchmark creators can use this catalog of settings in order to assist them in security benchmark creation. This list is a catalog, not a checklist or benchmark, and satisfaction of every item is not likely to be possible or sensible in many operational scenarios.
 authors: |
+  *macOS Security Compliance Project*
+
   |===
   |John Mahlman|Leidos
   |Bob Gendler|National Institute of Standards and Technology
@@ -37,9 +39,7 @@ profile:
       - os_airdrop_disable
       - os_appleid_prompt_disable
       - os_authenticated_root_enable
-      - os_calendar_app_disable
       - os_config_data_install_enforce
-      - os_facetime_app_disable
       - os_filevault_autologin_disable
       - os_firewall_log_enable
       - os_firmware_password_require
@@ -49,8 +49,6 @@ profile:
       - os_home_folders_secure
       - os_httpd_disable
       - os_icloud_storage_prompt_disable
-      - os_mail_app_disable
-      - os_messages_app_disable
       - os_nfsd_disable
       - os_rapid_security_response_allow
       - os_rapid_security_response_removal_disable
@@ -84,6 +82,7 @@ profile:
       - system_settings_siri_disable
       - system_settings_smbd_disable
       - system_settings_ssh_disable
+      - system_settings_ssh_enable
       - system_settings_system_wide_preferences_configure
   - section: "Inherent"
     rules:
@@ -91,8 +90,10 @@ profile:
       - os_malicious_code_prevention
   - section: "Supplemental"
     rules:
+      - supplemental_cis_manual
       - supplemental_controls
       - supplemental_filevault
       - supplemental_firewall_pf
       - supplemental_password_policy
       - supplemental_smartcard
+      - supplemental_stig

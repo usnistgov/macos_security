@@ -1,9 +1,11 @@
 title: "macOS 13.0: Security Configuration - CIS Controls Version 8"
 description: |
-  This guide describes the actions to take when securing a macOS 13.0 system against the CIS Controls version 8 baseline.
+  This guide describes the actions to take when securing a macOS 13.0 system against the CIS Controls Version 8 security baseline.
 
   Information System Security Officers and benchmark creators can use this catalog of settings in order to assist them in security benchmark creation. This list is a catalog, not a checklist or benchmark, and satisfaction of every item is not likely to be possible or sensible in many operational scenarios.
 authors: |
+  *macOS Security Compliance Project*
+
   CIS Critical Security Controls® (CIS Controls®) are referenced with the permission and support of the Center for Internet Security® (CIS®)
   |===
   |Edward Byrd|Center for Internet Security
@@ -64,6 +66,7 @@ profile:
       - os_appleid_prompt_disable
       - os_authenticated_root_enable
       - os_bonjour_disable
+      - os_calendar_app_disable
       - os_config_data_install_enforce
       - os_directory_services_configured
       - os_efi_integrity_validated
@@ -75,6 +78,7 @@ profile:
       - os_handoff_disable
       - os_hibernate_mode_destroyfvkeyonstandby_enable
       - os_hibernate_mode_enable
+      - os_home_folders_secure
       - os_httpd_disable
       - os_icloud_storage_prompt_disable
       - os_install_log_retention_configure
@@ -199,3 +203,4 @@ profile:
       - supplemental_firewall_pf
       - supplemental_password_policy
       - supplemental_smartcard
+      - supplemental_stig
