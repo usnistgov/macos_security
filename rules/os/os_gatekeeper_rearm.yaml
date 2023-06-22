@@ -32,6 +32,11 @@ references:
       - N/A
     controls v8:
       - 10.5
+  cmmc:
+    - SI.L1-3.14.1
+    - SI.L1-3.14.2
+    - SI.L1-3.14.4
+    - CM.L2-3.4.5
 macOS:
   - "13.0"
 tags:
@@ -45,6 +50,8 @@ tags:
   - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
+  - cmmc_lvl2
+  - cmmc_lvl1
 mobileconfig: true
 mobileconfig_info:
   com.apple.ManagedClient.preferences:

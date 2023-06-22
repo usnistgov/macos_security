@@ -23,6 +23,8 @@ references:
     - N/A
   srg:
     - N/A
+  cmmc:
+    - AC.L2-3.1.14
 macOS:
   - "13.0"
 tags:
@@ -32,5 +34,6 @@ tags:
   - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
+  - cmmc_lvl2
 mobileconfig: false
 mobileconfig_info:

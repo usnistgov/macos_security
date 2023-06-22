@@ -52,6 +52,10 @@ references:
       - 2.6.7 (level 1)
     controls v8:
       - 4.1
+  cmmc:
+    - AC.L1-3.1.1
+    - AC.L2-3.1.5
+    - AC.L2-3.1.6
 macOS:
   - "13.0"
 tags:
@@ -66,6 +70,8 @@ tags:
   - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
+  - cmmc_lvl2
+  - cmmc_lvl1
 severity: "medium"
 mobileconfig: false
 mobileconfig_info:

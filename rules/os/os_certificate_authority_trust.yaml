@@ -19,6 +19,8 @@ references:
     - SC-17
   disa_stig:
     - N/A
+  cmmc:
+    - SC.L2-3.13.10
 macOS:
   - "13.0"
 tags:
@@ -30,6 +32,7 @@ tags:
   - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
+  - cmmc_lvl2
 severity: "high"
 mobileconfig: false
 mobileconfig_info:

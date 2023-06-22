@@ -52,6 +52,10 @@ references:
     controls v8:
       - 3.3
       - 4.1
+  cmmc:
+    - AC.L1-3.1.1
+    - CM.L2-3.4.6
+    - CM.L2-3.4.7
 macOS:
   - "13.0"
 tags:
@@ -68,6 +72,8 @@ tags:
   - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
+  - cmmc_lvl2
+  - cmmc_lvl1
 mobileconfig: false
 mobileconfig_info:
 

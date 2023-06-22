@@ -55,6 +55,8 @@ references:
       - N/A
     controls v8:
       - 5.3
+  cmmc:
+    - IA.L2-3.5.6
 macOS:
   - "13.0"
 odv:
@@ -70,5 +72,6 @@ tags:
   - cisv8
   - cnssi-1253_moderate
   - cnssi-1253_high
+  - cmmc_lvl2
 mobileconfig: false
 mobileconfig_info:

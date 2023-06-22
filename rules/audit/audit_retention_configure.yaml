@@ -34,6 +34,8 @@ references:
     controls v8:
       - 8.1
       - 8.3
+  cmmc:
+    - AU.L2-3.3.1
 macOS:
   - "13.0"
 odv:
@@ -55,6 +57,7 @@ tags:
   - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
+  - cmmc_lvl2
 severity: "medium"
 mobileconfig: false
 mobileconfig_info:

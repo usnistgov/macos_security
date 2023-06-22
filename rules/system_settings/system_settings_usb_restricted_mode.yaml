@@ -38,6 +38,9 @@ references:
       - N/A
     controls v8:
       - N/A
+  cmmc:
+    - MP.L2-3.8.7
+    - MP.L2-3.8.8
 macOS:
   - "13.0"
 tags:
@@ -47,6 +50,7 @@ tags:
   - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
+  - cmmc_lvl2
 mobileconfig: true
 mobileconfig_info:
   com.apple.applicationaccess:

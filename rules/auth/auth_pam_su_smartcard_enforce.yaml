@@ -56,6 +56,9 @@ references:
       - 6.3
       - 6.4
       - 6.5
+  cmmc:
+    - IA.L2-3.5.3
+    - IA.L2-3.5.4
 macOS:
   - "13.0"
 tags:
@@ -70,6 +73,7 @@ tags:
   - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
+  - cmmc_lvl2
 severity: "medium"
 mobileconfig: false
 mobileconfig_info:

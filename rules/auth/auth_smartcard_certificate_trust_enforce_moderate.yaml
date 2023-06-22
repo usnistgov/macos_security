@@ -32,6 +32,8 @@ references:
     - N/A
   disa_stig:
     - N/A
+  cmmc:
+    - SC.L2-3.13.10
 macOS:
   - "13.0"
 tags:
@@ -39,6 +41,7 @@ tags:
   - 800-53r5_moderate 
   - cnssi-1253_moderate
   - cnssi-1253_low
+  - cmmc_lvl2
 severity: "medium"
 mobileconfig: true
 mobileconfig_info:

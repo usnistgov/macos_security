@@ -44,6 +44,8 @@ references:
     - N/A
   800-171r2:
     - 3.13.9
+  cmmc:
+    - SC.L2-3.13.9
 macOS:
   - "13.0"
 odv:
@@ -54,6 +56,7 @@ tags:
   - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
+  - cmmc_lvl2
 severity: "medium"
 mobileconfig: false
 mobileconfig_info:

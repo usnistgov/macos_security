@@ -41,6 +41,11 @@ references:
     - N/A
   800-171r2:
     - N/A
+  cmmc:
+    - AU.L2-3.3.3
+    - AU.L2-3.3.6
+    - AU.L2-3.3.8
+    - SI.L2-3.14.3
 macOS:
   - "13.0"
 tags:
@@ -51,6 +56,7 @@ tags:
   - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
+  - cmmc_lvl2
 severity: "medium"
 mobileconfig: false
 mobileconfig_info:

@@ -25,6 +25,8 @@ references:
     - N/A
   800-171r2:
     - N/A
+  cmmc:
+    - AU.L2-3.3.6
 macOS:
   - "13.0"
 tags:
@@ -34,5 +36,6 @@ tags:
   - inherent
   - cnssi-1253_moderate
   - cnssi-1253_high
+  - cmmc_lvl2
 mobileconfig: false
 mobileconfig_info:
