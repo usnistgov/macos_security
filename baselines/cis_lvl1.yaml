@@ -14,6 +14,7 @@ parent_values: "cis_lvl1"
 profile:
   - section: "auditing"
     rules:
+      - audit_acls_files_configure
       - audit_acls_folders_configure
       - audit_auditd_enabled
       - audit_control_acls_configure

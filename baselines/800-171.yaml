@@ -15,6 +15,7 @@ parent_values: "recommended"
 profile:
   - section: "auditing"
     rules:
+      - audit_acls_files_configure
       - audit_acls_folders_configure
       - audit_auditd_enabled
       - audit_failure_halt
