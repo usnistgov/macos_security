@@ -76,17 +76,13 @@ tags:
   - 800-53r4_moderate
   - 800-53r4_high
   - 800-171
-  - cnssi-1253
   - cisv8
-<<<<<<< HEAD
   - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
   - cmmc_lvl2
   - cmmc_lvl1
-=======
   - stig
->>>>>>> dev_ventura_stig
 severity: "high"
 mobileconfig: true
 mobileconfig_info:
