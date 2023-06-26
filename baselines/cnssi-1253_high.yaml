@@ -266,10 +266,8 @@ profile:
       - os_nonlocal_maintenance
   - section: "Supplemental"
     rules:
-      - supplemental_cis_manual
       - supplemental_controls
       - supplemental_filevault
       - supplemental_firewall_pf
       - supplemental_password_policy
       - supplemental_smartcard
-      - supplemental_stig
