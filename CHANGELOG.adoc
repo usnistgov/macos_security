@@ -68,6 +68,7 @@ This document provides a high-level view of the changes to the macOS Security Co
 *** Added base64 support for documentation logo
 *** Added support for CMMC references
 *** Added ssh key generation to compliance script
+*** Added cfc argument to compliance script
 *** Bug Fixes
 ** generate_baseline
 *** Bug Fixes
