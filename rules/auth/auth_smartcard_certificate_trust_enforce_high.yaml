@@ -32,11 +32,14 @@ references:
     - N/A
   disa_stig:
     - N/A
+  cmmc:
+    - SC.L2-3.13.10
 macOS:
   - "13.0"
 tags:
   - 800-53r4_high
   - 800-53r5_high
+  - cnssi-1253_high
 mobileconfig: true
 mobileconfig_info:
   com.apple.security.smartcard:

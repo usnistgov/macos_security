@@ -1,11 +1,11 @@
 id: os_sshd_fips_140_macs
 title: "Limit SSHD to FIPS 140 Validated Message Authentication Code Algorithms"
 discussion: |
-  If SSHD is enabled then it _MUST_ be configured to limit the Message Authentication Codes (MACs) to algorithms that are FIPS 140 validated.
+  If SSHD is enabled then it _MUST_ be configured to limit the Message Authentication Codes (MACs) to algorithms. This is required for compliance with the DISA STIG for macOS.
 
-  FIPS 140-2 is the current standard for validating that mechanisms used to access cryptographic modules utilize authentication that meets federal requirements.
-  
-  Operating systems utilizing encryption _MUST_ use FIPS validated mechanisms for authenticating to cryptographic modules. 
+  In order to meet FIPS 140-3 compliance, please use the configuration in *os_sshd_fips_compliant* which follows the recommended guidelines from Apple in the manpage *apple_ssh_and_fips* and found on
+
+  link:https://support.apple.com/guide/certifications/macos-security-certifications-apc35eb3dc4fa/web[]
 
   NOTE: /etc/ssh/sshd_config will be automatically modified to its original state following any update or major upgrade to the operating system.
 check: |
@@ -21,7 +21,7 @@ fix: |
     /usr/bin/sed -i.bk "1s/.*/Include \/etc\/ssh\/sshd_config.d\/\*/" /etc/ssh/sshd_config
   fi
 
-  echo "MACs hmac-sha2-256,hmac-sha2-512" >> "${include_dir}01-mscp-sshd.conf"
+  /usr/bin/grep -qxF 'MACs hmac-sha2-256,hmac-sha2-512' "${include_dir}01-mscp-sshd.conf" 2>/dev/null || echo "MACs hmac-sha2-256,hmac-sha2-512" >> "${include_dir}01-mscp-sshd.conf"
 
   for file in $(ls ${include_dir}); do
     if [[ "$file" == "100-macos.conf" ]]; then
@@ -32,35 +32,40 @@ fix: |
     fi
     /bin/mv ${include_dir}${file} ${include_dir}20-${file}
   done
-  ----  
+  ----
 references:
   cce:
     - CCE-91889-6
-  cci: 
+  cci:
     - N/A
   800-53r5:
     - AC-17(2)
     - IA-7
     - SC-13
     - SC-8(1)
-  800-53r4: 
+  800-53r4:
     - AC-17(2)
     - IA-7
     - SC-8(1)
     - SC-13
     - MA-4(6)
-  srg: 
+  srg:
     - N/A
-  disa_stig: 
-    - N/A
+  disa_stig:
+    - APPL-13-000055
   800-171r2:
     - 3.1.13
     - 3.13.8
     - 3.13.11
+  cmmc:
+    - AC.L2-3.1.13
+    - MP.L2-3.8.6
+    - SC.L2-3.13.8
+    - SC.L2-3.13.11
 macOS:
   - "13.0"
 tags:
-  - none
-severity: "medium"
+  - stig
+severity: "high"
 mobileconfig: false
 mobileconfig_info:

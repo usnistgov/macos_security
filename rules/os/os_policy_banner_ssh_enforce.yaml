@@ -9,29 +9,49 @@ discussion: |
 
   NOTE: /etc/ssh/sshd_config will be automatically modified to its original state following any update or major upgrade to the operating system.
 check: |
-  /usr/bin/grep -c "^Banner /etc/banner" /etc/ssh/sshd_config 
+  /usr/sbin/sshd -T | /usr/bin/grep -c "^banner /etc/banner"
 result:
   integer: 1
 fix: |
   [source,bash]
   ----
-  /usr/bin/sed -i.bak 's/^[\#]*Banner.*/Banner \/etc\/banner/' /etc/ssh/sshd_config
+  include_dir=$(/usr/bin/awk '/^Include/ {print $2}' /etc/ssh/sshd_config | /usr/bin/tr -d '*')
+
+  if [[ -z $include_dir ]]; then
+    /usr/bin/sed -i.bk "1s/.*/Include \/etc\/ssh\/sshd_config.d\/\*/" /etc/ssh/sshd_config
+  fi
+
+  /usr/bin/grep -qxF 'banner /etc/banner' "${include_dir}01-mscp-sshd.conf" 2>/dev/null || echo "banner /etc/banner" >> "${include_dir}01-mscp-sshd.conf"
+
+  for file in $(ls ${include_dir}); do
+    if [[ "$file" == "100-macos.conf" ]]; then
+        continue
+    fi
+    if [[ "$file" == "01-mscp-sshd.conf" ]]; then
+        break
+    fi
+    /bin/mv ${include_dir}${file} ${include_dir}20-${file}
+  done
   ----
 references:
   cce:
     - CCE-91847-4
-  cci: 
-    - N/A
+  cci:
+    - CCI-000048
+    - CCI-000050
   800-53r5:
     - AC-8
-  800-53r4: 
+  800-53r4:
     - AC-8
   srg:
-    - N/A
+    - SRG-OS-000023-GPOS-00006
+    - SRG-OS-000024-GPOS-00007
   disa_stig:
-    - N/A
+    - APPL-13-000024
   800-171r2:
     - 3.1.9
+  cmmc:
+    - AC.L2-3.1.9
 macOS:
   - "13.0"
 tags:
@@ -42,7 +62,11 @@ tags:
   - 800-53r4_moderate 
   - 800-53r4_high 
   - 800-171 
-  - cnssi-1253
+  - cnssi-1253_moderate
+  - cnssi-1253_low
+  - cnssi-1253_high
+  - cmmc_lvl2
+  - stig
 severity: "medium"
 mobileconfig: false
 mobileconfig_info:

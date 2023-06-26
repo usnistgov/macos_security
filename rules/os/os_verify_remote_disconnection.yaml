@@ -23,5 +23,8 @@ macOS:
   - "13.0"
 tags:
   - inherent
+  - cnssi-1253_moderate
+  - cnssi-1253_low
+  - cnssi-1253_high
 mobileconfig: false
 mobileconfig_info:

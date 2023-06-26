@@ -42,18 +42,25 @@ references:
     controls v8:
       - 4.2
       - 12.6
+  cmmc:
+    - AC.L2-3.1.3
+    - AC.L2-3.1.16
+    - AC.L2-3.1.17
 macOS:
   - "13.0"
 tags:
-  - manual 
-  - cnssi-1253 
-  - 800-53r4_low 
-  - 800-53r4_moderate 
-  - 800-53r4_high 
-  - 800-53r5_low 
-  - 800-53r5_moderate 
+  - manual
+  - 800-53r4_low
+  - 800-53r4_moderate
+  - 800-53r4_high
+  - 800-53r5_low
+  - 800-53r5_moderate
   - 800-53r5_high
   - cisv8
+  - cnssi-1253_moderate
+  - cnssi-1253_low
+  - cnssi-1253_high
+  - cmmc_lvl2
 severity: "medium"
 mobileconfig: false
 mobileconfig_info:

@@ -28,9 +28,9 @@ fix: |
   fi
 
   fips_sshd_config=("Ciphers aes128-gcm@openssh.com" "HostbasedAcceptedAlgorithms ecdsa-sha2-nistp256,ecdsa-sha2-nistp256-cert-v01@openssh.com" "HostKeyAlgorithms ecdsa-sha2-nistp256,ecdsa-sha2-nistp256-cert-v01@openssh.com" "KexAlgorithms ecdh-sha2-nistp256" "MACs hmac-sha2-256" "PubkeyAcceptedAlgorithms ecdsa-sha2-nistp256,ecdsa-sha2-nistp256-cert-v01@openssh.com" "CASignatureAlgorithms ecdsa-sha2-nistp256")
-  
+    
   for config in $fips_sshd_config; do
-    echo "$config" >> "${include_dir}01-mscp-sshd.conf"
+    /usr/bin/grep -qxF "$config" "${include_dir}01-mscp-sshd.conf" 2>/dev/null || echo "$config" >> "${include_dir}01-mscp-sshd.conf"
   done
 
   for file in $(ls ${include_dir}); do
@@ -67,6 +67,11 @@ references:
     - 3.1.13
     - 3.13.8
     - 3.13.11
+  cmmc:
+    - AC.L2-3.1.13
+    - MP.L2-3.8.6
+    - SC.L2-3.13.8
+    - SC.L2-3.13.11
 macOS:
   - "13.0"
 tags:
@@ -77,7 +82,10 @@ tags:
   - 800-53r4_moderate
   - 800-53r4_high
   - 800-171
-  - cnssi-1253
+  - cnssi-1253_moderate
+  - cnssi-1253_low
+  - cnssi-1253_high
+  - cmmc_lvl2
 severity: "medium"
 mobileconfig: false
 mobileconfig_info:

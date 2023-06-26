@@ -14,15 +14,15 @@ references:
   cce:
     - CCE-91778-1
   cci:
-    - N/A
+    - CCI-000366
   800-53r5:
     - N/A
   800-53r4:
     - N/A
   srg:
-    - N/A
+    - SRG-OS-000480-GPOS-00227
   disa_stig:
-    - N/A
+    - APPL-13-000016
   cis:
     benchmark:
       - N/A
@@ -32,6 +32,7 @@ macOS:
   - "13.0"
 tags:
   - cisv8
+  - stig
 severity: "high"
 mobileconfig: false
 mobileconfig_info:

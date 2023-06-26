@@ -59,6 +59,9 @@ references:
       - N/A
     controls v8:
       - 4.7
+  cmmc:
+    - IA.L2-3.5.8
+    - IA.L2-3.5.9
 macOS:
   - "13.0"
 odv:
@@ -66,7 +69,6 @@ odv:
   recommended: 24
 tags:
   - 800-171
-  - cnssi-1253
   - 800-53r4_low
   - 800-53r4_moderate
   - 800-53r4_high
@@ -74,5 +76,9 @@ tags:
   - 800-53r5_moderate
   - 800-53r5_high
   - cisv8
+  - cnssi-1253_moderate
+  - cnssi-1253_low
+  - cnssi-1253_high
+  - cmmc_lvl2
 mobileconfig: false
 mobileconfig_info:

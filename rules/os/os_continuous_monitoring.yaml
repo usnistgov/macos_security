@@ -22,11 +22,13 @@ references:
 macOS:
   - "13.0"
 tags:
-  - cnssi-1253
   - 800-53r5_moderate
   - 800-53r5_high
   - 800-53r4_moderate
   - 800-53r4_high
   - permanent 
+  - cnssi-1253_moderate
+  - cnssi-1253_low
+  - cnssi-1253_high
 mobileconfig: false
 mobileconfig_info:

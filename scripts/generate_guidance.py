@@ -13,6 +13,7 @@ import argparse
 import subprocess
 import logging
 import tempfile
+import base64
 from datetime import date
 from xlwt import Workbook
 from string import Template
@@ -20,7 +21,7 @@ from itertools import groupby
 from uuid import uuid4
 
 class MacSecurityRule():
-    def __init__(self, title, rule_id, severity, discussion, check, fix, cci, cce, nist_controls, nist_171, disa_stig, srg, cis, custom_refs, odv, tags, result_value, mobileconfig, mobileconfig_info, customized):
+    def __init__(self, title, rule_id, severity, discussion, check, fix, cci, cce, nist_controls, nist_171, disa_stig, srg, cis, cmmc, custom_refs, odv, tags, result_value, mobileconfig, mobileconfig_info, customized):
         self.rule_title = title
         self.rule_id = rule_id
         self.rule_severity = severity
@@ -34,6 +35,7 @@ class MacSecurityRule():
         self.rule_disa_stig = disa_stig
         self.rule_srg = srg
         self.rule_cis = cis
+        self.rule_cmmc = cmmc
         self.rule_custom_refs = custom_refs
         self.rule_odv = odv
         self.rule_result_value = result_value
@@ -56,6 +58,7 @@ class MacSecurityRule():
             rule_80053r5=self.rule_80053r5,
             rule_disa_stig=self.rule_disa_stig,
             rule_cis=self.rule_cis,
+            rule_cmmc=self.rule_cmmc,
             rule_srg=self.rule_srg,
             rule_result=self.rule_result_value
         )
@@ -602,11 +605,19 @@ if [[ $EUID -ne 0 ]]; then
     exit 1
 fi
 
+ssh_key_check=0
+if /usr/sbin/sshd -T &> /dev/null; then
+    ssh_key_check=0
+else
+    /usr/bin/ssh-keygen -q -N "" -t rsa -b 4096 -f /etc/ssh/ssh_host_rsa_key
+    ssh_key_check=1
+fi
+
 # path to PlistBuddy
 plb="/usr/libexec/PlistBuddy"
 
 # get the currently logged in user
-CURRENT_USER=$(scutil <<< "show State:/Users/ConsoleUser" | awk '/Name :/ && ! /loginwindow/ {{ print $3 }}')
+CURRENT_USER=$( /usr/sbin/scutil <<< "show State:/Users/ConsoleUser" | /usr/bin/awk '/Name :/ && ! /loginwindow/ {{ print $3 }}')
 CURR_USER_UID=$(/usr/bin/id -u $CURRENT_USER)
 
 # get system architecture
@@ -628,7 +639,7 @@ vared -p "Press [Enter] key to continue..." -c fackEnterKey
 
 ask() {{
     # if fix flag is passed, assume YES for everything
-    if [[ $fix ]]; then
+    if [[ $fix ]] || [[ $cfc ]]; then
         return 0
     fi
 
@@ -986,11 +997,11 @@ if [[ ! $exempt == "1" ]] || [[ -z $exempt ]];then
     if [[ ${rule_yaml['id']}_audit_score == "true" ]]; then
         ask '{rule_yaml['id']} - Run the command(s)-> {quotify(get_fix_code(rule_yaml['fix']).strip())} ' N
         if [[ $? == 0 ]]; then
-            echo 'Running the command to configure the settings for: {rule_yaml['id']} ...' | /usr/bin/tee -a "$audit_log"
+            echo "$(date -u) Running the command to configure the settings for: {rule_yaml['id']} ..." | /usr/bin/tee -a "$audit_log"
             {get_fix_code(rule_yaml['fix']).strip()}
         fi
     else
-        echo 'Settings for: {rule_yaml['id']} already configured, continuing...' | /usr/bin/tee -a "$audit_log"
+        echo "$(date -u) Settings for: {rule_yaml['id']} already configured, continuing..." | /usr/bin/tee -a "$audit_log"
     fi
 elif [[ ! -z "$exempt_reason" ]];then
     echo "$(date -u) {rule_yaml['id']} has an exemption, remediation skipped (Reason: "$exempt_reason")" | /usr/bin/tee -a "$audit_log"
@@ -1004,7 +1015,7 @@ fi
 lastComplianceScan=$(defaults read "$audit_plist" lastComplianceCheck)
 echo "Results written to $audit_plist"
 
-if [[ ! $check ]];then
+if [[ ! $check ]] && [[ ! $cfc ]];then
     pause
 fi
 
@@ -1024,7 +1035,7 @@ if [[ ! -e "$audit_plist" ]]; then
     fi
 fi
 
-if [[ ! $fix ]]; then
+if [[ ! $fix ]] && [[ ! $cfc ]]; then
     ask 'THE SOFTWARE IS PROVIDED "AS IS" WITHOUT ANY WARRANTY OF ANY KIND, EITHER EXPRESSED, IMPLIED, OR STATUTORY, INCLUDING, BUT NOT LIMITED TO, ANY WARRANTY THAT THE SOFTWARE WILL CONFORM TO SPECIFICATIONS, ANY IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND FREEDOM FROM INFRINGEMENT, AND ANY WARRANTY THAT THE DOCUMENTATION WILL CONFORM TO THE SOFTWARE, OR ANY WARRANTY THAT THE SOFTWARE WILL BE ERROR FREE.  IN NO EVENT SHALL NIST BE LIABLE FOR ANY DAMAGES, INCLUDING, BUT NOT LIMITED TO, DIRECT, INDIRECT, SPECIAL OR CONSEQUENTIAL DAMAGES, ARISING OUT OF, RESULTING FROM, OR IN ANY WAY CONNECTED WITH THIS SOFTWARE, WHETHER OR NOT BASED UPON WARRANTY, CONTRACT, TORT, OR OTHERWISE, WHETHER OR NOT INJURY WAS SUSTAINED BY PERSONS OR PROPERTY OR OTHERWISE, AND WHETHER OR NOT LOSS WAS SUSTAINED FROM, OR AROSE OUT OF THE RESULTS OF, OR USE OF, THE SOFTWARE OR SERVICES PROVIDED HEREUNDER. WOULD YOU LIKE TO CONTINUE? ' N
 
     if [[ $? != 0 ]]; then
@@ -1035,6 +1046,9 @@ fi
 
 # append to existing logfile
 echo "$(date -u) Beginning remediation of non-compliant settings" >> "$audit_log"
+
+# remove uchg on audit_control
+/usr/bin/chflags nouchg /etc/security/audit_control
 
 # run mcxrefresh
 /usr/bin/mcxrefresh -u $CURR_USER_UID
@@ -1048,13 +1062,14 @@ echo "$(date -u) Remediation complete" >> "$audit_log"
 
 }
 
-zparseopts -D -E -check=check -fix=fix -stats=stats -compliant=compliant_opt -non_compliant=non_compliant_opt -reset=reset
+zparseopts -D -E -check=check -fix=fix -stats=stats -compliant=compliant_opt -non_compliant=non_compliant_opt -reset=reset -cfc=cfc
 
 if [[ $reset ]]; then reset_plist; fi
 
-if [[ $check ]] || [[ $fix ]] || [[ $stats ]] || [[ $compliant_opt ]] || [[ $non_compliant_opt ]]; then
+if [[ $check ]] || [[ $fix ]] || [[ $cfc ]] || [[ $stats ]] || [[ $compliant_opt ]] || [[ $non_compliant_opt ]]; then
     if [[ $fix ]]; then run_fix; fi
     if [[ $check ]]; then run_scan; fi
+    if [[ $cfc ]]; then run_scan; run_fix; run_scan; fi
     if [[ $stats ]];then generate_stats; fi
     if [[ $compliant_opt ]];then compliance_count "compliant"; fi
     if [[ $non_compliant_opt ]];then compliance_count "non-compliant"; fi
@@ -1063,6 +1078,12 @@ else
         show_menus
         read_options
     done
+fi
+
+if [[ "$ssh_key_check" -ne 0 ]]; then
+    /bin/rm /etc/ssh/ssh_host_rsa_key
+    /bin/rm /etc/ssh/ssh_host_rsa_key.public
+    ssh_key_check=0
 fi
     """
 
@@ -1242,7 +1263,7 @@ def generate_xls(baseline_name, build_path, baseline_yaml):
     top = xlwt.easyxf("align: vert top")
     headers = xlwt.easyxf("font: bold on")
     counter = 1
-    column_counter = 16
+    column_counter = 17
     custom_ref_column = {}
     sheet1.write(0, 0, "CCE", headers)
     sheet1.write(0, 1, "Rule ID", headers)
@@ -1258,8 +1279,9 @@ def generate_xls(baseline_name, build_path, baseline_yaml):
     sheet1.write(0, 11, "DISA STIG", headers)
     sheet1.write(0, 12, "CIS Benchmark", headers)
     sheet1.write(0, 13, "CIS v8", headers)
-    sheet1.write(0, 14, "CCI", headers)
-    sheet1.write(0, 15, "Modifed Rule", headers)
+    sheet1.write(0, 14, "CMMC", headers)
+    sheet1.write(0, 15, "CCI", headers)
+    sheet1.write(0, 16, "Modifed Rule", headers)
     sheet1.set_panes_frozen(True)
     sheet1.set_horz_split_pos(1)
     sheet1.set_vert_split_pos(2)
@@ -1347,18 +1369,24 @@ def generate_xls(baseline_name, build_path, baseline_yaml):
                     cis = cis.replace(", ", "\n")
                     sheet1.write(counter, 13, cis, topWrap)
                     sheet1.col(13).width = 500 * 15
+        
+        cmmc_refs = (str(rule.rule_cmmc)).strip('[]\'')
+        cmmc_refs = cmmc_refs.replace(", ", "\n").replace("\'", "")
+
+        sheet1.write(counter, 14, cmmc_refs, topWrap)
+        sheet1.col(14).width = 500 * 15
 
         cci = (str(rule.rule_cci)).strip('[]\'')
         cci = cci.replace(", ", "\n").replace("\'", "")
 
-        sheet1.write(counter, 14, cci, topWrap)
-        sheet1.col(13).width = 400 * 15
+        sheet1.write(counter, 15, cci, topWrap)
+        sheet1.col(15).width = 400 * 15
 
         customized = (str(rule.rule_customized)).strip('[]\'')
         customized = customized.replace(", ", "\n").replace("\'", "")
 
-        sheet1.write(counter, 15, customized, topWrap)
-        sheet1.col(14).width = 400 * 15
+        sheet1.write(counter, 16, customized, topWrap)
+        sheet1.col(16).width = 400 * 15
 
         if rule.rule_custom_refs != ['None']:
             for title, ref in rule.rule_custom_refs.items():
@@ -1404,6 +1432,7 @@ def create_rules(baseline_yaml):
                   '800-53r5',
                   '800-171r2',
                   'cis',
+                  'cmmc',
                   'srg',
                   'custom']
 
@@ -1447,6 +1476,7 @@ def create_rules(baseline_yaml):
                                         rule_yaml['references']['disa_stig'],
                                         rule_yaml['references']['srg'],
                                         rule_yaml['references']['cis'],
+                                        rule_yaml['references']['cmmc'],
                                         rule_yaml['references']['custom'],
                                         rule_yaml['odv'],
                                         rule_yaml['tags'],
@@ -1558,6 +1588,7 @@ def parse_cis_references(reference):
             string += "!" + str(item) + "!* " + str(reference[item]) + "\n"
     return string
 
+# Might have to do something similar to above for cmmc
 
 def main():
 
@@ -1582,8 +1613,14 @@ def main():
 
         if args.logo:
             logo = args.logo
+            pdf_logo_path = logo
         else:
             logo = "../../templates/images/mscp_banner.png"
+            pdf_logo_path = "../templates/images/mscp_banner.png"
+
+        # convert logo to base64 for inline processing
+        b64logo = base64.b64encode(open(pdf_logo_path, "rb").read())
+        
 
         build_path = os.path.join(parent_dir, 'build', f'{baseline_name}')
         if not (os.path.isdir(build_path)):
@@ -1700,6 +1737,11 @@ def main():
     else:
         adoc_cis_show=":show_cis!:"
 
+    if "CMMC" in baseline_yaml['title'].upper():
+        adoc_cmmc_show=":show_CMMC:"
+    else:
+        adoc_cmmc_show=":show_CMMC!:"
+
     if "800" in baseline_yaml['title']:
          adoc_171_show=":show_171:"
     else:
@@ -1709,6 +1751,7 @@ def main():
         adoc_tag_show=":show_tags:"
         adoc_STIG_show=":show_STIG:"
         adoc_cis_show=":show_cis:"
+        adoc_cmmc_show=":show_CMMC:"
         adoc_171_show=":show_171:"
     else:
         adoc_tag_show=":show_tags!:"
@@ -1730,11 +1773,13 @@ def main():
         html_subtitle=adoc_html_subtitle,
         document_subtitle2=adoc_document_subtitle2,
         logo=logo,
+        pdflogo=b64logo.decode("ascii"),
         pdf_theme=pdf_theme,
         tag_attribute=adoc_tag_show,
         nist171_attribute=adoc_171_show,
         stig_attribute=adoc_STIG_show,
         cis_attribute=adoc_cis_show,
+        cmmc_attribute=adoc_cmmc_show,
         version=version_yaml['version'],
         os_version=version_yaml['os'],
         release_date=version_yaml['date']
@@ -1854,6 +1899,13 @@ def main():
                 cis = parse_cis_references(rule_yaml['references']['cis'])
 
             try:
+                rule_yaml['references']['cmmc']
+            except KeyError:
+                cmmc = ""
+            else:
+                cmmc = ulify(rule_yaml['references']['cmmc'])
+
+            try:
                 rule_yaml['references']['srg']
             except KeyError:
                 srg = '- N/A'
@@ -1937,6 +1989,7 @@ def main():
                     rule_800171=nist_800171,
                     rule_disa_stig=disa_stig,
                     rule_cis=cis,
+                    rule_cmmc=cmmc,
                     rule_cce=cce,
                     rule_custom_refs=custom_refs,
                     rule_tags=tags,
@@ -1954,6 +2007,7 @@ def main():
                     rule_800171=nist_800171,
                     rule_disa_stig=disa_stig,
                     rule_cis=cis,
+                    rule_cmmc=cmmc,
                     rule_cce=cce,
                     rule_tags=tags,
                     rule_srg=srg
@@ -1970,6 +2024,7 @@ def main():
                     rule_800171=nist_800171,
                     rule_disa_stig=disa_stig,
                     rule_cis=cis,
+                    rule_cmmc=cmmc,
                     rule_cce=cce,
                     rule_tags=tags,
                     rule_srg=srg,

@@ -5,25 +5,25 @@ discussion: |
 check: |
   /usr/bin/osascript -l JavaScript << EOS
   $.NSUserDefaults.alloc.initWithSuiteName('com.apple.screensaver')\
-  .objectForKey('loginWindowModulePath').js
+  .objectForKey('moduleName').js
   EOS
 result:
-  string: "/System/Library/Screen Savers/Flurry.saver"
+  string: "Ventura"
 fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
     - CCE-91872-2
   cci:
-    - N/A
+    - CCI-000060
   800-53r5:
     - AC-11(1)
   800-53r4:
     - AC-11(1)
   srg:
-    - N/A
+    - SRG-OS-000031-GPOS-00012
   disa_stig:
-    - N/A
+    - APPL-13-000006
   800-171r2:
     - 3.1.10
 macOS:
@@ -34,9 +34,12 @@ tags:
   - 800-53r4_moderate 
   - 800-53r4_high 
   - 800-171 
-  - cnssi-1253
-severity: "low"
+  - cnssi-1253_moderate
+  - cnssi-1253_low
+  - cnssi-1253_high
+  - stig
+severity: "medium"
 mobileconfig: true
 mobileconfig_info:
   com.apple.screensaver:
-    loginWindowModulePath: "/System/Library/Screen Savers/Flurry.saver"
+    moduleName: "Ventura"

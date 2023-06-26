@@ -5,7 +5,7 @@ discussion: |
 
   Malicious software can establish a base on individual desktops and servers. Employing an automated mechanism to detect this type of software will aid in elimination of the software from the operating system.'
 check: |
-  /bin/launchctl list | /usr/bin/grep -cE "(com.apple.XprotectFramework.PluginService|com.apple.XProtect.daemon.scan)"
+  /bin/launchctl list | /usr/bin/grep -cE "(com.apple.XprotectFramework.PluginService$|com.apple.XProtect.daemon.scan$)"
 result:
   integer: 2
 fix: |
@@ -17,20 +17,20 @@ fix: |
 references:
   cce:
     - CCE-91756-7
-  cci: 
-    - N/A
+  cci:
+    - CCI-000366
   800-53r5:
     - N/A
-  800-53r4: 
+  800-53r4:
     - SI-2
   srg:
-    - N/A
+    - SRG-OS-000480-GPOS-00227
   disa_stig:
-    - N/A
+    - APPL-13-002070
 macOS:
   - "13.0"
 tags:
-  - none
+  - stig
 severity: "high"
 mobileconfig: false
 mobileconfig_info:

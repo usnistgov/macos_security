@@ -1,7 +1,9 @@
-title: "macOS 13.0: Security Configuration - CIS Benchmarks"
+title: "macOS 13.0: Security Configuration - CIS Apple macOS 13.0 Ventura v1.0.0 Benchmark (Level 2)"
 description: |
-  This guide describes the actions to take when securing a macOS system against the CIS Apple macOS 13.0 Ventura v1.0.0 Benchmark (Level 1 and 2)
+  This guide describes the actions to take when securing a macOS 13.0 system against the CIS Apple macOS 13.0 Ventura v1.0.0 Benchmark (Level 2) security baseline.
 authors: |
+  *macOS Security Compliance Project*
+
   The CIS Benchmarks are referenced with the permission and support of the Center for Internet Security® (CIS®)
   |===
   |Edward Byrd|Center for Internet Security

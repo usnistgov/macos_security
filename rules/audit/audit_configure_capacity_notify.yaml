@@ -17,23 +17,29 @@ references:
   cce:
     - CCE-91705-4
   cci:
-    - N/A
+    - CCI-001855
   800-53r5:
     - AU-5(1)
   800-53r4: 
     - AU-5(1)
   srg:
-    - N/A
+    - SRG-OS-000343-GPOS-00134
   disa_stig:
-    - N/A
+    - APPL-13-001030
 macOS:
   - "13.0"
 odv:
   hint: "Percentage of free space."
   recommended: 25
+  stig: 25
 tags:
   - 800-53r5_high 
   - 800-53r4_high
+  - cnssi-1253_moderate
+  - cnssi-1253_low
+  - cnssi-1253_high
+  - stig
 severity: "medium"
+severity: "low"
 mobileconfig: false
 mobileconfig_info:

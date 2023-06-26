@@ -37,6 +37,9 @@ references:
   800-171r2:
     - 3.1.3
     - 3.13.6
+  cmmc:
+    - AC.L2-3.1.3
+    - SC.L2-3.13.6
 macOS:
   - "13.0"
 tags:
@@ -45,6 +48,9 @@ tags:
   - 800-53r4_moderate
   - 800-53r4_high
   - 800-171
-  - cnssi-1253
+  - cnssi-1253_moderate
+  - cnssi-1253_low
+  - cnssi-1253_high
+  - cmmc_lvl2
 mobileconfig: false
 mobileconfig_info:

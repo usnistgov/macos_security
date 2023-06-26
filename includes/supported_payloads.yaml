@@ -93,6 +93,7 @@ payloads_types:
   - com.apple.security.pkcs12
   - com.apple.security.scep
   - com.apple.security.smartcard
+  - com.apple.sharingd
   - com.apple.shareddeviceconfiguration
   - com.apple.sso
   - com.apple.subscribedcalendar.account
@@ -115,4 +116,3 @@ payloads_types:
   - .GlobalPreferences
   - com.apple.preferences.sharing.SharingPrefsExtension
   - com.apple.controlcenter
-  - com.apple.locationmenu

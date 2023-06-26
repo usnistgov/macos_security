@@ -5,27 +5,27 @@ discussion: |
 
   Audit logs contain sensitive data about the system and users. This rule ensures that the audit service is configured to create log folders that are readable and writable only by system administrators in order to prevent normal users from reading audit logs.
 check: |
-  /bin/ls -lde $(/usr/bin/grep '^dir' /etc/security/audit_control | /usr/bin/awk -F: '{print $2}') | /usr/bin/awk '{print $1}' | /usr/bin/grep -c ":"
+  /bin/ls -lde /var/audit | /usr/bin/awk '{print $1}' | /usr/bin/grep -c ":"
 result:
   integer: 0
 fix: |
   [source,bash]
   ----
-  /bin/chmod -N $(/usr/bin/grep '^dir' /etc/security/audit_control | /usr/bin/awk -F: '{print $2}')
+  /bin/chmod -N /var/audit
   ----
 references:
   cce:
     - CCE-91702-1
   cci:
-    - N/A
+    - CCI-000162
   800-53r5:
     - AU-9
   800-53r4:
     - AU-9
   srg:
-    - N/A
+    - SRG-OS-000057-GPOS-00027
   disa_stig:
-    - N/A
+    - APPL-13-000031
   800-171r2:
     - 3.3.8
   cis:
@@ -33,20 +33,26 @@ references:
       - 3.5 (level 1)
     controls v8:
       - 3.3
+  cmmc:
+    - AU.L2-3.3.8
 macOS:
   - "13.0"
 tags:
-  - 800-53r5_low 
-  - 800-53r5_moderate 
-  - 800-53r5_high 
-  - 800-53r4_low 
-  - 800-53r4_moderate 
-  - 800-53r4_high 
-  - 800-171 
-  - cnssi-1253
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_high
+  - 800-53r4_low
+  - 800-53r4_moderate
+  - 800-53r4_high
+  - 800-171
   - cis_lvl1
   - cis_lvl2
   - cisv8
+  - cnssi-1253_moderate
+  - cnssi-1253_low
+  - cnssi-1253_high
+  - cmmc_lvl2
+  - stig
 severity: "medium"
 mobileconfig: false
 mobileconfig_info:

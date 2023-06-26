@@ -52,6 +52,9 @@ references:
       - 4.5
       - 8.2
       - 8.5
+  cmmc:
+    - AU.L2-3.3.6
+    - SC.L1-3.13.1
 macOS:
   - "13.0"
 tags:
@@ -62,10 +65,14 @@ tags:
   - 800-53r4_moderate
   - 800-53r4_high
   - 800-171
-  - cnssi-1253
   - cis_lvl1
   - cis_lvl2
   - cisv8
+  - cnssi-1253_moderate
+  - cnssi-1253_low
+  - cnssi-1253_high
+  - cmmc_lvl2
+  - cmmc_lvl1
 mobileconfig: true
 mobileconfig_info:
   com.apple.security.firewall:

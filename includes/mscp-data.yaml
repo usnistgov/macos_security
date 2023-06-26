@@ -44,11 +44,38 @@ authors:
       - Bob Gendler|National Institute of Standards and Technology
       - Dan Brodjieski|National Aeronautics and Space Administration
       - Allen Golbig|Jamf
-  cnssi-1253:
+  cmmc_lvl1:
+    names:
+      - John Mahlman|Leidos
+      - Bob Gendler|National Institute of Standards and Technology
+      - Dan Brodjieski|National Aeronautics and Space Administration
+      - Allen Golbig|Jamf
+  cmmc_lvl2:
+    names:
+      - John Mahlman|Leidos
+      - Bob Gendler|National Institute of Standards and Technology
+      - Dan Brodjieski|National Aeronautics and Space Administration
+      - Allen Golbig|Jamf
+  cnssi-1253_low:
     names:
       - Rob Lamb|Los Alamos National Laboratory
       - Ekkehard Koch|
       - Bob Gendler|National Institute of Standards and Technology
+  cnssi-1253_moderate:
+    names:
+      - Rob Lamb|Los Alamos National Laboratory
+      - Ekkehard Koch|
+      - Bob Gendler|National Institute of Standards and Technology
+  cnssi-1253_high:
+    names:
+      - Rob Lamb|Los Alamos National Laboratory
+      - Ekkehard Koch|
+      - Bob Gendler|National Institute of Standards and Technology
+  stig:
+    names: 
+      - Dan Brodjieski|National Aeronautics and Space Administration
+      - Allen Golbig|Jamf
+      - Bob Gendler|National Institute of Standards and Technology      
 titles:
   all_rules: All Rules
   800-53r5_high: NIST SP 800-53 Rev 5 High Impact
@@ -57,5 +84,10 @@ titles:
   800-171: NIST 800-171 Rev 2
   cis_lvl1: CIS Apple macOS 13.0 Ventura v1.0.0 Benchmark (Level 1)
   cis_lvl2: CIS Apple macOS 13.0 Ventura v1.0.0 Benchmark (Level 2)
+  cmmc_lvl1: US CMMC 2.0 Level 1
+  cmmc_lvl2: US CMMC 2.0 Level 2
   cisv8: CIS Controls Version 8
-  cnssi-1253: Committee on National Security Systems Instruction No. 1253
+  cnssi-1253_low: Committee on National Security Systems Instruction No. 1253 (Low)
+  cnssi-1253_moderate: Committee on National Security Systems Instruction No. 1253 (Moderate)
+  cnssi-1253_high: Committee on National Security Systems Instruction No. 1253 (High)
+  stig: Apple macOS 13 (Ventura) STIG - Ver 1, Rel 1

@@ -28,6 +28,8 @@ references:
       - N/A
     controls v8:
       - 6.4
+  cmmc:
+    - AC.L2-3.1.18
 macOS:
   - "13.0"
 tags:
@@ -36,5 +38,9 @@ tags:
   - 800-53r5_high
   - n_a
   - cisv8
+  - cnssi-1253_moderate
+  - cnssi-1253_low
+  - cnssi-1253_high
+  - cmmc_lvl2
 mobileconfig: false
 mobileconfig_info:

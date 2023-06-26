@@ -21,11 +21,14 @@ references:
     - N/A
   srg:
     - N/A
+  cmmc:
+    - N/A
 macOS:
   - "13.0"
 tags:
   - 800-53r5_high
   - 800-53r4_high
   - inherent
+  - cnssi-1253_high
 mobileconfig: false
 mobileconfig_info:

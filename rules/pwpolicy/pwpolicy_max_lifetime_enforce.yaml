@@ -1,7 +1,7 @@
 id: pwpolicy_max_lifetime_enforce
 title: "Restrict Maximum Password Lifetime to $ODV Days"
 discussion: |
-  The macOS _MUST_ be configured to enforce a maximum password lifetime limit of at least $ODV days. 
+  The macOS _MUST_ be configured to enforce a maximum password lifetime limit of at least $ODV days.
 
   This rule ensures that users are forced to change their passwords frequently enough to prevent malicious users from gaining and maintaining access to the system.
 
@@ -15,17 +15,17 @@ fix: |
 references:
   cce:
     - CCE-91922-5
-  cci: 
-    - N/A
+  cci:
+    - CCI-000199
   800-53r5:
     - IA-5
-  800-53r4: 
+  800-53r4:
     - IA-5
     - IA-5(1)
   srg:
-    - N/A
+    - SRG-OS-000076-GPOS-00044
   disa_stig:
-    - N/A
+    - APPL-13-003008
   800-171r2:
     - 3.5.1
     - 3.5.2
@@ -38,6 +38,9 @@ references:
       - 5.2.7 (level 1)
     controls v8:
       - 5.3
+  cmmc:
+    - IA.L2-3.5.8
+    - IA.L2-3.5.9
 macOS:
   - "13.0"
 odv:
@@ -45,18 +48,23 @@ odv:
   recommended: 60
   cis_lvl1: 365
   cis_lvl2: 365
+  stig: 60
 tags:
-  - 800-171 
-  - cnssi-1253 
-  - 800-53r4_low 
-  - 800-53r4_moderate 
-  - 800-53r4_high 
-  - 800-53r5_low 
-  - 800-53r5_moderate 
+  - 800-171
+  - 800-53r4_low
+  - 800-53r4_moderate
+  - 800-53r4_high
+  - 800-53r5_low
+  - 800-53r5_moderate
   - 800-53r5_high
   - cis_lvl1
   - cis_lvl2
   - cisv8
+  - cnssi-1253_moderate
+  - cnssi-1253_low
+  - cnssi-1253_high
+  - cmmc_lvl2
+  - stig
 severity: "medium"
 mobileconfig: true
 mobileconfig_info:

@@ -49,6 +49,11 @@ ifdef::show_CIS[]
 $rule_cis
 endif::[]
 
+ifdef::show_CMMC[]
+!CMMC
+!$rule_cmmc
+endif::[]
+
 !CCE
 !$rule_cce
 
