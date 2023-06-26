@@ -2,6 +2,54 @@
 
 This document provides a high-level view of the changes to the macOS Security Compliance Project.
 
+== [Monterey, Revision 4.0] - 2022-06-26
+* Rules
+** Added Rules
+*** os_safari_advertising_privacy_protection_enable
+*** os_safari_prevent_cross-site_tracking_enable
+*** os_safari_show_full_website_address_enable
+*** os_safari_warn_fraudulent_website_enable
+
+** Modified Rules
+*** sysprefs_time_machine_encrypted_configure
+*** sysprefs_guest_account_disable
+*** sysprefs_personalized_advertising_disable
+*** os_policy_banner_ssh_enforce
+*** os_sshd_client_alive_count_max_configure
+*** os_sshd_client_alive_interval_configure
+*** os_sshd_fips_140_ciphers
+*** os_sshd_fips_140_macs
+*** os_sshd_key_exchange_algorithm_configure
+*** os_sshd_login_grace_time_configure
+*** os_sshd_permit_root_login_configure
+*** audit_control_mode_configure
+*** supplemental_cis_manual
+
+* Baselines
+** Modified Baselines
+*** cis_lvl1
+*** cis_lvl2
+*** cisv8
+*** all_rules
+** Removed Baselines
+*** cnssi-1253
+
+* Scripts
+** generate_guidance
+*** Added base64 support for documentation logo
+*** Added support for CMMC references
+*** Added ssh key generation to compliance script
+*** Bug Fixes
+** generate_baseline
+*** Bug Fixes
+** generate_scap
+*** Bug Fixes
+
+* Includes
+** supported_payloads
+*** Added com.apple.sharingd
+*** Removed com.apple.locationmenu
+
 == [Monterey, Revision 3.1] - 2022-12-08
 
 * Rules
