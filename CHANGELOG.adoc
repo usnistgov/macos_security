@@ -2,7 +2,7 @@
 
 This document provides a high-level view of the changes to the macOS Security Compliance Project.
 
-== [Monterey, Revision 4.0] - 2022-06-26
+== [Monterey, Revision 4.0] - 2023-06-26
 * Rules
 ** Added Rules
 *** os_safari_advertising_privacy_protection_enable
