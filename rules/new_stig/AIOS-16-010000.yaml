@@ -31,6 +31,7 @@ iOS:
 tags:
   - ios
   - stig
+  - manual
 severity: medium
 mobileconfig: 'true'
 mobileconfig_info:

@@ -33,6 +33,7 @@ iOS:
 tags:
   - ios
   - stig
+  - inherent
 severity: medium
 mobileconfig: 'true'
 mobileconfig_info:
