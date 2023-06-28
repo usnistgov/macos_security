@@ -12,6 +12,9 @@ references:
     - N/A
   cci: 
     - CCI-002536
+    - CCI-000366
+    - CCI-000097
+    - CCI-000370
   800-53r5:
     - AC-3
     - AC-20
@@ -19,8 +22,10 @@ references:
     - CM-7(1)
   sfr:
     - 'FMT_SMF_EXT.1.1/WLAN'
+    - 'FMT_SMF_EXT.1.1 #47'
   disa_stig:
     - AIOS-16-010200
+    - AIOS-16-012500
   800-171r2:
     - N/A
   cis:
