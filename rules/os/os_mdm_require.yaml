@@ -1,0 +1,40 @@
+id: os_supervised_mdm_require
+title: "Enforce Supervised Enrollment in Mobile Device Management"
+discussion: |-
+  iOS/iPadOS _MUST_ be supervised by a Mobile Device Management (MDM) software.
+check: ''
+fix: This is implemented by a Configuration Profile
+references:
+  cce:
+    - N/A
+  cci:
+    - CCI-000366
+    - CCI-000097
+    - CCI-000370
+  800-53r5:
+    - CM-2
+    - CM-6
+  sfr:
+    - 'FMT_SMF_EXT.1.1 #47'
+  disa_stig:
+    - AIOS-16-013200
+  800-171r2:
+    - N/A
+  cis:
+    benchmark:
+      - N/A
+    controls:
+      - N/A
+iOS:
+  - '16.0'
+tags:
+  - ios
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_high
+  - stig
+severity: medium
+mobileconfig: 'true'
+mobileconfig_info:
+  payload_domain:
+    key: value
