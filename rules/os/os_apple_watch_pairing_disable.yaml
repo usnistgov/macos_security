@@ -1,6 +1,6 @@
 id: os_apple_watch_pairing_disable
-title "Ensure Apple Watch Pairing is Disabled"
-discussion: |-
+title: "Ensure Apple Watch Pairing is Disabled"
+discussion: |
   Pairing an Apple Watch _MUST_ be disabled.
   
   NOTE: Any currently paired Apple Watch is unpaired and the watch's content is erased.
