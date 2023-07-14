@@ -33,7 +33,7 @@ references:
       - 2.3
       - 2.6
 macOS:
-  - "13.0"
+  - "14.0"
 tags:
   - cis_lvl1
   - cis_lvl2

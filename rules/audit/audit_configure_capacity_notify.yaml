@@ -27,7 +27,7 @@ references:
   disa_stig:
     - APPL-13-001030
 macOS:
-  - "13.0"
+  - "14.0"
 odv:
   hint: "Percentage of free space."
   recommended: 25

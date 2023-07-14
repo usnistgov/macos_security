@@ -47,7 +47,7 @@ references:
     - AC.L2-3.1.16
     - AC.L2-3.1.17
 macOS:
-  - "13.0"
+  - "14.0"
 tags:
   - manual
   - 800-53r4_low

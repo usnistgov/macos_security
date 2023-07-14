@@ -117,7 +117,7 @@ references:
   cmmc:
     - N/A
 macOS:
-  - "13.0"
+  - "14.0"
 tags:
   - supplemental
 mobileconfig: false

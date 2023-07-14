@@ -5,7 +5,7 @@ discussion: |
 
   Use of weak or untested encryption algorithms undermines the purposes of utilizing encryption to protect data. The operating system must implement cryptographic modules that adhere to the higher standards that have been tested, validated, and approved by the federal government. 
 
-  Apple is committed to the FIPS validation process and historically has always submitted and validated the cryptographic modules in macOS. macOS Ventura will be submitted for FIPS validation.
+  Apple is committed to the FIPS validation process and historically has always submitted and validated the cryptographic modules in macOS. macOS Sonoma will be submitted for FIPS validation.
 
   link:https://csrc.nist.gov/Projects/cryptographic-module-validation-program/validated-modules[]
   
@@ -33,7 +33,7 @@ references:
     - MP.L2-3.8.6
     - SC.L2-3.13.11
 macOS:
-  - "13.0"
+  - "14.0"
 tags:
   - 800-53r5_low
   - 800-53r5_moderate

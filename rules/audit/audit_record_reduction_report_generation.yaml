@@ -28,7 +28,7 @@ references:
   cmmc:
     - AU.L2-3.3.6
 macOS:
-  - "13.0"
+  - "14.0"
 tags:
   - 800-53r5_high
   - 800-53r4_high

@@ -45,7 +45,7 @@ discussion: |
   APPL-13-002053
   APPL-13-002062| DISA STIG requires `com.apple.preferences.AppleIDPrefPane`, `com.apple.preferences.internetaccounts`, `com.apple.preference.speech`,`com.apple.preferences.Bluetooth`, `com.apple.preferences.password`, `com.apple.preferences.wallet` to be set within the key `DisabledPreferencePanes`.
 
-  Apple has deprecated the `com.apple.systempreferences` preference domain, however in macOS Ventura it is recommended to use the key `DisabledSystemSettings` with the values `com.apple.systempreferences.AppleIDSettings`, `com.apple.Internet-Accounts-Settings.extension`, `com.apple.Siri-Settings.extension`, `com.apple.BluetoothSettings`, `com.apple.Touch-ID-Settings.extension`, `com.apple.WalletSettingsExtension`. +
+  Apple has deprecated the `com.apple.systempreferences` preference domain, however in macOS Sonoma it is recommended to use the key `DisabledSystemSettings` with the values `com.apple.systempreferences.AppleIDSettings`, `com.apple.Internet-Accounts-Settings.extension`, `com.apple.Siri-Settings.extension`, `com.apple.BluetoothSettings`, `com.apple.Touch-ID-Settings.extension`, `com.apple.WalletSettingsExtension`. +
   |APPL-13-000004| DISA STIG requires the screen saver after 15 minutes of inactivity.
 
   The keys required are `loginWindowIdleTime` and `IdleTime` in the `com.apple.screensaver` prefernece domain. +
@@ -54,7 +54,7 @@ discussion: |
   The key `Assistant Allowed` does not exist in the preference domain `com.apple.ironwood.support`. +
   |APPL-13-002052| DISA STIG requires hiding the Wallet and Apple Pay System Setting Pane.
 
-  In macOS Ventura, hiding preference panes is not possible. +
+  In macOS Sonoma, hiding preference panes is not possible. +
   |===
 check: |
 fix: |
@@ -70,7 +70,7 @@ references:
   disa_stig:
     - N/A
 macOS:
-  - "13.0"
+  - "14.0"
 tags:
   - stig
   - supplemental

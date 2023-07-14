@@ -1,4 +1,4 @@
-os: "13.0"
-version: "Ventura Guidance, Revision 2.0"
-cpe: o:apple:macos:13.0
-date: "2023-06-26"
+os: "14.0"
+version: "Sonoma Guidance, Revision 1.0"
+cpe: o:apple:macos:14.0
+date: "2023-XX-XX"

@@ -70,7 +70,7 @@ references:
   disa_stig:
     - APPL-13-000012
 macOS:
-  - "13.0"
+  - "14.0"
 tags:
   - 800-53r5_moderate
   - 800-53r5_high

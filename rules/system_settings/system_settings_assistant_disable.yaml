@@ -38,7 +38,7 @@ references:
     controls v8:
       - N/A
 macOS:
-  - "13.0"
+  - "14.0"
 tags:
   - stig
 severity: "medium"

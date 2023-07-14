@@ -49,7 +49,7 @@ references:
     - AC.L2-3.1.11
     - SC.L2-3.13.9
 macOS:
-  - "13.0"
+  - "14.0"
 odv:
   hint: "Number of seconds."
   recommended: 900

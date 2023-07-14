@@ -40,7 +40,7 @@ references:
       - 7.3
       - 7.4
 macOS:
-  - "13.0"
+  - "14.0"
 odv: 
   hint: "Number of days."
   recommended: 30

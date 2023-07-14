@@ -58,7 +58,7 @@ references:
   cmmc:
     - IA.L2-3.5.6
 macOS:
-  - "13.0"
+  - "14.0"
 odv:
   hint: "Number of days."
   recommended: 35

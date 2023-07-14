@@ -18,7 +18,7 @@ endif::[]
 
 ifdef::status[]
 image:https://badgen.net/badge/icon/apple?icon=apple&label[link="https://www.apple.com/"]
-image:https://badgen.net/badge/icon/13.0?icon=apple&label[link="https://www.apple.com/macos"]
+image:https://badgen.net/badge/icon/14.0?icon=apple&label[link="https://www.apple.com/macos"]
 endif::[]
 
 IMPORTANT: We recommend working off of one of the OS branches, rather than the `main` branch.

@@ -32,7 +32,7 @@ references:
     controls v8: 
       - 4.1
 macOS:
-  - "13.0"
+  - "14.0"
 tags:
   - cis_lvl1
   - cis_lvl2

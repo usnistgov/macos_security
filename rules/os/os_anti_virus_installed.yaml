@@ -28,7 +28,7 @@ references:
   disa_stig:
     - APPL-13-002070
 macOS:
-  - "13.0"
+  - "14.0"
 tags:
   - stig
 severity: "high"

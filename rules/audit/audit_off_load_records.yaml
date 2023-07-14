@@ -29,7 +29,7 @@ references:
     controls v8:
       - 8.9
 macOS:
-  - "13.0"
+  - "14.0"
 tags:
   - permanent
   - cisv8

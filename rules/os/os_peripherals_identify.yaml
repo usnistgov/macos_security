@@ -24,7 +24,7 @@ references:
   800-171r2:
     - N/A       
 macOS:
-  - "13.0"
+  - "14.0"
 tags:
   - inherent
 mobileconfig: false

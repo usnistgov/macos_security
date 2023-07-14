@@ -36,7 +36,7 @@ references:
       - 4.1
       - 4.8
 macOS:
-  - "13.0"
+  - "14.0"
 tags:
   - cis_lvl2
   - cisv8

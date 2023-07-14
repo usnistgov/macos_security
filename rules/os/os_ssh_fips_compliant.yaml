@@ -62,7 +62,7 @@ references:
     - SC.L2-3.13.8
     - SC.L2-3.13.11
 macOS:
-  - "13.0"
+  - "14.0"
 tags:
   - 800-53r5_moderate
   - 800-53r5_high

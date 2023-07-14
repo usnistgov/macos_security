@@ -39,7 +39,7 @@ references:
   cmmc:
     - CM.L2-3.4.9
 macOS:
-  - "13.0"
+  - "14.0"
 tags:
   - cnssi-1253_moderate
   - cnssi-1253_low
