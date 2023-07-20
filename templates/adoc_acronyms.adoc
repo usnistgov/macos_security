@@ -12,6 +12,7 @@
 |CA|Certificate Authority
 |CIS|Center for Internet Security
 |CMMC|Cybersecurity Maturity Model Certification
+|CNSSI|Committee on National Security Systems
 |CRL|Certificate Revocation List
 |DISA|Defense Information Systems Agency
 |DMA|Direct Memory Access
