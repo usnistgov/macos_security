@@ -1,6 +1,6 @@
 title: "macOS 12.0: Security Configuration - CIS Benchmarks"
 description: |
-  This guide describes the actions to take when securing a macOS system against the CIS Apple macOS 12.0 Monterey v2.0.0 Benchmark (Level 1 and 2)
+  This guide describes the actions to take when securing a macOS system against the CIS Apple macOS 12.0 Monterey v2.1.0 Benchmark (Level 1 and 2)
 authors: |
   The CIS Benchmarks are referenced with the permission and support of the Center for Internet Security® (CIS®)
   |===
