@@ -2,8 +2,6 @@ title: "macOS 13.0: Security Configuration - Apple macOS 13 (Ventura) DISA STIG 
 description: |
   This guide describes the actions to take when securing a macOS 13.0 system against the Apple macOS 13 (Ventura) STIG - Ver 1, Rel 1 security baseline.
 authors: |
-  *macOS Security Compliance Project*
-
   |===
   |Dan Brodjieski|National Aeronautics and Space Administration
   |Allen Golbig|Jamf
