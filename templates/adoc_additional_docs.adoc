@@ -21,7 +21,7 @@ ASSOCIATED DOCUMENTS
 |link:https://nvd.nist.gov/800-53[NIST Special Publication 800-53 Rev 5]|_NIST Special Publication 800-53 Rev 5_
 |link:https://www.nist.gov/itl/tig/projects/special-publication-800-63[NIST Special Publication 800-63]|_NIST Special Publication 800-63_
 |link:https://csrc.nist.gov/publications/detail/sp/800-171/rev-2/final[NIST Special Publication 800-171]|_NIST Special Publication 800-171 Rev 2_
-|link:https://csrc.nist.gov/publications/detail/sp/800-219/final[NIST Special Publication 800-219]|_NIST Special Publication 800-219 Rev 1_
+|link:https://csrc.nist.gov/pubs/sp/800/219/r1/final[NIST Special Publication 800-219]|\_NIST Special Publication 800-219 Rev 1\_
 |===
 
 [%header, cols=2*a]
@@ -29,7 +29,7 @@ ASSOCIATED DOCUMENTS
 |===
 |Document Number or Descriptor
 |Document Title
-|link:https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Apple_macOS_12_V1R3_STIG.zip[STIG Ver 1, Rel 3]|_Apple macOS 12 (Monterey) STIG_
+|link:https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Apple_macOS_13_V1R2_STIG.zip[STIG Ver 1, Rel 2]|_Apple macOS 13 (Ventura) STIG_
 |===
 
 [%header, cols=2*a]
@@ -48,7 +48,7 @@ ASSOCIATED DOCUMENTS
 |Document Title
 |link:https://support.apple.com/guide/security/welcome/web[Apple Platform Security Guide]|_Apple Platform Security_
 |link:https://support.apple.com/guide/deployment/welcome/web[Apple Platform Deployment]|_Apple Platform Deployment_
-|link:https://support.apple.com/guide/sccc/welcome/web[Security Certifications and Compliance Center]|_Security Certifications and Compliance Center_
+|link:https://support.apple.com/guide/certifications/welcome/web[Apple Platform Certifications]|_Apple Platform Certifications_
 |link:https://developer.apple.com/documentation/devicemanagement/profile-specific_payload_keys[Profile-Specific Payload Keys]|_Profile-Specific Payload Keys_
 |===
 [%header, cols=2*a]
