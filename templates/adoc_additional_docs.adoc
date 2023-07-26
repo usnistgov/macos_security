@@ -29,7 +29,7 @@ ASSOCIATED DOCUMENTS
 |===
 |Document Number or Descriptor
 |Document Title
-|link:https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Apple_macOS_11_V1R6_STIG.zip[STIG Ver 1, Rel 6]|_Apple macOS 11 (Big Sur) STIG_
+|link:https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Apple_macOS_11_V1R7_STIG.zip[STIG Ver 1, Rel 7]|_Apple macOS 11 (Big Sur) STIG_
 |===
 
 [%header, cols=2*a]
@@ -56,5 +56,5 @@ ASSOCIATED DOCUMENTS
 |===
 |Document Number or Descriptor
 |Document Title
-|link:https://www.cisecurity.org/benchmark/apple_os/[Apple macOS 11.0]|_CIS Apple macOS 11.0 Benchmark version 2.1.0_
+|link:https://www.cisecurity.org/benchmark/apple_os/[Apple macOS 11.0]|_CIS Apple macOS 11.0 Benchmark version 3.1.0_
 |===
