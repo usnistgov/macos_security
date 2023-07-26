@@ -1,4 +1,4 @@
-id: os_hibernate_mode_enable
+id: os_hibernate_mode_apple_silicon_enable
 title: "Enable Hibernate Mode (Apple Silicon)"
 discussion: |
   Hibernate mode _MUST_ be enabled. 

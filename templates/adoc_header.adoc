@@ -20,6 +20,7 @@ endif::[]
 $nist171_attribute
 $stig_attribute
 $cis_attribute
+$cmmc_attribute
 :version: $version ($release_date)
 :os: $os_version
 :proj-title: $html_header_title
@@ -28,11 +29,10 @@ $cis_attribute
 $document_subtitle2
 ifdef::backend-pdf[]
 = {document-title}: {document-subtitle}
-{document-subtitle2}
 $version ($release_date)
 :pdf-themesdir: ../templates
 :pdf-theme: $pdf_theme
-:title-logo-image: image:$logo[align=center]
+:title-logo-image: image:data:image/png;base64,$pdflogo[align=center]
 :nofooter!:
 endif::[]
 :data-uri:
