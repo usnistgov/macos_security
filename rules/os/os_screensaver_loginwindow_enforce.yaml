@@ -37,7 +37,6 @@ tags:
   - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
-  - stig
 severity: "medium"
 mobileconfig: true
 mobileconfig_info:

@@ -61,7 +61,6 @@ tags:
   - cnssi-1253_high
   - cmmc_lvl2
   - cmmc_lvl1
-  - stig
 mobileconfig: true
 mobileconfig_info:
   com.apple.assistant.support:

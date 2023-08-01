@@ -46,7 +46,6 @@ odv:
   recommended: 1200
   stig: 900
 tags:
-  - stig
 severity: "medium"
 mobileconfig: true
 mobileconfig_info:

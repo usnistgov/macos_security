@@ -60,7 +60,6 @@ tags:
   - cnssi-1253_high
   - cmmc_lvl2
   - cmmc_lvl1
-  - stig
 severity: "medium"
 mobileconfig: true
 mobileconfig_info:
