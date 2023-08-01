@@ -17,7 +17,7 @@ fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-    - CCE-91808-6
+    - N/A
   cci: 
     - N/A
   800-53r5:
@@ -31,7 +31,7 @@ references:
   srg:
     - N/A
   disa_stig:
-    - AOSX-13-000075
+    - N/A
   800-171r2:
     - 3.1.16
     - 3.4.6

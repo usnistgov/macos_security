@@ -36,7 +36,7 @@ fix: |
   ----
 references:
   cce:
-    - CCE-91704-7
+    - N/A
   cci:
     - CCI-000130
     - CCI-000131
@@ -84,7 +84,7 @@ references:
     - SRG-OS-000358-GPOS-00145
     - SRG-OS-000359-GPOS-00146
   disa_stig:
-    - APPL-13-001003
+    - N/A
   800-171r2:
     - 3.3.1
     - 3.3.2

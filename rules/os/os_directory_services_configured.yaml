@@ -12,7 +12,7 @@ fix: |
   Integrate the system into an existing directory services infrastructure.
 references:
   cce:
-    - CCE-91778-1
+    - N/A
   cci:
     - CCI-000366
   800-53r5:
@@ -22,7 +22,7 @@ references:
   srg:
     - SRG-OS-000480-GPOS-00227
   disa_stig:
-    - APPL-13-000016
+    - N/A
   cis:
     benchmark:
       - N/A

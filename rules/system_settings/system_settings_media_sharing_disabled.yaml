@@ -30,7 +30,7 @@ fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-    - CCE-91966-2
+    - N/A
   cci:
     - N/A
   800-53r5:

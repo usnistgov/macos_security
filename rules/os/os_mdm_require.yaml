@@ -26,7 +26,7 @@ fix: |
   Ensure that system is enrolled via UAMDM.
 references:
   cce:
-    - CCE-91820-1
+    - N/A
   cci:
     - N/A
   800-53r5:

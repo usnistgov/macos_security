@@ -23,7 +23,7 @@ fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-    - CCE-91764-1
+    - N/A
   cci:
     - CCI-000366
   800-53r5:
@@ -33,7 +33,7 @@ references:
   srg:
     - SRG-OS-000480-GPOS-00227
   disa_stig:
-    - APPL-13-005051
+    - N/A
   800-171r2:
     - 3.8.8
   cmmc:

@@ -22,7 +22,7 @@ fix: |
   NOTE - This will apply to the whole system
 references:
   cce:
-    - CCE-91983-7
+    - N/A
   cci: 
     - N/A
   800-53r5:

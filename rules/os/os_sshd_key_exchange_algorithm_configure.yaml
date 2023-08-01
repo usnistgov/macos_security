@@ -35,7 +35,7 @@ fix: |
   ----
 references:
   cce:
-    - CCE-91891-2
+    - N/A
   cci:
     - N/A
   800-53r5:
@@ -49,7 +49,7 @@ references:
   srg:
     - N/A
   disa_stig:
-    - APPL-13-000056
+    - N/A
   800-171r2:
     - N/A
   cmmc:

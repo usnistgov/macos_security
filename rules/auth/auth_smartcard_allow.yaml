@@ -17,7 +17,7 @@ fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-    - CCE-91736-9
+    - N/A
   cci:
     - CCI-000187
     - CCI-000767
@@ -34,7 +34,7 @@ references:
     - SRG-OS-000107-GPOS-00054
     - SRG-OS-000108-GPOS-00055
   disa_stig:
-    - APPL-13-003020
+    - N/A
   cis:
     benchmark:
       - N/A

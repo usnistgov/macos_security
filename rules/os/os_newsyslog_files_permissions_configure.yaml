@@ -14,7 +14,7 @@ fix: |
   ----
 references:
   cce:
-    - CCE-91826-8
+    - N/A
   cci:
     - CCI-001314
   800-53r5:
@@ -24,7 +24,7 @@ references:
   srg:
     - SRG-OS-000206-GPOS-00084
   disa_stig:
-    - APPL-13-004002
+    - N/A
   800-171r2:
     - N/A
 macOS:
