@@ -9,7 +9,7 @@ discussion: |
 
   NOTE: /etc/ssh/sshd_config will be automatically modified to its original state following any update or major upgrade to the operating system.
 check: |
-  /usr/sbin/sshd -T | /usr/bin/grep -ci "^Ciphers aes256-ctr,aes192-ctr,aes128-ctr"
+  /usr/sbin/sshd -G | /usr/bin/grep -ci "^Ciphers aes256-ctr,aes192-ctr,aes128-ctr"
 result:
   integer: 1
 fix: |

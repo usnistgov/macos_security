@@ -5,7 +5,7 @@ discussion: |
 
   NOTE: /etc/ssh/sshd_config will be automatically modified to its original state following any update or major upgrade to the operating system.
 check: |
-  /usr/sbin/sshd -T | /usr/bin/awk '/logingracetime/{print $2}'
+  /usr/sbin/sshd -G | /usr/bin/awk '/logingracetime/{print $2}'
 result:
   integer: $ODV
 fix: |

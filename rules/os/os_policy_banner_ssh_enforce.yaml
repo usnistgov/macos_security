@@ -9,7 +9,7 @@ discussion: |
 
   NOTE: /etc/ssh/sshd_config will be automatically modified to its original state following any update or major upgrade to the operating system.
 check: |
-  /usr/sbin/sshd -T | /usr/bin/grep -c "^banner /etc/banner"
+  /usr/sbin/sshd -G | /usr/bin/grep -c "^banner /etc/banner"
 result:
   integer: 1
 fix: |

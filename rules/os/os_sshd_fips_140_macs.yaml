@@ -9,7 +9,7 @@ discussion: |
 
   NOTE: /etc/ssh/sshd_config will be automatically modified to its original state following any update or major upgrade to the operating system.
 check: |
-  /usr/sbin/sshd -T | /usr/bin/grep -ci "^MACs hmac-sha2-256,hmac-sha2-512"
+  /usr/sbin/sshd -G | /usr/bin/grep -ci "^MACs hmac-sha2-256,hmac-sha2-512"
 result:
   integer: 1
 fix: |
