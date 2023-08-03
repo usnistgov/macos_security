@@ -1,4 +1,4 @@
-id: os_allow_contacts_managed_sources_unmanaged_destinations_disable
+id: os_allow_contacts_write_managed_sources_unmanaged_destinations_disable
 title: "Ensure Managed Apps Cannot Write to Unmanaged Contact Accounts"
 discussion: |-
   Managed Apps _MUST_ not be allowed to write contacts to unamanged contact destinations.  
@@ -17,7 +17,8 @@ references:
     - SC-7(10)
     - SC-39
   sfr:
-    - 'FMT_SMF_EXT.1.1 #42, FDP_ACF_EXT.1.2'
+    - 'FMT_SMF_EXT.1.1 #42'
+    - 'FDP_ACF_EXT.1.2'
   disa_stig:
     - AIOS-16-012300
   800-171r2:
@@ -30,10 +31,10 @@ references:
 iOS:
   - '16.0'
 tags:
+  - ios
   - 800-53r5_low
   - 800-53r5_moderate
   - 800-53r5_high
-  - ios
   - stig
 severity: "low"
 supervised: false

@@ -1,0 +1,41 @@
+
+id: supplemental_stig
+title: "DISA STIG Supplemental"
+discussion: |
+  This supplemental contains DISA STIG controls that require MDM.
+  
+  [cols="20%h, 80%a"]
+  |===
+  |STIG ID
+  |Notes
+
+  |AIOS-16-005000| +
+  |AIOS-16-007000| +
+  |AIOS-16-008400| +
+  |AIOS-16-009800| +
+  |AIOS-16-009900| +
+  |AIOS-16-010000| +
+  |AIOS-16-011600| +
+  |AIOS-16-011900| +
+  |AIOS-16-013500| +
+  |===
+check: |
+fix: |
+references:
+  cci:
+    - N/A
+  800-53r5:
+    - N/A
+  800-53r4:
+    - N/A
+  srg:
+    - N/A
+  disa_stig:
+    - N/A
+iOS:
+  - "13.0"
+tags:
+  - stig
+  - supplemental
+mobileconfig: false
+mobileconfig_info:  
