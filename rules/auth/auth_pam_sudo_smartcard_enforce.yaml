@@ -76,3 +76,15 @@ tags:
 severity: "medium"
 mobileconfig: false
 mobileconfig_info:
+ddm_info:
+  declarationtype: com.apple.configuration.services.configuration-files
+  service: com.apple.pam
+  config_file: sudo
+  configuration_key: file
+  configuration_value: |
+    auth        sufficient    pam_smartcard.so
+    auth        required      pam_opendirectory.so
+    auth        required      pam_deny.so
+    account     required      pam_permit.so
+    password    required      pam_deny.so
+    session     required      pam_permit.so

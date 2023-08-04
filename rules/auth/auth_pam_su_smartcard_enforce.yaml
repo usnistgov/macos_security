@@ -77,3 +77,16 @@ tags:
 severity: "medium"
 mobileconfig: false
 mobileconfig_info:
+ddm_info:
+  declarationtype: com.apple.configuration.services.configuration-files
+  service: com.apple.pam
+  config_file: su
+  configuration_key: file
+  configuration_value: |
+    auth        sufficient    pam_smartcard.so
+    auth        required      pam_rootok.so
+    auth        required      pam_group.so no_warn group=admin,wheel ruser root_only fail_safe
+    account     required      pam_permit.so
+    account     required      pam_opendirectory.so no_check_shell
+    password    required      pam_opendirectory.so
+    session     required      pam_launchd.so
