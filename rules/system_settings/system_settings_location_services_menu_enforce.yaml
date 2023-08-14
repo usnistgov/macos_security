@@ -1,5 +1,5 @@
 id: system_settings_location_services_menu_enforce
-title: "Enable Location Services"
+title: "Ensure Location Services Is In the Menu Bar"
 discussion: |
   Location Services menu item _MUST_ be enabled.
 check: |
