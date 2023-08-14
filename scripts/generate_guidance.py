@@ -1082,7 +1082,7 @@ fi
 
 if [[ "$ssh_key_check" -ne 0 ]]; then
     /bin/rm /etc/ssh/ssh_host_rsa_key
-    /bin/rm /etc/ssh/ssh_host_rsa_key.public
+    /bin/rm /etc/ssh/ssh_host_rsa_key.pub
     ssh_key_check=0
 fi
     """
