@@ -27,7 +27,7 @@ references:
   cis:
     benchmark:
       - 3.2.1.16 (level 1 - Institutionally-Owned Devices)
-    v8:
+    controls v8:
       - 12.7
 iOS:
   - "16.0"

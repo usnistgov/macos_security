@@ -23,7 +23,7 @@ references:
     benchmark:
       - 2.4.4 (level 1 - End-User Owned Devices)
       - 3.4.4 (level 1 - Institutionally-Owned Devices)
-    v8:
+    controls v8:
       - 4.3
 ios:
   - "16.0"

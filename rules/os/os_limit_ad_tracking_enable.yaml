@@ -27,7 +27,7 @@ references:
   cis:
     benchmark:
       - N/A
-    controls:
+    controls v8:
       - 4.8
 iOS:
   - "16.0"
