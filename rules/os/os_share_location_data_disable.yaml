@@ -33,5 +33,5 @@ tags:
   - manual
 severity: medium
 supervised: false
-mobileconfig: true
+mobileconfig: false
 mobileconfig_info:
