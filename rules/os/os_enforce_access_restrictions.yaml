@@ -1,6 +1,11 @@
 id: os_enforce_access_restrictions
 title: Enforce Access Restrictions
-discussion: "The information system _IS_ configured to enforce access restrictions and support auditing of the enforcement actions.\n\nThe inherent configuration of a macOS provides users with the ability to set their own permission settings to control who can view and alter files on the computer. \n\nlink:https://support.apple.com/guide/mac-help/change-permissions-for-files-folders-or-disks-mchlp1203/mac[]\n"
+discussion: |
+  The information system _IS_ configured to enforce access restrictions and support auditing of the enforcement actions.
+
+  The inherent configuration of a macOS provides users with the ability to set their own permission settings to control who can view and alter files on the computer.
+
+  link:https://support.apple.com/guide/mac-help/change-permissions-for-files-folders-or-disks-mchlp1203/mac[]
 check: |
   The technology supports this requirement and cannot be configured to be out of compliance. The technology inherently meets this requirement.
 fix: |
@@ -27,6 +32,5 @@ tags:
   - cnssi-1253_moderate
   - cnssi-1253_high
   - newstig
-  - newstig
 mobileconfig: false
-mobileconfig_info: null
+mobileconfig_info:

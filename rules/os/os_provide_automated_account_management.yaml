@@ -34,6 +34,5 @@ tags:
   - cnssi-1253_moderate
   - cnssi-1253_high
   - newstig
-  - newstig
 mobileconfig: false
-mobileconfig_info: null
+mobileconfig_info:

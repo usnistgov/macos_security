@@ -25,9 +25,9 @@ references:
     - SC-28
     - SC-28(1)
   srg:
+    - SRG-OS-000185-GPOS-00079
     - SRG-OS-000405-GPOS-00184
     - SRG-OS-000404-GPOS-00183
-    - SRG-OS-000185-GPOS-00079
   disa_stig:
     - N/A
   800-171r2:
@@ -44,7 +44,6 @@ macOS:
   - '14.0'
 tags:
   - none
-  - newstig
   - newstig
 severity: high
 mobileconfig: true

@@ -25,8 +25,8 @@ references:
     - AU-5
     - AU-5(2)
   srg:
-    - SRG-OS-000344-GPOS-00135
     - SRG-OS-000047-GPOS-00023
+    - SRG-OS-000344-GPOS-00135
   disa_stig:
     - N/A
   800-171r2:
@@ -46,7 +46,6 @@ tags:
   - cnssi-1253_high
   - cmmc_lvl2
   - newstig
-  - newstig
 severity: medium
 mobileconfig: false
-mobileconfig_info: null
+mobileconfig_info:

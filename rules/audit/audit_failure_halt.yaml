@@ -1,7 +1,11 @@
 id: audit_failure_halt
 title: Configure System to Shut Down Upon Audit Failure
-discussion: "The audit service _MUST_ be configured to shut down the computer if it is unable to audit system events. \n\nOnce audit failure occurs, user and system activity are no longer recorded, and malicious activity could go undetected. Audit processing failures can occur due to software/hardware errors, failures in the audit capturing mechanisms, and audit storage capacity being reached or exceeded. \n"
-check: "/usr/bin/awk -F':' '/^policy/ {print $NF}' /etc/security/audit_control | /usr/bin/tr ',' '\\n' | /usr/bin/grep -Ec 'ahlt' \n"
+discussion: |
+  The audit service _MUST_ be configured to shut down the computer if it is unable to audit system events.
+
+  Once audit failure occurs, user and system activity are no longer recorded, and malicious activity could go undetected. Audit processing failures can occur due to software/hardware errors, failures in the audit capturing mechanisms, and audit storage capacity being reached or exceeded.
+check: |
+  /usr/bin/awk -F':' '/^policy/ {print $NF}' /etc/security/audit_control | /usr/bin/tr ',' '\n' | /usr/bin/grep -Ec 'ahlt'
 result:
   integer: 1
 fix: |
@@ -41,7 +45,6 @@ tags:
   - cnssi-1253_high
   - cmmc_lvl2
   - newstig
-  - newstig
 severity: medium
 mobileconfig: false
-mobileconfig_info: null
+mobileconfig_info:

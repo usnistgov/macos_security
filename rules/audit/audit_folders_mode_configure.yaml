@@ -1,6 +1,9 @@
 id: audit_folders_mode_configure
 title: Configure Audit Log Folders to Mode 700 or Less Permissive
-discussion: "The audit log folder _MUST_ be configured to mode 700 or less permissive so that only the root user is able to read, write, and execute changes to folders. \n\nBecause audit logs contain sensitive data about the system and users, the audit service _MUST_ be configured to mode 700 or less permissive; thereby preventing normal users from reading, modifying or deleting audit logs. \n"
+discussion: |
+  The audit log folder _MUST_ be configured to mode 700 or less permissive so that only the root user is able to read, write, and execute changes to folders.
+
+  Because audit logs contain sensitive data about the system and users, the audit service _MUST_ be configured to mode 700 or less permissive; thereby preventing normal users from reading, modifying or deleting audit logs.
 check: |
   /usr/bin/stat -f %A $(/usr/bin/grep '^dir' /etc/security/audit_control | /usr/bin/awk -F: '{print $2}')
 result:
@@ -22,12 +25,12 @@ references:
   800-53r4:
     - AU-9
   srg:
-    - SRG-OS-000058-GPOS-00028
     - SRG-OS-000256-GPOS-00097
+    - SRG-OS-000057-GPOS-00027
     - SRG-OS-000059-GPOS-00029
     - SRG-OS-000257-GPOS-00098
     - SRG-OS-000258-GPOS-00099
-    - SRG-OS-000057-GPOS-00027
+    - SRG-OS-000058-GPOS-00028
   disa_stig:
     - N/A
   800-171r2:
@@ -57,7 +60,6 @@ tags:
   - cnssi-1253_high
   - cmmc_lvl2
   - newstig
-  - newstig
 severity: medium
 mobileconfig: false
-mobileconfig_info: null
+mobileconfig_info:

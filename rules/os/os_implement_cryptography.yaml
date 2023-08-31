@@ -1,6 +1,15 @@
 id: os_implement_cryptography
 title: Configure the System to Implement Approved Cryptography to Protect Information
-discussion: "The information system _IS_ configured to implement approved cryptography to protect information. \n\nUse of weak or untested encryption algorithms undermines the purposes of utilizing encryption to protect data. The operating system must implement cryptographic modules that adhere to the higher standards that have been tested, validated, and approved by the federal government. \n\nApple is committed to the FIPS validation process and historically has always submitted and validated the cryptographic modules in macOS. macOS Sonoma will be submitted for FIPS validation.\n\nlink:https://csrc.nist.gov/Projects/cryptographic-module-validation-program/validated-modules[]\n\nlink:https://support.apple.com/en-us/HT201159[]\n"
+discussion: |
+  The information system _IS_ configured to implement approved cryptography to protect information.
+
+  Use of weak or untested encryption algorithms undermines the purposes of utilizing encryption to protect data. The operating system must implement cryptographic modules that adhere to the higher standards that have been tested, validated, and approved by the federal government.
+
+  Apple is committed to the FIPS validation process and historically has always submitted and validated the cryptographic modules in macOS. macOS Sonoma will be submitted for FIPS validation.
+
+  link:https://csrc.nist.gov/Projects/cryptographic-module-validation-program/validated-modules[]
+
+  link:https://support.apple.com/en-us/HT201159[]
 check: |
   The technology supports this requirement and cannot be configured to be out of compliance. The technology inherently meets this requirement using FIPS Validated Cryptographic Modules.
 fix: |
@@ -18,8 +27,8 @@ references:
     - N/A
   srg:
     - SRG-OS-000478-GPOS-00223
-    - SRG-OS-000396-GPOS-00176
     - SRG-OS-000033-GPOS-00014
+    - SRG-OS-000396-GPOS-00176
   800-171r2:
     - 3.13.11
   cmmc:
@@ -41,6 +50,5 @@ tags:
   - cnssi-1253_high
   - cmmc_lvl2
   - newstig
-  - newstig
 mobileconfig: false
-mobileconfig_info: null
+mobileconfig_info:

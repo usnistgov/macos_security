@@ -1,7 +1,15 @@
 id: pwpolicy_lower_upper_case_character_enforce
 title: Require Passwords Contain a Minimum of $ODV Lowercase Character and $ODV Uppercase Character
-discussion: "The macOS _MUST_ be configured to require at least $ODV lower-case character and $ODV upper-case character be used when a password is created.\n\nThis rule enforces password complexity by requiring users to set passwords that are less vulnerable to malicious users. \n\nNOTE: The guidance for password based authentication in NIST 800-53 (Rev 5) and NIST 800-63B state that complexity rules should be organizationally defined. The values defined are based off of common complexity values. But your organization may define its own password complexity rules.\n\nNOTE: The configuration profile generated must be installed from an MDM server.\n"
-check: "/usr/bin/pwpolicy -getaccountpolicies 2> /dev/null | /usr/bin/tail +2 | /usr/bin/xmllint --xpath 'boolean(//*[contains(text(),\"policyAttributePassword matches '\\''.*[A-Z]{$ODV,}[a-z]{$ODV,}.*'\\''\")])' -  \n"
+discussion: |
+  The macOS _MUST_ be configured to require at least $ODV lower-case character and $ODV upper-case character be used when a password is created.
+
+  This rule enforces password complexity by requiring users to set passwords that are less vulnerable to malicious users.
+
+  NOTE: The guidance for password based authentication in NIST 800-53 (Rev 5) and NIST 800-63B state that complexity rules should be organizationally defined. The values defined are based off of common complexity values. But your organization may define its own password complexity rules.
+
+  NOTE: The configuration profile generated must be installed from an MDM server.
+check: |
+  /usr/bin/pwpolicy -getaccountpolicies 2> /dev/null | /usr/bin/tail +2 | /usr/bin/xmllint --xpath 'boolean(//*[contains(text(),"policyAttributePassword matches '\''.*[A-Z]{$ODV,}[a-z]{$ODV,}.*'\''")])' -
 result:
   string: 'true'
 fix: |
@@ -57,7 +65,6 @@ tags:
   - cnssi-1253_low
   - cnssi-1253_high
   - cmmc_lvl2
-  - newstig
   - newstig
 mobileconfig: true
 mobileconfig_info:

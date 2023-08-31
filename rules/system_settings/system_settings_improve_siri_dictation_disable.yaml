@@ -62,7 +62,6 @@ tags:
   - cmmc_lvl2
   - cmmc_lvl1
   - newstig
-  - newstig
 mobileconfig: true
 mobileconfig_info:
   com.apple.assistant.support:

@@ -65,8 +65,8 @@ references:
   800-53r4:
     - AC-2(2)
   srg:
-    - SRG-OS-000123-GPOS-00064
     - SRG-OS-000002-GPOS-00002
+    - SRG-OS-000123-GPOS-00064
   disa_stig:
     - N/A
 macOS:
@@ -80,7 +80,6 @@ tags:
   - cnssi-1253_moderate
   - cnssi-1253_high
   - newstig
-  - newstig
 severity: medium
 mobileconfig: false
-mobileconfig_info: null
+mobileconfig_info:

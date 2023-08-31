@@ -1,6 +1,9 @@
 id: system_settings_content_caching_disable
 title: Disable Content Caching Service
-discussion: "Content caching _MUST_ be disabled. \n\nContent caching is a macOS service that helps reduce Internet data usage and speed up software installation on Mac computers. It is not recommended for devices furnished to employees to act as a caching server. \n"
+discussion: |
+  Content caching _MUST_ be disabled.
+
+  Content caching is a macOS service that helps reduce Internet data usage and speed up software installation on Mac computers. It is not recommended for devices furnished to employees to act as a caching server.
 check: |
   /usr/bin/osascript -l JavaScript << EOS
   $.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess')\
@@ -51,7 +54,6 @@ tags:
   - cnssi-1253_low
   - cnssi-1253_high
   - cmmc_lvl2
-  - newstig
   - newstig
 mobileconfig: true
 mobileconfig_info:

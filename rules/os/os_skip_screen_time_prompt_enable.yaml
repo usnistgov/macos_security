@@ -36,7 +36,6 @@ tags:
   - cnssi-1253_high
   - cmmc_lvl2
   - newstig
-  - newstig
 severity: low
 mobileconfig: true
 mobileconfig_info:

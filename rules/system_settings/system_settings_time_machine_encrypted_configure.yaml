@@ -1,6 +1,7 @@
 id: system_settings_time_machine_encrypted_configure
 title: Ensure Time Machine Volumes are Encrypted
-discussion: "Time Machine volumes _MUST_ be encrypted. \n"
+discussion: |
+  Time Machine volumes _MUST_ be encrypted.
 check: |
   error_count=0
   for tm in $(/usr/bin/tmutil destinationinfo 2>/dev/null| /usr/bin/awk -F': ' '/Name/{print $2}'); do
@@ -48,4 +49,4 @@ tags:
   - cis_lvl2
   - cisv8
 mobileconfig: false
-mobileconfig_info: null
+mobileconfig_info:

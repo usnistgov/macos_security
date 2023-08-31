@@ -42,8 +42,8 @@ references:
   800-53r4:
     - SC-10
   srg:
-    - SRG-OS-000279-GPOS-00109
     - SRG-OS-000163-GPOS-00072
+    - SRG-OS-000279-GPOS-00109
   disa_stig:
     - N/A
   800-171r2:
@@ -65,6 +65,5 @@ tags:
   - cnssi-1253_high
   - cmmc_lvl2
   - newstig
-  - newstig
 mobileconfig: false
-mobileconfig_info: null
+mobileconfig_info:

@@ -1,6 +1,11 @@
 id: os_tftpd_disable
 title: Disable Trivial File Transfer Protocol Service
-discussion: "If the system does not require Trivial File Transfer Protocol (TFTP), support it is non-essential and _MUST_ be disabled.\n\nThe information system _MUST_ be configured to provide only essential capabilities. Disabling TFTP helps prevent the unauthorized connection of devices and the unauthorized transfer of information. \n\nNOTE: TFTP service is disabled at startup by default macOS.\n"
+discussion: |
+  If the system does not require Trivial File Transfer Protocol (TFTP), support it is non-essential and _MUST_ be disabled.
+
+  The information system _MUST_ be configured to provide only essential capabilities. Disabling TFTP helps prevent the unauthorized connection of devices and the unauthorized transfer of information.
+
+  NOTE: TFTP service is disabled at startup by default macOS.
 check: |
   /bin/launchctl print-disabled system | /usr/bin/grep -c '"com.apple.tftpd" => disabled'
 result:
@@ -60,7 +65,6 @@ tags:
   - cmmc_lvl2
   - cmmc_lvl1
   - newstig
-  - newstig
 severity: high
 mobileconfig: false
-mobileconfig_info: null
+mobileconfig_info:

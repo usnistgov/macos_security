@@ -1,6 +1,9 @@
 id: system_settings_hot_corners_secure
 title: Secure Hot Corners
-discussion: "Hot corners _MUST_ be secured. \n\nThe information system conceals, via the session lock, information previously visible on the display with a publicly viewable image. Although hot comers can be used to initiate a session lock or to launch useful applications, they can also be configured to disable an automatic session lock from initiating. Such a configuration introduces the risk that a user might forget to manually lock the screen before stepping away from the computer.\n"
+discussion: |
+  Hot corners _MUST_ be secured.
+
+  The information system conceals, via the session lock, information previously visible on the display with a publicly viewable image. Although hot comers can be used to initiate a session lock or to launch useful applications, they can also be configured to disable an automatic session lock from initiating. Such a configuration introduces the risk that a user might forget to manually lock the screen before stepping away from the computer.
 check: |
   bl_corner="$(/usr/bin/defaults read /Users/"$CURRENT_USER"/Library/Preferences/com.apple.dock wvous-bl-corner 2>/dev/null)"
   tl_corner="$(/usr/bin/defaults read /Users/"$CURRENT_USER"/Library/Preferences/com.apple.dock wvous-tl-corner 2>/dev/null)"
@@ -49,4 +52,4 @@ tags:
   - cnssi-1253_low
   - cnssi-1253_high
 mobileconfig: false
-mobileconfig_info: null
+mobileconfig_info:

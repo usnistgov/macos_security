@@ -1,6 +1,11 @@
 id: os_notify_account_disabled
 title: Configure the System to Notify upon Account Disabled Actions
-discussion: "The macOS should be configured to automatically notify system administrators and Information System Security Officers (ISSOs) when accounts are disabled.\n\nWhen operating system accounts are disabled, user accessibility is affected. Accounts are utilized for identifying individual operating system users or for identifying the operating system processes themselves. To detect and respond to events that affect user accessibility and system processing, operating systems should audit account disabling actions and, as required, notify system administrators and ISSOs so they can investigate the event. Such a capability greatly reduces the risk that operating system accessibility will be negatively affected for extended periods of time and also provides logging that can be used for forensic purposes.\n\nTo enable notifications and audit logging of disabled accounts, many operating systems can be integrated with enterprise-level auditing mechanisms that meet or exceed this requirement. \n"
+discussion: |
+  The macOS should be configured to automatically notify system administrators and Information System Security Officers (ISSOs) when accounts are disabled.
+
+  When operating system accounts are disabled, user accessibility is affected. Accounts are utilized for identifying individual operating system users or for identifying the operating system processes themselves. To detect and respond to events that affect user accessibility and system processing, operating systems should audit account disabling actions and, as required, notify system administrators and ISSOs so they can investigate the event. Such a capability greatly reduces the risk that operating system accessibility will be negatively affected for extended periods of time and also provides logging that can be used for forensic purposes.
+
+  To enable notifications and audit logging of disabled accounts, many operating systems can be integrated with enterprise-level auditing mechanisms that meet or exceed this requirement.
 check: |
   The technology does not support this requirement. This is an applicable-does not meet finding.
 fix: |
@@ -17,13 +22,13 @@ references:
   disa_stig:
     - N/A
   srg:
-    - SRG-OS-000274-GPOS-00104
-    - SRG-OS-000004-GPOS-00004
+    - SRG-OS-000239-GPOS-00089
     - SRG-OS-000240-GPOS-00090
+    - SRG-OS-000004-GPOS-00004
+    - SRG-OS-000241-GPOS-00091
+    - SRG-OS-000274-GPOS-00104
     - SRG-OS-000275-GPOS-00105
     - SRG-OS-000276-GPOS-00106
-    - SRG-OS-000241-GPOS-00091
-    - SRG-OS-000239-GPOS-00089
     - SRG-OS-000277-GPOS-00107
 macOS:
   - '14.0'
@@ -32,6 +37,5 @@ tags:
   - 800-53r4_high
   - permanent
   - newstig
-  - newstig
 mobileconfig: false
-mobileconfig_info: null
+mobileconfig_info:

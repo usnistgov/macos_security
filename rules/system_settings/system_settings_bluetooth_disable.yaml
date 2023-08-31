@@ -30,8 +30,8 @@ references:
     - AC-18(3)
     - SC-8
   srg:
-    - SRG-OS-000481-GPOS-00481
     - SRG-OS-000423-GPOS-00187
+    - SRG-OS-000481-GPOS-00481
   disa_stig:
     - N/A
   800-171r2:
@@ -59,7 +59,6 @@ tags:
   - cnssi-1253_low
   - cnssi-1253_high
   - cmmc_lvl2
-  - newstig
   - newstig
 severity: low
 mobileconfig: true

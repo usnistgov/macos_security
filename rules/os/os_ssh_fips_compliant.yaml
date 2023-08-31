@@ -1,6 +1,13 @@
 id: os_ssh_fips_compliant
 title: Limit SSH to FIPS Compliant Connections
-discussion: "SSH _MUST_ be configured to limit the Ciphers, HostbasedAcceptedAlgorithms, HostKeyAlgorithms, KexAlgorithms, MACs, PubkeyAcceptedAlgorithms, CASignatureAlgorithms to algorithms that are FIPS 140 validated.\n\nFIPS 140-2 is the current standard for validating that mechanisms used to access cryptographic modules utilize authentication that meet federal requirements.\n\nOperating systems utilizing encryption _MUST_ use FIPS validated mechanisms for authenticating to cryptographic modules. \n\nNOTE: For more information on FIPS compliance with the version of SSH included in the macOS, the manual page apple_ssh_and_fips has additional information.\n"
+discussion: |
+  SSH _MUST_ be configured to limit the Ciphers, HostbasedAcceptedAlgorithms, HostKeyAlgorithms, KexAlgorithms, MACs, PubkeyAcceptedAlgorithms, CASignatureAlgorithms to algorithms that are FIPS 140 validated.
+
+  FIPS 140-2 is the current standard for validating that mechanisms used to access cryptographic modules utilize authentication that meet federal requirements.
+
+  Operating systems utilizing encryption _MUST_ use FIPS validated mechanisms for authenticating to cryptographic modules.
+
+  NOTE: For more information on FIPS compliance with the version of SSH included in the macOS, the manual page apple_ssh_and_fips has additional information.
 check: |
   fips_ssh_config="Host *
   Ciphers aes128-gcm@openssh.com
@@ -13,7 +20,19 @@ check: |
   /usr/bin/grep -c "$fips_ssh_config" /etc/ssh/ssh_config.d/fips_ssh_config
 result:
   integer: 8
-fix: "[source,bash]\n----\nfips_ssh_config=\"Host *\nCiphers aes128-gcm@openssh.com\nHostbasedAcceptedAlgorithms ecdsa-sha2-nistp256,ecdsa-sha2-nistp256-cert-v01@openssh.com\nHostKeyAlgorithms ecdsa-sha2-nistp256,ecdsa-sha2-nistp256-cert-v01@openssh.com\nKexAlgorithms ecdh-sha2-nistp256\nMACs hmac-sha2-256\nPubkeyAcceptedAlgorithms ecdsa-sha2-nistp256,ecdsa-sha2-nistp256-cert-v01@openssh.com\nCASignatureAlgorithms ecdsa-sha2-nistp256\"\n/bin/echo \"${fips_ssh_config}\" > /etc/ssh/ssh_config.d/fips_ssh_config\n----   \n"
+fix: |
+  [source,bash]
+  ----
+  fips_ssh_config="Host *
+  Ciphers aes128-gcm@openssh.com
+  HostbasedAcceptedAlgorithms ecdsa-sha2-nistp256,ecdsa-sha2-nistp256-cert-v01@openssh.com
+  HostKeyAlgorithms ecdsa-sha2-nistp256,ecdsa-sha2-nistp256-cert-v01@openssh.com
+  KexAlgorithms ecdh-sha2-nistp256
+  MACs hmac-sha2-256
+  PubkeyAcceptedAlgorithms ecdsa-sha2-nistp256,ecdsa-sha2-nistp256-cert-v01@openssh.com
+  CASignatureAlgorithms ecdsa-sha2-nistp256"
+  /bin/echo "${fips_ssh_config}" > /etc/ssh/ssh_config.d/fips_ssh_config
+  ----
 references:
   cce:
     - N/A
@@ -30,12 +49,12 @@ references:
     - SC-8(1)
     - SC-13
   srg:
-    - SRG-OS-000424-GPOS-00188
-    - SRG-OS-000120-GPOS-00061
-    - SRG-OS-000396-GPOS-00176
-    - SRG-OS-000033-GPOS-00014
     - SRG-OS-000250-GPOS-00093
+    - SRG-OS-000120-GPOS-00061
+    - SRG-OS-000424-GPOS-00188
     - SRG-OS-000478-GPOS-00223
+    - SRG-OS-000033-GPOS-00014
+    - SRG-OS-000396-GPOS-00176
   disa_stig:
     - N/A
   800-171r2:
@@ -62,6 +81,5 @@ tags:
   - cnssi-1253_high
   - cmmc_lvl2
   - newstig
-  - newstig
 mobileconfig: false
-mobileconfig_info: null
+mobileconfig_info:

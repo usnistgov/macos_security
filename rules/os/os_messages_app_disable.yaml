@@ -1,6 +1,14 @@
 id: os_messages_app_disable
 title: Disable Messages App
-discussion: "The macOS built-in Messages.app _MUST_ be disabled. \n\nThe Messages.app establishes a connection to Apple's iCloud service, even when security controls to disable iCloud access have been put in place.\n\n[IMPORTANT]\n====\nApple has deprecated the use of link:https://github.com/apple/device-management/blob/eb51fb0cb9626cac4717858556912c257a734ce0/mdm/profiles/com.apple.applicationaccess.new.yaml#L67-L70[application restriction controls], using these controls may not work as expected. Third party software may be required to fulfill the compliance requirements.\n====\n"
+discussion: |
+  The macOS built-in Messages.app _MUST_ be disabled.
+
+  The Messages.app establishes a connection to Apple's iCloud service, even when security controls to disable iCloud access have been put in place.
+
+  [IMPORTANT]
+  ====
+  Apple has deprecated the use of link:https://github.com/apple/device-management/blob/eb51fb0cb9626cac4717858556912c257a734ce0/mdm/profiles/com.apple.applicationaccess.new.yaml#L67-L70[application restriction controls], using these controls may not work as expected. Third party software may be required to fulfill the compliance requirements.
+  ====
 check: |
   /usr/bin/osascript -l JavaScript << EOS
   function run() {
@@ -56,7 +64,6 @@ tags:
   - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
-  - newstig
   - newstig
 severity: low
 mobileconfig: true

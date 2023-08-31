@@ -1,6 +1,7 @@
 id: audit_files_mode_configure
 title: Configure Audit Log Files to Mode 440 or Less Permissive
-discussion: "The audit service _MUST_ be configured to create log files that are readable only by the root user and group wheel. To achieve this, audit log files _MUST_ be configured to mode 440 or less permissive; thereby preventing normal users from reading, modifying or deleting audit logs. \n"
+discussion: |
+  The audit service _MUST_ be configured to create log files that are readable only by the root user and group wheel. To achieve this, audit log files _MUST_ be configured to mode 440 or less permissive; thereby preventing normal users from reading, modifying or deleting audit logs.
 check: |
   /bin/ls -l $(/usr/bin/grep '^dir' /etc/security/audit_control | /usr/bin/awk -F: '{print $2}') | /usr/bin/awk '!/-r--r-----|current|total/{print $1}' | /usr/bin/wc -l | /usr/bin/tr -d ' '
 result:
@@ -20,12 +21,12 @@ references:
   800-53r4:
     - AU-9
   srg:
-    - SRG-OS-000058-GPOS-00028
     - SRG-OS-000256-GPOS-00097
+    - SRG-OS-000057-GPOS-00027
     - SRG-OS-000059-GPOS-00029
     - SRG-OS-000257-GPOS-00098
     - SRG-OS-000258-GPOS-00099
-    - SRG-OS-000057-GPOS-00027
+    - SRG-OS-000058-GPOS-00028
   disa_stig:
     - N/A
   800-171r2:
@@ -55,7 +56,6 @@ tags:
   - cnssi-1253_high
   - cmmc_lvl2
   - newstig
-  - newstig
 severity: medium
 mobileconfig: false
-mobileconfig_info: null
+mobileconfig_info:

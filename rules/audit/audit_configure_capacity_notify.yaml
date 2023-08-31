@@ -1,11 +1,18 @@
 id: audit_configure_capacity_notify
 title: Configure Audit Capacity Warning
-discussion: "The audit service _MUST_ be configured to notify the system administrator when the amount of free disk space remaining reaches an organization defined value. \n\nThis rule ensures that the system administrator is notified in advance that action is required to free up more disk space for audit logs.\n"
+discussion: |
+  The audit service _MUST_ be configured to notify the system administrator when the amount of free disk space remaining reaches an organization defined value.
+
+  This rule ensures that the system administrator is notified in advance that action is required to free up more disk space for audit logs.
 check: |
   /usr/bin/awk -F: '/^minfree/{print $2}' /etc/security/audit_control
 result:
   integer: $ODV
-fix: "[source,bash]\n----\n/usr/bin/sed -i.bak 's/.*minfree.*/minfree:$ODV/' /etc/security/audit_control; /usr/sbin/audit -s \n----\n"
+fix: |
+  [source,bash]
+  ----
+  /usr/bin/sed -i.bak 's/.*minfree.*/minfree:$ODV/' /etc/security/audit_control; /usr/sbin/audit -s
+  ----
 references:
   cce:
     - N/A
@@ -33,7 +40,6 @@ tags:
   - cnssi-1253_low
   - cnssi-1253_high
   - newstig
-  - newstig
 severity: low
 mobileconfig: false
-mobileconfig_info: null
+mobileconfig_info:

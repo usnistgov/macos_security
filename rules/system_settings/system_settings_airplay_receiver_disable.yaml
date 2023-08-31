@@ -1,6 +1,11 @@
 id: system_settings_airplay_receiver_disable
 title: Disable Airplay Receiver
-discussion: "Airplay Receiver allows you to send content from another Apple device to be displayed on the screen as it's being played from your other device.  \n\nSupport for Airplay Receiver is non-essential and _MUST_ be disabled.\n\nThe information system _MUST_ be configured to provide only essential capabilities.\n"
+discussion: |
+  Airplay Receiver allows you to send content from another Apple device to be displayed on the screen as it's being played from your other device.
+
+  Support for Airplay Receiver is non-essential and _MUST_ be disabled.
+
+  The information system _MUST_ be configured to provide only essential capabilities.
 check: |
   /usr/bin/osascript -l JavaScript << EOS
   $.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess')\
@@ -49,7 +54,6 @@ tags:
   - cnssi-1253_low
   - cnssi-1253_high
   - cmmc_lvl2
-  - newstig
   - newstig
 mobileconfig: true
 mobileconfig_info:

@@ -30,8 +30,8 @@ references:
     - CM-7(1)
   srg:
     - SRG-OS-000300-GPOS-00118
-    - SRG-OS-000095-GPOS-00049
     - SRG-OS-000080-GPOS-00048
+    - SRG-OS-000095-GPOS-00049
   disa_stig:
     - N/A
   800-171r2:
@@ -66,7 +66,6 @@ tags:
   - cnssi-1253_high
   - cmmc_lvl2
   - cmmc_lvl1
-  - newstig
   - newstig
 severity: low
 mobileconfig: true

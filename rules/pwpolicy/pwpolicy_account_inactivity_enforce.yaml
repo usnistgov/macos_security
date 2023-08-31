@@ -1,6 +1,9 @@
 id: pwpolicy_account_inactivity_enforce
 title: Disable Accounts after $ODV Days of Inactivity
-discussion: "The macOS _MUST_ be configured to disable accounts after $ODV days of inactivity.\n\nThis rule prevents malicious users from making use of unused accounts to gain access to the system while avoiding detection. \n"
+discussion: |
+  The macOS _MUST_ be configured to disable accounts after $ODV days of inactivity.
+
+  This rule prevents malicious users from making use of unused accounts to gain access to the system while avoiding detection.
 check: |
   /usr/bin/pwpolicy -getaccountpolicies 2> /dev/null | /usr/bin/tail +2 | /usr/bin/xmllint --xpath '//dict/key[text()="policyAttributeInactiveDays"]/following-sibling::integer[1]/text()' -
 result:
@@ -71,6 +74,5 @@ tags:
   - cnssi-1253_high
   - cmmc_lvl2
   - newstig
-  - newstig
 mobileconfig: false
-mobileconfig_info: null
+mobileconfig_info:

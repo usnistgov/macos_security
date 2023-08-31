@@ -68,4 +68,4 @@ tags:
   - none
 severity: high
 mobileconfig: false
-mobileconfig_info: null
+mobileconfig_info:

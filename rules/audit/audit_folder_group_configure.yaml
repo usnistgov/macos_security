@@ -1,6 +1,11 @@
 id: audit_folder_group_configure
 title: Configure Audit Log Folders Group to Wheel
-discussion: "Audit log files _MUST_ have the group set to wheel.\n\nThe audit service _MUST_ be configured to create log files with the correct group ownership to prevent normal users from reading audit logs. \n\nAudit logs contain sensitive data about the system and users. If log files are set to be readable and writable only by system administrators, the risk is mitigated.\n"
+discussion: |
+  Audit log files _MUST_ have the group set to wheel.
+
+  The audit service _MUST_ be configured to create log files with the correct group ownership to prevent normal users from reading audit logs.
+
+  Audit logs contain sensitive data about the system and users. If log files are set to be readable and writable only by system administrators, the risk is mitigated.
 check: |
   /bin/ls -dn $(/usr/bin/grep '^dir' /etc/security/audit_control | /usr/bin/awk -F: '{print $2}') | /usr/bin/awk '{print $4}'
 result:
@@ -20,12 +25,12 @@ references:
   800-53r4:
     - AU-9
   srg:
-    - SRG-OS-000058-GPOS-00028
     - SRG-OS-000256-GPOS-00097
+    - SRG-OS-000057-GPOS-00027
     - SRG-OS-000059-GPOS-00029
     - SRG-OS-000257-GPOS-00098
     - SRG-OS-000258-GPOS-00099
-    - SRG-OS-000057-GPOS-00027
+    - SRG-OS-000058-GPOS-00028
   disa_stig:
     - N/A
   800-171r2:
@@ -55,7 +60,6 @@ tags:
   - cnssi-1253_high
   - cmmc_lvl2
   - newstig
-  - newstig
 severity: medium
 mobileconfig: false
-mobileconfig_info: null
+mobileconfig_info:

@@ -24,4 +24,4 @@ macOS:
 tags:
   - permanent
 mobileconfig: false
-mobileconfig_info: null
+mobileconfig_info:

@@ -1,6 +1,7 @@
 id: system_settings_remote_management_disable
 title: Disable Remote Management
-discussion: "Remote Management _MUST_ be disabled. \n"
+discussion: |
+  Remote Management _MUST_ be disabled.
 check: |
   /usr/libexec/mdmclient QuerySecurityInfo | /usr/bin/grep -c "RemoteDesktopEnabled = 0"
 result:
@@ -54,6 +55,5 @@ tags:
   - cnssi-1253_high
   - cmmc_lvl2
   - newstig
-  - newstig
 mobileconfig: false
-mobileconfig_info: null
+mobileconfig_info:

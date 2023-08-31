@@ -25,8 +25,8 @@ references:
     - IA-2
     - IA-5(13)
   srg:
-    - SRG-OS-000104-GPOS-00051
     - SRG-OS-000480-GPOS-00229
+    - SRG-OS-000104-GPOS-00051
   disa_stig:
     - N/A
   800-171r2:
@@ -58,7 +58,6 @@ tags:
   - cnssi-1253_high
   - cmmc_lvl2
   - cmmc_lvl1
-  - newstig
   - newstig
 severity: medium
 mobileconfig: true

@@ -1,6 +1,13 @@
 id: audit_flags_fm_configure
 title: Configure System to Audit All Changes of Object Attributes
-discussion: "The audit system _MUST_ be configured to record enforcement actions of attempts to modify file attributes (fm). \n\nEnforcement actions are the methods or mechanisms used to prevent unauthorized changes to configuration settings. One common and effective enforcement action method is using access restrictions (i.e., modifications to a file by applying file permissions).\n\nThis configuration ensures that audit lists include events in which enforcement actions attempts to modify a file. \n\nWithout auditing the enforcement of access restrictions, it is difficult to identify attempted attacks, as there is no audit trail available for forensic investigation.\n"
+discussion: |
+  The audit system _MUST_ be configured to record enforcement actions of attempts to modify file attributes (fm).
+
+  Enforcement actions are the methods or mechanisms used to prevent unauthorized changes to configuration settings. One common and effective enforcement action method is using access restrictions (i.e., modifications to a file by applying file permissions).
+
+  This configuration ensures that audit lists include events in which enforcement actions attempts to modify a file.
+
+  Without auditing the enforcement of access restrictions, it is difficult to identify attempted attacks, as there is no audit trail available for forensic investigation.
 check: |
   /usr/bin/awk -F':' '/^flags/ { print $NF }' /etc/security/audit_control | /usr/bin/tr ',' '\n' | /usr/bin/grep -Ec '^fm'
 result:
@@ -30,22 +37,22 @@ references:
     - CM-5(1)
     - MA-4(1)
   srg:
-    - SRG-OS-000465-GPOS-00209
-    - SRG-OS-000058-GPOS-00028
-    - SRG-OS-000256-GPOS-00097
-    - SRG-OS-000059-GPOS-00029
-    - SRG-OS-000257-GPOS-00098
-    - SRG-OS-000458-GPOS-00203
-    - SRG-OS-000057-GPOS-00027
-    - SRG-OS-000258-GPOS-00099
-    - SRG-OS-000462-GPOS-00206
-    - SRG-OS-000466-GPOS-00210
-    - SRG-OS-000467-GPOS-00211
     - SRG-OS-000392-GPOS-00172
-    - SRG-OS-000463-GPOS-00207
-    - SRG-OS-000064-GPOS-00033
+    - SRG-OS-000256-GPOS-00097
     - SRG-OS-000365-GPOS-00152
+    - SRG-OS-000057-GPOS-00027
+    - SRG-OS-000064-GPOS-00033
+    - SRG-OS-000463-GPOS-00207
+    - SRG-OS-000467-GPOS-00211
+    - SRG-OS-000465-GPOS-00209
     - SRG-OS-000468-GPOS-00212
+    - SRG-OS-000466-GPOS-00210
+    - SRG-OS-000059-GPOS-00029
+    - SRG-OS-000462-GPOS-00206
+    - SRG-OS-000257-GPOS-00098
+    - SRG-OS-000258-GPOS-00099
+    - SRG-OS-000458-GPOS-00203
+    - SRG-OS-000058-GPOS-00028
   disa_stig:
     - N/A
   800-171r2:
@@ -63,7 +70,6 @@ tags:
   - cnssi-1253_high
   - cmmc_lvl2
   - newstig
-  - newstig
 severity: medium
 mobileconfig: false
-mobileconfig_info: null
+mobileconfig_info:

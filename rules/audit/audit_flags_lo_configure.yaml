@@ -33,15 +33,15 @@ references:
     - AU-12
     - MA-4(1)
   srg:
-    - SRG-OS-000458-GPOS-00203
-    - SRG-OS-000470-GPOS-00214
-    - SRG-OS-000473-GPOS-00218
     - SRG-OS-000032-GPOS-00013
+    - SRG-OS-000392-GPOS-00172
+    - SRG-OS-000064-GPOS-00033
+    - SRG-OS-000473-GPOS-00218
+    - SRG-OS-000470-GPOS-00214
+    - SRG-OS-000471-GPOS-00216
     - SRG-OS-000472-GPOS-00217
     - SRG-OS-000471-GPOS-00215
-    - SRG-OS-000392-GPOS-00172
-    - SRG-OS-000471-GPOS-00216
-    - SRG-OS-000064-GPOS-00033
+    - SRG-OS-000458-GPOS-00203
   disa_stig:
     - N/A
   800-171r2:
@@ -78,7 +78,6 @@ tags:
   - cnssi-1253_high
   - cmmc_lvl2
   - newstig
-  - newstig
 severity: medium
 mobileconfig: false
-mobileconfig_info: null
+mobileconfig_info:

@@ -1,6 +1,7 @@
 id: system_settings_printer_sharing_disable
 title: Disable Printer Sharing
-discussion: "Printer Sharing _MUST_ be disabled. \n"
+discussion: |
+  Printer Sharing _MUST_ be disabled.
 check: |
   /usr/sbin/cupsctl | /usr/bin/grep -c "_share_printers=0"
 result:
@@ -54,6 +55,5 @@ tags:
   - cnssi-1253_high
   - cmmc_lvl2
   - newstig
-  - newstig
 mobileconfig: false
-mobileconfig_info: null
+mobileconfig_info:

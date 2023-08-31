@@ -1,6 +1,9 @@
 id: os_root_disable
 title: Disable Root Login
-discussion: "To assure individual accountability and prevent unauthorized access, logging in as root at the login window _MUST_ be disabled.\n\nThe macOS system _MUST_ require individuals to be authenticated with an individual authenticator prior to using a group authenticator, and administrator users _MUST_ never log in directly as root. \n"
+discussion: |
+  To assure individual accountability and prevent unauthorized access, logging in as root at the login window _MUST_ be disabled.
+
+  The macOS system _MUST_ require individuals to be authenticated with an individual authenticator prior to using a group authenticator, and administrator users _MUST_ never log in directly as root.
 check: |
   /usr/bin/dscl . -read /Users/root UserShell 2>&1 | /usr/bin/grep -c "/usr/bin/false"
 result:
@@ -33,9 +36,9 @@ references:
     - IA.L1-3.5.1
     - IA.L1-3.5.2
   srg:
-    - SRG-OS-000104-GPOS-00051
     - SRG-OS-000364-GPOS-00151
     - SRG-OS-000109-GPOS-00056
+    - SRG-OS-000104-GPOS-00051
 macOS:
   - '14.0'
 tags:
@@ -55,6 +58,5 @@ tags:
   - cmmc_lvl2
   - cmmc_lvl1
   - newstig
-  - newstig
 mobileconfig: false
-mobileconfig_info: null
+mobileconfig_info:

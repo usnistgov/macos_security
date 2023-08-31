@@ -1,6 +1,12 @@
 id: audit_flags_ex_configure
 title: Configure System to Audit All Failed Program Execution on the System
-discussion: "The audit system _MUST_ be configured to record enforcement actions of access restrictions, including failed program execute (-ex) attempts.\n\nEnforcement actions are the methods or mechanisms used to prevent unauthorized access and/or changes to configuration settings. One common and effective enforcement action method is using program execution restrictions (e.g., denying users access to execute certain processes). \n\nThis configuration ensures that audit lists include events in which program execution has failed. \nWithout auditing the enforcement of program execution, it is difficult to identify attempted attacks, as there is no audit trail available for forensic investigation.\n"
+discussion: |
+  The audit system _MUST_ be configured to record enforcement actions of access restrictions, including failed program execute (-ex) attempts.
+
+  Enforcement actions are the methods or mechanisms used to prevent unauthorized access and/or changes to configuration settings. One common and effective enforcement action method is using program execution restrictions (e.g., denying users access to execute certain processes).
+
+  This configuration ensures that audit lists include events in which program execution has failed.
+  Without auditing the enforcement of program execution, it is difficult to identify attempted attacks, as there is no audit trail available for forensic investigation.
 check: |
   /usr/bin/awk -F':' '/^flags/ { print $NF }' /etc/security/audit_control | /usr/bin/tr ',' '\n' | /usr/bin/grep -Ec '\-ex'
 result:
@@ -25,10 +31,10 @@ references:
     - AU-12
     - CM-5(1)
   srg:
+    - SRG-OS-000365-GPOS-00152
     - SRG-OS-000465-GPOS-00209
     - SRG-OS-000458-GPOS-00203
     - SRG-OS-000463-GPOS-00207
-    - SRG-OS-000365-GPOS-00152
   disa_stig:
     - N/A
   800-171r2:
@@ -63,6 +69,5 @@ tags:
   - cnssi-1253_high
   - cmmc_lvl2
   - newstig
-  - newstig
 mobileconfig: false
-mobileconfig_info: null
+mobileconfig_info:

@@ -36,4 +36,4 @@ tags:
   - cisv8
   - i386
 mobileconfig: false
-mobileconfig_info: null
+mobileconfig_info:

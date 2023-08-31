@@ -55,20 +55,20 @@ references:
     - CM-5
     - SC-4
   srg:
-    - SRG-OS-000062-GPOS-00031
-    - SRG-OS-000058-GPOS-00028
     - SRG-OS-000256-GPOS-00097
-    - SRG-OS-000059-GPOS-00029
-    - SRG-OS-000257-GPOS-00098
-    - SRG-OS-000278-GPOS-00108
-    - SRG-OS-000258-GPOS-00099
-    - SRG-OS-000259-GPOS-00100
-    - SRG-OS-000138-GPOS-00069
+    - SRG-OS-000057-GPOS-00027
+    - SRG-OS-000062-GPOS-00031
     - SRG-OS-000051-GPOS-00024
     - SRG-OS-000054-GPOS-00025
+    - SRG-OS-000278-GPOS-00108
     - SRG-OS-000080-GPOS-00048
+    - SRG-OS-000059-GPOS-00029
+    - SRG-OS-000138-GPOS-00069
+    - SRG-OS-000257-GPOS-00098
+    - SRG-OS-000258-GPOS-00099
+    - SRG-OS-000259-GPOS-00100
     - SRG-OS-000122-GPOS-00063
-    - SRG-OS-000057-GPOS-00027
+    - SRG-OS-000058-GPOS-00028
   disa_stig:
     - N/A
   800-171r2:
@@ -111,7 +111,6 @@ tags:
   - cmmc_lvl2
   - cmmc_lvl1
   - newstig
-  - newstig
 severity: high
 mobileconfig: false
-mobileconfig_info: null
+mobileconfig_info:

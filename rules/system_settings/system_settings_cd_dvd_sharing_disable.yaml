@@ -1,6 +1,7 @@
 id: system_settings_cd_dvd_sharing_disable
 title: Disable CD/DVD Sharing
-discussion: "CD/DVD Sharing _MUST_ be disabled. \n"
+discussion: |
+  CD/DVD Sharing _MUST_ be disabled.
 check: |
   /usr/bin/pgrep -q ODSAgent; /bin/echo $?
 result:
@@ -53,6 +54,5 @@ tags:
   - cnssi-1253_high
   - cmmc_lvl2
   - newstig
-  - newstig
 mobileconfig: false
-mobileconfig_info: null
+mobileconfig_info:

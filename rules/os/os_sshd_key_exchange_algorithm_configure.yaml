@@ -63,4 +63,4 @@ tags:
   - cmmc_lvl2
 severity: high
 mobileconfig: false
-mobileconfig_info: null
+mobileconfig_info:

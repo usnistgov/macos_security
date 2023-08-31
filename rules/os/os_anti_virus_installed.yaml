@@ -32,7 +32,6 @@ macOS:
 tags:
   - none
   - newstig
-  - newstig
 severity: high
 mobileconfig: false
-mobileconfig_info: null
+mobileconfig_info:

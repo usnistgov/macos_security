@@ -46,6 +46,5 @@ tags:
   - cis_lvl2
   - cisv8
   - newstig
-  - newstig
 mobileconfig: false
-mobileconfig_info: null
+mobileconfig_info:

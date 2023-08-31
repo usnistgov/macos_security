@@ -38,7 +38,6 @@ tags:
   - cnssi-1253_low
   - cnssi-1253_high
   - newstig
-  - newstig
 severity: medium
 mobileconfig: true
 mobileconfig_info:

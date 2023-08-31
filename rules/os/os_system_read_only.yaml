@@ -8,7 +8,8 @@ check: |
   /usr/sbin/system_profiler SPStorageDataType | /usr/bin/awk '/Mount Point: \/$/{x=NR+2}(NR==x){print $2}'
 result:
   string: 'No'
-fix: "NOTE: To remount the System volume as Read Only, rebooting the computer will mount it as Read Only. \n"
+fix: |
+  NOTE: To remount the System volume as Read Only, rebooting the computer will mount it as Read Only.
 references:
   cce:
     - N/A
@@ -36,4 +37,4 @@ tags:
   - cnssi-1253_low
   - cnssi-1253_high
 mobileconfig: false
-mobileconfig_info: null
+mobileconfig_info:

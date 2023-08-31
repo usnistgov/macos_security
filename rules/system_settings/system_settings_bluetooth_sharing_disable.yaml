@@ -1,6 +1,18 @@
 id: system_settings_bluetooth_sharing_disable
 title: Disable Bluetooth Sharing
-discussion: "Bluetooth Sharing _MUST_ be disabled. \n\nBluetooth Sharing allows users to wirelessly transmit files between the macOS and Bluetooth-enabled devices, including personally owned cellphones and tablets. A malicious user might introduce viruses or malware onto the system or extract sensitive files via Bluetooth Sharing. When Bluetooth Sharing is disabled, this risk is mitigated. \n\n[NOTE] \n====\nThe check and fix are for the currently logged in user. To get the currently logged in user, run the following.\n[source,bash]\n----\nCURRENT_USER=$( /usr/sbin/scutil <<< \"show State:/Users/ConsoleUser\" | /usr/bin/awk '/Name :/ && ! /loginwindow/ { print $3 }' )\n----\n====\n"
+discussion: |
+  Bluetooth Sharing _MUST_ be disabled.
+
+  Bluetooth Sharing allows users to wirelessly transmit files between the macOS and Bluetooth-enabled devices, including personally owned cellphones and tablets. A malicious user might introduce viruses or malware onto the system or extract sensitive files via Bluetooth Sharing. When Bluetooth Sharing is disabled, this risk is mitigated.
+
+  [NOTE]
+  ====
+  The check and fix are for the currently logged in user. To get the currently logged in user, run the following.
+  [source,bash]
+  ----
+  CURRENT_USER=$( /usr/sbin/scutil <<< "show State:/Users/ConsoleUser" | /usr/bin/awk '/Name :/ && ! /loginwindow/ { print $3 }' )
+  ----
+  ====
 check: |
   /usr/bin/sudo -u "$CURRENT_USER" /usr/bin/defaults -currentHost read com.apple.Bluetooth PrefKeyServicesEnabled
 result:
@@ -26,8 +38,8 @@ references:
     - CM-7
     - CM-7(1)
   srg:
-    - SRG-OS-000095-GPOS-00049
     - SRG-OS-000080-GPOS-00048
+    - SRG-OS-000095-GPOS-00049
   disa_stig:
     - N/A
   800-171r2:
@@ -64,6 +76,5 @@ tags:
   - cmmc_lvl2
   - cmmc_lvl1
   - newstig
-  - newstig
 mobileconfig: false
-mobileconfig_info: null
+mobileconfig_info:

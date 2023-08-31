@@ -28,7 +28,6 @@ tags:
   - manual
   - cisv8
   - newstig
-  - newstig
 severity: medium
 mobileconfig: false
-mobileconfig_info: null
+mobileconfig_info:

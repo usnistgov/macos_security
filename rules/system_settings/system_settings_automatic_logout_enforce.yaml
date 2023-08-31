@@ -1,6 +1,14 @@
 id: system_settings_automatic_logout_enforce
 title: Enforce Auto Logout After $ODV Seconds of Inactivity
-discussion: "Auto logout _MUST_ be configured to automatically terminate a user session and log out the after $ODV seconds of inactivity. \n\nNOTE:The maximum that macOS can be configured for autologoff is $ODV seconds.\n\n[IMPORTANT]\n====\nThe automatic logout may cause disruptions to an organization's workflow and/or loss of data. Information System Security Officers (ISSOs) are advised to first fully weigh the potential risks posed to their organization before opting to disable the automatic logout setting.\n====\n"
+discussion: |
+  Auto logout _MUST_ be configured to automatically terminate a user session and log out the after $ODV seconds of inactivity.
+
+  NOTE:The maximum that macOS can be configured for autologoff is $ODV seconds.
+
+  [IMPORTANT]
+  ====
+  The automatic logout may cause disruptions to an organization's workflow and/or loss of data. Information System Security Officers (ISSOs) are advised to first fully weigh the potential risks posed to their organization before opting to disable the automatic logout setting.
+  ====
 check: |
   /usr/bin/osascript -l JavaScript << EOS
   $.NSUserDefaults.alloc.initWithSuiteName('.GlobalPreferences')\
@@ -44,7 +52,6 @@ tags:
   - cnssi-1253_low
   - cnssi-1253_high
   - cmmc_lvl2
-  - newstig
   - newstig
 mobileconfig: true
 mobileconfig_info:

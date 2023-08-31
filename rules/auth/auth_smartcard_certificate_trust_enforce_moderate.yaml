@@ -34,8 +34,8 @@ references:
     - IA-5(2)
   srg:
     - SRG-OS-000384-GPOS-00167
-    - SRG-OS-000377-GPOS-00162
     - SRG-OS-000403-GPOS-00182
+    - SRG-OS-000377-GPOS-00162
     - SRG-OS-000066-GPOS-00034
   disa_stig:
     - N/A
@@ -49,7 +49,6 @@ tags:
   - cnssi-1253_moderate
   - cnssi-1253_low
   - cmmc_lvl2
-  - newstig
   - newstig
 severity: medium
 mobileconfig: true

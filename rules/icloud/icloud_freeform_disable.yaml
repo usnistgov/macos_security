@@ -65,7 +65,6 @@ tags:
   - cmmc_lvl2
   - cmmc_lvl1
   - newstig
-  - newstig
 severity: low
 mobileconfig: true
 mobileconfig_info:

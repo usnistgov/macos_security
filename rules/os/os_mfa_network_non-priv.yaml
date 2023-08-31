@@ -25,4 +25,4 @@ macOS:
 tags:
   - inherent
 mobileconfig: false
-mobileconfig_info: null
+mobileconfig_info:
