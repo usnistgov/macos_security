@@ -1,8 +1,8 @@
 id: os_sshd_unused_connection_timeout_configure
-title: "Configure SSHD Unused Connection Timeout to $ODV"
+title: Configure SSHD Unused Connection Timeout to $ODV
 discussion: |
   If SSHD is enabled it _MUST_ be configured with unused connectione timeout set to $ODV.
-  
+
   This will set the time out when there are no open channels within an session.
 
   NOTE: /etc/ssh/sshd_config will be automatically modified to its original state following any update or major upgrade to the operating system.
@@ -34,15 +34,16 @@ fix: |
 references:
   cce:
     - N/A
-  cci: 
+  cci:
     - N/A
   800-53r5:
     - SC-10
     - AC-12
-  800-53r4: 
+  800-53r4:
     - SC-10
   srg:
-    - N/A
+    - SRG-OS-000279-GPOS-00109
+    - SRG-OS-000163-GPOS-00072
   disa_stig:
     - N/A
   800-171r2:
@@ -51,17 +52,19 @@ references:
     - AC.L2-3.1.11
     - SC.L2-3.13.9
 odv:
-  hint: "Number of seconds."
+  hint: Number of seconds.
   recommended: 900
 tags:
-  - 800-53r5_moderate 
+  - 800-53r5_moderate
   - 800-53r5_high
-  - 800-53r4_moderate 
+  - 800-53r4_moderate
   - 800-53r4_high
   - 800-171
   - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
   - cmmc_lvl2
+  - newstig
+  - newstig
 mobileconfig: false
-mobileconfig_info:
+mobileconfig_info: null

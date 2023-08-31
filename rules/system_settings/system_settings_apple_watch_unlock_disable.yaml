@@ -1,5 +1,5 @@
 id: system_settings_apple_watch_unlock_disable
-title: "Prevent Apple Watch from Terminating a Session Lock"
+title: Prevent Apple Watch from Terminating a Session Lock
 discussion: |
   Apple Watches are not an approved authenticator and their use _MUST_ be disabled.
 
@@ -10,7 +10,7 @@ check: |
   .objectForKey('allowAutoUnlock').js
   EOS
 result:
-  string: "false"
+  string: 'false'
 fix: |
   This is implemented by a Configuration Profile.
 references:
@@ -31,18 +31,20 @@ references:
   cmmc:
     - AC.L2-3.1.10
 macOS:
-  - "14.0"
+  - '14.0'
 tags:
-  - 800-53r5_moderate 
-  - 800-53r5_high 
-  - 800-53r4_moderate 
-  - 800-53r4_high 
-  - 800-171 
+  - 800-53r5_moderate
+  - 800-53r5_high
+  - 800-53r4_moderate
+  - 800-53r4_high
+  - 800-171
   - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
   - cmmc_lvl2
-severity: "medium"
+  - newstig
+  - newstig
+severity: medium
 mobileconfig: true
 mobileconfig_info:
   com.apple.applicationaccess:

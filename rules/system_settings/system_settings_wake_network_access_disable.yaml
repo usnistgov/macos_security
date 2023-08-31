@@ -1,5 +1,5 @@
 id: system_settings_wake_network_access_disable
-title: "Ensure Wake for Network Access Is Disabled"
+title: Ensure Wake for Network Access Is Disabled
 discussion: |
   Wake for network access _MUST_ be disabled.
 check: |
@@ -23,7 +23,7 @@ references:
   disa_stig:
     - N/A
   srg:
-    - N/A 
+    - N/A
   800-171r2:
     - N/A
   cis:
@@ -32,10 +32,10 @@ references:
     controls v8:
       - 4.8
 macOS:
-  - "14.0"
+  - '14.0'
 tags:
   - cis_lvl1
   - cis_lvl2
   - cisv8
 mobileconfig: false
-mobileconfig_info:
+mobileconfig_info: null

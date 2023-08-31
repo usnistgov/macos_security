@@ -1,5 +1,5 @@
 id: os_sip_enable
-title: "Ensure System Integrity Protection is Enabled"
+title: Ensure System Integrity Protection is Enabled
 discussion: |
   System Integrity Protection (SIP) _MUST_ be enabled.
 
@@ -35,7 +35,6 @@ references:
     - CCI-001880
     - CCI-001881
     - CCI-001882
-
   800-53r5:
     - AC-3
     - AU-9
@@ -56,21 +55,20 @@ references:
     - CM-5
     - SC-4
   srg:
-    - SRG-OS-000051-GPOS-00024
-    - SRG-OS-000054-GPOS-00025
     - SRG-OS-000062-GPOS-00031
-    - SRG-OS-000122-GPOS-00063
+    - SRG-OS-000058-GPOS-00028
     - SRG-OS-000256-GPOS-00097
+    - SRG-OS-000059-GPOS-00029
     - SRG-OS-000257-GPOS-00098
+    - SRG-OS-000278-GPOS-00108
     - SRG-OS-000258-GPOS-00099
     - SRG-OS-000259-GPOS-00100
-    - SRG-OS-000348-GPOS-00136
-    - SRG-OS-000349-GPOS-00137
-    - SRG-OS-000350-GPOS-00138
-    - SRG-OS-000351-GPOS-00139
-    - SRG-OS-000352-GPOS-00140
-    - SRG-OS-000353-GPOS-00141
-    - SRG-OS-000354-GPOS-00142
+    - SRG-OS-000138-GPOS-00069
+    - SRG-OS-000051-GPOS-00024
+    - SRG-OS-000054-GPOS-00025
+    - SRG-OS-000080-GPOS-00048
+    - SRG-OS-000122-GPOS-00063
+    - SRG-OS-000057-GPOS-00027
   disa_stig:
     - N/A
   800-171r2:
@@ -95,7 +93,7 @@ references:
     - SI.L1-3.14.1
     - SI.L1-3.14.4
 macOS:
-  - "14.0"
+  - '14.0'
 tags:
   - 800-53r5_low
   - 800-53r5_moderate
@@ -112,6 +110,8 @@ tags:
   - cnssi-1253_high
   - cmmc_lvl2
   - cmmc_lvl1
-severity: "high"
+  - newstig
+  - newstig
+severity: high
 mobileconfig: false
-mobileconfig_info:
+mobileconfig_info: null

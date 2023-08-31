@@ -1,7 +1,6 @@
 id: system_settings_ssh_enable
-title: "Enable SSH Server for Remote Access Sessions"
-discussion: |
-  Remote access sessions _MUST_ use encrypted methods to protect unauthorized individuals from gaining access. 
+title: Enable SSH Server for Remote Access Sessions
+discussion: "Remote access sessions _MUST_ use encrypted methods to protect unauthorized individuals from gaining access. \n"
 check: |
   /bin/launchctl print-disabled system | /usr/bin/grep -c '"com.openssh.sshd" => enabled'
 result:
@@ -14,7 +13,7 @@ fix: |
 references:
   cce:
     - N/A
-  cci: 
+  cci:
     - N/A
   800-53r5:
     - IA-2(8)
@@ -23,13 +22,14 @@ references:
     - CM-7(1)
     - AC-17
   800-53r4:
-    - AC-3 
+    - AC-3
     - CM-7
     - CM-7(1)
     - IA-2(8)
     - IA-2(9)
   srg:
-    - N/A
+    - SRG-OS-000113-GPOS-00058
+    - SRG-OS-000080-GPOS-00048
   disa_stig:
     - N/A
   800-171r2:
@@ -43,19 +43,21 @@ references:
     - CM.L2-3.4.7
     - IA.L2-3.5.4
 macOS:
-  - "14.0"
+  - '14.0'
 tags:
-  - 800-53r5_low 
-  - 800-53r5_moderate 
-  - 800-53r5_high 
-  - 800-53r4_low 
-  - 800-53r4_moderate 
-  - 800-53r4_high 
-  - 800-171 
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_high
+  - 800-53r4_low
+  - 800-53r4_moderate
+  - 800-53r4_high
+  - 800-171
   - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
   - cmmc_lvl2
   - cmmc_lvl1
+  - newstig
+  - newstig
 mobileconfig: false
-mobileconfig_info:
+mobileconfig_info: null

@@ -1,5 +1,5 @@
 id: os_config_data_install_enforce
-title: "Enforce Installation of XProtect Remediator and Gatekeeper Updates Automatically"
+title: Enforce Installation of XProtect Remediator and Gatekeeper Updates Automatically
 discussion: |
   Software Update _MUST_ be configured to update XProtect Remediator and Gatekeepr automatically.
 
@@ -14,7 +14,7 @@ check: |
   .objectForKey('ConfigDataInstall').js
   EOS
 result:
-  string: "true"
+  string: 'true'
 fix: |
   This is implemented by a Configuration Profile.
 references:
@@ -47,7 +47,7 @@ references:
     - SI.L1-3.14.2
     - SI.L1-3.14.4
 macOS:
-  - "14.0"
+  - '14.0'
 tags:
   - 800-53r5_low
   - 800-53r5_moderate
@@ -60,7 +60,9 @@ tags:
   - cnssi-1253_high
   - cmmc_lvl2
   - cmmc_lvl1
-severity: "high"
+  - newstig
+  - newstig
+severity: high
 mobileconfig: true
 mobileconfig_info:
   com.apple.SoftwareUpdate:

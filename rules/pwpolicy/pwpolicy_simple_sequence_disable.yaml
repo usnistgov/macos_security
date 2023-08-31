@@ -1,5 +1,5 @@
 id: pwpolicy_simple_sequence_disable
-title: "Prohibit Repeating, Ascending, and Descending Character Sequences"
+title: Prohibit Repeating, Ascending, and Descending Character Sequences
 discussion: |
   The macOS _MUST_ be configured to prohibit the use of repeating, ascending, and descending character sequences when a password is created.
 
@@ -16,14 +16,14 @@ references:
   cce:
     - N/A
   cci:
-    - CCI-001619
+    - N/A
   800-53r5:
     - IA-5(1)
   800-53r4:
     - IA-5
     - IA-5(1)
   srg:
-    - SRG-OS-000266-GPOS-00101
+    - N/A
   disa_stig:
     - N/A
   800-171r2:
@@ -43,7 +43,7 @@ references:
     - IA.L2-3.5.8
     - IA.L2-3.5.9
 macOS:
-  - "14.0"
+  - '14.0'
 tags:
   - 800-171
   - 800-53r4_low

@@ -1,20 +1,19 @@
 id: os_terminal_secure_keyboard_enable
-title: "Ensure Secure Keyboard Entry Terminal.app is Enabled"
-discussion: |
-  Secure keyboard entry _MUST_ be enabled in Terminal.app. 
+title: Ensure Secure Keyboard Entry Terminal.app is Enabled
+discussion: "Secure keyboard entry _MUST_ be enabled in Terminal.app. \n"
 check: |
   /usr/bin/osascript -l JavaScript << EOS
   $.NSUserDefaults.alloc.initWithSuiteName('com.apple.Terminal')\
   .objectForKey('SecureKeyboardEntry').js
   EOS
 result:
-  string: "true"
+  string: 'true'
 fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
     - N/A
-  cci: 
+  cci:
     - N/A
   800-53r5:
     - N/A
@@ -32,7 +31,7 @@ references:
     controls v8:
       - 4.8
 macOS:
-  - "14.0"
+  - '14.0'
 tags:
   - cis_lvl1
   - cis_lvl2

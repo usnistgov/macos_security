@@ -1,13 +1,6 @@
 id: os_authenticated_root_enable
-title: "Enable Authenticated Root"
-discussion: |
-  Authenticated Root _MUST_ be enabled. 
-  
-  When Authenticated Root is enabled the macOS is booted from a signed volume that is cryptographically protected to prevent tampering with the system volume.
-
-  NOTE: Authenticated Root is enabled by default on macOS systems.
-  
-  WARNING: If more than one partition with macOS is detected, the csrutil command will hang awaiting input.
+title: Enable Authenticated Root
+discussion: "Authenticated Root _MUST_ be enabled. \n\nWhen Authenticated Root is enabled the macOS is booted from a signed volume that is cryptographically protected to prevent tampering with the system volume.\n\nNOTE: Authenticated Root is enabled by default on macOS systems.\n\nWARNING: If more than one partition with macOS is detected, the csrutil command will hang awaiting input.\n"
 check: |
   /usr/bin/csrutil authenticated-root | /usr/bin/grep -c 'enabled'
 result:
@@ -21,7 +14,7 @@ fix: |
 references:
   cce:
     - N/A
-  cci: 
+  cci:
     - N/A
   800-53r5:
     - AC-3
@@ -37,7 +30,7 @@ references:
     - SI-7
     - SI-7(6)
   srg:
-    - N/A
+    - SRG-OS-000080-GPOS-00048
   disa_stig:
     - N/A
   800-171r2:
@@ -55,7 +48,7 @@ references:
     - CM.L2-3.4.5
     - SC.L2-3.13.11
 macOS:
-  - "14.0"
+  - '14.0'
 tags:
   - 800-53r5_low
   - 800-53r5_moderate
@@ -72,5 +65,7 @@ tags:
   - cnssi-1253_high
   - cmmc_lvl2
   - cmmc_lvl1
+  - newstig
+  - newstig
 mobileconfig: false
-mobileconfig_info:
+mobileconfig_info: null

@@ -1,7 +1,6 @@
 id: audit_files_mode_configure
-title: "Configure Audit Log Files to Mode 440 or Less Permissive"
-discussion: |
-  The audit service _MUST_ be configured to create log files that are readable only by the root user and group wheel. To achieve this, audit log files _MUST_ be configured to mode 440 or less permissive; thereby preventing normal users from reading, modifying or deleting audit logs. 
+title: Configure Audit Log Files to Mode 440 or Less Permissive
+discussion: "The audit service _MUST_ be configured to create log files that are readable only by the root user and group wheel. To achieve this, audit log files _MUST_ be configured to mode 440 or less permissive; thereby preventing normal users from reading, modifying or deleting audit logs. \n"
 check: |
   /bin/ls -l $(/usr/bin/grep '^dir' /etc/security/audit_control | /usr/bin/awk -F: '{print $2}') | /usr/bin/awk '!/-r--r-----|current|total/{print $1}' | /usr/bin/wc -l | /usr/bin/tr -d ' '
 result:
@@ -21,6 +20,11 @@ references:
   800-53r4:
     - AU-9
   srg:
+    - SRG-OS-000058-GPOS-00028
+    - SRG-OS-000256-GPOS-00097
+    - SRG-OS-000059-GPOS-00029
+    - SRG-OS-000257-GPOS-00098
+    - SRG-OS-000258-GPOS-00099
     - SRG-OS-000057-GPOS-00027
   disa_stig:
     - N/A
@@ -34,7 +38,7 @@ references:
   cmmc:
     - AU.L2-3.3.8
 macOS:
-  - "14.0"
+  - '14.0'
 tags:
   - 800-53r5_low
   - 800-53r5_moderate
@@ -50,6 +54,8 @@ tags:
   - cnssi-1253_low
   - cnssi-1253_high
   - cmmc_lvl2
-severity: "medium"
+  - newstig
+  - newstig
+severity: medium
 mobileconfig: false
-mobileconfig_info:
+mobileconfig_info: null

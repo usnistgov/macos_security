@@ -1,5 +1,5 @@
 id: system_settings_wallet_applepay_prefpane_hide
-title: "Hide the System Preference Pane for Wallet and Apple Pay"
+title: Hide the System Preference Pane for Wallet and Apple Pay
 discussion: |
   This is required for compliance with the DISA STIG for macOS.
 
@@ -16,15 +16,13 @@ references:
   cce:
     - N/A
   cci:
-    - CCI-000381
-    - CCI-001774
+    - N/A
   800-53r5:
     - N/A
   800-53r4:
     - N/A
   srg:
-    - SRG-OS-000095-GPOS-00049
-    - SRG-OS-000370-GPOS-00155
+    - N/A
   disa_stig:
     - N/A
   800-171r2:
@@ -35,10 +33,10 @@ references:
     controls v8:
       - N/A
 macOS:
-  - "14.0"
+  - '14.0'
 tags:
   - none
-severity: "medium"
+severity: medium
 mobileconfig: true
 mobileconfig_info:
   com.apple.systempreferences:

@@ -1,5 +1,5 @@
 id: os_policy_banner_ssh_configure
-title: "Display Policy Banner at Remote Login"
+title: Display Policy Banner at Remote Login
 discussion: |
   Remote login service _MUST_ be configured to display a policy banner at login.
 
@@ -27,6 +27,7 @@ references:
   800-53r4:
     - AC-8
   srg:
+    - SRG-OS-000024-GPOS-00007
     - SRG-OS-000023-GPOS-00006
   disa_stig:
     - N/A
@@ -35,9 +36,9 @@ references:
   cmmc:
     - AC.L2-3.1.9
 macOS:
-  - "14.0"
+  - '14.0'
 odv:
-  hint: "Organization's Policy Text"
+  hint: Organization's Policy Text
   recommended: |-
     You are accessing a U.S. Government (USG) Information System (IS) that is provided for USG-authorized use only. By using this IS (which includes any device attached to this IS), you consent to the following conditions:
     -The USG routinely intercepts and monitors communications on this IS for purposes including, but not limited to, penetration testing, COMSEC monitoring, network operations and defense, personnel misconduct (PM), law enforcement (LE), and counterintelligence (CI) investigations.
@@ -60,17 +61,19 @@ odv:
 
     -Notwithstanding the above, using this IS does not constitute consent to PM, LE or CI investigative searching or monitoring of the content of privileged communications, or work product, related to personal representation or services by attorneys, psychotherapists, or clergy, and their assistants. Such communications and work product are private and confidential. See User Agreement for details.
 tags:
-  - 800-53r5_low 
-  - 800-53r5_moderate 
-  - 800-53r5_high 
-  - 800-53r4_low 
-  - 800-53r4_moderate 
-  - 800-53r4_high 
-  - 800-171 
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_high
+  - 800-53r4_low
+  - 800-53r4_moderate
+  - 800-53r4_high
+  - 800-171
   - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
   - cmmc_lvl2
-severity: "medium"
+  - newstig
+  - newstig
+severity: medium
 mobileconfig: false
-mobileconfig_info:
+mobileconfig_info: null

@@ -1,5 +1,5 @@
 id: system_settings_touchid_unlock_disable
-title: "Disable TouchID for Unlocking the Device"
+title: Disable TouchID for Unlocking the Device
 discussion: |
   TouchID enables the ability to unlock a Mac system with a user's fingerprint.
 
@@ -12,7 +12,7 @@ check: |
   .objectForKey('allowFingerprintForUnlock').js
   EOS
 result:
-  string: "false"
+  string: 'false'
 fix: |
   This is implemented by a Configuration Profile.
 references:
@@ -25,7 +25,7 @@ references:
   800-53r4:
     - AC-11
   srg:
-    - N/A
+    - SRG-OS-000028-GPOS-00009
   disa_stig:
     - N/A
   800-171r2:
@@ -33,7 +33,7 @@ references:
   cmmc:
     - AC.L2-3.1.10
 macOS:
-  - "14.0"
+  - '14.0'
 tags:
   - 800-53r5_moderate
   - 800-53r5_high
@@ -44,6 +44,8 @@ tags:
   - cnssi-1253_low
   - cnssi-1253_high
   - cmmc_lvl2
+  - newstig
+  - newstig
 mobileconfig: true
 mobileconfig_info:
   com.apple.applicationaccess:

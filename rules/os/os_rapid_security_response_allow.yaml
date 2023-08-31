@@ -1,5 +1,5 @@
 id: os_rapid_security_response_allow
-title: "Enforce Rapid Security Response Mechanism"
+title: Enforce Rapid Security Response Mechanism
 discussion: |
   Rapid security response mechanism _MUST_ be enabled.
 check: |
@@ -8,13 +8,13 @@ check: |
   .objectForKey('allowRapidSecurityResponseInstallation').js
   EOS
 result:
-  string: "true"
+  string: 'true'
 fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
     - N/A
-  cci: 
+  cci:
     - N/A
   800-53r5:
     - SI-2
@@ -38,11 +38,11 @@ references:
     - SI.L1-3.14.2
     - SI.L1-3.14.4
 macOS:
-  - "14.0"
+  - '14.0'
 tags:
-  - 800-53r5_low 
-  - 800-53r5_moderate 
-  - 800-53r5_high 
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_high
   - 800-171
   - cnssi-1253_moderate
   - cnssi-1253_low

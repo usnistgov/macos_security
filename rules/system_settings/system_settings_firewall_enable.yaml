@@ -1,9 +1,6 @@
 id: system_settings_firewall_enable
-title: "Enable macOS Application Firewall"
-discussion: |
-  The macOS Application Firewall is the built-in firewall that comes with macOS, and it _MUST_ be enabled. 
-
-  When the macOS Application Firewall is enabled, the flow of information within the information system and between interconnected systems will be controlled by approved authorizations.
+title: Enable macOS Application Firewall
+discussion: "The macOS Application Firewall is the built-in firewall that comes with macOS, and it _MUST_ be enabled. \n\nWhen the macOS Application Firewall is enabled, the flow of information within the information system and between interconnected systems will be controlled by approved authorizations.\n"
 check: |
   profile="$(/usr/bin/osascript -l JavaScript << EOS
   $.NSUserDefaults.alloc.initWithSuiteName('com.apple.security.firewall')\
@@ -19,7 +16,7 @@ check: |
     echo "false"
   fi
 result:
-  string: "true"
+  string: 'true'
 fix: |
   [source,bash]
   ----
@@ -28,7 +25,7 @@ fix: |
 references:
   cce:
     - N/A
-  cci: 
+  cci:
     - CCI-000366
   800-53r5:
     - AC-4
@@ -36,7 +33,7 @@ references:
     - CM-7
     - CM-7(1)
     - SC-7
-  800-53r4: 
+  800-53r4:
     - AC-4
     - AC-6(1)
     - AC-19
@@ -57,9 +54,9 @@ references:
     - 3.13.2
     - 3.13.5
   cis:
-    benchmark: 
+    benchmark:
       - 2.2.1 (level 1)
-    controls v8: 
+    controls v8:
       - 4.1
       - 4.5
       - 13.1
@@ -69,15 +66,15 @@ references:
     - CM.L2-3.4.7
     - SC.L1-3.13.1
 macOS:
-  - "14.0"
+  - '14.0'
 tags:
-  - 800-53r5_low 
-  - 800-53r4_low 
-  - 800-53r4_moderate 
-  - 800-53r4_high 
-  - 800-53r5_moderate 
-  - 800-53r5_high 
-  - 800-171 
+  - 800-53r5_low
+  - 800-53r4_low
+  - 800-53r4_moderate
+  - 800-53r4_high
+  - 800-53r5_moderate
+  - 800-53r5_high
+  - 800-171
   - cis_lvl1
   - cis_lvl2
   - cisv8
@@ -86,7 +83,9 @@ tags:
   - cnssi-1253_high
   - cmmc_lvl2
   - cmmc_lvl1
-severity: "medium"
+  - newstig
+  - newstig
+severity: medium
 mobileconfig: true
 mobileconfig_info:
   com.apple.security.firewall:

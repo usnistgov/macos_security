@@ -1,5 +1,5 @@
 id: os_camera_disable
-title: "Disable Camera"
+title: Disable Camera
 discussion: |
   macOS _MUST_ be configured to disable the camera.
 check: |
@@ -8,7 +8,7 @@ check: |
   .objectForKey('allowCamera').js
   EOS
 result:
-  string: "false"
+  string: 'false'
 fix: |
   This is implemented by a Configuration Profile.
 references:
@@ -23,14 +23,15 @@ references:
     - N/A
   srg:
     - SRG-OS-000095-GPOS-00049
-    - SRG-OS-000370-GPOS-00155
   disa_stig:
     - N/A
 macOS:
-  - "14.0"
+  - '14.0'
 tags:
   - none
-severity: "medium"
+  - newstig
+  - newstig
+severity: medium
 mobileconfig: true
 mobileconfig_info:
   com.apple.applicationaccess:

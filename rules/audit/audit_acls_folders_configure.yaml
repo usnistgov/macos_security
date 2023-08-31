@@ -1,5 +1,5 @@
 id: audit_acls_folders_configure
-title: "Configure Audit Log Folder to Not Contain Access Control Lists"
+title: Configure Audit Log Folder to Not Contain Access Control Lists
 discussion: |
   The audit log folder _MUST_ not contain access control lists (ACLs).
 
@@ -23,6 +23,11 @@ references:
   800-53r4:
     - AU-9
   srg:
+    - SRG-OS-000058-GPOS-00028
+    - SRG-OS-000256-GPOS-00097
+    - SRG-OS-000059-GPOS-00029
+    - SRG-OS-000257-GPOS-00098
+    - SRG-OS-000258-GPOS-00099
     - SRG-OS-000057-GPOS-00027
   disa_stig:
     - N/A
@@ -36,7 +41,7 @@ references:
   cmmc:
     - AU.L2-3.3.8
 macOS:
-  - "14.0"
+  - '14.0'
 tags:
   - 800-53r5_low
   - 800-53r5_moderate
@@ -52,6 +57,8 @@ tags:
   - cnssi-1253_low
   - cnssi-1253_high
   - cmmc_lvl2
-severity: "medium"
+  - newstig
+  - newstig
+severity: medium
 mobileconfig: false
-mobileconfig_info:
+mobileconfig_info: null

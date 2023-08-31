@@ -1,5 +1,5 @@
 id: os_secure_name_resolution
-title: "Secure Name Address Resolution Service"
+title: Secure Name Address Resolution Service
 discussion: |
   The information system requests and performs data origin authentication and data integrity verification on the name/address resolution responses the system receives from authoritative sources.
 
@@ -27,7 +27,7 @@ references:
     controls v8:
       - 4.9
 macOS:
-  - "14.0"
+  - '14.0'
 tags:
   - 800-53r5_low
   - 800-53r5_moderate
@@ -41,4 +41,4 @@ tags:
   - cnssi-1253_low
   - cnssi-1253_high
 mobileconfig: false
-mobileconfig_info:
+mobileconfig_info: null

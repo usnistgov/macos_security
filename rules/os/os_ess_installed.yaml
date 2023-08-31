@@ -1,5 +1,5 @@
 id: os_ess_installed
-title: "Must Use ESS"
+title: Must Use ESS
 discussion: |
   The approved ESS solution _MUST_ be installed and configured to run.
 
@@ -23,10 +23,12 @@ references:
   disa_stig:
     - N/A
 macOS:
-  - "14.0"
+  - '14.0'
 tags:
   - manual
   - cisv8
-severity: "medium"
+  - newstig
+  - newstig
+severity: medium
 mobileconfig: false
-mobileconfig_info:
+mobileconfig_info: null

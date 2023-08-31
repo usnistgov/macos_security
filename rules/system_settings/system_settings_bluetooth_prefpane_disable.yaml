@@ -1,5 +1,5 @@
 id: system_settings_bluetooth_prefpane_disable
-title: "Disable the Bluetooth System Preference Pane"
+title: Disable the Bluetooth System Preference Pane
 discussion: |
   This is required for compliance with the DISA STIG for macOS.
 
@@ -16,24 +16,22 @@ references:
   cce:
     - N/A
   cci:
-    - CCI-002418
-    - CCI-001967
+    - N/A
   800-53r5:
     - N/A
   800-53r4:
     - SC-8
   srg:
-    - SRG-OS-000379-GPOS-00164
-    - SRG-OS-000481-GPOS-00481
+    - N/A
   disa_stig:
     - N/A
   800-171r2:
     - N/A
 macOS:
-  - "12.0"
+  - '12.0'
 tags:
   - none
-severity: "low"
+severity: low
 mobileconfig: true
 mobileconfig_info:
   com.apple.systempreferences:

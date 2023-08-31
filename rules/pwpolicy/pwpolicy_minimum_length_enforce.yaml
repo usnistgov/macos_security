@@ -1,15 +1,14 @@
 id: pwpolicy_minimum_length_enforce
-title: "Require a Minimum Password Length of $ODV Characters"
+title: Require a Minimum Password Length of $ODV Characters
 discussion: |
   The macOS _MUST_ be configured to require a minimum of $ODV characters be used when a password is created.
 
   This rule enforces password complexity by requiring users to set passwords that are less vulnerable to malicious users.
 
   NOTE: The guidance for password based authentication in NIST 800-53 (Rev 5) and NIST 800-63B state that complexity rules should be organizationally defined. The values defined are based off of common complexity values. But your organization may define its own password complexity rules.
-check: |
-  /usr/bin/pwpolicy -getaccountpolicies 2> /dev/null | /usr/bin/tail +2 | /usr/bin/xmllint --xpath 'boolean(//*[contains(text(),"policyAttributePassword matches '\''.{$ODV,}'\''")])' -   
+check: "/usr/bin/pwpolicy -getaccountpolicies 2> /dev/null | /usr/bin/tail +2 | /usr/bin/xmllint --xpath 'boolean(//*[contains(text(),\"policyAttributePassword matches '\\''.{$ODV,}'\\''\")])' -   \n"
 result:
-  string: "true"
+  string: 'true'
 fix: |
   This is implemented by a Configuration Profile.
 references:
@@ -43,9 +42,9 @@ references:
     - IA.L2-3.5.8
     - IA.L2-3.5.9
 macOS:
-  - "14.0"
+  - '14.0'
 odv:
-  hint: "Minimum password length."
+  hint: Minimum password length.
   recommended: 15
   cis_lvl1: 15
   cis_lvl2: 15
@@ -65,7 +64,9 @@ tags:
   - cnssi-1253_low
   - cnssi-1253_high
   - cmmc_lvl2
-severity: "medium"
+  - newstig
+  - newstig
+severity: medium
 mobileconfig: true
 mobileconfig_info:
   com.apple.mobiledevice.passwordpolicy:

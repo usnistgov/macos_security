@@ -1,11 +1,6 @@
 id: pwpolicy_50_percent
-title: "Require a Minimum of Fifty Percent Character Change in New Passwords"
-discussion: |
-  The macOS should be configured to require users to change at least 50% of the characters when setting a new password. 
-  
-  If the operating system allows users to consecutively reuse extensive portions of passwords, this increases the window of opportunity for a malicious user to guess the password. The number of changed characters refers to the number of changes required with respect to the total number of positions in the current password. In other words, characters may be the same within the two passwords; however, the positions of the like characters must be different.
-  
-  To enforce a 50% character change when new passwords are created, many operating systems can be integrated with an enterprise-level directory service that meets or exceeds this requirement. 
+title: Require a Minimum of Fifty Percent Character Change in New Passwords
+discussion: "The macOS should be configured to require users to change at least 50% of the characters when setting a new password. \n\nIf the operating system allows users to consecutively reuse extensive portions of passwords, this increases the window of opportunity for a malicious user to guess the password. The number of changed characters refers to the number of changes required with respect to the total number of positions in the current password. In other words, characters may be the same within the two passwords; however, the positions of the like characters must be different.\n\nTo enforce a 50% character change when new passwords are created, many operating systems can be integrated with an enterprise-level directory service that meets or exceeds this requirement. \n"
 check: |
   The technology does not support this requirement. This is an applicable-does not meet finding.
 fix: |
@@ -24,7 +19,7 @@ references:
   disa_stig:
     - N/A
   srg:
-    - N/A
+    - SRG-OS-000072-GPOS-00040
   800-171r2:
     - 3.5.1
     - 3.5.2
@@ -33,12 +28,14 @@ references:
     - 3.5.9
     - 3.5.10
 macOS:
-  - "14.0"
+  - '14.0'
 tags:
   - 800-171
   - 800-53r4_low
   - 800-53r4_moderate
   - 800-53r4_high
   - permanent
+  - newstig
+  - newstig
 mobileconfig: false
-mobileconfig_info:
+mobileconfig_info: null

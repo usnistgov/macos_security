@@ -1,17 +1,11 @@
 id: os_recovery_lock_enable
-title: "Enable Recovery Lock"
-discussion: |
-  A recovery lock password _MUST_ be enabled and set. 
-
-  Single user mode, recovery mode, the Startup Manager, and several other tools are available on macOS by holding down specific key combinations during startup. Setting a recovery lock restricts access to these tools.
-
-  IMPORTANT: Recovery lock passwords are not supported on Intel devices. This rule is only applicable to Apple Silicon devices.
+title: Enable Recovery Lock
+discussion: "A recovery lock password _MUST_ be enabled and set. \n\nSingle user mode, recovery mode, the Startup Manager, and several other tools are available on macOS by holding down specific key combinations during startup. Setting a recovery lock restricts access to these tools.\n\nIMPORTANT: Recovery lock passwords are not supported on Intel devices. This rule is only applicable to Apple Silicon devices.\n"
 check: |
   /usr/libexec/mdmclient QuerySecurityInfo | /usr/bin/grep -c "IsRecoveryLockEnabled = 1"
-result: 
+result:
   integer: 1
-fix: |
-  NOTE: The SetRecoveryLock command can be used to set a Recovery Lock password and must be from your MDM. 
+fix: "NOTE: The SetRecoveryLock command can be used to set a Recovery Lock password and must be from your MDM. \n"
 references:
   cce:
     - N/A
@@ -22,7 +16,7 @@ references:
   800-53r4:
     - AC-6
   srg:
-    - N/A
+    - SRG-OS-000480-GPOS-00227
   disa_stig:
     - N/A
   800-171r2:
@@ -31,13 +25,13 @@ references:
     - AC.L1-3.1.1
     - AC.L2-3.1.5
 macOS:
-  - "14.0"
+  - '14.0'
 tags:
-  - 800-53r5_moderate 
-  - 800-53r5_high 
-  - 800-53r4_moderate 
-  - 800-53r4_high 
-  - 800-171 
+  - 800-53r5_moderate
+  - 800-53r5_high
+  - 800-53r4_moderate
+  - 800-53r4_high
+  - 800-171
   - arm64
   - manual
   - cnssi-1253_moderate
@@ -45,6 +39,8 @@ tags:
   - cnssi-1253_high
   - cmmc_lvl2
   - cmmc_lvl1
-severity: "medium"
+  - newstig
+  - newstig
+severity: medium
 mobileconfig: false
-mobileconfig_info:
+mobileconfig_info: null

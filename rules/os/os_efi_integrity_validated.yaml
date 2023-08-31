@@ -1,5 +1,5 @@
 id: os_efi_integrity_validated
-title: "Ensure Extensible Firmware Interface Version is Valid"
+title: Ensure Extensible Firmware Interface Version is Valid
 discussion: |
   The macOS Extensible Firmware Interface (EFI) _MUST_ be checked to ensure it is a known good version from Apple.
 check: |
@@ -12,7 +12,7 @@ references:
   cce:
     - N/A
   cci:
-    - N/A   
+    - N/A
   800-53r5:
     - N/A
   800-53r4:
@@ -24,12 +24,16 @@ references:
       - 5.9 (level 1)
     controls v8:
       - 2.2
+  srg:
+    - N/A
+  disa_stig:
+    - N/A
 macOS:
-  - "14.0"
+  - '14.0'
 tags:
   - cis_lvl1
   - cis_lvl2
   - cisv8
   - i386
 mobileconfig: false
-mobileconfig_info:
+mobileconfig_info: null

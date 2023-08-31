@@ -1,13 +1,12 @@
 id: audit_files_owner_configure
-title: "Configure Audit Log Files to be Owned by Root" 
+title: Configure Audit Log Files to be Owned by Root
 discussion: |
   Audit log files _MUST_ be owned by root.
 
   The audit service _MUST_ be configured to create log files with the correct ownership to prevent normal users from reading audit logs.
 
   Audit logs contain sensitive data about the system and users. If log files are set to only be readable and writable by system administrators, the risk is mitigated.
-check: |
-  /bin/ls -n $(/usr/bin/grep '^dir' /etc/security/audit_control | /usr/bin/awk -F: '{print $2}') | /usr/bin/awk '{s+=$3} END {print s}'  
+check: "/bin/ls -n $(/usr/bin/grep '^dir' /etc/security/audit_control | /usr/bin/awk -F: '{print $2}') | /usr/bin/awk '{s+=$3} END {print s}'  \n"
 result:
   integer: 0
 fix: |
@@ -25,6 +24,11 @@ references:
   800-53r4:
     - AU-9
   srg:
+    - SRG-OS-000058-GPOS-00028
+    - SRG-OS-000256-GPOS-00097
+    - SRG-OS-000059-GPOS-00029
+    - SRG-OS-000257-GPOS-00098
+    - SRG-OS-000258-GPOS-00099
     - SRG-OS-000057-GPOS-00027
   disa_stig:
     - N/A
@@ -38,7 +42,7 @@ references:
   cmmc:
     - AU.L2-3.3.8
 macOS:
-  - "14.0"
+  - '14.0'
 tags:
   - 800-53r5_low
   - 800-53r5_moderate
@@ -54,6 +58,8 @@ tags:
   - cnssi-1253_low
   - cnssi-1253_high
   - cmmc_lvl2
-severity: "medium"
+  - newstig
+  - newstig
+severity: medium
 mobileconfig: false
-mobileconfig_info:
+mobileconfig_info: null

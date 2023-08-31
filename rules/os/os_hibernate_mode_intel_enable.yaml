@@ -1,32 +1,7 @@
 id: os_hibernate_mode_intel_enable
-title: "Enable Hibernate Mode (Intel)"
-discussion: |
-  Hibernate mode _MUST_ be enabled. 
-
-  This will store a copy of memory to persistent storage, and will remove power to memory. This setting will stop the potential for a cold-boot attack.
-
-check: |
-  error_count=0
-  if /usr/sbin/ioreg -rd1 -c IOPlatformExpertDevice 2>&1 | /usr/bin/grep -q "MacBook"; then
-    hibernateMode=$(/usr/bin/pmset -b -g | /usr/bin/grep hibernatemode 2>&1 | /usr/bin/awk '{print $2}')
-    hibernateStandbyLowValue=$(/usr/bin/pmset -g | /usr/bin/grep standbydelaylow 2>&1 | /usr/bin/awk '{print $2}')
-    hibernateStandbyHighValue=$(/usr/bin/pmset -g | /usr/bin/grep standbydelayhigh 2>&1 | /usr/bin/awk '{print $2}')
-    hibernateStandbyThreshValue=$(/usr/bin/pmset -g | /usr/bin/grep highstandbythreshold 2>&1 | /usr/bin/awk '{print $2}')
-    
-    if [[ "$hibernateStandbyLowValue" == "" ]] || [[ "$hibernateStandbyLowValue" -gt 900 ]]; then
-      ((error_count++))
-    fi
-    if [[ "$hibernateStandbyHighValue" == "" ]] || [[ "$hibernateStandbyHighValue" -gt 900 ]]; then
-      ((error_count++))
-    fi
-    if [[ "$hibernateStandbyThreshValue" == "" ]] || [[ "$hibernateStandbyThreshValue" -lt 90 ]]; then
-      ((error_count++))
-    fi
-    if [[ "$hibernateMode" == "" ]] || [[ "$hibernateMode" != 25 ]]; then
-      ((error_count++))
-    fi
-  fi
-  echo "$error_count"
+title: Enable Hibernate Mode (Intel)
+discussion: "Hibernate mode _MUST_ be enabled. \n\nThis will store a copy of memory to persistent storage, and will remove power to memory. This setting will stop the potential for a cold-boot attack.\n"
+check: "error_count=0\nif /usr/sbin/ioreg -rd1 -c IOPlatformExpertDevice 2>&1 | /usr/bin/grep -q \"MacBook\"; then\n  hibernateMode=$(/usr/bin/pmset -b -g | /usr/bin/grep hibernatemode 2>&1 | /usr/bin/awk '{print $2}')\n  hibernateStandbyLowValue=$(/usr/bin/pmset -g | /usr/bin/grep standbydelaylow 2>&1 | /usr/bin/awk '{print $2}')\n  hibernateStandbyHighValue=$(/usr/bin/pmset -g | /usr/bin/grep standbydelayhigh 2>&1 | /usr/bin/awk '{print $2}')\n  hibernateStandbyThreshValue=$(/usr/bin/pmset -g | /usr/bin/grep highstandbythreshold 2>&1 | /usr/bin/awk '{print $2}')\n  \n  if [[ \"$hibernateStandbyLowValue\" == \"\" ]] || [[ \"$hibernateStandbyLowValue\" -gt 900 ]]; then\n    ((error_count++))\n  fi\n  if [[ \"$hibernateStandbyHighValue\" == \"\" ]] || [[ \"$hibernateStandbyHighValue\" -gt 900 ]]; then\n    ((error_count++))\n  fi\n  if [[ \"$hibernateStandbyThreshValue\" == \"\" ]] || [[ \"$hibernateStandbyThreshValue\" -lt 90 ]]; then\n    ((error_count++))\n  fi\n  if [[ \"$hibernateMode\" == \"\" ]] || [[ \"$hibernateMode\" != 25 ]]; then\n    ((error_count++))\n  fi\nfi\necho \"$error_count\"\n"
 result:
   integer: 0
 fix: |
@@ -58,10 +33,10 @@ references:
     controls v8:
       - 4.1
 macOS:
-  - "14.0"
+  - '14.0'
 tags:
   - cis_lvl2
   - cisv8
   - i386
 mobileconfig: false
-mobileconfig_info:
+mobileconfig_info: null

@@ -1,5 +1,5 @@
 id: os_touchid_prompt_disable
-title: "Disable TouchID Prompt during Setup Assistant"
+title: Disable TouchID Prompt during Setup Assistant
 discussion: |
   The prompt for TouchID during Setup Assistant _MUST_ be disabled.
 
@@ -10,7 +10,7 @@ check: |
   .objectForKey('SkipTouchIDSetup').js
   EOS
 result:
-  string: "true"
+  string: 'true'
 fix: |
   This is implemented by a Configuration Profile.
 references:
@@ -37,7 +37,7 @@ references:
   cmmc:
     - CM.L2-3.4.2
 macOS:
-  - "14.0"
+  - '14.0'
 tags:
   - 800-53r5_low
   - 800-53r5_moderate
@@ -51,7 +51,9 @@ tags:
   - cnssi-1253_low
   - cnssi-1253_high
   - cmmc_lvl2
-severity: "medium"
+  - newstig
+  - newstig
+severity: medium
 mobileconfig: true
 mobileconfig_info:
   com.apple.SetupAssistant.managed:

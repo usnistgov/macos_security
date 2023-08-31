@@ -1,11 +1,6 @@
 id: os_ssh_server_alive_interval_configure
-title: "Configure SSH ServerAliveInterval option set to $ODV"
-discussion: |
-  SSH _MUST_ be configured with an Active Server Alive Maximum Count set to $ODV. 
-  
-  Setting the Active Server Alive Maximum Count to $ODV will log users out after a $ODV seconds interval of inactivity.
-
-  NOTE: /etc/ssh/ssh_config will be automatically modified to its original state following any update or major upgrade to the operating system.
+title: Configure SSH ServerAliveInterval option set to $ODV
+discussion: "SSH _MUST_ be configured with an Active Server Alive Maximum Count set to $ODV. \n\nSetting the Active Server Alive Maximum Count to $ODV will log users out after a $ODV seconds interval of inactivity.\n\nNOTE: /etc/ssh/ssh_config will be automatically modified to its original state following any update or major upgrade to the operating system.\n"
 check: |
   ret="pass"
   for u in $(/usr/bin/dscl . -list /Users UniqueID | /usr/bin/awk '$2 > 500 {print $1}'); do
@@ -18,29 +13,19 @@ check: |
   /bin/echo $ret
 result:
   string: pass
-fix: |
-  [source,bash]
-  ----
-  for u in $(/usr/bin/dscl . -list /Users UniqueID | /usr/bin/awk '$2 > 500 {print $1}'); do 
-    config=$(/usr/bin/sudo -u $u /usr/bin/ssh -Gv . 2>&1 | /usr/bin/awk '/Reading configuration data/ {print $NF}'| /usr/bin/tr -d '\r')
-    configarray=( ${(f)config} )
-    for c in $configarray; do
-      /usr/bin/sudo -u $u /usr/bin/grep -q '^ServerAliveInterval' "$c" && /usr/bin/sed -i '' 's/.*ServerAliveInterval.*/ServerAliveInterval $ODV/' "$c" || /bin/echo 'ServerAliveInterval $ODV' >> "$c"
-    done
-  done
-  ----
+fix: "[source,bash]\n----\nfor u in $(/usr/bin/dscl . -list /Users UniqueID | /usr/bin/awk '$2 > 500 {print $1}'); do \n  config=$(/usr/bin/sudo -u $u /usr/bin/ssh -Gv . 2>&1 | /usr/bin/awk '/Reading configuration data/ {print $NF}'| /usr/bin/tr -d '\\r')\n  configarray=( ${(f)config} )\n  for c in $configarray; do\n    /usr/bin/sudo -u $u /usr/bin/grep -q '^ServerAliveInterval' \"$c\" && /usr/bin/sed -i '' 's/.*ServerAliveInterval.*/ServerAliveInterval $ODV/' \"$c\" || /bin/echo 'ServerAliveInterval $ODV' >> \"$c\"\n  done\ndone\n----\n"
 references:
   cce:
     - N/A
-  cci: 
+  cci:
     - N/A
   800-53r5:
     - SC-10
     - AC-12
-  800-53r4: 
+  800-53r4:
     - SC-10
   srg:
-    - N/A
+    - SRG-OS-000163-GPOS-00072
   disa_stig:
     - N/A
   800-171r2:
@@ -49,9 +34,9 @@ references:
     - AC.L2-3.1.11
     - SC.L2-3.13.9
 macOS:
-  - "14.0"
+  - '14.0'
 odv:
-  hint: "Number of seconds."
+  hint: Number of seconds.
   recommended: 900
 tags:
   - 800-53r5_moderate
@@ -63,5 +48,7 @@ tags:
   - cnssi-1253_low
   - cnssi-1253_high
   - cmmc_lvl2
+  - newstig
+  - newstig
 mobileconfig: false
-mobileconfig_info:
+mobileconfig_info: null

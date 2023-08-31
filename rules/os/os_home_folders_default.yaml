@@ -1,30 +1,11 @@
 id: os_home_folders_default
-title: "Configure User's Home Folders to Apple's Default"
+title: Configure User's Home Folders to Apple's Default
 discussion: |
   The system _MUST_ be configured to prevent access to other user's home folders.
-  
+
   Configuring the operating system to use the most restrictive permissions possible for user home directories helps to protect against inadvertent disclosures.
-check: |-
-  Verify the macOS system is configured so that permissions are set correctly on user home directories with the following commands:
-  /bin/ls -le /Users
-  
-  This command will return a listing of the permissions of the root of every user account configured on the system. For each of the users, the permissions must be "drwxr-xr-x+", with the user listed as the owner and the group listed as \"staff\". The plus(+) sign indicates an associated Access Control List, which must be:
-  0: group:everyone deny delete
-  
-  For every authorized user account, also run the following command:
-  /usr/bin/sudo /bin/ls -le /Users/userid, where userid is an existing user. 
-  
-  This command will return the permissions of all the objects under the users' home directory. The permissions for each of the subdirectories must be:
-  drwx------+ 
-  0: group:everyone deny delete
-
-  The exception is the \"Public\" directory, whose permissions must match the following:
-
-  drwxr-xr-x+ 
-  0: group:everyone deny delete
-  
-  If the permissions returned by either of these checks differ from what is shown, this is a finding.
-result: ""
+check: "Verify the macOS system is configured so that permissions are set correctly on user home directories with the following commands:\n/bin/ls -le /Users\n\nThis command will return a listing of the permissions of the root of every user account configured on the system. For each of the users, the permissions must be \"drwxr-xr-x+\", with the user listed as the owner and the group listed as \\\"staff\\\". The plus(+) sign indicates an associated Access Control List, which must be:\n0: group:everyone deny delete\n\nFor every authorized user account, also run the following command:\n/usr/bin/sudo /bin/ls -le /Users/userid, where userid is an existing user. \n\nThis command will return the permissions of all the objects under the users' home directory. The permissions for each of the subdirectories must be:\ndrwx------+ \n0: group:everyone deny delete\n\nThe exception is the \\\"Public\\\" directory, whose permissions must match the following:\n\ndrwxr-xr-x+ \n0: group:everyone deny delete\n\nIf the permissions returned by either of these checks differ from what is shown, this is a finding."
+result: ''
 fix: |-
   Configure the macOS system to set the appropriate permissions for each user on the system with the following command:
 
@@ -35,13 +16,13 @@ references:
   cce:
     - N/A
   cci:
-    - CCI-000366
+    - N/A
   800-53r5:
     - AC-6
   800-53r4:
     - AC-6
   srg:
-    - SRG-OS-000480-GPOS-00228
+    - N/A
   disa_stig:
     - N/A
   800-171r2:
@@ -52,9 +33,9 @@ references:
     controls v8:
       - N/A
 macOS:
-  - "14.0"
+  - '14.0'
 tags:
   - manual
-severity: "medium"
+severity: medium
 mobileconfig: false
-mobileconfig_info:
+mobileconfig_info: null

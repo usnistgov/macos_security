@@ -1,5 +1,5 @@
 id: os_allow_info_passed
-title: "Allow Information Transfer with Other Operating Systems"
+title: Allow Information Transfer with Other Operating Systems
 discussion: |
   The information system _IS_ configured to allow the transfer of information to and from other operating systems and users.
 
@@ -22,13 +22,15 @@ references:
   disa_stig:
     - N/A
   srg:
-    - N/A
+    - SRG-OS-000312-GPOS-00122
 macOS:
-  - "14.0"
+  - '14.0'
 tags:
   - inherent
   - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
+  - newstig
+  - newstig
 mobileconfig: false
-mobileconfig_info:
+mobileconfig_info: null

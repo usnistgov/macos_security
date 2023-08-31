@@ -1,7 +1,6 @@
 id: os_safari_show_full_website_address_enable
-title: "Ensure Show Full Website Address in Safari Is Enabled"
-discussion: |
-  Show full website address _MUST_ be enabled in Safari. 
+title: Ensure Show Full Website Address in Safari Is Enabled
+discussion: "Show full website address _MUST_ be enabled in Safari. \n"
 check: |
   /usr/bin/profiles -P -o stdout | /usr/bin/grep -c 'ShowFullURLInSmartSearchField = 1' | /usr/bin/awk '{ if ($1 >= 1) {print "1"} else {print "0"}}'
 result:
@@ -27,7 +26,7 @@ references:
     controls v8:
       - 9.1
 macOS:
-  - "14.0"
+  - '14.0'
 tags:
   - cis_lvl1
   - cis_lvl2

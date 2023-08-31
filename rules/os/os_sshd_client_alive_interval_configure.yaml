@@ -1,15 +1,6 @@
 id: os_sshd_client_alive_interval_configure
-title: "Configure SSHD ClientAliveInterval to $ODV"
-discussion: |
-  If SSHD is enabled then it _MUST_ be configured with the Client Alive Interval set to $ODV. 
-  
-  Sets a timeout interval in seconds after which if no data has been received from the client, sshd(8) will send a message through the encrypted channel to request a response from the client.
-
-  This setting works in conjuction with ClientAliveCountMax to determine the termination of the connection after the threshold has been reached.
-
-  NOTE: This setting is not intended to manage idle user sessions where there is no input from the client. Its purpose is to monitor for interruptions in network connectivity and force the session to terminate after the connection appears to be broken.
-
-  NOTE: /etc/ssh/sshd_config will be automatically modified to its original state following any update or major upgrade to the operating system.
+title: Configure SSHD ClientAliveInterval to $ODV
+discussion: "If SSHD is enabled then it _MUST_ be configured with the Client Alive Interval set to $ODV. \n\nSets a timeout interval in seconds after which if no data has been received from the client, sshd(8) will send a message through the encrypted channel to request a response from the client.\n\nThis setting works in conjuction with ClientAliveCountMax to determine the termination of the connection after the threshold has been reached.\n\nNOTE: This setting is not intended to manage idle user sessions where there is no input from the client. Its purpose is to monitor for interruptions in network connectivity and force the session to terminate after the connection appears to be broken.\n\nNOTE: /etc/ssh/sshd_config will be automatically modified to its original state following any update or major upgrade to the operating system.\n"
 check: |
   /usr/sbin/sshd -G | /usr/bin/awk '/clientaliveinterval/{print $2}'
 result:
@@ -38,12 +29,12 @@ fix: |
 references:
   cce:
     - N/A
-  cci: 
+  cci:
     - CCI-001133
   800-53r5:
     - SC-10
     - AC-12
-  800-53r4: 
+  800-53r4:
     - SC-10
   srg:
     - SRG-OS-000163-GPOS-00072
@@ -55,21 +46,23 @@ references:
     - AC.L2-3.1.11
     - SC.L2-3.13.9
 macOS:
-  - "14.0"
+  - '14.0'
 odv:
-  hint: "Number of seconds."
+  hint: Number of seconds.
   recommended: 900
   stig: 900
 tags:
   - 800-53r5_moderate
   - 800-53r5_high
-  - 800-53r4_moderate 
-  - 800-53r4_high 
+  - 800-53r4_moderate
+  - 800-53r4_high
   - 800-171
   - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
   - cmmc_lvl2
-severity: "medium"
+  - newstig
+  - newstig
+severity: medium
 mobileconfig: false
-mobileconfig_info:
+mobileconfig_info: null

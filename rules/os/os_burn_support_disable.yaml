@@ -1,5 +1,5 @@
 id: os_burn_support_disable
-title: "Disable Burn Support"
+title: Disable Burn Support
 discussion: |
   Burn support _MUST_ be disabled.
 
@@ -17,29 +17,29 @@ references:
   cce:
     - N/A
   cci:
-    - CCI-000366
+    - N/A
   800-53r5:
     - MP-7
   800-53r4:
     - MP-7(1)
   srg:
-    - SRG-OS-000480-GPOS-00227
+    - N/A
   disa_stig:
     - N/A
   cmmc:
     - MP.L2-3.8.7
     - MP.L2-3.8.8
 macOS:
-  - "14.0"
+  - '14.0'
 tags:
   - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
   - cmmc_lvl2
-severity: "low"
+severity: low
 mobileconfig: true
 mobileconfig_info:
   com.apple.finder:
     ProhibitBurn: true
   com.apple.DiscRecording:
-    BurnSupport: "off"
+    BurnSupport: 'off'

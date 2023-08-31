@@ -1,5 +1,5 @@
 id: os_sshd_key_exchange_algorithm_configure
-title: "Configure SSHD to Use Secure Key Exchange Algorithms"
+title: Configure SSHD to Use Secure Key Exchange Algorithms
 discussion: |
   If SSHD is enabled then it _MUST_ be configured to limit the Message Key Exchange Algorithms. This is required for compliance with the DISA STIG for macOS.
 
@@ -55,12 +55,12 @@ references:
   cmmc:
     - AC.L2-3.1.13
 macOS:
-  - "14.0"
+  - '14.0'
 tags:
   - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
   - cmmc_lvl2
-severity: "high"
+severity: high
 mobileconfig: false
-mobileconfig_info:
+mobileconfig_info: null

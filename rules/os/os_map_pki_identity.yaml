@@ -1,5 +1,5 @@
 id: os_map_pki_identity
-title: "Map identity for PKI based authentication"
+title: Map identity for PKI based authentication
 discussion: |
   Without mapping the certificate used to authenticate to the user account, the ability to determine the identity of the individual user or group will not be available for forensic analysis.
 check: |
@@ -20,8 +20,8 @@ references:
   srg:
     - N/A
 macOS:
-  - "14.0"
+  - '14.0'
 tags:
   - inherent
 mobileconfig: false
-mobileconfig_info:
+mobileconfig_info: null

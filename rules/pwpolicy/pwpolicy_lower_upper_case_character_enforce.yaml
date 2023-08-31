@@ -1,33 +1,26 @@
 id: pwpolicy_lower_upper_case_character_enforce
-title: "Require Passwords Contain a Minimum of $ODV Lowercase Character and $ODV Uppercase Character"
-discussion: |
-  The macOS _MUST_ be configured to require at least $ODV lower-case character and $ODV upper-case character be used when a password is created.
-  
-  This rule enforces password complexity by requiring users to set passwords that are less vulnerable to malicious users. 
-
-  NOTE: The guidance for password based authentication in NIST 800-53 (Rev 5) and NIST 800-63B state that complexity rules should be organizationally defined. The values defined are based off of common complexity values. But your organization may define its own password complexity rules.
-
-  NOTE: The configuration profile generated must be installed from an MDM server.
-check: |
-  /usr/bin/pwpolicy -getaccountpolicies 2> /dev/null | /usr/bin/tail +2 | /usr/bin/xmllint --xpath 'boolean(//*[contains(text(),"policyAttributePassword matches '\''.*[A-Z]{$ODV,}[a-z]{$ODV,}.*'\''")])' -  
+title: Require Passwords Contain a Minimum of $ODV Lowercase Character and $ODV Uppercase Character
+discussion: "The macOS _MUST_ be configured to require at least $ODV lower-case character and $ODV upper-case character be used when a password is created.\n\nThis rule enforces password complexity by requiring users to set passwords that are less vulnerable to malicious users. \n\nNOTE: The guidance for password based authentication in NIST 800-53 (Rev 5) and NIST 800-63B state that complexity rules should be organizationally defined. The values defined are based off of common complexity values. But your organization may define its own password complexity rules.\n\nNOTE: The configuration profile generated must be installed from an MDM server.\n"
+check: "/usr/bin/pwpolicy -getaccountpolicies 2> /dev/null | /usr/bin/tail +2 | /usr/bin/xmllint --xpath 'boolean(//*[contains(text(),\"policyAttributePassword matches '\\''.*[A-Z]{$ODV,}[a-z]{$ODV,}.*'\\''\")])' -  \n"
 result:
-  string: "true"
+  string: 'true'
 fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
     - N/A
-  cci: 
+  cci:
     - N/A
   800-53r5:
     - IA-5(1)
-  800-53r4: 
+  800-53r4:
     - IA-5
     - IA-5(1)
   disa_stig:
     - N/A
   srg:
-    - N/A
+    - SRG-OS-000070-GPOS-00038
+    - SRG-OS-000069-GPOS-00037
   800-171r2:
     - 3.5.1
     - 3.5.2
@@ -45,9 +38,9 @@ references:
     - IA.L2-3.5.8
     - IA.L2-3.5.9
 macOS:
-  - "14.0"
+  - '14.0'
 odv:
-  hint: "Number of lowercase characters."
+  hint: Number of lowercase characters.
   recommended: 1
   cis_lvl2: 1
 tags:
@@ -64,10 +57,12 @@ tags:
   - cnssi-1253_low
   - cnssi-1253_high
   - cmmc_lvl2
+  - newstig
+  - newstig
 mobileconfig: true
 mobileconfig_info:
   com.apple.mobiledevice.passwordpolicy:
     customRegex:
       passwordContentRegex: .*[A-Z]{$ODV,}[a-z]{$ODV,}.*
       passwordContentDescription:
-        default: "Password must include $ODV uppercase and $ODV lowercase character"
+        default: Password must include $ODV uppercase and $ODV lowercase character

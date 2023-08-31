@@ -1,5 +1,5 @@
 id: os_sshd_fips_140_ciphers
-title: "Limit SSHD to FIPS 140 Validated Ciphers"
+title: Limit SSHD to FIPS 140 Validated Ciphers
 discussion: |
   If SSHD is enabled then it _MUST_ be configured to limit the ciphers to specific algorithms. This is required for compliance with the DISA STIG for macOS.
 
@@ -63,9 +63,9 @@ references:
     - SC.L2-3.13.8
     - SC.L2-3.13.11
 macOS:
-  - "14.0"
+  - '14.0'
 tags:
   - none
-severity: "high"
+severity: high
 mobileconfig: false
-mobileconfig_info:
+mobileconfig_info: null

@@ -1,5 +1,5 @@
 id: os_screensaver_timeout_loginwindow_enforce
-title: "Enforce Screen Saver Timeout at LoginWindow"
+title: Enforce Screen Saver Timeout at LoginWindow
 discussion: |
   The screen saver timeout at LoginWindow _MUST_ be set to $ODV seconds or a shorter length of time.
 
@@ -17,7 +17,7 @@ check: |
   }
   EOS
 result:
-  string: "true"
+  string: 'true'
 fix: |
   This is implemented by a Configuration Profile.
 references:
@@ -40,14 +40,16 @@ references:
     controls v8:
       - 4.3
 macOS:
-  - "14.0"
+  - '14.0'
 odv:
-  hint: "Number of seconds."
+  hint: Number of seconds.
   recommended: 1200
   stig: 900
 tags:
   - none
-severity: "medium"
+  - newstig
+  - newstig
+severity: medium
 mobileconfig: true
 mobileconfig_info:
   com.apple.screensaver:

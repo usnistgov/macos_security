@@ -1,5 +1,5 @@
 id: os_sudo_timeout_configure
-title: "Configure Sudo Timeout Period to $ODV"
+title: Configure Sudo Timeout Period to $ODV
 discussion: |
   The file /etc/sudoers _MUST_ include a timestamp_timout of $ODV.
 check: |
@@ -31,9 +31,9 @@ references:
     controls v8:
       - 4.3
 macOS:
-  - "14.0"
+  - '14.0'
 odv:
-  hint: "Number of minutes."
+  hint: Number of minutes.
   recommended: 0
   cis_lvl1: 0
   cis_lvl2: 0
@@ -45,5 +45,7 @@ tags:
   - cis_lvl1
   - cis_lvl2
   - cisv8
+  - newstig
+  - newstig
 mobileconfig: false
-mobileconfig_info:
+mobileconfig_info: null

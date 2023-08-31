@@ -1,11 +1,6 @@
 id: audit_enforce_dual_auth
-title: "Enforce Dual Authorization for Movement and Deletion of Audit Information"
-discussion: |
-  All bulk manipulation of audit information should be authorized via automatic processes, and any manual manipulation of audit information should require dual authorization. In addition, dual authorization mechanisms should require the approval of two authorized individuals before being executed.
-  
-  An authorized user may intentionally or accidentally move or delete audit records without those specific actions being authorized, which would result in the loss of information that could, in the future, be critical for forensic investigation.
-  
-  To enforce dual authorization before audit information can be moved or deleted, many operating systems can be integrated with enterprise-level auditing mechanisms that meet or exceed this requirement. 
+title: Enforce Dual Authorization for Movement and Deletion of Audit Information
+discussion: "All bulk manipulation of audit information should be authorized via automatic processes, and any manual manipulation of audit information should require dual authorization. In addition, dual authorization mechanisms should require the approval of two authorized individuals before being executed.\n\nAn authorized user may intentionally or accidentally move or delete audit records without those specific actions being authorized, which would result in the loss of information that could, in the future, be critical for forensic investigation.\n\nTo enforce dual authorization before audit information can be moved or deleted, many operating systems can be integrated with enterprise-level auditing mechanisms that meet or exceed this requirement. \n"
 check: |
   The technology does not support this requirement. This is an applicable-does not meet finding.
 fix: |
@@ -22,11 +17,13 @@ references:
   disa_stig:
     - N/A
   srg:
-    - N/A
+    - SRG-OS-000360-GPOS-00147
 macOS:
-  - "14.0"
+  - '14.0'
 tags:
   - permanent
   - cnssi-1253_high
+  - newstig
+  - newstig
 mobileconfig: false
-mobileconfig_info:
+mobileconfig_info: null

@@ -1,7 +1,6 @@
 id: os_safari_advertising_privacy_protection_enable
-title: "Ensure Advertising Privacy Protection in Safari Is Enabled"
-discussion: |
-  Allow privacy-preserving measurement of ad effectiveness _MUST_ be enabled in Safari. 
+title: Ensure Advertising Privacy Protection in Safari Is Enabled
+discussion: "Allow privacy-preserving measurement of ad effectiveness _MUST_ be enabled in Safari. \n"
 check: |
   /usr/bin/profiles -P -o stdout | /usr/bin/grep -c '"WebKitPreferences.privateClickMeasurementEnabled" = 1' | /usr/bin/awk '{ if ($1 >= 1) {print "1"} else {print "0"}}'
 result:
@@ -27,7 +26,7 @@ references:
     controls v8:
       - 9.1
 macOS:
-  - "14.0"
+  - '14.0'
 tags:
   - cis_lvl1
   - cis_lvl2

@@ -1,5 +1,5 @@
 id: os_screensaver_loginwindow_enforce
-title: "Enforce Screen Saver at Login Window"
+title: Enforce Screen Saver at Login Window
 discussion: |
   A default screen saver _MUST_ be configured to display at the login window and _MUST_ not display any sensitive information.
 check: |
@@ -8,7 +8,7 @@ check: |
   .objectForKey('moduleName').js
   EOS
 result:
-  string: "Ventura"
+  string: Ventura
 fix: |
   This is implemented by a Configuration Profile.
 references:
@@ -27,18 +27,20 @@ references:
   800-171r2:
     - 3.1.10
 macOS:
-  - "14.0"
+  - '14.0'
 tags:
-  - 800-53r5_moderate 
-  - 800-53r5_high 
-  - 800-53r4_moderate 
-  - 800-53r4_high 
-  - 800-171 
+  - 800-53r5_moderate
+  - 800-53r5_high
+  - 800-53r4_moderate
+  - 800-53r4_high
+  - 800-171
   - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
-severity: "medium"
+  - newstig
+  - newstig
+severity: medium
 mobileconfig: true
 mobileconfig_info:
   com.apple.screensaver:
-    moduleName: "Ventura"
+    moduleName: Ventura

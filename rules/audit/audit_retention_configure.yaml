@@ -1,5 +1,5 @@
 id: audit_retention_configure
-title: "Configure Audit Retention to $ODV"
+title: Configure Audit Retention to $ODV
 discussion: |
   The audit service _MUST_ be configured to require records be kept for a organizational defined value before deletion, unless the system uses a central audit record storage facility.
 
@@ -37,9 +37,9 @@ references:
   cmmc:
     - AU.L2-3.3.1
 macOS:
-  - "14.0"
+  - '14.0'
 odv:
-  hint: "See man audit_control for possible values."
+  hint: See man audit_control for possible values.
   recommended: 7d
   cis_lvl1: 60d OR 5G
   cis_lvl2: 60d OR 5G
@@ -59,6 +59,8 @@ tags:
   - cnssi-1253_low
   - cnssi-1253_high
   - cmmc_lvl2
-severity: "low"
+  - newstig
+  - newstig
+severity: low
 mobileconfig: false
-mobileconfig_info:
+mobileconfig_info: null

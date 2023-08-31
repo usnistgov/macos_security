@@ -1,11 +1,6 @@
 id: os_protect_dos_attacks
-title: "Protect Against Denial of Service Attacks by Ensuring Rate-Limiting Measures on Network Interfaces"
-discussion: |
-  The macOS should be configured to prevent Denial of Service (DoS) attacks by enforcing rate-limiting measures on network interfaces. 
-  
-  DoS attacks leave authorized users unable to access information systems, devices, or other network resources due to the actions of a malicious cyber threat actor. When this occurs, the organization must operate at degraded capacity; often resulting in an inability to accomplish its mission. 
-
-  To prevent DoS attacks by ensuring rate-limiting measures on network interfaces, many operating systems can be integrated with enterprise-level firewalls and networking equipment that meet or exceed this requirement.
+title: Protect Against Denial of Service Attacks by Ensuring Rate-Limiting Measures on Network Interfaces
+discussion: "The macOS should be configured to prevent Denial of Service (DoS) attacks by enforcing rate-limiting measures on network interfaces. \n\nDoS attacks leave authorized users unable to access information systems, devices, or other network resources due to the actions of a malicious cyber threat actor. When this occurs, the organization must operate at degraded capacity; often resulting in an inability to accomplish its mission. \n\nTo prevent DoS attacks by ensuring rate-limiting measures on network interfaces, many operating systems can be integrated with enterprise-level firewalls and networking equipment that meet or exceed this requirement.\n"
 check: |
   The technology does not support this requirement. This is an applicable-does not meet finding.
 fix: |
@@ -22,9 +17,9 @@ references:
   disa_stig:
     - N/A
   srg:
-    - N/A
+    - SRG-OS-000420-GPOS-00186
 macOS:
-  - "14.0"
+  - '14.0'
 tags:
   - 800-53r5_low
   - 800-53r5_moderate
@@ -36,5 +31,7 @@ tags:
   - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
+  - newstig
+  - newstig
 mobileconfig: false
-mobileconfig_info:
+mobileconfig_info: null

@@ -1,5 +1,5 @@
 id: os_anti_virus_installed
-title: "Must Use an Approved Antivirus Program"
+title: Must Use an Approved Antivirus Program
 discussion: |
   An approved antivirus product _MUST_ be installed and configured to run.
 
@@ -28,9 +28,11 @@ references:
   disa_stig:
     - N/A
 macOS:
-  - "14.0"
+  - '14.0'
 tags:
   - none
-severity: "high"
+  - newstig
+  - newstig
+severity: high
 mobileconfig: false
-mobileconfig_info:
+mobileconfig_info: null

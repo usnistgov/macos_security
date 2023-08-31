@@ -1,17 +1,16 @@
 id: pwpolicy_special_character_enforce
-title: "Require Passwords Contain a Minimum of One Special Character"
+title: Require Passwords Contain a Minimum of One Special Character
 discussion: |
   The macOS _MUST_ be configured to require at least one special character be used when a password is created.
 
   Special characters are those characters that are not alphanumeric. Examples include: ~ ! @ # $ % ^ *.
- 
+
   This rule enforces password complexity by requiring users to set passwords that are less vulnerable to malicious users.
- 
+
   NOTE: The guidance for password based authentication in NIST 800-53 (Rev 5) and NIST 800-63B state that complexity rules should be organizationally defined. The values defined are based off of common complexity values. But your organization may define its own password complexity rules.
-check: |
-  /usr/bin/pwpolicy -getaccountpolicies 2> /dev/null | /usr/bin/tail +2 | /usr/bin/xmllint --xpath 'boolean(//*[contains(text(),"policyAttributePassword matches '\''(.*[^a-zA-Z0-9].*){$ODV,}'\''")])' - 
+check: "/usr/bin/pwpolicy -getaccountpolicies 2> /dev/null | /usr/bin/tail +2 | /usr/bin/xmllint --xpath 'boolean(//*[contains(text(),\"policyAttributePassword matches '\\''(.*[^a-zA-Z0-9].*){$ODV,}'\\''\")])' - \n"
 result:
-  string: "true"
+  string: 'true'
 fix: |
   This is implemented by a Configuration Profile.
 references:
@@ -45,9 +44,9 @@ references:
     - IA.L2-3.5.8
     - IA.L2-3.5.9
 macOS:
-  - "14.0"
+  - '14.0'
 odv:
-  hint: "Number of special characters."
+  hint: Number of special characters.
   recommended: 1
   cis_lvl2: 1
   stig: 1
@@ -65,7 +64,9 @@ tags:
   - cnssi-1253_low
   - cnssi-1253_high
   - cmmc_lvl2
-severity: "medium"
+  - newstig
+  - newstig
+severity: medium
 mobileconfig: true
 mobileconfig_info:
   com.apple.mobiledevice.passwordpolicy:

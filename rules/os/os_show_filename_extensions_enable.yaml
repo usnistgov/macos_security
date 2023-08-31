@@ -1,16 +1,6 @@
 id: os_show_filename_extensions_enable
-title: "Enable Show All Filename Extensions"
-discussion: |
-  Show all filename extensions _MUST_ be enabled in the Finder.
-  
-  [NOTE] 
-  ====
-  The check and fix are for the currently logged in user. To get the currently logged in user, run the following.
-  [source,bash]
-  ----
-  CURRENT_USER=$( /usr/sbin/scutil <<< "show State:/Users/ConsoleUser" | /usr/bin/awk '/Name :/ && ! /loginwindow/ { print $3 }' )
-  ----
-  ====
+title: Enable Show All Filename Extensions
+discussion: "Show all filename extensions _MUST_ be enabled in the Finder.\n\n[NOTE] \n====\nThe check and fix are for the currently logged in user. To get the currently logged in user, run the following.\n[source,bash]\n----\nCURRENT_USER=$( /usr/sbin/scutil <<< \"show State:/Users/ConsoleUser\" | /usr/bin/awk '/Name :/ && ! /loginwindow/ { print $3 }' )\n----\n====\n"
 check: |
   /usr/bin/sudo -u "$CURRENT_USER" /usr/bin/defaults read .GlobalPreferences AppleShowAllExtensions 2>/dev/null
 result:
@@ -41,10 +31,10 @@ references:
     controls v8:
       - 2.3
 macOS:
-  - "14.0"
+  - '14.0'
 tags:
   - cis_lvl1
   - cis_lvl2
   - cisv8
 mobileconfig: false
-mobileconfig_info:
+mobileconfig_info: null
