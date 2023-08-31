@@ -149,12 +149,15 @@ def generate_scap(all_rules, all_baselines, args):
         <oval:product_name xmlns:oval="http://oval.mitre.org/XMLSchema/oval-common-5">macOS Security Compliance Project</oval:product_name>
       </generator>'''.format(date_time_string)
 
+    ostype = "macOS"
+    if "ios" in version_yaml['cpe']:
+        ostype = "iOS/iPadOS"
     xccdfPrefix = '''<?xml version="1.0" encoding="UTF-8"?>
     <Benchmark xmlns="http://checklists.nist.gov/xccdf/1.2" id="xccdf_gov.nist.mscp.content_benchmark_macOS_{1}" style="SCAP_1.3" resolved="true" xml:lang="en">
       <status date="{3}">draft</status>
-      <title>macOS {1}: Security Configuration</title>
+      <title>{4} {1}: Security Configuration</title>
       <description>
-        macOS {1}: Security Configuration
+        {4} {1}: Security Configuration
       </description>
       
       
@@ -171,7 +174,7 @@ def generate_scap(all_rules, all_baselines, args):
         <contributor xmlns="http://purl.org/dc/elements/1.1/">Dan Brodjieski - National Aeronautics and Space Administration</contributor>
         <contributor xmlns="http://purl.org/dc/elements/1.1/">Allen Golbig - Jamf</contributor>
       </metadata>
-    '''.format(date_time_string, version_yaml['os'], version_yaml['version'],date_time_string.split("T")[0] + "Z")
+    '''.format(date_time_string, version_yaml['os'], version_yaml['version'],date_time_string.split("T")[0] + "Z", ostype)
 
     scapPrefix = '''<?xml version="1.0" encoding="UTF-8"?>
 <data-stream-collection xmlns="http://scap.nist.gov/schema/scap/source/1.2" id="scap_gov.nist.mscp.content_collection_macOS_{1}" schematron-version="1.3">
