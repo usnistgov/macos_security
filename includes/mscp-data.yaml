@@ -37,6 +37,26 @@ authors:
       - Edward Byrd|Center for Internet Security
       - Ron Colvin|Center for Internet Security
       - Allen Golbig|Jamf
+  cis_lvl1_byod:
+    names:
+      - Edward Byrd|Center for Internet Security
+      - Ron Colvin|Center for Internet Security
+      - Allen Golbig|Jamf
+  cis_lvl2_byod:
+    names:
+      - Edward Byrd|Center for Internet Security
+      - Ron Colvin|Center for Internet Security
+      - Allen Golbig|Jamf
+  cis_lvl1_enterprise:
+    names:
+      - Edward Byrd|Center for Internet Security
+      - Ron Colvin|Center for Internet Security
+      - Allen Golbig|Jamf
+  cis_lvl2_enterprise:
+    names:
+      - Edward Byrd|Center for Internet Security
+      - Ron Colvin|Center for Internet Security
+      - Allen Golbig|Jamf
   cisv8:
     preamble: CIS Critical Security Controls® (CIS Controls®) are referenced with the permission and support of the Center for Internet Security® (CIS®)
     names:
@@ -75,7 +95,7 @@ authors:
     names: 
       - Dan Brodjieski|National Aeronautics and Space Administration
       - Allen Golbig|Jamf
-      - Bob Gendler|National Institute of Standards and Technology      
+      - Bob Gendler|National Institute of Standards and Technology
 titles:
   all_rules: All Rules
   800-53r5_high: NIST SP 800-53 Rev 5 High Impact
@@ -84,10 +104,14 @@ titles:
   800-171: NIST 800-171 Rev 2
   cis_lvl1: CIS Apple macOS 13.0 Ventura v1.1.0 Benchmark (Level 1)
   cis_lvl2: CIS Apple macOS 13.0 Ventura v1.1.0 Benchmark (Level 2)
+  cis_lvl1_byod: CIS Apple iOS 16 v1.1.0 Benchmark (Level 1) - End-User Owned Devices
+  cis_lvl2_byod: CIS Apple iOS 16 v1.1.0 Benchmark (Level 2) - End-User Owned Devices
+  cis_lvl1_enterprise: CIS Apple iOS 16 v1.1.0 Benchmark (Level 1) - Institutionally-Owned Devices
+  cis_lvl2_enterprise: CIS Apple iOS 16 v1.1.0 Benchmark (Level 2) - Institutionally-Owned Devices
+  cisv8: CIS Controls Version 8
   cmmc_lvl1: US CMMC 2.0 Level 1
   cmmc_lvl2: US CMMC 2.0 Level 2
-  cisv8: CIS Controls Version 8
   cnssi-1253_low: Committee on National Security Systems Instruction No. 1253 (Low)
   cnssi-1253_moderate: Committee on National Security Systems Instruction No. 1253 (Moderate)
   cnssi-1253_high: Committee on National Security Systems Instruction No. 1253 (High)
-  stig: Apple macOS 13 (Ventura) STIG - Ver 1, Rel 1
+  stig: Apple macOS 13 (Ventura) STIG - Ver 1, Rel 2

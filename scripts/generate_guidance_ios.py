@@ -13,6 +13,7 @@ import argparse
 import subprocess
 import logging
 import tempfile
+import base64
 from datetime import date
 from xlwt import Workbook
 from string import Template
@@ -1065,8 +1066,13 @@ def main():
 
         if args.logo:
             logo = args.logo
+            pdf_logo_path = logo
         else:
             logo = "../../templates/images/mscp_banner.png"
+            pdf_logo_path = "../templates/images/mscp_banner.png"
+
+        # convert logo to base64 for inline processing
+        b64logo = base64.b64encode(open(pdf_logo_path, "rb").read())
 
         build_path = os.path.join(parent_dir, 'build', f'{baseline_name}')
         if not (os.path.isdir(build_path)):
@@ -1183,6 +1189,11 @@ def main():
     else:
         adoc_cis_show=":show_cis!:"
 
+    if "CMMC" in baseline_yaml['title'].upper():
+        adoc_cmmc_show=":show_CMMC:"
+    else:
+        adoc_cmmc_show=":show_CMMC!:"
+
     if "800" in baseline_yaml['title']:
          adoc_171_show=":show_171:"
     else:
@@ -1213,11 +1224,13 @@ def main():
         html_subtitle=adoc_html_subtitle,
         document_subtitle2=adoc_document_subtitle2,
         logo=logo,
+        pdflogo=b64logo.decode("ascii"),
         pdf_theme=pdf_theme,
         tag_attribute=adoc_tag_show,
         nist171_attribute=adoc_171_show,
         stig_attribute=adoc_STIG_show,
         cis_attribute=adoc_cis_show,
+        cmmc_attribute=adoc_cmmc_show,
         version=version_yaml['version'],
         os_version=version_yaml['os'],
         release_date=version_yaml['date']
