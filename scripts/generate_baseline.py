@@ -131,6 +131,7 @@ def collect_rules():
                     except:
                         #print("expected reference '{}' is missing in key '{}' for rule{}".format(reference, key, rule))
                         rule_yaml[key].update({reference: ["None"]})
+
         all_rules.append(MacSecurityRule(rule_yaml['title'].replace('|', '\|'),
                                     rule_yaml['id'].replace('|', '\|'),
                                     rule_yaml['severity'].replace('|', '\|'),
