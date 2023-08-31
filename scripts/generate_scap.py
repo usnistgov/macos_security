@@ -39,28 +39,37 @@ def create_args():
     return parser.parse_args()
 
 def generate_scap(all_rules, all_baselines, args):
-
+    
     export_as = ""
 
+    version_file = "../VERSION.yaml"
+    with open(version_file) as r:
+        version_yaml = yaml.load(r, Loader=yaml.SafeLoader)
+        
     if args.xccdf:
         export_as = "xccdf"
     
     if args.oval:
         export_as = "oval"
+        if "ios" in version_yaml['cpe']:
+            print("OVAL generation is not available on iOS")
+            exit()
+
 
     if args.oval == None and args.xccdf == None:
         export_as = "scap"
-    
-    version_file = "../VERSION.yaml"
-    with open(version_file) as r:
-        version_yaml = yaml.load(r, Loader=yaml.SafeLoader)
+        if "ios" in version_yaml['cpe']:
+            print("iOS will only export as XCCDF")
+            export_as = "xccdf"
 
     now = datetime.now()
     date_time_string = now.strftime("%Y-%m-%dT%H:%M:%S")
 
     filenameversion = version_yaml['version'].split(",")[1].replace(" ", "_")[1:]
     output = "../build/macOS_{0}_Security_Compliance_Benchmark-{1}".format(version_yaml['os'],filenameversion)
-
+    if "ios" in version_yaml['cpe']:
+        output = "../build/iOS_{0}_Security_Compliance_Benchmark-{1}".format(version_yaml['os'],filenameversion)
+        
     if export_as == "xccdf":
         output = output + "_xccdf.xml"
     
