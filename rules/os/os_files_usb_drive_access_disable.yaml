@@ -35,7 +35,7 @@ tags:
   - 800-53r5_high
   - cis_lvl2_enterprise
   - cisv8
-  - stig
+  - ios_stig
 severity: "medium"
 supervised: true
 mobileconfig: true

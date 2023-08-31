@@ -34,7 +34,7 @@ odv:
   recommended: 6
   cis_lvl1: 6
   cis_lvl2: 6
-  stig: 10
+  ios_stig: 10
 tags:
   - ios
   - 800-53r5_low
@@ -45,7 +45,7 @@ tags:
   - cis_lvl1_enterprise
   - cis_lvl2_enterprise
   - cisv8
-  - stig
+  - ios_stig
 severity: "medium"
 supervised: false
 mobileconfig: true

@@ -32,7 +32,7 @@ iOS:
   - '16.0'
 tags:
   - ios
-  - stig
+  - ios_stig
   - 800-53r5_low
   - 800-53r5_moderate
   - 800-53r5_high

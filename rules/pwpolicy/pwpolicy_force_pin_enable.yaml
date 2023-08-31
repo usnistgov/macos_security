@@ -28,7 +28,7 @@ iOS:
   - "16.0"
 tags:
   - ios
-  - stig
+  - ios_stig
 severity: high
 mobileconfig: 'true'
 mobileconfig_info:

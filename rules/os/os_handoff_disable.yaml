@@ -41,7 +41,7 @@ tags:
   - cis_lvl2_byod
   - cis_lvl2_enterprise
   - cisv8
-  - stig
+  - ios_stig
 severity: "low"
 supervised: false
 mobileconfig: true

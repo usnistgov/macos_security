@@ -37,7 +37,7 @@ references:
 iOS:
   - "13.0"
 tags:
-  - stig
+  - ios_stig
   - supplemental
 mobileconfig: false
 mobileconfig_info:  

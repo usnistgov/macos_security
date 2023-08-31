@@ -32,7 +32,7 @@ tags:
   - 800-53r5_low
   - 800-53r5_moderate
   - 800-53r5_high
-  - stig
+  - ios_stig
   - inherent
 severity: medium
 supervised:
