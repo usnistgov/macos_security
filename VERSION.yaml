@@ -1,4 +1,5 @@
 os: "16.0"
+platform: iOS/iPadOS
 version: "iOS Guidance, Revision 1.0"
 cpe: o:apple:ios:16.0
 date: "2023-XX-XX"

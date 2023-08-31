@@ -167,11 +167,12 @@ def create_args():
     
     return parser.parse_args()
 
-def section_title(section_name):
+def section_title(section_name, platform):
+    os = platform.split(':')[2]
     titles = {
         "auth": "authentication",
         "audit": "auditing",
-        "os": "macos",
+        "os": os,
         "pwpolicy": "passwordpolicy",
         "icloud": "icloud",
         "sysprefs": "systempreferences",
@@ -234,7 +235,7 @@ def available_tags(all_rules):
         print(tag)
     return
 
-def output_baseline(rules, os, baseline_tailored_string, benchmark, authors, full_title):
+def output_baseline(rules, version, baseline_tailored_string, benchmark, authors, full_title):
     inherent_rules = []
     permanent_rules = []
     na_rules = []
@@ -262,11 +263,11 @@ def output_baseline(rules, os, baseline_tailored_string, benchmark, authors, ful
             if section_name not in sections:
                 sections.append(section_name)
     if baseline_tailored_string:
-        output_text = f'title: "macOS {os}: Security Configuration -{full_title} {baseline_tailored_string}"\n'
-        output_text += f'description: |\n  This guide describes the actions to take when securing a macOS {os} system against the{full_title} {baseline_tailored_string} security baseline.\n'
+        output_text = f'title: "{version["platform"]} {version["os"]}: Security Configuration -{full_title} {baseline_tailored_string}"\n'
+        output_text += f'description: |\n  This guide describes the actions to take when securing a {version["platform"]} {version["os"]} system against the{full_title} {baseline_tailored_string} security baseline.\n'
     else:
-        output_text = f'title: "macOS {os}: Security Configuration -{full_title}"\n'
-        output_text += f'description: |\n  This guide describes the actions to take when securing a macOS {os} system against the{full_title} security baseline.\n'
+        output_text = f'title: "{version["platform"]} {version["os"]}: Security Configuration -{full_title}"\n'
+        output_text += f'description: |\n  This guide describes the actions to take when securing a {version["platform"]} {version["os"]} system against the{full_title} security baseline.\n'
     
     if benchmark == "recommended":
         output_text += "\n  Information System Security Officers and benchmark creators can use this catalog of settings in order to assist them in security benchmark creation. This list is a catalog, not a checklist or benchmark, and satisfaction of every item is not likely to be possible or sensible in many operational scenarios.\n"
@@ -286,7 +287,7 @@ def output_baseline(rules, os, baseline_tailored_string, benchmark, authors, ful
 
     if len(other_rules) > 0:
         for section in sections:
-            output_text += ('  - section: "{}"\n'.format(section_title(section)))
+            output_text += ('  - section: "{}"\n'.format(section_title(section, version["cpe"])))
             output_text += ("    rules:\n")
             for rule in other_rules:
                 if rule.startswith(section):
@@ -552,10 +553,10 @@ def main():
             # prompt for inclusion, add ODV
             odv_baseline_rules = odv_query(found_rules, benchmark)
             baseline_output_file = open(f"{build_path}/{tailored_filename}.yaml", 'w')
-            baseline_output_file.write(output_baseline(odv_baseline_rules, version_yaml["os"], baseline_tailored_string, benchmark, authors, full_title))
+            baseline_output_file.write(output_baseline(odv_baseline_rules, version_yaml, baseline_tailored_string, benchmark, authors, full_title))
         else:
             baseline_output_file = open(f"{build_path}/{args.keyword}.yaml", 'w')
-            baseline_output_file.write(output_baseline(found_rules, version_yaml["os"], baseline_tailored_string, benchmark, authors, full_title))
+            baseline_output_file.write(output_baseline(found_rules, version_yaml, baseline_tailored_string, benchmark, authors, full_title))
     
     # finally revert back to the prior directory
     os.chdir(original_working_directory)
