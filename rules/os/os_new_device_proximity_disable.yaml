@@ -1,32 +1,32 @@
-id: os_password_proximity_disable
-title: "Disable Proximity Based Password Sharing Requests"
+id: os_new_device_proximity_disable
+title: "Ensure Allow setting up new nearby devices is set to Disabled"
 discussion: |
-  Proximity based password sharing requests _MUST_ be disabled. 
-  
-  The default behavior of iOS is to allow users to request passwords from other known devices (macOS and iOS). This feature _MUST_ be disabled to prevent passwords from being shared.
+  The setting up of new nearby devices _MUST_ be disabled.
 check: " "
 fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
     - N/A
-  cci:
+  cci: 
     - CCI-000366
     - CCI-000097
     - CCI-000370
   800-53r5:
-  - IA-5
+    - CM-6
+    - CM-7
+    - CM-7(1)
   sfr:
     - 'FMT_SMF_EXT.1.1 #47'
-  disa_stig:
-    - AIOS-16-012900
+  disa_stig: 
+    - AIOS-16-012800
   800-171r2:
     - N/A
   cis:
     benchmark:
-      - 3.2.1.29 (level 1 - Institutionally-Owned Devices)
+      - 3.2.1.28 (level 1 - Institutionally-Owned Devices)
     controls v8:
-      - 13.5
+      - 3.13
 iOS:
   - "16.0"
 tags:
@@ -43,4 +43,4 @@ supervised: true
 mobileconfig: true
 mobileconfig_info:
   com.apple.applicationaccess:
-    allowPasswordProximityRequests: false
+    allowProximitySetupToNewDevice: false

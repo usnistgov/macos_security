@@ -1,7 +1,7 @@
-id: icloud_sync_disable
-title: "Ensure Allow iCloud documents & data is set to Disabled"
+id: icloud_backup_disabled
+title: "Ensure iCloud Backup is set to Disabled"
 discussion: |
-  Institutionally owned devices _MUST_ not sync data through iCloud.
+  iCloud backup _MUST_ be disabled.
 check: " "
 fix: |
   This is implemented by a Configuration Profile.
@@ -9,10 +9,9 @@ references:
   cce:
     - N/A
   cci:
-    - CCI-000097
-    - CCI-000366
-    - CCI-000370
+    - CCI-001090
   800-53r5:
+    - SC-4
     - AC-20
     - AC-20(1)
     - CM-7
@@ -21,12 +20,12 @@ references:
   sfr:
     - 'FMT_MOF_EXT.1.2 #40'
   disa_stig:
-    - AIOS-16-003200
+    - AIOS-16-003000
   800-171r2:
     - N/A
   cis:
     benchmark:
-      - 3.2.1.5 (level 1 - Institutionally-Owned Devices)
+      - 3.2.1.4 (level 1 - Institutionally-Owned Devices)
     controls v8:
       - 2.3
 ios:
@@ -41,8 +40,8 @@ tags:
   - cisv8
   - stig
 severity: "medium"
-supervised: ¯\_(ツ)_/¯
+supervised: false
 mobileconfig: true
 mobileconfig_info:
   com.apple.applicationaccess:
-    allowCloudDocumentSync: false
+    allowCloudBackup: false

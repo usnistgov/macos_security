@@ -1,9 +1,7 @@
-id: os_handoff_disable
-title: "Disable Handoff"
+id: os_airdrop_unmanaged_destination_enable
+title: "Ensure Treat AirDrop as unmanaged destination is set to Enabled"
 discussion: |
-  Handoff _MUST_ be disabled. 
-
-  Handoff allows you to continue working on a document or project when the user switches from one Apple device to another. Disabling Handoff prevents data transfers to unauthorized devices.
+  AirDrop _MUST_ be treated as an unmanaged destination.
 check: " "
 fix: |
   This is implemented by a Configuration Profile.
@@ -12,23 +10,24 @@ references:
     - N/A
   cci: 
     - CCI-000366
-    - CCI-000370
-    - CCI-000381
+    - CCI-002008
   800-53r5:
     - AC-3
     - AC-20
     - CM-7
     - CM-7(1)
-  disa_stig:
-    - AIOS-16-010800
+    - MP-2
+    - SC-7(10)
   sfr:
     - 'FMT_SMF_EXT.1.1 #47'
+  disa_stig: 
+    - AIOS-16-011500
   800-171r2:
     - N/A
   cis:
     benchmark:
-      - 2.2.1.11 (level 2 - End-User Owned Devices)
-      - 3.2.1.24 (level 2 - Institutionally-Owned Devices)
+      - 2.2.1.10 (level 1 - End-User Owned Devices)
+      - 3.2.1.23 (level 1 - Institutionally-Owned Devices)
     controls v8:
       - 3.3
 ios:
@@ -38,13 +37,15 @@ tags:
   - 800-53r5_low
   - 800-53r5_moderate
   - 800-53r5_high
+  - cis_lvl1_byod
   - cis_lvl2_byod
+  - cis_lvl1_enterprise
   - cis_lvl2_enterprise
   - cisv8
   - stig
-severity: "low"
+severity: "medium"
 supervised: false
 mobileconfig: true
 mobileconfig_info:
   com.apple.applicationaccess:
-    allowActivityContinuation: false
+    forceAirDropUnmanaged: true

@@ -1,32 +1,33 @@
-id: os_password_proximity_disable
-title: "Disable Proximity Based Password Sharing Requests"
+id: os_usb_accessories_when_locked_disable
+title: "Ensure Allow USB accessories while the device is locked is set to Disabled"
 discussion: |
-  Proximity based password sharing requests _MUST_ be disabled. 
-  
-  The default behavior of iOS is to allow users to request passwords from other known devices (macOS and iOS). This feature _MUST_ be disabled to prevent passwords from being shared.
+  USB devices _MUST_ not be allowed to connect while the device is locked.
 check: " "
 fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
     - N/A
-  cci:
+  cci: 
     - CCI-000366
     - CCI-000097
     - CCI-000370
   800-53r5:
-  - IA-5
+    - CM-8(3)
+    - MP-7
+    - SC-7(10)
+    - SC-41
   sfr:
     - 'FMT_SMF_EXT.1.1 #47'
-  disa_stig:
-    - AIOS-16-012900
+  disa_stig: 
+    - AIOS-16-012200
   800-171r2:
     - N/A
   cis:
     benchmark:
-      - 3.2.1.29 (level 1 - Institutionally-Owned Devices)
+      - 3.2.1.19 (level 1 - Institutionally-Owned Devices)
     controls v8:
-      - 13.5
+      - 1.2
 iOS:
   - "16.0"
 tags:
@@ -43,4 +44,4 @@ supervised: true
 mobileconfig: true
 mobileconfig_info:
   com.apple.applicationaccess:
-    allowPasswordProximityRequests: false
+    allowUSBRestrictedMode: false

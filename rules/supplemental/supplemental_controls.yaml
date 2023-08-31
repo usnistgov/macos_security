@@ -189,8 +189,6 @@ references:
     - N/A
   disa_stig:
     - N/A
-  cmmc:
-    - N/A
 macOS:
   - "13.0"
 tags:

@@ -1,9 +1,9 @@
-id: os_password_sharing_disable
-title: "Disable Password Sharing"
+id: os_find_my_friends_disable
+title: "Disable Find My Friends Service"
 discussion: |
-  Password Sharing _MUST_ be disabled. 
-  
-  The default behavior of iOS/iPadOS is to allow users to share a password over Airdrop between other macOS and iOS devices. This feature _MUST_ be disabled to prevent passwords from being shared.
+  The Find My Friends service _MUST_ be disabled.
+
+  Sharing the location of a device may be an violation to an organization and potentially put users at risk.
 check: ''
 fix: This is implemented by a Configuration Profile
 references:
@@ -14,11 +14,13 @@ references:
     - CCI-000097
     - CCI-000370
   800-53r5:
-    - IA-5
+    - AC-20
+    - CM-7
+    - CM-7(1)
   sfr:
     - 'FMT_SMF_EXT.1.1 #47'
   disa_stig:
-    - AIOS-16-013000
+    - AIOS-16-013100
   800-171r2:
     - N/A
   cis:
@@ -34,9 +36,9 @@ tags:
   - 800-53r5_moderate
   - 800-53r5_high
   - stig
-severity: medium
+severity: low
 supervised: true
 mobileconfig: true
 mobileconfig_info:
   com.apple.applicationaccess:
-    allowPasswordSharing: false
+    allowFindMyFriends: false

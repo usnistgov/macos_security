@@ -1,7 +1,7 @@
-id: icloud_sync_disable
-title: "Ensure Allow iCloud documents & data is set to Disabled"
+id: os_voice_dialing_when_locked_disabled
+title: "Ensure Allow voice dialing while device is locked is set to Disabled"
 discussion: |
-  Institutionally owned devices _MUST_ not sync data through iCloud.
+  Voice dialing while the device is locked _MUST_ be disabled.
 check: " "
 fix: |
   This is implemented by a Configuration Profile.
@@ -9,26 +9,22 @@ references:
   cce:
     - N/A
   cci:
-    - CCI-000097
     - CCI-000366
-    - CCI-000370
   800-53r5:
-    - AC-20
-    - AC-20(1)
     - CM-7
     - CM-7(1)
-    - SC-7(10)
   sfr:
-    - 'FMT_MOF_EXT.1.2 #40'
+    - 'FMT_SMF_EXT.1.1 #8b'
   disa_stig:
-    - AIOS-16-003200
+    - AIOS-16-007300
   800-171r2:
     - N/A
   cis:
     benchmark:
-      - 3.2.1.5 (level 1 - Institutionally-Owned Devices)
+      - 2.2.1.1 (level 1 - End-User Owned Devices)
+      - 3.2.1.2 (level 1 - Institutionally-Owned Devices)
     controls v8:
-      - 2.3
+      - 4.3
 ios:
   - "16.0"
 tags:
@@ -36,13 +32,15 @@ tags:
   - 800-53r5_low
   - 800-53r5_moderate
   - 800-53r5_high
+  - cis_lvl1_byod
+  - cis_lvl2_byod
   - cis_lvl1_enterprise
   - cis_lvl2_enterprise
   - cisv8
   - stig
 severity: "medium"
-supervised: ¯\_(ツ)_/¯
+supervised: false
 mobileconfig: true
 mobileconfig_info:
   com.apple.applicationaccess:
-    allowCloudDocumentSync: false
+    allowVoiceDialing: false

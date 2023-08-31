@@ -1,9 +1,9 @@
-id: os_password_sharing_disable
-title: "Disable Password Sharing"
+id: os_apple_watch_pairing_disable
+title: "Ensure Apple Watch Pairing is Disabled"
 discussion: |
-  Password Sharing _MUST_ be disabled. 
+  Pairing an Apple Watch _MUST_ be disabled.
   
-  The default behavior of iOS/iPadOS is to allow users to share a password over Airdrop between other macOS and iOS devices. This feature _MUST_ be disabled to prevent passwords from being shared.
+  NOTE: Any currently paired Apple Watch is unpaired and the watch's content is erased.
 check: ''
 fix: This is implemented by a Configuration Profile
 references:
@@ -14,11 +14,12 @@ references:
     - CCI-000097
     - CCI-000370
   800-53r5:
-    - IA-5
+    - CM-7
+    - CM-7(1)
   sfr:
     - 'FMT_SMF_EXT.1.1 #47'
   disa_stig:
-    - AIOS-16-013000
+    - AIOS-16-012600
   800-171r2:
     - N/A
   cis:
@@ -30,13 +31,13 @@ iOS:
   - '16.0'
 tags:
   - ios
+  - stig
   - 800-53r5_low
   - 800-53r5_moderate
   - 800-53r5_high
-  - stig
 severity: medium
 supervised: true
 mobileconfig: true
 mobileconfig_info:
   com.apple.applicationaccess:
-    allowPasswordSharing: false
+    allowPairedWatch: false

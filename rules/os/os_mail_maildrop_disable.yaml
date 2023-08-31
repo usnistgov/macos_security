@@ -1,9 +1,7 @@
-id: os_handoff_disable
-title: "Disable Handoff"
+id: os_mail_maildrop_disable
+title: "Ensure Allow Mail Drop is set to Disabled"
 discussion: |
-  Handoff _MUST_ be disabled. 
-
-  Handoff allows you to continue working on a document or project when the user switches from one Apple device to another. Disabling Handoff prevents data transfers to unauthorized devices.
+  Mail Drop _MUST_ be disabled.
 check: " "
 fix: |
   This is implemented by a Configuration Profile.
@@ -13,25 +11,26 @@ references:
   cci: 
     - CCI-000366
     - CCI-000370
-    - CCI-000381
+    - CCI-002314
   800-53r5:
     - AC-3
     - AC-20
     - CM-7
     - CM-7(1)
-  disa_stig:
-    - AIOS-16-010800
+    - SC-07(10)
   sfr:
     - 'FMT_SMF_EXT.1.1 #47'
+  disa_stig: 
+    - AIOS-16-011000
   800-171r2:
     - N/A
   cis:
     benchmark:
-      - 2.2.1.11 (level 2 - End-User Owned Devices)
-      - 3.2.1.24 (level 2 - Institutionally-Owned Devices)
+      - 2.7.2 (level 2 - End-User Owned Devices)
+      - 3.7.2 (level 2 - Institutionally-Owned Devices)
     controls v8:
       - 3.3
-ios:
+iOS:
   - "16.0"
 tags:
   - ios
@@ -42,9 +41,9 @@ tags:
   - cis_lvl2_enterprise
   - cisv8
   - stig
-severity: "low"
+severity: "medium"
 supervised: false
 mobileconfig: true
 mobileconfig_info:
-  com.apple.applicationaccess:
-    allowActivityContinuation: false
+  com.apple.mail.managed:
+    allowMailDrop: false

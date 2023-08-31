@@ -1,0 +1,41 @@
+id: os_files_network_drive_access_disable
+title: "Ensure Allow network drive access in Files app is set to Disabled"
+discussion: |
+  Network drive acces in Files app _MUST_ be disabled.
+check: " "
+fix: |
+  This is implemented by a Configuration Profile.
+references:
+  cce:
+    - N/A
+  cci: 
+    - CCI-000366
+    - CCI-000097
+    - CCI-000370
+  800-53r5:
+    - AC-20(2)
+  sfr:
+    - 'FMT_SMF_EXT.1.1 #47'
+  disa_stig: 
+    - AIOS-16-014300
+  800-171r2:
+    - N/A
+  cis:
+    benchmark:
+      - 3.2.1.9 (level 2 - Institutionally-Owned Devices)
+    controls v8:
+      - 1.2
+ios:
+  - "16.0"
+tags:
+  - ios
+  - 800-53r5_moderate
+  - 800-53r5_high
+  - cis_lvl2_enterprise
+  - cisv8
+severity: "medium"
+supervised: true
+mobileconfig: true
+mobileconfig_info:
+  com.apple.applicationaccess:
+    allowFilesNetworkDriveAccess: false

@@ -1,9 +1,9 @@
-id: os_password_sharing_disable
-title: "Disable Password Sharing"
+id: os_on_device_translation_enforce
+title: "Ensure On Device Translation is Enforced"
 discussion: |
-  Password Sharing _MUST_ be disabled. 
-  
-  The default behavior of iOS/iPadOS is to allow users to share a password over Airdrop between other macOS and iOS devices. This feature _MUST_ be disabled to prevent passwords from being shared.
+  The device _MUST_ be configured for on device translation.
+
+  By enforcing on device translation this will mitigate the risk of unwanted data being sent to Apple.
 check: ''
 fix: This is implemented by a Configuration Profile
 references:
@@ -14,11 +14,13 @@ references:
     - CCI-000097
     - CCI-000370
   800-53r5:
-    - IA-5
+    - SI-11
+    - AC-20
+    - SC-7(10)
   sfr:
     - 'FMT_SMF_EXT.1.1 #47'
   disa_stig:
-    - AIOS-16-013000
+    - AIOS-16-014500
   800-171r2:
     - N/A
   cis:
@@ -30,13 +32,13 @@ iOS:
   - '16.0'
 tags:
   - ios
+  - stig
   - 800-53r5_low
   - 800-53r5_moderate
   - 800-53r5_high
-  - stig
 severity: medium
-supervised: true
+supervised: false
 mobileconfig: true
 mobileconfig_info:
   com.apple.applicationaccess:
-    allowPasswordSharing: false
+    forceOnDeviceOnlyTranslation: true

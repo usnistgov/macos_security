@@ -1,0 +1,40 @@
+id: os_erase_on_mdm_unenroll
+title: "All managed date must be erased upon unenrollment from MDM."
+discussion: |
+  When a mobile device is no longer going to be managed by MDM technologies, its protected/sensitive data must be sanitized because it will no longer be protected by the MDM software, putting it at much greater risk of unauthorized access and disclosure.
+check: ' '
+fix: This is implemented by a Configuration Profile
+references:
+  cce:
+    - N/A
+  cci:
+    - CCI-000370
+    - CCI-001033
+    - CCI-000366
+  800-53r5:
+    - MP-6
+    - MP-6(3)
+  sfr:
+    - FMT_SMF_EXT.2.1
+  disa_stig:
+    - AIOS-16-004900
+  800-171r2:
+    - N/A
+  cis:
+    benchmark:
+      - N/A
+    controls v8:
+      - N/A
+iOS:
+  - "16.0"
+tags:
+  - ios
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_high
+  - stig
+  - inherent
+severity: medium
+supervised:
+mobileconfig: false
+mobileconfig_info:
