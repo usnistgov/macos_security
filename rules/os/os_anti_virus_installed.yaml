@@ -30,7 +30,6 @@ references:
 macOS:
   - '14.0'
 tags:
-  - none
   - newstig
 severity: high
 mobileconfig: false

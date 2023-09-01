@@ -34,7 +34,7 @@ references:
     - 3.13.16
   cis:
     benchmark:
-      - 2.6.5 (level 1)
+      - N/A
     controls v8:
       - 3.6
       - 3.11
@@ -43,7 +43,10 @@ references:
 macOS:
   - '14.0'
 tags:
-  - none
+  - 800-53r5_moderate
+  - 800-53r5_high
+  - cisv8
+  - cmmc_lvl2
   - newstig
 severity: high
 mobileconfig: true

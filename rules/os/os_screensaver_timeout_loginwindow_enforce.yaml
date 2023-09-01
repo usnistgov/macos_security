@@ -26,19 +26,18 @@ references:
   cci:
     - CCI-000057
   800-53r5:
-    - AC-11
-    - IA-11
+    - N/A
   srg:
     - SRG-OS-000029-GPOS-00010
   disa_stig:
     - N/A
   800-171r2:
-    - 3.1.10
+    - N/A
   cis:
     benchmark:
       - N/A
     controls v8:
-      - 4.3
+      - N/A
 macOS:
   - '14.0'
 odv:
@@ -46,7 +45,6 @@ odv:
   recommended: 1200
   stig: 900
 tags:
-  - none
   - newstig
 severity: medium
 mobileconfig: true
