@@ -24,7 +24,6 @@ references:
     - N/A
   cmmc:
     - SC.L2-3.13.10
-    - APPL-13-003001
 macOS:
   - '14.0'
 tags:
