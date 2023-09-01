@@ -34,7 +34,6 @@ tags:
   - cis_lvl1_enterprise
   - cis_lvl2_enterprise
   - cisv8
-  - 800-53r5
 severity: ""
 supervised: true
 mobileconfig: true
