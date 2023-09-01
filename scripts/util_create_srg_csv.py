@@ -183,12 +183,6 @@ def main():
             parent_dir, 'includes', 'mscp-data.yaml')
     with open(mscp_data_file) as r:
         mscp_data_yaml = yaml.load(r, Loader=yaml.SafeLoader)
-
-    # import stig data
-    stig_data_file = os.path.join(
-            parent_dir, 'build', 'stig_mapping_ventura.yaml')
-    with open(stig_data_file) as r:
-        stig_data_yaml = yaml.load(r, Loader=yaml.SafeLoader)
     
     # import SRG data
     srg_data_file = os.path.join(
