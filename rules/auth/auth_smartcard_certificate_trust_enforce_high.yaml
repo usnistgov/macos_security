@@ -29,10 +29,7 @@ references:
     - IA-2(12)
     - IA-5(2)
   srg:
-    - SRG-OS-000384-GPOS-00167
-    - SRG-OS-000403-GPOS-00182
-    - SRG-OS-000377-GPOS-00162
-    - SRG-OS-000066-GPOS-00034
+    - N/A
   disa_stig:
     - N/A
   cmmc:
@@ -43,7 +40,6 @@ tags:
   - 800-53r4_high
   - 800-53r5_high
   - cnssi-1253_high
-  - newstig
 mobileconfig: true
 mobileconfig_info:
   com.apple.security.smartcard:
