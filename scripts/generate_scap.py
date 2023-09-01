@@ -400,6 +400,9 @@ def generate_scap(all_rules, all_baselines, args):
                 cce = rule_yaml['references']['cce'][0]
 
             if export_as == "scap":
+                mobileconfig_info = ""
+                if rule_yaml['mobileconfig']:
+                    mobileconfig_info = escape(format_mobileconfig_fix(rule_yaml['mobileconfig_info']))
                 xccdf_rules = xccdf_rules + '''
             <Rule id="xccdf_gov.nist.mscp.content_rule_{0}" selected="false" role="full" severity="{1}" weight="1.0">
             <title>{2}</title>
@@ -412,7 +415,7 @@ def generate_scap(all_rules, all_baselines, args):
             <fixtext>{7}</fixtext>
             {8}
             </Rule>
-            '''.format(rule_yaml['id'] + "_" + odv_label, severity, rule_yaml['title'], rule_yaml['discussion'].replace("<","&lt;").replace(">","&gt;").replace("&","&amp;").rstrip(), rule_yaml['check'].replace("<","&lt;").replace(">","&gt;").replace("&","&amp;").rstrip(), result, cce,rule_yaml['fix'].replace("<","&lt;").replace(">","&gt;").replace("&","&amp;"), check_rule, references)
+            '''.format(rule_yaml['id'] + "_" + odv_label, severity, rule_yaml['title'], rule_yaml['discussion'].replace("<","&lt;").replace(">","&gt;").replace("&","&amp;").rstrip(), rule_yaml['check'].replace("<","&lt;").replace(">","&gt;").replace("&","&amp;").rstrip(), result, cce,rule_yaml['fix'].replace("<","&lt;").replace(">","&gt;").replace("&","&amp;")  + "\n" + mobileconfig_info, check_rule, references)
 
             if export_as == "xccdf":
                 mobileconfig_info = ""
