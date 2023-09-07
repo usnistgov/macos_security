@@ -435,9 +435,10 @@ def generate_scap(all_rules, all_baselines, args):
             
             </Rule>
             '''.format(rule_yaml['id'] + "_" + odv_label, severity, rule_yaml['title'], rule_yaml['discussion'].replace("<","&lt;").replace(">","&gt;").replace("&","&amp;").rstrip(), rule_yaml['check'].replace("<","&lt;").replace(">","&gt;").replace("&","&amp;").rstrip(), result, cce,rule_yaml['fix'].replace("<","&lt;").replace(">","&gt;").replace("&","&amp;") + "\n" + mobileconfig_info, references)
+                continue
                 
 
-
+            
             if "inherent" in rule_yaml['tags'] or "n_a" in rule_yaml['tags'] or "permanent" in rule_yaml['tags']:
                 xccdf_rules = replace_ocil(xccdf_rules,x)
                 x += 1
