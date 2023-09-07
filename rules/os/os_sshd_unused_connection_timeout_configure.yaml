@@ -7,7 +7,7 @@ discussion: |
 
   NOTE: /etc/ssh/sshd_config will be automatically modified to its original state following any update or major upgrade to the operating system.
 check: |
-  /usr/sbin/sshd -G | /usr/bin/awk '/unusedconnectionetimeout/{print $2}'
+  /usr/sbin/sshd -G | /usr/bin/awk '/unusedconnectiontimeout/{print $2}'
 result:
   integer: $ODV
 fix: |
@@ -19,7 +19,7 @@ fix: |
     /usr/bin/sed -i.bk "1s/.*/Include \/etc\/ssh\/sshd_config.d\/\*/" /etc/ssh/sshd_config
   fi
 
-  /usr/bin/grep -qxF 'unusedconnectionetimeout $ODV' "${include_dir}01-mscp-sshd.conf" 2>/dev/null || echo "unusedconnectionetimeout $ODV" >> "${include_dir}01-mscp-sshd.conf"
+  /usr/bin/grep -qxF 'unusedconnectiontimeout $ODV' "${include_dir}01-mscp-sshd.conf" 2>/dev/null || echo "unusedconnectiontimeout $ODV" >> "${include_dir}01-mscp-sshd.conf"
 
   for file in $(ls ${include_dir}); do
     if [[ "$file" == "100-macos.conf" ]]; then
