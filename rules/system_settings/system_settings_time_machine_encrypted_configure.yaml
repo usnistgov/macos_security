@@ -22,7 +22,7 @@ fix: |
   . Click *Use Disk*
 references:
   cce:
-    - N/A
+    - CCE-92998-4
   cci: 
     - N/A
   800-53r5:

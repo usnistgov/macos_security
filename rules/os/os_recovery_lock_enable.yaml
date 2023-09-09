@@ -14,7 +14,7 @@ fix: |
   NOTE: The SetRecoveryLock command can be used to set a Recovery Lock password and must be from your MDM. 
 references:
   cce:
-    - N/A
+    - CCE-92870-5
   cci:
     - N/A
   800-53r5:

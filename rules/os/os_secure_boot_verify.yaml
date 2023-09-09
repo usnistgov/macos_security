@@ -14,7 +14,7 @@ fix: |
   NOTE: Boot into Recovery Mode and enable Full Secure Boot
 references:
   cce:
-    - N/A
+    - CCE-92883-8
   cci:
     - N/A
   800-53r5:

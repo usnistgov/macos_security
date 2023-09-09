@@ -10,7 +10,7 @@ fix: |
   Install a known good version of macOS.
 references:
   cce:
-    - N/A
+    - CCE-92783-0
   cci:
     - N/A   
   800-53r5:
