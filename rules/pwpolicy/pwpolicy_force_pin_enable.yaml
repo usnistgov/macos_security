@@ -8,7 +8,7 @@ check: ' '
 fix: This is implemented by a Configuration Profile
 references:
   cce:
-    - CCE-93257-4
+    - N/A
   cci:
     - CCI-001199
   800-53r5:
@@ -16,7 +16,7 @@ references:
   sfr:
     - 'FIA_UAU_EXT.1.1'
   disa_stig:
-    - AIOS-16-010400
+    - N/A
   800-171r2:
     - N/A
   cis:
@@ -25,10 +25,9 @@ references:
     controls v8:
       - N/A
 iOS:
-  - "16.0"
+  - "17.0"
 tags:
   - ios
-  - ios_stig
 severity: high
 mobileconfig: 'true'
 mobileconfig_info:

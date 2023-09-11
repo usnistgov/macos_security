@@ -7,7 +7,7 @@ fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-    - CCE-93258-2
+    - N/A
   cci: 
     - CCI-000057
   800-53r5:
@@ -15,8 +15,8 @@ references:
     - IA-11
   sfr:
     - 'FMT_SMF_EXT.1.1 #2a'
-  disa_stig: 
-    - AIOS-16-006700
+  disa_stig:
+    - N/A
   800-171r2:
     - N/A
   cis:
@@ -26,7 +26,7 @@ references:
     controls v8:
       - 4.3
 iOS:
-  - "16.0"
+  - "17.0"
 odv:
   hint: "Maximum Grace Period in Minutes."
   recommended: 0
@@ -43,7 +43,6 @@ tags:
   - cis_lvl1_enterprise
   - cis_lvl2_enterprise
   - cisv8
-  - ios_stig
 severity: "medium"
 supervised: false
 mobileconfig: true

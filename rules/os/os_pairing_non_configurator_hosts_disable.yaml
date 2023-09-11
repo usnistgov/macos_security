@@ -7,7 +7,7 @@ fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-    - CCE-93238-4
+    - N/A
   cci: 
     - N/A
   800-53r5:
@@ -16,7 +16,7 @@ references:
     - CM-7(1)
   sfr:
     - N/A
-  disa_stig: 
+  disa_stig:
     - N/A
   800-171r2:
     - N/A
@@ -26,7 +26,7 @@ references:
     controls v8:
       - 4.8
 iOS:
-  - "16.0"
+  - "17.0"
 tags:
   - ios
   - 800-53r5_low

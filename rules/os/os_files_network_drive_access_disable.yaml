@@ -7,7 +7,7 @@ fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-    - CCE-93223-6
+    - N/A
   cci: 
     - CCI-000366
     - CCI-000097
@@ -16,8 +16,8 @@ references:
     - AC-20(2)
   sfr:
     - 'FMT_SMF_EXT.1.1 #47'
-  disa_stig: 
-    - AIOS-16-014300
+  disa_stig:
+    - N/A
   800-171r2:
     - N/A
   cis:
@@ -25,8 +25,8 @@ references:
       - 3.2.1.9 (level 2 - Institutionally-Owned Devices)
     controls v8:
       - 1.2
-ios:
-  - "16.0"
+iOS:
+  - "17.0"
 tags:
   - ios
   - 800-53r5_moderate

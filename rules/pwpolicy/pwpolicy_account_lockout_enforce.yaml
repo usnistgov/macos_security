@@ -9,7 +9,7 @@ fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-    - CCE-93256-6
+    - N/A
   cci:
     - CCI-000044
   800-53r5:
@@ -18,7 +18,7 @@ references:
     - 'FMT_SMF_EXT.1.1 #2c'
     - 'FIA_AFL_EXT.1.5'
   disa_stig:
-    - AIOS-16-006900
+    - N/A
   800-171r2:
     - N/A
   cis:
@@ -27,8 +27,8 @@ references:
       - 3.4.6 (level 1 - Institutionally-Owned Devices)
     controls v8:
       - 4.3
-ios:
-  - "16.0"
+iOS:
+  - "17.0"
 odv:
   hint: "Number of failed attempts."
   recommended: 6
@@ -45,7 +45,6 @@ tags:
   - cis_lvl1_enterprise
   - cis_lvl2_enterprise
   - cisv8
-  - ios_stig
 severity: "medium"
 supervised: false
 mobileconfig: true

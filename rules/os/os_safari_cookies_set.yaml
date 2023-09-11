@@ -7,14 +7,14 @@ fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-    - CCE-93244-2
+    - N/A
   cci: 
     - N/A
   800-53r5:
     - PM-20(01)
   sfr:
     - N/A
-  disa_stig: 
+  disa_stig:
     - N/A
   800-171r2:
     - N/A
@@ -24,8 +24,8 @@ references:
       - 3.2.2.2 (level 1 - Institutionally-Owned Devices)
     controls v8:
       - 9.4
-ios:
-  - "16.0"
+iOS:
+  - "17.0"
 tags:
   - ios
   - 800-53r5_privacy

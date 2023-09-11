@@ -8,7 +8,7 @@ check: ' '
 fix: This is implemented by a Configuration Profile
 references:
   cce:
-    - CCE-93205-3
+    - N/A
   cci:
     - CCI-000381
   800-53r5:
@@ -20,7 +20,7 @@ references:
   sfr:
     - 'FMT_SMF_EXT.1.1 #47'
   disa_stig:
-    - AIOS-16-011000
+    - N/A
   800-171r2:
     - N/A
   cis:
@@ -31,13 +31,12 @@ references:
       - 4.8
       - 15.3
 iOS:
-  - "16.0"
+  - "17.0"
 tags:
   - ios
   - 800-53r5_low
   - 800-53r5_moderate
   - 800-53r5_high
-  - ios_stig
 severity: medium
 supervised: false
 mobileconfig: true

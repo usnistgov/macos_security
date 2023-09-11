@@ -9,7 +9,7 @@ fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-    - CCE-93242-6
+    - N/A
   cci: 
     - N/A
   800-53r5:
@@ -29,7 +29,7 @@ references:
     controls v8:
       - 4.8
 iOS:
-  - "16.0"
+  - "17.0"
 tags:
   - ios
   - 800-53r5_low

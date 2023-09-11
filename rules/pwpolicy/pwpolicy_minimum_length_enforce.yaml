@@ -9,7 +9,7 @@ fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-    - CCE-93260-8
+    - N/A
   cci: 
     - CCI-000205
   800-53r5:
@@ -17,7 +17,7 @@ references:
   sfr:
     - 'FMT_SMF_EXT.1.1 #1a'
   disa_stig:
-    - AIOS-16-006500
+    - N/A
   800-171r2:
     - N/A
   cis:
@@ -26,8 +26,8 @@ references:
       - 3.4.3 (level 1 - Institutionally-Owned Devices)
     controls v8:
       - 5.2
-ios:
-  - "16.0"
+iOS:
+  - "17.0"
 odv:
   hint: "Minimum passcode length."
   recommended: 6
@@ -44,7 +44,6 @@ tags:
   - cis_lvl1_enterprise
   - cis_lvl2_enterprise
   - cisv8
-  - ios_stig
 severity: "medium"
 supervised: false
 mobileconfig: true
