@@ -9,6 +9,7 @@ references:
   cce:
     - CCE-93430-7
   cci: 
+    - CCI-000366
     - CCI-000370
     - CCI-000066
   800-53r5:
