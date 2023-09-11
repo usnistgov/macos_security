@@ -8,10 +8,9 @@ fix: |
 references:
   cce:
     - CCE-93430-7
+  cci: 
     - CCI-000370
     - CCI-000066
-  cci: 
-    - N/A
   800-53r5:
     - AC-17
     - AC-17(1)
