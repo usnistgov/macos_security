@@ -7,11 +7,11 @@ fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
+    - CCE-93462-0
+  cci: 
     - CCI-000366
     - CCI-000370
     - CCI-000066
-  cci: 
-    - N/A
   800-53r5:
     - AC-17
     - AC-17(1)
