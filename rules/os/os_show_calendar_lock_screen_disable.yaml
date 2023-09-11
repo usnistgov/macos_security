@@ -6,7 +6,7 @@ check: ' '
 fix: This is implemented by a Configuration Profile
 references:
   cce:
-    - N/A
+    - CCE-93448-9
   cci:
     - CCI-000060
   800-53r5:
