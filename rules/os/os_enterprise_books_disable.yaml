@@ -16,6 +16,7 @@ references:
     - 'FMT_MOF_EXT.1.2 #40'
   disa_stig:
     - AIOS-16-003700
+    - AIOS-16-703700
   800-171r2:
     - N/A
   cis:
@@ -28,6 +29,7 @@ iOS:
 tags:
   - ios
   - ios_stig
+  - ios_stig_byoad
 severity: "medium"
 supervised: false
 mobileconfig: true
