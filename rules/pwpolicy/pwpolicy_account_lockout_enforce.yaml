@@ -19,6 +19,7 @@ references:
     - 'FIA_AFL_EXT.1.5'
   disa_stig:
     - AIOS-16-006900
+    - AIOS-16-706900
   800-171r2:
     - N/A
   cis:
@@ -35,6 +36,7 @@ odv:
   cis_lvl1: 6
   cis_lvl2: 6
   ios_stig: 10
+  ios_stig_byoad: 10
 tags:
   - ios
   - 800-53r5_low
@@ -46,6 +48,7 @@ tags:
   - cis_lvl2_enterprise
   - cisv8
   - ios_stig
+  - ios_stig_byoad
 severity: "medium"
 supervised: false
 mobileconfig: true

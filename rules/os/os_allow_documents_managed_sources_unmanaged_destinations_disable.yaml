@@ -21,6 +21,7 @@ references:
     - 'FDP_ACF_EXT.1.2'
   disa_stig:
     - AIOS-16-009700
+    - AIOS-16-709700
   800-171r2:
     - N/A
   cis:
@@ -42,6 +43,7 @@ tags:
   - cis_lvl2_enterprise
   - cisv8
   - ios_stig
+  - ios_stig_byoad
 severity: "medium"
 supervised: false
 mobileconfig: true

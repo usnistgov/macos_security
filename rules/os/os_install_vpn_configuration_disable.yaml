@@ -22,6 +22,7 @@ references:
     - 'FMT_SMF_EXT.1.1 #3'
   disa_stig:
     - AIOS-16-001000
+    - AIOS-16-701000
   800-171r2:
     - N/A
   cis:
@@ -40,6 +41,7 @@ tags:
   - cis_lvl2_enterprise
   - cisv8
   - ios_stig
+  - ios_stig_byoad
 severity: "low"
 supervised: true
 mobileconfig: true

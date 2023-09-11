@@ -22,6 +22,7 @@ references:
     - 'FMT_SMF_EXT.1.1 #8b'
   disa_stig:
     - AIOS-16-007400
+    - AIOS-16-707400
   800-171r2:
     - N/A
   cis:
@@ -37,6 +38,7 @@ tags:
   - 800-53r5_moderate
   - 800-53r5_high
   - ios_stig
+  - ios_stig_byoad
   - manual
 severity: medium
 supervised: true
