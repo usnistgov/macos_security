@@ -20,7 +20,7 @@ references:
     - SC-07(10)
   sfr:
     - 'FMT_SMF_EXT.1.1 #47'
-  disa_stig: 
+  disa_stig:
     - AIOS-16-011000
   800-171r2:
     - N/A

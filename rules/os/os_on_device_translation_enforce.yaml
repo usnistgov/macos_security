@@ -29,7 +29,7 @@ references:
     controls v8:
       - N/A
 iOS:
-  - '16.0'
+  - "16.0"
 tags:
   - ios
   - ios_stig

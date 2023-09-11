@@ -26,7 +26,7 @@ references:
     controls v8:
       - N/A
 iOS:
-  - '16.0'
+  - "16.0"
 tags:
   - ios
   - 800-53r5_moderate

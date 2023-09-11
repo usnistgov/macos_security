@@ -19,7 +19,7 @@ references:
     - SC-41
   sfr:
     - 'FMT_SMF_EXT.1.1 #47'
-  disa_stig: 
+  disa_stig:
     - AIOS-16-012200
   800-171r2:
     - N/A

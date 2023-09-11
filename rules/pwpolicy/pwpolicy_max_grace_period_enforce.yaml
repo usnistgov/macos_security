@@ -15,7 +15,7 @@ references:
     - IA-11
   sfr:
     - 'FMT_SMF_EXT.1.1 #2a'
-  disa_stig: 
+  disa_stig:
     - AIOS-16-006700
   800-171r2:
     - N/A

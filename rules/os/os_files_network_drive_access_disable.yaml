@@ -16,7 +16,7 @@ references:
     - AC-20(2)
   sfr:
     - 'FMT_SMF_EXT.1.1 #47'
-  disa_stig: 
+  disa_stig:
     - AIOS-16-014300
   800-171r2:
     - N/A
