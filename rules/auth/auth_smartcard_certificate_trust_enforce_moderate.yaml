@@ -19,7 +19,7 @@ fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-    - N/A
+    - CCE-92737-6
   cci:
     - CCI-000186
     - CCI-001953

@@ -21,7 +21,7 @@ fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-    - N/A
+    - CCE-92738-4
   cci:
     - CCI-000187
     - CCI-000767
