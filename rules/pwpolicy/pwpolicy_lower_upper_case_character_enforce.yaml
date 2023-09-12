@@ -48,7 +48,7 @@ references:
 macOS:
   - '14.0'
 odv:
-  hint: Number of lowercase characters.
+  hint: Number of lowercase and uppercase characters.
   recommended: 1
   cis_lvl2: 1
 tags:
