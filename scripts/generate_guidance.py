@@ -1583,7 +1583,7 @@ def parse_cis_references(reference):
             string += "!CIS " + str(item).title() + "\n!\n"
             string += "* "
             for i in reference[item]:
-                string += str(i) + ", "
+                string += str(i) + "\n * "
             string = string[:-2] + "\n"
         else:
             string += "!" + str(item) + "!* " + str(reference[item]) + "\n"
