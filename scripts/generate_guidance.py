@@ -727,8 +727,11 @@ compliance_count(){{
         if [[ $finding == "false" ]];then
             compliant=$((compliant+1))
         elif [[ $finding == "true" ]];then
-            is_exempt=$(/usr/libexec/PlistBuddy -c "Print $rule::exempt" $audit_plist 2>/dev/null)
-            if [[ $is_exempt == "true" ]]; then
+            is_exempt=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.{baseline_name}.audit').objectForKey("$rule"))["exempt"]
+EOS
+)
+            if [[ $is_exempt == "1" ]]; then
                 exempt_count=$((exempt_count+1))
                 non_compliant=$((non_compliant+1))
             else    
