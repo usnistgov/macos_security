@@ -1,4 +1,5 @@
 os: "11.0"
+platform: macOS
 version: "Big Sur Guidance, Revision 7.0"
 cpe: o:apple:macos:11.0
 date: "2023-06-26"
