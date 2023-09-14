@@ -65,6 +65,7 @@ payloads_types:
   - com.apple.ironwood.support
   - com.apple.jabber.account
   - com.apple.ldap.account
+  - com.apple.locationmenu
   - com.apple.logic10
   - com.apple.loginitems.managed
   - com.apple.loginwindow
