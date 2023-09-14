@@ -1,11 +1,11 @@
 id: audit_flags_fm_configure
 title: "Configure System to Audit All Changes of Object Attributes"
 discussion: |
-  The audit system _MUST_ be configured to record enforcement actions of attempts to modify file attributes (fm). 
+  The audit system _MUST_ be configured to record enforcement actions of attempts to modify file attributes (fm).
 
   Enforcement actions are the methods or mechanisms used to prevent unauthorized changes to configuration settings. One common and effective enforcement action method is using access restrictions (i.e., modifications to a file by applying file permissions).
 
-  This configuration ensures that audit lists include events in which enforcement actions attempts to modify a file. 
+  This configuration ensures that audit lists include events in which enforcement actions attempts to modify a file.
 
   Without auditing the enforcement of access restrictions, it is difficult to identify attempted attacks, as there is no audit trail available for forensic investigation.
 check: |

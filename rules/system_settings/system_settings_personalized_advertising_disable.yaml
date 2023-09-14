@@ -3,7 +3,7 @@ title: "Disable Personalized Advertising"
 discussion: |
   Ad tracking and targeted ads _MUST_ be disabled.
 
-  The information system _MUST_ be configured to provide only essential capabilities. Disabling ad tracking ensures that applications and advertisers are unable to track users' interests and deliver targeted advertisements.  
+  The information system _MUST_ be configured to provide only essential capabilities. Disabling ad tracking ensures that applications and advertisers are unable to track users' interests and deliver targeted advertisements.
 check: |
   /usr/bin/osascript -l JavaScript << EOS
   $.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess')\
@@ -16,14 +16,14 @@ fix: |
 references:
   cce:
     - CCE-92979-4
-  cci: 
+  cci:
     - N/A
   800-53r5:
     - AC-20
     - CM-7
     - CM-7(1)
-    - SC-7(10)    
-  800-53r4: 
+    - SC-7(10)
+  800-53r4:
     - AC-20
     - CM-7
     - CM-7(1)

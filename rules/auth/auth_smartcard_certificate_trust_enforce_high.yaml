@@ -1,8 +1,8 @@
 id: auth_smartcard_certificate_trust_enforce_high
 title: "Set Smartcard Certificate Trust to High"
 discussion: |
-  The macOS system _MUST_ be configured to block access to users who are no longer authorized (i.e., users with revoked certificates).  
-  
+  The macOS system _MUST_ be configured to block access to users who are no longer authorized (i.e., users with revoked certificates).
+
   To prevent the use of untrusted certificates, the certificates on a smartcard card _MUST_ meet the following criteria: its issuer has a system-trusted certificate, the certificate is not expired, its "valid-after" date is in the past, and it passes Certificate Revocation List (CRL) and Online Certificate Status Protocol (OCSP) checking.
 
   By setting the smartcard certificate trust level to high, the system will execute a hard revocation, i.e., a network connection is required. A verified positive response from the OSCP/CRL server is required for authentication to succeed.
@@ -20,12 +20,12 @@ fix: |
 references:
   cce:
     - CCE-92736-8
-  cci: 
+  cci:
     - N/A
   800-53r5:
     - IA-5(2)
     - SC-17
-  800-53r4: 
+  800-53r4:
     - IA-2(12)
     - IA-5(2)
   srg:

@@ -16,17 +16,17 @@ fix: |
 references:
   cce:
     - CCE-93000-8
-  cci: 
+  cci:
     - CCI-001891
     - CCI-002046
   800-53r5:
     - AU-12(1)
     - SC-45(1)
-  800-53r4: 
+  800-53r4:
     - AU-8(1)
   srg:
     - SRG-OS-000355-GPOS-00143
-    - SRG-OS-000356-GPOS-00144 
+    - SRG-OS-000356-GPOS-00144
   disa_stig:
     - N/A
   800-171r2:

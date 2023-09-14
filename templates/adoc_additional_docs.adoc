@@ -36,7 +36,7 @@ ASSOCIATED DOCUMENTS
 .Cybersecurity Maturity Model Certification (CMMC)
 |===
 |Document Number or Descriptor
-|Document Title 
+|Document Title
 |link:https://dodcio.defense.gov/Portals/0/Documents/CMMC/ModelOverview_V2.0_FINAL2_20211202_508.pdf[CMMC Model Overview v2.0]|_Cybersecurity Maturity Model Certification (CMMC) Model Overview v2.0_
 |===
 
@@ -44,7 +44,7 @@ ASSOCIATED DOCUMENTS
 .Committee on National Security Systems (CNSS)
 |===
 |Document Number or Descriptor
-|Document Title 
+|Document Title
 |link:https://www.cnss.gov/CNSS/issuances/Instructions.cfm[CNSSI No. 1253]|_Security Categorization and Control Selection for National Security Systems_
 |===
 

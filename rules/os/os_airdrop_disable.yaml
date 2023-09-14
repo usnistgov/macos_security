@@ -3,7 +3,7 @@ title: "Disable AirDrop"
 discussion:
   AirDrop _MUST_ be disabled to prevent file transfers to or from unauthorized devices.
 
-  AirDrop allows users to share and receive files from other nearby Apple devices. 
+  AirDrop allows users to share and receive files from other nearby Apple devices.
 check: |
   /usr/bin/osascript -l JavaScript << EOS
   $.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess')\

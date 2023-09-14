@@ -15,7 +15,7 @@ references:
   cce:
     - CCE-92777-2
   cci:
-    - N/A   
+    - N/A
   800-53r5:
     - CM-5
   800-171r2:
@@ -30,8 +30,8 @@ references:
 macOS:
   - "14.0"
 tags:
-  - 800-53r5_low 
-  - 800-53r5_moderate 
+  - 800-53r5_low
+  - 800-53r5_moderate
   - 800-53r5_high
   - 800-171
   - cnssi-1253_moderate

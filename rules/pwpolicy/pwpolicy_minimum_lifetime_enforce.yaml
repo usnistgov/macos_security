@@ -6,15 +6,15 @@ discussion: |
   This rule discourages users from cycling through their previous passwords to get back to a preferred one.
 
   NOTE: The guidance for password based authentication in NIST 800-53 (Rev 5) and NIST 800-63B state that complexity rules should be organizationally defined. The values defined are based off of common complexity values. But your organization may define its own password complexity rules.
-check: | 
+check: |
   /usr/bin/pwpolicy -getaccountpolicies 2> /dev/null | /usr/bin/tail +2 | /usr/bin/xmllint --xpath '//dict/key[text()="policyAttributeMinimumLifetimeHours"]/following-sibling::integer[1]/text()' - | /usr/bin/awk '{ if ($1 >= $ODV ) {print "yes"} else {print "no"}}'
 result:
   string: "yes"
 fix: |
   This setting may be enforced using local policy or by a directory service.
-  
+
   To set local policy to require a minimum password lifetime, edit the current password policy to contain the following <dict> within the "policyCategoryPasswordContent":
-  
+
   [source,xml]
   ----
   <dict>
@@ -30,7 +30,7 @@ fix: |
   </dict>
   ----
   After saving the file and exiting to the command prompt, run the following command to load the new policy file, substituting the path to the file in place of "$pwpolicy_file".
-  
+
   [source,bash]
   ----
   /usr/bin/pwpolicy setaccountpolicies $pwpolicy_file
@@ -39,11 +39,11 @@ fix: |
 references:
   cce:
     - CCE-92937-2
-  cci: 
+  cci:
     - N/A
-  800-53r5: 
+  800-53r5:
     - IA-5
-  800-53r4: 
+  800-53r4:
     - IA-5(1)
   disa_stig:
     - N/A

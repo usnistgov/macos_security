@@ -359,7 +359,7 @@ def concatenate_payload_settings(settings):
 def generate_profiles(baseline_name, build_path, parent_dir, baseline_yaml, signing, hash=''):
     """Generate the configuration profiles for the rules in the provided baseline YAML file
     """
-    
+
     # import profile_manifests.plist
     manifests_file = os.path.join(
         parent_dir, 'includes', 'supported_payloads.yaml')
@@ -486,7 +486,7 @@ def generate_profiles(baseline_name, build_path, parent_dir, baseline_yaml, sign
         created = date.today()
         description = "Created: {}\nConfiguration settings for the {} preference domain.".format(created,
             payload)
-        
+
         organization = "macOS Security Compliance Project"
         displayname = f"[{baseline_name}] {payload} settings"
 
@@ -852,7 +852,7 @@ fi
                 nist_80053r5 = 'N/A'
             else:
                 nist_80053r5 = rule_yaml['references']['800-53r5']
-            
+
             cis_ref = ['cis', 'cis_lvl1', 'cis_lvl2', 'cisv8']
 
             if reference == "default":
@@ -1155,7 +1155,7 @@ def get_rule_yaml(rule_file, baseline_yaml, custom=False,):
     resulting_yaml = {}
     names = [os.path.basename(x) for x in glob.glob('../custom/rules/**/*.yaml', recursive=True)]
     file_name = os.path.basename(rule_file)
-    
+
     # get parent values
     try:
         parent_values = baseline_yaml['parent_values']
@@ -1370,7 +1370,7 @@ def generate_xls(baseline_name, build_path, baseline_yaml):
                     cis = cis.replace(", ", "\n")
                     sheet1.write(counter, 13, cis, topWrap)
                     sheet1.col(13).width = 500 * 15
-        
+
         cmmc_refs = (str(rule.rule_cmmc)).strip('[]\'')
         cmmc_refs = cmmc_refs.replace(", ", "\n").replace("\'", "")
 
@@ -1621,7 +1621,7 @@ def main():
 
         # convert logo to base64 for inline processing
         b64logo = base64.b64encode(open(pdf_logo_path, "rb").read())
-        
+
 
         build_path = os.path.join(parent_dir, 'build', f'{baseline_name}')
         if not (os.path.isdir(build_path)):
@@ -1769,8 +1769,8 @@ def main():
     else:
         adoc_html_subtitle=baseline_yaml['title'].split(':')[1]
         adoc_document_subtitle2 = ':document-subtitle2:'
-    
-    # Create header    
+
+    # Create header
     header_adoc = adoc_header_template.substitute(
         description=baseline_yaml['description'],
         html_header_title=baseline_yaml['title'],

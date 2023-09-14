@@ -4,8 +4,8 @@ discussion: |
   The macOS should be configured to automatically notify system administrators and Information System Security Officers (ISSOs) when accounts are removed.
 
   When operating system accounts are disabled, user accessibility is affected. Accounts are utilized for identifying individual operating system users or for identifying the operating system processes themselves. To detect and respond to events that affect user accessibility and system processing, operating systems should audit account removal actions and, as required, notify system administrators and ISSOs so they can investigate the event. Such a capability greatly reduces the risk that operating system accessibility will be negatively affected for extended periods of time and also provides logging that can be used for forensic purposes.
-  
-  To enable notifications and audit logging of removed accounts, many operating systems can be integrated with enterprise-level auditing mechanisms that meet or exceed this requirement. 
+
+  To enable notifications and audit logging of removed accounts, many operating systems can be integrated with enterprise-level auditing mechanisms that meet or exceed this requirement.
 check: |
   The technology does not support this requirement. This is an applicable-does not meet finding.
 fix: |

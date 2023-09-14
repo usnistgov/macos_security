@@ -1,7 +1,7 @@
 id: icloud_addressbook_disable
 title: "Disable iCloud Address Book"
 discussion: |
-  The macOS built-in Contacts.app connection to Apple's iCloud service _MUST_ be disabled. 
+  The macOS built-in Contacts.app connection to Apple's iCloud service _MUST_ be disabled.
 
   Apple's iCloud service does not provide an organization with enough control over the storage and access of data, and, therefore, automated contact synchronization _MUST_ be controlled by an organization approved service.
 check: |

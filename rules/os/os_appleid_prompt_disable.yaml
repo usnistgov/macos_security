@@ -2,7 +2,7 @@ id: os_appleid_prompt_disable
 title: "Disable Apple ID Setup during Setup Assistant"
 discussion: |
   The prompt for Apple ID setup during Setup Assistant _MUST_ be disabled.
- 
+
   macOS will automatically prompt new users to set up an Apple ID while they are going through Setup Assistant if this is not disabled, misleading new users to think they need to create Apple ID accounts upon their first login.
 check: |
   /usr/bin/osascript -l JavaScript << EOS

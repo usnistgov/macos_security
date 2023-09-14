@@ -14,11 +14,11 @@ fix: |
 references:
   cce:
     - CCE-92796-2
-  cci: 
+  cci:
     - N/A
   800-53r5:
     - CM-5
-  800-53r4: 
+  800-53r4:
     - CM-5
     - SI-3
   srg:

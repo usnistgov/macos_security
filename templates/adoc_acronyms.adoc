@@ -5,7 +5,7 @@
 |AES|Advanced Encryption Standard
 |ABM|Apple Business Manager
 |AFP|Apple Filing Protocol
-|ALF|Application Layer Firewall 
+|ALF|Application Layer Firewall
 |AO|Authorizing Official
 |API|Application Programming Interface
 |ARD|Apple Remote Desktop

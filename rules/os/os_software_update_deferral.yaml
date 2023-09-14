@@ -41,7 +41,7 @@ references:
       - 7.4
 macOS:
   - "14.0"
-odv: 
+odv:
   hint: "Number of days."
   recommended: 30
   cis_lvl1: 30

@@ -2,14 +2,14 @@ id: pwpolicy_lower_upper_case_character_enforce
 title: "Require Passwords Contain a Minimum of $ODV Lowercase Character and $ODV Uppercase Character"
 discussion: |
   The macOS _MUST_ be configured to require at least $ODV lower-case character and $ODV upper-case character be used when a password is created.
-  
-  This rule enforces password complexity by requiring users to set passwords that are less vulnerable to malicious users. 
+
+  This rule enforces password complexity by requiring users to set passwords that are less vulnerable to malicious users.
 
   NOTE: The guidance for password based authentication in NIST 800-53 (Rev 5) and NIST 800-63B state that complexity rules should be organizationally defined. The values defined are based off of common complexity values. But your organization may define its own password complexity rules.
 
   NOTE: The configuration profile generated must be installed from an MDM server.
 check: |
-  /usr/bin/pwpolicy -getaccountpolicies 2> /dev/null | /usr/bin/tail +2 | /usr/bin/xmllint --xpath 'boolean(//*[contains(text(),"policyAttributePassword matches '\''.*[A-Z]{$ODV,}[a-z]{$ODV,}.*'\''")])' -  
+  /usr/bin/pwpolicy -getaccountpolicies 2> /dev/null | /usr/bin/tail +2 | /usr/bin/xmllint --xpath 'boolean(//*[contains(text(),"policyAttributePassword matches '\''.*[A-Z]{$ODV,}[a-z]{$ODV,}.*'\''")])' -
 result:
   string: "true"
 fix: |
@@ -17,11 +17,11 @@ fix: |
 references:
   cce:
     - CCE-92934-9
-  cci: 
+  cci:
     - N/A
   800-53r5:
     - IA-5(1)
-  800-53r4: 
+  800-53r4:
     - IA-5
     - IA-5(1)
   disa_stig:

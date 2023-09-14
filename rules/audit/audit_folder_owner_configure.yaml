@@ -1,5 +1,5 @@
 id: audit_folder_owner_configure
-title: "Configure Audit Log Folders to be Owned by Root" 
+title: "Configure Audit Log Folders to be Owned by Root"
 discussion: |
   Audit log folders _MUST_ be owned by root.
 

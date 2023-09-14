@@ -4,7 +4,7 @@ discussion: |
   /etc/security/audit_control _MUST_ not contain Access Control Lists (ACLs).
 check: |
   /bin/ls -le /etc/security/audit_control | /usr/bin/awk '{print $1}' | /usr/bin/grep -c ":"
-result: 
+result:
   integer: 0
 fix: |
   [source,bash]

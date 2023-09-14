@@ -1,10 +1,10 @@
 id: auth_smartcard_allow
 title: "Allow Smartcard Authentication"
 discussion: |
-  Smartcard authentication _MUST_ be allowed. 
+  Smartcard authentication _MUST_ be allowed.
 
   The use of smartcard credentials facilitates standardization and reduces the risk of unauthorized access.
-  
+
   When enabled, the smartcard can be used for login, authorization, and screen saver unlocking.
 check: |
   /usr/bin/osascript -l JavaScript << EOS
@@ -26,7 +26,7 @@ references:
     - IA-2(1)
     - IA-2(2)
     - IA-2(12)
-  800-53r4: 
+  800-53r4:
     - IA-2(12)
     - IA-5(11)
   srg:

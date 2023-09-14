@@ -14,15 +14,15 @@ fix: |
 references:
   cce:
     - CCE-92915-8
-  cci: 
-    - N/A    
+  cci:
+    - N/A
   800-53r5:
     - N/A
-  800-53r4: 
+  800-53r4:
     - N/A
   srg:
     - N/A
-  disa_stig: 
+  disa_stig:
     - N/A
   800-171r2:
     - N/A

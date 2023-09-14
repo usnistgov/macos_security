@@ -27,10 +27,10 @@ references:
   cce:
     - CCE-93004-0
   cci:
-    - N/A  
+    - N/A
   800-53r5:
     - MP-7
-    - SC-41 
+    - SC-41
   800-171r2:
     - N/A
   cis:

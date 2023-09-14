@@ -4,7 +4,7 @@ discussion: |
   The Find My service _MUST_ be disabled.
 
   A Mobile Device Management (MDM) solution _MUST_ be used to carry out remote locking and wiping instead of Apple's Find My service.
- 
+
   Apple's Find My service uses a personal AppleID for authentication. Organizations should rely on MDM solutions, which have much more secure authentication requirements, to perform remote lock and remote wipe.
 check: |
   /usr/bin/osascript -l JavaScript << EOS
@@ -29,13 +29,13 @@ fix: |
 references:
   cce:
     - CCE-92958-8
-  cci: 
+  cci:
     - N/A
   800-53r5:
     - AC-20
     - CM-7
     - CM-7(1)
-  800-53r4: 
+  800-53r4:
     - CM-7
     - CM-7(1)
     - AC-20
@@ -80,4 +80,4 @@ mobileconfig_info:
     allowFindMyFriends: false
   com.apple.icloud.managed:
     DisableFMMiCloudSetting: true
-  
+

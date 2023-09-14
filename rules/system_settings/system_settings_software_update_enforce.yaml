@@ -14,7 +14,7 @@ fix: |
 references:
   cce:
     - CCE-92992-7
-  cci: 
+  cci:
     - N/A
   800-53r5:
     - SI-2(5)

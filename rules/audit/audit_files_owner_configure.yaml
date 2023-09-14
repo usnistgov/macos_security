@@ -1,5 +1,5 @@
 id: audit_files_owner_configure
-title: "Configure Audit Log Files to be Owned by Root" 
+title: "Configure Audit Log Files to be Owned by Root"
 discussion: |
   Audit log files _MUST_ be owned by root.
 
@@ -7,7 +7,7 @@ discussion: |
 
   Audit logs contain sensitive data about the system and users. If log files are set to only be readable and writable by system administrators, the risk is mitigated.
 check: |
-  /bin/ls -n $(/usr/bin/grep '^dir' /etc/security/audit_control | /usr/bin/awk -F: '{print $2}') | /usr/bin/awk '{s+=$3} END {print s}'  
+  /bin/ls -n $(/usr/bin/grep '^dir' /etc/security/audit_control | /usr/bin/awk -F: '{print $2}') | /usr/bin/awk '{s+=$3} END {print s}'
 result:
   integer: 0
 fix: |
