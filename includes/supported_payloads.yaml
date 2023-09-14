@@ -1,4 +1,4 @@
-payloads_types: 
+payloads_types:
   - com.apple.ADCertificate.managed
   - com.apple.AIM.account
   - com.apple.AssetCache.managed

@@ -18,7 +18,7 @@ result:
 fix: "[source,bash]\n----\nauthDBs=(\"system.preferences\" \"system.preferences.energysaver\" \"system.preferences.network\" \"system.preferences.printing\" \"system.preferences.sharing\" \"system.preferences.softwareupdate\" \"system.preferences.startupdisk\" \"system.preferences.timemachine\")\n\nfor section in ${authDBs[@]}; do\n/usr/bin/security -q authorizationdb read \"$section\" > \"/tmp/$section.plist\"\nkey_value=$(/usr/libexec/PlistBuddy -c \"Print :shared\" \"/tmp/$section.plist\" 2>&1)\n\tif [[ \"$key_value\" == *\"Does Not Exist\"* ]]; then\n  \t\t/usr/libexec/PlistBuddy -c \"Add :shared bool false\" \"/tmp/$section.plist\"\n\telse\n  \t\t/usr/libexec/PlistBuddy -c \"Set :shared false\" \"/tmp/$section.plist\"\n\tfi\n  \t/usr/bin/security -q authorizationdb write \"$section\" < \"/tmp/$section.plist\"\ndone\n----\n"
 references:
   cce:
-    - N/A
+    - CCE-92996-8
   cci:
     - CCI-001958
   800-53r5:

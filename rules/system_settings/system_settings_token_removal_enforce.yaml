@@ -19,7 +19,7 @@ result:
 fix: This is implemented by a Configuration Profile.
 references:
   cce:
-    - N/A
+    - CCE-93001-6
   cci:
     - CCI-000058
   800-53r5:

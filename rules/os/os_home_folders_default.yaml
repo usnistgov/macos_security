@@ -33,7 +33,7 @@ fix: |-
   NOTE: Using the `/usr/sbin/diskutil resetUserPermissions` command will only reset the permissions on the default folder set. Other folders in the home directory will not be affected.
 references:
   cce:
-    - N/A
+    - CCE-92803-6
   cci:
     - N/A
   800-53r5:

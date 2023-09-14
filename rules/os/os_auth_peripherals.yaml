@@ -8,7 +8,7 @@ fix: |
   This requirement is a permanent finding and can be fixed by implementing a third party solution.
 references:
   cce:
-    - N/A
+    - CCE-92763-2
   cci:
     - N/A
   800-53r5:

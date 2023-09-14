@@ -17,7 +17,7 @@ fix: |
   ----
 references:
   cce:
-    - N/A
+    - CCE-92723-6
   cci:
     - CCI-000067
     - CCI-000172

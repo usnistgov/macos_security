@@ -324,7 +324,7 @@ profile:
       - pwpolicy_prevent_dictionary_words
       - system_settings_wifi_disable_when_connected_to_ethernet
   - section: "not_applicable"
-    rules: 
+    rules:
       - os_access_control_mobile_devices
       - os_identify_non-org_users
       - os_information_validation

@@ -359,7 +359,7 @@ def concatenate_payload_settings(settings):
 def generate_profiles(baseline_name, build_path, parent_dir, baseline_yaml, signing, hash=''):
     """Generate the configuration profiles for the rules in the provided baseline YAML file
     """
-    
+
     # import profile_manifests.plist
     manifests_file = os.path.join(
         parent_dir, 'includes', 'supported_payloads.yaml')
@@ -486,7 +486,7 @@ def generate_profiles(baseline_name, build_path, parent_dir, baseline_yaml, sign
         created = date.today()
         description = "Created: {}\nConfiguration settings for the {} preference domain.".format(created,
             payload)
-        
+
         organization = "macOS Security Compliance Project"
         displayname = f"[{baseline_name}] {payload} settings"
 
@@ -852,7 +852,7 @@ fi
                 nist_80053r5 = 'N/A'
             else:
                 nist_80053r5 = rule_yaml['references']['800-53r5']
-            
+
             cis_ref = ['cis', 'cis_lvl1', 'cis_lvl2', 'cisv8']
 
             if reference == "default":
@@ -1133,9 +1133,10 @@ def fill_in_odv(resulting_yaml, parent_values):
             if "$ODV" in resulting_yaml[field]:
                 resulting_yaml[field]=resulting_yaml[field].replace("$ODV", str(odv))
 
-        for result_value in resulting_yaml['result']:
-            if "$ODV" in str(resulting_yaml['result'][result_value]):
-                resulting_yaml['result'][result_value] = odv
+        if 'result' in resulting_yaml:
+            for result_value in resulting_yaml['result']:
+                if "$ODV" in str(resulting_yaml['result'][result_value]):
+                    resulting_yaml['result'][result_value] = odv
 
         if resulting_yaml['mobileconfig_info']:
             for mobileconfig_type in resulting_yaml['mobileconfig_info']:
@@ -1154,7 +1155,7 @@ def get_rule_yaml(rule_file, baseline_yaml, custom=False,):
     resulting_yaml = {}
     names = [os.path.basename(x) for x in glob.glob('../custom/rules/**/*.yaml', recursive=True)]
     file_name = os.path.basename(rule_file)
-    
+
     # get parent values
     try:
         parent_values = baseline_yaml['parent_values']
@@ -1369,7 +1370,7 @@ def generate_xls(baseline_name, build_path, baseline_yaml):
                     cis = cis.replace(", ", "\n")
                     sheet1.write(counter, 13, cis, topWrap)
                     sheet1.col(13).width = 500 * 15
-        
+
         cmmc_refs = (str(rule.rule_cmmc)).strip('[]\'')
         cmmc_refs = cmmc_refs.replace(", ", "\n").replace("\'", "")
 
@@ -1582,7 +1583,7 @@ def parse_cis_references(reference):
             string += "!CIS " + str(item).title() + "\n!\n"
             string += "* "
             for i in reference[item]:
-                string += str(i) + ", "
+                string += str(i) + "\n * "
             string = string[:-2] + "\n"
         else:
             string += "!" + str(item) + "!* " + str(reference[item]) + "\n"
@@ -1620,7 +1621,7 @@ def main():
 
         # convert logo to base64 for inline processing
         b64logo = base64.b64encode(open(pdf_logo_path, "rb").read())
-        
+
 
         build_path = os.path.join(parent_dir, 'build', f'{baseline_name}')
         if not (os.path.isdir(build_path)):
@@ -1655,7 +1656,8 @@ def main():
     with open(version_file) as r:
         version_yaml = yaml.load(r, Loader=yaml.SafeLoader)
 
-    adoc_templates = [ "adoc_rule",
+    adoc_templates = [ "adoc_rule_ios",
+                    "adoc_rule",
                     "adoc_supplemental",
                     "adoc_rule_no_setting",
                     "adoc_rule_custom_refs",
@@ -1690,6 +1692,9 @@ def main():
 
 
     # Setup AsciiDoc templates
+    with open(adoc_templates_dict['adoc_rule_ios']) as adoc_rule_ios_file:
+        adoc_rule_ios_template = Template(adoc_rule_ios_file.read())
+
     with open(adoc_templates_dict['adoc_rule']) as adoc_rule_file:
         adoc_rule_template = Template(adoc_rule_file.read())
 
@@ -1764,8 +1769,8 @@ def main():
     else:
         adoc_html_subtitle=baseline_yaml['title'].split(':')[1]
         adoc_document_subtitle2 = ':document-subtitle2:'
-    
-    # Create header    
+
+    # Create header
     header_adoc = adoc_header_template.substitute(
         description=baseline_yaml['description'],
         html_header_title=baseline_yaml['title'],
@@ -2013,23 +2018,42 @@ def main():
                     rule_srg=srg
                 )
             else:
-                rule_adoc = adoc_rule_template.substitute(
-                    rule_title=rule_yaml['title'].replace('|', '\|'),
-                    rule_id=rule_yaml['id'].replace('|', '\|'),
-                    rule_discussion=rule_yaml['discussion'].replace('|', '\|'),
-                    rule_check=rule_yaml['check'],  # .replace('|', '\|'),
-                    rule_fix=rulefix,
-                    rule_cci=cci,
-                    rule_80053r5=nist_controls,
-                    rule_800171=nist_800171,
-                    rule_disa_stig=disa_stig,
-                    rule_cis=cis,
-                    rule_cmmc=cmmc,
-                    rule_cce=cce,
-                    rule_tags=tags,
-                    rule_srg=srg,
-                    rule_result=result_value
-                )
+                if version_yaml['platform'] == "iOS/iPadOS":
+                    rule_adoc = adoc_rule_ios_template.substitute(
+                        rule_title=rule_yaml['title'].replace('|', '\|'),
+                        rule_id=rule_yaml['id'].replace('|', '\|'),
+                        rule_discussion=rule_yaml['discussion'].replace('|', '\|'),
+                        rule_check=rule_yaml['check'],  # .replace('|', '\|'),
+                        rule_fix=rulefix,
+                        rule_cci=cci,
+                        rule_80053r5=nist_controls,
+                        rule_800171=nist_800171,
+                        rule_disa_stig=disa_stig,
+                        rule_cis=cis,
+                        rule_cmmc=cmmc,
+                        rule_cce=cce,
+                        rule_tags=tags,
+                        rule_srg=srg,
+                        rule_result=result_value
+                    )
+                else:
+                    rule_adoc = adoc_rule_template.substitute(
+                        rule_title=rule_yaml['title'].replace('|', '\|'),
+                        rule_id=rule_yaml['id'].replace('|', '\|'),
+                        rule_discussion=rule_yaml['discussion'].replace('|', '\|'),
+                        rule_check=rule_yaml['check'],  # .replace('|', '\|'),
+                        rule_fix=rulefix,
+                        rule_cci=cci,
+                        rule_80053r5=nist_controls,
+                        rule_800171=nist_800171,
+                        rule_disa_stig=disa_stig,
+                        rule_cis=cis,
+                        rule_cmmc=cmmc,
+                        rule_cce=cce,
+                        rule_tags=tags,
+                        rule_srg=srg,
+                        rule_result=result_value
+                    )
 
             adoc_output_file.write(rule_adoc)
 

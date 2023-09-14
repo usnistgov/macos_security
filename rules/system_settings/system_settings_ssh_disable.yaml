@@ -15,7 +15,7 @@ fix: |
   NOTE: Systemsetup with -setremotelogin flag will fail unless you grant Full Disk Access to systemsetup or it's parent process. Requires supervision.
 references:
   cce:
-    - N/A
+    - CCE-92994-3
   cci:
     - N/A
   800-53r5:
