@@ -1,4 +1,5 @@
 os: "12.0"
+platform: macOS
 version: "Monterey Guidance, Revision 4.0"
 cpe: o:apple:macos:12.0
 date: "2023-06-26"
