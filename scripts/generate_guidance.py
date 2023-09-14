@@ -606,7 +606,7 @@ if [[ $EUID -ne 0 ]]; then
 fi
 
 ssh_key_check=0
-if /usr/sbin/sshd -T &> /dev/null; then
+if /usr/sbin/sshd -T &> /dev/null || /usr/sbin/sshd -G &>/dev/null; then
     ssh_key_check=0
 else
     /usr/bin/ssh-keygen -q -N "" -t rsa -b 4096 -f /etc/ssh/ssh_host_rsa_key
@@ -1133,9 +1133,10 @@ def fill_in_odv(resulting_yaml, parent_values):
             if "$ODV" in resulting_yaml[field]:
                 resulting_yaml[field]=resulting_yaml[field].replace("$ODV", str(odv))
 
-        for result_value in resulting_yaml['result']:
-            if "$ODV" in str(resulting_yaml['result'][result_value]):
-                resulting_yaml['result'][result_value] = odv
+        if 'result' in resulting_yaml:
+            for result_value in resulting_yaml['result']:
+                if "$ODV" in str(resulting_yaml['result'][result_value]):
+                    resulting_yaml['result'][result_value] = odv
 
         if resulting_yaml['mobileconfig_info']:
             for mobileconfig_type in resulting_yaml['mobileconfig_info']:
@@ -1582,7 +1583,7 @@ def parse_cis_references(reference):
             string += "!CIS " + str(item).title() + "\n!\n"
             string += "* "
             for i in reference[item]:
-                string += str(i) + ", "
+                string += str(i) + "\n * "
             string = string[:-2] + "\n"
         else:
             string += "!" + str(item) + "!* " + str(reference[item]) + "\n"
@@ -1655,7 +1656,8 @@ def main():
     with open(version_file) as r:
         version_yaml = yaml.load(r, Loader=yaml.SafeLoader)
 
-    adoc_templates = [ "adoc_rule",
+    adoc_templates = [ "adoc_rule_ios",
+                    "adoc_rule",
                     "adoc_supplemental",
                     "adoc_rule_no_setting",
                     "adoc_rule_custom_refs",
@@ -1690,6 +1692,9 @@ def main():
 
 
     # Setup AsciiDoc templates
+    with open(adoc_templates_dict['adoc_rule_ios']) as adoc_rule_ios_file:
+        adoc_rule_ios_template = Template(adoc_rule_ios_file.read())
+
     with open(adoc_templates_dict['adoc_rule']) as adoc_rule_file:
         adoc_rule_template = Template(adoc_rule_file.read())
 
@@ -2013,23 +2018,42 @@ def main():
                     rule_srg=srg
                 )
             else:
-                rule_adoc = adoc_rule_template.substitute(
-                    rule_title=rule_yaml['title'].replace('|', '\|'),
-                    rule_id=rule_yaml['id'].replace('|', '\|'),
-                    rule_discussion=rule_yaml['discussion'].replace('|', '\|'),
-                    rule_check=rule_yaml['check'],  # .replace('|', '\|'),
-                    rule_fix=rulefix,
-                    rule_cci=cci,
-                    rule_80053r5=nist_controls,
-                    rule_800171=nist_800171,
-                    rule_disa_stig=disa_stig,
-                    rule_cis=cis,
-                    rule_cmmc=cmmc,
-                    rule_cce=cce,
-                    rule_tags=tags,
-                    rule_srg=srg,
-                    rule_result=result_value
-                )
+                if version_yaml['platform'] == "iOS/iPadOS":
+                    rule_adoc = adoc_rule_ios_template.substitute(
+                        rule_title=rule_yaml['title'].replace('|', '\|'),
+                        rule_id=rule_yaml['id'].replace('|', '\|'),
+                        rule_discussion=rule_yaml['discussion'].replace('|', '\|'),
+                        rule_check=rule_yaml['check'],  # .replace('|', '\|'),
+                        rule_fix=rulefix,
+                        rule_cci=cci,
+                        rule_80053r5=nist_controls,
+                        rule_800171=nist_800171,
+                        rule_disa_stig=disa_stig,
+                        rule_cis=cis,
+                        rule_cmmc=cmmc,
+                        rule_cce=cce,
+                        rule_tags=tags,
+                        rule_srg=srg,
+                        rule_result=result_value
+                    )
+                else:
+                    rule_adoc = adoc_rule_template.substitute(
+                        rule_title=rule_yaml['title'].replace('|', '\|'),
+                        rule_id=rule_yaml['id'].replace('|', '\|'),
+                        rule_discussion=rule_yaml['discussion'].replace('|', '\|'),
+                        rule_check=rule_yaml['check'],  # .replace('|', '\|'),
+                        rule_fix=rulefix,
+                        rule_cci=cci,
+                        rule_80053r5=nist_controls,
+                        rule_800171=nist_800171,
+                        rule_disa_stig=disa_stig,
+                        rule_cis=cis,
+                        rule_cmmc=cmmc,
+                        rule_cce=cce,
+                        rule_tags=tags,
+                        rule_srg=srg,
+                        rule_result=result_value
+                    )
 
             adoc_output_file.write(rule_adoc)
 
