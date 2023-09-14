@@ -1598,7 +1598,7 @@ def generate_scap(all_rules, all_baselines, args):
         </local_variable>'''.format(x,x+999)
                     x = x + 1
                     continue
-                if "sshd -T" in rule_yaml['check'] and "fips" in rule_yaml['check']:
+                if "sshd -T" in rule_yaml['check'] and "fips" in rule_yaml['check'] or "sshd -G" in rule_yaml['check'] and "fips" in rule_yaml['check']:
                     fipslist = rule_yaml['check'].split("\n")[0].split("(")[1].replace(")","").replace('" "',"\n").replace('"',"")
                     
                     
@@ -1649,7 +1649,7 @@ def generate_scap(all_rules, all_baselines, args):
                     x = x + 1
                     
                     continue
-                if "sshd -T" in rule_yaml['check']:
+                if "sshd -T" in rule_yaml['check'] or "sshd -G" in rule_yaml['check']:
                     oval_definition = oval_definition + '''
                         <definition id="oval:mscp:def:{}" version="1" class="compliance"> 
                     <metadata> 
