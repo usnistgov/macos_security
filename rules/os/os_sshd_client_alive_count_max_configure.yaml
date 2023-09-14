@@ -53,7 +53,7 @@ macOS:
 odv:
   hint: "Number of seconds."
   recommended: 0
-  stig: 0
+  stig: 1
 tags:
   - 800-53r5_moderate 
   - 800-53r5_high
