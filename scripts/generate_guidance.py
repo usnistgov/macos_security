@@ -606,7 +606,7 @@ if [[ $EUID -ne 0 ]]; then
 fi
 
 ssh_key_check=0
-if /usr/sbin/sshd -T &> /dev/null; then
+if /usr/sbin/sshd -T &> /dev/null || /usr/sbin/sshd -G &>/dev/null; then
     ssh_key_check=0
 else
     /usr/bin/ssh-keygen -q -N "" -t rsa -b 4096 -f /etc/ssh/ssh_host_rsa_key
@@ -1583,7 +1583,7 @@ def parse_cis_references(reference):
             string += "!CIS " + str(item).title() + "\n!\n"
             string += "* "
             for i in reference[item]:
-                string += str(i) + ", "
+                string += str(i) + "\n * "
             string = string[:-2] + "\n"
         else:
             string += "!" + str(item) + "!* " + str(reference[item]) + "\n"
