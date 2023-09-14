@@ -9,17 +9,6 @@ discussion: |
   |STIG ID
   |Notes
 
-  |APPL-13-000011| DISA STIG requires SSHD must be disabled due to the implementation of OpenSSH that is included with macOS does not use a FIPS 140-2 validated cryptographic module.
-
-  Apple has provided methods to configure SSHD for FIPS compliance, the man page `apple_ssh_and_fips` and https://support.apple.com/guide/certifications/macos-security-certifications-apc35eb3dc4fa/web[macOS security certifications] both provide information on configuring SSHD for FIPS compliance. +
-  |APPL-13-000054| DISA STIG requires the following setting within SSHD for FIPS compliance `ciphers aes256-ctr,aes192-ctr,aes128-ctr`. 
-
-  In order to configure SSHD to meet FIPS compliance, the man page from Apple `apple_ssh_and_fips` recommends using the setting `ciphers \aes128-gcm@openssh.com`. +
-  |APPL-13-000055| DISA STIG requires the following setting within SSHD for FIPS compliance `macs hmac-sha2-512,hmac-sha2-256`. 
-
-  In order to configure SSHD to meet FIPS compliance, the man page from Apple `apple_ssh_and_fips` recommends using the setting `macs hmac-sha2-nistp256` +
-  |APPL-13-000056| DISA STIG requires the following setting within SSHD for FIPS compliance `kexalgorithms diffie-hellman-group-exchange-sha256`. 
-
   In order to configure SSHD to meet FIPS compliance, the man page from Apple `apple_ssh_and_fips` recommends using the setting `kexalgorithms ecdh-sha2-nistp256`. +
   |APPL-13-000014| DISA STIG's expected results are `Network Time:On`.
 

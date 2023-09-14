@@ -47,7 +47,12 @@ references:
   cce:
     - CCE-91890-4
   cci: 
-    - N/A
+    - CCI-000068
+    - CCI-000803
+    - CCI-000877
+    - CCI-001453
+    - CCI-002890
+    - CCI-003123
   800-53r5:
     - AC-17(2)
     - IA-7
@@ -60,9 +65,16 @@ references:
     - SC-13
     - MA-4(6)
   srg:
-    - N/A
+    - SRG-OS-000033-GPOS-00014
+    - SRG-OS-000120-GPOS-00061
+    - SRG-OS-000125-GPOS-00065
+    - SRG-OS-000250-GPOS-00093
+    - SRG-OS-000393-GPOS-00173
+    - SRG-OS-000394-GPOS-00174
   disa_stig:
-    - N/A
+    - APPL-13-000054
+    - APPL-13-000055
+    - APPL-13-000056
   800-171r2:
     - 3.1.13
     - 3.13.8
@@ -86,6 +98,7 @@ tags:
   - cnssi-1253_low
   - cnssi-1253_high
   - cmmc_lvl2
+  - stig
 severity: "medium"
 mobileconfig: false
 mobileconfig_info:
