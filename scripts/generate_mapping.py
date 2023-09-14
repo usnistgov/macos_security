@@ -370,15 +370,15 @@ tags:
                     continue
     
     
-    full_baseline = '''title: "macOS {2} ({3}): Security Configuration - {0}"
+    full_baseline = '''title: "{4} {2} ({3}): Security Configuration - {0}"
 description: |
-  This guide describes the actions to take when securing a macOS {2} system against the {1}.
+  This guide describes the actions to take when securing a {4} {2} system against the {1}.
 authors: |
   |===
   |Name|Organization
   |===
 parent_values: recommended  
-profile:'''.format(other_header,other_header,version_yaml['os'],version_yaml['version'].split(" ")[0])
+profile:'''.format(other_header,other_header,version_yaml['os'],version_yaml['version'].split(" ")[0],version_yaml['platform'])
     
     if len(audit) != 0:
         
@@ -431,13 +431,22 @@ profile:'''.format(other_header,other_header,version_yaml['os'],version_yaml['ve
 
     if len(os_section) != 0:
         full_baseline = full_baseline + '''
+  - section: "ios"
+    rules:'''
+        os_section.sort()
+        for rule in os_section:
+            full_baseline = full_baseline + '''
+      - {}'''.format(rule)
+    
+    if len(os_section) != 0 and version_yaml['platform'] == "macOS":
+        full_baseline = full_baseline + '''
   - section: "macOS"
     rules:'''
         os_section.sort()
         for rule in os_section:
             full_baseline = full_baseline + '''
       - {}'''.format(rule)
-
+            
     if len(pwpolicy) != 0:
         full_baseline = full_baseline + '''
   - section: "PasswordPolicy"
@@ -474,13 +483,15 @@ profile:'''.format(other_header,other_header,version_yaml['os'],version_yaml['ve
             full_baseline = full_baseline + '''
       - {}'''.format(rule)
 
+    listofsupplementals = str()
+    for supp_rule in glob.glob('../rules/supplemental/*.yaml',recursive=True):
+        listofsupplementals = listofsupplementals + '''- {}
+      '''.format(os.path.basename(supp_rule).split(".")[0])
     full_baseline = full_baseline + '''
   - section: "Supplemental"
     rules:
-      - supplemental_firewall_pf
-      - supplemental_password_policy
-      - supplemental_smartcard
-    '''
+      {}
+    '''.format(listofsupplementals)
 
     
 
@@ -488,9 +499,9 @@ profile:'''.format(other_header,other_header,version_yaml['os'],version_yaml['ve
         if os.path.isdir("../build/" + other_header.lower() + "/baseline/") == False:
             os.mkdir("../build/" + other_header.lower() + "/baseline")
 
-        with open("../build/" + other_header.lower() + "/baseline/" + other_header.lower() + ".yaml",'w') as fw:
+        with open("../build/" + other_header.lower() + "/baseline/" + other_header.lower().replace(" ","_") + ".yaml",'w') as fw:
             fw.write(full_baseline)
-            print(other_header.lower() + ".yaml baseline file created in build/" + other_header + "/baseline/")
+            print(other_header.lower().replace(" ","_") + ".yaml baseline file created in build/" + other_header + "/baseline/")
                     
         print("Move all of the folders in rules into the custom folder.")
     except:
