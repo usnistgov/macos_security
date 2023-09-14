@@ -14,8 +14,57 @@ from datetime import datetime
 import shutil
 from time import sleep
 import argparse
+from xml.sax.saxutils import escape
 
 warnings.filterwarnings("ignore", category=DeprecationWarning) 
+
+def format_mobileconfig_fix(mobileconfig):
+    """Takes a list of domains and setting from a mobileconfig, and reformats it for the output of the fix section of the guide.
+    """
+    rulefix = ""
+    for domain, settings in mobileconfig.items():
+        if domain == "com.apple.ManagedClient.preferences":
+            rulefix = rulefix + \
+                (f"NOTE: The following settings are in the ({domain}) payload. This payload requires the additional settings to be sub-payloads within, containing their defined payload types.\n\n")
+            rulefix = rulefix + format_mobileconfig_fix(settings)
+        else:
+            rulefix = rulefix + (
+                f"Create a configuration profile containing the following keys in the ({domain}) payload type:\n\n")
+            rulefix = rulefix + "[source,xml]\n----\n"
+            for item in settings.items():
+                rulefix = rulefix + (f"<key>{item[0]}</key>\n")
+
+                if type(item[1]) == bool:
+                    rulefix = rulefix + \
+                        (f"<{str(item[1]).lower()}/>\n")
+                elif type(item[1]) == list:
+                    rulefix = rulefix + "<array>\n"
+                    for setting in item[1]:
+                        rulefix = rulefix + \
+                            (f"    <string>{setting}</string>\n")
+                    rulefix = rulefix + "</array>\n"
+                elif type(item[1]) == int:
+                    rulefix = rulefix + \
+                        (f"<integer>{item[1]}</integer>\n")
+                elif type(item[1]) == str:
+                    rulefix = rulefix + \
+                        (f"<string>{item[1]}</string>\n")
+                elif type(item[1]) == dict:
+                    rulefix = rulefix + "<dict>\n"
+                    for k,v in item[1].items():
+                        rulefix = rulefix + \
+                                (f"    <key>{k}</key>\n")
+                        rulefix = rulefix + "    <array>\n"
+                        for setting in v:
+                            rulefix = rulefix + \
+                                (f"        <string>{setting}</string>\n")
+                        rulefix = rulefix + "    </array>\n"
+                    rulefix = rulefix + "</dict>\n"
+
+            rulefix = rulefix + "----\n\n"
+
+    return rulefix
+
 def replace_ocil(xccdf, x):
     regex = r'''([\r\n].*?)(?:=?\r|\n)(.*?(?:def:{}\").*)'''.format(x)
     substr = '''<check system="http://scap.nist.gov/schema/ocil/2"><check-content-ref href="ocil.xml"/>'''
@@ -39,28 +88,37 @@ def create_args():
     return parser.parse_args()
 
 def generate_scap(all_rules, all_baselines, args):
-
+    
     export_as = ""
 
+    version_file = "../VERSION.yaml"
+    with open(version_file) as r:
+        version_yaml = yaml.load(r, Loader=yaml.SafeLoader)
+        
     if args.xccdf:
         export_as = "xccdf"
     
     if args.oval:
         export_as = "oval"
+        if "ios" in version_yaml['cpe']:
+            print("OVAL generation is not available on iOS")
+            exit()
+
 
     if args.oval == None and args.xccdf == None:
         export_as = "scap"
-    
-    version_file = "../VERSION.yaml"
-    with open(version_file) as r:
-        version_yaml = yaml.load(r, Loader=yaml.SafeLoader)
+        if "ios" in version_yaml['cpe']:
+            print("iOS will only export as XCCDF")
+            export_as = "xccdf"
 
     now = datetime.now()
     date_time_string = now.strftime("%Y-%m-%dT%H:%M:%S")
 
     filenameversion = version_yaml['version'].split(",")[1].replace(" ", "_")[1:]
     output = "../build/macOS_{0}_Security_Compliance_Benchmark-{1}".format(version_yaml['os'],filenameversion)
-
+    if "ios" in version_yaml['cpe']:
+        output = "../build/iOS_{0}_Security_Compliance_Benchmark-{1}".format(version_yaml['os'],filenameversion)
+        
     if export_as == "xccdf":
         output = output + "_xccdf.xml"
     
@@ -91,12 +149,15 @@ def generate_scap(all_rules, all_baselines, args):
         <oval:product_name xmlns:oval="http://oval.mitre.org/XMLSchema/oval-common-5">macOS Security Compliance Project</oval:product_name>
       </generator>'''.format(date_time_string)
 
+    ostype = "macOS"
+    if "ios" in version_yaml['cpe']:
+        ostype = "iOS/iPadOS"
     xccdfPrefix = '''<?xml version="1.0" encoding="UTF-8"?>
     <Benchmark xmlns="http://checklists.nist.gov/xccdf/1.2" id="xccdf_gov.nist.mscp.content_benchmark_macOS_{1}" style="SCAP_1.3" resolved="true" xml:lang="en">
       <status date="{3}">draft</status>
-      <title>macOS {1}: Security Configuration</title>
+      <title>{4} {1}: Security Configuration</title>
       <description>
-        macOS {1}: Security Configuration
+        {4} {1}: Security Configuration
       </description>
       
       
@@ -113,7 +174,7 @@ def generate_scap(all_rules, all_baselines, args):
         <contributor xmlns="http://purl.org/dc/elements/1.1/">Dan Brodjieski - National Aeronautics and Space Administration</contributor>
         <contributor xmlns="http://purl.org/dc/elements/1.1/">Allen Golbig - Jamf</contributor>
       </metadata>
-    '''.format(date_time_string, version_yaml['os'], version_yaml['version'],date_time_string.split("T")[0] + "Z")
+    '''.format(date_time_string, version_yaml['os'], version_yaml['version'],date_time_string.split("T")[0] + "Z", ostype)
 
     scapPrefix = '''<?xml version="1.0" encoding="UTF-8"?>
 <data-stream-collection xmlns="http://scap.nist.gov/schema/scap/source/1.2" id="scap_gov.nist.mscp.content_collection_macOS_{1}" schematron-version="1.3">
@@ -339,6 +400,9 @@ def generate_scap(all_rules, all_baselines, args):
                 cce = rule_yaml['references']['cce'][0]
 
             if export_as == "scap":
+                mobileconfig_info = ""
+                if rule_yaml['mobileconfig']:
+                    mobileconfig_info = escape(format_mobileconfig_fix(rule_yaml['mobileconfig_info']))
                 xccdf_rules = xccdf_rules + '''
             <Rule id="xccdf_gov.nist.mscp.content_rule_{0}" selected="false" role="full" severity="{1}" weight="1.0">
             <title>{2}</title>
@@ -351,9 +415,13 @@ def generate_scap(all_rules, all_baselines, args):
             <fixtext>{7}</fixtext>
             {8}
             </Rule>
-            '''.format(rule_yaml['id'] + "_" + odv_label, severity, rule_yaml['title'], rule_yaml['discussion'].replace("<","&lt;").replace(">","&gt;").replace("&","&amp;").rstrip(), rule_yaml['check'].replace("<","&lt;").replace(">","&gt;").replace("&","&amp;").rstrip(), result, cce,rule_yaml['fix'].replace("<","&lt;").replace(">","&gt;").replace("&","&amp;"), check_rule, references)
+            '''.format(rule_yaml['id'] + "_" + odv_label, severity, rule_yaml['title'], rule_yaml['discussion'].replace("<","&lt;").replace(">","&gt;").replace("&","&amp;").rstrip(), rule_yaml['check'].replace("<","&lt;").replace(">","&gt;").replace("&","&amp;").rstrip(), result, cce,rule_yaml['fix'].replace("<","&lt;").replace(">","&gt;").replace("&","&amp;")  + "\n" + mobileconfig_info, check_rule, references)
 
             if export_as == "xccdf":
+                mobileconfig_info = ""
+                if rule_yaml['mobileconfig']:
+                    mobileconfig_info = escape(format_mobileconfig_fix(rule_yaml['mobileconfig_info']))
+
                 xccdf_rules = xccdf_rules + '''
             <Rule id="xccdf_gov.nist.mscp.content_rule_{0}" selected="false" role="full" severity="{1}" weight="1.0">
             <title>{2}</title>
@@ -366,10 +434,11 @@ def generate_scap(all_rules, all_baselines, args):
             <fixtext>{7}</fixtext>
             
             </Rule>
-            '''.format(rule_yaml['id'] + "_" + odv_label, severity, rule_yaml['title'], rule_yaml['discussion'].replace("<","&lt;").replace(">","&gt;").replace("&","&amp;").rstrip(), rule_yaml['check'].replace("<","&lt;").replace(">","&gt;").replace("&","&amp;").rstrip(), result, cce,rule_yaml['fix'].replace("<","&lt;").replace(">","&gt;").replace("&","&amp;"), references)
+            '''.format(rule_yaml['id'] + "_" + odv_label, severity, rule_yaml['title'], rule_yaml['discussion'].replace("<","&lt;").replace(">","&gt;").replace("&","&amp;").rstrip(), rule_yaml['check'].replace("<","&lt;").replace(">","&gt;").replace("&","&amp;").rstrip(), result, cce,rule_yaml['fix'].replace("<","&lt;").replace(">","&gt;").replace("&","&amp;") + "\n" + mobileconfig_info, references)
+                continue
                 
 
-
+            
             if "inherent" in rule_yaml['tags'] or "n_a" in rule_yaml['tags'] or "permanent" in rule_yaml['tags']:
                 xccdf_rules = replace_ocil(xccdf_rules,x)
                 x += 1
@@ -1529,7 +1598,7 @@ def generate_scap(all_rules, all_baselines, args):
         </local_variable>'''.format(x,x+999)
                     x = x + 1
                     continue
-                if "sshd -T" in rule_yaml['check'] and "fips" in rule_yaml['check']:
+                if "sshd -T" in rule_yaml['check'] and "fips" in rule_yaml['check'] or "sshd -G" in rule_yaml['check'] and "fips" in rule_yaml['check']:
                     fipslist = rule_yaml['check'].split("\n")[0].split("(")[1].replace(")","").replace('" "',"\n").replace('"',"")
                     
                     
@@ -1580,7 +1649,7 @@ def generate_scap(all_rules, all_baselines, args):
                     x = x + 1
                     
                     continue
-                if "sshd -T" in rule_yaml['check']:
+                if "sshd -T" in rule_yaml['check'] or "sshd -G" in rule_yaml['check']:
                     oval_definition = oval_definition + '''
                         <definition id="oval:mscp:def:{}" version="1" class="compliance"> 
                     <metadata> 
