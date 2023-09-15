@@ -280,10 +280,10 @@ def generate_scap(all_rules, all_baselines, args):
                 
                 rule_yaml['fix'] = rule_yaml['fix'].replace("$ODV",odv_value)
                 
-        
-                for result_value in rule_yaml['result']:
-                    if "$ODV" == rule_yaml['result'][result_value]:
-                        rule_yaml['result'][result_value] = rule_yaml['result'][result_value].replace("$ODV",odv_value)
+                if "result" in rule_yaml:
+                    for result_value in rule_yaml['result']:
+                        if "$ODV" == rule_yaml['result'][result_value]:
+                            rule_yaml['result'][result_value] = rule_yaml['result'][result_value].replace("$ODV",odv_value)
                             
                 
                 if rule_yaml['mobileconfig_info']:
