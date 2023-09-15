@@ -1,7 +1,7 @@
-id: pwpolicy_lower_upper_case_character_enforce
-title: "Require Passwords Contain a Minimum of $ODV Lowercase Character and $ODV Uppercase Character"
+id: pwpolicy_custom_regex_enforce
+title: Require Passwords to match the complexity defined in $ODV
 discussion: |
-  The macOS _MUST_ be configured to require at least $ODV lower-case character and $ODV upper-case character be used when a password is created.
+  The macOS _MUST_ be configured to meet complexity requirements when a password is created.
 
   This rule enforces password complexity by requiring users to set passwords that are less vulnerable to malicious users.
 
@@ -9,9 +9,9 @@ discussion: |
 
   NOTE: The configuration profile generated must be installed from an MDM server.
 check: |
-  /usr/bin/pwpolicy -getaccountpolicies 2> /dev/null | /usr/bin/tail +2 | /usr/bin/xmllint --xpath 'boolean(//*[contains(text(),"policyAttributePassword matches '\''.*[A-Z]{$ODV,}[a-z]{$ODV,}.*'\''")])' -
+  /usr/bin/pwpolicy -getaccountpolicies 2> /dev/null | /usr/bin/tail +2 | /usr/bin/xmllint --xpath 'boolean(//*[contains(text(),"policyAttributePassword matches '\''$ODV'\''")])' 
 result:
-  string: "true"
+  string: 'true'
 fix: |
   This is implemented by a Configuration Profile.
 references:
@@ -27,7 +27,8 @@ references:
   disa_stig:
     - N/A
   srg:
-    - N/A
+    - SRG-OS-000070-GPOS-00038
+    - SRG-OS-000069-GPOS-00037
   800-171r2:
     - 3.5.1
     - 3.5.2
@@ -45,11 +46,11 @@ references:
     - IA.L2-3.5.8
     - IA.L2-3.5.9
 macOS:
-  - "14.0"
+  - '14.0'
 odv:
-  hint: "Number of lowercase characters."
-  recommended: 1
-  cis_lvl2: 1
+  hint: Custom regex (recommended is 1 upper and 1 lowercase)
+  recommended: .*[A-Z]{1,}[a-z]{1,}.*
+  cis_lvl2: .*[A-Z]{1,}[a-z]{1,}.*
 tags:
   - 800-171
   - 800-53r4_low
@@ -64,10 +65,11 @@ tags:
   - cnssi-1253_low
   - cnssi-1253_high
   - cmmc_lvl2
+  - newstig
 mobileconfig: true
 mobileconfig_info:
   com.apple.mobiledevice.passwordpolicy:
     customRegex:
-      passwordContentRegex: .*[A-Z]{$ODV,}[a-z]{$ODV,}.*
+      passwordContentRegex: $ODV
       passwordContentDescription:
-        default: "Password must include $ODV uppercase and $ODV lowercase character"
+        default: Password must match custom regex.
