@@ -31,8 +31,10 @@ ios:
 odv:
   hint: "Maximum Auto-Lock in Minutes."
   recommended: 2
-  cis_lvl1: 2
-  cis_lvl2: 2
+  cis_lvl1_byod: 2
+  cis_lvl2_byod: 2
+  cis_lvl1_enterprise: 2
+  cis_lvl2_enterprise: 2  
   ios_stig: 5
   ios_stig_byoad: 5
 tags:

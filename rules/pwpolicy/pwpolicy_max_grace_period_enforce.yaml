@@ -31,8 +31,10 @@ iOS:
 odv:
   hint: "Maximum Grace Period in Minutes."
   recommended: 0
-  cis_lvl1: 0
-  cis_lvl2: 0
+  cis_lvl1_byod: 0
+  cis_lvl2_byod: 0
+  cis_lvl1_enterprise: 0
+  cis_lvl2_enterprise: 0  
   ios_stig: 5
   ios_stig_byoad: 5
 tags:

@@ -33,8 +33,10 @@ ios:
 odv:
   hint: "Number of failed attempts."
   recommended: 6
-  cis_lvl1: 6
-  cis_lvl2: 6
+  cis_lvl1_byod: 6
+  cis_lvl2_byod: 6
+  cis_lvl1_enterprise: 6
+  cis_lvl2_enterprise: 6  
   ios_stig: 10
   ios_stig_byoad: 10
 tags:
