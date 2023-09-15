@@ -279,20 +279,20 @@ def generate_scap(all_rules, all_baselines, args):
                 rule_yaml['check'] = rule_yaml['check'].replace("$ODV",odv_value)
                 
                 rule_yaml['fix'] = rule_yaml['fix'].replace("$ODV",odv_value)
-                
+            
                 if "result" in rule_yaml:
                     for result_value in rule_yaml['result']:
                         if "$ODV" == rule_yaml['result'][result_value]:
                             rule_yaml['result'][result_value] = rule_yaml['result'][result_value].replace("$ODV",odv_value)
-                            
                 
                 if rule_yaml['mobileconfig_info']:
                     for mobileconfig_type in rule_yaml['mobileconfig_info']:
                         if isinstance(rule_yaml['mobileconfig_info'][mobileconfig_type], dict):
                             for mobileconfig_value in rule_yaml['mobileconfig_info'][mobileconfig_type]:
                                 if "$ODV" in str(resulting_yaml['mobileconfig_info'][mobileconfig_type][mobileconfig_value]):
-                                    resulting_yaml['mobileconfig_info'][mobileconfig_type][mobileconfig_value] = rule_yaml['mobileconfig_info'][mobileconfig_type][mobileconfig_value].replace("$ODV",odv_value)
-
+                                    resulting_yaml['mobileconfig_info'][mobileconfig_type][mobileconfig_value] = odv_value
+                                    
+                
             except:
                 odv_label = "recommended"
                 
