@@ -16,7 +16,7 @@ fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-    - CCE-92934-9
+    - N/A
   cci:
     - N/A
   800-53r5:
@@ -65,7 +65,6 @@ tags:
   - cnssi-1253_low
   - cnssi-1253_high
   - cmmc_lvl2
-  - newstig
 mobileconfig: true
 mobileconfig_info:
   com.apple.mobiledevice.passwordpolicy:
