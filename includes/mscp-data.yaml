@@ -29,33 +29,27 @@ authors:
     preamble: The CIS Benchmarks are referenced with the permission and support of the Center for Internet Security® (CIS®)
     names:
       - Edward Byrd|Center for Internet Security
-      - Ron Colvin|Center for Internet Security
       - Allen Golbig|Jamf
   cis_lvl2:
     preamble: The CIS Benchmarks are referenced with the permission and support of the Center for Internet Security® (CIS®)
     names:
       - Edward Byrd|Center for Internet Security
-      - Ron Colvin|Center for Internet Security
       - Allen Golbig|Jamf
   cis_lvl1_byod:
     names:
       - Edward Byrd|Center for Internet Security
-      - Ron Colvin|Center for Internet Security
       - Allen Golbig|Jamf
   cis_lvl2_byod:
     names:
       - Edward Byrd|Center for Internet Security
-      - Ron Colvin|Center for Internet Security
       - Allen Golbig|Jamf
   cis_lvl1_enterprise:
     names:
       - Edward Byrd|Center for Internet Security
-      - Ron Colvin|Center for Internet Security
       - Allen Golbig|Jamf
   cis_lvl2_enterprise:
     names:
       - Edward Byrd|Center for Internet Security
-      - Ron Colvin|Center for Internet Security
       - Allen Golbig|Jamf
   cisv8:
     preamble: CIS Critical Security Controls® (CIS Controls®) are referenced with the permission and support of the Center for Internet Security® (CIS®)
@@ -96,6 +90,16 @@ authors:
       - Dan Brodjieski|National Aeronautics and Space Administration
       - Allen Golbig|Jamf
       - Bob Gendler|National Institute of Standards and Technology
+  ios_stig:
+    names: 
+      - Dan Brodjieski|National Aeronautics and Space Administration
+      - Allen Golbig|Jamf
+      - Bob Gendler|National Institute of Standards and Technology
+  ios_stig_byoad:
+    names: 
+      - Dan Brodjieski|National Aeronautics and Space Administration
+      - Allen Golbig|Jamf
+      - Bob Gendler|National Institute of Standards and Technology      
 titles:
   all_rules: All Rules
   800-53r5_high: NIST SP 800-53 Rev 5 High Impact
