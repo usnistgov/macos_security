@@ -31,8 +31,10 @@ iOS:
 odv:
   hint: "Minimum passcode length."
   recommended: 6
-  cis_lvl1: 6
-  cis_lvl2: 6
+  cis_lvl1_byod: 6
+  cis_lvl2_byod: 6
+  cis_lvl1_enterprise: 6
+  cis_lvl2_enterprise: 6
   ios_stig: 6
 tags:
   - ios
