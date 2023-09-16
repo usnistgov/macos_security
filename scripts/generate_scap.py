@@ -52,15 +52,32 @@ def format_mobileconfig_fix(mobileconfig):
                 elif type(item[1]) == dict:
                     rulefix = rulefix + "<dict>\n"
                     for k,v in item[1].items():
-                        rulefix = rulefix + \
-                                (f"    <key>{k}</key>\n")
-                        rulefix = rulefix + "    <array>\n"
-                        for setting in v:
+                        if type(v) == dict:
                             rulefix = rulefix + \
-                                (f"        <string>{setting}</string>\n")
-                        rulefix = rulefix + "    </array>\n"
+                                (f"    <key>{k}</key>\n")
+                            rulefix = rulefix + \
+                                (f"    <dict>\n")
+                            for x,y in v.items():
+                                rulefix = rulefix + \
+                                    (f"      <key>{x}</key>\n")
+                                rulefix  = rulefix + \
+                                    (f"      <string>{y}</string>\n")
+                            rulefix = rulefix + \
+                            (f"    </dict>\n")
+                            break
+                        if isinstance(v, list):
+                            rulefix = rulefix + "    <array>\n"
+                            for setting in v:
+                                rulefix = rulefix + \
+                                    (f"        <string>{setting}</string>\n")
+                            rulefix = rulefix + "    </array>\n"
+                        else:
+                            rulefix = rulefix + \
+                                    (f"    <key>{k}</key>\n")
+                            rulefix = rulefix + \
+                                    (f"    <string>{v}</string>\n")
                     rulefix = rulefix + "</dict>\n"
-
+         
             rulefix = rulefix + "----\n\n"
 
     return rulefix
@@ -289,8 +306,14 @@ def generate_scap(all_rules, all_baselines, args):
                     for mobileconfig_type in rule_yaml['mobileconfig_info']:
                         if isinstance(rule_yaml['mobileconfig_info'][mobileconfig_type], dict):
                             for mobileconfig_value in rule_yaml['mobileconfig_info'][mobileconfig_type]:
+                                
                                 if "$ODV" in str(resulting_yaml['mobileconfig_info'][mobileconfig_type][mobileconfig_value]):
-                                    resulting_yaml['mobileconfig_info'][mobileconfig_type][mobileconfig_value] = odv_value
+                                    if type(resulting_yaml['mobileconfig_info'][mobileconfig_type][mobileconfig_value]) == dict:
+                                        for k,v in resulting_yaml['mobileconfig_info'][mobileconfig_type][mobileconfig_value].items():
+                                            if v == "$ODV":
+                                                resulting_yaml['mobileconfig_info'][mobileconfig_type][mobileconfig_value][k] = odv_value
+                                    else:
+                                        resulting_yaml['mobileconfig_info'][mobileconfig_type][mobileconfig_value] = odv_value
                                     
                 
             except:
@@ -595,6 +618,10 @@ def generate_scap(all_rules, all_baselines, args):
                     continue
                 
                 for payload_type, info in rule_yaml['mobileconfig_info'].items():
+                    
+                    if payload_type == "com.apple.mobiledevice.passwordpolicy" and "customRegex" in info:
+                        print("REGEX")
+                        ################# CUSTOM REGEX PWPOLICY ######################
                     if payload_type == "com.apple.systempolicy.control":
                         continue
                     if payload_type == "com.apple.ManagedClient.preferences":
