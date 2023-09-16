@@ -1098,11 +1098,13 @@ def generate_scap(all_rules, all_baselines, args):
             <value_of datatype="{}" operation="equals">{}</value_of>
             </plist511_state>
             '''.format(rule_yaml['id'] + "_" + odv_label,x,state_kind,value['passwordContentRegex'])
+                                x += 1
+                                continue
                             else:
                                 oval_object = oval_object + '''
                                 <xpath>//*[contains(text(), "{}")]/following-sibling::*[1]/text()</xpath>
                 </plist511_object>'''.format(key)
-                                
+                          
                         oval_state = oval_state + '''
                         <plist511_state xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" comment="{}_state" id="oval:mscp:ste:{}" version="1">
             <value_of datatype="{}" operation="equals">{}</value_of>
