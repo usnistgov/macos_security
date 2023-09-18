@@ -75,7 +75,6 @@ profile:
       - os_gatekeeper_rearm
       - os_handoff_disable
       - os_hibernate_mode_destroyfvkeyonstandby_enable
-      - os_hibernate_mode_enable
       - os_home_folders_secure
       - os_httpd_disable
       - os_icloud_storage_prompt_disable
