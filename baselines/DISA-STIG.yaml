@@ -8,8 +8,9 @@ authors: |
   |Bob Gendler|National Institute of Standards and Technology
   |===
 parent_values: "stig"
-- section: "auditing"
-    rules:
+profile:
+  - section: "auditing"
+    rules:      
       - audit_acls_files_configure
       - audit_acls_folders_configure
       - audit_auditd_enabled
