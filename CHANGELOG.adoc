@@ -1,6 +1,30 @@
 = Changelog
 
 This document provides a high-level view of the changes to the macOS Security Compliance Project.
+== [Monterey, Revision 5.0] - 2023-09-XX
+* Rules
+** Modified Rules
+*** os_hibernate_mode_apple_silicon_enable
+*** os_hibernate_mode_intel_enable
+*** os_hibernate_mode_destroyfvkeyonstandby_enable
+*** os_sshd_client_alive_count_max_configure
+
+* Scripts
+** generate_guidance
+*** Added iOS support
+*** Added support for pwpolicy regex
+*** Modified ssh_key_check
+*** Bug Fixes
+** generate_baseline
+*** Added iOS support
+*** Bug Fixes
+** generate_mappings
+*** Added iOS support
+*** Bug Fixes
+** generate_scap
+*** Added iOS support
+*** Added support for pwpolicy regex
+*** Bug Fixes
 
 == [Monterey, Revision 4.0] - 2023-06-26
 * Rules
