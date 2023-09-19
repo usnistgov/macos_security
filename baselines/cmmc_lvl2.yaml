@@ -66,6 +66,7 @@ profile:
       - icloud_sync_disable
   - section: "macos"
     rules:
+      - os_account_modification_disable
       - os_airdrop_disable
       - os_appleid_prompt_disable
       - os_auth_peripherals
