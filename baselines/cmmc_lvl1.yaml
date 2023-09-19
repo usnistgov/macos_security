@@ -4,8 +4,6 @@ description: |
 
   Information System Security Officers and benchmark creators can use this catalog of settings in order to assist them in security benchmark creation. This list is a catalog, not a checklist or benchmark, and satisfaction of every item is not likely to be possible or sensible in many operational scenarios.
 authors: |
-  *macOS Security Compliance Project*
-
   |===
   |John Mahlman|Leidos
   |Bob Gendler|National Institute of Standards and Technology
@@ -26,6 +24,7 @@ profile:
       - icloud_bookmarks_disable
       - icloud_calendar_disable
       - icloud_drive_disable
+      - icloud_freeform_disable
       - icloud_game_center_disable
       - icloud_keychain_disable
       - icloud_mail_disable
@@ -38,6 +37,7 @@ profile:
     rules:
       - os_airdrop_disable
       - os_appleid_prompt_disable
+      - os_auth_peripherals
       - os_authenticated_root_enable
       - os_config_data_install_enforce
       - os_filevault_autologin_disable
@@ -50,6 +50,7 @@ profile:
       - os_httpd_disable
       - os_icloud_storage_prompt_disable
       - os_nfsd_disable
+      - os_on_device_dictation_enforce
       - os_rapid_security_response_allow
       - os_rapid_security_response_removal_disable
       - os_recovery_lock_enable
@@ -95,3 +96,4 @@ profile:
       - supplemental_firewall_pf
       - supplemental_password_policy
       - supplemental_smartcard
+    
