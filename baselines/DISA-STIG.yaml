@@ -1,7 +1,9 @@
-title: "macOS 13.0: Security Configuration - Apple macOS 13 (Ventura) DISA STIG - Ver 1, Rel 1"
+title: "macOS 13.0: Security Configuration - Apple macOS 13 (Ventura) STIG - Ver 1, Rel 1"
 description: |
   This guide describes the actions to take when securing a macOS 13.0 system against the Apple macOS 13 (Ventura) STIG - Ver 1, Rel 1 security baseline.
 authors: |
+  *macOS Security Compliance Project*
+
   |===
   |Dan Brodjieski|National Aeronautics and Space Administration
   |Allen Golbig|Jamf
@@ -10,7 +12,7 @@ authors: |
 parent_values: "stig"
 profile:
   - section: "auditing"
-    rules:      
+    rules:
       - audit_acls_files_configure
       - audit_acls_folders_configure
       - audit_auditd_enabled
