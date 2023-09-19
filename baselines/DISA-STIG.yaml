@@ -1,7 +1,9 @@
-title: "macOS 12.0: Security Configuration - DISA STIG"
+title: "macOS 12.0: Security Configuration - Apple macOS 12 (Monterey) STIG - Ver 1, Rel 4"
 description: |
-  This guide describes the actions to take when securing a macOS system against the Apple macOS 12 (Monterey) STIG - Ver 1, Rel 4.
+  This guide describes the actions to take when securing a macOS 12.0 system against the Apple macOS 12 (Monterey) STIG - Ver 1, Rel 4 security baseline.
 authors: |
+  *macOS Security Compliance Project*
+
   |===
   |Dan Brodjieski|National Aeronautics and Space Administration
   |Allen Golbig|Jamf

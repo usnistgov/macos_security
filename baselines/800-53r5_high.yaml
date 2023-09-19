@@ -1,9 +1,11 @@
-title: "macOS 12 Security Configuration: NIST SP 800-53 Rev 5 High Impact Security Baseline"
+title: "macOS 12.0: Security Configuration - NIST SP 800-53 Rev 5 High Impact"
 description: |
-  This guide describes the actions to take when securing a macOS 12 system against the NIST SP 800-53 Rev. 5 High-Impact Security Baseline.
-  
+  This guide describes the actions to take when securing a macOS 12.0 system against the NIST SP 800-53 Rev 5 High Impact security baseline.
+
   Information System Security Officers and benchmark creators can use this catalog of settings in order to assist them in security benchmark creation. This list is a catalog, not a checklist or benchmark, and satisfaction of every item is not likely to be possible or sensible in many operational scenarios.
 authors: |
+  *macOS Security Compliance Project*
+
   |===
   |Bob Gendler|National Institute of Standards and Technology
   |Dan Brodjieski|National Aeronautics and Space Administration
