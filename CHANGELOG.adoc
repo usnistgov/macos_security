@@ -28,6 +28,23 @@ This document provides a high-level view of the changes to the macOS Security Co
 *** cnssi-1253_high
 *** all_rules
 
+* Scripts
+** generate_guidance
+*** Added iOS support
+*** Added support for pwpolicy regex
+*** Modified ssh_key_check
+*** Bug Fixes
+** generate_baseline
+*** Added iOS support
+*** Bug Fixes
+** generate_mappings
+*** Added iOS support
+*** Bug Fixes
+** generate_scap
+*** Added iOS support
+*** Added support for pwpolicy regex
+*** Bug Fixes
+
 == [Ventura, Revision 2.0] - 2023-06-26
 
 * Rules
@@ -216,5 +233,3 @@ This document provides a high-level view of the changes to the macOS Security Co
 *** Added support for new checks
 *** Generate scap, xccdf, or oval
 *** Bug Fixes
-
-
