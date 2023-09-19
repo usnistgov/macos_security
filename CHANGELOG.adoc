@@ -2,6 +2,32 @@
 
 This document provides a high-level view of the changes to the macOS Security Compliance Project.
 
+== [Ventura, Revision 3.0] - 2023-09-XX
+* Rules
+** Modified Rules
+*** os_world_writable_system_folder_configure
+*** os_hibernate_mode_apple_silicon_enable
+*** os_hibernate_mode_destroyfvkeyonstandby_enable
+*** os_hibernate_mode_intel_enable
+*** os_ssh_fips_compliant
+*** os_sshd_fips_compliant
+*** system_settings_location_services_menu_enforce
+*** system_settings_ssh_disable
+** Deleted Rules
+*** os_sshd_fips_140_ciphers
+*** os_sshd_fips_140_macs
+*** os_sshd_key_exchange_algorithm_configure
+
+* Baselines
+** Modified
+*** DISA-STIG
+*** CISv8
+*** cmmc_lvl2
+*** cnssi-1253_low
+*** cnssi-1253_moderate
+*** cnssi-1253_high
+*** all_rules
+
 == [Ventura, Revision 2.0] - 2023-06-26
 
 * Rules
