@@ -71,7 +71,6 @@ profile:
       - os_account_modification_disable
       - os_airdrop_disable
       - os_appleid_prompt_disable
-      - os_auth_peripherals
       - os_authenticated_root_enable
       - os_blank_bluray_disable
       - os_blank_cd_disable
@@ -116,8 +115,6 @@ profile:
       - os_removable_media_disable
       - os_root_disable
       - os_screensaver_loginwindow_enforce
-      - os_screensaver_timeout_loginwindow_enforce
-      - os_setup_assistant_filevault_enforce
       - os_sip_enable
       - os_siri_prompt_disable
       - os_skip_screen_time_prompt_enable
@@ -128,10 +125,7 @@ profile:
       - os_sshd_channel_timeout_configure
       - os_sshd_client_alive_count_max_configure
       - os_sshd_client_alive_interval_configure
-      - os_sshd_fips_140_ciphers
-      - os_sshd_fips_140_macs
       - os_sshd_fips_compliant
-      - os_sshd_key_exchange_algorithm_configure
       - os_sshd_login_grace_time_configure
       - os_sshd_unused_connection_timeout_configure
       - os_tftpd_disable
@@ -146,14 +140,13 @@ profile:
       - pwpolicy_account_lockout_enforce
       - pwpolicy_account_lockout_timeout_enforce
       - pwpolicy_alpha_numeric_enforce
+      - pwpolicy_custom_regex_enforce
       - pwpolicy_history_enforce
-      - pwpolicy_lower_case_character_enforce
       - pwpolicy_max_lifetime_enforce
       - pwpolicy_minimum_length_enforce
       - pwpolicy_minimum_lifetime_enforce
       - pwpolicy_simple_sequence_disable
       - pwpolicy_special_character_enforce
-      - pwpolicy_upper_case_character_enforce
   - section: "systemsettings"
     rules:
       - system_settings_airplay_receiver_disable
@@ -220,6 +213,7 @@ profile:
   - section: "Permanent"
     rules:
       - audit_records_processing
+      - os_auth_peripherals
       - system_settings_wifi_disable_when_connected_to_ethernet
   - section: "not_applicable"
     rules: 
@@ -228,6 +222,7 @@ profile:
       - os_nonlocal_maintenance
   - section: "Supplemental"
     rules:
+      - supplemental_cis_manual
       - supplemental_controls
       - supplemental_filevault
       - supplemental_firewall_pf

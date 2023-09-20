@@ -15,7 +15,6 @@ parent_values: "recommended"
 profile:
   - section: "auditing"
     rules:
-      - audit_acls_files_configure
       - audit_acls_folders_configure
       - audit_auditd_enabled
       - audit_configure_capacity_notify
@@ -270,6 +269,7 @@ profile:
       - os_nonlocal_maintenance
   - section: "Supplemental"
     rules:
+      - supplemental_cis_manual
       - supplemental_controls
       - supplemental_filevault
       - supplemental_firewall_pf

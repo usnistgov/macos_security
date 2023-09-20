@@ -41,6 +41,7 @@ profile:
   - section: "macos"
     rules:
       - os_airdrop_disable
+      - os_anti_virus_installed
       - os_authenticated_root_enable
       - os_bonjour_disable
       - os_config_data_install_enforce
@@ -53,6 +54,7 @@ profile:
       - os_home_folders_secure
       - os_httpd_disable
       - os_install_log_retention_configure
+      - os_mdm_require
       - os_mobile_file_integrity_enable
       - os_nfsd_disable
       - os_on_device_dictation_enforce
@@ -79,6 +81,7 @@ profile:
   - section: "passwordpolicy"
     rules:
       - pwpolicy_account_lockout_enforce
+      - pwpolicy_account_lockout_timeout_enforce
       - pwpolicy_alpha_numeric_enforce
       - pwpolicy_custom_regex_enforce
       - pwpolicy_history_enforce

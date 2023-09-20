@@ -40,7 +40,6 @@ profile:
       - os_account_modification_disable
       - os_airdrop_disable
       - os_appleid_prompt_disable
-      - os_auth_peripherals
       - os_authenticated_root_enable
       - os_config_data_install_enforce
       - os_filevault_autologin_disable
@@ -92,11 +91,14 @@ profile:
     rules:
       - os_logical_access
       - os_malicious_code_prevention
+  - section: "Permanent"
+    rules:
+      - os_auth_peripherals
   - section: "Supplemental"
     rules:
+      - supplemental_cis_manual
       - supplemental_controls
       - supplemental_filevault
       - supplemental_firewall_pf
       - supplemental_password_policy
       - supplemental_smartcard
-    
