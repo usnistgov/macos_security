@@ -48,7 +48,7 @@ odv:
   recommended: 1200
   stig: 900
 tags:
-  - none
+  - cnssi-1253_moderate
 severity: "medium"
 mobileconfig: true
 mobileconfig_info:
