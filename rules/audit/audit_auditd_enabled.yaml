@@ -9,7 +9,7 @@ discussion: |
 
   The information system initiates session audits at system start-up.
 
-  NOTE: Security auditing is enabled by default on macOS.
+  NOTE: Security auditing is NOT enabled by default on macOS Sonoma.
 check: |
   LAUNCHD_RUNNING=$(/bin/launchctl list | /usr/bin/grep -c com.apple.auditd)
   if [[ $LAUNCHD_RUNNING == 1 ]] && [[ -e /etc/security/audit_control ]]; then
@@ -22,16 +22,18 @@ result:
 fix: |
   [source,bash]
   ----
-  LAUNCHD_RUNNING=$(/bin/launchctl list | /usr/bin/grep -c com.apple.auditd)
-
-  if [[ ! $LAUNCHD_RUNNING == 1 ]]; then
-    /bin/launchctl load -w /System/Library/LaunchDaemons/com.apple.auditd.plist
-  fi
-
   if [[ ! -e /etc/security/audit_control ]] && [[ -e /etc/security/audit_control.example ]];then
     /bin/cp /etc/security/audit_control.example /etc/security/audit_control
   else
     /usr/bin/touch /etc/security/audit_control
+  fi
+  
+  LAUNCHD_RUNNING=$(/bin/launchctl list | /usr/bin/grep -c com.apple.auditd)
+
+  if [[ ! $LAUNCHD_RUNNING == 1 ]]; then
+    /bin/launchctl enable system/com.apple.auditd
+    /bin/launchctl bootstrap system /System/Library/LaunchDaemons/com.apple.auditd.plist
+    /usr/sbin/audit -i
   fi
   ----
 references:
