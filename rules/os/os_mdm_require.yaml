@@ -44,7 +44,7 @@ references:
     - 3.4.2
   cis:
     benchmark:
-      - N/A
+      - 1.8 (level 1)
     controls v8:
       - 4.1
       - 5.1
@@ -60,6 +60,8 @@ tags:
   - 800-53r4_moderate
   - 800-53r4_high
   - 800-171
+  - cis_lvl1
+  - cis_lvl2
   - cisv8
   - cnssi-1253_moderate
   - cnssi-1253_low

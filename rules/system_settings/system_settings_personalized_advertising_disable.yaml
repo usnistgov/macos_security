@@ -36,7 +36,7 @@ references:
     - 3.4.6
   cis:
     benchmark:
-      - 2.6.3 (level 1)
+      - 2.6.4 (level 1)
     controls v8:
       - 4.8
   cmmc:
