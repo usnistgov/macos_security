@@ -3,7 +3,7 @@ title: "Disable Trivial File Transfer Protocol Service"
 discussion: |
   If the system does not require Trivial File Transfer Protocol (TFTP), support it is non-essential and _MUST_ be disabled.
 
-  The information system _MUST_ be configured to provide only essential capabilities. Disabling TFTP helps prevent the unauthorized connection of devices and the unauthorized transfer of information. 
+  The information system _MUST_ be configured to provide only essential capabilities. Disabling TFTP helps prevent the unauthorized connection of devices and the unauthorized transfer of information.
 
   NOTE: TFTP service is disabled at startup by default macOS.
 check: |
@@ -18,7 +18,7 @@ fix: |
   The system may need to be restarted for the update to take effect.
 references:
   cce:
-    - N/A
+    - CCE-92914-1
   cci:
     - CCI-000197
   800-53r5:

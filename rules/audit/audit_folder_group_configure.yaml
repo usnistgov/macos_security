@@ -3,7 +3,7 @@ title: "Configure Audit Log Folders Group to Wheel"
 discussion: |
   Audit log files _MUST_ have the group set to wheel.
 
-  The audit service _MUST_ be configured to create log files with the correct group ownership to prevent normal users from reading audit logs. 
+  The audit service _MUST_ be configured to create log files with the correct group ownership to prevent normal users from reading audit logs.
 
   Audit logs contain sensitive data about the system and users. If log files are set to be readable and writable only by system administrators, the risk is mitigated.
 check: |
@@ -17,7 +17,7 @@ fix: |
   ----
 references:
   cce:
-    - N/A
+    - CCE-92724-4
   cci:
     - CCI-000162
   800-53r5:

@@ -1,8 +1,8 @@
 id: os_grant_privs
 title: "Allow Administrators to Promote Other Users to Administrator Status"
 discussion: |
-  The information system _IS_ configured to allow current administrators to promote standard users to administrator user status. 
-  
+  The information system _IS_ configured to allow current administrators to promote standard users to administrator user status.
+
   The macOS is a UNIX 03-compliant operating system which allows administrators of the system to grant privileges to other users.
 
   link:https://support.apple.com/guide/mac-help/set-up-other-users-on-your-mac-mtusr001/mac[]
@@ -12,7 +12,7 @@ fix: |
   The technology inherently meets this requirement. No fix is required.
 references:
   cce:
-    - N/A
+    - CCE-92797-0
   cci:
     - N/A
   800-53r5:

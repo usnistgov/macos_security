@@ -33,7 +33,7 @@ fix: |
   ----
 references:
   cce:
-    - N/A
+    - CCE-92996-8
   cci:
     - CCI-001958
   800-53r5:
@@ -53,7 +53,7 @@ references:
     - 3.1.6
   cis:
     benchmark:
-      - 2.6.7 (level 1)
+      - 2.6.8 (level 1)
     controls v8:
       - 4.1
   cmmc:

@@ -1,7 +1,7 @@
 id: os_messages_app_disable
 title: "Disable Messages App"
 discussion: |
-  The macOS built-in Messages.app _MUST_ be disabled. 
+  The macOS built-in Messages.app _MUST_ be disabled.
 
   The Messages.app establishes a connection to Apple's iCloud service, even when security controls to disable iCloud access have been put in place.
 
@@ -30,8 +30,8 @@ fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-    - N/A
-  cci: 
+    - CCE-92825-9
+  cci:
     - N/A
   800-53r5:
     - AC-20
@@ -69,5 +69,5 @@ mobileconfig: true
 mobileconfig_info:
   com.apple.applicationaccess.new:
     familyControlsEnabled: true
-    pathBlackList: 
+    pathBlackList:
       - /Applications/Messages.app

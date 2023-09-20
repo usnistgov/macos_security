@@ -18,7 +18,7 @@ fix: |
   NOTE: To reenable "System Integrity Protection", boot the affected system into "Recovery" mode, launch "Terminal" from the "Utilities" menu, and run the command.
 references:
   cce:
-    - N/A
+    - CCE-92889-5
   cci:
     - CCI-000154
     - CCI-000158

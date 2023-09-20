@@ -146,14 +146,32 @@ def format_mobileconfig_fix(mobileconfig):
                 elif type(item[1]) == dict:
                     rulefix = rulefix + "<dict>\n"
                     for k,v in item[1].items():
-                        rulefix = rulefix + \
-                                (f"    <key>{k}</key>\n")
-                        rulefix = rulefix + "    <array>\n"
-                        for setting in v:
+                        if type(v) == dict:
                             rulefix = rulefix + \
-                                (f"        <string>{setting}</string>\n")
-                        rulefix = rulefix + "    </array>\n"
+                                (f"    <key>{k}</key>\n")
+                            rulefix = rulefix + \
+                                (f"    <dict>\n")
+                            for x,y in v.items():
+                                rulefix = rulefix + \
+                                    (f"      <key>{x}</key>\n")
+                                rulefix  = rulefix + \
+                                    (f"      <string>{y}</string>\n")
+                            rulefix = rulefix + \
+                            (f"    </dict>\n")
+                            break
+                        if isinstance(v, list):
+                            rulefix = rulefix + "    <array>\n"
+                            for setting in v:
+                                rulefix = rulefix + \
+                                    (f"        <string>{setting}</string>\n")
+                            rulefix = rulefix + "    </array>\n"
+                        else:
+                            rulefix = rulefix + \
+                                    (f"    <key>{k}</key>\n")
+                            rulefix = rulefix + \
+                                    (f"    <string>{v}</string>\n")
                     rulefix = rulefix + "</dict>\n"
+                    
 
             rulefix = rulefix + "----\n\n"
 
@@ -717,17 +735,28 @@ reset_plist(){{
 compliance_count(){{
     compliant=0
     non_compliant=0
-
-    results=$(/usr/libexec/PlistBuddy -c "Print" /Library/Preferences/org.{baseline_name}.audit.plist)
-
-    while IFS= read -r line; do
-        if [[ "$line" =~ "finding = false" ]]; then
+    exempt_count=0
+    audit_plist="/Library/Preferences/org.{baseline_name}.audit.plist"
+    
+    rule_names=($(/usr/libexec/PlistBuddy -c "Print" $audit_plist | awk '/= Dict/ {{print $1}}'))
+    
+    for rule in ${{rule_names[@]}}; do
+        finding=$(/usr/libexec/PlistBuddy -c "Print $rule:finding" $audit_plist)
+        if [[ $finding == "false" ]];then
             compliant=$((compliant+1))
+        elif [[ $finding == "true" ]];then
+            is_exempt=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.{baseline_name}.audit').objectForKey("$rule"))["exempt"]
+EOS
+)
+            if [[ $is_exempt == "1" ]]; then
+                exempt_count=$((exempt_count+1))
+                non_compliant=$((non_compliant+1))
+            else    
+                non_compliant=$((non_compliant+1))
+            fi
         fi
-        if [[ "$line" =~ "finding = true" ]]; then
-            non_compliant=$((non_compliant+1))
-        fi
-    done <<< "$results"
+    done
 
     # Enable output of just the compliant or non-compliant numbers.
     if [[ $1 = "compliant" ]]
@@ -737,40 +766,19 @@ compliance_count(){{
     then
         echo $non_compliant
     else # no matching args output the array
-        array=($compliant $non_compliant)
+        array=($compliant $non_compliant $exempt_count)
         echo ${{array[@]}}
     fi
 }}
 
-exempt_count(){{
-    exempt=0
-
-    if [[ -e "/Library/Managed Preferences/org.{baseline_name}.audit.plist" ]];then
-        mscp_prefs="/Library/Managed Preferences/org.{baseline_name}.audit.plist"
-    else
-        mscp_prefs="/Library/Preferences/org.{baseline_name}.audit.plist"
-    fi
-
-    results=$(/usr/libexec/PlistBuddy -c "Print" "$mscp_prefs")
-
-    while IFS= read -r line; do
-        if [[ "$line" =~ "exempt = true" ]]; then
-            exempt=$((exempt+1))
-        fi
-    done <<< "$results"
-
-    echo $exempt
-}}
-
-
 generate_report(){{
     count=($(compliance_count))
-    exempt_rules=$(exempt_count)
     compliant=${{count[1]}}
     non_compliant=${{count[2]}}
+    exempt_rules=${{count[3]}}
 
-    total=$((non_compliant + compliant - exempt_rules))
-    percentage=$(printf %.2f $(( compliant * 100. / total )) )
+    total=$((non_compliant + compliant))
+    percentage=$(printf %.2f $(( (compliant + exempt_rules) * 100. / total )) )
     echo
     echo "Number of tests passed: ${{GREEN}}$compliant${{STD}}"
     echo "Number of test FAILED: ${{RED}}$non_compliant${{STD}}"
@@ -1133,16 +1141,22 @@ def fill_in_odv(resulting_yaml, parent_values):
             if "$ODV" in resulting_yaml[field]:
                 resulting_yaml[field]=resulting_yaml[field].replace("$ODV", str(odv))
 
-        for result_value in resulting_yaml['result']:
-            if "$ODV" in str(resulting_yaml['result'][result_value]):
-                resulting_yaml['result'][result_value] = odv
+        if 'result' in resulting_yaml:
+            for result_value in resulting_yaml['result']:
+                if "$ODV" in str(resulting_yaml['result'][result_value]):
+                    resulting_yaml['result'][result_value] = odv
 
         if resulting_yaml['mobileconfig_info']:
             for mobileconfig_type in resulting_yaml['mobileconfig_info']:
                 if isinstance(resulting_yaml['mobileconfig_info'][mobileconfig_type], dict):
                     for mobileconfig_value in resulting_yaml['mobileconfig_info'][mobileconfig_type]:
                         if "$ODV" in str(resulting_yaml['mobileconfig_info'][mobileconfig_type][mobileconfig_value]):
-                            resulting_yaml['mobileconfig_info'][mobileconfig_type][mobileconfig_value] = odv
+                            if type(resulting_yaml['mobileconfig_info'][mobileconfig_type][mobileconfig_value]) == dict:
+                                for k,v in resulting_yaml['mobileconfig_info'][mobileconfig_type][mobileconfig_value].items():
+                                    if v == "$ODV":
+                                        resulting_yaml['mobileconfig_info'][mobileconfig_type][mobileconfig_value][k] = odv
+                            else:
+                                resulting_yaml['mobileconfig_info'][mobileconfig_type][mobileconfig_value] = odv
 
 
 
@@ -1582,7 +1596,7 @@ def parse_cis_references(reference):
             string += "!CIS " + str(item).title() + "\n!\n"
             string += "* "
             for i in reference[item]:
-                string += str(i) + ", "
+                string += str(i) + "\n * "
             string = string[:-2] + "\n"
         else:
             string += "!" + str(item) + "!* " + str(reference[item]) + "\n"
@@ -1655,7 +1669,8 @@ def main():
     with open(version_file) as r:
         version_yaml = yaml.load(r, Loader=yaml.SafeLoader)
 
-    adoc_templates = [ "adoc_rule",
+    adoc_templates = [ "adoc_rule_ios",
+                    "adoc_rule",
                     "adoc_supplemental",
                     "adoc_rule_no_setting",
                     "adoc_rule_custom_refs",
@@ -1690,6 +1705,9 @@ def main():
 
 
     # Setup AsciiDoc templates
+    with open(adoc_templates_dict['adoc_rule_ios']) as adoc_rule_ios_file:
+        adoc_rule_ios_template = Template(adoc_rule_ios_file.read())
+
     with open(adoc_templates_dict['adoc_rule']) as adoc_rule_file:
         adoc_rule_template = Template(adoc_rule_file.read())
 
@@ -2013,23 +2031,42 @@ def main():
                     rule_srg=srg
                 )
             else:
-                rule_adoc = adoc_rule_template.substitute(
-                    rule_title=rule_yaml['title'].replace('|', '\|'),
-                    rule_id=rule_yaml['id'].replace('|', '\|'),
-                    rule_discussion=rule_yaml['discussion'].replace('|', '\|'),
-                    rule_check=rule_yaml['check'],  # .replace('|', '\|'),
-                    rule_fix=rulefix,
-                    rule_cci=cci,
-                    rule_80053r5=nist_controls,
-                    rule_800171=nist_800171,
-                    rule_disa_stig=disa_stig,
-                    rule_cis=cis,
-                    rule_cmmc=cmmc,
-                    rule_cce=cce,
-                    rule_tags=tags,
-                    rule_srg=srg,
-                    rule_result=result_value
-                )
+                if version_yaml['platform'] == "iOS/iPadOS":
+                    rule_adoc = adoc_rule_ios_template.substitute(
+                        rule_title=rule_yaml['title'].replace('|', '\|'),
+                        rule_id=rule_yaml['id'].replace('|', '\|'),
+                        rule_discussion=rule_yaml['discussion'].replace('|', '\|'),
+                        rule_check=rule_yaml['check'],  # .replace('|', '\|'),
+                        rule_fix=rulefix,
+                        rule_cci=cci,
+                        rule_80053r5=nist_controls,
+                        rule_800171=nist_800171,
+                        rule_disa_stig=disa_stig,
+                        rule_cis=cis,
+                        rule_cmmc=cmmc,
+                        rule_cce=cce,
+                        rule_tags=tags,
+                        rule_srg=srg,
+                        rule_result=result_value
+                    )
+                else:
+                    rule_adoc = adoc_rule_template.substitute(
+                        rule_title=rule_yaml['title'].replace('|', '\|'),
+                        rule_id=rule_yaml['id'].replace('|', '\|'),
+                        rule_discussion=rule_yaml['discussion'].replace('|', '\|'),
+                        rule_check=rule_yaml['check'],  # .replace('|', '\|'),
+                        rule_fix=rulefix,
+                        rule_cci=cci,
+                        rule_80053r5=nist_controls,
+                        rule_800171=nist_800171,
+                        rule_disa_stig=disa_stig,
+                        rule_cis=cis,
+                        rule_cmmc=cmmc,
+                        rule_cce=cce,
+                        rule_tags=tags,
+                        rule_srg=srg,
+                        rule_result=result_value
+                    )
 
             adoc_output_file.write(rule_adoc)
 

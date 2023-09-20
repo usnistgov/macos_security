@@ -17,7 +17,7 @@ fix: |
   NOTE: Systemsetup with -setremoteappleevents flag will fail unless you grant Full Disk Access to systemsetup or it's parent process. Requires supervision.
 references:
   cce:
-    - N/A
+    - CCE-92981-0
   cci:
     - CCI-000382
   800-53r5:

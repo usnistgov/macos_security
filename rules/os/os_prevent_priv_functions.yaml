@@ -1,11 +1,11 @@
 id: os_prevent_priv_functions
 title: "Configure the System to Block Non-Privileged Users from Executing Privileged Functions"
 discussion: |
-  The information system _IS_ configured to block standard users from executing privileged functions. 
+  The information system _IS_ configured to block standard users from executing privileged functions.
 
-  Privileged functions include disabling, circumventing, or altering implemented security safeguards and countermeasures. 
-  
-  The inherent configuration of the macOS does not allow for non-privileged users to be able to execute functions requiring privilege. 
+  Privileged functions include disabling, circumventing, or altering implemented security safeguards and countermeasures.
+
+  The inherent configuration of the macOS does not allow for non-privileged users to be able to execute functions requiring privilege.
 
   link:https://developer.apple.com/library/archive/documentation/Security/Conceptual/AuthenticationAndAuthorizationGuide/Introduction/Introduction.html[]
 check: |
@@ -14,7 +14,7 @@ fix: |
   The technology inherently meets this requirement. No fix is required.
 references:
   cce:
-    - N/A
+    - CCE-92857-2
   cci:
     - N/A
   800-53r5:

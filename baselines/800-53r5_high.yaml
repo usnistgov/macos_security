@@ -1,0 +1,234 @@
+title: "macOS 14.0: Security Configuration - NIST SP 800-53 Rev 5 High Impact"
+description: |
+  This guide describes the actions to take when securing a macOS 14.0 system against the NIST SP 800-53 Rev 5 High Impact security baseline.
+
+  Information System Security Officers and benchmark creators can use this catalog of settings in order to assist them in security benchmark creation. This list is a catalog, not a checklist or benchmark, and satisfaction of every item is not likely to be possible or sensible in many operational scenarios.
+authors: |
+  *macOS Security Compliance Project*
+
+  |===
+  |Bob Gendler|National Institute of Standards and Technology
+  |Dan Brodjieski|National Aeronautics and Space Administration
+  |Allen Golbig|Jamf
+  |===
+parent_values: "recommended"
+profile:
+  - section: "auditing"
+    rules:
+      - audit_acls_files_configure
+      - audit_acls_folders_configure
+      - audit_auditd_enabled
+      - audit_configure_capacity_notify
+      - audit_failure_halt
+      - audit_files_group_configure
+      - audit_files_mode_configure
+      - audit_files_owner_configure
+      - audit_flags_aa_configure
+      - audit_flags_ad_configure
+      - audit_flags_ex_configure
+      - audit_flags_fd_configure
+      - audit_flags_fm_failed_configure
+      - audit_flags_fr_configure
+      - audit_flags_fw_configure
+      - audit_flags_lo_configure
+      - audit_folder_group_configure
+      - audit_folder_owner_configure
+      - audit_folders_mode_configure
+      - audit_retention_configure
+      - audit_settings_failure_notify
+  - section: "authentication"
+    rules:
+      - auth_pam_login_smartcard_enforce
+      - auth_pam_su_smartcard_enforce
+      - auth_pam_sudo_smartcard_enforce
+      - auth_smartcard_allow
+      - auth_smartcard_certificate_trust_enforce_high
+      - auth_smartcard_enforce
+      - auth_ssh_password_authentication_disable
+  - section: "icloud"
+    rules:
+      - icloud_addressbook_disable
+      - icloud_appleid_system_settings_disable
+      - icloud_bookmarks_disable
+      - icloud_calendar_disable
+      - icloud_drive_disable
+      - icloud_freeform_disable
+      - icloud_game_center_disable
+      - icloud_keychain_disable
+      - icloud_mail_disable
+      - icloud_notes_disable
+      - icloud_photos_disable
+      - icloud_private_relay_disable
+      - icloud_reminders_disable
+      - icloud_sync_disable
+  - section: "macos"
+    rules:
+      - os_account_modification_disable
+      - os_airdrop_disable
+      - os_appleid_prompt_disable
+      - os_asl_log_files_owner_group_configure
+      - os_asl_log_files_permissions_configure
+      - os_authenticated_root_enable
+      - os_bonjour_disable
+      - os_certificate_authority_trust
+      - os_config_data_install_enforce
+      - os_config_profile_ui_install_disable
+      - os_filevault_authorized_users
+      - os_filevault_autologin_disable
+      - os_firewall_default_deny_require
+      - os_firewall_log_enable
+      - os_firmware_password_require
+      - os_gatekeeper_enable
+      - os_gatekeeper_rearm
+      - os_handoff_disable
+      - os_home_folders_secure
+      - os_httpd_disable
+      - os_icloud_storage_prompt_disable
+      - os_ir_support_disable
+      - os_mdm_require
+      - os_newsyslog_files_owner_group_configure
+      - os_newsyslog_files_permissions_configure
+      - os_nfsd_disable
+      - os_on_device_dictation_enforce
+      - os_password_autofill_disable
+      - os_password_proximity_disable
+      - os_password_sharing_disable
+      - os_policy_banner_loginwindow_enforce
+      - os_policy_banner_ssh_configure
+      - os_policy_banner_ssh_enforce
+      - os_rapid_security_response_allow
+      - os_rapid_security_response_removal_disable
+      - os_recovery_lock_enable
+      - os_root_disable
+      - os_screensaver_loginwindow_enforce
+      - os_secure_boot_verify
+      - os_sip_enable
+      - os_siri_prompt_disable
+      - os_skip_unlock_with_watch_enable
+      - os_ssh_fips_compliant
+      - os_ssh_server_alive_count_max_configure
+      - os_ssh_server_alive_interval_configure
+      - os_sshd_channel_timeout_configure
+      - os_sshd_client_alive_count_max_configure
+      - os_sshd_client_alive_interval_configure
+      - os_sshd_fips_compliant
+      - os_sshd_permit_root_login_configure
+      - os_sshd_unused_connection_timeout_configure
+      - os_sudo_timeout_configure
+      - os_sudoers_timestamp_type_configure
+      - os_system_read_only
+      - os_tftpd_disable
+      - os_time_server_enabled
+      - os_touchid_prompt_disable
+      - os_unlock_active_user_session_disable
+      - os_uucp_disable
+  - section: "passwordpolicy"
+    rules:
+      - pwpolicy_account_inactivity_enforce
+      - pwpolicy_account_lockout_enforce
+      - pwpolicy_account_lockout_timeout_enforce
+      - pwpolicy_alpha_numeric_enforce
+      - pwpolicy_custom_regex_enforce
+      - pwpolicy_history_enforce
+      - pwpolicy_max_lifetime_enforce
+      - pwpolicy_minimum_length_enforce
+      - pwpolicy_minimum_lifetime_enforce
+      - pwpolicy_simple_sequence_disable
+      - pwpolicy_special_character_enforce
+      - pwpolicy_temporary_or_emergency_accounts_disable
+  - section: "systemsettings"
+    rules:
+      - system_settings_airplay_receiver_disable
+      - system_settings_apple_watch_unlock_disable
+      - system_settings_automatic_login_disable
+      - system_settings_automatic_logout_enforce
+      - system_settings_bluetooth_disable
+      - system_settings_bluetooth_sharing_disable
+      - system_settings_cd_dvd_sharing_disable
+      - system_settings_content_caching_disable
+      - system_settings_critical_update_install_enforce
+      - system_settings_diagnostics_reports_disable
+      - system_settings_filevault_enforce
+      - system_settings_find_my_disable
+      - system_settings_firewall_enable
+      - system_settings_firewall_stealth_mode_enable
+      - system_settings_gatekeeper_identified_developers_allowed
+      - system_settings_gatekeeper_override_disallow
+      - system_settings_guest_access_smb_disable
+      - system_settings_guest_account_disable
+      - system_settings_hot_corners_disable
+      - system_settings_improve_siri_dictation_disable
+      - system_settings_internet_accounts_disable
+      - system_settings_internet_sharing_disable
+      - system_settings_location_services_disable
+      - system_settings_loginwindow_prompt_username_password_enforce
+      - system_settings_media_sharing_disabled
+      - system_settings_password_hints_disable
+      - system_settings_personalized_advertising_disable
+      - system_settings_printer_sharing_disable
+      - system_settings_rae_disable
+      - system_settings_remote_management_disable
+      - system_settings_screen_sharing_disable
+      - system_settings_screensaver_ask_for_password_delay_enforce
+      - system_settings_screensaver_password_enforce
+      - system_settings_screensaver_timeout_enforce
+      - system_settings_siri_disable
+      - system_settings_smbd_disable
+      - system_settings_ssh_enable
+      - system_settings_system_wide_preferences_configure
+      - system_settings_time_server_configure
+      - system_settings_time_server_enforce
+      - system_settings_token_removal_enforce
+      - system_settings_touchid_unlock_disable
+      - system_settings_usb_restricted_mode
+      - system_settings_wifi_disable
+  - section: "Inherent"
+    rules:
+      - audit_record_reduction_report_generation
+      - os_application_sandboxing
+      - os_crypto_audit
+      - os_enforce_access_restrictions
+      - os_fail_secure_state
+      - os_implement_cryptography
+      - os_implement_memory_protection
+      - os_isolate_security_functions
+      - os_limit_gui_sessions
+      - os_logical_access
+      - os_malicious_code_prevention
+      - os_obscure_password
+      - os_prevent_priv_functions
+      - os_prevent_unauthorized_disclosure
+      - os_prohibit_remote_activation_collab_devices
+      - os_reauth_users_change_authenticators
+      - os_required_crypto_module
+      - os_separate_functionality
+      - os_store_encrypted_passwords
+      - os_unique_identification
+      - pwpolicy_emergency_accounts_disable
+      - pwpolicy_force_password_change
+      - pwpolicy_temporary_accounts_disable
+  - section: "Permanent"
+    rules:
+      - audit_records_processing
+      - os_auth_peripherals
+      - os_continuous_monitoring
+      - os_protect_dos_attacks
+      - os_provide_automated_account_management
+      - os_reauth_devices_change_authenticators
+      - os_secure_name_resolution
+      - system_settings_wifi_disable_when_connected_to_ethernet
+  - section: "not_applicable"
+    rules: 
+      - os_access_control_mobile_devices
+      - os_identify_non-org_users
+      - os_information_validation
+      - os_managed_access_control_points
+      - os_non_repudiation
+      - os_nonlocal_maintenance
+  - section: "Supplemental"
+    rules:
+      - supplemental_controls
+      - supplemental_filevault
+      - supplemental_firewall_pf
+      - supplemental_password_policy
+      - supplemental_smartcard

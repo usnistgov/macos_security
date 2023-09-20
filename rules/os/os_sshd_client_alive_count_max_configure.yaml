@@ -35,12 +35,12 @@ fix: |
   ----
 references:
   cce:
-    - N/A
-  cci: 
+    - CCE-92898-6
+  cci:
     - CCI-001133
   800-53r5:
     - SC-10
-  800-53r4: 
+  800-53r4:
     - SC-10
   srg:
     - SRG-OS-000163-GPOS-00072
@@ -57,9 +57,9 @@ odv:
   recommended: 0
   stig: 1
 tags:
-  - 800-53r5_moderate 
+  - 800-53r5_moderate
   - 800-53r5_high
-  - 800-53r4_moderate 
+  - 800-53r4_moderate
   - 800-53r4_high
   - 800-171
   - cnssi-1253_moderate

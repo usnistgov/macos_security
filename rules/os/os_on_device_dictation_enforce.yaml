@@ -15,7 +15,7 @@ fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-    - N/A
+    - CCE-92841-6
   cci:
     - N/A
   800-53r5:
@@ -36,7 +36,7 @@ references:
     - 3.4.6
   cis:
     benchmark:
-      - N/A
+      - 2.18.1 (level 1)
     controls v8:
       - 4.1
       - 4.8
@@ -60,6 +60,8 @@ tags:
   - cnssi-1253_high
   - cmmc_lvl2
   - cmmc_lvl1
+  - cis_lvl1
+  - cis_lvl2
 severity: "medium"
 mobileconfig: true
 mobileconfig_info:

@@ -16,7 +16,7 @@ fix: |
   ----
 references:
   cce:
-    - N/A
+    - CCE-92758-2
   cci:
     - CCI-000366
   800-53r5:
@@ -24,13 +24,22 @@ references:
   800-53r4:
     - SI-2
   srg:
-    - SRG-OS-000480-GPOS-00227
+    - N/A
   disa_stig:
     - N/A
+  cis:
+    benchmark:
+      - 5.10 (level 1)
+    controls v8:
+      - 10.5
+      - 10.1
+      - 10.2
 macOS:
   - "14.0"
 tags:
-  - none
+  - cis_lvl1
+  - cis_lvl2
+  - cisv8
 severity: "high"
 mobileconfig: false
 mobileconfig_info:

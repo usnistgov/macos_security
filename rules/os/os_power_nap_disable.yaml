@@ -3,7 +3,7 @@ title: "Disable Power Nap"
 discussion: |
   Power Nap _MUST_ be disabled.
 
-  NOTE: Power Nap allows your Mac to perform actions while a Mac is asleep. This can interfere with USB power and may cause devices such as smartcards to stop functioning until a reboot and must therefore be disabled on all applicable systems. 
+  NOTE: Power Nap allows your Mac to perform actions while a Mac is asleep. This can interfere with USB power and may cause devices such as smartcards to stop functioning until a reboot and must therefore be disabled on all applicable systems.
 
   The following Macs support Power Nap:
 
@@ -24,7 +24,7 @@ fix: |
   ----
 references:
   cce:
-    - N/A
+    - CCE-92853-1
   cci:
     - N/A
   800-53r5:

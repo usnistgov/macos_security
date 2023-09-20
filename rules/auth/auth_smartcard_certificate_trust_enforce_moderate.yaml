@@ -19,7 +19,7 @@ fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-    - N/A
+    - CCE-92737-6
   cci:
     - CCI-000186
     - CCI-001953
@@ -45,8 +45,8 @@ references:
 macOS:
   - "14.0"
 tags:
-  - 800-53r4_moderate 
-  - 800-53r5_moderate 
+  - 800-53r4_moderate
+  - 800-53r5_moderate
   - cnssi-1253_moderate
   - cnssi-1253_low
   - cmmc_lvl2

@@ -1,11 +1,11 @@
 id: os_hibernate_mode_apple_silicon_enable
 title: "Enable Hibernate Mode (Apple Silicon)"
 discussion: |
-  Hibernate mode _MUST_ be enabled. 
+  Hibernate mode _MUST_ be enabled.
 
   This will store a copy of memory to persistent storage, and will remove power to memory. This setting will stop the potential for a cold-boot attack.
 
-  Apple Silicon MacBooks should set sleep timeout to 10 minutes (600 seconds) or less and the display sleep timeout should be 15 minutes (900 seconds) or less but greater than the sleep setting. 
+  Apple Silicon MacBooks should set sleep timeout to 10 minutes (600 seconds) or less and the display sleep timeout should be 15 minutes (900 seconds) or less but greater than the sleep setting.
   This setting ensures that MacBooks will not hibernate and require FileVault authentication wheneve the display goes to sleep for a short period of time.
 
   NOTE: Hibernate mode will disable instant wake on Apple Silicon laptops.
@@ -15,7 +15,7 @@ check: |
     hibernateMode=$(/usr/bin/pmset -b -g | /usr/bin/grep hibernatemode 2>&1 | /usr/bin/awk '{print $2}')
     sleepMode=$(/usr/bin/pmset -b -g | /usr/bin/grep '^\s*sleep' 2>&1 | /usr/bin/awk '{print $2}')
     displaysleepMode=$(/usr/bin/pmset -b -g | /usr/bin/grep displaysleep 2>&1 | /usr/bin/awk '{print $2}')
-    
+
     if [[ "$sleepMode" == "" ]] || [[ "$sleepMode" -gt 10 ]]; then
       ((error_count++))
     fi
@@ -38,7 +38,7 @@ fix: |
   ----
 references:
   cce:
-    - N/A
+    - CCE-92800-2
   cci:
     - N/A
   800-53r5:

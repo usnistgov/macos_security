@@ -2,7 +2,7 @@ id: os_sshd_channel_timeout_configure
 title: "Configure SSHD Channel Timeout to $ODV"
 discussion: |
   If SSHD is enabled it _MUST_ be configured with session ChannelTime out set to $ODV.
-  
+
   This will set the time out when the session is inactive.
 
   NOTE: /etc/ssh/sshd_config will be automatically modified to its original state following any update or major upgrade to the operating system.
@@ -33,13 +33,13 @@ fix: |
   ----
 references:
   cce:
-    - N/A
-  cci: 
+    - CCE-92897-8
+  cci:
     - N/A
   800-53r5:
     - SC-10
     - AC-12
-  800-53r4: 
+  800-53r4:
     - SC-10
   srg:
     - N/A
@@ -54,9 +54,9 @@ odv:
   hint: "Number of seconds."
   recommended: 900
 tags:
-  - 800-53r5_moderate 
+  - 800-53r5_moderate
   - 800-53r5_high
-  - 800-53r4_moderate 
+  - 800-53r4_moderate
   - 800-53r4_high
   - 800-171
   - cnssi-1253_moderate

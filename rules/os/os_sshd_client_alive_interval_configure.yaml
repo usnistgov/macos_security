@@ -1,8 +1,8 @@
 id: os_sshd_client_alive_interval_configure
 title: "Configure SSHD ClientAliveInterval to $ODV"
 discussion: |
-  If SSHD is enabled then it _MUST_ be configured with the Client Alive Interval set to $ODV. 
-  
+  If SSHD is enabled then it _MUST_ be configured with the Client Alive Interval set to $ODV.
+
   Sets a timeout interval in seconds after which if no data has been received from the client, sshd(8) will send a message through the encrypted channel to request a response from the client.
 
   This setting works in conjuction with ClientAliveCountMax to determine the termination of the connection after the threshold has been reached.
@@ -37,13 +37,13 @@ fix: |
   ----
 references:
   cce:
-    - N/A
-  cci: 
+    - CCE-92899-4
+  cci:
     - CCI-001133
   800-53r5:
     - SC-10
     - AC-12
-  800-53r4: 
+  800-53r4:
     - SC-10
   srg:
     - SRG-OS-000163-GPOS-00072
@@ -63,8 +63,8 @@ odv:
 tags:
   - 800-53r5_moderate
   - 800-53r5_high
-  - 800-53r4_moderate 
-  - 800-53r4_high 
+  - 800-53r4_moderate
+  - 800-53r4_high
   - 800-171
   - cnssi-1253_moderate
   - cnssi-1253_low

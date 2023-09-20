@@ -13,8 +13,8 @@ fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-    - N/A
-  cci: 
+    - CCE-92992-7
+  cci:
     - N/A
   800-53r5:
     - SI-2(5)

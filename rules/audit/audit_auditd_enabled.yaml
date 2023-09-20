@@ -36,7 +36,7 @@ fix: |
   ----
 references:
   cce:
-    - N/A
+    - CCE-92704-6
   cci:
     - CCI-000130
     - CCI-000131
@@ -60,7 +60,7 @@ references:
     - AU-12(3)
     - AU-14(1)
     - MA-4(1)
-    - CM-5(1)   
+    - CM-5(1)
   800-53r4:
     - AU-3
     - AU-3(1)

@@ -4,9 +4,9 @@
 enable_macos_application_firewall () {
 
 	/usr/libexec/ApplicationFirewall/socketfilterfw --setglobalstate on
-	/usr/libexec/ApplicationFirewall/socketfilterfw --setloggingopt detail 
+	/usr/libexec/ApplicationFirewall/socketfilterfw --setloggingopt detail
 	/usr/libexec/ApplicationFirewall/socketfilterfw --setallowsigned on
-	/usr/libexec/ApplicationFirewall/socketfilterfw --setallowsignedapp on 
+	/usr/libexec/ApplicationFirewall/socketfilterfw --setallowsignedapp on
 
 }
 
@@ -35,7 +35,7 @@ enable_pf_firewall_with_macsec_rules () {
 	launchctl enable system/macsec.pfctl
 	launchctl bootstrap system $macsec_pfctl_plist
 
-	pfctl -f /etc/pf.conf 2> /dev/null #flush the pf ruleset (reload the rules)   
+	pfctl -f /etc/pf.conf 2> /dev/null #flush the pf ruleset (reload the rules)
 
 }
 
@@ -147,7 +147,7 @@ block log proto tcp to any port 540
 ENDCONFIG
 }
 
-#### 
+####
 
 enable_macos_application_firewall
 create_macsec_pf_anchors

@@ -33,8 +33,8 @@ fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-    - N/A
-  cci: 
+    - CCE-92771-5
+  cci:
     - N/A
   800-53r5:
     - AC-20
@@ -72,5 +72,5 @@ mobileconfig: true
 mobileconfig_info:
   com.apple.applicationaccess.new:
     familyControlsEnabled: true
-    pathBlackList: 
+    pathBlackList:
       - /Applications/Calendar.app

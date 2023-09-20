@@ -1,8 +1,8 @@
 id: os_parental_controls_enable
 title: "Enable Parental Controls"
 discussion: |
-  Parental Controls _MUST_ be enabled. 
-  
+  Parental Controls _MUST_ be enabled.
+
   Control of program execution is a mechanism used to prevent program execution of unauthorized programs, which is critical to maintaining a secure system baseline.
 
   Parental Controls on the macOS consist of many different payloads, which are set individually depending on the type of control required. Enabling parental controls allows for further configuration of these restrictions.
@@ -17,12 +17,12 @@ fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-    - N/A
-  cci: 
+    - CCE-92842-4
+  cci:
     - N/A
   800-53r5:
     - CM-7(2)
-  800-53r4: 
+  800-53r4:
     - CM-7(2)
   srg:
     - N/A

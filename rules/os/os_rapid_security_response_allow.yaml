@@ -13,8 +13,8 @@ fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-    - N/A
-  cci: 
+    - CCE-92865-5
+  cci:
     - N/A
   800-53r5:
     - SI-2
@@ -40,9 +40,9 @@ references:
 macOS:
   - "14.0"
 tags:
-  - 800-53r5_low 
-  - 800-53r5_moderate 
-  - 800-53r5_high 
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_high
   - 800-171
   - cnssi-1253_moderate
   - cnssi-1253_low

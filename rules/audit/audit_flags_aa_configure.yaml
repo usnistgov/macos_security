@@ -2,9 +2,9 @@ id: audit_flags_aa_configure
 title: "Configure System to Audit All Authorization and Authentication Events"
 discussion: |
   The auditing system _MUST_ be configured to flag authorization and authentication (aa) events.
-  
-  Authentication events contain information about the identity of a user, server, or client. Authorization events contain information about permissions, rights, and rules. If audit records do not include aa events, it is difficult to identify incidents and to correlate incidents to subsequent events. 
-  
+
+  Authentication events contain information about the identity of a user, server, or client. Authorization events contain information about permissions, rights, and rules. If audit records do not include aa events, it is difficult to identify incidents and to correlate incidents to subsequent events.
+
   Audit records can be generated from various components within the information system (e.g., via a module or policy filter).
 check: |
   /usr/bin/awk -F':' '/^flags/ { print $NF }' /etc/security/audit_control | /usr/bin/tr ',' '\n' | /usr/bin/grep -Ec 'aa'
@@ -17,7 +17,7 @@ fix: |
   ----
 references:
   cce:
-    - N/A
+    - CCE-92715-2
   cci:
     - CCI-000172
   800-53r5:
@@ -54,14 +54,14 @@ references:
 macOS:
   - "14.0"
 tags:
-  - 800-53r5_privacy 
-  - 800-53r4_low 
-  - 800-53r4_moderate 
-  - 800-53r4_high 
-  - 800-53r5_low 
-  - 800-53r5_moderate 
-  - 800-53r5_high 
-  - 800-171 
+  - 800-53r5_privacy
+  - 800-53r4_low
+  - 800-53r4_moderate
+  - 800-53r4_high
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_high
+  - 800-171
   - cis_lvl2
   - cisv8
   - cnssi-1253_moderate

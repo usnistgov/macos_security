@@ -8,7 +8,7 @@ fix: |
   This requirement is a permanent finding and cannot be fixed. An appropriate mitigation for the system must be implemented, but this finding cannot be considered fixed.
 references:
   cce:
-    - N/A
+    - CCE-92778-0
   cci:
     - N/A
   800-53r5:
@@ -26,7 +26,7 @@ tags:
   - 800-53r5_high
   - 800-53r4_moderate
   - 800-53r4_high
-  - permanent 
+  - permanent
   - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high

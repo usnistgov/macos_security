@@ -1,7 +1,7 @@
 id: system_settings_critical_update_install_enforce
 title: "Enforce Critical Security Updates to be Installed"
 discussion: |
-  Ensure that security updates are installed as soon as they are available from Apple. 
+  Ensure that security updates are installed as soon as they are available from Apple.
 check: |
   /usr/bin/osascript -l JavaScript << EOS
   $.NSUserDefaults.alloc.initWithSuiteName('com.apple.SoftwareUpdate')\
@@ -13,12 +13,12 @@ fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-    - N/A
-  cci: 
+    - CCE-92955-4
+  cci:
     - N/A
   800-53r5:
     - SI-2
-  800-53r4: 
+  800-53r4:
     - N/A
   srg:
     - N/A
