@@ -2,7 +2,7 @@
 
 This document provides a high-level view of the changes to the macOS Security Compliance Project.
 
-== [Sonoma, Revision 1.0] - 2023-XX-XX
+== [Sonoma, Revision 1.0] - 2023-09-21
 
 * Rules
 ** Added Rules
