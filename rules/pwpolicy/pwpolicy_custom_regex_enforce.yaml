@@ -1,7 +1,7 @@
 id: pwpolicy_custom_regex_enforce
-title: Require Passwords to match the complexity defined in $ODV
+title: Require Passwords to Match the Defined Custom Regular Expression
 discussion: |
-  The macOS _MUST_ be configured to meet complexity requirements when a password is created.
+  The macOS _MUST_ be configured to meet complexity requirements defined in $ODV.
 
   This rule enforces password complexity by requiring users to set passwords that are less vulnerable to malicious users.
 
