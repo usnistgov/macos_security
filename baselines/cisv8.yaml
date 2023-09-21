@@ -60,6 +60,4 @@ profile:
       - pwpolicy_max_inactivity_enforce
       - pwpolicy_minimum_length_enforce
       - pwpolicy_simple_sequence_disable
-  - section: "Supplemental"
-    rules:
-      - supplemental_controls
+

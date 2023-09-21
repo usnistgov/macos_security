@@ -56,4 +56,3 @@ profile:
   - section: "Supplemental"
     rules:
       - supplemental_cis_manual
-      - supplemental_controls
