@@ -146,14 +146,32 @@ def format_mobileconfig_fix(mobileconfig):
                 elif type(item[1]) == dict:
                     rulefix = rulefix + "<dict>\n"
                     for k,v in item[1].items():
-                        rulefix = rulefix + \
-                                (f"    <key>{k}</key>\n")
-                        rulefix = rulefix + "    <array>\n"
-                        for setting in v:
+                        if type(v) == dict:
                             rulefix = rulefix + \
-                                (f"        <string>{setting}</string>\n")
-                        rulefix = rulefix + "    </array>\n"
+                                (f"    <key>{k}</key>\n")
+                            rulefix = rulefix + \
+                                (f"    <dict>\n")
+                            for x,y in v.items():
+                                rulefix = rulefix + \
+                                    (f"      <key>{x}</key>\n")
+                                rulefix  = rulefix + \
+                                    (f"      <string>{y}</string>\n")
+                            rulefix = rulefix + \
+                            (f"    </dict>\n")
+                            break
+                        if isinstance(v, list):
+                            rulefix = rulefix + "    <array>\n"
+                            for setting in v:
+                                rulefix = rulefix + \
+                                    (f"        <string>{setting}</string>\n")
+                            rulefix = rulefix + "    </array>\n"
+                        else:
+                            rulefix = rulefix + \
+                                    (f"    <key>{k}</key>\n")
+                            rulefix = rulefix + \
+                                    (f"    <string>{v}</string>\n")
                     rulefix = rulefix + "</dict>\n"
+                    
 
             rulefix = rulefix + "----\n\n"
 
@@ -1133,7 +1151,12 @@ def fill_in_odv(resulting_yaml, parent_values):
                 if isinstance(resulting_yaml['mobileconfig_info'][mobileconfig_type], dict):
                     for mobileconfig_value in resulting_yaml['mobileconfig_info'][mobileconfig_type]:
                         if "$ODV" in str(resulting_yaml['mobileconfig_info'][mobileconfig_type][mobileconfig_value]):
-                            resulting_yaml['mobileconfig_info'][mobileconfig_type][mobileconfig_value] = odv
+                            if type(resulting_yaml['mobileconfig_info'][mobileconfig_type][mobileconfig_value]) == dict:
+                                for k,v in resulting_yaml['mobileconfig_info'][mobileconfig_type][mobileconfig_value].items():
+                                    if v == "$ODV":
+                                        resulting_yaml['mobileconfig_info'][mobileconfig_type][mobileconfig_value][k] = odv
+                            else:
+                                resulting_yaml['mobileconfig_info'][mobileconfig_type][mobileconfig_value] = odv
 
 
 
