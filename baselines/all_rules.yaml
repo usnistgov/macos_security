@@ -37,6 +37,7 @@ profile:
       - os_authentication_password_autofill_enable
       - os_auto_unlock_disable
       - os_diagnostics_reports_disable
+      - os_disallow_enterprise_app_trust
       - os_enterprise_books_disable
       - os_erase_contents_and_settings_disable
       - os_files_network_drive_access_disable
