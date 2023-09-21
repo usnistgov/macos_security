@@ -23,6 +23,8 @@ references:
   disa_stig:
     - AIOS-16-003600
     - AIOS-16-703600
+    - AIOS-16-009200
+    - AIOS-16-709200
   800-171r2:
     - N/A
   cis:
