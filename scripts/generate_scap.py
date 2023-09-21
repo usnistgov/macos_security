@@ -2986,7 +2986,7 @@ def generate_scap(all_rules, all_baselines, args):
                 </plist511_object>
                 <launchd_object id="oval:mscp:obj:{}" version="1" comment="{}_launchctl_object" xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos">
                     <label>{}</label>
-                </launchd_object>'''.format(rule_yaml['id'] + "_" + odv_label,x,domain,x+999,rule_yaml['id'] + "_" + odv_label,domain)
+                </launchd_object>'''.format(rule_yaml['id'] + "_" + odv_label,x,domain,x+999,rule_yaml['id'] + "_" + odv_label,domain.replace('(','').replace(')',''))
                             
                             status = ""
                             if "enable" in rule_yaml["fix"]:
@@ -3029,7 +3029,7 @@ def generate_scap(all_rules, all_baselines, args):
                             oval_object = oval_object + '''
                 <launchd_object id="oval:mscp:obj:{}" version="1" comment="{}_launchctl_object" xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos">
                     <label>{}</label>
-                </launchd_object>'''.format(x, rule_yaml['id'] + "_" + odv_label,domain)
+                </launchd_object>'''.format(x, rule_yaml['id'] + "_" + odv_label,domain.replace('(','').replace(')',''))
                         
 
 
@@ -3250,11 +3250,16 @@ def generate_scap(all_rules, all_baselines, args):
                             
                             domain = command[5].split()[2]
                             domain = domain.replace('"','').replace("'",'')
-
+                            ###########
+                            label_obj = '<label>'
+                            if 'E' in command[5].split()[1]:
+                                label_obj = '<label operation="pattern match">'
+                            else:
+                                domain = domain.replace('(','').replace(')','')
                             oval_object = oval_object + '''
                 <launchd_object id="oval:mscp:obj:{}" version="1" comment="{}_object" xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos">
-                    <label>{}</label>
-                </launchd_object>'''.format(x,rule_yaml['id'] + "_" + odv_label,domain)
+                    {}{}</label>
+                </launchd_object>'''.format(x,rule_yaml['id'] + "_" + odv_label,label_obj,domain)
                         x += 1
                         continue    
                 except:
