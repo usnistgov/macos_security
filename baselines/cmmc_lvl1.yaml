@@ -96,7 +96,6 @@ profile:
       - os_auth_peripherals
   - section: "Supplemental"
     rules:
-      - supplemental_cis_manual
       - supplemental_controls
       - supplemental_filevault
       - supplemental_firewall_pf

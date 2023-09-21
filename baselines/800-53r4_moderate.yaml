@@ -1,15 +1,11 @@
-title: "macOS 14.0: Security Configuration - NIST SP 800-53 Rev 5 Moderate Impact"
+title: "macOS 14.0: Security Configuration - 800-53r4_moderate"
 description: |
-  This guide describes the actions to take when securing a macOS 14.0 system against the NIST SP 800-53 Rev 5 Moderate Impact security baseline.
+  This guide describes the actions to take when securing a macOS 14.0 system against the 800-53r4_moderate security baseline.
 
   Information System Security Officers and benchmark creators can use this catalog of settings in order to assist them in security benchmark creation. This list is a catalog, not a checklist or benchmark, and satisfaction of every item is not likely to be possible or sensible in many operational scenarios.
 authors: |
-  *macOS Security Compliance Project*
-
   |===
-  |Bob Gendler|National Institute of Standards and Technology
-  |Dan Brodjieski|National Aeronautics and Space Administration
-  |Allen Golbig|Jamf
+  |Name|Organization
   |===
 parent_values: "recommended"
 profile:
@@ -25,7 +21,6 @@ profile:
       - audit_flags_aa_configure
       - audit_flags_ad_configure
       - audit_flags_ex_configure
-      - audit_flags_fd_configure
       - audit_flags_fm_failed_configure
       - audit_flags_fr_configure
       - audit_flags_fw_configure
@@ -34,7 +29,6 @@ profile:
       - audit_folder_owner_configure
       - audit_folders_mode_configure
       - audit_retention_configure
-      - audit_settings_failure_notify
   - section: "authentication"
     rules:
       - auth_pam_login_smartcard_enforce
@@ -65,13 +59,9 @@ profile:
       - os_account_modification_disable
       - os_airdrop_disable
       - os_appleid_prompt_disable
-      - os_asl_log_files_owner_group_configure
-      - os_asl_log_files_permissions_configure
       - os_authenticated_root_enable
       - os_bonjour_disable
       - os_certificate_authority_trust
-      - os_config_data_install_enforce
-      - os_config_profile_ui_install_disable
       - os_filevault_autologin_disable
       - os_firewall_default_deny_require
       - os_firewall_log_enable
@@ -84,8 +74,6 @@ profile:
       - os_icloud_storage_prompt_disable
       - os_ir_support_disable
       - os_mdm_require
-      - os_newsyslog_files_owner_group_configure
-      - os_newsyslog_files_permissions_configure
       - os_nfsd_disable
       - os_on_device_dictation_enforce
       - os_password_autofill_disable
@@ -94,12 +82,9 @@ profile:
       - os_policy_banner_loginwindow_enforce
       - os_policy_banner_ssh_configure
       - os_policy_banner_ssh_enforce
-      - os_rapid_security_response_allow
-      - os_rapid_security_response_removal_disable
       - os_recovery_lock_enable
       - os_root_disable
       - os_screensaver_loginwindow_enforce
-      - os_secure_boot_verify
       - os_sip_enable
       - os_siri_prompt_disable
       - os_skip_unlock_with_watch_enable
@@ -111,8 +96,6 @@ profile:
       - os_sshd_client_alive_interval_configure
       - os_sshd_fips_compliant
       - os_sshd_unused_connection_timeout_configure
-      - os_sudo_timeout_configure
-      - os_sudoers_timestamp_type_configure
       - os_system_read_only
       - os_tftpd_disable
       - os_time_server_enabled
@@ -135,7 +118,6 @@ profile:
       - pwpolicy_temporary_or_emergency_accounts_disable
   - section: "systemsettings"
     rules:
-      - system_settings_airplay_receiver_disable
       - system_settings_apple_watch_unlock_disable
       - system_settings_automatic_login_disable
       - system_settings_automatic_logout_enforce
@@ -143,7 +125,6 @@ profile:
       - system_settings_bluetooth_sharing_disable
       - system_settings_cd_dvd_sharing_disable
       - system_settings_content_caching_disable
-      - system_settings_critical_update_install_enforce
       - system_settings_diagnostics_reports_disable
       - system_settings_filevault_enforce
       - system_settings_find_my_disable
@@ -177,44 +158,38 @@ profile:
       - system_settings_time_server_enforce
       - system_settings_token_removal_enforce
       - system_settings_touchid_unlock_disable
-      - system_settings_usb_restricted_mode
       - system_settings_wifi_disable
   - section: "Inherent"
     rules:
-      - audit_record_reduction_report_generation
-      - os_application_sandboxing
       - os_implement_cryptography
       - os_implement_memory_protection
       - os_logical_access
-      - os_malicious_code_prevention
       - os_obscure_password
       - os_prevent_priv_functions
       - os_prevent_unauthorized_disclosure
-      - os_prohibit_remote_activation_collab_devices
-      - os_reauth_users_change_authenticators
       - os_required_crypto_module
       - os_separate_functionality
       - os_store_encrypted_passwords
-      - os_unique_identification
       - pwpolicy_emergency_accounts_disable
       - pwpolicy_force_password_change
       - pwpolicy_temporary_accounts_disable
   - section: "Permanent"
     rules:
-      - audit_records_processing
       - os_auth_peripherals
       - os_continuous_monitoring
+      - os_notify_account_created
+      - os_notify_account_disabled
+      - os_notify_account_enable
+      - os_notify_account_modified
+      - os_notify_account_removal
       - os_protect_dos_attacks
       - os_provide_automated_account_management
-      - os_reauth_devices_change_authenticators
       - os_secure_name_resolution
+      - pwpolicy_50_percent
       - system_settings_wifi_disable_when_connected_to_ethernet
   - section: "not_applicable"
     rules: 
-      - os_access_control_mobile_devices
       - os_identify_non-org_users
-      - os_information_validation
-      - os_managed_access_control_points
       - os_nonlocal_maintenance
   - section: "Supplemental"
     rules:

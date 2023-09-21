@@ -59,9 +59,6 @@ discussion: |
   6.3.2 Audit History and Remove History Items +
   6.3.5 Audit Hide IP Address in Safari Setting +
   6.3.8 Audit Autofill +
-  6.3.9 Ensure Pop-up Windows Are Blocked +
-  6.3.10 Ensure Javascript Is Enabled +
-  6.3.11 Ensure Show Status Bar Is Enabled +
   |===
 check: |
 fix: |
