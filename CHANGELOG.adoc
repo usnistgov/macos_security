@@ -1,7 +1,7 @@
 = Changelog
 
 This document provides a high-level view of the changes to the macOS Security Compliance Project.
-== [Monterey, Revision 5.0] - 2023-09-XX
+== [Monterey, Revision 5.0] - 2023-09-21
 * Rules
 ** Modified Rules
 *** os_hibernate_mode_apple_silicon_enable
