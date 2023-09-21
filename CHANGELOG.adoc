@@ -2,7 +2,7 @@
 
 This document provides a high-level view of the changes to the macOS Security Compliance Project.
 
-== [Ventura, Revision 3.0] - 2023-09-XX
+== [Ventura, Revision 3.0] - 2023-09-21
 * Rules
 ** Modified Rules
 *** os_world_writable_system_folder_configure
