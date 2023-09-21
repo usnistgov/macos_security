@@ -44,5 +44,4 @@ profile:
       - pwpolicy_simple_sequence_disable
   - section: "Supplemental"
     rules:
-      - supplemental_controls
       - supplemental_stig
