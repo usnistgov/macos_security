@@ -1,0 +1,43 @@
+id: os_loginwindow_adminhostinfo_undefined
+title: Prevent AdminHostInfo from Being Available at LoginWindow
+discussion: |
+  The system _MUST_ be configured to not display sensitive information at the LoginWindow. The key AdminHostInfo when configured will allow the HostName, IP Address, and operating system version and build to be displayed.
+check: |
+  /usr/bin/osascript -l JavaScript << EOS
+  $.NSUserDefaults.alloc.initWithSuiteName('com.apple.loginwindow')\
+  .objectIsForcedForKey('AdminHostInfo')
+  EOS
+result:
+  string: "false"
+fix: |
+  This is implemented by a Configuration Profile.
+references:
+  cce:
+    - N/A
+  cci:
+    - CCI-000060
+  800-53r5:
+    - AC-11(1)
+  800-53r4:
+    - AC-11(1)
+  srg:
+    - SRG-OS-000031-GPOS-00012
+  disa_stig:
+    - N/A
+  800-171r2:
+    - 3.1.10
+macOS:
+  - '14.0'
+tags:
+  - 800-53r5_moderate
+  - 800-53r5_high
+  - 800-53r4_moderate
+  - 800-53r4_high
+  - 800-171
+  - cnssi-1253_moderate
+  - cnssi-1253_low
+  - cnssi-1253_high
+  - newstig
+severity: medium
+mobileconfig: false
+
