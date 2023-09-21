@@ -2,4 +2,4 @@ os: "17.0"
 platform: iOS/iPadOS
 version: "iOS Guidance, Revision 1.0"
 cpe: o:apple:ios:17.0
-date: "2023-XX-XX"
+date: "2023-09-21"
