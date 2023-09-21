@@ -10,7 +10,7 @@ fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-    - CCE-92003-3
+    - CCE-92878-8
   cci:
     - N/A
   800-53r5:
@@ -28,7 +28,7 @@ references:
       - 9.1
       - 9.3
 macOS:
-  - "13.0"
+  - "14.0"
 tags:
   - cis_lvl1
   - cis_lvl2

@@ -21,7 +21,7 @@ fix: |
   ----
 references:
   cce:
-    - CCE-91716-1
+    - CCE-92716-0
   cci:
     - CCI-000018
     - CCI-000172
@@ -56,7 +56,7 @@ references:
     - SRG-OS-000476-GPOS-00221
     - SRG-OS-000477-GPOS-00222
   disa_stig:
-    - APPL-13-001001
+    - N/A
   800-171r2:
     - 3.1.7
     - 3.3.1
@@ -73,7 +73,7 @@ references:
     - AU.L2-3.3.6
     - SI.L2-3.14.3
 macOS:
-  - "13.0"
+  - "14.0"
 tags:
   - 800-53r5_privacy
   - 800-53r4_low
@@ -89,7 +89,6 @@ tags:
   - cnssi-1253_low
   - cnssi-1253_high
   - cmmc_lvl2
-  - stig
 severity: "medium"
 mobileconfig: false
 mobileconfig_info:

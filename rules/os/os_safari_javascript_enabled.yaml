@@ -1,0 +1,38 @@
+id: os_safari_javascript_enabled
+title: "Ensure JavaScript is Enabled in Safari"
+discussion: |
+  Safari _MUST_ be configured to enable Javascript.
+check: |
+  /usr/bin/profiles -P -o stdout | /usr/bin/grep -c 'WebKitPreferences.javaScriptEnabled = 1' | /usr/bin/awk '{ if ($1 >= 1) {print "1"} else {print "0"}}'
+result:
+  integer: 1
+fix: |
+  This is implemented by a Configuration Profile.
+references:
+  cce:
+    - CCE-93013-1
+  cci:
+    - N/A
+  800-53r5:
+    - N/A
+  800-53r4:
+    - N/A
+  disa_stig:
+    - N/A
+  srg:
+    - N/A
+  cis:
+    benchmark:
+      - 6.3.10 (level 1)
+    controls v8:
+      - 9.1
+macOS:
+  - "14.0"
+tags:
+  - cis_lvl1
+  - cis_lvl2
+  - cisv8
+mobileconfig: true
+mobileconfig_info:
+  com.apple.Safari:
+    WebKitPreferences.javaScriptEnabled: true

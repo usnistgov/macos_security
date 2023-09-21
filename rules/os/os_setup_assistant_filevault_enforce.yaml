@@ -1,0 +1,51 @@
+id: os_setup_assistant_filevault_enforce
+title: "Enforce FileVault in Setup Assistant"
+discussion: |
+  FileVault _MUST_ be enforced in Setup Assistant.
+
+  The information system implements cryptographic mechanisms to protect the confidentiality and integrity of information stored on digital media during transport outside of controlled areas.
+check: |
+  /usr/bin/osascript -l JavaScript << EOS
+  $.NSUserDefaults.alloc.initWithSuiteName('com.apple.MCX.FileVault2')\
+  .objectForKey('ForceEnableInSetupAssistant').js
+  EOS
+result:
+  integer: 1
+fix: |
+  NOTE: See the FileVault supplemental to implement this rule.
+references:
+  cce:
+    - CCE-92887-9
+  cci:
+    - N/A
+  800-53r5:
+    - SC-28
+    - SC-28(1)
+  800-53r4:
+    - SC-28
+    - SC-28(1)
+  srg:
+    - SRG-OS-000185-GPOS-00079
+    - SRG-OS-000404-GPOS-00183
+    - SRG-OS-000405-GPOS-00184
+  disa_stig:
+    - N/A
+  800-171r2:
+    - 3.13.16
+  cis:
+    benchmark:
+      - N/A
+    controls v8:
+      - 3.6
+      - 3.11
+  cmmc:
+    - SC.L2-3.13.16
+macOS:
+  - "14.0"
+tags:
+  - none
+severity: "high"
+mobileconfig: true
+mobileconfig_info:
+  com.apple.MCX.FileVault2:
+    ForceEnableInSetupAssistant: true

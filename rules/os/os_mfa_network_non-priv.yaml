@@ -9,7 +9,7 @@ fix: |
   For directory bound systems, the technology inherently meets this requirement. No fix is required.
 references:
   cce:
-    - CCE-91823-5
+    - CCE-92827-5
   cci:
     - N/A
   800-53r5:
@@ -21,7 +21,7 @@ references:
   srg:
     - N/A
 macOS:
-  - "13.0"
+  - "14.0"
 tags:
   - inherent
 mobileconfig: false

@@ -1,0 +1,74 @@
+id: pwpolicy_custom_regex_enforce
+title: Require Passwords to Match the Defined Custom Regular Expression
+discussion: |
+  The macOS _MUST_ be configured to meet complexity requirements defined in $ODV.
+
+  This rule enforces password complexity by requiring users to set passwords that are less vulnerable to malicious users.
+
+  NOTE: The guidance for password based authentication in NIST 800-53 (Rev 5) and NIST 800-63B state that complexity rules should be organizationally defined. The values defined are based off of common complexity values. But your organization may define its own password complexity rules.
+
+  NOTE: The configuration profile generated must be installed from an MDM server.
+check: |
+  /usr/bin/pwpolicy -getaccountpolicies 2> /dev/null | /usr/bin/tail +2 | /usr/bin/xmllint --xpath 'boolean(//*[contains(text(),"policyAttributePassword matches '\''$ODV'\''")])' 
+result:
+  string: 'true'
+fix: |
+  This is implemented by a Configuration Profile.
+references:
+  cce:
+    - CCE-93011-5
+  cci:
+    - N/A
+  800-53r5:
+    - IA-5(1)
+  800-53r4:
+    - IA-5
+    - IA-5(1)
+  disa_stig:
+    - N/A
+  srg:
+    - SRG-OS-000070-GPOS-00038
+    - SRG-OS-000069-GPOS-00037
+  800-171r2:
+    - 3.5.1
+    - 3.5.2
+    - 3.5.7
+    - 3.5.8
+    - 3.5.9
+    - 3.5.10
+  cis:
+    benchmark:
+      - 5.2.6 (level 2)
+    controls v8:
+      - 5.2
+  cmmc:
+    - IA.L2-3.5.7
+    - IA.L2-3.5.8
+    - IA.L2-3.5.9
+macOS:
+  - '14.0'
+odv:
+  hint: Custom regex (recommended is 1 upper and 1 lowercase)
+  recommended: .*[A-Z]{1,}[a-z]{1,}.*
+  cis_lvl2: .*[A-Z]{1,}[a-z]{1,}.*
+tags:
+  - 800-171
+  - 800-53r4_low
+  - 800-53r4_moderate
+  - 800-53r4_high
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_high
+  - cis_lvl2
+  - cisv8
+  - cnssi-1253_moderate
+  - cnssi-1253_low
+  - cnssi-1253_high
+  - cmmc_lvl2
+mobileconfig: true
+mobileconfig_info:
+  com.apple.mobiledevice.passwordpolicy:
+    customRegex:
+      passwordContentRegex: $ODV
+      passwordContentDescription:
+        default: Password must match custom regex.

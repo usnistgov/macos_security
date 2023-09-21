@@ -2,8 +2,8 @@ id: os_show_filename_extensions_enable
 title: "Enable Show All Filename Extensions"
 discussion: |
   Show all filename extensions _MUST_ be enabled in the Finder.
-  
-  [NOTE] 
+
+  [NOTE]
   ====
   The check and fix are for the currently logged in user. To get the currently logged in user, run the following.
   [source,bash]
@@ -22,7 +22,7 @@ fix: |
   ----
 references:
   cce:
-    - CCE-91877-1
+    - CCE-92888-7
   cci:
     - N/A
   800-53r5:
@@ -41,7 +41,7 @@ references:
     controls v8:
       - 2.3
 macOS:
-  - "13.0"
+  - "14.0"
 tags:
   - cis_lvl1
   - cis_lvl2

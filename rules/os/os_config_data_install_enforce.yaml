@@ -19,7 +19,7 @@ fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-    - CCE-91774-0
+    - CCE-92776-4
   cci:
     - CCI-000366
   800-53r5:
@@ -30,7 +30,7 @@ references:
   srg:
     - SRG-OS-000480-GPOS-00227
   disa_stig:
-    - APPL-13-002070
+    - N/A
   800-171r2:
     - 3.14.1
     - 3.14.2
@@ -47,7 +47,7 @@ references:
     - SI.L1-3.14.2
     - SI.L1-3.14.4
 macOS:
-  - "13.0"
+  - "14.0"
 tags:
   - 800-53r5_low
   - 800-53r5_moderate
@@ -60,7 +60,6 @@ tags:
   - cnssi-1253_high
   - cmmc_lvl2
   - cmmc_lvl1
-  - stig
 severity: "high"
 mobileconfig: true
 mobileconfig_info:

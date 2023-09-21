@@ -1,6 +1,6 @@
-title: "macOS 13.0: Security Configuration - US CMMC 2.0 Level 1"
+title: "macOS 14.0: Security Configuration - US CMMC 2.0 Level 1"
 description: |
-  This guide describes the actions to take when securing a macOS 13.0 system against the US CMMC 2.0 Level 1 security baseline.
+  This guide describes the actions to take when securing a macOS 14.0 system against the US CMMC 2.0 Level 1 security baseline.
 
   Information System Security Officers and benchmark creators can use this catalog of settings in order to assist them in security benchmark creation. This list is a catalog, not a checklist or benchmark, and satisfaction of every item is not likely to be possible or sensible in many operational scenarios.
 authors: |
@@ -26,6 +26,7 @@ profile:
       - icloud_bookmarks_disable
       - icloud_calendar_disable
       - icloud_drive_disable
+      - icloud_freeform_disable
       - icloud_game_center_disable
       - icloud_keychain_disable
       - icloud_mail_disable
@@ -36,6 +37,7 @@ profile:
       - icloud_sync_disable
   - section: "macos"
     rules:
+      - os_account_modification_disable
       - os_airdrop_disable
       - os_appleid_prompt_disable
       - os_authenticated_root_enable
@@ -50,6 +52,7 @@ profile:
       - os_httpd_disable
       - os_icloud_storage_prompt_disable
       - os_nfsd_disable
+      - os_on_device_dictation_enforce
       - os_rapid_security_response_allow
       - os_rapid_security_response_removal_disable
       - os_recovery_lock_enable
@@ -88,6 +91,9 @@ profile:
     rules:
       - os_logical_access
       - os_malicious_code_prevention
+  - section: "Permanent"
+    rules:
+      - os_auth_peripherals
   - section: "Supplemental"
     rules:
       - supplemental_controls

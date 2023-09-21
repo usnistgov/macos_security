@@ -15,7 +15,7 @@ fix: |
   ----
 references:
   cce:
-    - CCE-91732-8
+    - CCE-92731-9
   cci:
     - CCI-001858
   800-53r5:
@@ -27,13 +27,13 @@ references:
   srg:
     - SRG-OS-000344-GPOS-00135
   disa_stig:
-    - APPL-13-001031
+    - N/A
   800-171r2:
     - 3.3.4
   cmmc:
     - AU.L2-3.3.4
 macOS:
-  - "13.0"
+  - "14.0"
 tags:
   - 800-53r5_low
   - 800-53r5_moderate
@@ -44,7 +44,6 @@ tags:
   - cnssi-1253_low
   - cnssi-1253_high
   - cmmc_lvl2
-  - stig
 severity: "medium"
 mobileconfig: false
 mobileconfig_info:

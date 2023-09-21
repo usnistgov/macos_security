@@ -13,16 +13,16 @@ fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-    - CCE-91937-3
-  cci: 
+    - CCE-92950-5
+  cci:
     - N/A
   800-53r5:
     - N/A
-  800-53r4: 
+  800-53r4:
     - N/A
   srg:
     - N/A
-  disa_stig: 
+  disa_stig:
     - N/A
   800-171r2:
     - N/A
@@ -31,9 +31,9 @@ references:
       - 2.4.2 (level 1)
     controls v8:
       - 4.8
-      - 13.9  
+      - 13.9
 macOS:
-  - "13.0"
+  - "14.0"
 tags:
   - cis_lvl1
   - cis_lvl2

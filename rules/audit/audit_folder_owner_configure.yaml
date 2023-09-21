@@ -1,5 +1,5 @@
 id: audit_folder_owner_configure
-title: "Configure Audit Log Folders to be Owned by Root" 
+title: "Configure Audit Log Folders to be Owned by Root"
 discussion: |
   Audit log folders _MUST_ be owned by root.
 
@@ -17,7 +17,7 @@ fix: |
   ----
 references:
   cce:
-    - CCE-91726-0
+    - CCE-92725-1
   cci:
     - CCI-000162
   800-53r5:
@@ -27,7 +27,7 @@ references:
   srg:
     - SRG-OS-000057-GPOS-00027
   disa_stig:
-    - APPL-13-001013
+    - N/A
   800-171r2:
     - 3.3.8
   cis:
@@ -38,7 +38,7 @@ references:
   cmmc:
     - AU.L2-3.3.8
 macOS:
-  - "13.0"
+  - "14.0"
 tags:
   - 800-53r5_low
   - 800-53r5_moderate
@@ -54,7 +54,6 @@ tags:
   - cnssi-1253_low
   - cnssi-1253_high
   - cmmc_lvl2
-  - stig
 severity: "medium"
 mobileconfig: false
 mobileconfig_info:

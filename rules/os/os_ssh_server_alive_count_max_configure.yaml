@@ -19,7 +19,7 @@ result:
 fix: |
   [source,bash]
   ----
-  for u in $(/usr/bin/dscl . -list /Users UniqueID | /usr/bin/awk '$2 > 500 {print $1}'); do 
+  for u in $(/usr/bin/dscl . -list /Users UniqueID | /usr/bin/awk '$2 > 500 {print $1}'); do
     config=$(/usr/bin/sudo -u $u /usr/bin/ssh -Gv . 2>&1 | /usr/bin/awk '/Reading configuration data/ {print $NF}'| /usr/bin/tr -d '\r')
     configarray=( ${(f)config} )
     for c in $configarray; do
@@ -29,12 +29,12 @@ fix: |
   ----
 references:
   cce:
-    - CCE-91884-7
-  cci: 
+    - CCE-92895-2
+  cci:
     - N/A
   800-53r5:
     - SC-10
-  800-53r4: 
+  800-53r4:
     - SC-10
   srg:
     - N/A
@@ -45,10 +45,10 @@ references:
   cmmc:
     - SC.L2-3.13.9
 macOS:
-  - "13.0"
+  - "14.0"
 odv:
   hint: "Number of seconds."
-  recommended: 0 
+  recommended: 0
 tags:
   - 800-53r5_moderate
   - 800-53r5_high

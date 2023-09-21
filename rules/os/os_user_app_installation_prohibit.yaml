@@ -1,9 +1,14 @@
 id: os_user_app_installation_prohibit
 title: "Prohibit User Installation of Software into /Users/"
 discussion: |
-  Users _MUST_ not be allowed to install software into /Users/. 
-  
+  Users _MUST_ not be allowed to install software into /Users/.
+
   Allowing regular users to install software, without explicit privileges, presents the risk of untested and potentially malicious software being installed on the system. Explicit privileges (escalated or administrative privileges) provide the regular user with explicit capabilities and control that exceeds the rights of a regular user.
+
+  [IMPORTANT]
+  ====
+  Apple has deprecated the use of link:https://github.com/apple/device-management/blob/eb51fb0cb9626cac4717858556912c257a734ce0/mdm/profiles/com.apple.applicationaccess.new.yaml#L67-L70[application restriction controls], using these controls may not work as expected. Third party software may be required to fulfill the compliance requirements.
+  ====
 check: |
   /usr/bin/osascript -l JavaScript << EOS
   function run() {
@@ -25,7 +30,7 @@ fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-    - CCE-91908-4
+    - CCE-92920-8
   cci:
     - N/A
   800-53r5:
@@ -39,7 +44,7 @@ references:
   cmmc:
     - CM.L2-3.4.9
 macOS:
-  - "13.0"
+  - "14.0"
 tags:
   - cnssi-1253_moderate
   - cnssi-1253_low
@@ -50,5 +55,5 @@ mobileconfig: true
 mobileconfig_info:
   com.apple.applicationaccess.new:
     familyControlsEnabled: true
-    pathBlackList: 
+    pathBlackList:
       - "/Users/"

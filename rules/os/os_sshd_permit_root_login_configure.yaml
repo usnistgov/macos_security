@@ -7,7 +7,7 @@ discussion: |
 
   NOTE: /etc/ssh/sshd_config will be automatically modified to its original state following any update or major upgrade to the operating system.
 check: |
-  /usr/sbin/sshd -T | /usr/bin/awk '/permitrootlogin/{print $2}'
+  /usr/sbin/sshd -G | /usr/bin/awk '/permitrootlogin/{print $2}'
 result:
   string: "no"
 fix: |
@@ -33,7 +33,7 @@ fix: |
   ----
 references:
   cce:
-    - CCE-91893-8
+    - CCE-92905-9
   cci:
     - CCI-000770
   800-53r5:
@@ -43,16 +43,15 @@ references:
   srg:
     - SRG-OS-000109-GPOS-00056
   disa_stig:
-    - APPL-13-001100
+    - N/A
 macOS:
-  - "13.0"
+  - "14.0"
 tags:
   - 800-53r5_high
   - 800-53r4_high
   - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
-  - stig
 severity: "medium"
 mobileconfig: false
 mobileconfig_info:

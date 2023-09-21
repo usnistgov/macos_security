@@ -2,7 +2,7 @@ id: supplemental_cis_manual
 title: "CIS Manual Recommendations"
 discussion: |
   List of CIS recommendations that are manual check in the CIS macOS Benchmark.
-  
+
   [cols="15%h, 85%a"]
   |===
   |Section
@@ -10,16 +10,21 @@ discussion: |
 
   |Recommendations
   |2.1.1.1 Audit iCloud Keychain +
-  2.1.1.2 Audit iCloud Drive + 
+  2.1.1.2 Audit iCloud Drive +
+  2.1.1.4 Audit Security Keys Used With AppleIDs +
   2.1.2 Audit App Store Password Settings +
   2.3.3.12 Ensure Computer Name Does Not Contain PII or Protected Organizational Information +
   2.5.1 Audit Siri Settings +
   2.6.1.3 Audit Location Services Access +
-  2.6.6 Audit Lockdown Mode +
+  2.6.2.1 Audit Full Disk Access for Applications +
+  2.6.7 Audit Lockdown Mode +
   2.8.1 Audit Universal Control Settings +
-  2.11.2 Audit Touch ID and Wallet & Apple Pay Settings +  
+  2.11.2 Audit Touch ID +
   2.13.1 Audit Passwords System Preference Setting +
-  2.14.1 Audit Notification & Focus Settings +  
+  2.14.1 Audit Game Center Settings +
+  2.15.1 Audit Notification & Focus Settings +
+  2.16.1 Audit Wallet & Apple Pay Settings +
+  2.17.1 Audit Internet Accounts for Authorized Use +
   |===
 
   [cols="15%h, 85%a"]
@@ -43,7 +48,6 @@ discussion: |
   5.2.6 Ensure Complex Password Must Contain Uppercase and Lowercase Characters Is Configured +
   5.3.1 Ensure All User Storage APFS Volumes are Encrypted +
   5.3.2 Ensure All User Storage CoreStorage Volumes are Encrypted +
-  5.5 Ensure Login Keychain is Locked when the Computer Sleeps +
   |===
 
   [cols="15%h, 85%a"]
@@ -54,23 +58,23 @@ discussion: |
   |6.2.1 Ensure Protect Mail Activity in Mail Is Enabled +
   6.3.2 Audit History and Remove History Items +
   6.3.5 Audit Hide IP Address in Safari Setting +
-  6.3.7 Audit History and Remove History Items +
+  6.3.8 Audit Autofill +
   |===
 check: |
 fix: |
 references:
   cci:
     - N/A
-  800-53r5: 
-    - N/A    
-  800-53r4: 
+  800-53r5:
+    - N/A
+  800-53r4:
     - N/A
   srg:
     - N/A
   disa_stig:
     - N/A
 macOS:
-  - "13.0"
+  - "14.0"
 tags:
   - supplemental
 mobileconfig: false

@@ -16,7 +16,7 @@ fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-    - CCE-91920-9
+    - CCE-92932-3
   cci:
     - CCI-000200
   800-53r5:
@@ -26,7 +26,7 @@ references:
   srg:
     - SRG-OS-000077-GPOS-00045
   disa_stig:
-    - APPL-13-003009
+    - N/A
   800-171r2:
     - 3.5.7
     - 3.5.8
@@ -42,7 +42,7 @@ references:
     - IA.L2-3.5.8
     - IA.L2-3.5.9
 macOS:
-  - "13.0"
+  - "14.0"
 odv:
   hint: "Number of previous passwords."
   recommended: 5
@@ -64,7 +64,6 @@ tags:
   - cnssi-1253_low
   - cnssi-1253_high
   - cmmc_lvl2
-  - stig
 severity: "medium"
 mobileconfig: true
 mobileconfig_info:

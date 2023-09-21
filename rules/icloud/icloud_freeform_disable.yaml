@@ -1,0 +1,71 @@
+id: icloud_freeform_disable
+title: "Disable the iCloud Freeform Services"
+discussion: |
+  The macOS built-in Freeform.app connection to Apple's iCloud service _MUST_ be disabled.
+
+  Apple's iCloud service does not provide an organization with enough control over the storage and access of data and, therefore, automated calendar synchronization _MUST_ be controlled by an organization approved service.
+check: |
+  /usr/bin/osascript -l JavaScript << EOS
+  $.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess')\
+  .objectForKey('allowCloudFreeform').js
+  EOS
+result:
+  string: "false"
+fix: |
+  This is implemented by a Configuration Profile.
+references:
+  cce:
+    - CCE-92746-7
+  cci:
+    - CCI-000381
+    - CCI-001774
+  800-53r5:
+    - AC-20
+    - AC-20(1)
+    - CM-7
+    - CM-7(1)
+    - SC-7(10)
+  800-53r4:
+    - CM-7
+    - CM-7(1)
+    - AC-20
+    - AC-20(1)
+  srg:
+    - SRG-OS-000095-GPOS-00049
+  disa_stig:
+    - N/A
+  800-171r2:
+    - 3.1.20
+    - 3.4.6
+  cis:
+    benchmark:
+      - N/A
+    controls v8:
+      - 4.1
+      - 4.8
+      - 15.3
+  cmmc:
+    - AC.L1-3.1.20
+    - CM.L2-3.4.6
+    - CM.L2-3.4.7
+macOS:
+  - "14.0"
+tags:
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_high
+  - 800-53r4_low
+  - 800-53r4_moderate
+  - 800-53r4_high
+  - 800-171
+  - cisv8
+  - cnssi-1253_moderate
+  - cnssi-1253_low
+  - cnssi-1253_high
+  - cmmc_lvl2
+  - cmmc_lvl1
+severity: "low"
+mobileconfig: true
+mobileconfig_info:
+  com.apple.applicationaccess:
+    allowCloudFreeform: false

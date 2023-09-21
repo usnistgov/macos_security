@@ -1,6 +1,6 @@
 id: os_library_validation_enabled
 title: "Enable Library Validation"
-discussion:   
+discussion:
   Library validation  _MUST_ be enabled.
 check: |
   /usr/bin/osascript -l JavaScript << EOS
@@ -13,8 +13,8 @@ fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-    - CCE-91810-2
-  cci: 
+    - CCE-92814-3
+  cci:
     - N/A
   800-53r5:
     - N/A
@@ -33,7 +33,7 @@ references:
       - 2.3
       - 2.6
 macOS:
-  - "13.0"
+  - "14.0"
 tags:
   - cisv8
 mobileconfig: true

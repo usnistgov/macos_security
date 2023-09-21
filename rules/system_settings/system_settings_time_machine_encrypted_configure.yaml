@@ -1,7 +1,7 @@
 id: system_settings_time_machine_encrypted_configure
 title: "Ensure Time Machine Volumes are Encrypted"
 discussion: |
-  Time Machine volumes _MUST_ be encrypted. 
+  Time Machine volumes _MUST_ be encrypted.
 check: |
   error_count=0
   for tm in $(/usr/bin/tmutil destinationinfo 2>/dev/null| /usr/bin/awk -F': ' '/Name/{print $2}'); do
@@ -12,7 +12,7 @@ check: |
     fi
   done
   echo "$error_count"
-result: 
+result:
   integer: 0
 fix: |
   . Go to System Settings -> Time Machine
@@ -22,28 +22,28 @@ fix: |
   . Click *Use Disk*
 references:
   cce:
-    - CCE-91988-6
-  cci: 
+    - CCE-92998-4
+  cci:
     - N/A
   800-53r5:
     - N/A
-  800-53r4: 
+  800-53r4:
     - N/A
   srg:
     - N/A
-  disa_stig: 
+  disa_stig:
     - N/A
   800-171r2:
     - N/A
   cis:
-    benchmark: 
+    benchmark:
       - 2.3.4.2 (level 1)
     controls v8:
       - 3.6
       - 3.11
       - 11.3
 macOS:
-  - "13.0"
+  - "14.0"
 tags:
   - cis_lvl1
   - cis_lvl2

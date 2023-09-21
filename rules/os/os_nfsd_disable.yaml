@@ -14,7 +14,7 @@ fix: |
   The system may need to be restarted for the update to take effect.
 references:
   cce:
-    - CCE-91827-6
+    - CCE-92831-7
   cci:
     - CCI-000381
   800-53r5:
@@ -25,7 +25,7 @@ references:
   srg:
     - SRG-OS-000095-GPOS-00049
   disa_stig:
-    - APPL-13-002003
+    - N/A
   800-171r2:
     - 3.1.1
     - 3.1.2
@@ -38,7 +38,7 @@ references:
   cmmc:
     - AC.L1-3.1.1
 macOS:
-  - "13.0"
+  - "14.0"
 tags:
   - 800-53r5_low
   - 800-53r5_moderate
@@ -55,7 +55,6 @@ tags:
   - cnssi-1253_high
   - cmmc_lvl2
   - cmmc_lvl1
-  - stig
 severity: "medium"
 mobileconfig: false
 mobileconfig_info:

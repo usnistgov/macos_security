@@ -22,8 +22,8 @@ fix: |
   NOTE - This will apply to the whole system
 references:
   cce:
-    - CCE-91983-7
-  cci: 
+    - CCE-92993-5
+  cci:
     - N/A
   800-53r5:
     - N/A
@@ -31,7 +31,7 @@ references:
     - N/A
   srg:
     - N/A
-  disa_stig: 
+  disa_stig:
     - N/A
   800-171r2:
     - N/A
@@ -42,7 +42,7 @@ references:
       - 7.3
       - 7.4
 macOS:
-  - "13.0"
+  - "14.0"
 tags:
   - cis_lvl1
   - cis_lvl2

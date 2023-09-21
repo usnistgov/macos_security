@@ -1,7 +1,7 @@
 id: system_settings_hot_corners_secure
 title: "Secure Hot Corners"
 discussion: |
-  Hot corners _MUST_ be secured. 
+  Hot corners _MUST_ be secured.
 
   The information system conceals, via the session lock, information previously visible on the display with a publicly viewable image. Although hot comers can be used to initiate a session lock or to launch useful applications, they can also be configured to disable an automatic session lock from initiating. Such a configuration introduces the risk that a user might forget to manually lock the screen before stepping away from the computer.
 check: |
@@ -25,16 +25,16 @@ fix: |
   ----
 references:
   cce:
-    - CCE-91955-5
-  cci: 
+    - CCE-92966-1
+  cci:
     - N/A
   800-53r5:
     - AC-11(1)
-  800-53r4: 
+  800-53r4:
     - AC-11(1)
   srg:
     - N/A
-  disa_stig: 
+  disa_stig:
     - N/A
   800-171r2:
     - N/A
@@ -43,13 +43,16 @@ references:
       - 2.7.1 (level 2)
     controls v8:
       - 4.3
+  cmmc:
+    - AC.L2-3.1.10
 macOS:
-  - "13.0"
+  - "14.0"
 tags:
   - cis_lvl2
   - cisv8
   - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
+  - cmmc_lvl2
 mobileconfig: false
 mobileconfig_info:

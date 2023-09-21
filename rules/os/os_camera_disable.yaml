@@ -13,7 +13,7 @@ fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-    - CCE-91770-8
+    - CCE-92772-3
   cci:
     - CCI-000381
     - CCI-001774
@@ -25,11 +25,11 @@ references:
     - SRG-OS-000095-GPOS-00049
     - SRG-OS-000370-GPOS-00155
   disa_stig:
-    - APPL-13-002017
+    - N/A
 macOS:
-  - "13.0"
+  - "14.0"
 tags:
-  - stig
+  - none
 severity: "medium"
 mobileconfig: true
 mobileconfig_info:

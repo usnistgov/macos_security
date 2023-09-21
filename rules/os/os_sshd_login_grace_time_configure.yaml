@@ -5,7 +5,7 @@ discussion: |
 
   NOTE: /etc/ssh/sshd_config will be automatically modified to its original state following any update or major upgrade to the operating system.
 check: |
-  /usr/sbin/sshd -T | /usr/bin/awk '/logingracetime/{print $2}'
+  /usr/sbin/sshd -G | /usr/bin/awk '/logingracetime/{print $2}'
 result:
   integer: $ODV
 fix: |
@@ -31,7 +31,7 @@ fix: |
   ----
 references:
   cce:
-    - CCE-91892-0
+    - CCE-92904-2
   cci:
     - CCI-001133
   800-53r5:
@@ -41,13 +41,13 @@ references:
   srg:
     - SRG-OS-000163-GPOS-00072
   disa_stig:
-    - APPL-13-000053
+    - N/A
   800-171r2:
     - 3.13.9
   cmmc:
     - SC.L2-3.13.9
 macOS:
-  - "13.0"
+  - "14.0"
 odv:
   hint: "Number of seconds."
   recommended: 30
@@ -57,7 +57,6 @@ tags:
   - cnssi-1253_low
   - cnssi-1253_high
   - cmmc_lvl2
-  - stig
 severity: "medium"
 mobileconfig: false
 mobileconfig_info:

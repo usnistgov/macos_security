@@ -20,8 +20,8 @@ footer:
   recto:
     right:
       content: |-
-        *{page-number}*   
-    center: 
+        *{page-number}*
+    center:
       content: |-
         {proj-title} +
         macOS Security Compliance Project - _{version}_

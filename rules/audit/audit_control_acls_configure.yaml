@@ -4,7 +4,7 @@ discussion: |
   /etc/security/audit_control _MUST_ not contain Access Control Lists (ACLs).
 check: |
   /bin/ls -le /etc/security/audit_control | /usr/bin/awk '{print $1}' | /usr/bin/grep -c ":"
-result: 
+result:
   integer: 0
 fix: |
   [source,bash]
@@ -13,7 +13,7 @@ fix: |
   ----
 references:
   cce:
-    - CCE-91706-2
+    - CCE-92706-1
   cci:
     - N/A
   800-53r5:
@@ -34,7 +34,7 @@ references:
   cmmc:
     - AU.L2-3.3.8
 macOS:
-  - "13.0"
+  - "14.0"
 tags:
   - cis_lvl1
   - cis_lvl2

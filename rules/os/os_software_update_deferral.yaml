@@ -20,7 +20,7 @@ fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-    - CCE-91882-1
+    - CCE-92893-7
   cci:
     - N/A
   800-53r5:
@@ -40,8 +40,8 @@ references:
       - 7.3
       - 7.4
 macOS:
-  - "13.0"
-odv: 
+  - "14.0"
+odv:
   hint: "Number of days."
   recommended: 30
   cis_lvl1: 30

@@ -1,0 +1,67 @@
+id: os_sshd_unused_connection_timeout_configure
+title: "Configure SSHD Unused Connection Timeout to $ODV"
+discussion: |
+  If SSHD is enabled it _MUST_ be configured with unused connectione timeout set to $ODV.
+
+  This will set the time out when there are no open channels within an session.
+
+  NOTE: /etc/ssh/sshd_config will be automatically modified to its original state following any update or major upgrade to the operating system.
+check: |
+  /usr/sbin/sshd -G | /usr/bin/awk '/unusedconnectiontimeout/{print $2}'
+result:
+  integer: $ODV
+fix: |
+  [source,bash]
+  ----
+  include_dir=$(/usr/bin/awk '/^Include/ {print $2}' /etc/ssh/sshd_config | /usr/bin/tr -d '*')
+
+  if [[ -z $include_dir ]]; then
+    /usr/bin/sed -i.bk "1s/.*/Include \/etc\/ssh\/sshd_config.d\/\*/" /etc/ssh/sshd_config
+  fi
+
+  /usr/bin/grep -qxF 'unusedconnectiontimeout $ODV' "${include_dir}01-mscp-sshd.conf" 2>/dev/null || echo "unusedconnectiontimeout $ODV" >> "${include_dir}01-mscp-sshd.conf"
+
+  for file in $(ls ${include_dir}); do
+    if [[ "$file" == "100-macos.conf" ]]; then
+        continue
+    fi
+    if [[ "$file" == "01-mscp-sshd.conf" ]]; then
+        break
+    fi
+    /bin/mv ${include_dir}${file} ${include_dir}20-${file}
+  done
+  ----
+references:
+  cce:
+    - CCE-92906-7
+  cci:
+    - N/A
+  800-53r5:
+    - SC-10
+    - AC-12
+  800-53r4:
+    - SC-10
+  srg:
+    - N/A
+  disa_stig:
+    - N/A
+  800-171r2:
+    - 3.13.9
+  cmmc:
+    - AC.L2-3.1.11
+    - SC.L2-3.13.9
+odv:
+  hint: "Number of seconds."
+  recommended: 900
+tags:
+  - 800-53r5_moderate
+  - 800-53r5_high
+  - 800-53r4_moderate
+  - 800-53r4_high
+  - 800-171
+  - cnssi-1253_moderate
+  - cnssi-1253_low
+  - cnssi-1253_high
+  - cmmc_lvl2
+mobileconfig: false
+mobileconfig_info:

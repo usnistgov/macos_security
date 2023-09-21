@@ -5,14 +5,14 @@ discussion: |
 
   FIPS 140-2 is the current standard for validating that mechanisms used to access cryptographic modules utilize authentication that meet federal requirements.
 
-  Operating systems utilizing encryption _MUST_ use FIPS validated mechanisms for authenticating to cryptographic modules. 
+  Operating systems utilizing encryption _MUST_ use FIPS validated mechanisms for authenticating to cryptographic modules.
 
   NOTE: For more information on FIPS compliance with the version of SSHD included in the macOS, the manual page apple_ssh_and_fips has additional information.
 check: |
   fips_sshd_config=("Ciphers aes128-gcm@openssh.com" "HostbasedAcceptedAlgorithms ecdsa-sha2-nistp256,ecdsa-sha2-nistp256-cert-v01@openssh.com" "HostKeyAlgorithms ecdsa-sha2-nistp256,ecdsa-sha2-nistp256-cert-v01@openssh.com" "KexAlgorithms ecdh-sha2-nistp256" "MACs hmac-sha2-256" "PubkeyAcceptedAlgorithms ecdsa-sha2-nistp256,ecdsa-sha2-nistp256-cert-v01@openssh.com" "CASignatureAlgorithms ecdsa-sha2-nistp256")
   total=0
   for config in $fips_sshd_config; do
-    total=$(expr $(/usr/sbin/sshd -T | /usr/bin/grep -i -c "$config") + $total)
+    total=$(expr $(/usr/sbin/sshd -G | /usr/bin/grep -i -c "$config") + $total)
   done
 
   echo $total
@@ -28,7 +28,7 @@ fix: |
   fi
 
   fips_sshd_config=("Ciphers aes128-gcm@openssh.com" "HostbasedAcceptedAlgorithms ecdsa-sha2-nistp256,ecdsa-sha2-nistp256-cert-v01@openssh.com" "HostKeyAlgorithms ecdsa-sha2-nistp256,ecdsa-sha2-nistp256-cert-v01@openssh.com" "KexAlgorithms ecdh-sha2-nistp256" "MACs hmac-sha2-256" "PubkeyAcceptedAlgorithms ecdsa-sha2-nistp256,ecdsa-sha2-nistp256-cert-v01@openssh.com" "CASignatureAlgorithms ecdsa-sha2-nistp256")
-    
+
   for config in $fips_sshd_config; do
     /usr/bin/grep -qxF "$config" "${include_dir}01-mscp-sshd.conf" 2>/dev/null || echo "$config" >> "${include_dir}01-mscp-sshd.conf"
   done
@@ -42,18 +42,18 @@ fix: |
     fi
     /bin/mv ${include_dir}${file} ${include_dir}20-${file}
   done
-  ----   
+  ----
 references:
   cce:
-    - CCE-91890-4
-  cci: 
+    - CCE-92902-6
+  cci:
     - N/A
   800-53r5:
     - AC-17(2)
     - IA-7
     - SC-13
     - SC-8(1)
-  800-53r4: 
+  800-53r4:
     - AC-17(2)
     - IA-7
     - SC-8(1)
@@ -73,7 +73,7 @@ references:
     - SC.L2-3.13.8
     - SC.L2-3.13.11
 macOS:
-  - "13.0"
+  - "14.0"
 tags:
   - 800-53r5_moderate
   - 800-53r5_high

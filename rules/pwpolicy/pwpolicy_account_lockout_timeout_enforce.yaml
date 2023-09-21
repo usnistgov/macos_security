@@ -12,7 +12,7 @@ fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-    - CCE-91916-7
+    - CCE-92928-1
   cci:
     - CCI-002238
   800-53r5:
@@ -22,22 +22,24 @@ references:
   srg:
     - SRG-OS-000329-GPOS-00128
   disa_stig:
-    - APPL-13-000022
+    - N/A
   800-171r2:
     - 3.1.8
   cis:
     benchmark:
-      - N/A
+      - 5.2.1 (level 1)
     controls v8:
-      - 4.1
+      - 6.2
   cmmc:
     - AC.L2-3.1.8
 macOS:
-  - "13.0"
+  - "14.0"
 odv:
   hint: "Number of minutes."
   recommended: 15
   stig: 15
+  cis_lvl1: 15
+  cis_lvl2: 15
 tags:
   - 800-171
   - 800-53r4_low
@@ -47,11 +49,12 @@ tags:
   - 800-53r5_moderate
   - 800-53r5_high
   - cisv8
+  - cis_lvl1
+  - cis_lvl2
   - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
   - cmmc_lvl2
-  - stig
 severity: "medium"
 mobileconfig: true
 mobileconfig_info:

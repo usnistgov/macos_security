@@ -1,0 +1,67 @@
+id: os_hibernate_mode_intel_enable
+title: "Enable Hibernate Mode (Intel)"
+discussion: |
+  Hibernate mode _MUST_ be enabled.
+
+  This will store a copy of memory to persistent storage, and will remove power to memory. This setting will stop the potential for a cold-boot attack.
+
+check: |
+  error_count=0
+  if /usr/sbin/ioreg -rd1 -c IOPlatformExpertDevice 2>&1 | /usr/bin/grep -q "MacBook"; then
+    hibernateMode=$(/usr/bin/pmset -b -g | /usr/bin/grep hibernatemode 2>&1 | /usr/bin/awk '{print $2}')
+    hibernateStandbyLowValue=$(/usr/bin/pmset -g | /usr/bin/grep standbydelaylow 2>&1 | /usr/bin/awk '{print $2}')
+    hibernateStandbyHighValue=$(/usr/bin/pmset -g | /usr/bin/grep standbydelayhigh 2>&1 | /usr/bin/awk '{print $2}')
+    hibernateStandbyThreshValue=$(/usr/bin/pmset -g | /usr/bin/grep highstandbythreshold 2>&1 | /usr/bin/awk '{print $2}')
+
+    if [[ "$hibernateStandbyLowValue" == "" ]] || [[ "$hibernateStandbyLowValue" -gt 900 ]]; then
+      ((error_count++))
+    fi
+    if [[ "$hibernateStandbyHighValue" == "" ]] || [[ "$hibernateStandbyHighValue" -gt 900 ]]; then
+      ((error_count++))
+    fi
+    if [[ "$hibernateStandbyThreshValue" == "" ]] || [[ "$hibernateStandbyThreshValue" -lt 90 ]]; then
+      ((error_count++))
+    fi
+    if [[ "$hibernateMode" == "" ]] || [[ "$hibernateMode" != 25 ]]; then
+      ((error_count++))
+    fi
+  fi
+  echo "$error_count"
+result:
+  integer: 0
+fix: |
+  [source,bash]
+  ----
+  /usr/bin/pmset -a standbydelaylow 900
+  /usr/bin/pmset -a standbydelayhigh 900
+  /usr/bin/pmset -a highstandbythreshold 90
+  /usr/bin/pmset -a hibernatemode 25
+  ----
+references:
+  cce:
+    - CCE-92802-8
+  cci:
+    - N/A
+  800-53r5:
+    - N/A
+  800-53r4:
+    - N/A
+  srg:
+    - N/A
+  disa_stig:
+    - N/A
+  800-171r2:
+    - N/A
+  cis:
+    benchmark:
+      - 2.9.1.1 (level 2)
+    controls v8:
+      - 4.1
+macOS:
+  - "14.0"
+tags:
+  - cis_lvl2
+  - cisv8
+  - i386
+mobileconfig: false
+mobileconfig_info:

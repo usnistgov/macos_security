@@ -1,6 +1,6 @@
-title: "macOS 13.0: Security Configuration - CIS Apple macOS 13.0 Ventura v1.0.0 Benchmark (Level 2)"
+title: "macOS 14.0: Security Configuration - CIS Apple macOS 14.0 Sonoma v1.0.0 Benchmark (Level 2)"
 description: |
-  This guide describes the actions to take when securing a macOS 13.0 system against the CIS Apple macOS 13.0 Ventura v1.0.0 Benchmark (Level 2) security baseline.
+  This guide describes the actions to take when securing a macOS 14.0 system against the CIS Apple macOS 14.0 Sonoma v1.0.0 Benchmark (Level 2) security baseline.
 authors: |
   *macOS Security Compliance Project*
 
@@ -41,28 +41,34 @@ profile:
   - section: "macos"
     rules:
       - os_airdrop_disable
+      - os_anti_virus_installed
       - os_authenticated_root_enable
       - os_bonjour_disable
       - os_config_data_install_enforce
-      - os_efi_integrity_validated
       - os_firewall_log_enable
       - os_gatekeeper_enable
       - os_guest_folder_removed
+      - os_hibernate_mode_apple_silicon_enable
       - os_hibernate_mode_destroyfvkeyonstandby_enable
-      - os_hibernate_mode_enable
+      - os_hibernate_mode_intel_enable
       - os_home_folders_secure
       - os_httpd_disable
       - os_install_log_retention_configure
+      - os_mdm_require
       - os_mobile_file_integrity_enable
       - os_nfsd_disable
+      - os_on_device_dictation_enforce
       - os_password_hint_remove
       - os_policy_banner_loginwindow_enforce
       - os_power_nap_disable
       - os_root_disable
       - os_safari_advertising_privacy_protection_enable
+      - os_safari_javascript_enabled
       - os_safari_open_safe_downloads_disable
+      - os_safari_popups_disabled
       - os_safari_prevent_cross-site_tracking_enable
       - os_safari_show_full_website_address_enable
+      - os_safari_show_status_bar_enabled
       - os_safari_warn_fraudulent_website_enable
       - os_show_filename_extensions_enable
       - os_sip_enable
@@ -78,13 +84,13 @@ profile:
   - section: "passwordpolicy"
     rules:
       - pwpolicy_account_lockout_enforce
+      - pwpolicy_account_lockout_timeout_enforce
       - pwpolicy_alpha_numeric_enforce
+      - pwpolicy_custom_regex_enforce
       - pwpolicy_history_enforce
-      - pwpolicy_lower_case_character_enforce
       - pwpolicy_max_lifetime_enforce
       - pwpolicy_minimum_length_enforce
       - pwpolicy_special_character_enforce
-      - pwpolicy_upper_case_character_enforce
   - section: "systemsettings"
     rules:
       - system_settings_airplay_receiver_disable
@@ -132,7 +138,6 @@ profile:
   - section: "Supplemental"
     rules:
       - supplemental_cis_manual
-      - supplemental_controls
       - supplemental_filevault
       - supplemental_firewall_pf
       - supplemental_password_policy

@@ -1,6 +1,6 @@
 id: os_guest_folder_removed
 title: "Remove Guest Folder if Present"
-discussion: |  
+discussion: |
   The guest folder _MUST_ be deleted if present.
 check: |
   /bin/ls /Users/ | /usr/bin/grep -c "Guest"
@@ -13,8 +13,8 @@ fix: |
   ----
 references:
   cce:
-    - CCE-91796-3
-  cci: 
+    - CCE-92798-8
+  cci:
     - N/A
   800-53r5:
     - N/A
@@ -28,11 +28,11 @@ references:
     - N/A
   cis:
     benchmark:
-      - 5.10 (level 1)
-    controls v8: 
+      - 5.9 (level 1)
+    controls v8:
       - 4.1
 macOS:
-  - "13.0"
+  - "14.0"
 tags:
   - cis_lvl1
   - cis_lvl2

@@ -10,7 +10,7 @@ discussion: |
 
   [IMPORTANT]
   ====
-  Apple has deprecated the use of media mount controls, using these controls may not work as expected. Third party software may be required to fullfill the compliance requirements.
+  Apple has deprecated the use of link:https://github.com/apple/device-management/blob/eb51fb0cb9626cac4717858556912c257a734ce0/mdm/profiles/com.apple.systemuiserver.yaml#L4-L8[media mount controls], using these controls may not work as expected. Third party software may be required to fulfill the compliance requirements.
   ====
 check: |
   /usr/bin/osascript -l JavaScript << EOS
@@ -23,7 +23,7 @@ fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-    - CCE-91766-6
+    - CCE-92768-1
   cci:
     - CCI-000366
   800-53r5:
@@ -33,20 +33,19 @@ references:
   srg:
     - SRG-OS-000480-GPOS-00227
   disa_stig:
-    - APPL-13-005051
+    - N/A
   800-171r2:
     - 3.8.8
   cmmc:
     - MP.L2-3.8.7
     - MP.L2-3.8.8
 macOS:
-  - "13.0"
+  - "14.0"
 tags:
   - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
   - cmmc_lvl2
-  - stig
 severity: "medium"
 mobileconfig: true
 mobileconfig_info:

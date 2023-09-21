@@ -14,7 +14,7 @@ fix: |
   ----
 references:
   cce:
-    - CCE-91895-3
+    - CCE-92908-3
   cci:
     - CCI-002038
   800-53r5:
@@ -24,14 +24,14 @@ references:
   srg:
     - SRG-OS-000373-GPOS-00156
   disa_stig:
-    - APPL-13-004022
+    - N/A
   cis:
     benchmark:
       - 5.4 (level 1)
     controls v8:
       - 4.3
 macOS:
-  - "13.0"
+  - "14.0"
 odv:
   hint: "Number of minutes."
   recommended: 0
@@ -45,6 +45,5 @@ tags:
   - cis_lvl1
   - cis_lvl2
   - cisv8
-  - stig
 mobileconfig: false
 mobileconfig_info:

@@ -12,7 +12,7 @@ fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-    - CCE-91915-9
+    - CCE-92927-3
   cci:
     - CCI-002238
   800-53r5:
@@ -22,7 +22,7 @@ references:
   srg:
     - SRG-OS-000329-GPOS-00128
   disa_stig:
-    - APPL-13-000022
+    - N/A
   800-171r2:
     - 3.1.8
   cis:
@@ -33,7 +33,7 @@ references:
   cmmc:
     - AC.L2-3.1.8
 macOS:
-  - "13.0"
+  - "14.0"
 odv:
   hint: "Number of failed attempts."
   recommended: 3
@@ -55,7 +55,6 @@ tags:
   - cnssi-1253_low
   - cnssi-1253_high
   - cmmc_lvl2
-  - stig
 severity: "medium"
 mobileconfig: true
 mobileconfig_info:

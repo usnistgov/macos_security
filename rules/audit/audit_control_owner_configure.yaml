@@ -13,7 +13,7 @@ fix: |
   ----
 references:
   cce:
-    - CCE-91709-6
+    - CCE-92709-5
   cci:
     - N/A
   800-53r5:
@@ -34,7 +34,7 @@ references:
   cmmc:
     - AU.L2-3.3.8
 macOS:
-  - "13.0"
+  - "14.0"
 tags:
   - cis_lvl1
   - cis_lvl2

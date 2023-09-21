@@ -10,7 +10,7 @@ fix: |
   Obtain the approved certificates from the appropriate authority and install them to the System Keychain.
 references:
   cce:
-    - CCE-91772-4
+    - CCE-92774-9
   cci:
     - CCI-000185
     - CCI-002450
@@ -26,7 +26,7 @@ references:
     - SC.L2-3.13.10
     - APPL-13-003001
 macOS:
-  - "13.0"
+  - "14.0"
 tags:
   - 800-53r5_moderate
   - 800-53r5_high
@@ -37,7 +37,6 @@ tags:
   - cnssi-1253_low
   - cnssi-1253_high
   - cmmc_lvl2
-  - stig
 severity: "high"
 mobileconfig: false
 mobileconfig_info:

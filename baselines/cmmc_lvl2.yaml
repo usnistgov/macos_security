@@ -1,6 +1,6 @@
-title: "macOS 13.0: Security Configuration - US CMMC 2.0 Level 2"
+title: "macOS 14.0: Security Configuration - US CMMC 2.0 Level 2"
 description: |
-  This guide describes the actions to take when securing a macOS 13.0 system against the US CMMC 2.0 Level 2 security baseline.
+  This guide describes the actions to take when securing a macOS 14.0 system against the US CMMC 2.0 Level 2 security baseline.
 
   Information System Security Officers and benchmark creators can use this catalog of settings in order to assist them in security benchmark creation. This list is a catalog, not a checklist or benchmark, and satisfaction of every item is not likely to be possible or sensible in many operational scenarios.
 authors: |
@@ -57,6 +57,7 @@ profile:
       - icloud_bookmarks_disable
       - icloud_calendar_disable
       - icloud_drive_disable
+      - icloud_freeform_disable
       - icloud_game_center_disable
       - icloud_keychain_disable
       - icloud_mail_disable
@@ -67,6 +68,7 @@ profile:
       - icloud_sync_disable
   - section: "macos"
     rules:
+      - os_account_modification_disable
       - os_airdrop_disable
       - os_appleid_prompt_disable
       - os_authenticated_root_enable
@@ -97,6 +99,7 @@ profile:
       - os_ir_support_disable
       - os_mdm_require
       - os_nfsd_disable
+      - os_on_device_dictation_enforce
       - os_password_autofill_disable
       - os_password_hint_remove
       - os_password_proximity_disable
@@ -111,6 +114,7 @@ profile:
       - os_recovery_lock_enable
       - os_removable_media_disable
       - os_root_disable
+      - os_screensaver_loginwindow_enforce
       - os_sip_enable
       - os_siri_prompt_disable
       - os_skip_screen_time_prompt_enable
@@ -118,11 +122,12 @@ profile:
       - os_ssh_fips_compliant
       - os_ssh_server_alive_count_max_configure
       - os_ssh_server_alive_interval_configure
+      - os_sshd_channel_timeout_configure
       - os_sshd_client_alive_count_max_configure
       - os_sshd_client_alive_interval_configure
       - os_sshd_fips_compliant
-      - os_sshd_key_exchange_algorithm_configure
       - os_sshd_login_grace_time_configure
+      - os_sshd_unused_connection_timeout_configure
       - os_tftpd_disable
       - os_time_server_enabled
       - os_touchid_prompt_disable
@@ -135,14 +140,13 @@ profile:
       - pwpolicy_account_lockout_enforce
       - pwpolicy_account_lockout_timeout_enforce
       - pwpolicy_alpha_numeric_enforce
+      - pwpolicy_custom_regex_enforce
       - pwpolicy_history_enforce
-      - pwpolicy_lower_case_character_enforce
       - pwpolicy_max_lifetime_enforce
       - pwpolicy_minimum_length_enforce
       - pwpolicy_minimum_lifetime_enforce
       - pwpolicy_simple_sequence_disable
       - pwpolicy_special_character_enforce
-      - pwpolicy_upper_case_character_enforce
   - section: "systemsettings"
     rules:
       - system_settings_airplay_receiver_disable
@@ -163,6 +167,8 @@ profile:
       - system_settings_gatekeeper_override_disallow
       - system_settings_guest_access_smb_disable
       - system_settings_guest_account_disable
+      - system_settings_hot_corners_disable
+      - system_settings_hot_corners_secure
       - system_settings_improve_siri_dictation_disable
       - system_settings_internet_accounts_disable
       - system_settings_internet_sharing_disable
@@ -199,6 +205,7 @@ profile:
       - os_prevent_priv_functions
       - os_prevent_unauthorized_disclosure
       - os_prohibit_remote_activation_collab_devices
+      - os_secure_enclave
       - os_separate_functionality
       - os_store_encrypted_passwords
       - os_unique_identification
@@ -206,6 +213,7 @@ profile:
   - section: "Permanent"
     rules:
       - audit_records_processing
+      - os_auth_peripherals
       - system_settings_wifi_disable_when_connected_to_ethernet
   - section: "not_applicable"
     rules: 

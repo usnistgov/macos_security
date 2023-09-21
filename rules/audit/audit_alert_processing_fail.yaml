@@ -8,7 +8,7 @@ fix: |
   This requirement is a permanent finding and cannot be fixed. An appropriate mitigation for the system must be implemented, but this finding cannot be considered fixed.
 references:
   cce:
-    - CCE-91703-9
+    - CCE-92703-8
   cci:
     - N/A
   800-53r5:
@@ -20,7 +20,7 @@ references:
   srg:
     - N/A
 macOS:
-  - "13.0"
+  - "14.0"
 tags:
   - permanent
 mobileconfig: false

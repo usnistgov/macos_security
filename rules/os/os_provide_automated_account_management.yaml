@@ -4,7 +4,7 @@ discussion: |
   The organization should employ automated mechanisms to support the management of information system accounts.
 
   The use of automated mechanisms prevents against human error and provide a faster and more efficient means of relaying time-sensitive information and account management.
-  
+
   To employ automated mechanisms for account management functions, many operating systems can be integrated with an enterprise-level directory service that meets or exceeds this requirement.
 check: |
   The technology does not support this requirement. This is an applicable-does not meet finding.
@@ -12,7 +12,7 @@ fix: |
   This requirement is a permanent finding and cannot be fixed. An appropriate mitigation for the system must be implemented, but this finding cannot be considered fixed.
 references:
   cce:
-    - CCE-91858-1
+    - CCE-92863-0
   cci:
     - N/A
   800-53r5:
@@ -24,7 +24,7 @@ references:
   srg:
     - N/A
 macOS:
-  - "13.0"
+  - "14.0"
 tags:
   - 800-53r5_moderate
   - 800-53r5_high
