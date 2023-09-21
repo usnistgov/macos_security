@@ -25,6 +25,7 @@ profile:
       - os_apple_watch_wrist_detection_enable
       - os_application_allow_list
       - os_diagnostics_reports_disable
+      - os_disallow_enterprise_app_trust
       - os_enterprise_books_disable
       - os_force_encrypted_backups_enable
       - os_install_vpn_configuration_disable

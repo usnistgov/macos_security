@@ -35,6 +35,7 @@ profile:
       - os_application_allow_list
       - os_authentication_password_autofill_enable
       - os_diagnostics_reports_disable
+      - os_disallow_enterprise_app_trust
       - os_erase_contents_and_settings_disable
       - os_find_my_friends_disable
       - os_force_date_and_time_enable
