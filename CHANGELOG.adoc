@@ -2,6 +2,6 @@
 
 This document provides a high-level view of the changes to the macOS Security Compliance Project.
 
-== [iOS 17, Revision 1.0] - 2023-XX-XX
+== [iOS 17, Revision 1.0] - 2023-09-21
 
 Initial Public release
