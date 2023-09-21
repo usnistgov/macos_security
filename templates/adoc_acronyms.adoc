@@ -5,12 +5,14 @@
 |AES|Advanced Encryption Standard
 |ABM|Apple Business Manager
 |AFP|Apple Filing Protocol
-|ALF|Application Layer Firewall
+|ALF|Application Layer Firewall 
 |AO|Authorizing Official
 |API|Application Programming Interface
 |ARD|Apple Remote Desktop
 |CA|Certificate Authority
 |CIS|Center for Internet Security
+|CMMC|Cybersecurity Maturity Model Certification
+|CNSSI|Committee on National Security Systems
 |CRL|Certificate Revocation List
 |DISA|Defense Information Systems Agency
 |DMA|Direct Memory Access
