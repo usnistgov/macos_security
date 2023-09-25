@@ -429,7 +429,7 @@ profile:'''.format(other_header,other_header,version_yaml['os'],version_yaml['ve
             full_baseline = full_baseline + '''
       - {}'''.format(rule)
 
-    if len(os_section) != 0:
+    if len(os_section) != 0 and version_yaml['platform'] == "iOS/iPadOS":
         full_baseline = full_baseline + '''
   - section: "ios"
     rules:'''
