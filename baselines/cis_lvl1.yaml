@@ -62,6 +62,7 @@ profile:
   - section: "passwordpolicy"
     rules:
       - pwpolicy_account_lockout_enforce
+      - pwpolicy_account_lockout_timeout_enforce
       - pwpolicy_history_enforce
       - pwpolicy_max_lifetime_enforce
       - pwpolicy_minimum_length_enforce

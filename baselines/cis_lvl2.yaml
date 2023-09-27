@@ -78,6 +78,7 @@ profile:
   - section: "passwordpolicy"
     rules:
       - pwpolicy_account_lockout_enforce
+      - pwpolicy_account_lockout_timeout_enforce
       - pwpolicy_alpha_numeric_enforce
       - pwpolicy_history_enforce
       - pwpolicy_lower_case_character_enforce
