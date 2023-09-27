@@ -3,7 +3,7 @@ title: "Ensure JavaScript is Enabled in Safari"
 discussion: |
   Safari _MUST_ be configured to enable Javascript.
 check: |
-  /usr/bin/profiles -P -o stdout | /usr/bin/grep -c 'WebKitPreferences.javaScriptEnabled = 1' | /usr/bin/awk '{ if ($1 >= 1) {print "1"} else {print "0"}}'
+  /usr/bin/profiles -P -o stdout | /usr/bin/grep -c '"WebKitPreferences.javaScriptEnabled" = 1' | /usr/bin/awk '{ if ($1 >= 1) {print "1"} else {print "0"}}'
 result:
   integer: 1
 fix: |
