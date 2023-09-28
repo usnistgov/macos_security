@@ -1,21 +1,20 @@
-id: os_on_device_dictation_enforce
-title: Enforce On Device Dictation
+id: os_dictation_disable
+title: Disable Dictation
 discussion: |
-  Dictation _MUST_ be restricted to on device only to prevent potential data exfiltration.
+  Dictation _MUST_ be disabled on Intel based Macs as the feature On Device Dictation is only available on Apple Silicon devices. 
 
-  The information system _MUST_ be configured to provide only essential capabilities.
 check: |
   /usr/bin/osascript -l JavaScript << EOS
   $.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess')\
-  .objectForKey('forceOnDeviceOnlyDictation').js
+  .objectForKey('allowDictation').js
   EOS
 result:
-  string: 'true'
+  string: 'false'
 fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-    - CCE-92841-6
+    - N/A
   cci:
     - N/A
   800-53r5:
@@ -47,7 +46,7 @@ references:
 macOS:
   - '14.0'
 tags:
-  - arm64
+  - i386
   - 800-53r5_low
   - 800-53r5_moderate
   - 800-53r5_high
@@ -66,4 +65,4 @@ severity: medium
 mobileconfig: true
 mobileconfig_info:
   com.apple.applicationaccess:
-    forceOnDeviceOnlyDictation: true
+    allowDictation: false
