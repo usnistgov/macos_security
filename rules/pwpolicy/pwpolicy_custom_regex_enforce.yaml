@@ -9,7 +9,7 @@ discussion: |
 
   NOTE: The configuration profile generated must be installed from an MDM server.
 check: |
-  /usr/bin/pwpolicy -getaccountpolicies 2> /dev/null | /usr/bin/tail +2 | /usr/bin/xmllint --xpath 'boolean(//*[contains(text(),"policyAttributePassword matches '\''$ODV'\''")])' 
+  /usr/bin/pwpolicy -getaccountpolicies 2> /dev/null | /usr/bin/tail +2 | /usr/bin/xmllint --xpath 'boolean(//*[contains(text(),"policyAttributePassword matches '\''$ODV'\''")])' -
 result:
   string: 'true'
 fix: |
