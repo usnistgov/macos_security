@@ -28,6 +28,8 @@ references:
   srg:
     - SRG-OS-000404-GPOS-00183
     - SRG-OS-000405-GPOS-00184
+  cmmc:
+    - SC.L2-3.13.10
 macOS:
   - '14.0'
 tags:
@@ -36,5 +38,6 @@ tags:
   - cnssi-1253_low
   - cnssi-1253_high
   - newstig
+  - cmmc_lvl2
 mobileconfig: false
 mobileconfig_info:

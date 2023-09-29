@@ -1,0 +1,103 @@
+title: "macOS 14.0: Security Configuration - US CMMC 2.0 Level 1"
+description: |
+  This guide describes the actions to take when securing a macOS 14.0 system against the US CMMC 2.0 Level 1 security baseline.
+
+  Information System Security Officers and benchmark creators can use this catalog of settings in order to assist them in security benchmark creation. This list is a catalog, not a checklist or benchmark, and satisfaction of every item is not likely to be possible or sensible in many operational scenarios.
+authors: |
+  *macOS Security Compliance Project*
+
+  |===
+  |John Mahlman|Leidos
+  |Bob Gendler|National Institute of Standards and Technology
+  |Dan Brodjieski|National Aeronautics and Space Administration
+  |Allen Golbig|Jamf
+  |===
+parent_values: "recommended"
+profile:
+  - section: "authentication"
+    rules:
+      - auth_smartcard_allow
+      - auth_smartcard_enforce
+      - auth_ssh_password_authentication_disable
+  - section: "icloud"
+    rules:
+      - icloud_addressbook_disable
+      - icloud_appleid_system_settings_disable
+      - icloud_bookmarks_disable
+      - icloud_calendar_disable
+      - icloud_drive_disable
+      - icloud_freeform_disable
+      - icloud_game_center_disable
+      - icloud_keychain_disable
+      - icloud_mail_disable
+      - icloud_notes_disable
+      - icloud_photos_disable
+      - icloud_private_relay_disable
+      - icloud_reminders_disable
+      - icloud_sync_disable
+  - section: "macos"
+    rules:
+      - os_account_modification_disable
+      - os_airdrop_disable
+      - os_appleid_prompt_disable
+      - os_authenticated_root_enable
+      - os_config_data_install_enforce
+      - os_filevault_autologin_disable
+      - os_firewall_log_enable
+      - os_firmware_password_require
+      - os_gatekeeper_enable
+      - os_gatekeeper_rearm
+      - os_handoff_disable
+      - os_home_folders_secure
+      - os_httpd_disable
+      - os_icloud_storage_prompt_disable
+      - os_nfsd_disable
+      - os_on_device_dictation_enforce
+      - os_rapid_security_response_allow
+      - os_rapid_security_response_removal_disable
+      - os_recovery_lock_enable
+      - os_root_disable
+      - os_sip_enable
+      - os_siri_prompt_disable
+      - os_skip_unlock_with_watch_enable
+      - os_tftpd_disable
+      - os_unlock_active_user_session_disable
+      - os_uucp_disable
+  - section: "systemsettings"
+    rules:
+      - system_settings_automatic_login_disable
+      - system_settings_bluetooth_sharing_disable
+      - system_settings_critical_update_install_enforce
+      - system_settings_diagnostics_reports_disable
+      - system_settings_find_my_disable
+      - system_settings_firewall_enable
+      - system_settings_firewall_stealth_mode_enable
+      - system_settings_guest_access_smb_disable
+      - system_settings_guest_account_disable
+      - system_settings_improve_siri_dictation_disable
+      - system_settings_internet_accounts_disable
+      - system_settings_internet_sharing_disable
+      - system_settings_loginwindow_prompt_username_password_enforce
+      - system_settings_media_sharing_disabled
+      - system_settings_personalized_advertising_disable
+      - system_settings_rae_disable
+      - system_settings_screen_sharing_disable
+      - system_settings_siri_disable
+      - system_settings_smbd_disable
+      - system_settings_ssh_disable
+      - system_settings_ssh_enable
+      - system_settings_system_wide_preferences_configure
+  - section: "Inherent"
+    rules:
+      - os_logical_access
+      - os_malicious_code_prevention
+  - section: "Permanent"
+    rules:
+      - os_auth_peripherals
+  - section: "Supplemental"
+    rules:
+      - supplemental_controls
+      - supplemental_filevault
+      - supplemental_firewall_pf
+      - supplemental_password_policy
+      - supplemental_smartcard

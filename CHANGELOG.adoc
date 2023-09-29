@@ -2,4 +2,56 @@
 
 This document provides a high-level view of the changes to the macOS Security Compliance Project.
 
-== [Sonoma, Revision 1.0] - 2023-XX-XX
+== [Sonoma, Revision 1.0] - 2023-09-21
+
+* Rules
+** Added Rules
+*** icloud_freeform_disable
+*** os_account_modification_disable
+*** os_on_device_dictation_enforce
+*** os_setup_assistant_filevault_enforce
+*** os_sshd_channel_timeout_configure
+*** os_sshd_unused_connection_timeout_configure
+** Modified Rules
+*** auth_ssh_password_authentication_disable
+*** os_policy_banner_ssh_enforce
+*** os_sshd_client_alive_count_max_configure
+*** os_sshd_client_alive_interval_configure
+*** os_sshd_fips_compliant
+*** os_sshd_login_grace_time_configure
+*** os_sshd_permit_root_login_configure
+*** system_settings_location_services_menu_enforce
+*** system_settings_siri_disable
+** Deleted Rules
+*** icloud_appleid_preference_pane_disable.yaml
+*** os_efi_integrity_validated
+*** os_sshd_key_exchange_algorithm_configure
+*** os_sshd_fips_140_ciphers
+*** os_sshd_fips_140_macs
+*** system_settings_bluetooth_prefpane_disable
+*** system_settings_internet_accounts_preference_pane_disable
+*** system_settings_siri_prefpane_disable
+*** system_settings_touch_id_pane_disable
+*** system_settings_wallet_applepay_prefpane_disable
+*** system_settings_wallet_applepay_prefpane_hide
+** Bug Fixes
+
+* Baselines
+** Modified existing baselines
+
+* Scripts
+** generate_guidance
+*** Added iOS support
+*** Added support for pwpolicy regex
+*** Modified ssh_key_check
+*** Bug Fixes
+** generate_baseline
+*** Added iOS support
+*** Bug Fixes
+** generate_mappings
+*** Added iOS support
+*** Bug Fixes
+** generate_scap
+*** Added iOS support
+*** Added support for pwpolicy regex
+*** Bug Fixes

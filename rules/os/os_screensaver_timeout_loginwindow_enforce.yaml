@@ -37,7 +37,9 @@ references:
     benchmark:
       - N/A
     controls v8:
-      - N/A
+      - 4.3
+  cmmc:
+    - AC.L2-3.1.10
 macOS:
   - '14.0'
 odv:
@@ -46,6 +48,7 @@ odv:
   stig: 900
 tags:
   - newstig
+  - cnssi-1253_moderate
 severity: medium
 mobileconfig: true
 mobileconfig_info:

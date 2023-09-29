@@ -25,6 +25,8 @@ references:
     - N/A
   800-171r2:
     - 3.1.10
+  cmmc:
+    - AC.L2-3.1.10
 macOS:
   - '14.0'
 tags:
@@ -36,8 +38,13 @@ tags:
   - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
+<<<<<<< HEAD
   - newstig
 severity: medium
+=======
+  - cmmc_lvl2
+severity: "medium"
+>>>>>>> sonoma
 mobileconfig: true
 mobileconfig_info:
   com.apple.ManagedClient.preferences:
