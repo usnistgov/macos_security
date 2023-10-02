@@ -5,11 +5,7 @@ discussion: |
 check: |
   /usr/bin/defaults read /Library/Preferences/com.apple.locationmenu.plist ShowSystemServices
 result:
-<<<<<<< HEAD
-  string: 'true'
-=======
   boolean: 1
->>>>>>> sonoma
 fix: |
   [source,bash]
   ----

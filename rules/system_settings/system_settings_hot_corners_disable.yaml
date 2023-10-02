@@ -38,13 +38,9 @@ tags:
   - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
-<<<<<<< HEAD
   - newstig
-severity: medium
-=======
   - cmmc_lvl2
 severity: "medium"
->>>>>>> sonoma
 mobileconfig: true
 mobileconfig_info:
   com.apple.ManagedClient.preferences:
