@@ -33,6 +33,6 @@ tags:
   - permanent
   - cnssi-1253_moderate
   - cnssi-1253_high
-  - newstig
+  - stig
 mobileconfig: false
 mobileconfig_info:

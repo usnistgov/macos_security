@@ -75,6 +75,6 @@ tags:
   - cnssi-1253_high
   - cmmc_lvl2
   - cmmc_lvl1
-  - newstig
+  - stig
 mobileconfig: false
 mobileconfig_info:

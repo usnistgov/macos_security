@@ -57,7 +57,7 @@ tags:
   - cnssi-1253_moderate
   - cnssi-1253_low
   - cmmc_lvl2
-  - newstig
+  - stig
 severity: medium
 mobileconfig: false
 mobileconfig_info:

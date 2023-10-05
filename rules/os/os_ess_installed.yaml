@@ -27,7 +27,7 @@ macOS:
 tags:
   - manual
   - cisv8
-  - newstig
+  - stig
 severity: medium
 mobileconfig: false
 mobileconfig_info:

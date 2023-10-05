@@ -32,7 +32,7 @@ macOS:
   - '14.0'
 tags:
   - cisv8
-  - newstig
+  - stig
 severity: high
 mobileconfig: false
 mobileconfig_info:

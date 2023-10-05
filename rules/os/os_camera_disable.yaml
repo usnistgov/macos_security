@@ -28,7 +28,7 @@ references:
 macOS:
   - '14.0'
 tags:
-  - newstig
+  - stig
 severity: medium
 mobileconfig: true
 mobileconfig_info:

@@ -27,6 +27,6 @@ macOS:
   - '14.0'
 tags:
   - permanent
-  - newstig
+  - stig
 mobileconfig: false
 mobileconfig_info:

@@ -32,6 +32,6 @@ tags:
   - 800-53r4_high
   - inherent
   - cnssi-1253_high
-  - newstig
+  - stig
 mobileconfig: false
 mobileconfig_info:

@@ -79,7 +79,7 @@ tags:
   - manual
   - cnssi-1253_moderate
   - cnssi-1253_high
-  - newstig
+  - stig
 severity: medium
 mobileconfig: false
 mobileconfig_info:

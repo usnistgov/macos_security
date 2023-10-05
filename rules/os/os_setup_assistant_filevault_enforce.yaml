@@ -47,7 +47,7 @@ tags:
   - 800-53r5_high
   - cisv8
   - cmmc_lvl2
-  - newstig
+  - stig
 severity: high
 mobileconfig: true
 mobileconfig_info:

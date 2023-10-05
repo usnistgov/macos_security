@@ -54,7 +54,7 @@ tags:
   - cnssi-1253_low
   - cnssi-1253_high
   - cmmc_lvl2
-  - newstig
+  - stig
 mobileconfig: true
 mobileconfig_info:
   com.apple.applicationaccess:
