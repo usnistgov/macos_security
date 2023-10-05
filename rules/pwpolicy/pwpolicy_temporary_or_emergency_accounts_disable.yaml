@@ -44,7 +44,7 @@ fix: |
   <array>
   <dict>
   <key>policyContent</key>
-  <string>policyAttributeCurrentTime < policyAttributeCreationTime+259299</string>
+  <string>policyAttributeCurrentTime &lt; policyAttributeCreationTime+259299</string>
   <key>policyIdentifier</key>
   <string>Disable Tmp Accounts </string>
   </dict>
