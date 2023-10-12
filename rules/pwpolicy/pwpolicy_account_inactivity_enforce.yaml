@@ -22,7 +22,7 @@ fix: |
   <string>Inactive Account</string>
   <key>policyParameters</key>
   <dict>
-  <key>policyAttributeInactiveDays<key>
+  <key>policyAttributeInactiveDays</key>
   <integer>$ODV</integer>
   </dict>
   </dict>
