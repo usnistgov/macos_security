@@ -84,7 +84,7 @@ def get_rule_yaml(rule_file, custom=False):
             resulting_yaml[yaml_field] = og_rule_yaml[yaml_field]
             # print(f"key error {e} for {rule_file}")
     
-    if "newstig" not in resulting_yaml['tags']:
+    if "stig" not in resulting_yaml['tags']:
         resulting_yaml["references"]["srg"] = ["N/A"]
         resulting_yaml["references"]["cci"] = ["N/A"]
         resulting_yaml["references"]["disa_stig"] = ["N/A"]

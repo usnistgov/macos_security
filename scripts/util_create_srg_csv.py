@@ -196,7 +196,7 @@ def main():
 
     found_rules = []
     for rule in all_rules:
-        if "newstig" in rule.rule_tags:
+        if "stig" in rule.rule_tags:
             found_rules.append(rule)
 
 
@@ -233,14 +233,14 @@ def main():
                     else:
                         _new_req["Status"] = "Applicible - Configurable"
                     
-                    _new_req["Requirement"] = rule.rule_title
+                    _new_req["Requirement"] = f'The macOS system must {rule.rule_title.lower()}.'
                     _new_req["Artifact Description"] = rule.rule_id
                     _new_req["VulDiscussion"] = rule.rule_discussion
                     _new_req["Check"] = rule.rule_check
                     _new_req["Fix"] = rule.rule_fix
                     
-                    if _new_req not in requirements:
-                        requirements.append(_new_req)
+                    # if _new_req not in requirements:
+                    requirements.append(_new_req)
 
     with open('../build/srg_mscp.csv', 'w') as csvfile:
         writer = csv.DictWriter(csvfile, fieldnames=fields)
