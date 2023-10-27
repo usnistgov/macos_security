@@ -188,7 +188,7 @@ class PayloadDict:
     The actual plist content can be accessed as a dictionary via the 'data' attribute.
     """
 
-    def __init__(self, identifier, uuid=False, removal_allowed=False, description='', organization='', displayname=''):
+    def __init__(self, identifier, uuid=False, description='', organization='', displayname=''):
         self.data = {}
         self.data['PayloadVersion'] = 1
         self.data['PayloadOrganization'] = organization
@@ -196,10 +196,6 @@ class PayloadDict:
             self.data['PayloadUUID'] = uuid
         else:
             self.data['PayloadUUID'] = makeNewUUID()
-        if removal_allowed:
-            self.data['PayloadRemovalDisallowed'] = False
-        else:
-            self.data['PayloadRemovalDisallowed'] = True
         self.data['PayloadType'] = 'Configuration'
         self.data['PayloadScope'] = 'System'
         self.data['PayloadDescription'] = description
@@ -221,7 +217,6 @@ class PayloadDict:
         # Boilerplate
         payload_dict['PayloadVersion'] = 1
         payload_dict['PayloadUUID'] = makeNewUUID()
-        payload_dict['PayloadEnabled'] = True
         payload_dict['PayloadType'] = payload_content_dict['PayloadType']
         payload_dict['PayloadIdentifier'] = f"alacarte.macOS.{baseline_name}.{payload_dict['PayloadUUID']}"
 
@@ -240,7 +235,6 @@ class PayloadDict:
         # Boilerplate
         payload_dict['PayloadVersion'] = 1
         payload_dict['PayloadUUID'] = makeNewUUID()
-        payload_dict['PayloadEnabled'] = True
         payload_dict['PayloadType'] = payload_content_dict['PayloadType']
         payload_dict['PayloadIdentifier'] = f"alacarte.macOS.{baseline_name}.{payload_dict['PayloadUUID']}"
 
@@ -261,7 +255,6 @@ class PayloadDict:
         # Boilerplate
         payload_dict['PayloadVersion'] = 1
         payload_dict['PayloadUUID'] = makeNewUUID()
-        payload_dict['PayloadEnabled'] = True
         payload_dict['PayloadType'] = payload_type
         payload_dict['PayloadIdentifier'] = f"alacarte.macOS.{baseline_name}.{payload_dict['PayloadUUID']}"
 
@@ -510,7 +503,6 @@ def generate_profiles(baseline_name, build_path, parent_dir, baseline_yaml, sign
 
         newProfile = PayloadDict(identifier=identifier,
                                  uuid=False,
-                                 removal_allowed=False,
                                  organization=organization,
                                  displayname=displayname,
                                  description=description)
