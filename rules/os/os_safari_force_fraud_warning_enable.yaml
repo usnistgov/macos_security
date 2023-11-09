@@ -1,13 +1,13 @@
-id: os_safari_cookies_set
-title: "Ensure Accept cookies is set to From websites I visit or From current website only"
+id: os_safari_force_fraud_warning_enable
+title: "Ensure Force Fraud Warning is set to Enabled"
 discussion: |
-  Acceptance of cookies _MUST_ be only from sites visited.
+  Force fraud warning _MUST_ be enabled in Safari.
 check: " "
 fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-    - CCE-93444-8
+    - CCE-93464-6
   cci: 
     - N/A
   800-53r5:
@@ -20,8 +20,8 @@ references:
     - N/A
   cis:
     benchmark:
-      - 2.2.2.2 (level 1 - End-User Owned Devices)
-      - 3.2.2.2 (level 1 - Institutionally-Owned Devices)
+      - 2.2.2.1 (level 1 - End-User Owned Devices)
+      - 3.2.2.1 (level 1 - Institutionally-Owned Devices)
     controls v8:
       - 9.4
 iOS:
@@ -37,4 +37,4 @@ supervised: false
 mobileconfig: true
 mobileconfig_info:
   com.apple.applicationaccess:
-    safariAcceptCookies: 1.5
+    safariForceFraudWarning: true
