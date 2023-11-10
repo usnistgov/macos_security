@@ -188,7 +188,7 @@ class PayloadDict:
     The actual plist content can be accessed as a dictionary via the 'data' attribute.
     """
 
-    def __init__(self, identifier, uuid=False, removal_allowed=False, description='', organization='', displayname=''):
+    def __init__(self, identifier, uuid=False, description='', organization='', displayname=''):
         self.data = {}
         self.data['PayloadVersion'] = 1
         self.data['PayloadOrganization'] = organization
@@ -196,10 +196,6 @@ class PayloadDict:
             self.data['PayloadUUID'] = uuid
         else:
             self.data['PayloadUUID'] = makeNewUUID()
-        if removal_allowed:
-            self.data['PayloadRemovalDisallowed'] = False
-        else:
-            self.data['PayloadRemovalDisallowed'] = True
         self.data['PayloadType'] = 'Configuration'
         self.data['PayloadScope'] = 'System'
         self.data['PayloadDescription'] = description
@@ -221,7 +217,6 @@ class PayloadDict:
         # Boilerplate
         payload_dict['PayloadVersion'] = 1
         payload_dict['PayloadUUID'] = makeNewUUID()
-        payload_dict['PayloadEnabled'] = True
         payload_dict['PayloadType'] = payload_content_dict['PayloadType']
         payload_dict['PayloadIdentifier'] = f"alacarte.macOS.{baseline_name}.{payload_dict['PayloadUUID']}"
 
@@ -240,7 +235,6 @@ class PayloadDict:
         # Boilerplate
         payload_dict['PayloadVersion'] = 1
         payload_dict['PayloadUUID'] = makeNewUUID()
-        payload_dict['PayloadEnabled'] = True
         payload_dict['PayloadType'] = payload_content_dict['PayloadType']
         payload_dict['PayloadIdentifier'] = f"alacarte.macOS.{baseline_name}.{payload_dict['PayloadUUID']}"
 
@@ -261,7 +255,6 @@ class PayloadDict:
         # Boilerplate
         payload_dict['PayloadVersion'] = 1
         payload_dict['PayloadUUID'] = makeNewUUID()
-        payload_dict['PayloadEnabled'] = True
         payload_dict['PayloadType'] = payload_type
         payload_dict['PayloadIdentifier'] = f"alacarte.macOS.{baseline_name}.{payload_dict['PayloadUUID']}"
 
@@ -510,7 +503,6 @@ def generate_profiles(baseline_name, build_path, parent_dir, baseline_yaml, sign
 
         newProfile = PayloadDict(identifier=identifier,
                                  uuid=False,
-                                 removal_allowed=False,
                                  organization=organization,
                                  displayname=displayname,
                                  description=description)
@@ -655,6 +647,21 @@ pause(){{
 vared -p "Press [Enter] key to continue..." -c fackEnterKey
 }}
 
+# logging function
+logmessage(){{
+    if [[ ! $quiet ]];then
+        echo "$(date -u) $1" | /usr/bin/tee -a "$audit_log"
+    elif [[ ${{quiet[2][2]}} == 1 ]];then
+        if [[ $1 == *" failed"* ]] || [[ $1 == *"exemption"* ]] ;then
+            echo "$(date -u) $1" | /usr/bin/tee -a "$audit_log"
+        else
+            echo "$(date -u) $1" | /usr/bin/tee -a "$audit_log" > /dev/null
+        fi
+    else
+        echo "$(date -u) $1" | /usr/bin/tee -a "$audit_log" > /dev/null
+    fi
+}}
+
 ask() {{
     # if fix flag is passed, assume YES for everything
     if [[ $fix ]] || [[ $cfc ]]; then
@@ -727,8 +734,15 @@ read_options(){{
 
 # function to reset and remove plist file.  Used to clear out any previous findings
 reset_plist(){{
-    echo "Clearing results from /Library/Preferences/org.{baseline_name}.audit.plist"
-    defaults delete /Library/Preferences/org.{baseline_name}.audit.plist
+    if [[ $reset_all ]];then
+        echo "Clearing results from all MSCP baselines"
+        find /Library/Preferences -name "org.*.audit.plist" -exec rm -f '{{}}' \;
+        find /Library/Logs -name "*_baseline.log" -exec rm -f '{{}}' \;
+    else
+        echo "Clearing results from /Library/Preferences/org.{baseline_name}.audit.plist"
+        rm -f /Library/Preferences/org.{baseline_name}.audit.plist
+        rm -f /Library/Logs/{baseline_name}_baseline.log
+    fi
 }}
 
 # Generate the Compliant and Non-Compliant counts. Returns: Array (Compliant, Non-Compliant)
@@ -925,7 +939,6 @@ fi
 ## Addresses the following NIST 800-53 controls: {1}
 rule_arch="{6}"
 if [[ "$arch" == "$rule_arch" ]] || [[ -z "$rule_arch" ]]; then
-    #echo 'Running the command to check the settings for: {0} ...' | tee -a "$audit_log"
     unset result_value
     result_value=$({2}\n)
     # expected result {3}
@@ -945,16 +958,16 @@ EOS
 )
 
     if [[ $result_value == "{4}" ]]; then
-        echo "$(date -u) {5} passed (Result: $result_value, Expected: "{3}")" | /usr/bin/tee -a "$audit_log"
+        logmessage "{5} passed (Result: $result_value, Expected: \\"{3}\\")"
         /usr/bin/defaults write "$audit_plist" {0} -dict-add finding -bool NO
         /usr/bin/logger "mSCP: {7} - {5} passed (Result: $result_value, Expected: "{3}")"
     else
         if [[ ! $exempt == "1" ]] || [[ -z $exempt ]];then
-            echo "$(date -u) {5} failed (Result: $result_value, Expected: "{3}")" | /usr/bin/tee -a "$audit_log"
+            logmessage "{5} failed (Result: $result_value, Expected: \\"{3}\\")"
             /usr/bin/defaults write "$audit_plist" {0} -dict-add finding -bool YES
             /usr/bin/logger "mSCP: {7} - {5} failed (Result: $result_value, Expected: "{3}")"
         else
-            echo "$(date -u) {5} failed (Result: $result_value, Expected: "{3}") - Exemption Allowed (Reason: "$exempt_reason")" | /usr/bin/tee -a "$audit_log"
+            logmessage "{5} failed (Result: $result_value, Expected: \\"{3}\\") - Exemption Allowed (Reason: \\"$exempt_reason\\")"
             /usr/bin/defaults write "$audit_plist" {0} -dict-add finding -bool YES
             /usr/bin/logger "mSCP: {7} - {5} failed (Result: $result_value, Expected: "{3}") - Exemption Allowed (Reason: "$exempt_reason")"
             /bin/sleep 1
@@ -963,7 +976,7 @@ EOS
 
 
 else
-    echo "$(date -u) {5} does not apply to this architechture" | tee -a "$audit_log"
+    logmessage "{5} does not apply to this architechture"
     /usr/bin/defaults write "$audit_plist" {0} -dict-add finding -bool NO
 fi
     """.format(rule_yaml['id'], nist_controls.replace("\n", "\n#"), check.strip(), str(result).lower(), result_value, ' '.join(log_reference_id), arch, baseline_name)
@@ -1005,14 +1018,14 @@ if [[ ! $exempt == "1" ]] || [[ -z $exempt ]];then
     if [[ ${rule_yaml['id']}_audit_score == "true" ]]; then
         ask '{rule_yaml['id']} - Run the command(s)-> {quotify(get_fix_code(rule_yaml['fix']).strip())} ' N
         if [[ $? == 0 ]]; then
-            echo "$(date -u) Running the command to configure the settings for: {rule_yaml['id']} ..." | /usr/bin/tee -a "$audit_log"
+            logmessage "Running the command to configure the settings for: {rule_yaml['id']} ..."
             {get_fix_code(rule_yaml['fix']).strip()}
         fi
     else
-        echo "$(date -u) Settings for: {rule_yaml['id']} already configured, continuing..." | /usr/bin/tee -a "$audit_log"
+        logmessage "Settings for: {rule_yaml['id']} already configured, continuing..."
     fi
 elif [[ ! -z "$exempt_reason" ]];then
-    echo "$(date -u) {rule_yaml['id']} has an exemption, remediation skipped (Reason: "$exempt_reason")" | /usr/bin/tee -a "$audit_log"
+    logmessage "{rule_yaml['id']} has an exemption, remediation skipped (Reason: \"$exempt_reason\")"
 fi
     """
 
@@ -1027,7 +1040,7 @@ if [[ ! $check ]] && [[ ! $cfc ]];then
     pause
 fi
 
-}
+} 2>/dev/null
 
 run_fix(){
 
@@ -1068,11 +1081,34 @@ echo "$(date -u) Beginning remediation of non-compliant settings" >> "$audit_log
     zsh_fix_footer = """
 echo "$(date -u) Remediation complete" >> "$audit_log"
 
-}
+} 2>/dev/null
 
-zparseopts -D -E -check=check -fix=fix -stats=stats -compliant=compliant_opt -non_compliant=non_compliant_opt -reset=reset -cfc=cfc
+usage=(
+    "$0 Usage"
+    "$0 [--check] [--fix] [--cfc] [--stats] [--compliant] [--non_compliant] [--reset] [--reset-all] [--quiet=<value>]"
+    " "
+    "Optional parameters:"
+    "--check            :   run the compliance checks without interaction"
+    "--fix              :   run the remediation commands without interation"
+    "--cfc              :   runs a check, fix, check without interaction"
+    "--stats            :   display the statistics from last compliance check"
+    "--compliant        :   reports the number of compliant checks"
+    "--non_compliant    :   reports the number of non_compliant checks"
+    "--reset            :   clear out all results for current baseline"
+    "--reset-all        :   clear out all results for ALL MSCP baselines"
+    "--quiet=<value>    :   1 - show only failed and exempted checks in output"
+    "                       2 - show minimal output"
+  )
 
-if [[ $reset ]]; then reset_plist; fi
+zparseopts -D -E -help=flag_help -check=check -fix=fix -stats=stats -compliant=compliant_opt -non_compliant=non_compliant_opt -reset=reset -reset-all=reset_all -cfc=cfc -quiet:=quiet || { print -l $usage && return }
+
+[[ -z "$flag_help" ]] || { print -l $usage && return }
+
+if [[ ! -z $quiet ]];then
+  [[ ! -z ${quiet[2][2]} ]] || { print -l $usage && return }
+fi
+
+if [[ $reset ]] || [[ $reset_all ]]; then reset_plist; fi
 
 if [[ $check ]] || [[ $fix ]] || [[ $cfc ]] || [[ $stats ]] || [[ $compliant_opt ]] || [[ $non_compliant_opt ]]; then
     if [[ $fix ]]; then run_fix; fi
