@@ -7,7 +7,7 @@ discussion: |
 check: |
   /bin/launchctl list | /usr/bin/grep -cE "(com.apple.XprotectFramework.PluginService$|com.apple.XProtect.daemon.scan$)"
 result:
-  integer: 1
+  integer: 2
 fix: |
   [source,bash]
   ----

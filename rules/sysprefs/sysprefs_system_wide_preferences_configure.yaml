@@ -23,6 +23,8 @@ fix: |
 references:
   cce:
     - CCE-91079-4
+  cci:
+    - CCI-002235
   800-53r5:
     - AC-6
     - AC-6(2)
@@ -31,6 +33,8 @@ references:
     - AC-6
     - AC-6(1)
     - AC-6(2)
+  srg:
+    - SRG-OS-000324-GPOS-00125
   disa_stig:
     - APPL-12-002069
   800-171r2:
