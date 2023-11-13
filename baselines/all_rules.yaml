@@ -62,6 +62,7 @@ profile:
       - os_personalized_advertising_disable
       - os_require_managed_pasteboard_enforce
       - os_safari_cookies_set
+      - os_safari_force_fraud_warning_enable
       - os_safari_password_autofill_disable
       - os_screenshots_disable
       - os_share_location_data_disable
@@ -71,6 +72,7 @@ profile:
       - os_siri_when_locked_disabled
       - os_ssl_for_exchange_activesync_enable
       - os_supervised_mdm_require
+      - os_untrusted_tls_disable
       - os_usb_accessories_when_locked_disable
       - os_voice_dialing_when_locked_disabled
   - section: "passwordpolicy"
