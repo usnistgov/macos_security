@@ -86,7 +86,6 @@ profile:
       - os_skip_unlock_with_watch_enable
       - os_ssh_fips_compliant
       - os_sshd_fips_compliant
-      - os_sshd_key_exchange_algorithm_configure
       - os_sudo_timeout_configure
       - os_sudoers_timestamp_type_configure
       - os_tftpd_disable

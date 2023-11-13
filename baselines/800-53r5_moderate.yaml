@@ -103,7 +103,6 @@ profile:
       - os_sshd_client_alive_count_max_configure
       - os_sshd_client_alive_interval_configure
       - os_sshd_fips_compliant
-      - os_sshd_key_exchange_algorithm_configure
       - os_sudo_timeout_configure
       - os_sudoers_timestamp_type_configure
       - os_system_read_only

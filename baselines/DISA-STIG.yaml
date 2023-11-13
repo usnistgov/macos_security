@@ -98,9 +98,6 @@ profile:
       - os_skip_unlock_with_watch_enable
       - os_sshd_client_alive_count_max_configure
       - os_sshd_client_alive_interval_configure
-      - os_sshd_fips_140_ciphers
-      - os_sshd_fips_140_macs
-      - os_sshd_key_exchange_algorithm_configure
       - os_sshd_login_grace_time_configure
       - os_sshd_permit_root_login_configure
       - os_sudoers_timestamp_type_configure
