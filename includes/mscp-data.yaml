@@ -108,10 +108,10 @@ titles:
   800-171: NIST 800-171 Rev 2
   cis_lvl1: CIS Apple macOS 13.0 Ventura v1.1.0 Benchmark (Level 1)
   cis_lvl2: CIS Apple macOS 13.0 Ventura v1.1.0 Benchmark (Level 2)
-  cis_lvl1_byod: CIS Apple iOS 17 v1.1.0 Benchmark (Level 1) - End-User Owned Devices
-  cis_lvl2_byod: CIS Apple iOS 17 v1.1.0 Benchmark (Level 2) - End-User Owned Devices
-  cis_lvl1_enterprise: CIS Apple iOS 17 v1.1.0 Benchmark (Level 1) - Institutionally-Owned Devices
-  cis_lvl2_enterprise: CIS Apple iOS 17 v1.1.0 Benchmark (Level 2) - Institutionally-Owned Devices
+  cis_lvl1_byod: CIS Apple iOS 17 v1.0.0 Benchmark (Level 1) - End-User Owned Devices
+  cis_lvl2_byod: CIS Apple iOS 17 v1.0.0 Benchmark (Level 2) - End-User Owned Devices
+  cis_lvl1_enterprise: CIS Apple iOS 17 v1.0.0 Benchmark (Level 1) - Institutionally-Owned Devices
+  cis_lvl2_enterprise: CIS Apple iOS 17 v1.0.0 Benchmark (Level 2) - Institutionally-Owned Devices
   cisv8: CIS Controls Version 8
   cmmc_lvl1: US CMMC 2.0 Level 1
   cmmc_lvl2: US CMMC 2.0 Level 2

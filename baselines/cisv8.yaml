@@ -45,12 +45,14 @@ profile:
       - os_pairing_non_configurator_hosts_disable
       - os_password_proximity_disable
       - os_personalized_advertising_disable
+      - os_safari_force_fraud_warning_enable
       - os_safari_cookies_set
       - os_safari_password_autofill_disable
       - os_screenshots_disable
       - os_show_control_center_lock_screen_disable
       - os_show_notification_center_lock_screen_disable
       - os_siri_when_locked_disabled
+      - os_untrusted_tls_disable
       - os_usb_accessories_when_locked_disable
       - os_voice_dialing_when_locked_disabled
   - section: "passwordpolicy"

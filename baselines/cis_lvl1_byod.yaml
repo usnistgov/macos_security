@@ -24,6 +24,7 @@ profile:
       - os_force_encrypted_backups_enable
       - os_mail_move_messages_disable
       - os_personalized_advertising_disable
+      - os_safari_force_fraud_warning_enable
       - os_safari_cookies_set
       - os_show_control_center_lock_screen_disable
       - os_show_notification_center_lock_screen_disable
