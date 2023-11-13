@@ -121,7 +121,6 @@ profile:
   - section: "systemsettings"
     rules:
       - system_settings_apple_watch_unlock_disable
-      - system_settings_assistant_disable
       - system_settings_automatic_login_disable
       - system_settings_bluetooth_disable
       - system_settings_bluetooth_prefpane_disable
