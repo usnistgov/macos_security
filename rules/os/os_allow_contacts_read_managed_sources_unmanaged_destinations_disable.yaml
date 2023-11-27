@@ -39,5 +39,5 @@ severity: low
 supervised: false
 mobileconfig: true
 mobileconfig_info:
-  con.apple.applicationaccess:
+  com.apple.applicationaccess:
     allowUnmanagedToReadManagedContacts: false
