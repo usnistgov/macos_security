@@ -8,6 +8,8 @@ discussion: |-
   Core application: Any application integrated into the OS by the OS or MDM vendors.
 
   Preinstalled application: Additional noncore applications included in the OS build by the OS vendor, MDM vendor, or wireless carrier.
+
+  NOTE: See rule YAML file for implementation comments.
 check: ' '
 fix: This is implemented by a Configuration Profile
 references:
