@@ -3,11 +3,11 @@ title: "Define Allowed Applications"
 discussion: |-
   Requiring all authorized applications to be in an application allow list prevents the execution of any applications (e.g., unauthorized, malicious) that are not part of the allow list. Failure to configure an application allow list properly could allow unauthorized and malicious applications to be downloaded, installed, and executed on the mobile device, causing a compromise of DoD data accessible by these applications. Applications with the listed characteristics have features that can cause the compromise of sensitive DoD data or have features with no known application in the DoD environment.
 
-  Application note: The application allow list, in addition to controlling the installation of applications on the MD, must control user access/execution of all core and preinstalled applications, or the MD must provide an alternate method of restricting user access/execution to core and preinstalled applications.
+  Application note: The application allow list, in addition to controlling the installation of applications on the MDM, must control user access/execution of all core and preinstalled applications, or the MDM must provide an alternate method of restricting user access/execution to core and preinstalled applications.
 
-  Core application: Any application integrated into the OS by the OS or MD vendors.
+  Core application: Any application integrated into the OS by the OS or MDM vendors.
 
-  Preinstalled application: Additional noncore applications included in the OS build by the OS vendor, MD vendor, or wireless carrier.
+  Preinstalled application: Additional noncore applications included in the OS build by the OS vendor, MDM vendor, or wireless carrier.
 check: ' '
 fix: This is implemented by a Configuration Profile
 references:
@@ -33,13 +33,14 @@ iOS:
   - "17.0"
 tags:
   - ios
-  - 800-53r5_low
   - 800-53r5_moderate
   - 800-53r5_high
   - manual
 severity: medium
 supervised: true
-mobileconfig: true
+mobileconfig: false # Set to true when implementing
 mobileconfig_info:
   com.apple.applicationaccess:
-    allowListedAppBundleIDs: value
+    allowListedAppBundleIDs: # Add bundle identifiers below
+      - bundleID1
+      - bundleID2
