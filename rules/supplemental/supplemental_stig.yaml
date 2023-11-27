@@ -12,6 +12,8 @@ discussion: |
 
   |AIOS-16-004900| Apple iOS/iPadOS 16 must [selection: wipe protected data, wipe sensitive data] upon unenrollment from MDM.
   |AIOS-16-005000| Apple iOS/iPadOS 16 must [selection: remove Enterprise application, remove all noncore applications (any nonfactory-installed application)] upon unenrollment from MDM.
+  |AIOS-16-007400 +
+  AIOS-16-707400| Apple iOS/iPadOS 16 allowlist must be configured to not include applications with the following characteristics: - Backs up MD data to non-DoD cloud servers (including user and application access to cloud backup services); - Transmits MD diagnostic data to non-DoD servers; - Allows synchronization of data or applications between devices associated with user; and - Allows unencrypted (or encrypted but not FIPS 140-2/FIPS 140-3 validated) data sharing with other MDs or printers.
   |AIOS-16-008400 +
   AIOS-16-708400| Apple iOS/iPadOS 16 must be configured to display the DoD advisory warning message at startup or each time the user unlocks the device.
   |AIOS-16-009200 +
