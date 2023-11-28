@@ -1526,7 +1526,7 @@ def create_rules(baseline_yaml):
             all_rules.append(MacSecurityRule(rule_yaml['title'].replace('|', '\|'),
                                         rule_yaml['id'].replace('|', '\|'),
                                         rule_yaml['severity'].replace('|', '\|'),
-                                        rule_yaml['discussion'].replace('|', '\|'),
+                                        rule_yaml['discussion'],  #.replace('|', '\|'),
                                         rule_yaml['check'].replace('|', '\|'),
                                         rule_yaml['fix'].replace('|', '\|'),
                                         rule_yaml['references']['cci'],
@@ -2045,7 +2045,7 @@ def main():
                 rule_adoc = adoc_rule_custom_refs_template.substitute(
                     rule_title=rule_yaml['title'].replace('|', '\|'),
                     rule_id=rule_yaml['id'].replace('|', '\|'),
-                    rule_discussion=rule_yaml['discussion'],#.replace('|', '\|'),
+                    rule_discussion=rule_yaml['discussion'],  #.replace('|', '\|'),
                     rule_check=rule_yaml['check'],  # .replace('|', '\|'),
                     rule_fix=rulefix,
                     rule_cci=cci,
@@ -2064,7 +2064,7 @@ def main():
                 rule_adoc = adoc_rule_no_setting_template.substitute(
                     rule_title=rule_yaml['title'].replace('|', '\|'),
                     rule_id=rule_yaml['id'].replace('|', '\|'),
-                    rule_discussion=rule_yaml['discussion'].replace('|', '\|'),
+                    rule_discussion=rule_yaml['discussion'],  #.replace('|', '\|'),
                     rule_check=rule_yaml['check'],  # .replace('|', '\|'),
                     rule_fix=rulefix,
                     rule_80053r5=nist_controls,
@@ -2081,7 +2081,7 @@ def main():
                     rule_adoc = adoc_rule_ios_template.substitute(
                         rule_title=rule_yaml['title'].replace('|', '\|'),
                         rule_id=rule_yaml['id'].replace('|', '\|'),
-                        rule_discussion=rule_yaml['discussion'].replace('|', '\|'),
+                        rule_discussion=rule_yaml['discussion'],  #.replace('|', '\|'),
                         rule_check=rule_yaml['check'],  # .replace('|', '\|'),
                         rule_fix=rulefix,
                         rule_cci=cci,
@@ -2099,7 +2099,7 @@ def main():
                     rule_adoc = adoc_rule_template.substitute(
                         rule_title=rule_yaml['title'].replace('|', '\|'),
                         rule_id=rule_yaml['id'].replace('|', '\|'),
-                        rule_discussion=rule_yaml['discussion'].replace('|', '\|'),
+                        rule_discussion=rule_yaml['discussion'],  #.replace('|', '\|'),
                         rule_check=rule_yaml['check'],  # .replace('|', '\|'),
                         rule_fix=rulefix,
                         rule_cci=cci,
