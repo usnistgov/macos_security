@@ -29,7 +29,7 @@ ASSOCIATED DOCUMENTS
 |===
 |Document Number or Descriptor
 |Document Title
-|link:https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Apple_macOS_12_V1R7_STIG.zip[STIG Ver 1, Rel 7]|_Apple macOS 12 (Monterey) STIG_
+|link:https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Apple_macOS_12_V1R8_STIG.zip[STIG Ver 1, Rel 8]|_Apple macOS 12 (Monterey) STIG_
 |===
 
 [%header, cols=2*a]

@@ -62,10 +62,17 @@ references:
     - SC-8(1)
     - SC-13
     - MA-4(6)
-  srg:
-    - N/A
+  srg:    
+    - SRG-OS-000033-GPOS-00014
+    - SRG-OS-000120-GPOS-00061
+    - SRG-OS-000125-GPOS-00065
+    - SRG-OS-000250-GPOS-00093
+    - SRG-OS-000393-GPOS-00173
+    - SRG-OS-000394-GPOS-00174
   disa_stig:
-    - N/A
+    - APPL-12-000056
+    - APPL-12-000055
+    - APPL-12-000054
   800-171r2:
     - 3.1.13
     - 3.13.8
