@@ -955,20 +955,30 @@ EOS
     exempt_reason=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
 ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.{7}.audit').objectForKey('{0}'))["exempt_reason"]
 EOS
-)
-
+)   
+    customref="$(echo "{5}" | rev | cut -d ' ' -f 2- | rev)"
+    customref="$(echo "$customref" | tr " " ",")"
     if [[ $result_value == "{4}" ]]; then
         logmessage "{5} passed (Result: $result_value, Expected: \\"{3}\\")"
         /usr/bin/defaults write "$audit_plist" {0} -dict-add finding -bool NO
+        if [[ ! "$customref" == "{0}" ]]; then
+            /usr/bin/defaults write "$audit_plist" {0} -dict-add reference -string "$customref"
+        fi
         /usr/bin/logger "mSCP: {7} - {5} passed (Result: $result_value, Expected: "{3}")"
     else
         if [[ ! $exempt == "1" ]] || [[ -z $exempt ]];then
             logmessage "{5} failed (Result: $result_value, Expected: \\"{3}\\")"
             /usr/bin/defaults write "$audit_plist" {0} -dict-add finding -bool YES
+            if [[ ! "$customref" == "{0}" ]]; then
+                /usr/bin/defaults write "$audit_plist" {0} -dict-add reference -string "$customref"
+            fi
             /usr/bin/logger "mSCP: {7} - {5} failed (Result: $result_value, Expected: "{3}")"
         else
             logmessage "{5} failed (Result: $result_value, Expected: \\"{3}\\") - Exemption Allowed (Reason: \\"$exempt_reason\\")"
             /usr/bin/defaults write "$audit_plist" {0} -dict-add finding -bool YES
+            if [[ ! "$customref" == "{0}" ]]; then
+              /usr/bin/defaults write "$audit_plist" {0} -dict-add reference -string "$customref"
+            fi
             /usr/bin/logger "mSCP: {7} - {5} failed (Result: $result_value, Expected: "{3}") - Exemption Allowed (Reason: "$exempt_reason")"
             /bin/sleep 1
         fi
