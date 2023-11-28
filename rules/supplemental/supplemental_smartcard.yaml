@@ -304,6 +304,19 @@ references:
 macOS:
   - "14.0"
 tags:
+  - 800-171
+  - 800-53r4_high
+  - 800-53r4_low
+  - 800-53r4_moderate
+  - 800-53r5_high
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_privacy
+  - cmmc_lvl1
+  - cmmc_lvl2
+  - cnssi-1253_high
+  - cnssi-1253_low
+  - cnssi-1253_moderate
   - supplemental
 mobileconfig: false
 mobileconfig_info:
