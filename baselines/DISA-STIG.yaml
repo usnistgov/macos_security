@@ -1,6 +1,6 @@
-title: "macOS 13.0: Security Configuration - Apple macOS 13 (Ventura) STIG - Ver 1, Rel 1"
+title: "macOS 13.0: Security Configuration - Apple macOS 13 (Ventura) STIG - Ver 1, Rel 3"
 description: |
-  This guide describes the actions to take when securing a macOS 13.0 system against the Apple macOS 13 (Ventura) STIG - Ver 1, Rel 1 security baseline.
+  This guide describes the actions to take when securing a macOS 13.0 system against the Apple macOS 13 (Ventura) STIG - Ver 1, Rel 2 security baseline.
 authors: |
   *macOS Security Compliance Project*
 
@@ -121,7 +121,6 @@ profile:
   - section: "systemsettings"
     rules:
       - system_settings_apple_watch_unlock_disable
-      - system_settings_assistant_disable
       - system_settings_automatic_login_disable
       - system_settings_bluetooth_disable
       - system_settings_bluetooth_prefpane_disable
@@ -155,7 +154,6 @@ profile:
       - system_settings_wallet_applepay_prefpane_hide
   - section: "Supplemental"
     rules:
-      - supplemental_controls
       - supplemental_filevault
       - supplemental_firewall_pf
       - supplemental_password_policy
