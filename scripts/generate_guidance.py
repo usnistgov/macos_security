@@ -955,20 +955,30 @@ EOS
     exempt_reason=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
 ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.{7}.audit').objectForKey('{0}'))["exempt_reason"]
 EOS
-)
-
+)   
+    customref="$(echo "{5}" | rev | cut -d ' ' -f 2- | rev)"
+    customref="$(echo "$customref" | tr " " ",")"
     if [[ $result_value == "{4}" ]]; then
         logmessage "{5} passed (Result: $result_value, Expected: \\"{3}\\")"
         /usr/bin/defaults write "$audit_plist" {0} -dict-add finding -bool NO
+        if [[ ! "$customref" == "{0}" ]]; then
+            /usr/bin/defaults write "$audit_plist" {0} -dict-add reference -string "$customref"
+        fi
         /usr/bin/logger "mSCP: {7} - {5} passed (Result: $result_value, Expected: "{3}")"
     else
         if [[ ! $exempt == "1" ]] || [[ -z $exempt ]];then
             logmessage "{5} failed (Result: $result_value, Expected: \\"{3}\\")"
             /usr/bin/defaults write "$audit_plist" {0} -dict-add finding -bool YES
+            if [[ ! "$customref" == "{0}" ]]; then
+                /usr/bin/defaults write "$audit_plist" {0} -dict-add reference -string "$customref"
+            fi
             /usr/bin/logger "mSCP: {7} - {5} failed (Result: $result_value, Expected: "{3}")"
         else
             logmessage "{5} failed (Result: $result_value, Expected: \\"{3}\\") - Exemption Allowed (Reason: \\"$exempt_reason\\")"
             /usr/bin/defaults write "$audit_plist" {0} -dict-add finding -bool YES
+            if [[ ! "$customref" == "{0}" ]]; then
+              /usr/bin/defaults write "$audit_plist" {0} -dict-add reference -string "$customref"
+            fi
             /usr/bin/logger "mSCP: {7} - {5} failed (Result: $result_value, Expected: "{3}") - Exemption Allowed (Reason: "$exempt_reason")"
             /bin/sleep 1
         fi
@@ -1516,7 +1526,7 @@ def create_rules(baseline_yaml):
             all_rules.append(MacSecurityRule(rule_yaml['title'].replace('|', '\|'),
                                         rule_yaml['id'].replace('|', '\|'),
                                         rule_yaml['severity'].replace('|', '\|'),
-                                        rule_yaml['discussion'].replace('|', '\|'),
+                                        rule_yaml['discussion'],  #.replace('|', '\|'),
                                         rule_yaml['check'].replace('|', '\|'),
                                         rule_yaml['fix'].replace('|', '\|'),
                                         rule_yaml['references']['cci'],
@@ -2035,7 +2045,7 @@ def main():
                 rule_adoc = adoc_rule_custom_refs_template.substitute(
                     rule_title=rule_yaml['title'].replace('|', '\|'),
                     rule_id=rule_yaml['id'].replace('|', '\|'),
-                    rule_discussion=rule_yaml['discussion'],#.replace('|', '\|'),
+                    rule_discussion=rule_yaml['discussion'],  #.replace('|', '\|'),
                     rule_check=rule_yaml['check'],  # .replace('|', '\|'),
                     rule_fix=rulefix,
                     rule_cci=cci,
@@ -2054,7 +2064,7 @@ def main():
                 rule_adoc = adoc_rule_no_setting_template.substitute(
                     rule_title=rule_yaml['title'].replace('|', '\|'),
                     rule_id=rule_yaml['id'].replace('|', '\|'),
-                    rule_discussion=rule_yaml['discussion'].replace('|', '\|'),
+                    rule_discussion=rule_yaml['discussion'],  #.replace('|', '\|'),
                     rule_check=rule_yaml['check'],  # .replace('|', '\|'),
                     rule_fix=rulefix,
                     rule_80053r5=nist_controls,
@@ -2071,7 +2081,7 @@ def main():
                     rule_adoc = adoc_rule_ios_template.substitute(
                         rule_title=rule_yaml['title'].replace('|', '\|'),
                         rule_id=rule_yaml['id'].replace('|', '\|'),
-                        rule_discussion=rule_yaml['discussion'].replace('|', '\|'),
+                        rule_discussion=rule_yaml['discussion'],  #.replace('|', '\|'),
                         rule_check=rule_yaml['check'],  # .replace('|', '\|'),
                         rule_fix=rulefix,
                         rule_cci=cci,
@@ -2089,7 +2099,7 @@ def main():
                     rule_adoc = adoc_rule_template.substitute(
                         rule_title=rule_yaml['title'].replace('|', '\|'),
                         rule_id=rule_yaml['id'].replace('|', '\|'),
-                        rule_discussion=rule_yaml['discussion'].replace('|', '\|'),
+                        rule_discussion=rule_yaml['discussion'],  #.replace('|', '\|'),
                         rule_check=rule_yaml['check'],  # .replace('|', '\|'),
                         rule_fix=rulefix,
                         rule_cci=cci,
