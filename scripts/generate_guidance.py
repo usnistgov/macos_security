@@ -991,7 +991,7 @@ EOS
 
 
 else
-    logmessage "{5} does not apply to this architechture"
+    logmessage "{5} does not apply to this architecture"
     /usr/bin/defaults write "$audit_plist" {0} -dict-add finding -bool NO
 fi
     """.format(rule_yaml['id'], nist_controls.replace("\n", "\n#"), check.strip(), str(result).lower(), result_value, ' '.join(log_reference_id), arch, baseline_name)
