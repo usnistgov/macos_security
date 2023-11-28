@@ -3,12 +3,12 @@ title: "Configure Login Window to Show A Custom Message"
 discussion: |
   The login window _MUST_ be configured to show a custom access warning message. 
 check: |
-  /usr/bin/osascript -l JavaScript << EOS
+  /usr/bin/osascript -l JavaScript << EOS | /usr/bin/base64
   $.NSUserDefaults.alloc.initWithSuiteName('com.apple.loginwindow')\
   .objectForKey('LoginwindowText').js
   EOS
 result:
-  string: $ODV
+  base64: $ODV
 fix: |
   This is implemented by a Configuration Profile.
 references:
