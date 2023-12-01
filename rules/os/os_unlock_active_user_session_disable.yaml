@@ -4,14 +4,16 @@ discussion: |
   The ability to log in to another user's active or locked session _MUST_ be disabled.
 
   macOS has a privilege that can be granted to any user that will allow that user to unlock active user's sessions. Disabling the admins and/or user's ability to log into another user's active andlocked session prevents unauthorized persons from viewing potentially sensitive and/or personal information.
+
+  NOTE: Configuring this setting will disable TouchID from unlocking the screensaver.
 check: |
-  /usr/bin/security authorizationdb read system.login.screensaver 2>&1 | /usr/bin/grep -c 'use-login-window-ui'
+  /usr/bin/security authorizationdb read system.login.screensaver 2>&1 | /usr/bin/grep -c '<string>authenticate-session-owner</string>'
 result:
   integer: 1
 fix: |
   [source,bash]
   ----
-  /usr/bin/security authorizationdb write system.login.screensaver "use-login-window-ui"
+  /usr/bin/security authorizationdb write system.login.screensaver "authenticate-session-owner"
   ----
 references:
   cce:
