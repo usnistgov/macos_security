@@ -4,7 +4,6 @@
 import sys
 import os.path
 import plistlib
-import xlwt
 import glob
 import os
 import yaml
@@ -15,7 +14,6 @@ import logging
 import tempfile
 import base64
 from datetime import date
-from xlwt import Workbook
 from string import Template
 from itertools import groupby
 from uuid import uuid4
@@ -1310,6 +1308,9 @@ def get_rule_yaml(rule_file, baseline_yaml, custom=False,):
 def generate_xls(baseline_name, build_path, baseline_yaml):
     """Using the baseline yaml file, create an XLS document containing the YAML fields
     """
+
+    import xlwt
+    from xlwt import Workbook
 
     baseline_rules = create_rules(baseline_yaml)
 
