@@ -42,7 +42,7 @@ macOS:
   - "14.0"
 odv:
   hint: "Name of timeserver. As of macOS 10.13 only one time server is supported."
-  recommended: "time.nist.gov "
+  recommended: "time.nist.gov"
   cis_lvl1: "time.apple.com"
   cis_lvl2: "time.apple.com"
   stig: "time.nist.gov"
