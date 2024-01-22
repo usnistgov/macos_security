@@ -577,7 +577,7 @@ def default_audit_plist(baseline_name, build_path, baseline_yaml):
     plistlib.dump(plist_dict, plist_file)
 
 
-def generate_script(baseline_name, build_path, baseline_yaml, reference):
+def generate_script(baseline_name, audit_name, build_path, baseline_yaml, reference):
     """Generates the zsh script from the rules in the baseline YAML
     """
     compliance_script_file = open(
@@ -639,8 +639,8 @@ STD='\e[39m'
 GREEN='\e[32m'
 YELLOW='\e[33m'
 
-audit_plist="/Library/Preferences/org.{baseline_name}.audit.plist"
-audit_log="/Library/Logs/{baseline_name}_baseline.log"
+audit_plist="/Library/Preferences/org.{audit_name}.audit.plist"
+audit_log="/Library/Logs/{audit_name}_baseline.log"
 
 # pause function
 pause(){{
@@ -740,8 +740,8 @@ reset_plist(){{
         find /Library/Logs -name "*_baseline.log" -exec rm -f '{{}}' \;
     else
         echo "Clearing results from /Library/Preferences/org.{baseline_name}.audit.plist"
-        rm -f /Library/Preferences/org.{baseline_name}.audit.plist
-        rm -f /Library/Logs/{baseline_name}_baseline.log
+        rm -f /Library/Preferences/org.{audit_name}.audit.plist
+        rm -f /Library/Logs/{audit_name}_baseline.log
     fi
 }}
 
@@ -750,7 +750,6 @@ compliance_count(){{
     compliant=0
     non_compliant=0
     exempt_count=0
-    audit_plist="/Library/Preferences/org.{baseline_name}.audit.plist"
     
     rule_names=($(/usr/libexec/PlistBuddy -c "Print" $audit_plist | awk '/= Dict/ {{print $1}}'))
     
@@ -1579,6 +1578,8 @@ def create_args():
                         help="Generate the excel (xls) document for the rules.", action="store_true")
     parser.add_argument("-H", "--hash", default=None,
                         help="sign the configuration profiles with subject key ID (hash value without spaces)")
+    parser.add_argument("-a", "--audit_name", default=None,
+                        help="name of audit plist and log - defaults to baseline name")
     return parser.parse_args()
 
 
@@ -1675,6 +1676,8 @@ def main():
 
         # switch to the scripts directory
         os.chdir(file_dir)
+
+        audit_name = args.audit_name
 
         if args.logo:
             logo = args.logo
@@ -2131,13 +2134,18 @@ def main():
     adoc_output_file.write(footer_adoc)
     adoc_output_file.close()
 
+    if  args.audit_name:
+        audit_name = args.audit_name
+    else:
+        audit_name = baseline_name
+
     if args.profiles:
         print("Generating configuration profiles...")
         generate_profiles(baseline_name, build_path, parent_dir, baseline_yaml, signing, args.hash)
 
     if args.script:
         print("Generating compliance script...")
-        generate_script(baseline_name, build_path, baseline_yaml, log_reference)
+        generate_script(baseline_name, audit_name, build_path, baseline_yaml, log_reference)
         default_audit_plist(baseline_name, build_path, baseline_yaml)
 
     if args.xls:
