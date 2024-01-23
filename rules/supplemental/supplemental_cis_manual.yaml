@@ -59,6 +59,7 @@ discussion: |
   6.3.2 Audit History and Remove History Items +
   6.3.5 Audit Hide IP Address in Safari Setting +
   6.3.8 Audit Autofill +
+  6.3.10 Ensure JavaScript is Enabled in Safari +
   |===
 check: |
 fix: |

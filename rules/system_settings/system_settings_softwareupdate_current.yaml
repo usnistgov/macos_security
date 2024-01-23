@@ -17,7 +17,7 @@ result:
 fix: |
   [source,bash]
   ----
-  /usr/sbin/softwareupdate -i -a -R
+  /usr/sbin/softwareupdate -i -a
   ----
   NOTE - This will apply to the whole system
 references:
