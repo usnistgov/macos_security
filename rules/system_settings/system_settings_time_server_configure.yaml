@@ -28,7 +28,7 @@ references:
     - SRG-OS-000355-GPOS-00143
     - SRG-OS-000356-GPOS-00144
   disa_stig:
-    - N/A
+    - APPL-14-000170
   800-171r2:
     - 3.3.7
   cis:
@@ -41,11 +41,11 @@ references:
 macOS:
   - '14.0'
 odv:
-  hint: "Name of timeserver. As of macOS 10.13 only one time server is supported."
-  recommended: "time.nist.gov"
-  cis_lvl1: "time.apple.com"
-  cis_lvl2: "time.apple.com"
-  stig: "time.nist.gov"
+  hint: Name of timeserver. As of macOS 10.13 only one time server is supported.
+  recommended: time.nist.gov
+  cis_lvl1: time.apple.com
+  cis_lvl2: time.apple.com
+  stig: time.nist.gov
 tags:
   - 800-171
   - 800-53r5_low

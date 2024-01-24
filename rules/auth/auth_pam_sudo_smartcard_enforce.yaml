@@ -49,7 +49,7 @@ references:
     - SRG-OS-000106-GPOS-00053
     - SRG-OS-000105-GPOS-00052
   disa_stig:
-    - N/A
+    - APPL-14-003052
   800-171r2:
     - 3.5.3
   cis:

@@ -34,7 +34,7 @@ references:
   srg:
     - SRG-OS-000095-GPOS-00049
   disa_stig:
-    - N/A
+    - APPL-14-002210
   cis:
     benchmark:
       - N/A

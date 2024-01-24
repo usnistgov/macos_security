@@ -1,11 +1,15 @@
-title: "macOS 14.0: Security Configuration - STIG DRAFT"
+title: "macOS 14.0: Security Configuration - Apple macOS 14 (Sonoma) STIG - Ver 1, Rel 1"
 description: |
-  This guide describes the actions to take when securing a macOS 14.0 system against the DRAFT STIG security baseline.
+  This guide describes the actions to take when securing a macOS 14.0 system against the Apple macOS 14 (Sonoma) STIG - Ver 1, Rel 1 security baseline.
 authors: |
+  *macOS Security Compliance Project*
+
   |===
-  |Name|Organization
+  |Dan Brodjieski|National Aeronautics and Space Administration
+  |Allen Golbig|Jamf
+  |Bob Gendler|National Institute of Standards and Technology
   |===
-parent_values: "newstig"
+parent_values: "stig"
 profile:
   - section: "auditing"
     rules:
@@ -244,7 +248,6 @@ profile:
       - os_nonlocal_maintenance
   - section: "Supplemental"
     rules:
-      - supplemental_cis_manual
       - supplemental_controls
       - supplemental_filevault
       - supplemental_firewall_pf

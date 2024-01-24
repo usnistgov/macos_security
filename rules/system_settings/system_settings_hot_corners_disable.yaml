@@ -22,7 +22,7 @@ references:
   srg:
     - SRG-OS-000031-GPOS-00012
   disa_stig:
-    - N/A
+    - APPL-14-000007
   800-171r2:
     - 3.1.10
   cmmc:
@@ -40,7 +40,7 @@ tags:
   - cnssi-1253_high
   - stig
   - cmmc_lvl2
-severity: "medium"
+severity: medium
 mobileconfig: true
 mobileconfig_info:
   com.apple.ManagedClient.preferences:

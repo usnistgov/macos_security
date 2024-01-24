@@ -29,7 +29,7 @@ references:
   800-53r4:
     - AC-12
   disa_stig:
-    - N/A
+    - APPL-14-000160
   srg:
     - SRG-OS-000279-GPOS-00109
   800-171r2:

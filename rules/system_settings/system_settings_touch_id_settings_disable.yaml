@@ -2,8 +2,8 @@ id: system_settings_touch_id_settings_disable
 title: Disable the Touch ID System Settings Pane
 discussion: |
   The System Settings pane for Touch ID _MUST_ be disabled.
-
-  Disabling the System Settings pane prevents the users from configuring Touch ID. 
+  
+  Disabling the System Settings pane prevents the users from configuring Touch ID.
 check: |
   /usr/bin/profiles show -output stdout-xml | /usr/bin/xmllint --xpath '//key[text()="DisabledSystemSettings"]/following-sibling::*[1]' - | /usr/bin/grep -c "com.apple.Touch-ID-Settings.extension"
 result:
@@ -19,13 +19,13 @@ references:
     - CM-7
     - CM-7(1)
     - CM-7(5)
-  800-53r4: 
+  800-53r4:
     - CM-7
     - CM-7(5)
   srg:
     - SRG-OS-000095-GPOS-00049
   disa_stig:
-    - N/A
+    - APPL-14-002051
   800-171r2:
     - 3.4.6
   cis:
@@ -36,7 +36,7 @@ references:
       - 4.8
   cmmc:
     - CM.L2-3.4.6
-    - CM.L2-3.4.7      
+    - CM.L2-3.4.7
 macOS:
   - '14.0'
 tags:
@@ -45,7 +45,6 @@ tags:
   - 800-53r5_high
   - cisv8
   - cmmc_lvl2
-  - stig
   - stig
 severity: medium
 mobileconfig: true

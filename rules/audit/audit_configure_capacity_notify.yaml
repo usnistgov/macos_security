@@ -26,7 +26,7 @@ references:
     - SRG-OS-000046-GPOS-00022
     - SRG-OS-000343-GPOS-00134
   disa_stig:
-    - N/A
+    - APPL-14-001030
 macOS:
   - '14.0'
 odv:

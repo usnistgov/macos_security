@@ -2,8 +2,8 @@ id: system_settings_siri_settings_disable
 title: Disable the System Settings Pane for Siri
 discussion: |
   The System Settings pane for Siri _MUST_ be hidden.
-
-  Hiding the System Settings pane prevents the users from configuring Siri. 
+  
+  Hiding the System Settings pane prevents the users from configuring Siri.
 check: |
   /usr/bin/profiles show -output stdout-xml | /usr/bin/xmllint --xpath '//key[text()="DisabledSystemSettings"]/following-sibling::*[1]' - | /usr/bin/grep -c com.apple.Siri-Settings.extension
 result:
@@ -17,13 +17,13 @@ references:
     - CM-7
     - CM-7(1)
     - CM-7(5)
-  800-53r4: 
+  800-53r4:
     - CM-7
     - CM-7(5)
-  srg: 
+  srg:
     - SRG-OS-000095-GPOS-00049
   disa_stig:
-    - N/A
+    - APPL-14-002053
   800-171r2:
     - 3.4.6
   cis:
@@ -34,7 +34,7 @@ references:
       - 4.8
   cmmc:
     - CM.L2-3.4.6
-    - CM.L2-3.4.7      
+    - CM.L2-3.4.7
 macOS:
   - '14.0'
 tags:
@@ -43,7 +43,6 @@ tags:
   - 800-53r5_high
   - cisv8
   - cmmc_lvl2
-  - stig
   - stig
 severity: medium
 mobileconfig: true

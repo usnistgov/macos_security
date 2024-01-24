@@ -1,8 +1,7 @@
 id: os_dictation_disable
 title: Disable Dictation
 discussion: |
-  Dictation _MUST_ be disabled on Intel based Macs as the feature On Device Dictation is only available on Apple Silicon devices. 
-
+  Dictation _MUST_ be disabled on Intel based Macs as the feature On Device Dictation is only available on Apple Silicon devices.
 check: |
   /usr/bin/osascript -l JavaScript << EOS
   $.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess')\
@@ -29,7 +28,7 @@ references:
   srg:
     - SRG-OS-000095-GPOS-00049
   disa_stig:
-    - N/A
+    - APPL-14-002230
   800-171r2:
     - 3.1.20
     - 3.4.6

@@ -27,7 +27,7 @@ references:
   srg:
     - SRG-OS-000028-GPOS-00009
   disa_stig:
-    - N/A
+    - APPL-14-002090
   800-171r2:
     - 3.1.10
   cmmc:
