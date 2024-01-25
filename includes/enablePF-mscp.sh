@@ -91,7 +91,7 @@ cat > /etc/pf.anchors/mscp_pf_anchors <<'ENDCONFIG'
 anchor mscp_pf_anchors
 
 #default deny all in, allow all out and keep state
-block in all
+block drop in all
 pass out all keep state
 
 #pass in all packets from localhost
