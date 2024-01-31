@@ -86,6 +86,7 @@ tags:
   - cnssi-1253_high
   - cnssi-1253_low
   - cnssi-1253_moderate
+  - stig
   - supplemental
 mobileconfig: false
 mobileconfig_info:
