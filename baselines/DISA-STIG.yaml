@@ -8,6 +8,7 @@ authors: |
   |Dan Brodjieski|National Aeronautics and Space Administration
   |Allen Golbig|Jamf
   |Bob Gendler|National Institute of Standards and Technology
+  |Aaron Kegerreis|Defense Information Systems Agency
   |===
 parent_values: "stig"
 profile:
@@ -65,6 +66,7 @@ profile:
       - icloud_sync_disable
   - section: "macos"
     rules:
+      - os_account_modification_disable
       - os_airdrop_disable
       - os_appleid_prompt_disable
       - os_asl_log_files_owner_group_configure
@@ -88,7 +90,6 @@ profile:
       - os_httpd_disable
       - os_icloud_storage_prompt_disable
       - os_install_log_retention_configure
-      - os_ir_support_disable
       - os_loginwindow_adminhostinfo_undefined
       - os_mail_app_disable
       - os_mdm_require
