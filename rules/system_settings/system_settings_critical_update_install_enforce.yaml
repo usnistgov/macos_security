@@ -1,5 +1,5 @@
 id: system_settings_critical_update_install_enforce
-title: "Enforce Critical Security Updates to be Installed"
+title: Enforce Critical Security Updates to be Installed
 discussion: |
   Ensure that security updates are installed as soon as they are available from Apple.
 check: |
@@ -8,7 +8,7 @@ check: |
   .objectForKey('CriticalUpdateInstall').js
   EOS
 result:
-  string: "true"
+  string: 'true'
 fix: |
   This is implemented by a Configuration Profile.
 references:
@@ -37,7 +37,7 @@ references:
     - SI.L1-3.14.1
     - SI.L1-3.14.4
 macOS:
-  - "14.0"
+  - '14.0'
 tags:
   - 800-53r5_low
   - 800-53r5_moderate

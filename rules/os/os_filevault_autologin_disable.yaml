@@ -1,5 +1,5 @@
 id: os_filevault_autologin_disable
-title: "Disable FileVault Automatic Login"
+title: Disable FileVault Automatic Login
 discussion: |
   If FileVault is enabled, automatic login _MUST_ be disabled, so that both FileVault and login window authentication are required.
 
@@ -12,7 +12,7 @@ check: |
   .objectForKey('DisableFDEAutoLogin').js
   EOS
 result:
-  string: "true"
+  string: 'true'
 fix: |
   This is implemented by a Configuration Profile.
 references:
@@ -29,9 +29,9 @@ references:
     - AC-3
     - IA-5(13)
   srg:
-    - SRG-OS-000480-GPOS-00227
+    - SRG-OS-000080-GPOS-00048
   disa_stig:
-    - N/A
+    - APPL-14-000033
   800-171r2:
     - 3.1.1
     - 3.1.2
@@ -44,7 +44,7 @@ references:
   cmmc:
     - AC.L1-3.1.1
 macOS:
-  - "14.0"
+  - '14.0'
 tags:
   - 800-53r5_low
   - 800-53r5_moderate
@@ -59,7 +59,8 @@ tags:
   - cnssi-1253_high
   - cmmc_lvl2
   - cmmc_lvl1
-severity: "medium"
+  - stig
+severity: medium
 mobileconfig: true
 mobileconfig_info:
   com.apple.loginwindow:

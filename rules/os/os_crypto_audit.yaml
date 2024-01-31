@@ -1,5 +1,5 @@
 id: os_crypto_audit
-title: "Protect Audit Integrity with Cryptographic Mechanisms"
+title: Protect Audit Integrity with Cryptographic Mechanisms
 discussion: |
   The information system _IS_ configured to implement cryptographic mechanisms to protect the integrity of audit information and audit tools.
 
@@ -24,13 +24,14 @@ references:
   disa_stig:
     - N/A
   srg:
-    - N/A
+    - SRG-OS-000278-GPOS-00108
 macOS:
-  - "14.0"
+  - '14.0'
 tags:
   - 800-53r5_high
   - 800-53r4_high
   - inherent
   - cnssi-1253_high
+  - stig
 mobileconfig: false
 mobileconfig_info:

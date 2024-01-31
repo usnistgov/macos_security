@@ -1,5 +1,5 @@
 id: os_fail_secure_state
-title: "Configure System to Fail to a Known Safe State if System Initialization, Shutdown, or Abort Fails"
+title: Configure System to Fail to a Known Safe State if System Initialization, Shutdown, or Abort Fails
 discussion: |
   The information system _IS_ configured to fail to a known safe state in the event of a failed system initialization, shutdown, or abort.
 
@@ -24,13 +24,15 @@ references:
   disa_stig:
     - N/A
   srg:
-    - N/A
+    - SRG-OS-000269-GPOS-00103
+    - SRG-OS-000184-GPOS-00078
 macOS:
-  - "14.0"
+  - '14.0'
 tags:
   - 800-53r5_high
   - 800-53r4_high
   - inherent
   - cnssi-1253_high
+  - stig
 mobileconfig: false
 mobileconfig_info:

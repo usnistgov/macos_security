@@ -1,5 +1,5 @@
 id: os_continuous_monitoring
-title: "Configure Automated Flaw Remediation"
+title: Configure Automated Flaw Remediation
 discussion: |
   The macOS system _MUST_ be configured to determine the state of system components with regard to flaw remediation.
 check: |
@@ -16,11 +16,11 @@ references:
   800-53r4:
     - SI-2(2)
   srg:
-    - N/A
+    - SRG-OS-000191-GPOS-00080
   disa_stig:
     - N/A
 macOS:
-  - "14.0"
+  - '14.0'
 tags:
   - 800-53r5_moderate
   - 800-53r5_high
@@ -30,5 +30,6 @@ tags:
   - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
+  - stig
 mobileconfig: false
 mobileconfig_info:

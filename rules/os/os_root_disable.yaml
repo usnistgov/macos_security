@@ -1,5 +1,5 @@
 id: os_root_disable
-title: "Disable Root Login"
+title: Disable Root Login
 discussion: |
   To assure individual accountability and prevent unauthorized access, logging in as root at the login window _MUST_ be disabled.
 
@@ -35,8 +35,14 @@ references:
   cmmc:
     - IA.L1-3.5.1
     - IA.L1-3.5.2
+  srg:
+    - SRG-OS-000364-GPOS-00151
+    - SRG-OS-000109-GPOS-00056
+    - SRG-OS-000104-GPOS-00051
+  disa_stig:
+    - APPL-14-000100
 macOS:
-  - "14.0"
+  - '14.0'
 tags:
   - 800-53r5_low
   - 800-53r5_moderate
@@ -53,5 +59,6 @@ tags:
   - cnssi-1253_high
   - cmmc_lvl2
   - cmmc_lvl1
+  - stig
 mobileconfig: false
 mobileconfig_info:

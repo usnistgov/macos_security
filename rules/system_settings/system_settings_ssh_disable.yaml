@@ -1,5 +1,5 @@
 id: system_settings_ssh_disable
-title: "Disable SSH Server for Remote Access Sessions"
+title: Disable SSH Server for Remote Access Sessions
 discussion: |
   SSH service _MUST_ be disabled for remote access.
 check: |
@@ -17,17 +17,7 @@ references:
   cce:
     - CCE-92994-3
   cci:
-    - CCI-000068
-    - CCI-001453
-    - CCI-001941
-    - CCI-001942
-    - CCI-001967
-    - CCI-002418
-    - CCI-002420
-    - CCI-002421
-    - CCI-002422
-    - CCI-002890
-    - CCI-003123
+    - N/A
   800-53r5:
     - CM-7
     - CM-7(1)
@@ -37,17 +27,7 @@ references:
     - CM-7
     - CM-7(1)
   srg:
-    - SRG-OS-000033-GPOS-00014
-    - SRG-OS-000112-GPOS-00057
-    - SRG-OS-000113-GPOS-00058
-    - SRG-OS-000250-GPOS-00093
-    - SRG-OS-000379-GPOS-00164
-    - SRG-OS-000393-GPOS-00173
-    - SRG-OS-000394-GPOS-00174
-    - SRG-OS-000423-GPOS-00187
-    - SRG-OS-000424-GPOS-00188
-    - SRG-OS-000425-GPOS-00189
-    - SRG-OS-000426-GPOS-00190
+    - N/A
   disa_stig:
     - N/A
   800-171r2:
@@ -65,7 +45,7 @@ references:
     - CM.L2-3.4.6
     - CM.L2-3.4.7
 macOS:
-  - "14.0"
+  - '14.0'
 tags:
   - cis_lvl1
   - cis_lvl2
@@ -75,6 +55,6 @@ tags:
   - cnssi-1253_high
   - cmmc_lvl2
   - cmmc_lvl1
-severity: "high"
+severity: high
 mobileconfig: false
 mobileconfig_info:

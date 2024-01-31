@@ -1,5 +1,5 @@
 id: audit_control_mode_configure
-title: "Configure Audit_Control Owner to Mode 440 or Less Permissive"
+title: Configure Audit_Control Owner to Mode 440 or Less Permissive
 discussion: |
   /etc/security/audit_control _MUST_ be configured so that it is readable only by the root user and group wheel.
 check: |
@@ -21,9 +21,15 @@ references:
   800-53r4:
     - AU-9
   srg:
-    - N/A
+    - SRG-OS-000256-GPOS-00097
+    - SRG-OS-000057-GPOS-00027
+    - SRG-OS-000063-GPOS-00032
+    - SRG-OS-000059-GPOS-00029
+    - SRG-OS-000257-GPOS-00098
+    - SRG-OS-000258-GPOS-00099
+    - SRG-OS-000058-GPOS-00028
   disa_stig:
-    - N/A
+    - APPL-14-001130
   800-171r2:
     - N/A
   cis:
@@ -34,7 +40,7 @@ references:
   cmmc:
     - AU.L2-3.3.8
 macOS:
-  - "14.0"
+  - '14.0'
 tags:
   - cis_lvl1
   - cis_lvl2
@@ -43,5 +49,6 @@ tags:
   - cnssi-1253_low
   - cnssi-1253_high
   - cmmc_lvl2
+  - stig
 mobileconfig: false
 mobileconfig_info:

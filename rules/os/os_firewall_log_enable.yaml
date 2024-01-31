@@ -1,5 +1,5 @@
 id: os_firewall_log_enable
-title: "Enable Firewall Logging"
+title: Enable Firewall Logging
 discussion: |
   Firewall logging _MUST_ be enabled.
 
@@ -21,7 +21,7 @@ check: |
   }
   EOS
 result:
-  string: "true"
+  string: 'true'
 fix: |
   This is implemented by a Configuration Profile.
 references:
@@ -56,7 +56,7 @@ references:
     - AU.L2-3.3.6
     - SC.L1-3.13.1
 macOS:
-  - "14.0"
+  - '14.0'
 tags:
   - 800-53r5_low
   - 800-53r5_moderate

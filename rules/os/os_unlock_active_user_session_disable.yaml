@@ -1,17 +1,19 @@
 id: os_unlock_active_user_session_disable
-title: "Disable Login to Other User's Active and Locked Sessions"
+title: Disable Login to Other User's Active and Locked Sessions
 discussion: |
   The ability to log in to another user's active or locked session _MUST_ be disabled.
 
   macOS has a privilege that can be granted to any user that will allow that user to unlock active user's sessions. Disabling the admins and/or user's ability to log into another user's active andlocked session prevents unauthorized persons from viewing potentially sensitive and/or personal information.
+
+  NOTE: Configuring this setting will disable TouchID from unlocking the screensaver.
 check: |
-  /usr/bin/security authorizationdb read system.login.screensaver 2>&1 | /usr/bin/grep -c 'use-login-window-ui'
+  /usr/bin/security authorizationdb read system.login.screensaver 2>&1 | /usr/bin/grep -c '<string>authenticate-session-owner</string>'
 result:
   integer: 1
 fix: |
   [source,bash]
   ----
-  /usr/bin/security authorizationdb write system.login.screensaver "use-login-window-ui"
+  /usr/bin/security authorizationdb write system.login.screensaver "authenticate-session-owner"
   ----
 references:
   cce:
@@ -25,9 +27,10 @@ references:
     - IA-2
     - IA-2(5)
   disa_stig:
-    - N/A
+    - APPL-14-000090
   srg:
-    - N/A
+    - SRG-OS-000109-GPOS-00056
+    - SRG-OS-000104-GPOS-00051
   800-171r2:
     - 3.5.1
     - 3.5.2
@@ -40,7 +43,7 @@ references:
     - IA.L1-3.5.1
     - IA.L1-3.5.2
 macOS:
-  - "14.0"
+  - '14.0'
 tags:
   - 800-53r5_low
   - 800-53r5_moderate
@@ -57,5 +60,6 @@ tags:
   - cnssi-1253_high
   - cmmc_lvl2
   - cmmc_lvl1
+  - stig
 mobileconfig: false
 mobileconfig_info:

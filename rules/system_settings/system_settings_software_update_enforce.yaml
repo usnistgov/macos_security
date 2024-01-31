@@ -1,5 +1,5 @@
 id: system_settings_software_update_enforce
-title: "Enforce Software Update Automatically"
+title: Enforce Software Update Automatically
 discussion: |
   Software Update _MUST_ be configured to enforce automatic update is enabled.
 check: |
@@ -8,7 +8,7 @@ check: |
   .objectForKey('AutomaticCheckEnabled').js
   EOS
 result:
-  string: "true"
+  string: 'true'
 fix: |
   This is implemented by a Configuration Profile.
 references:
@@ -35,7 +35,7 @@ references:
       - 7.3
       - 7.4
 macOS:
-  - "14.0"
+  - '14.0'
 tags:
   - cis_lvl1
   - cis_lvl2

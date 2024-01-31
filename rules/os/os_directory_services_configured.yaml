@@ -1,5 +1,5 @@
 id: os_directory_services_configured
-title: "Integrate System into a Directory Services Infrastructure"
+title: Integrate System into a Directory Services Infrastructure
 discussion: |
   The macOS system _MUST_ be integrated into a directory services infrastructure.
 
@@ -22,16 +22,17 @@ references:
   srg:
     - SRG-OS-000480-GPOS-00227
   disa_stig:
-    - N/A
+    - APPL-14-000016
   cis:
     benchmark:
       - N/A
     controls v8:
       - 6.7
 macOS:
-  - "14.0"
+  - '14.0'
 tags:
   - cisv8
-severity: "high"
+  - stig
+severity: high
 mobileconfig: false
 mobileconfig_info:

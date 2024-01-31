@@ -1,5 +1,5 @@
 id: system_settings_automatic_logout_enforce
-title: "Enforce Auto Logout After $ODV Seconds of Inactivity"
+title: Enforce Auto Logout After $ODV Seconds of Inactivity
 discussion: |
   Auto logout _MUST_ be configured to automatically terminate a user session and log out the after $ODV seconds of inactivity.
 
@@ -29,18 +29,18 @@ references:
   800-53r4:
     - AC-12
   disa_stig:
-    - N/A
+    - APPL-14-000160
   srg:
-    - N/A
+    - SRG-OS-000279-GPOS-00109
   800-171r2:
     - 3.1.11
   cmmc:
     - AC.L2-3.1.10
     - AC.L2-3.1.11
 macOS:
-  - "14.0"
+  - '14.0'
 odv:
-  hint: "Number of seconds"
+  hint: Number of seconds
   recommended: 86400
 tags:
   - 800-53r5_moderate
@@ -52,9 +52,8 @@ tags:
   - cnssi-1253_low
   - cnssi-1253_high
   - cmmc_lvl2
+  - stig
 mobileconfig: true
 mobileconfig_info:
   .GlobalPreferences:
     com.apple.autologout.AutoLogOutDelay: $ODV
-
-

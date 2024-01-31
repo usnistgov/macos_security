@@ -1,5 +1,5 @@
 id: audit_settings_failure_notify
-title: "Configure Audit Failure Notification"
+title: Configure Audit Failure Notification
 discussion: |
   The audit service _MUST_ be configured to immediately print messages to the console or email administrator users when an auditing failure occurs.
 
@@ -25,15 +25,16 @@ references:
     - AU-5
     - AU-5(2)
   srg:
+    - SRG-OS-000047-GPOS-00023
     - SRG-OS-000344-GPOS-00135
   disa_stig:
-    - N/A
+    - APPL-14-001031
   800-171r2:
     - 3.3.4
   cmmc:
     - AU.L2-3.3.4
 macOS:
-  - "14.0"
+  - '14.0'
 tags:
   - 800-53r5_low
   - 800-53r5_moderate
@@ -44,6 +45,7 @@ tags:
   - cnssi-1253_low
   - cnssi-1253_high
   - cmmc_lvl2
-severity: "medium"
+  - stig
+severity: medium
 mobileconfig: false
 mobileconfig_info:

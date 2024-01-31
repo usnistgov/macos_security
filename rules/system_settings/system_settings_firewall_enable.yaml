@@ -1,5 +1,5 @@
 id: system_settings_firewall_enable
-title: "Enable macOS Application Firewall"
+title: Enable macOS Application Firewall
 discussion: |
   The macOS Application Firewall is the built-in firewall that comes with macOS, and it _MUST_ be enabled.
 
@@ -19,7 +19,7 @@ check: |
     echo "false"
   fi
 result:
-  string: "true"
+  string: 'true'
 fix: |
   [source,bash]
   ----
@@ -47,7 +47,7 @@ references:
   srg:
     - SRG-OS-000480-GPOS-00232
   disa_stig:
-    - N/A
+    - APPL-14-005050
   800-171r2:
     - 3.1.3
     - 3.1.5
@@ -69,7 +69,7 @@ references:
     - CM.L2-3.4.7
     - SC.L1-3.13.1
 macOS:
-  - "14.0"
+  - '14.0'
 tags:
   - 800-53r5_low
   - 800-53r4_low
@@ -86,7 +86,8 @@ tags:
   - cnssi-1253_high
   - cmmc_lvl2
   - cmmc_lvl1
-severity: "medium"
+  - stig
+severity: medium
 mobileconfig: true
 mobileconfig_info:
   com.apple.security.firewall:

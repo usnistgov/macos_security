@@ -1,5 +1,5 @@
 id: os_policy_banner_ssh_configure
-title: "Display Policy Banner at Remote Login"
+title: Display Policy Banner at Remote Login
 discussion: |
   Remote login service _MUST_ be configured to display a policy banner at login.
 
@@ -27,17 +27,18 @@ references:
   800-53r4:
     - AC-8
   srg:
+    - SRG-OS-000024-GPOS-00007
     - SRG-OS-000023-GPOS-00006
   disa_stig:
-    - N/A
+    - APPL-14-000023
   800-171r2:
     - 3.1.9
   cmmc:
     - AC.L2-3.1.9
 macOS:
-  - "14.0"
+  - '14.0'
 odv:
-  hint: "Organization's Policy Text"
+  hint: Organization's Policy Text
   recommended: |-
     You are accessing a U.S. Government (USG) Information System (IS) that is provided for USG-authorized use only. By using this IS (which includes any device attached to this IS), you consent to the following conditions:
     -The USG routinely intercepts and monitors communications on this IS for purposes including, but not limited to, penetration testing, COMSEC monitoring, network operations and defense, personnel misconduct (PM), law enforcement (LE), and counterintelligence (CI) investigations.
@@ -71,6 +72,7 @@ tags:
   - cnssi-1253_low
   - cnssi-1253_high
   - cmmc_lvl2
-severity: "medium"
+  - stig
+severity: medium
 mobileconfig: false
 mobileconfig_info:
