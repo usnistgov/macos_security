@@ -74,6 +74,9 @@ references:
 macOS:
   - "13.0"
 tags:
+  - cis_lvl1
+  - cis_lvl2
+  - cisv8
   - supplemental
 mobileconfig: false
 mobileconfig_info:
