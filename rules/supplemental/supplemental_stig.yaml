@@ -48,6 +48,7 @@ iOS:
   - "13.0"
 tags:
   - ios_stig
+  - ios_stig_byoad
   - supplemental
 mobileconfig: false
 mobileconfig_info:  
