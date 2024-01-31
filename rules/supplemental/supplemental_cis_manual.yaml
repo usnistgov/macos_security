@@ -172,6 +172,11 @@ references:
 ios:
   - "16.0"
 tags:
+  - cis_lvl1_byod
+  - cis_lvl1_enterprise
+  - cis_lvl2_byod
+  - cis_lvl2_enterprise
+  - cisv8
   - supplemental
 mobileconfig: false
 mobileconfig_info:
