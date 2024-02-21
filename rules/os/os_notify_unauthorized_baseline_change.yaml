@@ -30,6 +30,6 @@ macOS:
 tags:
   - permanent
   - cnssi-1253_high
-  - stig
+  - srg
 mobileconfig: false
 mobileconfig_info:

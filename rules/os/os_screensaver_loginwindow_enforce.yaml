@@ -21,7 +21,7 @@ references:
   800-53r4:
     - AC-11(1)
   srg:
-    - SRG-OS-000031-GPOS-00012
+    - N/A
   disa_stig:
     - N/A
   800-171r2:
@@ -39,7 +39,6 @@ tags:
   - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
-  - stig
   - cmmc_lvl2
 severity: medium
 mobileconfig: true

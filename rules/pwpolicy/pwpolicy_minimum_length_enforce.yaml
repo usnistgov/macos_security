@@ -49,7 +49,7 @@ odv:
   recommended: 15
   cis_lvl1: 15
   cis_lvl2: 15
-  stig: 15
+  stig: 14
 tags:
   - 800-171
   - 800-53r4_low

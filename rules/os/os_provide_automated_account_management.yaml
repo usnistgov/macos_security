@@ -33,6 +33,6 @@ tags:
   - permanent
   - cnssi-1253_moderate
   - cnssi-1253_high
-  - stig
+  - srg
 mobileconfig: false
 mobileconfig_info:

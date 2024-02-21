@@ -28,7 +28,7 @@ references:
   800-53r5:
     - N/A
   srg:
-    - SRG-OS-000029-GPOS-00010
+    - N/A
   disa_stig:
     - N/A
   800-171r2:
@@ -47,7 +47,6 @@ odv:
   recommended: 1200
   stig: 900
 tags:
-  - stig
   - cnssi-1253_moderate
 severity: medium
 mobileconfig: true
