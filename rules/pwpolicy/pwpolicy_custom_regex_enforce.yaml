@@ -49,8 +49,8 @@ macOS:
   - '14.0'
 odv:
   hint: Custom regex (recommended is 1 upper and 1 lowercase)
-  recommended: .*[A-Z]{1,}[a-z]{1,}.*
-  cis_lvl2: .*[A-Z]{1,}[a-z]{1,}.*
+  recommended: .*[A-Z]{1,}.*[a-z]{1,}.*
+  cis_lvl2: .*[A-Z]{1,}.*[a-z]{1,}.*
 tags:
   - 800-171
   - 800-53r4_low
