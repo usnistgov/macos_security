@@ -3,17 +3,17 @@ title: Disable Login to Other User's Active and Locked Sessions
 discussion: |
   The ability to log in to another user's active or locked session _MUST_ be disabled.
 
-  macOS has a privilege that can be granted to any user that will allow that user to unlock active user's sessions. Disabling the admins and/or user's ability to log into another user's active andlocked session prevents unauthorized persons from viewing potentially sensitive and/or personal information.
-
-  NOTE: Configuring this setting will disable TouchID from unlocking the screensaver.
+  macOS has a privilege that can be granted to any user that will allow that user to unlock active user's sessions. Disabling the admins and/or user's ability to log into another user's active and locked session prevents unauthorized persons from viewing potentially sensitive and/or personal information.
+  
+  NOTE: Configuring this setting will change the user experience and disable TouchID from unlocking the screensaver. To restore the user experience and allow TouchID to unlock the screensaver, you can run `/usr/bin/sudo /usr/bin/defaults write /Library/Preferences/com.apple.loginwindow screenUnlockMode -int 1`. This setting can also be deployed with a configuration profile.
 check: |
-  /usr/bin/security authorizationdb read system.login.screensaver 2>&1 | /usr/bin/grep -c '<string>authenticate-session-owner</string>'
+  /usr/bin/security authorizationdb read system.login.screensaver 2>&1 | /usr/bin/grep -c '<string>$ODV</string>'
 result:
   integer: 1
 fix: |
   [source,bash]
   ----
-  /usr/bin/security authorizationdb write system.login.screensaver "authenticate-session-owner"
+  /usr/bin/security authorizationdb write system.login.screensaver "$ODV"
   ----
 references:
   cce:
@@ -43,7 +43,13 @@ references:
     - IA.L1-3.5.1
     - IA.L1-3.5.2
 macOS:
-  - '14.0'
+  - "14.0"
+odv:
+  hint: "Review the /System/Library/Security/authorization.plist file for more information."
+  recommended: "authenticate-session-owner"
+  cis_lvl1: "use-login-window-ui"
+  cis_lvl2: "use-login-window-ui"
+  stig: "authenticate-session-owner"
 tags:
   - 800-53r5_low
   - 800-53r5_moderate
