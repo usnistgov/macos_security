@@ -1,5 +1,5 @@
 id: os_tftpd_disable
-title: "Disable Trivial File Transfer Protocol Service"
+title: Disable Trivial File Transfer Protocol Service
 discussion: |
   If the system does not require Trivial File Transfer Protocol (TFTP), support it is non-essential and _MUST_ be disabled.
 
@@ -29,9 +29,10 @@ references:
     - AC-3
     - IA-5(1)
   srg:
+    - SRG-OS-000080-GPOS-00048
     - SRG-OS-000074-GPOS-00042
   disa_stig:
-    - N/A
+    - APPL-14-002038
   800-171r2:
     - 3.1.1
     - 3.1.2
@@ -48,7 +49,7 @@ references:
     - IA.L2-3.5.8
     - IA.L2-3.5.9
 macOS:
-  - "14.0"
+  - '14.0'
 tags:
   - 800-53r5_low
   - 800-53r5_moderate
@@ -63,6 +64,7 @@ tags:
   - cnssi-1253_high
   - cmmc_lvl2
   - cmmc_lvl1
-severity: "high"
+  - stig
+severity: high
 mobileconfig: false
 mobileconfig_info:

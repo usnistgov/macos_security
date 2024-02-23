@@ -1,5 +1,5 @@
 id: os_terminate_session
-title: "Terminate all sessions and network connections when maintenance is completed"
+title: Terminate all sessions and network connections when maintenance is completed
 discussion: |
   Terminates session and network connections when nonlocal maintenance is completed.
 check: |
@@ -20,7 +20,7 @@ references:
   srg:
     - N/A
 macOS:
-  - "14.0"
+  - '14.0'
 tags:
   - inherent
 mobileconfig: false

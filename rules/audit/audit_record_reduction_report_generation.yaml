@@ -1,5 +1,5 @@
 id: audit_record_reduction_report_generation
-title: "Audit Record Reduction and Report Generation"
+title: Audit Record Reduction and Report Generation
 discussion: |
   The system _IS_ configured with the ability provide and implement an audit record reduction and report generation capability.
 
@@ -20,7 +20,13 @@ references:
   800-53r4:
     - N/A
   srg:
-    - N/A
+    - SRG-OS-000351-GPOS-00139
+    - SRG-OS-000349-GPOS-00137
+    - SRG-OS-000348-GPOS-00136
+    - SRG-OS-000354-GPOS-00142
+    - SRG-OS-000352-GPOS-00140
+    - SRG-OS-000353-GPOS-00141
+    - SRG-OS-000122-GPOS-00063
   disa_stig:
     - N/A
   800-171r2:
@@ -28,7 +34,7 @@ references:
   cmmc:
     - AU.L2-3.3.6
 macOS:
-  - "14.0"
+  - '14.0'
 tags:
   - 800-53r5_high
   - 800-53r4_high
@@ -37,5 +43,6 @@ tags:
   - cnssi-1253_moderate
   - cnssi-1253_high
   - cmmc_lvl2
+  - stig
 mobileconfig: false
 mobileconfig_info:

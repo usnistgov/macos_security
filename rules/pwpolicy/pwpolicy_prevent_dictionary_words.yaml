@@ -1,5 +1,5 @@
 id: pwpolicy_prevent_dictionary_words
-title: "Prevent the Use of Dictionary Words for Passwords"
+title: Prevent the Use of Dictionary Words for Passwords
 discussion: |
   The macOS should be configured to forbid users to use dictionary words for passwords.
 
@@ -22,10 +22,11 @@ references:
   disa_stig:
     - N/A
   srg:
-    - N/A
+    - SRG-OS-000480-GPOS-00225
 macOS:
-  - "14.0"
+  - '14.0'
 tags:
   - permanent
+  - stig
 mobileconfig: false
 mobileconfig_info:

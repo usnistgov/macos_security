@@ -1,5 +1,5 @@
 id: system_settings_diagnostics_reports_disable
-title: "Disable Sending Diagnostic and Usage Data to Apple"
+title: Disable Sending Diagnostic and Usage Data to Apple
 discussion: |
   The ability to submit diagnostic data to Apple _MUST_ be disabled.
 
@@ -19,7 +19,7 @@ check: |
   }
   EOS
 result:
-  string: "true"
+  string: 'true'
 fix: |
   This is implemented by a Configuration Profile.
 references:
@@ -35,9 +35,10 @@ references:
     - AC-20
     - SI-11
   srg:
-    - SRG-OS-000096-GPOS-00050
+    - SRG-OS-000206-GPOS-00084
+    - SRG-OS-000205-GPOS-00083
   disa_stig:
-    - N/A
+    - APPL-14-002021
   800-171r2:
     - 3.1.20
   cis:
@@ -49,7 +50,7 @@ references:
   cmmc:
     - AC.L1-3.1.20
 macOS:
-  - "14.0"
+  - '14.0'
 tags:
   - 800-53r5_low
   - 800-53r4_low
@@ -65,7 +66,8 @@ tags:
   - cnssi-1253_high
   - cmmc_lvl2
   - cmmc_lvl1
-severity: "medium"
+  - stig
+severity: medium
 mobileconfig: true
 mobileconfig_info:
   com.apple.SubmitDiagInfo:

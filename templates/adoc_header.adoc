@@ -29,6 +29,7 @@ $cmmc_attribute
 $document_subtitle2
 ifdef::backend-pdf[]
 = {document-title}: {document-subtitle}
+{document-subtitle2}
 $version ($release_date)
 :pdf-themesdir: ../templates
 :pdf-theme: $pdf_theme

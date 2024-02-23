@@ -1,5 +1,5 @@
 id: os_secure_boot_verify
-title: "Ensure Secure Boot Level Set to Full"
+title: Ensure Secure Boot Level Set to Full
 discussion: |
   The Secure Boot security setting _MUST_ be set to full.
 
@@ -25,16 +25,19 @@ references:
   800-53r4:
     - SI-6
   srg:
-    - N/A
+    - SRG-OS-000447-GPOS-00201
+    - SRG-OS-000445-GPOS-00199
+    - SRG-OS-000446-GPOS-00200
   disa_stig:
-    - N/A
+    - APPL-14-005100
 macOS:
-  - "14.0"
+  - '14.0'
 tags:
   - 800-53r5_high
   - 800-53r5_moderate
   - 800-53r4_high
   - cnssi-1253_moderate
   - cnssi-1253_high
+  - stig
 mobileconfig: false
 mobileconfig_info:

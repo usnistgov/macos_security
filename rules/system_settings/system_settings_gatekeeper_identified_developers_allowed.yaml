@@ -1,5 +1,5 @@
 id: system_settings_gatekeeper_identified_developers_allowed
-title: "Apply Gatekeeper Settings to Block Applications from Unidentified Developers"
+title: Apply Gatekeeper Settings to Block Applications from Unidentified Developers
 discussion: |
   The information system implements cryptographic mechanisms to authenticate software prior to installation.
 
@@ -28,15 +28,15 @@ references:
     - CM-5
     - SI-7(15)
   srg:
-    - SRG-OS-000480-GPOS-00227
+    - SRG-OS-000366-GPOS-00153
   disa_stig:
-    - N/A
+    - APPL-14-002060
   800-171r2:
     - 3.4.5
   cmmc:
     - CM.L2-3.4.5
 macOS:
-  - "14.0"
+  - '14.0'
 tags:
   - 800-53r5_low
   - 800-53r5_moderate
@@ -48,7 +48,8 @@ tags:
   - cnssi-1253_low
   - cnssi-1253_high
   - cmmc_lvl2
-severity: "medium"
+  - stig
+severity: medium
 mobileconfig: true
 mobileconfig_info:
   com.apple.systempolicy.control:

@@ -1,5 +1,5 @@
 id: os_enforce_access_restrictions
-title: "Enforce Access Restrictions"
+title: Enforce Access Restrictions
 discussion: |
   The information system _IS_ configured to enforce access restrictions and support auditing of the enforcement actions.
 
@@ -22,14 +22,15 @@ references:
   disa_stig:
     - N/A
   srg:
-    - N/A
+    - SRG-OS-000364-GPOS-00151
 macOS:
-  - "14.0"
+  - '14.0'
 tags:
   - 800-53r5_high
   - 800-53r4_high
   - inherent
   - cnssi-1253_moderate
   - cnssi-1253_high
+  - stig
 mobileconfig: false
 mobileconfig_info:

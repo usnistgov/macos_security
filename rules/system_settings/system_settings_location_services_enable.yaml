@@ -1,5 +1,5 @@
 id: system_settings_location_services_enable
-title: "Enable Location Services"
+title: Enable Location Services
 discussion: |
   Location Services _MUST_ be enabled.
 check: |
@@ -8,7 +8,7 @@ check: |
   .objectForKey('LocationServicesEnabled').js
   EOS
 result:
-  string: "true"
+  string: 'true'
 fix: |
   [source,bash]
   ----
@@ -36,7 +36,7 @@ references:
       - 4.1
       - 4.8
 macOS:
-  - "14.0"
+  - '14.0'
 tags:
   - cis_lvl2
   - cisv8
