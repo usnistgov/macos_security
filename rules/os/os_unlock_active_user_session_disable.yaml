@@ -43,6 +43,12 @@ references:
     - IA.L1-3.5.2
 macOS:
   - "13.0"
+odv:
+  hint: "Review the /System/Library/Security/authorization.plist file for more information."
+  recommended: "authenticate-session-owner"
+  cis_lvl1: "use-login-window-ui"
+  cis_lvl2: "use-login-window-ui"
+  stig: "authenticate-session-owner"
 tags:
   - 800-53r5_low
   - 800-53r5_moderate
