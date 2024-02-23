@@ -1,5 +1,5 @@
 id: audit_flags_fm_failed_configure
-title: "Configure System to Audit All Failed Change of Object Attributes"
+title: Configure System to Audit All Failed Change of Object Attributes
 discussion: |
   The audit system _MUST_ be configured to record enforcement actions of failed attempts to modify file attributes (-fm).
 
@@ -56,7 +56,7 @@ references:
     - AU.L2-3.3.8
     - SI.L2-3.14.3
 macOS:
-  - "14.0"
+  - '14.0'
 tags:
   - 800-53r5_privacy
   - 800-53r5_low
@@ -72,6 +72,6 @@ tags:
   - cnssi-1253_low
   - cnssi-1253_high
   - cmmc_lvl2
-severity: "medium"
+severity: medium
 mobileconfig: false
 mobileconfig_info:

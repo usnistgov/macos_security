@@ -1,5 +1,5 @@
 id: os_ssh_server_alive_interval_configure
-title: "Configure SSH ServerAliveInterval option set to $ODV"
+title: Configure SSH ServerAliveInterval option set to $ODV
 discussion: |
   SSH _MUST_ be configured with an Active Server Alive Maximum Count set to $ODV.
 
@@ -40,18 +40,18 @@ references:
   800-53r4:
     - SC-10
   srg:
-    - N/A
+    - SRG-OS-000163-GPOS-00072
   disa_stig:
-    - N/A
+    - APPL-14-000110
   800-171r2:
     - 3.13.9
   cmmc:
     - AC.L2-3.1.11
     - SC.L2-3.13.9
 macOS:
-  - "14.0"
+  - '14.0'
 odv:
-  hint: "Number of seconds."
+  hint: Number of seconds.
   recommended: 900
 tags:
   - 800-53r5_moderate
@@ -63,5 +63,6 @@ tags:
   - cnssi-1253_low
   - cnssi-1253_high
   - cmmc_lvl2
+  - stig
 mobileconfig: false
 mobileconfig_info:

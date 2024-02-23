@@ -18,14 +18,15 @@ references:
   cce:
     - CCE-93011-5
   cci:
-    - N/A
+    - CCI-000192
+    - CCI-000193
   800-53r5:
     - IA-5(1)
   800-53r4:
     - IA-5
     - IA-5(1)
   disa_stig:
-    - N/A
+    - APPL-14-003060
   srg:
     - SRG-OS-000070-GPOS-00038
     - SRG-OS-000069-GPOS-00037
@@ -51,6 +52,7 @@ odv:
   hint: Custom regex (recommended is 1 upper and 1 lowercase)
   recommended: .*[A-Z]{1,}[a-z]{1,}.*
   cis_lvl2: .*[A-Z]{1,}[a-z]{1,}.*
+  stig: .*[A-Z]{1,}[a-z]{1,}.*
 tags:
   - 800-171
   - 800-53r4_low
@@ -65,6 +67,7 @@ tags:
   - cnssi-1253_low
   - cnssi-1253_high
   - cmmc_lvl2
+  - stig
 mobileconfig: true
 mobileconfig_info:
   com.apple.mobiledevice.passwordpolicy:

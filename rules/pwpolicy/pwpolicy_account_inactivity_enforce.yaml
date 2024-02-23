@@ -1,5 +1,5 @@
 id: pwpolicy_account_inactivity_enforce
-title: "Disable Accounts after $ODV Days of Inactivity"
+title: Disable Accounts after $ODV Days of Inactivity
 discussion: |
   The macOS _MUST_ be configured to disable accounts after $ODV days of inactivity.
 
@@ -22,7 +22,7 @@ fix: |
   <string>Inactive Account</string>
   <key>policyParameters</key>
   <dict>
-  <key>policyAttributeInactiveDays<key>
+  <key>policyAttributeInactiveDays</key>
   <integer>$ODV</integer>
   </dict>
   </dict>
@@ -44,9 +44,9 @@ references:
   800-53r4:
     - IA-4
   srg:
-    - N/A
+    - SRG-OS-000118-GPOS-00060
   disa_stig:
-    - N/A
+    - APPL-14-003080
   800-171r2:
     - 3.5.5
     - 3.5.6
@@ -58,9 +58,9 @@ references:
   cmmc:
     - IA.L2-3.5.6
 macOS:
-  - "14.0"
+  - '14.0'
 odv:
-  hint: "Number of days."
+  hint: Number of days.
   recommended: 35
 tags:
   - 800-171
@@ -73,5 +73,6 @@ tags:
   - cnssi-1253_moderate
   - cnssi-1253_high
   - cmmc_lvl2
+  - stig
 mobileconfig: false
 mobileconfig_info:

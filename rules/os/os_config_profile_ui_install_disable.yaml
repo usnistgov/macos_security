@@ -1,5 +1,5 @@
 id: os_config_profile_ui_install_disable
-title: "Disable Installation of Configuration Profiles through the User Interface"
+title: Disable Installation of Configuration Profiles through the User Interface
 discussion: |
   Installation of configuration profiles through the user interface _MUST_ be disabled and only be permitted through an authorized MDM server.
 check: |
@@ -8,7 +8,7 @@ check: |
   .objectForKey('allowUIConfigurationProfileInstallation').js
   EOS
 result:
-  string: "false"
+  string: 'false'
 fix: |
   This is implemented by a Configuration Profile.
 references:
@@ -27,8 +27,12 @@ references:
       - N/A
   cmmc:
     - CM.L2-3.4.5
+  srg:
+    - N/A
+  disa_stig:
+    - N/A
 macOS:
-  - "14.0"
+  - '14.0'
 tags:
   - 800-53r5_low
   - 800-53r5_moderate

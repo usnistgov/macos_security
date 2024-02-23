@@ -1,5 +1,5 @@
 id: pwpolicy_special_character_enforce
-title: "Require Passwords Contain a Minimum of One Special Character"
+title: Require Passwords Contain a Minimum of One Special Character
 discussion: |
   The macOS _MUST_ be configured to require at least one special character be used when a password is created.
 
@@ -11,7 +11,7 @@ discussion: |
 check: |
   /usr/bin/pwpolicy -getaccountpolicies 2> /dev/null | /usr/bin/tail +2 | /usr/bin/xmllint --xpath 'boolean(//*[contains(text(),"policyAttributePassword matches '\''(.*[^a-zA-Z0-9].*){$ODV,}'\''")])' -
 result:
-  string: "true"
+  string: 'true'
 fix: |
   This is implemented by a Configuration Profile.
 references:
@@ -27,7 +27,7 @@ references:
   srg:
     - SRG-OS-000266-GPOS-00101
   disa_stig:
-    - N/A
+    - APPL-14-003011
   800-171r2:
     - 3.5.1
     - 3.5.2
@@ -45,9 +45,9 @@ references:
     - IA.L2-3.5.8
     - IA.L2-3.5.9
 macOS:
-  - "14.0"
+  - '14.0'
 odv:
-  hint: "Number of special characters."
+  hint: Number of special characters.
   recommended: 1
   cis_lvl2: 1
   stig: 1
@@ -65,7 +65,8 @@ tags:
   - cnssi-1253_low
   - cnssi-1253_high
   - cmmc_lvl2
-severity: "medium"
+  - stig
+severity: medium
 mobileconfig: true
 mobileconfig_info:
   com.apple.mobiledevice.passwordpolicy:

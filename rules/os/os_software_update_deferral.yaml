@@ -1,5 +1,5 @@
 id: os_software_update_deferral
-title: "Ensure Software Update Deferment Is Less Than or Equal to $ODV Days"
+title: Ensure Software Update Deferment Is Less Than or Equal to $ODV Days
 discussion: |
   Software updates _MUST_ be deferred for $ODV days or less.
 check: |
@@ -15,7 +15,7 @@ check: |
   }
   EOS
 result:
-  string: "true"
+  string: 'true'
 fix: |
   This is implemented by a Configuration Profile.
 references:
@@ -40,9 +40,9 @@ references:
       - 7.3
       - 7.4
 macOS:
-  - "14.0"
+  - '14.0'
 odv:
-  hint: "Number of days."
+  hint: Number of days.
   recommended: 30
   cis_lvl1: 30
   cis_lvl2: 30

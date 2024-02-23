@@ -1,5 +1,5 @@
 id: os_blank_cd_disable
-title: "Disable Blank CD"
+title: Disable Blank CD
 discussion: |
   Blank CD media _MUST_ be disabled.
 
@@ -18,20 +18,20 @@ check: |
   .objectForKey('mount-controls'))["blankcd"]
   EOS
 result:
-  string: "deny"
+  string: deny
 fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
     - CCE-92766-5
   cci:
-    - CCI-000366
+    - N/A
   800-53r5:
     - MP-7
   800-53r4:
     - MP-7(1)
   srg:
-    - SRG-OS-000480-GPOS-00227
+    - N/A
   disa_stig:
     - N/A
   800-171r2:
@@ -40,13 +40,13 @@ references:
     - MP.L2-3.8.7
     - MP.L2-3.8.8
 macOS:
-  - "14.0"
+  - '14.0'
 tags:
   - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
   - cmmc_lvl2
-severity: "medium"
+severity: medium
 mobileconfig: true
 mobileconfig_info:
   com.apple.systemuiserver:

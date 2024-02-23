@@ -1,5 +1,5 @@
 id: os_non_repudiation
-title: "Non-Repudiation"
+title: Non-Repudiation
 discussion: |
   Provide irrefutable evidence that an individual (or process acting on behalf of an individual) has performed organization-defined actions to be covered by non-repudiation.
 
@@ -24,7 +24,7 @@ references:
   srg:
     - N/A
 macOS:
-  - "14.0"
+  - '14.0'
 tags:
   - 800-53r5_high
   - n_a

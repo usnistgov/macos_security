@@ -1,5 +1,5 @@
 id: os_gatekeeper_enable
-title: "Enable Gatekeeper"
+title: Enable Gatekeeper
 discussion: |
   Gatekeeper _MUST_ be enabled.
 
@@ -34,7 +34,7 @@ references:
   srg:
     - SRG-OS-000366-GPOS-00153
   disa_stig:
-    - N/A
+    - APPL-14-002064
   800-171r2:
     - 3.4.5
   cis:
@@ -50,7 +50,7 @@ references:
     - SI.L1-3.14.2
     - SI.L1-3.14.4
 macOS:
-  - "14.0"
+  - '14.0'
 tags:
   - 800-53r5_low
   - 800-53r5_moderate
@@ -66,7 +66,8 @@ tags:
   - cnssi-1253_high
   - cmmc_lvl2
   - cmmc_lvl1
-severity: "high"
+  - stig
+severity: high
 mobileconfig: true
 mobileconfig_info:
   com.apple.systempolicy.control:

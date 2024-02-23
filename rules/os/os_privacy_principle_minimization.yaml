@@ -1,5 +1,5 @@
 id: os_privacy_principle_minimization
-title: "Implement the Privacy Principle of Minimization"
+title: Implement the Privacy Principle of Minimization
 discussion: |
   Implement the privacy principle of minimization using organization-defined processes.
 
@@ -24,7 +24,7 @@ references:
   srg:
     - N/A
 macOS:
-  - "14.0"
+  - '14.0'
 tags:
   - 800-53r5_privacy
   - n_a

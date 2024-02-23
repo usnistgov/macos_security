@@ -1,5 +1,5 @@
 id: os_sshd_unused_connection_timeout_configure
-title: "Configure SSHD Unused Connection Timeout to $ODV"
+title: Configure SSHD Unused Connection Timeout to $ODV
 discussion: |
   If SSHD is enabled it _MUST_ be configured with unused connectione timeout set to $ODV.
 
@@ -42,16 +42,17 @@ references:
   800-53r4:
     - SC-10
   srg:
-    - N/A
+    - SRG-OS-000163-GPOS-00072
+    - SRG-OS-000279-GPOS-00109
   disa_stig:
-    - N/A
+    - APPL-14-000130
   800-171r2:
     - 3.13.9
   cmmc:
     - AC.L2-3.1.11
     - SC.L2-3.13.9
 odv:
-  hint: "Number of seconds."
+  hint: Number of seconds.
   recommended: 900
 tags:
   - 800-53r5_moderate
@@ -63,5 +64,6 @@ tags:
   - cnssi-1253_low
   - cnssi-1253_high
   - cmmc_lvl2
+  - stig
 mobileconfig: false
 mobileconfig_info:

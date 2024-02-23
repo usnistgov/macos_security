@@ -1,5 +1,5 @@
 id: os_safari_open_safe_downloads_disable
-title: "Disable Automatic Opening of Safe Files in Safari"
+title: Disable Automatic Opening of Safe Files in Safari
 discussion: |
   Open "safe" files after downloading _MUST_ be disabled in Safari.
 check: |
@@ -28,7 +28,7 @@ references:
       - 9.1
       - 9.6
 macOS:
-  - "14.0"
+  - '14.0'
 tags:
   - cis_lvl1
   - cis_lvl2

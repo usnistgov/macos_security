@@ -1,13 +1,13 @@
 id: os_sudoers_timestamp_type_configure
-title: "Configure Sudoers Timestamp Type"
+title: Configure Sudoers Timestamp Type
 discussion: |
-  The file /etc/sudoers _MUST_ be configured to not include a timestamp_type of global or ppid aand be configured for timestamp record types of tty.
+  The file /etc/sudoers _MUST_ be configured to not include a timestamp_type of global or ppid and be configured for timestamp record types of tty.
 
   This rule ensures that the "sudo" command will prompt for the administrator's password at least once in each newly opened terminal window. This prevents a malicious user from taking advantage of an unlocked computer or an abandoned logon session by bypassing the normal password prompt requirement.
 check: |
   /usr/bin/sudo /usr/bin/sudo -V | /usr/bin/awk -F": " '/Type of authentication timestamp record/{print $2}'
 result:
-  string: "tty"
+  string: tty
 fix: |
   [source,bash]
   ----
@@ -24,16 +24,17 @@ references:
   800-53r4:
     - IA-11
   srg:
-    - N/A
+    - SRG-OS-000373-GPOS-00157
+    - SRG-OS-000373-GPOS-00156
   disa_stig:
-    - N/A
+    - APPL-14-004060
   cis:
     benchmark:
       - 5.5 (level 1)
     controls v8:
       - 4.3
 macOS:
-  - "14.0"
+  - '14.0'
 tags:
   - 800-53r5_low
   - 800-53r5_moderate
@@ -44,5 +45,6 @@ tags:
   - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
+  - stig
 mobileconfig: false
 mobileconfig_info:

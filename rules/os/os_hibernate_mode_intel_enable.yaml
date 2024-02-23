@@ -1,10 +1,9 @@
 id: os_hibernate_mode_intel_enable
-title: "Enable Hibernate Mode (Intel)"
+title: Enable Hibernate Mode (Intel)
 discussion: |
   Hibernate mode _MUST_ be enabled.
 
   This will store a copy of memory to persistent storage, and will remove power to memory. This setting will stop the potential for a cold-boot attack.
-
 check: |
   error_count=0
   if /usr/sbin/ioreg -rd1 -c IOPlatformExpertDevice 2>&1 | /usr/bin/grep -q "MacBook"; then
@@ -58,7 +57,7 @@ references:
     controls v8:
       - 4.1
 macOS:
-  - "14.0"
+  - '14.0'
 tags:
   - cis_lvl2
   - cisv8

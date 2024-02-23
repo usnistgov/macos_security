@@ -1,5 +1,5 @@
 id: os_implement_memory_protection
-title: "Configure the System to Protect Memory from Unauthorized Code Execution"
+title: Configure the System to Protect Memory from Unauthorized Code Execution
 discussion: |
   The information system _IS_ configured to implement non-executable data to protect memory from code execution.
 
@@ -12,7 +12,6 @@ discussion: |
   link:https://developer.apple.com/library/archive/qa/qa1788/_index.html[]
 
   link:https://www.apple.com/macos/security/[]
-
 check: |
   The technology supports this requirement and cannot be configured to be out of compliance. The technology inherently meets this requirement.
 fix: |
@@ -29,9 +28,10 @@ references:
   disa_stig:
     - N/A
   srg:
-    - N/A
+    - SRG-OS-000433-GPOS-00193
+    - SRG-OS-000433-GPOS-00192
 macOS:
-  - "14.0"
+  - '14.0'
 tags:
   - 800-53r5_moderate
   - 800-53r5_high
@@ -40,5 +40,6 @@ tags:
   - inherent
   - cnssi-1253_moderate
   - cnssi-1253_high
+  - stig
 mobileconfig: false
 mobileconfig_info:

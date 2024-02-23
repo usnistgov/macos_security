@@ -1,5 +1,5 @@
 id: os_limit_gui_sessions
-title: "Limit Concurrent GUI Sessions to 10 for all Accounts"
+title: Limit Concurrent GUI Sessions to 10 for all Accounts
 discussion: |
   The information system _IS_ configured to limit the number of concurrent graphical user interface (GUI) sessions to a maximum of ten for all users.
 
@@ -20,14 +20,15 @@ references:
   disa_stig:
     - N/A
   srg:
-    - N/A
+    - SRG-OS-000027-GPOS-00008
 macOS:
-  - "14.0"
+  - '14.0'
 tags:
   - 800-53r5_high
   - 800-53r4_high
   - inherent
   - cnssi-1253_moderate
   - cnssi-1253_high
+  - stig
 mobileconfig: false
 mobileconfig_info:

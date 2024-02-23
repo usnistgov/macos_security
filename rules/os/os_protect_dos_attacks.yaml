@@ -1,5 +1,5 @@
 id: os_protect_dos_attacks
-title: "Protect Against Denial of Service Attacks by Ensuring Rate-Limiting Measures on Network Interfaces"
+title: Protect Against Denial of Service Attacks by Ensuring Rate-Limiting Measures on Network Interfaces
 discussion: |
   The macOS should be configured to prevent Denial of Service (DoS) attacks by enforcing rate-limiting measures on network interfaces.
 
@@ -22,9 +22,9 @@ references:
   disa_stig:
     - N/A
   srg:
-    - N/A
+    - SRG-OS-000420-GPOS-00186
 macOS:
-  - "14.0"
+  - '14.0'
 tags:
   - 800-53r5_low
   - 800-53r5_moderate
@@ -36,5 +36,6 @@ tags:
   - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
+  - stig
 mobileconfig: false
 mobileconfig_info:
