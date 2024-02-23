@@ -33,7 +33,7 @@ discussion: |
   <key>Enable</key>
   <string>On</string>
   <key>Defer</key>
-  <true />
+  <true/>
   ----
   [source,xml]
   ----
