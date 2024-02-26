@@ -19,7 +19,8 @@ references:
   cce:
     - CCE-92919-0
   cci:
-    - N/A
+    - CCI-000764
+    - CCI-000770
   800-53r5:
     - IA-2
     - IA-2(5)
@@ -61,5 +62,6 @@ tags:
   - cmmc_lvl2
   - cmmc_lvl1
   - stig
+severity: medium
 mobileconfig: false
 mobileconfig_info:

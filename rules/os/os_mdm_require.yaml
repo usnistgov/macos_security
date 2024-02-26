@@ -27,7 +27,7 @@ references:
   cce:
     - CCE-92824-2
   cci:
-    - N/A
+    - CCI-000366
   800-53r5:
     - CM-2
     - CM-6
@@ -67,5 +67,6 @@ tags:
   - cnssi-1253_high
   - cmmc_lvl2
   - stig
+severity: medium
 mobileconfig: false
 mobileconfig_info:

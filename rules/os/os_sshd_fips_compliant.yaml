@@ -47,7 +47,13 @@ references:
   cce:
     - CCE-92902-6
   cci:
-    - N/A
+    - CCI-000068
+    - CCI-000803
+    - CCI-001453
+    - CCI-002421
+    - CCI-002450
+    - CCI-002890
+    - CCI-003123    
   800-53r5:
     - AC-17(2)
     - IA-7
@@ -94,6 +100,6 @@ tags:
   - cnssi-1253_high
   - cmmc_lvl2
   - stig
-severity: medium
+severity: high
 mobileconfig: false
 mobileconfig_info:

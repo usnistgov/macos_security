@@ -43,7 +43,7 @@ tags:
   - cmmc_lvl2
   - stig
   - stig
-severity: low
+severity: medium
 mobileconfig: true
 mobileconfig_info:
   com.apple.systempreferences:

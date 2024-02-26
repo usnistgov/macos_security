@@ -60,7 +60,7 @@ tags:
   - cnssi-1253_high
   - cmmc_lvl2
   - stig
-severity: low
+severity: high
 mobileconfig: true
 mobileconfig_info:
   com.apple.ManagedClient.preferences:

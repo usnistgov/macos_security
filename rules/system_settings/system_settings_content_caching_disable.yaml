@@ -17,7 +17,7 @@ references:
   cce:
     - CCE-92954-7
   cci:
-    - N/A
+    - CCI-000381
   800-53r5:
     - CM-7
     - CM-7(1)
@@ -55,6 +55,7 @@ tags:
   - cnssi-1253_high
   - cmmc_lvl2
   - stig
+severity: medium
 mobileconfig: true
 mobileconfig_info:
   com.apple.applicationaccess:

@@ -26,7 +26,8 @@ references:
   cce:
     - CCE-92956-2
   cci:
-    - CCI-000382
+    - CCI-001312
+    - CCI-001314
   800-53r5:
     - SI-11
     - AC-20

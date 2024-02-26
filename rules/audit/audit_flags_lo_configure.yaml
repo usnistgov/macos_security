@@ -21,6 +21,7 @@ references:
   cci:
     - CCI-000067
     - CCI-000172
+    - CCI-002884
   800-53r5:
     - AC-2(12)
     - AU-12

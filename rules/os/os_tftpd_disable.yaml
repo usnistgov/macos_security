@@ -21,6 +21,7 @@ references:
     - CCE-92914-1
   cci:
     - CCI-000197
+    - CCI-000213
   800-53r5:
     - AC-3
     - IA-5(1)

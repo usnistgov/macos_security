@@ -17,6 +17,7 @@ references:
   cce:
     - CCE-92705-3
   cci:
+    - CCI-000139
     - CCI-001855
   800-53r5:
     - AU-5(1)

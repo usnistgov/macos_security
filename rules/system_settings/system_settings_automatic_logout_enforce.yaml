@@ -22,7 +22,7 @@ references:
   cce:
     - CCE-92948-9
   cci:
-    - N/A
+    - CCI-002361
   800-53r5:
     - AC-12
     - AC-2(5)
@@ -53,6 +53,7 @@ tags:
   - cnssi-1253_high
   - cmmc_lvl2
   - stig
+severity: medium
 mobileconfig: true
 mobileconfig_info:
   .GlobalPreferences:

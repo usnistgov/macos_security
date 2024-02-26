@@ -22,7 +22,7 @@ references:
   cce:
     - CCE-92764-0
   cci:
-    - N/A
+    - CCI-000213
   800-53r5:
     - AC-3
     - CM-5
@@ -73,5 +73,6 @@ tags:
   - cmmc_lvl2
   - cmmc_lvl1
   - stig
+severity: medium
 mobileconfig: false
 mobileconfig_info:

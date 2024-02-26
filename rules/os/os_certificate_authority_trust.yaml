@@ -12,6 +12,7 @@ references:
   cce:
     - CCE-92774-9
   cci:
+    - CCI-002470 
     - CCI-000185
     - CCI-002450
   800-53r5:

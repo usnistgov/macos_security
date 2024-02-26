@@ -16,7 +16,9 @@ references:
   cce:
     - CCE-92756-6
   cci:
+    - CCI-000213
     - CCI-000381
+    - CCI-001443
   800-53r5:
     - AC-3
     - AC-20
@@ -70,7 +72,7 @@ tags:
   - cmmc_lvl2
   - cmmc_lvl1
   - stig
-severity: low
+severity: medium
 mobileconfig: true
 mobileconfig_info:
   com.apple.applicationaccess:
