@@ -42,6 +42,7 @@ macOS:
 odv:
   hint: Number of seconds
   recommended: 86400
+  stig: 86400
 tags:
   - 800-53r5_moderate
   - 800-53r5_high

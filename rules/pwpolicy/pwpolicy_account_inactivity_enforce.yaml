@@ -62,6 +62,7 @@ macOS:
 odv:
   hint: Number of days.
   recommended: 35
+  stig: 35
 tags:
   - 800-171
   - 800-53r4_low

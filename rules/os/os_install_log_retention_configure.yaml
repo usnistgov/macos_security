@@ -45,6 +45,7 @@ odv:
   recommended: 365
   cis_lvl1: 365
   cis_lvl2: 365
+  stig: 365
 tags:
   - cis_lvl1
   - cis_lvl2

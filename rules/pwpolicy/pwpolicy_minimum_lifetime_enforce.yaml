@@ -67,6 +67,7 @@ macOS:
 odv:
   hint: Number of hours.
   recommended: 24
+  stig: 24
 tags:
   - 800-171
   - 800-53r4_low

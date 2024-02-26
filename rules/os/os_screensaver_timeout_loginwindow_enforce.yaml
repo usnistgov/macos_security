@@ -45,7 +45,6 @@ macOS:
 odv:
   hint: Number of seconds.
   recommended: 1200
-  stig: 900
 tags:
   - cnssi-1253_moderate
 severity: medium
