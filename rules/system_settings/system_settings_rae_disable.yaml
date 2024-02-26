@@ -19,6 +19,7 @@ references:
   cce:
     - CCE-92981-0
   cci:
+    - CCI-000213
     - CCI-000382
   800-53r5:
     - AC-3
@@ -27,6 +28,7 @@ references:
     - AC-3
   srg:
     - SRG-OS-000080-GPOS-00048
+    - SRG-OS-000096-GPOS-00050
   disa_stig:
     - APPL-14-002022
   800-171r2:

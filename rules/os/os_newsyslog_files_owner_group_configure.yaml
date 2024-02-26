@@ -17,6 +17,7 @@ references:
   cce:
     - CCE-92829-1
   cci:
+    - CCI-001312
     - CCI-001314
   800-53r5:
     - SI-11

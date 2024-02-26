@@ -16,7 +16,9 @@ references:
   cce:
     - CCE-92883-8
   cci:
-    - N/A
+    - CCI-002696
+    - CCI-002699
+    - CCI-002702
   800-53r5:
     - SI-7
     - SI-7(1)
@@ -39,5 +41,6 @@ tags:
   - cnssi-1253_moderate
   - cnssi-1253_high
   - stig
+severity: medium
 mobileconfig: false
 mobileconfig_info:

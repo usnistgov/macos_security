@@ -20,7 +20,8 @@ references:
   cce:
     - CCE-92717-8
   cci:
-    - N/A
+    - CCI-000172
+    - CCI-001814
   800-53r5:
     - AC-2(12)
     - AU-12
@@ -69,5 +70,6 @@ tags:
   - cnssi-1253_high
   - cmmc_lvl2
   - stig
+severity: medium
 mobileconfig: false
 mobileconfig_info:

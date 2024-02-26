@@ -20,7 +20,7 @@ references:
   disa_stig:
     - N/A
   srg:
-    - SRG-OS-000126-GPOS-00066
+    - N/A
   cmmc:
     - MA.L2-3.7.5
 macOS:
@@ -38,6 +38,5 @@ tags:
   - cnssi-1253_low
   - cnssi-1253_high
   - cmmc_lvl2
-  - stig
 mobileconfig: false
 mobileconfig_info:

@@ -25,9 +25,7 @@ references:
     - SC-28
     - SC-28(1)
   srg:
-    - SRG-OS-000185-GPOS-00079
-    - SRG-OS-000405-GPOS-00184
-    - SRG-OS-000404-GPOS-00183
+    - N/A
   disa_stig:
     - N/A
   800-171r2:
@@ -47,7 +45,6 @@ tags:
   - 800-53r5_high
   - cisv8
   - cmmc_lvl2
-  - stig
 severity: high
 mobileconfig: true
 mobileconfig_info:

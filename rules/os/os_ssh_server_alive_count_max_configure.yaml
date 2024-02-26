@@ -31,7 +31,7 @@ references:
   cce:
     - CCE-92895-2
   cci:
-    - N/A
+    - CCI-001133
   800-53r5:
     - SC-10
   800-53r4:
@@ -49,6 +49,7 @@ macOS:
 odv:
   hint: Number of seconds.
   recommended: 0
+  stig: 0
 tags:
   - 800-53r5_moderate
   - 800-53r5_high
@@ -60,5 +61,6 @@ tags:
   - cnssi-1253_high
   - cmmc_lvl2
   - stig
+severity: medium
 mobileconfig: false
 mobileconfig_info:

@@ -18,7 +18,7 @@ references:
   disa_stig:
     - N/A
   srg:
-    - SRG-OS-000121-GPOS-00062
+    - N/A
 macOS:
   - '14.0'
 tags:
@@ -32,6 +32,5 @@ tags:
   - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
-  - stig
 mobileconfig: false
 mobileconfig_info:

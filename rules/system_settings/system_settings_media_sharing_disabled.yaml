@@ -32,7 +32,7 @@ references:
   cce:
     - CCE-92977-8
   cci:
-    - N/A
+    - CCI-000213
   800-53r5:
     - AC-3
     - AC-17
@@ -71,6 +71,7 @@ tags:
   - cmmc_lvl2
   - cmmc_lvl1
   - stig
+severity: medium
 mobileconfig: true
 mobileconfig_info:
   com.apple.preferences.sharing.SharingPrefsExtension:

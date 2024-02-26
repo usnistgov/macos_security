@@ -42,7 +42,7 @@ references:
     - CM-7(1)
     - AC-20
   srg:
-    - SRG-OS-000095-GPOS-00049
+    - N/A
   disa_stig:
     - N/A
   800-171r2:
@@ -64,7 +64,6 @@ tags:
   - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
-  - stig
 severity: low
 mobileconfig: true
 mobileconfig_info:

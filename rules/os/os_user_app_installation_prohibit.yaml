@@ -32,7 +32,7 @@ references:
   cce:
     - CCE-92920-8
   cci:
-    - N/A
+    - CCI-001812
   800-53r5:
     - CM-11(2)
   800-53r4:

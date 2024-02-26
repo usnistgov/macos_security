@@ -38,7 +38,7 @@ references:
   cce:
     - CCE-92926-5
   cci:
-    - N/A
+    - CCI-000795
   800-53r5:
     - AC-2(3)
   800-53r4:
@@ -62,6 +62,7 @@ macOS:
 odv:
   hint: Number of days.
   recommended: 35
+  stig: 35
 tags:
   - 800-171
   - 800-53r4_low
@@ -74,5 +75,6 @@ tags:
   - cnssi-1253_high
   - cmmc_lvl2
   - stig
+severity: medium
 mobileconfig: false
 mobileconfig_info:

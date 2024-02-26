@@ -42,8 +42,8 @@ tags:
   - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
-  - stig
   - cmmc_lvl2
   - cmmc_lvl1
+  - srg
 mobileconfig: false
 mobileconfig_info:

@@ -17,7 +17,7 @@ references:
   cce:
     - CCE-92811-9
   cci:
-    - N/A
+    - CCI-001849
   800-53r5:
     - AU-11
     - AU-4
@@ -45,6 +45,7 @@ odv:
   recommended: 365
   cis_lvl1: 365
   cis_lvl2: 365
+  stig: 365
 tags:
   - cis_lvl1
   - cis_lvl2
@@ -54,5 +55,6 @@ tags:
   - cnssi-1253_high
   - cmmc_lvl2
   - stig
+severity: medium
 mobileconfig: false
 mobileconfig_info:

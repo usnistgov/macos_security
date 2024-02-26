@@ -33,6 +33,6 @@ macOS:
 tags:
   - cisv8
   - stig
-severity: high
+severity: medium
 mobileconfig: false
 mobileconfig_info:

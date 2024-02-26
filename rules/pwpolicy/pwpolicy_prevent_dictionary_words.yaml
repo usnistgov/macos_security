@@ -27,6 +27,6 @@ macOS:
   - '14.0'
 tags:
   - permanent
-  - stig
+  - srg
 mobileconfig: false
 mobileconfig_info:

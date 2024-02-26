@@ -15,7 +15,13 @@ references:
   cce:
     - CCE-92707-9
   cci:
-    - N/A
+    - CCI-000162
+    - CCI-000163
+    - CCI-000164
+    - CCI-000171
+    - CCI-001493
+    - CCI-001494
+    - CCI-001495
   800-53r5:
     - AU-9
   800-53r4:
@@ -50,5 +56,6 @@ tags:
   - cnssi-1253_high
   - cmmc_lvl2
   - stig
+severity: medium
 mobileconfig: false
 mobileconfig_info:

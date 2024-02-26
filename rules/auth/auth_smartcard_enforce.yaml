@@ -23,9 +23,14 @@ references:
   cce:
     - CCE-92738-4
   cci:
-    - CCI-000187
+    - CCI-000186
+    - CCI-000765
+    - CCI-000766
     - CCI-000767
     - CCI-000768
+    - CCI-001941
+    - CCI-001948
+    - CCI-001953
   800-53r5:
     - IA-2(1)
     - IA-2(2)
@@ -88,7 +93,7 @@ tags:
   - cmmc_lvl2
   - cmmc_lvl1
   - stig
-severity: high
+severity: medium
 mobileconfig: true
 mobileconfig_info:
   com.apple.security.smartcard:

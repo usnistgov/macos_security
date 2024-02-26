@@ -15,7 +15,7 @@ references:
   cce:
     - CCE-92953-9
   cci:
-    - N/A
+    - CCI-000381
   800-53r5:
     - CM-7
     - CM-7(1)
@@ -54,5 +54,6 @@ tags:
   - cnssi-1253_high
   - cmmc_lvl2
   - stig
+severity: medium
 mobileconfig: false
 mobileconfig_info:
