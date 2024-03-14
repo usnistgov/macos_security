@@ -16,7 +16,8 @@ references:
   sfr:
     - 'FIA_UAU_EXT.1.1'
   disa_stig:
-    - N/A
+    - AIOS-17-010400
+    - AIOS-17-710400
   800-171r2:
     - N/A
   cis:
@@ -28,6 +29,8 @@ iOS:
   - "17.0"
 tags:
   - ios
+  - ios_stig
+  - ios_stig_byoad
 severity: high
 mobileconfig: 'true'
 mobileconfig_info:
