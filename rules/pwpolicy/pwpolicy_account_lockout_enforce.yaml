@@ -18,7 +18,8 @@ references:
     - 'FMT_SMF_EXT.1.1 #2c'
     - 'FIA_AFL_EXT.1.5'
   disa_stig:
-    - N/A
+    - AIOS-17-006900
+    - AIOS-17-706900
   800-171r2:
     - N/A
   cis:
@@ -47,6 +48,8 @@ tags:
   - cis_lvl1_enterprise
   - cis_lvl2_enterprise
   - cisv8
+  - ios_stig
+  - ios_stig_byoad
 severity: "medium"
 supervised: false
 mobileconfig: true
