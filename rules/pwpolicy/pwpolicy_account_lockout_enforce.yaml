@@ -38,6 +38,7 @@ odv:
   cis_lvl1_enterprise: 6
   cis_lvl2_enterprise: 6  
   ios_stig: 10
+  ios_stig_byoad: 10
 tags:
   - ios
   - 800-53r5_low
