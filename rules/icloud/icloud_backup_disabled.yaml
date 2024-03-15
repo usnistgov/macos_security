@@ -20,7 +20,7 @@ references:
   sfr:
     - 'FMT_MOF_EXT.1.2 #40'
   disa_stig:
-    -AIOS-17-003000
+    - AIOS-17-003000
   800-171r2:
     - N/A
   cis:
