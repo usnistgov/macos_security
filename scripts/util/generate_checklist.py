@@ -193,7 +193,7 @@ def do_regex(stig_id, stig_title, result, stig, exempt, exempt_reason, ruleid):
     
     regex = r"{}(\n|.)*?(<ident system=\".*.\">CCI-.*\d)<\/ident>".format(stig_id)
     matches = re.finditer(regex, stig, re.MULTILINE)
-
+    comment = str()
     for matchNum, match in enumerate(matches, start=1):
         
         for groupNum in range(1, 2):
@@ -210,7 +210,7 @@ def do_regex(stig_id, stig_title, result, stig, exempt, exempt_reason, ruleid):
             <VULN_ATTRIBUTE>CCI_REF</VULN_ATTRIBUTE>
             <ATTRIBUTE_DATA>{}</ATTRIBUTE_DATA>
         </STIG_DATA>'''.format(cci)
-        comment = str()
+        
         if exempt:
             exempt_reason = "Exemption Reason: {}".format(exempt_reason)
         if ruleid != "":
@@ -239,6 +239,9 @@ def main():
     with open(args.plist, 'rb') as fp:
         pl = plistlib.load(fp)
     
+    managedPref = "/Library/Managed Preferences/" + str(args.plist).split("/")[-1]
+    with open(managedPref, 'rb') as mPl:
+        managedDict = plistlib.load(mPl)
     file = open(args.disastig, "r")
     stig = file.read()
     sortedpl = OrderedDict(sorted(pl.items()))
@@ -259,8 +262,21 @@ def main():
             "finding": sub['finding'],
             "reference": "N/A"}
         try:
-            results_array['exemption'] = sub['exempt']
-            results_array['exemption_reason'] = sub['exempt_reason']
+            if rule in managedDict:
+                results_array['exemption'] = managedDict[rule]['exempt']
+                results_array['exemption_reason'] = managedDict[rule]['exempt_reason']
+            else:
+            # if managedDict[rule]:
+            #     print(managedDict[rule][exempt_reason])
+                
+                    # print(managedDict["id"]['exempt'])
+                    # print(managedDict["id"]['exempt_reason'])
+                    # results_array['exemption'] = managedDict["id"]['exempt']
+                    # results_array['exemption_reason'] = managedDict["id"]['exempt_reason']
+            # else:
+                results_array['exemption'] = sub['exempt']
+                results_array['exemption_reason'] = sub['exempt_reason']
+
         
         except:
             results_array['exemption'] = False
