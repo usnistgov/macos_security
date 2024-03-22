@@ -103,13 +103,11 @@ def do_regex(stig_id, stig_title, result, stig, exempt, exempt_reason, ruleid):
         <VULN_ATTRIBUTE>Check_Content</VULN_ATTRIBUTE>
         <ATTRIBUTE_DATA>{}</ATTRIBUTE_DATA>
     </STIG_DATA>'''.format(matches.group(2))
-
-    regex = r"{}.\n|.*.\_fix\">((\n|.)*?)<".format(stig_id)
+    regex = r"<version>{}<\/version>(?:.|\n)*?<fixtext fixref=\".*?\">([^<]+)<\/fixtext>".format(stig_id)
     #fix_text
     matches = re.search(regex,stig)
-
     if matches:
-        
+        print(matches.group(1))
         checklist_xml = checklist_xml + '''
     <STIG_DATA>
         <VULN_ATTRIBUTE>Fix_Text</VULN_ATTRIBUTE>
@@ -239,9 +237,13 @@ def main():
     with open(args.plist, 'rb') as fp:
         pl = plistlib.load(fp)
     
+    managedDict = []
+    
     managedPref = "/Library/Managed Preferences/" + str(args.plist).split("/")[-1]
-    with open(managedPref, 'rb') as mPl:
-        managedDict = plistlib.load(mPl)
+    if os.path.exists(managedPref):
+        with open(managedPref, 'rb') as mPl:
+            managedDict = plistlib.load(mPl)
+    
     file = open(args.disastig, "r")
     stig = file.read()
     sortedpl = OrderedDict(sorted(pl.items()))
@@ -266,14 +268,6 @@ def main():
                 results_array['exemption'] = managedDict[rule]['exempt']
                 results_array['exemption_reason'] = managedDict[rule]['exempt_reason']
             else:
-            # if managedDict[rule]:
-            #     print(managedDict[rule][exempt_reason])
-                
-                    # print(managedDict["id"]['exempt'])
-                    # print(managedDict["id"]['exempt_reason'])
-                    # results_array['exemption'] = managedDict["id"]['exempt']
-                    # results_array['exemption_reason'] = managedDict["id"]['exempt_reason']
-            # else:
                 results_array['exemption'] = sub['exempt']
                 results_array['exemption_reason'] = sub['exempt_reason']
 
