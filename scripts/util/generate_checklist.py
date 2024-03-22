@@ -107,7 +107,6 @@ def do_regex(stig_id, stig_title, result, stig, exempt, exempt_reason, ruleid):
     #fix_text
     matches = re.search(regex,stig)
     if matches:
-        print(matches.group(1))
         checklist_xml = checklist_xml + '''
     <STIG_DATA>
         <VULN_ATTRIBUTE>Fix_Text</VULN_ATTRIBUTE>
