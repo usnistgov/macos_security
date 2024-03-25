@@ -1,5 +1,5 @@
 id: os_remote_access_methods
-title: "Control remote access methods"
+title: Control remote access methods
 discussion: |
   The information system monitors and controls remote access methods.
 check: |
@@ -20,7 +20,7 @@ references:
   srg:
     - N/A
 macOS:
-  - "14.0"
+  - '14.0'
 tags:
   - inherent
 mobileconfig: false

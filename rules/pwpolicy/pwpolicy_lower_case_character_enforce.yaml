@@ -1,5 +1,5 @@
 id: pwpolicy_lower_case_character_enforce
-title: "Require Passwords Contain a Minimum of One Lowercase Character"
+title: Require Passwords Contain a Minimum of One Lowercase Character
 discussion: |
   The macOS _MUST_ be configured to require at least one lower-case character be used when a password is created.
 
@@ -11,7 +11,7 @@ discussion: |
 check: |
   /usr/bin/pwpolicy -getaccountpolicies 2> /dev/null | /usr/bin/tail +2 | /usr/bin/xmllint --xpath '//dict/key[text()="minimumAlphaCharactersLowerCase"]/following-sibling::integer[1]/text()' - | /usr/bin/awk '{ if ($1 >= $ODV ) {print "yes"} else {print "no"}}'
 result:
-  string: "yes"
+  string: 'yes'
 fix: |
   This setting may be enforced using local policy or by a directory service.
 
@@ -69,9 +69,9 @@ references:
     - IA.L2-3.5.8
     - IA.L2-3.5.9
 macOS:
-  - "14.0"
+  - '14.0'
 odv:
-  hint: "Number of lowercase characters."
+  hint: Number of lowercase characters.
   recommended: 1
 tags:
   - none

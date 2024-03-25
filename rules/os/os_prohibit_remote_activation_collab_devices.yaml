@@ -1,5 +1,5 @@
 id: os_prohibit_remote_activation_collab_devices
-title: "Prohibit Remote Activation of Collaborative Computing Devices"
+title: Prohibit Remote Activation of Collaborative Computing Devices
 discussion: |
   The inherent configuration of the macOS _IS_ in compliance.
 
@@ -29,8 +29,10 @@ references:
     - N/A
   cmmc:
     - SC.L2-3.13.12
+  cci:
+    - N/A
 macOS:
-  - "14.0"
+  - '14.0'
 tags:
   - inherent
   - 800-53r5_low

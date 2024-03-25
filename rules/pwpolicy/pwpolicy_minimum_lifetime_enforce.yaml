@@ -1,5 +1,5 @@
 id: pwpolicy_minimum_lifetime_enforce
-title: "Set Minimum Password Lifetime to $ODV Hours"
+title: Set Minimum Password Lifetime to $ODV Hours
 discussion: |
   The macOS _MUST_ be configured to enforce a minimum password lifetime limit of $ODV hours.
 
@@ -9,7 +9,7 @@ discussion: |
 check: |
   /usr/bin/pwpolicy -getaccountpolicies 2> /dev/null | /usr/bin/tail +2 | /usr/bin/xmllint --xpath '//dict/key[text()="policyAttributeMinimumLifetimeHours"]/following-sibling::integer[1]/text()' - | /usr/bin/awk '{ if ($1 >= $ODV ) {print "yes"} else {print "no"}}'
 result:
-  string: "yes"
+  string: 'yes'
 fix: |
   This setting may be enforced using local policy or by a directory service.
 
@@ -40,15 +40,15 @@ references:
   cce:
     - CCE-92937-2
   cci:
-    - N/A
+    - CCI-000198
   800-53r5:
     - IA-5
   800-53r4:
     - IA-5(1)
   disa_stig:
-    - N/A
+    - APPL-14-003070
   srg:
-    - N/A
+    - SRG-OS-000075-GPOS-00043
   800-171r2:
     - 3.5.7
     - 3.5.8
@@ -63,10 +63,11 @@ references:
     - IA.L2-3.5.8
     - IA.L2-3.5.9
 macOS:
-  - "14.0"
+  - '14.0'
 odv:
-  hint: "Number of hours."
+  hint: Number of hours.
   recommended: 24
+  stig: 24
 tags:
   - 800-171
   - 800-53r4_low
@@ -80,5 +81,7 @@ tags:
   - cnssi-1253_low
   - cnssi-1253_high
   - cmmc_lvl2
+  - stig
+severity: medium
 mobileconfig: false
 mobileconfig_info:

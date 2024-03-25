@@ -1,5 +1,5 @@
 id: system_settings_system_wide_preferences_configure
-title: "Require Administrator Password to Modify System-Wide Preferences"
+title: Require Administrator Password to Modify System-Wide Preferences
 discussion: |
   The system _MUST_ be configured to require an administrator password in order to modify the system-wide preferences in System Settings.
 
@@ -15,27 +15,12 @@ check: |
   echo $result
 result:
   integer: 1
-fix: |
-  [source,bash]
-  ----
-  authDBs=("system.preferences" "system.preferences.energysaver" "system.preferences.network" "system.preferences.printing" "system.preferences.sharing" "system.preferences.softwareupdate" "system.preferences.startupdisk" "system.preferences.timemachine")
-
-  for section in ${authDBs[@]}; do
-  /usr/bin/security -q authorizationdb read "$section" > "/tmp/$section.plist"
-  key_value=$(/usr/libexec/PlistBuddy -c "Print :shared" "/tmp/$section.plist" 2>&1)
-  	if [[ "$key_value" == *"Does Not Exist"* ]]; then
-    		/usr/libexec/PlistBuddy -c "Add :shared bool false" "/tmp/$section.plist"
-  	else
-    		/usr/libexec/PlistBuddy -c "Set :shared false" "/tmp/$section.plist"
-  	fi
-    	/usr/bin/security -q authorizationdb write "$section" < "/tmp/$section.plist"
-  done
-  ----
+fix: "[source,bash]\n----\nauthDBs=(\"system.preferences\" \"system.preferences.energysaver\" \"system.preferences.network\" \"system.preferences.printing\" \"system.preferences.sharing\" \"system.preferences.softwareupdate\" \"system.preferences.startupdisk\" \"system.preferences.timemachine\")\n\nfor section in ${authDBs[@]}; do\n/usr/bin/security -q authorizationdb read \"$section\" > \"/tmp/$section.plist\"\nkey_value=$(/usr/libexec/PlistBuddy -c \"Print :shared\" \"/tmp/$section.plist\" 2>&1)\n\tif [[ \"$key_value\" == *\"Does Not Exist\"* ]]; then\n  \t\t/usr/libexec/PlistBuddy -c \"Add :shared bool false\" \"/tmp/$section.plist\"\n\telse\n  \t\t/usr/libexec/PlistBuddy -c \"Set :shared false\" \"/tmp/$section.plist\"\n\tfi\n  \t/usr/bin/security -q authorizationdb write \"$section\" < \"/tmp/$section.plist\"\ndone\n----\n"
 references:
   cce:
     - CCE-92996-8
   cci:
-    - CCI-001958
+    - CCI-002235
   800-53r5:
     - AC-6
     - AC-6(2)
@@ -45,9 +30,9 @@ references:
     - AC-6(1)
     - AC-6(2)
   srg:
-    - SRG-OS-000378-GPOS-00163
+    - SRG-OS-000324-GPOS-00125
   disa_stig:
-    - N/A
+    - APPL-14-002069
   800-171r2:
     - 3.1.5
     - 3.1.6
@@ -61,7 +46,7 @@ references:
     - AC.L2-3.1.5
     - AC.L2-3.1.6
 macOS:
-  - "14.0"
+  - '14.0'
 tags:
   - 800-53r5_moderate
   - 800-53r5_high
@@ -76,6 +61,7 @@ tags:
   - cnssi-1253_high
   - cmmc_lvl2
   - cmmc_lvl1
-severity: "medium"
+  - stig
+severity: high
 mobileconfig: false
 mobileconfig_info:

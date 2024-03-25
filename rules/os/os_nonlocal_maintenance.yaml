@@ -1,5 +1,5 @@
 id: os_nonlocal_maintenance
-title: "Configure the System for Nonlocal Maintenance"
+title: Configure the System for Nonlocal Maintenance
 discussion: |
   Nonlocal maintenance and diagnostic activities are those activities conducted by individuals communicating through a network, either an external network or an internal network.
 check: |
@@ -24,7 +24,7 @@ references:
   cmmc:
     - MA.L2-3.7.5
 macOS:
-  - "14.0"
+  - '14.0'
 tags:
   - 800-53r5_low
   - 800-53r5_moderate

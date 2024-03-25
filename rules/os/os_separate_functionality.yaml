@@ -1,5 +1,5 @@
 id: os_separate_functionality
-title: "Configure the System to Separate User and System Functionality"
+title: Configure the System to Separate User and System Functionality
 discussion: |
   The information system _IS_ configured to separate user and system functionality.
 
@@ -25,13 +25,13 @@ references:
   disa_stig:
     - N/A
   srg:
-    - N/A
+    - SRG-OS-000132-GPOS-00067
   800-171r2:
     - 3.13.3
   cmmc:
     - SC.L2-3.13.3
 macOS:
-  - "14.0"
+  - '14.0'
 tags:
   - 800-53r5_moderate
   - 800-53r5_high
@@ -43,5 +43,6 @@ tags:
   - cnssi-1253_low
   - cnssi-1253_high
   - cmmc_lvl2
+  - srg
 mobileconfig: false
 mobileconfig_info:

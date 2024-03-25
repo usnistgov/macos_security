@@ -1,5 +1,5 @@
 id: os_hibernate_mode_destroyfvkeyonstandby_enable
-title: "Enable DestroyFVKeyOnStandby on Hibernate"
+title: Enable DestroyFVKeyOnStandby on Hibernate
 discussion: |
   DestroyFVKeyOnStandby on hibernate _MUST_ be enabled.
 check: |
@@ -8,7 +8,7 @@ check: |
   .objectForKey('DestroyFVKeyOnStandby').js
   EOS
 result:
-  string: "true"
+  string: 'true'
 fix: |
   This is implemented by a Configuration Profile.
 references:
@@ -32,7 +32,7 @@ references:
     controls v8:
       - 4.1
 macOS:
-  - "14.0"
+  - '14.0'
 tags:
   - cis_lvl2
   - cisv8

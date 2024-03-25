@@ -1,5 +1,5 @@
 id: os_anti_virus_installed
-title: "Must Use an Approved Antivirus Program"
+title: Must Use an Approved Antivirus Program
 discussion: |
   An approved antivirus product _MUST_ be installed and configured to run.
 
@@ -35,7 +35,7 @@ references:
       - 10.1
       - 10.2
 macOS:
-  - "14.0"
+  - '14.0'
 tags:
   - cis_lvl1
   - cis_lvl2

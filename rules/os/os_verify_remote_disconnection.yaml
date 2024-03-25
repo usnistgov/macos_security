@@ -1,5 +1,5 @@
 id: os_verify_remote_disconnection
-title: "Verify remote disconnection of sessions"
+title: Verify remote disconnection of sessions
 discussion: |
   The information system implements remote disconnect verification at the termination of nonlocal maintenance and diagnostic sessions.
 check: |
@@ -18,13 +18,14 @@ references:
   disa_stig:
     - N/A
   srg:
-    - N/A
+    - SRG-OS-000395-GPOS-00175
 macOS:
-  - "14.0"
+  - '14.0'
 tags:
   - inherent
   - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
+  - srg
 mobileconfig: false
 mobileconfig_info:

@@ -513,10 +513,6 @@ def main():
     for rule in all_rules:
         if args.keyword in rule.rule_tags or args.keyword == "all_rules":
             found_rules.append(rule)
-        # assume all baselines will contain the supplemental rules
-        if "supplemental" in rule.rule_tags:
-            if rule not in found_rules:
-                found_rules.append(rule)
 
     if args.keyword == None:
         print("No rules found for the keyword provided, please verify from the following list:")

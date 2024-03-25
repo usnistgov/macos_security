@@ -1,5 +1,5 @@
 id: os_safari_show_full_website_address_enable
-title: "Ensure Show Full Website Address in Safari Is Enabled"
+title: Ensure Show Full Website Address in Safari Is Enabled
 discussion: |
   Show full website address _MUST_ be enabled in Safari.
 check: |
@@ -27,7 +27,7 @@ references:
     controls v8:
       - 9.1
 macOS:
-  - "14.0"
+  - '14.0'
 tags:
   - cis_lvl1
   - cis_lvl2

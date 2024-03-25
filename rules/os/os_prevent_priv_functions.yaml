@@ -1,5 +1,5 @@
 id: os_prevent_priv_functions
-title: "Configure the System to Block Non-Privileged Users from Executing Privileged Functions"
+title: Configure the System to Block Non-Privileged Users from Executing Privileged Functions
 discussion: |
   The information system _IS_ configured to block standard users from executing privileged functions.
 
@@ -24,13 +24,13 @@ references:
   disa_stig:
     - N/A
   srg:
-    - N/A
+    - SRG-OS-000324-GPOS-00125
   800-171r2:
     - 3.1.7
   cmmc:
     - AC.L2-3.1.7
 macOS:
-  - "14.0"
+  - '14.0'
 tags:
   - 800-53r5_moderate
   - 800-53r5_high
@@ -42,5 +42,6 @@ tags:
   - cnssi-1253_low
   - cnssi-1253_high
   - cmmc_lvl2
+  - srg
 mobileconfig: false
 mobileconfig_info:

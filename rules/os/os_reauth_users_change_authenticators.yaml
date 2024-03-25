@@ -1,5 +1,5 @@
 id: os_reauth_users_change_authenticators
-title: "Require users to reauthenticate when changing authenticators"
+title: Require users to reauthenticate when changing authenticators
 discussion: |
   Without reauthentication, users may access resources or perform tasks for which they do not have authorization. When operating systems provide the capability to change user authenticators, it is critical the user reauthenticate.
 check: |
@@ -18,9 +18,9 @@ references:
   disa_stig:
     - N/A
   srg:
-    - N/A
+    - SRG-OS-000373-GPOS-00158
 macOS:
-  - "14.0"
+  - '14.0'
 tags:
   - inherent
   - 800-53r5_low
@@ -29,5 +29,6 @@ tags:
   - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
+  - srg
 mobileconfig: false
 mobileconfig_info:

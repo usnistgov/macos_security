@@ -1,5 +1,5 @@
 id: os_parental_controls_enable
-title: "Enable Parental Controls"
+title: Enable Parental Controls
 discussion: |
   Parental Controls _MUST_ be enabled.
 
@@ -12,7 +12,7 @@ check: |
   .objectForKey('familyControlsEnabled').js
   EOS
 result:
-  string: "true"
+  string: 'true'
 fix: |
   This is implemented by a Configuration Profile.
 references:
@@ -36,7 +36,7 @@ references:
     controls v8:
       - 4.8
 macOS:
-  - "14.0"
+  - '14.0'
 tags:
   - cnssi-1253_moderate
   - cnssi-1253_low
