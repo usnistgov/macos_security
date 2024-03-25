@@ -588,7 +588,7 @@ def generate_script(baseline_name, audit_name, build_path, baseline_yaml, refere
 
 
     # create header of fix zsh script
-    check_zsh_header = f"""#!/bin/zsh
+    check_zsh_header = f"""#!/bin/zsh --no-rcs
 
 ##  This script will attempt to audit all of the settings based on the installed profile.
 
