@@ -9,11 +9,13 @@ check: |
 result:
   integer: 2
 fix: |
-  [source,bash]
+  [source,shell]
   ----
   /bin/launchctl load -w /Library/Apple/System/Library/LaunchDaemons/com.apple.XProtect.daemon.scan.plist
   /bin/launchctl load -w /Library/Apple/System/Library/LaunchDaemons/com.apple.XprotectFramework.PluginService.plist
   ----
+
+  NOTE: These services cannot be unloaded or loaded while System Integrity Protection (SIP) is enabled.
 references:
   cce:
     - CCE-92758-2
