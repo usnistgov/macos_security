@@ -29,6 +29,8 @@ endif::[]
 ifdef::show_STIG[]
 !DISA STIG(s)
 !$rule_disa_stig
+!SFR
+!$rule_sfr
 endif::[]
 
 ifdef::show_CIS[]
