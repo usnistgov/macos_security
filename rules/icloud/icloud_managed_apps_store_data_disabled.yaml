@@ -43,8 +43,8 @@ tags:
   - cis_lvl1_enterprise
   - cis_lvl2_enterprise
   - cisv8
-  -ios_stig
-  -ios_stig_byoad
+  - ios_stig
+  - ios_stig_byoad
 supervised: false
 mobileconfig: true
 mobileconfig_info:
