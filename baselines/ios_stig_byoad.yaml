@@ -1,0 +1,48 @@
+title: "iOS/iPadOS 17.0: Security Configuration - Apple iOS/iPadOS 17 BYOAD STIG - Ver 1, Rel 1"
+description: |
+  This guide describes the actions to take when securing a iOS/iPadOS 17.0 system against the Apple iOS/iPadOS 17 BYOAD STIG - Ver 1, Rel 1 security baseline.
+authors: |
+  *macOS Security Compliance Project*
+
+  |===
+  |Marco Piñeyro|Department of State
+  |Dan Brodjieski|National Aeronautics and Space Administration
+  |Allen Golbig|Jamf
+  |Bob Gendler|National Institute of Standards and Technology
+  |===
+parent_values: "ios_stig_byoad"
+profile:
+  - section: "icloud"
+    rules:
+      - icloud_managed_apps_store_data_disabled
+  - section: "ios"
+    rules:
+      - os_airdrop_unmanaged_destination_enable
+      - os_airplay_password_require
+      - os_allow_contacts_read_managed_sources_unmanaged_destinations_disable
+      - os_allow_contacts_write_managed_sources_unmanaged_destinations_disable
+      - os_allow_documents_managed_sources_unmanaged_destinations_disable
+      - os_allow_documents_unmanaged_sources_managed_destinations_disable
+      - os_apple_watch_wrist_detection_enable
+      - os_application_allow_list
+      - os_diagnostics_reports_disable
+      - os_disallow_enterprise_app_trust
+      - os_enterprise_books_disable
+      - os_force_encrypted_backups_enable
+      - os_install_vpn_configuration_disable
+      - os_mail_move_messages_disable
+      - os_require_managed_pasteboard_enforce
+      - os_show_calendar_lock_screen_disable
+      - os_show_notification_center_lock_screen_disable
+      - os_ssl_for_exchange_activesync_enable
+  - section: "passwordpolicy"
+    rules:
+      - pwpolicy_account_lockout_enforce
+      - pwpolicy_force_pin_enable
+      - pwpolicy_max_grace_period_enforce
+      - pwpolicy_max_inactivity_enforce
+      - pwpolicy_minimum_length_enforce
+      - pwpolicy_simple_sequence_disable
+  - section: "Supplemental"
+    rules:
+      - supplemental_stig

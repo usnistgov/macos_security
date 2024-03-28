@@ -29,8 +29,8 @@ ASSOCIATED DOCUMENTS
 |===
 |Document Number or Descriptor
 |Document Title
-|link:https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Apple_iOS-iPadOS_16_V1R2_STIG.zip[STIG Ver 1, Rel 2]|_Apple iOS/iPadOS 16 STIG - Ver 1, Rel 2_
-|link:https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Apple_iOS-iPadOS_16_BYOAD_Y23M08_STIG.zip[STIG Ver 1, Rel 1]|_Apple iOS/iPadOS 16 BYOAD STIG - Ver 1, Rel 1_
+|link:https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Apple_iOS-iPadOS_17_V1R1_STIG.zip[STIG Ver 1, Rel 1]|_Apple iOS/iPadOS 17 STIG - Ver 1, Rel 1_
+|link:https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Apple_iOS-iPadOS_17_BYOAD_Y24M02_STIG.zip[STIG Ver 1, Rel 1]|_Apple iOS/iPadOS 17 BYOAD STIG - Ver 1, Rel 1_
 |===
 
 [%header, cols=2*a]
@@ -65,5 +65,5 @@ ASSOCIATED DOCUMENTS
 |===
 |Document Number or Descriptor
 |Document Title
-|link:https://www.cisecurity.org/benchmark/apple_ios[Apple iOS/iPadOS]|_CIS Apple iOS 16 and iPadOS 16 Version 1.1.0_
+|link:https://www.cisecurity.org/benchmark/apple_ios[Apple iOS/iPadOS]|_CIS Apple iOS 17 and iPadOS 17 Version 1.0.0_
 |===
