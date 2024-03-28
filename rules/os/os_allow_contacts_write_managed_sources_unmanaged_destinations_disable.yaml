@@ -20,7 +20,8 @@ references:
     - 'FMT_SMF_EXT.1.1 #42'
     - 'FDP_ACF_EXT.1.2'
   disa_stig:
-    - N/A
+    - AIOS-17-012300
+    - AIOS-17-712300
   800-171r2:
     - N/A
   cis:
@@ -35,6 +36,8 @@ tags:
   - 800-53r5_low
   - 800-53r5_moderate
   - 800-53r5_high
+  - ios_stig
+  - ios_stig_byoad
 severity: "low"
 supervised: false
 mobileconfig: true

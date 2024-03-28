@@ -24,7 +24,8 @@ references:
     - 'FMT_SMF_EXT.1.1/WLAN'
     - 'FMT_SMF_EXT.1.1 #47'
   disa_stig:
-    - N/A
+    - AIOS-17-010200
+    - AIOS-17-012500
   800-171r2:
     - N/A
   cis:
@@ -39,6 +40,7 @@ tags:
   - 800-53r5_low
   - 800-53r5_moderate
   - 800-53r5_high
+  - ios_stig
 severity: "medium"
 supervised: true
 mobileconfig: true
