@@ -20,7 +20,7 @@ references:
   sfr:
     - 'FMT_SMF_EXT.1.1 #47'
   disa_stig:
-    - N/A
+    - AIOS-17-012200
   800-171r2:
     - N/A
   cis:
@@ -38,9 +38,10 @@ tags:
   - cis_lvl1_enterprise
   - cis_lvl2_enterprise
   - cisv8
+  - ios_stig
 severity: "medium"
 supervised: true
 mobileconfig: true
 mobileconfig_info:
   com.apple.applicationaccess:
-    allowUSBRestrictedMode: false
+    allowUSBRestrictedMode: true

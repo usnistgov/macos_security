@@ -18,7 +18,7 @@ references:
   sfr:
     - N/A
   disa_stig:
-    - N/A
+    - AIOS-17-714900
   800-171r2:
     - N/A
   cis:
@@ -39,6 +39,7 @@ tags:
   - cis_lvl1_enterprise
   - cis_lvl2_enterprise
   - cisv8
+  - ios_stig_byoad
 supervised: false
 mobileconfig: true
 mobileconfig_info:
