@@ -92,11 +92,13 @@ authors:
       - Bob Gendler|National Institute of Standards and Technology
   ios_stig:
     names: 
+      - Marco Piñeyro|Department of State
       - Dan Brodjieski|National Aeronautics and Space Administration
       - Allen Golbig|Jamf
       - Bob Gendler|National Institute of Standards and Technology
   ios_stig_byoad:
     names: 
+      - Marco Piñeyro|Department of State
       - Dan Brodjieski|National Aeronautics and Space Administration
       - Allen Golbig|Jamf
       - Bob Gendler|National Institute of Standards and Technology      
@@ -119,5 +121,5 @@ titles:
   cnssi-1253_moderate: Committee on National Security Systems Instruction No. 1253 (Moderate)
   cnssi-1253_high: Committee on National Security Systems Instruction No. 1253 (High)
   stig: Apple macOS 13 (Ventura) STIG - Ver 1, Rel 2
-  ios_stig:  Apple iOS/iPadOS 17 STIG - Ver 1, Rel 2
+  ios_stig:  Apple iOS/iPadOS 17 STIG - Ver 1, Rel 1
   ios_stig_byoad: Apple iOS/iPadOS 17 BYOAD STIG - Ver 1, Rel 1
