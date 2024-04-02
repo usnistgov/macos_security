@@ -1,7 +1,7 @@
 id: os_config_data_install_enforce
 title: "Enforce Installation of XProtect and Gatekeeper Updates Automatically"
 discussion: |
-  Software Update _MUST_ be configured to update XProtect, MRT, and Gatekeepr automatically.
+  Software Update _MUST_ be configured to update XProtect, MRT, and Gatekeeper automatically.
 
   This setting enforces definition updates for XProtect and Gatekeeper; with this setting in place, new malware and adware that Apple has added to the list of malware or untrusted software will not execute. These updates do not require the computer to be restarted.
   
