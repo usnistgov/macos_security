@@ -21,7 +21,7 @@ from itertools import groupby
 from uuid import uuid4
 
 class MacSecurityRule():
-    def __init__(self, title, rule_id, severity, discussion, check, fix, cci, cce, nist_controls, nist_171, disa_stig, srg, cis, cmmc, custom_refs, odv, tags, result_value, mobileconfig, mobileconfig_info, customized):
+    def __init__(self, title, rule_id, severity, discussion, check, fix, cci, cce, nist_controls, nist_171, disa_stig, srg, sfr, cis, cmmc, custom_refs, odv, tags, result_value, mobileconfig, mobileconfig_info, customized):
         self.rule_title = title
         self.rule_id = rule_id
         self.rule_severity = severity
@@ -34,6 +34,7 @@ class MacSecurityRule():
         self.rule_800171 = nist_171
         self.rule_disa_stig = disa_stig
         self.rule_srg = srg
+        self.rule_sfr = sfr
         self.rule_cis = cis
         self.rule_cmmc = cmmc
         self.rule_custom_refs = custom_refs
@@ -1340,12 +1341,13 @@ def generate_xls(baseline_name, build_path, baseline_yaml):
     sheet1.write(0, 8, "800-53r5", headers)
     sheet1.write(0, 9, "800-171", headers)
     sheet1.write(0, 10, "SRG", headers)
-    sheet1.write(0, 11, "DISA STIG", headers)
-    sheet1.write(0, 12, "CIS Benchmark", headers)
-    sheet1.write(0, 13, "CIS v8", headers)
-    sheet1.write(0, 14, "CMMC", headers)
-    sheet1.write(0, 15, "CCI", headers)
-    sheet1.write(0, 16, "Modifed Rule", headers)
+    sheet1.write(0, 11, "SFR", headers)
+    sheet1.write(0, 12, "DISA STIG", headers)
+    sheet1.write(0, 13, "CIS Benchmark", headers)
+    sheet1.write(0, 14, "CIS v8", headers)
+    sheet1.write(0, 15, "CMMC", headers)
+    sheet1.write(0, 16, "CCI", headers)
+    sheet1.write(0, 17, "Modifed Rule", headers)
     sheet1.set_panes_frozen(True)
     sheet1.set_horz_split_pos(1)
     sheet1.set_vert_split_pos(2)
@@ -1416,41 +1418,47 @@ def generate_xls(baseline_name, build_path, baseline_yaml):
         sheet1.write(counter, 10, srg_refs, topWrap)
         sheet1.col(10).width = 500 * 15
 
+        sfr_refs = (str(rule.rule_sfr)).strip('[]\'')
+        sfr_refs = sfr_refs.replace(", ", "\n").replace("\'", "")
+
+        sheet1.write(counter, 11, sfr_refs, topWrap)
+        sheet1.col(11).width = 500 * 15
+
         disa_refs = (str(rule.rule_disa_stig)).strip('[]\'')
         disa_refs = disa_refs.replace(", ", "\n").replace("\'", "")
 
-        sheet1.write(counter, 11, disa_refs, topWrap)
-        sheet1.col(11).width = 500 * 15
+        sheet1.write(counter, 12, disa_refs, topWrap)
+        sheet1.col(12).width = 500 * 15
 
         cis = ""
         if rule.rule_cis != ['None']:
             for title, ref in rule.rule_cis.items():
                 if title.lower() == "benchmark":
-                    sheet1.write(counter, 12, ref, topWrap)
-                    sheet1.col(12).width = 500 * 15
+                    sheet1.write(counter, 13, ref, topWrap)
+                    sheet1.col(13).width = 500 * 15
                 if title.lower() == "controls v8":
                     cis = (str(ref).strip('[]\''))
                     cis = cis.replace(", ", "\n")
-                    sheet1.write(counter, 13, cis, topWrap)
-                    sheet1.col(13).width = 500 * 15
+                    sheet1.write(counter, 14, cis, topWrap)
+                    sheet1.col(14).width = 500 * 15
         
         cmmc_refs = (str(rule.rule_cmmc)).strip('[]\'')
         cmmc_refs = cmmc_refs.replace(", ", "\n").replace("\'", "")
 
-        sheet1.write(counter, 14, cmmc_refs, topWrap)
-        sheet1.col(14).width = 500 * 15
+        sheet1.write(counter, 15, cmmc_refs, topWrap)
+        sheet1.col(15).width = 500 * 15
 
         cci = (str(rule.rule_cci)).strip('[]\'')
         cci = cci.replace(", ", "\n").replace("\'", "")
 
-        sheet1.write(counter, 15, cci, topWrap)
-        sheet1.col(15).width = 400 * 15
+        sheet1.write(counter, 16, cci, topWrap)
+        sheet1.col(16).width = 400 * 15
 
         customized = (str(rule.rule_customized)).strip('[]\'')
         customized = customized.replace(", ", "\n").replace("\'", "")
 
-        sheet1.write(counter, 16, customized, topWrap)
-        sheet1.col(16).width = 400 * 15
+        sheet1.write(counter, 17, customized, topWrap)
+        sheet1.col(17).width = 400 * 15
 
         if rule.rule_custom_refs != ['None']:
             for title, ref in rule.rule_custom_refs.items():
@@ -1498,6 +1506,7 @@ def create_rules(baseline_yaml):
                   'cis',
                   'cmmc',
                   'srg',
+                  'sfr',
                   'custom']
 
 
@@ -1539,6 +1548,7 @@ def create_rules(baseline_yaml):
                                         rule_yaml['references']['800-171r2'],
                                         rule_yaml['references']['disa_stig'],
                                         rule_yaml['references']['srg'],
+                                        rule_yaml['references']['sfr'],
                                         rule_yaml['references']['cis'],
                                         rule_yaml['references']['cmmc'],
                                         rule_yaml['references']['custom'],
@@ -1983,6 +1993,13 @@ def main():
                 srg = '- N/A'
             else:
                 srg = ulify(rule_yaml['references']['srg'])
+            
+            try:
+                rule_yaml['references']['sfr']
+            except KeyError:
+                sfr = '- N/A'
+            else:
+                sfr = ulify(rule_yaml['references']['sfr'])
 
             try:
                 rule_yaml['references']['custom']
@@ -2073,6 +2090,7 @@ def main():
                     rule_custom_refs=custom_refs,
                     rule_tags=tags,
                     rule_srg=srg,
+                    rule_sfr=sfr,
                     rule_result=result_value
                 )
             elif ('permanent' in tags) or ('inherent' in tags) or ('n_a' in tags):
@@ -2108,6 +2126,7 @@ def main():
                         rule_cce=cce,
                         rule_tags=tags,
                         rule_srg=srg,
+                        rule_sfr=sfr,
                         rule_result=result_value
                     )
                 else:
@@ -2126,6 +2145,7 @@ def main():
                         rule_cce=cce,
                         rule_tags=tags,
                         rule_srg=srg,
+                        rule_sfr=sfr,
                         rule_result=result_value
                     )
 
