@@ -1,7 +1,7 @@
 id: os_verify_remote_disconnection
 title: "Verify remote disconnection of sessions"
 discussion: |
-  The information system implements remote disconnect verification at the termination of nonlocal maintenance and diagnostic sessions.
+  The information system implements remote disconnect verification at the termination of non-local maintenance and diagnostic sessions.
 check: |
   The technology supports this requirement and cannot be configured to be out of compliance. The technology inherently meets this requirement.
 fix: |
