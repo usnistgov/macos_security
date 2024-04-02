@@ -9,10 +9,11 @@ check: |
 result:
   integer: 1
 fix: |
-  [source,bash]
+  [source,shell]
   ----
   /bin/launchctl load -w /System/Library/LaunchDaemons/com.apple.timed.plist
   ----
+  NOTE: The service `timed` cannot be unloaded or loaded while System Integrity Protection (SIP) is enabled.
 references:
   cce:
     - CCE-91019-0
