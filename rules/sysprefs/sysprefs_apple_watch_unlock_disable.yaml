@@ -4,6 +4,8 @@ discussion: |
   Apple Watches are not an approved authenticator and their use _MUST_ be disabled.
 
   Disabling Apple watches is a necessary step to ensuring that the information system retains a session lock until the user reestablishes access using an authorized identification and authentication procedures.
+
+  NOTE: Unlocking the system with an Apple Watch is not an approved authenticator for US Federal Government usage as it has not been verified to meet the strength requirements outlined in NIST SP 800-63.
 check: |
   /usr/bin/osascript -l JavaScript << EOS
   $.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess')\
@@ -19,9 +21,9 @@ references:
   cci: 
     - CCI-000056
   800-53r5:
-    - AC-11
+    - IA-5
   800-53r4: 
-    - AC-11
+    - IA-5
   srg:
     - SRG-OS-000028-GPOS-00009
   disa_stig:
