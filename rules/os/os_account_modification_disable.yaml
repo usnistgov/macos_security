@@ -3,7 +3,7 @@ title: "Disable AppleID and Internet Account Modifications"
 discussion: |
   The system _MUST_ disable account modification. 
   
-  Account modification includes adding additional or modifying internet acounts in Apple Mail, Calendar, Contacts, in the Internet Account System Setting Pane, or the AppleID System Setting Pane.
+  Account modification includes adding additional or modifying internet accounts in Apple Mail, Calendar, Contacts, in the Internet Account System Setting Pane, or the AppleID System Setting Pane.
   
   This prevents the addition of unauthorized accounts.
 

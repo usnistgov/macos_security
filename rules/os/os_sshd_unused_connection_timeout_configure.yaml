@@ -1,7 +1,7 @@
 id: os_sshd_unused_connection_timeout_configure
 title: Configure SSHD Unused Connection Timeout to $ODV
 discussion: |
-  If SSHD is enabled it _MUST_ be configured with unused connectione timeout set to $ODV.
+  If SSHD is enabled it _MUST_ be configured with unused connection timeout set to $ODV.
 
   This will set the time out when there are no open channels within an session.
 
