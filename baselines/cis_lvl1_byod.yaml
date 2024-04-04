@@ -1,6 +1,6 @@
-title: "iOS/iPadOS 17.0: Security Configuration - CIS Apple iOS 17 v1.1.0 Benchmark (Level 1) - End-User Owned Devices"
+title: "iOS/iPadOS 17.0: Security Configuration - CIS Apple iOS 17 v1.0.0 Benchmark (Level 1) - End-User Owned Devices"
 description: |
-  This guide describes the actions to take when securing a iOS/iPadOS 17.0 system against the CIS Apple iOS 17 v1.1.0 Benchmark (Level 1) - End-User Owned Devices security baseline.
+  This guide describes the actions to take when securing a iOS/iPadOS 17.0 system against the CIS Apple iOS 17 v1.0.0 Benchmark (Level 1) - End-User Owned Devices security baseline.
 authors: |
   *macOS Security Compliance Project*
 
@@ -24,8 +24,8 @@ profile:
       - os_force_encrypted_backups_enable
       - os_mail_move_messages_disable
       - os_personalized_advertising_disable
-      - os_safari_force_fraud_warning_enable
       - os_safari_cookies_set
+      - os_safari_force_fraud_warning_enable
       - os_show_control_center_lock_screen_disable
       - os_show_notification_center_lock_screen_disable
       - os_siri_when_locked_disabled

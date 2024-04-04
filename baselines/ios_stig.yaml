@@ -53,7 +53,6 @@ profile:
       - os_password_sharing_disable
       - os_require_managed_pasteboard_enforce
       - os_safari_password_autofill_disable
-      - os_share_location_data_disable
       - os_show_calendar_lock_screen_disable
       - os_show_notification_center_lock_screen_disable
       - os_siri_when_locked_disabled

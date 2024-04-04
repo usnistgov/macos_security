@@ -60,7 +60,6 @@ profile:
       - os_personalized_advertising_disable
       - os_safari_password_autofill_disable
       - os_screenshots_disable
-      - os_share_location_data_disable
       - os_show_calendar_lock_screen_disable
       - os_show_control_center_lock_screen_disable
       - os_show_notification_center_lock_screen_disable
@@ -75,4 +74,3 @@ profile:
       - pwpolicy_max_inactivity_enforce
       - pwpolicy_minimum_length_enforce
       - pwpolicy_simple_sequence_disable
-

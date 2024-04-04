@@ -48,6 +48,7 @@ profile:
       - os_handoff_disable
       - os_install_configuration_profile_disable
       - os_install_vpn_configuration_disable
+      - os_iphone_widgets_on_mac_disable
       - os_limit_ad_tracking_enable
       - os_mail_maildrop_disable
       - os_mail_move_messages_disable
@@ -61,11 +62,10 @@ profile:
       - os_password_sharing_disable
       - os_personalized_advertising_disable
       - os_require_managed_pasteboard_enforce
-      - os_safari_force_fraud_warning_enable
       - os_safari_cookies_set
+      - os_safari_force_fraud_warning_enable
       - os_safari_password_autofill_disable
       - os_screenshots_disable
-      - os_share_location_data_disable
       - os_show_calendar_lock_screen_disable
       - os_show_control_center_lock_screen_disable
       - os_show_notification_center_lock_screen_disable
