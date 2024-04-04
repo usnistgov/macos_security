@@ -34,5 +34,5 @@ tags:
 severity: high
 mobileconfig: 'true'
 mobileconfig_info:
-  payload_domain:
+  com.apple.mobiledevice.passwordpolicy:
     forcePIN: true

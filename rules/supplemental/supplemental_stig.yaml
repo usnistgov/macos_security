@@ -2,8 +2,6 @@ id: supplemental_stig
 title: "DISA STIG Supplemental"
 discussion: |
   These controls are controls that require additional considerations for your environment. 
-
-  Please refer to your vendor's MDM documentation for instructions on how to implement these controls.
   
   [cols="20%h, 80%a"]
   |===
@@ -31,6 +29,7 @@ discussion: |
   AIOS-17-712000| A managed photo app must be used to take and store work-related photos.
   |AIOS-17-012650| Apple iOS/iPadOS 17 must implement the management setting: approved Apple Watches must be managed by an MDM.
   |AIOS-17-013500| Apple iOS must implement the management setting: Not allow a user to remove Apple iOS configuration profiles that enforce DoD security requirements.
+  |AIOS-17-011700| Apple iOS/iPadOS 17 must implement the management setting: not share location data through iCloud.
   |===
 check: |
 fix: |
