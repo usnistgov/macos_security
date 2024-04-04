@@ -68,6 +68,7 @@ profile:
       - os_bonjour_disable
       - os_config_data_install_enforce
       - os_config_profile_ui_install_disable
+      - os_dictation_disable
       - os_filevault_autologin_disable
       - os_firewall_log_enable
       - os_gatekeeper_enable
@@ -117,6 +118,7 @@ profile:
       - system_settings_airplay_receiver_disable
       - system_settings_automatic_login_disable
       - system_settings_bluetooth_disable
+      - system_settings_bluetooth_settings_disable
       - system_settings_bluetooth_sharing_disable
       - system_settings_cd_dvd_sharing_disable
       - system_settings_content_caching_disable
@@ -143,11 +145,14 @@ profile:
       - system_settings_screen_sharing_disable
       - system_settings_screensaver_timeout_enforce
       - system_settings_siri_disable
+      - system_settings_siri_settings_disable
       - system_settings_smbd_disable
       - system_settings_ssh_enable
       - system_settings_time_server_configure
       - system_settings_time_server_enforce
+      - system_settings_touch_id_settings_disable
       - system_settings_usb_restricted_mode
+      - system_settings_wallet_applepay_settings_disable
       - system_settings_wifi_disable
   - section: "Inherent"
     rules:

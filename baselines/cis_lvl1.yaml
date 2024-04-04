@@ -112,6 +112,4 @@ profile:
     rules:
       - supplemental_cis_manual
       - supplemental_filevault
-      - supplemental_firewall_pf
       - supplemental_password_policy
-      - supplemental_smartcard

@@ -85,6 +85,7 @@ profile:
       - os_certificate_authority_trust
       - os_config_data_install_enforce
       - os_config_profile_ui_install_disable
+      - os_dictation_disable
       - os_disk_image_disable
       - os_dvdram_disable
       - os_erase_content_and_settings_disable
@@ -101,6 +102,7 @@ profile:
       - os_icloud_storage_prompt_disable
       - os_install_log_retention_configure
       - os_ir_support_disable
+      - os_loginwindow_adminhostinfo_undefined
       - os_mail_app_disable
       - os_mdm_require
       - os_messages_app_disable

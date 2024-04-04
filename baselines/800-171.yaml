@@ -64,6 +64,7 @@ profile:
       - os_authenticated_root_enable
       - os_bonjour_disable
       - os_config_profile_ui_install_disable
+      - os_dictation_disable
       - os_filevault_autologin_disable
       - os_firewall_default_deny_require
       - os_firewall_log_enable
@@ -75,6 +76,7 @@ profile:
       - os_httpd_disable
       - os_icloud_storage_prompt_disable
       - os_ir_support_disable
+      - os_loginwindow_adminhostinfo_undefined
       - os_mdm_require
       - os_nfsd_disable
       - os_on_device_dictation_enforce
