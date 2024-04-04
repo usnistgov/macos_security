@@ -310,11 +310,6 @@ tags:
   - 800-53r5_low
   - 800-53r5_moderate
   - 800-53r5_privacy
-  - cmmc_lvl1
-  - cmmc_lvl2
-  - cnssi-1253_high
-  - cnssi-1253_low
-  - cnssi-1253_moderate
   - stig
   - supplemental
 mobileconfig: false
