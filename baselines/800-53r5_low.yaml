@@ -32,7 +32,6 @@ profile:
       - os_allow_documents_unmanaged_sources_managed_destinations_disable
       - os_apple_watch_pairing_disable
       - os_apple_watch_wrist_detection_enable
-      - os_application_allow_list
       - os_authentication_password_autofill_enable
       - os_diagnostics_reports_disable
       - os_disallow_enterprise_app_trust
@@ -56,7 +55,6 @@ profile:
       - os_personalized_advertising_disable
       - os_safari_password_autofill_disable
       - os_screenshots_disable
-      - os_share_location_data_disable
       - os_siri_when_locked_disabled
       - os_supervised_mdm_require
       - os_usb_accessories_when_locked_disable
@@ -68,4 +66,3 @@ profile:
       - pwpolicy_max_inactivity_enforce
       - pwpolicy_minimum_length_enforce
       - pwpolicy_simple_sequence_disable
-

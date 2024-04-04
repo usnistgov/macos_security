@@ -1,6 +1,6 @@
-title: "iOS/iPadOS 16.0: Security Configuration - CIS Apple iOS 16 v1.1.0 Benchmark (Level 1) - End-User Owned Devices"
+title: "iOS/iPadOS 16.0: Security Configuration - CIS Apple iOS 16 v1.0.0 Benchmark (Level 1) - End-User Owned Devices"
 description: |
-  This guide describes the actions to take when securing a iOS/iPadOS 16.0 system against the CIS Apple iOS 16 v1.1.0 Benchmark (Level 1) - End-User Owned Devices security baseline.
+  This guide describes the actions to take when securing a iOS/iPadOS 16.0 system against the CIS Apple iOS 16 v1.0.0 Benchmark (Level 1) - End-User Owned Devices security baseline.
 authors: |
   *macOS Security Compliance Project*
 
