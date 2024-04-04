@@ -30,6 +30,7 @@ discussion: |
   |AIOS-16-012000 +
   AIOS-16-712000| A managed photo app must be used to take and store work-related photos.
   |AIOS-16-013500| Apple iOS must implement the management setting: Not allow a user to remove Apple iOS configuration profiles that enforce DoD security requirements.
+  |AIOS-16-011700| Apple iOS/iPadOS 17 must implement the management setting: not share location data through iCloud.
   |===
 check: |
 fix: |
