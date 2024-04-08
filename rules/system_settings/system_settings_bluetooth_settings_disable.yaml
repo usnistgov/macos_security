@@ -42,7 +42,6 @@ tags:
   - cisv8
   - cmmc_lvl2
   - stig
-  - stig
 severity: medium
 mobileconfig: true
 mobileconfig_info:
