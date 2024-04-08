@@ -1549,7 +1549,6 @@ def generate_scap(all_rules, all_baselines, args):
                         continue
 
                 if "ssh_config" in rule_yaml['discussion'] and "dscl" in rule_yaml['check']:
-                    
                     oval_definition = oval_definition + '''
                         <definition id="oval:mscp:def:{}" version="1" class="compliance"> 
                     <metadata> 
@@ -1563,7 +1562,7 @@ def generate_scap(all_rules, all_baselines, args):
                     <criterion comment="{}_ssh_config.d" test_ref="oval:mscp:tst:{}"/>
                     <criterion comment="{}_.ssh" test_ref="oval:mscp:tst:{}"/>
                 </criteria>
-            </definition> '''.format(x,rule_yaml['title'],cce,rule_yaml['id'] + "_" + odv_label,rule_yaml['discussion'],rule_yaml['id'] + "_" + odv_label,x,rule_yaml['id'] + "_" + odv_label, x+5000, rule_yaml['id'] + "_" + odv_label,x+5001)
+            </definition> '''.format(x,rule_yaml['title'],cce,rule_yaml['id'] + "_" + odv_label,rule_yaml['discussion'],rule_yaml['id'] + "_" + odv_label,x,rule_yaml['id'] + "_" + odv_label, x+5010, rule_yaml['id'] + "_" + odv_label,x+5025)
                     
                     oval_test = oval_test + '''
                 <textfilecontent54_test id="oval:mscp:tst:{}" version="1" comment="{}_test" check_existence="all_exist" check="all" xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#independent">
@@ -1575,12 +1574,12 @@ def generate_scap(all_rules, all_baselines, args):
                 <textfilecontent54_test id="oval:mscp:tst:{}" version="1" comment="{}_ssh_config.d_test" check_existence="all_exist" check="all" xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#independent">
             <object object_ref="oval:mscp:obj:{}"/>
         </textfilecontent54_test>
-        '''.format(x+5000, rule_yaml['id'] + "_" + odv_label, x+5000)
+        '''.format(x+5010, rule_yaml['id'] + "_" + odv_label, x+5010)
                     oval_test = oval_test + '''
                 <textfilecontent54_test id="oval:mscp:tst:{}" version="1" comment="{}_ssh_config.d_test" check_existence="all_exist" check="all" xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#independent">
             <object object_ref="oval:mscp:obj:{}"/>
         </textfilecontent54_test>
-        '''.format(x+5001, rule_yaml['id'] + "_" + odv_label, x+5001)
+        '''.format(x+5025, rule_yaml['id'] + "_" + odv_label, x+5025)
                     regex = r"(?<=grep).*$"
                     matches = re.finditer(regex, rule_yaml['check'], re.MULTILINE)
                     matchy_match = ""
@@ -1606,7 +1605,7 @@ def generate_scap(all_rules, all_baselines, args):
                 <filename operation="pattern match">*</filename>
                 <pattern operation="pattern match">{}</pattern>
                 <instance datatype="int">1</instance>
-            </textfilecontent54_object>'''.format(x+5000, rule_yaml['id'] + "_" + odv_label, ssh_config_pattern)
+            </textfilecontent54_object>'''.format(x+5010, rule_yaml['id'] + "_" + odv_label, ssh_config_pattern)
                     
                     oval_object = oval_object + '''
             <textfilecontent54_object xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#independent" id="oval:mscp:obj:{}" version="1" comment="{}_.ssh_object" >
@@ -1620,7 +1619,7 @@ def generate_scap(all_rules, all_baselines, args):
             <accountinfo_object xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" comment="user home directory" id="oval:mscp:obj:{}" version="1">
                 <username operation="pattern match">.*</username>
                 <filter action="include" xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5">oval:mscp:ste:{}</filter>
-            </accountinfo_object>'''.format(x+5001,rule_yaml['id'] + "_" + odv_label,x,ssh_config_pattern,x+999,x+999)
+            </accountinfo_object>'''.format(x+5025,rule_yaml['id'] + "_" + odv_label,x,ssh_config_pattern,x+999,x+999)
                 
                     oval_state = oval_state + '''
                        <accountinfo_state xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" comment="accountinfo_state" id="oval:mscp:ste:{}" version="1">
@@ -2358,7 +2357,7 @@ def generate_scap(all_rules, all_baselines, args):
                 </authorizationdb_state>'''.format(rule_yaml['id'] + "_" + odv_label,x)
                             else:
                                 key = (check[1].split()[2].replace("'",""))
-
+                                key = key.split('>')[1].split('<')[0]
                                 oval_definition = oval_definition + '''
                 <definition id="oval:mscp:def:{}" version="1" class="compliance"> 
                         <metadata> 
