@@ -73,6 +73,6 @@ tags:
   - cmmc_lvl2
   - cmmc_lvl1
   - stig
-severity: medium
+severity: high
 mobileconfig: false
 mobileconfig_info:
