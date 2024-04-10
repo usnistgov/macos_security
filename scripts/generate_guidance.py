@@ -1536,12 +1536,12 @@ def create_rules(baseline_yaml):
                         except:
                             #print("expected reference '{}' is missing in key '{}' for rule{}".format(reference, key, rule))
                             rule_yaml[key].update({reference: ["None"]})
-            all_rules.append(MacSecurityRule(rule_yaml['title'].replace('|', '\|'),
-                                        rule_yaml['id'].replace('|', '\|'),
-                                        rule_yaml['severity'].replace('|', '\|'),
-                                        rule_yaml['discussion'],  #.replace('|', '\|'),
-                                        rule_yaml['check'].replace('|', '\|'),
-                                        rule_yaml['fix'].replace('|', '\|'),
+            all_rules.append(MacSecurityRule(rule_yaml['title'].replace('|', r'\|'),
+                                        rule_yaml['id'].replace('|', r'\|'),
+                                        rule_yaml['severity'].replace('|', r'\|'),
+                                        rule_yaml['discussion'],  #.replace('|', r'\|'),
+                                        rule_yaml['check'].replace('|', r'\|'),
+                                        rule_yaml['fix'].replace('|', r'\|'),
                                         rule_yaml['references']['cci'],
                                         rule_yaml['references']['cce'],
                                         rule_yaml['references']['800-53r5'],
@@ -2013,7 +2013,7 @@ def main():
             except KeyError:
                 rulefix = "No fix Found"
             else:
-                rulefix = rule_yaml['fix']  # .replace('|', '\|')
+                rulefix = rule_yaml['fix']  # .replace('|', r'\|')
 
             try:
                 rule_yaml['tags']
@@ -2069,16 +2069,16 @@ def main():
 
             if 'supplemental' in tags:
                 rule_adoc = adoc_supplemental_template.substitute(
-                    rule_title=rule_yaml['title'].replace('|', '\|'),
-                    rule_id=rule_yaml['id'].replace('|', '\|'),
+                    rule_title=rule_yaml['title'].replace('|', r'\|'),
+                    rule_id=rule_yaml['id'].replace('|', r'\|'),
                     rule_discussion=discussion,
                 )
             elif custom_refs:
                 rule_adoc = adoc_rule_custom_refs_template.substitute(
-                    rule_title=rule_yaml['title'].replace('|', '\|'),
-                    rule_id=rule_yaml['id'].replace('|', '\|'),
-                    rule_discussion=discussion,  #.replace('|', '\|'),
-                    rule_check=rule_yaml['check'],  # .replace('|', '\|'),
+                    rule_title=rule_yaml['title'].replace('|', r'\|'),
+                    rule_id=rule_yaml['id'].replace('|', r'\|'),
+                    rule_discussion=discussion,  #.replace('|', r'\|'),
+                    rule_check=rule_yaml['check'],  # .replace('|', r'\|'),
                     rule_fix=rulefix,
                     rule_cci=cci,
                     rule_80053r5=nist_controls,
@@ -2095,10 +2095,10 @@ def main():
                 )
             elif ('permanent' in tags) or ('inherent' in tags) or ('n_a' in tags):
                 rule_adoc = adoc_rule_no_setting_template.substitute(
-                    rule_title=rule_yaml['title'].replace('|', '\|'),
-                    rule_id=rule_yaml['id'].replace('|', '\|'),
-                    rule_discussion=discussion,  #.replace('|', '\|'),
-                    rule_check=rule_yaml['check'],  # .replace('|', '\|'),
+                    rule_title=rule_yaml['title'].replace('|', r'\|'),
+                    rule_id=rule_yaml['id'].replace('|', r'\|'),
+                    rule_discussion=discussion,  #.replace('|', r'\|'),
+                    rule_check=rule_yaml['check'],  # .replace('|', r'\|'),
                     rule_fix=rulefix,
                     rule_80053r5=nist_controls,
                     rule_800171=nist_800171,
@@ -2112,10 +2112,10 @@ def main():
             else:
                 if version_yaml['platform'] == "iOS/iPadOS":
                     rule_adoc = adoc_rule_ios_template.substitute(
-                        rule_title=rule_yaml['title'].replace('|', '\|'),
-                        rule_id=rule_yaml['id'].replace('|', '\|'),
-                        rule_discussion=discussion,  #.replace('|', '\|'),
-                        rule_check=rule_yaml['check'],  # .replace('|', '\|'),
+                        rule_title=rule_yaml['title'].replace('|', r'\|'),
+                        rule_id=rule_yaml['id'].replace('|', r'\|'),
+                        rule_discussion=discussion,  #.replace('|', r'\|'),
+                        rule_check=rule_yaml['check'],  # .replace('|', r'\|'),
                         rule_fix=rulefix,
                         rule_cci=cci,
                         rule_80053r5=nist_controls,
@@ -2131,10 +2131,10 @@ def main():
                     )
                 else:
                     rule_adoc = adoc_rule_template.substitute(
-                        rule_title=rule_yaml['title'].replace('|', '\|'),
-                        rule_id=rule_yaml['id'].replace('|', '\|'),
-                        rule_discussion=discussion,  #.replace('|', '\|'),
-                        rule_check=rule_yaml['check'],  # .replace('|', '\|'),
+                        rule_title=rule_yaml['title'].replace('|', r'\|'),
+                        rule_id=rule_yaml['id'].replace('|', r'\|'),
+                        rule_discussion=discussion,  #.replace('|', r'\|'),
+                        rule_check=rule_yaml['check'],  # .replace('|', r'\|'),
                         rule_fix=rulefix,
                         rule_cci=cci,
                         rule_80053r5=nist_controls,
