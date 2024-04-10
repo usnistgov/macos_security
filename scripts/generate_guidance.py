@@ -635,10 +635,10 @@ CURR_USER_UID=$(/usr/bin/id -u $CURRENT_USER)
 arch=$(/usr/bin/arch)
 
 # configure colors for text
-RED='\e[31m'
-STD='\e[39m'
-GREEN='\e[32m'
-YELLOW='\e[33m'
+RED='\\e[31m'
+STD='\\e[39m'
+GREEN='\\e[32m'
+YELLOW='\\e[33m'
 
 audit_plist="/Library/Preferences/org.{audit_name}.audit.plist"
 audit_log="/Library/Logs/{audit_name}_baseline.log"
@@ -737,8 +737,8 @@ read_options(){{
 reset_plist(){{
     if [[ $reset_all ]];then
         echo "Clearing results from all MSCP baselines"
-        find /Library/Preferences -name "org.*.audit.plist" -exec rm -f '{{}}' \;
-        find /Library/Logs -name "*_baseline.log" -exec rm -f '{{}}' \;
+        find /Library/Preferences -name "org.*.audit.plist" -exec rm -f '{{}}' \\;
+        find /Library/Logs -name "*_baseline.log" -exec rm -f '{{}}' \\;
     else
         echo "Clearing results from /Library/Preferences/org.{baseline_name}.audit.plist"
         rm -f /Library/Preferences/org.{audit_name}.audit.plist
@@ -1380,7 +1380,7 @@ def generate_xls(baseline_name, build_path, baseline_yaml):
         sheet1.write(counter, 4, mechanism, top)
         sheet1.col(4).width = 256 * 25
 
-        sheet1.write(counter, 5, rule.rule_check.replace("\|", "|"), topWrap)
+        sheet1.write(counter, 5, rule.rule_check.replace(r"\|", "|"), topWrap)
         sheet1.col(5).width = 750 * 50
 
         sheet1.write(counter, 6, str(rule.rule_result_value), topWrap)
@@ -1394,7 +1394,7 @@ def generate_xls(baseline_name, build_path, baseline_yaml):
             # sheet1.write(counter, 7, str(
             #     configProfile(rule_file)), topWrap)
         else:
-            sheet1.write(counter, 7, str(rule.rule_fix.replace("\|", "|")), topWrap)
+            sheet1.write(counter, 7, str(rule.rule_fix.replace(r"\|", "|")), topWrap)
 
         sheet1.col(7).width = 1000 * 50
 
