@@ -2,6 +2,62 @@
 
 This document provides a high-level view of the changes to the macOS Security Compliance Project.
 
+== [Sonoma, Revision 1.1] - 2024-04-XX
+
+* Rules
+** Added Rules
+*** os_dictation_disable
+** Modified Rules
+*** os_anti_virus_installed
+*** os_install_log_retention_configure (https://github.com/usnistgov/macos_security/issues/292[#292])
+*** os_on_device_dictation_enforce
+*** os_password_hint_remove (https://github.com/usnistgov/macos_security/issues/343[#343])
+*** os_recovery_lock_enable
+*** os_setup_assistant_filevault_enforce (https://github.com/usnistgov/macos_security/issues/362[#362])
+*** os_time_server_enabled
+*** os_unlock_active_user_session_disable (https://github.com/usnistgov/macos_security/pull/365[#365])
+*** os_world_writable_system_folder_configure (https://github.com/usnistgov/macos_security/issues/355[#355])
+*** pwpolicy_custom_regex_enforce (https://github.com/usnistgov/macos_security/pull/363[#363])
+*** system_settings_apple_watch_unlock_disable.yaml
+*** system_settings_location_services_disable (link:https://github.com/usnistgov/macos_security/issues/372[#372])
+*** system_settings_location_services_enable (link:https://github.com/usnistgov/macos_security/issues/372[#372])
+*** system_settings_loginwindow_loginwindowtext_enable
+*** system_settings_system_wide_preferences_configure
+*** system_settings_time_server_configure.yaml (link:https://github.com/usnistgov/macos_security/pull/336[#336])
+*** system_settings_touchid_unlock_disable.yaml
+*** supplemental_cis_manual
+** Deleted Rules
+*** os_safari_javascript_enabled.yaml
+** Other
+*** Added tags to all supplemental rule files
+*** Removed duplicate entries in `pwpolicy.xml` (link:https://github.com/usnistgov/macos_security/issues/373[#373])
+
+* Baselines
+** Added Baselines
+*** macOS 14 STIG
+*** iOS 17 STIG
+
+* Scripts
+** generate_guidance
+*** Added `--quiet` (link:https://github.com/usnistgov/macos_security/issues/301[#301])
+*** Modified Configuration Profile Payload (link:https://github.com/usnistgov/macos_security/issues/315[#315])
+*** Added `--audit` to compliance script (link:https://github.com/usnistgov/macos_security/pull/333/files[#333])
+*** Added `--no-rcs`to zsh sheband (link:https://github.com/usnistgov/macos_security/issues/377[#377])
+*** Bug Fixes
+**** link:https://github.com/usnistgov/macos_security/issues/319[#319]
+**** link:https://github.com/usnistgov/macos_security/issues/332[#332]
+** generate_baseline
+*** Bug Fixes
+** generate_mappings
+*** Bug Fixes
+** generate_scap
+*** Bug Fixes
+** Other
+*** Added `util` folder
+**** Added `generate_checklist.py`
+**** Added `mscp_local_report.py`
+*** Updated `enablePF-mscp.sh`
+
 == [Sonoma, Revision 1.0] - 2023-09-21
 
 * Rules
