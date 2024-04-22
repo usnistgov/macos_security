@@ -9,6 +9,7 @@ This document provides a high-level view of the changes to the macOS Security Co
 *** os_dictation_disable
 ** Modified Rules
 *** os_anti_virus_installed (https://github.com/usnistgov/macos_security/issues/345[#345])
+*** os_camera_disable (https://github.com/usnistgov/macos_security/issues/388[#388])
 *** os_install_log_retention_configure (https://github.com/usnistgov/macos_security/issues/292[#292])
 *** os_on_device_dictation_enforce
 *** os_password_hint_remove (https://github.com/usnistgov/macos_security/issues/343[#343])
@@ -35,7 +36,6 @@ This document provides a high-level view of the changes to the macOS Security Co
 * Baselines
 ** Added Baselines
 *** macOS 14 STIG
-*** iOS 17 STIG
 
 * Scripts
 ** generate_guidance
