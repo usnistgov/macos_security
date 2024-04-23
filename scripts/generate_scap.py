@@ -1654,7 +1654,7 @@ def generate_scap(all_rules, all_baselines, args):
                     <criterion comment="{}" test_ref="oval:mscp:tst:{}" />
                     <criterion comment="{}_sshd_config.d" test_ref="oval:mscp:tst:{}"/>
                 </criteria>
-            </definition> '''.format(x,rule_yaml['title'],cce,rule_yaml['id'] + "_" + odv_label,rule_yaml['discussion'],rule_yaml['id'] + "_" + odv_label,x,rule_yaml['id'] + "_" + odv_label, x+5000, rule_yaml['id'] + "_" + odv_label,x+5001)
+            </definition> '''.format(x,rule_yaml['title'],cce,rule_yaml['id'] + "_" + odv_label,rule_yaml['discussion'],rule_yaml['id'] + "_" + odv_label,x,rule_yaml['id'] + "_" + odv_label, x+6000, rule_yaml['id'] + "_" + odv_label,x+6001)
                     
                     oval_test = oval_test + '''
                 <textfilecontent54_test id="oval:mscp:tst:{}" version="1" comment="{}_test" check_existence="all_exist" check="all" xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#independent">
@@ -1666,7 +1666,7 @@ def generate_scap(all_rules, all_baselines, args):
                 <textfilecontent54_test id="oval:mscp:tst:{}" version="1" comment="{}_sshd_config.d_test" check_existence="all_exist" check="all" xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#independent">
             <object object_ref="oval:mscp:obj:{}"/>
         </textfilecontent54_test>
-        '''.format(x+5000, rule_yaml['id'] + "_" + odv_label, x+5000)
+        '''.format(x+6000, rule_yaml['id'] + "_" + odv_label, x+6000)
                     
                     oval_object = oval_object + '''
                 <textfilecontent54_object id="oval:mscp:obj:{}" version="1" comment="{}_object" xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#independent">
@@ -1684,7 +1684,7 @@ def generate_scap(all_rules, all_baselines, args):
                 <filename operation="pattern match">*</filename>
                 <pattern operation="pattern match">{}</pattern>
                 <instance datatype="int">1</instance>
-            </textfilecontent54_object>'''.format(x+5000, rule_yaml['id'] + "_" + odv_label, fipslist)
+            </textfilecontent54_object>'''.format(x+6000, rule_yaml['id'] + "_" + odv_label, fipslist)
                     
                     x = x + 1
                     
@@ -1702,7 +1702,7 @@ def generate_scap(all_rules, all_baselines, args):
                     <criterion comment="{}" test_ref="oval:mscp:tst:{}" />
                     <criterion comment="{}_sshd_config.d" test_ref="oval:mscp:tst:{}"/>
                 </criteria>
-            </definition> '''.format(x,rule_yaml['title'],cce,rule_yaml['id'] + "_" + odv_label,rule_yaml['discussion'],rule_yaml['id'] + "_" + odv_label,x,rule_yaml['id'] + "_" + odv_label, x+5000, rule_yaml['id'] + "_" + odv_label,x+5001)
+            </definition> '''.format(x,rule_yaml['title'],cce,rule_yaml['id'] + "_" + odv_label,rule_yaml['discussion'],rule_yaml['id'] + "_" + odv_label,x,rule_yaml['id'] + "_" + odv_label, x+6000, rule_yaml['id'] + "_" + odv_label,x+6001)
                     
                     oval_test = oval_test + '''
                 <textfilecontent54_test id="oval:mscp:tst:{}" version="1" comment="{}_test" check_existence="all_exist" check="all" xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#independent">
@@ -1714,7 +1714,7 @@ def generate_scap(all_rules, all_baselines, args):
                 <textfilecontent54_test id="oval:mscp:tst:{}" version="1" comment="{}_sshd_config.d_test" check_existence="all_exist" check="all" xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#independent">
             <object object_ref="oval:mscp:obj:{}"/>
         </textfilecontent54_test>
-        '''.format(x+5000, rule_yaml['id'] + "_" + odv_label, x+5000)
+        '''.format(x+6000, rule_yaml['id'] + "_" + odv_label, x+6000)
                     sshd_config_pattern = ""
                     if "grep" in rule_yaml['check']:                        
                         regex = r"(?<=grep).*$"
@@ -1749,7 +1749,7 @@ def generate_scap(all_rules, all_baselines, args):
                 <filename operation="pattern match">*</filename>
                 <pattern operation="pattern match">{}</pattern>
                 <instance datatype="int">1</instance>
-            </textfilecontent54_object>'''.format(x+5000, rule_yaml['id'] + "_" + odv_label, sshd_config_pattern)
+            </textfilecontent54_object>'''.format(x+6000, rule_yaml['id'] + "_" + odv_label, sshd_config_pattern)
                     
                 
                     x = x + 1
