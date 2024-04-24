@@ -82,6 +82,7 @@ profile:
       - os_certificate_authority_trust
       - os_config_data_install_enforce
       - os_config_profile_ui_install_disable
+      - os_dictation_disable
       - os_disk_image_disable
       - os_dvdram_disable
       - os_erase_content_and_settings_disable
@@ -115,6 +116,7 @@ profile:
       - os_removable_media_disable
       - os_root_disable
       - os_screensaver_loginwindow_enforce
+      - os_setup_assistant_filevault_enforce
       - os_sip_enable
       - os_siri_prompt_disable
       - os_skip_screen_time_prompt_enable
@@ -154,6 +156,7 @@ profile:
       - system_settings_automatic_login_disable
       - system_settings_automatic_logout_enforce
       - system_settings_bluetooth_disable
+      - system_settings_bluetooth_settings_disable
       - system_settings_bluetooth_sharing_disable
       - system_settings_cd_dvd_sharing_disable
       - system_settings_content_caching_disable
@@ -185,6 +188,7 @@ profile:
       - system_settings_screensaver_password_enforce
       - system_settings_screensaver_timeout_enforce
       - system_settings_siri_disable
+      - system_settings_siri_settings_disable
       - system_settings_smbd_disable
       - system_settings_ssh_disable
       - system_settings_ssh_enable
@@ -192,8 +196,10 @@ profile:
       - system_settings_time_server_configure
       - system_settings_time_server_enforce
       - system_settings_token_removal_enforce
+      - system_settings_touch_id_settings_disable
       - system_settings_touchid_unlock_disable
       - system_settings_usb_restricted_mode
+      - system_settings_wallet_applepay_settings_disable
       - system_settings_wifi_disable
   - section: "Inherent"
     rules:

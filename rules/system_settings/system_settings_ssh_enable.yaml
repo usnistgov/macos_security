@@ -1,5 +1,5 @@
 id: system_settings_ssh_enable
-title: "Enable SSH Server for Remote Access Sessions"
+title: Enable SSH Server for Remote Access Sessions
 discussion: |
   Remote access sessions _MUST_ use encrypted methods to protect unauthorized individuals from gaining access.
 check: |
@@ -15,7 +15,10 @@ references:
   cce:
     - CCE-92995-0
   cci:
-    - N/A
+    - CCI-000213
+    - CCI-001942
+    - CCI-002420
+    - CCI-002422
   800-53r5:
     - IA-2(8)
     - AC-3
@@ -29,9 +32,12 @@ references:
     - IA-2(8)
     - IA-2(9)
   srg:
-    - N/A
+    - SRG-OS-000080-GPOS-00048
+    - SRG-OS-000113-GPOS-00058
+    - SRG-OS-000425-GPOS-00189
+    - SRG-OS-000426-GPOS-00190
   disa_stig:
-    - N/A
+    - APPL-14-000080
   800-171r2:
     - 3.1.1
     - 3.1.2
@@ -43,7 +49,7 @@ references:
     - CM.L2-3.4.7
     - IA.L2-3.5.4
 macOS:
-  - "14.0"
+  - '14.0'
 tags:
   - 800-53r5_low
   - 800-53r5_moderate
@@ -57,5 +63,7 @@ tags:
   - cnssi-1253_high
   - cmmc_lvl2
   - cmmc_lvl1
+  - stig
+severity: medium
 mobileconfig: false
 mobileconfig_info:

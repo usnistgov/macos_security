@@ -1,5 +1,5 @@
 id: os_application_sandboxing
-title: "Ensure Seperate Execution Domain for Processes"
+title: Ensure Seperate Execution Domain for Processes
 discussion: |
   The inherent configuration of the macOS _IS_ in compliance as Apple has implemented multiple features Mandatory access controls (MAC), System Integrity Protection (SIP), and application sandboxing.
 
@@ -21,8 +21,10 @@ references:
     - N/A
   srg:
     - N/A
+  cci:
+    - N/A
 macOS:
-  - "14.0"
+  - '14.0'
 tags:
   - inherent
   - 800-53r5_low

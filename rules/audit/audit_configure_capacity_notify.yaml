@@ -1,5 +1,5 @@
 id: audit_configure_capacity_notify
-title: "Configure Audit Capacity Warning"
+title: Configure Audit Capacity Warning
 discussion: |
   The audit service _MUST_ be configured to notify the system administrator when the amount of free disk space remaining reaches an organization defined value.
 
@@ -17,19 +17,21 @@ references:
   cce:
     - CCE-92705-3
   cci:
+    - CCI-000139
     - CCI-001855
   800-53r5:
     - AU-5(1)
   800-53r4:
     - AU-5(1)
   srg:
+    - SRG-OS-000046-GPOS-00022
     - SRG-OS-000343-GPOS-00134
   disa_stig:
-    - N/A
+    - APPL-14-001030
 macOS:
-  - "14.0"
+  - '14.0'
 odv:
-  hint: "Percentage of free space."
+  hint: Percentage of free space.
   recommended: 25
   stig: 25
 tags:
@@ -38,7 +40,7 @@ tags:
   - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
-severity: "medium"
-severity: "low"
+  - stig
+severity: low
 mobileconfig: false
 mobileconfig_info:

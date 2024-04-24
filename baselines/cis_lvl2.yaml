@@ -63,7 +63,6 @@ profile:
       - os_power_nap_disable
       - os_root_disable
       - os_safari_advertising_privacy_protection_enable
-      - os_safari_javascript_enabled
       - os_safari_open_safe_downloads_disable
       - os_safari_popups_disabled
       - os_safari_prevent_cross-site_tracking_enable
@@ -139,6 +138,4 @@ profile:
     rules:
       - supplemental_cis_manual
       - supplemental_filevault
-      - supplemental_firewall_pf
       - supplemental_password_policy
-      - supplemental_smartcard

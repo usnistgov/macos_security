@@ -1,5 +1,5 @@
 id: system_settings_install_macos_updates_enforce
-title: "Enforce macOS Updates are Automatically Installed"
+title: Enforce macOS Updates are Automatically Installed
 discussion: |
   Software Update _MUST_ be configured to enforce automatic installation of macOS updates is enabled.
 check: |
@@ -8,7 +8,7 @@ check: |
   .objectForKey('AutomaticallyInstallMacOSUpdates').js
   EOS
 result:
-  string: "true"
+  string: 'true'
 fix: |
   This is implemented by a Configuration Profile.
 references:
@@ -33,7 +33,7 @@ references:
       - 7.3
       - 7.4
 macOS:
-  - "14.0"
+  - '14.0'
 tags:
   - cis_lvl1
   - cis_lvl2

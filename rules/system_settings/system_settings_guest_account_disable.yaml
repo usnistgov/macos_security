@@ -1,5 +1,5 @@
 id: system_settings_guest_account_disable
-title: "Disable the Guest Account"
+title: Disable the Guest Account
 discussion: |
   Guest access _MUST_ be disabled.
 
@@ -19,7 +19,7 @@ check: |
   }
   EOS
 result:
-  string: "true"
+  string: 'true'
 fix: |
   This is implemented by a Configuration Profile.
 references:
@@ -36,7 +36,7 @@ references:
   srg:
     - SRG-OS-000364-GPOS-00151
   disa_stig:
-    - N/A
+    - APPL-14-002063
   800-171r2:
     - 3.5.1
     - 3.5.2
@@ -50,7 +50,7 @@ references:
   cmmc:
     - AC.L1-3.1.2
 macOS:
-  - "14.0"
+  - '14.0'
 tags:
   - 800-53r5_low
   - 800-53r5_moderate
@@ -67,7 +67,8 @@ tags:
   - cnssi-1253_high
   - cmmc_lvl2
   - cmmc_lvl1
-severity: "high"
+  - stig
+severity: medium
 mobileconfig: true
 mobileconfig_info:
   com.apple.MCX:

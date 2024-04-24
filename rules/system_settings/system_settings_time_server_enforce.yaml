@@ -1,5 +1,5 @@
 id: system_settings_time_server_enforce
-title: "Enforce macOS Time Synchronization"
+title: Enforce macOS Time Synchronization
 discussion: |
   Time synchronization _MUST_ be enforced on all networked systems.
 
@@ -10,7 +10,7 @@ check: |
   .objectForKey('TMAutomaticTimeOnlyEnabled').js
   EOS
 result:
-  string: "true"
+  string: 'true'
 fix: |
   This is implemented by a Configuration Profile.
 references:
@@ -28,7 +28,7 @@ references:
     - SRG-OS-000355-GPOS-00143
     - SRG-OS-000356-GPOS-00144
   disa_stig:
-    - N/A
+    - APPL-14-000014
   800-171r2:
     - 3.3.7
   cis:
@@ -39,7 +39,7 @@ references:
   cmmc:
     - AU.L2-3.3.7
 macOS:
-  - "14.0"
+  - '14.0'
 tags:
   - 800-171
   - 800-53r5_low
@@ -54,10 +54,10 @@ tags:
   - cnssi-1253_low
   - cnssi-1253_high
   - cmmc_lvl2
-severity: "medium"
+  - stig
+severity: medium
 mobileconfig: true
 mobileconfig_info:
   com.apple.ManagedClient.preferences:
     com.apple.timed:
       TMAutomaticTimeOnlyEnabled: true
-

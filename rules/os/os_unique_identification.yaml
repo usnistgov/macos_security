@@ -1,5 +1,5 @@
 id: os_unique_identification
-title: "Uniquely Identify Users and Processes"
+title: Uniquely Identify Users and Processes
 discussion: |
   The macOS is a UNIX 03-compliant operating system. The system uniquely identifies and authenticates organizational users or processes.
 check: |
@@ -28,7 +28,7 @@ references:
   cmmc:
     - IA.L2-3.5.5
 macOS:
-  - "14.0"
+  - '14.0'
 tags:
   - 800-53r5_low
   - 800-53r5_moderate

@@ -1,5 +1,5 @@
 id: audit_off_load_records
-title: "Off-Load Audit Records"
+title: Off-Load Audit Records
 discussion: |
   Audit records should be off-loaded onto a different system or media from the system being audited.
 
@@ -22,19 +22,21 @@ references:
   disa_stig:
     - N/A
   srg:
-    - N/A
+    - SRG-OS-000479-GPOS-00224
+    - SRG-OS-000342-GPOS-00133
   cis:
     benchmark:
       - N/A
     controls v8:
       - 8.9
 macOS:
-  - "14.0"
+  - '14.0'
 tags:
   - permanent
   - cisv8
   - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
+  - srg
 mobileconfig: false
 mobileconfig_info:

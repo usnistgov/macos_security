@@ -1,5 +1,5 @@
 id: os_notify_account_created
-title: "Configure the System to Notify upon Account Created Actions"
+title: Configure the System to Notify upon Account Created Actions
 discussion: |
   The macOS should be configured to automatically notify system administrators and Information System Security Officers (ISSOs) when new accounts are created.
 
@@ -22,12 +22,22 @@ references:
   disa_stig:
     - N/A
   srg:
-    - N/A
+    - SRG-OS-000304-GPOS-00121
+    - SRG-OS-000239-GPOS-00089
+    - SRG-OS-000240-GPOS-00090
+    - SRG-OS-000004-GPOS-00004
+    - SRG-OS-000241-GPOS-00091
+    - SRG-OS-000274-GPOS-00104
+    - SRG-OS-000275-GPOS-00105
+    - SRG-OS-000276-GPOS-00106
+    - SRG-OS-000277-GPOS-00107
+    - SRG-OS-000303-GPOS-00120
 macOS:
-  - "14.0"
+  - '14.0'
 tags:
   - 800-53r4_moderate
   - 800-53r4_high
   - permanent
+  - srg
 mobileconfig: false
 mobileconfig_info:

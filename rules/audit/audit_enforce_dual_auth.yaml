@@ -1,5 +1,5 @@
 id: audit_enforce_dual_auth
-title: "Enforce Dual Authorization for Movement and Deletion of Audit Information"
+title: Enforce Dual Authorization for Movement and Deletion of Audit Information
 discussion: |
   All bulk manipulation of audit information should be authorized via automatic processes, and any manual manipulation of audit information should require dual authorization. In addition, dual authorization mechanisms should require the approval of two authorized individuals before being executed.
 
@@ -22,11 +22,12 @@ references:
   disa_stig:
     - N/A
   srg:
-    - N/A
+    - SRG-OS-000360-GPOS-00147
 macOS:
-  - "14.0"
+  - '14.0'
 tags:
   - permanent
   - cnssi-1253_high
+  - srg
 mobileconfig: false
 mobileconfig_info:

@@ -70,6 +70,7 @@ profile:
       - os_authenticated_root_enable
       - os_bonjour_disable
       - os_config_data_install_enforce
+      - os_dictation_disable
       - os_directory_services_configured
       - os_ess_installed
       - os_filevault_autologin_disable
@@ -98,13 +99,13 @@ profile:
       - os_privacy_setup_prompt_disable
       - os_root_disable
       - os_safari_advertising_privacy_protection_enable
-      - os_safari_javascript_enabled
       - os_safari_open_safe_downloads_disable
       - os_safari_popups_disabled
       - os_safari_prevent_cross-site_tracking_enable
       - os_safari_show_full_website_address_enable
       - os_safari_show_status_bar_enabled
       - os_safari_warn_fraudulent_website_enable
+      - os_setup_assistant_filevault_enforce
       - os_show_filename_extensions_enable
       - os_sip_enable
       - os_siri_prompt_disable
@@ -140,6 +141,7 @@ profile:
       - system_settings_automatic_login_disable
       - system_settings_bluetooth_disable
       - system_settings_bluetooth_menu_enable
+      - system_settings_bluetooth_settings_disable
       - system_settings_bluetooth_sharing_disable
       - system_settings_cd_dvd_sharing_disable
       - system_settings_content_caching_disable
@@ -169,6 +171,7 @@ profile:
       - system_settings_screensaver_ask_for_password_delay_enforce
       - system_settings_screensaver_timeout_enforce
       - system_settings_siri_disable
+      - system_settings_siri_settings_disable
       - system_settings_smbd_disable
       - system_settings_software_update_app_update_enforce
       - system_settings_software_update_download_enforce
@@ -180,7 +183,9 @@ profile:
       - system_settings_time_machine_encrypted_configure
       - system_settings_time_server_configure
       - system_settings_time_server_enforce
+      - system_settings_touch_id_settings_disable
       - system_settings_wake_network_access_disable
+      - system_settings_wallet_applepay_settings_disable
       - system_settings_wifi_disable
       - system_settings_wifi_menu_enable
   - section: "Inherent"
@@ -202,7 +207,6 @@ profile:
       - os_access_control_mobile_devices
   - section: "Supplemental"
     rules:
+      - supplemental_cis_manual
       - supplemental_filevault
-      - supplemental_firewall_pf
       - supplemental_password_policy
-      - supplemental_smartcard

@@ -76,6 +76,7 @@ authors:
       - Dan Brodjieski|National Aeronautics and Space Administration
       - Allen Golbig|Jamf
       - Bob Gendler|National Institute of Standards and Technology
+      - Aaron Kegerreis|Defense Information Systems Agency
 titles:
   all_rules: All Rules
   800-53r5_high: NIST SP 800-53 Rev 5 High Impact

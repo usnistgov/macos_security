@@ -6,19 +6,6 @@
     <array>
       <dict>
         <key>policyContent</key>
-        <string>(policyAttributeFailedAuthentications &lt; policyAttributeMaximumFailedAuthentications) OR (policyAttributeCurrentTime &gt; (policyAttributeLastFailedAuthenticationTime + autoEnableInSeconds))</string>
-        <key>policyIdentifier</key>
-        <string>Authentication Lockout</string>
-        <key>policyParameters</key>
-        <dict>
-          <key>autoEnableInSeconds</key>
-          <integer>300</integer>
-          <key>policyAttributeMaximumFailedAuthentications</key>
-          <integer>3</integer>
-        </dict>
-      </dict>
-      <dict>
-        <key>policyContent</key>
         <string>policyAttributeLastAuthenticationTime &gt; policyAttributeCurrentTime - (policyAttributeInactiveDays * 24 * 60 * 60)</string>
         <key>policyIdentifier</key>
         <string>Inactive Account</string>
@@ -26,20 +13,6 @@
         <dict>
           <key>policyAttributeInactiveDays</key>
           <integer>35</integer>
-        </dict>
-      </dict>
-    </array>
-    <key>policyCategoryPasswordChange</key>
-    <array>
-      <dict>
-        <key>policyContent</key>
-        <string>policyAttributeCurrentTime &gt; policyAttributeLastPasswordChangeTime + (policyAttributeExpiresEveryNDays * 24 * 60 * 60)</string>
-        <key>policyIdentifier</key>
-        <string>Password Expires after 60 days</string>
-        <key>policyParameters</key>
-        <dict>
-          <key>policyAttributeExpiresEveryNDays</key>
-          <integer>60</integer>
         </dict>
       </dict>
     </array>
@@ -58,39 +31,6 @@
       </dict>
       <dict>
         <key>policyContent</key>
-        <string>policyAttributeLastPasswordChangeTime &lt; policyAttributeCurrentTime - (policyAttributeMinimumLifetimeHours * 60 * 60)</string>
-        <key>policyIdentifier</key>
-        <string>Minimum Password Lifetime</string>
-        <key>policyParameters</key>
-        <dict>
-          <key>policyAttributeMinimumLifetimeHours</key>
-          <integer>24</integer>
-        </dict>
-      </dict>
-      <dict>
-        <key>policyContent</key>
-        <string>policyAttributePassword matches '.{15,}+'</string>
-        <key>policyIdentifier</key>
-        <string>Must be at least 15 characters</string>
-        <key>policyParameters</key>
-        <dict>
-          <key>minimumLength</key>
-          <integer>15</integer>
-        </dict>
-      </dict>
-      <dict>
-        <key>policyContent</key>
-        <string>policyAttributePassword matches '(.*[0-9].*){1,}+'</string>
-        <key>policyIdentifier</key>
-        <string>Must have at least 1 numeric value</string>
-        <key>policyParameters</key>
-        <dict>
-          <key>minimumNumericCharacters</key>
-          <integer>2</integer>
-        </dict>
-      </dict>
-      <dict>
-        <key>policyContent</key>
         <string>policyAttributePassword matches '(.*[a-z].*){1,}+'</string>
         <key>policyIdentifier</key>
         <string>Must have at least 1 lowercase letter</string>
@@ -102,37 +42,15 @@
       </dict>
       <dict>
         <key>policyContent</key>
-        <string>policyAttributePassword matches '(.*[A-Za-z].*){1,}+'</string>
+        <string>policyAttributeLastPasswordChangeTime &lt; policyAttributeCurrentTime - (policyAttributeMinimumLifetimeHours * 60 * 60)</string>
         <key>policyIdentifier</key>
-        <string>Must have at least 1 Letter</string>
+        <string>Minimum Password Lifetime</string>
         <key>policyParameters</key>
         <dict>
-          <key>minimumAlphaCharacters</key>
-          <integer>1</integer>
-        </dict>
-      </dict>
-      <dict>
-        <key>policyContent</key>
-        <string>policyAttributePassword matches '(.*[^a-zA-Z0-9].*){1,}+'</string>
-        <key>policyIdentifier</key>
-        <string>Must have at least 1 special characters</string>
-        <key>policyParameters</key>
-        <dict>
-          <key>minimumSymbols</key>
-          <integer>1</integer>
-        </dict>
-      </dict>
-      <dict>
-        <key>policyContent</key>
-        <string>none policyAttributePasswordHashes in policyAttributePasswordHistory</string>
-        <key>policyIdentifier</key>
-        <string>Cannot match the last 5 passwords</string>
-        <key>policyParameters</key>
-        <dict>
-          <key>policyAttributePasswordHistoryDepth</key>
-          <integer>5</integer>
+          <key>policyAttributeMinimumLifetimeHours</key>
+          <integer>24</integer>
         </dict>
       </dict>
     </array>
   </dict>
-  </plist>
+</plist>

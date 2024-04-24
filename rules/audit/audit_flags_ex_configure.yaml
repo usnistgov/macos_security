@@ -1,5 +1,5 @@
 id: audit_flags_ex_configure
-title: "Configure System to Audit All Failed Program Execution on the System"
+title: Configure System to Audit All Failed Program Execution on the System
 discussion: |
   The audit system _MUST_ be configured to record enforcement actions of access restrictions, including failed program execute (-ex) attempts.
 
@@ -20,7 +20,8 @@ references:
   cce:
     - CCE-92717-8
   cci:
-    - N/A
+    - CCI-000172
+    - CCI-001814
   800-53r5:
     - AC-2(12)
     - AU-12
@@ -31,9 +32,12 @@ references:
     - AU-12
     - CM-5(1)
   srg:
-    - N/A
+    - SRG-OS-000365-GPOS-00152
+    - SRG-OS-000465-GPOS-00209
+    - SRG-OS-000458-GPOS-00203
+    - SRG-OS-000463-GPOS-00207
   disa_stig:
-    - N/A
+    - APPL-14-001024
   800-171r2:
     - 3.3.1
     - 3.3.2
@@ -49,7 +53,7 @@ references:
     - AU.L2-3.3.6
     - SI.L2-3.14.3
 macOS:
-  - "14.0"
+  - '14.0'
 tags:
   - 800-53r5_privacy
   - 800-53r4_low
@@ -65,5 +69,7 @@ tags:
   - cnssi-1253_low
   - cnssi-1253_high
   - cmmc_lvl2
+  - stig
+severity: medium
 mobileconfig: false
 mobileconfig_info:
