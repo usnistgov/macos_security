@@ -1,5 +1,5 @@
 id: system_settings_time_machine_encrypted_configure
-title: "Ensure Time Machine Volumes are Encrypted"
+title: Ensure Time Machine Volumes are Encrypted
 discussion: |
   Time Machine volumes _MUST_ be encrypted.
 check: |
@@ -43,7 +43,7 @@ references:
       - 3.11
       - 11.3
 macOS:
-  - "14.0"
+  - '14.0'
 tags:
   - cis_lvl1
   - cis_lvl2

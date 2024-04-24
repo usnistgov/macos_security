@@ -1,5 +1,5 @@
 id: os_power_nap_enable
-title: "Enable Power Nap"
+title: Enable Power Nap
 discussion: |
   Power Nap _MUST_ be enabled.
 
@@ -43,7 +43,7 @@ references:
     controls v8:
       - N/A
 macOS:
-  - "14.0"
+  - '14.0'
 tags:
   - none
 mobileconfig: false

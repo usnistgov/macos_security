@@ -1,5 +1,5 @@
 id: audit_flags_lo_configure
-title: "Configure System to Audit All Log In and Log Out Events"
+title: Configure System to Audit All Log In and Log Out Events
 discussion: |
   The audit system _MUST_ be configured to record all attempts to log in and out of the system (lo).
 
@@ -21,6 +21,7 @@ references:
   cci:
     - CCI-000067
     - CCI-000172
+    - CCI-002884
   800-53r5:
     - AC-2(12)
     - AU-12
@@ -34,9 +35,16 @@ references:
     - MA-4(1)
   srg:
     - SRG-OS-000032-GPOS-00013
-    - SRG-OS-000462-GPOS-00206
+    - SRG-OS-000392-GPOS-00172
+    - SRG-OS-000064-GPOS-00033
+    - SRG-OS-000473-GPOS-00218
+    - SRG-OS-000470-GPOS-00214
+    - SRG-OS-000471-GPOS-00216
+    - SRG-OS-000472-GPOS-00217
+    - SRG-OS-000471-GPOS-00215
+    - SRG-OS-000458-GPOS-00203
   disa_stig:
-    - N/A
+    - APPL-14-001002
   800-171r2:
     - 3.1.12
     - 3.3.1
@@ -54,7 +62,7 @@ references:
     - AU.L2-3.3.6
     - SI.L2-3.14.3
 macOS:
-  - "14.0"
+  - '14.0'
 tags:
   - 800-53r5_privacy
   - 800-53r4_low
@@ -70,6 +78,7 @@ tags:
   - cnssi-1253_low
   - cnssi-1253_high
   - cmmc_lvl2
-severity: "medium"
+  - stig
+severity: medium
 mobileconfig: false
 mobileconfig_info:

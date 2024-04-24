@@ -1,14 +1,13 @@
 id: os_library_validation_enabled
-title: "Enable Library Validation"
-discussion:
-  Library validation  _MUST_ be enabled.
+title: Enable Library Validation
+discussion: Library validation  _MUST_ be enabled.
 check: |
   /usr/bin/osascript -l JavaScript << EOS
   $.NSUserDefaults.alloc.initWithSuiteName('com.apple.security.libraryvalidation')\
   .objectForKey('DisableLibraryValidation').js
   EOS
 result:
-  string: "false"
+  string: 'false'
 fix: |
   This is implemented by a Configuration Profile.
 references:
@@ -33,7 +32,7 @@ references:
       - 2.3
       - 2.6
 macOS:
-  - "14.0"
+  - '14.0'
 tags:
   - cisv8
 mobileconfig: true

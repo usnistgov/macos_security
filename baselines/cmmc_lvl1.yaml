@@ -42,6 +42,7 @@ profile:
       - os_appleid_prompt_disable
       - os_authenticated_root_enable
       - os_config_data_install_enforce
+      - os_dictation_disable
       - os_filevault_autologin_disable
       - os_firewall_log_enable
       - os_firmware_password_require

@@ -88,6 +88,7 @@ profile:
       - os_certificate_authority_trust
       - os_config_data_install_enforce
       - os_config_profile_ui_install_disable
+      - os_dictation_disable
       - os_directory_services_configured
       - os_disk_image_disable
       - os_dvdram_disable
@@ -113,6 +114,7 @@ profile:
       - os_install_log_retention_configure
       - os_ir_support_disable
       - os_library_validation_enabled
+      - os_loginwindow_adminhostinfo_undefined
       - os_mail_app_disable
       - os_mdm_require
       - os_messages_app_disable
@@ -138,7 +140,6 @@ profile:
       - os_removable_media_disable
       - os_root_disable
       - os_safari_advertising_privacy_protection_enable
-      - os_safari_javascript_enabled
       - os_safari_open_safe_downloads_disable
       - os_safari_popups_disabled
       - os_safari_prevent_cross-site_tracking_enable
@@ -199,11 +200,11 @@ profile:
     rules:
       - system_settings_airplay_receiver_disable
       - system_settings_apple_watch_unlock_disable
-      - system_settings_assistant_disable
       - system_settings_automatic_login_disable
       - system_settings_automatic_logout_enforce
       - system_settings_bluetooth_disable
       - system_settings_bluetooth_menu_enable
+      - system_settings_bluetooth_settings_disable
       - system_settings_bluetooth_sharing_disable
       - system_settings_cd_dvd_sharing_disable
       - system_settings_content_caching_disable
@@ -239,6 +240,7 @@ profile:
       - system_settings_screensaver_password_enforce
       - system_settings_screensaver_timeout_enforce
       - system_settings_siri_disable
+      - system_settings_siri_settings_disable
       - system_settings_smbd_disable
       - system_settings_software_update_app_update_enforce
       - system_settings_software_update_download_enforce
@@ -252,9 +254,11 @@ profile:
       - system_settings_time_server_configure
       - system_settings_time_server_enforce
       - system_settings_token_removal_enforce
+      - system_settings_touch_id_settings_disable
       - system_settings_touchid_unlock_disable
       - system_settings_usb_restricted_mode
       - system_settings_wake_network_access_disable
+      - system_settings_wallet_applepay_settings_disable
       - system_settings_wifi_disable
       - system_settings_wifi_menu_enable
   - section: "Inherent"

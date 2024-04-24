@@ -1,5 +1,5 @@
 id: os_mfa_network_access
-title: "Enforce multifactor authentication for network access to privileged accounts"
+title: Enforce multifactor authentication for network access to privileged accounts
 discussion: |
   The information system implements multifactor authentication for network access to privileged accounts.
 check: |
@@ -26,7 +26,7 @@ references:
     controls v8:
       - 5.6
 macOS:
-  - "14.0"
+  - '14.0'
 tags:
   - inherent
   - cisv8

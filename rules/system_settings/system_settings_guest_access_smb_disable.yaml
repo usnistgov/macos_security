@@ -1,5 +1,5 @@
 id: system_settings_guest_access_smb_disable
-title: "Disable Guest Access to Shared SMB Folders"
+title: Disable Guest Access to Shared SMB Folders
 discussion: |
   Guest access to shared Server Message Block (SMB) folders _MUST_ be disabled.
 
@@ -39,7 +39,7 @@ references:
   cmmc:
     - AC.L1-3.1.2
 macOS:
-  - "14.0"
+  - '14.0'
 tags:
   - 800-53r5_low
   - 800-53r5_moderate

@@ -1,5 +1,5 @@
 id: os_limit_dos_attacks
-title: "Limit Impact of Denial of Service Attacks"
+title: Limit Impact of Denial of Service Attacks
 discussion: |
   The macOS should be configured to limit the impact of Denial of Service (DoS) attacks.
 
@@ -22,12 +22,13 @@ references:
   disa_stig:
     - N/A
   srg:
-    - N/A
+    - SRG-OS-000142-GPOS-00071
 macOS:
-  - "14.0"
+  - '14.0'
 tags:
   - permanent
   - cnssi-1253_moderate
   - cnssi-1253_high
+  - srg
 mobileconfig: false
 mobileconfig_info:

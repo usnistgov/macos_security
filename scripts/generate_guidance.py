@@ -21,7 +21,7 @@ from itertools import groupby
 from uuid import uuid4
 
 class MacSecurityRule():
-    def __init__(self, title, rule_id, severity, discussion, check, fix, cci, cce, nist_controls, nist_171, disa_stig, srg, cis, cmmc, custom_refs, odv, tags, result_value, mobileconfig, mobileconfig_info, customized):
+    def __init__(self, title, rule_id, severity, discussion, check, fix, cci, cce, nist_controls, nist_171, disa_stig, srg, sfr, cis, cmmc, custom_refs, odv, tags, result_value, mobileconfig, mobileconfig_info, customized):
         self.rule_title = title
         self.rule_id = rule_id
         self.rule_severity = severity
@@ -34,6 +34,7 @@ class MacSecurityRule():
         self.rule_800171 = nist_171
         self.rule_disa_stig = disa_stig
         self.rule_srg = srg
+        self.rule_sfr = sfr
         self.rule_cis = cis
         self.rule_cmmc = cmmc
         self.rule_custom_refs = custom_refs
@@ -188,7 +189,7 @@ class PayloadDict:
     The actual plist content can be accessed as a dictionary via the 'data' attribute.
     """
 
-    def __init__(self, identifier, uuid=False, removal_allowed=False, description='', organization='', displayname=''):
+    def __init__(self, identifier, uuid=False, description='', organization='', displayname=''):
         self.data = {}
         self.data['PayloadVersion'] = 1
         self.data['PayloadOrganization'] = organization
@@ -196,10 +197,6 @@ class PayloadDict:
             self.data['PayloadUUID'] = uuid
         else:
             self.data['PayloadUUID'] = makeNewUUID()
-        if removal_allowed:
-            self.data['PayloadRemovalDisallowed'] = False
-        else:
-            self.data['PayloadRemovalDisallowed'] = True
         self.data['PayloadType'] = 'Configuration'
         self.data['PayloadScope'] = 'System'
         self.data['PayloadDescription'] = description
@@ -221,7 +218,6 @@ class PayloadDict:
         # Boilerplate
         payload_dict['PayloadVersion'] = 1
         payload_dict['PayloadUUID'] = makeNewUUID()
-        payload_dict['PayloadEnabled'] = True
         payload_dict['PayloadType'] = payload_content_dict['PayloadType']
         payload_dict['PayloadIdentifier'] = f"alacarte.macOS.{baseline_name}.{payload_dict['PayloadUUID']}"
 
@@ -240,7 +236,6 @@ class PayloadDict:
         # Boilerplate
         payload_dict['PayloadVersion'] = 1
         payload_dict['PayloadUUID'] = makeNewUUID()
-        payload_dict['PayloadEnabled'] = True
         payload_dict['PayloadType'] = payload_content_dict['PayloadType']
         payload_dict['PayloadIdentifier'] = f"alacarte.macOS.{baseline_name}.{payload_dict['PayloadUUID']}"
 
@@ -261,7 +256,6 @@ class PayloadDict:
         # Boilerplate
         payload_dict['PayloadVersion'] = 1
         payload_dict['PayloadUUID'] = makeNewUUID()
-        payload_dict['PayloadEnabled'] = True
         payload_dict['PayloadType'] = payload_type
         payload_dict['PayloadIdentifier'] = f"alacarte.macOS.{baseline_name}.{payload_dict['PayloadUUID']}"
 
@@ -510,7 +504,6 @@ def generate_profiles(baseline_name, build_path, parent_dir, baseline_yaml, sign
 
         newProfile = PayloadDict(identifier=identifier,
                                  uuid=False,
-                                 removal_allowed=False,
                                  organization=organization,
                                  displayname=displayname,
                                  description=description)
@@ -585,7 +578,7 @@ def default_audit_plist(baseline_name, build_path, baseline_yaml):
     plistlib.dump(plist_dict, plist_file)
 
 
-def generate_script(baseline_name, build_path, baseline_yaml, reference):
+def generate_script(baseline_name, audit_name, build_path, baseline_yaml, reference):
     """Generates the zsh script from the rules in the baseline YAML
     """
     compliance_script_file = open(
@@ -596,7 +589,7 @@ def generate_script(baseline_name, build_path, baseline_yaml, reference):
 
 
     # create header of fix zsh script
-    check_zsh_header = f"""#!/bin/zsh
+    check_zsh_header = f"""#!/bin/zsh --no-rcs
 
 ##  This script will attempt to audit all of the settings based on the installed profile.
 
@@ -642,17 +635,32 @@ CURR_USER_UID=$(/usr/bin/id -u $CURRENT_USER)
 arch=$(/usr/bin/arch)
 
 # configure colors for text
-RED='\e[31m'
-STD='\e[39m'
-GREEN='\e[32m'
-YELLOW='\e[33m'
+RED='\\e[31m'
+STD='\\e[39m'
+GREEN='\\e[32m'
+YELLOW='\\e[33m'
 
-audit_plist="/Library/Preferences/org.{baseline_name}.audit.plist"
-audit_log="/Library/Logs/{baseline_name}_baseline.log"
+audit_plist="/Library/Preferences/org.{audit_name}.audit.plist"
+audit_log="/Library/Logs/{audit_name}_baseline.log"
 
 # pause function
 pause(){{
 vared -p "Press [Enter] key to continue..." -c fackEnterKey
+}}
+
+# logging function
+logmessage(){{
+    if [[ ! $quiet ]];then
+        echo "$(date -u) $1" | /usr/bin/tee -a "$audit_log"
+    elif [[ ${{quiet[2][2]}} == 1 ]];then
+        if [[ $1 == *" failed"* ]] || [[ $1 == *"exemption"* ]] ;then
+            echo "$(date -u) $1" | /usr/bin/tee -a "$audit_log"
+        else
+            echo "$(date -u) $1" | /usr/bin/tee -a "$audit_log" > /dev/null
+        fi
+    else
+        echo "$(date -u) $1" | /usr/bin/tee -a "$audit_log" > /dev/null
+    fi
 }}
 
 ask() {{
@@ -727,8 +735,15 @@ read_options(){{
 
 # function to reset and remove plist file.  Used to clear out any previous findings
 reset_plist(){{
-    echo "Clearing results from /Library/Preferences/org.{baseline_name}.audit.plist"
-    defaults delete /Library/Preferences/org.{baseline_name}.audit.plist
+    if [[ $reset_all ]];then
+        echo "Clearing results from all MSCP baselines"
+        find /Library/Preferences -name "org.*.audit.plist" -exec rm -f '{{}}' \\;
+        find /Library/Logs -name "*_baseline.log" -exec rm -f '{{}}' \\;
+    else
+        echo "Clearing results from /Library/Preferences/org.{baseline_name}.audit.plist"
+        rm -f /Library/Preferences/org.{audit_name}.audit.plist
+        rm -f /Library/Logs/{audit_name}_baseline.log
+    fi
 }}
 
 # Generate the Compliant and Non-Compliant counts. Returns: Array (Compliant, Non-Compliant)
@@ -736,7 +751,6 @@ compliance_count(){{
     compliant=0
     non_compliant=0
     exempt_count=0
-    audit_plist="/Library/Preferences/org.{baseline_name}.audit.plist"
     
     rule_names=($(/usr/libexec/PlistBuddy -c "Print" $audit_plist | awk '/= Dict/ {{print $1}}'))
     
@@ -916,6 +930,11 @@ fi
                 result_value = str(result['boolean']).lower()
             elif "string" in result:
                 result_value = result['string']
+            elif "base64" in result:
+                result_string_bytes = f'{result["base64"]}\n'.encode("UTF-8")
+                result_encoded = base64.b64encode(result_string_bytes)
+                result_value = result_encoded.decode()
+                result = f'base64: {result_value}'
             else:
                 continue
 
@@ -925,7 +944,6 @@ fi
 ## Addresses the following NIST 800-53 controls: {1}
 rule_arch="{6}"
 if [[ "$arch" == "$rule_arch" ]] || [[ -z "$rule_arch" ]]; then
-    #echo 'Running the command to check the settings for: {0} ...' | tee -a "$audit_log"
     unset result_value
     result_value=$({2}\n)
     # expected result {3}
@@ -942,20 +960,30 @@ EOS
     exempt_reason=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
 ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.{7}.audit').objectForKey('{0}'))["exempt_reason"]
 EOS
-)
-
+)   
+    customref="$(echo "{5}" | rev | cut -d ' ' -f 2- | rev)"
+    customref="$(echo "$customref" | tr " " ",")"
     if [[ $result_value == "{4}" ]]; then
-        echo "$(date -u) {5} passed (Result: $result_value, Expected: "{3}")" | /usr/bin/tee -a "$audit_log"
+        logmessage "{5} passed (Result: $result_value, Expected: \\"{3}\\")"
         /usr/bin/defaults write "$audit_plist" {0} -dict-add finding -bool NO
+        if [[ ! "$customref" == "{0}" ]]; then
+            /usr/bin/defaults write "$audit_plist" {0} -dict-add reference -string "$customref"
+        fi
         /usr/bin/logger "mSCP: {7} - {5} passed (Result: $result_value, Expected: "{3}")"
     else
         if [[ ! $exempt == "1" ]] || [[ -z $exempt ]];then
-            echo "$(date -u) {5} failed (Result: $result_value, Expected: "{3}")" | /usr/bin/tee -a "$audit_log"
+            logmessage "{5} failed (Result: $result_value, Expected: \\"{3}\\")"
             /usr/bin/defaults write "$audit_plist" {0} -dict-add finding -bool YES
+            if [[ ! "$customref" == "{0}" ]]; then
+                /usr/bin/defaults write "$audit_plist" {0} -dict-add reference -string "$customref"
+            fi
             /usr/bin/logger "mSCP: {7} - {5} failed (Result: $result_value, Expected: "{3}")"
         else
-            echo "$(date -u) {5} failed (Result: $result_value, Expected: "{3}") - Exemption Allowed (Reason: "$exempt_reason")" | /usr/bin/tee -a "$audit_log"
+            logmessage "{5} failed (Result: $result_value, Expected: \\"{3}\\") - Exemption Allowed (Reason: \\"$exempt_reason\\")"
             /usr/bin/defaults write "$audit_plist" {0} -dict-add finding -bool YES
+            if [[ ! "$customref" == "{0}" ]]; then
+              /usr/bin/defaults write "$audit_plist" {0} -dict-add reference -string "$customref"
+            fi
             /usr/bin/logger "mSCP: {7} - {5} failed (Result: $result_value, Expected: "{3}") - Exemption Allowed (Reason: "$exempt_reason")"
             /bin/sleep 1
         fi
@@ -963,7 +991,7 @@ EOS
 
 
 else
-    echo "$(date -u) {5} does not apply to this architechture" | tee -a "$audit_log"
+    logmessage "{5} does not apply to this architecture"
     /usr/bin/defaults write "$audit_plist" {0} -dict-add finding -bool NO
 fi
     """.format(rule_yaml['id'], nist_controls.replace("\n", "\n#"), check.strip(), str(result).lower(), result_value, ' '.join(log_reference_id), arch, baseline_name)
@@ -1005,14 +1033,14 @@ if [[ ! $exempt == "1" ]] || [[ -z $exempt ]];then
     if [[ ${rule_yaml['id']}_audit_score == "true" ]]; then
         ask '{rule_yaml['id']} - Run the command(s)-> {quotify(get_fix_code(rule_yaml['fix']).strip())} ' N
         if [[ $? == 0 ]]; then
-            echo "$(date -u) Running the command to configure the settings for: {rule_yaml['id']} ..." | /usr/bin/tee -a "$audit_log"
+            logmessage "Running the command to configure the settings for: {rule_yaml['id']} ..."
             {get_fix_code(rule_yaml['fix']).strip()}
         fi
     else
-        echo "$(date -u) Settings for: {rule_yaml['id']} already configured, continuing..." | /usr/bin/tee -a "$audit_log"
+        logmessage "Settings for: {rule_yaml['id']} already configured, continuing..."
     fi
 elif [[ ! -z "$exempt_reason" ]];then
-    echo "$(date -u) {rule_yaml['id']} has an exemption, remediation skipped (Reason: "$exempt_reason")" | /usr/bin/tee -a "$audit_log"
+    logmessage "{rule_yaml['id']} has an exemption, remediation skipped (Reason: \"$exempt_reason\")"
 fi
     """
 
@@ -1027,7 +1055,7 @@ if [[ ! $check ]] && [[ ! $cfc ]];then
     pause
 fi
 
-}
+} 2>/dev/null
 
 run_fix(){
 
@@ -1068,11 +1096,34 @@ echo "$(date -u) Beginning remediation of non-compliant settings" >> "$audit_log
     zsh_fix_footer = """
 echo "$(date -u) Remediation complete" >> "$audit_log"
 
-}
+} 2>/dev/null
 
-zparseopts -D -E -check=check -fix=fix -stats=stats -compliant=compliant_opt -non_compliant=non_compliant_opt -reset=reset -cfc=cfc
+usage=(
+    "$0 Usage"
+    "$0 [--check] [--fix] [--cfc] [--stats] [--compliant] [--non_compliant] [--reset] [--reset-all] [--quiet=<value>]"
+    " "
+    "Optional parameters:"
+    "--check            :   run the compliance checks without interaction"
+    "--fix              :   run the remediation commands without interation"
+    "--cfc              :   runs a check, fix, check without interaction"
+    "--stats            :   display the statistics from last compliance check"
+    "--compliant        :   reports the number of compliant checks"
+    "--non_compliant    :   reports the number of non_compliant checks"
+    "--reset            :   clear out all results for current baseline"
+    "--reset-all        :   clear out all results for ALL MSCP baselines"
+    "--quiet=<value>    :   1 - show only failed and exempted checks in output"
+    "                       2 - show minimal output"
+  )
 
-if [[ $reset ]]; then reset_plist; fi
+zparseopts -D -E -help=flag_help -check=check -fix=fix -stats=stats -compliant=compliant_opt -non_compliant=non_compliant_opt -reset=reset -reset-all=reset_all -cfc=cfc -quiet:=quiet || { print -l $usage && return }
+
+[[ -z "$flag_help" ]] || { print -l $usage && return }
+
+if [[ ! -z $quiet ]];then
+  [[ ! -z ${quiet[2][2]} ]] || { print -l $usage && return }
+fi
+
+if [[ $reset ]] || [[ $reset_all ]]; then reset_plist; fi
 
 if [[ $check ]] || [[ $fix ]] || [[ $cfc ]] || [[ $stats ]] || [[ $compliant_opt ]] || [[ $non_compliant_opt ]]; then
     if [[ $fix ]]; then run_fix; fi
@@ -1290,12 +1341,13 @@ def generate_xls(baseline_name, build_path, baseline_yaml):
     sheet1.write(0, 8, "800-53r5", headers)
     sheet1.write(0, 9, "800-171", headers)
     sheet1.write(0, 10, "SRG", headers)
-    sheet1.write(0, 11, "DISA STIG", headers)
-    sheet1.write(0, 12, "CIS Benchmark", headers)
-    sheet1.write(0, 13, "CIS v8", headers)
-    sheet1.write(0, 14, "CMMC", headers)
-    sheet1.write(0, 15, "CCI", headers)
-    sheet1.write(0, 16, "Modifed Rule", headers)
+    sheet1.write(0, 11, "SFR", headers)
+    sheet1.write(0, 12, "DISA STIG", headers)
+    sheet1.write(0, 13, "CIS Benchmark", headers)
+    sheet1.write(0, 14, "CIS v8", headers)
+    sheet1.write(0, 15, "CMMC", headers)
+    sheet1.write(0, 16, "CCI", headers)
+    sheet1.write(0, 17, "Modifed Rule", headers)
     sheet1.set_panes_frozen(True)
     sheet1.set_horz_split_pos(1)
     sheet1.set_vert_split_pos(2)
@@ -1328,7 +1380,7 @@ def generate_xls(baseline_name, build_path, baseline_yaml):
         sheet1.write(counter, 4, mechanism, top)
         sheet1.col(4).width = 256 * 25
 
-        sheet1.write(counter, 5, rule.rule_check.replace("\|", "|"), topWrap)
+        sheet1.write(counter, 5, rule.rule_check.replace(r"\|", "|"), topWrap)
         sheet1.col(5).width = 750 * 50
 
         sheet1.write(counter, 6, str(rule.rule_result_value), topWrap)
@@ -1342,7 +1394,7 @@ def generate_xls(baseline_name, build_path, baseline_yaml):
             # sheet1.write(counter, 7, str(
             #     configProfile(rule_file)), topWrap)
         else:
-            sheet1.write(counter, 7, str(rule.rule_fix.replace("\|", "|")), topWrap)
+            sheet1.write(counter, 7, str(rule.rule_fix.replace(r"\|", "|")), topWrap)
 
         sheet1.col(7).width = 1000 * 50
 
@@ -1366,41 +1418,47 @@ def generate_xls(baseline_name, build_path, baseline_yaml):
         sheet1.write(counter, 10, srg_refs, topWrap)
         sheet1.col(10).width = 500 * 15
 
+        sfr_refs = (str(rule.rule_sfr)).strip('[]\'')
+        sfr_refs = sfr_refs.replace(", ", "\n").replace("\'", "")
+
+        sheet1.write(counter, 11, sfr_refs, topWrap)
+        sheet1.col(11).width = 500 * 15
+
         disa_refs = (str(rule.rule_disa_stig)).strip('[]\'')
         disa_refs = disa_refs.replace(", ", "\n").replace("\'", "")
 
-        sheet1.write(counter, 11, disa_refs, topWrap)
-        sheet1.col(11).width = 500 * 15
+        sheet1.write(counter, 12, disa_refs, topWrap)
+        sheet1.col(12).width = 500 * 15
 
         cis = ""
         if rule.rule_cis != ['None']:
             for title, ref in rule.rule_cis.items():
                 if title.lower() == "benchmark":
-                    sheet1.write(counter, 12, ref, topWrap)
-                    sheet1.col(12).width = 500 * 15
+                    sheet1.write(counter, 13, ref, topWrap)
+                    sheet1.col(13).width = 500 * 15
                 if title.lower() == "controls v8":
                     cis = (str(ref).strip('[]\''))
                     cis = cis.replace(", ", "\n")
-                    sheet1.write(counter, 13, cis, topWrap)
-                    sheet1.col(13).width = 500 * 15
+                    sheet1.write(counter, 14, cis, topWrap)
+                    sheet1.col(14).width = 500 * 15
         
         cmmc_refs = (str(rule.rule_cmmc)).strip('[]\'')
         cmmc_refs = cmmc_refs.replace(", ", "\n").replace("\'", "")
 
-        sheet1.write(counter, 14, cmmc_refs, topWrap)
-        sheet1.col(14).width = 500 * 15
+        sheet1.write(counter, 15, cmmc_refs, topWrap)
+        sheet1.col(15).width = 500 * 15
 
         cci = (str(rule.rule_cci)).strip('[]\'')
         cci = cci.replace(", ", "\n").replace("\'", "")
 
-        sheet1.write(counter, 15, cci, topWrap)
-        sheet1.col(15).width = 400 * 15
+        sheet1.write(counter, 16, cci, topWrap)
+        sheet1.col(16).width = 400 * 15
 
         customized = (str(rule.rule_customized)).strip('[]\'')
         customized = customized.replace(", ", "\n").replace("\'", "")
 
-        sheet1.write(counter, 16, customized, topWrap)
-        sheet1.col(16).width = 400 * 15
+        sheet1.write(counter, 17, customized, topWrap)
+        sheet1.col(17).width = 400 * 15
 
         if rule.rule_custom_refs != ['None']:
             for title, ref in rule.rule_custom_refs.items():
@@ -1448,6 +1506,7 @@ def create_rules(baseline_yaml):
                   'cis',
                   'cmmc',
                   'srg',
+                  'sfr',
                   'custom']
 
 
@@ -1477,18 +1536,19 @@ def create_rules(baseline_yaml):
                         except:
                             #print("expected reference '{}' is missing in key '{}' for rule{}".format(reference, key, rule))
                             rule_yaml[key].update({reference: ["None"]})
-            all_rules.append(MacSecurityRule(rule_yaml['title'].replace('|', '\|'),
-                                        rule_yaml['id'].replace('|', '\|'),
-                                        rule_yaml['severity'].replace('|', '\|'),
-                                        rule_yaml['discussion'].replace('|', '\|'),
-                                        rule_yaml['check'].replace('|', '\|'),
-                                        rule_yaml['fix'].replace('|', '\|'),
+            all_rules.append(MacSecurityRule(rule_yaml['title'].replace('|', r'\|'),
+                                        rule_yaml['id'].replace('|', r'\|'),
+                                        rule_yaml['severity'].replace('|', r'\|'),
+                                        rule_yaml['discussion'],  #.replace('|', r'\|'),
+                                        rule_yaml['check'].replace('|', r'\|'),
+                                        rule_yaml['fix'].replace('|', r'\|'),
                                         rule_yaml['references']['cci'],
                                         rule_yaml['references']['cce'],
                                         rule_yaml['references']['800-53r5'],
                                         rule_yaml['references']['800-171r2'],
                                         rule_yaml['references']['disa_stig'],
                                         rule_yaml['references']['srg'],
+                                        rule_yaml['references']['sfr'],
                                         rule_yaml['references']['cis'],
                                         rule_yaml['references']['cmmc'],
                                         rule_yaml['references']['custom'],
@@ -1528,6 +1588,8 @@ def create_args():
                         help="Generate the excel (xls) document for the rules.", action="store_true")
     parser.add_argument("-H", "--hash", default=None,
                         help="sign the configuration profiles with subject key ID (hash value without spaces)")
+    parser.add_argument("-a", "--audit_name", default=None,
+                        help="name of audit plist and log - defaults to baseline name")
     return parser.parse_args()
 
 
@@ -1624,6 +1686,8 @@ def main():
 
         # switch to the scripts directory
         os.chdir(file_dir)
+
+        audit_name = args.audit_name
 
         if args.logo:
             logo = args.logo
@@ -1929,6 +1993,13 @@ def main():
                 srg = '- N/A'
             else:
                 srg = ulify(rule_yaml['references']['srg'])
+            
+            try:
+                rule_yaml['references']['sfr']
+            except KeyError:
+                sfr = '- N/A'
+            else:
+                sfr = ulify(rule_yaml['references']['sfr'])
 
             try:
                 rule_yaml['references']['custom']
@@ -1942,7 +2013,7 @@ def main():
             except KeyError:
                 rulefix = "No fix Found"
             else:
-                rulefix = rule_yaml['fix']  # .replace('|', '\|')
+                rulefix = rule_yaml['fix']  # .replace('|', r'\|')
 
             try:
                 rule_yaml['tags']
@@ -1965,6 +2036,8 @@ def main():
             elif "string" in result:
                 result_value = result['string']
                 result_type = "string"
+            elif "base64" in result:
+                result_value = result["base64"]
             else:
                 result_value = 'N/A'
 
@@ -1989,18 +2062,23 @@ def main():
             else:
                 nist_controls = "- N/A"
 
+            if "manual" in tags:
+                discussion = rule_yaml['discussion'] + '\n\nNOTE: This rule is marked as manual and may not be able to be automated. It is also excluded in the compliance scan and will not report any results.\n'
+            else:
+                discussion = rule_yaml['discussion']
+
             if 'supplemental' in tags:
                 rule_adoc = adoc_supplemental_template.substitute(
-                    rule_title=rule_yaml['title'].replace('|', '\|'),
-                    rule_id=rule_yaml['id'].replace('|', '\|'),
-                    rule_discussion=rule_yaml['discussion'],
+                    rule_title=rule_yaml['title'].replace('|', r'\|'),
+                    rule_id=rule_yaml['id'].replace('|', r'\|'),
+                    rule_discussion=discussion,
                 )
             elif custom_refs:
                 rule_adoc = adoc_rule_custom_refs_template.substitute(
-                    rule_title=rule_yaml['title'].replace('|', '\|'),
-                    rule_id=rule_yaml['id'].replace('|', '\|'),
-                    rule_discussion=rule_yaml['discussion'],#.replace('|', '\|'),
-                    rule_check=rule_yaml['check'],  # .replace('|', '\|'),
+                    rule_title=rule_yaml['title'].replace('|', r'\|'),
+                    rule_id=rule_yaml['id'].replace('|', r'\|'),
+                    rule_discussion=discussion,  #.replace('|', r'\|'),
+                    rule_check=rule_yaml['check'],  # .replace('|', r'\|'),
                     rule_fix=rulefix,
                     rule_cci=cci,
                     rule_80053r5=nist_controls,
@@ -2012,14 +2090,15 @@ def main():
                     rule_custom_refs=custom_refs,
                     rule_tags=tags,
                     rule_srg=srg,
+                    rule_sfr=sfr,
                     rule_result=result_value
                 )
             elif ('permanent' in tags) or ('inherent' in tags) or ('n_a' in tags):
                 rule_adoc = adoc_rule_no_setting_template.substitute(
-                    rule_title=rule_yaml['title'].replace('|', '\|'),
-                    rule_id=rule_yaml['id'].replace('|', '\|'),
-                    rule_discussion=rule_yaml['discussion'].replace('|', '\|'),
-                    rule_check=rule_yaml['check'],  # .replace('|', '\|'),
+                    rule_title=rule_yaml['title'].replace('|', r'\|'),
+                    rule_id=rule_yaml['id'].replace('|', r'\|'),
+                    rule_discussion=discussion,  #.replace('|', r'\|'),
+                    rule_check=rule_yaml['check'],  # .replace('|', r'\|'),
                     rule_fix=rulefix,
                     rule_80053r5=nist_controls,
                     rule_800171=nist_800171,
@@ -2033,10 +2112,10 @@ def main():
             else:
                 if version_yaml['platform'] == "iOS/iPadOS":
                     rule_adoc = adoc_rule_ios_template.substitute(
-                        rule_title=rule_yaml['title'].replace('|', '\|'),
-                        rule_id=rule_yaml['id'].replace('|', '\|'),
-                        rule_discussion=rule_yaml['discussion'].replace('|', '\|'),
-                        rule_check=rule_yaml['check'],  # .replace('|', '\|'),
+                        rule_title=rule_yaml['title'].replace('|', r'\|'),
+                        rule_id=rule_yaml['id'].replace('|', r'\|'),
+                        rule_discussion=discussion,  #.replace('|', r'\|'),
+                        rule_check=rule_yaml['check'],  # .replace('|', r'\|'),
                         rule_fix=rulefix,
                         rule_cci=cci,
                         rule_80053r5=nist_controls,
@@ -2047,14 +2126,15 @@ def main():
                         rule_cce=cce,
                         rule_tags=tags,
                         rule_srg=srg,
+                        rule_sfr=sfr,
                         rule_result=result_value
                     )
                 else:
                     rule_adoc = adoc_rule_template.substitute(
-                        rule_title=rule_yaml['title'].replace('|', '\|'),
-                        rule_id=rule_yaml['id'].replace('|', '\|'),
-                        rule_discussion=rule_yaml['discussion'].replace('|', '\|'),
-                        rule_check=rule_yaml['check'],  # .replace('|', '\|'),
+                        rule_title=rule_yaml['title'].replace('|', r'\|'),
+                        rule_id=rule_yaml['id'].replace('|', r'\|'),
+                        rule_discussion=discussion,  #.replace('|', r'\|'),
+                        rule_check=rule_yaml['check'],  # .replace('|', r'\|'),
                         rule_fix=rulefix,
                         rule_cci=cci,
                         rule_80053r5=nist_controls,
@@ -2065,6 +2145,7 @@ def main():
                         rule_cce=cce,
                         rule_tags=tags,
                         rule_srg=srg,
+                        rule_sfr=sfr,
                         rule_result=result_value
                     )
 
@@ -2078,13 +2159,18 @@ def main():
     adoc_output_file.write(footer_adoc)
     adoc_output_file.close()
 
+    if  args.audit_name:
+        audit_name = args.audit_name
+    else:
+        audit_name = baseline_name
+
     if args.profiles:
         print("Generating configuration profiles...")
         generate_profiles(baseline_name, build_path, parent_dir, baseline_yaml, signing, args.hash)
 
     if args.script:
         print("Generating compliance script...")
-        generate_script(baseline_name, build_path, baseline_yaml, log_reference)
+        generate_script(baseline_name, audit_name, build_path, baseline_yaml, log_reference)
         default_audit_plist(baseline_name, build_path, baseline_yaml)
 
     if args.xls:

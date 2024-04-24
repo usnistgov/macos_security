@@ -1,5 +1,5 @@
 id: os_sshd_permit_root_login_configure
-title: "Disable Root Login for SSH"
+title: Disable Root Login for SSH
 discussion: |
   If SSH is enabled to assure individual accountability and prevent unauthorized access, logging in as root via SSH _MUST_ be disabled.
 
@@ -9,7 +9,7 @@ discussion: |
 check: |
   /usr/sbin/sshd -G | /usr/bin/awk '/permitrootlogin/{print $2}'
 result:
-  string: "no"
+  string: 'no'
 fix: |
   [source,bash]
   ----
@@ -36,22 +36,25 @@ references:
     - CCE-92905-9
   cci:
     - CCI-000770
+    - CCI-001813
   800-53r5:
     - IA-2(5)
   800-53r4:
     - IA-2(5)
   srg:
+    - SRG-OS-000364-GPOS-00151
     - SRG-OS-000109-GPOS-00056
   disa_stig:
-    - N/A
+    - APPL-14-001100
 macOS:
-  - "14.0"
+  - '14.0'
 tags:
   - 800-53r5_high
   - 800-53r4_high
   - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
-severity: "medium"
+  - stig
+severity: medium
 mobileconfig: false
 mobileconfig_info:

@@ -1,5 +1,5 @@
 id: os_user_app_installation_prohibit
-title: "Prohibit User Installation of Software into /Users/"
+title: Prohibit User Installation of Software into /Users/
 discussion: |
   Users _MUST_ not be allowed to install software into /Users/.
 
@@ -25,35 +25,36 @@ check: |
     }
   EOS
 result:
-  string: "true"
+  string: 'true'
 fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
     - CCE-92920-8
   cci:
-    - N/A
+    - CCI-001812
   800-53r5:
     - CM-11(2)
   800-53r4:
     - CM-11(2)
   srg:
-    - N/A
+    - SRG-OS-000362-GPOS-00149
   disa_stig:
-    - N/A
+    - APPL-14-005080
   cmmc:
     - CM.L2-3.4.9
 macOS:
-  - "14.0"
+  - '14.0'
 tags:
   - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
   - cmmc_lvl2
-severity: "medium"
+  - stig
+severity: medium
 mobileconfig: true
 mobileconfig_info:
   com.apple.applicationaccess.new:
     familyControlsEnabled: true
     pathBlackList:
-      - "/Users/"
+      - /Users/

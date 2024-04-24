@@ -1,5 +1,5 @@
 id: os_guest_folder_removed
-title: "Remove Guest Folder if Present"
+title: Remove Guest Folder if Present
 discussion: |
   The guest folder _MUST_ be deleted if present.
 check: |
@@ -32,7 +32,7 @@ references:
     controls v8:
       - 4.1
 macOS:
-  - "14.0"
+  - '14.0'
 tags:
   - cis_lvl1
   - cis_lvl2

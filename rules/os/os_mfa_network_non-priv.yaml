@@ -1,5 +1,5 @@
 id: os_mfa_network_non-priv
-title: "Enforce multifactor authentication for network access to non-privileged accounts"
+title: Enforce multifactor authentication for network access to non-privileged accounts
 discussion: |
   The information system implements multifactor authentication for network access to non-privileged accounts.
 check: |
@@ -21,7 +21,7 @@ references:
   srg:
     - N/A
 macOS:
-  - "14.0"
+  - '14.0'
 tags:
   - inherent
 mobileconfig: false

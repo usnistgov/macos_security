@@ -1,5 +1,5 @@
 id: audit_control_group_configure
-title: "Configure Audit_Control Group to Wheel"
+title: Configure Audit_Control Group to Wheel
 discussion: |
   /etc/security/audit_control _MUST_ have the group set to wheel.
 check: |
@@ -15,15 +15,27 @@ references:
   cce:
     - CCE-92707-9
   cci:
-    - N/A
+    - CCI-000162
+    - CCI-000163
+    - CCI-000164
+    - CCI-000171
+    - CCI-001493
+    - CCI-001494
+    - CCI-001495
   800-53r5:
     - AU-9
   800-53r4:
     - AU-9
   srg:
-    - N/A
+    - SRG-OS-000256-GPOS-00097
+    - SRG-OS-000057-GPOS-00027
+    - SRG-OS-000063-GPOS-00032
+    - SRG-OS-000059-GPOS-00029
+    - SRG-OS-000257-GPOS-00098
+    - SRG-OS-000258-GPOS-00099
+    - SRG-OS-000058-GPOS-00028
   disa_stig:
-    - N/A
+    - APPL-14-001110
   800-171r2:
     - N/A
   cis:
@@ -34,7 +46,7 @@ references:
   cmmc:
     - AU.L2-3.3.8
 macOS:
-  - "14.0"
+  - '14.0'
 tags:
   - cis_lvl1
   - cis_lvl2
@@ -43,5 +55,7 @@ tags:
   - cnssi-1253_low
   - cnssi-1253_high
   - cmmc_lvl2
+  - stig
+severity: medium
 mobileconfig: false
 mobileconfig_info:

@@ -1,5 +1,5 @@
 id: system_settings_location_services_enable
-title: "Enable Location Services"
+title: Enable Location Services
 discussion: |
   Location Services _MUST_ be enabled.
 check: |
@@ -8,11 +8,13 @@ check: |
   .objectForKey('LocationServicesEnabled').js
   EOS
 result:
-  string: "true"
+  string: 'true'
 fix: |
   [source,bash]
   ----
-  /usr/bin/defaults write /var/db/locationd/Library/Preferences/ByHost/com.apple.locationd LocationServicesEnabled -bool true; /bin/launchctl kickstart -k system/com.apple.locationd
+  /usr/bin/defaults write /var/db/locationd/Library/Preferences/ByHost/com.apple.locationd LocationServicesEnabled -bool true; 
+  pid=$(/bin/launchctl list | /usr/bin/awk '/com.apple.locationd/ { print $1 }')
+  kill -9 $pid
   ----
 references:
   cce:
@@ -36,7 +38,7 @@ references:
       - 4.1
       - 4.8
 macOS:
-  - "14.0"
+  - '14.0'
 tags:
   - cis_lvl2
   - cisv8

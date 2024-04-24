@@ -1,5 +1,5 @@
 id: os_time_server_enabled
-title: "Enable Time Synchronization Daemon"
+title: Enable Time Synchronization Daemon
 discussion: |
   The macOS time synchronization daemon (timed) _MUST_ be enabled for proper time synchronization to an authorized time server.
 
@@ -9,10 +9,12 @@ check: |
 result:
   integer: 1
 fix: |
-  [source,bash]
+  [source,shell]
   ----
   /bin/launchctl load -w /System/Library/LaunchDaemons/com.apple.timed.plist
   ----
+
+  NOTE: The service `timed` cannot be unloaded or loaded while System Integrity Protection (SIP) is enabled.
 references:
   cce:
     - CCE-92916-6
@@ -28,7 +30,7 @@ references:
     - SRG-OS-000355-GPOS-00143
     - SRG-OS-000356-GPOS-00144
   disa_stig:
-    - N/A
+    - APPL-14-000180
   800-171r2:
     - 3.3.7
   cis:
@@ -39,7 +41,7 @@ references:
   cmmc:
     - AU.L2-3.3.7
 macOS:
-  - "14.0"
+  - '14.0'
 tags:
   - 800-171
   - 800-53r5_low
@@ -52,6 +54,7 @@ tags:
   - cnssi-1253_low
   - cnssi-1253_high
   - cmmc_lvl2
-severity: "medium"
+  - stig
+severity: medium
 mobileconfig: false
 mobileconfig_info:

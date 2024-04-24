@@ -1,5 +1,5 @@
 id: os_sshd_fips_compliant
-title: "Limit SSHD to FIPS Compliant Connections"
+title: Limit SSHD to FIPS Compliant Connections
 discussion: |
   If SSHD is enabled then it _MUST_ be configured to limit the Ciphers, HostbasedAcceptedAlgorithms, HostKeyAlgorithms, KexAlgorithms, MACs, PubkeyAcceptedAlgorithms, CASignatureAlgorithms to algorithms that are FIPS 140 validated.
 
@@ -47,7 +47,13 @@ references:
   cce:
     - CCE-92902-6
   cci:
-    - N/A
+    - CCI-000068
+    - CCI-000803
+    - CCI-001453
+    - CCI-002421
+    - CCI-002450
+    - CCI-002890
+    - CCI-003123    
   800-53r5:
     - AC-17(2)
     - IA-7
@@ -60,9 +66,16 @@ references:
     - SC-13
     - MA-4(6)
   srg:
-    - N/A
+    - SRG-OS-000250-GPOS-00093
+    - SRG-OS-000120-GPOS-00061
+    - SRG-OS-000424-GPOS-00188
+    - SRG-OS-000394-GPOS-00174
+    - SRG-OS-000478-GPOS-00223
+    - SRG-OS-000033-GPOS-00014
+    - SRG-OS-000393-GPOS-00173
+    - SRG-OS-000396-GPOS-00176
   disa_stig:
-    - N/A
+    - APPL-14-000054
   800-171r2:
     - 3.1.13
     - 3.13.8
@@ -73,7 +86,7 @@ references:
     - SC.L2-3.13.8
     - SC.L2-3.13.11
 macOS:
-  - "14.0"
+  - '14.0'
 tags:
   - 800-53r5_moderate
   - 800-53r5_high
@@ -86,6 +99,7 @@ tags:
   - cnssi-1253_low
   - cnssi-1253_high
   - cmmc_lvl2
-severity: "medium"
+  - stig
+severity: high
 mobileconfig: false
 mobileconfig_info:

@@ -1,7 +1,6 @@
 id: os_mobile_file_integrity_enable
-title: "Enable Apple Mobile File Integrity"
-discussion:
-  Mobile file integrity _MUST_ be ebabled.
+title: Enable Apple Mobile File Integrity
+discussion: Mobile file integrity _MUST_ be ebabled.
 check: |
   /usr/sbin/nvram -p | /usr/bin/grep -c "amfi_get_out_of_my_way=1"
 result:
@@ -33,7 +32,7 @@ references:
       - 2.3
       - 2.6
 macOS:
-  - "14.0"
+  - '14.0'
 tags:
   - cis_lvl1
   - cis_lvl2
