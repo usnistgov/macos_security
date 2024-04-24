@@ -2,4 +2,4 @@ os: "13.0"
 platform: macOS
 version: "Ventura Guidance, Revision 4.0"
 cpe: o:apple:macos:13.0
-date: "2024-04-23"
+date: "2024-04-24"

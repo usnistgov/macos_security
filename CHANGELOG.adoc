@@ -2,7 +2,7 @@
 
 This document provides a high-level view of the changes to the macOS Security Compliance Project.
 
-== [Ventura, Revision 4.0] - 2024-04-23
+== [Ventura, Revision 4.0] - 2024-04-24
 
 * Rules
 ** Modified Rules
