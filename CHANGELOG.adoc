@@ -2,7 +2,7 @@
 
 This document provides a high-level view of the changes to the macOS Security Compliance Project.
 
-== [iOS 17, Revision 2.0] - 2024-04-23
+== [iOS 17, Revision 2.0] - 2024-04-24
 * Rules
 ** Modified Rules
 *** icloud_backup_disabled
