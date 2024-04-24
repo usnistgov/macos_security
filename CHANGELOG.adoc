@@ -2,7 +2,7 @@
 
 This document provides a high-level view of the changes to the macOS Security Compliance Project.
 
-== [Monterey, Revision 6.0] - 2024-04-23
+== [Monterey, Revision 6.0] - 2024-04-24
 * Rules
 ** Modified Rules
 *** os_anti_virus_installed (https://github.com/usnistgov/macos_security/issues/345[#345])
