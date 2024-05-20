@@ -1,5 +1,5 @@
 id: system_settings_screensaver_timeout_enforce
-title: "Enforce Screen Saver Timeout"
+title: Enforce Screen Saver Timeout
 discussion: |
   The screen saver timeout _MUST_ be set to $ODV seconds or a shorter length of time.
 
@@ -17,12 +17,12 @@ check: |
   }
   EOS
 result:
-  string: "true"
+  string: 'true'
 fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-    - N/A
+    - CCE-92986-9
   cci:
     - CCI-000057
   800-53r5:
@@ -33,7 +33,7 @@ references:
   srg:
     - SRG-OS-000029-GPOS-00010
   disa_stig:
-    - N/A
+    - APPL-14-000070
   800-171r2:
     - 3.1.10
   cis:
@@ -44,9 +44,9 @@ references:
   cmmc:
     - AC.L2-3.1.10
 macOS:
-  - "14.0"
+  - '14.0'
 odv:
-  hint: "Number of seconds."
+  hint: Number of seconds.
   recommended: 1200
   cis_lvl1: 1200
   cis_lvl2: 1200
@@ -65,7 +65,8 @@ tags:
   - cnssi-1253_low
   - cnssi-1253_high
   - cmmc_lvl2
-severity: "medium"
+  - stig
+severity: medium
 mobileconfig: true
 mobileconfig_info:
   com.apple.screensaver:

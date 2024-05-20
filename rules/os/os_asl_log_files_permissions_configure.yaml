@@ -1,5 +1,5 @@
 id: os_asl_log_files_permissions_configure
-title: "Configure Apple System Log Files To Mode 640 or Less Permissive"
+title: Configure Apple System Log Files To Mode 640 or Less Permissive
 discussion: |
   The Apple System Logs (ASL) _MUST_ be configured to be writable by root and readable only by the root user and group wheel. To achieve this, ASL log files _MUST_ be configured to mode 640 permissive or less; thereby preventing normal users from reading, modifying or deleting audit logs. System logs frequently contain sensitive information that could be used by an attacker. Setting the correct permissions mitigates this risk.
 check: |
@@ -13,8 +13,9 @@ fix: |
   ----
 references:
   cce:
-    - N/A
+    - CCE-92762-4
   cci:
+    - CCI-001312
     - CCI-001314
   800-53r5:
     - SI-11
@@ -22,18 +23,20 @@ references:
     - SI-11
   srg:
     - SRG-OS-000206-GPOS-00084
+    - SRG-OS-000205-GPOS-00083
   disa_stig:
-    - N/A
+    - APPL-14-004002
   800-171r2:
     - N/A
 macOS:
-  - "14.0"
+  - '14.0'
 tags:
   - 800-53r5_moderate
   - 800-53r5_high
   - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
-severity: "medium"
+  - stig
+severity: medium
 mobileconfig: false
 mobileconfig_info:

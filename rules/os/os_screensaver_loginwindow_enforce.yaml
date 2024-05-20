@@ -1,5 +1,5 @@
 id: os_screensaver_loginwindow_enforce
-title: "Enforce Screen Saver at Login Window"
+title: Enforce Screen Saver at Login Window
 discussion: |
   A default screen saver _MUST_ be configured to display at the login window and _MUST_ not display any sensitive information.
 check: |
@@ -8,12 +8,12 @@ check: |
   .objectForKey('moduleName').js
   EOS
 result:
-  string: "Ventura"
+  string: Sonoma
 fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-    - N/A
+    - CCE-92881-2
   cci:
     - CCI-000060
   800-53r5:
@@ -21,24 +21,27 @@ references:
   800-53r4:
     - AC-11(1)
   srg:
-    - SRG-OS-000031-GPOS-00012
+    - N/A
   disa_stig:
     - N/A
   800-171r2:
     - 3.1.10
+  cmmc:
+    - AC.L2-3.1.10
 macOS:
-  - "14.0"
+  - '14.0'
 tags:
-  - 800-53r5_moderate 
-  - 800-53r5_high 
-  - 800-53r4_moderate 
-  - 800-53r4_high 
-  - 800-171 
+  - 800-53r5_moderate
+  - 800-53r5_high
+  - 800-53r4_moderate
+  - 800-53r4_high
+  - 800-171
   - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
-severity: "medium"
+  - cmmc_lvl2
+severity: medium
 mobileconfig: true
 mobileconfig_info:
   com.apple.screensaver:
-    moduleName: "Ventura"
+    moduleName: Sonoma

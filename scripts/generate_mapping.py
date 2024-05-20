@@ -106,8 +106,8 @@ def sort_nicely( l ):
 
 def main():
     file_dir = os.path.dirname(os.path.abspath(__file__))
-    
-    os.chdir(file_dir)    
+
+    os.chdir(file_dir)
 
     nist_header = ""
     other_header = ""
@@ -123,7 +123,7 @@ def main():
     parser = argparse.ArgumentParser(description='Easily generate custom rules from compliance framework mappings')
     parser.add_argument("CSV", default=None, help="CSV to create custom rule files from a mapping.", type=argparse.FileType('rt'))
     parser.add_argument("-f", "--framework", default="800-53r5", help="Specify framework for the source. If no framework is specified, the default is 800-53r5.", action="store")
-    
+
     try:
         results = parser.parse_args()
         print("Mapping CSV: " + results.CSV.name)
@@ -131,9 +131,9 @@ def main():
 
 
     except IOError as msg:
-        
+
         parser.error(str(msg))
-    
+
 
     version_file = "../VERSION.yaml"
     with open(version_file) as r:
@@ -142,14 +142,14 @@ def main():
     for rule in glob.glob('../rules/**/*.yaml',recursive=True) + glob.glob('../custom/rules/**/*.yaml',recursive=True):
 
         sub_directory = rule.split(".yaml")[0].split("/")[2]
-        
+
         if "supplemental" in rule or "srg" in rule:
             continue
-        
+
         # with open(rule) as r:
         #     rule_yaml = yaml.load(r, Loader=yaml.SafeLoader)
         rule_yaml = get_rule_yaml(rule, custom=False)
-        
+
         control_array = []
         # print("----------------------")
         # print(rule_yaml)
@@ -159,21 +159,21 @@ def main():
             modded_reader = csv_reader
             dict_from_csv = dict(list(modded_reader)[0])
 
-            
+
             list_of_column_names = list(dict_from_csv.keys())
 
 
             nist_header = list_of_column_names[1]
             other_header = list_of_column_names[0]
-           
 
-        
-   
+
+
+
         with open(results.CSV.name, newline='',encoding='utf-8-sig') as csvfile:
             reader = csv.DictReader(csvfile,dialect='excel')
-    
+
             for row in reader:
-           
+
                 if results.framework != nist_header:
                     sys.exit(str(results.framework) + " not found in CSV")
 
@@ -185,33 +185,33 @@ def main():
                 duplicate = ""
                 csv_duplicate = ""
                 for control in controls:
-                        
+
                         try:
-                            
+
                             rule_yaml['references']
-                            
+
                             if "/" in str(results.framework):
-                                
+
                                 framework_main = results.framework.split("/")[0]
                                 framework_sub = results.framework.split("/")[1]
-                                
+
                                 references = []
                                 if "custom" not in rule_yaml['references']:
                                     references = rule_yaml['references'][framework_main][framework_sub]
                                 else:
                                     references = rule_yaml['references']['custom'][framework_main][framework_sub]
-                                
+
                                 for yaml_control in references:
                                     if duplicate == str(yaml_control).split("(")[0]:
                                         continue
                                     if csv_duplicate == str(row[other_header]):
-                                        
+
                                         continue
                                     if control.replace(" ",'') == str(yaml_control):
-                                        
+
                                         duplicate = str(yaml_control).split("(")[0]
                                         csv_duplicate = str(row[other_header])
-                                        
+
                                         row_array = str(row[other_header]).split(",")
                                         for item in row_array:
                                             control_array.append(item)
@@ -219,7 +219,7 @@ def main():
 
 
                             else:
-                                
+
                                 references = []
                                 if "custom" not in rule_yaml['references']:
                                     references = rule_yaml['references'][results.framework]
@@ -239,33 +239,33 @@ def main():
                                         for item in row_array:
                                             control_array.append(item)
                                             print(rule_yaml['id'] + " - " + str(results.framework) + " " + str(yaml_control) + " maps to " + other_header + " " + item)
-                            
+
                         except:
                             continue
-                                       
+
         if len(control_array) == 0:
             continue
-        
+
         custom_rule = '''references:
   custom:
     {}:'''.format(other_header)
-        
+
         for control in control_array:
             custom_rule = custom_rule + '''
       - {}'''.format(control)
-        
+
         custom_rule = custom_rule + '''
 tags:
   - {}'''.format(other_header)
-        
+
         if os.path.isdir("../build/" + other_header) == False:
             os.mkdir("../build/" + other_header)
         if os.path.isdir("../build/" + other_header + "/rules/") == False:
             os.mkdir("../build/" + other_header + "/rules/")
         if os.path.isdir("../build/" + other_header + "/rules/" + sub_directory) == False:
             os.mkdir("../build/" + other_header + "/rules/" + sub_directory)
-        
-        try: 
+
+        try:
             with open("../build/" + other_header + "/rules/" + sub_directory + "/" + rule_yaml['id'] + ".yaml", 'w') as r:
                 custom_yaml = r.read()
 
@@ -276,23 +276,23 @@ tags:
                 with open("../build/" + other_header + "/rules/" + sub_directory + "/" + rule_yaml['id'] + ".yaml", 'w') as fw:
                     fw.write(custom_rule)
 
-    
+
     for rule in glob.glob("../build/" + other_header + "/rules/*/*"):
         if "supplemental" in rule or "srg" in rule:
             continue
-        
+
         with open(rule) as r:
             custom_rule_yaml = yaml.load(r, Loader=yaml.SafeLoader)
         othercontrols = []
-        
+
         if other_header in custom_rule_yaml['references']['custom']:
-            
+
             for control in custom_rule_yaml['references']['custom'][other_header]:
-                
+
                 if str(control) in othercontrols:
                     continue
                 else:
-                    
+
                     othercontrols.append(str(control))
 
             sort_nicely(othercontrols)
@@ -302,18 +302,18 @@ tags:
             custom_rule = '''references:
   custom:
     {}:'''.format(other_header)
-        
+
         for control in othercontrols:
             custom_rule = custom_rule + '''
       - {}'''.format(control)
-        
+
         custom_rule = custom_rule + '''
 tags:
   - {}'''.format(other_header)
-        
+
         with open(rule, 'w') as rite:
-            rite.write(custom_rule) 
-                
+            rite.write(custom_rule)
+
 
     audit = []
     auth = []
@@ -333,8 +333,8 @@ tags:
         with open(rule) as r:
             custom_rule = yaml.load(r, Loader=yaml.SafeLoader)
             rule_id = rule.split(".yaml")[0].split("/")[5]
-            
-            
+
+
             if other_header in custom_rule['tags']:
                 if "inherent" in rule_yaml['tags']:
                     inherent.append(rule_id)
@@ -345,10 +345,10 @@ tags:
                 if "n_a" in custom_rule['tags']:
                     na.append(rule_id)
                     continue
-                
+
                 if "/audit/" in rule:
                     audit.append(rule_id)
-                    
+
                     continue
                 if "/auth/" in rule:
                     auth.append(rule_id)
@@ -368,20 +368,20 @@ tags:
                 if "/sysprefs/" in rule:
                     sysprefs.append(rule_id)
                     continue
-    
-    
-    full_baseline = '''title: "macOS {2} ({3}): Security Configuration - {0}"
+
+
+    full_baseline = '''title: "{4} {2} ({3}): Security Configuration - {0}"
 description: |
-  This guide describes the actions to take when securing a macOS {2} system against the {1}.
+  This guide describes the actions to take when securing a {4} {2} system against the {1}.
 authors: |
   |===
   |Name|Organization
   |===
-parent_values: recommended  
-profile:'''.format(other_header,other_header,version_yaml['os'],version_yaml['version'].split(" ")[0])
-    
+parent_values: recommended
+profile:'''.format(other_header,other_header,version_yaml['os'],version_yaml['version'].split(" ")[0],version_yaml['platform'])
+
     if len(audit) != 0:
-        
+
         full_baseline = full_baseline + '''
   - section: "Auditing"
     rules:'''
@@ -395,7 +395,7 @@ profile:'''.format(other_header,other_header,version_yaml['os'],version_yaml['ve
   - section: "Authentication"
     rules:'''
         auth.sort()
-    
+
         for rule in auth:
             full_baseline = full_baseline + '''
       - {}'''.format(rule)
@@ -405,7 +405,7 @@ profile:'''.format(other_header,other_header,version_yaml['os'],version_yaml['ve
   - section: "SystemPreferences"
     rules:'''
         sysprefs.sort()
-    
+
         for rule in sysprefs:
             full_baseline = full_baseline + '''
       - {}'''.format(rule)
@@ -415,7 +415,7 @@ profile:'''.format(other_header,other_header,version_yaml['os'],version_yaml['ve
   - section: "SystemSettings"
     rules:'''
         system_settings.sort()
-    
+
         for rule in system_settings:
             full_baseline = full_baseline + '''
       - {}'''.format(rule)
@@ -429,7 +429,16 @@ profile:'''.format(other_header,other_header,version_yaml['os'],version_yaml['ve
             full_baseline = full_baseline + '''
       - {}'''.format(rule)
 
-    if len(os_section) != 0:
+    if len(os_section) != 0 and version_yaml['platform'] == "iOS/iPadOS":
+        full_baseline = full_baseline + '''
+  - section: "ios"
+    rules:'''
+        os_section.sort()
+        for rule in os_section:
+            full_baseline = full_baseline + '''
+      - {}'''.format(rule)
+
+    if len(os_section) != 0 and version_yaml['platform'] == "macOS":
         full_baseline = full_baseline + '''
   - section: "macOS"
     rules:'''
@@ -474,24 +483,26 @@ profile:'''.format(other_header,other_header,version_yaml['os'],version_yaml['ve
             full_baseline = full_baseline + '''
       - {}'''.format(rule)
 
+    listofsupplementals = str()
+    for supp_rule in glob.glob('../rules/supplemental/*.yaml',recursive=True):
+        listofsupplementals = listofsupplementals + '''- {}
+      '''.format(os.path.basename(supp_rule).split(".")[0])
     full_baseline = full_baseline + '''
   - section: "Supplemental"
     rules:
-      - supplemental_firewall_pf
-      - supplemental_password_policy
-      - supplemental_smartcard
-    '''
+      {}
+    '''.format(listofsupplementals)
 
-    
+
 
     try:
         if os.path.isdir("../build/" + other_header.lower() + "/baseline/") == False:
             os.mkdir("../build/" + other_header.lower() + "/baseline")
 
-        with open("../build/" + other_header.lower() + "/baseline/" + other_header.lower() + ".yaml",'w') as fw:
+        with open("../build/" + other_header.lower() + "/baseline/" + other_header.lower().replace(" ","_") + ".yaml",'w') as fw:
             fw.write(full_baseline)
-            print(other_header.lower() + ".yaml baseline file created in build/" + other_header + "/baseline/")
-                    
+            print(other_header.lower().replace(" ","_") + ".yaml baseline file created in build/" + other_header + "/baseline/")
+
         print("Move all of the folders in rules into the custom folder.")
     except:
         print("No controls mapped were found in rule files.")

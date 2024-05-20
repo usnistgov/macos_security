@@ -1,0 +1,115 @@
+title: "macOS 14.0: Security Configuration - CIS Apple macOS 14.0 Sonoma v1.0.0 Benchmark (Level 1)"
+description: |
+  This guide describes the actions to take when securing a macOS 14.0 system against the CIS Apple macOS 14.0 Sonoma v1.0.0 Benchmark (Level 1) security baseline.
+authors: |
+  *macOS Security Compliance Project*
+
+  The CIS Benchmarks are referenced with the permission and support of the Center for Internet Security® (CIS®)
+  |===
+  |Edward Byrd|Center for Internet Security
+  |Ron Colvin|Center for Internet Security
+  |Allen Golbig|Jamf
+  |===
+parent_values: "cis_lvl1"
+profile:
+  - section: "auditing"
+    rules:
+      - audit_acls_files_configure
+      - audit_acls_folders_configure
+      - audit_auditd_enabled
+      - audit_control_acls_configure
+      - audit_control_group_configure
+      - audit_control_mode_configure
+      - audit_control_owner_configure
+      - audit_files_group_configure
+      - audit_files_mode_configure
+      - audit_files_owner_configure
+      - audit_folder_group_configure
+      - audit_folder_owner_configure
+      - audit_folders_mode_configure
+      - audit_retention_configure
+  - section: "macos"
+    rules:
+      - os_airdrop_disable
+      - os_anti_virus_installed
+      - os_authenticated_root_enable
+      - os_config_data_install_enforce
+      - os_firewall_log_enable
+      - os_gatekeeper_enable
+      - os_guest_folder_removed
+      - os_home_folders_secure
+      - os_httpd_disable
+      - os_install_log_retention_configure
+      - os_mdm_require
+      - os_mobile_file_integrity_enable
+      - os_nfsd_disable
+      - os_on_device_dictation_enforce
+      - os_password_hint_remove
+      - os_power_nap_disable
+      - os_root_disable
+      - os_safari_advertising_privacy_protection_enable
+      - os_safari_open_safe_downloads_disable
+      - os_safari_popups_disabled
+      - os_safari_prevent_cross-site_tracking_enable
+      - os_safari_show_full_website_address_enable
+      - os_safari_show_status_bar_enabled
+      - os_safari_warn_fraudulent_website_enable
+      - os_show_filename_extensions_enable
+      - os_sip_enable
+      - os_software_update_deferral
+      - os_sudo_timeout_configure
+      - os_sudoers_timestamp_type_configure
+      - os_system_wide_applications_configure
+      - os_terminal_secure_keyboard_enable
+      - os_time_offset_limit_configure
+      - os_unlock_active_user_session_disable
+      - os_world_writable_system_folder_configure
+  - section: "passwordpolicy"
+    rules:
+      - pwpolicy_account_lockout_enforce
+      - pwpolicy_account_lockout_timeout_enforce
+      - pwpolicy_history_enforce
+      - pwpolicy_max_lifetime_enforce
+      - pwpolicy_minimum_length_enforce
+  - section: "systemsettings"
+    rules:
+      - system_settings_airplay_receiver_disable
+      - system_settings_automatic_login_disable
+      - system_settings_bluetooth_menu_enable
+      - system_settings_bluetooth_sharing_disable
+      - system_settings_cd_dvd_sharing_disable
+      - system_settings_critical_update_install_enforce
+      - system_settings_filevault_enforce
+      - system_settings_firewall_enable
+      - system_settings_firewall_stealth_mode_enable
+      - system_settings_guest_access_smb_disable
+      - system_settings_guest_account_disable
+      - system_settings_install_macos_updates_enforce
+      - system_settings_internet_sharing_disable
+      - system_settings_loginwindow_loginwindowtext_enable
+      - system_settings_loginwindow_prompt_username_password_enforce
+      - system_settings_password_hints_disable
+      - system_settings_personalized_advertising_disable
+      - system_settings_printer_sharing_disable
+      - system_settings_rae_disable
+      - system_settings_remote_management_disable
+      - system_settings_screen_sharing_disable
+      - system_settings_screensaver_ask_for_password_delay_enforce
+      - system_settings_screensaver_timeout_enforce
+      - system_settings_smbd_disable
+      - system_settings_software_update_app_update_enforce
+      - system_settings_software_update_download_enforce
+      - system_settings_software_update_enforce
+      - system_settings_softwareupdate_current
+      - system_settings_ssh_disable
+      - system_settings_system_wide_preferences_configure
+      - system_settings_time_machine_encrypted_configure
+      - system_settings_time_server_configure
+      - system_settings_time_server_enforce
+      - system_settings_wake_network_access_disable
+      - system_settings_wifi_menu_enable
+  - section: "Supplemental"
+    rules:
+      - supplemental_cis_manual
+      - supplemental_filevault
+      - supplemental_password_policy

@@ -1,6 +1,6 @@
 ---
 authors:
-  all_rules: 
+  all_rules:
     names:
       - Bob Gendler|National Institute of Standards and Technology
       - Dan Brodjieski|National Aeronautics and Space Administration
@@ -10,7 +10,7 @@ authors:
       - Bob Gendler|National Institute of Standards and Technology
       - Dan Brodjieski|National Aeronautics and Space Administration
       - Allen Golbig|Jamf
-  800-53r5_moderate: 
+  800-53r5_moderate:
     names:
       - Bob Gendler|National Institute of Standards and Technology
       - Dan Brodjieski|National Aeronautics and Space Administration
@@ -20,12 +20,12 @@ authors:
       - Bob Gendler|National Institute of Standards and Technology
       - Dan Brodjieski|National Aeronautics and Space Administration
       - Allen Golbig|Jamf
-  800-171: 
+  800-171:
     names:
       - Bob Gendler|National Institute of Standards and Technology
       - Dan Brodjieski|National Aeronautics and Space Administration
       - Allen Golbig|Jamf
-  cis_lvl1: 
+  cis_lvl1:
     preamble: The CIS Benchmarks are referenced with the permission and support of the Center for Internet Security® (CIS®)
     names:
       - Edward Byrd|Center for Internet Security
@@ -72,10 +72,11 @@ authors:
       - Ekkehard Koch|
       - Bob Gendler|National Institute of Standards and Technology
   stig:
-    names: 
+    names:
       - Dan Brodjieski|National Aeronautics and Space Administration
       - Allen Golbig|Jamf
-      - Bob Gendler|National Institute of Standards and Technology      
+      - Bob Gendler|National Institute of Standards and Technology
+      - Aaron Kegerreis|Defense Information Systems Agency
 titles:
   all_rules: All Rules
   800-53r5_high: NIST SP 800-53 Rev 5 High Impact

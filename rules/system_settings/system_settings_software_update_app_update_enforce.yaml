@@ -1,5 +1,5 @@
 id: system_settings_software_update_app_update_enforce
-title: "Enforce Software Update App Update Updates Automatically"
+title: Enforce Software Update App Update Updates Automatically
 discussion: |
   Software Update _MUST_ be configured to enforce automatic updates of App Updates is enabled.
 check: |
@@ -8,13 +8,13 @@ check: |
   .objectForKey('AutomaticallyInstallAppUpdates').js
   EOS
 result:
-  string: "true"
+  string: 'true'
 fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-    - N/A
-  cci: 
+    - CCE-92990-1
+  cci:
     - N/A
   800-53r5:
     - N/A
@@ -33,7 +33,7 @@ references:
       - 7.3
       - 7.4
 macOS:
-  - "14.0"
+  - '14.0'
 tags:
   - cis_lvl1
   - cis_lvl2

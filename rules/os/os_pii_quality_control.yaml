@@ -1,5 +1,5 @@
 id: os_pii_quality_control
-title: "Personally Identifiable Information Quality Operations"
+title: Personally Identifiable Information Quality Operations
 discussion: |
   Check the accuracy, relevance, timeliness, and completeness of personally identifiable information across the information life cycle organization-defined frequency; and correct or delete inaccurate or outdated personally identifiable information.
 
@@ -10,7 +10,7 @@ fix: |
   The requirement is NA. No fix is required.
 references:
   cce:
-    - N/A
+    - CCE-92849-9
   cci:
     - N/A
   800-53r5:
@@ -24,7 +24,7 @@ references:
   srg:
     - N/A
 macOS:
-  - "14.0"
+  - '14.0'
 tags:
   - 800-53r5_privacy
   - n_a

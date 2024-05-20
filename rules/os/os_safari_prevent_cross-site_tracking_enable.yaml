@@ -1,5 +1,5 @@
 id: os_safari_prevent_cross-site_tracking_enable
-title: "Ensure Prevent Cross-site Tracking in Safari Is Enabled"
+title: Ensure Prevent Cross-site Tracking in Safari Is Enabled
 discussion: |
   Prevent cross-site tracking _MUST_ be enabled in Safari.
 check: |
@@ -10,7 +10,7 @@ fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-    - N/A
+    - CCE-92878-8
   cci:
     - N/A
   800-53r5:
@@ -28,7 +28,7 @@ references:
       - 9.1
       - 9.3
 macOS:
-  - "14.0"
+  - '14.0'
 tags:
   - cis_lvl1
   - cis_lvl2

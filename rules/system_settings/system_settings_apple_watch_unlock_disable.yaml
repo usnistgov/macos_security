@@ -1,48 +1,51 @@
 id: system_settings_apple_watch_unlock_disable
-title: "Prevent Apple Watch from Terminating a Session Lock"
+title: Prevent Apple Watch from Terminating a Session Lock
 discussion: |
   Apple Watches are not an approved authenticator and their use _MUST_ be disabled.
 
   Disabling Apple watches is a necessary step to ensuring that the information system retains a session lock until the user reestablishes access using an authorized identification and authentication procedures.
+
+  NOTE: Unlocking the system with an Apple Watch is not an approved authenticator for US Federal Government usage as it has not been verified to meet the strength requirements outlined in NIST SP 800-63.
 check: |
   /usr/bin/osascript -l JavaScript << EOS
   $.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess')\
   .objectForKey('allowAutoUnlock').js
   EOS
 result:
-  string: "false"
+  string: 'false'
 fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-    - N/A
+    - CCE-92945-5
   cci:
     - CCI-000056
   800-53r5:
-    - AC-11
+    - IA-5
   800-53r4:
-    - AC-11
+    - IA-5
   srg:
     - SRG-OS-000028-GPOS-00009
   disa_stig:
-    - N/A
+    - APPL-14-000001
   800-171r2:
     - 3.1.10
   cmmc:
     - AC.L2-3.1.10
 macOS:
-  - "14.0"
+  - '14.0'
 tags:
-  - 800-53r5_moderate 
-  - 800-53r5_high 
-  - 800-53r4_moderate 
-  - 800-53r4_high 
-  - 800-171 
+  - 800-53r5_moderate
+  - 800-53r5_high
+  - 800-53r4_moderate
+  - 800-53r4_high
+  - 800-171
   - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
   - cmmc_lvl2
-severity: "medium"
+  - stig
+severity: medium
 mobileconfig: true
 mobileconfig_info:
   com.apple.applicationaccess:

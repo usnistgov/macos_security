@@ -1,9 +1,14 @@
 id: os_messages_app_disable
-title: "Disable Messages App"
+title: Disable Messages App
 discussion: |
-  The macOS built-in Messages.app _MUST_ be disabled. 
+  The macOS built-in Messages.app _MUST_ be disabled.
 
-  The Messages.app establishes a connection to Apple's iCloud service, even when security controls to disable iCloud access have been put in place. 
+  The Messages.app establishes a connection to Apple's iCloud service, even when security controls to disable iCloud access have been put in place.
+
+  [IMPORTANT]
+  ====
+  Apple has deprecated the use of link:https://github.com/apple/device-management/blob/eb51fb0cb9626cac4717858556912c257a734ce0/mdm/profiles/com.apple.applicationaccess.new.yaml#L67-L70[application restriction controls], using these controls may not work as expected. Third party software may be required to fulfill the compliance requirements.
+  ====
 check: |
   /usr/bin/osascript -l JavaScript << EOS
   function run() {
@@ -20,13 +25,13 @@ check: |
     }
   EOS
 result:
-  string: "true"
+  string: 'true'
 fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-    - N/A
-  cci: 
+    - CCE-92825-9
+  cci:
     - N/A
   800-53r5:
     - AC-20
@@ -54,15 +59,15 @@ references:
     - CM.L2-3.4.6
     - CM.L2-3.4.7
 macOS:
-  - "14.0"
+  - '14.0'
 tags:
   - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
-severity: "low"
+severity: low
 mobileconfig: true
 mobileconfig_info:
   com.apple.applicationaccess.new:
     familyControlsEnabled: true
-    pathBlackList: 
+    pathBlackList:
       - /Applications/Messages.app

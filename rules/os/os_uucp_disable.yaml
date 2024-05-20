@@ -1,9 +1,9 @@
 id: os_uucp_disable
-title: "Disable Unix-to-Unix Copy Protocol Service"
+title: Disable Unix-to-Unix Copy Protocol Service
 discussion: |
   The system _MUST_ not have the Unix-to-Unix Copy Protocol (UUCP) service active.
 
-  UUCP, a set of programs that enable the sending of files between different UNIX systems as well as sending commands to be executed on another system, is not essential and _MUST_ be disabled in order to prevent the unauthorized connection of devices, transfer of information, and tunneling. 
+  UUCP, a set of programs that enable the sending of files between different UNIX systems as well as sending commands to be executed on another system, is not essential and _MUST_ be disabled in order to prevent the unauthorized connection of devices, transfer of information, and tunneling.
 
   NOTE: UUCP service is disabled at startup by default macOS.
 check: |
@@ -18,18 +18,18 @@ fix: |
   The system may need to be restarted for the update to take effect.
 references:
   cce:
-    - N/A
+    - CCE-92921-6
   cci:
-    - CCI-000381
+    - CCI-000213
   800-53r5:
     - AC-3
     - AC-17
   800-53r4:
     - AC-3
   srg:
-    - SRG-OS-000095-GPOS-00049
+    - SRG-OS-000080-GPOS-00048
   disa_stig:
-    - N/A
+    - APPL-14-002006
   800-171r2:
     - 3.1.1
     - 3.1.2
@@ -43,7 +43,7 @@ references:
   cmmc:
     - AC.L1-3.1.1
 macOS:
-  - "14.0"
+  - '14.0'
 tags:
   - 800-53r5_low
   - 800-53r5_moderate
@@ -58,6 +58,7 @@ tags:
   - cnssi-1253_high
   - cmmc_lvl2
   - cmmc_lvl1
-severity: "medium"
+  - stig
+severity: medium
 mobileconfig: false
 mobileconfig_info:

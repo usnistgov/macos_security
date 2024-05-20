@@ -1,7 +1,7 @@
 id: os_sudo_timeout_configure
-title: "Configure Sudo Timeout Period to $ODV"
+title: Configure Sudo Timeout Period to $ODV
 discussion: |
-  The file /etc/sudoers _MUST_ include a timestamp_timout of $ODV.
+  The file /etc/sudoers _MUST_ include a timestamp_timeout of $ODV.
 check: |
   /usr/bin/sudo /usr/bin/sudo -V | /usr/bin/grep -c "Authentication timestamp timeout: $ODV.0 minutes"
 result:
@@ -14,7 +14,7 @@ fix: |
   ----
 references:
   cce:
-    - N/A
+    - CCE-92908-3
   cci:
     - CCI-002038
   800-53r5:
@@ -24,16 +24,16 @@ references:
   srg:
     - SRG-OS-000373-GPOS-00156
   disa_stig:
-    - N/A
+    - APPL-14-004022
   cis:
     benchmark:
       - 5.4 (level 1)
     controls v8:
       - 4.3
 macOS:
-  - "14.0"
+  - '14.0'
 odv:
-  hint: "Number of minutes."
+  hint: Number of minutes.
   recommended: 0
   cis_lvl1: 0
   cis_lvl2: 0
@@ -45,5 +45,7 @@ tags:
   - cis_lvl1
   - cis_lvl2
   - cisv8
+  - stig
+severity: medium
 mobileconfig: false
 mobileconfig_info:
