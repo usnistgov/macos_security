@@ -92,3 +92,14 @@ titles:
   cnssi-1253_moderate: Committee on National Security Systems Instruction No. 1253 (Moderate)
   cnssi-1253_high: Committee on National Security Systems Instruction No. 1253 (High)
   stig: Apple macOS 14 (Sonoma) STIG - Ver 1, Rel 1
+ddm:
+  supported_types:
+    - com.apple.configuration.services.configuration-files
+    - com.apple.configuration.passcode.settings
+  services:
+    com.apple.bash: /etc/
+    com.apple.pam: /etc/pam.d/
+    com.apple.sshd: /etc/ssh/
+    com.apple.sudo: /etc/
+    com.apple.zsh: /etc/
+  
