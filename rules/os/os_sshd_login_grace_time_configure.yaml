@@ -1,5 +1,5 @@
 id: os_sshd_login_grace_time_configure
-title: Set Login Grace Time to $ODV
+title: "Set Login Grace Time to $ODV"
 discussion: |
   If SSHD is enabled then it _MUST_ be configured to wait only $ODV seconds before timing out logon attempts.
 
@@ -31,7 +31,7 @@ fix: |
   ----
 references:
   cce:
-    - CCE-92904-2
+    - N/A
   cci:
     - CCI-001133
   800-53r5:
@@ -41,15 +41,15 @@ references:
   srg:
     - SRG-OS-000163-GPOS-00072
   disa_stig:
-    - APPL-14-000053
+    - N/A
   800-171r2:
     - 3.13.9
   cmmc:
     - SC.L2-3.13.9
 macOS:
-  - '14.0'
+  - "14.0"
 odv:
-  hint: Number of seconds.
+  hint: "Number of seconds."
   recommended: 30
   stig: 30
 tags:
@@ -57,7 +57,12 @@ tags:
   - cnssi-1253_low
   - cnssi-1253_high
   - cmmc_lvl2
-  - stig
-severity: medium
+severity: "medium"
 mobileconfig: false
 mobileconfig_info:
+ddm_info:
+  declarationtype: com.apple.configuration.services.configuration-files
+  service: com.apple.sshd
+  config_file: sshd_config
+  configuration_key: LoginGraceTime
+  configuration_value: $ODV
