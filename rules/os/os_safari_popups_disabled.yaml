@@ -23,15 +23,13 @@ references:
     - N/A
   cis:
     benchmark:
-      - 6.3.9 (level 1)
+      - N/A
     controls v8:
-      - 9.1
+      - N/A
 macOS:
   - "14.0"
 tags:
-  - cis_lvl1
-  - cis_lvl2
-  - cisv8
+  - none
 mobileconfig: true
 mobileconfig_info:
   com.apple.Safari:
