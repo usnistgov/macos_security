@@ -8,9 +8,11 @@ discussion: |
   Apple Silicon MacBooks should set sleep timeout to 10 minutes (600 seconds) or less and the display sleep timeout should be 15 minutes (900 seconds) or less but greater than the sleep setting.
   This setting ensures that MacBooks will not hibernate and require FileVault authentication whenever the display goes to sleep for a short period of time.
 
+  NOTE: Hibernate mode will disable instant wake on Apple Silicon laptops.
 check: |
   error_count=0
   if /usr/sbin/ioreg -rd1 -c IOPlatformExpertDevice 2>&1 | /usr/bin/grep -q "MacBook"; then
+    hibernateMode=$(/usr/bin/pmset -b -g | /usr/bin/grep hibernatemode 2>&1 | /usr/bin/awk '{print $2}')
     sleepMode=$(/usr/bin/pmset -b -g | /usr/bin/grep '^\s*sleep' 2>&1 | /usr/bin/awk '{print $2}')
     displaysleepMode=$(/usr/bin/pmset -b -g | /usr/bin/grep displaysleep 2>&1 | /usr/bin/awk '{print $2}')
 
@@ -18,6 +20,9 @@ check: |
       ((error_count++))
     fi
     if [[ "$displaysleepMode" == "" ]] || [[ "$displaysleepMode" -gt 15 ]] || [[ "$displaysleepMode" -lt "$sleepMode" ]]; then
+      ((error_count++))
+    fi
+    if [[ "$hibernateMode" == "" ]] || [[ "$hibernateMode" != 25 ]]; then
       ((error_count++))
     fi
   fi
@@ -29,6 +34,7 @@ fix: |
   ----
   /usr/bin/pmset -a sleep 10
   /usr/bin/pmset -a displaysleep 15
+  /usr/bin/pmset -a hibernatemode 25
   ----
 references:
   cce:
@@ -47,14 +53,13 @@ references:
     - N/A
   cis:
     benchmark:
-      - 2.9.1.2 (level 2)
+      - N/A
     controls v8:
-      - 4.1
+      - N/A
 macOS:
   - '14.0'
 tags:
-  - cis_lvl2
-  - cisv8
+  - none
   - arm64
 mobileconfig: false
 mobileconfig_info:
