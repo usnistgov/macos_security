@@ -49,7 +49,6 @@ profile:
       - os_root_disable
       - os_safari_advertising_privacy_protection_enable
       - os_safari_open_safe_downloads_disable
-      - os_safari_popups_disabled
       - os_safari_prevent_cross-site_tracking_enable
       - os_safari_show_full_website_address_enable
       - os_safari_show_status_bar_enabled
@@ -61,7 +60,7 @@ profile:
       - os_sudoers_timestamp_type_configure
       - os_system_wide_applications_configure
       - os_terminal_secure_keyboard_enable
-      - os_time_offset_limit_configure
+      - os_time_server_enabled
       - os_unlock_active_user_session_disable
       - os_world_writable_system_folder_configure
   - section: "passwordpolicy"
@@ -96,6 +95,7 @@ profile:
       - system_settings_screen_sharing_disable
       - system_settings_screensaver_ask_for_password_delay_enforce
       - system_settings_screensaver_timeout_enforce
+      - system_settings_siri_listen_disable
       - system_settings_smbd_disable
       - system_settings_software_update_app_update_enforce
       - system_settings_software_update_download_enforce
