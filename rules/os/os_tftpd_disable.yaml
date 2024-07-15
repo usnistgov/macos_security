@@ -18,7 +18,7 @@ fix: |
   The system may need to be restarted for the update to take effect.
 references:
   cce:
-    - CCE-92914-1
+    - N/A
   cci:
     - CCI-000197
     - CCI-000213
@@ -33,7 +33,7 @@ references:
     - SRG-OS-000080-GPOS-00048
     - SRG-OS-000074-GPOS-00042
   disa_stig:
-    - APPL-14-002038
+    - N/A
   800-171r2:
     - 3.1.1
     - 3.1.2

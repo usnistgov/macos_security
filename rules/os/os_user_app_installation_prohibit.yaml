@@ -30,7 +30,7 @@ fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-    - CCE-92920-8
+    - N/A
   cci:
     - CCI-001812
   800-53r5:
@@ -40,7 +40,7 @@ references:
   srg:
     - SRG-OS-000362-GPOS-00149
   disa_stig:
-    - APPL-14-005080
+    - N/A
   cmmc:
     - CM.L2-3.4.9
 macOS:

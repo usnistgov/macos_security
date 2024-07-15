@@ -25,7 +25,7 @@ fix: |
   Ensure that system is enrolled via UAMDM.
 references:
   cce:
-    - CCE-92824-2
+    - N/A
   cci:
     - CCI-000366
   800-53r5:
@@ -35,7 +35,7 @@ references:
     - CM-2
     - CM-6
   disa_stig:
-    - APPL-14-005110
+    - N/A
   srg:
     - SRG-OS-000480-GPOS-00227
   800-171r2:

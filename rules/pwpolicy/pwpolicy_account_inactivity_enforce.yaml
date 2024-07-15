@@ -36,7 +36,7 @@ fix: |
   NOTE: See the password policy supplemental on more information on how to implement password policies on macOS.
 references:
   cce:
-    - CCE-92926-5
+    - N/A
   cci:
     - CCI-000795
   800-53r5:
@@ -46,7 +46,7 @@ references:
   srg:
     - SRG-OS-000118-GPOS-00060
   disa_stig:
-    - APPL-14-003080
+    - N/A
   800-171r2:
     - 3.5.5
     - 3.5.6

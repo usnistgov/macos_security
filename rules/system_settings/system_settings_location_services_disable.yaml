@@ -20,7 +20,7 @@ fix: |
   ----
 references:
   cce:
-    - CCE-92972-9
+    - N/A
   cci:
     - CCI-000381
   800-53r5:
@@ -33,7 +33,7 @@ references:
   srg:
     - SRG-OS-000095-GPOS-00049
   disa_stig:
-    - APPL-14-002004
+    - N/A
   800-171r2:
     - 3.4.6
   cmmc:

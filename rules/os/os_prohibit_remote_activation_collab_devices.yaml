@@ -18,7 +18,7 @@ fix: |
   The technology partially meets this requirement. An appropriate mitigation for the system must be implemented for full compliance.
 references:
   cce:
-    - CCE-92861-4
+    - N/A
   800-53r5:
     - SC-15
   800-53r4:

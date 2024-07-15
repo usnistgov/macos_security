@@ -22,7 +22,7 @@ fix: |
   NOTE: See the FileVault supplemental to implement this rule.
 references:
   cce:
-    - CCE-92957-0
+    - N/A
   cci:
     - CCI-001199
     - CCI-002475
@@ -38,7 +38,7 @@ references:
     - SRG-OS-000405-GPOS-00184
     - SRG-OS-000404-GPOS-00183
   disa_stig:
-    - APPL-14-005020
+    - N/A
   800-171r2:
     - 3.13.16
   cis:

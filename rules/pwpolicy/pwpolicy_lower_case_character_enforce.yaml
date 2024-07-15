@@ -40,7 +40,7 @@ fix: |
   NOTE: See the password policy supplemental on more information on how to implement password policies on macOS.
 references:
   cce:
-    - CCE-92933-1
+    - N/A
   cci:
     - N/A
   800-53r5:

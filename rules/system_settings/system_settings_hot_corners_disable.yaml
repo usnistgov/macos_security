@@ -12,7 +12,7 @@ fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-    - CCE-92965-3
+    - N/A
   cci:
     - CCI-000060
   800-53r5:
@@ -22,7 +22,7 @@ references:
   srg:
     - SRG-OS-000031-GPOS-00012
   disa_stig:
-    - APPL-14-000007
+    - N/A
   800-171r2:
     - 3.1.10
   cmmc:

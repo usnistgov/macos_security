@@ -16,7 +16,7 @@ fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-    - CCE-93011-5
+    - N/A
   cci:
     - CCI-000192
     - CCI-000193
@@ -26,7 +26,7 @@ references:
     - IA-5
     - IA-5(1)
   disa_stig:
-    - APPL-14-003060
+    - N/A
   srg:
     - SRG-OS-000070-GPOS-00038
     - SRG-OS-000069-GPOS-00037

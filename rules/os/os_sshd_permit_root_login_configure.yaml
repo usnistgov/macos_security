@@ -33,7 +33,7 @@ fix: |
   ----
 references:
   cce:
-    - CCE-92905-9
+    - N/A
   cci:
     - CCI-000770
     - CCI-001813
@@ -45,7 +45,7 @@ references:
     - SRG-OS-000364-GPOS-00151
     - SRG-OS-000109-GPOS-00056
   disa_stig:
-    - APPL-14-001100
+    - N/A
 macOS:
   - '15.0'
 tags:

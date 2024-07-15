@@ -14,7 +14,7 @@ fix: |
   NOTE: Boot into Recovery Mode and enable Full Secure Boot
 references:
   cce:
-    - CCE-92883-8
+    - N/A
   cci:
     - CCI-002696
     - CCI-002699
@@ -31,7 +31,7 @@ references:
     - SRG-OS-000445-GPOS-00199
     - SRG-OS-000446-GPOS-00200
   disa_stig:
-    - APPL-14-005100
+    - N/A
 macOS:
   - '15.0'
 tags:

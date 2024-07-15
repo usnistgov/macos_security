@@ -9,7 +9,7 @@ fix: |
   For directory bound systems, the technology inherently meets this requirement. No fix is required.
 references:
   cce:
-    - CCE-92827-5
+    - N/A
   cci:
     - N/A
   800-53r5:

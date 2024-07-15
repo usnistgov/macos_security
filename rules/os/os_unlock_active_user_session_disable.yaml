@@ -17,7 +17,7 @@ fix: |
   ----
 references:
   cce:
-    - CCE-92919-0
+    - N/A
   cci:
     - CCI-000764
     - CCI-000770
@@ -28,7 +28,7 @@ references:
     - IA-2
     - IA-2(5)
   disa_stig:
-    - APPL-14-000090
+    - N/A
   srg:
     - SRG-OS-000109-GPOS-00056
     - SRG-OS-000104-GPOS-00051
