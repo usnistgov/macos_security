@@ -24,7 +24,7 @@ references:
   srg:
     - SRG-OS-000142-GPOS-00071
 macOS:
-  - '14.0'
+  - '15.0'
 tags:
   - permanent
   - cnssi-1253_moderate

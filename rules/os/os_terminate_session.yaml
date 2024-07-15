@@ -20,7 +20,7 @@ references:
   srg:
     - N/A
 macOS:
-  - '14.0'
+  - '15.0'
 tags:
   - inherent
 mobileconfig: false

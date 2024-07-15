@@ -43,7 +43,7 @@ references:
     controls v8:
       - N/A
 macOS:
-  - '14.0'
+  - '15.0'
 tags:
   - none
 mobileconfig: false

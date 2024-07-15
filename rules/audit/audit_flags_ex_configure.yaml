@@ -53,7 +53,7 @@ references:
     - AU.L2-3.3.6
     - SI.L2-3.14.3
 macOS:
-  - '14.0'
+  - '15.0'
 tags:
   - 800-53r5_privacy
   - 800-53r4_low

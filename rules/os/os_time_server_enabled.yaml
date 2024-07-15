@@ -41,7 +41,7 @@ references:
   cmmc:
     - AU.L2-3.3.7
 macOS:
-  - '14.0'
+  - '15.0'
 tags:
   - 800-171
   - 800-53r5_low

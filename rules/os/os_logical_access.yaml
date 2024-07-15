@@ -35,7 +35,7 @@ references:
   cmmc:
     - AC.L1-3.1.1
 macOS:
-  - '14.0'
+  - '15.0'
 tags:
   - 800-53r5_low
   - 800-53r5_moderate

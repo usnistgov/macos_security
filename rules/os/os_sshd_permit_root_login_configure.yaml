@@ -47,7 +47,7 @@ references:
   disa_stig:
     - APPL-14-001100
 macOS:
-  - '14.0'
+  - '15.0'
 tags:
   - 800-53r5_high
   - 800-53r4_high

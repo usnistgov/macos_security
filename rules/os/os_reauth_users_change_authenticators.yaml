@@ -20,7 +20,7 @@ references:
   srg:
     - SRG-OS-000373-GPOS-00158
 macOS:
-  - '14.0'
+  - '15.0'
 tags:
   - inherent
   - 800-53r5_low

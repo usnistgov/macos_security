@@ -55,7 +55,7 @@ references:
     - IA.L1-3.5.2
     - IA.L2-3.5.3
 macOS:
-  - '14.0'
+  - '15.0'
 tags:
   - 800-53r5_low
   - 800-53r5_moderate

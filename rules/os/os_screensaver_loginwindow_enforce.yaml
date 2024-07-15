@@ -8,7 +8,7 @@ check: |
   .objectForKey('moduleName').js
   EOS
 result:
-  string: Sonoma
+  string: Sequoia
 fix: |
   This is implemented by a Configuration Profile.
 references:
@@ -29,7 +29,7 @@ references:
   cmmc:
     - AC.L2-3.1.10
 macOS:
-  - '14.0'
+  - '15.0'
 tags:
   - 800-53r5_moderate
   - 800-53r5_high
@@ -44,4 +44,4 @@ severity: medium
 mobileconfig: true
 mobileconfig_info:
   com.apple.screensaver:
-    moduleName: Sonoma
+    moduleName: Sequoia

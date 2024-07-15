@@ -41,7 +41,7 @@ references:
   cmmc:
     - AC.L2-3.1.10
 macOS:
-  - '14.0'
+  - '15.0'
 odv:
   hint: Number of seconds.
   recommended: 1200

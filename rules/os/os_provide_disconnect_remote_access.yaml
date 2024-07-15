@@ -20,7 +20,7 @@ references:
   srg:
     - SRG-OS-000298-GPOS-00116
 macOS:
-  - '14.0'
+  - '15.0'
 tags:
   - inherent
   - cnssi-1253_moderate

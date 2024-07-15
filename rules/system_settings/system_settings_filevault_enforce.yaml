@@ -50,7 +50,7 @@ references:
   cmmc:
     - SC.L2-3.13.16
 macOS:
-  - '14.0'
+  - '15.0'
 tags:
   - 800-53r5_moderate
   - 800-53r5_high

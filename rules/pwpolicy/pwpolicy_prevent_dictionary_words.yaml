@@ -24,7 +24,7 @@ references:
   srg:
     - SRG-OS-000480-GPOS-00225
 macOS:
-  - '14.0'
+  - '15.0'
 tags:
   - permanent
   - srg

@@ -47,7 +47,7 @@ references:
     - SI.L1-3.14.2
     - SI.L1-3.14.4
 macOS:
-  - '14.0'
+  - '15.0'
 tags:
   - 800-53r5_low
   - 800-53r5_moderate

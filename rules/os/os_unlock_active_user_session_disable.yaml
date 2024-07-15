@@ -44,7 +44,7 @@ references:
     - IA.L1-3.5.1
     - IA.L1-3.5.2
 macOS:
-  - "14.0"
+  - '15.0'
 odv:
   hint: "Review the /System/Library/Security/authorization.plist file for more information."
   recommended: "authenticate-session-owner"

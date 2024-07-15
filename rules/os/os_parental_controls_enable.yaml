@@ -36,7 +36,7 @@ references:
     controls v8:
       - 4.8
 macOS:
-  - '14.0'
+  - '15.0'
 tags:
   - cnssi-1253_moderate
   - cnssi-1253_low

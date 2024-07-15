@@ -63,7 +63,7 @@ references:
     - IA.L2-3.5.8
     - IA.L2-3.5.9
 macOS:
-  - '14.0'
+  - '15.0'
 odv:
   hint: Number of hours.
   recommended: 24

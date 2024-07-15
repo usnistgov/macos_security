@@ -27,7 +27,7 @@ references:
   disa_stig:
     - N/A
 macOS:
-  - '14.0'
+  - '15.0'
 tags:
   - 800-53r5_high
   - manual

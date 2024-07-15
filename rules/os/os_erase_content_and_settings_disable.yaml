@@ -32,7 +32,7 @@ references:
     - CM.L2-3.4.6
     - CM.L2-3.4.7
 macOS:
-  - '14.0'
+  - '15.0'
 tags:
   - cnssi-1253_moderate
   - cnssi-1253_low

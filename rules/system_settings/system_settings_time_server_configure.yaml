@@ -39,7 +39,7 @@ references:
   cmmc:
     - AU.L2-3.3.7
 macOS:
-  - '14.0'
+  - '15.0'
 odv:
   hint: Name of timeserver. As of macOS 10.13 only one time server is supported.
   recommended: time.nist.gov

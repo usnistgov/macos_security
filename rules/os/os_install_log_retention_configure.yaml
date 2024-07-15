@@ -39,7 +39,7 @@ references:
   cmmc:
     - AU.L2-3.3.1
 macOS:
-  - '14.0'
+  - '15.0'
 odv:
   hint: Number of days.
   recommended: 365

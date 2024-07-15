@@ -47,7 +47,7 @@ references:
     - IA.L2-3.5.8
     - IA.L2-3.5.9
 macOS:
-  - '14.0'
+  - '15.0'
 odv:
   hint: Custom regex (recommended is 1 upper and 1 lowercase)
   recommended: ^(?=.*[A-Z])(?=.*[a-z]).*$

@@ -33,7 +33,7 @@ references:
     - SRG-OS-000277-GPOS-00107
     - SRG-OS-000303-GPOS-00120
 macOS:
-  - '14.0'
+  - '15.0'
 tags:
   - 800-53r4_moderate
   - 800-53r4_high

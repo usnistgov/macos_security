@@ -26,7 +26,7 @@ references:
   srg:
     - SRG-OS-000278-GPOS-00108
 macOS:
-  - '14.0'
+  - '15.0'
 tags:
   - 800-53r5_high
   - 800-53r4_high
