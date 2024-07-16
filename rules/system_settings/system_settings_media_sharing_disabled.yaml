@@ -10,22 +10,11 @@ discussion: |
   NOTE: The Media Sharing preference panel will still allow "Home Sharing" and "Share media with guests" to be checked but the service will not be enabled.
 check: |
   /usr/bin/osascript -l JavaScript << EOS
-  function run() {
-    let pref1 = ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('com.apple.preferences.sharing.SharingPrefsExtension')\
-    .objectForKey('homeSharingUIStatus'))
-    let pref2 = ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('com.apple.preferences.sharing.SharingPrefsExtension')\
-    .objectForKey('legacySharingUIStatus'))
-    let pref3 = ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('com.apple.preferences.sharing.SharingPrefsExtension')\
-    .objectForKey('mediaSharingUIStatus'))
-    if ( pref1 == 0 && pref2 == 0 && pref3 == 0 ) {
-      return("true")
-    } else {
-      return("false")
-    }
-  }
+  $.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess')\
+  .objectForKey('allowMediaSharing').js
   EOS
 result:
-  string: 'true'
+  string: 'false'
 fix: |
   This is implemented by a Configuration Profile.
 references:
@@ -74,7 +63,5 @@ tags:
 severity: medium
 mobileconfig: true
 mobileconfig_info:
-  com.apple.preferences.sharing.SharingPrefsExtension:
-    homeSharingUIStatus: 0
-    legacySharingUIStatus: 0
-    mediaSharingUIStatus: 0
+  com.apple.applicationaccess:
+    allowMediaSharing: false
