@@ -7,9 +7,11 @@ discussion: |
 
   Administrator users will still have the option to override these settings on a case-by-case basis.
 check: |
-  /usr/sbin/spctl --status | /usr/bin/grep -c "assessments enabled"
+  $.NSUserDefaults.alloc.initWithSuiteName('com.apple.systempolicy.control')\
+  .objectForKey('EnableAssessment').js
+  EOS
 result:
-  integer: 1
+  string: 'true'
 fix: |
   This is implemented by a Configuration Profile.
 references:
