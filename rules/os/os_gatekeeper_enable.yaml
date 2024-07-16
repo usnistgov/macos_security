@@ -11,10 +11,7 @@ check: |
 result:
   integer: 1
 fix: |
-  [source,bash]
-  ----
-  /usr/sbin/spctl --global-enable
-  ----
+  This is implemented by a Configuration Profile.
 references:
   cce:
     - N/A
