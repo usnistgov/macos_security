@@ -7,6 +7,7 @@ discussion: |
 
   Administrator users will still have the option to override these settings on a case-by-case basis.
 check: |
+  /usr/bin/osascript -l JavaScript << EOS
   $.NSUserDefaults.alloc.initWithSuiteName('com.apple.systempolicy.control')\
   .objectForKey('EnableAssessment').js
   EOS
