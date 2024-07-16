@@ -14,7 +14,7 @@ check: ' '
 fix: This is implemented by a Configuration Profile
 references:
   cce:
-    - CCE-93417-4
+    - N/A
   cci:
     - CCI-000366
   800-53r5:
@@ -23,8 +23,7 @@ references:
   sfr:
     - 'FMT_SMF_EXT.1.1 #8b'
   disa_stig:
-    - AIOS-17-007400
-    - AIOS-17-707400
+    - N/A
   800-171r2:
     - N/A
   cis:

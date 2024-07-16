@@ -7,7 +7,7 @@ fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-    - CCE-93413-3
+    - N/A
   cci: 
     - CCI-002233
     - CCI-002530
@@ -20,8 +20,7 @@ references:
     - 'FMT_SMF_EXT.1.1 #42'
     - 'FDP_ACF_EXT.1.2'
   disa_stig:
-    - AIOS-17-009700
-    - AIOS-17-709700
+    - N/A
   800-171r2:
     - N/A
   cis:

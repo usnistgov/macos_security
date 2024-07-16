@@ -9,7 +9,7 @@ fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-    - CCE-93461-2
+    - N/A
   cci: 
     - CCI-000366
   800-53r5:
@@ -17,8 +17,7 @@ references:
   sfr:
     - 'FMT_SMF_EXT.1.1 #1b'
   disa_stig:
-    - AIOS-17-006600
-    - AIOS-17-706600
+    - N/A
   800-171r2:
     - N/A
   cis:
