@@ -1,9 +1,9 @@
 id: os_prevent_unauthorized_disclosure
-title: "Configure the System to Prevent the Unauthorized Disclosure of Data via Shared Resources"
+title: Configure the System to Prevent the Unauthorized Disclosure of Data via Shared Resources
 discussion: |
-  The information system _IS_ configured to ensure that the unauthorized disclosure of data does not occur when resources are shared. 
-  
-  The inherent configuration of the macOS does not allow for resources to be shared between users without authorization. 
+  The information system _IS_ configured to ensure that the unauthorized disclosure of data does not occur when resources are shared.
+
+  The inherent configuration of the macOS does not allow for resources to be shared between users without authorization.
 
   link:https://developer.apple.com/library/archive/documentation/Security/Conceptual/AuthenticationAndAuthorizationGuide/Permissions/Permissions.html[]
 check: |
@@ -12,7 +12,7 @@ fix: |
   The technology inherently meets this requirement. No fix is required.
 references:
   cce:
-    - N/A
+    - CCE-92858-0
   cci:
     - N/A
   800-53r5:
@@ -22,13 +22,13 @@ references:
   disa_stig:
     - N/A
   srg:
-    - N/A
+    - SRG-OS-000138-GPOS-00069
   800-171r2:
     - 3.13.4
   cmmc:
     - SC.L2-3.13.4
 macOS:
-  - "14.0"
+  - '14.0'
 tags:
   - 800-53r5_moderate
   - 800-53r5_high
@@ -40,5 +40,6 @@ tags:
   - cnssi-1253_low
   - cnssi-1253_high
   - cmmc_lvl2
+  - srg
 mobileconfig: false
 mobileconfig_info:

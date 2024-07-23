@@ -1,8 +1,8 @@
 id: os_ssh_server_alive_interval_configure
-title: "Configure SSH ServerAliveInterval option set to $ODV"
+title: Configure SSH ServerAliveInterval option set to $ODV
 discussion: |
-  SSH _MUST_ be configured with an Active Server Alive Maximum Count set to $ODV. 
-  
+  SSH _MUST_ be configured with an Active Server Alive Maximum Count set to $ODV.
+
   Setting the Active Server Alive Maximum Count to $ODV will log users out after a $ODV seconds interval of inactivity.
 
   NOTE: /etc/ssh/ssh_config will be automatically modified to its original state following any update or major upgrade to the operating system.
@@ -21,7 +21,7 @@ result:
 fix: |
   [source,bash]
   ----
-  for u in $(/usr/bin/dscl . -list /Users UniqueID | /usr/bin/awk '$2 > 500 {print $1}'); do 
+  for u in $(/usr/bin/dscl . -list /Users UniqueID | /usr/bin/awk '$2 > 500 {print $1}'); do
     config=$(/usr/bin/sudo -u $u /usr/bin/ssh -Gv . 2>&1 | /usr/bin/awk '/Reading configuration data/ {print $NF}'| /usr/bin/tr -d '\r')
     configarray=( ${(f)config} )
     for c in $configarray; do
@@ -31,28 +31,29 @@ fix: |
   ----
 references:
   cce:
-    - N/A
-  cci: 
-    - N/A
+    - CCE-92896-0
+  cci:
+    - CCI-001133
   800-53r5:
     - SC-10
     - AC-12
-  800-53r4: 
+  800-53r4:
     - SC-10
   srg:
-    - N/A
+    - SRG-OS-000163-GPOS-00072
   disa_stig:
-    - N/A
+    - APPL-14-000110
   800-171r2:
     - 3.13.9
   cmmc:
     - AC.L2-3.1.11
     - SC.L2-3.13.9
 macOS:
-  - "14.0"
+  - '14.0'
 odv:
-  hint: "Number of seconds."
+  hint: Number of seconds.
   recommended: 900
+  stig: 900
 tags:
   - 800-53r5_moderate
   - 800-53r5_high
@@ -63,5 +64,7 @@ tags:
   - cnssi-1253_low
   - cnssi-1253_high
   - cmmc_lvl2
+  - stig
+severity: medium
 mobileconfig: false
 mobileconfig_info:

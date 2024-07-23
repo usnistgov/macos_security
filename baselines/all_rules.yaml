@@ -54,11 +54,11 @@ profile:
   - section: "icloud"
     rules:
       - icloud_addressbook_disable
-      - icloud_appleid_preference_pane_disable
       - icloud_appleid_system_settings_disable
       - icloud_bookmarks_disable
       - icloud_calendar_disable
       - icloud_drive_disable
+      - icloud_freeform_disable
       - icloud_game_center_disable
       - icloud_keychain_disable
       - icloud_mail_disable
@@ -69,6 +69,7 @@ profile:
       - icloud_sync_disable
   - section: "macos"
     rules:
+      - os_account_modification_disable
       - os_airdrop_disable
       - os_anti_virus_installed
       - os_appleid_prompt_disable
@@ -87,10 +88,10 @@ profile:
       - os_certificate_authority_trust
       - os_config_data_install_enforce
       - os_config_profile_ui_install_disable
+      - os_dictation_disable
       - os_directory_services_configured
       - os_disk_image_disable
       - os_dvdram_disable
-      - os_efi_integrity_validated
       - os_erase_content_and_settings_disable
       - os_ess_installed
       - os_facetime_app_disable
@@ -103,8 +104,9 @@ profile:
       - os_gatekeeper_rearm
       - os_guest_folder_removed
       - os_handoff_disable
+      - os_hibernate_mode_apple_silicon_enable
       - os_hibernate_mode_destroyfvkeyonstandby_enable
-      - os_hibernate_mode_enable
+      - os_hibernate_mode_intel_enable
       - os_home_folders_default
       - os_home_folders_secure
       - os_httpd_disable
@@ -112,6 +114,7 @@ profile:
       - os_install_log_retention_configure
       - os_ir_support_disable
       - os_library_validation_enabled
+      - os_loginwindow_adminhostinfo_undefined
       - os_mail_app_disable
       - os_mdm_require
       - os_messages_app_disable
@@ -119,6 +122,7 @@ profile:
       - os_newsyslog_files_owner_group_configure
       - os_newsyslog_files_permissions_configure
       - os_nfsd_disable
+      - os_on_device_dictation_enforce
       - os_parental_controls_enable
       - os_password_autofill_disable
       - os_password_hint_remove
@@ -137,12 +141,15 @@ profile:
       - os_root_disable
       - os_safari_advertising_privacy_protection_enable
       - os_safari_open_safe_downloads_disable
+      - os_safari_popups_disabled
       - os_safari_prevent_cross-site_tracking_enable
       - os_safari_show_full_website_address_enable
+      - os_safari_show_status_bar_enabled
       - os_safari_warn_fraudulent_website_enable
       - os_screensaver_loginwindow_enforce
       - os_screensaver_timeout_loginwindow_enforce
       - os_secure_boot_verify
+      - os_setup_assistant_filevault_enforce
       - os_show_filename_extensions_enable
       - os_sip_enable
       - os_siri_prompt_disable
@@ -152,14 +159,13 @@ profile:
       - os_ssh_fips_compliant
       - os_ssh_server_alive_count_max_configure
       - os_ssh_server_alive_interval_configure
+      - os_sshd_channel_timeout_configure
       - os_sshd_client_alive_count_max_configure
       - os_sshd_client_alive_interval_configure
-      - os_sshd_fips_140_ciphers
-      - os_sshd_fips_140_macs
       - os_sshd_fips_compliant
-      - os_sshd_key_exchange_algorithm_configure
       - os_sshd_login_grace_time_configure
       - os_sshd_permit_root_login_configure
+      - os_sshd_unused_connection_timeout_configure
       - os_sudo_timeout_configure
       - os_sudoers_timestamp_type_configure
       - os_system_read_only
@@ -180,6 +186,7 @@ profile:
       - pwpolicy_account_lockout_enforce
       - pwpolicy_account_lockout_timeout_enforce
       - pwpolicy_alpha_numeric_enforce
+      - pwpolicy_custom_regex_enforce
       - pwpolicy_history_enforce
       - pwpolicy_lower_case_character_enforce
       - pwpolicy_max_lifetime_enforce
@@ -193,12 +200,11 @@ profile:
     rules:
       - system_settings_airplay_receiver_disable
       - system_settings_apple_watch_unlock_disable
-      - system_settings_assistant_disable
       - system_settings_automatic_login_disable
       - system_settings_automatic_logout_enforce
       - system_settings_bluetooth_disable
       - system_settings_bluetooth_menu_enable
-      - system_settings_bluetooth_prefpane_disable
+      - system_settings_bluetooth_settings_disable
       - system_settings_bluetooth_sharing_disable
       - system_settings_cd_dvd_sharing_disable
       - system_settings_content_caching_disable
@@ -217,7 +223,6 @@ profile:
       - system_settings_improve_siri_dictation_disable
       - system_settings_install_macos_updates_enforce
       - system_settings_internet_accounts_disable
-      - system_settings_internet_accounts_preference_pane_disable
       - system_settings_internet_sharing_disable
       - system_settings_location_services_disable
       - system_settings_location_services_enable
@@ -235,7 +240,7 @@ profile:
       - system_settings_screensaver_password_enforce
       - system_settings_screensaver_timeout_enforce
       - system_settings_siri_disable
-      - system_settings_siri_prefpane_disable
+      - system_settings_siri_settings_disable
       - system_settings_smbd_disable
       - system_settings_software_update_app_update_enforce
       - system_settings_software_update_download_enforce
@@ -249,12 +254,11 @@ profile:
       - system_settings_time_server_configure
       - system_settings_time_server_enforce
       - system_settings_token_removal_enforce
-      - system_settings_touch_id_pane_disable
+      - system_settings_touch_id_settings_disable
       - system_settings_touchid_unlock_disable
       - system_settings_usb_restricted_mode
       - system_settings_wake_network_access_disable
-      - system_settings_wallet_applepay_prefpane_disable
-      - system_settings_wallet_applepay_prefpane_hide
+      - system_settings_wallet_applepay_settings_disable
       - system_settings_wifi_disable
       - system_settings_wifi_menu_enable
   - section: "Inherent"

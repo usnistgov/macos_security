@@ -2,4 +2,113 @@
 
 This document provides a high-level view of the changes to the macOS Security Compliance Project.
 
-== [Sonoma, Revision 1.0] - 2023-XX-XX
+== [Sonoma, Revision 2.0] - 2024-04-24
+
+* Rules
+** Added Rules
+*** os_dictation_disable
+** Modified Rules
+*** os_anti_virus_installed (https://github.com/usnistgov/macos_security/issues/345[#345])
+*** os_camera_disable (https://github.com/usnistgov/macos_security/issues/388[#388])
+*** os_install_log_retention_configure (https://github.com/usnistgov/macos_security/issues/292[#292])
+*** os_on_device_dictation_enforce
+*** os_password_hint_remove (https://github.com/usnistgov/macos_security/issues/343[#343])
+*** os_recovery_lock_enable
+*** os_setup_assistant_filevault_enforce (https://github.com/usnistgov/macos_security/issues/362[#362])
+*** os_time_server_enabled (https://github.com/usnistgov/macos_security/issues/345[#345])
+*** os_unlock_active_user_session_disable (https://github.com/usnistgov/macos_security/pull/365[#365])
+*** os_world_writable_system_folder_configure (https://github.com/usnistgov/macos_security/issues/355[#355])
+*** pwpolicy_custom_regex_enforce (https://github.com/usnistgov/macos_security/pull/363[#363])
+*** system_settings_apple_watch_unlock_disable.yaml (https://github.com/usnistgov/macos_security/issues/326[#326])
+*** system_settings_location_services_disable (https://github.com/usnistgov/macos_security/issues/372[#372])
+*** system_settings_location_services_enable (https://github.com/usnistgov/macos_security/issues/372[#372])
+*** system_settings_loginwindow_loginwindowtext_enable
+*** system_settings_system_wide_preferences_configure
+*** system_settings_time_server_configure.yaml (https://github.com/usnistgov/macos_security/pull/336[#336])
+*** system_settings_touchid_unlock_disable.yaml (https://github.com/usnistgov/macos_security/issues/326[#326])
+*** supplemental_cis_manual
+** Deleted Rules
+*** os_safari_javascript_enabled.yaml
+** Other
+*** Added tags to all supplemental rule files
+*** Removed duplicate entries in `pwpolicy.xml` (https://github.com/usnistgov/macos_security/issues/373[#373])
+
+* Baselines
+** Added Baselines
+*** macOS 14 STIG
+
+* Scripts
+** generate_guidance
+*** Added `--quiet` (https://github.com/usnistgov/macos_security/issues/301[#301])
+*** Modified Configuration Profile Payload (https://github.com/usnistgov/macos_security/issues/315[#315])
+*** Added `--audit` to compliance script (https://github.com/usnistgov/macos_security/pull/333/files[#333])
+*** Added `--no-rcs`to zsh sheband (https://github.com/usnistgov/macos_security/issues/377[#377])
+*** Bug Fixes
+**** https://github.com/usnistgov/macos_security/issues/319[#319]
+**** https://github.com/usnistgov/macos_security/issues/332[#332]
+** generate_baseline
+*** Add tags to baselines (https://github.com/usnistgov/macos_security/issues/324[#324])
+*** Bug Fixes
+** generate_mappings
+*** Bug Fixes
+** generate_scap
+*** Bug Fixes
+** Other
+*** Added `util` folder
+**** Added `generate_checklist.py`
+**** Added `mscp_local_report.py`
+*** Updated `enablePF-mscp.sh`
+
+== [Sonoma, Revision 1.0] - 2023-09-21
+
+* Rules
+** Added Rules
+*** icloud_freeform_disable
+*** os_account_modification_disable
+*** os_on_device_dictation_enforce
+*** os_setup_assistant_filevault_enforce
+*** os_sshd_channel_timeout_configure
+*** os_sshd_unused_connection_timeout_configure
+** Modified Rules
+*** auth_ssh_password_authentication_disable
+*** os_policy_banner_ssh_enforce
+*** os_sshd_client_alive_count_max_configure
+*** os_sshd_client_alive_interval_configure
+*** os_sshd_fips_compliant
+*** os_sshd_login_grace_time_configure
+*** os_sshd_permit_root_login_configure
+*** system_settings_location_services_menu_enforce
+*** system_settings_siri_disable
+** Deleted Rules
+*** icloud_appleid_preference_pane_disable.yaml
+*** os_efi_integrity_validated
+*** os_sshd_key_exchange_algorithm_configure
+*** os_sshd_fips_140_ciphers
+*** os_sshd_fips_140_macs
+*** system_settings_bluetooth_prefpane_disable
+*** system_settings_internet_accounts_preference_pane_disable
+*** system_settings_siri_prefpane_disable
+*** system_settings_touch_id_pane_disable
+*** system_settings_wallet_applepay_prefpane_disable
+*** system_settings_wallet_applepay_prefpane_hide
+** Bug Fixes
+
+* Baselines
+** Modified existing baselines
+
+* Scripts
+** generate_guidance
+*** Added iOS support
+*** Added support for pwpolicy regex
+*** Modified ssh_key_check
+*** Bug Fixes
+** generate_baseline
+*** Added iOS support
+*** Bug Fixes
+** generate_mappings
+*** Added iOS support
+*** Bug Fixes
+** generate_scap
+*** Added iOS support
+*** Added support for pwpolicy regex
+*** Bug Fixes

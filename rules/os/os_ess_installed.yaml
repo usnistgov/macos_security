@@ -1,5 +1,5 @@
 id: os_ess_installed
-title: "Must Use ESS"
+title: Must Use ESS
 discussion: |
   The approved ESS solution _MUST_ be installed and configured to run.
 
@@ -11,7 +11,7 @@ fix: |
   Install the approved ESS solution onto the system.
 references:
   cce:
-    - N/A
+    - CCE-92787-1
   cci:
     - CCI-001233
   800-53r5:
@@ -21,12 +21,13 @@ references:
   srg:
     - SRG-OS-000191-GPOS-00080
   disa_stig:
-    - N/A
+    - APPL-14-000015
 macOS:
-  - "14.0"
+  - '14.0'
 tags:
   - manual
   - cisv8
-severity: "medium"
+  - stig
+severity: medium
 mobileconfig: false
 mobileconfig_info:

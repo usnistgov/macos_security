@@ -1,13 +1,13 @@
 id: os_firewall_default_deny_require
-title: "Control Connections to Other Systems via a Deny-All and Allow-by-Exception Firewall Policy"
+title: Control Connections to Other Systems via a Deny-All and Allow-by-Exception Firewall Policy
 discussion: |
-  A deny-all and allow-by-exception firewall policy _MUST_ be employed for managing connections to other systems. 
+  A deny-all and allow-by-exception firewall policy _MUST_ be employed for managing connections to other systems.
 
   Organizations _MUST_ ensure the built-in packet filter firewall is configured correctly to employ the default deny rule.
 
   Failure to restrict network connectivity to authorized systems permits inbound connections from malicious systems. It also permits outbound connections that may facilitate the exfiltration of data.
 
-  If you are using a third-party firewall solution, this setting does not apply. 
+  If you are using a third-party firewall solution, this setting does not apply.
 
   [IMPORTANT]
   ====
@@ -21,7 +21,7 @@ fix: |
   NOTE: See the firewall supplemental which includes a script that has an example policy to implement this rule.
 references:
   cce:
-    - N/A
+    - CCE-92792-1
   cci:
     - N/A
   800-53r5:
@@ -41,7 +41,7 @@ references:
     - AC.L2-3.1.3
     - SC.L2-3.13.6
 macOS:
-  - "14.0"
+  - '14.0'
 tags:
   - 800-53r5_moderate
   - 800-53r5_high

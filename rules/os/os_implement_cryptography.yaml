@@ -1,14 +1,14 @@
 id: os_implement_cryptography
-title: "Configure the System to Implement Approved Cryptography to Protect Information"
+title: Configure the System to Implement Approved Cryptography to Protect Information
 discussion: |
-  The information system _IS_ configured to implement approved cryptography to protect information. 
+  The information system _IS_ configured to implement approved cryptography to protect information.
 
-  Use of weak or untested encryption algorithms undermines the purposes of utilizing encryption to protect data. The operating system must implement cryptographic modules that adhere to the higher standards that have been tested, validated, and approved by the federal government. 
+  Use of weak or untested encryption algorithms undermines the purposes of utilizing encryption to protect data. The operating system must implement cryptographic modules that adhere to the higher standards that have been tested, validated, and approved by the federal government.
 
   Apple is committed to the FIPS validation process and historically has always submitted and validated the cryptographic modules in macOS. macOS Sonoma will be submitted for FIPS validation.
 
   link:https://csrc.nist.gov/Projects/cryptographic-module-validation-program/validated-modules[]
-  
+
   link:https://support.apple.com/en-us/HT201159[]
 check: |
   The technology supports this requirement and cannot be configured to be out of compliance. The technology inherently meets this requirement using FIPS Validated Cryptographic Modules.
@@ -16,7 +16,7 @@ fix: |
   The technology inherently meets this requirement. No fix is required.
 references:
   cce:
-    - N/A
+    - CCE-92808-5
   cci:
     - N/A
   800-53r5:
@@ -26,14 +26,16 @@ references:
   disa_stig:
     - N/A
   srg:
-    - N/A
+    - SRG-OS-000478-GPOS-00223
+    - SRG-OS-000033-GPOS-00014
+    - SRG-OS-000396-GPOS-00176
   800-171r2:
     - 3.13.11
   cmmc:
     - MP.L2-3.8.6
     - SC.L2-3.13.11
 macOS:
-  - "14.0"
+  - '14.0'
 tags:
   - 800-53r5_low
   - 800-53r5_moderate
@@ -47,5 +49,6 @@ tags:
   - cnssi-1253_low
   - cnssi-1253_high
   - cmmc_lvl2
+  - srg
 mobileconfig: false
 mobileconfig_info:

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
-# filename: generate_guidance.py
-# description: Process a given keyword, and output a baseline file
+# filename: generate_scap.py
+# description: Input a keyword for the baseline, output the scap/oval/xccdf
 
 import sys
 import os
@@ -14,8 +14,74 @@ from datetime import datetime
 import shutil
 from time import sleep
 import argparse
+from xml.sax.saxutils import escape
 
 warnings.filterwarnings("ignore", category=DeprecationWarning) 
+
+def format_mobileconfig_fix(mobileconfig):
+    """Takes a list of domains and setting from a mobileconfig, and reformats it for the output of the fix section of the guide.
+    """
+    rulefix = ""
+    for domain, settings in mobileconfig.items():
+        if domain == "com.apple.ManagedClient.preferences":
+            rulefix = rulefix + \
+                (f"NOTE: The following settings are in the ({domain}) payload. This payload requires the additional settings to be sub-payloads within, containing their defined payload types.\n\n")
+            rulefix = rulefix + format_mobileconfig_fix(settings)
+        else:
+            rulefix = rulefix + (
+                f"Create a configuration profile containing the following keys in the ({domain}) payload type:\n\n")
+            rulefix = rulefix + "[source,xml]\n----\n"
+            for item in settings.items():
+                rulefix = rulefix + (f"<key>{item[0]}</key>\n")
+
+                if type(item[1]) == bool:
+                    rulefix = rulefix + \
+                        (f"<{str(item[1]).lower()}/>\n")
+                elif type(item[1]) == list:
+                    rulefix = rulefix + "<array>\n"
+                    for setting in item[1]:
+                        rulefix = rulefix + \
+                            (f"    <string>{setting}</string>\n")
+                    rulefix = rulefix + "</array>\n"
+                elif type(item[1]) == int:
+                    rulefix = rulefix + \
+                        (f"<integer>{item[1]}</integer>\n")
+                elif type(item[1]) == str:
+                    rulefix = rulefix + \
+                        (f"<string>{item[1]}</string>\n")
+                elif type(item[1]) == dict:
+                    rulefix = rulefix + "<dict>\n"
+                    for k,v in item[1].items():
+                        if type(v) == dict:
+                            rulefix = rulefix + \
+                                (f"    <key>{k}</key>\n")
+                            rulefix = rulefix + \
+                                (f"    <dict>\n")
+                            for x,y in v.items():
+                                rulefix = rulefix + \
+                                    (f"      <key>{x}</key>\n")
+                                rulefix  = rulefix + \
+                                    (f"      <string>{y}</string>\n")
+                            rulefix = rulefix + \
+                            (f"    </dict>\n")
+                            break
+                        if isinstance(v, list):
+                            rulefix = rulefix + "    <array>\n"
+                            for setting in v:
+                                rulefix = rulefix + \
+                                    (f"        <string>{setting}</string>\n")
+                            rulefix = rulefix + "    </array>\n"
+                        else:
+                            rulefix = rulefix + \
+                                    (f"    <key>{k}</key>\n")
+                            rulefix = rulefix + \
+                                    (f"    <string>{v}</string>\n")
+                    rulefix = rulefix + "</dict>\n"
+         
+            rulefix = rulefix + "----\n\n"
+
+    return rulefix
+
 def replace_ocil(xccdf, x):
     regex = r'''([\r\n].*?)(?:=?\r|\n)(.*?(?:def:{}\").*)'''.format(x)
     substr = '''<check system="http://scap.nist.gov/schema/ocil/2"><check-content-ref href="ocil.xml"/>'''
@@ -39,28 +105,37 @@ def create_args():
     return parser.parse_args()
 
 def generate_scap(all_rules, all_baselines, args):
-
+    
     export_as = ""
 
+    version_file = "../VERSION.yaml"
+    with open(version_file) as r:
+        version_yaml = yaml.load(r, Loader=yaml.SafeLoader)
+        
     if args.xccdf:
         export_as = "xccdf"
     
     if args.oval:
         export_as = "oval"
+        if "ios" in version_yaml['cpe']:
+            print("OVAL generation is not available on iOS")
+            exit()
+
 
     if args.oval == None and args.xccdf == None:
         export_as = "scap"
-    
-    version_file = "../VERSION.yaml"
-    with open(version_file) as r:
-        version_yaml = yaml.load(r, Loader=yaml.SafeLoader)
+        if "ios" in version_yaml['cpe']:
+            print("iOS will only export as XCCDF")
+            export_as = "xccdf"
 
     now = datetime.now()
     date_time_string = now.strftime("%Y-%m-%dT%H:%M:%S")
 
     filenameversion = version_yaml['version'].split(",")[1].replace(" ", "_")[1:]
     output = "../build/macOS_{0}_Security_Compliance_Benchmark-{1}".format(version_yaml['os'],filenameversion)
-
+    if "ios" in version_yaml['cpe']:
+        output = "../build/iOS_{0}_Security_Compliance_Benchmark-{1}".format(version_yaml['os'],filenameversion)
+        
     if export_as == "xccdf":
         output = output + "_xccdf.xml"
     
@@ -91,12 +166,15 @@ def generate_scap(all_rules, all_baselines, args):
         <oval:product_name xmlns:oval="http://oval.mitre.org/XMLSchema/oval-common-5">macOS Security Compliance Project</oval:product_name>
       </generator>'''.format(date_time_string)
 
+    ostype = "macOS"
+    if "ios" in version_yaml['cpe']:
+        ostype = "iOS/iPadOS"
     xccdfPrefix = '''<?xml version="1.0" encoding="UTF-8"?>
     <Benchmark xmlns="http://checklists.nist.gov/xccdf/1.2" id="xccdf_gov.nist.mscp.content_benchmark_macOS_{1}" style="SCAP_1.3" resolved="true" xml:lang="en">
       <status date="{3}">draft</status>
-      <title>macOS {1}: Security Configuration</title>
+      <title>{4} {1}: Security Configuration</title>
       <description>
-        macOS {1}: Security Configuration
+        {4} {1}: Security Configuration
       </description>
       
       
@@ -113,7 +191,7 @@ def generate_scap(all_rules, all_baselines, args):
         <contributor xmlns="http://purl.org/dc/elements/1.1/">Dan Brodjieski - National Aeronautics and Space Administration</contributor>
         <contributor xmlns="http://purl.org/dc/elements/1.1/">Allen Golbig - Jamf</contributor>
       </metadata>
-    '''.format(date_time_string, version_yaml['os'], version_yaml['version'],date_time_string.split("T")[0] + "Z")
+    '''.format(date_time_string, version_yaml['os'], version_yaml['version'],date_time_string.split("T")[0] + "Z", ostype)
 
     scapPrefix = '''<?xml version="1.0" encoding="UTF-8"?>
 <data-stream-collection xmlns="http://scap.nist.gov/schema/scap/source/1.2" id="scap_gov.nist.mscp.content_collection_macOS_{1}" schematron-version="1.3">
@@ -190,7 +268,7 @@ def generate_scap(all_rules, all_baselines, args):
         for a in range(0, loop):
             
             rule_yaml = get_rule_yaml(rule_file, custom)
-
+            
             try:           
                 
                 # # odv_label = list(rule_yaml['odv'].keys())[a]
@@ -218,20 +296,26 @@ def generate_scap(all_rules, all_baselines, args):
                 rule_yaml['check'] = rule_yaml['check'].replace("$ODV",odv_value)
                 
                 rule_yaml['fix'] = rule_yaml['fix'].replace("$ODV",odv_value)
-                
-        
-                for result_value in rule_yaml['result']:
-                    if "$ODV" == rule_yaml['result'][result_value]:
-                        rule_yaml['result'][result_value] = rule_yaml['result'][result_value].replace("$ODV",odv_value)
-                            
+            
+                if "result" in rule_yaml:
+                    for result_value in rule_yaml['result']:
+                        if "$ODV" == rule_yaml['result'][result_value]:
+                            rule_yaml['result'][result_value] = rule_yaml['result'][result_value].replace("$ODV",odv_value)
                 
                 if rule_yaml['mobileconfig_info']:
                     for mobileconfig_type in rule_yaml['mobileconfig_info']:
                         if isinstance(rule_yaml['mobileconfig_info'][mobileconfig_type], dict):
                             for mobileconfig_value in rule_yaml['mobileconfig_info'][mobileconfig_type]:
+                                
                                 if "$ODV" in str(resulting_yaml['mobileconfig_info'][mobileconfig_type][mobileconfig_value]):
-                                    resulting_yaml['mobileconfig_info'][mobileconfig_type][mobileconfig_value] = rule_yaml['mobileconfig_info'][mobileconfig_type][mobileconfig_value].replace("$ODV",odv_value)
-
+                                    if type(resulting_yaml['mobileconfig_info'][mobileconfig_type][mobileconfig_value]) == dict:
+                                        for k,v in resulting_yaml['mobileconfig_info'][mobileconfig_type][mobileconfig_value].items():
+                                            if v == "$ODV":
+                                                resulting_yaml['mobileconfig_info'][mobileconfig_type][mobileconfig_value][k] = odv_value
+                                    else:
+                                        resulting_yaml['mobileconfig_info'][mobileconfig_type][mobileconfig_value] = odv_value
+                                    
+                
             except:
                 odv_label = "recommended"
                 
@@ -339,6 +423,9 @@ def generate_scap(all_rules, all_baselines, args):
                 cce = rule_yaml['references']['cce'][0]
 
             if export_as == "scap":
+                mobileconfig_info = ""
+                if rule_yaml['mobileconfig']:
+                    mobileconfig_info = escape(format_mobileconfig_fix(rule_yaml['mobileconfig_info']))
                 xccdf_rules = xccdf_rules + '''
             <Rule id="xccdf_gov.nist.mscp.content_rule_{0}" selected="false" role="full" severity="{1}" weight="1.0">
             <title>{2}</title>
@@ -351,9 +438,13 @@ def generate_scap(all_rules, all_baselines, args):
             <fixtext>{7}</fixtext>
             {8}
             </Rule>
-            '''.format(rule_yaml['id'] + "_" + odv_label, severity, rule_yaml['title'], rule_yaml['discussion'].replace("<","&lt;").replace(">","&gt;").replace("&","&amp;").rstrip(), rule_yaml['check'].replace("<","&lt;").replace(">","&gt;").replace("&","&amp;").rstrip(), result, cce,rule_yaml['fix'].replace("<","&lt;").replace(">","&gt;").replace("&","&amp;"), check_rule, references)
+            '''.format(rule_yaml['id'] + "_" + odv_label, severity, rule_yaml['title'], rule_yaml['discussion'].replace("<","&lt;").replace(">","&gt;").replace("&","&amp;").rstrip(), rule_yaml['check'].replace("<","&lt;").replace(">","&gt;").replace("&","&amp;").rstrip(), result, cce,rule_yaml['fix'].replace("<","&lt;").replace(">","&gt;").replace("&","&amp;")  + "\n" + mobileconfig_info, check_rule, references)
 
             if export_as == "xccdf":
+                mobileconfig_info = ""
+                if rule_yaml['mobileconfig']:
+                    mobileconfig_info = escape(format_mobileconfig_fix(rule_yaml['mobileconfig_info']))
+
                 xccdf_rules = xccdf_rules + '''
             <Rule id="xccdf_gov.nist.mscp.content_rule_{0}" selected="false" role="full" severity="{1}" weight="1.0">
             <title>{2}</title>
@@ -366,10 +457,11 @@ def generate_scap(all_rules, all_baselines, args):
             <fixtext>{7}</fixtext>
             
             </Rule>
-            '''.format(rule_yaml['id'] + "_" + odv_label, severity, rule_yaml['title'], rule_yaml['discussion'].replace("<","&lt;").replace(">","&gt;").replace("&","&amp;").rstrip(), rule_yaml['check'].replace("<","&lt;").replace(">","&gt;").replace("&","&amp;").rstrip(), result, cce,rule_yaml['fix'].replace("<","&lt;").replace(">","&gt;").replace("&","&amp;"), references)
+            '''.format(rule_yaml['id'] + "_" + odv_label, severity, rule_yaml['title'], rule_yaml['discussion'].replace("<","&lt;").replace(">","&gt;").replace("&","&amp;").rstrip(), rule_yaml['check'].replace("<","&lt;").replace(">","&gt;").replace("&","&amp;").rstrip(), result, cce,rule_yaml['fix'].replace("<","&lt;").replace(">","&gt;").replace("&","&amp;") + "\n" + mobileconfig_info, references)
+                continue
                 
 
-
+            
             if "inherent" in rule_yaml['tags'] or "n_a" in rule_yaml['tags'] or "permanent" in rule_yaml['tags']:
                 xccdf_rules = replace_ocil(xccdf_rules,x)
                 x += 1
@@ -526,6 +618,7 @@ def generate_scap(all_rules, all_baselines, args):
                     continue
                 
                 for payload_type, info in rule_yaml['mobileconfig_info'].items():
+                    
                     if payload_type == "com.apple.systempolicy.control":
                         continue
                     if payload_type == "com.apple.ManagedClient.preferences":
@@ -604,7 +697,6 @@ def generate_scap(all_rules, all_baselines, args):
                         oval_definition = oval_definition + '''</criteria> </definition>'''
                         continue
                     for key, value in info.items():
-
                         if key == "familyControlsEnabled":
                             xpath_search = ""
                             if len(info) > 1:
@@ -630,7 +722,7 @@ def generate_scap(all_rules, all_baselines, args):
                 <state state_ref="oval:mscp:ste:{}" />
             </plist511_test>
         '''.format(rule_yaml['id'] + "_" + odv_label,x,x,x)
-
+                                ""
                                 oval_object = oval_object + '''
             <plist511_object xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" comment="{}_object" id="oval:mscp:obj:{}" version="1">
                     <filepath>/Library/Managed Preferences/com.apple.applicationaccess.new.plist</filepath>
@@ -668,7 +760,7 @@ def generate_scap(all_rules, all_baselines, args):
                 <state state_ref="oval:mscp:ste:{}" />
             </plist511_test>
         '''.format(rule_yaml['id'] + "_" + odv_label,x,x,x)
-
+                                                                
                                 oval_object = oval_object + '''
             <plist511_object xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" comment="{}_object" id="oval:mscp:obj:{}" version="1">
                 <filepath>/Library/Managed Preferences/{}.plist</filepath>'''.format(rule_yaml['id'] + "_" + odv_label,x,payload_type)
@@ -947,14 +1039,21 @@ def generate_scap(all_rules, all_baselines, args):
             </local_variable>'''.format(x,x+1999)
                             x += 1
                             continue
-
-
+                        
                         state_kind = ""
                         if type(value) == bool:
                             state_kind = "boolean"
                         elif type(value) == int:
                             state_kind = "int"
                         elif type(value) == str:
+                            state_kind = "string"
+                            try:
+                                int(value)
+                                state_kind = "int"
+                            except:
+                                pass
+
+                        elif type(value) == dict:
                             state_kind = "string"
                         else:
                             
@@ -980,21 +1079,32 @@ def generate_scap(all_rules, all_baselines, args):
                 <state state_ref="oval:mscp:ste:{}" />
             </plist511_test>
         '''.format(rule_yaml['id'] + "_" + odv_label,x,x,x)
-
                         
                         oval_object = oval_object + '''
             <plist511_object xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" comment="{}_object" id="oval:mscp:obj:{}" version="1">
                 <filepath>/Library/Managed Preferences/{}.plist</filepath>'''.format(rule_yaml['id'] + "_" + odv_label,x,payload_type)
-                
+                        
                         if state_kind == "boolean":
                             oval_object = oval_object + '''
                 <xpath>name(//*[contains(text(), "{}")]/following-sibling::*[1])</xpath>
             </plist511_object>'''.format(key)
                         else:
-                            oval_object = oval_object + '''
+                            if payload_type == "com.apple.mobiledevice.passwordpolicy" and "customRegex" in info:
+                                oval_object = oval_object + '''
                             <xpath>//*[contains(text(), "{}")]/following-sibling::*[1]/text()</xpath>
-            </plist511_object>'''.format(key)
-                    
+            </plist511_object>'''.format("passwordContentRegex")
+                                oval_state = oval_state + '''
+                        <plist511_state xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" comment="{}_state" id="oval:mscp:ste:{}" version="1">
+            <value_of datatype="{}" operation="equals">{}</value_of>
+            </plist511_state>
+            '''.format(rule_yaml['id'] + "_" + odv_label,x,state_kind,value['passwordContentRegex'])
+                                x += 1
+                                continue
+                            else:
+                                oval_object = oval_object + '''
+                                <xpath>//*[contains(text(), "{}")]/following-sibling::*[1]/text()</xpath>
+                </plist511_object>'''.format(key)
+                          
                         oval_state = oval_state + '''
                         <plist511_state xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" comment="{}_state" id="oval:mscp:ste:{}" version="1">
             <value_of datatype="{}" operation="equals">{}</value_of>
@@ -1439,7 +1549,6 @@ def generate_scap(all_rules, all_baselines, args):
                         continue
 
                 if "ssh_config" in rule_yaml['discussion'] and "dscl" in rule_yaml['check']:
-                    
                     oval_definition = oval_definition + '''
                         <definition id="oval:mscp:def:{}" version="1" class="compliance"> 
                     <metadata> 
@@ -1453,7 +1562,7 @@ def generate_scap(all_rules, all_baselines, args):
                     <criterion comment="{}_ssh_config.d" test_ref="oval:mscp:tst:{}"/>
                     <criterion comment="{}_.ssh" test_ref="oval:mscp:tst:{}"/>
                 </criteria>
-            </definition> '''.format(x,rule_yaml['title'],cce,rule_yaml['id'] + "_" + odv_label,rule_yaml['discussion'],rule_yaml['id'] + "_" + odv_label,x,rule_yaml['id'] + "_" + odv_label, x+5000, rule_yaml['id'] + "_" + odv_label,x+5001)
+            </definition> '''.format(x,rule_yaml['title'],cce,rule_yaml['id'] + "_" + odv_label,rule_yaml['discussion'],rule_yaml['id'] + "_" + odv_label,x,rule_yaml['id'] + "_" + odv_label, x+5010, rule_yaml['id'] + "_" + odv_label,x+5025)
                     
                     oval_test = oval_test + '''
                 <textfilecontent54_test id="oval:mscp:tst:{}" version="1" comment="{}_test" check_existence="all_exist" check="all" xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#independent">
@@ -1465,12 +1574,12 @@ def generate_scap(all_rules, all_baselines, args):
                 <textfilecontent54_test id="oval:mscp:tst:{}" version="1" comment="{}_ssh_config.d_test" check_existence="all_exist" check="all" xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#independent">
             <object object_ref="oval:mscp:obj:{}"/>
         </textfilecontent54_test>
-        '''.format(x+5000, rule_yaml['id'] + "_" + odv_label, x+5000)
+        '''.format(x+5010, rule_yaml['id'] + "_" + odv_label, x+5010)
                     oval_test = oval_test + '''
                 <textfilecontent54_test id="oval:mscp:tst:{}" version="1" comment="{}_ssh_config.d_test" check_existence="all_exist" check="all" xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#independent">
             <object object_ref="oval:mscp:obj:{}"/>
         </textfilecontent54_test>
-        '''.format(x+5001, rule_yaml['id'] + "_" + odv_label, x+5001)
+        '''.format(x+5025, rule_yaml['id'] + "_" + odv_label, x+5025)
                     regex = r"(?<=grep).*$"
                     matches = re.finditer(regex, rule_yaml['check'], re.MULTILINE)
                     matchy_match = ""
@@ -1496,7 +1605,7 @@ def generate_scap(all_rules, all_baselines, args):
                 <filename operation="pattern match">*</filename>
                 <pattern operation="pattern match">{}</pattern>
                 <instance datatype="int">1</instance>
-            </textfilecontent54_object>'''.format(x+5000, rule_yaml['id'] + "_" + odv_label, ssh_config_pattern)
+            </textfilecontent54_object>'''.format(x+5010, rule_yaml['id'] + "_" + odv_label, ssh_config_pattern)
                     
                     oval_object = oval_object + '''
             <textfilecontent54_object xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#independent" id="oval:mscp:obj:{}" version="1" comment="{}_.ssh_object" >
@@ -1510,7 +1619,7 @@ def generate_scap(all_rules, all_baselines, args):
             <accountinfo_object xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" comment="user home directory" id="oval:mscp:obj:{}" version="1">
                 <username operation="pattern match">.*</username>
                 <filter action="include" xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5">oval:mscp:ste:{}</filter>
-            </accountinfo_object>'''.format(x+5001,rule_yaml['id'] + "_" + odv_label,x,ssh_config_pattern,x+999,x+999)
+            </accountinfo_object>'''.format(x+5025,rule_yaml['id'] + "_" + odv_label,x,ssh_config_pattern,x+999,x+999)
                 
                     oval_state = oval_state + '''
                        <accountinfo_state xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" comment="accountinfo_state" id="oval:mscp:ste:{}" version="1">
@@ -1545,7 +1654,7 @@ def generate_scap(all_rules, all_baselines, args):
                     <criterion comment="{}" test_ref="oval:mscp:tst:{}" />
                     <criterion comment="{}_sshd_config.d" test_ref="oval:mscp:tst:{}"/>
                 </criteria>
-            </definition> '''.format(x,rule_yaml['title'],cce,rule_yaml['id'] + "_" + odv_label,rule_yaml['discussion'],rule_yaml['id'] + "_" + odv_label,x,rule_yaml['id'] + "_" + odv_label, x+5000, rule_yaml['id'] + "_" + odv_label,x+5001)
+            </definition> '''.format(x,rule_yaml['title'],cce,rule_yaml['id'] + "_" + odv_label,rule_yaml['discussion'],rule_yaml['id'] + "_" + odv_label,x,rule_yaml['id'] + "_" + odv_label, x+6000, rule_yaml['id'] + "_" + odv_label,x+6001)
                     
                     oval_test = oval_test + '''
                 <textfilecontent54_test id="oval:mscp:tst:{}" version="1" comment="{}_test" check_existence="all_exist" check="all" xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#independent">
@@ -1557,7 +1666,7 @@ def generate_scap(all_rules, all_baselines, args):
                 <textfilecontent54_test id="oval:mscp:tst:{}" version="1" comment="{}_sshd_config.d_test" check_existence="all_exist" check="all" xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#independent">
             <object object_ref="oval:mscp:obj:{}"/>
         </textfilecontent54_test>
-        '''.format(x+5000, rule_yaml['id'] + "_" + odv_label, x+5000)
+        '''.format(x+6000, rule_yaml['id'] + "_" + odv_label, x+6000)
                     
                     oval_object = oval_object + '''
                 <textfilecontent54_object id="oval:mscp:obj:{}" version="1" comment="{}_object" xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#independent">
@@ -1575,7 +1684,7 @@ def generate_scap(all_rules, all_baselines, args):
                 <filename operation="pattern match">*</filename>
                 <pattern operation="pattern match">{}</pattern>
                 <instance datatype="int">1</instance>
-            </textfilecontent54_object>'''.format(x+5000, rule_yaml['id'] + "_" + odv_label, fipslist)
+            </textfilecontent54_object>'''.format(x+6000, rule_yaml['id'] + "_" + odv_label, fipslist)
                     
                     x = x + 1
                     
@@ -1593,7 +1702,7 @@ def generate_scap(all_rules, all_baselines, args):
                     <criterion comment="{}" test_ref="oval:mscp:tst:{}" />
                     <criterion comment="{}_sshd_config.d" test_ref="oval:mscp:tst:{}"/>
                 </criteria>
-            </definition> '''.format(x,rule_yaml['title'],cce,rule_yaml['id'] + "_" + odv_label,rule_yaml['discussion'],rule_yaml['id'] + "_" + odv_label,x,rule_yaml['id'] + "_" + odv_label, x+5000, rule_yaml['id'] + "_" + odv_label,x+5001)
+            </definition> '''.format(x,rule_yaml['title'],cce,rule_yaml['id'] + "_" + odv_label,rule_yaml['discussion'],rule_yaml['id'] + "_" + odv_label,x,rule_yaml['id'] + "_" + odv_label, x+6000, rule_yaml['id'] + "_" + odv_label,x+6001)
                     
                     oval_test = oval_test + '''
                 <textfilecontent54_test id="oval:mscp:tst:{}" version="1" comment="{}_test" check_existence="all_exist" check="all" xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#independent">
@@ -1605,7 +1714,7 @@ def generate_scap(all_rules, all_baselines, args):
                 <textfilecontent54_test id="oval:mscp:tst:{}" version="1" comment="{}_sshd_config.d_test" check_existence="all_exist" check="all" xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#independent">
             <object object_ref="oval:mscp:obj:{}"/>
         </textfilecontent54_test>
-        '''.format(x+5000, rule_yaml['id'] + "_" + odv_label, x+5000)
+        '''.format(x+6000, rule_yaml['id'] + "_" + odv_label, x+6000)
                     sshd_config_pattern = ""
                     if "grep" in rule_yaml['check']:                        
                         regex = r"(?<=grep).*$"
@@ -1640,7 +1749,7 @@ def generate_scap(all_rules, all_baselines, args):
                 <filename operation="pattern match">*</filename>
                 <pattern operation="pattern match">{}</pattern>
                 <instance datatype="int">1</instance>
-            </textfilecontent54_object>'''.format(x+5000, rule_yaml['id'] + "_" + odv_label, sshd_config_pattern)
+            </textfilecontent54_object>'''.format(x+6000, rule_yaml['id'] + "_" + odv_label, sshd_config_pattern)
                     
                 
                     x = x + 1
@@ -2248,7 +2357,7 @@ def generate_scap(all_rules, all_baselines, args):
                 </authorizationdb_state>'''.format(rule_yaml['id'] + "_" + odv_label,x)
                             else:
                                 key = (check[1].split()[2].replace("'",""))
-
+                                key = key.split('>')[1].split('<')[0]
                                 oval_definition = oval_definition + '''
                 <definition id="oval:mscp:def:{}" version="1" class="compliance"> 
                         <metadata> 
@@ -2876,7 +2985,7 @@ def generate_scap(all_rules, all_baselines, args):
                 </plist511_object>
                 <launchd_object id="oval:mscp:obj:{}" version="1" comment="{}_launchctl_object" xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos">
                     <label>{}</label>
-                </launchd_object>'''.format(rule_yaml['id'] + "_" + odv_label,x,domain,x+999,rule_yaml['id'] + "_" + odv_label,domain)
+                </launchd_object>'''.format(rule_yaml['id'] + "_" + odv_label,x,domain,x+999,rule_yaml['id'] + "_" + odv_label,domain.replace('(','').replace(')',''))
                             
                             status = ""
                             if "enable" in rule_yaml["fix"]:
@@ -2919,7 +3028,7 @@ def generate_scap(all_rules, all_baselines, args):
                             oval_object = oval_object + '''
                 <launchd_object id="oval:mscp:obj:{}" version="1" comment="{}_launchctl_object" xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos">
                     <label>{}</label>
-                </launchd_object>'''.format(x, rule_yaml['id'] + "_" + odv_label,domain)
+                </launchd_object>'''.format(x, rule_yaml['id'] + "_" + odv_label,domain.replace('(','').replace(')',''))
                         
 
 
@@ -3140,11 +3249,16 @@ def generate_scap(all_rules, all_baselines, args):
                             
                             domain = command[5].split()[2]
                             domain = domain.replace('"','').replace("'",'')
-
+                            ###########
+                            label_obj = '<label>'
+                            if 'E' in command[5].split()[1]:
+                                label_obj = '<label operation="pattern match">'
+                            else:
+                                domain = domain.replace('(','').replace(')','')
                             oval_object = oval_object + '''
                 <launchd_object id="oval:mscp:obj:{}" version="1" comment="{}_object" xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos">
-                    <label>{}</label>
-                </launchd_object>'''.format(x,rule_yaml['id'] + "_" + odv_label,domain)
+                    {}{}</label>
+                </launchd_object>'''.format(x,rule_yaml['id'] + "_" + odv_label,label_obj,domain)
                         x += 1
                         continue    
                 except:

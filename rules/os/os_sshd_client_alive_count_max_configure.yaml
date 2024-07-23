@@ -1,5 +1,5 @@
 id: os_sshd_client_alive_count_max_configure
-title: "Configure SSHD ClientAliveCountMax to $ODV"
+title: Configure SSHD ClientAliveCountMax to $ODV
 discussion: |
   If SSHD is enabled it _MUST_ be configured with the Client Alive Maximum Count set to $ODV.
 
@@ -35,38 +35,39 @@ fix: |
   ----
 references:
   cce:
-    - N/A
-  cci: 
+    - CCE-92898-6
+  cci:
     - CCI-001133
   800-53r5:
     - SC-10
-  800-53r4: 
+  800-53r4:
     - SC-10
   srg:
     - SRG-OS-000163-GPOS-00072
   disa_stig:
-    - N/A
+    - APPL-14-000052
   800-171r2:
     - 3.13.9
   cmmc:
     - SC.L2-3.13.9
 macOS:
-  - "14.0"
+  - '14.0'
 odv:
-  hint: "Number of seconds."
+  hint: Number of seconds.
   recommended: 0
   stig: 1
 tags:
-  - 800-53r5_moderate 
+  - 800-53r5_moderate
   - 800-53r5_high
-  - 800-53r4_moderate 
+  - 800-53r4_moderate
   - 800-53r4_high
   - 800-171
   - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
   - cmmc_lvl2
-severity: "medium"
+  - stig
+severity: medium
 mobileconfig: false
 mobileconfig_info:
 ddm_info:

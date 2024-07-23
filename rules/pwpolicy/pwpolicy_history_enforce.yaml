@@ -1,5 +1,5 @@
 id: pwpolicy_history_enforce
-title: "Prohibit Password Reuse for a Minimum of $ODV Generations"
+title: Prohibit Password Reuse for a Minimum of $ODV Generations
 discussion: |
   The macOS _MUST_ be configured to enforce a password history of at least $ODV previous passwords when a password is created.
 
@@ -11,12 +11,12 @@ discussion: |
 check: |
   /usr/bin/pwpolicy -getaccountpolicies 2> /dev/null | /usr/bin/tail +2 | /usr/bin/xmllint --xpath '//dict/key[text()="policyAttributePasswordHistoryDepth"]/following-sibling::*[1]/text()' - | /usr/bin/awk '{ if ($1 >= $ODV ) {print "yes"} else {print "no"}}'
 result:
-  string: "yes"
+  string: 'yes'
 fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-    - N/A
+    - CCE-92932-3
   cci:
     - CCI-000200
   800-53r5:
@@ -26,7 +26,7 @@ references:
   srg:
     - SRG-OS-000077-GPOS-00045
   disa_stig:
-    - N/A
+    - APPL-14-003009
   800-171r2:
     - 3.5.7
     - 3.5.8
@@ -42,9 +42,9 @@ references:
     - IA.L2-3.5.8
     - IA.L2-3.5.9
 macOS:
-  - "14.0"
+  - '14.0'
 odv:
-  hint: "Number of previous passwords."
+  hint: Number of previous passwords.
   recommended: 5
   cis_lvl1: 15
   cis_lvl2: 15
@@ -64,7 +64,8 @@ tags:
   - cnssi-1253_low
   - cnssi-1253_high
   - cmmc_lvl2
-severity: "medium"
+  - stig
+severity: medium
 mobileconfig: true
 mobileconfig_info:
   com.apple.mobiledevice.passwordpolicy:
