@@ -38,6 +38,7 @@ class MacSecurityRule:
         nist_171,
         disa_stig,
         srg,
+        sfr,
         cis,
         cmmc,
         custom_refs,
@@ -1916,6 +1917,11 @@ def create_args():
         default=None,
         help="sign the configuration profiles with subject key ID (hash value without spaces)",
     )
+    parser.add_argument(
+        "-a", "--audit_name",
+        default=None,
+        help="name of audit plist and log - defaults to baseline name",
+    )
     return parser.parse_args()
 
 
@@ -2067,19 +2073,19 @@ def main():
     with open(version_file) as r:
         version_yaml = yaml.load(r, Loader=yaml.SafeLoader)
 
-    adoc_templates = [
-        "adoc_rule",
-        "adoc_supplemental",
-        "adoc_rule_no_setting",
-        "adoc_rule_custom_refs",
-        "adoc_section",
-        "adoc_header",
-        "adoc_footer",
-        "adoc_foreword",
-        "adoc_scope",
-        "adoc_authors",
-        "adoc_acronyms",
-        "adoc_additional_docs",
+    adoc_templates = [ "adoc_rule_ios",
+                    "adoc_rule",
+                    "adoc_supplemental",
+                    "adoc_rule_no_setting",
+                    "adoc_rule_custom_refs",
+                    "adoc_section",
+                    "adoc_header",
+                    "adoc_footer",
+                    "adoc_foreword",
+                    "adoc_scope",
+                    "adoc_authors",
+                    "adoc_acronyms",
+                    "adoc_additional_docs"
     ]
     adoc_templates_dict = {}
 
