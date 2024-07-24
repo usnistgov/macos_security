@@ -28,14 +28,12 @@ references:
     - N/A
   cis:
     benchmark:
-      - 2.3.2.2 (level 1)
+      - N/A
     controls v8:
-      - 8.4
+      - N/A
 macOS:
   - "13.0"
 tags:
-  - cis_lvl1
-  - cis_lvl2
-  - cisv8
+  - none
 mobileconfig: false
 mobileconfig_info:
