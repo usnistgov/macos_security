@@ -1,6 +1,6 @@
-title: "macOS 14.0: Security Configuration - CIS Apple macOS 14.0 Sonoma v1.0.0 Benchmark (Level 2)"
+title: "macOS 14.0: Security Configuration - CIS Apple macOS 14.0 Sonoma v1.1.0 Benchmark (Level 2)"
 description: |
-  This guide describes the actions to take when securing a macOS 14.0 system against the CIS Apple macOS 14.0 Sonoma v1.0.0 Benchmark (Level 2) security baseline.
+  This guide describes the actions to take when securing a macOS 14.0 system against the CIS Apple macOS 14.0 Sonoma v1.1.0 Benchmark (Level 2) security baseline.
 authors: |
   *macOS Security Compliance Project*
 
@@ -48,9 +48,6 @@ profile:
       - os_firewall_log_enable
       - os_gatekeeper_enable
       - os_guest_folder_removed
-      - os_hibernate_mode_apple_silicon_enable
-      - os_hibernate_mode_destroyfvkeyonstandby_enable
-      - os_hibernate_mode_intel_enable
       - os_home_folders_secure
       - os_httpd_disable
       - os_install_log_retention_configure
@@ -64,7 +61,6 @@ profile:
       - os_root_disable
       - os_safari_advertising_privacy_protection_enable
       - os_safari_open_safe_downloads_disable
-      - os_safari_popups_disabled
       - os_safari_prevent_cross-site_tracking_enable
       - os_safari_show_full_website_address_enable
       - os_safari_show_status_bar_enabled
@@ -76,7 +72,7 @@ profile:
       - os_sudoers_timestamp_type_configure
       - os_system_wide_applications_configure
       - os_terminal_secure_keyboard_enable
-      - os_time_offset_limit_configure
+      - os_time_server_enabled
       - os_unlock_active_user_session_disable
       - os_world_writable_library_folder_configure
       - os_world_writable_system_folder_configure
@@ -106,6 +102,7 @@ profile:
       - system_settings_guest_access_smb_disable
       - system_settings_guest_account_disable
       - system_settings_hot_corners_secure
+      - system_settings_improve_siri_dictation_disable
       - system_settings_install_macos_updates_enforce
       - system_settings_internet_sharing_disable
       - system_settings_location_services_enable
@@ -121,6 +118,8 @@ profile:
       - system_settings_screen_sharing_disable
       - system_settings_screensaver_ask_for_password_delay_enforce
       - system_settings_screensaver_timeout_enforce
+      - system_settings_siri_listen_disable
+      - system_settings_sleep_enforce
       - system_settings_smbd_disable
       - system_settings_software_update_app_update_enforce
       - system_settings_software_update_download_enforce

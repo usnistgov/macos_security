@@ -116,12 +116,14 @@ profile:
       - os_library_validation_enabled
       - os_loginwindow_adminhostinfo_undefined
       - os_mail_app_disable
+      - os_malicious_code_prevention
       - os_mdm_require
       - os_messages_app_disable
       - os_mobile_file_integrity_enable
       - os_newsyslog_files_owner_group_configure
       - os_newsyslog_files_permissions_configure
       - os_nfsd_disable
+      - os_obscure_password
       - os_on_device_dictation_enforce
       - os_parental_controls_enable
       - os_password_autofill_disable
@@ -166,6 +168,7 @@ profile:
       - os_sshd_login_grace_time_configure
       - os_sshd_permit_root_login_configure
       - os_sshd_unused_connection_timeout_configure
+      - os_store_encrypted_passwords
       - os_sudo_timeout_configure
       - os_sudoers_timestamp_type_configure
       - os_system_read_only
@@ -187,6 +190,7 @@ profile:
       - pwpolicy_account_lockout_timeout_enforce
       - pwpolicy_alpha_numeric_enforce
       - pwpolicy_custom_regex_enforce
+      - pwpolicy_force_password_change
       - pwpolicy_history_enforce
       - pwpolicy_lower_case_character_enforce
       - pwpolicy_max_lifetime_enforce
@@ -240,7 +244,9 @@ profile:
       - system_settings_screensaver_password_enforce
       - system_settings_screensaver_timeout_enforce
       - system_settings_siri_disable
+      - system_settings_siri_listen_disable
       - system_settings_siri_settings_disable
+      - system_settings_sleep_enforce
       - system_settings_smbd_disable
       - system_settings_software_update_app_update_enforce
       - system_settings_software_update_download_enforce
@@ -260,6 +266,7 @@ profile:
       - system_settings_wake_network_access_disable
       - system_settings_wallet_applepay_settings_disable
       - system_settings_wifi_disable
+      - system_settings_wifi_disable_when_connected_to_ethernet
       - system_settings_wifi_menu_enable
   - section: "Inherent"
     rules:
