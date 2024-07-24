@@ -12,6 +12,8 @@ discussion: |
   |2.1.1.1 Audit iCloud Keychain +
   2.1.1.2 Audit iCloud Drive +
   2.1.1.4 Audit Security Keys Used With AppleIDs +
+  2.1.1.5 Audit Freeform Sync to iCloud +
+  2.1.1.6 Audit Find My Mac +
   2.1.2 Audit App Store Password Settings +
   2.3.3.12 Ensure Computer Name Does Not Contain PII or Protected Organizational Information +
   2.5.1 Audit Siri Settings +
@@ -19,6 +21,7 @@ discussion: |
   2.6.2.1 Audit Full Disk Access for Applications +
   2.6.7 Audit Lockdown Mode +
   2.8.1 Audit Universal Control Settings +
+  2.9.1.1 Ensure the OS Is Not Active When Resuming from Standby (Intel) +
   2.11.2 Audit Touch ID +
   2.13.1 Audit Passwords System Preference Setting +
   2.14.1 Audit Game Center Settings +
@@ -60,7 +63,7 @@ discussion: |
   6.3.2 Audit History and Remove History Items +
   6.3.5 Audit Hide IP Address in Safari Setting +
   6.3.8 Audit Autofill +
-  6.3.10 Ensure JavaScript is Enabled in Safari +
+  6.3.9 Audit Pop-up Windows +
   |===
 check: |
 fix: |
