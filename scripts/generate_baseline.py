@@ -452,52 +452,50 @@ def odv_query(rules, benchmark):
 def main():
 
     args = create_args()
-    try:
-        file_dir = os.path.dirname(os.path.abspath(__file__))
-        parent_dir = os.path.dirname(file_dir)
 
-        # stash current working directory
-        original_working_directory = os.getcwd()
+    file_dir = os.path.dirname(os.path.abspath(__file__))
+    parent_dir = os.path.dirname(file_dir)
 
-        # switch to the scripts directory
-        os.chdir(file_dir)
+    # stash current working directory
+    original_working_directory = os.getcwd()
 
-        all_rules = collect_rules()
+    # switch to the scripts directory
+    os.chdir(file_dir)
 
-        if args.list_tags:
-            available_tags(all_rules)
-            return
+    all_rules = collect_rules()
 
-        if args.controls:
-            baselines_file = os.path.join(
-            parent_dir, 'includes', '800-53_baselines.yaml')
+    if args.list_tags:
+        available_tags(all_rules)
+        return
+
+    if args.controls:
+        baselines_file = os.path.join(
+        parent_dir, 'includes', '800-53_baselines.yaml')
 
 
-            with open(baselines_file) as r:
-                baselines = yaml.load(r, Loader=yaml.SafeLoader)
+        with open(baselines_file) as r:
+            baselines = yaml.load(r, Loader=yaml.SafeLoader)
 
-            included_controls = get_controls(all_rules)
-            needed_controls = []
+        included_controls = get_controls(all_rules)
+        needed_controls = []
 
-            for control in baselines['low']:
-                if control not in needed_controls:
-                    needed_controls.append(control)
+        for control in baselines['low']:
+            if control not in needed_controls:
+                needed_controls.append(control)
 
-            for n_control in needed_controls:
-                if n_control not in included_controls:
-                    print(f'{n_control} missing from any rule, needs a rule, or included in supplemental')
+        for n_control in needed_controls:
+            if n_control not in included_controls:
+                print(f'{n_control} missing from any rule, needs a rule, or included in supplemental')
 
-            return
+        return
 
-        build_path = os.path.join(parent_dir, 'build', 'baselines')
-        if not (os.path.isdir(build_path)):
-            try:
-                os.makedirs(build_path)
-            except OSError:
-                print(f"Creation of the directory {build_path} failed")
+    build_path = os.path.join(parent_dir, 'build', 'baselines')
+    if not (os.path.isdir(build_path)):
+        try:
+            os.makedirs(build_path)
+        except OSError:
+            print(f"Creation of the directory {build_path} failed")
 
-    except IOError as msg:
-        parser.error(str(msg))
 
     # import mscp-data
     mscp_data_file = os.path.join(
