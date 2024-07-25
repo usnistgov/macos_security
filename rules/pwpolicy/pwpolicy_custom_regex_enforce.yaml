@@ -76,3 +76,9 @@ mobileconfig_info:
       passwordContentRegex: $ODV
       passwordContentDescription:
         default: Password must match custom regex.
+ddm_info:
+  declarationtype: com.apple.configuration.passcode.settings
+  ddm_key: CustomRegex
+  ddm_value:
+    Regex: $ODV
+    Description: Password must match custom regex.
