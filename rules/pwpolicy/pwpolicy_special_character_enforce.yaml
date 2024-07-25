@@ -27,7 +27,7 @@ references:
   srg:
     - SRG-OS-000266-GPOS-00101
   disa_stig:
-    - N/A
+    - APPL-15-003011
   800-171r2:
     - 3.5.1
     - 3.5.2
