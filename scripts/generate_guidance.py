@@ -711,6 +711,8 @@ def generate_ddm(baseline_name, build_path, parent_dir, baseline_yaml):
             )
 
     for ddm_type in mscp_data_yaml["ddm"]["supported_types"]:
+        if ddm_type not in ddm_dict.keys():
+            continue
         if ddm_type == "com.apple.configuration.services.configuration-files":
             # build zip files for configs
             for service in mscp_data_yaml["ddm"]["services"]:
