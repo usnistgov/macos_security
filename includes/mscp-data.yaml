@@ -96,6 +96,7 @@ ddm:
   supported_types:
     - com.apple.configuration.services.configuration-files
     - com.apple.configuration.passcode.settings
+    - com.apple.configuration.diskmanagement.settings
   services:
     com.apple.bash: /etc/
     com.apple.pam: /etc/pam.d/

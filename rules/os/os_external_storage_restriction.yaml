@@ -1,0 +1,38 @@
+id: os_external_storage_restriction
+title: External Storage Must Be Restricted
+discussion: |-
+  External Storage _MUST_ be restricted. 
+  
+  NOTE: Apple's built in method using declative device management method only allows you to set external storage manament to Allowed, ReadOnly, and Disallowed.
+check: |
+  /usr/bin/plutil -convert json /var/db/ManagedConfigurationFiles/DiskManagement/DiskManagement_Settings.plist -o - | /usr/bin/jq '.Restrictions | .ExternalStorage'
+result:
+  string: $ODV
+fix: |
+  This is implemented by a Declarative Device Management.
+references:
+  cce:
+    - N/A
+  cci:
+    - N/A
+  800-53r5:
+    - N/A
+  srg:
+    - N/A
+  disa_stig:
+    - N/A
+  800-171r2:
+    - N/A
+macOS:
+  - '15.0'
+tags:
+  - none
+odv:
+  hint: Allowed, ReadOnly, or Disallowed
+  recommended: Allowed
+mobileconfig: false
+mobileconfig_info:
+ddm_info:
+  declarationtype: com.apple.configuration.diskmanagement.settings
+  ddm_key: ExternalStorage
+  ddm_value: $ODV
