@@ -702,6 +702,11 @@ def generate_ddm(baseline_name, build_path, parent_dir, baseline_yaml):
                     f'{ddm_rule["ddm_info"]["configuration_key"]} {ddm_rule["ddm_info"]["configuration_value"]}\n'
                 )
 
+            # add configuration-files type to ddm_dict
+            ddm_dict.setdefault(ddm_rule["ddm_info"]["declarationtype"], {}).update(
+                {}
+            )
+
             service_config_file.close()
         else:
             ddm_key = ddm_rule["ddm_info"]["ddm_key"]
