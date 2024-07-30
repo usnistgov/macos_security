@@ -103,3 +103,16 @@ tags:
 severity: high
 mobileconfig: false
 mobileconfig_info:
+ddm_info:
+  declarationtype: com.apple.configuration.services.configuration-files
+  service: com.apple.sshd
+  config_file: sshd_config
+  configuration_key: file
+  configuration_value: |
+    Ciphers aes128-gcm@openssh.com
+    HostbasedAcceptedAlgorithms ecdsa-sha2-nistp256,ecdsa-sha2-nistp256-cert-v01@openssh.com
+    HostKeyAlgorithms ecdsa-sha2-nistp256,ecdsa-sha2-nistp256-cert-v01@openssh.com
+    KexAlgorithms ecdh-sha2-nistp256
+    MACs hmac-sha2-256
+    PubkeyAcceptedAlgorithms ecdsa-sha2-nistp256,ecdsa-sha2-nistp256-cert-v01@openssh.com
+    CASignatureAlgorithms ecdsa-sha2-nistp256
