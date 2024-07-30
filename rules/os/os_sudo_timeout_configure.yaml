@@ -49,3 +49,9 @@ tags:
 severity: medium
 mobileconfig: false
 mobileconfig_info:
+ddm_info:
+  declarationtype: com.apple.configuration.services.configuration-files
+  service: com.apple.sudo
+  config_file: sudoers
+  configuration_key: Defaults timestamp_timeout=
+  configuration_value: $ODV
