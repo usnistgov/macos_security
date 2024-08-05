@@ -18,7 +18,7 @@ check: |
   CASignatureAlgorithms ecdsa-sha2-nistp256,sk-ecdsa-sha2-nistp256@openssh.com"
   /usr/bin/grep -c "$fips_ssh_config" /etc/ssh/crypto.conf
 result:
-  integer: 8
+  integer: 7
 fix: |
   [source,bash]
   ----
