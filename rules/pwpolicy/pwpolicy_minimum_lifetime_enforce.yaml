@@ -41,6 +41,7 @@ references:
     - N/A
   cci:
     - CCI-000198
+    - CCI-004066
   800-53r5:
     - IA-5
   800-53r4:

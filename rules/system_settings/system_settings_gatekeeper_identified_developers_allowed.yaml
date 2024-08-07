@@ -27,6 +27,7 @@ references:
     - N/A
   cci:
     - CCI-001749
+    - CCI-003992
   800-53r5:
     - CM-14
     - CM-5

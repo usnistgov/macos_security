@@ -21,6 +21,7 @@ references:
   cci:
     - CCI-000764
     - CCI-000770
+    - CCI-004045
   800-53r5:
     - IA-2
     - IA-2(5)
