@@ -85,6 +85,7 @@ references:
     - AC-6(2)
   srg:
     - SRG-OS-000324-GPOS-00125
+    - SRG-OS-000480-GPOS-00228
   disa_stig:
     - APPL-15-002069
   800-171r2:

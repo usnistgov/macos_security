@@ -35,6 +35,7 @@ references:
     - AC-2(9)
   srg:
     - SRG-OS-000364-GPOS-00151
+    - SRG-OS-000480-GPOS-00228
   disa_stig:
     - APPL-15-002063
   800-171r2:

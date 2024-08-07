@@ -44,6 +44,7 @@ references:
     - MP.L2-3.8.8
   srg:
     - SRG-OS-000378-GPOS-00163
+    - SRG-OS-000690-GPOS-00140
   disa_stig:
     - APPL-15-005090
 macOS:

@@ -25,6 +25,7 @@ references:
     - IA-5(1)
   srg:
     - SRG-OS-000071-GPOS-00039
+    - SRG-OS-000775-GPOS-00230
   disa_stig:
     - APPL-15-003007
   800-171r2:

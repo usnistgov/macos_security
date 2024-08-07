@@ -22,6 +22,7 @@ references:
     - SC-17
   srg:
     - SRG-OS-000403-GPOS-00182
+    - SRG-OS-000775-GPOS-00230
   disa_stig:
     - APPL-15-003001
   cmmc:
