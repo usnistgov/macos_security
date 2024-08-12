@@ -98,7 +98,6 @@ profile:
       - os_filevault_authorized_users
       - os_filevault_autologin_disable
       - os_firewall_default_deny_require
-      - os_firewall_log_enable
       - os_firmware_password_require
       - os_gatekeeper_enable
       - os_gatekeeper_rearm
