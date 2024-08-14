@@ -9,7 +9,7 @@ discussion: |
 
   WARNING: If more than one partition with macOS is detected, the csrutil command will hang awaiting input.
 check: |
-  /usr/bin/csrutil authenticated-root | /usr/bin/grep -c 'enabled'
+  /usr/libexec/mdmclient QuerySecurityInfo | /usr/bin/grep -c "AuthenticatedRootVolumeEnabled = 1;"
 result:
   integer: 1
 fix: |

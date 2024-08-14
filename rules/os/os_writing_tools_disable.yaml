@@ -15,13 +15,29 @@ references:
   cce:
     - N/A
   cci:
+    - CCI-000381
+    - CCI-001774
+  srg:
+    - SRG-OS-000095-GPOS-00049
+  disa_stig:
     - N/A
   800-53r5:
-    - N/A
+    - AC-20
+    - AC-20(1)
+    - CM-7
+    - CM-7(1)
+    - SC-7(10)
 macOS:
   - '15.0'
 tags:
-  - none
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_high
+  - 800-171
+  - cnssi-1253_moderate
+  - cnssi-1253_low
+  - cnssi-1253_high
+  - stig
 mobileconfig: true
 mobileconfig_info:
   com.apple.applicationaccess:
