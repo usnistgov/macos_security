@@ -645,6 +645,34 @@ def create_ddm_activation(identifier, ddm_output_path):
     ) as outfile:
         outfile.write(ddm_object)
 
+    return
+
+def create_ddm_conf(identifier, service, ddm_output_path):
+
+    ddm_output_path = f'{ddm_output_path}/configurations'
+    ddm_identifier = f'{identifier.replace("asset","config")}'
+    ddm_json = {}
+    ddm_json["Identifier"] = ddm_identifier
+    ddm_json["Type"] = "com.apple.configuration.services.configuration-files"
+    ddm_json["Payload"] = { "ServiceType" : service,
+                            "DataAssetReference" : identifier }
+
+    ddm_object = json.dumps(ddm_json, indent=4)
+    
+    logging.debug(f"Building declarative configuration for {ddm_identifier}...")
+
+    # Writing the .json to disk
+    if not (os.path.isdir(ddm_output_path)):
+        try:
+            os.makedirs(ddm_output_path)
+        except OSError:
+            print("Creation of the directory %s failed" % ddm_output_path)
+
+    with open(
+        ddm_output_path + "/" + ddm_identifier + ".json", "w"
+    ) as outfile:
+        outfile.write(ddm_object)
+
     return 
 
 def generate_ddm(baseline_name, build_path, parent_dir, baseline_yaml):
@@ -802,6 +830,9 @@ def generate_ddm(baseline_name, build_path, parent_dir, baseline_yaml):
                             
                             # create activation
                             create_ddm_activation(ddm_identifier, ddm_output_path)
+
+                            # create configuration declaration for assets
+                            create_ddm_conf(ddm_identifier, service, ddm_output_path)
         else:
             logging.debug(f"Building any declarations for {ddm_type}...")
             ddm_identifier = f'org.mscp.{baseline_name}.config.{ddm_type.replace("com.apple.configuration.", "")}'
