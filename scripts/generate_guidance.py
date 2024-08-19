@@ -620,6 +620,32 @@ def zip_folder(folder_to_zip):
 
     return zip_object.filename
 
+def create_ddm_activation(identifier, ddm_output_path):
+
+    ddm_output_path = f'{ddm_output_path}/activations'
+    ddm_identifier = f'{identifier.replace("config","activation").replace("asset","activation")}'
+    ddm_json = {}
+    ddm_json["Identifier"] = ddm_identifier
+    ddm_json["Type"] = "com.apple.activation.simple"
+    ddm_json["Payload"] = { "StandardConfigurations" : [ identifier ]}
+
+    ddm_object = json.dumps(ddm_json, indent=4)
+    
+    logging.debug(f"Building declarative activation for {ddm_identifier}...")
+
+    # Writing the .json to disk
+    if not (os.path.isdir(ddm_output_path)):
+        try:
+            os.makedirs(ddm_output_path)
+        except OSError:
+            print("Creation of the directory %s failed" % ddm_output_path)
+
+    with open(
+        ddm_output_path + "/" + ddm_identifier + ".json", "w"
+    ) as outfile:
+        outfile.write(ddm_object)
+
+    return 
 
 def generate_ddm(baseline_name, build_path, parent_dir, baseline_yaml):
     """Generate the declarative management artifacts for the rules in the provided baseline YAML file"""
@@ -724,7 +750,7 @@ def generate_ddm(baseline_name, build_path, parent_dir, baseline_yaml):
                 for root, dirs, files in os.walk(ddm_output_path):
                     for folder in dirs:
                         if folder == service:
-                            print(
+                            logging.debug(
                                 f"Found Configuration files for {service}, zipping..."
                             )
                             service_path = os.path.join(ddm_output_path, service)
@@ -759,13 +785,26 @@ def generate_ddm(baseline_name, build_path, parent_dir, baseline_yaml):
                             ddm_object = json.dumps(ddm_json, indent=4)
 
                             # Writing the .json to disk
+                            ddm_asset_output_path = f'{ddm_output_path}/assets'
+                            if not (os.path.isdir(ddm_asset_output_path)):
+                                try:
+                                    os.makedirs(ddm_asset_output_path)
+                                except OSError:
+                                    print("Creation of the directory %s failed" % ddm_asset_output_path)
+                            
                             with open(
-                                ddm_output_path + "/" + ddm_identifier + ".json", "w"
+                                ddm_asset_output_path + "/" + ddm_identifier + ".json", "w"
                             ) as outfile:
                                 outfile.write(ddm_object)
+                            
+                            # move .zips to assets
+                            shutil.move(zip_file,ddm_asset_output_path)
+                            
+                            # create activation
+                            create_ddm_activation(ddm_identifier, ddm_output_path)
         else:
-            print(f"Building any declarations for {ddm_type}...")
-            ddm_identifier = f"org.mscp.{baseline_name}.config.{ddm_type}"
+            logging.debug(f"Building any declarations for {ddm_type}...")
+            ddm_identifier = f'org.mscp.{baseline_name}.config.{ddm_type.replace("com.apple.configuration.", "")}'
             ddm_json = {}
             ddm_json["Identifier"] = ddm_identifier
             ddm_json["Type"] = ddm_type
@@ -774,8 +813,20 @@ def generate_ddm(baseline_name, build_path, parent_dir, baseline_yaml):
             ddm_object = json.dumps(ddm_json, indent=4)
 
             # Writing the .json to disk
-            with open(ddm_output_path + "/" + ddm_type + ".json", "w") as outfile:
+            ddm_config_output_path = f'{ddm_output_path}/configurations'
+            if not (os.path.isdir(ddm_config_output_path)):
+                try:
+                    os.makedirs(ddm_config_output_path)
+                except OSError:
+                    print("Creation of the directory %s failed" % ddm_config_output_path)
+            
+            with open(
+                ddm_config_output_path + "/" + ddm_identifier + ".json", "w"
+            ) as outfile:
                 outfile.write(ddm_object)
+            
+            # create activation
+            create_ddm_activation(ddm_identifier, ddm_output_path)
 
 
 def default_audit_plist(baseline_name, build_path, baseline_yaml):
@@ -1471,6 +1522,10 @@ def fill_in_odv(resulting_yaml, parent_values):
 
         if "ddm_info" in resulting_yaml.keys():
             for ddm_type, value in resulting_yaml["ddm_info"].items():
+                if isinstance(value, dict):
+                    for _value in value:
+                        if "$ODV" in str(value[_value]):
+                            resulting_yaml["ddm_info"][ddm_type] = odv
                 if "$ODV" in value:
                     resulting_yaml["ddm_info"][ddm_type] = odv
 
