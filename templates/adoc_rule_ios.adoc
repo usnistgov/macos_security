@@ -18,6 +18,8 @@ $rule_fix
 |ID
 |$rule_id
 
+$severity
+
 |References
 |
 

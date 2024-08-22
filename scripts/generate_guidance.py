@@ -1702,7 +1702,7 @@ def generate_xls(baseline_name, build_path, baseline_yaml):
     top = easyxf("align: vert top")
     headers = easyxf("font: bold on")
     counter = 1
-    column_counter = 17
+    column_counter = 18
     custom_ref_column = {}
     sheet1.write(0, 0, "CCE", headers)
     sheet1.write(0, 1, "Rule ID", headers)
@@ -1722,6 +1722,7 @@ def generate_xls(baseline_name, build_path, baseline_yaml):
     sheet1.write(0, 15, "CMMC", headers)
     sheet1.write(0, 16, "CCI", headers)
     sheet1.write(0, 17, "Modifed Rule", headers)
+    sheet1.write(0, 18, "Severity", headers)
     sheet1.set_panes_frozen(True)
     sheet1.set_horz_split_pos(1)
     sheet1.set_vert_split_pos(2)
@@ -1848,6 +1849,20 @@ def generate_xls(baseline_name, build_path, baseline_yaml):
                 added_ref = added_ref.replace(", ", "\n").replace("'", "")
                 sheet1.write(counter, custom_ref_column[title], added_ref, topWrap)
 
+        # determine severity
+        # uses 'parent_values' from baseline.yaml file to determine which/if any severity to use
+        severity = ""
+        if isinstance(rule.rule_severity, str):
+            severity = f'{rule.rule_severity}'
+        if isinstance(rule.rule_severity, dict):
+            try:
+                severity = f'{rule.rule_severity[baseline_yaml["parent_values"]]}'
+            except KeyError:
+                severity = ""
+
+        sheet1.write(counter, 18, severity, topWrap)
+        sheet1.col(18).width = 400 * 15
+
         tall_style = easyxf("font:height 640;")  # 36pt
 
         sheet1.row(counter).set_style(tall_style)
@@ -1917,7 +1932,7 @@ def create_rules(baseline_yaml):
                             rule_yaml[key].update({reference: ["None"]})
             all_rules.append(MacSecurityRule(rule_yaml['title'].replace('|', r'\|'),
                                         rule_yaml['id'].replace('|', r'\|'),
-                                        rule_yaml['severity'].replace('|', r'\|'),
+                                        rule_yaml['severity'],
                                         rule_yaml['discussion'],  #.replace('|', r'\|'),
                                         rule_yaml['check'].replace('|', r'\|'),
                                         rule_yaml['fix'].replace('|', r'\|'),
@@ -2479,6 +2494,19 @@ def main():
                 result_value = result["base64"]
             else:
                 result_value = "N/A"
+            
+            # determine severity, if severity is determined, build asciidoc table row for references
+            # uses 'parent_values' from baseline.yaml file to determine which/if any severity to use
+            if "severity" in rule_yaml.keys():
+                if isinstance(rule_yaml["severity"], str):
+                    severity = f'|Severity\n|{rule_yaml["severity"]}'
+                if isinstance(rule_yaml["severity"], dict):
+                    try:
+                        severity = f'|Severity\n|{rule_yaml["severity"][baseline_yaml["parent_values"]]}'
+                    except KeyError:
+                        severity = ""
+            else:
+                severity = ""
 
             # determine if configprofile
             try:
@@ -2530,7 +2558,8 @@ def main():
                     rule_tags=tags,
                     rule_srg=srg,
                     rule_sfr=sfr,
-                    rule_result=result_value
+                    rule_result=result_value,
+                    severity=severity
                 )
             elif ("permanent" in tags) or ("inherent" in tags) or ("n_a" in tags):
                 rule_adoc = adoc_rule_no_setting_template.substitute(
@@ -2566,7 +2595,8 @@ def main():
                         rule_tags=tags,
                         rule_srg=srg,
                         rule_sfr=sfr,
-                        rule_result=result_value
+                        rule_result=result_value,
+                        severity=severity
                     )
                 else:
                     rule_adoc = adoc_rule_template.substitute(
@@ -2585,7 +2615,8 @@ def main():
                         rule_tags=tags,
                         rule_srg=srg,
                         rule_sfr=sfr,
-                        rule_result=result_value
+                        rule_result=result_value,
+                        severity=severity
                     )
 
             adoc_output_file.write(rule_adoc)

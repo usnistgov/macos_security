@@ -134,7 +134,7 @@ def collect_rules():
 
         all_rules.append(MacSecurityRule(rule_yaml['title'].replace('|', '\|'),
                                     rule_yaml['id'].replace('|', '\|'),
-                                    rule_yaml['severity'].replace('|', '\|'),
+                                    rule_yaml['severity'],
                                     rule_yaml['discussion'].replace('|', '\|'),
                                     rule_yaml['check'].replace('|', '\|'),
                                     rule_yaml['fix'].replace('|', '\|'),

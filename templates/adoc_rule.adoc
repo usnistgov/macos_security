@@ -22,7 +22,9 @@ $rule_fix
 |===
 
 |ID
-|$rule_id
+|$rule_id 
+
+$severity
 
 |References
 |

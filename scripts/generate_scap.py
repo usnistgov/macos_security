@@ -356,10 +356,17 @@ def generate_scap(all_rules, all_baselines, args):
                 result = ""
             severity = str()
 
-            if "severity" in rule_yaml:
-                severity = rule_yaml['severity']
+            if severity in rule_yaml:
+                if isinstance(rule_yaml["severity"], str):
+                    severity = f'{rule_yaml["severity"]}'
+                if isinstance(rule_yaml["severity"], dict):
+                    try:
+                        severity = f'{rule_yaml["severity"][args.baseline]}'
+                    except KeyError:
+                        severity = "unknown"
             else:
                 severity = "unknown"
+
             check_rule = str()
             if "inherent" in rule_yaml['tags'] or "n_a" in rule_yaml['tags'] or "permenant" in rule_yaml['tags']:
                 check_rule = '''
@@ -3621,7 +3628,7 @@ def collect_rules():
 
         all_rules.append(MacSecurityRule(rule_yaml['title'].replace('|', '\|'),
                                     rule_yaml['id'].replace('|', '\|'),
-                                    rule_yaml['severity'].replace('|', '\|'),
+                                    rule_yaml['severity'],
                                     rule_yaml['discussion'].replace('|', '\|'),
                                     rule_yaml['check'].replace('|', '\|'),
                                     rule_yaml['fix'].replace('|', '\|'),
