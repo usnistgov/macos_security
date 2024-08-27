@@ -8,7 +8,7 @@ check: |
   .objectForKey('VoiceTriggerUserEnabled').js
   EOS
 result:
-  integer: 1
+  string: 'false'
 fix: |
   This is implemented by a Configuration Profile.
 references:
