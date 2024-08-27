@@ -2497,16 +2497,14 @@ def main():
             
             # determine severity, if severity is determined, build asciidoc table row for references
             # uses 'parent_values' from baseline.yaml file to determine which/if any severity to use
+            severity = ""
             if "severity" in rule_yaml.keys():
-                if isinstance(rule_yaml["severity"], str):
-                    severity = f'|Severity\n|{rule_yaml["severity"]}'
                 if isinstance(rule_yaml["severity"], dict):
                     try:
                         severity = f'|Severity\n|{rule_yaml["severity"][baseline_yaml["parent_values"]]}'
+                        print(severity)
                     except KeyError:
                         severity = ""
-            else:
-                severity = ""
 
             # determine if configprofile
             try:
