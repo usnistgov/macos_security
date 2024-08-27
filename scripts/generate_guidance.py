@@ -834,7 +834,7 @@ fi
 /usr/bin/mcxrefresh -u $CURR_USER_UID
 
 # write timestamp of last compliance check
-/usr/bin/defaults write "$audit_plist" lastComplianceCheck "$(date)"
+/usr/bin/defaults write "$audit_plist" lastComplianceCheck "$(date +"%Y-%m-%d %H:%M:%S%z")"
     """
 
     # Read all rules in the section and output the check functions
