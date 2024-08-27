@@ -834,7 +834,7 @@ fi
 /usr/bin/mcxrefresh -u $CURR_USER_UID
 
 # write timestamp of last compliance check
-/usr/bin/defaults write "$audit_plist" lastComplianceCheck "$(date)"
+/usr/bin/defaults write "$audit_plist" lastComplianceCheck "$(date +"%Y-%m-%d %H:%M:%S%z")"
     """
 
     # Read all rules in the section and output the check functions
@@ -1104,7 +1104,7 @@ usage=(
     " "
     "Optional parameters:"
     "--check            :   run the compliance checks without interaction"
-    "--fix              :   run the remediation commands without interation"
+    "--fix              :   run the remediation commands without interaction"
     "--cfc              :   runs a check, fix, check without interaction"
     "--stats            :   display the statistics from last compliance check"
     "--compliant        :   reports the number of compliant checks"
@@ -1347,7 +1347,7 @@ def generate_xls(baseline_name, build_path, baseline_yaml):
     sheet1.write(0, 14, "CIS v8", headers)
     sheet1.write(0, 15, "CMMC", headers)
     sheet1.write(0, 16, "CCI", headers)
-    sheet1.write(0, 17, "Modifed Rule", headers)
+    sheet1.write(0, 17, "Modified Rule", headers)
     sheet1.set_panes_frozen(True)
     sheet1.set_horz_split_pos(1)
     sheet1.set_vert_split_pos(2)
@@ -1761,7 +1761,7 @@ def main():
     pdf_theme="mscp-theme.yml"
     themes = glob.glob('../custom/templates/*theme*.yml')
     if len(themes) > 1 :
-        print("Found muliple custom themes in directory, only one can exist, using default")
+        print("Found multiple custom themes in directory, only one can exist, using default")
     elif len(themes) == 1 :
         print(f"Found custom PDF theme: {themes[0]}")
         pdf_theme = themes[0]
