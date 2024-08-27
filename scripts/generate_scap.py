@@ -361,7 +361,7 @@ def generate_scap(all_rules, all_baselines, args):
             else:
                 severity = "unknown"
             check_rule = str()
-            if "inherent" in rule_yaml['tags'] or "n_a" in rule_yaml['tags'] or "permenant" in rule_yaml['tags']:
+            if "inherent" in rule_yaml['tags'] or "n_a" in rule_yaml['tags'] or "permanent" in rule_yaml['tags']:
                 check_rule = '''
             <check system="http://scap.nist.gov/schema/ocil/2">
             <check-content-ref href="ocil.xml"/></check>'''
