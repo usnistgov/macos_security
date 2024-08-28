@@ -1674,58 +1674,54 @@ def main():
     else:
         logging.basicConfig(level=logging.WARNING)
 
-    try:
-        output_basename = os.path.basename(args.baseline.name)
-        output_filename = os.path.splitext(output_basename)[0]
-        baseline_name = os.path.splitext(output_basename)[0]#.capitalize()
-        file_dir = os.path.dirname(os.path.abspath(__file__))
-        parent_dir = os.path.dirname(file_dir)
+    output_basename = os.path.basename(args.baseline.name)
+    output_filename = os.path.splitext(output_basename)[0]
+    baseline_name = os.path.splitext(output_basename)[0]#.capitalize()
+    file_dir = os.path.dirname(os.path.abspath(__file__))
+    parent_dir = os.path.dirname(file_dir)
 
-        # stash current working directory
-        original_working_directory = os.getcwd()
+    # stash current working directory
+    original_working_directory = os.getcwd()
 
-        # switch to the scripts directory
-        os.chdir(file_dir)
+    # switch to the scripts directory
+    os.chdir(file_dir)
 
-        audit_name = args.audit_name
+    audit_name = args.audit_name
 
-        if args.logo:
-            logo = args.logo
-            pdf_logo_path = logo
-        else:
-            logo = "../../templates/images/mscp_banner.png"
-            pdf_logo_path = "../templates/images/mscp_banner.png"
+    if args.logo:
+        logo = args.logo
+        pdf_logo_path = logo
+    else:
+        logo = "../../templates/images/mscp_banner.png"
+        pdf_logo_path = "../templates/images/mscp_banner.png"
 
-        # convert logo to base64 for inline processing
-        b64logo = base64.b64encode(open(pdf_logo_path, "rb").read())
-        
+    # convert logo to base64 for inline processing
+    b64logo = base64.b64encode(open(pdf_logo_path, "rb").read())
+    
 
-        build_path = os.path.join(parent_dir, 'build', f'{baseline_name}')
-        if not (os.path.isdir(build_path)):
-            try:
-                os.makedirs(build_path)
-            except OSError:
-                print(f"Creation of the directory {build_path} failed")
-        adoc_output_file = open(f"{build_path}/{output_filename}.adoc", 'w')
-        print('Profile YAML:', args.baseline.name)
-        print('Output path:', adoc_output_file.name)
+    build_path = os.path.join(parent_dir, 'build', f'{baseline_name}')
+    if not (os.path.isdir(build_path)):
+        try:
+            os.makedirs(build_path)
+        except OSError:
+            print(f"Creation of the directory {build_path} failed")
+    adoc_output_file = open(f"{build_path}/{output_filename}.adoc", 'w')
+    print('Profile YAML:', args.baseline.name)
+    print('Output path:', adoc_output_file.name)
 
-        if args.hash:
-            signing = True
-            if not verify_signing_hash(args.hash):
-                sys.exit('Cannot use the provided hash to sign.  Please make sure you provide the subject key ID hash from an installed certificate')
-        else:
-            signing = False
+    if args.hash:
+        signing = True
+        if not verify_signing_hash(args.hash):
+            sys.exit('Cannot use the provided hash to sign.  Please make sure you provide the subject key ID hash from an installed certificate')
+    else:
+        signing = False
 
-        if args.reference:
-            use_custom_reference = True
-            log_reference = args.reference
-        else:
-            log_reference = "default"
-            use_custom_reference = False
-
-    except IOError as msg:
-        parser.error(str(msg))
+    if args.reference:
+        use_custom_reference = True
+        log_reference = args.reference
+    else:
+        log_reference = "default"
+        use_custom_reference = False
 
 
     baseline_yaml = yaml.load(args.baseline, Loader=yaml.SafeLoader)
