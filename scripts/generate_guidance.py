@@ -933,8 +933,7 @@ fi
             elif "base64" in result:
                 result_string_bytes = f'{result["base64"]}\n'.encode("UTF-8")
                 result_encoded = base64.b64encode(result_string_bytes)
-                result_value = result_encoded.decode()
-                result = f'base64: {result_value}'
+                result['base64'] = result_encoded.decode()
             else:
                 continue
 
@@ -994,7 +993,7 @@ else
     logmessage "{5} does not apply to this architecture"
     /usr/bin/defaults write "$audit_plist" {0} -dict-add finding -bool NO
 fi
-    """.format(rule_yaml['id'], nist_controls.replace("\n", "\n#"), check.strip(), str(result).lower(), result_value, ' '.join(log_reference_id), arch, baseline_name)
+    """.format(rule_yaml['id'], nist_controls.replace("\n", "\n#"), check.strip(), str(result), result_value, ' '.join(log_reference_id), arch, baseline_name)
 
             check_function_string = check_function_string + zsh_check_text
 
