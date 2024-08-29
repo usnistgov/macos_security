@@ -1,0 +1,37 @@
+id: os_allow_personalized_handwrirting_results
+title: "Ensure the ability to analyse handwriting is set to Disabled"
+discussion: |
+  AI handwriting analysis _MUST_ be disabled.
+check: " "
+fix: |
+  This is implemented by a Configuration Profile.
+references:
+  cce:
+    - N/A
+  cci: 
+    - N/A
+  800-53r5:
+    - 
+  sfr:
+    - N/A
+  disa_stig:
+    - N/A
+  800-171r2:
+    - N/A
+  cis:
+    benchmark:
+      - 
+    controls v8:
+      -
+iOS:
+  - "18.0"
+tags:
+  - ios
+  - 800-53r5_low 
+  - 800-53r5_moderate 
+  - 800-53r5_high
+supervised: false
+mobileconfig: true
+mobileconfig_info:
+  com.apple.applicationaccess:
+    allowPersonalizedHandwritingResults: false
