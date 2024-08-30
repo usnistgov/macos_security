@@ -55,8 +55,7 @@ references:
     - SRG-OS-000105-GPOS-00052
   disa_stig:
     - APPL-14-003051
-  800-171r2:
-    - 3.5.3
+  800-171r3:
   cis:
     benchmark:
       - N/A

@@ -24,8 +24,7 @@ references:
     - N/A
   srg:
     - N/A
-  800-171r2:
-    - N/A
+  800-171r3:
   cis:
     benchmark:
       - 6.4.1 (level 1)

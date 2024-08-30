@@ -87,9 +87,7 @@ references:
     - SRG-OS-000324-GPOS-00125
   disa_stig:
     - APPL-14-002069
-  800-171r2:
-    - 3.1.5
-    - 3.1.6
+  800-171r3:
   cis:
     benchmark:
       - 2.6.8 (level 1)

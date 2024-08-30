@@ -24,8 +24,7 @@ references:
     - N/A
   disa_stig:
     - N/A
-  800-171r2:
-    - N/A
+  800-171r3:
   cis:
     benchmark:
       - 5.9 (level 1)

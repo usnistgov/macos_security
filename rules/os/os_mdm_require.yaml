@@ -38,9 +38,7 @@ references:
     - APPL-14-005110
   srg:
     - SRG-OS-000480-GPOS-00227
-  800-171r2:
-    - 3.4.1
-    - 3.4.2
+  800-171r3:
   cis:
     benchmark:
       - 1.8 (level 1)
