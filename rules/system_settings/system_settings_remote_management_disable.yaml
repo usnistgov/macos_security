@@ -17,6 +17,8 @@ references:
   cci:
     - CCI-000381
   800-53r5:
+    - AC-3
+    - AC-17
     - CM-7
     - CM-7(1)
   800-53r4:

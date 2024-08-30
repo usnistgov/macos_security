@@ -22,6 +22,7 @@ references:
   800-53r5:
     - AC-3
     - AC-17
+    - CM-7
   800-53r4:
     - AC-3
     - AC-17

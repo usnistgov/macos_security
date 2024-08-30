@@ -19,7 +19,6 @@ references:
   cci:
     - N/A
   800-53r5:
-    - CM-5
     - SI-7(15)
   800-53r4:
     - CM-5
