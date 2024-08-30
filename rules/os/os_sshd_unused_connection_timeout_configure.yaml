@@ -47,8 +47,7 @@ references:
     - SRG-OS-000279-GPOS-00109
   disa_stig:
     - APPL-14-000130
-  800-171r2:
-    - 3.13.9
+  800-171r3:
   cmmc:
     - AC.L2-3.1.11
     - SC.L2-3.13.9

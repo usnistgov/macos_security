@@ -22,8 +22,7 @@ references:
     - SRG-OS-000054-GPOS-00025
   disa_stig:
     - N/A
-  800-171r2:
-    - N/A
+  800-171r3:
   cmmc:
     - AU.L2-3.3.6
 macOS:

@@ -25,8 +25,7 @@ references:
     - N/A
   srg:
     - SRG-OS-000324-GPOS-00125
-  800-171r2:
-    - 3.1.7
+  800-171r3:
   cmmc:
     - AC.L2-3.1.7
 macOS:

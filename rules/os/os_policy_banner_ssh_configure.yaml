@@ -32,8 +32,7 @@ references:
     - SRG-OS-000023-GPOS-00006
   disa_stig:
     - APPL-14-000023
-  800-171r2:
-    - 3.1.9
+  800-171r3:
   cmmc:
     - AC.L2-3.1.9
 macOS:

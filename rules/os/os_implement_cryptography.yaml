@@ -29,8 +29,7 @@ references:
     - SRG-OS-000478-GPOS-00223
     - SRG-OS-000033-GPOS-00014
     - SRG-OS-000396-GPOS-00176
-  800-171r2:
-    - 3.13.11
+  800-171r3:
   cmmc:
     - MP.L2-3.8.6
     - SC.L2-3.13.11
