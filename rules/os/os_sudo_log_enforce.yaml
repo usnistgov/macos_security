@@ -1,7 +1,7 @@
 id: os_sudo_log_enforce
 title: Configure Sudo To Log Events
 discussion: |
-  Sudo _MUST_ be configured to log privledge escalation.
+  Sudo _MUST_ be configured to log privilege escalation.
 check: |
   /usr/bin/sudo /usr/bin/sudo -V | /usr/bin/grep -c "Log when a command is allowed by sudoers"
 result:
@@ -30,6 +30,10 @@ references:
       - N/A
     controls v8:
       - N/A
+  cmmc:
+    - AU.L2-3.3.3
+    - AU.L2-3.3.6
+    - SI.L2-3.14.3
 macOS:
   - '15.0'
 tags:
@@ -39,8 +43,8 @@ tags:
   - cis_lvl1
   - cis_lvl2
   - cisv8
+  - cmmc_lvl2
   - stig
-  - sudo
 severity: medium
 mobileconfig: false
 mobileconfig_info:
