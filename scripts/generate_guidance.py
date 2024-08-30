@@ -1502,7 +1502,7 @@ def create_rules(baseline_yaml):
                   'cci',
                   'cce',
                   '800-53r5',
-                  '800-171r2',
+                  '800-171r3',
                   'cis',
                   'cmmc',
                   'srg',
@@ -1545,7 +1545,7 @@ def create_rules(baseline_yaml):
                                         rule_yaml['references']['cci'],
                                         rule_yaml['references']['cce'],
                                         rule_yaml['references']['800-53r5'],
-                                        rule_yaml['references']['800-171r2'],
+                                        rule_yaml['references']['800-171r3'],
                                         rule_yaml['references']['disa_stig'],
                                         rule_yaml['references']['srg'],
                                         rule_yaml['references']['sfr'],
@@ -1960,11 +1960,11 @@ def main():
                 nist_80053r5 = rule_yaml['references']['800-53r5']
 
             try:
-                rule_yaml['references']['800-171r2']
+                rule_yaml['references']['800-171r3']
             except KeyError:
                 nist_800171 = '- N/A'
             else:
-                nist_800171 = ulify(rule_yaml['references']['800-171r2'])
+                nist_800171 = ulify(rule_yaml['references']['800-171r3'])
 
             try:
                 rule_yaml['references']['disa_stig']
