@@ -16,6 +16,8 @@ references:
   800-53r4:
     - MA-4
   800-171r3:
+    - 03.07.05
+
   cmmc:
     - MA.L2-3.7.5
 macOS:

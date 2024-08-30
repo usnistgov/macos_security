@@ -47,6 +47,8 @@ references:
   disa_stig:
     - APPL-14-000052
   800-171r3:
+    - 03.13.09
+
   cmmc:
     - SC.L2-3.13.9
 macOS:

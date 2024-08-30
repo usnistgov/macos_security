@@ -19,6 +19,7 @@ references:
   cci:
     - N/A
   800-171r3:
+    - 03.01.01
   cis:
     benchmark:
       - 2.12.2 (level 1)

@@ -33,6 +33,7 @@ references:
     - SRG-OS-000109-GPOS-00056
     - SRG-OS-000104-GPOS-00051
   800-171r3:
+    - 03.05.01
   cis:
     benchmark:
       - 5.7 (level 1)

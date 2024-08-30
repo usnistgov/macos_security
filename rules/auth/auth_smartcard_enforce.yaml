@@ -61,6 +61,9 @@ references:
   disa_stig:
     - APPL-14-003020
   800-171r3:
+    - 03.05.01
+    - 03.05.03
+    - 03.05.04
   cis:
     benchmark:
       - N/A

@@ -27,6 +27,7 @@ references:
     - IA-2
     - IA-2(5)
   800-171r3:
+    - 03.05.01
   cis:
     benchmark:
       - 5.6 (level 1)

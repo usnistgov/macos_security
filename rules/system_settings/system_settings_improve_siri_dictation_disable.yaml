@@ -29,6 +29,8 @@ references:
     - AC-20
     - SC-7(10)
   800-171r3:
+    - 03.01.20
+    - 03.04.06
   cis:
     benchmark:
       - 2.6.3 (level 2)

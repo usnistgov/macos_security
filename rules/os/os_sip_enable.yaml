@@ -71,6 +71,10 @@ references:
   disa_stig:
     - APPL-14-005001
   800-171r3:
+    - 03.01.02
+    - 03.03.08
+    - 03.04.05
+    - 03.13.04
   cis:
     benchmark:
       - 5.1.2 (level 1)

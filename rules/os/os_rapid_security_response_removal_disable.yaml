@@ -25,6 +25,8 @@ references:
   disa_stig:
     - N/A
   800-171r3:
+    - 03.14.01
+    - 03.14.02
   cis:
     benchmark:
       - N/A

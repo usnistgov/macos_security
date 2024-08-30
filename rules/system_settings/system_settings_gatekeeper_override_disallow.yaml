@@ -28,6 +28,8 @@ references:
   disa_stig:
     - N/A
   800-171r3:
+    - 03.14.02
+
   cmmc:
     - CM.L2-3.4.5
 macOS:

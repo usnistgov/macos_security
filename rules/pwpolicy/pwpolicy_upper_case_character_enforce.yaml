@@ -53,6 +53,7 @@ references:
   srg:
     - N/A
   800-171r3:
+    - 03.05.07
   cis:
     benchmark:
       - N/A
