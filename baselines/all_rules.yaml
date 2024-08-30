@@ -100,7 +100,6 @@ profile:
       - os_firewall_default_deny_require
       - os_firmware_password_require
       - os_gatekeeper_enable
-      - os_gatekeeper_rearm
       - os_genmoji_disable
       - os_guest_folder_removed
       - os_handoff_disable
