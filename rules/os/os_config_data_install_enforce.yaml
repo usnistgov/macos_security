@@ -31,10 +31,8 @@ references:
     - SRG-OS-000480-GPOS-00227
   disa_stig:
     - N/A
-  800-171r2:
-    - 3.14.1
-    - 3.14.2
-    - 3.13.3
+  800-171r3:
+    - 03.14.02
   cis:
     benchmark:
       - 1.6 (level 1)

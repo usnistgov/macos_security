@@ -17,8 +17,8 @@ references:
     - AC-17(3)
   800-53r4:
     - N/A
-  800-171r2:
-    - N/A
+  800-171r3:
+    - 03.01.12
   disa_stig:
     - N/A
   srg:

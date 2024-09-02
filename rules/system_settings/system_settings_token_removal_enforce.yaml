@@ -30,8 +30,8 @@ references:
     - SRG-OS-000030-GPOS-00011
   disa_stig:
     - N/A
-  800-171r2:
-    - 3.1.10
+  800-171r3:
+    - 03.01.10
   cmmc:
     - AC.L2-3.1.10
 macOS:
