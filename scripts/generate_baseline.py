@@ -132,12 +132,12 @@ def collect_rules():
                         #print("expected reference '{}' is missing in key '{}' for rule{}".format(reference, key, rule))
                         rule_yaml[key].update({reference: ["None"]})
 
-        all_rules.append(MacSecurityRule(rule_yaml['title'].replace('|', '\|'),
-                                    rule_yaml['id'].replace('|', '\|'),
-                                    rule_yaml['severity'],
-                                    rule_yaml['discussion'].replace('|', '\|'),
-                                    rule_yaml['check'].replace('|', '\|'),
-                                    rule_yaml['fix'].replace('|', '\|'),
+        all_rules.append(MacSecurityRule(rule_yaml['title'].replace('|', '\\|'),
+                                    rule_yaml['id'].replace('|', '\\|'),
+                                    rule_yaml['severity'].replace('|', '\\|'),
+                                    rule_yaml['discussion'].replace('|', '\\|'),
+                                    rule_yaml['check'].replace('|', '\\|'),
+                                    rule_yaml['fix'].replace('|', '\\|'),
                                     rule_yaml['references']['cci'],
                                     rule_yaml['references']['cce'],
                                     rule_yaml['references']['800-53r4'],
@@ -452,7 +452,7 @@ def odv_query(rules, benchmark):
 def main():
 
     args = create_args()
-
+    
     file_dir = os.path.dirname(os.path.abspath(__file__))
     parent_dir = os.path.dirname(file_dir)
 
@@ -495,7 +495,6 @@ def main():
             os.makedirs(build_path)
         except OSError:
             print(f"Creation of the directory {build_path} failed")
-
 
     # import mscp-data
     mscp_data_file = os.path.join(
