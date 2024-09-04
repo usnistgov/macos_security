@@ -616,6 +616,60 @@ def zip_folder(folder_to_zip):
 
     return zip_object.filename
 
+def create_ddm_activation(identifier, ddm_output_path):
+
+    ddm_output_path = f'{ddm_output_path}/activations'
+    ddm_identifier = f'{identifier.replace("config","activation").replace("asset","activation")}'
+    ddm_json = {}
+    ddm_json["Identifier"] = ddm_identifier
+    ddm_json["Type"] = "com.apple.activation.simple"
+    ddm_json["Payload"] = { "StandardConfigurations" : [ identifier ]}
+
+    ddm_object = json.dumps(ddm_json, indent=4)
+    
+    logging.debug(f"Building declarative activation for {ddm_identifier}...")
+
+    # Writing the .json to disk
+    if not (os.path.isdir(ddm_output_path)):
+        try:
+            os.makedirs(ddm_output_path)
+        except OSError:
+            print("Creation of the directory %s failed" % ddm_output_path)
+
+    with open(
+        ddm_output_path + "/" + ddm_identifier + ".json", "w"
+    ) as outfile:
+        outfile.write(ddm_object)
+
+    return
+
+def create_ddm_conf(identifier, service, ddm_output_path):
+
+    ddm_output_path = f'{ddm_output_path}/configurations'
+    ddm_identifier = f'{identifier.replace("asset","config")}'
+    ddm_json = {}
+    ddm_json["Identifier"] = ddm_identifier
+    ddm_json["Type"] = "com.apple.configuration.services.configuration-files"
+    ddm_json["Payload"] = { "ServiceType" : service,
+                            "DataAssetReference" : identifier }
+
+    ddm_object = json.dumps(ddm_json, indent=4)
+    
+    logging.debug(f"Building declarative configuration for {ddm_identifier}...")
+
+    # Writing the .json to disk
+    if not (os.path.isdir(ddm_output_path)):
+        try:
+            os.makedirs(ddm_output_path)
+        except OSError:
+            print("Creation of the directory %s failed" % ddm_output_path)
+
+    with open(
+        ddm_output_path + "/" + ddm_identifier + ".json", "w"
+    ) as outfile:
+        outfile.write(ddm_object)
+
+    return 
 
 def generate_ddm(baseline_name, build_path, parent_dir, baseline_yaml):
     """Generate the declarative management artifacts for the rules in the provided baseline YAML file"""
@@ -640,15 +694,15 @@ def generate_ddm(baseline_name, build_path, parent_dir, baseline_yaml):
         for profile_rule in sections["rules"]:
             logging.debug(f"checking for rule file for {profile_rule}")
             if glob.glob(
-                "../custom/rules/**/{}.yaml".format(profile_rule), recursive=True
+                "../custom/rules/**/{}.y*ml".format(profile_rule), recursive=True
             ):
                 rule = glob.glob(
-                    "../custom/rules/**/{}.yaml".format(profile_rule), recursive=True
+                    "../custom/rules/**/{}.y*ml".format(profile_rule), recursive=True
                 )[0]
                 custom = True
                 logging.debug(f"{rule}")
-            elif glob.glob("../rules/*/{}.yaml".format(profile_rule)):
-                rule = glob.glob("../rules/*/{}.yaml".format(profile_rule))[0]
+            elif glob.glob("../rules/*/{}.y*ml".format(profile_rule)):
+                rule = glob.glob("../rules/*/{}.y*ml".format(profile_rule))[0]
                 custom = False
                 logging.debug(f"{rule}")
 
@@ -698,6 +752,11 @@ def generate_ddm(baseline_name, build_path, parent_dir, baseline_yaml):
                     f'{ddm_rule["ddm_info"]["configuration_key"]} {ddm_rule["ddm_info"]["configuration_value"]}\n'
                 )
 
+            # add configuration-files type to ddm_dict
+            ddm_dict.setdefault(ddm_rule["ddm_info"]["declarationtype"], {}).update(
+                {}
+            )
+
             service_config_file.close()
         else:
             ddm_key = ddm_rule["ddm_info"]["ddm_key"]
@@ -707,13 +766,15 @@ def generate_ddm(baseline_name, build_path, parent_dir, baseline_yaml):
             )
 
     for ddm_type in mscp_data_yaml["ddm"]["supported_types"]:
+        if ddm_type not in ddm_dict.keys():
+            continue
         if ddm_type == "com.apple.configuration.services.configuration-files":
             # build zip files for configs
             for service in mscp_data_yaml["ddm"]["services"]:
                 for root, dirs, files in os.walk(ddm_output_path):
                     for folder in dirs:
                         if folder == service:
-                            print(
+                            logging.debug(
                                 f"Found Configuration files for {service}, zipping..."
                             )
                             service_path = os.path.join(ddm_output_path, service)
@@ -748,13 +809,29 @@ def generate_ddm(baseline_name, build_path, parent_dir, baseline_yaml):
                             ddm_object = json.dumps(ddm_json, indent=4)
 
                             # Writing the .json to disk
+                            ddm_asset_output_path = f'{ddm_output_path}/assets'
+                            if not (os.path.isdir(ddm_asset_output_path)):
+                                try:
+                                    os.makedirs(ddm_asset_output_path)
+                                except OSError:
+                                    print("Creation of the directory %s failed" % ddm_asset_output_path)
+                            
                             with open(
-                                ddm_output_path + "/" + ddm_identifier + ".json", "w"
+                                ddm_asset_output_path + "/" + ddm_identifier + ".json", "w"
                             ) as outfile:
                                 outfile.write(ddm_object)
+                            
+                            # move .zips to assets
+                            shutil.move(zip_file,ddm_asset_output_path)
+                            
+                            # create activation
+                            create_ddm_activation(ddm_identifier, ddm_output_path)
+
+                            # create configuration declaration for assets
+                            create_ddm_conf(ddm_identifier, service, ddm_output_path)
         else:
-            print(f"Building any declarations for {ddm_type}...")
-            ddm_identifier = f"org.mscp.{baseline_name}.config.{ddm_type}"
+            logging.debug(f"Building any declarations for {ddm_type}...")
+            ddm_identifier = f'org.mscp.{baseline_name}.config.{ddm_type.replace("com.apple.configuration.", "")}'
             ddm_json = {}
             ddm_json["Identifier"] = ddm_identifier
             ddm_json["Type"] = ddm_type
@@ -763,8 +840,20 @@ def generate_ddm(baseline_name, build_path, parent_dir, baseline_yaml):
             ddm_object = json.dumps(ddm_json, indent=4)
 
             # Writing the .json to disk
-            with open(ddm_output_path + "/" + ddm_type + ".json", "w") as outfile:
+            ddm_config_output_path = f'{ddm_output_path}/configurations'
+            if not (os.path.isdir(ddm_config_output_path)):
+                try:
+                    os.makedirs(ddm_config_output_path)
+                except OSError:
+                    print("Creation of the directory %s failed" % ddm_config_output_path)
+            
+            with open(
+                ddm_config_output_path + "/" + ddm_identifier + ".json", "w"
+            ) as outfile:
                 outfile.write(ddm_object)
+            
+            # create activation
+            create_ddm_activation(ddm_identifier, ddm_output_path)
 
 
 def default_audit_plist(baseline_name, build_path, baseline_yaml):
@@ -1456,6 +1545,10 @@ def fill_in_odv(resulting_yaml, parent_values):
 
         if "ddm_info" in resulting_yaml.keys():
             for ddm_type, value in resulting_yaml["ddm_info"].items():
+                if isinstance(value, dict):
+                    for _value in value:
+                        if "$ODV" in str(value[_value]):
+                            resulting_yaml["ddm_info"][ddm_type] = odv
                 if "$ODV" in value:
                     resulting_yaml["ddm_info"][ddm_type] = odv
 
@@ -1598,7 +1691,7 @@ def generate_xls(baseline_name, build_path, baseline_yaml):
     top = easyxf("align: vert top")
     headers = easyxf("font: bold on")
     counter = 1
-    column_counter = 17
+    column_counter = 18
     custom_ref_column = {}
     sheet1.write(0, 0, "CCE", headers)
     sheet1.write(0, 1, "Rule ID", headers)
@@ -1617,7 +1710,8 @@ def generate_xls(baseline_name, build_path, baseline_yaml):
     sheet1.write(0, 14, "CIS v8", headers)
     sheet1.write(0, 15, "CMMC", headers)
     sheet1.write(0, 16, "CCI", headers)
-    sheet1.write(0, 17, "Modified Rule", headers)
+    sheet1.write(0, 17, "Modifed Rule", headers)
+    sheet1.write(0, 18, "Severity", headers)
     sheet1.set_panes_frozen(True)
     sheet1.set_horz_split_pos(1)
     sheet1.set_vert_split_pos(2)
@@ -1744,6 +1838,20 @@ def generate_xls(baseline_name, build_path, baseline_yaml):
                 added_ref = added_ref.replace(", ", "\n").replace("'", "")
                 sheet1.write(counter, custom_ref_column[title], added_ref, topWrap)
 
+        # determine severity
+        # uses 'parent_values' from baseline.yaml file to determine which/if any severity to use
+        severity = ""
+        if isinstance(rule.rule_severity, str):
+            severity = f'{rule.rule_severity}'
+        if isinstance(rule.rule_severity, dict):
+            try:
+                severity = f'{rule.rule_severity[baseline_yaml["parent_values"]]}'
+            except KeyError:
+                severity = ""
+
+        sheet1.write(counter, 18, severity, topWrap)
+        sheet1.col(18).width = 400 * 15
+
         tall_style = easyxf("font:height 640;")  # 36pt
 
         sheet1.row(counter).set_style(tall_style)
@@ -1784,26 +1892,17 @@ def create_rules(baseline_yaml):
     for sections in baseline_yaml["profile"]:
         for profile_rule in sections["rules"]:
             if glob.glob(
-                "../custom/rules/**/{}.yaml".format(profile_rule), recursive=True
+                "../custom/rules/**/{}.y*ml".format(profile_rule), recursive=True
             ):
                 rule = glob.glob(
-                    "../custom/rules/**/{}.yaml".format(profile_rule), recursive=True
+                    "../custom/rules/**/{}.y*ml".format(profile_rule), recursive=True
                 )[0]
                 custom = True
-            elif glob.glob("../rules/*/{}.yaml".format(profile_rule)):
-                rule = glob.glob("../rules/*/{}.yaml".format(profile_rule))[0]
+            elif glob.glob("../rules/*/{}.y*ml".format(profile_rule)):
+                rule = glob.glob("../rules/*/{}.y*ml".format(profile_rule))[0]
                 custom = False
 
-    for sections in baseline_yaml['profile']:
-        for profile_rule in sections['rules']:
-            if glob.glob('../custom/rules/**/{}.y*ml'.format(profile_rule),recursive=True):
-                rule = glob.glob('../custom/rules/**/{}.y*ml'.format(profile_rule),recursive=True)[0]
-                custom=True
-            elif glob.glob('../rules/*/{}.y*ml'.format(profile_rule)):
-                rule = glob.glob('../rules/*/{}.y*ml'.format(profile_rule))[0]
-                custom=False
-
-            #for rule in glob.glob('../rules/*/{}.y*ml'.format(profile_rule)) + glob.glob('../custom/rules/**/{}.y*ml'.format(profile_rule),recursive=True):
+            # for rule in glob.glob('../rules/*/{}.y*ml'.format(profile_rule)) + glob.glob('../custom/rules/**/{}.y*ml'.format(profile_rule),recursive=True):
             rule_yaml = get_rule_yaml(rule, baseline_yaml, custom)
 
             for key in keys:
@@ -1822,7 +1921,7 @@ def create_rules(baseline_yaml):
                             rule_yaml[key].update({reference: ["None"]})
             all_rules.append(MacSecurityRule(rule_yaml['title'].replace('|', r'\|'),
                                         rule_yaml['id'].replace('|', r'\|'),
-                                        rule_yaml['severity'].replace('|', r'\|'),
+                                        rule_yaml['severity'],
                                         rule_yaml['discussion'],  #.replace('|', r'\|'),
                                         rule_yaml['check'].replace('|', r'\|'),
                                         rule_yaml['fix'].replace('|', r'\|'),
@@ -2007,7 +2106,7 @@ def main():
 
     output_basename = os.path.basename(args.baseline.name)
     output_filename = os.path.splitext(output_basename)[0]
-    baseline_name = os.path.splitext(output_basename)[0]#.capitalize()
+    baseline_name = os.path.splitext(output_basename)[0]  # .capitalize()
     file_dir = os.path.dirname(os.path.abspath(__file__))
     parent_dir = os.path.dirname(file_dir)
 
@@ -2028,9 +2127,8 @@ def main():
 
     # convert logo to base64 for inline processing
     b64logo = base64.b64encode(open(pdf_logo_path, "rb").read())
-    
 
-    build_path = os.path.join(parent_dir, 'build', f'{baseline_name}')
+    build_path = os.path.join(parent_dir, "build", f"{baseline_name}")
     if not (os.path.isdir(build_path)):
         try:
             os.makedirs(build_path)
@@ -2097,11 +2195,13 @@ def main():
             adoc_templates_dict[template] = f"../templates/{template}.adoc"
 
     # check for custom PDF theme (must have theme in the name and end with .yml)
-    pdf_theme="mscp-theme.yml"
-    themes = glob.glob('../custom/templates/*theme*.yml')
-    if len(themes) > 1 :
-        print("Found multiple custom themes in directory, only one can exist, using default")
-    elif len(themes) == 1 :
+    pdf_theme = "mscp-theme.yml"
+    themes = glob.glob("../custom/templates/*theme*.yml")
+    if len(themes) > 1:
+        print(
+            "Found muliple custom themes in directory, only one can exist, using default"
+        )
+    elif len(themes) == 1:
         print(f"Found custom PDF theme: {themes[0]}")
         pdf_theme = themes[0]
 
@@ -2298,11 +2398,11 @@ def main():
                 nist_80053r5 = rule_yaml["references"]["800-53r5"]
 
             try:
-                rule_yaml['references']['800-171r3']
+                rule_yaml["references"]["800-171r3"]
             except KeyError:
                 nist_800171 = "- N/A"
             else:
-                nist_800171 = ulify(rule_yaml['references']['800-171r3'])
+                nist_800171 = ulify(rule_yaml["references"]["800-171r3"])
 
             try:
                 rule_yaml["references"]["disa_stig"]
@@ -2378,6 +2478,17 @@ def main():
                 result_value = result["base64"]
             else:
                 result_value = "N/A"
+            
+            # determine severity, if severity is determined, build asciidoc table row for references
+            # uses 'parent_values' from baseline.yaml file to determine which/if any severity to use
+            severity = ""
+            if "severity" in rule_yaml.keys():
+                if isinstance(rule_yaml["severity"], dict):
+                    try:
+                        severity = f'|Severity\n|{rule_yaml["severity"][baseline_yaml["parent_values"]]}'
+                        print(severity)
+                    except KeyError:
+                        severity = ""
 
             # determine if configprofile
             try:
@@ -2429,7 +2540,8 @@ def main():
                     rule_tags=tags,
                     rule_srg=srg,
                     rule_sfr=sfr,
-                    rule_result=result_value
+                    rule_result=result_value,
+                    severity=severity
                 )
             elif ("permanent" in tags) or ("inherent" in tags) or ("n_a" in tags):
                 rule_adoc = adoc_rule_no_setting_template.substitute(
@@ -2465,7 +2577,8 @@ def main():
                         rule_tags=tags,
                         rule_srg=srg,
                         rule_sfr=sfr,
-                        rule_result=result_value
+                        rule_result=result_value,
+                        severity=severity
                     )
                 else:
                     rule_adoc = adoc_rule_template.substitute(
@@ -2484,7 +2597,8 @@ def main():
                         rule_tags=tags,
                         rule_srg=srg,
                         rule_sfr=sfr,
-                        rule_result=result_value
+                        rule_result=result_value,
+                        severity=severity
                     )
 
             adoc_output_file.write(rule_adoc)
