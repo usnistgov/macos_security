@@ -27,9 +27,12 @@ references:
       - 6.1
   cmmc:
     - IA.L2-3.5.5
+  800-171r3:
+    - 03.05.05
 macOS:
   - '15.0'
 tags:
+  - 800-171
   - 800-53r5_low
   - 800-53r5_moderate
   - 800-53r5_high

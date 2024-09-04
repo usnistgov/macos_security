@@ -17,7 +17,7 @@ references:
     - SI-10
   800-53r4:
     - N/A
-  800-171r2:
+  800-171r3:
     - N/A
   disa_stig:
     - N/A

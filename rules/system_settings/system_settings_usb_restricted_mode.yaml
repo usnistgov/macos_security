@@ -31,8 +31,8 @@ references:
   800-53r5:
     - MP-7
     - SC-41
-  800-171r2:
-    - N/A
+  800-171r3:
+    - 03.08.07
   cis:
     benchmark:
       - N/A
