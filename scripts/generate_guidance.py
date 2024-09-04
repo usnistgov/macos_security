@@ -448,19 +448,19 @@ def generate_profiles(
         for profile_rule in sections["rules"]:
             logging.debug(f"checking for rule file for {profile_rule}")
             if glob.glob(
-                "../custom/rules/**/{}.yaml".format(profile_rule), recursive=True
+                "../custom/rules/**/{}.y*ml".format(profile_rule), recursive=True
             ):
                 rule = glob.glob(
-                    "../custom/rules/**/{}.yaml".format(profile_rule), recursive=True
+                    "../custom/rules/**/{}.y*ml".format(profile_rule), recursive=True
                 )[0]
                 custom = True
                 logging.debug(f"{rule}")
-            elif glob.glob("../rules/*/{}.yaml".format(profile_rule)):
-                rule = glob.glob("../rules/*/{}.yaml".format(profile_rule))[0]
+            elif glob.glob("../rules/*/{}.y*ml".format(profile_rule)):
+                rule = glob.glob("../rules/*/{}.y*ml".format(profile_rule))[0]
                 custom = False
                 logging.debug(f"{rule}")
 
-            # for rule in glob.glob('../rules/*/{}.yaml'.format(profile_rule)) + glob.glob('../custom/rules/**/{}.yaml'.format(profile_rule),recursive=True):
+            # for rule in glob.glob('../rules/*/{}.y*ml'.format(profile_rule)) + glob.glob('../custom/rules/**/{}.y*ml'.format(profile_rule),recursive=True):
             rule_yaml = get_rule_yaml(rule, baseline_yaml, custom)
 
             if rule_yaml["mobileconfig"]:
@@ -698,15 +698,15 @@ def generate_ddm(baseline_name, build_path, parent_dir, baseline_yaml):
         for profile_rule in sections["rules"]:
             logging.debug(f"checking for rule file for {profile_rule}")
             if glob.glob(
-                "../custom/rules/**/{}.yaml".format(profile_rule), recursive=True
+                "../custom/rules/**/{}.y*ml".format(profile_rule), recursive=True
             ):
                 rule = glob.glob(
-                    "../custom/rules/**/{}.yaml".format(profile_rule), recursive=True
+                    "../custom/rules/**/{}.y*ml".format(profile_rule), recursive=True
                 )[0]
                 custom = True
                 logging.debug(f"{rule}")
-            elif glob.glob("../rules/*/{}.yaml".format(profile_rule)):
-                rule = glob.glob("../rules/*/{}.yaml".format(profile_rule))[0]
+            elif glob.glob("../rules/*/{}.y*ml".format(profile_rule)):
+                rule = glob.glob("../rules/*/{}.y*ml".format(profile_rule))[0]
                 custom = False
                 logging.debug(f"{rule}")
 
@@ -1152,15 +1152,15 @@ fi
         for profile_rule in sections["rules"]:
             logging.debug(f"checking for rule file for {profile_rule}")
             if glob.glob(
-                "../custom/rules/**/{}.yaml".format(profile_rule), recursive=True
+                "../custom/rules/**/{}.y*ml".format(profile_rule), recursive=True
             ):
                 rule = glob.glob(
-                    "../custom/rules/**/{}.yaml".format(profile_rule), recursive=True
+                    "../custom/rules/**/{}.y*ml".format(profile_rule), recursive=True
                 )[0]
                 custom = True
                 logging.debug(f"{rule}")
-            elif glob.glob("../rules/*/{}.yaml".format(profile_rule)):
-                rule = glob.glob("../rules/*/{}.yaml".format(profile_rule))[0]
+            elif glob.glob("../rules/*/{}.y*ml".format(profile_rule)):
+                rule = glob.glob("../rules/*/{}.y*ml".format(profile_rule))[0]
                 custom = False
                 logging.debug(f"{rule}")
 
@@ -1571,7 +1571,7 @@ def get_rule_yaml(
     resulting_yaml = {}
     names = [
         os.path.basename(x)
-        for x in glob.glob("../custom/rules/**/*.yaml", recursive=True)
+        for x in glob.glob("../custom/rules/**/*.y*ml", recursive=True)
     ]
     file_name = os.path.basename(rule_file)
 
@@ -1903,17 +1903,17 @@ def create_rules(baseline_yaml):
     for sections in baseline_yaml["profile"]:
         for profile_rule in sections["rules"]:
             if glob.glob(
-                "../custom/rules/**/{}.yaml".format(profile_rule), recursive=True
+                "../custom/rules/**/{}.y*ml".format(profile_rule), recursive=True
             ):
                 rule = glob.glob(
-                    "../custom/rules/**/{}.yaml".format(profile_rule), recursive=True
+                    "../custom/rules/**/{}.y*ml".format(profile_rule), recursive=True
                 )[0]
                 custom = True
-            elif glob.glob("../rules/*/{}.yaml".format(profile_rule)):
-                rule = glob.glob("../rules/*/{}.yaml".format(profile_rule))[0]
+            elif glob.glob("../rules/*/{}.y*ml".format(profile_rule)):
+                rule = glob.glob("../rules/*/{}.y*ml".format(profile_rule))[0]
                 custom = False
 
-            # for rule in glob.glob('../rules/*/{}.yaml'.format(profile_rule)) + glob.glob('../custom/rules/**/{}.yaml'.format(profile_rule),recursive=True):
+            # for rule in glob.glob('../rules/*/{}.y*ml'.format(profile_rule)) + glob.glob('../custom/rules/**/{}.y*ml'.format(profile_rule),recursive=True):
             rule_yaml = get_rule_yaml(rule, baseline_yaml, custom)
 
             for key in keys:
@@ -2362,13 +2362,13 @@ def main():
 
         for rule in sections["rules"]:
             logging.debug(f"processing rule id: {rule}")
-            rule_path = glob.glob("../rules/*/{}.yaml".format(rule))
+            rule_path = glob.glob("../rules/*/{}.y*ml".format(rule))
             if not rule_path:
                 print(
                     f"Rule file not found in library, checking in custom folder for rule: {rule}"
                 )
                 rule_path = glob.glob(
-                    "../custom/rules/**/{}.yaml".format(rule), recursive=True
+                    "../custom/rules/**/{}.y*ml".format(rule), recursive=True
                 )
             try:
                 rule_file = os.path.basename(rule_path[0])
