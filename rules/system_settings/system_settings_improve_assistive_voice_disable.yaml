@@ -1,16 +1,16 @@
-id: system_settings_improve_siri_dictation_disable
-title: Disable Sending Siri and Dictation Information to Apple
+id: system_settings_improve_assistive_voice_disable
+title: Disable Sending Audio Recordings and Transcripts to Apple
 discussion: |
-  The ability for Apple to store and review audio of your Siri and Dictation interactions _MUST_ be disabled.
+  The ability for Apple to store and review audio of your audio recordings and transcripts of your vocal shortcuts and voice control interactions _MUST_ be disabled.
 
-  The information system _MUST_ be configured to provide only essential capabilities. Disabling the submission of Siri and Dictation information will mitigate the risk of unwanted data being sent to Apple.
+  The information system _MUST_ be configured to provide only essential capabilities. Disabling the submission of this information will mitigate the risk of unwanted data being sent to Apple.
 check: |
   /usr/bin/osascript -l JavaScript << EOS
-  $.NSUserDefaults.alloc.initWithSuiteName('com.apple.assistant.support')\
-  .objectForKey('Siri Data Sharing Opt-In Status').js
+  $.NSUserDefaults.alloc.initWithSuiteName('com.apple.Accessibility')\
+  .objectForKey('AXSAudioDonationSiriImprovementEnabled').js
   EOS
 result:
-  integer: 2
+  string: "false"
 fix: |
   This is implemented by a Configuration Profile.
 references:
@@ -28,11 +28,11 @@ references:
     - CM-7(1)
     - AC-20
     - SC-7(10)
-  800-171r3:
-    - 03.01.20
-    - 03.04.06
+  800-171r2:
+    - 3.1.20
+    - 3.4.6
   srg:
-    - SRG-OS-000095-GPOS-00049
+    - N/A
   disa_stig:
     - N/A
   cis:
@@ -61,10 +61,9 @@ tags:
   - cnssi-1253_high
   - cmmc_lvl2
   - cmmc_lvl1
-  - stig
   - cis_lvl1
 severity: medium
 mobileconfig: true
 mobileconfig_info:
-  com.apple.assistant.support:
-    Siri Data Sharing Opt-In Status: 2
+  com.apple.Accessibility:
+    AXSAudioDonationSiriImprovementEnabled: false
