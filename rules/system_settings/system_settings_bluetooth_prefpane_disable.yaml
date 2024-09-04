@@ -27,7 +27,7 @@ references:
     - SRG-OS-000481-GPOS-00481
   disa_stig:
     - APPL-13-002062
-  800-171r2:
+  800-171r3:
     - N/A
 macOS:
   - "12.0"

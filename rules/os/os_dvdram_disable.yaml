@@ -34,8 +34,8 @@ references:
     - SRG-OS-000480-GPOS-0022
   disa_stig:
     - APPL-13-005051
-  800-171r2:
-    - 3.8.8
+  800-171r3:
+    - 03.08.07
   cmmc:
     - MP.L2-3.8.7
     - MP.L2-3.8.8

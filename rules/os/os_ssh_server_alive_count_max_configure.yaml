@@ -40,8 +40,8 @@ references:
     - N/A
   disa_stig:
     - N/A
-  800-171r2:
-    - 3.13.9
+  800-171r3:
+    - 03.13.09
   cmmc:
     - SC.L2-3.13.9
 macOS:
