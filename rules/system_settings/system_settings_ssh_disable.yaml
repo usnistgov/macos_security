@@ -12,7 +12,7 @@ fix: |
   /usr/sbin/systemsetup -f -setremotelogin off >/dev/null
   /bin/launchctl disable system/com.openssh.sshd
   ----
-  NOTE: Systemsetup with -setremotelogin flag will fail unless you grant Full Disk Access to systemsetup or it's parent process. Requires supervision.
+  NOTE: Systemsetup with -setremotelogin flag will fail unless you grant Full Disk Access to systemsetup or its parent process. Requires supervision.
 references:
   cce:
     - CCE-92994-3
@@ -30,10 +30,9 @@ references:
     - N/A
   disa_stig:
     - N/A
-  800-171r2:
-    - 3.1.1
-    - 3.1.2
-    - 3.4.6
+  800-171r3:
+    - 03.01.02
+    - 03.04.06
   cis:
     benchmark:
       - 2.3.3.5 (level 1)

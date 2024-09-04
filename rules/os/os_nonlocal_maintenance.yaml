@@ -15,12 +15,9 @@ references:
     - MA-4
   800-53r4:
     - MA-4
-  800-171r2:
-    - 3.7.5
-  disa_stig:
-    - N/A
-  srg:
-    - N/A
+  800-171r3:
+    - 03.07.05
+
   cmmc:
     - MA.L2-3.7.5
 macOS:

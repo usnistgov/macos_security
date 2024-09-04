@@ -28,13 +28,9 @@ references:
     - CM-7(1)
     - AC-20
     - SC-7(10)
-  800-171r2:
-    - 3.1.20
-    - 3.4.6
-  srg:
-    - SRG-OS-000095-GPOS-00049
-  disa_stig:
-    - APPL-14-002210
+  800-171r3:
+    - 03.01.20
+    - 03.04.06
   cis:
     benchmark:
       - 2.6.3 (level 2)

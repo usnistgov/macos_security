@@ -1,6 +1,6 @@
 id: os_mobile_file_integrity_enable
 title: Enable Apple Mobile File Integrity
-discussion: Mobile file integrity _MUST_ be ebabled.
+discussion: Mobile file integrity _MUST_ be enabled.
 check: |
   /usr/sbin/nvram -p | /usr/bin/grep -c "amfi_get_out_of_my_way=1"
 result:
@@ -23,7 +23,7 @@ references:
     - N/A
   disa_stig:
     - N/A
-  800-171r2:
+  800-171r3:
     - N/A
   cis:
     benchmark:

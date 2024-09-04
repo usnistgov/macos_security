@@ -447,20 +447,16 @@ def generate_profiles(
     for sections in baseline_yaml["profile"]:
         for profile_rule in sections["rules"]:
             logging.debug(f"checking for rule file for {profile_rule}")
-            if glob.glob(
-                "../custom/rules/**/{}.yaml".format(profile_rule), recursive=True
-            ):
-                rule = glob.glob(
-                    "../custom/rules/**/{}.yaml".format(profile_rule), recursive=True
-                )[0]
-                custom = True
+            if glob.glob('../custom/rules/**/{}.y*ml'.format(profile_rule),recursive=True):
+                rule = glob.glob('../custom/rules/**/{}.y*ml'.format(profile_rule),recursive=True)[0]
+                custom=True
                 logging.debug(f"{rule}")
-            elif glob.glob("../rules/*/{}.yaml".format(profile_rule)):
-                rule = glob.glob("../rules/*/{}.yaml".format(profile_rule))[0]
-                custom = False
+            elif glob.glob('../rules/*/{}.y*ml'.format(profile_rule)):
+                rule = glob.glob('../rules/*/{}.y*ml'.format(profile_rule))[0]
+                custom=False
                 logging.debug(f"{rule}")
 
-            # for rule in glob.glob('../rules/*/{}.yaml'.format(profile_rule)) + glob.glob('../custom/rules/**/{}.yaml'.format(profile_rule),recursive=True):
+            #for rule in glob.glob('../rules/*/{}.y*ml'.format(profile_rule)) + glob.glob('../custom/rules/**/{}.y*ml'.format(profile_rule),recursive=True):
             rule_yaml = get_rule_yaml(rule, baseline_yaml, custom)
 
             if rule_yaml["mobileconfig"]:
@@ -1055,24 +1051,20 @@ fi
 /usr/bin/mcxrefresh -u $CURR_USER_UID
 
 # write timestamp of last compliance check
-/usr/bin/defaults write "$audit_plist" lastComplianceCheck "$(date)"
+/usr/bin/defaults write "$audit_plist" lastComplianceCheck "$(date +"%Y-%m-%d %H:%M:%S%z")"
     """
 
     # Read all rules in the section and output the check functions
     for sections in baseline_yaml["profile"]:
         for profile_rule in sections["rules"]:
             logging.debug(f"checking for rule file for {profile_rule}")
-            if glob.glob(
-                "../custom/rules/**/{}.yaml".format(profile_rule), recursive=True
-            ):
-                rule = glob.glob(
-                    "../custom/rules/**/{}.yaml".format(profile_rule), recursive=True
-                )[0]
-                custom = True
+            if glob.glob('../custom/rules/**/{}.y*ml'.format(profile_rule),recursive=True):
+                rule = glob.glob('../custom/rules/**/{}.y*ml'.format(profile_rule),recursive=True)[0]
+                custom=True
                 logging.debug(f"{rule}")
-            elif glob.glob("../rules/*/{}.yaml".format(profile_rule)):
-                rule = glob.glob("../rules/*/{}.yaml".format(profile_rule))[0]
-                custom = False
+            elif glob.glob('../rules/*/{}.y*ml'.format(profile_rule)):
+                rule = glob.glob('../rules/*/{}.y*ml'.format(profile_rule))[0]
+                custom=False
                 logging.debug(f"{rule}")
 
             rule_yaml = get_rule_yaml(rule, baseline_yaml, custom)
@@ -1352,7 +1344,7 @@ usage=(
     " "
     "Optional parameters:"
     "--check            :   run the compliance checks without interaction"
-    "--fix              :   run the remediation commands without interation"
+    "--fix              :   run the remediation commands without interaction"
     "--cfc              :   runs a check, fix, check without interaction"
     "--stats            :   display the statistics from last compliance check"
     "--compliant        :   reports the number of compliant checks"
@@ -1476,10 +1468,7 @@ def get_rule_yaml(
     """Takes a rule file, checks for a custom version, and returns the yaml for the rule"""
     global resulting_yaml
     resulting_yaml = {}
-    names = [
-        os.path.basename(x)
-        for x in glob.glob("../custom/rules/**/*.yaml", recursive=True)
-    ]
+    names = [os.path.basename(x) for x in glob.glob('../custom/rules/**/*.y*ml', recursive=True)]
     file_name = os.path.basename(rule_file)
 
     # get parent values
@@ -1628,7 +1617,7 @@ def generate_xls(baseline_name, build_path, baseline_yaml):
     sheet1.write(0, 14, "CIS v8", headers)
     sheet1.write(0, 15, "CMMC", headers)
     sheet1.write(0, 16, "CCI", headers)
-    sheet1.write(0, 17, "Modifed Rule", headers)
+    sheet1.write(0, 17, "Modified Rule", headers)
     sheet1.set_panes_frozen(True)
     sheet1.set_horz_split_pos(1)
     sheet1.set_vert_split_pos(2)
@@ -1785,7 +1774,7 @@ def create_rules(baseline_yaml):
                   'cci',
                   'cce',
                   '800-53r5',
-                  '800-171r2',
+                  '800-171r3',
                   'cis',
                   'cmmc',
                   'srg',
@@ -1805,7 +1794,16 @@ def create_rules(baseline_yaml):
                 rule = glob.glob("../rules/*/{}.yaml".format(profile_rule))[0]
                 custom = False
 
-            # for rule in glob.glob('../rules/*/{}.yaml'.format(profile_rule)) + glob.glob('../custom/rules/**/{}.yaml'.format(profile_rule),recursive=True):
+    for sections in baseline_yaml['profile']:
+        for profile_rule in sections['rules']:
+            if glob.glob('../custom/rules/**/{}.y*ml'.format(profile_rule),recursive=True):
+                rule = glob.glob('../custom/rules/**/{}.y*ml'.format(profile_rule),recursive=True)[0]
+                custom=True
+            elif glob.glob('../rules/*/{}.y*ml'.format(profile_rule)):
+                rule = glob.glob('../rules/*/{}.y*ml'.format(profile_rule))[0]
+                custom=False
+
+            #for rule in glob.glob('../rules/*/{}.y*ml'.format(profile_rule)) + glob.glob('../custom/rules/**/{}.y*ml'.format(profile_rule),recursive=True):
             rule_yaml = get_rule_yaml(rule, baseline_yaml, custom)
 
             for key in keys:
@@ -1831,7 +1829,7 @@ def create_rules(baseline_yaml):
                                         rule_yaml['references']['cci'],
                                         rule_yaml['references']['cce'],
                                         rule_yaml['references']['800-53r5'],
-                                        rule_yaml['references']['800-171r2'],
+                                        rule_yaml['references']['800-171r3'],
                                         rule_yaml['references']['disa_stig'],
                                         rule_yaml['references']['srg'],
                                         rule_yaml['references']['sfr'],
@@ -2009,7 +2007,7 @@ def main():
 
     output_basename = os.path.basename(args.baseline.name)
     output_filename = os.path.splitext(output_basename)[0]
-    baseline_name = os.path.splitext(output_basename)[0]  # .capitalize()
+    baseline_name = os.path.splitext(output_basename)[0]#.capitalize()
     file_dir = os.path.dirname(os.path.abspath(__file__))
     parent_dir = os.path.dirname(file_dir)
 
@@ -2030,8 +2028,9 @@ def main():
 
     # convert logo to base64 for inline processing
     b64logo = base64.b64encode(open(pdf_logo_path, "rb").read())
+    
 
-    build_path = os.path.join(parent_dir, "build", f"{baseline_name}")
+    build_path = os.path.join(parent_dir, 'build', f'{baseline_name}')
     if not (os.path.isdir(build_path)):
         try:
             os.makedirs(build_path)
@@ -2098,13 +2097,11 @@ def main():
             adoc_templates_dict[template] = f"../templates/{template}.adoc"
 
     # check for custom PDF theme (must have theme in the name and end with .yml)
-    pdf_theme = "mscp-theme.yml"
-    themes = glob.glob("../custom/templates/*theme*.yml")
-    if len(themes) > 1:
-        print(
-            "Found muliple custom themes in directory, only one can exist, using default"
-        )
-    elif len(themes) == 1:
+    pdf_theme="mscp-theme.yml"
+    themes = glob.glob('../custom/templates/*theme*.yml')
+    if len(themes) > 1 :
+        print("Found multiple custom themes in directory, only one can exist, using default")
+    elif len(themes) == 1 :
         print(f"Found custom PDF theme: {themes[0]}")
         pdf_theme = themes[0]
 
@@ -2230,12 +2227,13 @@ def main():
     adoc_output_file.write(adoc_additional_docs_template)
 
     # Create sections and rules
-    for sections in baseline_yaml["profile"]:
-        section_yaml_file = sections["section"].lower() + ".yaml"
-        # check for custom section
-        if section_yaml_file in glob.glob1("../custom/sections/", "*.yaml"):
-            # print(f"Custom settings found for section: {sections['section']}")
-            override_section = os.path.join(f"../custom/sections/{section_yaml_file}")
+    for sections in baseline_yaml['profile']:
+        section_yaml_file = sections['section'].lower() + '.yaml'
+        #check for custom section
+        if section_yaml_file in glob.glob1('../custom/sections/', '*.y*ml'):
+            #print(f"Custom settings found for section: {sections['section']}")
+            override_section = os.path.join(
+                f'../custom/sections/{section_yaml_file}')
             with open(override_section) as r:
                 section_yaml = yaml.load(r, Loader=yaml.SafeLoader)
         else:
@@ -2252,16 +2250,12 @@ def main():
 
         # Read all rules in the section and output them
 
-        for rule in sections["rules"]:
-            logging.debug(f"processing rule id: {rule}")
-            rule_path = glob.glob("../rules/*/{}.yaml".format(rule))
+        for rule in sections['rules']:
+            logging.debug(f'processing rule id: {rule}')
+            rule_path = glob.glob('../rules/*/{}.y*ml'.format(rule))
             if not rule_path:
-                print(
-                    f"Rule file not found in library, checking in custom folder for rule: {rule}"
-                )
-                rule_path = glob.glob(
-                    "../custom/rules/**/{}.yaml".format(rule), recursive=True
-                )
+                print(f"Rule file not found in library, checking in custom folder for rule: {rule}")
+                rule_path = glob.glob('../custom/rules/**/{}.y*ml'.format(rule), recursive=True)
             try:
                 rule_file = os.path.basename(rule_path[0])
             except IndexError:
@@ -2269,14 +2263,12 @@ def main():
                     f"defined rule {rule} does not have valid yaml file, check that rule ID and filename match."
                 )
 
-            # check for custom rule
-            if glob.glob("../custom/rules/**/{}".format(rule_file), recursive=True):
-                print(f"Custom settings found for rule: {rule_file}")
-                # override_rule = glob.glob('../custom/rules/**/{}'.format(rule_file), recursive=True)[0]
-                rule_location = glob.glob(
-                    "../custom/rules/**/{}".format(rule_file), recursive=True
-                )[0]
-                custom = True
+            #check for custom rule
+            if glob.glob('../custom/rules/**/{}.y*ml'.format(rule), recursive=True):
+                print(f"Custom settings found for rule: {rule}")
+                #override_rule = glob.glob('../custom/rules/**/{}'.format(rule_file), recursive=True)[0]
+                rule_location = glob.glob('../custom/rules/**/{}.y*ml'.format(rule), recursive=True)[0]
+                custom=True
             else:
                 rule_location = rule_path[0]
                 custom = False
@@ -2306,11 +2298,11 @@ def main():
                 nist_80053r5 = rule_yaml["references"]["800-53r5"]
 
             try:
-                rule_yaml["references"]["800-171r2"]
+                rule_yaml['references']['800-171r3']
             except KeyError:
                 nist_800171 = "- N/A"
             else:
-                nist_800171 = ulify(rule_yaml["references"]["800-171r2"])
+                nist_800171 = ulify(rule_yaml['references']['800-171r3'])
 
             try:
                 rule_yaml["references"]["disa_stig"]

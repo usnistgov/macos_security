@@ -20,14 +20,16 @@ references:
     - CCI-000381
   800-53r5:
     - AC-20
+    - CM-7
   800-53r4:
     - AC-20
   srg:
     - SRG-OS-000095-GPOS-00049
   disa_stig:
     - APPL-14-005056
-  800-171r2:
-    - 3.1.20
+  800-171r3:
+    - 03.01.20
+    - 03.04.06
   cis:
     benchmark:
       - N/A
