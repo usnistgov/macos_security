@@ -76,3 +76,9 @@ tags:
 severity: medium
 mobileconfig: false
 mobileconfig_info:
+ddm_info:
+  declarationtype: com.apple.configuration.services.configuration-files
+  service: com.apple.sshd
+  config_file: sshd_config
+  configuration_key: ClientAliveInterval
+  configuration_value: $ODV
