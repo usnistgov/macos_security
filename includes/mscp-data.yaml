@@ -91,3 +91,6 @@ titles:
   cnssi-1253_moderate: Committee on National Security Systems Instruction No. 1253 (Moderate)
   cnssi-1253_high: Committee on National Security Systems Instruction No. 1253 (High)
   stig: Apple macOS 13 (Ventura) STIG - Ver 1, Rel 3
+ddm:
+  supported_types: []
+  services: []
