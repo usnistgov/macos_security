@@ -19,13 +19,10 @@ references:
     - CCI-000172
   800-53r5:
     - AC-6(9)
-<<<<<<< HEAD
   800-53r4:
     - N/A
   800-171r3:
     - 03.01.07
-=======
->>>>>>> dev_sequoia_cis
   srg:
     - SRG-OS-000064-GPOS-00033
   disa_stig:
@@ -44,16 +41,12 @@ macOS:
 tags:
   - 800-53r5_moderate
   - 800-53r5_high
-<<<<<<< HEAD
   - cis_lvl1
   - cis_lvl2
   - cisv8
   - cmmc_lvl2
   - stig
   - 800-171
-=======
-  - stig
->>>>>>> dev_sequoia_cis
 severity: medium
 mobileconfig: false
 mobileconfig_info:
