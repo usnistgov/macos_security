@@ -18,8 +18,8 @@ references:
     - N/A
   800-53r5:
     - CM-5
-  800-171r2:
-    - 3.4.5
+  800-171r3:
+    - 03.04.05
   cis:
     benchmark:
       - N/A
