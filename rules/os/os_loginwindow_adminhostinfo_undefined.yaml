@@ -24,11 +24,12 @@ references:
     - SRG-OS-000031-GPOS-00012
   disa_stig:
     - APPL-14-000009
-  800-171r2:
-    - 3.1.10
+  800-171r3:
+    - 03.01.10
 macOS:
   - '14.0'
 tags:
+  - 800-171
   - 800-53r5_moderate
   - 800-53r5_high
   - 800-53r4_moderate

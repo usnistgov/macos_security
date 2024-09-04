@@ -1,5 +1,5 @@
 os: "14.0"
 platform: macOS
-version: "Sonoma Guidance, Revision 2.0"
+version: "Sonoma Guidance, Revision 3.0"
 cpe: o:apple:macos:14.0
-date: "2024-04-24"
+date: "XXXX-XX-XX"

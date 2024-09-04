@@ -55,8 +55,9 @@ references:
     - SRG-OS-000105-GPOS-00052
   disa_stig:
     - APPL-14-003051
-  800-171r2:
-    - 3.5.3
+  800-171r3:
+    - 03.05.03
+    - 03.05.04
   cis:
     benchmark:
       - N/A
@@ -86,3 +87,16 @@ tags:
 severity: medium
 mobileconfig: false
 mobileconfig_info:
+ddm_info:
+  declarationtype: com.apple.configuration.services.configuration-files
+  service: com.apple.pam
+  config_file: su
+  configuration_key: file
+  configuration_value: |
+    auth        sufficient    pam_smartcard.so
+    auth        required      pam_rootok.so
+    auth        required      pam_group.so no_warn group=admin,wheel ruser root_only fail_safe
+    account     required      pam_permit.so
+    account     required      pam_opendirectory.so no_check_shell
+    password    required      pam_opendirectory.so
+    session     required      pam_launchd.so

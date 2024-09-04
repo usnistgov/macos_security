@@ -27,11 +27,8 @@ references:
     - SRG-OS-000077-GPOS-00045
   disa_stig:
     - APPL-14-003009
-  800-171r2:
-    - 3.5.7
-    - 3.5.8
-    - 3.5.9
-    - 3.5.10
+  800-171r3:
+    - 03.05.07
   cis:
     benchmark:
       - 5.2.8 (level 1)
@@ -70,3 +67,7 @@ mobileconfig: true
 mobileconfig_info:
   com.apple.mobiledevice.passwordpolicy:
     pinHistory: $ODV
+ddm_info:
+  declarationtype: com.apple.configuration.passcode.settings
+  ddm_key: PasscodeReuseLimit
+  ddm_value: $ODV

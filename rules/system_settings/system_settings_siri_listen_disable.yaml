@@ -38,5 +38,5 @@ tags:
   - cisv8
 mobileconfig: true
 mobileconfig_info:
-  com.apple.siri:
+  com.apple.Siri:
     VoiceTriggerUserEnabled: false
