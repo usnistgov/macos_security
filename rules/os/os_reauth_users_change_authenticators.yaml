@@ -19,9 +19,12 @@ references:
     - N/A
   srg:
     - N/A
+  800-171r3:
+    - 03.05.01
 macOS:
   - "13.0"
 tags:
+  - 800-171
   - inherent
   - 800-53r5_low
   - 800-53r5_moderate

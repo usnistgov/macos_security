@@ -26,7 +26,7 @@ references:
     - N/A
   srg:
     - N/A
-  800-171r2:
+  800-171r3:
     - 3.13.3
   cmmc:
     - SC.L2-3.13.3

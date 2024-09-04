@@ -23,8 +23,8 @@ references:
     - N/A
   disa_stig:
     - N/A
-  800-171r2:
-    - N/A
+  800-171r3:
+    - 03.03.06
   cmmc:
     - AU.L2-3.3.6
 macOS:
