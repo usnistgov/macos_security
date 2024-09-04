@@ -20,9 +20,12 @@ references:
   srg:
     - SRG-OS-000373-GPOS-00157
     - SRG-OS-000373-GPOS-00156
+  800-171r3:
+    - 03.05.01
 macOS:
   - '14.0'
 tags:
+  - 800-171
   - inherent
   - cnssi-1253_moderate
   - cnssi-1253_low

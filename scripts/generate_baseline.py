@@ -51,7 +51,7 @@ def get_rule_yaml(rule_file, custom=False):
     """ Takes a rule file, checks for a custom version, and returns the yaml for the rule
     """
     resulting_yaml = {}
-    names = [os.path.basename(x) for x in glob.glob('../custom/rules/**/*.yaml', recursive=True)]
+    names = [os.path.basename(x) for x in glob.glob('../custom/rules/**/*.y*ml', recursive=True)]
     file_name = os.path.basename(rule_file)
 
     if custom:
@@ -116,7 +116,7 @@ def collect_rules():
                   'srg']
 
 
-    for rule in sorted(glob.glob('../rules/**/*.yaml',recursive=True)) + sorted(glob.glob('../custom/rules/**/*.yaml',recursive=True)):
+    for rule in sorted(glob.glob('../rules/**/*.y*ml',recursive=True)) + sorted(glob.glob('../custom/rules/**/*.y*ml',recursive=True)):
         rule_yaml = get_rule_yaml(rule, custom=False)
         for key in keys:
             try:

@@ -20,7 +20,6 @@ references:
     - CCI-001749
   800-53r5:
     - CM-14
-    - CM-5
     - SI-7(15)
     - SI-7(1)
   800-53r4:
@@ -31,8 +30,9 @@ references:
     - SRG-OS-000366-GPOS-00153
   disa_stig:
     - APPL-14-002060
-  800-171r2:
-    - 3.4.5
+  800-171r3:
+    - 03.14.02
+
   cmmc:
     - CM.L2-3.4.5
 macOS:

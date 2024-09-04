@@ -381,9 +381,9 @@ def generate_scap(all_rules, all_baselines, args):
                 for nist80053 in rule_yaml['references']['800-53r4']:
                     references = references + nist80053 + ", "
                 references = references[:-2] + "</reference>"
-            if "800-171r2" in rule_yaml['references'] and rule_yaml['references']['800-171r2'][0] != "N/A":
-                references = references + "<reference href=\"https://csrc.nist.gov/publications/detail/sp/800-171/rev-2/final\">NIST SP 800-171r2: "
-                for nist800171 in rule_yaml['references']['800-171r2']:
+            if "800-171r3" in rule_yaml['references'] and rule_yaml['references']['800-171r3'][0] != "N/A":
+                references = references + "<reference href=\"https://csrc.nist.gov/publications/detail/sp/800-171/rev-2/final\">NIST SP 800-171r3: "
+                for nist800171 in rule_yaml['references']['800-171r3']:
                     references = references + nist800171 + ", "
                 references = references[:-2] + "</reference>"
             if "disa_stig" in rule_yaml['references'] and rule_yaml['references']['disa_stig'][0] != "N/A":
