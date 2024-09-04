@@ -16,12 +16,14 @@ references:
   cci:
     - N/A
   800-53r5:
-    - N/A
+    - AC-20(4)
   srg:
     - N/A
   disa_stig:
     - N/A
   800-171r3:
+    - N/A
+  cmmc:
     - N/A
 macOS:
   - '15.0'

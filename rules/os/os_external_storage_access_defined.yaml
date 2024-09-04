@@ -1,7 +1,7 @@
-id: os_external_storage_restriction
-title: External Storage Must Be Restricted
+id: os_external_storage_access_defined
+title: Access to External Storage Must Be Defined
 discussion: |-
-  External Storage _MUST_ be restricted. 
+  Access to external storage _MUST_ be managed. 
   
   NOTE: Apple's built in method using declative device management method only allows you to set external storage manament to Allowed, ReadOnly, and Disallowed.
 check: |
@@ -16,17 +16,23 @@ references:
   cci:
     - N/A
   800-53r5:
-    - N/A
+    - MP-7
   srg:
     - N/A
   disa_stig:
     - N/A
   800-171r3:
-    - N/A
+    - 03.08.07
+  cmmc:
+    - MP.L2-3.8.7
+    - MP.L2-3.8.8    
 macOS:
   - '15.0'
 tags:
-  - none
+  - cmmc_lvl2
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_high  
 odv:
   hint: Allowed, ReadOnly, or Disallowed
   recommended: Allowed
