@@ -141,7 +141,6 @@ profile:
       - os_root_disable
       - os_safari_advertising_privacy_protection_enable
       - os_safari_open_safe_downloads_disable
-      - os_safari_popups_disabled
       - os_safari_prevent_cross-site_tracking_enable
       - os_safari_show_full_website_address_enable
       - os_safari_show_status_bar_enabled
