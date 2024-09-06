@@ -2,6 +2,42 @@
 
 This document provides a high-level view of the changes to the macOS Security Compliance Project.
 
+== [Sonoma, Revision 3.0] - 2024-XX-XX
+
+* Rules
+** Added Rules
+*** system_settings_improve_siri_dictation_disable
+*** system_settings_siri_listen_disable
+*** system_settings_sleep_enforce
+** Modified Rules
+*** os_application_sandboxing (https://github.com/usnistgov/macos_security/pull/409[#409])
+*** os_camera_disable (https://github.com/usnistgov/macos_security/issues/388[#388])
+*** os_mobile_file_integrity_enable (https://github.com/usnistgov/macos_security/pull/409[#409])
+*** pwpolicy_force_pin_enable  (https://github.com/usnistgov/macos_security/issues/384[#384])
+*** system_settings_rae_disable (https://github.com/usnistgov/macos_security/pull/408[#408])
+*** system_settings_siri_listen_disable (https://github.com/usnistgov/macos_security/issues/411[#411])
+*** system_settings_ssh_disable (https://github.com/usnistgov/macos_security/pull/408[#408])
+s** system_settings_system_wide_preferences_configure (https://github.com/usnistgov/macos_security/issues/418[#418])
+*** os_unlock_active_user_session_disable
+** Deleted Rules
+*** os_hibernate_mode_apple_silicon_enable
+*** os_safari_popups_disabled
+
+* Baselines
+** Modified existing baselines
+
+* Scripts
+** generate_guidance
+*** Updated date format for compliance script (https://github.com/usnistgov/macos_security/issues/405[#405])
+*** Spelling fixes (https://github.com/usnistgov/macos_security/pull/409[#409])
+*** Support `.yaml` & .`yml` (https://github.com/usnistgov/macos_security/issues/412[#412])
+** generate_baseline
+*** Removed unnecessary try blocks (https://github.com/usnistgov/macos_security/issues/401[#401])
+*** Update with correct syntax for replace (https://github.com/usnistgov/macos_security/pull/406[#406])
+*** Support `.yaml` & .`yml` (https://github.com/usnistgov/macos_security/issues/412[#412])
+** generate_scap
+*** Spelling fixes (https://github.com/usnistgov/macos_security/pull/409[#409])
+
 == [Sonoma, Revision 2.0] - 2024-04-24
 
 * Rules
