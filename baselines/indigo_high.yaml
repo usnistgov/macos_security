@@ -68,7 +68,6 @@ profile:
       - os_mail_maildrop_disable
       - os_mail_move_messages_disable
       - os_marketplace_prevent
-      - os_modify_cellular_data_app_settings_disable
       - os_network_known_only
       - os_new_device_proximity_disable
       - os_on_device_dictation_enforce
@@ -78,9 +77,9 @@ profile:
       - os_password_sharing_disable
       - os_personalized_advertising_disable
       - os_predictive_keyboard_disable
-      - os_require_managed_pasteboard_enforce
       - os_rapid_security_responses_install_enable
       - os_rapid_security_responses_remove_disable
+      - os_require_managed_pasteboard_enforce
       - os_safari_JavaScript_disable
       - os_safari_cookies_set
       - os_safari_force_fraud_warning_enable
@@ -91,6 +90,7 @@ profile:
       - os_show_control_center_lock_screen_disable
       - os_show_notification_center_lock_screen_disable
       - os_siri_allow_dictation_disable
+      - os_siri_assistant_diable
       - os_siri_server_logging_disable
       - os_siri_user_generated_content_disable
       - os_siri_when_locked_disabled
