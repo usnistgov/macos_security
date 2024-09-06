@@ -17,7 +17,7 @@ references:
   indigo:
     - ANNEX K
 iOS:
-  - "17.4.1"
+  - "17.0"
 tags:
   - manual
   - ios

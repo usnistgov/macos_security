@@ -19,7 +19,7 @@ references:
     - ANNEX D (Section 5.9.1 - Device-Code)
     - ANNEX K  
 iOS:
-  - "17.4.1"
+  - "17.0"
 tags:
   - ios
   - indigo_base
