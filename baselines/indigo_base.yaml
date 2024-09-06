@@ -32,7 +32,7 @@ profile:
       - os_diagnostics_reports_modification_disable
       - os_disallow_enterprise_app_trust
       - os_exchange_peraccountVPN
-      - os_exchange_prevent_move_enforceEAS
+      - os_exchange_prevent_move_enforce
       - os_force_date_and_time_enable
       - os_force_encrypted_backups_enable
       - os_handoff_disable

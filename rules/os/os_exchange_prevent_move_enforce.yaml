@@ -1,4 +1,4 @@
-id: os_exchange_prevent_move_enforceEAS
+id: os_exchange_prevent_move_enforce
 title: "Prevent move manged mails to another account."
 discussion: |
   The iOS device needs some specific configurations for the Exchange setup to meet the minimum requirements. Some are mandatory.
