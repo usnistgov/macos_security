@@ -20,6 +20,8 @@ references:
     - AIOS-17-710400
   800-171r2:
     - N/A
+  indigo:
+    - Annex D (Section 5.9.1 - Device-Code)
   cis:
     benchmark:
       - N/A
@@ -31,8 +33,10 @@ tags:
   - ios
   - ios_stig
   - ios_stig_byoad
+  - indigo_base
+  - indigo_high
 severity: high
-mobileconfig: 'true'
+mobileconfig: true
 mobileconfig_info:
   com.apple.mobiledevice.passwordpolicy:
     forcePIN: true

@@ -1,0 +1,28 @@
+id: os_device_name_change_disable
+title: "Disable device name changes"
+discussion: |
+  The iOS device _MUST_ be configured to disable device name changes.  
+check: |
+  Check your MDM to ensure that device name change is disabled on the iOS endpoint.
+result:
+  string: "false"
+fix: |
+  This is implemented by a Configuration Profile.
+references:
+  cce:
+    - N/A
+  800-53r5:
+    - N/A
+  indigo:
+    - ANNEX K
+iOS:
+  - "17.0"
+tags:
+  - ios
+  - indigo_base
+  - indigo_high
+supervised: true
+mobileconfig: true
+mobileconfig_info:
+  com.apple.applicationaccess:
+    allowDeviceNameModification: false

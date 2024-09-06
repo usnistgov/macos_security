@@ -1,0 +1,29 @@
+id: os_network_known_only
+title: "Only allow known networks"
+discussion: |
+  The iOS device _SHOULD_ be configured to only allow known networks in case only trustworthy networks can be used. This can have a limitation on connectivity especially when devices are used in area with low or no network connectivity. This is especially applicable when traveling.
+  
+  This configuration is recommended but can be changed by the CISO.  
+check: |
+  Check your MDM to ensure that only known networks are allowed on the iOS endpoint, if decided by the CISO.
+result:
+  string: "true"
+fix: |
+  This is implemented by a Configuration Profile.
+references:
+  cce:
+    - N/A
+  800-53r5:
+    - N/A
+  indigo:
+    - ANNEX D (Section 5.7 - Interfaces)
+iOS:
+  - "17.0"
+tags:
+  - ios
+  - indigo_high
+supervised: true
+mobileconfig: true
+mobileconfig_info:
+  com.apple.applicationaccess:
+    forceWiFiToAllowedNetworksOnly: true

@@ -22,6 +22,8 @@ references:
     - N/A
   800-171r2:
     - N/A
+  indigo:
+    - ANNEX D (Section 5.6.1 - Mail) 
   cis:
     benchmark:
       - 3.2.1.15 (level 1 - Institutionally-Owned Devices)
@@ -34,6 +36,8 @@ tags:
   - cis_lvl1_enterprise
   - cis_lvl2_enterprise
   - cisv8
+  - indigo_base
+  - indigo_high
 supervised: true
 mobileconfig: true
 mobileconfig_info:

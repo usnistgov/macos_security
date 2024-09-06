@@ -28,6 +28,8 @@ references:
     - AIOS-17-012500
   800-171r2:
     - N/A
+  indigo:
+    - ANNEX K
   cis:
     benchmark:
       - N/A
@@ -41,6 +43,8 @@ tags:
   - 800-53r5_moderate
   - 800-53r5_high
   - ios_stig
+  - indigo_base
+  - indigo_high
 severity: "medium"
 supervised: true
 mobileconfig: true

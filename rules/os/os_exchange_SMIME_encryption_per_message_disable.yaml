@@ -1,0 +1,25 @@
+id: os_exchange_SMIME_encryption_per_message_disable
+title: "Disable encryption selection option per mail."
+discussion: |
+  The iOS device needs some specific configurations for the Exchange setup to meet the minimum requirements. Some are mandatory.
+
+  The user _SHOULD_ not be enabled to have the option to decide wether to encrypt a mail communication. Encryption _SHOULD_ be the default.
+check: ' '
+fix: This is implemented by a Configuration Profile
+references:
+  cce:
+    - N/A
+  800-53r5:
+    - N/A
+  indigo:
+    - ANNEX D (Section 5.6.1 - Mail)  
+iOS:
+  - "17.0"
+tags:
+  - ios
+  - indigo_high
+severity: "medium"
+mobileconfig: true
+mobileconfig_info:
+  com.apple.mail.managed: 
+    SMIMEEnableEncryptionPerMessageSwitch: false

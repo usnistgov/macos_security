@@ -1,0 +1,29 @@
+id: os_update_OTAPKI_allow
+title: "Allow OTA Update of PKI"
+discussion: |
+  The device _SHOULD_ be configured that the OTA update of the PKI is allowed.
+  
+  This configuration is recommended but can be changed by the CISO.
+check: |
+  Check your MDM to ensure that OTA PKI updates are allowed on the iOS endpoint, if decided by the CISO.
+result:
+  string: "true"
+fix: |
+  This is implemented by a Configuration Profile.
+references:
+  cce:
+    - N/A
+  800-53r5:
+    - N/A
+  indigo:
+    - ANNEX K
+iOS:
+  - "17.0"
+tags:
+  - ios
+  - indigo_high
+supervised: false
+mobileconfig: true
+mobileconfig_info:
+  com.apple.applicationaccess:
+    allowOTAPKIUpdates: true

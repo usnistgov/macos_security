@@ -1,0 +1,31 @@
+id: os_airprint_disable
+title: "Disable AirPrint"
+discussion: |
+  The iOS built-in AirPrint capability _SHOULD_ be disabled.
+
+  The service AirPrint _SHOULD_ be disabled to prevent intendedly printing content on unknown printers and leaking data.
+  
+  This configuration is recommended but can be changed by the CISO.  
+check: |
+  Check your MDM to ensure that AirPrint has been disabled on the iOS endpoint, if decided by the CISO.
+result:
+  string: "false"
+fix: |
+  This is implemented by a Configuration Profile.
+references:
+  cce:
+    - N/A
+  800-53r5:
+    - N/A
+  indigo:
+    - ANNEX K
+iOS:
+  - "17.0"
+tags:
+  - ios
+  - indigo_high
+supervised: false
+mobileconfig: true
+mobileconfig_info:
+  com.apple.applicationaccess:
+    allowAirPrint: false

@@ -23,6 +23,8 @@ references:
     - AIOS-17-714600
   800-171r2:
     - N/A
+  indigo:
+    - ANNEX K
   cis:
     benchmark:
       - N/A
@@ -34,6 +36,8 @@ tags:
   - ios
   - ios_stig
   - ios_stig_byoad
+  - indigo_base
+  - indigo_high
 severity: medium
 supervised: false
 mobileconfig: true

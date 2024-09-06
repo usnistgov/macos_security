@@ -18,6 +18,8 @@ references:
     - AIOS-17-707000
   800-171r2:
     - N/A
+  indigo:
+    - ANNEX D - (Section 5.8.5) 
   cis:
     benchmark:
       - N/A
@@ -32,6 +34,8 @@ tags:
   - 800-53r5_high
   - ios_stig
   - ios_stig_byoad
+  - indigo_base
+  - indigo_high
 severity: low
 supervised: false
 mobileconfig: true

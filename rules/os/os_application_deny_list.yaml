@@ -1,0 +1,35 @@
+id: os_application_deny_list
+title: "Apps not allowed on the device"
+discussion: |
+  In case specific apps are allowed to be used on the device a specific list _SHOULD_VALUEONDEMAND_ needs to be defined by the MDM. These apps will not open on the device.
+  
+  This list is defined by the CISO  
+check: |
+  Check your MDM to ensure that not allowed apps have been disabled on the iOS endpoint, if decided by the CISO.
+result:
+  string: "BundleIDs"
+fix: |
+  This is implemented by a Configuration Profile.
+references:
+  cce:
+    - N/A
+  800-53r5:
+    - N/A
+  indigo:
+    - ANNEX D (Section 5.8 - App-Installation)
+    - ANNEX N
+iOS:
+  - "17.0"
+tags:
+  - ios
+  - manual
+  - indigo_base
+  - indigo_high
+supervised: true
+mobileconfig: false # Set to true when implementing
+mobileconfig_info:
+  com.apple.applicationaccess:
+    blockedAppBundleIDs: # Add bundle identifiers below
+      - bundleID1
+      - bundleID2
+    

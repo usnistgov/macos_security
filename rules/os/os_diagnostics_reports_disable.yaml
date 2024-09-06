@@ -23,6 +23,8 @@ references:
     - AIOS-17-713400
   800-171r2:
     - N/A
+  indigo:
+    - ANNEX K
   cis:
     benchmark: 
       - 2.2.1.12 (level 1 - End-User Owned Devices)
@@ -43,6 +45,8 @@ tags:
   - cisv8
   - ios_stig
   - ios_stig_byoad
+  - indigo_base
+  - indigo_high
 severity: "medium"
 supervised: false
 mobileconfig: true

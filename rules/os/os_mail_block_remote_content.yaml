@@ -1,0 +1,27 @@
+id: os_mail_block_remote_content
+title: "Block remote content"
+discussion: |
+  The user _SHOULD_ manually block remote content in Settings/Mail/Privacy/Block Remote Content
+  
+  This configuration is recommended but can be changed by the CISO.  
+check: |
+result:
+  string: "false"
+fix: |
+  This is implemented manually by the user.
+references:
+  cce:
+    - N/A
+  800-53r5:
+    - N/A
+  indigo:
+    - ANNEX K
+iOS:
+  - "17.4.1"
+tags:
+  - manual
+  - ios
+  - indigo_base
+  - indigo_high
+mobileconfig: false
+mobileconfig_info:

@@ -25,6 +25,9 @@ references:
     - AIOS-17-003300
   800-171r2:
     - N/A
+  indigo:
+    - ANNEX D (Section 5.4 - iCloud restrictions)
+    - ANNEX K
   cis:
     benchmark:
       - 3.2.1.6 (level 1 - Institutionally-Owned Devices) 
@@ -43,6 +46,8 @@ tags:
   - cis_lvl2_enterprise
   - cisv8
   - ios_stig
+  - indigo_base
+  - indigo_high
 supervised: false
 mobileconfig: true
 mobileconfig_info:

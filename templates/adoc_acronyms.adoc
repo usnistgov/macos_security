@@ -9,6 +9,8 @@
 |AO|Authorizing Official
 |API|Application Programming Interface
 |ARD|Apple Remote Desktop
+|BSI|Bundesamt für Sicherheit in der Informationstechnik +
+(German Federal Office for Information Security)
 |CA|Certificate Authority
 |CIS|Center for Internet Security
 |CMMC|Cybersecurity Maturity Model Certification

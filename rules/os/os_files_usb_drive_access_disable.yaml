@@ -22,6 +22,8 @@ references:
     - AIOS-17-013300
   800-171r2:
     - N/A
+  indigo:
+    - ANNEX K
   cis:
     benchmark:
       - 3.2.1.8 (level 2 - Institutionally-Owned Devices)
@@ -36,6 +38,7 @@ tags:
   - cis_lvl2_enterprise
   - cisv8
   - ios_stig
+  - indigo_high
 severity: "medium"
 supervised: true
 mobileconfig: true

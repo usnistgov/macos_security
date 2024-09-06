@@ -27,6 +27,8 @@ references:
     - AIOS-17-707400
   800-171r2:
     - N/A
+  indigo:
+    - ANNEX D (Section 5.8 - App-Installation)
   cis:
     benchmark:
       - N/A
@@ -41,6 +43,8 @@ tags:
   - manual
   - ios_stig
   - ios_stig_byoad
+  - indigo_base
+  - indigo_high
 severity: medium
 supervised: true
 mobileconfig: false # Set to true when implementing

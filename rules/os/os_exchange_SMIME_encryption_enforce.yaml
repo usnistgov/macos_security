@@ -1,0 +1,30 @@
+id: os_exchange_SMIME_encryption_enforce
+title: "Setting S/MIME encrytion as default."
+discussion: |
+  The iOS device needs some specific configurations for the Exchange setup to meet the minimum requirements. Some are mandatory.
+
+  The usage of S/MIME encryption _SHOULD_ be configured to set mail signing as the default.
+
+check: |
+  Check your MDM to ensure that mail S/MIME encrytion has been enforced on the iOS endpoint, if decided by the CISO.
+
+result:
+  string: "true"
+fix: |
+  This is implemented by a Configuration Profile.
+references:
+  cce:
+    - N/A
+  800-53r5:
+    - N/A
+  indigo:
+    - ANNEX D (Section 5.6.1 - Mail) 
+iOS:
+  - "17.0"
+tags:
+  - ios
+  - indigo_high
+mobileconfig: true
+mobileconfig_info:
+  com.apple.eas.account: 
+    SMIMEEncryptByDefault: true

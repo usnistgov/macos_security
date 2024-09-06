@@ -19,6 +19,8 @@ references:
     - N/A
   800-171r2:
     - N/A
+  indigo:
+    - ANNEX K
   cis:
     benchmark:
       - 2.2.1.7 (level 1 - End-User Owned Devices)
@@ -37,6 +39,8 @@ tags:
   - cis_lvl1_enterprise
   - cis_lvl2_enterprise
   - cisv8
+  - indigo_base
+  - indigo_high
 supervised: false
 mobileconfig: true
 mobileconfig_info:
