@@ -356,10 +356,17 @@ def generate_scap(all_rules, all_baselines, args):
                 result = ""
             severity = str()
 
-            if "severity" in rule_yaml:
-                severity = rule_yaml['severity']
+            if severity in rule_yaml:
+                if isinstance(rule_yaml["severity"], str):
+                    severity = f'{rule_yaml["severity"]}'
+                if isinstance(rule_yaml["severity"], dict):
+                    try:
+                        severity = f'{rule_yaml["severity"][args.baseline]}'
+                    except KeyError:
+                        severity = "unknown"
             else:
                 severity = "unknown"
+
             check_rule = str()
             if "inherent" in rule_yaml['tags'] or "n_a" in rule_yaml['tags'] or "permanent" in rule_yaml['tags']:
                 check_rule = '''
@@ -381,9 +388,9 @@ def generate_scap(all_rules, all_baselines, args):
                 for nist80053 in rule_yaml['references']['800-53r4']:
                     references = references + nist80053 + ", "
                 references = references[:-2] + "</reference>"
-            if "800-171r2" in rule_yaml['references'] and rule_yaml['references']['800-171r2'][0] != "N/A":
-                references = references + "<reference href=\"https://csrc.nist.gov/publications/detail/sp/800-171/rev-2/final\">NIST SP 800-171r2: "
-                for nist800171 in rule_yaml['references']['800-171r2']:
+            if "800-171r3" in rule_yaml['references'] and rule_yaml['references']['800-171r3'][0] != "N/A":
+                references = references + "<reference href=\"https://csrc.nist.gov/publications/detail/sp/800-171/rev-2/final\">NIST SP 800-171r3: "
+                for nist800171 in rule_yaml['references']['800-171r3']:
                     references = references + nist800171 + ", "
                 references = references[:-2] + "</reference>"
             if "disa_stig" in rule_yaml['references'] and rule_yaml['references']['disa_stig'][0] != "N/A":
@@ -1119,7 +1126,11 @@ def generate_scap(all_rules, all_baselines, args):
                     xccdf_rules = replace_ocil(xccdf_rules,x)
                     x += 1
                     continue
-
+                if "xprotect status" in rule_yaml['check']:
+                    print(rule_yaml['id'] + " - No relevant oval test")
+                    xccdf_rules = replace_ocil(xccdf_rules,x)
+                    x += 1
+                    continue
                 if "SPStorageDataType" in rule_yaml['check']:
                     
                     print(rule_yaml['id'] + " - No relevant oval test")
@@ -3621,7 +3632,7 @@ def collect_rules():
 
         all_rules.append(MacSecurityRule(rule_yaml['title'].replace('|', '\|'),
                                     rule_yaml['id'].replace('|', '\|'),
-                                    rule_yaml['severity'].replace('|', '\|'),
+                                    rule_yaml['severity'],
                                     rule_yaml['discussion'].replace('|', '\|'),
                                     rule_yaml['check'].replace('|', '\|'),
                                     rule_yaml['fix'].replace('|', '\|'),
