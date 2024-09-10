@@ -1,42 +1,23 @@
 id: os_allow_contacts_read_managed_sources_unmanaged_destinations_disable
 title: "Ensure Managed Apps Cannot Read Unmanaged Contact Accounts"
-discussion: |-
-  Managed Apps _MUST_ not be allowed to read contacts from unamanged contact destinations. 
+discussion: |
+  Managed Apps _MUST_ not be allowed to read contacts from unamanged contact destinations.
 check: ' '
-fix: This is implemented by a Configuration Profile
+result: ' '
+fix: |
+  This is implemented by a Configuration Profile.
 references:
   cce:
-    - CCE-93411-7
-  cci:
-    - CCI-000366
-    - CCI-000051
-    - CCI-000370
+    - N/A
   800-53r5:
     - AC-3
     - MP-2
     - SC-7(10)
     - SC-39
-  sfr:
-    - 'FMT_SMF_EXT.1.1 #42'
-    - 'FDP_ACF_EXT.1.2'
-  disa_stig:
-    - AIOS-17-012400
-    - AIOS-17-712400
-  cis:
-    benchmark:
-      - N/A
-    controls v8:
-      - N/A
-iOS:
-  - "17.0"
+visionOS:
+  - '2.0'
 tags:
-  - ios
-  - 800-53r5_low
-  - 800-53r5_moderate
-  - 800-53r5_high
-  - ios_stig
-  - ios_stig_byoad
-severity: low
+  - visionos
 supervised: false
 mobileconfig: true
 mobileconfig_info:
