@@ -1,13 +1,8 @@
 id: os_airprint_force_trusted_TLS
 title: "Requires trusted certificates for TLS printing communication"
 discussion: |
-  The service AirPrint _SHOULD_be configured to require trusted certificates for TLS printing communication.
-  
-  This configuration is recommended but can be changed by the CISO.  
-check: |
-  Check your MDM to ensure that trusted TLS certificates for AirPrint has been enforced on the iOS endpoint, if decided by the CISO.
-result:
-  string: "true"
+  The service AirPrint _MUST_ be configured to require trusted certificates for TLS printing communication.
+check: " "
 fix: |
   This is implemented by a Configuration Profile.
 references:

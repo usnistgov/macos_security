@@ -1,13 +1,8 @@
 id: os_rapid_security_responses_remove_disable
 title: "Disallow to remove Rapid Security Responses"
 discussion: |
-  The iOS device _SHOULD_ be configured not to allow the user to remove rapid security responses.
-  
-  This configuration is recommended but can be changed by the CISO.
-check: |
-  Check your MDM to ensure that removal of Rapid Security Responses has been disabled on the iOS endpoint.
-result:
-  string: "false"
+  The iOS device _MUST_ be configured not to allow the user to remove rapid security responses.
+check: " "
 fix: |
   This is implemented by a Configuration Profile.
 references:

@@ -2,10 +2,7 @@ id: pwpolicy_history_enforce
 title: "Prohibit Password Reuse for a Minimum of 2 Generations"
 discussion: |
   The iOS _MUST_ be configured to enforce a password history of at least 2 previous passwords when a password is created.  
-check: |
-  Check your MDM to ensure that the password history has been enforced to 2 generations on the iOS endpoint.
-result:
-  integer: "2"
+check: " "
 fix: |
   This is implemented by a Configuration Profile.
 references:

@@ -3,11 +3,8 @@ title: "Enable selecting the appropriate S/MIME encryption certificate."
 discussion: |
   The iOS device needs some specific configurations for the Exchange setup to meet the minimum requirements. Some are mandatory.
 
-  The user _SHOULD_ be enabled to select the appropriate signing identity.
-check: |
-  Check your MDM to ensure that selecting the appropriate mail S/MIME encryption certificate  has been enforced on the iOS endpoint, if decided by the CISO.
-result:
-  string: "false"
+  The user _MUST_ be enabled to select the appropriate signing identity.
+check: " "
 fix: |
   This is implemented by a Configuration Profile.
 references:

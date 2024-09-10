@@ -1,13 +1,8 @@
 id: os_safari_popups_disable
 title: "Disable Safari Popups"
 discussion: |
-  The iOS device _SHOULD_ be configured to automatically prevent popups on the device to protect users from malicious content.
-  
-  This configuration is recommended but can be changed by the CISO.  
-check: |
-  Check your MDM to ensure that AirPrint has been Safari popups are disabled on the iOS endpoint, if decided by the CISO.
-result:
-  string: "false"
+  The iOS device _MUST_ be configured to automatically prevent popups on the device to protect users from malicious content.
+check: " "
 fix: |
   This is implemented by a Configuration Profile.
 references:

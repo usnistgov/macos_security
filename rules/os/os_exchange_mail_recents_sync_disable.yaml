@@ -3,11 +3,8 @@ title: "Prevent synching of recent recipients."
 discussion: |
   The iOS device needs some specific configurations for the Exchange setup to meet the minimum requirements. Some are mandatory.
 
-  The synchronization of recent addresses _SHOULD_ be prevented not to synchronize sensitive addresses locally to the device.
-check: |
-  Check your MDM to ensure that disabling recent mail address sync has been enforced on the iOS endpoint, if decided by the CISO.
-result:
-  string: "true"
+  The synchronization of recent addresses _MUST_ be prevented not to synchronize sensitive addresses locally to the device.
+check: " "
 fix: |
   This is implemented by a Configuration Profile.
 references:

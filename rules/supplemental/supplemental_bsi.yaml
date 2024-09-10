@@ -1,7 +1,7 @@
 id: supplemental_bsi
 title: "BSI Supplemental"
 discussion: |
-  These controls are controls that require additional considerations for your environment based on indigo in accordance with the recommendations of BSI (Bundesamt für Sicherheit in der Informationstechnik, German Federal Office for Information Security).
+  These controls require additional considerations for your environment based on indigo,  in accordance with the recommendations of BSI (Bundesamt für Sicherheit in der Informationstechnik, German Federal Office for Information Security).
 
   [cols="20%h, 80%a"]
   |===

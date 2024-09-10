@@ -4,10 +4,7 @@ discussion: |
   The iOS built-in Siri service _MUST_ be disabled to prevent organizational data from being synchronized to Apple servers.
 
   Apple's Siri service does not provide an organization with enough control over the storage and access of data, and, therefore, automated synchronization _MUST_ be controlled by an organization approved service.
-check: |
-  Check your MDM to ensure that Siri has been disabled on the iOS endpoint.
-result:
-  string: "false"
+check: " "
 fix: |
   This is implemented by a Configuration Profile.
 references:

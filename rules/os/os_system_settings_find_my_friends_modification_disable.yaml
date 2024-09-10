@@ -1,11 +1,8 @@
 id: os_system_settings_find_my_friends_modification_disable
 title: "Disable Find My Friends Modification"
 discussion: |
-  The Find My service modification _SHOULD_ be disabled, if decided by the CISO.
-check: |
-  Check your MDM to ensure that modification of Find My Friends has been disabled on the iOS endpoint.
-result:
-  string: "false"
+  The Find My service modification _MUST_ be disabled, if decided by the CISO.
+check: " "
 fix: |
   This is implemented by a Configuration Profile.
 references:

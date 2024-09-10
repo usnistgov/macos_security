@@ -1,11 +1,8 @@
 id: os_marketplace_prevent
 title: "Prevent 3rd party marketplaces"
 discussion: |
-  The iOS device_MUST_ be configured to prevent 3rd party market places to be installed.  
-check: |
-  Check your MDM to ensure that 3rd party marketplaces have been disabled on the iOS endpoint.
-result:
-  string: "false"
+  The iOS device _MUST_ be configured to prevent 3rd party market places to be installed.  
+check: " "
 fix: |
   This is implemented by a Configuration Profile.
 references:

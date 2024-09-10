@@ -3,11 +3,8 @@ title: "Enable S/MIME signing of mails."
 discussion: |
   The iOS device needs some specific configurations for the Exchange setup to meet the minimum requirements. Some are mandatory.
 
-  The usage of S/MIME signing _SHOULD_ be configured to set mail signing as the default.
-check: |
-  Check your MDM to ensure that enabling mail S/MIME signing has been enforced on the iOS endpoint, if decided by the CISO.
-result:
-  string: "true"
+  The usage of S/MIME signing _MUST_ be configured to set mail signing as the default.
+check: ""
 fix: |
   This is implemented by a Configuration Profile.
 references:

@@ -4,10 +4,7 @@ discussion: |
   The iOS device needs some specific configurations for the Exchange setup to meet the minimum requirements. Some are mandatory.
 
   he prevent move to another account _MUST_ be configured to prevent data leakage via a different account.
-check: |
-  Check your MDM to ensure that preventing the move of managed mails to another account has been enforced on the iOS endpoint.
-result:
-  string: "true"
+check: " "
 fix: |
   This is implemented by a Configuration Profile.
 references:

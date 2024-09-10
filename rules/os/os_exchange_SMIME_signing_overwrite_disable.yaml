@@ -3,11 +3,8 @@ title: "Disable changing the S/MIME signing settings."
 discussion: |
   The iOS device needs some specific configurations for the Exchange setup to meet the minimum requirements. Some are mandatory.
 
-  The option for a user to overwrite the of S/MIME configuration _SHOULD_ prevented.
-check: |
-  Check your MDM to ensure that disabling changing mail S/MIME signing certificate settings has been enforced on the iOS endpoint, if decided by the CISO.
-result:
-  string: "false"
+  The option for a user to overwrite the of S/MIME configuration _MUST_ prevented.
+check: " "
 fix: |
   This is implemented by a Configuration Profile.
 references:

@@ -6,10 +6,7 @@ discussion: |
   If the feature is enabled the default value is 30 days and can be configured to a maximum of 90 days.
   
   In any case software updates should be applied as soon as possible to address potential security issues.
-check: |
-  Check your MDM to ensure that delayed software update has been enforced on the iOS endpoint, if decided by the CISO.
-result:
-  integer: $ODV
+check: " "
 fix: |
   This is implemented by a Configuration Profile.
 references:

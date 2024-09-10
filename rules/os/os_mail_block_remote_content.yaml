@@ -1,12 +1,8 @@
 id: os_mail_block_remote_content
 title: "Block remote content"
 discussion: |
-  The user _SHOULD_ manually block remote content in Settings/Mail/Privacy/Block Remote Content
-  
-  This configuration is recommended but can be changed by the CISO.  
-check: |
-result:
-  string: "false"
+  The user _MUST_ manually block remote content in Settings/Mail/Privacy/Block Remote Content.
+check: " "
 fix: |
   This is implemented manually by the user.
 references:

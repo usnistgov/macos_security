@@ -1,13 +1,8 @@
 id: os_chat_disable
 title: "Prevent the usage of iMessage"
 discussion: |
-  The iOS device _SHOULD_ be configured to disable iMessage on the device to prevent receiving malicious content via iMessage.
-  
-  This configuration is recommended but can be changed by the CISO.  
-check: |
-  Check your MDM to ensure that iMessage has been disabled on the iOS endpoint, if decided by the CISO.
-result:
-  string: "false"
+  The iOS device _MUST_ be configured to disable iMessage on the device to prevent receiving malicious content via iMessage.  
+check: " "
 fix: |
   This is implemented by a Configuration Profile.
 references:

@@ -1,8 +1,8 @@
-title: "iOS/iPadOS 17.0: Security Configuration - BSI indigo 17.x - base configuration"
+title: "iOS/iPadOS 17.0: Security Configuration - BSI indigo 17.x Base Configuration"
 description: |
   This guide describes the actions to take when securing an iOS/iPadOS 17.0 system against indigo 17.x base configuration, which is the minimum configuration that is aligned with the indigo Security Operating Procedures and user handbooks.
 
-  Items in this Baseline as suited for iOS v17.5.1 and above.  
+  NOTE: Items in this Baseline are suited for iOS v17.5.1 and above.  
 authors: |
   |===
   |Name|Organization

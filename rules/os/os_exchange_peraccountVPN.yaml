@@ -4,10 +4,7 @@ discussion: |
   The iOS device needs some specific configurations for the Exchange setup to meet the minimum requirements. Some are mandatory.
 
   When leveraging per account VPN configurations mail, calendar and contacts need to be configured to leverage the specific VPNUUID in addition.
-check: |
-  Check your MDM to ensure per account VPN has been enforced on the iOS endpoint.
-result:
-  string: "VPNUUID"
+check: " "
 fix: |
   This is implemented by a Configuration Profile.
 references:
