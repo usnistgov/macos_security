@@ -1126,7 +1126,11 @@ def generate_scap(all_rules, all_baselines, args):
                     xccdf_rules = replace_ocil(xccdf_rules,x)
                     x += 1
                     continue
-
+                if "xprotect status" in rule_yaml['check']:
+                    print(rule_yaml['id'] + " - No relevant oval test")
+                    xccdf_rules = replace_ocil(xccdf_rules,x)
+                    x += 1
+                    continue
                 if "SPStorageDataType" in rule_yaml['check']:
                     
                     print(rule_yaml['id'] + " - No relevant oval test")
