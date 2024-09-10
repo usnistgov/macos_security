@@ -21,8 +21,6 @@ references:
     - 'FMT_MOF_EXT.1.2 #40'
   disa_stig:
     - AIOS-17-003000
-  800-171r2:
-    - N/A
   indigo:
     - ANNEX D (Section 5.4 - iCloud restrictions)
     - ANNEX K
