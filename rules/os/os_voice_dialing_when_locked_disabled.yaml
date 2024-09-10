@@ -17,8 +17,6 @@ references:
     - 'FMT_SMF_EXT.1.1 #8b'
   disa_stig:
     - AIOS-16-007300
-  800-171r2:
-    - N/A
   cis:
     benchmark:
       - 2.2.1.1 (level 1 - End-User Owned Devices)

@@ -23,8 +23,6 @@ references:
     - AIOS-16-010800
   sfr:
     - 'FMT_SMF_EXT.1.1 #47'
-  800-171r2:
-    - N/A
   cis:
     benchmark:
       - 2.2.1.11 (level 2 - End-User Owned Devices)

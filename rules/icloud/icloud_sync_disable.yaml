@@ -22,8 +22,6 @@ references:
     - 'FMT_MOF_EXT.1.2 #40'
   disa_stig:
     - AIOS-16-003200
-  800-171r2:
-    - N/A
   cis:
     benchmark:
       - 3.2.1.5 (level 1 - Institutionally-Owned Devices)

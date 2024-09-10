@@ -21,8 +21,6 @@ references:
     - 'FMT_MOF_EXT.1.2 #40'
   disa_stig:
     - AIOS-16-003500
-  800-171r2:
-    - N/A
   cis:
     benchmark:
       - N/A

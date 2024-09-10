@@ -21,8 +21,6 @@ references:
   disa_stig:
     - AIOS-16-014600
     - AIOS-16-714600
-  800-171r2:
-    - N/A
   cis:
     benchmark:
       - N/A
