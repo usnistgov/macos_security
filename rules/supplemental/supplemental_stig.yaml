@@ -45,7 +45,7 @@ references:
   disa_stig:
     - N/A
 iOS:
-  - "17.0"
+  - "18.0"
 tags:
   - ios_stig
   - ios_stig_byoad
