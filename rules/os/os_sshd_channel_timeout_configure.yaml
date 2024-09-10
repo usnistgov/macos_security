@@ -33,7 +33,7 @@ fix: |
   ----
 references:
   cce:
-    - N/A
+    - CCE-94302-7
   cci:
     - CCI-001133
     - CCI-002361

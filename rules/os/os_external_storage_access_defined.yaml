@@ -12,7 +12,7 @@ fix: |
   This is implemented by a Declarative Device Management.
 references:
   cce:
-    - N/A
+    - CCE-94188-0
   cci:
     - N/A
   800-53r5:

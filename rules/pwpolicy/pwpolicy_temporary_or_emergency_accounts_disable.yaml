@@ -56,7 +56,7 @@ fix: |
   /usr/bin/pwpolicy -u username setaccountpolicies /path/to/file
 references:
   cce:
-    - N/A
+    - CCE-94346-4
   cci:
     - CCI-001682
     - CCI-000016

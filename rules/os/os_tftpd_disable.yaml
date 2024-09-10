@@ -18,7 +18,7 @@ fix: |
   The system may need to be restarted for the update to take effect.
 references:
   cce:
-    - N/A
+    - CCE-94317-5
   cci:
     - CCI-000197
     - CCI-000213

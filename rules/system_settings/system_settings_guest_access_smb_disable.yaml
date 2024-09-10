@@ -15,7 +15,7 @@ fix: |
   ----
 references:
   cce:
-    - N/A
+    - CCE-94366-2
   cci:
     - N/A
   800-171r3:

@@ -13,7 +13,7 @@ fix: |
   ----
 references:
   cce:
-    - N/A
+    - CCE-94400-9
   cci:
     - CCI-000213
     - CCI-001942

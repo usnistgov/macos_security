@@ -15,7 +15,7 @@ fix: |
   NOTE: See the FileVault supplemental to implement this rule.
 references:
   cce:
-    - N/A
+    - CCE-94292-0
   cci:
     - N/A
   800-53r5:

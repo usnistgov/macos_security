@@ -18,7 +18,7 @@ fix: |
   NOTE: These services cannot be unloaded or loaded while System Integrity Protection (SIP) is enabled.
 references:
   cce:
-    - N/A
+    - CCE-94158-3
   cci:
     - CCI-000366
   800-53r5:
