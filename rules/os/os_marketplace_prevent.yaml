@@ -1,0 +1,25 @@
+id: os_marketplace_prevent
+title: "Prevent 3rd party marketplaces"
+discussion: |
+  The iOS device _MUST_ be configured to prevent 3rd party market places to be installed.  
+check: " "
+fix: |
+  This is implemented by a Configuration Profile.
+references:
+  cce:
+    - N/A
+  800-53r5:
+    - N/A
+  indigo:
+    - ANNEX K
+iOS:
+  - "17.4"
+tags:
+  - ios
+  - indigo_base
+  - indigo_high
+supervised: true
+mobileconfig: true
+mobileconfig_info:
+  com.apple.applicationaccess:
+    allowMarketplaceAppInstallation: false

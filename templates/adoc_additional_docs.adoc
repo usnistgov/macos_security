@@ -49,6 +49,15 @@ ASSOCIATED DOCUMENTS
 |link:https://www.cnss.gov/CNSS/issuances/Instructions.cfm[CNSSI No. 1253]|_Security Categorization and Control Selection for National Security Systems_
 |===
 
+[%header, cols=2*a]
+.Bundesamt für Sicherheit in der Informationstechnik
+.German Federal Office for Information Security (BSI)
+|===
+|Document Number or Descriptor
+|Document Title 
+|link:https://www.bsi.bund.de/EN/Themen/Oeffentliche-Verwaltung/Zulassung/mobile_Kommunikation/mobileKommunikation_node.html#doc919528bodyText2[indigo]|_indigo iOS 17.4.1 and iPadOS 17.4.1 Version 1.0_
+|===
+
 === Non-Government Documents
 [%header, cols=2*a]
 .Apple
@@ -58,6 +67,7 @@ ASSOCIATED DOCUMENTS
 |link:https://support.apple.com/guide/security/welcome/web[Apple Platform Security Guide]|_Apple Platform Security_
 |link:https://support.apple.com/guide/deployment/welcome/web[Apple Platform Deployment]|_Apple Platform Deployment_
 |link:https://support.apple.com/guide/certifications/welcome/web[Apple Platform Certifications]|_Apple Platform Certifications_
+|link:https://support.apple.com/en-ca/guide/certifications/apc37dae516c6/web[Apple Platform Certifications]|_National regulations security certifications_
 |link:https://developer.apple.com/documentation/devicemanagement/profile-specific_payload_keys[Profile-Specific Payload Keys]|_Profile-Specific Payload Keys_
 |===
 [%header, cols=2*a]

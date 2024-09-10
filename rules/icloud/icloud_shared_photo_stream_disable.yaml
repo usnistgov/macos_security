@@ -21,6 +21,11 @@ references:
     - 'FMT_MOF_EXT.1.2 #40'
   disa_stig:
     - AIOS-17-003500
+  800-171r2:
+    - N/A
+  indigo:
+    - ANNEX D (Section 5.4 - iCloud restrictions) 
+    - ANNEX K
   cis:
     benchmark:
       - N/A
@@ -34,6 +39,7 @@ tags:
   - 800-53r5_moderate
   - 800-53r5_high
   - ios_stig
+  - indigo_high
 severity: "medium"
 supervised: false
 mobileconfig: true
