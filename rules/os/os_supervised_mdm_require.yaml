@@ -18,8 +18,6 @@ references:
     - 'FMT_SMF_EXT.1.1 #47'
   disa_stig:
     - AIOS-17-013200
-  800-171r2:
-    - N/A
   cis:
     benchmark:
       - N/A
