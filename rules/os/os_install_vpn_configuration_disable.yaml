@@ -23,8 +23,6 @@ references:
   disa_stig:
     - AIOS-17-001000
     - AIOS-17-701000
-  800-171r2:
-    - N/A
   cis:
     benchmark:
       - 3.2.1.16 (level 1 - Institutionally-Owned Devices)

@@ -19,8 +19,6 @@ references:
     - N/A
   disa_stig:
     - AIOS-17-714900
-  800-171r2:
-    - N/A
   cis:
     benchmark:
       - 2.2.1.9 (level 1 - End-User Owned Devices)

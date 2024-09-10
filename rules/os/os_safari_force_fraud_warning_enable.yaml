@@ -16,8 +16,6 @@ references:
     - N/A
   disa_stig:
     - N/A
-  800-171r2:
-    - N/A
   cis:
     benchmark:
       - 2.2.2.1 (level 1 - End-User Owned Devices)
