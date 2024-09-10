@@ -1710,7 +1710,7 @@ def generate_xls(baseline_name, build_path, baseline_yaml):
     sheet1.write(0, 14, "CIS v8", headers)
     sheet1.write(0, 15, "CMMC", headers)
     sheet1.write(0, 16, "CCI", headers)
-    sheet1.write(0, 17, "Modifed Rule", headers)
+    sheet1.write(0, 17, "Modified Rule", headers)
     sheet1.write(0, 18, "Severity", headers)
     sheet1.set_panes_frozen(True)
     sheet1.set_horz_split_pos(1)
@@ -2199,7 +2199,7 @@ def main():
     themes = glob.glob("../custom/templates/*theme*.yml")
     if len(themes) > 1:
         print(
-            "Found muliple custom themes in directory, only one can exist, using default"
+            "Found multiple custom themes in directory, only one can exist, using default"
         )
     elif len(themes) == 1:
         print(f"Found custom PDF theme: {themes[0]}")

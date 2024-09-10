@@ -368,7 +368,7 @@ def generate_scap(all_rules, all_baselines, args):
                 severity = "unknown"
 
             check_rule = str()
-            if "inherent" in rule_yaml['tags'] or "n_a" in rule_yaml['tags'] or "permenant" in rule_yaml['tags']:
+            if "inherent" in rule_yaml['tags'] or "n_a" in rule_yaml['tags'] or "permanent" in rule_yaml['tags']:
                 check_rule = '''
             <check system="http://scap.nist.gov/schema/ocil/2">
             <check-content-ref href="ocil.xml"/></check>'''
@@ -1126,7 +1126,11 @@ def generate_scap(all_rules, all_baselines, args):
                     xccdf_rules = replace_ocil(xccdf_rules,x)
                     x += 1
                     continue
-
+                if "xprotect status" in rule_yaml['check']:
+                    print(rule_yaml['id'] + " - No relevant oval test")
+                    xccdf_rules = replace_ocil(xccdf_rules,x)
+                    x += 1
+                    continue
                 if "SPStorageDataType" in rule_yaml['check']:
                     
                     print(rule_yaml['id'] + " - No relevant oval test")
