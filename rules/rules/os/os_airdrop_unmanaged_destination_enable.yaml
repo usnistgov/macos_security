@@ -1,0 +1,27 @@
+id: os_airdrop_unmanaged_destination_enable
+title: "Ensure Treat AirDrop as unmanaged destination is set to Enabled"
+discussion: |
+  AirDrop _MUST_ be treated as an unmanaged destination.
+check: ' '
+result: ' '
+fix: |
+  This is implemented by a Configuration Profile.
+references:
+  cce:
+    - N/A
+  800-53r5:
+    - AC-3
+    - AC-20
+    - CM-7
+    - CM-7(1)
+    - MP-2
+    - SC-7(10)
+visionOS:
+  - '2.0'
+tags:
+  - visionos
+supervised: false
+mobileconfig: true
+mobileconfig_info:
+  com.apple.applicationaccess:
+    forceAirDropUnmanaged: true

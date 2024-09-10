@@ -1,0 +1,27 @@
+id: os_airdrop_disable
+title: "Ensure AirDrop is set to Disabled"
+discussion: |
+  AirDrop _MUST_ be disabled to prevent file transfers to or from unauthorized devices.
+
+  AirDrop allows users to share and receive files from other nearby Apple devices. 
+check: ' '
+result: ' '
+fix: |
+  This is implemented by a Configuration Profile.
+references:
+  cce:
+    - N/A
+  800-53r5:
+    - AC-3
+    - AC-20
+    - CM-7
+    - CM-7(1)
+visionOS:
+  - '2.0'
+tags:
+  - visionos
+supervised: true
+mobileconfig: true
+mobileconfig_info:
+  com.apple.applicationaccess:
+    allowAirDrop: false

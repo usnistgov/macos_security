@@ -1,0 +1,24 @@
+id: os_screenshots_disable
+title: "Ensure Allow screenshots and screen recording is set to Disabled"
+discussion: |
+  Screenshots and screen recordings on _MUST_ be disabled.
+check: ' '
+result: ' '
+fix: |
+  This is implemented by a Configuration Profile.
+references:
+  cce:
+    - N/A
+  800-53r5:
+    - CM-7
+    - CM-7(1)
+    - SC-07(10)
+visionOS:
+  - '2.0'
+tags:
+  - visionos
+supervised: false
+mobileconfig: true
+mobileconfig_info:
+  com.apple.applicationaccess:
+    allowScreenShot: false

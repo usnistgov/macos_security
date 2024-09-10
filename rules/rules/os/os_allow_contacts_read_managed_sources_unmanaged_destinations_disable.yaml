@@ -1,0 +1,25 @@
+id: os_allow_contacts_read_managed_sources_unmanaged_destinations_disable
+title: "Ensure Managed Apps Cannot Read Unmanaged Contact Accounts"
+discussion: |
+  Managed Apps _MUST_ not be allowed to read contacts from unamanged contact destinations.
+check: ' '
+result: ' '
+fix: |
+  This is implemented by a Configuration Profile.
+references:
+  cce:
+    - N/A
+  800-53r5:
+    - AC-3
+    - MP-2
+    - SC-7(10)
+    - SC-39
+visionOS:
+  - '2.0'
+tags:
+  - visionos
+supervised: false
+mobileconfig: true
+mobileconfig_info:
+  com.apple.applicationaccess:
+    allowUnmanagedToReadManagedContacts: false

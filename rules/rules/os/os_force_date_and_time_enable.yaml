@@ -1,0 +1,23 @@
+id: os_force_date_and_time_enable
+title: "Ensure Force automatic date and time is set to Enabled"
+discussion: |
+  Automatic date and time _MUST_ be enabled.
+check: ' '
+result: ' '
+fix: |
+  This is implemented by a Configuration Profile.
+references:
+  cce:
+    - N/A
+  800-53r5:
+    - AU-12(1)
+    - SC-45(1)
+visionOS:
+  - '2.0'
+tags:
+  - visionos
+supervised: true
+mobileconfig: true
+mobileconfig_info:
+  com.apple.applicationaccess:
+    forceAutomaticDateAndTime: true

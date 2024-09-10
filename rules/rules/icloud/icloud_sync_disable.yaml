@@ -1,0 +1,26 @@
+id: icloud_sync_disable
+title: "Ensure Allow iCloud Documents and Data is set to Disabled"
+discussion: |
+  Institutionally owned devices _MUST_ not sync data through iCloud.
+check: ' '
+result: ' '
+fix: |
+  This is implemented by a Configuration Profile.
+references:
+  cce:
+    - N/A
+  800-53r5:
+    - AC-20
+    - AC-20(1)
+    - CM-7
+    - CM-7(1)
+    - SC-7(10)
+visionOS:
+  - '2.0'
+tags:
+  - visionos
+supervised: true
+mobileconfig: true
+mobileconfig_info:
+  com.apple.applicationaccess:
+    allowCloudDocumentSync: false

@@ -1,0 +1,26 @@
+id: os_on_device_dictation_enforce
+title: "Ensure On Device Dictation is Enforced"
+discussion: |
+  The device _MUST_ be configured for on device dictation.
+
+  By enforcing on device dictation this will mitigate the risk of unwanted data being sent to Apple.
+check: ' '
+result: ' '
+fix: |
+  This is implemented by a Configuration Profile.
+references:
+  cce:
+    - N/A
+  800-53r5:
+    - SI-11
+    - AC-20
+    - SC-7(10)
+visionOS:
+  - '2.0'
+tags:
+  - visionos
+supervised: false
+mobileconfig: true
+mobileconfig_info:
+  com.apple.applicationaccess:
+    forceOnDeviceOnlyDictation: true

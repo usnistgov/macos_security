@@ -1,0 +1,26 @@
+id: icloud_keychain_disable
+title: "Disable iCloud Keychain Sync"
+discussion: |
+  The system's ability to automatically synchronize a user's passwords to their iCloud account _MUST_ be disabled. 
+check: ' '
+result: ' '
+fix: |
+  This is implemented by a Configuration Profile.
+references:
+  cce:
+    - N/A
+  800-53r5:
+    - AC-20
+    - AC-20(1)
+    - CM-7
+    - CM-7(1)
+    - SC-7(10)
+visionOS:
+  - '2.0'
+tags:
+  - visionos
+supervised: false
+mobileconfig: true
+mobileconfig_info:
+  com.apple.applicationaccess:
+    allowCloudKeychainSync: false
