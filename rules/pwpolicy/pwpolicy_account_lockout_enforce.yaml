@@ -19,8 +19,6 @@ references:
     - 'FIA_AFL_EXT.1.5'
   disa_stig:
     - N/A
-  800-171r2:
-    - N/A
   cis:
     benchmark:
       - 2.4.6 (level 1 - End-User Owned Devices)

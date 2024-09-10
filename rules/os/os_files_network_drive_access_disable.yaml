@@ -18,8 +18,6 @@ references:
     - 'FMT_SMF_EXT.1.1 #47'
   disa_stig:
     - N/A
-  800-171r2:
-    - N/A
   cis:
     benchmark:
       - 3.2.1.9 (level 2 - Institutionally-Owned Devices)

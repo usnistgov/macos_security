@@ -21,8 +21,6 @@ references:
     - 'FDP_ACF_EXT.1.2'
   disa_stig:
     - N/A
-  800-171r2:
-    - N/A
   cis:
     benchmark:
       - N/A

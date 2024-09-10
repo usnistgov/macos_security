@@ -17,8 +17,6 @@ references:
     - 'FIA_UAU_EXT.1.1'
   disa_stig:
     - N/A
-  800-171r2:
-    - N/A
   cis:
     benchmark:
       - N/A

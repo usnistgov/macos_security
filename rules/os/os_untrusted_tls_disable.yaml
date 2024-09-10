@@ -16,8 +16,6 @@ references:
     - N/A
   sfr:
     - N/A
-  800-171r2:
-    - N/A
   cis:
     benchmark:
       - 2.2.1.6 (level 2 - End-User Owned Devices)
