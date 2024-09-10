@@ -14,7 +14,7 @@ check: ' '
 fix: This is implemented by a Configuration Profile
 references:
   cce:
-    - N/A
+    - CCE-94431-4
   cci:
     - CCI-000366
   800-53r5:
