@@ -1527,22 +1527,17 @@ def fill_in_odv(resulting_yaml, parent_values):
                 if "$ODV" in str(resulting_yaml["result"][result_value]):
                     resulting_yaml["result"][result_value] = odv
 
-        if resulting_yaml["mobileconfig_info"]:
-            for mobileconfig_type in resulting_yaml["mobileconfig_info"]:
-                if isinstance(
-                    resulting_yaml["mobileconfig_info"][mobileconfig_type], dict
-                ):
-                    for mobileconfig_value in resulting_yaml["mobileconfig_info"][
-                        mobileconfig_type
-                    ]:
-                        if "$ODV" in str(
-                            resulting_yaml["mobileconfig_info"][mobileconfig_type][
-                                mobileconfig_value
-                            ]
-                        ):
-                            resulting_yaml["mobileconfig_info"][mobileconfig_type][
-                                mobileconfig_value
-                            ] = odv
+        if resulting_yaml['mobileconfig_info']:
+            for mobileconfig_type in resulting_yaml['mobileconfig_info']:
+                if isinstance(resulting_yaml['mobileconfig_info'][mobileconfig_type], dict):
+                    for mobileconfig_value in resulting_yaml['mobileconfig_info'][mobileconfig_type]:
+                        if "$ODV" in str(resulting_yaml['mobileconfig_info'][mobileconfig_type][mobileconfig_value]):
+                            if type(resulting_yaml['mobileconfig_info'][mobileconfig_type][mobileconfig_value]) == dict:
+                                for k,v in resulting_yaml['mobileconfig_info'][mobileconfig_type][mobileconfig_value].items():
+                                    if v == "$ODV":
+                                        resulting_yaml['mobileconfig_info'][mobileconfig_type][mobileconfig_value][k] = odv
+                            else:
+                                resulting_yaml['mobileconfig_info'][mobileconfig_type][mobileconfig_value] = odv
 
         if "ddm_info" in resulting_yaml.keys():
             for ddm_type, value in resulting_yaml["ddm_info"].items():
