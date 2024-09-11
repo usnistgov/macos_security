@@ -52,5 +52,5 @@ profile:
       - os_user_ui_app_installation_prohibit
   - section: "systemsettings"
     rules:
+      - system_settings_opticid_unlock_disable
       - system_settings_siri_disable
-      - system_settings_touchid_unlock_disable

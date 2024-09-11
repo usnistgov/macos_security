@@ -45,5 +45,5 @@ profile:
       - os_screenshots_disable
   - section: "systemsettings"
     rules:
+      - system_settings_opticid_unlock_disable
       - system_settings_siri_disable
-      - system_settings_touchid_unlock_disable
