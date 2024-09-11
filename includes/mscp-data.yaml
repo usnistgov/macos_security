@@ -114,3 +114,6 @@ titles:
   cisv8: CIS Controls Version 8
   ios_stig:  Apple iOS/iPadOS 17 STIG - Ver 1, Rel 1
   ios_stig_byoad: Apple iOS/iPadOS 17 BYOAD STIG - Ver 1, Rel 1
+ddm:
+  supported_types: []
+  services: []  
