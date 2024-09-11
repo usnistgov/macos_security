@@ -121,3 +121,6 @@ titles:
   stig: Apple macOS 13 (Ventura) STIG - Ver 1, Rel 2
   ios_stig:  Apple iOS/iPadOS 16 STIG - Ver 1, Rel 2
   ios_stig_byoad: Apple iOS/iPadOS 16 BYOAD STIG - Ver 1, Rel 1
+ddm:
+  supported_types: []
+  services: []  
