@@ -41,6 +41,7 @@ class MacSecurityRule:
         sfr,
         cis,
         cmmc,
+        indigo,
         custom_refs,
         odv,
         tags,
@@ -64,6 +65,7 @@ class MacSecurityRule:
         self.rule_sfr = sfr
         self.rule_cis = cis
         self.rule_cmmc = cmmc
+        self.rule_indigo = indigo
         self.rule_custom_refs = custom_refs
         self.rule_odv = odv
         self.rule_result_value = result_value
@@ -87,6 +89,7 @@ class MacSecurityRule:
             rule_disa_stig=self.rule_disa_stig,
             rule_cis=self.rule_cis,
             rule_cmmc=self.rule_cmmc,
+            rule_indigo=self.rule_indigo,
             rule_srg=self.rule_srg,
             rule_result=self.rule_result_value,
         )
@@ -1704,9 +1707,10 @@ def generate_xls(baseline_name, build_path, baseline_yaml):
     sheet1.write(0, 13, "CIS Benchmark", headers)
     sheet1.write(0, 14, "CIS v8", headers)
     sheet1.write(0, 15, "CMMC", headers)
-    sheet1.write(0, 16, "CCI", headers)
-    sheet1.write(0, 17, "Modified Rule", headers)
-    sheet1.write(0, 18, "Severity", headers)
+    sheet1.write(0, 16, "indigo", headers)
+    sheet1.write(0, 17, "CCI", headers)
+    sheet1.write(0, 18, "Modified Rule", headers)
+    sheet1.write(0, 19, "Severity", headers)
     sheet1.set_panes_frozen(True)
     sheet1.set_horz_split_pos(1)
     sheet1.set_vert_split_pos(2)
@@ -1810,6 +1814,9 @@ def generate_xls(baseline_name, build_path, baseline_yaml):
         sheet1.write(counter, 15, cmmc_refs, topWrap)
         sheet1.col(15).width = 500 * 15
 
+        indigo_refs = (str(rule.rule_indigo)).strip('[]\'')
+        indigo_refs = indigo_refs.replace(", ", "\n").replace("\'", "")
+
         cci = (str(rule.rule_cci)).strip("[]'")
         cci = cci.replace(", ", "\n").replace("'", "")
 
@@ -1880,6 +1887,7 @@ def create_rules(baseline_yaml):
                   '800-171r3',
                   'cis',
                   'cmmc',
+                  'indigo',
                   'srg',
                   'sfr',
                   'custom']
@@ -1929,6 +1937,7 @@ def create_rules(baseline_yaml):
                                         rule_yaml['references']['sfr'],
                                         rule_yaml['references']['cis'],
                                         rule_yaml['references']['cmmc'],
+                                        rule_yaml['references']['indigo'],
                                         rule_yaml['references']['custom'],
                                         rule_yaml['odv'],
                                         rule_yaml['tags'],
@@ -2257,6 +2266,11 @@ def main():
         adoc_cmmc_show = ":show_CMMC:"
     else:
         adoc_cmmc_show = ":show_CMMC!:"
+   
+    if "indigo" in baseline_yaml['title']:
+        adoc_indigo_show = ":show_indigo:"
+    else:
+        adoc_indigo_show=":show_indigo!:"        
 
     if "800" in baseline_yaml["title"]:
         adoc_171_show = ":show_171:"
@@ -2268,6 +2282,7 @@ def main():
         adoc_STIG_show = ":show_STIG:"
         adoc_cis_show = ":show_cis:"
         adoc_cmmc_show = ":show_CMMC:"
+        adoc_indigo_show=":show_indigo:"
         adoc_171_show = ":show_171:"
     else:
         adoc_tag_show = ":show_tags!:"
@@ -2296,6 +2311,7 @@ def main():
         stig_attribute=adoc_STIG_show,
         cis_attribute=adoc_cis_show,
         cmmc_attribute=adoc_cmmc_show,
+        indigo_attribute=adoc_indigo_show,
         version=version_yaml["version"],
         os_version=version_yaml["os"],
         release_date=version_yaml["date"],
@@ -2421,6 +2437,13 @@ def main():
                 cmmc = ulify(rule_yaml["references"]["cmmc"])
 
             try:
+                rule_yaml['references']['indigo']
+            except KeyError:
+                indigo = ""
+            else:
+                indigo = ulify(rule_yaml['references']['indigo'])
+
+            try:
                 rule_yaml["references"]["srg"]
             except KeyError:
                 srg = "- N/A"
@@ -2530,6 +2553,7 @@ def main():
                     rule_disa_stig=disa_stig,
                     rule_cis=cis,
                     rule_cmmc=cmmc,
+                    rule_indigo=indigo,
                     rule_cce=cce,
                     rule_custom_refs=custom_refs,
                     rule_tags=tags,
@@ -2550,6 +2574,7 @@ def main():
                     rule_disa_stig=disa_stig,
                     rule_cis=cis,
                     rule_cmmc=cmmc,
+                    rule_indigo=indigo,
                     rule_cce=cce,
                     rule_tags=tags,
                     rule_srg=srg,
@@ -2569,6 +2594,7 @@ def main():
                         rule_disa_stig=disa_stig,
                         rule_cis=cis,
                         rule_cmmc=cmmc,
+                        rule_indigo=indigo,
                         rule_cce=cce,
                         rule_tags=tags,
                         rule_srg=srg,
@@ -2589,6 +2615,7 @@ def main():
                         rule_disa_stig=disa_stig,
                         rule_cis=cis,
                         rule_cmmc=cmmc,
+                        rule_indigo=indigo,
                         rule_cce=cce,
                         rule_tags=tags,
                         rule_srg=srg,
