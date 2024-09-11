@@ -2,8 +2,7 @@ id: os_disallow_enterprise_app_trust
 title: "Disallow Apps to be Installed from Unauthorized Sources"
 discussion: |
   Apps _MUST_ be installed from authorized application repositories. Disallowing enterprise app trust prevents apps from being provisioned by universal provisioning profiles.
-check: ' '
-result: ' '
+check: " "
 fix: |
   This is implemented by a Configuration Profile.
 references:
@@ -15,6 +14,9 @@ visionOS:
   - '2.0'
 tags:
   - visionos
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_high  
 supervised: false
 mobileconfig: true
 mobileconfig_info:

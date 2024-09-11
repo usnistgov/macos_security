@@ -4,8 +4,7 @@ discussion: |
   Enterprise networks may be required to audit all network traffic by policy, therefore, iCloud Private Relay _MUST_ be disabled.
 
   Network administrators can also prevent the use of this feature by blocking DNS resolution of mask.icloud.com and mask-h2.icloud.com.
-check: ' '
-result: ' '
+check: " "
 fix: |
   This is implemented by a Configuration Profile.
 references:
@@ -21,6 +20,9 @@ visionOS:
   - '2.0'
 tags:
   - visionos
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_high  
 supervised: true
 mobileconfig: true
 mobileconfig_info:

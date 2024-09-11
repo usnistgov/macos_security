@@ -1,5 +1,5 @@
-os: "17.0"
-platform: iOS/iPadOS
-version: "iOS 17 Guidance, Revision 3.0"
-cpe: o:apple:ios:17.0
+os: "2.0"
+platform: visionOS
+version: "visionOS 2.0 Guidance, Revision 1.0"
+cpe: o:apple:visionos:2.0
 date: "2024-XX-XX"

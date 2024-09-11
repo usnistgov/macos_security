@@ -2,8 +2,7 @@ id: os_screenshots_disable
 title: "Ensure Allow screenshots and screen recording is set to Disabled"
 discussion: |
   Screenshots and screen recordings on _MUST_ be disabled.
-check: ' '
-result: ' '
+check: " "
 fix: |
   This is implemented by a Configuration Profile.
 references:
@@ -17,6 +16,9 @@ visionOS:
   - '2.0'
 tags:
   - visionos
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_high  
 supervised: false
 mobileconfig: true
 mobileconfig_info:

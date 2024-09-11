@@ -2,8 +2,7 @@ id: os_allow_documents_managed_sources_unmanaged_destinations_disable
 title: "Ensure Allow documents from managed sources in unmanaged destinations is set to Disabled"
 discussion: |
   Documents from managed sources _MUST_ not be allowed in unmanaged destinations.
-check: ' '
-result: ' '
+check: " "
 fix: |
   This is implemented by a Configuration Profile.
 references:
@@ -18,6 +17,9 @@ visionOS:
   - '2.0'
 tags:
   - visionos
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_high  
 supervised: false
 mobileconfig: true
 mobileconfig_info:
