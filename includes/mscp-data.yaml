@@ -25,3 +25,6 @@ titles:
   800-53r5_high: NIST SP 800-53 Rev 5 High Impact
   800-53r5_moderate: NIST SP 800-53 Rev 5 Moderate Impact
   800-53r5_low: NIST SP 800-53 Rev 5 Low Impact
+ddm:
+  supported_types: []
+  services: []  
