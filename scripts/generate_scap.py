@@ -120,12 +120,17 @@ def generate_scap(all_rules, all_baselines, args):
         if "ios" in version_yaml['cpe']:
             print("OVAL generation is not available on iOS")
             exit()
-
+        if "visionOS" in version_yaml['cpe']:
+            print("OVAL generation is not available on visionOS")
+            exit()
 
     if args.oval == None and args.xccdf == None:
         export_as = "scap"
         if "ios" in version_yaml['cpe']:
             print("iOS will only export as XCCDF")
+            export_as = "xccdf"
+        if "visionos" in version_yaml['cpe']:
+            print("visionOS will only export as XCCDF")
             export_as = "xccdf"
 
     now = datetime.now()
@@ -135,7 +140,8 @@ def generate_scap(all_rules, all_baselines, args):
     output = "../build/macOS_{0}_Security_Compliance_Benchmark-{1}".format(version_yaml['os'],filenameversion)
     if "ios" in version_yaml['cpe']:
         output = "../build/iOS_{0}_Security_Compliance_Benchmark-{1}".format(version_yaml['os'],filenameversion)
-        
+    if "visionos" in version_yaml['cpe']:
+        output = "../build/iOS_{0}_Security_Compliance_Benchmark-{1}".format(version_yaml['os'],filenameversion)    
     if export_as == "xccdf":
         output = output + "_xccdf.xml"
     
@@ -167,8 +173,11 @@ def generate_scap(all_rules, all_baselines, args):
       </generator>'''.format(date_time_string)
 
     ostype = "macOS"
-    if "ios" in version_yaml['cpe']:
+    if "ios" in version_yaml['cpe'] or "visionos" in version_yaml['cpe']:
         ostype = "iOS/iPadOS"
+        if "visionos" in version_yaml['cpe']:
+            ostype = "visionOS"
+
     xccdfPrefix = '''<?xml version="1.0" encoding="UTF-8"?>
     <Benchmark xmlns="http://checklists.nist.gov/xccdf/1.2" id="xccdf_gov.nist.mscp.content_benchmark_macOS_{1}" style="SCAP_1.3" resolved="true" xml:lang="en">
       <status date="{3}">draft</status>
