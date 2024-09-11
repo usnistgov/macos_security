@@ -135,3 +135,6 @@ titles:
   ios_stig_byoad: Apple iOS/iPadOS 17 BYOAD STIG - Ver 1, Rel 1
   indigo_base: BSI indigo iOS 17.x Base Configuration
   indigo_high: BSI indigo iOS 17.x High Configuration
+ddm:
+  supported_types: []
+  services: []    
