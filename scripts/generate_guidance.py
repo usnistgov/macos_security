@@ -1526,9 +1526,10 @@ def fill_in_odv(resulting_yaml, parent_values):
             if "$ODV" in resulting_yaml[field]:
                 resulting_yaml[field] = resulting_yaml[field].replace("$ODV", str(odv))
 
-        for result_value in resulting_yaml["result"]:
-            if "$ODV" in str(resulting_yaml["result"][result_value]):
-                resulting_yaml["result"][result_value] = odv
+        if "result" in resulting_yaml.keys():
+            for result_value in resulting_yaml["result"]:
+                if "$ODV" in str(resulting_yaml["result"][result_value]):
+                    resulting_yaml["result"][result_value] = odv
 
         if resulting_yaml["mobileconfig_info"]:
             for mobileconfig_type in resulting_yaml["mobileconfig_info"]:
@@ -2600,7 +2601,8 @@ def main():
                     rule_srg=srg,
                 )
             else:
-                if version_yaml['platform'] == "iOS/iPadOS":
+                #using the same rule template for ios/ipados/visionos
+                if version_yaml['platform'] == "iOS/iPadOS" or version_yaml['platform'] == "visionOS":
                     rule_adoc = adoc_rule_ios_template.substitute(
                         rule_title=rule_yaml['title'].replace('|', r'\|'),
                         rule_id=rule_yaml['id'].replace('|', r'\|'),
