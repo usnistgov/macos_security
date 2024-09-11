@@ -4,7 +4,7 @@ discussion: |
   The ability to submit diagnostic data to Apple _MUST_ be disabled.
 
   The information system _MUST_ be configured to provide only essential capabilities. Disabling the submission of diagnostic and usage information will mitigate the risk of unwanted data being sent to Apple. 
-check: " "
+check: ""
 fix: |
   This is implemented by a Configuration Profile.
 references:

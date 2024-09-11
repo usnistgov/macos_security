@@ -4,7 +4,7 @@ discussion: |
   Handoff _MUST_ be disabled. 
 
   Handoff allows you to continue working on a document or project when the user switches from one Apple device to another. Disabling Handoff prevents data transfers to unauthorized devices.
-check: " "
+check: ""
 fix: |
   This is implemented by a Configuration Profile.
 references:

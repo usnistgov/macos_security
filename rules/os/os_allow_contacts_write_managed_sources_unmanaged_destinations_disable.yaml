@@ -2,7 +2,7 @@ id: os_allow_contacts_write_managed_sources_unmanaged_destinations_disable
 title: "Ensure Managed Apps Cannot Write to Unmanaged Contact Accounts"
 discussion: |
   Managed Apps _MUST_ not be allowed to write contacts to unamanged contact destinations.
-check: " "
+check: ""
 fix: |
   This is implemented by a Configuration Profile.
 references:

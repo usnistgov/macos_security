@@ -4,7 +4,7 @@ discussion: |
   The device _MUST_ be configured to disable copy/paste of data from managed to unmanaged applications.
 
   If 'true', copy and paste functionality respects the 'allowOpenFromManagedToUnmanaged' and 'allowOpenFromUnmanagedToManaged' restrictions.
-check: " "
+check: ""
 fix: |
   This is implemented by a Configuration Profile.
 references:

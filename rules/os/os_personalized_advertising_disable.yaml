@@ -4,7 +4,7 @@ discussion: |
   Ad tracking and targeted ads _MUST_ be disabled.
 
   The information system _MUST_ be configured to provide only essential capabilities. Disabling ad tracking ensures that applications and advertisers are unable to track users' interests and deliver targeted advertisements.  
-check: " "
+check: ""
 fix: |
   This is implemented by a Configuration Profile.
 references:

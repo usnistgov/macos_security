@@ -8,8 +8,7 @@ discussion: |
   The system _MUST_ remain locked until the user establishes access using an authorized identification and authentication method.
 
   NOTE: TouchID is not an approved biometric authenticator for US Federal Government usage as it has not been verified to meet the strength requirements outlined in NIST SP 800-63.
-check: ' '
-result: ' '
+check: ""
 fix: |
   This is implemented by a Configuration Profile.
 references:

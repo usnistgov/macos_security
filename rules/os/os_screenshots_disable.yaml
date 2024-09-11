@@ -2,7 +2,7 @@ id: os_screenshots_disable
 title: "Ensure Allow screenshots and screen recording is set to Disabled"
 discussion: |
   Screenshots and screen recordings on _MUST_ be disabled.
-check: " "
+check: ""
 fix: |
   This is implemented by a Configuration Profile.
 references:

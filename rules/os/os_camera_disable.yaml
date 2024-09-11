@@ -14,7 +14,7 @@ discussion: |
   For a built-in camera, the camera must be protected by a camera cover (e.g., laptop camera cover slide) when not in use. If the built-in camera is not protected with a camera cover, or is not physically disabled, this is a finding.
 
   If the camera is not disconnected, covered, or physically disabled, the following configuration is required.
-check: " "
+check: ""
 fix: |
   This is implemented by a Configuration Profile.
 references:

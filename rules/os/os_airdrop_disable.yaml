@@ -4,7 +4,7 @@ discussion: |
   AirDrop _MUST_ be disabled to prevent file transfers to or from unauthorized devices.
 
   AirDrop allows users to share and receive files from other nearby Apple devices. 
-check: " "
+check: ""
 fix: |
   This is implemented by a Configuration Profile.
 references:

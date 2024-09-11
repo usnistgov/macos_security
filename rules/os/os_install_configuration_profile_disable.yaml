@@ -2,7 +2,7 @@ id: os_install_configuration_profile_disable
 title: "Ensure Allow Installing Configuration Profiles is Set to Disabled"
 discussion: |
   Configuration profiles _MUST_ be installed via an organization's MDM.
-check: " "
+check: ""
 fix: |
   This is implemented by a Configuration Profile.
 references:
