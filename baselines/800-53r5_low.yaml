@@ -1,0 +1,49 @@
+title: "visionOS 2.0: Security Configuration - NIST SP 800-53 Rev 5 Low Impact"
+description: |
+  This guide describes the actions to take when securing a visionOS 2.0 system against the NIST SP 800-53 Rev 5 Low Impact security baseline.
+
+  Information System Security Officers and benchmark creators can use this catalog of settings in order to assist them in security benchmark creation. This list is a catalog, not a checklist or benchmark, and satisfaction of every item is not likely to be possible or sensible in many operational scenarios.
+authors: |
+  *macOS Security Compliance Project*
+
+  |===
+  |Jorge Escobar|Lawrence Livermore National Laboratory
+  |Mike Lord|Idaho National Laboratory
+  |Bob Gendler|National Institute of Standards and Technology
+  |===
+parent_values: "recommended"
+profile:
+  - section: "icloud"
+    rules:
+      - icloud_backup_disabled
+      - icloud_keychain_disable
+      - icloud_managed_apps_store_data_disabled
+      - icloud_photos_disable
+      - icloud_private_relay_disable
+      - icloud_sync_disable
+  - section: "visionos"
+    rules:
+      - os_account_modification_disable
+      - os_airdrop_disable
+      - os_airdrop_unmanaged_destination_enable
+      - os_allow_contacts_read_managed_sources_unmanaged_destinations_disable
+      - os_allow_contacts_write_managed_sources_unmanaged_destinations_disable
+      - os_allow_documents_managed_sources_unmanaged_destinations_disable
+      - os_allow_documents_unmanaged_sources_managed_destinations_disable
+      - os_authentication_password_autofill_enable
+      - os_diagnostics_reports_disable
+      - os_disallow_enterprise_app_trust
+      - os_erase_contents_and_settings_disable
+      - os_force_date_and_time_enable
+      - os_handoff_disable
+      - os_install_vpn_configuration_disable
+      - os_on_device_dictation_enforce
+      - os_password_autofill_disable
+      - os_password_sharing_disable
+      - os_personalized_advertising_disable
+      - os_safari_password_autofill_disable
+      - os_screenshots_disable
+  - section: "systemsettings"
+    rules:
+      - system_settings_siri_disable
+      - system_settings_touchid_unlock_disable
