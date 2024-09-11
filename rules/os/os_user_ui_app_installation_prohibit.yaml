@@ -9,7 +9,7 @@ fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-    - N/A
+    - CCE-94511-3
   800-53r5:
     - CM-11(2)
 visionOS:
