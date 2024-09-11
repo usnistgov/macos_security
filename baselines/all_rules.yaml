@@ -1,6 +1,6 @@
-title: "iOS/iPadOS 17.0: Security Configuration - All Rules"
+title: "iOS/iPadOS 18.0: Security Configuration - All Rules"
 description: |
-  This guide describes the actions to take when securing a iOS/iPadOS 17.0 system against the All Rules security baseline.
+  This guide describes the actions to take when securing a iOS/iPadOS 18.0 system against the All Rules security baseline.
 
   Information System Security Officers and benchmark creators can use this catalog of settings in order to assist them in security benchmark creation. This list is a catalog, not a checklist or benchmark, and satisfaction of every item is not likely to be possible or sensible in many operational scenarios.
 authors: |
@@ -35,19 +35,24 @@ profile:
       - os_apple_watch_wrist_detection_enable
       - os_application_allow_list
       - os_authentication_password_autofill_enable
+      - os_auto_dim_allow
       - os_auto_unlock_disable
       - os_diagnostics_reports_disable
       - os_disallow_enterprise_app_trust
       - os_enterprise_books_disable
       - os_erase_contents_and_settings_disable
+      - os_esim_transfers_disable
       - os_files_network_drive_access_disable
       - os_files_usb_drive_access_disable
       - os_find_my_friends_disable
       - os_force_date_and_time_enable
       - os_force_encrypted_backups_enable
+      - os_genmoji_disable
       - os_handoff_disable
+      - os_image_playground_disable
       - os_install_configuration_profile_disable
       - os_install_vpn_configuration_disable
+      - os_iphone_mirroring_disable
       - os_iphone_widgets_on_mac_disable
       - os_limit_ad_tracking_enable
       - os_mail_maildrop_disable
@@ -61,6 +66,7 @@ profile:
       - os_password_proximity_disable
       - os_password_sharing_disable
       - os_personalized_advertising_disable
+      - os_personalized_handwriting_disable
       - os_require_managed_pasteboard_enforce
       - os_safari_cookies_set
       - os_safari_force_fraud_warning_enable
@@ -74,7 +80,10 @@ profile:
       - os_supervised_mdm_require
       - os_untrusted_tls_disable
       - os_usb_accessories_when_locked_disable
+      - os_vidio_conferencing_remote_control_disable
       - os_voice_dialing_when_locked_disabled
+      - os_web_distribution_app_installation_disable
+      - os_writing_tools_disable
   - section: "passwordpolicy"
     rules:
       - pwpolicy_account_lockout_enforce
