@@ -1253,8 +1253,7 @@ fi
             elif "base64" in result:
                 result_string_bytes = f'{result["base64"]}\n'.encode("UTF-8")
                 result_encoded = base64.b64encode(result_string_bytes)
-                result_value = result_encoded.decode()
-                result = f'base64: {result_value}'
+                result['base64'] = result_encoded.decode()
             else:
                 continue
 
