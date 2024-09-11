@@ -22,6 +22,10 @@ references:
     - 'FMT_SMF_EXT.1.1 #47'
   disa_stig:
     - AIOS-17-011000
+  800-171r2:
+    - N/A
+  indigo:
+    - ANNEX D (Section 5.6.1 - Mail) 
   cis:
     benchmark:
       - 2.7.2 (level 2 - End-User Owned Devices)
@@ -39,6 +43,8 @@ tags:
   - cis_lvl2_enterprise
   - cisv8
   - ios_stig
+  - indigo_base
+  - indigo_high
 severity: "medium"
 supervised: false
 mobileconfig: true

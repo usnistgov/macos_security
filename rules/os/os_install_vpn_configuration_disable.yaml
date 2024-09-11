@@ -23,6 +23,10 @@ references:
   disa_stig:
     - AIOS-17-001000
     - AIOS-17-701000
+  800-171r2:
+    - N/A
+  indigo:
+    - ANNEX D (Section 5.10.3 - Manual VPN)
   cis:
     benchmark:
       - 3.2.1.16 (level 1 - Institutionally-Owned Devices)
@@ -40,6 +44,8 @@ tags:
   - cisv8
   - ios_stig
   - ios_stig_byoad
+  - indigo_base
+  - indigo_high
 severity: "low"
 supervised: true
 mobileconfig: true

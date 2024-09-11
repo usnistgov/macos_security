@@ -101,7 +101,17 @@ authors:
       - Marco Piñeyro|Department of State
       - Dan Brodjieski|National Aeronautics and Space Administration
       - Allen Golbig|Jamf
-      - Bob Gendler|National Institute of Standards and Technology      
+      - Bob Gendler|National Institute of Standards and Technology
+  indigo_base:
+    names: 
+      - Henry Stamerjohann|Zentral Pro Services GmbH
+      - Allen Golbig|Jamf
+      - Bob Gendler|National Institute of Standards and Technology
+  indigo_high:
+    names: 
+      - Henry Stamerjohann|Zentral Pro Services GmbH
+      - Allen Golbig|Jamf
+      - Bob Gendler|National Institute of Standards and Technology              
 titles:
   all_rules: All Rules
   800-53r5_high: NIST SP 800-53 Rev 5 High Impact
@@ -123,6 +133,8 @@ titles:
   stig: Apple macOS 13 (Ventura) STIG - Ver 1, Rel 2
   ios_stig:  Apple iOS/iPadOS 17 STIG - Ver 1, Rel 1
   ios_stig_byoad: Apple iOS/iPadOS 17 BYOAD STIG - Ver 1, Rel 1
+  indigo_base: BSI indigo iOS 17.x Base Configuration
+  indigo_high: BSI indigo iOS 17.x High Configuration
 ddm:
   supported_types: []
-  services: []  
+  services: []    

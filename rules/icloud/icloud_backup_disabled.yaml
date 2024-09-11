@@ -21,6 +21,9 @@ references:
     - 'FMT_MOF_EXT.1.2 #40'
   disa_stig:
     - AIOS-17-003000
+  indigo:
+    - ANNEX D (Section 5.4 - iCloud restrictions)
+    - ANNEX K
   cis:
     benchmark:
       - 3.2.1.4 (level 1 - Institutionally-Owned Devices)
@@ -37,6 +40,8 @@ tags:
   - cis_lvl2_enterprise
   - cisv8
   - ios_stig
+  - indigo_base
+  - indigo_high
 severity: "medium"
 supervised: false
 mobileconfig: true

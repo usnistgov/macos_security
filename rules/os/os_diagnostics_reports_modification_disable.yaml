@@ -1,0 +1,28 @@
+id: os_diagnostics_reports_modification_disable
+title: "Disable changing Sending Diagnostic and Usage Data to Apple"
+discussion: |
+  The ability to change the setting to submit diagnostic data to Apple _MUST_ be disabled.
+
+  The information system _MUST_ be configured to provide only essential capabilities. Disabling the submission of diagnostic and usage information will mitigate the risk of unwanted data being sent to Apple.
+check: " "
+fix: |
+  This is implemented by a Configuration Profile.
+references:
+  cce:
+    - N/A
+  800-53r5:
+    - N/A
+  indigo:
+    - ANNEX K  
+iOS:
+  - "17.0"
+tags:
+  - ios
+  - indigo_base
+  - indigo_high
+severity: "high"
+supervised: true
+mobileconfig: true
+mobileconfig_info:
+  com.apple.applicationaccess:
+    allowDiagnosticSubmissionModification: false

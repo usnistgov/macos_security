@@ -1,0 +1,25 @@
+id: os_chat_disable
+title: "Prevent the usage of iMessage"
+discussion: |
+  The iOS device _MUST_ be configured to disable iMessage on the device to prevent receiving malicious content via iMessage.  
+check: " "
+fix: |
+  This is implemented by a Configuration Profile.
+references:
+  cce:
+    - N/A
+  800-53r5:
+    - N/A
+  indigo:
+    - ANNEX K  
+iOS:
+  - "17.0"
+tags:
+  - ios
+  - indigo_high
+supervised: true
+mobileconfig: true
+mobileconfig_info:
+  com.apple.applicationaccess:
+    allowChat: false
+    
