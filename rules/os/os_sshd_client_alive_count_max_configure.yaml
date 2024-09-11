@@ -35,7 +35,7 @@ fix: |
   ----
 references:
   cce:
-    - CCE-92898-6
+    - CCE-94303-5
   cci:
     - CCI-001133
   800-53r5:
@@ -45,13 +45,13 @@ references:
   srg:
     - SRG-OS-000163-GPOS-00072
   disa_stig:
-    - APPL-14-000052
-  800-171r2:
-    - 3.13.9
+    - N/A
+  800-171r3:
+    - 03.13.09
   cmmc:
     - SC.L2-3.13.9
 macOS:
-  - '14.0'
+  - '15.0'
 odv:
   hint: Number of seconds.
   recommended: 0
@@ -70,3 +70,9 @@ tags:
 severity: medium
 mobileconfig: false
 mobileconfig_info:
+ddm_info:
+  declarationtype: com.apple.configuration.services.configuration-files
+  service: com.apple.sshd
+  config_file: sshd_config
+  configuration_key: ClientAliveCountMax
+  configuration_value: $ODV

@@ -17,7 +17,7 @@ fix: |
   NOTE: The service `timed` cannot be unloaded or loaded while System Integrity Protection (SIP) is enabled.
 references:
   cce:
-    - CCE-92916-6
+    - CCE-94319-1
   cci:
     - CCI-002046
     - CCI-001891
@@ -30,8 +30,8 @@ references:
     - SRG-OS-000355-GPOS-00143
     - SRG-OS-000356-GPOS-00144
   disa_stig:
-    - APPL-14-000180
-  800-171r2:
+    - N/A
+  800-171r3:
     - 3.3.7
   cis:
     benchmark:
@@ -41,7 +41,7 @@ references:
   cmmc:
     - AU.L2-3.3.7
 macOS:
-  - '14.0'
+  - '15.0'
 tags:
   - 800-171
   - 800-53r5_low

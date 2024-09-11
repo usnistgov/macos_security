@@ -15,7 +15,7 @@ fix: |
   NOTE: See the FileVault supplemental to implement this rule.
 references:
   cce:
-    - CCE-92887-9
+    - CCE-94292-0
   cci:
     - N/A
   800-53r5:
@@ -28,8 +28,8 @@ references:
     - N/A
   disa_stig:
     - N/A
-  800-171r2:
-    - 3.13.16
+  800-171r3:
+    - 03.13.08
   cis:
     benchmark:
       - N/A
@@ -39,7 +39,7 @@ references:
   cmmc:
     - SC.L2-3.13.16
 macOS:
-  - '14.0'
+  - '15.0'
 tags:
   - 800-53r5_moderate
   - 800-53r5_high

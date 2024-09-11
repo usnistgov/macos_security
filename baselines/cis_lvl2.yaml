@@ -1,6 +1,6 @@
-title: "macOS 14.0: Security Configuration - CIS Apple macOS 14.0 Sonoma v1.0.0 Benchmark (Level 2)"
+title: "macOS 15.0: Security Configuration - CIS Apple macOS 15.0 Sequoia v1.0.0 Benchmark (Level 2)"
 description: |
-  This guide describes the actions to take when securing a macOS 14.0 system against the CIS Apple macOS 14.0 Sonoma v1.0.0 Benchmark (Level 2) security baseline.
+  This guide describes the actions to take when securing a macOS 15.0 system against the CIS Apple macOS 15.0 Sequoia v1.0.0 DRAFT Benchmark (Level 2) security baseline.
 authors: |
   *macOS Security Compliance Project*
 
@@ -45,7 +45,6 @@ profile:
       - os_authenticated_root_enable
       - os_bonjour_disable
       - os_config_data_install_enforce
-      - os_firewall_log_enable
       - os_gatekeeper_enable
       - os_guest_folder_removed
       - os_hibernate_mode_apple_silicon_enable
@@ -64,7 +63,6 @@ profile:
       - os_root_disable
       - os_safari_advertising_privacy_protection_enable
       - os_safari_open_safe_downloads_disable
-      - os_safari_popups_disabled
       - os_safari_prevent_cross-site_tracking_enable
       - os_safari_show_full_website_address_enable
       - os_safari_show_status_bar_enabled
@@ -72,6 +70,7 @@ profile:
       - os_show_filename_extensions_enable
       - os_sip_enable
       - os_software_update_deferral
+      - os_sudo_log_enforce
       - os_sudo_timeout_configure
       - os_sudoers_timestamp_type_configure
       - os_system_wide_applications_configure
@@ -99,7 +98,6 @@ profile:
       - system_settings_cd_dvd_sharing_disable
       - system_settings_content_caching_disable
       - system_settings_critical_update_install_enforce
-      - system_settings_diagnostics_reports_disable
       - system_settings_filevault_enforce
       - system_settings_firewall_enable
       - system_settings_firewall_stealth_mode_enable
@@ -121,6 +119,7 @@ profile:
       - system_settings_screen_sharing_disable
       - system_settings_screensaver_ask_for_password_delay_enforce
       - system_settings_screensaver_timeout_enforce
+      - system_settings_siri_listen_disable
       - system_settings_smbd_disable
       - system_settings_software_update_app_update_enforce
       - system_settings_software_update_download_enforce

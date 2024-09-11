@@ -10,21 +10,21 @@ fix: |
   The requirement is NA. No fix is required.
 references:
   cce:
-    - CCE-92848-1
+    - CCE-94252-4
   cci:
     - N/A
   800-53r5:
     - SI-19
   800-53r4:
     - N/A
-  800-171r2:
+  800-171r3:
     - N/A
   disa_stig:
     - N/A
   srg:
     - N/A
 macOS:
-  - '14.0'
+  - '15.0'
 tags:
   - 800-53r5_privacy
   - n_a

@@ -22,7 +22,9 @@ $rule_fix
 |===
 
 |ID
-|$rule_id
+|$rule_id 
+
+$severity
 
 |References
 |
@@ -36,7 +38,7 @@ $rule_fix
 !$rule_80053r5
 
 ifdef::show_171[]
-!800-171r2
+!800-171r3
 !$rule_800171
 endif::[]
 

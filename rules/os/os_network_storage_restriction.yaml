@@ -1,0 +1,40 @@
+id: os_network_storage_restriction
+title: Network Storage Must Be Restricted
+discussion: |-
+  Network Storage _MUST_ be restricted. 
+  
+  NOTE: Apple's built in method using declative device management method only allows you to set network storage manament to Allowed, ReadOnly, and Disallowed.
+check: |
+  /usr/bin/plutil -convert json /var/db/ManagedConfigurationFiles/DiskManagement/DiskManagement_Settings.plist -o - | /usr/bin/jq '.Restrictions | .ExternalStorage'
+result:
+  string: $ODV
+fix: |
+  This is implemented by a Declarative Device Management.
+references:
+  cce:
+    - CCE-94232-6
+  cci:
+    - N/A
+  800-53r5:
+    - AC-20(4)
+  srg:
+    - N/A
+  disa_stig:
+    - N/A
+  800-171r3:
+    - N/A
+  cmmc:
+    - N/A
+macOS:
+  - '15.0'
+tags:
+  - none
+odv:
+  hint: Allowed, ReadOnly, or Disallowed
+  recommended: Allowed
+mobileconfig: false
+mobileconfig_info:
+ddm_info:
+  declarationtype: com.apple.configuration.diskmanagement.settings
+  ddm_key: NetworkStorage
+  ddm_value: $ODV

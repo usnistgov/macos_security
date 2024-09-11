@@ -7,9 +7,9 @@ discussion: |
 
   NOTE: /etc/ssh/sshd_config will be automatically modified to its original state following any update or major upgrade to the operating system.
 check: |
-  /usr/sbin/sshd -G | /usr/bin/awk -F "=" '/channeltimeout session:*/{print $2}'
+  /usr/sbin/sshd -G | /usr/bin/awk '/channeltimeout/{print $2}'
 result:
-  integer: $ODV
+  string: $ODV
 fix: |
   [source,bash]
   ----
@@ -19,7 +19,7 @@ fix: |
     /usr/bin/sed -i.bk "1s/.*/Include \/etc\/ssh\/sshd_config.d\/\*/" /etc/ssh/sshd_config
   fi
 
-  /usr/bin/grep -qxF 'channeltimeout session:*=$ODV' "${include_dir}01-mscp-sshd.conf" 2>/dev/null || echo "channeltimeout session:*=$ODV" >> "${include_dir}01-mscp-sshd.conf"
+  /usr/bin/grep -qxF 'channeltimeout $ODV' "${include_dir}01-mscp-sshd.conf" 2>/dev/null || echo "channeltimeout $ODV" >> "${include_dir}01-mscp-sshd.conf"
 
   for file in $(ls ${include_dir}); do
     if [[ "$file" == "100-macos.conf" ]]; then
@@ -33,7 +33,7 @@ fix: |
   ----
 references:
   cce:
-    - CCE-92897-8
+    - CCE-94302-7
   cci:
     - CCI-001133
     - CCI-002361
@@ -46,16 +46,19 @@ references:
     - SRG-OS-000163-GPOS-00072
     - SRG-OS-000279-GPOS-00109
   disa_stig:
-    - APPL-14-000120
-  800-171r2:
-    - 3.13.9
+    - N/A
+  800-171r3:
+    - 03.01.11
+    - 03.13.09
   cmmc:
     - AC.L2-3.1.11
     - SC.L2-3.13.9
 odv:
-  hint: Number of seconds.
-  recommended: 900
-  stig: 900
+  hint: Channel type and number of seconds.
+  recommended: session:*=900
+  stig: session:*=900
+macOS:
+  - '15.0'
 tags:
   - 800-53r5_moderate
   - 800-53r5_high
@@ -70,3 +73,9 @@ tags:
 severity: medium
 mobileconfig: false
 mobileconfig_info:
+ddm_info:
+  declarationtype: com.apple.configuration.services.configuration-files
+  service: com.apple.sshd
+  config_file: sshd_config
+  configuration_key: ChannelTimeout
+  configuration_value: $ODV

@@ -16,7 +16,7 @@ fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-    - CCE-93011-5
+    - CCE-94334-0
   cci:
     - CCI-000192
     - CCI-000193
@@ -26,17 +26,12 @@ references:
     - IA-5
     - IA-5(1)
   disa_stig:
-    - APPL-14-003060
+    - N/A
   srg:
     - SRG-OS-000070-GPOS-00038
     - SRG-OS-000069-GPOS-00037
-  800-171r2:
-    - 3.5.1
-    - 3.5.2
-    - 3.5.7
-    - 3.5.8
-    - 3.5.9
-    - 3.5.10
+  800-171r3:
+    - 03.05.07
   cis:
     benchmark:
       - 5.2.6 (level 2)
@@ -47,7 +42,7 @@ references:
     - IA.L2-3.5.8
     - IA.L2-3.5.9
 macOS:
-  - '14.0'
+  - '15.0'
 odv:
   hint: Custom regex (recommended is 1 upper and 1 lowercase)
   recommended: ^(?=.*[A-Z])(?=.*[a-z]).*$
@@ -76,3 +71,9 @@ mobileconfig_info:
       passwordContentRegex: $ODV
       passwordContentDescription:
         default: Password must match custom regex.
+ddm_info:
+  declarationtype: com.apple.configuration.passcode.settings
+  ddm_key: CustomRegex
+  ddm_value:
+    Regex: $ODV
+    Description: Password must match custom regex.

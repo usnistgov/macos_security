@@ -33,7 +33,7 @@ fix: |
   ----
 references:
   cce:
-    - CCE-92906-7
+    - CCE-94308-4
   cci:
     - CCI-001133
     - CCI-002361
@@ -46,9 +46,10 @@ references:
     - SRG-OS-000163-GPOS-00072
     - SRG-OS-000279-GPOS-00109
   disa_stig:
-    - APPL-14-000130
-  800-171r2:
-    - 3.13.9
+    - N/A
+  800-171r3:
+    - 03.01.11
+    - 03.13.09
   cmmc:
     - AC.L2-3.1.11
     - SC.L2-3.13.9
@@ -56,6 +57,8 @@ odv:
   hint: Number of seconds.
   recommended: 900
   stig: 900
+macOS:
+  - '15.0'
 tags:
   - 800-53r5_moderate
   - 800-53r5_high
@@ -70,3 +73,9 @@ tags:
 severity: medium
 mobileconfig: false
 mobileconfig_info:
+ddm_info:
+  declarationtype: com.apple.configuration.services.configuration-files
+  service: com.apple.sshd
+  config_file: sshd_config
+  configuration_key: UnusedConnectionTimeout
+  configuration_value: $ODV

@@ -22,7 +22,7 @@ fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-    - CCE-92986-9
+    - CCE-94390-2
   cci:
     - CCI-000057
   800-53r5:
@@ -33,9 +33,10 @@ references:
   srg:
     - SRG-OS-000029-GPOS-00010
   disa_stig:
-    - APPL-14-000070
-  800-171r2:
-    - 3.1.10
+    - N/A
+  800-171r3:
+    - 03.01.10
+    - 03.05.01
   cis:
     benchmark:
       - 2.10.1 (level 1)
@@ -44,7 +45,7 @@ references:
   cmmc:
     - AC.L2-3.1.10
 macOS:
-  - '14.0'
+  - '15.0'
 odv:
   hint: Number of seconds.
   recommended: 1200

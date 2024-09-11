@@ -10,7 +10,7 @@ fix: |
   The technology inherently meets this requirement. No fix is required.
 references:
   cce:
-    - CCE-92813-5
+    - CCE-94215-1
   cci:
     - N/A
   800-53r5:
@@ -24,7 +24,7 @@ references:
   cmmc:
     - N/A
 macOS:
-  - '14.0'
+  - '15.0'
 tags:
   - 800-53r5_high
   - 800-53r4_high

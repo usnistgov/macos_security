@@ -33,7 +33,7 @@ fix: |
   ----
 references:
   cce:
-    - CCE-92905-9
+    - CCE-94307-6
   cci:
     - CCI-000770
     - CCI-001813
@@ -45,9 +45,9 @@ references:
     - SRG-OS-000364-GPOS-00151
     - SRG-OS-000109-GPOS-00056
   disa_stig:
-    - APPL-14-001100
+    - N/A
 macOS:
-  - '14.0'
+  - '15.0'
 tags:
   - 800-53r5_high
   - 800-53r4_high
@@ -58,3 +58,9 @@ tags:
 severity: medium
 mobileconfig: false
 mobileconfig_info:
+ddm_info:
+  declarationtype: com.apple.configuration.services.configuration-files
+  service: com.apple.sshd
+  config_file: sshd_config
+  configuration_key: PermitRootLogin
+  configuration_value: no

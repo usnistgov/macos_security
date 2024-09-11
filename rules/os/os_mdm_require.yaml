@@ -25,7 +25,7 @@ fix: |
   Ensure that system is enrolled via UAMDM.
 references:
   cce:
-    - CCE-92824-2
+    - CCE-94227-6
   cci:
     - CCI-000366
   800-53r5:
@@ -35,12 +35,12 @@ references:
     - CM-2
     - CM-6
   disa_stig:
-    - APPL-14-005110
+    - N/A
   srg:
     - SRG-OS-000480-GPOS-00227
-  800-171r2:
-    - 3.4.1
-    - 3.4.2
+  800-171r3:
+    - 03.04.01
+    - 03.04.02
   cis:
     benchmark:
       - 1.8 (level 1)
@@ -50,7 +50,7 @@ references:
   cmmc:
     - CM.L2-3.4.2
 macOS:
-  - '14.0'
+  - '15.0'
 tags:
   - 800-53r5_low
   - 800-53r5_moderate
