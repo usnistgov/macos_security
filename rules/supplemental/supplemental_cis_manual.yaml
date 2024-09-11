@@ -155,7 +155,8 @@ discussion: |
   4.6 Review Mail Privacy Protection settings +
   4.7 Ensure Automatic Downloads of App Updates is set to Enabled +
   4.8 Ensure Find My iPhone/iPad is set to Enabled on end user-owned devices +
-  4.9 Ensure the latest iOS device architecture is used by high-value targets
+  4.9 Ensure the latest iOS device architecture is used by high-value targets +
+  4.10 Verify iPhone Mirroring Settings
   |===
 check: |
 fix: |
