@@ -1,4 +1,4 @@
-id: os_web_allow_web_distribution_app_installation
+id: os_web_distribution_app_installation_disable
 title: "Ensure the ability to install apps directly from the web is set to Disabled"
 discussion: |
   Web distrubtion of app installation _MUST_ be disabled.
@@ -8,21 +8,8 @@ fix: |
 references:
   cce:
     - N/A
-  cci:
-    -
   800-53r5:
-    - 
-  sfr:
-    - ''
-  disa_stig:
-    - N/A
-  800-171r2:
-    - N/A
-  cis:
-    benchmark:
-      - 
-    controls v8:
-      -
+    - CM-11
 iOS:
   - "18.0"
 tags:
@@ -30,7 +17,6 @@ tags:
   - 800-53r5_low
   - 800-53r5_moderate
   - 800-53r5_high
-severity: ""
 supervised: false
 mobileconfig: true
 mobileconfig_info:

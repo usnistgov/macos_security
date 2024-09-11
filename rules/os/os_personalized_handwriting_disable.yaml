@@ -1,4 +1,4 @@
-id: os_allow_personalized_handwrirting_results
+id: os_personalized_handwriting_disable
 title: "Ensure the ability to analyse handwriting is set to Disabled"
 discussion: |
   AI handwriting analysis _MUST_ be disabled.
@@ -11,18 +11,15 @@ references:
   cci: 
     - N/A
   800-53r5:
-    - 
+    - AC-20
+    - AC-20(1)
+    - CM-7
+    - CM-7(1)
+    - SC-7(10)
   sfr:
     - N/A
   disa_stig:
     - N/A
-  800-171r2:
-    - N/A
-  cis:
-    benchmark:
-      - 
-    controls v8:
-      -
 iOS:
   - "18.0"
 tags:

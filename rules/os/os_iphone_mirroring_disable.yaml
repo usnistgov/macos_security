@@ -1,7 +1,7 @@
-id: os_allow_genmoji
-title: "Ensure the ability to create Genmojis is set to Disabled"
+id: os_iphone_mirroring_disable
+title: "Ensure the ability to mirror a device is set to Disabled"
 discussion: |
-  Use of Genmojis _MUST_ be disabled.
+  Device mirroring _MUST_ be disabled.
 check: " "
 fix: |
   This is implemented by a Configuration Profile.
@@ -11,27 +11,17 @@ references:
   cci: 
     - N/A
   800-53r5:
-    - 
+    - N/A
   sfr:
     - N/A
   disa_stig:
     - N/A
-  800-171r2:
-    - N/A
-  cis:
-    benchmark:
-      - 
-    controls v8:
-      -
 iOS:
   - "18.0"
 tags:
   - ios
-  - 800-53r5_low 
-  - 800-53r5_moderate 
-  - 800-53r5_high
 supervised: false
 mobileconfig: true
 mobileconfig_info:
   com.apple.applicationaccess:
-    allowGenmoji: false
+    allowiPhoneMirroring: false

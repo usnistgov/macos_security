@@ -1,7 +1,7 @@
-id: os_allow_esim_outgoing_transfers
-title: "Ensure the ability to transfer an eSIM is set to Disabled"
+id: os_image_playground_disable
+title: "Ensure the ability to use AI image generation is set to Disabled"
 discussion: |
-  Outgoing transfers of eSIMs _MUST_ be disabled.
+  AI image generation _MUST_ be disabled.
 check: " "
 fix: |
   This is implemented by a Configuration Profile.
@@ -11,18 +11,15 @@ references:
   cci: 
     - N/A
   800-53r5:
-    - 
+    - AC-20
+    - AC-20(1)
+    - CM-7
+    - CM-7(1)
+    - SC-7(10)
   sfr:
     - N/A
   disa_stig:
     - N/A
-  800-171r2:
-    - N/A
-  cis:
-    benchmark:
-      - 
-    controls v8:
-      -
 iOS:
   - "18.0"
 tags:
@@ -34,4 +31,4 @@ supervised: false
 mobileconfig: true
 mobileconfig_info:
   com.apple.applicationaccess:
-    allowESIMOutgoingTransfers: false
+    allowImagePlayground: false

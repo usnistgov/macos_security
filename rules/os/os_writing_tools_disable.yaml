@@ -1,7 +1,7 @@
-id: os_allow_image_playground
-title: "Ensure the ability to use AI image generation is set to Disabled"
+id: os_writing_tools_disable
+title: "Ensure the ability to use AI writing tools is set to Disabled"
 discussion: |
-  AI image generation _MUST_ be disabled.
+  AI writing tools _MUST_ be disabled.
 check: " "
 fix: |
   This is implemented by a Configuration Profile.
@@ -16,13 +16,6 @@ references:
     - N/A
   disa_stig:
     - N/A
-  800-171r2:
-    - N/A
-  cis:
-    benchmark:
-      - 
-    controls v8:
-      -
 iOS:
   - "18.0"
 tags:
@@ -34,4 +27,4 @@ supervised: false
 mobileconfig: true
 mobileconfig_info:
   com.apple.applicationaccess:
-    allowImagePlayground: false
+    allowWritingTools: false
