@@ -1317,7 +1317,7 @@ fi
                 rule_yaml["id"],
                 nist_controls.replace("\n", "\n#"),
                 check.strip(),
-                str(result).lower(),
+                str(result),
                 result_value,
                 " ".join(log_reference_id),
                 arch,
