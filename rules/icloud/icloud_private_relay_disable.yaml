@@ -1,0 +1,28 @@
+id: icloud_private_relay_disable
+title: Disable iCloud Private Relay
+discussion: |
+  Enterprise networks may be required to audit all network traffic by policy, therefore, iCloud Private Relay _MUST_ be disabled.
+
+  Network administrators can also prevent the use of this feature by blocking DNS resolution of mask.icloud.com and mask-h2.icloud.com.
+check: ' '
+result: ' '
+fix: |
+  This is implemented by a Configuration Profile.
+references:
+  cce:
+    - N/A
+  800-53r5:
+    - AC-20
+    - AC-20(1)
+    - CM-7
+    - CM-7(1)
+    - SC-7(10)
+visionOS:
+  - '2.0'
+tags:
+  - visionos
+supervised: true
+mobileconfig: true
+mobileconfig_info:
+  com.apple.applicationaccess:
+    allowCloudPrivateRelay: false
