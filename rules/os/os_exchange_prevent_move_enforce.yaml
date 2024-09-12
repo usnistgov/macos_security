@@ -1,9 +1,9 @@
 id: os_exchange_prevent_move_enforce
 title: "Prevent move manged mails to another account."
 discussion: |
-  The iOS device needs some specific configurations for the Exchange setup to meet the minimum requirements. Some are mandatory.
+  The iOS device needs some specific configurations for the Exchange setup to meet the minimum requirements.
 
-  he prevent move to another account _MUST_ be configured to prevent data leakage via a different account.
+  The setting, prevent moving to another account _MUST_ be configured to prevent data leakage.
 check: " "
 fix: |
   This is implemented by a Configuration Profile.

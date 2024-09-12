@@ -2,10 +2,7 @@ id: os_predictive_keyboard_disable
 title: "Disable the use of predictable keyboards"
 discussion: |
   The device _MUST_ be configured that the usage of the predictable keyboard feature is not possible.  
-check: |
-  Check your MDM to ensure that predictive keyboard is disabled on the iOS endpoint.
-result:
-  string: "false"
+check: " "
 fix: |
   This is implemented by a Configuration Profile.
 references:

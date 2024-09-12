@@ -1,7 +1,7 @@
 id: os_system_settings_find_my_friends_modification_disable
 title: "Disable Find My Friends Modification"
 discussion: |
-  The Find My service modification _MUST_ be disabled, if decided by the CISO.
+  The Find My service modification _MUST_ be disabled.
 check: " "
 fix: |
   This is implemented by a Configuration Profile.
@@ -9,7 +9,9 @@ references:
   cce:
     - CCE-93504-9
   800-53r5:
-    - N/A
+    - AC-20
+    - CM-7
+    - CM-7(1)
   indigo:
     - ANNEX K
 iOS:
@@ -17,6 +19,9 @@ iOS:
 tags:
   - ios
   - indigo_high
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_high  
 supervised: true
 mobileconfig: true
 mobileconfig_info:

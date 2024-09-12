@@ -1,7 +1,7 @@
 id: os_network_known_only
 title: "Only allow known networks"
 discussion: |
-  The iOS device _MUST_ be configured to only allow known networks in case only trustworthy networks can be used. This can have a limitation on connectivity especially when devices are used in area with low or no network connectivity. This is especially applicable when traveling.
+  The iOS device _MUST_ be configured to only allow known networks in case only trustworthy networks can be used. This can have a limitation on connectivity especially when devices are used in area with low or no network connectivity. 
 check: " "
 result:
   string: "true"

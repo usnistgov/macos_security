@@ -1,11 +1,7 @@
 id: os_update_enforced_software_update_delay
 title: "Enforce Software Update Delay."
 discussion: |
-  The iOS device _SHOULD_VALUEONDEMAND_ be configured to enforce a software update delay that is defined by the CISO to enable the IT to validate compatibility with their infrastructure. When enabling the feature the device will not show available update to the user so they cannot install the update.
-  
-  If the feature is enabled the default value is 30 days and can be configured to a maximum of 90 days.
-  
-  In any case software updates should be applied as soon as possible to address potential security issues.
+  The iOS device _MUST_ be configured to enforce a software update delay by $ODV days in order to validate compatibility with required software and infrastructure.
 check: " "
 fix: |
   This is implemented by a Configuration Profile.
@@ -31,4 +27,5 @@ supervised: true
 mobileconfig: true
 mobileconfig_info:
   com.apple.applicationaccess:
+    forceDelayedSoftwareUpdates: true
     enforcedSoftwareUpdateDelay: $ODV

@@ -9,7 +9,7 @@ references:
   cce:
     - CCE-93489-3
   800-53r5:
-    - N/A
+    - CM-11
   indigo:
     - ANNEX K
 iOS:
@@ -18,6 +18,9 @@ tags:
   - ios
   - indigo_base
   - indigo_high
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_high
 supervised: true
 mobileconfig: true
 mobileconfig_info:

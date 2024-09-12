@@ -107,7 +107,6 @@ profile:
       - os_update_OTAPKI_allow
       - os_update_auto_RSR_allow
       - os_update_enforced_software_update_delay
-      - os_update_force_delayed_software_updates
       - os_usb_accessories_when_locked_disable
       - os_voice_dialing_when_locked_disabled
   - section: "passwordpolicy"

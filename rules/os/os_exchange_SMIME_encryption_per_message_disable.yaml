@@ -1,7 +1,7 @@
 id: os_exchange_SMIME_encryption_per_message_disable
 title: "Disable encryption selection option per mail."
 discussion: |
-  The iOS device needs some specific configurations for the Exchange setup to meet the minimum requirements. Some are mandatory.
+  The iOS device needs some specific configurations for the Exchange setup to meet the minimum requirements. 
 
   The user _MUST_ not be enabled to have the option to decide wether to encrypt a mail communication. Encryption _MUST_ be the default.
 check: " "

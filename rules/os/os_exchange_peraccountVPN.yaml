@@ -1,7 +1,7 @@
 id: os_exchange_peraccountVPN
 title: "Enforce per account VPN for managed Mail accounts."
 discussion: |
-  The iOS device needs some specific configurations for the Exchange setup to meet the minimum requirements. Some are mandatory.
+  The iOS device needs some specific configurations for the Exchange setup to meet the minimum requirements. 
 
   When leveraging per account VPN configurations mail, calendar and contacts need to be configured to leverage the specific VPNUUID in addition.
 check: " "

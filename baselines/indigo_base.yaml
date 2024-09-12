@@ -68,7 +68,6 @@ profile:
       - os_ssl_for_exchange_activesync_enable
       - os_unpaired_boot_disable
       - os_update_enforced_software_update_delay
-      - os_update_force_delayed_software_updates
       - os_usb_accessories_when_locked_disable
   - section: "passwordpolicy"
     rules:

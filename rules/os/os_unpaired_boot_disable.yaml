@@ -1,10 +1,8 @@
 id: os_unpaired_boot_disable
 title: "Disable the option to recover the device via an unpaired host"
 discussion: |
-  Check your MDM to ensure that disabled unpaired OS boot has been enforced on the iOS endpoint.
-check: |
-result:
-  string: "false"
+  The iOS device _MUST_ be configured to disable unpaired devices to boot devices into recovery.
+check: " "
 fix: |
   This is implemented by a Configuration Profile.
 references:

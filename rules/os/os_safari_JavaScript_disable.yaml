@@ -1,5 +1,5 @@
 id: os_safari_JavaScript_disable
-title: "Prevent Jave Script"
+title: "Prevent Java Script"
 discussion: |
   The iOS device _MUST_ be configured to prevent Java Script support in Safari to prevent malicious code execution on the device.
 check: " "
