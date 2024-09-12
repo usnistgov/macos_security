@@ -1,7 +1,7 @@
 id: settings_opticid_unlock_disable
 title: "Disable OpticID for Unlocking the Device"
 discussion: |
-  OpticID enables the ability to unlock a device with a user's fingerprint.
+  OpticID enables the ability to unlock a device with biometric.
 
   OpticID _MUST_ be disabled for "Unlocking your device" on all devices that are capable of using OpticID.
 
