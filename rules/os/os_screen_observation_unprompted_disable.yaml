@@ -1,0 +1,24 @@
+id: os_screen_observation_unprompted_disable
+title: "Prevent unprompted screen observation."
+discussion: |
+  The iOS device _MUST_ be configured to prevent automatic acceptance for unprompted screen observations to prevent data leakage via the classroom app.
+check: " "
+fix: |
+  This is implemented by a Configuration Profile.
+references:
+  cce:
+    - CCE-94549-3
+  800-53r5:
+    - N/A
+  indigo:
+    - N/A
+iOS:
+  - "18.0"
+tags:
+  - ios
+supervised: false
+mobileconfig: true
+mobileconfig_info:
+  com.apple.applicationaccess:
+    forceClassroomUnpromptedScreenObservation: false
+    

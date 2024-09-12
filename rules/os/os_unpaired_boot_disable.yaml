@@ -1,0 +1,23 @@
+id: os_unpaired_boot_disable
+title: "Disable the option to recover the device via an unpaired host"
+discussion: |
+  The iOS device _MUST_ be configured to disable unpaired devices to boot devices into recovery.
+check: " "
+fix: |
+  This is implemented by a Configuration Profile.
+references:
+  cce:
+    - CCE-94557-6
+  800-53r5:
+    - N/A
+  indigo:
+    - N/A
+iOS:
+  - "17.4.1"
+tags:
+  - ios
+supervised: true
+mobileconfig: true
+mobileconfig_info:
+  com.apple.applicationaccess:
+    allowUnpairedExternalBootToRecovery: false

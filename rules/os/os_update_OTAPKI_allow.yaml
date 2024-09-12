@@ -1,16 +1,16 @@
-id: os_esim_transfers_disable
-title: "Ensure the ability to transfer an eSIM is set to Disabled"
+id: os_update_OTAPKI_allow
+title: "Allow OTA Update of PKI"
 discussion: |
-  Outgoing transfers of eSIMs _MUST_ be disabled.
+  The device _MUST_ be configured that the OTA update of the PKI is allowed.
 check: " "
 fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-    - CCE-94524-6
-  cci: 
-    - N/A
+    - CCE-94558-4
   800-53r5:
+    - N/A
+  indigo:
     - N/A
 iOS:
   - "18.0"
@@ -20,4 +20,4 @@ supervised: false
 mobileconfig: true
 mobileconfig_info:
   com.apple.applicationaccess:
-    allowESIMOutgoingTransfers: false
+    allowOTAPKIUpdates: true

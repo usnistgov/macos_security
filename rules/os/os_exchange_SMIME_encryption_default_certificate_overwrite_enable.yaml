@@ -1,0 +1,24 @@
+id: os_exchange_SMIME_encryption_default_certificate_overwrite_enable
+title: "Enable selecting the appropriate S/MIME encryption certificate."
+discussion: |
+  The iOS device needs some specific configurations for the Exchange setup to meet the minimum requirements.
+
+  The user _MUST_ be enabled to select the appropriate signing identity.
+check: " "
+fix: |
+  This is implemented by a Configuration Profile.
+references:
+  cce:
+    - CCE-94526-1
+  800-53r5:
+    - N/A
+  indigo:
+    - N/A
+iOS:
+  - "18.0"
+tags:
+  - ios
+mobileconfig: true
+mobileconfig_info:
+  com.apple.mail.managed:
+    SMIMEEncryptByDefaultUserOverrideable: false

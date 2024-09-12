@@ -1,0 +1,25 @@
+id: os_airprint_force_trusted_TLS
+title: "Requires trusted certificates for TLS printing communication"
+discussion: |
+  The service AirPrint _MUST_ be configured to require trusted certificates for TLS printing communication.
+check: " "
+fix: |
+  This is implemented by a Configuration Profile.
+references:
+  cce:
+    - CCE-94516-2
+  800-53r5:
+    - AC-17(02)
+  indigo:
+    - N/A
+iOS:
+  - "18.0"
+tags:
+  - ios
+  - 800-53r5_moderate
+  - 800-53r5_high  
+supervised: false
+mobileconfig: true
+mobileconfig_info:
+  com.apple.applicationaccess:
+    forceAirPrintTrustedTLSRequirement: true
