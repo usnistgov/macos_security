@@ -44,7 +44,7 @@ profile:
       - os_personalized_advertising_disable
       - os_safari_password_autofill_disable
       - os_screenshots_disable
-  - section: "systemsettings"
+  - section: "settings"
     rules:
-      - system_settings_opticid_unlock_disable
-      - system_settings_siri_disable
+      - settings_opticid_unlock_disable
+      - settings_siri_disable

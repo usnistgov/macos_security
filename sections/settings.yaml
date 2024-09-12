@@ -1,0 +1,5 @@
+  name: "Settings"
+  description: |
+    This section contains the configuration and enforcement of the settings within the Settings application.
+
+    NOTE: The check/fix commands outlined in this section _MUST_ be run by a user with elevated privileges. 

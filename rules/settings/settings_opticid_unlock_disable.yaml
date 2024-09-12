@@ -1,4 +1,4 @@
-id: system_settings_opticid_unlock_disable
+id: settings_opticid_unlock_disable
 title: "Disable TouchID for Unlocking the Device"
 discussion: |
   TouchID enables the ability to unlock a device with a user's fingerprint.

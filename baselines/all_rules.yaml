@@ -50,7 +50,7 @@ profile:
       - os_untrusted_tls_disable
       - os_user_app_installation_prohibit
       - os_user_ui_app_installation_prohibit
-  - section: "systemsettings"
+  - section: "settings"
     rules:
-      - system_settings_opticid_unlock_disable
-      - system_settings_siri_disable
+      - settings_opticid_unlock_disable
+      - settings_siri_disable
