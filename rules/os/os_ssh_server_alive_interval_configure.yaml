@@ -25,13 +25,16 @@ fix: |
     config=$(/usr/bin/sudo -u $u /usr/bin/ssh -Gv . 2>&1 | /usr/bin/awk '/Reading configuration data/ {print $NF}'| /usr/bin/tr -d '\r')
     configarray=( ${(f)config} )
     for c in $configarray; do
+      if [[ "$c" == "/etc/ssh/crypto.conf" ]]; then
+        continue
+      fi
       /usr/bin/sudo -u $u /usr/bin/grep -q '^ServerAliveInterval' "$c" && /usr/bin/sed -i '' 's/.*ServerAliveInterval.*/ServerAliveInterval $ODV/' "$c" || /bin/echo 'ServerAliveInterval $ODV' >> "$c"
     done
   done
   ----
 references:
   cce:
-    - CCE-92896-0
+    - CCE-94301-9
   cci:
     - CCI-001133
   800-53r5:
@@ -42,14 +45,15 @@ references:
   srg:
     - SRG-OS-000163-GPOS-00072
   disa_stig:
-    - APPL-14-000110
-  800-171r2:
-    - 3.13.9
+    - N/A
+  800-171r3:
+    - 03.01.11
+    - 03.13.09
   cmmc:
     - AC.L2-3.1.11
     - SC.L2-3.13.9
 macOS:
-  - '14.0'
+  - '15.0'
 odv:
   hint: Number of seconds.
   recommended: 900

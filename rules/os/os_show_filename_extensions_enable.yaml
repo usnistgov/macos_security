@@ -22,7 +22,7 @@ fix: |
   ----
 references:
   cce:
-    - CCE-92888-7
+    - CCE-94293-8
   cci:
     - N/A
   800-53r5:
@@ -33,7 +33,7 @@ references:
     - N/A
   disa_stig:
     - N/A
-  800-171r2:
+  800-171r3:
     - N/A
   cis:
     benchmark:
@@ -41,7 +41,7 @@ references:
     controls v8:
       - 2.3
 macOS:
-  - '14.0'
+  - '15.0'
 tags:
   - cis_lvl1
   - cis_lvl2

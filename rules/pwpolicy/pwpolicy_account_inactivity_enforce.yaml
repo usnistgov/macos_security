@@ -36,7 +36,7 @@ fix: |
   NOTE: See the password policy supplemental on more information on how to implement password policies on macOS.
 references:
   cce:
-    - CCE-92926-5
+    - CCE-94330-8
   cci:
     - CCI-000795
   800-53r5:
@@ -46,10 +46,9 @@ references:
   srg:
     - SRG-OS-000118-GPOS-00060
   disa_stig:
-    - APPL-14-003080
-  800-171r2:
-    - 3.5.5
-    - 3.5.6
+    - N/A
+  800-171r3:
+    - 03.01.01
   cis:
     benchmark:
       - N/A
@@ -58,7 +57,7 @@ references:
   cmmc:
     - IA.L2-3.5.6
 macOS:
-  - '14.0'
+  - '15.0'
 odv:
   hint: Number of days.
   recommended: 35

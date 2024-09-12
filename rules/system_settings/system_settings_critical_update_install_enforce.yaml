@@ -13,7 +13,7 @@ fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-    - CCE-92955-4
+    - CCE-94358-9
   cci:
     - N/A
   800-53r5:
@@ -24,8 +24,8 @@ references:
     - N/A
   disa_stig:
     - N/A
-  800-171r2:
-    - N/A
+  800-171r3:
+    - 03.14.01
   cis:
     benchmark:
       - 1.6 (level 1)
@@ -37,7 +37,7 @@ references:
     - SI.L1-3.14.1
     - SI.L1-3.14.4
 macOS:
-  - '14.0'
+  - '15.0'
 tags:
   - 800-53r5_low
   - 800-53r5_moderate

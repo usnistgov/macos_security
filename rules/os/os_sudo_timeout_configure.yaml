@@ -14,7 +14,7 @@ fix: |
   ----
 references:
   cce:
-    - CCE-92908-3
+    - CCE-94311-8
   cci:
     - CCI-002038
   800-53r5:
@@ -24,14 +24,14 @@ references:
   srg:
     - SRG-OS-000373-GPOS-00156
   disa_stig:
-    - APPL-14-004022
+    - N/A
   cis:
     benchmark:
       - 5.4 (level 1)
     controls v8:
       - 4.3
 macOS:
-  - '14.0'
+  - '15.0'
 odv:
   hint: Number of minutes.
   recommended: 0
@@ -49,3 +49,9 @@ tags:
 severity: medium
 mobileconfig: false
 mobileconfig_info:
+ddm_info:
+  declarationtype: com.apple.configuration.services.configuration-files
+  service: com.apple.sudo
+  config_file: sudoers
+  configuration_key: Defaults timestamp_timeout=
+  configuration_value: $ODV

@@ -1,6 +1,6 @@
-title: "macOS 14.0: Security Configuration - NIST SP 800-53 Rev 5 High Impact"
+title: "macOS 15.0: Security Configuration - NIST SP 800-53 Rev 5 High Impact"
 description: |
-  This guide describes the actions to take when securing a macOS 14.0 system against the NIST SP 800-53 Rev 5 High Impact security baseline.
+  This guide describes the actions to take when securing a macOS 15.0 system against the NIST SP 800-53 Rev 5 High Impact security baseline.
 
   Information System Security Officers and benchmark creators can use this catalog of settings in order to assist them in security benchmark creation. This list is a catalog, not a checklist or benchmark, and satisfaction of every item is not likely to be possible or sensible in many operational scenarios.
 authors: |
@@ -74,17 +74,18 @@ profile:
       - os_config_data_install_enforce
       - os_config_profile_ui_install_disable
       - os_dictation_disable
+      - os_external_storage_access_defined
       - os_filevault_authorized_users
       - os_filevault_autologin_disable
       - os_firewall_default_deny_require
-      - os_firewall_log_enable
       - os_firmware_password_require
       - os_gatekeeper_enable
-      - os_gatekeeper_rearm
+      - os_genmoji_disable
       - os_handoff_disable
       - os_home_folders_secure
       - os_httpd_disable
       - os_icloud_storage_prompt_disable
+      - os_image_generation_disable
       - os_ir_support_disable
       - os_loginwindow_adminhostinfo_undefined
       - os_mdm_require
@@ -117,6 +118,7 @@ profile:
       - os_sshd_fips_compliant
       - os_sshd_permit_root_login_configure
       - os_sshd_unused_connection_timeout_configure
+      - os_sudo_log_enforce
       - os_sudo_timeout_configure
       - os_sudoers_timestamp_type_configure
       - os_system_read_only
@@ -125,6 +127,7 @@ profile:
       - os_touchid_prompt_disable
       - os_unlock_active_user_session_disable
       - os_uucp_disable
+      - os_writing_tools_disable
   - section: "passwordpolicy"
     rules:
       - pwpolicy_account_inactivity_enforce
@@ -161,6 +164,8 @@ profile:
       - system_settings_guest_access_smb_disable
       - system_settings_guest_account_disable
       - system_settings_hot_corners_disable
+      - system_settings_improve_assistive_voice_disable
+      - system_settings_improve_search_disable
       - system_settings_improve_siri_dictation_disable
       - system_settings_internet_accounts_disable
       - system_settings_internet_sharing_disable

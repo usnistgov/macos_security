@@ -18,7 +18,7 @@ fix: |
   ----
 references:
   cce:
-    - CCE-93008-1
+    - CCE-94412-4
   cci:
     - N/A
   800-53r5:
@@ -34,8 +34,9 @@ references:
     - N/A
   srg:
     - N/A
-  800-171r2:
-    - N/A
+  800-171r3:
+    - 03.01.03
+    - 03.01.16
   cis:
     benchmark:
       - N/A
@@ -47,7 +48,7 @@ references:
     - AC.L2-3.1.16
     - AC.L2-3.1.17
 macOS:
-  - '14.0'
+  - '15.0'
 tags:
   - manual
   - 800-53r4_low

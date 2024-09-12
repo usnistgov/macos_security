@@ -30,7 +30,7 @@ fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-    - CCE-92825-9
+    - CCE-94228-4
   cci:
     - N/A
   800-53r5:
@@ -45,9 +45,9 @@ references:
     - N/A
   disa_stig:
     - N/A
-  800-171r2:
-    - 3.1.20
-    - 3.4.6
+  800-171r3:
+    - 03.01.20
+    - 03.04.06
   cis:
     benchmark:
       - N/A
@@ -59,7 +59,7 @@ references:
     - CM.L2-3.4.6
     - CM.L2-3.4.7
 macOS:
-  - '14.0'
+  - '15.0'
 tags:
   - cnssi-1253_moderate
   - cnssi-1253_low

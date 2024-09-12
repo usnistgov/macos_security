@@ -11,7 +11,7 @@ check: |
     if [[ $(/usr/bin/security -q authorizationdb read "$section" | /usr/bin/xmllint -xpath 'name(//*[contains(text(), "shared")]/following-sibling::*[1])' -) != "false" ]]; then
       result="0"
     fi
-    if [[ $(security -q authorizationdb read "$section" | /usr/bin/xmllint -xpath '//*[contains(text(), "group")]/following-sibling::*[1]/text()' - ) != "admin" ]]; then
+    if [[ $(/usr/bin/security -q authorizationdb read "$section" | /usr/bin/xmllint -xpath '//*[contains(text(), "group")]/following-sibling::*[1]/text()' - ) != "admin" ]]; then
       result="0"
     fi
     if [[ $(/usr/bin/security -q authorizationdb read "$section" | /usr/bin/xmllint -xpath 'name(//*[contains(text(), "authenticate-user")]/following-sibling::*[1])' -) != "true" ]]; then
@@ -72,7 +72,7 @@ fix: |
   ----
 references:
   cce:
-    - CCE-92996-8
+    - CCE-94401-7
   cci:
     - CCI-002235
   800-53r5:
@@ -86,10 +86,9 @@ references:
   srg:
     - SRG-OS-000324-GPOS-00125
   disa_stig:
-    - APPL-14-002069
-  800-171r2:
-    - 3.1.5
-    - 3.1.6
+    - N/A
+  800-171r3:
+    - 03.01.07
   cis:
     benchmark:
       - 2.6.8 (level 1)
@@ -100,7 +99,7 @@ references:
     - AC.L2-3.1.5
     - AC.L2-3.1.6
 macOS:
-  - '14.0'
+  - '15.0'
 tags:
   - 800-53r5_moderate
   - 800-53r5_high

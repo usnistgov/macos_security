@@ -22,7 +22,7 @@ $rule_check
 !$rule_80053r5
 
 ifdef::show_171[]
-!800-171r2
+!800-171r3
 !$rule_800171
 endif::[]
 

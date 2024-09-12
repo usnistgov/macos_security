@@ -15,7 +15,7 @@ fix: |
   ----
 references:
   cce:
-    - CCE-92702-0
+    - CCE-94102-1
   cci:
     - CCI-000162
     - CCI-000162
@@ -36,9 +36,9 @@ references:
     - SRG-OS-000258-GPOS-00099
     - SRG-OS-000058-GPOS-00028
   disa_stig:
-    - APPL-14-000031
-  800-171r2:
-    - 3.3.8
+    - N/A
+  800-171r3:
+    - 03.03.08
   cis:
     benchmark:
       - 3.5 (level 1)
@@ -47,7 +47,7 @@ references:
   cmmc:
     - AU.L2-3.3.8
 macOS:
-  - '14.0'
+  - '15.0'
 tags:
   - 800-53r5_low
   - 800-53r5_moderate

@@ -17,7 +17,7 @@ fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-    - CCE-92842-4
+    - CCE-94246-6
   cci:
     - N/A
   800-53r5:
@@ -28,7 +28,7 @@ references:
     - N/A
   disa_stig:
     - N/A
-  800-171r2:
+  800-171r3:
     - 3.4.7
   cis:
     benchmark:
@@ -36,7 +36,7 @@ references:
     controls v8:
       - 4.8
 macOS:
-  - '14.0'
+  - '15.0'
 tags:
   - cnssi-1253_moderate
   - cnssi-1253_low

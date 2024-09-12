@@ -9,7 +9,7 @@ discussion: |
 
   The information system initiates session audits at system start-up.
 
-  NOTE: Security auditing is NOT enabled by default on macOS Sonoma.
+  NOTE: Security auditing is NOT enabled by default on macOS Sequoia.
 check: |
   LAUNCHD_RUNNING=$(/bin/launchctl list | /usr/bin/grep -c com.apple.auditd)
   AUDITD_RUNNING=$(/usr/sbin/audit -c | /usr/bin/grep -c "AUC_AUDITING")
@@ -33,7 +33,7 @@ fix: |
   ----
 references:
   cce:
-    - CCE-92704-6
+    - CCE-94104-7
   cci:
     - CCI-000130
     - CCI-000131
@@ -101,11 +101,11 @@ references:
     - SRG-OS-000462-GPOS-00206
     - SRG-OS-000055-GPOS-00026
   disa_stig:
-    - APPL-14-001003
-  800-171r2:
-    - 3.3.1
-    - 3.3.2
-    - 3.3.7
+    - N/A
+  800-171r3:
+    - 03.03.02
+    - 03.03.03
+    - 03.03.07
   cis:
     benchmark:
       - 3.1 (level 1)
@@ -116,7 +116,7 @@ references:
     - AU.L2-3.3.2
     - AU.L2-3.3.6
 macOS:
-  - '14.0'
+  - '15.0'
 tags:
   - 800-53r5_low
   - 800-53r5_moderate
