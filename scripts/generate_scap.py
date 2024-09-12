@@ -487,6 +487,11 @@ def generate_scap(all_rules, all_baselines, args):
                 xccdf_rules = replace_ocil(xccdf_rules,x)
                 x += 1
                 continue
+            if "objectIsForcedForKey" in rule_yaml['check']:
+                print(rule_yaml['id'] + " - Manual Check")
+                xccdf_rules = replace_ocil(xccdf_rules,x)
+                x += 1
+                continue
             if "bluetooth" in rule_yaml['id'] and "unpaired" in rule_yaml['id']:
                 print(rule_yaml['id'] + " - Manual Check Required")
                 xccdf_rules = replace_ocil(xccdf_rules,x)
