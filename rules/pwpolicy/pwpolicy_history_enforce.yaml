@@ -1,7 +1,7 @@
 id: pwpolicy_history_enforce
-title: "Prohibit Password Reuse for a Minimum of 2 Generations"
+title: "Prohibit Password Reuse for a Minimum of $ODV Generations"
 discussion: |
-  The iOS _MUST_ be configured to enforce a password history of at least 2 previous passwords when a password is created.  
+  The iOS _MUST_ be configured to enforce a password history of at least $ODV previous passwords when a password is created.  
 check: " "
 fix: |
   This is implemented by a Configuration Profile.
@@ -9,18 +9,26 @@ references:
   cce:
     - CCE-93511-4
   800-53r5:
-    - N/A
+    - IA-5(1)
   indigo:
     - ANNEX D (Section 5.9.1 - Device-Code) 
     - ANNEX K  
 iOS:
   - "17.0"
+odv:
+  hint: Number of previous passwords.
+  recommended: 2
+  indigo_base: 2
+  indigo_high: 2
 tags:
   - ios
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_high
   - indigo_base
   - indigo_high
 supervised: false
 mobileconfig: true
 mobileconfig_info:
   com.apple.mobiledevice.passwordpolicy:
-    pinHistory: 2
+    pinHistory: $ODV
