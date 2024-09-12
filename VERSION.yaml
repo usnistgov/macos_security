@@ -2,4 +2,4 @@ os: "14.0"
 platform: macOS
 version: "Sonoma Guidance, Revision 3.0"
 cpe: o:apple:macos:14.0
-date: "XXXX-XX-XX"
+date: "2024-09-12"
