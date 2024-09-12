@@ -141,7 +141,7 @@ def generate_scap(all_rules, all_baselines, args):
     if "ios" in version_yaml['cpe']:
         output = "../build/iOS_{0}_Security_Compliance_Benchmark-{1}".format(version_yaml['os'],filenameversion)
     if "visionos" in version_yaml['cpe']:
-        output = "../build/iOS_{0}_Security_Compliance_Benchmark-{1}".format(version_yaml['os'],filenameversion)    
+        output = "../build/visionOS_{0}_Security_Compliance_Benchmark-{1}".format(version_yaml['os'],filenameversion)    
     if export_as == "xccdf":
         output = output + "_xccdf.xml"
     
