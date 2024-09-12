@@ -2,6 +2,72 @@
 
 This document provides a high-level view of the changes to the macOS Security Compliance Project.
 
+== [iOS 17, Revision 3.0] - 2024-09-12
+* Rules
+** Added Rules
+*** icloud_enterprisebook_sync
+*** os_account_modification_disable
+*** os_airprint_disable
+*** os_airprint_force_trusted_TLS
+*** os_application_deny_list
+*** os_auto_correction_disable
+*** os_chat_disable
+*** os_definition_lookup_disable
+*** os_device_name_change_disable
+*** os_diagnostics_reports_modification_disable
+*** os_exchange_mail_recents_sync_disable
+*** os_exchange_peraccountVPN
+*** os_exchange_prevent_move_enforce
+*** os_exchange_SMIME_encryption_certificate_overwirte_disable
+*** os_exchange_SMIME_encryption_default_certificate_overwrite_enable
+*** os_exchange_SMIME_encryption_enforce
+*** os_exchange_SMIME_encryption_per_message_disable
+*** os_exchange_SMIME_signing_certificate_overwirte_disable
+*** os_exchange_SMIME_signing_enabled
+*** os_exchange_SMIME_signing_overwrite_disable
+*** os_iphone_widgets_on_mac_disable
+*** os_live_text_disable
+*** os_mail_block_remote_content
+*** os_marketplace_prevent
+*** os_network_known_only
+*** os_predictive_keyboard_disable
+*** os_rapid_security_responses_install_enable
+*** os_rapid_security_responses_remove_disable
+*** os_safari_JavaScript_disable
+*** os_safari_popups_disable
+*** os_screen_observation_remote_disable
+*** os_screen_observation_unprompted_disable
+*** os_siri_allow_dictation_disable
+*** os_siri_assistant_diable
+*** os_siri_server_logging_disable
+*** os_siri_user_generated_content_disable
+*** os_spell_check_disable
+*** os_system_settings_find_my_device_disable
+*** os_system_settings_find_my_friends_modification_disable
+*** os_unpaired_boot_disable
+*** os_update_auto_RSR_allow
+*** os_update_enforced_software_update_delay
+*** os_update_force_delayed_software_updates
+*** os_update_OTAPKI_allow
+*** pwpolicy_alpha_numeric_enforce
+*** pwpolicy_history_enforce
+*** supplemental_bsi
+* Baselines
+** Added Baselines
+*** Indigo (Base/High)
+* Scripts
+** generate_guidance
+*** Updated date format for compliance script (https://github.com/usnistgov/macos_security/issues/405[#405])
+*** Spelling fixes (https://github.com/usnistgov/macos_security/pull/409[#409])
+*** Support `.yaml` & .`yml` (https://github.com/usnistgov/macos_security/issues/412[#412])
+*** Support for Indigo
+** generate_baseline
+*** Removed unnecessary try blocks (https://github.com/usnistgov/macos_security/issues/401[#401])
+*** Update with correct syntax for replace (https://github.com/usnistgov/macos_security/pull/406[#406])
+*** Support `.yaml` & .`yml` (https://github.com/usnistgov/macos_security/issues/412[#412])
+*** Support for Indigo
+
+
 == [iOS 17, Revision 2.0] - 2024-04-24
 * Rules
 ** Modified Rules
