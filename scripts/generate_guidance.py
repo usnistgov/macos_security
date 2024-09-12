@@ -1710,8 +1710,8 @@ def generate_xls(baseline_name, build_path, baseline_yaml):
     sheet1.write(0, 15, "CMMC", headers)
     sheet1.write(0, 16, "indigo", headers)
     sheet1.write(0, 17, "CCI", headers)
-    sheet1.write(0, 18, "Modified Rule", headers)
-    sheet1.write(0, 19, "Severity", headers)
+    sheet1.write(0, 18, "Severity", headers)
+    sheet1.write(0, 19, "Modified Rule", headers)
     sheet1.set_panes_frozen(True)
     sheet1.set_horz_split_pos(1)
     sheet1.set_vert_split_pos(2)
@@ -1818,17 +1818,34 @@ def generate_xls(baseline_name, build_path, baseline_yaml):
         indigo_refs = (str(rule.rule_indigo)).strip('[]\'')
         indigo_refs = indigo_refs.replace(", ", "\n").replace("\'", "")
 
+        sheet1.write(counter, 16, indigo_refs, topWrap)
+        sheet1.col(16).width = 500 * 15
+
         cci = (str(rule.rule_cci)).strip("[]'")
         cci = cci.replace(", ", "\n").replace("'", "")
 
-        sheet1.write(counter, 16, cci, topWrap)
-        sheet1.col(16).width = 400 * 15
+        sheet1.write(counter, 17, cci, topWrap)
+        sheet1.col(17).width = 400 * 15
+
+        # determine severity
+        # uses 'parent_values' from baseline.yaml file to determine which/if any severity to use
+        severity = ""
+        # if isinstance(rule.rule_severity, str):
+        #     severity = f'{rule.rule_severity}'
+        if isinstance(rule.rule_severity, dict):
+            try:
+                severity = f'{rule.rule_severity[baseline_yaml["parent_values"]]}'
+            except KeyError:
+                severity = ""
+
+        sheet1.write(counter, 18, severity, topWrap)
+        sheet1.col(18).width = 400 * 15
 
         customized = (str(rule.rule_customized)).strip("[]'")
         customized = customized.replace(", ", "\n").replace("'", "")
 
-        sheet1.write(counter, 17, customized, topWrap)
-        sheet1.col(17).width = 400 * 15
+        sheet1.write(counter, 19, customized, topWrap)
+        sheet1.col(19).width = 400 * 15
 
         if rule.rule_custom_refs != ["None"]:
             for title, ref in rule.rule_custom_refs.items():
@@ -1841,19 +1858,7 @@ def generate_xls(baseline_name, build_path, baseline_yaml):
                 added_ref = added_ref.replace(", ", "\n").replace("'", "")
                 sheet1.write(counter, custom_ref_column[title], added_ref, topWrap)
 
-        # determine severity
-        # uses 'parent_values' from baseline.yaml file to determine which/if any severity to use
-        severity = ""
-        if isinstance(rule.rule_severity, str):
-            severity = f'{rule.rule_severity}'
-        if isinstance(rule.rule_severity, dict):
-            try:
-                severity = f'{rule.rule_severity[baseline_yaml["parent_values"]]}'
-            except KeyError:
-                severity = ""
-
-        sheet1.write(counter, 18, severity, topWrap)
-        sheet1.col(18).width = 400 * 15
+        
 
         tall_style = easyxf("font:height 640;")  # 36pt
 
@@ -2505,7 +2510,6 @@ def main():
                 if isinstance(rule_yaml["severity"], dict):
                     try:
                         severity = f'|Severity\n|{rule_yaml["severity"][baseline_yaml["parent_values"]]}'
-                        print(severity)
                     except KeyError:
                         severity = ""
 
