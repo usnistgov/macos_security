@@ -80,7 +80,7 @@ profile:
       - os_supervised_mdm_require
       - os_untrusted_tls_disable
       - os_usb_accessories_when_locked_disable
-      - os_vidio_conferencing_remote_control_disable
+      - os_video_conferencing_remote_control_disable
       - os_voice_dialing_when_locked_disabled
       - os_web_distribution_app_installation_disable
       - os_writing_tools_disable
