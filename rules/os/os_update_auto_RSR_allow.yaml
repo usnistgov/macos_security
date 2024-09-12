@@ -7,7 +7,7 @@ fix: |
   This is implemented manually by the user.
 references:
   cce:
-    - N/A
+    - CCE-93507-2
   800-53r5:
     - N/A
   indigo:
