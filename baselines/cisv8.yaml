@@ -108,7 +108,6 @@ profile:
       - os_system_wide_applications_configure
       - os_terminal_secure_keyboard_enable
       - os_tftpd_disable
-      - os_time_offset_limit_configure
       - os_time_server_enabled
       - os_touchid_prompt_disable
       - os_unlock_active_user_session_disable
@@ -164,6 +163,7 @@ profile:
       - system_settings_screensaver_ask_for_password_delay_enforce
       - system_settings_screensaver_timeout_enforce
       - system_settings_siri_disable
+      - system_settings_siri_listen_disable
       - system_settings_smbd_disable
       - system_settings_software_update_app_update_enforce
       - system_settings_software_update_download_enforce
