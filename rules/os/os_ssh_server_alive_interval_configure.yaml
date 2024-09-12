@@ -25,6 +25,9 @@ fix: |
     config=$(/usr/bin/sudo -u $u /usr/bin/ssh -Gv . 2>&1 | /usr/bin/awk '/Reading configuration data/ {print $NF}'| /usr/bin/tr -d '\r')
     configarray=( ${(f)config} )
     for c in $configarray; do
+      if [[ "$c" == "/etc/ssh/crypto.conf" ]]; then
+        continue
+      fi
       /usr/bin/sudo -u $u /usr/bin/grep -q '^ServerAliveInterval' "$c" && /usr/bin/sed -i '' 's/.*ServerAliveInterval.*/ServerAliveInterval $ODV/' "$c" || /bin/echo 'ServerAliveInterval $ODV' >> "$c"
     done
   done
