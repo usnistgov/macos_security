@@ -9,7 +9,7 @@ check: |
 result:
   integer: 2
 fix: |
-  [source,shell]
+  [source,bash]
   ----
   /bin/launchctl load -w /Library/Apple/System/Library/LaunchDaemons/com.apple.XProtect.daemon.scan.plist
   /bin/launchctl load -w /Library/Apple/System/Library/LaunchDaemons/com.apple.XprotectFramework.PluginService.plist
