@@ -9,7 +9,7 @@ check: |
 result:
   integer: 1
 fix: |
-  [source,shell]
+  [source,bash]
   ----
   /bin/launchctl load -w /System/Library/LaunchDaemons/com.apple.timed.plist
   ----
