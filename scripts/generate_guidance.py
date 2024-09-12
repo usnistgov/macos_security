@@ -1257,6 +1257,7 @@ fi
                 result_string_bytes = f'{result["base64"]}\n'.encode("UTF-8")
                 result_encoded = base64.b64encode(result_string_bytes)
                 result['base64'] = result_encoded.decode()
+                result_value = result['base64']
             else:
                 continue
 
@@ -1316,7 +1317,7 @@ else
     logmessage "{5} does not apply to this architecture"
     /usr/bin/defaults write "$audit_plist" {0} -dict-add finding -bool NO
 fi
-    """.format(
+""".format(
                 rule_yaml["id"],
                 nist_controls.replace("\n", "\n#"),
                 check.strip(),
