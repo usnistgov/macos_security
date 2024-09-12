@@ -2,4 +2,4 @@ os: "2.0"
 platform: visionOS
 version: "visionOS 2.0 Guidance, Revision 1.0"
 cpe: o:apple:visionos:2.0
-date: "2024-XX-XX"
+date: "2024-09-12"
