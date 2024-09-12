@@ -1,6 +1,6 @@
-title: "macOS 14.0: Security Configuration - Apple macOS 14 (Sonoma) STIG - Ver 1, Rel 1"
+title: "macOS 14.0: Security Configuration - Apple macOS 14 (Sonoma) STIG - Ver 1, Rel 2"
 description: |
-  This guide describes the actions to take when securing a macOS 14.0 system against the Apple macOS 14 (Sonoma) STIG - Ver 1, Rel 1 security baseline.
+  This guide describes the actions to take when securing a macOS 14.0 system against the Apple macOS 14 (Sonoma) STIG - Ver 1, Rel 2 security baseline.
 authors: |
   *macOS Security Compliance Project*
 
