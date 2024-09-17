@@ -35,7 +35,7 @@ references:
     - 3.3.7
   cis:
     benchmark:
-      - N/A
+      - 2.3.2.2
     controls v8:
       - 8.4
   cmmc:
@@ -49,6 +49,8 @@ tags:
   - 800-53r5_high
   - 800-53r4_moderate
   - 800-53r4_high
+  - cis_lvl1
+  - cis_lvl2
   - cisv8
   - cnssi-1253_moderate
   - cnssi-1253_low

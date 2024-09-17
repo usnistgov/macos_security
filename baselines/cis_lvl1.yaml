@@ -60,6 +60,7 @@ profile:
       - os_sudoers_timestamp_type_configure
       - os_system_wide_applications_configure
       - os_terminal_secure_keyboard_enable
+      - os_time_server_enabled
       - os_unlock_active_user_session_disable
       - os_world_writable_system_folder_configure
   - section: "passwordpolicy"
