@@ -30,7 +30,7 @@ result:
 fix: |
   [source,bash]
   ----
-  if [ -f /etc/ssh/crypto.conf ] && [ /usr/bin/grep -q "Include /etc/ssh/crypto.conf" ]; then
+  if [ -f /etc/ssh/crypto.conf ] && [ /usr/bin/grep -q "Include /etc/ssh/crypto.conf" /etc/ssh/ssh_config.d/100-macos.conf ]; then
     /bin/ln -fs /etc/ssh/crypto/fips.conf /etc/ssh/crypto.conf
   fi
   include_dir=$(/usr/bin/awk '/^Include/ {print $2}' /etc/ssh/ssh_config | /usr/bin/tr -d '*')
