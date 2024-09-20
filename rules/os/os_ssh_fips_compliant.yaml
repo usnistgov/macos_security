@@ -41,15 +41,14 @@ fix: |
       config=$(/usr/bin/sudo -u $u /usr/bin/ssh -Gv . 2>&1)
       configfiles=$(echo "$config" | /usr/bin/awk '/Reading configuration data/ {print $NF}'| /usr/bin/tr -d '\r')
       configarray=( ${(f)configfiles} )
-      echo "$ssh_config"
-      if ! echo $config | /usr/bin/grep -i "$ssh_config" ; then
+      if ! echo $config | /usr/bin/grep -q -i "$ssh_config" ; then
         for c in $configarray; do
           if [[ "$c" == "/etc/ssh/crypto.conf" ]]; then
             continue
           fi
           ssh_setting=$(echo $ssh_config | /usr/bin/cut -d " " -f1)
-          /usr/bin/sudo -u $u /usr/bin/grep -qE "^$ssh_setting" "$c" && /usr/bin/sed -i "" "s/^$ssh_setting.*/${ssh_config}/" "$c" || /echo "$ssh_config" >> "${include_dir}01-mscp-ssh.conf"
-          if /usr/bin/grep -q "$ssh_setting" ~$u/.ssh/config 2> /dev/null; then
+          /usr/bin/sudo -u $u /usr/bin/grep -qEi "^$ssh_setting" "$c" && /usr/bin/sed -i "" "s/^$ssh_setting.*/${ssh_config}/" "$c" || echo "$ssh_config" >> "${include_dir}01-mscp-ssh.conf"
+          if /usr/bin/grep -qEi "$ssh_setting" ~$u/.ssh/config 2> /dev/null && ! /usr/bin/grep -i "$ssh_config" ~$u/.ssh/config 2> /dev/null; then
             old_file=$(cat ~$u/.ssh/config)
             echo "$ssh_config" > ~$u/.ssh/config
             echo "$old_file" >> ~$u/.ssh/config
