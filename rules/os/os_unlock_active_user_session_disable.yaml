@@ -47,8 +47,8 @@ macOS:
 odv:
   hint: "Review the /System/Library/Security/authorization.plist file for more information."
   recommended: "authenticate-session-owner"
-  cis_lvl1: "use-login-window-ui"
-  cis_lvl2: "use-login-window-ui"
+  cis_lvl1: "authenticate-session-owner"
+  cis_lvl2: "authenticate-session-owner"
   stig: "authenticate-session-owner"
 tags:
   - 800-53r5_low
