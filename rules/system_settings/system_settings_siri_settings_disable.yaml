@@ -4,6 +4,8 @@ discussion: |
   The System Settings pane for Siri _MUST_ be hidden.
   
   Hiding the System Settings pane prevents the users from configuring Siri.
+
+  NOTE: Disabling the Siri System Settings pane blocks the user from opting into Apple Intelligence. 
 check: |
   /usr/bin/profiles show -output stdout-xml | /usr/bin/xmllint --xpath '//key[text()="DisabledSystemSettings"]/following-sibling::*[1]' - | /usr/bin/grep -c com.apple.Siri-Settings.extension
 result:
@@ -12,7 +14,7 @@ fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-    - N/A
+    - CCE-94393-6
   cci:
     - CCI-000381
   800-53r5:
@@ -26,8 +28,9 @@ references:
     - SRG-OS-000095-GPOS-00049
   disa_stig:
     - APPL-15-002053
-  800-171r2:
-    - 3.4.6
+  800-171r3:
+    - 03.04.06
+    - 03.04.08
   cis:
     benchmark:
       - N/A

@@ -31,7 +31,7 @@ fix: |
   ----
 references:
   cce:
-    - N/A
+    - CCE-94134-4
   cci:
     - CCI-000765
     - CCI-000766
@@ -56,8 +56,9 @@ references:
     - SRG-OS-000705-GPOS-00150
   disa_stig:
     - APPL-15-003052
-  800-171r2:
-    - 3.5.3
+  800-171r3:
+    - 03.05.03
+    - 03.05.04
   cis:
     benchmark:
       - N/A
@@ -87,3 +88,15 @@ tags:
 severity: medium
 mobileconfig: false
 mobileconfig_info:
+ddm_info:
+  declarationtype: com.apple.configuration.services.configuration-files
+  service: com.apple.pam
+  config_file: sudo
+  configuration_key: file
+  configuration_value: |
+    auth        sufficient    pam_smartcard.so
+    auth        required      pam_opendirectory.so
+    auth        required      pam_deny.so
+    account     required      pam_permit.so
+    password    required      pam_deny.so
+    session     required      pam_permit.so

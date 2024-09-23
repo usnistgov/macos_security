@@ -19,7 +19,7 @@ fix: |
   ----
 references:
   cce:
-    - N/A
+    - CCE-94120-3
   cci:
     - N/A
   800-53r5:
@@ -39,10 +39,10 @@ references:
     - N/A
   disa_stig:
     - N/A
-  800-171r2:
-    - 3.3.1
-    - 3.3.2
-    - 3.3.8
+  800-171r3:
+    - 03.03.01
+    - 03.03.03
+    - 03.03.08
   cis:
     benchmark:
       - 3.2 (level 2)

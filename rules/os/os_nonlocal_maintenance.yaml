@@ -8,15 +8,15 @@ fix: |
   The requirement is NA. No fix is required.
 references:
   cce:
-    - N/A
+    - CCE-94237-5
   cci:
     - N/A
   800-53r5:
     - MA-4
   800-53r4:
     - MA-4
-  800-171r2:
-    - 3.7.5
+  800-171r3:
+    - 03.07.05
   disa_stig:
     - N/A
   srg:

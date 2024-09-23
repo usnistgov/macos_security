@@ -10,14 +10,14 @@ fix: |
   The requirement is NA. No fix is required.
 references:
   cce:
-    - N/A
+    - CCE-94263-1
   cci:
     - N/A
   800-53r5:
     - SA-8(33)
   800-53r4:
     - N/A
-  800-171r2:
+  800-171r3:
     - N/A
   disa_stig:
     - N/A

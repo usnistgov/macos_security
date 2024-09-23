@@ -37,7 +37,7 @@ fix: |
   ----
 references:
   cce:
-    - N/A
+    - CCE-94304-3
   cci:
     - CCI-001133
   800-53r5:
@@ -49,8 +49,9 @@ references:
     - SRG-OS-000163-GPOS-00072
   disa_stig:
     - APPL-15-000051
-  800-171r2:
-    - 3.13.9
+  800-171r3:
+    - 03.01.11
+    - 03.13.09
   cmmc:
     - AC.L2-3.1.11
     - SC.L2-3.13.9
@@ -74,3 +75,9 @@ tags:
 severity: medium
 mobileconfig: false
 mobileconfig_info:
+ddm_info:
+  declarationtype: com.apple.configuration.services.configuration-files
+  service: com.apple.sshd
+  config_file: sshd_config
+  configuration_key: ClientAliveInterval
+  configuration_value: $ODV

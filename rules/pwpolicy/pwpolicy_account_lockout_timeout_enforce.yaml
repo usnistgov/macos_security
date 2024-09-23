@@ -12,7 +12,7 @@ fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-    - N/A
+    - CCE-94332-4
   cci:
     - CCI-002238
     - CCI-000044
@@ -25,8 +25,8 @@ references:
     - SRG-OS-000021-GPOS-00005
   disa_stig:
     - APPL-15-000060
-  800-171r2:
-    - 3.1.8
+  800-171r3:
+    - 03.01.08
   cis:
     benchmark:
       - 5.2.1 (level 1)
@@ -63,3 +63,7 @@ mobileconfig: true
 mobileconfig_info:
   com.apple.mobiledevice.passwordpolicy:
     minutesUntilFailedLoginReset: $ODV
+ddm_info:
+  declarationtype: com.apple.configuration.passcode.settings
+  ddm_key: MaximumGracePeriodInMinutes
+  ddm_value: $ODV

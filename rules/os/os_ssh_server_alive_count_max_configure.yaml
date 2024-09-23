@@ -32,7 +32,7 @@ fix: |
   ----
 references:
   cce:
-    - N/A
+    - CCE-94300-1
   cci:
     - CCI-001133
   800-53r5:
@@ -43,8 +43,8 @@ references:
     - SRG-OS-000163-GPOS-00072
   disa_stig:
     - APPL-15-000140
-  800-171r2:
-    - 3.13.9
+  800-171r3:
+    - 03.13.09
   cmmc:
     - SC.L2-3.13.9
 macOS:

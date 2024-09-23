@@ -13,7 +13,7 @@ fix: |
   ----
 references:
   cce:
-    - N/A
+    - CCE-94107-0
   cci:
     - CCI-000162
     - CCI-000163
@@ -36,8 +36,8 @@ references:
     - SRG-OS-000058-GPOS-00028
   disa_stig:
     - APPL-15-001110
-  800-171r2:
-    - N/A
+  800-171r3:
+    - 03.03.08
   cis:
     benchmark:
       - 3.5 (level 1)

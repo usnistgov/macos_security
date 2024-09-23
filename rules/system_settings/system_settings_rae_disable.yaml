@@ -14,10 +14,10 @@ fix: |
   /usr/sbin/systemsetup -setremoteappleevents off
   /bin/launchctl disable system/com.apple.AEServer
   ----
-  NOTE: Systemsetup with -setremoteappleevents flag will fail unless you grant Full Disk Access to systemsetup or it's parent process. Requires supervision.
+  NOTE: Systemsetup with -setremoteappleevents flag will fail unless you grant Full Disk Access to systemsetup or its parent process. Requires supervision.
 references:
   cce:
-    - N/A
+    - CCE-94385-2
   cci:
     - CCI-000213
     - CCI-000382
@@ -31,9 +31,9 @@ references:
     - SRG-OS-000096-GPOS-00050
   disa_stig:
     - APPL-15-002022
-  800-171r2:
-    - 3.1.1
-    - 3.1.2
+  800-171r3:
+    - 03.01.02
+    - 03.04.06
   cis:
     benchmark:
       - 2.3.3.7 (level 1)

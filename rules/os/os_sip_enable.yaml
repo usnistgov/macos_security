@@ -18,7 +18,7 @@ fix: |
   NOTE: To reenable "System Integrity Protection", boot the affected system into "Recovery" mode, launch "Terminal" from the "Utilities" menu, and run the command.
 references:
   cce:
-    - N/A
+    - CCE-94294-6
   cci:
     - CCI-000154
     - CCI-000158
@@ -73,13 +73,11 @@ references:
     - SRG-OS-000058-GPOS-00028
   disa_stig:
     - APPL-15-005001
-  800-171r2:
-    - 3.1.1
-    - 3.1.2
-    - 3.3.6
-    - 3.3.8
-    - 3.4.5
-    - 3.13.4
+  800-171r3:
+    - 03.01.02
+    - 03.03.08
+    - 03.04.05
+    - 03.13.04
   cis:
     benchmark:
       - 5.1.2 (level 1)

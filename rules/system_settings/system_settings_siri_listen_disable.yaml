@@ -1,0 +1,42 @@
+id: system_settings_siri_listen_disable
+title: "Ensure Siri Listen For is Disabled"
+discussion: |
+  Siri has the ability to listen for "Hey Siri" or "Siri". Listen for _MUST_ be disabled.
+check: |
+  /usr/bin/sudo /usr/bin/osascript -l JavaScript << EOS
+  $.NSUserDefaults.alloc.initWithSuiteName('com.apple.Siri')\
+  .objectForKey('VoiceTriggerUserEnabled').js
+  EOS
+result:
+  string: 'false'
+fix: |
+  This is implemented by a Configuration Profile.
+references:
+  cce:
+    - CCE-94392-8
+  cci:
+    - N/A
+  800-53r5:
+    - N/A
+  800-53r4:
+    - N/A
+  disa_stig:
+    - N/A
+  srg:
+    - N/A
+  cis:
+    benchmark:
+      - 2.5.2 (level 1)
+    controls v8:
+      - 4.1
+      - 4.8
+macOS:
+  - "15.0"
+tags:
+  - cis_lvl1
+  - cis_lvl2
+  - cisv8
+mobileconfig: true
+mobileconfig_info:
+  com.apple.Siri:
+    VoiceTriggerUserEnabled: false

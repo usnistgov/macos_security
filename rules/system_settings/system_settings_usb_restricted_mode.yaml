@@ -25,15 +25,15 @@ fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-    - N/A
+    - CCE-94409-0
   cci:
     - CCI-001958
     - CCI-003959
   800-53r5:
     - MP-7
     - SC-41
-  800-171r2:
-    - N/A
+  800-171r3:
+    - 03.08.07
   cis:
     benchmark:
       - N/A

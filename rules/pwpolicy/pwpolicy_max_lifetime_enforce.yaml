@@ -6,6 +6,8 @@ discussion: |
   This rule ensures that users are forced to change their passwords frequently enough to prevent malicious users from gaining and maintaining access to the system.
 
   NOTE: The guidance for password based authentication in NIST 800-53 (Rev 5) and NIST 800-63B state that complexity rules should be organizationally defined. The values defined are based off of common complexity values. But your organization may define its own password complexity rules.
+
+  NOTE: To comply with Executive Order 14028, “Improving the Nation's Cybersecurity”, OMB M-22-09, “Moving the U.S. Government Toward Zero Trust Cybersecurity Principles”, and NIST SP-800-63b, “Digital Identity Guidelines: Authentication and Lifecycle Management” federal, military, and intelligence communities must adopt the following configuration settings. Password policies must not require use of special characters or regular rotation.
 check: |
   /usr/bin/pwpolicy -getaccountpolicies 2> /dev/null | /usr/bin/tail +2 | /usr/bin/xmllint --xpath '//dict/key[text()="policyAttributeExpiresEveryNDays"]/following-sibling::*[1]/text()' -
 result:
@@ -14,7 +16,7 @@ fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-    - N/A
+    - CCE-94339-9
   cci:
     - CCI-000199
     - CCI-004066
@@ -28,13 +30,8 @@ references:
     - SRG-OS-000775-GPOS-00230
   disa_stig:
     - APPL-15-003008
-  800-171r2:
-    - 3.5.1
-    - 3.5.2
-    - 3.5.7
-    - 3.5.8
-    - 3.5.9
-    - 3.5.10
+  800-171r3:
+    - 03.05.12
   cis:
     benchmark:
       - 5.2.7 (level 1)
@@ -72,3 +69,7 @@ mobileconfig: true
 mobileconfig_info:
   com.apple.mobiledevice.passwordpolicy:
     maxPINAgeInDays: $ODV
+ddm_info:
+  declarationtype: com.apple.configuration.passcode.settings
+  ddm_key: MaximumPasscodeAgeInDays
+  ddm_value: $ODV

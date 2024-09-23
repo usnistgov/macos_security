@@ -18,7 +18,7 @@ fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-    - N/A
+    - CCE-94352-2
   cci:
     - CCI-001967
     - CCI-002418
@@ -37,6 +37,10 @@ references:
     - APPL-15-002062
   800-171r2:
     - 3.13.8
+    - N/A
+  800-171r3:
+    - 03.01.16
+    - 03.13.08
   cis:
     benchmark:
       - N/A

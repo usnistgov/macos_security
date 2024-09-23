@@ -120,12 +120,17 @@ def generate_scap(all_rules, all_baselines, args):
         if "ios" in version_yaml['cpe']:
             print("OVAL generation is not available on iOS")
             exit()
-
+        if "visionOS" in version_yaml['cpe']:
+            print("OVAL generation is not available on visionOS")
+            exit()
 
     if args.oval == None and args.xccdf == None:
         export_as = "scap"
         if "ios" in version_yaml['cpe']:
             print("iOS will only export as XCCDF")
+            export_as = "xccdf"
+        if "visionos" in version_yaml['cpe']:
+            print("visionOS will only export as XCCDF")
             export_as = "xccdf"
 
     now = datetime.now()
@@ -135,7 +140,8 @@ def generate_scap(all_rules, all_baselines, args):
     output = "../build/macOS_{0}_Security_Compliance_Benchmark-{1}".format(version_yaml['os'],filenameversion)
     if "ios" in version_yaml['cpe']:
         output = "../build/iOS_{0}_Security_Compliance_Benchmark-{1}".format(version_yaml['os'],filenameversion)
-        
+    if "visionos" in version_yaml['cpe']:
+        output = "../build/visionOS_{0}_Security_Compliance_Benchmark-{1}".format(version_yaml['os'],filenameversion)    
     if export_as == "xccdf":
         output = output + "_xccdf.xml"
     
@@ -167,8 +173,11 @@ def generate_scap(all_rules, all_baselines, args):
       </generator>'''.format(date_time_string)
 
     ostype = "macOS"
-    if "ios" in version_yaml['cpe']:
+    if "ios" in version_yaml['cpe'] or "visionos" in version_yaml['cpe']:
         ostype = "iOS/iPadOS"
+        if "visionos" in version_yaml['cpe']:
+            ostype = "visionOS"
+
     xccdfPrefix = '''<?xml version="1.0" encoding="UTF-8"?>
     <Benchmark xmlns="http://checklists.nist.gov/xccdf/1.2" id="xccdf_gov.nist.mscp.content_benchmark_macOS_{1}" style="SCAP_1.3" resolved="true" xml:lang="en">
       <status date="{3}">draft</status>
@@ -356,12 +365,19 @@ def generate_scap(all_rules, all_baselines, args):
                 result = ""
             severity = str()
 
-            if "severity" in rule_yaml:
-                severity = rule_yaml['severity']
+            if severity in rule_yaml:
+                if isinstance(rule_yaml["severity"], str):
+                    severity = f'{rule_yaml["severity"]}'
+                if isinstance(rule_yaml["severity"], dict):
+                    try:
+                        severity = f'{rule_yaml["severity"][args.baseline]}'
+                    except KeyError:
+                        severity = "unknown"
             else:
                 severity = "unknown"
+
             check_rule = str()
-            if "inherent" in rule_yaml['tags'] or "n_a" in rule_yaml['tags'] or "permenant" in rule_yaml['tags']:
+            if "inherent" in rule_yaml['tags'] or "n_a" in rule_yaml['tags'] or "permanent" in rule_yaml['tags']:
                 check_rule = '''
             <check system="http://scap.nist.gov/schema/ocil/2">
             <check-content-ref href="ocil.xml"/></check>'''
@@ -381,9 +397,9 @@ def generate_scap(all_rules, all_baselines, args):
                 for nist80053 in rule_yaml['references']['800-53r4']:
                     references = references + nist80053 + ", "
                 references = references[:-2] + "</reference>"
-            if "800-171r2" in rule_yaml['references'] and rule_yaml['references']['800-171r2'][0] != "N/A":
-                references = references + "<reference href=\"https://csrc.nist.gov/publications/detail/sp/800-171/rev-2/final\">NIST SP 800-171r2: "
-                for nist800171 in rule_yaml['references']['800-171r2']:
+            if "800-171r3" in rule_yaml['references'] and rule_yaml['references']['800-171r3'][0] != "N/A":
+                references = references + "<reference href=\"https://csrc.nist.gov/publications/detail/sp/800-171/rev-2/final\">NIST SP 800-171r3: "
+                for nist800171 in rule_yaml['references']['800-171r3']:
                     references = references + nist800171 + ", "
                 references = references[:-2] + "</reference>"
             if "disa_stig" in rule_yaml['references'] and rule_yaml['references']['disa_stig'][0] != "N/A":
@@ -468,6 +484,11 @@ def generate_scap(all_rules, all_baselines, args):
                 continue
             if "time_machine" in rule_yaml['id'] and "encrypted" in rule_yaml['id']:
                 print(rule_yaml['id'] + " - Manual Check Required")
+                xccdf_rules = replace_ocil(xccdf_rules,x)
+                x += 1
+                continue
+            if "objectIsForcedForKey" in rule_yaml['check']:
+                print(rule_yaml['id'] + " - Manual Check")
                 xccdf_rules = replace_ocil(xccdf_rules,x)
                 x += 1
                 continue
@@ -1119,7 +1140,11 @@ def generate_scap(all_rules, all_baselines, args):
                     xccdf_rules = replace_ocil(xccdf_rules,x)
                     x += 1
                     continue
-
+                if "xprotect status" in rule_yaml['check']:
+                    print(rule_yaml['id'] + " - No relevant oval test")
+                    xccdf_rules = replace_ocil(xccdf_rules,x)
+                    x += 1
+                    continue
                 if "SPStorageDataType" in rule_yaml['check']:
                     
                     print(rule_yaml['id'] + " - No relevant oval test")
@@ -3621,7 +3646,7 @@ def collect_rules():
 
         all_rules.append(MacSecurityRule(rule_yaml['title'].replace('|', '\|'),
                                     rule_yaml['id'].replace('|', '\|'),
-                                    rule_yaml['severity'].replace('|', '\|'),
+                                    rule_yaml['severity'],
                                     rule_yaml['discussion'].replace('|', '\|'),
                                     rule_yaml['check'].replace('|', '\|'),
                                     rule_yaml['fix'].replace('|', '\|'),

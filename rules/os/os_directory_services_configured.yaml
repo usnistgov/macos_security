@@ -12,7 +12,7 @@ fix: |
   Integrate the system into an existing directory services infrastructure.
 references:
   cce:
-    - N/A
+    - CCE-94181-5
   cci:
     - N/A
   800-53r5:

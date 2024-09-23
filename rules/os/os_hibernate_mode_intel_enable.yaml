@@ -38,7 +38,7 @@ fix: |
   ----
 references:
   cce:
-    - N/A
+    - CCE-94202-9
   cci:
     - N/A
   800-53r5:
@@ -49,18 +49,16 @@ references:
     - N/A
   disa_stig:
     - N/A
-  800-171r2:
+  800-171r3:
     - N/A
   cis:
     benchmark:
-      - 2.9.1.1 (level 2)
+      - N/A
     controls v8:
-      - 4.1
+      - N/A
 macOS:
   - '15.0'
 tags:
-  - cis_lvl2
-  - cisv8
-  - i386
+  - none
 mobileconfig: false
 mobileconfig_info:

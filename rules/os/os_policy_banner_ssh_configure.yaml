@@ -19,7 +19,7 @@ fix: |
   ----
 references:
   cce:
-    - N/A
+    - CCE-94255-7
   cci:
     - CCI-000048
     - CCI-000050
@@ -32,8 +32,8 @@ references:
     - SRG-OS-000023-GPOS-00006
   disa_stig:
     - APPL-15-000023
-  800-171r2:
-    - 3.1.9
+  800-171r3:
+    - 03.01.09
   cmmc:
     - AC.L2-3.1.9
 macOS:

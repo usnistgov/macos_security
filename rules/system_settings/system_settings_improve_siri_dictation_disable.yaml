@@ -15,7 +15,7 @@ fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-    - N/A
+    - CCE-94372-0
   cci:
     - CCI-000381
   800-53r5:
@@ -63,6 +63,7 @@ tags:
   - cmmc_lvl1
   - stig
   - cis_lvl1
+  - cis_lvl2
 severity: medium
 mobileconfig: true
 mobileconfig_info:

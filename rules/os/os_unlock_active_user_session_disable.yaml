@@ -17,7 +17,7 @@ fix: |
   ----
 references:
   cce:
-    - N/A
+    - CCE-94322-5
   cci:
     - CCI-000764
     - CCI-000770
@@ -33,9 +33,8 @@ references:
   srg:
     - SRG-OS-000109-GPOS-00056
     - SRG-OS-000104-GPOS-00051
-  800-171r2:
-    - 3.5.1
-    - 3.5.2
+  800-171r3:
+    - 03.05.01
   cis:
     benchmark:
       - 5.7 (level 1)
@@ -49,8 +48,8 @@ macOS:
 odv:
   hint: "Review the /System/Library/Security/authorization.plist file for more information."
   recommended: "authenticate-session-owner"
-  cis_lvl1: "use-login-window-ui"
-  cis_lvl2: "use-login-window-ui"
+  cis_lvl1: "authenticate-session-owner"
+  cis_lvl2: "authenticate-session-owner"
   stig: "authenticate-session-owner"
 tags:
   - 800-53r5_low

@@ -15,7 +15,7 @@ fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-    - N/A
+    - CCE-94264-9
   cci:
     - CCI-000381
   800-53r5:
@@ -37,9 +37,12 @@ references:
   cmmc:
     - CM.L2-3.4.6
     - CM.L2-3.4.7
+  800-171r3:
+    - 03.04.06
 macOS:
   - '15.0'
 tags:
+  - 800-171
   - cisv8
   - cnssi-1253_moderate
   - cnssi-1253_low

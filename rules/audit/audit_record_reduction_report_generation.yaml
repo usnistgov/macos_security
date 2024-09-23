@@ -12,7 +12,7 @@ fix: |
   The technology inherently meets this requirement. No fix is required.
 references:
   cce:
-    - N/A
+    - CCE-94128-6
   cci:
     - N/A
   800-53r5:
@@ -29,8 +29,8 @@ references:
     - SRG-OS-000122-GPOS-00063
   disa_stig:
     - N/A
-  800-171r2:
-    - N/A
+  800-171r3:
+    - 03.03.06
   cmmc:
     - AU.L2-3.3.6
 macOS:

@@ -12,7 +12,7 @@ fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-    - N/A
+    - CCE-94407-4
   cci:
     - N/A
   800-53r5:
@@ -26,8 +26,9 @@ references:
     - N/A
   disa_stig:
     - N/A
-  800-171r2:
-    - 3.4.6
+  800-171r3:
+    - 03.04.06
+    - 03.04.08
   cis:
     benchmark:
       - N/A

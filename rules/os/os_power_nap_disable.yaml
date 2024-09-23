@@ -24,7 +24,7 @@ fix: |
   ----
 references:
   cce:
-    - N/A
+    - CCE-94257-3
   cci:
     - N/A
   800-53r5:
@@ -37,8 +37,8 @@ references:
     - N/A
   srg:
     - N/A
-  800-171r2:
-    - N/A
+  800-171r3:
+    - 03.04.06
   cis:
     benchmark:
       - 2.9.2 (level 1)
