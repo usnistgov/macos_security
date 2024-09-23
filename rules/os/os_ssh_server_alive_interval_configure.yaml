@@ -23,8 +23,8 @@ fix: |
   ----
   include_dir=$(/usr/bin/awk '/^Include/ {print $2}' /etc/ssh/ssh_config | /usr/bin/tr -d '*')
   
-  fips_ssh_config=("ServerAliveInterval $ODV")
-  for ssh_config in $fips_ssh_config; do
+  ssh_config_string=("ServerAliveInterval $ODV")
+  for ssh_config in $ssh_config_string; do
     ssh_setting=$(echo $ssh_config | /usr/bin/cut -d " " -f1)
     /usr/bin/grep -qEi "^$ssh_setting" "${include_dir}01-mscp-ssh.conf" && /usr/bin/sed -i "" "s/^$ssh_setting.*/${ssh_config}/" "${include_dir}01-mscp-ssh.conf" || echo "$ssh_config" >> "${include_dir}01-mscp-ssh.conf"
     for u in $(/usr/bin/dscl . list /users shell | /usr/bin/egrep -v '(^_)|(root)|(/usr/bin/false)' | /usr/bin/awk '{print $1}'); do
