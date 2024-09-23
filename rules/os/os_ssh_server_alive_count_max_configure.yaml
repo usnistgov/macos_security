@@ -21,32 +21,32 @@ fix: |
   ----
   include_dir=$(/usr/bin/awk '/^Include/ {print $2}' /etc/ssh/ssh_config | /usr/bin/tr -d '*')
   
-  ssh_config_string=("ServerAliveCountMax $ODV")
-  for ssh_config in $ssh_config_string; do
-    ssh_setting=$(echo $ssh_config | /usr/bin/cut -d " " -f1)
-    /usr/bin/grep -qEi "^$ssh_setting" "${include_dir}01-mscp-ssh.conf" && /usr/bin/sed -i "" "s/^$ssh_setting.*/${ssh_config}/" "${include_dir}01-mscp-ssh.conf" || echo "$ssh_config" >> "${include_dir}01-mscp-ssh.conf"
-    for u in $(/usr/bin/dscl . list /users shell | /usr/bin/egrep -v '(^_)|(root)|(/usr/bin/false)' | /usr/bin/awk '{print $1}'); do
-      config=$(/usr/bin/sudo -u $u /usr/bin/ssh -Gv . 2>&1)
-      configfiles=$(echo "$config" | /usr/bin/awk '/Reading configuration data/ {print $NF}'| /usr/bin/tr -d '\r')
-      configarray=( ${(f)configfiles} )
-      if ! echo $config | /usr/bin/grep -q -i "$ssh_config" ; then
-        for c in $configarray; do
-          if [[ "$c" == "/etc/ssh/crypto.conf" ]]; then
-            continue
+  ssh_config=("ServerAliveCountMax $ODV")
+  
+  ssh_setting=$(echo $ssh_config | /usr/bin/cut -d " " -f1)
+  /usr/bin/grep -qEi "^$ssh_setting" "${include_dir}01-mscp-ssh.conf" && /usr/bin/sed -i "" "s/^$ssh_setting.*/${ssh_config}/" "${include_dir}01-mscp-ssh.conf" || echo "$ssh_config" >> "${include_dir}01-mscp-ssh.conf"
+  for u in $(/usr/bin/dscl . list /users shell | /usr/bin/egrep -v '(^_)|(root)|(/usr/bin/false)' | /usr/bin/awk '{print $1}'); do
+    config=$(/usr/bin/sudo -u $u /usr/bin/ssh -Gv . 2>&1)
+    configfiles=$(echo "$config" | /usr/bin/awk '/Reading configuration data/ {print $NF}'| /usr/bin/tr -d '\r')
+    configarray=( ${(f)configfiles} )
+    if ! echo $config | /usr/bin/grep -q -i "$ssh_config" ; then
+      for c in $configarray; do
+        if [[ "$c" == "/etc/ssh/crypto.conf" ]]; then
+          continue
+        fi
+        
+        /usr/bin/sudo -u $u /usr/bin/grep -qEi "^$ssh_setting" "$c" && /usr/bin/sed -i "" "s/^$ssh_setting.*/${ssh_config}/I" "$c"
+        if [[ "$c" =~ ".ssh/config" ]]; then
+          if /usr/bin/grep -qEi "$ssh_setting" "$c" 2> /dev/null; then
+            old_file=$(cat ~$u/.ssh/config)
+            echo "$ssh_config" > ~$u/.ssh/config
+            echo "$old_file" >> ~$u/.ssh/config
           fi
-          
-          /usr/bin/sudo -u $u /usr/bin/grep -qEi "^$ssh_setting" "$c" && /usr/bin/sed -i "" "s/^$ssh_setting.*/${ssh_config}/I" "$c"
-          if [[ "$c" =~ ".ssh/config" ]]; then
-            if /usr/bin/grep -qEi "$ssh_setting" "$c" 2> /dev/null; then
-              old_file=$(cat ~$u/.ssh/config)
-              echo "$ssh_config" > ~$u/.ssh/config
-              echo "$old_file" >> ~$u/.ssh/config
-            fi
-          fi
-        done
-      fi
-    done
+        fi
+      done
+    fi
   done
+
   ----  
 references:
   cce:
