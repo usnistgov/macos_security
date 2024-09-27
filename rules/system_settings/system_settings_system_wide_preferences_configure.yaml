@@ -60,7 +60,7 @@ fix: |
       /usr/libexec/PlistBuddy -c "Set :session-owner false" "/tmp/$section.plist"
     fi
 
-    group_key=$(usr/libexec/PlistBuddy -c "Print :group" "/tmp/$section.plist" 2>&1)
+    group_key=$(/usr/libexec/PlistBuddy -c "Print :group" "/tmp/$section.plist" 2>&1)
     if [[ "$group_key" == *"Does Not Exist"* ]]; then
       /usr/libexec/PlistBuddy -c "Add :group string admin" "/tmp/$section.plist"
     else
