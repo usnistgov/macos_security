@@ -29,7 +29,7 @@ references:
     - APPL-15-000190
   cis:
     benchmark:
-      - N/A
+      - 5.11 (level 1)
     controls v8:
       - N/A
   cmmc:
