@@ -2,5 +2,8 @@
 .vscode
 *.lock
 .bundle
+.venv
 bin
 mscp_gems
+*.log
+__pycache__
