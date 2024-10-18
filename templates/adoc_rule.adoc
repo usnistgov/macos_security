@@ -54,6 +54,12 @@ ifdef::show_CMMC[]
 !$rule_cmmc
 endif::[]
 
+ifdef::show_indigo[]
+!indigo
+!$rule_indigo
+endif::[]
+
+
 !CCE
 !$rule_cce
 

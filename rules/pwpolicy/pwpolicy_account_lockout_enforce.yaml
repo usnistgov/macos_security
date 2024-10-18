@@ -19,6 +19,9 @@ references:
     - 'FIA_AFL_EXT.1.5'
   disa_stig:
     - N/A
+  indigo:
+    - ANNEX D (Section 5.9.1 - Device-Code)
+    - ANNEX K
   cis:
     benchmark:
       - 2.4.6 (level 1 - End-User Owned Devices)
@@ -36,6 +39,8 @@ odv:
   cis_lvl2_enterprise: 6  
   ios_stig: 10
   ios_stig_byoad: 10
+  indigo_base: 10
+  indigo_high: 10
 tags:
   - ios
   - 800-53r5_low
@@ -48,6 +53,8 @@ tags:
   - cisv8
   - ios_stig
   - ios_stig_byoad
+  - indigo_base
+  - indigo_high
 severity: "medium"
 supervised: false
 mobileconfig: true

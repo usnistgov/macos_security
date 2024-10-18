@@ -11,14 +11,18 @@ references:
   800-53r5:
     - N/A
   indigo:
-    - N/A
+    - ANNEX D (Section 6.3.1.2 - Update management)
 iOS:
   - "18.0"
 odv:
   hint: "Enforced a software update delay in days"
   recommended: 30
+  indigo_base: 30
+  indigo_high: 30
 tags:
   - ios
+  - indigo_base
+  - indigo_high
 supervised: true
 mobileconfig: true
 mobileconfig_info:

@@ -17,6 +17,8 @@ references:
     - 'FIA_UAU_EXT.1.1'
   disa_stig:
     - N/A
+  indigo:
+    - Annex D (Section 5.9.1 - Device-Code)
   cis:
     benchmark:
       - N/A
@@ -28,6 +30,8 @@ tags:
   - ios
   - ios_stig
   - ios_stig_byoad
+  - indigo_base
+  - indigo_high
 severity: high
 mobileconfig: 'true'
 mobileconfig_info:

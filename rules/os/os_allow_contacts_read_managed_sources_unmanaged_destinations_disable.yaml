@@ -21,6 +21,9 @@ references:
     - 'FDP_ACF_EXT.1.2'
   disa_stig:
     - N/A
+  indigo:
+    - ANNEX D (Section 5.6.3 - Contacts)
+    - ANNEX K
   cis:
     benchmark:
       - N/A
@@ -35,6 +38,8 @@ tags:
   - 800-53r5_high
   - ios_stig
   - ios_stig_byoad
+  - indigo_base
+  - indigo_high
 severity: low
 supervised: false
 mobileconfig: true

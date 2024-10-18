@@ -21,6 +21,9 @@ references:
     - 'FMT_SMF_EXT.1.1 #47'
   disa_stig:
     - N/A
+  indigo:
+    - ANNEX D (Section 5.3 - Description of security/key management) 
+    - ANNEX K
   cis:
     benchmark:
       - 2.2.1.4 (level 1 - End-User Owned Devices)
@@ -41,6 +44,8 @@ tags:
   - cisv8
   - ios_stig
   - ios_stig_byoad
+  - indigo_base
+  - indigo_high
 severity: "medium"
 supervised: false
 mobileconfig: true
