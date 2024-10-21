@@ -17,7 +17,7 @@ references:
     - CM-7(1)
     - SC-7(10)
   indigo:
-    - N/A
+    - ANNEX K
 iOS:
   - "18.0"
 tags:

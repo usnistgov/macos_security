@@ -64,13 +64,16 @@ profile:
       - os_force_date_and_time_enable
       - os_force_encrypted_backups_enable
       - os_handoff_disable
+      - os_image_wand_disable
       - os_install_configuration_profile_disable
       - os_install_vpn_configuration_disable
+      - os_iphone_mirroring_disable
       - os_limit_ad_tracking_enable
       - os_live_text_disable
       - os_mail_block_remote_content
       - os_mail_maildrop_disable
       - os_mail_move_messages_disable
+      - os_mail_summary_disable
       - os_marketplace_prevent
       - os_network_known_only
       - os_new_device_proximity_disable
@@ -80,6 +83,7 @@ profile:
       - os_password_proximity_disable
       - os_password_sharing_disable
       - os_personalized_advertising_disable
+      - os_personalized_handwriting_disable
       - os_predictive_keyboard_disable
       - os_rapid_security_responses_install_enable
       - os_rapid_security_responses_remove_disable
@@ -108,7 +112,10 @@ profile:
       - os_update_auto_RSR_allow
       - os_update_enforced_software_update_delay
       - os_usb_accessories_when_locked_disable
+      - os_video_conferencing_remote_control_disable
       - os_voice_dialing_when_locked_disabled
+      - os_web_distribution_app_installation_disable
+      - os_writing_tools_disable
   - section: "passwordpolicy"
     rules:
       - pwpolicy_account_lockout_enforce

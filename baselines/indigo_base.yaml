@@ -42,10 +42,12 @@ profile:
       - os_handoff_disable
       - os_install_configuration_profile_disable
       - os_install_vpn_configuration_disable
+      - os_iphone_mirroring_disable
       - os_live_text_disable
       - os_mail_block_remote_content
       - os_mail_maildrop_disable
       - os_mail_move_messages_disable
+      - os_mail_summary_disable
       - os_marketplace_prevent
       - os_new_device_proximity_disable
       - os_on_device_dictation_enforce
@@ -69,6 +71,9 @@ profile:
       - os_unpaired_boot_disable
       - os_update_enforced_software_update_delay
       - os_usb_accessories_when_locked_disable
+      - os_video_conferencing_remote_control_disable
+      - os_web_distribution_app_installation_disable
+      - os_writing_tools_disable
   - section: "passwordpolicy"
     rules:
       - pwpolicy_account_lockout_enforce
