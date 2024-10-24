@@ -22,6 +22,8 @@ references:
     - 'FMT_SMF_EXT.1.1 #3'
   disa_stig:
     - N/A
+  indigo:
+    - ANNEX D (Section 5.10.3 - Manual VPN)
   cis:
     benchmark:
       - 3.2.1.16 (level 1 - Institutionally-Owned Devices)
@@ -39,6 +41,8 @@ tags:
   - cisv8
   - ios_stig
   - ios_stig_byoad
+  - indigo_base
+  - indigo_high
 severity: "low"
 supervised: true
 mobileconfig: true

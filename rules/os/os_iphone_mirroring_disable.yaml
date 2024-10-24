@@ -14,12 +14,16 @@ references:
     - N/A
   sfr:
     - N/A
+  indigo:
+    - ANNEX K
   disa_stig:
     - N/A
 iOS:
   - "18.0"
 tags:
   - ios
+  - indigo_base
+  - indigo_high
 supervised: false
 mobileconfig: true
 mobileconfig_info:

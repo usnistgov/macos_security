@@ -20,6 +20,8 @@ references:
     - 'FMT_SMF_EXT.1.1 #47'
   disa_stig:
     - N/A
+  indigo:
+    - ANNEX K
   cis:
     benchmark:
       - N/A
@@ -31,6 +33,8 @@ tags:
   - ios
   - ios_stig
   - ios_stig_byoad
+  - indigo_base
+  - indigo_high
 severity: medium
 supervised: false
 mobileconfig: true

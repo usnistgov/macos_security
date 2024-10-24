@@ -19,6 +19,9 @@ references:
     - N/A
   disa_stig:
     - N/A
+  indigo:
+    - ANNEX D (section 5.8.3 - Institutional procurement)
+    - ANNEX K
   cis:
     benchmark:
       - 2.2.1.9 (level 1 - End-User Owned Devices)
@@ -38,6 +41,8 @@ tags:
   - cis_lvl2_enterprise
   - cisv8
   - ios_stig_byoad
+  - indigo_base
+  - indigo_high
 supervised: false
 mobileconfig: true
 mobileconfig_info:

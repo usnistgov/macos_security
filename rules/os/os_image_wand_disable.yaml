@@ -1,0 +1,33 @@
+id: os_image_wand_disable
+title: Disable Apple Intelligence ImageWand
+discussion: |-
+  Apple Intelligence features such as Apple ImageWand that use off device AI _MUST_ be disabled.
+check: " "
+result:
+  string: 'false'
+fix: |
+  This is implemented by a Configuration Profile.
+references:
+  cce:
+    - N/A
+  cci:
+    - N/A
+  800-53r5:
+    - N/A
+  sfr:
+    - N/A
+  disa_stig:
+    - N/A
+  indigo:
+    - ANNEX K
+iOS:
+  - "18.0"
+tags:
+  - ios
+  - indigo_high
+tags:
+  - ios
+mobileconfig: true
+mobileconfig_info:
+  com.apple.applicationaccess:
+    allowImageWand: false

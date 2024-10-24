@@ -10,6 +10,8 @@ references:
     - CCE-94562-6
   800-53r5:
     - CM-11
+  indigo:
+    - ANNEX K
 iOS:
   - "18.0"
 tags:
@@ -17,6 +19,8 @@ tags:
   - 800-53r5_low
   - 800-53r5_moderate
   - 800-53r5_high
+  - indigo_base
+  - indigo_high
 supervised: false
 mobileconfig: true
 mobileconfig_info:

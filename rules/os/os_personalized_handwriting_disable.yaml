@@ -18,6 +18,8 @@ references:
     - SC-7(10)
   sfr:
     - N/A
+  indigo:
+    - ANNEX K
   disa_stig:
     - N/A
 iOS:
@@ -27,6 +29,7 @@ tags:
   - 800-53r5_low 
   - 800-53r5_moderate 
   - 800-53r5_high
+  - indigo_high
 supervised: false
 mobileconfig: true
 mobileconfig_info:

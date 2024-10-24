@@ -12,6 +12,8 @@ references:
     - N/A
   800-53r5:
     - N/A
+  indigo:
+    - ANNEX K
   sfr:
     - N/A
   disa_stig:
@@ -20,6 +22,8 @@ iOS:
   - "18.0"
 tags:
   - ios
+  - indigo_base
+  - indigo_high
 supervised: false
 mobileconfig: true
 mobileconfig_info:

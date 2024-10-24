@@ -17,5 +17,7 @@ iOS:
 tags:
   - manual
   - ios
+  - indigo_base
+  - indigo_high
 mobileconfig: false
 mobileconfig_info:
