@@ -28,6 +28,7 @@ references:
     - CCE-94409-0
   cci:
     - CCI-001958
+    - CCI-003959
   800-53r5:
     - MP-7
     - SC-41
@@ -43,8 +44,9 @@ references:
     - MP.L2-3.8.8
   srg:
     - SRG-OS-000378-GPOS-00163
+    - SRG-OS-000690-GPOS-00140
   disa_stig:
-    - N/A
+    - APPL-15-005090
 macOS:
   - '15.0'
 tags:

@@ -17,6 +17,7 @@ references:
     - CCE-94340-7
   cci:
     - CCI-000205
+    - CCI-004066
   800-53r5:
     - IA-5(1)
   800-53r4:
@@ -25,7 +26,7 @@ references:
   srg:
     - SRG-OS-000078-GPOS-00046
   disa_stig:
-    - N/A
+    - APPL-15-003010
   800-171r3:
     - 03.05.07
   cis:

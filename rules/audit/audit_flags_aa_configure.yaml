@@ -22,6 +22,7 @@ references:
     - CCI-000172
     - CCI-001814
     - CCI-002884
+    - CCI-003938
   800-53r5:
     - AC-2(12)
     - AU-12
@@ -46,7 +47,7 @@ references:
     - SRG-OS-000458-GPOS-00203
     - SRG-OS-000468-GPOS-00212
   disa_stig:
-    - N/A
+    - APPL-15-001044
   800-171r3:
     - 03.03.01
     - 03.03.03
