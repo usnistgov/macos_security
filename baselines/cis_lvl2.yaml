@@ -66,6 +66,7 @@ profile:
       - os_safari_warn_fraudulent_website_enable
       - os_show_filename_extensions_enable
       - os_sip_enable
+      - os_sleep_and_display_sleep_apple_silicon_enable
       - os_software_update_deferral
       - os_sudo_log_enforce
       - os_sudo_timeout_configure
