@@ -26,8 +26,6 @@ tags:
   - ios
   - indigo_base
   - indigo_high
-tags:
-  - ios
 mobileconfig: true
 mobileconfig_info:
   com.apple.applicationaccess:
