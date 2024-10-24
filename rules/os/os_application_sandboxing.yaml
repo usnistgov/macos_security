@@ -30,8 +30,8 @@ tags:
   - 800-53r5_low
   - 800-53r5_moderate
   - 800-53r5_high
-  - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
+  - cnssi-1253_moderate
 mobileconfig: false
 mobileconfig_info:

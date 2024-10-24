@@ -27,9 +27,9 @@ macOS:
 tags:
   - 800-171
   - inherent
-  - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
   - srg
+  - cnssi-1253_moderate
 mobileconfig: false
 mobileconfig_info:

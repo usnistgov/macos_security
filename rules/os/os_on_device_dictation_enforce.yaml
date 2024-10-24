@@ -56,7 +56,6 @@ tags:
   - 800-53r4_high
   - 800-171
   - cisv8
-  - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
   - cmmc_lvl2
@@ -64,6 +63,7 @@ tags:
   - stig
   - cis_lvl1
   - cis_lvl2
+  - cnssi-1253_moderate
 severity: medium
 mobileconfig: true
 mobileconfig_info:

@@ -73,10 +73,10 @@ tags:
   - 800-53r5_moderate
   - 800-53r5_high
   - cisv8
-  - cnssi-1253_moderate
   - cnssi-1253_high
   - cmmc_lvl2
   - stig
+  - cnssi-1253_moderate
 severity: medium
 mobileconfig: false
 mobileconfig_info:

@@ -34,10 +34,10 @@ macOS:
   - '15.0'
 tags:
   - inherent
-  - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
   - cmmc_lvl2
   - srg
+  - cnssi-1253_moderate
 mobileconfig: false
 mobileconfig_info:

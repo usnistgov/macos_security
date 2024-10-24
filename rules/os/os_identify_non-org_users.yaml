@@ -29,8 +29,8 @@ tags:
   - 800-53r4_moderate
   - 800-53r4_high
   - n_a
-  - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
+  - cnssi-1253_moderate
 mobileconfig: false
 mobileconfig_info:
