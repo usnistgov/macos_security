@@ -106,6 +106,7 @@ profile:
       - os_sip_enable
       - os_siri_prompt_disable
       - os_skip_unlock_with_watch_enable
+      - os_sleep_and_display_sleep_apple_silicon_enable
       - os_sudo_timeout_configure
       - os_sudoers_timestamp_type_configure
       - os_system_wide_applications_configure

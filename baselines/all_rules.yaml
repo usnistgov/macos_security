@@ -155,6 +155,7 @@ profile:
       - os_siri_prompt_disable
       - os_skip_screen_time_prompt_enable
       - os_skip_unlock_with_watch_enable
+      - os_sleep_and_display_sleep_apple_silicon_enable
       - os_software_update_deferral
       - os_ssh_fips_compliant
       - os_ssh_server_alive_count_max_configure
