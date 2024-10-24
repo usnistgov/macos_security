@@ -33,6 +33,9 @@ tags:
   - ios_stig_byoad
   - indigo_base
   - indigo_high
+  - cnssi-1253_moderate
+  - cnssi-1253_low
+  - cnssi-1253_high
 severity: low
 supervised: false
 mobileconfig: true

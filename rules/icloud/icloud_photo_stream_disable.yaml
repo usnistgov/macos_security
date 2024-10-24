@@ -37,6 +37,9 @@ tags:
   - 800-53r5_moderate
   - 800-53r5_high
   - indigo_high
+  - cnssi-1253_moderate
+  - cnssi-1253_low
+  - cnssi-1253_high
 severity: "medium"
 supervised: false
 mobileconfig: true

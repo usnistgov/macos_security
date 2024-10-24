@@ -38,6 +38,9 @@ tags:
   - cisv8
   - ios_stig
   - ios_stig_byoad
+  - cnssi-1253_moderate
+  - cnssi-1253_low
+  - cnssi-1253_high
 severity: "low"
 supervised: false
 mobileconfig: true
