@@ -32,9 +32,9 @@ references:
     - 03.01.20
     - 03.04.06
   srg:
-    - N/A
+    - SRG-OS-000095-GPOS-00049
   disa_stig:
-    - N/A
+    - APPL-15-002023
   cis:
     benchmark:
       - 2.6.3.2 (level 1)

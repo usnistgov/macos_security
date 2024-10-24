@@ -27,7 +27,7 @@ references:
     - SRG-OS-000373-GPOS-00157
     - SRG-OS-000373-GPOS-00156
   disa_stig:
-    - N/A
+    - APPL-15-004060
   cis:
     benchmark:
       - 5.5 (level 1)

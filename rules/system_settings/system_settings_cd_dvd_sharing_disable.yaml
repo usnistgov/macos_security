@@ -1,19 +1,19 @@
-id: os_bonjour_disable
-title: Disable Bonjour Multicast
+id: system_settings_cd_dvd_sharing_disable
+title: Disable CD/DVD Sharing
 discussion: |
-  Bonjour multicast advertising _MUST_ be disabled to prevent the system from broadcasting its presence and available services over network interfaces.
+  CD/DVD Sharing _MUST_ be disabled.
 check: |
-  /usr/bin/osascript -l JavaScript << EOS
-  $.NSUserDefaults.alloc.initWithSuiteName('com.apple.mDNSResponder')\
-  .objectForKey('NoMulticastAdvertisements').js
-  EOS
+  /usr/bin/pgrep -q ODSAgent; /bin/echo $?
 result:
-  string: 'true'
+  integer: 1
 fix: |
-  This is implemented by a Configuration Profile.
+  [source,bash]
+  ----
+  /bin/launchctl unload /System/Library/LaunchDaemons/com.apple.ODSAgent.plist
+  ----
 references:
   cce:
-    - CCE-94169-0
+    - CCE-94356-3
   cci:
     - CCI-000381
   800-53r5:
@@ -25,12 +25,12 @@ references:
   srg:
     - SRG-OS-000095-GPOS-00049
   disa_stig:
-    - APPL-15-002005
+    - APPL-15-002130
   800-171r3:
     - 03.04.06
   cis:
     benchmark:
-      - 4.1 (level 2)
+      - 2.3.3.1 (level 1)
     controls v8:
       - 4.1
       - 4.8
@@ -46,7 +46,7 @@ tags:
   - 800-53r4_low
   - 800-53r4_moderate
   - 800-53r4_high
-  - 800-171
+  - cis_lvl1
   - cis_lvl2
   - cisv8
   - cnssi-1253_moderate
@@ -55,7 +55,5 @@ tags:
   - cmmc_lvl2
   - stig
 severity: medium
-mobileconfig: true
+mobileconfig: false
 mobileconfig_info:
-  com.apple.mDNSResponder:
-    NoMulticastAdvertisements: true

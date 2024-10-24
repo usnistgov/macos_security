@@ -15,10 +15,7 @@ references:
   cce:
     - CCE-94400-9
   cci:
-    - CCI-000213
-    - CCI-001942
-    - CCI-002420
-    - CCI-002422
+    - N/A
   800-53r5:
     - IA-2(8)
     - AC-3
@@ -32,10 +29,7 @@ references:
     - IA-2(8)
     - IA-2(9)
   srg:
-    - SRG-OS-000080-GPOS-00048
-    - SRG-OS-000113-GPOS-00058
-    - SRG-OS-000425-GPOS-00189
-    - SRG-OS-000426-GPOS-00190
+    - N/A
   disa_stig:
     - N/A
   800-171r3:
@@ -61,7 +55,6 @@ tags:
   - cnssi-1253_high
   - cmmc_lvl2
   - cmmc_lvl1
-  - stig
 severity: medium
 mobileconfig: false
 mobileconfig_info:

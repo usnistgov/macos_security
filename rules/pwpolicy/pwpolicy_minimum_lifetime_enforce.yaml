@@ -41,12 +41,13 @@ references:
     - CCE-94341-5
   cci:
     - CCI-000198
+    - CCI-004066
   800-53r5:
     - IA-5
   800-53r4:
     - IA-5(1)
   disa_stig:
-    - N/A
+    - APPL-15-003070
   srg:
     - SRG-OS-000075-GPOS-00043
   800-171r3:
