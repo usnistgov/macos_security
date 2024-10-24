@@ -59,6 +59,7 @@ profile:
       - icloud_mail_disable
       - icloud_notes_disable
       - icloud_photos_disable
+      - icloud_private_relay_disable
       - icloud_reminders_disable
       - icloud_sync_disable
   - section: "macos"
@@ -80,13 +81,13 @@ profile:
       - os_httpd_disable
       - os_icloud_storage_prompt_disable
       - os_install_log_retention_configure
+      - os_iphone_mirroring_disable
       - os_ir_support_disable
       - os_library_validation_enabled
       - os_mdm_require
       - os_mobile_file_integrity_enable
       - os_nfsd_disable
       - os_on_device_dictation_enforce
-      - os_password_autofill_disable
       - os_password_hint_remove
       - os_password_proximity_disable
       - os_password_sharing_disable
