@@ -23,7 +23,7 @@ references:
   disa_stig:
     - N/A
   indigo:
-    - ANNEX D (Section 5.5.5 - AirDrop)
+    - ANNEX D (Section 5.7.5 - AirDrop)
     - ANNEX K
   cis:
     benchmark:
