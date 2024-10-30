@@ -13,6 +13,7 @@ references:
     - CCI-000370
   800-53r5:
     - AC-3
+    - CM-6 b
     - MP-2
     - SC-7(10)
     - SC-39
@@ -20,7 +21,7 @@ references:
     - 'FMT_SMF_EXT.1.1 #42'
     - 'FDP_ACF_EXT.1.2'
   disa_stig:
-    - N/A
+    - AIOS-18-012400
   800-171r2:
     - N/A
   cis:
@@ -29,7 +30,7 @@ references:
     controls v8:
       - N/A
 iOS:
-  - "17.0"
+  - "18.0"
 tags:
   - ios
   - 800-53r5_low
