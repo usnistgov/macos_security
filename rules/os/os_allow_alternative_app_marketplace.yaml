@@ -1,0 +1,39 @@
+id: os_allow_alternative_app_marketplace
+title: "Apple iOS/iPadOS 18 must disable the installation of alternative marketplace apps."
+discussion: |
+  Forcing all applications to be installed from authorized application repositories can prevent unauthorized and malicious applications from being installed and executed on mobile devices. Allowing such installations and executions could cause a compromise of DOD data accessible by these unauthorized/malicious applications.
+check: " "
+fix: |
+ Install a configuration profile to disable the installation of alternative marketplace apps. This a supervised-only control.
+references:
+  cce:
+    - N/A
+  cci:
+    - CCI-000366
+  800-53r5:
+    - CM-6 b
+  sfr:
+    - 'FMT_MOF_EXT.1.2 #47'
+  disa_stig:
+    - AIOS-18-014900
+  800-171r2:
+    - N/A
+  cis:
+    benchmark:
+      - 
+    controls v8:
+      -
+iOS:
+  - "18.0"
+tags:
+  - ios
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_high
+  - ios_stig
+severity: "moderate"
+supervised: true
+mobileconfig: true
+mobileconfig_info:
+  com.apple.applicationaccess:
+    allowAppInstallation: false
