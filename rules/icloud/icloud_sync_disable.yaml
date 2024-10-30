@@ -12,16 +12,18 @@ references:
     - CCI-000097
     - CCI-000366
     - CCI-000370
+    - CCI-1090
   800-53r5:
     - AC-20
     - AC-20(1)
     - CM-7
     - CM-7(1)
+    - SC-4
     - SC-7(10)
   sfr:
     - 'FMT_MOF_EXT.1.2 #40'
   disa_stig:
-    - N/A
+    - AIOS-18-003200
   800-171r2:
     - N/A
   cis:
@@ -30,7 +32,7 @@ references:
     controls v8:
       - 2.3
 iOS:
-  - "17.0"
+  - "18.0"
 tags:
   - ios
   - 800-53r5_low
