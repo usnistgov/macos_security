@@ -19,7 +19,7 @@ references:
   sfr:
     - 'FMT_SMF_EXT.1.1 #47a'
   disa_stig:
-    - N/A
+    - AIOS-18-013400
   indigo:
     - ANNEX K
   cis:

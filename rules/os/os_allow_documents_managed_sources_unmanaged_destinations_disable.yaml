@@ -20,7 +20,7 @@ references:
     - 'FMT_SMF_EXT.1.1 #42'
     - 'FDP_ACF_EXT.1.2'
   disa_stig:
-    - N/A
+    - AIOS-18-009700
   indigo:
     - ANNEX D (Section 5.6.3 - Contacts)
     - ANNEX K

@@ -26,7 +26,7 @@ references:
     - ANNEX K  
   cis:
     benchmark:
-      - N/A
+      - AIOS-18-003450
     controls v8:
       - 4.1
       - 4.8

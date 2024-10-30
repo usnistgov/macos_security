@@ -16,7 +16,7 @@ references:
   sfr:
     - 'FIA_UAU_EXT.1.1'
   disa_stig:
-    - N/A
+    - AIOS-18-010400
   indigo:
     - Annex D (Section 5.9.1 - Device-Code)
   cis:

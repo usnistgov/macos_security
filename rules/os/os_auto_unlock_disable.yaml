@@ -17,7 +17,7 @@ references:
   sfr:
     - 'FMT_MOF_EXT.1.2 #47'
   disa_stig:
-    - N/A
+    - AIOS-18-014800
   indigo:
     - ANNEX K
   cis:
