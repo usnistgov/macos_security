@@ -13,6 +13,7 @@ references:
     - CCI-000370
   800-53r5:
     - AC-3
+    - CM-6 b
     - MP-2
     - SC-7(10)
     - SC-39
@@ -29,7 +30,7 @@ references:
     controls v8:
       - 3.3
 iOS:
-  - "17.0"
+  - "18.0"
 tags:
   - ios
   - 800-53r5_low
