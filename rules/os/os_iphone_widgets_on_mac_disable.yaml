@@ -10,13 +10,15 @@ references:
     - N/A
   cci:
     - CCI-000366
+    - CCI-000381
   800-53r5:
     - CM-7
+    - CM-7 a
     - CM-7(1)
   sfr:
-    - 'FMT_SMF_EXT.1.1 #8b'
+    - 'FMT_SMF.1.1 #47'
   disa_stig:
-    - N/A
+    - AIOS-18-010850
   800-171r2:
     - N/A
   cis:
@@ -25,7 +27,7 @@ references:
     controls v8:
       - N/A
 iOS:
-  - "17.0"
+  - "18.0"
 tags:
   - ios
   - ios_stig
