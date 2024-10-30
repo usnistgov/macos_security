@@ -11,13 +11,13 @@ references:
   cce:
     - N/A
   cci: 
-    - CCI-000205
+    - CCI-004066
   800-53r5:
-    - IA-5(1)
+    - IA-5(1) (h)
   sfr:
-    - 'FMT_SMF_EXT.1.1 #1a'
+    - 'FMT_SMF.1.1 #1'
   disa_stig:
-    - N/A
+    - AIOS-18-006500
   800-171r2:
     - N/A
   cis:
