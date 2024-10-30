@@ -16,11 +16,12 @@ references:
   800-53r5:
     - SI-11
     - AC-20
+    - SM-6 b
     - SC-7(10)
   sfr:
-    - 'FMT_SMF_EXT.1.1 #47'
+    - 'FMT_SMF.1.1 #47'
   disa_stig:
-    - N/A
+    - AIOS-18-014500
   800-171r2:
     - N/A
   cis:
@@ -29,7 +30,7 @@ references:
     controls v8:
       - N/A
 iOS:
-  - "17.0"
+  - "18.0"
 tags:
   - ios
   - 800-53r5_low
