@@ -13,12 +13,12 @@ references:
   cci:
     - CCI-000044
   800-53r5:
-    - AC-7
+    - AC-7 a
   sfr:
-    - 'FMT_SMF_EXT.1.1 #2c'
+    - 'FMT_SMF.1.1 #2'
     - 'FIA_AFL_EXT.1.5'
   disa_stig:
-    - N/A
+    - AIOS-18-006900
   800-171r2:
     - N/A
   cis:
@@ -28,7 +28,7 @@ references:
     controls v8:
       - 4.3
 iOS:
-  - "17.0"
+  - "18.0"
 odv:
   hint: "Number of failed attempts."
   recommended: 6
