@@ -16,7 +16,7 @@ references:
   sfr:
     - 'FIA_UAU_EXT.1.1'
   disa_stig:
-    - N/A
+    - AIOS-18-010400
   800-171r2:
     - N/A
   cis:
@@ -25,7 +25,7 @@ references:
     controls v8:
       - N/A
 iOS:
-  - "17.0"
+  - "18.0"
 tags:
   - ios
   - ios_stig
