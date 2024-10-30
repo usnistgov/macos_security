@@ -18,6 +18,7 @@ references:
   800-53r5:
     - AC-3
     - AC-20
+    - CM-6 b
     - CM-7
     - CM-7(1)
     - SC-40
@@ -26,6 +27,7 @@ references:
     - 'FMT_SMF_EXT.1.1 #47'
   disa_stig:
     - AIOS-18-010200
+    - AIOS-18-012500
   800-171r2:
     - N/A
   cis:
