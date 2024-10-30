@@ -37,7 +37,7 @@ references:
     - APPL-15-002024
   cis:
     benchmark:
-      - 2.19.1 (level 1)
+      - N/A
     controls v8:
       - 4.1
       - 4.8
@@ -61,8 +61,6 @@ tags:
   - cmmc_lvl2
   - cmmc_lvl1
   - stig
-  - cis_lvl1
-  - cis_lvl2
   - cnssi-1253_moderate
 severity: medium
 mobileconfig: true
