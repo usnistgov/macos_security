@@ -20,11 +20,12 @@ references:
     - AC-20
     - CM-7
     - CM-7(1)
+    - SC-40
   sfr:
     - 'FMT_SMF_EXT.1.1/WLAN'
     - 'FMT_SMF_EXT.1.1 #47'
   disa_stig:
-    - N/A
+    - AIOS-18-010200
   800-171r2:
     - N/A
   cis:
@@ -33,7 +34,7 @@ references:
     controls v8:
       - N/A
 iOS:
-  - "17.0"
+  - "18.0"
 tags:
   - ios
   - 800-53r5_low
