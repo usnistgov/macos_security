@@ -20,16 +20,19 @@ discussion: |
   |AIOS-18-009900 +
   AIOS-18-709900| Apple iOS/iPadOS 17 must be configured to [selection: wipe protected data, wipe sensitive data] upon unenrollment from MDM.
   |AIOS-18-010000|  Apple iOS/iPadOS 17 must be configured to [selection: remove Enterprise applications, remove all noncore applications (any nonfactory installed application)] upon unenrollment from MDM.
-  |AIOS-17-011200 +
-  AIOS-17-711200| iPhone and iPad must have the latest available iOS/iPadOS operating system installed.
-  |AIOS-17-011600| Apple iOS/iPadOS 17 must implement the management setting: Not have any Family Members in Family Sharing.
-  |AIOS-17-011900 +
-  AIOS-17-711900| Apple iOS/iPadOS 17 users must complete required training.
-  |AIOS-17-012000 +
-  AIOS-17-712000| A managed photo app must be used to take and store work-related photos.
-  |AIOS-17-012650| Apple iOS/iPadOS 17 must implement the management setting: approved Apple Watches must be managed by an MDM.
-  |AIOS-17-013500| Apple iOS must implement the management setting: Not allow a user to remove Apple iOS configuration profiles that enforce DoD security requirements.
-  |AIOS-17-011700| Apple iOS/iPadOS 17 must implement the management setting: not share location data through iCloud.
+  |AIOS-18-011200 +
+  AIOS-18-711200| iPhone and iPad must have the latest available iOS/iPadOS operating system installed.
+  |AIOS-18-011600| Apple iOS/iPadOS 17 must implement the management setting: Not have any Family Members in Family Sharing.
+  |AIOS-18-011700| Apple iOS/iPadOS 17 must implement the management setting: not share location data through iCloud.
+  |AIOS-18-011900 +
+  AIOS-18-711900| Apple iOS/iPadOS 17 users must complete required training.
+  |AIOS-18-012000 +
+  AIOS-18-712000| A managed photo app must be used to take and store work-related photos.
+  |AIOS-18-012650| Apple iOS/iPadOS 18 must implement the management setting: approved Apple Watches must be managed by an MDM.
+  |AIOS-18-013500| Apple iOS must implement the management setting: Not allow a user to remove Apple iOS configuration profiles that enforce DoD security requirements.
+  |AIOS-18-014700| Apple iOS/iPadOS 18 must have DOD root and intermediate PKI certificates installed.
+  |AIOS-18-014900| Apple iOS/iPadOS 18 must disable the installation of alternative marketplace apps.
+  |AIOS-18-015100| Apple iOS/iPadOS 18 must delete eSIM content when the device is erased.
   |===
 check: |
 fix: |
