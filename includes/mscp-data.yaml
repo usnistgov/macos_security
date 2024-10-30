@@ -112,8 +112,8 @@ titles:
   cis_lvl1_enterprise: CIS Apple iOS 18 v1.0.0 DRAFT Benchmark (Level 1) - Institutionally-Owned Devices
   cis_lvl2_enterprise: CIS Apple iOS 18 v1.0.0 DRAFT Benchmark (Level 2) - Institutionally-Owned Devices
   cisv8: CIS Controls Version 8
-  ios_stig:  Apple iOS/iPadOS 17 STIG - Ver 1, Rel 1
-  ios_stig_byoad: Apple iOS/iPadOS 17 BYOAD STIG - Ver 1, Rel 1
+  ios_stig:  Apple iOS/iPadOS 18 STIG - Ver 1, Rel 1
+  ios_stig_byoad: Apple iOS/iPadOS 18 BYOAD STIG - Ver 1, Rel 1
 ddm:
   supported_types: []
   services: []  

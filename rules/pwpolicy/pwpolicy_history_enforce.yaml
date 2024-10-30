@@ -12,7 +12,13 @@ references:
     - IA-5(1)
   indigo:
     - ANNEX D (Section 5.9.1 - Device-Code) 
-    - ANNEX K  
+    - ANNEX K
+  cci:
+    - CCI-004061
+  sfr:
+    - 'FMT_SMF.1.1 #47'
+  disa_stig:
+    - AIOS-18-006950
 iOS:
   - "18.0"
 odv:
@@ -27,6 +33,7 @@ tags:
   - 800-53r5_high
   - indigo_base
   - indigo_high
+  - ios_stig
 supervised: false
 mobileconfig: true
 mobileconfig_info:

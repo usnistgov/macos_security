@@ -27,7 +27,6 @@ iOS:
 tags:
   - ios
   - ios_stig
-  - ios_stig_byoad
   - indigo_base
   - indigo_high
 severity: medium

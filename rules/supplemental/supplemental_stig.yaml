@@ -30,6 +30,8 @@ discussion: |
   |AIOS-18-012650| Apple iOS/iPadOS 18 must implement the management setting: approved Apple Watches must be managed by an MDM.
   |AIOS-18-013500| Apple iOS must implement the management setting: Not allow a user to remove Apple iOS configuration profiles that enforce DoD security requirements.
   |AIOS-18-011700| Apple iOS/iPadOS 18 must implement the management setting: not share location data through iCloud.
+  |AIOS-18-014700| Apple iOS/iPadOS 18 must have DOD root and intermediate PKI certificates installed.
+  |AIOS-18-015500| Apple iOS/iPadOS 18 must disable the download of iOS/iPadOS beta updates.
   |===
 check: |
 fix: |
@@ -48,7 +50,6 @@ iOS:
   - "18.0"
 tags:
   - ios_stig
-  - ios_stig_byoad
   - supplemental
 mobileconfig: false
 mobileconfig_info:  

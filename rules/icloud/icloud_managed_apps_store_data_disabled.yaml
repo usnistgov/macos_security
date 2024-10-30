@@ -44,7 +44,6 @@ tags:
   - cis_lvl2_enterprise
   - cisv8
   - ios_stig
-  - ios_stig_byoad
   - indigo_base
   - indigo_high
 supervised: false
