@@ -17,7 +17,7 @@ references:
   sfr:
     - 'FMT_SMF_EXT.1.1 #47'
   disa_stig:
-    - N/A
+    - AIOS-18-011800
   800-171r2:
     - N/A
   cis:
@@ -27,7 +27,7 @@ references:
     controls v8:
       - 3.3
 iOS:
-  - "17.0"
+  - "18.0"
 tags:
   - ios
   - 800-53r5_low
