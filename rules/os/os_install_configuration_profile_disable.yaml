@@ -9,9 +9,9 @@ references:
   cce:
     - N/A
   cci: 
-    - N/A
+    - CCI-00366
   800-53r5:
-    - CM-6
+    - CM-6 b
     - CM-7
     - CM-7(1)
   800-53r4: 
@@ -19,7 +19,7 @@ references:
   sfr:
     - N/A
   disa_stig:
-    - N/A
+    - AIOS-18-015500
   800-171r2:
     - N/A
   cis:
@@ -28,12 +28,13 @@ references:
     controls v8:
       - 4.1
 iOS:
-  - "17.0"
+  - "18.0"
 tags:
   - ios
   - cis_lvl1_enterprise
   - cis_lvl2_enterprise
   - cisv8
+  - ios_stig
 supervised: true
 mobileconfig: true
 mobileconfig_info:
