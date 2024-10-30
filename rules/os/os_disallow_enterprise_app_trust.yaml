@@ -10,11 +10,12 @@ references:
   cci:
     - CCI-000366
   800-53r5:
+    - CM-6 b
     - CM-11
   sfr:
-    - 'FMT_SMF_EXT.1.1 #8a'
+    - 'FMT_SMF.1.1 #8'
   disa_stig:
-    - N/A
+    - AIOS-18-007000
   800-171r2:
     - N/A
   cis:
@@ -23,7 +24,7 @@ references:
     controls v8:
       - N/A
 iOS:
-  - "17.0"
+  - "18.0"
 tags:
   - ios
   - 800-53r5_low
