@@ -9,6 +9,7 @@ references:
   cce:
     - N/A
   cci:
+    - CCI-001090
     - CCI-000097
     - CCI-000366
     - CCI-000370
@@ -18,10 +19,11 @@ references:
     - CM-7
     - CM-7(1)
     - SC-7(10)
+    - SC-4
   sfr:
     - 'FMT_MOF_EXT.1.2 #40'
   disa_stig:
-    - N/A
+    - AIOS-18-003600
   800-171r2:
     - N/A
   cis:
@@ -31,7 +33,7 @@ references:
     controls v8:
       - 2.3
 iOS:
-  - "17.0"
+  - "18.0"
 tags:
   - ios
   - 800-53r5_low
@@ -43,7 +45,6 @@ tags:
   - cis_lvl2_enterprise
   - cisv8
   - ios_stig
-  - ios_stig_byoad
 supervised: false
 mobileconfig: true
 mobileconfig_info:
