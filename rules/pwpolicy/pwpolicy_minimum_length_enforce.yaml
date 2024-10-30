@@ -15,7 +15,7 @@ references:
   800-53r5:
     - IA-5(1) (h)
   sfr:
-    - 'FMT_SMF.1.1 #1'
+    - 'FMT_SMF.1.1#1'
   disa_stig:
     - AIOS-18-006500
   800-171r2:
@@ -27,7 +27,7 @@ references:
     controls v8:
       - 5.2
 iOS:
-  - "17.0"
+  - "18.0"
 odv:
   hint: "Minimum passcode length."
   recommended: 6
