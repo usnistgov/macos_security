@@ -14,14 +14,16 @@ references:
     - CCI-002314
   800-53r5:
     - AC-3
+    - AC-17(1)
     - AC-20
+    - CM-6 b
     - CM-7
     - CM-7(1)
     - SC-07(10)
   sfr:
-    - 'FMT_SMF_EXT.1.1 #47'
+    - 'FMT_SMF.1.1 #47'
   disa_stig:
-    - N/A
+    - AIOS-18-011000
   800-171r2:
     - N/A
   cis:
@@ -31,7 +33,7 @@ references:
     controls v8:
       - 3.3
 iOS:
-  - "17.0"
+  - "18.0"
 tags:
   - ios
   - 800-53r5_low
