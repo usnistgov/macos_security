@@ -12,17 +12,15 @@ references:
     - CCI-000366
     - CCI-000370
     - CCI-000381
-    - CCI-001090
   800-53r5:
     - CM-7
     - CM-7(1)
     - CP-09(8)
-    - SC-4
     - SC-28
   sfr:
-    - 'FMT_SMF.1.1 #40'
+    - 'FMT_SMF.1.1 #47'
   disa_stig:
-    - AIOS-18-009200
+    - AIOS-18-010700
   800-171r2:
     - N/A
   cis:
