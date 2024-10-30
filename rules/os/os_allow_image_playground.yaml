@@ -1,7 +1,7 @@
 id: os_allow_image_playground
 title: "Ensure the ability to use AI image generation is set to Disabled"
 discussion: |
-  AI image generation _MUST_ be disabled.
+  The ChatGPT feature of Apple Intelligence allows DOD information to be downloaded from the DOD iPhone/iPad and processed by the ChatGPT application in the cloud. The ChatGPT feature of Apple Intelligence increases the risk of compromise of sensitive DOD information. AI image generation _MUST_ be disabled.
 check: " "
 fix: |
   This is implemented by a Configuration Profile.
@@ -9,13 +9,13 @@ references:
   cce:
     - N/A
   cci: 
-    - N/A
+    - CCI-000366
   800-53r5:
-    - 
+    - CM-6 b
   sfr:
-    - N/A
+    - 'FMT_MOF_EXT.1.2 #47'
   disa_stig:
-    - N/A
+    - AIOS-18-015400
   800-171r2:
     - N/A
   cis:
