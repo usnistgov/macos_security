@@ -9,9 +9,11 @@ references:
     - N/A
   cci:
     - CCI-000366
+    - CCI-001090
     - CCI-002110
   800-53r5:
     - CM-6 b
+    - SC-4
   sfr:
     - 'FMT_MOF_EXT.1.2 #40'
   disa_stig:
@@ -24,7 +26,7 @@ references:
     controls v8:
       - N/A
 iOS:
-  - "17.0"
+  - "18.0"
 tags:
   - ios
   - ios_stig
