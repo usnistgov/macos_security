@@ -1,6 +1,6 @@
-title: "macOS 13.0: Security Configuration - CIS Apple macOS 13.0 Ventura v2.1.0 Benchmark (Level 2)"
+title: "macOS 13.0: Security Configuration - CIS Apple macOS 13.0 Ventura v3.0.0 Benchmark (Level 2)"
 description: |
-  This guide describes the actions to take when securing a macOS 13.0 system against the CIS Apple macOS 13.0 Ventura v2.1.0 Benchmark (Level 2) security baseline.
+  This guide describes the actions to take when securing a macOS 13.0 system against the CIS Apple macOS 13.0 Ventura v3.0.0 Benchmark (Level 2) security baseline.
 authors: |
   *macOS Security Compliance Project*
 
@@ -63,6 +63,7 @@ profile:
       - os_safari_open_safe_downloads_disable
       - os_safari_prevent_cross-site_tracking_enable
       - os_safari_show_full_website_address_enable
+      - os_safari_show_status_bar_enabled
       - os_safari_warn_fraudulent_website_enable
       - os_show_filename_extensions_enable
       - os_sip_enable

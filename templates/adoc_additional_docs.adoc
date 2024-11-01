@@ -64,5 +64,5 @@ ASSOCIATED DOCUMENTS
 |===
 |Document Number or Descriptor
 |Document Title
-|link:https://www.cisecurity.org/benchmark/apple_os/[Apple macOS 13.0]|_CIS Apple macOS 13.0 Benchmark version 2.1.0_
+|link:https://www.cisecurity.org/benchmark/apple_os/[Apple macOS 13.0]|_CIS Apple macOS 13.0 Benchmark version 3.0.0_
 |===
