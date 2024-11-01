@@ -49,5 +49,6 @@ macOS:
 tags:
   - cis_lvl2
   - cisv8
+  - arm64
 mobileconfig: false
 mobileconfig_info:
