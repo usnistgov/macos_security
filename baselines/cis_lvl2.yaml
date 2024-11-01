@@ -48,7 +48,6 @@ profile:
       - os_firewall_log_enable
       - os_gatekeeper_enable
       - os_guest_folder_removed
-      - os_hibernate_mode_apple_silicon_enable
       - os_hibernate_mode_destroyfvkeyonstandby_enable
       - os_hibernate_mode_intel_enable
       - os_home_folders_secure
@@ -67,6 +66,7 @@ profile:
       - os_safari_warn_fraudulent_website_enable
       - os_show_filename_extensions_enable
       - os_sip_enable
+      - os_sleep_and_display_sleep_apple_silicon_enable
       - os_software_update_deferral
       - os_sudo_timeout_configure
       - os_sudoers_timestamp_type_configure

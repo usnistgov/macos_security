@@ -28,6 +28,13 @@ references:
     - SRG-OS-000480-GPOS-00227
   disa_stig:
     - APPL-13-002070
+  cis:
+    benchmark:
+      - 5.11 (level 1)
+    controls v8:
+      - 10.1
+      - 10.2
+      - 10.5
 macOS:
   - "13.0"
 tags:
