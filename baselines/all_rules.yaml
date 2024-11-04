@@ -43,6 +43,7 @@ profile:
       - os_auto_correction_disable
       - os_auto_dim_allow
       - os_auto_unlock_disable
+      - os_call_recording_disable
       - os_chat_disable
       - os_definition_lookup_disable
       - os_device_name_change_disable
@@ -51,6 +52,7 @@ profile:
       - os_disallow_enterprise_app_trust
       - os_enterprise_books_disable
       - os_erase_contents_and_settings_disable
+      - os_esim_delete
       - os_esim_transfers_disable
       - os_exchange_SMIME_encryption_certificate_overwirte_disable
       - os_exchange_SMIME_encryption_default_certificate_overwrite_enable
@@ -62,6 +64,8 @@ profile:
       - os_exchange_mail_recents_sync_disable
       - os_exchange_peraccountVPN
       - os_exchange_prevent_move_enforce
+      - os_external_intelligence_integration_disable
+      - os_external_intelligence_integration_sign_in_disable
       - os_files_network_drive_access_disable
       - os_files_usb_drive_access_disable
       - os_find_my_friends_disable
@@ -70,6 +74,7 @@ profile:
       - os_genmoji_disable
       - os_handoff_disable
       - os_image_playground_disable
+      - os_image_wand_disable
       - os_install_configuration_profile_disable
       - os_install_vpn_configuration_disable
       - os_iphone_mirroring_disable
@@ -79,6 +84,7 @@ profile:
       - os_mail_block_remote_content
       - os_mail_maildrop_disable
       - os_mail_move_messages_disable
+      - os_mail_summary_disable
       - os_marketplace_prevent
       - os_modify_cellular_data_app_settings_disable
       - os_network_known_only
@@ -138,5 +144,6 @@ profile:
       - pwpolicy_simple_sequence_disable
   - section: "Supplemental"
     rules:
+      - supplemental_bsi
       - supplemental_cis_manual
       - supplemental_stig
