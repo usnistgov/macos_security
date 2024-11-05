@@ -11,7 +11,7 @@ check: |
     if [[ "$sleepMode" == "" ]] || [[ "$sleepMode" -gt 15 ]]; then
       ((error_count++))
     fi
-    if [[ "$displaysleepMode" == "" ]] || [[ "$displaysleepMode" -gt 10 ]] || [[ "$displaysleepMode" -lt "$sleepMode" ]]; then
+    if [[ "$displaysleepMode" == "" ]] || [[ "$displaysleepMode" -gt 10 ]] || [[ "$displaysleepMode" -gt "$sleepMode" ]]; then
       ((error_count++))
     fi
   fi
