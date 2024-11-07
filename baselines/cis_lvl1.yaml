@@ -1,6 +1,6 @@
-title: "macOS 15.0: Security Configuration - CIS Apple macOS 15.0 Sequoia v1.0.0 DRAFT Benchmark (Level 1)"
+title: "macOS 15.0: Security Configuration - CIS Apple macOS 15.0 Sequoia v1.0.0 Benchmark (Level 1)"
 description: |
-  This guide describes the actions to take when securing a macOS 15.0 system against the CIS Apple macOS 15.0 Sequoia v1.0.0 DRAFT Benchmark (Level 1) security baseline.
+  This guide describes the actions to take when securing a macOS 15.0 system against the CIS Apple macOS 15.0 Sequoia v1.0.0 Benchmark (Level 1) security baseline.
 authors: |
   *macOS Security Compliance Project*
 
