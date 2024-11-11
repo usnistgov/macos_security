@@ -1,0 +1,59 @@
+id: os_sudo_log_enforce
+title: Configure Sudo To Log Events
+discussion: |
+  Sudo _MUST_ be configured to log privilege escalation.
+check: |
+  /usr/bin/sudo /usr/bin/sudo -V | /usr/bin/grep -c "Log when a command is allowed by sudoers"
+result:
+  integer: 1
+fix: |
+  [source,bash]
+  ----
+  /usr/bin/find /etc/sudoers* -type f -exec sed -i '' '/Defaults \!log_allowed/d' '{}' \;
+  /bin/echo "Defaults log_allowed" >> /etc/sudoers.d/mscp
+  ----
+references:
+  cce:
+    - CCE-94310-0
+  cci:
+    - CCI-000172
+  800-53r5:
+    - AC-6(9)
+  800-53r4:
+    - N/A
+  800-171r3:
+    - 03.01.07
+  srg:
+    - SRG-OS-000064-GPOS-00033
+  disa_stig:
+    - APPL-15-000190
+  cis:
+    benchmark:
+      - 5.11 (level 1)
+    controls v8:
+      - N/A
+  cmmc:
+    - AU.L2-3.3.3
+    - AU.L2-3.3.6
+    - SI.L2-3.14.3
+macOS:
+  - '15.0'
+tags:
+  - 800-53r5_moderate
+  - 800-53r5_high
+  - stig
+  - cis_lvl1
+  - cis_lvl2
+  - cisv8
+  - cmmc_lvl2
+  - stig
+  - 800-171
+severity: medium
+mobileconfig: false
+mobileconfig_info:
+ddm_info:
+  declarationtype: com.apple.configuration.services.configuration-files
+  service: com.apple.sudo
+  config_file: sudoers
+  configuration_key: Defaults
+  configuration_value: log_allowed
