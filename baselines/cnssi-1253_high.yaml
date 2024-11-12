@@ -16,7 +16,7 @@ profile:
   - section: "icloud"
     rules:
       - icloud_backup_disabled
-      - icloud_enterprisebook_sync
+      - icloud_enterprisebook_metadata_sync_disable
       - icloud_photo_stream_disable
       - icloud_photos_disable
       - icloud_shared_photo_stream_disable
@@ -25,7 +25,8 @@ profile:
     rules:
       - os_airdrop_disable
       - os_airdrop_unmanaged_destination_enable
-      - os_airplay_password_require
+      - os_airplay_incoming_password_require
+      - os_airplay_outgoing_password_require
       - os_allow_contacts_read_managed_sources_unmanaged_destinations_disable
       - os_allow_contacts_write_managed_sources_unmanaged_destinations_disable
       - os_allow_documents_managed_sources_unmanaged_destinations_disable

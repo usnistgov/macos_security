@@ -1,11 +1,9 @@
-title: "iOS/iPadOS 18.0: Security Configuration - BSI indigo iOS 18.x Base Configuration"
+title: "iOS/iPadOS 18.0: Security Configuration - indigo_base"
 description: |
-  This guide describes the actions to take when securing a iOS/iPadOS 18.0 system against the BSI indigo iOS 18.x Base Configuration security baseline.
+  This guide describes the actions to take when securing a iOS/iPadOS 18.0 system against the indigo_base security baseline.
 
   Information System Security Officers and benchmark creators can use this catalog of settings in order to assist them in security benchmark creation. This list is a catalog, not a checklist or benchmark, and satisfaction of every item is not likely to be possible or sensible in many operational scenarios.
 authors: |
-  *macOS Security Compliance Project*
-
   |===
   |Henry Stamerjohann|Zentral Pro Services GmbH
   |Allen Golbig|Jamf
@@ -22,7 +20,8 @@ profile:
     rules:
       - os_airdrop_disable
       - os_airdrop_unmanaged_destination_enable
-      - os_airplay_password_require
+      - os_airplay_incoming_password_require
+      - os_airplay_outgoing_password_require
       - os_allow_contacts_read_managed_sources_unmanaged_destinations_disable
       - os_allow_contacts_write_managed_sources_unmanaged_destinations_disable
       - os_allow_documents_managed_sources_unmanaged_destinations_disable
