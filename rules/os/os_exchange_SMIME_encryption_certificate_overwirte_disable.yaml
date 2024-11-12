@@ -13,11 +13,12 @@ references:
   800-53r5:
     - N/A
   indigo:
-    - N/A
+    - ANNEX D (Section 5.6.1 - Mail)   
 iOS:
   - "18.0"
 tags:
   - ios
+  - indigo_high
 supervised: false
 mobileconfig: true
 mobileconfig_info:

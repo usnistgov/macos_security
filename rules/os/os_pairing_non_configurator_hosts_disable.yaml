@@ -18,6 +18,8 @@ references:
     - N/A
   disa_stig:
     - N/A
+  indigo:
+    - ANNEX K
   cis:
     benchmark:
       - 3.2.1.20 (level 2 - Institutionally-Owned Devices)
@@ -32,6 +34,8 @@ tags:
   - 800-53r5_high
   - cis_lvl2_enterprise
   - cisv8
+  - indigo_base
+  - indigo_high
 supervised: true
 mobileconfig: true
 mobileconfig_info:

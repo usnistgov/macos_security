@@ -8,28 +8,28 @@ discussion: |
   |STIG ID
   |Rule Title
 
-  |AIOS-17-004900| Apple iOS/iPadOS 17 must [selection: wipe protected data, wipe sensitive data] upon unenrollment from MDM.
-  |AIOS-17-005000| Apple iOS/iPadOS 17 must [selection: remove Enterprise application, remove all noncore applications (any nonfactory-installed application)] upon unenrollment from MDM.
-  |AIOS-17-007400 +
-  AIOS-17-707400| Apple iOS/iPadOS 17 allowlist must be configured to not include applications with the following characteristics: - Backs up MD data to non-DoD cloud servers (including user and application access to cloud backup services); - Transmits MD diagnostic data to non-DoD servers; - Allows synchronization of data or applications between devices associated with user; and - Allows unencrypted (or encrypted but not FIPS 140-2/FIPS 140-3 validated) data sharing with other MDs or printers.
-  |AIOS-17-008400 +
-  AIOS-17-708400| Apple iOS/iPadOS 17 must be configured to display the DoD advisory warning message at startup or each time the user unlocks the device.
-  |AIOS-17-009200 +
-  AIOS-17-709200| Apple iOS/iPadOS 17 must be configured to not allow backup of [all applications, configuration data] to locally connected systems.
-  |AIOS-17-009800| Apple iOS/iPadOS 17 must be configured to disable multiuser modes.
-  |AIOS-17-009900 +
-  AIOS-17-709900| Apple iOS/iPadOS 17 must be configured to [selection: wipe protected data, wipe sensitive data] upon unenrollment from MDM.
-  |AIOS-17-010000|  Apple iOS/iPadOS 17 must be configured to [selection: remove Enterprise applications, remove all noncore applications (any nonfactory installed application)] upon unenrollment from MDM.
-  |AIOS-17-011200 +
-  AIOS-17-711200| iPhone and iPad must have the latest available iOS/iPadOS operating system installed.
-  |AIOS-17-011600| Apple iOS/iPadOS 17 must implement the management setting: Not have any Family Members in Family Sharing.
-  |AIOS-17-011900 +
-  AIOS-17-711900| Apple iOS/iPadOS 17 users must complete required training.
-  |AIOS-17-012000 +
-  AIOS-17-712000| A managed photo app must be used to take and store work-related photos.
-  |AIOS-17-012650| Apple iOS/iPadOS 17 must implement the management setting: approved Apple Watches must be managed by an MDM.
-  |AIOS-17-013500| Apple iOS must implement the management setting: Not allow a user to remove Apple iOS configuration profiles that enforce DoD security requirements.
-  |AIOS-17-011700| Apple iOS/iPadOS 17 must implement the management setting: not share location data through iCloud.
+  |AIOS-18-007400 +
+  AIOS-18-707400| Apple iOS/iPadOS 18 allowlist must be configured to not include applications with the following characteristics: - Backs up MD data to non-DoD cloud servers (including user and application access to cloud backup services); - Transmits MD diagnostic data to non-DoD servers; - Allows synchronization of data or applications between devices associated with user; and - Allows unencrypted (or encrypted but not FIPS 140-2/FIPS 140-3 validated) data sharing with other MDs or printers.
+  |AIOS-18-008400 +
+  AIOS-18-708400| Apple iOS/iPadOS 18 must be configured to display the DoD advisory warning message at startup or each time the user unlocks the device.
+  |AIOS-18-009200 +
+  AIOS-18-709200| Apple iOS/iPadOS 18 must be configured to not allow backup of [all applications, configuration data] to locally connected systems.
+  |AIOS-18-009800| Apple iOS/iPadOS 18 must be configured to disable multiuser modes.
+  |AIOS-18-009900 +
+  AIOS-18-709900| Apple iOS/iPadOS 18 must be configured to [selection: wipe protected data, wipe sensitive data] upon unenrollment from MDM.
+  |AIOS-18-010000|  Apple iOS/iPadOS 18 must be configured to [selection: remove Enterprise applications, remove all noncore applications (any nonfactory installed application)] upon unenrollment from MDM.
+  |AIOS-18-011200 +
+  AIOS-18-711200| iPhone and iPad must have the latest available iOS/iPadOS operating system installed.
+  |AIOS-18-011600| Apple iOS/iPadOS 18 must implement the management setting: Not have any Family Members in Family Sharing.
+  |AIOS-18-011700| Apple iOS/iPadOS 18 must implement the management setting: not share location data through iCloud.
+  |AIOS-18-011900 +
+  AIOS-18-711900| Apple iOS/iPadOS 18 users must complete required training.
+  |AIOS-18-012000 +
+  AIOS-18-712000| A managed photo app must be used to take and store work-related photos.
+  |AIOS-18-012650| Apple iOS/iPadOS 18 must implement the management setting: approved Apple Watches must be managed by an MDM.
+  |AIOS-18-013500| Apple iOS must implement the management setting: Not allow a user to remove Apple iOS configuration profiles that enforce DoD security requirements.
+  |AIOS-18-014700| Apple iOS/iPadOS 18 must have DOD root and intermediate PKI certificates installed.
+  |AIOS-18-015500| Apple iOS/iPadOS 18 must disable the download of iOS/iPadOS beta updates.
   |===
 check: |
 fix: |
@@ -48,7 +48,6 @@ iOS:
   - "18.0"
 tags:
   - ios_stig
-  - ios_stig_byoad
   - supplemental
 mobileconfig: false
 mobileconfig_info:  

@@ -18,6 +18,7 @@ iOS:
   - "18.0"
 tags:
   - ios
+  - indigo_high
 supervised: true
 mobileconfig: true
 mobileconfig_info:

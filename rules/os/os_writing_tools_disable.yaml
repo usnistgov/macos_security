@@ -16,6 +16,8 @@ references:
     - CM-7
     - CM-7(1)
     - SC-7(10)
+  indigo:
+    - ANNEX K
 iOS:
   - "18.0"
 tags:
@@ -23,6 +25,8 @@ tags:
   - 800-53r5_low 
   - 800-53r5_moderate 
   - 800-53r5_high
+  - indigo_base
+  - indigo_high
 supervised: false
 mobileconfig: true
 mobileconfig_info:

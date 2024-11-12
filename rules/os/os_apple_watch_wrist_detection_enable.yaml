@@ -17,7 +17,7 @@ references:
   sfr:
     - 'FMT_SMF_EXT.1.1 #47'
   disa_stig:
-    - N/A
+    - AIOS-18-011800
   cis:
     benchmark:
       - 2.2.1.13 (level 1 - End-User Owned Devices)
@@ -37,7 +37,9 @@ tags:
   - cis_lvl2_enterprise
   - cisv8
   - ios_stig
-  - ios_stig_byoad
+  - cnssi-1253_moderate
+  - cnssi-1253_low
+  - cnssi-1253_high
 severity: "low"
 supervised: false
 mobileconfig: true

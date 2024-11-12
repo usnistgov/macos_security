@@ -16,7 +16,7 @@ profile:
   - section: "icloud"
     rules:
       - icloud_backup_disabled
-      - icloud_enterprisebook_sync
+      - icloud_enterprisebook_metadata_sync_disable
       - icloud_keychain_disable
       - icloud_managed_apps_store_data_disabled
       - icloud_photo_stream_disable

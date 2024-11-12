@@ -20,7 +20,10 @@ references:
     - 'FMT_SMF_EXT.1.1 #42'
     - 'FDP_ACF_EXT.1.2'
   disa_stig:
-    - N/A
+    - AIOS-18-009700
+  indigo:
+    - ANNEX D (Section 5.6.3 - Contacts)
+    - ANNEX K
   cis:
     benchmark:
       - 2.2.1.8 (level 1 - End-User Owned Devices)
@@ -40,7 +43,11 @@ tags:
   - cis_lvl2_enterprise
   - cisv8
   - ios_stig
-  - ios_stig_byoad
+  - indigo_base
+  - indigo_high
+  - cnssi-1253_moderate
+  - cnssi-1253_low
+  - cnssi-1253_high
 severity: "medium"
 supervised: false
 mobileconfig: true

@@ -1,0 +1,51 @@
+id: supplemental_bsi
+title: "BSI Supplemental"
+discussion: |
+  These controls require additional considerations for your environment based on indigo,  in accordance with the recommendations of BSI (Bundesamt für Sicherheit in der Informationstechnik, German Federal Office for Information Security).
+
+  [cols="20%h, 80%a"]
+  |===
+  |Section 5.8
+  |Restrictions - App-Installation
+
+  | 
+  |os_application_allow_list +
+  os_application_deny_list
+  |===
+
+  [cols="20%h, 80%a"]
+  |===
+  |Section 6.1.6
+  |Manual configuration - operational requirements
+
+  | 
+  |os_live_text_disable
+  |===
+
+  [cols="20%h, 80%a"]
+  |===
+  |Section 6.3
+  |Manual configuration - Update management
+
+  | 
+  |os_update_auto_RSR_allow
+  |===
+
+check: |
+fix: |
+references:
+  cce:
+    - N/A
+  800-53r5:
+    - N/A
+  indigo:
+    - ANNEX K
+iOS:
+  - "18.0"
+tags:
+  - indigo_base
+  - indigo_high
+  - supplemental
+mobileconfig: false
+mobileconfig_info:  
+

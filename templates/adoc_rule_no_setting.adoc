@@ -43,6 +43,11 @@ ifdef::show_CMMC[]
 $rule_cmmc
 endif::[]
 
+ifdef::show_indigo[]
+!indigo
+$rule_indigo
+endif::[]
+
 ifdef::show_tags[]
 !CCE
 !$rule_cce

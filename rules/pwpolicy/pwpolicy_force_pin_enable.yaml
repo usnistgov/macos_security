@@ -16,7 +16,9 @@ references:
   sfr:
     - 'FIA_UAU_EXT.1.1'
   disa_stig:
-    - N/A
+    - AIOS-18-010400
+  indigo:
+    - Annex D (Section 5.9.1 - Device-Code)
   cis:
     benchmark:
       - N/A
@@ -27,7 +29,11 @@ iOS:
 tags:
   - ios
   - ios_stig
-  - ios_stig_byoad
+  - indigo_base
+  - indigo_high
+  - cnssi-1253_moderate
+  - cnssi-1253_low
+  - cnssi-1253_high
 severity: high
 mobileconfig: 'true'
 mobileconfig_info:

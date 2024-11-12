@@ -15,7 +15,9 @@ references:
   sfr:
     - 'FMT_MOF_EXT.1.2 #40'
   disa_stig:
-    - N/A
+    - AIOS-18-003700
+  indigo:
+    - ANNEX K
   cis:
     benchmark:
       - N/A
@@ -26,7 +28,7 @@ iOS:
 tags:
   - ios
   - ios_stig
-  - ios_stig_byoad
+  - indigo_high
 severity: "medium"
 supervised: false
 mobileconfig: true

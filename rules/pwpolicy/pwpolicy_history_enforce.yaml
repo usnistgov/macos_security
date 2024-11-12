@@ -11,17 +11,29 @@ references:
   800-53r5:
     - IA-5(1)
   indigo:
-    - N/A
+    - ANNEX D (Section 5.9.1 - Device-Code) 
+    - ANNEX K
+  cci:
+    - CCI-004061
+  sfr:
+    - 'FMT_SMF.1.1 #47'
+  disa_stig:
+    - AIOS-18-006950
 iOS:
   - "18.0"
 odv:
   hint: Number of previous passwords.
   recommended: 2
+  indigo_base: 2
+  indigo_high: 2
 tags:
   - ios
   - 800-53r5_low
   - 800-53r5_moderate
   - 800-53r5_high
+  - indigo_base
+  - indigo_high
+  - ios_stig
 supervised: false
 mobileconfig: true
 mobileconfig_info:
