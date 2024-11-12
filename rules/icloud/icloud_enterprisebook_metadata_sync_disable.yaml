@@ -1,4 +1,4 @@
-id: icloud_enterprisebook_sync
+id: icloud_enterprisebook_metadata_sync_disable
 title: "Preventing synchronisation of enterprise book meta data."
 discussion: |
   The iOS device _MUST_ be configured to prevent the synchronization of enterprise book meta data to Apple iCloud servers.
