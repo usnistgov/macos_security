@@ -8,8 +8,6 @@ discussion: |
   |STIG ID
   |Rule Title
 
-  |AIOS-18-004900| Apple iOS/iPadOS 18 must [selection: wipe protected data, wipe sensitive data] upon unenrollment from MDM.
-  |AIOS-18-005000| Apple iOS/iPadOS 18 must [selection: remove Enterprise application, remove all noncore applications (any nonfactory-installed application)] upon unenrollment from MDM.
   |AIOS-18-007400 +
   AIOS-18-707400| Apple iOS/iPadOS 18 allowlist must be configured to not include applications with the following characteristics: - Backs up MD data to non-DoD cloud servers (including user and application access to cloud backup services); - Transmits MD diagnostic data to non-DoD servers; - Allows synchronization of data or applications between devices associated with user; and - Allows unencrypted (or encrypted but not FIPS 140-2/FIPS 140-3 validated) data sharing with other MDs or printers.
   |AIOS-18-008400 +
@@ -23,13 +21,13 @@ discussion: |
   |AIOS-18-011200 +
   AIOS-18-711200| iPhone and iPad must have the latest available iOS/iPadOS operating system installed.
   |AIOS-18-011600| Apple iOS/iPadOS 18 must implement the management setting: Not have any Family Members in Family Sharing.
+  |AIOS-18-011700| Apple iOS/iPadOS 18 must implement the management setting: not share location data through iCloud.
   |AIOS-18-011900 +
   AIOS-18-711900| Apple iOS/iPadOS 18 users must complete required training.
   |AIOS-18-012000 +
   AIOS-18-712000| A managed photo app must be used to take and store work-related photos.
   |AIOS-18-012650| Apple iOS/iPadOS 18 must implement the management setting: approved Apple Watches must be managed by an MDM.
   |AIOS-18-013500| Apple iOS must implement the management setting: Not allow a user to remove Apple iOS configuration profiles that enforce DoD security requirements.
-  |AIOS-18-011700| Apple iOS/iPadOS 18 must implement the management setting: not share location data through iCloud.
   |AIOS-18-014700| Apple iOS/iPadOS 18 must have DOD root and intermediate PKI certificates installed.
   |AIOS-18-015500| Apple iOS/iPadOS 18 must disable the download of iOS/iPadOS beta updates.
   |===
