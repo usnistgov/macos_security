@@ -1,6 +1,6 @@
-title: "macOS 15.0: Security Configuration - CIS Apple macOS 15.0 Sequoia v1.0.0 DRAFT Benchmark (Level 1)"
+title: "macOS 15.0: Security Configuration - CIS Apple macOS 15.0 Sequoia v1.0.0 Benchmark (Level 1)"
 description: |
-  This guide describes the actions to take when securing a macOS 15.0 system against the CIS Apple macOS 15.0 Sequoia v1.0.0 DRAFT Benchmark (Level 1) security baseline.
+  This guide describes the actions to take when securing a macOS 15.0 system against the CIS Apple macOS 15.0 Sequoia v1.0.0 Benchmark (Level 1) security baseline.
 authors: |
   *macOS Security Compliance Project*
 
@@ -39,6 +39,7 @@ profile:
       - os_home_folders_secure
       - os_httpd_disable
       - os_install_log_retention_configure
+      - os_iphone_mirroring_disable
       - os_mdm_require
       - os_mobile_file_integrity_enable
       - os_nfsd_disable
@@ -85,7 +86,6 @@ profile:
       - system_settings_guest_access_smb_disable
       - system_settings_guest_account_disable
       - system_settings_improve_assistive_voice_disable
-      - system_settings_improve_search_disable
       - system_settings_improve_siri_dictation_disable
       - system_settings_install_macos_updates_enforce
       - system_settings_internet_sharing_disable

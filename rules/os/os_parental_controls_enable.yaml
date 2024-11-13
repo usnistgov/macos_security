@@ -38,9 +38,9 @@ references:
 macOS:
   - '15.0'
 tags:
-  - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
+  - cnssi-1253_moderate
 mobileconfig: true
 mobileconfig_info:
   com.apple.applicationaccess.new:

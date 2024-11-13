@@ -46,7 +46,7 @@ odv:
   hint: Number of seconds.
   recommended: 1200
 tags:
-  - cnssi-1253_moderate
+  - none
 severity: medium
 mobileconfig: true
 mobileconfig_info:

@@ -39,7 +39,7 @@ references:
     - 3.3.7
   cis:
     benchmark:
-      - 2.3.2.2
+      - 2.3.2.2 (level 1)
     controls v8:
       - 8.4
   cmmc:
@@ -56,11 +56,11 @@ tags:
   - cis_lvl1
   - cis_lvl2
   - cisv8
-  - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
   - cmmc_lvl2
   - stig
+  - cnssi-1253_moderate
 severity: medium
 mobileconfig: false
 mobileconfig_info:

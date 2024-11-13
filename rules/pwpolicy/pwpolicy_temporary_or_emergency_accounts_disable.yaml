@@ -77,9 +77,9 @@ tags:
   - 800-53r4_moderate
   - 800-53r4_high
   - manual
-  - cnssi-1253_moderate
   - cnssi-1253_high
   - stig
+  - cnssi-1253_moderate
 severity: medium
 mobileconfig: false
 mobileconfig_info:

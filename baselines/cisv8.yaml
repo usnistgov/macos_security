@@ -59,6 +59,7 @@ profile:
       - icloud_mail_disable
       - icloud_notes_disable
       - icloud_photos_disable
+      - icloud_private_relay_disable
       - icloud_reminders_disable
       - icloud_sync_disable
   - section: "macos"
@@ -80,13 +81,13 @@ profile:
       - os_httpd_disable
       - os_icloud_storage_prompt_disable
       - os_install_log_retention_configure
+      - os_iphone_mirroring_disable
       - os_ir_support_disable
       - os_library_validation_enabled
       - os_mdm_require
       - os_mobile_file_integrity_enable
       - os_nfsd_disable
       - os_on_device_dictation_enforce
-      - os_password_autofill_disable
       - os_password_hint_remove
       - os_password_proximity_disable
       - os_password_sharing_disable
@@ -104,6 +105,7 @@ profile:
       - os_sip_enable
       - os_siri_prompt_disable
       - os_skip_unlock_with_watch_enable
+      - os_sleep_and_display_sleep_apple_silicon_enable
       - os_sudo_log_enforce
       - os_sudo_timeout_configure
       - os_sudoers_timestamp_type_configure

@@ -1,0 +1,54 @@
+id: os_sleep_and_display_sleep_apple_silicon_enable
+title: Ensure Sleep and Display Sleep Is Enabled on Apple Silicon Devices
+discussion: |
+  Apple Silicon MacBooks should set sleep timeout to 15 minutes (900 seconds) or less and the display sleep timeout should be 10 minutes (600 seconds) or less but less than the sleep setting.
+check: |
+  error_count=0
+  if /usr/sbin/ioreg -rd1 -c IOPlatformExpertDevice 2>&1 | /usr/bin/grep -q "MacBook"; then
+    sleepMode=$(/usr/bin/pmset -b -g | /usr/bin/grep '^\s*sleep' 2>&1 | /usr/bin/awk '{print $2}')
+    displaysleepMode=$(/usr/bin/pmset -b -g | /usr/bin/grep displaysleep 2>&1 | /usr/bin/awk '{print $2}')
+
+    if [[ "$sleepMode" == "" ]] || [[ "$sleepMode" -gt 15 ]]; then
+      ((error_count++))
+    fi
+    if [[ "$displaysleepMode" == "" ]] || [[ "$displaysleepMode" -gt 10 ]] || [[ "$displaysleepMode" -gt "$sleepMode" ]]; then
+      ((error_count++))
+    fi
+  fi
+  echo "$error_count"
+result:
+  integer: 0
+fix: |
+  [source,bash]
+  ----
+  /usr/bin/pmset -a sleep 15
+  /usr/bin/pmset -a displaysleep 10
+  ----
+references:
+  cce:
+    - CCE-94200-3
+  cci:
+    - N/A
+  800-53r5:
+    - N/A
+  800-53r4:
+    - N/A
+  srg:
+    - N/A
+  disa_stig:
+    - N/A
+  800-171r3:
+    - N/A
+  cis:
+    benchmark:
+      - 2.9.1.2 (level 2)
+    controls v8:
+      - 4.1
+macOS:
+  - '15.0'
+tags:
+  - cis_lvl2
+  - cisv8
+  - arm64
+mobileconfig: false
+mobileconfig_info:

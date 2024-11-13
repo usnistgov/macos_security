@@ -55,6 +55,9 @@ macOS:
   - '15.0'
 tags:
   - manual
+  - cnssi-1253_moderate
+  - cnssi-1253_low
+  - cnssi-1253_high
 severity: medium
 mobileconfig: false
 mobileconfig_info:

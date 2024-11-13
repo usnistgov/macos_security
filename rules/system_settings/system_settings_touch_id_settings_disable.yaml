@@ -46,6 +46,9 @@ tags:
   - 800-53r5_high
   - cisv8
   - cmmc_lvl2
+  - cnssi-1253_moderate
+  - cnssi-1253_low
+  - cnssi-1253_high
 mobileconfig: true
 mobileconfig_info:
   com.apple.systempreferences:

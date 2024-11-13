@@ -1,11 +1,11 @@
-id: os_writing_tools_disable
-title: Disable Apple Intelligence Writing Tools
+id: os_mail_summary_disable
+title: Disable Apple Intelligence Mail Summary
 discussion: |-
-  Apple Intelligence features such as writing tools that use off device AI _MUST_ be disabled.
+  Apple Intelligence features such as Apple Mail Summary that use off device AI _MUST_ be disabled.
 check: |
   /usr/bin/osascript -l JavaScript << EOS
   $.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess')\
-  .objectForKey('allowWritingTools').js
+  .objectForKey('allowMailSummary').js
   EOS
 result:
   string: 'false'
@@ -13,14 +13,9 @@ fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-    - CCE-94328-2
+    - N/A
   cci:
-    - CCI-000381
-    - CCI-001774
-  srg:
-    - SRG-OS-000095-GPOS-00049
-  disa_stig:
-    - APPL-15-005160
+    - N/A
   800-53r5:
     - AC-20
     - AC-20(1)
@@ -41,13 +36,9 @@ tags:
   - 800-53r5_moderate
   - 800-53r5_high
   - 800-171
-  - cnssi-1253_low
-  - cnssi-1253_high
-  - stig
   - cmmc_lvl2
   - cmmc_lvl1
-  - cnssi-1253_moderate
 mobileconfig: true
 mobileconfig_info:
   com.apple.applicationaccess:
-    allowWritingTools: false
+    allowMailSummary: false

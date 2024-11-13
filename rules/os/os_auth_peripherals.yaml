@@ -38,11 +38,11 @@ tags:
   - 800-53r4_high
   - permanent
   - cisv8
-  - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
   - cmmc_lvl2
   - cmmc_lvl1
   - srg
+  - cnssi-1253_moderate
 mobileconfig: false
 mobileconfig_info:

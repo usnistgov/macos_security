@@ -37,10 +37,10 @@ odv:
 tags:
   - 800-53r5_high
   - 800-53r4_high
-  - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
   - stig
+  - cnssi-1253_moderate
 severity: low
 mobileconfig: false
 mobileconfig_info:
