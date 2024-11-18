@@ -48,7 +48,7 @@ references:
 macOS:
   - '15.0'
 odv:
-  hint: Custom regex (recommended is 1 upper and 1 lowercase)
+  hint: Custom regex (recommended is 1 upper, 1 lowercase, and 1 numeric digit)
   recommended: ^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).*$
   cis_lvl2: ^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).*$
   stig: ^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).*$
