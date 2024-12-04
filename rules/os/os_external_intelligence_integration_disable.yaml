@@ -17,12 +17,13 @@ references:
   sfr:
     - 'FMT_MOF_EXT.1.2 #47'    
   disa_stig:
-    - AIOS-18-015100    
+    - AIOS-18-015400    
 iOS:
   - "18.2"
 tags:
   - ios
   - ios_stig
+severity: medium
 supervised: true
 mobileconfig: true
 mobileconfig_info:

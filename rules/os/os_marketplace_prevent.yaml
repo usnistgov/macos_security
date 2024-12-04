@@ -28,6 +28,7 @@ tags:
   - 800-53r5_moderate
   - 800-53r5_high
   - ios_stig
+severity: medium
 supervised: true
 mobileconfig: true
 mobileconfig_info:

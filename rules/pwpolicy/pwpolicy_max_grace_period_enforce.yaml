@@ -16,7 +16,7 @@ references:
   sfr:
     - 'FMT_SMF_EXT.1.1 #2a'
   disa_stig:
-    - N/A
+    - AIOS-18-006800
   indigo:
     - ANNEX D (Section 5.9.1 - Device-Code) 
   cis:

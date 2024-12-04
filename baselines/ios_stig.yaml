@@ -44,6 +44,7 @@ profile:
       - os_find_my_friends_disable
       - os_force_encrypted_backups_enable
       - os_handoff_disable
+      - os_install_configuration_profile_disable
       - os_install_vpn_configuration_disable
       - os_iphone_widgets_on_mac_disable
       - os_limit_ad_tracking_enable
