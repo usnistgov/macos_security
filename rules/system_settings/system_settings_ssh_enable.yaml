@@ -35,11 +35,10 @@ references:
     - SRG-OS-000425-GPOS-00189
     - SRG-OS-000426-GPOS-00190
   disa_stig:
-    - APPL-14-000080
+    - N/A
   800-171r3:
     - 03.01.02
     - 03.05.04
-
   cmmc:
     - AC.L1-3.1.1
     - CM.L2-3.4.6
@@ -60,7 +59,6 @@ tags:
   - cnssi-1253_high
   - cmmc_lvl2
   - cmmc_lvl1
-  - stig
 severity: medium
 mobileconfig: false
 mobileconfig_info:
