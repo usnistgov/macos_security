@@ -21,6 +21,7 @@ iOS:
 tags:
   - ios
   - ios_stig
+severity: medium
 supervised: true
 mobileconfig: true
 mobileconfig_info:

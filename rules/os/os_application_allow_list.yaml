@@ -23,7 +23,7 @@ references:
   sfr:
     - 'FMT_SMF_EXT.1.1 #8b'
   disa_stig:
-    - N/A
+    - AIOS-18-007400
   indigo:
     - ANNEX D (Section 5.8 - App-Installation)
   cis:

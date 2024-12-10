@@ -28,6 +28,7 @@ tags:
   - indigo_base
   - indigo_high
   - ios_stig
+severity: medium
 supervised: false
 mobileconfig: true
 mobileconfig_info:
