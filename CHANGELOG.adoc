@@ -2,9 +2,14 @@
 
 This document provides a high-level view of the changes to the macOS Security Compliance Project.
 
+== [Ventura, Revision 5.1] - 2024-XX-XX
+* Rules
+** Modified Rules
+*** os_world_writable_library_folder_configure
+
 == [Ventura, Revision 5.0] - 2024-09-12
 
-
+* Rules
 ** Modified Rules
 *** os_application_sandboxing (https://github.com/usnistgov/macos_security/pull/409[#409])
 *** os_camera_disable (https://github.com/usnistgov/macos_security/issues/388[#388])
@@ -14,7 +19,7 @@ This document provides a high-level view of the changes to the macOS Security Co
 *** system_settings_ssh_disable (https://github.com/usnistgov/macos_security/pull/408[#408])
 *** system_settings_system_wide_preferences_configure (https://github.com/usnistgov/macos_security/issues/418[#418])
 
-** Deleted Rules
+** Removed Rules
 *** os_safari_popups_disabled
 
 * Baselines
@@ -83,7 +88,7 @@ This document provides a high-level view of the changes to the macOS Security Co
 *** os_sshd_fips_compliant
 *** system_settings_location_services_menu_enforce
 *** system_settings_ssh_disable
-** Deleted Rules
+** Removed Rules
 *** os_sshd_fips_140_ciphers
 *** os_sshd_fips_140_macs
 *** os_sshd_key_exchange_algorithm_configure
@@ -277,7 +282,7 @@ This document provides a high-level view of the changes to the macOS Security Co
 *** pwpolicy_upper_case_character_enforce.yaml
 *** system_settings_system_wide_preferences_configure
 *** System Preferences -> System Settings
-** Deleted Rules
+** Removed Rules
 *** os_sudoers_tty_configure
 ** Bug Fixes
 
