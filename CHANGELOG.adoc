@@ -2,7 +2,19 @@
 
 This document provides a high-level view of the changes to the macOS Security Compliance Project.
 
-== [Sonoma, Revision 3.0] - 2024-XX-XX
+== [Sonoma, Revision 3.1] - 2024-XX-XX
+
+* Rules
+** Modified Rules
+*** os_directory_services_configured
+*** os_sleep_and_display_sleep_apple_silicon_enable
+*** os_sshd_unused_connection_timeout_configure
+*** os_world_writable_library_folder_configure
+*** system_settings_ssh_enable
+** Removed Rules
+*** system_settings_cd_dvd_sharing_disable
+
+== [Sonoma, Revision 3.0] - 2024-09-12
 
 * Rules
 ** Added Rules
@@ -19,7 +31,7 @@ This document provides a high-level view of the changes to the macOS Security Co
 *** system_settings_ssh_disable (https://github.com/usnistgov/macos_security/pull/408[#408])
 s** system_settings_system_wide_preferences_configure (https://github.com/usnistgov/macos_security/issues/418[#418])
 *** os_unlock_active_user_session_disable
-** Deleted Rules
+** Removed Rules
 *** os_hibernate_mode_apple_silicon_enable
 *** os_safari_popups_disabled
 
@@ -63,7 +75,7 @@ s** system_settings_system_wide_preferences_configure (https://github.com/usnist
 *** system_settings_time_server_configure.yaml (https://github.com/usnistgov/macos_security/pull/336[#336])
 *** system_settings_touchid_unlock_disable.yaml (https://github.com/usnistgov/macos_security/issues/326[#326])
 *** supplemental_cis_manual
-** Deleted Rules
+** Removed Rules
 *** os_safari_javascript_enabled.yaml
 ** Other
 *** Added tags to all supplemental rule files
@@ -115,7 +127,7 @@ s** system_settings_system_wide_preferences_configure (https://github.com/usnist
 *** os_sshd_permit_root_login_configure
 *** system_settings_location_services_menu_enforce
 *** system_settings_siri_disable
-** Deleted Rules
+** Removed Rules
 *** icloud_appleid_preference_pane_disable.yaml
 *** os_efi_integrity_validated
 *** os_sshd_key_exchange_algorithm_configure
