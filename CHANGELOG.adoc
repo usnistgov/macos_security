@@ -25,6 +25,8 @@ This document provides a high-level view of the changes to the macOS Security Co
 *** pwpolicy_special_character_enforce
 *** pwpolicy_upper_case_character_enforce.yaml
 *** system_settings_improve_assistive_voice_disable
+** Removed Rules
+*** system_settings_cd_dvd_sharing_disable
 ** Bug Fixes
 * Baselines
 ** Added DISA STIG v1r1
@@ -73,7 +75,7 @@ This document provides a high-level view of the changes to the macOS Security Co
 **** pwpolicy_minimum_length_enforce
 **** pwpolicy_simple_sequence_disable
 **** pwpolicy_special_character_enforce
-** Deleted Rules
+** Removed Rules
 *** os_firewall_log_enable
 *** os_gatekeeper_rearm
 *** os_safari_popups_disabled
