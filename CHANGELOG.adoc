@@ -2,6 +2,35 @@
 
 This document provides a high-level view of the changes to the macOS Security Compliance Project.
 
+== [iOS 18, Revision 1.1] - 2024-XX-XX
+* Rules
+** Added Rules
+*** os_airplay_incoming_password_require
+*** os_airplay_outgoing_password_require
+*** os_call_recording_disable
+*** os_esim_delete.yaml
+*** os_external_intelligence_integration_disable
+*** os_external_intelligence_integration_sign_in_disable
+*** os_image_wand_disable
+*** os_iphone_widgets_on_mac_disable
+*** os_mail_summary_disable
+
+** Modified Rules
+*** os_application_allow_list
+*** os_install_configuration_profile_disable
+*** os_marketplace_prevent
+*** os_web_distribution_app_installation_disable
+*** pwpolicy_history_enforce
+*** pwpolicy_max_grace_period_enforce
+
+** Removed Rules
+*** os_airplay_password_require
+
+* Baselines
+*** Added DISA STIG v1r1
+*** Added INDIGO
+*** Added CIS 
+
 == [iOS 18, Revision 1.0] - 2024-09-12
 * Rules
 ** Modified Rules
@@ -60,6 +89,6 @@ This document provides a high-level view of the changes to the macOS Security Co
 *** pwpolicy_history_enforce
 
 * Baselines
-** Updated Baslines
+** Updated Baselines
 
 * Scripts
