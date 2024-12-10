@@ -22,7 +22,7 @@ references:
   srg:
     - SRG-OS-000480-GPOS-00227
   disa_stig:
-    - APPL-14-000016
+    - N/A
   cis:
     benchmark:
       - N/A
@@ -32,7 +32,6 @@ macOS:
   - '14.0'
 tags:
   - cisv8
-  - stig
 severity: medium
 mobileconfig: false
 mobileconfig_info:
