@@ -3,7 +3,7 @@ title: Set Login Grace Time to $ODV
 discussion: |
   If SSHD is enabled then it _MUST_ be configured to wait only $ODV seconds before timing out logon attempts.
 
-  NOTE: /etc/ssh/sshd_config will be automatically modified to its original state following any update or major upgrade to the operating system.
+  NOTE: On macOS 15.2 and higher the SSH configuration can be reset to the macOS default by running /usr/libexec/reset-ssh-configuration.
 check: |
   /usr/sbin/sshd -G | /usr/bin/awk '/logingracetime/{print $2}'
 result:
