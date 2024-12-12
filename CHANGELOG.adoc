@@ -11,6 +11,9 @@ This document provides a high-level view of the changes to the macOS Security Co
 *** os_sshd_unused_connection_timeout_configure
 *** os_world_writable_library_folder_configure
 *** pwpolicy_special_character_enforce
+*** pwpolicy_history_enforce
+*** pwpolicy_account_lockout_timeout_enforce
+*** pwpolicy_account_lockout_enforce
 *** system_settings_ssh_enable
 ** Removed Rules
 *** system_settings_cd_dvd_sharing_disable
