@@ -20,6 +20,9 @@ This document provides a high-level view of the changes to the macOS Security Co
 *** pwpolicy_lower_case_character_enforce.yaml
 *** pwpolicy_max_lifetime_enforce
 *** pwpolicy_minimum_lifetime_enforce
+*** pwpolicy_history_enforce
+*** pwpolicy_account_lockout_timeout_enforce
+*** pwpolicy_account_lockout_enforce
 *** pwpolicy_prevent_dictionary_words
 *** pwpolicy_simple_sequence_disable
 *** pwpolicy_special_character_enforce
