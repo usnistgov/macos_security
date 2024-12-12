@@ -2,10 +2,11 @@
 
 This document provides a high-level view of the changes to the macOS Security Compliance Project.
 
-== [Ventura, Revision 5.1] - 2024-XX-XX
+== [Ventura, Revision 5.1] - 2024-12-XX
 * Rules
 ** Modified Rules
 *** os_world_writable_library_folder_configure
+*** pwpolicy_special_character_enforce
 
 == [Ventura, Revision 5.0] - 2024-09-12
 
