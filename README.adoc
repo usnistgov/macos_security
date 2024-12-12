@@ -53,6 +53,7 @@ Part 39 of the Federal Acquisition Regulations, section 39.101 paragraph (c) sta
 |Dan Brodjieski|NASA
 |John Mahlman IV|Leidos
 |Aaron Kegerreis|DISA
+|Henry Stamerjohann|Zentral Pro Services GmbH
 |Marco A Piñeryo II|State Department
 |Jason Blake|NIST
 |Blair Heiserman|NIST
