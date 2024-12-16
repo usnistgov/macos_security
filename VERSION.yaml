@@ -1,5 +1,5 @@
 os: "18.0"
 platform: iOS/iPadOS
-version: "iOS 18 Guidance, Revision 1.0"
+version: "iOS 18 Guidance, Revision 1.1"
 cpe: o:apple:ios:18.0
-date: "2024-09-12"
+date: "2024-12-16"
