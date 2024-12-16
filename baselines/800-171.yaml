@@ -1,6 +1,6 @@
-title: "macOS 15.0: Security Configuration - NIST 800-171 Rev 2"
+title: "macOS 15.0: Security Configuration - NIST 800-171 Rev 3"
 description: |
-  This guide describes the actions to take when securing a macOS 15.0 system against the NIST 800-171 Rev 2 security baseline.
+  This guide describes the actions to take when securing a macOS 15.0 system against the NIST 800-171 Rev 3 security baseline.
 
   Information System Security Officers and benchmark creators can use this catalog of settings in order to assist them in security benchmark creation. This list is a catalog, not a checklist or benchmark, and satisfaction of every item is not likely to be possible or sensible in many operational scenarios.
 authors: |
@@ -79,14 +79,16 @@ profile:
       - os_httpd_disable
       - os_icloud_storage_prompt_disable
       - os_image_generation_disable
+      - os_iphone_mirroring_disable
       - os_ir_support_disable
       - os_loginwindow_adminhostinfo_undefined
+      - os_mail_summary_disable
       - os_mdm_require
       - os_nfsd_disable
       - os_on_device_dictation_enforce
-      - os_password_autofill_disable
       - os_password_proximity_disable
       - os_password_sharing_disable
+      - os_photos_enhanced_search_disable
       - os_policy_banner_loginwindow_enforce
       - os_policy_banner_ssh_configure
       - os_policy_banner_ssh_enforce
@@ -121,14 +123,9 @@ profile:
       - pwpolicy_account_inactivity_enforce
       - pwpolicy_account_lockout_enforce
       - pwpolicy_account_lockout_timeout_enforce
-      - pwpolicy_alpha_numeric_enforce
-      - pwpolicy_custom_regex_enforce
       - pwpolicy_history_enforce
-      - pwpolicy_max_lifetime_enforce
       - pwpolicy_minimum_length_enforce
-      - pwpolicy_minimum_lifetime_enforce
       - pwpolicy_simple_sequence_disable
-      - pwpolicy_special_character_enforce
   - section: "systemsettings"
     rules:
       - system_settings_apple_watch_unlock_disable
@@ -138,6 +135,8 @@ profile:
       - system_settings_bluetooth_sharing_disable
       - system_settings_content_caching_disable
       - system_settings_diagnostics_reports_disable
+      - system_settings_external_intelligence_disable
+      - system_settings_external_intelligence_sign_in_disable
       - system_settings_filevault_enforce
       - system_settings_find_my_disable
       - system_settings_firewall_enable

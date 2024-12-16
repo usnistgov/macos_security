@@ -6,6 +6,8 @@ discussion: |
   If the operating system allows users to select passwords based on dictionary words, this increases the window of opportunity for a malicious user to guess the password.
 
   To prevent users from using dictionary words for passwords, many operating systems can be integrated with an enterprise-level directory service that meets or exceeds this requirement.
+
+  NOTE: To comply with Executive Order 14028, “Improving the Nation's Cybersecurity”, OMB M-22-09, “Moving the U.S. Government Toward Zero Trust Cybersecurity Principles”, and NIST SP-800-63b, “Digital Identity Guidelines: Authentication and Lifecycle Management” federal, military, and intelligence communities must adopt the following configuration settings. Password policies must not require the use of complexity policies such as upper characters, lower characters, or special characters. Password policies must also not require the use of regular rotation. Password policies should define a minimum length. Multifactor authentication should be used where ever possible.
 check: |
   For systems not requiring mandatory smart card authentication or those that are not bound to a directory, the technology does not support this requirement. This is an applicable-does not meet finding.
 fix: |
@@ -27,6 +29,5 @@ macOS:
   - '15.0'
 tags:
   - permanent
-  - srg
 mobileconfig: false
 mobileconfig_info:

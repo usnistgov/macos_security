@@ -5,7 +5,7 @@ discussion: |
 
   This rule protects against malicious users attempting to gain access to the system via brute-force hacking methods.
 check: |
-  /usr/bin/pwpolicy -getaccountpolicies 2> /dev/null | /usr/bin/tail +2 | /usr/bin/xmllint --xpath '//dict/key[text()="policyAttributeMaximumFailedAuthentications"]/following-sibling::integer[1]/text()' - | /usr/bin/awk '{ if ($1 <= $ODV) {print "yes"} else {print "no"}}'
+  /usr/bin/pwpolicy -getaccountpolicies 2> /dev/null | /usr/bin/tail +2 | /usr/bin/xmllint --xpath '//dict/key[text()="policyAttributeMaximumFailedAuthentications"]/following-sibling::integer[1]/text()' - | /usr/bin/awk '{ if ($1 <= $ODV) {print "yes"} else {print "no"}}' | /usr/bin/uniq
 result:
   string: 'yes'
 fix: |
@@ -24,7 +24,7 @@ references:
     - SRG-OS-000329-GPOS-00128
     - SRG-OS-000021-GPOS-00005
   disa_stig:
-    - N/A
+    - APPL-15-000022
   800-171r3:
     - 03.01.08
   cis:
@@ -53,11 +53,11 @@ tags:
   - cis_lvl1
   - cis_lvl2
   - cisv8
-  - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
   - cmmc_lvl2
   - stig
+  - cnssi-1253_moderate
 severity: medium
 mobileconfig: true
 mobileconfig_info:

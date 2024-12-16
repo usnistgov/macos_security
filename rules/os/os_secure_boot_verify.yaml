@@ -31,16 +31,16 @@ references:
     - SRG-OS-000445-GPOS-00199
     - SRG-OS-000446-GPOS-00200
   disa_stig:
-    - N/A
+    - APPL-15-005100
 macOS:
   - '15.0'
 tags:
   - 800-53r5_high
   - 800-53r5_moderate
   - 800-53r4_high
-  - cnssi-1253_moderate
   - cnssi-1253_high
   - stig
+  - cnssi-1253_moderate
 severity: medium
 mobileconfig: false
 mobileconfig_info:

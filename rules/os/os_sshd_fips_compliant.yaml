@@ -8,6 +8,8 @@ discussion: |
   Operating systems utilizing encryption _MUST_ use FIPS validated mechanisms for authenticating to cryptographic modules.
 
   NOTE: For more information on FIPS compliance with the version of SSHD included in the macOS, the manual page apple_ssh_and_fips has additional information.
+
+  NOTE: On macOS 15.2 and higher the SSH configuration can be reset to the macOS default by running /usr/libexec/reset-ssh-configuration.
 check: |
   fips_sshd_config=("Ciphers aes128-gcm@openssh.com" "HostbasedAcceptedAlgorithms ecdsa-sha2-nistp256,ecdsa-sha2-nistp256-cert-v01@openssh.com" "HostKeyAlgorithms ecdsa-sha2-nistp256-cert-v01@openssh.com,sk-ecdsa-sha2-nistp256-cert-v01@openssh.com,ecdsa-sha2-nistp256,sk-ecdsa-sha2-nistp256@openssh.com" "KexAlgorithms ecdh-sha2-nistp256" "MACs hmac-sha2-256-etm@openssh.com,hmac-sha2-256" "PubkeyAcceptedAlgorithms ecdsa-sha2-nistp256,ecdsa-sha2-nistp256-cert-v01@openssh.com,sk-ecdsa-sha2-nistp256-cert-v01@openssh.com" "CASignatureAlgorithms ecdsa-sha2-nistp256,sk-ecdsa-sha2-nistp256@openssh.com")
   total=0
@@ -21,6 +23,10 @@ result:
 fix: |
   [source,bash]
   ----
+  if [ -f /etc/ssh/crypto.conf ] && /usr/bin/grep -q "Include /etc/ssh/crypto.conf" /etc/ssh/sshd_config.d/100-macos.conf 2>/bin/null; then
+    /bin/ln -fs /etc/ssh/crypto/fips.conf /etc/ssh/crypto.conf
+  fi
+  
   include_dir=$(/usr/bin/awk '/^Include/ {print $2}' /etc/ssh/sshd_config | /usr/bin/tr -d '*')
 
   if [[ -z $include_dir ]]; then
@@ -28,9 +34,11 @@ fix: |
   fi
   
   fips_sshd_config=("Ciphers aes128-gcm@openssh.com" "HostbasedAcceptedAlgorithms ecdsa-sha2-nistp256,ecdsa-sha2-nistp256-cert-v01@openssh.com" "HostKeyAlgorithms ecdsa-sha2-nistp256-cert-v01@openssh.com,sk-ecdsa-sha2-nistp256-cert-v01@openssh.com,ecdsa-sha2-nistp256,sk-ecdsa-sha2-nistp256@openssh.com" "KexAlgorithms ecdh-sha2-nistp256" "MACs hmac-sha2-256-etm@openssh.com,hmac-sha2-256" "PubkeyAcceptedAlgorithms ecdsa-sha2-nistp256,ecdsa-sha2-nistp256-cert-v01@openssh.com,sk-ecdsa-sha2-nistp256-cert-v01@openssh.com" "CASignatureAlgorithms ecdsa-sha2-nistp256,sk-ecdsa-sha2-nistp256@openssh.com")
-
+  sshd_config=$(/usr/sbin/sshd -G)
   for config in $fips_sshd_config; do
-    /usr/bin/grep -qxF "$config" "${include_dir}01-mscp-sshd.conf" 2>/dev/null || echo "$config" >> "${include_dir}01-mscp-sshd.conf"
+    if ! echo $sshd_config | /usr/bin/grep -q -i "$config" 2>/dev/null; then
+      /usr/bin/grep -qxF "$config" "${include_dir}01-mscp-sshd.conf" 2>/dev/null || echo "$config" >> "${include_dir}01-mscp-sshd.conf"
+    fi
   done
 
   for file in $(ls ${include_dir}); do
@@ -75,7 +83,7 @@ references:
     - SRG-OS-000393-GPOS-00173
     - SRG-OS-000396-GPOS-00176
   disa_stig:
-    - N/A
+    - APPL-15-000054
   800-171r3:
     - 03.13.08
     - 03.13.11
@@ -94,11 +102,11 @@ tags:
   - 800-53r4_moderate
   - 800-53r4_high
   - 800-171
-  - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
   - cmmc_lvl2
   - stig
+  - cnssi-1253_moderate
 severity: high
 mobileconfig: false
 mobileconfig_info:

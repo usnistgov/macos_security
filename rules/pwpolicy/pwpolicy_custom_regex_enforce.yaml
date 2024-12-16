@@ -5,7 +5,7 @@ discussion: |
 
   This rule enforces password complexity by requiring users to set passwords that are less vulnerable to malicious users.
 
-  NOTE: The guidance for password based authentication in NIST 800-53 (Rev 5) and NIST 800-63B state that complexity rules should be organizationally defined. The values defined are based off of common complexity values. But your organization may define its own password complexity rules.
+  NOTE: To comply with Executive Order 14028, “Improving the Nation's Cybersecurity”, OMB M-22-09, “Moving the U.S. Government Toward Zero Trust Cybersecurity Principles”, and NIST SP-800-63b, “Digital Identity Guidelines: Authentication and Lifecycle Management” federal, military, and intelligence communities must adopt the following configuration settings. Password policies must not require the use of complexity policies such as upper characters, lower characters, or special characters. Password policies must also not require the use of regular rotation. Password policies should define a minimum length. Multifactor authentication should be used where ever possible.
 
   NOTE: The configuration profile generated must be installed from an MDM server.
 check: |
@@ -20,13 +20,17 @@ references:
   cci:
     - CCI-000192
     - CCI-000193
+    - CCI-004066
+    - CCI-004066
+    - CCI-004064
+    - CCI-004065
   800-53r5:
     - IA-5(1)
   800-53r4:
     - IA-5
     - IA-5(1)
   disa_stig:
-    - N/A
+    - APPL-15-003060
   srg:
     - SRG-OS-000070-GPOS-00038
     - SRG-OS-000069-GPOS-00037
@@ -44,25 +48,18 @@ references:
 macOS:
   - '15.0'
 odv:
-  hint: Custom regex (recommended is 1 upper and 1 lowercase)
-  recommended: ^(?=.*[A-Z])(?=.*[a-z]).*$
-  cis_lvl2: ^(?=.*[A-Z])(?=.*[a-z]).*$
-  stig: ^(?=.*[A-Z])(?=.*[a-z]).*$
+  hint: Custom regex (recommended is 1 upper, 1 lowercase, and 1 numeric digit)
+  recommended: ^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).*$
+  cis_lvl2: ^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).*$
+  stig: ^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).*$
 tags:
-  - 800-171
-  - 800-53r4_low
-  - 800-53r4_moderate
-  - 800-53r4_high
-  - 800-53r5_low
-  - 800-53r5_moderate
-  - 800-53r5_high
   - cis_lvl2
   - cisv8
-  - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
   - cmmc_lvl2
   - stig
+  - cnssi-1253_moderate
 severity: medium
 mobileconfig: true
 mobileconfig_info:

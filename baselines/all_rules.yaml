@@ -104,7 +104,6 @@ profile:
       - os_genmoji_disable
       - os_guest_folder_removed
       - os_handoff_disable
-      - os_hibernate_mode_apple_silicon_enable
       - os_hibernate_mode_destroyfvkeyonstandby_enable
       - os_hibernate_mode_intel_enable
       - os_home_folders_default
@@ -118,6 +117,7 @@ profile:
       - os_library_validation_enabled
       - os_loginwindow_adminhostinfo_undefined
       - os_mail_app_disable
+      - os_mail_summary_disable
       - os_mdm_require
       - os_messages_app_disable
       - os_mobile_file_integrity_enable
@@ -131,6 +131,7 @@ profile:
       - os_password_hint_remove
       - os_password_proximity_disable
       - os_password_sharing_disable
+      - os_photos_enhanced_search_disable
       - os_policy_banner_loginwindow_enforce
       - os_policy_banner_ssh_configure
       - os_policy_banner_ssh_enforce
@@ -157,6 +158,7 @@ profile:
       - os_siri_prompt_disable
       - os_skip_screen_time_prompt_enable
       - os_skip_unlock_with_watch_enable
+      - os_sleep_and_display_sleep_apple_silicon_enable
       - os_software_update_deferral
       - os_ssh_fips_compliant
       - os_ssh_server_alive_count_max_configure
@@ -210,10 +212,11 @@ profile:
       - system_settings_bluetooth_menu_enable
       - system_settings_bluetooth_settings_disable
       - system_settings_bluetooth_sharing_disable
-      - system_settings_cd_dvd_sharing_disable
       - system_settings_content_caching_disable
       - system_settings_critical_update_install_enforce
       - system_settings_diagnostics_reports_disable
+      - system_settings_external_intelligence_disable
+      - system_settings_external_intelligence_sign_in_disable
       - system_settings_filevault_enforce
       - system_settings_find_my_disable
       - system_settings_firewall_enable

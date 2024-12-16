@@ -19,6 +19,9 @@ references:
   cci:
     - CCI-001891
     - CCI-002046
+    - CCI-004923
+    - CCI-004926
+    - CCI-004922
   800-53r5:
     - AU-12(1)
     - SC-45(1)
@@ -28,7 +31,7 @@ references:
     - SRG-OS-000355-GPOS-00143
     - SRG-OS-000356-GPOS-00144
   disa_stig:
-    - N/A
+    - APPL-15-000014
   800-171r3:
     - 3.3.7
   cis:
@@ -50,11 +53,11 @@ tags:
   - cis_lvl1
   - cis_lvl2
   - cisv8
-  - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
   - cmmc_lvl2
   - stig
+  - cnssi-1253_moderate
 severity: medium
 mobileconfig: true
 mobileconfig_info:

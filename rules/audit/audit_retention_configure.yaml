@@ -27,7 +27,7 @@ references:
   srg:
     - SRG-OS-000341-GPOS-00132
   disa_stig:
-    - N/A
+    - APPL-15-001029
   cis:
     benchmark:
       - 3.4 (level 1)
@@ -58,11 +58,11 @@ tags:
   - cis_lvl1
   - cis_lvl2
   - cisv8
-  - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
   - cmmc_lvl2
   - stig
+  - cnssi-1253_moderate
 severity: low
 mobileconfig: false
 mobileconfig_info:

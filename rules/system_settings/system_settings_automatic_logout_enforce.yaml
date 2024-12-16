@@ -29,7 +29,7 @@ references:
   800-53r4:
     - AC-12
   disa_stig:
-    - N/A
+    - APPL-15-000160
   srg:
     - SRG-OS-000279-GPOS-00109
   800-171r3:
@@ -50,11 +50,11 @@ tags:
   - 800-53r4_moderate
   - 800-53r4_high
   - 800-171
-  - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
   - cmmc_lvl2
   - stig
+  - cnssi-1253_moderate
 severity: medium
 mobileconfig: true
 mobileconfig_info:

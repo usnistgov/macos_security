@@ -2,7 +2,41 @@
 
 This document provides a high-level view of the changes to the macOS Security Compliance Project.
 
-== [Sequoia, Revision 1.0] - 2024-XX-XX
+== [Sequoia, Revision 1.1] - 2024-12-16]
+* Rules
+** Added Rules
+*** os_iphone_mirroring_disable
+*** os_mail_summary_disable
+*** os_photos_enhanced_search_disable
+*** system_settings_external_intelligence_disable
+*** system_settings_external_intelligence_sign_in_disable
+** Modified Rules
+*** os_sleep_and_display_sleep_apple_silicon_enable
+*** os_sudo_log_enforce
+*** os_world_writable_library_folder_configure
+*** os_password_autofill_disable
+*** pwpolicy_alpha_numeric_enforce
+*** pwpolicy_custom_regex_enforce
+*** pwpolicy_lower_case_character_enforce.yaml
+*** pwpolicy_max_lifetime_enforce
+*** pwpolicy_minimum_lifetime_enforce
+*** pwpolicy_history_enforce
+*** pwpolicy_account_lockout_timeout_enforce
+*** pwpolicy_account_lockout_enforce
+*** pwpolicy_prevent_dictionary_words
+*** pwpolicy_simple_sequence_disable
+*** pwpolicy_special_character_enforce
+*** pwpolicy_upper_case_character_enforce.yaml
+*** system_settings_improve_assistive_voice_disable
+** Removed Rules
+*** system_settings_cd_dvd_sharing_disable
+** Bug Fixes
+* Baselines
+** Added DISA STIG v1r1
+** Added CIS Level (Draft -> Final)
+** Updated CNSSI-1253
+
+== [Sequoia, Revision 1.0] - 2024-09-12
 
 * Rules
 ** Added Rules
@@ -44,7 +78,7 @@ This document provides a high-level view of the changes to the macOS Security Co
 **** pwpolicy_minimum_length_enforce
 **** pwpolicy_simple_sequence_disable
 **** pwpolicy_special_character_enforce
-** Deleted Rules
+** Removed Rules
 *** os_firewall_log_enable
 *** os_gatekeeper_rearm
 *** os_safari_popups_disabled
