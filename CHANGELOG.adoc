@@ -2,7 +2,7 @@
 
 This document provides a high-level view of the changes to the macOS Security Compliance Project.
 
-== [Sequoia, Revision 1.1] - 2024-12-XX]
+== [Sequoia, Revision 1.1] - 2024-12-16]
 * Rules
 ** Added Rules
 *** os_iphone_mirroring_disable
