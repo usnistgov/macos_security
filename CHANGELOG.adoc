@@ -2,7 +2,7 @@
 
 This document provides a high-level view of the changes to the macOS Security Compliance Project.
 
-== [Ventura, Revision 5.1] - 2024-12-XX
+== [Ventura, Revision 5.1] - 2024-12-16
 * Rules
 ** Modified Rules
 *** os_world_writable_library_folder_configure
