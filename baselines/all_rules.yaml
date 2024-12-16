@@ -103,7 +103,6 @@ profile:
       - os_gatekeeper_rearm
       - os_guest_folder_removed
       - os_handoff_disable
-      - os_hibernate_mode_apple_silicon_enable
       - os_hibernate_mode_destroyfvkeyonstandby_enable
       - os_hibernate_mode_intel_enable
       - os_home_folders_default
@@ -140,6 +139,7 @@ profile:
       - os_safari_open_safe_downloads_disable
       - os_safari_prevent_cross-site_tracking_enable
       - os_safari_show_full_website_address_enable
+      - os_safari_show_status_bar_enabled
       - os_safari_warn_fraudulent_website_enable
       - os_screensaver_loginwindow_enforce
       - os_screensaver_timeout_loginwindow_enforce
@@ -149,6 +149,7 @@ profile:
       - os_siri_prompt_disable
       - os_skip_screen_time_prompt_enable
       - os_skip_unlock_with_watch_enable
+      - os_sleep_and_display_sleep_apple_silicon_enable
       - os_software_update_deferral
       - os_ssh_fips_compliant
       - os_ssh_server_alive_count_max_configure
