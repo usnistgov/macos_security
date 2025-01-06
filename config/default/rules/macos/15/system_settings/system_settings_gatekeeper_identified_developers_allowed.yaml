@@ -1,0 +1,66 @@
+id: system_settings_gatekeeper_identified_developers_allowed
+title: Apply Gatekeeper Settings to Block Applications from Unidentified Developers
+discussion: |
+  The information system implements cryptographic mechanisms to authenticate software prior to installation.
+
+  Gatekeeper settings must be configured correctly to only allow the system to run applications downloaded from the Mac App Store or applications signed with a valid Apple Developer ID code. Administrator users will still have the option to override these settings on a per-app basis. Gatekeeper is a security feature that ensures that applications must be digitally signed by an Apple-issued certificate in order to run. Digital signatures allow the macOS to verify that the application has not been modified by a malicious third party.
+check: |
+  /usr/bin/osascript -l JavaScript << EOS
+  function run() {
+    let pref1 = ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('com.apple.systempolicy.control')\
+  .objectForKey('AllowIdentifiedDevelopers'))
+    let pref2 = ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('com.apple.systempolicy.control')\
+  .objectForKey('EnableAssessment'))
+    if ( pref1 == true && pref2 == true ) {
+      return("true")
+    } else {
+      return("false")
+    }
+  }
+  EOS
+result:
+  string: 'true'
+fix: |
+  This is implemented by a Configuration Profile.
+references:
+  cce:
+    - CCE-94364-7
+  cci:
+    - CCI-001749
+  800-53r5:
+    - CM-14
+    - CM-5
+    - SI-7(15)
+    - SI-7(1)
+  800-53r4:
+    - CM-5(3)
+    - CM-5
+    - SI-7(15)
+  srg:
+    - SRG-OS-000366-GPOS-00153
+  disa_stig:
+    - N/A
+  800-171r3:
+    - 03.14.02
+  cmmc:
+    - CM.L2-3.4.5
+macOS:
+  - '15.0'
+tags:
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_high
+  - 800-53r4_moderate
+  - 800-53r4_high
+  - 800-171
+  - cnssi-1253_moderate
+  - cnssi-1253_low
+  - cnssi-1253_high
+  - cmmc_lvl2
+  - stig
+severity: high
+mobileconfig: true
+mobileconfig_info:
+  com.apple.systempolicy.control:
+    AllowIdentifiedDevelopers: true
+    EnableAssessment: true

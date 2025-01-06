@@ -1,0 +1,31 @@
+id: os_limit_gui_sessions
+title: "Limit Concurrent GUI Sessions to 10 for all Accounts"
+discussion: |
+  The information system _IS_ configured to limit the number of concurrent graphical user interface (GUI) sessions to a maximum of ten for all users. 
+
+  Operating system management includes the ability to control the number of users and user sessions that utilize an operating system. Limiting the number of allowed users and sessions per user helps reduce the risks related to Denial-of-Service (DoS) attacks. This requirement addresses concurrent sessions for information system accounts and does not address concurrent sessions by single users via multiple system accounts. The maximum number of concurrent sessions should be defined based upon mission needs and the operational environment for each system.
+check: |
+  The technology supports this requirement and cannot be configured to be out of compliance. The technology inherently meets this requirement.
+fix: |
+  The technology inherently meets this requirement. No fix is required.
+references:
+  cce:
+    - CCE-90943-2
+  cci:
+    - CCI-000054
+  800-53r5:
+    - AC-10
+  800-53r4:
+    - AC-10
+  disa_stig:
+    - N/A
+  srg:
+    - N/A
+macOS:
+  - "12.0"
+tags:
+  - 800-53r5_high
+  - 800-53r4_high
+  - inherent
+mobileconfig: false
+mobileconfig_info:

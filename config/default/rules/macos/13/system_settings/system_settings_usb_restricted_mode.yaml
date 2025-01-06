@@ -1,0 +1,57 @@
+id: system_settings_usb_restricted_mode
+title: "USB Devices Must be Authorized Before Allowing"
+discussion: |
+  USB devices connected to a Mac _MUST_ be authorized.
+
+  [IMPORTANT]
+  ====
+  This feature is removed if a smartcard is paired or smartcard attribute mapping is configured.
+  ====
+check: |
+  /usr/bin/osascript -l JavaScript << EOS
+    function run() {
+      let pref1 = ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess')\
+    .objectForKey('allowUSBRestrictedMode'))
+      if ( pref1 == false ) {
+        return("false")
+      } else {
+        return("true")
+      }
+    }
+  EOS
+result:
+  string: "true"
+fix: |
+  This is implemented by a Configuration Profile.
+references:
+  cce:
+    - CCE-91931-6
+  cci:
+    - N/A  
+  800-53r5:
+    - MP-7
+    - SC-41 
+  800-171r3:
+    - 03.08.07
+  cis:
+    benchmark:
+      - N/A
+    controls v8:
+      - N/A
+  cmmc:
+    - MP.L2-3.8.7
+    - MP.L2-3.8.8
+macOS:
+  - "13.0"
+tags:
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_high
+  - cnssi-1253_moderate
+  - cnssi-1253_low
+  - cnssi-1253_high
+  - cmmc_lvl2
+mobileconfig: true
+mobileconfig_info:
+  com.apple.applicationaccess:
+    allowUSBRestrictedMode: true

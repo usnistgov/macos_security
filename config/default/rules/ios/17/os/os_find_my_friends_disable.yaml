@@ -1,0 +1,43 @@
+id: os_find_my_friends_disable
+title: "Disable Find My Friends Service"
+discussion: |
+  The Find My Friends service _MUST_ be disabled.
+
+  Sharing the location of a device may be an violation to an organization and potentially put users at risk.
+check: ''
+fix: This is implemented by a Configuration Profile
+references:
+  cce:
+    - CCE-93425-7
+  cci:
+    - CCI-000366
+    - CCI-000097
+    - CCI-000370
+  800-53r5:
+    - AC-20
+    - CM-7
+    - CM-7(1)
+  sfr:
+    - 'FMT_SMF_EXT.1.1 #47'
+  disa_stig:
+    - N/A
+  800-171r2:
+    - N/A
+  cis:
+    benchmark:
+      - N/A
+    controls v8:
+      - N/A
+iOS:
+  - "17.0"
+tags:
+  - ios
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_high
+severity: low
+supervised: true
+mobileconfig: true
+mobileconfig_info:
+  com.apple.applicationaccess:
+    allowFindMyFriends: false

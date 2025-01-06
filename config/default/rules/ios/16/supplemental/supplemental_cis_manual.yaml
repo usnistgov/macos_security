@@ -1,0 +1,182 @@
+id: supplemental_cis_manual
+title: "CIS Manual Recommendations"
+discussion: |
+  List of CIS recommendations that are manual check in the CIS iOS Benchmark.
+  
+  [cols="15%h, 85%a"]
+  |===
+  |Section
+  |General
+
+  |Recommendations
+  |2.1.1 Ensure a Consent Message has been Configured +
+  2.1.2 Ensure Controls when the profile can be removed is set to Always +
+  3.1.1 Ensure Controls when the profile can be removed is set to Never
+  |===
+
+
+  [cols="15%h, 85%a"]
+  |===
+  |Section
+  |Restrictions
+
+  |Recommendations
+  |2.2.1.5  Ensure Allow personalized ads delivered by Apple is set to Disabled +
+  2.2.1.7 Ensure Force automatic date and time is set to Enabled + 
+  2.2.1.12 Ensure Allow sending diagnostic and usage data to Apple is set to Disabled
+  |===
+
+  [cols="15%h, 85%a"]
+  |===
+  |Section
+  |Domains
+
+  |Recommendations
+  |2.3.1 Ensure Managed Safari Web Domains is Configured
+  |===
+
+  [cols="15%h, 85%a"]
+  |===
+  |Section
+  |Passcode
+
+  |Recommendations
+  |2.4.2 Ensure Require alphanumeric value is set to Enabled
+  |===
+
+  [cols="15%h, 85%a"]
+  |===
+  |Section
+  |Wi-Fi
+
+  |Recommendations
+  |2.5.1 Ensure Disable Association MAC Randomization is Configured
+  |===
+
+  [cols="15%h, 85%a"]
+  |===
+  |Section
+  |VPN
+
+  |Recommendations
+  |2.6.1 Ensure VPN is Configured
+  |===
+
+  [cols="15%h, 85%a"]
+  |===
+  |Section
+  |Notifications
+
+  |Recommendations
+  |2.8.1 Ensure Notification Settings are configured for all Managed Apps
+  |===
+
+  [cols="15%h, 85%a"]
+  |===
+  |Section
+  |Functionality
+
+  |Recommendations
+  |3.2.1.14 Ensure "Allow trusting new enterprise app authors" is set to "Disabled" +
+  3.2.1.17 Ensure "Force automatic date and time" is set to "Enabled" +
+  3.2.1.25 Ensure "Allow sending diagnostic and usage data to Apple" is set to "Disabled" +
+  3.2.1.30 Ensure "Allow password sharing (supervised only)" is set to "Disabled" +
+  |===
+
+  [cols="15%h, 85%a"]
+  |===
+  |Section
+  |Domains
+
+  |Recommendations
+  |3.3.1 Ensure "Managed Safari Web Domains" is "Configured"
+  |===
+
+  [cols="15%h, 85%a"]
+  |===
+  |Section
+  |Passcode
+
+  |Recommendations
+  |3.4.2 Ensure Require alphanumeric value is set to Enabled
+  |===
+
+  [cols="15%h, 85%a"]
+  |===
+  |Section
+  |Wi-Fi
+
+  |Recommendations
+  |3.5.1 Ensure Disable Association MAC Randomization is Configured
+  |===
+
+  [cols="15%h, 85%a"]
+  |===
+  |Section
+  |VPN
+
+  |Recommendations
+  |3.6.1 Ensure VPN is Configured
+  |===
+
+  [cols="15%h, 85%a"]
+  |===
+  |Section
+  |Notifications
+
+  |Recommendations
+  |2.8.1 Ensure Notification Settings are configured for all Managed Apps
+  |===
+
+  [cols="15%h, 85%a"]
+  |===
+  |Section
+  |Lock Screen Message
+
+  |Recommendations
+  |3.9.1. Ensure "If Lost, Return to..." Message is "Configured"
+  |===
+
+  [cols="15%h, 85%a"]
+  |===
+  |Section
+  |Additional Reccomendations
+
+  |Recommendations
+  |4.1.1 Review Manage Sharing & Access +
+  4.1.2 Review Emergency Reset +
+  4.1.3 Review Lockdown Mode + 
+  4.1.4 Ensure "App Privacy Report" is enabled +
+  4.2 Ensure device is not obviously jailbroken or compromised +
+  4.3 Ensure Install iOS Updates of Automatic Updates is set to Enabled +
+  4.4 Ensure Software Update returns Your software is up to date + 
+  4.5 Review iCloud Private Relay settings +
+  4.6 Review Mail Privacy Protection settings +
+  4.7 Ensure Automatic Downloads of App Updates is set to Enabled +
+  4.8 Ensure Find My iPhone/iPad is set to Enabled on end user-owned devices +
+  4.9 Ensure the latest iOS device architecture is used by high-value targets
+  |===
+check: |
+fix: |
+references:
+  cci:
+    - N/A
+  800-53r5: 
+    - N/A    
+  800-53r4: 
+    - N/A
+  srg:
+    - N/A
+  disa_stig:
+    - N/A
+ios:
+  - "16.0"
+tags:
+  - cis_lvl1_byod
+  - cis_lvl1_enterprise
+  - cis_lvl2_byod
+  - cis_lvl2_enterprise
+  - cisv8
+  - supplemental
+mobileconfig: false
+mobileconfig_info:

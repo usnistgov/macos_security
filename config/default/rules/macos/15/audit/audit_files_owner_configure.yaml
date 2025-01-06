@@ -1,0 +1,70 @@
+id: audit_files_owner_configure
+title: Configure Audit Log Files to be Owned by Root
+discussion: |
+  Audit log files _MUST_ be owned by root.
+
+  The audit service _MUST_ be configured to create log files with the correct ownership to prevent normal users from reading audit logs.
+
+  Audit logs contain sensitive data about the system and users. If log files are set to only be readable and writable by system administrators, the risk is mitigated.
+check: |
+  /bin/ls -n $(/usr/bin/grep '^dir' /etc/security/audit_control | /usr/bin/awk -F: '{print $2}') | /usr/bin/awk '{s+=$3} END {print s}'
+result:
+  integer: 0
+fix: |
+  [source,bash]
+  ----
+  /usr/sbin/chown -R root /var/audit/*
+  ----
+references:
+  cce:
+    - CCE-94114-6
+  cci:
+    - CCI-000162
+    - CCI-000163
+    - CCI-000164
+    - CCI-001493
+    - CCI-001494
+    - CCI-001495
+  800-53r5:
+    - AU-9
+  800-53r4:
+    - AU-9
+  srg:
+    - SRG-OS-000256-GPOS-00097
+    - SRG-OS-000057-GPOS-00027
+    - SRG-OS-000059-GPOS-00029
+    - SRG-OS-000257-GPOS-00098
+    - SRG-OS-000258-GPOS-00099
+    - SRG-OS-000058-GPOS-00028
+  disa_stig:
+    - N/A
+  800-171r3:
+    - 03.03.08
+  cis:
+    benchmark:
+      - 3.5 (level 1)
+    controls v8:
+      - 3.3
+  cmmc:
+    - AU.L2-3.3.8
+macOS:
+  - '15.0'
+tags:
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_high
+  - 800-53r4_low
+  - 800-53r4_moderate
+  - 800-53r4_high
+  - 800-171
+  - cis_lvl1
+  - cis_lvl2
+  - cisv8
+  - cnssi-1253_moderate
+  - cnssi-1253_low
+  - cnssi-1253_high
+  - cmmc_lvl2
+  - stig
+severity: medium
+mobileconfig: false
+mobileconfig_info:

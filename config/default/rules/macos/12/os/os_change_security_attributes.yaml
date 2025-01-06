@@ -1,0 +1,31 @@
+id: os_change_security_attributes
+title: "Allow Administrators to Modify Security Settings and System Attributes"
+discussion: |
+  The information system _IS_ configured to allow administrators to modify security settings and system attributes. 
+  
+  The macOS is a UNIX 03-compliant operating system, which allows administrators of the system to change security settings and system attributes, including those which are kept within preference panes that are locked for standard users. . 
+
+  link:https://support.apple.com/guide/mac-help/change-permissions-for-files-folders-or-disks-mchlp1203/mac[]
+check: |
+  The technology supports this requirement and cannot be configured to be out of compliance. The technology inherently meets this requirement.
+fix: |
+  The technology inherently meets this requirement. No fix is required.
+references:
+  cce:
+    - CCE-90912-7
+  cci:
+    - CCI-002165
+  800-53r5:
+    - AC-3(4)
+  800-53r4:
+    - AC-3(4)
+  disa_stig:
+    - N/A
+  srg:
+    - N/A
+macOS:
+  - "12.0"
+tags:
+  - inherent
+mobileconfig: false
+mobileconfig_info:

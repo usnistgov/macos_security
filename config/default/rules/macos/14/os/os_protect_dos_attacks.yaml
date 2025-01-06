@@ -1,0 +1,41 @@
+id: os_protect_dos_attacks
+title: Protect Against Denial of Service Attacks by Ensuring Rate-Limiting Measures on Network Interfaces
+discussion: |
+  The macOS should be configured to prevent Denial of Service (DoS) attacks by enforcing rate-limiting measures on network interfaces.
+
+  DoS attacks leave authorized users unable to access information systems, devices, or other network resources due to the actions of a malicious cyber threat actor. When this occurs, the organization must operate at degraded capacity; often resulting in an inability to accomplish its mission.
+
+  To prevent DoS attacks by ensuring rate-limiting measures on network interfaces, many operating systems can be integrated with enterprise-level firewalls and networking equipment that meet or exceed this requirement.
+check: |
+  The technology does not support this requirement. This is an applicable-does not meet finding.
+fix: |
+  This requirement is a permanent finding and cannot be fixed. An appropriate mitigation for the system must be implemented, but this finding cannot be considered fixed.
+references:
+  cce:
+    - CCE-92862-2
+  cci:
+    - N/A
+  800-53r5:
+    - SC-5
+  800-53r4:
+    - SC-5
+  disa_stig:
+    - N/A
+  srg:
+    - SRG-OS-000420-GPOS-00186
+macOS:
+  - '14.0'
+tags:
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_high
+  - 800-53r4_low
+  - 800-53r4_moderate
+  - 800-53r4_high
+  - permanent
+  - cnssi-1253_moderate
+  - cnssi-1253_low
+  - cnssi-1253_high
+  - srg
+mobileconfig: false
+mobileconfig_info:

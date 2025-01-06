@@ -1,0 +1,52 @@
+id: system_settings_time_machine_encrypted_configure
+title: Ensure Time Machine Volumes are Encrypted
+discussion: |
+  Time Machine volumes _MUST_ be encrypted.
+check: |
+  error_count=0
+  for tm in $(/usr/bin/tmutil destinationinfo 2>/dev/null| /usr/bin/awk -F': ' '/Name/{print $2}'); do
+    tmMounted=$(/usr/sbin/diskutil info "${tm}" 2>/dev/null | /usr/bin/awk '/Mounted/{print $2}')
+    tmEncrypted=$(/usr/sbin/diskutil info "${tm}" 2>/dev/null | /usr/bin/awk '/FileVault/{print $2}')
+    if [[ "$tmMounted" = "Yes" && "$tmEncrypted" = "No" ]]; then
+        ((error_count++))
+    fi
+  done
+  echo "$error_count"
+result:
+  integer: 0
+fix: |
+  . Go to System Settings -> Time Machine
+  . Click *Select Disk*
+  . Select existing Backup Disk under *Available Disks*
+  . Click *Encrypt Backups*
+  . Click *Use Disk*
+references:
+  cce:
+    - CCE-94403-3
+  cci:
+    - N/A
+  800-53r5:
+    - N/A
+  800-53r4:
+    - N/A
+  srg:
+    - N/A
+  disa_stig:
+    - N/A
+  800-171r3:
+    - N/A
+  cis:
+    benchmark:
+      - 2.3.4.2 (level 1)
+    controls v8:
+      - 3.6
+      - 3.11
+      - 11.3
+macOS:
+  - '15.0'
+tags:
+  - cis_lvl1
+  - cis_lvl2
+  - cisv8
+mobileconfig: false
+mobileconfig_info:

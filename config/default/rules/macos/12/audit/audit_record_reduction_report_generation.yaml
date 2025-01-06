@@ -1,0 +1,36 @@
+id: audit_record_reduction_report_generation
+title: "Audit Record Reduction and Report Generation"
+discussion: |
+  The system _IS_ configured with the ability provide and implement an audit record reduction and report generation capability. 
+  
+  Audit record reduction is a process that manipulates collected audit log information and organizes it into a summary format that is more meaningful to analysts. Audit record reduction and report generation capabilities do not always emanate from the same system or from the same organizational entities that conduct audit logging activities. The audit record reduction capability includes modern data mining techniques with advanced data filters to identify anomalous behavior in audit records. The report generation capability provided by the system can generate customizable reports. Time ordering of audit records can be an issue if the granularity of the timestamp in the record is insufficient.
+
+  Audit record reduction and report generation can be done with tools built into macOS such as auditreduce and praudit. These tools are protected by System Integrity Protection (SIP).
+check: |
+  The technology supports this requirement and cannot be configured to be out of compliance. The technology inherently meets this requirement.
+fix: |
+  The technology inherently meets this requirement. No fix is required.
+references:
+  cce:
+    - CCE-90873-1
+  cci: 
+    - N/A
+  800-53r5:
+    - AU-7
+  800-53r4: 
+    - N/A
+  srg:
+    - N/A
+  disa_stig:
+    - N/A
+  800-171r2:
+    - N/A
+macOS:
+  - "12.0"
+tags:
+  - 800-53r5_high
+  - 800-53r4_high
+  - 800-53r5_moderate
+  - inherent
+mobileconfig: false
+mobileconfig_info:

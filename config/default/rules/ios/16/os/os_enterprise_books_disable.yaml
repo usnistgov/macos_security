@@ -1,0 +1,36 @@
+id: os_enterprise_books_disable
+title: "Ensure Backup of Enterprise Books is set to Disabled"
+discussion: |-
+  If a user is able to configure the security setting, the user could inadvertently or maliciously set it to a value that poses unacceptable risk to DoD information systems. An adversary could exploit vulnerabilities created by the weaker configuration to compromise DoD sensitive information.
+check: ' '
+fix: This is implemented by a Configuration Profile
+references:
+  cce:
+    - CCE-93221-0
+  cci:
+    - CCI-000366
+    - CCI-002110
+  800-53r5:
+    - CM-6 b
+  sfr:
+    - 'FMT_MOF_EXT.1.2 #40'
+  disa_stig:
+    - AIOS-16-003700
+    - AIOS-16-703700
+  cis:
+    benchmark:
+      - N/A
+    controls v8:
+      - N/A
+iOS:
+  - "16.0"
+tags:
+  - ios
+  - ios_stig
+  - ios_stig_byoad
+severity: "medium"
+supervised: false
+mobileconfig: true
+mobileconfig_info:
+  com.apple.applicationaccess:
+    allowEnterpriseBookBackup: false

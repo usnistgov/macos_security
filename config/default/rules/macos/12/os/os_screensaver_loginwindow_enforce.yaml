@@ -1,0 +1,42 @@
+id: os_screensaver_loginwindow_enforce
+title: "Enforce Screen Saver at Login Window"
+discussion: |
+  A default screen saver _MUST_ be configured to display at the login window and _MUST_ not display any sensitive information.
+check: |
+  /usr/bin/osascript -l JavaScript << EOS
+  $.NSUserDefaults.alloc.initWithSuiteName('com.apple.screensaver')\
+  .objectForKey('loginWindowModulePath').js
+  EOS
+result:
+  string: "/System/Library/Screen Savers/Flurry.saver"
+fix: |
+  This is implemented by a Configuration Profile.
+references:
+  cce:
+    - CCE-90995-2
+  cci:
+    - CCI-000060
+  800-53r5:
+    - AC-11(1)
+  800-53r4:
+    - AC-11(1)
+  srg:
+    - SRG-OS-000031-GPOS-00012
+  disa_stig:
+    - APPL-12-000006
+  800-171r2:
+    - 3.1.10
+macOS:
+  - "12.0"
+tags:
+  - 800-53r5_moderate 
+  - 800-53r5_high 
+  - 800-53r4_moderate 
+  - 800-53r4_high 
+  - 800-171 
+  - stig
+severity: "low"
+mobileconfig: true
+mobileconfig_info:
+  com.apple.screensaver:
+    loginWindowModulePath: "/System/Library/Screen Savers/Flurry.saver"

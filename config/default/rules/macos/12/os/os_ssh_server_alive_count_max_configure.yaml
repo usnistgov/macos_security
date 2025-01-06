@@ -1,0 +1,57 @@
+id: os_ssh_server_alive_count_max_configure
+title: "Set SSH Active Server Alive Maximum to $ODV"
+discussion: |
+  SSH _MUST_ be configured with an Active Server Alive Maximum Count set to $ODV. Terminating an idle session within a short time period reduces the window of opportunity for unauthorized personnel to take control of a management session enabled on the console or console port that has been left unattended. In addition, quickly terminating an idle session or an incomplete login attempt will also free up resources committed by the managed network element.
+
+  NOTE: /etc/ssh/ssh_config will be automatically modified to its original state following any update or major upgrade to the operating system.
+check: |
+  ret="pass"
+  for u in $(/usr/bin/dscl . -list /Users UniqueID | /usr/bin/awk '$2 > 500 {print $1}'); do
+    sshCheck=$(/usr/bin/sudo -u $u /usr/bin/ssh -G . | /usr/bin/grep -c "^serveralivecountmax $ODV")
+    if [[ "$sshCheck" == "0" ]]; then
+      ret="fail"
+      break
+    fi
+  done
+  /bin/echo $ret
+result:
+  string: pass
+fix: |
+  [source,bash]
+  ----
+  for u in $(/usr/bin/dscl . -list /Users UniqueID | /usr/bin/awk '$2 > 500 {print $1}'); do 
+    config=$(/usr/bin/sudo -u $u /usr/bin/ssh -Gv . 2>&1 | /usr/bin/awk '/Reading configuration data/ {print $NF}'| /usr/bin/tr -d '\r')
+    configarray=( ${(f)config} )
+    for c in $configarray; do
+      /usr/bin/sudo -u $u /usr/bin/grep -q '^ServerAliveCountMax' "$c" && /usr/bin/sed -i '' 's/.*ServerAliveCountMax.*/ServerAliveCountMax $ODV/' "$c" || /bin/echo 'ServerAliveCountMax $ODV' >> "$c"
+    done
+  done
+  ----
+references:
+  cce:
+    - CCE-91005-9
+  cci: 
+    - N/A
+  800-53r5:
+    - SC-10
+  800-53r4: 
+    - SC-10
+  srg:
+    - N/A
+  disa_stig:
+    - N/A
+  800-171r2:
+    - 3.13.9
+macOS:
+  - "12.0"
+odv:
+  hint: "Number of seconds."
+  recommended: 0 
+tags:
+  - 800-53r5_moderate
+  - 800-53r5_high
+  - 800-53r4_moderate
+  - 800-53r4_high
+  - 800-171
+mobileconfig: false
+mobileconfig_info:

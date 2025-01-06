@@ -1,0 +1,31 @@
+id: os_logoff_capability_and_message
+title: "Display logoff capability and message to prevent exploitation"
+discussion: |
+  Provides a logout capability for user-initiated communications sessions whenever authentication is used to gain access to the system.
+
+  Displays an explicit logout message to users indicating the reliable termination of authenticated communications sessions.
+check: |
+  The technology supports this requirement and cannot be configured to be out of compliance. The technology inherently meets this requirement.
+fix: |
+  The technology inherently meets this requirement. No fix is required.
+references:
+  cce:
+    - CCE-90945-7
+  cci:
+    - CCI-002363
+    - CCI-002364
+  800-53r5:
+    - AC-12(1)
+    - AC-12(2)
+  800-53r4:
+    - AC-12(1)
+  disa_stig:
+    - N/A
+  srg:
+    - N/A
+macOS:
+  - "12.0"
+tags:
+  - inherent
+mobileconfig: false
+mobileconfig_info:

@@ -1,0 +1,36 @@
+id: os_identify_non-org_users
+title: Configure the System to Uniquely Identify and Authenticate Non-Organizational Users
+discussion: |
+  The information system uniquely identifies and authenticates non-organizational users (or processes acting on behalf of non-organizational users).
+check: |
+  This requirement is NA for this technology.
+fix: |
+  The requirement is NA. No fix is required.
+references:
+  cce:
+    - CCE-92807-7
+  cci:
+    - N/A
+  800-53r5:
+    - IA-8
+  800-53r4:
+    - IA-8
+  disa_stig:
+    - N/A
+  srg:
+    - N/A
+macOS:
+  - '14.0'
+tags:
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_high
+  - 800-53r4_low
+  - 800-53r4_moderate
+  - 800-53r4_high
+  - n_a
+  - cnssi-1253_moderate
+  - cnssi-1253_low
+  - cnssi-1253_high
+mobileconfig: false
+mobileconfig_info:

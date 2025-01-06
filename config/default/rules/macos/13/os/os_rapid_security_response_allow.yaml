@@ -1,0 +1,54 @@
+id: os_rapid_security_response_allow
+title: "Enforce Rapid Security Response Mechanism"
+discussion: |
+  Rapid security response mechanism _MUST_ be enabled.
+check: |
+  /usr/bin/osascript -l JavaScript << EOS
+  $.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess')\
+  .objectForKey('allowRapidSecurityResponseInstallation').js
+  EOS
+result:
+  string: "true"
+fix: |
+  This is implemented by a Configuration Profile.
+references:
+  cce:
+    - CCE-91860-7
+  cci: 
+    - N/A
+  800-53r5:
+    - SI-2
+    - SI-2(5)
+    - SI-3
+  srg:
+    - N/A
+  disa_stig:
+    - N/A
+  800-171r3:
+    - 03.14.01
+    - 03.14.02
+  cis:
+    benchmark:
+      - N/A
+    controls v8:
+      - N/A
+  cmmc:
+    - SI.L1-3.14.1
+    - SI.L1-3.14.2
+    - SI.L1-3.14.4
+macOS:
+  - "13.0"
+tags:
+  - 800-53r5_low 
+  - 800-53r5_moderate 
+  - 800-53r5_high 
+  - 800-171
+  - cnssi-1253_moderate
+  - cnssi-1253_low
+  - cnssi-1253_high
+  - cmmc_lvl2
+  - cmmc_lvl1
+mobileconfig: true
+mobileconfig_info:
+  com.apple.applicationaccess:
+    allowRapidSecurityResponseInstallation: true

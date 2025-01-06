@@ -1,0 +1,32 @@
+id: os_pii_deidentification
+title: "Remove Elements of Personally Identifiable Information from Datasets"
+discussion: |
+  Remove the following elements of personally identifiable information from datasets: organization-defined elements of personally identifiable information and evaluate organization-defined frequency for effectiveness of de-identification.
+
+  De-identification is the general term for the process of removing the association between a set of identifying data and the data subject. Many datasets contain information about individuals that can be used to distinguish or trace an individual's identity, such as name, social security number, date and place of birth, mother's maiden name, or biometric records. Datasets may also contain other information that is linked or linkable to an individual, such as medical, educational, financial, and employment information. Personally identifiable information is removed from datasets by trained individuals when such information is not (or no longer) necessary to satisfy the requirements envisioned for the data. For example, if the dataset is only used to produce aggregate statistics, the identifiers that are not needed for producing those statistics are removed. Removing identifiers improves privacy protection since information that is removed cannot be inadvertently disclosed or improperly used. Organizations may be subject to specific de-identification definitions or methods under applicable laws, regulations, or policies. Re-identification is a residual risk with de-identified data. Re-identification attacks can vary, including combining new datasets or other improvements in data analytics. Maintaining awareness of potential attacks and evaluating for the effectiveness of the de-identification over time support the management of this residual risk.
+check: |
+  This requirement is NA for this technology.
+fix: |
+  The requirement is NA. No fix is required.
+references:
+  cce:
+    - CCE-90971-3
+  cci:
+    - N/A
+  800-53r5:
+    - SI-19
+  800-53r4:
+    - N/A
+  800-171r2:
+    - N/A
+  disa_stig:
+    - N/A
+  srg:
+    - N/A
+macOS:
+  - "12.0"
+tags:
+  - 800-53r5_privacy
+  - n_a
+mobileconfig: false
+mobileconfig_info:

@@ -1,0 +1,38 @@
+id: os_newsyslog_files_permissions_configure
+title: "Configure System Log Files to Mode 640 or Less Permissive"
+discussion: |
+  The system logs _MUST_ be configured to be writable by root and readable only by the root user and group wheel. To achieve this, system log files _MUST_ be configured to mode 640 permissive or less; thereby preventing normal users from reading, modifying or deleting audit logs. System logs frequently contain sensitive information that could be used by an attacker. Setting the correct permissions mitigates this risk.
+
+check: |
+  /usr/bin/stat -f '%A:%N' $(/usr/bin/grep -v '^#' /etc/newsyslog.conf | /usr/bin/awk '{ print $1 }') 2> /dev/null | /usr/bin/awk '!/640/{print $1}' | /usr/bin/wc -l | /usr/bin/tr -d ' '
+result:
+  integer: 0
+fix: |
+  [source,bash]
+  ----
+  /bin/chmod 640 $(/usr/bin/stat -f '%A:%N' $(/usr/bin/grep -v '^#' /etc/newsyslog.conf | /usr/bin/awk '{ print $1 }') 2> /dev/null | /usr/bin/awk '!/640/{print $1}' | awk -F":" '!/640/{print $2}')
+  ----
+references:
+  cce:
+    - CCE-90955-6
+  cci:
+    - CCI-001314
+  800-53r5:
+    - SI-11
+  800-53r4:
+    - SI-11
+  srg:
+    - SRG-OS-000206-GPOS-00084
+  disa_stig:
+    - APPL-12-004002
+  800-171r2:
+    - N/A
+macOS:
+  - "12.0"
+tags:
+  - 800-53r5_moderate 
+  - 800-53r5_high
+  - stig
+severity: "medium"
+mobileconfig: false
+mobileconfig_info:

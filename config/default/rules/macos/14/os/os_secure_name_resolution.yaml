@@ -1,0 +1,44 @@
+id: os_secure_name_resolution
+title: Secure Name Address Resolution Service
+discussion: |
+  The information system requests and performs data origin authentication and data integrity verification on the name/address resolution responses the system receives from authoritative sources.
+
+  NOTE: macOS supports encrypted DNS settings with the com.apple.dnsSettings.managed payload, however, the system must be integrated with a DNS server that supports encrypted DNS. link:https://developer.apple.com/documentation/devicemanagement/dnssettings[]
+check: |
+  The technology does not support this requirement. This is an applicable-does not meet finding.
+fix: |
+  This requirement is a permanent finding and cannot be fixed. An appropriate mitigation for the system must be implemented, but this finding cannot be considered fixed.
+references:
+  cce:
+    - CCE-92885-3
+  cci:
+    - N/A
+  800-53r5:
+    - SC-21
+  800-53r4:
+    - SC-21
+  disa_stig:
+    - N/A
+  srg:
+    - N/A
+  cis:
+    benchmark:
+      - N/A
+    controls v8:
+      - 4.9
+macOS:
+  - '14.0'
+tags:
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_high
+  - 800-53r4_low
+  - 800-53r4_moderate
+  - 800-53r4_high
+  - permanent
+  - cisv8
+  - cnssi-1253_moderate
+  - cnssi-1253_low
+  - cnssi-1253_high
+mobileconfig: false
+mobileconfig_info:

@@ -1,0 +1,57 @@
+id: auth_smartcard_certificate_trust_enforce_moderate
+title: Set Smartcard Certificate Trust to Moderate
+discussion: |
+  The macOS system _MUST_ be configured to block access to users who are no longer authorized (i.e., users with revoked certificates).
+
+  To prevent the use of untrusted certificates, the certificates on a smartcard card _MUST_ meet the following criteria: its issuer has a system-trusted certificate, the certificate is not expired, its "valid-after" date is in the past, and it passes Certificate Revocation List (CRL) and Online Certificate Status Protocol (OCSP) checking.
+
+  By setting the smartcard certificate trust level to moderate, the system will execute a soft revocation, i.e., if the OCSP/CRL server is unreachable, authentication will still succeed.
+
+  NOTE: Before applying this setting, please see the smartcard supplemental guidance.
+check: |
+  /usr/bin/osascript -l JavaScript << EOS
+  $.NSUserDefaults.alloc.initWithSuiteName('com.apple.security.smartcard')\
+  .objectForKey('checkCertificateTrust').js
+  EOS
+result:
+  integer: 2
+fix: |
+  This is implemented by a Configuration Profile.
+references:
+  cce:
+    - CCE-92737-6
+  cci:
+    - CCI-000186
+    - CCI-001953
+    - CCI-001954
+    - CCI-001991
+    - CCI-002470
+  800-53r5:
+    - IA-5(2)
+    - SC-17
+  800-53r4:
+    - IA-2(12)
+    - IA-5(2)
+  srg:
+    - SRG-OS-000384-GPOS-00167
+    - SRG-OS-000403-GPOS-00182
+    - SRG-OS-000377-GPOS-00162
+    - SRG-OS-000066-GPOS-00034
+  disa_stig:
+    - APPL-14-001060
+  cmmc:
+    - SC.L2-3.13.10
+macOS:
+  - '14.0'
+tags:
+  - 800-53r4_moderate
+  - 800-53r5_moderate
+  - cnssi-1253_moderate
+  - cnssi-1253_low
+  - cmmc_lvl2
+  - stig
+severity: medium
+mobileconfig: true
+mobileconfig_info:
+  com.apple.security.smartcard:
+    checkCertificateTrust: 2

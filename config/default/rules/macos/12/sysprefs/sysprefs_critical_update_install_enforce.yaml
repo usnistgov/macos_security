@@ -1,0 +1,48 @@
+id: sysprefs_critical_update_install_enforce
+title: "Enforce Critical Security Updates to be Installed"
+discussion: |
+  Ensure that security updates are installed as soon as they are available from Apple. 
+check: |
+  /usr/bin/osascript -l JavaScript << EOS
+  $.NSUserDefaults.alloc.initWithSuiteName('com.apple.SoftwareUpdate')\
+  .objectForKey('CriticalUpdateInstall').js
+  EOS
+result:
+  string: "true"
+fix: |
+  This is implemented by a Configuration Profile.
+references:
+  cce:
+    - CCE-91051-3
+  cci: 
+    - N/A
+  800-53r5:
+    - SI-2
+  800-53r4: 
+    - N/A
+  srg:
+    - N/A
+  disa_stig:
+    - N/A
+  800-171r2:
+    - N/A
+  cis:
+    benchmark:
+      - 1.5 (level 1)
+    controls v8:
+      - 7.3
+      - 7.4
+      - 7.7
+macOS:
+  - "12.0"
+tags:
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_high
+  - cis_lvl1
+  - cis_lvl2
+  - cisv8
+mobileconfig: true
+mobileconfig_info:
+  com.apple.SoftwareUpdate:
+    CriticalUpdateInstall: true

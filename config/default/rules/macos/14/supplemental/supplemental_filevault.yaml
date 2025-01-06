@@ -1,0 +1,92 @@
+id: supplemental_filevault
+title: "FileVault Supplemental"
+discussion: |
+  The supplemental guidance found in this section is applicable for the following rules:
+    * system_settings_filevault_enforce
+
+  In macOS the internal Apple File System (APFS) data volume can be protected by FileVault. The system volume is always cryptographically protected (T2 and Apple Silicon) and is a read-only volume.
+
+  NOTE: FileVault uses an AES-XTS data encryption algorithm to protect full volumes of internal and external storage. Macs with a secure enclave (T2 and Apple Silicon) utilize the hardware security features of the architecture.
+
+  FileVault is described in detail here: link:https://support.apple.com/guide/security/volume-encryption-with-filevault-sec4c6dc1b6e/web[].
+
+  FileVault can be enabled in two ways within the macOS. It can be managed using the fdesetup command or by a Configuration Profile. When enabling FileVault via either of the aforementioned methods, you will be required to enter a username and password, which must be a local Open Directory account with a valid SecureToken password.
+
+  [discrete]
+  ==== Using the fdesetup Command
+  When enabling FileVault via the command line in the Terminal application, you can run the following command.
+  [source,bash]
+  ----
+  /usr/bin/fdesetup enable
+  ----
+  Running this command will prompt you for a username and password and then enable FileVault and return the personal recovery key. There are a number of management features available when managing FileVault via the command line that are not available when using a configuration profile. More information on these management features is available in the man page for `fdesetup`.
+
+  NOTE: Apple has deprecated `fdesetup` command line tool from recognizing user name and password for security reasons and may remove the ability in future versions of macOS.
+
+  [discrete]
+  ==== Using a Configuration Profile
+
+  When managing FileVault with a configuration profile, you must deploy a profile with the payload type `com.apple.MCX.FileVault2`. When using the Enable key to enable FileVault with a configuration profile, you must include 1 of the following:
+
+  [source,xml]
+  ----
+  <key>Enable</key>
+  <string>On</string>
+  <key>Defer</key>
+  <true/>
+  ----
+  [source,xml]
+  ----
+  <key>Enable</key>
+  <string>On</string>
+  <key>UserEntersMissingInfo</key>
+  <true/>
+  ----
+
+  If using the Defer key it will prompt for the user name and password at logout.
+
+  The `UserEntersMissingInfo` key will only work if installed through manual installation, and it will prompt for the username and password immediately.
+
+  When using a configuration profile, you can escrow the Recovery key to a Mobile Device Management (MDM) server. Documentation for that can be found on Apple's Developer site: link:https://developer.apple.com/documentation/devicemanagement/fderecoverykeyescrow[].
+
+  It's recommended that you use a Personal Recovery key instead of an Institutional key as it will generate a specific key for each device. You can find more guidance on choosing a recover key here: link:https://docs.jamf.com/technical-papers/jamf-pro/administering-filevault-macos/10.7.1/Choosing_a_Recovery_Key.html[].
+
+  NOTE: FileVault currently only uses password-based authentication and cannot be done using a smartcard or any other type of multi-factor authentication.
+check: |
+fix: |
+references:
+  cci:
+    - N/A
+  800-53r5:
+    - N/A
+  800-53r4:
+    - N/A
+  srg:
+    - N/A
+  disa_stig:
+    - N/A
+  cmmc:
+    - N/A
+macOS:
+  - "14.0"
+tags:
+  - 800-171
+  - 800-53r4_high
+  - 800-53r4_low
+  - 800-53r4_moderate
+  - 800-53r5_high
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_privacy
+  - cis_lvl1
+  - cis_lvl2
+  - cisv8
+  - cmmc_lvl1
+  - cmmc_lvl2
+  - cnssi-1253_high
+  - cnssi-1253_low
+  - cnssi-1253_moderate
+  - stig
+  - supplemental
+mobileconfig: false
+mobileconfig_info:

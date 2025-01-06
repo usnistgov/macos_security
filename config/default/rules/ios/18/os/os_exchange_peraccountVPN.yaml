@@ -1,0 +1,30 @@
+id: os_exchange_peraccountVPN
+title: "Enforce per account VPN for managed Mail accounts."
+discussion: |
+  The iOS device needs some specific configurations for the Exchange setup to meet the minimum requirements. 
+
+  When leveraging per account VPN configurations mail, calendar and contacts need to be configured to leverage the specific VPNUUID in addition.
+check: " "
+fix: |
+  This is implemented by a Configuration Profile.
+references:
+  cce:
+    - CCE-94533-7
+  800-53r5:
+    - N/A
+  indigo:
+    - ANNEX D (Section 5.6.1 - Mail) 
+iOS:
+  - "18.0"
+odv:
+  hint: "Use UUID to leverage the specific VPNUUID"
+  recommended: VPNUUID
+tags:
+  - ios
+  - indigo_base
+  - indigo_high
+supervised: false
+mobileconfig: true
+mobileconfig_info:
+  com.apple.mail.managed: 
+    VPNUUID: $ODV

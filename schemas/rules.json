@@ -1,0 +1,218 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "MacOS Security Compliance Rule Schema",
+  "description": "Schema for validating rule configuration documents.",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique identifier for the rule."
+    },
+    "title": {
+      "type": "string",
+      "description": "Title describing the configuration."
+    },
+    "discussion": {
+      "type": "string",
+      "description": "Detailed discussion about the rule, including implementation and cautions."
+    },
+    "check": {
+      "type": "string",
+      "description": "Command or method to verify compliance."
+    },
+    "result": {
+      "oneOf": [
+        {
+          "type": "string",
+          "description": "Expected result as a string."
+        },
+        {
+          "type": "integer",
+          "description": "Expected result as an integer."
+        },
+        {
+          "type": "boolean",
+          "description": "Expected result as a boolean."
+        },
+        {
+          "type": "string",
+          "format": "base64",
+          "description": "Expected result as a base64-encoded string."
+        }
+      ]
+    },
+    "fix": {
+      "type": "string",
+      "description": "Instructions to implement the fix."
+    },
+    "references": {
+      "type": "object",
+      "properties": {
+        "cce": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "cci": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "800-53r5": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "800-53r4": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "srg": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "disa_stig": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "800-171r3": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "cis": {
+          "type": "object",
+          "properties": {
+            "benchmark": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "controls_v8": {
+              "type": "array",
+              "items": {
+                "type": "number"
+              }
+            }
+          }
+        },
+        "cmmc": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "operating_system": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Name of the operating system",
+          "enum": ["macos", "ios", "visionos"]
+        },
+        "version": {
+          "type": "number",
+          "description": "Version number of the OS."
+        }
+      }
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "severity": {
+      "type": "string",
+      "description": "Severity of the rule.",
+      "enum": ["low", "medium", "high"]
+    },
+    "mobileconfig": {
+      "type": "boolean",
+      "description": "Indicates if the rule can be implemented using a mobile configuration profile."
+    },
+    "mobileconfig_info": {
+      "type": "object",
+      "description": "Apple MDM configuration settings specific to the rule.",
+      "properties": {
+        "PayloadType": {
+          "type": "string",
+          "description": "The type of configuration payload (e.g., 'com.apple.security.smartcard')."
+        },
+        "PayloadContent": {
+          "type": "object",
+          "description": "Key-value pairs of MDM controls for this payload.",
+          "additionalProperties": {
+            "anyOf": [
+              { "type": "string" },
+              { "type": "integer" },
+              { "type": "boolean" },
+              { "type": "array", "items": { "type": "string" } },
+              { "type": "object", "additionalProperties": true }
+            ]
+          }
+        }
+      },
+      "required": ["PayloadType", "PayloadContent"]
+    },
+    "ddm_info": {
+      "type": "object",
+      "description": "Apple MDM Declarative Device Management configuration profile.",
+      "properties": {
+        "declarationtype": {
+          "type": "string",
+          "description": "Type of the declaration payload."
+        },
+        "service": {
+          "type": "string",
+          "description": "The identifier of the system service with managed configuration files. Use a reverse DNS style for this identifier. However, the system reserves 'com.apple.' prefix for built-in services.",
+          "enum": ["com.apple.sshd", "com.apple.sudo", "com.apple.pam", "com.apple.cups", "com.apple.apache.httpd", "com.apple.bash", "com.apple.zsh"]
+        },
+        "config_file": {
+          "type": "string",
+          "description": "The name of the file to be used/generated."
+        },
+        "configuration_value": {
+          "description": "Value that needs to be set.",
+          "anyOf": [
+            { "type": "string" },
+            { "type": "integer" },
+            { "type": "boolean" },
+            { "type": "array", "items": { "type": "string" } },
+            { "type": "object", "additionalProperties": true }
+          ]
+        },
+        "ddm_key": {
+          "type": "string",
+          "description": ""
+        },
+        "ddm_value": {
+          "description": "Value to be set.",
+          "anyOf": [
+            { "type": "string" },
+            { "type": "integer" },
+            { "type": "boolean" },
+            { "type": "array", "items": { "type": "string" } }
+          ]
+        }
+      }
+    },
+    "declarative_device_management": {
+      "$ref": "https://raw.githubusercontent.com/apple/device-management/refs/heads/release/docs/schema.yaml"
+    }
+  },
+  "required": ["id", "title", "discussion", "check", "result", "fix", "severity", "operating_system"]
+}

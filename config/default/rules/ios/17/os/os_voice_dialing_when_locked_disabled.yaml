@@ -1,0 +1,45 @@
+id: os_voice_dialing_when_locked_disabled
+title: "Ensure Allow voice dialing while device is locked is set to Disabled"
+discussion: |
+  Voice dialing while the device is locked _MUST_ be disabled.
+check: " "
+fix: |
+  This is implemented by a Configuration Profile.
+references:
+  cce:
+    - CCE-93455-4
+  cci:
+    - CCI-000366
+  800-53r5:
+    - CM-7
+    - CM-7(1)
+  sfr:
+    - 'FMT_SMF_EXT.1.1 #8b'
+  disa_stig:
+    - N/A
+  800-171r2:
+    - N/A
+  cis:
+    benchmark:
+      - 2.2.1.1 (level 1 - End-User Owned Devices)
+      - 3.2.1.2 (level 1 - Institutionally-Owned Devices)
+    controls v8:
+      - 4.3
+iOS:
+  - "17.0"
+tags:
+  - ios
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_high
+  - cis_lvl1_byod
+  - cis_lvl2_byod
+  - cis_lvl1_enterprise
+  - cis_lvl2_enterprise
+  - cisv8
+severity: "medium"
+supervised: false
+mobileconfig: true
+mobileconfig_info:
+  com.apple.applicationaccess:
+    allowVoiceDialing: false

@@ -1,0 +1,58 @@
+id: sysprefs_wifi_disable
+title: "Disable Wi-Fi Interface"
+discussion: |
+  The macOS system must be configured with Wi-Fi support software disabled if not connected to an authorized trusted network. 
+
+  Allowing devices and users to connect to or from the system without first authenticating them allows untrusted access and can lead to a compromise or attack. Since wireless communications can be intercepted it is necessary to use encryption to protect the confidentiality of information in transit. Wireless technologies include for example  microwave packet radio (UHF/VHF) 802.11x and Bluetooth. Wireless networks use authentication protocols (e.g. EAP/TLS PEAP) which provide credential protection and mutual authentication.
+
+  NOTE: If the system requires Wi-Fi to connect to an authorized network, this is not applicable.
+check: |
+  /usr/sbin/networksetup -listallnetworkservices | /usr/bin/grep -c "*Wi-Fi"
+result: 
+  integer: 1
+fix: |
+  To disable Wi-Fi on a macOS system, run the following command.
+  [source,bash]
+  ----
+  /usr/sbin/networksetup -setnetworkserviceenabled "Wi-Fi" off
+  ----
+references:
+  cce:
+    - CCE-91084-4
+  cci:
+    - N/A
+  800-53r5:
+    - AC-4
+    - AC-18
+    - AC-18(1)
+    - AC-18(3)
+  800-53r4: 
+    - AC-4
+    - AC-18(1)
+    - AC-18(3)
+  disa_stig:
+    - N/A
+  srg:
+    - N/A
+  800-171r2:
+    - N/A
+  cis:
+    benchmark:
+      - N/A
+    controls v8:
+      - 4.2
+      - 12.6
+macOS:
+  - "12.0"
+tags:
+  - manual 
+  - 800-53r4_low 
+  - 800-53r4_moderate 
+  - 800-53r4_high 
+  - 800-53r5_low 
+  - 800-53r5_moderate 
+  - 800-53r5_high
+  - cisv8
+severity: "medium"
+mobileconfig: false
+mobileconfig_info:

@@ -1,0 +1,28 @@
+id: os_diagnostics_reports_disable
+title: "Disable Sending Diagnostic and Usage Data to Apple"
+discussion: |
+  The ability to submit diagnostic data to Apple _MUST_ be disabled.
+
+  The information system _MUST_ be configured to provide only essential capabilities. Disabling the submission of diagnostic and usage information will mitigate the risk of unwanted data being sent to Apple. 
+check: ""
+fix: |
+  This is implemented by a Configuration Profile.
+references:
+  cce:
+    - CCE-94494-2
+  800-53r5:
+    - AC-20
+    - SC-7(10)
+    - SI-11
+visionOS:
+  - '2.0'
+tags:
+  - visionos
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_high  
+supervised: false
+mobileconfig: true
+mobileconfig_info:
+  com.apple.applicationaccess:
+    allowDiagnosticSubmission: false

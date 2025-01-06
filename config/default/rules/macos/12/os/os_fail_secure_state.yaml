@@ -1,0 +1,36 @@
+id: os_fail_secure_state
+title: "Configure System to Fail to a Known Safe State if System Initialization, Shutdown, or Abort Fails"
+discussion: |
+  The information system _IS_ configured to fail to a known safe state in the event of a failed system initialization, shutdown, or abort. 
+
+  Failure to a known safe state helps prevent systems from failing to a state that may cause loss of data or unauthorized access to system resources. 
+
+  Apple File System (APFS) is the default file system for Mac computers using macOS 10.13 and all later versions. APFS includes native encryption, safe document saves, stable snapshots, and crash protection; these features ensure that the macOS fails to safe state. 
+
+  link:https://developer.apple.com/videos/play/wwdc2017/715/[]
+check: |
+  The technology supports this requirement and cannot be configured to be out of compliance. The technology inherently meets this requirement.
+fix: |
+  The technology inherently meets this requirement. No fix is required.
+references:
+  cce:
+    - CCE-90920-0
+  cci:
+    - CCI-001190
+    - CCI-001665
+  800-53r5:
+    - SC-24
+  800-53r4:
+    - SC-24
+  disa_stig:
+    - N/A
+  srg:
+    - N/A
+macOS:
+  - "12.0"
+tags:
+  - 800-53r5_high
+  - 800-53r4_high
+  - inherent
+mobileconfig: false
+mobileconfig_info:

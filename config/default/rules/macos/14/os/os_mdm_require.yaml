@@ -1,0 +1,72 @@
+id: os_mdm_require
+title: Enforce Enrollment in Mobile Device Management
+discussion: |
+  You _MUST_ enroll your Mac in a Mobile Device Management (MDM) software.
+
+  User Approved MDM (UAMDM) enrollment or enrollment via Apple Business Manager (ABM)/Apple School Manager (ASM) is required to manage certain security settings. Currently these include:
+
+  * Allowed Kernel Extensions
+  * Allowed Approved System Extensions
+  * Privacy Preferences Policy Control Payload
+  * ExtensibleSingleSignOn
+  * FDEFileVault
+
+  In macOS 11, UAMDM grants Supervised status on a Mac, unlocking the following MDM features, which were previously locked behind ABM:
+
+  * Activation Lock Bypass
+  * Access to Bootstrap Tokens
+  * Scheduling Software Updates
+  * Query list and delete local users
+check: |
+  /usr/bin/profiles status -type enrollment | /usr/bin/awk -F: '/MDM enrollment/ {print $2}' | /usr/bin/grep -c "Yes (User Approved)"
+result:
+  integer: 1
+fix: |
+  Ensure that system is enrolled via UAMDM.
+references:
+  cce:
+    - CCE-92824-2
+  cci:
+    - CCI-000366
+  800-53r5:
+    - CM-2
+    - CM-6
+  800-53r4:
+    - CM-2
+    - CM-6
+  disa_stig:
+    - APPL-14-005110
+  srg:
+    - SRG-OS-000480-GPOS-00227
+  800-171r2:
+    - 3.4.1
+    - 3.4.2
+  cis:
+    benchmark:
+      - 1.8 (level 1)
+    controls v8:
+      - 4.1
+      - 5.1
+  cmmc:
+    - CM.L2-3.4.2
+macOS:
+  - '14.0'
+tags:
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_high
+  - 800-53r4_low
+  - 800-53r4_moderate
+  - 800-53r4_high
+  - 800-171
+  - cis_lvl1
+  - cis_lvl2
+  - cisv8
+  - cnssi-1253_moderate
+  - cnssi-1253_low
+  - cnssi-1253_high
+  - cmmc_lvl2
+  - stig
+severity: medium
+mobileconfig: false
+mobileconfig_info:

@@ -1,0 +1,29 @@
+id: icloud_backup_disabled
+title: "Ensure iCloud Backup is set to Disabled"
+discussion: |
+  iCloud backup _MUST_ be disabled.
+check: ""
+fix: |
+  This is implemented by a Configuration Profile.
+references:
+  cce:
+    - CCE-94479-3
+  800-53r5:
+    - SC-4
+    - AC-20
+    - AC-20(1)
+    - CM-7
+    - CM-7(1)
+    - SC-7(10)
+visionOS:
+  - '2.0'
+tags:
+  - visionos
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_high
+supervised: false
+mobileconfig: true
+mobileconfig_info:
+  com.apple.applicationaccess:
+    allowCloudBackup: false

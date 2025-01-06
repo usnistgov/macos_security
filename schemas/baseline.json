@@ -1,0 +1,60 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "MacOS Security Compliance Baseline Schema",
+  "description": "Schema for validating baseline configuration documents.",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string",
+      "description": "The title of the document."
+    },
+    "description": {
+      "type": "string",
+      "description": "A detailed explanation of the document's purpose and scope."
+    },
+    "authors": {
+      "type": "array",
+      "description": "List of authors contributing to the document.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Author's name."
+          },
+          "organization": {
+            "type": "string",
+            "description": "Author's organization."
+          }
+        },
+        "required": ["name", "organization"]
+      }
+    },
+    "parent_values": {
+      "type": "string",
+      "description": "Indicates recommended values or parent key."
+    },
+    "profile": {
+      "type": "array",
+      "description": "List of profiles containing sections and their associated rules.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "section": {
+            "type": "string",
+            "description": "The name of the section."
+          },
+          "rules": {
+            "type": "array",
+            "description": "A list of rule identifiers for the section.",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": ["section", "rules"]
+      }
+    }
+  },
+  "required": ["title", "description", "authors", "parent_values", "profile"]
+}

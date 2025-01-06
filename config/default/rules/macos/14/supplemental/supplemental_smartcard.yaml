@@ -1,0 +1,323 @@
+id: supplemental_smartcard
+title: "Smartcard Supplemental"
+discussion: |
+  The supplemental guidance found in this section is applicable for the following rules:
+
+    * auth_ssh_password_authentication_disable
+    * auth_smartcard_enforce
+    * auth_smartcard_certificate_trust_enforce_moderate
+    * auth_smartcard_certificate_trust_enforce_high
+    * auth_smartcard_allow
+    * auth_pam_sudo_smartcard_enforce
+    * auth_pam_su_smartcard_enforce
+    * auth_pam_login_smartcard_enforce
+
+  macOS supports smartcards, such as U.S. Personal Identity Verification (PIV) cards and U.S. Department of Defense Common Access Cards (CAC). Smartcards can be used on a macOS for the following:
+
+    * Authentication (Loginwindow, Screensaver, SSH, PKINIT, Safari, Finder, and PAM Authorization (`sudo`, `login`, and `su`) )
+    * Digital Encryption
+    * Digital Signing
+    * Remote Access (VPN:L2TP)
+    * Port-based Network Access Control (802.1X)
+    * Keychain Unlock
+
+  macOS has built-in support for USB CCID class-compliant smartcard readers.
+
+  [discrete]
+  ==== Smartcard Pairing
+  The default method for using smartcards in macOS is a method called "local account pairing". Local account pairing is automatically initiated when a user inserts a smartcard into the Mac. The user is prompted to pair their smartcard with their account. If a user receives a new smartcard, the previous card must be unpaired, and the new card paired to the account. Local account pairing employs fixed key mapping with the hash of a public key on the user's smartcard with a local account.
+
+  [discrete]
+  ==== Smartcard Attribute Mapping
+  Smartcards can be used to authenticate against a directory via attribute mapping configured in `/private/etc/SmartcardLogin.plist`. This file takes precedence over local account pairing. Attribute mapping matches the configured certificate field values from the smart card to the value in a directory. This may be used with network accounts, mobile accounts, or local accounts.
+
+  [discrete]
+  ==== Smartcard Management in macOS
+
+  The following settings are available to manage smartcards (com.apple.security.smartcard):
+
+  [%header,cols="2,1,7"]
+  |===
+  |Key
+  |Type
+  |Value
+
+  <.^|userPairing
+  ^.^|bool
+  |If false, users will not get the pairing dialog, although existing pairings will still work.
+
+  <.^|allowSmartCard
+  ^.^|bool
+  |If false, the SmartCard is disabled for logins, authorizations, and screensaver unlocking. It is still allowed for other functions, such as signing emails and web access. A restart is required for a change of setting to take effect.
+
+  <.^|checkCertificateTrust
+  ^.^|int
+  a|Valid values are 0-3:
+
+  - 0: certificate trust check is turned off
+
+  - 1: certificate trust check is turned on. Standard validity check is being performed but this does not include additional revocation checks.
+
+  - 2: certificate trust check is turned on, and a soft revocation check is performed. Until the certificate is explicitly rejected by CRL/OCSP, it is considered valid. This implies that unavailable/unreachable CRL/OCSP allows this check to succeed.
+
+  - 3: certificate trust check is turned on, plus a hard revocation check is performed. Unless CRL/OCSP explicitly states that "this certificate is OK", the certificate is considered invalid. This is the most secure value for this setting.
+
+  <.^|oneCardPerUser
+  ^.^|bool
+  |If true, a user can pair with only one smartcard, although existing pairings will be allowed if already set up.
+
+  <.^|enforceSmartCard
+  ^.^|bool
+  |If true, a user can only login or authenticate with a smartcard.
+
+  <.^|tokenRemovalAction
+  ^.^|int
+  |If 1, the screen saver will automatically when the smartcard is removed.
+
+  <.^|allowUnmappedUsers
+  ^.^|int
+  |If 1, allows users who are in a directory group to be exempt from smartcard-only enforcement. The group allowed for exemption is defined in /private/etc/SmartcardLogin.plist
+
+  |===
+
+  A custom configuration profile (`com.apple.loginwindow`) should be created to disable automatic login when FileVault is enabled. This ensures that authorized users boot their Macs, enter a password at the pre-boot screen (which decrypts the boot volume), and are then presented with a login window where they can authenticate with a smartcard.
+
+  [%header,cols="2,1,7"]
+  |===
+  |Key
+  |Type
+  |Value
+
+  <.^|DisableFDEAutoLogin
+  ^.^|bool
+  |If true, both Extensible Firmware Interface (EFI) login password and loginwindow PIN are required.
+
+  |===
+
+  NOTE: DisableFDEAutoLogin does not have to be set on Apple Silicon based macOS systems that are smartcard enforced as smartcards are available at pre-boot.
+
+  [discrete]
+  ==== Trusted Authorities
+  The macOS allows users to specify which certificate authorities (CA) can be used for trust evaluation during smartcard authentication. Only CAs listed in the TrustedAuthorities section of the SmartcardLogin.plist will be evaluated as trusted. This setting only works if `checkCertificateTrust` is set to either 1, 2, or 3 in `com.apple.security.smartcard`.
+
+  To get the SHA-256 hash in the correct format, run the following command within terminal:
+  [source,bash]
+  ----
+  /usr/bin/openssl x509 -noout -fingerprint -sha256 -inform pem -in <issuer cert> | /usr/bin/awk -F '=' '{print $2}' |  /usr/bin/sed 's/://g'
+  ----
+
+  To configure Trusted Authorities, the `SmartcardLogin.plist` should be minimally configured as below:
+
+  [source,xml]
+  ----
+  <?xml version="1.0" encoding="UTF-8"?>
+  <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+  <plist version="1.0">
+  <dict>
+      <key>AttributeMapping</key>
+      <dict>
+            <key>fields</key>
+            <array>
+                <string>NT Principal Name</string>
+            </array>
+            <key>formatString</key>
+            <string>Kerberos:$1</string>
+            <key>dsAttributeString</key>
+            <string>dsAttrTypeStandard:AltSecurityIdentities</string>
+      </dict>
+      <key>TrustedAuthorities</key>
+    <array>
+        <string>SHA256_HASH_OF_CERTDOMAIN_1,SHA256_HASH_OF_CERTDOMAIN_2</string>
+    </array>
+  </dict>
+  </plist>
+  ----
+
+  [discrete]
+  ==== Smartcard Enforcement Exemption
+
+  [discrete]
+  ===== Group Exemption
+
+  Starting in macOS 10.15, enforcement on a system can be granularly configured by adding a field to `/private/etc/SmartcardLogin.plist`. The `NotEnforcedGroup` can be added to the file to list a Directory group that will not be included in smartcard enforcement. In order to activate this feature, `enforceSmartCard` and `allowUnmappedUsers` must be applied via a configuration profile (`com.apple.security.smartcard`).
+
+  To configure the `NotEnforcedGroup`, the `SmartcardLogin.plist` should be minimally configured as follows:
+  [source,xml]
+  ----
+  <?xml version="1.0" encoding="UTF-8"?>
+  <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+  <plist version="1.0">
+  <dict>
+      <key>AttributeMapping</key>
+      <dict>
+            <key>fields</key>
+            <array>
+                <string>NT Principal Name</string>
+            </array>
+            <key>formatString</key>
+            <string>Kerberos:$1</string>
+            <key>dsAttributeString</key>
+            <string>dsAttrTypeStandard:AltSecurityIdentities</string>
+      </dict>
+      <key>TrustedAuthorities</key>
+    <array>
+        <string>SHA256_HASH_OF_CERTDOMAIN_1,SHA256_HASH_OF_CERTDOMAIN_2</string>
+    </array>
+      <key>NotEnforcedGroup</key>
+      <string>EXEMPTGROUP</key>
+  </dict>
+  </plist>
+  ----
+
+  Once a system is configured for the `NotEnforcedGroup` a user can be added to the assigned group by running the following:
+  [source,bash]
+  ----
+  /usr/sbin/dseditgroup -o edit -a <exempt_user> -t user <notenforcegroup>
+  ----
+
+  [discrete]
+  ===== User Exemption
+
+  Alternatively, if a single user needs to be exempt for a period of time, `kDSNativeAttrTypePrefix:SmartCardEnforcement` can be set in the user's Open Directory record. The following values can be set:
+
+  * 0 - The system default is respected.
+  * 1 - Smartcard enforcement is enabled.
+  * 2 - Smartcard enforcement is disabled.
+
+  NOTE: In Active Directory environments, the value of the `userAccountControl` attribute is respected.
+
+  Run the following command to set the exemption when booted from macOS:
+  [source,bash]
+  ----
+  /usr/bin/dscl . -append /Users/<username> SmartCardEnforcement 2
+  ----
+
+  Run the following command to set the exemption when booted from Recovery:
+  [source,bash]
+  ----
+  /usr/bin/defaults write /Volumes/Macintosh\ HD/var/db/dslocal/nodes/Default/users/<username> SmartCardEnforcement -array-add 2
+  ----
+  NOTE: When booted to recovery on an Apple Silicon Mac, run the following after setting the exemption.
+  `/usr/sbin/diskutil apfs updatePreboot /Volumes/Macintosh\ HD`
+
+  [discrete]
+  ===== Temporary Exemption
+
+  On an Apple Silicon Mac, if a temporary exemption is needed, `security filevault skip-sc-enforcement` will disable smartcard enforcement on next boot only.
+
+  Run the following command to set the temporary exemption when booted from Recovery:
+  [source,bash]
+  ----
+  /usr/bin/security filevault skip-sc-enforcement <data volume UUID> set
+  ----
+
+  To obtain the `data volume UUID` run the following:
+  [source,bash]
+  ----
+  /usr/sbin/diskutil apfs listGroups | /usr/bin/awk -F: '/ Data/ { getline; gsub(/ /,""); print $2}'
+  ----
+
+  [discrete]
+  ==== Pluggable Authentication Module (PAM)
+
+  Terminal sessions in macOS can be configured for smartcard enforcement by modifying the PAM modules for `sudo`, `su`, and `login`.
+
+  [source,bash]
+  ----
+  /etc/pam.d/sudo
+  # sudo: auth account password session
+  auth        sufficient    pam_smartcard.so
+  auth        required      pam_opendirectory.so
+  auth        required      pam_deny.so
+  account     required      pam_permit.so
+  password    required      pam_deny.so
+  session     required      pam_permit.so
+  ----
+
+  [source,bash]
+  ----
+  /etc/pam.d/su
+  # su: auth account password session
+  auth        sufficient    pam_smartcard.so
+  auth        required      pam_rootok.so
+  auth        required      pam_group.so no_warn group=admin,wheel ruser root_only fail_safe
+  account     required      pam_permit.so
+  account     required      pam_opendirectory.so no_check_shell
+  password    required      pam_opendirectory.so
+  session     required      pam_launchd.so
+  ----
+
+  [source,bash]
+  ----
+  /etc/pam.d/login
+  # login: auth account password session
+  auth        sufficient    pam_smartcard.so
+  auth        optional      pam_krb5.so use_kcminit
+  auth        optional      pam_ntlm.so try_first_pass
+  auth        optional      pam_mount.so try_first_pass
+  auth        required      pam_opendirectory.so try_first_pass
+  auth        required      pam_deny.so
+  account     required      pam_nologin.so
+  account     required      pam_opendirectory.so
+  password    required      pam_opendirectory.so
+  session     required      pam_launchd.so
+  session     required      pam_uwtmp.so
+  session     optional      pam_mount.so
+  ----
+
+  [discrete]
+  ==== Screen Sharing and Screen Recording
+  macOS will disable support for TouchID, Watch, or Smartcard authentication when being watched or recorded. This can cause certain portions of the system to not recognize your smartcard.
+
+  In Unified Logging you'll notice an entry such as
+  [source,bash]
+  ----
+  2022-07-14 16:45:46.880038-0400 0x2F97 Info 0xC8D2 1600 SecurityAgent: (SecurityAgent) [com.apple.Authorization:SecurityAgent] Screen is being watched, no Touch ID, Watch or SmartCard support is allowed
+  ----
+  This can be remediated by writing the preference domain com.apple.authorization with the key ignoreARD.
+
+  `defaults write com.apple.Authorization ignoreARD -bool true`
+
+  Or applied system wide with a configuration profile named `com.apple.security.authorization.mobileconfig` in the project's `includes` folder.
+  [source,xml]
+  ----
+  <key>PayloadType</key>
+  <string>com.apple.security.authorization</string>
+  <key>ignoreArd</key>
+  <true/>
+  ----
+check: |
+fix: |
+references:
+  cci:
+    - N/A
+  800-53r5:
+    - N/A
+  800-53r4:
+    - N/A
+  srg:
+    - N/A
+  disa_stig:
+    - N/A
+  cmmc:
+    - N/A
+macOS:
+  - "14.0"
+tags:
+  - 800-171
+  - 800-53r4_high
+  - 800-53r4_low
+  - 800-53r4_moderate
+  - 800-53r5_high
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_privacy
+  - cmmc_lvl1
+  - cmmc_lvl2
+  - cnssi-1253_high
+  - cnssi-1253_low
+  - cnssi-1253_moderate
+  - stig
+  - supplemental
+mobileconfig: false
+mobileconfig_info:

@@ -1,0 +1,55 @@
+id: supplemental_stig
+title: "DISA STIG Supplemental"
+discussion: |
+  These controls are controls that require additional considerations for your environment. 
+
+  Please refer to your vendor's MDM documentation for instructions on how to implement these controls.
+  
+  [cols="20%h, 80%a"]
+  |===
+  |STIG ID
+  |Rule Title
+
+  |AIOS-16-004900| Apple iOS/iPadOS 16 must [selection: wipe protected data, wipe sensitive data] upon unenrollment from MDM.
+  |AIOS-16-005000| Apple iOS/iPadOS 16 must [selection: remove Enterprise application, remove all noncore applications (any nonfactory-installed application)] upon unenrollment from MDM.
+  |AIOS-16-007400 +
+  AIOS-16-707400| Apple iOS/iPadOS 16 allowlist must be configured to not include applications with the following characteristics: - Backs up MD data to non-DoD cloud servers (including user and application access to cloud backup services); - Transmits MD diagnostic data to non-DoD servers; - Allows synchronization of data or applications between devices associated with user; and - Allows unencrypted (or encrypted but not FIPS 140-2/FIPS 140-3 validated) data sharing with other MDs or printers.
+  |AIOS-16-008400 +
+  AIOS-16-708400| Apple iOS/iPadOS 16 must be configured to display the DoD advisory warning message at startup or each time the user unlocks the device.
+  |AIOS-16-009200 +
+  AIOS-16-709200| Apple iOS/iPadOS 16 must be configured to not allow backup of [all applications, configuration data] to locally connected systems.
+  |AIOS-16-009800| Apple iOS/iPadOS 16 must be configured to disable multiuser modes.
+  |AIOS-16-009900 +
+  AIOS-16-709900| Apple iOS/iPadOS 16 must be configured to [selection: wipe protected data, wipe sensitive data] upon unenrollment from MDM.
+  |AIOS-16-010000|  Apple iOS/iPadOS 16 must be configured to [selection: remove Enterprise applications, remove all noncore applications (any nonfactory installed application)] upon unenrollment from MDM.
+  |AIOS-16-011200 +
+  AIOS-16-711200| iPhone and iPad must have the latest available iOS/iPadOS operating system installed.
+  |AIOS-16-011600| Apple iOS/iPadOS 16 must implement the management setting: Not have any Family Members in Family Sharing.
+  |AIOS-16-011900 +
+  AIOS-16-711900| Apple iOS/iPadOS 16 users must complete required training.
+  |AIOS-16-012000 +
+  AIOS-16-712000| A managed photo app must be used to take and store work-related photos.
+  |AIOS-16-013500| Apple iOS must implement the management setting: Not allow a user to remove Apple iOS configuration profiles that enforce DoD security requirements.
+  |AIOS-16-011700| Apple iOS/iPadOS 17 must implement the management setting: not share location data through iCloud.
+  |===
+check: |
+fix: |
+references:
+  cci:
+    - N/A
+  800-53r5:
+    - N/A
+  800-53r4:
+    - N/A
+  srg:
+    - N/A
+  disa_stig:
+    - N/A
+iOS:
+  - "13.0"
+tags:
+  - ios_stig
+  - ios_stig_byoad
+  - supplemental
+mobileconfig: false
+mobileconfig_info:  

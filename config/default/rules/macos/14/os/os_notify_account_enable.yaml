@@ -1,0 +1,43 @@
+id: os_notify_account_enable
+title: 'Configure the System to Notify upon Account Enabled Actions '
+discussion: |
+  The macOS should be configured to automatically notify system administrators and Information System Security Officers (ISSOs) when accounts are enabled.
+
+  Once an attacker establishes initial access to a system, the attacker often attempts to create a persistent method of reestablishing and maintaining access by enabling a new or previously disabled account.  Configuring the information system to send a notification when  a new or disabled account is enabled is one method for mitigating this risk. A comprehensive account management process should not only notify when accounts are enabled, but also maintain an audit record of these actions.  Such a process greatly reduces the risk that accounts will be surreptitiously enabled and provides logging that can be used for forensic purposes.
+
+  To enable notifications and audit logging of enabled accounts, many operating systems can be integrated with enterprise-level auditing mechanisms that meet or exceed this requirement.
+check: |
+  The technology does not support this requirement. This is an applicable-does not meet finding.
+fix: |
+  This requirement is a permanent finding and cannot be fixed. An appropriate mitigation for the system must be implemented, but this finding cannot be considered fixed.
+references:
+  cce:
+    - CCE-92836-6
+  cci:
+    - N/A
+  800-53r5:
+    - N/A
+  800-53r4:
+    - AC-2(4)
+  disa_stig:
+    - N/A
+  srg:
+    - SRG-OS-000304-GPOS-00121
+    - SRG-OS-000239-GPOS-00089
+    - SRG-OS-000240-GPOS-00090
+    - SRG-OS-000004-GPOS-00004
+    - SRG-OS-000241-GPOS-00091
+    - SRG-OS-000274-GPOS-00104
+    - SRG-OS-000275-GPOS-00105
+    - SRG-OS-000276-GPOS-00106
+    - SRG-OS-000277-GPOS-00107
+    - SRG-OS-000303-GPOS-00120
+macOS:
+  - '14.0'
+tags:
+  - 800-53r4_moderate
+  - 800-53r4_high
+  - permanent
+  - srg
+mobileconfig: false
+mobileconfig_info:

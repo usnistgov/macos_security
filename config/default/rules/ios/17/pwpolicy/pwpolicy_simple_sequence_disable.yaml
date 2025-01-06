@@ -1,0 +1,46 @@
+id: pwpolicy_simple_sequence_disable
+title: "Prohibit Repeating, Ascending, and Descending Character Sequences"
+discussion: |
+  The iOS device _MUST_ be configured to prohibit the use of repeating, ascending, and descending character sequences when a passcode is created.
+
+  This rule enforces password complexity by requiring users to set passcodes that are less vulnerable to malicious users.
+check: " "
+fix: |
+  This is implemented by a Configuration Profile.
+references:
+  cce:
+    - CCE-93461-2
+  cci: 
+    - CCI-000366
+  800-53r5:
+    - IA-5(1)
+  sfr:
+    - 'FMT_SMF_EXT.1.1 #1b'
+  disa_stig:
+    - N/A
+  800-171r2:
+    - N/A
+  cis:
+    benchmark:
+      - 2.4.1 (level 1 - End-User Owned Devices)
+      - 3.4.1 (level 1 - Institutionally-Owned Devices)
+    controls v8:
+      - 5.2
+iOS:
+  - "17.0"
+tags:
+  - ios
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_high
+  - cis_lvl1_byod
+  - cis_lvl2_byod
+  - cis_lvl1_enterprise
+  - cis_lvl2_enterprise
+  - cisv8
+severity: "medium"
+supervised: false
+mobileconfig: true
+mobileconfig_info:
+  com.apple.mobiledevice.passwordpolicy:
+    allowSimple: false

@@ -1,0 +1,40 @@
+id: pwpolicy_50_percent
+title: Require a Minimum of Fifty Percent Character Change in New Passwords
+discussion: |
+  The macOS should be configured to require users to change at least 50% of the characters when setting a new password.
+
+  If the operating system allows users to consecutively reuse extensive portions of passwords, this increases the window of opportunity for a malicious user to guess the password. The number of changed characters refers to the number of changes required with respect to the total number of positions in the current password. In other words, characters may be the same within the two passwords; however, the positions of the like characters must be different.
+
+  To enforce a 50% character change when new passwords are created, many operating systems can be integrated with an enterprise-level directory service that meets or exceeds this requirement.
+check: |
+  The technology does not support this requirement. This is an applicable-does not meet finding.
+fix: |
+  This requirement is a permanent finding and cannot be fixed. An appropriate mitigation for the system must be implemented, but this finding cannot be considered fixed.
+references:
+  cce:
+    - CCE-94329-0
+  cci:
+    - N/A
+  800-53r5:
+    - N/A
+  800-53r4:
+    - IA-5
+    - IA-5(1)(b)
+    - IA-5(1)
+  disa_stig:
+    - N/A
+  srg:
+    - SRG-OS-000072-GPOS-00040
+  800-171r3:
+    - 03.05.07
+  macOS:
+  - '15.0'
+tags:
+  - 800-171
+  - 800-53r4_low
+  - 800-53r4_moderate
+  - 800-53r4_high
+  - permanent
+  - srg
+mobileconfig: false
+mobileconfig_info:

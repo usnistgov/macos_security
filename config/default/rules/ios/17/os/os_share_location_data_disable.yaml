@@ -1,0 +1,36 @@
+id: os_share_location_data_disable
+title: "Ensure Sharing of Location Data is Disabled"
+discussion: |
+  Sharing of location data is an operational security (OPSEC) risk because it potentially allows an adversary to determine a DoD user's location, movements, and patterns in those movements over time. An adversary could use this information to target the user or gather intelligence on the user's likely activities. Using commercial cloud services to store and handle location data could leave the data vulnerable to breach, particularly by sophisticated adversaries. Disabling the use of such services mitigates this risk.
+check: ' '
+fix: This is implemented by a Configuration Profile
+references:
+  cce:
+    - CCE-93447-1
+  cci:
+    - CCI-000048
+  800-53r5:
+    - AC-20
+  sfr:
+    - 'FMT_SMF_EXT.1.1 #47'
+  disa_stig:
+    - N/A
+  800-171r2:
+    - N/A
+  cis:
+    benchmark:
+      - N/A
+    controls v8:
+      - N/A
+iOS:
+  - "17.0"
+tags:
+  - ios
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_high
+  - manual
+severity: medium
+supervised: false
+mobileconfig: false
+mobileconfig_info:

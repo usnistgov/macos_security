@@ -1,0 +1,31 @@
+id: os_limit_dos_attacks
+title: "Limit Impact of Denial of Service Attacks"
+discussion: |
+  The macOS should be configured to limit the impact of Denial of Service (DoS) attacks. 
+
+  DoS attacks leave authorized users unable to access information systems, devices, or other network resources due to the actions of a malicious cyber threat actor. When this occurs, the organization must operate at degraded capacity; often resulting in an inability to accomplish its mission. 
+
+  To limit the impact of DoS attacks, organizations may choose to employ increased capacity and service redundancy, which has the potential to reduce systems' susceptibility to some DoS attacks. Managing excess capacity may include, for example, establishing selected usage priorities, quotas, or partitioning. Many operating systems can be integrated with enterprise-level firewalls and networking equipment that meet or exceed this requirement.
+check: |
+  The technology does not support this requirement. This is an applicable-does not meet finding.
+fix: |
+  This requirement is a permanent finding and cannot be fixed. An appropriate mitigation for the system must be implemented, but this finding cannot be considered fixed.
+references:
+  cce:
+    - CCE-90942-4
+  cci:
+    - CCI-001095
+  800-53r5:
+    - SC-5(2)
+  800-53r4:
+    - SC-5(2)
+  disa_stig:
+    - N/A
+  srg:
+    - N/A
+macOS:
+  - "12.0"
+tags:
+  - permanent
+mobileconfig: false
+mobileconfig_info:

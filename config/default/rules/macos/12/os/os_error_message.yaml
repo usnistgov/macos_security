@@ -1,0 +1,27 @@
+id: os_error_message
+title: "Generate Error Messages without Exploitable Information"
+discussion: |
+  The information system _IS_ configured to generate error messages that provide the information necessary for corrective actions without revealing information that could be exploited by adversaries.
+check: |
+  The technology supports this requirement and cannot be configured to be out of compliance. The technology inherently meets this requirement.
+fix: |
+  The technology inherently meets this requirement. No fix is required.
+references:
+  cce:
+    - CCE-90918-4
+  cci:
+    - CCI-001312
+  800-53r5:
+    - N/A
+  800-53r4:
+    - N/A
+  disa_stig:
+    - N/A
+  srg:
+    - N/A
+macOS:
+  - "12.0"
+tags:
+  - inherent
+mobileconfig: false
+mobileconfig_info:

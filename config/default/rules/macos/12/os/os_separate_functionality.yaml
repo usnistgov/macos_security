@@ -1,0 +1,41 @@
+id: os_separate_functionality
+title: "Configure the System to Separate User and System Functionality"
+discussion: |
+  The information system _IS_ configured to separate user and system functionality. 
+  
+  Operating system management functionality includes functions necessary for administration and requires privileged user access. Allowing non-privileged users to access operating system management functionality capabilities increases the risk that non-privileged users may obtain elevated privileges. Operating system management functionality includes functions necessary to administer console, network components, workstations, or servers and typically requires privileged user access. 
+  
+  The inherent configuration of the macOS allows only privileged users to access operating system management functionalities. 
+
+  link:https://developer.apple.com/library/archive/documentation/MacOSX/Conceptual/BPSystemStartup/Chapters/DesigningDaemons.html[]
+check: |
+  The technology supports this requirement and cannot be configured to be out of compliance. The technology inherently meets this requirement.
+fix: |
+  The technology inherently meets this requirement. No fix is required.
+references:
+  cce:
+    - CCE-90999-4
+  cci:
+    - CCI-001082
+  800-53r5:
+    - SC-2
+    - MA-4(1)
+  800-53r4:
+    - SC-2
+  disa_stig:
+    - N/A
+  srg:
+    - N/A
+  800-171r2:
+    - 3.13.3
+macOS:
+  - "12.0"
+tags:
+  - 800-53r5_moderate
+  - 800-53r5_high
+  - 800-53r4_moderate
+  - 800-53r4_high
+  - 800-171
+  - inherent
+mobileconfig: false
+mobileconfig_info:

@@ -1,0 +1,37 @@
+id: os_asl_log_files_permissions_configure
+title: "Configure Apple System Log Files To Mode 640 or Less Permissive"
+discussion: |
+  The Apple System Logs (ASL) _MUST_ be configured to be writable by root and readable only by the root user and group wheel. To achieve this, ASL log files _MUST_ be configured to mode 640 permissive or less; thereby preventing normal users from reading, modifying or deleting audit logs. System logs frequently contain sensitive information that could be used by an attacker. Setting the correct permissions mitigates this risk.
+check: |
+  /usr/bin/stat -f '%A:%N' $(/usr/bin/grep -e '^>' /etc/asl.conf /etc/asl/* | /usr/bin/awk '{ print $2 }') 2> /dev/null | /usr/bin/awk '!/640/{print $1}' | /usr/bin/wc -l | /usr/bin/tr -d ' '
+result:
+  integer: 0
+fix: |
+  [source,bash]
+  ----
+  /bin/chmod 640 $(/usr/bin/stat -f '%A:%N' $(/usr/bin/grep -e '^>' /etc/asl.conf /etc/asl/* | /usr/bin/awk '{ print $2 }') 2> /dev/null | /usr/bin/awk -F":" '!/640/{print $2}')
+  ----
+references:
+  cce:
+    - CCE-90905-1
+  cci:
+    - CCI-001314
+  800-53r5:
+    - SI-11
+  800-53r4:
+    - SI-11
+  srg:
+    - SRG-OS-000206-GPOS-00084
+  disa_stig:
+    - APPL-12-004002
+  800-171r2:
+    - N/A
+macOS:
+  - "12.0"
+tags:
+  - 800-53r5_moderate 
+  - 800-53r5_high
+  - stig
+severity: "medium"
+mobileconfig: false
+mobileconfig_info:

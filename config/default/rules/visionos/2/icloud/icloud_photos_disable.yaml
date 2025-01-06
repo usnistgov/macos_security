@@ -1,0 +1,29 @@
+id: icloud_photos_disable
+title: "Disable iCloud Photo Library"
+discussion: |
+  The built-in Photos.app connection to Apple's iCloud service _MUST_ be disabled.
+  Apple's iCloud service does not provide an organization with enough control over the storage and access of data and, therefore, automated photo synchronization _MUST_ be controlled by an organization approved service.
+check: ""
+fix: |
+  This is implemented by a Configuration Profile.
+references:
+  cce:
+    - CCE-94482-7
+  800-53r5:
+    - AC-20
+    - AC-20(1)
+    - CM-7
+    - CM-7(1)
+    - SC-7(10)
+visionOS:
+  - '2.0'
+tags:
+  - visionos
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_high  
+supervised: false
+mobileconfig: true
+mobileconfig_info:
+  com.apple.applicationaccess:
+    allowCloudPhotoLibrary: false

@@ -1,0 +1,64 @@
+id: audit_flags_fd_configure
+title: "Configure System to Audit All Deletions of Object Attributes"
+discussion: |
+  The audit system _MUST_ be configured to record enforcement actions of attempts to delete file attributes (fd). 
+
+  ***Enforcement actions are the methods or mechanisms used to prevent unauthorized changes to configuration settings. One common and effective enforcement action method is using access restrictions (i.e., denying modifications to a file by applying file permissions). 
+  
+  This configuration ensures that audit lists include events in which enforcement actions prevent attempts to delete a file. 
+
+  Without auditing the enforcement of access restrictions, it is difficult to identify attempted attacks, as there is no audit trail available for forensic investigation.
+check: |
+  /usr/bin/awk -F':' '/^flags/ { print $NF }' /etc/security/audit_control | /usr/bin/tr ',' '\n' | /usr/bin/grep -Ec '\-fd'
+result:
+  integer: 1
+fix: |
+  [source,bash]
+  ----
+  /usr/bin/grep -qE "^flags.*-fd" /etc/security/audit_control || /usr/bin/sed -i.bak '/^flags/ s/$/,-fd/' /etc/security/audit_control;/usr/sbin/audit -s
+  ----
+references:
+  cce:
+    - CCE-90864-0
+  cci:
+    - CCI-000172
+    - CCI-001814
+  800-53r5:
+    - AC-2(12)
+    - AU-12
+    - AU-2
+    - AU-9
+    - CM-5(1)
+    - MA-4(1)
+  800-53r4: 
+    - AU-2  
+    - AU-12
+    - AU-9
+    - CM-5(1)
+    - MA-4(1)
+  srg:
+    - SRG-OS-000064-GPOS-00033
+    - SRG-OS-000365-GPOS-00152
+    - SRG-OS-000458-GPOS-00203
+    - SRG-OS-000461-GPOS-00205
+    - SRG-OS-000463-GPOS-00207
+    - SRG-OS-000465-GPOS-00209
+    - SRG-OS-000466-GPOS-00210
+    - SRG-OS-000467-GPOS-00211
+    - SRG-OS-000468-GPOS-00212
+    - SRG-OS-000474-GPOS-00219
+  disa_stig:
+    - APPL-12-001020
+  800-171r2:
+    - N/A
+macOS:
+  - "12.0"
+tags:
+  - 800-53r5_privacy 
+  - 800-53r5_low 
+  - 800-53r5_moderate 
+  - 800-53r5_high
+  - stig
+severity: "medium"
+mobileconfig: false
+mobileconfig_info:

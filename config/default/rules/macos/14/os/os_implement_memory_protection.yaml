@@ -1,0 +1,45 @@
+id: os_implement_memory_protection
+title: Configure the System to Protect Memory from Unauthorized Code Execution
+discussion: |
+  The information system _IS_ configured to implement non-executable data to protect memory from code execution.
+
+  Some adversaries launch attacks with the intent of executing code in non-executable regions of memory or in memory locations that are prohibited (e.g., buffer overflow attacks). Security safeguards (e.g., data execution prevention and address space layout randomization) can be employed to protect non-executable regions of memory. Data execution prevention safeguards can either be hardware-enforced or software-enforced; hardware-enforced methods provide the greater strength of mechanism.
+
+  macOS supports address space layout randomization (ASLR), position-independent executable (PIE), Stack Canaries, and NX stack and heap protection.
+
+  link:https://developer.apple.com/library/archive/documentation/Darwin/Conceptual/64bitPorting/transition/transition.html[]
+
+  link:https://developer.apple.com/library/archive/qa/qa1788/_index.html[]
+
+  link:https://www.apple.com/macos/security/[]
+check: |
+  The technology supports this requirement and cannot be configured to be out of compliance. The technology inherently meets this requirement.
+fix: |
+  The technology inherently meets this requirement. No fix is required.
+references:
+  cce:
+    - CCE-92809-3
+  cci:
+    - N/A
+  800-53r5:
+    - SI-16
+  800-53r4:
+    - SI-16
+  disa_stig:
+    - N/A
+  srg:
+    - SRG-OS-000433-GPOS-00193
+    - SRG-OS-000433-GPOS-00192
+macOS:
+  - '14.0'
+tags:
+  - 800-53r5_moderate
+  - 800-53r5_high
+  - 800-53r4_moderate
+  - 800-53r4_high
+  - inherent
+  - cnssi-1253_moderate
+  - cnssi-1253_high
+  - srg
+mobileconfig: false
+mobileconfig_info:

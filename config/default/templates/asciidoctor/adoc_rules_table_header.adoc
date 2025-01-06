@@ -1,0 +1,9 @@
+= macOS Rules
+:stylesheet:
+
+[%header,width="100%",cols="10%,25%,65%a",opts="wrap"]
+|===
+
+|ID
+|Title
+|Discussion

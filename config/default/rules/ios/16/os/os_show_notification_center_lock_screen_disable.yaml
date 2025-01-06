@@ -1,0 +1,44 @@
+id: os_show_notification_center_lock_screen_disable
+title: "Ensure Show Notification Center in Lock screen is set to Disabled"
+discussion: |
+  Notification Center _MUST_ be disabled in the lock screen.
+check: " "
+fix: |
+  This is implemented by a Configuration Profile.
+references:
+  cce:
+    - CCE-93250-9
+  cci: 
+    - CCI-000060
+  800-53r5:
+    - AC-11(1)
+  sfr:
+    - 'FMT_SMF_EXT.1.1 #18'
+  disa_stig:
+    - AIOS-16-007500
+    - AIOS-16-707500
+  cis:
+    benchmark:
+      - 2.2.1.15 (level 1 - End-User Owned Devices)
+      - 3.2.1.32 (level 1 - Institutionally-Owned Devices)
+    controls v8:
+      - 4.3
+iOS:
+  - "16.0"
+tags:
+  - ios
+  - 800-53r5_moderate
+  - 800-53r5_high
+  - cis_lvl1_byod
+  - cis_lvl2_byod
+  - cis_lvl1_enterprise
+  - cis_lvl2_enterprise
+  - cisv8
+  - ios_stig
+  - ios_stig_byoad
+severity: "medium"
+supervised: false
+mobileconfig: true
+mobileconfig_info:
+  com.apple.applicationaccess:
+    allowLockScreenNotificationsView: false

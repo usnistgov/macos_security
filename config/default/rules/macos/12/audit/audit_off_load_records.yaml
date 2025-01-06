@@ -1,0 +1,37 @@
+id: audit_off_load_records
+title: "Off-Load Audit Records"
+discussion: |
+  Audit records should be off-loaded onto a different system or media from the system being audited.
+
+  Information stored in only one location is vulnerable to accidental or incidental deletion or alteration. Off-loading is a common process in information systems with limited audit storage capacity. 
+
+  To secure audit records by off-loading, many operating systems can be integrated with enterprise-level auditing mechanisms that meet or exceed this requirement. 
+check: |
+  The technology does not support this requirement. This is an applicable-does not meet finding.
+fix: |
+  This requirement is a permanent finding and cannot be fixed. An appropriate mitigation for the system must be implemented, but this finding cannot be considered fixed.
+references:
+  cce:
+    - CCE-90872-3
+  cci:
+    - CCI-001851
+  800-53r5:
+    - AU-4(1)
+  800-53r4:
+    - AU-4(1)
+  disa_stig:
+    - N/A
+  srg:
+    - N/A
+  cis:
+    benchmark:
+      - N/A
+    controls v8:
+      - 8.9
+macOS:
+  - "12.0"
+tags:
+  - permanent
+  - cisv8
+mobileconfig: false
+mobileconfig_info:

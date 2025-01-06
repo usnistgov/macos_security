@@ -1,0 +1,24 @@
+id: os_safari_JavaScript_disable
+title: "Prevent Java Script"
+discussion: |
+  The iOS device _MUST_ be configured to prevent Java Script support in Safari to prevent malicious code execution on the device.
+check: " "
+fix: |
+  This is implemented by a Configuration Profile.
+references:
+  cce:
+    - CCE-94546-9
+  800-53r5:
+    - N/A
+  indigo:
+    - ANNEX K
+iOS:
+  - "18.0"
+tags:
+  - ios
+  - indigo_high
+supervised: false
+mobileconfig: true
+mobileconfig_info:
+  com.apple.applicationaccess:
+    safariAllowJavaScript: false

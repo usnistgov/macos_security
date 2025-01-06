@@ -1,0 +1,48 @@
+id: os_camera_disable
+title: Disable Camera
+discussion: |
+  It is detrimental for operating systems to provide, or install by default, functionality exceeding requirements or mission objectives. These unnecessary capabilities or services are often overlooked and therefore may remain unsecured. They increase the risk to the platform by providing additional attack vectors.
+
+  Failing to disconnect from collaborative computing devices (i.e., cameras) can result in subsequent compromises of organizational information. Providing easy methods to physically disconnect from such devices after a collaborative computing session helps to ensure that participants carry out the disconnect activity without having to go through complex and tedious procedures.
+
+  This requirement is not applicable to mobile devices (smartphones and tablets), where the use of the camera is a local AO decision.
+
+  This requirement is not applicable to dedicated VTC suites located in approved VTC locations that are centrally managed.
+
+  For an external camera, if there is not a method for the operator to manually disconnect camera at the end of collaborative computing sessions, this is a finding.
+
+  For a built-in camera, the camera must be protected by a camera cover (e.g., laptop camera cover slide) when not in use. If the built-in camera is not protected with a camera cover, or is not physically disabled, this is a finding.
+
+  If the camera is not disconnected, covered, or physically disabled, the following configuration is required.
+check: |
+  /usr/bin/osascript -l JavaScript << EOS
+  $.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess')\
+  .objectForKey('allowCamera').js
+  EOS
+result:
+  string: 'false'
+fix: |
+  This is implemented by a Configuration Profile.
+references:
+  cce:
+    - CCE-92772-3
+  cci:
+    - CCI-000381
+    - CCI-001774
+  800-53r5:
+    - N/A
+  800-53r4:
+    - N/A
+  srg:
+    - SRG-OS-000095-GPOS-00049
+  disa_stig:
+    - APPL-14-002017
+macOS:
+  - '14.0'
+tags:
+  - stig
+severity: medium
+mobileconfig: true
+mobileconfig_info:
+  com.apple.applicationaccess:
+    allowCamera: false

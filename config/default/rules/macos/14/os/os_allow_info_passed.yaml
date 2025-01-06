@@ -1,0 +1,35 @@
+id: os_allow_info_passed
+title: Allow Information Transfer with Other Operating Systems
+discussion: |
+  The information system _IS_ configured to allow the transfer of information to and from other operating systems and users.
+
+  The macOS is a UNIX 03-compliant operating system, which allows owners of object to have discretion over who should be authorized to access information.
+
+  link:https://developer.apple.com/library/archive/documentation/Security/Conceptual/AuthenticationAndAuthorizationGuide/Permissions/Permissions.html[]
+check: |
+  The technology supports this requirement and cannot be configured to be out of compliance. The technology inherently meets this requirement.
+fix: |
+  The technology inherently meets this requirement. No fix is required.
+references:
+  cce:
+    - CCE-92757-4
+  cci:
+    - N/A
+  800-53r5:
+    - AC-3(4)
+  800-53r4:
+    - AC-3(4)
+  disa_stig:
+    - N/A
+  srg:
+    - SRG-OS-000312-GPOS-00122
+macOS:
+  - '14.0'
+tags:
+  - inherent
+  - cnssi-1253_moderate
+  - cnssi-1253_low
+  - cnssi-1253_high
+  - srg
+mobileconfig: false
+mobileconfig_info:

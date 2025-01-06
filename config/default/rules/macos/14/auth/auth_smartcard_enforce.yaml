@@ -1,0 +1,101 @@
+id: auth_smartcard_enforce
+title: Enforce Smartcard Authentication
+discussion: |
+  Smartcard authentication _MUST_ be enforced.
+
+  The use of smartcard credentials facilitates standardization and reduces the risk of unauthorized access.
+
+  When enforceSmartCard is set to "true", the smartcard must be used for login, authorization, and unlocking the screensaver.
+
+  CAUTION: enforceSmartCard will apply to the whole system. No users will be able to login with their password unless the profile is removed or a user is exempt from smartcard enforcement.
+
+  NOTE: enforceSmartcard requires allowSmartcard to be set to true in order to work.
+check: |
+  /usr/bin/osascript -l JavaScript << EOS
+  $.NSUserDefaults.alloc.initWithSuiteName('com.apple.security.smartcard')\
+  .objectForKey('enforceSmartCard').js
+  EOS
+result:
+  string: 'true'
+fix: |
+  This is implemented by a Configuration Profile.
+references:
+  cce:
+    - CCE-92738-4
+  cci:
+    - CCI-000186
+    - CCI-000765
+    - CCI-000766
+    - CCI-000767
+    - CCI-000768
+    - CCI-001941
+    - CCI-001948
+    - CCI-001953
+  800-53r5:
+    - IA-2(1)
+    - IA-2(2)
+    - IA-2(6)
+    - IA-2
+    - IA-5(2)
+    - IA-2(12)
+    - IA-2(8)
+  800-53r4:
+    - IA-2
+    - IA-2(1)
+    - IA-2(2)
+    - IA-2(3)
+    - IA-2(4)
+    - IA-2(6)
+    - IA-2(11)
+    - IA-5(2)
+    - IA-5(11)
+  srg:
+    - SRG-OS-000107-GPOS-00054
+    - SRG-OS-000112-GPOS-00057
+    - SRG-OS-000067-GPOS-00035
+    - SRG-OS-000108-GPOS-00055
+    - SRG-OS-000106-GPOS-00053
+    - SRG-OS-000375-GPOS-00160
+    - SRG-OS-000376-GPOS-00161
+    - SRG-OS-000105-GPOS-00052
+  disa_stig:
+    - APPL-14-003020
+  800-171r2:
+    - 3.5.1
+    - 3.5.2
+    - 3.5.3
+  cis:
+    benchmark:
+      - N/A
+    controls v8:
+      - 6.3
+      - 6.4
+      - 6.5
+  cmmc:
+    - IA.L1-3.5.1
+    - IA.L1-3.5.2
+    - IA.L2-3.5.3
+    - IA.L2-3.5.4
+macOS:
+  - '14.0'
+tags:
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_high
+  - 800-53r4_low
+  - 800-53r4_moderate
+  - 800-53r4_high
+  - 800-171
+  - cisv8
+  - cnssi-1253_moderate
+  - cnssi-1253_low
+  - cnssi-1253_high
+  - cmmc_lvl2
+  - cmmc_lvl1
+  - stig
+severity: medium
+mobileconfig: true
+mobileconfig_info:
+  com.apple.security.smartcard:
+    enforceSmartCard: true
+    allowSmartCard: true

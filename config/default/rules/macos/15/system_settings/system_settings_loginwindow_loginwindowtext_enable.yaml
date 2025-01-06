@@ -1,0 +1,48 @@
+id: system_settings_loginwindow_loginwindowtext_enable
+title: Configure Login Window to Show A Custom Message
+discussion: |
+  The login window _MUST_ be configured to show a custom access warning message.
+check: |
+  /usr/bin/osascript -l JavaScript << EOS | /usr/bin/base64
+  $.NSUserDefaults.alloc.initWithSuiteName('com.apple.loginwindow')\
+  .objectForKey('LoginwindowText').js
+  EOS
+result:
+  base64: $ODV
+fix: |
+  This is implemented by a Configuration Profile.
+references:
+  cce:
+    - CCE-94379-5
+  cci:
+    - N/A
+  800-53r5:
+    - N/A
+  800-53r4:
+    - N/A
+  srg:
+    - N/A
+  disa_stig:
+    - N/A
+  800-171r3:
+    - N/A
+  cis:
+    benchmark:
+      - 2.10.3 (level 1)
+    controls v8:
+      - 4.1
+macOS:
+  - '15.0'
+odv:
+  hint: Organization's approved message.
+  recommended: Center for Internet Security Test Message
+  cis_lvl1: Center for Internet Security Test Message
+  cis_lvl2: Center for Internet Security Test Message
+tags:
+  - cis_lvl1
+  - cis_lvl2
+  - cisv8
+mobileconfig: true
+mobileconfig_info:
+  com.apple.loginwindow:
+    LoginwindowText: $ODV

@@ -1,0 +1,33 @@
+id: os_external_intelligence_integration_sign_in_disable
+title: "Sign In to External Intelligence Integrations Must Be Disabled"
+discussion: |
+  The ability to sign into external intelligence integrations _MUST_ be disabled.
+  
+  The external intelligence integration feature of Apple Intelligence allows information to be downloaded from the device and processed by an external application in the cloud. The external intelligence integration feature of Apple Intelligence increases the risk of compromise of sensitive information. 
+check: " "
+fix: |
+  This is implemented by a Configuration Profile.
+references:
+  cce:
+    - CCE-94518-8
+  cci: 
+    - CCI-000366
+  800-53r5:
+    - CM-6
+    - CM-7
+    - AC-20
+  sfr:
+    - 'FMT_MOF_EXT.1.2 #47'    
+  disa_stig:
+    - AIOS-18-015400    
+iOS:
+  - "18.2"
+tags:
+  - ios
+  - ios_stig
+severity: medium
+supervised: true
+mobileconfig: true
+mobileconfig_info:
+  com.apple.applicationaccess:
+    allowExternalIntelligenceIntegrationsSignIn: false

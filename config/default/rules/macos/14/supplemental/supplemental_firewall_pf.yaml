@@ -1,0 +1,138 @@
+id: supplemental_firewall_pf
+title: "Packet Filter (pf) Supplemental"
+discussion: |
+  The supplemental guidance found in this section is applicable for the following rules:
+
+  *	os_firewall_default_deny_require
+
+  macOS contains an application layer firewall (ALF) and a packet filter (PF) firewall.
+
+    * The ALF can block incoming traffic on a per-application basis and prevent applications from gaining control of network ports, but it cannot be configured to block outgoing traffic.
+    ** More information on the ALF can be found here: https://support.apple.com/en-ca/HT201642
+
+    *  The PF firewall can manipulate virtually any packet data and is highly configurable.
+    ** More information on the BF firewall can be found here: https://www.openbsd.org/faq/pf/index.html
+
+  Below is a script that configures ALF and the PF firewall to meet the requirements defined in NIST SP 800-53 (Rev. 5). The script will make sure the application layer firewall is enabled, set logging to "detailed", set built-in signed applications to automatically receive incoming connections, and set downloaded signed applications to automatically receive incoming connections. It will then create a custom rule set and copy `com.apple.pfctl.plis` from `/System/Library/LaunchDaemons/` into the `/Library/LaunchDaemons` folder and name it `800-53.pfctl.plist`. This is done to not conflict with the system's pf ruleset.
+
+  The custom pf rules are created at `/etc/pf.anchors/800_53_pf_anchors`.
+
+  The ruleset will block connections on the following ports:
+
+  [%header,width="100%",cols="3,7"]
+  |===
+  ^.^|Port
+  ^.^|Service
+
+  |548
+  |Apple File Protocol (AFP)
+
+  |1900
+  |Bonjour
+
+  |79
+  |Finger
+
+  |20, 21
+  |File Transfer Protocol (FTP)
+
+  |80
+  |HTTP
+
+  |icmp
+  |ping
+
+  |143
+  |Internet Message Access Protocol (IMAP)
+
+  |993
+  |Internet Message Access Protocol over SSL (IMAPS)
+
+  |3689
+  |Music Sharing
+
+  |5353
+  |mDNSResponder
+
+  |2049
+  |Network File System (NFS)
+
+  |49152
+  |Optical Media Sharing
+
+  |110
+  |Post Office Protocol (POP3)
+
+  |995
+  |Post Office Protocol Secure (POP3S)
+
+  |631
+  |Printer Sharing
+
+  |3031
+  |Remote Apple Events
+
+  |5900
+  |Screen Sharing
+
+  |137, 138, 138, 445
+  |Samba (SMB)
+
+  |25
+  |Simple Mail Transfer Protocol (SMTP)
+
+  |22
+  |Secure Shell (SSH)
+
+  |23
+  |Telnet
+
+  |69
+  |Trivial File Transfer Protocol (TFTP)
+
+  |540
+  |Unix-to-Unix Copy (UUCP)
+
+  |===
+
+  For more on configuring the PF firewall check out the man pages on `pf.conf` and `pfctl`.
+
+  [source,bash]
+  ----
+  include::../../includes/enablePF-mscp.sh[]
+  ----
+check: |
+fix: |
+references:
+  cci:
+    - N/A
+  800-53r5:
+    - N/A
+  800-53r4:
+    - N/A
+  srg:
+    - N/A
+  disa_stig:
+    - N/A
+  cmmc:
+    - N/A
+macOS:
+  - "14.0"
+tags:
+  - 800-171
+  - 800-53r4_high
+  - 800-53r4_low
+  - 800-53r4_moderate
+  - 800-53r5_high
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_privacy
+  - cmmc_lvl1
+  - cmmc_lvl2
+  - cnssi-1253_high
+  - cnssi-1253_low
+  - cnssi-1253_moderate
+  - stig
+  - supplemental
+mobileconfig: false
+mobileconfig_info:

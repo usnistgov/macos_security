@@ -1,0 +1,31 @@
+id: os_predictable_behavior
+title: Must behave in predictable and documented manner
+discussion: |
+  The information system behaves in a predictable and documented manner that reflects organizational and system objectives when invalid inputs are received.
+check: |
+  The technology supports this requirement and cannot be configured to be out of compliance. The technology inherently meets this requirement.
+fix: |
+  The technology inherently meets this requirement. No fix is required.
+references:
+  cce:
+    - CCE-92855-6
+  cci:
+    - N/A
+  800-53r5:
+    - SI-10(3)
+  800-53r4:
+    - SI-10(3)
+  disa_stig:
+    - N/A
+  srg:
+    - SRG-OS-000432-GPOS-00191
+macOS:
+  - '14.0'
+tags:
+  - inherent
+  - cnssi-1253_moderate
+  - cnssi-1253_low
+  - cnssi-1253_high
+  - srg
+mobileconfig: false
+mobileconfig_info:

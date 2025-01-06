@@ -1,0 +1,26 @@
+id: os_erase_contents_and_settings_disable
+title: "Ensure Allow Erase All Content and Settings is set to Disabled"
+discussion: |
+  Erase all contents and settings _MUST_ be disabled on institutionally owned devices.
+check: ""
+fix: |
+  This is implemented by a Configuration Profile.
+references:
+  cce:
+    - CCE-94496-7
+  800-53r5:
+    - CM-6
+    - CM-7
+    - CM-7(1)
+visionOS:
+  - '2.0'
+tags:
+  - visionos
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_high  
+supervised: true
+mobileconfig: true
+mobileconfig_info:
+  com.apple.applicationaccess:
+    allowEraseContentAndSettings: false

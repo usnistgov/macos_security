@@ -1,0 +1,29 @@
+id: os_esim_delete
+title: "Ensure the eSIM Contents are Deleted When Device is Erased"
+discussion: |
+  An eSIM may contain sensitive data and must be wiped of data when the mobile device is wiped to protect sensitive data from exposure.
+check: " "
+fix: |
+  This is implemented by a Configuration Profile.
+references:
+  cce:
+    - CCE-94516-2
+  cci: 
+    - CCI-001033
+  800-53r5:
+    - MP-6
+  sfr:
+    - 'FMT_MOF_EXT.1.2 #47'    
+  disa_stig:
+    - AIOS-18-015100    
+iOS:
+  - "18.0"
+tags:
+  - ios
+  - ios_stig
+severity: medium
+supervised: true
+mobileconfig: true
+mobileconfig_info:
+  com.apple.applicationaccess:
+    forcePreserveESIMOnErase: false

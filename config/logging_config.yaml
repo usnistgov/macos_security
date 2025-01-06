@@ -1,0 +1,41 @@
+version: 1
+disable_existing_loggers: False
+
+formatters:
+    simple:
+        format: '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+        datefmt: '%Y-%m-%d %H:%M:%S'
+
+handlers:
+    console:
+        class: logging.StreamHandler
+        level: DEBUG
+        formatter: simple
+        stream: ext://sys.stdout
+
+    file:
+        class: logging.FileHandler
+        level: INFO
+        formatter: simple
+        filename: mscp.log
+        mode: a
+
+loggers:
+    development:
+        level: DEBUG
+        handlers: [console]
+        propagate: no
+
+    staging:
+        level: INFO
+        handlers: [console, file]
+        propagate: no
+
+    production:
+        level: WARNING
+        handlers: [file]
+        propagate: no
+
+root:
+    level: DEBUG
+    handlers: [console, file]

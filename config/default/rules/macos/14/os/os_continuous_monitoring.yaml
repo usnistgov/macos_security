@@ -1,0 +1,35 @@
+id: os_continuous_monitoring
+title: Configure Automated Flaw Remediation
+discussion: |
+  The macOS system _MUST_ be configured to determine the state of system components with regard to flaw remediation.
+check: |
+  The technology does not support this requirement. This is an applicable-does not meet finding.
+fix: |
+  This requirement is a permanent finding and cannot be fixed. An appropriate mitigation for the system must be implemented, but this finding cannot be considered fixed.
+references:
+  cce:
+    - CCE-92778-0
+  cci:
+    - N/A
+  800-53r5:
+    - SI-2(2)
+  800-53r4:
+    - SI-2(2)
+  srg:
+    - SRG-OS-000191-GPOS-00080
+  disa_stig:
+    - N/A
+macOS:
+  - '14.0'
+tags:
+  - 800-53r5_moderate
+  - 800-53r5_high
+  - 800-53r4_moderate
+  - 800-53r4_high
+  - permanent
+  - cnssi-1253_moderate
+  - cnssi-1253_low
+  - cnssi-1253_high
+  - srg
+mobileconfig: false
+mobileconfig_info:

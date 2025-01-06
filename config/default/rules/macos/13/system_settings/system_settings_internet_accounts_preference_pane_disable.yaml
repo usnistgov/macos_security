@@ -1,0 +1,49 @@
+id: system_settings_internet_accounts_preference_pane_disable
+title: "Disable the Internet Accounts  Preference Pane"
+discussion: |
+  This is required for compliance with the DISA STIG for macOS.
+
+  The domain *com.apple.systempreferences* has been deprecated by Apple in macOS 13. The recommended way to disable System Setting Panes is to use the *DisabledSystemSettings* key.
+
+  link:https://developer.apple.com/documentation/devicemanagement/systempreferences[]
+
+  [IMPORTANT]
+  ====
+  Some organizations may allow the use and configuration of the built-in Mail.app, Calendar.app, and Contacts.app for organizational communication. Information System Security Officers (ISSOs) may make the risk-based decision not to disable the Internet Accounts System Preference pane to avoid losing this functionality, but they are advised to first fully weigh the potential risks posed to their organization.
+  ====
+check: |
+  /usr/bin/profiles show -output stdout-xml | /usr/bin/xmllint --xpath '//key[text()="DisabledPreferencePanes"]/following-sibling::*[1]' - | /usr/bin/grep -c "com.apple.preferences.internetaccounts"
+result:
+  integer: 1
+fix: |
+  This is implemented by a Configuration Profile.
+references:
+  cce:
+    - CCE-92009-0
+  cci:
+    - CCI-000381
+  800-53r5:
+    - N/A
+  800-53r4:
+    - N/A
+  srg:
+    - SRG-OS-000095-GPOS-00049
+  disa_stig:
+    - APPL-13-002032
+  800-171r3:
+    - N/A
+  cis:
+    benchmark:
+      - N/A
+    controls v8:
+      - N/A
+macOS:
+  - "13.0"
+tags:
+  - stig
+severity: "medium"
+mobileconfig: true
+mobileconfig_info:
+  com.apple.systempreferences:
+    DisabledPreferencePanes:
+      - com.apple.preferences.internetaccounts

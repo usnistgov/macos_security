@@ -1,0 +1,46 @@
+id: os_required_crypto_module
+title: Ensure all Federal Laws, Executive Orders, Directives, Policies, Regulations, Standards, and Guidance for Authentication to a Cryptographic Module are Met
+discussion: |
+  The inherent configuration of the macOS _IS_ in compliance by implementing mechanisms for authentication to a cryptographic module that meet the requirements of all applicable federal laws, Executive Orders, directives, policies, regulations, standards, and guidance for such authentication
+
+  macOS contains many open source projects that may use their own cryptographic libraries typically for the purposes of maintaining platform independence. These services are not covered by the Apple FIPS Validation of the CoreCrypto and CoreCrypto Kernel modules.
+
+  Apple is committed to the FIPS validation process and historically has always submitted and validated the cryptographic modules in macOS. macOS Sonoma will be submitted for FIPS validation.
+
+  link:https://csrc.nist.gov/Projects/cryptographic-module-validation-program/validated-modules[]
+
+  link:https://support.apple.com/en-us/HT201159[]
+check: |
+  The technology supports this requirement and cannot be configured to be out of compliance. The technology inherently meets this requirement.
+fix: |
+  The technology inherently meets this requirement. No fix is required.
+references:
+  cce:
+    - CCE-92874-7
+  cci:
+    - N/A
+  800-53r5:
+    - IA-7
+  800-53r4:
+    - IA-7
+  disa_stig:
+    - N/A
+  srg:
+    - SRG-OS-000033-GPOS-00014
+    - SRG-OS-000120-GPOS-00061
+macOS:
+  - '14.0'
+tags:
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_high
+  - 800-53r4_low
+  - 800-53r4_moderate
+  - 800-53r4_high
+  - inherent
+  - cnssi-1253_moderate
+  - cnssi-1253_low
+  - cnssi-1253_high
+  - srg
+mobileconfig: false
+mobileconfig_info:

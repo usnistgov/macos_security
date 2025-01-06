@@ -1,0 +1,38 @@
+id: os_camera_disable
+title: "Disable Camera"
+discussion: |
+  macOS _MUST_ be configured to disable the camera.
+check: |
+  /usr/bin/osascript -l JavaScript << EOS
+  $.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess')\
+  .objectForKey('allowCamera').js
+  EOS
+result:
+  string: "false"
+fix: |
+  This is implemented by a Configuration Profile.
+references:
+  cce:
+    - CCE-90910-1
+  cci: 
+    - CCI-000381
+    - CCI-001150
+    - CCI-001153
+  800-53r5:
+    - N/A
+  800-53r4:
+    - N/A
+  srg:
+    - SRG-OS-000095-GPOS-00049
+    - SRG-OS-000370-GPOS-00155
+  disa_stig:
+    - APPL-12-002017
+macOS:
+  - "12.0"
+tags:
+  - stig
+severity: "medium"
+mobileconfig: true
+mobileconfig_info:
+  com.apple.applicationaccess:
+    allowCamera: false

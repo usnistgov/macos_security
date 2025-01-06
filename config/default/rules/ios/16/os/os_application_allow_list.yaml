@@ -1,0 +1,48 @@
+id: os_application_allow_list
+title: "Define Allowed Applications"
+discussion: |-
+  Requiring all authorized applications to be in an application allow list prevents the execution of any applications (e.g., unauthorized, malicious) that are not part of the allow list. Failure to configure an application allow list properly could allow unauthorized and malicious applications to be downloaded, installed, and executed on the mobile device, causing a compromise of DoD data accessible by these applications. Applications with the listed characteristics have features that can cause the compromise of sensitive DoD data or have features with no known application in the DoD environment.
+
+  Application note: The application allow list, in addition to controlling the installation of applications on the MD, must control user access/execution of all core and preinstalled applications, or the MD must provide an alternate method of restricting user access/execution to core and preinstalled applications.
+
+  Core application: Any application integrated into the OS by the OS or MD vendors.
+
+  Preinstalled application: Additional noncore applications included in the OS build by the OS vendor, MD vendor, or wireless carrier.
+
+  NOTE: See rule YAML file for implementation comments.
+check: ' '
+fix: This is implemented by a Configuration Profile
+references:
+  cce:
+    - CCE-93217-8
+  cci:
+    - CCI-000366
+  800-53r5:
+    - CM-7(5)
+  sfr:
+    - 'FMT_SMF_EXT.1.1 #8b'
+  disa_stig:
+    - AIOS-16-007400
+    - AIOS-16-707400
+  cis:
+    benchmark:
+      - N/A
+    controls v8:
+      - N/A
+iOS:
+  - "16.0"
+tags:
+  - ios
+  - 800-53r5_moderate
+  - 800-53r5_high
+  - ios_stig
+  - ios_stig_byoad
+  - manual
+severity: medium
+supervised: true
+mobileconfig: false # Set to true when implementing
+mobileconfig_info:
+  com.apple.applicationaccess:
+    allowListedAppBundleIDs: # Add bundle identifiers below
+      - bundleID1
+      - bundleID2

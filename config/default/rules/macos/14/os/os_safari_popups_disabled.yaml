@@ -1,0 +1,36 @@
+id: os_safari_popups_disabled
+title: "Ensure Pop-Up Windows are Blocked in Safari"
+discussion: |
+  Safari _MUST_ be configured to block Pop-Up windows.
+check: |
+  /usr/bin/profiles -P -o stdout | /usr/bin/grep -c 'safariAllowPopups = 0' | /usr/bin/awk '{ if ($1 >= 1) {print "1"} else {print "0"}}'
+result:
+  integer: 1
+fix: |
+  This is implemented by a Configuration Profile.
+references:
+  cce:
+    - CCE-93014-9
+  cci:
+    - N/A
+  800-53r5:
+    - N/A
+  800-53r4:
+    - N/A
+  disa_stig:
+    - N/A
+  srg:
+    - N/A
+  cis:
+    benchmark:
+      - N/A
+    controls v8:
+      - N/A
+macOS:
+  - "14.0"
+tags:
+  - none
+mobileconfig: true
+mobileconfig_info:
+  com.apple.Safari:
+    safariAllowPopups: false

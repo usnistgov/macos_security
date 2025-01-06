@@ -1,0 +1,56 @@
+id: os_force_encrypted_backups_enable
+title: "Ensure Force Encrypted Backups is Enabled"
+discussion: |
+  iOS and iPadOS backups _MUST_ be encrypted.
+check: " "
+fix: |
+  This is implemented by a Configuration Profile.
+references:
+  cce:
+    - CCE-94442-1
+  cci:
+    - CCI-000366
+    - CCI-000370
+    - CCI-000381
+  800-53r5:
+    - CM-7
+    - CM-7(1)
+    - CP-09(8)
+    - SC-28
+  sfr:
+    - 'FMT_SMF_EXT.1.1 #47'
+  disa_stig:
+    - AIOS-18-010700
+  indigo:
+    - ANNEX D (Section 5.3 - Description of security/key management) 
+    - ANNEX K
+  cis:
+    benchmark:
+      - 2.2.1.4 (level 1 - End-User Owned Devices)
+      - 3.2.1.10 (level 1 - Institutionally-Owned Devices)
+    controls v8:
+      - 11.3
+iOS:
+  - "18.0"
+tags:
+  - ios
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_high
+  - cis_lvl1_byod
+  - cis_lvl2_byod
+  - cis_lvl1_enterprise
+  - cis_lvl2_enterprise
+  - cisv8
+  - ios_stig
+  - indigo_base
+  - indigo_high
+  - cnssi-1253_moderate
+  - cnssi-1253_low
+  - cnssi-1253_high
+severity: "medium"
+supervised: false
+mobileconfig: true
+mobileconfig_info:
+  com.apple.applicationaccess:
+    forceEncryptedBackup: true

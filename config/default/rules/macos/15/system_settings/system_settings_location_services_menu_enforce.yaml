@@ -1,0 +1,40 @@
+id: system_settings_location_services_menu_enforce
+title: Ensure Location Services Is In the Menu Bar
+discussion: |
+  Location Services menu item _MUST_ be enabled.
+check: |
+  /usr/bin/defaults read /Library/Preferences/com.apple.locationmenu.plist ShowSystemServices
+result:
+  boolean: 1
+fix: |
+  [source,bash]
+  ----
+  /usr/bin/defaults write /Library/Preferences/com.apple.locationmenu.plist ShowSystemServices -bool true
+  ----
+references:
+  cce:
+    - CCE-94378-7
+  cci:
+    - N/A
+  800-53r5:
+    - N/A
+  800-53r4:
+    - N/A
+  srg:
+    - N/A
+  disa_stig:
+    - N/A
+  800-171r3:
+    - N/A
+  cis:
+    benchmark:
+      - 2.6.1.2 (level 2)
+    controls v8:
+      - 4.1
+      - 4.8
+macOS:
+  - '15.0'
+tags:
+  - cis_lvl2
+mobileconfig: false
+mobileconfig_info:

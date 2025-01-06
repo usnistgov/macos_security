@@ -1,0 +1,47 @@
+id: os_anti_virus_installed
+title: Must Use an Approved Antivirus Program
+discussion: |
+  An approved antivirus product _MUST_ be installed and configured to run.
+
+  Malicious software can establish a base on individual desktops and servers. Employing an automated mechanism to detect this type of software will aid in elimination of the software from the operating system.'
+check: |
+  /usr/bin/xprotect status | /usr/bin/grep -cE "(launch scans: enabled|background scans: enabled)"
+result:
+  integer: 2
+fix: |
+  [source,bash]
+  ----
+  /bin/launchctl load -w /Library/Apple/System/Library/LaunchDaemons/com.apple.XProtect.daemon.scan.plist
+  /bin/launchctl load -w /Library/Apple/System/Library/LaunchDaemons/com.apple.XprotectFramework.PluginService.plist
+  ----
+
+  NOTE: These services cannot be unloaded or loaded while System Integrity Protection (SIP) is enabled.
+references:
+  cce:
+    - CCE-94158-3
+  cci:
+    - CCI-000366
+  800-53r5:
+    - N/A
+  800-53r4:
+    - SI-2
+  srg:
+    - N/A
+  disa_stig:
+    - N/A
+  cis:
+    benchmark:
+      - 5.10 (level 1)
+    controls v8:
+      - 10.5
+      - 10.1
+      - 10.2
+macOS:
+  - '15.0'
+tags:
+  - cis_lvl1
+  - cis_lvl2
+  - cisv8
+severity: "high"
+mobileconfig: false
+mobileconfig_info:

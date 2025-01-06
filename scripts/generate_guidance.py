@@ -200,7 +200,7 @@ def format_mobileconfig_fix(mobileconfig):
                             rulefix = rulefix + \
                                     (f"    <string>{v}</string>\n")
                     rulefix = rulefix + "</dict>\n"
-                    
+
 
             rulefix = rulefix + "----\n\n"
 
@@ -629,7 +629,7 @@ def create_ddm_activation(identifier, ddm_output_path):
     ddm_json["Payload"] = { "StandardConfigurations" : [ identifier ]}
 
     ddm_object = json.dumps(ddm_json, indent=4)
-    
+
     logging.debug(f"Building declarative activation for {ddm_identifier}...")
 
     # Writing the .json to disk
@@ -657,7 +657,7 @@ def create_ddm_conf(identifier, service, ddm_output_path):
                             "DataAssetReference" : identifier }
 
     ddm_object = json.dumps(ddm_json, indent=4)
-    
+
     logging.debug(f"Building declarative configuration for {ddm_identifier}...")
 
     # Writing the .json to disk
@@ -672,7 +672,7 @@ def create_ddm_conf(identifier, service, ddm_output_path):
     ) as outfile:
         outfile.write(ddm_object)
 
-    return 
+    return
 
 def generate_ddm(baseline_name, build_path, parent_dir, baseline_yaml):
     """Generate the declarative management artifacts for the rules in the provided baseline YAML file"""
@@ -818,15 +818,15 @@ def generate_ddm(baseline_name, build_path, parent_dir, baseline_yaml):
                                     os.makedirs(ddm_asset_output_path)
                                 except OSError:
                                     print("Creation of the directory %s failed" % ddm_asset_output_path)
-                            
+
                             with open(
                                 ddm_asset_output_path + "/" + ddm_identifier + ".json", "w"
                             ) as outfile:
                                 outfile.write(ddm_object)
-                            
+
                             # move .zips to assets
                             shutil.move(zip_file,ddm_asset_output_path)
-                            
+
                             # create activation
                             create_ddm_activation(ddm_identifier, ddm_output_path)
 
@@ -849,12 +849,12 @@ def generate_ddm(baseline_name, build_path, parent_dir, baseline_yaml):
                     os.makedirs(ddm_config_output_path)
                 except OSError:
                     print("Creation of the directory %s failed" % ddm_config_output_path)
-            
+
             with open(
                 ddm_config_output_path + "/" + ddm_identifier + ".json", "w"
             ) as outfile:
                 outfile.write(ddm_object)
-            
+
             # create activation
             create_ddm_activation(ddm_identifier, ddm_output_path)
 
@@ -951,10 +951,11 @@ YELLOW='\\e[33m'
 
 audit_plist="/Library/Preferences/org.{audit_name}.audit.plist"
 audit_log="/Library/Logs/{audit_name}_baseline.log"
+audit_csv="/Library/Logs/{audit_name}_baseline.csv"
 
 # pause function
 pause(){{
-vared -p "Press [Enter] key to continue..." -c fackEnterKey
+    vared -p "Press [Enter] key to continue..." -c fackEnterKey
 }}
 
 # logging function
@@ -970,6 +971,20 @@ logmessage(){{
     else
         echo "$(date -u) $1" | /usr/bin/tee -a "$audit_log" > /dev/null
     fi
+}}
+
+logcsv(){{
+    local rule_name="%1"
+    local status="$2"
+    local result="%3"
+    local expected="%4"
+    local exemption="%5"
+
+    if [[ ! -f "$audit_csv" ]]; then
+        echo "Rule,Status,Result,Expected,Exemption > "$audit_csv"
+    fi
+
+    echo "$rule_name,$status,$result,$expected,$exemption" >> "$audit_csv"
 }}
 
 ask() {{
@@ -1060,9 +1075,9 @@ compliance_count(){{
     compliant=0
     non_compliant=0
     exempt_count=0
-    
+
     rule_names=($(/usr/libexec/PlistBuddy -c "Print" $audit_plist | awk '/= Dict/ {{print $1}}'))
-    
+
     for rule in ${{rule_names[@]}}; do
         finding=$(/usr/libexec/PlistBuddy -c "Print $rule:finding" $audit_plist)
         if [[ $finding == "false" ]];then
@@ -1075,7 +1090,7 @@ EOS
             if [[ $is_exempt == "1" ]]; then
                 exempt_count=$((exempt_count+1))
                 non_compliant=$((non_compliant+1))
-            else    
+            else
                 non_compliant=$((non_compliant+1))
             fi
         fi
@@ -1283,11 +1298,12 @@ EOS
     exempt_reason=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
 ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.{7}.audit').objectForKey('{0}'))["exempt_reason"]
 EOS
-)   
+)
     customref="$(echo "{5}" | rev | cut -d ' ' -f 2- | rev)"
     customref="$(echo "$customref" | tr " " ",")"
     if [[ $result_value == "{4}" ]]; then
         logmessage "{5} passed (Result: $result_value, Expected: \\"{3}\\")"
+        logcsv "{5}" "passed" "$result_value" "{3}"
         /usr/bin/defaults write "$audit_plist" {0} -dict-add finding -bool NO
         if [[ ! "$customref" == "{0}" ]]; then
             /usr/bin/defaults write "$audit_plist" {0} -dict-add reference -string "$customref"
@@ -1296,6 +1312,7 @@ EOS
     else
         if [[ ! $exempt == "1" ]] || [[ -z $exempt ]];then
             logmessage "{5} failed (Result: $result_value, Expected: \\"{3}\\")"
+            logcsv "{5}" "failed" "$result_value" "{3}"
             /usr/bin/defaults write "$audit_plist" {0} -dict-add finding -bool YES
             if [[ ! "$customref" == "{0}" ]]; then
                 /usr/bin/defaults write "$audit_plist" {0} -dict-add reference -string "$customref"
@@ -1303,6 +1320,7 @@ EOS
             /usr/bin/logger "mSCP: {7} - {5} failed (Result: $result_value, Expected: "{3}")"
         else
             logmessage "{5} failed (Result: $result_value, Expected: \\"{3}\\") - Exemption Allowed (Reason: \\"$exempt_reason\\")"
+            logcsv "{5}" "failed" "$result_value" "{3}" "$exempt_reason"
             /usr/bin/defaults write "$audit_plist" {0} -dict-add finding -bool YES
             if [[ ! "$customref" == "{0}" ]]; then
               /usr/bin/defaults write "$audit_plist" {0} -dict-add reference -string "$customref"
@@ -1808,7 +1826,7 @@ def generate_xls(baseline_name, build_path, baseline_yaml):
                     cis = cis.replace(", ", "\n")
                     sheet1.write(counter, 14, cis, topWrap)
                     sheet1.col(14).width = 500 * 15
-        
+
         cmmc_refs = (str(rule.rule_cmmc)).strip('[]\'')
         cmmc_refs = cmmc_refs.replace(", ", "\n").replace("\'", "")
 
@@ -1858,7 +1876,7 @@ def generate_xls(baseline_name, build_path, baseline_yaml):
                 added_ref = added_ref.replace(", ", "\n").replace("'", "")
                 sheet1.write(counter, custom_ref_column[title], added_ref, topWrap)
 
-        
+
 
         tall_style = easyxf("font:height 640;")  # 36pt
 
@@ -2272,11 +2290,11 @@ def main():
         adoc_cmmc_show = ":show_CMMC:"
     else:
         adoc_cmmc_show = ":show_CMMC!:"
-   
+
     if "indigo" in baseline_yaml['title']:
         adoc_indigo_show = ":show_indigo:"
     else:
-        adoc_indigo_show=":show_indigo!:"        
+        adoc_indigo_show=":show_indigo!:"
 
     if "800" in baseline_yaml["title"]:
         adoc_171_show = ":show_171:"
@@ -2455,7 +2473,7 @@ def main():
                 srg = "- N/A"
             else:
                 srg = ulify(rule_yaml['references']['srg'])
-            
+
             try:
                 rule_yaml['references']['sfr']
             except KeyError:
@@ -2502,7 +2520,7 @@ def main():
                 result_value = result["base64"]
             else:
                 result_value = "N/A"
-            
+
             # determine severity, if severity is determined, build asciidoc table row for references
             # uses 'parent_values' from baseline.yaml file to determine which/if any severity to use
             severity = ""
@@ -2668,12 +2686,12 @@ def main():
         cmd = f"{asciidoctor_path} '{adoc_output_file.name}'"
         process = subprocess.Popen(cmd, stdout=subprocess.PIPE, shell=True)
         process.communicate()
-    elif os.path.exists("../bin/asciidoctor"):
+    elif os.path.exists("../mscp_gems/bin/asciidoctor"):
         print("Generating HTML file from AsciiDoc...")
-        cmd = f"'../bin/asciidoctor' '{adoc_output_file.name}'"
+        cmd = f"'../mscp_gems/bin/asciidoctor' '{adoc_output_file.name}'"
         process = subprocess.Popen(cmd, stdout=subprocess.PIPE, shell=True)
         process.communicate()
-    elif not os.path.exists("../bin/asciidoctor"):
+    elif not os.path.exists("../mscp_gems/bin/asciidoctor"):
         print(
             "Installing gem requirements - asciidoctor, asciidoctor-pdf, and rouge..."
         )

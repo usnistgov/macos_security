@@ -1,0 +1,51 @@
+id: sysprefs_ssh_enable
+title: "Enable SSH Server for Remote Access Sessions"
+discussion: |
+  Remote access sessions _MUST_ use encrypted methods to protect unauthorized individuals from gaining access. 
+check: |
+  /bin/launchctl print-disabled system | /usr/bin/grep -c '"com.openssh.sshd" => false'
+result:
+  integer: 1
+fix: |
+  [source,bash]
+  ----
+  /bin/launchctl enable system/com.openssh.sshd
+  ----
+references:
+  cce:
+    - CCE-91078-6
+  cci: 
+    - N/A
+  800-53r5:
+    - IA-2(8)
+    - AC-3
+    - CM-7
+    - CM-7(1)
+    - AC-17
+  800-53r4:
+    - AC-3 
+    - CM-7
+    - CM-7(1)
+    - IA-2(8)
+    - IA-2(9)
+  srg:
+    - N/A
+  disa_stig:
+    - N/A
+  800-171r2:
+    - 3.1.1
+    - 3.1.2
+    - 3.4.6
+    - 3.5.4
+macOS:
+  - "12.0"
+tags:
+  - 800-53r5_low 
+  - 800-53r5_moderate 
+  - 800-53r5_high 
+  - 800-53r4_low 
+  - 800-53r4_moderate 
+  - 800-53r4_high 
+  - 800-171 
+mobileconfig: false
+mobileconfig_info:

@@ -1,0 +1,80 @@
+title: "iOS/iPadOS 18.0: Security Configuration - Apple iOS/iPadOS 18 STIG - Ver 1, Rel 1"
+description: |
+  This guide describes the actions to take when securing a iOS/iPadOS 18.0 system against the Apple iOS/iPadOS 18 STIG - Ver 1, Rel 1 security baseline.
+authors: |
+  *macOS Security Compliance Project*
+
+  |===
+  |Marco Piñeyro|Department of State
+  |Dan Brodjieski|National Aeronautics and Space Administration
+  |Allen Golbig|Jamf
+  |Bob Gendler|National Institute of Standards and Technology
+  |===
+parent_values: "ios_stig"
+profile:
+  - section: "icloud"
+    rules:
+      - icloud_backup_disabled
+      - icloud_keychain_disable
+      - icloud_managed_apps_store_data_disabled
+      - icloud_photos_disable
+      - icloud_shared_photo_stream_disable
+      - icloud_sync_disable
+  - section: "ios"
+    rules:
+      - os_airdrop_disable
+      - os_airdrop_unmanaged_destination_enable
+      - os_airplay_incoming_password_require
+      - os_airplay_outgoing_password_require
+      - os_allow_contacts_read_managed_sources_unmanaged_destinations_disable
+      - os_allow_contacts_write_managed_sources_unmanaged_destinations_disable
+      - os_allow_documents_managed_sources_unmanaged_destinations_disable
+      - os_apple_watch_pairing_disable
+      - os_apple_watch_wrist_detection_enable
+      - os_application_allow_list
+      - os_auto_unlock_disable
+      - os_diagnostics_reports_disable
+      - os_disallow_enterprise_app_trust
+      - os_enterprise_books_disable
+      - os_esim_delete
+      - os_external_intelligence_integration_disable
+      - os_external_intelligence_integration_sign_in_disable
+      - os_files_network_drive_access_disable
+      - os_files_usb_drive_access_disable
+      - os_find_my_friends_disable
+      - os_force_encrypted_backups_enable
+      - os_handoff_disable
+      - os_install_configuration_profile_disable
+      - os_install_vpn_configuration_disable
+      - os_iphone_widgets_on_mac_disable
+      - os_limit_ad_tracking_enable
+      - os_mail_maildrop_disable
+      - os_mail_move_messages_disable
+      - os_marketplace_prevent
+      - os_new_device_proximity_disable
+      - os_on_device_dictation_enforce
+      - os_on_device_translation_enforce
+      - os_password_autofill_disable
+      - os_password_proximity_disable
+      - os_password_sharing_disable
+      - os_require_managed_pasteboard_enforce
+      - os_safari_password_autofill_disable
+      - os_show_calendar_lock_screen_disable
+      - os_show_notification_center_lock_screen_disable
+      - os_siri_when_locked_disabled
+      - os_ssl_for_exchange_activesync_enable
+      - os_supervised_mdm_require
+      - os_usb_accessories_when_locked_disable
+      - os_web_distribution_app_installation_disable
+  - section: "passwordpolicy"
+    rules:
+      - pwpolicy_account_lockout_enforce
+      - pwpolicy_force_pin_enable
+      - pwpolicy_history_enforce
+      - pwpolicy_max_grace_period_enforce
+      - pwpolicy_max_inactivity_enforce
+      - pwpolicy_minimum_length_enforce
+      - pwpolicy_simple_sequence_disable
+  - section: "Supplemental"
+    rules:
+      - supplemental_stig

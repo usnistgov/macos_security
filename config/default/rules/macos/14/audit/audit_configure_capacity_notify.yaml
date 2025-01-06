@@ -1,0 +1,46 @@
+id: audit_configure_capacity_notify
+title: Configure Audit Capacity Warning
+discussion: |
+  The audit service _MUST_ be configured to notify the system administrator when the amount of free disk space remaining reaches an organization defined value.
+
+  This rule ensures that the system administrator is notified in advance that action is required to free up more disk space for audit logs.
+check: |
+  /usr/bin/awk -F: '/^minfree/{print $2}' /etc/security/audit_control
+result:
+  integer: $ODV
+fix: |
+  [source,bash]
+  ----
+  /usr/bin/sed -i.bak 's/.*minfree.*/minfree:$ODV/' /etc/security/audit_control; /usr/sbin/audit -s
+  ----
+references:
+  cce:
+    - CCE-92705-3
+  cci:
+    - CCI-000139
+    - CCI-001855
+  800-53r5:
+    - AU-5(1)
+  800-53r4:
+    - AU-5(1)
+  srg:
+    - SRG-OS-000046-GPOS-00022
+    - SRG-OS-000343-GPOS-00134
+  disa_stig:
+    - APPL-14-001030
+macOS:
+  - '14.0'
+odv:
+  hint: Percentage of free space.
+  recommended: 25
+  stig: 25
+tags:
+  - 800-53r5_high
+  - 800-53r4_high
+  - cnssi-1253_moderate
+  - cnssi-1253_low
+  - cnssi-1253_high
+  - stig
+severity: low
+mobileconfig: false
+mobileconfig_info:

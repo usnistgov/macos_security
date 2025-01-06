@@ -1,0 +1,91 @@
+id: os_ssh_fips_compliant
+title: "Limit SSH to FIPS Compliant Connections"
+discussion: |
+  SSH _MUST_ be configured to limit the Ciphers, HostbasedAcceptedAlgorithms, HostKeyAlgorithms, KexAlgorithms, MACs, PubkeyAcceptedAlgorithms, CASignatureAlgorithms to algorithms that are FIPS 140 validated.
+
+  FIPS 140-2 is the current standard for validating that mechanisms used to access cryptographic modules utilize authentication that meet federal requirements.
+
+  Operating systems utilizing encryption _MUST_ use FIPS validated mechanisms for authenticating to cryptographic modules. 
+
+  NOTE: For more information on FIPS compliance with the version of SSH included in the macOS, the manual page apple_ssh_and_fips has additional information.
+check: |
+  fips_ssh_config="Host *
+  Ciphers aes128-gcm@openssh.com
+  HostbasedAcceptedAlgorithms ecdsa-sha2-nistp256,ecdsa-sha2-nistp256-cert-v01@openssh.com
+  HostKeyAlgorithms ecdsa-sha2-nistp256,ecdsa-sha2-nistp256-cert-v01@openssh.com
+  KexAlgorithms ecdh-sha2-nistp256
+  MACs hmac-sha2-256
+  PubkeyAcceptedAlgorithms ecdsa-sha2-nistp256,ecdsa-sha2-nistp256-cert-v01@openssh.com
+  CASignatureAlgorithms ecdsa-sha2-nistp256"
+  /usr/bin/grep -c "$fips_ssh_config" /etc/ssh/ssh_config.d/fips_ssh_config
+result:
+  integer: 8
+fix: |
+  [source,bash]
+  ----
+  fips_ssh_config="Host *
+  Ciphers aes128-gcm@openssh.com
+  HostbasedAcceptedAlgorithms ecdsa-sha2-nistp256,ecdsa-sha2-nistp256-cert-v01@openssh.com
+  HostKeyAlgorithms ecdsa-sha2-nistp256,ecdsa-sha2-nistp256-cert-v01@openssh.com
+  KexAlgorithms ecdh-sha2-nistp256
+  MACs hmac-sha2-256
+  PubkeyAcceptedAlgorithms ecdsa-sha2-nistp256,ecdsa-sha2-nistp256-cert-v01@openssh.com
+  CASignatureAlgorithms ecdsa-sha2-nistp256"
+  /bin/echo "${fips_ssh_config}" > /etc/ssh/ssh_config.d/fips_ssh_config
+  ----   
+references:
+  cce:
+    - CCE-91883-9
+  cci: 
+    - CCI-000068
+    - CCI-000803
+    - CCI-000877
+    - CCI-001453
+    - CCI-002890
+    - CCI-003123
+  800-53r5:
+    - AC-17(2)
+    - IA-7
+    - SC-13
+    - SC-8(1)
+  800-53r4: 
+    - AC-17(2)
+    - IA-7
+    - SC-8(1)
+    - SC-13
+  srg:
+    - SRG-OS-000033-GPOS-00014
+    - SRG-OS-000120-GPOS-00061
+    - SRG-OS-000125-GPOS-00065
+    - SRG-OS-000250-GPOS-00093
+    - SRG-OS-000393-GPOS-00173
+    - SRG-OS-000394-GPOS-00176
+  disa_stig:
+    - APPL-13-000057
+    - APPL-13-000058
+    - APPL-13-000059
+  800-171r3:
+    - 03.13.08
+    - 03.13.11
+  cmmc:
+    - AC.L2-3.1.13
+    - MP.L2-3.8.6
+    - SC.L2-3.13.8
+    - SC.L2-3.13.11
+macOS:
+  - "13.0"
+tags:
+  - 800-53r5_moderate
+  - 800-53r5_high
+  - 800-53r5_low
+  - 800-53r4_low
+  - 800-53r4_moderate
+  - 800-53r4_high
+  - 800-171
+  - cnssi-1253_moderate
+  - cnssi-1253_low
+  - cnssi-1253_high
+  - cmmc_lvl2
+  - stig
+mobileconfig: false
+mobileconfig_info:

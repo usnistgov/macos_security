@@ -1,0 +1,32 @@
+id: os_pii_quality_control
+title: "Personally Identifiable Information Quality Operations"
+discussion: |
+  Check the accuracy, relevance, timeliness, and completeness of personally identifiable information across the information life cycle organization-defined frequency; and correct or delete inaccurate or outdated personally identifiable information.
+
+  Personally identifiable information quality operations include the steps that organizations take to confirm the accuracy and relevance of personally identifiable information throughout the information life cycle. The information life cycle includes the creation, collection, use, processing, storage, maintenance, dissemination, disclosure, and disposal of personally identifiable information. Personally identifiable information quality operations include editing and validating addresses as they are collected or entered into systems using automated address verification look-up application programming interfaces. Checking personally identifiable information quality includes the tracking of updates or changes to data over time, which enables organizations to know how and what personally identifiable information was changed should erroneous information be identified. The measures taken to protect personally identifiable information quality are based on the nature and context of the personally identifiable information, how it is to be used, how it was obtained, and the potential de-identification methods employed. The measures taken to validate the accuracy of personally identifiable information used to make determinations about the rights, benefits, or privileges of individuals covered under federal programs may be more comprehensive than the measures used to validate personally identifiable information used for less sensitive purposes.
+check: |
+  This requirement is NA for this technology.
+fix: |
+  The requirement is NA. No fix is required.
+references:
+  cce:
+    - CCE-90972-1
+  cci:
+    - N/A
+  800-53r5:
+    - SI-18
+  800-53r4:
+    - N/A
+  800-171r2:
+    - N/A
+  disa_stig:
+    - N/A
+  srg:
+    - N/A
+macOS:
+  - "12.0"
+tags:
+  - 800-53r5_privacy
+  - n_a
+mobileconfig: false
+mobileconfig_info:

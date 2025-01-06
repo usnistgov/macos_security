@@ -1,0 +1,37 @@
+id: os_filevault_authorized_users
+title: "FileVault Authorized Users"
+discussion: |
+  macOS _MUST_ be configured to only allow authorized users to unlock FileVault upon startup.
+check: |
+  /usr/bin/fdesetup list | /usr/bin/awk -F',' '{print $1}'
+result: 
+  string: "a list containing authorized users that can unlock FileVault"
+fix: |
+  Remove the user that is not authorized to unlock FileVault using the fdesetup command.
+
+  [source,bash]
+  ----
+  /usr/bin/fdesetup remove -user NOT_AUTHORIZED_USERNAME
+  ----
+references:
+  cce:
+    - CCE-90921-8
+  cci:
+    - CCI-002143
+  800-53r5:
+    - AC-2(11)
+  800-53r4:
+    - N/A
+  srg:
+    - SRG-OS-000480-GPOS-00227
+  disa_stig:
+    - APPL-12-000032
+macOS:
+  - "12.0"
+tags:
+  - 800-53r5_high 
+  - manual
+  - stig
+severity: "medium"
+mobileconfig: false
+mobileconfig_info:

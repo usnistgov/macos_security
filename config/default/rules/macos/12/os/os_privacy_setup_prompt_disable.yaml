@@ -1,0 +1,46 @@
+id: os_privacy_setup_prompt_disable
+title: "Disable Privacy Setup Services During Setup Assistant"
+discussion: |
+  The prompt for Privacy Setup services during Setup Assistant _MUST_ be disabled.
+
+  Organizations _MUST_ apply organization-wide configuration settings. The macOS Privacy Setup services prompt guides new users through enabling their own specific privacy settings; this is not essential and, therefore, _MUST_ be disabled to prevent against the risk of individuals electing privacy settings with the potential to override organization-wide settings.
+check: |
+  /usr/bin/osascript -l JavaScript << EOS
+  $.NSUserDefaults.alloc.initWithSuiteName('com.apple.SetupAssistant.managed')\
+  .objectForKey('SkipPrivacySetup').js
+  EOS
+result:
+  string: "true"
+fix: |
+  This is implemented by a Configuration Profile.
+references:
+  cce:
+    - CCE-90981-2
+  cci:
+    - CCI-000381
+  800-53r5:
+    - CM-7
+    - CM-7(1)
+  800-53r4: 
+    - CM-7
+    - CM-7(1)
+  srg:
+    - SRG-OS-000095-GPOS-00049
+  disa_stig: 
+    - APPL-12-002036
+  cis:
+    benchmark:
+      - N/A
+    controls v8:
+      - 4.1
+      - 4.8
+macOS:
+  - "12.0"
+tags:
+  - cisv8
+  - stig
+severity: "medium"
+mobileconfig: true
+mobileconfig_info:
+  com.apple.SetupAssistant.managed:
+    SkipPrivacySetup: true

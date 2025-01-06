@@ -1,0 +1,55 @@
+id: os_software_update_deferral
+title: Ensure Software Update Deferment Is Less Than or Equal to $ODV Days
+discussion: |
+  Software updates _MUST_ be deferred for $ODV days or less.
+check: |
+  /usr/bin/osascript -l JavaScript << EOS
+  function run() {
+    let timeout = ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess')\
+  .objectForKey('enforcedSoftwareUpdateDelay')) || 0
+    if ( timeout <= $ODV ) {
+      return("true")
+    } else {
+      return("false")
+    }
+  }
+  EOS
+result:
+  string: 'true'
+fix: |
+  This is implemented by a Configuration Profile.
+references:
+  cce:
+    - CCE-94298-7
+  cci:
+    - N/A
+  800-53r5:
+    - N/A
+  800-53r4:
+    - N/A
+  srg:
+    - N/A
+  disa_stig:
+    - N/A
+  800-171r3:
+    - N/A
+  cis:
+    benchmark:
+      - 1.7 (level 1)
+    controls v8:
+      - 7.3
+      - 7.4
+macOS:
+  - '15.0'
+odv:
+  hint: Number of days.
+  recommended: 30
+  cis_lvl1: 30
+  cis_lvl2: 30
+tags:
+  - cis_lvl1
+  - cis_lvl2
+mobileconfig: true
+mobileconfig_info:
+  com.apple.applicationaccess:
+    enforcedSoftwareUpdateDelay: $ODV

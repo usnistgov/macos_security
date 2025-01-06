@@ -1,0 +1,35 @@
+id: os_crypto_audit
+title: "Protect Audit Integrity with Cryptographic Mechanisms"
+discussion: |
+  The information system _IS_ configured to implement cryptographic mechanisms to protect the integrity of audit information and audit tools. 
+  
+  The Apple T2 Security Chip includes a dedicated Advanced Encryption Standard (AES) crypto engine built into the direct memory access (DMA) path between the flash storage and main system memory, which powers line-speed encrypted storage with FileVault and makes internal volume highly efficient. 
+  
+  link:https://www.apple.com/euro/mac/shared/docs/Apple_T2_Security_Chip_Overview.pdf[]
+  
+  NOTE: This will only apply to a Mac that includes a T2 security chip. 
+check: |
+  The technology supports this requirement and cannot be configured to be out of compliance. The technology inherently meets this requirement.
+fix: |
+  The technology inherently meets this requirement. No fix is required.
+references:
+  cce:
+    - CCE-90915-0
+  cci:
+    - CCI-001496
+  800-53r5:
+    - AU-9(3)
+  800-53r4:
+    - AU-9(3)
+  disa_stig:
+    - N/A
+  srg:
+    - N/A
+macOS:
+  - "12.0"
+tags:
+  - 800-53r5_high
+  - 800-53r4_high
+  - inherent
+mobileconfig: false
+mobileconfig_info:

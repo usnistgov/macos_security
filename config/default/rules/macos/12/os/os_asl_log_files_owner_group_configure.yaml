@@ -1,0 +1,39 @@
+id: os_asl_log_files_owner_group_configure
+title: "Configure Apple System Log Files Owned by Root and Group to Wheel"
+discussion: |
+  The Apple System Logs (ASL) _MUST_ be owned by root.
+  
+  ASL logs contain sensitive data about the system and users. If ASL log files are set to only be readable and writable by system administrators, the risk is mitigated.
+check: |
+  /usr/bin/stat -f '%Su:%Sg:%N' $(/usr/bin/grep -e '^>' /etc/asl.conf /etc/asl/* | /usr/bin/awk '{ print $2 }') 2> /dev/null | /usr/bin/awk '!/^root:wheel:/{print $1}' | /usr/bin/wc -l | /usr/bin/tr -d ' '
+result:
+  integer: 0
+fix: |
+  [source,bash]
+  ----
+  /usr/sbin/chown root:wheel $(/usr/bin/stat -f '%Su:%Sg:%N' $(/usr/bin/grep -e '^>' /etc/asl.conf /etc/asl/* | /usr/bin/awk '{ print $2 }') 2> /dev/null | /usr/bin/awk '!/^root:wheel:/{print $1}' | /usr/bin/awk -F":" '!/^root:wheel:/{print $3}')
+  ----
+references:
+  cce:
+    - CCE-90904-4
+  cci:
+    - CCI-001314
+  800-53r5:
+    - SI-11
+  800-53r4:
+    - SI-11
+  srg:
+    - SRG-OS-000206-GPOS-00084
+  disa_stig:
+    - APPL-12-004001
+  800-171r2:
+    - N/A
+macOS:
+  - "12.0"
+tags:
+  - 800-53r5_moderate 
+  - 800-53r5_high
+  - stig
+severity: "medium"
+mobileconfig: false
+mobileconfig_info:

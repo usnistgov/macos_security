@@ -1,0 +1,46 @@
+
+id: supplemental_stig
+title: "DISA STIG Supplemental"
+discussion: |
+  This supplemental contains DISA STIG controls that may not produce intended results when applied. Where discrepancies exist between the DISA STIG and macOS Security Compliance Project guidelines, the appropriate recommendations are outlined below.
+  
+  [cols="20%h, 80%a"]
+  |===
+  |STIG ID
+  |Notes
+  |APPL-13-000051
+  APPL-13-000052| This setting is not intended to manage idle user sessions where there is no input from the client. Its purpose is to monitor for interruptions in network connectivity and force the session to terminate after the connection appears to be broken.+
+  |APPL-13-002031
+  APPL-13-002051
+  APPL-13-002032
+  APPL-13-002053
+  APPL-13-002062| DISA STIG requires `com.apple.preferences.AppleIDPrefPane`, `com.apple.preferences.internetaccounts`, `com.apple.preference.speech`,`com.apple.preferences.Bluetooth`, `com.apple.preferences.password`, `com.apple.preferences.wallet` to be set within the key `DisabledPreferencePanes`.
+
+  Apple has deprecated the `com.apple.systempreferences` preference domain, however in macOS Ventura it is recommended to use the key `DisabledSystemSettings` with the values `com.apple.systempreferences.AppleIDSettings`, `com.apple.Internet-Accounts-Settings.extension`, `com.apple.Siri-Settings.extension`, `com.apple.BluetoothSettings`, `com.apple.Touch-ID-Settings.extension`, `com.apple.WalletSettingsExtension`. +
+  |APPL-13-000004| DISA STIG requires the screen saver after 15 minutes of inactivity.
+
+  The keys required are `loginWindowIdleTime` and `IdleTime` in the `com.apple.screensaver` prefernece domain. +
+  |APPL-13-002052| DISA STIG requires hiding the Wallet and Apple Pay System Setting Pane.
+
+  In macOS Ventura, hiding preference panes is not possible. +
+  |===
+check: |
+fix: |
+references:
+  cci:
+    - N/A
+  800-53r5:
+    - N/A
+  800-53r4:
+    - N/A
+  srg:
+    - N/A
+  disa_stig:
+    - N/A
+macOS:
+  - "13.0"
+tags:
+  - stig
+  - supplemental
+mobileconfig: false
+mobileconfig_info:  

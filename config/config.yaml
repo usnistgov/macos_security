@@ -1,0 +1,26 @@
+# config/config.yaml
+---
+logging_config: "config/logging_config.yaml"
+output_dir: "build/"
+includes_dir: "config/includes"
+mspc_data: "config/includes/mscp-data.yaml"
+
+defaults:
+  adoc_templates_dir: "config/default/templates/asciidoctor"
+  baseline_dir: "config/default/baselines"
+  images_dir: "config/default/images"
+  md_templates_dir: "config/default/templates/markdown"
+  misc_dir: "config/default/misc"
+  root_dir: "config/default"
+  rules_dir: "config/default/rules"
+  sections_dir: "config/default/sections"
+
+custom:
+  adoc_templates_dir: "config/custom/templates/asciidoctor"
+  baseline_dir: "config/custom/baselines"
+  images_dir: "config/custom/images"
+  md_templates_dir: "config/custom/templates/markdown"
+  misc_dir: "config/custom/misc"
+  root_dir: "config/custom"
+  rules_dir: "config/custom/rules"
+  sections_dir: "config/custom/sections"

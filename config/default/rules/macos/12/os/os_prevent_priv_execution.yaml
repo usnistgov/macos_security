@@ -1,0 +1,33 @@
+id: os_prevent_priv_execution
+title: "Prevent Software From Executing at Higher Privilege Levels than Users Executing The Software"
+discussion: |
+  In certain situations, software applications/programs need to execute with elevated privileges to perform required functions. However, if the privileges required for execution are at a higher level than the privileges assigned to organizational users invoking such applications/programs, those users are indirectly provided with greater privileges than assigned by the organizations.Some programs and processes are required to operate at a higher privilege level and therefore should be excluded from the organization-defined software list after review.
+
+  The inherent configuration of the macOS does not allow for non-privileged users to be able to execute functions requiring privilege. 
+  
+  link:https://developer.apple.com/library/archive/documentation/Security/Conceptual/AuthenticationAndAuthorizationGuide/Permissions/Permissions.html[]
+check: |
+  The technology supports this requirement and cannot be configured to be out of compliance. The technology inherently meets this requirement.
+fix: |
+  The technology inherently meets this requirement. No fix is required.
+references:
+  cce:
+    - CCE-90977-0
+  cci:
+    - CCI-002233
+  800-53r5:
+    - AC-6(8)
+  800-53r4:
+    - AC-6(8)
+  disa_stig:
+    - N/A
+  srg:
+    - N/A
+  800-171r2:
+    - 3.1.7  
+macOS:
+  - "12.0"
+tags:
+  - inherent
+mobileconfig: false
+mobileconfig_info:

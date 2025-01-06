@@ -1,0 +1,27 @@
+id: os_provide_disconnect_remote_access
+title: "Provide Ability to Disconnect or Disable Remote Access"
+discussion: |
+  Without the ability to immediately disconnect or disable remote access, an attack or other compromise taking place would not be immediately stopped.Operating system remote access functionality must have the capability to immediately disconnect current users remotely accessing the information system and/or disable further remote access. The speed of disconnect or disablement varies based on the criticality of missions functions and the need to eliminate immediate or future remote access to organizational information systems.The remote access functionality (e.g., SSH) may implement features such as automatic disconnect (or user-initiated disconnect) in case of adverse information based on an indicator of compromise or attack.
+check: |
+  The technology supports this requirement and cannot be configured to be out of compliance. The technology inherently meets this requirement.
+fix: |
+  The technology inherently meets this requirement. No fix is required.
+references:
+  cce:
+    - CCE-90985-3
+  cci:
+    - CCI-002322
+  800-53r5:
+    - AC-17(9)
+  800-53r4:
+    - AC-17(9)
+  disa_stig:
+    - N/A
+  srg:
+    - N/A
+macOS:
+  - "12.0"
+tags:
+  - inherent
+mobileconfig: false
+mobileconfig_info:

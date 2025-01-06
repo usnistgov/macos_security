@@ -1,0 +1,31 @@
+id: pwpolicy_prevent_dictionary_words
+title: "Prevent the Use of Dictionary Words for Passwords"
+discussion: |
+  The macOS should be configured to forbid users to use dictionary words for passwords. 
+  
+  If the operating system allows users to select passwords based on dictionary words, this increases the window of opportunity for a malicious user to guess the password. 
+  
+  To prevent users from using dictionary words for passwords, many operating systems can be integrated with an enterprise-level directory service that meets or exceeds this requirement.
+check: |
+  For systems not requiring mandatory smart card authentication or those that are not bound to a directory, the technology does not support this requirement. This is an applicable-does not meet finding.
+fix: |
+  This requirement is a permanent finding and cannot be fixed. An appropriate mitigation for the system must be implemented, but this finding cannot be considered fixed.
+references:
+  cce:
+    - CCE-91038-0
+  cci:
+    - CCI-000366
+  800-53r5:
+    - N/A
+  800-53r4:
+    - N/A
+  disa_stig:
+    - N/A
+  srg:
+    - N/A
+macOS:
+  - "12.0"
+tags:
+  - permanent
+mobileconfig: false
+mobileconfig_info:

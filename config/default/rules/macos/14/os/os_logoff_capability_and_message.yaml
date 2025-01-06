@@ -1,0 +1,35 @@
+id: os_logoff_capability_and_message
+title: Display logoff capability and message to prevent exploitation
+discussion: |
+  Provides a logout capability for user-initiated communications sessions whenever authentication is used to gain access to the system.
+
+  Displays an explicit logout message to users indicating the reliable termination of authenticated communications sessions.
+check: |
+  The technology supports this requirement and cannot be configured to be out of compliance. The technology inherently meets this requirement.
+fix: |
+  The technology inherently meets this requirement. No fix is required.
+references:
+  cce:
+    - CCE-92819-2
+  cci:
+    - N/A
+  800-53r5:
+    - AC-12(1)
+    - AC-12(2)
+  800-53r4:
+    - AC-12(1)
+  disa_stig:
+    - N/A
+  srg:
+    - SRG-OS-000280-GPOS-00110
+    - SRG-OS-000281-GPOS-00111
+macOS:
+  - '14.0'
+tags:
+  - inherent
+  - cnssi-1253_moderate
+  - cnssi-1253_low
+  - cnssi-1253_high
+  - srg
+mobileconfig: false
+mobileconfig_info:

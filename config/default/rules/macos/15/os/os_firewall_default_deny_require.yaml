@@ -1,0 +1,56 @@
+id: os_firewall_default_deny_require
+title: Control Connections to Other Systems via a Deny-All and Allow-by-Exception Firewall Policy
+discussion: |
+  A deny-all and allow-by-exception firewall policy _MUST_ be employed for managing connections to other systems.
+
+  Organizations _MUST_ ensure the built-in packet filter firewall is configured correctly to employ the default deny rule.
+
+  Failure to restrict network connectivity to authorized systems permits inbound connections from malicious systems. It also permits outbound connections that may facilitate the exfiltration of data.
+
+  If you are using a third-party firewall solution, this setting does not apply.
+
+  [IMPORTANT]
+  ====
+  Configuring the built-in packet filter firewall to employ the default deny rule has the potential to interfere with applications on the system in an unpredictable manner. Information System Security Officers (ISSOs) may make the risk-based decision not to configure the built-in packet filter firewall to employ the default deny rule to avoid losing functionality, but they are advised to first fully weigh the potential risks posed to their organization.
+  ====
+check: |
+  /sbin/pfctl -a '*' -sr &> /dev/null | /usr/bin/grep -c "block drop in all"
+result:
+  integer: 1
+fix: |
+  NOTE: See the firewall supplemental which includes a script that has an example policy to implement this rule.
+references:
+  cce:
+    - CCE-94193-0
+  cci:
+    - N/A
+  800-53r5:
+    - AC-4
+    - SC-7(5)
+  800-53r4:
+    - SC-7(5)
+    - AC-4
+  srg:
+    - N/A
+  disa_stig:
+    - N/A
+  800-171r3:
+    - 03.01.03
+    - 03.13.06
+  cmmc:
+    - AC.L2-3.1.3
+    - SC.L2-3.13.6
+macOS:
+  - '15.0'
+tags:
+  - 800-53r5_moderate
+  - 800-53r5_high
+  - 800-53r4_moderate
+  - 800-53r4_high
+  - 800-171
+  - cnssi-1253_moderate
+  - cnssi-1253_low
+  - cnssi-1253_high
+  - cmmc_lvl2
+mobileconfig: false
+mobileconfig_info:

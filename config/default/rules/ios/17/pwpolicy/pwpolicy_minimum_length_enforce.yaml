@@ -1,0 +1,54 @@
+id: pwpolicy_minimum_length_enforce
+title: "Require a Minimum Passcode Length of $ODV Characters"
+discussion: |
+  The iOS _MUST_ be configured to require a minimum of $ODV characters be used when a passcode is created.
+
+  This rule enforces passcode complexity by requiring users to set passcode that are less vulnerable to malicious users. 
+check: " " 
+fix: |
+  This is implemented by a Configuration Profile.
+references:
+  cce:
+    - CCE-93460-4
+  cci: 
+    - CCI-000205
+  800-53r5:
+    - IA-5(1)
+  sfr:
+    - 'FMT_SMF_EXT.1.1 #1a'
+  disa_stig:
+    - N/A
+  800-171r2:
+    - N/A
+  cis:
+    benchmark:
+      - 2.4.3 (level 1 - End-User Owned Devices)
+      - 3.4.3 (level 1 - Institutionally-Owned Devices)
+    controls v8:
+      - 5.2
+iOS:
+  - "17.0"
+odv:
+  hint: "Minimum passcode length."
+  recommended: 6
+  cis_lvl1_byod: 6
+  cis_lvl2_byod: 6
+  cis_lvl1_enterprise: 6
+  cis_lvl2_enterprise: 6
+  ios_stig: 6
+tags:
+  - ios
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_high
+  - cis_lvl1_byod
+  - cis_lvl2_byod
+  - cis_lvl1_enterprise
+  - cis_lvl2_enterprise
+  - cisv8
+severity: "medium"
+supervised: false
+mobileconfig: true
+mobileconfig_info:
+  com.apple.mobiledevice.passwordpolicy:
+    minLength: $ODV

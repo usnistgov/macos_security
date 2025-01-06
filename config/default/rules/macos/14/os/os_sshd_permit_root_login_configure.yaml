@@ -1,0 +1,60 @@
+id: os_sshd_permit_root_login_configure
+title: Disable Root Login for SSH
+discussion: |
+  If SSH is enabled to assure individual accountability and prevent unauthorized access, logging in as root via SSH _MUST_ be disabled.
+
+  The macOS system MUST  require individuals to be authenticated with an individual authenticator prior to using a group authenticator, and administrator users _MUST_ never log in directly as root.
+
+  NOTE: /etc/ssh/sshd_config will be automatically modified to its original state following any update or major upgrade to the operating system.
+check: |
+  /usr/sbin/sshd -G | /usr/bin/awk '/permitrootlogin/{print $2}'
+result:
+  string: 'no'
+fix: |
+  [source,bash]
+  ----
+  include_dir=$(/usr/bin/awk '/^Include/ {print $2}' /etc/ssh/sshd_config | /usr/bin/tr -d '*')
+
+  if [[ -z $include_dir ]]; then
+    /usr/bin/sed -i.bk "1s/.*/Include \/etc\/ssh\/sshd_config.d\/\*/" /etc/ssh/sshd_config
+  fi
+
+  /usr/bin/grep -qxF 'permitrootlogin no' "${include_dir}01-mscp-sshd.conf" 2>/dev/null || echo "permitrootlogin no" >> "${include_dir}01-mscp-sshd.conf"
+
+  for file in $(ls ${include_dir}); do
+    if [[ "$file" == "100-macos.conf" ]]; then
+        continue
+    fi
+    if [[ "$file" == "01-mscp-sshd.conf" ]]; then
+        break
+    fi
+    /bin/mv ${include_dir}${file} ${include_dir}20-${file}
+  done
+  ----
+references:
+  cce:
+    - CCE-92905-9
+  cci:
+    - CCI-000770
+    - CCI-001813
+  800-53r5:
+    - IA-2(5)
+  800-53r4:
+    - IA-2(5)
+  srg:
+    - SRG-OS-000364-GPOS-00151
+    - SRG-OS-000109-GPOS-00056
+  disa_stig:
+    - APPL-14-001100
+macOS:
+  - '14.0'
+tags:
+  - 800-53r5_high
+  - 800-53r4_high
+  - cnssi-1253_moderate
+  - cnssi-1253_low
+  - cnssi-1253_high
+  - stig
+severity: medium
+mobileconfig: false
+mobileconfig_info:

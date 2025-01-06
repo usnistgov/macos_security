@@ -1,0 +1,54 @@
+id: system_settings_sleep_enforce
+title: Enforce Display Sleep (Apple Silicon)
+discussion: |
+  Display Sleep _MUST_ be enforced on Apple Silicon MacBooks.
+check: |
+  error_count=0
+  if /usr/sbin/ioreg -rd1 -c IOPlatformExpertDevice 2>&1 | /usr/bin/grep -q "MacBook"; then
+    sleepMode=$(/usr/bin/pmset -b -g | /usr/bin/grep '^\s*sleep' 2>&1 | /usr/bin/awk '{print $2}')
+    displaysleepMode=$(/usr/bin/pmset -b -g | /usr/bin/grep displaysleep 2>&1 | /usr/bin/awk '{print $2}')
+
+    if [[ "$sleepMode" == "" ]] || [[ "$sleepMode" -gt 10 ]]; then
+      ((error_count++))
+    fi
+    if [[ "$displaysleepMode" == "" ]] || [[ "$displaysleepMode" -gt 15 ]] || [[ "$displaysleepMode" -lt "$sleepMode" ]]; then
+      ((error_count++))
+    fi
+  fi
+  echo "$error_count"
+result:
+  integer: 0
+fix: |
+  [source,bash]
+  ----
+  /usr/bin/pmset -a sleep 10
+  /usr/bin/pmset -a displaysleep 15
+  ----
+references:
+  cce:
+    - CCE-93023-0
+  cci:
+    - N/A
+  800-53r5:
+    - N/A
+  800-53r4:
+    - N/A
+  srg:
+    - N/A
+  disa_stig:
+    - N/A
+  800-171r2:
+    - N/A
+  cis:
+    benchmark:
+      - 2.9.1.2 (level 2)
+    controls v8:
+      - 4.1
+macOS:
+  - '14.0'
+tags:
+  - cis_lvl2
+  - cisv8
+  - arm64
+mobileconfig: false
+mobileconfig_info:

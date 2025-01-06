@@ -1,0 +1,47 @@
+id: os_install_vpn_configuration_disable
+title: "Ensure Allow adding VPN configurations is set to Disabled"
+discussion: |
+  VPN configurations _MUST_ be installed via an organization's MDM.
+check: " "
+fix: |
+  This is implemented by a Configuration Profile.
+references:
+  cce:
+    - CCE-93430-7
+  cci: 
+    - CCI-000366
+    - CCI-000370
+    - CCI-000066
+  800-53r5:
+    - AC-17
+    - AC-17(1)
+    - AC-17(3)
+  800-53r4: 
+    - N/A
+  sfr:
+    - 'FMT_SMF_EXT.1.1 #3'
+  disa_stig:
+    - N/A
+  800-171r2:
+    - N/A
+  cis:
+    benchmark:
+      - 3.2.1.16 (level 1 - Institutionally-Owned Devices)
+    controls v8:
+      - 12.7
+iOS:
+  - "17.0"
+tags:
+  - ios
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_high
+  - cis_lvl1_enterprise
+  - cis_lvl2_enterprise
+  - cisv8
+severity: "low"
+supervised: true
+mobileconfig: true
+mobileconfig_info:
+  com.apple.applicationaccess:
+    allowVPNCreation: false

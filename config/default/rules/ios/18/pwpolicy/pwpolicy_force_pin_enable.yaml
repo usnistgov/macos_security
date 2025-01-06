@@ -1,0 +1,41 @@
+id: pwpolicy_force_pin_enable
+title: "Ensure Force Pin is set to Enabled"
+discussion: |-
+  Passwords provide a form of access control that prevents unauthorized individuals from accessing computing resources and sensitive data. Passwords may also be a source of entropy for generation of key encryption or data encryption keys. If a password is not required to access data, this data is accessible to any adversary who obtains physical possession of the device. Requiring that a password be successfully entered before the mobile device data is unencrypted mitigates this risk.
+
+  Note: MDF PP v2.0 requires a Password Authentication Factor and requires management of its length and complexity. It leaves open whether the existence of a password is subject to management. This requirement addresses the configuration to require a password, which is critical to the cybersecurity posture of the device.
+check: ' '
+fix: This is implemented by a Configuration Profile
+references:
+  cce:
+    - CCE-94474-4
+  cci:
+    - CCI-001199
+  800-53r5:
+    - SC-28
+  sfr:
+    - 'FIA_UAU_EXT.1.1'
+  disa_stig:
+    - AIOS-18-010400
+  indigo:
+    - Annex D (Section 5.9.1 - Device-Code)
+  cis:
+    benchmark:
+      - N/A
+    controls v8:
+      - N/A
+iOS:
+  - "18.0"
+tags:
+  - ios
+  - ios_stig
+  - indigo_base
+  - indigo_high
+  - cnssi-1253_moderate
+  - cnssi-1253_low
+  - cnssi-1253_high
+severity: high
+mobileconfig: 'true'
+mobileconfig_info:
+  com.apple.mobiledevice.passwordpolicy:
+    forcePIN: true

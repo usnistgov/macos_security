@@ -1,0 +1,52 @@
+id: sysprefs_airplay_receiver_disable
+title: "Disable Airplay Receiver"
+discussion: |
+  Airplay Receiver allows you to send content from another Apple device to be displayed on the screen as it's being played from your other device.  
+  
+  Support for Airplay Receiver is non-essential and _MUST_ be disabled.
+
+  The information system _MUST_ be configured to provide only essential capabilities.
+check: |
+  /usr/bin/osascript -l JavaScript << EOS
+  $.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess')\
+  .objectForKey('allowAirPlayIncomingRequests').js
+  EOS
+result:
+  string: "false"
+fix: |
+  This is implemented by a Configuration Profile.
+references:
+  cce:
+    - CCE-91044-8
+  cci: 
+    - N/A
+  800-53r5:
+    - CM-7
+    - CM-7(1)
+  800-53r4: 
+    - N/A
+  srg:
+    - N/A
+  disa_stig:
+    - N/A
+  800-171r2:
+    - 3.4.6
+  cis:
+    benchmark:
+      - 2.4.13 (level 1)
+    controls v8:
+      - 4.1
+      - 4.8 
+macOS:
+  - "12.0"
+tags:
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_high
+  - cis_lvl1
+  - cis_lvl2
+  - cisv8  
+mobileconfig: true
+mobileconfig_info:
+  com.apple.applicationaccess:
+    allowAirPlayIncomingRequests: false

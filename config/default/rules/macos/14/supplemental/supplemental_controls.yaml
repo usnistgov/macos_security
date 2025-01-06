@@ -1,0 +1,213 @@
+id: supplemental_controls
+title: "Out of Scope Supplemental"
+discussion: |
+  There are several requirements defined in National Institute of Standards and Technology (NIST) Special Publication (SP) 800-53, Security and Privacy Controls for Information Systems and Organizations, Revision 5 that can be met by making configuration changes to the operating system. However, NIST SP 800-53 (Rev. 5) contains a broad set of guidelines that attempt to address all aspects of an information system or systems within an organization. Because the macOS Security Compliance Project is tailored specifically to macOS, some requirements defined in NIST SP 800-53 (Rev. 5) are not applicable.
+
+  This supplemental contains those controls that are assigned to a baseline in NIST SP 800-53 (Rev. 5) which cannot be addressed with a technical configuration for macOS. These controls can be accomplished though administrative or procedural processes within an organization or via integration of the macOS system into enterprise information systems which are configured to protect the systems within.
+
+  [cols="15%h, 85%a"]
+  |===
+
+  |Family
+  |Access Control (AC)
+
+  |Controls
+  |link:https://csrc.nist.gov/Projects/risk-management/sp800-53-controls/release-search#!/control?version=5.1&number=AC-1[AC-1], link:https://csrc.nist.gov/Projects/risk-management/sp800-53-controls/release-search#!/control?version=5.1&number=AC-2[AC-2], link:https://csrc.nist.gov/Projects/risk-management/sp800-53-controls/release-search#!/control?version=5.1&number=AC-3[AC-3(14)], link:https://csrc.nist.gov/Projects/risk-management/sp800-53-controls/release-search#!/control?version=5.1&number=AC-14[AC-14], link:https://csrc.nist.gov/Projects/risk-management/sp800-53-controls/release-search#!/control?version=5.1&number=AC-17[AC-17(4)], link:https://csrc.nist.gov/Projects/risk-management/sp800-53-controls/release-search#!/control?version=5.1&number=AC-22[AC-22]
+
+  |===
+
+  [cols="15%h, 85%a"]
+  |===
+
+  |Family
+  |Awareness and Training (AT)
+
+  |Controls
+  |link:https://csrc.nist.gov/Projects/risk-management/sp800-53-controls/release-search#!/control?version=5.1&number=AT-1[AT-1], link:https://csrc.nist.gov/Projects/risk-management/sp800-53-controls/release-search#!/control?version=5.1&number=AT-2[AT-2], link:https://csrc.nist.gov/Projects/risk-management/sp800-53-controls/release-search#!/control?version=5.1&number=AT-3[AT-3], link:https://csrc.nist.gov/Projects/risk-management/sp800-53-controls/release-search#!/control?version=5.1&number=AT-4[AT-4]
+  |===
+
+  [cols="15%h, 85%a"]
+  |===
+
+  |Family
+  |Audit and Accountability (AU)
+
+  |Controls
+  |link:https://csrc.nist.gov/Projects/risk-management/sp800-53-controls/release-search#!/control?version=5.1&number=AU-1[AU-1], link:https://csrc.nist.gov/Projects/risk-management/sp800-53-controls/release-search#!/control?version=5.1&number=AU-6[AU-6], link:https://csrc.nist.gov/Projects/risk-management/sp800-53-controls/release-search#!/control?version=5.1&number=AU-9[AU-9(2)]
+  |===
+
+  [cols="15%h, 85%a"]
+  |===
+
+  |Family
+  |Security Assessment and Authorization (CA)
+
+  |Controls
+  |link:https://csrc.nist.gov/Projects/risk-management/sp800-53-controls/release-search#!/control?version=5.1&number=CA-1[CA-1], link:https://csrc.nist.gov/Projects/risk-management/sp800-53-controls/release-search#!/control?version=5.1&number=CA-2[CA-2], link:https://csrc.nist.gov/Projects/risk-management/sp800-53-controls/release-search#!/control?version=5.1&number=CA-3[CA-3], link:https://csrc.nist.gov/Projects/risk-management/sp800-53-controls/release-search#!/control?version=5.1&number=CA-3[CA-3(6)], link:https://csrc.nist.gov/Projects/risk-management/sp800-53-controls/release-search#!/control?version=5.1&number=CA-5[CA-5], link:https://csrc.nist.gov/Projects/risk-management/sp800-53-controls/release-search#!/control?version=5.1&number=CA-6[CA-6], link:https://csrc.nist.gov/Projects/risk-management/sp800-53-controls/release-search#!/control?version=5.1&number=CA-7[CA-7], link:https://csrc.nist.gov/Projects/risk-management/sp800-53-controls/release-search#!/control?version=5.1&number=CA-7[CA-7(4)], link:https://csrc.nist.gov/Projects/risk-management/sp800-53-controls/release-search#!/control?version=5.1&number=CA-9[CA-9]
+  |===
+
+  [cols="15%h, 85%a"]
+  |===
+
+  |Family
+  |Configuration Management (CM)
+
+  |Controls
+  |link:https://csrc.nist.gov/Projects/risk-management/sp800-53-controls/release-search#!/control?version=5.1&number=CM-1[CM-1], link:https://csrc.nist.gov/Projects/risk-management/sp800-53-controls/release-search#!/control?version=5.1&number=CM-4[CM-4], link:https://csrc.nist.gov/Projects/risk-management/sp800-53-controls/release-search#!/control?version=5.1&number=CM-8[CM-8], link:https://csrc.nist.gov/Projects/risk-management/sp800-53-controls/release-search#!/control?version=5.1&number=CM-10[CM-10], link:https://csrc.nist.gov/Projects/risk-management/sp800-53-controls/release-search#!/control?version=5.1&number=CM-11[CM-11]
+  |===
+
+  [cols="15%h, 85%a"]
+  |===
+
+  |Family
+  |Contingency Planning (CP)
+
+  |Controls
+  |link:https://csrc.nist.gov/Projects/risk-management/sp800-53-controls/release-search#!/control?version=5.1&number=CP-1[CP-1], link:https://csrc.nist.gov/Projects/risk-management/sp800-53-controls/release-search#!/control?version=5.1&number=CP-2[CP-2], link:https://csrc.nist.gov/Projects/risk-management/sp800-53-controls/release-search#!/control?version=5.1&number=CP-3[CP-3], link:https://csrc.nist.gov/Projects/risk-management/sp800-53-controls/release-search#!/control?version=5.1&number=CP-4[CP-4], link:https://csrc.nist.gov/Projects/risk-management/sp800-53-controls/release-search#!/control?version=5.1&number=CP-9[CP-9], link:https://csrc.nist.gov/Projects/risk-management/sp800-53-controls/release-search#!/control?version=5.1&number=CP-10[CP-10]
+  |===
+
+  [cols="15%h, 85%a"]
+  |===
+
+  |Family
+  |Identification and Authentication (IA)
+
+  |Controls
+  |link:https://csrc.nist.gov/Projects/risk-management/sp800-53-controls/release-search#!/control?version=5.1&number=IA-1[IA-1], link:https://csrc.nist.gov/Projects/risk-management/sp800-53-controls/release-search#!/control?version=5.1&number=IA-8[IA-8(1)], link:https://csrc.nist.gov/Projects/risk-management/sp800-53-controls/release-search#!/control?version=5.1&number=IA-8[IA-8(2)], link:https://csrc.nist.gov/Projects/risk-management/sp800-53-controls/release-search#!/control?version=5.1&number=IA-8[IA-8(3)], link:https://csrc.nist.gov/Projects/risk-management/sp800-53-controls/release-search#!/control?version=5.1&number=IA-8[IA-8(4)]
+  |===
+
+  [cols="15%h, 85%a"]
+  |===
+
+  |Family
+  |Incident Response (IR)
+
+  |Controls
+  |link:https://csrc.nist.gov/Projects/risk-management/sp800-53-controls/release-search#!/control?version=5.1&number=IR-1[IR-1], link:https://csrc.nist.gov/Projects/risk-management/sp800-53-controls/release-search#!/control?version=5.1&number=IR-2[IR-2], link:https://csrc.nist.gov/Projects/risk-management/sp800-53-controls/release-search#!/control?version=5.1&number=IR-4[IR-4], link:https://csrc.nist.gov/Projects/risk-management/sp800-53-controls/release-search#!/control?version=5.1&number=IR-5[IR-5], link:https://csrc.nist.gov/Projects/risk-management/sp800-53-controls/release-search#!/control?version=5.1&number=IR-6[IR-6], link:https://csrc.nist.gov/Projects/risk-management/sp800-53-controls/release-search#!/control?version=5.1&number=IR-7[IR-7], link:https://csrc.nist.gov/Projects/risk-management/sp800-53-controls/release-search#!/control?version=5.1&number=IR-8[IR-8]
+  |===
+
+  [cols="15%h, 85%a"]
+  |===
+
+  |Family
+  |Maintenance (MA)
+
+  |Controls
+  |link:https://csrc.nist.gov/Projects/risk-management/sp800-53-controls/release-search#!/control?version=5.1&number=MA-1[MA-1], link:https://csrc.nist.gov/Projects/risk-management/sp800-53-controls/release-search#!/control?version=5.1&number=MA-2[MA-2], link:https://csrc.nist.gov/Projects/risk-management/sp800-53-controls/release-search#!/control?version=5.1&number=MA-5[MA-5]
+  |===
+
+  [cols="15%h, 85%a"]
+  |===
+
+  |Family
+  |Media Protection (MP)
+
+  |Controls
+  |link:https://csrc.nist.gov/Projects/risk-management/sp800-53-controls/release-search#!/control?version=5.1&number=MP-1[MP-1], link:https://csrc.nist.gov/Projects/risk-management/sp800-53-controls/release-search#!/control?version=5.1&number=MP-2[MP-2], link:https://csrc.nist.gov/Projects/risk-management/sp800-53-controls/release-search#!/control?version=5.1&number=MP-6[MP-6], link:https://csrc.nist.gov/Projects/risk-management/sp800-53-controls/release-search#!/control?version=5.1&number=MP-7[MP-7]
+  |===
+
+  [cols="15%h, 85%a"]
+  |===
+
+  |Family
+  |Physical and Environmental Protection (PE)
+
+  |Controls
+  |link:https://csrc.nist.gov/Projects/risk-management/sp800-53-controls/release-search#!/control?version=5.1&number=PE-1[PE-1], link:https://csrc.nist.gov/Projects/risk-management/sp800-53-controls/release-search#!/control?version=5.1&number=PE-2[PE-2], link:https://csrc.nist.gov/Projects/risk-management/sp800-53-controls/release-search#!/control?version=5.1&number=PE-3[PE-3], link:https://csrc.nist.gov/Projects/risk-management/sp800-53-controls/release-search#!/control?version=5.1&number=PE-6[PE-6], link:https://csrc.nist.gov/Projects/risk-management/sp800-53-controls/release-search#!/control?version=5.1&number=PE-8[PE-8], link:https://csrc.nist.gov/Projects/risk-management/sp800-53-controls/release-search#!/control?version=5.1&number=PE-12[PE-12], link:https://csrc.nist.gov/Projects/risk-management/sp800-53-controls/release-search#!/control?version=5.1&number=PE-13[PE-13], link:https://csrc.nist.gov/Projects/risk-management/sp800-53-controls/release-search#!/control?version=5.1&number=PE-14[PE-14], link:https://csrc.nist.gov/Projects/risk-management/sp800-53-controls/release-search#!/control?version=5.1&number=PE-15[PE-15],  link:https://csrc.nist.gov/Projects/risk-management/sp800-53-controls/release-search#!/control?version=5.1&number=PE-16[PE-16]
+  |===
+
+  [cols="15%h, 85%a"]
+  |===
+
+  |Family
+  |Planning (PL)
+
+  |Controls
+  |link:https://csrc.nist.gov/Projects/risk-management/sp800-53-controls/release-search#!/control?version=5.1&number=PL-1[PL-1], link:https://csrc.nist.gov/Projects/risk-management/sp800-53-controls/release-search#!/control?version=5.1&number=PL-2[PL-2], link:https://csrc.nist.gov/Projects/risk-management/sp800-53-controls/release-search#!/control?version=5.1&number=PL-4[PL-4]
+  |===
+
+  [cols="15%h, 85%a"]
+  |===
+
+  |Family
+  |Personnel Security (PS)
+
+
+  |Controls
+  |link:https://csrc.nist.gov/Projects/risk-management/sp800-53-controls/release-search#!/control?version=5.1&number=PS-1[PS-1], link:https://csrc.nist.gov/Projects/risk-management/sp800-53-controls/release-search#!/control?version=5.1&number=PS-2[PS-2], link:https://csrc.nist.gov/Projects/risk-management/sp800-53-controls/release-search#!/control?version=5.1&number=PS-3[PS-3], link:https://csrc.nist.gov/Projects/risk-management/sp800-53-controls/release-search#!/control?version=5.1&number=PS-4[PS-4], link:https://csrc.nist.gov/Projects/risk-management/sp800-53-controls/release-search#!/control?version=5.1&number=PS-5[PS-5], link:https://csrc.nist.gov/Projects/risk-management/sp800-53-controls/release-search#!/control?version=5.1&number=PS-6[PS-6], link:https://csrc.nist.gov/Projects/risk-management/sp800-53-controls/release-search#!/control?version=5.1&number=PS-7[PS-7], link:https://csrc.nist.gov/Projects/risk-management/sp800-53-controls/release-search#!/control?version=5.1&number=PS-8[PS-8]
+  |===
+
+  [cols="15%h, 85%a"]
+  |===
+
+  |Family
+  |Risk Assessment (RA)
+
+  |Controls
+  |link:https://csrc.nist.gov/Projects/risk-management/sp800-53-controls/release-search#!/control?version=5.1&number=RA-1[RA-1], link:https://csrc.nist.gov/Projects/risk-management/sp800-53-controls/release-search#!/control?version=5.1&number=RA-2[RA-2], link:https://csrc.nist.gov/Projects/risk-management/sp800-53-controls/release-search#!/control?version=5.1&number=RA-3[RA-3], link:https://csrc.nist.gov/Projects/risk-management/sp800-53-controls/release-search#!/control?version=5.1&number=RA-5[RA-5]
+  |===
+
+  [cols="15%h, 85%a"]
+  |===
+
+  |Family
+  |System and Services Acquisition (SA)
+
+  |Controls
+  |link:https://csrc.nist.gov/Projects/risk-management/sp800-53-controls/release-search#!/control?version=5.1&number=SA-1[SA-1], link:https://csrc.nist.gov/Projects/risk-management/sp800-53-controls/release-search#!/control?version=5.1&number=SA-2[SA-2], link:https://csrc.nist.gov/Projects/risk-management/sp800-53-controls/release-search#!/control?version=5.1&number=SA-3[SA-3], link:https://csrc.nist.gov/Projects/risk-management/sp800-53-controls/release-search#!/control?version=5.1&number=SA-4[SA-4], link:https://csrc.nist.gov/Projects/risk-management/sp800-53-controls/release-search#!/control?version=5.1&number=SA-4[SA-4(10)], link:https://csrc.nist.gov/Projects/risk-management/sp800-53-controls/release-search#!/control?version=5.1&number=SA-5[SA-5], link:https://csrc.nist.gov/Projects/risk-management/sp800-53-controls/release-search#!/control?version=5.1&number=SA-9[SA-9]
+  |===
+
+  [cols="15%h, 85%a"]
+  |===
+
+  |Family
+  |System and Communications Protection (SC)
+
+  |Controls
+  |link:https://csrc.nist.gov/Projects/risk-management/sp800-53-controls/release-search#!/control?version=5.1&number=SC-1[SC-1], link:https://csrc.nist.gov/Projects/risk-management/sp800-53-controls/release-search#!/control?version=5.1&number=SC-7[SC-7(3)], link:https://csrc.nist.gov/Projects/risk-management/sp800-53-controls/release-search#!/control?version=5.1&number=SC-7[SC-7(7)], link:https://csrc.nist.gov/Projects/risk-management/sp800-53-controls/release-search#!/control?version=5.1&number=SC-7[SC-7(8)], link:https://csrc.nist.gov/Projects/risk-management/sp800-53-controls/release-search#!/control?version=5.1&number=SC-7[SC-7(18)], link:https://csrc.nist.gov/Projects/risk-management/sp800-53-controls/release-search#!/control?version=5.1&number=SC-7[SC-7(21)], link:https://csrc.nist.gov/Projects/risk-management/sp800-53-controls/release-search#!/control?version=5.1&number=SC-12[SC-12], link:https://csrc.nist.gov/Projects/risk-management/sp800-53-controls/release-search#!/control?version=5.1&number=SC-12[SC-12(1)], link:https://csrc.nist.gov/Projects/risk-management/sp800-53-controls/release-search#!/control?version=5.1&number=SC-20[SC-20], link:https://csrc.nist.gov/Projects/risk-management/sp800-53-controls/release-search#!/control?version=5.1&number=SC-22[SC-22], link:https://csrc.nist.gov/Projects/risk-management/sp800-53-controls/release-search#!/control?version=5.1&number=SC-23[SC-23]
+  |===
+
+  [cols="15%h, 85%a"]
+  |===
+
+  |Family
+  |System and Information Integrity (SI)
+
+  |Controls
+  |link:https://csrc.nist.gov/Projects/risk-management/sp800-53-controls/release-search#!/control?version=5.1&number=SI-1[SI-1], link:https://csrc.nist.gov/Projects/risk-management/sp800-53-controls/release-search#!/control?version=5.1&number=SI-4[SI-4], link:https://csrc.nist.gov/Projects/risk-management/sp800-53-controls/release-search#!/control?version=5.1&number=SI-4[SI-4(2)], link:https://csrc.nist.gov/Projects/risk-management/sp800-53-controls/release-search#!/control?version=5.1&number=SI-4[SI-4(4)], link:https://csrc.nist.gov/Projects/risk-management/sp800-53-controls/release-search#!/control?version=5.1&number=SI-4[SI-4(5)], link:https://csrc.nist.gov/Projects/risk-management/sp800-53-controls/release-search#!/control?version=5.1&number=SI-4[SI-4(12)], link:https://csrc.nist.gov/Projects/risk-management/sp800-53-controls/release-search#!/control?version=5.1&number=SI-4[SI-4(14)], link:https://csrc.nist.gov/Projects/risk-management/sp800-53-controls/release-search#!/control?version=5.1&number=SI-4[SI-4(20)], link:https://csrc.nist.gov/Projects/risk-management/sp800-53-controls/release-search#!/control?version=5.1&number=SI-4[SI-4(22)], link:https://csrc.nist.gov/Projects/risk-management/sp800-53-controls/release-search#!/control?version=5.1&number=SI-5[SI-5], link:https://csrc.nist.gov/Projects/risk-management/sp800-53-controls/release-search#!/control?version=5.1&number=SI-7[SI-7(2)], link:https://csrc.nist.gov/Projects/risk-management/sp800-53-controls/release-search#!/control?version=5.1&number=SI-8[SI-8(2)], link:https://csrc.nist.gov/Projects/risk-management/sp800-53-controls/release-search#!/control?version=5.1&number=SI-12[SI-12]
+  |===
+check: |
+fix: |
+references:
+  cci:
+    - N/A
+  800-53r5:
+    - N/A
+  800-53r4:
+    - N/A
+  srg:
+    - N/A
+  disa_stig:
+    - N/A
+  cmmc:
+    - N/A
+macOS:
+  - "14.0"
+tags:
+  - 800-171
+  - 800-53r4_high
+  - 800-53r4_low
+  - 800-53r4_moderate
+  - 800-53r5_high
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_privacy
+  - cmmc_lvl1
+  - cmmc_lvl2
+  - cnssi-1253_high
+  - cnssi-1253_low
+  - cnssi-1253_moderate
+  - stig
+  - supplemental
+mobileconfig: false
+mobileconfig_info:

@@ -1,0 +1,28 @@
+id: os_mfa_network_non-priv
+title: "Enforce multifactor authentication for network access to non-privileged accounts"
+discussion: |
+  The information system implements multifactor authentication for network access to non-privileged accounts.
+check: |
+  For directory bound systems:
+  The technology supports this requirement and cannot be configured to be out of compliance. The technology inherently meets this requirement.
+fix: |
+  For directory bound systems, the technology inherently meets this requirement. No fix is required.
+references:
+  cce:
+    - CCE-90953-1
+  cci:
+    - CCI-000766
+  800-53r5:
+    - N/A
+  800-53r4:
+    - N/A
+  disa_stig:
+    - N/A
+  srg:
+    - N/A
+macOS:
+  - "12.0"
+tags:
+  - inherent
+mobileconfig: false
+mobileconfig_info:

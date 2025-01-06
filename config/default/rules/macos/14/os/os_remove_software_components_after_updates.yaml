@@ -1,0 +1,31 @@
+id: os_remove_software_components_after_updates
+title: Must remove all software components after updated versions installed
+discussion: |
+  Previous versions of software components that are not removed from the information system after updates have been installed may be exploited by adversaries. Some information technology products may remove older versions of software automatically from the information system.
+check: |
+  The technology supports this requirement and cannot be configured to be out of compliance. The technology inherently meets this requirement.
+fix: |
+  The technology inherently meets this requirement. No fix is required.
+references:
+  cce:
+    - CCE-92873-9
+  cci:
+    - N/A
+  800-53r5:
+    - SI-2(6)
+  800-53r4:
+    - SI-2(6)
+  disa_stig:
+    - N/A
+  srg:
+    - SRG-OS-000437-GPOS-00194
+macOS:
+  - '14.0'
+tags:
+  - inherent
+  - cnssi-1253_moderate
+  - cnssi-1253_low
+  - cnssi-1253_high
+  - srg
+mobileconfig: false
+mobileconfig_info:

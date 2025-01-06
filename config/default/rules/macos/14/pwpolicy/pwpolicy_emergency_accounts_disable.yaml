@@ -1,0 +1,43 @@
+id: pwpolicy_emergency_accounts_disable
+title: Automatically Remove or Disable Emergency Accounts within 72 Hours
+discussion: |
+  The macOS is able to be configured to automatically remove or disable emergency accounts within 72 hours or less.
+
+  Emergency administrator accounts are privileged accounts established in response to crisis situations where the need for rapid account activation is required. Therefore, emergency account activation may bypass normal account authorization processes. If these accounts are disabled, system maintenance during emergencies may not be possible, thus adversely affecting system availability.
+
+  Although the ability to create and use emergency administrator accounts is necessary for performing system maintenance during emergencies, these accounts present vulnerabilities to the system if they are not disabled and removed when they are no longer needed. Configuring the macOS to automatically remove or disable emergency accounts within 72 hours of creation mitigates the risks posed if one were to be created and accidentally left active once the crisis is resolved.
+
+  Emergency administrator accounts are different from infrequently used accounts (i.e., local logon accounts used by system administrators when network or normal logon is not available). Infrequently used accounts also remain available and are not subject to automatic termination dates. However, an emergency administrator account is normally a different account created for use by vendors or system maintainers.
+
+  To address access requirements, many operating systems can be integrated with enterprise-level authentication/access mechanisms that meet or exceed access control policy requirements.
+check: |
+  The technology supports this requirement and cannot be configured to be out of compliance. The technology inherently meets this requirement.
+fix: |
+  The technology inherently meets this requirement. No fix is required.
+references:
+  cce:
+    - CCE-92930-7
+  cci:
+    - N/A
+  800-53r5:
+    - AC-2(2)
+  800-53r4:
+    - AC-2(2)
+  srg:
+    - SRG-OS-000002-GPOS-00002
+    - SRG-OS-000123-GPOS-00064
+  disa_stig:
+    - N/A
+macOS:
+  - '14.0'
+tags:
+  - 800-53r5_moderate
+  - 800-53r5_high
+  - 800-53r4_moderate
+  - 800-53r4_high
+  - inherent
+  - cnssi-1253_moderate
+  - cnssi-1253_high
+  - srg
+mobileconfig: false
+mobileconfig_info:

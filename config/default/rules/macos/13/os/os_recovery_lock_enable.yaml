@@ -1,0 +1,49 @@
+id: os_recovery_lock_enable
+title: "Enable Recovery Lock"
+discussion: |
+  A recovery lock password _MUST_ be enabled and set. 
+
+  Single user mode, recovery mode, the Startup Manager, and several other tools are available on macOS by holding down specific key combinations during startup. Setting a recovery lock restricts access to these tools.
+
+  IMPORTANT: Recovery lock passwords are not supported on Intel devices. This rule is only applicable to Apple Silicon devices.
+check: |
+  /usr/libexec/mdmclient QuerySecurityInfo | /usr/bin/grep -c "IsRecoveryLockEnabled = 1"
+result: 
+  integer: 1
+fix: |
+  NOTE: The SetRecoveryLock command can be used to set a Recovery Lock password and must be from your MDM. 
+references:
+  cce:
+    - CCE-91865-6
+  cci:
+    - N/A
+  800-53r5:
+    - AC-6
+  800-53r4:
+    - AC-6
+  srg:
+    - N/A
+  disa_stig:
+    - N/A
+  800-171r3:
+    - 03.01.05
+  cmmc:
+    - AC.L1-3.1.1
+    - AC.L2-3.1.5
+macOS:
+  - "13.0"
+tags:
+  - 800-53r5_moderate 
+  - 800-53r5_high 
+  - 800-53r4_moderate 
+  - 800-53r4_high 
+  - 800-171 
+  - arm64
+  - cnssi-1253_moderate
+  - cnssi-1253_low
+  - cnssi-1253_high
+  - cmmc_lvl2
+  - cmmc_lvl1
+severity: "medium"
+mobileconfig: false
+mobileconfig_info:

@@ -1,0 +1,37 @@
+id: os_system_read_only
+title: "Ensure System Volume is Read Only"
+discussion: |
+  The System volume _MUST_ be mounted as read-only in order to ensure that configurations critical to the integrity of the macOS have not been compromised. System Integrity Protection (SIP) will prevent the system volume from being mounted as writable.
+
+  NOTE: The system volume is read only by default in macOS.
+check: |
+  /usr/sbin/system_profiler SPStorageDataType | /usr/bin/awk '/Mount Point: \/$/{x=NR+2}(NR==x){print $2}'
+result: 
+  string: "No"
+fix: |
+  NOTE: To remount the System volume as Read Only, rebooting the computer will mount it as Read Only. 
+references:
+  cce:
+    - CCE-91016-6
+  cci:
+    - N/A
+  800-53r5:
+    - SC-34
+    - MA-4(1)
+    - SI-7
+  800-53r4:
+    - SC-34
+    - SI-7
+  srg:
+    - N/A
+  disa_stig:
+    - N/A
+macOS:
+  - "12.0"
+tags:
+  - 800-53r5_moderate
+  - 800-53r5_high
+  - 800-53r4_moderate
+  - 800-53r4_high
+mobileconfig: false
+mobileconfig_info:

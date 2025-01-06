@@ -1,0 +1,41 @@
+id: pwpolicy_temporary_accounts_disable
+title: Automatically Remove or Disable Temporary User Accounts within 72 Hours
+discussion: |
+  The macOS is able to be configured to set an automated termination for 72 hours or less for all temporary accounts upon account creation.
+
+  If temporary user accounts remain active when no longer needed or for an excessive period, these accounts may be targeted by attackers to gain unauthorized access. To mitigate this risk, automated termination of all temporary accounts _MUST_ be set to 72 hours (or less) when the temporary account is created.
+
+  If no policy is enforced by a directory service, a password policy can be set with the "pwpolicy" utility. The variable names may vary depending on how the policy was set.
+
+  If there are no temporary accounts defined on the system, this is Not Applicable.
+check: |
+  The technology supports this requirement and cannot be configured to be out of compliance. The technology inherently meets this requirement.
+fix: |
+  The technology inherently meets this requirement. No fix is required.
+references:
+  cce:
+    - CCE-92941-4
+  cci:
+    - N/A
+  800-53r5:
+    - AC-2(2)
+  800-53r4:
+    - AC-2(2)
+  srg:
+    - SRG-OS-000002-GPOS-00002
+    - SRG-OS-000123-GPOS-00064
+  disa_stig:
+    - N/A
+macOS:
+  - '14.0'
+tags:
+  - 800-53r5_moderate
+  - 800-53r5_high
+  - 800-53r4_moderate
+  - 800-53r4_high
+  - inherent
+  - cnssi-1253_moderate
+  - cnssi-1253_high
+  - srg
+mobileconfig: false
+mobileconfig_info:

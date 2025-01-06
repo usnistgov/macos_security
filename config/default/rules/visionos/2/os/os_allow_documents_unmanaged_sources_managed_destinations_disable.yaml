@@ -1,0 +1,27 @@
+id: os_allow_documents_unmanaged_sources_managed_destinations_disable
+title: "Ensure Allow documents from unmanaged sources in managed destinations is set to Disabled"
+discussion: |
+  Documents from unmanaged sources _MUST_ not be allowed in managed destinations.
+check: ""
+fix: |
+  This is implemented by a Configuration Profile.
+references:
+  cce:
+    - CCE-94491-8
+  800-53r5:
+    - AC-3
+    - MP-2
+    - SC-7(10)
+    - SC-39
+visionOS:
+  - '2.0'
+tags:
+  - visionos
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_high  
+supervised: false
+mobileconfig: true
+mobileconfig_info:
+  com.apple.applicationaccess:
+    allowOpenFromUnmanagedToManaged: false

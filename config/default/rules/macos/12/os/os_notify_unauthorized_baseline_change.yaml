@@ -1,0 +1,31 @@
+id: os_notify_unauthorized_baseline_change
+title: "Configure the System to Notify upon Baseline Configuration Changes"
+discussion: |
+  The macOS should be configured to automatically notify system administrators, Information System Security Officers (ISSOs), and (IMOs) when baseline configurations are modified.
+
+  Unauthorized changes to the baseline configuration could make the system vulnerable to various attacks or allow unauthorized access to the operating system. Changes to operating system configurations can have unintended side effects, some of which may  present security threats. Detecting such changes and providing an automated response can help avoid unintended, negative consequences that could ultimately affect the state of the operating system. 
+
+  To enable notifications and audit logging of changes made to baseline configurations, many operating systems can be integrated with enterprise-level auditing mechanisms that meet or exceed this requirement. 
+check: |
+  The technology does not support this requirement. This is an applicable-does not meet finding.
+fix: |
+  This requirement is a permanent finding and cannot be fixed. An appropriate mitigation for the system must be implemented, but this finding cannot be considered fixed.
+references:
+  cce:
+    - CCE-90964-8
+  cci:
+    - CCI-001744
+  800-53r5:
+    - CM-3(5)
+  800-53r4:
+    - CM-3(5)
+  disa_stig:
+    - N/A
+  srg:
+    - N/A
+macOS:
+  - "12.0"
+tags:
+  - permanent
+mobileconfig: false
+mobileconfig_info:

@@ -1,0 +1,43 @@
+id: os_certificate_authority_trust
+title: Issue or Obtain Public Key Certificates from an Approved Service Provider
+discussion: |
+  The organization _MUST_ issue or obtain public key certificates from an organization-approved service provider and ensure only approved trust anchors are in the System Keychain.
+check: |
+  /usr/bin/security dump-keychain /Library/Keychains/System.keychain | /usr/bin/awk -F'"' '/labl/ {print $4}'
+result:
+  string: a list containing approved root certificates
+fix: |
+  Obtain the approved certificates from the appropriate authority and install them to the System Keychain.
+references:
+  cce:
+    - CCE-92774-9
+  cci:
+    - CCI-002470 
+    - CCI-000185
+    - CCI-002450
+  800-53r5:
+    - SC-17
+  800-53r4:
+    - SC-17
+  srg:
+    - SRG-OS-000403-GPOS-00182
+  disa_stig:
+    - APPL-14-003001
+  cmmc:
+    - SC.L2-3.13.10
+macOS:
+  - '14.0'
+tags:
+  - 800-53r5_moderate
+  - 800-53r5_high
+  - 800-53r4_moderate
+  - 800-53r4_high
+  - manual
+  - cnssi-1253_moderate
+  - cnssi-1253_low
+  - cnssi-1253_high
+  - cmmc_lvl2
+  - stig
+severity: high
+mobileconfig: false
+mobileconfig_info:

@@ -1,0 +1,64 @@
+id: os_malicious_code_prevention
+title: "Ensure the System Implements Malicious Code Protection Mechanisms"
+discussion: |
+  The inherent configuration of the macOS _IS_ in compliance as Apple has designed the system with three layers of protection against malware. Each layer of protection is comprised of one or more malicious code protection mechanisms, which are automatically implemented and which, collectively, meet the requirements of all applicable federal laws, Executive Orders, directives, policies, regulations, standards, and guidance for malicious code prevention.
+  
+  1. This  first layer of defense targets the distribution of malware; the aim is to prevent malware from ever launching. 
+  The following mechanisms are inherent to the macOS design and constitute the first layer of protection against malicious code: 
+  *	The Apple App Store: the safest way to add new applications to a Mac is by downloading them from the App Store; all apps available for download from the App Store have been reviewed for signs of tampering and signed by Apple to indicate that the app meets security requirements and does not contain malware. 
+  *	XProtect: a built-in, signature-based, anti-virus, anti-malware technology inherent to all Macs. XProtect automatically detects and blocks the execution of known malware. 
+    *	In macOS 10.15 and all subsequent releases, XProtect checks for known malicious content when:
+      *	an app is first launched,
+      *	an app has been changed (in the file system), and
+      *	XProtect signatures are updated.
+  *	YARA: another built-in tool (inherent to all Macs), which conducts signature-based detection of malware. Apple updates YARA rules regularly.
+  *	Gatekeeper: a security feature inherent to all Macs; Gatekeeper scans apps to detect malware and/or revocations of a developer's signing certificate and prevents unsafe apps from running.
+  *	Notarization: Apple performs regular, automated scans to detect signs of malicious content and to verify developer ID-signed software; when no issues are found, Apple notarizes the software and delivers the results of scans to the system owner. 
+
+  2. The second layer of defense targets malware that manages to appear on a Mac before it runs; the aim is to quickly identify and block any malware present on a Mac in order to prevent the malware from running and further spreading. 
+  The following mechanisms are inherent to the macOS design and constitute the second layer of protection against malicious code: 
+  *	XProtect (defined above).
+  *	Gatekeeper (defined above).
+  *	Notarization (defined above).
+
+  3.  The third layer of defense targets infected Mac system(s); the aim is to remediate Macs on which malware has managed to successfully execute. 
+  The following mechanism is inherent to the macOS design and constitutes the third layer of protection against malicious code: 
+  *	Apple's Malware Removal Tool (MRT): a technology included on all macOS systems. MRT is an agent that remediates based on automatic updates delivered from Apple. MRT will remove the malware upon receiving updated information and check for malware on restart and login.
+
+  link:https://support.apple.com/guide/security/protecting-against-malware-sec469d47bd8/1/web/1[]
+  
+  link:https://support.apple.com/guide/security/app-security-overview-sec35dd877d0/web[]
+check: |
+  The technology supports this requirement and cannot be configured to be out of compliance. The technology inherently meets this requirement.
+fix: |
+  The technology inherently meets this requirement. No fix is required.
+references:
+  cce:
+    - CCE-90947-3
+  cci:
+    - N/A
+  800-53r5:
+    - SI-3
+  800-53r4:
+    - N/A
+  disa_stig:
+    - N/A
+  srg:
+    - N/A
+  cis:
+    benchmark:
+      - N/A
+    controls v8:
+      - 10.1
+      - 10.2
+      - 10.5
+macOS:
+  - "12.0"
+tags:
+  - inherent
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_high
+  - cisv8
+mobileconfig: false
+mobileconfig_info:

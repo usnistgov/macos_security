@@ -1,0 +1,40 @@
+id: os_require_managed_pasteboard_enforce
+title: "Ensure copy/paste of data from Managed to Unmanaged Applications is Disabled"
+discussion: |-
+  The device _MUST_ be configured to disable copy/paste of data from managed to unmanaged applications.
+
+  If 'true', copy and paste functionality respects the 'allowOpenFromManagedToUnmanaged' and 'allowOpenFromUnmanagedToManaged' restrictions. 
+check: ''
+fix: This is implemented by a Configuration Profile
+references:
+  cce:
+    - CCE-93243-4
+  cci:
+    - CCI-000366
+    - CCI-000097
+    - CCI-000370
+  800-53r5:
+    - AC-23
+    - SC-7(10)
+  sfr:
+    - 'FMT_SMF_EXT.1.1 #47'
+  disa_stig:
+    - AIOS-16-014600
+    - AIOS-16-714600
+  cis:
+    benchmark:
+      - N/A
+    controls v8:
+      - N/A
+iOS:
+  - "16.0"
+tags:
+  - ios
+  - ios_stig
+  - ios_stig_byoad
+severity: medium
+supervised: false
+mobileconfig: true
+mobileconfig_info:
+  com.apple.applicationaccess:
+    requireManagedPasteboard: true

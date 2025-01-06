@@ -1,0 +1,13 @@
+{% include "header.adoc.jinja" %}
+
+{% include "foreword.adoc.jinja" %}
+
+{% include "authors.adoc.jinja" %}
+
+{% include "acronyms.adoc.jinja" %}
+
+{% include "additional_docs.adoc.jinja" %}
+
+{% for profile in baseline.profile %}
+{% include "section.adoc.jinja" %}
+{% endfor %}

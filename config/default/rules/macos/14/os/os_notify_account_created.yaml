@@ -1,0 +1,43 @@
+id: os_notify_account_created
+title: Configure the System to Notify upon Account Created Actions
+discussion: |
+  The macOS should be configured to automatically notify system administrators and Information System Security Officers (ISSOs) when new accounts are created.
+
+  Once an attacker establishes initial access to a system, the attacker often attempts to create a persistent method of reestablishing and maintaining access by creating a new account. Configuring the information system to send a notification when new accounts are created is one method for mitigating this risk. A comprehensive account management process should not only notify when new accounts are created, but also maintain an audit record of accounts made. Such a process greatly reduces the risk that accounts will be surreptitiously created and provides logging that can be used for forensic purposes.
+
+  To enable notifications and audit logging of accounts created, many operating systems can be integrated with enterprise-level auditing mechanisms that meet or exceed this requirement.
+check: |
+  The technology does not support this requirement. This is an applicable-does not meet finding.
+fix: |
+  This requirement is a permanent finding and cannot be fixed. An appropriate mitigation for the system must be implemented, but this finding cannot be considered fixed.
+references:
+  cce:
+    - CCE-92834-1
+  cci:
+    - N/A
+  800-53r5:
+    - N/A
+  800-53r4:
+    - AC-2(4)
+  disa_stig:
+    - N/A
+  srg:
+    - SRG-OS-000304-GPOS-00121
+    - SRG-OS-000239-GPOS-00089
+    - SRG-OS-000240-GPOS-00090
+    - SRG-OS-000004-GPOS-00004
+    - SRG-OS-000241-GPOS-00091
+    - SRG-OS-000274-GPOS-00104
+    - SRG-OS-000275-GPOS-00105
+    - SRG-OS-000276-GPOS-00106
+    - SRG-OS-000277-GPOS-00107
+    - SRG-OS-000303-GPOS-00120
+macOS:
+  - '14.0'
+tags:
+  - 800-53r4_moderate
+  - 800-53r4_high
+  - permanent
+  - srg
+mobileconfig: false
+mobileconfig_info:

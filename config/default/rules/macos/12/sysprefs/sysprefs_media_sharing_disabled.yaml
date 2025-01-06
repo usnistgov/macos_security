@@ -1,0 +1,71 @@
+id: sysprefs_media_sharing_disabled
+title: "Disable Media Sharing"
+discussion: |
+  Media sharing _MUST_ be disabled.
+
+  When Media Sharing is enabled, the computer starts a network listening service that shares the contents of the user's music collection with other users in the same subnet. 
+
+  The information system _MUST_ be configured to provide only essential capabilities. Disabling Media Sharing helps prevent the unauthorized connection of devices and the unauthorized transfer of information. Disabling Media Sharing mitigates this risk.
+
+  NOTE: The Media Sharing preference panel will still allow "Home Sharing" and "Share media with guests" to be checked but the service will not be enabled.
+check: |
+  /usr/bin/osascript -l JavaScript << EOS
+  function run() {
+    let pref1 = ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('com.apple.preferences.sharing.SharingPrefsExtension')\
+    .objectForKey('homeSharingUIStatus'))
+    let pref2 = ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('com.apple.preferences.sharing.SharingPrefsExtension')\
+    .objectForKey('legacySharingUIStatus'))
+    let pref3 = ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('com.apple.preferences.sharing.SharingPrefsExtension')\
+    .objectForKey('mediaSharingUIStatus'))
+    if ( pref1 == 0 && pref2 == 0 && pref3 == 0 ) {
+      return("true")
+    } else {
+      return("false")
+    }
+  }
+  EOS
+result:
+  string: "true"
+fix: |
+  This is implemented by a Configuration Profile.
+references:
+  cce:
+    - CCE-91066-1
+  800-53r5:
+    - AC-3
+    - AC-17
+  800-53r4:
+    - AC-3
+  srg:
+    - N/A
+  disa_stig:
+    - N/A
+  cci:
+    - N/A
+  800-171r2:
+    - 3.1.1
+    - 3.1.2
+  cis:
+    benchmark:
+      - 2.4.12 (level 2)
+    controls v8:
+      - 4.1
+      - 4.8
+macOS:
+  - "12.0"
+tags:
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_high
+  - 800-53r4_low
+  - 800-53r4_moderate
+  - 800-53r4_high
+  - 800-171
+  - cis_lvl2
+  - cisv8
+mobileconfig: true
+mobileconfig_info:
+  com.apple.preferences.sharing.SharingPrefsExtension:
+    homeSharingUIStatus: 0
+    legacySharingUIStatus: 0
+    mediaSharingUIStatus: 0

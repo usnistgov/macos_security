@@ -1,0 +1,68 @@
+id: os_config_data_install_enforce
+title: Enforce Installation of XProtect Remediator and Gatekeeper Updates Automatically
+discussion: |
+  Software Update _MUST_ be configured to update XProtect Remediator and Gatekeeper automatically.
+
+  This setting enforces definition updates for XProtect Remediator and Gatekeeper; with this setting in place, new malware and adware that Apple has added to the list of malware or untrusted software will not execute. These updates do not require the computer to be restarted.
+
+  link:https://support.apple.com/en-us/HT207005[]
+
+  NOTE: Software update will automatically update XProtect Remediator and Gatekeeper by default in the macOS.
+check: |
+  /usr/bin/osascript -l JavaScript << EOS
+  $.NSUserDefaults.alloc.initWithSuiteName('com.apple.SoftwareUpdate')\
+  .objectForKey('ConfigDataInstall').js
+  EOS
+result:
+  string: 'true'
+fix: |
+  This is implemented by a Configuration Profile.
+references:
+  cce:
+    - CCE-92776-4
+  cci:
+    - CCI-000366
+  800-53r5:
+    - SI-3
+    - SI-2(5)
+  800-53r4:
+    - N/A
+  srg:
+    - SRG-OS-000480-GPOS-00227
+  disa_stig:
+    - APPL-14-005130
+  800-171r2:
+    - 3.14.1
+    - 3.14.2
+    - 3.13.3
+  cis:
+    benchmark:
+      - 1.6 (level 1)
+    controls v8:
+      - 7.3
+      - 7.4
+      - 7.7
+  cmmc:
+    - SI.L1-3.14.1
+    - SI.L1-3.14.2
+    - SI.L1-3.14.4
+macOS:
+  - '14.0'
+tags:
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_high
+  - cis_lvl1
+  - cis_lvl2
+  - cisv8
+  - cnssi-1253_moderate
+  - cnssi-1253_low
+  - cnssi-1253_high
+  - cmmc_lvl2
+  - cmmc_lvl1
+  - stig
+severity: medium
+mobileconfig: true
+mobileconfig_info:
+  com.apple.SoftwareUpdate:
+    ConfigDataInstall: true
