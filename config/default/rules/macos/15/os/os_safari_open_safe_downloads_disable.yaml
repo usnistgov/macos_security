@@ -27,8 +27,10 @@ references:
     controls v8:
       - 9.1
       - 9.6
-macOS:
-  - '15.0'
+operating_system:
+  - name: macos
+    version:
+      - 15.0
 tags:
   - cis_lvl1
   - cis_lvl2

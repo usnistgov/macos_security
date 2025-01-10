@@ -8,6 +8,7 @@ import hashlib
 
 from pathlib import Path
 from typing import List
+from collections import defaultdict
 
 # Local python modules
 from src.mscp.classes.baseline import Baseline
@@ -33,13 +34,53 @@ def generate_ddm_activation(output_path: Path, identifier: str) -> None:
 
 
 def generate_ddm(build_path: Path, baseline: Baseline, baseline_name: str) -> None:
+    """
+    Generate Declarative Device Management (DDM) profiles for a given baseline.
 
-    mscp_data: dict = open_yaml(Path(config["global"]["mspc_data"]))
+    This function creates and organizes DDM files such as configurations, assets, and activations
+    based on the rules in the provided baseline. It processes `ddm_info` from the rules to generate
+    JSON files and zip archives required for DDM operations.
+
+    Args:
+        build_path (Path): The base directory where DDM output files will be stored.
+        baseline (Baseline): The Baseline object containing profiles and rules to process.
+        baseline_name (str): The name of the baseline for identifying the output files.
+
+    Returns:
+        None
+
+    Raises:
+        Various exceptions for file handling, such as IOError for archive creation errors.
+
+    Key Steps:
+        1. Parse `ddm_info` from rules in the baseline to identify supported declaration types.
+        2. Create required output directories if they don't exist.
+        3. Process configuration files (`com.apple.configuration.services.configuration-files`):
+            - Generate configuration directories and files.
+            - Append configuration settings based on `ddm_info`.
+        4. Generate and zip configuration files for supported services.
+        5. Create JSON assets, configurations, and activations for each DDM declaration type.
+
+    Notes:
+        - The `assets`, `activations`, and `configurations` folders are created in the `declarative`
+          directory under the `build_path`.
+        - Services not found in `mscp_data` are skipped with a logged error message.
+        - Unsupported DDM types are logged as errors and skipped.
+
+    Example:
+        generate_ddm(
+            build_path=Path("/path/to/build"),
+            baseline=my_baseline_object,
+            baseline_name="example_baseline"
+        )
+    """
+
+    mscp_data: dict = open_yaml(Path(config.get("mspc_data", "")))
     ddm_output_path: Path = Path(build_path, "declarative")
     activations_output_path: Path = Path(ddm_output_path, "activations")
     assets_output_path: Path = Path(ddm_output_path, "assets")
     configurations_output_path: Path = Path(ddm_output_path, "configurations")
-    ddm_dict: dict = {}
+    ddm_dict:dict = defaultdict(dict)
 
     logging.debug(f"Output Directory name: {ddm_output_path}")
 
@@ -56,37 +97,46 @@ def generate_ddm(build_path: Path, baseline: Baseline, baseline_name: str) -> No
     ]
 
     for ddm_rule in ddm_rules:
-        if ddm_rule.get("ddm_info", {}).get("declarationtype", "") == "com.apple.configuration.services.configuration-files":
-            if not mscp_data.get("ddm", {}).get("services", {}).get(ddm_rule.get("ddm_info", {}).get("service")):
-                logger.error(f"{ddm_rule.get("ddm_info", {}).get("service", "")} service NOT found")
+        ddm_info = ddm_rule.get("ddm_info", {})
+        declaration_type = ddm_info.get("declarationtype", "")
+
+        if declaration_type == "com.apple.configuration.services.configuration-files":
+            service_name = ddm_info.get("service", "")
+            if not mscp_data.get("ddm", {}).get("services", {}).get(service_name):
+                logger.error(f"{service_name} service NOT found")
                 continue
 
-            service_name = ddm_rule.get("ddm_info", {}).get("service", "")
             logger.debug(f"Service name: {service_name}")
-
             service_path = mscp_data.get("ddm", {}).get("services", {}).get(service_name, "")
             logger.debug(f"Service path: {service_path}")
 
-            # ! Need to strip the trailing "/" so that pathlib does not treat it as an absolute path.
-            service_config_dir: Path = Path(ddm_output_path, ddm_rule.get("ddm_info", {}).get("service", ""), str(mscp_data["ddm"]["services"][ddm_rule.get("ddm_info", {}).get("service")]).lstrip("/"))
-            service_config_file: Path = service_config_dir / ddm_rule.get("ddm_info", {}).get("config_file")
+            # Handle the configuration directory and file
+            service_config_dir: Path = Path(
+                ddm_output_path,
+                service_name,
+                str(mscp_data["ddm"]["services"][service_name]).lstrip("/")
+            )
+            service_config_file: Path = service_config_dir / ddm_info.get("config_file", "")
 
-            logging.debug(f"Configuration Directory name: {service_config_dir}")
-            logging.debug(f"Configuration File name: {service_config_file}")
+            logger.debug(f"Configuration Directory: {service_config_dir}")
+            logger.debug(f"Configuration File: {service_config_file}")
 
             if not service_config_dir.exists():
                 make_dir(service_config_dir)
 
-            if ddm_rule.get("ddm_info", {}).get("configuration_key", "") == "file":
-                append_text(service_config_file, ddm_rule.get("ddm_info", {}).get("configuration_value", ""), encoding='UTF-8', newline='\n')
-            else:
-                append_text(service_config_file, f"{ddm_rule.get("ddm_info", {}).get("configuration_key", "")} {ddm_rule.get("ddm_info", {}).get("configuration_value", "")}", encoding='UTF-8', newline='\n')
+            config_key = ddm_info.get("configuration_key", "")
+            config_value = ddm_info.get("configuration_value", "")
 
-            ddm_dict.setdefault(ddm_rule.get("ddm_info", {}).get("declarationtype", ""), {}).update({})
+            if config_key == "file":
+                append_text(service_config_file, config_value, encoding="UTF-8", newline="\n")
+            else:
+                append_text(service_config_file, f"{config_key} {config_value}", encoding="UTF-8", newline="\n")
+
+            ddm_dict[declaration_type].update({})
         else:
-            ddm_dict.setdefault(ddm_rule.get("ddm_info", {}).get("declarationtype", ""), {}).update(
-                {ddm_rule.get("ddm_info", {}).get("ddm_key", ""): ddm_rule.get("ddm_info", {}).get("ddm_value", "")}
-                )
+            ddm_key = ddm_info.get("ddm_key", "")
+            ddm_value = ddm_info.get("ddm_value", "")
+            ddm_dict[declaration_type][ddm_key] = ddm_value
 
     for ddm_type in mscp_data.get("ddm", {}).get("supported_types", []):
         if ddm_type not in ddm_dict.keys():

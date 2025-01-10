@@ -1,3 +1,5 @@
+---
+# yaml-language-server: $schema=../../../../../../schemas/rules.json
 id: system_settings_hot_corners_secure
 title: Secure Hot Corners
 discussion: |
@@ -45,8 +47,10 @@ references:
       - 4.3
   cmmc:
     - AC.L2-3.1.10
-macOS:
-  - '15.0'
+operating_system:
+  - name: macos
+    version:
+      - 15.0
 tags:
   - cis_lvl2
   - cisv8
@@ -55,4 +59,3 @@ tags:
   - cnssi-1253_high
   - cmmc_lvl2
 mobileconfig: false
-mobileconfig_info:

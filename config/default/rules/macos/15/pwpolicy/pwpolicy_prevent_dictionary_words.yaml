@@ -1,3 +1,5 @@
+---
+# yaml-language-server: $schema=../../../../../../schemas/rules.json
 id: pwpolicy_prevent_dictionary_words
 title: Prevent the Use of Dictionary Words for Passwords
 discussion: |
@@ -23,10 +25,11 @@ references:
     - N/A
   srg:
     - SRG-OS-000480-GPOS-00225
-macOS:
-  - '15.0'
+operating_system:
+  - name: macos
+    version:
+      - 15.0
 tags:
   - permanent
   - srg
 mobileconfig: false
-mobileconfig_info:

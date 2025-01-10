@@ -39,8 +39,10 @@ references:
     - CM.L2-3.4.7
   800-171r3:
     - 03.04.06
-macOS:
-  - '15.0'
+operating_system:
+  - name: macos
+    version:
+      - 15.0
 tags:
   - 800-171
   - cisv8

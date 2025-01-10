@@ -37,8 +37,10 @@ references:
       - 4.8
   cmmc:
     - AC.L1-3.1.20
-macOS:
-  - '15.0'
+operating_system:
+  - name: macos
+    version:
+      - 15.0
 tags:
   - 800-53r5_low
   - 800-53r5_moderate

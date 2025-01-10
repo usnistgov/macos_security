@@ -68,7 +68,7 @@ def make_dir(folder_path: Path) -> None:
             logger.info(f"Created folder: {folder_path}")
         except OSError as e:
             logger.error(f"Creation of {folder_path} failed.")
-            logging.debug(f"Error message: {str(e)}")
+            logger.debug(f"Error message: {str(e)}")
 
 
 def append_text(path: Path, text: str, encoding: str = "UTF-8", errors=None, newline=None) -> None:
@@ -87,7 +87,7 @@ def append_text(path: Path, text: str, encoding: str = "UTF-8", errors=None, new
     """
     try:
         with path.open(mode='a', encoding=encoding, errors=errors, newline=newline) as f:
-            logging.info(f"Appending to file: {path}")
+            logger.info(f"Appending to file: {path}")
             f.write(f"{text}\n")
 
     except Exception as e:
@@ -108,4 +108,14 @@ def remove_dir(folder_path: Path) -> None:
 
         except OSError as e:
             logger.error(f"Removal of {folder_path} failed.")
-            logging.debug(f"Error message: {str(e)}")
+            logger.debug(f"Error message: {str(e)}")
+
+def remove_file(file_path: Path) -> None:
+    if file_path.exists():
+        try:
+            file_path.unlink()
+            logger.info(f"Removed file: {file_path}")
+
+        except (OSError, FileNotFoundError) as e:
+            logger.error(f"An error occurred while removing the file: {file_path}. Error: {e}")
+            logger.debug(f"Error message: {str(e)}")

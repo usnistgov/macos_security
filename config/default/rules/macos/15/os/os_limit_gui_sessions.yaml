@@ -21,8 +21,10 @@ references:
     - N/A
   srg:
     - SRG-OS-000027-GPOS-00008
-macOS:
-  - '15.0'
+operating_system:
+  - name: macos
+    version:
+      - 15.0
 tags:
   - 800-53r5_high
   - 800-53r4_high

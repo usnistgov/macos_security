@@ -1,3 +1,5 @@
+---
+# yaml-language-server: $schema=../../../../../../schemas/rules.json
 id: pwpolicy_temporary_or_emergency_accounts_disable
 title: Automatically Remove or Disable Temporary or Emergency User Accounts within 72 Hours
 discussion: |
@@ -69,8 +71,10 @@ references:
     - SRG-OS-000123-GPOS-00064
   disa_stig:
     - N/A
-macOS:
-  - '15.0'
+operating_system:
+  - name: macos
+    version:
+      - 15.0
 tags:
   - 800-53r5_moderate
   - 800-53r5_high
@@ -82,4 +86,3 @@ tags:
   - stig
 severity: medium
 mobileconfig: false
-mobileconfig_info:

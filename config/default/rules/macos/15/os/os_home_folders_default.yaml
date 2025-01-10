@@ -51,8 +51,10 @@ references:
       - N/A
     controls v8:
       - N/A
-macOS:
-  - '15.0'
+operating_system:
+  - name: macos
+    version:
+      - 15.0
 tags:
   - manual
 severity: medium

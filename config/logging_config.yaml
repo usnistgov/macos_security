@@ -1,3 +1,4 @@
+---
 version: 1
 disable_existing_loggers: False
 
@@ -20,10 +21,17 @@ handlers:
         filename: mscp.log
         mode: a
 
+    debug_file:
+        class: logging.FileHandler
+        level: DEBUG
+        formatter: simple
+        filename: mscp.log
+        mode: a
+
 loggers:
     development:
         level: DEBUG
-        handlers: [console]
+        handlers: [console, debug_file]
         propagate: no
 
     staging:
@@ -38,4 +46,4 @@ loggers:
 
 root:
     level: DEBUG
-    handlers: [console, file]
+    handlers: [console, debug_file]

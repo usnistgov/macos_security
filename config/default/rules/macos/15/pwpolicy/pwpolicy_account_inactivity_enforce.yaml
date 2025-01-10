@@ -1,3 +1,5 @@
+---
+# yaml-language-server: $schema=../../../../../../schemas/rules.json
 id: pwpolicy_account_inactivity_enforce
 title: Disable Accounts after $ODV Days of Inactivity
 discussion: |
@@ -56,8 +58,10 @@ references:
       - 5.3
   cmmc:
     - IA.L2-3.5.6
-macOS:
-  - '15.0'
+operating_system:
+  - name: macos
+    version:
+      - 15.0
 odv:
   hint: Number of days.
   recommended: 35
@@ -76,4 +80,3 @@ tags:
   - stig
 severity: medium
 mobileconfig: false
-mobileconfig_info:

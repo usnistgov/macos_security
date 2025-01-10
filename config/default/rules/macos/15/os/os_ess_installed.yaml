@@ -22,8 +22,10 @@ references:
     - SRG-OS-000191-GPOS-00080
   disa_stig:
     - N/A
-macOS:
-  - '15.0'
+operating_system:
+  - name: macos
+    version:
+      - 15.0
 tags:
   - manual
   - cisv8

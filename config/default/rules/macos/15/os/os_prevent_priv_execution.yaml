@@ -25,8 +25,10 @@ references:
     - SRG-OS-000326-GPOS-00126
   800-171r3:
     - 03.01.07
-  macOS:
-  - '15.0'
+  operating_system:
+  - name: macos
+    version:
+      - 15.0
 tags:
   - inherent
   - cnssi-1253_moderate

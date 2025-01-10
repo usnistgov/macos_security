@@ -1,3 +1,5 @@
+---
+# yaml-language-server: $schema=../../../../../../schemas/rules.json
 id: system_settings_token_removal_enforce
 title: Configure User Session Lock When a Smart Token is Removed
 discussion: |
@@ -34,8 +36,10 @@ references:
     - 03.01.10
   cmmc:
     - AC.L2-3.1.10
-macOS:
-  - '15.0'
+operating_system:
+  - name: macos
+    version:
+      - 15.0
 tags:
   - 800-53r5_moderate
   - 800-53r5_high
@@ -50,5 +54,6 @@ tags:
 severity: medium
 mobileconfig: true
 mobileconfig_info:
-  com.apple.security.smartcard:
-    tokenRemovalAction: 1
+  - PayloadType: com.apple.security.smartcard
+    PayloadContent:
+      tokenRemovalAction: 1

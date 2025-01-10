@@ -38,6 +38,7 @@ class Baseline:
     description: str = field(default="")
     parent_values: str = ""
 
+
     @classmethod
     def from_yaml(cls, file_path: Path, os_name: str, os_version: int, custom: bool = False) -> "Baseline":
         """
@@ -82,6 +83,7 @@ class Baseline:
 
         return baseline
 
+
     def to_dataframe(self) -> pd.DataFrame:
         """
         Convert the profiles and rules from the Baseline object into a Pandas DataFrame.
@@ -98,3 +100,7 @@ class Baseline:
                 rules.append(rule_dict)
 
         return pd.DataFrame(rules)
+
+
+    def get(self, attr, default=None):
+        return getattr(self, attr, default)

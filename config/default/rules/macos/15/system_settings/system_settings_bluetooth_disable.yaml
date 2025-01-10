@@ -1,3 +1,5 @@
+---
+# yaml-language-server: $schema=../../../../../../schemas/rules.json
 id: system_settings_bluetooth_disable
 title: Disable Bluetooth When no Approved Device is Connected
 discussion: |
@@ -13,7 +15,7 @@ check: |
   .objectForKey('DisableBluetooth').js
   EOS
 result:
-  string: 'true'
+  boolean: true
 fix: |
   This is implemented by a Configuration Profile.
 references:
@@ -46,8 +48,10 @@ references:
       - 13.9
   cmmc:
     - AC.L2-3.1.16
-macOS:
-  - '15.0'
+operating_system:
+  - name: macos
+    version:
+      - 15.0
 tags:
   - 800-53r5_low
   - 800-53r4_moderate
@@ -64,6 +68,7 @@ tags:
 severity: high
 mobileconfig: true
 mobileconfig_info:
-  com.apple.ManagedClient.preferences:
-    com.apple.MCXBluetooth:
-      DisableBluetooth: true
+  - PayloadType: com.apple.ManagedClient.preferences
+    PayloadContent:
+      com.apple.MCXBluetooth:
+        DisableBluetooth: true

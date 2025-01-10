@@ -1,3 +1,5 @@
+---
+# yaml-language-server: $schema=../../../../../../schemas/rules.json
 id: system_settings_location_services_menu_enforce
 title: Ensure Location Services Is In the Menu Bar
 discussion: |
@@ -5,7 +7,7 @@ discussion: |
 check: |
   /usr/bin/defaults read /Library/Preferences/com.apple.locationmenu.plist ShowSystemServices
 result:
-  boolean: 1
+  boolean: true
 fix: |
   [source,bash]
   ----
@@ -32,9 +34,10 @@ references:
     controls v8:
       - 4.1
       - 4.8
-macOS:
-  - '15.0'
+operating_system:
+  - name: macos
+    version:
+      - 15.0
 tags:
   - cis_lvl2
 mobileconfig: false
-mobileconfig_info:

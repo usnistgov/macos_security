@@ -1,3 +1,5 @@
+---
+# yaml-language-server: $schema=../../../../../../schemas/rules.json
 id: system_settings_gatekeeper_identified_developers_allowed
 title: Apply Gatekeeper Settings to Block Applications from Unidentified Developers
 discussion: |
@@ -19,7 +21,7 @@ check: |
   }
   EOS
 result:
-  string: 'true'
+  boolean: true
 fix: |
   This is implemented by a Configuration Profile.
 references:
@@ -44,8 +46,10 @@ references:
     - 03.14.02
   cmmc:
     - CM.L2-3.4.5
-macOS:
-  - '15.0'
+operating_system:
+  - name: macos
+    version:
+      - 15.0
 tags:
   - 800-53r5_low
   - 800-53r5_moderate
@@ -61,6 +65,7 @@ tags:
 severity: high
 mobileconfig: true
 mobileconfig_info:
-  com.apple.systempolicy.control:
-    AllowIdentifiedDevelopers: true
-    EnableAssessment: true
+  - PayloadType: com.apple.systempolicy.control
+    PayloadContent:
+      AllowIdentifiedDevelopers: true
+      EnableAssessment: true

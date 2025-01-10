@@ -1,3 +1,5 @@
+---
+# yaml-language-server: $schema=../../../../../../schemas/rules.json
 id: system_settings_time_server_configure
 title: Configure macOS to Use an Authorized Time Server
 discussion: |
@@ -38,8 +40,10 @@ references:
       - 8.4
   cmmc:
     - AU.L2-3.3.7
-macOS:
-  - '15.0'
+operating_system:
+  - name: macos
+    version:
+      - 15.0
 odv:
   hint: Name of timeserver. As of macOS 10.13 only one time server is supported.
   recommended: time.nist.gov
@@ -64,5 +68,6 @@ tags:
 severity: medium
 mobileconfig: true
 mobileconfig_info:
-  com.apple.MCX:
-    timeServer: $ODV
+  - PayloadType: com.apple.MCX
+    PayloadContent:
+      timeServer: $ODV

@@ -5,28 +5,19 @@ import logging
 import tempfile
 import argparse
 import sys
-import json
-import re
 
 from pathlib import Path
 from icecream import ic
 from base64 import b64encode
-from typing import Optional, Dict, List
-from dataclasses import asdict
 
 # Additional python modules
 import pandas as pd
-
-from openpyxl import Workbook
-from openpyxl.styles import Alignment, Font
-from openpyxl.utils import get_column_letter
 
 # Local python modules
 from src.mscp.classes.baseline import Baseline
 from src.mscp.common_utils.run_command import run_command
 from src.mscp.common_utils.config import config
-from src.mscp.common_utils.file_handling import open_file, open_yaml, make_dir
-from src.mscp.common_utils.mobile_config_fix import format_mobileconfig_fix
+from src.mscp.common_utils.file_handling import open_yaml, make_dir
 from src.mscp.generate.documents import generate_documents
 from src.mscp.generate.script import generate_script
 from src.mscp.generate.ddm import generate_ddm
@@ -67,24 +58,6 @@ def verify_signing_hash(cert_hash: str) -> bool:
     return True
 
 
-def sign_config_profile(in_file: Path, out_file: Path, cert_hash: str) -> None:
-    """
-    Signs the configuration profile using the identity associated with the provided hash
-
-    Args:
-        in_file (Path): The file being signed.
-        out_file (Path): The file being written to.
-        hash (str): The hash string to use for signing.
-    """
-
-    cmd = f"security cms -SZ {cert_hash} -i {in_file} -o {out_file}"
-    output, error = run_command(cmd)
-
-    if output:
-        logger.info(f"Signed Configuration profile written to {out_file}")
-
-
-# Entry point for the script to call
 def guidance(args: argparse.Namespace) -> None:
     logo_path: str = f"{config["defaults"]["images_dir"]}/mscp_banner.png"
     signing: bool = False
@@ -163,9 +136,10 @@ def guidance(args: argparse.Namespace) -> None:
 
     if args.xlsx:
         logger.info("Generating Excel document")
-        generate_excel(spreadsheet_output_file, df)
+        generate_excel(spreadsheet_output_file, baseline)
 
     if args.gary:
         show_all_tags = True
 
+    # df.to_excel(spreadsheet_output_file)
     # generate_documents(adoc_output_file, baseline, b64logo, pdf_theme, logo_path, args.os_name, current_version_data, show_all_tags, custom)

@@ -18,8 +18,10 @@ references:
     - N/A
   800-53r5:
     - N/A
-macOS:
-  - '15.0'
+operating_system:
+  - name: macos
+    version:
+      - 15.0
 tags:
   - none
 mobileconfig: true

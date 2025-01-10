@@ -1,3 +1,5 @@
+---
+# yaml-language-server: $schema=../../../../../../schemas/rules.json
 id: system_settings_wake_network_access_disable
 title: Ensure Wake for Network Access Is Disabled
 discussion: |
@@ -31,11 +33,12 @@ references:
       - 2.9.3 (level 1)
     controls v8:
       - 4.8
-macOS:
-  - '15.0'
+operating_system:
+  - name: macos
+    version:
+      - 15.0
 tags:
   - cis_lvl1
   - cis_lvl2
   - cisv8
 mobileconfig: false
-mobileconfig_info:

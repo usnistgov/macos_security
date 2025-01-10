@@ -1,3 +1,5 @@
+---
+# yaml-language-server: $schema=../../../../../../schemas/rules.json
 id: os_access_control_mobile_devices
 title: Access Control for Mobile Devices
 discussion: |
@@ -32,8 +34,10 @@ references:
     - AC.L2-3.1.18
   800-171r3:
     - 03.01.18
-macOS:
-  - '15.0'
+operating_system:
+  - name: macos
+    version:
+      - 15.0
 tags:
   - 800-171
   - 800-53r5_low
@@ -46,4 +50,3 @@ tags:
   - cnssi-1253_high
   - cmmc_lvl2
 mobileconfig: false
-mobileconfig_info:

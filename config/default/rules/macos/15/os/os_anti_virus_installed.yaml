@@ -36,8 +36,10 @@ references:
       - 10.5
       - 10.1
       - 10.2
-macOS:
-  - '15.0'
+operating_system:
+  - name: macos
+    version:
+      - 15.0
 tags:
   - cis_lvl1
   - cis_lvl2

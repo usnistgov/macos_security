@@ -1,3 +1,5 @@
+---
+# yaml-language-server: $schema=../../../../../../schemas/rules.json
 id: system_settings_software_update_enforce
 title: Enforce Software Update Automatically
 discussion: |
@@ -8,7 +10,7 @@ check: |
   .objectForKey('AutomaticCheckEnabled').js
   EOS
 result:
-  string: 'true'
+  boolean: true
 fix: |
   This is implemented by a Configuration Profile.
 references:
@@ -34,13 +36,16 @@ references:
     controls v8:
       - 7.3
       - 7.4
-macOS:
-  - '15.0'
+operating_system:
+  - name: macos
+    version:
+      - 15.0
 tags:
   - cis_lvl1
   - cis_lvl2
   - cisv8
 mobileconfig: true
 mobileconfig_info:
-  com.apple.SoftwareUpdate:
-    AutomaticCheckEnabled: true
+  - PayloadType: com.apple.SoftwareUpdate
+    PayloadContent:
+      AutomaticCheckEnabled: true

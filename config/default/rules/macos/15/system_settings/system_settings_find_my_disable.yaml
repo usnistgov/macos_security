@@ -1,3 +1,5 @@
+---
+# yaml-language-server: $schema=../../../../../../schemas/rules.json
 id: system_settings_find_my_disable
 title: Disable Find My Service
 discussion: |
@@ -23,7 +25,7 @@ check: |
   }
   EOS
 result:
-  string: 'true'
+  boolean: true
 fix: |
   This is implemented by a Configuration Profile.
 references:
@@ -57,8 +59,10 @@ references:
     - AC.L1-3.1.20
     - CM.L2-3.4.6
     - CM.L2-3.4.7
-macOS:
-  - '15.0'
+operating_system:
+  - name: macos
+    version:
+      - 15.0
 tags:
   - 800-53r5_low
   - 800-53r5_moderate
@@ -77,8 +81,11 @@ tags:
 severity: medium
 mobileconfig: true
 mobileconfig_info:
-  com.apple.applicationaccess:
-    allowFindMyDevice: false
-    allowFindMyFriends: false
-  com.apple.icloud.managed:
-    DisableFMMiCloudSetting: true
+  - PayloadType: com.apple.applicationaccess
+    PayloadContent:
+      allowFindMyDevice: false
+      allowFindMyFriends: false
+
+  - PayloadType: com.apple.icloud.managed
+    PayloadContent:
+      DisableFMMiCloudSetting: true

@@ -58,8 +58,10 @@ references:
     - SI.L1-3.14.4
   800-171r3:
     - 03.14.02
-macOS:
-  - '15.0'
+operating_system:
+  - name: macos
+    version:
+      - 15.0
 tags:
   - 800-171
   - inherent

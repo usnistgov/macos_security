@@ -1,3 +1,5 @@
+---
+# yaml-language-server: $schema=../../../../../../schemas/rules.json
 id: system_settings_wifi_disable
 title: Disable Wi-Fi Interface
 discussion: |
@@ -47,8 +49,10 @@ references:
     - AC.L2-3.1.3
     - AC.L2-3.1.16
     - AC.L2-3.1.17
-macOS:
-  - '15.0'
+operating_system:
+  - name: macos
+    version:
+      - 15.0
 tags:
   - manual
   - 800-53r4_low
@@ -64,4 +68,3 @@ tags:
   - cmmc_lvl2
 severity: medium
 mobileconfig: false
-mobileconfig_info:

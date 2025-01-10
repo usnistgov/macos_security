@@ -29,11 +29,11 @@ If the result is not *{{ rule.result_value }}*, this is a finding.
 **Remediation Description**
 
 Perform the following to configure the system to meet the requirements:
-{% if rule.mobileconfig == true %}
+{# {% if rule.mobileconfig == true %}
 {{ rule.mobileconfig_info | mobileconfig_fix }}
-{% else %}
+{% else %} #}
 {{ rule.fix | replace("\|", "|") }}
-{% endif %}
+{# {% endif %} #}
 ====
 {% endif %}
 [cols="15%h, 85%a"]
@@ -59,14 +59,14 @@ Perform the following to configure the system to meet the requirements:
 ifdef::show_171[]
 !800-171r3
 !
-{{ render_rules(rule.nist_171) if rule.nist_171 is not none else "* N/A" -}}
+{{ render_rules(rule.nist_171) if rule.nist_171 is not none else "* N/A" }}
 
 endif::[]
 
 ifdef::show_STIG[]
 !DISA STIG(s)
 !
-{{ render_rules(rule.disa_stig) if rule.disa_stig is not none else "* N/A" -}}
+{{ render_rules(rule.disa_stig) if rule.disa_stig is not none else "* N/A" }}
 
 !SFR
 !
@@ -93,7 +93,7 @@ endif::[]
 ifdef::show_CMMC[]
 !CMMC
 !
-{{ render_rules(rule.cmmc) if rule.cmmc is not none -}}
+{{ render_rules(rule.cmmc) if rule.cmmc is not none }}
 
 endif::[]
 
@@ -104,13 +104,13 @@ endif::[]
 {%- if custom %}
 ! Custom References
 !
-{{ render_rules(rule.custom_refs) if rule.custom_refs is not none -}}
+{{ render_rules(rule.custom_refs) if rule.custom_refs is not none }}
 {% endif -%}
 
 ifdef::show_tags[]
 !TAGS
 !
-{{ render_rules(rule.tags) if rule.tags is not none else "* N/A" -}}
+{{ render_rules(rule.tags) if rule.tags is not none else "* N/A" }}
 
 endif::[]
 

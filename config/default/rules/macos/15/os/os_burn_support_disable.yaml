@@ -31,8 +31,10 @@ references:
     - MP.L2-3.8.8
   800-171r3:
     - 03.08.07
-macOS:
-  - '15.0'
+operating_system:
+  - name: macos
+    version:
+      - 15.0
 tags:
   - 800-171
   - cnssi-1253_moderate

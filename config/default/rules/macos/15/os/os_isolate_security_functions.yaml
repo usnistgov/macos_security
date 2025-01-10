@@ -23,8 +23,10 @@ references:
     - SRG-OS-000134-GPOS-00068
   cmmc:
     - N/A
-macOS:
-  - '15.0'
+operating_system:
+  - name: macos
+    version:
+      - 15.0
 tags:
   - 800-53r5_high
   - 800-53r4_high

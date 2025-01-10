@@ -1,3 +1,5 @@
+---
+# yaml-language-server: $schema=../../../../../../schemas/rules.json
 id: pwpolicy_account_lockout_timeout_enforce
 title: Set Account Lockout Time to $ODV Minutes
 discussion: |
@@ -34,8 +36,10 @@ references:
       - 6.2
   cmmc:
     - AC.L2-3.1.8
-macOS:
-  - '15.0'
+operating_system:
+  - name: macos
+    version:
+      - 15.0
 odv:
   hint: Number of minutes.
   recommended: 15
@@ -61,8 +65,9 @@ tags:
 severity: medium
 mobileconfig: true
 mobileconfig_info:
-  com.apple.mobiledevice.passwordpolicy:
-    minutesUntilFailedLoginReset: $ODV
+  - PayloadType: com.apple.mobiledevice.passwordpolicy
+    PayloadContent:
+      minutesUntilFailedLoginReset: $ODV
 ddm_info:
   declarationtype: com.apple.configuration.passcode.settings
   ddm_key: MaximumGracePeriodInMinutes

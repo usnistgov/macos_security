@@ -32,8 +32,10 @@ references:
     - SRG-OS-000276-GPOS-00106
     - SRG-OS-000277-GPOS-00107
     - SRG-OS-000303-GPOS-00120
-macOS:
-  - '15.0'
+operating_system:
+  - name: macos
+    version:
+      - 15.0
 tags:
   - 800-53r4_moderate
   - 800-53r4_high

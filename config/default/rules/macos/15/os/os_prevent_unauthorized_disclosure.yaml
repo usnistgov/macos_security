@@ -27,8 +27,10 @@ references:
     - 03.13.04
   cmmc:
     - SC.L2-3.13.4
-macOS:
-  - '15.0'
+operating_system:
+  - name: macos
+    version:
+      - 15.0
 tags:
   - 800-53r5_moderate
   - 800-53r5_high

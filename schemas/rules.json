@@ -21,25 +21,22 @@
       "description": "Command or method to verify compliance."
     },
     "result": {
-      "oneOf": [
-        {
+      "type": "object",
+      "properties": {
+        "string": {
+          "type": "string"
+        },
+        "integer": {
+          "type": "integer"
+        },
+        "boolean": {
+          "type": "boolean"
+        },
+        "base64": {
           "type": "string",
-          "description": "Expected result as a string."
-        },
-        {
-          "type": "integer",
-          "description": "Expected result as an integer."
-        },
-        {
-          "type": "boolean",
-          "description": "Expected result as a boolean."
-        },
-        {
-          "type": "string",
-          "format": "base64",
-          "description": "Expected result as a base64-encoded string."
+          "contentEncoding": "base64"
         }
-      ]
+      }
     },
     "fix": {
       "type": "string",
@@ -112,22 +109,49 @@
           "items": {
             "type": "string"
           }
+        },
+        "indigo": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "sfr": {
+          "type": "array",
+          "items":{
+            "type": "string"
+          }
+        },
+        "custom": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
         }
       }
     },
     "operating_system": {
-      "type": "object",
-      "properties": {
-        "name": {
-          "type": "string",
-          "description": "Name of the operating system",
-          "enum": ["macos", "ios", "visionos"]
-        },
-        "version": {
-          "type": "number",
-          "description": "Version number of the OS."
+      "type": "array",
+      "description": "Array of operating systems the Rule applies to.",
+      "items": {
+        "type": "object",
+        "description": "Operating System's this rule applies to.",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Name of the operating system",
+            "enum": ["macos", "ios", "visionos"]
+          },
+          "version": {
+            "type": "array",
+            "description": "Version number of the OS.",
+            "items": {
+              "type": "number"
+            }
+          }
         }
       }
+
     },
     "tags": {
       "type": "array",
@@ -145,28 +169,32 @@
       "description": "Indicates if the rule can be implemented using a mobile configuration profile."
     },
     "mobileconfig_info": {
-      "type": "object",
-      "description": "Apple MDM configuration settings specific to the rule.",
-      "properties": {
-        "PayloadType": {
-          "type": "string",
-          "description": "The type of configuration payload (e.g., 'com.apple.security.smartcard')."
-        },
-        "PayloadContent": {
-          "type": "object",
-          "description": "Key-value pairs of MDM controls for this payload.",
-          "additionalProperties": {
-            "anyOf": [
-              { "type": "string" },
-              { "type": "integer" },
-              { "type": "boolean" },
-              { "type": "array", "items": { "type": "string" } },
-              { "type": "object", "additionalProperties": true }
-            ]
+      "type": "array",
+      "description": "Array of Apple MDM configuration settings specific to the rule.",
+      "items": {
+        "type": "object",
+        "description": "Apple MDM configuration settings specific to the rule.",
+        "properties": {
+          "PayloadType": {
+            "type": "string",
+            "description": "The type of configuration payload (e.g., 'com.apple.security.smartcard')."
+          },
+          "PayloadContent": {
+            "type": "object",
+            "description": "Key-value pairs of MDM controls for this payload.",
+            "additionalProperties": {
+              "anyOf": [
+                { "type": "string" },
+                { "type": "integer" },
+                { "type": "boolean" },
+                { "type": "array", "items": { "type": "string" } },
+                { "type": "object", "additionalProperties": true }
+              ]
+            }
           }
-        }
-      },
-      "required": ["PayloadType", "PayloadContent"]
+        },
+        "required": ["PayloadType", "PayloadContent"]
+      }
     },
     "ddm_info": {
       "type": "object",
@@ -214,5 +242,29 @@
       "$ref": "https://raw.githubusercontent.com/apple/device-management/refs/heads/release/docs/schema.yaml"
     }
   },
-  "required": ["id", "title", "discussion", "check", "result", "fix", "severity", "operating_system"]
+  "anyOf": [
+    {
+      "not": {
+        "properties": {
+          "tags": {
+            "pattern": "\\b(permanent|supplemental|inherent|not_applicable)\\b"
+          }
+        }
+      },
+      "then": {
+        "required": ["result"]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "mobileconfig": { "const": true }
+        }
+      },
+      "then": {
+        "required": ["mobileconfig_info"]
+      }
+    }
+  ],
+  "required": ["id", "title", "discussion", "check", "fix", "operating_system", "references"]
 }

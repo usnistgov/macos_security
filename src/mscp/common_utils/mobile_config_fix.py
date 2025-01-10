@@ -2,9 +2,13 @@
 
 import logging
 
+from typing import List
+
+from src.mscp.classes.macsecurityrule import Mobileconfigpayload
+
 logger = logging.getLogger(__name__)
 
-def format_mobileconfig_fix(mobileconfig: dict) -> str:
+def format_mobileconfig_fix(mobileconfig: List) -> str:
     """
     Generate a formatted string representing a configuration profile in XML format
     based on the provided mobileconfig dictionary.
@@ -16,7 +20,7 @@ def format_mobileconfig_fix(mobileconfig: dict) -> str:
     which requires sub-payloads within its payload type.
 
     Args:
-        mobileconfig (dict): A dictionary representing the configuration settings.
+        mobileconfig (List[Mobileconfigprofile]): A list of Mobileconfigprofile instances.
             Keys are domains or payload types, and values are configuration settings,
             which can include nested dictionaries, lists, or scalar values.
 
@@ -60,61 +64,59 @@ def format_mobileconfig_fix(mobileconfig: dict) -> str:
     """
 
     rulefix = ""
-    for domain, settings in mobileconfig.items():
-        if domain == "com.apple.ManagedClient.preferences":
-            rulefix = rulefix + (
-                f"NOTE: The following settings are in the ({domain}) payload. This payload requires the additional settings to be sub-payloads within, containing their defined payload types.\n\n"
+
+    for profile in mobileconfig:
+        payload_type = profile.payload_type
+        payload_content = profile.payload_content
+
+        if payload_type == "com.apple.ManagedClient.preferences":
+            rulefix += (
+                f"NOTE: The following settings are in the ({payload_type}) payload. "
+                "This payload requires the additional settings to be sub-payloads within, "
+                "containing their defined payload types.\n\n"
             )
-            rulefix = rulefix + format_mobileconfig_fix(settings)
+            # Recursively handle nested payloads if needed
+            nested_fix = format_mobileconfig_fix(
+                [Mobileconfigpayload(k, v) for k, v in payload_content.items()]
+            )
+            rulefix += nested_fix
         else:
-            rulefix = rulefix + (
-                f"Create a configuration profile containing the following keys in the ({domain}) payload type:\n\n"
+            rulefix += (
+                f"Create a configuration profile containing the following keys in the ({payload_type}) payload type:\n\n"
             )
-            rulefix = rulefix + "[source,xml]\n----\n"
-            for item in settings.items():
-                rulefix = rulefix + (f"<key>{item[0]}</key>\n")
+            rulefix += "[source,xml]\n----\n"
 
-                if type(item[1]) == bool:
-                    rulefix = rulefix + (f"<{str(item[1]).lower()}/>\n")
-                elif type(item[1]) == list:
-                    rulefix = rulefix + "<array>\n"
-                    for setting in item[1]:
-                        rulefix = rulefix + (f"    <string>{setting}</string>\n")
-                    rulefix = rulefix + "</array>\n"
-                elif type(item[1]) == int:
-                    rulefix = rulefix + (f"<integer>{item[1]}</integer>\n")
-                elif type(item[1]) == str:
-                    rulefix = rulefix + (f"<string>{item[1]}</string>\n")
-                elif type(item[1]) == dict:
-                    rulefix = rulefix + "<dict>\n"
-                    for k,v in item[1].items():
-                        if type(v) == dict:
-                            rulefix = rulefix + \
-                                (f"    <key>{k}</key>\n")
-                            rulefix = rulefix + \
-                                (f"    <dict>\n")
-                            for x,y in v.items():
-                                rulefix = rulefix + \
-                                    (f"      <key>{x}</key>\n")
-                                rulefix  = rulefix + \
-                                    (f"      <string>{y}</string>\n")
-                            rulefix = rulefix + \
-                            (f"    </dict>\n")
-                            break
-                        if isinstance(v, list):
-                            rulefix = rulefix + "    <array>\n"
-                            for setting in v:
-                                rulefix = rulefix + \
-                                    (f"        <string>{setting}</string>\n")
-                            rulefix = rulefix + "    </array>\n"
-                        else:
-                            rulefix = rulefix + \
-                                    (f"    <key>{k}</key>\n")
-                            rulefix = rulefix + \
-                                    (f"    <string>{v}</string>\n")
-                    rulefix = rulefix + "</dict>\n"
+            for key, value in payload_content.items():
+                rulefix += f"<key>{key}</key>\n"
 
+                if isinstance(value, bool):
+                    rulefix += f"<{str(value).lower()}/>\n"
+                elif isinstance(value, list):
+                    rulefix += "<array>\n"
+                    for item in value:
+                        rulefix += f"    <string>{item}</string>\n"
+                    rulefix += "</array>\n"
+                elif isinstance(value, int):
+                    rulefix += f"<integer>{value}</integer>\n"
+                elif isinstance(value, str):
+                    rulefix += f"<string>{value}</string>\n"
+                elif isinstance(value, dict):
+                    rulefix += "<dict>\n"
+                    for sub_key, sub_value in value.items():
+                        rulefix += f"    <key>{sub_key}</key>\n"
+                        if isinstance(sub_value, str):
+                            rulefix += f"    <string>{sub_value}</string>\n"
+                        elif isinstance(sub_value, bool):
+                            rulefix += f"    <{str(sub_value).lower()}/>\n"
+                        elif isinstance(sub_value, list):
+                            rulefix += "    <array>\n"
+                            for sub_item in sub_value:
+                                rulefix += f"        <string>{sub_item}</string>\n"
+                            rulefix += "    </array>\n"
+                        elif isinstance(sub_value, int):
+                            rulefix += f"    <integer>{sub_value}</integer>\n"
+                    rulefix += "</dict>\n"
 
-            rulefix = rulefix + "----\n\n"
+            rulefix += "----\n\n"
 
     return rulefix

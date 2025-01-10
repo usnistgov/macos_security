@@ -1,3 +1,5 @@
+---
+# yaml-language-server: $schema=../../../../../../schemas/rules.json
 id: pwpolicy_custom_regex_enforce
 title: Require Passwords to Match the Defined Custom Regular Expression
 discussion: |
@@ -41,8 +43,10 @@ references:
     - IA.L2-3.5.7
     - IA.L2-3.5.8
     - IA.L2-3.5.9
-macOS:
-  - '15.0'
+operating_system:
+  - name: macos
+    version:
+      - 15.0
 odv:
   hint: Custom regex (recommended is 1 upper and 1 lowercase)
   recommended: ^(?=.*[A-Z])(?=.*[a-z]).*$
@@ -66,11 +70,12 @@ tags:
 severity: medium
 mobileconfig: true
 mobileconfig_info:
-  com.apple.mobiledevice.passwordpolicy:
-    customRegex:
-      passwordContentRegex: $ODV
-      passwordContentDescription:
-        default: Password must match custom regex.
+  - PayloadType: com.apple.mobiledevice.passwordpolicy
+    PayloadContent:
+      customRegex:
+        passwordContentRegex: $ODV
+        passwordContentDescription:
+          default: Password must match custom regex.
 ddm_info:
   declarationtype: com.apple.configuration.passcode.settings
   ddm_key: CustomRegex

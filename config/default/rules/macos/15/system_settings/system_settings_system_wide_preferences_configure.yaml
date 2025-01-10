@@ -1,3 +1,5 @@
+---
+# yaml-language-server: $schema=../../../../../../schemas/rules.json
 id: system_settings_system_wide_preferences_configure
 title: Require Administrator Password to Modify System-Wide Preferences
 discussion: |
@@ -24,7 +26,7 @@ check: |
   echo $result
 result:
   integer: 1
-fix: | 
+fix: |
   [source,bash]
   ----
   authDBs=("system.preferences" "system.preferences.energysaver" "system.preferences.network" "system.preferences.printing" "system.preferences.sharing" "system.preferences.softwareupdate" "system.preferences.startupdisk" "system.preferences.timemachine")
@@ -39,21 +41,21 @@ fix: |
       /usr/libexec/PlistBuddy -c "Set :class user" "/tmp/$section.plist"
     fi
 
-    key_value=$(/usr/libexec/PlistBuddy -c "Print :shared" "/tmp/$section.plist" 2>&1)  	
+    key_value=$(/usr/libexec/PlistBuddy -c "Print :shared" "/tmp/$section.plist" 2>&1)
     if [[ "$key_value" == *"Does Not Exist"* ]]; then
       /usr/libexec/PlistBuddy -c "Add :shared bool false" "/tmp/$section.plist"
     else
       /usr/libexec/PlistBuddy -c "Set :shared false" "/tmp/$section.plist"
     fi
 
-    auth_user_key=$(/usr/libexec/PlistBuddy -c "Print :authenticate-user" "/tmp/$section.plist" 2>&1)  	
+    auth_user_key=$(/usr/libexec/PlistBuddy -c "Print :authenticate-user" "/tmp/$section.plist" 2>&1)
     if [[ "$auth_user_key" == *"Does Not Exist"* ]]; then
       /usr/libexec/PlistBuddy -c "Add :authenticate-user bool true" "/tmp/$section.plist"
     else
       /usr/libexec/PlistBuddy -c "Set :authenticate-user true" "/tmp/$section.plist"
     fi
 
-    session_owner_key=$(/usr/libexec/PlistBuddy -c "Print :session-owner" "/tmp/$section.plist" 2>&1)  	
+    session_owner_key=$(/usr/libexec/PlistBuddy -c "Print :session-owner" "/tmp/$section.plist" 2>&1)
     if [[ "$session_owner_key" == *"Does Not Exist"* ]]; then
       /usr/libexec/PlistBuddy -c "Add :session-owner bool false" "/tmp/$section.plist"
     else
@@ -98,8 +100,10 @@ references:
     - AC.L1-3.1.1
     - AC.L2-3.1.5
     - AC.L2-3.1.6
-macOS:
-  - '15.0'
+operating_system:
+  - name: macos
+    version:
+      - 15.0
 tags:
   - 800-53r5_moderate
   - 800-53r5_high
@@ -117,4 +121,3 @@ tags:
   - stig
 severity: high
 mobileconfig: false
-mobileconfig_info:

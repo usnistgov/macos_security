@@ -1,3 +1,5 @@
+---
+# yaml-language-server: $schema=../../../../../../schemas/rules.json
 id: system_settings_automatic_logout_enforce
 title: Enforce Auto Logout After $ODV Seconds of Inactivity
 discussion: |
@@ -38,8 +40,10 @@ references:
   cmmc:
     - AC.L2-3.1.10
     - AC.L2-3.1.11
-macOS:
-  - '15.0'
+operating_system:
+  - name: macos
+    version:
+      - 15.0
 odv:
   hint: Number of seconds
   recommended: 86400
@@ -58,5 +62,6 @@ tags:
 severity: medium
 mobileconfig: true
 mobileconfig_info:
-  .GlobalPreferences:
-    com.apple.autologout.AutoLogOutDelay: $ODV
+  - PayloadType: .GlobalPreferences
+    PayloadContent:
+      com.apple.autologout.AutoLogOutDelay: $ODV

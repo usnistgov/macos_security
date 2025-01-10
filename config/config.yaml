@@ -4,6 +4,7 @@ logging_config: "config/logging_config.yaml"
 output_dir: "build/"
 includes_dir: "config/includes"
 mspc_data: "config/includes/mscp-data.yaml"
+environment: "development"
 
 defaults:
   adoc_templates_dir: "config/default/templates/asciidoctor"

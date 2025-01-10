@@ -1,3 +1,5 @@
+---
+# yaml-language-server: $schema=../../../../../../schemas/rules.json
 id: system_settings_printer_sharing_disable
 title: Disable Printer Sharing
 discussion: |
@@ -5,7 +7,7 @@ discussion: |
 check: |
   /usr/sbin/cupsctl | /usr/bin/grep -c "_share_printers=0"
 result:
-  boolean: 1
+  integer: 1
 fix: |
   [source,bash]
   ----
@@ -38,8 +40,10 @@ references:
   cmmc:
     - CM.L2-3.4.6
     - CM.L2-3.4.7
-macOS:
-  - '15.0'
+operating_system:
+  - name: macos
+    version:
+      - 15.0
 tags:
   - 800-53r5_low
   - 800-53r5_moderate
@@ -57,4 +61,3 @@ tags:
   - stig
 severity: medium
 mobileconfig: false
-mobileconfig_info:

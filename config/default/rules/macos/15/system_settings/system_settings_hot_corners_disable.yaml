@@ -1,3 +1,5 @@
+---
+# yaml-language-server: $schema=../../../../../../schemas/rules.json
 id: system_settings_hot_corners_disable
 title: Disable Hot Corners
 discussion: |
@@ -27,8 +29,10 @@ references:
     - 03.01.10
   cmmc:
     - AC.L2-3.1.10
-macOS:
-  - '15.0'
+operating_system:
+  - name: macos
+    version:
+      - 15.0
 tags:
   - 800-53r5_moderate
   - 800-53r5_high
@@ -43,9 +47,10 @@ tags:
 severity: medium
 mobileconfig: true
 mobileconfig_info:
-  com.apple.ManagedClient.preferences:
-    com.apple.dock:
-      wvous-bl-corner: 0
-      wvous-br-corner: 0
-      wvous-tr-corner: 0
-      wvous-tl-corner: 0
+  - PayloadType: com.apple.ManagedClient.preferences
+    PayloadContent:
+      com.apple.dock:
+        wvous-bl-corner: 0
+        wvous-br-corner: 0
+        wvous-tr-corner: 0
+        wvous-tl-corner: 0

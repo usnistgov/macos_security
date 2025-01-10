@@ -1,3 +1,5 @@
+---
+# yaml-language-server: $schema=../../../../../../schemas/rules.json
 id: system_settings_guest_account_disable
 title: Disable the Guest Account
 discussion: |
@@ -19,7 +21,7 @@ check: |
   }
   EOS
 result:
-  string: 'true'
+  boolean: true
 fix: |
   This is implemented by a Configuration Profile.
 references:
@@ -48,8 +50,10 @@ references:
       - 6.8
   cmmc:
     - AC.L1-3.1.2
-macOS:
-  - '15.0'
+operating_system:
+  - name: macos
+    version:
+      - 15.0
 tags:
   - 800-53r5_low
   - 800-53r5_moderate
@@ -70,6 +74,7 @@ tags:
 severity: medium
 mobileconfig: true
 mobileconfig_info:
-  com.apple.MCX:
-    DisableGuestAccount: true
-    EnableGuestAccount: false
+  - PayloadType: com.apple.MCX
+    PayloadContent:
+      DisableGuestAccount: true
+      EnableGuestAccount: false

@@ -23,8 +23,10 @@ references:
     - N/A
   800-171r3:
     - N/A
-macOS:
-  - '15.0'
+operating_system:
+  - name: macos
+    version:
+      - 15.0
 tags:
   - inherent
 mobileconfig: false

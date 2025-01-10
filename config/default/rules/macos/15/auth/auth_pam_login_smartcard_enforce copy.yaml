@@ -75,8 +75,9 @@ references:
     - IA.L2-3.5.3
     - IA.L2-3.5.4
 operating_system:
-  name: "macos"
-  version: 15.0
+  - name: macos
+    version:
+      - 15.0
 tags:
   - 800-53r5_low
   - 800-53r5_moderate
@@ -93,7 +94,6 @@ tags:
   - stig
 severity: medium
 mobileconfig: false
-mobileconfig_info:
 ddm_info:
   declarationtype: com.apple.configuration.services.configuration-files
   service: com.apple.pam

@@ -30,8 +30,10 @@ references:
     - 3.13.3
   cmmc:
     - SC.L2-3.13.3
-macOS:
-  - '15.0'
+operating_system:
+  - name: macos
+    version:
+      - 15.0
 tags:
   - 800-53r5_moderate
   - 800-53r5_high

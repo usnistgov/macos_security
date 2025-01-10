@@ -1,3 +1,5 @@
+---
+# yaml-language-server: $schema=../../../../../../schemas/rules.json
 id: pwpolicy_max_lifetime_enforce
 title: Restrict Maximum Password Lifetime to $ODV Days
 discussion: |
@@ -38,8 +40,10 @@ references:
   cmmc:
     - IA.L2-3.5.8
     - IA.L2-3.5.9
-macOS:
-  - '15.0'
+operating_system:
+  - name: macos
+    version:
+      - 15.0
 odv:
   hint: Number of days.
   recommended: 60
@@ -65,8 +69,9 @@ tags:
 severity: medium
 mobileconfig: true
 mobileconfig_info:
-  com.apple.mobiledevice.passwordpolicy:
-    maxPINAgeInDays: $ODV
+  - PayloadType: com.apple.mobiledevice.passwordpolicy
+    PayloadContent:
+      maxPINAgeInDays: $ODV
 ddm_info:
   declarationtype: com.apple.configuration.passcode.settings
   ddm_key: MaximumPasscodeAgeInDays

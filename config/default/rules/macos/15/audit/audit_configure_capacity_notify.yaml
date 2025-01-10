@@ -28,8 +28,10 @@ references:
     - SRG-OS-000343-GPOS-00134
   disa_stig:
     - N/A
-macOS:
-  - '15.0'
+operating_system:
+  - name: macos
+    version:
+      - 15.0
 odv:
   hint: Percentage of free space.
   recommended: 25

@@ -48,8 +48,10 @@ references:
   cmmc:
     - CM.L2-3.4.6
     - CM.L2-3.4.7
-macOS:
-  - '15.0'
+operating_system:
+  - name: macos
+    version:
+      - 15.0
 tags:
   - cis_lvl1
   - cis_lvl2

@@ -1,3 +1,5 @@
+---
+# yaml-language-server: $schema=../../../../../../schemas/rules.json
 id: system_settings_bluetooth_settings_disable
 title: Disable the Bluetooth System Settings Pane
 discussion: |
@@ -33,8 +35,10 @@ references:
   cmmc:
     - CM.L2-3.4.6
     - CM.L2-3.4.7
-macOS:
-  - '15.0'
+operating_system:
+  - name: macos
+    version:
+      - 15.0
 tags:
   - 800-53r5_low
   - 800-53r5_moderate
@@ -45,6 +49,7 @@ tags:
 severity: medium
 mobileconfig: true
 mobileconfig_info:
-  com.apple.systempreferences:
-    DisabledSystemSettings:
-      - com.apple.BluetoothSettings
+  - PayloadType: com.apple.systempreferences
+    PayloadContent:
+      DisabledSystemSettings:
+        - com.apple.BluetoothSettings

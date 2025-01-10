@@ -1,3 +1,5 @@
+---
+# yaml-language-server: $schema=../../../../../../schemas/rules.json
 id: supplemental_firewall_pf
 title: "Packet Filter (pf) Supplemental"
 discussion: |
@@ -116,8 +118,10 @@ references:
     - N/A
   cmmc:
     - N/A
-macOS:
-  - '15.0'
+operating_system:
+  - name: macos
+    version:
+      - 15.0
 tags:
   - 800-171
   - 800-53r4_high
@@ -135,4 +139,3 @@ tags:
   - stig
   - supplemental
 mobileconfig: false
-mobileconfig_info:

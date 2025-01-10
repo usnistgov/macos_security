@@ -29,8 +29,10 @@ references:
       - 13.9
   cmmc:
     - IA.L1-3.5.2
-macOS:
-  - '15.0'
+operating_system:
+  - name: macos
+    version:
+      - 15.0
 tags:
   - 800-53r5_moderate
   - 800-53r5_high

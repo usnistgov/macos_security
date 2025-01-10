@@ -47,8 +47,10 @@ references:
     - 03.13.09
   cmmc:
     - SC.L2-3.13.9
-macOS:
-  - '15.0'
+operating_system:
+  - name: macos
+    version:
+      - 15.0
 odv:
   hint: Number of seconds.
   recommended: 0

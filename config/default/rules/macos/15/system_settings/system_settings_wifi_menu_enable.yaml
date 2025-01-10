@@ -1,3 +1,5 @@
+---
+# yaml-language-server: $schema=../../../../../../schemas/rules.json
 id: system_settings_wifi_menu_enable
 title: Enable Wifi Menu
 discussion: |
@@ -32,13 +34,16 @@ references:
     controls v8:
       - 4.8
       - 12.6
-macOS:
-  - '15.0'
+operating_system:
+  - name: macos
+    version:
+      - 15.0
 tags:
   - cis_lvl1
   - cis_lvl2
   - cisv8
 mobileconfig: true
 mobileconfig_info:
-  com.apple.controlcenter:
-    WiFi: 18
+  - PayloadType: com.apple.controlcenter
+    PayloadContent:
+      WiFi: 18

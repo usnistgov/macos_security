@@ -32,8 +32,10 @@ references:
     - SRG-OS-000446-GPOS-00200
   disa_stig:
     - N/A
-macOS:
-  - '15.0'
+operating_system:
+  - name: macos
+    version:
+      - 15.0
 tags:
   - 800-53r5_high
   - 800-53r5_moderate

@@ -1,3 +1,5 @@
+---
+# yaml-language-server: $schema=../../../../../../schemas/rules.json
 id: system_settings_time_machine_auto_backup_enable
 title: Configure Time Machine for Automatic Backups
 discussion: |
@@ -8,7 +10,7 @@ check: |
   .objectForKey('AutoBackup').js
   EOS
 result:
-  string: 'true'
+  boolean: true
 fix: |
   This is implemented by a Configuration Profile.
 references:
@@ -31,12 +33,15 @@ references:
       - 2.3.4.1 (level 2)
     controls v8:
       - 11.2
-macOS:
-  - '15.0'
+operating_system:
+  - name: macos
+    version:
+      - 15.0
 tags:
   - cis_lvl2
   - cisv8
 mobileconfig: true
 mobileconfig_info:
-  com.apple.TimeMachine:
-    AutoBackup: true
+  - PayloadType: com.apple.TimeMachine
+    PayloadContent:
+      AutoBackup: true

@@ -56,8 +56,10 @@ references:
       - 2.9.1.1 (level 2)
     controls v8:
       - 4.1
-macOS:
-  - '15.0'
+operating_system:
+  - name: macos
+    version:
+      - 15.0
 tags:
   - cis_lvl2
   - cisv8

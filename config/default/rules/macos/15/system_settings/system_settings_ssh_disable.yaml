@@ -1,3 +1,5 @@
+---
+# yaml-language-server: $schema=../../../../../../schemas/rules.json
 id: system_settings_ssh_disable
 title: Disable SSH Server for Remote Access Sessions
 discussion: |
@@ -43,8 +45,10 @@ references:
     - AC.L1-3.1.1
     - CM.L2-3.4.6
     - CM.L2-3.4.7
-macOS:
-  - '15.0'
+operating_system:
+  - name: macos
+    version:
+      - 15.0
 tags:
   - cis_lvl1
   - cis_lvl2
@@ -56,4 +60,3 @@ tags:
   - cmmc_lvl1
 severity: high
 mobileconfig: false
-mobileconfig_info:

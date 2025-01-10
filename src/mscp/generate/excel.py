@@ -12,13 +12,13 @@ from openpyxl import Workbook
 from openpyxl.styles import Alignment, Font
 from openpyxl.utils import get_column_letter
 
-# Local python modules
-from src.mscp.common_utils.mobile_config_fix import format_mobileconfig_fix
+from src.mscp.classes.baseline import Baseline
 
 # Initialize local logger
 logger = logging.getLogger(__name__)
 
-def generate_excel(file_out: Path, dataframe: pd.DataFrame) -> None:
+
+def generate_excel(file_out: Path, baseline: Baseline) -> None:
     """
     Generate a formatted Excel file from a given DataFrame.
 
@@ -67,18 +67,6 @@ def generate_excel(file_out: Path, dataframe: pd.DataFrame) -> None:
     Returns:
         None: The function saves the output directly to the specified `file_out` path.
     """
-
-    def __replace_fix(row):
-        if row["mobileconfig_info"]:
-            try:
-                return format_mobileconfig_fix(row["mobileconfig_info"])
-            except Exception as e:
-                logger.error(f"Error formatting mobileconfig_info: {e}")
-                return row["fix"]
-
-        else:
-            return row["fix"]
-
     rename_mapping = {
         "title": "Title",
         "rule_id": "Rule ID",
@@ -144,6 +132,7 @@ def generate_excel(file_out: Path, dataframe: pd.DataFrame) -> None:
         "Modified Rule"
     ]
 
+    dataframe = baseline.to_dataframe()
     # Make a copy of the dataframe so as not to modify the original dataset
     df_copy: pd.DataFrame = dataframe.copy()
 
@@ -153,7 +142,6 @@ def generate_excel(file_out: Path, dataframe: pd.DataFrame) -> None:
     df_details= df_copy['cis'].apply(lambda x: {} if pd.isna(x) else x).apply(pd.Series)[["benchmark","controls_v8"]]
     df_copy = pd.concat([df_copy, df_details], axis=1)
     df_copy["check"] = df_copy["check"].apply(lambda x: {} if pd.isna(x) else x).apply(pd.Series)
-    df_copy["fix"] = df_copy.apply(__replace_fix, axis=1)
 
     df_copy.columns = (
         df_copy.columns.str.strip()

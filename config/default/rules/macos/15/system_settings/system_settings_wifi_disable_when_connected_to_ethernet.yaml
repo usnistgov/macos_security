@@ -1,3 +1,5 @@
+---
+# yaml-language-server: $schema=../../../../../../schemas/rules.json
 id: system_settings_wifi_disable_when_connected_to_ethernet
 title: Disable Wi-Fi When Connected to Ethernet
 discussion: |
@@ -33,8 +35,10 @@ references:
   cmmc:
     - AC.L2-3.1.3
     - AC.L2-3.1.17
-macOS:
-  - '15.0'
+operating_system:
+  - name: macos
+    version:
+      - 15.0
 tags:
   - 800-53r5_moderate
   - 800-53r5_high
@@ -47,4 +51,3 @@ tags:
   - cnssi-1253_high
   - cmmc_lvl2
 mobileconfig: false
-mobileconfig_info:

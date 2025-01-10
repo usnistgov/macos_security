@@ -23,8 +23,10 @@ references:
     - SRG-OS-000374-GPOS-00159
   800-171r3:
     - 03.05.01
-macOS:
-  - '15.0'
+operating_system:
+  - name: macos
+    version:
+      - 15.0
 tags:
   - 800-171
   - 800-53r5_low

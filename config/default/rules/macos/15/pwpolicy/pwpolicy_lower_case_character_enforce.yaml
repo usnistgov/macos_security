@@ -1,3 +1,5 @@
+---
+# yaml-language-server: $schema=../../../../../../schemas/rules.json
 id: pwpolicy_lower_case_character_enforce
 title: Require Passwords Contain a Minimum of One Lowercase Character
 discussion: |
@@ -63,12 +65,13 @@ references:
     - IA.L2-3.5.7
     - IA.L2-3.5.8
     - IA.L2-3.5.9
-macOS:
-  - '15.0'
+operating_system:
+  - name: macos
+    version:
+      - 15.0
 odv:
   hint: Number of lowercase characters.
   recommended: 1
 tags:
   - none
 mobileconfig: false
-mobileconfig_info:

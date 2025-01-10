@@ -1,3 +1,5 @@
+---
+# yaml-language-server: $schema=../../../../../../schemas/rules.json
 id: system_settings_time_machine_encrypted_configure
 title: Ensure Time Machine Volumes are Encrypted
 discussion: |
@@ -42,11 +44,12 @@ references:
       - 3.6
       - 3.11
       - 11.3
-macOS:
-  - '15.0'
+operating_system:
+  - name: macos
+    version:
+      - 15.0
 tags:
   - cis_lvl1
   - cis_lvl2
   - cisv8
 mobileconfig: false
-mobileconfig_info:
