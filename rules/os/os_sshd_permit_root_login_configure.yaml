@@ -5,7 +5,7 @@ discussion: |
 
   The macOS system MUST  require individuals to be authenticated with an individual authenticator prior to using a group authenticator, and administrator users _MUST_ never log in directly as root.
 
-  NOTE: /etc/ssh/sshd_config will be automatically modified to its original state following any update or major upgrade to the operating system.
+  NOTE: On macOS 15.2 and higher the SSH configuration can be reset to the macOS default by running /usr/libexec/reset-ssh-configuration.
 check: |
   /usr/sbin/sshd -G | /usr/bin/awk '/permitrootlogin/{print $2}'
 result:
@@ -37,6 +37,7 @@ references:
   cci:
     - CCI-000770
     - CCI-001813
+    - CCI-004045
   800-53r5:
     - IA-2(5)
   800-53r4:
@@ -45,16 +46,16 @@ references:
     - SRG-OS-000364-GPOS-00151
     - SRG-OS-000109-GPOS-00056
   disa_stig:
-    - N/A
+    - APPL-15-001100
 macOS:
   - '15.0'
 tags:
   - 800-53r5_high
   - 800-53r4_high
-  - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
   - stig
+  - cnssi-1253_moderate
 severity: medium
 mobileconfig: false
 mobileconfig_info:

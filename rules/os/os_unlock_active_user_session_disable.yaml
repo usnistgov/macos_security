@@ -21,6 +21,7 @@ references:
   cci:
     - CCI-000764
     - CCI-000770
+    - CCI-004045
   800-53r5:
     - IA-2
     - IA-2(5)
@@ -28,7 +29,7 @@ references:
     - IA-2
     - IA-2(5)
   disa_stig:
-    - N/A
+    - APPL-15-000090
   srg:
     - SRG-OS-000109-GPOS-00056
     - SRG-OS-000104-GPOS-00051
@@ -47,8 +48,8 @@ macOS:
 odv:
   hint: "Review the /System/Library/Security/authorization.plist file for more information."
   recommended: "authenticate-session-owner"
-  cis_lvl1: "use-login-window-ui"
-  cis_lvl2: "use-login-window-ui"
+  cis_lvl1: "authenticate-session-owner"
+  cis_lvl2: "authenticate-session-owner"
   stig: "authenticate-session-owner"
 tags:
   - 800-53r5_low
@@ -61,12 +62,12 @@ tags:
   - cis_lvl1
   - cis_lvl2
   - cisv8
-  - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
   - cmmc_lvl2
   - cmmc_lvl1
   - stig
+  - cnssi-1253_moderate
 severity: medium
 mobileconfig: false
 mobileconfig_info:

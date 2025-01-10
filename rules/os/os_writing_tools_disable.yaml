@@ -15,7 +15,12 @@ references:
   cce:
     - CCE-94328-2
   cci:
-    - N/A
+    - CCI-000381
+    - CCI-001774
+  srg:
+    - SRG-OS-000095-GPOS-00049
+  disa_stig:
+    - APPL-15-005160
   800-53r5:
     - AC-20
     - AC-20(1)
@@ -36,8 +41,12 @@ tags:
   - 800-53r5_moderate
   - 800-53r5_high
   - 800-171
+  - cnssi-1253_low
+  - cnssi-1253_high
+  - stig
   - cmmc_lvl2
   - cmmc_lvl1
+  - cnssi-1253_moderate
 mobileconfig: true
 mobileconfig_info:
   com.apple.applicationaccess:

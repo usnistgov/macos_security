@@ -6,15 +6,22 @@ discussion: |
   When Media Sharing is enabled, the computer starts a network listening service that shares the contents of the user's music collection with other users in the same subnet.
 
   The information system _MUST_ be configured to provide only essential capabilities. Disabling Media Sharing helps prevent the unauthorized connection of devices and the unauthorized transfer of information. Disabling Media Sharing mitigates this risk.
-
-  NOTE: The Media Sharing preference panel will still allow "Home Sharing" and "Share media with guests" to be checked but the service will not be enabled.
 check: |
   /usr/bin/osascript -l JavaScript << EOS
-  $.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess')\
-  .objectForKey('allowMediaSharing').js
+  function run() {
+    let pref1 = ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess')\
+  .objectForKey('allowMediaSharing'))
+    let pref2 = ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess')\
+  .objectForKey('allowMediaSharingModification'))
+    if ( pref1 == false && pref2 == false ) {
+      return("true")
+    } else {
+      return("false")
+    }
+  }
   EOS
 result:
-  string: 'false'
+  string: 'true'
 fix: |
   This is implemented by a Configuration Profile.
 references:
@@ -30,7 +37,7 @@ references:
   srg:
     - SRG-OS-000080-GPOS-00048
   disa_stig:
-    - N/A
+    - APPL-15-002100
   800-171r3:
     - 03.01.02
     - 03.04.06
@@ -54,14 +61,15 @@ tags:
   - 800-171
   - cis_lvl2
   - cisv8
-  - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
   - cmmc_lvl2
   - cmmc_lvl1
   - stig
+  - cnssi-1253_moderate
 severity: medium
 mobileconfig: true
 mobileconfig_info:
   com.apple.applicationaccess:
     allowMediaSharing: false
+    allowMediaSharingModification: false

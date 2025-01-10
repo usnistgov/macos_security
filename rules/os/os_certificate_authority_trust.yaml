@@ -15,14 +15,16 @@ references:
     - CCI-002470 
     - CCI-000185
     - CCI-002450
+    - CCI-004909
   800-53r5:
     - SC-17
   800-53r4:
     - SC-17
   srg:
     - SRG-OS-000403-GPOS-00182
+    - SRG-OS-000775-GPOS-00230
   disa_stig:
-    - N/A
+    - APPL-15-003001
   cmmc:
     - SC.L2-3.13.10
 macOS:
@@ -33,11 +35,11 @@ tags:
   - 800-53r4_moderate
   - 800-53r4_high
   - manual
-  - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
   - cmmc_lvl2
   - stig
+  - cnssi-1253_moderate
 severity: high
 mobileconfig: false
 mobileconfig_info:

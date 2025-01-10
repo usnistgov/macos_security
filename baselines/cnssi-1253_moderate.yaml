@@ -47,6 +47,7 @@ profile:
       - auth_pam_su_smartcard_enforce
       - auth_pam_sudo_smartcard_enforce
       - auth_smartcard_allow
+      - auth_smartcard_certificate_trust_enforce_high
       - auth_smartcard_certificate_trust_enforce_moderate
       - auth_smartcard_enforce
       - auth_ssh_password_authentication_disable
@@ -89,15 +90,19 @@ profile:
       - os_disk_image_disable
       - os_dvdram_disable
       - os_erase_content_and_settings_disable
+      - os_external_storage_access_defined
       - os_facetime_app_disable
       - os_filevault_autologin_disable
       - os_firewall_default_deny_require
       - os_firmware_password_require
       - os_gatekeeper_enable
+      - os_genmoji_disable
       - os_handoff_disable
+      - os_home_folders_default
       - os_home_folders_secure
       - os_httpd_disable
       - os_icloud_storage_prompt_disable
+      - os_image_generation_disable
       - os_install_log_retention_configure
       - os_ir_support_disable
       - os_loginwindow_adminhostinfo_undefined
@@ -124,8 +129,8 @@ profile:
       - os_removable_media_disable
       - os_root_disable
       - os_screensaver_loginwindow_enforce
-      - os_screensaver_timeout_loginwindow_enforce
       - os_secure_boot_verify
+      - os_setup_assistant_filevault_enforce
       - os_sip_enable
       - os_siri_prompt_disable
       - os_skip_screen_time_prompt_enable
@@ -140,6 +145,7 @@ profile:
       - os_sshd_login_grace_time_configure
       - os_sshd_permit_root_login_configure
       - os_sshd_unused_connection_timeout_configure
+      - os_sudo_log_enforce
       - os_sudoers_timestamp_type_configure
       - os_system_read_only
       - os_tftpd_disable
@@ -148,6 +154,7 @@ profile:
       - os_unlock_active_user_session_disable
       - os_user_app_installation_prohibit
       - os_uucp_disable
+      - os_writing_tools_disable
   - section: "passwordpolicy"
     rules:
       - pwpolicy_account_inactivity_enforce
@@ -156,12 +163,14 @@ profile:
       - pwpolicy_alpha_numeric_enforce
       - pwpolicy_custom_regex_enforce
       - pwpolicy_history_enforce
+      - pwpolicy_lower_case_character_enforce
       - pwpolicy_max_lifetime_enforce
       - pwpolicy_minimum_length_enforce
       - pwpolicy_minimum_lifetime_enforce
       - pwpolicy_simple_sequence_disable
       - pwpolicy_special_character_enforce
       - pwpolicy_temporary_or_emergency_accounts_disable
+      - pwpolicy_upper_case_character_enforce
   - section: "systemsettings"
     rules:
       - system_settings_airplay_receiver_disable
@@ -169,18 +178,19 @@ profile:
       - system_settings_automatic_login_disable
       - system_settings_automatic_logout_enforce
       - system_settings_bluetooth_disable
+      - system_settings_bluetooth_settings_disable
       - system_settings_bluetooth_sharing_disable
-      - system_settings_cd_dvd_sharing_disable
       - system_settings_content_caching_disable
       - system_settings_critical_update_install_enforce
       - system_settings_diagnostics_reports_disable
+      - system_settings_external_intelligence_disable
+      - system_settings_external_intelligence_sign_in_disable
       - system_settings_filevault_enforce
       - system_settings_find_my_disable
       - system_settings_firewall_enable
       - system_settings_firewall_stealth_mode_enable
       - system_settings_gatekeeper_identified_developers_allowed
       - system_settings_gatekeeper_override_disallow
-      - system_settings_guest_access_smb_disable
       - system_settings_guest_account_disable
       - system_settings_hot_corners_disable
       - system_settings_hot_corners_secure
@@ -202,6 +212,7 @@ profile:
       - system_settings_screensaver_password_enforce
       - system_settings_screensaver_timeout_enforce
       - system_settings_siri_disable
+      - system_settings_siri_settings_disable
       - system_settings_smbd_disable
       - system_settings_ssh_disable
       - system_settings_ssh_enable
@@ -209,8 +220,10 @@ profile:
       - system_settings_time_server_configure
       - system_settings_time_server_enforce
       - system_settings_token_removal_enforce
+      - system_settings_touch_id_settings_disable
       - system_settings_touchid_unlock_disable
       - system_settings_usb_restricted_mode
+      - system_settings_wallet_applepay_settings_disable
       - system_settings_wifi_disable
   - section: "Inherent"
     rules:
@@ -265,10 +278,3 @@ profile:
       - os_managed_access_control_points
       - os_non_repudiation
       - os_nonlocal_maintenance
-  - section: "Supplemental"
-    rules:
-      - supplemental_controls
-      - supplemental_filevault
-      - supplemental_firewall_pf
-      - supplemental_password_policy
-      - supplemental_smartcard

@@ -27,8 +27,8 @@ macOS:
   - '15.0'
 tags:
   - permanent
-  - cnssi-1253_moderate
   - cnssi-1253_high
   - srg
+  - cnssi-1253_moderate
 mobileconfig: false
 mobileconfig_info:

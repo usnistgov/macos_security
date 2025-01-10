@@ -59,6 +59,7 @@ profile:
       - icloud_mail_disable
       - icloud_notes_disable
       - icloud_photos_disable
+      - icloud_private_relay_disable
       - icloud_reminders_disable
       - icloud_sync_disable
   - section: "macos"
@@ -76,20 +77,17 @@ profile:
       - os_filevault_autologin_disable
       - os_gatekeeper_enable
       - os_handoff_disable
-      - os_hibernate_mode_apple_silicon_enable
-      - os_hibernate_mode_destroyfvkeyonstandby_enable
-      - os_hibernate_mode_intel_enable
       - os_home_folders_secure
       - os_httpd_disable
       - os_icloud_storage_prompt_disable
       - os_install_log_retention_configure
+      - os_iphone_mirroring_disable
       - os_ir_support_disable
       - os_library_validation_enabled
       - os_mdm_require
       - os_mobile_file_integrity_enable
       - os_nfsd_disable
       - os_on_device_dictation_enforce
-      - os_password_autofill_disable
       - os_password_hint_remove
       - os_password_proximity_disable
       - os_password_sharing_disable
@@ -107,13 +105,13 @@ profile:
       - os_sip_enable
       - os_siri_prompt_disable
       - os_skip_unlock_with_watch_enable
+      - os_sleep_and_display_sleep_apple_silicon_enable
       - os_sudo_log_enforce
       - os_sudo_timeout_configure
       - os_sudoers_timestamp_type_configure
       - os_system_wide_applications_configure
       - os_terminal_secure_keyboard_enable
       - os_tftpd_disable
-      - os_time_offset_limit_configure
       - os_time_server_enabled
       - os_touchid_prompt_disable
       - os_unlock_active_user_session_disable
@@ -141,10 +139,11 @@ profile:
       - system_settings_bluetooth_menu_enable
       - system_settings_bluetooth_settings_disable
       - system_settings_bluetooth_sharing_disable
-      - system_settings_cd_dvd_sharing_disable
       - system_settings_content_caching_disable
       - system_settings_critical_update_install_enforce
       - system_settings_diagnostics_reports_disable
+      - system_settings_external_intelligence_disable
+      - system_settings_external_intelligence_sign_in_disable
       - system_settings_filevault_enforce
       - system_settings_find_my_disable
       - system_settings_firewall_enable

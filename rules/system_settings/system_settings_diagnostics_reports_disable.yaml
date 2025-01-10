@@ -39,7 +39,7 @@ references:
     - SRG-OS-000206-GPOS-00084
     - SRG-OS-000205-GPOS-00083
   disa_stig:
-    - N/A
+    - APPL-15-002021
   800-171r3:
     - 03.01.20
   cis:
@@ -62,13 +62,14 @@ tags:
   - 800-53r5_high
   - 800-171
   - cis_lvl1
+  - cis_lvl2
   - cisv8
-  - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
   - cmmc_lvl2
   - cmmc_lvl1
   - stig
+  - cnssi-1253_moderate
 severity: medium
 mobileconfig: true
 mobileconfig_info:

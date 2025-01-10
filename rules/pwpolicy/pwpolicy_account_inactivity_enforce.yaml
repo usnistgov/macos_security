@@ -39,14 +39,17 @@ references:
     - CCE-94330-8
   cci:
     - CCI-000795
+    - CCI-003627
+    - CCI-003628
   800-53r5:
     - AC-2(3)
   800-53r4:
     - IA-4
   srg:
     - SRG-OS-000118-GPOS-00060
+    - SRG-OS-000590-GPOS-00110
   disa_stig:
-    - N/A
+    - APPL-15-003080
   800-171r3:
     - 03.01.01
   cis:
@@ -70,10 +73,10 @@ tags:
   - 800-53r5_moderate
   - 800-53r5_high
   - cisv8
-  - cnssi-1253_moderate
   - cnssi-1253_high
   - cmmc_lvl2
   - stig
+  - cnssi-1253_moderate
 severity: medium
 mobileconfig: false
 mobileconfig_info:

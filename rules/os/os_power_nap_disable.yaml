@@ -55,9 +55,9 @@ tags:
   - cis_lvl2
   - cisv8
   - i386
-  - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
   - cmmc_lvl2
+  - cnssi-1253_moderate
 mobileconfig: false
 mobileconfig_info:
