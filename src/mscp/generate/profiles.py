@@ -7,7 +7,6 @@ from pathlib import Path
 from typing import List, Dict, Any
 from collections import defaultdict
 from datetime import date
-from icecream import ic
 
 
 # Local python modules
@@ -142,7 +141,6 @@ def generate_profiles(build_path: Path, baseline_name: str, baseline: Baseline, 
             for settings in settings_list:
                 for domain, payload_content in settings.items():
                     new_profile.add_mcx_payload([domain, "Forced", payload_content], baseline_name)
-            ic(new_profile)
         else:
             settings: dict = {k: v for d in settings_list for k, v in d.items()}
             new_profile.add_payload(payload_type, settings, baseline_name)
