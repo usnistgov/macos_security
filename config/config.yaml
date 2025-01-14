@@ -5,6 +5,7 @@ output_dir: "build/"
 includes_dir: "config/includes"
 mspc_data: "config/includes/mscp-data.yaml"
 environment: "development"
+shell_template_dir: "config/default/templates/shell_scripts"
 
 defaults:
   adoc_templates_dir: "config/default/templates/asciidoctor"
@@ -15,6 +16,7 @@ defaults:
   root_dir: "config/default"
   rules_dir: "config/default/rules"
   sections_dir: "config/default/sections"
+  templates_dir: "config/default/templates"
 
 custom:
   adoc_templates_dir: "config/custom/templates/asciidoctor"
@@ -25,3 +27,4 @@ custom:
   root_dir: "config/custom"
   rules_dir: "config/custom/rules"
   sections_dir: "config/custom/sections"
+  templates_dir: "config/custom/templates"
