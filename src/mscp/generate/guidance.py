@@ -11,7 +11,6 @@ from icecream import ic
 from base64 import b64encode
 
 # Additional python modules
-import pandas as pd
 
 # Local python modules
 from src.mscp.classes.baseline import Baseline
@@ -19,7 +18,7 @@ from src.mscp.common_utils.run_command import run_command
 from src.mscp.common_utils.config import config
 from src.mscp.common_utils.file_handling import open_yaml, make_dir
 from src.mscp.generate.documents import generate_documents
-from src.mscp.generate.script import generate_script
+from src.mscp.generate.script import generate_script, generate_audit_plist
 from src.mscp.generate.ddm import generate_ddm
 from src.mscp.generate.excel import generate_excel
 from src.mscp.generate.profiles import generate_profiles
@@ -120,8 +119,6 @@ def guidance(args: argparse.Namespace) -> None:
             logger.info(f"Found custom PDF theme: {themes[0]}")
             pdf_theme = str(themes[0])
 
-    df: pd.DataFrame = baseline.to_dataframe()
-
     if args.profiles:
         logger.info("Generating configuration profiles...")
         generate_profiles(build_path, baseline_name, baseline)
@@ -132,7 +129,8 @@ def guidance(args: argparse.Namespace) -> None:
 
     if args.script:
         logger.info("Generating compliance script...")
-        generate_script()
+        generate_script(build_path, baseline_name, audit_name, baseline, log_reference)
+        generate_audit_plist(build_path, baseline_name, baseline)
 
     if args.xlsx:
         logger.info("Generating Excel document")
@@ -141,5 +139,4 @@ def guidance(args: argparse.Namespace) -> None:
     if args.gary:
         show_all_tags = True
 
-    # df.to_excel(spreadsheet_output_file)
-    # generate_documents(adoc_output_file, baseline, b64logo, pdf_theme, logo_path, args.os_name, current_version_data, show_all_tags, custom)
+    generate_documents(adoc_output_file, baseline, b64logo, pdf_theme, logo_path, args.os_name, current_version_data, show_all_tags, custom)

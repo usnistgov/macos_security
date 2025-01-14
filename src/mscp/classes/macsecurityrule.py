@@ -3,6 +3,7 @@
 # Standard python modules
 import logging
 import sys
+import base64
 
 from dataclasses import dataclass
 from typing import List, Dict, Any
@@ -16,8 +17,6 @@ from lxml import etree
 # Local python modules
 from src.mscp.common_utils.config import config
 from src.mscp.common_utils.file_handling import open_yaml
-# from src.mscp.common_utils.odv import fill_in_odv
-# from src.mscp.common_utils.mobile_config_fix import format_mobileconfig_fix
 
 # Initialize logger
 logger = logging.getLogger(__name__)
@@ -100,21 +99,28 @@ class MacSecurityRule:
                 continue
 
             rule_yaml: dict = open_yaml(rule_file)
-            # fill_in_odv(rule_yaml, parent_values)
             payloads: List[Mobileconfigpayload] = []
 
             result = rule_yaml.get("result", "N/A")
             mobileconfig = rule_yaml.get("mobileconfig", False)
 
-            if isinstance(result, dict):
-                for result_type in ["integer", "boolean", "string", "base64"]:
-                    if result_type in result:
-                        result_value = result[result_type]
-                        break
-                else:
-                    result_value = "N/A"
+            if "base64" in result:
+                cls.encode_base64_result(result)  # Apply Base64 encoding
+            for result_type in ["integer", "boolean", "string", "base64"]:
+                if result_type in result:
+                    result_value = result[result_type]
+                    break
             else:
-                result_value = result
+                result_value = "N/A"
+            # if isinstance(result, dict):
+            #     for result_type in ["integer", "boolean", "string", "base64"]:
+            #         if result_type in result:
+            #             result_value = result[result_type]
+            #             break
+            #     else:
+            #         result_value = "N/A"
+            # else:
+            #     result_value = result
 
             if mobileconfig:
                 mechanism = "Configuration Profile"
@@ -388,5 +394,26 @@ class MacSecurityRule:
         else:
             raise ValueError(f"Unsupported value type: {type(value)}")
 
+
     def get(self, attr, default=None):
         return getattr(self, attr, default)
+
+
+    @staticmethod
+    def encode_base64_result(result: Dict[str, Any]) -> str:
+        """
+        Encodes the 'base64' key's value in the given dictionary into Base64 format,
+        updates the dictionary with the encoded value, and returns the encoded string.
+
+        Args:
+            result (Dict[str, Any]): A dictionary with a 'base64' key containing a string value.
+
+        Returns:
+            str: The Base64-encoded string.
+        """
+        if "base64" in result:
+            result_string_bytes: bytes = f'{result["base64"]}\n'.encode("UTF-8")
+            result_encoded: bytes = base64.b64encode(result_string_bytes)
+            result["base64"] = result_encoded.decode()
+            return result["base64"]
+        return ""

@@ -1,0 +1,12 @@
+{% set check_tags = ["permanent", "inherent", "n_a"] %}
+{% if "supplemental" not in rule.rule_id and not (rule.tags | select("in", check_tags) | list) %}
+  {% if "[source,bash]" in  rule.fix %}
+  #####----- Rule: {{ rule.rule_id | replace("\|", "|") }} -----#####
+  ## Addresses the following NIST 800-53 controls:
+  {{ rule.nist_controls | group_ulify if rule.nist_controls is not none else "# * N/A" }}
+  rule_id="{{ rule.rule_id | replace("\|", "|") }}"
+  fix_code="{{ rule.fix | get_fix_code | quotify | trim }}"
+
+  rule_fix "$rule_id" "$audit_plist" "$fix_code"
+  {% endif %}
+{% endif %}

@@ -1,5 +1,5 @@
 {% from "macros.jinja" import render_rules %}
-{% set check_tags = ["permanent","inherent", "n_a"] %}
+{% set check_tags = ["permanent", "inherent", "n_a"] %}
 === {{ rule.title | replace("\|", "|") }}
 
 {% if not "supplemental" in rule.tags %}
