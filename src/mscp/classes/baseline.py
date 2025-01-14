@@ -29,6 +29,10 @@ class Profile:
     description: str
     rules: List[MacSecurityRule]
 
+    def get(self, attr, default=None):
+        return getattr(self, attr, default)
+
+
 @dataclass
 class Baseline:
     authors: List[Authors]
