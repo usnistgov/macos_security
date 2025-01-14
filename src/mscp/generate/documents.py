@@ -6,15 +6,12 @@ import re
 import sys
 
 from pathlib import Path
-from base64 import decode
 from dataclasses import asdict
 from typing import Dict, Any
 from itertools import groupby
 from icecream import ic
 
 # Additional python modules
-import pandas as pd
-
 from jinja2 import Environment, FileSystemLoader
 
 # Local python modules
