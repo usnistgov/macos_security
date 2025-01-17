@@ -2,6 +2,6 @@
 
 {{ profile.description }}
 
-{%- for rule in profile.rules %}
+{% for rule in profile.rules %}
 {% include "rule.adoc.jinja" %}
-{% endfor -%}
+{% endfor %}

@@ -29,11 +29,7 @@ If the result is not *{{ rule.result_value }}*, this is a finding.
 **Remediation Description**
 
 Perform the following to configure the system to meet the requirements:
-{# {% if rule.mobileconfig == true %}
-{{ rule.mobileconfig_info | mobileconfig_fix }}
-{% else %} #}
 {{ rule.fix | replace("\|", "|") }}
-{# {% endif %} #}
 ====
 {% endif %}
 [cols="15%h, 85%a"]

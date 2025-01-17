@@ -7,7 +7,7 @@ import logging
 from uuid import uuid4
 from pathlib import Path
 from typing import List, Dict, Optional, Any
-from dataclasses import dataclass, field
+from pydantic import BaseModel, Field
 
 # Initialize local logger
 logger = logging.getLogger(__name__)
@@ -17,18 +17,17 @@ def make_new_uuid() -> str:
     return str(uuid4())
 
 
-@dataclass
-class Payload:
+class Payload(BaseModel):
     """Dataclass to create and manipulate Configuration Profiles."""
     identifier: str
     organization: str = ""
     description: str = ""
     displayname: str = ""
-    uuid: Optional[str] = field(default_factory=make_new_uuid)
+    uuid: Optional[str] = Field(default_factory=lambda: str(uuid4()))
     payload_version: int = 1
     payload_scope: str = "System"
     payload_type: str = "Configuration"
-    consent_text: Dict[str, str] = field(default_factory=lambda: {
+    consent_text: Dict[str, str] = Field(default_factory=lambda: {
         "default": (
             "THE SOFTWARE IS PROVIDED 'AS IS' WITHOUT ANY WARRANTY OF ANY KIND, "
             "EITHER EXPRESSED, IMPLIED, OR STATUTORY, INCLUDING, BUT NOT LIMITED TO, "
@@ -43,15 +42,17 @@ class Payload:
             "SUSTAINED FROM, OR AROSE OUT OF THE RESULTS OF, OR USE OF, THE SOFTWARE OR SERVICES PROVIDED HEREUNDER."
         )
     })
-    payload_content: List[Dict[str, Any]] = field(default_factory=list)
+    payload_content: List[Dict[str, Any]] = Field(default_factory=list)
 
     def add_payload(self, payload_type: str, settings: Dict[str, Any], baseline_name: str) -> None:
         """Add a payload to the profile."""
+        uuid = lambda: str(uuid4())
+
         payload = {
             "PayloadVersion": self.payload_version,
-            "PayloadUUID": make_new_uuid(),
+            "PayloadUUID": uuid,
             "PayloadType": payload_type,
-            "PayloadIdentifier": f"alacarte.macOS.{baseline_name}.{make_new_uuid()}",
+            "PayloadIdentifier": f"alacarte.macOS.{baseline_name}.{uuid}",
         }
         # Merge settings directly into the payload dictionary
         payload.update(settings)
@@ -62,7 +63,7 @@ class Payload:
         """Add a Managed Client preferences payload."""
         keys = settings[1]
         plist_dict = {key: settings[2] for key in keys.split()}
-        uuid = make_new_uuid()
+        uuid = lambda: str(uuid4())
 
         domain = settings[0]
         payload = {

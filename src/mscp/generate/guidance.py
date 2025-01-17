@@ -57,7 +57,7 @@ def verify_signing_hash(cert_hash: str) -> bool:
     return True
 
 
-def guidance(args: argparse.Namespace) -> None:
+def generate_guidance(args: argparse.Namespace) -> None:
     logo_path: str = f"{config["defaults"]["images_dir"]}/mscp_banner.png"
     signing: bool = False
     log_reference: str = "default"
@@ -69,7 +69,7 @@ def guidance(args: argparse.Namespace) -> None:
     os_version: float = float(args.os_version)
     version_file: Path = Path(config["includes_dir"], "version.yaml")
     version_data: dict = open_yaml(version_file)
-    current_version_data = next((entry for entry in version_data.get("platforms", {}).get(args.os_name, []) if entry.get("os") == os_version), {})
+    current_version_data: dict = next((entry for entry in version_data.get("platforms", {}).get(args.os_name, []) if entry.get("os") == os_version), {})
 
     output_basename: str = args.baseline.name
     baseline_name: str = args.baseline.stem

@@ -18,7 +18,6 @@ from jinja2 import Environment, FileSystemLoader
 from src.mscp.classes.baseline import Baseline
 from src.mscp.common_utils.config import config
 from src.mscp.common_utils.run_command import run_command
-from src.mscp.common_utils.mobile_config_fix import format_mobileconfig_fix
 
 # Initialize local logger
 logger = logging.getLogger(__name__)
@@ -46,8 +45,6 @@ def generate_documents(
         custom: bool = False) -> None:
 
     env: Environment = Environment(loader=FileSystemLoader(config["defaults"]["adoc_templates_dir"]), trim_blocks=True, lstrip_blocks=True)
-    env.filters['group_ulify'] = group_ulify
-    env.filters['mobileconfig_fix'] = format_mobileconfig_fix
 
     styles_dir: str = config["defaults"]["misc_dir"]
     gems_asciidoctor: Path = Path("mscp_gems/bin/asciidoctor")
@@ -62,13 +59,13 @@ def generate_documents(
 
     if custom:
         env = Environment(loader=FileSystemLoader(config["custom"]["adoc_templates_dir"]), trim_blocks=True, lstrip_blocks=True)
-        env.filters['group_ulify'] = group_ulify
-        env.filters['mobileconfig_fix'] = format_mobileconfig_fix
         styles_dir = config["custom"]["misc_dir"]
+
+    env.filters['group_ulify'] = group_ulify
 
     main_template = env.get_template('main.adoc.jinja')
 
-    baseline_dict: Dict[str, Any] = asdict(baseline)
+    baseline_dict: Dict[str, Any] = dict(baseline)
 
     if "Talored from" in baseline.title:
         html_subtitle = html_subtitle.split("(")[0]

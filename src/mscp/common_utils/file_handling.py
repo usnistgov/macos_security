@@ -45,7 +45,7 @@ def open_yaml(file_path: Path) -> dict[str, Any]:
         file_path (Path): The path to the file to be opened.
 
     Returns:
-        Optional[Any]: The content of the file if successful, None if otherwise.
+        dict[str, Any]: The content of the file if successful, None if otherwise.
     """
 
     try:
@@ -61,6 +61,25 @@ def open_yaml(file_path: Path) -> dict[str, Any]:
         return {}
 
 
+def create_yaml(file_path: Path, data: dict, sort_keys: bool = False) -> None:
+    """
+    Create YAML file.
+
+    Args:
+        file_path (Path): The path to the file that the data will be added to.
+        data (dict): The data that will be added to the file.
+        sort_keys (bool): Sort the keys. Default is False
+    Returns:
+        None: The function writes directly to the file and does not return a value.
+    """
+    try:
+        with file_path.open('w', encoding='UTF-8') as file:
+            yaml.dump(data, file, explicit_start=True, sort_keys=sort_keys, indent=2)
+
+    except Exception as e:
+        logger.error(f"Error processing {file_path}: {e}")
+
+
 def make_dir(folder_path: Path) -> None:
     if not folder_path.exists():
         try:
@@ -71,12 +90,12 @@ def make_dir(folder_path: Path) -> None:
             logger.debug(f"Error message: {str(e)}")
 
 
-def append_text(path: Path, text: str, encoding: str = "UTF-8", errors=None, newline=None) -> None:
+def append_text(file_path: Path, text: str, encoding: str = "UTF-8", errors=None, newline=None) -> None:
     """
     Append text to a file, creating the file if it does not exist.
 
     Args:
-        path (Path): The path to the file to which text will be appended.
+        file_path (Path): The path to the file to which text will be appended.
         text (str): The text to append to the file.
         encoding (str, optional): The encoding used to write the text. Defaults to 'utf-8'.
         errors (str, optional): Specifies how encoding/decoding errors are handled. Defaults to 'strict'.
@@ -86,8 +105,8 @@ def append_text(path: Path, text: str, encoding: str = "UTF-8", errors=None, new
         None: The function writes directly to the file and does not return a value.
     """
     try:
-        with path.open(mode='a', encoding=encoding, errors=errors, newline=newline) as f:
-            logger.info(f"Appending to file: {path}")
+        with file_path.open(mode='a', encoding=encoding, errors=errors, newline=newline) as f:
+            logger.info(f"Appending to file: {file_path}")
             f.write(f"{text}\n")
 
     except Exception as e:
@@ -109,6 +128,7 @@ def remove_dir(folder_path: Path) -> None:
         except OSError as e:
             logger.error(f"Removal of {folder_path} failed.")
             logger.debug(f"Error message: {str(e)}")
+
 
 def remove_file(file_path: Path) -> None:
     if file_path.exists():

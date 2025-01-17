@@ -4,8 +4,8 @@ import sys
 
 from pathlib import Path
 from icecream import ic
-from src.mscp.generate.guidance import guidance
-from src.mscp.generate.baseline import baseline
+from src.mscp.generate.guidance import generate_guidance
+from src.mscp.generate.baseline import generate_baseline
 
 logger = logging.getLogger(__name__)
 
@@ -162,11 +162,11 @@ def main() -> None:
         case "guidance":
             logger.info("CLI guidance entry")
 
-            guidance(args)
+            generate_guidance(args)
         case "baseline":
             logger.info("CLI baseline entry")
 
-            baseline()
+            generate_baseline(args)
         case _:
             parser.print_help()
 

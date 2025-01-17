@@ -2,81 +2,128 @@
 authors:
   all_rules:
     names:
-      - Bob Gendler|National Institute of Standards and Technology
-      - Dan Brodjieski|National Aeronautics and Space Administration
-      - Allen Golbig|Jamf
+      - name: Bob Gendler
+        organization: National Institute of Standards and Technology
+      - name: Dan Brodjieski
+        organization: National Aeronautics and Space Administration
+      - name: Allen Golbig
+        organization: Jamf
   800-53r5_high:
     names:
-      - Bob Gendler|National Institute of Standards and Technology
-      - Dan Brodjieski|National Aeronautics and Space Administration
-      - Allen Golbig|Jamf
+      - name: Bob Gendler
+        organization: National Institute of Standards and Technology
+      - name: Dan Brodjieski
+        organization: National Aeronautics and Space Administration
+      - name: Allen Golbig
+        organization: Jamf
   800-53r5_moderate:
     names:
-      - Bob Gendler|National Institute of Standards and Technology
-      - Dan Brodjieski|National Aeronautics and Space Administration
-      - Allen Golbig|Jamf
+      - name: Bob Gendler
+        organization: National Institute of Standards and Technology
+      - name: Dan Brodjieski
+        organization: National Aeronautics and Space Administration
+      - name: Allen Golbig
+        organization: Jamf
   800-53r5_low:
     names:
-      - Bob Gendler|National Institute of Standards and Technology
-      - Dan Brodjieski|National Aeronautics and Space Administration
-      - Allen Golbig|Jamf
+      - name: Bob Gendler
+        organization: National Institute of Standards and Technology
+      - name: Dan Brodjieski
+        organization: National Aeronautics and Space Administration
+      - name: Allen Golbig
+        organization: Jamf
   800-171:
     names:
-      - Bob Gendler|National Institute of Standards and Technology
-      - Dan Brodjieski|National Aeronautics and Space Administration
-      - Allen Golbig|Jamf
+      - name: Bob Gendler
+        organization: National Institute of Standards and Technology
+      - name: Dan Brodjieski
+        organization: National Aeronautics and Space Administration
+      - name: Allen Golbig
+        organization: Jamf
   cis_lvl1:
     preamble: The CIS Benchmarks are referenced with the permission and support of the Center for Internet Security® (CIS®)
     names:
-      - Edward Byrd|Center for Internet Security
-      - Ron Colvin|Center for Internet Security
-      - Allen Golbig|Jamf
+      - name: Edward Byrd
+        organization: Center for Internet Security
+      - name: Ron Colvin
+        organization: Center for Internet Security
+      - name: Allen Golbig
+        organization: Jamf
   cis_lvl2:
     preamble: The CIS Benchmarks are referenced with the permission and support of the Center for Internet Security® (CIS®)
     names:
-      - Edward Byrd|Center for Internet Security
-      - Ron Colvin|Center for Internet Security
-      - Allen Golbig|Jamf
+      - name: Edward Byrd
+        organization: Center for Internet Security
+      - name: Ron Colvin
+        organization: Center for Internet Security
+      - name: Allen Golbig
+        organization: Jamf
   cisv8:
     preamble: CIS Critical Security Controls® (CIS Controls®) are referenced with the permission and support of the Center for Internet Security® (CIS®)
     names:
-      - Edward Byrd|Center for Internet Security
-      - Bob Gendler|National Institute of Standards and Technology
-      - Dan Brodjieski|National Aeronautics and Space Administration
-      - Allen Golbig|Jamf
+      - name: Bob Gendler
+        organization: National Institute of Standards and Technology
+      - name: Dan Brodjieski
+        organization: National Aeronautics and Space Administration
+      - name: Allen Golbig
+        organization: Jamf
+      - name: Edward Byrd|
+        organization: Center for Internet Security
   cmmc_lvl1:
     names:
-      - John Mahlman|Leidos
-      - Bob Gendler|National Institute of Standards and Technology
-      - Dan Brodjieski|National Aeronautics and Space Administration
-      - Allen Golbig|Jamf
+      - name: Bob Gendler
+        organization: National Institute of Standards and Technology
+      - name: Dan Brodjieski
+        organization: National Aeronautics and Space Administration
+      - name: Allen Golbig
+        organization: Jamf
+      - name: John Mahlman
+        organization: Leidos
   cmmc_lvl2:
     names:
-      - John Mahlman|Leidos
-      - Bob Gendler|National Institute of Standards and Technology
-      - Dan Brodjieski|National Aeronautics and Space Administration
-      - Allen Golbig|Jamf
+      - name: Bob Gendler
+        organization: National Institute of Standards and Technology
+      - name: Dan Brodjieski
+        organization: National Aeronautics and Space Administration
+      - name: Allen Golbig
+        organization: Jamf
+      - name: John Mahlman
+        organization: Leidos
   cnssi-1253_low:
     names:
-      - Rob Lamb|Los Alamos National Laboratory
-      - Ekkehard Koch|
-      - Bob Gendler|National Institute of Standards and Technology
+      - name: Bob Gendler
+        organization: National Institute of Standards and Technology
+      - name: Rob Lamb
+        organization: Los Alamos National Laboratory
+      - name: Ekkehard Koch
+        organization: ""
   cnssi-1253_moderate:
     names:
-      - Rob Lamb|Los Alamos National Laboratory
-      - Ekkehard Koch|
-      - Bob Gendler|National Institute of Standards and Technology
+      - name: Bob Gendler
+        organization: National Institute of Standards and Technology
+      - name: Rob Lamb
+        organization: Los Alamos National Laboratory
+      - name: Ekkehard Koch
+        organization: ""
   cnssi-1253_high:
     names:
-      - Rob Lamb|Los Alamos National Laboratory
-      - Ekkehard Koch|
-      - Bob Gendler|National Institute of Standards and Technology
+      - name: Bob Gendler
+        organization: National Institute of Standards and Technology
+      - name: Rob Lamb
+        organization: Los Alamos National Laboratory
+      - name: Ekkehard Koch
+        organization: ""
   stig:
     names:
-      - Dan Brodjieski|National Aeronautics and Space Administration
-      - Allen Golbig|Jamf
-      - Bob Gendler|National Institute of Standards and Technology
-      - Aaron Kegerreis|Defense Information Systems Agency
+      - name: Bob Gendler
+        organization: National Institute of Standards and Technology
+      - name: Dan Brodjieski
+        organization: National Aeronautics and Space Administration
+      - name: Allen Golbig
+        organization: Jamf
+      - name: Aaron Kegerreis
+        organization: Defense Information Systems Agency
+
 titles:
   all_rules: All Rules
   800-53r5_high: NIST SP 800-53 Rev 5 High Impact
@@ -92,11 +139,13 @@ titles:
   cnssi-1253_moderate: Committee on National Security Systems Instruction No. 1253 (Moderate)
   cnssi-1253_high: Committee on National Security Systems Instruction No. 1253 (High)
   stig: Apple macOS 14 (Sonoma) STIG - Ver 1, Rel 1
+
 ddm:
   supported_types:
     - com.apple.configuration.services.configuration-files
     - com.apple.configuration.passcode.settings
     - com.apple.configuration.diskmanagement.settings
+
   services:
     com.apple.bash: /etc/
     com.apple.pam: /etc/pam.d/

@@ -60,7 +60,6 @@ def generate_excel(file_out: Path, baseline: Baseline) -> None:
         ValueError: If `dataframe` contains invalid data types that cannot be processed.
 
     Notes:
-        - The function uses `format_mobileconfig_fix` to format the "Fix" column if `mobileconfig_info` is present.
         - The Excel file is written using `openpyxl` as the engine for `pd.ExcelWriter`.
         - Ensure all required dependencies, like `pandas` and `openpyxl`, are installed.
 
