@@ -73,7 +73,7 @@ def sign_config_profile(in_file: Path, out_file: Path, cert_hash: str) -> None:
         logger.info(f"Signed Configuration profile written to {out_file}")
 
 
-def generate_profiles(build_path: Path, baseline_name: str, baseline: Baseline, hash: str = "", signing: bool = False) -> None:
+def generate_profiles(build_path: Path, baseline_name: str, baseline: Baseline, signing: bool = False, hash: str = "") -> None:
     unsigned_mobileconfig_output_path: Path = Path(build_path, "mobileconfigs", "unsigned")
     signed_mobileconfig_output_path: Path = Path(build_path, "mobileconfigs", "signed")
     settings_plist_output_path: Path = Path(build_path, "mobileconfigs", "preferences")

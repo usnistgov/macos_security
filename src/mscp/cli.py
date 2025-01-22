@@ -6,6 +6,7 @@ from pathlib import Path
 from icecream import ic
 from src.mscp.generate.guidance import generate_guidance
 from src.mscp.generate.baseline import generate_baseline
+from src.mscp.generate.mapping import generate_mapping
 
 logger = logging.getLogger(__name__)
 
@@ -155,18 +156,37 @@ def main() -> None:
         action="store"
     )
 
+    mapping_parser = subparsers.add_parser("mapping", help="Easily generate custom rules from compliance framework mappings")
+    mapping_parser.add_argument(
+        "-c",
+        "--csv",
+        default=None,
+        help="CSV to create custom rule files from a mapping",
+        type=validate_file
+    )
+    mapping_parser.add_argument(
+        "-f",
+        "--framework",
+        default="800-53r5",
+        help="Specify framework for the source. If no framework is specified, the default is 800-53r5.",
+        action="store"
+    )
 
     args = parser.parse_args()
 
     match args.subcommand:
         case "guidance":
-            logger.info("CLI guidance entry")
+            logger.debug("CLI guidance entry")
 
             generate_guidance(args)
         case "baseline":
-            logger.info("CLI baseline entry")
+            logger.debug("CLI baseline entry")
 
             generate_baseline(args)
+        case "mapping":
+            logger.debug("CLI baseline entry")
+
+            generate_mapping(args)
         case _:
             parser.print_help()
 

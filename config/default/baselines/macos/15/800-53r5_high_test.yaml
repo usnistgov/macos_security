@@ -1,5 +1,5 @@
 ---
-# yaml-language-server: $schema=../../../../../schemas/baseline.json
+# yaml-language-server: $schema=https://raw.githubusercontent.com/snoopy82481/macos_security/main/schemas/baseline.json
 title: "macOS 15.0: Security Configuration - NIST SP 800-53 Rev 5 High Impact"
 description: |
   This guide describes the actions to take when securing a macOS 15.0 system against the NIST SP 800-53 Rev 5 High Impact security baseline.

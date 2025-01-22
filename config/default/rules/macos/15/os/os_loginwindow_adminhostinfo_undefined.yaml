@@ -26,7 +26,7 @@ references:
     - N/A
   800-171r3:
     - 03.01.10
-  operating_system:
+operating_system:
   - name: macos
     version:
       - 15.0

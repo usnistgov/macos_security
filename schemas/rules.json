@@ -130,6 +130,10 @@
         }
       }
     },
+    "customized": {
+      "type": "boolean",
+      "description": "Boolean to declare if the rule is customized from the baseline."
+    },
     "operating_system": {
       "type": "array",
       "description": "Array of operating systems the Rule applies to.",

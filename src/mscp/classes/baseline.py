@@ -3,11 +3,13 @@
 # Standard python modules
 import logging
 import re
+import sys
 
 from pathlib import Path
 from typing import Optional, List, Dict, Any
 from pydantic import BaseModel, Field
 from collections import OrderedDict, defaultdict
+from icecream import ic
 
 # Additional python modules
 import pandas as pd
@@ -22,22 +24,22 @@ logger = logging.getLogger(__name__)
 
 
 class Author(BaseModel):
-    name: str
-    organization: str
+    name: str | None
+    organization: str | None
 
 
 class Profile(BaseModel):
     section: str
     description: str
-    rules: List[MacSecurityRule]
+    rules: list[MacSecurityRule]
 
     def get(self, attr, default=None):
         return getattr(self, attr, default)
 
 
 class Baseline(BaseModel):
-    authors: List[Author]
-    profile: List[Profile]
+    authors: list[Author]
+    profile: list[Profile]
     name: str
     title: str = Field(default="")
     description: str = Field(default="")
@@ -59,9 +61,9 @@ class Baseline(BaseModel):
 
         logger.info(f"Attempting to open Baseline file: {file_path}")
 
-        section_dir: Path = Path(config["defaults"]["sections_dir"], os_name)
+        section_dir: Path = Path(config["defaults"]["sections_dir"])
         if custom:
-            section_dir = Path(config["custom"]["sections_dir"], os_name)
+            section_dir = Path(config["custom"]["sections_dir"])
 
         baseline_data = open_yaml(file_path)
         authors = [Author(**author) for author in baseline_data.get("authors", [])]
@@ -69,7 +71,9 @@ class Baseline(BaseModel):
         # Parse profiles
         profiles = []
         for prof in baseline_data.get("profile", []):
+            logger.debug(f"Section Name: {prof['section']}")
             section_data = open_yaml(Path(section_dir, f"{prof['section']}.yaml"))
+            logger.debug(f"Section Data: {section_data}")
             profiles.append(Profile(
                 section=section_data.get("name", "").strip(),
                 description=section_data.get("description", "").strip(),
@@ -90,17 +94,17 @@ class Baseline(BaseModel):
 
 
     @classmethod
-    def create_new(cls, output_file: Path, rules: List[MacSecurityRule], version_data: Dict[str, Any], baseline_name: str, benchmark: str, authors: List[Author], full_title: str) -> None:
+    def create_new(cls, output_file: Path, rules: list[MacSecurityRule], version_data: dict[str, Any], baseline_name: str, authors: list[Author], full_title: str, benchmark: str = "recommended") -> None:
         """
         Create and save a Baseline object as a YAML file with grouped and sorted rules.
 
         Args:
             output_file (Path): Path to save the baseline YAML file.
-            rules (List[MacSecurityRule]): List of rules to include in the baseline.
+            rules (list[MacSecurityRule]): List of rules to include in the baseline.
             version_data (Dict[str, Any]): Version information, including OS and CPE.
             baseline_name (str): Name of the baseline.
-            benchmark (str): Benchmark type (e.g., 'recommended').
-            authors (List[Authors]): List of authors.
+            benchmark (str): Benchmark type (default: 'recommended').
+            authors (list[Authors]): List of authors.
             full_title (str): Full title for the baseline.
         """
         os_name: str = re.search(r'(macos|ios|visionos)', version_data["cpe"], re.IGNORECASE).group()
@@ -193,7 +197,7 @@ class Baseline(BaseModel):
 
         serialized_data = ordered_data
 
-        create_yaml(output_path, serialized_data)
+        create_yaml(output_path, serialized_data, "baseline")
 
     def get(self, attr, default=None):
         return getattr(self, attr, default)

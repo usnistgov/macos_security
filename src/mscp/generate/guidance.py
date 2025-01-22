@@ -14,9 +14,11 @@ from base64 import b64encode
 
 # Local python modules
 from src.mscp.classes.baseline import Baseline
+from src.mscp.classes.macsecurityrule import MacSecurityRule
 from src.mscp.common_utils.run_command import run_command
 from src.mscp.common_utils.config import config
 from src.mscp.common_utils.file_handling import open_yaml, make_dir
+from src.mscp.common_utils.version_data import get_version_data
 from src.mscp.generate.documents import generate_documents
 from src.mscp.generate.script import generate_script, generate_audit_plist
 from src.mscp.generate.ddm import generate_ddm
@@ -66,10 +68,7 @@ def generate_guidance(args: argparse.Namespace) -> None:
     custom: bool = not any(Path(config["custom"]["root_dir"]).iterdir())
     show_all_tags: bool = False
 
-    os_version: float = float(args.os_version)
-    version_file: Path = Path(config["includes_dir"], "version.yaml")
-    version_data: dict = open_yaml(version_file)
-    current_version_data: dict = next((entry for entry in version_data.get("platforms", {}).get(args.os_name, []) if entry.get("os") == os_version), {})
+    current_version_data: dict = get_version_data(args.os_name, args.os_version)
 
     output_basename: str = args.baseline.name
     baseline_name: str = args.baseline.stem
@@ -121,7 +120,10 @@ def generate_guidance(args: argparse.Namespace) -> None:
 
     if args.profiles:
         logger.info("Generating configuration profiles...")
-        generate_profiles(build_path, baseline_name, baseline)
+        if not signing:
+            generate_profiles(build_path, baseline_name, baseline)
+        else:
+            generate_profiles(build_path, baseline_name, baseline, signing, args.hash)
 
     if args.ddm:
         logger.info("Generating declarative components...")

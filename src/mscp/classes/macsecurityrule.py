@@ -5,8 +5,11 @@ import logging
 import sys
 import base64
 
-from typing import List, Dict, Any, Optional
+from typing import Any, Optional, TypeVar, Generic
 from pathlib import Path
+from collections import OrderedDict, defaultdict
+from enum import Enum
+from icecream import ic
 
 # Additional python modules
 from lxml import etree
@@ -20,62 +23,138 @@ from src.mscp.common_utils.sanatize_input import sanitised_input
 # Initialize logger
 logger = logging.getLogger(__name__)
 
+T = TypeVar("T", str, int, bool, float, None, list, dict)
+
+
+class Sectionmap(Enum):
+    AUDIT = "auditing"
+    AUTH = "authentication"
+    ICLOUD = "icloud"
+    INHERENT = "inherent"
+    OS = "operatingsystem"
+    NOT_APPLICABLE = "not_applicable"
+    PWPOLICY = "passwordpolicy"
+    PERMANENT = "permanent"
+    SRG = "srg"
+    SUPPLEMENTAL = "supplemental"
+    SYSTEM_SETTINGS = "systemsettings"
+
+
+
 class Cis(BaseModel):
-    benchmark: Optional[List[str]] = []
-    controls_v8: Optional[List[float]] = []
+    benchmark: Optional[list[str]] = ["N/A"]
+    controls_v8: Optional[list[float]] = []
 
 
-class Mobileconfigpayload(BaseModel):
+    def __getitem__(self, key: str) -> Any:
+        if key in self.model_fields:
+            return getattr(self, key)
+        raise KeyError(f"{key} is not a valid attribute of {self.__class__.__name__}")
+
+
+    def __setitem__(self, key: str, value: Any) -> None:
+        if key in self.model_fields:
+            setattr(self, key, value)
+        else:
+            raise KeyError(f"{key} is not a valid attribute of {self.__class__.__name__}")
+
+
+class Operatingsystem(BaseModel):
+    name: str
+    version: list[float]
+
+
+class Mobileconfigpayload(BaseModel, Generic[T]):
     payload_type: str
-    payload_content: Dict[str, Any]
+    payload_content: dict[str, T]
 
 
-class MacSecurityRule(BaseModel):
+    def __getitem__(self, key: str) -> T:
+        if key in self.model_fields:
+            return getattr(self, key)
+        raise KeyError(f"{key} is not a valid attribute of {self.__class__.__name__}")
+
+
+    def __setitem__(self, key: str, value: T) -> None:
+        if key in self.model_fields:
+            setattr(self, key, value)
+        else:
+            raise KeyError(f"{key} is not a valid attribute of {self.__class__.__name__}")
+
+
+class References(BaseModel, Generic[T]):
+    cci: list[str] = ["N/A"]
+    cce: list[str] = ["N/A"]
+    nist_controls: list[str] = ["N/A"]
+    nist_171: list[str] = ["N/A"]
+    disa_stig: list[str] = ["N/A"]
+    srg: list[str] = ["N/A"]
+    cis: Cis
+    cmmc: list[str] = ["N/A"]
+    sfr: list[str] = ["N/A"]
+    indigo: list[str] = ["N/A"]
+    custom_refs: Optional[dict[str, T]] = {}
+
+    class Config:
+        extra = "ignore"
+
+
+    def get(self, attr, default=None):
+        return getattr(self, attr, default)
+
+
+    def __getitem__(self, key: str) -> Any:
+        if key in self.model_fields:
+            return getattr(self, key)
+        raise KeyError(f"{key} is not a valid attribute of {self.__class__.__name__}")
+
+
+    def __setitem__(self, key: str, value: Any) -> None:
+        if key in self.model_fields:
+            setattr(self, key, value)
+        else:
+            raise KeyError(f"{key} is not a valid attribute of {self.__class__.__name__}")
+
+
+class MacSecurityRule(BaseModel, Generic[T]):
     title: str
-    rule_id: str
+    id: str
     severity: str
     discussion: str
     check: str
     fix: str
-    cci: List[str]
-    cce: List[str]
-    nist_controls: List[str]
-    nist_171: List[str]
-    disa_stig: List[str]
-    srg: List[str]
-    sfr: List[str]
-    cis: Cis
-    cmmc: List[str]
-    indigo: List[str]
-    custom_refs: List[str]
-    odv: Optional[Dict[str, Any]] = {}
-    tags: List[str]
-    result: Any
-    result_value: str | int
+    references: References
+    odv: Optional[dict[str, T]] = {}
+    tags: list[str]
+    result: dict[str, T]
+    result_value: T
     mobileconfig: bool
-    mobileconfig_info: List[Mobileconfigpayload]
+    mobileconfig_info: list[Mobileconfigpayload]
     ddm_info: dict
     customized: bool
+    operating_system: list[Operatingsystem]
     mechanism: str = ""
     section: str = ""
 
     @classmethod
-    def load_rules(cls, rule_ids: List[str], os_name: str, os_version: int, parent_values: str, section: str, custom: bool = False, generate_baseline: bool = False) -> List["MacSecurityRule"]:
+    def load_rules(cls, rule_ids: list[str], os_name: str, os_version: int, parent_values: str, section: str, custom: bool = False, generate_baseline: bool = False) -> list["MacSecurityRule"]:
         """
         Load MacSecurityRule objects from YAML files for the given rule IDs.
 
         Args:
-            rule_ids (List[str]): List of rule IDs to load.
+            rule_ids (list[str]): List of rule IDs to load.
             parent_values (str): Parent values to apply when filling in ODV.
             is_custom (bool): Whether to include custom rules.
 
         Returns:
-            List[MacSecurityRule]: A list of loaded MacSecurityRule objects.
+            list[MacSecurityRule]: A list of loaded MacSecurityRule objects.
         """
 
-        rules_dir: List[Path] = []
-        rules: List[MacSecurityRule] = []
-        mobileconfig_info: List = []
+        logger.info("=== LOADING RULES ===")
+
+        rules_dirs: list[Path] = []
+        rules: list[MacSecurityRule] = []
+        mobileconfig_info: list[dict[str, T]] = []
         mechanism: str = "Manual"
         os_version_str: str = str(os_version)
 
@@ -88,6 +167,8 @@ class MacSecurityRule(BaseModel):
             rules_dirs = [Path(config["defaults"]["rules_dir"], os_name, os_version_str)]
 
         for rule_id in rule_ids:
+            logger.debug(f"Transforming rule: {rule_id}")
+
             rule_file = next((file for rules_dir in rules_dirs if rules_dir.exists()
                               for file in rules_dir.rglob(f"{rule_id}.y*ml")), None)
             if not rule_file:
@@ -95,7 +176,7 @@ class MacSecurityRule(BaseModel):
                 continue
 
             rule_yaml: dict = open_yaml(rule_file)
-            payloads: List[Mobileconfigpayload] = []
+            payloads: list[Mobileconfigpayload] = []
 
             result = rule_yaml.get("result", "N/A")
             mobileconfig = rule_yaml.get("mobileconfig", False)
@@ -119,8 +200,9 @@ class MacSecurityRule(BaseModel):
                         payloads.append(Mobileconfigpayload(payload_type=payload_type, payload_content=payload_content))
                 elif isinstance(mobileconfig_info, list):
                     for entry in mobileconfig_info:
-                        payload_type = entry.get("PayloadType")
+                        payload_type: str = str(entry.get("PayloadType", ""))
                         payload_content = entry.get("PayloadContent", {})
+                        logger.debug(f"The payload content type is: {type(payload_content)}")
                         payloads.append(Mobileconfigpayload(payload_type=payload_type, payload_content=payload_content))
 
             if "[source,bash]" in rule_yaml["fix"]:
@@ -134,24 +216,26 @@ class MacSecurityRule(BaseModel):
                 case "not_applicable":
                     mechanism = "The control is not applicable when configuring a macOS system."
 
+            rule_yaml["references"]["nist_controls"] = rule_yaml["references"].pop("800-53r5")
+
+            if rule_yaml.get("references", {}).get("800-171r3"):
+                rule_yaml["references"]["nist_171"] = rule_yaml["references"].pop("800-171r3")
+
+            if rule_yaml.get("references", {}).get("cis", None) is None:
+                rule_yaml["references"]["cis"] = Cis().model_dump()
+            else:
+                rule_yaml["references"]["cis"]["controls_v8"] = rule_yaml["references"]["cis"].pop("controls v8")
+                if type(rule_yaml["references"]["cis"]["controls_v8"]) is not float:
+                    rule_yaml["references"]["cis"]["controls_v8"] = None
+
             rule = cls(
                 title=rule_yaml.get("title", "missing").replace('|', '\\|'),
-                rule_id=rule_yaml.get("id", "missing").replace('|', '\\|'),
+                id=rule_yaml.get("id", "missing").replace('|', '\\|'),
                 severity=rule_yaml.get("severity", ""),
                 discussion=rule_yaml.get("discussion", "missing").replace('|', '\\|'),
                 check=rule_yaml.get("check", "missing").replace('|', '\\|'),
                 fix=rule_yaml.get("fix", "").replace('|', '\\|'),
-                cci=rule_yaml.get("references", {}).get("cci", []),
-                cce=rule_yaml.get("references", {}).get("cce", []),
-                nist_171=rule_yaml.get("references", {}).get("800-171r3", []),
-                nist_controls=rule_yaml.get("references", {}).get("800-53r4", []),
-                disa_stig=rule_yaml.get("references", {}).get("disa_stig", []),
-                srg=rule_yaml.get("references", {}).get("srg", []),
-                sfr=rule_yaml.get("references", {}).get("sfr", []),
-                cis = Cis(**rule_yaml.get("references", {}).get("cis", {})),
-                cmmc=rule_yaml.get("references", {}).get("cmmc", []),
-                indigo=rule_yaml.get("references", {}).get("indigo", []),
-                custom_refs=rule_yaml.get("custom_refs", []),
+                references=References(**rule_yaml["references"]),
                 odv=rule_yaml.get("odv", {}),
                 tags=rule_yaml.get("tags", []),
                 result=rule_yaml.get("result", {}),
@@ -161,25 +245,32 @@ class MacSecurityRule(BaseModel):
                 customized=rule_yaml.get("references", {}).get("customized", False),
                 section=section,
                 mechanism=mechanism,
-                ddm_info=rule_yaml.get("ddm_info", {})
+                ddm_info=rule_yaml.get("ddm_info", {}),
+                operating_system=rule_yaml.get("operating_system", [])
             )
 
             if mobileconfig:
-                logger.debug(f"Formatting mobileconfig_info for rule: {rule.rule_id}")
+                logger.debug(f"Formatting mobileconfig_info for rule: {rule.id}")
                 formatted_mobileconfig = rule.format_mobileconfig_fix()
                 rule.fix = formatted_mobileconfig
                 logger.debug(formatted_mobileconfig)
 
-            if not rule.odv == None and generate_baseline:
+            if not rule.odv == None and not generate_baseline:
                 rule._fill_in_odv(parent_values)
 
+            logger.debug(f"Transformed rule: {rule_id}")
+            # logger.debug(f"{rule}")
+
             rules.append(rule)
+
+        logger.debug(f"NUMBER OF LOADED RULES: {len(rules)}")
+        logger.info("=== RULES LOADED ===")
 
         return rules
 
 
     @classmethod
-    def collect_all_rules(cls, os_name: str, os_version: int, parent_values: str) -> List["MacSecurityRule"]:
+    def collect_all_rules(cls, os_name: str, os_version: int, parent_values: str = "default") -> list["MacSecurityRule"]:
         """
         Populate MacSecurityRule objects from YAML files in a folder.
         Map folder names to specific section filenames for the `section` attribute.
@@ -190,34 +281,20 @@ class MacSecurityRule(BaseModel):
             parent_values (str): Parent values for rule initialization.
 
         Returns:
-            List[MacSecurityRule]: A list of MacSecurityRule instances.
+            list[MacSecurityRule]: A list of MacSecurityRule instances.
         """
-        rules: List[MacSecurityRule] = []
+        rules: list[MacSecurityRule] = []
         os_version_str: str = str(os_version)
         sub_sections: list[str] = ["permanent", "inherent", "n_a", "srg", "supplemental"]
-        section_dirs: List[Path] = [
+        section_dirs: list[Path] = [
             Path(config["custom"]["sections_dir"]),
             Path(config["defaults"]["sections_dir"])
         ]
 
-        rules_dirs: List[Path] = [
+        rules_dirs: list[Path] = [
             Path(config["custom"]["rules_dir"], os_name, os_version_str),
             Path(config["defaults"]["rules_dir"], os_name, os_version_str)
         ]
-
-        section_map: dict = {
-            "audit": "auditing",
-            "auth": "authentication",
-            "icloud": "icloud",
-            "inherent": "inherent",
-            "os": "macos",
-            "not_applicable": "not_applicable",
-            "pwpolicy": "passwordpolicy",
-            "permanent": "permanent",
-            "srg": "srg",
-            "supplemental": "supplemental",
-            "system_settings": "systemsettings"
-        }
 
         section_data: dict = {
             section_file.stem: open_yaml(section_file).get("name", "")
@@ -240,7 +317,8 @@ class MacSecurityRule(BaseModel):
                     try:
                         rule_yaml: dict = open_yaml(yaml_file)
                         folder_name: str = yaml_file.parent.name
-                        section_name: str = section_data.get(section_map.get(folder_name, ""), "")
+                        logger.debug(f"{rule_yaml["id"]} folder: {folder_name}")
+                        section_name: str = section_data.get(Sectionmap[folder_name.upper()], "")
                         custom: bool = False
 
                         if "custom" in str(folder).lower():
@@ -252,7 +330,7 @@ class MacSecurityRule(BaseModel):
 
                         for tag in rule_yaml.get("tags", []):
                             if tag in sub_sections:
-                                section_name = section_data.get(section_map.get(tag, ""), "")
+                                section_name = section_data.get(Sectionmap[tag.upper()], "")
 
                         rules += cls.load_rules(
                             rule_ids=[rule_yaml.get("id", "")],
@@ -479,7 +557,7 @@ class MacSecurityRule(BaseModel):
 
 
     @staticmethod
-    def encode_base64_result(result: Dict[str, Any]) -> str:
+    def encode_base64_result(result: dict[str, Any]) -> str:
         """
         Encodes the 'base64' key's value in the given dictionary into Base64 format,
         updates the dictionary with the encoded value, and returns the encoded string.
@@ -501,18 +579,18 @@ class MacSecurityRule(BaseModel):
 
     @staticmethod
     def write_odv_custom_rule(rule, odv: Any) -> None:
-        rule_file_path: Path = Path(config["custom"]["rules"][rule.section], f"{rule.rule_id}.yaml")
+        rule_file_path: Path = Path(config["custom"]["rules"][rule.section], f"{rule.id}.yaml")
 
         make_dir(rule_file_path.parent)
 
         rule['odv'] = {"custom": odv}
 
-        create_yaml(rule_file_path, rule)
+        create_yaml(rule_file_path, rule, "rule")
 
 
     @staticmethod
     def remove_odv_custom_rule(rule) -> None:
-        rule_file_path: Path = Path(config["custom"]["rules"][rule.section], f"{rule.rule_id}.yaml")
+        rule_file_path: Path = Path(config["custom"]["rules"][rule.section], f"{rule.id}.yaml")
 
         if not rule_file_path.exists():
             return
@@ -520,20 +598,20 @@ class MacSecurityRule(BaseModel):
         if "odv" in rule and "custom" in rule["odv"]:
             del rule["odv"]["custom"]
 
-            create_yaml(rule_file_path, rule)
+            create_yaml(rule_file_path, rule, "rule")
 
 
     @classmethod
-    def odv_query(cls, rules: List["MacSecurityRule"], benchmark: str) -> List["MacSecurityRule"]:
+    def odv_query(cls, rules: list["MacSecurityRule"], benchmark: str) -> list["MacSecurityRule"]:
         """
         Queries the user to include/exclude rules and set Organizational Defined Values (ODVs).
 
         Args:
-            rules (List[MacSecurityRule]): List of rules to process.
+            rules (list[MacSecurityRule]): List of rules to process.
             benchmark (str): The benchmark being tailored (e.g., "recommended").
 
         Returns:
-            List[MacSecurityRule]: List of included rules after user input and ODV modifications.
+            list[MacSecurityRule]: List of included rules after user input and ODV modifications.
         """
         print(
             "The inclusion of any given rule is a risk-based-decision (RBD). "
@@ -559,15 +637,15 @@ class MacSecurityRule(BaseModel):
             if any(tag in rule.tags for tag in _always_include):
                 include = "y"
             elif include_all:
-                if rule.rule_id not in queried_rule_ids:
+                if rule.id not in queried_rule_ids:
                     include = "y"
                     get_odv = True
-                    queried_rule_ids.append(rule.rule_id)
+                    queried_rule_ids.append(rule.id)
                     cls.remove_odv_custom_rule(rule)
             else:
-                if rule.rule_id not in queried_rule_ids:
+                if rule.id not in queried_rule_ids:
                     include = sanitised_input(
-                        f"Would you like to include the rule for \"{rule.rule_id}\" in your benchmark? [Y/n/all/?]: ",
+                        f"Would you like to include the rule for \"{rule.id}\" in your benchmark? [Y/n/all/?]: ",
                         str.lower,
                         range_=("y", "n", "all", "?"),
                         default_="y",
@@ -575,12 +653,12 @@ class MacSecurityRule(BaseModel):
                     if include == "?":
                         print(f"Rule Details: \n{rule.discussion}")
                         include = sanitised_input(
-                            f"Would you like to include the rule for \"{rule.rule_id}\" in your benchmark? [Y/n/all]: ",
+                            f"Would you like to include the rule for \"{rule.id}\" in your benchmark? [Y/n/all]: ",
                             str.lower,
                             range_=("y", "n", "all"),
                             default_="y",
                         )
-                    queried_rule_ids.append(rule.rule_id)
+                    queried_rule_ids.append(rule.id)
                     get_odv = True
                     cls.remove_odv_custom_rule(rule)
                     if include.lower() == "all":
@@ -599,7 +677,7 @@ class MacSecurityRule(BaseModel):
                     if benchmark == "recommended":
                         print(f"{odv_hint}")
                         odv = sanitised_input(
-                            f'Enter the ODV for "{rule.rule_id}" or press Enter for the recommended value ({odv_recommended}): ',
+                            f'Enter the ODV for "{rule.id}" or press Enter for the recommended value ({odv_recommended}): ',
                             type(odv_recommended),
                             default_=odv_recommended,
                         )
@@ -608,7 +686,7 @@ class MacSecurityRule(BaseModel):
                     else:
                         print(f"\nODV value: {odv_hint}")
                         odv = sanitised_input(
-                            f'Enter the ODV for "{rule.rule_id}" or press Enter for the default value ({odv_benchmark}): ',
+                            f'Enter the ODV for "{rule.id}" or press Enter for the default value ({odv_benchmark}): ',
                             type(odv_benchmark),
                             default_=odv_benchmark,
                         )
@@ -616,3 +694,38 @@ class MacSecurityRule(BaseModel):
                             cls.write_odv_custom_rule(rule, odv)
 
         return included_rules
+
+    def to_yaml(self, output_path: Path) -> None:
+        key_order: list[str] = ["id", "title", "discussion", "check", "result", "fix", "references", "customized", "operating_system", "tags", "severity", "odv", "mobileconfig", "mobileconfig_info", "ddm_info"]
+        required_keys: list[str] = ["id", "title", "discussion", "check", "fix", "operating_system", "references"]
+        rule_file_path: Path = output_path / f"{self.id}.yaml"
+        serialized_data: dict[str, Any] = self.model_dump()
+        ordered_data = OrderedDict()
+
+        serialized_data["references"]["800-53r5"] = serialized_data["references"].pop("nist_controls")
+        serialized_data["references"]["800-171r3"] = serialized_data["references"].pop("nist_171")
+
+        for key in serialized_data["references"]:
+            serialized_data["references"][key].sort()
+
+        for key in key_order:
+            if key in serialized_data:
+                ordered_data[key] = serialized_data[key]
+
+        clean_dict: dict = {key:value
+                            for key, value in ordered_data.items()
+                            if value or key in required_keys}
+
+        create_yaml(rule_file_path, clean_dict, "rule")
+
+
+    def __getitem__(self, key: str) -> Any:
+        if key in self.model_fields:
+            return getattr(self, key)
+        raise KeyError(f"{key} is not a valid attribute of {self.__class__.__name__}")
+
+    def __setitem__(self, key: str, value: Any) -> None:
+        if key in self.model_fields:
+            setattr(self, key, value)
+        else:
+            raise KeyError(f"{key} is not a valid attribute of {self.__class__.__name__}")

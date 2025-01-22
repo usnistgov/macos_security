@@ -17,6 +17,7 @@ from icecream import ic
 # Local python modules
 from src.mscp.common_utils.config import config
 from src.mscp.common_utils.file_handling import open_yaml, make_dir
+from src.mscp.common_utils.version_data import get_version_data
 from src.mscp.classes.baseline import Baseline, Author
 from src.mscp.classes.macsecurityrule import MacSecurityRule
 from src.mscp.common_utils.sanatize_input import sanitised_input
@@ -37,10 +38,7 @@ def generate_baseline(args: argparse.Namespace) -> None:
     authors: List[Author] = []
     baseline_name: str = ""
 
-    os_version: float = float(args.os_version)
-    version_file: Path = Path(config["includes_dir"], "version.yaml")
-    version_data: dict = open_yaml(version_file)
-    current_version_data = next((entry for entry in version_data.get("platforms", {}).get(args.os_name, []) if entry.get("os") == os_version), {})
+    current_version_data: dict = get_version_data(args.os_name, args.os_version)
     all_rules: List[MacSecurityRule] = MacSecurityRule.collect_all_rules(args.os_name, args.os_version, parent_values="Default")
 
     uuid = lambda: uuid4().hex
