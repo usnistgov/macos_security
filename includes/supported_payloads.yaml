@@ -1,4 +1,4 @@
-payloads_types: 
+payloads_types:
   - com.apple.ADCertificate.managed
   - com.apple.AIM.account
   - com.apple.AssetCache.managed
@@ -65,7 +65,6 @@ payloads_types:
   - com.apple.ironwood.support
   - com.apple.jabber.account
   - com.apple.ldap.account
-  - com.apple.locationmenu
   - com.apple.logic10
   - com.apple.loginitems.managed
   - com.apple.loginwindow
@@ -117,3 +116,5 @@ payloads_types:
   - .GlobalPreferences
   - com.apple.preferences.sharing.SharingPrefsExtension
   - com.apple.controlcenter
+  - com.apple.Accessibility
+  - com.apple.photos.shareddefaults
