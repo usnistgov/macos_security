@@ -10,7 +10,7 @@ check: |
   .objectForKey('allowExternalIntelligenceIntegrationsSignIn').js
   EOS
 result:
-  string: 'true'
+  string: 'false'
 fix: |
   This is implemented by a Configuration Profile.
 references:
