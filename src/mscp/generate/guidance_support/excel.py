@@ -28,8 +28,8 @@ def generate_excel(file_out: Path, baseline: Baseline) -> None:
     and layout enhancements like column widths and header alignment.
 
     Args:
-        dataframe (pd.DataFrame): The input DataFrame containing data to be written to Excel.
         file_out (Path): The output file path where the Excel file will be saved.
+        baseline: (Baseline): The Baseline instance to be processed.
 
     DataFrame Processing:
         - Adds and renames columns based on a mapping (`rename_mapping`).
@@ -52,8 +52,8 @@ def generate_excel(file_out: Path, baseline: Baseline) -> None:
         ...     "title": ["Title1", "Title2"],
         ...     "mobileconfig_info": [{"key1": "value1"}, {}],
         ... }
-        >>> df = pd.DataFrame(data)
-        >>> generate_excel(df, Path("output.xlsx"))
+        >>> baseline = Baseline.from_yaml(file_path=Path("baseline.yaml"), os_name="macos" , os_version=15, custom=False)
+        >>> generate_excel(Path("output.xlsx"), baseline)
 
     Raises:
         KeyError: If critical columns required for processing are missing from the DataFrame.

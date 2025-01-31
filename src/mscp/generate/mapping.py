@@ -36,7 +36,7 @@ def update_rule_with_custom_controls(rule: MacSecurityRule, controls: list[str],
         rule.references["custom_refs"] = {}
 
     rule.references["custom_refs"][header] = controls
-    logger.info(f"Updated rule {rule.id} with controls: {controls}")
+    logger.info(f"Updated rule {rule.rule_id} with controls: {controls}")
 
 
 def generate_mapping(args: argparse.Namespace) -> None:
@@ -65,7 +65,7 @@ def generate_mapping(args: argparse.Namespace) -> None:
         make_dir(output_dir)
 
     for rule in rules:
-        rule_file_path: Path = output_dir / "rules" / f"{rule.id}.yaml"
+        rule_file_path: Path = output_dir / "rules" / f"{rule.rule_id}.yaml"
         control_list: list = []
 
         if any(tag in rule.tags for tag in ["supplemental", "srg"]):
@@ -99,10 +99,10 @@ def generate_mapping(args: argparse.Namespace) -> None:
                     row_array = [item.strip() for item in row[other_header].split(",")]
 
                     for item in row_array:
-                        logger.info(f"{rule.id} - {args.framework} {control} maps to {other_header} {item}")
+                        logger.info(f"{rule.rule_id} - {args.framework} {control} maps to {other_header} {item}")
 
         if not control_list:
-            logger.debug(f"No controls matched for rule {rule.id}")
+            logger.debug(f"No controls matched for rule {rule.rule_id}")
             continue
 
         update_rule_with_custom_controls(rule, control_list, other_header)

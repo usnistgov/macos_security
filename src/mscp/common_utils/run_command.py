@@ -13,8 +13,8 @@ def run_command(command: str) -> Tuple[Optional[str], Optional[str]]:
     args = shlex.split(command)
     try:
         result = subprocess.run(args, capture_output=True, text=True, check=True)
-        logging.info(f"Command executed successfully: {command}")
-        logging.debug(f"Command output: {result.stdout}")
+        logger.info(f"Command executed successfully: {command}")
+        logger.debug(f"Command output: {result.stdout}")
 
         return result.stdout.strip(), None
 
@@ -25,7 +25,7 @@ def run_command(command: str) -> Tuple[Optional[str], Optional[str]]:
         return None, f"Command failed: {e.stderr}"
 
     except OSError as e:
-        logging.error(f"OS error when running command: {command}")
-        logging.debug(f"Error message: {str(e)}")
+        logger.error(f"OS error when running command: {command}")
+        logger.debug(f"Error message: {str(e)}")
 
         return None, f"OS error occurred: {str(e)}"

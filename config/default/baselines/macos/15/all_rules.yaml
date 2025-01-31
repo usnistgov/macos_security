@@ -1,16 +1,17 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/snoopy82481/macos_security/main/schemas/baseline.json
 title: "macOS 15.0: Security Configuration - All Rules"
 description: |
   This guide describes the actions to take when securing a macOS 15.0 system against the All Rules security baseline.
 
   Information System Security Officers and benchmark creators can use this catalog of settings in order to assist them in security benchmark creation. This list is a catalog, not a checklist or benchmark, and satisfaction of every item is not likely to be possible or sensible in many operational scenarios.
-authors: |
-  *macOS Security Compliance Project*
-
-  |===
-  |Bob Gendler|National Institute of Standards and Technology
-  |Dan Brodjieski|National Aeronautics and Space Administration
-  |Allen Golbig|Jamf
-  |===
+authors:
+  - name: Bob Gendler
+    organization: National Institute of Standards and Technology
+  - name: Dan Brodjieski
+    organization: National Aeronautics and Space Administration
+  - name: Allen Golbig
+    organization: Jamf
 parent_values: "recommended"
 profile:
   - section: "auditing"
@@ -104,7 +105,6 @@ profile:
       - os_genmoji_disable
       - os_guest_folder_removed
       - os_handoff_disable
-      - os_hibernate_mode_apple_silicon_enable
       - os_hibernate_mode_destroyfvkeyonstandby_enable
       - os_hibernate_mode_intel_enable
       - os_home_folders_default
@@ -118,6 +118,7 @@ profile:
       - os_library_validation_enabled
       - os_loginwindow_adminhostinfo_undefined
       - os_mail_app_disable
+      - os_mail_summary_disable
       - os_mdm_require
       - os_messages_app_disable
       - os_mobile_file_integrity_enable
@@ -131,6 +132,7 @@ profile:
       - os_password_hint_remove
       - os_password_proximity_disable
       - os_password_sharing_disable
+      - os_photos_enhanced_search_disable
       - os_policy_banner_loginwindow_enforce
       - os_policy_banner_ssh_configure
       - os_policy_banner_ssh_enforce
@@ -157,6 +159,7 @@ profile:
       - os_siri_prompt_disable
       - os_skip_screen_time_prompt_enable
       - os_skip_unlock_with_watch_enable
+      - os_sleep_and_display_sleep_apple_silicon_enable
       - os_software_update_deferral
       - os_ssh_fips_compliant
       - os_ssh_server_alive_count_max_configure
@@ -210,10 +213,11 @@ profile:
       - system_settings_bluetooth_menu_enable
       - system_settings_bluetooth_settings_disable
       - system_settings_bluetooth_sharing_disable
-      - system_settings_cd_dvd_sharing_disable
       - system_settings_content_caching_disable
       - system_settings_critical_update_install_enforce
       - system_settings_diagnostics_reports_disable
+      - system_settings_external_intelligence_disable
+      - system_settings_external_intelligence_sign_in_disable
       - system_settings_filevault_enforce
       - system_settings_find_my_disable
       - system_settings_firewall_enable
@@ -335,7 +339,7 @@ profile:
       - pwpolicy_prevent_dictionary_words
       - system_settings_wifi_disable_when_connected_to_ethernet
   - section: "not_applicable"
-    rules: 
+    rules:
       - os_access_control_mobile_devices
       - os_identify_non-org_users
       - os_information_validation

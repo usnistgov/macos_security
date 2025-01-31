@@ -14,16 +14,15 @@ from base64 import b64encode
 
 # Local python modules
 from src.mscp.classes.baseline import Baseline
-from src.mscp.classes.macsecurityrule import MacSecurityRule
 from src.mscp.common_utils.run_command import run_command
 from src.mscp.common_utils.config import config
-from src.mscp.common_utils.file_handling import open_yaml, make_dir
+from src.mscp.common_utils.file_handling import make_dir
 from src.mscp.common_utils.version_data import get_version_data
-from src.mscp.generate.documents import generate_documents
-from src.mscp.generate.script import generate_script, generate_audit_plist
-from src.mscp.generate.ddm import generate_ddm
-from src.mscp.generate.excel import generate_excel
-from src.mscp.generate.profiles import generate_profiles
+from .guidance_support.documents import generate_documents
+from .guidance_support.script import generate_script, generate_audit_plist
+from .guidance_support.ddm import generate_ddm
+from .guidance_support.excel import generate_excel
+from .guidance_support.profiles import generate_profiles
 
 
 # Initialize local logger

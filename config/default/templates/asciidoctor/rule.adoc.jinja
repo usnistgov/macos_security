@@ -50,64 +50,60 @@ Perform the following to configure the system to meet the requirements:
 
 !800-53r5
 !
-{{ rule.nist_controls | group_ulify if rule.nist_controls is not none else "* N/A" }}
+{{ rule.references.nist_controls | group_ulify if rule.nist_controls is not none else "* N/A" }}
 
 ifdef::show_171[]
 !800-171r3
 !
 {{ render_rules(rule.nist_171) if rule.nist_171 is not none else "* N/A" }}
-
 endif::[]
 
 ifdef::show_STIG[]
 !DISA STIG(s)
 !
-{{ render_rules(rule.disa_stig) if rule.disa_stig is not none else "* N/A" }}
+{{ render_rules(rule.references.disa_stig) if rule.disa_stig is not none else "* N/A" }}
 
 !SFR
 !
 {{ render_rules(rule.sfr) if rule.sfr is not none else "* N/A" }}
-
 endif::[]
 
 ifdef::show_CIS[]
 !CIS Benchmark
 !
-{{ render_rules(rule["cis"]["benchmark"]) if rule["cis"]["benchmark"] is not none }}
+{{ render_rules(rule.references.cis.benchmark) if rule.references.cis.benchmark is not none }}
 
 !CIS Controls V8
 !
-{{ render_rules(rule["cis"]["controls_v8"]) if rule["cis"]["controls_v8"] is not none }}
+{{ render_rules(rule.references.cis.controls_v8) if rule.references.cis.controls_v8 is not none }}
 endif::[]
 
 ifdef::show_indigo[]
 !indigo
 !
-{{ render_rules(rule.indigo) if rule.indigo is not none }}
+{{ render_rules(rule.references.indigo) if rule.references.indigo is not none }}
 endif::[]
 
 ifdef::show_CMMC[]
 !CMMC
 !
-{{ render_rules(rule.cmmc) if rule.cmmc is not none }}
-
+{{ render_rules(rule.references.cmmc) if rule.references.cmmc is not none }}
 endif::[]
 
 !CCE
 !
-{{ render_rules(rule.cce) if rule.cce is not none -}}
+{{ render_rules(rule.references.cce) if rule.references.cce is not none -}}
 
-{%- if custom %}
+{% if custom %}
 ! Custom References
 !
-{{ render_rules(rule.custom_refs) if rule.custom_refs is not none }}
-{% endif -%}
+{{ render_rules(rule.references.custom_refs) if rule.references.custom_refs is not none }}
+{% endif %}
 
 ifdef::show_tags[]
 !TAGS
 !
 {{ render_rules(rule.tags) if rule.tags is not none else "* N/A" }}
-
 endif::[]
 
 !===

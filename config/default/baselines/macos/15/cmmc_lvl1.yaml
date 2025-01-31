@@ -1,17 +1,19 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/snoopy82481/macos_security/main/schemas/baseline.json
 title: "macOS 15.0: Security Configuration - US CMMC 2.0 Level 1"
 description: |
   This guide describes the actions to take when securing a macOS 15.0 system against the US CMMC 2.0 Level 1 security baseline.
 
   Information System Security Officers and benchmark creators can use this catalog of settings in order to assist them in security benchmark creation. This list is a catalog, not a checklist or benchmark, and satisfaction of every item is not likely to be possible or sensible in many operational scenarios.
-authors: |
-  *macOS Security Compliance Project*
-
-  |===
-  |John Mahlman|Leidos
-  |Bob Gendler|National Institute of Standards and Technology
-  |Dan Brodjieski|National Aeronautics and Space Administration
-  |Allen Golbig|Jamf
-  |===
+authors:
+  - name: John Mahlman
+    organization: Leidos
+  - name: Bob Gendler
+    organization: National Institute of Standards and Technology
+  - name: Dan Brodjieski
+    organization: National Aeronautics and Space Administration
+  - name: Allen Golbig
+    organization: Jamf
 parent_values: "recommended"
 profile:
   - section: "authentication"
@@ -52,8 +54,11 @@ profile:
       - os_httpd_disable
       - os_icloud_storage_prompt_disable
       - os_image_generation_disable
+      - os_iphone_mirroring_disable
+      - os_mail_summary_disable
       - os_nfsd_disable
       - os_on_device_dictation_enforce
+      - os_photos_enhanced_search_disable
       - os_rapid_security_response_allow
       - os_rapid_security_response_removal_disable
       - os_recovery_lock_enable

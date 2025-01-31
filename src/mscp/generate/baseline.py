@@ -7,9 +7,6 @@ import sys
 import re
 
 from pathlib import Path
-from typing import List, Dict, Any
-from collections import defaultdict
-from uuid import uuid4
 from icecream import ic
 
 # Additional python modules
@@ -35,16 +32,13 @@ def generate_baseline(args: argparse.Namespace) -> None:
     established_benchmarks: tuple = tuple(['stig', 'cis_lvl1', 'cis_lvl2'])
     benchmark: str = "recommended"
     full_title: str = args.keyword
-    authors: List[Author] = []
+    authors: list[Author] = []
     baseline_name: str = ""
 
     current_version_data: dict = get_version_data(args.os_name, args.os_version)
-    all_rules: List[MacSecurityRule] = MacSecurityRule.collect_all_rules(args.os_name, args.os_version, parent_values="Default")
+    all_rules: list[MacSecurityRule] = MacSecurityRule.collect_all_rules(args.os_name, args.os_version, parent_values="Default")
+    all_tags: list[str] = MacSecurityRule.get_tags(all_rules)
 
-    uuid = lambda: uuid4().hex
-    ic(str(uuid))
-    print(uuid)
-    sys.exit()
     if not build_path.exists():
         make_dir(build_path)
     else:
@@ -54,13 +48,6 @@ def generate_baseline(args: argparse.Namespace) -> None:
             for name in dirs:
                 (root / name).rmdir()
 
-    all_tags: List[str] = sorted(
-        {tag for rule in all_rules for tag in rule.tags}
-    )
-
-    all_tags.append("all_rules")
-    all_tags.sort()
-
     if args.list_tags:
         for tag in all_tags:
             print(tag)
@@ -68,11 +55,11 @@ def generate_baseline(args: argparse.Namespace) -> None:
         sys.exit()
 
     if args.controls:
-        included_controls: List[str] = sorted(
-            {control for rule in all_rules for control in rule.nist_controls}
+        included_controls: list[str] = sorted(
+            {control for rule in all_rules for control in rule.references.nist_controls}
         )
 
-        needed_controls: List[str] = [control for control in baselines_data.get("low", [])]
+        needed_controls: list[str] = [control for control in baselines_data.get("low", [])]
 
         for control in needed_controls:
             if control not in included_controls:
@@ -80,7 +67,7 @@ def generate_baseline(args: argparse.Namespace) -> None:
 
         sys.exit()
 
-    found_rules: List[MacSecurityRule] = [
+    found_rules: list[MacSecurityRule] = [
         rule for rule in all_rules
         if args.keyword in rule.tags or args.keyword == "all_rules"
     ]
@@ -88,19 +75,22 @@ def generate_baseline(args: argparse.Namespace) -> None:
     if not args.keyword:
         logger.info("No rules found for the keyword provided, please verify from the following list:")
         logger.info(all_tags)
+        for tag in all_tags:
+            print(tag)
+
         sys.exit()
 
     if any(bm in args.keyword for bm in established_benchmarks):
         benchmark = args.keyword
 
-    if args.keyword in mscp_data.get("Author", {}):
-        author_dicts: dict = mscp_data["Author"][args.keyword]["names"]
+    if args.keyword in mscp_data.get("authors", {}):
+        author_dicts: dict = mscp_data["authors"][args.keyword]["names"]
         authors = [Author(**author) for author in author_dicts]
 
     if args.keyword in mscp_data['titles'] and not args.tailor:
         full_title = mscp_data['titles'][args.keyword]
 
-    if args.talor:
+    if args.tailor:
         full_title = ""
         tailored_filename: str = sanitised_input(f'Enter a name for your tailored benchmark or press Enter for the default value ({args.keyword}): ', str, default_=args.keyword)
         custom_author_name: str = sanitised_input('Enter your name: ')
@@ -113,11 +103,11 @@ def generate_baseline(args: argparse.Namespace) -> None:
         else:
             baseline_name = f"{tailored_filename.upper()} (Tailored from {args.keyword.upper()})"
 
-        odv_baseline_rules: List[MacSecurityRule] = MacSecurityRule.odv_query(found_rules, benchmark)
+        odv_baseline_rules: list[MacSecurityRule] = MacSecurityRule.odv_query(found_rules, benchmark)
 
     Baseline.create_new(
         output_file = baseline_output_file,
-        rules = odv_baseline_rules if args.talor else found_rules,
+        rules = odv_baseline_rules if args.tailor else found_rules,
         version_data = current_version_data,
         baseline_name = baseline_name,
         benchmark = benchmark,

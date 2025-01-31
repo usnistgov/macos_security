@@ -6,8 +6,7 @@ import re
 import sys
 
 from pathlib import Path
-from dataclasses import asdict
-from typing import Dict, Any
+from typing import Any
 from itertools import groupby
 from icecream import ic
 
@@ -22,16 +21,14 @@ from src.mscp.common_utils.run_command import run_command
 # Initialize local logger
 logger = logging.getLogger(__name__)
 
-def group_ulify(elements):
+def group_ulify(elements: list[str]) -> str:
     if elements == "N/A":
         return "- N/A"
 
     elements.sort()
     grouped = [list(i) for _, i in groupby(elements, lambda a: a.split("(")[0])]
-    result = ""
-    for group in grouped:
-        result += "\n * " + ", ".join(group)
-    return result.strip()
+
+    return "\n".join(" * " + ", ".join(group) for group in grouped).strip()
 
 def generate_documents(
         output_file: Path,
@@ -40,7 +37,7 @@ def generate_documents(
         pdf_theme: str,
         logo_path: str,
         os_name: str,
-        version_info: Dict[str, Any],
+        version_info: dict[str, Any],
         show_all_tags: bool = False,
         custom: bool = False) -> None:
 
@@ -65,7 +62,7 @@ def generate_documents(
 
     main_template = env.get_template('main.adoc.jinja')
 
-    baseline_dict: Dict[str, Any] = dict(baseline)
+    baseline_dict: dict[str, Any] = baseline.model_dump()
 
     if "Talored from" in baseline.title:
         html_subtitle = html_subtitle.split("(")[0]

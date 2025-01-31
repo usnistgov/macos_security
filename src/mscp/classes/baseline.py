@@ -18,6 +18,7 @@ import pandas as pd
 from src.mscp.classes.macsecurityrule import MacSecurityRule
 from src.mscp.common_utils.file_handling import open_yaml, create_yaml
 from src.mscp.common_utils.config import config
+import yaml
 
 # Initialize logger
 logger = logging.getLogger(__name__)
@@ -53,6 +54,8 @@ class Baseline(BaseModel):
 
         Args:
             file_path (Path): Path to the baseline YAML file.
+            custom (bool, optional): Whether to load custom configurations. Defaults to False.
+            os_version (int): Operating system version.
             custom (bool): Whether to load custom configurations.
 
         Returns:
@@ -69,7 +72,7 @@ class Baseline(BaseModel):
         authors = [Author(**author) for author in baseline_data.get("authors", [])]
 
         # Parse profiles
-        profiles = []
+        profiles: list[Profile] = []
         for prof in baseline_data.get("profile", []):
             logger.debug(f"Section Name: {prof['section']}")
             section_data = open_yaml(Path(section_dir, f"{prof['section']}.yaml"))
@@ -77,7 +80,7 @@ class Baseline(BaseModel):
             profiles.append(Profile(
                 section=section_data.get("name", "").strip(),
                 description=section_data.get("description", "").strip(),
-                rules=MacSecurityRule.load_rules(prof.get("rules", []), os_name, os_version, baseline_data.get("parent_values", ""), section_data.get("name", "").strip(), custom)
+                rules=MacSecurityRule.load_rules(prof.get("rules", []), os_name, os_version, baseline_data.get("parent_values", ""), section_data.get("name", "").strip(), custom),
             ))
 
         # Instantiate Baseline object
@@ -103,9 +106,9 @@ class Baseline(BaseModel):
             rules (list[MacSecurityRule]): List of rules to include in the baseline.
             version_data (Dict[str, Any]): Version information, including OS and CPE.
             baseline_name (str): Name of the baseline.
-            benchmark (str): Benchmark type (default: 'recommended').
             authors (list[Authors]): List of authors.
             full_title (str): Full title for the baseline.
+            benchmark (str, optional): Benchmark type. Defaults to recommended.
         """
         os_name: str = re.search(r'(macos|ios|visionos)', version_data["cpe"], re.IGNORECASE).group()
         os_version: float = version_data["os"]
@@ -125,7 +128,7 @@ class Baseline(BaseModel):
         grouped_rules = defaultdict(list)
         section_descriptions: dict = {}
 
-        for yaml_file in Path(config["defaults"]["section"]).glob("*.y*ml"):
+        for yaml_file in Path(config["defaults"]["sections_dir"]).glob("*.y*ml"):
             section_data: dict = open_yaml(yaml_file)
 
             section_descriptions[section_data.get("name")] = section_data.get("description", "")
@@ -172,32 +175,69 @@ class Baseline(BaseModel):
             pd.DataFrame: A DataFrame containing rules with their associated profile sections.
         """
 
-        rules =[]
+        rules: list[dict] = []
         for profile in self.profile:
             for rule in profile.rules:
-                rule_dict = dict(rule)
-                rule_dict["section"] = profile.section
-                rules.append(rule_dict)
+                rule_data = rule.model_dump()
+                references = rule_data.pop("references", {})
+
+                for ref_key, ref_value in references.items():
+                    rule_data[ref_key] = ref_value
+
+                rules.append(rule_data)
 
         return pd.DataFrame(rules)
 
 
     def to_yaml(self, output_path: Path) -> None:
+        logger.info("Creating baseline yaml")
         serialized_data = self.model_dump()
         key_order: List[str] = ['title', 'description', 'authors', 'parent_values', 'profile']
-        ordered_data = OrderedDict()
+        profile_order: list[str] = ['Auditing', 'Authentication', 'iCloud', 'Operating System', 'Password Policy', 'System Settings', 'Inherent', 'Permanent', 'Not Applicable', 'Supplemental']
+        ordered_data: OrderedDict = OrderedDict()
 
+        serialized_data.pop("name")
         for profile in serialized_data["profile"]:
             profile.pop("description", None)
             profile["rules"] = sorted([rule["rule_id"] for rule in profile["rules"]])
 
+        ordered_profiles = sorted(serialized_data["profile"], key=lambda p: profile_order.index(p["section"]) if p["section"] in profile_order else len(profile_order))
+
         for key in key_order:
             if key in serialized_data:
-                ordered_data[key] = serialized_data[key]
+                if key == 'profile':
+                    ordered_data[key] = ordered_profiles
+                else:
+                    ordered_data[key] = serialized_data[key]
 
-        serialized_data = ordered_data
-
-        create_yaml(output_path, serialized_data, "baseline")
+        create_yaml(output_path, ordered_data, "baseline")
+        logger.info(f"Created baseline yaml: {output_path}")
 
     def get(self, attr, default=None):
         return getattr(self, attr, default)
+
+    @classmethod
+    def load_all_from_folder(cls, folder_path: Path, os_name: str, os_version: int, custom: bool = False) -> List["Baseline"]:
+        """
+        Load all Baseline objects from YAML files in a specified folder.
+
+        Args:
+            folder_path (Path): Path to the folder containing baseline YAML files.
+            os_name (str): Operating system name.
+            os_version (int): Operating system version.
+            custom (bool): Whether to load custom configurations.
+
+        Returns:
+            List[Baseline]: A list of fully populated Baseline instances.
+        """
+        logger.debug("=== LOADING ALL BASELINES ===")
+        baseline_folder:Path = Path(folder_path, os_name, str(os_version))
+        logger.debug(f"Folder: {baseline_folder}")
+        baselines = []
+
+        for yaml_file in baseline_folder.glob("*.yaml"):
+            logger.debug(f"Loading YAML file: {yaml_file}")
+            baseline = cls.from_yaml(yaml_file, os_name, os_version, custom)
+            baselines.append(baseline)
+
+        return baselines

@@ -73,19 +73,19 @@ def sign_config_profile(in_file: Path, out_file: Path, cert_hash: str) -> None:
         logger.info(f"Signed Configuration profile written to {out_file}")
 
 
-def generate_profiles(build_path: Path, baseline_name: str, baseline: Baseline, signing: bool = False, hash: str = "") -> None:
-    unsigned_mobileconfig_output_path: Path = Path(build_path, "mobileconfigs", "unsigned")
-    signed_mobileconfig_output_path: Path = Path(build_path, "mobileconfigs", "signed")
-    settings_plist_output_path: Path = Path(build_path, "mobileconfigs", "preferences")
+def generate_profiles(build_path: Path, baseline_name: str, baseline: Baseline, signing: bool = False, hash_value: str = "") -> None:
+    unsigned_output_path: Path = Path(build_path, "mobileconfigs", "unsigned")
+    signed_output_path: Path = Path(build_path, "mobileconfigs", "signed")
+    plist_output_path: Path = Path(build_path, "mobileconfigs", "preferences")
     create_date: date = date.today()
 
     manifests_file: dict = open_yaml(Path(config.get("includes_dir", ""), "supported_payloads.yaml"))
 
-    make_dir(unsigned_mobileconfig_output_path)
-    make_dir(settings_plist_output_path)
+    make_dir(unsigned_output_path)
+    make_dir(plist_output_path)
 
     if signing:
-        make_dir(signed_mobileconfig_output_path)
+        make_dir(signed_output_path)
 
     profile_errors: List = [
         rule for profile in baseline.profile
@@ -116,13 +116,14 @@ def generate_profiles(build_path: Path, baseline_name: str, baseline: Baseline, 
         logger.debug(f"Payload Type: {payload_type}")
         logger.debug(f"Settings List: {settings_list}")
         payload_base_name = f"com.apple{payload_type}" if payload_type.startswith(".") else payload_type
-        unsigned_mobileconfig_file_path = unsigned_mobileconfig_output_path / f"{payload_base_name}.mobileconfig"
-        settings_plist_file_path = settings_plist_output_path / f"{payload_base_name}.plist"
+        unsigned_mobileconfig_file_path = unsigned_output_path / f"{payload_base_name}.mobileconfig"
+        settings_plist_file_path = plist_output_path / f"{payload_base_name}.plist"
 
         if signing:
-            signed_mobileconfig_file_path = signed_mobileconfig_output_path / f"{payload_base_name}.mobileconfig"
+            signed_mobileconfig_file_path = signed_output_path / f"{payload_base_name}.mobileconfig"
 
-        identifier = f"{payload_type}.{baseline_name}"
+        sanitized_payload_type = "".join(c if c.isalnum() or c in "._-" else "_" for c in payload_type)
+        identifier = f"{sanitized_payload_type}.{baseline_name}"
         description = (
             f"Created: {create_date}\n"
             f"Configuration settings for the {payload_type} preference domain."
@@ -148,7 +149,7 @@ def generate_profiles(build_path: Path, baseline_name: str, baseline: Baseline, 
         new_profile.save_to_plist(unsigned_mobileconfig_file_path)
 
         if signing:
-            sign_config_profile(unsigned_mobileconfig_file_path, signed_mobileconfig_file_path, hash)
+            sign_config_profile(unsigned_mobileconfig_file_path, signed_mobileconfig_file_path, hash_value)
 
         new_profile.finalize_and_save_plist(settings_plist_file_path)
 

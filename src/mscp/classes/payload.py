@@ -9,6 +9,8 @@ from pathlib import Path
 from typing import List, Dict, Optional, Any
 from pydantic import BaseModel, Field
 
+from mscp.common_utils.file_handling import open_plist, create_plist
+
 # Initialize local logger
 logger = logging.getLogger(__name__)
 
@@ -105,15 +107,17 @@ class Payload(BaseModel):
                 for domain, value in payload["PayloadContent"].items():
                     preferences_file = output_path.parent / f"{domain}.plist"
                     preferences_file.touch(exist_ok=True)
-                    with preferences_file.open("rb") as f:
-                        try:
-                            settings_dict = plistlib.load(f)
-                        except Exception:
-                            settings_dict = {}
-                    with preferences_file.open("wb") as f:
-                        for forced_setting in value["Forced"]:
-                            settings_dict.update(forced_setting["mcx_preference_settings"])
-                        plistlib.dump(settings_dict, f)
-                        print(f"Settings plist written to {preferences_file}")
+                    try:
+                        settings_dict = open_plist(preferences_file)
+                    except Exception:
+                        settings_dict = {}
+
+                    settings_dict.update({
+                        k: v for forced_setting in value['Forced']
+                        for k, v in forced_setting['mcx_preference_settings'].items()
+                    })
+
+                    create_plist(preferences_file, settings_dict)
+                    logger.info(f"Settings plist written to {preferences_file}")
 
         self.save_to_plist(output_path)

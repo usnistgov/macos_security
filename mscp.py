@@ -9,8 +9,9 @@ from src.mscp.cli import main
 from src.mscp.common_utils.config import config
 from src.mscp.common_utils.file_handling import open_yaml, remove_file
 
-#! Convert to loguru and loguru-config before going to production
-#! This will allow for better log handling and serialization for ingestion into external tools.
+# TODO Convert to loguru and loguru-config before going to production
+#!       This will allow for better log handling and serialization for ingestion into external tools.
+
 # Initialize logger
 def setup_logging(environment: str = "development", update_log=False) -> None:
     config_file: Path = Path(config.get("logging_config", ""))

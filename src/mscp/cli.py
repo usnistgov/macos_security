@@ -4,15 +4,50 @@ import sys
 
 from pathlib import Path
 from icecream import ic
-from src.mscp.generate.guidance import generate_guidance
-from src.mscp.generate.baseline import generate_baseline
-from src.mscp.generate.mapping import generate_mapping
+from typing import Union
+
+from .generate.guidance import generate_guidance
+from .generate.baseline import generate_baseline
+from .generate.mapping import generate_mapping
+from .generate.scap import generate_scap
+from .generate.local_report import generate_local_report
 
 logger = logging.getLogger(__name__)
 
-def validate_file(arg):
+
+class CustomHelpFormatter(argparse.HelpFormatter):
+    def __init__(self, *args, **kwargs) -> None:
+        super().__init__(*args, **kwargs)
+
+    def start_section(self, heading: str) -> None:
+        heading = heading.upper()
+        super().start_section(heading)
+
+    def format_help(self) -> str:
+        help_text = super().format_help()
+        return f"\n{help_text}\n"
+
+    def format_usage(self) -> str:
+        usage_text = super().format_usage()
+        return f"USAGE: {usage_text}"
+
+    def format_description(self, description: str) -> str:
+        if description:
+            return f"{description}\n\n"
+        else:
+            return ""
+
+    def format_epilog(self, epilog: str) -> str:
+        if epilog:
+            return f"\n{epilog}\n"
+        else:
+            return ""
+
+
+
+def validate_file(arg: str) -> Union[Path, None]:
     if (file := Path(arg)).is_file():
-        return Path(arg)
+        return file
     else:
         logger.error(f"File Not found: {arg}")
         sys.exit()
@@ -20,15 +55,7 @@ def validate_file(arg):
 def main() -> None:
     parser = argparse.ArgumentParser(
         description="CLI tool for managing baseline and compliance documents.",
-        formatter_class=argparse.ArgumentDefaultsHelpFormatter
-    )
-
-
-    parser.add_argument(
-        "baseline",
-        default=None,
-        help="Baseline YAML file used to create the guide.",
-        type=validate_file
+        formatter_class=CustomHelpFormatter
     )
 
     parser.add_argument(
@@ -55,7 +82,7 @@ def main() -> None:
     )
 
     # 'baseline' subcommand
-    baseline_parser = subparsers.add_parser("baseline", help="Given a keyword tag, generate a generic baseline.yaml file containing rules with the tag.")
+    baseline_parser: argparse.ArgumentParser = subparsers.add_parser("baseline", help="Given a keyword tag, generate a generic baseline.yaml file containing rules with the tag.")
     baseline_parser.add_argument(
         "-c",
         "--controls",
@@ -82,7 +109,13 @@ def main() -> None:
     )
 
     # 'guidance' subcommand
-    guidance_parser = subparsers.add_parser("guidance", help="Given a baseline, create guidance documents and files.")
+    guidance_parser: argparse.ArgumentParser = subparsers.add_parser("guidance", help="Given a baseline, create guidance documents and files.")
+    guidance_parser.add_argument(
+        "baseline",
+        default=None,
+        help="Baseline YAML file used to create the guide.",
+        type=validate_file
+    )
     guidance_parser.add_argument(
         "-c",
         "--clean",
@@ -156,7 +189,7 @@ def main() -> None:
         action="store"
     )
 
-    mapping_parser = subparsers.add_parser("mapping", help="Easily generate custom rules from compliance framework mappings")
+    mapping_parser: argparse.ArgumentParser = subparsers.add_parser("mapping", help="Easily generate custom rules from compliance framework mappings")
     mapping_parser.add_argument(
         "-c",
         "--csv",
@@ -169,6 +202,53 @@ def main() -> None:
         "--framework",
         default="800-53r5",
         help="Specify framework for the source. If no framework is specified, the default is 800-53r5.",
+        action="store"
+    )
+
+    scap_parser: argparse.ArgumentParser = subparsers.add_parser("scap", help="Easily generate xccdf, oval, or scap datastream. If no option is defined, it will generate an scap datastream file.")
+    scap_parser.add_argument(
+        "-b",
+        "--baseline",
+        default=None,
+        help="Baseline YAML file used to create the guide.",
+        type=validate_file,
+        action="store"
+    )
+    scap_parser.add_argument(
+        "-x",
+        "--xccdf",
+        default=None,
+        help="Generate an xccdf file.",
+        action="store_true"
+    )
+    scap_parser.add_argument(
+        "-o",
+        "--oval",
+        default=None,
+        help="Generate an oval file of the checks.",
+        action="store_true"
+    )
+    scap_parser.add_argument(
+        "-l",
+        "--list_tags",
+        default=None,
+        help="List the available keyword tags to search for.",
+        action="store_true"
+    )
+
+    local_report_parser: argparse.ArgumentParser = subparsers.add_parser("local_report", help="Creates local report in Excel format.")
+    local_report_parser.add_argument(
+        "-p",
+        "--plist",
+        help="Plist input file",
+        type=validate_file,
+        action="store"
+    )
+    local_report_parser.add_argument(
+        "-o",
+        "--output",
+        help="Location to output report to.",
+        type=Path,
         action="store"
     )
 
@@ -187,6 +267,14 @@ def main() -> None:
             logger.debug("CLI baseline entry")
 
             generate_mapping(args)
+        case "scap":
+            logger.debug("CLI SCAP entry")
+
+            generate_scap(args)
+        case "local_report":
+            logger.debug("CLI local_report entry")
+
+            generate_local_report(args)
         case _:
             parser.print_help()
 
