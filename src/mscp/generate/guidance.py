@@ -18,11 +18,11 @@ from src.mscp.common_utils.run_command import run_command
 from src.mscp.common_utils.config import config
 from src.mscp.common_utils.file_handling import make_dir
 from src.mscp.common_utils.version_data import get_version_data
-from .guidance_support.documents import generate_documents
-from .guidance_support.script import generate_script, generate_audit_plist
-from .guidance_support.ddm import generate_ddm
-from .guidance_support.excel import generate_excel
-from .guidance_support.profiles import generate_profiles
+from src.mscp.generate.guidance_support.documents import generate_documents
+from src.mscp.generate.guidance_support.script import generate_script, generate_audit_plist
+from src.mscp.generate.guidance_support.ddm import generate_ddm
+from src.mscp.generate.guidance_support.excel import generate_excel
+from src.mscp.generate.guidance_support.profiles import generate_profiles
 
 
 # Initialize local logger
@@ -118,18 +118,18 @@ def generate_guidance(args: argparse.Namespace) -> None:
             pdf_theme = str(themes[0])
 
     if args.profiles:
-        logger.info("Generating configuration profiles...")
+        logger.info("Generating configuration profiles")
         if not signing:
             generate_profiles(build_path, baseline_name, baseline)
         else:
             generate_profiles(build_path, baseline_name, baseline, signing, args.hash)
 
     if args.ddm:
-        logger.info("Generating declarative components...")
+        logger.info("Generating declarative components")
         generate_ddm(build_path, baseline, baseline_name)
 
     if args.script:
-        logger.info("Generating compliance script...")
+        logger.info("Generating compliance script")
         generate_script(build_path, baseline_name, audit_name, baseline, log_reference)
         generate_audit_plist(build_path, baseline_name, baseline)
 
@@ -139,5 +139,20 @@ def generate_guidance(args: argparse.Namespace) -> None:
 
     if args.gary:
         show_all_tags = True
+
+    if args.all:
+        logger.info("Generating all support files")
+        logger.info("Generating configuration profiles")
+        generate_profiles(build_path, baseline_name, baseline)
+
+        logger.info("Generating declarative components")
+        generate_ddm(build_path, baseline, baseline_name)
+
+        logger.info("Generating compliance script")
+        generate_script(build_path, baseline_name, audit_name, baseline, log_reference)
+        generate_audit_plist(build_path, baseline_name, baseline)
+
+        logger.info("Generating Excel document")
+        generate_excel(spreadsheet_output_file, baseline)
 
     generate_documents(adoc_output_file, baseline, b64logo, pdf_theme, logo_path, args.os_name, current_version_data, show_all_tags, custom)

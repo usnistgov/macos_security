@@ -18,7 +18,7 @@ from pydantic import BaseModel
 # Local python modules
 from src.mscp.common_utils.config import config
 from src.mscp.common_utils.file_handling import open_yaml, make_dir, create_yaml
-from src.mscp.common_utils.sanatize_input import sanitised_input
+from src.mscp.common_utils.sanatize_input import sanitized_input
 
 # Initialize logger
 logger = logging.getLogger(__name__)
@@ -653,7 +653,7 @@ class MacSecurityRule(BaseModel, Generic[T]):
                     cls.remove_odv_custom_rule(rule)
             else:
                 if rule.rule_id not in queried_rule_ids:
-                    include = sanitised_input(
+                    include = sanitized_input(
                         f"Would you like to include the rule for \"{rule.rule_id}\" in your benchmark? [Y/n/all/?]: ",
                         str,
                         range_=("y", "n", "all", "?"),
@@ -661,7 +661,7 @@ class MacSecurityRule(BaseModel, Generic[T]):
                     )
                     if include == "?":
                         print(f"Rule Details: \n{rule.discussion}")
-                        include = sanitised_input(
+                        include = sanitized_input(
                             f"Would you like to include the rule for \"{rule.rule_id}\" in your benchmark? [Y/n/all]: ",
                             str,
                             range_=("y", "n", "all"),
@@ -685,7 +685,7 @@ class MacSecurityRule(BaseModel, Generic[T]):
 
                     if benchmark == "recommended":
                         print(f"{odv_hint}")
-                        odv = sanitised_input(
+                        odv = sanitized_input(
                             f'Enter the ODV for "{rule.rule_id}" or press Enter for the recommended value ({odv_recommended}): ',
                             type(odv_recommended),
                             default_=odv_recommended,
@@ -694,7 +694,7 @@ class MacSecurityRule(BaseModel, Generic[T]):
                             cls.write_odv_custom_rule(rule, odv)
                     else:
                         print(f"\nODV value: {odv_hint}")
-                        odv = sanitised_input(
+                        odv = sanitized_input(
                             f'Enter the ODV for "{rule.rule_id}" or press Enter for the default value ({odv_benchmark}): ',
                             type(odv_benchmark),
                             default_=odv_benchmark,

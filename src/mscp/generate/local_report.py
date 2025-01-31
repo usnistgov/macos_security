@@ -16,7 +16,6 @@ import matplotlib.pyplot as plt
 import pandas as pd
 import numpy as np
 from openpyxl import Workbook
-# from openpyxl.cell.text import RichText
 from openpyxl.drawing.text import Paragraph, ParagraphProperties, CharacterProperties
 from openpyxl.styles import Alignment
 from openpyxl.chart import PieChart, Reference
@@ -30,8 +29,8 @@ from jinja2 import Environment, FileSystemLoader
 
 # Local python modules
 from src.mscp.common_utils.config import config
-from src.mscp.common_utils.file_handling import open_mscp_plist
-from src.mscp.common_utils.sanatize_input import sanitised_input
+from src.mscp.common_utils.file_handling import open_plist
+from src.mscp.common_utils.sanatize_input import sanitized_input
 
 
 # Initialize local logger
@@ -70,7 +69,7 @@ def generate_local_report(args: argparse.Namespace) -> None:
     logger.debug(f"HTML output path: {html_output_path}")
 
     if args.plist:
-        plist_data = open_mscp_plist(args.plist)
+        plist_data = open_plist(args.plist)
     else:
         plist_dir = Path("/Library/Preferences")
         plist_files = list(plist_dir.glob("org.*.audit.plist"))
@@ -83,13 +82,13 @@ def generate_local_report(args: argparse.Namespace) -> None:
         for idx, plist in enumerate(plist_files, start=1):
             print(f"{idx}: {plist.name}")
 
-        choice = sanitised_input("Select the number of the plist file you want to use: ", type_=int)
+        choice = sanitized_input("Select the number of the plist file you want to use: ", type_=int)
 
         try:
             choice_idx = int(choice) - 1
             if choice_idx < 0 or choice_idx >= len(plist_files):
                 raise ValueError
-            plist_data = open_mscp_plist(plist_files[choice_idx])
+            plist_data = open_plist(plist_files[choice_idx])
         except ValueError:
             logger.error("Invalid selection")
             sys.exit(1)

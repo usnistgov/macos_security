@@ -1,7 +1,6 @@
 # mscp/classes/payload.py
 
-import os
-import plistlib
+# Standard python modules
 import logging
 
 from uuid import uuid4
@@ -9,7 +8,8 @@ from pathlib import Path
 from typing import List, Dict, Optional, Any
 from pydantic import BaseModel, Field
 
-from mscp.common_utils.file_handling import open_plist, create_plist
+# Local python modules
+from src.mscp.common_utils.file_handling import open_plist, create_plist
 
 # Initialize local logger
 logger = logging.getLogger(__name__)
@@ -96,9 +96,8 @@ class Payload(BaseModel):
             "PayloadContent": self.payload_content
         }
 
-        with output_path.open("wb") as plist_file:
-            plistlib.dump(data, plist_file)
-        print(f"Configuration profile written to {output_path}")
+        create_plist(output_path, data)
+        logger.info(f"Configuration profile written to {output_path}")
 
     def finalize_and_save_plist(self, output_path: Path) -> None:
         """Save a final plist with additional processing for MCX settings."""

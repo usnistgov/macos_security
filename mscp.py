@@ -1,10 +1,12 @@
 # ./mscp.py
 
+# Standard python modules
 import logging
 import logging.config
 
 from pathlib import Path
 
+# Local python modules
 from src.mscp.cli import main
 from src.mscp.common_utils.config import config
 from src.mscp.common_utils.file_handling import open_yaml, remove_file
@@ -29,7 +31,7 @@ def setup_logging(environment: str = "development", update_log=False) -> None:
         raise("Unable to initialize logging")
 
     logger = logging.getLogger(environment)
-    logger.info("Logging Initialized")
+    logger.info("=== Logging Initialized ===")
     logger.info(f"LOGGING LEVEL: {log_level_str}")
     logger.info(f"LOGGING ENVIRONMENT: {environment}")
 

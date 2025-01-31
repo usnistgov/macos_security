@@ -17,7 +17,7 @@ from src.mscp.common_utils.file_handling import open_yaml, make_dir
 from src.mscp.common_utils.version_data import get_version_data
 from src.mscp.classes.baseline import Baseline, Author
 from src.mscp.classes.macsecurityrule import MacSecurityRule
-from src.mscp.common_utils.sanatize_input import sanitised_input
+from src.mscp.common_utils.sanatize_input import sanitized_input
 
 
 # Initialize local logger
@@ -92,9 +92,9 @@ def generate_baseline(args: argparse.Namespace) -> None:
 
     if args.tailor:
         full_title = ""
-        tailored_filename: str = sanitised_input(f'Enter a name for your tailored benchmark or press Enter for the default value ({args.keyword}): ', str, default_=args.keyword)
-        custom_author_name: str = sanitised_input('Enter your name: ')
-        custom_author_org: str = sanitised_input('Enter your organization: ')
+        tailored_filename: str = sanitized_input(f'Enter a name for your tailored benchmark or press Enter for the default value ({args.keyword}): ', str, default_=args.keyword)
+        custom_author_name: str = sanitized_input('Enter your name: ')
+        custom_author_org: str = sanitized_input('Enter your organization: ')
         baseline_output_file = build_path / f"{tailored_filename}.yaml"
         authors.append(Author(name=custom_author_name, organization=custom_author_org))
 

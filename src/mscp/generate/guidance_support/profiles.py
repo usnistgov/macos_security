@@ -14,7 +14,7 @@ from src.mscp.common_utils.config import config
 from src.mscp.classes.baseline import Baseline
 from src.mscp.classes.macsecurityrule import MacSecurityRule
 from src.mscp.classes.payload import Payload
-from src.mscp.common_utils.file_handling import open_file, open_yaml, make_dir
+from src.mscp.common_utils.file_handling import open_yaml, make_dir
 from src.mscp.common_utils.run_command import run_command
 
 

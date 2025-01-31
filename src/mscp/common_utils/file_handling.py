@@ -4,7 +4,6 @@
 import logging
 import yaml
 import csv
-import sys
 import plistlib
 
 from pathlib import Path

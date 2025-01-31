@@ -1,3 +1,6 @@
+# mscp/cli.py
+
+# Standard python modules
 import argparse
 import logging
 import sys
@@ -6,11 +9,12 @@ from pathlib import Path
 from icecream import ic
 from typing import Union
 
-from .generate.guidance import generate_guidance
-from .generate.baseline import generate_baseline
-from .generate.mapping import generate_mapping
-from .generate.scap import generate_scap
-from .generate.local_report import generate_local_report
+# Local python modules
+from src.mscp.generate.guidance import generate_guidance
+from src.mscp.generate.baseline import generate_baseline
+from src.mscp.generate.mapping import generate_mapping
+from src.mscp.generate.scap import generate_scap
+from src.mscp.generate.local_report import generate_local_report
 
 logger = logging.getLogger(__name__)
 
@@ -188,6 +192,13 @@ def main() -> None:
         help="name of audit plist and log - defaults to baseline name",
         action="store"
     )
+    # guidance_parser.add_argument(
+    #     "-A",
+    #     "--all",
+    #     default=None,
+    #     help="Generate Documentation and all support files",
+    #     action="store_true"
+    # )
 
     mapping_parser: argparse.ArgumentParser = subparsers.add_parser("mapping", help="Easily generate custom rules from compliance framework mappings")
     mapping_parser.add_argument(
