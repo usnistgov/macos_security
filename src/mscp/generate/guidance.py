@@ -1,16 +1,15 @@
 # mscp/generate/guidance.py
 
 # Standard python modules
-import logging
 import tempfile
 import argparse
 import sys
 
 from pathlib import Path
-from icecream import ic
 from base64 import b64encode
 
 # Additional python modules
+from loguru import logger
 
 # Local python modules
 from src.mscp.classes.baseline import Baseline
@@ -25,11 +24,8 @@ from src.mscp.generate.guidance_support.excel import generate_excel
 from src.mscp.generate.guidance_support.profiles import generate_profiles
 
 
-# Initialize local logger
-logger = logging.getLogger(__name__)
-
-
 # Functions
+@logger.catch
 def verify_signing_hash(cert_hash: str) -> bool:
     """
     Attempts to validate the existence of the certificate provided by the hash
@@ -58,6 +54,7 @@ def verify_signing_hash(cert_hash: str) -> bool:
     return True
 
 
+@logger.catch
 def generate_guidance(args: argparse.Namespace) -> None:
     logo_path: str = f"{config["defaults"]["images_dir"]}/mscp_banner.png"
     signing: bool = False

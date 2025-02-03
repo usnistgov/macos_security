@@ -1,2 +1,6 @@
 pyyaml
-xlwt
+openpyxl
+pandas
+matplotlib
+jinja2
+loguru

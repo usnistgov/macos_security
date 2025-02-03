@@ -1,12 +1,11 @@
 # mscp/generate/excel.py
 
 # Standard python modules
-import logging
-
 from pathlib import Path
 
 # Additional python modules
 import pandas as pd
+from loguru import logger
 
 from openpyxl import Workbook
 from openpyxl.styles import Alignment, Font
@@ -14,58 +13,32 @@ from openpyxl.utils import get_column_letter
 
 from src.mscp.classes.baseline import Baseline
 
-# Initialize local logger
-logger = logging.getLogger(__name__)
-
 
 def generate_excel(file_out: Path, baseline: Baseline) -> None:
     """
-    Generate a formatted Excel file from a given DataFrame.
-
-    This function processes the input DataFrame to align with a predefined structure,
-    formats its content for better readability in Excel, and writes the processed data
-    to an Excel file. It includes modifications to column names, content formatting,
-    and layout enhancements like column widths and header alignment.
+    Generates an Excel file from the given baseline data.
 
     Args:
         file_out (Path): The output file path where the Excel file will be saved.
-        baseline: (Baseline): The Baseline instance to be processed.
-
-    DataFrame Processing:
-        - Adds and renames columns based on a mapping (`rename_mapping`).
-        - Converts nested structures like lists and dictionaries into readable strings.
-        - Handles missing data by filling in default values or empty strings.
-        - Applies specific formatting for key columns like "Fix" and "Check".
-        - Enforces required columns and their order in the output file.
-
-    Excel Formatting:
-        - Sets column widths for better readability.
-        - Applies alignment and text-wrapping for specific columns.
-        - Freezes panes to keep headers visible during scrolling.
-        - Formats headers with bold fonts and aligns cell content vertically to the top.
-
-    Example Usage:
-        >>> import pandas as pd
-        >>> from pathlib import Path
-        >>> data = {
-        ...     "rule_id": ["Rule1", "Rule2"],
-        ...     "title": ["Title1", "Title2"],
-        ...     "mobileconfig_info": [{"key1": "value1"}, {}],
-        ... }
-        >>> baseline = Baseline.from_yaml(file_path=Path("baseline.yaml"), os_name="macos" , os_version=15, custom=False)
-        >>> generate_excel(Path("output.xlsx"), baseline)
-
-    Raises:
-        KeyError: If critical columns required for processing are missing from the DataFrame.
-        ValueError: If `dataframe` contains invalid data types that cannot be processed.
-
-    Notes:
-        - The Excel file is written using `openpyxl` as the engine for `pd.ExcelWriter`.
-        - Ensure all required dependencies, like `pandas` and `openpyxl`, are installed.
+        baseline (Baseline): The baseline data to be converted into an Excel file.
 
     Returns:
-        None: The function saves the output directly to the specified `file_out` path.
+        None
+
+    This function performs the following steps:
+    1. Logs the start of the Excel generation process.
+    2. Defines mappings for renaming columns and lists of columns to process.
+    3. Converts the baseline data to a DataFrame and makes a copy of it.
+    4. Modifies the DataFrame content, including handling nested structures and renaming columns.
+    5. Ensures all required columns are present in the DataFrame.
+    6. Writes the DataFrame to an Excel file using the openpyxl engine.
+    7. Applies formatting to the Excel sheet, including setting column widths, header fonts, and cell alignments.
+    8. Logs the successful generation of the Excel file.
+
+    Raises:
+        Any exceptions raised during the process will be logged.
     """
+    logger.info("Starting Excel generation process.")
     rename_mapping = {
         "title": "Title",
         "rule_id": "Rule ID",
@@ -131,14 +104,14 @@ def generate_excel(file_out: Path, baseline: Baseline) -> None:
         "Modified Rule"
     ]
 
+    logger.info("Converting baseline to DataFrame.")
     dataframe = baseline.to_dataframe()
-    # Make a copy of the dataframe so as not to modify the original dataset
     df_copy: pd.DataFrame = dataframe.copy()
 
-    # Dataframe content modifications
+    logger.info("Modifying DataFrame content.")
     df_copy["section"] = df_copy["section"].astype(pd.CategoricalDtype(ordered=True))
 
-    df_details= df_copy['cis'].apply(lambda x: {} if pd.isna(x) else x).apply(pd.Series)[["benchmark","controls_v8"]]
+    df_details = df_copy['cis'].apply(lambda x: {} if pd.isna(x) else x).apply(pd.Series)[["benchmark", "controls_v8"]]
     df_copy = pd.concat([df_copy, df_details], axis=1)
     df_copy["check"] = df_copy["check"].apply(lambda x: {} if pd.isna(x) else x).apply(pd.Series)
 
@@ -153,7 +126,7 @@ def generate_excel(file_out: Path, baseline: Baseline) -> None:
         if col in df_copy.columns:
             df_copy[col] = df_copy[col].apply(lambda x: "\n".join(x) if isinstance(x, list) else "")
 
-    df_copy = df_copy.drop(columns=["odv","result_value"])
+    df_copy = df_copy.drop(columns=["odv", "result_value"])
     df_copy.rename(columns=rename_mapping, inplace=True)
 
     for col in required_columns:
@@ -162,6 +135,7 @@ def generate_excel(file_out: Path, baseline: Baseline) -> None:
 
     df_copy = df_copy[required_columns]
 
+    logger.info("Writing DataFrame to Excel file.")
     with pd.ExcelWriter(file_out, engine='openpyxl') as writer:
         df_copy.to_excel(writer, index=False, header=True, sheet_name='Sheet 1')
 
@@ -170,10 +144,10 @@ def generate_excel(file_out: Path, baseline: Baseline) -> None:
         header_font: Font = Font(bold=True)
         top: Alignment = Alignment(vertical="top")
         topWrap: Alignment = Alignment(
-                    vertical="top",
-                    wrap_text=True,
-                    horizontal="left"
-                )
+            vertical="top",
+            wrap_text=True,
+            horizontal="left"
+        )
 
         column_widths: dict = {
             0: 15,
@@ -231,9 +205,10 @@ def generate_excel(file_out: Path, baseline: Baseline) -> None:
                     cell.font = Font(size=12)
                     cell.alignment = column_alignment[column_name]
 
-
         for col_idx, width in column_widths.items():
             column_letter = get_column_letter(col_idx + 1)
             sheet.column_dimensions[column_letter].width = width
 
         sheet.freeze_panes = 'C2'
+
+    logger.info(f"Excel file generated successfully at {file_out}.")

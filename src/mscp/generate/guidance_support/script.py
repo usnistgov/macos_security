@@ -1,9 +1,6 @@
 # mscp/generate/script.py
 
 # Standard python modules
-import logging
-import plistlib
-import base64
 import re
 
 from pathlib import Path
@@ -14,16 +11,15 @@ from typing import Dict, Any, List
 
 # Additional python modules
 from jinja2 import Environment, FileSystemLoader
+from loguru import logger
 
 # Local python modules
 from src.mscp.common_utils.config import config
 from src.mscp.classes.baseline import Baseline
-from src.mscp.common_utils.file_handling import make_dir
-
-# Initialize local logger
-logger = logging.getLogger(__name__)
+from src.mscp.common_utils.file_handling import make_dir, create_plist
 
 
+@logger.catch
 def group_ulify(elements):
     if elements == "N/A":
         return "- N/A"
@@ -36,10 +32,16 @@ def group_ulify(elements):
     return result.strip()
 
 
-def generate_log_reference(rule_yaml, reference):
+@logger.catch
+def generate_log_reference(rule_yaml: Dict[str, Any], reference: str) -> List[str]:
     """
     Generate the log reference ID based on the rule_yaml and reference type.
     """
+    if not isinstance(rule_yaml, dict):
+        raise TypeError("Expected a dictionary for rule_yaml")
+    if not isinstance(reference, str):
+        raise TypeError("Expected a string for reference")
+
     cis_ref = ["cis", "cis_lvl1", "cis_lvl2", "cisv8"]
 
     if reference == "default":
@@ -79,33 +81,47 @@ def generate_log_reference(rule_yaml, reference):
         else:
             # If found in standard references
             if isinstance(rule_yaml["references"][reference], list):
-                log_reference_id = rule_yaml["references"][reference] + rule_yaml["rule_id"
-                ]
+                log_reference_id = rule_yaml["references"][reference] + [rule_yaml["rule_id"]]
             else:
                 log_reference_id = [rule_yaml["references"][reference]] + [rule_yaml["rule_id"]]
 
     return log_reference_id
 
 
-def quotify(fix_code):
+@logger.catch
+def quotify(fix_code: str) -> str:
     """Escape single quotes and format percentages for Bash."""
+    if not isinstance(fix_code, str):
+        raise TypeError("Expected a string for fix_code")
+
     string = fix_code.replace("'", "'\"'\"'")
     string = string.replace("%", "%%")
     return string
 
 
-def get_fix_code(fix_yaml):
+def get_fix_code(fix_yaml: str) -> str:
     """Extract fix code from the YAML block."""
+    if not isinstance(fix_yaml, str):
+        raise TypeError("Expected a string for fix_yaml")
+
     fix_string = fix_yaml.split("[source,bash]")[1]
     fix_code = re.search(r"(?:----((?:.*?\r?\n?)*)----)+", fix_string)
+
+    if fix_code is None:
+        raise ValueError("No fix code found in the provided YAML block")
+
     return fix_code.group(1)
 
 
-def escape_double_quotes(text):
+@logger.catch
+def escape_double_quotes(text: str) -> str:
     """Escape double quotes for Bash."""
+    if not isinstance(text, str):
+        raise TypeError("Expected a string for text")
     return text.replace('"', '\\"')
 
 
+@logger.catch
 def generate_audit_plist(build_path: Path, baseline_name: str, baseline: Baseline) -> None:
     plist_output_path: Path = build_path / "preferences"
     plist_file_path: Path = plist_output_path / f"org.{baseline_name}.audit.plist"
@@ -125,8 +141,7 @@ def generate_audit_plist(build_path: Path, baseline_name: str, baseline: Baselin
     }
 
     try:
-        with plist_file_path.open("wb") as f:
-            plistlib.dump(plist_dict, f)
+        create_plist(plist_file_path, plist_dict)
 
         logger.info("Generated default audit plist.")
 

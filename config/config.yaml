@@ -6,6 +6,7 @@ includes_dir: "config/includes"
 mspc_data: "config/includes/mscp-data.yaml"
 environment: "development"
 shell_template_dir: "config/default/templates/shell_scripts"
+log_output_file: mscp.log
 
 defaults:
   adoc_templates_dir: "config/default/templates/asciidoctor"

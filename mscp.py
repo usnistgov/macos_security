@@ -1,39 +1,36 @@
 # ./mscp.py
 
 # Standard python modules
-import logging
-import logging.config
+import sys
 
-from pathlib import Path
+# Additional python modules
+from loguru import logger
 
 # Local python modules
 from src.mscp.cli import main
 from src.mscp.common_utils.config import config
-from src.mscp.common_utils.file_handling import open_yaml, remove_file
 
-# TODO Convert to loguru and loguru-config before going to production
-#!       This will allow for better log handling and serialization for ingestion into external tools.
 
 # Initialize logger
-def setup_logging(environment: str = "development", update_log=False) -> None:
-    config_file: Path = Path(config.get("logging_config", ""))
-    logging_config = open_yaml(config_file)
-    log_file: Path = Path(logging_config.get("handlers", {}).get("file", {}).get("filename", None))
+def setup_logging(environment: str = "development") -> None:
+    logger_format: str = "<green>{time:YYYY-MM-DD HH:mm:ss}</green> | {name} | {level} | <level>{message}</level>"
 
-    if log_file.exists() and not update_log:
-        remove_file(log_file)
+    match environment:
+        case "development":
+            log_level_str = "DEBUG"
+        case "production":
+            log_level_str = "INFO"
+        case "testing":
+            log_level_str = "DEBUG"
+        case _:
+            log_level_str = "DEBUG"
 
-    logging.config.dictConfig(logging_config)
+    logger.remove()
+    logger.configure(handlers=[{"sink": sys.stderr, "level": log_level_str, "format": logger_format},{"sink": f"logs/{log_level_str}.log", "level": log_level_str, "format": logger_format, "serialize": True, "rotation": "1 hour"}])
 
-    log_level_str: str = logging_config.get("loggers", {}).get(environment, {}).get("level", None)
-
-    if log_level_str == None:
-        raise("Unable to initialize logging")
-
-    logger = logging.getLogger(environment)
     logger.info("=== Logging Initialized ===")
-    logger.info(f"LOGGING LEVEL: {log_level_str}")
-    logger.info(f"LOGGING ENVIRONMENT: {environment}")
+    logger.info("LOGGING LEVEL: {}", log_level_str)
+    logger.info("LOGGING ENVIRONMENT: {}", environment)
 
 
 if __name__ == "__main__":

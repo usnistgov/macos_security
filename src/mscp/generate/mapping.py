@@ -1,7 +1,6 @@
 # mscp/generate/mapping.py
 
 # Standard python modules
-import logging
 import argparse
 import sys
 import re
@@ -10,6 +9,7 @@ from pathlib import Path
 from typing import Optional, Any, TypeVar
 
 # Additional python modules
+from loguru import logger
 
 # Local python modules
 from src.mscp.common_utils.config import config
@@ -18,9 +18,6 @@ from src.mscp.classes.macsecurityrule import MacSecurityRule
 from src.mscp.classes.baseline import Baseline, Author
 from src.mscp.common_utils.file_handling import open_yaml, make_dir, open_csv
 
-
-# Initialize local logger
-logger = logging.getLogger(__name__)
 
 def update_rule_with_custom_controls(rule: MacSecurityRule, controls: list[str], header: str) -> None:
     """

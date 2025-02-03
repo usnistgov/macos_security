@@ -1,12 +1,11 @@
 # mscp/common_utils/sanatize_input.py
 
-import logging
-
+# Standard python modules
 from typing import Type, Optional, Any
 from collections.abc import Iterable
 
-# Initialize local logger
-logger = logging.getLogger(__name__)
+# Additional python modules
+from loguru import logger
 
 
 def sanitized_input(

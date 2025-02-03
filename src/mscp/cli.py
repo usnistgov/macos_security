@@ -2,12 +2,13 @@
 
 # Standard python modules
 import argparse
-import logging
 import sys
 
 from pathlib import Path
-from icecream import ic
 from typing import Union
+
+# Additional python modules
+from loguru import logger
 
 # Local python modules
 from src.mscp.generate.guidance import generate_guidance
@@ -15,8 +16,7 @@ from src.mscp.generate.baseline import generate_baseline
 from src.mscp.generate.mapping import generate_mapping
 from src.mscp.generate.scap import generate_scap
 from src.mscp.generate.local_report import generate_local_report
-
-logger = logging.getLogger(__name__)
+from src.mscp.generate.checklist import generate_checklist
 
 
 class CustomHelpFormatter(argparse.HelpFormatter):
@@ -192,13 +192,13 @@ def main() -> None:
         help="name of audit plist and log - defaults to baseline name",
         action="store"
     )
-    # guidance_parser.add_argument(
-    #     "-A",
-    #     "--all",
-    #     default=None,
-    #     help="Generate Documentation and all support files",
-    #     action="store_true"
-    # )
+    guidance_parser.add_argument(
+        "-A",
+        "--all",
+        default=None,
+        help="Generate Documentation and all support files",
+        action="store_true"
+    )
 
     mapping_parser: argparse.ArgumentParser = subparsers.add_parser("mapping", help="Easily generate custom rules from compliance framework mappings")
     mapping_parser.add_argument(
@@ -263,6 +263,31 @@ def main() -> None:
         action="store"
     )
 
+    checklist_parser: argparse.ArgumentParser = subparsers.add_parser("stig_checklist", help="Creates DISA STIG Checklist")
+    checklist_parser.add_argument(
+        "-p",
+        "--plist",
+        help="Plist input file",
+        type=validate_file,
+        action="store"
+    )
+
+    checklist_parser.add_argument(
+        "-d",
+        "--disastig",
+        help="DISA STIG File",
+        type=validate_file,
+        action="store"
+    )
+
+    checklist_parser.add_argument(
+        "-j",
+        "--json",
+        help="Create JSON export",
+        default=None,
+        action="store_true"
+    )
+
     args = parser.parse_args()
 
     match args.subcommand:
@@ -286,6 +311,10 @@ def main() -> None:
             logger.debug("CLI local_report entry")
 
             generate_local_report(args)
+        case "stig_checklist":
+            logger.debug("CLI stig_checklist entry")
+
+            generate_checklist(args)
         case _:
             parser.print_help()
 

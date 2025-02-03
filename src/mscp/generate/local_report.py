@@ -1,7 +1,6 @@
 # mscp/generate/local_report.py
 
 # Standard python modules
-import logging
 import argparse
 import sys
 import base64
@@ -26,15 +25,12 @@ from openpyxl.chart.text import RichText, Text
 from openpyxl.chart.data_source import StrRef
 from openpyxl.styles import Alignment
 from jinja2 import Environment, FileSystemLoader
+from loguru import logger
 
 # Local python modules
 from src.mscp.common_utils.config import config
 from src.mscp.common_utils.file_handling import open_plist
 from src.mscp.common_utils.sanatize_input import sanitized_input
-
-
-# Initialize local logger
-logger = logging.getLogger(__name__)
 
 
 def generate_local_report(args: argparse.Namespace) -> None:

@@ -17,7 +17,7 @@ def do_regex(stig_id, stig_title, result, stig, exempt, exempt_reason, ruleid, j
     rules_json = {}
     group_tree_dict = {}
     regex = r"<Group id=\"(V-..*\d)\">.*.{}".format(stig_id)
-    #Vulnerability ID        
+    #Vulnerability ID
     matches = re.search(regex,stig)
     if matches:
         if json:
@@ -30,7 +30,7 @@ def do_regex(stig_id, stig_title, result, stig, exempt, exempt_reason, ruleid, j
             <VULN_ATTRIBUTE>Vuln_Num</VULN_ATTRIBUTE>
             <ATTRIBUTE_DATA>{}</ATTRIBUTE_DATA>
         </STIG_DATA>'''.format(matches.group(1))
-            
+
     regex = r"severity=\"(.*\S)\">.*.{}".format(stig_id)
     #severity
     matches = re.search(regex,stig)
@@ -74,13 +74,13 @@ def do_regex(stig_id, stig_title, result, stig, exempt, exempt_reason, ruleid, j
             <ATTRIBUTE_DATA>{}</ATTRIBUTE_DATA>
         </STIG_DATA>'''.format(matches.group(1))
 
-    
+
             checklist_xml = checklist_xml + '''
         <STIG_DATA>
             <VULN_ATTRIBUTE>Rule_Ver</VULN_ATTRIBUTE>
             <ATTRIBUTE_DATA>{}</ATTRIBUTE_DATA>
         </STIG_DATA>'''.format(stig_id)
-    
+
 
     regex = r"{}.*<title>(.*.)<\/title>".format(stig_id)
     #Title
@@ -94,7 +94,7 @@ def do_regex(stig_id, stig_title, result, stig, exempt, exempt_reason, ruleid, j
                 <VULN_ATTRIBUTE>Rule_Title</VULN_ATTRIBUTE>
                 <ATTRIBUTE_DATA>{}</ATTRIBUTE_DATA>
         </STIG_DATA>'''.format(matches.group(1))
-    
+
     regex = r"{}.*.<description>&lt;VulnDiscussion&gt;((\n|.)*?)&lt;\/VulnDiscussion&gt".format(stig_id)
     #Vul Discussion
     matches = re.search(regex,stig)
@@ -113,7 +113,7 @@ def do_regex(stig_id, stig_title, result, stig, exempt, exempt_reason, ruleid, j
         <VULN_ATTRIBUTE>IA_Controls</VULN_ATTRIBUTE>
         <ATTRIBUTE_DATA></ATTRIBUTE_DATA>
     </STIG_DATA>'''
-    
+
     regex = r"{}.(\n|.)*?.<check-content>((\n|.)*?)<\/check-content>".format(stig_id)
     matches = re.search(regex, stig)
     if matches:
@@ -215,13 +215,13 @@ def do_regex(stig_id, stig_title, result, stig, exempt, exempt_reason, ruleid, j
 					<VULN_ATTRIBUTE>LEGACY_ID</VULN_ATTRIBUTE>
 					<ATTRIBUTE_DATA></ATTRIBUTE_DATA>
 				</STIG_DATA>'''.format(weight = matches.group(1), title = stig_title)
-    
+
     regex = r"{}(\n|.)*?(<ident system=\".*.\">CCI-.*\d)<\/ident>".format(stig_id)
     matches = re.finditer(regex, stig, re.MULTILINE)
     comment = str()
     json_ccis = []
     for matchNum, match in enumerate(matches, start=1):
-        
+
         for groupNum in range(1, 2):
             #CCI
             groupNum = groupNum + 1
@@ -236,7 +236,7 @@ def do_regex(stig_id, stig_title, result, stig, exempt, exempt_reason, ruleid, j
             <VULN_ATTRIBUTE>CCI_REF</VULN_ATTRIBUTE>
             <ATTRIBUTE_DATA>{}</ATTRIBUTE_DATA>
         </STIG_DATA>'''.format(cci)
-        
+
         if json:
             rules_json["ccis"] = json_ccis
         if exempt:
@@ -281,8 +281,8 @@ def do_regex(stig_id, stig_title, result, stig, exempt, exempt_reason, ruleid, j
         <COMMENTS>{}</COMMENTS>
         <SEVERITY_OVERRIDE></SEVERITY_OVERRIDE>
         <SEVERITY_JUSTIFICATION></SEVERITY_JUSTIFICATION>
-    </VULN>'''.format(result, exempt_reason, comment)	
-    return checklist_xml			
+    </VULN>'''.format(result, exempt_reason, comment)
+    return checklist_xml
 
 def validate_file(arg):
     if (file := Path(arg)).is_file():
@@ -313,7 +313,7 @@ def json_output(hostname,stigid,filename,releaseinfo,title,data,ref_identifer,st
         if entry['finding'] == 1:
             rules_array.append(do_regex(entry['reference'], title + " " + releaseinfo, "Open", stig, entry['exemption'], entry['exemption_reason'], entry['id'],json=True,stiguuid=stigs_meta_data['uuid'],ref_identifer=ref_identifer))
                 # big_xml = big_xml + do_regex(entry['reference'], stigtitle + " " + release_info, "Open", stig, entry['exemption'], entry['exemption_reason'], entry['id'])
-    
+
     stigs_meta_data_array = []
     stigs_meta_data["rules"] = rules_array
     stigs_meta_data_array.append(stigs_meta_data)
@@ -350,14 +350,14 @@ def main():
 
     with open(args.plist, 'rb') as fp:
         pl = plistlib.load(fp)
-    
+
     managedDict = []
-    
+
     managedPref = "/Library/Managed Preferences/" + str(args.plist).split("/")[-1]
     if os.path.exists(managedPref):
         with open(managedPref, 'rb') as mPl:
             managedDict = plistlib.load(mPl)
-    
+
     file = open(args.disastig, "r")
     stig = file.read()
     sortedpl = OrderedDict(sorted(pl.items()))
@@ -385,19 +385,19 @@ def main():
                 results_array['exemption'] = sub['exempt']
                 results_array['exemption_reason'] = sub['exempt_reason']
 
-        
+
         except:
             results_array['exemption'] = False
             results_array['exemption_reason'] = ""
-            
+
         data.append(results_array)
     regex = r"<title>(.*?.)<\/title><description>"
-    
+
     matches = re.search(regex, stig)
     stigtitle = str()
     #stig title
     if matches:
-        
+
         stigtitle = matches.group(1)
 
     regex = r"id=\"(.*)\" xml:lang=\"en\" xmlns="
@@ -486,7 +486,7 @@ def main():
 				</SI_DATA>
 			</STIG_INFO>'''.format(stigid = stig_title_id, filename = os.path.basename(args.disastig), releaseinfo = release_info, title = stigtitle, hostname = platform.node())
     for entry in data:
-        
+
         if entry['reference'] == "N/A":
             continue
         if entry['finding'] == 0:

@@ -1,7 +1,6 @@
 # mscp/generate/ddm.py
 
 # Standard python modules
-import logging
 import json
 import shutil
 import hashlib
@@ -10,13 +9,13 @@ from pathlib import Path
 from typing import List
 from collections import defaultdict
 
+# Additional python modules
+from loguru import logger
+
 # Local python modules
 from src.mscp.classes.baseline import Baseline
 from src.mscp.common_utils.config import config
 from src.mscp.common_utils.file_handling import open_yaml, make_dir, append_text, remove_dir
-
-# Initialize logger
-logger = logging.getLogger(__name__)
 
 
 def generate_ddm_activation(output_path: Path, identifier: str) -> None:

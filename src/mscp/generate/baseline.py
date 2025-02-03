@@ -1,15 +1,13 @@
 # mscp/generate/baseline.py
 
 # Standard python modules
-import logging
 import argparse
 import sys
-import re
 
 from pathlib import Path
-from icecream import ic
 
 # Additional python modules
+from loguru import logger
 
 # Local python modules
 from src.mscp.common_utils.config import config
@@ -18,10 +16,6 @@ from src.mscp.common_utils.version_data import get_version_data
 from src.mscp.classes.baseline import Baseline, Author
 from src.mscp.classes.macsecurityrule import MacSecurityRule
 from src.mscp.common_utils.sanatize_input import sanitized_input
-
-
-# Initialize local logger
-logger = logging.getLogger(__name__)
 
 
 def generate_baseline(args: argparse.Namespace) -> None:

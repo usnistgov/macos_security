@@ -1,24 +1,21 @@
 # mscp/common_utils/file_handling.py
 
 # Standard python modules
-import logging
 import yaml
 import csv
 import plistlib
 
 from pathlib import Path
 from typing import Optional, Any
-from icecream import ic
+
+# Additional python modules
+from loguru import logger
 
 # Local python modules
 
-# Initialize logger
-logger = logging.getLogger(__name__)
-
-
 ENCODING = 'utf-8'
 
-def open_file(file_path: Path) -> Optional[Any]:
+def open_file(file_path: Path) -> str:
     """
     Attempts to open a file and read it's contents with error checking and logging
 
@@ -26,7 +23,7 @@ def open_file(file_path: Path) -> Optional[Any]:
         file_path (Path): The path to the file to be opened.
 
     Returns:
-        Optional[Any]: The content of the file if successful, None if otherwise.
+        str: The content of the file if successful, None if otherwise.
     """
 
     try:
@@ -52,7 +49,7 @@ def open_yaml(file_path: Path) -> dict[str, Any]:
     """
 
     try:
-        logger.debug(f"Attempting to open YAML: {file_path}")
+        logger.debug("Attempting to open CSV: {}", file_path)
 
         data = yaml.safe_load(file_path.read_text(encoding=ENCODING))
         return data if isinstance(data, dict) else {}
@@ -65,7 +62,9 @@ def open_yaml(file_path: Path) -> dict[str, Any]:
         Exception,
     ) as e:
         logger.error(
-            f"An error occurred while opening the file: {file_path}. Error: {e}"
+            "An error occurred while opening the file: {}. Error: {}",
+            file_path,
+            e
         )
         raise
 
@@ -82,7 +81,7 @@ def open_csv(file_path: Path) -> dict[str, Any]:
     """
 
     try:
-        logger.debug(f"Attempting to open CSV: {file_path}")
+        logger.debug("Attempting to open CSV: {}", file_path)
         data = csv.DictReader(file_path.read_text(encoding='utf-8-sig'), dialect="excel")
         return data if isinstance(data, dict) else {}
 
@@ -104,13 +103,17 @@ def open_plist(file_path: Path) -> dict[str, dict[str, bool]]:
         Optional[dict[str, Any]]: The content of the file if successful, None if otherwise.
     """
     try:
-        logger.debug(f"Attempting to open plist: {file_path}")
-        return plistlib.load(file_path.read_bytes())
+        logger.debug("Attempting to open plist: {}", file_path)
+
+        with file_path.open('rb') as file:
+            return plistlib.load(file)
 
 
     except (FileNotFoundError, PermissionError, plistlib.InvalidFileException, IOError, Exception) as e:
         logger.error(
-            f"An error occurred while opening the file: {file_path}. Error: {e}"
+            "An error occurred while opening the file: {}. Error: {}",
+            file_path,
+            e
         )
         raise
 
@@ -130,6 +133,7 @@ def create_yaml(
         None: The function writes directly to the file and does not return a value.
     """
     try:
+        logger.debug("Attempting to create YAML: {}", file_path)
         yaml_content: str = "---\n"
 
         match yaml_type:
@@ -146,8 +150,14 @@ def create_yaml(
                 dict(data), stream=file, explicit_start=False, sort_keys=sort_keys, indent=2, default_flow_style=False
             )
 
+        logger.success("Created YAML: {}", file_path)
+
     except Exception as e:
-        logger.error(f"Error processing {file_path}: {e}")
+        logger.error(
+            "An error occurred while opening the file: {}. Error: {}",
+            file_path,
+            e
+        )
         raise
 
 
@@ -166,16 +176,23 @@ def create_file(file_path: Path, data: str) -> None:
         file_path.write_text(data, encoding=ENCODING)
     except (FileNotFoundError, PermissionError, IOError) as e:
         logger.error(
-            f"Error occurred while writing to the file: {file_path}. Error: {e}"
+            "An error occurred while opening the file: {}. Error: {}",
+            file_path,
+            e
         )
         raise
 
 
 def create_plist(file_path: Path, data: dict[str, Any]) -> None:
     try:
-        plistlib.dump(data, file_path.write_bytes())
+        with file_path.open("wb") as file:
+            plistlib.dump(data, file)
     except Exception as e:
-        logger.error(f"Error processing {file_path}: {e}")
+        logger.error(
+            "An error occurred while processing the file: {}. Error: {}",
+            file_path,
+            e
+        )
         raise
 
 
@@ -183,10 +200,10 @@ def make_dir(folder_path: Path) -> None:
     if not folder_path.exists():
         try:
             folder_path.mkdir(parents=True)
-            logger.debug(f"Created folder: {folder_path}")
+            logger.success("Created folder: {}", folder_path)
         except OSError as e:
-            logger.error(f"Creation of {folder_path} failed.")
-            logger.debug(f"Error message: {str(e)}")
+            logger.error("Creation of {} failed.", folder_path)
+            logger.debug("Error message: {}", str(e))
             raise
 
 
@@ -207,11 +224,12 @@ def append_text(
         None: The function writes directly to the file and does not return a value.
     """
     try:
+        logger.debug(f"Appending to file: {file_path}")
         with file_path.open(
             mode="a", encoding=encoding, errors=errors, newline=newline
         ) as f:
-            logger.debug(f"Appending to file: {file_path}")
             f.write(f"{text}\n")
+            logger.success("Appended to file: {}", file_path)
 
     except Exception as e:
         logger.error(f"Error occurred: {e}")
@@ -221,6 +239,7 @@ def append_text(
 def remove_dir(folder_path: Path) -> None:
     if folder_path.exists():
         try:
+            logger.debug("Removing folder: {}", folder_path)
             for root, dirs, files in folder_path.walk(top_down=False):
                 for name in files:
                     (root / name).unlink()
@@ -228,11 +247,11 @@ def remove_dir(folder_path: Path) -> None:
                     (root / name).rmdir()
 
             folder_path.rmdir()
-            logger.debug(f"Removed folder: {folder_path}")
+            logger.success("Removed folder: {}", folder_path)
 
         except OSError as e:
-            logger.error(f"Removal of {folder_path} failed.")
-            logger.debug(f"Error message: {str(e)}")
+            logger.error("Removal of {} failed.", folder_path)
+            logger.debug("Error message: {}", str(e))
             raise
 
 
@@ -240,13 +259,14 @@ def remove_file(file_path: Path) -> None:
     if file_path.exists():
         try:
             file_path.unlink()
-            logger.debug(f"Removed file: {file_path}")
+            logger.success("Removed file: {}", file_path)
         except FileNotFoundError as e:
-            logger.warning(f"File Name not found: {file_path}")
+            logger.warning("File Name not found: {}", file_path)
 
         except OSError as e:
             logger.error(
-                f"An error occurred while removing the file: {file_path}. Error: {e}"
+                "An error occurred while removing the file: {}. Error: {}",
+                file_path,
+                e
             )
-            logger.debug(f"Error message: {str(e)}")
             raise

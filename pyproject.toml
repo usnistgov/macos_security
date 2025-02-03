@@ -23,7 +23,8 @@ dependencies = [
   "openpyxl",
   "pandas",
   "matplotlib",
-  "jinja2"
+  "jinja2",
+  "loguru",
 ]
 
 [project.urls]

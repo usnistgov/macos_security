@@ -1,27 +1,21 @@
 # mscp/classes/baseline.py
 
 # Standard python modules
-import logging
 import re
-import sys
 
 from pathlib import Path
-from typing import Optional, List, Dict, Any
+from typing import Any
 from pydantic import BaseModel, Field
 from collections import OrderedDict, defaultdict
-from icecream import ic
 
 # Additional python modules
 import pandas as pd
+from loguru import logger
 
 # Local python modules
 from src.mscp.classes.macsecurityrule import MacSecurityRule
 from src.mscp.common_utils.file_handling import open_yaml, create_yaml
 from src.mscp.common_utils.config import config
-import yaml
-
-# Initialize logger
-logger = logging.getLogger(__name__)
 
 
 class Author(BaseModel):
@@ -97,6 +91,7 @@ class Baseline(BaseModel):
 
 
     @classmethod
+    @logger.catch
     def create_new(cls, output_file: Path, rules: list[MacSecurityRule], version_data: dict[str, Any], baseline_name: str, authors: list[Author], full_title: str, benchmark: str = "recommended") -> None:
         """
         Create and save a Baseline object as a YAML file with grouped and sorted rules.
@@ -167,6 +162,7 @@ class Baseline(BaseModel):
 
         baseline.to_yaml(output_path=output_file)
 
+    @logger.catch
     def to_dataframe(self) -> pd.DataFrame:
         """
         Convert the profiles and rules from the Baseline object into a Pandas DataFrame.
@@ -189,10 +185,31 @@ class Baseline(BaseModel):
         return pd.DataFrame(rules)
 
 
+    @logger.catch
     def to_yaml(self, output_path: Path) -> None:
+        """
+        Serializes the baseline model to a YAML file with a specific order for keys and profiles.
+
+        Args:
+            output_path (Path): The path where the YAML file will be created.
+
+        Returns:
+            None
+
+        The method performs the following steps:
+        1. Logs the start of the YAML creation process.
+        2. Serializes the model data.
+        3. Defines the order for the main keys and profile sections.
+        4. Removes the "name" key from the serialized data.
+        5. Sorts the rules within each profile by their rule IDs.
+        6. Orders the profiles based on the predefined profile order.
+        7. Constructs an ordered dictionary with the specified key order.
+        8. Creates the YAML file using the ordered data.
+        9. Logs the completion of the YAML creation process.
+        """
         logger.info("Creating baseline yaml")
         serialized_data = self.model_dump()
-        key_order: List[str] = ['title', 'description', 'authors', 'parent_values', 'profile']
+        key_order: list[str] = ['title', 'description', 'authors', 'parent_values', 'profile']
         profile_order: list[str] = ['Auditing', 'Authentication', 'iCloud', 'Operating System', 'Password Policy', 'System Settings', 'Inherent', 'Permanent', 'Not Applicable', 'Supplemental']
         ordered_data: OrderedDict = OrderedDict()
 
@@ -211,13 +228,14 @@ class Baseline(BaseModel):
                     ordered_data[key] = serialized_data[key]
 
         create_yaml(output_path, ordered_data, "baseline")
-        logger.info(f"Created baseline yaml: {output_path}")
+        logger.success("Created baseline yaml: {}", output_path)
 
     def get(self, attr, default=None):
         return getattr(self, attr, default)
 
     @classmethod
-    def load_all_from_folder(cls, folder_path: Path, os_name: str, os_version: int, custom: bool = False) -> List["Baseline"]:
+    @logger.catch
+    def load_all_from_folder(cls, folder_path: Path, os_name: str, os_version: int, custom: bool = False) -> list["Baseline"]:
         """
         Load all Baseline objects from YAML files in a specified folder.
 
@@ -228,16 +246,17 @@ class Baseline(BaseModel):
             custom (bool): Whether to load custom configurations.
 
         Returns:
-            List[Baseline]: A list of fully populated Baseline instances.
+            list[Baseline]: A list of fully populated Baseline instances.
         """
         logger.debug("=== LOADING ALL BASELINES ===")
         baseline_folder:Path = Path(folder_path, os_name, str(os_version))
         logger.debug(f"Folder: {baseline_folder}")
-        baselines = []
+        baselines: list["Baseline"] = []
 
         for yaml_file in baseline_folder.glob("*.yaml"):
             logger.debug(f"Loading YAML file: {yaml_file}")
             baseline = cls.from_yaml(yaml_file, os_name, os_version, custom)
             baselines.append(baseline)
 
+        logger.success("Loaded {} baselines", len(baselines))
         return baselines

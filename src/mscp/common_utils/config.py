@@ -1,16 +1,20 @@
 # mscp/common_utils/config.py
 
 # Standard python modules
-import logging
-
 from pathlib import Path
+
+# Additional python modules
+from loguru import logger
 
 # Local python modules
 from src.mscp.common_utils.file_handling import open_yaml
 
-# Initialize logger
-logger = logging.getLogger(__name__)
-
 CONFIG_PATH: Path = Path.cwd() / "config" / "config.yaml"
 
-config = open_yaml(CONFIG_PATH)
+try:
+    logger.info("Attempting to open config file: {}", CONFIG_PATH)
+    config = open_yaml(CONFIG_PATH)
+    logger.success("Config file loaded successfully")
+except Exception as e:
+    logger.error("An error occurred while loading the config file: {}", e)
+    raise

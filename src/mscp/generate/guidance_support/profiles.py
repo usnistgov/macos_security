@@ -1,13 +1,13 @@
 # mscp/generate/payload.py
 
 # Standard python modules
-import logging
-
 from pathlib import Path
 from typing import List, Dict, Any
 from collections import defaultdict
 from datetime import date
 
+# Additional python modules
+from loguru import logger
 
 # Local python modules
 from src.mscp.common_utils.config import config
@@ -18,10 +18,7 @@ from src.mscp.common_utils.file_handling import open_yaml, make_dir
 from src.mscp.common_utils.run_command import run_command
 
 
-# Initialize local logger
-logger = logging.getLogger(__name__)
-
-
+@logger.catch
 def get_payload_content_by_type(rules: List[MacSecurityRule]) -> Dict[str, List[Dict[str, Any]]]:
     """
     Group the payload_content of Mobileconfigpayloads by their payload_type across a list of MacSecurityRule objects.
@@ -73,7 +70,34 @@ def sign_config_profile(in_file: Path, out_file: Path, cert_hash: str) -> None:
         logger.info(f"Signed Configuration profile written to {out_file}")
 
 
+@logger.catch
 def generate_profiles(build_path: Path, baseline_name: str, baseline: Baseline, signing: bool = False, hash_value: str = "") -> None:
+    """
+    Generates configuration profiles based on the provided baseline and saves them to the specified build path.
+
+    Args:
+        build_path (Path): The path where the generated profiles will be saved.
+        baseline_name (str): The name of the baseline being used.
+        baseline (Baseline): The baseline object containing profile and rule information.
+        signing (bool, optional): Whether to sign the generated profiles. Defaults to False.
+        hash_value (str, optional): The hash value used for signing the profiles. Defaults to an empty string.
+
+    Returns:
+        None
+
+    Raises:
+        None
+
+    Notes:
+        - Creates directories for unsigned, signed, and preferences profiles.
+        - Validates rules against supported payload types.
+        - Logs any errors found in the rules.
+        - Groups payloads by type and generates profiles for each type.
+        - Saves the generated profiles in plist format.
+        - Optionally signs the profiles if signing is enabled.
+        - Displays a caution message about the use of the generated profiles in a test environment.
+    """
+
     unsigned_output_path: Path = Path(build_path, "mobileconfigs", "unsigned")
     signed_output_path: Path = Path(build_path, "mobileconfigs", "signed")
     plist_output_path: Path = Path(build_path, "mobileconfigs", "preferences")
