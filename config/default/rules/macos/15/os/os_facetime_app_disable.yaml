@@ -1,3 +1,4 @@
+---
 id: os_facetime_app_disable
 title: Disable FaceTime.app
 discussion: |
@@ -25,7 +26,7 @@ check: |
     }
   EOS
 result:
-  string: 'true'
+  string: "true"
 fix: |
   This is implemented by a Configuration Profile.
 references:
@@ -44,7 +45,7 @@ references:
   srg:
     - SRG-OS-000095-GPOS-00049
   disa_stig:
-    - N/A
+    - APPL-15-002010
   800-171r3:
     - 03.01.20
     - 03.04.06
@@ -63,14 +64,15 @@ operating_system:
     version:
       - 15.0
 tags:
-  - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
   - stig
+  - cnssi-1253_moderate
 severity: medium
 mobileconfig: true
 mobileconfig_info:
-  com.apple.applicationaccess.new:
-    familyControlsEnabled: true
-    pathBlackList:
-      - /Applications/FaceTime.app
+  - PayloadType: com.apple.applicationaccess.new
+    PayloadContent:
+      familyControlsEnabled: true
+      pathBlackList:
+        - /Applications/FaceTime.app

@@ -1,5 +1,4 @@
 ---
-# yaml-language-server: $schema=../../../../../../schemas/rules.json
 id: system_settings_wifi_menu_enable
 title: Enable Wifi Menu
 discussion: |

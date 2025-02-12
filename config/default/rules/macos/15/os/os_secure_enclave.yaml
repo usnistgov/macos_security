@@ -1,3 +1,4 @@
+---
 id: os_secure_enclave
 title: Protected Storage for Cryptographic Keys
 discussion: |
@@ -36,10 +37,10 @@ operating_system:
       - 15.0
 tags:
   - inherent
-  - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
   - cmmc_lvl2
   - srg
+  - cnssi-1253_moderate
 mobileconfig: false
-mobileconfig_info:
+mobileconfig_info: null

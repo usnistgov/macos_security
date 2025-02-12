@@ -1,3 +1,4 @@
+---
 id: os_time_offset_limit_configure
 title: Ensure Time Offset Within Limits
 discussion: |
@@ -5,7 +6,7 @@ discussion: |
 check: |
   /usr/bin/sntp $(/usr/sbin/systemsetup -getnetworktimeserver | /usr/bin/awk '{print $4}') | /usr/bin/awk -F'.' '/\+\/\-/{if (substr($1,2) >= 270) {print "No"} else {print "Yes"}}'
 result:
-  string: 'Yes'
+  string: "Yes"
 fix: |
   [source,bash]
   ----
@@ -28,16 +29,14 @@ references:
     - N/A
   cis:
     benchmark:
-      - 2.3.2.2 (level 1)
+      - N/A
     controls v8:
-      - 8.4
+      - N/A
 operating_system:
   - name: macos
     version:
       - 15.0
 tags:
-  - cis_lvl1
-  - cis_lvl2
-  - cisv8
+  - none
 mobileconfig: false
-mobileconfig_info:
+mobileconfig_info: null

@@ -1,3 +1,4 @@
+---
 id: os_nonlocal_maintenance
 title: Configure the System for Non-local Maintenance
 discussion: |
@@ -36,9 +37,9 @@ tags:
   - 800-53r4_high
   - 800-171
   - n_a
-  - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
   - cmmc_lvl2
+  - cnssi-1253_moderate
 mobileconfig: false
-mobileconfig_info:
+mobileconfig_info: null

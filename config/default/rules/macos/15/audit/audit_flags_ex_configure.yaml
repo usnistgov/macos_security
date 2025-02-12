@@ -1,3 +1,4 @@
+---
 id: audit_flags_ex_configure
 title: Configure System to Audit All Failed Program Execution on the System
 discussion: |
@@ -22,6 +23,7 @@ references:
   cci:
     - CCI-000172
     - CCI-001814
+    - CCI-003938
   800-53r5:
     - AC-2(12)
     - AU-12
@@ -37,7 +39,7 @@ references:
     - SRG-OS-000458-GPOS-00203
     - SRG-OS-000463-GPOS-00207
   disa_stig:
-    - N/A
+    - APPL-15-001024
   800-171r3:
     - 03.03.01
     - 03.03.03
@@ -67,11 +69,11 @@ tags:
   - 800-171
   - cis_lvl2
   - cisv8
-  - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
   - cmmc_lvl2
   - stig
+  - cnssi-1253_moderate
 severity: medium
 mobileconfig: false
-mobileconfig_info:
+mobileconfig_info: null

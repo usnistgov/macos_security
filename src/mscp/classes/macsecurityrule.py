@@ -2,22 +2,26 @@
 
 # Standard python modules
 import base64
-
-from typing import Any, Optional, TypeVar, Generic
-from pathlib import Path
 from collections import OrderedDict
 from enum import Enum
+from pathlib import Path
+from typing import Any, Generic, Optional, TypeVar
+from uuid import uuid4
+
+from loguru import logger
 
 # Additional python modules
 from lxml import etree
-from pydantic import BaseModel
-from loguru import logger
+from pydantic import BaseModel, Field
 
 # Local python modules
-from src.mscp.common_utils.config import config
-from src.mscp.common_utils.file_handling import open_yaml, make_dir, create_yaml
-from src.mscp.common_utils.sanatize_input import sanitized_input
-
+from src.mscp.common_utils import (
+    config,
+    create_yaml,
+    make_dir,
+    open_yaml,
+    sanitize_input,
+)
 
 T = TypeVar("T", str, int, bool, float, None, list, dict)
 
@@ -110,7 +114,7 @@ class References(BaseModel, Generic[T]):
             )
 
 
-class MacSecurityRule(BaseModel, Generic[T]):
+class Macsecurityrule(BaseModel, Generic[T]):
     """
     Represents a security rule for macOS systems.
 
@@ -123,6 +127,7 @@ class MacSecurityRule(BaseModel, Generic[T]):
         fix (str): Instructions on how to fix non-compliance with the rule.
         references (References): References related to the rule.
         odv (Optional[dict[str, T]]): Organizational Defined Values (ODVs) for the rule.
+        finding (bool): Indicates if the rule is a finding.
         tags (list[str]): Tags associated with the rule.
         result (dict[str, T]): The result of the rule check.
         result_value (T): The value of the result.
@@ -133,10 +138,11 @@ class MacSecurityRule(BaseModel, Generic[T]):
         operating_system (list[Operatingsystem]): List of operating systems the rule applies to.
         mechanism (str): The mechanism used to enforce the rule.
         section (str): The section the rule belongs to.
+        uuid (str): The unique identifier for the rule instance.
 
     Methods:
-        load_rules: Loads MacSecurityRule objects from YAML files for the given rule IDs.
-        collect_all_rules: Populates MacSecurityRule objects from YAML files in a folder.
+        load_rules: Loads Macsecurityrule objects from YAML files for the given rule IDs.
+        collect_all_rules: Populates Macsecurityrule objects from YAML files in a folder.
         format_mobileconfig_fix: Generates a formatted XML-like string for the `mobileconfig_info` field.
         _fill_in_odv: Replaces placeholders ('$ODV') in the instance attributes with the appropriate override value.
         _format_payload: Formats a single payload type and its content.
@@ -144,8 +150,8 @@ class MacSecurityRule(BaseModel, Generic[T]):
         write_odv_custom_rule: Writes a custom ODV value to a rule file.
         remove_odv_custom_rule: Removes a custom ODV value from a rule file.
         odv_query: Queries the user to include/exclude rules and set Organizational Defined Values (ODVs).
-        to_yaml: Serializes the MacSecurityRule instance to a YAML file.
-        to_dict: Converts the MacSecurityRule instance to a dictionary.
+        to_yaml: Serializes the Macsecurityrule instance to a YAML file.
+        to_dict: Converts the Macsecurityrule instance to a dictionary.
         get_tags: Generates a sorted list of unique tags from the provided rules.
     """
 
@@ -157,6 +163,7 @@ class MacSecurityRule(BaseModel, Generic[T]):
     fix: str
     references: References
     odv: Optional[dict[str, T]] = {}
+    finding: bool = False
     tags: list[str]
     result: dict[str, T]
     result_value: T
@@ -167,6 +174,7 @@ class MacSecurityRule(BaseModel, Generic[T]):
     operating_system: list[Operatingsystem]
     mechanism: str = ""
     section: str = ""
+    uuid: str = Field(default_factory=lambda: str(uuid4()))
 
     @classmethod
     @logger.catch
@@ -179,9 +187,9 @@ class MacSecurityRule(BaseModel, Generic[T]):
         section: str,
         custom: bool = False,
         generate_baseline: bool = False,
-    ) -> list["MacSecurityRule"]:
+    ) -> list["Macsecurityrule"]:
         """
-        Load MacSecurityRule objects from YAML files for the given rule IDs.
+        Load Macsecurityrule objects from YAML files for the given rule IDs.
 
         Args:
             rule_ids (list[str]): List of rule IDs to load.
@@ -193,13 +201,13 @@ class MacSecurityRule(BaseModel, Generic[T]):
             generate_baseline (bool): Whether to generate a baseline.
 
         Returns:
-            list[MacSecurityRule]: A list of loaded MacSecurityRule objects.
+            list[Macsecurityrule]: A list of loaded Macsecurityrule objects.
         """
 
-        logger.info(f"=== LOADING {section.upper()} RULES ===")
+        logger.info("=== LOADING {} RULES ===", section.upper())
 
         rules_dirs: list[Path] = []
-        rules: list[MacSecurityRule] = []
+        rules: list[Macsecurityrule] = []
         mobileconfig_info: list[dict[str, T]] = []
         mechanism: str = "Manual"
         os_version_str: str = str(os_version)
@@ -215,7 +223,7 @@ class MacSecurityRule(BaseModel, Generic[T]):
             ]
 
         for rule_id in rule_ids:
-            logger.debug(f"Transforming rule: {rule_id}")
+            logger.debug("Transforming rule: {}", rule_id)
 
             rule_file = next(
                 (
@@ -227,7 +235,7 @@ class MacSecurityRule(BaseModel, Generic[T]):
                 None,
             )
             if not rule_file:
-                logger.warning(f"Rule file not found for rule: {rule_id}")
+                logger.warning("Rule file not found for rule: {}", rule_id)
                 continue
 
             rule_yaml: dict = open_yaml(rule_file)
@@ -262,14 +270,16 @@ class MacSecurityRule(BaseModel, Generic[T]):
                             )
                         else:
                             logger.warning(
-                                f"Invalid payload content for payload type {payload_type}: {payload_content}"
+                                "Invalid payload content for payload type {}: {}",
+                                payload_type,
+                                payload_content,
                             )
                 elif isinstance(mobileconfig_info, list):
                     for entry in mobileconfig_info:
                         payload_type: str = str(entry.get("PayloadType", ""))
                         payload_content = entry.get("PayloadContent", {})
                         logger.debug(
-                            f"The payload content type is: {type(payload_content)}"
+                            "The payload content type is: {}", type(payload_content)
                         )
                         payloads.append(
                             Mobileconfigpayload(
@@ -333,20 +343,20 @@ class MacSecurityRule(BaseModel, Generic[T]):
             )
 
             if mobileconfig:
-                logger.debug(f"Formatting mobileconfig_info for rule: {rule.rule_id}")
+                logger.debug("Formatting mobileconfig_info for rule: {}", rule.rule_id)
                 formatted_mobileconfig = rule.format_mobileconfig_fix()
                 rule.fix = formatted_mobileconfig
-                logger.debug(formatted_mobileconfig)
+                logger.success("Formatted mobileconfig_info for rule: {}", rule.rule_id)
 
             if not rule.odv == None and not generate_baseline:
                 rule._fill_in_odv(parent_values)
 
-            logger.debug(f"Transformed rule: {rule_id}")
+            logger.success("Transformed rule: {}", rule_id)
 
             rules.append(rule)
 
-        logger.debug(f"NUMBER OF {section.upper()} LOADED RULES: {len(rules)}")
-        logger.info(f"=== RULES {section.upper()} LOADED ===")
+        logger.debug("NUMBER OF {} LOADED RULES: {}", section.upper(), len(rules))
+        logger.info("=== RULES {} LOADED ===", section.upper())
 
         return rules
 
@@ -358,9 +368,9 @@ class MacSecurityRule(BaseModel, Generic[T]):
         os_version: int,
         generate_baseline: bool = True,
         parent_values: str = "default",
-    ) -> list["MacSecurityRule"]:
+    ) -> list["Macsecurityrule"]:
         """
-        Populate MacSecurityRule objects from YAML files in a folder.
+        Populate Macsecurityrule objects from YAML files in a folder.
         Map folder names to specific section filenames for the `section` attribute.
 
         Args:
@@ -369,9 +379,9 @@ class MacSecurityRule(BaseModel, Generic[T]):
             parent_values (str): Parent values for rule initialization.
 
         Returns:
-            list[MacSecurityRule]: A list of MacSecurityRule instances.
+            list[Macsecurityrule]: A list of Macsecurityrule instances.
         """
-        rules: list[MacSecurityRule] = []
+        rules: list[Macsecurityrule] = []
         os_version_str: str = str(os_version)
         sub_sections: list[str] = [
             "permanent",
@@ -401,7 +411,7 @@ class MacSecurityRule(BaseModel, Generic[T]):
         for rule_dir in rules_dirs:
             if not rule_dir.exists() or not rule_dir.is_dir():
                 logger.warning(
-                    f"Directory does not exist or is not a directory: {rule_dir}"
+                    "Directory does not exist or is not a directory: {}", rule_dir
                 )
                 continue
 
@@ -413,11 +423,11 @@ class MacSecurityRule(BaseModel, Generic[T]):
                     try:
                         rule_yaml: dict = open_yaml(yaml_file)
                         folder_name: str = yaml_file.parent.name
-                        logger.debug(f"{rule_yaml["id"]} folder: {folder_name}")
+                        logger.debug("{} folder: {}", rule_yaml["id"], folder_name)
                         section_name: str = section_data.get(
                             Sectionmap[folder_name.upper()].value, ""
                         )
-                        logger.debug(f"Section Name: {section_name}")
+                        logger.debug("Section Name: {}", section_name)
                         custom: bool = False
 
                         if "custom" in str(folder).lower():
@@ -425,7 +435,7 @@ class MacSecurityRule(BaseModel, Generic[T]):
 
                         if not section_name:
                             logger.warning(
-                                f"Folder '{folder_name}' not found in section mapping."
+                                "Folder '{}' not found in section mapping.", folder_name
                             )
                             continue
 
@@ -446,7 +456,9 @@ class MacSecurityRule(BaseModel, Generic[T]):
                         )
 
                     except Exception as e:
-                        logger.error(f"Failed to load rule from file {yaml_file}: {e}")
+                        logger.error(
+                            "Failed to load rule from file {}: {}", yaml_file, e
+                        )
 
         return rules
 
@@ -642,7 +654,7 @@ class MacSecurityRule(BaseModel, Generic[T]):
                     dict_element = etree.SubElement(
                         parent, "dict", attrib=None, nsmap=None
                     )
-                    MacSecurityRule._add_payload_content(dict_element, value)
+                    Macsecurityrule._add_payload_content(dict_element, value)
                 case _:
                     raise ValueError(
                         f"Unsupported value type: {type(value)} for key: {key}"
@@ -701,7 +713,7 @@ class MacSecurityRule(BaseModel, Generic[T]):
             str: The Base64-encoded string.
         """
         if "base64" in result:
-            result_string_bytes: bytes = f'{result["base64"]}\n'.encode("UTF-8")
+            result_string_bytes: bytes = f"{result['base64']}\n".encode("UTF-8")
             result_encoded: bytes = base64.b64encode(result_string_bytes)
             result["base64"] = result_encoded.decode()
             return result["base64"]
@@ -719,7 +731,7 @@ class MacSecurityRule(BaseModel, Generic[T]):
 
         rule["odv"] = {"custom": odv}
 
-        create_yaml(rule_file_path, rule, "rule")
+        create_yaml(rule_file_path, rule)
 
     @staticmethod
     @logger.catch
@@ -734,22 +746,22 @@ class MacSecurityRule(BaseModel, Generic[T]):
         if "odv" in rule and "custom" in rule["odv"]:
             del rule["odv"]["custom"]
 
-            create_yaml(rule_file_path, rule, "rule")
+            create_yaml(rule_file_path, rule)
 
     @classmethod
     @logger.catch
     def odv_query(
-        cls, rules: list["MacSecurityRule"], benchmark: str
-    ) -> list["MacSecurityRule"]:
+        cls, rules: list["Macsecurityrule"], benchmark: str
+    ) -> list["Macsecurityrule"]:
         """
         Queries the user to include/exclude rules and set Organizational Defined Values (ODVs).
 
         Args:
-            rules (list[MacSecurityRule]): List of rules to process.
+            rules (list[Macsecurityrule]): List of rules to process.
             benchmark (str): The benchmark being tailored (e.g., "recommended").
 
         Returns:
-            list[MacSecurityRule]: List of included rules after user input and ODV modifications.
+            list[Macsecurityrule]: List of included rules after user input and ODV modifications.
         """
         print(
             "The inclusion of any given rule is a risk-based-decision (RBD). "
@@ -782,7 +794,7 @@ class MacSecurityRule(BaseModel, Generic[T]):
                     cls.remove_odv_custom_rule(rule)
             else:
                 if rule.rule_id not in queried_rule_ids:
-                    include = sanitized_input(
+                    include = sanitize_input(
                         f'Would you like to include the rule for "{rule.rule_id}" in your benchmark? [Y/n/all/?]: ',
                         str,
                         range_=("y", "n", "all", "?"),
@@ -790,7 +802,7 @@ class MacSecurityRule(BaseModel, Generic[T]):
                     )
                     if include == "?":
                         print(f"Rule Details: \n{rule.discussion}")
-                        include = sanitized_input(
+                        include = sanitize_input(
                             f'Would you like to include the rule for "{rule.rule_id}" in your benchmark? [Y/n/all]: ',
                             str,
                             range_=("y", "n", "all"),
@@ -814,7 +826,7 @@ class MacSecurityRule(BaseModel, Generic[T]):
 
                     if benchmark == "recommended":
                         print(f"{odv_hint}")
-                        odv = sanitized_input(
+                        odv = sanitize_input(
                             f'Enter the ODV for "{rule.rule_id}" or press Enter for the recommended value ({odv_recommended}): ',
                             type(odv_recommended),
                             default_=odv_recommended,
@@ -823,7 +835,7 @@ class MacSecurityRule(BaseModel, Generic[T]):
                             cls.write_odv_custom_rule(rule, odv)
                     else:
                         print(f"\nODV value: {odv_hint}")
-                        odv = sanitized_input(
+                        odv = sanitize_input(
                             f'Enter the ODV for "{rule.rule_id}" or press Enter for the default value ({odv_benchmark}): ',
                             type(odv_benchmark),
                             default_=odv_benchmark,
@@ -885,22 +897,22 @@ class MacSecurityRule(BaseModel, Generic[T]):
             if value or key in required_keys
         }
 
-        create_yaml(rule_file_path, clean_dict, "rule")
+        create_yaml(rule_file_path, clean_dict)
 
     @logger.catch
     def to_dict(self) -> dict[str, T]:
-        """Convert the MacSecurityRule instance to a dictionary"""
+        """Convert the Macsecurityrule instance to a dictionary"""
         return self.model_dump()
 
     @staticmethod
     @logger.catch
-    def get_tags(rules: list["MacSecurityRule"], list_tags: bool = False) -> list[str]:
+    def get_tags(rules: list["Macsecurityrule"], list_tags: bool = False) -> list[str]:
         """
         Generate a sorted list of unique tags from the provided rules, optionally
         print the tags if list_tags is True.
 
         Args:
-            rules (list[MacSecurityRule]): List of all MacSecurityRule objects.
+            rules (list[Macsecurityrule]): List of all Macsecurityrule objects.
             list_tags (bool): If True, prints all unique tags.
 
         Returns:

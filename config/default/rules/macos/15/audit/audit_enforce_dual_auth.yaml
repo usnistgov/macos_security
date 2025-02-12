@@ -1,3 +1,4 @@
+---
 id: audit_enforce_dual_auth
 title: Enforce Dual Authorization for Movement and Deletion of Audit Information
 discussion: |
@@ -32,4 +33,4 @@ tags:
   - cnssi-1253_high
   - srg
 mobileconfig: false
-mobileconfig_info:
+mobileconfig_info: null

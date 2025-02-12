@@ -1,3 +1,4 @@
+---
 id: os_privacy_principle_minimization
 title: Implement the Privacy Principle of Minimization
 discussion: |
@@ -31,4 +32,4 @@ tags:
   - 800-53r5_privacy
   - n_a
 mobileconfig: false
-mobileconfig_info:
+mobileconfig_info: null

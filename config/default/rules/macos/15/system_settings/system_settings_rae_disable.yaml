@@ -1,5 +1,4 @@
 ---
-# yaml-language-server: $schema=../../../../../../schemas/rules.json
 id: system_settings_rae_disable
 title: Disable Remote Apple Events
 discussion: |
@@ -32,7 +31,7 @@ references:
     - SRG-OS-000080-GPOS-00048
     - SRG-OS-000096-GPOS-00050
   disa_stig:
-    - N/A
+    - APPL-15-002022
   800-171r3:
     - 03.01.02
     - 03.04.06
@@ -59,11 +58,12 @@ tags:
   - cis_lvl1
   - cis_lvl2
   - cisv8
-  - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
   - cmmc_lvl2
   - cmmc_lvl1
   - stig
+  - cnssi-1253_moderate
 severity: medium
 mobileconfig: false
+mobileconfig_info: null

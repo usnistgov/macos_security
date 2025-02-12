@@ -1,7 +1,6 @@
 ---
-# yaml-language-server: $schema=../../../../../../schemas/rules.json
 id: supplemental_filevault
-title: "FileVault Supplemental"
+title: FileVault Supplemental
 discussion: |
   The supplemental guidance found in this section is applicable for the following rules:
     * system_settings_filevault_enforce
@@ -53,9 +52,9 @@ discussion: |
 
   It's recommended that you use a Personal Recovery key instead of an Institutional key as it will generate a specific key for each device. You can find more guidance on choosing a recover key here: link:https://docs.jamf.com/technical-papers/jamf-pro/administering-filevault-macos/10.7.1/Choosing_a_Recovery_Key.html[].
 
-  NOTE: FileVault currently only uses password-based authentication and cannot be done using a smartcard or any other type of multi-factor authentication.
-check: |
-fix: |
+  NOTE: On Intel Macs, FileVault only supports password-based unlock and cannot be done using a smartcard. Smartcard unlock for FileVault is supported on Apple Silicon Macs.
+check: ""
+fix: ""
 references:
   cci:
     - N/A
@@ -89,7 +88,7 @@ tags:
   - cmmc_lvl2
   - cnssi-1253_high
   - cnssi-1253_low
-  - cnssi-1253_moderate
   - stig
   - supplemental
 mobileconfig: false
+mobileconfig_info: null

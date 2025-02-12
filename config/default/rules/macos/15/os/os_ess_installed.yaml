@@ -1,3 +1,4 @@
+---
 id: os_ess_installed
 title: Must Use ESS
 discussion: |
@@ -32,4 +33,4 @@ tags:
   - stig
 severity: medium
 mobileconfig: false
-mobileconfig_info:
+mobileconfig_info: null

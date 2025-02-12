@@ -1,5 +1,4 @@
 ---
-# yaml-language-server: $schema=../../../../../../schemas/rules.json
 id: system_settings_time_server_configure
 title: Configure macOS to Use an Authorized Time Server
 discussion: |
@@ -21,6 +20,10 @@ references:
   cci:
     - CCI-001891
     - CCI-002046
+    - CCI-004923
+    - CCI-004923
+    - CCI-004926
+    - CCI-004926
   800-53r5:
     - AU-12(1)
     - SC-45(1)
@@ -30,7 +33,7 @@ references:
     - SRG-OS-000355-GPOS-00143
     - SRG-OS-000356-GPOS-00144
   disa_stig:
-    - N/A
+    - APPL-15-000170
   800-171r3:
     - 3.3.7
   cis:
@@ -44,12 +47,6 @@ operating_system:
   - name: macos
     version:
       - 15.0
-odv:
-  hint: Name of timeserver. As of macOS 10.13 only one time server is supported.
-  recommended: time.nist.gov
-  cis_lvl1: time.apple.com
-  cis_lvl2: time.apple.com
-  stig: time.nist.gov
 tags:
   - 800-171
   - 800-53r5_low
@@ -60,12 +57,18 @@ tags:
   - cis_lvl1
   - cis_lvl2
   - cisv8
-  - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
   - cmmc_lvl2
   - stig
+  - cnssi-1253_moderate
 severity: medium
+odv:
+  hint: Name of timeserver. As of macOS 10.13 only one time server is supported.
+  recommended: time.nist.gov
+  cis_lvl1: time.apple.com
+  cis_lvl2: time.apple.com
+  stig: time.nist.gov
 mobileconfig: true
 mobileconfig_info:
   - PayloadType: com.apple.MCX

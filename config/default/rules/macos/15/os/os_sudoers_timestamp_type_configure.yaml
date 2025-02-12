@@ -1,3 +1,4 @@
+---
 id: os_sudoers_timestamp_type_configure
 title: Configure Sudoers Timestamp Type
 discussion: |
@@ -27,7 +28,7 @@ references:
     - SRG-OS-000373-GPOS-00157
     - SRG-OS-000373-GPOS-00156
   disa_stig:
-    - N/A
+    - APPL-15-004060
   cis:
     benchmark:
       - 5.5 (level 1)
@@ -47,10 +48,10 @@ tags:
   - cis_lvl1
   - cis_lvl2
   - cisv8
-  - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
   - stig
+  - cnssi-1253_moderate
 severity: medium
 mobileconfig: false
-mobileconfig_info:
+mobileconfig_info: null

@@ -1,5 +1,4 @@
 ---
-# yaml-language-server: $schema=../../../../../../schemas/rules.json
 id: system_settings_softwareupdate_current
 title: Ensure Software Update is Updated and Current
 discussion: |
@@ -53,3 +52,4 @@ tags:
   - cisv8
 severity: medium
 mobileconfig: false
+mobileconfig_info: null

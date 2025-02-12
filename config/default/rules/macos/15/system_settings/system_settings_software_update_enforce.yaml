@@ -1,5 +1,4 @@
 ---
-# yaml-language-server: $schema=../../../../../../schemas/rules.json
 id: system_settings_software_update_enforce
 title: Enforce Software Update Automatically
 discussion: |
@@ -10,7 +9,7 @@ check: |
   .objectForKey('AutomaticCheckEnabled').js
   EOS
 result:
-  boolean: true
+  string: "true"
 fix: |
   This is implemented by a Configuration Profile.
 references:

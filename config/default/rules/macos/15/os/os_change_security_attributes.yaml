@@ -1,3 +1,4 @@
+---
 id: os_change_security_attributes
 title: Allow Administrators to Modify Security Settings and System Attributes
 discussion: |
@@ -29,9 +30,9 @@ operating_system:
       - 15.0
 tags:
   - inherent
-  - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
   - srg
+  - cnssi-1253_moderate
 mobileconfig: false
-mobileconfig_info:
+mobileconfig_info: null

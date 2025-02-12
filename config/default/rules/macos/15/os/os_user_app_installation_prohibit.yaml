@@ -1,3 +1,4 @@
+---
 id: os_user_app_installation_prohibit
 title: Prohibit User Installation of Software into /Users/
 discussion: |
@@ -25,7 +26,7 @@ check: |
     }
   EOS
 result:
-  string: 'true'
+  string: "true"
 fix: |
   This is implemented by a Configuration Profile.
 references:
@@ -33,6 +34,7 @@ references:
     - CCE-94323-3
   cci:
     - CCI-001812
+    - CCI-003980
   800-53r5:
     - CM-11(2)
   800-53r4:
@@ -40,7 +42,7 @@ references:
   srg:
     - SRG-OS-000362-GPOS-00149
   disa_stig:
-    - N/A
+    - APPL-15-005080
   cmmc:
     - CM.L2-3.4.9
 operating_system:
@@ -48,15 +50,16 @@ operating_system:
     version:
       - 15.0
 tags:
-  - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
   - cmmc_lvl2
   - stig
+  - cnssi-1253_moderate
 severity: medium
 mobileconfig: true
 mobileconfig_info:
-  com.apple.applicationaccess.new:
-    familyControlsEnabled: true
-    pathBlackList:
-      - /Users/
+  - PayloadType: com.apple.applicationaccess.new
+    PayloadContent:
+      familyControlsEnabled: true
+      pathBlackList:
+        - /Users/

@@ -1,5 +1,4 @@
 ---
-# yaml-language-server: $schema=../../../../../../schemas/rules.json
 id: system_settings_ssh_enable
 title: Enable SSH Server for Remote Access Sessions
 discussion: |
@@ -17,10 +16,7 @@ references:
   cce:
     - CCE-94400-9
   cci:
-    - CCI-000213
-    - CCI-001942
-    - CCI-002420
-    - CCI-002422
+    - N/A
   800-53r5:
     - IA-2(8)
     - AC-3
@@ -34,10 +30,7 @@ references:
     - IA-2(8)
     - IA-2(9)
   srg:
-    - SRG-OS-000080-GPOS-00048
-    - SRG-OS-000113-GPOS-00058
-    - SRG-OS-000425-GPOS-00189
-    - SRG-OS-000426-GPOS-00190
+    - N/A
   disa_stig:
     - N/A
   800-171r3:
@@ -60,11 +53,11 @@ tags:
   - 800-53r4_moderate
   - 800-53r4_high
   - 800-171
-  - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
   - cmmc_lvl2
   - cmmc_lvl1
-  - stig
+  - cnssi-1253_moderate
 severity: medium
 mobileconfig: false
+mobileconfig_info: null

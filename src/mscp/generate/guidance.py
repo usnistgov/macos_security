@@ -1,27 +1,36 @@
 # mscp/generate/guidance.py
 
 # Standard python modules
-import tempfile
 import argparse
 import sys
-
-from pathlib import Path
+import tempfile
 from base64 import b64encode
+from pathlib import Path
 
 # Additional python modules
 from loguru import logger
 
 # Local python modules
-from src.mscp.classes.baseline import Baseline
-from src.mscp.common_utils.run_command import run_command
-from src.mscp.common_utils.config import config
-from src.mscp.common_utils.file_handling import make_dir
-from src.mscp.common_utils.version_data import get_version_data
-from src.mscp.generate.guidance_support.documents import generate_documents
-from src.mscp.generate.guidance_support.script import generate_script, generate_audit_plist
-from src.mscp.generate.guidance_support.ddm import generate_ddm
-from src.mscp.generate.guidance_support.excel import generate_excel
-from src.mscp.generate.guidance_support.profiles import generate_profiles
+from src.mscp.classes import Baseline
+from src.mscp.common_utils import (
+    config,
+    get_version_data,
+    make_dir,
+    remove_dir_contents,
+    run_command,
+)
+from src.mscp.generate.guidance_support import (
+    generate_ddm,
+    generate_documents,
+    generate_excel,
+    generate_profiles,
+    generate_script,
+)
+
+# from src.mscp.generate.guidance_support.documents import generate_documents
+# from src.mscp.generate.guidance_support.excel import generate_excel
+# from src.mscp.generate.guidance_support.profiles import generate_profiles
+# from src.mscp.generate.guidance_support.script import generate_script
 
 
 # Functions
@@ -56,7 +65,7 @@ def verify_signing_hash(cert_hash: str) -> bool:
 
 @logger.catch
 def generate_guidance(args: argparse.Namespace) -> None:
-    logo_path: str = f"{config["defaults"]["images_dir"]}/mscp_banner.png"
+    logo_path: str = f"{config['defaults']['images_dir']}/mscp_banner.png"
     signing: bool = False
     log_reference: str = "default"
     use_custom_reference: bool = False
@@ -73,7 +82,9 @@ def generate_guidance(args: argparse.Namespace) -> None:
     adoc_output_file: Path = Path(build_path, f"{baseline_name}.adoc")
     spreadsheet_output_file: Path = Path(build_path, f"{baseline_name}.xlsx")
 
-    baseline: Baseline = Baseline.from_yaml(args.baseline, args.os_name, args.os_version, custom)
+    baseline: Baseline = Baseline.from_yaml(
+        args.baseline, args.os_name, args.os_version, custom
+    )
 
     if args.audit_name:
         audit_name = args.audit_name
@@ -84,7 +95,9 @@ def generate_guidance(args: argparse.Namespace) -> None:
     if args.hash:
         signing = True
         if not verify_signing_hash(args.hash):
-            logger.error("Cannot use the provided hash to sign.  Please make sure you provide the subject key ID hash from an installed certificate")
+            logger.error(
+                "Cannot use the provided hash to sign.  Please make sure you provide the subject key ID hash from an installed certificate"
+            )
             sys.exit()
 
     if args.reference:
@@ -96,20 +109,18 @@ def generate_guidance(args: argparse.Namespace) -> None:
     if not build_path.exists():
         make_dir(build_path)
     else:
-        for root,dirs,files in build_path.walk(top_down=False):
-            for name in files:
-                (root / name).unlink()
-            for name in dirs:
-                (root / name).rmdir()
+        remove_dir_contents(build_path)
 
     logger.info(f"Profile YAML: {output_basename}")
     logger.info(f"Output path: {adoc_output_file.name}")
 
     if custom:
-        themes = list(Path(config["custom"]["misc_dir"]).glob('*theme*.yml'))
+        themes = list(Path(config["custom"]["misc_dir"]).glob("*theme*.yml"))
 
         if len(themes) > 1:
-            logger.warning("Found multiple custom themes in directory, only one can exist, using default")
+            logger.warning(
+                "Found multiple custom themes in directory, only one can exist, using default"
+            )
         elif len(themes) == 1:
             logger.info(f"Found custom PDF theme: {themes[0]}")
             pdf_theme = str(themes[0])
@@ -128,7 +139,6 @@ def generate_guidance(args: argparse.Namespace) -> None:
     if args.script:
         logger.info("Generating compliance script")
         generate_script(build_path, baseline_name, audit_name, baseline, log_reference)
-        generate_audit_plist(build_path, baseline_name, baseline)
 
     if args.xlsx:
         logger.info("Generating Excel document")
@@ -147,9 +157,18 @@ def generate_guidance(args: argparse.Namespace) -> None:
 
         logger.info("Generating compliance script")
         generate_script(build_path, baseline_name, audit_name, baseline, log_reference)
-        generate_audit_plist(build_path, baseline_name, baseline)
 
         logger.info("Generating Excel document")
         generate_excel(spreadsheet_output_file, baseline)
 
-    generate_documents(adoc_output_file, baseline, b64logo, pdf_theme, logo_path, args.os_name, current_version_data, show_all_tags, custom)
+    generate_documents(
+        adoc_output_file,
+        baseline,
+        b64logo,
+        pdf_theme,
+        logo_path,
+        args.os_name,
+        current_version_data,
+        show_all_tags,
+        custom,
+    )

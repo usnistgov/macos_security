@@ -1,5 +1,4 @@
 ---
-# yaml-language-server: $schema=../../../../../../schemas/rules.json
 id: system_settings_install_macos_updates_enforce
 title: Enforce macOS Updates are Automatically Installed
 discussion: |
@@ -10,7 +9,7 @@ check: |
   .objectForKey('AutomaticallyInstallMacOSUpdates').js
   EOS
 result:
-  boolean: true
+  string: "true"
 fix: |
   This is implemented by a Configuration Profile.
 references:

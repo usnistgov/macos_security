@@ -1,3 +1,4 @@
+---
 id: os_burn_support_disable
 title: Disable Burn Support
 discussion: |
@@ -37,14 +38,16 @@ operating_system:
       - 15.0
 tags:
   - 800-171
-  - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
   - cmmc_lvl2
+  - cnssi-1253_moderate
 severity: low
 mobileconfig: true
 mobileconfig_info:
-  com.apple.finder:
-    ProhibitBurn: true
-  com.apple.DiscRecording:
-    BurnSupport: 'off'
+  - PayloadType: com.apple.finder
+    PayloadContent:
+      ProhibitBurn: true
+  - PayloadType: com.apple.DiscRecording
+    PayloadContent:
+      BurnSupport: "off"

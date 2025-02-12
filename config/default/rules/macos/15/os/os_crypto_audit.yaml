@@ -1,3 +1,4 @@
+---
 id: os_crypto_audit
 title: Protect Audit Integrity with Cryptographic Mechanisms
 discussion: |
@@ -36,4 +37,4 @@ tags:
   - cnssi-1253_high
   - srg
 mobileconfig: false
-mobileconfig_info:
+mobileconfig_info: null

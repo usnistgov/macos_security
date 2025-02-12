@@ -1,3 +1,4 @@
+---
 id: os_gatekeeper_enable
 title: Enable Gatekeeper
 discussion: |
@@ -12,7 +13,7 @@ check: |
   .objectForKey('EnableAssessment').js
   EOS
 result:
-  string: 'true'
+  string: "true"
 fix: |
   This is implemented by a Configuration Profile.
 references:
@@ -20,6 +21,7 @@ references:
     - CCE-94195-5
   cci:
     - CCI-001749
+    - CCI-003992
   800-53r5:
     - CM-14
     - CM-5
@@ -33,8 +35,9 @@ references:
     - SI-7(15)
   srg:
     - SRG-OS-000366-GPOS-00153
+    - SRG-OS-000480-GPOS-00228
   disa_stig:
-    - N/A
+    - APPL-15-002064
   800-171r3:
     - 03.14.02
   cis:
@@ -63,14 +66,15 @@ tags:
   - cis_lvl1
   - cis_lvl2
   - cisv8
-  - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
   - cmmc_lvl2
   - cmmc_lvl1
   - stig
+  - cnssi-1253_moderate
 severity: high
 mobileconfig: true
 mobileconfig_info:
-  com.apple.systempolicy.control:
-    EnableAssessment: true
+  - PayloadType: com.apple.systempolicy.control
+    PayloadContent:
+      EnableAssessment: true

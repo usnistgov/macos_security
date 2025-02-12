@@ -1,3 +1,4 @@
+---
 id: os_separate_functionality
 title: Configure the System to Separate User and System Functionality
 discussion: |
@@ -41,10 +42,10 @@ tags:
   - 800-53r4_high
   - 800-171
   - inherent
-  - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
   - cmmc_lvl2
   - srg
+  - cnssi-1253_moderate
 mobileconfig: false
-mobileconfig_info:
+mobileconfig_info: null

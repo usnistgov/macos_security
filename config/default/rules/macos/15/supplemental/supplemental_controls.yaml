@@ -1,7 +1,6 @@
 ---
-# yaml-language-server: $schema=../../../../../../schemas/rules.json
 id: supplemental_controls
-title: "Out of Scope Supplemental"
+title: Out of Scope Supplemental
 discussion: |
   There are several requirements defined in National Institute of Standards and Technology (NIST) Special Publication (SP) 800-53, Security and Privacy Controls for Information Systems and Organizations, Revision 5 that can be met by making configuration changes to the operating system. However, NIST SP 800-53 (Rev. 5) contains a broad set of guidelines that attempt to address all aspects of an information system or systems within an organization. Because the macOS Security Compliance Project is tailored specifically to macOS, some requirements defined in NIST SP 800-53 (Rev. 5) are not applicable.
 
@@ -178,8 +177,8 @@ discussion: |
   |Controls
   |link:https://csrc.nist.gov/Projects/risk-management/sp800-53-controls/release-search#!/control?version=5.1&number=SI-1[SI-1], link:https://csrc.nist.gov/Projects/risk-management/sp800-53-controls/release-search#!/control?version=5.1&number=SI-4[SI-4], link:https://csrc.nist.gov/Projects/risk-management/sp800-53-controls/release-search#!/control?version=5.1&number=SI-4[SI-4(2)], link:https://csrc.nist.gov/Projects/risk-management/sp800-53-controls/release-search#!/control?version=5.1&number=SI-4[SI-4(4)], link:https://csrc.nist.gov/Projects/risk-management/sp800-53-controls/release-search#!/control?version=5.1&number=SI-4[SI-4(5)], link:https://csrc.nist.gov/Projects/risk-management/sp800-53-controls/release-search#!/control?version=5.1&number=SI-4[SI-4(12)], link:https://csrc.nist.gov/Projects/risk-management/sp800-53-controls/release-search#!/control?version=5.1&number=SI-4[SI-4(14)], link:https://csrc.nist.gov/Projects/risk-management/sp800-53-controls/release-search#!/control?version=5.1&number=SI-4[SI-4(20)], link:https://csrc.nist.gov/Projects/risk-management/sp800-53-controls/release-search#!/control?version=5.1&number=SI-4[SI-4(22)], link:https://csrc.nist.gov/Projects/risk-management/sp800-53-controls/release-search#!/control?version=5.1&number=SI-5[SI-5], link:https://csrc.nist.gov/Projects/risk-management/sp800-53-controls/release-search#!/control?version=5.1&number=SI-7[SI-7(2)], link:https://csrc.nist.gov/Projects/risk-management/sp800-53-controls/release-search#!/control?version=5.1&number=SI-8[SI-8(2)], link:https://csrc.nist.gov/Projects/risk-management/sp800-53-controls/release-search#!/control?version=5.1&number=SI-12[SI-12]
   |===
-check: |
-fix: |
+check: ""
+fix: ""
 references:
   cci:
     - N/A
@@ -210,7 +209,7 @@ tags:
   - cmmc_lvl2
   - cnssi-1253_high
   - cnssi-1253_low
-  - cnssi-1253_moderate
   - stig
   - supplemental
 mobileconfig: false
+mobileconfig_info: null

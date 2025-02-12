@@ -1,5 +1,4 @@
 ---
-# yaml-language-server: $schema=../../../../../../schemas/rules.json
 id: system_settings_system_wide_preferences_configure
 title: Require Administrator Password to Modify System-Wide Preferences
 discussion: |
@@ -34,7 +33,7 @@ fix: |
   for section in ${authDBs[@]}; do
     /usr/bin/security -q authorizationdb read "$section" > "/tmp/$section.plist"
 
-    class_key_value=$(usr/libexec/PlistBuddy -c "Print :class" "/tmp/$section.plist" 2>&1)
+    class_key_value=$(/usr/libexec/PlistBuddy -c "Print :class" "/tmp/$section.plist" 2>&1)
     if [[ "$class_key_value" == *"Does Not Exist"* ]]; then
       /usr/libexec/PlistBuddy -c "Add :class string user" "/tmp/$section.plist"
     else
@@ -62,7 +61,7 @@ fix: |
       /usr/libexec/PlistBuddy -c "Set :session-owner false" "/tmp/$section.plist"
     fi
 
-    group_key=$(usr/libexec/PlistBuddy -c "Print :group" "/tmp/$section.plist" 2>&1)
+    group_key=$(/usr/libexec/PlistBuddy -c "Print :group" "/tmp/$section.plist" 2>&1)
     if [[ "$group_key" == *"Does Not Exist"* ]]; then
       /usr/libexec/PlistBuddy -c "Add :group string admin" "/tmp/$section.plist"
     else
@@ -87,8 +86,9 @@ references:
     - AC-6(2)
   srg:
     - SRG-OS-000324-GPOS-00125
+    - SRG-OS-000480-GPOS-00228
   disa_stig:
-    - N/A
+    - APPL-15-002069
   800-171r3:
     - 03.01.07
   cis:
@@ -113,11 +113,12 @@ tags:
   - cis_lvl1
   - cis_lvl2
   - cisv8
-  - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
   - cmmc_lvl2
   - cmmc_lvl1
   - stig
+  - cnssi-1253_moderate
 severity: high
 mobileconfig: false
+mobileconfig_info: null

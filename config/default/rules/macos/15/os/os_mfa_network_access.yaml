@@ -1,3 +1,4 @@
+---
 id: os_mfa_network_access
 title: Enforce multifactor authentication for network access to privileged accounts
 discussion: |
@@ -33,4 +34,4 @@ tags:
   - inherent
   - cisv8
 mobileconfig: false
-mobileconfig_info:
+mobileconfig_info: null

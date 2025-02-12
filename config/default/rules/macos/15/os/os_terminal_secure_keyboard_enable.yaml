@@ -1,3 +1,4 @@
+---
 id: os_terminal_secure_keyboard_enable
 title: Ensure Secure Keyboard Entry Terminal.app is Enabled
 discussion: |
@@ -8,7 +9,7 @@ check: |
   .objectForKey('SecureKeyboardEntry').js
   EOS
 result:
-  string: 'true'
+  string: "true"
 fix: |
   This is implemented by a Configuration Profile.
 references:
@@ -41,5 +42,6 @@ tags:
   - cisv8
 mobileconfig: true
 mobileconfig_info:
-  com.apple.Terminal:
-    SecureKeyboardEntry: true
+  - PayloadType: com.apple.Terminal
+    PayloadContent:
+      SecureKeyboardEntry: true

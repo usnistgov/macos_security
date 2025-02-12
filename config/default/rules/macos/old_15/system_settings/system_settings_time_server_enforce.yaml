@@ -1,0 +1,68 @@
+---
+# yaml-language-server: $schema=../../../../../../schemas/rules.json
+id: system_settings_time_server_enforce
+title: Enforce macOS Time Synchronization
+discussion: |
+  Time synchronization _MUST_ be enforced on all networked systems.
+
+  This rule ensures the uniformity of time stamps for information systems with multiple system clocks and systems connected over a network.
+check: |
+  /usr/bin/osascript -l JavaScript << EOS
+  $.NSUserDefaults.alloc.initWithSuiteName('com.apple.timed')\
+  .objectForKey('TMAutomaticTimeOnlyEnabled').js
+  EOS
+result:
+  boolean: true
+fix: |
+  This is implemented by a Configuration Profile.
+references:
+  cce:
+    - CCE-94405-8
+  cci:
+    - CCI-001891
+    - CCI-002046
+  800-53r5:
+    - AU-12(1)
+    - SC-45(1)
+  800-53r4:
+    - AU-8(1)
+  srg:
+    - SRG-OS-000355-GPOS-00143
+    - SRG-OS-000356-GPOS-00144
+  disa_stig:
+    - N/A
+  800-171r3:
+    - 3.3.7
+  cis:
+    benchmark:
+      - 2.3.2.1 (level 1)
+    controls v8:
+      - 8.4
+  cmmc:
+    - AU.L2-3.3.7
+operating_system:
+  - name: macos
+    version:
+      - 15.0
+tags:
+  - 800-171
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_high
+  - 800-53r4_moderate
+  - 800-53r4_high
+  - cis_lvl1
+  - cis_lvl2
+  - cisv8
+  - cnssi-1253_moderate
+  - cnssi-1253_low
+  - cnssi-1253_high
+  - cmmc_lvl2
+  - stig
+severity: medium
+mobileconfig: true
+mobileconfig_info:
+  - PayloadType: com.apple.ManagedClient.preferences
+    PayloadContent:
+      com.apple.timed:
+        TMAutomaticTimeOnlyEnabled: true

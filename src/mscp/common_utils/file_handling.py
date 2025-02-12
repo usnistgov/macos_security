@@ -1,19 +1,39 @@
 # mscp/common_utils/file_handling.py
 
 # Standard python modules
-import yaml
 import csv
+import json
 import plistlib
-
 from pathlib import Path
-from typing import Optional, Any
+from typing import Any
+
+import yaml
 
 # Additional python modules
 from loguru import logger
 
 # Local python modules
 
-ENCODING = 'utf-8'
+ENCODING = "utf-8"
+
+
+def _str_presenter(dumper, data):
+    """
+    Preserve multiline strings when dumping yaml.
+    https://github.com/yaml/pyyaml/issues/240
+    """
+    if "\n" in data:
+        # Remove trailing spaces messing out the output.
+        block = "\n".join([line.rstrip() for line in data.splitlines()])
+        if data.endswith("\n"):
+            block += "\n"
+        return dumper.represent_scalar("tag:yaml.org,2002:str", block, style="|")
+    return dumper.represent_scalar("tag:yaml.org,2002:str", data)
+
+
+yaml.add_representer(str, _str_presenter)
+yaml.representer.SafeRepresenter.add_representer(str, _str_presenter)
+
 
 def open_file(file_path: Path) -> str:
     """
@@ -49,7 +69,7 @@ def open_yaml(file_path: Path) -> dict[str, Any]:
     """
 
     try:
-        logger.debug("Attempting to open CSV: {}", file_path)
+        logger.debug("Attempting to open YAML: {}", file_path)
 
         data = yaml.safe_load(file_path.read_text(encoding=ENCODING))
         return data if isinstance(data, dict) else {}
@@ -62,9 +82,7 @@ def open_yaml(file_path: Path) -> dict[str, Any]:
         Exception,
     ) as e:
         logger.error(
-            "An error occurred while opening the file: {}. Error: {}",
-            file_path,
-            e
+            "An error occurred while opening the file: {}. Error: {}", file_path, e
         )
         raise
 
@@ -82,7 +100,9 @@ def open_csv(file_path: Path) -> dict[str, Any]:
 
     try:
         logger.debug("Attempting to open CSV: {}", file_path)
-        data = csv.DictReader(file_path.read_text(encoding='utf-8-sig'), dialect="excel")
+        data = csv.DictReader(
+            file_path.read_text(encoding="utf-8-sig"), dialect="excel"
+        )
         return data if isinstance(data, dict) else {}
 
     except (FileNotFoundError, PermissionError, csv.Error, IOError, Exception) as e:
@@ -105,22 +125,19 @@ def open_plist(file_path: Path) -> dict[str, dict[str, bool]]:
     try:
         logger.debug("Attempting to open plist: {}", file_path)
 
-        with file_path.open('rb') as file:
+        with file_path.open("rb") as file:
             return plistlib.load(file)
+    except plistlib.InvalidFileException as e:
+        raise
 
-
-    except (FileNotFoundError, PermissionError, plistlib.InvalidFileException, IOError, Exception) as e:
+    except (FileNotFoundError, PermissionError, IOError, Exception) as e:
         logger.error(
-            "An error occurred while opening the file: {}. Error: {}",
-            file_path,
-            e
+            "An error occurred while opening the file: {}. Error: {}", file_path, e
         )
         raise
 
 
-def create_yaml(
-    file_path: Path, data: dict[str, Any], yaml_type: str, sort_keys: bool = False
-) -> None:
+def create_yaml(file_path: Path, data: dict[str, Any], sort_keys: bool = False) -> None:
     """
     Create YAML file.
 
@@ -134,29 +151,43 @@ def create_yaml(
     """
     try:
         logger.debug("Attempting to create YAML: {}", file_path)
-        yaml_content: str = "---\n"
 
-        match yaml_type:
-            case "baseline":
-                yaml_content += "# yaml-language-server: $schema=https://raw.githubusercontent.com/snoopy82481/macos_security/main/schemas/baseline.json\n"
-            case "rule":
-                yaml_content += "# yaml-language-server: $schema=https://raw.githubusercontent.com/snoopy82481/macos_security/main/schemas/rules.json\n"
-            case _:
-                logger.error("Yaml type has no schema validation yet.")
+        if not file_path.exists():
+            file_path.touch()
 
-        with file_path.open("w", encoding=ENCODING) as file:
-            file.write(yaml_content)
+        file_path.write_bytes(
             yaml.dump(
-                dict(data), stream=file, explicit_start=False, sort_keys=sort_keys, indent=2, default_flow_style=False
+                dict(data),
+                default_flow_style=False,
+                sort_keys=sort_keys,
+                explicit_start=True,
+                indent=2,
+                encoding=ENCODING,
             )
+        )
+
+        # with file_path.open("w", encoding=ENCODING) as file:
+        #     file.write(yaml_content)
+        #     yaml.dump(
+        #         dict(data),
+        #         stream=file,
+        #         explicit_start=False,
+        #         sort_keys=sort_keys,
+        #         indent=2,
+        #         default_flow_style=False,
+        #     )
 
         logger.success("Created YAML: {}", file_path)
 
+    except yaml.YAMLError as e:
+        logger.error(
+            "An error occurred while processing the file: {}. Error: {}", file_path, e
+        )
+        raise
+
     except Exception as e:
         logger.error(
-            "An error occurred while opening the file: {}. Error: {}",
-            file_path,
-            e
+            "An error occurred while opening the file: {}. Error: {}", file_path, e
         )
         raise
 
@@ -176,9 +207,7 @@ def create_file(file_path: Path, data: str) -> None:
         file_path.write_text(data, encoding=ENCODING)
     except (FileNotFoundError, PermissionError, IOError) as e:
         logger.error(
-            "An error occurred while opening the file: {}. Error: {}",
-            file_path,
-            e
+            "An error occurred while opening the file: {}. Error: {}", file_path, e
         )
         raise
 
@@ -189,14 +218,71 @@ def create_plist(file_path: Path, data: dict[str, Any]) -> None:
             plistlib.dump(data, file)
     except Exception as e:
         logger.error(
-            "An error occurred while processing the file: {}. Error: {}",
-            file_path,
-            e
+            "An error occurred while processing the file: {}. Error: {}", file_path, e
+        )
+        raise
+
+
+def create_json(file_path: Path, data: dict[str, Any]) -> None:
+    """
+    Creates a JSON file at the specified file path with the given data.
+
+    Args:
+        file_path (Path): The path where the JSON file will be created.
+        data (dict[str, Any]): The data to be written to the JSON file.
+
+    Raises:
+        Exception: If an error occurs while writing to the file, it logs the error and re-raises the exception.
+    """
+    try:
+        file_path.write_text(json.dumps(data, indent=2))
+        # with file_path.open("w") as file:
+        #     json.dump(data, file, indent=2)
+    except Exception as e:
+        logger.error(
+            "An error occurred while processing the file: {}. Error: {}", file_path, e
+        )
+        raise
+
+
+def create_csv(file_path: Path, data: list[dict[str, Any]]) -> None:
+    """
+    Creates a CSV file at the specified file path with the given data.
+
+    Args:
+        file_path (Path): The path where the CSV file will be created.
+        data (list[dict[str, Any]]): The data to be written to the CSV file.
+
+    Raises:
+        Exception: If an error occurs while writing to the file, it logs the error and re-raises the exception.
+    """
+    try:
+        with file_path.open("w", newline="", encoding=ENCODING) as file:
+            writer = csv.DictWriter(file, fieldnames=data[0].keys())
+            writer.writeheader()
+            writer.writerows(data)
+    except Exception as e:
+        logger.error(
+            "An error occurred while processing the file: {}. Error: {}", file_path, e
         )
         raise
 
 
 def make_dir(folder_path: Path) -> None:
+    """
+    Creates a directory at the specified folder path if it does not already exist.
+
+    Args:
+        folder_path (Path): The path of the folder to be created.
+
+    Raises:
+        OSError: If the directory creation fails.
+
+    Logs:
+        Success message if the directory is created successfully.
+        Error message if the directory creation fails.
+        Debug message with the error details if the directory creation fails.
+    """
     if not folder_path.exists():
         try:
             folder_path.mkdir(parents=True)
@@ -237,6 +323,18 @@ def append_text(
 
 
 def remove_dir(folder_path: Path) -> None:
+    """
+    Remove a directory and all its contents.
+
+    This function removes the specified directory and all its files and subdirectories.
+    It logs the process of removal and handles any errors that may occur.
+
+    Args:
+        folder_path (Path): The path to the directory to be removed.
+
+    Raises:
+        OSError: If an error occurs during the removal process.
+    """
     if folder_path.exists():
         try:
             logger.debug("Removing folder: {}", folder_path)
@@ -255,18 +353,61 @@ def remove_dir(folder_path: Path) -> None:
             raise
 
 
+def remove_dir_contents(folder_path: Path) -> None:
+    """
+    Remove the contents of a directory without removing the directory itself.
+
+    This function removes all files and subdirectories within the specified directory.
+    It logs the process of removal and handles any errors that may occur.
+
+    Args:
+        folder_path (Path): The path to the directory whose contents will be removed.
+
+    Raises:
+        OSError: If an error occurs during the removal process.
+    """
+    if folder_path.exists():
+        try:
+            logger.debug("Removing contents of folder: {}", folder_path)
+            for root, dirs, files in folder_path.walk(top_down=False):
+                for name in files:
+                    (root / name).unlink()
+                for name in dirs:
+                    (root / name).rmdir()
+
+            logger.success("Removed contents of folder: {}", folder_path)
+
+        except OSError as e:
+            logger.error("Removal of {} failed.", folder_path)
+            logger.debug("Error message: {}", str(e))
+            raise
+
+
 def remove_file(file_path: Path) -> None:
+    """
+    Remove the specified file if it exists.
+
+    Args:
+        file_path (Path): The path to the file to be removed.
+
+    Raises:
+        OSError: If an error occurs while removing the file.
+
+    Logs:
+        Success: When the file is successfully removed.
+        Warning: If the file is not found.
+        Error: If an error occurs while removing the file.
+    """
     if file_path.exists():
         try:
             file_path.unlink()
             logger.success("Removed file: {}", file_path)
-        except FileNotFoundError as e:
+
+        except FileNotFoundError:
             logger.warning("File Name not found: {}", file_path)
 
         except OSError as e:
             logger.error(
-                "An error occurred while removing the file: {}. Error: {}",
-                file_path,
-                e
+                "An error occurred while removing the file: {}. Error: {}", file_path, e
             )
             raise

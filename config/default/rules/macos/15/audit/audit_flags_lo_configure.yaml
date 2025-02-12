@@ -1,3 +1,4 @@
+---
 id: audit_flags_lo_configure
 title: Configure System to Audit All Log In and Log Out Events
 discussion: |
@@ -43,8 +44,9 @@ references:
     - SRG-OS-000472-GPOS-00217
     - SRG-OS-000471-GPOS-00215
     - SRG-OS-000458-GPOS-00203
+    - SRG-OS-000755-GPOS-00220
   disa_stig:
-    - N/A
+    - APPL-15-001002
   800-171r3:
     - 03.03.01
     - 03.03.03
@@ -75,11 +77,11 @@ tags:
   - 800-171
   - cis_lvl2
   - cisv8
-  - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
   - cmmc_lvl2
   - stig
+  - cnssi-1253_moderate
 severity: medium
 mobileconfig: false
-mobileconfig_info:
+mobileconfig_info: null

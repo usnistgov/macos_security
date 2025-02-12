@@ -1,3 +1,4 @@
+---
 id: os_home_folders_default
 title: Configure User's Home Folders to Apple's Default
 discussion: |
@@ -24,7 +25,7 @@ check: |-
   0: group:everyone deny delete
 
   If the permissions returned by either of these checks differ from what is shown, this is a finding.
-result: ''
+result: ""
 fix: |-
   Configure the macOS system to set the appropriate permissions for each user on the system with the following command:
 
@@ -57,6 +58,9 @@ operating_system:
       - 15.0
 tags:
   - manual
+  - cnssi-1253_moderate
+  - cnssi-1253_low
+  - cnssi-1253_high
 severity: medium
 mobileconfig: false
-mobileconfig_info:
+mobileconfig_info: null

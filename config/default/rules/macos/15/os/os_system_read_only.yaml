@@ -1,3 +1,4 @@
+---
 id: os_system_read_only
 title: Ensure System Volume is Read Only
 discussion: |
@@ -7,7 +8,7 @@ discussion: |
 check: |
   /usr/sbin/system_profiler SPStorageDataType | /usr/bin/awk '/Mount Point: \/$/{x=NR+2}(NR==x){print $2}'
 result:
-  string: 'No'
+  string: "No"
 fix: |
   NOTE: To remount the System volume as Read Only, rebooting the computer will mount it as Read Only.
 references:
@@ -35,8 +36,8 @@ tags:
   - 800-53r5_high
   - 800-53r4_moderate
   - 800-53r4_high
-  - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
+  - cnssi-1253_moderate
 mobileconfig: false
-mobileconfig_info:
+mobileconfig_info: null

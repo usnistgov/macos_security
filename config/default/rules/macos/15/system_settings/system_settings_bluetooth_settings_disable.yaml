@@ -1,5 +1,4 @@
 ---
-# yaml-language-server: $schema=../../../../../../schemas/rules.json
 id: system_settings_bluetooth_settings_disable
 title: Disable the Bluetooth System Settings Pane
 discussion: |
@@ -23,7 +22,7 @@ references:
   srg:
     - SRG-OS-000095-GPOS-00049
   disa_stig:
-    - N/A
+    - APPL-15-002260
   800-171r3:
     - 03.04.06
   cis:
@@ -46,6 +45,9 @@ tags:
   - cisv8
   - cmmc_lvl2
   - stig
+  - cnssi-1253_moderate
+  - cnssi-1253_low
+  - cnssi-1253_high
 severity: medium
 mobileconfig: true
 mobileconfig_info:

@@ -1,3 +1,4 @@
+---
 id: os_safari_show_full_website_address_enable
 title: Ensure Show Full Website Address in Safari Is Enabled
 discussion: |
@@ -36,5 +37,6 @@ tags:
   - cisv8
 mobileconfig: true
 mobileconfig_info:
-  com.apple.Safari:
-    ShowFullURLInSmartSearchField: true
+  - PayloadType: com.apple.Safari
+    PayloadContent:
+      ShowFullURLInSmartSearchField: true

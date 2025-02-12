@@ -1,5 +1,4 @@
 ---
-# yaml-language-server: $schema=../../../../../../schemas/rules.json
 id: system_settings_critical_update_install_enforce
 title: Enforce Critical Security Updates to be Installed
 discussion: |
@@ -10,7 +9,7 @@ check: |
   .objectForKey('CriticalUpdateInstall').js
   EOS
 result:
-  boolean: true
+  string: "true"
 fix: |
   This is implemented by a Configuration Profile.
 references:
@@ -49,11 +48,11 @@ tags:
   - cis_lvl1
   - cis_lvl2
   - cisv8
-  - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
   - cmmc_lvl2
   - cmmc_lvl1
+  - cnssi-1253_moderate
 mobileconfig: true
 mobileconfig_info:
   - PayloadType: com.apple.SoftwareUpdate

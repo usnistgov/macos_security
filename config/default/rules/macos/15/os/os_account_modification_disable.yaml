@@ -1,5 +1,6 @@
+---
 id: os_account_modification_disable
-title: "Disable AppleID and Internet Account Modifications"
+title: Disable AppleID and Internet Account Modifications
 discussion: |
   The system _MUST_ disable account modification.
 
@@ -39,7 +40,7 @@ references:
   srg:
     - SRG-OS-000095-GPOS-00049
   disa_stig:
-    - N/A
+    - APPL-15-002120
   800-171r3:
     - 03.01.20
     - 03.04.06
@@ -66,14 +67,15 @@ tags:
   - 800-53r4_high
   - 800-171
   - cisv8
-  - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
   - cmmc_lvl2
   - cmmc_lvl1
   - stig
+  - cnssi-1253_moderate
 severity: medium
 mobileconfig: true
 mobileconfig_info:
-  com.apple.applicationaccess:
-    allowAccountModification: false
+  - PayloadType: com.apple.applicationaccess
+    PayloadContent:
+      allowAccountModification: false

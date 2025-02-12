@@ -1,3 +1,4 @@
+---
 id: os_isolate_security_functions
 title: Configure the System to Separate User and System Functionality
 discussion: |
@@ -34,4 +35,4 @@ tags:
   - cnssi-1253_high
   - srg
 mobileconfig: false
-mobileconfig_info:
+mobileconfig_info: null

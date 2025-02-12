@@ -1,7 +1,6 @@
 ---
-# yaml-language-server: $schema=../../../../../../schemas/rules.json
 id: supplemental_smartcard
-title: "Smartcard Supplemental"
+title: Smartcard Supplemental
 discussion: |
   The supplemental guidance found in this section is applicable for the following rules:
 
@@ -288,8 +287,8 @@ discussion: |
   <key>ignoreArd</key>
   <true/>
   ----
-check: |
-fix: |
+check: ""
+fix: ""
 references:
   cci:
     - N/A
@@ -320,7 +319,7 @@ tags:
   - cmmc_lvl2
   - cnssi-1253_high
   - cnssi-1253_low
-  - cnssi-1253_moderate
   - stig
   - supplemental
 mobileconfig: false
+mobileconfig_info: null

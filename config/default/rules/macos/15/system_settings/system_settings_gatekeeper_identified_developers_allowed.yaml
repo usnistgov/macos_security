@@ -1,5 +1,4 @@
 ---
-# yaml-language-server: $schema=../../../../../../schemas/rules.json
 id: system_settings_gatekeeper_identified_developers_allowed
 title: Apply Gatekeeper Settings to Block Applications from Unidentified Developers
 discussion: |
@@ -21,7 +20,7 @@ check: |
   }
   EOS
 result:
-  boolean: true
+  string: "true"
 fix: |
   This is implemented by a Configuration Profile.
 references:
@@ -29,6 +28,7 @@ references:
     - CCE-94364-7
   cci:
     - CCI-001749
+    - CCI-003992
   800-53r5:
     - CM-14
     - CM-5
@@ -40,8 +40,9 @@ references:
     - SI-7(15)
   srg:
     - SRG-OS-000366-GPOS-00153
+    - SRG-OS-000480-GPOS-00228
   disa_stig:
-    - N/A
+    - APPL-15-002060
   800-171r3:
     - 03.14.02
   cmmc:
@@ -57,11 +58,11 @@ tags:
   - 800-53r4_moderate
   - 800-53r4_high
   - 800-171
-  - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
   - cmmc_lvl2
   - stig
+  - cnssi-1253_moderate
 severity: high
 mobileconfig: true
 mobileconfig_info:

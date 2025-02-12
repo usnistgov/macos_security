@@ -1,3 +1,4 @@
+---
 id: os_config_data_install_enforce
 title: Enforce Installation of XProtect Remediator and Gatekeeper Updates Automatically
 discussion: |
@@ -14,7 +15,7 @@ check: |
   .objectForKey('ConfigDataInstall').js
   EOS
 result:
-  string: 'true'
+  string: "true"
 fix: |
   This is implemented by a Configuration Profile.
 references:
@@ -30,7 +31,7 @@ references:
   srg:
     - SRG-OS-000480-GPOS-00227
   disa_stig:
-    - N/A
+    - APPL-15-005130
   800-171r3:
     - 03.14.02
   cis:
@@ -55,14 +56,15 @@ tags:
   - cis_lvl1
   - cis_lvl2
   - cisv8
-  - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
   - cmmc_lvl2
   - cmmc_lvl1
   - stig
+  - cnssi-1253_moderate
 severity: medium
 mobileconfig: true
 mobileconfig_info:
-  com.apple.SoftwareUpdate:
-    ConfigDataInstall: true
+  - PayloadType: com.apple.SoftwareUpdate
+    PayloadContent:
+      ConfigDataInstall: true

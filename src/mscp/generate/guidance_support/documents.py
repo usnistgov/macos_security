@@ -3,20 +3,17 @@
 # Standard python modules
 import re
 import sys
-
+from itertools import groupby
 from pathlib import Path
 from typing import Any
-from itertools import groupby
 
 # Additional python modules
-from jinja2 import Environment, FileSystemLoader
+from jinja2 import Environment, FileSystemLoader, Template
 from loguru import logger
-from icecream import ic
 
 # Local python modules
-from src.mscp.classes.baseline import Baseline
-from src.mscp.common_utils.config import config
-from src.mscp.common_utils.run_command import run_command
+from src.mscp.classes import Baseline
+from src.mscp.common_utils import config, run_command
 
 
 def group_ulify(elements: list[str]) -> str:
@@ -27,6 +24,14 @@ def group_ulify(elements: list[str]) -> str:
     grouped = [list(i) for _, i in groupby(elements, lambda a: a.split("(")[0])]
 
     return "\n".join(" * " + ", ".join(group) for group in grouped).strip()
+
+
+def extract_from_title(title: str) -> str:
+    return (
+        match.group()
+        if (match := re.search(r"(?<=\()(.*?)(?=\s*\))", title, re.IGNORECASE))
+        else ""
+    )
 
 
 def generate_documents(
@@ -58,9 +63,7 @@ def generate_documents(
         None
     """
     env: Environment = Environment(
-        loader=FileSystemLoader(config["defaults"]["adoc_templates_dir"]),
-        trim_blocks=True,
-        lstrip_blocks=True,
+        loader=FileSystemLoader(config["defaults"]["adoc_templates_dir"])
     )
 
     styles_dir: str = config["defaults"]["misc_dir"]
@@ -70,11 +73,11 @@ def generate_documents(
     html_title: str = baseline.title.split(":")[0]
     html_subtitle: str = baseline.title.split(":")[1].strip()
     document_subtitle2: str = ":document-subtitle2:"
-    extract_from_title = lambda title: (
-        match.group()
-        if (match := re.search(r"(?<=\()(.*?)(?=\s*\))", title, re.IGNORECASE))
-        else None
-    )
+    # extract_from_title = lambda title: (
+    #     match.group()
+    #     if (match := re.search(r"(?<=\()(.*?)(?=\s*\))", title, re.IGNORECASE))
+    #     else None
+    # )
 
     if custom:
         env = Environment(
@@ -86,14 +89,14 @@ def generate_documents(
 
     env.filters["group_ulify"] = group_ulify
 
-    main_template = env.get_template("main.adoc.jinja")
+    main_template: Template = env.get_template("main.adoc.jinja")
 
     baseline_dict: dict[str, Any] = baseline.model_dump()
 
     if "Talored from" in baseline.title:
-        html_subtitle = html_subtitle.split("(")[0]
-        html_subtitle2: str = str(extract_from_title(baseline.title))
-        document_subtitle2 = f"{document_subtitle2} {html_subtitle2}"
+        html_subtitle: str = html_subtitle.split("(")[0]
+        html_subtitle2: str = extract_from_title(baseline.title)
+        document_subtitle2: str = f"{document_subtitle2} {html_subtitle2}"
 
     rendered_output = main_template.render(
         baseline=baseline_dict,

@@ -1,0 +1,102 @@
+id: audit_flags_ad_configure
+title: Configure System to Audit All Administrative Action Events
+discussion: |
+  The auditing system _MUST_ be configured to flag administrative action (ad) events.
+
+  Administrative action events include changes made to the system (e.g. modifying authentication policies). If audit records do not include ad events, it is difficult to identify incidents and to correlate incidents to subsequent events.
+
+  Audit records can be generated from various components within the information system (e.g., via a module or policy filter).
+
+  The information system audits the execution of privileged functions.
+
+  NOTE: We recommend changing the line "43127:AUE_MAC_SYSCALL:mac_syscall(2):ad" to "43127:AUE_MAC_SYSCALL:mac_syscall(2):zz" in the file /etc/security/audit_event. This will prevent sandbox violations from being audited by the ad flag.
+check: |
+  /usr/bin/awk -F':' '/^flags/ { print $NF }' /etc/security/audit_control | /usr/bin/tr ',' '\n' | /usr/bin/grep -Ec 'ad'
+result:
+  integer: 1
+fix: |
+  [source,bash]
+  ----
+  /usr/bin/grep -qE "^flags.*[^-]ad" /etc/security/audit_control || /usr/bin/sed -i.bak '/^flags/ s/$/,ad/' /etc/security/audit_control; /usr/sbin/audit -s
+  ----
+references:
+  cce:
+    - CCE-94116-1
+  cci:
+    - CCI-000018
+    - CCI-000172
+    - CCI-001403
+    - CCI-001404
+    - CCI-001405
+    - CCI-001814
+    - CCI-002234
+    - CCI-002884
+  800-53r5:
+    - AC-2(12)
+    - AC-6(9)
+    - AU-12
+    - AC-2(4)
+    - AU-2
+    - MA-4(1)
+    - CM-5(1)
+  800-53r4:
+    - AU-2
+    - AC-2(4)
+    - AC-6(9)
+    - AU-12
+    - MA-4(1)
+  srg:
+    - SRG-OS-000304-GPOS-00121
+    - SRG-OS-000365-GPOS-00152
+    - SRG-OS-000392-GPOS-00172
+    - SRG-OS-000239-GPOS-00089
+    - SRG-OS-000240-GPOS-00090
+    - SRG-OS-000004-GPOS-00004
+    - SRG-OS-000241-GPOS-00091
+    - SRG-OS-000274-GPOS-00104
+    - SRG-OS-000327-GPOS-00127
+    - SRG-OS-000471-GPOS-00216
+    - SRG-OS-000476-GPOS-00221
+    - SRG-OS-000471-GPOS-00215
+    - SRG-OS-000458-GPOS-00203
+    - SRG-OS-000303-GPOS-00120
+  disa_stig:
+    - N/A
+  800-171r3:
+    - 03.01.07
+    - 03.03.01
+    - 03.03.03
+  cis:
+    benchmark:
+      - 3.2 (level 2)
+    controls v8:
+      - 3.14
+      - 8.2
+      - 8.5
+  cmmc:
+    - AU.L2-3.3.3
+    - AU.L2-3.3.6
+    - SI.L2-3.14.3
+operating_system:
+  - name: macos
+    version:
+      - 15.0
+tags:
+  - 800-53r5_privacy
+  - 800-53r4_low
+  - 800-53r4_moderate
+  - 800-53r4_high
+  - 800-53r5_moderate
+  - 800-53r5_high
+  - 800-53r5_low
+  - 800-171
+  - cis_lvl2
+  - cisv8
+  - cnssi-1253_moderate
+  - cnssi-1253_low
+  - cnssi-1253_high
+  - cmmc_lvl2
+  - stig
+severity: medium
+mobileconfig: false
+mobileconfig_info:

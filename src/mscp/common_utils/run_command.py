@@ -1,13 +1,13 @@
 # mscp/common_utils/run_command.py
 
 # Standard python modules
-import subprocess
 import shlex
-
+import subprocess
 from typing import Optional
 
 # Additional python modules
 from loguru import logger
+
 
 def run_command(command: str) -> tuple[Optional[str], Optional[str]]:
     """

@@ -1,3 +1,4 @@
+---
 id: os_logical_access
 title: Enforce Approved Authorization for Logical Access
 discussion: |
@@ -47,11 +48,11 @@ tags:
   - 800-171
   - inherent
   - cisv8
-  - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
   - cmmc_lvl2
   - cmmc_lvl1
   - srg
+  - cnssi-1253_moderate
 mobileconfig: false
-mobileconfig_info:
+mobileconfig_info: null

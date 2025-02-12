@@ -1,3 +1,4 @@
+---
 id: os_library_validation_enabled
 title: Enable Library Validation
 discussion: Library validation  _MUST_ be enabled.
@@ -7,7 +8,7 @@ check: |
   .objectForKey('DisableLibraryValidation').js
   EOS
 result:
-  string: 'false'
+  string: "false"
 fix: |
   This is implemented by a Configuration Profile.
 references:
@@ -39,5 +40,6 @@ tags:
   - cisv8
 mobileconfig: true
 mobileconfig_info:
-  com.apple.security.libraryvalidation:
-    DisableLibraryValidation: false
+  - PayloadType: com.apple.security.libraryvalidation
+    PayloadContent:
+      DisableLibraryValidation: false

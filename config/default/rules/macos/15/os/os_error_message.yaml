@@ -1,3 +1,4 @@
+---
 id: os_error_message
 title: Generate Error Messages without Exploitable Information
 discussion: |
@@ -26,4 +27,4 @@ operating_system:
 tags:
   - inherent
 mobileconfig: false
-mobileconfig_info:
+mobileconfig_info: null

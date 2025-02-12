@@ -1,3 +1,4 @@
+---
 id: os_provide_automated_account_management
 title: Employ Automated Mechanisms for Account Management Functions
 discussion: |
@@ -33,8 +34,8 @@ tags:
   - 800-53r4_moderate
   - 800-53r4_high
   - permanent
-  - cnssi-1253_moderate
   - cnssi-1253_high
   - srg
+  - cnssi-1253_moderate
 mobileconfig: false
-mobileconfig_info:
+mobileconfig_info: null

@@ -1,0 +1,391 @@
+{
+  "$schema": "https://json-schema.org/draft/2019-09/schema",
+  "title": "STIG Viewer 3 Checklist",
+  "description": "A file used for storing STIG Viewer checklists, containing rules with finding statuses, comments, and data about the target system.",
+  "additionalProperties": false,
+  "required": [
+    "title",
+    "id"
+  ],
+  "properties": {
+    "title": {
+      "description": "The STIG filename when it was last saved",
+      "type": "string"
+    },
+    "cklb_version": {
+      "description": "[Optional] Schema Version, Defaults to 1.0",
+      "type": "string",
+      "const": "1.0"
+    },
+    "id": {
+      "description": "A UUID that uniquely itentifies the checklist",
+      "type": "string",
+      "format": "uuid"
+    },
+    "active": {
+      "description": "[Optional] Internal use by SV3",
+      "type": "boolean"
+    },
+    "mode": {
+      "description": "[Optional] Used By SV3 to track if the checklist is in build or fill mode",
+      "type": "number"
+    },
+    "has_path": {
+      "description": "[Optional] Internal use by SV3",
+      "type": "boolean"
+    },
+    "target_data": {
+      "description": "[Optional] Properties of the scanned system",
+      "$ref": "#/$defs/target_data"
+    },
+    "stigs": {
+      "description": "[Optional] An array of STIGs contained in the checklist",
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/stig"
+      }
+    }
+  },
+  "$defs": {
+    "target_data": {
+      "description": "Properties of the scanned system",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [],
+      "properties": {
+        "target_type": {
+          "description": "",
+          "type": "string"
+        },
+        "host_name": {
+          "description": "",
+          "type": "string"
+        },
+        "ip_address": {
+          "description": "",
+          "type": "string"
+        },
+        "mac_address": {
+          "description": "",
+          "type": "string"
+        },
+        "fqdn": {
+          "description": "",
+          "type": "string"
+        },
+        "comments": {
+          "description": "",
+          "type": "string"
+        },
+        "role": {
+          "description": "",
+          "type": "string"
+        },
+        "is_web_database": {
+          "description": "",
+          "type": "boolean"
+        },
+        "technology_area": {
+          "description": "",
+          "type": "string"
+        },
+        "web_db_site": {
+          "description": "",
+          "type": "string"
+        },
+        "web_db_instance": {
+          "description": "",
+          "type": "string"
+        }
+      }
+    },
+    "stig": {
+      "description": "",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "stig_name",
+        "display_name",
+        "stig_id",
+        "release_info",
+        "uuid",
+        "size"
+      ],
+      "properties": {
+        "stig_name": {
+          "description": "The Full STIG Name taken from the title field of the origin STIG",
+          "type": "string"
+        },
+        "display_name": {
+          "description": "A formatted STIG Name that's more suitable for compact display like abbreviating 'Security Technical Implementation Guide' to 'STIG'",
+          "type": "string"
+        },
+        "stig_id": {
+          "description": "The Benchmark ID taken from the origin STIG",
+          "type": "string"
+        },
+        "release_info": {
+          "description": "The Release Info taken from the origin STIG, usually contains the STIG version and release date",
+          "type": "string"
+        },
+        "uuid": {
+          "type": "string",
+          "description": "A unique identifier used to tie a STIG to a specific STIG",
+          "format": "uuid"
+        },
+        "reference_identifier": {
+          "description": "The Refrence -> identifier from the first rule in the checklist",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "size": {
+          "description": "The TOTAL number of rules in the origin STIG, even if the rules were cherrypicked. Comparing this to the length of rules will indicate if there are missing rules",
+          "type": "integer"
+        },
+        "rules": {
+          "description": "An array of Checklist Rule Objects that contain data from STIG rules and any data captured by the checklist editor",
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/stig_rule"
+          }
+        }
+      }
+    },
+    "stig_rule": {
+      "description": "Rules taken from the origin STIG, any fields without descriptions are copied 1:1 from the origin.",
+      "additionalProperties": false,
+      "properties": {
+        "uuid": {
+          "description": "A unique identifier for the checklist rule",
+          "type": "string"
+        },
+        "stig_uuid": {
+          "description": "The UUID of the origin STIG",
+          "type": "string"
+        },
+        "group_id": {
+          "description": "A prettier version of group_id_src for display, removes text like 'xccdf_mil.disa.stig_group_'",
+          "type": "string"
+        },
+        "group_id_src": {
+          "description": "The GroupID from the rule in the origin STIG",
+          "type": "string"
+        },
+        "rule_id": {
+          "description": "A prettier version of rule_id_src for rule display, removes text like 'xccdf_mil.disa.stig_rule_' or 'rule_'",
+          "type": "string"
+        },
+        "rule_id_src": {
+          "description": "The RuleID from the rule in the origin STIG",
+          "type": "string"
+        },
+        "target_key": {
+          "description": "The identifier value from the Reference tag",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "stig_ref": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "weight": {
+          "description": "Weight from origin STIG",
+          "type": "string"
+        },
+        "classification": {
+          "description": "Class from origin STIG",
+          "type": "string"
+        },
+        "severity": {
+          "description": "Severity from origin STIG",
+          "type": "string",
+          "enum": [
+            "unknown",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        "rule_version": {
+          "description": "Rule_Ver from origin STIG",
+          "type": "string"
+        },
+        "rule_title": {
+          "description": "Rule_Title from origin STIG",
+          "type": "string"
+        },
+        "fix_text": {
+          "description": "FixText from origin STIG",
+          "type": "string"
+        },
+        "reference_identifier": {
+          "description": "The identifier value from the Reference tag",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "group_title": {
+          "description": "Group_Title from origin STIG",
+          "type": "string"
+        },
+        "false_positives": {
+          "description": "False_Positives from origin STIG",
+          "type": "string"
+        },
+        "false_negatives": {
+          "description": "False_Negatives from origin STIG",
+          "type": "string"
+        },
+        "discussion": {
+          "description": "Discussion from origin STIG",
+          "type": "string"
+        },
+        "documentable": {
+          "description": "Documentable from origin STIG",
+          "type": "string"
+        },
+        "mitigations": {
+          "description": "Mitigations from origin STIG",
+          "type": "string"
+        },
+        "potential_impacts": {
+          "description": "Potential_Impacts from origin STIG",
+          "type": "string"
+        },
+        "third_party_tools": {
+          "description": "Third_Party_Tools from origin STIG",
+          "type": "string"
+        },
+        "mitigation_control": {
+          "description": "Mitigation_Control from origin STIG",
+          "type": "string"
+        },
+        "responsibility": {
+          "description": "Responsibility from origin STIG",
+          "type": "string"
+        },
+        "security_override_guidance": {
+          "description": "Security_Override_Guidance from origin STIG",
+          "type": "string"
+        },
+        "ia_controls": {
+          "description": "IA_Controls from origin STIG",
+          "type": "string"
+        },
+        "check_content": {
+          "description": "Check_Content from origin STIG",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "check_content_ref": {
+          "description": "CheckContentRef from origin STIG",
+          "type": [
+            "object",
+            "null"
+          ],
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "href": {
+              "type": "string"
+            }
+          }
+        },
+        "legacy_ids": {
+          "description": "LEGACY_ID array from origin STIG",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "ccis": {
+          "description": "CCI_REF array from origin STIG",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "group_tree": {
+          "description": "An array showing the hierarchy of the group tree structure",
+          "type": "array",
+          "items": {
+            "description": "Each level in the group heirarchy is stored, with the earlier entries in the array representing higher levels of the tree",
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "title": {
+                "type": "string"
+              },
+              "description": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "createdAt": {
+          "description": "The datetime string for the time the rule was added to the SV3 library",
+          "type": "string"
+        },
+        "updatedAt": {
+          "description": "The datetime string for the last time the rule was modified in the SV3 Library",
+          "type": "string"
+        },
+        "status": {
+          "description": "The STATUS field of the rule",
+          "type": "string",
+          "enum": [
+            "not_reviewed",
+            "not_applicable",
+            "open",
+            "not_a_finding"
+          ]
+        },
+        "overrides": {
+          "Description": "Allows rule properties to be overridden without data-loss of the original value. Currently, only 'severity' is used",
+          "additionalProperties": false,
+          "patternProperties": {
+            "^[a-zA-Z_]+$": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "reason": {
+                  "description": "Justification for overriding the property",
+                  "type": "string"
+                }
+              },
+              "patternProperties": {
+                "^[a-zA-Z_]+$": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "comments": {
+          "description": "Comments about the current rule",
+          "type": "string"
+        },
+        "finding_details": {
+          "description": "Finding details for the current rule, usually information about the tool that was used to generate the finding",
+          "type": "string"
+        },
+        "STIGUuid": {
+          "description": "[Deprecated] Not Used",
+          "type": "string"
+        }
+      }
+    }
+  }
+}

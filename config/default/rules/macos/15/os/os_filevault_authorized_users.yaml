@@ -1,3 +1,4 @@
+---
 id: os_filevault_authorized_users
 title: FileVault Authorized Users
 discussion: |
@@ -36,4 +37,4 @@ tags:
   - cnssi-1253_high
 severity: medium
 mobileconfig: false
-mobileconfig_info:
+mobileconfig_info: null

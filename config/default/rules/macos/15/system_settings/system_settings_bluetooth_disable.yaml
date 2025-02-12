@@ -1,5 +1,4 @@
 ---
-# yaml-language-server: $schema=../../../../../../schemas/rules.json
 id: system_settings_bluetooth_disable
 title: Disable Bluetooth When no Approved Device is Connected
 discussion: |
@@ -15,7 +14,7 @@ check: |
   .objectForKey('DisableBluetooth').js
   EOS
 result:
-  boolean: true
+  string: "true"
 fix: |
   This is implemented by a Configuration Profile.
 references:
@@ -34,7 +33,11 @@ references:
   srg:
     - SRG-OS-000423-GPOS-00187
     - SRG-OS-000481-GPOS-00481
+    - SRG-OS-000480-GPOS-00228
   disa_stig:
+    - APPL-15-002062
+  800-171r2:
+    - 3.13.8
     - N/A
   800-171r3:
     - 03.01.16
@@ -60,11 +63,11 @@ tags:
   - 800-53r5_high
   - 800-171
   - cisv8
-  - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
   - cmmc_lvl2
   - stig
+  - cnssi-1253_moderate
 severity: high
 mobileconfig: true
 mobileconfig_info:

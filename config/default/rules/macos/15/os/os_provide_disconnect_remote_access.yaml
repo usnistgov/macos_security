@@ -1,3 +1,4 @@
+---
 id: os_provide_disconnect_remote_access
 title: Provide Ability to Disconnect or Disable Remote Access
 discussion: |
@@ -25,9 +26,9 @@ operating_system:
       - 15.0
 tags:
   - inherent
-  - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
   - srg
+  - cnssi-1253_moderate
 mobileconfig: false
-mobileconfig_info:
+mobileconfig_info: null

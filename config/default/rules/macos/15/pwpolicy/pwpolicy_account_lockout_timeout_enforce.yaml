@@ -1,5 +1,4 @@
 ---
-# yaml-language-server: $schema=../../../../../../schemas/rules.json
 id: pwpolicy_account_lockout_timeout_enforce
 title: Set Account Lockout Time to $ODV Minutes
 discussion: |
@@ -7,9 +6,9 @@ discussion: |
 
   This rule protects against malicious users attempting to gain access to the system via brute-force hacking methods.
 check: |
-  /usr/bin/pwpolicy -getaccountpolicies 2> /dev/null | /usr/bin/tail +2 | /usr/bin/xmllint --xpath '//dict/key[text()="autoEnableInSeconds"]/following-sibling::integer[1]/text()' - | /usr/bin/awk '{ if ($1/60 >= $ODV ) {print "yes"} else {print "no"}}'
+  /usr/bin/pwpolicy -getaccountpolicies 2> /dev/null | /usr/bin/tail +2 | /usr/bin/xmllint --xpath '//dict/key[text()="autoEnableInSeconds"]/following-sibling::integer[1]/text()' - | /usr/bin/awk '{ if ($1/60 >= $ODV ) {print "yes"} else {print "no"}}' | /usr/bin/uniq
 result:
-  string: 'yes'
+  string: "yes"
 fix: |
   This is implemented by a Configuration Profile.
 references:
@@ -26,7 +25,7 @@ references:
     - SRG-OS-000329-GPOS-00128
     - SRG-OS-000021-GPOS-00005
   disa_stig:
-    - N/A
+    - APPL-15-000060
   800-171r3:
     - 03.01.08
   cis:
@@ -40,12 +39,6 @@ operating_system:
   - name: macos
     version:
       - 15.0
-odv:
-  hint: Number of minutes.
-  recommended: 15
-  stig: 15
-  cis_lvl1: 15
-  cis_lvl2: 15
 tags:
   - 800-171
   - 800-53r4_low
@@ -57,12 +50,18 @@ tags:
   - cisv8
   - cis_lvl1
   - cis_lvl2
-  - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
   - cmmc_lvl2
   - stig
+  - cnssi-1253_moderate
 severity: medium
+odv:
+  hint: Number of minutes.
+  recommended: 15
+  stig: 15
+  cis_lvl1: 15
+  cis_lvl2: 15
 mobileconfig: true
 mobileconfig_info:
   - PayloadType: com.apple.mobiledevice.passwordpolicy

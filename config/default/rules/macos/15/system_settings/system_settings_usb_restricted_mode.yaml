@@ -1,5 +1,4 @@
 ---
-# yaml-language-server: $schema=../../../../../../schemas/rules.json
 id: system_settings_usb_restricted_mode
 title: USB Devices Must be Authorized Before Allowing
 discussion: |
@@ -22,7 +21,7 @@ check: |
     }
   EOS
 result:
-  boolean: true
+  string: "true"
 fix: |
   This is implemented by a Configuration Profile.
 references:
@@ -30,6 +29,7 @@ references:
     - CCE-94409-0
   cci:
     - CCI-001958
+    - CCI-003959
   800-53r5:
     - MP-7
     - SC-41
@@ -45,8 +45,9 @@ references:
     - MP.L2-3.8.8
   srg:
     - SRG-OS-000378-GPOS-00163
+    - SRG-OS-000690-GPOS-00140
   disa_stig:
-    - N/A
+    - APPL-15-005090
 operating_system:
   - name: macos
     version:
@@ -55,11 +56,11 @@ tags:
   - 800-53r5_low
   - 800-53r5_moderate
   - 800-53r5_high
-  - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
   - cmmc_lvl2
   - stig
+  - cnssi-1253_moderate
 severity: medium
 mobileconfig: true
 mobileconfig_info:

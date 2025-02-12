@@ -1,3 +1,4 @@
+---
 id: os_sshd_channel_timeout_configure
 title: Configure SSHD Channel Timeout to $ODV
 discussion: |
@@ -6,6 +7,8 @@ discussion: |
   This will set the time out when the session is inactive.
 
   NOTE: /etc/ssh/sshd_config will be automatically modified to its original state following any update or major upgrade to the operating system.
+
+  NOTE: On macOS 15.2 and higher the SSH configuration can be reset to the macOS default by running /usr/libexec/reset-ssh-configuration.
 check: |
   /usr/sbin/sshd -G | /usr/bin/awk '/channeltimeout/{print $2}'
 result:
@@ -46,17 +49,13 @@ references:
     - SRG-OS-000163-GPOS-00072
     - SRG-OS-000279-GPOS-00109
   disa_stig:
-    - N/A
+    - APPL-15-000120
   800-171r3:
     - 03.01.11
     - 03.13.09
   cmmc:
     - AC.L2-3.1.11
     - SC.L2-3.13.9
-odv:
-  hint: Channel type and number of seconds.
-  recommended: session:*=900
-  stig: session:*=900
 operating_system:
   - name: macos
     version:
@@ -67,14 +66,18 @@ tags:
   - 800-53r4_moderate
   - 800-53r4_high
   - 800-171
-  - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
   - cmmc_lvl2
   - stig
+  - cnssi-1253_moderate
 severity: medium
+odv:
+  hint: Channel type and number of seconds.
+  recommended: session:*=900
+  stig: session:*=900
 mobileconfig: false
-mobileconfig_info:
+mobileconfig_info: null
 ddm_info:
   declarationtype: com.apple.configuration.services.configuration-files
   service: com.apple.sshd

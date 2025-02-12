@@ -2,20 +2,19 @@
 
 # Standard python modules
 import re
-
+from collections import OrderedDict, defaultdict
 from pathlib import Path
 from typing import Any
-from pydantic import BaseModel, Field
-from collections import OrderedDict, defaultdict
 
 # Additional python modules
 import pandas as pd
 from loguru import logger
+from pydantic import BaseModel, Field
 
 # Local python modules
-from src.mscp.classes.macsecurityrule import MacSecurityRule
-from src.mscp.common_utils.file_handling import open_yaml, create_yaml
-from src.mscp.common_utils.config import config
+from src.mscp.common_utils import config, create_yaml, open_yaml
+
+from .macsecurityrule import Macsecurityrule
 
 
 class Author(BaseModel):
@@ -26,7 +25,7 @@ class Author(BaseModel):
 class Profile(BaseModel):
     section: str
     description: str
-    rules: list[MacSecurityRule]
+    rules: list[Macsecurityrule]
 
     def get(self, attr, default=None):
         return getattr(self, attr, default)
@@ -40,9 +39,10 @@ class Baseline(BaseModel):
     description: str = Field(default="")
     parent_values: str = ""
 
-
     @classmethod
-    def from_yaml(cls, file_path: Path, os_name: str, os_version: int, custom: bool = False) -> "Baseline":
+    def from_yaml(
+        cls, file_path: Path, os_name: str, os_version: int, custom: bool = False
+    ) -> "Baseline":
         """
         Load a Baseline object from a YAML file, including profiles and associated rules.
 
@@ -71,11 +71,20 @@ class Baseline(BaseModel):
             logger.debug(f"Section Name: {prof['section']}")
             section_data = open_yaml(Path(section_dir, f"{prof['section']}.yaml"))
             logger.debug(f"Section Data: {section_data}")
-            profiles.append(Profile(
-                section=section_data.get("name", "").strip(),
-                description=section_data.get("description", "").strip(),
-                rules=MacSecurityRule.load_rules(prof.get("rules", []), os_name, os_version, baseline_data.get("parent_values", ""), section_data.get("name", "").strip(), custom),
-            ))
+            profiles.append(
+                Profile(
+                    section=section_data.get("name", "").strip(),
+                    description=section_data.get("description", "").strip(),
+                    rules=Macsecurityrule.load_rules(
+                        prof.get("rules", []),
+                        os_name,
+                        os_version,
+                        baseline_data.get("parent_values", ""),
+                        section_data.get("name", "").strip(),
+                        custom,
+                    ),
+                )
+            )
 
         # Instantiate Baseline object
         baseline = cls(
@@ -89,23 +98,34 @@ class Baseline(BaseModel):
 
         return baseline
 
-
     @classmethod
     @logger.catch
-    def create_new(cls, output_file: Path, rules: list[MacSecurityRule], version_data: dict[str, Any], baseline_name: str, authors: list[Author], full_title: str, benchmark: str = "recommended") -> None:
+    def create_new(
+        cls,
+        output_file: Path,
+        rules: list[Macsecurityrule],
+        version_data: dict[str, Any],
+        baseline_name: str,
+        authors: list[Author],
+        full_title: str,
+        benchmark: str = "recommended",
+    ) -> None:
         """
         Create and save a Baseline object as a YAML file with grouped and sorted rules.
 
         Args:
             output_file (Path): Path to save the baseline YAML file.
-            rules (list[MacSecurityRule]): List of rules to include in the baseline.
+            rules (list[Macsecurityrule]): List of rules to include in the baseline.
             version_data (Dict[str, Any]): Version information, including OS and CPE.
             baseline_name (str): Name of the baseline.
             authors (list[Authors]): List of authors.
             full_title (str): Full title for the baseline.
             benchmark (str, optional): Benchmark type. Defaults to recommended.
         """
-        os_name: str = re.search(r'(macos|ios|visionos)', version_data["cpe"], re.IGNORECASE).group()
+
+        os_name: str = re.search(
+            r"(macos|ios|visionos)", version_data["cpe"], re.IGNORECASE
+        ).group()
         os_version: float = version_data["os"]
         baseline_title: str = f"{os_name} {os_version}: Security Configuration - {full_title} {baseline_name}"
         description: str = f"|\n  This guide describes the actions to take when securing a {os_name} {os_version} system against the {full_title} {baseline_name} security baseline.\n"
@@ -126,7 +146,9 @@ class Baseline(BaseModel):
         for yaml_file in Path(config["defaults"]["sections_dir"]).glob("*.y*ml"):
             section_data: dict = open_yaml(yaml_file)
 
-            section_descriptions[section_data.get("name")] = section_data.get("description", "")
+            section_descriptions[section_data.get("name")] = section_data.get(
+                "description", ""
+            )
 
         for rule in rules:
             matched: bool = False
@@ -140,12 +162,16 @@ class Baseline(BaseModel):
                 grouped_rules[rule.section].append(rule)
 
         for section in grouped_rules:
-            grouped_rules[section] = sorted(grouped_rules[section], key=lambda r: r.rule_id)
+            grouped_rules[section] = sorted(
+                grouped_rules[section], key=lambda r: r.rule_id
+            )
 
         profiles = [
             Profile(
                 section=section,
-                description=section_descriptions.get(section, "No description available"),
+                description=section_descriptions.get(
+                    section, "No description available"
+                ),
                 rules=grouped_rules[section],
             )
             for section in grouped_rules
@@ -157,7 +183,7 @@ class Baseline(BaseModel):
             name=output_file.stem,
             title=baseline_title.strip(),
             description=description.strip(),
-            parent_values=benchmark
+            parent_values=benchmark,
         )
 
         baseline.to_yaml(output_path=output_file)
@@ -184,7 +210,6 @@ class Baseline(BaseModel):
 
         return pd.DataFrame(rules)
 
-
     @logger.catch
     def to_yaml(self, output_path: Path) -> None:
         """
@@ -207,10 +232,28 @@ class Baseline(BaseModel):
         8. Creates the YAML file using the ordered data.
         9. Logs the completion of the YAML creation process.
         """
+
         logger.info("Creating baseline yaml")
         serialized_data = self.model_dump()
-        key_order: list[str] = ['title', 'description', 'authors', 'parent_values', 'profile']
-        profile_order: list[str] = ['Auditing', 'Authentication', 'iCloud', 'Operating System', 'Password Policy', 'System Settings', 'Inherent', 'Permanent', 'Not Applicable', 'Supplemental']
+        key_order: list[str] = [
+            "title",
+            "description",
+            "authors",
+            "parent_values",
+            "profile",
+        ]
+        profile_order: list[str] = [
+            "Auditing",
+            "Authentication",
+            "iCloud",
+            "Operating System",
+            "Password Policy",
+            "System Settings",
+            "Inherent",
+            "Permanent",
+            "Not Applicable",
+            "Supplemental",
+        ]
         ordered_data: OrderedDict = OrderedDict()
 
         serialized_data.pop("name")
@@ -218,16 +261,21 @@ class Baseline(BaseModel):
             profile.pop("description", None)
             profile["rules"] = sorted([rule["rule_id"] for rule in profile["rules"]])
 
-        ordered_profiles = sorted(serialized_data["profile"], key=lambda p: profile_order.index(p["section"]) if p["section"] in profile_order else len(profile_order))
+        ordered_profiles = sorted(
+            serialized_data["profile"],
+            key=lambda p: profile_order.index(p["section"])
+            if p["section"] in profile_order
+            else len(profile_order),
+        )
 
         for key in key_order:
             if key in serialized_data:
-                if key == 'profile':
+                if key == "profile":
                     ordered_data[key] = ordered_profiles
                 else:
                     ordered_data[key] = serialized_data[key]
 
-        create_yaml(output_path, ordered_data, "baseline")
+        create_yaml(output_path, ordered_data)
         logger.success("Created baseline yaml: {}", output_path)
 
     def get(self, attr, default=None):
@@ -235,7 +283,9 @@ class Baseline(BaseModel):
 
     @classmethod
     @logger.catch
-    def load_all_from_folder(cls, folder_path: Path, os_name: str, os_version: int, custom: bool = False) -> list["Baseline"]:
+    def load_all_from_folder(
+        cls, folder_path: Path, os_name: str, os_version: int, custom: bool = False
+    ) -> list["Baseline"]:
         """
         Load all Baseline objects from YAML files in a specified folder.
 
@@ -248,8 +298,9 @@ class Baseline(BaseModel):
         Returns:
             list[Baseline]: A list of fully populated Baseline instances.
         """
+
         logger.debug("=== LOADING ALL BASELINES ===")
-        baseline_folder:Path = Path(folder_path, os_name, str(os_version))
+        baseline_folder: Path = Path(folder_path, os_name, str(os_version))
         logger.debug(f"Folder: {baseline_folder}")
         baselines: list["Baseline"] = []
 

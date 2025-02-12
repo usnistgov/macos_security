@@ -1,3 +1,4 @@
+---
 id: os_power_nap_enable
 title: Enable Power Nap
 discussion: |
@@ -49,4 +50,4 @@ operating_system:
 tags:
   - none
 mobileconfig: false
-mobileconfig_info:
+mobileconfig_info: null

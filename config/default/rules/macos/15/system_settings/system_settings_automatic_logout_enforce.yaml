@@ -1,5 +1,4 @@
 ---
-# yaml-language-server: $schema=../../../../../../schemas/rules.json
 id: system_settings_automatic_logout_enforce
 title: Enforce Auto Logout After $ODV Seconds of Inactivity
 discussion: |
@@ -31,7 +30,7 @@ references:
   800-53r4:
     - AC-12
   disa_stig:
-    - N/A
+    - APPL-15-000160
   srg:
     - SRG-OS-000279-GPOS-00109
   800-171r3:
@@ -44,22 +43,22 @@ operating_system:
   - name: macos
     version:
       - 15.0
-odv:
-  hint: Number of seconds
-  recommended: 86400
-  stig: 86400
 tags:
   - 800-53r5_moderate
   - 800-53r5_high
   - 800-53r4_moderate
   - 800-53r4_high
   - 800-171
-  - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
   - cmmc_lvl2
   - stig
+  - cnssi-1253_moderate
 severity: medium
+odv:
+  hint: Number of seconds
+  recommended: 86400
+  stig: 86400
 mobileconfig: true
 mobileconfig_info:
   - PayloadType: .GlobalPreferences

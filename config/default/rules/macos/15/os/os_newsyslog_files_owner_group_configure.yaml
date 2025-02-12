@@ -1,3 +1,4 @@
+---
 id: os_newsyslog_files_owner_group_configure
 title: Configure System Log Files Owned by Root and Group to Wheel
 discussion: |
@@ -27,7 +28,7 @@ references:
     - SRG-OS-000206-GPOS-00084
     - SRG-OS-000205-GPOS-00083
   disa_stig:
-    - N/A
+    - APPL-15-004030
   800-171r3:
     - N/A
 operating_system:
@@ -37,10 +38,10 @@ operating_system:
 tags:
   - 800-53r5_moderate
   - 800-53r5_high
-  - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
   - stig
+  - cnssi-1253_moderate
 severity: medium
 mobileconfig: false
-mobileconfig_info:
+mobileconfig_info: null

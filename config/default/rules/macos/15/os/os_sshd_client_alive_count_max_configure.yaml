@@ -1,3 +1,4 @@
+---
 id: os_sshd_client_alive_count_max_configure
 title: Configure SSHD ClientAliveCountMax to $ODV
 discussion: |
@@ -7,7 +8,7 @@ discussion: |
 
   NOTE: This setting is not intended to manage idle user sessions where there is no input from the client. Its purpose is to monitor for interruptions in network connectivity and force the session to terminate after the connection appears to be broken.
 
-  NOTE: /etc/ssh/sshd_config will be automatically modified to its original state following any update or major upgrade to the operating system.
+  NOTE: On macOS 15.2 and higher the SSH configuration can be reset to the macOS default by running /usr/libexec/reset-ssh-configuration.
 check: |
   /usr/sbin/sshd -G | /usr/bin/awk '/clientalivecountmax/{print $2}'
 result:
@@ -45,7 +46,7 @@ references:
   srg:
     - SRG-OS-000163-GPOS-00072
   disa_stig:
-    - N/A
+    - APPL-15-000052
   800-171r3:
     - 03.13.09
   cmmc:
@@ -54,24 +55,24 @@ operating_system:
   - name: macos
     version:
       - 15.0
-odv:
-  hint: Number of seconds.
-  recommended: 0
-  stig: 1
 tags:
   - 800-53r5_moderate
   - 800-53r5_high
   - 800-53r4_moderate
   - 800-53r4_high
   - 800-171
-  - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
   - cmmc_lvl2
   - stig
+  - cnssi-1253_moderate
 severity: medium
+odv:
+  hint: Number of seconds.
+  recommended: 0
+  stig: 1
 mobileconfig: false
-mobileconfig_info:
+mobileconfig_info: null
 ddm_info:
   declarationtype: com.apple.configuration.services.configuration-files
   service: com.apple.sshd

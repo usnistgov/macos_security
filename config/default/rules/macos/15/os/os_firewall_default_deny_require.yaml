@@ -1,5 +1,8 @@
+---
 id: os_firewall_default_deny_require
-title: Control Connections to Other Systems via a Deny-All and Allow-by-Exception Firewall Policy
+title:
+  Control Connections to Other Systems via a Deny-All and Allow-by-Exception
+  Firewall Policy
 discussion: |
   A deny-all and allow-by-exception firewall policy _MUST_ be employed for managing connections to other systems.
 
@@ -50,9 +53,9 @@ tags:
   - 800-53r4_moderate
   - 800-53r4_high
   - 800-171
-  - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
   - cmmc_lvl2
+  - cnssi-1253_moderate
 mobileconfig: false
-mobileconfig_info:
+mobileconfig_info: null

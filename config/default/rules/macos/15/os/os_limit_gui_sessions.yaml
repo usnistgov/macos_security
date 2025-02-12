@@ -1,3 +1,4 @@
+---
 id: os_limit_gui_sessions
 title: Limit Concurrent GUI Sessions to 10 for all Accounts
 discussion: |
@@ -29,8 +30,8 @@ tags:
   - 800-53r5_high
   - 800-53r4_high
   - inherent
-  - cnssi-1253_moderate
   - cnssi-1253_high
   - srg
+  - cnssi-1253_moderate
 mobileconfig: false
-mobileconfig_info:
+mobileconfig_info: null

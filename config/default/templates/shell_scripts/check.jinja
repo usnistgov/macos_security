@@ -3,7 +3,7 @@
   {% if rule.check %}
   #####----- Rule: {{ rule.rule_id | replace("\|", "|") }} -----#####
   ## Addresses the following NIST 800-53 controls:
-  {{ rule.nist_controls | group_ulify if rule.nist_controls is not none else "# * N/A" }}
+  {{ rule.references.nist_controls | group_ulify if rule.references.nist_controls is not none else "# * N/A" }}
 
   {% if "arm64" in rule.tags %}
   rule_arch="arm64"

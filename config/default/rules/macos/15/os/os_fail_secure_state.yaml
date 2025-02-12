@@ -1,5 +1,8 @@
+---
 id: os_fail_secure_state
-title: Configure System to Fail to a Known Safe State if System Initialization, Shutdown, or Abort Fails
+title:
+  Configure System to Fail to a Known Safe State if System Initialization, Shutdown,
+  or Abort Fails
 discussion: |
   The information system _IS_ configured to fail to a known safe state in the event of a failed system initialization, shutdown, or abort.
 
@@ -37,4 +40,4 @@ tags:
   - cnssi-1253_high
   - srg
 mobileconfig: false
-mobileconfig_info:
+mobileconfig_info: null

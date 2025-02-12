@@ -1,0 +1,60 @@
+id: os_removable_media_disable
+title: Disable Removable Storage Devices
+discussion: |
+  Removable media, such as USB connected external hard drives, thumb drives, and optical media, _MUST_ be disabled for users.
+
+  Disabling removable storage devices reduces the risks and known vulnerabilities of such devices (e.g., malicious code insertion)
+
+  [IMPORTANT]
+  ====
+  Some organizations rely on the use of removable media for storing and sharing data. Information System Security Officers (ISSOs) may make the risk-based decision not to disable external hard drives to avoid losing this functionality, but they are advised to first fully weigh the potential risks posed to their organization.
+  ====
+
+  [IMPORTANT]
+  ====
+  Apple has deprecated the use of link:https://github.com/apple/device-management/blob/eb51fb0cb9626cac4717858556912c257a734ce0/mdm/profiles/com.apple.systemuiserver.yaml#L4-L8[media mount controls], using these controls may not work as expected. Third party software may be required to fulfill the compliance requirements.
+  ====
+check: |
+  /usr/bin/osascript -l JavaScript << EOS
+  ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('com.apple.systemuiserver')\
+  .objectForKey('mount-controls'))["harddisk-external"]
+  EOS
+result:
+  string: deny
+fix: |
+  This is implemented by a Configuration Profile.
+references:
+  cce:
+    - CCE-94276-3
+  cci:
+    - N/A
+  800-53r5:
+    - MP-7
+  800-53r4:
+    - MP-7(1)
+  srg:
+    - N/A
+  disa_stig:
+    - N/A
+  800-171r3:
+    - 03.08.07
+  cmmc:
+    - MP.L2-3.8.7
+    - MP.L2-3.8.8
+operating_system:
+  - name: macos
+    version:
+      - 15.0
+tags:
+  - cnssi-1253_moderate
+  - cnssi-1253_low
+  - cnssi-1253_high
+  - cmmc_lvl2
+severity: medium
+mobileconfig: true
+mobileconfig_info:
+  com.apple.systemuiserver:
+    mount-controls:
+      harddisk-external:
+        - alert
+        - eject

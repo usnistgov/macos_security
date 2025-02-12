@@ -2,21 +2,23 @@
 # filename: generate_scap.py
 # description: Input a keyword for the baseline, output the scap/oval/xccdf
 
-import sys
+import argparse
+import glob
 import os
 import os.path
-import yaml
-import glob
 import re
-import warnings
-from pathlib import Path
-from datetime import datetime
 import shutil
+import sys
+import warnings
+from datetime import datetime
+from pathlib import Path
 from time import sleep
-import argparse
 from xml.sax.saxutils import escape
 
+import yaml
+
 warnings.filterwarnings("ignore", category=DeprecationWarning)
+
 
 def clean_oval_definition(oval_definition: str) -> str:
     """
@@ -31,6 +33,7 @@ def clean_oval_definition(oval_definition: str) -> str:
     # This regex pattern matches any text that starts with a newline followed by "[NOTE]"
     # and captures everything until the next "<" character, replacing it with "<".
     return re.sub(r"(?s)(?=\n\[NOTE\])(.*)\n<", "<", oval_definition)
+
 
 def format_mobileconfig_fix(mobileconfig):
     """Takes a list of domains and setting from a mobileconfig, and reformats it for the output of the fix section of the guide."""
@@ -96,7 +99,6 @@ def replace_ocil(xccdf, x):
 
 
 def create_args():
-
     parser = argparse.ArgumentParser(
         description="Easily generate xccdf, oval, or scap datastream. If no option is defined, it will generate an scap datastream file."
     )
@@ -133,7 +135,6 @@ def create_args():
 
 
 def generate_scap(all_rules, all_baselines, args):
-
     export_as = ""
 
     version_file = "../VERSION.yaml"
@@ -204,9 +205,7 @@ def generate_scap(all_rules, all_baselines, args):
         <oval:timestamp xmlns:oval="http://oval.mitre.org/XMLSchema/oval-common-5">{0}</oval:timestamp>
         <terms_of_use>Copyright (c) 2020, NIST.</terms_of_use>
         <oval:product_name xmlns:oval="http://oval.mitre.org/XMLSchema/oval-common-5">macOS Security Compliance Project</oval:product_name>
-      </generator>""".format(
-        date_time_string
-    )
+      </generator>""".format(date_time_string)
 
     ostype = "macOS"
     if "ios" in version_yaml["cpe"] or "visionos" in version_yaml["cpe"]:
@@ -304,7 +303,6 @@ def generate_scap(all_rules, all_baselines, args):
     generated_baselines = {}
 
     for rule in all_rules:
-
         if glob.glob("../custom/rules/**/{}.yaml".format(rule), recursive=True):
             rule_file = glob.glob(
                 "../custom/rules/**/{}.yaml".format(rule), recursive=True
@@ -324,11 +322,9 @@ def generate_scap(all_rules, all_baselines, args):
             if args.baseline != "None":
                 loop = 1
         for a in range(0, loop):
-
             rule_yaml = get_rule_yaml(rule_file, custom)
 
             try:
-
                 # # odv_label = list(rule_yaml['odv'].keys())[a]
                 # # odv_label.remove('hint')
                 if args.baseline != "None":
@@ -367,7 +363,6 @@ def generate_scap(all_rules, all_baselines, args):
                             for mobileconfig_value in rule_yaml["mobileconfig_info"][
                                 mobileconfig_type
                             ]:
-
                                 if "$ODV" in str(
                                     resulting_yaml["mobileconfig_info"][
                                         mobileconfig_type
@@ -405,7 +400,6 @@ def generate_scap(all_rules, all_baselines, args):
                             and odv_label == tag
                             or odv_label == "custom"
                         ):
-
                             if baseline in generated_baselines:
                                 generated_baselines[baseline].append(
                                     rule_yaml["id"] + "_" + odv_label
@@ -416,11 +410,9 @@ def generate_scap(all_rules, all_baselines, args):
                                 ]
                             continue
                         elif odv_label == "recommended" or odv_label == "custom":
-
                             if "odv" in rule_yaml:
                                 if baseline not in rule_yaml["odv"]:
                                     if baseline in generated_baselines:
-
                                         generated_baselines[baseline].append(
                                             rule_yaml["id"] + "_" + odv_label
                                         )
@@ -430,7 +422,6 @@ def generate_scap(all_rules, all_baselines, args):
                                         ]
                             else:
                                 if baseline in generated_baselines:
-
                                     generated_baselines[baseline].append(
                                         rule_yaml["id"] + "_" + odv_label
                                     )
@@ -451,10 +442,10 @@ def generate_scap(all_rules, all_baselines, args):
 
             if severity in rule_yaml:
                 if isinstance(rule_yaml["severity"], str):
-                    severity = f'{rule_yaml["severity"]}'
+                    severity = f"{rule_yaml['severity']}"
                 if isinstance(rule_yaml["severity"], dict):
                     try:
-                        severity = f'{rule_yaml["severity"][args.baseline]}'
+                        severity = f"{rule_yaml['severity'][args.baseline]}"
                     except KeyError:
                         severity = "unknown"
             else:
@@ -472,9 +463,7 @@ def generate_scap(all_rules, all_baselines, args):
             else:
                 check_rule = """<check system="http://oval.mitre.org/XMLSchema/oval-definitions-5">
             <check-content-ref href="oval.xml" name="oval:mscp:def:{0}"/>
-            </check>""".format(
-                    x
-                )
+            </check>""".format(x)
             references = str()
 
             if (
@@ -549,7 +538,6 @@ def generate_scap(all_rules, all_baselines, args):
                 if k == "cci" or k == "srg":
                     continue
                 if k == "custom":
-
                     for i, u in rule_yaml["references"]["custom"].items():
                         references = references + '<reference href="#">{0}: '.format(i)
                         for refs in rule_yaml["references"]["custom"][i]:
@@ -764,9 +752,7 @@ def generate_scap(all_rules, all_baselines, args):
                     <file_test xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#unix" check="all" check_existence="all_exist" comment="{}_test" id="oval:mscp:tst:{}" version="2">
                 <object object_ref="oval:mscp:obj:{}" />
                 <state state_ref="oval:mscp:ste:{}" />
-            </file_test>""".format(
-                        rule_yaml["id"] + "_" + odv_label, x, x, x
-                    )
+            </file_test>""".format(rule_yaml["id"] + "_" + odv_label, x, x, x)
                 )
 
                 oval_object = (
@@ -816,22 +802,18 @@ def generate_scap(all_rules, all_baselines, args):
                     + """
                     <local_variable id="oval:mscp:var:{}" version="1" datatype="string" comment="home directory variable">
                 <object_component object_ref="oval:mscp:obj:{}" item_field="home_dir"/>
-        </local_variable>""".format(
-                        x, x + 999
-                    )
+        </local_variable>""".format(x, x + 999)
                 )
                 x = x + 1
                 continue
 
             if rule_yaml["mobileconfig"]:
                 if "spctl" in rule_yaml["check"]:
-
                     if "verbose" in rule_yaml["check"]:
                         xccdf_rules = replace_ocil(xccdf_rules, x)
                         x = x + 1
                         continue
                     else:
-
                         oval_definition = (
                             oval_definition
                             + """
@@ -863,18 +845,14 @@ def generate_scap(all_rules, all_baselines, args):
             <gatekeeper_test xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" check="all" check_existence="only_one_exists" comment="{}_test" id="oval:mscp:tst:{}" version="2">
                 <object object_ref="oval:mscp:obj:{}"/>
                 <state state_ref="oval:mscp:ste:{}" />
-            </gatekeeper_test>""".format(
-                                rule_yaml["id"] + "_" + odv_label, x, x, x
-                            )
+            </gatekeeper_test>""".format(rule_yaml["id"] + "_" + odv_label, x, x, x)
                         )
 
                         oval_object = (
                             oval_object
                             + """
             <gatekeeper_object id="oval:mscp:obj:{}" version="1" comment="{}_object" xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos">
-            </gatekeeper_object>""".format(
-                                x, rule_yaml["id"]
-                            )
+            </gatekeeper_object>""".format(x, rule_yaml["id"])
                         )
 
                         oval_state = (
@@ -882,16 +860,13 @@ def generate_scap(all_rules, all_baselines, args):
                             + """
             <gatekeeper_state xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" comment="{}_state" id="oval:mscp:ste:{}" version="1">
                 <enabled datatype="boolean" operation="equals">true</enabled>
-            </gatekeeper_state>""".format(
-                                rule_yaml["id"] + "_" + odv_label, x
-                            )
+            </gatekeeper_state>""".format(rule_yaml["id"] + "_" + odv_label, x)
                         )
 
                     x += 1
                     continue
 
                 for payload_type, info in rule_yaml["mobileconfig_info"].items():
-
                     if payload_type == "com.apple.systempolicy.control":
                         continue
                     if payload_type == "com.apple.ManagedClient.preferences":
@@ -963,7 +938,6 @@ def generate_scap(all_rules, all_baselines, args):
                                     )
                                 )
                                 if payload_domain == "com.apple.dock":
-
                                     oval_object = (
                                         oval_object
                                         + """
@@ -974,9 +948,7 @@ def generate_scap(all_rules, all_baselines, args):
                     <plist511_object xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" comment="{}_object" id="oval:mscp:obj:{}" version="1">
                 <filepath datatype="string" operation="equals" var_check="at least one" var_ref="oval:mscp:var:{}"/>
                 <xpath>//*[contains(text(), "{}")]/following-sibling::*[1]/text()</xpath>
-            </plist511_object>""".format(
-                                            x + 1999, key, dz, x, key
-                                        )
+            </plist511_object>""".format(x + 1999, key, dz, x, key)
                                     )
 
                                     oval_variable = (
@@ -988,9 +960,7 @@ def generate_scap(all_rules, all_baselines, args):
                     <object_component object_ref="oval:mscp:obj:{}" item_field="value_of"/>
                     <literal_component datatype="string">/com.apple.dock.plist</literal_component>
             </concat>
-        </local_variable>""".format(
-                                            x, x + 1999
-                                        )
+        </local_variable>""".format(x, x + 1999)
                                     )
 
                                 else:
@@ -1033,7 +1003,6 @@ def generate_scap(all_rules, all_baselines, args):
                         if key == "familyControlsEnabled":
                             xpath_search = ""
                             if len(info) > 1:
-
                                 xpath_search = info["pathBlackList"]
                                 oval_definition = (
                                     oval_definition
@@ -1067,9 +1036,7 @@ def generate_scap(all_rules, all_baselines, args):
                 <object object_ref="oval:mscp:obj:{}" />
                 <state state_ref="oval:mscp:ste:{}" />
             </plist511_test>
-        """.format(
-                                        rule_yaml["id"] + "_" + odv_label, x, x, x
-                                    )
+        """.format(rule_yaml["id"] + "_" + odv_label, x, x, x)
                                 )
                                 ""
                                 oval_object = (
@@ -1095,15 +1062,12 @@ def generate_scap(all_rules, all_baselines, args):
                         <plist511_state xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" comment="{}_state" id="oval:mscp:ste:{}" version="1">
             <value_of datatype="boolean" operation="equals">true</value_of>
             </plist511_state>
-            """.format(
-                                        rule_yaml["id"] + "_" + odv_label, x
-                                    )
+            """.format(rule_yaml["id"] + "_" + odv_label, x)
                                 )
 
                                 x = x + 1
                                 continue
                             else:
-
                                 oval_definition = (
                                     oval_definition
                                     + """
@@ -1136,9 +1100,7 @@ def generate_scap(all_rules, all_baselines, args):
                 <object object_ref="oval:mscp:obj:{}" />
                 <state state_ref="oval:mscp:ste:{}" />
             </plist511_test>
-        """.format(
-                                        rule_yaml["id"] + "_" + odv_label, x, x, x
-                                    )
+        """.format(rule_yaml["id"] + "_" + odv_label, x, x, x)
                                 )
 
                                 oval_object = (
@@ -1158,9 +1120,7 @@ def generate_scap(all_rules, all_baselines, args):
                                         oval_object
                                         + """
     <xpath>name(//*[contains(text(), "{}")]/following-sibling::*[1])</xpath>
-    </plist511_object>""".format(
-                                            key
-                                        )
+    </plist511_object>""".format(key)
                                     )
                                     state_kind = "boolean"
                                 elif type(value) == int:
@@ -1169,9 +1129,7 @@ def generate_scap(all_rules, all_baselines, args):
                                         oval_object
                                         + """
     <xpath>//*[contains(text(), "{}")]/following-sibling::*[1]/text()</xpath>
-    </plist511_object>""".format(
-                                            key
-                                        )
+    </plist511_object>""".format(key)
                                     )
                                 elif type(value) == str:
                                     state_kind = "string"
@@ -1179,9 +1137,7 @@ def generate_scap(all_rules, all_baselines, args):
                                         oval_object
                                         + """
     <xpath>//*[contains(text(), "{}")]/following-sibling::*[1]/text()</xpath>
-    </plist511_object>""".format(
-                                            key
-                                        )
+    </plist511_object>""".format(key)
                                     )
 
                                 oval_state = (
@@ -1233,9 +1189,7 @@ def generate_scap(all_rules, all_baselines, args):
                 <object object_ref="oval:mscp:obj:{}" />
                 <state state_ref="oval:mscp:ste:{}" />
             </plist511_test>
-        """.format(
-                                    rule_yaml["id"] + "_" + odv_label, x, x, x
-                                )
+        """.format(rule_yaml["id"] + "_" + odv_label, x, x, x)
                             )
 
                             oval_object = (
@@ -1247,9 +1201,7 @@ def generate_scap(all_rules, all_baselines, args):
             </plist511_object>
             <plist511_object xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" comment="{}_object" id="oval:mscp:obj:{}" version="1">
                 <filepath datatype="string" operation="equals" var_check="at least one" var_ref="oval:mscp:var:{}"/>
-            """.format(
-                                    x + 1999, rule_yaml["id"] + "_" + odv_label, x, x
-                                )
+            """.format(x + 1999, rule_yaml["id"] + "_" + odv_label, x, x)
                             )
 
                             state_kind = ""
@@ -1258,9 +1210,7 @@ def generate_scap(all_rules, all_baselines, args):
                                     oval_object
                                     + """
     <xpath>name(//*[contains(text(), "{}")]/following-sibling::*[1])</xpath>
-    </plist511_object>""".format(
-                                        key
-                                    )
+    </plist511_object>""".format(key)
                                 )
                                 state_kind = "boolean"
                             elif type(value) == int:
@@ -1269,9 +1219,7 @@ def generate_scap(all_rules, all_baselines, args):
                                     oval_object
                                     + """
     <xpath>//*[contains(text(), "{}")]/following-sibling::*[1]/text()</xpath>
-    </plist511_object>""".format(
-                                        key
-                                    )
+    </plist511_object>""".format(key)
                                 )
                             elif type(value) == str:
                                 state_kind = "string"
@@ -1279,9 +1227,7 @@ def generate_scap(all_rules, all_baselines, args):
                                     oval_object
                                     + """
     <xpath>//*[contains(text(), "{}")]/following-sibling::*[1]/text()</xpath>
-    </plist511_object>""".format(
-                                        key
-                                    )
+    </plist511_object>""".format(key)
                                 )
 
                             oval_state = (
@@ -1307,9 +1253,7 @@ def generate_scap(all_rules, all_baselines, args):
                     <object_component object_ref="oval:mscp:obj:{}" item_field="value_of"/>
                     <literal_component datatype="string">/com.apple.finder.plist</literal_component>
                 </concat>
-            </local_variable>""".format(
-                                    x, x + 1999
-                                )
+            </local_variable>""".format(x, x + 1999)
                             )
                             x += 1
                             continue
@@ -1347,9 +1291,7 @@ def generate_scap(all_rules, all_baselines, args):
                 <object object_ref="oval:mscp:obj:{}" />
                 <state state_ref="oval:mscp:ste:{}" />
             </plist511_test>
-        """.format(
-                                    rule_yaml["id"] + "_" + odv_label, x, x, x
-                                )
+        """.format(rule_yaml["id"] + "_" + odv_label, x, x, x)
                             )
 
                             oval_object = (
@@ -1361,9 +1303,7 @@ def generate_scap(all_rules, all_baselines, args):
             </plist511_object>
             <plist511_object xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" comment="{}_object" id="oval:mscp:obj:{}" version="1">
                 <filepath datatype="string" operation="equals" var_check="at least one" var_ref="oval:mscp:var:{}"/>
-            """.format(
-                                    x + 1999, rule_yaml["id"] + "_" + odv_label, x, x
-                                )
+            """.format(x + 1999, rule_yaml["id"] + "_" + odv_label, x, x)
                             )
 
                             state_kind = ""
@@ -1372,9 +1312,7 @@ def generate_scap(all_rules, all_baselines, args):
                                     oval_object
                                     + """
     <xpath>name(//*[contains(text(), "{}")]/following-sibling::*[1])</xpath>
-    </plist511_object>""".format(
-                                        key
-                                    )
+    </plist511_object>""".format(key)
                                 )
                                 state_kind = "boolean"
                             elif type(value) == int:
@@ -1383,9 +1321,7 @@ def generate_scap(all_rules, all_baselines, args):
                                     oval_object
                                     + """
     <xpath>//*[contains(text(), "{}")]/following-sibling::*[1]/text()</xpath>
-    </plist511_object>""".format(
-                                        key
-                                    )
+    </plist511_object>""".format(key)
                                 )
                             elif type(value) == str:
                                 state_kind = "string"
@@ -1393,9 +1329,7 @@ def generate_scap(all_rules, all_baselines, args):
                                     oval_object
                                     + """
     <xpath>//*[contains(text(), "{}")]/following-sibling::*[1]/text()</xpath>
-    </plist511_object>""".format(
-                                        key
-                                    )
+    </plist511_object>""".format(key)
                                 )
 
                             oval_state = (
@@ -1421,9 +1355,7 @@ def generate_scap(all_rules, all_baselines, args):
                     <object_component object_ref="oval:mscp:obj:{}" item_field="value_of"/>
                     <literal_component datatype="string">/com.apple.DiscRecording.plist</literal_component>
                 </concat>
-            </local_variable>""".format(
-                                    x, x + 1999
-                                )
+            </local_variable>""".format(x, x + 1999)
                             )
                             x += 1
                             continue
@@ -1463,9 +1395,7 @@ def generate_scap(all_rules, all_baselines, args):
                 <object object_ref="oval:mscp:obj:{}" />
                 <state state_ref="oval:mscp:ste:{}" />
             </plist511_test>
-        """.format(
-                                    rule_yaml["id"] + "_" + odv_label, x, x, x
-                                )
+        """.format(rule_yaml["id"] + "_" + odv_label, x, x, x)
                             )
 
                             oval_object = (
@@ -1477,9 +1407,7 @@ def generate_scap(all_rules, all_baselines, args):
             </plist511_object>
             <plist511_object xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" comment="{}_object" id="oval:mscp:obj:{}" version="1">
                 <filepath datatype="string" operation="equals" var_check="at least one" var_ref="oval:mscp:var:{}"/>
-            """.format(
-                                    x + 1999, rule_yaml["id"] + "_" + odv_label, x, x
-                                )
+            """.format(x + 1999, rule_yaml["id"] + "_" + odv_label, x, x)
                             )
 
                             state_kind = ""
@@ -1488,9 +1416,7 @@ def generate_scap(all_rules, all_baselines, args):
                                     oval_object
                                     + """
     <xpath>name(//*[contains(text(), "{}")]/following-sibling::*[1])</xpath>
-    </plist511_object>""".format(
-                                        key
-                                    )
+    </plist511_object>""".format(key)
                                 )
                                 state_kind = "boolean"
                             elif type(value) == int:
@@ -1499,9 +1425,7 @@ def generate_scap(all_rules, all_baselines, args):
                                     oval_object
                                     + """
     <xpath>//*[contains(text(), "{}")]/following-sibling::*[1]/text()</xpath>
-    </plist511_object>""".format(
-                                        key
-                                    )
+    </plist511_object>""".format(key)
                                 )
                             elif type(value) == str:
                                 state_kind = "string"
@@ -1509,9 +1433,7 @@ def generate_scap(all_rules, all_baselines, args):
                                     oval_object
                                     + """
     <xpath>//*[contains(text(), "{}")]/following-sibling::*[1]/text()</xpath>
-    </plist511_object>""".format(
-                                        key
-                                    )
+    </plist511_object>""".format(key)
                                 )
 
                             oval_state = (
@@ -1537,9 +1459,7 @@ def generate_scap(all_rules, all_baselines, args):
                     <object_component object_ref="oval:mscp:obj:{}" item_field="value_of"/>
                     <literal_component datatype="string">/com.apple.Safari.plist</literal_component>
                 </concat>
-            </local_variable>""".format(
-                                    x, x + 1999
-                                )
+            </local_variable>""".format(x, x + 1999)
                             )
                             x += 1
                             continue
@@ -1551,7 +1471,6 @@ def generate_scap(all_rules, all_baselines, args):
                             or payload_type == "com.apple.systempreferences"
                             and key == "DisabledSystemSettings"
                         ):
-
                             oval_definition = (
                                 oval_definition
                                 + """
@@ -1584,9 +1503,7 @@ def generate_scap(all_rules, all_baselines, args):
                 <object object_ref="oval:mscp:obj:{}" />
                 <state state_ref="oval:mscp:ste:{}" />
             </plist511_test>
-        """.format(
-                                    rule_yaml["id"] + "_" + odv_label, x, x, x
-                                )
+        """.format(rule_yaml["id"] + "_" + odv_label, x, x, x)
                             )
 
                             oval_object = (
@@ -1634,9 +1551,7 @@ def generate_scap(all_rules, all_baselines, args):
                     <object_component object_ref="oval:mscp:obj:{}" item_field="value_of"/>
                     <literal_component datatype="string">/com.apple.systempreferences.plist</literal_component>
                 </concat>
-            </local_variable>""".format(
-                                    x, x + 1999
-                                )
+            </local_variable>""".format(x, x + 1999)
                             )
                             x += 1
                             continue
@@ -1657,7 +1572,6 @@ def generate_scap(all_rules, all_baselines, args):
                         elif type(value) == dict:
                             state_kind = "string"
                         else:
-
                             continue
 
                         oval_definition = (
@@ -1692,9 +1606,7 @@ def generate_scap(all_rules, all_baselines, args):
                 <object object_ref="oval:mscp:obj:{}" />
                 <state state_ref="oval:mscp:ste:{}" />
             </plist511_test>
-        """.format(
-                                rule_yaml["id"] + "_" + odv_label, x, x, x
-                            )
+        """.format(rule_yaml["id"] + "_" + odv_label, x, x, x)
                         )
 
                         oval_object = (
@@ -1711,9 +1623,7 @@ def generate_scap(all_rules, all_baselines, args):
                                 oval_object
                                 + """
                 <xpath>name(//*[contains(text(), "{}")]/following-sibling::*[1])</xpath>
-            </plist511_object>""".format(
-                                    key
-                                )
+            </plist511_object>""".format(key)
                             )
                         else:
                             if (
@@ -1724,9 +1634,7 @@ def generate_scap(all_rules, all_baselines, args):
                                     oval_object
                                     + """
                             <xpath>//*[contains(text(), "{}")]/following-sibling::*[1]/text()</xpath>
-            </plist511_object>""".format(
-                                        "passwordContentRegex"
-                                    )
+            </plist511_object>""".format("passwordContentRegex")
                                 )
                                 oval_state = (
                                     oval_state
@@ -1748,9 +1656,7 @@ def generate_scap(all_rules, all_baselines, args):
                                     oval_object
                                     + """
                                 <xpath>//*[contains(text(), "{}")]/following-sibling::*[1]/text()</xpath>
-                </plist511_object>""".format(
-                                        key
-                                    )
+                </plist511_object>""".format(key)
                                 )
 
                         oval_state = (
@@ -1759,9 +1665,7 @@ def generate_scap(all_rules, all_baselines, args):
                         <plist511_state xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" comment="{}_state" id="oval:mscp:ste:{}" version="1">
             <value_of datatype="{}" operation="equals">{}</value_of>
             </plist511_state>
-            """.format(
-                                rule_yaml["id"] + "_" + odv_label, x, state_kind, value
-                            )
+            """.format(rule_yaml["id"] + "_" + odv_label, x, state_kind, value)
                         )
                         x += 1
                         continue
@@ -1778,14 +1682,12 @@ def generate_scap(all_rules, all_baselines, args):
                     x += 1
                     continue
                 if "SPStorageDataType" in rule_yaml["check"]:
-
                     print(rule_yaml["id"] + " - No relevant oval test")
                     xccdf_rules = replace_ocil(xccdf_rules, x)
                     x += 1
                     continue
                 try:
                     if "fdesetup" in command[3]:
-
                         print(rule_yaml["id"] + " - No relevant oval test")
                         xccdf_rules = replace_ocil(xccdf_rules, x)
                         x += 1
@@ -1836,9 +1738,7 @@ def generate_scap(all_rules, all_baselines, args):
                 </file_test>
                 <file_test id="oval:mscp:tst:{}" version="1" comment="com.apple.TCC.configuration-profile-policy_test" check_existence="all_exist" check="all" xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#unix">
                     <object object_ref="oval:mscp:obj:{}"/>
-                </file_test>""".format(
-                                    x, x, x + 899, x + 899, x + 799, x + 799
-                                )
+                </file_test>""".format(x, x, x + 899, x + 899, x + 799, x + 799)
                             )
 
                             oval_object = (
@@ -1852,9 +1752,7 @@ def generate_scap(all_rules, all_baselines, args):
                 </file_object>
                 <file_object id="oval:mscp:obj:{}" version="1" comment="com.apple.syspolicy.kernel-extension-policy_object" xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#unix">
                     <filepath operation="equals">/Library/Managed Preferences/com.apple.TCC.configuration-profile-policy.plist</filepath>
-                </file_object> """.format(
-                                    x, x + 899, x + 799
-                                )
+                </file_object> """.format(x, x + 899, x + 799)
                             )
                         x += 1
                         continue
@@ -1863,7 +1761,6 @@ def generate_scap(all_rules, all_baselines, args):
                 try:
                     if "csrutil" in command[3]:
                         if "authenticated-root" in command[3]:
-
                             print(rule_yaml["id"] + " - No relevant oval test")
                             xccdf_rules = replace_ocil(xccdf_rules, x)
                             x += 1
@@ -1900,9 +1797,7 @@ def generate_scap(all_rules, all_baselines, args):
                     <object object_ref="oval:mscp:obj:{}" />
                     <state state_ref="oval:mscp:ste:{}" />
                 </systemprofiler_test>
-                """.format(
-                                rule_yaml["id"] + "_" + odv_label, x, x, x
-                            )
+                """.format(rule_yaml["id"] + "_" + odv_label, x, x, x)
                         )
 
                         oval_object = (
@@ -1913,9 +1808,7 @@ def generate_scap(all_rules, all_baselines, args):
 
         <xpath>//*[contains(text(), "system_integrity")]/following-sibling::string[position()=1]/text()</xpath>
                 </systemprofiler_object>
-                """.format(
-                                rule_yaml["id"] + "_" + odv_label, x
-                            )
+                """.format(rule_yaml["id"] + "_" + odv_label, x)
                         )
 
                         oval_state = (
@@ -1927,9 +1820,7 @@ def generate_scap(all_rules, all_baselines, args):
         <xpath>//*[contains(text(), "system_integrity")]/following-sibling::string[position()=1]/text()</xpath>
         <value_of>integrity_enabled</value_of>
                 </systemprofiler_state>
-                """.format(
-                                rule_yaml["id"] + "_" + odv_label, x
-                            )
+                """.format(rule_yaml["id"] + "_" + odv_label, x)
                         )
                         x += 1
                         continue
@@ -2054,9 +1945,7 @@ def generate_scap(all_rules, all_baselines, args):
                 <data_type>SPHardwareDataType</data_type>
 
                     <xpath>//*[contains(text(), "platform_UUID")]/following-sibling::string[position()=1]/text()</xpath>
-                </systemprofiler_object> """.format(
-                                "hardware UUID", x + 999
-                            )
+                </systemprofiler_object> """.format("hardware UUID", x + 999)
                         )
 
                         oval_variable = (
@@ -2068,9 +1957,7 @@ def generate_scap(all_rules, all_baselines, args):
                     <object_component object_ref="oval:mscp:obj:{}" item_field="value_of"/>
                     <literal_component datatype="string">.plist</literal_component>
                 </concat>
-            </local_variable>""".format(
-                                x, x + 999
-                            )
+            </local_variable>""".format(x, x + 999)
                         )
 
                         oval_object = (
@@ -2086,9 +1973,7 @@ def generate_scap(all_rules, all_baselines, args):
                             oval_object
                             + """
                     <xpath>boolean(plist/dict[key="AC Power"]/dict[key="{}"]/integer/text() = "{}")</xpath>
-                </plist511_object>""".format(
-                                "High Standby Delay", standbydelayhigh
-                            )
+                </plist511_object>""".format("High Standby Delay", standbydelayhigh)
                         )
 
                         oval_object = (
@@ -2104,9 +1989,7 @@ def generate_scap(all_rules, all_baselines, args):
                             oval_object
                             + """
                     <xpath>boolean(plist/dict[key="AC Power"]/dict[key="{}"]/integer/text() = "{}")</xpath>
-                </plist511_object>""".format(
-                                "Standby Delay", standbydelaylow
-                            )
+                </plist511_object>""".format("Standby Delay", standbydelaylow)
                         )
 
                         oval_object = (
@@ -2132,9 +2015,7 @@ def generate_scap(all_rules, all_baselines, args):
                             + """
                             <plist511_state xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" comment="{}_state" id="oval:mscp:ste:{}" version="1">
                 <value_of datatype="boolean" operation="equals">true</value_of>
-                </plist511_state>""".format(
-                                rule_yaml["id"] + "_standbydelayhigh", x
-                            )
+                </plist511_state>""".format(rule_yaml["id"] + "_standbydelayhigh", x)
                         )
 
                         oval_state = (
@@ -2162,7 +2043,6 @@ def generate_scap(all_rules, all_baselines, args):
                 except:
                     pass
                 if "sudo -V" in rule_yaml["check"]:
-
                     if "grep" in rule_yaml["check"].split("|")[1]:
                         oval_definition = (
                             oval_definition
@@ -2199,9 +2079,7 @@ def generate_scap(all_rules, all_baselines, args):
                 <textfilecontent54_test id="oval:mscp:tst:{}" version="1" comment="{}_test" check_existence="all_exist" check="all" xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#independent">
             <object object_ref="oval:mscp:obj:{}"/>
         </textfilecontent54_test>
-        """.format(
-                                x, rule_yaml["id"] + "_" + odv_label, x
-                            )
+        """.format(x, rule_yaml["id"] + "_" + odv_label, x)
                         )
 
                         oval_test = (
@@ -2210,9 +2088,7 @@ def generate_scap(all_rules, all_baselines, args):
                 <textfilecontent54_test id="oval:mscp:tst:{}" version="1" comment="{}_sudoers.d_test" check_existence="all_exist" check="all" xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#independent">
             <object object_ref="oval:mscp:obj:{}"/>
         </textfilecontent54_test>
-        """.format(
-                                x + 5051, rule_yaml["id"] + "_" + odv_label, x + 5051
-                            )
+        """.format(x + 5051, rule_yaml["id"] + "_" + odv_label, x + 5051)
                         )
 
                         check_string = rule_yaml["fix"].split("echo")[1].split('"')[1]
@@ -2295,9 +2171,7 @@ def generate_scap(all_rules, all_baselines, args):
                     <textfilecontent54_test id="oval:mscp:tst:{}" version="1" comment="{}_test" check_existence="none_exist" check="all" xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#independent">
                 <object object_ref="oval:mscp:obj:{}"/>
             </textfilecontent54_test>
-            """.format(
-                                    x, rule_yaml["id"] + "_" + odv_label, x
-                                )
+            """.format(x, rule_yaml["id"] + "_" + odv_label, x)
                             )
 
                             oval_test = (
@@ -2438,9 +2312,7 @@ def generate_scap(all_rules, all_baselines, args):
                     <textfilecontent54_test id="oval:mscp:tst:{}" version="1" comment="{}_test" check_existence="at_least_one_exists" check="all" xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#independent">
                 <object object_ref="oval:mscp:obj:{}"/>
             </textfilecontent54_test>
-            """.format(
-                                    x, rule_yaml["id"] + "_" + odv_label, x
-                                )
+            """.format(x, rule_yaml["id"] + "_" + odv_label, x)
                             )
 
                             oval_test = (
@@ -2528,9 +2400,7 @@ def generate_scap(all_rules, all_baselines, args):
                 <textfilecontent54_test id="oval:mscp:tst:{}" version="1" comment="{}_test" check_existence="all_exist" check="all" xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#independent">
             <object object_ref="oval:mscp:obj:{}"/>
         </textfilecontent54_test>
-        """.format(
-                            x, rule_yaml["id"] + "_" + odv_label, x
-                        )
+        """.format(x, rule_yaml["id"] + "_" + odv_label, x)
                     )
 
                     oval_test = (
@@ -2539,9 +2409,7 @@ def generate_scap(all_rules, all_baselines, args):
                 <textfilecontent54_test id="oval:mscp:tst:{}" version="1" comment="{}_ssh_config.d_test" check_existence="all_exist" check="all" xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#independent">
             <object object_ref="oval:mscp:obj:{}"/>
         </textfilecontent54_test>
-        """.format(
-                            x + 5010, rule_yaml["id"] + "_" + odv_label, x + 5010
-                        )
+        """.format(x + 5010, rule_yaml["id"] + "_" + odv_label, x + 5010)
                     )
                     oval_test = (
                         oval_test
@@ -2549,9 +2417,7 @@ def generate_scap(all_rules, all_baselines, args):
                 <textfilecontent54_test id="oval:mscp:tst:{}" version="1" comment="{}_ssh_config.d_test" check_existence="all_exist" check="all" xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#independent">
             <object object_ref="oval:mscp:obj:{}"/>
         </textfilecontent54_test>
-        """.format(
-                            x + 5025, rule_yaml["id"] + "_" + odv_label, x + 5025
-                        )
+        """.format(x + 5025, rule_yaml["id"] + "_" + odv_label, x + 5025)
                     )
                     regex = r"(?<=grep).*"
                     matches = re.finditer(regex, rule_yaml["check"], re.MULTILINE)
@@ -2622,9 +2488,7 @@ def generate_scap(all_rules, all_baselines, args):
                 <uid datatype="int" operation="not equal">0</uid>
                 <gid datatype="int" operation="not equal">0</gid>
                 <login_shell operation="not equal">/usr/bin/false</login_shell>
-            </accountinfo_state>""".format(
-                            x + 999
-                        )
+            </accountinfo_state>""".format(x + 999)
                     )
 
                     oval_variable = (
@@ -2635,9 +2499,7 @@ def generate_scap(all_rules, all_baselines, args):
                 <object_component object_ref="oval:mscp:obj:{}" item_field="home_dir"/>
                 <literal_component datatype="string">/.ssh/config</literal_component>
                 </concat>
-        </local_variable>""".format(
-                            x, x + 999
-                        )
+        </local_variable>""".format(x, x + 999)
                     )
                     x = x + 1
                     continue
@@ -2691,9 +2553,7 @@ def generate_scap(all_rules, all_baselines, args):
                 <textfilecontent54_test id="oval:mscp:tst:{}" version="1" comment="{}_test" check_existence="all_exist" check="all" xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#independent">
             <object object_ref="oval:mscp:obj:{}"/>
         </textfilecontent54_test>
-        """.format(
-                            x, rule_yaml["id"] + "_" + odv_label, x
-                        )
+        """.format(x, rule_yaml["id"] + "_" + odv_label, x)
                     )
 
                     oval_test = (
@@ -2702,9 +2562,7 @@ def generate_scap(all_rules, all_baselines, args):
                 <textfilecontent54_test id="oval:mscp:tst:{}" version="1" comment="{}_sshd_config.d_test" check_existence="all_exist" check="all" xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#independent">
             <object object_ref="oval:mscp:obj:{}"/>
         </textfilecontent54_test>
-        """.format(
-                            x + 6000, rule_yaml["id"] + "_" + odv_label, x + 6000
-                        )
+        """.format(x + 6000, rule_yaml["id"] + "_" + odv_label, x + 6000)
                     )
 
                     oval_object = (
@@ -2773,9 +2631,7 @@ def generate_scap(all_rules, all_baselines, args):
                 <textfilecontent54_test id="oval:mscp:tst:{}" version="1" comment="{}_test" check_existence="all_exist" check="all" xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#independent">
             <object object_ref="oval:mscp:obj:{}"/>
         </textfilecontent54_test>
-        """.format(
-                            x, rule_yaml["id"] + "_" + odv_label, x
-                        )
+        """.format(x, rule_yaml["id"] + "_" + odv_label, x)
                     )
 
                     oval_test = (
@@ -2784,9 +2640,7 @@ def generate_scap(all_rules, all_baselines, args):
                 <textfilecontent54_test id="oval:mscp:tst:{}" version="1" comment="{}_sshd_config.d_test" check_existence="all_exist" check="all" xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#independent">
             <object object_ref="oval:mscp:obj:{}"/>
         </textfilecontent54_test>
-        """.format(
-                            x + 6000, rule_yaml["id"] + "_" + odv_label, x + 6000
-                        )
+        """.format(x + 6000, rule_yaml["id"] + "_" + odv_label, x + 6000)
                     )
                     sshd_config_pattern = ""
                     if "grep" in rule_yaml["check"]:
@@ -2872,9 +2726,7 @@ def generate_scap(all_rules, all_baselines, args):
                 <plist511_test xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" check="all" check_existence="at_least_one_exists" comment="{}_test" id="oval:mscp:tst:{}" version="2">
                     <object object_ref="oval:mscp:obj:{}" />
                     <state state_ref="oval:mscp:ste:{}" />
-                </plist511_test>""".format(
-                                rule_yaml["id"] + "_" + odv_label, x, x, x
-                            )
+                </plist511_test>""".format(rule_yaml["id"] + "_" + odv_label, x, x, x)
                         )
 
                         oval_object = (
@@ -2906,9 +2758,7 @@ def generate_scap(all_rules, all_baselines, args):
                             + """
                             <plist511_state xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" comment="{}_state" id="oval:mscp:ste:{}" version="1">
                 <value_of datatype="boolean" operation="equals">true</value_of>
-                </plist511_state>""".format(
-                                rule_yaml["id"] + "_" + odv_label, x
-                            )
+                </plist511_state>""".format(rule_yaml["id"] + "_" + odv_label, x)
                         )
                         x += 1
                         continue
@@ -2947,9 +2797,7 @@ def generate_scap(all_rules, all_baselines, args):
                 <object object_ref="oval:mscp:obj:{}" />
                 <state state_ref="oval:mscp:ste:{}" />
             </plist511_test>
-            """.format(
-                            rule_yaml["id"] + "_" + odv_label, x, x, x
-                        )
+            """.format(rule_yaml["id"] + "_" + odv_label, x, x, x)
                     )
 
                     if rule_yaml["check"].split()[1] == "--getloggingmode":
@@ -2975,9 +2823,7 @@ def generate_scap(all_rules, all_baselines, args):
                         + """
             <plist511_state xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" comment="{}_state" id="oval:mscp:ste:{}" version="1">
             <value_of datatype="int" operation="equals">1</value_of>
-            </plist511_state>""".format(
-                            rule_yaml["id"] + "_" + odv_label, x
-                        )
+            </plist511_state>""".format(rule_yaml["id"] + "_" + odv_label, x)
                     )
                     x += 1
                     continue
@@ -3024,20 +2870,15 @@ def generate_scap(all_rules, all_baselines, args):
                             oval_object
                             + """
                     <systemsetup_object xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" comment="{}_object" id="oval:mscp:obj:{}" version="1">
-                </systemsetup_object>""".format(
-                                rule_yaml["id"] + "_" + odv_label, x
-                            )
+                </systemsetup_object>""".format(rule_yaml["id"] + "_" + odv_label, x)
                         )
                         state_test = ""
                         if "-getnetworktimeserver" in rule_yaml["check"]:
-
                             timeservers = rule_yaml["result"]["string"]
 
                             state_test = """
                                 <networktimeserver datatype="string" operation="equals">{}</networktimeserver>
-                                """.format(
-                                timeservers
-                            )
+                                """.format(timeservers)
                         oval_state = (
                             oval_state
                             + """
@@ -3057,7 +2898,6 @@ def generate_scap(all_rules, all_baselines, args):
                     and "grep" in rule_yaml["check"]
                     and "CURRENT_USER" in rule_yaml["check"]
                 ):
-
                     regex = r"(?<=\()(.*?)(?=\))"
 
                     test_str = rule_yaml["check"].split("grep")[1]
@@ -3090,14 +2930,11 @@ def generate_scap(all_rules, all_baselines, args):
                     )
 
                     for multi_grep in matchy_match.split("|"):
-
                         oval_definition = (
                             oval_definition
                             + """
                         <criterion comment="{}" test_ref="oval:mscp:tst:{}" />
-                        """.format(
-                                rule_yaml["id"] + "_" + str(abc), x
-                            )
+                        """.format(rule_yaml["id"] + "_" + str(abc), x)
                         )
 
                         oval_test = (
@@ -3106,9 +2943,7 @@ def generate_scap(all_rules, all_baselines, args):
                         <plist511_test xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" check="all" check_existence="any_exist" comment="{}_test" id="oval:mscp:tst:{}" version="2">
                 <object object_ref="oval:mscp:obj:{}" />
                 <state state_ref="oval:mscp:ste:{}" />
-            </plist511_test>""".format(
-                                rule_yaml["id"] + "_" + str(abc), x, x, x
-                            )
+            </plist511_test>""".format(rule_yaml["id"] + "_" + str(abc), x, x, x)
                         )
 
                         key = (
@@ -3122,7 +2957,6 @@ def generate_scap(all_rules, all_baselines, args):
                             .replace(";", "")
                         )
                         if "$CURRENT_USER" in rule_yaml["check"]:
-
                             oval_object = (
                                 oval_object
                                 + """
@@ -3130,9 +2964,7 @@ def generate_scap(all_rules, all_baselines, args):
                 <username operation="pattern match">.*</username>
                 <filter action="include" xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5">oval:mscp:ste:{}</filter>
             </accountinfo_object>
-            """.format(
-                                    x + 1999, x + 1999
-                                )
+            """.format(x + 1999, x + 1999)
                             )
 
                             oval_state = (
@@ -3143,9 +2975,7 @@ def generate_scap(all_rules, all_baselines, args):
                 <uid datatype="int" operation="not equal">0</uid>
                 <gid datatype="int" operation="not equal">0</gid>
                 <login_shell operation="not equal">/usr/bin/false</login_shell>
-            </accountinfo_state>""".format(
-                                    x + 1999
-                                )
+            </accountinfo_state>""".format(x + 1999)
                             )
                             plist = (
                                 rule_yaml["check"]
@@ -3163,9 +2993,7 @@ def generate_scap(all_rules, all_baselines, args):
                 <literal_component datatype="string">/Library/Preferences/{}.</literal_component>
                 <literal_component datatype="string">plist</literal_component>
             </concat>
-        </local_variable>""".format(
-                                    x, x + 1999, plist
-                                )
+        </local_variable>""".format(x, x + 1999, plist)
                             )
 
                         oval_object = (
@@ -3186,9 +3014,7 @@ def generate_scap(all_rules, all_baselines, args):
                                 oval_object
                                 + """
                             <xpath>//*[contains(text(), "{}")]/following-sibling::*[1]/text()</xpath>
-                            </plist511_object>""".format(
-                                    key
-                                )
+                            </plist511_object>""".format(key)
                             )
                         except:
                             if value.lower() == "true" or value.lower == "false":
@@ -3197,9 +3023,7 @@ def generate_scap(all_rules, all_baselines, args):
                                     oval_object
                                     + """
                         <xpath>name(//*[contains(text(), "{}")]/following-sibling::*[1])</xpath>
-                    </plist511_object>""".format(
-                                        key
-                                    )
+                    </plist511_object>""".format(key)
                                 )
                             else:
                                 oval_datatype = "string"
@@ -3207,9 +3031,7 @@ def generate_scap(all_rules, all_baselines, args):
                                     oval_object
                                     + """
                             <xpath>//*[contains(text(), "{}")]/following-sibling::*[1]/text()</xpath>
-                            </plist511_object>""".format(
-                                        key
-                                    )
+                            </plist511_object>""".format(key)
                                 )
                         oval_state = (
                             oval_state
@@ -3240,7 +3062,6 @@ def generate_scap(all_rules, all_baselines, args):
                     break
 
                 if "defaults" in rule_yaml["check"]:
-
                     if (
                         rule_yaml["id"] == "system_settings_hot_corners_secure"
                         or rule_yaml["id"] == "sysprefs_hot_corners_secure"
@@ -3284,9 +3105,7 @@ def generate_scap(all_rules, all_baselines, args):
                         <plist511_test xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" check="all" check_existence="all_exist" comment="{}_1_test" id="oval:mscp:tst:{}" version="2">
                 <object object_ref="oval:mscp:obj:{}" />
                 <state state_ref="oval:mscp:ste:{}" />
-            </plist511_test>""".format(
-                                rule_yaml["id"] + "_" + odv_label, x, x, x
-                            )
+            </plist511_test>""".format(rule_yaml["id"] + "_" + odv_label, x, x, x)
                         )
 
                         oval_test = (
@@ -3368,9 +3187,7 @@ def generate_scap(all_rules, all_baselines, args):
                         oval_object = (
                             oval_object
                             + """<xpath>//*[contains(text(), "{}")]/following-sibling::*[1]/text()</xpath>
-        </plist511_object>""".format(
-                                key
-                            )
+        </plist511_object>""".format(key)
                         )
 
                         key = (
@@ -3387,17 +3204,13 @@ def generate_scap(all_rules, all_baselines, args):
                             + """
                         <plist511_object xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" comment="{}_2_object" id="oval:mscp:obj:{}" version="1">
                 <filepath datatype="string" operation="equals" var_check="at least one" var_ref="oval:mscp:var:{}"/>
-            """.format(
-                                rule_yaml["id"] + "_" + odv_label, x + 5000, x
-                            )
+            """.format(rule_yaml["id"] + "_" + odv_label, x + 5000, x)
                         )
 
                         oval_object = (
                             oval_object
                             + """<xpath>//*[contains(text(), "{}")]/following-sibling::*[1]/text()</xpath>
-        </plist511_object>""".format(
-                                key
-                            )
+        </plist511_object>""".format(key)
                         )
 
                         key = (
@@ -3414,17 +3227,13 @@ def generate_scap(all_rules, all_baselines, args):
                             + """
                         <plist511_object xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" comment="{}_3_object" id="oval:mscp:obj:{}" version="1">
                 <filepath datatype="string" operation="equals" var_check="at least one" var_ref="oval:mscp:var:{}"/>
-            """.format(
-                                rule_yaml["id"] + "_" + odv_label, x + 5001, x
-                            )
+            """.format(rule_yaml["id"] + "_" + odv_label, x + 5001, x)
                         )
 
                         oval_object = (
                             oval_object
                             + """<xpath>//*[contains(text(), "{}")]/following-sibling::*[1]/text()</xpath>
-        </plist511_object>""".format(
-                                key
-                            )
+        </plist511_object>""".format(key)
                         )
 
                         key = (
@@ -3441,16 +3250,12 @@ def generate_scap(all_rules, all_baselines, args):
                             + """
                         <plist511_object xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" comment="{}_4_object" id="oval:mscp:obj:{}" version="1">
                 <filepath datatype="string" operation="equals" var_check="at least one" var_ref="oval:mscp:var:{}"/>
-            """.format(
-                                rule_yaml["id"] + "_" + odv_label, x + 5002, x
-                            )
+            """.format(rule_yaml["id"] + "_" + odv_label, x + 5002, x)
                         )
                         oval_object = (
                             oval_object
                             + """<xpath>//*[contains(text(), "{}")]/following-sibling::*[1]/text()</xpath>
-        </plist511_object>""".format(
-                                key
-                            )
+        </plist511_object>""".format(key)
                         )
 
                         oval_state = (
@@ -3461,9 +3266,7 @@ def generate_scap(all_rules, all_baselines, args):
                 <uid datatype="int" operation="not equal">0</uid>
                 <gid datatype="int" operation="not equal">0</gid>
                 <login_shell operation="not equal">/usr/bin/false</login_shell>
-            </accountinfo_state>""".format(
-                                x + 1999
-                            )
+            </accountinfo_state>""".format(x + 1999)
                         )
 
                         after_user = plist.split('"')[2]
@@ -3476,16 +3279,13 @@ def generate_scap(all_rules, all_baselines, args):
                     <literal_component datatype="string">{}</literal_component>
                     <literal_component datatype="string">.plist</literal_component>
                 </concat>
-            </local_variable>""".format(
-                                x, x + 1999, after_user, x + 999
-                            )
+            </local_variable>""".format(x, x + 1999, after_user, x + 999)
                         )
                         try:
                             check_if = rule_yaml["check"].split("\n")[5]
 
                             modifier = 0
                             for n in check_if.split():
-
                                 if n.replace('"', "").isdigit():
                                     if modifier >= 4999:
                                         modifier = modifier + 1
@@ -3537,9 +3337,7 @@ def generate_scap(all_rules, all_baselines, args):
                         <plist511_test xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" check="all" check_existence="all_exist" comment="{}_test" id="oval:mscp:tst:{}" version="2">
                 <object object_ref="oval:mscp:obj:{}" />
                 <state state_ref="oval:mscp:ste:{}" />
-            </plist511_test>""".format(
-                            rule_yaml["id"] + "_" + odv_label, x, x, x
-                        )
+            </plist511_test>""".format(rule_yaml["id"] + "_" + odv_label, x, x, x)
                     )
 
                     plist = (
@@ -3553,7 +3351,6 @@ def generate_scap(all_rules, all_baselines, args):
                         "ByHost" in rule_yaml["fix"]
                         or "currentHost" in rule_yaml["fix"]
                     ):
-
                         oval_object = (
                             oval_object
                             + """
@@ -3561,13 +3358,10 @@ def generate_scap(all_rules, all_baselines, args):
             <data_type>SPHardwareDataType</data_type>
 
                 <xpath>//*[contains(text(), "platform_UUID")]/following-sibling::string[position()=1]/text()</xpath>
-            </systemprofiler_object> """.format(
-                                "hardware UUID", x + 999
-                            )
+            </systemprofiler_object> """.format("hardware UUID", x + 999)
                         )
 
                         if "$CURRENT_USER" in rule_yaml["check"]:
-
                             check_length = len(rule_yaml["check"].split())
                             key = rule_yaml["check"].split()[check_length - 1]
 
@@ -3596,18 +3390,13 @@ def generate_scap(all_rules, all_baselines, args):
                                     oval_object
                                     + """
                         <xpath>name(//*[contains(text(), "{}")]/following-sibling::*[1])</xpath>
-    </plist511_object>""".format(
-                                        key
-                                    )
+    </plist511_object>""".format(key)
                                 )
                             except:
-
                                 oval_object = (
                                     oval_object
                                     + """<xpath>//*[contains(text(), "{}")]/following-sibling::*[1]/text()</xpath>
-            </plist511_object>""".format(
-                                        key
-                                    )
+            </plist511_object>""".format(key)
                                 )
                             oval_state = (
                                 oval_state
@@ -3617,9 +3406,7 @@ def generate_scap(all_rules, all_baselines, args):
                 <uid datatype="int" operation="not equal">0</uid>
                 <gid datatype="int" operation="not equal">0</gid>
                 <login_shell operation="not equal">/usr/bin/false</login_shell>
-            </accountinfo_state>""".format(
-                                    x + 1999
-                                )
+            </accountinfo_state>""".format(x + 1999)
                             )
 
                             oval_variable = (
@@ -3632,13 +3419,10 @@ def generate_scap(all_rules, all_baselines, args):
                 <object_component object_ref="oval:mscp:obj:{}" item_field="value_of"/>
                 <literal_component datatype="string">.plist</literal_component>
             </concat>
-        </local_variable>""".format(
-                                    x, x + 1999, plist, x + 999
-                                )
+        </local_variable>""".format(x, x + 1999, plist, x + 999)
                             )
 
                         else:
-
                             check_length = len(rule_yaml["check"].split())
                             key = (
                                 rule_yaml["check"]
@@ -3651,9 +3435,7 @@ def generate_scap(all_rules, all_baselines, args):
                                 + """
             <plist511_object xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" comment="{}_object" id="oval:mscp:obj:{}" version="1">
                 <filepath datatype="string" operation="equals" var_check="at least one" var_ref="oval:mscp:var:{}"/>
-                """.format(
-                                    rule_yaml["id"] + "_" + odv_label, x, x
-                                )
+                """.format(rule_yaml["id"] + "_" + odv_label, x, x)
                             )
 
                             try:
@@ -3662,18 +3444,14 @@ def generate_scap(all_rules, all_baselines, args):
                                     oval_object
                                     + """
                         <xpath>name(//*[contains(text(), "{}")]/following-sibling::*[1])</xpath>
-            </plist511_object>""".format(
-                                        key
-                                    )
+            </plist511_object>""".format(key)
                                 )
                             except:
                                 oval_object = (
                                     oval_object
                                     + """
                             <xpath>//*[contains(text(), "{}")]/following-sibling::*[1]/text()</xpath>
-            </plist511_object>""".format(
-                                        key
-                                    )
+            </plist511_object>""".format(key)
                                 )
 
                             oval_variable = (
@@ -3685,13 +3463,10 @@ def generate_scap(all_rules, all_baselines, args):
                 <object_component object_ref="oval:mscp:obj:{}" item_field="value_of"/>
                 <literal_component datatype="string">.plist</literal_component>
             </concat>
-        </local_variable>""".format(
-                                    x, plist, x + 999
-                                )
+        </local_variable>""".format(x, plist, x + 999)
                             )
 
                     elif "$CURRENT_USER" in rule_yaml["check"]:
-
                         check_length = len(rule_yaml["check"].split())
                         key = rule_yaml["check"].replace(" 2>/dev/null", "").split()[-1]
 
@@ -3720,18 +3495,13 @@ def generate_scap(all_rules, all_baselines, args):
                                 oval_object
                                 + """
                     <xpath>name(//*[contains(text(), "{}")]/following-sibling::*[1])</xpath>
-    </plist511_object>""".format(
-                                    key
-                                )
+    </plist511_object>""".format(key)
                             )
                         except:
-
                             oval_object = (
                                 oval_object
                                 + """<xpath>//*[contains(text(), "{}")]/following-sibling::*[1]/text()</xpath>
-        </plist511_object>""".format(
-                                    key
-                                )
+        </plist511_object>""".format(key)
                             )
                         oval_state = (
                             oval_state
@@ -3741,9 +3511,7 @@ def generate_scap(all_rules, all_baselines, args):
             <uid datatype="int" operation="not equal">0</uid>
             <gid datatype="int" operation="not equal">0</gid>
             <login_shell operation="not equal">/usr/bin/false</login_shell>
-        </accountinfo_state>""".format(
-                                x + 1999
-                            )
+        </accountinfo_state>""".format(x + 1999)
                         )
 
                         oval_variable = (
@@ -3755,13 +3523,10 @@ def generate_scap(all_rules, all_baselines, args):
             <literal_component datatype="string">/Library/Preferences/{}.</literal_component>
             <literal_component datatype="string">plist</literal_component>
         </concat>
-    </local_variable>""".format(
-                                x, x + 1999, plist, x + 999
-                            )
+    </local_variable>""".format(x, x + 1999, plist, x + 999)
                         )
 
                     else:
-
                         if plist[-6:] != ".plist":
                             plist = plist + ".plist"
 
@@ -3786,18 +3551,14 @@ def generate_scap(all_rules, all_baselines, args):
                                 oval_object
                                 + """
                         <xpath>name(//*[contains(text(), "{}")]/following-sibling::*[1])</xpath>
-                        </plist511_object>""".format(
-                                    plist_key
-                                )
+                        </plist511_object>""".format(plist_key)
                             )
                         except:
                             oval_object = (
                                 oval_object
                                 + """
                             <xpath>//*[contains(text(), "{}")]/following-sibling::*[1]/text()</xpath>
-                        </plist511_object>""".format(
-                                    plist_key
-                                )
+                        </plist511_object>""".format(plist_key)
                             )
 
                     datatype = ""
@@ -3833,7 +3594,6 @@ def generate_scap(all_rules, all_baselines, args):
                         )
                     )
 
-
                     # oval_definition = re.sub(r"(?=\n\[NOTE\])(?s)(.*)\=\n$.*", "<", oval_definition)
                     oval_definition = clean_oval_definition(oval_definition)
                     x = x + 1
@@ -3846,7 +3606,6 @@ def generate_scap(all_rules, all_baselines, args):
 
                             authdb = rule_yaml["check"].split()[3]
                             if len(check) > 2:
-
                                 matches = re.findall(r"(?<=\>)(.*)(?=\<)", check[1])
                                 key = (
                                     str(matches)
@@ -3923,9 +3682,7 @@ def generate_scap(all_rules, all_baselines, args):
                     <authorizationdb_state xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" comment="{}_state" id="oval:mscp:ste:{}" version="1">
 
                 <value_of datatype="boolean" operation="equals">true</value_of>
-                </authorizationdb_state>""".format(
-                                        rule_yaml["id"] + "_" + odv_label, x
-                                    )
+                </authorizationdb_state>""".format(rule_yaml["id"] + "_" + odv_label, x)
                                 )
                             else:
                                 key = check[1].split()[2].replace("'", "")
@@ -4025,14 +3782,11 @@ def generate_scap(all_rules, all_baselines, args):
                                 )
 
                                 for match in matchy_match:
-
                                     oval_definition = (
                                         oval_definition
                                         + """
                                 <criterion comment="{}" test_ref="oval:mscp:tst:{}" />
-                                """.format(
-                                            rule_yaml["id"] + "+" + match, x
-                                        )
+                                """.format(rule_yaml["id"] + "+" + match, x)
                                     )
                                     oval_test = (
                                         oval_test
@@ -4040,9 +3794,7 @@ def generate_scap(all_rules, all_baselines, args):
                                     <authorizationdb_test xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" check="all" check_existence="only_one_exists" comment="{}_test" id="oval:mscp:tst:{}" version="2">
                     <object object_ref="oval:mscp:obj:{}" />
                     <state state_ref="oval:mscp:ste:{}" />
-                </authorizationdb_test>""".format(
-                                            match, x, x, x
-                                        )
+                </authorizationdb_test>""".format(match, x, x, x)
                                     )
                                     key = "shared"
                                     value = ""
@@ -4057,9 +3809,7 @@ def generate_scap(all_rules, all_baselines, args):
                                     <authorizationdb_object xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" comment="{}_object" id="oval:mscp:obj:{}" version="1">
                     <right_name>{}</right_name>
                     <xpath>boolean(//key[text()="{}"]/following-sibling::{})</xpath>
-                </authorizationdb_object>  """.format(
-                                            match, x, match, key, value
-                                        )
+                </authorizationdb_object>  """.format(match, x, match, key, value)
                                     )
 
                                     oval_state = (
@@ -4068,9 +3818,7 @@ def generate_scap(all_rules, all_baselines, args):
                     <authorizationdb_state xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" comment="{}_state" id="oval:mscp:ste:{}" version="1">
 
                 <value_of datatype="boolean" operation="equals">true</value_of>
-                </authorizationdb_state>""".format(
-                                            match, x
-                                        )
+                </authorizationdb_state>""".format(match, x)
                                     )
                                     x += 1
 
@@ -4111,9 +3859,7 @@ def generate_scap(all_rules, all_baselines, args):
                         + """
                             <file_test id="oval:mscp:tst:{}" version="1" comment="{}_test" check_existence="none_exist" check="none satisfy" xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#unix">
                 <object object_ref="oval:mscp:obj:{}"/>
-            </file_test>""".format(
-                            x, rule_yaml["id"] + "_" + odv_label, x
-                        )
+            </file_test>""".format(x, rule_yaml["id"] + "_" + odv_label, x)
                     )
 
                     path = rule_yaml["fix"].split("----")[1].split(" ")[-1]
@@ -4134,7 +3880,6 @@ def generate_scap(all_rules, all_baselines, args):
                 try:
                     if "ls" in command[2] or "stat" in command[3].split()[0]:
                         if "/Library/Security/PolicyBanner.rtf" in rule_yaml["check"]:
-
                             oval_definition = (
                                 oval_definition
                                 + """
@@ -4204,7 +3949,6 @@ def generate_scap(all_rules, all_baselines, args):
                         config_file = str()
                         oval_variable_need = bool()
                         if "grep" in s.split()[2]:
-
                             oval_variable_need = True
                             grep_search = re.search("\\((.*?)\\)", s).group(1)
 
@@ -4286,9 +4030,7 @@ def generate_scap(all_rules, all_baselines, args):
                 <file_test id="oval:mscp:tst:{}" version="1" comment="{}_test" check_existence="all_exist" check="all" xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#unix">
                     <object object_ref="oval:mscp:obj:{}"/>
                     <state state_ref="oval:mscp:ste:{}"/>
-                </file_test>""".format(
-                                x, rule_yaml["id"] + "_" + odv_label, x, x
-                            )
+                </file_test>""".format(x, rule_yaml["id"] + "_" + odv_label, x, x)
                         )
 
                         if (
@@ -4347,20 +4089,14 @@ def generate_scap(all_rules, all_baselines, args):
                         elif "chgrp" in fix_command:
                             state_test = """
                             <group_id>{}</group_id>
-                            """.format(
-                                rule_yaml["result"]["integer"]
-                            )
+                            """.format(rule_yaml["result"]["integer"])
 
                         elif "chown" in fix_command:
-
                             state_test = """
                             <user_id>{}</user_id>
-                            """.format(
-                                rule_yaml["result"]["integer"]
-                            )
+                            """.format(rule_yaml["result"]["integer"])
 
                         elif "chmod" in fix_command:
-
                             perms = fix_command.split()[1]
 
                             if perms[0] == "0":
@@ -4384,7 +4120,6 @@ def generate_scap(all_rules, all_baselines, args):
                 <uwrite datatype="boolean">true</uwrite>
                 <uexec datatype="boolean">true</uexec>"""
                             elif perms[0] == "4":
-
                                 state_test = """
                 <uread datatype="boolean">true</uread>
                 <uwrite datatype="boolean">false</uwrite>
@@ -4438,7 +4173,6 @@ def generate_scap(all_rules, all_baselines, args):
                 <gexec datatype="boolean">true</gexec>"""
                                 )
                             elif perms[1] == "4":
-
                                 state_test = (
                                     state_test
                                     + """
@@ -4472,7 +4206,6 @@ def generate_scap(all_rules, all_baselines, args):
                                 )
 
                             if perms[2] == "0":
-
                                 state_test = (
                                     state_test
                                     + """
@@ -4597,9 +4330,7 @@ def generate_scap(all_rules, all_baselines, args):
                     <object object_ref="oval:mscp:obj:{}" />
                     <state state_ref="oval:mscp:ste:{}" />
                 </accountinfo_test>
-                """.format(
-                                    rule_yaml["id"] + "_" + odv_label, x, x, x
-                                )
+                """.format(rule_yaml["id"] + "_" + odv_label, x, x, x)
                             )
 
                             oval_object = (
@@ -4621,9 +4352,7 @@ def generate_scap(all_rules, all_baselines, args):
                                 <accountinfo_state xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" comment="{}_state" id="oval:mscp:ste:{}" version="1">
                 <login_shell>{}</login_shell>
                 </accountinfo_state>
-                """.format(
-                                    rule_yaml["id"] + "_" + odv_label, x, shell
-                                )
+                """.format(rule_yaml["id"] + "_" + odv_label, x, shell)
                             )
                             x += 1
                             continue
@@ -4640,7 +4369,6 @@ def generate_scap(all_rules, all_baselines, args):
                             awk_search = rule_yaml["fix"].split(" ")[2].strip('"')
 
                         elif "grep" in rule_yaml["check"]:
-
                             awk_file = rule_yaml["check"].split("|")[0].split(" ")[-2]
                             awk_search = (
                                 rule_yaml["check"]
@@ -4665,11 +4393,9 @@ def generate_scap(all_rules, all_baselines, args):
                                 field_sep = " "
 
                             try:
-
                                 awk_result = rule_yaml["result"]["string"]
 
                             except:
-
                                 awk_result = str(rule_yaml["result"]["integer"])
 
                             if awk_search[0] != "^":
@@ -4706,9 +4432,7 @@ def generate_scap(all_rules, all_baselines, args):
                         <textfilecontent54_test id="oval:mscp:tst:{}" version="1" comment="{}_test" check_existence="all_exist" check="all" xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#independent">
                     <object object_ref="oval:mscp:obj:{}"/>
                 </textfilecontent54_test>
-                """.format(
-                                x, rule_yaml["id"] + "_" + odv_label, x
-                            )
+                """.format(x, rule_yaml["id"] + "_" + odv_label, x)
                         )
                         oval_object = (
                             oval_object
@@ -4731,12 +4455,10 @@ def generate_scap(all_rules, all_baselines, args):
                     pass
                 try:
                     if "grep" in command[3] and not "pgrep" in command[3]:
-
                         if (
                             "bannerText" in rule_yaml["check"]
                             or "fips_" in rule_yaml["check"]
                         ):
-
                             text_to_find = (
                                 rule_yaml["check"].split("=")[1].split('"')[1]
                             )
@@ -4777,9 +4499,7 @@ def generate_scap(all_rules, all_baselines, args):
                     <textfilecontent54_test id="oval:mscp:tst:{}" version="1" comment="{}_test" check_existence="all_exist" check="all" xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#independent">
                 <object object_ref="oval:mscp:obj:{}"/>
             </textfilecontent54_test>
-            """.format(
-                                    x, rule_yaml["id"] + "_" + odv_label, x
-                                )
+            """.format(x, rule_yaml["id"] + "_" + odv_label, x)
                             )
 
                             file_path = rule_yaml["check"].split(" ")[-1].rstrip()
@@ -4802,15 +4522,12 @@ def generate_scap(all_rules, all_baselines, args):
                             x += 1
                             continue
                         else:
-
                             s = rule_yaml["check"]
 
                             try:
-
                                 grep_search = re.search('"(.*?)"', s).group(1)
 
                             except:
-
                                 grep_search = re.search("'(.*?)'", s).group(1)
 
                             grep_file = (
@@ -4848,9 +4565,7 @@ def generate_scap(all_rules, all_baselines, args):
                         <textfilecontent54_test id="oval:mscp:tst:{}" version="1" comment="{}_test" check_existence="all_exist" check="all" xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#independent">
                     <object object_ref="oval:mscp:obj:{}"/>
                 </textfilecontent54_test>
-                """.format(
-                                    x, rule_yaml["id"] + "_" + odv_label, x
-                                )
+                """.format(x, rule_yaml["id"] + "_" + odv_label, x)
                             )
                             oval_object = (
                                 oval_object
@@ -5007,9 +4722,7 @@ def generate_scap(all_rules, all_baselines, args):
                                 + """
                 <launchd_test id="oval:mscp:tst:{}" version="1" comment="{}_launchctl_test" check_existence="none_exist" check="none satisfy" xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos">
                     <object object_ref="oval:mscp:obj:{}"/>
-                </launchd_test>""".format(
-                                    x, rule_yaml["id"] + "_" + odv_label, x
-                                )
+                </launchd_test>""".format(x, rule_yaml["id"] + "_" + odv_label, x)
                             )
 
                             domain = str()
@@ -5080,7 +4793,6 @@ def generate_scap(all_rules, all_baselines, args):
                                 "ByHost" in rule_yaml["fix"]
                                 or "currentHost" in rule_yaml["fix"]
                             ):
-
                                 oval_object = (
                                     oval_object
                                     + """
@@ -5088,13 +4800,10 @@ def generate_scap(all_rules, all_baselines, args):
                     <data_type>SPHardwareDataType</data_type>
 
                         <xpath>//*[contains(text(), "platform_UUID")]/following-sibling::string[position()=1]/text()</xpath>
-                    </systemprofiler_object> """.format(
-                                        "hardware UUID", x + 999
-                                    )
+                    </systemprofiler_object> """.format("hardware UUID", x + 999)
                                 )
 
                                 if "$CURRENT_USER" in rule_yaml["check"]:
-
                                     key = (
                                         rule_yaml["fix"]
                                         .split("defaults")[1]
@@ -5131,18 +4840,13 @@ def generate_scap(all_rules, all_baselines, args):
                                             oval_object
                                             + """
                                 <xpath>name(//*[contains(text(), "{}")]/following-sibling::*[1])</xpath>
-            </plist511_object>""".format(
-                                                key
-                                            )
+            </plist511_object>""".format(key)
                                         )
                                     else:
-
                                         oval_object = (
                                             oval_object
                                             + """<xpath>//*[contains(text(), "{}")]/following-sibling::*[1]/text()</xpath>
-                    </plist511_object>""".format(
-                                                key
-                                            )
+                    </plist511_object>""".format(key)
                                         )
                                     oval_state = (
                                         oval_state
@@ -5152,9 +4856,7 @@ def generate_scap(all_rules, all_baselines, args):
                         <uid datatype="int" operation="not equal">0</uid>
                         <gid datatype="int" operation="not equal">0</gid>
                         <login_shell operation="not equal">/usr/bin/false</login_shell>
-                    </accountinfo_state>""".format(
-                                            x + 1999
-                                        )
+                    </accountinfo_state>""".format(x + 1999)
                                     )
 
                                     oval_variable = (
@@ -5167,13 +4869,10 @@ def generate_scap(all_rules, all_baselines, args):
                         <object_component object_ref="oval:mscp:obj:{}" item_field="value_of"/>
                         <literal_component datatype="string">.plist</literal_component>
                     </concat>
-                </local_variable>""".format(
-                                            x, x + 1999, plist, x + 999
-                                        )
+                </local_variable>""".format(x, x + 1999, plist, x + 999)
                                     )
 
                                 else:
-
                                     key = (
                                         rule_yaml["fix"]
                                         .split("defaults")[1]
@@ -5185,9 +4884,7 @@ def generate_scap(all_rules, all_baselines, args):
                                         + """
                     <plist511_object xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" comment="{}_object" id="oval:mscp:obj:{}" version="1">
                         <filepath datatype="string" operation="equals" var_check="at least one" var_ref="oval:mscp:var:{}"/>
-                        """.format(
-                                            rule_yaml["id"] + "_" + odv_label, x, x
-                                        )
+                        """.format(rule_yaml["id"] + "_" + odv_label, x, x)
                                     )
 
                                     if (
@@ -5196,23 +4893,18 @@ def generate_scap(all_rules, all_baselines, args):
                                         .split(" ")[4]
                                         == "-bool"
                                     ):
-
                                         oval_object = (
                                             oval_object
                                             + """
                                 <xpath>name(//*[contains(text(), "{}")]/following-sibling::*[1])</xpath>
-                    </plist511_object>""".format(
-                                                key
-                                            )
+                    </plist511_object>""".format(key)
                                         )
                                     else:
                                         oval_object = (
                                             oval_object
                                             + """
                                     <xpath>//*[contains(text(), "{}")]/following-sibling::*[1]/text()</xpath>
-                    </plist511_object>""".format(
-                                                key
-                                            )
+                    </plist511_object>""".format(key)
                                         )
 
                                     oval_variable = (
@@ -5224,13 +4916,10 @@ def generate_scap(all_rules, all_baselines, args):
                         <object_component object_ref="oval:mscp:obj:{}" item_field="value_of"/>
                         <literal_component datatype="string">.plist</literal_component>
                     </concat>
-                </local_variable>""".format(
-                                            x, plist, x + 999
-                                        )
+                </local_variable>""".format(x, plist, x + 999)
                                     )
 
                             elif "$CURRENT_USER" in rule_yaml["check"]:
-
                                 check_length = len(rule_yaml["check"].split())
                                 key = (
                                     rule_yaml["fix"].split("defaults")[1].split(" ")[3]
@@ -5259,23 +4948,17 @@ def generate_scap(all_rules, all_baselines, args):
                                     rule_yaml["fix"].split("defaults")[1].split(" ")[4]
                                     == "-bool"
                                 ):
-
                                     oval_object = (
                                         oval_object
                                         + """
                             <xpath>name(//*[contains(text(), "{}")]/following-sibling::*[1])</xpath>
-            </plist511_object>""".format(
-                                            key
-                                        )
+            </plist511_object>""".format(key)
                                     )
                                 else:
-
                                     oval_object = (
                                         oval_object
                                         + """<xpath>//*[contains(text(), "{}")]/following-sibling::*[1]/text()</xpath>
-                </plist511_object>""".format(
-                                            key
-                                        )
+                </plist511_object>""".format(key)
                                     )
                                 oval_state = (
                                     oval_state
@@ -5285,9 +4968,7 @@ def generate_scap(all_rules, all_baselines, args):
                     <uid datatype="int" operation="not equal">0</uid>
                     <gid datatype="int" operation="not equal">0</gid>
                     <login_shell operation="not equal">/usr/bin/false</login_shell>
-                </accountinfo_state>""".format(
-                                        x + 1999
-                                    )
+                </accountinfo_state>""".format(x + 1999)
                                 )
 
                                 oval_variable = (
@@ -5299,13 +4980,10 @@ def generate_scap(all_rules, all_baselines, args):
                     <literal_component datatype="string">/Library/Preferences/{}.</literal_component>
                     <literal_component datatype="string">plist</literal_component>
                 </concat>
-            </local_variable>""".format(
-                                        x, x + 1999, plist, x + 999
-                                    )
+            </local_variable>""".format(x, x + 1999, plist, x + 999)
                                 )
 
                             else:
-
                                 if plist[-6:] != ".plist":
                                     plist = plist + ".plist"
                                 plist_key = (
@@ -5327,18 +5005,14 @@ def generate_scap(all_rules, all_baselines, args):
                                         oval_object
                                         + """
                                 <xpath>name(//*[contains(text(), "{}")]/following-sibling::*[1])</xpath>
-                                </plist511_object>""".format(
-                                            plist_key
-                                        )
+                                </plist511_object>""".format(plist_key)
                                     )
                                 except:
                                     oval_object = (
                                         oval_object
                                         + """
                                     <xpath>//*[contains(text(), "{}")]/following-sibling::*[1]/text()</xpath>
-                                </plist511_object>""".format(
-                                            plist_key
-                                        )
+                                </plist511_object>""".format(plist_key)
                                     )
 
                             datatype = ""
@@ -5388,7 +5062,6 @@ def generate_scap(all_rules, all_baselines, args):
                             continue
 
                         else:
-
                             oval_definition = (
                                 oval_definition
                                 + """
@@ -5418,9 +5091,7 @@ def generate_scap(all_rules, all_baselines, args):
                                 + """
                 <launchd_test id="oval:mscp:tst:{}" version="1" comment="{}_test" check_existence="all_exist" check="all" xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos">
                     <object object_ref="oval:mscp:obj:{}"/>
-                </launchd_test>""".format(
-                                    x, rule_yaml["id"] + "_" + odv_label, x
-                                )
+                </launchd_test>""".format(x, rule_yaml["id"] + "_" + odv_label, x)
                             )
 
                             domain = command[5].split()[2]
@@ -5513,9 +5184,7 @@ def generate_scap(all_rules, all_baselines, args):
         <terms_of_use>Copyright (c) 2020, NIST.</terms_of_use>
         <oval:product_name xmlns:oval="http://oval.mitre.org/XMLSchema/oval-common-5">macOS Security Compliance Project</oval:product_name>
       </generator>
-""".format(
-            date_time_string, version_yaml["os"]
-        )
+""".format(date_time_string, version_yaml["os"])
     )
     total_oval = (
         "\n<definitions>\n"
@@ -5775,7 +5444,7 @@ def get_rule_yaml(rule_file, custom=False, baseline_name=""):
     return resulting_yaml
 
 
-class MacSecurityRule:
+class Macsecurityrule:
     def __init__(
         self,
         title,
@@ -5886,7 +5555,7 @@ def collect_rules():
             rule_yaml["tags"].remove("arm64")
 
         all_rules.append(
-            MacSecurityRule(
+            Macsecurityrule(
                 rule_yaml["title"].replace("|", "\\|"),
                 rule_yaml["id"].replace("|", "\\|"),
                 rule_yaml["severity"],
@@ -5936,7 +5605,6 @@ def get_controls(all_rules):
 
 
 def main():
-
     args = create_args()
 
     file_dir = os.path.dirname(os.path.abspath(__file__))

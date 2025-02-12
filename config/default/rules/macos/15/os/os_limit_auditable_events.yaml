@@ -1,3 +1,4 @@
+---
 id: os_limit_auditable_events
 title: Only allow authorized users to select auditable events
 discussion: |
@@ -26,4 +27,4 @@ operating_system:
 tags:
   - inherent
 mobileconfig: false
-mobileconfig_info:
+mobileconfig_info: null

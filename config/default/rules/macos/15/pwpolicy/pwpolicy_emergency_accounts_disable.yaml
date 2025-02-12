@@ -1,5 +1,4 @@
 ---
-# yaml-language-server: $schema=../../../../../../schemas/rules.json
 id: pwpolicy_emergency_accounts_disable
 title: Automatically Remove or Disable Emergency Accounts within 72 Hours
 discussion: |
@@ -40,7 +39,8 @@ tags:
   - 800-53r4_moderate
   - 800-53r4_high
   - inherent
-  - cnssi-1253_moderate
   - cnssi-1253_high
   - srg
+  - cnssi-1253_moderate
 mobileconfig: false
+mobileconfig_info: null

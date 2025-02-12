@@ -1,3 +1,4 @@
+---
 id: os_touchid_prompt_disable
 title: Disable TouchID Prompt during Setup Assistant
 discussion: |
@@ -10,7 +11,7 @@ check: |
   .objectForKey('SkipTouchIDSetup').js
   EOS
 result:
-  string: 'true'
+  string: "true"
 fix: |
   This is implemented by a Configuration Profile.
 references:
@@ -25,7 +26,7 @@ references:
   srg:
     - SRG-OS-000095-GPOS-00049
   disa_stig:
-    - N/A
+    - APPL-15-005054
   800-171r3:
     - 03.04.02
   cis:
@@ -48,13 +49,14 @@ tags:
   - 800-53r4_high
   - 800-171
   - cisv8
-  - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
   - cmmc_lvl2
   - stig
+  - cnssi-1253_moderate
 severity: medium
 mobileconfig: true
 mobileconfig_info:
-  com.apple.SetupAssistant.managed:
-    SkipTouchIDSetup: true
+  - PayloadType: com.apple.SetupAssistant.managed
+    PayloadContent:
+      SkipTouchIDSetup: true

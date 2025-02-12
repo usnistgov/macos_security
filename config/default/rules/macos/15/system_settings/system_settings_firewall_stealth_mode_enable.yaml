@@ -1,5 +1,4 @@
 ---
-# yaml-language-server: $schema=../../../../../../schemas/rules.json
 id: system_settings_firewall_stealth_mode_enable
 title: Enable Firewall Stealth Mode
 discussion: |
@@ -17,7 +16,7 @@ check: |
   .objectForKey('EnableStealthMode').js
   EOS
 result:
-  boolean: true
+  string: "true"
 fix: |
   This is implemented by a Configuration Profile.
 references:
@@ -68,11 +67,11 @@ tags:
   - cis_lvl1
   - cis_lvl2
   - cisv8
-  - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
   - cmmc_lvl2
   - cmmc_lvl1
+  - cnssi-1253_moderate
 severity: medium
 mobileconfig: true
 mobileconfig_info:

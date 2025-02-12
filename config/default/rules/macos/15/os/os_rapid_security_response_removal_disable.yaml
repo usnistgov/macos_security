@@ -1,3 +1,4 @@
+---
 id: os_rapid_security_response_removal_disable
 title: Disable User Ability from Being Able to Undo Rapid Security Responses
 discussion: |
@@ -8,7 +9,7 @@ check: |
   .objectForKey('allowRapidSecurityResponseRemoval').js
   EOS
 result:
-  string: 'false'
+  string: "false"
 fix: |
   This is implemented by a Configuration Profile.
 references:
@@ -45,12 +46,13 @@ tags:
   - 800-53r5_moderate
   - 800-53r5_high
   - 800-171
-  - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
   - cmmc_lvl2
   - cmmc_lvl1
+  - cnssi-1253_moderate
 mobileconfig: true
 mobileconfig_info:
-  com.apple.applicationaccess:
-    allowRapidSecurityResponseRemoval: false
+  - PayloadType: com.apple.applicationaccess
+    PayloadContent:
+      allowRapidSecurityResponseRemoval: false

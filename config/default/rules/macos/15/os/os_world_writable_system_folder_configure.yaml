@@ -1,3 +1,4 @@
+---
 id: os_world_writable_system_folder_configure
 title: Ensure No World Writable Files Exist in the System Folder
 discussion: |
@@ -43,4 +44,4 @@ tags:
   - cis_lvl2
   - cisv8
 mobileconfig: false
-mobileconfig_info:
+mobileconfig_info: null

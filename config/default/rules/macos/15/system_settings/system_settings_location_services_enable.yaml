@@ -1,5 +1,4 @@
 ---
-# yaml-language-server: $schema=../../../../../../schemas/rules.json
 id: system_settings_location_services_enable
 title: Enable Location Services
 discussion: |
@@ -10,7 +9,7 @@ check: |
   .objectForKey('LocationServicesEnabled').js
   EOS
 result:
-  boolean: true
+  string: "true"
 fix: |
   [source,bash]
   ----
@@ -47,3 +46,4 @@ tags:
   - cis_lvl2
   - cisv8
 mobileconfig: false
+mobileconfig_info: null

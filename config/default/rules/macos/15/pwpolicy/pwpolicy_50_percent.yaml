@@ -1,5 +1,4 @@
 ---
-# yaml-language-server: $schema=../../../../../../schemas/rules.json
 id: pwpolicy_50_percent
 title: Require a Minimum of Fifty Percent Character Change in New Passwords
 discussion: |
@@ -29,6 +28,8 @@ references:
     - SRG-OS-000072-GPOS-00040
   800-171r3:
     - 03.05.07
+  macOS:
+    - "15.0"
 operating_system:
   - name: macos
     version:
@@ -41,3 +42,4 @@ tags:
   - permanent
   - srg
 mobileconfig: false
+mobileconfig_info: null

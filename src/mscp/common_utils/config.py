@@ -7,7 +7,7 @@ from pathlib import Path
 from loguru import logger
 
 # Local python modules
-from src.mscp.common_utils.file_handling import open_yaml
+from .file_handling import open_yaml
 
 CONFIG_PATH: Path = Path.cwd() / "config" / "config.yaml"
 

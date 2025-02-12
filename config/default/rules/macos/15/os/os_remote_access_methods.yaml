@@ -1,3 +1,4 @@
+---
 id: os_remote_access_methods
 title: Control remote access methods
 discussion: |
@@ -26,4 +27,4 @@ operating_system:
 tags:
   - inherent
 mobileconfig: false
-mobileconfig_info:
+mobileconfig_info: null

@@ -1,21 +1,28 @@
+---
 id: os_writing_tools_disable
 title: Disable Apple Intelligence Writing Tools
-discussion: |-
-  Apple Intelligence features such as writing tools that use off device AI _MUST_ be disabled.
+discussion:
+  Apple Intelligence features such as writing tools that use off device
+  AI _MUST_ be disabled.
 check: |
   /usr/bin/osascript -l JavaScript << EOS
   $.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess')\
   .objectForKey('allowWritingTools').js
   EOS
 result:
-  string: 'false'
+  string: "false"
 fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
     - CCE-94328-2
   cci:
-    - N/A
+    - CCI-000381
+    - CCI-001774
+  srg:
+    - SRG-OS-000095-GPOS-00049
+  disa_stig:
+    - APPL-15-005160
   800-53r5:
     - AC-20
     - AC-20(1)
@@ -38,9 +45,14 @@ tags:
   - 800-53r5_moderate
   - 800-53r5_high
   - 800-171
+  - cnssi-1253_low
+  - cnssi-1253_high
+  - stig
   - cmmc_lvl2
   - cmmc_lvl1
+  - cnssi-1253_moderate
 mobileconfig: true
 mobileconfig_info:
-  com.apple.applicationaccess:
-    allowWritingTools: false
+  - PayloadType: com.apple.applicationaccess
+    PayloadContent:
+      allowWritingTools: false

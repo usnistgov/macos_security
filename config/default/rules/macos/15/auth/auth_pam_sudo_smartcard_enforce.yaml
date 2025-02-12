@@ -1,5 +1,8 @@
+---
 id: auth_pam_sudo_smartcard_enforce
-title: Enforce Multifactor Authentication for Privilege Escalation Through the sudo Command
+title:
+  Enforce Multifactor Authentication for Privilege Escalation Through the sudo
+  Command
 discussion: |
   The system _MUST_ be configured to enforce multifactor authentication when the sudo command is used to elevate privilege.
 
@@ -38,6 +41,7 @@ references:
     - CCI-000767
     - CCI-000768
     - CCI-001941
+    - CCI-004047
   800-53r5:
     - IA-2(1)
     - IA-2(2)
@@ -52,8 +56,9 @@ references:
     - SRG-OS-000108-GPOS-00055
     - SRG-OS-000106-GPOS-00053
     - SRG-OS-000105-GPOS-00052
+    - SRG-OS-000705-GPOS-00150
   disa_stig:
-    - N/A
+    - APPL-15-003052
   800-171r3:
     - 03.05.03
     - 03.05.04
@@ -80,20 +85,20 @@ tags:
   - 800-53r4_high
   - 800-171
   - cisv8
-  - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
   - cmmc_lvl2
   - stig
+  - cnssi-1253_moderate
 severity: medium
 mobileconfig: false
-mobileconfig_info:
+mobileconfig_info: null
 ddm_info:
   declarationtype: com.apple.configuration.services.configuration-files
   service: com.apple.pam
   config_file: sudo
   configuration_key: file
-  configuration_value: |
+  configuration_value: |-
     auth        sufficient    pam_smartcard.so
     auth        required      pam_opendirectory.so
     auth        required      pam_deny.so

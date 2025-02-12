@@ -1,3 +1,4 @@
+---
 id: os_home_folders_secure
 title: Secure User's Home Folders
 discussion: |
@@ -28,8 +29,9 @@ references:
     - AC-6
   srg:
     - SRG-OS-000480-GPOS-00230
+    - SRG-OS-000480-GPOS-00228
   disa_stig:
-    - N/A
+    - APPL-15-002068
   800-171r3:
     - 03.01.05
   cis:
@@ -53,12 +55,12 @@ tags:
   - cis_lvl1
   - cis_lvl2
   - cisv8
-  - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
   - cmmc_lvl2
   - cmmc_lvl1
   - stig
+  - cnssi-1253_moderate
 severity: medium
 mobileconfig: false
-mobileconfig_info:
+mobileconfig_info: null

@@ -1,3 +1,4 @@
+---
 id: auth_smartcard_enforce
 title: Enforce Smartcard Authentication
 discussion: |
@@ -16,7 +17,7 @@ check: |
   .objectForKey('enforceSmartCard').js
   EOS
 result:
-  string: 'true'
+  string: "true"
 fix: |
   This is implemented by a Configuration Profile.
 references:
@@ -31,6 +32,7 @@ references:
     - CCI-001941
     - CCI-001948
     - CCI-001953
+    - CCI-004046
   800-53r5:
     - IA-2(1)
     - IA-2(2)
@@ -58,8 +60,9 @@ references:
     - SRG-OS-000375-GPOS-00160
     - SRG-OS-000376-GPOS-00161
     - SRG-OS-000105-GPOS-00052
+    - SRG-OS-000705-GPOS-00150
   disa_stig:
-    - N/A
+    - APPL-15-003020
   800-171r3:
     - 03.05.01
     - 03.05.03
@@ -89,15 +92,16 @@ tags:
   - 800-53r4_high
   - 800-171
   - cisv8
-  - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
   - cmmc_lvl2
   - cmmc_lvl1
   - stig
+  - cnssi-1253_moderate
 severity: medium
 mobileconfig: true
 mobileconfig_info:
-  com.apple.security.smartcard:
-    enforceSmartCard: true
-    allowSmartCard: true
+  - PayloadType: com.apple.security.smartcard
+    PayloadContent:
+      enforceSmartCard: true
+      allowSmartCard: true

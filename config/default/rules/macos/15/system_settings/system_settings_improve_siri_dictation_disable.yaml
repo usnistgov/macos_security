@@ -1,7 +1,6 @@
 ---
-# yaml-language-server: $schema=../../../../../../schemas/rules.json
 id: system_settings_improve_siri_dictation_disable
-title: Disable Sending Siri and Dictation Information to Apple
+title: Disable Improve Siri and Dictation Information to Apple
 discussion: |
   The ability for Apple to store and review audio of your Siri and Dictation interactions _MUST_ be disabled.
 
@@ -36,7 +35,7 @@ references:
   srg:
     - SRG-OS-000095-GPOS-00049
   disa_stig:
-    - N/A
+    - APPL-15-002210
   cis:
     benchmark:
       - 2.6.3.2 (level 1)
@@ -60,16 +59,17 @@ tags:
   - 800-53r4_high
   - 800-171
   - cisv8
-  - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
   - cmmc_lvl2
   - cmmc_lvl1
   - stig
   - cis_lvl1
+  - cis_lvl2
+  - cnssi-1253_moderate
 severity: medium
 mobileconfig: true
 mobileconfig_info:
-  - PayloadType: com.apple.support
+  - PayloadType: com.apple.assistant.support
     PayloadContent:
       Siri Data Sharing Opt-In Status: 2

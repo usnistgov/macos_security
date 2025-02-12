@@ -1,3 +1,4 @@
+---
 id: os_privacy_setup_prompt_disable
 title: Disable Privacy Setup Services During Setup Assistant
 discussion: |
@@ -10,7 +11,7 @@ check: |
   .objectForKey('SkipPrivacySetup').js
   EOS
 result:
-  string: 'true'
+  string: "true"
 fix: |
   This is implemented by a Configuration Profile.
 references:
@@ -27,7 +28,7 @@ references:
   srg:
     - SRG-OS-000095-GPOS-00049
   disa_stig:
-    - N/A
+    - APPL-15-002036
   cis:
     benchmark:
       - N/A
@@ -46,13 +47,14 @@ operating_system:
 tags:
   - 800-171
   - cisv8
-  - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
   - cmmc_lvl2
   - stig
+  - cnssi-1253_moderate
 severity: medium
 mobileconfig: true
 mobileconfig_info:
-  com.apple.SetupAssistant.managed:
-    SkipPrivacySetup: true
+  - PayloadType: com.apple.SetupAssistant.managed
+    PayloadContent:
+      SkipPrivacySetup: true

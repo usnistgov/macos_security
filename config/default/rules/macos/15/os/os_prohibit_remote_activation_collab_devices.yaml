@@ -1,3 +1,4 @@
+---
 id: os_prohibit_remote_activation_collab_devices
 title: Prohibit Remote Activation of Collaborative Computing Devices
 discussion: |
@@ -43,9 +44,9 @@ tags:
   - 800-53r5_low
   - 800-53r5_moderate
   - 800-53r5_high
-  - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
   - cmmc_lvl2
+  - cnssi-1253_moderate
 mobileconfig: false
-mobileconfig_info:
+mobileconfig_info: null

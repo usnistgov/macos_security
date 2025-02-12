@@ -1,3 +1,4 @@
+---
 id: os_sshd_unused_connection_timeout_configure
 title: Configure SSHD Unused Connection Timeout to $ODV
 discussion: |
@@ -5,7 +6,7 @@ discussion: |
 
   This will set the time out when there are no open channels within an session.
 
-  NOTE: /etc/ssh/sshd_config will be automatically modified to its original state following any update or major upgrade to the operating system.
+  NOTE: On macOS 15.2 and higher the SSH configuration can be reset to the macOS default by running /usr/libexec/reset-ssh-configuration.
 check: |
   /usr/sbin/sshd -G | /usr/bin/awk '/unusedconnectiontimeout/{print $2}'
 result:
@@ -46,17 +47,13 @@ references:
     - SRG-OS-000163-GPOS-00072
     - SRG-OS-000279-GPOS-00109
   disa_stig:
-    - N/A
+    - APPL-15-000130
   800-171r3:
     - 03.01.11
     - 03.13.09
   cmmc:
     - AC.L2-3.1.11
     - SC.L2-3.13.9
-odv:
-  hint: Number of seconds.
-  recommended: 900
-  stig: 900
 operating_system:
   - name: macos
     version:
@@ -67,14 +64,18 @@ tags:
   - 800-53r4_moderate
   - 800-53r4_high
   - 800-171
-  - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
   - cmmc_lvl2
   - stig
+  - cnssi-1253_moderate
 severity: medium
+odv:
+  hint: Number of seconds.
+  recommended: 900
+  stig: 900
 mobileconfig: false
-mobileconfig_info:
+mobileconfig_info: null
 ddm_info:
   declarationtype: com.apple.configuration.services.configuration-files
   service: com.apple.sshd

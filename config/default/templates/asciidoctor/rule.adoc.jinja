@@ -50,12 +50,12 @@ Perform the following to configure the system to meet the requirements:
 
 !800-53r5
 !
-{{ rule.references.nist_controls | group_ulify if rule.nist_controls is not none else "* N/A" }}
+{{ rule.references.nist_controls | group_ulify if rule.references.nist_controls is not none else "* N/A" }}
 
 ifdef::show_171[]
 !800-171r3
 !
-{{ render_rules(rule.nist_171) if rule.nist_171 is not none else "* N/A" }}
+{{ render_rules(rule.references.nist_171) if rule.references.nist_171 is not none else "* N/A" }}
 endif::[]
 
 ifdef::show_STIG[]

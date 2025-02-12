@@ -1,7 +1,6 @@
 ---
-# yaml-language-server: $schema=../../../../../../schemas/rules.json
 id: system_settings_siri_listen_disable
-title: "Ensure Siri Listen For is Disabled"
+title: Ensure Siri Listen For is Disabled
 discussion: |
   Siri has the ability to listen for "Hey Siri" or "Siri". Listen for _MUST_ be disabled.
 check: |
@@ -10,7 +9,7 @@ check: |
   .objectForKey('VoiceTriggerUserEnabled').js
   EOS
 result:
-  boolean: false
+  string: "false"
 fix: |
   This is implemented by a Configuration Profile.
 references:

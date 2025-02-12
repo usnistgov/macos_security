@@ -1,3 +1,4 @@
+---
 id: os_mail_app_disable
 title: Disable Mail App
 discussion: |
@@ -30,7 +31,7 @@ check: |
     }
   EOS
 result:
-  string: 'true'
+  string: "true"
 fix: |
   This is implemented by a Configuration Profile.
 references:
@@ -68,13 +69,14 @@ operating_system:
     version:
       - 15.0
 tags:
-  - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
+  - cnssi-1253_moderate
 severity: medium
 mobileconfig: true
 mobileconfig_info:
-  com.apple.applicationaccess.new:
-    familyControlsEnabled: true
-    pathBlackList:
-      - /Applications/Mail.app
+  - PayloadType: com.apple.applicationaccess.new
+    PayloadContent:
+      familyControlsEnabled: true
+      pathBlackList:
+        - /Applications/Mail.app

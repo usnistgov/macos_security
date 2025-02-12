@@ -1,3 +1,4 @@
+---
 id: os_notify_account_created
 title: Configure the System to Notify upon Account Created Actions
 discussion: |
@@ -42,4 +43,4 @@ tags:
   - permanent
   - srg
 mobileconfig: false
-mobileconfig_info:
+mobileconfig_info: null

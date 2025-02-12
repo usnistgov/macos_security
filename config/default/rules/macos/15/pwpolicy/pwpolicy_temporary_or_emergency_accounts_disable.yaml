@@ -1,7 +1,8 @@
 ---
-# yaml-language-server: $schema=../../../../../../schemas/rules.json
 id: pwpolicy_temporary_or_emergency_accounts_disable
-title: Automatically Remove or Disable Temporary or Emergency User Accounts within 72 Hours
+title:
+  Automatically Remove or Disable Temporary or Emergency User Accounts within
+  72 Hours
 discussion: |
   The macOS is able to be configured to set an automated termination for 72 hours or less for all temporary or emergency accounts upon account creation.
 
@@ -70,7 +71,7 @@ references:
     - SRG-OS-000002-GPOS-00002
     - SRG-OS-000123-GPOS-00064
   disa_stig:
-    - N/A
+    - APPL-15-000012
 operating_system:
   - name: macos
     version:
@@ -81,8 +82,9 @@ tags:
   - 800-53r4_moderate
   - 800-53r4_high
   - manual
-  - cnssi-1253_moderate
   - cnssi-1253_high
   - stig
+  - cnssi-1253_moderate
 severity: medium
 mobileconfig: false
+mobileconfig_info: null

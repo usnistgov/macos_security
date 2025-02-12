@@ -1,3 +1,4 @@
+---
 id: os_mobile_file_integrity_enable
 title: Enable Apple Mobile File Integrity
 discussion: Mobile file integrity _MUST_ be enabled.
@@ -40,4 +41,4 @@ tags:
   - cis_lvl2
   - cisv8
 mobileconfig: false
-mobileconfig_info:
+mobileconfig_info: null

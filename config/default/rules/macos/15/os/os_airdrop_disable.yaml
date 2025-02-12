@@ -1,3 +1,4 @@
+---
 id: os_airdrop_disable
 title: Disable AirDrop
 discussion: |-
@@ -9,7 +10,7 @@ check: |
   .objectForKey('allowAirDrop').js
   EOS
 result:
-  string: 'false'
+  string: "false"
 fix: |
   This is implemented by a Configuration Profile.
 references:
@@ -34,7 +35,7 @@ references:
     - SRG-OS-000080-GPOS-00048
     - SRG-OS-000095-GPOS-00049
   disa_stig:
-    - N/A
+    - APPL-15-002009
   800-171r3:
     - 03.01.02
     - 03.01.20
@@ -66,14 +67,15 @@ tags:
   - cis_lvl1
   - cis_lvl2
   - cisv8
-  - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
   - cmmc_lvl2
   - cmmc_lvl1
   - stig
+  - cnssi-1253_moderate
 severity: medium
 mobileconfig: true
 mobileconfig_info:
-  com.apple.applicationaccess:
-    allowAirDrop: false
+  - PayloadType: com.apple.applicationaccess
+    PayloadContent:
+      allowAirDrop: false

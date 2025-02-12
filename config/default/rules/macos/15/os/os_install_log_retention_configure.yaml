@@ -1,3 +1,4 @@
+---
 id: os_install_log_retention_configure
 title: Configure Install.log Retention to $ODV
 discussion: |
@@ -5,7 +6,7 @@ discussion: |
 check: |
   /usr/sbin/aslmanager -dd 2>&1 | /usr/bin/awk '/\/var\/log\/install.log$/ {count++} /Processing module com.apple.install/,/Finished/ { for (i=1;i<=NR;i++) { if ($i == "TTL" && $(i+2) >= $ODV) { ttl="True" }; if ($i == "MAX") {max="True"}}} END{if (count > 1) { print "Multiple config files for /var/log/install, manually remove the extra files"} else if (max == "True") { print "all_max setting is configured, must be removed" } if (ttl != "True") { print "TTL not configured" } else { print "Yes" }}'
 result:
-  string: 'Yes'
+  string: "Yes"
 fix: |
   [source,bash]
   ----
@@ -27,7 +28,7 @@ references:
   srg:
     - SRG-OS-000341-GPOS-00132
   disa_stig:
-    - N/A
+    - APPL-15-004050
   800-171r3:
     - 03.03.03
   cis:
@@ -42,21 +43,21 @@ operating_system:
   - name: macos
     version:
       - 15.0
+tags:
+  - cis_lvl1
+  - cis_lvl2
+  - cisv8
+  - cnssi-1253_low
+  - cnssi-1253_high
+  - cmmc_lvl2
+  - stig
+  - cnssi-1253_moderate
+severity: medium
 odv:
   hint: Number of days.
   recommended: 365
   cis_lvl1: 365
   cis_lvl2: 365
   stig: 365
-tags:
-  - cis_lvl1
-  - cis_lvl2
-  - cisv8
-  - cnssi-1253_moderate
-  - cnssi-1253_low
-  - cnssi-1253_high
-  - cmmc_lvl2
-  - stig
-severity: medium
 mobileconfig: false
-mobileconfig_info:
+mobileconfig_info: null

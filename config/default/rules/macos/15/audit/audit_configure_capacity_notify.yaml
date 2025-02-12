@@ -1,3 +1,4 @@
+---
 id: audit_configure_capacity_notify
 title: Configure Audit Capacity Warning
 discussion: |
@@ -27,22 +28,22 @@ references:
     - SRG-OS-000046-GPOS-00022
     - SRG-OS-000343-GPOS-00134
   disa_stig:
-    - N/A
+    - APPL-15-001030
 operating_system:
   - name: macos
     version:
       - 15.0
+tags:
+  - 800-53r5_high
+  - 800-53r4_high
+  - cnssi-1253_low
+  - cnssi-1253_high
+  - stig
+  - cnssi-1253_moderate
+severity: low
 odv:
   hint: Percentage of free space.
   recommended: 25
   stig: 25
-tags:
-  - 800-53r5_high
-  - 800-53r4_high
-  - cnssi-1253_moderate
-  - cnssi-1253_low
-  - cnssi-1253_high
-  - stig
-severity: low
 mobileconfig: false
-mobileconfig_info:
+mobileconfig_info: null

@@ -1,5 +1,4 @@
 ---
-# yaml-language-server: $schema=../../../../../../schemas/rules.json
 id: system_settings_gatekeeper_override_disallow
 title: Configure Gatekeeper to Disallow End User Override
 discussion: |
@@ -12,7 +11,7 @@ check: |
   .objectForKey('DisableOverride').js
   EOS
 result:
-  boolean: true
+  string: "true"
 fix: |
   This is implemented by a Configuration Profile.
 references:
@@ -45,10 +44,10 @@ tags:
   - 800-53r4_moderate
   - 800-53r4_high
   - 800-171
-  - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
   - cmmc_lvl2
+  - cnssi-1253_moderate
 severity: medium
 mobileconfig: true
 mobileconfig_info:

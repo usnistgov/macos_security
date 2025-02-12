@@ -1,3 +1,4 @@
+---
 id: os_notify_unauthorized_baseline_change
 title: Configure the System to Notify upon Baseline Configuration Changes
 discussion: |
@@ -34,4 +35,4 @@ tags:
   - cnssi-1253_high
   - srg
 mobileconfig: false
-mobileconfig_info:
+mobileconfig_info: null

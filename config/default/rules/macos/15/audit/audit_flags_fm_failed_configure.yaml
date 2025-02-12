@@ -1,3 +1,4 @@
+---
 id: audit_flags_fm_failed_configure
 title: Configure System to Audit All Failed Change of Object Attributes
 discussion: |
@@ -70,10 +71,10 @@ tags:
   - 800-53r4_high
   - cis_lvl2
   - cisv8
-  - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
   - cmmc_lvl2
+  - cnssi-1253_moderate
 severity: medium
 mobileconfig: false
-mobileconfig_info:
+mobileconfig_info: null

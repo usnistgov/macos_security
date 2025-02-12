@@ -1,3 +1,4 @@
+---
 id: audit_retention_configure
 title: Configure Audit Retention to $ODV
 discussion: |
@@ -27,7 +28,7 @@ references:
   srg:
     - SRG-OS-000341-GPOS-00132
   disa_stig:
-    - N/A
+    - APPL-15-001029
   cis:
     benchmark:
       - 3.4 (level 1)
@@ -42,12 +43,6 @@ operating_system:
   - name: macos
     version:
       - 15.0
-odv:
-  hint: See man audit_control for possible values.
-  recommended: 7d
-  cis_lvl1: 60d OR 5G
-  cis_lvl2: 60d OR 5G
-  stig: 7d
 tags:
   - 800-171
   - 800-53r5_privacy
@@ -60,11 +55,17 @@ tags:
   - cis_lvl1
   - cis_lvl2
   - cisv8
-  - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
   - cmmc_lvl2
   - stig
+  - cnssi-1253_moderate
 severity: low
+odv:
+  hint: See man audit_control for possible values.
+  recommended: 7d
+  cis_lvl1: 60d OR 5G
+  cis_lvl2: 60d OR 5G
+  stig: 7d
 mobileconfig: false
-mobileconfig_info:
+mobileconfig_info: null

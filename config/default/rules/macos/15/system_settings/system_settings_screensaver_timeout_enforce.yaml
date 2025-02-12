@@ -1,5 +1,4 @@
 ---
-# yaml-language-server: $schema=../../../../../../schemas/rules.json
 id: system_settings_screensaver_timeout_enforce
 title: Enforce Screen Saver Timeout
 discussion: |
@@ -19,7 +18,7 @@ check: |
   }
   EOS
 result:
-  boolean: true
+  string: "true"
 fix: |
   This is implemented by a Configuration Profile.
 references:
@@ -35,7 +34,7 @@ references:
   srg:
     - SRG-OS-000029-GPOS-00010
   disa_stig:
-    - N/A
+    - APPL-15-000070
   800-171r3:
     - 03.01.10
     - 03.05.01
@@ -50,12 +49,6 @@ operating_system:
   - name: macos
     version:
       - 15.0
-odv:
-  hint: Number of seconds.
-  recommended: 1200
-  cis_lvl1: 1200
-  cis_lvl2: 1200
-  stig: 900
 tags:
   - 800-53r5_moderate
   - 800-53r5_high
@@ -66,12 +59,18 @@ tags:
   - cis_lvl1
   - cis_lvl2
   - cisv8
-  - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
   - cmmc_lvl2
   - stig
+  - cnssi-1253_moderate
 severity: medium
+odv:
+  hint: Number of seconds.
+  recommended: 1200
+  cis_lvl1: 1200
+  cis_lvl2: 1200
+  stig: 900
 mobileconfig: true
 mobileconfig_info:
   - PayloadType: com.apple.screensaver

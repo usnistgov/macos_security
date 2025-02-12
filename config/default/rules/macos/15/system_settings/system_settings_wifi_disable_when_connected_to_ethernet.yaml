@@ -1,5 +1,4 @@
 ---
-# yaml-language-server: $schema=../../../../../../schemas/rules.json
 id: system_settings_wifi_disable_when_connected_to_ethernet
 title: Disable Wi-Fi When Connected to Ethernet
 discussion: |
@@ -46,8 +45,9 @@ tags:
   - 800-53r4_high
   - 800-171
   - permanent
-  - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
   - cmmc_lvl2
+  - cnssi-1253_moderate
 mobileconfig: false
+mobileconfig_info: null

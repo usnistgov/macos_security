@@ -1,3 +1,4 @@
+---
 id: os_erase_content_and_settings_disable
 title: Disable Erase Content and Settings
 discussion: |
@@ -8,7 +9,7 @@ check: |
   .objectForKey('allowEraseContentAndSettings').js
   EOS
 result:
-  string: 'false'
+  string: "false"
 fix: |
   This is implemented by a Configuration Profile.
 references:
@@ -27,7 +28,7 @@ references:
     - SRG-OS-000480-GPOS-00227
     - SRG-OS-000095-GPOS-00049
   disa_stig:
-    - N/A
+    - APPL-15-005061
   cmmc:
     - CM.L2-3.4.6
     - CM.L2-3.4.7
@@ -39,13 +40,14 @@ operating_system:
       - 15.0
 tags:
   - 800-171
-  - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
   - cmmc_lvl2
   - stig
+  - cnssi-1253_moderate
 severity: medium
 mobileconfig: true
 mobileconfig_info:
-  com.apple.applicationaccess:
-    allowEraseContentAndSettings: false
+  - PayloadType: com.apple.applicationaccess
+    PayloadContent:
+      allowEraseContentAndSettings: false

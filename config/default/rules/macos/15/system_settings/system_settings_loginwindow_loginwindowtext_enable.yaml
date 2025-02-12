@@ -1,5 +1,4 @@
 ---
-# yaml-language-server: $schema=../../../../../../schemas/rules.json
 id: system_settings_loginwindow_loginwindowtext_enable
 title: Configure Login Window to Show A Custom Message
 discussion: |
@@ -37,15 +36,15 @@ operating_system:
   - name: macos
     version:
       - 15.0
+tags:
+  - cis_lvl1
+  - cis_lvl2
+  - cisv8
 odv:
   hint: Organization's approved message.
   recommended: Center for Internet Security Test Message
   cis_lvl1: Center for Internet Security Test Message
   cis_lvl2: Center for Internet Security Test Message
-tags:
-  - cis_lvl1
-  - cis_lvl2
-  - cisv8
 mobileconfig: true
 mobileconfig_info:
   - PayloadType: com.apple.loginwindow

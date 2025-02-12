@@ -1,3 +1,4 @@
+---
 id: os_limit_dos_attacks
 title: Limit Impact of Denial of Service Attacks
 discussion: |
@@ -29,8 +30,8 @@ operating_system:
       - 15.0
 tags:
   - permanent
-  - cnssi-1253_moderate
   - cnssi-1253_high
   - srg
+  - cnssi-1253_moderate
 mobileconfig: false
-mobileconfig_info:
+mobileconfig_info: null

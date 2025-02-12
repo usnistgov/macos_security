@@ -6,12 +6,10 @@ from pathlib import Path
 # Additional python modules
 import pandas as pd
 from loguru import logger
-
-from openpyxl import Workbook
 from openpyxl.styles import Alignment, Font
 from openpyxl.utils import get_column_letter
 
-from src.mscp.classes.baseline import Baseline
+from src.mscp.classes import Baseline
 
 
 def generate_excel(file_out: Path, baseline: Baseline) -> None:
@@ -61,7 +59,7 @@ def generate_excel(file_out: Path, baseline: Baseline) -> None:
         "result": "Check Result",
         "customized": "Modified Rule",
         "benchmark": "CIS Benchmark",
-        "controls_v8": "CIS Controls v8"
+        "controls_v8": "CIS Controls v8",
     }
 
     list_columns = [
@@ -78,7 +76,7 @@ def generate_excel(file_out: Path, baseline: Baseline) -> None:
         "odv",
         "tags",
         "benchmark",
-        "controls_v8"
+        "controls_v8",
     ]
 
     required_columns = [
@@ -101,30 +99,38 @@ def generate_excel(file_out: Path, baseline: Baseline) -> None:
         "indigo",
         "CCI",
         "Severity",
-        "Modified Rule"
+        "Modified Rule",
     ]
 
-    logger.info("Converting baseline to DataFrame.")
+    logger.debug("Converting baseline to DataFrame.")
     dataframe = baseline.to_dataframe()
     df_copy: pd.DataFrame = dataframe.copy()
 
-    logger.info("Modifying DataFrame content.")
+    logger.debug("Modifying DataFrame content.")
     df_copy["section"] = df_copy["section"].astype(pd.CategoricalDtype(ordered=True))
 
-    df_details = df_copy['cis'].apply(lambda x: {} if pd.isna(x) else x).apply(pd.Series)[["benchmark", "controls_v8"]]
+    df_details = (
+        df_copy["cis"]
+        .apply(lambda x: {} if pd.isna(x) else x)
+        .apply(pd.Series)[["benchmark", "controls_v8"]]
+    )
     df_copy = pd.concat([df_copy, df_details], axis=1)
-    df_copy["check"] = df_copy["check"].apply(lambda x: {} if pd.isna(x) else x).apply(pd.Series)
+    df_copy["check"] = (
+        df_copy["check"].apply(lambda x: {} if pd.isna(x) else x).apply(pd.Series)
+    )
 
     df_copy.columns = (
         df_copy.columns.str.strip()
-        .str.strip('[]')
+        .str.strip("[]")
         .str.replace(r"\|", "|", regex=True)
         .str.replace(r"N/A", "", regex=True)
     )
 
     for col in list_columns:
         if col in df_copy.columns:
-            df_copy[col] = df_copy[col].apply(lambda x: "\n".join(x) if isinstance(x, list) else "")
+            df_copy[col] = df_copy[col].apply(
+                lambda x: "\n".join(x) if isinstance(x, list) else ""
+            )
 
     df_copy = df_copy.drop(columns=["odv", "result_value"])
     df_copy.rename(columns=rename_mapping, inplace=True)
@@ -135,18 +141,15 @@ def generate_excel(file_out: Path, baseline: Baseline) -> None:
 
     df_copy = df_copy[required_columns]
 
-    logger.info("Writing DataFrame to Excel file.")
-    with pd.ExcelWriter(file_out, engine='openpyxl') as writer:
-        df_copy.to_excel(writer, index=False, header=True, sheet_name='Sheet 1')
+    logger.debug("Writing DataFrame to Excel file.")
+    with pd.ExcelWriter(file_out, engine="openpyxl") as writer:
+        df_copy.to_excel(writer, index=False, header=True, sheet_name="Sheet 1")
 
-        workbook = writer.book
         sheet = writer.sheets["Sheet 1"]
         header_font: Font = Font(bold=True)
         top: Alignment = Alignment(vertical="top")
         topWrap: Alignment = Alignment(
-            vertical="top",
-            wrap_text=True,
-            horizontal="left"
+            vertical="top", wrap_text=True, horizontal="left"
         )
 
         column_widths: dict = {
@@ -169,7 +172,7 @@ def generate_excel(file_out: Path, baseline: Baseline) -> None:
             16: 15,
             17: 15,
             18: 15,
-            19: 15
+            19: 15,
         }
 
         column_alignment: dict = {
@@ -192,13 +195,18 @@ def generate_excel(file_out: Path, baseline: Baseline) -> None:
             "indigo": topWrap,
             "CCI": topWrap,
             "Severity": topWrap,
-            "Modified Rule": topWrap
+            "Modified Rule": topWrap,
         }
 
         for cell in sheet[1]:
             cell.font = header_font
 
-        for row_idx, row in enumerate(sheet.iter_rows(min_row=2, max_row=sheet.max_row, min_col=1, max_col=sheet.max_column), start=2):
+        for row_idx, row in enumerate(
+            sheet.iter_rows(
+                min_row=2, max_row=sheet.max_row, min_col=1, max_col=sheet.max_column
+            ),
+            start=2,
+        ):
             for col_idx, cell in enumerate(row, start=1):
                 column_name = df_copy.columns[col_idx - 1]
                 if column_name in column_alignment:
@@ -209,6 +217,6 @@ def generate_excel(file_out: Path, baseline: Baseline) -> None:
             column_letter = get_column_letter(col_idx + 1)
             sheet.column_dimensions[column_letter].width = width
 
-        sheet.freeze_panes = 'C2'
+        sheet.freeze_panes = "C2"
 
-    logger.info(f"Excel file generated successfully at {file_out}.")
+    logger.success("Excel file generated successfully at {}.", file_out)

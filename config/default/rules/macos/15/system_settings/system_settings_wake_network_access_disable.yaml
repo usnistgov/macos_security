@@ -1,5 +1,4 @@
 ---
-# yaml-language-server: $schema=../../../../../../schemas/rules.json
 id: system_settings_wake_network_access_disable
 title: Ensure Wake for Network Access Is Disabled
 discussion: |
@@ -42,3 +41,4 @@ tags:
   - cis_lvl2
   - cisv8
 mobileconfig: false
+mobileconfig_info: null

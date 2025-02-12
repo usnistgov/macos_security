@@ -1,5 +1,4 @@
 ---
-# yaml-language-server: $schema=../../../../../../schemas/rules.json
 id: system_settings_time_machine_auto_backup_enable
 title: Configure Time Machine for Automatic Backups
 discussion: |
@@ -10,7 +9,7 @@ check: |
   .objectForKey('AutoBackup').js
   EOS
 result:
-  boolean: true
+  string: "true"
 fix: |
   This is implemented by a Configuration Profile.
 references:

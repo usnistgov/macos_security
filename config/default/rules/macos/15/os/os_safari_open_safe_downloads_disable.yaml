@@ -1,3 +1,4 @@
+---
 id: os_safari_open_safe_downloads_disable
 title: Disable Automatic Opening of Safe Files in Safari
 discussion: |
@@ -37,5 +38,6 @@ tags:
   - cisv8
 mobileconfig: true
 mobileconfig_info:
-  com.apple.Safari:
-    AutoOpenSafeDownloads: false
+  - PayloadType: com.apple.Safari
+    PayloadContent:
+      AutoOpenSafeDownloads: false

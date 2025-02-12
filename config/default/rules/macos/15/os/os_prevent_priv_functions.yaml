@@ -1,5 +1,8 @@
+---
 id: os_prevent_priv_functions
-title: Configure the System to Block Non-Privileged Users from Executing Privileged Functions
+title:
+  Configure the System to Block Non-Privileged Users from Executing Privileged
+  Functions
 discussion: |
   The information system _IS_ configured to block standard users from executing privileged functions.
 
@@ -40,10 +43,10 @@ tags:
   - 800-53r4_high
   - 800-171
   - inherent
-  - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
   - cmmc_lvl2
   - srg
+  - cnssi-1253_moderate
 mobileconfig: false
-mobileconfig_info:
+mobileconfig_info: null

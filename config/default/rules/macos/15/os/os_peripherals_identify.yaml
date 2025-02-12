@@ -1,3 +1,4 @@
+---
 id: os_peripherals_identify
 title: The macOS system must uniquely identify peripherals before establishing a connection.
 discussion: |
@@ -30,4 +31,4 @@ operating_system:
 tags:
   - inherent
 mobileconfig: false
-mobileconfig_info:
+mobileconfig_info: null

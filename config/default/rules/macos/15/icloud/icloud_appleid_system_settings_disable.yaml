@@ -1,3 +1,4 @@
+---
 id: icloud_appleid_system_settings_disable
 title: Disable the System Setting for Apple ID
 discussion: |
@@ -55,14 +56,15 @@ tags:
   - 800-53r4_high
   - 800-171
   - cisv8
-  - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
   - cmmc_lvl2
   - cmmc_lvl1
+  - cnssi-1253_moderate
 severity: high
 mobileconfig: true
 mobileconfig_info:
-  com.apple.systempreferences:
-    DisabledSystemSettings:
-      - com.apple.systempreferences.AppleIDSettings
+  - PayloadType: com.apple.systempreferences
+    PayloadContent:
+      DisabledSystemSettings:
+        - com.apple.systempreferences.AppleIDSettings

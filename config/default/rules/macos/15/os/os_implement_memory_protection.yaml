@@ -1,3 +1,4 @@
+---
 id: os_implement_memory_protection
 title: Configure the System to Protect Memory from Unauthorized Code Execution
 discussion: |
@@ -40,8 +41,8 @@ tags:
   - 800-53r4_moderate
   - 800-53r4_high
   - inherent
-  - cnssi-1253_moderate
   - cnssi-1253_high
   - srg
+  - cnssi-1253_moderate
 mobileconfig: false
-mobileconfig_info:
+mobileconfig_info: null

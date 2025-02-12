@@ -1,3 +1,4 @@
+---
 id: os_sshd_permit_root_login_configure
 title: Disable Root Login for SSH
 discussion: |
@@ -5,11 +6,11 @@ discussion: |
 
   The macOS system MUST  require individuals to be authenticated with an individual authenticator prior to using a group authenticator, and administrator users _MUST_ never log in directly as root.
 
-  NOTE: /etc/ssh/sshd_config will be automatically modified to its original state following any update or major upgrade to the operating system.
+  NOTE: On macOS 15.2 and higher the SSH configuration can be reset to the macOS default by running /usr/libexec/reset-ssh-configuration.
 check: |
   /usr/sbin/sshd -G | /usr/bin/awk '/permitrootlogin/{print $2}'
 result:
-  string: 'no'
+  string: "no"
 fix: |
   [source,bash]
   ----
@@ -37,6 +38,7 @@ references:
   cci:
     - CCI-000770
     - CCI-001813
+    - CCI-004045
   800-53r5:
     - IA-2(5)
   800-53r4:
@@ -45,7 +47,7 @@ references:
     - SRG-OS-000364-GPOS-00151
     - SRG-OS-000109-GPOS-00056
   disa_stig:
-    - N/A
+    - APPL-15-001100
 operating_system:
   - name: macos
     version:
@@ -53,16 +55,16 @@ operating_system:
 tags:
   - 800-53r5_high
   - 800-53r4_high
-  - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
   - stig
+  - cnssi-1253_moderate
 severity: medium
 mobileconfig: false
-mobileconfig_info:
+mobileconfig_info: null
 ddm_info:
   declarationtype: com.apple.configuration.services.configuration-files
   service: com.apple.sshd
   config_file: sshd_config
   configuration_key: PermitRootLogin
-  configuration_value: no
+  configuration_value: false

@@ -1,5 +1,4 @@
 ---
-# yaml-language-server: $schema=../../../../../../schemas/rules.json
 id: system_settings_hot_corners_secure
 title: Secure Hot Corners
 discussion: |
@@ -54,8 +53,9 @@ operating_system:
 tags:
   - cis_lvl2
   - cisv8
-  - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
   - cmmc_lvl2
+  - cnssi-1253_moderate
 mobileconfig: false
+mobileconfig_info: null

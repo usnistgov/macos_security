@@ -1,3 +1,4 @@
+---
 id: auth_smartcard_certificate_trust_enforce_high
 title: Set Smartcard Certificate Trust to High
 discussion: |
@@ -42,7 +43,10 @@ tags:
   - 800-53r4_high
   - 800-53r5_high
   - cnssi-1253_high
+  - cnssi-1253_moderate
+  - cnssi-1253_low
 mobileconfig: true
 mobileconfig_info:
-  com.apple.security.smartcard:
-    checkCertificateTrust: 3
+  - PayloadType: com.apple.security.smartcard
+    PayloadContent:
+      checkCertificateTrust: 3

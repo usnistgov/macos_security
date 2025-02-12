@@ -1,3 +1,4 @@
+---
 id: os_safari_prevent_cross-site_tracking_enable
 title: Ensure Prevent Cross-site Tracking in Safari Is Enabled
 discussion: |
@@ -37,7 +38,8 @@ tags:
   - cisv8
 mobileconfig: true
 mobileconfig_info:
-  com.apple.Safari:
-    WebKitPreferences.storageBlockingPolicy: 1
-    WebKitStorageBlockingPolicy: 1
-    BlockStoragePolicy: 2
+  - PayloadType: com.apple.Safari
+    PayloadContent:
+      WebKitPreferences.storageBlockingPolicy: 1
+      WebKitStorageBlockingPolicy: 1
+      BlockStoragePolicy: 2

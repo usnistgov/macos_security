@@ -1,5 +1,4 @@
 ---
-# yaml-language-server: $schema=../../../../../../schemas/rules.json
 id: system_settings_automatic_login_disable
 title: Disable Unattended or Automatic Logon to the System
 discussion: |
@@ -12,7 +11,7 @@ check: |
   .objectForKey('com.apple.login.mcx.DisableAutoLoginClient').js
   EOS
 result:
-  boolean: true
+  string: "true"
 fix: |
   This is implemented by a Configuration Profile.
 references:
@@ -29,8 +28,9 @@ references:
   srg:
     - SRG-OS-000480-GPOS-00229
     - SRG-OS-000104-GPOS-00051
+    - SRG-OS-000480-GPOS-00228
   disa_stig:
-    - N/A
+    - APPL-15-002066
   800-171r3:
     - 03.05.01
   cis:
@@ -56,12 +56,12 @@ tags:
   - cis_lvl1
   - cis_lvl2
   - cisv8
-  - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
   - cmmc_lvl2
   - cmmc_lvl1
   - stig
+  - cnssi-1253_moderate
 severity: medium
 mobileconfig: true
 mobileconfig_info:

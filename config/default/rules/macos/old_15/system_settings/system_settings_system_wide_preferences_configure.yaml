@@ -1,0 +1,123 @@
+---
+# yaml-language-server: $schema=../../../../../../schemas/rules.json
+id: system_settings_system_wide_preferences_configure
+title: Require Administrator Password to Modify System-Wide Preferences
+discussion: |
+  The system _MUST_ be configured to require an administrator password in order to modify the system-wide preferences in System Settings.
+
+  Some Preference Panes in System Settings contain settings that affect the entire system. Requiring a password to unlock these system-wide settings reduces the risk of a non-authorized user modifying system configurations.
+check: |
+  authDBs=("system.preferences" "system.preferences.energysaver" "system.preferences.network" "system.preferences.printing" "system.preferences.sharing" "system.preferences.softwareupdate" "system.preferences.startupdisk" "system.preferences.timemachine")
+  result="1"
+  for section in ${authDBs[@]}; do
+    if [[ $(/usr/bin/security -q authorizationdb read "$section" | /usr/bin/xmllint -xpath 'name(//*[contains(text(), "shared")]/following-sibling::*[1])' -) != "false" ]]; then
+      result="0"
+    fi
+    if [[ $(/usr/bin/security -q authorizationdb read "$section" | /usr/bin/xmllint -xpath '//*[contains(text(), "group")]/following-sibling::*[1]/text()' - ) != "admin" ]]; then
+      result="0"
+    fi
+    if [[ $(/usr/bin/security -q authorizationdb read "$section" | /usr/bin/xmllint -xpath 'name(//*[contains(text(), "authenticate-user")]/following-sibling::*[1])' -) != "true" ]]; then
+      result="0"
+    fi
+    if [[ $(/usr/bin/security -q authorizationdb read "$section" | /usr/bin/xmllint -xpath 'name(//*[contains(text(), "session-owner")]/following-sibling::*[1])' -) != "false" ]]; then
+      result="0"
+    fi
+  done
+  echo $result
+result:
+  integer: 1
+fix: |
+  [source,bash]
+  ----
+  authDBs=("system.preferences" "system.preferences.energysaver" "system.preferences.network" "system.preferences.printing" "system.preferences.sharing" "system.preferences.softwareupdate" "system.preferences.startupdisk" "system.preferences.timemachine")
+
+  for section in ${authDBs[@]}; do
+    /usr/bin/security -q authorizationdb read "$section" > "/tmp/$section.plist"
+
+    class_key_value=$(usr/libexec/PlistBuddy -c "Print :class" "/tmp/$section.plist" 2>&1)
+    if [[ "$class_key_value" == *"Does Not Exist"* ]]; then
+      /usr/libexec/PlistBuddy -c "Add :class string user" "/tmp/$section.plist"
+    else
+      /usr/libexec/PlistBuddy -c "Set :class user" "/tmp/$section.plist"
+    fi
+
+    key_value=$(/usr/libexec/PlistBuddy -c "Print :shared" "/tmp/$section.plist" 2>&1)
+    if [[ "$key_value" == *"Does Not Exist"* ]]; then
+      /usr/libexec/PlistBuddy -c "Add :shared bool false" "/tmp/$section.plist"
+    else
+      /usr/libexec/PlistBuddy -c "Set :shared false" "/tmp/$section.plist"
+    fi
+
+    auth_user_key=$(/usr/libexec/PlistBuddy -c "Print :authenticate-user" "/tmp/$section.plist" 2>&1)
+    if [[ "$auth_user_key" == *"Does Not Exist"* ]]; then
+      /usr/libexec/PlistBuddy -c "Add :authenticate-user bool true" "/tmp/$section.plist"
+    else
+      /usr/libexec/PlistBuddy -c "Set :authenticate-user true" "/tmp/$section.plist"
+    fi
+
+    session_owner_key=$(/usr/libexec/PlistBuddy -c "Print :session-owner" "/tmp/$section.plist" 2>&1)
+    if [[ "$session_owner_key" == *"Does Not Exist"* ]]; then
+      /usr/libexec/PlistBuddy -c "Add :session-owner bool false" "/tmp/$section.plist"
+    else
+      /usr/libexec/PlistBuddy -c "Set :session-owner false" "/tmp/$section.plist"
+    fi
+
+    group_key=$(usr/libexec/PlistBuddy -c "Print :group" "/tmp/$section.plist" 2>&1)
+    if [[ "$group_key" == *"Does Not Exist"* ]]; then
+      /usr/libexec/PlistBuddy -c "Add :group string admin" "/tmp/$section.plist"
+    else
+      /usr/libexec/PlistBuddy -c "Set :group admin" "/tmp/$section.plist"
+    fi
+
+    /usr/bin/security -q authorizationdb write "$section" < "/tmp/$section.plist"
+  done
+  ----
+references:
+  cce:
+    - CCE-94401-7
+  cci:
+    - CCI-002235
+  800-53r5:
+    - AC-6
+    - AC-6(2)
+    - AC-6(1)
+  800-53r4:
+    - AC-6
+    - AC-6(1)
+    - AC-6(2)
+  srg:
+    - SRG-OS-000324-GPOS-00125
+  disa_stig:
+    - N/A
+  800-171r3:
+    - 03.01.07
+  cis:
+    benchmark:
+      - 2.6.8 (level 1)
+    controls v8:
+      - 4.1
+  cmmc:
+    - AC.L1-3.1.1
+    - AC.L2-3.1.5
+    - AC.L2-3.1.6
+operating_system:
+  - name: macos
+    version:
+      - 15.0
+tags:
+  - 800-53r5_moderate
+  - 800-53r5_high
+  - 800-53r4_moderate
+  - 800-53r4_high
+  - 800-171
+  - cis_lvl1
+  - cis_lvl2
+  - cisv8
+  - cnssi-1253_moderate
+  - cnssi-1253_low
+  - cnssi-1253_high
+  - cmmc_lvl2
+  - cmmc_lvl1
+  - stig
+severity: high
+mobileconfig: false

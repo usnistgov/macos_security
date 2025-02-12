@@ -1,5 +1,4 @@
 ---
-# yaml-language-server: $schema=../../../../../../schemas/rules.json
 id: system_settings_guest_access_smb_disable
 title: Disable Guest Access to Shared SMB Folders
 discussion: |
@@ -9,7 +8,7 @@ discussion: |
 check: |
   /usr/bin/defaults read /Library/Preferences/SystemConfiguration/com.apple.smb.server AllowGuestAccess
 result:
-  boolean: false
+  boolean: 0
 fix: |
   [source,bash]
   ----
@@ -22,7 +21,7 @@ references:
     - N/A
   800-171r3:
     - 03.01.01
-  800-53r5:
+  r5:
     - AC-2(9)
     - AC-2
   800-53r4:
@@ -54,9 +53,9 @@ tags:
   - cis_lvl1
   - cis_lvl2
   - cisv8
-  - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
   - cmmc_lvl2
   - cmmc_lvl1
 mobileconfig: false
+mobileconfig_info: null

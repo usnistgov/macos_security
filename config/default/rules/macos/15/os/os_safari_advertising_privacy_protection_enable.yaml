@@ -1,3 +1,4 @@
+---
 id: os_safari_advertising_privacy_protection_enable
 title: Ensure Advertising Privacy Protection in Safari Is Enabled
 discussion: |
@@ -36,5 +37,6 @@ tags:
   - cisv8
 mobileconfig: true
 mobileconfig_info:
-  com.apple.Safari:
-    WebKitPreferences.privateClickMeasurementEnabled: true
+  - PayloadType: com.apple.Safari
+    PayloadContent:
+      WebKitPreferences.privateClickMeasurementEnabled: true

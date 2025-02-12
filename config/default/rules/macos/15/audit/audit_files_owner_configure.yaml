@@ -1,3 +1,4 @@
+---
 id: audit_files_owner_configure
 title: Configure Audit Log Files to be Owned by Root
 discussion: |
@@ -37,7 +38,7 @@ references:
     - SRG-OS-000258-GPOS-00099
     - SRG-OS-000058-GPOS-00028
   disa_stig:
-    - N/A
+    - APPL-15-001012
   800-171r3:
     - 03.03.08
   cis:
@@ -62,11 +63,11 @@ tags:
   - cis_lvl1
   - cis_lvl2
   - cisv8
-  - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
   - cmmc_lvl2
   - stig
+  - cnssi-1253_moderate
 severity: medium
 mobileconfig: false
-mobileconfig_info:
+mobileconfig_info: null

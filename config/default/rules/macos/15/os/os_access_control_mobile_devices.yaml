@@ -1,5 +1,4 @@
 ---
-# yaml-language-server: $schema=../../../../../../schemas/rules.json
 id: os_access_control_mobile_devices
 title: Access Control for Mobile Devices
 discussion: |
@@ -45,8 +44,9 @@ tags:
   - 800-53r5_high
   - n_a
   - cisv8
-  - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
   - cmmc_lvl2
+  - cnssi-1253_moderate
 mobileconfig: false
+mobileconfig_info: null

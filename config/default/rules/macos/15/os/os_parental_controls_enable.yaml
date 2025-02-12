@@ -1,3 +1,4 @@
+---
 id: os_parental_controls_enable
 title: Enable Parental Controls
 discussion: |
@@ -12,7 +13,7 @@ check: |
   .objectForKey('familyControlsEnabled').js
   EOS
 result:
-  string: 'true'
+  string: "true"
 fix: |
   This is implemented by a Configuration Profile.
 references:
@@ -40,10 +41,11 @@ operating_system:
     version:
       - 15.0
 tags:
-  - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
+  - cnssi-1253_moderate
 mobileconfig: true
 mobileconfig_info:
-  com.apple.applicationaccess.new:
-    familyControlsEnabled: true
+  - PayloadType: com.apple.applicationaccess.new
+    PayloadContent:
+      familyControlsEnabled: true

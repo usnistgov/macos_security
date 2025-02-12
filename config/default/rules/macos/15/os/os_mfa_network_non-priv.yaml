@@ -1,3 +1,4 @@
+---
 id: os_mfa_network_non-priv
 title: Enforce multifactor authentication for network access to non-privileged accounts
 discussion: |
@@ -27,4 +28,4 @@ operating_system:
 tags:
   - inherent
 mobileconfig: false
-mobileconfig_info:
+mobileconfig_info: null

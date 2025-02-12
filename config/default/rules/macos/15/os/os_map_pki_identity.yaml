@@ -1,3 +1,4 @@
+---
 id: os_map_pki_identity
 title: Map identity for PKI based authentication
 discussion: |
@@ -26,4 +27,4 @@ operating_system:
 tags:
   - inherent
 mobileconfig: false
-mobileconfig_info:
+mobileconfig_info: null

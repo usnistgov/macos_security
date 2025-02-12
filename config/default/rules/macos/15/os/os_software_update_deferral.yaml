@@ -1,3 +1,4 @@
+---
 id: os_software_update_deferral
 title: Ensure Software Update Deferment Is Less Than or Equal to $ODV Days
 discussion: |
@@ -15,7 +16,7 @@ check: |
   }
   EOS
 result:
-  string: 'true'
+  string: "true"
 fix: |
   This is implemented by a Configuration Profile.
 references:
@@ -43,15 +44,16 @@ operating_system:
   - name: macos
     version:
       - 15.0
+tags:
+  - cis_lvl1
+  - cis_lvl2
 odv:
   hint: Number of days.
   recommended: 30
   cis_lvl1: 30
   cis_lvl2: 30
-tags:
-  - cis_lvl1
-  - cis_lvl2
 mobileconfig: true
 mobileconfig_info:
-  com.apple.applicationaccess:
-    enforcedSoftwareUpdateDelay: $ODV
+  - PayloadType: com.apple.applicationaccess
+    PayloadContent:
+      enforcedSoftwareUpdateDelay: $ODV

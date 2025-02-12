@@ -1,3 +1,4 @@
+---
 id: os_calendar_app_disable
 title: Disable Calendar.app
 discussion: |
@@ -28,7 +29,7 @@ check: |
     }
   EOS
 result:
-  string: 'true'
+  string: "true"
 fix: |
   This is implemented by a Configuration Profile.
 references:
@@ -66,13 +67,14 @@ operating_system:
     version:
       - 15.0
 tags:
-  - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
+  - cnssi-1253_moderate
 severity: medium
 mobileconfig: true
 mobileconfig_info:
-  com.apple.applicationaccess.new:
-    familyControlsEnabled: true
-    pathBlackList:
-      - /Applications/Calendar.app
+  - PayloadType: com.apple.applicationaccess.new
+    PayloadContent:
+      familyControlsEnabled: true
+      pathBlackList:
+        - /Applications/Calendar.app

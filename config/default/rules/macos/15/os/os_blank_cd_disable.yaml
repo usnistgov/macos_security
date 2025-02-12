@@ -1,3 +1,4 @@
+---
 id: os_blank_cd_disable
 title: Disable Blank CD
 discussion: |
@@ -44,15 +45,16 @@ operating_system:
     version:
       - 15.0
 tags:
-  - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
   - cmmc_lvl2
+  - cnssi-1253_moderate
 severity: medium
 mobileconfig: true
 mobileconfig_info:
-  com.apple.systemuiserver:
-    mount-controls:
-      blankcd:
-        - alert
-        - eject
+  - PayloadType: com.apple.systemuiserver
+    PayloadContent:
+      mount-controls:
+        blankcd:
+          - alert
+          - eject

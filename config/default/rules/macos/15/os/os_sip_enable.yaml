@@ -1,3 +1,4 @@
+---
 id: os_sip_enable
 title: Ensure System Integrity Protection is Enabled
 discussion: |
@@ -35,6 +36,8 @@ references:
     - CCI-001880
     - CCI-001881
     - CCI-001882
+    - CCI-001090
+    - CCI-001496
   800-53r5:
     - AC-3
     - AU-9
@@ -70,7 +73,7 @@ references:
     - SRG-OS-000122-GPOS-00063
     - SRG-OS-000058-GPOS-00028
   disa_stig:
-    - N/A
+    - APPL-15-005001
   800-171r3:
     - 03.01.02
     - 03.03.08
@@ -105,12 +108,12 @@ tags:
   - cisv8
   - cis_lvl1
   - cis_lvl2
-  - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
   - cmmc_lvl2
   - cmmc_lvl1
   - stig
+  - cnssi-1253_moderate
 severity: high
 mobileconfig: false
-mobileconfig_info:
+mobileconfig_info: null

@@ -1,3 +1,4 @@
+---
 id: os_network_storage_restriction
 title: Network Storage Must Be Restricted
 discussion: |-
@@ -35,7 +36,7 @@ odv:
   hint: Allowed, ReadOnly, or Disallowed
   recommended: Allowed
 mobileconfig: false
-mobileconfig_info:
+mobileconfig_info: null
 ddm_info:
   declarationtype: com.apple.configuration.diskmanagement.settings
   ddm_key: NetworkStorage

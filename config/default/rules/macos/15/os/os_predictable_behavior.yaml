@@ -1,3 +1,4 @@
+---
 id: os_predictable_behavior
 title: Must behave in predictable and documented manner
 discussion: |
@@ -25,9 +26,9 @@ operating_system:
       - 15.0
 tags:
   - inherent
-  - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
   - srg
+  - cnssi-1253_moderate
 mobileconfig: false
-mobileconfig_info:
+mobileconfig_info: null

@@ -6,10 +6,12 @@ Thumbs.db
 bin
 mscp_gems
 .bundle
+Gemfile.lock
 
 # Python
 .venv
 
+.private
 .vscode
 *.lock
 

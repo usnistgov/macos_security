@@ -1,5 +1,8 @@
+---
 id: os_prevent_unauthorized_disclosure
-title: Configure the System to Prevent the Unauthorized Disclosure of Data via Shared Resources
+title:
+  Configure the System to Prevent the Unauthorized Disclosure of Data via Shared
+  Resources
 discussion: |
   The information system _IS_ configured to ensure that the unauthorized disclosure of data does not occur when resources are shared.
 
@@ -38,10 +41,10 @@ tags:
   - 800-53r4_high
   - 800-171
   - inherent
-  - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
   - cmmc_lvl2
   - srg
+  - cnssi-1253_moderate
 mobileconfig: false
-mobileconfig_info:
+mobileconfig_info: null

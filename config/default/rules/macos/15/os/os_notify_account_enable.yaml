@@ -1,5 +1,6 @@
+---
 id: os_notify_account_enable
-title: 'Configure the System to Notify upon Account Enabled Actions '
+title: "Configure the System to Notify upon Account Enabled Actions "
 discussion: |
   The macOS should be configured to automatically notify system administrators and Information System Security Officers (ISSOs) when accounts are enabled.
 
@@ -42,4 +43,4 @@ tags:
   - permanent
   - srg
 mobileconfig: false
-mobileconfig_info:
+mobileconfig_info: null

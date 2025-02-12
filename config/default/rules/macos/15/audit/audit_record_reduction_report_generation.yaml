@@ -1,3 +1,4 @@
+---
 id: audit_record_reduction_report_generation
 title: Audit Record Reduction and Report Generation
 discussion: |
@@ -42,9 +43,9 @@ tags:
   - 800-53r4_high
   - 800-53r5_moderate
   - inherent
-  - cnssi-1253_moderate
   - cnssi-1253_high
   - cmmc_lvl2
   - srg
+  - cnssi-1253_moderate
 mobileconfig: false
-mobileconfig_info:
+mobileconfig_info: null

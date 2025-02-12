@@ -1,5 +1,4 @@
 ---
-# yaml-language-server: $schema=../../../../../../schemas/rules.json
 id: system_settings_touch_id_settings_disable
 title: Disable the Touch ID System Settings Pane
 discussion: |
@@ -16,7 +15,7 @@ references:
   cce:
     - CCE-94407-4
   cci:
-    - CCI-000381
+    - N/A
   800-53r5:
     - CM-7
     - CM-7(1)
@@ -25,7 +24,7 @@ references:
     - CM-7
     - CM-7(5)
   srg:
-    - SRG-OS-000095-GPOS-00049
+    - N/A
   disa_stig:
     - N/A
   800-171r3:
@@ -50,8 +49,9 @@ tags:
   - 800-53r5_high
   - cisv8
   - cmmc_lvl2
-  - stig
-severity: medium
+  - cnssi-1253_moderate
+  - cnssi-1253_low
+  - cnssi-1253_high
 mobileconfig: true
 mobileconfig_info:
   - PayloadType: com.apple.systempreferences

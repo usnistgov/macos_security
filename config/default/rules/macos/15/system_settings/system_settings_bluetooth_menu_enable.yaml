@@ -1,5 +1,4 @@
 ---
-# yaml-language-server: $schema=../../../../../../schemas/rules.json
 id: system_settings_bluetooth_menu_enable
 title: Enable Bluetooth Menu
 discussion: |

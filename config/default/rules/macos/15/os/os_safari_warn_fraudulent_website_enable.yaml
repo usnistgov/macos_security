@@ -1,3 +1,4 @@
+---
 id: os_safari_warn_fraudulent_website_enable
 title: Ensure Warn When Visiting A Fraudulent Website in Safari Is Enabled
 discussion: |
@@ -37,5 +38,6 @@ tags:
   - cisv8
 mobileconfig: true
 mobileconfig_info:
-  com.apple.Safari:
-    WarnAboutFraudulentWebsites: true
+  - PayloadType: com.apple.Safari
+    PayloadContent:
+      WarnAboutFraudulentWebsites: true

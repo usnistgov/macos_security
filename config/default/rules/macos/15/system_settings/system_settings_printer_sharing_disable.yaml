@@ -1,5 +1,4 @@
 ---
-# yaml-language-server: $schema=../../../../../../schemas/rules.json
 id: system_settings_printer_sharing_disable
 title: Disable Printer Sharing
 discussion: |
@@ -7,7 +6,7 @@ discussion: |
 check: |
   /usr/sbin/cupsctl | /usr/bin/grep -c "_share_printers=0"
 result:
-  integer: 1
+  boolean: 1
 fix: |
   [source,bash]
   ----
@@ -28,7 +27,7 @@ references:
   srg:
     - SRG-OS-000095-GPOS-00049
   disa_stig:
-    - N/A
+    - APPL-15-002240
   800-171r3:
     - 03.04.06
   cis:
@@ -54,10 +53,11 @@ tags:
   - cis_lvl1
   - cis_lvl2
   - cisv8
-  - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
   - cmmc_lvl2
   - stig
+  - cnssi-1253_moderate
 severity: medium
 mobileconfig: false
+mobileconfig_info: null

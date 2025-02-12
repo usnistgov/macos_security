@@ -1,3 +1,4 @@
+---
 id: os_reauth_devices_change_authenticators
 title: Require Devices to Reauthenticate when Changing Authenticators
 discussion: |
@@ -33,9 +34,9 @@ tags:
   - 800-53r5_moderate
   - 800-53r5_high
   - permanent
-  - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
   - srg
+  - cnssi-1253_moderate
 mobileconfig: false
-mobileconfig_info:
+mobileconfig_info: null
