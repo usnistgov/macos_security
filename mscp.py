@@ -16,8 +16,6 @@ from src.mscp.common_utils import config
 
 # Initialize logger
 def setup_logging(environment: str = "development") -> None:
-    logger_format: str = "<green>{time:YYYY-MM-DD HH:mm:ss}</green> | {name}:{function}:{line} | {function} | {level} | <level>{message}</level>"
-
     # Set logging level based on environment
     match environment:
         case "development":
