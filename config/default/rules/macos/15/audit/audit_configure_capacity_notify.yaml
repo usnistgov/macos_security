@@ -16,34 +16,33 @@ fix: |
   ----
 references:
   cce:
-  - CCE-94105-4
+    - CCE-94105-4
   cci:
-  - CCI-000139
-  - CCI-001855
+    - CCI-000139
+    - CCI-001855
   800-53r5:
-  - AU-5(1)
+    - AU-5(1)
   800-53r4:
-  - AU-5(1)
+    - AU-5(1)
   srg:
-  - SRG-OS-000046-GPOS-00022
-  - SRG-OS-000343-GPOS-00134
+    - SRG-OS-000046-GPOS-00022
+    - SRG-OS-000343-GPOS-00134
   disa_stig:
-  - APPL-15-001030
+    - APPL-15-001030
 operating_system:
-- name: macos
-  version:
-  - 15.0
+  - name: macos
+    version:
+      - 15.0
 tags:
-- 800-53r5_high
-- 800-53r4_high
-- cnssi-1253_low
-- cnssi-1253_high
-- stig
-- cnssi-1253_moderate
+  - 800-53r5_high
+  - 800-53r4_high
+  - cnssi-1253_low
+  - cnssi-1253_high
+  - stig
+  - cnssi-1253_moderate
 severity: low
 odv:
   hint: Percentage of free space.
   recommended: 25
   stig: 25
 mobileconfig: false
-mobileconfig_info: null

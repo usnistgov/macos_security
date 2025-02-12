@@ -55,43 +55,42 @@ fix: |
   ----
 references:
   cce:
-  - CCE-94301-9
+    - CCE-94301-9
   cci:
-  - CCI-001133
+    - CCI-001133
   800-53r5:
-  - SC-10
-  - AC-12
+    - SC-10
+    - AC-12
   800-53r4:
-  - SC-10
+    - SC-10
   srg:
-  - SRG-OS-000163-GPOS-00072
+    - SRG-OS-000163-GPOS-00072
   disa_stig:
-  - APPL-15-000110
+    - APPL-15-000110
   800-171r3:
-  - 03.01.11
-  - 03.13.09
+    - 03.01.11
+    - 03.13.09
   cmmc:
-  - AC.L2-3.1.11
-  - SC.L2-3.13.9
+    - AC.L2-3.1.11
+    - SC.L2-3.13.9
 operating_system:
-- name: macos
-  version:
-  - 15.0
+  - name: macos
+    version:
+      - 15.0
 tags:
-- 800-53r5_moderate
-- 800-53r5_high
-- 800-53r4_moderate
-- 800-53r4_high
-- 800-171
-- cnssi-1253_low
-- cnssi-1253_high
-- cmmc_lvl2
-- stig
-- cnssi-1253_moderate
+  - 800-53r5_moderate
+  - 800-53r5_high
+  - 800-53r4_moderate
+  - 800-53r4_high
+  - 800-171
+  - cnssi-1253_low
+  - cnssi-1253_high
+  - cmmc_lvl2
+  - stig
+  - cnssi-1253_moderate
 severity: medium
 odv:
   hint: Number of seconds.
   recommended: 900
   stig: 900
 mobileconfig: false
-mobileconfig_info: null

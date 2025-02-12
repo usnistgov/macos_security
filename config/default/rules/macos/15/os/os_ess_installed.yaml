@@ -12,25 +12,24 @@ fix: |
   Install the approved ESS solution onto the system.
 references:
   cce:
-  - CCE-94187-2
+    - CCE-94187-2
   cci:
-  - CCI-001233
+    - CCI-001233
   800-53r5:
-  - N/A
+    - N/A
   800-53r4:
-  - SI-2(2)
+    - SI-2(2)
   srg:
-  - SRG-OS-000191-GPOS-00080
+    - SRG-OS-000191-GPOS-00080
   disa_stig:
-  - N/A
+    - N/A
 operating_system:
-- name: macos
-  version:
-  - 15.0
+  - name: macos
+    version:
+      - 15.0
 tags:
-- manual
-- cisv8
-- stig
+  - manual
+  - cisv8
+  - stig
 severity: medium
 mobileconfig: false
-mobileconfig_info: null

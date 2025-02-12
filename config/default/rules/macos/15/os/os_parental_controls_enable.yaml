@@ -13,39 +13,39 @@ check: |
   .objectForKey('familyControlsEnabled').js
   EOS
 result:
-  string: 'true'
+  string: "true"
 fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-  - CCE-94246-6
+    - CCE-94246-6
   cci:
-  - N/A
+    - N/A
   800-53r5:
-  - CM-7(2)
+    - CM-7(2)
   800-53r4:
-  - CM-7(2)
+    - CM-7(2)
   srg:
-  - N/A
+    - N/A
   disa_stig:
-  - N/A
+    - N/A
   800-171r3:
-  - 3.4.7
+    - 3.4.7
   cis:
     benchmark:
-    - N/A
+      - N/A
     controls v8:
-    - 4.8
+      - 4.8
 operating_system:
-- name: macos
-  version:
-  - 15.0
+  - name: macos
+    version:
+      - 15.0
 tags:
-- cnssi-1253_low
-- cnssi-1253_high
-- cnssi-1253_moderate
+  - cnssi-1253_low
+  - cnssi-1253_high
+  - cnssi-1253_moderate
 mobileconfig: true
 mobileconfig_info:
-- PayloadType: com.apple.applicationaccess.new
-  PayloadContent:
-    familyControlsEnabled: true
+  - PayloadType: com.apple.applicationaccess.new
+    PayloadContent:
+      familyControlsEnabled: true

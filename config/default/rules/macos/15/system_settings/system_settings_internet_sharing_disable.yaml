@@ -11,60 +11,60 @@ check: |
   .objectForKey('forceInternetSharingOff').js
   EOS
 result:
-  string: 'true'
+  string: "true"
 fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-  - CCE-94375-3
+    - CCE-94375-3
   cci:
-  - CCI-000381
+    - CCI-000381
   800-53r5:
-  - AC-4
-  - AC-20
+    - AC-4
+    - AC-20
   800-53r4:
-  - AC-4
-  - AC-20
+    - AC-4
+    - AC-20
   srg:
-  - SRG-OS-000095-GPOS-00049
+    - SRG-OS-000095-GPOS-00049
   disa_stig:
-  - APPL-15-002007
+    - APPL-15-002007
   800-171r3:
-  - 03.01.03
-  - 03.01.20
+    - 03.01.03
+    - 03.01.20
   cis:
     benchmark:
-    - 2.3.3.8 (level 1)
+      - 2.3.3.8 (level 1)
     controls v8:
-    - 4.1
-    - 4.8
+      - 4.1
+      - 4.8
   cmmc:
-  - AC.L1-3.1.20
-  - AC.L2-3.1.3
+    - AC.L1-3.1.20
+    - AC.L2-3.1.3
 operating_system:
-- name: macos
-  version:
-  - 15.0
+  - name: macos
+    version:
+      - 15.0
 tags:
-- 800-53r5_low
-- 800-53r4_low
-- 800-53r4_moderate
-- 800-53r4_high
-- 800-53r5_moderate
-- 800-53r5_high
-- 800-171
-- cis_lvl1
-- cis_lvl2
-- cisv8
-- cnssi-1253_low
-- cnssi-1253_high
-- cmmc_lvl2
-- cmmc_lvl1
-- stig
-- cnssi-1253_moderate
+  - 800-53r5_low
+  - 800-53r4_low
+  - 800-53r4_moderate
+  - 800-53r4_high
+  - 800-53r5_moderate
+  - 800-53r5_high
+  - 800-171
+  - cis_lvl1
+  - cis_lvl2
+  - cisv8
+  - cnssi-1253_low
+  - cnssi-1253_high
+  - cmmc_lvl2
+  - cmmc_lvl1
+  - stig
+  - cnssi-1253_moderate
 severity: medium
 mobileconfig: true
 mobileconfig_info:
-- PayloadType: com.apple.MCX
-  PayloadContent:
-    forceInternetSharingOff: true
+  - PayloadType: com.apple.MCX
+    PayloadContent:
+      forceInternetSharingOff: true

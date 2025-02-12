@@ -16,52 +16,52 @@ fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-  - CCE-94404-1
+    - CCE-94404-1
   cci:
-  - CCI-001891
-  - CCI-002046
-  - CCI-004923
-  - CCI-004923
-  - CCI-004926
-  - CCI-004926
+    - CCI-001891
+    - CCI-002046
+    - CCI-004923
+    - CCI-004923
+    - CCI-004926
+    - CCI-004926
   800-53r5:
-  - AU-12(1)
-  - SC-45(1)
+    - AU-12(1)
+    - SC-45(1)
   800-53r4:
-  - AU-8(1)
+    - AU-8(1)
   srg:
-  - SRG-OS-000355-GPOS-00143
-  - SRG-OS-000356-GPOS-00144
+    - SRG-OS-000355-GPOS-00143
+    - SRG-OS-000356-GPOS-00144
   disa_stig:
-  - APPL-15-000170
+    - APPL-15-000170
   800-171r3:
-  - 3.3.7
+    - 3.3.7
   cis:
     benchmark:
-    - 2.3.2.1 (level 1)
+      - 2.3.2.1 (level 1)
     controls v8:
-    - 8.4
+      - 8.4
   cmmc:
-  - AU.L2-3.3.7
+    - AU.L2-3.3.7
 operating_system:
-- name: macos
-  version:
-  - 15.0
+  - name: macos
+    version:
+      - 15.0
 tags:
-- 800-171
-- 800-53r5_low
-- 800-53r5_moderate
-- 800-53r5_high
-- 800-53r4_moderate
-- 800-53r4_high
-- cis_lvl1
-- cis_lvl2
-- cisv8
-- cnssi-1253_low
-- cnssi-1253_high
-- cmmc_lvl2
-- stig
-- cnssi-1253_moderate
+  - 800-171
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_high
+  - 800-53r4_moderate
+  - 800-53r4_high
+  - cis_lvl1
+  - cis_lvl2
+  - cisv8
+  - cnssi-1253_low
+  - cnssi-1253_high
+  - cmmc_lvl2
+  - stig
+  - cnssi-1253_moderate
 severity: medium
 odv:
   hint: Name of timeserver. As of macOS 10.13 only one time server is supported.
@@ -71,6 +71,6 @@ odv:
   stig: time.nist.gov
 mobileconfig: true
 mobileconfig_info:
-- PayloadType: com.apple.MCX
-  PayloadContent:
-    timeServer: $ODV
+  - PayloadType: com.apple.MCX
+    PayloadContent:
+      timeServer: $ODV

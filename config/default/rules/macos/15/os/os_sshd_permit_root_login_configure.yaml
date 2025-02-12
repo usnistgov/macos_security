@@ -10,7 +10,7 @@ discussion: |
 check: |
   /usr/sbin/sshd -G | /usr/bin/awk '/permitrootlogin/{print $2}'
 result:
-  string: 'no'
+  string: "no"
 fix: |
   [source,bash]
   ----
@@ -34,34 +34,33 @@ fix: |
   ----
 references:
   cce:
-  - CCE-94307-6
+    - CCE-94307-6
   cci:
-  - CCI-000770
-  - CCI-001813
-  - CCI-004045
+    - CCI-000770
+    - CCI-001813
+    - CCI-004045
   800-53r5:
-  - IA-2(5)
+    - IA-2(5)
   800-53r4:
-  - IA-2(5)
+    - IA-2(5)
   srg:
-  - SRG-OS-000364-GPOS-00151
-  - SRG-OS-000109-GPOS-00056
+    - SRG-OS-000364-GPOS-00151
+    - SRG-OS-000109-GPOS-00056
   disa_stig:
-  - APPL-15-001100
+    - APPL-15-001100
 operating_system:
-- name: macos
-  version:
-  - 15.0
+  - name: macos
+    version:
+      - 15.0
 tags:
-- 800-53r5_high
-- 800-53r4_high
-- cnssi-1253_low
-- cnssi-1253_high
-- stig
-- cnssi-1253_moderate
+  - 800-53r5_high
+  - 800-53r4_high
+  - cnssi-1253_low
+  - cnssi-1253_high
+  - stig
+  - cnssi-1253_moderate
 severity: medium
 mobileconfig: false
-mobileconfig_info: null
 ddm_info:
   declarationtype: com.apple.configuration.services.configuration-files
   service: com.apple.sshd

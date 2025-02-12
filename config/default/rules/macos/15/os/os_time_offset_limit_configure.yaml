@@ -6,7 +6,7 @@ discussion: |
 check: |
   /usr/bin/sntp $(/usr/sbin/systemsetup -getnetworktimeserver | /usr/bin/awk '{print $4}') | /usr/bin/awk -F'.' '/\+\/\-/{if (substr($1,2) >= 270) {print "No"} else {print "Yes"}}'
 result:
-  string: 'Yes'
+  string: "Yes"
 fix: |
   [source,bash]
   ----
@@ -14,29 +14,28 @@ fix: |
   ----
 references:
   cce:
-  - CCE-94318-3
+    - CCE-94318-3
   cci:
-  - N/A
+    - N/A
   800-53r5:
-  - N/A
+    - N/A
   800-53r4:
-  - N/A
+    - N/A
   srg:
-  - N/A
+    - N/A
   disa_stig:
-  - N/A
+    - N/A
   800-171r3:
-  - N/A
+    - N/A
   cis:
     benchmark:
-    - N/A
+      - N/A
     controls v8:
-    - N/A
+      - N/A
 operating_system:
-- name: macos
-  version:
-  - 15.0
+  - name: macos
+    version:
+      - 15.0
 tags:
-- none
+  - none
 mobileconfig: false
-mobileconfig_info: null

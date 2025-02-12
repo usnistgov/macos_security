@@ -16,37 +16,37 @@ check: |
   }
   EOS
 result:
-  string: 'true'
+  string: "true"
 fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-  - CCE-94298-7
+    - CCE-94298-7
   cci:
-  - N/A
+    - N/A
   800-53r5:
-  - N/A
+    - N/A
   800-53r4:
-  - N/A
+    - N/A
   srg:
-  - N/A
+    - N/A
   disa_stig:
-  - N/A
+    - N/A
   800-171r3:
-  - N/A
+    - N/A
   cis:
     benchmark:
-    - 1.7 (level 1)
+      - 1.7 (level 1)
     controls v8:
-    - 7.3
-    - 7.4
+      - 7.3
+      - 7.4
 operating_system:
-- name: macos
-  version:
-  - 15.0
+  - name: macos
+    version:
+      - 15.0
 tags:
-- cis_lvl1
-- cis_lvl2
+  - cis_lvl1
+  - cis_lvl2
 odv:
   hint: Number of days.
   recommended: 30
@@ -54,6 +54,6 @@ odv:
   cis_lvl2: 30
 mobileconfig: true
 mobileconfig_info:
-- PayloadType: com.apple.applicationaccess
-  PayloadContent:
-    enforcedSoftwareUpdateDelay: $ODV
+  - PayloadType: com.apple.applicationaccess
+    PayloadContent:
+      enforcedSoftwareUpdateDelay: $ODV

@@ -11,32 +11,31 @@ fix: |
   The requirement is NA. No fix is required.
 references:
   cce:
-  - CCE-94225-0
+    - CCE-94225-0
   cci:
-  - N/A
+    - N/A
   800-53r5:
-  - AC-17(3)
+    - AC-17(3)
   800-53r4:
-  - N/A
+    - N/A
   800-171r3:
-  - 03.01.12
+    - 03.01.12
   disa_stig:
-  - N/A
+    - N/A
   srg:
-  - N/A
+    - N/A
   cmmc:
-  - AC.L2-3.1.14
+    - AC.L2-3.1.14
 operating_system:
-- name: macos
-  version:
-  - 15.0
+  - name: macos
+    version:
+      - 15.0
 tags:
-- 800-53r5_moderate
-- 800-53r5_high
-- n_a
-- cnssi-1253_low
-- cnssi-1253_high
-- cmmc_lvl2
-- cnssi-1253_moderate
+  - 800-53r5_moderate
+  - 800-53r5_high
+  - n_a
+  - cnssi-1253_low
+  - cnssi-1253_high
+  - cmmc_lvl2
+  - cnssi-1253_moderate
 mobileconfig: false
-mobileconfig_info: null

@@ -19,57 +19,56 @@ fix: |
   The system may need to be restarted for the update to take effect.
 references:
   cce:
-  - CCE-94317-5
+    - CCE-94317-5
   cci:
-  - CCI-000197
-  - CCI-000213
+    - CCI-000197
+    - CCI-000213
   800-53r5:
-  - AC-3
-  - IA-5(1)
-  - AC-17
+    - AC-3
+    - IA-5(1)
+    - AC-17
   800-53r4:
-  - AC-3
-  - IA-5(1)
+    - AC-3
+    - IA-5(1)
   srg:
-  - SRG-OS-000080-GPOS-00048
-  - SRG-OS-000074-GPOS-00042
+    - SRG-OS-000080-GPOS-00048
+    - SRG-OS-000074-GPOS-00042
   disa_stig:
-  - APPL-15-002038
+    - APPL-15-002038
   800-171r3:
-  - 03.01.02
-  - 03.04.06
-  - 03.05.07
+    - 03.01.02
+    - 03.04.06
+    - 03.05.07
   cis:
     benchmark:
-    - N/A
+      - N/A
     controls v8:
-    - 3.3
-    - 3.1
-    - 5.2
+      - 3.3
+      - 3.1
+      - 5.2
   cmmc:
-  - AC.L1-3.1.1
-  - IA.L2-3.5.7
-  - IA.L2-3.5.8
-  - IA.L2-3.5.9
+    - AC.L1-3.1.1
+    - IA.L2-3.5.7
+    - IA.L2-3.5.8
+    - IA.L2-3.5.9
 operating_system:
-- name: macos
-  version:
-  - 15.0
+  - name: macos
+    version:
+      - 15.0
 tags:
-- 800-53r5_low
-- 800-53r5_moderate
-- 800-53r5_high
-- 800-53r4_low
-- 800-53r4_moderate
-- 800-53r4_high
-- 800-171
-- cisv8
-- cnssi-1253_low
-- cnssi-1253_high
-- cmmc_lvl2
-- cmmc_lvl1
-- stig
-- cnssi-1253_moderate
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_high
+  - 800-53r4_low
+  - 800-53r4_moderate
+  - 800-53r4_high
+  - 800-171
+  - cisv8
+  - cnssi-1253_low
+  - cnssi-1253_high
+  - cmmc_lvl2
+  - cmmc_lvl1
+  - stig
+  - cnssi-1253_moderate
 severity: high
 mobileconfig: false
-mobileconfig_info: null

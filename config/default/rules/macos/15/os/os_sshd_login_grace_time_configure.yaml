@@ -32,38 +32,37 @@ fix: |
   ----
 references:
   cce:
-  - CCE-94306-8
+    - CCE-94306-8
   cci:
-  - CCI-001133
+    - CCI-001133
   800-53r5:
-  - SC-10
+    - SC-10
   800-53r4:
-  - SC-10
+    - SC-10
   srg:
-  - SRG-OS-000163-GPOS-00072
+    - SRG-OS-000163-GPOS-00072
   disa_stig:
-  - APPL-15-000053
+    - APPL-15-000053
   800-171r3:
-  - 03.13.09
+    - 03.13.09
   cmmc:
-  - SC.L2-3.13.9
+    - SC.L2-3.13.9
 operating_system:
-- name: macos
-  version:
-  - 15.0
+  - name: macos
+    version:
+      - 15.0
 tags:
-- cnssi-1253_low
-- cnssi-1253_high
-- cmmc_lvl2
-- stig
-- cnssi-1253_moderate
+  - cnssi-1253_low
+  - cnssi-1253_high
+  - cmmc_lvl2
+  - stig
+  - cnssi-1253_moderate
 severity: medium
 odv:
   hint: Number of seconds.
   recommended: 30
   stig: 30
 mobileconfig: false
-mobileconfig_info: null
 ddm_info:
   declarationtype: com.apple.configuration.services.configuration-files
   service: com.apple.sshd

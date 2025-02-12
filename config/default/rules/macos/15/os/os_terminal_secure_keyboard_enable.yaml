@@ -9,39 +9,39 @@ check: |
   .objectForKey('SecureKeyboardEntry').js
   EOS
 result:
-  string: 'true'
+  string: "true"
 fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-  - CCE-94315-9
+    - CCE-94315-9
   cci:
-  - N/A
+    - N/A
   800-53r5:
-  - N/A
+    - N/A
   800-53r4:
-  - N/A
+    - N/A
   disa_stig:
-  - N/A
+    - N/A
   srg:
-  - N/A
+    - N/A
   800-171r3:
-  - N/A
+    - N/A
   cis:
     benchmark:
-    - 6.4.1 (level 1)
+      - 6.4.1 (level 1)
     controls v8:
-    - 4.8
+      - 4.8
 operating_system:
-- name: macos
-  version:
-  - 15.0
+  - name: macos
+    version:
+      - 15.0
 tags:
-- cis_lvl1
-- cis_lvl2
-- cisv8
+  - cis_lvl1
+  - cis_lvl2
+  - cisv8
 mobileconfig: true
 mobileconfig_info:
-- PayloadType: com.apple.Terminal
-  PayloadContent:
-    SecureKeyboardEntry: true
+  - PayloadType: com.apple.Terminal
+    PayloadContent:
+      SecureKeyboardEntry: true

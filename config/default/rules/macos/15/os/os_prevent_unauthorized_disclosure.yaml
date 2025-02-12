@@ -1,6 +1,7 @@
 ---
 id: os_prevent_unauthorized_disclosure
-title: Configure the System to Prevent the Unauthorized Disclosure of Data via Shared
+title:
+  Configure the System to Prevent the Unauthorized Disclosure of Data via Shared
   Resources
 discussion: |
   The information system _IS_ configured to ensure that the unauthorized disclosure of data does not occur when resources are shared.
@@ -14,36 +15,35 @@ fix: |
   The technology inherently meets this requirement. No fix is required.
 references:
   cce:
-  - CCE-94262-3
+    - CCE-94262-3
   cci:
-  - N/A
+    - N/A
   800-53r5:
-  - SC-4
+    - SC-4
   800-53r4:
-  - SC-4
+    - SC-4
   disa_stig:
-  - N/A
+    - N/A
   srg:
-  - SRG-OS-000138-GPOS-00069
+    - SRG-OS-000138-GPOS-00069
   800-171r3:
-  - 03.13.04
+    - 03.13.04
   cmmc:
-  - SC.L2-3.13.4
+    - SC.L2-3.13.4
 operating_system:
-- name: macos
-  version:
-  - 15.0
+  - name: macos
+    version:
+      - 15.0
 tags:
-- 800-53r5_moderate
-- 800-53r5_high
-- 800-53r4_moderate
-- 800-53r4_high
-- 800-171
-- inherent
-- cnssi-1253_low
-- cnssi-1253_high
-- cmmc_lvl2
-- srg
-- cnssi-1253_moderate
+  - 800-53r5_moderate
+  - 800-53r5_high
+  - 800-53r4_moderate
+  - 800-53r4_high
+  - 800-171
+  - inherent
+  - cnssi-1253_low
+  - cnssi-1253_high
+  - cmmc_lvl2
+  - srg
+  - cnssi-1253_moderate
 mobileconfig: false
-mobileconfig_info: null

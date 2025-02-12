@@ -16,38 +16,38 @@ fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-  - CCE-94170-8
+    - CCE-94170-8
   cci:
-  - N/A
+    - N/A
   800-53r5:
-  - MP-7
+    - MP-7
   800-53r4:
-  - MP-7(1)
+    - MP-7(1)
   srg:
-  - N/A
+    - N/A
   disa_stig:
-  - N/A
+    - N/A
   cmmc:
-  - MP.L2-3.8.7
-  - MP.L2-3.8.8
+    - MP.L2-3.8.7
+    - MP.L2-3.8.8
   800-171r3:
-  - 03.08.07
+    - 03.08.07
 operating_system:
-- name: macos
-  version:
-  - 15.0
+  - name: macos
+    version:
+      - 15.0
 tags:
-- 800-171
-- cnssi-1253_low
-- cnssi-1253_high
-- cmmc_lvl2
-- cnssi-1253_moderate
+  - 800-171
+  - cnssi-1253_low
+  - cnssi-1253_high
+  - cmmc_lvl2
+  - cnssi-1253_moderate
 severity: low
 mobileconfig: true
 mobileconfig_info:
-- PayloadType: com.apple.finder
-  PayloadContent:
-    ProhibitBurn: true
-- PayloadType: com.apple.DiscRecording
-  PayloadContent:
-    BurnSupport: 'off'
+  - PayloadType: com.apple.finder
+    PayloadContent:
+      ProhibitBurn: true
+  - PayloadType: com.apple.DiscRecording
+    PayloadContent:
+      BurnSupport: "off"

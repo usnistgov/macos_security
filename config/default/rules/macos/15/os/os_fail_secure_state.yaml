@@ -1,6 +1,7 @@
 ---
 id: os_fail_secure_state
-title: Configure System to Fail to a Known Safe State if System Initialization, Shutdown,
+title:
+  Configure System to Fail to a Known Safe State if System Initialization, Shutdown,
   or Abort Fails
 discussion: |
   The information system _IS_ configured to fail to a known safe state in the event of a failed system initialization, shutdown, or abort.
@@ -16,27 +17,26 @@ fix: |
   The technology inherently meets this requirement. No fix is required.
 references:
   cce:
-  - CCE-94190-6
+    - CCE-94190-6
   cci:
-  - N/A
+    - N/A
   800-53r5:
-  - SC-24
+    - SC-24
   800-53r4:
-  - SC-24
+    - SC-24
   disa_stig:
-  - N/A
+    - N/A
   srg:
-  - SRG-OS-000269-GPOS-00103
-  - SRG-OS-000184-GPOS-00078
+    - SRG-OS-000269-GPOS-00103
+    - SRG-OS-000184-GPOS-00078
 operating_system:
-- name: macos
-  version:
-  - 15.0
+  - name: macos
+    version:
+      - 15.0
 tags:
-- 800-53r5_high
-- 800-53r4_high
-- inherent
-- cnssi-1253_high
-- srg
+  - 800-53r5_high
+  - 800-53r4_high
+  - inherent
+  - cnssi-1253_high
+  - srg
 mobileconfig: false
-mobileconfig_info: null

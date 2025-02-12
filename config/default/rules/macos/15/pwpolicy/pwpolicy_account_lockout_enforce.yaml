@@ -8,53 +8,53 @@ discussion: |
 check: |
   /usr/bin/pwpolicy -getaccountpolicies 2> /dev/null | /usr/bin/tail +2 | /usr/bin/xmllint --xpath '//dict/key[text()="policyAttributeMaximumFailedAuthentications"]/following-sibling::integer[1]/text()' - | /usr/bin/awk '{ if ($1 <= $ODV) {print "yes"} else {print "no"}}' | /usr/bin/uniq
 result:
-  string: 'yes'
+  string: "yes"
 fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-  - CCE-94331-6
+    - CCE-94331-6
   cci:
-  - CCI-000044
-  - CCI-002238
+    - CCI-000044
+    - CCI-002238
   800-53r5:
-  - AC-7
+    - AC-7
   800-53r4:
-  - AC-7
+    - AC-7
   srg:
-  - SRG-OS-000329-GPOS-00128
-  - SRG-OS-000021-GPOS-00005
+    - SRG-OS-000329-GPOS-00128
+    - SRG-OS-000021-GPOS-00005
   disa_stig:
-  - APPL-15-000022
+    - APPL-15-000022
   800-171r3:
-  - 03.01.08
+    - 03.01.08
   cis:
     benchmark:
-    - 5.2.1 (level 1)
+      - 5.2.1 (level 1)
     controls v8:
-    - 6.2
+      - 6.2
   cmmc:
-  - AC.L2-3.1.8
+    - AC.L2-3.1.8
 operating_system:
-- name: macos
-  version:
-  - 15.0
+  - name: macos
+    version:
+      - 15.0
 tags:
-- 800-171
-- 800-53r4_low
-- 800-53r4_moderate
-- 800-53r4_high
-- 800-53r5_low
-- 800-53r5_moderate
-- 800-53r5_high
-- cis_lvl1
-- cis_lvl2
-- cisv8
-- cnssi-1253_low
-- cnssi-1253_high
-- cmmc_lvl2
-- stig
-- cnssi-1253_moderate
+  - 800-171
+  - 800-53r4_low
+  - 800-53r4_moderate
+  - 800-53r4_high
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_high
+  - cis_lvl1
+  - cis_lvl2
+  - cisv8
+  - cnssi-1253_low
+  - cnssi-1253_high
+  - cmmc_lvl2
+  - stig
+  - cnssi-1253_moderate
 severity: medium
 odv:
   hint: Number of failed attempts.
@@ -64,9 +64,9 @@ odv:
   stig: 3
 mobileconfig: true
 mobileconfig_info:
-- PayloadType: com.apple.mobiledevice.passwordpolicy
-  PayloadContent:
-    maxFailedAttempts: $ODV
+  - PayloadType: com.apple.mobiledevice.passwordpolicy
+    PayloadContent:
+      maxFailedAttempts: $ODV
 ddm_info:
   declarationtype: com.apple.configuration.passcode.settings
   ddm_key: MaximumFailedAttempts

@@ -11,32 +11,32 @@ fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-  - CCE-94284-7
+    - CCE-94284-7
   cci:
-  - N/A
+    - N/A
   800-53r5:
-  - N/A
+    - N/A
   800-53r4:
-  - N/A
+    - N/A
   disa_stig:
-  - N/A
+    - N/A
   srg:
-  - N/A
+    - N/A
   cis:
     benchmark:
-    - 6.3.10 (level 1)
+      - 6.3.10 (level 1)
     controls v8:
-    - 9.1
+      - 9.1
 operating_system:
-- name: macos
-  version:
-  - 15.0
+  - name: macos
+    version:
+      - 15.0
 tags:
-- cis_lvl1
-- cis_lvl2
-- cisv8
+  - cis_lvl1
+  - cis_lvl2
+  - cisv8
 mobileconfig: true
 mobileconfig_info:
-- PayloadType: com.apple.Safari
-  PayloadContent:
-    ShowOverlayStatusBar: true
+  - PayloadType: com.apple.Safari
+    PayloadContent:
+      ShowOverlayStatusBar: true

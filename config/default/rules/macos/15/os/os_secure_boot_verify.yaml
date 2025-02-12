@@ -15,35 +15,34 @@ fix: |
   NOTE: Boot into Recovery Mode and enable Full Secure Boot
 references:
   cce:
-  - CCE-94288-8
+    - CCE-94288-8
   cci:
-  - CCI-002696
-  - CCI-002699
-  - CCI-002702
+    - CCI-002696
+    - CCI-002699
+    - CCI-002702
   800-53r5:
-  - SI-7
-  - SI-7(1)
-  - SI-7(5)
-  - SI-6
+    - SI-7
+    - SI-7(1)
+    - SI-7(5)
+    - SI-6
   800-53r4:
-  - SI-6
+    - SI-6
   srg:
-  - SRG-OS-000447-GPOS-00201
-  - SRG-OS-000445-GPOS-00199
-  - SRG-OS-000446-GPOS-00200
+    - SRG-OS-000447-GPOS-00201
+    - SRG-OS-000445-GPOS-00199
+    - SRG-OS-000446-GPOS-00200
   disa_stig:
-  - APPL-15-005100
+    - APPL-15-005100
 operating_system:
-- name: macos
-  version:
-  - 15.0
+  - name: macos
+    version:
+      - 15.0
 tags:
-- 800-53r5_high
-- 800-53r5_moderate
-- 800-53r4_high
-- cnssi-1253_high
-- stig
-- cnssi-1253_moderate
+  - 800-53r5_high
+  - 800-53r5_moderate
+  - 800-53r4_high
+  - cnssi-1253_high
+  - stig
+  - cnssi-1253_moderate
 severity: medium
 mobileconfig: false
-mobileconfig_info: null

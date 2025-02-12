@@ -26,36 +26,35 @@ fix: |
   ----
 references:
   cce:
-  - CCE-94369-6
+    - CCE-94369-6
   cci:
-  - N/A
+    - N/A
   800-53r5:
-  - AC-11(1)
+    - AC-11(1)
   800-53r4:
-  - AC-11(1)
+    - AC-11(1)
   srg:
-  - N/A
+    - N/A
   disa_stig:
-  - N/A
+    - N/A
   800-171r3:
-  - 03.01.10
+    - 03.01.10
   cis:
     benchmark:
-    - 2.7.1 (level 2)
+      - 2.7.1 (level 2)
     controls v8:
-    - 4.3
+      - 4.3
   cmmc:
-  - AC.L2-3.1.10
+    - AC.L2-3.1.10
 operating_system:
-- name: macos
-  version:
-  - 15.0
+  - name: macos
+    version:
+      - 15.0
 tags:
-- cis_lvl2
-- cisv8
-- cnssi-1253_low
-- cnssi-1253_high
-- cmmc_lvl2
-- cnssi-1253_moderate
+  - cis_lvl2
+  - cisv8
+  - cnssi-1253_low
+  - cnssi-1253_high
+  - cmmc_lvl2
+  - cnssi-1253_moderate
 mobileconfig: false
-mobileconfig_info: null

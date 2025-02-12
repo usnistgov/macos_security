@@ -11,35 +11,35 @@ fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-  - CCE-94282-1
+    - CCE-94282-1
   cci:
-  - N/A
+    - N/A
   800-53r5:
-  - N/A
+    - N/A
   800-53r4:
-  - N/A
+    - N/A
   disa_stig:
-  - N/A
+    - N/A
   srg:
-  - N/A
+    - N/A
   cis:
     benchmark:
-    - 6.3.4 (level 1)
+      - 6.3.4 (level 1)
     controls v8:
-    - 9.1
-    - 9.3
+      - 9.1
+      - 9.3
 operating_system:
-- name: macos
-  version:
-  - 15.0
+  - name: macos
+    version:
+      - 15.0
 tags:
-- cis_lvl1
-- cis_lvl2
-- cisv8
+  - cis_lvl1
+  - cis_lvl2
+  - cisv8
 mobileconfig: true
 mobileconfig_info:
-- PayloadType: com.apple.Safari
-  PayloadContent:
-    WebKitPreferences.storageBlockingPolicy: 1
-    WebKitStorageBlockingPolicy: 1
-    BlockStoragePolicy: 2
+  - PayloadType: com.apple.Safari
+    PayloadContent:
+      WebKitPreferences.storageBlockingPolicy: 1
+      WebKitStorageBlockingPolicy: 1
+      BlockStoragePolicy: 2

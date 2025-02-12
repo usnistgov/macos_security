@@ -1,69 +1,139 @@
 ---
 id: supplemental_firewall_pf
 title: Packet Filter (pf) Supplemental
-discussion: "The supplemental guidance found in this section is applicable for the\
-  \ following rules:\n\n*\tos_firewall_default_deny_require\n\nmacOS contains an application\
-  \ layer firewall (ALF) and a packet filter (PF) firewall.\n\n  * The ALF can block\
-  \ incoming traffic on a per-application basis and prevent applications from gaining\
-  \ control of network ports, but it cannot be configured to block outgoing traffic.\n\
-  \  ** More information on the ALF can be found here: https://support.apple.com/en-ca/HT201642\n\
-  \n  *  The PF firewall can manipulate virtually any packet data and is highly configurable.\n\
-  \  ** More information on the BF firewall can be found here: https://www.openbsd.org/faq/pf/index.html\n\
-  \nBelow is a script that configures ALF and the PF firewall to meet the requirements\
-  \ defined in NIST SP 800-53 (Rev. 5). The script will make sure the application\
-  \ layer firewall is enabled, set logging to \"detailed\", set built-in signed applications\
-  \ to automatically receive incoming connections, and set downloaded signed applications\
-  \ to automatically receive incoming connections. It will then create a custom rule\
-  \ set and copy `com.apple.pfctl.plis` from `/System/Library/LaunchDaemons/` into\
-  \ the `/Library/LaunchDaemons` folder and name it `800-53.pfctl.plist`. This is\
-  \ done to not conflict with the system's pf ruleset.\n\nThe custom pf rules are\
-  \ created at `/etc/pf.anchors/800_53_pf_anchors`.\n\nThe ruleset will block connections\
-  \ on the following ports:\n\n[%header,width=\"100%\",cols=\"3,7\"]\n|===\n^.^|Port\n\
-  ^.^|Service\n\n|548\n|Apple File Protocol (AFP)\n\n|1900\n|Bonjour\n\n|79\n|Finger\n\
-  \n|20, 21\n|File Transfer Protocol (FTP)\n\n|80\n|HTTP\n\n|icmp\n|ping\n\n|143\n\
-  |Internet Message Access Protocol (IMAP)\n\n|993\n|Internet Message Access Protocol\
-  \ over SSL (IMAPS)\n\n|3689\n|Music Sharing\n\n|5353\n|mDNSResponder\n\n|2049\n\
-  |Network File System (NFS)\n\n|49152\n|Optical Media Sharing\n\n|110\n|Post Office\
-  \ Protocol (POP3)\n\n|995\n|Post Office Protocol Secure (POP3S)\n\n|631\n|Printer\
-  \ Sharing\n\n|3031\n|Remote Apple Events\n\n|5900\n|Screen Sharing\n\n|137, 138,\
-  \ 138, 445\n|Samba (SMB)\n\n|25\n|Simple Mail Transfer Protocol (SMTP)\n\n|22\n\
-  |Secure Shell (SSH)\n\n|23\n|Telnet\n\n|69\n|Trivial File Transfer Protocol (TFTP)\n\
-  \n|540\n|Unix-to-Unix Copy (UUCP)\n\n|===\n\nFor more on configuring the PF firewall\
-  \ check out the man pages on `pf.conf` and `pfctl`.\n\n[source,bash]\n----\ninclude::../../includes/enablePF-mscp.sh[]\n\
-  ----\n"
-check: ''
-fix: ''
+discussion: |
+  The supplemental guidance found in this section is applicable for the following rules:
+
+  *	os_firewall_default_deny_require
+
+  macOS contains an application layer firewall (ALF) and a packet filter (PF) firewall.
+
+    * The ALF can block incoming traffic on a per-application basis and prevent applications from gaining control of network ports, but it cannot be configured to block outgoing traffic.
+    ** More information on the ALF can be found here: https://support.apple.com/en-ca/HT201642
+
+    *  The PF firewall can manipulate virtually any packet data and is highly configurable.
+    ** More information on the BF firewall can be found here: https://www.openbsd.org/faq/pf/index.html
+
+  Below is a script that configures ALF and the PF firewall to meet the requirements defined in NIST SP 800-53 (Rev. 5). The script will make sure the application layer firewall is enabled, set logging to "detailed", set built-in signed applications to automatically receive incoming connections, and set downloaded signed applications to automatically receive incoming connections. It will then create a custom rule set and copy `com.apple.pfctl.plis` from `/System/Library/LaunchDaemons/` into the `/Library/LaunchDaemons` folder and name it `800-53.pfctl.plist`. This is done to not conflict with the system's pf ruleset.
+
+  The custom pf rules are created at `/etc/pf.anchors/800_53_pf_anchors`.
+
+  The ruleset will block connections on the following ports:
+
+  [%header,width="100%",cols="3,7"]
+  |===
+  ^.^|Port
+  ^.^|Service
+
+  |548
+  |Apple File Protocol (AFP)
+
+  |1900
+  |Bonjour
+
+  |79
+  |Finger
+
+  |20, 21
+  |File Transfer Protocol (FTP)
+
+  |80
+  |HTTP
+
+  |icmp
+  |ping
+
+  |143
+  |Internet Message Access Protocol (IMAP)
+
+  |993
+  |Internet Message Access Protocol over SSL (IMAPS)
+
+  |3689
+  |Music Sharing
+
+  |5353
+  |mDNSResponder
+
+  |2049
+  |Network File System (NFS)
+
+  |49152
+  |Optical Media Sharing
+
+  |110
+  |Post Office Protocol (POP3)
+
+  |995
+  |Post Office Protocol Secure (POP3S)
+
+  |631
+  |Printer Sharing
+
+  |3031
+  |Remote Apple Events
+
+  |5900
+  |Screen Sharing
+
+  |137, 138, 138, 445
+  |Samba (SMB)
+
+  |25
+  |Simple Mail Transfer Protocol (SMTP)
+
+  |22
+  |Secure Shell (SSH)
+
+  |23
+  |Telnet
+
+  |69
+  |Trivial File Transfer Protocol (TFTP)
+
+  |540
+  |Unix-to-Unix Copy (UUCP)
+
+  |===
+
+  For more on configuring the PF firewall check out the man pages on `pf.conf` and `pfctl`.
+
+  [source,bash]
+  ----
+  include::../../includes/enablePF-mscp.sh[]
+  ----
+check: ""
+fix: ""
 references:
   cci:
-  - N/A
+    - N/A
   800-53r5:
-  - N/A
+    - N/A
   800-53r4:
-  - N/A
+    - N/A
   srg:
-  - N/A
+    - N/A
   disa_stig:
-  - N/A
+    - N/A
   cmmc:
-  - N/A
+    - N/A
 operating_system:
-- name: macos
-  version:
-  - 15.0
+  - name: macos
+    version:
+      - 15.0
 tags:
-- 800-171
-- 800-53r4_high
-- 800-53r4_low
-- 800-53r4_moderate
-- 800-53r5_high
-- 800-53r5_low
-- 800-53r5_moderate
-- 800-53r5_privacy
-- cmmc_lvl1
-- cmmc_lvl2
-- cnssi-1253_high
-- cnssi-1253_low
-- stig
-- supplemental
+  - 800-171
+  - 800-53r4_high
+  - 800-53r4_low
+  - 800-53r4_moderate
+  - 800-53r5_high
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_privacy
+  - cmmc_lvl1
+  - cmmc_lvl2
+  - cnssi-1253_high
+  - cnssi-1253_low
+  - stig
+  - supplemental
 mobileconfig: false
-mobileconfig_info: null

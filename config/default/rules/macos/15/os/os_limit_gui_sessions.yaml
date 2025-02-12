@@ -11,27 +11,26 @@ fix: |
   The technology inherently meets this requirement. No fix is required.
 references:
   cce:
-  - CCE-94219-3
+    - CCE-94219-3
   cci:
-  - N/A
+    - N/A
   800-53r5:
-  - AC-10
+    - AC-10
   800-53r4:
-  - AC-10
+    - AC-10
   disa_stig:
-  - N/A
+    - N/A
   srg:
-  - SRG-OS-000027-GPOS-00008
+    - SRG-OS-000027-GPOS-00008
 operating_system:
-- name: macos
-  version:
-  - 15.0
+  - name: macos
+    version:
+      - 15.0
 tags:
-- 800-53r5_high
-- 800-53r4_high
-- inherent
-- cnssi-1253_high
-- srg
-- cnssi-1253_moderate
+  - 800-53r5_high
+  - 800-53r4_high
+  - inherent
+  - cnssi-1253_high
+  - srg
+  - cnssi-1253_moderate
 mobileconfig: false
-mobileconfig_info: null

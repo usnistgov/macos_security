@@ -19,34 +19,33 @@ fix: |
   The technology partially meets this requirement. An appropriate mitigation for the system must be implemented for full compliance.
 references:
   cce:
-  - CCE-94265-6
+    - CCE-94265-6
   800-53r5:
-  - SC-15
+    - SC-15
   800-53r4:
-  - N/A
+    - N/A
   disa_stig:
-  - N/A
+    - N/A
   srg:
-  - N/A
+    - N/A
   cmmc:
-  - SC.L2-3.13.12
+    - SC.L2-3.13.12
   cci:
-  - N/A
+    - N/A
   800-171r3:
-  - 03.13.12
+    - 03.13.12
 operating_system:
-- name: macos
-  version:
-  - 15.0
+  - name: macos
+    version:
+      - 15.0
 tags:
-- 800-171
-- inherent
-- 800-53r5_low
-- 800-53r5_moderate
-- 800-53r5_high
-- cnssi-1253_low
-- cnssi-1253_high
-- cmmc_lvl2
-- cnssi-1253_moderate
+  - 800-171
+  - inherent
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_high
+  - cnssi-1253_low
+  - cnssi-1253_high
+  - cmmc_lvl2
+  - cnssi-1253_moderate
 mobileconfig: false
-mobileconfig_info: null

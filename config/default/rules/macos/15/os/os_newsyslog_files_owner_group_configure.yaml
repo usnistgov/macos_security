@@ -16,32 +16,31 @@ fix: |
   ----
 references:
   cce:
-  - CCE-94233-4
+    - CCE-94233-4
   cci:
-  - CCI-001312
-  - CCI-001314
+    - CCI-001312
+    - CCI-001314
   800-53r5:
-  - SI-11
+    - SI-11
   800-53r4:
-  - SI-11
+    - SI-11
   srg:
-  - SRG-OS-000206-GPOS-00084
-  - SRG-OS-000205-GPOS-00083
+    - SRG-OS-000206-GPOS-00084
+    - SRG-OS-000205-GPOS-00083
   disa_stig:
-  - APPL-15-004030
+    - APPL-15-004030
   800-171r3:
-  - N/A
+    - N/A
 operating_system:
-- name: macos
-  version:
-  - 15.0
+  - name: macos
+    version:
+      - 15.0
 tags:
-- 800-53r5_moderate
-- 800-53r5_high
-- cnssi-1253_low
-- cnssi-1253_high
-- stig
-- cnssi-1253_moderate
+  - 800-53r5_moderate
+  - 800-53r5_high
+  - cnssi-1253_low
+  - cnssi-1253_high
+  - stig
+  - cnssi-1253_moderate
 severity: medium
 mobileconfig: false
-mobileconfig_info: null

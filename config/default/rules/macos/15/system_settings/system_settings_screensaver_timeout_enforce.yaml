@@ -18,52 +18,52 @@ check: |
   }
   EOS
 result:
-  string: 'true'
+  string: "true"
 fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-  - CCE-94390-2
+    - CCE-94390-2
   cci:
-  - CCI-000057
+    - CCI-000057
   800-53r5:
-  - AC-11
-  - IA-11
+    - AC-11
+    - IA-11
   800-53r4:
-  - AC-11
+    - AC-11
   srg:
-  - SRG-OS-000029-GPOS-00010
+    - SRG-OS-000029-GPOS-00010
   disa_stig:
-  - APPL-15-000070
+    - APPL-15-000070
   800-171r3:
-  - 03.01.10
-  - 03.05.01
+    - 03.01.10
+    - 03.05.01
   cis:
     benchmark:
-    - 2.10.1 (level 1)
+      - 2.10.1 (level 1)
     controls v8:
-    - 4.3
+      - 4.3
   cmmc:
-  - AC.L2-3.1.10
+    - AC.L2-3.1.10
 operating_system:
-- name: macos
-  version:
-  - 15.0
+  - name: macos
+    version:
+      - 15.0
 tags:
-- 800-53r5_moderate
-- 800-53r5_high
-- 800-53r5_low
-- 800-53r4_moderate
-- 800-53r4_high
-- 800-171
-- cis_lvl1
-- cis_lvl2
-- cisv8
-- cnssi-1253_low
-- cnssi-1253_high
-- cmmc_lvl2
-- stig
-- cnssi-1253_moderate
+  - 800-53r5_moderate
+  - 800-53r5_high
+  - 800-53r5_low
+  - 800-53r4_moderate
+  - 800-53r4_high
+  - 800-171
+  - cis_lvl1
+  - cis_lvl2
+  - cisv8
+  - cnssi-1253_low
+  - cnssi-1253_high
+  - cmmc_lvl2
+  - stig
+  - cnssi-1253_moderate
 severity: medium
 odv:
   hint: Number of seconds.
@@ -73,6 +73,6 @@ odv:
   stig: 900
 mobileconfig: true
 mobileconfig_info:
-- PayloadType: com.apple.screensaver
-  PayloadContent:
-    idleTime: $ODV
+  - PayloadType: com.apple.screensaver
+    PayloadContent:
+      idleTime: $ODV

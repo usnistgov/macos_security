@@ -15,47 +15,46 @@ fix: |
   ----
 references:
   cce:
-  - CCE-94310-0
+    - CCE-94310-0
   cci:
-  - CCI-000172
+    - CCI-000172
   800-53r5:
-  - AC-6(9)
+    - AC-6(9)
   800-53r4:
-  - N/A
+    - N/A
   800-171r3:
-  - 03.01.07
+    - 03.01.07
   srg:
-  - SRG-OS-000064-GPOS-00033
+    - SRG-OS-000064-GPOS-00033
   disa_stig:
-  - APPL-15-000190
+    - APPL-15-000190
   cis:
     benchmark:
-    - 5.11 (level 1)
+      - 5.11 (level 1)
     controls v8:
-    - N/A
+      - N/A
   cmmc:
-  - AU.L2-3.3.3
-  - AU.L2-3.3.6
-  - SI.L2-3.14.3
+    - AU.L2-3.3.3
+    - AU.L2-3.3.6
+    - SI.L2-3.14.3
 operating_system:
-- name: macos
-  version:
-  - 15.0
+  - name: macos
+    version:
+      - 15.0
 tags:
-- 800-53r5_moderate
-- 800-53r5_high
-- stig
-- cis_lvl1
-- cis_lvl2
-- cisv8
-- cmmc_lvl2
-- 800-171
-- cnssi-1253_moderate
-- cnssi-1253_low
-- cnssi-1253_high
+  - 800-53r5_moderate
+  - 800-53r5_high
+  - stig
+  - cis_lvl1
+  - cis_lvl2
+  - cisv8
+  - cmmc_lvl2
+  - 800-171
+  - cnssi-1253_moderate
+  - cnssi-1253_low
+  - cnssi-1253_high
 severity: medium
 mobileconfig: false
-mobileconfig_info: null
 ddm_info:
   declarationtype: com.apple.configuration.services.configuration-files
   service: com.apple.sudo

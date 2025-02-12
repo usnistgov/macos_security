@@ -14,35 +14,35 @@ fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-  - CCE-94414-0
+    - CCE-94414-0
   cci:
-  - N/A
+    - N/A
   800-53r5:
-  - N/A
+    - N/A
   800-53r4:
-  - N/A
+    - N/A
   srg:
-  - N/A
+    - N/A
   disa_stig:
-  - N/A
+    - N/A
   800-171r3:
-  - N/A
+    - N/A
   cis:
     benchmark:
-    - 2.4.1 (level 1)
+      - 2.4.1 (level 1)
     controls v8:
-    - 4.8
-    - 12.6
+      - 4.8
+      - 12.6
 operating_system:
-- name: macos
-  version:
-  - 15.0
+  - name: macos
+    version:
+      - 15.0
 tags:
-- cis_lvl1
-- cis_lvl2
-- cisv8
+  - cis_lvl1
+  - cis_lvl2
+  - cisv8
 mobileconfig: true
 mobileconfig_info:
-- PayloadType: com.apple.controlcenter
-  PayloadContent:
-    WiFi: 18
+  - PayloadType: com.apple.controlcenter
+    PayloadContent:
+      WiFi: 18

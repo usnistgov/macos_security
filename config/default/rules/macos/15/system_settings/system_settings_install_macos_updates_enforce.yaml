@@ -9,40 +9,40 @@ check: |
   .objectForKey('AutomaticallyInstallMacOSUpdates').js
   EOS
 result:
-  string: 'true'
+  string: "true"
 fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-  - CCE-94373-8
+    - CCE-94373-8
   cci:
-  - N/A
+    - N/A
   800-53r5:
-  - N/A
+    - N/A
   800-53r4:
-  - N/A
+    - N/A
   srg:
-  - N/A
+    - N/A
   disa_stig:
-  - N/A
+    - N/A
   800-171r3:
-  - N/A
+    - N/A
   cis:
     benchmark:
-    - 1.4 (level 1)
+      - 1.4 (level 1)
     controls v8:
-    - 7.3
-    - 7.4
+      - 7.3
+      - 7.4
 operating_system:
-- name: macos
-  version:
-  - 15.0
+  - name: macos
+    version:
+      - 15.0
 tags:
-- cis_lvl1
-- cis_lvl2
-- cisv8
+  - cis_lvl1
+  - cis_lvl2
+  - cisv8
 mobileconfig: true
 mobileconfig_info:
-- PayloadType: com.apple.SoftwareUpdate
-  PayloadContent:
-    AutomaticallyInstallMacOSUpdates: true
+  - PayloadType: com.apple.SoftwareUpdate
+    PayloadContent:
+      AutomaticallyInstallMacOSUpdates: true

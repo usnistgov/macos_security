@@ -13,30 +13,29 @@ fix: |
   This is implemented by a Declarative Device Management.
 references:
   cce:
-  - CCE-94232-6
+    - CCE-94232-6
   cci:
-  - N/A
+    - N/A
   800-53r5:
-  - AC-20(4)
+    - AC-20(4)
   srg:
-  - N/A
+    - N/A
   disa_stig:
-  - N/A
+    - N/A
   800-171r3:
-  - N/A
+    - N/A
   cmmc:
-  - N/A
+    - N/A
 operating_system:
-- name: macos
-  version:
-  - 15.0
+  - name: macos
+    version:
+      - 15.0
 tags:
-- none
+  - none
 odv:
   hint: Allowed, ReadOnly, or Disallowed
   recommended: Allowed
 mobileconfig: false
-mobileconfig_info: null
 ddm_info:
   declarationtype: com.apple.configuration.diskmanagement.settings
   ddm_key: NetworkStorage
