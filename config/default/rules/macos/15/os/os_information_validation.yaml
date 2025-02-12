@@ -1,8 +1,7 @@
 ---
 id: os_information_validation
 title: Information Input Validation
-discussion:
-  "Check the validity of the following information inputs: organization-defined\
+discussion: "Check the validity of the following information inputs: organization-defined\
   \ information inputs to the systems.\n\nChecking the valid syntax and semantics\
   \ of system inputs\u2014including character set, length, numerical range, and acceptable\
   \ values\u2014verifies that inputs match specified definitions for format and content.\
@@ -28,29 +27,29 @@ fix: |
   The requirement is NA. No fix is required.
 references:
   cce:
-    - CCE-94211-0
+  - CCE-94211-0
   cci:
-    - N/A
+  - N/A
   800-53r5:
-    - SI-10
+  - SI-10
   800-53r4:
-    - N/A
+  - N/A
   800-171r3:
-    - N/A
+  - N/A
   disa_stig:
-    - N/A
+  - N/A
   srg:
-    - N/A
+  - N/A
 operating_system:
-  - name: macos
-    version:
-      - 15.0
+- name: macos
+  version:
+  - 15.0
 tags:
-  - 800-53r5_moderate
-  - 800-53r5_high
-  - n_a
-  - cnssi-1253_low
-  - cnssi-1253_high
-  - cnssi-1253_moderate
+- 800-53r5_moderate
+- 800-53r5_high
+- n_a
+- cnssi-1253_low
+- cnssi-1253_high
+- cnssi-1253_moderate
 mobileconfig: false
 mobileconfig_info: null

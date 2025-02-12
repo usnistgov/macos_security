@@ -9,43 +9,43 @@ fix: |
   This requirement is a permanent finding and can be fixed by implementing a third party solution.
 references:
   cce:
-    - CCE-94163-3
+  - CCE-94163-3
   cci:
-    - N/A
+  - N/A
   800-53r5:
-    - IA-3
+  - IA-3
   800-53r4:
-    - IA-3
+  - IA-3
   disa_stig:
-    - N/A
+  - N/A
   srg:
-    - SRG-OS-000114-GPOS-00059
-    - SRG-OS-000378-GPOS-00163
+  - SRG-OS-000114-GPOS-00059
+  - SRG-OS-000378-GPOS-00163
   800-171r3:
-    - 03.05.02
+  - 03.05.02
   cis:
     benchmark:
-      - N/A
+    - N/A
     controls v8:
-      - 13.9
+    - 13.9
   cmmc:
-    - IA.L1-3.5.2
+  - IA.L1-3.5.2
 operating_system:
-  - name: macos
-    version:
-      - 15.0
+- name: macos
+  version:
+  - 15.0
 tags:
-  - 800-53r5_moderate
-  - 800-53r5_high
-  - 800-53r4_moderate
-  - 800-53r4_high
-  - permanent
-  - cisv8
-  - cnssi-1253_low
-  - cnssi-1253_high
-  - cmmc_lvl2
-  - cmmc_lvl1
-  - srg
-  - cnssi-1253_moderate
+- 800-53r5_moderate
+- 800-53r5_high
+- 800-53r4_moderate
+- 800-53r4_high
+- permanent
+- cisv8
+- cnssi-1253_low
+- cnssi-1253_high
+- cmmc_lvl2
+- cmmc_lvl1
+- srg
+- cnssi-1253_moderate
 mobileconfig: false
 mobileconfig_info: null

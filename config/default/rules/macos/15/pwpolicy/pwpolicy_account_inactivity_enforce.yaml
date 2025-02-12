@@ -37,45 +37,45 @@ fix: |
   NOTE: See the password policy supplemental on more information on how to implement password policies on macOS.
 references:
   cce:
-    - CCE-94330-8
+  - CCE-94330-8
   cci:
-    - CCI-000795
-    - CCI-003627
-    - CCI-003628
+  - CCI-000795
+  - CCI-003627
+  - CCI-003628
   800-53r5:
-    - AC-2(3)
+  - AC-2(3)
   800-53r4:
-    - IA-4
+  - IA-4
   srg:
-    - SRG-OS-000118-GPOS-00060
-    - SRG-OS-000590-GPOS-00110
+  - SRG-OS-000118-GPOS-00060
+  - SRG-OS-000590-GPOS-00110
   disa_stig:
-    - APPL-15-003080
+  - APPL-15-003080
   800-171r3:
-    - 03.01.01
+  - 03.01.01
   cis:
     benchmark:
-      - N/A
+    - N/A
     controls v8:
-      - 5.3
+    - 5.3
   cmmc:
-    - IA.L2-3.5.6
+  - IA.L2-3.5.6
 operating_system:
-  - name: macos
-    version:
-      - 15.0
+- name: macos
+  version:
+  - 15.0
 tags:
-  - 800-171
-  - 800-53r4_low
-  - 800-53r4_moderate
-  - 800-53r4_high
-  - 800-53r5_moderate
-  - 800-53r5_high
-  - cisv8
-  - cnssi-1253_high
-  - cmmc_lvl2
-  - stig
-  - cnssi-1253_moderate
+- 800-171
+- 800-53r4_low
+- 800-53r4_moderate
+- 800-53r4_high
+- 800-53r5_moderate
+- 800-53r5_high
+- cisv8
+- cnssi-1253_high
+- cmmc_lvl2
+- stig
+- cnssi-1253_moderate
 severity: medium
 odv:
   hint: Number of days.

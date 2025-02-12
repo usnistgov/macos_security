@@ -17,51 +17,51 @@ fix: |
   NOTE - This will apply to the whole system
 references:
   cce:
-    - CCE-94387-8
+  - CCE-94387-8
   cci:
-    - CCI-000213
+  - CCI-000213
   800-53r5:
-    - AC-3
-    - AC-17
+  - AC-3
+  - AC-17
   800-53r4:
-    - AC-3
-    - AC-17
+  - AC-3
+  - AC-17
   srg:
-    - SRG-OS-000080-GPOS-00048
+  - SRG-OS-000080-GPOS-00048
   disa_stig:
-    - APPL-15-002050
+  - APPL-15-002050
   800-171r3:
-    - 03.01.02
-    - 03.04.06
+  - 03.01.02
+  - 03.04.06
   cis:
     benchmark:
-      - 2.3.3.2 (level 1)
+    - 2.3.3.2 (level 1)
     controls v8:
-      - 4.1
-      - 4.8
+    - 4.1
+    - 4.8
   cmmc:
-    - AC.L1-3.1.1
+  - AC.L1-3.1.1
 operating_system:
-  - name: macos
-    version:
-      - 15.0
+- name: macos
+  version:
+  - 15.0
 tags:
-  - 800-53r5_low
-  - 800-53r5_moderate
-  - 800-53r5_high
-  - 800-53r4_low
-  - 800-53r4_moderate
-  - 800-53r4_high
-  - 800-171
-  - cis_lvl1
-  - cis_lvl2
-  - cisv8
-  - cnssi-1253_low
-  - cnssi-1253_high
-  - cmmc_lvl2
-  - cmmc_lvl1
-  - stig
-  - cnssi-1253_moderate
+- 800-53r5_low
+- 800-53r5_moderate
+- 800-53r5_high
+- 800-53r4_low
+- 800-53r4_moderate
+- 800-53r4_high
+- 800-171
+- cis_lvl1
+- cis_lvl2
+- cisv8
+- cnssi-1253_low
+- cnssi-1253_high
+- cmmc_lvl2
+- cmmc_lvl1
+- stig
+- cnssi-1253_moderate
 severity: medium
 mobileconfig: false
 mobileconfig_info: null

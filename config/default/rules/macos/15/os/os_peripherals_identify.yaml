@@ -11,24 +11,24 @@ fix: |
   The technology inherently meets this requirement. No fix is required.
 references:
   cce:
-    - CCE-94251-6
+  - CCE-94251-6
   cci:
-    - N/A
+  - N/A
   800-53r5:
-    - N/A
+  - N/A
   800-53r4:
-    - N/A
+  - N/A
   srg:
-    - N/A
+  - N/A
   disa_stig:
-    - N/A
+  - N/A
   800-171r3:
-    - N/A
+  - N/A
 operating_system:
-  - name: macos
-    version:
-      - 15.0
+- name: macos
+  version:
+  - 15.0
 tags:
-  - inherent
+- inherent
 mobileconfig: false
 mobileconfig_info: null

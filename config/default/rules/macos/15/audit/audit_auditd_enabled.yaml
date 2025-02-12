@@ -34,111 +34,111 @@ fix: |
   ----
 references:
   cce:
-    - CCE-94104-7
+  - CCE-94104-7
   cci:
-    - CCI-000130
-    - CCI-000131
-    - CCI-000132
-    - CCI-000133
-    - CCI-000134
-    - CCI-000135
-    - CCI-000159
-    - CCI-001464
-    - CCI-001487
-    - CCI-001889
-    - CCI-001890
-    - CCI-001914
-    - CCI-002130
-    - CCI-003938
-    - CCI-004188
+  - CCI-000130
+  - CCI-000131
+  - CCI-000132
+  - CCI-000133
+  - CCI-000134
+  - CCI-000135
+  - CCI-000159
+  - CCI-001464
+  - CCI-001487
+  - CCI-001889
+  - CCI-001890
+  - CCI-001914
+  - CCI-002130
+  - CCI-003938
+  - CCI-004188
   800-53r5:
-    - AU-3
-    - AU-3(1)
-    - AU-8
-    - AU-12
-    - AU-12(1)
-    - AU-12(3)
-    - AU-14(1)
-    - MA-4(1)
-    - CM-5(1)
+  - AU-3
+  - AU-3(1)
+  - AU-8
+  - AU-12
+  - AU-12(1)
+  - AU-12(3)
+  - AU-14(1)
+  - MA-4(1)
+  - CM-5(1)
   800-53r4:
-    - AU-3
-    - AU-3(1)
-    - AU-8
-    - AU-12
-    - AU-12(3)
-    - AU-14(1)
+  - AU-3
+  - AU-3(1)
+  - AU-8
+  - AU-12
+  - AU-12(3)
+  - AU-14(1)
   srg:
-    - SRG-OS-000255-GPOS-00096
-    - SRG-OS-000474-GPOS-00219
-    - SRG-OS-000465-GPOS-00209
-    - SRG-OS-000473-GPOS-00218
-    - SRG-OS-000337-GPOS-00129
-    - SRG-OS-000359-GPOS-00146
-    - SRG-OS-000472-GPOS-00217
-    - SRG-OS-000257-GPOS-00098
-    - SRG-OS-000466-GPOS-00210
-    - SRG-OS-000042-GPOS-00020
-    - SRG-OS-000468-GPOS-00212
-    - SRG-OS-000392-GPOS-00172
-    - SRG-OS-000463-GPOS-00207
-    - SRG-OS-000039-GPOS-00017
-    - SRG-OS-000467-GPOS-00211
-    - SRG-OS-000470-GPOS-00214
-    - SRG-OS-000461-GPOS-00205
-    - SRG-OS-000258-GPOS-00099
-    - SRG-OS-000471-GPOS-00215
-    - SRG-OS-000458-GPOS-00203
-    - SRG-OS-000037-GPOS-00015
-    - SRG-OS-000040-GPOS-00018
-    - SRG-OS-000471-GPOS-00216
-    - SRG-OS-000476-GPOS-00221
-    - SRG-OS-000254-GPOS-00095
-    - SRG-OS-000042-GPOS-00021
-    - SRG-OS-000358-GPOS-00145
-    - SRG-OS-000477-GPOS-00222
-    - SRG-OS-000365-GPOS-00152
-    - SRG-OS-000475-GPOS-00220
-    - SRG-OS-000041-GPOS-00019
-    - SRG-OS-000038-GPOS-00016
-    - SRG-OS-000462-GPOS-00206
-    - SRG-OS-000055-GPOS-00026
-    - SRG-OS-000755-GPOS-00220
+  - SRG-OS-000255-GPOS-00096
+  - SRG-OS-000474-GPOS-00219
+  - SRG-OS-000465-GPOS-00209
+  - SRG-OS-000473-GPOS-00218
+  - SRG-OS-000337-GPOS-00129
+  - SRG-OS-000359-GPOS-00146
+  - SRG-OS-000472-GPOS-00217
+  - SRG-OS-000257-GPOS-00098
+  - SRG-OS-000466-GPOS-00210
+  - SRG-OS-000042-GPOS-00020
+  - SRG-OS-000468-GPOS-00212
+  - SRG-OS-000392-GPOS-00172
+  - SRG-OS-000463-GPOS-00207
+  - SRG-OS-000039-GPOS-00017
+  - SRG-OS-000467-GPOS-00211
+  - SRG-OS-000470-GPOS-00214
+  - SRG-OS-000461-GPOS-00205
+  - SRG-OS-000258-GPOS-00099
+  - SRG-OS-000471-GPOS-00215
+  - SRG-OS-000458-GPOS-00203
+  - SRG-OS-000037-GPOS-00015
+  - SRG-OS-000040-GPOS-00018
+  - SRG-OS-000471-GPOS-00216
+  - SRG-OS-000476-GPOS-00221
+  - SRG-OS-000254-GPOS-00095
+  - SRG-OS-000042-GPOS-00021
+  - SRG-OS-000358-GPOS-00145
+  - SRG-OS-000477-GPOS-00222
+  - SRG-OS-000365-GPOS-00152
+  - SRG-OS-000475-GPOS-00220
+  - SRG-OS-000041-GPOS-00019
+  - SRG-OS-000038-GPOS-00016
+  - SRG-OS-000462-GPOS-00206
+  - SRG-OS-000055-GPOS-00026
+  - SRG-OS-000755-GPOS-00220
   disa_stig:
-    - APPL-15-001003
+  - APPL-15-001003
   800-171r3:
-    - 03.03.02
-    - 03.03.03
-    - 03.03.07
+  - 03.03.02
+  - 03.03.03
+  - 03.03.07
   cis:
     benchmark:
-      - 3.1 (level 1)
+    - 3.1 (level 1)
     controls v8:
-      - 8.2
-      - 8.5
+    - 8.2
+    - 8.5
   cmmc:
-    - AU.L2-3.3.2
-    - AU.L2-3.3.6
+  - AU.L2-3.3.2
+  - AU.L2-3.3.6
 operating_system:
-  - name: macos
-    version:
-      - 15.0
+- name: macos
+  version:
+  - 15.0
 tags:
-  - 800-53r5_low
-  - 800-53r5_moderate
-  - 800-53r5_high
-  - 800-53r4_low
-  - 800-53r4_moderate
-  - 800-53r4_high
-  - 800-171
-  - cis_lvl1
-  - cis_lvl2
-  - cisv8
-  - cnssi-1253_low
-  - cnssi-1253_high
-  - cmmc_lvl2
-  - stig
-  - cnssi-1253_moderate
+- 800-53r5_low
+- 800-53r5_moderate
+- 800-53r5_high
+- 800-53r4_low
+- 800-53r4_moderate
+- 800-53r4_high
+- 800-171
+- cis_lvl1
+- cis_lvl2
+- cisv8
+- cnssi-1253_low
+- cnssi-1253_high
+- cmmc_lvl2
+- stig
+- cnssi-1253_moderate
 severity: medium
 mobileconfig: false
 mobileconfig_info: null

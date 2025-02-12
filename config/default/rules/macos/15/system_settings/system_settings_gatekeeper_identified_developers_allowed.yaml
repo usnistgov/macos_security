@@ -20,53 +20,53 @@ check: |
   }
   EOS
 result:
-  string: "true"
+  string: 'true'
 fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-    - CCE-94364-7
+  - CCE-94364-7
   cci:
-    - CCI-001749
-    - CCI-003992
+  - CCI-001749
+  - CCI-003992
   800-53r5:
-    - CM-14
-    - CM-5
-    - SI-7(15)
-    - SI-7(1)
+  - CM-14
+  - CM-5
+  - SI-7(15)
+  - SI-7(1)
   800-53r4:
-    - CM-5(3)
-    - CM-5
-    - SI-7(15)
+  - CM-5(3)
+  - CM-5
+  - SI-7(15)
   srg:
-    - SRG-OS-000366-GPOS-00153
-    - SRG-OS-000480-GPOS-00228
+  - SRG-OS-000366-GPOS-00153
+  - SRG-OS-000480-GPOS-00228
   disa_stig:
-    - APPL-15-002060
+  - APPL-15-002060
   800-171r3:
-    - 03.14.02
+  - 03.14.02
   cmmc:
-    - CM.L2-3.4.5
+  - CM.L2-3.4.5
 operating_system:
-  - name: macos
-    version:
-      - 15.0
+- name: macos
+  version:
+  - 15.0
 tags:
-  - 800-53r5_low
-  - 800-53r5_moderate
-  - 800-53r5_high
-  - 800-53r4_moderate
-  - 800-53r4_high
-  - 800-171
-  - cnssi-1253_low
-  - cnssi-1253_high
-  - cmmc_lvl2
-  - stig
-  - cnssi-1253_moderate
+- 800-53r5_low
+- 800-53r5_moderate
+- 800-53r5_high
+- 800-53r4_moderate
+- 800-53r4_high
+- 800-171
+- cnssi-1253_low
+- cnssi-1253_high
+- cmmc_lvl2
+- stig
+- cnssi-1253_moderate
 severity: high
 mobileconfig: true
 mobileconfig_info:
-  - PayloadType: com.apple.systempolicy.control
-    PayloadContent:
-      AllowIdentifiedDevelopers: true
-      EnableAssessment: true
+- PayloadType: com.apple.systempolicy.control
+  PayloadContent:
+    AllowIdentifiedDevelopers: true
+    EnableAssessment: true

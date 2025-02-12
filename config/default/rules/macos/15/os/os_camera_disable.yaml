@@ -21,32 +21,32 @@ check: |
   .objectForKey('allowCamera').js
   EOS
 result:
-  string: "false"
+  string: 'false'
 fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-    - CCE-94172-4
+  - CCE-94172-4
   cci:
-    - CCI-000381
-    - CCI-001774
+  - CCI-000381
+  - CCI-001774
   800-53r5:
-    - N/A
+  - N/A
   800-53r4:
-    - N/A
+  - N/A
   srg:
-    - SRG-OS-000095-GPOS-00049
+  - SRG-OS-000095-GPOS-00049
   disa_stig:
-    - APPL-15-002017
+  - APPL-15-002017
 operating_system:
-  - name: macos
-    version:
-      - 15.0
+- name: macos
+  version:
+  - 15.0
 tags:
-  - stig
+- stig
 severity: medium
 mobileconfig: true
 mobileconfig_info:
-  - PayloadType: com.apple.applicationaccess
-    PayloadContent:
-      allowCamera: false
+- PayloadType: com.apple.applicationaccess
+  PayloadContent:
+    allowCamera: false

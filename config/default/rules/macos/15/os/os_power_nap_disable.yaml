@@ -25,42 +25,42 @@ fix: |
   ----
 references:
   cce:
-    - CCE-94257-3
+  - CCE-94257-3
   cci:
-    - N/A
+  - N/A
   800-53r5:
-    - CM-7
-    - CM-7(1)
+  - CM-7
+  - CM-7(1)
   800-53r4:
-    - CM-7
-    - CM-7(1)
+  - CM-7
+  - CM-7(1)
   disa_stig:
-    - N/A
+  - N/A
   srg:
-    - N/A
+  - N/A
   800-171r3:
-    - 03.04.06
+  - 03.04.06
   cis:
     benchmark:
-      - 2.9.2 (level 1)
+    - 2.9.2 (level 1)
     controls v8:
-      - 4.1
-      - 4.8
+    - 4.1
+    - 4.8
   cmmc:
-    - CM.L2-3.4.6
-    - CM.L2-3.4.7
+  - CM.L2-3.4.6
+  - CM.L2-3.4.7
 operating_system:
-  - name: macos
-    version:
-      - 15.0
+- name: macos
+  version:
+  - 15.0
 tags:
-  - cis_lvl1
-  - cis_lvl2
-  - cisv8
-  - i386
-  - cnssi-1253_low
-  - cnssi-1253_high
-  - cmmc_lvl2
-  - cnssi-1253_moderate
+- cis_lvl1
+- cis_lvl2
+- cisv8
+- i386
+- cnssi-1253_low
+- cnssi-1253_high
+- cmmc_lvl2
+- cnssi-1253_moderate
 mobileconfig: false
 mobileconfig_info: null

@@ -21,39 +21,39 @@ fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-    - CCE-94351-4
+  - CCE-94351-4
   cci:
-    - CCI-002361
+  - CCI-002361
   800-53r5:
-    - AC-12
-    - AC-2(5)
+  - AC-12
+  - AC-2(5)
   800-53r4:
-    - AC-12
+  - AC-12
   disa_stig:
-    - APPL-15-000160
+  - APPL-15-000160
   srg:
-    - SRG-OS-000279-GPOS-00109
+  - SRG-OS-000279-GPOS-00109
   800-171r3:
-    - 03.01.01
-    - 03.01.11
+  - 03.01.01
+  - 03.01.11
   cmmc:
-    - AC.L2-3.1.10
-    - AC.L2-3.1.11
+  - AC.L2-3.1.10
+  - AC.L2-3.1.11
 operating_system:
-  - name: macos
-    version:
-      - 15.0
+- name: macos
+  version:
+  - 15.0
 tags:
-  - 800-53r5_moderate
-  - 800-53r5_high
-  - 800-53r4_moderate
-  - 800-53r4_high
-  - 800-171
-  - cnssi-1253_low
-  - cnssi-1253_high
-  - cmmc_lvl2
-  - stig
-  - cnssi-1253_moderate
+- 800-53r5_moderate
+- 800-53r5_high
+- 800-53r4_moderate
+- 800-53r4_high
+- 800-171
+- cnssi-1253_low
+- cnssi-1253_high
+- cmmc_lvl2
+- stig
+- cnssi-1253_moderate
 severity: medium
 odv:
   hint: Number of seconds
@@ -61,6 +61,6 @@ odv:
   stig: 86400
 mobileconfig: true
 mobileconfig_info:
-  - PayloadType: .GlobalPreferences
-    PayloadContent:
-      com.apple.autologout.AutoLogOutDelay: $ODV
+- PayloadType: .GlobalPreferences
+  PayloadContent:
+    com.apple.autologout.AutoLogOutDelay: $ODV

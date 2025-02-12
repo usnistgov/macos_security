@@ -1,8 +1,7 @@
 ---
 id: supplemental_firewall_pf
 title: Packet Filter (pf) Supplemental
-discussion:
-  "The supplemental guidance found in this section is applicable for the\
+discussion: "The supplemental guidance found in this section is applicable for the\
   \ following rules:\n\n*\tos_firewall_default_deny_require\n\nmacOS contains an application\
   \ layer firewall (ALF) and a packet filter (PF) firewall.\n\n  * The ALF can block\
   \ incoming traffic on a per-application basis and prevent applications from gaining\
@@ -32,39 +31,39 @@ discussion:
   \n|540\n|Unix-to-Unix Copy (UUCP)\n\n|===\n\nFor more on configuring the PF firewall\
   \ check out the man pages on `pf.conf` and `pfctl`.\n\n[source,bash]\n----\ninclude::../../includes/enablePF-mscp.sh[]\n\
   ----\n"
-check: ""
-fix: ""
+check: ''
+fix: ''
 references:
   cci:
-    - N/A
+  - N/A
   800-53r5:
-    - N/A
+  - N/A
   800-53r4:
-    - N/A
+  - N/A
   srg:
-    - N/A
+  - N/A
   disa_stig:
-    - N/A
+  - N/A
   cmmc:
-    - N/A
+  - N/A
 operating_system:
-  - name: macos
-    version:
-      - 15.0
+- name: macos
+  version:
+  - 15.0
 tags:
-  - 800-171
-  - 800-53r4_high
-  - 800-53r4_low
-  - 800-53r4_moderate
-  - 800-53r5_high
-  - 800-53r5_low
-  - 800-53r5_moderate
-  - 800-53r5_privacy
-  - cmmc_lvl1
-  - cmmc_lvl2
-  - cnssi-1253_high
-  - cnssi-1253_low
-  - stig
-  - supplemental
+- 800-171
+- 800-53r4_high
+- 800-53r4_low
+- 800-53r4_moderate
+- 800-53r5_high
+- 800-53r5_low
+- 800-53r5_moderate
+- 800-53r5_privacy
+- cmmc_lvl1
+- cmmc_lvl2
+- cnssi-1253_high
+- cnssi-1253_low
+- stig
+- supplemental
 mobileconfig: false
 mobileconfig_info: null

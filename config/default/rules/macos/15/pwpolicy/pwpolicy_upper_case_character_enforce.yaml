@@ -1,8 +1,7 @@
 ---
 id: pwpolicy_upper_case_character_enforce
 title: Require Passwords Contain a Minimum of One Uppercase Character
-discussion:
-  "The macOS _MUST_ be configured to require at least one uppercase character\
+discussion: "The macOS _MUST_ be configured to require at least one uppercase character\
   \ be used when a password is created.\n\nThis rule enforces password complexity\
   \ by requiring users to set passwords that are less vulnerable to malicious users.\n\
   \nNOTE: To comply with Executive Order 14028, \u201CImproving the Nation's Cybersecurity\u201D\
@@ -19,7 +18,7 @@ discussion:
 check: |
   /usr/bin/pwpolicy -getaccountpolicies 2> /dev/null | /usr/bin/tail +2 | /usr/bin/xmllint --xpath '//dict/key[text()="minimumAlphaCharactersUpperCase"]/following-sibling::integer[1]/text()' - | /usr/bin/awk '{ if ($1 >= $ODV ) {print "yes"} else {print "no"}}'
 result:
-  string: "yes"
+  string: 'yes'
 fix: |
   This setting may be enforced using local policy or by a directory service.
 
@@ -48,38 +47,38 @@ fix: |
   NOTE: See the password policy supplemental on more information on how to implement password policies on macOS.
 references:
   cce:
-    - CCE-94347-2
+  - CCE-94347-2
   cci:
-    - N/A
+  - N/A
   800-53r5:
-    - IA-5(1)
+  - IA-5(1)
   800-53r4:
-    - IA-5
-    - IA-5(1)
+  - IA-5
+  - IA-5(1)
   disa_stig:
-    - N/A
+  - N/A
   srg:
-    - N/A
+  - N/A
   800-171r3:
-    - 03.05.07
+  - 03.05.07
   cis:
     benchmark:
-      - N/A
+    - N/A
     controls v8:
-      - 5.2
+    - 5.2
   cmmc:
-    - IA.L2-3.5.7
-    - IA.L2-3.5.8
-    - IA.L2-3.5.9
+  - IA.L2-3.5.7
+  - IA.L2-3.5.8
+  - IA.L2-3.5.9
 operating_system:
-  - name: macos
-    version:
-      - 15.0
+- name: macos
+  version:
+  - 15.0
 tags:
-  - none
-  - cnssi-1253_moderate
-  - cnssi-1253_low
-  - cnssi-1253_high
+- none
+- cnssi-1253_moderate
+- cnssi-1253_low
+- cnssi-1253_high
 odv:
   hint: Number of special characters.
   recommended: 1

@@ -1,7 +1,6 @@
 ---
 id: pwpolicy_temporary_or_emergency_accounts_disable
-title:
-  Automatically Remove or Disable Temporary or Emergency User Accounts within
+title: Automatically Remove or Disable Temporary or Emergency User Accounts within
   72 Hours
 discussion: |
   The macOS is able to be configured to set an automated termination for 72 hours or less for all temporary or emergency accounts upon account creation.
@@ -59,32 +58,32 @@ fix: |
   /usr/bin/pwpolicy -u username setaccountpolicies /path/to/file
 references:
   cce:
-    - CCE-94346-4
+  - CCE-94346-4
   cci:
-    - CCI-001682
-    - CCI-000016
+  - CCI-001682
+  - CCI-000016
   800-53r5:
-    - AC-2(2)
+  - AC-2(2)
   800-53r4:
-    - AC-2(2)
+  - AC-2(2)
   srg:
-    - SRG-OS-000002-GPOS-00002
-    - SRG-OS-000123-GPOS-00064
+  - SRG-OS-000002-GPOS-00002
+  - SRG-OS-000123-GPOS-00064
   disa_stig:
-    - APPL-15-000012
+  - APPL-15-000012
 operating_system:
-  - name: macos
-    version:
-      - 15.0
+- name: macos
+  version:
+  - 15.0
 tags:
-  - 800-53r5_moderate
-  - 800-53r5_high
-  - 800-53r4_moderate
-  - 800-53r4_high
-  - manual
-  - cnssi-1253_high
-  - stig
-  - cnssi-1253_moderate
+- 800-53r5_moderate
+- 800-53r5_high
+- 800-53r4_moderate
+- 800-53r4_high
+- manual
+- cnssi-1253_high
+- stig
+- cnssi-1253_moderate
 severity: medium
 mobileconfig: false
 mobileconfig_info: null

@@ -6,7 +6,7 @@ discussion: |
 check: |
   /usr/sbin/aslmanager -dd 2>&1 | /usr/bin/awk '/\/var\/log\/install.log$/ {count++} /Processing module com.apple.install/,/Finished/ { for (i=1;i<=NR;i++) { if ($i == "TTL" && $(i+2) >= $ODV) { ttl="True" }; if ($i == "MAX") {max="True"}}} END{if (count > 1) { print "Multiple config files for /var/log/install, manually remove the extra files"} else if (max == "True") { print "all_max setting is configured, must be removed" } if (ttl != "True") { print "TTL not configured" } else { print "Yes" }}'
 result:
-  string: "Yes"
+  string: 'Yes'
 fix: |
   [source,bash]
   ----
@@ -16,42 +16,42 @@ fix: |
   NOTE: If there are multiple configuration files in /etc/asl that are set to process the file /var/log/install.log, these files will have to be manually removed.
 references:
   cce:
-    - CCE-94212-8
+  - CCE-94212-8
   cci:
-    - CCI-001849
+  - CCI-001849
   800-53r5:
-    - AU-11
-    - AU-4
+  - AU-11
+  - AU-4
   800-53r4:
-    - AU-11
-    - AU-4
+  - AU-11
+  - AU-4
   srg:
-    - SRG-OS-000341-GPOS-00132
+  - SRG-OS-000341-GPOS-00132
   disa_stig:
-    - APPL-15-004050
+  - APPL-15-004050
   800-171r3:
-    - 03.03.03
+  - 03.03.03
   cis:
     benchmark:
-      - 3.3 (level 1)
+    - 3.3 (level 1)
     controls v8:
-      - 8.1
-      - 8.3
+    - 8.1
+    - 8.3
   cmmc:
-    - AU.L2-3.3.1
+  - AU.L2-3.3.1
 operating_system:
-  - name: macos
-    version:
-      - 15.0
+- name: macos
+  version:
+  - 15.0
 tags:
-  - cis_lvl1
-  - cis_lvl2
-  - cisv8
-  - cnssi-1253_low
-  - cnssi-1253_high
-  - cmmc_lvl2
-  - stig
-  - cnssi-1253_moderate
+- cis_lvl1
+- cis_lvl2
+- cisv8
+- cnssi-1253_low
+- cnssi-1253_high
+- cmmc_lvl2
+- stig
+- cnssi-1253_moderate
 severity: medium
 odv:
   hint: Number of days.

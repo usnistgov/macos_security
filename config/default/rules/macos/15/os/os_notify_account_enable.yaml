@@ -1,6 +1,6 @@
 ---
 id: os_notify_account_enable
-title: "Configure the System to Notify upon Account Enabled Actions "
+title: 'Configure the System to Notify upon Account Enabled Actions '
 discussion: |
   The macOS should be configured to automatically notify system administrators and Information System Security Officers (ISSOs) when accounts are enabled.
 
@@ -13,34 +13,34 @@ fix: |
   This requirement is a permanent finding and cannot be fixed. An appropriate mitigation for the system must be implemented, but this finding cannot be considered fixed.
 references:
   cce:
-    - CCE-94240-9
+  - CCE-94240-9
   cci:
-    - N/A
+  - N/A
   800-53r5:
-    - N/A
+  - N/A
   800-53r4:
-    - AC-2(4)
+  - AC-2(4)
   disa_stig:
-    - N/A
+  - N/A
   srg:
-    - SRG-OS-000304-GPOS-00121
-    - SRG-OS-000239-GPOS-00089
-    - SRG-OS-000240-GPOS-00090
-    - SRG-OS-000004-GPOS-00004
-    - SRG-OS-000241-GPOS-00091
-    - SRG-OS-000274-GPOS-00104
-    - SRG-OS-000275-GPOS-00105
-    - SRG-OS-000276-GPOS-00106
-    - SRG-OS-000277-GPOS-00107
-    - SRG-OS-000303-GPOS-00120
+  - SRG-OS-000304-GPOS-00121
+  - SRG-OS-000239-GPOS-00089
+  - SRG-OS-000240-GPOS-00090
+  - SRG-OS-000004-GPOS-00004
+  - SRG-OS-000241-GPOS-00091
+  - SRG-OS-000274-GPOS-00104
+  - SRG-OS-000275-GPOS-00105
+  - SRG-OS-000276-GPOS-00106
+  - SRG-OS-000277-GPOS-00107
+  - SRG-OS-000303-GPOS-00120
 operating_system:
-  - name: macos
-    version:
-      - 15.0
+- name: macos
+  version:
+  - 15.0
 tags:
-  - 800-53r4_moderate
-  - 800-53r4_high
-  - permanent
-  - srg
+- 800-53r4_moderate
+- 800-53r4_high
+- permanent
+- srg
 mobileconfig: false
 mobileconfig_info: null

@@ -1,7 +1,6 @@
 ---
 id: os_prevent_priv_functions
-title:
-  Configure the System to Block Non-Privileged Users from Executing Privileged
+title: Configure the System to Block Non-Privileged Users from Executing Privileged
   Functions
 discussion: |
   The information system _IS_ configured to block standard users from executing privileged functions.
@@ -17,36 +16,36 @@ fix: |
   The technology inherently meets this requirement. No fix is required.
 references:
   cce:
-    - CCE-94261-5
+  - CCE-94261-5
   cci:
-    - N/A
+  - N/A
   800-53r5:
-    - AC-6(10)
+  - AC-6(10)
   800-53r4:
-    - AC-6(10)
+  - AC-6(10)
   disa_stig:
-    - N/A
+  - N/A
   srg:
-    - SRG-OS-000324-GPOS-00125
+  - SRG-OS-000324-GPOS-00125
   800-171r3:
-    - 03.01.07
+  - 03.01.07
   cmmc:
-    - AC.L2-3.1.7
+  - AC.L2-3.1.7
 operating_system:
-  - name: macos
-    version:
-      - 15.0
+- name: macos
+  version:
+  - 15.0
 tags:
-  - 800-53r5_moderate
-  - 800-53r5_high
-  - 800-53r4_moderate
-  - 800-53r4_high
-  - 800-171
-  - inherent
-  - cnssi-1253_low
-  - cnssi-1253_high
-  - cmmc_lvl2
-  - srg
-  - cnssi-1253_moderate
+- 800-53r5_moderate
+- 800-53r5_high
+- 800-53r4_moderate
+- 800-53r4_high
+- 800-171
+- inherent
+- cnssi-1253_low
+- cnssi-1253_high
+- cmmc_lvl2
+- srg
+- cnssi-1253_moderate
 mobileconfig: false
 mobileconfig_info: null

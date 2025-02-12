@@ -25,7 +25,7 @@ check: |-
   0: group:everyone deny delete
 
   If the permissions returned by either of these checks differ from what is shown, this is a finding.
-result: ""
+result: ''
 fix: |-
   Configure the macOS system to set the appropriate permissions for each user on the system with the following command:
 
@@ -34,33 +34,33 @@ fix: |-
   NOTE: Using the `/usr/sbin/diskutil resetUserPermissions` command will only reset the permissions on the default folder set. Other folders in the home directory will not be affected.
 references:
   cce:
-    - CCE-94203-7
+  - CCE-94203-7
   cci:
-    - N/A
+  - N/A
   800-53r5:
-    - AC-6
+  - AC-6
   800-53r4:
-    - AC-6
+  - AC-6
   srg:
-    - N/A
+  - N/A
   disa_stig:
-    - N/A
+  - N/A
   800-171r3:
-    - 03.01.05
+  - 03.01.05
   cis:
     benchmark:
-      - N/A
+    - N/A
     controls v8:
-      - N/A
+    - N/A
 operating_system:
-  - name: macos
-    version:
-      - 15.0
+- name: macos
+  version:
+  - 15.0
 tags:
-  - manual
-  - cnssi-1253_moderate
-  - cnssi-1253_low
-  - cnssi-1253_high
+- manual
+- cnssi-1253_moderate
+- cnssi-1253_low
+- cnssi-1253_high
 severity: medium
 mobileconfig: false
 mobileconfig_info: null

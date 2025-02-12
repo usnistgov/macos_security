@@ -1,8 +1,7 @@
 ---
 id: pwpolicy_special_character_enforce
 title: Require Passwords Contain a Minimum of One Special Character
-discussion:
-  "The macOS _MUST_ be configured to require at least one special character\
+discussion: "The macOS _MUST_ be configured to require at least one special character\
   \ be used when a password is created.\n\nSpecial characters are those characters\
   \ that are not alphanumeric. Examples include: ~ ! @ # $ % ^ *.\n\nThis rule enforces\
   \ password complexity by requiring users to set passwords that are less vulnerable\
@@ -23,42 +22,42 @@ fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-    - CCE-94344-9
+  - CCE-94344-9
   cci:
-    - CCI-001619
-    - CCI-004066
+  - CCI-001619
+  - CCI-004066
   800-53r5:
-    - IA-5(1)
+  - IA-5(1)
   800-53r4:
-    - IA-5
-    - IA-5(1)
+  - IA-5
+  - IA-5(1)
   srg:
-    - SRG-OS-000266-GPOS-00101
+  - SRG-OS-000266-GPOS-00101
   disa_stig:
-    - APPL-15-003011
+  - APPL-15-003011
   800-171r3:
-    - 03.05.07
+  - 03.05.07
   cis:
     benchmark:
-      - 5.2.5 (level 2)
+    - 5.2.5 (level 2)
     controls v8:
-      - 5.2
+    - 5.2
   cmmc:
-    - IA.L2-3.5.7
-    - IA.L2-3.5.8
-    - IA.L2-3.5.9
+  - IA.L2-3.5.7
+  - IA.L2-3.5.8
+  - IA.L2-3.5.9
 operating_system:
-  - name: macos
-    version:
-      - 15.0
+- name: macos
+  version:
+  - 15.0
 tags:
-  - cis_lvl2
-  - cisv8
-  - cnssi-1253_low
-  - cnssi-1253_high
-  - cmmc_lvl2
-  - stig
-  - cnssi-1253_moderate
+- cis_lvl2
+- cisv8
+- cnssi-1253_low
+- cnssi-1253_high
+- cmmc_lvl2
+- stig
+- cnssi-1253_moderate
 severity: medium
 odv:
   hint: Number of special characters.
@@ -67,9 +66,9 @@ odv:
   stig: 1
 mobileconfig: true
 mobileconfig_info:
-  - PayloadType: com.apple.mobiledevice.passwordpolicy
-    PayloadContent:
-      minComplexChars: $ODV
+- PayloadType: com.apple.mobiledevice.passwordpolicy
+  PayloadContent:
+    minComplexChars: $ODV
 ddm_info:
   declarationtype: com.apple.configuration.passcode.settings
   ddm_key: MinimumComplexCharacters

@@ -1,7 +1,6 @@
 ---
 id: os_firewall_default_deny_require
-title:
-  Control Connections to Other Systems via a Deny-All and Allow-by-Exception
+title: Control Connections to Other Systems via a Deny-All and Allow-by-Exception
   Firewall Policy
 discussion: |
   A deny-all and allow-by-exception firewall policy _MUST_ be employed for managing connections to other systems.
@@ -24,38 +23,38 @@ fix: |
   NOTE: See the firewall supplemental which includes a script that has an example policy to implement this rule.
 references:
   cce:
-    - CCE-94193-0
+  - CCE-94193-0
   cci:
-    - N/A
+  - N/A
   800-53r5:
-    - AC-4
-    - SC-7(5)
+  - AC-4
+  - SC-7(5)
   800-53r4:
-    - SC-7(5)
-    - AC-4
+  - SC-7(5)
+  - AC-4
   srg:
-    - N/A
+  - N/A
   disa_stig:
-    - N/A
+  - N/A
   800-171r3:
-    - 03.01.03
-    - 03.13.06
+  - 03.01.03
+  - 03.13.06
   cmmc:
-    - AC.L2-3.1.3
-    - SC.L2-3.13.6
+  - AC.L2-3.1.3
+  - SC.L2-3.13.6
 operating_system:
-  - name: macos
-    version:
-      - 15.0
+- name: macos
+  version:
+  - 15.0
 tags:
-  - 800-53r5_moderate
-  - 800-53r5_high
-  - 800-53r4_moderate
-  - 800-53r4_high
-  - 800-171
-  - cnssi-1253_low
-  - cnssi-1253_high
-  - cmmc_lvl2
-  - cnssi-1253_moderate
+- 800-53r5_moderate
+- 800-53r5_high
+- 800-53r4_moderate
+- 800-53r4_high
+- 800-171
+- cnssi-1253_low
+- cnssi-1253_high
+- cmmc_lvl2
+- cnssi-1253_moderate
 mobileconfig: false
 mobileconfig_info: null

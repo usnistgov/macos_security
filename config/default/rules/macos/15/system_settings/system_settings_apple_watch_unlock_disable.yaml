@@ -13,44 +13,44 @@ check: |
   .objectForKey('allowAutoUnlock').js
   EOS
 result:
-  string: "false"
+  string: 'false'
 fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-    - CCE-94349-8
+  - CCE-94349-8
   cci:
-    - CCI-000056
+  - CCI-000056
   800-53r5:
-    - IA-5
+  - IA-5
   800-53r4:
-    - IA-5
+  - IA-5
   srg:
-    - SRG-OS-000028-GPOS-00009
+  - SRG-OS-000028-GPOS-00009
   disa_stig:
-    - APPL-15-000001
+  - APPL-15-000001
   800-171r3:
-    - 03.05.12
+  - 03.05.12
   cmmc:
-    - AC.L2-3.1.10
+  - AC.L2-3.1.10
 operating_system:
-  - name: macos
-    version:
-      - 15.0
+- name: macos
+  version:
+  - 15.0
 tags:
-  - 800-53r5_moderate
-  - 800-53r5_high
-  - 800-53r4_moderate
-  - 800-53r4_high
-  - 800-171
-  - cnssi-1253_low
-  - cnssi-1253_high
-  - cmmc_lvl2
-  - stig
-  - cnssi-1253_moderate
+- 800-53r5_moderate
+- 800-53r5_high
+- 800-53r4_moderate
+- 800-53r4_high
+- 800-171
+- cnssi-1253_low
+- cnssi-1253_high
+- cmmc_lvl2
+- stig
+- cnssi-1253_moderate
 severity: medium
 mobileconfig: true
 mobileconfig_info:
-  - PayloadType: com.apple.applicationaccess
-    PayloadContent:
-      allowAutoUnlock: false
+- PayloadType: com.apple.applicationaccess
+  PayloadContent:
+    allowAutoUnlock: false

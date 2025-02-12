@@ -36,41 +36,41 @@ fix: |
   ----
 references:
   cce:
-    - CCE-94302-7
+  - CCE-94302-7
   cci:
-    - CCI-001133
-    - CCI-002361
+  - CCI-001133
+  - CCI-002361
   800-53r5:
-    - SC-10
-    - AC-12
+  - SC-10
+  - AC-12
   800-53r4:
-    - SC-10
+  - SC-10
   srg:
-    - SRG-OS-000163-GPOS-00072
-    - SRG-OS-000279-GPOS-00109
+  - SRG-OS-000163-GPOS-00072
+  - SRG-OS-000279-GPOS-00109
   disa_stig:
-    - APPL-15-000120
+  - APPL-15-000120
   800-171r3:
-    - 03.01.11
-    - 03.13.09
+  - 03.01.11
+  - 03.13.09
   cmmc:
-    - AC.L2-3.1.11
-    - SC.L2-3.13.9
+  - AC.L2-3.1.11
+  - SC.L2-3.13.9
 operating_system:
-  - name: macos
-    version:
-      - 15.0
+- name: macos
+  version:
+  - 15.0
 tags:
-  - 800-53r5_moderate
-  - 800-53r5_high
-  - 800-53r4_moderate
-  - 800-53r4_high
-  - 800-171
-  - cnssi-1253_low
-  - cnssi-1253_high
-  - cmmc_lvl2
-  - stig
-  - cnssi-1253_moderate
+- 800-53r5_moderate
+- 800-53r5_high
+- 800-53r4_moderate
+- 800-53r4_high
+- 800-171
+- cnssi-1253_low
+- cnssi-1253_high
+- cmmc_lvl2
+- stig
+- cnssi-1253_moderate
 severity: medium
 odv:
   hint: Channel type and number of seconds.

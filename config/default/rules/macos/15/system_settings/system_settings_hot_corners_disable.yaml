@@ -13,43 +13,43 @@ fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-    - CCE-94368-8
+  - CCE-94368-8
   cci:
-    - CCI-000060
+  - CCI-000060
   800-53r5:
-    - AC-11(1)
+  - AC-11(1)
   800-53r4:
-    - AC-11(1)
+  - AC-11(1)
   srg:
-    - SRG-OS-000031-GPOS-00012
+  - SRG-OS-000031-GPOS-00012
   disa_stig:
-    - APPL-15-000007
+  - APPL-15-000007
   800-171r3:
-    - 03.01.10
+  - 03.01.10
   cmmc:
-    - AC.L2-3.1.10
+  - AC.L2-3.1.10
 operating_system:
-  - name: macos
-    version:
-      - 15.0
+- name: macos
+  version:
+  - 15.0
 tags:
-  - 800-53r5_moderate
-  - 800-53r5_high
-  - 800-53r4_moderate
-  - 800-53r4_high
-  - 800-171
-  - cnssi-1253_low
-  - cnssi-1253_high
-  - stig
-  - cmmc_lvl2
-  - cnssi-1253_moderate
+- 800-53r5_moderate
+- 800-53r5_high
+- 800-53r4_moderate
+- 800-53r4_high
+- 800-171
+- cnssi-1253_low
+- cnssi-1253_high
+- stig
+- cmmc_lvl2
+- cnssi-1253_moderate
 severity: medium
 mobileconfig: true
 mobileconfig_info:
-  - PayloadType: com.apple.ManagedClient.preferences
-    PayloadContent:
-      com.apple.dock:
-        wvous-bl-corner: 0
-        wvous-br-corner: 0
-        wvous-tr-corner: 0
-        wvous-tl-corner: 0
+- PayloadType: com.apple.ManagedClient.preferences
+  PayloadContent:
+    com.apple.dock:
+      wvous-bl-corner: 0
+      wvous-br-corner: 0
+      wvous-tr-corner: 0
+      wvous-tl-corner: 0

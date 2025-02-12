@@ -16,44 +16,44 @@ fix: |
   NOTE: See the FileVault supplemental to implement this rule.
 references:
   cce:
-    - CCE-94292-0
+  - CCE-94292-0
   cci:
-    - N/A
+  - N/A
   800-53r5:
-    - SC-28
-    - SC-28(1)
+  - SC-28
+  - SC-28(1)
   800-53r4:
-    - SC-28
-    - SC-28(1)
+  - SC-28
+  - SC-28(1)
   srg:
-    - N/A
+  - N/A
   disa_stig:
-    - N/A
+  - N/A
   800-171r3:
-    - 03.13.08
+  - 03.13.08
   cis:
     benchmark:
-      - N/A
+    - N/A
     controls v8:
-      - 3.6
-      - 3.11
+    - 3.6
+    - 3.11
   cmmc:
-    - SC.L2-3.13.16
+  - SC.L2-3.13.16
 operating_system:
-  - name: macos
-    version:
-      - 15.0
+- name: macos
+  version:
+  - 15.0
 tags:
-  - 800-53r5_moderate
-  - 800-53r5_high
-  - cisv8
-  - cmmc_lvl2
-  - cnssi-1253_moderate
-  - cnssi-1253_low
-  - cnssi-1253_high
+- 800-53r5_moderate
+- 800-53r5_high
+- cisv8
+- cmmc_lvl2
+- cnssi-1253_moderate
+- cnssi-1253_low
+- cnssi-1253_high
 severity: high
 mobileconfig: true
 mobileconfig_info:
-  - PayloadType: com.apple.MCX.FileVault2
-    PayloadContent:
-      ForceEnableInSetupAssistant: true
+- PayloadType: com.apple.MCX.FileVault2
+  PayloadContent:
+    ForceEnableInSetupAssistant: true

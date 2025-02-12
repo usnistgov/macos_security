@@ -13,33 +13,33 @@ fix: |
   This requirement is a permanent finding and cannot be fixed. An appropriate mitigation for the system must be implemented, but this finding cannot be considered fixed.
 references:
   cce:
-    - CCE-94127-8
+  - CCE-94127-8
   cci:
-    - N/A
+  - N/A
   800-53r5:
-    - AU-4(1)
+  - AU-4(1)
   800-53r4:
-    - AU-4(1)
+  - AU-4(1)
   disa_stig:
-    - N/A
+  - N/A
   srg:
-    - SRG-OS-000479-GPOS-00224
-    - SRG-OS-000342-GPOS-00133
+  - SRG-OS-000479-GPOS-00224
+  - SRG-OS-000342-GPOS-00133
   cis:
     benchmark:
-      - N/A
+    - N/A
     controls v8:
-      - 8.9
+    - 8.9
 operating_system:
-  - name: macos
-    version:
-      - 15.0
+- name: macos
+  version:
+  - 15.0
 tags:
-  - permanent
-  - cisv8
-  - cnssi-1253_low
-  - cnssi-1253_high
-  - srg
-  - cnssi-1253_moderate
+- permanent
+- cisv8
+- cnssi-1253_low
+- cnssi-1253_high
+- srg
+- cnssi-1253_moderate
 mobileconfig: false
 mobileconfig_info: null

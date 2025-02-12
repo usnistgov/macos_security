@@ -1,4 +1,5 @@
-# ./mscp.py
+#! .venv/bin/python3 mscp.py
+# filename: mscp.py
 
 # Standard python modules
 import sys
@@ -11,10 +12,6 @@ from loguru import logger
 from src.mscp import main
 from src.mscp.classes import LoguruFormatter
 from src.mscp.common_utils import config
-
-# from src.mscp.classes.loguruformatter import LoguruFormatter
-# from src.mscp.cli import main
-# from src.mscp.common_utils.config import config
 
 
 # Initialize logger

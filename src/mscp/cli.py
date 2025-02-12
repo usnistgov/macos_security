@@ -18,13 +18,6 @@ from src.mscp.generate import (
     generate_mapping,
 )
 
-# from src.mscp.generate.baseline import generate_baseline
-# from src.mscp.generate.checklist import generate_checklist
-# from src.mscp.generate.guidance import generate_guidance
-# from src.mscp.generate.local_report import generate_local_report
-# from src.mscp.generate.mapping import generate_mapping
-# from src.mscp.generate.scap import generate_scap
-
 
 class CustomHelpFormatter(argparse.HelpFormatter):
     def __init__(self, *args, **kwargs) -> None:

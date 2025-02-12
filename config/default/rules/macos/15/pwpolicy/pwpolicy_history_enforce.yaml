@@ -12,54 +12,54 @@ discussion: |
 check: |
   /usr/bin/pwpolicy -getaccountpolicies 2> /dev/null | /usr/bin/tail +2 | /usr/bin/xmllint --xpath '//dict/key[text()="policyAttributePasswordHistoryDepth"]/following-sibling::*[1]/text()' - | /usr/bin/awk '{ if ($1 >= $ODV ) {print "yes"} else {print "no"}}' | /usr/bin/uniq
 result:
-  string: "yes"
+  string: 'yes'
 fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-    - CCE-94337-3
+  - CCE-94337-3
   cci:
-    - CCI-000200
+  - CCI-000200
   800-53r5:
-    - IA-5(1)
+  - IA-5(1)
   800-53r4:
-    - IA-5(1)
+  - IA-5(1)
   srg:
-    - SRG-OS-000077-GPOS-00045
-    - SRG-OS-000775-GPOS-00230
+  - SRG-OS-000077-GPOS-00045
+  - SRG-OS-000775-GPOS-00230
   disa_stig:
-    - APPL-15-003009
+  - APPL-15-003009
   800-171r3:
-    - 03.05.07
+  - 03.05.07
   cis:
     benchmark:
-      - 5.2.8 (level 1)
+    - 5.2.8 (level 1)
     controls v8:
-      - 5.2
+    - 5.2
   cmmc:
-    - IA.L2-3.5.7
-    - IA.L2-3.5.8
-    - IA.L2-3.5.9
+  - IA.L2-3.5.7
+  - IA.L2-3.5.8
+  - IA.L2-3.5.9
 operating_system:
-  - name: macos
-    version:
-      - 15.0
+- name: macos
+  version:
+  - 15.0
 tags:
-  - 800-171
-  - 800-53r4_low
-  - 800-53r4_moderate
-  - 800-53r4_high
-  - 800-53r5_low
-  - 800-53r5_moderate
-  - 800-53r5_high
-  - cis_lvl1
-  - cis_lvl2
-  - cisv8
-  - cnssi-1253_low
-  - cnssi-1253_high
-  - cmmc_lvl2
-  - stig
-  - cnssi-1253_moderate
+- 800-171
+- 800-53r4_low
+- 800-53r4_moderate
+- 800-53r4_high
+- 800-53r5_low
+- 800-53r5_moderate
+- 800-53r5_high
+- cis_lvl1
+- cis_lvl2
+- cisv8
+- cnssi-1253_low
+- cnssi-1253_high
+- cmmc_lvl2
+- stig
+- cnssi-1253_moderate
 severity: medium
 odv:
   hint: Number of previous passwords.
@@ -69,9 +69,9 @@ odv:
   stig: 5
 mobileconfig: true
 mobileconfig_info:
-  - PayloadType: com.apple.mobiledevice.passwordpolicy
-    PayloadContent:
-      pinHistory: $ODV
+- PayloadType: com.apple.mobiledevice.passwordpolicy
+  PayloadContent:
+    pinHistory: $ODV
 ddm_info:
   declarationtype: com.apple.configuration.passcode.settings
   ddm_key: PasscodeReuseLimit

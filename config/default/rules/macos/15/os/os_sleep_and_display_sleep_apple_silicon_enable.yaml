@@ -27,31 +27,31 @@ fix: |
   ----
 references:
   cce:
-    - CCE-94200-3
+  - CCE-94200-3
   cci:
-    - N/A
+  - N/A
   800-53r5:
-    - N/A
+  - N/A
   800-53r4:
-    - N/A
+  - N/A
   srg:
-    - N/A
+  - N/A
   disa_stig:
-    - N/A
+  - N/A
   800-171r3:
-    - N/A
+  - N/A
   cis:
     benchmark:
-      - 2.9.1.2 (level 2)
+    - 2.9.1.2 (level 2)
     controls v8:
-      - 4.1
+    - 4.1
 operating_system:
-  - name: macos
-    version:
-      - 15.0
+- name: macos
+  version:
+  - 15.0
 tags:
-  - cis_lvl2
-  - cisv8
-  - arm64
+- cis_lvl2
+- cisv8
+- arm64
 mobileconfig: false
 mobileconfig_info: null

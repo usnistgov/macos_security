@@ -17,31 +17,31 @@ fix: |
   ----
 references:
   cce:
-    - CCE-94314-2
+  - CCE-94314-2
   cci:
-    - N/A
+  - N/A
   800-53r5:
-    - N/A
+  - N/A
   800-53r4:
-    - N/A
+  - N/A
   srg:
-    - N/A
+  - N/A
   disa_stig:
-    - N/A
+  - N/A
   800-171r3:
-    - N/A
+  - N/A
   cis:
     benchmark:
-      - 5.1.5 (level 1)
+    - 5.1.5 (level 1)
     controls v8:
-      - 3.3
+    - 3.3
 operating_system:
-  - name: macos
-    version:
-      - 15.0
+- name: macos
+  version:
+  - 15.0
 tags:
-  - cis_lvl1
-  - cis_lvl2
-  - cisv8
+- cis_lvl1
+- cis_lvl2
+- cisv8
 mobileconfig: false
 mobileconfig_info: null

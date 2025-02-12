@@ -18,41 +18,41 @@ check: |
   }
   EOS
 result:
-  string: "true"
+  string: 'true'
 fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-    - CCE-94287-0
+  - CCE-94287-0
   cci:
-    - CCI-000057
+  - CCI-000057
   800-53r5:
-    - N/A
+  - N/A
   srg:
-    - N/A
+  - N/A
   disa_stig:
-    - N/A
+  - N/A
   800-171r3:
-    - N/A
+  - N/A
   cis:
     benchmark:
-      - N/A
+    - N/A
     controls v8:
-      - 4.3
+    - 4.3
   cmmc:
-    - AC.L2-3.1.10
+  - AC.L2-3.1.10
 operating_system:
-  - name: macos
-    version:
-      - 15.0
+- name: macos
+  version:
+  - 15.0
 tags:
-  - none
+- none
 severity: medium
 odv:
   hint: Number of seconds.
   recommended: 1200
 mobileconfig: true
 mobileconfig_info:
-  - PayloadType: com.apple.screensaver
-    PayloadContent:
-      loginWindowIdleTime: $ODV
+- PayloadType: com.apple.screensaver
+  PayloadContent:
+    loginWindowIdleTime: $ODV

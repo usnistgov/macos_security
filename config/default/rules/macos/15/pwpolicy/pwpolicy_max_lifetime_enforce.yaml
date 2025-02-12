@@ -1,8 +1,7 @@
 ---
 id: pwpolicy_max_lifetime_enforce
 title: Restrict Maximum Password Lifetime to $ODV Days
-discussion:
-  "The macOS _MUST_ be configured to enforce a maximum password lifetime\
+discussion: "The macOS _MUST_ be configured to enforce a maximum password lifetime\
   \ limit of at least $ODV days.\n\nThis rule ensures that users are forced to change\
   \ their passwords frequently enough to prevent malicious users from gaining and\
   \ maintaining access to the system.\n\nNOTE: To comply with Executive Order 14028,\
@@ -22,43 +21,43 @@ fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-    - CCE-94339-9
+  - CCE-94339-9
   cci:
-    - CCI-000199
-    - CCI-004066
+  - CCI-000199
+  - CCI-004066
   800-53r5:
-    - IA-5
+  - IA-5
   800-53r4:
-    - IA-5
-    - IA-5(1)
+  - IA-5
+  - IA-5(1)
   srg:
-    - SRG-OS-000076-GPOS-00044
-    - SRG-OS-000775-GPOS-00230
+  - SRG-OS-000076-GPOS-00044
+  - SRG-OS-000775-GPOS-00230
   disa_stig:
-    - APPL-15-003008
+  - APPL-15-003008
   800-171r3:
-    - 03.05.12
+  - 03.05.12
   cis:
     benchmark:
-      - 5.2.7 (level 1)
+    - 5.2.7 (level 1)
     controls v8:
-      - 5.3
+    - 5.3
   cmmc:
-    - IA.L2-3.5.8
-    - IA.L2-3.5.9
+  - IA.L2-3.5.8
+  - IA.L2-3.5.9
 operating_system:
-  - name: macos
-    version:
-      - 15.0
+- name: macos
+  version:
+  - 15.0
 tags:
-  - cis_lvl1
-  - cis_lvl2
-  - cisv8
-  - cnssi-1253_low
-  - cnssi-1253_high
-  - cmmc_lvl2
-  - stig
-  - cnssi-1253_moderate
+- cis_lvl1
+- cis_lvl2
+- cisv8
+- cnssi-1253_low
+- cnssi-1253_high
+- cmmc_lvl2
+- stig
+- cnssi-1253_moderate
 severity: medium
 odv:
   hint: Number of days.
@@ -68,9 +67,9 @@ odv:
   stig: 60
 mobileconfig: true
 mobileconfig_info:
-  - PayloadType: com.apple.mobiledevice.passwordpolicy
-    PayloadContent:
-      maxPINAgeInDays: $ODV
+- PayloadType: com.apple.mobiledevice.passwordpolicy
+  PayloadContent:
+    maxPINAgeInDays: $ODV
 ddm_info:
   declarationtype: com.apple.configuration.passcode.settings
   ddm_key: MaximumPasscodeAgeInDays

@@ -9,37 +9,37 @@ fix: |
   The requirement is NA. No fix is required.
 references:
   cce:
-    - CCE-94237-5
+  - CCE-94237-5
   cci:
-    - N/A
+  - N/A
   800-53r5:
-    - MA-4
+  - MA-4
   800-53r4:
-    - MA-4
+  - MA-4
   800-171r3:
-    - 03.07.05
+  - 03.07.05
   disa_stig:
-    - N/A
+  - N/A
   srg:
-    - N/A
+  - N/A
   cmmc:
-    - MA.L2-3.7.5
+  - MA.L2-3.7.5
 operating_system:
-  - name: macos
-    version:
-      - 15.0
+- name: macos
+  version:
+  - 15.0
 tags:
-  - 800-53r5_low
-  - 800-53r5_moderate
-  - 800-53r5_high
-  - 800-53r4_low
-  - 800-53r4_moderate
-  - 800-53r4_high
-  - 800-171
-  - n_a
-  - cnssi-1253_low
-  - cnssi-1253_high
-  - cmmc_lvl2
-  - cnssi-1253_moderate
+- 800-53r5_low
+- 800-53r5_moderate
+- 800-53r5_high
+- 800-53r4_low
+- 800-53r4_moderate
+- 800-53r4_high
+- 800-171
+- n_a
+- cnssi-1253_low
+- cnssi-1253_high
+- cmmc_lvl2
+- cnssi-1253_moderate
 mobileconfig: false
 mobileconfig_info: null
