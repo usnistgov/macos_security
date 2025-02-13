@@ -1,7 +1,8 @@
+---
 id: os_screen_observation_remote_disable
-title: "Prevent remote screen observation"
+title: Prevent remote screen observation
 discussion: |
-  The iOS device _MUST_ be configured to prevent remote screen observation via the classroom app to prevent data leakage via the classroom app.  
+  The iOS device _MUST_ be configured to prevent remote screen observation via the classroom app to prevent data leakage via the classroom app.
 check: " "
 fix: |
   This is implemented by a Configuration Profile.
@@ -12,15 +13,16 @@ references:
     - N/A
   indigo:
     - ANNEX K
-iOS:
-  - "18.0"
+operating_system:
+  - name: iOS
+    version:
+      - 18.0
 tags:
   - ios
   - indigo_base
   - indigo_high
-supervised: false
 mobileconfig: true
 mobileconfig_info:
-  com.apple.applicationaccess:
-    allowRemoteScreenObservation: false
-    
+  - PayloadType: com.apple.applicationaccess
+    PayloadContent:
+      allowRemoteScreenObservation: false

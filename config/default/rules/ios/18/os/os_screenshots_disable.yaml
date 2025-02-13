@@ -1,5 +1,6 @@
+---
 id: os_screenshots_disable
-title: "Ensure Allow screenshots and screen recording is set to Disabled"
+title: Ensure Allow screenshots and screen recording is set to Disabled
 discussion: |
   Screenshots and screen recordings on iOS _MUST_ be disabled.
 check: " "
@@ -8,7 +9,7 @@ fix: |
 references:
   cce:
     - CCE-94463-7
-  cci: 
+  cci:
     - N/A
   800-53r5:
     - CM-7
@@ -25,8 +26,10 @@ references:
       - 3.2.1.1 (level 2 - Institutionally-Owned Devices)
     controls v8:
       - 3.3
-iOS:
-  - "18.0"
+operating_system:
+  - name: iOS
+    version:
+      - 18.0
 tags:
   - ios
   - 800-53r5_low
@@ -36,8 +39,8 @@ tags:
   - cisv8
   - indigo_base
   - indigo_high
-supervised: false
 mobileconfig: true
 mobileconfig_info:
-  com.apple.applicationaccess:
-    allowScreenShot: false
+  - PayloadType: com.apple.applicationaccess
+    PayloadContent:
+      allowScreenShot: false

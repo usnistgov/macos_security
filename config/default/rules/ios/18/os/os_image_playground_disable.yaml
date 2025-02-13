@@ -1,5 +1,6 @@
+---
 id: os_image_playground_disable
-title: "Ensure the ability to use AI image generation is set to Disabled"
+title: Ensure the ability to use AI image generation is set to Disabled
 discussion: |
   AI image generation _MUST_ be disabled.
 check: " "
@@ -8,7 +9,7 @@ fix: |
 references:
   cce:
     - CCE-94536-0
-  cci: 
+  cci:
     - N/A
   800-53r5:
     - AC-20
@@ -20,15 +21,17 @@ references:
     - N/A
   disa_stig:
     - N/A
-iOS:
-  - "18.0"
+operating_system:
+  - name: iOS
+    version:
+      - 18.0
 tags:
   - ios
-  - 800-53r5_low 
-  - 800-53r5_moderate 
+  - 800-53r5_low
+  - 800-53r5_moderate
   - 800-53r5_high
-supervised: false
 mobileconfig: true
 mobileconfig_info:
-  com.apple.applicationaccess:
-    allowImagePlayground: false
+  - PayloadType: com.apple.applicationaccess
+    PayloadContent:
+      allowImagePlayground: false

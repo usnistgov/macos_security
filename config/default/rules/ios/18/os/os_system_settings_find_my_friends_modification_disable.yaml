@@ -1,5 +1,6 @@
+---
 id: os_system_settings_find_my_friends_modification_disable
-title: "Disable Find My Friends Modification"
+title: Disable Find My Friends Modification
 discussion: |
   The Find My service modification _MUST_ be disabled.
 check: " "
@@ -14,16 +15,18 @@ references:
     - CM-7(1)
   indigo:
     - ANNEX K
-iOS:
-  - "18.0"
+operating_system:
+  - name: iOS
+    version:
+      - 18.0
 tags:
   - ios
   - indigo_high
   - 800-53r5_low
   - 800-53r5_moderate
-  - 800-53r5_high  
-supervised: true
+  - 800-53r5_high
 mobileconfig: true
 mobileconfig_info:
-  com.apple.applicationaccess:
-    allowFindMyFriendsModification: false
+  - PayloadType: com.apple.applicationaccess
+    PayloadContent:
+      allowFindMyFriendsModification: false

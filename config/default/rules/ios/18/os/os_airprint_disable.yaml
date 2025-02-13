@@ -1,5 +1,6 @@
+---
 id: os_airprint_disable
-title: "Disable AirPrint"
+title: Disable AirPrint
 discussion: |
   The iOS built-in AirPrint capability _MUST_ be disabled.
 
@@ -14,12 +15,14 @@ references:
     - N/A
   indigo:
     - N/A
-iOS:
-  - "18.0"
+operating_system:
+  - name: iOS
+    version:
+      - 18.0
 tags:
   - ios
-supervised: false
 mobileconfig: true
 mobileconfig_info:
-  com.apple.applicationaccess:
-    allowAirPrint: false
+  - PayloadType: com.apple.applicationaccess
+    PayloadContent:
+      allowAirPrint: false

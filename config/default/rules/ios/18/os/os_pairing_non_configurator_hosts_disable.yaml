@@ -1,5 +1,6 @@
+---
 id: os_pairing_non_configurator_hosts_disable
-title: "Ensure Allow pairing with non-Configurator hosts is set to Disabled"
+title: Ensure Allow pairing with non-Configurator hosts is set to Disabled
 discussion: |
   Host pairing with a non-Configurator host _MUST_ be disabled.
 check: " "
@@ -8,7 +9,7 @@ fix: |
 references:
   cce:
     - CCE-94454-6
-  cci: 
+  cci:
     - N/A
   800-53r5:
     - CM-6
@@ -25,8 +26,10 @@ references:
       - 3.2.1.20 (level 2 - Institutionally-Owned Devices)
     controls v8:
       - 4.8
-iOS:
-  - "18.0"
+operating_system:
+  - name: iOS
+    version:
+      - 18.0
 tags:
   - ios
   - 800-53r5_low
@@ -36,8 +39,8 @@ tags:
   - cisv8
   - indigo_base
   - indigo_high
-supervised: true
 mobileconfig: true
 mobileconfig_info:
-  com.apple.applicationaccess:
-    allowHostPairing: false
+  - PayloadType: com.apple.applicationaccess
+    PayloadContent:
+      allowHostPairing: false

@@ -1,7 +1,8 @@
+---
 id: os_live_text_disable
-title: "Disable Live Text"
+title: Disable Live Text
 discussion: |
-  The user _MUST_ manually disable Settings/General/Language and Region/Live-Text.  
+  The user _MUST_ manually disable Settings/General/Language and Region/Live-Text.
 check: " "
 fix: |
   This is implemented manually by the user.
@@ -12,12 +13,13 @@ references:
     - N/A
   indigo:
     - ANNEX K
-iOS:
-  - "18.0"
+operating_system:
+  - name: iOS
+    version:
+      - 18.0
 tags:
   - ios
   - manual
   - indigo_base
   - indigo_high
 mobileconfig: false
-mobileconfig_info:

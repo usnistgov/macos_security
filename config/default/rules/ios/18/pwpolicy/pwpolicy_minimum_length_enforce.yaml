@@ -1,21 +1,22 @@
+---
 id: pwpolicy_minimum_length_enforce
-title: "Require a Minimum Passcode Length of $ODV Characters"
+title: Require a Minimum Passcode Length of $ODV Characters
 discussion: |
   The iOS _MUST_ be configured to require a minimum of $ODV characters be used when a passcode is created.
 
-  This rule enforces passcode complexity by requiring users to set passcode that are less vulnerable to malicious users. 
-check: " " 
+  This rule enforces passcode complexity by requiring users to set passcode that are less vulnerable to malicious users.
+check: " "
 fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
     - CCE-94477-7
-  cci: 
+  cci:
     - CCI-000205
   800-53r5:
     - IA-5(1)
   sfr:
-    - 'FMT_SMF_EXT.1.1 #1a'
+    - "FMT_SMF_EXT.1.1 #1a"
   disa_stig:
     - AIOS-18-006500
   indigo:
@@ -27,19 +28,10 @@ references:
       - 3.4.3 (level 1 - Institutionally-Owned Devices)
     controls v8:
       - 5.2
-iOS:
-  - "18.0"
-odv:
-  hint: "Minimum passcode length."
-  recommended: 6
-  cis_lvl1_byod: 6
-  cis_lvl2_byod: 6
-  cis_lvl1_enterprise: 6
-  cis_lvl2_enterprise: 6
-  ios_stig: 6
-  ios_stig_byoad: 6
-  indigo_base: 8
-  indigo_high: 8
+operating_system:
+  - name: iOS
+    version:
+      - 18.0
 tags:
   - ios
   - 800-53r5_low
@@ -56,9 +48,20 @@ tags:
   - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
-severity: "medium"
-supervised: false
+severity: medium
+odv:
+  hint: Minimum passcode length.
+  recommended: 6
+  cis_lvl1_byod: 6
+  cis_lvl2_byod: 6
+  cis_lvl1_enterprise: 6
+  cis_lvl2_enterprise: 6
+  ios_stig: 6
+  ios_stig_byoad: 6
+  indigo_base: 8
+  indigo_high: 8
 mobileconfig: true
 mobileconfig_info:
-  com.apple.mobiledevice.passwordpolicy:
-    minLength: $ODV
+  - PayloadType: com.apple.mobiledevice.passwordpolicy
+    PayloadContent:
+      minLength: $ODV

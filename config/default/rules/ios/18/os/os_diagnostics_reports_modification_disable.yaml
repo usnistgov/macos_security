@@ -1,5 +1,6 @@
+---
 id: os_diagnostics_reports_modification_disable
-title: "Disable changing Sending Diagnostic and Usage Data to Apple"
+title: Disable changing Sending Diagnostic and Usage Data to Apple
 discussion: |
   The ability to change the setting to submit diagnostic data to Apple _MUST_ be disabled.
 
@@ -15,9 +16,11 @@ references:
     - AC-20
     - SC-7(10)
   indigo:
-    - ANNEX K  
-iOS:
-  - "18.0"
+    - ANNEX K
+operating_system:
+  - name: iOS
+    version:
+      - 18.0
 tags:
   - ios
   - indigo_base
@@ -28,9 +31,9 @@ tags:
   - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
-severity: "high"
-supervised: true
+severity: high
 mobileconfig: true
 mobileconfig_info:
-  com.apple.applicationaccess:
-    allowDiagnosticSubmissionModification: false
+  - PayloadType: com.apple.applicationaccess
+    PayloadContent:
+      allowDiagnosticSubmissionModification: false

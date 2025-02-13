@@ -1,8 +1,9 @@
+---
 id: supplemental_stig
-title: "DISA STIG Supplemental"
+title: DISA STIG Supplemental
 discussion: |
-  These controls are controls that require additional considerations for your environment. 
-  
+  These controls are controls that require additional considerations for your environment.
+
   [cols="20%h, 80%a"]
   |===
   |STIG ID
@@ -31,8 +32,8 @@ discussion: |
   |AIOS-18-014700| Apple iOS/iPadOS 18 must have DOD root and intermediate PKI certificates installed.
   |AIOS-18-015500| Apple iOS/iPadOS 18 must disable the download of iOS/iPadOS beta updates.
   |===
-check: |
-fix: |
+check: ""
+fix: ""
 references:
   cci:
     - N/A
@@ -44,10 +45,11 @@ references:
     - N/A
   disa_stig:
     - N/A
-iOS:
-  - "18.0"
+operating_system:
+  - name: iOS
+    version:
+      - 18.0
 tags:
   - ios_stig
   - supplemental
 mobileconfig: false
-mobileconfig_info:  

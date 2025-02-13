@@ -1,10 +1,11 @@
+---
 id: os_find_my_friends_disable
-title: "Disable Find My Friends Service"
+title: Disable Find My Friends Service
 discussion: |
   The Find My Friends service _MUST_ be disabled.
 
   Sharing the location of a device may be an violation to an organization and potentially put users at risk.
-check: ''
+check: ""
 fix: This is implemented by a Configuration Profile
 references:
   cce:
@@ -18,7 +19,7 @@ references:
     - CM-7
     - CM-7(1)
   sfr:
-    - 'FMT_SMF_EXT.1.1 #47'
+    - "FMT_SMF_EXT.1.1 #47"
   disa_stig:
     - AIOS-18-013100
   indigo:
@@ -28,8 +29,10 @@ references:
       - N/A
     controls v8:
       - N/A
-iOS:
-  - "18.0"
+operating_system:
+  - name: iOS
+    version:
+      - 18.0
 tags:
   - ios
   - 800-53r5_low
@@ -41,8 +44,8 @@ tags:
   - cnssi-1253_low
   - cnssi-1253_high
 severity: low
-supervised: true
 mobileconfig: true
 mobileconfig_info:
-  com.apple.applicationaccess:
-    allowFindMyFriends: false
+  - PayloadType: com.apple.applicationaccess
+    PayloadContent:
+      allowFindMyFriends: false

@@ -1,5 +1,6 @@
+---
 id: os_apple_watch_wrist_detection_enable
-title: "Ensure Force Apple Watch wrist detection is set to Enabled"
+title: Ensure Force Apple Watch wrist detection is set to Enabled
 discussion: |
   Wrist detection _MUST_ be enabled for paired Apple Watches.
 check: " "
@@ -8,14 +9,14 @@ fix: |
 references:
   cce:
     - CCE-94430-6
-  cci: 
+  cci:
     - CCI-000381
   800-53r5:
     - AC-3
     - CM-7
     - CM-7(1)
   sfr:
-    - 'FMT_SMF_EXT.1.1 #47'
+    - "FMT_SMF_EXT.1.1 #47"
   disa_stig:
     - AIOS-18-011800
   cis:
@@ -24,8 +25,10 @@ references:
       - 3.2.1.27 (level 1 - Institutionally-Owned Devices)
     controls v8:
       - 3.3
-iOS:
-  - "18.0"
+operating_system:
+  - name: iOS
+    version:
+      - 18.0
 tags:
   - ios
   - 800-53r5_low
@@ -40,9 +43,9 @@ tags:
   - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
-severity: "low"
-supervised: false
+severity: low
 mobileconfig: true
 mobileconfig_info:
-  com.apple.applicationaccess:
-    forceWatchWristDetection: true
+  - PayloadType: com.apple.applicationaccess
+    PayloadContent:
+      forceWatchWristDetection: true

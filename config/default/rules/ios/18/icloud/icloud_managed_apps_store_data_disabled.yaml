@@ -1,5 +1,6 @@
+---
 id: icloud_managed_apps_store_data_disabled
-title: "Ensure Managed Apps Storing Data in iCloud is Set to Disabled"
+title: Ensure Managed Apps Storing Data in iCloud is Set to Disabled
 discussion: |
   Managed Apps _MUST_ not store data in iCloud.
 check: " "
@@ -19,11 +20,11 @@ references:
     - CM-7(1)
     - SC-7(10)
   sfr:
-    - 'FMT_MOF_EXT.1.2 #40'
+    - "FMT_MOF_EXT.1.2 #40"
   disa_stig:
     - AIOS-18-003600
   indigo:
-    - ANNEX D (Section 5.4 - iCloud restrictions) 
+    - ANNEX D (Section 5.4 - iCloud restrictions)
     - ANNEX K
   cis:
     benchmark:
@@ -31,15 +32,17 @@ references:
       - 3.2.1.7 (level 1 - Institutionally-Owned Devices)
     controls v8:
       - 2.3
-iOS:
-  - "18.0"
+operating_system:
+  - name: iOS
+    version:
+      - 18.0
 tags:
   - ios
   - 800-53r5_low
   - 800-53r5_moderate
   - 800-53r5_high
   - cis_lvl1_byod
-  - cis_lvl2_byod  
+  - cis_lvl2_byod
   - cis_lvl1_enterprise
   - cis_lvl2_enterprise
   - cisv8
@@ -47,8 +50,8 @@ tags:
   - indigo_base
   - indigo_high
 severity: medium
-supervised: false
 mobileconfig: true
 mobileconfig_info:
-  com.apple.applicationaccess:
-    allowManagedAppsCloudSync: false
+  - PayloadType: com.apple.applicationaccess
+    PayloadContent:
+      allowManagedAppsCloudSync: false

@@ -1,8 +1,8 @@
+---
 id: icloud_keychain_disable
-title: "Disable iCloud Keychain Sync"
+title: Disable iCloud Keychain Sync
 discussion: |
-  The iOS system's ability to automatically synchronize a user's passwords to their iCloud account _MUST_ be disabled. 
-  
+  The iOS system's ability to automatically synchronize a user's passwords to their iCloud account _MUST_ be disabled.
 check: " "
 fix: |
   This is implemented by a Configuration Profile.
@@ -20,7 +20,7 @@ references:
     - CM-7(1)
     - SC-7(10)
   sfr:
-    - 'FMT_MOF_EXT.1.2 #40'
+    - "FMT_MOF_EXT.1.2 #40"
   disa_stig:
     - AIOS-18-003300
   indigo:
@@ -28,13 +28,15 @@ references:
     - ANNEX K
   cis:
     benchmark:
-      - 3.2.1.6 (level 1 - Institutionally-Owned Devices) 
+      - 3.2.1.6 (level 1 - Institutionally-Owned Devices)
     controls v8:
       - 4.1
       - 4.8
       - 15.3
-iOS:
-  - "18.0"
+operating_system:
+  - name: iOS
+    version:
+      - 18.0
 tags:
   - ios
   - 800-53r5_low
@@ -47,8 +49,8 @@ tags:
   - indigo_base
   - indigo_high
 severity: medium
-supervised: false
 mobileconfig: true
 mobileconfig_info:
-  com.apple.applicationaccess:
-    allowCloudKeychainSync: false
+  - PayloadType: com.apple.applicationaccess
+    PayloadContent:
+      allowCloudKeychainSync: false

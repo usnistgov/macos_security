@@ -1,5 +1,6 @@
+---
 id: os_show_control_center_lock_screen_disable
-title: "Ensure Show Control Center in Lock screen is set to Disabled"
+title: Ensure Show Control Center in Lock screen is set to Disabled
 discussion: |
   Control Center _MUST_ be disabled in the lock screen.
 check: " "
@@ -8,7 +9,7 @@ fix: |
 references:
   cce:
     - CCE-94465-2
-  cci: 
+  cci:
     - N/A
   800-53r5:
     - AC-11(1)
@@ -24,8 +25,10 @@ references:
       - 3.2.1.31 (level 1 - Institutionally-Owned Devices)
     controls v8:
       - 4.3
-iOS:
-  - "18.0"
+operating_system:
+  - name: iOS
+    version:
+      - 18.0
 tags:
   - ios
   - 800-53r5_moderate
@@ -37,8 +40,8 @@ tags:
   - cisv8
   - indigo_base
   - indigo_high
-supervised: false
 mobileconfig: true
 mobileconfig_info:
-  com.apple.applicationaccess:
-    allowLockScreenControlCenter: false
+  - PayloadType: com.apple.applicationaccess
+    PayloadContent:
+      allowLockScreenControlCenter: false

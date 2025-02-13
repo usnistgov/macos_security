@@ -1,5 +1,6 @@
+---
 id: os_rapid_security_responses_remove_disable
-title: "Disallow to remove Rapid Security Responses"
+title: Disallow to remove Rapid Security Responses
 discussion: |
   The iOS device _MUST_ be configured not to allow the user to remove rapid security responses.
 check: " "
@@ -14,16 +15,18 @@ references:
     - SI-3
   indigo:
     - ANNEX D (Section 6.3.1.3 - Rapid security response)
-iOS:
-  - "18.0"
+operating_system:
+  - name: iOS
+    version:
+      - 18.0
 tags:
   - ios
   - indigo_high
   - 800-53r5_low
   - 800-53r5_moderate
-  - 800-53r5_high  
-supervised: true
+  - 800-53r5_high
 mobileconfig: true
 mobileconfig_info:
-  com.apple.applicationaccess:
-    allowRapidSecurityResponseRemoval: false
+  - PayloadType: com.apple.applicationaccess
+    PayloadContent:
+      allowRapidSecurityResponseRemoval: false

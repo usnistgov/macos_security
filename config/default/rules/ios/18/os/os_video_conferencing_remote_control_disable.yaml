@@ -1,5 +1,6 @@
+---
 id: os_video_conferencing_remote_control_disable
-title: "Ensure the remotely control a system via videoconferencing is set to Disabled"
+title: Ensure the remotely control a system via videoconferencing is set to Disabled
 discussion: |
   Video conferencing remote control _MUST_ be disabled.
 check: " "
@@ -8,7 +9,7 @@ fix: |
 references:
   cce:
     - CCE-94561-8
-  cci: 
+  cci:
     - N/A
   800-53r5:
     - N/A
@@ -18,14 +19,16 @@ references:
     - N/A
   disa_stig:
     - N/A
-iOS:
-  - "18.0"
+operating_system:
+  - name: iOS
+    version:
+      - 18.0
 tags:
   - ios
   - indigo_base
   - indigo_high
-supervised: false
 mobileconfig: true
 mobileconfig_info:
-  com.apple.applicationaccess:
-    allowVideoConferenceingRemoteControl: false
+  - PayloadType: com.apple.applicationaccess
+    PayloadContent:
+      allowVideoConferenceingRemoteControl: false

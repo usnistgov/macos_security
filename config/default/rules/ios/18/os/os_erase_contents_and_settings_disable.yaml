@@ -1,5 +1,6 @@
+---
 id: os_erase_contents_and_settings_disable
-title: "Ensure Allow Erase All Content and Settings is set to Disabled"
+title: Ensure Allow Erase All Content and Settings is set to Disabled
 discussion: |
   Erase all contents and settings _MUST_ be disabled on institutionally owned iOS devices.
 check: " "
@@ -8,7 +9,7 @@ fix: |
 references:
   cce:
     - CCE-94437-1
-  cci: 
+  cci:
     - N/A
   800-53r5:
     - CM-6
@@ -23,8 +24,10 @@ references:
       - 3.2.1.12 (level 1 - Institutionally-Owned Devices)
     controls v8:
       - 4.1
-iOS:
-  - "18.0"
+operating_system:
+  - name: iOS
+    version:
+      - 18.0
 tags:
   - ios
   - 800-53r5_low
@@ -33,8 +36,8 @@ tags:
   - cis_lvl1_enterprise
   - cis_lvl2_enterprise
   - cisv8
-supervised: true
 mobileconfig: true
 mobileconfig_info:
-  com.apple.applicationaccess:
-    allowEraseContentAndSettings: false
+  - PayloadType: com.apple.applicationaccess
+    PayloadContent:
+      allowEraseContentAndSettings: false

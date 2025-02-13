@@ -1,9 +1,10 @@
+---
 id: pwpolicy_account_lockout_enforce
-title: "Limit Consecutive Failed Login Attempts to $ODV"
+title: Limit Consecutive Failed Login Attempts to $ODV
 discussion: |
   The iOS _MUST_ be configured to limit the number of failed login attempts to a maximum of $ODV.
 
-  This rule protects against malicious users attempting to gain access to the system via brute-force hacking methods. 
+  This rule protects against malicious users attempting to gain access to the system via brute-force hacking methods.
 check: " "
 fix: |
   This is implemented by a Configuration Profile.
@@ -15,8 +16,8 @@ references:
   800-53r5:
     - AC-7
   sfr:
-    - 'FMT_SMF_EXT.1.1 #2c'
-    - 'FIA_AFL_EXT.1.5'
+    - "FMT_SMF_EXT.1.1 #2c"
+    - FIA_AFL_EXT.1.5
   disa_stig:
     - AIOS-18-006900
   indigo:
@@ -28,19 +29,10 @@ references:
       - 3.4.6 (level 1 - Institutionally-Owned Devices)
     controls v8:
       - 4.3
-iOS:
-  - "18.0"
-odv:
-  hint: "Number of failed attempts."
-  recommended: 6
-  cis_lvl1_byod: 6
-  cis_lvl2_byod: 6
-  cis_lvl1_enterprise: 6
-  cis_lvl2_enterprise: 6  
-  ios_stig: 10
-  ios_stig_byoad: 10
-  indigo_base: 10
-  indigo_high: 10
+operating_system:
+  - name: iOS
+    version:
+      - 18.0
 tags:
   - ios
   - 800-53r5_low
@@ -57,9 +49,20 @@ tags:
   - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
-severity: "medium"
-supervised: false
+severity: medium
+odv:
+  hint: Number of failed attempts.
+  recommended: 6
+  cis_lvl1_byod: 6
+  cis_lvl2_byod: 6
+  cis_lvl1_enterprise: 6
+  cis_lvl2_enterprise: 6
+  ios_stig: 10
+  ios_stig_byoad: 10
+  indigo_base: 10
+  indigo_high: 10
 mobileconfig: true
 mobileconfig_info:
-  com.apple.mobiledevice.passwordpolicy:
-    maxFailedAttempts: $ODV
+  - PayloadType: com.apple.mobiledevice.passwordpolicy
+    PayloadContent:
+      maxFailedAttempts: $ODV

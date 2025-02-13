@@ -1,5 +1,6 @@
+---
 id: icloud_backup_disabled
-title: "Ensure iCloud Backup is set to Disabled"
+title: Ensure iCloud Backup is set to Disabled
 discussion: |
   iCloud backup _MUST_ be disabled.
 check: " "
@@ -18,7 +19,7 @@ references:
     - CM-7(1)
     - SC-7(10)
   sfr:
-    - 'FMT_MOF_EXT.1.2 #40'
+    - "FMT_MOF_EXT.1.2 #40"
   disa_stig:
     - AIOS-18-003000
   indigo:
@@ -29,8 +30,10 @@ references:
       - 3.2.1.4 (level 1 - Institutionally-Owned Devices)
     controls v8:
       - 2.3
-iOS:
-  - "18.0"
+operating_system:
+  - name: iOS
+    version:
+      - 18.0
 tags:
   - ios
   - 800-53r5_low
@@ -45,9 +48,9 @@ tags:
   - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
-severity: "medium"
-supervised: false
+severity: medium
 mobileconfig: true
 mobileconfig_info:
-  com.apple.applicationaccess:
-    allowCloudBackup: false
+  - PayloadType: com.apple.applicationaccess
+    PayloadContent:
+      allowCloudBackup: false

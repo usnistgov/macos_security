@@ -1,5 +1,6 @@
+---
 id: pwpolicy_max_inactivity_enforce
-title: "Ensure Maximum Auto-Lock is set to $ODV minutes or less"
+title: Ensure Maximum Auto-Lock is set to $ODV minutes or less
 discussion: |
   The iOS _MUST_ be configured to auto-lock after $ODV minutes.
 check: " "
@@ -8,17 +9,17 @@ fix: |
 references:
   cce:
     - CCE-94476-9
-  cci: 
+  cci:
     - CCI-000057
   800-53r5:
     - AC-11
     - IA-11
   sfr:
-    - 'FMT_SMF_EXT.1.1 #2b'
+    - "FMT_SMF_EXT.1.1 #2b"
   disa_stig:
     - AIOS-18-006800
   indigo:
-    - ANNEX D (Section 5.9.1 - Device-Code) 
+    - ANNEX D (Section 5.9.1 - Device-Code)
     - ANNEX K
   cis:
     benchmark:
@@ -26,19 +27,10 @@ references:
       - 3.4.4 (level 1 - Institutionally-Owned Devices)
     controls v8:
       - 4.3
-iOS:
-  - "18.0"
-odv:
-  hint: "Maximum Auto-Lock in Minutes."
-  recommended: 2
-  cis_lvl1_byod: 2
-  cis_lvl2_byod: 2
-  cis_lvl1_enterprise: 2
-  cis_lvl2_enterprise: 2
-  ios_stig: 5
-  ios_stig_byoad: 5
-  indigo_base: 2
-  indigo_high: 2
+operating_system:
+  - name: iOS
+    version:
+      - 18.0
 tags:
   - ios
   - 800-53r5_low
@@ -55,9 +47,20 @@ tags:
   - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
-severity: "medium"
-supervised: false
+severity: medium
+odv:
+  hint: Maximum Auto-Lock in Minutes.
+  recommended: 2
+  cis_lvl1_byod: 2
+  cis_lvl2_byod: 2
+  cis_lvl1_enterprise: 2
+  cis_lvl2_enterprise: 2
+  ios_stig: 5
+  ios_stig_byoad: 5
+  indigo_base: 2
+  indigo_high: 2
 mobileconfig: true
 mobileconfig_info:
-  com.apple.mobiledevice.passwordpolicy:
-    maxInactivity: $ODV
+  - PayloadType: com.apple.mobiledevice.passwordpolicy
+    PayloadContent:
+      maxInactivity: $ODV

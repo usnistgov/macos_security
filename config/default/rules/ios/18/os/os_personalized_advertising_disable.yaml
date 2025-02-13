@@ -1,16 +1,17 @@
+---
 id: os_personalized_advertising_disable
-title: "Disable Personalized Advertising"
+title: Disable Personalized Advertising
 discussion: |
   Ad tracking and targeted ads _MUST_ be disabled.
 
-  The information system _MUST_ be configured to provide only essential capabilities. Disabling ad tracking ensures that applications and advertisers are unable to track users' interests and deliver targeted advertisements.  
+  The information system _MUST_ be configured to provide only essential capabilities. Disabling ad tracking ensures that applications and advertisers are unable to track users' interests and deliver targeted advertisements.
 check: " "
 fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
     - CCE-94458-7
-  cci: 
+  cci:
     - N/A
   800-53r5:
     - AC-20
@@ -28,8 +29,10 @@ references:
       - 3.2.1.11 (level 1 - Institutionally-Owned Devices)
     controls v8:
       - 4.8
-iOS:
-  - "18.0"
+operating_system:
+  - name: iOS
+    version:
+      - 18.0
 tags:
   - ios
   - 800-53r5_low
@@ -41,8 +44,8 @@ tags:
   - cis_lvl2_enterprise
   - cisv8
   - indigo_high
-supervised: false
 mobileconfig: true
 mobileconfig_info:
-  com.apple.applicationaccess:
-    allowApplePersonalizedAdvertising: false
+  - PayloadType: com.apple.applicationaccess
+    PayloadContent:
+      allowApplePersonalizedAdvertising: false

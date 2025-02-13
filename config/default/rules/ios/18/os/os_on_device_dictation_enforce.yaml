@@ -1,10 +1,11 @@
+---
 id: os_on_device_dictation_enforce
-title: "Ensure On Device Dictation is Enforced"
+title: Ensure On Device Dictation is Enforced
 discussion: |-
   The device _MUST_ be configured for on device dictation.
 
   By enforcing on device dictation this will mitigate the risk of unwanted data being sent to Apple.
-check: ''
+check: ""
 fix: This is implemented by a Configuration Profile
 references:
   cce:
@@ -18,7 +19,7 @@ references:
     - AC-20
     - SC-7(10)
   sfr:
-    - 'FMT_SMF_EXT.1.1 #47'
+    - "FMT_SMF_EXT.1.1 #47"
   disa_stig:
     - AIOS-18-014400
   indigo:
@@ -28,8 +29,10 @@ references:
       - N/A
     controls v8:
       - N/A
-iOS:
-  - "18.0"
+operating_system:
+  - name: iOS
+    version:
+      - 18.0
 tags:
   - ios
   - 800-53r5_low
@@ -42,8 +45,8 @@ tags:
   - cnssi-1253_low
   - cnssi-1253_high
 severity: medium
-supervised: false
 mobileconfig: true
 mobileconfig_info:
-  com.apple.applicationaccess:
-    forceOnDeviceOnlyDictation: true
+  - PayloadType: com.apple.applicationaccess
+    PayloadContent:
+      forceOnDeviceOnlyDictation: true

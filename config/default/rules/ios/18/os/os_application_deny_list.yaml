@@ -1,8 +1,9 @@
+---
 id: os_application_deny_list
-title: "Apps not allowed on the device"
+title: Apps not allowed on the device
 discussion: |
   In case specific apps are allowed to be used on the device a specific list _SHOULD_VALUEONDEMAND_ needs to be defined by the MDM. These apps will not open on the device.
-check: ' '
+check: " "
 fix: |
   This is implemented by a Configuration Profile.
 references:
@@ -13,18 +14,19 @@ references:
   indigo:
     - ANNEX D (Section 5.8 - App-Installation)
     - ANNEX N
-iOS:
-  - "18.0"
+operating_system:
+  - name: iOS
+    version:
+      - 18.0
 tags:
   - ios
   - manual
   - indigo_base
   - indigo_high
-supervised: true
-mobileconfig: false # Set to true when implementing
+mobileconfig: true
 mobileconfig_info:
-  com.apple.applicationaccess:
-    blockedAppBundleIDs: # Add bundle identifiers below
-      - bundleID1
-      - bundleID2
-    
+  - PayloadType: com.apple.applicationaccess
+    PayloadContent:
+      blockedAppBundleIDs:
+        - bundleID1
+        - bundleID2

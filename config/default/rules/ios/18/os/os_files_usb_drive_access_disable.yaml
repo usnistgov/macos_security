@@ -1,23 +1,24 @@
+---
 id: os_files_usb_drive_access_disable
-title: "Ensure Allow USB drive access in Files app is set to Disabled"
+title: Ensure Allow USB drive access in Files app is set to Disabled
 discussion: |
-  USB drive acces in Files app _MUST_ be disabled.
+  USB drive access in Files app _MUST_ be disabled.
 check: " "
 fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
     - CCE-94439-7
-  cci: 
+  cci:
     - CCI-000366
     - CCI-000097
     - CCI-000370
   800-53r5:
     - AC-20(2)
-  800-53r4: 
+  800-53r4:
     - N/A
   sfr:
-    - 'FMT_SMF_EXT.1.1 #47'
+    - "FMT_SMF_EXT.1.1 #47"
   disa_stig:
     - AIOS-18-013300
   indigo:
@@ -27,8 +28,10 @@ references:
       - 3.2.1.8 (level 2 - Institutionally-Owned Devices)
     controls v8:
       - 1.2
-iOS:
-  - "18.0"
+operating_system:
+  - name: iOS
+    version:
+      - 18.0
 tags:
   - ios
   - 800-53r5_moderate
@@ -40,9 +43,9 @@ tags:
   - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
-severity: "medium"
-supervised: true
+severity: medium
 mobileconfig: true
 mobileconfig_info:
-  com.apple.applicationaccess:
-    allowFilesUSBDriveAccess: false
+  - PayloadType: com.apple.applicationaccess
+    PayloadContent:
+      allowFilesUSBDriveAccess: false

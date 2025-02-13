@@ -1,8 +1,9 @@
+---
 id: os_enterprise_books_disable
-title: "Ensure Backup of Enterprise Books is set to Disabled"
+title: Ensure Backup of Enterprise Books is set to Disabled
 discussion: |-
-  If a user is able to configure the security setting, the user could inadvertently or maliciously set it to a value that poses unacceptable risk to DoD information systems. An adversary could exploit vulnerabilities created by the weaker configuration to compromise DoD sensitive information.
-check: ' '
+  Apps _MUST_ be installed from authorized application repositories. Disallowing enterprise app trust prevents apps from being provisioned by universal provisioning profiles.
+check: " "
 fix: This is implemented by a Configuration Profile
 references:
   cce:
@@ -13,7 +14,7 @@ references:
   800-53r5:
     - CM-6 b
   sfr:
-    - 'FMT_MOF_EXT.1.2 #40'
+    - "FMT_MOF_EXT.1.2 #40"
   disa_stig:
     - AIOS-18-003700
   indigo:
@@ -23,15 +24,17 @@ references:
       - N/A
     controls v8:
       - N/A
-iOS:
-  - "18.0"
+operating_system:
+  - name: iOS
+    version:
+      - 18.0
 tags:
   - ios
   - ios_stig
   - indigo_high
-severity: "medium"
-supervised: false
+severity: medium
 mobileconfig: true
 mobileconfig_info:
-  com.apple.applicationaccess:
-    allowEnterpriseBookBackup: false
+  - PayloadType: com.apple.applicationaccess
+    PayloadContent:
+      allowEnterpriseBookBackup: false

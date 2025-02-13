@@ -1,5 +1,6 @@
+---
 id: os_iphone_mirroring_disable
-title: "Ensure the ability to mirror a device is set to Disabled"
+title: Ensure the ability to mirror a device is set to Disabled
 discussion: |
   Device mirroring _MUST_ be disabled.
 check: " "
@@ -8,7 +9,7 @@ fix: |
 references:
   cce:
     - CCE-94537-8
-  cci: 
+  cci:
     - N/A
   800-53r5:
     - N/A
@@ -18,14 +19,16 @@ references:
     - ANNEX K
   disa_stig:
     - N/A
-iOS:
-  - "18.0"
+operating_system:
+  - name: iOS
+    version:
+      - 18.0
 tags:
   - ios
   - indigo_base
   - indigo_high
-supervised: false
 mobileconfig: true
 mobileconfig_info:
-  com.apple.applicationaccess:
-    allowiPhoneMirroring: false
+  - PayloadType: com.apple.applicationaccess
+    PayloadContent:
+      allowiPhoneMirroring: false

@@ -1,5 +1,6 @@
+---
 id: os_mail_maildrop_disable
-title: "Ensure Allow Mail Drop is set to Disabled"
+title: Ensure Allow Mail Drop is set to Disabled
 discussion: |
   Mail Drop _MUST_ be disabled.
 check: " "
@@ -8,7 +9,7 @@ fix: |
 references:
   cce:
     - CCE-94448-8
-  cci: 
+  cci:
     - CCI-000366
     - CCI-000370
     - CCI-002314
@@ -19,19 +20,21 @@ references:
     - CM-7(1)
     - SC-07(10)
   sfr:
-    - 'FMT_SMF_EXT.1.1 #47'
+    - "FMT_SMF_EXT.1.1 #47"
   disa_stig:
     - AIOS-18-011000
   indigo:
-    - ANNEX D (Section 5.6.1 - Mail) 
+    - ANNEX D (Section 5.6.1 - Mail)
   cis:
     benchmark:
       - 2.7.2 (level 2 - End-User Owned Devices)
       - 3.7.2 (level 2 - Institutionally-Owned Devices)
     controls v8:
       - 3.3
-iOS:
-  - "18.0"
+operating_system:
+  - name: iOS
+    version:
+      - 18.0
 tags:
   - ios
   - 800-53r5_low
@@ -46,9 +49,9 @@ tags:
   - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
-severity: "medium"
-supervised: false
+severity: medium
 mobileconfig: true
 mobileconfig_info:
-  com.apple.mail.managed:
-    allowMailDrop: false
+  - PayloadType: com.apple.mail.managed
+    PayloadContent:
+      allowMailDrop: false

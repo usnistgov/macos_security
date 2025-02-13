@@ -1,10 +1,11 @@
+---
 id: os_mail_summary_disable
 title: Disable Apple Intelligence Mail Summary
 discussion: |-
   Apple Intelligence features such as Apple Mail Summary that use off device AI _MUST_ be disabled.
 check: " "
 result:
-  string: 'false'
+  string: "false"
 fix: |
   This is implemented by a Configuration Profile.
 references:
@@ -20,13 +21,16 @@ references:
     - N/A
   indigo:
     - ANNEX K
-iOS:
-  - "18.0"
+operating_system:
+  - name: iOS
+    version:
+      - 18.0
 tags:
   - ios
   - indigo_base
   - indigo_high
 mobileconfig: true
 mobileconfig_info:
-  com.apple.applicationaccess:
-    allowMailSummary: false
+  - PayloadType: com.apple.applicationaccess
+    PayloadContent:
+      allowMailSummary: false

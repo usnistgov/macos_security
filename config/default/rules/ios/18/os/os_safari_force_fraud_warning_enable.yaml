@@ -1,5 +1,6 @@
+---
 id: os_safari_force_fraud_warning_enable
-title: "Ensure Force Fraud Warning is set to Enabled"
+title: Ensure Force Fraud Warning is set to Enabled
 discussion: |
   Force fraud warning _MUST_ be enabled in Safari.
 check: " "
@@ -8,7 +9,7 @@ fix: |
 references:
   cce:
     - CCE-94461-1
-  cci: 
+  cci:
     - N/A
   800-53r5:
     - N/A
@@ -24,8 +25,10 @@ references:
       - 3.2.2.1 (level 1 - Institutionally-Owned Devices)
     controls v8:
       - 9.4
-iOS:
-  - "18.0"
+operating_system:
+  - name: iOS
+    version:
+      - 18.0
 tags:
   - ios
   - cis_lvl1_byod
@@ -34,8 +37,8 @@ tags:
   - cis_lvl2_enterprise
   - cisv8
   - indigo_high
-supervised: false
 mobileconfig: true
 mobileconfig_info:
-  com.apple.applicationaccess:
-    safariForceFraudWarning: true
+  - PayloadType: com.apple.applicationaccess
+    PayloadContent:
+      safariForceFraudWarning: true

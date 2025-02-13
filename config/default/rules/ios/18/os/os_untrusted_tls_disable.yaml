@@ -1,5 +1,6 @@
+---
 id: os_untrusted_tls_disable
-title: "Ensure Allow Users to Accept Untrusted TLS Certificates is set to Disabled"
+title: Ensure Allow Users to Accept Untrusted TLS Certificates is set to Disabled
 discussion: |
   Users _MUST_ not be allowed to accept self-signed or unverified certificates.
 check: " "
@@ -8,7 +9,7 @@ fix: |
 references:
   cce:
     - CCE-94470-2
-  cci: 
+  cci:
     - N/A
   800-53r5:
     - N/A
@@ -24,16 +25,18 @@ references:
       - 3.2.1.13 (level 2 - Institutionally-Owned Devices)
     controls v8:
       - 4.1
-iOS:
-  - "18.0"
+operating_system:
+  - name: iOS
+    version:
+      - 18.0
 tags:
   - ios
   - cis_lvl2_byod
   - cis_lvl2_enterprise
   - cisv8
   - indigo_high
-supervised: false
 mobileconfig: true
 mobileconfig_info:
-  com.apple.applicationaccess:
-    allowUntrustedTLSPrompt: false
+  - PayloadType: com.apple.applicationaccess
+    PayloadContent:
+      allowUntrustedTLSPrompt: false

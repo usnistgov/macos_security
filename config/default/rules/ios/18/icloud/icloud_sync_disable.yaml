@@ -1,5 +1,6 @@
+---
 id: icloud_sync_disable
-title: "Ensure Allow iCloud Documents and Data is set to Disabled"
+title: Ensure Allow iCloud Documents and Data is set to Disabled
 discussion: |
   Institutionally owned devices _MUST_ not sync data through iCloud.
 check: " "
@@ -19,19 +20,21 @@ references:
     - CM-7(1)
     - SC-7(10)
   sfr:
-    - 'FMT_MOF_EXT.1.2 #40'
+    - "FMT_MOF_EXT.1.2 #40"
   disa_stig:
     - AIOS-18-003200
   indigo:
-    - ANNEX D (Section 5.4 - iCloud restrictions) 
+    - ANNEX D (Section 5.4 - iCloud restrictions)
     - ANNEX K
   cis:
     benchmark:
       - 3.2.1.5 (level 1 - Institutionally-Owned Devices)
     controls v8:
       - 2.3
-iOS:
-  - "18.0"
+operating_system:
+  - name: iOS
+    version:
+      - 18.0
 tags:
   - ios
   - 800-53r5_low
@@ -45,9 +48,9 @@ tags:
   - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
-severity: "medium"
-supervised: true
+severity: medium
 mobileconfig: true
 mobileconfig_info:
-  com.apple.applicationaccess:
-    allowCloudDocumentSync: false
+  - PayloadType: com.apple.applicationaccess
+    PayloadContent:
+      allowCloudDocumentSync: false

@@ -1,5 +1,6 @@
+---
 id: os_writing_tools_disable
-title: "Ensure the ability to use AI writing tools is set to Disabled"
+title: Ensure the ability to use AI writing tools is set to Disabled
 discussion: |
   AI writing tools _MUST_ be disabled.
 check: " "
@@ -8,7 +9,7 @@ fix: |
 references:
   cce:
     - CCE-94563-4
-  cci: 
+  cci:
     - N/A
   800-53r5:
     - AC-20
@@ -18,17 +19,19 @@ references:
     - SC-7(10)
   indigo:
     - ANNEX K
-iOS:
-  - "18.0"
+operating_system:
+  - name: iOS
+    version:
+      - 18.0
 tags:
   - ios
-  - 800-53r5_low 
-  - 800-53r5_moderate 
+  - 800-53r5_low
+  - 800-53r5_moderate
   - 800-53r5_high
   - indigo_base
   - indigo_high
-supervised: false
 mobileconfig: true
 mobileconfig_info:
-  com.apple.applicationaccess:
-    allowWritingTools: false
+  - PayloadType: com.apple.applicationaccess
+    PayloadContent:
+      allowWritingTools: false

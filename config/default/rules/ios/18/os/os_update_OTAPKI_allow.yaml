@@ -1,5 +1,6 @@
+---
 id: os_update_OTAPKI_allow
-title: "Allow OTA Update of PKI"
+title: Allow OTA Update of PKI
 discussion: |
   The device _MUST_ be configured that the OTA update of the PKI is allowed.
 check: " "
@@ -12,13 +13,15 @@ references:
     - N/A
   indigo:
     - ANNEX K
-iOS:
-  - "18.0"
+operating_system:
+  - name: iOS
+    version:
+      - 18.0
 tags:
   - ios
   - indigo_high
-supervised: false
 mobileconfig: true
 mobileconfig_info:
-  com.apple.applicationaccess:
-    allowOTAPKIUpdates: true
+  - PayloadType: com.apple.applicationaccess
+    PayloadContent:
+      allowOTAPKIUpdates: true

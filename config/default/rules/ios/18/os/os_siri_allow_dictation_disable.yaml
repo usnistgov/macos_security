@@ -1,5 +1,6 @@
+---
 id: os_siri_allow_dictation_disable
-title: "Disallow dictation feature"
+title: Disallow dictation feature
 discussion: |
   The iOS built-in Siri service _MUST_ be disabled to prevent organizational data from being synchronized to Apple servers.
 
@@ -17,17 +18,19 @@ references:
     - SC-7(10)
   indigo:
     - ANNEX K
-iOS:
-  - "18.0"
+operating_system:
+  - name: iOS
+    version:
+      - 18.0
 tags:
   - ios
   - indigo_base
   - indigo_high
   - 800-53r5_low
   - 800-53r5_moderate
-  - 800-53r5_high  
-supervised: false
+  - 800-53r5_high
 mobileconfig: true
 mobileconfig_info:
-  com.apple.applicationaccess:
-    allowDictation: false
+  - PayloadType: com.apple.applicationaccess
+    PayloadContent:
+      allowDictation: false

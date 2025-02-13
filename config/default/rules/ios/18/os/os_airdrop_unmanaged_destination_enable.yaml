@@ -1,5 +1,6 @@
+---
 id: os_airdrop_unmanaged_destination_enable
-title: "Ensure Treat AirDrop as unmanaged destination is set to Enabled"
+title: Ensure Treat AirDrop as unmanaged destination is set to Enabled
 discussion: |
   AirDrop _MUST_ be treated as an unmanaged destination.
 check: " "
@@ -8,7 +9,7 @@ fix: |
 references:
   cce:
     - CCE-94423-1
-  cci: 
+  cci:
     - CCI-000366
     - CCI-002008
   800-53r5:
@@ -19,7 +20,7 @@ references:
     - MP-2
     - SC-7(10)
   sfr:
-    - 'FMT_SMF_EXT.1.1 #47'
+    - "FMT_SMF_EXT.1.1 #47"
   disa_stig:
     - AIOS-18-011500
   indigo:
@@ -31,8 +32,10 @@ references:
       - 3.2.1.23 (level 1 - Institutionally-Owned Devices)
     controls v8:
       - 3.3
-iOS:
-  - "18.0"
+operating_system:
+  - name: iOS
+    version:
+      - 18.0
 tags:
   - ios
   - 800-53r5_low
@@ -49,9 +52,9 @@ tags:
   - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
-severity: "medium"
-supervised: false
+severity: medium
 mobileconfig: true
 mobileconfig_info:
-  com.apple.applicationaccess:
-    forceAirDropUnmanaged: true
+  - PayloadType: com.apple.applicationaccess
+    PayloadContent:
+      forceAirDropUnmanaged: true

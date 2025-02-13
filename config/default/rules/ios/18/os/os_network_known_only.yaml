@@ -1,7 +1,8 @@
+---
 id: os_network_known_only
-title: "Only allow known networks"
+title: Only allow known networks
 discussion: |
-  The iOS device _MUST_ be configured to only allow known networks in case only trustworthy networks can be used. This can have a limitation on connectivity especially when devices are used in area with low or no network connectivity. 
+  The iOS device _MUST_ be configured to only allow known networks in case only trustworthy networks can be used. This can have a limitation on connectivity especially when devices are used in area with low or no network connectivity.
 check: " "
 result:
   string: "true"
@@ -14,13 +15,15 @@ references:
     - N/A
   indigo:
     - ANNEX D (Section 5.7 - Interfaces)
-iOS:
-  - "18.0"
+operating_system:
+  - name: iOS
+    version:
+      - 18.0
 tags:
   - ios
   - indigo_high
-supervised: true
 mobileconfig: true
 mobileconfig_info:
-  com.apple.applicationaccess:
-    forceWiFiToAllowedNetworksOnly: true
+  - PayloadType: com.apple.applicationaccess
+    PayloadContent:
+      forceWiFiToAllowedNetworksOnly: true

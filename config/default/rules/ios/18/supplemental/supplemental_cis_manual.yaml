@@ -1,8 +1,9 @@
+---
 id: supplemental_cis_manual
-title: "CIS Manual Recommendations"
+title: CIS Manual Recommendations
 discussion: |
   List of CIS recommendations that are manual check in the CIS iOS Benchmark.
-  
+
   [cols="15%h, 85%a"]
   |===
   |Section
@@ -22,7 +23,7 @@ discussion: |
 
   |Recommendations
   |2.2.1.5  Ensure Allow personalized ads delivered by Apple is set to Disabled +
-  2.2.1.7 Ensure Force automatic date and time is set to Enabled + 
+  2.2.1.7 Ensure Force automatic date and time is set to Enabled +
   2.2.1.12 Ensure Allow sending diagnostic and usage data to Apple is set to Disabled
   |===
 
@@ -145,12 +146,12 @@ discussion: |
   |Recommendations
   |4.1.1 Review Manage Sharing & Access +
   4.1.2 Review Emergency Reset +
-  4.1.3 Review Lockdown Mode + 
+  4.1.3 Review Lockdown Mode +
   4.1.4 Ensure "App Privacy Report" is enabled +
   4.1.5 Review Airprint +
   4.2 Ensure device is not obviously jailbroken or compromised +
   4.3 Ensure Install iOS Updates of Automatic Updates is set to Enabled +
-  4.4 Ensure Software Update returns Your software is up to date + 
+  4.4 Ensure Software Update returns Your software is up to date +
   4.5 Review iCloud Private Relay settings +
   4.6 Review Mail Privacy Protection settings +
   4.7 Ensure Automatic Downloads of App Updates is set to Enabled +
@@ -158,21 +159,23 @@ discussion: |
   4.9 Ensure the latest iOS device architecture is used by high-value targets +
   4.10 Verify iPhone Mirroring Settings
   |===
-check: |
-fix: |
+check: ""
+fix: ""
 references:
   cci:
     - N/A
-  800-53r5: 
-    - N/A    
-  800-53r4: 
+  800-53r5:
+    - N/A
+  800-53r4:
     - N/A
   srg:
     - N/A
   disa_stig:
     - N/A
-iOS:
-  - "18.0"
+operating_system:
+  - name: iOS
+    version:
+      - 18.0
 tags:
   - cis_lvl1_byod
   - cis_lvl1_enterprise
@@ -181,4 +184,3 @@ tags:
   - cisv8
   - supplemental
 mobileconfig: false
-mobileconfig_info:

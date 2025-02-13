@@ -1,10 +1,11 @@
+---
 id: os_auto_unlock_disable
-title: "Prevent Apple Watch from Unlocking a Device"
+title: Prevent Apple Watch from Unlocking a Device
 discussion: |-
   Apple Watches are not an approved authenticator and their use _MUST_ be disabled.
 
   Disabling Apple watches is a necessary step to ensuring that the information system retains a session lock until the user reestablishes access using an authorized identification and authentication procedures.
-check: ''
+check: ""
 fix: This is implemented by a Configuration Profile
 references:
   cce:
@@ -15,7 +16,7 @@ references:
   800-53r5:
     - AC-11
   sfr:
-    - 'FMT_MOF_EXT.1.2 #47'
+    - "FMT_MOF_EXT.1.2 #47"
   disa_stig:
     - AIOS-18-014800
   indigo:
@@ -25,8 +26,10 @@ references:
       - N/A
     controls v8:
       - N/A
-iOS:
-  - "18.0"
+operating_system:
+  - name: iOS
+    version:
+      - 18.0
 tags:
   - ios
   - 800-53r5_moderate
@@ -38,8 +41,8 @@ tags:
   - cnssi-1253_low
   - cnssi-1253_high
 severity: medium
-supervised: false
 mobileconfig: true
 mobileconfig_info:
-  com.apple.applicationaccess:
-    allowAutoUnlock: false
+  - PayloadType: com.apple.applicationaccess
+    PayloadContent:
+      allowAutoUnlock: false
