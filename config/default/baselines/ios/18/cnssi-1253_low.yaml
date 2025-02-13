@@ -1,16 +1,16 @@
+---
 title: "iOS/iPadOS 18.0: Security Configuration - cnssi-1253_low"
 description: |
   This guide describes the actions to take when securing a iOS/iPadOS 18.0 system against the cnssi-1253_low security baseline.
 
   Information System Security Officers and benchmark creators can use this catalog of settings in order to assist them in security benchmark creation. This list is a catalog, not a checklist or benchmark, and satisfaction of every item is not likely to be possible or sensible in many operational scenarios.
-authors: |
-  *macOS Security Compliance Project*
-
-  |===
-  |Rob Lamb|Los Alamos National Laboratory
-  |Ekkehard Koch|
-  |Bob Gendler|National Institute of Standards and Technology
-  |===
+authors:
+  - name: Bob Gendler
+    organization: National Institute of Standards and Technology
+  - name: Ekkehard Koch
+    organization: ""
+  - name: Rob Lamb
+    organization: Los Alamos National Laboratory
 parent_values: "recommended"
 profile:
   - section: "icloud"
@@ -21,7 +21,7 @@ profile:
       - icloud_photos_disable
       - icloud_shared_photo_stream_disable
       - icloud_sync_disable
-  - section: "ios"
+  - section: "operatingsystem"
     rules:
       - os_airdrop_disable
       - os_airdrop_unmanaged_destination_enable

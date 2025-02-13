@@ -1,6 +1,37 @@
+:idprefix:
+:idseparator: -
+ifndef::env-github[:icons: font]
+ifdef::env-github[]
+:status:
+//:outfilesuffix: .adoc
+:caution-caption: :fire:
+:important-caption: :exclamation:
+:note-caption: :paperclip:
+:tip-caption: :bulb:
+:warning-caption: :warning:
+endif::[]
+:uri-org: https://github.com/usnistgov
+:uri-repo: {uri-org}/macos_security
+
 = Changelog
 
 This document provides a high-level view of the changes to the macOS Security Compliance Project.
+
+== [mSCP 2.x] - 2025-02-12
+IMPORTANT: This release is a major update and includes breaking changes. Please review the documentation before upgrading.
+
+=== Scripts
+* All scripts have been moved from individual files to a single API
+* All Apple Operating Systems have been consolidated into a single API
+* All document creation has been moved to a Jinja template's
+
+=== Rules
+* All rules updated to support the new API
+
+=== Baselines
+* All baselines updated to support the new API
+
+NOTE: Version 2.x of the mSCP will not support macOS 14 or earlier and iOS 17 or earlier.
 
 == [Sequoia, Revision 1.1] - 2024-12-16]
 * Rules

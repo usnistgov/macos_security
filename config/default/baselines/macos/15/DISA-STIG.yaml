@@ -1,5 +1,4 @@
 ---
-# yaml-language-server: $schema=https://raw.githubusercontent.com/snoopy82481/macos_security/main/schemas/baseline.json
 title: "macOS 15.0: Security Configuration - Apple macOS 15 (Sequoia) STIG - Ver 1, Rel 1"
 description: |
   This guide describes the actions to take when securing a macOS 15.0 system against the Apple macOS 15 (Sequoia) STIG - Ver 1, Rel 1 security baseline.

@@ -1,13 +1,12 @@
+---
 title: "iOS/iPadOS 18.0: Security Configuration - CIS Apple iOS 18 v1.0.0 Benchmark (Level 2) - Institutionally-Owned Devices"
 description: |
   This guide describes the actions to take when securing a iOS/iPadOS 18.0 system against the CIS Apple iOS 18 v1.0.0 Benchmark (Level 2) - Institutionally-Owned Devices security baseline.
-authors: |
-  *macOS Security Compliance Project*
-
-  |===
-  |Edward Byrd|Center for Internet Security
-  |Allen Golbig|Jamf
-  |===
+authors:
+  - name: Edward Byrd
+    organization: Center for Internet Security
+  - name: Allen Golbig
+    organization: Jamf
 parent_values: "cis_lvl2_enterprise"
 profile:
   - section: "icloud"
@@ -16,7 +15,7 @@ profile:
       - icloud_keychain_disable
       - icloud_managed_apps_store_data_disabled
       - icloud_sync_disable
-  - section: "ios"
+  - section: "operatingsystem"
     rules:
       - os_airdrop_unmanaged_destination_enable
       - os_allow_documents_managed_sources_unmanaged_destinations_disable
