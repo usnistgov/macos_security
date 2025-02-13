@@ -28,7 +28,7 @@ profile:
       - audit_folder_owner_configure
       - audit_folders_mode_configure
       - audit_retention_configure
-  - section: "macos"
+  - section: "operatingsystem"
     rules:
       - os_airdrop_disable
       - os_anti_virus_installed

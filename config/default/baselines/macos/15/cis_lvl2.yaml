@@ -38,7 +38,7 @@ profile:
   - section: "icloud"
     rules:
       - icloud_sync_disable
-  - section: "macos"
+  - section: "operatingsystem"
     rules:
       - os_airdrop_disable
       - os_anti_virus_installed

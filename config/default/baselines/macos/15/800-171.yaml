@@ -59,7 +59,7 @@ profile:
       - icloud_private_relay_disable
       - icloud_reminders_disable
       - icloud_sync_disable
-  - section: "macos"
+  - section: "operatingsystem"
     rules:
       - os_account_modification_disable
       - os_airdrop_disable
