@@ -12,8 +12,6 @@ from pydantic import BaseModel, Field
 # Local python modules
 from src.mscp.common_utils import create_plist, open_plist
 
-# from src.mscp.common_utils.file_handling import create_plist, open_plist
-
 
 class Payload(BaseModel):
     """

@@ -2,7 +2,6 @@
 
 # Standard python modules
 import argparse
-import json
 import platform
 import re
 import sys
@@ -14,7 +13,6 @@ from typing import Any
 from uuid import uuid4
 
 # Additional python modules
-from icecream import ic
 from jinja2 import Environment, FileSystemLoader
 from loguru import logger
 from lxml.etree import Element, XMLParser, fromstring
@@ -22,9 +20,6 @@ from lxml.etree import Element, XMLParser, fromstring
 # Local python modules
 from src.mscp.classes import Baseline
 from src.mscp.common_utils import config, create_file, create_json, open_plist
-
-# from src.mscp.common_utils.config import config
-# from src.mscp.common_utils.file_handling import create_file, create_json, open_plist
 
 XML_PARSER: XMLParser = XMLParser(recover=True, ns_clean=True, encoding="utf-8")
 

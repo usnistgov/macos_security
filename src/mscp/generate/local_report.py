@@ -19,11 +19,6 @@ from openpyxl.styles import Alignment
 # Local python modules
 from src.mscp.common_utils import config, open_plist, sanitize_input
 
-# from mscp.common_utils.sanitize_input import sanitize_input
-
-# from src.mscp.common_utils.config import config
-# from src.mscp.common_utils.file_handling import open_plist
-
 
 def generate_local_report(args: argparse.Namespace) -> None:
     """

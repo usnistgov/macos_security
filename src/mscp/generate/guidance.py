@@ -27,13 +27,7 @@ from src.mscp.generate.guidance_support import (
     generate_script,
 )
 
-# from src.mscp.generate.guidance_support.documents import generate_documents
-# from src.mscp.generate.guidance_support.excel import generate_excel
-# from src.mscp.generate.guidance_support.profiles import generate_profiles
-# from src.mscp.generate.guidance_support.script import generate_script
 
-
-# Functions
 @logger.catch
 def verify_signing_hash(cert_hash: str) -> bool:
     """
@@ -90,7 +84,7 @@ def generate_guidance(args: argparse.Namespace) -> None:
         audit_name = args.audit_name
 
     if args.logo:
-        logo = args.logo
+        logo_path = args.logo
 
     if args.hash:
         signing = True

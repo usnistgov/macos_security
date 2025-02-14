@@ -13,12 +13,6 @@ from loguru import logger
 from src.mscp.classes import Author, Baseline, Macsecurityrule
 from src.mscp.common_utils import config, get_version_data, make_dir, open_csv
 
-# from src.mscp.classes.baseline import Author, Baseline
-# from src.mscp.classes.macsecurityrule import Macsecurityrule
-# from src.mscp.common_utils.config import config
-# from src.mscp.common_utils.file_handling import make_dir, open_csv
-# from src.mscp.common_utils.version_data import get_version_data
-
 
 def update_rule_with_custom_controls(
     rule: Macsecurityrule, controls: list[str], header: str
