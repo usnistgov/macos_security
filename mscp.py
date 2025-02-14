@@ -1,4 +1,4 @@
-#! .venv/bin/python3 mscp.py
+#! .venv/bin/python3
 # filename: mscp.py
 
 # Standard python modules
