@@ -62,7 +62,6 @@ def generate_guidance(args: argparse.Namespace) -> None:
     logo_path: str = f"{config['defaults']['images_dir']}/mscp_banner.png"
     signing: bool = False
     log_reference: str = "default"
-    use_custom_reference: bool = False
     pdf_theme: str = "mscp-theme.yml"
     custom: bool = not any(Path(config["custom"]["root_dir"]).iterdir())
     show_all_tags: bool = False
@@ -95,7 +94,6 @@ def generate_guidance(args: argparse.Namespace) -> None:
             sys.exit()
 
     if args.reference:
-        use_custom_reference = True
         log_reference = args.reference
 
     b64logo: bytes = b64encode(Path(logo_path).read_bytes())

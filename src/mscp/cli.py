@@ -6,8 +6,6 @@ import sys
 from pathlib import Path
 from typing import Union
 
-from icecream import ic
-
 # Additional python modules
 from loguru import logger
 
