@@ -6,10 +6,13 @@ import sys
 from pathlib import Path
 from typing import Union
 
+from icecream import ic
+
 # Additional python modules
 from loguru import logger
 
 # Local python modules
+from src.mscp import __version__
 from src.mscp.generate import (
     generate_baseline,
     generate_checklist,
@@ -19,33 +22,20 @@ from src.mscp.generate import (
 )
 
 
-class CustomHelpFormatter(argparse.HelpFormatter):
-    def __init__(self, *args, **kwargs) -> None:
-        super().__init__(*args, **kwargs)
+class Customparser(argparse.ArgumentParser):
+    """
+    Customparser is a subclass of argparse.ArgumentParser that overrides the error method
+    to log an error message, print the help message, and exit the program with a status code of 2.
 
-    def start_section(self, heading: str) -> None:
-        heading = heading.upper()
-        super().start_section(heading)
+    Methods:
+        error(message: str) -> None:
+            Logs an error message, prints the help message, and exits the program with status code 2.
+    """
 
-    def format_help(self) -> str:
-        help_text = super().format_help()
-        return f"\n{help_text}\n"
-
-    def format_usage(self) -> str:
-        usage_text = super().format_usage()
-        return f"USAGE: {usage_text}"
-
-    def format_description(self, description: str) -> str:
-        if description:
-            return f"{description}\n\n"
-        else:
-            return ""
-
-    def format_epilog(self, epilog: str) -> str:
-        if epilog:
-            return f"\n{epilog}\n"
-        else:
-            return ""
+    def error(self, message: str) -> None:
+        logger.error(f"Argument Error: {message}")
+        self.print_help()
+        sys.exit(2)
 
 
 def validate_file(arg: str) -> Union[Path, None]:
@@ -57,9 +47,9 @@ def validate_file(arg: str) -> Union[Path, None]:
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(
+    parser = Customparser(
         description="CLI tool for managing baseline and compliance documents.",
-        formatter_class=CustomHelpFormatter,
+        prog="mscp",
     )
 
     parser.add_argument(
@@ -77,6 +67,21 @@ def main() -> None:
         help="Operating system version (eg: 14, 15).",
     )
 
+    parser.add_argument(
+        "-D",
+        "--debug",
+        required=False,
+        help="Enable debug output.",
+        action="store_true",
+    )
+
+    parser.add_argument(
+        "-V",
+        "--version",
+        action="version",
+        version=f"%(prog)s {__version__}",
+    )
+
     # Sub Parsers for individual commands
     subparsers = parser.add_subparsers(
         title="Subcommands",
@@ -90,6 +95,7 @@ def main() -> None:
         "baseline",
         help="Given a keyword tag, generate a generic baseline.yaml file containing rules with the tag.",
     )
+    baseline_parser.set_defaults(func=generate_baseline)
     baseline_parser.add_argument(
         "-c",
         "--controls",
@@ -119,6 +125,7 @@ def main() -> None:
     guidance_parser: argparse.ArgumentParser = subparsers.add_parser(
         "guidance", help="Given a baseline, create guidance documents and files."
     )
+    guidance_parser.set_defaults(func=generate_guidance)
     guidance_parser.add_argument(
         "baseline",
         default=None,
@@ -129,10 +136,7 @@ def main() -> None:
         "-c", "--clean", help=argparse.SUPPRESS, action="store_true"
     )
     guidance_parser.add_argument(
-        "-d", "--debug", help=argparse.SUPPRESS, action="store_true"
-    )
-    guidance_parser.add_argument(
-        "-D",
+        "-d",
         "--ddm",
         help="Generate declarative management artifacts for the rules.",
         action="store_true",
@@ -200,6 +204,7 @@ def main() -> None:
         "mapping",
         help="Easily generate custom rules from compliance framework mappings",
     )
+    mapping_parser.set_defaults(func=generate_mapping)
     mapping_parser.add_argument(
         "-c",
         "--csv",
@@ -219,6 +224,7 @@ def main() -> None:
         "scap",
         help="Easily generate xccdf, oval, or scap datastream. If no option is defined, it will generate an scap datastream file.",
     )
+    # scap_parser.set_defaults(func=parser.print_help)
     scap_parser.add_argument(
         "-b",
         "--baseline",
@@ -252,6 +258,7 @@ def main() -> None:
     local_report_parser: argparse.ArgumentParser = subparsers.add_parser(
         "local_report", help="Creates local report in Excel format."
     )
+    local_report_parser.set_defaults(func=generate_local_report)
     local_report_parser.add_argument(
         "-p", "--plist", help="Plist input file", type=validate_file, action="store"
     )
@@ -266,6 +273,7 @@ def main() -> None:
     checklist_parser: argparse.ArgumentParser = subparsers.add_parser(
         "stig_checklist", help="Creates DISA STIG Checklist"
     )
+    checklist_parser.set_defaults(func=generate_checklist)
     checklist_parser.add_argument(
         "-p", "--plist", help="Plist input file", type=validate_file, action="store"
     )
@@ -288,44 +296,46 @@ def main() -> None:
 
     checklist_parser.add_argument(
         "-v",
-        "--version",
+        "--checklist_version",
         help="STIG Checklist Version",
         default="3",
         action="store",
         choices=["2", "3"],
     )
 
-    args = parser.parse_args()
+    try:
+        args = parser.parse_args()
+    except argparse.ArgumentError as e:
+        logger.debug("Argument Error: {}", e)
+        parser.print_help()
+        sys.exit()
 
-    match args.subcommand:
-        case "guidance":
-            logger.debug("CLI guidance entry")
+    if not hasattr(args, "func"):
+        logger.error("Functionality for {} is not implemented yet.", args.subcommand)
+        parser.print_help()
+        sys.exit()
 
-            generate_guidance(args)
-        case "baseline":
-            logger.debug("CLI baseline entry")
+    if args.os_name == "ios" and args.os_version < 18:
+        logger.warning(
+            "iOS/iPadOS 17 and below is not supported, please use mSCP version 1.0."
+        )
+        sys.exit()
 
-            generate_baseline(args)
-        case "mapping":
-            logger.debug("CLI baseline entry")
+    if args.os_name == "macos" and args.os_version < 15:
+        logger.warning(
+            "macOS 14 and below is not supported, please use mSCP version 1.0."
+        )
+        sys.exit()
 
-            generate_mapping(args)
-        case "scap":
-            logger.debug("CLI SCAP entry")
-            logger.error("SCAP generation is not implemented yet.")
-            sys.exit()
+    if args.os_name == "visionos":
+        logger.warning("visionOS is not supported at this time.")
+        sys.exit()
 
-            # generate_scap(args)
-        case "local_report":
-            logger.debug("CLI local_report entry")
+    if args.debug:
+        logger.info("Debug mode enabled.")
+        logger.level("DEBUG")
 
-            generate_local_report(args)
-        case "stig_checklist":
-            logger.debug("CLI stig_checklist entry")
-
-            generate_checklist(args)
-        case _:
-            parser.print_help()
+    args.func(args)
 
 
 if __name__ == "__main__":
