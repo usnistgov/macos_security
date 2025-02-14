@@ -23,7 +23,8 @@ IMPORTANT: This release is a major update and includes breaking changes. Please 
 === Scripts
 * All scripts have been moved from individual files to a single API
 * All Apple Operating Systems have been consolidated into a single API
-* All document creation has been moved to a Jinja template's
+* All document creation has been moved to a Jinja template
+* Add debug and version switch to CLI
 
 === Rules
 * All rules updated to support the new API
