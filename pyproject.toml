@@ -25,6 +25,8 @@ dependencies = [
   "matplotlib",
   "jinja2",
   "loguru",
+  "lxml",
+  "pydantic",
 ]
 
 [project.urls]
