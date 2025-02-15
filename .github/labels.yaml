@@ -1,0 +1,20 @@
+---
+# Area
+- { name: "area/rules",              color: "0e8a16" }
+- { name: "area/baselines",          color: "0e8a16" }
+- { name: "area/images",             color: "0e8a16" }
+- { name: "area/misc",               color: "0e8a16" }
+- { name: "area/sections",           color: "0e8a16" }
+- { name: "area/templates",          color: "0e8a16" }
+- { name: "area/github",             color: "0e8a16" }
+- { name: "area/mscp_api",           color: "0e8a16" }
+# Semantic Type
+- { name: "type/patch",              color: "ffec19" }
+- { name: "type/minor",              color: "ff9800" }
+- { name: "type/major",              color: "f6412d" }
+- { name: "type/break",              color: "f6412d" }
+# Renovate
+- { name: "renovate/github-action",  color: "027fa0" }
+- { name: "renovate/github-release", color: "027fa0" }
+# Uncategorized
+- { name: "hold",                    color: "ee0701" }
