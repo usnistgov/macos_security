@@ -1,4 +1,4 @@
-image::templates/images/mscp_banner_outline.png[]
+image::config/default/images/mscp_banner_outline.png[]
 // settings:
 :idprefix:
 :idseparator: -
