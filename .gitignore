@@ -2,7 +2,7 @@
 .DS_Store
 Thumbs.db
 
-# Ruby folders
+# Ruby
 bin
 mscp_gems
 .bundle
@@ -11,9 +11,11 @@ Gemfile.lock
 # Python
 .venv
 
+# misc
 .private
 .vscode
 *.lock
 
+logs
 *.log
 __pycache__

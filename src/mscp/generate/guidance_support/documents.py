@@ -17,7 +17,21 @@ from src.mscp.common_utils import config, run_command
 
 
 def group_ulify(elements: list[str]) -> str:
-    if elements == "N/A":
+    """
+    Converts a list of strings into a grouped unordered list (UL) format.
+
+    If the list contains the string "N/A", it returns "- N/A".
+    Otherwise, it sorts the list, groups elements by their prefix (before the first parenthesis),
+    and returns a string where each group is represented as a bullet point with its elements
+    separated by commas.
+
+    Args:
+        elements (list[str]): The list of strings to be converted.
+
+    Returns:
+        str: A string representing the grouped unordered list.
+    """
+    if "N/A" in elements:
         return "- N/A"
 
     elements.sort()

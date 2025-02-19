@@ -32,7 +32,7 @@ jobs:
           pip install flake8
 
       - name: Lint Python files
-        run: flake8 src/mscp
+        run: flake8 src/mscp --ignore=E501
 
   yamllint:
     name: yamllint

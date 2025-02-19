@@ -348,7 +348,7 @@ class Macsecurityrule(BaseModel, Generic[T]):
                 rule.fix = formatted_mobileconfig
                 logger.success("Formatted mobileconfig_info for rule: {}", rule.rule_id)
 
-            if not rule.odv == None and not generate_baseline:
+            if rule.odv is not None and not generate_baseline:
                 rule._fill_in_odv(parent_values)
 
             logger.success("Transformed rule: {}", rule_id)
@@ -771,7 +771,7 @@ class Macsecurityrule(BaseModel, Generic[T]):
 
         if benchmark != "recommended":
             print(
-                f"WARNING: You are tailoring an established benchmark. Excluding rules or modifying ODVs "
+                "WARNING: You are tailoring an established benchmark. Excluding rules or modifying ODVs "
                 "may result in non-compliance with the benchmark.\n"
             )
 
