@@ -128,6 +128,9 @@ def open_plist(file_path: Path) -> dict[str, dict[str, bool]]:
         with file_path.open("rb") as file:
             return plistlib.load(file)
     except plistlib.InvalidFileException as e:
+        logger.error(
+            "An error occurred while processing the file: {}. Error: {}", file_path, e
+        )
         raise
 
     except (FileNotFoundError, PermissionError, IOError, Exception) as e:
