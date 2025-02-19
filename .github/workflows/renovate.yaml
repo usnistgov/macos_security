@@ -41,10 +41,21 @@ jobs:
     name: Renovate
     runs-on: ubuntu-latest
     steps:
+      - name: Generate Token
+        uses: actions/create-github-app-token@67e27a7eb7db372a1c61a7f9bdab8699e9ee57f7 # v1
+        id: app-token
+        with:
+          app-id: "${{ secrets.BOT_APP_ID }}"
+          private-key: "${{ secrets.BOT_APP_PRIVATE_KEY }}"
+
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+        with:
+          token: "${{ steps.app-token.outputs.token }}"
 
       - name: Renovate
-        uses: renovatebot/github-action@v41.0.13
+        uses: renovatebot/github-action@e084b5ac6fd201023db6dd7743aec023babb02c8 # v41.0.13
         with:
+          configurationFile: .github/renovate.json5
+          token: "${{ steps.app-token.outputs.token }}"
           renovate-version: "${{ env.WORKFLOW_RENOVATE_VERSION }}"
