@@ -4,8 +4,17 @@ name: "Labeler"
 
 on:
   workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - 'archive/**'
   pull_request_target:
-    branches: ["main"]
+    types: [opened, synchronize, reopened]
+    branches:
+      - main
+    paths-ignore:
+      - 'archive/**'
 
 jobs:
   labeler:
