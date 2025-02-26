@@ -31,6 +31,7 @@ profile:
       - os_airplay_incoming_password_require
       - os_airplay_outgoing_password_require
       - os_airprint_force_trusted_TLS
+      - os_airprint_disable
       - os_allow_contacts_read_managed_sources_unmanaged_destinations_disable
       - os_allow_contacts_write_managed_sources_unmanaged_destinations_disable
       - os_allow_documents_managed_sources_unmanaged_destinations_disable
