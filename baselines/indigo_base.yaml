@@ -11,7 +11,7 @@ authors: |
   |Allen Golbig|Jamf
   |Bob Gendler|National Institute of Standards and Technology
   |===
-parent_values: "recommended"
+parent_values: "indigo_base"
 profile:
   - section: "icloud"
     rules:
