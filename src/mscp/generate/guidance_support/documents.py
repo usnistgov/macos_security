@@ -53,7 +53,7 @@ def generate_documents(
     baseline: Baseline,
     b64logo: bytes,
     pdf_theme: str,
-    logo_path: str,
+    logo_path: Path,
     os_name: str,
     version_info: dict[str, Any],
     show_all_tags: bool = False,
@@ -80,18 +80,12 @@ def generate_documents(
         loader=FileSystemLoader(config["defaults"]["adoc_templates_dir"])
     )
 
-    styles_dir: str = config["defaults"]["misc_dir"]
+    styles_dir: Path = Path(config["defaults"]["misc_dir"]).absolute()
     gems_asciidoctor: Path = Path("mscp_gems/bin/asciidoctor")
     gems_asciidoctor_pdf: Path = Path("mscp_gems/bin/asciidoctor-pdf")
 
-    html_title: str = baseline.title.split(":")[0]
-    html_subtitle: str = baseline.title.split(":")[1].strip()
+    html_title, html_subtitle = map(str.strip, baseline.title.split(":", 1))
     document_subtitle2: str = ":document-subtitle2:"
-    # extract_from_title = lambda title: (
-    #     match.group()
-    #     if (match := re.search(r"(?<=\()(.*?)(?=\s*\))", title, re.IGNORECASE))
-    #     else None
-    # )
 
     if custom:
         env = Environment(
@@ -99,7 +93,7 @@ def generate_documents(
             trim_blocks=True,
             lstrip_blocks=True,
         )
-        styles_dir = config["custom"]["misc_dir"]
+        styles_dir = Path(config["custom"]["misc_dir"])
 
     env.filters["group_ulify"] = group_ulify
 
@@ -123,8 +117,8 @@ def generate_documents(
         pdf_theme=pdf_theme,
         show_all_tags=show_all_tags,
         os_name=os_name.strip().lower(),
-        os_version=str(version_info.get("os", None)),
-        version=version_info.get("version", None),
+        os_version=str(version_info.get("os_version", None)),
+        version=version_info.get("compliance_version", None),
         release_date=version_info.get("date", None),
         custom=custom,
     )

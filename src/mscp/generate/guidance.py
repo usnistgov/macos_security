@@ -59,7 +59,9 @@ def verify_signing_hash(cert_hash: str) -> bool:
 
 @logger.catch
 def generate_guidance(args: argparse.Namespace) -> None:
-    logo_path: str = f"{config['defaults']['images_dir']}/mscp_banner.png"
+    logo_path: Path = Path(
+        config["defaults"]["images_dir"], "mscp_banner.png"
+    ).absolute()
     signing: bool = False
     log_reference: str = "default"
     pdf_theme: str = "mscp-theme.yml"

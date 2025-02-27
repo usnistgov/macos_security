@@ -38,7 +38,12 @@ def get_version_data(os_name: str, os_version: int) -> dict[str, Any]:
         os_entries = platforms.get(os_name, [])
 
         return next(
-            (entry for entry in os_entries if entry.get("os") == os_version_float), {}
+            (
+                entry
+                for entry in os_entries
+                if entry.get("os_version") == os_version_float
+            ),
+            {},
         )
 
     except FileNotFoundError:

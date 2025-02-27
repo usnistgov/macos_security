@@ -1,7 +1,8 @@
 # mscp/common_utils/sanatize_input.py
 
 # Standard python modules
-from typing import Any, Optional, Sequence, Type
+from collections.abc import Sequence
+from typing import Any, Type
 
 # Additional python modules
 from loguru import logger
@@ -9,9 +10,9 @@ from loguru import logger
 
 def sanitize_input(
     prompt: str,
-    type_: Optional[Type[Any]] = None,
-    range_: Optional[Sequence[Any]] = None,
-    default_: Optional[Any] = None,
+    type_: Type[Any] | None = None,
+    range_: Sequence[Any] | None = None,
+    default_: Any | None = None,
 ) -> Any:
     """
     Prompts the user for input, casts it to the specified type, validates it, and returns the validated input.

@@ -126,9 +126,13 @@ class Baseline(BaseModel):
         os_name: str = re.search(
             r"(macos|ios|visionos)", version_data["cpe"], re.IGNORECASE
         ).group()
-        os_version: float = version_data["os"]
-        baseline_title: str = f"{os_name} {os_version}: Security Configuration - {full_title} {baseline_name}"
-        description: str = f"|\n  This guide describes the actions to take when securing a {os_name} {os_version} system against the {full_title} {baseline_name} security baseline.\n"
+        os_version: float = version_data["os_version"]
+        baseline_title: str = (
+            f"{os_name} {os_version}: Security Configuration - {full_title} {baseline_name}"
+        )
+        description: str = (
+            f"|\n  This guide describes the actions to take when securing a {os_name} {os_version} system against the {full_title} {baseline_name} security baseline.\n"
+        )
 
         if benchmark == "recommended":
             description += "\n  Information System Security Officers and benchmark creators can use this catalog of settings in order to assist them in security benchmark creation. This list is a catalog, not a checklist or benchmark, and satisfaction of every item is not likely to be possible or sensible in many operational scenarios."
@@ -263,9 +267,11 @@ class Baseline(BaseModel):
 
         ordered_profiles = sorted(
             serialized_data["profile"],
-            key=lambda p: profile_order.index(p["section"])
-            if p["section"] in profile_order
-            else len(profile_order),
+            key=lambda p: (
+                profile_order.index(p["section"])
+                if p["section"] in profile_order
+                else len(profile_order)
+            ),
         )
 
         for key in key_order:

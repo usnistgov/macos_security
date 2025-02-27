@@ -3,13 +3,12 @@
 # Standard python modules
 import shlex
 import subprocess
-from typing import Optional
 
 # Additional python modules
 from loguru import logger
 
 
-def run_command(command: str) -> tuple[Optional[str], Optional[str]]:
+def run_command(command: str) -> tuple[str | None, str | None]:
     """
     Executes a shell command and returns its output or an error message.
         result = subprocess.run(args, capture_output=True, text=True, check=True)

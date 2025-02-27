@@ -246,6 +246,74 @@
       "$ref": "https://raw.githubusercontent.com/apple/device-management/refs/heads/release/docs/schema.yaml"
     }
   },
+  "$defs": {
+    "operating_system_names": {
+      "type": "object",
+      "description": "Operating System's this rule applies to.",
+      "properties": {
+        "sequoia": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "sonoma": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "ventura": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "monterey": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "big_sur": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "catalina": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "ios_18": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "ios_17": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "ios_16": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "visionos_2": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  },
   "anyOf": [
     {
       "not": {

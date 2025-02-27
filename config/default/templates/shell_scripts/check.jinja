@@ -15,6 +15,7 @@
   rule_id="{{ rule.rule_id | replace("\|", "|") }}"
   check_command="{{ rule.check | replace("\|", "|") | trim }}"
   expected_result="{{ rule.result | string }}"
+  {% if rule.result is not none %}
   {% if "integer" in rule.result %}
   result_value="{{ rule["result"]["integer"] }}"
   {% elif "boolean" in rule.result %}
@@ -23,6 +24,7 @@
   result_value="{{ rule["result"]["string"] }}"
   {% elif "base64" in rule.result %}
   result_value="{{ rule["result"]["base64"] }}"
+  {% endif %}
   {% endif %}
   log_reference_id="{{ rule | log_reference(reference) }}"
 

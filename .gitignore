@@ -9,7 +9,7 @@ mscp_gems
 Gemfile.lock
 
 # Python
-.venv
+.venv*
 
 # misc
 .private

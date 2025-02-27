@@ -61,11 +61,11 @@ endif::[]
 ifdef::show_STIG[]
 !DISA STIG(s)
 !
-{{ render_rules(rule.references.disa_stig) if rule.disa_stig is not none else "* N/A" }}
+{{ render_rules(rule.references.disa_stig) if rule.references.disa_stig is not none else "* N/A" }}
 
 !SFR
 !
-{{ render_rules(rule.sfr) if rule.sfr is not none else "* N/A" }}
+{{ render_rules(rule.references.sfr) if rule.references.sfr is not none else "* N/A" }}
 endif::[]
 
 ifdef::show_CIS[]
