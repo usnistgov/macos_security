@@ -1,0 +1,8 @@
+
+## {{ profile.section }}
+
+{{ profile.description | trim }}
+
+{% for rule in profile.rules %}
+{% include "rule.md.jinja" %}
+{% endfor %}

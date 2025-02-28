@@ -313,9 +313,9 @@ class Macsecurityrule(BaseModel):
             rule_yaml: dict = open_yaml(rule_file)
             payloads: list[Mobileconfigpayload] = []
 
-            for k, v in rule_yaml.items():
-                if k in ["title", "id", "discussion", "check", "fix"]:
-                    rule_yaml[k] = v.replace("|", "\\|")
+            # for k, v in rule_yaml.items():
+            #     if k in ["title", "id", "discussion", "fix"]:
+            #         rule_yaml[k] = v.replace("|", "\\|")
 
             rule_yaml["rule_id"] = rule_yaml.pop("id")
 

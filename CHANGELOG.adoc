@@ -17,7 +17,7 @@ endif::[]
 
 This document provides a high-level view of the changes to the macOS Security Compliance Project.
 
-== [mSCP 2.x] - 2025-02-12
+== [mSCP 2.x] - 2025-02-28
 IMPORTANT: This release is a major update and includes breaking changes. Please review the documentation before upgrading.
 
 === Scripts
@@ -25,6 +25,10 @@ IMPORTANT: This release is a major update and includes breaking changes. Please 
 * All Apple Operating Systems have been consolidated into a single API
 * All document creation has been moved to a Jinja template
 * Add debug and version switch to CLI
+* Add markdown switch to guidance CLI
+* Add generate_markdown_documents function for handleing markdown guidance generation
+* Add generate_asciidoc_documents function for handling asciidoc guidance generation
+* Add render_template function for rendering Jinja templates for document generation
 
 === Rules
 * All rules updated to support the new API
@@ -32,9 +36,12 @@ IMPORTANT: This release is a major update and includes breaking changes. Please 
 === Baselines
 * All baselines updated to support the new API
 
-NOTE: Version 2.x of the mSCP will not support macOS 14 or earlier and iOS 17 or earlier.
+=== Templates
+* Created shell script Jinja templates for compliance checking
+* Created markdown and asciidoc Jinja templates for guidance generation
 
-== [Sequoia, Revision 1.1] - 2024-12-16]
+
+== [Sequoia, Revision 1.1] - 2024-12-16
 * Rules
 ** Added Rules
 *** os_iphone_mirroring_disable

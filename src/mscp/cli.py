@@ -197,6 +197,13 @@ def main() -> None:
         help="Generate Documentation and all support files",
         action="store_true",
     )
+    guidance_parser.add_argument(
+        "-m",
+        "--markdown",
+        default=None,
+        help="Generate Documentation in markdown format",
+        action="store_true",
+    )
 
     mapping_parser: argparse.ArgumentParser = subparsers.add_parser(
         "mapping",

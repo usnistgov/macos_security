@@ -20,9 +20,10 @@ from src.mscp.common_utils import (
     run_command,
 )
 from src.mscp.generate.guidance_support import (
+    generate_asciidoc_documents,
     generate_ddm,
-    generate_documents,
     generate_excel,
+    generate_markdown_documents,
     generate_profiles,
     generate_script,
 )
@@ -75,6 +76,7 @@ def generate_guidance(args: argparse.Namespace) -> None:
     audit_name: str = str(baseline_name)
     build_path: Path = Path(config.get("output_dir", ""), baseline_name)
     adoc_output_file: Path = Path(build_path, f"{baseline_name}.adoc")
+    md_output_file: Path = Path(build_path, f"{baseline_name}.md")
     spreadsheet_output_file: Path = Path(build_path, f"{baseline_name}.xlsx")
 
     baseline: Baseline = Baseline.from_yaml(
@@ -141,6 +143,20 @@ def generate_guidance(args: argparse.Namespace) -> None:
     if args.gary:
         show_all_tags = True
 
+    if args.markdown:
+        logger.info("Generating markdown documents")
+        generate_markdown_documents(
+            md_output_file,
+            baseline,
+            b64logo,
+            pdf_theme,
+            logo_path,
+            args.os_name,
+            current_version_data,
+            show_all_tags,
+            custom,
+        )
+
     if args.all:
         logger.info("Generating all support files")
         logger.info("Generating configuration profiles")
@@ -155,7 +171,20 @@ def generate_guidance(args: argparse.Namespace) -> None:
         logger.info("Generating Excel document")
         generate_excel(spreadsheet_output_file, baseline)
 
-    generate_documents(
+        logger.info("Generating markdown documents")
+        generate_markdown_documents(
+            md_output_file,
+            baseline,
+            b64logo,
+            pdf_theme,
+            logo_path,
+            args.os_name,
+            current_version_data,
+            show_all_tags,
+            custom,
+        )
+
+    generate_asciidoc_documents(
         adoc_output_file,
         baseline,
         b64logo,

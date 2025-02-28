@@ -1,15 +1,14 @@
-{% from "macros.jinja" import render_rules %}
 {% set check_tags = ["permanent", "inherent", "n_a"] %}
-=== {{ rule.title | replace("\|", "|") }}
+=== {{ rule.title }}
 
 {% if not "supplemental" in rule.tags %}
 {{ rule.discussion }}
 {% else %}
-{{ rule.discussion | replace("\|", "|") }}
+{{ rule.discussion | include_replace }}
 {% endif %}
 
 {%- if rule.mechanism == "manual" %}
-NOTE: This rule is marked as manual and may not be able to be automated. It is also excluded in the compliance scan and will not report any results.
+:grey_exclamation: This rule is marked as manual and may not be able to be automated. It is also excluded in the compliance scan and will not report any results.
 {% endif -%}
 
 {%- if not "supplemental" in rule.tags %}
@@ -18,26 +17,24 @@ To check the state of the system, run the following command(s):
 [source,bash,options="nowrap"]
 ----
 {% endif -%}
-{{ rule.check | replace("\|", "|") }}
-
-{% if not rule.tags in check_tags %}
+{{- rule.check }}
 ----
 
+{% if not rule.tags in check_tags %}
 If the result is not *{{ rule.result_value }}*, this is a finding.
 
 ====
 **Remediation Description**
 
 Perform the following to configure the system to meet the requirements:
-{{ rule.fix | replace("\|", "|") }}
+{{ rule.fix }}
 ====
 {% endif %}
 [cols="15%h, 85%a"]
 |===
 
 |ID
-|{{ rule.rule_id | replace("\|", "|") }}
-
+|{{ rule.rule_id }}
 {{ rule.severity if rule.severity is not none and rule.tags not in check_tags }}
 
 |References
@@ -50,60 +47,60 @@ Perform the following to configure the system to meet the requirements:
 
 !800-53r5
 !
-{{ rule.references.nist_controls | group_ulify if rule.references.nist_controls is not none else "* N/A" }}
+{{ rule.references.nist_controls | group_ulify if rule.references.nist_controls is not none else "- N/A" }}
 
 ifdef::show_171[]
 !800-171r3
 !
-{{ render_rules(rule.references.nist_171) if rule.references.nist_171 is not none else "* N/A" }}
+{{ rule.references.nist_171 | render_rules if rule.references.nist_171 is not none else "- N/A" }}
 endif::[]
 
 ifdef::show_STIG[]
 !DISA STIG(s)
 !
-{{ render_rules(rule.references.disa_stig) if rule.references.disa_stig is not none else "* N/A" }}
+{{ rule.references.disa_stig | render_rules if rule.references.disa_stig is not none else "- N/A" }}
 
 !SFR
 !
-{{ render_rules(rule.references.sfr) if rule.references.sfr is not none else "* N/A" }}
+{{ rule.references.sfr | render_rules if rule.references.sfr is not none else "- N/A" }}
 endif::[]
 
 ifdef::show_CIS[]
 !CIS Benchmark
 !
-{{ render_rules(rule.references.cis.benchmark) if rule.references.cis.benchmark is not none }}
+{{ rule.references.cis.benchmark | render_rules if rule.references.cis.benchmark is not none else "- N/A" }}
 
 !CIS Controls V8
 !
-{{ render_rules(rule.references.cis.controls_v8) if rule.references.cis.controls_v8 is not none }}
+{{ rule.references.cis.controls_v8 | render_rules if rule.references.cis.controls_v8 is not none else "- N/A" }}
 endif::[]
 
 ifdef::show_indigo[]
 !indigo
 !
-{{ render_rules(rule.references.indigo) if rule.references.indigo is not none }}
+{{ rule.references.indigo | render_rules if rule.references.indigo is not none else "- N/A" }}
 endif::[]
 
 ifdef::show_CMMC[]
 !CMMC
 !
-{{ render_rules(rule.references.cmmc) if rule.references.cmmc is not none }}
+{{ rule.references.cmmc | render_rules if rule.references.cmmc is not none else "- N/A" }}
 endif::[]
 
 !CCE
 !
-{{ render_rules(rule.references.cce) if rule.references.cce is not none -}}
+{{ rule.references.cce | render_rules if rule.references.cce is not none else "- N/A" -}}
 
 {% if custom %}
 ! Custom References
 !
-{{ render_rules(rule.references.custom_refs) if rule.references.custom_refs is not none }}
+{{ rule.references.custom_refs | render_rules if rule.references.custom_refs is not none else "- N/A" }}
 {% endif %}
 
 ifdef::show_tags[]
 !TAGS
 !
-{{ render_rules(rule.tags) if rule.tags is not none else "* N/A" }}
+{{ rule.tags | render_rules if rule.tags is not none else "- N/A" }}
 endif::[]
 
 !===
