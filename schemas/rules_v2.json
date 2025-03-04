@@ -3,6 +3,200 @@
   "$title": "MacOS Security Compliance Rule Schema",
   "$description": "Schema for MacOS Security Compliance Rules",
   "$type": "object",
+  "properties": {
+    "id": {
+      "description": "Unique identifier for the rule.",
+      "type": "string"
+    },
+    "title": {
+      "description": "Title of the rule",
+      "type": "string"
+    },
+    "discussion": {
+      "description": "Detailed explanation or rationale for the rule.",
+      "type": "string"
+    },
+    "references": {
+      "type": "object",
+      "description": "References related to the rule.",
+      "nist": {
+        "$ref": "#/$defs/nistReferences"
+      },
+      "disa": {
+        "$ref": "#/$defs/disaReferences"
+      },
+      "cis": {
+        "$ref": "#/$defs/cisReferences"
+      },
+      "bis": {
+        "indigo": {
+          "$ref": "#/components/schemas/ArrayOfStrings"
+        }
+      },
+      "custom": {
+        "$ref": "#/components/schemas/ArrayOfStrings"
+      }
+    },
+    "platforms": {
+      "ref": "#/$defs/platform"
+    },
+    "ddm_info": {
+      "type": "object",
+      "properties": {
+        "declaration_type": {
+          "type": "string"
+        },
+        "service": {
+          "type": "string",
+          "enum": [
+            "com.apple.sshd",
+            "com.apple.sudo",
+            "com.apple.pam",
+            "com.apple.cups",
+            "com.apple.apache.httpd",
+            "com.apple.bash",
+            "com.apple.zsh"
+          ]
+        },
+        "config_file": {
+          "type": "string"
+        },
+        "configuration_value": {
+          "$ref": "#/components/schemas/AnyofStringIntegerBooleanArrayObject"
+        },
+        "ddm_key": {
+          "type": "string"
+        },
+        "ddm_value": {
+          "$ref": "#/components/schemas/AnyofStringIntegerBooleanArrayObject"
+        }
+      },
+      "if": {
+        "properties": {
+          "declaration_type": {
+            "const": "com.apple.configuration.services.configuration-files"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "service",
+          "config_file",
+          "configuration_value"
+        ]
+      },
+      "else": {
+        "required": [
+          "declaration_type",
+          "ddm_key",
+          "ddm_value"
+        ]
+      }
+    },
+    "customized": {
+      "type": "boolean",
+      "default": false
+    },
+    "mobileconfig": {
+      "type": "boolean"
+    },
+    "mobileconfig_info": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "PayloadType": {
+            "type": "string"
+          },
+          "PayloadContent": {
+            "$ref": "#/components/schemas/AnyofStringIntegerBooleanArrayObject"
+          }
+        }
+      }
+    },
+    "odv": {
+      "type": "object",
+      "properties": {
+        "hint": {
+          "type": "string"
+        },
+        "recommendation": {
+          "$ref": "#/components/schemas/AnyofStringIntegerBooleanArrayObject"
+        },
+        "additionalProperties": true
+      },
+      "required": [
+        "hint",
+        "recommendation"
+      ]
+    },
+    "tags": {
+      "$ref": "#/components/schemas/ArrayOfStrings",
+      "minimumitems": 1
+    }
+  },
+  "anyOf": [
+    {
+      "not": {
+        "properties": {
+          "tags": {
+            "pattern": "\\b(permanent|supplemental|inherent|not_applicable)\\b"
+          }
+        },
+        "then": {
+          "properties": {
+            "platforms": {
+              "anyOf": [
+                {
+                  "macos": {
+                    "required": [
+                      "result"
+                    ]
+                  }
+                },
+                {
+                  "ios": {
+                    "required": [
+                      "result"
+                    ]
+                  }
+                },
+                {
+                  "visionos": {
+                    "required": [
+                      "result"
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "mobileconfig": {
+            "const": true
+          }
+        },
+        "then": {
+          "required": [
+            "mobileconfig_info"
+          ]
+        }
+      }
+    }
+  ],
+  "required": [
+    "id",
+    "title",
+    "discussion",
+    "references",
+    "platforms",
+    "tags"
+  ],
   "components": {
     "schemas": {
       "ArrayOfStrings": {
@@ -40,12 +234,14 @@
       "description": "Platform Configuration",
       "properties": {
         "severity": {
+          "description": "Severity level of the issue.",
           "type": "string"
         },
         "benchmarks": {
           "$ref": "#/components/schemas/ArrayOfStrings"
         },
         "fix": {
+          "description": "Command to fix the issue if the check command fails.",
           "type": "string"
         }
       },
@@ -65,6 +261,7 @@
         {
           "properties": {
             "supervised": {
+              "description": "Flag to indicate if the device is supervised.",
               "type": "boolean",
               "default": true
             }
@@ -79,61 +276,32 @@
       ]
     },
     "rule_os": {
+      "type": "object",
       "anyOf": [
         {
-          "properties": {
-            "sequoia": {
-              "$ref": "#/components/schemas/ArrayOfStrings"
-            }
-          }
-        },
-        {
-          "properties": {
-            "sonoma": {
-              "$ref": "#/components/schemas/ArrayOfStrings"
-            }
-          }
-        },
-        {
-          "properties": {
-            "ventura": {
-              "$ref": "#/components/schemas/ArrayOfStrings"
-            }
-          }
-        },
-        {
-          "properties": {
-            "monterey": {
-              "$ref": "#/components/schemas/ArrayOfStrings"
-            }
-          }
-        },
-        {
-          "properties": {
-            "big_sur": {
-              "$ref": "#/components/schemas/ArrayOfStrings"
-            }
-          }
-        },
-        {
-          "properties": {
-            "ios_18": {
-              "$ref": "#/components/schemas/ArrayOfStrings"
-            }
-          }
-        },
-        {
-          "properties": {
-            "ios_17": {
-              "$ref": "#/components/schemas/ArrayOfStrings"
-            }
-          }
-        },
-        {
-          "properties": {
-            "ios_16": {
-              "$ref": "#/components/schemas/ArrayOfStrings"
-            }
+          "sequoia": {
+            "$ref": "#/components/schemas/ArrayOfStrings"
+          },
+          "sonoma": {
+            "$ref": "#/components/schemas/ArrayOfStrings"
+          },
+          "ventura": {
+            "$ref": "#/components/schemas/ArrayOfStrings"
+          },
+          "monterey": {
+            "$ref": "#/components/schemas/ArrayOfStrings"
+          },
+          "big_sur": {
+            "$ref": "#/components/schemas/ArrayOfStrings"
+          },
+          "ios_18": {
+            "$ref": "#/components/schemas/ArrayOfStrings"
+          },
+          "ios_17": {
+            "$ref": "#/components/schemas/ArrayOfStrings"
+          },
+          "ios_16": {
+            "$ref": "#/components/schemas/ArrayOfStrings"
           }
         }
       ],
@@ -144,38 +312,33 @@
       "description": "Platform Configuration",
       "properties": {
         "check": {
-          "description": "Check text",
+          "description": "Command to check the current state of the system.",
           "type": "string"
         },
         "result": {
           "type": "object",
-          "description": "Result of the check",
-          "anyOf": [
+          "description": "Expected result of the check command.",
+          "oneOf": [
             {
               "integer": {
                 "type": "integer"
-              }
-            },
-            {
+              },
               "string": {
                 "type": "string"
-              }
-            },
-            {
+              },
               "boolean": {
                 "type": "boolean"
-              }
-            },
-            {
+              },
               "base64": {
-                "type": "string"
+                "type": "string",
+                "contentMediaType": "base64"
               }
             }
           ],
           "additionalProperties": false
         },
         "fix": {
-          "description": "Fix text",
+          "description": "Command to fix the issue if the check command fails.",
           "type": "string"
         }
       },
@@ -258,7 +421,12 @@
           "$ref": "#/components/schemas/ArrayOfStrings"
         }
       },
-      "additionalProperties": false
+      "additionalProperties": false,
+      "required": [
+        "cce",
+        "800-53r5",
+        "800-171r3"
+      ]
     },
     "disaReferences": {
       "type": "object",
@@ -296,215 +464,6 @@
         }
       },
       "additionalProperties": false
-    },
-    "references": {
-      "type": "object",
-      "properties": {
-        "nist": {
-          "$ref": "#/$defs/nistReferences"
-        }
-      },
-      "anyOf": [
-        {
-          "disa": {
-            "$ref": "#/$defs/disaReferences"
-          }
-        },
-        {
-          "cis": {
-            "$ref": "#/$defs/cisReferences"
-          }
-        },
-        {
-          "bis": {
-            "indigo": {
-              "$ref": "#/components/schemas/ArrayOfStrings"
-            }
-          }
-        },
-        {
-          "custom": {
-            "$ref": "#/components/schemas/ArrayOfStrings"
-          }
-        }
-      ],
-      "additionalProperties": false
     }
-  },
-  "properties": {
-    "id": {
-      "type": "string"
-    },
-    "title": {
-      "type": "string"
-    },
-    "discussion": {
-      "type": "string"
-    },
-    "references": {
-      "$ref": "#/$defs/references"
-    },
-    "platforms": {
-      "type": "object",
-      "anyOf": [
-        {
-          "macos": {
-            "$ref": "#/$defs/platform"
-          }
-        },
-        {
-          "ios": {
-            "$ref": "#/$defs/platform"
-          }
-        },
-        {
-          "visionos": {
-            "$ref": "#/$defs/platform"
-          }
-        }
-      ],
-      "additionalProperties": false
-    },
-    "ddm_info": {
-      "type": "object",
-      "properties": {
-        "declaration_type": {
-          "type": "string"
-        },
-        "service": {
-          "type": "string",
-          "enum": [
-            "com.apple.sshd",
-            "com.apple.sudo",
-            "com.apple.pam",
-            "com.apple.cups",
-            "com.apple.apache.httpd",
-            "com.apple.bash",
-            "com.apple.zsh"
-          ]
-        },
-        "config_file": {
-          "type": "string"
-        },
-        "configuration_value": {
-          "$ref": "#/components/schemas/AnyofStringIntegerBooleanArrayObject"
-        },
-        "ddm_key": {
-          "type": "string"
-        },
-        "ddm_value": {
-          "$ref": "#/components/schemas/AnyofStringIntegerBooleanArrayObject"
-        }
-      },
-      "required": [
-        "declaration_type",
-        "service",
-        "config_file",
-        "configuration_value",
-        "ddm_key",
-        "ddm_value"
-      ]
-    },
-    "customized": {
-      "type": "boolean"
-    },
-    "mobileconfig": {
-      "type": "boolean"
-    },
-    "mobileconfig_profile": {
-      "type": "array",
-      "items": {
-        "type": "object",
-        "properties": {
-          "profileType": {
-            "type": "string"
-          },
-          "PayloadContent": {
-            "$ref": "#/components/schemas/AnyofStringIntegerBooleanArrayObject"
-          }
-        }
-      }
-    },
-    "odv": {
-      "type": "object",
-      "properties": {
-        "hint": {
-          "type": "string"
-        },
-        "recommendation": {
-          "$ref": "#/components/schemas/AnyofStringIntegerBooleanArrayObject"
-        },
-        "additionalProperties": true
-      },
-      "required": [
-        "hint",
-        "recommendation"
-      ]
-    },
-    "tags": {
-      "$ref": "#/components/schemas/ArrayOfStrings"
-    }
-  },
-  "anyOf": [
-    {
-      "not": {
-        "properties": {
-          "tags": {
-            "pattern": "\\b(permanent|supplemental|inherent|not_applicable)\\b"
-          }
-        },
-        "then": {
-          "properties": {
-            "platforms": {
-              "anyOf": [
-                {
-                  "macos": {
-                    "required": [
-                      "result"
-                    ]
-                  }
-                },
-                {
-                  "ios": {
-                    "required": [
-                      "result"
-                    ]
-                  }
-                },
-                {
-                  "visionos": {
-                    "required": [
-                      "result"
-                    ]
-                  }
-                }
-              ]
-            }
-          }
-        }
-      }
-    },
-    {
-      "if": {
-        "properties": {
-          "mobileconfig": {
-            "const": true
-          }
-        },
-        "then": {
-          "required": [
-            "mobileconfig_info"
-          ]
-        }
-      }
-    }
-  ],
-  "required": [
-    "id",
-    "title",
-    "discussion",
-    "references",
-    "platforms",
-    "tags"
-  ]
+  }
 }

@@ -6,7 +6,7 @@ from collections import OrderedDict
 from enum import Enum
 from pathlib import Path
 from typing import Any
-from uuid import uuid4
+from uuid import UUID, uuid4
 
 from loguru import logger
 
@@ -155,7 +155,33 @@ class References(BaseModel):
     cmmc: list[str] | None = None
     sfr: list[str] | None = None
     indigo: list[str] | None = None
-    custom_refs: dict[str, Any] | None = None
+    custom_refs: list[str] | None = None
+
+    def __init__(self, **data: Any) -> None:
+        super().__init__(**data)
+
+        if self.cci:
+            self.cci = sorted(set(self.cci))
+        if self.cce:
+            self.cce = sorted(set(self.cce))
+        if self.nist_controls:
+            self.nist_controls = sorted(
+                set(self.nist_controls), key=lambda x: (x.split("(")[0], x)
+            )
+        if self.nist_171:
+            self.nist_171 = sorted(set(self.nist_171))
+        if self.disa_stig:
+            self.disa_stig = sorted(set(self.disa_stig))
+        if self.srg:
+            self.srg = sorted(set(self.srg))
+        if self.cmmc:
+            self.cmmc = sorted(set(self.cmmc))
+        if self.sfr:
+            self.sfr = sorted(set(self.sfr))
+        if self.indigo:
+            self.indigo = sorted(set(self.indigo))
+        if self.custom_refs:
+            self.custom_refs = sorted(set(self.custom_refs))
 
     def get(self, attr, default=None):
         return getattr(self, attr, default)
@@ -245,7 +271,8 @@ class Macsecurityrule(BaseModel):
     operating_system: list[Operatingsystem]
     mechanism: str
     section: str
-    uuid: str = Field(default_factory=lambda: str(uuid4()))
+    uuid: UUID = Field(default_factory=uuid4)
+    # uuid: str = Field(default_factory=lambda: str(uuid4()))
 
     @classmethod
     @logger.catch
@@ -312,10 +339,6 @@ class Macsecurityrule(BaseModel):
 
             rule_yaml: dict = open_yaml(rule_file)
             payloads: list[Mobileconfigpayload] = []
-
-            # for k, v in rule_yaml.items():
-            #     if k in ["title", "id", "discussion", "fix"]:
-            #         rule_yaml[k] = v.replace("|", "\\|")
 
             rule_yaml["rule_id"] = rule_yaml.pop("id")
 
@@ -412,8 +435,9 @@ class Macsecurityrule(BaseModel):
 
             if rule.mobileconfig:
                 logger.debug("Formatting mobileconfig_info for rule: {}", rule.rule_id)
-                formatted_mobileconfig = rule.format_mobileconfig_fix()
-                rule.fix = formatted_mobileconfig
+                rule.format_mobileconfig_fix()
+                # formatted_mobileconfig = rule.format_mobileconfig_fix()
+                # rule.fix = formatted_mobileconfig
                 logger.success("Formatted mobileconfig_info for rule: {}", rule.rule_id)
 
             if rule.odv is not None and not generate_baseline:
@@ -532,7 +556,7 @@ class Macsecurityrule(BaseModel):
         return rules
 
     @logger.catch
-    def format_mobileconfig_fix(self) -> str:
+    def format_mobileconfig_fix(self) -> None:
         """
         Generate a formatted XML-like string for the `mobileconfig_info` field.
 
@@ -542,7 +566,7 @@ class Macsecurityrule(BaseModel):
             str: A formatted string representing the mobileconfig payloads.
         """
         if not self.mobileconfig_info:
-            return "No mobileconfig info available for this rule.\n"
+            return
 
         rulefix = ""
 
@@ -566,8 +590,8 @@ class Macsecurityrule(BaseModel):
                 rulefix += self._format_payload(
                     payload.payload_type, payload.payload_content
                 )
-
-        return rulefix
+        self.fix = rulefix
+        # return rulefix
 
     def _fill_in_odv(self, parent_values: str) -> None:
         """

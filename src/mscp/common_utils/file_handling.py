@@ -169,17 +169,6 @@ def create_yaml(file_path: Path, data: dict[str, Any], sort_keys: bool = False) 
             )
         )
 
-        # with file_path.open("w", encoding=ENCODING) as file:
-        #     file.write(yaml_content)
-        #     yaml.dump(
-        #         dict(data),
-        #         stream=file,
-        #         explicit_start=False,
-        #         sort_keys=sort_keys,
-        #         indent=2,
-        #         default_flow_style=False,
-        #     )
-
         logger.success("Created YAML: {}", file_path)
 
     except yaml.YAMLError as e:

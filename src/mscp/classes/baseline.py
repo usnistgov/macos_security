@@ -69,7 +69,7 @@ class Baseline(BaseModel):
         profiles: list[Profile] = []
         for prof in baseline_data.get("profile", []):
             logger.debug(f"Section Name: {prof['section']}")
-            section_data = open_yaml(Path(section_dir, f"{prof['section']}.yaml"))
+            section_data: dict[str,str] = open_yaml(Path(section_dir, f"{prof['section']}.yaml"))
             logger.debug(f"Section Data: {section_data}")
             profiles.append(
                 Profile(

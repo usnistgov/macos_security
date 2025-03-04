@@ -44,6 +44,15 @@ class NistReferences(BaseModel):
     nist_800_53r5: list[str] | None = None
     nist_800_171r3: list[str] | None = None
 
+    def __init__(self, **data):
+        super().__init__(**data)
+        if self.cce:
+            self.cce = OrderedDict(sorted(self.cce.items()))
+        if self.nist_800_53r5:
+            self.nist_800_53r5 = sorted(self.nist_800_53r5)
+        if self.nist_800_171r3:
+            self.nist_800_171r3 = sorted(self.nist_800_171r3)
+
     def get(self, attr, default=None):
         return getattr(self, attr, default)
 
@@ -67,6 +76,17 @@ class DisaReferences(BaseModel):
     disa_stig: dict[str, list[str]] | None = None
     cmmc: list[str] | None = None
 
+    def __init__(self, **data):
+        super().__init__(**data)
+        if self.cci:
+            self.cci = sorted(self.cci)
+        if self.srg:
+            self.srg = sorted(self.srg)
+        if self.disa_stig:
+            self.disa_stig = {k: sorted(v) for k, v in self.disa_stig.items()}
+        if self.cmmc:
+            self.cmmc = sorted(self.cmmc)
+
     def get(self, attr, default=None):
         return getattr(self, attr, default)
 
@@ -88,6 +108,13 @@ class CisReferences(BaseModel):
     benchmark: dict[str, list[str]] | None = None
     controls_v8: list[str] | None = None
 
+    def __init__(self, **data: Any) -> None:
+        super().__init__(**data)
+        if self.benchmark:
+            self.benchmark = {k: sorted(v) for k, v in self.benchmark.items()}
+        if self.controls_v8:
+            self.controls_v8 = sorted(self.controls_v8)
+
     def get(self, attr, default=None):
         return getattr(self, attr, default)
 
@@ -107,6 +134,11 @@ class CisReferences(BaseModel):
 
 class bisReferences(BaseModel):
     indigo: list[str] | None = None
+
+    def __init__(self, **data: Any) -> None:
+        super().__init__(**data)
+        if self.indigo:
+            self.indigo = sorted(self.indigo)
 
     def get(self, attr, default=None):
         return getattr(self, attr, default)
@@ -153,6 +185,7 @@ class References(BaseModel):
     disa: DisaReferences | None = None
     cis: CisReferences | None = None
     bis: bisReferences | None = None
+    custom: list[str] | None = None
 
     def get(self, attr, default=None):
         return getattr(self, attr, default)
@@ -273,6 +306,7 @@ class Macsecurityrule(BaseModel):
     uuid: str = Field(default_factory=lambda: str(uuid4()))
     platforms: dict[str, Platform]
     os_name: str
+    os_type: str
 
     @classmethod
     @logger.catch
@@ -342,17 +376,21 @@ class Macsecurityrule(BaseModel):
             rule_yaml: dict = open_yaml(rule_file)
             payloads: list[Mobileconfigpayload] = []
 
-            for k, v in rule_yaml.items():
-                if k in ["title", "id", "discussion", "check", "fix"]:
-                    rule_yaml[k] = v.replace("|", "\\|")
-
             rule_yaml["rule_id"] = rule_yaml.pop("id")
 
             result_value: str | int | bool | None = None
 
-            if not rule_yaml.get("platforms").get(os_name).get("result"):
+            if (
+                not rule_yaml.get("platforms", {})
+                .get(os_type, {})
+                .get(os_name, {})
+                .get("result")
+            ):
                 rule_yaml["platforms"][os_name]["result"] = (
-                    rule_yaml.get("platforms").get(os_name).get("result", None)
+                    rule_yaml.get("platforms", {})
+                    .get(os_type, {})
+                    .get(os_name, {})
+                    .get("result", None)
                 )
             else:
                 if isinstance(rule_yaml["result"], dict):
@@ -446,12 +484,12 @@ class Macsecurityrule(BaseModel):
                 mechanism=mechanism,
                 section=section,
                 os_name=os_name,
+                os_type=os_type,
             )
 
             if rule.mobileconfig:
                 logger.debug("Formatting mobileconfig_info for rule: {}", rule.rule_id)
-                formatted_mobileconfig = rule._format_mobileconfig_fix()
-                rule["platforms"][os_name]["fix"] = formatted_mobileconfig
+                rule._format_mobileconfig_fix()
                 logger.success("Formatted mobileconfig_info for rule: {}", rule.rule_id)
 
             if rule.odv is not None and not generate_baseline:
@@ -569,7 +607,7 @@ class Macsecurityrule(BaseModel):
         return rules
 
     @logger.catch
-    def _format_mobileconfig_fix(self) -> str:
+    def _format_mobileconfig_fix(self) -> None:
         """
         Generate a formatted XML-like string for the `mobileconfig_info` field.
 
@@ -579,7 +617,7 @@ class Macsecurityrule(BaseModel):
             str: A formatted string representing the mobileconfig payloads.
         """
         if not self.mobileconfig_info:
-            return "No mobileconfig info available for this rule.\n"
+            return
 
         rulefix = ""
 
@@ -604,7 +642,7 @@ class Macsecurityrule(BaseModel):
                     payload.payload_type, payload.payload_content
                 )
 
-        return rulefix
+        self["platforms"][self.os_type][self.os_name].fix = rulefix
 
     def _fill_in_odv(self, parent_values: str) -> None:
         """
@@ -871,6 +909,7 @@ class Macsecurityrule(BaseModel):
 
         if self.odv is not None and "custom" in self.odv:
             self.odv.pop("custom")
+            self.references.pop("custom")
 
         self.to_yaml(rule_file_path)
 
