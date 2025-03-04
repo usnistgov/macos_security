@@ -1,3 +1,4 @@
-  name: "Not Applicable"
-  description: |
-    This section contains the controls that are defined in the NIST 800-53 revision 5 but are not applicable when configuring a macOS system.
+---
+name: "Not Applicable"
+description: |
+  This section contains the controls that are defined in the NIST 800-53 revision 5 but are not applicable when configuring a macOS system.

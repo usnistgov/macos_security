@@ -1,3 +1,4 @@
-  name: "Operating System"
-  description: |
-    This section contains the configuration and enforcement of operating system settings.
+---
+name: "Operating System"
+description: |
+  This section contains the configuration and enforcement of operating system settings.
