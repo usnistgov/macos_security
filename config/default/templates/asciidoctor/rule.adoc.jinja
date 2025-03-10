@@ -17,7 +17,8 @@ To check the state of the system, run the following command(s):
 [source,bash,options="nowrap"]
 ----
 {% endif -%}
-{{- rule.check }}
+{{- rule.check | replace("\\\\", "\\") | replace('\\"', '"') | trim | safe }}
+{# {{- rule.check }} #}
 ----
 
 {% if not rule.tags in check_tags %}

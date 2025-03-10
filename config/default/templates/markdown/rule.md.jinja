@@ -13,13 +13,13 @@
 {% endif -%}
 
 {% if not "supplemental" in rule.tags %}
-{% if os_name == "macos" or custom and rule.tags not in check_tags %}
+{% if os_name == "macos" or custom and rule.tags not in check_tags and "[source,bash]" in rule.check %}
 To check the state of the system, run the following command(s):
 ```bash
-{{ rule.check }}
+{{ rule.check | replace("\\\\", "\\") | replace('\\"', '"') | trim | safe }}
 ```
 {% else %}
-{{ rule.check }}
+{{ rule.check | trim | safe }}
 {% endif -%}
 
 {% if not rule.tags in check_tags %}

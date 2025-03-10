@@ -190,6 +190,9 @@ def render_template(
     env: Environment = Environment(
         loader=FileSystemLoader(template_dir),
         trim_blocks=True,
+        lstrip_blocks=True,
+        autoescape=False,
+        keep_trailing_newline=False,
     )
 
     styles_dir: Path = Path(misc_dir).absolute()

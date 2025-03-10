@@ -1,7 +1,7 @@
 {% set check_tags = ["permanent", "inherent", "n_a"] %}
 {% if "supplemental" not in rule.rule_id and not (rule.tags | select("in", check_tags) | list) %}
   {% if rule.check %}
-  #####----- Rule: {{ rule.rule_id | replace("\|", "|") }} -----#####
+  #####----- Rule: {{ rule.rule_id }} -----#####
   ## Addresses the following NIST 800-53 controls:
   {{ rule.references.nist_controls | group_ulify if rule.references.nist_controls is not none else "# * N/A" }}
 
@@ -12,8 +12,8 @@
   {% else %}
   rule_arch=""
   {% endif %}
-  rule_id="{{ rule.rule_id | replace("\|", "|") }}"
-  check_command="{{ rule.check | replace("\|", "|") | trim }}"
+  rule_id="{{ rule.rule_id }}"
+  check_command="{{ rule.check | replace("\\\\", "\\") | trim | safe }}"
   expected_result="{{ rule.result | string }}"
   {% if rule.result is not none %}
   {% if "integer" in rule.result %}

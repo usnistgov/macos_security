@@ -6,14 +6,13 @@ build-backend = "hatchling.build"
 name = "pyospackage"
 version = "0.1"
 description = 'The macOS Security Compliance Project is an open source effort to provide a programmatic approach to generating security guidance.'
-readme = {"file" = "README.adoc"}
+readme = "README.adoc"
 requires-python = ">=3.12"
 license = "LICENSE.md"
 keywords = []
 classifiers = [
   "Development Status :: 4 - Beta",
   "Programming Language :: Python",
-  "Programming Language :: Python :: 3.9",
   "Programming Language :: Python :: 3.10",
   "Programming Language :: Python :: 3.11",
   "Programming Language :: Python :: 3.12",
@@ -32,6 +31,6 @@ dependencies = [
 [project.urls]
 Documentation = "https://github.com/usnistgov/macos_security/wiki"
 Issues = "https://github.com/usnistgov/macos_security/issues"
-Sourece = "https://github.com/usnistgov/macos_security"
+Source = "https://github.com/usnistgov/macos_security"
 
 [tool]
