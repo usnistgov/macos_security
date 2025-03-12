@@ -18,7 +18,7 @@ endif::[]
 
 ifdef::status[]
 image:https://badgen.net/badge/icon/apple?icon=apple&label[link="https://www.apple.com/"]
-image:https://badgen.net/badge/icon/14.0?icon=apple&label[link="https://www.apple.com/macos"]
+// image:https://badgen.net/badge/icon/14.0?icon=apple&label[link="https://www.apple.com/macos"]
 endif::[]
 
 IMPORTANT: THIS IS A DEV BRANCH FOR mSCP 2.0. DO NOT USE FOR PRODUCTION.
