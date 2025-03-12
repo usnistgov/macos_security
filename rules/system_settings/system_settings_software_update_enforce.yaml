@@ -17,18 +17,6 @@ references:
       - 3.14.1
       - 3.14.2
       - 3.13.3
-  disa:
-    cci:
-      - null
-    srg:
-      - null
-    disa_stig:
-      sequoia:
-        - null
-      sonoma:
-        - null
-      ventura:
-        - null
   cis:
     benchmark:
       sequoia:

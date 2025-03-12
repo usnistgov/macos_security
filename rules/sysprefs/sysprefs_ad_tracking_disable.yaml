@@ -1,6 +1,9 @@
 id: sysprefs_ad_tracking_disable
 title: Disable Ad Tracking
-discussion: "Ad tracking and targeted ads _MUST_ be disabled.\n\nThe information system _MUST_ be configured to provide only essential capabilities. Disabling ad tracking ensures that applications and advertisers are unable to track users' interests and deliver targeted advertisements. \n"
+discussion: |
+  Ad tracking and targeted ads _MUST_ be disabled.
+
+  The information system _MUST_ be configured to provide only essential capabilities. Disabling ad tracking ensures that applications and advertisers are unable to track users' interests and deliver targeted advertisements.
 references:
   nist:
     cce:
@@ -11,18 +14,7 @@ references:
       - CM-7
       - CM-7(1)
       - SC-7(10)
-  disa:
-    cci:
-      - null
-    srg:
-      - null
-    disa_stig:
-      catalina:
-        - null
   cis:
-    benchmark:
-      catalina:
-        - null
     controls_v8:
       - 4.1
       - 4.8

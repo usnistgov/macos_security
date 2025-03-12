@@ -27,15 +27,7 @@ references:
       - 03.04.06
       - 03.13.01
   disa:
-    cci:
-      - null
-    srg:
-      - null
     disa_stig:
-      sequoia:
-        - null
-      sonoma:
-        - null
       ventura:
         - APPL-13-005050
     cmmc:

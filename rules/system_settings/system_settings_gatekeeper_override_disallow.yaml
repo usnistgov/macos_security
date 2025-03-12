@@ -19,17 +19,6 @@ references:
     800-171r3:
       - 03.14.02
   disa:
-    cci:
-      - null
-    srg:
-      - null
-    disa_stig:
-      sequoia:
-        - null
-      sonoma:
-        - null
-      ventura:
-        - null
     cmmc:
       - CM.L2-3.4.5
 platforms:

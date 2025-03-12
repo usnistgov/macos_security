@@ -27,8 +27,6 @@ references:
         - APPL-15-002250
       sonoma:
         - APPL-14-002250
-      ventura:
-        - null
     cmmc:
       - CM.L2-3.4.6
       - CM.L2-3.4.7

@@ -24,7 +24,6 @@ platforms:
       supervised: true
       benchmarks:
         - ios_stig
-tags: []
 mobileconfig_info:
   com.apple.applicationaccess:
     forcePreserveESIMOnErase: false

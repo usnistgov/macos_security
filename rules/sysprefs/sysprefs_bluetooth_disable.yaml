@@ -1,0 +1,74 @@
+id: sysprefs_bluetooth_disable
+title: Disable Bluetooth When no Approved Device is Connected
+discussion: |
+  The macOS system _MUST_ be configured to disable Bluetooth unless there is an approved device connected.
+
+  [IMPORTANT]
+  ====
+  Information System Security Officers (ISSOs) may make the risk-based decision not to disable Bluetooth, so as to maintain necessary functionality, but they are advised to first fully weigh the potential risks posed to their organization.
+  ====
+references:
+  nist:
+    cce:
+      monterey:
+        - CCE-91048-9
+      big_sur:
+        - CCE-85420-8
+      catalina:
+        - CCE-84826-7
+    800-53r5:
+      - AC-18
+      - SC-8
+      - AC-18(3)
+  disa:
+    cci:
+      - CCI-002418
+    srg:
+      - SRG-OS-000481-GPOS-000481
+      - SRG-OS-000319-GPOS-00164
+    disa_stig:
+      monterey:
+        - APPL-12-002062
+      big_sur:
+        - APPL-11-002062
+      catalina:
+        - AOSX-15-002062
+  cis:
+    controls_v8:
+      - 4.8
+      - 12.6
+      - 13.9
+platforms:
+  macOS:
+    check: |
+      /usr/bin/osascript -l JavaScript << EOS
+      $.NSUserDefaults.alloc.initWithSuiteName('com.apple.MCXBluetooth')\
+      .objectForKey('DisableBluetooth').js
+      EOS
+    result:
+      string: 'true'
+    fix: |
+      This is implemented by a Configuration Profile.
+    monterey:
+      severity: low
+      benchmarks:
+        - disa_stig
+    big_sur:
+      severity: low
+      benchmarks:
+        - disa_stig
+    catalina:
+      severity: low
+      benchmarks:
+        - disa_stig
+tags:
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_high
+  - 800-171
+  - cisv8
+  - cnssi-1253
+mobileconfig_info:
+  com.apple.ManagedClient.preferences:
+    com.apple.MCXBluetooth:
+      DisableBluetooth: true

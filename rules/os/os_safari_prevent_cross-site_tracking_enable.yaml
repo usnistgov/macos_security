@@ -1,0 +1,59 @@
+id: os_safari_prevent_cross-site_tracking_enable
+title: Ensure Prevent Cross-site Tracking in Safari Is Enabled
+discussion: |
+  Prevent cross-site tracking _MUST_ be enabled in Safari.
+references:
+  nist:
+    cce:
+      sequoia:
+        - CCE-94282-1
+      sonoma:
+        - CCE-92878-8
+      ventura:
+        - CCE-92003-3
+      monterey:
+        - CCE-85142-8
+  cis:
+    benchmark:
+      sequoia:
+        - 6.3.4 (level 1)
+      sonoma:
+        - 6.3.4 (level 1)
+      ventura:
+        - 6.3.4 (level 1)
+      monterey:
+        - 7.2.5 (level 1)
+    controls_v8:
+      - 9.1
+      - 9.3
+platforms:
+  macOS:
+    check: |
+      /usr/bin/profiles -P -o stdout | /usr/bin/grep -cE '"WebKitPreferences.storageBlockingPolicy" = 1|"WebKitStorageBlockingPolicy" = 1|"BlockStoragePolicy" =2' | /usr/bin/awk '{ if ($1 >= 1) {print "1"} else {print "0"}}'
+    result:
+      integer: 1
+    fix: |
+      This is implemented by a Configuration Profile.
+    sequoia:
+      benchmarks:
+        - cis_lvl1
+        - cis_lvl2
+    sonoma:
+      benchmarks:
+        - cis_lvl1
+        - cis_lvl2
+    ventura:
+      benchmarks:
+        - cis_lvl1
+        - cis_lvl2
+    monterey:
+      benchmarks:
+        - cis_lvl1
+        - cis_lvl2
+tags:
+  - cisv8
+mobileconfig_info:
+  com.apple.Safari:
+    WebKitPreferences.storageBlockingPolicy: 1
+    WebKitStorageBlockingPolicy: 1
+    BlockStoragePolicy: 2

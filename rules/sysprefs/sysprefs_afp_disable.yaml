@@ -21,9 +21,6 @@ references:
       catalina:
         - AOSX-15-002002
   cis:
-    benchmark:
-      catalina:
-        - null
     controls_v8:
       - 4.1
       - 4.8
@@ -47,4 +44,3 @@ tags:
   - 800-171
   - cnssi-1253
   - cisv8
-mobileconfig_info: null

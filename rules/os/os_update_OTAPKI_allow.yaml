@@ -1,0 +1,28 @@
+id: os_update_OTAPKI_allow
+title: Allow OTA Update of PKI
+discussion: |
+  The device _MUST_ be configured that the OTA update of the PKI is allowed.
+references:
+  nist:
+    cce:
+      ios_18:
+        - CCE-94558-4
+      ios_17:
+        - CCE-93506-4
+  bsi:
+    indigo:
+      ios_17:
+        - ANNEX K
+platforms:
+  iOS:
+    ios_18:
+      supervised: false
+      benchmarks:
+        - indigo_high
+    ios_17:
+      supervised: false
+      benchmarks:
+        - indigo_high
+mobileconfig_info:
+  com.apple.applicationaccess:
+    allowOTAPKIUpdates: true

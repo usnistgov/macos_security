@@ -1,0 +1,90 @@
+id: audit_failure_halt
+title: Configure System to Shut Down Upon Audit Failure
+discussion: |
+  The audit service _MUST_ be configured to shut down the computer if it is unable to audit system events.
+
+  Once audit failure occurs, user and system activity are no longer recorded, and malicious activity could go undetected. Audit processing failures can occur due to software/hardware errors, failures in the audit capturing mechanisms, and audit storage capacity being reached or exceeded.
+references:
+  nist:
+    cce:
+      sequoia:
+        - CCE-94111-2
+      sonoma:
+        - CCE-92711-1
+      ventura:
+        - CCE-91711-2
+      monterey:
+        - CCE-90857-4
+      big_sur:
+        - CCE-85257-4
+      catalina:
+        - CCE-84708-7
+    800-53r5:
+      - AU-5
+    800-171r3:
+      - 03.03.04
+  disa:
+    cci:
+      - CCI-000140
+    srg:
+      - SRG-OS-000047-GPOS-00023
+    disa_stig:
+      sequoia:
+        - APPL-15-001010
+      sonoma:
+        - APPL-14-001010
+      ventura:
+        - APPL-13-001010
+      monterey:
+        - APPL-12-001010
+      big_sur:
+        - APPL-11-001010
+      catalina:
+        - AOSX-15-001010
+    cmmc:
+      - AU.L2-3.3.4
+platforms:
+  macOS:
+    check: |
+      /usr/bin/awk -F':' '/^policy/ {print $NF}' /etc/security/audit_control | /usr/bin/tr ',' '\n' | /usr/bin/grep -Ec 'ahlt'
+    result:
+      integer: 1
+    fix: |
+      [source,bash]
+      ----
+      /usr/bin/sed -i.bak 's/^policy.*/policy: ahlt,argv/' /etc/security/audit_control; /usr/sbin/audit -s
+      ----
+    sequoia:
+      severity: medium
+      benchmarks:
+        - disa_stig
+    sonoma:
+      severity: medium
+      benchmarks:
+        - disa_stig
+    ventura:
+      severity: medium
+      benchmarks:
+        - disa_stig
+    monterey:
+      severity: medium
+      benchmarks:
+        - disa_stig
+    big_sur:
+      severity: medium
+      benchmarks:
+        - disa_stig
+    catalina:
+      severity: medium
+      benchmarks:
+        - disa_stig
+tags:
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_high
+  - 800-171
+  - cnssi-1253_low
+  - cnssi-1253_high
+  - cmmc_lvl2
+  - cnssi-1253_moderate
+  - cnssi-1253

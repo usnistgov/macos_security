@@ -19,24 +19,13 @@ references:
       - 03.04.06
       - 03.04.08
   disa:
-    cci:
-      - null
-    srg:
-      - null
     disa_stig:
-      sequoia:
-        - null
       sonoma:
         - APPL-14-002051
     cmmc:
       - CM.L2-3.4.6
       - CM.L2-3.4.7
   cis:
-    benchmark:
-      sequoia:
-        - null
-      sonoma:
-        - null
     controls_v8:
       - 4.1
       - 4.8

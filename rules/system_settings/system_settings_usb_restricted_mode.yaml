@@ -36,16 +36,6 @@ references:
     cmmc:
       - MP.L2-3.8.7
       - MP.L2-3.8.8
-  cis:
-    benchmark:
-      sequoia:
-        - null
-      sonoma:
-        - null
-      ventura:
-        - null
-    controls_v8:
-      - null
 platforms:
   macOS:
     check: |

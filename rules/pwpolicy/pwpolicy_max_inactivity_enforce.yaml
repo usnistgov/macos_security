@@ -1,0 +1,105 @@
+id: pwpolicy_max_inactivity_enforce
+title: Ensure Maximum Auto-Lock is set to $ODV minutes or less
+discussion: |
+  The iOS _MUST_ be configured to auto-lock after $ODV minutes.
+references:
+  nist:
+    cce:
+      ios_18:
+        - CCE-94476-9
+      ios_17:
+        - CCE-93459-6
+      ios_16:
+        - CCE-93259-0
+    800-53r5:
+      - AC-11
+      - IA-11
+  disa:
+    cci:
+      - CCI-000057
+    disa_stig:
+      ios_18:
+        - AIOS-18-006800
+      ios_17:
+        - AIOS-17-006800
+        - AIOS-17-706800
+      ios_16:
+        - AIOS-16-006800
+        - AIOS-16-706800
+    sfr:
+      - 'FMT_SMF_EXT.1.1 #2b'
+  cis:
+    benchmark:
+      ios_18:
+        - 2.4.4 (level 1 - End-User Owned Devices)
+        - 3.4.4 (level 1 - Institutionally-Owned Devices)
+      ios_17:
+        - 2.4.4 (level 1 - End-User Owned Devices)
+        - 3.4.4 (level 1 - Institutionally-Owned Devices)
+      ios_16:
+        - 2.4.4 (level 1 - End-User Owned Devices)
+        - 3.4.4 (level 1 - Institutionally-Owned Devices)
+    controls_v8:
+      - 4.3
+  bsi:
+    indigo:
+      ios_17:
+        - ANNEX D (Section 5.9.1 - Device-Code)
+        - ANNEX K
+platforms:
+  iOS:
+    ios_18:
+      severity: medium
+      supervised: false
+      benchmarks:
+        - cis_lvl1_byod
+        - cis_lvl2_byod
+        - cis_lvl1_enterprise
+        - cis_lvl2_enterprise
+        - ios_stig
+        - indigo_base
+        - indigo_high
+    ios_17:
+      severity: medium
+      supervised: false
+      benchmarks:
+        - cis_lvl1_byod
+        - cis_lvl2_byod
+        - cis_lvl1_enterprise
+        - cis_lvl2_enterprise
+        - ios_stig
+        - ios_stig_byoad
+        - indigo_base
+        - indigo_high
+    ios_16:
+      severity: medium
+      supervised: false
+      benchmarks:
+        - cis_lvl1_byod
+        - cis_lvl2_byod
+        - cis_lvl1_enterprise
+        - cis_lvl2_enterprise
+        - ios_stig
+        - ios_stig_byoad
+odv:
+  hint: Maximum Auto-Lock in Minutes.
+  recommended: 2
+  cis_lvl1_byod: 2
+  cis_lvl2_byod: 2
+  cis_lvl1_enterprise: 2
+  cis_lvl2_enterprise: 2
+  ios_stig: 5
+  ios_stig_byoad: 5
+  indigo_base: 2
+  indigo_high: 2
+tags:
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_high
+  - cisv8
+  - cnssi-1253_moderate
+  - cnssi-1253_low
+  - cnssi-1253_high
+mobileconfig_info:
+  com.apple.mobiledevice.passwordpolicy:
+    maxInactivity: $ODV

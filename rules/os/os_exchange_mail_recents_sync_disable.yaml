@@ -1,0 +1,30 @@
+id: os_exchange_mail_recents_sync_disable
+title: Prevent synching of recent recipients.
+discussion: |
+  The iOS device needs some specific configurations for the Exchange setup to meet the minimum requirements.
+
+  The synchronization of recent addresses _MUST_ be prevented not to synchronize sensitive addresses locally to the device.
+references:
+  nist:
+    cce:
+      ios_18:
+        - CCE-94532-9
+      ios_17:
+        - CCE-93484-4
+  bsi:
+    indigo:
+      ios_17:
+        - ANNEX D (Section 5.6.1 - Mail)
+platforms:
+  iOS:
+    ios_18:
+      supervised: false
+      benchmarks:
+        - indigo_high
+    ios_17:
+      supervised: false
+      benchmarks:
+        - indigo_high
+mobileconfig_info:
+  com.apple.mail.managed:
+    disableMailRecentsSyncing: true

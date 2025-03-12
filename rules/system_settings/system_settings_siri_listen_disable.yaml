@@ -11,20 +11,6 @@ references:
         - CCE-93022-2
       ventura:
         - CCE-92031-4
-    800-53r5:
-      - null
-  disa:
-    cci:
-      - null
-    srg:
-      - null
-    disa_stig:
-      sequoia:
-        - null
-      sonoma:
-        - null
-      ventura:
-        - null
   cis:
     benchmark:
       sequoia:

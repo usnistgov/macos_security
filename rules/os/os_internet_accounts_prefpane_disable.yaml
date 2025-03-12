@@ -26,9 +26,6 @@ references:
       catalina:
         - AOSX-15-002032
   cis:
-    benchmark:
-      catalina:
-        - null
     controls_v8:
       - 4.8
       - 15.2

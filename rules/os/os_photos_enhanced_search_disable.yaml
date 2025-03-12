@@ -19,8 +19,6 @@ references:
       - 03.01.20
       - 03.04.06
   disa:
-    cci:
-      - null
     cmmc:
       - AC.L1-3.1.20
       - CM.L2-3.4.6

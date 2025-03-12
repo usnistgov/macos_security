@@ -31,8 +31,6 @@ references:
         - APPL-15-002100
       sonoma:
         - APPL-14-002100
-      ventura:
-        - null
     cmmc:
       - AC.L1-3.1.1
   cis:

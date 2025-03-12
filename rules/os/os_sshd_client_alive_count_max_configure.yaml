@@ -1,0 +1,208 @@
+id: os_sshd_client_alive_count_max_configure
+title: Configure SSHD ClientAliveCountMax to $ODV
+discussion: |
+  If SSHD is enabled it _MUST_ be configured with the Client Alive Maximum Count set to $ODV.
+
+  This will set the number of client alive messages which may be sent without the SSH server receiving any messages back from the client.  If this threshold is reached while client alive messages are being sent, the SSH server will disconnect the client, terminating the session.  The client alive messages are sent through the encrypted channel and therefore will not be spoofable.  The client alive mechanism is valuable when the client or server depend on knowing when a connection has become unresponsive.
+
+  NOTE: This setting is not intended to manage idle user sessions where there is no input from the client. Its purpose is to monitor for interruptions in network connectivity and force the session to terminate after the connection appears to be broken.
+
+  NOTE: On macOS 15.2 and higher the SSH configuration can be reset to the macOS default by running /usr/libexec/reset-ssh-configuration.
+references:
+  nist:
+    cce:
+      sequoia:
+        - CCE-94303-5
+      sonoma:
+        - CCE-92898-6
+      ventura:
+        - CCE-91886-2
+      monterey:
+        - CCE-91007-5
+      big_sur:
+        - CCE-85456-2
+      catalina:
+        - CCE-84792-1
+    800-53r5:
+      - SC-10
+    800-171r3:
+      - 03.13.09
+  disa:
+    cci:
+      - CCI-001133
+    srg:
+      - SRG-OS-000163-GPOS-00072
+    disa_stig:
+      sequoia:
+        - APPL-15-000052
+      sonoma:
+        - APPL-14-000052
+      ventura:
+        - APPL-13-000052
+      monterey:
+        - APPL-12-000052
+      big_sur:
+        - APPL-11-000052
+      catalina:
+        - AOSX-15-000052
+    cmmc:
+      - SC.L2-3.13.9
+platforms:
+  macOS:
+    check: $OS_VALUE
+    result: $OS_VALUE
+    fix: $OS_VALUE
+    sequoia:
+      severity: medium
+      benchmarks:
+        - disa_stig
+      check: /usr/sbin/sshd -G | /usr/bin/awk '/clientalivecountmax/{print $2}'
+      fix: |-
+        [source,bash]
+        ----
+        include_dir=$(/usr/bin/awk '/^Include/ {print $2}' /etc/ssh/sshd_config | /usr/bin/tr -d '*')
+
+        if [[ -z $include_dir ]]; then
+          /usr/bin/sed -i.bk "1s/.*/Include \/etc\/ssh\/sshd_config.d\/\*/" /etc/ssh/sshd_config
+        fi
+
+        /usr/bin/grep -qxF 'clientalivecountmax $ODV' "${include_dir}01-mscp-sshd.conf" 2>/dev/null || echo "clientalivecountmax $ODV" >> "${include_dir}01-mscp-sshd.conf"
+
+        for file in $(ls ${include_dir}); do
+          if [[ "$file" == "100-macos.conf" ]]; then
+              continue
+          fi
+          if [[ "$file" == "01-mscp-sshd.conf" ]]; then
+              break
+          fi
+          /bin/mv ${include_dir}${file} ${include_dir}20-${file}
+        done
+        ----
+      result:
+        integer: $ODV
+    sonoma:
+      severity: medium
+      benchmarks:
+        - disa_stig
+      check: /usr/sbin/sshd -G | /usr/bin/awk '/clientalivecountmax/{print $2}'
+      fix: |-
+        [source,bash]
+        ----
+        include_dir=$(/usr/bin/awk '/^Include/ {print $2}' /etc/ssh/sshd_config | /usr/bin/tr -d '*')
+
+        if [[ -z $include_dir ]]; then
+          /usr/bin/sed -i.bk "1s/.*/Include \/etc\/ssh\/sshd_config.d\/\*/" /etc/ssh/sshd_config
+        fi
+
+        /usr/bin/grep -qxF 'clientalivecountmax $ODV' "${include_dir}01-mscp-sshd.conf" 2>/dev/null || echo "clientalivecountmax $ODV" >> "${include_dir}01-mscp-sshd.conf"
+
+        for file in $(ls ${include_dir}); do
+          if [[ "$file" == "100-macos.conf" ]]; then
+              continue
+          fi
+          if [[ "$file" == "01-mscp-sshd.conf" ]]; then
+              break
+          fi
+          /bin/mv ${include_dir}${file} ${include_dir}20-${file}
+        done
+        ----
+      result:
+        integer: $ODV
+    ventura:
+      severity: medium
+      benchmarks:
+        - disa_stig
+      check: /usr/sbin/sshd -T | /usr/bin/awk '/clientalivecountmax/{print $2}'
+      fix: |-
+        [source,bash]
+        ----
+        include_dir=$(/usr/bin/awk '/^Include/ {print $2}' /etc/ssh/sshd_config | /usr/bin/tr -d '*')
+
+        if [[ -z $include_dir ]]; then
+          /usr/bin/sed -i.bk "1s/.*/Include \/etc\/ssh\/sshd_config.d\/\*/" /etc/ssh/sshd_config
+        fi
+
+        /usr/bin/grep -qxF 'clientalivecountmax $ODV' "${include_dir}01-mscp-sshd.conf" 2>/dev/null || echo "clientalivecountmax $ODV" >> "${include_dir}01-mscp-sshd.conf"
+
+        for file in $(ls ${include_dir}); do
+          if [[ "$file" == "100-macos.conf" ]]; then
+              continue
+          fi
+          if [[ "$file" == "01-mscp-sshd.conf" ]]; then
+              break
+          fi
+          /bin/mv ${include_dir}${file} ${include_dir}20-${file}
+        done
+        ----
+      result:
+        integer: $ODV
+    monterey:
+      severity: medium
+      benchmarks:
+        - disa_stig
+      check: /usr/sbin/sshd -T | /usr/bin/awk '/clientalivecountmax/{print $2}'
+      fix: |-
+        [source,bash]
+        ----
+        include_dir=$(/usr/bin/awk '/^Include/ {print $2}' /etc/ssh/sshd_config | /usr/bin/tr -d '*')
+
+        if [[ -z $include_dir ]]; then
+          /usr/bin/sed -i.bk "1s/.*/Include \/etc\/ssh\/sshd_config.d\/\*/" /etc/ssh/sshd_config
+        fi
+
+        /usr/bin/grep -qxF 'clientalivecountmax $ODV' "${include_dir}01-mscp-sshd.conf" 2>/dev/null || echo "clientalivecountmax $ODV" >> "${include_dir}01-mscp-sshd.conf"
+
+        for file in $(ls ${include_dir}); do
+          if [[ "$file" == "100-macos.conf" ]]; then
+              continue
+          fi
+          if [[ "$file" == "01-mscp-sshd.conf" ]]; then
+              break
+          fi
+          /bin/mv ${include_dir}${file} ${include_dir}20-${file}
+        done
+        ----
+      result:
+        integer: $ODV
+    big_sur:
+      severity: medium
+      benchmarks:
+        - disa_stig
+      check: /usr/bin/grep -c "^ClientAliveCountMax $ODV" /etc/ssh/sshd_config
+      fix: |-
+        [source,bash]
+        ----
+        /usr/bin/sed -i.bak 's/.*ClientAliveCountMax.*/ClientAliveCountMax $ODV/' /etc/ssh/sshd_config; /bin/launchctl kickstart -k system/com.openssh.sshd
+        ----
+      result:
+        integer: 1
+    catalina:
+      severity: medium
+      benchmarks:
+        - disa_stig
+      check: /usr/bin/grep -c "^ClientAliveCountMax $ODV" /etc/ssh/sshd_config
+      fix: |-
+        [source,bash]
+        ----
+        /usr/bin/sed -i.bak 's/.*ClientAliveCountMax.*/ClientAliveCountMax $ODV/' /etc/ssh/sshd_config; /bin/launchctl kickstart -k system/com.openssh.sshd
+        ----
+      result:
+        integer: 1
+odv:
+  hint: Number of seconds.
+  recommended: 0
+  stig: 0
+tags:
+  - 800-53r5_moderate
+  - 800-53r5_high
+  - 800-171
+  - cnssi-1253_low
+  - cnssi-1253_high
+  - cmmc_lvl2
+  - cnssi-1253_moderate
+ddm_info:
+  declarationtype: com.apple.configuration.services.configuration-files
+  service: com.apple.sshd
+  config_file: sshd_config
+  configuration_key: ClientAliveCountMax
+  configuration_value: $ODV

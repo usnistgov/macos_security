@@ -33,8 +33,6 @@ references:
         - APPL-15-000014
       sonoma:
         - APPL-14-000014
-      ventura:
-        - null
     cmmc:
       - AU.L2-3.3.7
   cis:

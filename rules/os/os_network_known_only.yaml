@@ -1,0 +1,28 @@
+id: os_network_known_only
+title: Only allow known networks
+discussion: |
+  The iOS device _MUST_ be configured to only allow known networks in case only trustworthy networks can be used. This can have a limitation on connectivity especially when devices are used in area with low or no network connectivity.
+references:
+  nist:
+    cce:
+      ios_18:
+        - CCE-94541-0
+      ios_17:
+        - CCE-93490-1
+  bsi:
+    indigo:
+      ios_17:
+        - ANNEX D (Section 5.7 - Interfaces)
+platforms:
+  iOS:
+    ios_18:
+      supervised: true
+      benchmarks:
+        - indigo_high
+    ios_17:
+      supervised: true
+      benchmarks:
+        - indigo_high
+mobileconfig_info:
+  com.apple.applicationaccess:
+    forceWiFiToAllowedNetworksOnly: true

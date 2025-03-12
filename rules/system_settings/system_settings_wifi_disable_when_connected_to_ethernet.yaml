@@ -23,17 +23,6 @@ references:
       - 03.01.03
       - 03.01.16
   disa:
-    cci:
-      - null
-    srg:
-      - null
-    disa_stig:
-      sequoia:
-        - null
-      sonoma:
-        - null
-      ventura:
-        - null
     cmmc:
       - AC.L2-3.1.3
       - AC.L2-3.1.17

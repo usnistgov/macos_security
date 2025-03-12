@@ -13,22 +13,6 @@ references:
         - CCE-92993-5
       ventura:
         - CCE-91983-7
-    800-53r5:
-      - null
-    800-171r3:
-      - null
-  disa:
-    cci:
-      - null
-    srg:
-      - null
-    disa_stig:
-      sequoia:
-        - null
-      sonoma:
-        - null
-      ventura:
-        - null
   cis:
     benchmark:
       sequoia:

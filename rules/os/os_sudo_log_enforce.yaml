@@ -27,8 +27,6 @@ references:
     benchmark:
       sequoia:
         - 5.11 (level 1)
-    controls_v8:
-      - null
 platforms:
   macOS:
     sequoia:
@@ -50,7 +48,6 @@ tags:
   - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
-mobileconfig_info: null
 ddm_info:
   declarationtype: com.apple.configuration.services.configuration-files
   service: com.apple.sudo

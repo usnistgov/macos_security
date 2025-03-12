@@ -1,0 +1,128 @@
+id: pwpolicy_account_lockout_timeout_enforce
+title: Set Account Lockout Time to $ODV Minutes
+discussion: |
+  The macOS _MUST_ be configured to enforce a lockout time period of at least $ODV minutes when the maximum number of failed logon attempts is reached.
+
+  This rule protects against malicious users attempting to gain access to the system via brute-force hacking methods.
+references:
+  nist:
+    cce:
+      sequoia:
+        - CCE-94332-4
+      sonoma:
+        - CCE-92928-1
+      ventura:
+        - CCE-91916-7
+      monterey:
+        - CCE-91030-7
+      big_sur:
+        - CCE-85403-4
+      catalina:
+        - CCE-84810-1
+    800-53r5:
+      - AC-7
+    800-171r3:
+      - 03.01.08
+  disa:
+    cci:
+      - CCI-002238
+      - CCI-000044
+    srg:
+      - SRG-OS-000329-GPOS-00128
+      - SRG-OS-000021-GPOS-00005
+    disa_stig:
+      sequoia:
+        - APPL-15-000060
+      sonoma:
+        - APPL-14-000060
+      ventura:
+        - APPL-13-000022
+      monterey:
+        - APPL-12-000022
+      big_sur:
+        - APPL-11-000022
+      catalina:
+        - AOSX-15-000021
+    cmmc:
+      - AC.L2-3.1.8
+  cis:
+    benchmark:
+      sequoia:
+        - 5.2.1 (level 1)
+      sonoma:
+        - 5.2.1 (level 1)
+      ventura:
+        - 5.2.1 (level 1)
+      monterey:
+        - 5.2.1 (level 1)
+    controls_v8:
+      - 6.2
+platforms:
+  macOS:
+    check: $OS_VALUE
+    result:
+      string: 'yes'
+    fix: |
+      This is implemented by a Configuration Profile.
+    sequoia:
+      severity: medium
+      benchmarks:
+        - cis_lvl1
+        - cis_lvl2
+        - disa_stig
+      check: /usr/bin/pwpolicy -getaccountpolicies 2> /dev/null | /usr/bin/tail +2 | /usr/bin/xmllint --xpath '//dict/key[text()="autoEnableInSeconds"]/following-sibling::integer[1]/text()' - | /usr/bin/awk '{ if ($1/60 >= $ODV ) {print "yes"} else {print "no"}}' | /usr/bin/uniq
+    sonoma:
+      severity: medium
+      benchmarks:
+        - cis_lvl1
+        - cis_lvl2
+        - disa_stig
+      check: /usr/bin/pwpolicy -getaccountpolicies 2> /dev/null | /usr/bin/tail +2 | /usr/bin/xmllint --xpath '//dict/key[text()="autoEnableInSeconds"]/following-sibling::integer[1]/text()' - | /usr/bin/awk '{ if ($1/60 >= $ODV ) {print "yes"} else {print "no"}}' | /usr/bin/uniq
+    ventura:
+      severity: medium
+      benchmarks:
+        - cis_lvl1
+        - cis_lvl2
+        - disa_stig
+      check: /usr/bin/pwpolicy -getaccountpolicies 2> /dev/null | /usr/bin/tail +2 | /usr/bin/xmllint --xpath '//dict/key[text()="autoEnableInSeconds"]/following-sibling::integer[1]/text()' - | /usr/bin/awk '{ if ($1/60 >= $ODV ) {print "yes"} else {print "no"}}' | /usr/bin/uniq
+    monterey:
+      severity: medium
+      benchmarks:
+        - cis_lvl1
+        - cis_lvl2
+        - disa_stig
+      check: /usr/bin/pwpolicy -getaccountpolicies 2> /dev/null | /usr/bin/tail +2 | /usr/bin/xmllint --xpath '//dict/key[text()="autoEnableInSeconds"]/following-sibling::integer[1]/text()' - | /usr/bin/awk '{ if ($1/60 >= $ODV ) {print "yes"} else {print "no"}}'
+    big_sur:
+      severity: medium
+      benchmarks:
+        - disa_stig
+      check: /usr/bin/pwpolicy -getaccountpolicies 2> /dev/null | /usr/bin/tail +2 | /usr/bin/xmllint --xpath '//dict/key[text()="autoEnableInSeconds"]/following-sibling::integer[1]/text()' - | /usr/bin/awk '{ if ($1/60 >= $ODV ) {print "yes"} else {print "no"}}'
+    catalina:
+      severity: medium
+      benchmarks:
+        - disa_stig
+      check: /usr/bin/pwpolicy -getaccountpolicies 2> /dev/null | /usr/bin/tail +2 | /usr/bin/xmllint --xpath '//dict/key[text()="autoEnableInSeconds"]/following-sibling::integer[1]/text()' - | /usr/bin/awk '{ if ($1/60 >= $ODV ) {print "yes"} else {print "no"}}'
+odv:
+  hint: Number of minutes.
+  recommended: 15
+  stig: 15
+  cis_lvl1: 15
+  cis_lvl2: 15
+tags:
+  - 800-171
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_high
+  - cisv8
+  - cnssi-1253_low
+  - cnssi-1253_high
+  - cmmc_lvl2
+  - cnssi-1253_moderate
+  - cnssi-1253
+mobileconfig_info:
+  com.apple.mobiledevice.passwordpolicy:
+    minutesUntilFailedLoginReset: $ODV
+ddm_info:
+  declarationtype: com.apple.configuration.passcode.settings
+  ddm_key: MaximumGracePeriodInMinutes
+  ddm_value: $ODV

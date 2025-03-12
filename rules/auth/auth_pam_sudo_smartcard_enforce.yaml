@@ -62,19 +62,6 @@ references:
       - IA.L2-3.5.3
       - IA.L2-3.5.4
   cis:
-    benchmark:
-      sequoia:
-        - null
-      sonoma:
-        - null
-      ventura:
-        - null
-      monterey:
-        - null
-      big_sur:
-        - null
-      catalina:
-        - null
     controls_v8:
       - 6.3
       - 6.4

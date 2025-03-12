@@ -27,21 +27,7 @@ references:
       - IA-5(2)
       - SC-17
   disa:
-    cci:
-      - null
-    srg:
-      - null
     disa_stig:
-      sequoia:
-        - null
-      sonoma:
-        - null
-      ventura:
-        - null
-      monterey:
-        - null
-      big_sur:
-        - null
       catalina:
         - AOSX-15-003002
     cmmc:

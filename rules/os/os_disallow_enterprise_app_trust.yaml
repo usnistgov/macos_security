@@ -1,0 +1,70 @@
+id: os_disallow_enterprise_app_trust
+title: Disallow Apps to be Installed from Unauthorized Sources
+discussion: Apps _MUST_ be installed from authorized application repositories. Disallowing enterprise app trust prevents apps from being provisioned by universal provisioning profiles.
+references:
+  nist:
+    cce:
+      ios_18:
+        - CCE-94435-5
+      ios_17:
+        - CCE-93463-8
+      ios_16:
+        - CCE-93262-4
+      visionos_2.0:
+        - CCE-94495-9
+    800-53r5:
+      - CM-11
+  disa:
+    cci:
+      - CCI-000366
+    disa_stig:
+      ios_18:
+        - AIOS-18-007000
+      ios_17:
+        - AIOS-17-007000
+        - AIOS-17-707000
+      ios_16:
+        - AIOS-16-007000
+        - AIOS-16-707000
+    sfr:
+      - 'FMT_SMF_EXT.1.1 #8a'
+  bsi:
+    indigo:
+      ios_17:
+        - ANNEX D - (Section 5.8.5)
+platforms:
+  iOS:
+    ios_18:
+      severity: low
+      supervised: false
+      benchmarks:
+        - ios_stig
+        - indigo_base
+        - indigo_high
+    ios_17:
+      severity: low
+      supervised: false
+      benchmarks:
+        - ios_stig
+        - ios_stig_byoad
+        - indigo_base
+        - indigo_high
+    ios_16:
+      severity: low
+      supervised: false
+      benchmarks:
+        - ios_stig
+        - ios_stig_byoad
+  visionOS:
+    visionos_2.0:
+      supervised: false
+tags:
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_high
+  - cnssi-1253_moderate
+  - cnssi-1253_low
+  - cnssi-1253_high
+mobileconfig_info:
+  com.apple.applicationaccess:
+    allowEnterpriseAppTrust: false

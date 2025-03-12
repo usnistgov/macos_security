@@ -6,16 +6,6 @@ references:
     cce:
       ios_18:
         - CCE-94519-6
-    800-53r5:
-      - null
-  disa:
-    cci:
-      - null
-    disa_stig:
-      ios_18:
-        - null
-    sfr:
-      - null
   bsi:
     indigo:
       - ANNEX K
@@ -24,7 +14,6 @@ platforms:
     ios_18:
       benchmarks:
         - indigo_high
-tags: []
 mobileconfig_info:
   com.apple.applicationaccess:
     allowImageWand: false

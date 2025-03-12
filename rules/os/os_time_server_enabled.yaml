@@ -1,0 +1,142 @@
+id: os_time_server_enabled
+title: Enable Time Synchronization Daemon
+discussion: |
+  The macOS time synchronization daemon (timed) _MUST_ be enabled for proper time synchronization to an authorized time server.
+
+  NOTE: The time synchronization daemon is enabled by default on macOS.
+references:
+  nist:
+    cce:
+      sequoia:
+        - CCE-94319-1
+      sonoma:
+        - CCE-92916-6
+      ventura:
+        - CCE-91904-3
+      monterey:
+        - CCE-91019-0
+      big_sur:
+        - CCE-85392-9
+      catalina:
+        - CCE-84801-0
+    800-53r5:
+      - AU-12(1)
+      - SC-45(1)
+    800-171r3:
+      - 3.3.7
+  disa:
+    cci:
+      - CCI-002046
+      - CCI-001891
+      - CCI-004923
+      - CCI-004926
+      - CCI-004922
+    srg:
+      - SRG-OS-000355-GPOS-00143
+      - SRG-OS-000356-GPOS-00144
+      - SRG-OS-000785-GPOS-00250
+    disa_stig:
+      sequoia:
+        - APPL-15-000180
+      sonoma:
+        - APPL-14-000180
+      ventura:
+        - APPL-13-000014
+      monterey:
+        - APPL-12-000014
+      big_sur:
+        - APPL-11-000014
+      catalina:
+        - AOSX-15-000014
+    cmmc:
+      - AU.L2-3.3.7
+  cis:
+    benchmark:
+      sequoia:
+        - 2.3.2.2 (level 1)
+      sonoma:
+        - 2.3.2.2 (level 1)
+    controls_v8:
+      - 8.4
+platforms:
+  macOS:
+    check: |
+      /bin/launchctl list | /usr/bin/grep -c com.apple.timed
+    result:
+      integer: 1
+    fix: $OS_VALUE
+    sequoia:
+      severity: medium
+      benchmarks:
+        - cis_lvl1
+        - cis_lvl2
+        - disa_stig
+      fix: |-
+        [source,bash]
+        ----
+        /bin/launchctl load -w /System/Library/LaunchDaemons/com.apple.timed.plist
+        ----
+
+        NOTE: The service `timed` cannot be unloaded or loaded while System Integrity Protection (SIP) is enabled.
+    sonoma:
+      severity: medium
+      benchmarks:
+        - cis_lvl1
+        - cis_lvl2
+        - disa_stig
+      fix: |-
+        [source,bash]
+        ----
+        /bin/launchctl load -w /System/Library/LaunchDaemons/com.apple.timed.plist
+        ----
+
+        NOTE: The service `timed` cannot be unloaded or loaded while System Integrity Protection (SIP) is enabled.
+    ventura:
+      severity: medium
+      benchmarks:
+        - disa_stig
+      fix: |-
+        [source,bash]
+        ----
+        /bin/launchctl load -w /System/Library/LaunchDaemons/com.apple.timed.plist
+        ----
+        NOTE: The service `timed` cannot be unloaded or loaded while System Integrity Protection (SIP) is enabled.
+    monterey:
+      severity: medium
+      benchmarks:
+        - disa_stig
+      fix: |-
+        [source,shell]
+        ----
+        /bin/launchctl load -w /System/Library/LaunchDaemons/com.apple.timed.plist
+        ----
+        NOTE: The service `timed` cannot be unloaded or loaded while System Integrity Protection (SIP) is enabled.
+    big_sur:
+      severity: medium
+      benchmarks:
+        - disa_stig
+      fix: |-
+        [source,bash]
+        ----
+        /bin/launchctl load -w /System/Library/LaunchDaemons/com.apple.timed.plist
+        ----
+    catalina:
+      severity: medium
+      benchmarks:
+        - disa_stig
+      fix: |-
+        [source,bash]
+        ----
+        /bin/launchctl load -w /System/Library/LaunchDaemons/com.apple.timed.plist
+        ----
+tags:
+  - 800-171
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_high
+  - cisv8
+  - cnssi-1253_low
+  - cnssi-1253_high
+  - cmmc_lvl2
+  - cnssi-1253_moderate
+  - cnssi-1253

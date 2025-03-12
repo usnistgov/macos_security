@@ -1,0 +1,98 @@
+id: pwpolicy_upper_case_character_enforce
+title: Require Passwords Contain a Minimum of One Uppercase Character
+discussion: "The macOS _MUST_ be configured to require at least one uppercase character be used when a password is created.\n\nThis rule enforces password complexity by requiring users to set passwords that are less vulnerable to malicious users.\n\nNOTE: To comply with Executive Order 14028, \u201CImproving the Nation's Cybersecurity\u201D, OMB M-22-09, \u201CMoving the U.S. Government Toward Zero Trust Cybersecurity Principles\u201D, and NIST SP-800-63b, \u201CDigital Identity Guidelines: Authentication and Lifecycle Management\u201D federal, military, and intelligence communities must adopt the following configuration settings. Password policies must not require the use of complexity policies such as upper characters, lower characters, or special characters. Password policies must also not require the use of regular rotation. Password policies should define a minimum length. Multifactor authentication should be used where ever possible.\n\nNOTE: macOS 14 supports password policy complexity with custom regex deployed with a mobileconfig file. To use a mobileconfig file use *pwpolicy_custom_regex_enforce*.\n"
+references:
+  nist:
+    cce:
+      sequoia:
+        - CCE-94347-2
+      sonoma:
+        - CCE-92943-0
+      ventura:
+        - CCE-91930-8
+      monterey:
+        - CCE-91043-0
+      big_sur:
+        - CCE-85415-8
+      catalina:
+        - CCE-84821-8
+    800-53r5:
+      - IA-5(1)
+    800-171r3:
+      - 03.05.07
+  disa:
+    cmmc:
+      - IA.L2-3.5.7
+      - IA.L2-3.5.8
+      - IA.L2-3.5.9
+  cis:
+    benchmark:
+      ventura:
+        - 5.2.6 (level 2)
+      monterey:
+        - 5.2.6 (level 2)
+      big_sur:
+        - 5.2.6 (level 2)
+    controls_v8:
+      - 5.2
+platforms:
+  macOS:
+    check: |
+      /usr/bin/pwpolicy -getaccountpolicies 2> /dev/null | /usr/bin/tail +2 | /usr/bin/xmllint --xpath '//dict/key[text()="minimumAlphaCharactersUpperCase"]/following-sibling::integer[1]/text()' - | /usr/bin/awk '{ if ($1 >= $ODV ) {print "yes"} else {print "no"}}'
+    result:
+      string: 'yes'
+    fix: |
+      This setting may be enforced using local policy or by a directory service.
+
+      To set local policy to require at least $ODV lowercase letter, edit the current password policy to contain the following <dict> within the "policyCategoryPasswordContent":
+
+      [source,xml]
+      ----
+      <dict>
+      <key>policyContent</key>
+      <string>policyAttributePassword matches &apos;(.*[A-Z].*){$ODV,}+&apos;</string>
+      <key>policyIdentifier</key>
+      <string>Must have at least $ODV uppercase letter</string>
+      <key>policyParameters</key>
+      <dict>
+      <key>minimumAlphaCharactersUpperCase</key>
+      <integer>$ODV</integer>
+      </dict>
+      </dict>
+      ----
+      After saving the file and exiting to the command prompt, run the following command to load the new policy file, substituting the path to the file in place of "$pwpolicy_file".
+
+      [source,bash]
+      ----
+      /usr/bin/pwpolicy setaccountpolicies $pwpolicy_file
+      ----
+      NOTE: See the password policy supplemental on more information on how to implement password policies on macOS.
+    sequoia: {}
+    sonoma: {}
+    ventura:
+      benchmarks:
+        - cis_lvl2
+    monterey:
+      benchmarks:
+        - cis_lvl2
+    big_sur:
+      benchmarks:
+        - cis_lvl2
+    catalina: {}
+odv:
+  hint: Number of special characters.
+  recommended: 1
+  cis_lvl1: 1
+  cis_lvl2: 1
+  stig: 1
+tags:
+  - cnssi-1253_moderate
+  - cnssi-1253_low
+  - cnssi-1253_high
+  - 800-171
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_high
+  - cisv8
+  - cmmc_lvl2
+  - cnssi-1253

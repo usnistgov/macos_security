@@ -14,13 +14,6 @@ references:
     800-171r3:
       - 03.08.07
   disa:
-    cci:
-      - null
-    srg:
-      - null
-    disa_stig:
-      sequoia:
-        - null
     cmmc:
       - MP.L2-3.8.7
       - MP.L2-3.8.8
@@ -39,7 +32,6 @@ tags:
   - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
-mobileconfig_info: null
 ddm_info:
   declarationtype: com.apple.configuration.diskmanagement.settings
   ddm_key: ExternalStorage

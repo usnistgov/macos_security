@@ -1,0 +1,87 @@
+id: os_touchid_prompt_disable
+title: Disable TouchID Prompt during Setup Assistant
+discussion: |
+  The prompt for TouchID during Setup Assistant _MUST_ be disabled.
+
+  macOS prompts new users through enabling TouchID during Setup Assistant; this is not essential and, therefore, _MUST_ be disabled to prevent against the risk of individuals electing to enable TouchID to override organization-wide settings.
+references:
+  nist:
+    cce:
+      sequoia:
+        - CCE-94320-9
+      sonoma:
+        - CCE-92917-4
+      ventura:
+        - CCE-91905-0
+      monterey:
+        - CCE-91020-8
+      big_sur:
+        - CCE-85393-7
+      catalina:
+        - CCE-84802-8
+    800-53r5:
+      - CM-6
+    800-171r3:
+      - 03.04.02
+  disa:
+    cci:
+      - CCI-000381
+    srg:
+      - SRG-OS-000095-GPOS-00049
+    disa_stig:
+      sequoia:
+        - APPL-15-005054
+      sonoma:
+        - APPL-14-005054
+      ventura:
+        - APPL-13-005054
+      monterey:
+        - APPL-12-005054
+    cmmc:
+      - CM.L2-3.4.2
+  cis:
+    controls_v8:
+      - 4.1
+platforms:
+  macOS:
+    check: |
+      /usr/bin/osascript -l JavaScript << EOS
+      $.NSUserDefaults.alloc.initWithSuiteName('com.apple.SetupAssistant.managed')\
+      .objectForKey('SkipTouchIDSetup').js
+      EOS
+    result:
+      string: 'true'
+    fix: |
+      This is implemented by a Configuration Profile.
+    sequoia:
+      severity: medium
+      benchmarks:
+        - disa_stig
+    sonoma:
+      severity: medium
+      benchmarks:
+        - disa_stig
+    ventura:
+      severity: medium
+      benchmarks:
+        - disa_stig
+    monterey:
+      severity: medium
+      benchmarks:
+        - disa_stig
+    big_sur: {}
+    catalina: {}
+tags:
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_high
+  - 800-171
+  - cisv8
+  - cnssi-1253_low
+  - cnssi-1253_high
+  - cmmc_lvl2
+  - cnssi-1253_moderate
+  - cnssi-1253
+mobileconfig_info:
+  com.apple.SetupAssistant.managed:
+    SkipTouchIDSetup: true

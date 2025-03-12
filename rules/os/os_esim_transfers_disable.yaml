@@ -7,16 +7,10 @@ references:
     cce:
       ios_18:
         - CCE-94524-6
-    800-53r5:
-      - null
-  disa:
-    cci:
-      - null
 platforms:
   iOS:
     ios_18:
       supervised: false
-tags: []
 mobileconfig_info:
   com.apple.applicationaccess:
     allowESIMOutgoingTransfers: false

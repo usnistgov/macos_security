@@ -1,0 +1,74 @@
+id: os_recovery_lock_enable
+title: Enable Recovery Lock
+discussion: |
+  A recovery lock password _MUST_ be enabled and set.
+
+  Single user mode, recovery mode, the Startup Manager, and several other tools are available on macOS by holding down specific key combinations during startup. Setting a recovery lock restricts access to these tools.
+
+  IMPORTANT: Recovery lock passwords are not supported on Intel devices. This rule is only applicable to Apple Silicon devices.
+references:
+  nist:
+    cce:
+      sequoia:
+        - CCE-94274-8
+      sonoma:
+        - CCE-92870-5
+      ventura:
+        - CCE-91865-6
+      monterey:
+        - CCE-90989-5
+      big_sur:
+        - CCE-85483-6
+    800-53r5:
+      - AC-6
+    800-171r3:
+      - 03.01.05
+  disa:
+    cci:
+      - CCI-000366
+    srg:
+      - SRG-OS-000480-GPOS-00227
+    disa_stig:
+      sequoia:
+        - APPL-15-005120
+      sonoma:
+        - APPL-14-005120
+    cmmc:
+      - AC.L1-3.1.1
+      - AC.L2-3.1.5
+platforms:
+  macOS:
+    check: |
+      /usr/libexec/mdmclient QuerySecurityInfo | /usr/bin/grep -c "IsRecoveryLockEnabled = 1"
+    result:
+      integer: 1
+    fix: $OS_VALUE
+    sequoia:
+      severity: medium
+      benchmarks:
+        - disa_stig
+      fix: 'NOTE: The SetRecoveryLock command can be used to set a Recovery Lock password and must be from your MDM.'
+    sonoma:
+      severity: medium
+      benchmarks:
+        - disa_stig
+      fix: 'NOTE: The SetRecoveryLock command can be used to set a Recovery Lock password and must be from your MDM.'
+    ventura:
+      severity: medium
+      fix: 'NOTE: The SetRecoveryLock command can be used to set a Recovery Lock password and must be from your MDM.'
+    monterey:
+      severity: medium
+      fix: 'NOTE: The SetRecoveryLock command can be used to set a Recovery Lock password.'
+    big_sur:
+      severity: medium
+      fix: 'NOTE: The SetRecoveryLock command can be used to set a Recovery Lock password.'
+tags:
+  - 800-53r5_moderate
+  - 800-53r5_high
+  - 800-171
+  - arm64
+  - cnssi-1253_low
+  - cnssi-1253_high
+  - cmmc_lvl2
+  - cmmc_lvl1
+  - cnssi-1253_moderate

@@ -28,26 +28,10 @@ references:
   disa:
     cci:
       - CCI-000381
-    srg:
-      - null
-    disa_stig:
-      sequoia:
-        - null
-      sonoma:
-        - null
-      ventura:
-        - null
     cmmc:
       - AC.L1-3.1.20
       - CM.L2-3.4.8
   cis:
-    benchmark:
-      sequoia:
-        - null
-      sonoma:
-        - null
-      ventura:
-        - null
     controls_v8:
       - 4.8
       - 15.2

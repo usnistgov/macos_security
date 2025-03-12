@@ -9,16 +9,10 @@ references:
     cce:
       ios_18:
         - CCE-94515-4
-    800-53r5:
-      - null
-  bsi:
-    indigo:
-      - null
 platforms:
   iOS:
     ios_18:
       supervised: false
-tags: []
 mobileconfig_info:
   com.apple.applicationaccess:
     allowCallRecording: false

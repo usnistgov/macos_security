@@ -11,18 +11,6 @@ references:
         - CCE-94232-6
     800-53r5:
       - AC-20(4)
-    800-171r3:
-      - null
-  disa:
-    cci:
-      - null
-    srg:
-      - null
-    disa_stig:
-      sequoia:
-        - null
-    cmmc:
-      - null
 platforms:
   macOS:
     sequoia: {}
@@ -32,7 +20,6 @@ platforms:
       string: $ODV
 tags:
   - none
-mobileconfig_info: null
 ddm_info:
   declarationtype: com.apple.configuration.diskmanagement.settings
   ddm_key: NetworkStorage

@@ -1,0 +1,61 @@
+id: sysprefs_guest_access_smb_disable
+title: Disable Guest Access to Shared SMB Folders
+discussion: |
+  Guest access to shared Server Message Block (SMB) folders _MUST_ be disabled.
+
+  Turning off guest access prevents anonymous users from accessing files shared via SMB.
+references:
+  nist:
+    cce:
+      monterey:
+        - CCE-91059-6
+      big_sur:
+        - CCE-85319-2
+      catalina:
+        - CCE-84761-6
+    800-53r5:
+      - AC-2(9)
+      - AC-2
+  cis:
+    benchmark:
+      monterey:
+        - 6.1.4 (level 1)
+      big_sur:
+        - 6.1.4 (level 1)
+    controls_v8:
+      - 5.2
+      - 6.2
+      - 6.8
+platforms:
+  macOS:
+    check: |
+      /usr/bin/defaults read /Library/Preferences/SystemConfiguration/com.apple.smb.server AllowGuestAccess
+    result:
+      boolean: 0
+    fix: |
+      [source,bash]
+      ----
+      /usr/sbin/sysadminctl -smbGuestAccess off
+      ----
+    monterey:
+      benchmarks:
+        - cis_lvl1
+        - cis_lvl2
+      mobileconfig_info: null
+    big_sur:
+      benchmarks:
+        - cis_lvl1
+        - cis_lvl2
+      mobileconfig_info: null
+    catalina:
+      mobileconfig_info:
+        com.apple.smb.server:
+          AllowGuestAccess: false
+tags:
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_high
+  - 800-171
+  - cisv8
+  - cnssi-1253
+mobileconfig_info: $OS_VALUE

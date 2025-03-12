@@ -13,13 +13,6 @@ references:
     800-171r3:
       - 03.04.06
   disa:
-    cci:
-      - null
-    srg:
-      - null
-    disa_stig:
-      ventura:
-        - null
     cmmc:
       - CM.L2-3.4.6
       - CM.L2-3.4.7
@@ -52,4 +45,3 @@ tags:
   - cnssi-1253_low
   - cnssi-1253_high
   - cmmc_lvl2
-mobileconfig_info: null

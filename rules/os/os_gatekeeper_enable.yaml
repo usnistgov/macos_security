@@ -1,0 +1,174 @@
+id: os_gatekeeper_enable
+title: Enable Gatekeeper
+discussion: |
+  Gatekeeper _MUST_ be enabled.
+
+  Gatekeeper is a security feature that ensures that applications are digitally signed by an Apple-issued certificate before they are permitted to run. Digital signatures allow the macOS host to verify that the application has not been modified by a malicious third party.
+
+  Administrator users will still have the option to override these settings on a case-by-case basis.
+references:
+  nist:
+    cce:
+      sequoia:
+        - CCE-94195-5
+      sonoma:
+        - CCE-92795-4
+      ventura:
+        - CCE-91793-0
+      monterey:
+        - CCE-90926-7
+      big_sur:
+        - CCE-85315-0
+      catalina:
+        - CCE-84759-0
+    800-53r5:
+      - CM-14
+      - CM-5
+      - SI-7(1)
+      - SI-7(15)
+      - SI-3
+    800-171r3:
+      - 03.14.02
+  disa:
+    cci:
+      - CCI-001749
+      - CCI-003992
+    srg:
+      - SRG-OS-000366-GPOS-00153
+      - SRG-OS-000480-GPOS-00228
+    disa_stig:
+      sequoia:
+        - APPL-15-002064
+      sonoma:
+        - APPL-14-002064
+      ventura:
+        - APPL-13-002064
+      monterey:
+        - APPL-12-002064
+      big_sur:
+        - APPL-11-002064
+      catalina:
+        - AOSX-15-002064
+    cmmc:
+      - CM.L2-3.4.5
+      - SI.L1-3.14.1
+      - SI.L1-3.14.2
+      - SI.L1-3.14.4
+  cis:
+    benchmark:
+      sequoia:
+        - 2.6.5 (level 1)
+      sonoma:
+        - 2.6.5 (level 1)
+      ventura:
+        - 2.6.4 (level 1)
+      monterey:
+        - 2.5.7 (level 1)
+      big_sur:
+        - 2.5.7 (level 1)
+    controls_v8:
+      - 10.1
+      - 10.2
+      - 10.5
+platforms:
+  macOS:
+    check: $OS_VALUE
+    result: $OS_VALUE
+    fix: $OS_VALUE
+    sequoia:
+      severity: high
+      benchmarks:
+        - cis_lvl1
+        - cis_lvl2
+        - disa_stig
+      check: |-
+        /usr/bin/osascript -l JavaScript << EOS
+        $.NSUserDefaults.alloc.initWithSuiteName('com.apple.systempolicy.control')\
+        .objectForKey('EnableAssessment').js
+        EOS
+      fix: This is implemented by a Configuration Profile.
+      result:
+        string: 'true'
+    sonoma:
+      severity: high
+      benchmarks:
+        - cis_lvl1
+        - cis_lvl2
+        - disa_stig
+      check: /usr/sbin/spctl --status | /usr/bin/grep -c "assessments enabled"
+      fix: |-
+        [source,bash]
+        ----
+        /usr/sbin/spctl --global-enable
+        ----
+      result:
+        integer: 1
+    ventura:
+      severity: high
+      benchmarks:
+        - cis_lvl1
+        - cis_lvl2
+        - disa_stig
+      check: /usr/sbin/spctl --status | /usr/bin/grep -c "assessments enabled"
+      fix: |-
+        [source,bash]
+        ----
+        /usr/sbin/spctl --global-enable
+        ----
+      result:
+        integer: 1
+    monterey:
+      severity: high
+      benchmarks:
+        - cis_lvl1
+        - cis_lvl2
+        - disa_stig
+      check: /usr/sbin/spctl --status | /usr/bin/grep -c "assessments enabled"
+      fix: |-
+        [source,bash]
+        ----
+        /usr/sbin/spctl --global-enable
+        ----
+      result:
+        integer: 1
+    big_sur:
+      severity: high
+      benchmarks:
+        - cis_lvl1
+        - cis_lvl2
+        - disa_stig
+      check: /usr/sbin/spctl --status | /usr/bin/grep -c "assessments enabled"
+      fix: |-
+        [source,bash]
+        ----
+        /usr/sbin/spctl --master-enable
+        ----
+      result:
+        integer: 1
+    catalina:
+      severity: high
+      benchmarks:
+        - disa_stig
+      check: /usr/sbin/spctl --status | /usr/bin/grep -c "assessments enabled"
+      fix: |-
+        [source,bash]
+        ----
+        /usr/sbin/spctl --master-enable
+        ----
+      result:
+        integer: 1
+tags:
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_high
+  - 800-171
+  - cisv8
+  - cnssi-1253_low
+  - cnssi-1253_high
+  - cmmc_lvl2
+  - cmmc_lvl1
+  - cnssi-1253_moderate
+  - cnssi-1253
+mobileconfig_info:
+  com.apple.systempolicy.control:
+    EnableAssessment: true

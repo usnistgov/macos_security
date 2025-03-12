@@ -1,0 +1,61 @@
+id: os_screensaver_timeout_loginwindow_enforce
+title: Enforce Screen Saver Timeout at LoginWindow
+discussion: |
+  The screen saver timeout at LoginWindow _MUST_ be set to $ODV seconds or a shorter length of time.
+
+  This rule ensures that a full session lock is triggered within no more than $ODV seconds of inactivity.
+references:
+  nist:
+    cce:
+      sequoia:
+        - CCE-94287-0
+      sonoma:
+        - CCE-92882-0
+      ventura:
+        - CCE-92010-8
+  disa:
+    cci:
+      - CCI-000057
+    disa_stig:
+      ventura:
+        - APPL-13-000004
+    cmmc:
+      - AC.L2-3.1.10
+  cis:
+    controls_v8:
+      - 4.3
+platforms:
+  macOS:
+    check: |
+      /usr/bin/osascript -l JavaScript << EOS
+      function run() {
+        let timeout = ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('com.apple.screensaver')\
+      .objectForKey('loginWindowIdleTime'))
+        if ( timeout <= $ODV ) {
+          return("true")
+        } else {
+          return("false")
+        }
+      }
+      EOS
+    result:
+      string: 'true'
+    fix: |
+      This is implemented by a Configuration Profile.
+    sequoia:
+      severity: medium
+    sonoma:
+      severity: medium
+    ventura:
+      severity: medium
+      benchmarks:
+        - disa_stig
+odv:
+  hint: Number of seconds.
+  recommended: 1200
+  stig: 900
+tags:
+  - cnssi-1253_moderate
+mobileconfig_info:
+  com.apple.screensaver:
+    loginWindowIdleTime: $ODV

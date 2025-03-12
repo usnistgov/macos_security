@@ -7,18 +7,6 @@ references:
     cce:
       sonoma:
         - CCE-93023-0
-    800-53r5:
-      - null
-    800-171r3:
-      - null
-  disa:
-    cci:
-      - null
-    srg:
-      - null
-    disa_stig:
-      sonoma:
-        - null
   cis:
     benchmark:
       sonoma:
@@ -49,4 +37,3 @@ platforms:
 tags:
   - cisv8
   - arm64
-mobileconfig_info: null

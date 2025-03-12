@@ -1,0 +1,85 @@
+id: os_allow_documents_unmanaged_sources_managed_destinations_disable
+title: Ensure Allow documents from unmanaged sources in managed destinations is set to Disabled
+discussion: |
+  Documents from unmanaged sources _MUST_ not be allowed in managed destinations.
+references:
+  nist:
+    cce:
+      ios_18:
+        - CCE-94428-0
+      ios_17:
+        - CCE-93414-1
+      ios_16:
+        - CCE-93214-5
+      visionos_2.0:
+        - CCE-94491-8
+    800-53r5:
+      - AC-3
+      - MP-2
+      - SC-7(10)
+      - SC-39
+  disa:
+    disa_stig:
+      ios_17:
+        - AIOS-17-714900
+      ios_16:
+        - AIOS-16-714900
+  cis:
+    benchmark:
+      ios_18:
+        - 2.2.1.9 (level 1 - End-User Owned Devices)
+        - 3.2.1.22 (level 1 - Institutionally-Owned Devices)
+      ios_17:
+        - 2.2.1.9 (level 1 - End-User Owned Devices)
+        - 3.2.1.22 (level 1 - Institutionally-Owned Devices)
+      ios_16:
+        - 2.2.1.9 (level 1 - End-User Owned Devices)
+        - 3.2.1.22 (level 1 - Institutionally-Owned Devices)
+    controls_v8:
+      - 3.3
+  bsi:
+    indigo:
+      ios_17:
+        - ANNEX D (section 5.8.3 - Institutional procurement)
+        - ANNEX K
+platforms:
+  iOS:
+    ios_18:
+      supervised: false
+      benchmarks:
+        - cis_lvl1_byod
+        - cis_lvl2_byod
+        - cis_lvl1_enterprise
+        - cis_lvl2_enterprise
+        - indigo_base
+        - indigo_high
+    ios_17:
+      supervised: false
+      benchmarks:
+        - cis_lvl1_byod
+        - cis_lvl2_byod
+        - cis_lvl1_enterprise
+        - cis_lvl2_enterprise
+        - ios_stig_byoad
+        - indigo_base
+        - indigo_high
+    ios_16:
+      severity: medium
+      supervised: false
+      benchmarks:
+        - cis_lvl1_byod
+        - cis_lvl2_byod
+        - cis_lvl1_enterprise
+        - cis_lvl2_enterprise
+        - ios_stig_byoad
+  visionOS:
+    visionos_2.0:
+      supervised: false
+tags:
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_high
+  - cisv8
+mobileconfig_info:
+  com.apple.applicationaccess:
+    allowOpenFromUnmanagedToManaged: false

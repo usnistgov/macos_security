@@ -16,15 +16,6 @@ references:
     800-171r3:
       - 03.01.01
   disa:
-    cci:
-      - null
-    srg:
-      - null
-    disa_stig:
-      sequoia:
-        - null
-      ventura:
-        - null
     cmmc:
       - AC.L1-3.1.2
   cis:

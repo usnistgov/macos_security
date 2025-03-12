@@ -11,10 +11,6 @@ references:
     cce:
       ventura:
         - CCE-92013-2
-    800-53r5:
-      - null
-    800-171r3:
-      - null
   disa:
     cci:
       - CCI-000381
@@ -25,12 +21,6 @@ references:
     disa_stig:
       ventura:
         - APPL-13-002052
-  cis:
-    benchmark:
-      ventura:
-        - null
-    controls_v8:
-      - null
 platforms:
   macOS:
     ventura:
@@ -41,7 +31,6 @@ platforms:
       /usr/bin/profiles show -output stdout-xml | /usr/bin/xmllint --xpath '//key[text()="HiddenPreferencePanes"]/following-sibling::*[1]' - | /usr/bin/grep -c com.apple.preferences.wallet
     result:
       integer: 1
-tags: []
 mobileconfig_info:
   com.apple.systempreferences:
     HiddenPreferencePanes:

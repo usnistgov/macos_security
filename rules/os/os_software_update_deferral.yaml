@@ -1,0 +1,127 @@
+id: os_software_update_deferral
+title: Ensure Software Update Deferment Is Less Than or Equal to $ODV Days
+discussion: |
+  Software updates _MUST_ be deferred for $ODV days or less.
+references:
+  nist:
+    cce:
+      sequoia:
+        - CCE-94298-7
+      sonoma:
+        - CCE-92893-7
+      ventura:
+        - CCE-91882-1
+      monterey:
+        - CCE-85140-2
+      big_sur:
+        - CCE-85548-6
+  cis:
+    benchmark:
+      sequoia:
+        - 1.7 (level 1)
+      sonoma:
+        - 1.7 (level 1)
+      ventura:
+        - 1.7 (level 1)
+      monterey:
+        - 1.7 (level 1)
+      big_sur:
+        - 1.7 (level 1)
+    controls_v8:
+      - 7.3
+      - 7.4
+platforms:
+  macOS:
+    check: $OS_VALUE
+    result:
+      string: 'true'
+    fix: |
+      This is implemented by a Configuration Profile.
+    sequoia:
+      benchmarks:
+        - cis_lvl1
+        - cis_lvl2
+      check: |-
+        /usr/bin/osascript -l JavaScript << EOS
+        function run() {
+          let timeout = ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess')\
+        .objectForKey('enforcedSoftwareUpdateDelay')) || 0
+          if ( timeout <= $ODV ) {
+            return("true")
+          } else {
+            return("false")
+          }
+        }
+        EOS
+    sonoma:
+      benchmarks:
+        - cis_lvl1
+        - cis_lvl2
+      check: |-
+        /usr/bin/osascript -l JavaScript << EOS
+        function run() {
+          let timeout = ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess')\
+        .objectForKey('enforcedSoftwareUpdateDelay')) || 0
+          if ( timeout <= $ODV ) {
+            return("true")
+          } else {
+            return("false")
+          }
+        }
+        EOS
+    ventura:
+      benchmarks:
+        - cis_lvl1
+        - cis_lvl2
+      check: |-
+        /usr/bin/osascript -l JavaScript << EOS
+        function run() {
+          let timeout = ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess')\
+        .objectForKey('enforcedSoftwareUpdateDelay')) || 0
+          if ( timeout <= $ODV ) {
+            return("true")
+          } else {
+            return("false")
+          }
+        }
+        EOS
+    monterey:
+      benchmarks:
+        - cis_lvl1
+        - cis_lvl2
+      check: |-
+        /usr/bin/osascript -l JavaScript << EOS
+        function run() {
+          let timeout = ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess')\
+        .objectForKey('enforcedSoftwareUpdateDelay')) || 0
+          if ( timeout <= $ODV ) {
+            return("true")
+          } else {
+            return("false")
+          }
+        }
+        EOS
+    big_sur:
+      benchmarks:
+        - cis_lvl1
+        - cis_lvl2
+      check: |-
+        /usr/bin/osascript -l JavaScript << EOS
+        function run() {
+          let timeout = ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess')\
+        .objectForKey('enforcedSoftwareUpdateDelay'))
+          if ( timeout <= $ODV ) {
+            return("true")
+          } else {
+            return("false")
+          }
+        }
+        EOS
+odv:
+  hint: Number of days.
+  recommended: 30
+  cis_lvl1: 30
+  cis_lvl2: 30
+mobileconfig_info:
+  com.apple.applicationaccess:
+    enforcedSoftwareUpdateDelay: $ODV

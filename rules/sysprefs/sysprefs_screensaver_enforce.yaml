@@ -7,8 +7,6 @@ references:
     cce:
       catalina:
         - CCE-84921-6
-    800-53r5:
-      - null
   disa:
     cci:
       - CCI-000060
@@ -27,7 +25,6 @@ platforms:
       /usr/bin/profiles -P -o stdout  | /usr/bin/grep -c modulePath
     result:
       integer: 1
-tags: []
 mobileconfig_info:
   com.apple.screensaver.user:
     modulePath: /System/Library/Screen Savers/Flurry.saver

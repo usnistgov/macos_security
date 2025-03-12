@@ -1,0 +1,69 @@
+id: os_directory_services_configured
+title: Integrate System into a Directory Services Infrastructure
+discussion: |
+  The macOS system _MUST_ be integrated into a directory services infrastructure.
+
+  A directory service infrastructure enables centralized user and rights management, as well as centralized control over computer and user configurations. Integrating the macOS systems used throughout an organization into a directory services infrastructure ensures more administrator oversight and security than allowing distinct user account databases to exist on each separate system.
+references:
+  nist:
+    cce:
+      sequoia:
+        - CCE-94181-5
+      sonoma:
+        - CCE-92780-6
+      ventura:
+        - CCE-91778-1
+      monterey:
+        - CCE-91087-7
+      big_sur:
+        - CCE-85494-3
+      catalina:
+        - CCE-84951-3
+  disa:
+    disa_stig:
+      ventura:
+        - APPL-13-000016
+      monterey:
+        - APPL-12-000016
+      big_sur:
+        - APPL-11-000016
+      catalina:
+        - AOSX-15-000016
+  cis:
+    controls_v8:
+      - 6.7
+platforms:
+  macOS:
+    check: $OS_VALUE
+    result:
+      integer: 0
+    fix: |
+      Integrate the system into an existing directory services infrastructure.
+    sequoia:
+      severity: medium
+      check: /usr/bin/dscl localhost -list . | /usr/bin/grep -qvE '(Contact|Search|Local|^$)'; /bin/echo $?
+    sonoma:
+      severity: medium
+      check: /usr/bin/dscl localhost -list . | /usr/bin/grep -qvE '(Contact|Search|Local|^$)'; /bin/echo $?
+    ventura:
+      severity: high
+      benchmarks:
+        - disa_stig
+      check: /usr/bin/dscl localhost -list . | /usr/bin/grep -qvE '(Contact|Search|Local|^$)'; /bin/echo $?
+    monterey:
+      severity: high
+      benchmarks:
+        - disa_stig
+      check: /usr/bin/dscl localhost -list . | /usr/bin/grep -qvE '(Contact|Search|Local|^$)'; /bin/echo $?
+    big_sur:
+      severity: high
+      benchmarks:
+        - disa_stig
+      check: /usr/bin/dscl localhost -list . | /usr/bin/grep -vE '(Contact|Search|Local|^$)'; /bin/echo $?
+    catalina:
+      severity: high
+      benchmarks:
+        - disa_stig
+      check: /usr/bin/dscl localhost -list . | /usr/bin/grep -vE '(Contact|Search|Local|^$)'; /bin/echo $?
+tags:
+  - cisv8

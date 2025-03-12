@@ -1,0 +1,45 @@
+id: os_enforce_access_restrictions
+title: Enforce Access Restrictions
+discussion: |
+  The information system _IS_ configured to enforce access restrictions and support auditing of the enforcement actions.
+
+  The inherent configuration of a macOS provides users with the ability to set their own permission settings to control who can view and alter files on the computer.
+
+  link:https://support.apple.com/guide/mac-help/change-permissions-for-files-folders-or-disks-mchlp1203/mac[]
+references:
+  nist:
+    cce:
+      sequoia:
+        - CCE-94184-9
+      sonoma:
+        - CCE-92784-8
+      ventura:
+        - CCE-91782-3
+      monterey:
+        - CCE-90917-6
+      big_sur:
+        - CCE-85306-9
+      catalina:
+        - CCE-84854-9
+    800-53r5:
+      - CM-5(1)
+  disa:
+    srg:
+      - SRG-OS-000364-GPOS-00151
+platforms:
+  macOS:
+    check: |
+      The technology supports this requirement and cannot be configured to be out of compliance. The technology inherently meets this requirement.
+    fix: |
+      The technology inherently meets this requirement. No fix is required.
+    sequoia: {}
+    sonoma: {}
+    ventura: {}
+    monterey: {}
+    big_sur: {}
+    catalina: {}
+tags:
+  - 800-53r5_high
+  - inherent
+  - cnssi-1253_high
+  - cnssi-1253_moderate

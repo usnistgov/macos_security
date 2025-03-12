@@ -51,30 +51,11 @@ references:
         - APPL-14-003030
       ventura:
         - APPL-13-003020
-      monterey:
-        - null
-      big_sur:
-        - null
-      catalina:
-        - null
     cmmc:
       - IA.L1-3.5.1
       - IA.L1-3.5.2
       - IA.L2-3.5.3
   cis:
-    benchmark:
-      sequoia:
-        - null
-      sonoma:
-        - null
-      ventura:
-        - null
-      monterey:
-        - null
-      big_sur:
-        - null
-      catalina:
-        - null
     controls_v8:
       - 6.3
       - 6.4

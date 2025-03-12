@@ -7,22 +7,6 @@ references:
     cce:
       sonoma:
         - CCE-93014-9
-    800-53r5:
-      - null
-  disa:
-    cci:
-      - null
-    srg:
-      - null
-    disa_stig:
-      sonoma:
-        - null
-  cis:
-    benchmark:
-      sonoma:
-        - null
-    controls_v8:
-      - null
 platforms:
   macOS:
     sonoma: {}

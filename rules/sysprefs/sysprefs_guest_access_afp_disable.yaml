@@ -12,18 +12,7 @@ references:
     800-53r5:
       - AC-2(9)
       - AC-2
-  disa:
-    cci:
-      - null
-    srg:
-      - null
-    disa_stig:
-      catalina:
-        - null
   cis:
-    benchmark:
-      catalina:
-        - null
     controls_v8:
       - 5.2
       - 6.2

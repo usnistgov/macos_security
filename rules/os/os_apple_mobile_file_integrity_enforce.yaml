@@ -12,16 +12,7 @@ references:
     800-53r5:
       - SI-7(1)
       - SI-3
-  disa:
-    srg:
-      - null
-    disa_stig:
-      catalina:
-        - null
   cis:
-    benchmark:
-      catalina:
-        - null
     controls_v8:
       - 10.1
       - 10.4
@@ -38,4 +29,3 @@ tags:
   - 800-53r5_moderate
   - 800-53r5_high
   - cisv8
-mobileconfig_info: null

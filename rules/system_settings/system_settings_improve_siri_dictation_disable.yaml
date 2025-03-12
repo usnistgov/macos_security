@@ -41,8 +41,6 @@ references:
         - 2.6.3.2 (level 1)
       sonoma:
         - 2.6.3 (level 2)
-      ventura:
-        - null
     controls_v8:
       - 4.1
       - 4.8

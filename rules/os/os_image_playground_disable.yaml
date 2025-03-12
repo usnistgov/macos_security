@@ -13,14 +13,6 @@ references:
       - CM-7
       - CM-7(1)
       - SC-7(10)
-  disa:
-    cci:
-      - null
-    disa_stig:
-      ios_18:
-        - null
-    sfr:
-      - null
 platforms:
   iOS:
     ios_18:

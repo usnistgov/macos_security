@@ -11,10 +11,6 @@ references:
     cce:
       ventura:
         - CCE-92012-4
-    800-53r5:
-      - null
-    800-171r3:
-      - null
   disa:
     cci:
       - CCI-002418
@@ -35,7 +31,6 @@ platforms:
       /usr/bin/profiles show -output stdout-xml | /usr/bin/xmllint --xpath '//key[text()="DisabledPreferencePanes"]/following-sibling::*[1]' - | /usr/bin/grep -c com.apple.preferences.Bluetooth
     result:
       integer: 1
-tags: []
 mobileconfig_info:
   com.apple.systempreferences:
     DisabledPreferencePanes:

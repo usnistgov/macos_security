@@ -1,0 +1,38 @@
+id: os_privacy_principle_minimization
+title: Implement the Privacy Principle of Minimization
+discussion: |
+  Implement the privacy principle of minimization using organization-defined processes.
+
+  The principle of minimization states that organizations should only process personally identifiable information that is directly relevant and necessary to accomplish an authorized purpose and should only maintain personally identifiable information for as long as is necessary to accomplish the purpose. Organizations have processes in place, consistent with applicable laws and policies, to implement the principle of minimization.
+references:
+  nist:
+    cce:
+      sequoia:
+        - CCE-94263-1
+      sonoma:
+        - CCE-92859-8
+      ventura:
+        - CCE-91854-0
+      monterey:
+        - CCE-90980-4
+      big_sur:
+        - CCE-85479-4
+      catalina:
+        - CCE-84949-7
+    800-53r5:
+      - SA-8(33)
+platforms:
+  macOS:
+    check: |
+      This requirement is NA for this technology.
+    fix: |
+      The requirement is NA. No fix is required.
+    sequoia: {}
+    sonoma: {}
+    ventura: {}
+    monterey: {}
+    big_sur: {}
+    catalina: {}
+tags:
+  - 800-53r5_privacy
+  - n_a

@@ -15,7 +15,6 @@ platforms:
   visionOS:
     visionos_2.0:
       supervised: true
-tags: []
 mobileconfig_info:
   com.apple.applicationaccess:
     allowUIAppInstallation: false
