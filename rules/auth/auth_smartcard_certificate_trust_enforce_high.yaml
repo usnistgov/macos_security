@@ -8,41 +8,66 @@ discussion: |
   By setting the smartcard certificate trust level to high, the system will execute a hard revocation, i.e., a network connection is required. A verified positive response from the OSCP/CRL server is required for authentication to succeed.
 
   NOTE: Before applying this setting, please see the smartcard supplemental guidance.
-check: |
-  /usr/bin/osascript -l JavaScript << EOS
-  $.NSUserDefaults.alloc.initWithSuiteName('com.apple.security.smartcard')\
-  .objectForKey('checkCertificateTrust').js
-  EOS
-result:
-  integer: 3
-fix: |
-  This is implemented by a Configuration Profile.
 references:
-  cce:
-    - CCE-94136-9
-  cci:
-    - N/A
-  800-53r5:
-    - IA-5(2)
-    - SC-17
-  800-53r4:
-    - IA-2(12)
-    - IA-5(2)
-  srg:
-    - N/A
-  disa_stig:
-    - N/A
-  cmmc:
-    - SC.L2-3.13.10
-macOS:
-  - '15.0'
+  nist:
+    cce:
+      sequoia:
+        - CCE-94136-9
+      sonoma:
+        - CCE-92736-8
+      ventura:
+        - CCE-91737-7
+      monterey:
+        - CCE-90881-4
+      big_sur:
+        - CCE-85278-0
+      catalina:
+        - CCE-84725-1
+    800-53r5:
+      - IA-5(2)
+      - SC-17
+  disa:
+    cci:
+      - null
+    srg:
+      - null
+    disa_stig:
+      sequoia:
+        - null
+      sonoma:
+        - null
+      ventura:
+        - null
+      monterey:
+        - null
+      big_sur:
+        - null
+      catalina:
+        - AOSX-15-003002
+    cmmc:
+      - SC.L2-3.13.10
+platforms:
+  macOS:
+    check: |
+      /usr/bin/osascript -l JavaScript << EOS
+      $.NSUserDefaults.alloc.initWithSuiteName('com.apple.security.smartcard')\
+      .objectForKey('checkCertificateTrust').js
+      EOS
+    result:
+      integer: 3
+    fix: |
+      This is implemented by a Configuration Profile.
+    sequoia: {}
+    sonoma: {}
+    ventura: {}
+    monterey: {}
+    big_sur: {}
+    catalina: {}
 tags:
-  - 800-53r4_high
   - 800-53r5_high
   - cnssi-1253_high
   - cnssi-1253_moderate
   - cnssi-1253_low
-mobileconfig: true
 mobileconfig_info:
   com.apple.security.smartcard:
     checkCertificateTrust: 3

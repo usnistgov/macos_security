@@ -8,47 +8,61 @@ discussion: |
   The system _MUST_ remain locked until the user establishes access using an authorized identification and authentication method.
 
   NOTE: TouchID is not an approved biometric authenticator for US Federal Government usage as it has not been verified to meet the strength requirements outlined in NIST SP 800-63.
-check: |
-  /usr/bin/osascript -l JavaScript << EOS
-  $.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess')\
-  .objectForKey('allowFingerprintForUnlock').js
-  EOS
-result:
-  string: 'false'
-fix: |
-  This is implemented by a Configuration Profile.
 references:
-  cce:
-    - CCE-94408-2
-  cci:
-    - CCI-000056
-  800-53r5:
-    - IA-5
-  800-53r4:
-    - IA-5
-  srg:
-    - SRG-OS-000028-GPOS-00009
-  disa_stig:
-    - APPL-15-002090
-  800-171r3:
-    - 03.05.12
-  cmmc:
-    - AC.L2-3.1.10
-macOS:
-  - '15.0'
+  nist:
+    cce:
+      sequoia:
+        - CCE-94408-2
+      sonoma:
+        - CCE-93003-2
+      ventura:
+        - CCE-91994-4
+    800-53r5:
+      - IA-5
+    800-171r3:
+      - 03.05.12
+  disa:
+    cci:
+      - CCI-000056
+    srg:
+      - SRG-OS-000028-GPOS-00009
+    disa_stig:
+      sequoia:
+        - APPL-15-002090
+      sonoma:
+        - APPL-14-002090
+      ventura:
+        - null
+    cmmc:
+      - AC.L2-3.1.10
+platforms:
+  macOS:
+    check: |
+      /usr/bin/osascript -l JavaScript << EOS
+      $.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess')\
+      .objectForKey('allowFingerprintForUnlock').js
+      EOS
+    result:
+      string: 'false'
+    fix: |
+      This is implemented by a Configuration Profile.
+    sequoia:
+      severity: medium
+      benchmarks:
+        - disa_stig
+    sonoma:
+      severity: medium
+      benchmarks:
+        - disa_stig
+    ventura: {}
 tags:
   - 800-53r5_moderate
   - 800-53r5_high
-  - 800-53r4_moderate
-  - 800-53r4_high
   - 800-171
   - cnssi-1253_low
   - cnssi-1253_high
   - cmmc_lvl2
-  - stig
   - cnssi-1253_moderate
-severity: medium
-mobileconfig: true
 mobileconfig_info:
   com.apple.applicationaccess:
     allowFingerprintForUnlock: false

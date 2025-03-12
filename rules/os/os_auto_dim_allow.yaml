@@ -1,0 +1,22 @@
+id: os_auto_dim_allow
+title: Ensure auto dim of iPads with OLED displays is set to Enabled
+discussion: |
+  Automatic dimming of iPads with OLED displays _MUST_ be enabled.
+references:
+  nist:
+    cce:
+      ios_18:
+        - CCE-94519-6
+    800-53r5:
+      - null
+  disa:
+    cci:
+      - null
+platforms:
+  iOS:
+    ios_18:
+      supervised: false
+tags: []
+mobileconfig_info:
+  com.apple.applicationaccess:
+    allowAutoDim: true

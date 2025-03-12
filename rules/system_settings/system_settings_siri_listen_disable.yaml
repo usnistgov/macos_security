@@ -1,42 +1,66 @@
 id: system_settings_siri_listen_disable
-title: "Ensure Siri Listen For is Disabled"
+title: Ensure Siri Listen For is Disabled
 discussion: |
   Siri has the ability to listen for "Hey Siri" or "Siri". Listen for _MUST_ be disabled.
-check: |
-  /usr/bin/sudo /usr/bin/osascript -l JavaScript << EOS
-  $.NSUserDefaults.alloc.initWithSuiteName('com.apple.Siri')\
-  .objectForKey('VoiceTriggerUserEnabled').js
-  EOS
-result:
-  string: 'false'
-fix: |
-  This is implemented by a Configuration Profile.
 references:
-  cce:
-    - CCE-94392-8
-  cci:
-    - N/A
-  800-53r5:
-    - N/A
-  800-53r4:
-    - N/A
-  disa_stig:
-    - N/A
-  srg:
-    - N/A
+  nist:
+    cce:
+      sequoia:
+        - CCE-94392-8
+      sonoma:
+        - CCE-93022-2
+      ventura:
+        - CCE-92031-4
+    800-53r5:
+      - null
+  disa:
+    cci:
+      - null
+    srg:
+      - null
+    disa_stig:
+      sequoia:
+        - null
+      sonoma:
+        - null
+      ventura:
+        - null
   cis:
     benchmark:
-      - 2.5.2 (level 1)
-    controls v8:
+      sequoia:
+        - 2.5.2 (level 1)
+      sonoma:
+        - 2.5.2 (level 1)
+      ventura:
+        - 2.5.2 (level 1)
+    controls_v8:
       - 4.1
       - 4.8
-macOS:
-  - "15.0"
+platforms:
+  macOS:
+    check: |
+      /usr/bin/sudo /usr/bin/osascript -l JavaScript << EOS
+      $.NSUserDefaults.alloc.initWithSuiteName('com.apple.Siri')\
+      .objectForKey('VoiceTriggerUserEnabled').js
+      EOS
+    result:
+      string: 'false'
+    fix: |
+      This is implemented by a Configuration Profile.
+    sequoia:
+      benchmarks:
+        - cis_lvl1
+        - cis_lvl2
+    sonoma:
+      benchmarks:
+        - cis_lvl1
+        - cis_lvl2
+    ventura:
+      benchmarks:
+        - cis_lvl1
+        - cis_lvl2
 tags:
-  - cis_lvl1
-  - cis_lvl2
   - cisv8
-mobileconfig: true
 mobileconfig_info:
   com.apple.Siri:
     VoiceTriggerUserEnabled: false

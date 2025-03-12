@@ -1,0 +1,41 @@
+id: os_apple_mobile_file_integrity_enforce
+title: Enforce Apple Mobile File Integrity
+discussion: |
+  Apple Mobile File Integrity (AMFI) is a macOS kernel module that enforces the code-signing validation within Gatekeeper and library validation. AMFI checks the signatures of every app that is run.
+
+  NOTE: AMFI is enabled by default on macOS systems.
+references:
+  nist:
+    cce:
+      catalina:
+        - CCE-84926-5
+    800-53r5:
+      - SI-7(1)
+      - SI-3
+  disa:
+    srg:
+      - null
+    disa_stig:
+      catalina:
+        - null
+  cis:
+    benchmark:
+      catalina:
+        - null
+    controls_v8:
+      - 10.1
+      - 10.4
+      - 10.5
+platforms:
+  macOS:
+    catalina: {}
+    check: |
+      /usr/sbin/nvram -p | /usr/bin/grep -c "amfi_get_out_of_my_way=1"
+    result:
+      integer: 0
+tags:
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_high
+  - cisv8
+mobileconfig_info: null

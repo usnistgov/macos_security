@@ -1,0 +1,33 @@
+id: sysprefs_screensaver_enforce
+title: Enforce Screen Saver
+discussion: |
+  A default screen saver _MUST_ be configured to display and _MUST_ not display any sensitive information.
+references:
+  nist:
+    cce:
+      catalina:
+        - CCE-84921-6
+    800-53r5:
+      - null
+  disa:
+    cci:
+      - CCI-000060
+    srg:
+      - SRG-OS-000031-GPOS-00012
+    disa_stig:
+      catalina:
+        - AOSX-15-000006
+platforms:
+  macOS:
+    catalina:
+      severity: medium
+      benchmarks:
+        - disa_stig
+    check: |
+      /usr/bin/profiles -P -o stdout  | /usr/bin/grep -c modulePath
+    result:
+      integer: 1
+tags: []
+mobileconfig_info:
+  com.apple.screensaver.user:
+    modulePath: /System/Library/Screen Savers/Flurry.saver

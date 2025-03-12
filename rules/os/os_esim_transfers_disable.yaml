@@ -1,0 +1,22 @@
+id: os_esim_transfers_disable
+title: Ensure the ability to transfer an eSIM is set to Disabled
+discussion: |
+  Outgoing transfers of eSIMs _MUST_ be disabled.
+references:
+  nist:
+    cce:
+      ios_18:
+        - CCE-94524-6
+    800-53r5:
+      - null
+  disa:
+    cci:
+      - null
+platforms:
+  iOS:
+    ios_18:
+      supervised: false
+tags: []
+mobileconfig_info:
+  com.apple.applicationaccess:
+    allowESIMOutgoingTransfers: false

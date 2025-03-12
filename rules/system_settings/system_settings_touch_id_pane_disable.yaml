@@ -1,0 +1,48 @@
+id: system_settings_touch_id_pane_disable
+title: Disable the Touch ID and Password Preference Pane
+discussion: |
+  This is required for compliance with the DISA STIG for macOS.
+
+  The domain *com.apple.systempreferences* has been deprecated by Apple in macOS 13. The recommended way to disable System Setting Panes is to use the *DisabledSystemSettings* key.
+
+  link:https://developer.apple.com/documentation/devicemanagement/systempreferences[]
+references:
+  nist:
+    cce:
+      ventura:
+        - CCE-92014-0
+    800-53r5:
+      - null
+    800-171r3:
+      - null
+  disa:
+    cci:
+      - CCI-000381
+      - CCI-001774
+    srg:
+      - SRG-OS-000095-GPOS-00049
+      - SRG-OS-000370-GPOS-00155
+    disa_stig:
+      ventura:
+        - APPL-13-002051
+  cis:
+    benchmark:
+      ventura:
+        - null
+    controls_v8:
+      - null
+platforms:
+  macOS:
+    ventura:
+      severity: medium
+      benchmarks:
+        - disa_stig
+    check: |
+      /usr/bin/profiles show -output stdout-xml | /usr/bin/xmllint --xpath '//key[text()="DisabledPreferencePanes"]/following-sibling::*[1]' - | /usr/bin/grep -c "com.apple.preferences.password"
+    result:
+      integer: 1
+tags: []
+mobileconfig_info:
+  com.apple.systempreferences:
+    DisabledPreferencePanes:
+      - com.apple.preferences.password

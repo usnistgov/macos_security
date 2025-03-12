@@ -4,55 +4,76 @@ discussion: |
   Hot corners _MUST_ be secured.
 
   The information system conceals, via the session lock, information previously visible on the display with a publicly viewable image. Although hot comers can be used to initiate a session lock or to launch useful applications, they can also be configured to disable an automatic session lock from initiating. Such a configuration introduces the risk that a user might forget to manually lock the screen before stepping away from the computer.
-check: |
-  bl_corner="$(/usr/bin/defaults read /Users/"$CURRENT_USER"/Library/Preferences/com.apple.dock wvous-bl-corner 2>/dev/null)"
-  tl_corner="$(/usr/bin/defaults read /Users/"$CURRENT_USER"/Library/Preferences/com.apple.dock wvous-tl-corner 2>/dev/null)"
-  tr_corner="$(/usr/bin/defaults read /Users/"$CURRENT_USER"/Library/Preferences/com.apple.dock wvous-tr-corner 2>/dev/null)"
-  br_corner="$(/usr/bin/defaults read /Users/"$CURRENT_USER"/Library/Preferences/com.apple.dock wvous-br-corner 2>/dev/null)"
-
-  if [[ "$bl_corner" != "6" ]] && [[ "$tl_corner" != "6" ]] && [[ "$tr_corner" != "6" ]] && [[ "$br_corner" != "6" ]]; then
-    echo "0"
-  fi
-result:
-  integer: 0
-fix: |
-  [source,bash]
-  ----
-  /usr/bin/sudo -u "$CURRENT_USER" /usr/bin/defaults delete /Users/"$CURRENT_USER"/Library/Preferences/com.apple.dock wvous-bl-corner 2>/dev/null
-  /usr/bin/sudo -u "$CURRENT_USER" /usr/bin/defaults delete /Users/"$CURRENT_USER"/Library/Preferences/com.apple.dock wvous-tl-corner 2>/dev/null
-  /usr/bin/sudo -u "$CURRENT_USER" /usr/bin/defaults delete /Users/"$CURRENT_USER"/Library/Preferences/com.apple.dock wvous-tr-corner 2>/dev/null
-  /usr/bin/sudo -u "$CURRENT_USER" /usr/bin/defaults delete /Users/"$CURRENT_USER"/Library/Preferences/com.apple.dock wvous-br-corner 2>/dev/null
-  ----
 references:
-  cce:
-    - CCE-94369-6
-  cci:
-    - N/A
-  800-53r5:
-    - AC-11(1)
-  800-53r4:
-    - AC-11(1)
-  srg:
-    - N/A
-  disa_stig:
-    - N/A
-  800-171r3:
-    - 03.01.10
+  nist:
+    cce:
+      sequoia:
+        - CCE-94369-6
+      sonoma:
+        - CCE-92966-1
+      ventura:
+        - CCE-91955-5
+    800-53r5:
+      - AC-11(1)
+    800-171r3:
+      - 03.01.10
+  disa:
+    cci:
+      - null
+    srg:
+      - null
+    disa_stig:
+      sequoia:
+        - null
+      sonoma:
+        - null
+      ventura:
+        - null
+    cmmc:
+      - AC.L2-3.1.10
   cis:
     benchmark:
-      - 2.7.1 (level 2)
-    controls v8:
+      sequoia:
+        - 2.7.1 (level 2)
+      sonoma:
+        - 2.7.1 (level 2)
+      ventura:
+        - 2.7.1 (level 2)
+    controls_v8:
       - 4.3
-  cmmc:
-    - AC.L2-3.1.10
-macOS:
-  - '15.0'
+platforms:
+  macOS:
+    check: |
+      bl_corner="$(/usr/bin/defaults read /Users/"$CURRENT_USER"/Library/Preferences/com.apple.dock wvous-bl-corner 2>/dev/null)"
+      tl_corner="$(/usr/bin/defaults read /Users/"$CURRENT_USER"/Library/Preferences/com.apple.dock wvous-tl-corner 2>/dev/null)"
+      tr_corner="$(/usr/bin/defaults read /Users/"$CURRENT_USER"/Library/Preferences/com.apple.dock wvous-tr-corner 2>/dev/null)"
+      br_corner="$(/usr/bin/defaults read /Users/"$CURRENT_USER"/Library/Preferences/com.apple.dock wvous-br-corner 2>/dev/null)"
+
+      if [[ "$bl_corner" != "6" ]] && [[ "$tl_corner" != "6" ]] && [[ "$tr_corner" != "6" ]] && [[ "$br_corner" != "6" ]]; then
+        echo "0"
+      fi
+    result:
+      integer: 0
+    fix: |
+      [source,bash]
+      ----
+      /usr/bin/sudo -u "$CURRENT_USER" /usr/bin/defaults delete /Users/"$CURRENT_USER"/Library/Preferences/com.apple.dock wvous-bl-corner 2>/dev/null
+      /usr/bin/sudo -u "$CURRENT_USER" /usr/bin/defaults delete /Users/"$CURRENT_USER"/Library/Preferences/com.apple.dock wvous-tl-corner 2>/dev/null
+      /usr/bin/sudo -u "$CURRENT_USER" /usr/bin/defaults delete /Users/"$CURRENT_USER"/Library/Preferences/com.apple.dock wvous-tr-corner 2>/dev/null
+      /usr/bin/sudo -u "$CURRENT_USER" /usr/bin/defaults delete /Users/"$CURRENT_USER"/Library/Preferences/com.apple.dock wvous-br-corner 2>/dev/null
+      ----
+    sequoia:
+      benchmarks:
+        - cis_lvl2
+    sonoma:
+      benchmarks:
+        - cis_lvl2
+    ventura:
+      benchmarks:
+        - cis_lvl2
 tags:
-  - cis_lvl2
   - cisv8
   - cnssi-1253_low
   - cnssi-1253_high
   - cmmc_lvl2
   - cnssi-1253_moderate
-mobileconfig: false
-mobileconfig_info:

@@ -2,45 +2,69 @@ id: system_settings_software_update_enforce
 title: Enforce Software Update Automatically
 discussion: |
   Software Update _MUST_ be configured to enforce automatic update is enabled.
-check: |
-  /usr/bin/osascript -l JavaScript << EOS
-  $.NSUserDefaults.alloc.initWithSuiteName('com.apple.SoftwareUpdate')\
-  .objectForKey('AutomaticCheckEnabled').js
-  EOS
-result:
-  string: 'true'
-fix: |
-  This is implemented by a Configuration Profile.
 references:
-  cce:
-    - CCE-94397-7
-  cci:
-    - N/A
-  800-53r5:
-    - SI-2(5)
-  800-53r4:
-    - N/A
-  srg:
-    - N/A
-  disa_stig:
-    - N/A
-  800-171r3:
-    - 3.14.1
-    - 3.14.2
-    - 3.13.3
+  nist:
+    cce:
+      sequoia:
+        - CCE-94397-7
+      sonoma:
+        - CCE-92992-7
+      ventura:
+        - CCE-91982-9
+    800-53r5:
+      - SI-2(5)
+    800-171r3:
+      - 3.14.1
+      - 3.14.2
+      - 3.13.3
+  disa:
+    cci:
+      - null
+    srg:
+      - null
+    disa_stig:
+      sequoia:
+        - null
+      sonoma:
+        - null
+      ventura:
+        - null
   cis:
     benchmark:
-      - 1.2 (level 1)
-    controls v8:
+      sequoia:
+        - 1.2 (level 1)
+      sonoma:
+        - 1.2 (level 1)
+      ventura:
+        - 1.2 (level 1)
+    controls_v8:
       - 7.3
       - 7.4
-macOS:
-  - '15.0'
+platforms:
+  macOS:
+    check: |
+      /usr/bin/osascript -l JavaScript << EOS
+      $.NSUserDefaults.alloc.initWithSuiteName('com.apple.SoftwareUpdate')\
+      .objectForKey('AutomaticCheckEnabled').js
+      EOS
+    result:
+      string: 'true'
+    fix: |
+      This is implemented by a Configuration Profile.
+    sequoia:
+      benchmarks:
+        - cis_lvl1
+        - cis_lvl2
+    sonoma:
+      benchmarks:
+        - cis_lvl1
+        - cis_lvl2
+    ventura:
+      benchmarks:
+        - cis_lvl1
+        - cis_lvl2
 tags:
-  - cis_lvl1
-  - cis_lvl2
   - cisv8
-mobileconfig: true
 mobileconfig_info:
   com.apple.SoftwareUpdate:
     AutomaticCheckEnabled: true

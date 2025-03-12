@@ -2,40 +2,63 @@ id: system_settings_wake_network_access_disable
 title: Ensure Wake for Network Access Is Disabled
 discussion: |
   Wake for network access _MUST_ be disabled.
-check: |
-  /usr/bin/pmset -g custom | /usr/bin/awk '/womp/ { sum+=$2 } END {print sum}'
-result:
-  integer: 0
-fix: |
-  [source,bash]
-  ----
-  /usr/bin/pmset -a womp 0
-  ----
 references:
-  cce:
-    - CCE-94410-8
-  cci:
-    - N/A
-  800-53r5:
-    - N/A
-  800-53r4:
-    - N/A
-  disa_stig:
-    - N/A
-  srg:
-    - N/A
-  800-171r3:
-    - N/A
+  nist:
+    cce:
+      sequoia:
+        - CCE-94410-8
+      sonoma:
+        - CCE-93005-7
+      ventura:
+        - CCE-91995-1
+    800-53r5:
+      - null
+    800-171r3:
+      - null
+  disa:
+    cci:
+      - null
+    srg:
+      - null
+    disa_stig:
+      sequoia:
+        - null
+      sonoma:
+        - null
+      ventura:
+        - null
   cis:
     benchmark:
-      - 2.9.3 (level 1)
-    controls v8:
+      sequoia:
+        - 2.9.3 (level 1)
+      sonoma:
+        - 2.9.3 (level 1)
+      ventura:
+        - 2.9.3 (level 1)
+    controls_v8:
       - 4.8
-macOS:
-  - '15.0'
+platforms:
+  macOS:
+    check: |
+      /usr/bin/pmset -g custom | /usr/bin/awk '/womp/ { sum+=$2 } END {print sum}'
+    result:
+      integer: 0
+    fix: |
+      [source,bash]
+      ----
+      /usr/bin/pmset -a womp 0
+      ----
+    sequoia:
+      benchmarks:
+        - cis_lvl1
+        - cis_lvl2
+    sonoma:
+      benchmarks:
+        - cis_lvl1
+        - cis_lvl2
+    ventura:
+      benchmarks:
+        - cis_lvl1
+        - cis_lvl2
 tags:
-  - cis_lvl1
-  - cis_lvl2
   - cisv8
-mobileconfig: false
-mobileconfig_info:

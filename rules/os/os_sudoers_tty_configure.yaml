@@ -1,0 +1,38 @@
+id: os_sudoers_tty_configure
+title: Configure Sudoers to Authenticate Users on a Per -tty Basis
+discussion: |
+  The file /etc/sudoers _MUST_ be configured to include tty_tickets.
+
+  This rule ensures that the "sudo" command will prompt for the administrator's password at least once in each newly opened terminal window. This prevents a malicious user from taking advantage of an unlocked computer or an abandoned logon session by bypassing the normal password prompt requirement. Without the "tty_tickets" option, all open local and remote logon sessions would be authenticated to use sudo without a password for the duration of the configured password timeout window.
+references:
+  nist:
+    cce:
+      catalina:
+        - CCE-84799-6
+    800-53r5:
+      - CM-5(1)
+      - IA-11
+  disa:
+    cci:
+      - CCI-000366
+    srg:
+      - SRG-OS-000480-GPOS-00227
+    disa_stig:
+      catalina:
+        - AOSX-15-004021
+platforms:
+  macOS:
+    catalina:
+      severity: high
+      benchmarks:
+        - disa_stig
+    check: |
+      /usr/bin/grep -Ec "^Defaults tty_tickets" /etc/sudoers
+    result:
+      integer: 1
+tags:
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_high
+  - cnssi-1253
+mobileconfig_info: null
