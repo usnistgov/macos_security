@@ -314,11 +314,11 @@ def main():
                     new_yaml['references'].update({"disa": {}})
                     new_yaml['references']['disa'].update({"cmmc": rule_yaml['references']['cmmc']})
             if "indigo" in rule_yaml['references']:
-                if "bsi" in new_rule['references']:
+                if "bsi" in new_yaml['references']:
                     new_yaml['references']['bsi'].update({"indigo": rule_yaml['references']['indigo']})
                 else:
                     new_yaml['references'].update({"bsi": {}})
-                    new_yaml['references']['bsi'].ipdate({"indigo": rule_yaml['references']['indigo']})
+                    new_yaml['references']['bsi'].update({"indigo": rule_yaml['references']['indigo']})
             if "cis" in rule_yaml['references']:
                 if "benchmark" in rule_yaml['references']['cis']:
                     if "cis" in new_yaml['references']:
