@@ -17,8 +17,8 @@ iOS:
 odv:
   hint: "Enforced a software update delay in days"
   recommended: 30
-  indigo_base: 30
-  indigo_high: 30
+  indigo_base: 14
+  indigo_high: 14
 tags:
   - ios
   - indigo_base
