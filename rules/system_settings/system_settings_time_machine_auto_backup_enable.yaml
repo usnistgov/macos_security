@@ -1,0 +1,48 @@
+id: system_settings_time_machine_auto_backup_enable
+title: Configure Time Machine for Automatic Backups
+discussion: |
+  Automatic backups _MUST_ be enabled when using Time Machine.
+references:
+  nist:
+    cce:
+      sequoia:
+        - CCE-94402-5
+      sonoma:
+        - CCE-92997-6
+      ventura:
+        - CCE-91987-8
+  cis:
+    benchmark:
+      sequoia:
+        - 2.3.4.1 (level 2)
+      sonoma:
+        - 2.3.4.1 (level 2)
+      ventura:
+        - 2.3.4.1 (level 2)
+    controls_v8:
+      - 11.2
+platforms:
+  macOS:
+    check: |
+      /usr/bin/osascript -l JavaScript << EOS
+      $.NSUserDefaults.alloc.initWithSuiteName('com.apple.TimeMachine')\
+      .objectForKey('AutoBackup').js
+      EOS
+    result:
+      string: 'true'
+    fix: |
+      This is implemented by a Configuration Profile.
+    sequoia:
+      benchmarks:
+        - cis_lvl2
+    sonoma:
+      benchmarks:
+        - cis_lvl2
+    ventura:
+      benchmarks:
+        - cis_lvl2
+tags:
+  - cisv8
+mobileconfig_info:
+  com.apple.TimeMachine:
+    AutoBackup: true

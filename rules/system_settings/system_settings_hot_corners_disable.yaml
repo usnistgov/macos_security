@@ -1,0 +1,68 @@
+id: system_settings_hot_corners_disable
+title: Disable Hot Corners
+discussion: |
+  Hot corners _MUST_ be disabled.
+
+  The information system conceals, via the session lock, information previously visible on the display with a publicly viewable image. Although hot comers can be used to initiate a session lock or to launch useful applications, they can also be configured to disable an automatic session lock from initiating. Such a configuration introduces the risk that a user might forget to manually lock the screen before stepping away from the computer.
+references:
+  nist:
+    cce:
+      sequoia:
+        - CCE-94368-8
+      sonoma:
+        - CCE-92965-3
+      ventura:
+        - CCE-91954-8
+    800-53r5:
+      - AC-11(1)
+    800-171r3:
+      - 03.01.10
+  disa:
+    cci:
+      - CCI-000060
+    srg:
+      - SRG-OS-000031-GPOS-00012
+    disa_stig:
+      sequoia:
+        - APPL-15-000007
+      sonoma:
+        - APPL-14-000007
+      ventura:
+        - APPL-13-000007
+    cmmc:
+      - AC.L2-3.1.10
+platforms:
+  macOS:
+    check: |
+      /usr/bin/profiles -P -o stdout | /usr/bin/grep -Ec '"wvous-bl-corner" = 0|"wvous-br-corner" = 0|"wvous-tl-corner" = 0|"wvous-tr-corner" = 0'
+    result:
+      integer: 4
+    fix: |
+      This is implemented by a Configuration Profile.
+    sequoia:
+      severity: medium
+      benchmarks:
+        - disa_stig
+    sonoma:
+      severity: medium
+      benchmarks:
+        - disa_stig
+    ventura:
+      severity: medium
+      benchmarks:
+        - disa_stig
+tags:
+  - 800-53r5_moderate
+  - 800-53r5_high
+  - 800-171
+  - cnssi-1253_low
+  - cnssi-1253_high
+  - cmmc_lvl2
+  - cnssi-1253_moderate
+mobileconfig_info:
+  com.apple.ManagedClient.preferences:
+    com.apple.dock:
+      wvous-bl-corner: 0
+      wvous-br-corner: 0
+      wvous-tr-corner: 0
+      wvous-tl-corner: 0

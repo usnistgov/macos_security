@@ -1,0 +1,87 @@
+id: pwpolicy_custom_regex_enforce
+title: Require Passwords to Match the Defined Custom Regular Expression
+discussion: "The macOS _MUST_ be configured to meet complexity requirements defined in $ODV.\n\nThis rule enforces password complexity by requiring users to set passwords that are less vulnerable to malicious users.\n\nNOTE: To comply with Executive Order 14028, \u201CImproving the Nation's Cybersecurity\u201D, OMB M-22-09, \u201CMoving the U.S. Government Toward Zero Trust Cybersecurity Principles\u201D, and NIST SP-800-63b, \u201CDigital Identity Guidelines: Authentication and Lifecycle Management\u201D federal, military, and intelligence communities must adopt the following configuration settings. Password policies must not require the use of complexity policies such as upper characters, lower characters, or special characters. Password policies must also not require the use of regular rotation. Password policies should define a minimum length. Multifactor authentication should be used where ever possible.\n\nNOTE: The configuration profile generated must be installed from an MDM server.\n"
+references:
+  nist:
+    cce:
+      sequoia:
+        - CCE-94334-0
+      sonoma:
+        - CCE-93011-5
+    800-53r5:
+      - IA-5(1)
+    800-171r3:
+      - 03.05.07
+  disa:
+    cci:
+      - CCI-000192
+      - CCI-000193
+      - CCI-004066
+      - CCI-004066
+      - CCI-004064
+      - CCI-004065
+    srg:
+      - SRG-OS-000070-GPOS-00038
+      - SRG-OS-000069-GPOS-00037
+    disa_stig:
+      sequoia:
+        - APPL-15-003060
+      sonoma:
+        - APPL-14-003060
+    cmmc:
+      - IA.L2-3.5.7
+      - IA.L2-3.5.8
+      - IA.L2-3.5.9
+  cis:
+    benchmark:
+      sequoia:
+        - 5.2.6 (level 2)
+      sonoma:
+        - 5.2.6 (level 2)
+    controls_v8:
+      - 5.2
+platforms:
+  macOS:
+    check: |
+      /usr/bin/pwpolicy -getaccountpolicies 2> /dev/null | /usr/bin/tail +2 | /usr/bin/xmllint --xpath 'boolean(//*[contains(text(),"policyAttributePassword matches '\''$ODV'\''")])' -
+    result:
+      string: 'true'
+    fix: |
+      This is implemented by a Configuration Profile.
+    sequoia:
+      severity: medium
+      benchmarks:
+        - cis_lvl2
+        - disa_stig
+    sonoma:
+      severity: medium
+      benchmarks:
+        - cis_lvl2
+        - disa_stig
+odv:
+  hint: Custom regex (recommended is 1 upper and 1 lowercase)
+  recommended: ^(?=.*[A-Z])(?=.*[a-z]).*$
+  cis_lvl2: ^(?=.*[A-Z])(?=.*[a-z]).*$
+  stig: ^(?=.*[A-Z])(?=.*[a-z]).*$
+tags:
+  - cisv8
+  - cnssi-1253_low
+  - cnssi-1253_high
+  - cmmc_lvl2
+  - cnssi-1253_moderate
+  - 800-171
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_high
+mobileconfig_info:
+  com.apple.mobiledevice.passwordpolicy:
+    customRegex:
+      passwordContentRegex: $ODV
+      passwordContentDescription:
+        default: Password must match custom regex.
+ddm_info:
+  declarationtype: com.apple.configuration.passcode.settings
+  ddm_key: CustomRegex
+  ddm_value:
+    Regex: $ODV
+    Description: Password must match custom regex.

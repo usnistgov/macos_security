@@ -1,0 +1,33 @@
+id: audit_alert_processing_fail
+title: Alert Audit Processing Failure
+discussion: |
+  It is critical for the appropriate personnel to be aware if a system is at risk of failing to process audit logs as required. Without this notification, the security personnel may be unaware of an impending failure of the audit capability, and system operation may be adversely affected. Audit processing failures include software/hardware errors, failures in the audit capturing mechanisms, and audit storage capacity being reached or exceeded. This requirement applies to each audit data storage repository (i.e., distinct information system component where audit records are stored), the centralized audit storage capacity of organizations (i.e., all audit data storage repositories combined), or both.
+references:
+  nist:
+    cce:
+      sequoia:
+        - CCE-94103-9
+      sonoma:
+        - CCE-92703-8
+      ventura:
+        - CCE-91703-9
+      monterey:
+        - CCE-90853-3
+      big_sur:
+        - CCE-85253-3
+      catalina:
+        - CCE-84908-3
+platforms:
+  macOS:
+    check: |
+      The technology does not support this requirement. This is an applicable-does not meet finding.
+    fix: |
+      This requirement is a permanent finding and cannot be fixed. An appropriate mitigation for the system must be implemented, but this finding cannot be considered fixed.
+    sequoia: {}
+    sonoma: {}
+    ventura: {}
+    monterey: {}
+    big_sur: {}
+    catalina: {}
+tags:
+  - permanent

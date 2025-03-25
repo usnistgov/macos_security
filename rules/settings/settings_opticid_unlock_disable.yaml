@@ -1,0 +1,28 @@
+id: settings_opticid_unlock_disable
+title: Disable OpticID for Unlocking the Device
+discussion: |
+  OpticID enables the ability to unlock a device with biometric.
+
+  OpticID _MUST_ be disabled for "Unlocking your device" on all devices that are capable of using OpticID.
+
+  The system _MUST_ remain locked until the user establishes access using an authorized identification and authentication method.
+
+  NOTE: OpticID is not an approved biometric authenticator for US Federal Government usage as it has not been verified to meet the strength requirements outlined in NIST SP 800-63.
+references:
+  nist:
+    cce:
+      visionos_2.0:
+        - CCE-94513-9
+    800-53r5:
+      - IA-5
+platforms:
+  visionOS:
+    visionos_2.0:
+      supervised: true
+tags:
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_high
+mobileconfig_info:
+  com.apple.applicationaccess:
+    allowFingerprintForUnlock: false

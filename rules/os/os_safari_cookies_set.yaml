@@ -1,0 +1,67 @@
+id: os_safari_cookies_set
+title: Ensure Accept cookies is set to From websites I visit or From current website only
+discussion: |
+  Acceptance of cookies _MUST_ be only from sites visited.
+references:
+  nist:
+    cce:
+      ios_18:
+        - CCE-94460-3
+      ios_17:
+        - CCE-93444-8
+      ios_16:
+        - CCE-93244-2
+  cis:
+    benchmark:
+      ios_18:
+        - 2.2.2.2 (level 1 - End-User Owned Devices)
+        - 3.2.2.2 (level 1 - Institutionally-Owned Devices)
+      ios_17:
+        - 2.2.2.2 (level 1 - End-User Owned Devices)
+        - 3.2.2.2 (level 1 - Institutionally-Owned Devices)
+      ios_16:
+        - 2.2.2.2 (level 1 - End-User Owned Devices)
+        - 3.2.2.2 (level 1 - Institutionally-Owned Devices)
+    controls_v8:
+      - 9.4
+  bsi:
+    indigo:
+      ios_17:
+        - ANNEX K
+platforms:
+  iOS:
+    ios_18:
+      supervised: false
+      benchmarks:
+        - cis_lvl1_byod
+        - cis_lvl2_byod
+        - cis_lvl1_enterprise
+        - cis_lvl2_enterprise
+        - indigo_high
+      mobileconfig_info:
+        com.apple.applicationaccess:
+          safariAcceptCookies: 1.5
+    ios_17:
+      supervised: false
+      benchmarks:
+        - cis_lvl1_byod
+        - cis_lvl2_byod
+        - cis_lvl1_enterprise
+        - cis_lvl2_enterprise
+        - indigo_high
+      mobileconfig_info:
+        com.apple.applicationaccess:
+          safariAcceptCookies: 1.0
+    ios_16:
+      supervised: false
+      benchmarks:
+        - cis_lvl1_byod
+        - cis_lvl2_byod
+        - cis_lvl1_enterprise
+        - cis_lvl2_enterprise
+      mobileconfig_info:
+        com.apple.applicationaccess:
+          safariAcceptCookies: 1.5
+tags:
+  - cisv8
+mobileconfig_info: $OS_VALUE

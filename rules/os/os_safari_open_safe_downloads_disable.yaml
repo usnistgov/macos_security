@@ -1,0 +1,65 @@
+id: os_safari_open_safe_downloads_disable
+title: Disable Automatic Opening of Safe Files in Safari
+discussion: |
+  Open "safe" files after downloading _MUST_ be disabled in Safari.
+references:
+  nist:
+    cce:
+      sequoia:
+        - CCE-94281-3
+      sonoma:
+        - CCE-92877-0
+      ventura:
+        - CCE-91871-4
+      monterey:
+        - CCE-91111-5
+      big_sur:
+        - CCE-85510-6
+  cis:
+    benchmark:
+      sequoia:
+        - 6.3.1 (level 1)
+      sonoma:
+        - 6.3.1 (level 1)
+      ventura:
+        - 6.3.1 (level 1)
+      monterey:
+        - 7.2.1 (level 1)
+      big_sur:
+        - 6.3 (level 1)
+    controls_v8:
+      - 9.1
+      - 9.6
+platforms:
+  macOS:
+    check: |
+      /usr/bin/profiles -P -o stdout | /usr/bin/grep -c 'AutoOpenSafeDownloads = 0' | /usr/bin/awk '{ if ($1 >= 1) {print "1"} else {print "0"}}'
+    result:
+      integer: 1
+    fix: |
+      This is implemented by a Configuration Profile.
+    sequoia:
+      benchmarks:
+        - cis_lvl1
+        - cis_lvl2
+    sonoma:
+      benchmarks:
+        - cis_lvl1
+        - cis_lvl2
+    ventura:
+      benchmarks:
+        - cis_lvl1
+        - cis_lvl2
+    monterey:
+      benchmarks:
+        - cis_lvl1
+        - cis_lvl2
+    big_sur:
+      benchmarks:
+        - cis_lvl1
+        - cis_lvl2
+tags:
+  - cisv8
+mobileconfig_info:
+  com.apple.Safari:
+    AutoOpenSafeDownloads: false

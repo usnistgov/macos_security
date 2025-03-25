@@ -1,0 +1,69 @@
+id: os_ess_installed
+title: Must Use ESS
+discussion: |
+  The approved ESS solution _MUST_ be installed and configured to run.
+
+  The macOS system must employ automated mechanisms to determine the state of system components. The DoD requires the installation and use of an approved ESS solution to be implemented on the operating system. For additional information, reference all applicable ESS OPORDs and FRAGOs on SIPRNET.
+references:
+  nist:
+    cce:
+      sequoia:
+        - CCE-94187-2
+      sonoma:
+        - CCE-92787-1
+      ventura:
+        - CCE-91785-6
+      monterey:
+        - CCE-90930-9
+      big_sur:
+        - CCE-85467-9
+      catalina:
+        - CCE-84931-5
+  disa:
+    cci:
+      - CCI-001233
+    srg:
+      - SRG-OS-000191-GPOS-00080
+    disa_stig:
+      sonoma:
+        - APPL-14-000015
+      ventura:
+        - APPL-13-000015
+      monterey:
+        - APPL-12-000015
+      big_sur:
+        - APPL-11-000015
+      catalina:
+        - AOSX-15-000015
+platforms:
+  macOS:
+    check: |
+      Ask the System Administrator (SA) or Information System Security Officer (ISSO) if the approved ESS solution is loaded on the system.
+      If the installed components of the ESS solution are not at the DoD approved minimal versions, this is a finding.
+    fix: |
+      Install the approved ESS solution onto the system.
+    sequoia:
+      severity: medium
+      benchmarks:
+        - disa_stig
+    sonoma:
+      severity: medium
+      benchmarks:
+        - disa_stig
+    ventura:
+      severity: medium
+    monterey:
+      severity: medium
+      benchmarks:
+        - disa_stig
+    big_sur:
+      severity: medium
+      benchmarks:
+        - disa_stig
+    catalina:
+      severity: medium
+      benchmarks:
+        - disa_stig
+tags:
+  - manual
+  - cisv8

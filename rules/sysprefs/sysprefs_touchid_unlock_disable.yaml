@@ -1,0 +1,46 @@
+id: sysprefs_touchid_unlock_disable
+title: Disable TouchID for Unlocking the Device
+discussion: |
+  TouchID enables the ability to unlock a Mac system with a user's fingerprint.
+
+  TouchID _MUST_ be disabled for "Unlocking your Mac" on all macOS devices that are capable of using Touch ID.
+
+  The system _MUST_ remain locked until the user establishes access using an authorized identification and authentication method.
+
+  NOTE: TouchID is not an approved biometric authenticator for US Federal Government usage as it has not been verified to meet the strength requirements outlined in NIST SP 800-63.
+references:
+  nist:
+    cce:
+      monterey:
+        - CCE-91083-6
+      big_sur:
+        - CCE-85451-3
+      catalina:
+        - CCE-84849-9
+    800-53r5:
+      - IA-5
+  disa:
+    cci:
+      - CCI-000056
+platforms:
+  macOS:
+    check: |
+      /usr/bin/osascript -l JavaScript << EOS
+      $.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess')\
+      .objectForKey('allowFingerprintForUnlock').js
+      EOS
+    result:
+      string: 'false'
+    fix: |
+      This is implemented by a Configuration Profile.
+    monterey: {}
+    big_sur: {}
+    catalina: {}
+tags:
+  - 800-53r5_moderate
+  - 800-53r5_high
+  - 800-171
+  - cnssi-1253
+mobileconfig_info:
+  com.apple.applicationaccess:
+    allowFingerprintForUnlock: false

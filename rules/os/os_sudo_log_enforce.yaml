@@ -1,0 +1,56 @@
+id: os_sudo_log_enforce
+title: Configure Sudo To Log Events
+discussion: |
+  Sudo _MUST_ be configured to log privilege escalation.
+references:
+  nist:
+    cce:
+      sequoia:
+        - CCE-94310-0
+    800-53r5:
+      - AC-6(9)
+    800-171r3:
+      - 03.01.07
+  disa:
+    cci:
+      - CCI-000172
+    srg:
+      - SRG-OS-000064-GPOS-00033
+    disa_stig:
+      sequoia:
+        - APPL-15-000190
+    cmmc:
+      - AU.L2-3.3.3
+      - AU.L2-3.3.6
+      - SI.L2-3.14.3
+  cis:
+    benchmark:
+      sequoia:
+        - 5.11 (level 1)
+platforms:
+  macOS:
+    sequoia:
+      severity: medium
+      benchmarks:
+        - cis_lvl1
+        - cis_lvl2
+        - disa_stig
+    check: |
+      /usr/bin/sudo /usr/bin/sudo -V | /usr/bin/grep -c "Log when a command is allowed by sudoers"
+    result:
+      integer: 1
+tags:
+  - 800-53r5_moderate
+  - 800-53r5_high
+  - cisv8
+  - cmmc_lvl2
+  - 800-171
+  - cnssi-1253_moderate
+  - cnssi-1253_low
+  - cnssi-1253_high
+ddm_info:
+  declarationtype: com.apple.configuration.services.configuration-files
+  service: com.apple.sudo
+  config_file: sudoers
+  configuration_key: Defaults
+  configuration_value: log_allowed

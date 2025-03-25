@@ -1,0 +1,61 @@
+id: system_settings_softwareupdate_current
+title: Ensure Software Update is Updated and Current
+discussion: |
+  Make sure Software Update is updated and current.
+
+  NOTE: Automatic fix can cause unplanned restarts and may lose work.
+references:
+  nist:
+    cce:
+      sequoia:
+        - CCE-94398-5
+      sonoma:
+        - CCE-92993-5
+      ventura:
+        - CCE-91983-7
+  cis:
+    benchmark:
+      sequoia:
+        - 1.1 (level 1)
+      sonoma:
+        - 1.1 (level 1)
+      ventura:
+        - 1.1 (level 1)
+    controls_v8:
+      - 7.3
+      - 7.4
+platforms:
+  macOS:
+    check: |
+      softwareupdate_date_epoch=$(/bin/date -j -f "%Y-%m-%d" "$(/usr/bin/defaults read /Library/Preferences/com.apple.SoftwareUpdate.plist LastFullSuccessfulDate | /usr/bin/awk '{print $1}')" "+%s")
+      thirty_days_epoch=$(/bin/date -v -30d "+%s")
+      if [[ $softwareupdate_date_epoch -lt $thirty_days_epoch ]]; then
+        /bin/echo "0"
+      else
+        /bin/echo "1"
+      fi
+    result:
+      integer: 1
+    fix: |
+      [source,bash]
+      ----
+      /usr/sbin/softwareupdate -i -a
+      ----
+      NOTE - This will apply to the whole system
+    sequoia:
+      severity: medium
+      benchmarks:
+        - cis_lvl1
+        - cis_lvl2
+    sonoma:
+      severity: medium
+      benchmarks:
+        - cis_lvl1
+        - cis_lvl2
+    ventura:
+      severity: medium
+      benchmarks:
+        - cis_lvl1
+        - cis_lvl2
+tags:
+  - cisv8

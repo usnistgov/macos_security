@@ -1,0 +1,64 @@
+id: system_settings_location_services_enable
+title: Enable Location Services
+discussion: |
+  Location Services _MUST_ be enabled.
+references:
+  nist:
+    cce:
+      sequoia:
+        - CCE-94377-9
+      sonoma:
+        - CCE-92973-7
+      ventura:
+        - CCE-91963-9
+  cis:
+    benchmark:
+      sequoia:
+        - 2.6.1.1 (level 2)
+      sonoma:
+        - 2.6.1.1 (level 2)
+      ventura:
+        - 2.6.1.1 (level 2)
+    controls_v8:
+      - 4.1
+      - 4.8
+platforms:
+  macOS:
+    check: |
+      /usr/bin/sudo -u _locationd /usr/bin/osascript -l JavaScript << EOS
+      $.NSUserDefaults.alloc.initWithSuiteName('com.apple.locationd')\
+      .objectForKey('LocationServicesEnabled').js
+      EOS
+    result:
+      string: 'true'
+    fix: $OS_VALUE
+    sequoia:
+      benchmarks:
+        - cis_lvl2
+      fix: |-
+        [source,bash]
+        ----
+        /usr/bin/defaults write /var/db/locationd/Library/Preferences/ByHost/com.apple.locationd LocationServicesEnabled -bool true;
+        pid=$(/bin/launchctl list | /usr/bin/awk '/com.apple.locationd/ { print $1 }')
+        kill -9 $pid
+        ----
+    sonoma:
+      benchmarks:
+        - cis_lvl2
+      fix: |-
+        [source,bash]
+        ----
+        /usr/bin/defaults write /var/db/locationd/Library/Preferences/ByHost/com.apple.locationd LocationServicesEnabled -bool true;
+        pid=$(/bin/launchctl list | /usr/bin/awk '/com.apple.locationd/ { print $1 }')
+        kill -9 $pid
+        ----
+    ventura:
+      benchmarks:
+        - cis_lvl2
+      fix: |-
+        [source,bash]
+        ----
+        /usr/bin/defaults write /var/db/locationd/Library/Preferences/ByHost/com.apple.locationd LocationServicesEnabled -bool true; /bin/launchctl kickstart -k system/com.apple.locationd
+        ----
+tags:
+  - cisv8

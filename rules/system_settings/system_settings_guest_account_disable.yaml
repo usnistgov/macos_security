@@ -1,0 +1,100 @@
+id: system_settings_guest_account_disable
+title: Disable the Guest Account
+discussion: |
+  Guest access _MUST_ be disabled.
+
+  Turning off guest access prevents anonymous users from accessing files.
+references:
+  nist:
+    cce:
+      sequoia:
+        - CCE-94367-0
+      sonoma:
+        - CCE-92964-6
+      ventura:
+        - CCE-91953-0
+    800-53r5:
+      - AC-2
+      - AC-2(9)
+    800-171r3:
+      - 03.01.01
+  disa:
+    cci:
+      - CCI-001813
+    srg:
+      - SRG-OS-000364-GPOS-00151
+      - SRG-OS-000480-GPOS-00228
+    disa_stig:
+      sequoia:
+        - APPL-15-002063
+      sonoma:
+        - APPL-14-002063
+      ventura:
+        - APPL-13-002063
+    cmmc:
+      - AC.L1-3.1.2
+  cis:
+    benchmark:
+      sequoia:
+        - 2.12.1 (level 1)
+      sonoma:
+        - 2.12.1 (level 1)
+      ventura:
+        - 2.12.1 (level 1)
+    controls_v8:
+      - 5.2
+      - 6.2
+      - 6.8
+platforms:
+  macOS:
+    check: |
+      /usr/bin/osascript -l JavaScript << EOS
+      function run() {
+        let pref1 = ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('com.apple.MCX')\
+      .objectForKey('DisableGuestAccount'))
+        let pref2 = ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('com.apple.MCX')\
+      .objectForKey('EnableGuestAccount'))
+        if ( pref1 == true && pref2 == false ) {
+          return("true")
+        } else {
+          return("false")
+        }
+      }
+      EOS
+    result:
+      string: 'true'
+    fix: |
+      This is implemented by a Configuration Profile.
+    sequoia:
+      severity: medium
+      benchmarks:
+        - cis_lvl1
+        - cis_lvl2
+        - disa_stig
+    sonoma:
+      severity: medium
+      benchmarks:
+        - cis_lvl1
+        - cis_lvl2
+        - disa_stig
+    ventura:
+      severity: high
+      benchmarks:
+        - cis_lvl1
+        - cis_lvl2
+        - disa_stig
+tags:
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_high
+  - 800-171
+  - cisv8
+  - cnssi-1253_low
+  - cnssi-1253_high
+  - cmmc_lvl2
+  - cmmc_lvl1
+  - cnssi-1253_moderate
+mobileconfig_info:
+  com.apple.MCX:
+    DisableGuestAccount: true
+    EnableGuestAccount: false

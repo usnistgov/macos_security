@@ -1,0 +1,134 @@
+id: audit_flags_lo_configure
+title: Configure System to Audit All Log In and Log Out Events
+discussion: |
+  The audit system _MUST_ be configured to record all attempts to log in and out of the system (lo).
+
+  Frequently, an attacker that successfully gains access to a system has only gained access to an account with limited privileges, such as a guest account or a service account. The attacker must attempt to change to another user account with normal or elevated privileges in order to proceed. Auditing both successful and unsuccessful attempts to switch to another user account (by way of monitoring login and logout events) mitigates this risk.
+
+  The information system monitors login and logout events.
+references:
+  nist:
+    cce:
+      sequoia:
+        - CCE-94123-7
+      sonoma:
+        - CCE-92723-6
+      ventura:
+        - CCE-91724-5
+      monterey:
+        - CCE-90868-1
+      big_sur:
+        - CCE-85267-3
+      catalina:
+        - CCE-84716-0
+    800-53r5:
+      - AC-2(12)
+      - AU-12
+      - AC-17(1)
+      - AU-2
+      - MA-4(1)
+    800-171r3:
+      - 03.03.01
+      - 03.03.03
+  disa:
+    cci:
+      - CCI-000067
+      - CCI-000172
+      - CCI-002884
+    srg:
+      - SRG-OS-000032-GPOS-00013
+      - SRG-OS-000392-GPOS-00172
+      - SRG-OS-000064-GPOS-00033
+      - SRG-OS-000473-GPOS-00218
+      - SRG-OS-000470-GPOS-00214
+      - SRG-OS-000471-GPOS-00216
+      - SRG-OS-000472-GPOS-00217
+      - SRG-OS-000471-GPOS-00215
+      - SRG-OS-000458-GPOS-00203
+      - SRG-OS-000755-GPOS-00220
+    disa_stig:
+      sequoia:
+        - APPL-15-001002
+      sonoma:
+        - APPL-14-001002
+      ventura:
+        - APPL-13-001002
+      monterey:
+        - APPL-12-001002
+      big_sur:
+        - APPL-11-001002
+      catalina:
+        - AOSX-15-001002
+    cmmc:
+      - AC.L2-3.1.12
+      - AU.L2-3.3.3
+      - AU.L2-3.3.6
+      - SI.L2-3.14.3
+  cis:
+    benchmark:
+      sequoia:
+        - 3.2 (level 2)
+      sonoma:
+        - 3.2 (level 2)
+      ventura:
+        - 3.2 (level 2)
+      monterey:
+        - 3.2 (level 2)
+      big_sur:
+        - 3.2 (level 2)
+    controls_v8:
+      - 3.14
+      - 8.2
+      - 8.5
+platforms:
+  macOS:
+    check: |
+      /usr/bin/awk -F':' '/^flags/ { print $NF }' /etc/security/audit_control | /usr/bin/tr ',' '\n' | /usr/bin/grep -Ec '^lo'
+    result:
+      integer: 1
+    fix: |
+      [source,bash]
+      ----
+      /usr/bin/grep -qE "^flags.*[^-]lo" /etc/security/audit_control || /usr/bin/sed -i.bak '/^flags/ s/$/,lo/' /etc/security/audit_control; /usr/sbin/audit -s
+      ----
+    sequoia:
+      severity: medium
+      benchmarks:
+        - cis_lvl2
+        - disa_stig
+    sonoma:
+      severity: medium
+      benchmarks:
+        - cis_lvl2
+        - disa_stig
+    ventura:
+      severity: medium
+      benchmarks:
+        - cis_lvl2
+        - disa_stig
+    monterey:
+      severity: medium
+      benchmarks:
+        - cis_lvl2
+        - disa_stig
+    big_sur:
+      severity: medium
+      benchmarks:
+        - cis_lvl2
+        - disa_stig
+    catalina:
+      severity: medium
+      benchmarks:
+        - disa_stig
+tags:
+  - 800-53r5_privacy
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_high
+  - 800-171
+  - cisv8
+  - cnssi-1253_low
+  - cnssi-1253_high
+  - cmmc_lvl2
+  - cnssi-1253_moderate
+  - cnssi-1253

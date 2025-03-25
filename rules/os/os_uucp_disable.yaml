@@ -1,0 +1,107 @@
+id: os_uucp_disable
+title: Disable Unix-to-Unix Copy Protocol Service
+discussion: |
+  The system _MUST_ not have the Unix-to-Unix Copy Protocol (UUCP) service active.
+
+  UUCP, a set of programs that enable the sending of files between different UNIX systems as well as sending commands to be executed on another system, is not essential and _MUST_ be disabled in order to prevent the unauthorized connection of devices, transfer of information, and tunneling.
+
+  NOTE: UUCP service is disabled at startup by default macOS.
+references:
+  nist:
+    cce:
+      sequoia:
+        - CCE-94324-1
+      sonoma:
+        - CCE-92921-6
+      ventura:
+        - CCE-91909-2
+      monterey:
+        - CCE-91024-0
+      big_sur:
+        - CCE-85397-8
+      catalina:
+        - CCE-84806-9
+    800-53r5:
+      - AC-3
+      - AC-17
+    800-171r3:
+      - 03.01.02
+      - 03.04.06
+  disa:
+    cci:
+      - CCI-000213
+    srg:
+      - SRG-OS-000080-GPOS-00048
+    disa_stig:
+      sequoia:
+        - APPL-15-002006
+      sonoma:
+        - APPL-14-002006
+      ventura:
+        - APPL-13-002006
+      monterey:
+        - APPL-12-002006
+      big_sur:
+        - APPL-11-002006
+      catalina:
+        - AOSX-15-002006
+    cmmc:
+      - AC.L1-3.1.1
+  cis:
+    controls_v8:
+      - 3.3
+      - 4.1
+      - 4.8
+platforms:
+  macOS:
+    check: $OS_VALUE
+    result:
+      integer: 1
+    fix: |
+      [source,bash]
+      ----
+      /bin/launchctl disable system/com.apple.uucp
+      ----
+      The system may need to be restarted for the update to take effect.
+    sequoia:
+      severity: medium
+      benchmarks:
+        - disa_stig
+      check: /bin/launchctl print-disabled system | /usr/bin/grep -c '"com.apple.uucp" => disabled'
+    sonoma:
+      severity: medium
+      benchmarks:
+        - disa_stig
+      check: /bin/launchctl print-disabled system | /usr/bin/grep -c '"com.apple.uucp" => disabled'
+    ventura:
+      severity: medium
+      benchmarks:
+        - disa_stig
+      check: /bin/launchctl print-disabled system | /usr/bin/grep -c '"com.apple.uucp" => disabled'
+    monterey:
+      severity: medium
+      benchmarks:
+        - disa_stig
+      check: /bin/launchctl print-disabled system | /usr/bin/grep -c '"com.apple.uucp" => true'
+    big_sur:
+      severity: medium
+      benchmarks:
+        - disa_stig
+      check: /bin/launchctl print-disabled system | /usr/bin/grep -c '"com.apple.uucp" => true'
+    catalina:
+      severity: medium
+      benchmarks:
+        - disa_stig
+      check: /bin/launchctl print-disabled system | /usr/bin/grep -c '"com.apple.uucp" => true'
+tags:
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_high
+  - 800-171
+  - cisv8
+  - cnssi-1253_low
+  - cnssi-1253_high
+  - cmmc_lvl2
+  - cmmc_lvl1
+  - cnssi-1253_moderate
+  - cnssi-1253

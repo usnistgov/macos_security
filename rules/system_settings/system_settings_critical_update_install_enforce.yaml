@@ -1,0 +1,69 @@
+id: system_settings_critical_update_install_enforce
+title: Enforce Critical Security Updates to be Installed
+discussion: |
+  Ensure that security updates are installed as soon as they are available from Apple.
+references:
+  nist:
+    cce:
+      sequoia:
+        - CCE-94358-9
+      sonoma:
+        - CCE-92955-4
+      ventura:
+        - CCE-91944-9
+    800-53r5:
+      - SI-2
+    800-171r3:
+      - 03.14.01
+  disa:
+    cmmc:
+      - SI.L1-3.14.1
+      - SI.L1-3.14.4
+  cis:
+    benchmark:
+      sequoia:
+        - 1.6 (level 1)
+      sonoma:
+        - 1.6 (level 1)
+      ventura:
+        - 1.6 (level 1)
+    controls_v8:
+      - 7.3
+      - 7.4
+      - 7.7
+platforms:
+  macOS:
+    check: |
+      /usr/bin/osascript -l JavaScript << EOS
+      $.NSUserDefaults.alloc.initWithSuiteName('com.apple.SoftwareUpdate')\
+      .objectForKey('CriticalUpdateInstall').js
+      EOS
+    result:
+      string: 'true'
+    fix: |
+      This is implemented by a Configuration Profile.
+    sequoia:
+      benchmarks:
+        - cis_lvl1
+        - cis_lvl2
+    sonoma:
+      benchmarks:
+        - cis_lvl1
+        - cis_lvl2
+    ventura:
+      benchmarks:
+        - cis_lvl1
+        - cis_lvl2
+tags:
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_high
+  - cisv8
+  - cnssi-1253_low
+  - cnssi-1253_high
+  - cmmc_lvl2
+  - cmmc_lvl1
+  - cnssi-1253_moderate
+mobileconfig_info:
+  com.apple.SoftwareUpdate:
+    CriticalUpdateInstall: true

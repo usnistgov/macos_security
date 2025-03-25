@@ -1,0 +1,34 @@
+id: os_mfa_network_non-priv
+title: Enforce multifactor authentication for network access to non-privileged accounts
+discussion: |
+  The information system implements multifactor authentication for network access to non-privileged accounts.
+references:
+  nist:
+    cce:
+      sequoia:
+        - CCE-94230-0
+      sonoma:
+        - CCE-92827-5
+      ventura:
+        - CCE-91823-5
+      monterey:
+        - CCE-90953-1
+      big_sur:
+        - CCE-85341-6
+      catalina:
+        - CCE-84864-8
+platforms:
+  macOS:
+    check: |
+      For directory bound systems:
+      The technology supports this requirement and cannot be configured to be out of compliance. The technology inherently meets this requirement.
+    fix: |
+      For directory bound systems, the technology inherently meets this requirement. No fix is required.
+    sequoia: {}
+    sonoma: {}
+    ventura: {}
+    monterey: {}
+    big_sur: {}
+    catalina: {}
+tags:
+  - inherent

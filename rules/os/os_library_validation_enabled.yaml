@@ -1,0 +1,49 @@
+id: os_library_validation_enabled
+title: Enable Library Validation
+discussion: Library validation  _MUST_ be enabled.
+references:
+  nist:
+    cce:
+      sequoia:
+        - CCE-94216-9
+      sonoma:
+        - CCE-92814-3
+      ventura:
+        - CCE-91810-2
+      monterey:
+        - CCE-91108-1
+      big_sur:
+        - CCE-85507-2
+  cis:
+    controls_v8:
+      - 2.3
+      - 2.6
+platforms:
+  macOS:
+    check: |
+      /usr/bin/osascript -l JavaScript << EOS
+      $.NSUserDefaults.alloc.initWithSuiteName('com.apple.security.libraryvalidation')\
+      .objectForKey('DisableLibraryValidation').js
+      EOS
+    result:
+      string: 'false'
+    fix: $OS_VALUE
+    sequoia:
+      fix: This is implemented by a Configuration Profile.
+    sonoma:
+      fix: This is implemented by a Configuration Profile.
+    ventura:
+      fix: This is implemented by a Configuration Profile.
+    monterey:
+      fix: This is implemented by a Configuration Profile.
+    big_sur:
+      fix: |-
+        [source,bash]
+        ----
+        This is implemented by a Configuration Profile.
+        ----
+tags:
+  - cisv8
+mobileconfig_info:
+  com.apple.security.libraryvalidation:
+    DisableLibraryValidation: false

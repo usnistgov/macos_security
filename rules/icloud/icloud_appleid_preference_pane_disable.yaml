@@ -1,0 +1,35 @@
+id: icloud_appleid_preference_pane_disable
+title: Disable the Preference Pane for Apple ID
+discussion: |
+  This is required for compliance with the DISA STIG for macOS.
+
+  The domain *com.apple.systempreferences* has been deprecated by Apple in macOS 13. The recommended way to disable System Setting Panes is to use the *DisabledSystemSettings* key.
+
+  link:https://developer.apple.com/documentation/devicemanagement/systempreferences[]
+references:
+  nist:
+    cce:
+      ventura:
+        - CCE-92006-6
+  disa:
+    cci:
+      - CCI-001774
+    srg:
+      - SRG-OS-000370-GPOS-00155
+    disa_stig:
+      ventura:
+        - APPL-13-002031
+platforms:
+  macOS:
+    ventura:
+      severity: high
+      benchmarks:
+        - disa_stig
+    check: |
+      /usr/bin/profiles show -output stdout-xml | /usr/bin/xmllint --xpath '//key[text()="DisabledPreferencePanes"]/following-sibling::*[1]' - | /usr/bin/grep -c "com.apple.preferences.AppleIDPrefPane"
+    result:
+      integer: 1
+mobileconfig_info:
+  com.apple.systempreferences:
+    DisabledPreferencePanes:
+      - com.apple.preferences.AppleIDPrefPane

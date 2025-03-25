@@ -1,0 +1,84 @@
+id: os_certificate_authority_trust
+title: Issue or Obtain Public Key Certificates from an Approved Service Provider
+discussion: |
+  The organization _MUST_ issue or obtain public key certificates from an organization-approved service provider and ensure only approved trust anchors are in the System Keychain.
+references:
+  nist:
+    cce:
+      sequoia:
+        - CCE-94174-0
+      sonoma:
+        - CCE-92774-9
+      ventura:
+        - CCE-91772-4
+      monterey:
+        - CCE-90911-9
+      big_sur:
+        - CCE-85302-8
+      catalina:
+        - CCE-85302-8
+    800-53r5:
+      - SC-17
+  disa:
+    cci:
+      - CCI-002470
+      - CCI-000185
+      - CCI-002450
+      - CCI-004909
+    srg:
+      - SRG-OS-000403-GPOS-00182
+      - SRG-OS-000775-GPOS-00230
+    disa_stig:
+      sequoia:
+        - APPL-15-003001
+      sonoma:
+        - APPL-14-003001
+      monterey:
+        - APPL-12-003001
+      big_sur:
+        - APPL-11-003001
+      catalina:
+        - AOSX-15-003001
+    cmmc:
+      - SC.L2-3.13.10
+platforms:
+  macOS:
+    check: |
+      /usr/bin/security dump-keychain /Library/Keychains/System.keychain | /usr/bin/awk -F'"' '/labl/ {print $4}'
+    result:
+      string: a list containing approved root certificates
+    fix: |
+      Obtain the approved certificates from the appropriate authority and install them to the System Keychain.
+    sequoia:
+      severity: high
+      benchmarks:
+        - disa_stig
+    sonoma:
+      severity: high
+      benchmarks:
+        - disa_stig
+    ventura:
+      severity: high
+      benchmarks:
+        - disa_stig
+    monterey:
+      severity: high
+      benchmarks:
+        - disa_stig
+    big_sur:
+      severity: high
+      benchmarks:
+        - disa_stig
+    catalina:
+      severity: high
+      benchmarks:
+        - disa_stig
+tags:
+  - 800-53r5_moderate
+  - 800-53r5_high
+  - manual
+  - cnssi-1253_low
+  - cnssi-1253_high
+  - cmmc_lvl2
+  - cnssi-1253_moderate
+  - cnssi-1253

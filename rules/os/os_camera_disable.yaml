@@ -1,0 +1,93 @@
+id: os_camera_disable
+title: Disable Camera
+discussion: |
+  It is detrimental for operating systems to provide, or install by default, functionality exceeding requirements or mission objectives. These unnecessary capabilities or services are often overlooked and therefore may remain unsecured. They increase the risk to the platform by providing additional attack vectors.
+
+  Failing to disconnect from collaborative computing devices (i.e., cameras) can result in subsequent compromises of organizational information. Providing easy methods to physically disconnect from such devices after a collaborative computing session helps to ensure that participants carry out the disconnect activity without having to go through complex and tedious procedures.
+
+  This requirement is not applicable to mobile devices (smartphones and tablets), where the use of the camera is a local AO decision.
+
+  This requirement is not applicable to dedicated VTC suites located in approved VTC locations that are centrally managed.
+
+  For an external camera, if there is not a method for the operator to manually disconnect camera at the end of collaborative computing sessions, this is a finding.
+
+  For a built-in camera, the camera must be protected by a camera cover (e.g., laptop camera cover slide) when not in use. If the built-in camera is not protected with a camera cover, or is not physically disabled, this is a finding.
+
+  If the camera is not disconnected, covered, or physically disabled, the following configuration is required.
+references:
+  nist:
+    cce:
+      sequoia:
+        - CCE-94172-4
+      sonoma:
+        - CCE-92772-3
+      ventura:
+        - CCE-91770-8
+      monterey:
+        - CCE-90910-1
+      big_sur:
+        - CCE-85301-0
+      catalina:
+        - CCE-84751-7
+      visionos_2.0:
+        - CCE-94493-4
+  disa:
+    cci:
+      - CCI-000381
+      - CCI-001774
+    srg:
+      - SRG-OS-000095-GPOS-00049
+    disa_stig:
+      sequoia:
+        - APPL-15-002017
+      sonoma:
+        - APPL-14-002017
+      ventura:
+        - APPL-13-002017
+      monterey:
+        - APPL-12-002017
+      big_sur:
+        - APPL-11-002017
+      catalina:
+        - AOSX-15-002017
+platforms:
+  macOS:
+    check: |
+      /usr/bin/osascript -l JavaScript << EOS
+      $.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess')\
+      .objectForKey('allowCamera').js
+      EOS
+    result:
+      string: 'false'
+    fix: |
+      This is implemented by a Configuration Profile.
+    sequoia:
+      severity: medium
+      benchmarks:
+        - disa_stig
+    sonoma:
+      severity: medium
+      benchmarks:
+        - disa_stig
+    ventura:
+      severity: medium
+      benchmarks:
+        - disa_stig
+    monterey:
+      severity: medium
+      benchmarks:
+        - disa_stig
+    big_sur:
+      severity: medium
+      benchmarks:
+        - disa_stig
+    catalina:
+      severity: medium
+      benchmarks:
+        - disa_stig
+  visionOS:
+    visionos_2.0:
+      supervised: true
+mobileconfig_info:
+  com.apple.applicationaccess:
+    allowCamera: false

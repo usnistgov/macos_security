@@ -1,0 +1,28 @@
+id: os_auto_correction_disable
+title: Disable Auto Correction
+discussion: |
+  The device _MUST_ be configured not to use the auto correction feature of the iOS.
+references:
+  nist:
+    cce:
+      ios_18:
+        - CCE-94518-8
+      ios_17:
+        - CCE-93472-9
+  bsi:
+    indigo:
+      ios_17:
+        - ANNEX K
+platforms:
+  iOS:
+    ios_18:
+      supervised: true
+      benchmarks:
+        - indigo_high
+    ios_17:
+      supervised: true
+      benchmarks:
+        - indigo_high
+mobileconfig_info:
+  com.apple.applicationaccess:
+    allowAutoCorrection: false

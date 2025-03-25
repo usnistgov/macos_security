@@ -8,6 +8,7 @@ from pathlib import Path
 from typing import Any
 
 # Additional python modules
+# import markdown2
 from jinja2 import Environment, FileSystemLoader, Template
 from loguru import logger
 
@@ -352,6 +353,7 @@ def generate_markdown_documents(
     """
     template_dir = config["defaults"]["md_templates_dir"]
     misc_dir = config["defaults"]["misc_dir"]
+    # html_path = output_file.with_suffix(".html")
 
     if custom:
         template_dir = config["custom"]["md_templates_dir"]
@@ -371,3 +373,10 @@ def generate_markdown_documents(
         template_dir,
         misc_dir,
     )
+
+    # logger.debug("Converting Markdown to HTML")
+    # html = markdown2.markdown(
+    #     output_file.read_text(), extras=["fenced-code-blocks", "tables", "admonitions"]
+    # )
+    # html_path.write_text(html)
+    # logger.success(f"HTML file generated: {html_path}")

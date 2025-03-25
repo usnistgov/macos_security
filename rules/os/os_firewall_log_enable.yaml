@@ -1,0 +1,161 @@
+id: os_firewall_log_enable
+title: Enable Firewall Logging
+discussion: |
+  Firewall logging _MUST_ be enabled.
+
+  Firewall logging ensures that malicious network activity will be logged to the system.
+
+  NOTE: The firewall data is logged to Apple's Unified Logging with the subsystem `com.apple.alf` and the data is marked as private. In order to enable private data, review the `com.apple.alf.private_data.mobileconfig` file in the project's `includes` folder.
+references:
+  nist:
+    cce:
+      sonoma:
+        - CCE-92793-9
+      ventura:
+        - CCE-91791-4
+      monterey:
+        - CCE-90924-2
+      big_sur:
+        - CCE-85313-5
+      catalina:
+        - CCE-84757-4
+    800-53r5:
+      - AU-12
+      - SC-7
+    800-171r3:
+      - 03.03.03
+      - 03.13.01
+  disa:
+    cmmc:
+      - AU.L2-3.3.6
+      - SC.L1-3.13.1
+  cis:
+    benchmark:
+      sonoma:
+        - 3.6 (level 1)
+      ventura:
+        - 3.6 (level 1)
+      monterey:
+        - 3.6 (level 1)
+      big_sur:
+        - 3.6 (level 1)
+    controls_v8:
+      - 4.5
+      - 8.2
+      - 8.5
+platforms:
+  macOS:
+    check: $OS_VALUE
+    result: $OS_VALUE
+    fix: $OS_VALUE
+    sonoma:
+      benchmarks:
+        - cis_lvl1
+        - cis_lvl2
+      check: |-
+        /usr/bin/osascript -l JavaScript << EOS
+        function run() {
+          let pref1 = $.NSUserDefaults.alloc.initWithSuiteName('com.apple.security.firewall')\
+          .objectForKey('EnableLogging').js
+          let pref2 = $.NSUserDefaults.alloc.initWithSuiteName('com.apple.security.firewall')\
+          .objectForKey('LoggingOption').js
+          if ( pref1 == true && pref2 == "detail" ){
+            return("true")
+          } else {
+            return("false")
+          }
+        }
+        EOS
+      fix: This is implemented by a Configuration Profile.
+      result:
+        string: 'true'
+      mobileconfig_info:
+        com.apple.security.firewall:
+          EnableLogging: true
+          LoggingOption: detail
+    ventura:
+      benchmarks:
+        - cis_lvl1
+        - cis_lvl2
+      check: |-
+        /usr/bin/osascript -l JavaScript << EOS
+        function run() {
+          let pref1 = $.NSUserDefaults.alloc.initWithSuiteName('com.apple.security.firewall')\
+          .objectForKey('EnableLogging').js
+          let pref2 = $.NSUserDefaults.alloc.initWithSuiteName('com.apple.security.firewall')\
+          .objectForKey('LoggingOption').js
+          if ( pref1 == true && pref2 == "detail" ){
+            return("true")
+          } else {
+            return("false")
+          }
+        }
+        EOS
+      fix: This is implemented by a Configuration Profile.
+      result:
+        string: 'true'
+      mobileconfig_info:
+        com.apple.security.firewall:
+          EnableLogging: true
+          LoggingOption: detail
+    monterey:
+      benchmarks:
+        - cis_lvl1
+        - cis_lvl2
+      check: |-
+        /usr/bin/osascript -l JavaScript << EOS
+        function run() {
+          let pref1 = $.NSUserDefaults.alloc.initWithSuiteName('com.apple.security.firewall')\
+          .objectForKey('EnableLogging').js
+          let pref2 = $.NSUserDefaults.alloc.initWithSuiteName('com.apple.security.firewall')\
+          .objectForKey('LoggingOption').js
+          if ( pref1 == true && pref2 == "detail" ){
+            return("true")
+          } else {
+            return("false")
+          }
+        }
+        EOS
+      fix: This is implemented by a Configuration Profile.
+      result:
+        string: 'true'
+      mobileconfig_info:
+        com.apple.security.firewall:
+          EnableLogging: true
+          LoggingOption: detail
+    big_sur:
+      benchmarks:
+        - cis_lvl1
+        - cis_lvl2
+      check: /usr/libexec/ApplicationFirewall/socketfilterfw --getloggingmode | /usr/bin/grep -c "Log mode is on"
+      fix: |-
+        [source,bash]
+        ----
+        /usr/libexec/ApplicationFirewall/socketfilterfw --setloggingmode on
+        ----
+      result:
+        integer: 1
+      mobileconfig_info: null
+    catalina:
+      check: /usr/libexec/ApplicationFirewall/socketfilterfw --getloggingmode | /usr/bin/grep -c "Log mode is on"
+      fix: |-
+        [source,bash]
+        ----
+        /usr/libexec/ApplicationFirewall/socketfilterfw --setloggingmode on
+        ----
+      result:
+        integer: 1
+      mobileconfig_info: null
+tags:
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_high
+  - 800-171
+  - cisv8
+  - cnssi-1253_moderate
+  - cnssi-1253_low
+  - cnssi-1253_high
+  - cmmc_lvl2
+  - cmmc_lvl1
+  - cnssi-1253
+mobileconfig_info: $OS_VALUE

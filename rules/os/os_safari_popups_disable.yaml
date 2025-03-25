@@ -1,0 +1,28 @@
+id: os_safari_popups_disable
+title: Disable Safari Popups
+discussion: |
+  The iOS device _MUST_ be configured to automatically prevent popups on the device to protect users from malicious content.
+references:
+  nist:
+    cce:
+      ios_18:
+        - CCE-94547-7
+      ios_17:
+        - CCE-93495-0
+  bsi:
+    indigo:
+      ios_17:
+        - ANNEX K
+platforms:
+  iOS:
+    ios_18:
+      supervised: false
+      benchmarks:
+        - indigo_high
+    ios_17:
+      supervised: false
+      benchmarks:
+        - indigo_high
+mobileconfig_info:
+  com.apple.applicationaccess:
+    safariAllowPopups: false

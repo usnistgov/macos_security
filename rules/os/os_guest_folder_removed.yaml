@@ -1,0 +1,62 @@
+id: os_guest_folder_removed
+title: Remove Guest Folder if Present
+discussion: |
+  The guest folder _MUST_ be deleted if present.
+references:
+  nist:
+    cce:
+      sequoia:
+        - CCE-94198-9
+      sonoma:
+        - CCE-92798-8
+      ventura:
+        - CCE-91796-3
+      monterey:
+        - CCE-91104-0
+      big_sur:
+        - CCE-85503-1
+  cis:
+    benchmark:
+      sequoia:
+        - 5.9 (level 1)
+      sonoma:
+        - 5.9 (level 1)
+      ventura:
+        - 5.10 (level 1)
+      monterey:
+        - 6.1.5 (level 1)
+      big_sur:
+        - 6.1.5 (level 1)
+    controls_v8:
+      - 4.1
+platforms:
+  macOS:
+    check: |
+      /bin/ls /Users/ | /usr/bin/grep -c "Guest"
+    result:
+      integer: 0
+    fix: |
+      [source,bash]
+      ----
+      /bin/rm -Rf /Users/Guest
+      ----
+    sequoia:
+      benchmarks:
+        - cis_lvl1
+        - cis_lvl2
+    sonoma:
+      benchmarks:
+        - cis_lvl1
+        - cis_lvl2
+    ventura:
+      benchmarks:
+        - cis_lvl1
+        - cis_lvl2
+    monterey:
+      benchmarks:
+        - cis_lvl1
+        - cis_lvl2
+    big_sur:
+      benchmarks:
+        - cis_lvl1
+        - cis_lvl2

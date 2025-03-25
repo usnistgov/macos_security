@@ -1,0 +1,68 @@
+id: os_install_configuration_profile_disable
+title: Ensure Allow Installing Configuration Profiles is Set to Disabled
+discussion: |
+  Configuration profiles _MUST_ be installed via an organization's MDM.
+references:
+  nist:
+    cce:
+      ios_18:
+        - CCE-94444-7
+      ios_17:
+        - CCE-93429-9
+      ios_16:
+        - CCE-93229-3
+      visionos_2.0:
+        - CCE-94500-6
+    800-53r5:
+      - CM-6
+      - CM-7
+      - CM-7(1)
+  disa:
+    disa_stig:
+      ios_18:
+        - AIOS-18-015500
+  cis:
+    benchmark:
+      ios_18:
+        - 3.2.1.15 (level 1 - Institutionally-Owned Devices)
+      ios_17:
+        - 3.2.1.15 (level 1 - Institutionally-Owned Devices)
+      ios_16:
+        - 3.2.1.15 (level 1 - Institutionally-Owned Devices)
+    controls_v8:
+      - 4.1
+  bsi:
+    indigo:
+      ios_17:
+        - ANNEX D (Section 5.6.1 - Mail)
+platforms:
+  iOS:
+    ios_18:
+      severity: medium
+      supervised: true
+      benchmarks:
+        - cis_lvl1_enterprise
+        - cis_lvl2_enterprise
+        - ios_stig
+        - indigo_base
+        - indigo_high
+    ios_17:
+      supervised: true
+      benchmarks:
+        - cis_lvl1_enterprise
+        - cis_lvl2_enterprise
+        - indigo_base
+        - indigo_high
+    ios_16:
+      supervised: true
+      benchmarks:
+        - cis_lvl1_enterprise
+        - cis_lvl2_enterprise
+  visionOS:
+    visionos_2.0:
+      supervised: true
+tags:
+  - cisv8
+mobileconfig_info:
+  com.apple.applicationaccess:
+    allowUIConfigurationProfileInstallation: false

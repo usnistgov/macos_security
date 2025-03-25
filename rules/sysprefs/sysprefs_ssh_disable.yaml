@@ -1,0 +1,79 @@
+id: sysprefs_ssh_disable
+title: Disable SSH Server for Remote Access Sessions
+discussion: |
+  SSH service _MUST_ be disabled for remote access.
+
+  Remote access sessions _MUST_ use FIPS validated encrypted methods to protect unauthorized individuals from gaining access.
+references:
+  nist:
+    cce:
+      monterey:
+        - CCE-91077-8
+      big_sur:
+        - CCE-85447-1
+      catalina:
+        - CCE-84920-8
+    800-53r5:
+      - CM-7
+      - CM-7(1)
+      - AC-17
+  disa:
+    disa_stig:
+      big_sur:
+        - APPL-11-000011
+  cis:
+    benchmark:
+      monterey:
+        - 2.4.5 (level 1)
+      big_sur:
+        - 2.4.5 (level 1)
+    controls_v8:
+      - 4.1
+      - 4.8
+platforms:
+  macOS:
+    check: |
+      /bin/launchctl print-disabled system | /usr/bin/grep -c '"com.openssh.sshd" => true'
+    result:
+      integer: 1
+    fix: $OS_VALUE
+    monterey:
+      severity: medium
+      benchmarks:
+        - cis_lvl1
+        - cis_lvl2
+      fix: |-
+        [source,bash]
+        ----
+        /usr/sbin/systemsetup -f -setremotelogin off >/dev/null
+        /bin/launchctl disable system/com.openssh.sshd
+        ----
+        NOTE: Systemsetup with -setremotelogin flag will fail unless you grant Full Disk Access to systemsetup or its parent process. Requires supervision.
+    big_sur:
+      severity: medium
+      benchmarks:
+        - cis_lvl1
+        - cis_lvl2
+        - disa_stig
+      fix: |-
+        [source,bash]
+        ----
+        /usr/sbin/systemsetup -f -setremotelogin off >/dev/null
+        /bin/launchctl disable system/com.openssh.sshd
+        ----
+        NOTE: Systemsetup with -setremotelogin flag will fail unless you grant Full Disk Access to systemsetup or it's parent process. Requires supervision.
+    catalina:
+      fix: |-
+        [source,bash]
+        ----
+        /usr/sbin/systemsetup -f -setremotelogin off >/dev/null
+        /bin/launchctl disable system/com.openssh.sshd
+        ----
+        NOTE: Systemsetup with -setremotelogin flag will fail unless you grant Full Disk Access to systemsetup or it's parent process. Requires UAMDM.
+tags:
+  - cisv8
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_high
+  - 800-171
+  - cnssi-1253

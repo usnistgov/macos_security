@@ -1,0 +1,85 @@
+id: os_newsyslog_files_owner_group_configure
+title: Configure System Log Files Owned by Root and Group to Wheel
+discussion: |
+  The system log files _MUST_ be owned by root.
+
+  System logs contain sensitive data about the system and users. If log files are set to only be readable and writable by system administrators, the risk is mitigated.
+references:
+  nist:
+    cce:
+      sequoia:
+        - CCE-94233-4
+      sonoma:
+        - CCE-92829-1
+      ventura:
+        - CCE-91825-0
+      monterey:
+        - CCE-90954-9
+      big_sur:
+        - CCE-85469-5
+      catalina:
+        - CCE-84942-2
+    800-53r5:
+      - SI-11
+  disa:
+    cci:
+      - CCI-001312
+      - CCI-001314
+    srg:
+      - SRG-OS-000206-GPOS-00084
+      - SRG-OS-000205-GPOS-00083
+    disa_stig:
+      sequoia:
+        - APPL-15-004030
+      sonoma:
+        - APPL-14-004030
+      ventura:
+        - APPL-13-004001
+      monterey:
+        - APPL-12-004001
+      big_sur:
+        - APPL-11-004001
+      catalina:
+        - AOSX-15-004001
+platforms:
+  macOS:
+    check: |
+      /usr/bin/stat -f '%Su:%Sg:%N' $(/usr/bin/grep -v '^#' /etc/newsyslog.conf | /usr/bin/awk '{ print $1 }') 2> /dev/null | /usr/bin/awk '!/^root:wheel:/{print $1}' | /usr/bin/wc -l | /usr/bin/tr -d ' '
+    result:
+      integer: 0
+    fix: |
+      [source,bash]
+      ----
+      /usr/sbin/chown root:wheel $(/usr/bin/stat -f '%Su:%Sg:%N' $(/usr/bin/grep -v '^#' /etc/newsyslog.conf | /usr/bin/awk '{ print $1 }') 2> /dev/null | /usr/bin/awk -F":" '!/^root:wheel:/{print $3}')
+      ----
+    sequoia:
+      severity: medium
+      benchmarks:
+        - disa_stig
+    sonoma:
+      severity: medium
+      benchmarks:
+        - disa_stig
+    ventura:
+      severity: medium
+      benchmarks:
+        - disa_stig
+    monterey:
+      severity: medium
+      benchmarks:
+        - disa_stig
+    big_sur:
+      severity: medium
+      benchmarks:
+        - disa_stig
+    catalina:
+      severity: medium
+      benchmarks:
+        - disa_stig
+tags:
+  - 800-53r5_moderate
+  - 800-53r5_high
+  - cnssi-1253_low
+  - cnssi-1253_high
+  - cnssi-1253_moderate
+  - manual

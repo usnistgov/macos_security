@@ -1,0 +1,90 @@
+id: system_settings_rae_disable
+title: Disable Remote Apple Events
+discussion: |
+  If the system does not require Remote Apple Events, support for Apple Remote Events is non-essential and _MUST_ be disabled.
+
+  The information system _MUST_ be configured to provide only essential capabilities. Disabling Remote Apple Events helps prevent the unauthorized connection of devices, the unauthorized transfer of information, and unauthorized tunneling.
+references:
+  nist:
+    cce:
+      sequoia:
+        - CCE-94385-2
+      sonoma:
+        - CCE-92981-0
+      ventura:
+        - CCE-91970-4
+    800-53r5:
+      - AC-3
+      - AC-17
+    800-171r3:
+      - 03.01.02
+      - 03.04.06
+  disa:
+    cci:
+      - CCI-000213
+      - CCI-000382
+    srg:
+      - SRG-OS-000080-GPOS-00048
+      - SRG-OS-000096-GPOS-00050
+    disa_stig:
+      sequoia:
+        - APPL-15-002022
+      sonoma:
+        - APPL-14-002022
+      ventura:
+        - APPL-13-002022
+    cmmc:
+      - AC.L1-3.1.1
+  cis:
+    benchmark:
+      sequoia:
+        - 2.3.3.7 (level 1)
+      sonoma:
+        - 2.3.3.7 (level 1)
+      ventura:
+        - 2.3.3.7 (level 1)
+    controls_v8:
+      - 4.1
+      - 4.8
+platforms:
+  macOS:
+    check: |
+      /bin/launchctl print-disabled system | /usr/bin/grep -c '"com.apple.AEServer" => disabled'
+    result:
+      integer: 1
+    fix: |
+      [source,bash]
+      ----
+      /usr/sbin/systemsetup -setremoteappleevents off
+      /bin/launchctl disable system/com.apple.AEServer
+      ----
+      NOTE: Systemsetup with -setremoteappleevents flag will fail unless you grant Full Disk Access to systemsetup or its parent process. Requires supervision.
+    sequoia:
+      severity: medium
+      benchmarks:
+        - cis_lvl1
+        - cis_lvl2
+        - disa_stig
+    sonoma:
+      severity: medium
+      benchmarks:
+        - cis_lvl1
+        - cis_lvl2
+        - disa_stig
+    ventura:
+      severity: medium
+      benchmarks:
+        - cis_lvl1
+        - cis_lvl2
+        - disa_stig
+tags:
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_high
+  - 800-171
+  - cisv8
+  - cnssi-1253_low
+  - cnssi-1253_high
+  - cmmc_lvl2
+  - cmmc_lvl1
+  - cnssi-1253_moderate

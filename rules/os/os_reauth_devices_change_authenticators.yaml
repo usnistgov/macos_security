@@ -1,0 +1,49 @@
+id: os_reauth_devices_change_authenticators
+title: Require Devices to Reauthenticate when Changing Authenticators
+discussion: |
+  The macOS should be configured to require users to reauthenticate when the device authenticator is changed.
+
+  Without reauthentication, users may access resources or perform tasks for which they are not authorization. When operating systems provide the capability to change device authenticators, it is critical the device reauthenticate.
+references:
+  nist:
+    cce:
+      sequoia:
+        - CCE-94271-4
+      sonoma:
+        - CCE-92867-1
+      ventura:
+        - CCE-91862-3
+      monterey:
+        - CCE-90986-1
+      big_sur:
+        - CCE-85366-3
+      catalina:
+        - CCE-84896-0
+    800-53r5:
+      - IA-11
+    800-171r3:
+      - 03.05.01
+  disa:
+    srg:
+      - SRG-OS-000374-GPOS-00159
+platforms:
+  macOS:
+    check: |
+      The technology does not support this requirement. This is an applicable-does not meet finding.
+    fix: |
+      This requirement is a permanent finding and cannot be fixed. An appropriate mitigation for the system must be implemented, but this finding cannot be considered fixed.
+    sequoia: {}
+    sonoma: {}
+    ventura: {}
+    monterey: {}
+    big_sur: {}
+    catalina: {}
+tags:
+  - 800-171
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_high
+  - permanent
+  - cnssi-1253_low
+  - cnssi-1253_high
+  - cnssi-1253_moderate

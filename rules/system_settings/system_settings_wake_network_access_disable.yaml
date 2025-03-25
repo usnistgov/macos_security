@@ -1,0 +1,48 @@
+id: system_settings_wake_network_access_disable
+title: Ensure Wake for Network Access Is Disabled
+discussion: |
+  Wake for network access _MUST_ be disabled.
+references:
+  nist:
+    cce:
+      sequoia:
+        - CCE-94410-8
+      sonoma:
+        - CCE-93005-7
+      ventura:
+        - CCE-91995-1
+  cis:
+    benchmark:
+      sequoia:
+        - 2.9.3 (level 1)
+      sonoma:
+        - 2.9.3 (level 1)
+      ventura:
+        - 2.9.3 (level 1)
+    controls_v8:
+      - 4.8
+platforms:
+  macOS:
+    check: |
+      /usr/bin/pmset -g custom | /usr/bin/awk '/womp/ { sum+=$2 } END {print sum}'
+    result:
+      integer: 0
+    fix: |
+      [source,bash]
+      ----
+      /usr/bin/pmset -a womp 0
+      ----
+    sequoia:
+      benchmarks:
+        - cis_lvl1
+        - cis_lvl2
+    sonoma:
+      benchmarks:
+        - cis_lvl1
+        - cis_lvl2
+    ventura:
+      benchmarks:
+        - cis_lvl1
+        - cis_lvl2
+tags:
+  - cisv8

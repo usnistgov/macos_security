@@ -1,0 +1,30 @@
+id: os_device_name_change_disable
+title: Disable device name changes
+discussion: |
+  The iOS device _MUST_ be configured to disable device name changes.
+references:
+  nist:
+    cce:
+      ios_18:
+        - CCE-94522-0
+      ios_17:
+        - CCE-93475-2
+  bsi:
+    indigo:
+      ios_17:
+        - ANNEX K
+platforms:
+  iOS:
+    ios_18:
+      supervised: true
+      benchmarks:
+        - indigo_base
+        - indigo_high
+    ios_17:
+      supervised: true
+      benchmarks:
+        - indigo_base
+        - indigo_high
+mobileconfig_info:
+  com.apple.applicationaccess:
+    allowDeviceNameModification: false

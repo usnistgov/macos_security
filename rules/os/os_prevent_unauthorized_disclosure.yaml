@@ -1,0 +1,54 @@
+id: os_prevent_unauthorized_disclosure
+title: Configure the System to Prevent the Unauthorized Disclosure of Data via Shared Resources
+discussion: |
+  The information system _IS_ configured to ensure that the unauthorized disclosure of data does not occur when resources are shared.
+
+  The inherent configuration of the macOS does not allow for resources to be shared between users without authorization.
+
+  link:https://developer.apple.com/library/archive/documentation/Security/Conceptual/AuthenticationAndAuthorizationGuide/Permissions/Permissions.html[]
+references:
+  nist:
+    cce:
+      sequoia:
+        - CCE-94262-3
+      sonoma:
+        - CCE-92858-0
+      ventura:
+        - CCE-91853-2
+      monterey:
+        - CCE-90979-6
+      big_sur:
+        - CCE-85361-4
+      catalina:
+        - CCE-84880-4
+    800-53r5:
+      - SC-4
+    800-171r3:
+      - 03.13.04
+  disa:
+    srg:
+      - SRG-OS-000138-GPOS-00069
+    cmmc:
+      - SC.L2-3.13.4
+platforms:
+  macOS:
+    check: |
+      The technology supports this requirement and cannot be configured to be out of compliance. The technology inherently meets this requirement.
+    fix: |
+      The technology inherently meets this requirement. No fix is required.
+    sequoia: {}
+    sonoma: {}
+    ventura: {}
+    monterey: {}
+    big_sur: {}
+    catalina: {}
+tags:
+  - 800-53r5_moderate
+  - 800-53r5_high
+  - 800-171
+  - inherent
+  - cnssi-1253_low
+  - cnssi-1253_high
+  - cmmc_lvl2
+  - cnssi-1253_moderate
+  - cnssi-1253

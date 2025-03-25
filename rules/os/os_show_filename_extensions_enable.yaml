@@ -1,0 +1,73 @@
+id: os_show_filename_extensions_enable
+title: Enable Show All Filename Extensions
+discussion: |
+  Show all filename extensions _MUST_ be enabled in the Finder.
+
+  [NOTE]
+  ====
+  The check and fix are for the currently logged in user. To get the currently logged in user, run the following.
+  [source,bash]
+  ----
+  CURRENT_USER=$( /usr/sbin/scutil <<< "show State:/Users/ConsoleUser" | /usr/bin/awk '/Name :/ && ! /loginwindow/ { print $3 }' )
+  ----
+  ====
+references:
+  nist:
+    cce:
+      sequoia:
+        - CCE-94293-8
+      sonoma:
+        - CCE-92888-7
+      ventura:
+        - CCE-91877-1
+      monterey:
+        - CCE-91112-3
+      big_sur:
+        - CCE-85511-4
+  cis:
+    benchmark:
+      sequoia:
+        - 6.1.1 (level 1)
+      sonoma:
+        - 6.1.1 (level 1)
+      ventura:
+        - 6.1.1 (level 1)
+      monterey:
+        - 6.2 (level 1)
+      big_sur:
+        - 6.2 (level 1)
+    controls_v8:
+      - 2.3
+platforms:
+  macOS:
+    check: |
+      /usr/bin/sudo -u "$CURRENT_USER" /usr/bin/defaults read .GlobalPreferences AppleShowAllExtensions 2>/dev/null
+    result:
+      boolean: 1
+    fix: |
+      [source,bash]
+      ----
+      /usr/bin/sudo -u "$CURRENT_USER" /usr/bin/defaults write /Users/"$CURRENT_USER"/Library/Preferences/.GlobalPreferences AppleShowAllExtensions -bool true
+      ----
+    sequoia:
+      benchmarks:
+        - cis_lvl1
+        - cis_lvl2
+    sonoma:
+      benchmarks:
+        - cis_lvl1
+        - cis_lvl2
+    ventura:
+      benchmarks:
+        - cis_lvl1
+        - cis_lvl2
+    monterey:
+      benchmarks:
+        - cis_lvl1
+        - cis_lvl2
+    big_sur:
+      benchmarks:
+        - cis_lvl1
+        - cis_lvl2
+tags:
+  - cisv8

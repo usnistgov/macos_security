@@ -1,0 +1,83 @@
+id: os_asl_log_files_permissions_configure
+title: Configure Apple System Log Files To Mode 640 or Less Permissive
+discussion: |
+  The Apple System Logs (ASL) _MUST_ be configured to be writable by root and readable only by the root user and group wheel. To achieve this, ASL log files _MUST_ be configured to mode 640 permissive or less; thereby preventing normal users from reading, modifying or deleting audit logs. System logs frequently contain sensitive information that could be used by an attacker. Setting the correct permissions mitigates this risk.
+references:
+  nist:
+    cce:
+      sequoia:
+        - CCE-94162-5
+      sonoma:
+        - CCE-92762-4
+      ventura:
+        - CCE-91760-9
+      monterey:
+        - CCE-90905-1
+      big_sur:
+        - CCE-85465-3
+      catalina:
+        - CCE-84930-7
+    800-53r5:
+      - SI-11
+  disa:
+    cci:
+      - CCI-001312
+      - CCI-001314
+    srg:
+      - SRG-OS-000206-GPOS-00084
+      - SRG-OS-000205-GPOS-00083
+    disa_stig:
+      sequoia:
+        - APPL-15-004002
+      sonoma:
+        - APPL-14-004002
+      ventura:
+        - APPL-13-004002
+      monterey:
+        - APPL-12-004002
+      big_sur:
+        - APPL-11-004002
+      catalina:
+        - AOSX-15-004002
+platforms:
+  macOS:
+    check: |
+      /usr/bin/stat -f '%A:%N' $(/usr/bin/grep -e '^>' /etc/asl.conf /etc/asl/* | /usr/bin/awk '{ print $2 }') 2> /dev/null | /usr/bin/awk '!/640/{print $1}' | /usr/bin/wc -l | /usr/bin/tr -d ' '
+    result:
+      integer: 0
+    fix: |
+      [source,bash]
+      ----
+      /bin/chmod 640 $(/usr/bin/stat -f '%A:%N' $(/usr/bin/grep -e '^>' /etc/asl.conf /etc/asl/* | /usr/bin/awk '{ print $2 }') 2> /dev/null | /usr/bin/awk -F":" '!/640/{print $2}')
+      ----
+    sequoia:
+      severity: medium
+      benchmarks:
+        - disa_stig
+    sonoma:
+      severity: medium
+      benchmarks:
+        - disa_stig
+    ventura:
+      severity: medium
+      benchmarks:
+        - disa_stig
+    monterey:
+      severity: medium
+      benchmarks:
+        - disa_stig
+    big_sur:
+      severity: medium
+      benchmarks:
+        - disa_stig
+    catalina:
+      severity: medium
+      benchmarks:
+        - disa_stig
+tags:
+  - 800-53r5_moderate
+  - 800-53r5_high
+  - cnssi-1253_low
+  - cnssi-1253_high
+  - cnssi-1253_moderate
+  - manual

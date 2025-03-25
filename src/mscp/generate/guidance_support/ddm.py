@@ -6,6 +6,7 @@ import json
 import zipfile
 from collections import defaultdict
 from pathlib import Path
+from typing import Any
 
 # Additional python modules
 from loguru import logger
@@ -16,6 +17,17 @@ from src.mscp.common_utils import append_text, config, make_dir, open_yaml, remo
 
 
 def generate_ddm_activation(output_path: Path, identifier: str) -> None:
+    """
+    Generates a DDM (Device Deployment Manifest) activation JSON file and appends it to the specified output path.
+
+    Args:
+        output_path (Path): The file path where the generated activation JSON will be appended.
+        identifier (str): The identifier string used to generate the activation DDM identifier.
+                          It is transformed by replacing "config" and "asset" with "activation".
+
+    Returns:
+        None
+    """
     activation_ddm_identifier: str = identifier.replace("config", "activation").replace(
         "asset", "activation"
     )
@@ -27,6 +39,31 @@ def generate_ddm_activation(output_path: Path, identifier: str) -> None:
     }
 
     append_text(output_path, json.dumps(activation_ddm_json, indent=4))
+
+
+def zip_directory(zip_path: Path, folder_path: Path) -> None:
+    """
+    Compresses the contents of a directory into a ZIP file.
+
+    Args:
+        zip_path (Path): The path where the resulting ZIP file will be created.
+        folder_path (Path): The path of the directory to be compressed.
+
+    Returns:
+        None
+
+    Notes:
+        - The function recursively includes all files and subdirectories within the specified folder.
+        - The relative paths of the files within the folder are preserved in the ZIP archive.
+    """
+    folder_path = Path(folder_path)
+    try:
+        with zipfile.ZipFile(zip_path, "w", zipfile.ZIP_DEFLATED) as zipf:
+            for file_path in folder_path.rglob("*"):
+                zipf.write(file_path, arcname=file_path.relative_to(folder_path))
+    except IOError as e:
+        logger.error(f"Unable to create zip file for {folder_path}. Error: {e}.")
+        return
 
 
 def generate_ddm(build_path: Path, baseline: Baseline, baseline_name: str) -> None:
@@ -71,12 +108,12 @@ def generate_ddm(build_path: Path, baseline: Baseline, baseline_name: str) -> No
         )
     """
 
-    mscp_data: dict = open_yaml(Path(config.get("mspc_data", "")))
+    mscp_data: dict[str, Any] = open_yaml(Path(config.get("mspc_data", "")))
     ddm_output_path: Path = Path(build_path, "declarative")
     activations_output_path: Path = Path(ddm_output_path, "activations")
     assets_output_path: Path = Path(ddm_output_path, "assets")
     configurations_output_path: Path = Path(ddm_output_path, "configurations")
-    ddm_dict: dict = defaultdict(dict)
+    ddm_dict: dict[str, Any] = defaultdict(dict)
 
     logger.debug(f"Output Directory name: {ddm_output_path}")
 
@@ -91,7 +128,7 @@ def generate_ddm(build_path: Path, baseline: Baseline, baseline_name: str) -> No
     ]
 
     for ddm_rule in ddm_rules:
-        ddm_info = ddm_rule.get("ddm_info", {})
+        ddm_info: dict[str, Any] = ddm_rule["ddm_info"]
         declaration_type = ddm_info.get("declarationtype", "")
 
         if declaration_type == "com.apple.configuration.services.configuration-files":
@@ -110,7 +147,7 @@ def generate_ddm(build_path: Path, baseline: Baseline, baseline_name: str) -> No
             service_config_dir: Path = Path(
                 ddm_output_path,
                 service_name,
-                str(mscp_data["ddm"]["services"][service_name]).lstrip("/"),
+                str(mscp_data["ddm"]["services"][service_name]).lstrip("/").rstrip("/"),
             )
             service_config_file: Path = service_config_dir / ddm_info.get(
                 "config_file", ""
@@ -177,18 +214,7 @@ def generate_ddm(build_path: Path, baseline: Baseline, baseline_name: str) -> No
                         activations_output_path, f"{activation_ddm_identifier}.json"
                     )
 
-                    try:
-                        with zipfile.ZipFile(
-                            zip_path, "w", zipfile.ZIP_DEFLATED
-                        ) as zipf:
-                            for file_path in path.iterdir():
-                                zipf.write(file_path, arcname=file_path.name)
-
-                        logger.success("Zip file created for {}.", service)
-                    except IOError as e:
-                        logger.error(
-                            f"Unable to create zip file for {service}. Error: {e}."
-                        )
+                    zip_directory(zip_path, path)
 
                     if zip_path.exists():
                         remove_dir(path)

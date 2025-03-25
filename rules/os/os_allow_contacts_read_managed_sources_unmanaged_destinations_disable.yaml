@@ -1,0 +1,77 @@
+id: os_allow_contacts_read_managed_sources_unmanaged_destinations_disable
+title: Ensure Managed Apps Cannot Read Unmanaged Contact Accounts
+discussion: 'Managed Apps _MUST_ not be allowed to read contacts from unamanged contact destinations. '
+references:
+  nist:
+    cce:
+      ios_18:
+        - CCE-94425-6
+      ios_17:
+        - CCE-93411-7
+      ios_16:
+        - CCE-93211-1
+      visionos_2.0:
+        - CCE-94488-4
+    800-53r5:
+      - AC-3
+      - MP-2
+      - SC-7(10)
+      - SC-39
+  disa:
+    cci:
+      - CCI-000366
+      - CCI-000051
+      - CCI-000370
+    disa_stig:
+      ios_18:
+        - AIOS-18-012400
+      ios_17:
+        - AIOS-17-012400
+        - AIOS-17-712400
+      ios_16:
+        - AIOS-16-012400
+        - AIOS-16-012400
+    sfr:
+      - 'FMT_SMF_EXT.1.1 #42'
+      - FDP_ACF_EXT.1.2
+  bsi:
+    indigo:
+      ios_17:
+        - ANNEX D (Section 5.6.3 - Contacts)
+        - ANNEX K
+platforms:
+  iOS:
+    ios_18:
+      severity: low
+      supervised: false
+      benchmarks:
+        - ios_stig
+        - indigo_base
+        - indigo_high
+    ios_17:
+      severity: low
+      supervised: false
+      benchmarks:
+        - ios_stig
+        - ios_stig_byoad
+        - indigo_base
+        - indigo_high
+    ios_16:
+      severity: low
+      supervised: false
+      benchmarks:
+        - ios_stig
+        - ios_stig_byoad
+  visionOS:
+    visionos_2.0:
+      supervised: false
+tags:
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_high
+  - cnssi-1253_moderate
+  - cnssi-1253_low
+  - cnssi-1253_high
+mobileconfig_info:
+  com.apple.applicationaccess:
+    allowUnmanagedToReadManagedContacts: false

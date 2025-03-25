@@ -1,0 +1,50 @@
+id: audit_off_load_records
+title: Off-Load Audit Records
+discussion: |
+  Audit records should be off-loaded onto a different system or media from the system being audited.
+
+  Information stored in only one location is vulnerable to accidental or incidental deletion or alteration. Off-loading is a common process in information systems with limited audit storage capacity.
+
+  To secure audit records by off-loading, many operating systems can be integrated with enterprise-level auditing mechanisms that meet or exceed this requirement.
+references:
+  nist:
+    cce:
+      sequoia:
+        - CCE-94127-8
+      sonoma:
+        - CCE-92727-7
+      ventura:
+        - CCE-91728-6
+      monterey:
+        - CCE-90872-3
+      big_sur:
+        - CCE-85271-5
+      catalina:
+        - CCE-84895-2
+    800-53r5:
+      - AU-4(1)
+  disa:
+    srg:
+      - SRG-OS-000479-GPOS-00224
+      - SRG-OS-000342-GPOS-00133
+  cis:
+    controls_v8:
+      - 8.9
+platforms:
+  macOS:
+    check: |
+      The technology does not support this requirement. This is an applicable-does not meet finding.
+    fix: |
+      This requirement is a permanent finding and cannot be fixed. An appropriate mitigation for the system must be implemented, but this finding cannot be considered fixed.
+    sequoia: {}
+    sonoma: {}
+    ventura: {}
+    monterey: {}
+    big_sur: {}
+    catalina: {}
+tags:
+  - permanent
+  - cisv8
+  - cnssi-1253_low
+  - cnssi-1253_high
+  - cnssi-1253_moderate

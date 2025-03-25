@@ -1,0 +1,265 @@
+id: audit_auditd_enabled
+title: Enable Security Auditing
+discussion: |
+  The information system _MUST_ be configured to generate audit records.
+
+  Audit records establish what types of events have occurred, when they occurred, and which users were involved. These records aid an organization in their efforts to establish, correlate, and investigate the events leading up to an outage or attack.
+
+  The content required to be captured in an audit record varies based on the impact level of an organization's system. Content that may be necessary to satisfy this requirement includes, for example, time stamps, source addresses, destination addresses, user identifiers, event descriptions, success/fail indications, filenames involved, and access or flow control rules invoked.
+
+  The information system initiates session audits at system start-up.
+
+  NOTE: Security auditing is NOT enabled by default on macOS Sequoia.
+references:
+  nist:
+    cce:
+      sequoia:
+        - CCE-94104-7
+      sonoma:
+        - CCE-92704-6
+      ventura:
+        - CCE-91704-7
+      monterey:
+        - CCE-90854-1
+      big_sur:
+        - CCE-85254-1
+      catalina:
+        - CCE-84706-1
+    800-53r5:
+      - AU-3
+      - AU-3(1)
+      - AU-8
+      - AU-12
+      - AU-12(1)
+      - AU-12(3)
+      - AU-14(1)
+      - MA-4(1)
+      - CM-5(1)
+    800-171r3:
+      - 03.03.02
+      - 03.03.03
+      - 03.03.07
+  disa:
+    cci:
+      - CCI-000130
+      - CCI-000131
+      - CCI-000132
+      - CCI-000133
+      - CCI-000134
+      - CCI-000135
+      - CCI-000159
+      - CCI-001464
+      - CCI-001487
+      - CCI-001889
+      - CCI-001890
+      - CCI-001914
+      - CCI-002130
+      - CCI-003938
+      - CCI-004188
+    srg:
+      - SRG-OS-000255-GPOS-00096
+      - SRG-OS-000474-GPOS-00219
+      - SRG-OS-000465-GPOS-00209
+      - SRG-OS-000473-GPOS-00218
+      - SRG-OS-000337-GPOS-00129
+      - SRG-OS-000359-GPOS-00146
+      - SRG-OS-000472-GPOS-00217
+      - SRG-OS-000257-GPOS-00098
+      - SRG-OS-000466-GPOS-00210
+      - SRG-OS-000042-GPOS-00020
+      - SRG-OS-000468-GPOS-00212
+      - SRG-OS-000392-GPOS-00172
+      - SRG-OS-000463-GPOS-00207
+      - SRG-OS-000039-GPOS-00017
+      - SRG-OS-000467-GPOS-00211
+      - SRG-OS-000470-GPOS-00214
+      - SRG-OS-000461-GPOS-00205
+      - SRG-OS-000258-GPOS-00099
+      - SRG-OS-000471-GPOS-00215
+      - SRG-OS-000458-GPOS-00203
+      - SRG-OS-000037-GPOS-00015
+      - SRG-OS-000040-GPOS-00018
+      - SRG-OS-000471-GPOS-00216
+      - SRG-OS-000476-GPOS-00221
+      - SRG-OS-000254-GPOS-00095
+      - SRG-OS-000042-GPOS-00021
+      - SRG-OS-000358-GPOS-00145
+      - SRG-OS-000477-GPOS-00222
+      - SRG-OS-000365-GPOS-00152
+      - SRG-OS-000475-GPOS-00220
+      - SRG-OS-000041-GPOS-00019
+      - SRG-OS-000038-GPOS-00016
+      - SRG-OS-000462-GPOS-00206
+      - SRG-OS-000055-GPOS-00026
+      - SRG-OS-000755-GPOS-00220
+    disa_stig:
+      sequoia:
+        - APPL-15-001003
+      sonoma:
+        - APPL-14-001003
+      ventura:
+        - APPL-13-001003
+      monterey:
+        - APPL-12-001003
+      big_sur:
+        - APPL-11-001003
+      catalina:
+        - AOSX-15-001003
+    cmmc:
+      - AU.L2-3.3.2
+      - AU.L2-3.3.6
+  cis:
+    benchmark:
+      sequoia:
+        - 3.1 (level 1)
+      sonoma:
+        - 3.1 (level 1)
+      ventura:
+        - 3.1 (level 1)
+      monterey:
+        - 3.1 (level 1)
+      big_sur:
+        - 3.1 (level 1)
+    controls_v8:
+      - 8.2
+      - 8.5
+platforms:
+  macOS:
+    check: $OS_VALUE
+    result: $OS_VALUE
+    fix: $OS_VALUE
+    sequoia:
+      severity: medium
+      benchmarks:
+        - cis_lvl1
+        - cis_lvl2
+        - disa_stig
+      check: |-
+        LAUNCHD_RUNNING=$(/bin/launchctl list | /usr/bin/grep -c com.apple.auditd)
+        AUDITD_RUNNING=$(/usr/sbin/audit -c | /usr/bin/grep -c "AUC_AUDITING")
+        if [[ $LAUNCHD_RUNNING == 1 ]] && [[ -e /etc/security/audit_control ]] && [[ $AUDITD_RUNNING == 1 ]]; then
+          echo "pass"
+        else
+          echo "fail"
+        fi
+      fix: |-
+        [source,bash]
+        ----
+        if [[ ! -e /etc/security/audit_control ]] && [[ -e /etc/security/audit_control.example ]];then
+          /bin/cp /etc/security/audit_control.example /etc/security/audit_control
+        fi
+
+        /bin/launchctl enable system/com.apple.auditd
+        /bin/launchctl bootstrap system /System/Library/LaunchDaemons/com.apple.auditd.plist
+        /usr/sbin/audit -i
+        ----
+      result:
+        string: pass
+    sonoma:
+      severity: medium
+      benchmarks:
+        - cis_lvl1
+        - cis_lvl2
+        - disa_stig
+      check: |-
+        LAUNCHD_RUNNING=$(/bin/launchctl list | /usr/bin/grep -c com.apple.auditd)
+        AUDITD_RUNNING=$(/usr/sbin/audit -c | /usr/bin/grep -c "AUC_AUDITING")
+        if [[ $LAUNCHD_RUNNING == 1 ]] && [[ -e /etc/security/audit_control ]] && [[ $AUDITD_RUNNING == 1 ]]; then
+          echo "pass"
+        else
+          echo "fail"
+        fi
+      fix: |-
+        [source,bash]
+        ----
+        if [[ ! -e /etc/security/audit_control ]] && [[ -e /etc/security/audit_control.example ]];then
+          /bin/cp /etc/security/audit_control.example /etc/security/audit_control
+        fi
+
+        /bin/launchctl enable system/com.apple.auditd
+        /bin/launchctl bootstrap system /System/Library/LaunchDaemons/com.apple.auditd.plist
+        /usr/sbin/audit -i
+        ----
+      result:
+        string: pass
+    ventura:
+      severity: medium
+      benchmarks:
+        - cis_lvl1
+        - cis_lvl2
+        - disa_stig
+      check: |-
+        LAUNCHD_RUNNING=$(/bin/launchctl list | /usr/bin/grep -c com.apple.auditd)
+        if [[ $LAUNCHD_RUNNING == 1 ]] && [[ -e /etc/security/audit_control ]]; then
+          echo "pass"
+        else
+          echo "fail"
+        fi
+      fix: |-
+        [source,bash]
+        ----
+        LAUNCHD_RUNNING=$(/bin/launchctl list | /usr/bin/grep -c com.apple.auditd)
+
+        if [[ ! $LAUNCHD_RUNNING == 1 ]]; then
+          /bin/launchctl load -w /System/Library/LaunchDaemons/com.apple.auditd.plist
+        fi
+
+        if [[ ! -e /etc/security/audit_control ]] && [[ -e /etc/security/audit_control.example ]];then
+          /bin/cp /etc/security/audit_control.example /etc/security/audit_control
+        else
+          /usr/bin/touch /etc/security/audit_control
+        fi
+        ----
+      result:
+        string: pass
+    monterey:
+      severity: medium
+      benchmarks:
+        - cis_lvl1
+        - cis_lvl2
+        - disa_stig
+      check: /bin/launchctl list | /usr/bin/grep -c com.apple.auditd
+      fix: |-
+        [source,bash]
+        ----
+        /bin/launchctl load -w /System/Library/LaunchDaemons/com.apple.auditd.plist
+        ----
+      result:
+        integer: 1
+    big_sur:
+      severity: medium
+      benchmarks:
+        - cis_lvl1
+        - cis_lvl2
+        - disa_stig
+      check: /bin/launchctl list | /usr/bin/grep -c com.apple.auditd
+      fix: |-
+        [source,bash]
+        ----
+        /bin/launchctl load -w /System/Library/LaunchDaemons/com.apple.auditd.plist
+        ----
+      result:
+        integer: 1
+    catalina:
+      severity: medium
+      benchmarks:
+        - disa_stig
+      check: /bin/launchctl list | /usr/bin/grep -c com.apple.auditd
+      fix: |-
+        [source,bash]
+        ----
+        /bin/launchctl load -w /System/Library/LaunchDaemons/com.apple.auditd.plist
+        ----
+      result:
+        integer: 1
+tags:
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_high
+  - 800-171
+  - cisv8
+  - cnssi-1253_low
+  - cnssi-1253_high
+  - cmmc_lvl2
+  - cnssi-1253_moderate
+  - cnssi-1253

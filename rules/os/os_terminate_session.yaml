@@ -1,0 +1,33 @@
+id: os_terminate_session
+title: Terminate all sessions and network connections when maintenance is completed
+discussion: |
+  Terminates session and network connections when non-local maintenance is completed.
+references:
+  nist:
+    cce:
+      sequoia:
+        - CCE-94316-7
+      sonoma:
+        - CCE-92913-3
+      ventura:
+        - CCE-91901-9
+      monterey:
+        - CCE-91017-4
+      big_sur:
+        - CCE-85390-3
+      catalina:
+        - CCE-84881-2
+platforms:
+  macOS:
+    check: |
+      The technology supports this requirement and cannot be configured to be out of compliance. The technology inherently meets this requirement.
+    fix: |
+      The technology inherently meets this requirement. No fix is required.
+    sequoia: {}
+    sonoma: {}
+    ventura: {}
+    monterey: {}
+    big_sur: {}
+    catalina: {}
+tags:
+  - inherent

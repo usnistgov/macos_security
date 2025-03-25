@@ -1,0 +1,38 @@
+id: os_mfa_network_access
+title: Enforce multifactor authentication for network access to privileged accounts
+discussion: |
+  The information system implements multifactor authentication for network access to privileged accounts.
+references:
+  nist:
+    cce:
+      sequoia:
+        - CCE-94229-2
+      sonoma:
+        - CCE-92826-7
+      ventura:
+        - CCE-91822-7
+      monterey:
+        - CCE-90952-3
+      big_sur:
+        - CCE-85340-8
+      catalina:
+        - CCE-84883-8
+  cis:
+    controls_v8:
+      - 5.6
+platforms:
+  macOS:
+    check: |
+      For directory bound systems:
+      The technology supports this requirement and cannot be configured to be out of compliance. The technology inherently meets this requirement.
+    fix: |
+      For directory bound systems, the technology inherently meets this requirement. No fix is required.
+    sequoia: {}
+    sonoma: {}
+    ventura: {}
+    monterey: {}
+    big_sur: {}
+    catalina: {}
+tags:
+  - inherent
+  - cisv8

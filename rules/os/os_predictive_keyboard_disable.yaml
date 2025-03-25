@@ -1,0 +1,30 @@
+id: os_predictive_keyboard_disable
+title: Disable the use of predictable keyboards
+discussion: |
+  The device _MUST_ be configured that the usage of the predictable keyboard feature is not possible.
+references:
+  nist:
+    cce:
+      ios_18:
+        - CCE-94543-6
+      ios_17:
+        - CCE-93491-9
+  bsi:
+    indigo:
+      ios_17:
+        - ANNEX K
+platforms:
+  iOS:
+    ios_18:
+      supervised: true
+      benchmarks:
+        - indigo_base
+        - indigo_high
+    ios_17:
+      supervised: true
+      benchmarks:
+        - indigo_base
+        - indigo_high
+mobileconfig_info:
+  com.apple.applicationaccess:
+    allowPredictiveKeyboard: false

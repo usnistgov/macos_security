@@ -1,0 +1,44 @@
+id: sysprefs_install_macos_updates_enforce
+title: Enforce macOS Updates are Automatically Installed
+discussion: |
+  Software Update _MUST_ be configured to enforce automatic installation of macOS updates is enabled.
+references:
+  nist:
+    cce:
+      monterey:
+        - CCE-91129-7
+      big_sur:
+        - CCE-85525-4
+  cis:
+    benchmark:
+      monterey:
+        - 1.6 (level 1)
+      big_sur:
+        - 1.6 (level 1)
+    controls_v8:
+      - 7.3
+      - 7.4
+platforms:
+  macOS:
+    check: |
+      /usr/bin/osascript -l JavaScript << EOS
+      $.NSUserDefaults.alloc.initWithSuiteName('com.apple.SoftwareUpdate')\
+      .objectForKey('AutomaticallyInstallMacOSUpdates').js
+      EOS
+    result:
+      string: 'true'
+    fix: |
+      This is implemented by a Configuration Profile.
+    monterey:
+      benchmarks:
+        - cis_lvl1
+        - cis_lvl2
+    big_sur:
+      benchmarks:
+        - cis_lvl1
+        - cis_lvl2
+tags:
+  - cisv8
+mobileconfig_info:
+  com.apple.SoftwareUpdate:
+    AutomaticallyInstallMacOSUpdates: true

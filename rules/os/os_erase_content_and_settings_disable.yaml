@@ -1,0 +1,75 @@
+id: os_erase_content_and_settings_disable
+title: Disable Erase Content and Settings
+discussion: |
+  Erase Content and Settings _MUST_ be disabled.
+references:
+  nist:
+    cce:
+      sequoia:
+        - CCE-94185-6
+      sonoma:
+        - CCE-92785-5
+      ventura:
+        - CCE-91783-1
+      monterey:
+        - CCE-91103-2
+    800-53r5:
+      - CM-7
+      - CM-7(1)
+    800-171r3:
+      - 03.04.06
+  disa:
+    cci:
+      - CCI-000366
+      - CCI-000381
+    srg:
+      - SRG-OS-000480-GPOS-00227
+      - SRG-OS-000095-GPOS-00049
+    disa_stig:
+      sequoia:
+        - APPL-15-005061
+      sonoma:
+        - APPL-14-005061
+      ventura:
+        - APPL-13-005061
+      monterey:
+        - APPL-12-005061
+    cmmc:
+      - CM.L2-3.4.6
+      - CM.L2-3.4.7
+platforms:
+  macOS:
+    check: |
+      /usr/bin/osascript -l JavaScript << EOS
+      $.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess')\
+      .objectForKey('allowEraseContentAndSettings').js
+      EOS
+    result:
+      string: 'false'
+    fix: |
+      This is implemented by a Configuration Profile.
+    sequoia:
+      severity: medium
+      benchmarks:
+        - disa_stig
+    sonoma:
+      severity: medium
+      benchmarks:
+        - disa_stig
+    ventura:
+      severity: medium
+      benchmarks:
+        - disa_stig
+    monterey:
+      severity: medium
+      benchmarks:
+        - disa_stig
+tags:
+  - 800-171
+  - cnssi-1253_low
+  - cnssi-1253_high
+  - cmmc_lvl2
+  - cnssi-1253_moderate
+mobileconfig_info:
+  com.apple.applicationaccess:
+    allowEraseContentAndSettings: false
