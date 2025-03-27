@@ -61,6 +61,7 @@ tags:
   - cmmc_lvl2
   - stig
   - cnssi-1253_moderate
+  - nlmapgov_base
 severity: medium
 mobileconfig: false
 mobileconfig_info:
