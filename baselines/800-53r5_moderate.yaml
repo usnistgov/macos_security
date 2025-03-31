@@ -31,19 +31,29 @@ profile:
       - os_allow_documents_managed_sources_unmanaged_destinations_disable
       - os_allow_documents_unmanaged_sources_managed_destinations_disable
       - os_authentication_password_autofill_enable
+      - os_default_browser_modification_disable
       - os_diagnostics_reports_disable
       - os_disallow_enterprise_app_trust
       - os_erase_contents_and_settings_disable
+      - os_external_intelligence_integration_disable
+      - os_external_intelligence_integration_sign_in_disable
       - os_files_network_drive_access_disable
       - os_force_date_and_time_enable
+      - os_genmoji_disable
       - os_handoff_disable
+      - os_image_playground_disable
+      - os_image_wand_disable
       - os_install_vpn_configuration_disable
+      - os_mail_smart_reply_disable
+      - os_mail_summary_disable
       - os_on_device_dictation_enforce
       - os_password_autofill_disable
       - os_password_sharing_disable
       - os_personalized_advertising_disable
       - os_safari_password_autofill_disable
+      - os_safari_reader_summary_disable
       - os_screenshots_disable
+      - os_writing_tools_disable
   - section: "settings"
     rules:
       - settings_opticid_unlock_disable
