@@ -1,0 +1,32 @@
+id: os_notes_transcription_summary_disable
+title: Disable Apple Intelligence Notes Transcription Summary
+discussion: |
+  Apple Intelligence features such as Notes Transcription Summary that use off device AI _MUST_ be disabled.
+check: " "
+fix: |
+  This is implemented by a Configuration Profile.
+references:
+  cce:
+    - CCE-94576-6
+  cci: 
+    - N/A
+  800-53r5:
+    - AC-20
+    - AC-20(1)
+    - CM-7
+    - CM-7(1)
+    - SC-7(10)
+  indigo:
+    - N/A
+iOS:
+  - "18.3"
+tags:
+  - ios
+  - 800-53r5_low 
+  - 800-53r5_moderate 
+  - 800-53r5_high
+supervised: true
+mobileconfig: true
+mobileconfig_info:
+  com.apple.applicationaccess:
+    allowNotesTranscriptionSummary: false

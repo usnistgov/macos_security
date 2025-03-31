@@ -46,6 +46,9 @@ profile:
       - os_auto_unlock_disable
       - os_call_recording_disable
       - os_chat_disable
+      - os_default_browser_modification_disable
+      - os_default_calling_modification_disable
+      - os_default_messaging_modification_disable
       - os_definition_lookup_disable
       - os_device_name_change_disable
       - os_diagnostics_reports_disable
@@ -85,11 +88,14 @@ profile:
       - os_mail_block_remote_content
       - os_mail_maildrop_disable
       - os_mail_move_messages_disable
+      - os_mail_smart_reply_disable
       - os_mail_summary_disable
       - os_marketplace_prevent
       - os_modify_cellular_data_app_settings_disable
       - os_network_known_only
       - os_new_device_proximity_disable
+      - os_notes_transcription_disable
+      - os_notes_transcription_summary_disable
       - os_on_device_dictation_enforce
       - os_on_device_translation_enforce
       - os_pairing_non_configurator_hosts_disable
@@ -107,6 +113,7 @@ profile:
       - os_safari_force_fraud_warning_enable
       - os_safari_password_autofill_disable
       - os_safari_popups_disable
+      - os_safari_reader_summary_disable
       - os_screen_observation_remote_disable
       - os_screen_observation_unprompted_disable
       - os_screenshots_disable
@@ -130,6 +137,7 @@ profile:
       - os_update_enforced_software_update_delay
       - os_usb_accessories_when_locked_disable
       - os_video_conferencing_remote_control_disable
+      - os_visual_intelligence_summary
       - os_voice_dialing_when_locked_disabled
       - os_web_distribution_app_installation_disable
       - os_writing_tools_disable

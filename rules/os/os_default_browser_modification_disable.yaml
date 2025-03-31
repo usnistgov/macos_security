@@ -1,0 +1,30 @@
+id: os_default_browser_modification_disable
+title: Disable Modifying the Default Web Browser Application
+discussion: |
+  The ability to modify the default web browser application _MUST_ be disabled to prevent unauthorized changes to the device's behavior.
+check: " "
+fix: |
+  This is implemented by a Configuration Profile.
+references:
+  cce:
+    - CCE-94571-7
+  cci: 
+    - N/A
+  800-53r5:
+    - CM-7
+    - CM-7(1)
+    - CM-6
+  indigo:
+    - N/A
+iOS:
+  - "18.4"
+tags:
+  - ios
+  - 800-53r5_low 
+  - 800-53r5_moderate 
+  - 800-53r5_high
+supervised: true
+mobileconfig: true
+mobileconfig_info:
+  com.apple.applicationaccess:
+    allowDefaultBrowserModification: false
