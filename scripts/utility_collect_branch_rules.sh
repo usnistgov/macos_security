@@ -2,7 +2,7 @@
 
 # verify that no unstage changes exist
 
-GIT_STATUS=$(git status --porcelain=v1 2>/dev/null | wc -l)
+GIT_STATUS=$(git status --porcelain=v1 2>/dev/null | wc -l | xargs)
 
 if [[ ! $GIT_STATUS == 0 ]];then
     echo "There are unstaged changes here, please resolve before continuing."
