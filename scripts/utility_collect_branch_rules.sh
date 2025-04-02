@@ -21,3 +21,13 @@ for branch in ${branches[@]}; do
 
 done
 mv _work/visionos _work/visionos_2.0
+
+# clone apple's device-management repo
+
+if [[ -d "_work/apple" ]]; then
+    rm -rf "_work/apple"
+fi
+
+mkdir -p "_work/apple"
+
+git clone https://github.com/apple/device-management "_work/apple"
