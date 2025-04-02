@@ -37,6 +37,10 @@ done
 
 # rename visionOS folder for simplicity
 
+if [[ -d "_work/visionos_2.0" ]];then
+    rm -rf "_work/visionos_2.0"
+fi
+
 mv _work/visionos _work/visionos_2.0
 
 # clone apple's device-management repo
