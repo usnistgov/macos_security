@@ -946,7 +946,94 @@ def main():
                 _yaml['tags'].remove("srg")
             if "visionos" in _yaml['tags']:
                 _yaml['tags'].remove("visionos")
+     
+            _yaml = replace_keys_by_path(_yaml)
+    
         with open(file, "w") as nf:
             yaml.dump(remove_none_fields(_yaml), nf, Dumper=MyDumper, sort_keys=False, width=float("inf")) 
+
+def replace_keys_by_path(data, path=None):
+    if path is None:
+        path = []
+
+    if isinstance(data, dict):
+        new_data = {}
+        for k, v in data.items():
+            current_path = path + [k]
+            new_k = k
+            if k == 'visionos_2.0':
+                if path == ['references', 'nist', 'cce']:
+                    new_k = 'visionos_2'
+                elif path == ['references', 'disa', 'disa_stig']:
+                    new_k = 'visionos_2'
+                elif path == ['platforms', 'visionOS']:
+                    new_k = '2.0'
+                # else:
+                #     new_k = k  # leave as-is
+            if k == 'ios_18':
+                if path == ['platforms', 'iOS']:
+                    new_k = '18.0'
+                # else:
+                #     new_k = k  # leave as-is
+            # Determine the replacement key
+            if k == 'ios_16':
+                if path == ['platforms', 'iOS']:
+                    new_k = '16.0'
+                # else:
+                #     new_k = k  # leave as-is            
+            if k == 'ios_17':
+                if path == ['platforms', 'iOS']:
+                    new_k = '17.0'
+                # else:
+                #     new_k = k  # leave as-is
+            if k == 'ios_18':
+                if path == ['platforms', 'iOS']:
+                    new_k = '18.0'
+                # else:
+                #     new_k = k  # leave as-is
+            if k == 'ventura':
+                if path == ['references', 'nist', 'cce']:
+                    new_k = 'macos_13'
+                elif path == ['references', 'disa', 'disa_stig']:
+                    new_k = 'macos_13'
+                elif path == ['references', 'cis', 'benchmark']:
+                    new_k = 'macos_13'
+                elif path == ['platforms', 'macOS']:
+                    new_k = '13.0'
+                # else:
+                #     new_k = k  # leave as-is
+            if k == 'sonoma':
+                if path == ['references', 'nist', 'cce']:
+                    new_k = 'macos_14'
+                elif path == ['references', 'disa', 'disa_stig']:
+                    new_k = 'macos_14'
+                elif path == ['references', 'cis', 'benchmark']:
+                    new_k = 'macos_14'                    
+                elif path == ['platforms', 'macOS']:
+                    new_k = '14.0'
+                # else:
+                #     new_k = k  # leave as-is
+            if k == 'sequoia':
+                if path == ['references', 'nist', 'cce']:
+                    new_k = 'macos_15'
+                elif path == ['references', 'disa', 'disa_stig']:
+                    new_k = 'macos_15'
+                elif path == ['references', 'cis', 'benchmark']:
+                    new_k = 'macos_15'                    
+                elif path == ['platforms', 'macOS']:
+                    new_k = '15.0'
+                # else:
+                #     new_k = k  # leave as-is
+            # else:
+            #     new_k = k
+
+            new_data[new_k] = replace_keys_by_path(v, current_path)
+        return new_data
+
+    elif isinstance(data, list):
+        return [replace_keys_by_path(item, path) for item in data]
+    else:
+        return data
+
 if __name__ == "__main__":
     main()
