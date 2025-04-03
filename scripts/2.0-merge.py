@@ -91,8 +91,8 @@ def main():
         except OSError:
             print(f"Creation of the directory {build_path} failed")
 
-    os_supported = ["sequoia", "sonoma", "ventura", "monterey", "big_sur", "catalina", "ios_18", "ios_17", "ios_16", "visionos_2.0"]
-
+    # os_supported = ["sequoia", "sonoma", "ventura", "monterey", "big_sur", "catalina", "ios_18", "ios_17", "ios_16", "visionos_2.0"]
+    os_supported = ["sequoia", "sonoma", "ventura", "ios_18", "ios_17", "ios_16", "visionos_2.0"]
     # for os_list in glob.glob("../_work/*"):
     #     os_supported.add(os_list.split("/")[2])
 
