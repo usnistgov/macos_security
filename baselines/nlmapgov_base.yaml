@@ -14,6 +14,11 @@ authors: |
   |===
 parent_values: "recommended"
 profile:
+  - section: "auditing"
+    rules:
+      - audit_auditd_enabled
+      - audit_flags_ad_configure
+      - audit_retention_configure
   - section: "macos"
     rules:
       - os_anti_virus_installed
@@ -22,10 +27,12 @@ profile:
       - os_mdm_require
       - os_safari_open_safe_downloads_disable
       - os_sip_enable
+      - os_sudo_log_enforce
       - os_time_server_enabled
   - section: "systemsettings"
     rules:
       - system_settings_filevault_enforce
+      - system_settings_gatekeeper_override_disallow
       - system_settings_loginwindow_loginwindowtext_enable
       - system_settings_software_update_app_update_enforce
       - system_settings_software_update_download_enforce
@@ -36,4 +43,7 @@ profile:
   - section: "Inherent"
     rules:
       - os_secure_enclave
+  - section: "Supplemental"
+    rules:
+      - supplemental_filevault
 
