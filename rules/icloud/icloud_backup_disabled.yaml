@@ -11,7 +11,7 @@ references:
         - CCE-93401-8
       ios_16:
         - CCE-93201-2
-      visionos_2.0:
+      visionos_2:
         - CCE-94479-3
     800-53r5:
       - SC-4
@@ -49,7 +49,7 @@ references:
         - ANNEX K
 platforms:
   iOS:
-    ios_18:
+    '18.0':
       severity: medium
       supervised: false
       benchmarks:
@@ -58,7 +58,7 @@ platforms:
         - ios_stig
         - indigo_base
         - indigo_high
-    ios_17:
+    '17.0':
       severity: medium
       supervised: false
       benchmarks:
@@ -67,7 +67,7 @@ platforms:
         - ios_stig
         - indigo_base
         - indigo_high
-    ios_16:
+    '16.0':
       severity: medium
       supervised: false
       benchmarks:
@@ -75,7 +75,7 @@ platforms:
         - cis_lvl2_enterprise
         - ios_stig
   visionOS:
-    visionos_2.0:
+    '2.0':
       supervised: false
 tags:
   - 800-53r5_low

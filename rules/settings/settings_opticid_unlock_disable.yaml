@@ -11,13 +11,13 @@ discussion: |
 references:
   nist:
     cce:
-      visionos_2.0:
+      visionos_2:
         - CCE-94513-9
     800-53r5:
       - IA-5
 platforms:
   visionOS:
-    visionos_2.0:
+    '2.0':
       supervised: true
 tags:
   - 800-53r5_low

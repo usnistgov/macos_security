@@ -4,11 +4,11 @@ discussion: "The macOS _MUST_ be configured to require at least one uppercase ch
 references:
   nist:
     cce:
-      sequoia:
+      macos_15:
         - CCE-94347-2
-      sonoma:
+      macos_14:
         - CCE-92943-0
-      ventura:
+      macos_13:
         - CCE-91930-8
       monterey:
         - CCE-91043-0
@@ -27,7 +27,7 @@ references:
       - IA.L2-3.5.9
   cis:
     benchmark:
-      ventura:
+      macos_13:
         - 5.2.6 (level 2)
       monterey:
         - 5.2.6 (level 2)
@@ -67,9 +67,9 @@ platforms:
       /usr/bin/pwpolicy setaccountpolicies $pwpolicy_file
       ----
       NOTE: See the password policy supplemental on more information on how to implement password policies on macOS.
-    sequoia: {}
-    sonoma: {}
-    ventura:
+    '15.0': {}
+    '14.0': {}
+    '13.0':
       benchmarks:
         - cis_lvl2
     monterey:

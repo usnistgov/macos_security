@@ -7,11 +7,11 @@ discussion: |
 references:
   nist:
     cce:
-      sequoia:
+      macos_15:
         - CCE-94203-7
-      sonoma:
+      macos_14:
         - CCE-92803-6
-      ventura:
+      macos_13:
         - CCE-92007-4
     800-53r5:
       - AC-6
@@ -19,7 +19,7 @@ references:
       - 03.01.05
   disa:
     disa_stig:
-      ventura:
+      macos_13:
         - APPL-13-002068
 platforms:
   macOS:
@@ -50,11 +50,11 @@ platforms:
       `/usr/sbin/diskutil resetUserPermissions / DeviceNode UID`, where "DeviceNode UID" is the ID number for the user whose home directory permissions need to be repaired.
 
       NOTE: Using the `/usr/sbin/diskutil resetUserPermissions` command will only reset the permissions on the default folder set. Other folders in the home directory will not be affected.
-    sequoia:
+    '15.0':
       severity: medium
-    sonoma:
+    '14.0':
       severity: medium
-    ventura:
+    '13.0':
       severity: medium
       benchmarks:
         - disa_stig

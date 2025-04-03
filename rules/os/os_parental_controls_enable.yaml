@@ -9,11 +9,11 @@ discussion: |
 references:
   nist:
     cce:
-      sequoia:
+      macos_15:
         - CCE-94246-6
-      sonoma:
+      macos_14:
         - CCE-92842-4
-      ventura:
+      macos_13:
         - CCE-91837-5
       monterey:
         - CCE-90966-3
@@ -39,9 +39,9 @@ platforms:
       string: 'true'
     fix: |
       This is implemented by a Configuration Profile.
-    sequoia: {}
-    sonoma: {}
-    ventura: {}
+    '15.0': {}
+    '14.0': {}
+    '13.0': {}
     monterey: {}
     big_sur: {}
     catalina: {}

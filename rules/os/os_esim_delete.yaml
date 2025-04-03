@@ -19,7 +19,7 @@ references:
       - 'FMT_MOF_EXT.1.2 #47'
 platforms:
   iOS:
-    ios_18:
+    '18.0':
       severity: medium
       supervised: true
       benchmarks:

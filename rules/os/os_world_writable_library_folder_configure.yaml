@@ -7,11 +7,11 @@ discussion: |
 references:
   nist:
     cce:
-      sequoia:
+      macos_15:
         - CCE-94326-6
-      sonoma:
+      macos_14:
         - CCE-92923-2
-      ventura:
+      macos_13:
         - CCE-91911-8
       monterey:
         - CCE-91120-6
@@ -19,11 +19,11 @@ references:
         - CCE-85517-1
   cis:
     benchmark:
-      sequoia:
+      macos_15:
         - 5.1.7 (level 2)
-      sonoma:
+      macos_14:
         - 5.1.7 (level 2)
-      ventura:
+      macos_13:
         - 5.1.7 (level 2)
       monterey:
         - 5.1.7 (level 2)
@@ -37,7 +37,7 @@ platforms:
     result:
       integer: 0
     fix: $OS_VALUE
-    sequoia:
+    '15.0':
       benchmarks:
         - cis_lvl2
       check: /usr/bin/find /System/Volumes/Data/Library -type d -perm -2 -ls 2>&1 | /usr/bin/grep -v Caches | /usr/bin/grep -v /Preferences/Audio/Data | /usr/bin/wc -l | /usr/bin/xargs
@@ -49,7 +49,7 @@ platforms:
           /bin/chmod -R o-w "$libPermissions"
         done
         ----
-    sonoma:
+    '14.0':
       benchmarks:
         - cis_lvl2
       check: /usr/bin/find /System/Volumes/Data/Library -type d -perm -2 -ls 2>&1 | /usr/bin/grep -v Caches | /usr/bin/grep -v /Preferences/Audio/Data | /usr/bin/wc -l | /usr/bin/xargs
@@ -61,7 +61,7 @@ platforms:
           /bin/chmod -R o-w "$libPermissions"
         done
         ----
-    ventura:
+    '13.0':
       benchmarks:
         - cis_lvl2
       check: /usr/bin/find /System/Volumes/Data/Library -type d -perm -2 -ls 2>&1 | /usr/bin/grep -v Caches | /usr/bin/grep -v /Preferences/Audio/Data | /usr/bin/wc -l | /usr/bin/xargs

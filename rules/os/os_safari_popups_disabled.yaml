@@ -5,11 +5,11 @@ discussion: |
 references:
   nist:
     cce:
-      sonoma:
+      macos_14:
         - CCE-93014-9
 platforms:
   macOS:
-    sonoma: {}
+    '14.0': {}
     check: |
       /usr/bin/profiles -P -o stdout | /usr/bin/grep -c 'safariAllowPopups = 0' | /usr/bin/awk '{ if ($1 >= 1) {print "1"} else {print "0"}}'
     result:

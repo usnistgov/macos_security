@@ -22,7 +22,7 @@ references:
       - ANNEX K
 platforms:
   iOS:
-    ios_18:
+    '18.0':
       severity: medium
       supervised: false
       benchmarks:

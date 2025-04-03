@@ -44,7 +44,7 @@ references:
       - 3.3
 platforms:
   iOS:
-    ios_18:
+    '18.0':
       severity: low
       supervised: false
       benchmarks:
@@ -53,7 +53,7 @@ platforms:
         - cis_lvl1_enterprise
         - cis_lvl2_enterprise
         - ios_stig
-    ios_17:
+    '17.0':
       severity: low
       supervised: false
       benchmarks:
@@ -63,7 +63,7 @@ platforms:
         - cis_lvl2_enterprise
         - ios_stig
         - ios_stig_byoad
-    ios_16:
+    '16.0':
       severity: low
       supervised: false
       benchmarks:

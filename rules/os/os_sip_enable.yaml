@@ -9,11 +9,11 @@ discussion: |
 references:
   nist:
     cce:
-      sequoia:
+      macos_15:
         - CCE-94294-6
-      sonoma:
+      macos_14:
         - CCE-92889-5
-      ventura:
+      macos_13:
         - CCE-91878-9
       monterey:
         - CCE-91000-0
@@ -70,11 +70,11 @@ references:
       - SRG-OS-000122-GPOS-00063
       - SRG-OS-000058-GPOS-00028
     disa_stig:
-      sequoia:
+      macos_15:
         - APPL-15-005001
-      sonoma:
+      macos_14:
         - APPL-14-005001
-      ventura:
+      macos_13:
         - APPL-13-005001
       monterey:
         - APPL-12-005001
@@ -91,11 +91,11 @@ references:
       - SI.L1-3.14.4
   cis:
     benchmark:
-      sequoia:
+      macos_15:
         - 5.1.2 (level 1)
-      sonoma:
+      macos_14:
         - 5.1.2 (level 1)
-      ventura:
+      macos_13:
         - 5.1.2 (level 1)
       monterey:
         - 5.1.2 (level 1)
@@ -117,19 +117,19 @@ platforms:
       /usr/bin/csrutil enable
       ----
       NOTE: To reenable "System Integrity Protection", boot the affected system into "Recovery" mode, launch "Terminal" from the "Utilities" menu, and run the command.
-    sequoia:
+    '15.0':
       severity: high
       benchmarks:
         - cis_lvl1
         - cis_lvl2
         - disa_stig
-    sonoma:
+    '14.0':
       severity: high
       benchmarks:
         - cis_lvl1
         - cis_lvl2
         - disa_stig
-    ventura:
+    '13.0':
       severity: high
       benchmarks:
         - cis_lvl1

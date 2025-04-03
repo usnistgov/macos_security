@@ -5,17 +5,17 @@ discussion: |
 references:
   nist:
     cce:
-      sonoma:
+      macos_14:
         - CCE-93023-0
   cis:
     benchmark:
-      sonoma:
+      macos_14:
         - 2.9.1.2 (level 2)
     controls_v8:
       - 4.1
 platforms:
   macOS:
-    sonoma:
+    '14.0':
       benchmarks:
         - cis_lvl2
     check: |

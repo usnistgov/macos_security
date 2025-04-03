@@ -7,11 +7,11 @@ discussion: |
 references:
   nist:
     cce:
-      sequoia:
+      macos_15:
         - CCE-94153-4
-      sonoma:
+      macos_14:
         - CCE-92754-1
-      ventura:
+      macos_13:
         - CCE-91752-6
       monterey:
         - CCE-90896-2
@@ -25,7 +25,7 @@ references:
         - CCE-93407-5
       ios_16:
         - CCE-93207-9
-      visionos_2.0:
+      visionos_2:
         - CCE-94484-3
     800-53r5:
       - AC-20
@@ -42,9 +42,9 @@ references:
     srg:
       - SRG-OS-000095-GPOS-00049
     disa_stig:
-      sequoia:
+      macos_15:
         - APPL-15-002150
-      sonoma:
+      macos_14:
         - APPL-14-002150
       ios_18:
         - AIOS-18-003200
@@ -58,11 +58,11 @@ references:
       - CM.L2-3.4.7
   cis:
     benchmark:
-      sequoia:
+      macos_15:
         - 2.1.1.3 (level 2)
-      sonoma:
+      macos_14:
         - 2.1.1.3 (level 2)
-      ventura:
+      macos_13:
         - 2.1.1.3 (level 2)
       monterey:
         - 2.6.1.3 (level 2)
@@ -97,17 +97,17 @@ platforms:
       string: 'false'
     fix: |
       This is implemented by a Configuration Profile.
-    sequoia:
+    '15.0':
       severity: medium
       benchmarks:
         - cis_lvl2
         - disa_stig
-    sonoma:
+    '14.0':
       severity: medium
       benchmarks:
         - cis_lvl2
         - disa_stig
-    ventura:
+    '13.0':
       benchmarks:
         - cis_lvl2
     monterey:
@@ -118,7 +118,7 @@ platforms:
         - cis_lvl2
     catalina: {}
   iOS:
-    ios_18:
+    '18.0':
       severity: medium
       supervised: true
       benchmarks:
@@ -129,7 +129,7 @@ platforms:
       mobileconfig_info:
         com.apple.applicationaccess:
           allowCloudDocumentSync: false
-    ios_17:
+    '17.0':
       severity: medium
       supervised: true
       benchmarks:
@@ -140,7 +140,7 @@ platforms:
       mobileconfig_info:
         com.apple.applicationaccess:
           allowCloudDocumentSync: false
-    ios_16:
+    '16.0':
       severity: medium
       supervised: true
       benchmarks:
@@ -151,7 +151,7 @@ platforms:
         com.apple.applicationaccess:
           allowCloudDocumentSync: false
   visionOS:
-    visionos_2.0:
+    '2.0':
       supervised: true
       mobileconfig_info:
         com.apple.applicationaccess:

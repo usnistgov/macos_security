@@ -7,11 +7,11 @@ discussion: |
 references:
   nist:
     cce:
-      sequoia:
+      macos_15:
         - CCE-94187-2
-      sonoma:
+      macos_14:
         - CCE-92787-1
-      ventura:
+      macos_13:
         - CCE-91785-6
       monterey:
         - CCE-90930-9
@@ -25,9 +25,9 @@ references:
     srg:
       - SRG-OS-000191-GPOS-00080
     disa_stig:
-      sonoma:
+      macos_14:
         - APPL-14-000015
-      ventura:
+      macos_13:
         - APPL-13-000015
       monterey:
         - APPL-12-000015
@@ -42,15 +42,15 @@ platforms:
       If the installed components of the ESS solution are not at the DoD approved minimal versions, this is a finding.
     fix: |
       Install the approved ESS solution onto the system.
-    sequoia:
+    '15.0':
       severity: medium
       benchmarks:
         - disa_stig
-    sonoma:
+    '14.0':
       severity: medium
       benchmarks:
         - disa_stig
-    ventura:
+    '13.0':
       severity: medium
     monterey:
       severity: medium

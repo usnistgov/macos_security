@@ -4,7 +4,7 @@ discussion: iPhone Mirroing _MUST_ be disabled to prevent file transfers to or f
 references:
   nist:
     cce:
-      sequoia:
+      macos_15:
         - CCE-94213-6
       ios_18:
         - CCE-94537-8
@@ -49,10 +49,10 @@ platforms:
       EOS
     result:
       string: 'false'
-    sequoia:
+    '15.0':
       severity: medium
   iOS:
-    ios_18:
+    '18.0':
       supervised: false
       benchmarks:
         - indigo_base

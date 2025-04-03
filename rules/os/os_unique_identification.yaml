@@ -5,11 +5,11 @@ discussion: |
 references:
   nist:
     cce:
-      sequoia:
+      macos_15:
         - CCE-94321-7
-      sonoma:
+      macos_14:
         - CCE-92918-2
-      ventura:
+      macos_13:
         - CCE-91906-8
       monterey:
         - CCE-91021-6
@@ -34,9 +34,9 @@ platforms:
       The technology supports this requirement and cannot be configured to be out of compliance. The technology inherently meets this requirement.
     fix: |
       The technology inherently meets this requirement. No fix is required.
-    sequoia: {}
-    sonoma: {}
-    ventura: {}
+    '15.0': {}
+    '14.0': {}
+    '13.0': {}
     monterey: {}
     big_sur: {}
     catalina: {}

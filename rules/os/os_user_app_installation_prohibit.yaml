@@ -12,11 +12,11 @@ discussion: |
 references:
   nist:
     cce:
-      sequoia:
+      macos_15:
         - CCE-94323-3
-      sonoma:
+      macos_14:
         - CCE-92920-8
-      ventura:
+      macos_13:
         - CCE-91908-4
       monterey:
         - CCE-91023-2
@@ -24,7 +24,7 @@ references:
         - CCE-85396-0
       catalina:
         - CCE-84805-1
-      visionos_2.0:
+      visionos_2:
         - CCE-94510-5
     800-53r5:
       - CM-11(2)
@@ -35,9 +35,9 @@ references:
     srg:
       - SRG-OS-000362-GPOS-00149
     disa_stig:
-      sequoia:
+      macos_15:
         - APPL-15-005080
-      sonoma:
+      macos_14:
         - APPL-14-005080
       big_sur:
         - APPL-11-002067
@@ -66,15 +66,15 @@ platforms:
       string: 'true'
     fix: |
       This is implemented by a Configuration Profile.
-    sequoia:
+    '15.0':
       severity: medium
       benchmarks:
         - disa_stig
-    sonoma:
+    '14.0':
       severity: medium
       benchmarks:
         - disa_stig
-    ventura:
+    '13.0':
       severity: medium
     monterey:
       severity: medium
@@ -87,7 +87,7 @@ platforms:
       benchmarks:
         - disa_stig
   visionOS:
-    visionos_2.0:
+    '2.0':
       supervised: true
       mobileconfig_info:
         com.apple.applicationaccess:

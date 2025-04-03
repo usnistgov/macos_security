@@ -5,11 +5,11 @@ discussion: |
 references:
   nist:
     cce:
-      sequoia:
+      macos_15:
         - CCE-94384-5
-      sonoma:
+      macos_14:
         - CCE-92980-2
-      ventura:
+      macos_13:
         - CCE-91969-6
     800-53r5:
       - CM-7
@@ -22,20 +22,20 @@ references:
     srg:
       - SRG-OS-000095-GPOS-00049
     disa_stig:
-      sequoia:
+      macos_15:
         - APPL-15-002240
-      sonoma:
+      macos_14:
         - APPL-14-002240
     cmmc:
       - CM.L2-3.4.6
       - CM.L2-3.4.7
   cis:
     benchmark:
-      sequoia:
+      macos_15:
         - 2.3.3.4 (level 1)
-      sonoma:
+      macos_14:
         - 2.3.3.4 (level 1)
-      ventura:
+      macos_13:
         - 2.3.3.4 (level 1)
     controls_v8:
       - 4.1
@@ -52,19 +52,19 @@ platforms:
       /usr/sbin/cupsctl --no-share-printers
       /usr/bin/lpstat -p | awk '{print $2}'| /usr/bin/xargs -I{} lpadmin -p {} -o printer-is-shared=false
       ----
-    sequoia:
+    '15.0':
       severity: medium
       benchmarks:
         - cis_lvl1
         - cis_lvl2
         - disa_stig
-    sonoma:
+    '14.0':
       severity: medium
       benchmarks:
         - cis_lvl1
         - cis_lvl2
         - disa_stig
-    ventura:
+    '13.0':
       benchmarks:
         - cis_lvl1
         - cis_lvl2

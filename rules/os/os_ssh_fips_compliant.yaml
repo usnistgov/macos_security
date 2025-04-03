@@ -13,11 +13,11 @@ discussion: |
 references:
   nist:
     cce:
-      sequoia:
+      macos_15:
         - CCE-94299-5
-      sonoma:
+      macos_14:
         - CCE-92894-5
-      ventura:
+      macos_13:
         - CCE-91883-9
       monterey:
         - CCE-91003-4
@@ -44,11 +44,11 @@ references:
       - SRG-OS-000033-GPOS-00014
       - SRG-OS-000396-GPOS-00176
     disa_stig:
-      sequoia:
+      macos_15:
         - APPL-15-000057
-      sonoma:
+      macos_14:
         - APPL-14-000057
-      ventura:
+      macos_13:
         - APPL-13-000057
         - APPL-13-000058
         - APPL-13-000059
@@ -66,7 +66,7 @@ platforms:
     check: $OS_VALUE
     result: $OS_VALUE
     fix: $OS_VALUE
-    sequoia:
+    '15.0':
       severity: high
       benchmarks:
         - disa_stig
@@ -90,7 +90,7 @@ platforms:
       fix: "[source,bash]\n----\nif [ -f /etc/ssh/crypto.conf ] && /usr/bin/grep -q \"Include /etc/ssh/crypto.conf\" /etc/ssh/ssh_config.d/100-macos.conf 2>/dev/null; then\n  /bin/ln -fs /etc/ssh/crypto/fips.conf /etc/ssh/crypto.conf\nfi\ninclude_dir=$(/usr/bin/awk '/^Include/ {print $2}' /etc/ssh/ssh_config | /usr/bin/tr -d '*')\n\nfips_ssh_config=(\"Ciphers aes128-gcm@openssh.com\" \"HostbasedAcceptedAlgorithms ecdsa-sha2-nistp256,ecdsa-sha2-nistp256-cert-v01@openssh.com\" \"HostKeyAlgorithms ecdsa-sha2-nistp256-cert-v01@openssh.com,sk-ecdsa-sha2-nistp256-cert-v01@openssh.com,ecdsa-sha2-nistp256,sk-ecdsa-sha2-nistp256@openssh.com\" \"KexAlgorithms ecdh-sha2-nistp256\" \"MACs hmac-sha2-256-etm@openssh.com,hmac-sha2-256\" \"PubkeyAcceptedAlgorithms ecdsa-sha2-nistp256,ecdsa-sha2-nistp256-cert-v01@openssh.com,sk-ecdsa-sha2-nistp256-cert-v01@openssh.com\" \"CASignatureAlgorithms ecdsa-sha2-nistp256,sk-ecdsa-sha2-nistp256@openssh.com\")\nfor ssh_config in $fips_ssh_config; do\n  ssh_setting=$(echo $ssh_config | /usr/bin/cut -d \" \" -f1)\n  /usr/bin/grep -qEi \"^$ssh_setting\" \"${include_dir}01-mscp-ssh.conf\" && /usr/bin/sed -i \"\" \"s/^$ssh_setting.*/${ssh_config}/\" \"${include_dir}01-mscp-ssh.conf\" || echo \"$ssh_config\" >> \"${include_dir}01-mscp-ssh.conf\"\n  for u in $(/usr/bin/dscl . list /users shell | /usr/bin/egrep -v '(^_)|(root)|(/usr/bin/false)' | /usr/bin/awk '{print $1}'); do\n    config=$(/usr/bin/sudo -u $u /usr/bin/ssh -Gv . 2>&1)\n    configfiles=$(echo \"$config\" | /usr/bin/awk '/Reading configuration data/ {print $NF}'| /usr/bin/tr -d '\\r')\n    configarray=( ${(f)configfiles} )\n    if ! echo $config | /usr/bin/grep -q -i \"$ssh_config\" ; then\n      for c in $configarray; do\n        if [[ \"$c\" == \"/etc/ssh/crypto.conf\" ]]; then\n          continue\n        fi\n  \n        /usr/bin/sudo -u $u /usr/bin/grep -qEi \"^$ssh_setting\" \"$c\" && /usr/bin/sed -i \"\" \"s/^$ssh_setting.*/${ssh_config}/I\" \"$c\"\n        if [[ \"$c\" =~ \".ssh/config\" ]]; then\n          if /usr/bin/grep -qEi \"$ssh_setting\" \"$c\" 2> /dev/null; then\n            old_file=$(cat ~$u/.ssh/config)\n            echo \"$ssh_config\" > ~$u/.ssh/config\n            echo \"$old_file\" >> ~$u/.ssh/config\n          fi\n        fi\n      done\n    fi\n  done\ndone\n----"
       result:
         string: pass
-    sonoma:
+    '14.0':
       severity: high
       benchmarks:
         - disa_stig
@@ -119,7 +119,7 @@ platforms:
         ----
       result:
         integer: 8
-    ventura:
+    '13.0':
       benchmarks:
         - disa_stig
       check: |-

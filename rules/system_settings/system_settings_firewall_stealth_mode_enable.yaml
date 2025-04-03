@@ -12,11 +12,11 @@ discussion: |
 references:
   nist:
     cce:
-      sequoia:
+      macos_15:
         - CCE-94363-9
-      sonoma:
+      macos_14:
         - CCE-92960-4
-      ventura:
+      macos_13:
         - CCE-91949-8
     800-53r5:
       - CM-7
@@ -28,7 +28,7 @@ references:
       - 03.13.01
   disa:
     disa_stig:
-      ventura:
+      macos_13:
         - APPL-13-005050
     cmmc:
       - CM.L2-3.4.6
@@ -36,11 +36,11 @@ references:
       - SC.L1-3.13.1
   cis:
     benchmark:
-      sequoia:
+      macos_15:
         - 2.2.2 (level 1)
-      sonoma:
+      macos_14:
         - 2.2.2 (level 1)
-      ventura:
+      macos_13:
         - 2.2.2 (level 1)
     controls_v8:
       - 4.1
@@ -52,7 +52,7 @@ platforms:
     result:
       string: 'true'
     fix: $OS_VALUE
-    sequoia:
+    '15.0':
       severity: medium
       benchmarks:
         - cis_lvl1
@@ -63,7 +63,7 @@ platforms:
         .objectForKey('EnableStealthMode').js
         EOS
       fix: This is implemented by a Configuration Profile.
-    sonoma:
+    '14.0':
       severity: medium
       benchmarks:
         - cis_lvl1
@@ -87,7 +87,7 @@ platforms:
         ----
         /usr/bin/defaults write /Library/Preferences/com.apple.alf stealthenabled -int 1
         ----
-    ventura:
+    '13.0':
       severity: medium
       benchmarks:
         - cis_lvl1

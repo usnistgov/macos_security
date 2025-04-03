@@ -5,11 +5,11 @@ discussion: |
 references:
   nist:
     cce:
-      sequoia:
+      macos_15:
         - CCE-94400-9
-      sonoma:
+      macos_14:
         - CCE-92995-0
-      ventura:
+      macos_13:
         - CCE-91985-2
     800-53r5:
       - IA-2(8)
@@ -37,11 +37,11 @@ platforms:
       ----
       /bin/launchctl enable system/com.openssh.sshd
       ----
-    sequoia:
+    '15.0':
       severity: medium
-    sonoma:
+    '14.0':
       severity: medium
-    ventura: {}
+    '13.0': {}
 tags:
   - 800-53r5_low
   - 800-53r5_moderate

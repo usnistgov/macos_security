@@ -24,12 +24,12 @@ references:
       - 'FMT_SMF_EXT.1.1 #8b'
 platforms:
   iOS:
-    ios_18:
+    '18.0':
       severity: low
       supervised: true
       benchmarks:
         - ios_stig
-    ios_17:
+    '17.0':
       supervised: true
       benchmarks:
         - ios_stig

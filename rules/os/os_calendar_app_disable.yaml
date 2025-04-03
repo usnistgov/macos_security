@@ -15,11 +15,11 @@ discussion: |
 references:
   nist:
     cce:
-      sequoia:
+      macos_15:
         - CCE-94171-6
-      sonoma:
+      macos_14:
         - CCE-92771-5
-      ventura:
+      macos_13:
         - CCE-91769-0
       monterey:
         - CCE-90909-3
@@ -54,7 +54,7 @@ platforms:
     result: $OS_VALUE
     fix: |
       This is implemented by a Configuration Profile.
-    sequoia:
+    '15.0':
       severity: medium
       check: |-
         /usr/bin/osascript -l JavaScript << EOS
@@ -73,7 +73,7 @@ platforms:
         EOS
       result:
         string: 'true'
-    sonoma:
+    '14.0':
       severity: medium
       check: |-
         /usr/bin/osascript -l JavaScript << EOS
@@ -92,7 +92,7 @@ platforms:
         EOS
       result:
         string: 'true'
-    ventura:
+    '13.0':
       severity: medium
       check: |-
         /usr/bin/osascript -l JavaScript << EOS

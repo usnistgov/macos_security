@@ -7,11 +7,11 @@ discussion: |
 references:
   nist:
     cce:
-      sequoia:
+      macos_15:
         - CCE-94383-7
-      sonoma:
+      macos_14:
         - CCE-92979-4
-      ventura:
+      macos_13:
         - CCE-91968-8
     800-53r5:
       - AC-20
@@ -27,9 +27,9 @@ references:
     srg:
       - SRG-OS-000095-GPOS-00049
     disa_stig:
-      sequoia:
+      macos_15:
         - APPL-15-002200
-      sonoma:
+      macos_14:
         - APPL-14-002200
     cmmc:
       - AC.L1-3.1.20
@@ -37,11 +37,11 @@ references:
       - CM.L2-3.4.7
   cis:
     benchmark:
-      sequoia:
+      macos_15:
         - 2.6.4 (level 1)
-      sonoma:
+      macos_14:
         - 2.6.4 (level 1)
-      ventura:
+      macos_13:
         - 2.6.3 (level 1)
     controls_v8:
       - 4.8
@@ -56,19 +56,19 @@ platforms:
       string: 'false'
     fix: |
       This is implemented by a Configuration Profile.
-    sequoia:
+    '15.0':
       severity: medium
       benchmarks:
         - cis_lvl1
         - cis_lvl2
         - disa_stig
-    sonoma:
+    '14.0':
       severity: medium
       benchmarks:
         - cis_lvl1
         - cis_lvl2
         - disa_stig
-    ventura:
+    '13.0':
       benchmarks:
         - cis_lvl1
         - cis_lvl2

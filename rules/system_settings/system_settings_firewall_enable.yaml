@@ -7,11 +7,11 @@ discussion: |
 references:
   nist:
     cce:
-      sequoia:
+      macos_15:
         - CCE-94362-1
-      sonoma:
+      macos_14:
         - CCE-92959-6
-      ventura:
+      macos_13:
         - CCE-91948-0
     800-53r5:
       - AC-4
@@ -29,11 +29,11 @@ references:
     srg:
       - SRG-OS-000480-GPOS-00232
     disa_stig:
-      sequoia:
+      macos_15:
         - APPL-15-005050
-      sonoma:
+      macos_14:
         - APPL-14-005050
-      ventura:
+      macos_13:
         - APPL-13-005050
     cmmc:
       - AC.L2-3.1.3
@@ -42,11 +42,11 @@ references:
       - SC.L1-3.13.1
   cis:
     benchmark:
-      sequoia:
+      macos_15:
         - 2.2.1 (level 1)
-      sonoma:
+      macos_14:
         - 2.2.1 (level 1)
-      ventura:
+      macos_13:
         - 2.2.1 (level 1)
     controls_v8:
       - 4.1
@@ -58,7 +58,7 @@ platforms:
     result:
       string: 'true'
     fix: $OS_VALUE
-    sequoia:
+    '15.0':
       severity: medium
       benchmarks:
         - cis_lvl1
@@ -70,7 +70,7 @@ platforms:
         .objectForKey('EnableFirewall').js
         EOS
       fix: This is implemented by a Configuration Profile.
-    sonoma:
+    '14.0':
       severity: medium
       benchmarks:
         - cis_lvl1
@@ -95,7 +95,7 @@ platforms:
         ----
         /usr/bin/defaults write /Library/Preferences/com.apple.alf globalstate -int 1
         ----
-    ventura:
+    '13.0':
       severity: medium
       benchmarks:
         - cis_lvl1

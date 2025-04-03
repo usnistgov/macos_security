@@ -16,11 +16,11 @@ discussion: |
 references:
   nist:
     cce:
-      sequoia:
+      macos_15:
         - CCE-94258-1
-      sonoma:
+      macos_14:
         - CCE-92854-9
-      ventura:
+      macos_13:
         - CCE-91849-0
 platforms:
   macOS:
@@ -33,6 +33,6 @@ platforms:
       ----
       /usr/bin/pmset -a powernap 1
       ----
-    sequoia: {}
-    sonoma: {}
-    ventura: {}
+    '15.0': {}
+    '14.0': {}
+    '13.0': {}

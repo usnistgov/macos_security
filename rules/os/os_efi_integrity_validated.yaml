@@ -5,7 +5,7 @@ discussion: |
 references:
   nist:
     cce:
-      ventura:
+      macos_13:
         - CCE-91781-5
       monterey:
         - CCE-91102-4
@@ -13,7 +13,7 @@ references:
         - CCE-85502-3
   cis:
     benchmark:
-      ventura:
+      macos_13:
         - 5.9 (level 1)
       monterey:
         - 2.9 (level 1)
@@ -29,7 +29,7 @@ platforms:
       integer: 1
     fix: |
       Install a known good version of macOS.
-    ventura:
+    '13.0':
       benchmarks:
         - cis_lvl1
         - cis_lvl2

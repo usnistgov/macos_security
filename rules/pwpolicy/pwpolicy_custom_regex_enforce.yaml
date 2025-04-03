@@ -4,9 +4,9 @@ discussion: "The macOS _MUST_ be configured to meet complexity requirements defi
 references:
   nist:
     cce:
-      sequoia:
+      macos_15:
         - CCE-94334-0
-      sonoma:
+      macos_14:
         - CCE-93011-5
     800-53r5:
       - IA-5(1)
@@ -24,9 +24,9 @@ references:
       - SRG-OS-000070-GPOS-00038
       - SRG-OS-000069-GPOS-00037
     disa_stig:
-      sequoia:
+      macos_15:
         - APPL-15-003060
-      sonoma:
+      macos_14:
         - APPL-14-003060
     cmmc:
       - IA.L2-3.5.7
@@ -34,9 +34,9 @@ references:
       - IA.L2-3.5.9
   cis:
     benchmark:
-      sequoia:
+      macos_15:
         - 5.2.6 (level 2)
-      sonoma:
+      macos_14:
         - 5.2.6 (level 2)
     controls_v8:
       - 5.2
@@ -48,12 +48,12 @@ platforms:
       string: 'true'
     fix: |
       This is implemented by a Configuration Profile.
-    sequoia:
+    '15.0':
       severity: medium
       benchmarks:
         - cis_lvl2
         - disa_stig
-    sonoma:
+    '14.0':
       severity: medium
       benchmarks:
         - cis_lvl2

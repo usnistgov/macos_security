@@ -7,7 +7,7 @@ discussion: |
 references:
   nist:
     cce:
-      visionos_2.0:
+      visionos_2:
         - CCE-94512-1
     800-53r5:
       - AC-20
@@ -16,7 +16,7 @@ references:
       - SC-7(10)
 platforms:
   visionOS:
-    visionos_2.0:
+    '2.0':
       supervised: false
 tags:
   - 800-53r5_low

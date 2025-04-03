@@ -9,11 +9,11 @@ discussion: |
 references:
   nist:
     cce:
-      sequoia:
+      macos_15:
         - CCE-94255-7
-      sonoma:
+      macos_14:
         - CCE-92851-5
-      ventura:
+      macos_13:
         - CCE-91846-6
       monterey:
         - CCE-90974-7
@@ -33,11 +33,11 @@ references:
       - SRG-OS-000024-GPOS-00007
       - SRG-OS-000023-GPOS-00006
     disa_stig:
-      sequoia:
+      macos_15:
         - APPL-15-000023
-      sonoma:
+      macos_14:
         - APPL-14-000023
-      ventura:
+      macos_13:
         - APPL-13-000023
       monterey:
         - APPL-12-000023
@@ -58,21 +58,21 @@ platforms:
       bannerText="$ODV"
       /bin/echo "${bannerText}" > /etc/banner
       ----
-    sequoia:
+    '15.0':
       severity: medium
       benchmarks:
         - disa_stig
       check: |-
         bannerText="$ODV"
         test "$(cat /etc/banner)" = "$bannerText" && echo "1" || echo "0"
-    sonoma:
+    '14.0':
       severity: medium
       benchmarks:
         - disa_stig
       check: |-
         bannerText="$ODV"
         test "$(cat /etc/banner)" = "$bannerText" && echo "1" || echo "0"
-    ventura:
+    '13.0':
       severity: medium
       benchmarks:
         - disa_stig

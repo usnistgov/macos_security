@@ -29,15 +29,15 @@ references:
       - 'FMT_SMF_EXT.1.1 #47'
 platforms:
   iOS:
-    ios_18:
+    '18.0':
       severity: medium
       benchmarks:
         - ios_stig
-    ios_17:
+    '17.0':
       severity: medium
       benchmarks:
         - ios_stig
-    ios_16:
+    '16.0':
       severity: medium
       benchmarks:
         - ios_stig

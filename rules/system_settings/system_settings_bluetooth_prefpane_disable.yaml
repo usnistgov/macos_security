@@ -9,7 +9,7 @@ discussion: |
 references:
   nist:
     cce:
-      ventura:
+      macos_13:
         - CCE-92012-4
   disa:
     cci:
@@ -19,11 +19,11 @@ references:
       - SRG-OS-000379-GPOS-00164
       - SRG-OS-000481-GPOS-00481
     disa_stig:
-      ventura:
+      macos_13:
         - APPL-13-002062
 platforms:
   macOS:
-    ventura:
+    '13.0':
       severity: low
       benchmarks:
         - disa_stig

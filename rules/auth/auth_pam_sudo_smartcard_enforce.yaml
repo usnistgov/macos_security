@@ -11,11 +11,11 @@ discussion: |
 references:
   nist:
     cce:
-      sequoia:
+      macos_15:
         - CCE-94134-4
-      sonoma:
+      macos_14:
         - CCE-92734-3
-      ventura:
+      macos_13:
         - CCE-91735-1
       monterey:
         - CCE-90879-8
@@ -46,11 +46,11 @@ references:
       - SRG-OS-000105-GPOS-00052
       - SRG-OS-000705-GPOS-00150
     disa_stig:
-      sequoia:
+      macos_15:
         - APPL-15-003052
-      sonoma:
+      macos_14:
         - APPL-14-003052
-      ventura:
+      macos_13:
         - APPL-13-003052
       monterey:
         - APPL-12-003052
@@ -89,15 +89,15 @@ platforms:
       /bin/chmod 444 /etc/pam.d/sudo
       /usr/sbin/chown root:wheel /etc/pam.d/sudo
       ----
-    sequoia:
+    '15.0':
       severity: medium
       benchmarks:
         - disa_stig
-    sonoma:
+    '14.0':
       severity: medium
       benchmarks:
         - disa_stig
-    ventura:
+    '13.0':
       severity: medium
       benchmarks:
         - disa_stig

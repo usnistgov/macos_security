@@ -9,9 +9,9 @@ discussion: |
 references:
   nist:
     cce:
-      sequoia:
+      macos_15:
         - CCE-94308-4
-      sonoma:
+      macos_14:
         - CCE-92906-7
     800-53r5:
       - SC-10
@@ -27,9 +27,9 @@ references:
       - SRG-OS-000163-GPOS-00072
       - SRG-OS-000279-GPOS-00109
     disa_stig:
-      sequoia:
+      macos_15:
         - APPL-15-000130
-      sonoma:
+      macos_14:
         - APPL-14-000130
     cmmc:
       - AC.L2-3.1.11
@@ -61,11 +61,11 @@ platforms:
         /bin/mv ${include_dir}${file} ${include_dir}20-${file}
       done
       ----
-    sequoia:
+    '15.0':
       severity: medium
       benchmarks:
         - disa_stig
-    sonoma:
+    '14.0':
       severity: medium
       benchmarks:
         - disa_stig

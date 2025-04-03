@@ -4,11 +4,11 @@ discussion: Library validation  _MUST_ be enabled.
 references:
   nist:
     cce:
-      sequoia:
+      macos_15:
         - CCE-94216-9
-      sonoma:
+      macos_14:
         - CCE-92814-3
-      ventura:
+      macos_13:
         - CCE-91810-2
       monterey:
         - CCE-91108-1
@@ -28,11 +28,11 @@ platforms:
     result:
       string: 'false'
     fix: $OS_VALUE
-    sequoia:
+    '15.0':
       fix: This is implemented by a Configuration Profile.
-    sonoma:
+    '14.0':
       fix: This is implemented by a Configuration Profile.
-    ventura:
+    '13.0':
       fix: This is implemented by a Configuration Profile.
     monterey:
       fix: This is implemented by a Configuration Profile.

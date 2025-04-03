@@ -7,11 +7,11 @@ discussion: |
 references:
   nist:
     cce:
-      sequoia:
+      macos_15:
         - CCE-94202-9
-      sonoma:
+      macos_14:
         - CCE-92802-8
-      ventura:
+      macos_13:
         - CCE-91799-7
       monterey:
         - CCE-91106-5
@@ -36,7 +36,7 @@ platforms:
       /usr/bin/pmset -a highstandbythreshold 90
       /usr/bin/pmset -a hibernatemode 25
       ----
-    sequoia:
+    '15.0':
       check: |-
         error_count=0
         if /usr/sbin/ioreg -rd1 -c IOPlatformExpertDevice 2>&1 | /usr/bin/grep -q "MacBook"; then
@@ -59,7 +59,7 @@ platforms:
           fi
         fi
         echo "$error_count"
-    sonoma:
+    '14.0':
       check: |-
         error_count=0
         if /usr/sbin/ioreg -rd1 -c IOPlatformExpertDevice 2>&1 | /usr/bin/grep -q "MacBook"; then
@@ -82,7 +82,7 @@ platforms:
           fi
         fi
         echo "$error_count"
-    ventura:
+    '13.0':
       check: |-
         error_count=0
         if /usr/sbin/ioreg -rd1 -c IOPlatformExpertDevice 2>&1 | /usr/bin/grep -q "MacBook"; then

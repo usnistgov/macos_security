@@ -7,11 +7,11 @@ discussion: |
 references:
   nist:
     cce:
-      sequoia:
+      macos_15:
         - CCE-94330-8
-      sonoma:
+      macos_14:
         - CCE-92926-5
-      ventura:
+      macos_13:
         - CCE-91914-2
       monterey:
         - CCE-91028-1
@@ -32,9 +32,9 @@ references:
       - SRG-OS-000118-GPOS-00060
       - SRG-OS-000590-GPOS-00110
     disa_stig:
-      sequoia:
+      macos_15:
         - APPL-15-003080
-      sonoma:
+      macos_14:
         - APPL-14-003080
     cmmc:
       - IA.L2-3.5.6
@@ -48,7 +48,7 @@ platforms:
     result:
       integer: $ODV
     fix: $OS_VALUE
-    sequoia:
+    '15.0':
       severity: medium
       benchmarks:
         - disa_stig
@@ -78,7 +78,7 @@ platforms:
         /usr/bin/pwpolicy setaccountpolicies $pwpolicy_file
         ----
         NOTE: See the password policy supplemental on more information on how to implement password policies on macOS.
-    sonoma:
+    '14.0':
       severity: medium
       benchmarks:
         - disa_stig
@@ -108,7 +108,7 @@ platforms:
         /usr/bin/pwpolicy setaccountpolicies $pwpolicy_file
         ----
         NOTE: See the password policy supplemental on more information on how to implement password policies on macOS.
-    ventura:
+    '13.0':
       fix: |-
         This setting may be enforced using local policy or by a directory service.
 

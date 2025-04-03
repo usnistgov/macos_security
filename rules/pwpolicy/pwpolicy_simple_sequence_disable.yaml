@@ -4,11 +4,11 @@ discussion: "The macOS _MUST_ be configured to prohibit the use of repeating, as
 references:
   nist:
     cce:
-      sequoia:
+      macos_15:
         - CCE-94343-1
-      sonoma:
+      macos_14:
         - CCE-92939-8
-      ventura:
+      macos_13:
         - CCE-91926-6
       monterey:
         - CCE-91039-8
@@ -28,7 +28,7 @@ references:
       - 03.05.07
   disa:
     disa_stig:
-      ventura:
+      macos_13:
         - APPL-13-003011
       ios_18:
         - AIOS-18-006600
@@ -71,16 +71,16 @@ platforms:
       integer: 1
     fix: |
       This is implemented by a Configuration Profile.
-    sequoia: {}
-    sonoma: {}
-    ventura:
+    '15.0': {}
+    '14.0': {}
+    '13.0':
       benchmarks:
         - disa_stig
     monterey: {}
     big_sur: {}
     catalina: {}
   iOS:
-    ios_18:
+    '18.0':
       severity: medium
       supervised: false
       benchmarks:
@@ -91,7 +91,7 @@ platforms:
         - ios_stig
         - indigo_base
         - indigo_high
-    ios_17:
+    '17.0':
       severity: medium
       supervised: false
       benchmarks:
@@ -103,7 +103,7 @@ platforms:
         - ios_stig_byoad
         - indigo_base
         - indigo_high
-    ios_16:
+    '16.0':
       severity: medium
       supervised: false
       benchmarks:

@@ -7,7 +7,7 @@ discussion: |
 references:
   nist:
     cce:
-      sequoia:
+      macos_15:
         - CCE-94371-2
     800-53r5:
       - AC-20
@@ -23,7 +23,7 @@ references:
     srg:
       - SRG-OS-000095-GPOS-00049
     disa_stig:
-      sequoia:
+      macos_15:
         - APPL-15-002024
     cmmc:
       - AC.L1-3.1.20
@@ -35,7 +35,7 @@ references:
       - 4.8
 platforms:
   macOS:
-    sequoia:
+    '15.0':
       severity: medium
       benchmarks:
         - disa_stig

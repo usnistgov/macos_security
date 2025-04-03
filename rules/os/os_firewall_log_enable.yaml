@@ -9,9 +9,9 @@ discussion: |
 references:
   nist:
     cce:
-      sonoma:
+      macos_14:
         - CCE-92793-9
-      ventura:
+      macos_13:
         - CCE-91791-4
       monterey:
         - CCE-90924-2
@@ -31,9 +31,9 @@ references:
       - SC.L1-3.13.1
   cis:
     benchmark:
-      sonoma:
+      macos_14:
         - 3.6 (level 1)
-      ventura:
+      macos_13:
         - 3.6 (level 1)
       monterey:
         - 3.6 (level 1)
@@ -48,7 +48,7 @@ platforms:
     check: $OS_VALUE
     result: $OS_VALUE
     fix: $OS_VALUE
-    sonoma:
+    '14.0':
       benchmarks:
         - cis_lvl1
         - cis_lvl2
@@ -73,7 +73,7 @@ platforms:
         com.apple.security.firewall:
           EnableLogging: true
           LoggingOption: detail
-    ventura:
+    '13.0':
       benchmarks:
         - cis_lvl1
         - cis_lvl2

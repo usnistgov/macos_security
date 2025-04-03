@@ -7,11 +7,11 @@ discussion: |
 references:
   nist:
     cce:
-      sequoia:
+      macos_15:
         - CCE-94199-7
-      sonoma:
+      macos_14:
         - CCE-92799-6
-      ventura:
+      macos_13:
         - CCE-91797-1
       monterey:
         - CCE-90929-1
@@ -25,7 +25,7 @@ references:
         - CCE-93428-1
       ios_16:
         - CCE-93228-5
-      visionos_2.0:
+      visionos_2:
         - CCE-94499-1
     800-53r5:
       - AC-3
@@ -46,11 +46,11 @@ references:
       - SRG-OS-000080-GPOS-00048
       - SRG-OS-000095-GPOS-00049
     disa_stig:
-      sequoia:
+      macos_15:
         - APPL-15-005058
-      sonoma:
+      macos_14:
         - APPL-14-005058
-      ventura:
+      macos_13:
         - APPL-13-005058
       monterey:
         - APPL-12-005058
@@ -96,15 +96,15 @@ platforms:
       string: 'false'
     fix: |
       This is implemented by a Configuration Profile.
-    sequoia:
+    '15.0':
       severity: medium
       benchmarks:
         - disa_stig
-    sonoma:
+    '14.0':
       severity: medium
       benchmarks:
         - disa_stig
-    ventura:
+    '13.0':
       severity: low
       benchmarks:
         - disa_stig
@@ -115,7 +115,7 @@ platforms:
     big_sur: {}
     catalina: {}
   iOS:
-    ios_18:
+    '18.0':
       severity: low
       supervised: false
       benchmarks:
@@ -124,7 +124,7 @@ platforms:
         - ios_stig
         - indigo_base
         - indigo_high
-    ios_17:
+    '17.0':
       severity: low
       supervised: false
       benchmarks:
@@ -133,7 +133,7 @@ platforms:
         - ios_stig
         - indigo_base
         - indigo_high
-    ios_16:
+    '16.0':
       severity: low
       supervised: false
       benchmarks:
@@ -141,7 +141,7 @@ platforms:
         - cis_lvl2_enterprise
         - ios_stig
   visionOS:
-    visionos_2.0:
+    '2.0':
       supervised: false
 tags:
   - 800-53r5_low

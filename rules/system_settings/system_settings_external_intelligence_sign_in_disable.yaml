@@ -7,7 +7,7 @@ discussion: |
 references:
   nist:
     cce:
-      sequoia:
+      macos_15:
         - CCE-94524-6
     800-53r5:
       - AC-20
@@ -32,7 +32,7 @@ references:
       - 15.3
 platforms:
   macOS:
-    sequoia:
+    '15.0':
       severity: medium
     check: |
       /usr/bin/osascript -l JavaScript << EOS

@@ -26,15 +26,15 @@ references:
       - 4.1
 platforms:
   iOS:
-    ios_18:
+    '18.0':
       supervised: true
       benchmarks:
         - cis_lvl2_enterprise
-    ios_17:
+    '17.0':
       supervised: true
       benchmarks:
         - cis_lvl2_enterprise
-    ios_16:
+    '16.0':
       supervised: true
       benchmarks:
         - cis_lvl2_enterprise

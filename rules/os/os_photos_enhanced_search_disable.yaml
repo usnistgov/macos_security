@@ -7,7 +7,7 @@ discussion: |-
 references:
   nist:
     cce:
-      sequoia:
+      macos_15:
         - CCE-94522-0
     800-53r5:
       - AC-20
@@ -25,7 +25,7 @@ references:
       - CM.L2-3.4.7
 platforms:
   macOS:
-    sequoia: {}
+    '15.0': {}
     check: |
       /usr/bin/osascript -l JavaScript << EOS
       $.NSUserDefaults.alloc.initWithSuiteName('com.apple.photos.shareddefaults')\

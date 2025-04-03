@@ -18,7 +18,7 @@ references:
       - ANNEX K
 platforms:
   iOS:
-    ios_18:
+    '18.0':
       supervised: false
       benchmarks:
         - indigo_high

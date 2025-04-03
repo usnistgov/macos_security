@@ -11,7 +11,7 @@ references:
         - CCE-93465-3
       ios_16:
         - CCE-93264-0
-      visionos_2.0:
+      visionos_2:
         - CCE-94509-7
   cis:
     benchmark:
@@ -32,25 +32,25 @@ references:
         - ANNEX K
 platforms:
   iOS:
-    ios_18:
+    '18.0':
       supervised: false
       benchmarks:
         - cis_lvl2_byod
         - cis_lvl2_enterprise
         - indigo_high
-    ios_17:
+    '17.0':
       supervised: false
       benchmarks:
         - cis_lvl2_byod
         - cis_lvl2_enterprise
         - indigo_high
-    ios_16:
+    '16.0':
       supervised: false
       benchmarks:
         - cis_lvl2_byod
         - cis_lvl2_enterprise
   visionOS:
-    visionos_2.0:
+    '2.0':
       supervised: false
 tags:
   - cisv8

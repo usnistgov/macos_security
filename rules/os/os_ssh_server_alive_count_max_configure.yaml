@@ -9,11 +9,11 @@ discussion: |
 references:
   nist:
     cce:
-      sequoia:
+      macos_15:
         - CCE-94300-1
-      sonoma:
+      macos_14:
         - CCE-92895-2
-      ventura:
+      macos_13:
         - CCE-91884-7
       monterey:
         - CCE-91005-9
@@ -31,9 +31,9 @@ references:
     srg:
       - SRG-OS-000163-GPOS-00072
     disa_stig:
-      sequoia:
+      macos_15:
         - APPL-15-000140
-      sonoma:
+      macos_14:
         - APPL-14-000140
     cmmc:
       - SC.L2-3.13.9
@@ -42,7 +42,7 @@ platforms:
     check: $OS_VALUE
     result: $OS_VALUE
     fix: $OS_VALUE
-    sequoia:
+    '15.0':
       severity: medium
       benchmarks:
         - disa_stig
@@ -90,7 +90,7 @@ platforms:
         ----
       result:
         string: pass
-    sonoma:
+    '14.0':
       severity: medium
       benchmarks:
         - disa_stig
@@ -117,7 +117,7 @@ platforms:
         ----
       result:
         string: pass
-    ventura:
+    '13.0':
       check: |-
         ret="pass"
         for u in $(/usr/bin/dscl . -list /Users UniqueID | /usr/bin/awk '$2 > 500 {print $1}'); do

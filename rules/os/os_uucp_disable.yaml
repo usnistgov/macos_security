@@ -9,11 +9,11 @@ discussion: |
 references:
   nist:
     cce:
-      sequoia:
+      macos_15:
         - CCE-94324-1
-      sonoma:
+      macos_14:
         - CCE-92921-6
-      ventura:
+      macos_13:
         - CCE-91909-2
       monterey:
         - CCE-91024-0
@@ -33,11 +33,11 @@ references:
     srg:
       - SRG-OS-000080-GPOS-00048
     disa_stig:
-      sequoia:
+      macos_15:
         - APPL-15-002006
-      sonoma:
+      macos_14:
         - APPL-14-002006
-      ventura:
+      macos_13:
         - APPL-13-002006
       monterey:
         - APPL-12-002006
@@ -63,17 +63,17 @@ platforms:
       /bin/launchctl disable system/com.apple.uucp
       ----
       The system may need to be restarted for the update to take effect.
-    sequoia:
+    '15.0':
       severity: medium
       benchmarks:
         - disa_stig
       check: /bin/launchctl print-disabled system | /usr/bin/grep -c '"com.apple.uucp" => disabled'
-    sonoma:
+    '14.0':
       severity: medium
       benchmarks:
         - disa_stig
       check: /bin/launchctl print-disabled system | /usr/bin/grep -c '"com.apple.uucp" => disabled'
-    ventura:
+    '13.0':
       severity: medium
       benchmarks:
         - disa_stig

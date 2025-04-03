@@ -5,11 +5,11 @@ discussion: |
 references:
   nist:
     cce:
-      sequoia:
+      macos_15:
         - CCE-94298-7
-      sonoma:
+      macos_14:
         - CCE-92893-7
-      ventura:
+      macos_13:
         - CCE-91882-1
       monterey:
         - CCE-85140-2
@@ -17,11 +17,11 @@ references:
         - CCE-85548-6
   cis:
     benchmark:
-      sequoia:
+      macos_15:
         - 1.7 (level 1)
-      sonoma:
+      macos_14:
         - 1.7 (level 1)
-      ventura:
+      macos_13:
         - 1.7 (level 1)
       monterey:
         - 1.7 (level 1)
@@ -37,7 +37,7 @@ platforms:
       string: 'true'
     fix: |
       This is implemented by a Configuration Profile.
-    sequoia:
+    '15.0':
       benchmarks:
         - cis_lvl1
         - cis_lvl2
@@ -53,7 +53,7 @@ platforms:
           }
         }
         EOS
-    sonoma:
+    '14.0':
       benchmarks:
         - cis_lvl1
         - cis_lvl2
@@ -69,7 +69,7 @@ platforms:
           }
         }
         EOS
-    ventura:
+    '13.0':
       benchmarks:
         - cis_lvl1
         - cis_lvl2

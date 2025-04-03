@@ -9,11 +9,11 @@ discussion: |
 references:
   nist:
     cce:
-      sequoia:
+      macos_15:
         - CCE-94288-8
-      sonoma:
+      macos_14:
         - CCE-92883-8
-      ventura:
+      macos_13:
         - CCE-91873-0
       monterey:
         - CCE-90996-0
@@ -36,9 +36,9 @@ references:
       - SRG-OS-000445-GPOS-00199
       - SRG-OS-000446-GPOS-00200
     disa_stig:
-      sequoia:
+      macos_15:
         - APPL-15-005100
-      sonoma:
+      macos_14:
         - APPL-14-005100
 platforms:
   macOS:
@@ -48,15 +48,15 @@ platforms:
       integer: 1
     fix: |
       NOTE: Boot into Recovery Mode and enable Full Secure Boot
-    sequoia:
+    '15.0':
       severity: medium
       benchmarks:
         - disa_stig
-    sonoma:
+    '14.0':
       severity: medium
       benchmarks:
         - disa_stig
-    ventura: {}
+    '13.0': {}
     monterey: {}
     big_sur: {}
     catalina: {}

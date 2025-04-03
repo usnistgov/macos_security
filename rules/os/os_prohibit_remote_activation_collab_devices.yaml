@@ -15,11 +15,11 @@ discussion: |
 references:
   nist:
     cce:
-      sequoia:
+      macos_15:
         - CCE-94265-6
-      sonoma:
+      macos_14:
         - CCE-92861-4
-      ventura:
+      macos_13:
         - CCE-91856-5
       monterey:
         - CCE-90982-0
@@ -40,9 +40,9 @@ platforms:
       The technology partially supports this requirement and cannot be configured to be in full compliance.
     fix: |
       The technology partially meets this requirement. An appropriate mitigation for the system must be implemented for full compliance.
-    sequoia: {}
-    sonoma: {}
-    ventura: {}
+    '15.0': {}
+    '14.0': {}
+    '13.0': {}
     monterey: {}
     big_sur: {}
     catalina: {}

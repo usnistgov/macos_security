@@ -5,11 +5,11 @@ discussion: |
 references:
   nist:
     cce:
-      sequoia:
+      macos_15:
         - CCE-94237-5
-      sonoma:
+      macos_14:
         - CCE-92833-3
-      ventura:
+      macos_13:
         - CCE-91829-2
       monterey:
         - CCE-90958-0
@@ -30,9 +30,9 @@ platforms:
       This requirement is NA for this technology.
     fix: |
       The requirement is NA. No fix is required.
-    sequoia: {}
-    sonoma: {}
-    ventura: {}
+    '15.0': {}
+    '14.0': {}
+    '13.0': {}
     monterey: {}
     big_sur: {}
     catalina: {}

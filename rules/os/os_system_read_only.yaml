@@ -7,11 +7,11 @@ discussion: |
 references:
   nist:
     cce:
-      sequoia:
+      macos_15:
         - CCE-94313-4
-      sonoma:
+      macos_14:
         - CCE-92910-9
-      ventura:
+      macos_13:
         - CCE-91898-7
       monterey:
         - CCE-91016-6
@@ -31,9 +31,9 @@ platforms:
       string: 'No'
     fix: |
       NOTE: To remount the System volume as Read Only, rebooting the computer will mount it as Read Only.
-    sequoia: {}
-    sonoma: {}
-    ventura: {}
+    '15.0': {}
+    '14.0': {}
+    '13.0': {}
     monterey: {}
     big_sur: {}
     catalina: {}

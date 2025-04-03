@@ -9,11 +9,11 @@ discussion: |
 references:
   nist:
     cce:
-      sequoia:
+      macos_15:
         - CCE-94192-2
-      sonoma:
+      macos_14:
         - CCE-92791-3
-      ventura:
+      macos_13:
         - CCE-91789-8
       monterey:
         - CCE-90922-6
@@ -34,11 +34,11 @@ references:
     srg:
       - SRG-OS-000080-GPOS-00048
     disa_stig:
-      sequoia:
+      macos_15:
         - APPL-15-000033
-      sonoma:
+      macos_14:
         - APPL-14-000033
-      ventura:
+      macos_13:
         - APPL-13-000033
       monterey:
         - APPL-12-000033
@@ -63,15 +63,15 @@ platforms:
       string: 'true'
     fix: |
       This is implemented by a Configuration Profile.
-    sequoia:
+    '15.0':
       severity: medium
       benchmarks:
         - disa_stig
-    sonoma:
+    '14.0':
       severity: medium
       benchmarks:
         - disa_stig
-    ventura:
+    '13.0':
       severity: medium
       benchmarks:
         - disa_stig

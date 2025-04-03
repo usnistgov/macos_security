@@ -4,11 +4,11 @@ discussion: "The inherent configuration of the macOS _IS_ in compliance as Apple
 references:
   nist:
     cce:
-      sequoia:
+      macos_15:
         - CCE-94224-3
-      sonoma:
+      macos_14:
         - CCE-92821-8
-      ventura:
+      macos_13:
         - CCE-91817-7
       monterey:
         - CCE-90947-3
@@ -36,9 +36,9 @@ platforms:
       The technology supports this requirement and cannot be configured to be out of compliance. The technology inherently meets this requirement.
     fix: |
       The technology inherently meets this requirement. No fix is required.
-    sequoia: {}
-    sonoma: {}
-    ventura: {}
+    '15.0': {}
+    '14.0': {}
+    '13.0': {}
     monterey: {}
     big_sur: {}
     catalina: {}

@@ -28,18 +28,18 @@ references:
       - 'FMT_SMF_EXT.1.1 #18'
 platforms:
   iOS:
-    ios_18:
+    '18.0':
       severity: medium
       supervised: false
       benchmarks:
         - ios_stig
-    ios_17:
+    '17.0':
       severity: medium
       supervised: false
       benchmarks:
         - ios_stig
         - ios_stig_byoad
-    ios_16:
+    '16.0':
       severity: medium
       supervised: false
       benchmarks:

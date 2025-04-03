@@ -7,11 +7,11 @@ discussion: |
 references:
   nist:
     cce:
-      sequoia:
+      macos_15:
         - CCE-94181-5
-      sonoma:
+      macos_14:
         - CCE-92780-6
-      ventura:
+      macos_13:
         - CCE-91778-1
       monterey:
         - CCE-91087-7
@@ -21,7 +21,7 @@ references:
         - CCE-84951-3
   disa:
     disa_stig:
-      ventura:
+      macos_13:
         - APPL-13-000016
       monterey:
         - APPL-12-000016
@@ -39,13 +39,13 @@ platforms:
       integer: 0
     fix: |
       Integrate the system into an existing directory services infrastructure.
-    sequoia:
+    '15.0':
       severity: medium
       check: /usr/bin/dscl localhost -list . | /usr/bin/grep -qvE '(Contact|Search|Local|^$)'; /bin/echo $?
-    sonoma:
+    '14.0':
       severity: medium
       check: /usr/bin/dscl localhost -list . | /usr/bin/grep -qvE '(Contact|Search|Local|^$)'; /bin/echo $?
-    ventura:
+    '13.0':
       severity: high
       benchmarks:
         - disa_stig

@@ -9,11 +9,11 @@ discussion: |
 references:
   nist:
     cce:
-      sequoia:
+      macos_15:
         - CCE-94412-4
-      sonoma:
+      macos_14:
         - CCE-93008-1
-      ventura:
+      macos_13:
         - CCE-91998-5
     800-53r5:
       - AC-4
@@ -44,11 +44,11 @@ platforms:
       ----
       /usr/sbin/networksetup -setnetworkserviceenabled "Wi-Fi" off
       ----
-    sequoia:
+    '15.0':
       severity: medium
-    sonoma:
+    '14.0':
       severity: medium
-    ventura:
+    '13.0':
       severity: medium
 tags:
   - manual

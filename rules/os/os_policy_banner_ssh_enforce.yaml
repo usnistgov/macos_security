@@ -11,11 +11,11 @@ discussion: |
 references:
   nist:
     cce:
-      sequoia:
+      macos_15:
         - CCE-94256-5
-      sonoma:
+      macos_14:
         - CCE-92852-3
-      ventura:
+      macos_13:
         - CCE-91847-4
       monterey:
         - CCE-90975-4
@@ -35,11 +35,11 @@ references:
       - SRG-OS-000024-GPOS-00007
       - SRG-OS-000023-GPOS-00006
     disa_stig:
-      sequoia:
+      macos_15:
         - APPL-15-000024
-      sonoma:
+      macos_14:
         - APPL-14-000024
-      ventura:
+      macos_13:
         - APPL-13-000024
       monterey:
         - APPL-12-000024
@@ -55,7 +55,7 @@ platforms:
     result:
       integer: 1
     fix: $OS_VALUE
-    sequoia:
+    '15.0':
       severity: medium
       benchmarks:
         - disa_stig
@@ -81,7 +81,7 @@ platforms:
           /bin/mv ${include_dir}${file} ${include_dir}20-${file}
         done
         ----
-    sonoma:
+    '14.0':
       severity: medium
       benchmarks:
         - disa_stig
@@ -107,7 +107,7 @@ platforms:
           /bin/mv ${include_dir}${file} ${include_dir}20-${file}
         done
         ----
-    ventura:
+    '13.0':
       severity: medium
       benchmarks:
         - disa_stig

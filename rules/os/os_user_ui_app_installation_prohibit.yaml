@@ -7,13 +7,13 @@ discussion: |
 references:
   nist:
     cce:
-      visionos_2.0:
+      visionos_2:
         - CCE-94511-3
     800-53r5:
       - CM-11(2)
 platforms:
   visionOS:
-    visionos_2.0:
+    '2.0':
       supervised: true
 mobileconfig_info:
   com.apple.applicationaccess:

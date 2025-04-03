@@ -19,11 +19,11 @@ discussion: |
 references:
   nist:
     cce:
-      sequoia:
+      macos_15:
         - CCE-94346-4
-      sonoma:
+      macos_14:
         - CCE-92942-2
-      ventura:
+      macos_13:
         - CCE-91929-0
       monterey:
         - CCE-91042-2
@@ -41,11 +41,11 @@ references:
       - SRG-OS-000002-GPOS-00002
       - SRG-OS-000123-GPOS-00064
     disa_stig:
-      sequoia:
+      macos_15:
         - APPL-15-000012
-      sonoma:
+      macos_14:
         - APPL-14-000012
-      ventura:
+      macos_13:
         - APPL-13-000012
       monterey:
         - APPL-12-000012
@@ -57,7 +57,7 @@ platforms:
   macOS:
     check: $OS_VALUE
     fix: $OS_VALUE
-    sequoia:
+    '15.0':
       severity: medium
       benchmarks:
         - disa_stig
@@ -99,7 +99,7 @@ platforms:
         After saving the file and exiting to the command prompt, run the following command to load the new policy file, substituting the correct user name in place of "username" and the path to the file in place of "/path/to/file".
 
         /usr/bin/pwpolicy -u username setaccountpolicies /path/to/file
-    sonoma:
+    '14.0':
       severity: medium
       benchmarks:
         - disa_stig
@@ -141,7 +141,7 @@ platforms:
         After saving the file and exiting to the command prompt, run the following command to load the new policy file, substituting the correct user name in place of "username" and the path to the file in place of "/path/to/file".
 
         /usr/bin/pwpolicy -u username setaccountpolicies /path/to/file
-    ventura:
+    '13.0':
       severity: medium
       benchmarks:
         - disa_stig

@@ -7,11 +7,11 @@ discussion: |
 references:
   nist:
     cce:
-      sequoia:
+      macos_15:
         - CCE-94365-4
-      sonoma:
+      macos_14:
         - CCE-92962-0
-      ventura:
+      macos_13:
         - CCE-91951-4
     800-53r5:
       - CM-5
@@ -32,11 +32,11 @@ platforms:
       string: 'true'
     fix: |
       This is implemented by a Configuration Profile.
-    sequoia:
+    '15.0':
       severity: medium
-    sonoma:
+    '14.0':
       severity: medium
-    ventura:
+    '13.0':
       severity: medium
 tags:
   - 800-53r5_low

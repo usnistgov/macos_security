@@ -13,11 +13,11 @@ discussion: |
 references:
   nist:
     cce:
-      sequoia:
+      macos_15:
         - CCE-94138-5
-      sonoma:
+      macos_14:
         - CCE-92738-4
-      ventura:
+      macos_13:
         - CCE-91739-3
       monterey:
         - CCE-90883-0
@@ -59,11 +59,11 @@ references:
       - SRG-OS-000105-GPOS-00052
       - SRG-OS-000705-GPOS-00150
     disa_stig:
-      sequoia:
+      macos_15:
         - APPL-15-003020
-      sonoma:
+      macos_14:
         - APPL-14-003020
-      ventura:
+      macos_13:
         - APPL-13-003020
       monterey:
         - APPL-12-003020
@@ -92,7 +92,7 @@ platforms:
       string: 'true'
     fix: |
       This is implemented by a Configuration Profile.
-    sequoia:
+    '15.0':
       severity: medium
       benchmarks:
         - disa_stig
@@ -100,7 +100,7 @@ platforms:
         com.apple.security.smartcard:
           enforceSmartCard: true
           allowSmartCard: true
-    sonoma:
+    '14.0':
       severity: medium
       benchmarks:
         - disa_stig
@@ -108,7 +108,7 @@ platforms:
         com.apple.security.smartcard:
           enforceSmartCard: true
           allowSmartCard: true
-    ventura:
+    '13.0':
       severity: high
       benchmarks:
         - disa_stig

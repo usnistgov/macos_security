@@ -5,11 +5,11 @@ discussion: |
 references:
   nist:
     cce:
-      sequoia:
+      macos_15:
         - CCE-94212-8
-      sonoma:
+      macos_14:
         - CCE-92811-9
-      ventura:
+      macos_13:
         - CCE-91807-8
       monterey:
         - CCE-91107-3
@@ -26,19 +26,19 @@ references:
     srg:
       - SRG-OS-000341-GPOS-00132
     disa_stig:
-      sequoia:
+      macos_15:
         - APPL-15-004050
-      sonoma:
+      macos_14:
         - APPL-14-004050
     cmmc:
       - AU.L2-3.3.1
   cis:
     benchmark:
-      sequoia:
+      macos_15:
         - 3.3 (level 1)
-      sonoma:
+      macos_14:
         - 3.3 (level 1)
-      ventura:
+      macos_13:
         - 3.3 (level 1)
       monterey:
         - 3.3 (level 1)
@@ -53,7 +53,7 @@ platforms:
     result:
       string: 'Yes'
     fix: $OS_VALUE
-    sequoia:
+    '15.0':
       severity: medium
       benchmarks:
         - cis_lvl1
@@ -67,7 +67,7 @@ platforms:
         ----
 
         NOTE: If there are multiple configuration files in /etc/asl that are set to process the file /var/log/install.log, these files will have to be manually removed.
-    sonoma:
+    '14.0':
       severity: medium
       benchmarks:
         - cis_lvl1
@@ -81,7 +81,7 @@ platforms:
         ----
 
         NOTE: If there are multiple configuration files in /etc/asl that are set to process the file /var/log/install.log, these files will have to be manually removed.
-    ventura:
+    '13.0':
       benchmarks:
         - cis_lvl1
         - cis_lvl2

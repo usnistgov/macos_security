@@ -5,7 +5,7 @@ discussion: |
 references:
   nist:
     cce:
-      ventura:
+      macos_13:
         - CCE-91942-3
     800-53r5:
       - CM-7
@@ -18,14 +18,14 @@ references:
       - CM.L2-3.4.7
   cis:
     benchmark:
-      ventura:
+      macos_13:
         - 2.3.3.1 (level 1)
     controls_v8:
       - 4.1
       - 4.8
 platforms:
   macOS:
-    ventura:
+    '13.0':
       benchmarks:
         - cis_lvl1
         - cis_lvl2

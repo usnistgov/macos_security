@@ -30,7 +30,7 @@ references:
         - ANNEX K
 platforms:
   iOS:
-    ios_18:
+    '18.0':
       supervised: false
       benchmarks:
         - cis_lvl1_byod
@@ -41,7 +41,7 @@ platforms:
       mobileconfig_info:
         com.apple.applicationaccess:
           safariAcceptCookies: 1.5
-    ios_17:
+    '17.0':
       supervised: false
       benchmarks:
         - cis_lvl1_byod
@@ -52,7 +52,7 @@ platforms:
       mobileconfig_info:
         com.apple.applicationaccess:
           safariAcceptCookies: 1.0
-    ios_16:
+    '16.0':
       supervised: false
       benchmarks:
         - cis_lvl1_byod

@@ -5,11 +5,11 @@ discussion: |
 references:
   nist:
     cce:
-      sequoia:
+      macos_15:
         - CCE-94327-4
-      sonoma:
+      macos_14:
         - CCE-92924-0
-      ventura:
+      macos_13:
         - CCE-91912-6
       monterey:
         - CCE-91121-4
@@ -17,11 +17,11 @@ references:
         - CCE-85518-9
   cis:
     benchmark:
-      sequoia:
+      macos_15:
         - 5.1.6 (level 1)
-      sonoma:
+      macos_14:
         - 5.1.6 (level 1)
-      ventura:
+      macos_13:
         - 5.1.6 (level 1)
       monterey:
         - 5.1.6 (level 1)
@@ -35,7 +35,7 @@ platforms:
     result:
       integer: 0
     fix: $OS_VALUE
-    sequoia:
+    '15.0':
       benchmarks:
         - cis_lvl1
         - cis_lvl2
@@ -48,7 +48,7 @@ platforms:
           /bin/chmod -R o-w "$sysPermissions"
         done
         ----
-    sonoma:
+    '14.0':
       benchmarks:
         - cis_lvl1
         - cis_lvl2
@@ -61,7 +61,7 @@ platforms:
           /bin/chmod -R o-w "$sysPermissions"
         done
         ----
-    ventura:
+    '13.0':
       benchmarks:
         - cis_lvl1
         - cis_lvl2

@@ -20,7 +20,7 @@ references:
       - ANNEX K
 platforms:
   iOS:
-    ios_18:
+    '18.0':
       benchmarks:
         - indigo_high
 tags:

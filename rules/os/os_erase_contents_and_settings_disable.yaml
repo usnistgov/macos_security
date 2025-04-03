@@ -11,7 +11,7 @@ references:
         - CCE-93422-4
       ios_16:
         - CCE-93222-8
-      visionos_2.0:
+      visionos_2:
         - CCE-94496-7
     800-53r5:
       - CM-6
@@ -29,23 +29,23 @@ references:
       - 4.1
 platforms:
   iOS:
-    ios_18:
+    '18.0':
       supervised: true
       benchmarks:
         - cis_lvl1_enterprise
         - cis_lvl2_enterprise
-    ios_17:
+    '17.0':
       supervised: true
       benchmarks:
         - cis_lvl1_enterprise
         - cis_lvl2_enterprise
-    ios_16:
+    '16.0':
       supervised: true
       benchmarks:
         - cis_lvl1_enterprise
         - cis_lvl2_enterprise
   visionOS:
-    visionos_2.0:
+    '2.0':
       supervised: true
 tags:
   - 800-53r5_low

@@ -4,11 +4,11 @@ discussion: "The macOS _MUST_ be configured to require at least one lower-case c
 references:
   nist:
     cce:
-      sequoia:
+      macos_15:
         - CCE-94338-1
-      sonoma:
+      macos_14:
         - CCE-92933-1
-      ventura:
+      macos_13:
         - CCE-91921-7
       monterey:
         - CCE-91035-6
@@ -27,7 +27,7 @@ references:
       - IA.L2-3.5.9
   cis:
     benchmark:
-      ventura:
+      macos_13:
         - 5.2.6 (level 2)
       monterey:
         - 5.2.6 (level 2)
@@ -42,7 +42,7 @@ platforms:
     result:
       string: 'yes'
     fix: $OS_VALUE
-    sequoia:
+    '15.0':
       fix: |-
         This setting may be enforced using local policy or by a directory service.
 
@@ -69,7 +69,7 @@ platforms:
         /usr/bin/pwpolicy setaccountpolicies $pwpolicy_file
         ----
         NOTE: See the password policy supplemental on more information on how to implement password policies on macOS.
-    sonoma:
+    '14.0':
       fix: |-
         This setting may be enforced using local policy or by a directory service.
 
@@ -96,7 +96,7 @@ platforms:
         /usr/bin/pwpolicy setaccountpolicies $pwpolicy_file
         ----
         NOTE: See the password policy supplemental on more information on how to implement password policies on macOS.
-    ventura:
+    '13.0':
       benchmarks:
         - cis_lvl2
       fix: |-

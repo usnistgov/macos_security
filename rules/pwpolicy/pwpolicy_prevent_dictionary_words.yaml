@@ -4,11 +4,11 @@ discussion: "The macOS should be configured to forbid users to use dictionary wo
 references:
   nist:
     cce:
-      sequoia:
+      macos_15:
         - CCE-94342-3
-      sonoma:
+      macos_14:
         - CCE-92938-0
-      ventura:
+      macos_13:
         - CCE-91925-8
       monterey:
         - CCE-91038-0
@@ -25,9 +25,9 @@ platforms:
       For systems not requiring mandatory smart card authentication or those that are not bound to a directory, the technology does not support this requirement. This is an applicable-does not meet finding.
     fix: |
       This requirement is a permanent finding and cannot be fixed. An appropriate mitigation for the system must be implemented, but this finding cannot be considered fixed.
-    sequoia: {}
-    sonoma: {}
-    ventura: {}
+    '15.0': {}
+    '14.0': {}
+    '13.0': {}
     monterey: {}
     big_sur: {}
     catalina: {}

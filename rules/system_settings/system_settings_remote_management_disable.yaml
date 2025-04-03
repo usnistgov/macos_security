@@ -5,11 +5,11 @@ discussion: |
 references:
   nist:
     cce:
-      sequoia:
+      macos_15:
         - CCE-94386-0
-      sonoma:
+      macos_14:
         - CCE-92982-8
-      ventura:
+      macos_13:
         - CCE-91971-2
     800-53r5:
       - CM-7
@@ -23,20 +23,20 @@ references:
     srg:
       - SRG-OS-000095-GPOS-00049
     disa_stig:
-      sequoia:
+      macos_15:
         - APPL-15-002250
-      sonoma:
+      macos_14:
         - APPL-14-002250
     cmmc:
       - CM.L2-3.4.6
       - CM.L2-3.4.7
   cis:
     benchmark:
-      sequoia:
+      macos_15:
         - 2.3.3.6 (level 1)
-      sonoma:
+      macos_14:
         - 2.3.3.6 (level 1)
-      ventura:
+      macos_13:
         - 2.3.3.6 (level 1)
     controls_v8:
       - 4.1
@@ -53,19 +53,19 @@ platforms:
       ----
       /System/Library/CoreServices/RemoteManagement/ARDAgent.app/Contents/Resources/kickstart -deactivate -stop
       ----
-    sequoia:
+    '15.0':
       severity: medium
       benchmarks:
         - cis_lvl1
         - cis_lvl2
         - disa_stig
-    sonoma:
+    '14.0':
       severity: medium
       benchmarks:
         - cis_lvl1
         - cis_lvl2
         - disa_stig
-    ventura:
+    '13.0':
       benchmarks:
         - cis_lvl1
         - cis_lvl2

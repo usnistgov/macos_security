@@ -7,11 +7,11 @@ discussion: |
 references:
   nist:
     cce:
-      sequoia:
+      macos_15:
         - CCE-94161-7
-      sonoma:
+      macos_14:
         - CCE-92761-6
-      ventura:
+      macos_13:
         - CCE-91759-1
       monterey:
         - CCE-90904-4
@@ -29,11 +29,11 @@ references:
       - SRG-OS-000206-GPOS-00084
       - SRG-OS-000205-GPOS-00083
     disa_stig:
-      sequoia:
+      macos_15:
         - APPL-15-004001
-      sonoma:
+      macos_14:
         - APPL-14-004001
-      ventura:
+      macos_13:
         - APPL-13-004001
       monterey:
         - APPL-12-004001
@@ -52,15 +52,15 @@ platforms:
       ----
       /usr/sbin/chown root:wheel $(/usr/bin/stat -f '%Su:%Sg:%N' $(/usr/bin/grep -e '^>' /etc/asl.conf /etc/asl/* | /usr/bin/awk '{ print $2 }') 2> /dev/null | /usr/bin/awk '!/^root:wheel:/{print $1}' | /usr/bin/awk -F":" '!/^root:wheel:/{print $3}')
       ----
-    sequoia:
+    '15.0':
       severity: medium
       benchmarks:
         - disa_stig
-    sonoma:
+    '14.0':
       severity: medium
       benchmarks:
         - disa_stig
-    ventura:
+    '13.0':
       severity: medium
       benchmarks:
         - disa_stig

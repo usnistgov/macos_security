@@ -11,7 +11,7 @@ references:
         - CCE-93446-3
       ios_16:
         - CCE-93246-7
-      visionos_2.0:
+      visionos_2:
         - CCE-94508-9
     800-53r5:
       - CM-7
@@ -33,24 +33,24 @@ references:
         - ANNEX K
 platforms:
   iOS:
-    ios_18:
+    '18.0':
       supervised: false
       benchmarks:
         - cis_lvl2_enterprise
         - indigo_base
         - indigo_high
-    ios_17:
+    '17.0':
       supervised: false
       benchmarks:
         - cis_lvl2_enterprise
         - indigo_base
         - indigo_high
-    ios_16:
+    '16.0':
       supervised: false
       benchmarks:
         - cis_lvl2_enterprise
   visionOS:
-    visionos_2.0:
+    '2.0':
       supervised: false
 tags:
   - 800-53r5_low

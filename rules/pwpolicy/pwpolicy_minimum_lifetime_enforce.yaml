@@ -4,11 +4,11 @@ discussion: "The macOS _MUST_ be configured to enforce a minimum password lifeti
 references:
   nist:
     cce:
-      sequoia:
+      macos_15:
         - CCE-94341-5
-      sonoma:
+      macos_14:
         - CCE-92937-2
-      ventura:
+      macos_13:
         - CCE-91924-1
       monterey:
         - CCE-91037-2
@@ -27,9 +27,9 @@ references:
     srg:
       - SRG-OS-000075-GPOS-00043
     disa_stig:
-      sequoia:
+      macos_15:
         - APPL-15-003070
-      sonoma:
+      macos_14:
         - APPL-14-003070
     cmmc:
       - IA.L2-3.5.8
@@ -69,15 +69,15 @@ platforms:
       /usr/bin/pwpolicy setaccountpolicies $pwpolicy_file
       ----
       NOTE: See the password policy supplemental on more information on how to implement password policies on macOS.
-    sequoia:
+    '15.0':
       severity: medium
       benchmarks:
         - disa_stig
-    sonoma:
+    '14.0':
       severity: medium
       benchmarks:
         - disa_stig
-    ventura: {}
+    '13.0': {}
     monterey: {}
     big_sur: {}
     catalina: {}

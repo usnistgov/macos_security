@@ -7,9 +7,9 @@ discussion: |
 references:
   nist:
     cce:
-      sequoia:
+      macos_15:
         - CCE-94407-4
-      sonoma:
+      macos_14:
         - CCE-93020-6
     800-53r5:
       - CM-7
@@ -20,7 +20,7 @@ references:
       - 03.04.08
   disa:
     disa_stig:
-      sonoma:
+      macos_14:
         - APPL-14-002051
     cmmc:
       - CM.L2-3.4.6
@@ -37,8 +37,8 @@ platforms:
       integer: 1
     fix: |
       This is implemented by a Configuration Profile.
-    sequoia: {}
-    sonoma:
+    '15.0': {}
+    '14.0':
       severity: medium
       benchmarks:
         - disa_stig

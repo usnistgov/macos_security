@@ -7,11 +7,11 @@ discussion: |
 references:
   nist:
     cce:
-      sequoia:
+      macos_15:
         - CCE-94205-2
-      sonoma:
+      macos_14:
         - CCE-92805-1
-      ventura:
+      macos_13:
         - CCE-91801-1
       monterey:
         - CCE-90932-5
@@ -31,11 +31,11 @@ references:
     srg:
       - SRG-OS-000080-GPOS-00048
     disa_stig:
-      sequoia:
+      macos_15:
         - APPL-15-002008
-      sonoma:
+      macos_14:
         - APPL-14-002008
-      ventura:
+      macos_13:
         - APPL-13-002008
       monterey:
         - APPL-12-002008
@@ -47,11 +47,11 @@ references:
       - AC.L1-3.1.1
   cis:
     benchmark:
-      sequoia:
+      macos_15:
         - 4.2 (level 1)
-      sonoma:
+      macos_14:
         - 4.2 (level 1)
-      ventura:
+      macos_13:
         - 4.2 (level 1)
       monterey:
         - 4.2 (level 1)
@@ -70,21 +70,21 @@ platforms:
       ----
       /bin/launchctl disable system/org.apache.httpd
       ----
-    sequoia:
+    '15.0':
       severity: medium
       benchmarks:
         - cis_lvl1
         - cis_lvl2
         - disa_stig
       check: /bin/launchctl print-disabled system | /usr/bin/grep -c '"org.apache.httpd" => disabled'
-    sonoma:
+    '14.0':
       severity: medium
       benchmarks:
         - cis_lvl1
         - cis_lvl2
         - disa_stig
       check: /bin/launchctl print-disabled system | /usr/bin/grep -c '"org.apache.httpd" => disabled'
-    ventura:
+    '13.0':
       severity: medium
       benchmarks:
         - cis_lvl1

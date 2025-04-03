@@ -15,12 +15,12 @@ references:
         - ANNEX K
 platforms:
   iOS:
-    ios_18:
+    '18.0':
       supervised: false
       benchmarks:
         - indigo_base
         - indigo_high
-    ios_17:
+    '17.0':
       supervised: false
       benchmarks:
         - indigo_base

@@ -13,11 +13,11 @@ discussion: |
 references:
   nist:
     cce:
-      sequoia:
+      macos_15:
         - CCE-94209-4
-      sonoma:
+      macos_14:
         - CCE-92808-5
-      ventura:
+      macos_13:
         - CCE-91804-5
       monterey:
         - CCE-90935-8
@@ -43,9 +43,9 @@ platforms:
       The technology supports this requirement and cannot be configured to be out of compliance. The technology inherently meets this requirement using FIPS Validated Cryptographic Modules.
     fix: |
       The technology inherently meets this requirement. No fix is required.
-    sequoia: {}
-    sonoma: {}
-    ventura: {}
+    '15.0': {}
+    '14.0': {}
+    '13.0': {}
     monterey: {}
     big_sur: {}
     catalina: {}

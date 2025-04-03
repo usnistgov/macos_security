@@ -5,11 +5,11 @@ discussion: |
 references:
   nist:
     cce:
-      sequoia:
+      macos_15:
         - CCE-94163-3
-      sonoma:
+      macos_14:
         - CCE-92763-2
-      ventura:
+      macos_13:
         - CCE-91761-7
       monterey:
         - CCE-90906-9
@@ -36,9 +36,9 @@ platforms:
       The technology does support this requirement, however, third party solutions are required to implement at an infrastructure level.
     fix: |
       This requirement is a permanent finding and can be fixed by implementing a third party solution.
-    sequoia: {}
-    sonoma: {}
-    ventura: {}
+    '15.0': {}
+    '14.0': {}
+    '13.0': {}
     monterey: {}
     big_sur: {}
     catalina: {}

@@ -7,13 +7,13 @@ discussion: |-
 references:
   nist:
     cce:
-      sequoia:
+      macos_15:
         - CCE-94232-6
     800-53r5:
       - AC-20(4)
 platforms:
   macOS:
-    sequoia: {}
+    '15.0': {}
     check: |
       /usr/bin/plutil -convert json /var/db/ManagedConfigurationFiles/DiskManagement/DiskManagement_Settings.plist -o - | /usr/bin/jq '.Restrictions | .ExternalStorage'
     result:

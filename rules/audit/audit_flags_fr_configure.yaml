@@ -11,11 +11,11 @@ discussion: |
 references:
   nist:
     cce:
-      sequoia:
+      macos_15:
         - CCE-94121-1
-      sonoma:
+      macos_14:
         - CCE-92721-0
-      ventura:
+      macos_13:
         - CCE-91722-9
       monterey:
         - CCE-90866-5
@@ -55,11 +55,11 @@ references:
       - SRG-OS-000458-GPOS-00203
       - SRG-OS-000058-GPOS-00028
     disa_stig:
-      sequoia:
+      macos_15:
         - APPL-15-001022
-      sonoma:
+      macos_14:
         - APPL-14-001022
-      ventura:
+      macos_13:
         - APPL-13-001020
       monterey:
         - APPL-12-001020
@@ -74,11 +74,11 @@ references:
       - SI.L2-3.14.3
   cis:
     benchmark:
-      sequoia:
+      macos_15:
         - 3.2 (level 2)
-      sonoma:
+      macos_14:
         - 3.2 (level 2)
-      ventura:
+      macos_13:
         - 3.2 (level 2)
       monterey:
         - 3.2 (level 2)
@@ -99,17 +99,17 @@ platforms:
       ----
       /usr/bin/grep -qE "^flags.*-fr" /etc/security/audit_control || /usr/bin/sed -i.bak '/^flags/ s/$/,-fr/' /etc/security/audit_control;/usr/sbin/audit -s
       ----
-    sequoia:
+    '15.0':
       severity: medium
       benchmarks:
         - cis_lvl2
         - disa_stig
-    sonoma:
+    '14.0':
       severity: medium
       benchmarks:
         - cis_lvl2
         - disa_stig
-    ventura:
+    '13.0':
       severity: medium
       benchmarks:
         - cis_lvl2

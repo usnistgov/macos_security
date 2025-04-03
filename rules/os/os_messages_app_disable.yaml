@@ -12,11 +12,11 @@ discussion: |
 references:
   nist:
     cce:
-      sequoia:
+      macos_15:
         - CCE-94228-4
-      sonoma:
+      macos_14:
         - CCE-92825-9
-      ventura:
+      macos_13:
         - CCE-91821-9
       monterey:
         - CCE-90951-5
@@ -64,11 +64,11 @@ platforms:
       string: 'true'
     fix: |
       This is implemented by a Configuration Profile.
-    sequoia:
+    '15.0':
       severity: low
-    sonoma:
+    '14.0':
       severity: low
-    ventura:
+    '13.0':
       severity: low
     monterey:
       severity: low

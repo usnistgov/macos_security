@@ -9,11 +9,11 @@ discussion: |
 references:
   nist:
     cce:
-      sequoia:
+      macos_15:
         - CCE-94218-5
-      sonoma:
+      macos_14:
         - CCE-92816-8
-      ventura:
+      macos_13:
         - CCE-91812-8
       monterey:
         - CCE-90942-4
@@ -32,9 +32,9 @@ platforms:
       The technology does not support this requirement. This is an applicable-does not meet finding.
     fix: |
       This requirement is a permanent finding and cannot be fixed. An appropriate mitigation for the system must be implemented, but this finding cannot be considered fixed.
-    sequoia: {}
-    sonoma: {}
-    ventura: {}
+    '15.0': {}
+    '14.0': {}
+    '13.0': {}
     monterey: {}
     big_sur: {}
     catalina: {}

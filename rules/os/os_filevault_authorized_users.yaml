@@ -5,11 +5,11 @@ discussion: |
 references:
   nist:
     cce:
-      sequoia:
+      macos_15:
         - CCE-94191-4
-      sonoma:
+      macos_14:
         - CCE-92790-5
-      ventura:
+      macos_13:
         - CCE-91788-0
       monterey:
         - CCE-90921-8
@@ -21,7 +21,7 @@ references:
       - AC-2(11)
   disa:
     disa_stig:
-      ventura:
+      macos_13:
         - APPL-13-000032
       monterey:
         - APPL-12-000032
@@ -42,11 +42,11 @@ platforms:
       ----
       /usr/bin/fdesetup remove -user NOT_AUTHORIZED_USERNAME
       ----
-    sequoia:
+    '15.0':
       severity: medium
-    sonoma:
+    '14.0':
       severity: medium
-    ventura:
+    '13.0':
       severity: medium
       benchmarks:
         - disa_stig

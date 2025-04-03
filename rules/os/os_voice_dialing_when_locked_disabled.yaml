@@ -41,7 +41,7 @@ references:
         - ANNEX K
 platforms:
   iOS:
-    ios_18:
+    '18.0':
       severity: medium
       supervised: false
       benchmarks:
@@ -50,7 +50,7 @@ platforms:
         - cis_lvl1_enterprise
         - cis_lvl2_enterprise
         - indigo_high
-    ios_17:
+    '17.0':
       severity: medium
       supervised: false
       benchmarks:
@@ -59,7 +59,7 @@ platforms:
         - cis_lvl1_enterprise
         - cis_lvl2_enterprise
         - indigo_high
-    ios_16:
+    '16.0':
       severity: medium
       supervised: false
       benchmarks:

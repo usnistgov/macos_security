@@ -5,9 +5,9 @@ discussion: |
 references:
   nist:
     cce:
-      sonoma:
+      macos_14:
         - CCE-92796-2
-      ventura:
+      macos_13:
         - CCE-91794-8
       monterey:
         - CCE-90927-5
@@ -39,8 +39,8 @@ platforms:
       string: 'true'
     fix: |
       This is implemented by a Configuration Profile.
-    sonoma: {}
-    ventura: {}
+    '14.0': {}
+    '13.0': {}
     monterey: {}
     big_sur: {}
     catalina: {}

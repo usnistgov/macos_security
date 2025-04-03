@@ -5,11 +5,11 @@ discussion: |
 references:
   nist:
     cce:
-      sequoia:
+      macos_15:
         - CCE-94234-2
-      sonoma:
+      macos_14:
         - CCE-92830-9
-      ventura:
+      macos_13:
         - CCE-91826-8
       monterey:
         - CCE-90955-6
@@ -27,11 +27,11 @@ references:
       - SRG-OS-000206-GPOS-00084
       - SRG-OS-000205-GPOS-00083
     disa_stig:
-      sequoia:
+      macos_15:
         - APPL-15-004040
-      sonoma:
+      macos_14:
         - APPL-14-004040
-      ventura:
+      macos_13:
         - APPL-13-004002
       monterey:
         - APPL-12-004002
@@ -50,15 +50,15 @@ platforms:
       ----
       /bin/chmod 640 $(/usr/bin/stat -f '%A:%N' $(/usr/bin/grep -v '^#' /etc/newsyslog.conf | /usr/bin/awk '{ print $1 }') 2> /dev/null | /usr/bin/awk '!/640/{print $1}' | awk -F":" '!/640/{print $2}')
       ----
-    sequoia:
+    '15.0':
       severity: medium
       benchmarks:
         - disa_stig
-    sonoma:
+    '14.0':
       severity: medium
       benchmarks:
         - disa_stig
-    ventura:
+    '13.0':
       severity: medium
       benchmarks:
         - disa_stig

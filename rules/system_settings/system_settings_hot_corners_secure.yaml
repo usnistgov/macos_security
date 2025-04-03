@@ -7,11 +7,11 @@ discussion: |
 references:
   nist:
     cce:
-      sequoia:
+      macos_15:
         - CCE-94369-6
-      sonoma:
+      macos_14:
         - CCE-92966-1
-      ventura:
+      macos_13:
         - CCE-91955-5
     800-53r5:
       - AC-11(1)
@@ -22,11 +22,11 @@ references:
       - AC.L2-3.1.10
   cis:
     benchmark:
-      sequoia:
+      macos_15:
         - 2.7.1 (level 2)
-      sonoma:
+      macos_14:
         - 2.7.1 (level 2)
-      ventura:
+      macos_13:
         - 2.7.1 (level 2)
     controls_v8:
       - 4.3
@@ -51,13 +51,13 @@ platforms:
       /usr/bin/sudo -u "$CURRENT_USER" /usr/bin/defaults delete /Users/"$CURRENT_USER"/Library/Preferences/com.apple.dock wvous-tr-corner 2>/dev/null
       /usr/bin/sudo -u "$CURRENT_USER" /usr/bin/defaults delete /Users/"$CURRENT_USER"/Library/Preferences/com.apple.dock wvous-br-corner 2>/dev/null
       ----
-    sequoia:
+    '15.0':
       benchmarks:
         - cis_lvl2
-    sonoma:
+    '14.0':
       benchmarks:
         - cis_lvl2
-    ventura:
+    '13.0':
       benchmarks:
         - cis_lvl2
 tags:

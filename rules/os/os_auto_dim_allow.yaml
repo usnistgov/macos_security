@@ -9,7 +9,7 @@ references:
         - CCE-94519-6
 platforms:
   iOS:
-    ios_18:
+    '18.0':
       supervised: false
 mobileconfig_info:
   com.apple.applicationaccess:

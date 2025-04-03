@@ -7,9 +7,9 @@ discussion: |
 references:
   nist:
     cce:
-      sequoia:
+      macos_15:
         - CCE-94292-0
-      sonoma:
+      macos_14:
         - CCE-92887-9
     800-53r5:
       - SC-28
@@ -34,9 +34,9 @@ platforms:
       integer: 1
     fix: |
       NOTE: See the FileVault supplemental to implement this rule.
-    sequoia:
+    '15.0':
       severity: high
-    sonoma:
+    '14.0':
       severity: high
 tags:
   - 800-53r5_moderate

@@ -48,7 +48,7 @@ references:
         - ANNEX K
 platforms:
   iOS:
-    ios_18:
+    '18.0':
       severity: medium
       supervised: false
       benchmarks:
@@ -59,7 +59,7 @@ platforms:
         - ios_stig
         - indigo_base
         - indigo_high
-    ios_17:
+    '17.0':
       severity: medium
       supervised: false
       benchmarks:
@@ -71,7 +71,7 @@ platforms:
         - ios_stig_byoad
         - indigo_base
         - indigo_high
-    ios_16:
+    '16.0':
       severity: medium
       supervised: false
       benchmarks:

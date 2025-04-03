@@ -7,11 +7,11 @@ discussion: |
 references:
   nist:
     cce:
-      sequoia:
+      macos_15:
         - CCE-94111-2
-      sonoma:
+      macos_14:
         - CCE-92711-1
-      ventura:
+      macos_13:
         - CCE-91711-2
       monterey:
         - CCE-90857-4
@@ -29,11 +29,11 @@ references:
     srg:
       - SRG-OS-000047-GPOS-00023
     disa_stig:
-      sequoia:
+      macos_15:
         - APPL-15-001010
-      sonoma:
+      macos_14:
         - APPL-14-001010
-      ventura:
+      macos_13:
         - APPL-13-001010
       monterey:
         - APPL-12-001010
@@ -54,15 +54,15 @@ platforms:
       ----
       /usr/bin/sed -i.bak 's/^policy.*/policy: ahlt,argv/' /etc/security/audit_control; /usr/sbin/audit -s
       ----
-    sequoia:
+    '15.0':
       severity: medium
       benchmarks:
         - disa_stig
-    sonoma:
+    '14.0':
       severity: medium
       benchmarks:
         - disa_stig
-    ventura:
+    '13.0':
       severity: medium
       benchmarks:
         - disa_stig

@@ -7,11 +7,11 @@ discussion: |
 references:
   nist:
     cce:
-      sequoia:
+      macos_15:
         - CCE-94376-1
-      sonoma:
+      macos_14:
         - CCE-92972-9
-      ventura:
+      macos_13:
         - CCE-91962-1
     800-53r5:
       - CM-7
@@ -25,11 +25,11 @@ references:
     srg:
       - SRG-OS-000095-GPOS-00049
     disa_stig:
-      sequoia:
+      macos_15:
         - APPL-15-002004
-      sonoma:
+      macos_14:
         - APPL-14-002004
-      ventura:
+      macos_13:
         - APPL-13-002004
     cmmc:
       - CM.L2-3.4.6
@@ -44,7 +44,7 @@ platforms:
     result:
       string: 'false'
     fix: $OS_VALUE
-    sequoia:
+    '15.0':
       severity: medium
       benchmarks:
         - disa_stig
@@ -55,7 +55,7 @@ platforms:
         pid=$(/bin/launchctl list | /usr/bin/awk '/com.apple.locationd/ { print $1 }')
         kill -9 $pid
         ----
-    sonoma:
+    '14.0':
       severity: medium
       benchmarks:
         - disa_stig
@@ -66,7 +66,7 @@ platforms:
         pid=$(/bin/launchctl list | /usr/bin/awk '/com.apple.locationd/ { print $1 }')
         kill -9 $pid
         ----
-    ventura:
+    '13.0':
       severity: medium
       benchmarks:
         - disa_stig

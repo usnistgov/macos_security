@@ -11,11 +11,11 @@ discussion: |
 references:
   nist:
     cce:
-      sequoia:
+      macos_15:
         - CCE-94289-6
-      sonoma:
+      macos_14:
         - CCE-92884-6
-      ventura:
+      macos_13:
         - CCE-91874-8
       monterey:
         - CCE-90997-8
@@ -39,9 +39,9 @@ platforms:
       integer: 0
     fix: |
       The hardware does not support the requirement.
-    sequoia: {}
-    sonoma: {}
-    ventura: {}
+    '15.0': {}
+    '14.0': {}
+    '13.0': {}
     monterey: {}
     big_sur: {}
     catalina: {}

@@ -7,11 +7,11 @@ discussion: |
 references:
   nist:
     cce:
-      sequoia:
+      macos_15:
         - CCE-94319-1
-      sonoma:
+      macos_14:
         - CCE-92916-6
-      ventura:
+      macos_13:
         - CCE-91904-3
       monterey:
         - CCE-91019-0
@@ -36,11 +36,11 @@ references:
       - SRG-OS-000356-GPOS-00144
       - SRG-OS-000785-GPOS-00250
     disa_stig:
-      sequoia:
+      macos_15:
         - APPL-15-000180
-      sonoma:
+      macos_14:
         - APPL-14-000180
-      ventura:
+      macos_13:
         - APPL-13-000014
       monterey:
         - APPL-12-000014
@@ -52,9 +52,9 @@ references:
       - AU.L2-3.3.7
   cis:
     benchmark:
-      sequoia:
+      macos_15:
         - 2.3.2.2 (level 1)
-      sonoma:
+      macos_14:
         - 2.3.2.2 (level 1)
     controls_v8:
       - 8.4
@@ -65,7 +65,7 @@ platforms:
     result:
       integer: 1
     fix: $OS_VALUE
-    sequoia:
+    '15.0':
       severity: medium
       benchmarks:
         - cis_lvl1
@@ -78,7 +78,7 @@ platforms:
         ----
 
         NOTE: The service `timed` cannot be unloaded or loaded while System Integrity Protection (SIP) is enabled.
-    sonoma:
+    '14.0':
       severity: medium
       benchmarks:
         - cis_lvl1
@@ -91,7 +91,7 @@ platforms:
         ----
 
         NOTE: The service `timed` cannot be unloaded or loaded while System Integrity Protection (SIP) is enabled.
-    ventura:
+    '13.0':
       severity: medium
       benchmarks:
         - disa_stig
