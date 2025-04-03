@@ -13,12 +13,6 @@ references:
         - CCE-92759-0
       macos_13:
         - CCE-91757-5
-      monterey:
-        - CCE-90902-8
-      big_sur:
-        - CCE-85296-2
-      catalina:
-        - CCE-84748-3
     800-53r5:
       - AC-20
     800-171r3:
@@ -35,12 +29,6 @@ references:
         - APPL-14-002035
       macos_13:
         - APPL-13-002035
-      monterey:
-        - APPL-12-002035
-      big_sur:
-        - APPL-11-002035
-      catalina:
-        - AOSX-15-002035
     cmmc:
       - AC.L1-3.1.20
   cis:
@@ -70,18 +58,6 @@ platforms:
       severity: medium
       benchmarks:
         - disa_stig
-    monterey:
-      severity: medium
-      benchmarks:
-        - disa_stig
-    big_sur:
-      severity: medium
-      benchmarks:
-        - disa_stig
-    catalina:
-      severity: medium
-      benchmarks:
-        - disa_stig
 tags:
   - 800-53r5_low
   - 800-53r5_moderate
@@ -93,7 +69,6 @@ tags:
   - cmmc_lvl2
   - cmmc_lvl1
   - cnssi-1253_moderate
-  - cnssi-1253
 mobileconfig_info:
   com.apple.SetupAssistant.managed:
     SkipCloudSetup: true

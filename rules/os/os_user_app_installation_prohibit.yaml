@@ -18,12 +18,6 @@ references:
         - CCE-92920-8
       macos_13:
         - CCE-91908-4
-      monterey:
-        - CCE-91023-2
-      big_sur:
-        - CCE-85396-0
-      catalina:
-        - CCE-84805-1
       visionos_2:
         - CCE-94510-5
     800-53r5:
@@ -39,10 +33,6 @@ references:
         - APPL-15-005080
       macos_14:
         - APPL-14-005080
-      big_sur:
-        - APPL-11-002067
-      catalina:
-        - AOSX-15-002067
     cmmc:
       - CM.L2-3.4.9
 platforms:
@@ -76,16 +66,6 @@ platforms:
         - disa_stig
     '13.0':
       severity: medium
-    monterey:
-      severity: medium
-    big_sur:
-      severity: medium
-      benchmarks:
-        - disa_stig
-    catalina:
-      severity: medium
-      benchmarks:
-        - disa_stig
   visionOS:
     '2.0':
       supervised: true

@@ -15,12 +15,6 @@ references:
         - CCE-92919-0
       macos_13:
         - CCE-91907-6
-      monterey:
-        - CCE-91022-4
-      big_sur:
-        - CCE-85395-2
-      catalina:
-        - CCE-84804-4
     800-53r5:
       - IA-2
       - IA-2(5)
@@ -50,79 +44,35 @@ references:
         - 5.7 (level 1)
       macos_13:
         - 5.7 (level 1)
-      monterey:
-        - 5.7 (level 1)
-      big_sur:
-        - 5.7 (level 1)
     controls_v8:
       - 4.3
 platforms:
   macOS:
-    check: $OS_VALUE
+    check: |
+      /usr/bin/security authorizationdb read system.login.screensaver 2>&1 | /usr/bin/grep -c '<string>$ODV</string>'
     result:
       integer: 1
-    fix: $OS_VALUE
+    fix: |
+      [source,bash]
+      ----
+      /usr/bin/security authorizationdb write system.login.screensaver "$ODV"
+      ----
     '15.0':
       severity: medium
       benchmarks:
         - cis_lvl1
         - cis_lvl2
         - disa_stig
-      check: /usr/bin/security authorizationdb read system.login.screensaver 2>&1 | /usr/bin/grep -c '<string>$ODV</string>'
-      fix: |-
-        [source,bash]
-        ----
-        /usr/bin/security authorizationdb write system.login.screensaver "$ODV"
-        ----
     '14.0':
       severity: medium
       benchmarks:
         - cis_lvl1
         - cis_lvl2
         - disa_stig
-      check: /usr/bin/security authorizationdb read system.login.screensaver 2>&1 | /usr/bin/grep -c '<string>$ODV</string>'
-      fix: |-
-        [source,bash]
-        ----
-        /usr/bin/security authorizationdb write system.login.screensaver "$ODV"
-        ----
     '13.0':
       benchmarks:
         - cis_lvl1
         - cis_lvl2
-      check: /usr/bin/security authorizationdb read system.login.screensaver 2>&1 | /usr/bin/grep -c '<string>$ODV</string>'
-      fix: |-
-        [source,bash]
-        ----
-        /usr/bin/security authorizationdb write system.login.screensaver "$ODV"
-        ----
-    monterey:
-      benchmarks:
-        - cis_lvl1
-        - cis_lvl2
-      check: /usr/bin/security authorizationdb read system.login.screensaver 2>&1 | /usr/bin/grep -c '<string>$ODV</string>'
-      fix: |-
-        [source,bash]
-        ----
-        /usr/bin/security authorizationdb write system.login.screensaver "$ODV"
-        ----
-    big_sur:
-      benchmarks:
-        - cis_lvl1
-        - cis_lvl2
-      check: /usr/bin/security authorizationdb read system.login.screensaver 2>&1 | /usr/bin/grep -c 'use-login-window-ui'
-      fix: |-
-        [source,bash]
-        ----
-        /usr/bin/security authorizationdb write system.login.screensaver "use-login-window-ui"
-        ----
-    catalina:
-      check: /usr/bin/security authorizationdb read system.login.screensaver 2>&1 | /usr/bin/grep -c 'use-login-window-ui'
-      fix: |-
-        [source,bash]
-        ----
-        /usr/bin/security authorizationdb write system.login.screensaver "use-login-window-ui"
-        ----
 odv:
   hint: Review the /System/Library/Security/authorization.plist file for more information.
   recommended: authenticate-session-owner
@@ -140,4 +90,3 @@ tags:
   - cmmc_lvl2
   - cmmc_lvl1
   - cnssi-1253_moderate
-  - cnssi-1253

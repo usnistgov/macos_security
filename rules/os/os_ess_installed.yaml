@@ -13,12 +13,6 @@ references:
         - CCE-92787-1
       macos_13:
         - CCE-91785-6
-      monterey:
-        - CCE-90930-9
-      big_sur:
-        - CCE-85467-9
-      catalina:
-        - CCE-84931-5
   disa:
     cci:
       - CCI-001233
@@ -29,12 +23,6 @@ references:
         - APPL-14-000015
       macos_13:
         - APPL-13-000015
-      monterey:
-        - APPL-12-000015
-      big_sur:
-        - APPL-11-000015
-      catalina:
-        - AOSX-15-000015
 platforms:
   macOS:
     check: |
@@ -52,18 +40,6 @@ platforms:
         - disa_stig
     '13.0':
       severity: medium
-    monterey:
-      severity: medium
-      benchmarks:
-        - disa_stig
-    big_sur:
-      severity: medium
-      benchmarks:
-        - disa_stig
-    catalina:
-      severity: medium
-      benchmarks:
-        - disa_stig
 tags:
   - manual
   - cisv8

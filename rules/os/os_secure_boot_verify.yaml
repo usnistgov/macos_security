@@ -15,12 +15,6 @@ references:
         - CCE-92883-8
       macos_13:
         - CCE-91873-0
-      monterey:
-        - CCE-90996-0
-      big_sur:
-        - CCE-85376-2
-      catalina:
-        - CCE-84789-7
     800-53r5:
       - SI-7
       - SI-7(1)
@@ -57,9 +51,6 @@ platforms:
       benchmarks:
         - disa_stig
     '13.0': {}
-    monterey: {}
-    big_sur: {}
-    catalina: {}
 tags:
   - 800-53r5_high
   - 800-53r5_moderate

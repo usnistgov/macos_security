@@ -19,12 +19,6 @@ references:
         - CCE-92899-4
       macos_13:
         - CCE-91887-0
-      monterey:
-        - CCE-91008-3
-      big_sur:
-        - CCE-85457-0
-      catalina:
-        - CCE-84793-9
     800-53r5:
       - SC-10
       - AC-12
@@ -43,156 +37,50 @@ references:
         - APPL-14-000051
       macos_13:
         - APPL-13-000051
-      monterey:
-        - APPL-12-000051
-      big_sur:
-        - APPL-11-000051
-      catalina:
-        - AOSX-15-000051
     cmmc:
       - AC.L2-3.1.11
       - SC.L2-3.13.9
 platforms:
   macOS:
     check: $OS_VALUE
-    result: $OS_VALUE
-    fix: $OS_VALUE
+    result:
+      integer: $ODV
+    fix: |
+      [source,bash]
+      ----
+      include_dir=$(/usr/bin/awk '/^Include/ {print $2}' /etc/ssh/sshd_config | /usr/bin/tr -d '*')
+
+      if [[ -z $include_dir ]]; then
+        /usr/bin/sed -i.bk "1s/.*/Include \/etc\/ssh\/sshd_config.d\/\*/" /etc/ssh/sshd_config
+      fi
+
+      /usr/bin/grep -qxF 'clientaliveinterval $ODV' "${include_dir}01-mscp-sshd.conf" 2>/dev/null || echo "clientaliveinterval $ODV" >> "${include_dir}01-mscp-sshd.conf"
+
+      for file in $(ls ${include_dir}); do
+        if [[ "$file" == "100-macos.conf" ]]; then
+            continue
+        fi
+        if [[ "$file" == "01-mscp-sshd.conf" ]]; then
+            break
+        fi
+        /bin/mv ${include_dir}${file} ${include_dir}20-${file}
+      done
+      ----
     '15.0':
       severity: medium
       benchmarks:
         - disa_stig
       check: /usr/sbin/sshd -G | /usr/bin/awk '/clientaliveinterval/{print $2}'
-      fix: |-
-        [source,bash]
-        ----
-        include_dir=$(/usr/bin/awk '/^Include/ {print $2}' /etc/ssh/sshd_config | /usr/bin/tr -d '*')
-
-        if [[ -z $include_dir ]]; then
-          /usr/bin/sed -i.bk "1s/.*/Include \/etc\/ssh\/sshd_config.d\/\*/" /etc/ssh/sshd_config
-        fi
-
-        /usr/bin/grep -qxF 'clientaliveinterval $ODV' "${include_dir}01-mscp-sshd.conf" 2>/dev/null || echo "clientaliveinterval $ODV" >> "${include_dir}01-mscp-sshd.conf"
-
-        for file in $(ls ${include_dir}); do
-          if [[ "$file" == "100-macos.conf" ]]; then
-              continue
-          fi
-          if [[ "$file" == "01-mscp-sshd.conf" ]]; then
-              break
-          fi
-          /bin/mv ${include_dir}${file} ${include_dir}20-${file}
-        done
-        ----
-      result:
-        integer: $ODV
     '14.0':
       severity: medium
       benchmarks:
         - disa_stig
       check: /usr/sbin/sshd -G | /usr/bin/awk '/clientaliveinterval/{print $2}'
-      fix: |-
-        [source,bash]
-        ----
-        include_dir=$(/usr/bin/awk '/^Include/ {print $2}' /etc/ssh/sshd_config | /usr/bin/tr -d '*')
-
-        if [[ -z $include_dir ]]; then
-          /usr/bin/sed -i.bk "1s/.*/Include \/etc\/ssh\/sshd_config.d\/\*/" /etc/ssh/sshd_config
-        fi
-
-        /usr/bin/grep -qxF 'clientaliveinterval $ODV' "${include_dir}01-mscp-sshd.conf" 2>/dev/null || echo "clientaliveinterval $ODV" >> "${include_dir}01-mscp-sshd.conf"
-
-        for file in $(ls ${include_dir}); do
-          if [[ "$file" == "100-macos.conf" ]]; then
-              continue
-          fi
-          if [[ "$file" == "01-mscp-sshd.conf" ]]; then
-              break
-          fi
-          /bin/mv ${include_dir}${file} ${include_dir}20-${file}
-        done
-        ----
-      result:
-        integer: $ODV
     '13.0':
       severity: medium
       benchmarks:
         - disa_stig
       check: /usr/sbin/sshd -T | /usr/bin/awk '/clientaliveinterval/{print $2}'
-      fix: |-
-        [source,bash]
-        ----
-        include_dir=$(/usr/bin/awk '/^Include/ {print $2}' /etc/ssh/sshd_config | /usr/bin/tr -d '*')
-
-        if [[ -z $include_dir ]]; then
-          /usr/bin/sed -i.bk "1s/.*/Include \/etc\/ssh\/sshd_config.d\/\*/" /etc/ssh/sshd_config
-        fi
-
-        /usr/bin/grep -qxF 'clientaliveinterval $ODV' "${include_dir}01-mscp-sshd.conf" 2>/dev/null || echo "clientaliveinterval $ODV" >> "${include_dir}01-mscp-sshd.conf"
-
-        for file in $(ls ${include_dir}); do
-          if [[ "$file" == "100-macos.conf" ]]; then
-              continue
-          fi
-          if [[ "$file" == "01-mscp-sshd.conf" ]]; then
-              break
-          fi
-          /bin/mv ${include_dir}${file} ${include_dir}20-${file}
-        done
-        ----
-      result:
-        integer: $ODV
-    monterey:
-      severity: medium
-      benchmarks:
-        - disa_stig
-      check: /usr/sbin/sshd -T | /usr/bin/awk '/clientaliveinterval/{print $2}'
-      fix: |-
-        [source,bash]
-        ----
-        include_dir=$(/usr/bin/awk '/^Include/ {print $2}' /etc/ssh/sshd_config | /usr/bin/tr -d '*')
-
-        if [[ -z $include_dir ]]; then
-          /usr/bin/sed -i.bk "1s/.*/Include \/etc\/ssh\/sshd_config.d\/\*/" /etc/ssh/sshd_config
-        fi
-
-        /usr/bin/grep -qxF 'clientaliveinterval $ODV' "${include_dir}01-mscp-sshd.conf" 2>/dev/null || echo "clientaliveinterval $ODV" >> "${include_dir}01-mscp-sshd.conf"
-
-        for file in $(ls ${include_dir}); do
-          if [[ "$file" == "100-macos.conf" ]]; then
-              continue
-          fi
-          if [[ "$file" == "01-mscp-sshd.conf" ]]; then
-              break
-          fi
-          /bin/mv ${include_dir}${file} ${include_dir}20-${file}
-        done
-        ----
-      result:
-        integer: $ODV
-    big_sur:
-      severity: medium
-      benchmarks:
-        - disa_stig
-      check: /usr/bin/grep -c "^ClientAliveInterval $ODV" /etc/ssh/sshd_config
-      fix: |-
-        [source,bash]
-        ----
-        /usr/bin/sed -i.bak 's/.*ClientAliveInterval.*/ClientAliveInterval $ODV/' /etc/ssh/sshd_config; /bin/launchctl kickstart -k system/com.openssh.sshd
-        ----
-      result:
-        integer: 1
-    catalina:
-      severity: medium
-      benchmarks:
-        - disa_stig
-      check: /usr/bin/grep -c "^ClientAliveInterval $ODV " /etc/ssh/sshd_config
-      fix: |-
-        [source,bash]
-        ----
-        /usr/bin/sed -i.bak 's/.*ClientAliveInterval.*/ClientAliveInterval $ODV /' /etc/ssh/sshd_config; /bin/launchctl kickstart -k system/com.openssh.sshd
-        ----
-      result:
-        integer: 1
 odv:
   hint: Number of seconds.
   recommended: 900

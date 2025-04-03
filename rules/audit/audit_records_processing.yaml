@@ -13,12 +13,6 @@ references:
         - CCE-92729-3
       macos_13:
         - CCE-91730-2
-      monterey:
-        - CCE-90874-9
-      big_sur:
-        - CCE-85462-0
-      catalina:
-        - CCE-84925-7
     800-53r5:
       - AU-7(1)
   disa:
@@ -36,9 +30,6 @@ platforms:
     '15.0': {}
     '14.0': {}
     '13.0': {}
-    monterey: {}
-    big_sur: {}
-    catalina: {}
 tags:
   - 800-53r5_high
   - 800-53r5_moderate

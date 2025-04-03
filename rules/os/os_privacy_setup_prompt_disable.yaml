@@ -13,12 +13,6 @@ references:
         - CCE-92860-6
       macos_13:
         - CCE-91855-7
-      monterey:
-        - CCE-90981-2
-      big_sur:
-        - CCE-85362-2
-      catalina:
-        - CCE-84781-4
     800-53r5:
       - CM-7
       - CM-7(1)
@@ -36,12 +30,6 @@ references:
         - APPL-14-002036
       macos_13:
         - APPL-13-002036
-      monterey:
-        - APPL-12-002036
-      big_sur:
-        - APPL-11-002036
-      catalina:
-        - AOSX-15-002036
     cmmc:
       - CM.L2-3.4.6
       - CM.L2-3.4.7
@@ -69,18 +57,6 @@ platforms:
       benchmarks:
         - disa_stig
     '13.0':
-      severity: medium
-      benchmarks:
-        - disa_stig
-    monterey:
-      severity: medium
-      benchmarks:
-        - disa_stig
-    big_sur:
-      severity: medium
-      benchmarks:
-        - disa_stig
-    catalina:
       severity: medium
       benchmarks:
         - disa_stig

@@ -15,12 +15,6 @@ references:
         - CCE-92914-1
       macos_13:
         - CCE-91902-7
-      monterey:
-        - CCE-91018-2
-      big_sur:
-        - CCE-85391-1
-      catalina:
-        - CCE-84853-1
     800-53r5:
       - AC-3
       - IA-5(1)
@@ -43,12 +37,6 @@ references:
         - APPL-14-002038
       macos_13:
         - APPL-13-002038
-      monterey:
-        - APPL-12-002038
-      big_sur:
-        - APPL-11-002038
-      catalina:
-        - AOSX-15-002038
     cmmc:
       - AC.L1-3.1.1
       - IA.L2-3.5.7
@@ -61,7 +49,8 @@ references:
       - 5.2
 platforms:
   macOS:
-    check: $OS_VALUE
+    check: |
+      /bin/launchctl print-disabled system | /usr/bin/grep -c '"com.apple.tftpd" => disabled'
     result:
       integer: 1
     fix: |
@@ -74,32 +63,14 @@ platforms:
       severity: high
       benchmarks:
         - disa_stig
-      check: /bin/launchctl print-disabled system | /usr/bin/grep -c '"com.apple.tftpd" => disabled'
     '14.0':
       severity: high
       benchmarks:
         - disa_stig
-      check: /bin/launchctl print-disabled system | /usr/bin/grep -c '"com.apple.tftpd" => disabled'
     '13.0':
       severity: high
       benchmarks:
         - disa_stig
-      check: /bin/launchctl print-disabled system | /usr/bin/grep -c '"com.apple.tftpd" => disabled'
-    monterey:
-      severity: high
-      benchmarks:
-        - disa_stig
-      check: /bin/launchctl print-disabled system | /usr/bin/grep -c '"com.apple.tftpd" => true'
-    big_sur:
-      severity: high
-      benchmarks:
-        - disa_stig
-      check: /bin/launchctl print-disabled system | /usr/bin/grep -c '"com.apple.tftpd" => true'
-    catalina:
-      severity: medium
-      benchmarks:
-        - disa_stig
-      check: /bin/launchctl print-disabled system | /usr/bin/grep -c '"com.apple.tftpd" => true'
 tags:
   - 800-53r5_low
   - 800-53r5_moderate
@@ -111,4 +82,3 @@ tags:
   - cmmc_lvl2
   - cmmc_lvl1
   - cnssi-1253_moderate
-  - cnssi-1253

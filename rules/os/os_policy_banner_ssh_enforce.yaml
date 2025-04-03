@@ -17,12 +17,6 @@ references:
         - CCE-92852-3
       macos_13:
         - CCE-91847-4
-      monterey:
-        - CCE-90975-4
-      big_sur:
-        - CCE-85357-2
-      catalina:
-        - CCE-84779-8
     800-53r5:
       - AC-8
     800-171r3:
@@ -41,12 +35,6 @@ references:
         - APPL-14-000024
       macos_13:
         - APPL-13-000024
-      monterey:
-        - APPL-12-000024
-      big_sur:
-        - APPL-11-000024
-      catalina:
-        - AOSX-15-000024
     cmmc:
       - AC.L2-3.1.9
 platforms:
@@ -54,131 +42,42 @@ platforms:
     check: $OS_VALUE
     result:
       integer: 1
-    fix: $OS_VALUE
+    fix: |
+      [source,bash]
+      ----
+      include_dir=$(/usr/bin/awk '/^Include/ {print $2}' /etc/ssh/sshd_config | /usr/bin/tr -d '*')
+
+      if [[ -z $include_dir ]]; then
+        /usr/bin/sed -i.bk "1s/.*/Include \/etc\/ssh\/sshd_config.d\/\*/" /etc/ssh/sshd_config
+      fi
+
+      /usr/bin/grep -qxF 'banner /etc/banner' "${include_dir}01-mscp-sshd.conf" 2>/dev/null || echo "banner /etc/banner" >> "${include_dir}01-mscp-sshd.conf"
+
+      for file in $(ls ${include_dir}); do
+        if [[ "$file" == "100-macos.conf" ]]; then
+            continue
+        fi
+        if [[ "$file" == "01-mscp-sshd.conf" ]]; then
+            break
+        fi
+        /bin/mv ${include_dir}${file} ${include_dir}20-${file}
+      done
+      ----
     '15.0':
       severity: medium
       benchmarks:
         - disa_stig
       check: /usr/sbin/sshd -G | /usr/bin/grep -c "^banner /etc/banner"
-      fix: |-
-        [source,bash]
-        ----
-        include_dir=$(/usr/bin/awk '/^Include/ {print $2}' /etc/ssh/sshd_config | /usr/bin/tr -d '*')
-
-        if [[ -z $include_dir ]]; then
-          /usr/bin/sed -i.bk "1s/.*/Include \/etc\/ssh\/sshd_config.d\/\*/" /etc/ssh/sshd_config
-        fi
-
-        /usr/bin/grep -qxF 'banner /etc/banner' "${include_dir}01-mscp-sshd.conf" 2>/dev/null || echo "banner /etc/banner" >> "${include_dir}01-mscp-sshd.conf"
-
-        for file in $(ls ${include_dir}); do
-          if [[ "$file" == "100-macos.conf" ]]; then
-              continue
-          fi
-          if [[ "$file" == "01-mscp-sshd.conf" ]]; then
-              break
-          fi
-          /bin/mv ${include_dir}${file} ${include_dir}20-${file}
-        done
-        ----
     '14.0':
       severity: medium
       benchmarks:
         - disa_stig
       check: /usr/sbin/sshd -G | /usr/bin/grep -c "^banner /etc/banner"
-      fix: |-
-        [source,bash]
-        ----
-        include_dir=$(/usr/bin/awk '/^Include/ {print $2}' /etc/ssh/sshd_config | /usr/bin/tr -d '*')
-
-        if [[ -z $include_dir ]]; then
-          /usr/bin/sed -i.bk "1s/.*/Include \/etc\/ssh\/sshd_config.d\/\*/" /etc/ssh/sshd_config
-        fi
-
-        /usr/bin/grep -qxF 'banner /etc/banner' "${include_dir}01-mscp-sshd.conf" 2>/dev/null || echo "banner /etc/banner" >> "${include_dir}01-mscp-sshd.conf"
-
-        for file in $(ls ${include_dir}); do
-          if [[ "$file" == "100-macos.conf" ]]; then
-              continue
-          fi
-          if [[ "$file" == "01-mscp-sshd.conf" ]]; then
-              break
-          fi
-          /bin/mv ${include_dir}${file} ${include_dir}20-${file}
-        done
-        ----
     '13.0':
       severity: medium
       benchmarks:
         - disa_stig
       check: /usr/sbin/sshd -T | /usr/bin/grep -c "^banner /etc/banner"
-      fix: |-
-        [source,bash]
-        ----
-        include_dir=$(/usr/bin/awk '/^Include/ {print $2}' /etc/ssh/sshd_config | /usr/bin/tr -d '*')
-
-        if [[ -z $include_dir ]]; then
-          /usr/bin/sed -i.bk "1s/.*/Include \/etc\/ssh\/sshd_config.d\/\*/" /etc/ssh/sshd_config
-        fi
-
-        /usr/bin/grep -qxF 'banner /etc/banner' "${include_dir}01-mscp-sshd.conf" 2>/dev/null || echo "banner /etc/banner" >> "${include_dir}01-mscp-sshd.conf"
-
-        for file in $(ls ${include_dir}); do
-          if [[ "$file" == "100-macos.conf" ]]; then
-              continue
-          fi
-          if [[ "$file" == "01-mscp-sshd.conf" ]]; then
-              break
-          fi
-          /bin/mv ${include_dir}${file} ${include_dir}20-${file}
-        done
-        ----
-    monterey:
-      severity: medium
-      benchmarks:
-        - disa_stig
-      check: /usr/sbin/sshd -T | /usr/bin/grep -c "^banner /etc/banner"
-      fix: |-
-        [source,bash]
-        ----
-        include_dir=$(/usr/bin/awk '/^Include/ {print $2}' /etc/ssh/sshd_config | /usr/bin/tr -d '*')
-
-        if [[ -z $include_dir ]]; then
-          /usr/bin/sed -i.bk "1s/.*/Include \/etc\/ssh\/sshd_config.d\/\*/" /etc/ssh/sshd_config
-        fi
-
-        /usr/bin/grep -qxF 'banner /etc/banner' "${include_dir}01-mscp-sshd.conf" 2>/dev/null || echo "banner /etc/banner" >> "${include_dir}01-mscp-sshd.conf"
-
-        for file in $(ls ${include_dir}); do
-          if [[ "$file" == "100-macos.conf" ]]; then
-              continue
-          fi
-          if [[ "$file" == "01-mscp-sshd.conf" ]]; then
-              break
-          fi
-          /bin/mv ${include_dir}${file} ${include_dir}20-${file}
-        done
-        ----
-    big_sur:
-      severity: medium
-      benchmarks:
-        - disa_stig
-      check: /usr/bin/grep -c "^Banner /etc/banner" /etc/ssh/sshd_config
-      fix: |-
-        [source,bash]
-        ----
-        /usr/bin/sed -i.bak 's/^[\#]*Banner.*/Banner \/etc\/banner/' /etc/ssh/sshd_config
-        ----
-    catalina:
-      severity: medium
-      benchmarks:
-        - disa_stig
-      check: /usr/bin/grep -c "^Banner /etc/banner" /etc/ssh/sshd_config
-      fix: |-
-        [source,bash]
-        ----
-        /usr/bin/sed -i.bak 's/^[\#]*Banner.*/Banner \/etc\/banner/' /etc/ssh/sshd_config
-        ----
 tags:
   - 800-53r5_low
   - 800-53r5_moderate

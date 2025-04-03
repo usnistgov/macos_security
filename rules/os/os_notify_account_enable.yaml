@@ -15,12 +15,6 @@ references:
         - CCE-92836-6
       macos_13:
         - CCE-91832-6
-      monterey:
-        - CCE-90961-4
-      big_sur:
-        - CCE-85345-7
-      catalina:
-        - CCE-84897-8
   disa:
     srg:
       - SRG-OS-000304-GPOS-00121
@@ -42,9 +36,5 @@ platforms:
     '15.0': {}
     '14.0': {}
     '13.0': {}
-    monterey: {}
-    big_sur: {}
-    catalina: {}
 tags:
   - permanent
-  - cnssi-1253

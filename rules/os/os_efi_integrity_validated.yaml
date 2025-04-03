@@ -7,40 +7,22 @@ references:
     cce:
       macos_13:
         - CCE-91781-5
-      monterey:
-        - CCE-91102-4
-      big_sur:
-        - CCE-85502-3
   cis:
     benchmark:
       macos_13:
         - 5.9 (level 1)
-      monterey:
-        - 2.9 (level 1)
-      big_sur:
-        - 2.9 (level 1)
     controls_v8:
       - 2.2
 platforms:
   macOS:
-    check: |
-      if /usr/sbin/ioreg -w 0 -c AppleSEPManager | /usr/bin/grep -q AppleSEPManager; then echo "1"; else /usr/libexec/firmwarecheckers/eficheck/eficheck --integrity-check | /usr/bin/grep -c "No changes detected"; fi
-    result:
-      integer: 1
-    fix: |
-      Install a known good version of macOS.
     '13.0':
       benchmarks:
         - cis_lvl1
         - cis_lvl2
-    monterey:
-      benchmarks:
-        - cis_lvl1
-        - cis_lvl2
-    big_sur:
-      benchmarks:
-        - cis_lvl1
-        - cis_lvl2
+    check: |
+      if /usr/sbin/ioreg -w 0 -c AppleSEPManager | /usr/bin/grep -q AppleSEPManager; then echo "1"; else /usr/libexec/firmwarecheckers/eficheck/eficheck --integrity-check | /usr/bin/grep -c "No changes detected"; fi
+    result:
+      integer: 1
 tags:
   - cisv8
   - i386

@@ -11,24 +11,12 @@ references:
         - CCE-92790-5
       macos_13:
         - CCE-91788-0
-      monterey:
-        - CCE-90921-8
-      big_sur:
-        - CCE-85311-9
-      catalina:
-        - CCE-84932-3
     800-53r5:
       - AC-2(11)
   disa:
     disa_stig:
       macos_13:
         - APPL-13-000032
-      monterey:
-        - APPL-12-000032
-      big_sur:
-        - APPL-11-000032
-      catalina:
-        - AOSX-15-000032
 platforms:
   macOS:
     check: |
@@ -47,18 +35,6 @@ platforms:
     '14.0':
       severity: medium
     '13.0':
-      severity: medium
-      benchmarks:
-        - disa_stig
-    monterey:
-      severity: medium
-      benchmarks:
-        - disa_stig
-    big_sur:
-      severity: medium
-      benchmarks:
-        - disa_stig
-    catalina:
       severity: medium
       benchmarks:
         - disa_stig

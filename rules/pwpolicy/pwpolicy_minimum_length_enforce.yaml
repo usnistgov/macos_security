@@ -10,12 +10,6 @@ references:
         - CCE-92936-4
       macos_13:
         - CCE-91923-3
-      monterey:
-        - CCE-91036-4
-      big_sur:
-        - CCE-85409-1
-      catalina:
-        - CCE-84816-8
       ios_18:
         - CCE-94477-7
       ios_17:
@@ -39,12 +33,6 @@ references:
         - APPL-14-003010
       macos_13:
         - APPL-13-003010
-      monterey:
-        - APPL-12-003010
-      big_sur:
-        - APPL-11-003010
-      catalina:
-        - AOSX-15-003010
       ios_18:
         - AIOS-18-006500
       ios_17:
@@ -64,10 +52,6 @@ references:
       macos_14:
         - 5.2.2 (level 1)
       macos_13:
-        - 5.2.2 (level 1)
-      monterey:
-        - 5.2.2 (level 1)
-      big_sur:
         - 5.2.2 (level 1)
       ios_18:
         - 2.4.3 (level 1 - End-User Owned Devices)
@@ -113,22 +97,6 @@ platforms:
       benchmarks:
         - cis_lvl1
         - cis_lvl2
-        - disa_stig
-    monterey:
-      severity: medium
-      benchmarks:
-        - cis_lvl1
-        - cis_lvl2
-        - disa_stig
-    big_sur:
-      severity: medium
-      benchmarks:
-        - cis_lvl1
-        - cis_lvl2
-        - disa_stig
-    catalina:
-      severity: medium
-      benchmarks:
         - disa_stig
   iOS:
     '18.0':
@@ -188,7 +156,6 @@ tags:
   - cnssi-1253_high
   - cmmc_lvl2
   - cnssi-1253_moderate
-  - cnssi-1253
 mobileconfig_info:
   com.apple.mobiledevice.passwordpolicy:
     minLength: $ODV

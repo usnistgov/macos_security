@@ -11,12 +11,6 @@ references:
         - CCE-92831-7
       macos_13:
         - CCE-91827-6
-      monterey:
-        - CCE-90956-4
-      big_sur:
-        - CCE-85342-4
-      catalina:
-        - CCE-84772-3
     800-53r5:
       - AC-3
       - AC-17
@@ -35,12 +29,6 @@ references:
         - APPL-14-002003
       macos_13:
         - APPL-13-002003
-      monterey:
-        - APPL-12-002003
-      big_sur:
-        - APPL-11-002003
-      catalina:
-        - AOSX-15-002003
     cmmc:
       - AC.L1-3.1.1
   cis:
@@ -51,16 +39,13 @@ references:
         - 4.3 (level 1)
       macos_13:
         - 4.3 (level 1)
-      monterey:
-        - 4.3 (level 1)
-      big_sur:
-        - 4.3 (level 1)
     controls_v8:
       - 4.1
       - 4.8
 platforms:
   macOS:
-    check: $OS_VALUE
+    check: |
+      /bin/launchctl print-disabled system | /usr/bin/grep -c '"com.apple.nfsd" => disabled'
     result:
       integer: 1
     fix: |
@@ -75,40 +60,18 @@ platforms:
         - cis_lvl1
         - cis_lvl2
         - disa_stig
-      check: /bin/launchctl print-disabled system | /usr/bin/grep -c '"com.apple.nfsd" => disabled'
     '14.0':
       severity: medium
       benchmarks:
         - cis_lvl1
         - cis_lvl2
         - disa_stig
-      check: /bin/launchctl print-disabled system | /usr/bin/grep -c '"com.apple.nfsd" => disabled'
     '13.0':
       severity: medium
       benchmarks:
         - cis_lvl1
         - cis_lvl2
         - disa_stig
-      check: /bin/launchctl print-disabled system | /usr/bin/grep -c '"com.apple.nfsd" => disabled'
-    monterey:
-      severity: medium
-      benchmarks:
-        - cis_lvl1
-        - cis_lvl2
-        - disa_stig
-      check: /bin/launchctl print-disabled system | /usr/bin/grep -c '"com.apple.nfsd" => true'
-    big_sur:
-      severity: medium
-      benchmarks:
-        - cis_lvl1
-        - cis_lvl2
-        - disa_stig
-      check: /bin/launchctl print-disabled system | /usr/bin/grep -c '"com.apple.nfsd" => true'
-    catalina:
-      severity: medium
-      benchmarks:
-        - disa_stig
-      check: /bin/launchctl print-disabled system | /usr/bin/grep -c '"com.apple.nfsd" => true'
 tags:
   - 800-53r5_low
   - 800-53r5_moderate
@@ -120,4 +83,3 @@ tags:
   - cmmc_lvl2
   - cmmc_lvl1
   - cnssi-1253_moderate
-  - cnssi-1253

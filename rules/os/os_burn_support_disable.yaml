@@ -16,10 +16,6 @@ references:
         - CCE-92770-7
       macos_13:
         - CCE-91768-2
-      monterey:
-        - CCE-91098-4
-      big_sur:
-        - CCE-85544-5
     800-53r5:
       - MP-7
     800-171r3:
@@ -28,10 +24,6 @@ references:
     disa_stig:
       macos_13:
         - APPL-13-005053
-      monterey:
-        - APPL-12-005053
-      big_sur:
-        - APPL-12-005053
     cmmc:
       - MP.L2-3.8.7
       - MP.L2-3.8.8
@@ -48,14 +40,6 @@ platforms:
     '14.0':
       severity: low
     '13.0':
-      severity: low
-      benchmarks:
-        - disa_stig
-    monterey:
-      severity: low
-      benchmarks:
-        - disa_stig
-    big_sur:
       severity: low
       benchmarks:
         - disa_stig

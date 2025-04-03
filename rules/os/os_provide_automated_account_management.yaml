@@ -15,12 +15,6 @@ references:
         - CCE-92863-0
       macos_13:
         - CCE-91858-1
-      monterey:
-        - CCE-90984-6
-      big_sur:
-        - CCE-85364-8
-      catalina:
-        - CCE-84899-4
     800-53r5:
       - AC-2(1)
   disa:
@@ -35,13 +29,9 @@ platforms:
     '15.0': {}
     '14.0': {}
     '13.0': {}
-    monterey: {}
-    big_sur: {}
-    catalina: {}
 tags:
   - 800-53r5_moderate
   - 800-53r5_high
   - permanent
   - cnssi-1253_high
   - cnssi-1253_moderate
-  - cnssi-1253

@@ -13,12 +13,6 @@ references:
         - CCE-92805-1
       macos_13:
         - CCE-91801-1
-      monterey:
-        - CCE-90932-5
-      big_sur:
-        - CCE-85323-4
-      catalina:
-        - CCE-84765-7
     800-53r5:
       - AC-3
       - AC-17
@@ -37,12 +31,6 @@ references:
         - APPL-14-002008
       macos_13:
         - APPL-13-002008
-      monterey:
-        - APPL-12-002008
-      big_sur:
-        - APPL-11-002008
-      catalina:
-        - AOSX-15-002008
     cmmc:
       - AC.L1-3.1.1
   cis:
@@ -53,16 +41,13 @@ references:
         - 4.2 (level 1)
       macos_13:
         - 4.2 (level 1)
-      monterey:
-        - 4.2 (level 1)
-      big_sur:
-        - 4.2 (level 1)
     controls_v8:
       - 4.1
       - 4.8
 platforms:
   macOS:
-    check: $OS_VALUE
+    check: |
+      /bin/launchctl print-disabled system | /usr/bin/grep -c '"org.apache.httpd" => disabled'
     result:
       integer: 1
     fix: |
@@ -76,40 +61,18 @@ platforms:
         - cis_lvl1
         - cis_lvl2
         - disa_stig
-      check: /bin/launchctl print-disabled system | /usr/bin/grep -c '"org.apache.httpd" => disabled'
     '14.0':
       severity: medium
       benchmarks:
         - cis_lvl1
         - cis_lvl2
         - disa_stig
-      check: /bin/launchctl print-disabled system | /usr/bin/grep -c '"org.apache.httpd" => disabled'
     '13.0':
       severity: medium
       benchmarks:
         - cis_lvl1
         - cis_lvl2
         - disa_stig
-      check: /bin/launchctl print-disabled system | /usr/bin/grep -c '"org.apache.httpd" => disabled'
-    monterey:
-      severity: medium
-      benchmarks:
-        - cis_lvl1
-        - cis_lvl2
-        - disa_stig
-      check: /bin/launchctl print-disabled system | /usr/bin/grep -c '"org.apache.httpd" => true'
-    big_sur:
-      severity: medium
-      benchmarks:
-        - cis_lvl1
-        - cis_lvl2
-        - disa_stig
-      check: /bin/launchctl print-disabled system | /usr/bin/grep -c '"org.apache.httpd" => true'
-    catalina:
-      severity: medium
-      benchmarks:
-        - disa_stig
-      check: /bin/launchctl print-disabled system | /usr/bin/grep -c '"org.apache.httpd" => true'
 tags:
   - 800-53r5_low
   - 800-53r5_moderate
@@ -121,4 +84,3 @@ tags:
   - cmmc_lvl2
   - cmmc_lvl1
   - cnssi-1253_moderate
-  - cnssi-1253

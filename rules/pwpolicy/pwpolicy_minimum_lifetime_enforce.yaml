@@ -10,12 +10,6 @@ references:
         - CCE-92937-2
       macos_13:
         - CCE-91924-1
-      monterey:
-        - CCE-91037-2
-      big_sur:
-        - CCE-85410-9
-      catalina:
-        - CCE-84817-6
     800-53r5:
       - IA-5
     800-171r3:
@@ -78,9 +72,6 @@ platforms:
       benchmarks:
         - disa_stig
     '13.0': {}
-    monterey: {}
-    big_sur: {}
-    catalina: {}
 odv:
   hint: Number of hours.
   recommended: 24
@@ -95,4 +86,3 @@ tags:
   - 800-53r5_low
   - 800-53r5_moderate
   - 800-53r5_high
-  - cnssi-1253

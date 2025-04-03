@@ -13,12 +13,6 @@ references:
         - CCE-92927-3
       macos_13:
         - CCE-91915-9
-      monterey:
-        - CCE-91029-9
-      big_sur:
-        - CCE-85402-6
-      catalina:
-        - CCE-84809-3
       ios_18:
         - CCE-94473-6
       ios_17:
@@ -43,13 +37,6 @@ references:
         - APPL-14-000022
       macos_13:
         - APPL-13-000022
-      monterey:
-        - APPL-12-000022
-      big_sur:
-        - APPL-11-000022
-      catalina:
-        - AOSX-15-000020
-        - AOSX-15-000022
       ios_18:
         - AIOS-18-006900
       ios_17:
@@ -67,10 +54,6 @@ references:
       macos_14:
         - 5.2.1 (level 1)
       macos_13:
-        - 5.2.1 (level 1)
-      monterey:
-        - 5.2.1 (level 1)
-      big_sur:
         - 5.2.1 (level 1)
       ios_18:
         - 2.4.6 (level 1 - End-User Owned Devices)
@@ -93,7 +76,8 @@ references:
         - ANNEX K
 platforms:
   macOS:
-    check: $OS_VALUE
+    check: |
+      /usr/bin/pwpolicy -getaccountpolicies 2> /dev/null | /usr/bin/tail +2 | /usr/bin/xmllint --xpath '//dict/key[text()="policyAttributeMaximumFailedAuthentications"]/following-sibling::integer[1]/text()' - | /usr/bin/awk '{ if ($1 <= $ODV) {print "yes"} else {print "no"}}' | /usr/bin/uniq
     result:
       string: 'yes'
     fix: |
@@ -104,40 +88,18 @@ platforms:
         - cis_lvl1
         - cis_lvl2
         - disa_stig
-      check: /usr/bin/pwpolicy -getaccountpolicies 2> /dev/null | /usr/bin/tail +2 | /usr/bin/xmllint --xpath '//dict/key[text()="policyAttributeMaximumFailedAuthentications"]/following-sibling::integer[1]/text()' - | /usr/bin/awk '{ if ($1 <= $ODV) {print "yes"} else {print "no"}}' | /usr/bin/uniq
     '14.0':
       severity: medium
       benchmarks:
         - cis_lvl1
         - cis_lvl2
         - disa_stig
-      check: /usr/bin/pwpolicy -getaccountpolicies 2> /dev/null | /usr/bin/tail +2 | /usr/bin/xmllint --xpath '//dict/key[text()="policyAttributeMaximumFailedAuthentications"]/following-sibling::integer[1]/text()' - | /usr/bin/awk '{ if ($1 <= $ODV) {print "yes"} else {print "no"}}' | /usr/bin/uniq
     '13.0':
       severity: medium
       benchmarks:
         - cis_lvl1
         - cis_lvl2
         - disa_stig
-      check: /usr/bin/pwpolicy -getaccountpolicies 2> /dev/null | /usr/bin/tail +2 | /usr/bin/xmllint --xpath '//dict/key[text()="policyAttributeMaximumFailedAuthentications"]/following-sibling::integer[1]/text()' - | /usr/bin/awk '{ if ($1 <= $ODV) {print "yes"} else {print "no"}}' | /usr/bin/uniq
-    monterey:
-      severity: medium
-      benchmarks:
-        - cis_lvl1
-        - cis_lvl2
-        - disa_stig
-      check: /usr/bin/pwpolicy -getaccountpolicies 2> /dev/null | /usr/bin/tail +2 | /usr/bin/xmllint --xpath '//dict/key[text()="policyAttributeMaximumFailedAuthentications"]/following-sibling::integer[1]/text()' - | /usr/bin/awk '{ if ($1 <= $ODV) {print "yes"} else {print "no"}}'
-    big_sur:
-      severity: medium
-      benchmarks:
-        - cis_lvl1
-        - cis_lvl2
-        - disa_stig
-      check: /usr/bin/pwpolicy -getaccountpolicies 2> /dev/null | /usr/bin/tail +2 | /usr/bin/xmllint --xpath '//dict/key[text()="policyAttributeMaximumFailedAuthentications"]/following-sibling::integer[1]/text()' - | /usr/bin/awk '{ if ($1 <= $ODV) {print "yes"} else {print "no"}}'
-    catalina:
-      severity: medium
-      benchmarks:
-        - disa_stig
-      check: /usr/bin/pwpolicy -getaccountpolicies 2> /dev/null | /usr/bin/tail +2 | /usr/bin/xmllint --xpath '//dict/key[text()="policyAttributeMaximumFailedAuthentications"]/following-sibling::integer[1]/text()' - | /usr/bin/awk '{ if ($1 <= $ODV) {print "yes"} else {print "no"}}'
   iOS:
     '18.0':
       severity: medium
@@ -196,7 +158,6 @@ tags:
   - cnssi-1253_high
   - cmmc_lvl2
   - cnssi-1253_moderate
-  - cnssi-1253
 mobileconfig_info:
   com.apple.mobiledevice.passwordpolicy:
     maxFailedAttempts: $ODV

@@ -11,12 +11,6 @@ references:
         - CCE-92881-2
       macos_13:
         - CCE-91872-2
-      monterey:
-        - CCE-90995-2
-      big_sur:
-        - CCE-85375-4
-      catalina:
-        - CCE-84786-3
     800-53r5:
       - AC-11(1)
     800-171r3:
@@ -27,25 +21,20 @@ references:
     disa_stig:
       macos_13:
         - APPL-13-000006
-      monterey:
-        - APPL-12-000006
-      big_sur:
-        - APPL-11-000006
     cmmc:
       - AC.L2-3.1.10
 platforms:
   macOS:
-    check: $OS_VALUE
+    check: |
+      /usr/bin/osascript -l JavaScript << EOS
+      $.NSUserDefaults.alloc.initWithSuiteName('com.apple.screensaver')\
+      .objectForKey('moduleName').js
+      EOS
     result: $OS_VALUE
     fix: |
       This is implemented by a Configuration Profile.
     '15.0':
       severity: medium
-      check: |-
-        /usr/bin/osascript -l JavaScript << EOS
-        $.NSUserDefaults.alloc.initWithSuiteName('com.apple.screensaver')\
-        .objectForKey('moduleName').js
-        EOS
       result:
         string: Sequoia
       mobileconfig_info:
@@ -53,11 +42,6 @@ platforms:
           moduleName: Sequoia
     '14.0':
       severity: medium
-      check: |-
-        /usr/bin/osascript -l JavaScript << EOS
-        $.NSUserDefaults.alloc.initWithSuiteName('com.apple.screensaver')\
-        .objectForKey('moduleName').js
-        EOS
       result:
         string: Sonoma
       mobileconfig_info:
@@ -67,55 +51,11 @@ platforms:
       severity: medium
       benchmarks:
         - disa_stig
-      check: |-
-        /usr/bin/osascript -l JavaScript << EOS
-        $.NSUserDefaults.alloc.initWithSuiteName('com.apple.screensaver')\
-        .objectForKey('moduleName').js
-        EOS
       result:
         string: Ventura
       mobileconfig_info:
         com.apple.screensaver:
           moduleName: Ventura
-    monterey:
-      severity: low
-      benchmarks:
-        - disa_stig
-      check: |-
-        /usr/bin/osascript -l JavaScript << EOS
-        $.NSUserDefaults.alloc.initWithSuiteName('com.apple.screensaver')\
-        .objectForKey('loginWindowModulePath').js
-        EOS
-      result:
-        string: /System/Library/Screen Savers/Flurry.saver
-      mobileconfig_info:
-        com.apple.screensaver:
-          loginWindowModulePath: /System/Library/Screen Savers/Flurry.saver
-    big_sur:
-      severity: low
-      benchmarks:
-        - disa_stig
-      check: |-
-        /usr/bin/osascript -l JavaScript << EOS
-        $.NSUserDefaults.alloc.initWithSuiteName('com.apple.screensaver')\
-        .objectForKey('loginWindowModulePath').js
-        EOS
-      result:
-        string: /System/Library/Screen Savers/Flurry.saver
-      mobileconfig_info:
-        com.apple.screensaver:
-          loginWindowModulePath: /System/Library/Screen Savers/Flurry.saver
-    catalina:
-      check: |-
-        /usr/bin/osascript -l JavaScript << EOS
-        $.NSUserDefaults.alloc.initWithSuiteName('com.apple.screensaver')\
-        .objectForKey('loginWindowModulePath').js
-        EOS
-      result:
-        string: /System/Library/Screen Savers/Flurry.saver
-      mobileconfig_info:
-        com.apple.screensaver:
-          loginWindowModulePath: /System/Library/Screen Savers/Flurry.saver
 tags:
   - 800-53r5_moderate
   - 800-53r5_high
@@ -124,5 +64,4 @@ tags:
   - cnssi-1253_high
   - cmmc_lvl2
   - cnssi-1253_moderate
-  - cnssi-1253
 mobileconfig_info: $OS_VALUE

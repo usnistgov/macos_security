@@ -11,12 +11,6 @@ references:
         - CCE-92703-8
       macos_13:
         - CCE-91703-9
-      monterey:
-        - CCE-90853-3
-      big_sur:
-        - CCE-85253-3
-      catalina:
-        - CCE-84908-3
 platforms:
   macOS:
     check: |
@@ -26,8 +20,5 @@ platforms:
     '15.0': {}
     '14.0': {}
     '13.0': {}
-    monterey: {}
-    big_sur: {}
-    catalina: {}
 tags:
   - permanent

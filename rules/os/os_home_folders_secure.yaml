@@ -13,12 +13,6 @@ references:
         - CCE-92804-4
       macos_13:
         - CCE-91800-3
-      monterey:
-        - CCE-90931-7
-      big_sur:
-        - CCE-85322-6
-      catalina:
-        - CCE-84764-0
     800-53r5:
       - AC-6
     800-171r3:
@@ -34,12 +28,6 @@ references:
         - APPL-15-002068
       macos_14:
         - APPL-14-002068
-      monterey:
-        - APPL-12-002068
-      big_sur:
-        - APPL-11-002068
-      catalina:
-        - AOSX-15-002068
     cmmc:
       - AC.L1-3.1.1
       - AC.L2-3.1.5
@@ -51,111 +39,40 @@ references:
         - 5.1.1 (level 1)
       macos_13:
         - 5.1.1 (level 1)
-      monterey:
-        - 5.1.1 (level 1)
-      big_sur:
-        - 5.1.1 (level 1)
     controls_v8:
       - 3.3
 platforms:
   macOS:
-    check: $OS_VALUE
+    check: |
+      /usr/bin/find /System/Volumes/Data/Users -mindepth 1 -maxdepth 1 -type d ! \( -perm 700 -o -perm 711 \) | /usr/bin/grep -v "Shared" | /usr/bin/grep -v "Guest" | /usr/bin/wc -l | /usr/bin/xargs
     result:
       integer: 0
-    fix: $OS_VALUE
+    fix: |
+      [source,bash]
+      ----
+      IFS=$'\n'
+      for userDirs in $( /usr/bin/find /System/Volumes/Data/Users -mindepth 1 -maxdepth 1 -type d ! \( -perm 700 -o -perm 711 \) | /usr/bin/grep -v "Shared" | /usr/bin/grep -v "Guest" ); do
+        /bin/chmod og-rwx "$userDirs"
+      done
+      unset IFS
+      ----
     '15.0':
       severity: medium
       benchmarks:
         - cis_lvl1
         - cis_lvl2
         - disa_stig
-      check: /usr/bin/find /System/Volumes/Data/Users -mindepth 1 -maxdepth 1 -type d ! \( -perm 700 -o -perm 711 \) | /usr/bin/grep -v "Shared" | /usr/bin/grep -v "Guest" | /usr/bin/wc -l | /usr/bin/xargs
-      fix: |-
-        [source,bash]
-        ----
-        IFS=$'\n'
-        for userDirs in $( /usr/bin/find /System/Volumes/Data/Users -mindepth 1 -maxdepth 1 -type d ! \( -perm 700 -o -perm 711 \) | /usr/bin/grep -v "Shared" | /usr/bin/grep -v "Guest" ); do
-          /bin/chmod og-rwx "$userDirs"
-        done
-        unset IFS
-        ----
     '14.0':
       severity: medium
       benchmarks:
         - cis_lvl1
         - cis_lvl2
         - disa_stig
-      check: /usr/bin/find /System/Volumes/Data/Users -mindepth 1 -maxdepth 1 -type d ! \( -perm 700 -o -perm 711 \) | /usr/bin/grep -v "Shared" | /usr/bin/grep -v "Guest" | /usr/bin/wc -l | /usr/bin/xargs
-      fix: |-
-        [source,bash]
-        ----
-        IFS=$'\n'
-        for userDirs in $( /usr/bin/find /System/Volumes/Data/Users -mindepth 1 -maxdepth 1 -type d ! \( -perm 700 -o -perm 711 \) | /usr/bin/grep -v "Shared" | /usr/bin/grep -v "Guest" ); do
-          /bin/chmod og-rwx "$userDirs"
-        done
-        unset IFS
-        ----
     '13.0':
       severity: medium
       benchmarks:
         - cis_lvl1
         - cis_lvl2
-      check: /usr/bin/find /System/Volumes/Data/Users -mindepth 1 -maxdepth 1 -type d ! \( -perm 700 -o -perm 711 \) | /usr/bin/grep -v "Shared" | /usr/bin/grep -v "Guest" | /usr/bin/wc -l | /usr/bin/xargs
-      fix: |-
-        [source,bash]
-        ----
-        IFS=$'\n'
-        for userDirs in $( /usr/bin/find /System/Volumes/Data/Users -mindepth 1 -maxdepth 1 -type d ! \( -perm 700 -o -perm 711 \) | /usr/bin/grep -v "Shared" | /usr/bin/grep -v "Guest" ); do
-          /bin/chmod og-rwx "$userDirs"
-        done
-        unset IFS
-        ----
-    monterey:
-      severity: medium
-      benchmarks:
-        - cis_lvl1
-        - cis_lvl2
-        - disa_stig
-      check: /usr/bin/find /System/Volumes/Data/Users -mindepth 1 -maxdepth 1 -type d -perm -1 | /usr/bin/grep -v "Shared" | /usr/bin/grep -v "Guest" | /usr/bin/wc -l | /usr/bin/xargs
-      fix: |-
-        [source,bash]
-        ----
-        IFS=$'\n'
-        for userDirs in $( /usr/bin/find /System/Volumes/Data/Users -mindepth 1 -maxdepth 1 -type d -perm -1 | /usr/bin/grep -v "Shared" | /usr/bin/grep -v "Guest" ); do
-          /bin/chmod og-rwx "$userDirs"
-        done
-        unset IFS
-        ----
-    big_sur:
-      severity: medium
-      benchmarks:
-        - cis_lvl1
-        - cis_lvl2
-        - disa_stig
-      check: /usr/bin/find /System/Volumes/Data/Users -mindepth 1 -maxdepth 1 -type d -perm -1 | /usr/bin/grep -v "Shared" | /usr/bin/grep -v "Guest" | /usr/bin/wc -l | /usr/bin/xargs
-      fix: |-
-        [source,bash]
-        ----
-        IFS=$'\n'
-        for userDirs in $( /usr/bin/find /System/Volumes/Data/Users -mindepth 1 -maxdepth 1 -type d -perm -1 | /usr/bin/grep -v "Shared" | /usr/bin/grep -v "Guest" ); do
-          /bin/chmod og-rwx "$userDirs"
-        done
-        unset IFS
-        ----
-    catalina:
-      severity: medium
-      benchmarks:
-        - disa_stig
-      check: /usr/bin/find /System/Volumes/Data/Users -mindepth 1 -maxdepth 1 -type d -perm -1 | /usr/bin/grep -v "Shared" | /usr/bin/grep -v "Guest" | /usr/bin/wc -l | /usr/bin/xargs
-      fix: |-
-        [source,bash]
-        ----
-        IFS=$'\n'
-        for userDirs in $( /usr/bin/find /System/Volumes/Data/Users -mindepth 1 -maxdepth 1 -type d -perm -1 | /usr/bin/grep -v "Shared" | /usr/bin/grep -v "Guest" ); do
-          /bin/chmod og-rwx "$userDirs"
-        done
-        unset IFS
-        ----
 tags:
   - 800-53r5_moderate
   - 800-53r5_high
@@ -166,4 +83,3 @@ tags:
   - cmmc_lvl2
   - cmmc_lvl1
   - cnssi-1253_moderate
-  - cnssi-1253

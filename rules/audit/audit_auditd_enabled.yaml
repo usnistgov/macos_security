@@ -19,12 +19,6 @@ references:
         - CCE-92704-6
       macos_13:
         - CCE-91704-7
-      monterey:
-        - CCE-90854-1
-      big_sur:
-        - CCE-85254-1
-      catalina:
-        - CCE-84706-1
     800-53r5:
       - AU-3
       - AU-3(1)
@@ -99,12 +93,6 @@ references:
         - APPL-14-001003
       macos_13:
         - APPL-13-001003
-      monterey:
-        - APPL-12-001003
-      big_sur:
-        - APPL-11-001003
-      catalina:
-        - AOSX-15-001003
     cmmc:
       - AU.L2-3.3.2
       - AU.L2-3.3.6
@@ -116,17 +104,14 @@ references:
         - 3.1 (level 1)
       macos_13:
         - 3.1 (level 1)
-      monterey:
-        - 3.1 (level 1)
-      big_sur:
-        - 3.1 (level 1)
     controls_v8:
       - 8.2
       - 8.5
 platforms:
   macOS:
     check: $OS_VALUE
-    result: $OS_VALUE
+    result:
+      string: pass
     fix: $OS_VALUE
     '15.0':
       severity: medium
@@ -153,8 +138,6 @@ platforms:
         /bin/launchctl bootstrap system /System/Library/LaunchDaemons/com.apple.auditd.plist
         /usr/sbin/audit -i
         ----
-      result:
-        string: pass
     '14.0':
       severity: medium
       benchmarks:
@@ -180,8 +163,6 @@ platforms:
         /bin/launchctl bootstrap system /System/Library/LaunchDaemons/com.apple.auditd.plist
         /usr/sbin/audit -i
         ----
-      result:
-        string: pass
     '13.0':
       severity: medium
       benchmarks:
@@ -210,48 +191,6 @@ platforms:
           /usr/bin/touch /etc/security/audit_control
         fi
         ----
-      result:
-        string: pass
-    monterey:
-      severity: medium
-      benchmarks:
-        - cis_lvl1
-        - cis_lvl2
-        - disa_stig
-      check: /bin/launchctl list | /usr/bin/grep -c com.apple.auditd
-      fix: |-
-        [source,bash]
-        ----
-        /bin/launchctl load -w /System/Library/LaunchDaemons/com.apple.auditd.plist
-        ----
-      result:
-        integer: 1
-    big_sur:
-      severity: medium
-      benchmarks:
-        - cis_lvl1
-        - cis_lvl2
-        - disa_stig
-      check: /bin/launchctl list | /usr/bin/grep -c com.apple.auditd
-      fix: |-
-        [source,bash]
-        ----
-        /bin/launchctl load -w /System/Library/LaunchDaemons/com.apple.auditd.plist
-        ----
-      result:
-        integer: 1
-    catalina:
-      severity: medium
-      benchmarks:
-        - disa_stig
-      check: /bin/launchctl list | /usr/bin/grep -c com.apple.auditd
-      fix: |-
-        [source,bash]
-        ----
-        /bin/launchctl load -w /System/Library/LaunchDaemons/com.apple.auditd.plist
-        ----
-      result:
-        integer: 1
 tags:
   - 800-53r5_low
   - 800-53r5_moderate
@@ -262,4 +201,3 @@ tags:
   - cnssi-1253_high
   - cmmc_lvl2
   - cnssi-1253_moderate
-  - cnssi-1253

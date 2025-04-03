@@ -11,12 +11,6 @@ references:
         - CCE-92769-9
       macos_13:
         - CCE-91767-4
-      monterey:
-        - CCE-90908-5
-      big_sur:
-        - CCE-85299-6
-      catalina:
-        - CCE-84749-1
     800-53r5:
       - CM-7
       - CM-7(1)
@@ -34,12 +28,6 @@ references:
         - APPL-14-002005
       macos_13:
         - APPL-13-002005
-      monterey:
-        - APPL-12-002005
-      big_sur:
-        - APPL-11-002005
-      catalina:
-        - AOSX-15-002005
     cmmc:
       - CM.L2-3.4.6
       - CM.L2-3.4.7
@@ -50,10 +38,6 @@ references:
       macos_14:
         - 4.1 (level 2)
       macos_13:
-        - 4.1 (level 2)
-      monterey:
-        - 4.1 (level 2)
-      big_sur:
         - 4.1 (level 2)
     controls_v8:
       - 4.1
@@ -84,20 +68,6 @@ platforms:
       benchmarks:
         - cis_lvl2
         - disa_stig
-    monterey:
-      severity: medium
-      benchmarks:
-        - cis_lvl2
-        - disa_stig
-    big_sur:
-      severity: medium
-      benchmarks:
-        - cis_lvl2
-        - disa_stig
-    catalina:
-      severity: medium
-      benchmarks:
-        - disa_stig
 tags:
   - 800-53r5_low
   - 800-53r5_moderate
@@ -108,7 +78,6 @@ tags:
   - cnssi-1253_high
   - cmmc_lvl2
   - cnssi-1253_moderate
-  - cnssi-1253
 mobileconfig_info:
   com.apple.mDNSResponder:
     NoMulticastAdvertisements: true

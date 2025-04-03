@@ -11,8 +11,6 @@ references:
         - CCE-92879-6
       macos_13:
         - CCE-92004-1
-      monterey:
-        - CCE-85143-6
   cis:
     benchmark:
       macos_15:
@@ -21,8 +19,6 @@ references:
         - 6.3.7 (level 1)
       macos_13:
         - 6.3.7 (level 1)
-      monterey:
-        - 7.2.8 (level 1)
     controls_v8:
       - 9.1
 platforms:
@@ -42,10 +38,6 @@ platforms:
         - cis_lvl1
         - cis_lvl2
     '13.0':
-      benchmarks:
-        - cis_lvl1
-        - cis_lvl2
-    monterey:
       benchmarks:
         - cis_lvl1
         - cis_lvl2

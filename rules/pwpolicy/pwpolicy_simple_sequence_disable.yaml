@@ -10,12 +10,6 @@ references:
         - CCE-92939-8
       macos_13:
         - CCE-91926-6
-      monterey:
-        - CCE-91039-8
-      big_sur:
-        - CCE-85412-5
-      catalina:
-        - CCE-84818-4
       ios_18:
         - CCE-94478-5
       ios_17:
@@ -76,9 +70,6 @@ platforms:
     '13.0':
       benchmarks:
         - disa_stig
-    monterey: {}
-    big_sur: {}
-    catalina: {}
   iOS:
     '18.0':
       severity: medium
@@ -123,7 +114,6 @@ tags:
   - cnssi-1253_high
   - cmmc_lvl2
   - cnssi-1253_moderate
-  - cnssi-1253
 mobileconfig_info:
   com.apple.mobiledevice.passwordpolicy:
     allowSimple: false

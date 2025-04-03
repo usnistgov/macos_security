@@ -13,12 +13,6 @@ references:
         - CCE-92910-9
       macos_13:
         - CCE-91898-7
-      monterey:
-        - CCE-91016-6
-      big_sur:
-        - CCE-85388-7
-      catalina:
-        - CCE-84851-5
     800-53r5:
       - SC-34
       - MA-4(1)
@@ -34,9 +28,6 @@ platforms:
     '15.0': {}
     '14.0': {}
     '13.0': {}
-    monterey: {}
-    big_sur: {}
-    catalina: {}
 tags:
   - 800-53r5_moderate
   - 800-53r5_high

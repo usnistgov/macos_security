@@ -15,12 +15,6 @@ references:
         - CCE-92784-8
       macos_13:
         - CCE-91782-3
-      monterey:
-        - CCE-90917-6
-      big_sur:
-        - CCE-85306-9
-      catalina:
-        - CCE-84854-9
     800-53r5:
       - CM-5(1)
   disa:
@@ -35,9 +29,6 @@ platforms:
     '15.0': {}
     '14.0': {}
     '13.0': {}
-    monterey: {}
-    big_sur: {}
-    catalina: {}
 tags:
   - 800-53r5_high
   - inherent

@@ -13,12 +13,6 @@ references:
         - CCE-92748-3
       macos_13:
         - CCE-91746-8
-      monterey:
-        - CCE-90890-5
-      big_sur:
-        - CCE-85287-1
-      catalina:
-        - CCE-84735-0
       ios_18:
         - CCE-94416-5
       ios_17:
@@ -49,12 +43,6 @@ references:
         - APPL-14-002040
       macos_13:
         - APPL-13-002040
-      monterey:
-        - APPL-12-002040
-      big_sur:
-        - APPL-11-002040
-      catalina:
-        - AOSX-15-002040
       ios_18:
         - AIOS-18-003300
       ios_17:
@@ -108,18 +96,6 @@ platforms:
       severity: medium
       benchmarks:
         - disa_stig
-    monterey:
-      severity: medium
-      benchmarks:
-        - disa_stig
-    big_sur:
-      severity: medium
-      benchmarks:
-        - disa_stig
-    catalina:
-      severity: medium
-      benchmarks:
-        - disa_stig
   iOS:
     '18.0':
       severity: medium
@@ -157,7 +133,6 @@ tags:
   - cmmc_lvl2
   - cmmc_lvl1
   - cnssi-1253_moderate
-  - cnssi-1253
 mobileconfig_info:
   com.apple.applicationaccess:
     allowCloudKeychainSync: false

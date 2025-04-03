@@ -15,12 +15,6 @@ references:
         - CCE-92905-9
       macos_13:
         - CCE-91893-8
-      monterey:
-        - CCE-91013-3
-      big_sur:
-        - CCE-85385-3
-      catalina:
-        - CCE-84798-8
     800-53r5:
       - IA-2(5)
   disa:
@@ -38,153 +32,47 @@ references:
         - APPL-14-001100
       macos_13:
         - APPL-13-001100
-      monterey:
-        - APPL-12-001100
-      big_sur:
-        - APPL-11-001100
-      catalina:
-        - AOSX-15-001100
 platforms:
   macOS:
     check: $OS_VALUE
-    result: $OS_VALUE
-    fix: $OS_VALUE
+    result:
+      string: 'no'
+    fix: |
+      [source,bash]
+      ----
+      include_dir=$(/usr/bin/awk '/^Include/ {print $2}' /etc/ssh/sshd_config | /usr/bin/tr -d '*')
+
+      if [[ -z $include_dir ]]; then
+        /usr/bin/sed -i.bk "1s/.*/Include \/etc\/ssh\/sshd_config.d\/\*/" /etc/ssh/sshd_config
+      fi
+
+      /usr/bin/grep -qxF 'permitrootlogin no' "${include_dir}01-mscp-sshd.conf" 2>/dev/null || echo "permitrootlogin no" >> "${include_dir}01-mscp-sshd.conf"
+
+      for file in $(ls ${include_dir}); do
+        if [[ "$file" == "100-macos.conf" ]]; then
+            continue
+        fi
+        if [[ "$file" == "01-mscp-sshd.conf" ]]; then
+            break
+        fi
+        /bin/mv ${include_dir}${file} ${include_dir}20-${file}
+      done
+      ----
     '15.0':
       severity: medium
       benchmarks:
         - disa_stig
       check: /usr/sbin/sshd -G | /usr/bin/awk '/permitrootlogin/{print $2}'
-      fix: |-
-        [source,bash]
-        ----
-        include_dir=$(/usr/bin/awk '/^Include/ {print $2}' /etc/ssh/sshd_config | /usr/bin/tr -d '*')
-
-        if [[ -z $include_dir ]]; then
-          /usr/bin/sed -i.bk "1s/.*/Include \/etc\/ssh\/sshd_config.d\/\*/" /etc/ssh/sshd_config
-        fi
-
-        /usr/bin/grep -qxF 'permitrootlogin no' "${include_dir}01-mscp-sshd.conf" 2>/dev/null || echo "permitrootlogin no" >> "${include_dir}01-mscp-sshd.conf"
-
-        for file in $(ls ${include_dir}); do
-          if [[ "$file" == "100-macos.conf" ]]; then
-              continue
-          fi
-          if [[ "$file" == "01-mscp-sshd.conf" ]]; then
-              break
-          fi
-          /bin/mv ${include_dir}${file} ${include_dir}20-${file}
-        done
-        ----
-      result:
-        string: 'no'
     '14.0':
       severity: medium
       benchmarks:
         - disa_stig
       check: /usr/sbin/sshd -G | /usr/bin/awk '/permitrootlogin/{print $2}'
-      fix: |-
-        [source,bash]
-        ----
-        include_dir=$(/usr/bin/awk '/^Include/ {print $2}' /etc/ssh/sshd_config | /usr/bin/tr -d '*')
-
-        if [[ -z $include_dir ]]; then
-          /usr/bin/sed -i.bk "1s/.*/Include \/etc\/ssh\/sshd_config.d\/\*/" /etc/ssh/sshd_config
-        fi
-
-        /usr/bin/grep -qxF 'permitrootlogin no' "${include_dir}01-mscp-sshd.conf" 2>/dev/null || echo "permitrootlogin no" >> "${include_dir}01-mscp-sshd.conf"
-
-        for file in $(ls ${include_dir}); do
-          if [[ "$file" == "100-macos.conf" ]]; then
-              continue
-          fi
-          if [[ "$file" == "01-mscp-sshd.conf" ]]; then
-              break
-          fi
-          /bin/mv ${include_dir}${file} ${include_dir}20-${file}
-        done
-        ----
-      result:
-        string: 'no'
     '13.0':
       severity: medium
       benchmarks:
         - disa_stig
       check: /usr/sbin/sshd -T | /usr/bin/awk '/permitrootlogin/{print $2}'
-      fix: |-
-        [source,bash]
-        ----
-        include_dir=$(/usr/bin/awk '/^Include/ {print $2}' /etc/ssh/sshd_config | /usr/bin/tr -d '*')
-
-        if [[ -z $include_dir ]]; then
-          /usr/bin/sed -i.bk "1s/.*/Include \/etc\/ssh\/sshd_config.d\/\*/" /etc/ssh/sshd_config
-        fi
-
-        /usr/bin/grep -qxF 'permitrootlogin no' "${include_dir}01-mscp-sshd.conf" 2>/dev/null || echo "permitrootlogin no" >> "${include_dir}01-mscp-sshd.conf"
-
-        for file in $(ls ${include_dir}); do
-          if [[ "$file" == "100-macos.conf" ]]; then
-              continue
-          fi
-          if [[ "$file" == "01-mscp-sshd.conf" ]]; then
-              break
-          fi
-          /bin/mv ${include_dir}${file} ${include_dir}20-${file}
-        done
-        ----
-      result:
-        string: 'no'
-    monterey:
-      severity: medium
-      benchmarks:
-        - disa_stig
-      check: /usr/sbin/sshd -T | /usr/bin/awk '/permitrootlogin/{print $2}'
-      fix: |-
-        [source,bash]
-        ----
-        include_dir=$(/usr/bin/awk '/^Include/ {print $2}' /etc/ssh/sshd_config | /usr/bin/tr -d '*')
-
-        if [[ -z $include_dir ]]; then
-          /usr/bin/sed -i.bk "1s/.*/Include \/etc\/ssh\/sshd_config.d\/\*/" /etc/ssh/sshd_config
-        fi
-
-        /usr/bin/grep -qxF 'permitrootlogin no' "${include_dir}01-mscp-sshd.conf" 2>/dev/null || echo "permitrootlogin no" >> "${include_dir}01-mscp-sshd.conf"
-
-        for file in $(ls ${include_dir}); do
-          if [[ "$file" == "100-macos.conf" ]]; then
-              continue
-          fi
-          if [[ "$file" == "01-mscp-sshd.conf" ]]; then
-              break
-          fi
-          /bin/mv ${include_dir}${file} ${include_dir}20-${file}
-        done
-        ----
-      result:
-        string: 'no'
-    big_sur:
-      severity: medium
-      benchmarks:
-        - disa_stig
-      check: /usr/bin/grep -c "^PermitRootLogin no" /etc/ssh/sshd_config
-      fix: |-
-        [source,bash]
-        ----
-        /usr/bin/sed -i.bak 's/^[\#]*PermitRootLogin.*/PermitRootLogin no/' /etc/ssh/sshd_config; /bin/launchctl kickstart -k system/com.openssh.sshd
-        ----
-      result:
-        integer: 1
-    catalina:
-      severity: medium
-      benchmarks:
-        - disa_stig
-      check: /usr/bin/grep -c "^PermitRootLogin no" /etc/ssh/sshd_config
-      fix: |-
-        [source,bash]
-        ----
-        /usr/bin/sed -i.bak 's/^[\#]*PermitRootLogin.*/PermitRootLogin no/' /etc/ssh/sshd_config; /bin/launchctl kickstart -k system/com.openssh.sshd
-        ----
-      result:
-        integer: 1
 tags:
   - 800-53r5_high
   - cnssi-1253_low

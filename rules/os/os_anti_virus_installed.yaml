@@ -13,24 +13,12 @@ references:
         - CCE-92758-2
       macos_13:
         - CCE-91756-7
-      monterey:
-        - CCE-90900-2
-      big_sur:
-        - CCE-85501-5
-      catalina:
-        - CCE-84894-5
   disa:
     cci:
       - CCI-000366
     disa_stig:
       macos_13:
         - APPL-13-002070
-      monterey:
-        - APPL-12-002070
-      big_sur:
-        - APPL-11-002070
-      catalina:
-        - AOSX-15-002070
   cis:
     benchmark:
       macos_15:
@@ -46,7 +34,8 @@ references:
 platforms:
   macOS:
     check: $OS_VALUE
-    result: $OS_VALUE
+    result:
+      integer: 2
     fix: $OS_VALUE
     '15.0':
       severity: high
@@ -62,8 +51,6 @@ platforms:
         ----
 
         NOTE: These services cannot be unloaded or loaded while System Integrity Protection (SIP) is enabled.
-      result:
-        integer: 2
     '14.0':
       severity: high
       benchmarks:
@@ -78,8 +65,6 @@ platforms:
         ----
 
         NOTE: These services cannot be unloaded or loaded while System Integrity Protection (SIP) is enabled.
-      result:
-        integer: 2
     '13.0':
       severity: high
       benchmarks:
@@ -92,42 +77,5 @@ platforms:
         /bin/launchctl load -w /Library/Apple/System/Library/LaunchDaemons/com.apple.XprotectFramework.PluginService.plist
         ----
         NOTE: These services cannot be unloaded or loaded while System Integrity Protection (SIP) is enabled.
-      result:
-        integer: 2
-    monterey:
-      severity: high
-      benchmarks:
-        - disa_stig
-      check: /bin/launchctl list | /usr/bin/grep -cE "(com.apple.XprotectFramework.PluginService$|com.apple.XProtect.daemon.scan$)"
-      fix: |-
-        [source,shell]
-        ----
-        /bin/launchctl load -w /Library/Apple/System/Library/LaunchDaemons/com.apple.XProtect.daemon.scan.plist
-        /bin/launchctl load -w /Library/Apple/System/Library/LaunchDaemons/com.apple.XprotectFramework.PluginService.plist
-        ----
-        NOTE: These services cannot be unloaded or loaded while System Integrity Protection (SIP) is enabled.
-      result:
-        integer: 2
-    big_sur:
-      severity: high
-      benchmarks:
-        - disa_stig
-      check: /bin/launchctl print-disabled system | /usr/bin/grep -c '"com.apple.mrt" => false'
-      fix: |-
-        [source,bash]
-        ----
-        /bin/launchctl enable system/com.apple.mrt
-        ----
-      result:
-        integer: 1
-    catalina:
-      severity: high
-      benchmarks:
-        - disa_stig
-      check: |-
-        Ask the System Administrator (SA) or Information System Security Officer (ISSO) if an approved antivirus solution is loaded on the system. The antivirus solution may be bundled with an approved host-based security solution.
-        If there is no local antivirus solution installed on the system, this is a finding.
-      fix: Install an approved antivirus solution onto the system.
 tags:
   - cisv8
-  - manual

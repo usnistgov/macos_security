@@ -15,12 +15,6 @@ references:
         - CCE-92851-5
       macos_13:
         - CCE-91846-6
-      monterey:
-        - CCE-90974-7
-      big_sur:
-        - CCE-85356-4
-      catalina:
-        - CCE-84778-0
     800-53r5:
       - AC-8
     800-171r3:
@@ -39,17 +33,13 @@ references:
         - APPL-14-000023
       macos_13:
         - APPL-13-000023
-      monterey:
-        - APPL-12-000023
-      big_sur:
-        - APPL-11-000023
-      catalina:
-        - AOSX-15-000023
     cmmc:
       - AC.L2-3.1.9
 platforms:
   macOS:
-    check: $OS_VALUE
+    check: |
+      bannerText="$ODV"
+      test "$(cat /etc/banner)" = "$bannerText" && echo "1" || echo "0"
     result:
       integer: 1
     fix: |
@@ -62,47 +52,14 @@ platforms:
       severity: medium
       benchmarks:
         - disa_stig
-      check: |-
-        bannerText="$ODV"
-        test "$(cat /etc/banner)" = "$bannerText" && echo "1" || echo "0"
     '14.0':
       severity: medium
       benchmarks:
         - disa_stig
-      check: |-
-        bannerText="$ODV"
-        test "$(cat /etc/banner)" = "$bannerText" && echo "1" || echo "0"
     '13.0':
       severity: medium
       benchmarks:
         - disa_stig
-      check: |-
-        bannerText="$ODV"
-        test "$(cat /etc/banner)" = "$bannerText" && echo "1" || echo "0"
-    monterey:
-      severity: medium
-      benchmarks:
-        - disa_stig
-      check: |-
-        bannerText="$ODV"
-        test "$(cat /etc/banner)" = "$bannerText" && echo "1" || echo "0"
-    big_sur:
-      severity: medium
-      benchmarks:
-        - disa_stig
-      check: |-
-        bannerText="$ODV"
-        test "$(cat /etc/banner)" = "$bannerText" && echo "1" || echo "0"
-    catalina:
-      severity: medium
-      benchmarks:
-        - disa_stig
-      check: |-
-        compliant=1
-        if [[ "$(/bin/cat /etc/banner)" != "$ODV" ]]; then
-          compliant=0
-        fi
-        echo "$compliant"
 odv:
   hint: Organization's Policy Text
   recommended: |-
@@ -113,11 +70,18 @@ odv:
     -This IS includes security measures (e.g., authentication and access controls) to protect USG interests--not for your personal benefit or privacy.
     -Notwithstanding the above, using this IS does not constitute consent to PM, LE or CI investigative searching or monitoring of the content of privileged communications, or work product, related to personal representation or services by attorneys, psychotherapists, or clergy, and their assistants. Such communications and work product are private and confidential. See User Agreement for details.
   stig: |-
-    You are accessing a U.S. Government (USG) Information System (IS) that is provided for USG-authorized use only. By using this IS (which includes any device attached to this IS), you consent to the following conditions:
+    You are accessing a U.S. Government (USG) Information System (IS) that is provided for USG-authorized use only.
+
+    By using this IS (which includes any device attached to this IS), you consent to the following conditions:
+
     -The USG routinely intercepts and monitors communications on this IS for purposes including, but not limited to, penetration testing, COMSEC monitoring, network operations and defense, personnel misconduct (PM), law enforcement (LE), and counterintelligence (CI) investigations.
+
     -At any time, the USG may inspect and seize data stored on this IS.
-    -Communications using, or data stored on, this IS are not private, are subject to routine monitoring, interception, and search, and may be disclosed or used for any USG authorized purpose.
+
+    -Communications using, or data stored on, this IS are not private, are subject to routine monitoring, interception, and search, and may be disclosed or used for any USG-authorized purpose.
+
     -This IS includes security measures (e.g., authentication and access controls) to protect USG interests--not for your personal benefit or privacy.
+
     -Notwithstanding the above, using this IS does not constitute consent to PM, LE or CI investigative searching or monitoring of the content of privileged communications, or work product, related to personal representation or services by attorneys, psychotherapists, or clergy, and their assistants. Such communications and work product are private and confidential. See User Agreement for details.
 tags:
   - 800-53r5_low

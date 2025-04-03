@@ -13,12 +13,6 @@ references:
         - CCE-92799-6
       macos_13:
         - CCE-91797-1
-      monterey:
-        - CCE-90929-1
-      big_sur:
-        - CCE-85321-8
-      catalina:
-        - CCE-84763-2
       ios_18:
         - CCE-94443-9
       ios_17:
@@ -52,8 +46,6 @@ references:
         - APPL-14-005058
       macos_13:
         - APPL-13-005058
-      monterey:
-        - APPL-12-005058
       ios_18:
         - AIOS-18-010800
       ios_17:
@@ -108,12 +100,6 @@ platforms:
       severity: low
       benchmarks:
         - disa_stig
-    monterey:
-      severity: low
-      benchmarks:
-        - disa_stig
-    big_sur: {}
-    catalina: {}
   iOS:
     '18.0':
       severity: low
@@ -154,7 +140,6 @@ tags:
   - cmmc_lvl2
   - cmmc_lvl1
   - cnssi-1253_moderate
-  - cnssi-1253
 mobileconfig_info:
   com.apple.applicationaccess:
     allowActivityContinuation: false

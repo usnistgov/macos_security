@@ -15,12 +15,6 @@ references:
         - CCE-92812-7
       macos_13:
         - CCE-91808-6
-      monterey:
-        - CCE-90939-0
-      big_sur:
-        - CCE-85329-1
-      catalina:
-        - CCE-84768-1
     800-53r5:
       - AC-18
       - CM-7
@@ -31,10 +25,6 @@ references:
   disa:
     disa_stig:
       macos_13:
-        - AOSX-13-000075
-      monterey:
-        - AOSX-13-000075
-      catalina:
         - AOSX-13-000075
     cmmc:
       - AC.L2-3.1.16
@@ -59,9 +49,6 @@ platforms:
     '15.0': {}
     '14.0': {}
     '13.0': {}
-    monterey: {}
-    big_sur: {}
-    catalina: {}
 tags:
   - 800-53r5_low
   - 800-53r5_moderate
@@ -72,7 +59,6 @@ tags:
   - cnssi-1253_high
   - cmmc_lvl2
   - cnssi-1253_moderate
-  - cnssi-1253
 mobileconfig_info:
   com.apple.ManagedClient.preferences:
     com.apple.driver.AppleIRController:

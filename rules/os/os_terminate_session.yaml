@@ -11,12 +11,6 @@ references:
         - CCE-92913-3
       macos_13:
         - CCE-91901-9
-      monterey:
-        - CCE-91017-4
-      big_sur:
-        - CCE-85390-3
-      catalina:
-        - CCE-84881-2
 platforms:
   macOS:
     check: |
@@ -26,8 +20,5 @@ platforms:
     '15.0': {}
     '14.0': {}
     '13.0': {}
-    monterey: {}
-    big_sur: {}
-    catalina: {}
 tags:
   - inherent

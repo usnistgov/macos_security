@@ -17,8 +17,6 @@ references:
         - CCE-92720-2
       macos_13:
         - CCE-91721-1
-      monterey:
-        - CCE-90865-7
     800-53r5:
       - AC-2(12)
       - AU-12
@@ -44,8 +42,6 @@ references:
         - 3.2 (level 2)
       macos_13:
         - 3.2 (level 2)
-      monterey:
-        - 3.2 (level 2)
     controls_v8:
       - 3.14
       - 8.2
@@ -70,10 +66,6 @@ platforms:
       benchmarks:
         - cis_lvl2
     '13.0':
-      severity: medium
-      benchmarks:
-        - cis_lvl2
-    monterey:
       severity: medium
       benchmarks:
         - cis_lvl2

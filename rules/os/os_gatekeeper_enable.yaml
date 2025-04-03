@@ -15,12 +15,6 @@ references:
         - CCE-92795-4
       macos_13:
         - CCE-91793-0
-      monterey:
-        - CCE-90926-7
-      big_sur:
-        - CCE-85315-0
-      catalina:
-        - CCE-84759-0
     800-53r5:
       - CM-14
       - CM-5
@@ -43,12 +37,6 @@ references:
         - APPL-14-002064
       macos_13:
         - APPL-13-002064
-      monterey:
-        - APPL-12-002064
-      big_sur:
-        - APPL-11-002064
-      catalina:
-        - AOSX-15-002064
     cmmc:
       - CM.L2-3.4.5
       - SI.L1-3.14.1
@@ -62,10 +50,6 @@ references:
         - 2.6.5 (level 1)
       macos_13:
         - 2.6.4 (level 1)
-      monterey:
-        - 2.5.7 (level 1)
-      big_sur:
-        - 2.5.7 (level 1)
     controls_v8:
       - 10.1
       - 10.2
@@ -117,46 +101,6 @@ platforms:
         ----
       result:
         integer: 1
-    monterey:
-      severity: high
-      benchmarks:
-        - cis_lvl1
-        - cis_lvl2
-        - disa_stig
-      check: /usr/sbin/spctl --status | /usr/bin/grep -c "assessments enabled"
-      fix: |-
-        [source,bash]
-        ----
-        /usr/sbin/spctl --global-enable
-        ----
-      result:
-        integer: 1
-    big_sur:
-      severity: high
-      benchmarks:
-        - cis_lvl1
-        - cis_lvl2
-        - disa_stig
-      check: /usr/sbin/spctl --status | /usr/bin/grep -c "assessments enabled"
-      fix: |-
-        [source,bash]
-        ----
-        /usr/sbin/spctl --master-enable
-        ----
-      result:
-        integer: 1
-    catalina:
-      severity: high
-      benchmarks:
-        - disa_stig
-      check: /usr/sbin/spctl --status | /usr/bin/grep -c "assessments enabled"
-      fix: |-
-        [source,bash]
-        ----
-        /usr/sbin/spctl --master-enable
-        ----
-      result:
-        integer: 1
 tags:
   - 800-53r5_low
   - 800-53r5_moderate
@@ -168,7 +112,6 @@ tags:
   - cmmc_lvl2
   - cmmc_lvl1
   - cnssi-1253_moderate
-  - cnssi-1253
 mobileconfig_info:
   com.apple.systempolicy.control:
     EnableAssessment: true

@@ -15,12 +15,6 @@ references:
         - CCE-92925-7
       macos_13:
         - CCE-91913-4
-      monterey:
-        - CCE-91026-5
-      big_sur:
-        - CCE-85399-4
-      catalina:
-        - CCE-84898-6
     800-171r3:
       - 03.05.07
   disa:
@@ -35,10 +29,6 @@ platforms:
     '15.0': {}
     '14.0': {}
     '13.0': {}
-    monterey: {}
-    big_sur: {}
-    catalina: {}
 tags:
   - 800-171
   - permanent
-  - cnssi-1253

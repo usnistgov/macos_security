@@ -11,10 +11,6 @@ references:
         - CCE-92706-1
       macos_13:
         - CCE-91706-2
-      monterey:
-        - CCE-91088-5
-      big_sur:
-        - CCE-85495-0
     800-53r5:
       - AU-9
     800-171r3:
@@ -51,10 +47,6 @@ references:
         - 3.5 (level 1)
       macos_13:
         - 3.5 (level 1)
-      monterey:
-        - 3.5 (level 1)
-      big_sur:
-        - 3.5 (level 1)
     controls_v8:
       - 3.3
 platforms:
@@ -81,14 +73,6 @@ platforms:
         - cis_lvl2
         - disa_stig
     '13.0':
-      benchmarks:
-        - cis_lvl1
-        - cis_lvl2
-    monterey:
-      benchmarks:
-        - cis_lvl1
-        - cis_lvl2
-    big_sur:
       benchmarks:
         - cis_lvl1
         - cis_lvl2

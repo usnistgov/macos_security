@@ -19,21 +19,12 @@ references:
         - CCE-92930-7
       macos_13:
         - CCE-91918-3
-      monterey:
-        - CCE-91032-3
-      big_sur:
-        - CCE-85405-9
-      catalina:
-        - CCE-84812-7
     800-53r5:
       - AC-2(2)
   disa:
     srg:
       - SRG-OS-000002-GPOS-00002
       - SRG-OS-000123-GPOS-00064
-    disa_stig:
-      catalina:
-        - AOSX-15-000013
 platforms:
   macOS:
     check: |
@@ -43,13 +34,9 @@ platforms:
     '15.0': {}
     '14.0': {}
     '13.0': {}
-    monterey: {}
-    big_sur: {}
-    catalina: {}
 tags:
   - 800-53r5_moderate
   - 800-53r5_high
   - inherent
   - cnssi-1253_high
   - cnssi-1253_moderate
-  - cnssi-1253

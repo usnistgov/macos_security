@@ -15,10 +15,6 @@ references:
         - CCE-92870-5
       macos_13:
         - CCE-91865-6
-      monterey:
-        - CCE-90989-5
-      big_sur:
-        - CCE-85483-6
     800-53r5:
       - AC-6
     800-171r3:
@@ -42,26 +38,18 @@ platforms:
       /usr/libexec/mdmclient QuerySecurityInfo | /usr/bin/grep -c "IsRecoveryLockEnabled = 1"
     result:
       integer: 1
-    fix: $OS_VALUE
+    fix: |
+      NOTE: The SetRecoveryLock command can be used to set a Recovery Lock password and must be from your MDM.
     '15.0':
       severity: medium
       benchmarks:
         - disa_stig
-      fix: 'NOTE: The SetRecoveryLock command can be used to set a Recovery Lock password and must be from your MDM.'
     '14.0':
       severity: medium
       benchmarks:
         - disa_stig
-      fix: 'NOTE: The SetRecoveryLock command can be used to set a Recovery Lock password and must be from your MDM.'
     '13.0':
       severity: medium
-      fix: 'NOTE: The SetRecoveryLock command can be used to set a Recovery Lock password and must be from your MDM.'
-    monterey:
-      severity: medium
-      fix: 'NOTE: The SetRecoveryLock command can be used to set a Recovery Lock password.'
-    big_sur:
-      severity: medium
-      fix: 'NOTE: The SetRecoveryLock command can be used to set a Recovery Lock password.'
 tags:
   - 800-53r5_moderate
   - 800-53r5_high

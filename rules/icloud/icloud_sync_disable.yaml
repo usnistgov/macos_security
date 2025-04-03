@@ -13,12 +13,6 @@ references:
         - CCE-92754-1
       macos_13:
         - CCE-91752-6
-      monterey:
-        - CCE-90896-2
-      big_sur:
-        - CCE-85292-1
-      catalina:
-        - CCE-84740-0
       ios_18:
         - CCE-94421-5
       ios_17:
@@ -64,10 +58,6 @@ references:
         - 2.1.1.3 (level 2)
       macos_13:
         - 2.1.1.3 (level 2)
-      monterey:
-        - 2.6.1.3 (level 2)
-      big_sur:
-        - 2.6.1.3 (level 2)
       ios_18:
         - 3.2.1.5 (level 1 - Institutionally-Owned Devices)
       ios_17:
@@ -110,13 +100,6 @@ platforms:
     '13.0':
       benchmarks:
         - cis_lvl2
-    monterey:
-      benchmarks:
-        - cis_lvl2
-    big_sur:
-      benchmarks:
-        - cis_lvl2
-    catalina: {}
   iOS:
     '18.0':
       severity: medium
@@ -167,5 +150,4 @@ tags:
   - cmmc_lvl2
   - cmmc_lvl1
   - cnssi-1253_moderate
-  - cnssi-1253
 mobileconfig_info: $OS_VALUE

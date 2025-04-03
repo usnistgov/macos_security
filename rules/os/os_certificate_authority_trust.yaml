@@ -11,12 +11,6 @@ references:
         - CCE-92774-9
       macos_13:
         - CCE-91772-4
-      monterey:
-        - CCE-90911-9
-      big_sur:
-        - CCE-85302-8
-      catalina:
-        - CCE-85302-8
     800-53r5:
       - SC-17
   disa:
@@ -33,12 +27,6 @@ references:
         - APPL-15-003001
       macos_14:
         - APPL-14-003001
-      monterey:
-        - APPL-12-003001
-      big_sur:
-        - APPL-11-003001
-      catalina:
-        - AOSX-15-003001
     cmmc:
       - SC.L2-3.13.10
 platforms:
@@ -61,18 +49,6 @@ platforms:
       severity: high
       benchmarks:
         - disa_stig
-    monterey:
-      severity: high
-      benchmarks:
-        - disa_stig
-    big_sur:
-      severity: high
-      benchmarks:
-        - disa_stig
-    catalina:
-      severity: high
-      benchmarks:
-        - disa_stig
 tags:
   - 800-53r5_moderate
   - 800-53r5_high
@@ -81,4 +57,3 @@ tags:
   - cnssi-1253_high
   - cmmc_lvl2
   - cnssi-1253_moderate
-  - cnssi-1253

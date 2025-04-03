@@ -13,12 +13,6 @@ references:
         - CCE-92702-0
       macos_13:
         - CCE-91702-1
-      monterey:
-        - CCE-90852-5
-      big_sur:
-        - CCE-85252-5
-      catalina:
-        - CCE-84704-6
     800-53r5:
       - AU-9
     800-171r3:
@@ -46,12 +40,6 @@ references:
         - APPL-14-000031
       macos_13:
         - APPL-13-000031
-      monterey:
-        - APPL-12-000031
-      big_sur:
-        - APPL-11-000031
-      catalina:
-        - AOSX-15-000031
     cmmc:
       - AU.L2-3.3.8
   cis:
@@ -62,88 +50,37 @@ references:
         - 3.5 (level 1)
       macos_13:
         - 3.5 (level 1)
-      monterey:
-        - 3.5 (level 1)
-      big_sur:
-        - 3.5 (level 1)
     controls_v8:
       - 3.3
 platforms:
   macOS:
-    check: $OS_VALUE
+    check: |
+      /bin/ls -lde /var/audit | /usr/bin/awk '{print $1}' | /usr/bin/grep -c ":"
     result:
       integer: 0
-    fix: $OS_VALUE
+    fix: |
+      [source,bash]
+      ----
+      /bin/chmod -N /var/audit
+      ----
     '15.0':
       severity: medium
       benchmarks:
         - cis_lvl1
         - cis_lvl2
         - disa_stig
-      check: /bin/ls -lde /var/audit | /usr/bin/awk '{print $1}' | /usr/bin/grep -c ":"
-      fix: |-
-        [source,bash]
-        ----
-        /bin/chmod -N /var/audit
-        ----
     '14.0':
       severity: medium
       benchmarks:
         - cis_lvl1
         - cis_lvl2
         - disa_stig
-      check: /bin/ls -lde /var/audit | /usr/bin/awk '{print $1}' | /usr/bin/grep -c ":"
-      fix: |-
-        [source,bash]
-        ----
-        /bin/chmod -N /var/audit
-        ----
     '13.0':
       severity: medium
       benchmarks:
         - cis_lvl1
         - cis_lvl2
         - disa_stig
-      check: /bin/ls -lde /var/audit | /usr/bin/awk '{print $1}' | /usr/bin/grep -c ":"
-      fix: |-
-        [source,bash]
-        ----
-        /bin/chmod -N /var/audit
-        ----
-    monterey:
-      severity: medium
-      benchmarks:
-        - cis_lvl1
-        - cis_lvl2
-        - disa_stig
-      check: '/bin/ls -lde $(/usr/bin/grep ''^dir'' /etc/security/audit_control | /usr/bin/awk -F: ''{print $2}'') | /usr/bin/awk ''{print $1}'' | /usr/bin/grep -c ":"'
-      fix: |-
-        [source,bash]
-        ----
-        /bin/chmod -N $(/usr/bin/grep '^dir' /etc/security/audit_control | /usr/bin/awk -F: '{print $2}')
-        ----
-    big_sur:
-      severity: medium
-      benchmarks:
-        - cis_lvl1
-        - cis_lvl2
-        - disa_stig
-      check: '/bin/ls -lde $(/usr/bin/grep ''^dir'' /etc/security/audit_control | /usr/bin/awk -F: ''{print $2}'') | /usr/bin/awk ''{print $1}'' | /usr/bin/grep -c ":"'
-      fix: |-
-        [source,bash]
-        ----
-        /bin/chmod -N $(/usr/bin/grep '^dir' /etc/security/audit_control | /usr/bin/awk -F: '{print $2}')
-        ----
-    catalina:
-      severity: medium
-      benchmarks:
-        - disa_stig
-      check: '/bin/ls -lde $(/usr/bin/grep ''^dir'' /etc/security/audit_control | /usr/bin/awk -F: ''{print $2}'') | /usr/bin/awk ''{print $1}'' | /usr/bin/grep -c ":"'
-      fix: |-
-        [source,bash]
-        ----
-        /bin/chmod -N $(/usr/bin/grep '^dir' /etc/security/audit_control | /usr/bin/awk -F: '{print $2}')
-        ----
 tags:
   - 800-53r5_low
   - 800-53r5_moderate
@@ -154,4 +91,3 @@ tags:
   - cnssi-1253_high
   - cmmc_lvl2
   - cnssi-1253_moderate
-  - cnssi-1253

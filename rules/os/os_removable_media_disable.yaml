@@ -23,12 +23,6 @@ references:
         - CCE-92872-1
       macos_13:
         - CCE-91867-2
-      monterey:
-        - CCE-90991-1
-      big_sur:
-        - CCE-85370-5
-      catalina:
-        - CCE-84782-2
     800-53r5:
       - MP-7
     800-171r3:
@@ -37,12 +31,6 @@ references:
     disa_stig:
       macos_13:
         - APPL-13-005051
-      monterey:
-        - APPL-12-005051
-      big_sur:
-        - APPL-11-005051
-      catalina:
-        - AOSX-15-005051
     cmmc:
       - MP.L2-3.8.7
       - MP.L2-3.8.8
@@ -53,49 +41,23 @@ platforms:
       ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('com.apple.systemuiserver')\
       .objectForKey('mount-controls'))["harddisk-external"]
       EOS
-    result: $OS_VALUE
+    result:
+      string: deny
     fix: |
       This is implemented by a Configuration Profile.
     '15.0':
       severity: medium
-      result:
-        string: deny
     '14.0':
       severity: medium
-      result:
-        string: deny
     '13.0':
       severity: medium
       benchmarks:
         - disa_stig
-      result:
-        string: deny
-    monterey:
-      severity: medium
-      benchmarks:
-        - disa_stig
-      result:
-        string: deny
-    big_sur:
-      benchmarks:
-        - disa_stig
-      result:
-        string: deny
-    catalina:
-      benchmarks:
-        - disa_stig
-      result:
-        string: deny,eject
 tags:
   - cnssi-1253_low
   - cnssi-1253_high
   - cmmc_lvl2
   - cnssi-1253_moderate
-  - 800-53r5_low
-  - 800-53r5_moderate
-  - 800-53r5_high
-  - 800-171
-  - cnssi-1253
 mobileconfig_info:
   com.apple.systemuiserver:
     mount-controls:

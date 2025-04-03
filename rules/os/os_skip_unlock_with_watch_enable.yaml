@@ -13,8 +13,6 @@ references:
         - CCE-92892-9
       macos_13:
         - CCE-91881-3
-      monterey:
-        - CCE-91002-6
     800-53r5:
       - AC-20
     800-171r3:
@@ -32,8 +30,6 @@ references:
         - APPL-14-005056
       macos_13:
         - APPL-13-005056
-      monterey:
-        - APPL-12-005056
     cmmc:
       - AC.L1-3.1.20
   cis:
@@ -59,10 +55,6 @@ platforms:
       benchmarks:
         - disa_stig
     '13.0':
-      severity: medium
-      benchmarks:
-        - disa_stig
-    monterey:
       severity: medium
       benchmarks:
         - disa_stig

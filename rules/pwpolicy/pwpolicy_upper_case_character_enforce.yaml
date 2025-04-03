@@ -10,12 +10,6 @@ references:
         - CCE-92943-0
       macos_13:
         - CCE-91930-8
-      monterey:
-        - CCE-91043-0
-      big_sur:
-        - CCE-85415-8
-      catalina:
-        - CCE-84821-8
     800-53r5:
       - IA-5(1)
     800-171r3:
@@ -28,10 +22,6 @@ references:
   cis:
     benchmark:
       macos_13:
-        - 5.2.6 (level 2)
-      monterey:
-        - 5.2.6 (level 2)
-      big_sur:
         - 5.2.6 (level 2)
     controls_v8:
       - 5.2
@@ -72,19 +62,11 @@ platforms:
     '13.0':
       benchmarks:
         - cis_lvl2
-    monterey:
-      benchmarks:
-        - cis_lvl2
-    big_sur:
-      benchmarks:
-        - cis_lvl2
-    catalina: {}
 odv:
   hint: Number of special characters.
   recommended: 1
   cis_lvl1: 1
   cis_lvl2: 1
-  stig: 1
 tags:
   - cnssi-1253_moderate
   - cnssi-1253_low
@@ -95,4 +77,3 @@ tags:
   - 800-53r5_high
   - cisv8
   - cmmc_lvl2
-  - cnssi-1253

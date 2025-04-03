@@ -10,12 +10,6 @@ references:
         - CCE-92821-8
       macos_13:
         - CCE-91817-7
-      monterey:
-        - CCE-90947-3
-      big_sur:
-        - CCE-85468-7
-      catalina:
-        - CCE-84933-1
     800-53r5:
       - SI-3
     800-171r3:
@@ -39,9 +33,6 @@ platforms:
     '15.0': {}
     '14.0': {}
     '13.0': {}
-    monterey: {}
-    big_sur: {}
-    catalina: {}
 tags:
   - 800-171
   - inherent

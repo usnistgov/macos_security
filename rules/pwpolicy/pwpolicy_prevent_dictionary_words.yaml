@@ -10,12 +10,6 @@ references:
         - CCE-92938-0
       macos_13:
         - CCE-91925-8
-      monterey:
-        - CCE-91038-0
-      big_sur:
-        - CCE-85411-7
-      catalina:
-        - CCE-84910-9
   disa:
     srg:
       - SRG-OS-000480-GPOS-00225
@@ -28,8 +22,5 @@ platforms:
     '15.0': {}
     '14.0': {}
     '13.0': {}
-    monterey: {}
-    big_sur: {}
-    catalina: {}
 tags:
   - permanent

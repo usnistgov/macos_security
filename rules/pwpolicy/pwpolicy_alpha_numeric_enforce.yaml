@@ -10,12 +10,6 @@ references:
         - CCE-92929-9
       macos_13:
         - CCE-91917-5
-      monterey:
-        - CCE-91031-5
-      big_sur:
-        - CCE-85404-2
-      catalina:
-        - CCE-84811-9
       ios_18:
         - CCE-94564-2
       ios_17:
@@ -38,12 +32,6 @@ references:
         - APPL-14-003007
       macos_13:
         - APPL-13-003007
-      monterey:
-        - APPL-12-003007
-      big_sur:
-        - APPL-11-003007
-      catalina:
-        - AOSX-15-003007
     cmmc:
       - IA.L2-3.5.7
       - IA.L2-3.5.8
@@ -57,12 +45,6 @@ references:
         - 5.2.3 (level 2)
         - 5.2.4 (level 2)
       macos_13:
-        - 5.2.3 (level 2)
-        - 5.2.4 (level 2)
-      monterey:
-        - 5.2.3 (level 2)
-        - 5.2.4 (level 2)
-      big_sur:
         - 5.2.3 (level 2)
         - 5.2.4 (level 2)
     controls_v8:
@@ -98,20 +80,6 @@ platforms:
       benchmarks:
         - cis_lvl2
         - disa_stig
-    monterey:
-      severity: medium
-      benchmarks:
-        - cis_lvl2
-        - disa_stig
-    big_sur:
-      severity: medium
-      benchmarks:
-        - cis_lvl2
-        - disa_stig
-    catalina:
-      severity: medium
-      benchmarks:
-        - disa_stig
   iOS:
     '18.0':
       supervised: false
@@ -133,7 +101,6 @@ tags:
   - 800-53r5_low
   - 800-53r5_moderate
   - 800-53r5_high
-  - cnssi-1253
 mobileconfig_info:
   com.apple.mobiledevice.passwordpolicy:
     requireAlphanumeric: true

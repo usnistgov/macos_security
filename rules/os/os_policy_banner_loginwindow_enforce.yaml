@@ -22,12 +22,6 @@ references:
         - CCE-92850-7
       macos_13:
         - CCE-91845-8
-      monterey:
-        - CCE-90973-9
-      big_sur:
-        - CCE-85355-6
-      catalina:
-        - CCE-84777-2
     800-53r5:
       - AC-8
     800-171r3:
@@ -52,12 +46,6 @@ references:
         - APPL-14-000025
       macos_13:
         - APPL-13-000025
-      monterey:
-        - APPL-12-000025
-      big_sur:
-        - APPL-11-000025
-      catalina:
-        - AOSX-15-000025
     cmmc:
       - AC.L2-3.1.9
   cis:
@@ -68,10 +56,6 @@ references:
         - 5.8 (level 2)
       macos_13:
         - 5.8 (level 2)
-      monterey:
-        - 5.8 (level 2)
-      big_sur:
-        - 5.8 (level 2)
     controls_v8:
       - 4.1
 platforms:
@@ -80,66 +64,30 @@ platforms:
       /bin/ls -ld /Library/Security/PolicyBanner.rtf* | /usr/bin/wc -l | /usr/bin/tr -d ' '
     result:
       integer: 1
-    fix: $OS_VALUE
+    fix: |
+      [source,bash]
+      ----
+      bannerText="$ODV"
+      /bin/mkdir /Library/Security/PolicyBanner.rtfd
+      /usr/bin/textutil -convert rtf -output /Library/Security/PolicyBanner.rtfd/TXT.rtf -stdin <<EOF
+      $bannerText
+      EOF
+      ----
     '15.0':
       severity: medium
       benchmarks:
         - cis_lvl2
         - disa_stig
-      fix: |-
-        [source,bash]
-        ----
-        bannerText="$ODV"
-        /bin/mkdir /Library/Security/PolicyBanner.rtfd
-        /usr/bin/textutil -convert rtf -output /Library/Security/PolicyBanner.rtfd/TXT.rtf -stdin <<EOF
-        $bannerText
-        EOF
-        ----
     '14.0':
       severity: medium
       benchmarks:
         - cis_lvl2
         - disa_stig
-      fix: |-
-        [source,bash]
-        ----
-        bannerText="$ODV"
-        /bin/mkdir /Library/Security/PolicyBanner.rtfd
-        /usr/bin/textutil -convert rtf -output /Library/Security/PolicyBanner.rtfd/TXT.rtf -stdin <<EOF
-        $bannerText
-        EOF
-        ----
     '13.0':
       severity: medium
       benchmarks:
         - cis_lvl2
         - disa_stig
-      fix: |-
-        [source,bash]
-        ----
-        bannerText="$ODV"
-        /bin/mkdir /Library/Security/PolicyBanner.rtfd
-        /usr/bin/textutil -convert rtf -output /Library/Security/PolicyBanner.rtfd/TXT.rtf -stdin <<EOF
-        $bannerText
-        EOF
-        ----
-    monterey:
-      severity: medium
-      benchmarks:
-        - cis_lvl2
-        - disa_stig
-      fix: "[source,bash]\n----\nbannerText=\"$ODV\"\n/bin/mkdir /Library/Security/PolicyBanner.rtfd\n/usr/bin/textutil -convert rtf -output /Library/Security/PolicyBanner.rtfd/TXT.rtf -stdin <<EOF        \n$bannerText\nEOF\n----"
-    big_sur:
-      severity: medium
-      benchmarks:
-        - cis_lvl2
-        - disa_stig
-      fix: "[source,bash]\n----\nbannerText=\"$ODV\"\n/bin/mkdir /Library/Security/PolicyBanner.rtfd\n/usr/bin/textutil -convert rtf -output /Library/Security/PolicyBanner.rtfd/TXT.rtf -stdin <<EOF        \n$bannerText\nEOF\n----"
-    catalina:
-      severity: medium
-      benchmarks:
-        - disa_stig
-      fix: "[source,bash]\n----\nbannerText=\"$ODV\"\n/bin/mkdir /Library/Security/PolicyBanner.rtfd\n/usr/bin/textutil -convert rtf -output /Library/Security/PolicyBanner.rtfd/TXT.rtf -stdin <<EOF        \n$bannerText\nEOF\n----"
 odv:
   hint: Organization's Policy Text
   recommended: 'You are accessing a U.S. Government information system, which includes: 1) this computer, 2) this computer network, 3) all Government-furnished computers connected to this network, and 4) all Government-furnished devices and storage media attached to this network or to a computer on this network. You understand and consent to the following: you may access this information system for authorized use only; unauthorized use of the system is prohibited and subject to criminal and civil penalties; you have no reasonable expectation of privacy regarding any communication or data transiting or stored on this information system at any time and for any lawful Government purpose, the Government may monitor, intercept, audit, and search and seize any communication or data transiting or stored on this information system; and any communications or data transiting or stored on this information system may be disclosed or used for any lawful Government purpose. This information system may contain Controlled Unclassified Information (CUI) that is subject to safeguarding or dissemination controls in accordance with law, regulation, or Government-wide policy. Accessing and using this system indicates your understanding of this warning.'
@@ -147,10 +95,15 @@ odv:
   cis_lvl2: Center for Internet Security Test Message
   stig: |-
     You are accessing a U.S. Government (USG) Information System (IS) that is provided for USG-authorized use only. By using this IS (which includes any device attached to this IS), you consent to the following conditions:
+
     -The USG routinely intercepts and monitors communications on this IS for purposes including, but not limited to, penetration testing, COMSEC monitoring, network operations and defense, personnel misconduct (PM), law enforcement (LE), and counterintelligence (CI) investigations.
+
     -At any time, the USG may inspect and seize data stored on this IS.
+
     -Communications using, or data stored on, this IS are not private, are subject to routine monitoring, interception, and search, and may be disclosed or used for any USG authorized purpose.
+
     -This IS includes security measures (e.g., authentication and access controls) to protect USG interests--not for your personal benefit or privacy.
+
     -Notwithstanding the above, using this IS does not constitute consent to PM, LE or CI investigative searching or monitoring of the content of privileged communications, or work product, related to personal representation or services by attorneys, psychotherapists, or clergy, and their assistants. Such communications and work product are private and confidential. See User Agreement for details.
 tags:
   - 800-53r5_low
@@ -161,4 +114,3 @@ tags:
   - cnssi-1253_high
   - cmmc_lvl2
   - cnssi-1253_moderate
-  - cnssi-1253

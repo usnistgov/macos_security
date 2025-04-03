@@ -16,12 +16,6 @@ references:
         - CCE-92717-8
       macos_13:
         - CCE-91718-7
-      monterey:
-        - CCE-90863-2
-      big_sur:
-        - CCE-85263-2
-      catalina:
-        - CCE-84913-3
     800-53r5:
       - AC-2(12)
       - AU-12
@@ -57,10 +51,6 @@ references:
         - 3.2 (level 2)
       macos_13:
         - 3.2 (level 2)
-      monterey:
-        - 3.2 (level 2)
-      big_sur:
-        - 3.2 (level 2)
     controls_v8:
       - 3.14
       - 8.2
@@ -89,13 +79,6 @@ platforms:
     '13.0':
       benchmarks:
         - cis_lvl2
-    monterey:
-      benchmarks:
-        - cis_lvl2
-    big_sur:
-      benchmarks:
-        - cis_lvl2
-    catalina: {}
 tags:
   - 800-53r5_privacy
   - 800-53r5_low
@@ -107,4 +90,3 @@ tags:
   - cnssi-1253_high
   - cmmc_lvl2
   - cnssi-1253_moderate
-  - cnssi-1253

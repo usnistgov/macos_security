@@ -15,12 +15,6 @@ references:
         - CCE-92895-2
       macos_13:
         - CCE-91884-7
-      monterey:
-        - CCE-91005-9
-      big_sur:
-        - CCE-85380-4
-      catalina:
-        - CCE-84918-2
     800-53r5:
       - SC-10
     800-171r3:
@@ -39,23 +33,23 @@ references:
       - SC.L2-3.13.9
 platforms:
   macOS:
-    check: $OS_VALUE
-    result: $OS_VALUE
+    check: |
+      ret="pass"
+      for u in $(/usr/bin/dscl . -list /Users UniqueID | /usr/bin/awk '$2 > 500 {print $1}'); do
+        sshCheck=$(/usr/bin/sudo -u $u /usr/bin/ssh -G . | /usr/bin/grep -c "^serveralivecountmax $ODV")
+        if [[ "$sshCheck" == "0" ]]; then
+          ret="fail"
+          break
+        fi
+      done
+      /bin/echo $ret
+    result:
+      string: pass
     fix: $OS_VALUE
     '15.0':
       severity: medium
       benchmarks:
         - disa_stig
-      check: |-
-        ret="pass"
-        for u in $(/usr/bin/dscl . -list /Users UniqueID | /usr/bin/awk '$2 > 500 {print $1}'); do
-          sshCheck=$(/usr/bin/sudo -u $u /usr/bin/ssh -G . | /usr/bin/grep -c "^serveralivecountmax $ODV")
-          if [[ "$sshCheck" == "0" ]]; then
-            ret="fail"
-            break
-          fi
-        done
-        /bin/echo $ret
       fix: |-
         [source,bash]
         ----
@@ -88,22 +82,10 @@ platforms:
         done
 
         ----
-      result:
-        string: pass
     '14.0':
       severity: medium
       benchmarks:
         - disa_stig
-      check: |-
-        ret="pass"
-        for u in $(/usr/bin/dscl . -list /Users UniqueID | /usr/bin/awk '$2 > 500 {print $1}'); do
-          sshCheck=$(/usr/bin/sudo -u $u /usr/bin/ssh -G . | /usr/bin/grep -c "^serveralivecountmax $ODV")
-          if [[ "$sshCheck" == "0" ]]; then
-            ret="fail"
-            break
-          fi
-        done
-        /bin/echo $ret
       fix: |-
         [source,bash]
         ----
@@ -115,19 +97,7 @@ platforms:
           done
         done
         ----
-      result:
-        string: pass
     '13.0':
-      check: |-
-        ret="pass"
-        for u in $(/usr/bin/dscl . -list /Users UniqueID | /usr/bin/awk '$2 > 500 {print $1}'); do
-          sshCheck=$(/usr/bin/sudo -u $u /usr/bin/ssh -G . | /usr/bin/grep -c "^serveralivecountmax $ODV")
-          if [[ "$sshCheck" == "0" ]]; then
-            ret="fail"
-            break
-          fi
-        done
-        /bin/echo $ret
       fix: |-
         [source,bash]
         ----
@@ -139,50 +109,6 @@ platforms:
           done
         done
         ----
-      result:
-        string: pass
-    monterey:
-      check: |-
-        ret="pass"
-        for u in $(/usr/bin/dscl . -list /Users UniqueID | /usr/bin/awk '$2 > 500 {print $1}'); do
-          sshCheck=$(/usr/bin/sudo -u $u /usr/bin/ssh -G . | /usr/bin/grep -c "^serveralivecountmax $ODV")
-          if [[ "$sshCheck" == "0" ]]; then
-            ret="fail"
-            break
-          fi
-        done
-        /bin/echo $ret
-      fix: |-
-        [source,bash]
-        ----
-        for u in $(/usr/bin/dscl . -list /Users UniqueID | /usr/bin/awk '$2 > 500 {print $1}'); do
-          config=$(/usr/bin/sudo -u $u /usr/bin/ssh -Gv . 2>&1 | /usr/bin/awk '/Reading configuration data/ {print $NF}'| /usr/bin/tr -d '\r')
-          configarray=( ${(f)config} )
-          for c in $configarray; do
-            /usr/bin/sudo -u $u /usr/bin/grep -q '^ServerAliveCountMax' "$c" && /usr/bin/sed -i '' 's/.*ServerAliveCountMax.*/ServerAliveCountMax $ODV/' "$c" || /bin/echo 'ServerAliveCountMax $ODV' >> "$c"
-          done
-        done
-        ----
-      result:
-        string: pass
-    big_sur:
-      check: /usr/bin/awk '/^ServerAliveCountMax/{print $2}' /etc/ssh/ssh_config
-      fix: |-
-        [source,bash]
-        ----
-        /usr/bin/grep -q '^ServerAliveCountMax' /etc/ssh/ssh_config && /usr/bin/sed -i.bak  's/.*ServerAliveCountMax.*/ServerAliveCountMax $ODV/' /etc/ssh/ssh_config || /bin/echo 'ServerAliveCountMax $ODV' >> /etc/ssh/ssh_config
-        ----
-      result:
-        integer: $ODV
-    catalina:
-      check: /usr/bin/awk '/^ServerAliveCountMax/{print $2}' /etc/ssh/ssh_config
-      fix: |-
-        [source,bash]
-        ----
-        /usr/bin/grep -q '^ServerAliveCountMax' /etc/ssh/ssh_config && /usr/bin/sed -i.bak  's/.*ServerAliveCountMax.*/ServerAliveCountMax $ODV/' /etc/ssh/ssh_config || /bin/echo 'ServerAliveCountMax 0' >> /etc/ssh/ssh_config
-        ----
-      result:
-        integer: $ODV
 odv:
   hint: Number of seconds.
   recommended: 0
@@ -195,4 +121,3 @@ tags:
   - cnssi-1253_high
   - cmmc_lvl2
   - cnssi-1253_moderate
-  - cnssi-1253

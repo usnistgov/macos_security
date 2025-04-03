@@ -13,12 +13,6 @@ references:
         - CCE-92926-5
       macos_13:
         - CCE-91914-2
-      monterey:
-        - CCE-91028-1
-      big_sur:
-        - CCE-85401-8
-      catalina:
-        - CCE-84808-5
     800-53r5:
       - AC-2(3)
     800-171r3:
@@ -135,87 +129,6 @@ platforms:
         /usr/bin/pwpolicy setaccountpolicies $pwpolicy_file
         ----
         NOTE: See the password policy supplemental on more information on how to implement password policies on macOS.
-    monterey:
-      fix: |-
-        This setting may be enforced using local policy or by a directory service.
-
-        To set local policy to disable an inactive user after $ODV days, edit the current password policy to contain the following <dict> within the "policyCategoryAuthentication":
-
-        [source,xml]
-        ----
-        <dict>
-        <key>policyContent</key>
-        <string>policyAttributeLastAuthenticationTime &gt; policyAttributeCurrentTime - (policyAttributeInactiveDays * 24 * 60 * 60)</string>
-        <key>policyIdentifier</key>
-        <string>Inactive Account</string>
-        <key>policyParameters</key>
-        <dict>
-        <key>policyAttributeInactiveDays<key>
-        <integer>$ODV</integer>
-        </dict>
-        </dict>
-        ----
-        After saving the file and exiting to the command prompt, run the following command to load the new policy file, substituting the path to the file in place of "$pwpolicy_file".
-
-        [source,bash]
-        ----
-        /usr/bin/pwpolicy setaccountpolicies $pwpolicy_file
-        ----
-        NOTE: See the password policy supplemental on more information on how to implement password policies on macOS.
-    big_sur:
-      fix: |-
-        This setting may be enforced using local policy or by a directory service.
-
-        To set local policy to disable an inactive user after $ODV days, edit the current password policy to contain the following <dict> within the "policyCategoryAuthentication":
-
-        [source,xml]
-        ----
-        <dict>
-        <key>policyContent</key>
-        <string>policyAttributeLastAuthenticationTime &gt; policyAttributeCurrentTime - (policyAttributeInactiveDays * 24 * 60 * 60)</string>
-        <key>policyIdentifier</key>
-        <string>Inactive Account</string>
-        <key>policyParameters</key>
-        <dict>
-        <key>policyAttributeInactiveDays<key>
-        <integer>$ODV</integer>
-        </dict>
-        </dict>
-        ----
-        After saving the file and exiting to the command prompt, run the following command to load the new policy file, substituting the path to the file in place of "$pwpolicy_file".
-
-        [source,bash]
-        ----
-        /usr/bin/pwpolicy setaccountpolicies $pwpolicy_file
-        ----
-        NOTE: See the password policy supplemental on more information on how to implement password policies on macOS.
-    catalina:
-      fix: |-
-        This setting may be enforced using local policy or by a directory service.
-
-        To set local policy to disable an inactive user after $ODV days, edit the current password policy to contain the following <dict> within the "policyCategoryAuthentication":
-
-        [source,xml]
-        ----
-        <dict>
-        <key>policyContent</key>
-        <string>policyAttributeLastAuthenticationTime &gt; policyAttributeCurrentTime - (policyAttributeInactiveDays * 24 * 60 * 60)</string>
-        <key>policyIdentifier</key>
-        <string>Inactive Account</string>
-        <key>policyParameters</key>
-        <dict>
-        <key>policyAttributeInactiveDays<key>
-        <integer>$ODV</integer>
-        </dict>
-        </dict>
-        ----
-        After saving the file and exiting to the command prompt, run the following command to load the new policy file, substituting the path to the file in place of "$pwpolicy_file".
-
-        [source,bash]
-        ----
-        /usr/bin/pwpolicy setaccountpolicies $pwpolicy_file
-        ----
-        NOTE: See the password policy supplemental on more information on how to implement password policies on macOS.
 odv:
   hint: Number of days.
   recommended: 35
@@ -228,4 +141,3 @@ tags:
   - cnssi-1253_high
   - cmmc_lvl2
   - cnssi-1253_moderate
-  - cnssi-1253

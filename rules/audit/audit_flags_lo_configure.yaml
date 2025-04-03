@@ -15,12 +15,6 @@ references:
         - CCE-92723-6
       macos_13:
         - CCE-91724-5
-      monterey:
-        - CCE-90868-1
-      big_sur:
-        - CCE-85267-3
-      catalina:
-        - CCE-84716-0
     800-53r5:
       - AC-2(12)
       - AU-12
@@ -53,12 +47,6 @@ references:
         - APPL-14-001002
       macos_13:
         - APPL-13-001002
-      monterey:
-        - APPL-12-001002
-      big_sur:
-        - APPL-11-001002
-      catalina:
-        - AOSX-15-001002
     cmmc:
       - AC.L2-3.1.12
       - AU.L2-3.3.3
@@ -71,10 +59,6 @@ references:
       macos_14:
         - 3.2 (level 2)
       macos_13:
-        - 3.2 (level 2)
-      monterey:
-        - 3.2 (level 2)
-      big_sur:
         - 3.2 (level 2)
     controls_v8:
       - 3.14
@@ -106,20 +90,6 @@ platforms:
       benchmarks:
         - cis_lvl2
         - disa_stig
-    monterey:
-      severity: medium
-      benchmarks:
-        - cis_lvl2
-        - disa_stig
-    big_sur:
-      severity: medium
-      benchmarks:
-        - cis_lvl2
-        - disa_stig
-    catalina:
-      severity: medium
-      benchmarks:
-        - disa_stig
 tags:
   - 800-53r5_privacy
   - 800-53r5_low
@@ -131,4 +101,3 @@ tags:
   - cnssi-1253_high
   - cmmc_lvl2
   - cnssi-1253_moderate
-  - cnssi-1253

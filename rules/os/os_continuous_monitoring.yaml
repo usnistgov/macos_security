@@ -11,20 +11,11 @@ references:
         - CCE-92778-0
       macos_13:
         - CCE-91776-5
-      monterey:
-        - CCE-90914-3
-      big_sur:
-        - CCE-85304-4
-      catalina:
-        - CCE-84892-9
     800-53r5:
       - SI-2(2)
   disa:
     srg:
       - SRG-OS-000191-GPOS-00080
-    disa_stig:
-      big_sur:
-        - APPL-11-000015
 platforms:
   macOS:
     check: |
@@ -34,9 +25,6 @@ platforms:
     '15.0': {}
     '14.0': {}
     '13.0': {}
-    monterey: {}
-    big_sur: {}
-    catalina: {}
 tags:
   - 800-53r5_moderate
   - 800-53r5_high
@@ -44,4 +32,3 @@ tags:
   - cnssi-1253_low
   - cnssi-1253_high
   - cnssi-1253_moderate
-  - cnssi-1253

@@ -13,8 +13,6 @@ references:
         - CCE-92752-5
       macos_13:
         - CCE-91750-0
-      monterey:
-        - CCE-90894-7
       visionos_2:
         - CCE-94483-5
     800-53r5:
@@ -65,8 +63,6 @@ platforms:
       benchmarks:
         - disa_stig
     '13.0':
-      severity: medium
-    monterey:
       severity: medium
   visionOS:
     '2.0':

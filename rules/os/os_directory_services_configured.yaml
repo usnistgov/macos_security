@@ -13,57 +13,28 @@ references:
         - CCE-92780-6
       macos_13:
         - CCE-91778-1
-      monterey:
-        - CCE-91087-7
-      big_sur:
-        - CCE-85494-3
-      catalina:
-        - CCE-84951-3
   disa:
     disa_stig:
       macos_13:
         - APPL-13-000016
-      monterey:
-        - APPL-12-000016
-      big_sur:
-        - APPL-11-000016
-      catalina:
-        - AOSX-15-000016
   cis:
     controls_v8:
       - 6.7
 platforms:
   macOS:
-    check: $OS_VALUE
+    check: |
+      /usr/bin/dscl localhost -list . | /usr/bin/grep -qvE '(Contact|Search|Local|^$)'; /bin/echo $?
     result:
       integer: 0
     fix: |
       Integrate the system into an existing directory services infrastructure.
     '15.0':
       severity: medium
-      check: /usr/bin/dscl localhost -list . | /usr/bin/grep -qvE '(Contact|Search|Local|^$)'; /bin/echo $?
     '14.0':
       severity: medium
-      check: /usr/bin/dscl localhost -list . | /usr/bin/grep -qvE '(Contact|Search|Local|^$)'; /bin/echo $?
     '13.0':
       severity: high
       benchmarks:
         - disa_stig
-      check: /usr/bin/dscl localhost -list . | /usr/bin/grep -qvE '(Contact|Search|Local|^$)'; /bin/echo $?
-    monterey:
-      severity: high
-      benchmarks:
-        - disa_stig
-      check: /usr/bin/dscl localhost -list . | /usr/bin/grep -qvE '(Contact|Search|Local|^$)'; /bin/echo $?
-    big_sur:
-      severity: high
-      benchmarks:
-        - disa_stig
-      check: /usr/bin/dscl localhost -list . | /usr/bin/grep -vE '(Contact|Search|Local|^$)'; /bin/echo $?
-    catalina:
-      severity: high
-      benchmarks:
-        - disa_stig
-      check: /usr/bin/dscl localhost -list . | /usr/bin/grep -vE '(Contact|Search|Local|^$)'; /bin/echo $?
 tags:
   - cisv8

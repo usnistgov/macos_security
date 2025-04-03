@@ -9,12 +9,6 @@ references:
         - CCE-92796-2
       macos_13:
         - CCE-91794-8
-      monterey:
-        - CCE-90927-5
-      big_sur:
-        - CCE-85316-8
-      catalina:
-        - CCE-84852-3
     800-53r5:
       - CM-5
     800-171r3:
@@ -41,9 +35,6 @@ platforms:
       This is implemented by a Configuration Profile.
     '14.0': {}
     '13.0': {}
-    monterey: {}
-    big_sur: {}
-    catalina: {}
 tags:
   - 800-53r5_low
   - 800-53r5_moderate
@@ -55,7 +46,6 @@ tags:
   - cnssi-1253_high
   - cmmc_lvl2
   - cmmc_lvl1
-  - cnssi-1253
 mobileconfig_info:
   com.apple.ManagedClient.preferences:
     com.apple.security:

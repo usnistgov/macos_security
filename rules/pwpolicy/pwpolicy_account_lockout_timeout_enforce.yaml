@@ -13,12 +13,6 @@ references:
         - CCE-92928-1
       macos_13:
         - CCE-91916-7
-      monterey:
-        - CCE-91030-7
-      big_sur:
-        - CCE-85403-4
-      catalina:
-        - CCE-84810-1
     800-53r5:
       - AC-7
     800-171r3:
@@ -37,12 +31,6 @@ references:
         - APPL-14-000060
       macos_13:
         - APPL-13-000022
-      monterey:
-        - APPL-12-000022
-      big_sur:
-        - APPL-11-000022
-      catalina:
-        - AOSX-15-000021
     cmmc:
       - AC.L2-3.1.8
   cis:
@@ -53,13 +41,12 @@ references:
         - 5.2.1 (level 1)
       macos_13:
         - 5.2.1 (level 1)
-      monterey:
-        - 5.2.1 (level 1)
     controls_v8:
       - 6.2
 platforms:
   macOS:
-    check: $OS_VALUE
+    check: |
+      /usr/bin/pwpolicy -getaccountpolicies 2> /dev/null | /usr/bin/tail +2 | /usr/bin/xmllint --xpath '//dict/key[text()="autoEnableInSeconds"]/following-sibling::integer[1]/text()' - | /usr/bin/awk '{ if ($1/60 >= $ODV ) {print "yes"} else {print "no"}}' | /usr/bin/uniq
     result:
       string: 'yes'
     fix: |
@@ -70,38 +57,18 @@ platforms:
         - cis_lvl1
         - cis_lvl2
         - disa_stig
-      check: /usr/bin/pwpolicy -getaccountpolicies 2> /dev/null | /usr/bin/tail +2 | /usr/bin/xmllint --xpath '//dict/key[text()="autoEnableInSeconds"]/following-sibling::integer[1]/text()' - | /usr/bin/awk '{ if ($1/60 >= $ODV ) {print "yes"} else {print "no"}}' | /usr/bin/uniq
     '14.0':
       severity: medium
       benchmarks:
         - cis_lvl1
         - cis_lvl2
         - disa_stig
-      check: /usr/bin/pwpolicy -getaccountpolicies 2> /dev/null | /usr/bin/tail +2 | /usr/bin/xmllint --xpath '//dict/key[text()="autoEnableInSeconds"]/following-sibling::integer[1]/text()' - | /usr/bin/awk '{ if ($1/60 >= $ODV ) {print "yes"} else {print "no"}}' | /usr/bin/uniq
     '13.0':
       severity: medium
       benchmarks:
         - cis_lvl1
         - cis_lvl2
         - disa_stig
-      check: /usr/bin/pwpolicy -getaccountpolicies 2> /dev/null | /usr/bin/tail +2 | /usr/bin/xmllint --xpath '//dict/key[text()="autoEnableInSeconds"]/following-sibling::integer[1]/text()' - | /usr/bin/awk '{ if ($1/60 >= $ODV ) {print "yes"} else {print "no"}}' | /usr/bin/uniq
-    monterey:
-      severity: medium
-      benchmarks:
-        - cis_lvl1
-        - cis_lvl2
-        - disa_stig
-      check: /usr/bin/pwpolicy -getaccountpolicies 2> /dev/null | /usr/bin/tail +2 | /usr/bin/xmllint --xpath '//dict/key[text()="autoEnableInSeconds"]/following-sibling::integer[1]/text()' - | /usr/bin/awk '{ if ($1/60 >= $ODV ) {print "yes"} else {print "no"}}'
-    big_sur:
-      severity: medium
-      benchmarks:
-        - disa_stig
-      check: /usr/bin/pwpolicy -getaccountpolicies 2> /dev/null | /usr/bin/tail +2 | /usr/bin/xmllint --xpath '//dict/key[text()="autoEnableInSeconds"]/following-sibling::integer[1]/text()' - | /usr/bin/awk '{ if ($1/60 >= $ODV ) {print "yes"} else {print "no"}}'
-    catalina:
-      severity: medium
-      benchmarks:
-        - disa_stig
-      check: /usr/bin/pwpolicy -getaccountpolicies 2> /dev/null | /usr/bin/tail +2 | /usr/bin/xmllint --xpath '//dict/key[text()="autoEnableInSeconds"]/following-sibling::integer[1]/text()' - | /usr/bin/awk '{ if ($1/60 >= $ODV ) {print "yes"} else {print "no"}}'
 odv:
   hint: Number of minutes.
   recommended: 15
@@ -118,7 +85,6 @@ tags:
   - cnssi-1253_high
   - cmmc_lvl2
   - cnssi-1253_moderate
-  - cnssi-1253
 mobileconfig_info:
   com.apple.mobiledevice.passwordpolicy:
     minutesUntilFailedLoginReset: $ODV

@@ -10,12 +10,6 @@ references:
         - CCE-92940-6
       macos_13:
         - CCE-91927-4
-      monterey:
-        - CCE-91040-6
-      big_sur:
-        - CCE-85413-3
-      catalina:
-        - CCE-84819-2
     800-53r5:
       - IA-5(1)
     800-171r3:
@@ -33,12 +27,6 @@ references:
         - APPL-14-003011
       macos_13:
         - APPL-13-003011
-      monterey:
-        - APPL-12-003011
-      big_sur:
-        - APPL-11-003011
-      catalina:
-        - AOSX-15-003011
     cmmc:
       - IA.L2-3.5.7
       - IA.L2-3.5.8
@@ -51,15 +39,12 @@ references:
         - 5.2.5 (level 2)
       macos_13:
         - 5.2.5 (level 2)
-      monterey:
-        - 5.2.5 (level 2)
-      big_sur:
-        - 5.2.5 (level 2)
     controls_v8:
       - 5.2
 platforms:
   macOS:
-    check: $OS_VALUE
+    check: |
+      /usr/bin/pwpolicy -getaccountpolicies 2>/dev/null | /usr/bin/tail -n +2 | /usr/bin/xmllint --xpath "//string[contains(text(), \"policyAttributePassword matches '(.*[^a-zA-Z0-9].*){\")]" - 2>/dev/null | /usr/bin/awk -F"{|}" '{if ($2 >= $ODV) {print "true"} else {print "false"}}'
     result:
       string: 'true'
     fix: |
@@ -69,7 +54,6 @@ platforms:
       benchmarks:
         - cis_lvl2
         - disa_stig
-      check: /usr/bin/pwpolicy -getaccountpolicies 2>/dev/null | /usr/bin/tail -n +2 | /usr/bin/xmllint --xpath "//string[contains(text(), \"policyAttributePassword matches '(.*[^a-zA-Z0-9].*){\")]" - 2>/dev/null | /usr/bin/awk -F"{|}" '{if ($2 >= $ODV) {print "true"} else {print "false"}}'
       mobileconfig_info:
         com.apple.mobiledevice.passwordpolicy:
           minComplexChars: $ODV
@@ -78,7 +62,6 @@ platforms:
       benchmarks:
         - cis_lvl2
         - disa_stig
-      check: /usr/bin/pwpolicy -getaccountpolicies 2>/dev/null | /usr/bin/tail -n +2 | /usr/bin/xmllint --xpath "//string[contains(text(), \"policyAttributePassword matches '(.*[^a-zA-Z0-9].*){\")]" - 2>/dev/null | /usr/bin/awk -F"{|}" '{if ($2 >= $ODV) {print "true"} else {print "false"}}'
       mobileconfig_info:
         com.apple.mobiledevice.passwordpolicy:
           minComplexChars: 1
@@ -87,42 +70,14 @@ platforms:
       benchmarks:
         - cis_lvl2
         - disa_stig
-      check: /usr/bin/pwpolicy -getaccountpolicies 2>/dev/null | /usr/bin/tail -n +2 | /usr/bin/xmllint --xpath "//string[contains(text(), \"policyAttributePassword matches '(.*[^a-zA-Z0-9].*){\")]" - 2>/dev/null | /usr/bin/awk -F"{|}" '{if ($2 >= $ODV) {print "true"} else {print "false"}}'
       mobileconfig_info:
         com.apple.mobiledevice.passwordpolicy:
           minComplexChars: 1
-    monterey:
-      severity: medium
-      benchmarks:
-        - cis_lvl2
-        - disa_stig
-      check: /usr/bin/pwpolicy -getaccountpolicies 2> /dev/null | /usr/bin/tail +2 | /usr/bin/xmllint --xpath 'boolean(//*[contains(text(),"policyAttributePassword matches '\''(.*[^a-zA-Z0-9].*){$ODV,}'\''")])' -
-      mobileconfig_info:
-        com.apple.mobiledevice.passwordpolicy:
-          minComplexChars: $ODV
-    big_sur:
-      severity: medium
-      benchmarks:
-        - cis_lvl2
-        - disa_stig
-      check: /usr/bin/pwpolicy -getaccountpolicies 2> /dev/null | /usr/bin/tail +2 | /usr/bin/xmllint --xpath 'boolean(//*[contains(text(),"policyAttributePassword matches '\''(.*[^a-zA-Z0-9].*){$ODV,}'\''")])' -
-      mobileconfig_info:
-        com.apple.mobiledevice.passwordpolicy:
-          minComplexChars: $ODV
-    catalina:
-      severity: medium
-      benchmarks:
-        - disa_stig
-      check: /usr/bin/pwpolicy -getaccountpolicies 2> /dev/null | /usr/bin/tail +2 | /usr/bin/xmllint --xpath 'boolean(//*[contains(text(),"policyAttributePassword matches '\''(.*[^a-zA-Z0-9].*){$ODV,}'\''")])' -
-      mobileconfig_info:
-        com.apple.mobiledevice.passwordpolicy:
-          minComplexChars: $ODV
 odv:
   hint: Number of special characters.
   recommended: 1
   cis_lvl2: 1
   stig: 1
-  cis_lvl1: 1
 tags:
   - cisv8
   - cnssi-1253_low
@@ -133,7 +88,6 @@ tags:
   - 800-53r5_low
   - 800-53r5_moderate
   - 800-53r5_high
-  - cnssi-1253
 mobileconfig_info: $OS_VALUE
 ddm_info:
   declarationtype: com.apple.configuration.passcode.settings

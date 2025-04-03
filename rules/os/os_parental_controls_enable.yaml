@@ -15,12 +15,6 @@ references:
         - CCE-92842-4
       macos_13:
         - CCE-91837-5
-      monterey:
-        - CCE-90966-3
-      big_sur:
-        - CCE-85350-7
-      catalina:
-        - CCE-84773-1
     800-53r5:
       - CM-7(2)
     800-171r3:
@@ -42,18 +36,10 @@ platforms:
     '15.0': {}
     '14.0': {}
     '13.0': {}
-    monterey: {}
-    big_sur: {}
-    catalina: {}
 tags:
   - cnssi-1253_low
   - cnssi-1253_high
   - cnssi-1253_moderate
-  - 800-53r5_moderate
-  - 800-53r5_high
-  - 800-171
-  - cisv8
-  - cnssi-1253
 mobileconfig_info:
   com.apple.applicationaccess.new:
     familyControlsEnabled: true

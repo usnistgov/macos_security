@@ -11,12 +11,6 @@ references:
         - CCE-92826-7
       macos_13:
         - CCE-91822-7
-      monterey:
-        - CCE-90952-3
-      big_sur:
-        - CCE-85340-8
-      catalina:
-        - CCE-84883-8
   cis:
     controls_v8:
       - 5.6
@@ -30,9 +24,6 @@ platforms:
     '15.0': {}
     '14.0': {}
     '13.0': {}
-    monterey: {}
-    big_sur: {}
-    catalina: {}
 tags:
   - inherent
   - cisv8

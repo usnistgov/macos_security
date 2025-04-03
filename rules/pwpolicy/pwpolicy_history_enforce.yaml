@@ -17,12 +17,6 @@ references:
         - CCE-92932-3
       macos_13:
         - CCE-91920-9
-      monterey:
-        - CCE-91034-9
-      big_sur:
-        - CCE-85407-5
-      catalina:
-        - CCE-84814-3
       ios_18:
         - CCE-94565-9
       ios_17:
@@ -44,12 +38,6 @@ references:
         - APPL-14-003009
       macos_13:
         - APPL-13-003009
-      monterey:
-        - APPL-12-003009
-      big_sur:
-        - APPL-11-003009
-      catalina:
-        - AOSX-15-003009
       ios_18:
         - AIOS-18-006950
     cmmc:
@@ -64,10 +52,6 @@ references:
         - 5.2.8 (level 1)
       macos_13:
         - 5.2.8 (level 1)
-      monterey:
-        - 5.2.8 (level 1)
-      big_sur:
-        - 5.2.7 (level 1)
     controls_v8:
       - 5.2
   bsi:
@@ -80,7 +64,8 @@ references:
         - ANNEX K
 platforms:
   macOS:
-    check: $OS_VALUE
+    check: |
+      /usr/bin/pwpolicy -getaccountpolicies 2> /dev/null | /usr/bin/tail +2 | /usr/bin/xmllint --xpath '//dict/key[text()="policyAttributePasswordHistoryDepth"]/following-sibling::*[1]/text()' - | /usr/bin/awk '{ if ($1 >= $ODV ) {print "yes"} else {print "no"}}' | /usr/bin/uniq
     result:
       string: 'yes'
     fix: |
@@ -91,40 +76,18 @@ platforms:
         - cis_lvl1
         - cis_lvl2
         - disa_stig
-      check: /usr/bin/pwpolicy -getaccountpolicies 2> /dev/null | /usr/bin/tail +2 | /usr/bin/xmllint --xpath '//dict/key[text()="policyAttributePasswordHistoryDepth"]/following-sibling::*[1]/text()' - | /usr/bin/awk '{ if ($1 >= $ODV ) {print "yes"} else {print "no"}}' | /usr/bin/uniq
     '14.0':
       severity: medium
       benchmarks:
         - cis_lvl1
         - cis_lvl2
         - disa_stig
-      check: /usr/bin/pwpolicy -getaccountpolicies 2> /dev/null | /usr/bin/tail +2 | /usr/bin/xmllint --xpath '//dict/key[text()="policyAttributePasswordHistoryDepth"]/following-sibling::*[1]/text()' - | /usr/bin/awk '{ if ($1 >= $ODV ) {print "yes"} else {print "no"}}' | /usr/bin/uniq
     '13.0':
       severity: medium
       benchmarks:
         - cis_lvl1
         - cis_lvl2
         - disa_stig
-      check: /usr/bin/pwpolicy -getaccountpolicies 2> /dev/null | /usr/bin/tail +2 | /usr/bin/xmllint --xpath '//dict/key[text()="policyAttributePasswordHistoryDepth"]/following-sibling::*[1]/text()' - | /usr/bin/awk '{ if ($1 >= $ODV ) {print "yes"} else {print "no"}}' | /usr/bin/uniq
-    monterey:
-      severity: medium
-      benchmarks:
-        - cis_lvl1
-        - cis_lvl2
-        - disa_stig
-      check: /usr/bin/pwpolicy -getaccountpolicies 2> /dev/null | /usr/bin/tail +2 | /usr/bin/xmllint --xpath '//dict/key[text()="policyAttributePasswordHistoryDepth"]/following-sibling::*[1]/text()' - | /usr/bin/awk '{ if ($1 >= $ODV ) {print "yes"} else {print "no"}}'
-    big_sur:
-      severity: medium
-      benchmarks:
-        - cis_lvl1
-        - cis_lvl2
-        - disa_stig
-      check: /usr/bin/pwpolicy -getaccountpolicies 2> /dev/null | /usr/bin/tail +2 | /usr/bin/xmllint --xpath '//dict/key[text()="policyAttributePasswordHistoryDepth"]/following-sibling::*[1]/text()' - | /usr/bin/awk '{ if ($1 >= $ODV ) {print "yes"} else {print "no"}}'
-    catalina:
-      severity: medium
-      benchmarks:
-        - disa_stig
-      check: /usr/bin/pwpolicy -getaccountpolicies 2> /dev/null | /usr/bin/tail +2 | /usr/bin/xmllint --xpath '//dict/key[text()="policyAttributePasswordHistoryDepth"]/following-sibling::*[1]/text()' - | /usr/bin/awk '{ if ($1 >= $ODV ) {print "yes"} else {print "no"}}'
   iOS:
     '18.0':
       severity: high
@@ -156,7 +119,6 @@ tags:
   - cnssi-1253_high
   - cmmc_lvl2
   - cnssi-1253_moderate
-  - cnssi-1253
 mobileconfig_info:
   com.apple.mobiledevice.passwordpolicy:
     pinHistory: $ODV

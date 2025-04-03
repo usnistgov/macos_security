@@ -11,10 +11,6 @@ references:
         - CCE-92908-3
       macos_13:
         - CCE-91895-3
-      monterey:
-        - CCE-91116-4
-      big_sur:
-        - CCE-85512-2
   disa:
     cci:
       - CCI-002038
@@ -35,10 +31,6 @@ references:
         - 5.4 (level 1)
       macos_13:
         - 5.4 (level 1)
-      monterey:
-        - 5.3 (level 1)
-      big_sur:
-        - 5.3 (level 1)
     controls_v8:
       - 4.3
 platforms:
@@ -70,14 +62,6 @@ platforms:
         - cis_lvl1
         - cis_lvl2
         - disa_stig
-    monterey:
-      benchmarks:
-        - cis_lvl1
-        - cis_lvl2
-    big_sur:
-      benchmarks:
-        - cis_lvl1
-        - cis_lvl2
 odv:
   hint: Number of minutes.
   recommended: 0

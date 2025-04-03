@@ -19,8 +19,6 @@ references:
         - CCE-92894-5
       macos_13:
         - CCE-91883-9
-      monterey:
-        - CCE-91003-4
     800-53r5:
       - AC-17(2)
       - IA-7
@@ -52,10 +50,6 @@ references:
         - APPL-13-000057
         - APPL-13-000058
         - APPL-13-000059
-      monterey:
-        - APPL-12-000057
-        - APPL-12-000058
-        - APPL-12-000059
     cmmc:
       - AC.L2-3.1.13
       - MP.L2-3.8.6
@@ -122,32 +116,6 @@ platforms:
     '13.0':
       benchmarks:
         - disa_stig
-      check: |-
-        fips_ssh_config="Host *
-        Ciphers aes128-gcm@openssh.com
-        HostbasedAcceptedAlgorithms ecdsa-sha2-nistp256,ecdsa-sha2-nistp256-cert-v01@openssh.com
-        HostKeyAlgorithms ecdsa-sha2-nistp256,ecdsa-sha2-nistp256-cert-v01@openssh.com
-        KexAlgorithms ecdh-sha2-nistp256
-        MACs hmac-sha2-256
-        PubkeyAcceptedAlgorithms ecdsa-sha2-nistp256,ecdsa-sha2-nistp256-cert-v01@openssh.com
-        CASignatureAlgorithms ecdsa-sha2-nistp256"
-        /usr/bin/grep -c "$fips_ssh_config" /etc/ssh/ssh_config.d/fips_ssh_config
-      fix: |-
-        [source,bash]
-        ----
-        fips_ssh_config="Host *
-        Ciphers aes128-gcm@openssh.com
-        HostbasedAcceptedAlgorithms ecdsa-sha2-nistp256,ecdsa-sha2-nistp256-cert-v01@openssh.com
-        HostKeyAlgorithms ecdsa-sha2-nistp256,ecdsa-sha2-nistp256-cert-v01@openssh.com
-        KexAlgorithms ecdh-sha2-nistp256
-        MACs hmac-sha2-256
-        PubkeyAcceptedAlgorithms ecdsa-sha2-nistp256,ecdsa-sha2-nistp256-cert-v01@openssh.com
-        CASignatureAlgorithms ecdsa-sha2-nistp256"
-        /bin/echo "${fips_ssh_config}" > /etc/ssh/ssh_config.d/fips_ssh_config
-        ----
-      result:
-        integer: 8
-    monterey:
       check: |-
         fips_ssh_config="Host *
         Ciphers aes128-gcm@openssh.com

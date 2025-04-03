@@ -22,12 +22,6 @@ references:
         - CCE-92792-1
       macos_13:
         - CCE-91790-6
-      monterey:
-        - CCE-90923-4
-      big_sur:
-        - CCE-85312-7
-      catalina:
-        - CCE-84756-6
     800-53r5:
       - AC-4
       - SC-7(5)
@@ -35,9 +29,6 @@ references:
       - 03.01.03
       - 03.13.06
   disa:
-    disa_stig:
-      catalina:
-        - AOSX-15-005051
     cmmc:
       - AC.L2-3.1.3
       - SC.L2-3.13.6
@@ -52,9 +43,6 @@ platforms:
     '15.0': {}
     '14.0': {}
     '13.0': {}
-    monterey: {}
-    big_sur: {}
-    catalina: {}
 tags:
   - 800-53r5_moderate
   - 800-53r5_high
@@ -63,4 +51,3 @@ tags:
   - cnssi-1253_high
   - cmmc_lvl2
   - cnssi-1253_moderate
-  - cnssi-1253

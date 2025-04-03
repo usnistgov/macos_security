@@ -13,12 +13,6 @@ references:
         - CCE-92848-1
       macos_13:
         - CCE-91843-3
-      monterey:
-        - CCE-90971-3
-      big_sur:
-        - CCE-85475-2
-      catalina:
-        - CCE-84944-8
     800-53r5:
       - SI-19
 platforms:
@@ -30,9 +24,6 @@ platforms:
     '15.0': {}
     '14.0': {}
     '13.0': {}
-    monterey: {}
-    big_sur: {}
-    catalina: {}
 tags:
   - 800-53r5_privacy
   - n_a

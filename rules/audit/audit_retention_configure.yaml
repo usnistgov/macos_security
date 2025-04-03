@@ -13,12 +13,6 @@ references:
         - CCE-92730-1
       macos_13:
         - CCE-91731-0
-      monterey:
-        - CCE-90875-6
-      big_sur:
-        - CCE-85272-3
-      catalina:
-        - CCE-84719-4
     800-53r5:
       - AU-11
       - AU-4
@@ -36,12 +30,6 @@ references:
         - APPL-14-001029
       macos_13:
         - APPL-13-001029
-      monterey:
-        - APPL-12-001029
-      big_sur:
-        - APPL-11-001029
-      catalina:
-        - AOSX-15-001029
     cmmc:
       - AU.L2-3.3.1
   cis:
@@ -51,10 +39,6 @@ references:
       macos_14:
         - 3.4 (level 1)
       macos_13:
-        - 3.4 (level 1)
-      monterey:
-        - 3.4 (level 1)
-      big_sur:
         - 3.4 (level 1)
     controls_v8:
       - 8.1
@@ -87,27 +71,11 @@ platforms:
       benchmarks:
         - cis_lvl1
         - cis_lvl2
-    monterey:
-      severity: medium
-      benchmarks:
-        - cis_lvl1
-        - cis_lvl2
-        - disa_stig
-    big_sur:
-      severity: medium
-      benchmarks:
-        - cis_lvl1
-        - cis_lvl2
-        - disa_stig
-    catalina:
-      severity: medium
-      benchmarks:
-        - disa_stig
 odv:
   hint: See man audit_control for possible values.
   recommended: 7d
-  cis_lvl1: 60d OR 1G
-  cis_lvl2: 60d OR 1G
+  cis_lvl1: 60d OR 5G
+  cis_lvl2: 60d OR 5G
   stig: 7d
 tags:
   - 800-171
@@ -120,4 +88,3 @@ tags:
   - cnssi-1253_high
   - cmmc_lvl2
   - cnssi-1253_moderate
-  - cnssi-1253

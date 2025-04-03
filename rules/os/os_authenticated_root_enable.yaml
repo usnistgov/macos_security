@@ -17,10 +17,6 @@ references:
         - CCE-92764-0
       macos_13:
         - CCE-91762-5
-      monterey:
-        - CCE-90907-7
-      big_sur:
-        - CCE-85298-8
     800-53r5:
       - AC-3
       - CM-5
@@ -53,10 +49,6 @@ references:
         - 5.1.4 (level 1)
       macos_13:
         - 5.1.4 (level 1)
-      monterey:
-        - 5.1.4 (level 1)
-      big_sur:
-        - 5.1.4 (level 1)
     controls_v8:
       - 3.6
       - 3.11
@@ -86,16 +78,6 @@ platforms:
         - disa_stig
       check: /usr/bin/csrutil authenticated-root | /usr/bin/grep -c 'enabled'
     '13.0':
-      benchmarks:
-        - cis_lvl1
-        - cis_lvl2
-      check: /usr/bin/csrutil authenticated-root | /usr/bin/grep -c 'enabled'
-    monterey:
-      benchmarks:
-        - cis_lvl1
-        - cis_lvl2
-      check: /usr/bin/csrutil authenticated-root | /usr/bin/grep -c 'enabled'
-    big_sur:
       benchmarks:
         - cis_lvl1
         - cis_lvl2

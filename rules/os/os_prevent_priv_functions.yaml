@@ -17,12 +17,6 @@ references:
         - CCE-92857-2
       macos_13:
         - CCE-91852-4
-      monterey:
-        - CCE-90978-8
-      big_sur:
-        - CCE-85360-6
-      catalina:
-        - CCE-84856-4
     800-53r5:
       - AC-6(10)
     800-171r3:
@@ -41,9 +35,6 @@ platforms:
     '15.0': {}
     '14.0': {}
     '13.0': {}
-    monterey: {}
-    big_sur: {}
-    catalina: {}
 tags:
   - 800-53r5_moderate
   - 800-53r5_high
@@ -53,4 +44,3 @@ tags:
   - cnssi-1253_high
   - cmmc_lvl2
   - cnssi-1253_moderate
-  - cnssi-1253

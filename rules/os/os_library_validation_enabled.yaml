@@ -10,10 +10,6 @@ references:
         - CCE-92814-3
       macos_13:
         - CCE-91810-2
-      monterey:
-        - CCE-91108-1
-      big_sur:
-        - CCE-85507-2
   cis:
     controls_v8:
       - 2.3
@@ -27,21 +23,11 @@ platforms:
       EOS
     result:
       string: 'false'
-    fix: $OS_VALUE
-    '15.0':
-      fix: This is implemented by a Configuration Profile.
-    '14.0':
-      fix: This is implemented by a Configuration Profile.
-    '13.0':
-      fix: This is implemented by a Configuration Profile.
-    monterey:
-      fix: This is implemented by a Configuration Profile.
-    big_sur:
-      fix: |-
-        [source,bash]
-        ----
-        This is implemented by a Configuration Profile.
-        ----
+    fix: |
+      This is implemented by a Configuration Profile.
+    '15.0': {}
+    '14.0': {}
+    '13.0': {}
 tags:
   - cisv8
 mobileconfig_info:

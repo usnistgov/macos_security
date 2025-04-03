@@ -15,12 +15,6 @@ references:
         - CCE-92735-0
       macos_13:
         - CCE-91736-9
-      monterey:
-        - CCE-90880-6
-      big_sur:
-        - CCE-85277-2
-      catalina:
-        - CCE-84724-4
     800-53r5:
       - IA-2(1)
       - IA-2(2)
@@ -82,9 +76,6 @@ platforms:
     '13.0':
       benchmarks:
         - disa_stig
-    monterey: {}
-    big_sur: {}
-    catalina: {}
 tags:
   - 800-171
   - 800-53r5_low
@@ -96,7 +87,6 @@ tags:
   - cmmc_lvl2
   - cmmc_lvl1
   - cnssi-1253_moderate
-  - cnssi-1253
 mobileconfig_info:
   com.apple.security.smartcard:
     allowSmartCard: true

@@ -13,12 +13,6 @@ references:
         - CCE-92750-9
       macos_13:
         - CCE-91748-4
-      monterey:
-        - CCE-90892-1
-      big_sur:
-        - CCE-85289-7
-      catalina:
-        - CCE-84737-6
     800-53r5:
       - AC-20
       - AC-20(1)
@@ -41,12 +35,6 @@ references:
         - APPL-14-002016
       macos_13:
         - APPL-13-002016
-      monterey:
-        - APPL-12-002016
-      big_sur:
-        - APPL-11-002016
-      catalina:
-        - AOSX-15-002016
     cmmc:
       - AC.L1-3.1.20
       - CM.L2-3.4.6
@@ -79,18 +67,6 @@ platforms:
       severity: low
       benchmarks:
         - disa_stig
-    monterey:
-      severity: low
-      benchmarks:
-        - disa_stig
-    big_sur:
-      severity: low
-      benchmarks:
-        - disa_stig
-    catalina:
-      severity: low
-      benchmarks:
-        - disa_stig
 tags:
   - 800-53r5_low
   - 800-53r5_moderate
@@ -102,7 +78,6 @@ tags:
   - cmmc_lvl2
   - cmmc_lvl1
   - cnssi-1253_moderate
-  - cnssi-1253
 mobileconfig_info:
   com.apple.applicationaccess:
     allowCloudNotes: false

@@ -11,12 +11,6 @@ references:
         - CCE-92922-4
       macos_13:
         - CCE-91910-0
-      monterey:
-        - CCE-91025-7
-      big_sur:
-        - CCE-85398-6
-      catalina:
-        - CCE-84858-0
     800-53r5:
       - MA-4(7)
   disa:
@@ -31,9 +25,6 @@ platforms:
     '15.0': {}
     '14.0': {}
     '13.0': {}
-    monterey: {}
-    big_sur: {}
-    catalina: {}
 tags:
   - inherent
   - cnssi-1253_low

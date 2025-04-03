@@ -18,12 +18,6 @@ references:
         - CCE-92788-9
       macos_13:
         - CCE-91786-4
-      monterey:
-        - CCE-90919-2
-      big_sur:
-        - CCE-85308-5
-      catalina:
-        - CCE-85308-5
     800-53r5:
       - AC-20
       - CM-7
@@ -41,8 +35,6 @@ references:
         - APPL-15-002010
       macos_14:
         - APPL-14-002010
-      catalina:
-        - AOSX-15-002010
     cmmc:
       - AC.L1-3.1.20
       - CM.L2-3.4.6
@@ -82,24 +74,10 @@ platforms:
         - disa_stig
     '13.0':
       severity: low
-    monterey:
-      severity: low
-    big_sur:
-      severity: low
-    catalina:
-      severity: low
-      benchmarks:
-        - disa_stig
 tags:
   - cnssi-1253_low
   - cnssi-1253_high
   - cnssi-1253_moderate
-  - 800-53r5_low
-  - 800-53r5_moderate
-  - 800-53r5_high
-  - 800-171
-  - cnssi-1253
-  - cisv8
 mobileconfig_info:
   com.apple.applicationaccess.new:
     familyControlsEnabled: true

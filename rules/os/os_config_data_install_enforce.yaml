@@ -17,12 +17,6 @@ references:
         - CCE-92776-4
       macos_13:
         - CCE-91774-0
-      monterey:
-        - CCE-90913-5
-      big_sur:
-        - CCE-85466-1
-      catalina:
-        - CCE-84929-9
     800-53r5:
       - SI-3
       - SI-2(5)
@@ -40,8 +34,6 @@ references:
         - APPL-14-005130
       macos_13:
         - APPL-13-002070
-      monterey:
-        - APPL-12-002070
     cmmc:
       - SI.L1-3.14.1
       - SI.L1-3.14.2
@@ -54,10 +46,6 @@ references:
         - 1.6 (level 1)
       macos_13:
         - 1.6 (level 1)
-      monterey:
-        - 1.5 (level 1)
-      big_sur:
-        - 1.5 (level 1)
     controls_v8:
       - 7.3
       - 7.4
@@ -91,17 +79,6 @@ platforms:
         - cis_lvl1
         - cis_lvl2
         - disa_stig
-    monterey:
-      severity: high
-      benchmarks:
-        - cis_lvl1
-        - cis_lvl2
-        - disa_stig
-    big_sur:
-      benchmarks:
-        - cis_lvl1
-        - cis_lvl2
-    catalina: {}
 tags:
   - 800-53r5_low
   - 800-53r5_moderate
