@@ -147,6 +147,7 @@ profile:
       - os_sshd_client_alive_interval_configure
       - os_sshd_fips_compliant
       - os_sshd_login_grace_time_configure
+      - os_sshd_per_source_penalties_configure
       - os_sshd_permit_root_login_configure
       - os_sshd_unused_connection_timeout_configure
       - os_sudo_log_enforce
