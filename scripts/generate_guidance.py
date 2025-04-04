@@ -1829,14 +1829,15 @@ def generate_xls(baseline_name, build_path, baseline_yaml):
 
         # determine severity
         # uses 'parent_values' from baseline.yaml file to determine which/if any severity to use
+        # while support for a dictionary will work for generating the excel sheet, having a dictionary in severity may break third-party apps
         severity = ""
-        # if isinstance(rule.rule_severity, str):
-        #     severity = f'{rule.rule_severity}'
         if isinstance(rule.rule_severity, dict):
             try:
                 severity = f'{rule.rule_severity[baseline_yaml["parent_values"]]}'
             except KeyError:
                 severity = ""
+        elif isinstance(rule.rule_severity, str):
+            severity = f'{rule.rule_severity}'
 
         sheet1.write(counter, 18, severity, topWrap)
         sheet1.col(18).width = 400 * 15
