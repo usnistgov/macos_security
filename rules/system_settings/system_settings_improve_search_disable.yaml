@@ -4,6 +4,7 @@ discussion: |
   Sending data to Apple to help improve search _MUST_ be disabled. This will disable "Improve Search" within Spotlight in System Settings.
   
   The information system _MUST_ be configured to provide only essential capabilities. Disabling the submission of search data will mitigate the risk of unwanted data being sent to Apple.
+  
 check: |
   /usr/bin/osascript -l JavaScript << EOS
   $.NSUserDefaults.alloc.initWithSuiteName('com.apple.assistant.support')\
