@@ -7,10 +7,10 @@ discussion: |
 
   [NOTE]
   ====
-  The check and fix are for the currently logged in user. To get the currently logged in user, run the following.
+  The check and fix are for the last logged in user. To get the last logged in user, run the following.
   [source,bash]
   ----
-  CURRENT_USER=$( /usr/sbin/scutil <<< "show State:/Users/ConsoleUser" | /usr/bin/awk '/Name :/ && ! /loginwindow/ { print $3 }' )
+  CURRENT_USER=$( /usr/bin/defaults read /Library/Preferences/com.apple.loginwindow lastUserName )
   ----
   ====
 check: |
