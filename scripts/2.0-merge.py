@@ -857,20 +857,21 @@ def main():
                             if value['result'] == " " or value['result'] == "":
                                 continue
                             if "result" in differences_yaml['platforms']['macOS']:
-                                differences_yaml['platforms']['macOS'][operating_sys].update({"result": value['result']})
+                                if operating_sys != "sequoia":
+                                    differences_yaml['platforms']['macOS'][operating_sys].update({"result": value['result']})
                             
                         if key == "fix":
                             differences_yaml['platforms']['macOS'][operating_sys].update({"fix": value['fix']})
                             
                         # if key == "mobileconfig":
                         #     differences_yaml['platforms']['macOS'][operating_sys].update({"mobileconfig": value})
-                    if "macOS" in differences_yaml['platforms']:
-                        if key == "result":
-                            differences_yaml['platforms']['macOS']['result'] = "$OS_VALUE"
-                        if key == "check":
-                            differences_yaml['platforms']['macOS']['check'] = "$OS_VALUE"
-                        if key == "fix":
-                            differences_yaml['platforms']['macOS']['fix'] = "$OS_VALUE"
+                    # if "macOS" in differences_yaml['platforms']:
+                    #     if key == "result":
+                    #         differences_yaml['platforms']['macOS']['result'] = "$OS_VALUE"
+                    #     if key == "check":
+                    #         differences_yaml['platforms']['macOS']['check'] = "$OS_VALUE"
+                    #     if key == "fix":
+                    #         differences_yaml['platforms']['macOS']['fix'] = "$OS_VALUE"
                 # if key == "mobileconfig":
                 #     differences_yaml['mobileconfig_info'] = "$OS_VALUE"
                 
@@ -882,12 +883,13 @@ def main():
                             differences_yaml['platforms']['visionOS'][operating_sys].update({"mobileconfig_info": value['mobileconfig']})
                         elif "ios" in operating_sys:
                             differences_yaml['platforms']['iOS'][operating_sys].update({"mobileconfig_info": value['mobileconfig']})
-                        elif os_ == "sequoia" or os_ == "sonoma" or os_ == "ventura" or os_ == "monterey" or os_ == "big_sur" or os_ == "catalina":
+                        # elif os_ == "sequoia" or os_ == "sonoma" or os_ == "ventura" or os_ == "monterey" or os_ == "big_sur" or os_ == "catalina":
+                        elif os_ == "sonoma" or os_ == "ventura" or os_ == "monterey" or os_ == "big_sur" or os_ == "catalina":
                             differences_yaml['platforms']['macOS'][operating_sys].update({"mobileconfig_info": value['mobileconfig']})
                         # print(differences_yaml['id'])
                         # print(value['mobileconfig'])
                         # print(operating_sys)
-                    differences_yaml['mobileconfig_info'] = "$OS_VALUE"
+                    # differences_yaml['mobileconfig_info'] = "$OS_VALUE"
 
                 with open(yaml_full_path, 'w') as wfile:
                     yaml.dump(differences_yaml, wfile, Dumper=MyDumper, sort_keys=False, width=float("inf")) 
