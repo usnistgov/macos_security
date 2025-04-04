@@ -1,5 +1,5 @@
 id: system_settings_media_sharing_disabled
-title: "Disable Media Sharing"
+title: Disable Media Sharing
 discussion: |
   Media sharing _MUST_ be disabled.
 
@@ -25,7 +25,7 @@ check: |
   }
   EOS
 result:
-  string: "true"
+  string: 'true'
 fix: |
   This is implemented by a Configuration Profile.
 references:
