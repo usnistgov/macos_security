@@ -9,6 +9,7 @@ import re
 import json
 from collections import defaultdict
 import difflib
+import pprint
 
 class MyDumper(yaml.Dumper):
 
@@ -56,6 +57,20 @@ def remove_none_fields(data, parent_key=None):
         # Return the value itself if it's not a dict or list
         return data if data is not None else None
 
+def restructure_mobileconfig(rule_yaml):
+    if "mobileconfig_info" in rule_yaml.keys() and rule_yaml['mobileconfig_info'] is not None:
+        mobileconfig_info_obj = []
+        for obj, data in rule_yaml["mobileconfig_info"].items():
+            payload = {}
+            payload["PayloadType"] = obj
+            payload["PayloadContent"] = data
+            mobileconfig_info_obj.append(payload)
+        return mobileconfig_info_obj
+    else:
+        return {}
+    
+
+
 # def remove_none_fields(data):
 #     if isinstance(data, dict):
 #         # Process each key-value pair and keep only non-None results
@@ -74,7 +89,24 @@ def remove_none_fields(data, parent_key=None):
 #     else:
 #         # Return the value itself if it's not a dict or list
 #         return data if data is not None else None
-    
+
+def get_introduced(payloadtype, key, os):
+    version = "-1"
+    for item in payloadtype['payloadkeys']:
+        if item['key'] == key:
+            try:
+                if os in item['supportedOS'].keys():
+                    version = item['supportedOS'][os]["introduced"]
+                else:
+                    # try go get introduced from payload parent
+                    if os in payloadtype['payload']['supportedOS'].keys():
+                        version = payloadtype['payload']['supportedOS'][os]["introduced"]
+            except KeyError:
+                # try go get introduced from payload parent
+                if os in payloadtype['payload']['supportedOS'].keys():
+                    version = payloadtype['payload']['supportedOS'][os]["introduced"]
+    return version
+
 def main():
     files_created = []
     file_dir = os.path.dirname(os.path.abspath(__file__))
@@ -90,6 +122,14 @@ def main():
             os.makedirs(build_path)
         except OSError:
             print(f"Creation of the directory {build_path} failed")
+
+    # load apple device-management profile for referencing
+    apple_profiles = {}
+    for apple_profile_file in glob.glob("../_work/apple/mdm/profiles/*.yaml"):
+        with open(apple_profile_file) as p:
+            apple_yam = yaml.load(p, Loader=yaml.SafeLoader)
+            payloadtype = apple_yam["payload"]["payloadtype"]
+            apple_profiles[payloadtype] = apple_yam
 
     # os_supported = ["sequoia", "sonoma", "ventura", "monterey", "big_sur", "catalina", "ios_18", "ios_17", "ios_16", "visionos_2.0"]
     os_supported = ["sequoia", "sonoma", "ventura", "ios_18", "ios_17", "ios_16", "visionos_2.0"]
@@ -108,6 +148,11 @@ def main():
             with open(os_rule) as r:
                 rule_yam = yaml.load(r, Loader=yaml.SafeLoader)
                 rule_yaml = replace_na_with_none(rule_yam)
+                # restructure the mobileconfig object
+                new_mobileconfig = restructure_mobileconfig(rule_yaml)
+                rule_yaml['mobileconfig_info'] = new_mobileconfig
+                if "This is implemented by a Configuration Profile" in rule_yaml['fix']:
+                    rule_yaml.pop("fix")
                 all_rules[os_version].append(rule_yaml)
 
     # print(json.dumps(all_rules))
@@ -146,6 +191,10 @@ def main():
             with open("../_work/{}/rules/{}/{}.yaml".format(os_,section,id_)) as r:
                 rule_yam = yaml.load(r, Loader=yaml.SafeLoader)
                 rule_yaml = replace_na_with_none(rule_yam)
+                new_mobileconfig = restructure_mobileconfig(rule_yaml)
+                rule_yaml['mobileconfig_info'] = new_mobileconfig
+                if "This is implemented by a Configuration Profile" in rule_yaml['fix']:
+                    rule_yaml.pop("fix")
                 yaml_file_name = f"{rule_yaml['id']}.yaml"
                 yaml_full_path = os.path.join(build_path, section, yaml_file_name)
                 
@@ -342,6 +391,8 @@ def main():
                 yaml.dump(new_yaml, wfile, Dumper=MyDumper, sort_keys=False, width=float("inf")) 
 
     if duplicates:
+        rules_to_review = []
+
         # print("Duplicate IDs and their associated OS versions:")
         for id_, os_versions in duplicates.items():
             
@@ -362,6 +413,10 @@ def main():
                 with open("../_work/{}/rules/{}/{}.yaml".format(os_,section,id_)) as r:
                     rule_yam = yaml.load(r, Loader=yaml.SafeLoader)
                     rule_yaml = replace_na_with_none(rule_yam)
+                    new_mobileconfig = restructure_mobileconfig(rule_yaml)
+                    rule_yaml['mobileconfig_info'] = new_mobileconfig
+                    if "This is implemented by a Configuration Profile" in rule_yaml['fix']:
+                        rule_yaml.pop("fix")
                     os_specifics.update({os_: {}})
                     
                     # if "discussion" in rule_yaml:
@@ -810,6 +865,7 @@ def main():
             #     print(rule_yaml['id'])
             #     print(json.dumps(discussion_differences,indent=4))
             #     print()
+            
 
             for key in ['check', 'fix', 'result', 'mobileconfig']:
 
@@ -867,13 +923,19 @@ def main():
                             differences_yaml['platforms']['macOS'][operating_sys].update({"mobileconfig": value})
                     if "macOS" in differences_yaml['platforms']:
                         if key == "result":
-                            differences_yaml['platforms']['macOS']['result'] = "$OS_VALUE"
+                            if differences_yaml['id'] not in rules_to_review:
+                                rules_to_review.append(differences_yaml['id'])
+                            # differences_yaml['platforms']['macOS']['result'] = "$OS_VALUE"
                         if key == "check":
-                            differences_yaml['platforms']['macOS']['check'] = "$OS_VALUE"
+                            if differences_yaml['id'] not in rules_to_review:
+                                rules_to_review.append(differences_yaml['id'])
+                            # differences_yaml['platforms']['macOS']['check'] = "$OS_VALUE"
                         if key == "fix":
-                            differences_yaml['platforms']['macOS']['fix'] = "$OS_VALUE"
-                if key == "mobileconfig":
-                    differences_yaml['mobileconfig_info'] = "$OS_VALUE"
+                            if differences_yaml['id'] not in rules_to_review:
+                                rules_to_review.append(differences_yaml['id'])
+                            # differences_yaml['platforms']['macOS']['fix'] = "$OS_VALUE"
+                # if key == "mobileconfig":
+                #     differences_yaml['mobileconfig_info'] = "$OS_VALUE"
                 
                 if configprofile_differences and key == 'mobileconfig':
                     for operating_sys,value in os_specifics.items():
@@ -886,10 +948,10 @@ def main():
                         elif os_ == "sequoia" or os_ == "sonoma" or os_ == "ventura" or os_ == "monterey" or os_ == "big_sur" or os_ == "catalina":
 
                             differences_yaml['platforms']['macOS'][operating_sys].update({"mobileconfig_info": value['mobileconfig']})
-                        print(differences_yaml['id'])
-                        print(value['mobileconfig'])
-                        print(operating_sys)
-                    differences_yaml['mobileconfig_info'] = "$OS_VALUE"
+                        # print(differences_yaml['id'])
+                        # print(value['mobileconfig'])
+                        # print(operating_sys)
+                    #differences_yaml['mobileconfig_info'] = "$OS_VALUE"
 
                 with open(yaml_full_path, 'w') as wfile:
                     yaml.dump(differences_yaml, wfile, Dumper=MyDumper, sort_keys=False, width=float("inf")) 
@@ -941,6 +1003,11 @@ def main():
                     files_created.append(yaml_full_path)
                 yaml.dump(re_order_yam, wfile, Dumper=MyDumper, sort_keys=False, width=float("inf")) 
 
+    print("review the following rules across branches for minor differences")
+    for r in rules_to_review:
+        print(r)
+    
+    unknown_keys = []
     for file in files_created:
         with open(file) as newyamlfile:
             _yaml = yaml.load(newyamlfile, Loader=yaml.SafeLoader)
@@ -950,10 +1017,32 @@ def main():
                 _yaml['tags'].remove("visionos")
      
             _yaml = replace_keys_by_path(_yaml)
+
+            # add the introduced data here 
+            if "mobileconfig_info" in _yaml.keys():
+                os_list = list(_yaml['platforms'].keys())
+
+                for mobileconfig_payload in _yaml['mobileconfig_info']:
+                    payloadtype = mobileconfig_payload['PayloadType']
+                    payloadkey = list(mobileconfig_payload['PayloadContent'].keys())
+
+                    for opsys in os_list:
+                        if payloadtype in apple_profiles.keys():
+                            version = get_introduced(apple_profiles[payloadtype], payloadkey[0], opsys)
+                            if version == "-1":
+                                unknown_keys.append(payloadkey)
+                            _yaml['platforms'][opsys]['introduced'] = version
+                        else:
+                            unknown_keys.append(payloadkey)
+                            _yaml['platforms'][opsys]['introduced'] = "-1"
+                
     
         with open(file, "w") as nf:
             yaml.dump(remove_none_fields(_yaml), nf, Dumper=MyDumper, sort_keys=False, width=float("inf")) 
 
+    print("\n\nthe following keys are not found in apple git")
+    for k in unknown_keys:
+        print(k)    
 def replace_keys_by_path(data, path=None):
     if path is None:
         path = []
