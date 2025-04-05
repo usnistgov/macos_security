@@ -1008,6 +1008,7 @@ def main():
         print(r)
     
     unknown_keys = []
+    odv_rules = []
     for file in files_created:
         with open(file) as newyamlfile:
             _yaml = yaml.load(newyamlfile, Loader=yaml.SafeLoader)
@@ -1035,6 +1036,14 @@ def main():
                         else:
                             unknown_keys.append(payloadkey)
                             _yaml['platforms'][opsys]['introduced'] = "-1"
+
+            if "odv" in _yaml.keys():
+                description = _yaml['odv']['hint']
+                _yaml['odv']['hint'] = {}
+                _yaml['odv']['hint']['datatype'] = type(_yaml['odv']['recommended']).__name__
+                _yaml['odv']['hint']['description'] = description
+                _yaml['odv']['hint']['constraints'] = ""
+                odv_rules.append(_yaml['id'])
                 
     
         with open(file, "w") as nf:
@@ -1042,7 +1051,12 @@ def main():
 
     print("\n\nthe following keys are not found in apple git")
     for k in unknown_keys:
-        print(k)    
+        print(k)   
+
+    print("\n\nthe following rules have ODVs to update")
+    for k in odv_rules:
+        print(k)   
+     
 def replace_keys_by_path(data, path=None):
     if path is None:
         path = []
