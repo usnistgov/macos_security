@@ -10,6 +10,7 @@
         "references",
         "platforms"
     ],
+    "additionalProperties": false,
     "properties": {
         "id": {
             "description": "Unique identifier for each rule. The filename for the rule should match this id",
@@ -33,7 +34,37 @@
             "type": "object",
             "properties": {
                 "hint": {
-                    "type": "object"
+                    "type": "object",
+                    "properties": {
+                        "datatype": {
+                            "type": "string"
+                        },
+                        "description": {
+                            "type": "string"
+                        },
+                        "validation": {
+                            "type": "object",
+                            "properties": {
+                                "min": {
+                                    "type": "number"
+                                },
+                                "max": {
+                                    "type": "number"
+                                },
+                                "regex": {
+                                    "type": "string"
+                                },
+                                "enumValues": {
+                                    "$ref": "#/components/schemas/ArrayOfStrings"
+                                }
+                            },
+                            "additionalProperties": false
+                        }
+                    },
+                    "required": [
+                        "description"
+                    ],
+                    "additionalProperties": false
                 },
                 "recommended": {
                     "$ref": "#/components/schemas/AnyofStringIntegerBooleanArrayObject"
@@ -46,7 +77,7 @@
             "additionalProperties": true
         },
         "references": {
-            "description": "Identifiers used to cross-reference other published security documenation as it relates to MSCP controls",
+            "description": "Identifiers used to cross-reference other published security documentation as it relates to MSCP controls",
             "type": "object",
             "properties": {
                 "nist": {
@@ -127,7 +158,8 @@
             },
             "required": [
                 "nist"
-            ]
+            ],
+            "additionalProperties": true
         },
         "platforms": {
             "type": "object",
@@ -262,7 +294,8 @@
                 "required": [
                     "PayloadType",
                     "PayloadContent"
-                ]
+                ],
+                "additionalProperties": false
             }
         },
         "ddm_info": {
@@ -325,7 +358,8 @@
                         "ddm_key",
                         "ddm_value"
                     ]
-                }
+                },
+                "additionalProperties": false
             }
         }
     },
