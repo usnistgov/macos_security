@@ -58,9 +58,7 @@
                             "800-53r5"
                         ]
                     }
-                }
-            },
-            "additionalProperties": {
+                },
                 "disa": {
                     "type": "object",
                     "properties": {
@@ -108,7 +106,10 @@
                         "controls_v8": {
                             "type": "array",
                             "items": {
-                                "type": "string"
+                                "anyOf": [
+                                  { "type": "string" },
+                                  { "type": "number"}
+                                ]
                             }
                         }
                     }
@@ -144,14 +145,17 @@
                         "result": {
                             "type": "object",
                             "properties": {
-                                "string": {
-                                    "type": "string"
-                                }
-                            },
-                            "required": [
-                                "string"
-                            ]
+                                "string": { "type": "string" },
+                                "integer": {
+                                "anyOf": [
+                                    { "type": "integer" },
+                                    { "type": "string", "enum": ["$ODV"] }
+                                ]
+                                },
+                                "boolean": { "type": "boolean" }
+                            }
                         },
+
                         "13.0": {
                             "type": "object",
                             "properties": {
@@ -287,6 +291,7 @@
                     "PayloadContent": {
                         "type": "array",
                         "items": {
+                            "type": "object",
                             "additionalProperties": {
                                 "anyOf": [
                                     {
@@ -297,6 +302,15 @@
                                     },
                                     {
                                         "type": "number"
+                                    },
+                                    {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    {
+                                        "type": "object"
                                     }
                                 ]
                             }
