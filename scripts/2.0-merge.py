@@ -63,7 +63,13 @@ def restructure_mobileconfig(rule_yaml):
         for obj, data in rule_yaml["mobileconfig_info"].items():
             payload = {}
             payload["PayloadType"] = obj
-            payload["PayloadContent"] = [data]
+            
+            # generate list of keys for payload content
+            payload_content = []
+            for k, v in data.items():
+                payload_content.append({k:v})
+            payload["PayloadContent"] = payload_content
+
             mobileconfig_info_obj.append(payload)
         return mobileconfig_info_obj
     else:
