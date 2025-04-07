@@ -74,27 +74,7 @@ def restructure_mobileconfig(rule_yaml):
         return mobileconfig_info_obj
     else:
         return {}
-    
 
-
-# def remove_none_fields(data):
-#     if isinstance(data, dict):
-#         # Process each key-value pair and keep only non-None results
-#         result = {}
-#         for key, value in data.items():
-#             processed_value = remove_none_fields(value)
-#             if processed_value is not None:
-#                 result[key] = processed_value
-#         return result if result else None
-#     elif isinstance(data, list):
-#         # Process each item in the list
-#         processed_list = [remove_none_fields(item) for item in data]
-#         # Remove None values and keep only valid items
-#         filtered_list = [item for item in processed_list if item is not None]
-#         return filtered_list if filtered_list else None
-#     else:
-#         # Return the value itself if it's not a dict or list
-#         return data if data is not None else None
 
 def get_introduced(payloadtype, key, os):
     version = "-1"
@@ -136,6 +116,10 @@ def main():
             apple_yam = yaml.load(p, Loader=yaml.SafeLoader)
             payloadtype = apple_yam["payload"]["payloadtype"]
             apple_profiles[payloadtype] = apple_yam
+    
+    # load odv.json for reference
+    with open("../includes/odv.json") as o:
+        odv_json = json.load(o)
 
     # os_supported = ["sequoia", "sonoma", "ventura", "monterey", "big_sur", "catalina", "ios_18", "ios_17", "ios_16", "visionos_2.0"]
     os_supported = ["sequoia", "sonoma", "ventura", "ios_18", "ios_17", "ios_16", "visionos_2.0"]
@@ -1012,7 +996,8 @@ def main():
     print("review the following rules across branches for minor differences")
     for r in rules_to_review:
         print(r)
-    
+
+
     unknown_keys = []
     odv_rules = []
     for file in files_created:
@@ -1047,10 +1032,21 @@ def main():
 
             if "odv" in _yaml.keys():
                 description = _yaml['odv']['hint']
+                datatype = None
+                validation = None
+                for r in odv_json:
+                    if r["ruleId"] == _yaml['id']:
+                        datatype = r["type"]
+                        if "note" in r.keys():
+                            description = r["note"]
+                        if "validation" in r.keys():
+                            validation = r["validation"]
+
+                
                 _yaml['odv']['hint'] = {}
-                _yaml['odv']['hint']['datatype'] = type(_yaml['odv']['recommended']).__name__
+                _yaml['odv']['hint']['datatype'] = datatype
                 _yaml['odv']['hint']['description'] = description
-                _yaml['odv']['hint']['constraints'] = ""
+                _yaml['odv']['hint']['validation'] = validation
                 odv_rules.append(_yaml['id'])
                 
     

@@ -12,21 +12,41 @@
     ],
     "properties": {
         "id": {
+            "description": "Unique identifier for each rule. The filename for the rule should match this id",
             "type": "string"
         },
         "title": {
+            "description": "Title of the rule as it will appear in the documentation",
             "type": "string"
         },
         "discussion": {
+            "description": "The discussion may contain a description of the rule, rationale, or other information that will appear in the generated documentation",
             "type": "string"
         },
         "tags": {
-            "type": "array",
-            "items": {
-                "type": "string"
-            }
+            "description": "Metadata keywords used for searching for rules and for cross-referencing.",
+            "$ref": "#/components/schemas/ArrayOfStrings",
+            "minimumitems": 1
+        },
+        "odv": {
+            "description": "Organization Defined Values are determined by a benchmark or customized by the organization.",
+            "type": "object",
+            "properties": {
+                "hint": {
+                    "type": "object"
+                },
+                "recommended": {
+                    "$ref": "#/components/schemas/AnyofStringIntegerBooleanArrayObject"
+                }
+            },
+            "required": [
+                "hint",
+                "recommended"
+            ],
+            "additionalProperties": true
         },
         "references": {
+            "description": "Identifiers used to cross-reference other published security documenation as it relates to MSCP controls",
             "type": "object",
             "properties": {
                 "nist": {
@@ -35,61 +55,39 @@
                         "cce": {
                             "type": "object",
                             "additionalProperties": {
-                                "type": "array",
-                                "items": {
-                                    "type": "string"
-                                }
+                                "$ref": "#/components/schemas/ArrayOfStrings"
                             }
                         },
                         "800-53r5": {
-                            "type": "array",
-                            "items": {
-                                "type": "string"
-                            }
+                            "$ref": "#/components/schemas/ArrayOfStrings"
                         },
                         "800-171r3": {
-                            "type": "array",
-                            "items": {
-                                "type": "string"
-                            }
-                        },
-                        "required": [
-                            "cce",
-                            "800-53r5"
-                        ]
-                    }
+                            "$ref": "#/components/schemas/ArrayOfStrings"
+                        }
+                    },
+                    "required": [
+                        "cce"
+                    ]
                 },
                 "disa": {
                     "type": "object",
                     "properties": {
                         "cci": {
-                            "type": "array",
-                            "items": {
-                                "type": "string"
-                            }
+                            "$ref": "#/components/schemas/ArrayOfStrings"
                         },
                         "srg": {
-                            "type": "array",
-                            "items": {
-                                "type": "string"
-                            }
+                            "$ref": "#/components/schemas/ArrayOfStrings"
                         },
                         "disa_stig": {
                             "type": "object",
                             "additionalProperties": {
-                                "type": "array",
-                                "items": {
-                                    "type": "string"
-                                }
+                                "$ref": "#/components/schemas/ArrayOfStrings"
                             }
                         }
                     }
                 },
                 "cmmc": {
-                    "type": "array",
-                    "items": {
-                        "type": "string"
-                    }
+                    "$ref": "#/components/schemas/ArrayOfStrings"
                 },
                 "cis": {
                     "type": "object",
@@ -97,18 +95,19 @@
                         "benchmark": {
                             "type": "object",
                             "additionalProperties": {
-                                "type": "array",
-                                "items": {
-                                    "type": "string"
-                                }
+                                "$ref": "#/components/schemas/ArrayOfStrings"
                             }
                         },
                         "controls_v8": {
                             "type": "array",
                             "items": {
                                 "anyOf": [
-                                  { "type": "string" },
-                                  { "type": "number"}
+                                    {
+                                        "type": "string"
+                                    },
+                                    {
+                                        "type": "number"
+                                    }
                                 ]
                             }
                         }
@@ -120,10 +119,7 @@
                         "indigo": {
                             "type": "object",
                             "additionalProperties": {
-                                "type": "array",
-                                "items": {
-                                    "type": "string"
-                                }
+                                "$ref": "#/components/schemas/ArrayOfStrings"
                             }
                         }
                     }
@@ -138,6 +134,7 @@
             "properties": {
                 "macOS": {
                     "type": "object",
+                    "description": "Schema for identifying components to support macOS",
                     "properties": {
                         "check": {
                             "type": "string"
@@ -145,129 +142,91 @@
                         "result": {
                             "type": "object",
                             "properties": {
-                                "string": { "type": "string" },
-                                "integer": {
-                                "anyOf": [
-                                    { "type": "integer" },
-                                    { "type": "string", "enum": ["$ODV"] }
-                                ]
-                                },
-                                "boolean": { "type": "boolean" }
-                            }
-                        },
-
-                        "13.0": {
-                            "type": "object",
-                            "properties": {
-                                "severity": {
+                                "string": {
                                     "type": "string"
                                 },
-                                "benchmarks": {
-                                    "type": "array",
-                                    "items": {
-                                        "type": "string"
-                                    }
+                                "integer": {
+                                    "anyOf": [
+                                        {
+                                            "type": "integer"
+                                        },
+                                        {
+                                            "type": "string",
+                                            "enum": [
+                                                "$ODV"
+                                            ]
+                                        }
+                                    ]
+                                },
+                                "boolean": {
+                                    "type": "boolean"
                                 }
                             }
+                        },
+                        "fix": {
+                            "description": "Command to fix the issue if the check command fails.",
+                            "type": "string"
+                        },
+                        "13.0": {
+                            "$ref": "#/$defs/osDef"
                         },
                         "14.0": {
-                            "type": "object",
-                            "properties": {
-                                "severity": {
-                                    "type": "string"
-                                },
-                                "benchmarks": {
-                                    "type": "array",
-                                    "items": {
-                                        "type": "string"
-                                    }
-                                }
-                            }
+                            "$ref": "#/$defs/osDef"
                         },
                         "15.0": {
-                            "type": "object",
-                            "properties": {
-                                "severity": {
-                                    "type": "string"
-                                },
-                                "benchmarks": {
-                                    "type": "array",
-                                    "items": {
-                                        "type": "string"
-                                    }
-                                }
-                            }
+                            "$ref": "#/$defs/osDef"
                         },
                         "introduced": {
                             "type": "string"
-                        }
+                        },
+                        "additionalProperties": false
                     }
                 },
                 "iOS": {
                     "type": "object",
+                    "description": "Schema for identifying components to support iOS",
                     "properties": {
                         "16.0": {
                             "type": "object",
                             "properties": {
-                                "severity": {
-                                    "type": "string"
-                                },
+                                "$ref": "#/$defs/osDef",
                                 "supervised": {
                                     "type": "boolean"
-                                },
-                                "benchmarks": {
-                                    "type": "array",
-                                    "items": {
-                                        "type": "string"
-                                    }
                                 }
                             }
                         },
                         "17.0": {
                             "type": "object",
                             "properties": {
-                                "severity": {
-                                    "type": "string"
-                                },
+                                "$ref": "#/$defs/osDef",
                                 "supervised": {
                                     "type": "boolean"
-                                },
-                                "benchmarks": {
-                                    "type": "array",
-                                    "items": {
-                                        "type": "string"
-                                    }
                                 }
                             }
                         },
                         "18.0": {
                             "type": "object",
                             "properties": {
-                                "severity": {
-                                    "type": "string"
-                                },
+                                "$ref": "#/$defs/osDef",
                                 "supervised": {
                                     "type": "boolean"
-                                },
-                                "benchmarks": {
-                                    "type": "array",
-                                    "items": {
-                                        "type": "string"
-                                    }
                                 }
                             }
                         },
                         "introduced": {
                             "type": "string"
-                        }
+                        },
+                        "additionalProperties": false
                     }
                 },
                 "visionOS": {
                     "type": "object",
+                    "description": "Schema for identifying components to support visionOS",
                     "properties": {
                         "2.0": {
                             "type": "object",
                             "properties": {
+                                "$ref": "#/$defs/osDef",
                                 "supervised": {
                                     "type": "boolean"
                                 }
@@ -275,13 +234,15 @@
                         },
                         "introduced": {
                             "type": "string"
-                        }
+                        },
+                        "additionalProperties": false
                     }
                 }
             }
         },
         "mobileconfig_info": {
             "type": "array",
+            "description": "Definition for supported Mobile Device Management configurations",
             "items": {
                 "type": "object",
                 "properties": {
@@ -293,26 +254,7 @@
                         "items": {
                             "type": "object",
                             "additionalProperties": {
-                                "anyOf": [
-                                    {
-                                        "type": "string"
-                                    },
-                                    {
-                                        "type": "boolean"
-                                    },
-                                    {
-                                        "type": "number"
-                                    },
-                                    {
-                                        "type": "array",
-                                        "items": {
-                                            "type": "string"
-                                        }
-                                    },
-                                    {
-                                        "type": "object"
-                                    }
-                                ]
+                                "$ref": "#/components/schemas/AnyofStringIntegerBooleanArrayObject"
                             }
                         }
                     }
@@ -325,6 +267,7 @@
         },
         "ddm_info": {
             "type": "object",
+            "description": "Definition for supported Declarative Device Management components",
             "properties": {
                 "declarationtype": {
                     "type": "string",
@@ -335,7 +278,16 @@
                     ]
                 },
                 "service": {
-                    "type": "string"
+                    "type": "string",
+                    "enum": [
+                        "com.apple.sshd",
+                        "com.apple.sudo",
+                        "com.apple.pam",
+                        "com.apple.cups",
+                        "com.apple.apache.httpd",
+                        "com.apple.bash",
+                        "com.apple.zsh"
+                    ]
                 },
                 "config_file": {
                     "type": "string"
@@ -344,13 +296,86 @@
                     "type": "string"
                 },
                 "configuration_value": {
+                    "$ref": "#/components/schemas/AnyofStringIntegerBooleanArrayObject"
+                },
+                "ddm_key": {
                     "type": "string"
                 },
-                "required": [
-                    "declarationtype",
-                    "configuration_key",
-                    "configuration_value"
+                "ddm_value": {
+                    "$ref": "#/components/schemas/AnyofStringIntegerBooleanArrayObject"
+                },
+                "if": {
+                    "properties": {
+                        "declaration_type": {
+                            "const": "com.apple.configuration.services.configuration-files"
+                        }
+                    }
+                },
+                "then": {
+                    "required": [
+                        "service",
+                        "config_file",
+                        "configuration_value",
+                        "configuration_key"
+                    ]
+                },
+                "else": {
+                    "required": [
+                        "declaration_type",
+                        "ddm_key",
+                        "ddm_value"
+                    ]
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "ArrayOfStrings": {
+                "type": "array",
+                "items": {
+                    "type": "string"
+                }
+            },
+            "AnyofStringIntegerBooleanArrayObject": {
+                "anyOf": [
+                    {
+                        "type": "string"
+                    },
+                    {
+                        "type": "integer"
+                    },
+                    {
+                        "type": "boolean"
+                    },
+                    {
+                        "type": "array",
+                        "$ref": "#/components/schemas/ArrayOfStrings"
+                    },
+                    {
+                        "type": "object",
+                        "additionalProperties": true
+                    }
                 ]
+            }
+        }
+    },
+    "$defs": {
+        "osDef": {
+            "type": "object",
+            "description": "Operating System Definition",
+            "properties": {
+                "severity": {
+                    "description": "Severity level of the issue, typically defined in a benchmark.",
+                    "type": "string"
+                },
+                "benchmarks": {
+                    "$ref": "#/components/schemas/ArrayOfStrings"
+                },
+                "fix": {
+                    "description": "Bash command(s) to fix the issue if the check command fails.",
+                    "type": "string"
+                }
             }
         }
     }
