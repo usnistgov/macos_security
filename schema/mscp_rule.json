@@ -1,0 +1,343 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "title": "macOS Security Compliance Project Rule",
+    "description": "Schema for a macOS Security Compliance Project rule, detailing security configurations and requirements for Apple platforms.",
+    "version": "2.0.0",
+    "required": [
+        "id",
+        "title",
+        "discussion",
+        "references",
+        "platforms"
+    ],
+    "properties": {
+        "id": {
+            "type": "string"
+        },
+        "title": {
+            "type": "string"
+        },
+        "discussion": {
+            "type": "string"
+        },
+        "tags": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        },
+        "references": {
+            "type": "object",
+            "properties": {
+                "nist": {
+                    "type": "object",
+                    "properties": {
+                        "cce": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "array",
+                                "items": {
+                                    "type": "string"
+                                }
+                            }
+                        },
+                        "800-53r5": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        },
+                        "800-171r3": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        },
+                        "required": [
+                            "cce",
+                            "800-53r5"
+                        ]
+                    }
+                }
+            },
+            "additionalProperties": {
+                "disa": {
+                    "type": "object",
+                    "properties": {
+                        "cci": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        },
+                        "srg": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        },
+                        "disa_stig": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "array",
+                                "items": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                },
+                "cmmc": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "cis": {
+                    "type": "object",
+                    "properties": {
+                        "benchmark": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "array",
+                                "items": {
+                                    "type": "string"
+                                }
+                            }
+                        },
+                        "controls_v8": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                },
+                "bsi": {
+                    "type": "object",
+                    "properties": {
+                        "indigo": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "array",
+                                "items": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "required": [
+                "nist"
+            ]
+        },
+        "platforms": {
+            "type": "object",
+            "properties": {
+                "macOS": {
+                    "type": "object",
+                    "properties": {
+                        "check": {
+                            "type": "string"
+                        },
+                        "result": {
+                            "type": "object",
+                            "properties": {
+                                "string": {
+                                    "type": "string"
+                                }
+                            },
+                            "required": [
+                                "string"
+                            ]
+                        },
+                        "13.0": {
+                            "type": "object",
+                            "properties": {
+                                "severity": {
+                                    "type": "string"
+                                },
+                                "benchmarks": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        },
+                        "14.0": {
+                            "type": "object",
+                            "properties": {
+                                "severity": {
+                                    "type": "string"
+                                },
+                                "benchmarks": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        },
+                        "15.0": {
+                            "type": "object",
+                            "properties": {
+                                "severity": {
+                                    "type": "string"
+                                },
+                                "benchmarks": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        },
+                        "introduced": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "iOS": {
+                    "type": "object",
+                    "properties": {
+                        "16.0": {
+                            "type": "object",
+                            "properties": {
+                                "severity": {
+                                    "type": "string"
+                                },
+                                "supervised": {
+                                    "type": "boolean"
+                                },
+                                "benchmarks": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        },
+                        "17.0": {
+                            "type": "object",
+                            "properties": {
+                                "severity": {
+                                    "type": "string"
+                                },
+                                "supervised": {
+                                    "type": "boolean"
+                                },
+                                "benchmarks": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        },
+                        "18.0": {
+                            "type": "object",
+                            "properties": {
+                                "severity": {
+                                    "type": "string"
+                                },
+                                "supervised": {
+                                    "type": "boolean"
+                                },
+                                "benchmarks": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        },
+                        "introduced": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "visionOS": {
+                    "type": "object",
+                    "properties": {
+                        "2.0": {
+                            "type": "object",
+                            "properties": {
+                                "supervised": {
+                                    "type": "boolean"
+                                }
+                            }
+                        },
+                        "introduced": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "mobileconfig_info": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "PayloadType": {
+                        "type": "string"
+                    },
+                    "PayloadContent": {
+                        "type": "array",
+                        "items": {
+                            "additionalProperties": {
+                                "anyOf": [
+                                    {
+                                        "type": "string"
+                                    },
+                                    {
+                                        "type": "boolean"
+                                    },
+                                    {
+                                        "type": "number"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "required": [
+                    "PayloadType",
+                    "PayloadContent"
+                ]
+            }
+        },
+        "ddm_info": {
+            "type": "object",
+            "properties": {
+                "declarationtype": {
+                    "type": "string",
+                    "enum": [
+                        "com.apple.configuration.services.configuration-files",
+                        "com.apple.configuration.diskmanagement.settings",
+                        "com.apple.configuration.passcode.settings"
+                    ]
+                },
+                "service": {
+                    "type": "string"
+                },
+                "config_file": {
+                    "type": "string"
+                },
+                "configuration_key": {
+                    "type": "string"
+                },
+                "configuration_value": {
+                    "type": "string"
+                },
+                "required": [
+                    "declarationtype",
+                    "configuration_key",
+                    "configuration_value"
+                ]
+            }
+        }
+    }
+}

@@ -63,7 +63,7 @@ def restructure_mobileconfig(rule_yaml):
         for obj, data in rule_yaml["mobileconfig_info"].items():
             payload = {}
             payload["PayloadType"] = obj
-            payload["PayloadContent"] = data
+            payload["PayloadContent"] = [data]
             mobileconfig_info_obj.append(payload)
         return mobileconfig_info_obj
     else:
@@ -1025,11 +1025,13 @@ def main():
 
                 for mobileconfig_payload in _yaml['mobileconfig_info']:
                     payloadtype = mobileconfig_payload['PayloadType']
-                    payloadkey = list(mobileconfig_payload['PayloadContent'].keys())
+                    payloadkeys = mobileconfig_payload['PayloadContent']
+                    # just get first key, since we can't identify multiple introduce versions
+                    payloadkey = next(iter(payloadkeys[0]))
 
                     for opsys in os_list:
                         if payloadtype in apple_profiles.keys():
-                            version = get_introduced(apple_profiles[payloadtype], payloadkey[0], opsys)
+                            version = get_introduced(apple_profiles[payloadtype], payloadkey, opsys)
                             if version == "-1":
                                 unknown_keys.append(payloadkey)
                             _yaml['platforms'][opsys]['introduced'] = version
