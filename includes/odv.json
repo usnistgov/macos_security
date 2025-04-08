@@ -1,0 +1,272 @@
+[
+    {
+        "ruleId": "os_install_log_retention_configure",
+        "type": "number",
+        "validation": {
+            "min": 1
+        },
+        "note": "Number of days, e.g. 365"
+    },
+    {
+        "ruleId": "audit_configure_capacity_notify",
+        "type": "number",
+        "validation": {
+            "min": 1,
+            "max": 100
+        },
+        "note": "Percentage of free space, e.g. 25"
+    },
+    {
+        "ruleId": "audit_retention_configure",
+        "type": "string",
+        "validation": {
+            "regex": "^\\d+[shdyBKMG](\\s(AND|OR)\\s\\d+[shdyBKMG])?$"
+        },
+        "note": "Time or disk size, e.g. 60d OR 5G, see the man page for audit_control"
+    },
+    {
+        "ruleId": "os_external_storage_access_defined",
+        "type": "enum",
+        "validation": {
+            "enumValues": [
+                "Allowed",
+                "ReadOnly",
+                "Disallowed"
+            ]
+        },
+        "note": "Allowed|ReadOnly|Disallowed"
+    },
+    {
+        "ruleId": "os_network_storage_restriction",
+        "type": "enum",
+        "validation": {
+            "enumValues": [
+                "Allowed",
+                "ReadOnly",
+                "Disallowed"
+            ]
+        },
+        "note": "Allowed|ReadOnly|Disallowed"
+    },
+    {
+        "ruleId": "os_policy_banner_loginwindow_enforce",
+        "type": "string",
+        "note": "Text to be displayed before a user logs in. Avoid special characters and complex formatting for best results."
+    },
+    {
+        "ruleId": "os_policy_banner_ssh_configure",
+        "type": "string",
+        "note": "Text to be displayed before a user logs in via SSH. Avoid special characters and complex formatting for best results."
+    },
+    {
+        "ruleId": "os_screensaver_timeout_loginwindow_enforce",
+        "type": "number",
+        "validation": {
+            "min": 1
+        },
+        "note": "Number of seconds, e.g. 1200"
+    },
+    {
+        "ruleId": "os_software_update_deferral",
+        "type": "number",
+        "validation": {
+            "min": 1
+        },
+        "note": "Number of days, e.g. 30"
+    },
+    {
+        "ruleId": "os_ssh_server_alive_count_max_configure",
+        "type": "number",
+        "validation": {
+            "min": 0
+        },
+        "note": "Number of seconds, e.g. 0"
+    },
+    {
+        "ruleId": "os_ssh_server_alive_interval_configure",
+        "type": "number",
+        "validation": {
+            "min": 1
+        },
+        "note": "Number of seconds, e.g. 900"
+    },
+    {
+        "ruleId": "os_sshd_channel_timeout_configure",
+        "type": "number",
+        "validation": {
+            "min": 0
+        },
+        "note": "Number of seconds, e.g. 900"
+    },
+    {
+        "ruleId": "os_sshd_client_alive_count_max_configure",
+        "type": "number",
+        "validation": {
+            "min": 0
+        },
+        "note": "Number of seconds, e.g. 0"
+    },
+    {
+        "ruleId": "os_sshd_client_alive_interval_configure",
+        "type": "number",
+        "validation": {
+            "min": 1
+        },
+        "note": "Number of seconds, e.g. 900"
+    },
+    {
+        "ruleId": "os_sshd_login_grace_time_configure",
+        "type": "number",
+        "validation": {
+            "min": 1
+        },
+        "note": "Number of seconds, e.g. 30"
+    },
+    {
+        "ruleId": "os_sshd_unused_connection_timeout_configure",
+        "type": "number",
+        "validation": {
+            "min": 1
+        },
+        "note": "Number of seconds, e.g. 900"
+    },
+    {
+        "ruleId": "os_sudo_timeout_configure",
+        "type": "number",
+        "validation": {
+            "min": 0
+        },
+        "note": "Number of minutes, e.g. 0"
+    },
+    {
+        "ruleId": "os_unlock_active_user_session_disable",
+        "type": "enum",
+        "validation": {
+            "enumValues": [
+                "authenticate-session-owner",
+                "authenticate-session-owner-or-admin",
+                "use-login-window-ui"
+            ]
+        },
+        "note": "Refer to system.login.screensaver in /System/Library/Security/authorization.plist"
+    },
+    {
+        "ruleId": "pwpolicy_account_inactivity_enforce",
+        "type": "number",
+        "validation": {
+            "min": 1
+        },
+        "note": "Number of seconds, e.g. 35"
+    },
+    {
+        "ruleId": "pwpolicy_account_lockout_enforce",
+        "type": "number",
+        "validation": {
+            "min": 1
+        },
+        "note": "Number of failed attempts, e.g. 3"
+    },
+    {
+        "ruleId": "pwpolicy_account_lockout_timeout_enforce",
+        "type": "number",
+        "validation": {
+            "min": 1
+        },
+        "note": "Number of minutes, e.g. 15"
+    },
+    {
+        "ruleId": "pwpolicy_custom_regex_enforce",
+        "type": "regex",
+        "note": "Custom regex, e.g. ^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).*$"
+    },
+    {
+        "ruleId": "pwpolicy_history_enforce",
+        "type": "number",
+        "validation": {
+            "min": 0
+        },
+        "note": "Number of previous passwords, e.g. 5"
+    },
+    {
+        "ruleId": "pwpolicy_lower_case_character_enforce",
+        "type": "number",
+        "validation": {
+            "min": 1
+        },
+        "note": "Number of lowercase characters, e.g. 1"
+    },
+    {
+        "ruleId": "pwpolicy_max_lifetime_enforce",
+        "type": "number",
+        "validation": {
+            "min": 1
+        },
+        "note": "Number of days, e.g. 60"
+    },
+    {
+        "ruleId": "pwpolicy_minimum_length_enforce",
+        "type": "number",
+        "validation": {
+            "min": 1
+        },
+        "note": "Minimum password length. e.g. 15"
+    },
+    {
+        "ruleId": "pwpolicy_minimum_lifetime_enforce",
+        "type": "number",
+        "validation": {
+            "min": 1
+        },
+        "note": "Minimum number of hours before a new password can be changed, e.g. 24"
+    },
+    {
+        "ruleId": "pwpolicy_special_character_enforce",
+        "type": "number",
+        "validation": {
+            "min": 1
+        },
+        "note": "Number of special characters, e.g. 1"
+    },
+    {
+        "ruleId": "pwpolicy_upper_case_character_enforce",
+        "type": "number",
+        "validation": {
+            "min": 1
+        },
+        "note": "Number of uppercase characters, e.g. 1"
+    },
+    {
+        "ruleId": "system_settings_loginwindow_loginwindowtext_enable",
+        "type": "string",
+        "note": "Text to be displayed at the loginwindow. The visible characters are limited at the loginwindow screen. Avoid special characters and complex formatting for best results."
+    },
+    {
+        "ruleId": "system_settings_automatic_logout_enforce",
+        "type": "number",
+        "validation": {
+            "min": 1
+        },
+        "note": "Number of seconds, e.g. 86400"
+    },
+    {
+        "ruleId": "system_settings_screensaver_ask_for_password_delay_enforce",
+        "type": "number",
+        "validation": {
+            "min": 1
+        },
+        "note": "Number of seconds, e.g. 5"
+    },
+    {
+        "ruleId": "system_settings_screensaver_timeout_enforce",
+        "type": "number",
+        "validation": {
+            "min": 1
+        },
+        "note":"Number of seconds, e.g. 1200"
+    },
+    {
+        "ruleId": "system_settings_time_server_configure",
+        "type": "string",
+        "note": "The time server used by your organization, e.g. time.apple.com"
+    }
+]

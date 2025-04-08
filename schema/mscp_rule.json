@@ -62,7 +62,8 @@
                         }
                     },
                     "required": [
-                        "description"
+                        "description",
+                        "datatype"
                     ],
                     "additionalProperties": false
                 },
