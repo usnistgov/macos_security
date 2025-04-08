@@ -121,6 +121,10 @@ def main():
     with open("../includes/odv.json") as o:
         odv_json = json.load(o)
 
+    # load discussions.yaml for reference
+    with open("../includes/discussions.yaml") as y:
+        discussions_yaml = yaml.load(y, Loader=yaml.SafeLoader)
+
     # os_supported = ["sequoia", "sonoma", "ventura", "monterey", "big_sur", "catalina", "ios_18", "ios_17", "ios_16", "visionos_2.0"]
     os_supported = ["sequoia", "sonoma", "ventura", "ios_18", "ios_17", "ios_16", "visionos_2.0"]
     # for os_list in glob.glob("../_work/*"):
@@ -1048,6 +1052,10 @@ def main():
                 _yaml['odv']['hint']['description'] = description
                 _yaml['odv']['hint']['validation'] = validation
                 odv_rules.append(_yaml['id'])
+
+            for d in discussions_yaml:
+                if _yaml['id'] == d['id']:
+                    _yaml['discussion'] = d['discussion']
                 
     
         with open(file, "w") as nf:

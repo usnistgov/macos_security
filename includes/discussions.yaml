@@ -1,0 +1,130 @@
+- id: os_sshd_client_alive_count_max_configure
+  discussion: |
+    If SSHD is enabled it _MUST_ be configured with the Client Alive Maximum Count set to $ODV.
+
+    This will set the number of client alive messages which may be sent without the SSH server receiving any messages back from the client.  If this threshold is reached while client alive messages are being sent, the SSH server will disconnect the client, terminating the session.  The client alive messages are sent through the encrypted channel and therefore will not be spoofable.  The client alive mechanism is valuable when the client or server depend on knowing when a connection has become unresponsive.
+
+    NOTE: This setting is not intended to manage idle user sessions where there is no input from the client. Its purpose is to monitor for interruptions in network connectivity and force the session to terminate after the connection appears to be broken.
+
+    NOTE: /etc/ssh/sshd_config will be automatically modified to its original state following any update or major upgrade to the operating system.
+
+    NOTE: On macOS 15.2 and higher the SSH configuration can be reset to the macOS default by running /usr/libexec/reset-ssh-configuration.
+- id: os_writing_tools_disable
+  discussion: |
+    Apple Intelligence features such as writing tools that use off device AI _MUST_ be disabled.
+- id: os_user_app_installation_prohibit
+  discussion: |
+    Users _MUST_ not be allowed to install software. 
+
+    Allowing regular users to install software, without explicit privileges, presents the risk of untested and potentially malicious software being installed on the system. Explicit privileges (escalated or administrative privileges) provide the regular user with explicit capabilities and control that exceeds the rights of a regular user.
+
+    On macOS, restrict users from installing and running software from the /Users/ folder.
+    
+    [IMPORTANT]
+    ====
+    For macOS, Apple has deprecated the use of link:https://github.com/apple/device-management/blob/eb51fb0cb9626cac4717858556912c257a734ce0/mdm/profiles/com.apple.applicationaccess.new.yaml#L67-L70[application restriction controls], using these controls may not work as expected. Third party software may be required to fulfill the compliance requirements.
+    ====
+- id: os_required_crypto_module
+  discussion: |
+    The inherent configuration of the macOS _IS_ in compliance by implementing mechanisms for authentication to a cryptographic module that meet the requirements of all applicable federal laws, Executive Orders, directives, policies, regulations, standards, and guidance for such authentication
+
+    macOS contains many open source projects that may use their own cryptographic libraries typically for the purposes of maintaining platform independence. These services are not covered by the Apple FIPS Validation of the CoreCrypto and CoreCrypto Kernel modules.
+
+    Apple is committed to the FIPS validation process and historically has always submitted and validated the cryptographic modules in macOS.
+
+    link:https://csrc.nist.gov/Projects/cryptographic-module-validation-program/validated-modules[]
+
+    link:https://support.apple.com/en-us/HT201159[]
+- id: os_genmoji_disable
+  discussion: |
+    Apple Intelligence features such as Genmoji that use off device AI _MUST_ be disabled.
+- id: os_ssh_server_alive_count_max_configure
+  discussion: |
+    SSH _MUST_ be configured with an Active Server Alive Maximum Count set to $ODV. Terminating an idle session within a short time period reduces the window of opportunity for unauthorized personnel to take control of a management session enabled on the console or console port that has been left unattended. In addition, quickly terminating an idle session or an incomplete login attempt will also free up resources committed by the managed network element.
+
+    NOTE: /etc/ssh/ssh_config will be automatically modified to its original state following any update or major upgrade to the operating system.
+
+    NOTE: On macOS 15.2 and higher the SSH configuration can be reset to the macOS default by running /usr/libexec/reset-ssh-configuration.
+- id: os_sshd_permit_root_login_configure
+  discussion: |
+    If SSH is enabled to assure individual accountability and prevent unauthorized access, logging in as root via SSH _MUST_ be disabled.
+
+    The macOS system _MUST_ require individuals to be authenticated with an individual authenticator prior to using a group authenticator, and administrator users _MUST_ never log in directly as root.
+
+    NOTE: On macOS 15.2 and higher the SSH configuration can be reset to the macOS default by running /usr/libexec/reset-ssh-configuration.
+- id: os_account_modification_disable
+  discussion: |
+    The system _MUST_ disable account modification. 
+  
+    Account modification includes adding additional or modifying internet accounts in Apple Mail, Calendar, Contacts, in the Internet Account System Setting Pane, or the Apple Account System Setting Pane.
+    
+    This prevents the addition of unauthorized accounts.
+
+    [IMPORTANT]
+    ====
+    Some organizations may allow the use and configuration of the built-in Mail.app, Calendar.app, and Contacts.app for organizational communication. Information System Security Officers (ISSOs) may make the risk-based decision not to disable the Internet Accounts System Preference pane to avoid losing this functionality, but they are advised to first fully weigh the potential risks posed to their organization.
+    ====
+- id: os_on_device_dictation_enforce
+  discussion: |
+    The system _MUST_ be configured for on device dictation.
+
+    By enforcing on device dictation this will mitigate the risk of unwanted data being sent to Apple.
+- id: os_sshd_channel_timeout_configure
+  discussion: |
+    If SSHD is enabled it _MUST_ be configured with session ChannelTime out set to $ODV.
+
+    This will set the time out when the session is inactive.
+
+    NOTE: /etc/ssh/sshd_config will be automatically modified to its original state following any update or major upgrade to the operating system.
+
+    NOTE: On macOS 15.2 and higher the SSH configuration can be reset to the macOS default by running /usr/libexec/reset-ssh-configuration.
+- id: os_calendar_app_disable
+  discussion: |
+    The macOS built-in Calendar.app _MUST_ be disabled as this application can establish a connection to non-approved services. This rule is in place to prevent inadvertent data transfers.
+
+    [IMPORTANT]
+    ====
+    Some organizations allow the use of the built-in Calendar.app for organizational communication. Information System Security Officers (ISSOs) may make the risk-based decision not to disable the macOS built-in Calendar.app to avoid losing this functionality, but they are advised to first fully weigh the potential risks posed to their organization.
+    ====
+
+    [IMPORTANT]
+    ====
+    Apple has deprecated the use of link:https://github.com/apple/device-management/blob/eb51fb0cb9626cac4717858556912c257a734ce0/mdm/profiles/com.apple.applicationaccess.new.yaml#L67-L70[application restriction controls], using these controls may not work as expected. Third party software may be required to fulfill the compliance requirements.
+    ====
+- id: pwpolicy_custom_regex_enforce
+  discussion: |
+    The macOS _MUST_ be configured to meet complexity requirements defined in $ODV.
+
+    This rule enforces password complexity by requiring users to set passwords that are less vulnerable to malicious users.
+
+    NOTE: To comply with Executive Order 14028, “Improving the Nation's Cybersecurity”, OMB M-22-09, “Moving the U.S. Government Toward Zero Trust Cybersecurity Principles”, and NIST SP-800-63b, “Digital Identity Guidelines: Authentication and Lifecycle Management” federal, military, and intelligence communities must adopt the following configuration settings. Password policies must not require the use of complexity policies such as upper characters, lower characters, or special characters. Password policies must also not require the use of regular rotation. Password policies should define a minimum length. Multifactor authentication should be used where ever possible.
+
+    NOTE: The configuration profile generated must be installed from an MDM server.
+- id: pwpolicy_max_lifetime_enforce
+  discussion: |
+    The system _MUST_ be configured to enforce a maximum password lifetime limit of $ODV days.
+
+    This rule ensures that users are forced to change their passwords frequently enough to prevent malicious users from gaining and maintaining access to the system.
+
+    NOTE: To comply with Executive Order 14028, “Improving the Nation's Cybersecurity”, OMB M-22-09, “Moving the U.S. Government Toward Zero Trust Cybersecurity Principles”, and NIST SP-800-63b, “Digital Identity Guidelines: Authentication and Lifecycle Management” federal, military, and intelligence communities must adopt the following configuration settings. Password policies must not require the use of complexity policies such as upper characters, lower characters, or special characters. Password policies must also not require the use of regular rotation. Password policies should define a minimum length. Multifactor authentication should be used where ever possible.
+- id: pwpolicy_history_enforce
+  discussion: |
+    The device _MUST_ be configured to enforce a password history of at least $ODV previous passwords when a password is created.
+
+    This rule ensures that users are not allowed to re-use a password that was used in any of the $ODV previous password generations.
+
+    Limiting password reuse protects against malicious users attempting to gain access to the system via brute-force hacking methods.
+- id: pwpolicy_account_lockout_enforce
+  discussion: |
+    The system _MUST_ be configured to limit the number of failed login attempts to a maximum of $ODV. When the maximum number of failed attempts is reached, the system _MUST_ prevent logins for a period of time after.
+
+    This rule protects against malicious users attempting to gain access to the system via brute-force hacking methods.
+- id: pwpolicy_simple_sequence_disable
+  discussion: |
+    The system _MUST_ be configured to prohibit the use of repeating, ascending, and descending character sequences when a password is created.
+
+    This rule enforces password complexity by requiring users to set passwords that are less vulnerable to malicious users.
+
+    NOTE: To comply with Executive Order 14028, “Improving the Nation's Cybersecurity”, OMB M-22-09, “Moving the U.S. Government Toward Zero Trust Cybersecurity Principles”, and NIST SP-800-63b, “Digital Identity Guidelines: Authentication and Lifecycle Management” federal, military, and intelligence communities must adopt the following configuration settings. Password policies must not require the use of complexity policies such as upper characters, lower characters, or special characters. Password policies must also not require the use of regular rotation. Password policies should define a minimum length. Multifactor authentication should be used where ever possible.
+
+    NOTE: pwpolicy_simple_sequence_disable prevents use of passwords which are regularly found in compromised password lists.
