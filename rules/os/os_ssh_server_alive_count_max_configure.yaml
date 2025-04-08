@@ -1,5 +1,5 @@
 id: os_ssh_server_alive_count_max_configure
-title: "Set SSH Active Server Alive Maximum to $ODV"
+title: Set SSH Active Server Alive Maximum to $ODV
 discussion: |
   SSH _MUST_ be configured with an Active Server Alive Maximum Count set to $ODV. Terminating an idle session within a short time period reduces the window of opportunity for unauthorized personnel to take control of a management session enabled on the console or console port that has been left unattended. In addition, quickly terminating an idle session or an incomplete login attempt will also free up resources committed by the managed network element.
 
@@ -19,7 +19,7 @@ result:
 fix: |
   [source,bash]
   ----
-  for u in $(/usr/bin/dscl . -list /Users UniqueID | /usr/bin/awk '$2 > 500 {print $1}'); do 
+  for u in $(/usr/bin/dscl . -list /Users UniqueID | /usr/bin/awk '$2 > 500 {print $1}'); do
     config=$(/usr/bin/sudo -u $u /usr/bin/ssh -Gv . 2>&1 | /usr/bin/awk '/Reading configuration data/ {print $NF}'| /usr/bin/tr -d '\r')
     configarray=( ${(f)config} )
     for c in $configarray; do
@@ -30,11 +30,11 @@ fix: |
 references:
   cce:
     - CCE-91884-7
-  cci: 
+  cci:
     - N/A
   800-53r5:
     - SC-10
-  800-53r4: 
+  800-53r4:
     - SC-10
   srg:
     - N/A
@@ -48,7 +48,7 @@ macOS:
   - "13.0"
 odv:
   hint: "Number of seconds."
-  recommended: 0 
+  recommended: 0
 tags:
   - 800-53r5_moderate
   - 800-53r5_high

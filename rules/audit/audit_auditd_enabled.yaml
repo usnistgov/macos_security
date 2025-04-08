@@ -1,5 +1,5 @@
 id: audit_auditd_enabled
-title: "Enable Security Auditing"
+title: Enable Security Auditing
 discussion: |
   The information system _MUST_ be configured to generate audit records.
 
@@ -18,7 +18,7 @@ check: |
     echo "fail"
   fi
 result:
-  string: "pass"
+  string: pass
 fix: |
   [source,bash]
   ----

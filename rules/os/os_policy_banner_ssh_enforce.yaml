@@ -1,7 +1,7 @@
 id: os_policy_banner_ssh_enforce
-title: "Enforce SSH to Display Policy Banner"
+title: Enforce SSH to Display Policy Banner
 discussion: |
-  SSH _MUST_ be configured to display a policy banner. 
+  SSH _MUST_ be configured to display a policy banner.
 
   Displaying a standardized and approved use notification before granting access to the operating system ensures that users are provided with privacy and security notification verbiage that is consistent with applicable federal laws, Executive Orders, directives, policies, regulations, standards, and guidance.
 
@@ -9,7 +9,7 @@ discussion: |
 
   NOTE: /etc/ssh/sshd_config will be automatically modified to its original state following any update or major upgrade to the operating system.
 check: |
-  /usr/sbin/sshd -T | /usr/bin/grep -c "^banner /etc/banner"
+  /usr/sbin/sshd -G | /usr/bin/grep -c "^banner /etc/banner"
 result:
   integer: 1
 fix: |

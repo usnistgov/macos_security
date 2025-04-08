@@ -1,8 +1,8 @@
 id: os_ssh_server_alive_interval_configure
-title: "Configure SSH ServerAliveInterval option set to $ODV"
+title: Configure SSH ServerAliveInterval option set to $ODV
 discussion: |
-  SSH _MUST_ be configured with an Active Server Alive Maximum Count set to $ODV. 
-  
+  SSH _MUST_ be configured with an Active Server Alive Maximum Count set to $ODV.
+
   Setting the Active Server Alive Maximum Count to $ODV will log users out after a $ODV seconds interval of inactivity.
 
   NOTE: /etc/ssh/ssh_config will be automatically modified to its original state following any update or major upgrade to the operating system.
@@ -21,7 +21,7 @@ result:
 fix: |
   [source,bash]
   ----
-  for u in $(/usr/bin/dscl . -list /Users UniqueID | /usr/bin/awk '$2 > 500 {print $1}'); do 
+  for u in $(/usr/bin/dscl . -list /Users UniqueID | /usr/bin/awk '$2 > 500 {print $1}'); do
     config=$(/usr/bin/sudo -u $u /usr/bin/ssh -Gv . 2>&1 | /usr/bin/awk '/Reading configuration data/ {print $NF}'| /usr/bin/tr -d '\r')
     configarray=( ${(f)config} )
     for c in $configarray; do

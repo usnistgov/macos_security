@@ -1,7 +1,7 @@
 id: os_hibernate_mode_intel_enable
 title: "Enable Hibernate Mode (Intel)"
 discussion: |
-  Hibernate mode _MUST_ be enabled. 
+  Hibernate mode _MUST_ be enabled.
 
   This will store a copy of memory to persistent storage, and will remove power to memory. This setting will stop the potential for a cold-boot attack.
 
@@ -12,7 +12,7 @@ check: |
     hibernateStandbyLowValue=$(/usr/bin/pmset -g | /usr/bin/grep standbydelaylow 2>&1 | /usr/bin/awk '{print $2}')
     hibernateStandbyHighValue=$(/usr/bin/pmset -g | /usr/bin/grep standbydelayhigh 2>&1 | /usr/bin/awk '{print $2}')
     hibernateStandbyThreshValue=$(/usr/bin/pmset -g | /usr/bin/grep highstandbythreshold 2>&1 | /usr/bin/awk '{print $2}')
-    
+
     if [[ "$hibernateStandbyLowValue" == "" ]] || [[ "$hibernateStandbyLowValue" -gt 900 ]]; then
       ((error_count++))
     fi
