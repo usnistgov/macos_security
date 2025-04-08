@@ -21,7 +21,7 @@ fix: |
 references:
   cce:
     - CCE-91762-5
-  cci:q
+  cci:
     - N/A
   800-53r5:
     - AC-3
