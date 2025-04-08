@@ -128,3 +128,89 @@
     NOTE: To comply with Executive Order 14028, “Improving the Nation's Cybersecurity”, OMB M-22-09, “Moving the U.S. Government Toward Zero Trust Cybersecurity Principles”, and NIST SP-800-63b, “Digital Identity Guidelines: Authentication and Lifecycle Management” federal, military, and intelligence communities must adopt the following configuration settings. Password policies must not require the use of complexity policies such as upper characters, lower characters, or special characters. Password policies must also not require the use of regular rotation. Password policies should define a minimum length. Multifactor authentication should be used where ever possible.
 
     NOTE: pwpolicy_simple_sequence_disable prevents use of passwords which are regularly found in compromised password lists.
+- id: pwpolicy_lower_case_character_enforce
+  discussion: |
+    The macOS _MUST_ be configured to require at least one lower-case character be used when a password is created.
+
+    This rule enforces password complexity by requiring users to set passwords that are less vulnerable to malicious users.
+
+    NOTE: To comply with Executive Order 14028, "Improving the Nation's Cybersecurity", OMB M-22-09, "Moving the U.S. Government Toward Zero Trust Cybersecurity Principles", and NIST SP-800-63b, "Digital Identity Guidelines: Authentication and Lifecycle Management" federal, military, and intelligence communities must adopt the following configuration settings. Password policies must not require the use of complexity policies such as upper characters, lower characters, or special characters. Password policies must also not require the use of regular rotation. Password policies should define a minimum length. Multifactor authentication should be used where ever possible.
+
+    NOTE: macOS 14 supports password policy complexity with custom regex deployed with a mobileconfig file. To use a mobileconfig file use *pwpolicy_custom_regex_enforce*.
+- id: pwpolicy_special_character_enforce
+  discussion: |
+    The macOS _MUST_ be configured to require at least one special character be used when a password is created.
+
+    Special characters are those characters that are not alphanumeric. Examples include: ~ ! @ # $ % ^ *.
+
+    This rule enforces password complexity by requiring users to set passwords that are less vulnerable to malicious users.
+
+    NOTE: To comply with Executive Order 14028, "Improving the Nation's Cybersecurity", OMB M-22-09, "Moving the U.S. Government Toward Zero Trust Cybersecurity Principles", and NIST SP-800-63b, "Digital Identity Guidelines: Authentication and Lifecycle Management" federal, military, and intelligence communities must adopt the following configuration settings. Password policies must not require the use of complexity policies such as upper characters, lower characters, or special characters. Password policies must also not require the use of regular rotation. Password policies should define a minimum length. Multifactor authentication should be used where ever possible.
+- id: pwpolicy_alpha_numeric_enforce
+  discussion: |
+    The macOS _MUST_ be configured to require at least one numeric character be used when a password is created.
+
+    This rule enforces password complexity by requiring users to set passwords that are less vulnerable to malicious users.
+  
+    NOTE: To comply with Executive Order 14028, "Improving the Nation's Cybersecurity", OMB M-22-09, "Moving the U.S. Government Toward Zero Trust Cybersecurity Principles", and NIST SP-800-63b, "Digital Identity Guidelines: Authentication and Lifecycle Management" federal, military, and intelligence communities must adopt the following configuration settings. Password policies must not require the use of complexity policies such as upper characters, lower characters, or special characters. Password policies must also not require the use of regular rotation. Password policies should define a minimum length. Multifactor authentication should be used where ever possible.
+- id: pwpolicy_minimum_length_enforce
+  discussion: |
+    The macOS _MUST_ be configured to require a minimum of $ODV characters be used when a password is created.
+
+    This rule enforces password complexity by requiring users to set passwords that are less vulnerable to malicious users.
+
+    NOTE: To comply with Executive Order 14028, "Improving the Nation's Cybersecurity", OMB M-22-09, "Moving the U.S. Government Toward Zero Trust Cybersecurity Principles", and NIST SP-800-63b, "Digital Identity Guidelines: Authentication and Lifecycle Management" federal, military, and intelligence communities must adopt the following configuration settings. Password policies must not require the use of complexity policies such as upper characters, lower characters, or special characters. Password policies must also not require the use of regular rotation. Password policies should define a minimum length. Multifactor authentication should be used where ever possible.
+- id: pwpolicy_upper_case_character_enforce
+  discussion: |
+    The macOS should be configured to forbid users to use dictionary words for passwords.
+
+    If the operating system allows users to select passwords based on dictionary words, this increases the window of opportunity for a malicious user to guess the password.
+
+    To prevent users from using dictionary words for passwords, many operating systems can be integrated with an enterprise-level directory service that meets or exceeds this requirement.
+
+    NOTE: To comply with Executive Order 14028, “Improving the Nation's Cybersecurity”, OMB M-22-09, “Moving the U.S. Government Toward Zero Trust Cybersecurity Principles”, and NIST SP-800-63b, “Digital Identity Guidelines: Authentication and Lifecycle Management” federal, military, and intelligence communities must adopt the following configuration settings. Password policies must not require the use of complexity policies such as upper characters, lower characters, or special characters. Password policies must also not require the use of regular rotation. Password policies should define a minimum length. Multifactor authentication should be used where ever possible.
+- id: pwpolicy_minimum_lifetime_enforce
+  discussion: |
+    The macOS _MUST_ be configured to enforce a minimum password lifetime limit of $ODV hours.
+
+    This rule discourages users from cycling through their previous passwords to get back to a preferred one.
+
+    NOTE: To comply with Executive Order 14028, “Improving the Nation's Cybersecurity”, OMB M-22-09, “Moving the U.S. Government Toward Zero Trust Cybersecurity Principles”, and NIST SP-800-63b, “Digital Identity Guidelines: Authentication and Lifecycle Management” federal, military, and intelligence communities must adopt the following configuration settings. Password policies must not require the use of complexity policies such as upper characters, lower characters, or special characters. Password policies must also not require the use of regular rotation. Password policies should define a minimum length. Multifactor authentication should be used where ever possible.
+- id: icloud_photos_disable
+  discussion: |
+    The built-in Photos.app's connection to Apple's iCloud service _MUST_ be disabled.
+
+    Apple's iCloud service does not provide an organization with enough control over the storage and access of data and, therefore, automated photo synchronization _MUST_ be controlled by an organization approved service.
+- id: icloud_sync_disable
+  discussion: |
+    The macOS system's ability to automatically synchronize a user's desktop and documents folder to their iCloud Drive _MUST_ be disabled.
+
+    Apple's iCloud service does not provide an organization with enough control over the storage and access of data and, therefore, automated file synchronization _MUST_ be controlled by an organization approved service.
+- id: icloud_keychain_disable
+  discussion: |
+    The system's ability to automatically synchronize a user's passwords to their iCloud account _MUST_ be disabled.
+
+    Apple's iCloud service does not provide an organization with enough control over the storage and access of data and, therefore, password management and synchronization _MUST_ be controlled by an organization approved service.
+- id: os_files_network_drive_access_disable
+  discussion: |
+    Network drive acces in Files app _MUST_ be disabled.
+- id: pwpolicy_max_grace_period_enforce
+  discussion: |
+    The iOS grace period for device lock _MUST_ be configured to $ODV minutes.
+- id: os_screenshots_disable
+  discussion: |
+    Screenshots and screen recordings _MUST_ be disabled.
+- id: os_erase_contents_and_settings_disable
+  discussion: |
+    Erase all contents and settings _MUST_ be disabled on institutionally owned devices.
+- id: os_application_allow_list
+  discussion: |
+    Requiring all authorized applications to be in an application allow list prevents the execution of any applications (e.g., unauthorized, malicious) that are not part of the allow list. Failure to configure an application allow list properly could allow unauthorized and malicious applications to be downloaded, installed, and executed on the mobile device, causing a compromise of DoD data accessible by these applications. Applications with the listed characteristics have features that can cause the compromise of sensitive DoD data or have features with no known application in the DoD environment.
+
+    Application note: The application allow list, in addition to controlling the installation of applications on the MDM, must control user access/execution of all core and preinstalled applications, or the MDM must provide an alternate method of restricting user access/execution to core and preinstalled applications.
+
+    Core application: Any application integrated into the OS by the OS or MDM vendors.
+
+    Preinstalled application: Additional noncore applications included in the OS build by the OS vendor, MDM vendor, or wireless carrier.
+
+    NOTE: See rule YAML file for implementation comments.    
