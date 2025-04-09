@@ -14,12 +14,12 @@
     Apple Intelligence features such as writing tools that use off device AI _MUST_ be disabled.
 - id: os_user_app_installation_prohibit
   discussion: |
-    Users _MUST_ not be allowed to install software. 
+    Users _MUST_ not be allowed to install software.
 
     Allowing regular users to install software, without explicit privileges, presents the risk of untested and potentially malicious software being installed on the system. Explicit privileges (escalated or administrative privileges) provide the regular user with explicit capabilities and control that exceeds the rights of a regular user.
 
     On macOS, restrict users from installing and running software from the /Users/ folder.
-    
+
     [IMPORTANT]
     ====
     For macOS, Apple has deprecated the use of link:https://github.com/apple/device-management/blob/eb51fb0cb9626cac4717858556912c257a734ce0/mdm/profiles/com.apple.applicationaccess.new.yaml#L67-L70[application restriction controls], using these controls may not work as expected. Third party software may be required to fulfill the compliance requirements.
@@ -54,10 +54,10 @@
     NOTE: On macOS 15.2 and higher the SSH configuration can be reset to the macOS default by running /usr/libexec/reset-ssh-configuration.
 - id: os_account_modification_disable
   discussion: |
-    The system _MUST_ disable account modification. 
-  
+    The system _MUST_ disable account modification.
+
     Account modification includes adding additional or modifying internet accounts in Apple Mail, Calendar, Contacts, in the Internet Account System Setting Pane, or the Apple Account System Setting Pane.
-    
+
     This prevents the addition of unauthorized accounts.
 
     [IMPORTANT]
@@ -151,7 +151,7 @@
     The macOS _MUST_ be configured to require at least one numeric character be used when a password is created.
 
     This rule enforces password complexity by requiring users to set passwords that are less vulnerable to malicious users.
-  
+
     NOTE: To comply with Executive Order 14028, "Improving the Nation's Cybersecurity", OMB M-22-09, "Moving the U.S. Government Toward Zero Trust Cybersecurity Principles", and NIST SP-800-63b, "Digital Identity Guidelines: Authentication and Lifecycle Management" federal, military, and intelligence communities must adopt the following configuration settings. Password policies must not require the use of complexity policies such as upper characters, lower characters, or special characters. Password policies must also not require the use of regular rotation. Password policies should define a minimum length. Multifactor authentication should be used where ever possible.
 - id: pwpolicy_minimum_length_enforce
   discussion: |
@@ -213,4 +213,124 @@
 
     Preinstalled application: Additional noncore applications included in the OS build by the OS vendor, MDM vendor, or wireless carrier.
 
-    NOTE: See rule YAML file for implementation comments.    
+    NOTE: See rule YAML file for implementation comments.
+- id: system_settings_location_services_menu_enforce
+  discussion: |
+    Location Services menu item _MUST_ be enabled.
+- id: system_settings_time_server_configure
+  discussion: |
+    Approved time server _MUST_ be the only server configured for use.
+
+    This rule ensures the uniformity of time stamps for information systems with multiple system clocks and systems connected over a network.
+
+    NOTE: As of macOS 10.13 only one time server is supported.
+- id: system_settings_siri_settings_disable
+  discussion: |
+    The System Settings pane for Siri _MUST_ be hidden.
+
+    Hiding the System Settings pane prevents the users from configuring Siri.
+
+    NOTE: On macOS 15 and later, disabling the Siri System Settings pane blocks the user from opting into Apple Intelligence.
+- id: system_settings_media_sharing_disabled
+  discussion: |
+    Media sharing _MUST_ be disabled.
+
+    When Media Sharing is enabled, the computer starts a network listening service that shares the contents of the user's music collection with other users in the same subnet.
+
+    The information system _MUST_ be configured to provide only essential capabilities. Disabling Media Sharing helps prevent the unauthorized connection of devices and the unauthorized transfer of information. Disabling Media Sharing mitigates this risk.
+
+    Note: On macOS versions prior to 15, the Media Sharing settings panel may still allow you to check "Home Sharing" and "Share media with guests," but the service itself will not be activated.
+- id: audit_auditd_enabled
+  discussion: |
+    The information system _MUST_ be configured to generate audit records.
+
+    Audit records establish what types of events have occurred, when they occurred, and which users were involved. These records aid an organization in their efforts to establish, correlate, and investigate the events leading up to an outage or attack.
+
+    The content required to be captured in an audit record varies based on the impact level of an organization's system. Content that may be necessary to satisfy this requirement includes, for example, time stamps, source addresses, destination addresses, user identifiers, event descriptions, success/fail indications, filenames involved, and access or flow control rules invoked.
+
+    The information system initiates session audits at system start-up.
+
+    NOTE: Security auditing is NOT enabled by default on macOS 14 and later.
+- id: os_sshd_unused_connection_timeout_configure
+  discussion: |
+    If SSHD is enabled it _MUST_ be configured with unused connection timeout set to $ODV.
+
+    This will set the time out when there are no open channels within an session.
+
+    NOTE: On macOS 15.2 and higher the SSH configuration can be reset to the macOS default by running /usr/libexec/reset-ssh-configuration.
+- id: os_sshd_login_grace_time_configure
+  discussion: |
+    If SSHD is enabled then it _MUST_ be configured to wait only $ODV seconds before timing out logon attempts.
+
+    NOTE: On macOS 15.2 and higher the SSH configuration can be reset to the macOS default by running /usr/libexec/reset-ssh-configuration.
+- id: os_sshd_fips_compliant
+  discussion: |
+    If SSHD is enabled then it _MUST_ be configured to limit the Ciphers, HostbasedAcceptedAlgorithms, HostKeyAlgorithms, KexAlgorithms, MACs, PubkeyAcceptedAlgorithms, CASignatureAlgorithms to algorithms that are FIPS 140 validated.
+
+    FIPS 140-3 is the current standard for validating that mechanisms used to access cryptographic modules utilize authentication that meet federal requirements.
+
+    Operating systems utilizing encryption _MUST_ use FIPS validated mechanisms for authenticating to cryptographic modules.
+
+    NOTE: For more information on FIPS compliance with the version of SSHD included in the macOS, the manual page apple_ssh_and_fips has additional information.
+
+    NOTE: On macOS 15.2 and higher the SSH configuration can be reset to the macOS default by running /usr/libexec/reset-ssh-configuration.
+- id: os_password_proximity_disable
+  discussion: |
+    Proximity based password sharing requests _MUST_ be disabled.
+
+    The default behavior of macOS and iOS is to allow users to request passwords from other known devices. This feature _MUST_ be disabled to prevent passwords from being shared.
+- id: os_iphone_mirroring_disable
+  discussion: |
+    iPhone Mirroring _MUST_ be disabled to prevent file transfers to or from unauthorized devices. On macOS, disabling iPhone Mirroring prevents potentially unauthorized applications from appearing as if they are installed on the device.
+- id: os_ssh_server_alive_interval_configure
+  discussion: |
+    SSH _MUST_ be configured with an Active Server Alive Maximum Count set to $ODV.
+
+    Setting the Active Server Alive Maximum Count to $ODV will log users out after a $ODV seconds interval of inactivity.
+
+    NOTE: /etc/ssh/ssh_config will be automatically modified to its original state following any update or major upgrade to the operating system.
+
+    NOTE: On macOS 15.2 and higher the SSH configuration can be reset to the macOS default by running /usr/libexec/reset-ssh-configuration.
+- id: os_ssh_fips_compliant
+  discussion: |
+    SSH _MUST_ be configured to limit the Ciphers, HostbasedAcceptedAlgorithms, HostKeyAlgorithms, KexAlgorithms, MACs, PubkeyAcceptedAlgorithms, CASignatureAlgorithms to algorithms that are FIPS 140 validated.
+
+    FIPS 140-3 is the current standard for validating that mechanisms used to access cryptographic modules utilize authentication that meet federal requirements.
+
+    Operating systems utilizing encryption _MUST_ use FIPS validated mechanisms for authenticating to cryptographic modules.
+
+    NOTE: For more information on FIPS compliance with the version of SSH included in the macOS, the manual page apple_ssh_and_fips has additional information.
+
+    NOTE: On macOS 15.2 and higher the SSH configuration can be reset to the macOS default by running /usr/libexec/reset-ssh-configuration.
+- id: os_password_autofill_disable
+  discussion: |
+    Password Autofill _MUST_ be disabled.
+
+    The operating system allows users to save passwords and use the Password Autofill feature in Safari and compatible apps. To protect against malicious users gaining access to the system, this feature _MUST_ be disabled to prevent users from being prompted to save passwords in applications.
+- id: os_sshd_client_alive_interval_configure
+  discussion: |
+    If SSHD is enabled then it _MUST_ be configured with the Client Alive Interval set to $ODV.
+
+    Sets a timeout interval in seconds after which if no data has been received from the client, sshd(8) will send a message through the encrypted channel to request a response from the client.
+
+    This setting works in conjunction with ClientAliveCountMax to determine the termination of the connection after the threshold has been reached.
+
+    NOTE: This setting is not intended to manage idle user sessions where there is no input from the client. Its purpose is to monitor for interruptions in network connectivity and force the session to terminate after the connection appears to be broken.
+
+    NOTE: On macOS 15.2 and higher the SSH configuration can be reset to the macOS default by running /usr/libexec/reset-ssh-configuration. Previous versions of macOS would revert /etc/ssh/sshd_config to its original state following any update or major upgrade to the operating system.
+- id: os_implement_cryptography
+  discussion: |
+    The information system _IS_ configured to implement approved cryptography to protect information.
+
+    Use of weak or untested encryption algorithms undermines the purposes of utilizing encryption to protect data. The operating system must implement cryptographic modules that adhere to the higher standards that have been tested, validated, and approved by the federal government.
+
+    Apple is committed to the FIPS validation process and historically has always submitted and validated the cryptographic modules in macOS.
+
+    link:https://csrc.nist.gov/Projects/cryptographic-module-validation-program/validated-modules[]
+
+    link:https://support.apple.com/en-us/HT201159[]
+- id: os_password_sharing_disable
+  discussion: |
+    Password Sharing _MUST_ be disabled.
+
+    The default behavior of the operating system is to allow users to share a password over Airdrop between other macOS and iOS devices. This feature _MUST_ be disabled to prevent passwords from being shared.
