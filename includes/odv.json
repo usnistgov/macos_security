@@ -268,5 +268,36 @@
         "ruleId": "system_settings_time_server_configure",
         "type": "string",
         "note": "The time server used by your organization, e.g. time.apple.com"
+    },
+    {
+        "ruleId": "os_exchange_peraccountVPN",
+        "type": "string",
+        "note": "Provide a UUID to leverage the specific VPNUUID"
+    },
+    {
+        "ruleId": "pwpolicy_max_inactivity_enforce",
+        "type": "number",
+        "validation": {
+            "min": 1
+        },
+        "note": "Number of minutes, e.g. 5"
+    },
+    {
+        "ruleId": "pwpolicy_max_grace_period_enforce",
+        "type": "number",
+        "validation": {
+            "min": 1
+        },
+        "note": "Maximum grace period in minutes, e.g. 5"
+    },
+    {
+        "ruleId": "os_update_enforced_software_update_delay",
+        "type": "number",
+        "validation": {
+            "min": 1,
+            "max": 90
+        },
+        "note": "Delay the availability of a software update in days, e.g. 30"
     }
 ]
+

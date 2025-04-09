@@ -27,7 +27,7 @@
         "tags": {
             "description": "Metadata keywords used for searching for rules and for cross-referencing.",
             "$ref": "#/components/schemas/ArrayOfStrings",
-            "minimumitems": 1
+            "minItems": 1
         },
         "odv": {
             "description": "Organization Defined Values are determined by a benchmark or customized by the organization.",
@@ -211,40 +211,58 @@
                         },
                         "introduced": {
                             "type": "string"
-                        },
-                        "additionalProperties": false
-                    }
+                        }
+                    },
+                    "additionalProperties": false
                 },
                 "iOS": {
                     "type": "object",
                     "description": "Schema for identifying components to support iOS",
                     "properties": {
                         "16.0": {
-                            "type": "object",
-                            "properties": {
-                                "$ref": "#/$defs/osDef",
-                                "supervised": {
-                                    "type": "boolean"
+                            "allOf": [
+                                {
+                                    "$ref": "#/$defs/osDef"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "supervised": {
+                                            "type": "boolean"
+                                        }
+                                    }
                                 }
-                            }
+                            ]
                         },
                         "17.0": {
-                            "type": "object",
-                            "properties": {
-                                "$ref": "#/$defs/osDef",
-                                "supervised": {
-                                    "type": "boolean"
+                            "allOf": [
+                                {
+                                    "$ref": "#/$defs/osDef"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "supervised": {
+                                            "type": "boolean"
+                                        }
+                                    }
                                 }
-                            }
+                            ]
                         },
                         "18.0": {
-                            "type": "object",
-                            "properties": {
-                                "$ref": "#/$defs/osDef",
-                                "supervised": {
-                                    "type": "boolean"
+                            "allOf": [
+                                {
+                                    "$ref": "#/$defs/osDef"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "supervised": {
+                                            "type": "boolean"
+                                        }
+                                    }
                                 }
-                            }
+                            ]
                         },
                         "introduced": {
                             "type": "string"
@@ -257,13 +275,19 @@
                     "description": "Schema for identifying components to support visionOS",
                     "properties": {
                         "2.0": {
-                            "type": "object",
-                            "properties": {
-                                "$ref": "#/$defs/osDef",
-                                "supervised": {
-                                    "type": "boolean"
+                            "allOf": [
+                                {
+                                    "$ref": "#/$defs/osDef"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "supervised": {
+                                            "type": "boolean"
+                                        }
+                                    }
                                 }
-                            }
+                            ]
                         },
                         "introduced": {
                             "type": "string"
@@ -274,30 +298,7 @@
             }
         },
         "mobileconfig_info": {
-            "type": "array",
-            "description": "Definition for supported Mobile Device Management configurations",
-            "items": {
-                "type": "object",
-                "properties": {
-                    "PayloadType": {
-                        "type": "string"
-                    },
-                    "PayloadContent": {
-                        "type": "array",
-                        "items": {
-                            "type": "object",
-                            "additionalProperties": {
-                                "$ref": "#/components/schemas/AnyofStringIntegerBooleanArrayObject"
-                            }
-                        }
-                    }
-                },
-                "required": [
-                    "PayloadType",
-                    "PayloadContent"
-                ],
-                "additionalProperties": false
-            }
+            "$ref": "#/$defs/mobileConfigDef"
         },
         "ddm_info": {
             "type": "object",
@@ -359,9 +360,9 @@
                         "ddm_key",
                         "ddm_value"
                     ]
-                },
-                "additionalProperties": false
-            }
+                }
+            },
+            "additionalProperties": false
         }
     },
     "components": {
@@ -378,7 +379,7 @@
                         "type": "string"
                     },
                     {
-                        "type": "integer"
+                        "type": "number"
                     },
                     {
                         "type": "boolean"
@@ -410,7 +411,63 @@
                 "fix": {
                     "description": "Bash command(s) to fix the issue if the check command fails.",
                     "type": "string"
+                },
+                "mobileconfig_info": {
+                    "$ref": "#/$defs/mobileConfigDef"
+                },
+                "check": {
+                    "type": "string"
+                },
+                "result": {
+                    "type": "object",
+                    "properties": {
+                        "string": {
+                            "type": "string"
+                        },
+                        "integer": {
+                            "anyOf": [
+                                {
+                                    "type": "integer"
+                                },
+                                {
+                                    "type": "string",
+                                    "enum": [
+                                        "$ODV"
+                                    ]
+                                }
+                            ]
+                        },
+                        "boolean": {
+                            "type": "boolean"
+                        }
+                    }
                 }
+            }
+        },
+        "mobileConfigDef": {
+            "type": "array",
+            "description": "Definition for supported Mobile Device Management configurations",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "PayloadType": {
+                        "type": "string"
+                    },
+                    "PayloadContent": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "$ref": "#/components/schemas/AnyofStringIntegerBooleanArrayObject"
+                            }
+                        }
+                    }
+                },
+                "required": [
+                    "PayloadType",
+                    "PayloadContent"
+                ],
+                "additionalProperties": false
             }
         }
     }

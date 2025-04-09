@@ -358,10 +358,10 @@ def main():
                     new_yaml['references']['disa'].update({"cmmc": rule_yaml['references']['cmmc']})
             if "indigo" in rule_yaml['references']:
                 if "bsi" in new_yaml['references']:
-                    new_yaml['references']['bsi'].update({"indigo": rule_yaml['references']['indigo']})
+                    new_yaml['references']['bsi'].update({"indigo": {os_: rule_yaml['references']["indigo"]}})
                 else:
                     new_yaml['references'].update({"bsi": {}})
-                    new_yaml['references']['bsi'].update({"indigo": rule_yaml['references']['indigo']})
+                    new_yaml['references']['bsi'].update({"indigo": {os_: rule_yaml['references']["indigo"]}})
             if "cis" in rule_yaml['references']:
                 if "benchmark" in rule_yaml['references']['cis']:
                     if "cis" in new_yaml['references']:
@@ -913,8 +913,8 @@ def main():
                         if key == "fix":
                             differences_yaml['platforms']['macOS'][operating_sys].update({"fix": value['fix']})
                             
-                        if key == "mobileconfig":
-                            differences_yaml['platforms']['macOS'][operating_sys].update({"mobileconfig": value})
+                        # if key == "mobileconfig":
+                        #     differences_yaml['platforms']['macOS'][operating_sys].update({"mobileconfig": value})
                     if "macOS" in differences_yaml['platforms']:
                         if key == "result":
                             if differences_yaml['id'] not in rules_to_review:
@@ -1013,6 +1013,20 @@ def main():
                 _yaml['tags'].remove("visionos")
      
             _yaml = replace_keys_by_path(_yaml)
+
+            # update discussions
+            for d in discussions_yaml:
+                if _yaml['id'] == d['id']:
+                    _yaml['discussion'] = d['discussion']
+
+            # move permanent, inherant check/fix info into discussions
+            if "macOS" in _yaml['platforms'] and "check" in _yaml['platforms']['macOS']:
+                if "requirement is NA" in _yaml['platforms']['macOS']['check'] or "inherently" in _yaml['platforms']['macOS']['check'] or "does not meet finding" in _yaml['platforms']['macOS']['check']:
+                    check_text = _yaml['platforms']['macOS']['check']
+                    fix_text = _yaml['platforms']['macOS']['fix']
+                    _yaml['platforms']['macOS'].pop('check')
+                    _yaml['platforms']['macOS'].pop('fix')
+                    _yaml['discussion'] += f'\nNOTE: {check_text}'
 
             # add the introduced data here 
             if "mobileconfig_info" in _yaml.keys():
