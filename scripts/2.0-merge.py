@@ -1035,7 +1035,7 @@ def main():
 
             # move permanent, inherant check/fix info into discussions
             if "macOS" in _yaml['platforms'] and "check" in _yaml['platforms']['macOS']:
-                if "requirement is NA" in _yaml['platforms']['macOS']['check'] or "inherently" in _yaml['platforms']['macOS']['check'] or "does not meet finding" in _yaml['platforms']['macOS']['check']:
+                if "requirement is NA" in _yaml['platforms']['macOS']['check'] or "inherently" in _yaml['platforms']['macOS']['check'] or "does not meet finding" in _yaml['platforms']['macOS']['check'] or "technology does support this requirement" in _yaml['platforms']['macOS']['check'] or "technology partially supports" in _yaml['platforms']['macOS']['check']:
                     check_text = _yaml['platforms']['macOS']['check']
                     fix_text = _yaml['platforms']['macOS']['fix']
                     _yaml['platforms']['macOS'].pop('check')
