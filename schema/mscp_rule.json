@@ -25,7 +25,7 @@
             "type": "string"
         },
         "tags": {
-            "description": "Metadata keywords used for searching for rules and for cross-referencing.",
+            "description": "Metadata keywords used in searching for rules and for cross-referencing.",
             "$ref": "#/components/schemas/ArrayOfStrings",
             "minItems": 1
         },
@@ -82,6 +82,7 @@
             "type": "object",
             "properties": {
                 "nist": {
+                    "description": "References to NIST publications and documents",
                     "type": "object",
                     "properties": {
                         "cce": {
@@ -115,11 +116,11 @@
                             "additionalProperties": {
                                 "$ref": "#/components/schemas/ArrayOfStrings"
                             }
+                        },
+                        "cmmc": {
+                            "$ref": "#/components/schemas/ArrayOfStrings"
                         }
                     }
-                },
-                "cmmc": {
-                    "$ref": "#/components/schemas/ArrayOfStrings"
                 },
                 "cis": {
                     "type": "object",
@@ -212,6 +213,11 @@
                         "introduced": {
                             "type": "string"
                         }
+                    },
+                    "dependentRequired": {
+                        "check": [
+                            "result"
+                        ]
                     },
                     "additionalProperties": false
                 },
@@ -442,6 +448,11 @@
                         }
                     }
                 }
+            },
+            "dependentRequired": {
+                "check": [
+                    "result"
+                ]
             }
         },
         "mobileConfigDef": {

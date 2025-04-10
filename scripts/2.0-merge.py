@@ -93,6 +93,16 @@ def get_introduced(payloadtype, key, os):
                     version = payloadtype['payload']['supportedOS'][os]["introduced"]
     return version
 
+def correct_result_key(result_dict):
+    if isinstance(result_dict, str):
+        return {}
+    new_result = result_dict.copy()
+    for k, v in result_dict.items():
+        if k == "boolean" and isinstance(v, int):
+            new_result["integer"] = v
+            new_result.pop("boolean")
+    return new_result
+    
 def main():
     files_created = []
     file_dir = os.path.dirname(os.path.abspath(__file__))
@@ -219,7 +229,7 @@ def main():
                 new_yaml['platforms'] = {"macOS": {}}
                 new_yaml['platforms']['macOS'].update({os_:{}})
                 
-                new_yaml['platforms']['macOS'].update({"check": rule_yaml['check']})
+                new_yaml['platforms']['macOS'].update({"check": rule_yaml['check'].strip()})
                 if "result" in rule_yaml:
                     new_yaml['platforms']['macOS'].update({"result": rule_yaml['result']})
                 new_yaml['platforms']['macOS'].update({os_: {}})
@@ -420,6 +430,7 @@ def main():
                     else:
                         os_specifics[os_].update({"check":""})
                     if "result" in rule_yaml:
+                        rule_yaml['result'] = correct_result_key(rule_yaml['result'])
                         os_specifics[os_].update({"result":rule_yaml['result']})
                     else:
                         os_specifics[os_].update({"result":""})
@@ -622,12 +633,12 @@ def main():
                                     if "check" in rule_yaml:
                                         
                                         # update_rule_yaml['platforms']['macOS'].update({"check", rule_yaml['check']})
-                                        update_rule_yaml['platforms']['macOS'].update({"check": rule_yaml['check']})
+                                        update_rule_yaml['platforms']['macOS'].update({"check": rule_yaml['check'].strip().replace(" \n","\n")})
                                         # update_rule_yaml['platforms']['macOS'].update({"result", rule_yaml['result']})
                                         update_rule_yaml['platforms']['macOS'].update({"result": rule_yaml['result']})
                                 if "fix" not in update_rule_yaml['platforms']['macOS']:
                                     if "fix" in rule_yaml:
-                                        update_rule_yaml['platforms']['macOS'].update({"fix": rule_yaml['fix']})
+                                        update_rule_yaml['platforms']['macOS'].update({"fix": rule_yaml['fix'].strip()})
 
                                     
                             if "ddm_info" in rule_yaml:
@@ -674,8 +685,9 @@ def main():
                     
                             new_yaml['platforms'] = {"macOS": {}}
                             
-                            new_yaml['platforms']['macOS'].update({"check": rule_yaml['check']})
+                            new_yaml['platforms']['macOS'].update({"check": rule_yaml['check'].strip()})
                             if "result" in rule_yaml:
+                                rule_yaml['result'] = correct_result_key(rule_yaml['result'])
                                 new_yaml['platforms']['macOS'].update({"result": rule_yaml['result']})
                             new_yaml['platforms']['macOS'].update({os_: {}})
                             if "severity" in rule_yaml:
@@ -884,6 +896,8 @@ def main():
                         # print(base_os)
                         
                         differences[platform] = os_specifics[platform][key]
+                    if key == "result":
+                        differences[platform] = os_specifics[platform][key]
                 with open(yaml_full_path) as ryam:
                     differences_yam = yaml.load(ryam, Loader=yaml.SafeLoader)
                     differences_yaml = replace_na_with_none(differences_yam)
@@ -906,9 +920,9 @@ def main():
                         if key == "result":
                             if value['result'] == " " or value['result'] == "":
                                 continue
-                            if "result" in differences_yaml['platforms']['macOS']:
+                            # if "result" in differences_yaml['platforms']['macOS']:
                                 # if operating_sys != "sequoia":
-                                differences_yaml['platforms']['macOS'][operating_sys].update({"result": value['result']})
+                            differences_yaml['platforms']['macOS'][operating_sys].update({"result": value['result']})
                             
                         if key == "fix":
                             differences_yaml['platforms']['macOS'][operating_sys].update({"fix": value['fix']})
@@ -1027,6 +1041,23 @@ def main():
                     _yaml['platforms']['macOS'].pop('check')
                     _yaml['platforms']['macOS'].pop('fix')
                     _yaml['discussion'] += f'\nNOTE: {check_text}'
+                
+                # clean up any redundent checks
+                
+                for _os in _yaml['platforms']['macOS'].keys():
+                    if _os == "check" or _os == "fix" or _os == "result":
+                        continue
+                    if "check" in _yaml['platforms']['macOS'][_os]:
+                        if _yaml['platforms']['macOS']['check'] == _yaml['platforms']['macOS'][_os]['check']:
+                            print(f'{_yaml["id"]} - main check does not match check of {_os}')
+                            _yaml['platforms']['macOS'][_os].pop('check')
+                            if "result" in _yaml['platforms']['macOS'][_os]:
+                                _yaml['platforms']['macOS'][_os].pop('result')
+                    if "fix" in _yaml['platforms']['macOS'][_os]:
+                        if _yaml['platforms']['macOS']['fix'] == _yaml['platforms']['macOS'][_os]['fix']:
+                            print(f'{_yaml["id"]} - main fix does not match fix of {_os}')
+                            _yaml['platforms']['macOS'][_os].pop('fix')
+
 
             # add the introduced data here 
             if "mobileconfig_info" in _yaml.keys():
@@ -1047,6 +1078,14 @@ def main():
                         else:
                             unknown_keys.append(payloadkey)
                             _yaml['platforms'][opsys]['introduced'] = "-1"
+                
+                for platform in _yaml['platforms'].keys():
+                    for _os in _yaml['platforms'][platform].keys():
+                        if _os == "check" or _os == "fix" or _os == "result" or _os == "introduced":
+                            continue
+                        if "mobileconfig_info" in _yaml['platforms'][platform][_os].keys() and _yaml['mobileconfig_info'] == _yaml['platforms'][platform][_os]['mobileconfig_info']:
+                            _yaml['platforms'][platform][_os].pop("mobileconfig_info")
+
 
             if "odv" in _yaml.keys():
                 description = _yaml['odv']['hint']
@@ -1067,9 +1106,9 @@ def main():
                 _yaml['odv']['hint']['validation'] = validation
                 odv_rules.append(_yaml['id'])
 
-            for d in discussions_yaml:
-                if _yaml['id'] == d['id']:
-                    _yaml['discussion'] = d['discussion']
+
+          
+            
                 
     
         with open(file, "w") as nf:

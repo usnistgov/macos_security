@@ -3,7 +3,7 @@ import yaml
 import json
 import glob
 import argparse
-from jsonschema import validate, ValidationError, Draft7Validator
+from jsonschema import validate, ValidationError, Draft202012Validator
 
 # Load JSON Schema
 SCHEMA_PATH = "schema/mscp_rule.json"
@@ -13,7 +13,7 @@ RULES_DIR = "rules"
 with open(SCHEMA_PATH, "r") as f:
     schema = json.load(f)
 
-validator = Draft7Validator(schema)
+validator = Draft202012Validator(schema)
 
 def validate_yaml_file(file_path, show_only_invalid=False):
     with open(file_path, "r") as f:
