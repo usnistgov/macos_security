@@ -1,15 +1,11 @@
 #!/usr/bin/env python3
 
-import io
 import glob
 import os
 import shutil
 import yaml
-import re
 import json
 from collections import defaultdict
-import difflib
-import pprint
 
 class MyDumper(yaml.Dumper):
 
@@ -1063,7 +1059,7 @@ def main():
                     if _os == "check" or _os == "fix" or _os == "result":
                         continue
 
-                    _yaml['platforms']['macOS'][_os]['compliance'] = {}
+                    _yaml['platforms']['macOS'][_os]['assessment'] = {}
                     
                     if "check" in _yaml['platforms']['macOS'][_os]:
                         if _yaml['platforms']['macOS']['check'] == _yaml['platforms']['macOS'][_os]['check']:
@@ -1074,10 +1070,11 @@ def main():
                         # move it into compliance object
                         
                     if "check" in _yaml['platforms']['macOS'][_os]:
-                        _yaml['platforms']['macOS'][_os]['compliance']['check'] = _yaml['platforms']['macOS'][_os]['check']
+                        _yaml['platforms']['macOS'][_os]['assessment']['check'] = {}
+                        _yaml['platforms']['macOS'][_os]['assessment']['check']['shell'] = _yaml['platforms']['macOS'][_os]['check']
                         _yaml['platforms']['macOS'][_os].pop('check')
-                    if "result" in _yaml['platforms']['macOS'][_os] and "check" in _yaml['platforms']['macOS'][_os]['compliance']:
-                        _yaml['platforms']['macOS'][_os]['compliance']['result'] = _yaml['platforms']['macOS'][_os]['result']
+                    if "result" in _yaml['platforms']['macOS'][_os] and "check" in _yaml['platforms']['macOS'][_os]['assessment']:
+                        _yaml['platforms']['macOS'][_os]['assessment']['check']['result'] = _yaml['platforms']['macOS'][_os]['result']
                         _yaml['platforms']['macOS'][_os].pop('result')
                     elif "result" in _yaml['platforms']['macOS'][_os]:
                         _yaml['platforms']['macOS'][_os].pop('result')
@@ -1089,23 +1086,24 @@ def main():
                         
                     # move it into compliance object
                     if "fix" in _yaml['platforms']['macOS'][_os]:
-                        _yaml['platforms']['macOS'][_os]['compliance']['fix'] = _yaml['platforms']['macOS'][_os]['fix']
+                        _yaml['platforms']['macOS'][_os]['assessment']['fix'] = _yaml['platforms']['macOS'][_os]['fix']
                         _yaml['platforms']['macOS'][_os].pop('fix')
                     
-                    if _yaml['platforms']['macOS'][_os]['compliance'] == {}:
-                        _yaml['platforms']['macOS'][_os].pop('compliance')
+                    if _yaml['platforms']['macOS'][_os]['assessment'] == {}:
+                        _yaml['platforms']['macOS'][_os].pop('assessment')
                 
-                _yaml['compliance'] = {}
+                _yaml['platforms']['macOS']['assessment'] = {}
                 if "check" in _yaml['platforms']['macOS']:
-                    _yaml['compliance']['check'] = _yaml['platforms']['macOS']['check']
+                    _yaml['platforms']['macOS']['assessment']['check'] = {}
+                    _yaml['platforms']['macOS']['assessment']['check']['shell'] = _yaml['platforms']['macOS']['check']
                     _yaml['platforms']['macOS'].pop('check')
 
                 if "result" in _yaml['platforms']['macOS']:
-                    _yaml['compliance']['result'] = _yaml['platforms']['macOS']['result']
+                    _yaml['platforms']['macOS']['assessment']['check']['result'] = _yaml['platforms']['macOS']['result']
                     _yaml['platforms']['macOS'].pop('result')
                 
                 if "fix" in _yaml['platforms']['macOS']:
-                    _yaml['compliance']['fix'] = _yaml['platforms']['macOS']['fix']
+                    _yaml['platforms']['macOS']['assessment']['fix'] = _yaml['platforms']['macOS']['fix']
                     _yaml['platforms']['macOS'].pop('fix')
                 
 

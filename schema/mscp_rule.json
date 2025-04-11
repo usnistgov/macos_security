@@ -178,8 +178,8 @@
                     "type": "object",
                     "description": "Schema for identifying components to support macOS",
                     "properties": {
-                        "compliance": {
-                            "$ref": "#/$defs/complianceDef"
+                        "assessment": {
+                            "$ref": "#/$defs/assessmentDef"
                         },
                         "13.0": {
                             "$ref": "#/$defs/osDef"
@@ -284,9 +284,6 @@
         },
         "ddm_info": {
             "$ref": "#/$defs/ddmDef"
-        },
-        "compliance":{
-            "$ref": "#/$defs/complianceDef"
         }
     },
     "$defs": {
@@ -331,8 +328,8 @@
                 "mobileconfig_info": {
                     "$ref": "#/$defs/mobileConfigDef"
                 },
-                "compliance": {
-                    "$ref": "#/$defs/complianceDef"
+                "assessment": {
+                    "$ref": "#/$defs/assessmentDef"
                 }
             }
         },
@@ -451,15 +448,24 @@
                 }
             }
         },
-        "complianceDef":{
+        "assessmentDef": {
             "type": "object",
-            "description": "Compliance information containing the check, result, fix, and default state used by the generated compliance script",
+            "description": "assessment information containing the check, result, fix, and default state used by the generated assessment script",
             "properties": {
                 "check": {
-                    "type": "string"
-                },
-                "result": {
-                    "$ref": "#/$defs/resultDef"
+                    "type": "object",
+                    "properties": {
+                        "shell": {
+                            "type": "string"
+                        },
+                        "result": {
+                            "$ref": "#/$defs/resultDef"
+                        }
+                    },
+                    "required": [
+                        "shell",
+                        "result"
+                    ]
                 },
                 "fix": {
                     "description": "Bash command(s) to fix the issue if the check command fails.",
@@ -469,11 +475,6 @@
                     "description": "Bash command(s) to restore the system to a default factory state.",
                     "type": "string"
                 }
-            },
-            "dependentRequired": {
-                "check": [
-                    "result"
-                ]
             },
             "additionalProperties": false
         }

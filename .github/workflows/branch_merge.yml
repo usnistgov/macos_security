@@ -1,0 +1,66 @@
+#############################################################################
+# GitHub Action to merge branches
+#
+#############################################################################
+name: "Merge all branches for 2.0"
+on:
+  workflow_dispatch:
+  
+jobs:
+  merge:
+    name: Merge 2.0
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the latest code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'     
+      
+      - name: Run 2.0merge.py 
+        run: |
+          branches=("sequoia" "sonoma" "ventura" "ios_16" "ios_17" "ios_18" "visionos")
+          for branch in ${branches[@]}; do
+              if [[ ! -d "_work/$branch" ]]; then
+                  mkdir -p "_work/$branch"
+              fi
+              git --work-tree=_work/$branch checkout $branch -- rules
+
+              #git restore --staged .
+          done
+
+          # rename visionOS folder for simplicity
+
+          if [[ -d "_work/visionos_2.0" ]];then
+              rm -rf "_work/visionos_2.0"
+          fi
+
+          mv _work/visionos _work/visionos_2.0
+
+          # clone apple's device-management repo
+
+          # remove any existing version of apple repo and recreate
+          if [[ -d "_work/apple" ]]; then
+              rm -rf "_work/apple"
+          fi
+
+          mkdir -p "_work/apple"
+
+          git clone https://github.com/apple/device-management "_work/apple"
+
+          exit 0
+
+          python scripts/2.0merge.py
+            
+      - name: Push commit
+        run: |
+          # git config --global user.name 'github-actions[bot]'
+          # git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          # git add rules
+          # git commit -am "merge: automatic merge of rules"
+          # git push
+          git status
