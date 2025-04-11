@@ -26,7 +26,7 @@
         },
         "tags": {
             "description": "Metadata keywords used in searching for rules and for cross-referencing.",
-            "$ref": "#/components/schemas/ArrayOfStrings",
+            "$ref": "#/$defs/ArrayOfStrings",
             "minItems": 1
         },
         "odv": {
@@ -55,7 +55,7 @@
                                     "type": "string"
                                 },
                                 "enumValues": {
-                                    "$ref": "#/components/schemas/ArrayOfStrings"
+                                    "$ref": "#/$defs/ArrayOfStrings"
                                 }
                             },
                             "additionalProperties": false
@@ -68,7 +68,7 @@
                     "additionalProperties": false
                 },
                 "recommended": {
-                    "$ref": "#/components/schemas/AnyofStringIntegerBooleanArrayObject"
+                    "$ref": "#/$defs/AnyofStringIntegerBooleanArrayObject"
                 }
             },
             "required": [
@@ -88,14 +88,22 @@
                         "cce": {
                             "type": "object",
                             "additionalProperties": {
-                                "$ref": "#/components/schemas/ArrayOfStrings"
+                                "$ref": "#/$defs/ArrayOfStrings"
                             }
                         },
                         "800-53r5": {
-                            "$ref": "#/components/schemas/ArrayOfStrings"
+                            "type": "array",
+                            "items": {
+                                "type": "string",
+                                "pattern": "^[A-Z]{2}-\\d{1,3}(\\(\\d+[a-z]?\\))*$"
+                            }
                         },
                         "800-171r3": {
-                            "$ref": "#/components/schemas/ArrayOfStrings"
+                            "type": "array",
+                            "items": {
+                                "type": "string",
+                                "pattern": "^\\d{1,2}\\.\\d{1,2}\\.\\d{1,2}$"
+                            }
                         }
                     },
                     "required": [
@@ -106,19 +114,19 @@
                     "type": "object",
                     "properties": {
                         "cci": {
-                            "$ref": "#/components/schemas/ArrayOfStrings"
+                            "$ref": "#/$defs/ArrayOfStrings"
                         },
                         "srg": {
-                            "$ref": "#/components/schemas/ArrayOfStrings"
+                            "$ref": "#/$defs/ArrayOfStrings"
                         },
                         "disa_stig": {
                             "type": "object",
                             "additionalProperties": {
-                                "$ref": "#/components/schemas/ArrayOfStrings"
+                                "$ref": "#/$defs/ArrayOfStrings"
                             }
                         },
                         "cmmc": {
-                            "$ref": "#/components/schemas/ArrayOfStrings"
+                            "$ref": "#/$defs/ArrayOfStrings"
                         }
                     }
                 },
@@ -128,7 +136,7 @@
                         "benchmark": {
                             "type": "object",
                             "additionalProperties": {
-                                "$ref": "#/components/schemas/ArrayOfStrings"
+                                "$ref": "#/$defs/ArrayOfStrings"
                             }
                         },
                         "controls_v8": {
@@ -152,7 +160,7 @@
                         "indigo": {
                             "type": "object",
                             "additionalProperties": {
-                                "$ref": "#/components/schemas/ArrayOfStrings"
+                                "$ref": "#/$defs/ArrayOfStrings"
                             }
                         }
                     }
@@ -174,28 +182,7 @@
                             "type": "string"
                         },
                         "result": {
-                            "type": "object",
-                            "properties": {
-                                "string": {
-                                    "type": "string"
-                                },
-                                "integer": {
-                                    "anyOf": [
-                                        {
-                                            "type": "integer"
-                                        },
-                                        {
-                                            "type": "string",
-                                            "enum": [
-                                                "$ODV"
-                                            ]
-                                        }
-                                    ]
-                                },
-                                "boolean": {
-                                    "type": "boolean"
-                                }
-                            }
+                            "$ref": "#/$defs/resultDef"
                         },
                         "fix": {
                             "description": "Command to fix the issue if the check command fails.",
@@ -211,7 +198,8 @@
                             "$ref": "#/$defs/osDef"
                         },
                         "introduced": {
-                            "type": "string"
+                            "type": "string",
+                            "pattern": "^(\\d+(\\.\\d+){1,2}|-1)$"
                         }
                     },
                     "dependentRequired": {
@@ -307,6 +295,95 @@
             "$ref": "#/$defs/mobileConfigDef"
         },
         "ddm_info": {
+            "$ref": "#/$defs/ddmDef"
+        }
+    },
+    "$defs": {
+        "ArrayOfStrings": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        },
+        "AnyofStringIntegerBooleanArrayObject": {
+            "anyOf": [
+                {
+                    "type": "string"
+                },
+                {
+                    "type": "number"
+                },
+                {
+                    "type": "boolean"
+                },
+                {
+                    "type": "array",
+                    "$ref": "#/$defs/ArrayOfStrings"
+                },
+                {
+                    "type": "object",
+                    "additionalProperties": true
+                }
+            ]
+        },
+        "osDef": {
+            "type": "object",
+            "description": "Operating System Definition",
+            "properties": {
+                "severity": {
+                    "description": "Severity level of the issue, typically defined in a benchmark.",
+                    "type": "string"
+                },
+                "benchmarks": {
+                    "$ref": "#/$defs/ArrayOfStrings"
+                },
+                "fix": {
+                    "description": "Bash command(s) to fix the issue if the check command fails.",
+                    "type": "string"
+                },
+                "mobileconfig_info": {
+                    "$ref": "#/$defs/mobileConfigDef"
+                },
+                "check": {
+                    "type": "string"
+                },
+                "result": {
+                    "$ref": "#/$defs/resultDef"
+                }
+            },
+            "dependentRequired": {
+                "check": [
+                    "result"
+                ]
+            }
+        },
+        "mobileConfigDef": {
+            "type": "array",
+            "description": "Definition for supported Mobile Device Management configurations",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "PayloadType": {
+                        "type": "string"
+                    },
+                    "PayloadContent": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "$ref": "#/$defs/AnyofStringIntegerBooleanArrayObject"
+                            }
+                        }
+                    }
+                },
+                "required": [
+                    "PayloadType",
+                    "PayloadContent"
+                ],
+                "additionalProperties": false
+            }
+        },
+        "ddmDef": {
             "type": "object",
             "description": "Definition for supported Declarative Device Management components",
             "properties": {
@@ -337,13 +414,13 @@
                     "type": "string"
                 },
                 "configuration_value": {
-                    "$ref": "#/components/schemas/AnyofStringIntegerBooleanArrayObject"
+                    "$ref": "#/$defs/AnyofStringIntegerBooleanArrayObject"
                 },
                 "ddm_key": {
                     "type": "string"
                 },
                 "ddm_value": {
-                    "$ref": "#/components/schemas/AnyofStringIntegerBooleanArrayObject"
+                    "$ref": "#/$defs/AnyofStringIntegerBooleanArrayObject"
                 },
                 "if": {
                     "properties": {
@@ -369,116 +446,30 @@
                 }
             },
             "additionalProperties": false
-        }
-    },
-    "components": {
-        "schemas": {
-            "ArrayOfStrings": {
-                "type": "array",
-                "items": {
-                    "type": "string"
-                }
-            },
-            "AnyofStringIntegerBooleanArrayObject": {
-                "anyOf": [
-                    {
-                        "type": "string"
-                    },
-                    {
-                        "type": "number"
-                    },
-                    {
-                        "type": "boolean"
-                    },
-                    {
-                        "type": "array",
-                        "$ref": "#/components/schemas/ArrayOfStrings"
-                    },
-                    {
-                        "type": "object",
-                        "additionalProperties": true
-                    }
-                ]
-            }
-        }
-    },
-    "$defs": {
-        "osDef": {
-            "type": "object",
-            "description": "Operating System Definition",
-            "properties": {
-                "severity": {
-                    "description": "Severity level of the issue, typically defined in a benchmark.",
-                    "type": "string"
-                },
-                "benchmarks": {
-                    "$ref": "#/components/schemas/ArrayOfStrings"
-                },
-                "fix": {
-                    "description": "Bash command(s) to fix the issue if the check command fails.",
-                    "type": "string"
-                },
-                "mobileconfig_info": {
-                    "$ref": "#/$defs/mobileConfigDef"
-                },
-                "check": {
-                    "type": "string"
-                },
-                "result": {
-                    "type": "object",
-                    "properties": {
-                        "string": {
-                            "type": "string"
-                        },
-                        "integer": {
-                            "anyOf": [
-                                {
-                                    "type": "integer"
-                                },
-                                {
-                                    "type": "string",
-                                    "enum": [
-                                        "$ODV"
-                                    ]
-                                }
-                            ]
-                        },
-                        "boolean": {
-                            "type": "boolean"
-                        }
-                    }
-                }
-            },
-            "dependentRequired": {
-                "check": [
-                    "result"
-                ]
-            }
         },
-        "mobileConfigDef": {
-            "type": "array",
-            "description": "Definition for supported Mobile Device Management configurations",
-            "items": {
-                "type": "object",
-                "properties": {
-                    "PayloadType": {
-                        "type": "string"
-                    },
-                    "PayloadContent": {
-                        "type": "array",
-                        "items": {
-                            "type": "object",
-                            "additionalProperties": {
-                                "$ref": "#/components/schemas/AnyofStringIntegerBooleanArrayObject"
-                            }
-                        }
-                    }
+        "resultDef": {
+            "type": "object",
+            "description": "Result Definition for retrun values from bash checks",
+            "properties": {
+                "string": {
+                    "type": "string"
                 },
-                "required": [
-                    "PayloadType",
-                    "PayloadContent"
-                ],
-                "additionalProperties": false
+                "integer": {
+                    "anyOf": [
+                        {
+                            "type": "integer"
+                        },
+                        {
+                            "type": "string",
+                            "enum": [
+                                "$ODV"
+                            ]
+                        }
+                    ]
+                },
+                "boolean": {
+                    "type": "boolean"
+                }
             }
         }
     }
