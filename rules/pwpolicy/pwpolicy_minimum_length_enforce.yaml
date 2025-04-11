@@ -46,6 +46,7 @@ odv:
   cis_lvl1: 15
   cis_lvl2: 15
   stig: 14
+  nlmapgov_base: 15
 tags:
   - 800-171
   - 800-53r4_low
@@ -62,6 +63,7 @@ tags:
   - cmmc_lvl2
   - stig
   - cnssi-1253_moderate
+  - nlmapgov_base
 severity: medium
 mobileconfig: true
 mobileconfig_info:

@@ -29,10 +29,14 @@ profile:
       - os_sip_enable
       - os_sudo_log_enforce
       - os_time_server_enabled
+  - section: "passwordpolicy"
+    rules:
+      - pwpolicy_minimum_length_enforce
   - section: "systemsettings"
     rules:
       - system_settings_filevault_enforce
       - system_settings_gatekeeper_override_disallow
+      - system_settings_guest_account_disable
       - system_settings_loginwindow_loginwindowtext_enable
       - system_settings_software_update_app_update_enforce
       - system_settings_software_update_download_enforce
@@ -43,7 +47,9 @@ profile:
   - section: "Inherent"
     rules:
       - os_secure_enclave
+  - section: "Permanent"
+    rules:
+      - pwpolicy_prevent_dictionary_words
   - section: "Supplemental"
     rules:
       - supplemental_filevault
-
