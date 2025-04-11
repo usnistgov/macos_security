@@ -1069,26 +1069,31 @@ def main():
                         if _yaml['platforms']['macOS']['check'] == _yaml['platforms']['macOS'][_os]['check']:
                             print(f'{_yaml["id"]} - main check matches check of {_os}')
                             _yaml['platforms']['macOS'][_os].pop('check')
-                            if "result" in _yaml['platforms']['macOS'][_os]:
-                                _yaml['platforms']['macOS'][_os].pop('result')
+                            # if "result" in _yaml['platforms']['macOS'][_os]:
+                            #     _yaml['platforms']['macOS'][_os].pop('result')
                         # move it into compliance object
                         
-                        if "check" in _yaml['platforms']['macOS'][_os]:
-                            _yaml['platforms']['macOS'][_os]['compliance']['check'] = _yaml['platforms']['macOS'][_os]['check']
-                            _yaml['platforms']['macOS'][_os].pop('check')
-                        if "result" in _yaml['platforms']['macOS'][_os]:
-                            _yaml['platforms']['macOS'][_os]['compliance']['result'] = _yaml['platforms']['macOS'][_os]['result']
-                            _yaml['platforms']['macOS'][_os].pop('result')
+                    if "check" in _yaml['platforms']['macOS'][_os]:
+                        _yaml['platforms']['macOS'][_os]['compliance']['check'] = _yaml['platforms']['macOS'][_os]['check']
+                        _yaml['platforms']['macOS'][_os].pop('check')
+                    if "result" in _yaml['platforms']['macOS'][_os] and "check" in _yaml['platforms']['macOS'][_os]['compliance']:
+                        _yaml['platforms']['macOS'][_os]['compliance']['result'] = _yaml['platforms']['macOS'][_os]['result']
+                        _yaml['platforms']['macOS'][_os].pop('result')
+                    elif "result" in _yaml['platforms']['macOS'][_os]:
+                        _yaml['platforms']['macOS'][_os].pop('result')
 
                     if "fix" in _yaml['platforms']['macOS'][_os]:
                         if _yaml['platforms']['macOS']['fix'] == _yaml['platforms']['macOS'][_os]['fix']:
                             print(f'{_yaml["id"]} - main fix matches fix of {_os}')
                             _yaml['platforms']['macOS'][_os].pop('fix')
                         
-                        # move it into compliance object
-                        if "fix" in _yaml['platforms']['macOS'][_os]:
-                            _yaml['platforms']['macOS'][_os]['compliance']['fix'] = _yaml['platforms']['macOS'][_os]['fix']
-                            _yaml['platforms']['macOS'][_os].pop('fix')
+                    # move it into compliance object
+                    if "fix" in _yaml['platforms']['macOS'][_os]:
+                        _yaml['platforms']['macOS'][_os]['compliance']['fix'] = _yaml['platforms']['macOS'][_os]['fix']
+                        _yaml['platforms']['macOS'][_os].pop('fix')
+                    
+                    if _yaml['platforms']['macOS'][_os]['compliance'] == {}:
+                        _yaml['platforms']['macOS'][_os].pop('compliance')
                 
                 _yaml['compliance'] = {}
                 if "check" in _yaml['platforms']['macOS']:
