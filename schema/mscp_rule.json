@@ -425,7 +425,7 @@
         },
         "resultDef": {
             "type": "object",
-            "description": "Result Definition for return values from bash checks",
+            "description": "Result Definition for return values from shell checks",
             "properties": {
                 "string": {
                     "type": "string"
@@ -456,7 +456,8 @@
                     "type": "object",
                     "properties": {
                         "shell": {
-                            "type": "string"
+                            "type": "string",
+                            "description": "Shell command(s) to evaluate the state of a configuration."
                         },
                         "result": {
                             "$ref": "#/$defs/resultDef"
