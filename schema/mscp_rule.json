@@ -178,15 +178,8 @@
                     "type": "object",
                     "description": "Schema for identifying components to support macOS",
                     "properties": {
-                        "check": {
-                            "type": "string"
-                        },
-                        "result": {
-                            "$ref": "#/$defs/resultDef"
-                        },
-                        "fix": {
-                            "description": "Command to fix the issue if the check command fails.",
-                            "type": "string"
+                        "compliance": {
+                            "$ref": "#/$defs/complianceDef"
                         },
                         "13.0": {
                             "$ref": "#/$defs/osDef"
@@ -201,11 +194,6 @@
                             "type": "string",
                             "pattern": "^(\\d+(\\.\\d+){1,2}|-1)$"
                         }
-                    },
-                    "dependentRequired": {
-                        "check": [
-                            "result"
-                        ]
                     },
                     "additionalProperties": false
                 },
@@ -296,6 +284,9 @@
         },
         "ddm_info": {
             "$ref": "#/$defs/ddmDef"
+        },
+        "compliance":{
+            "$ref": "#/$defs/complianceDef"
         }
     },
     "$defs": {
@@ -337,24 +328,12 @@
                 "benchmarks": {
                     "$ref": "#/$defs/ArrayOfStrings"
                 },
-                "fix": {
-                    "description": "Bash command(s) to fix the issue if the check command fails.",
-                    "type": "string"
-                },
                 "mobileconfig_info": {
                     "$ref": "#/$defs/mobileConfigDef"
                 },
-                "check": {
-                    "type": "string"
-                },
-                "result": {
-                    "$ref": "#/$defs/resultDef"
+                "compliance": {
+                    "$ref": "#/$defs/complianceDef"
                 }
-            },
-            "dependentRequired": {
-                "check": [
-                    "result"
-                ]
             }
         },
         "mobileConfigDef": {
@@ -449,7 +428,7 @@
         },
         "resultDef": {
             "type": "object",
-            "description": "Result Definition for retrun values from bash checks",
+            "description": "Result Definition for return values from bash checks",
             "properties": {
                 "string": {
                     "type": "string"
@@ -471,6 +450,32 @@
                     "type": "boolean"
                 }
             }
+        },
+        "complianceDef":{
+            "type": "object",
+            "description": "Compliance information containing the check, result, fix, and default state used by the generated compliance script",
+            "properties": {
+                "check": {
+                    "type": "string"
+                },
+                "result": {
+                    "$ref": "#/$defs/resultDef"
+                },
+                "fix": {
+                    "description": "Bash command(s) to fix the issue if the check command fails.",
+                    "type": "string"
+                },
+                "default_state": {
+                    "description": "Bash command(s) to restore the system to a default factory state.",
+                    "type": "string"
+                }
+            },
+            "dependentRequired": {
+                "check": [
+                    "result"
+                ]
+            },
+            "additionalProperties": false
         }
     }
 }

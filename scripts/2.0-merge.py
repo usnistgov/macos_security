@@ -102,6 +102,18 @@ def correct_result_key(result_dict):
             new_result["integer"] = v
             new_result.pop("boolean")
     return new_result
+
+def remove_lines_containing(text, substring):
+    lines = text.splitlines()
+    filtered_lines = [line for line in lines if substring not in line]
+    return '\n'.join(filtered_lines)
+
+def cleanup_fix(fix_text):
+    new_result = fix_text.strip().replace(" \n","\n")
+    new_result = remove_lines_containing(new_result, "----")
+    new_result = remove_lines_containing(new_result, "[source,bash]")
+
+    return new_result
     
 def main():
     files_created = []
@@ -435,7 +447,8 @@ def main():
                     else:
                         os_specifics[os_].update({"result":""})
                     if "fix" in rule_yaml:
-                        os_specifics[os_].update({"fix":rule_yaml['fix'].strip().replace(" \n","\n")})
+                        rule_yaml['fix'] = cleanup_fix(rule_yaml['fix'])
+                        os_specifics[os_].update({"fix":rule_yaml['fix']})
                     else:
                         os_specifics[os_].update({"fix":""})
                     if "mobileconfig" in rule_yaml:
@@ -638,7 +651,8 @@ def main():
                                         update_rule_yaml['platforms']['macOS'].update({"result": rule_yaml['result']})
                                 if "fix" not in update_rule_yaml['platforms']['macOS']:
                                     if "fix" in rule_yaml:
-                                        update_rule_yaml['platforms']['macOS'].update({"fix": rule_yaml['fix'].strip()})
+                                        rule_yaml['fix'] = cleanup_fix(rule_yaml['fix'])
+                                        update_rule_yaml['platforms']['macOS'].update({"fix": rule_yaml['fix']})
 
                                     
                             if "ddm_info" in rule_yaml:
@@ -1045,18 +1059,50 @@ def main():
                 # clean up any redundent checks
                 
                 for _os in _yaml['platforms']['macOS'].keys():
+                    
                     if _os == "check" or _os == "fix" or _os == "result":
                         continue
+
+                    _yaml['platforms']['macOS'][_os]['compliance'] = {}
+                    
                     if "check" in _yaml['platforms']['macOS'][_os]:
                         if _yaml['platforms']['macOS']['check'] == _yaml['platforms']['macOS'][_os]['check']:
-                            print(f'{_yaml["id"]} - main check does not match check of {_os}')
+                            print(f'{_yaml["id"]} - main check matches check of {_os}')
                             _yaml['platforms']['macOS'][_os].pop('check')
                             if "result" in _yaml['platforms']['macOS'][_os]:
                                 _yaml['platforms']['macOS'][_os].pop('result')
+                        # move it into compliance object
+                        
+                        if "check" in _yaml['platforms']['macOS'][_os]:
+                            _yaml['platforms']['macOS'][_os]['compliance']['check'] = _yaml['platforms']['macOS'][_os]['check']
+                            _yaml['platforms']['macOS'][_os].pop('check')
+                        if "result" in _yaml['platforms']['macOS'][_os]:
+                            _yaml['platforms']['macOS'][_os]['compliance']['result'] = _yaml['platforms']['macOS'][_os]['result']
+                            _yaml['platforms']['macOS'][_os].pop('result')
+
                     if "fix" in _yaml['platforms']['macOS'][_os]:
                         if _yaml['platforms']['macOS']['fix'] == _yaml['platforms']['macOS'][_os]['fix']:
-                            print(f'{_yaml["id"]} - main fix does not match fix of {_os}')
+                            print(f'{_yaml["id"]} - main fix matches fix of {_os}')
                             _yaml['platforms']['macOS'][_os].pop('fix')
+                        
+                        # move it into compliance object
+                        if "fix" in _yaml['platforms']['macOS'][_os]:
+                            _yaml['platforms']['macOS'][_os]['compliance']['fix'] = _yaml['platforms']['macOS'][_os]['fix']
+                            _yaml['platforms']['macOS'][_os].pop('fix')
+                
+                _yaml['compliance'] = {}
+                if "check" in _yaml['platforms']['macOS']:
+                    _yaml['compliance']['check'] = _yaml['platforms']['macOS']['check']
+                    _yaml['platforms']['macOS'].pop('check')
+
+                if "result" in _yaml['platforms']['macOS']:
+                    _yaml['compliance']['result'] = _yaml['platforms']['macOS']['result']
+                    _yaml['platforms']['macOS'].pop('result')
+                
+                if "fix" in _yaml['platforms']['macOS']:
+                    _yaml['compliance']['fix'] = _yaml['platforms']['macOS']['fix']
+                    _yaml['platforms']['macOS'].pop('fix')
+                
 
 
             # add the introduced data here 
