@@ -16,13 +16,13 @@ profile:
   - section: "icloud"
     rules:
       - icloud_backup_disabled
+      - icloud_drive_disable
       - icloud_enterprisebook_sync
       - icloud_keychain_disable
       - icloud_managed_apps_store_data_disabled
       - icloud_photo_stream_disable
       - icloud_photos_disable
       - icloud_shared_photo_stream_disable
-      - icloud_sync_disable
   - section: "ios"
     rules:
       - os_account_modification_disable
