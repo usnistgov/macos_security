@@ -35,6 +35,7 @@ profile:
       - os_apple_watch_pairing_disable
       - os_apple_watch_wrist_detection_enable
       - os_authentication_password_autofill_enable
+      - os_call_recording_disable
       - os_chat_disable
       - os_default_browser_modification_disable
       - os_default_calling_modification_disable

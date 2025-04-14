@@ -33,6 +33,7 @@ profile:
       - os_apple_watch_wrist_detection_enable
       - os_application_allow_list
       - os_auto_unlock_disable
+      - os_call_recording_disable
       - os_diagnostics_reports_disable
       - os_disallow_enterprise_app_trust
       - os_enterprise_books_disable

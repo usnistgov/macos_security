@@ -40,6 +40,7 @@ profile:
       - os_application_allow_list
       - os_authentication_password_autofill_enable
       - os_auto_unlock_disable
+      - os_call_recording_disable
       - os_chat_disable
       - os_default_browser_modification_disable
       - os_default_calling_modification_disable
