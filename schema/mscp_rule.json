@@ -178,8 +178,8 @@
                     "type": "object",
                     "description": "Schema for identifying components to support macOS",
                     "properties": {
-                        "assessment": {
-                            "$ref": "#/$defs/assessmentDef"
+                        "enforcement_info": {
+                            "$ref": "#/$defs/enforcement_infoDef"
                         },
                         "13.0": {
                             "$ref": "#/$defs/osDef"
@@ -328,8 +328,8 @@
                 "mobileconfig_info": {
                     "$ref": "#/$defs/mobileConfigDef"
                 },
-                "assessment": {
-                    "$ref": "#/$defs/assessmentDef"
+                "enforcement_info": {
+                    "$ref": "#/$defs/enforcement_infoDef"
                 }
             }
         },
@@ -448,9 +448,9 @@
                 }
             }
         },
-        "assessmentDef": {
+        "enforcement_infoDef": {
             "type": "object",
-            "description": "assessment information containing the check, result, fix, and default state used by the generated assessment script",
+            "description": "enforcement_info containsbthe check, result, fix, and default state used by the generated compliance script",
             "properties": {
                 "check": {
                     "type": "object",
