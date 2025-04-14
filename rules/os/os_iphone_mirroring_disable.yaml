@@ -9,15 +9,18 @@ references:
   cce:
     - CCE-94537-8
   cci: 
-    - N/A
+    - CCI-000366
   800-53r5:
-    - N/A
+    - AC-3
+    - AC-20
+    - CM-7
+    - CM-7(1)
   sfr:
-    - N/A
+    - 'FMT_MOF_EXT.1.2 #47'
   indigo:
     - ANNEX K
   disa_stig:
-    - N/A
+    - AIOS-18-015800
 iOS:
   - "18.0"
 tags:
