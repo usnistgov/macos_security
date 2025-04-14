@@ -120,6 +120,7 @@ profile:
       - os_sshd_client_alive_count_max_configure
       - os_sshd_client_alive_interval_configure
       - os_sshd_fips_compliant
+      - os_sshd_per_source_penalties_configure
       - os_sshd_unused_connection_timeout_configure
       - os_sudo_log_enforce
       - os_sudo_timeout_configure
