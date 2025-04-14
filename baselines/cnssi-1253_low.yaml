@@ -16,11 +16,11 @@ profile:
   - section: "icloud"
     rules:
       - icloud_backup_disabled
+      - icloud_drive_disable
       - icloud_enterprisebook_metadata_sync_disable
       - icloud_photo_stream_disable
       - icloud_photos_disable
       - icloud_shared_photo_stream_disable
-      - icloud_sync_disable
   - section: "ios"
     rules:
       - os_airdrop_disable

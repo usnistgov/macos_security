@@ -26,7 +26,7 @@ profile:
       - icloud_photo_stream_disable
       - icloud_photos_disable
       - icloud_shared_photo_stream_disable
-      - icloud_sync_disable
+      - icloud_drive_disable
   - section: "ios"
     rules:
       - os_account_modification_disable
