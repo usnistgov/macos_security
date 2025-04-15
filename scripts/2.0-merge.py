@@ -6,6 +6,8 @@ import shutil
 import yaml
 import json
 from collections import defaultdict
+import re
+import pprint
 
 class MyDumper(yaml.Dumper):
 
@@ -71,6 +73,21 @@ def restructure_mobileconfig(rule_yaml):
     else:
         return {}
 
+def restructure_benchmarks(benchmarks, severity):
+    bmarks = []
+    for b in benchmarks:
+        if "stig" in b or "indigo" in b:
+            bmarks.append({"name": b, "severity": severity})
+        else:
+            bmarks.append({"name": b})
+    return bmarks
+
+def restructure_severity(benchmarks, severity):
+    severity_list = []
+    for b in benchmarks:
+        if "stig" in b or "indigo" in b:
+            severity_list.append({b: severity})
+    return severity_list
 
 def get_introduced(payloadtype, key, os):
     version = "-1"
@@ -106,10 +123,21 @@ def remove_lines_containing(text, substring):
 
 def cleanup_fix(fix_text):
     new_result = fix_text.strip().replace(" \n","\n")
+    if "[source,xml]" in fix_text:
+        return "", new_result
     new_result = remove_lines_containing(new_result, "----")
     new_result = remove_lines_containing(new_result, "[source,bash]")
 
-    return new_result
+    pattern = r'----\n(.*?)\n----(.*)'
+    match = re.search(pattern, fix_text, re.DOTALL)
+
+    note = ""
+    if match:
+        code=match.group(1)
+        note=match.group(2)
+        return code, note.strip()
+    else:
+        return "", new_result
     
 def main():
     files_created = []
@@ -238,6 +266,8 @@ def main():
                 new_yaml['platforms']['macOS'].update({os_:{}})
                 
                 new_yaml['platforms']['macOS'].update({"check": rule_yaml['check'].strip()})
+                if "fix" in rule_yaml:
+                    new_yaml['platforms']['macOS'].update({"fix": rule_yaml['fix'].strip()})
                 if "result" in rule_yaml:
                     new_yaml['platforms']['macOS'].update({"result": rule_yaml['result']})
                 new_yaml['platforms']['macOS'].update({os_: {}})
@@ -443,7 +473,8 @@ def main():
                     else:
                         os_specifics[os_].update({"result":""})
                     if "fix" in rule_yaml:
-                        rule_yaml['fix'] = cleanup_fix(rule_yaml['fix'])
+                        # fix_code, fix_note = cleanup_fix(rule_yaml['fix'])
+                        # rule_yaml['fix'] = fix_code
                         os_specifics[os_].update({"fix":rule_yaml['fix']})
                     else:
                         os_specifics[os_].update({"fix":""})
@@ -647,7 +678,8 @@ def main():
                                         update_rule_yaml['platforms']['macOS'].update({"result": rule_yaml['result']})
                                 if "fix" not in update_rule_yaml['platforms']['macOS']:
                                     if "fix" in rule_yaml:
-                                        rule_yaml['fix'] = cleanup_fix(rule_yaml['fix'])
+                                        # fix_code, fix_note = cleanup_fix(rule_yaml['fix'])
+                                        # rule_yaml['fix'] = fix_code
                                         update_rule_yaml['platforms']['macOS'].update({"fix": rule_yaml['fix']})
 
                                     
@@ -1042,18 +1074,18 @@ def main():
             for d in discussions_yaml:
                 if _yaml['id'] == d['id']:
                     _yaml['discussion'] = d['discussion']
-
+            
             # move permanent, inherant check/fix info into discussions
             if "macOS" in _yaml['platforms'] and "check" in _yaml['platforms']['macOS']:
                 if "requirement is NA" in _yaml['platforms']['macOS']['check'] or "inherently" in _yaml['platforms']['macOS']['check'] or "does not meet finding" in _yaml['platforms']['macOS']['check'] or "technology does support this requirement" in _yaml['platforms']['macOS']['check'] or "technology partially supports" in _yaml['platforms']['macOS']['check']:
                     check_text = _yaml['platforms']['macOS']['check']
                     fix_text = _yaml['platforms']['macOS']['fix']
                     _yaml['platforms']['macOS'].pop('check')
-                    _yaml['platforms']['macOS'].pop('fix')
+                    # _yaml['platforms']['macOS'].pop('fix')
                     _yaml['discussion'] += f'\nNOTE: {check_text}'
+
                 
                 # clean up any redundent checks
-                
                 for _os in _yaml['platforms']['macOS'].keys():
                     
                     if _os == "check" or _os == "fix" or _os == "result":
@@ -1086,7 +1118,12 @@ def main():
                         
                     # move it into compliance object
                     if "fix" in _yaml['platforms']['macOS'][_os]:
-                        _yaml['platforms']['macOS'][_os]['enforcement_info']['fix'] = _yaml['platforms']['macOS'][_os]['fix']
+                        fix_code, fix_note = cleanup_fix(_yaml['platforms']['macOS'][_os]['fix'])
+                        _yaml['platforms']['macOS'][_os]['enforcement_info']['fix'] = {}
+                        if fix_code:
+                            _yaml['platforms']['macOS'][_os]['enforcement_info']['fix']['shell'] = fix_code
+                        if fix_note:
+                            _yaml['platforms']['macOS'][_os]['enforcement_info']['fix']['note'] = fix_note
                         _yaml['platforms']['macOS'][_os].pop('fix')
                     
                     if _yaml['platforms']['macOS'][_os]['enforcement_info'] == {}:
@@ -1103,9 +1140,44 @@ def main():
                     _yaml['platforms']['macOS'].pop('result')
                 
                 if "fix" in _yaml['platforms']['macOS']:
-                    _yaml['platforms']['macOS']['enforcement_info']['fix'] = _yaml['platforms']['macOS']['fix']
+                    fix_code, fix_note = cleanup_fix(_yaml['platforms']['macOS']['fix'])
+                    if "inherently" not in fix_code and "permanent" not in fix_note:
+                        _yaml['platforms']['macOS']['enforcement_info']['fix'] = {}
+                        if fix_code:
+                            _yaml['platforms']['macOS']['enforcement_info']['fix']['shell'] = fix_code
+                        if fix_note:
+                                _yaml['platforms']['macOS']['enforcement_info']['fix']['note'] = fix_note
                     _yaml['platforms']['macOS'].pop('fix')
                 
+                if _yaml['platforms']['macOS']['enforcement_info'] == {}:
+                    _yaml['platforms']['macOS'].pop('enforcement_info')
+                
+            # restructure benchmarks to include severity
+            # for p in _yaml['platforms'].keys():
+            #     for o in _yaml['platforms'][p]:
+            #         if "benchmarks" in _yaml['platforms'][p][o]:
+            #             if "severity" in _yaml['platforms'][p][o]:
+            #                 s = _yaml['platforms'][p][o]['severity']
+            #                 _yaml['platforms'][p][o].pop('severity')
+            #             else:
+            #                 s = ""
+                        
+            #             _yaml['platforms'][p][o]['benchmarks'] = restructure_benchmarks(_yaml['platforms'][p][o]['benchmarks'], s)
+
+            # restructure benchmarks to include severity
+            for p in _yaml['platforms'].keys():
+                for o in _yaml['platforms'][p]:
+                    if "benchmarks" in _yaml['platforms'][p][o]:
+                        if "severity" in _yaml['platforms'][p][o]:
+                            s = _yaml['platforms'][p][o]['severity']
+                        else:
+                            s = ""
+                        
+                        _yaml['platforms'][p][o]['severity'] = restructure_severity(_yaml['platforms'][p][o]['benchmarks'], s)
+                    elif "severity" in _yaml['platforms'][p][o]:
+                        _yaml['platforms'][p][o].pop('severity')
+
+
 
 
             # add the introduced data here 

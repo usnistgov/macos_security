@@ -293,6 +293,12 @@
                 "type": "string"
             }
         },
+        "ArrayOfObjects": {
+            "type": "array",
+            "items": {
+                "type": "object"
+            }
+        },
         "AnyofStringIntegerBooleanArrayObject": {
             "anyOf": [
                 {
@@ -320,7 +326,7 @@
             "properties": {
                 "severity": {
                     "description": "Severity level of the issue, typically defined in a benchmark.",
-                    "type": "string"
+                    "$ref": "#/$defs/ArrayOfObjects"
                 },
                 "benchmarks": {
                     "$ref": "#/$defs/ArrayOfStrings"
@@ -469,11 +475,19 @@
                     ]
                 },
                 "fix": {
-                    "description": "Bash command(s) to fix the issue if the check command fails.",
-                    "type": "string"
+                    "type": "object",
+                    "properties": {
+                        "shell": {
+                            "type": "string",
+                            "description": "Shell command(s) to fix the configuration if the check command fails."
+                        },
+                        "note": {
+                            "type": "string"
+                        }
+                    }
                 },
                 "default_state": {
-                    "description": "Bash command(s) to restore the system to a default factory state.",
+                    "description": "Shell command(s) to restore the system to a default factory state.",
                     "type": "string"
                 }
             },
