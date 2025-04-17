@@ -37,31 +37,33 @@ references:
       - AC.L2-3.1.9
 platforms:
   macOS:
-    check: |
-      bannerText="$ODV"
-      test "$(cat /etc/banner)" = "$bannerText" && echo "1" || echo "0"
-    result:
-      integer: 1
-    fix: |
-      [source,bash]
-      ----
-      bannerText="$ODV"
-      /bin/echo "${bannerText}" > /etc/banner
-      ----
     '15.0':
-      severity: medium
       benchmarks:
-        - disa_stig
+        - name: disa_stig
+          severity: medium
     '14.0':
-      severity: medium
       benchmarks:
-        - disa_stig
+        - name: disa_stig
+          severity: medium
     '13.0':
-      severity: medium
       benchmarks:
-        - disa_stig
+        - name: disa_stig
+          severity: medium
+    enforcement_info:
+      check:
+        shell: |-
+          bannerText="$ODV"
+          test "$(cat /etc/banner)" = "$bannerText" && echo "1" || echo "0"
+        result:
+          integer: 1
+      fix:
+        shell: |-
+          bannerText="$ODV"
+          /bin/echo "${bannerText}" > /etc/banner
 odv:
-  hint: Organization's Policy Text
+  hint:
+    datatype: string
+    description: Text to be displayed before a user logs in via SSH. Avoid special characters and complex formatting for best results.
   recommended: |-
     You are accessing a U.S. Government (USG) Information System (IS) that is provided for USG-authorized use only. By using this IS (which includes any device attached to this IS), you consent to the following conditions:
     -The USG routinely intercepts and monitors communications on this IS for purposes including, but not limited to, penetration testing, COMSEC monitoring, network operations and defense, personnel misconduct (PM), law enforcement (LE), and counterintelligence (CI) investigations.

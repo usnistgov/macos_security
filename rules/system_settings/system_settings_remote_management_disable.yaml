@@ -44,31 +44,29 @@ references:
       - 5.4
 platforms:
   macOS:
-    check: |
-      /usr/libexec/mdmclient QuerySecurityInfo | /usr/bin/grep -c "RemoteDesktopEnabled = 0"
-    result:
-      integer: 1
-    fix: |
-      [source,bash]
-      ----
-      /System/Library/CoreServices/RemoteManagement/ARDAgent.app/Contents/Resources/kickstart -deactivate -stop
-      ----
     '15.0':
-      severity: medium
       benchmarks:
-        - cis_lvl1
-        - cis_lvl2
-        - disa_stig
+        - name: cis_lvl1
+        - name: cis_lvl2
+        - name: disa_stig
+          severity: medium
     '14.0':
-      severity: medium
       benchmarks:
-        - cis_lvl1
-        - cis_lvl2
-        - disa_stig
+        - name: cis_lvl1
+        - name: cis_lvl2
+        - name: disa_stig
+          severity: medium
     '13.0':
       benchmarks:
-        - cis_lvl1
-        - cis_lvl2
+        - name: cis_lvl1
+        - name: cis_lvl2
+    enforcement_info:
+      check:
+        shell: /usr/libexec/mdmclient QuerySecurityInfo | /usr/bin/grep -c "RemoteDesktopEnabled = 0"
+        result:
+          integer: 1
+      fix:
+        shell: /System/Library/CoreServices/RemoteManagement/ARDAgent.app/Contents/Resources/kickstart -deactivate -stop
 tags:
   - 800-53r5_low
   - 800-53r5_moderate

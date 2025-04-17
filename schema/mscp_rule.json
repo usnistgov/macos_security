@@ -481,6 +481,9 @@
                         },
                         "result": {
                             "$ref": "#/$defs/resultDef"
+                        },
+                        "additional_info": {
+                            "type": "string"
                         }
                     },
                     "required": [
@@ -495,7 +498,7 @@
                             "type": "string",
                             "description": "Shell command(s) to fix the configuration if the check command fails."
                         },
-                        "note": {
+                        "additional_info": {
                             "type": "string"
                         }
                     }

@@ -1,7 +1,9 @@
 id: os_verify_remote_disconnection
 title: Verify remote disconnection of sessions
-discussion: |
+discussion: |-
   The information system implements remote disconnect verification at the termination of non-local maintenance and diagnostic sessions.
+
+  NOTE: The technology supports this requirement and cannot be configured to be out of compliance. The technology inherently meets this requirement.
 references:
   nist:
     cce:
@@ -18,13 +20,12 @@ references:
       - SRG-OS-000395-GPOS-00175
 platforms:
   macOS:
-    check: |
-      The technology supports this requirement and cannot be configured to be out of compliance. The technology inherently meets this requirement.
-    fix: |
-      The technology inherently meets this requirement. No fix is required.
     '15.0': {}
     '14.0': {}
     '13.0': {}
+    enforcement_info:
+      fix:
+        additional_info: The technology inherently meets this requirement. No fix is required.
 tags:
   - inherent
   - cnssi-1253_low

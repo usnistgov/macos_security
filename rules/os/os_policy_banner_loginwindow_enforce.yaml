@@ -60,36 +60,37 @@ references:
       - 4.1
 platforms:
   macOS:
-    check: |
-      /bin/ls -ld /Library/Security/PolicyBanner.rtf* | /usr/bin/wc -l | /usr/bin/tr -d ' '
-    result:
-      integer: 1
-    fix: |
-      [source,bash]
-      ----
-      bannerText="$ODV"
-      /bin/mkdir /Library/Security/PolicyBanner.rtfd
-      /usr/bin/textutil -convert rtf -output /Library/Security/PolicyBanner.rtfd/TXT.rtf -stdin <<EOF
-      $bannerText
-      EOF
-      ----
     '15.0':
-      severity: medium
       benchmarks:
-        - cis_lvl2
-        - disa_stig
+        - name: cis_lvl2
+        - name: disa_stig
+          severity: medium
     '14.0':
-      severity: medium
       benchmarks:
-        - cis_lvl2
-        - disa_stig
+        - name: cis_lvl2
+        - name: disa_stig
+          severity: medium
     '13.0':
-      severity: medium
       benchmarks:
-        - cis_lvl2
-        - disa_stig
+        - name: cis_lvl2
+        - name: disa_stig
+          severity: medium
+    enforcement_info:
+      check:
+        shell: /bin/ls -ld /Library/Security/PolicyBanner.rtf* | /usr/bin/wc -l | /usr/bin/tr -d ' '
+        result:
+          integer: 1
+      fix:
+        shell: |-
+          bannerText="$ODV"
+          /bin/mkdir /Library/Security/PolicyBanner.rtfd
+          /usr/bin/textutil -convert rtf -output /Library/Security/PolicyBanner.rtfd/TXT.rtf -stdin <<EOF
+          $bannerText
+          EOF
 odv:
-  hint: Organization's Policy Text
+  hint:
+    datatype: string
+    description: Text to be displayed before a user logs in. Avoid special characters and complex formatting for best results.
   recommended: 'You are accessing a U.S. Government information system, which includes: 1) this computer, 2) this computer network, 3) all Government-furnished computers connected to this network, and 4) all Government-furnished devices and storage media attached to this network or to a computer on this network. You understand and consent to the following: you may access this information system for authorized use only; unauthorized use of the system is prohibited and subject to criminal and civil penalties; you have no reasonable expectation of privacy regarding any communication or data transiting or stored on this information system at any time and for any lawful Government purpose, the Government may monitor, intercept, audit, and search and seize any communication or data transiting or stored on this information system; and any communications or data transiting or stored on this information system may be disclosed or used for any lawful Government purpose. This information system may contain Controlled Unclassified Information (CUI) that is subject to safeguarding or dissemination controls in accordance with law, regulation, or Government-wide policy. Accessing and using this system indicates your understanding of this warning.'
   cis_lvl1: Center for Internet Security Test Message
   cis_lvl2: Center for Internet Security Test Message

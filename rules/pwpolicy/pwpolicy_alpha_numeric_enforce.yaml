@@ -1,6 +1,11 @@
 id: pwpolicy_alpha_numeric_enforce
 title: Require Passwords Contain a Minimum of One Numeric Character
-discussion: "The macOS _MUST_ be configured to require at least one numeric character be used when a password is created.\n\nThis rule enforces password complexity by requiring users to set passwords that are less vulnerable to malicious users.\n\nNOTE: To comply with Executive Order 14028, \u201CImproving the Nation's Cybersecurity\u201D, OMB M-22-09, \u201CMoving the U.S. Government Toward Zero Trust Cybersecurity Principles\u201D, and NIST SP-800-63b, \u201CDigital Identity Guidelines: Authentication and Lifecycle Management\u201D federal, military, and intelligence communities must adopt the following configuration settings. Password policies must not require the use of complexity policies such as upper characters, lower characters, or special characters. Password policies must also not require the use of regular rotation. Password policies should define a minimum length. Multifactor authentication should be used where ever possible.\n"
+discussion: |
+  The macOS _MUST_ be configured to require at least one numeric character be used when a password is created.
+
+  This rule enforces password complexity by requiring users to set passwords that are less vulnerable to malicious users.
+
+  NOTE: To comply with Executive Order 14028, "Improving the Nation's Cybersecurity", OMB M-22-09, "Moving the U.S. Government Toward Zero Trust Cybersecurity Principles", and NIST SP-800-63b, "Digital Identity Guidelines: Authentication and Lifecycle Management" federal, military, and intelligence communities must adopt the following configuration settings. Password policies must not require the use of complexity policies such as upper characters, lower characters, or special characters. Password policies must also not require the use of regular rotation. Password policies should define a minimum length. Multifactor authentication should be used where ever possible.
 references:
   nist:
     cce:
@@ -59,38 +64,39 @@ references:
         - ANNEX K
 platforms:
   macOS:
-    check: |
-      /usr/bin/pwpolicy -getaccountpolicies 2> /dev/null | /usr/bin/tail +2 | /usr/bin/xmllint --xpath '//dict/key[text()="policyIdentifier"]/following-sibling::*[1]/text()' - | /usr/bin/grep "requireAlphanumeric" -c
-    result:
-      integer: 1
-    fix: |
-      This is implemented by a Configuration Profile.
     '15.0':
-      severity: medium
       benchmarks:
-        - cis_lvl2
-        - disa_stig
+        - name: cis_lvl2
+        - name: disa_stig
+          severity: medium
     '14.0':
-      severity: medium
       benchmarks:
-        - cis_lvl2
-        - disa_stig
+        - name: cis_lvl2
+        - name: disa_stig
+          severity: medium
     '13.0':
-      severity: medium
       benchmarks:
-        - cis_lvl2
-        - disa_stig
+        - name: cis_lvl2
+        - name: disa_stig
+          severity: medium
+    enforcement_info:
+      check:
+        shell: /usr/bin/pwpolicy -getaccountpolicies 2> /dev/null | /usr/bin/tail +2 | /usr/bin/xmllint --xpath '//dict/key[text()="policyIdentifier"]/following-sibling::*[1]/text()' - | /usr/bin/grep "requireAlphanumeric" -c
+        result:
+          integer: 1
+    introduced: '10.7'
   iOS:
     '18.0':
       supervised: false
       benchmarks:
-        - indigo_base
-        - indigo_high
+        - name: indigo_base
+        - name: indigo_high
     '17.0':
       supervised: false
       benchmarks:
-        - indigo_base
-        - indigo_high
+        - name: indigo_base
+        - name: indigo_high
+    introduced: '4.0'
 tags:
   - cisv8
   - cnssi-1253_low
@@ -102,8 +108,9 @@ tags:
   - 800-53r5_moderate
   - 800-53r5_high
 mobileconfig_info:
-  com.apple.mobiledevice.passwordpolicy:
-    requireAlphanumeric: true
+  - PayloadType: com.apple.mobiledevice.passwordpolicy
+    PayloadContent:
+      - requireAlphanumeric: true
 ddm_info:
   declarationtype: com.apple.configuration.passcode.settings
   ddm_key: RequireAlphanumericPasscode

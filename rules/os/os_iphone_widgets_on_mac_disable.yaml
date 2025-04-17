@@ -25,14 +25,16 @@ references:
 platforms:
   iOS:
     '18.0':
-      severity: low
       supervised: true
       benchmarks:
-        - ios_stig
+        - name: ios_stig
+          severity: low
     '17.0':
       supervised: true
       benchmarks:
-        - ios_stig
+        - name: ios_stig
+    introduced: '17.0'
 mobileconfig_info:
-  com.apple.applicationaccess:
-    allowiPhoneWidgetsOnMac: false
+  - PayloadType: com.apple.applicationaccess
+    PayloadContent:
+      - allowiPhoneWidgetsOnMac: false

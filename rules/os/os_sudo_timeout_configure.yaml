@@ -35,35 +35,38 @@ references:
       - 4.3
 platforms:
   macOS:
-    check: |
-      /usr/bin/sudo /usr/bin/sudo -V | /usr/bin/grep -c "Authentication timestamp timeout: $ODV.0 minutes"
-    result:
-      integer: 1
-    fix: |
-      [source,bash]
-      ----
-      /usr/bin/find /etc/sudoers* -type f -exec sed -i '' '/timestamp_timeout/d' '{}' \;
-      /bin/echo "Defaults timestamp_timeout=$ODV" >> /etc/sudoers.d/mscp
-      ----
     '15.0':
-      severity: medium
       benchmarks:
-        - cis_lvl1
-        - cis_lvl2
-        - disa_stig
+        - name: cis_lvl1
+        - name: cis_lvl2
+        - name: disa_stig
+          severity: medium
     '14.0':
-      severity: medium
       benchmarks:
-        - cis_lvl1
-        - cis_lvl2
-        - disa_stig
+        - name: cis_lvl1
+        - name: cis_lvl2
+        - name: disa_stig
+          severity: medium
     '13.0':
       benchmarks:
-        - cis_lvl1
-        - cis_lvl2
-        - disa_stig
+        - name: cis_lvl1
+        - name: cis_lvl2
+        - name: disa_stig
+    enforcement_info:
+      check:
+        shell: '/usr/bin/sudo /usr/bin/sudo -V | /usr/bin/grep -c "Authentication timestamp timeout: $ODV.0 minutes"'
+        result:
+          integer: 1
+      fix:
+        shell: |-
+          /usr/bin/find /etc/sudoers* -type f -exec sed -i '' '/timestamp_timeout/d' '{}' \;
+          /bin/echo "Defaults timestamp_timeout=$ODV" >> /etc/sudoers.d/mscp
 odv:
-  hint: Number of minutes.
+  hint:
+    datatype: number
+    description: Number of minutes, e.g. 0
+    validation:
+      min: 0
   recommended: 0
   cis_lvl1: 0
   cis_lvl2: 0

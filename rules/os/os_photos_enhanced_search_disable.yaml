@@ -26,13 +26,16 @@ references:
 platforms:
   macOS:
     '15.0': {}
-    check: |
-      /usr/bin/osascript -l JavaScript << EOS
-      $.NSUserDefaults.alloc.initWithSuiteName('com.apple.photos.shareddefaults')\
-      .objectForKey('IPXDefaultEnhancedVisualSearchEnabled').js
-      EOS
-    result:
-      string: 'false'
+    enforcement_info:
+      check:
+        shell: |-
+          /usr/bin/osascript -l JavaScript << EOS
+          $.NSUserDefaults.alloc.initWithSuiteName('com.apple.photos.shareddefaults')\
+          .objectForKey('IPXDefaultEnhancedVisualSearchEnabled').js
+          EOS
+        result:
+          string: 'false'
+    introduced: '-1'
 tags:
   - 800-53r5_low
   - 800-53r5_moderate
@@ -41,5 +44,6 @@ tags:
   - cmmc_lvl2
   - cmmc_lvl1
 mobileconfig_info:
-  com.apple.photos.shareddefaults:
-    IPXDefaultEnhancedVisualSearchEnabled: false
+  - PayloadType: com.apple.photos.shareddefaults
+    PayloadContent:
+      - IPXDefaultEnhancedVisualSearchEnabled: false

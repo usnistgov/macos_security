@@ -45,34 +45,35 @@ references:
       - 8.3
 platforms:
   macOS:
-    check: |
-      /usr/bin/awk -F: '/expire-after/{print $2}' /etc/security/audit_control
-    result:
-      string: $ODV
-    fix: |
-      [source,bash]
-      ----
-      /usr/bin/sed -i.bak 's/^expire-after.*/expire-after:$ODV/' /etc/security/audit_control; /usr/sbin/audit -s
-      ----
     '15.0':
-      severity: low
       benchmarks:
-        - cis_lvl1
-        - cis_lvl2
-        - disa_stig
+        - name: cis_lvl1
+        - name: cis_lvl2
+        - name: disa_stig
+          severity: low
     '14.0':
-      severity: low
       benchmarks:
-        - cis_lvl1
-        - cis_lvl2
-        - disa_stig
+        - name: cis_lvl1
+        - name: cis_lvl2
+        - name: disa_stig
+          severity: low
     '13.0':
-      severity: low
       benchmarks:
-        - cis_lvl1
-        - cis_lvl2
+        - name: cis_lvl1
+        - name: cis_lvl2
+    enforcement_info:
+      check:
+        shell: '/usr/bin/awk -F: ''/expire-after/{print $2}'' /etc/security/audit_control'
+        result:
+          string: $ODV
+      fix:
+        shell: /usr/bin/sed -i.bak 's/^expire-after.*/expire-after:$ODV/' /etc/security/audit_control; /usr/sbin/audit -s
 odv:
-  hint: See man audit_control for possible values.
+  hint:
+    datatype: string
+    description: Time or disk size, e.g. 60d OR 5G, see the man page for audit_control
+    validation:
+      regex: ^\d+[shdyBKMG](\s(AND|OR)\s\d+[shdyBKMG])?$
   recommended: 7d
   cis_lvl1: 60d OR 5G
   cis_lvl2: 60d OR 5G

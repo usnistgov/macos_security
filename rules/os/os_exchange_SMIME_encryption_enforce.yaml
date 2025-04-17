@@ -19,10 +19,12 @@ platforms:
   iOS:
     '18.0':
       benchmarks:
-        - indigo_high
+        - name: indigo_high
     '17.0':
       benchmarks:
-        - indigo_high
+        - name: indigo_high
+    introduced: '12.0'
 mobileconfig_info:
-  com.apple.eas.account:
-    SMIMEEncryptByDefault: true
+  - PayloadType: com.apple.eas.account
+    PayloadContent:
+      - SMIMEEncryptByDefault: true

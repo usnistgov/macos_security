@@ -48,31 +48,32 @@ references:
       - 4.8
 platforms:
   macOS:
-    check: |
-      /usr/bin/osascript -l JavaScript << EOS
-      $.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess')\
-      .objectForKey('allowAirPlayIncomingRequests').js
-      EOS
-    result:
-      string: 'false'
-    fix: |
-      This is implemented by a Configuration Profile.
     '15.0':
-      severity: medium
       benchmarks:
-        - cis_lvl1
-        - cis_lvl2
-        - disa_stig
+        - name: cis_lvl1
+        - name: cis_lvl2
+        - name: disa_stig
+          severity: medium
     '14.0':
-      severity: medium
       benchmarks:
-        - cis_lvl1
-        - cis_lvl2
-        - disa_stig
+        - name: cis_lvl1
+        - name: cis_lvl2
+        - name: disa_stig
+          severity: medium
     '13.0':
       benchmarks:
-        - cis_lvl1
-        - cis_lvl2
+        - name: cis_lvl1
+        - name: cis_lvl2
+    enforcement_info:
+      check:
+        shell: |-
+          /usr/bin/osascript -l JavaScript << EOS
+          $.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess')\
+          .objectForKey('allowAirPlayIncomingRequests').js
+          EOS
+        result:
+          string: 'false'
+    introduced: '12.3'
 tags:
   - 800-53r5_low
   - 800-53r5_moderate
@@ -83,5 +84,6 @@ tags:
   - cmmc_lvl2
   - cnssi-1253_moderate
 mobileconfig_info:
-  com.apple.applicationaccess:
-    allowAirPlayIncomingRequests: false
+  - PayloadType: com.apple.applicationaccess
+    PayloadContent:
+      - allowAirPlayIncomingRequests: false

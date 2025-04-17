@@ -34,15 +34,16 @@ references:
       - SC.L2-3.13.6
 platforms:
   macOS:
-    check: |
-      /sbin/pfctl -a '*' -sr &> /dev/null | /usr/bin/grep -c "block drop in all"
-    result:
-      integer: 1
-    fix: |
-      NOTE: See the firewall supplemental which includes a script that has an example policy to implement this rule.
     '15.0': {}
     '14.0': {}
     '13.0': {}
+    enforcement_info:
+      check:
+        shell: /sbin/pfctl -a '*' -sr &> /dev/null | /usr/bin/grep -c "block drop in all"
+        result:
+          integer: 1
+      fix:
+        additional_info: 'NOTE: See the firewall supplemental which includes a script that has an example policy to implement this rule.'
 tags:
   - 800-53r5_moderate
   - 800-53r5_high

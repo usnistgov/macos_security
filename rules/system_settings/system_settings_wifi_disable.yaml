@@ -34,22 +34,16 @@ references:
       - 12.6
 platforms:
   macOS:
-    check: |
-      /usr/sbin/networksetup -listallnetworkservices | /usr/bin/grep -c "*Wi-Fi"
-    result:
-      integer: 1
-    fix: |
-      To disable Wi-Fi on a macOS system, run the following command.
-      [source,bash]
-      ----
-      /usr/sbin/networksetup -setnetworkserviceenabled "Wi-Fi" off
-      ----
-    '15.0':
-      severity: medium
-    '14.0':
-      severity: medium
-    '13.0':
-      severity: medium
+    '15.0': {}
+    '14.0': {}
+    '13.0': {}
+    enforcement_info:
+      check:
+        shell: /usr/sbin/networksetup -listallnetworkservices | /usr/bin/grep -c "*Wi-Fi"
+        result:
+          integer: 1
+      fix:
+        shell: /usr/sbin/networksetup -setnetworkserviceenabled "Wi-Fi" off
 tags:
   - manual
   - 800-53r5_low

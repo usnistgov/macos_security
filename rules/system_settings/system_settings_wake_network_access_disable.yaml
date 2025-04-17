@@ -23,26 +23,24 @@ references:
       - 4.8
 platforms:
   macOS:
-    check: |
-      /usr/bin/pmset -g custom | /usr/bin/awk '/womp/ { sum+=$2 } END {print sum}'
-    result:
-      integer: 0
-    fix: |
-      [source,bash]
-      ----
-      /usr/bin/pmset -a womp 0
-      ----
     '15.0':
       benchmarks:
-        - cis_lvl1
-        - cis_lvl2
+        - name: cis_lvl1
+        - name: cis_lvl2
     '14.0':
       benchmarks:
-        - cis_lvl1
-        - cis_lvl2
+        - name: cis_lvl1
+        - name: cis_lvl2
     '13.0':
       benchmarks:
-        - cis_lvl1
-        - cis_lvl2
+        - name: cis_lvl1
+        - name: cis_lvl2
+    enforcement_info:
+      check:
+        shell: /usr/bin/pmset -g custom | /usr/bin/awk '/womp/ { sum+=$2 } END {print sum}'
+        result:
+          integer: 0
+      fix:
+        shell: /usr/bin/pmset -a womp 0
 tags:
   - cisv8

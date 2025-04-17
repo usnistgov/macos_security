@@ -1,6 +1,6 @@
 id: os_implement_memory_protection
 title: Configure the System to Protect Memory from Unauthorized Code Execution
-discussion: |
+discussion: |-
   The information system _IS_ configured to implement non-executable data to protect memory from code execution.
 
   Some adversaries launch attacks with the intent of executing code in non-executable regions of memory or in memory locations that are prohibited (e.g., buffer overflow attacks). Security safeguards (e.g., data execution prevention and address space layout randomization) can be employed to protect non-executable regions of memory. Data execution prevention safeguards can either be hardware-enforced or software-enforced; hardware-enforced methods provide the greater strength of mechanism.
@@ -12,6 +12,8 @@ discussion: |
   link:https://developer.apple.com/library/archive/qa/qa1788/_index.html[]
 
   link:https://www.apple.com/macos/security/[]
+
+  NOTE: The technology supports this requirement and cannot be configured to be out of compliance. The technology inherently meets this requirement.
 references:
   nist:
     cce:
@@ -29,13 +31,12 @@ references:
       - SRG-OS-000433-GPOS-00192
 platforms:
   macOS:
-    check: |
-      The technology supports this requirement and cannot be configured to be out of compliance. The technology inherently meets this requirement.
-    fix: |
-      The technology inherently meets this requirement. No fix is required.
     '15.0': {}
     '14.0': {}
     '13.0': {}
+    enforcement_info:
+      fix:
+        additional_info: The technology inherently meets this requirement. No fix is required.
 tags:
   - 800-53r5_moderate
   - 800-53r5_high

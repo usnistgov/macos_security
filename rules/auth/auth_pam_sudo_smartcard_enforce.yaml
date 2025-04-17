@@ -56,39 +56,38 @@ references:
       - 6.5
 platforms:
   macOS:
-    check: |
-      /usr/bin/grep -Ec '^(auth\s+sufficient\s+pam_smartcard.so|auth\s+required\s+pam_deny.so)' /etc/pam.d/sudo
-    result:
-      integer: 2
-    fix: |
-      [source,bash]
-      ----
-
-      /bin/cat > /etc/pam.d/sudo << SUDO_END
-      # sudo: auth account password session
-      auth        sufficient    pam_smartcard.so
-      auth        required      pam_opendirectory.so
-      auth        required      pam_deny.so
-      account     required      pam_permit.so
-      password    required      pam_deny.so
-      session     required      pam_permit.so
-      SUDO_END
-
-      /bin/chmod 444 /etc/pam.d/sudo
-      /usr/sbin/chown root:wheel /etc/pam.d/sudo
-      ----
     '15.0':
-      severity: medium
       benchmarks:
-        - disa_stig
+        - name: disa_stig
+          severity: medium
     '14.0':
-      severity: medium
       benchmarks:
-        - disa_stig
+        - name: disa_stig
+          severity: medium
     '13.0':
-      severity: medium
       benchmarks:
-        - disa_stig
+        - name: disa_stig
+          severity: medium
+    enforcement_info:
+      check:
+        shell: /usr/bin/grep -Ec '^(auth\s+sufficient\s+pam_smartcard.so|auth\s+required\s+pam_deny.so)' /etc/pam.d/sudo
+        result:
+          integer: 2
+      fix:
+        shell: |2-
+
+          /bin/cat > /etc/pam.d/sudo << SUDO_END
+          # sudo: auth account password session
+          auth        sufficient    pam_smartcard.so
+          auth        required      pam_opendirectory.so
+          auth        required      pam_deny.so
+          account     required      pam_permit.so
+          password    required      pam_deny.so
+          session     required      pam_permit.so
+          SUDO_END
+
+          /bin/chmod 444 /etc/pam.d/sudo
+          /usr/sbin/chown root:wheel /etc/pam.d/sudo
 tags:
   - 800-53r5_low
   - 800-53r5_moderate

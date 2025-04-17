@@ -35,32 +35,33 @@ references:
       - 8.5
 platforms:
   macOS:
-    check: |
-      /usr/bin/osascript -l JavaScript << EOS
-      function run() {
-        let pref1 = $.NSUserDefaults.alloc.initWithSuiteName('com.apple.security.firewall')\
-        .objectForKey('EnableLogging').js
-        let pref2 = $.NSUserDefaults.alloc.initWithSuiteName('com.apple.security.firewall')\
-        .objectForKey('LoggingOption').js
-        if ( pref1 == true && pref2 == "detail" ){
-          return("true")
-        } else {
-          return("false")
-        }
-      }
-      EOS
-    result:
-      string: 'true'
-    fix: |
-      This is implemented by a Configuration Profile.
     '14.0':
       benchmarks:
-        - cis_lvl1
-        - cis_lvl2
+        - name: cis_lvl1
+        - name: cis_lvl2
     '13.0':
       benchmarks:
-        - cis_lvl1
-        - cis_lvl2
+        - name: cis_lvl1
+        - name: cis_lvl2
+    enforcement_info:
+      check:
+        shell: |-
+          /usr/bin/osascript -l JavaScript << EOS
+          function run() {
+            let pref1 = $.NSUserDefaults.alloc.initWithSuiteName('com.apple.security.firewall')\
+            .objectForKey('EnableLogging').js
+            let pref2 = $.NSUserDefaults.alloc.initWithSuiteName('com.apple.security.firewall')\
+            .objectForKey('LoggingOption').js
+            if ( pref1 == true && pref2 == "detail" ){
+              return("true")
+            } else {
+              return("false")
+            }
+          }
+          EOS
+        result:
+          string: 'true'
+    introduced: '12.0'
 tags:
   - 800-53r5_low
   - 800-53r5_moderate
@@ -73,6 +74,7 @@ tags:
   - cmmc_lvl2
   - cmmc_lvl1
 mobileconfig_info:
-  com.apple.security.firewall:
-    EnableLogging: true
-    LoggingOption: detail
+  - PayloadType: com.apple.security.firewall
+    PayloadContent:
+      - EnableLogging: true
+      - LoggingOption: detail

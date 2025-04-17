@@ -22,14 +22,17 @@ references:
 platforms:
   macOS:
     '13.0':
-      severity: high
       benchmarks:
-        - disa_stig
-    check: |
-      /usr/bin/profiles show -output stdout-xml | /usr/bin/xmllint --xpath '//key[text()="DisabledPreferencePanes"]/following-sibling::*[1]' - | /usr/bin/grep -c "com.apple.preferences.AppleIDPrefPane"
-    result:
-      integer: 1
+        - name: disa_stig
+          severity: high
+    enforcement_info:
+      check:
+        shell: /usr/bin/profiles show -output stdout-xml | /usr/bin/xmllint --xpath '//key[text()="DisabledPreferencePanes"]/following-sibling::*[1]' - | /usr/bin/grep -c "com.apple.preferences.AppleIDPrefPane"
+        result:
+          integer: 1
+    introduced: '10.7'
 mobileconfig_info:
-  com.apple.systempreferences:
-    DisabledPreferencePanes:
-      - com.apple.preferences.AppleIDPrefPane
+  - PayloadType: com.apple.systempreferences
+    PayloadContent:
+      - DisabledPreferencePanes:
+          - com.apple.preferences.AppleIDPrefPane

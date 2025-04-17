@@ -46,29 +46,30 @@ references:
       - 4.8
 platforms:
   macOS:
-    check: |
-      /usr/bin/osascript -l JavaScript << EOS
-      $.NSUserDefaults.alloc.initWithSuiteName('com.apple.assistant.support')\
-      .objectForKey('Siri Data Sharing Opt-In Status').js
-      EOS
-    result:
-      integer: 2
-    fix: |
-      This is implemented by a Configuration Profile.
     '15.0':
-      severity: medium
       benchmarks:
-        - cis_lvl1
-        - cis_lvl2
-        - disa_stig
+        - name: cis_lvl1
+        - name: cis_lvl2
+        - name: disa_stig
+          severity: medium
     '14.0':
-      severity: medium
       benchmarks:
-        - cis_lvl2
-        - disa_stig
+        - name: cis_lvl2
+        - name: disa_stig
+          severity: medium
     '13.0':
       benchmarks:
-        - disa_stig
+        - name: disa_stig
+    enforcement_info:
+      check:
+        shell: |-
+          /usr/bin/osascript -l JavaScript << EOS
+          $.NSUserDefaults.alloc.initWithSuiteName('com.apple.assistant.support')\
+          .objectForKey('Siri Data Sharing Opt-In Status').js
+          EOS
+        result:
+          integer: 2
+    introduced: '-1'
 tags:
   - 800-53r5_low
   - 800-53r5_moderate
@@ -81,5 +82,6 @@ tags:
   - cmmc_lvl1
   - cnssi-1253_moderate
 mobileconfig_info:
-  com.apple.assistant.support:
-    Siri Data Sharing Opt-In Status: 2
+  - PayloadType: com.apple.assistant.support
+    PayloadContent:
+      - Siri Data Sharing Opt-In Status: 2

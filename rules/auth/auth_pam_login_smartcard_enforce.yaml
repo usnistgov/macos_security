@@ -56,45 +56,44 @@ references:
       - 6.5
 platforms:
   macOS:
-    check: |
-      /usr/bin/grep -Ec '^(auth\s+sufficient\s+pam_smartcard.so|auth\s+required\s+pam_deny.so)' /etc/pam.d/login
-    result:
-      integer: 2
-    fix: |
-      [source,bash]
-      ----
-      /bin/cat > /etc/pam.d/login << LOGIN_END
-      # login: auth account password session
-      auth        sufficient    pam_smartcard.so
-      auth        optional      pam_krb5.so use_kcminit
-      auth        optional      pam_ntlm.so try_first_pass
-      auth        optional      pam_mount.so try_first_pass
-      auth        required      pam_opendirectory.so try_first_pass
-      auth        required      pam_deny.so
-      account     required      pam_nologin.so
-      account     required      pam_opendirectory.so
-      password    required      pam_opendirectory.so
-      session     required      pam_launchd.so
-      session     required      pam_uwtmp.so
-      session     optional      pam_mount.so
-      LOGIN_END
-
-
-      /bin/chmod 644 /etc/pam.d/login
-      /usr/sbin/chown root:wheel /etc/pam.d/login
-      ----
     '15.0':
-      severity: medium
       benchmarks:
-        - disa_stig
+        - name: disa_stig
+          severity: medium
     '14.0':
-      severity: medium
       benchmarks:
-        - disa_stig
+        - name: disa_stig
+          severity: medium
     '13.0':
-      severity: medium
       benchmarks:
-        - disa_stig
+        - name: disa_stig
+          severity: medium
+    enforcement_info:
+      check:
+        shell: /usr/bin/grep -Ec '^(auth\s+sufficient\s+pam_smartcard.so|auth\s+required\s+pam_deny.so)' /etc/pam.d/login
+        result:
+          integer: 2
+      fix:
+        shell: |-
+          /bin/cat > /etc/pam.d/login << LOGIN_END
+          # login: auth account password session
+          auth        sufficient    pam_smartcard.so
+          auth        optional      pam_krb5.so use_kcminit
+          auth        optional      pam_ntlm.so try_first_pass
+          auth        optional      pam_mount.so try_first_pass
+          auth        required      pam_opendirectory.so try_first_pass
+          auth        required      pam_deny.so
+          account     required      pam_nologin.so
+          account     required      pam_opendirectory.so
+          password    required      pam_opendirectory.so
+          session     required      pam_launchd.so
+          session     required      pam_uwtmp.so
+          session     optional      pam_mount.so
+          LOGIN_END
+
+
+          /bin/chmod 644 /etc/pam.d/login
+          /usr/sbin/chown root:wheel /etc/pam.d/login
 tags:
   - 800-53r5_low
   - 800-53r5_moderate

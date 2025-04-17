@@ -14,9 +14,9 @@ references:
     800-53r5:
       - SI-2(5)
     800-171r3:
-      - 3.14.1
-      - 3.14.2
-      - 3.13.3
+      - 03.14.01
+      - 03.14.02
+      - 03.13.03
   cis:
     benchmark:
       macos_15:
@@ -30,29 +30,31 @@ references:
       - 7.4
 platforms:
   macOS:
-    check: |
-      /usr/bin/osascript -l JavaScript << EOS
-      $.NSUserDefaults.alloc.initWithSuiteName('com.apple.SoftwareUpdate')\
-      .objectForKey('AutomaticCheckEnabled').js
-      EOS
-    result:
-      string: 'true'
-    fix: |
-      This is implemented by a Configuration Profile.
     '15.0':
       benchmarks:
-        - cis_lvl1
-        - cis_lvl2
+        - name: cis_lvl1
+        - name: cis_lvl2
     '14.0':
       benchmarks:
-        - cis_lvl1
-        - cis_lvl2
+        - name: cis_lvl1
+        - name: cis_lvl2
     '13.0':
       benchmarks:
-        - cis_lvl1
-        - cis_lvl2
+        - name: cis_lvl1
+        - name: cis_lvl2
+    enforcement_info:
+      check:
+        shell: |-
+          /usr/bin/osascript -l JavaScript << EOS
+          $.NSUserDefaults.alloc.initWithSuiteName('com.apple.SoftwareUpdate')\
+          .objectForKey('AutomaticCheckEnabled').js
+          EOS
+        result:
+          string: 'true'
+    introduced: '10.15'
 tags:
   - cisv8
 mobileconfig_info:
-  com.apple.SoftwareUpdate:
-    AutomaticCheckEnabled: true
+  - PayloadType: com.apple.SoftwareUpdate
+    PayloadContent:
+      - AutomaticCheckEnabled: true

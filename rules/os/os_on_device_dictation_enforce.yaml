@@ -1,9 +1,9 @@
 id: os_on_device_dictation_enforce
 title: Enforce On Device Dictation
 discussion: |
-  Dictation _MUST_ be restricted to on device only to prevent potential data exfiltration.
+  The system _MUST_ be configured for on device dictation.
 
-  The information system _MUST_ be configured to provide only essential capabilities.
+  By enforcing on device dictation this will mitigate the risk of unwanted data being sent to Apple.
 references:
   nist:
     cce:
@@ -64,50 +64,57 @@ references:
         - ANNEX K
 platforms:
   macOS:
-    check: |
-      /usr/bin/osascript -l JavaScript << EOS
-      $.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess')\
-      .objectForKey('forceOnDeviceOnlyDictation').js
-      EOS
-    result:
-      string: 'true'
-    fix: |
-      This is implemented by a Configuration Profile.
     '15.0':
-      severity: medium
       benchmarks:
-        - cis_lvl1
-        - cis_lvl2
-        - disa_stig
+        - name: cis_lvl1
+        - name: cis_lvl2
+        - name: disa_stig
+          severity: medium
     '14.0':
-      severity: medium
       benchmarks:
-        - cis_lvl1
-        - cis_lvl2
-        - disa_stig
+        - name: cis_lvl1
+        - name: cis_lvl2
+        - name: disa_stig
+          severity: medium
+    enforcement_info:
+      check:
+        shell: |-
+          /usr/bin/osascript -l JavaScript << EOS
+          $.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess')\
+          .objectForKey('forceOnDeviceOnlyDictation').js
+          EOS
+        result:
+          string: 'true'
+    introduced: '14.0'
   iOS:
     '18.0':
-      severity: medium
       supervised: false
       benchmarks:
-        - ios_stig
-        - indigo_base
-        - indigo_high
+        - name: ios_stig
+          severity: medium
+        - name: indigo_base
+          severity: medium
+        - name: indigo_high
+          severity: medium
     '17.0':
-      severity: medium
       supervised: false
       benchmarks:
-        - ios_stig
-        - indigo_base
-        - indigo_high
+        - name: ios_stig
+          severity: medium
+        - name: indigo_base
+          severity: medium
+        - name: indigo_high
+          severity: medium
     '16.0':
-      severity: medium
       supervised: false
       benchmarks:
-        - ios_stig
+        - name: ios_stig
+          severity: medium
+    introduced: '14.5'
   visionOS:
     '2.0':
       supervised: false
+    introduced: '2.0'
 tags:
   - arm64
   - 800-53r5_low
@@ -121,5 +128,6 @@ tags:
   - cmmc_lvl1
   - cnssi-1253_moderate
 mobileconfig_info:
-  com.apple.applicationaccess:
-    forceOnDeviceOnlyDictation: true
+  - PayloadType: com.apple.applicationaccess
+    PayloadContent:
+      - forceOnDeviceOnlyDictation: true

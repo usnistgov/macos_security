@@ -49,40 +49,43 @@ references:
       - 3.11
 platforms:
   macOS:
-    check: |
-      dontAllowDisable=$(/usr/bin/osascript -l JavaScript << EOS
-      $.NSUserDefaults.alloc.initWithSuiteName('com.apple.MCX')\
-      .objectForKey('dontAllowFDEDisable').js
-      EOS
-      )
-      fileVault=$(/usr/bin/fdesetup status | /usr/bin/grep -c "FileVault is On.")
-      if [[ "$dontAllowDisable" == "true" ]] && [[ "$fileVault" == 1 ]]; then
-        echo "1"
-      else
-        echo "0"
-      fi
-    result:
-      integer: 1
-    fix: |
-      NOTE: See the FileVault supplemental to implement this rule.
     '15.0':
-      severity: high
       benchmarks:
-        - cis_lvl1
-        - cis_lvl2
-        - disa_stig
+        - name: cis_lvl1
+        - name: cis_lvl2
+        - name: disa_stig
+          severity: high
     '14.0':
-      severity: high
       benchmarks:
-        - cis_lvl1
-        - cis_lvl2
-        - disa_stig
+        - name: cis_lvl1
+        - name: cis_lvl2
+        - name: disa_stig
+          severity: high
     '13.0':
-      severity: high
       benchmarks:
-        - cis_lvl1
-        - cis_lvl2
-        - disa_stig
+        - name: cis_lvl1
+        - name: cis_lvl2
+        - name: disa_stig
+          severity: high
+    enforcement_info:
+      check:
+        shell: |-
+          dontAllowDisable=$(/usr/bin/osascript -l JavaScript << EOS
+          $.NSUserDefaults.alloc.initWithSuiteName('com.apple.MCX')\
+          .objectForKey('dontAllowFDEDisable').js
+          EOS
+          )
+          fileVault=$(/usr/bin/fdesetup status | /usr/bin/grep -c "FileVault is On.")
+          if [[ "$dontAllowDisable" == "true" ]] && [[ "$fileVault" == 1 ]]; then
+            echo "1"
+          else
+            echo "0"
+          fi
+        result:
+          integer: 1
+      fix:
+        additional_info: 'NOTE: See the FileVault supplemental to implement this rule.'
+    introduced: '-1'
 tags:
   - 800-53r5_moderate
   - 800-53r5_high
@@ -93,5 +96,6 @@ tags:
   - cmmc_lvl2
   - cnssi-1253_moderate
 mobileconfig_info:
-  com.apple.MCX:
-    dontAllowFDEDisable: true
+  - PayloadType: com.apple.MCX
+    PayloadContent:
+      - dontAllowFDEDisable: true

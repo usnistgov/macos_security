@@ -23,29 +23,28 @@ references:
       - 3.3
 platforms:
   macOS:
-    check: |
-      /usr/bin/find /Applications -iname "*\.app" -type d -perm -2 -ls | /usr/bin/wc -l | /usr/bin/xargs
-    result:
-      integer: 0
-    fix: |
-      [source,bash]
-      ----
-      IFS=$'\n'
-      for apps in $( /usr/bin/find /Applications -iname "*\.app" -type d -perm -2 ); do
-        /bin/chmod -R o-w "$apps"
-      done
-      ----
     '15.0':
       benchmarks:
-        - cis_lvl1
-        - cis_lvl2
+        - name: cis_lvl1
+        - name: cis_lvl2
     '14.0':
       benchmarks:
-        - cis_lvl1
-        - cis_lvl2
+        - name: cis_lvl1
+        - name: cis_lvl2
     '13.0':
       benchmarks:
-        - cis_lvl1
-        - cis_lvl2
+        - name: cis_lvl1
+        - name: cis_lvl2
+    enforcement_info:
+      check:
+        shell: /usr/bin/find /Applications -iname "*\.app" -type d -perm -2 -ls | /usr/bin/wc -l | /usr/bin/xargs
+        result:
+          integer: 0
+      fix:
+        shell: |-
+          IFS=$'\n'
+          for apps in $( /usr/bin/find /Applications -iname "*\.app" -type d -perm -2 ); do
+            /bin/chmod -R o-w "$apps"
+          done
 tags:
   - cisv8

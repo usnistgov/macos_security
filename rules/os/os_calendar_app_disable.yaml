@@ -39,37 +39,36 @@ references:
       - 4.8
 platforms:
   macOS:
-    check: |
-      /usr/bin/osascript -l JavaScript << EOS
-      function run() {
-        let pref1 = ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess.new')\
-        .objectForKey('familyControlsEnabled'))
-        let pathlist = $.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess.new')\
-        .objectForKey('pathBlackList').js
-        for ( let app in pathlist ) {
-            if ( ObjC.unwrap(pathlist[app]) == "/Applications/Calendar.app" && pref1 == true ){
-                return("true")
+    '15.0': {}
+    '14.0': {}
+    '13.0': {}
+    enforcement_info:
+      check:
+        shell: |-
+          /usr/bin/osascript -l JavaScript << EOS
+          function run() {
+            let pref1 = ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess.new')\
+            .objectForKey('familyControlsEnabled'))
+            let pathlist = $.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess.new')\
+            .objectForKey('pathBlackList').js
+            for ( let app in pathlist ) {
+                if ( ObjC.unwrap(pathlist[app]) == "/Applications/Calendar.app" && pref1 == true ){
+                    return("true")
+                }
             }
-        }
-        return("false")
-        }
-      EOS
-    result:
-      string: 'true'
-    fix: |
-      This is implemented by a Configuration Profile.
-    '15.0':
-      severity: medium
-    '14.0':
-      severity: medium
-    '13.0':
-      severity: medium
+            return("false")
+            }
+          EOS
+        result:
+          string: 'true'
+    introduced: '10.7'
 tags:
   - cnssi-1253_low
   - cnssi-1253_high
   - cnssi-1253_moderate
 mobileconfig_info:
-  com.apple.applicationaccess.new:
-    familyControlsEnabled: true
-    pathBlackList:
-      - /Applications/Calendar.app
+  - PayloadType: com.apple.applicationaccess.new
+    PayloadContent:
+      - familyControlsEnabled: true
+      - pathBlackList:
+          - /Applications/Calendar.app

@@ -1,7 +1,7 @@
 id: icloud_keychain_disable
 title: Disable iCloud Keychain Sync
 discussion: |
-  The macOS system's ability to automatically synchronize a user's passwords to their iCloud account _MUST_ be disabled.
+  The system's ability to automatically synchronize a user's passwords to their iCloud account _MUST_ be disabled.
 
   Apple's iCloud service does not provide an organization with enough control over the storage and access of data and, therefore, password management and synchronization _MUST_ be controlled by an organization approved service.
 references:
@@ -75,53 +75,58 @@ references:
         - ANNEX K
 platforms:
   macOS:
-    check: |
-      /usr/bin/osascript -l JavaScript << EOS
-      $.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess')\
-      .objectForKey('allowCloudKeychainSync').js
-      EOS
-    result:
-      string: 'false'
-    fix: |
-      This is implemented by a Configuration Profile.
     '15.0':
-      severity: medium
       benchmarks:
-        - disa_stig
+        - name: disa_stig
+          severity: medium
     '14.0':
-      severity: medium
       benchmarks:
-        - disa_stig
+        - name: disa_stig
+          severity: medium
     '13.0':
-      severity: medium
       benchmarks:
-        - disa_stig
+        - name: disa_stig
+          severity: medium
+    enforcement_info:
+      check:
+        shell: |-
+          /usr/bin/osascript -l JavaScript << EOS
+          $.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess')\
+          .objectForKey('allowCloudKeychainSync').js
+          EOS
+        result:
+          string: 'false'
+    introduced: '10.12'
   iOS:
     '18.0':
-      severity: medium
       supervised: false
       benchmarks:
-        - cis_lvl1_enterprise
-        - cis_lvl2_enterprise
-        - ios_stig
-        - indigo_base
-        - indigo_high
+        - name: cis_lvl1_enterprise
+        - name: cis_lvl2_enterprise
+        - name: ios_stig
+          severity: medium
+        - name: indigo_base
+          severity: medium
+        - name: indigo_high
+          severity: medium
     '17.0':
       supervised: false
       benchmarks:
-        - cis_lvl1_enterprise
-        - cis_lvl2_enterprise
-        - ios_stig
-        - indigo_base
-        - indigo_high
+        - name: cis_lvl1_enterprise
+        - name: cis_lvl2_enterprise
+        - name: ios_stig
+        - name: indigo_base
+        - name: indigo_high
     '16.0':
       supervised: false
       benchmarks:
-        - cis_lvl1_enterprise
-        - cis_lvl2_enterprise
+        - name: cis_lvl1_enterprise
+        - name: cis_lvl2_enterprise
+    introduced: '7.0'
   visionOS:
     '2.0':
       supervised: false
+    introduced: '2.0'
 tags:
   - 800-53r5_low
   - 800-53r5_moderate
@@ -134,5 +139,6 @@ tags:
   - cmmc_lvl1
   - cnssi-1253_moderate
 mobileconfig_info:
-  com.apple.applicationaccess:
-    allowCloudKeychainSync: false
+  - PayloadType: com.apple.applicationaccess
+    PayloadContent:
+      - allowCloudKeychainSync: false

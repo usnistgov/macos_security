@@ -45,47 +45,41 @@ references:
       - 4.8
 platforms:
   macOS:
-    check: $OS_VALUE
-    result:
-      string: 'false'
-    fix: |
-      This is implemented by a Configuration Profile.
     '15.0':
-      severity: medium
       benchmarks:
-        - disa_stig
-      check: |-
-        /usr/bin/osascript -l JavaScript << EOS
-        $.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess')\
-        .objectForKey('allowAssistant').js
-        EOS
-      mobileconfig_info:
-        com.apple.applicationaccess:
-          allowAssistant: false
+        - name: disa_stig
+          severity: medium
     '14.0':
-      severity: medium
       benchmarks:
-        - disa_stig
-      check: |-
-        /usr/bin/osascript -l JavaScript << EOS
-        $.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess')\
-        .objectForKey('allowAssistant').js
-        EOS
-      mobileconfig_info:
-        com.apple.applicationaccess:
-          allowAssistant: false
+        - name: disa_stig
+          severity: medium
     '13.0':
-      severity: medium
       benchmarks:
-        - disa_stig
-      check: |-
-        /usr/bin/osascript -l JavaScript << EOS
-        $.NSUserDefaults.alloc.initWithSuiteName('com.apple.ironwood.support')\
-        .objectForKey('Ironwood Allowed').js
-        EOS
+        - name: disa_stig
+          severity: medium
       mobileconfig_info:
-        com.apple.ironwood.support:
-          Ironwood Allowed: false
+        - PayloadType: com.apple.ironwood.support
+          PayloadContent:
+            - Ironwood Allowed: false
+      enforcement_info:
+        check:
+          shell: |-
+            /usr/bin/osascript -l JavaScript << EOS
+            $.NSUserDefaults.alloc.initWithSuiteName('com.apple.ironwood.support')\
+            .objectForKey('Ironwood Allowed').js
+            EOS
+          result:
+            string: 'false'
+    enforcement_info:
+      check:
+        shell: |-
+          /usr/bin/osascript -l JavaScript << EOS
+          $.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess')\
+          .objectForKey('allowAssistant').js
+          EOS
+        result:
+          string: 'false'
+    introduced: '14.0'
 tags:
   - 800-53r5_low
   - 800-53r5_moderate
@@ -97,4 +91,7 @@ tags:
   - cmmc_lvl2
   - cmmc_lvl1
   - cnssi-1253_moderate
-mobileconfig_info: $OS_VALUE
+mobileconfig_info:
+  - PayloadType: com.apple.applicationaccess
+    PayloadContent:
+      - allowAssistant: false

@@ -47,27 +47,28 @@ references:
       - 13.9
 platforms:
   macOS:
-    check: |
-      /usr/bin/osascript -l JavaScript << EOS
-      $.NSUserDefaults.alloc.initWithSuiteName('com.apple.MCXBluetooth')\
-      .objectForKey('DisableBluetooth').js
-      EOS
-    result:
-      string: 'true'
-    fix: |
-      This is implemented by a Configuration Profile.
     '15.0':
-      severity: high
       benchmarks:
-        - disa_stig
+        - name: disa_stig
+          severity: high
     '14.0':
-      severity: high
       benchmarks:
-        - disa_stig
+        - name: disa_stig
+          severity: high
     '13.0':
-      severity: low
       benchmarks:
-        - disa_stig
+        - name: disa_stig
+          severity: low
+    enforcement_info:
+      check:
+        shell: |-
+          /usr/bin/osascript -l JavaScript << EOS
+          $.NSUserDefaults.alloc.initWithSuiteName('com.apple.MCXBluetooth')\
+          .objectForKey('DisableBluetooth').js
+          EOS
+        result:
+          string: 'true'
+    introduced: '-1'
 tags:
   - 800-53r5_low
   - 800-53r5_moderate
@@ -79,6 +80,7 @@ tags:
   - cmmc_lvl2
   - cnssi-1253_moderate
 mobileconfig_info:
-  com.apple.ManagedClient.preferences:
-    com.apple.MCXBluetooth:
-      DisableBluetooth: true
+  - PayloadType: com.apple.ManagedClient.preferences
+    PayloadContent:
+      - com.apple.MCXBluetooth:
+          DisableBluetooth: true

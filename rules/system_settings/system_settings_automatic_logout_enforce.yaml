@@ -39,26 +39,31 @@ references:
       - AC.L2-3.1.11
 platforms:
   macOS:
-    check: |
-      /usr/bin/osascript -l JavaScript << EOS
-      $.NSUserDefaults.alloc.initWithSuiteName('.GlobalPreferences')\
-      .objectForKey('com.apple.autologout.AutoLogOutDelay').js
-      EOS
-    result:
-      integer: $ODV
-    fix: |
-      This is implemented by a Configuration Profile.
     '15.0':
-      severity: medium
       benchmarks:
-        - disa_stig
+        - name: disa_stig
+          severity: medium
     '14.0':
-      severity: medium
       benchmarks:
-        - disa_stig
+        - name: disa_stig
+          severity: medium
     '13.0': {}
+    enforcement_info:
+      check:
+        shell: |-
+          /usr/bin/osascript -l JavaScript << EOS
+          $.NSUserDefaults.alloc.initWithSuiteName('.GlobalPreferences')\
+          .objectForKey('com.apple.autologout.AutoLogOutDelay').js
+          EOS
+        result:
+          integer: $ODV
+    introduced: '10.7'
 odv:
-  hint: Number of seconds
+  hint:
+    datatype: number
+    description: Number of seconds, e.g. 86400
+    validation:
+      min: 1
   recommended: 86400
   stig: 86400
 tags:
@@ -70,5 +75,6 @@ tags:
   - cmmc_lvl2
   - cnssi-1253_moderate
 mobileconfig_info:
-  .GlobalPreferences:
-    com.apple.autologout.AutoLogOutDelay: $ODV
+  - PayloadType: .GlobalPreferences
+    PayloadContent:
+      - com.apple.autologout.AutoLogOutDelay: $ODV

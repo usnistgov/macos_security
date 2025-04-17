@@ -31,20 +31,25 @@ references:
       - CM.L2-3.4.7
 platforms:
   macOS:
-    check: |
-      /usr/bin/osascript -l JavaScript << EOS
-      $.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess')\
-      .objectForKey('allowMailSmartReplies').js
-      EOS
-    result:
-      string: 'false'
     '15.0': {}
+    enforcement_info:
+      check:
+        shell: |-
+          /usr/bin/osascript -l JavaScript << EOS
+          $.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess')\
+          .objectForKey('allowMailSmartReplies').js
+          EOS
+        result:
+          string: 'false'
+    introduced: '15.4'
   iOS:
     '18.0':
       supervised: true
+    introduced: '18.4'
   visionOS:
     '2.0':
       supervised: true
+    introduced: '2.4'
 tags:
   - 800-53r5_low
   - 800-53r5_moderate
@@ -56,5 +61,6 @@ tags:
   - cmmc_lvl1
   - cnssi-1253_moderate
 mobileconfig_info:
-  com.apple.applicationaccess:
-    allowMailSmartReplies: false
+  - PayloadType: com.apple.applicationaccess
+    PayloadContent:
+      - allowMailSmartReplies: false

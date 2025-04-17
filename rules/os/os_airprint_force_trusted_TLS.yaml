@@ -20,14 +20,16 @@ platforms:
     '18.0':
       supervised: false
       benchmarks:
-        - indigo_high
+        - name: indigo_high
     '17.0':
       supervised: false
       benchmarks:
-        - indigo_high
+        - name: indigo_high
+    introduced: '11.0'
 tags:
   - 800-53r5_moderate
   - 800-53r5_high
 mobileconfig_info:
-  com.apple.applicationaccess:
-    forceAirPrintTrustedTLSRequirement: true
+  - PayloadType: com.apple.applicationaccess
+    PayloadContent:
+      - forceAirPrintTrustedTLSRequirement: true

@@ -20,10 +20,12 @@ references:
 platforms:
   iOS:
     '18.0':
-      severity: medium
       supervised: true
       benchmarks:
-        - ios_stig
+        - name: ios_stig
+          severity: medium
+    introduced: '17.2'
 mobileconfig_info:
-  com.apple.applicationaccess:
-    forcePreserveESIMOnErase: false
+  - PayloadType: com.apple.applicationaccess
+    PayloadContent:
+      - forcePreserveESIMOnErase: false

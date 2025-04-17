@@ -24,29 +24,31 @@ references:
       - 4.8
 platforms:
   macOS:
-    check: |
-      /usr/bin/sudo /usr/bin/osascript -l JavaScript << EOS
-      $.NSUserDefaults.alloc.initWithSuiteName('com.apple.Siri')\
-      .objectForKey('VoiceTriggerUserEnabled').js
-      EOS
-    result:
-      string: 'false'
-    fix: |
-      This is implemented by a Configuration Profile.
     '15.0':
       benchmarks:
-        - cis_lvl1
-        - cis_lvl2
+        - name: cis_lvl1
+        - name: cis_lvl2
     '14.0':
       benchmarks:
-        - cis_lvl1
-        - cis_lvl2
+        - name: cis_lvl1
+        - name: cis_lvl2
     '13.0':
       benchmarks:
-        - cis_lvl1
-        - cis_lvl2
+        - name: cis_lvl1
+        - name: cis_lvl2
+    enforcement_info:
+      check:
+        shell: |-
+          /usr/bin/sudo /usr/bin/osascript -l JavaScript << EOS
+          $.NSUserDefaults.alloc.initWithSuiteName('com.apple.Siri')\
+          .objectForKey('VoiceTriggerUserEnabled').js
+          EOS
+        result:
+          string: 'false'
+    introduced: '-1'
 tags:
   - cisv8
 mobileconfig_info:
-  com.apple.Siri:
-    VoiceTriggerUserEnabled: false
+  - PayloadType: com.apple.Siri
+    PayloadContent:
+      - VoiceTriggerUserEnabled: false

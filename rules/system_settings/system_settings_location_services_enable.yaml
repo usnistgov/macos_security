@@ -24,41 +24,28 @@ references:
       - 4.8
 platforms:
   macOS:
-    check: |
-      /usr/bin/sudo -u _locationd /usr/bin/osascript -l JavaScript << EOS
-      $.NSUserDefaults.alloc.initWithSuiteName('com.apple.locationd')\
-      .objectForKey('LocationServicesEnabled').js
-      EOS
-    result:
-      string: 'true'
-    fix: $OS_VALUE
     '15.0':
       benchmarks:
-        - cis_lvl2
-      fix: |-
-        [source,bash]
-        ----
-        /usr/bin/defaults write /var/db/locationd/Library/Preferences/ByHost/com.apple.locationd LocationServicesEnabled -bool true;
-        pid=$(/bin/launchctl list | /usr/bin/awk '/com.apple.locationd/ { print $1 }')
-        kill -9 $pid
-        ----
+        - name: cis_lvl2
     '14.0':
       benchmarks:
-        - cis_lvl2
-      fix: |-
-        [source,bash]
-        ----
-        /usr/bin/defaults write /var/db/locationd/Library/Preferences/ByHost/com.apple.locationd LocationServicesEnabled -bool true;
-        pid=$(/bin/launchctl list | /usr/bin/awk '/com.apple.locationd/ { print $1 }')
-        kill -9 $pid
-        ----
+        - name: cis_lvl2
     '13.0':
       benchmarks:
-        - cis_lvl2
-      fix: |-
-        [source,bash]
-        ----
-        /usr/bin/defaults write /var/db/locationd/Library/Preferences/ByHost/com.apple.locationd LocationServicesEnabled -bool true; /bin/launchctl kickstart -k system/com.apple.locationd
-        ----
+        - name: cis_lvl2
+    enforcement_info:
+      check:
+        shell: |-
+          /usr/bin/sudo -u _locationd /usr/bin/osascript -l JavaScript << EOS
+          $.NSUserDefaults.alloc.initWithSuiteName('com.apple.locationd')\
+          .objectForKey('LocationServicesEnabled').js
+          EOS
+        result:
+          string: 'true'
+      fix:
+        shell: |-
+          /usr/bin/defaults write /var/db/locationd/Library/Preferences/ByHost/com.apple.locationd LocationServicesEnabled -bool true;
+          pid=$(/bin/launchctl list | /usr/bin/awk '/com.apple.locationd/ { print $1 }')
+          kill -9 $pid
 tags:
   - cisv8

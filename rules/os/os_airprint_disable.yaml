@@ -22,7 +22,9 @@ platforms:
     '17.0':
       supervised: false
       benchmarks:
-        - indigo_high
+        - name: indigo_high
+    introduced: '11.0'
 mobileconfig_info:
-  com.apple.applicationaccess:
-    allowAirPrint: false
+  - PayloadType: com.apple.applicationaccess
+    PayloadContent:
+      - allowAirPrint: false

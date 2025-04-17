@@ -17,7 +17,7 @@ references:
       - AU-12(1)
       - SC-45(1)
     800-171r3:
-      - 3.3.7
+      - 03.03.07
   disa:
     cci:
       - CCI-001891
@@ -47,33 +47,34 @@ references:
       - 8.4
 platforms:
   macOS:
-    check: |
-      /usr/bin/osascript -l JavaScript << EOS
-      $.NSUserDefaults.alloc.initWithSuiteName('com.apple.timed')\
-      .objectForKey('TMAutomaticTimeOnlyEnabled').js
-      EOS
-    result:
-      string: 'true'
-    fix: |
-      This is implemented by a Configuration Profile.
     '15.0':
-      severity: medium
       benchmarks:
-        - cis_lvl1
-        - cis_lvl2
-        - disa_stig
+        - name: cis_lvl1
+        - name: cis_lvl2
+        - name: disa_stig
+          severity: medium
     '14.0':
-      severity: medium
       benchmarks:
-        - cis_lvl1
-        - cis_lvl2
-        - disa_stig
+        - name: cis_lvl1
+        - name: cis_lvl2
+        - name: disa_stig
+          severity: medium
     '13.0':
-      severity: medium
       benchmarks:
-        - cis_lvl1
-        - cis_lvl2
-        - disa_stig
+        - name: cis_lvl1
+        - name: cis_lvl2
+        - name: disa_stig
+          severity: medium
+    enforcement_info:
+      check:
+        shell: |-
+          /usr/bin/osascript -l JavaScript << EOS
+          $.NSUserDefaults.alloc.initWithSuiteName('com.apple.timed')\
+          .objectForKey('TMAutomaticTimeOnlyEnabled').js
+          EOS
+        result:
+          string: 'true'
+    introduced: '-1'
 tags:
   - 800-171
   - 800-53r5_low
@@ -85,6 +86,7 @@ tags:
   - cmmc_lvl2
   - cnssi-1253_moderate
 mobileconfig_info:
-  com.apple.ManagedClient.preferences:
-    com.apple.timed:
-      TMAutomaticTimeOnlyEnabled: true
+  - PayloadType: com.apple.ManagedClient.preferences
+    PayloadContent:
+      - com.apple.timed:
+          TMAutomaticTimeOnlyEnabled: true

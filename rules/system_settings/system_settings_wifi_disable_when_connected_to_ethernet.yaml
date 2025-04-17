@@ -1,11 +1,13 @@
 id: system_settings_wifi_disable_when_connected_to_ethernet
 title: Disable Wi-Fi When Connected to Ethernet
-discussion: |
+discussion: |-
   The macOS should be configured to automatically disable Wi-Fi when connected to ethernet.
 
   The use of Wi-Fi to connect to unauthorized networks may facilitate the exfiltration of mission data. Therefore, wireless networking capabilities internally embedded within information system components should be disabled when not intended to be used.
 
   NOTE: If the system requires Wi-Fi to connect to an authorized network, this is not applicable.
+
+  NOTE: The technology does not support this requirement. This is an applicable-does not meet finding.
 references:
   nist:
     cce:
@@ -28,10 +30,6 @@ references:
       - AC.L2-3.1.17
 platforms:
   macOS:
-    check: |
-      The technology does not support this requirement. This is an applicable-does not meet finding.
-    fix: |
-      This requirement is a permanent finding and cannot be fixed. An appropriate mitigation for the system must be implemented, but this finding cannot be considered fixed.
     '15.0': {}
     '14.0': {}
     '13.0': {}

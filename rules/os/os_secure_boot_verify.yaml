@@ -36,21 +36,22 @@ references:
         - APPL-14-005100
 platforms:
   macOS:
-    check: |
-      /usr/libexec/mdmclient QuerySecurityInfo | /usr/bin/grep -c "SecureBootLevel = full"
-    result:
-      integer: 1
-    fix: |
-      NOTE: Boot into Recovery Mode and enable Full Secure Boot
     '15.0':
-      severity: medium
       benchmarks:
-        - disa_stig
+        - name: disa_stig
+          severity: medium
     '14.0':
-      severity: medium
       benchmarks:
-        - disa_stig
+        - name: disa_stig
+          severity: medium
     '13.0': {}
+    enforcement_info:
+      check:
+        shell: /usr/libexec/mdmclient QuerySecurityInfo | /usr/bin/grep -c "SecureBootLevel = full"
+        result:
+          integer: 1
+      fix:
+        additional_info: 'NOTE: Boot into Recovery Mode and enable Full Secure Boot'
 tags:
   - 800-53r5_high
   - 800-53r5_moderate

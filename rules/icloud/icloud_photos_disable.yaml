@@ -1,7 +1,7 @@
 id: icloud_photos_disable
 title: Disable iCloud Photo Library
 discussion: |
-  The macOS built-in Photos.app connection to Apple's iCloud service _MUST_ be disabled.
+  The built-in Photos.app's connection to Apple's iCloud service _MUST_ be disabled.
 
   Apple's iCloud service does not provide an organization with enough control over the storage and access of data and, therefore, automated photo synchronization _MUST_ be controlled by an organization approved service.
 references:
@@ -71,48 +71,53 @@ references:
         - ANNEX K
 platforms:
   macOS:
-    check: |
-      /usr/bin/osascript -l JavaScript << EOS
-      $.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess')\
-      .objectForKey('allowCloudPhotoLibrary').js
-      EOS
-    result:
-      string: 'false'
-    fix: |
-      This is implemented by a Configuration Profile.
     '15.0':
-      severity: medium
       benchmarks:
-        - disa_stig
+        - name: disa_stig
+          severity: medium
     '14.0':
-      severity: medium
       benchmarks:
-        - disa_stig
+        - name: disa_stig
+          severity: medium
     '13.0':
-      severity: medium
       benchmarks:
-        - disa_stig
+        - name: disa_stig
+          severity: medium
+    enforcement_info:
+      check:
+        shell: |-
+          /usr/bin/osascript -l JavaScript << EOS
+          $.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess')\
+          .objectForKey('allowCloudPhotoLibrary').js
+          EOS
+        result:
+          string: 'false'
+    introduced: '10.12'
   iOS:
     '18.0':
-      severity: medium
       supervised: false
       benchmarks:
-        - ios_stig
-        - indigo_high
+        - name: ios_stig
+          severity: medium
+        - name: indigo_high
+          severity: medium
     '17.0':
-      severity: medium
       supervised: false
       benchmarks:
-        - ios_stig
-        - indigo_high
+        - name: ios_stig
+          severity: medium
+        - name: indigo_high
+          severity: medium
     '16.0':
-      severity: medium
       supervised: false
       benchmarks:
-        - ios_stig
+        - name: ios_stig
+          severity: medium
+    introduced: '9.0'
   visionOS:
     '2.0':
       supervised: false
+    introduced: '2.0'
 tags:
   - 800-53r5_low
   - 800-53r5_moderate
@@ -125,5 +130,6 @@ tags:
   - cmmc_lvl1
   - cnssi-1253_moderate
 mobileconfig_info:
-  com.apple.applicationaccess:
-    allowCloudPhotoLibrary: false
+  - PayloadType: com.apple.applicationaccess
+    PayloadContent:
+      - allowCloudPhotoLibrary: false

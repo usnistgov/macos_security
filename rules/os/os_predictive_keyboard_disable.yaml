@@ -18,13 +18,15 @@ platforms:
     '18.0':
       supervised: true
       benchmarks:
-        - indigo_base
-        - indigo_high
+        - name: indigo_base
+        - name: indigo_high
     '17.0':
       supervised: true
       benchmarks:
-        - indigo_base
-        - indigo_high
+        - name: indigo_base
+        - name: indigo_high
+    introduced: 8.1.3
 mobileconfig_info:
-  com.apple.applicationaccess:
-    allowPredictiveKeyboard: false
+  - PayloadType: com.apple.applicationaccess
+    PayloadContent:
+      - allowPredictiveKeyboard: false

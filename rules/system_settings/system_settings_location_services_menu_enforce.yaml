@@ -24,21 +24,19 @@ references:
       - 4.8
 platforms:
   macOS:
-    check: |
-      /usr/bin/defaults read /Library/Preferences/com.apple.locationmenu.plist ShowSystemServices
-    result:
-      boolean: 1
-    fix: |
-      [source,bash]
-      ----
-      /usr/bin/defaults write /Library/Preferences/com.apple.locationmenu.plist ShowSystemServices -bool true
-      ----
     '15.0':
       benchmarks:
-        - cis_lvl2
+        - name: cis_lvl2
     '14.0':
       benchmarks:
-        - cis_lvl2
+        - name: cis_lvl2
     '13.0':
       benchmarks:
-        - cis_lvl2
+        - name: cis_lvl2
+    enforcement_info:
+      check:
+        shell: /usr/bin/defaults read /Library/Preferences/com.apple.locationmenu.plist ShowSystemServices
+        result:
+          integer: 1
+      fix:
+        shell: /usr/bin/defaults write /Library/Preferences/com.apple.locationmenu.plist ShowSystemServices -bool true

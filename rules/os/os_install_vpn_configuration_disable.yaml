@@ -50,35 +50,43 @@ references:
 platforms:
   iOS:
     '18.0':
-      severity: low
       supervised: true
       benchmarks:
-        - cis_lvl1_enterprise
-        - cis_lvl2_enterprise
-        - ios_stig
-        - indigo_base
-        - indigo_high
+        - name: cis_lvl1_enterprise
+        - name: cis_lvl2_enterprise
+        - name: ios_stig
+          severity: low
+        - name: indigo_base
+          severity: low
+        - name: indigo_high
+          severity: low
     '17.0':
-      severity: low
       supervised: true
       benchmarks:
-        - cis_lvl1_enterprise
-        - cis_lvl2_enterprise
-        - ios_stig
-        - ios_stig_byoad
-        - indigo_base
-        - indigo_high
+        - name: cis_lvl1_enterprise
+        - name: cis_lvl2_enterprise
+        - name: ios_stig
+          severity: low
+        - name: ios_stig_byoad
+          severity: low
+        - name: indigo_base
+          severity: low
+        - name: indigo_high
+          severity: low
     '16.0':
-      severity: low
       supervised: true
       benchmarks:
-        - cis_lvl1_enterprise
-        - cis_lvl2_enterprise
-        - ios_stig
-        - ios_stig_byoad
+        - name: cis_lvl1_enterprise
+        - name: cis_lvl2_enterprise
+        - name: ios_stig
+          severity: low
+        - name: ios_stig_byoad
+          severity: low
+    introduced: '11.0'
   visionOS:
     '2.0':
       supervised: true
+    introduced: '2.0'
 tags:
   - 800-53r5_low
   - 800-53r5_moderate
@@ -88,5 +96,6 @@ tags:
   - cnssi-1253_low
   - cnssi-1253_high
 mobileconfig_info:
-  com.apple.applicationaccess:
-    allowVPNCreation: false
+  - PayloadType: com.apple.applicationaccess
+    PayloadContent:
+      - allowVPNCreation: false

@@ -27,12 +27,15 @@ platforms:
   macOS:
     '13.0':
       benchmarks:
-        - cis_lvl1
-        - cis_lvl2
-    check: |
-      /usr/bin/pgrep -q ODSAgent; /bin/echo $?
-    result:
-      integer: 1
+        - name: cis_lvl1
+        - name: cis_lvl2
+    enforcement_info:
+      check:
+        shell: /usr/bin/pgrep -q ODSAgent; /bin/echo $?
+        result:
+          integer: 1
+      fix:
+        shell: /bin/launchctl unload /System/Library/LaunchDaemons/com.apple.ODSAgent.plist
 tags:
   - 800-53r5_low
   - 800-53r5_moderate

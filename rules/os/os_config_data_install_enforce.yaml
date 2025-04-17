@@ -52,33 +52,34 @@ references:
       - 7.7
 platforms:
   macOS:
-    check: |
-      /usr/bin/osascript -l JavaScript << EOS
-      $.NSUserDefaults.alloc.initWithSuiteName('com.apple.SoftwareUpdate')\
-      .objectForKey('ConfigDataInstall').js
-      EOS
-    result:
-      string: 'true'
-    fix: |
-      This is implemented by a Configuration Profile.
     '15.0':
-      severity: medium
       benchmarks:
-        - cis_lvl1
-        - cis_lvl2
-        - disa_stig
+        - name: cis_lvl1
+        - name: cis_lvl2
+        - name: disa_stig
+          severity: medium
     '14.0':
-      severity: medium
       benchmarks:
-        - cis_lvl1
-        - cis_lvl2
-        - disa_stig
+        - name: cis_lvl1
+        - name: cis_lvl2
+        - name: disa_stig
+          severity: medium
     '13.0':
-      severity: high
       benchmarks:
-        - cis_lvl1
-        - cis_lvl2
-        - disa_stig
+        - name: cis_lvl1
+        - name: cis_lvl2
+        - name: disa_stig
+          severity: high
+    enforcement_info:
+      check:
+        shell: |-
+          /usr/bin/osascript -l JavaScript << EOS
+          $.NSUserDefaults.alloc.initWithSuiteName('com.apple.SoftwareUpdate')\
+          .objectForKey('ConfigDataInstall').js
+          EOS
+        result:
+          string: 'true'
+    introduced: '10.15'
 tags:
   - 800-53r5_low
   - 800-53r5_moderate
@@ -90,5 +91,6 @@ tags:
   - cmmc_lvl1
   - cnssi-1253_moderate
 mobileconfig_info:
-  com.apple.SoftwareUpdate:
-    ConfigDataInstall: true
+  - PayloadType: com.apple.SoftwareUpdate
+    PayloadContent:
+      - ConfigDataInstall: true

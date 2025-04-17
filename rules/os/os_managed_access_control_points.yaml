@@ -1,9 +1,11 @@
 id: os_managed_access_control_points
 title: Managed Access Control Points
-discussion: |
+discussion: |-
   Route remote accesses through authorized and managed network access control points.
 
   Organizations consider the Trusted Internet Connections (TIC) initiative requirements for external network connections since limiting the number of access control points for remote access reduces attack surfaces.
+
+  NOTE: This requirement is NA for this technology.
 references:
   nist:
     cce:
@@ -22,13 +24,12 @@ references:
       - AC.L2-3.1.14
 platforms:
   macOS:
-    check: |
-      This requirement is NA for this technology.
-    fix: |
-      The requirement is NA. No fix is required.
     '15.0': {}
     '14.0': {}
     '13.0': {}
+    enforcement_info:
+      fix:
+        additional_info: The requirement is NA. No fix is required.
 tags:
   - 800-53r5_moderate
   - 800-53r5_high

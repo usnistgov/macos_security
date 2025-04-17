@@ -1,9 +1,11 @@
 id: os_peripherals_identify
 title: The macOS system must uniquely identify peripherals before establishing a connection.
-discussion: |
+discussion: |-
   Without identifying devices, unidentified or unknown devices may be introduced, thereby facilitating malicious activity.
 
   Peripherals include, but are not limited to, such devices as flash drives, external storage, and printers.
+
+  NOTE: The technology supports this requirement and cannot be configured to be out of compliance. The technology inherently meets this requirement.
 references:
   nist:
     cce:
@@ -15,12 +17,11 @@ references:
         - CCE-91842-5
 platforms:
   macOS:
-    check: |
-      The technology supports this requirement and cannot be configured to be out of compliance. The technology inherently meets this requirement.
-    fix: |
-      The technology inherently meets this requirement. No fix is required.
     '15.0': {}
     '14.0': {}
     '13.0': {}
+    enforcement_info:
+      fix:
+        additional_info: The technology inherently meets this requirement. No fix is required.
 tags:
   - inherent

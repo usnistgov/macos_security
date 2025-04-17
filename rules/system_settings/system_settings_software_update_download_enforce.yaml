@@ -24,29 +24,31 @@ references:
       - 7.4
 platforms:
   macOS:
-    check: |
-      /usr/bin/osascript -l JavaScript << EOS
-      $.NSUserDefaults.alloc.initWithSuiteName('com.apple.SoftwareUpdate')\
-      .objectForKey('AutomaticDownload').js
-      EOS
-    result:
-      string: 'true'
-    fix: |
-      This is implemented by a Configuration Profile.
     '15.0':
       benchmarks:
-        - cis_lvl1
-        - cis_lvl2
+        - name: cis_lvl1
+        - name: cis_lvl2
     '14.0':
       benchmarks:
-        - cis_lvl1
-        - cis_lvl2
+        - name: cis_lvl1
+        - name: cis_lvl2
     '13.0':
       benchmarks:
-        - cis_lvl1
-        - cis_lvl2
+        - name: cis_lvl1
+        - name: cis_lvl2
+    enforcement_info:
+      check:
+        shell: |-
+          /usr/bin/osascript -l JavaScript << EOS
+          $.NSUserDefaults.alloc.initWithSuiteName('com.apple.SoftwareUpdate')\
+          .objectForKey('AutomaticDownload').js
+          EOS
+        result:
+          string: 'true'
+    introduced: '10.15'
 tags:
   - cisv8
 mobileconfig_info:
-  com.apple.SoftwareUpdate:
-    AutomaticDownload: true
+  - PayloadType: com.apple.SoftwareUpdate
+    PayloadContent:
+      - AutomaticDownload: true

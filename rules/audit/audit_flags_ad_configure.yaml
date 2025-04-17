@@ -86,30 +86,28 @@ references:
       - 8.5
 platforms:
   macOS:
-    check: |
-      /usr/bin/awk -F':' '/^flags/ { print $NF }' /etc/security/audit_control | /usr/bin/tr ',' '\n' | /usr/bin/grep -Ec 'ad'
-    result:
-      integer: 1
-    fix: |
-      [source,bash]
-      ----
-      /usr/bin/grep -qE "^flags.*[^-]ad" /etc/security/audit_control || /usr/bin/sed -i.bak '/^flags/ s/$/,ad/' /etc/security/audit_control; /usr/sbin/audit -s
-      ----
     '15.0':
-      severity: medium
       benchmarks:
-        - cis_lvl2
-        - disa_stig
+        - name: cis_lvl2
+        - name: disa_stig
+          severity: medium
     '14.0':
-      severity: medium
       benchmarks:
-        - cis_lvl2
-        - disa_stig
+        - name: cis_lvl2
+        - name: disa_stig
+          severity: medium
     '13.0':
-      severity: medium
       benchmarks:
-        - cis_lvl2
-        - disa_stig
+        - name: cis_lvl2
+        - name: disa_stig
+          severity: medium
+    enforcement_info:
+      check:
+        shell: /usr/bin/awk -F':' '/^flags/ { print $NF }' /etc/security/audit_control | /usr/bin/tr ',' '\n' | /usr/bin/grep -Ec 'ad'
+        result:
+          integer: 1
+      fix:
+        shell: /usr/bin/grep -qE "^flags.*[^-]ad" /etc/security/audit_control || /usr/bin/sed -i.bak '/^flags/ s/$/,ad/' /etc/security/audit_control; /usr/sbin/audit -s
 tags:
   - 800-53r5_privacy
   - 800-53r5_moderate

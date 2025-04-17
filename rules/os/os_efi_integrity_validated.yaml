@@ -17,12 +17,15 @@ platforms:
   macOS:
     '13.0':
       benchmarks:
-        - cis_lvl1
-        - cis_lvl2
-    check: |
-      if /usr/sbin/ioreg -w 0 -c AppleSEPManager | /usr/bin/grep -q AppleSEPManager; then echo "1"; else /usr/libexec/firmwarecheckers/eficheck/eficheck --integrity-check | /usr/bin/grep -c "No changes detected"; fi
-    result:
-      integer: 1
+        - name: cis_lvl1
+        - name: cis_lvl2
+    enforcement_info:
+      check:
+        shell: if /usr/sbin/ioreg -w 0 -c AppleSEPManager | /usr/bin/grep -q AppleSEPManager; then echo "1"; else /usr/libexec/firmwarecheckers/eficheck/eficheck --integrity-check | /usr/bin/grep -c "No changes detected"; fi
+        result:
+          integer: 1
+      fix:
+        additional_info: Install a known good version of macOS.
 tags:
   - cisv8
   - i386

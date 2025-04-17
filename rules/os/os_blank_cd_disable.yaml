@@ -34,31 +34,31 @@ references:
       - MP.L2-3.8.8
 platforms:
   macOS:
-    check: |
-      /usr/bin/osascript -l JavaScript << EOS
-      ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('com.apple.systemuiserver')\
-      .objectForKey('mount-controls'))["blankcd"]
-      EOS
-    result:
-      string: deny
-    fix: |
-      This is implemented by a Configuration Profile.
-    '15.0':
-      severity: medium
-    '14.0':
-      severity: medium
+    '15.0': {}
+    '14.0': {}
     '13.0':
-      severity: medium
       benchmarks:
-        - disa_stig
+        - name: disa_stig
+          severity: medium
+    enforcement_info:
+      check:
+        shell: |-
+          /usr/bin/osascript -l JavaScript << EOS
+          ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('com.apple.systemuiserver')\
+          .objectForKey('mount-controls'))["blankcd"]
+          EOS
+        result:
+          string: deny
+    introduced: '10.7'
 tags:
   - cnssi-1253_low
   - cnssi-1253_high
   - cmmc_lvl2
   - cnssi-1253_moderate
 mobileconfig_info:
-  com.apple.systemuiserver:
-    mount-controls:
-      blankcd:
-        - alert
-        - eject
+  - PayloadType: com.apple.systemuiserver
+    PayloadContent:
+      - mount-controls:
+          blankcd:
+            - alert
+            - eject

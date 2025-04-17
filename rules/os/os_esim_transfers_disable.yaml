@@ -11,6 +11,8 @@ platforms:
   iOS:
     '18.0':
       supervised: false
+    introduced: '18.0'
 mobileconfig_info:
-  com.apple.applicationaccess:
-    allowESIMOutgoingTransfers: false
+  - PayloadType: com.apple.applicationaccess
+    PayloadContent:
+      - allowESIMOutgoingTransfers: false

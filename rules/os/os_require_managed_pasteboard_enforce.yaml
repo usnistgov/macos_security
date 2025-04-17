@@ -38,33 +38,42 @@ references:
 platforms:
   iOS:
     '18.0':
-      severity: medium
       supervised: false
       benchmarks:
-        - ios_stig
-        - indigo_base
-        - indigo_high
+        - name: ios_stig
+          severity: medium
+        - name: indigo_base
+          severity: medium
+        - name: indigo_high
+          severity: medium
     '17.0':
-      severity: medium
       supervised: false
       benchmarks:
-        - ios_stig
-        - ios_stig_byoad
-        - indigo_base
-        - indigo_high
+        - name: ios_stig
+          severity: medium
+        - name: ios_stig_byoad
+          severity: medium
+        - name: indigo_base
+          severity: medium
+        - name: indigo_high
+          severity: medium
     '16.0':
-      severity: medium
       supervised: false
       benchmarks:
-        - ios_stig
-        - ios_stig_byoad
+        - name: ios_stig
+          severity: medium
+        - name: ios_stig_byoad
+          severity: medium
+    introduced: '15.0'
   visionOS:
     '2.0':
       supervised: false
+    introduced: '2.0'
 tags:
   - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
 mobileconfig_info:
-  com.apple.applicationaccess:
-    requireManagedPasteboard: true
+  - PayloadType: com.apple.applicationaccess
+    PayloadContent:
+      - requireManagedPasteboard: true

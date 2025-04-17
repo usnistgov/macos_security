@@ -37,20 +37,20 @@ references:
       - 4.8
 platforms:
   macOS:
-    check: |
-      /usr/bin/profiles show -output stdout-xml | /usr/bin/xmllint --xpath '//key[text()="DisabledSystemSettings"]/following-sibling::*[1]' - | /usr/bin/grep -c "com.apple.WalletSettingsExtension"
-    result:
-      integer: 1
-    fix: |
-      This is implemented by a Configuration Profile.
     '15.0':
-      severity: medium
       benchmarks:
-        - disa_stig
+        - name: disa_stig
+          severity: medium
     '14.0':
-      severity: medium
       benchmarks:
-        - disa_stig
+        - name: disa_stig
+          severity: medium
+    enforcement_info:
+      check:
+        shell: /usr/bin/profiles show -output stdout-xml | /usr/bin/xmllint --xpath '//key[text()="DisabledSystemSettings"]/following-sibling::*[1]' - | /usr/bin/grep -c "com.apple.WalletSettingsExtension"
+        result:
+          integer: 1
+    introduced: '13.0'
 tags:
   - 800-53r5_low
   - 800-53r5_moderate
@@ -61,6 +61,7 @@ tags:
   - cnssi-1253_low
   - cnssi-1253_high
 mobileconfig_info:
-  com.apple.systempreferences:
-    DisabledSystemSettings:
-      - com.apple.WalletSettingsExtension
+  - PayloadType: com.apple.systempreferences
+    PayloadContent:
+      - DisabledSystemSettings:
+          - com.apple.WalletSettingsExtension

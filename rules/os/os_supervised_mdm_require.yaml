@@ -30,17 +30,17 @@ references:
 platforms:
   iOS:
     '18.0':
-      severity: medium
       benchmarks:
-        - ios_stig
+        - name: ios_stig
+          severity: medium
     '17.0':
-      severity: medium
       benchmarks:
-        - ios_stig
+        - name: ios_stig
+          severity: medium
     '16.0':
-      severity: medium
       benchmarks:
-        - ios_stig
+        - name: ios_stig
+          severity: medium
 tags:
   - manual
   - 800-53r5_low

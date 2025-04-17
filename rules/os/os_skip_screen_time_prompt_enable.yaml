@@ -32,27 +32,28 @@ references:
       - CM.L2-3.4.7
 platforms:
   macOS:
-    check: |
-      /usr/bin/osascript -l JavaScript << EOS
-      $.NSUserDefaults.alloc.initWithSuiteName('com.apple.SetupAssistant.managed')\
-      .objectForKey('SkipScreenTime').js
-      EOS
-    result:
-      string: 'true'
-    fix: |
-      This is implemented by a Configuration Profile.
     '15.0':
-      severity: low
       benchmarks:
-        - disa_stig
+        - name: disa_stig
+          severity: low
     '14.0':
-      severity: low
       benchmarks:
-        - disa_stig
+        - name: disa_stig
+          severity: low
     '13.0':
-      severity: low
       benchmarks:
-        - disa_stig
+        - name: disa_stig
+          severity: low
+    enforcement_info:
+      check:
+        shell: |-
+          /usr/bin/osascript -l JavaScript << EOS
+          $.NSUserDefaults.alloc.initWithSuiteName('com.apple.SetupAssistant.managed')\
+          .objectForKey('SkipScreenTime').js
+          EOS
+        result:
+          string: 'true'
+    introduced: '10.15'
 tags:
   - 800-171
   - cnssi-1253_low
@@ -60,5 +61,6 @@ tags:
   - cmmc_lvl2
   - cnssi-1253_moderate
 mobileconfig_info:
-  com.apple.SetupAssistant.managed:
-    SkipScreenTime: true
+  - PayloadType: com.apple.SetupAssistant.managed
+    PayloadContent:
+      - SkipScreenTime: true

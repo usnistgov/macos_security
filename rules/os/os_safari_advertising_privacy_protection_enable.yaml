@@ -23,26 +23,27 @@ references:
       - 9.1
 platforms:
   macOS:
-    check: |
-      /usr/bin/profiles -P -o stdout | /usr/bin/grep -c '"WebKitPreferences.privateClickMeasurementEnabled" = 1' | /usr/bin/awk '{ if ($1 >= 1) {print "1"} else {print "0"}}'
-    result:
-      integer: 1
-    fix: |
-      This is implemented by a Configuration Profile.
     '15.0':
       benchmarks:
-        - cis_lvl1
-        - cis_lvl2
+        - name: cis_lvl1
+        - name: cis_lvl2
     '14.0':
       benchmarks:
-        - cis_lvl1
-        - cis_lvl2
+        - name: cis_lvl1
+        - name: cis_lvl2
     '13.0':
       benchmarks:
-        - cis_lvl1
-        - cis_lvl2
+        - name: cis_lvl1
+        - name: cis_lvl2
+    enforcement_info:
+      check:
+        shell: /usr/bin/profiles -P -o stdout | /usr/bin/grep -c '"WebKitPreferences.privateClickMeasurementEnabled" = 1' | /usr/bin/awk '{ if ($1 >= 1) {print "1"} else {print "0"}}'
+        result:
+          integer: 1
+    introduced: '-1'
 tags:
   - cisv8
 mobileconfig_info:
-  com.apple.Safari:
-    WebKitPreferences.privateClickMeasurementEnabled: true
+  - PayloadType: com.apple.Safari
+    PayloadContent:
+      - WebKitPreferences.privateClickMeasurementEnabled: true

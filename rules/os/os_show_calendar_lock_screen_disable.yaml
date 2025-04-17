@@ -29,22 +29,25 @@ references:
 platforms:
   iOS:
     '18.0':
-      severity: medium
       supervised: false
       benchmarks:
-        - ios_stig
+        - name: ios_stig
+          severity: medium
     '17.0':
-      severity: medium
       supervised: false
       benchmarks:
-        - ios_stig
-        - ios_stig_byoad
+        - name: ios_stig
+          severity: medium
+        - name: ios_stig_byoad
+          severity: medium
     '16.0':
-      severity: medium
       supervised: false
       benchmarks:
-        - ios_stig
-        - ios_stig_byoad
+        - name: ios_stig
+          severity: medium
+        - name: ios_stig_byoad
+          severity: medium
+    introduced: '7.0'
 tags:
   - 800-53r5_moderate
   - 800-53r5_high
@@ -52,5 +55,6 @@ tags:
   - cnssi-1253_low
   - cnssi-1253_high
 mobileconfig_info:
-  com.apple.applicationaccess:
-    allowLockScreenTodayView: false
+  - PayloadType: com.apple.applicationaccess
+    PayloadContent:
+      - allowLockScreenTodayView: false

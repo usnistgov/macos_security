@@ -25,23 +25,25 @@ references:
       - SC.L2-3.13.10
 platforms:
   macOS:
-    check: |
-      /usr/bin/osascript -l JavaScript << EOS
-      $.NSUserDefaults.alloc.initWithSuiteName('com.apple.security.smartcard')\
-      .objectForKey('checkCertificateTrust').js
-      EOS
-    result:
-      integer: 3
-    fix: |
-      This is implemented by a Configuration Profile.
     '15.0': {}
     '14.0': {}
     '13.0': {}
+    enforcement_info:
+      check:
+        shell: |-
+          /usr/bin/osascript -l JavaScript << EOS
+          $.NSUserDefaults.alloc.initWithSuiteName('com.apple.security.smartcard')\
+          .objectForKey('checkCertificateTrust').js
+          EOS
+        result:
+          integer: 3
+    introduced: 10.12.4
 tags:
   - 800-53r5_high
   - cnssi-1253_high
   - cnssi-1253_moderate
   - cnssi-1253_low
 mobileconfig_info:
-  com.apple.security.smartcard:
-    checkCertificateTrust: 3
+  - PayloadType: com.apple.security.smartcard
+    PayloadContent:
+      - checkCertificateTrust: 3

@@ -54,72 +54,74 @@ references:
       - 13.1
 platforms:
   macOS:
-    check: $OS_VALUE
-    result:
-      string: 'true'
-    fix: $OS_VALUE
     '15.0':
-      severity: medium
       benchmarks:
-        - cis_lvl1
-        - cis_lvl2
-        - disa_stig
-      check: |-
-        /usr/bin/osascript -l JavaScript << EOS
-        $.NSUserDefaults.alloc.initWithSuiteName('com.apple.security.firewall')\
-        .objectForKey('EnableFirewall').js
-        EOS
-      fix: This is implemented by a Configuration Profile.
+        - name: cis_lvl1
+        - name: cis_lvl2
+        - name: disa_stig
+          severity: medium
+      enforcement_info:
+        fix: {}
     '14.0':
-      severity: medium
       benchmarks:
-        - cis_lvl1
-        - cis_lvl2
-        - disa_stig
-      check: |-
-        profile="$(/usr/bin/osascript -l JavaScript << EOS
-        $.NSUserDefaults.alloc.initWithSuiteName('com.apple.security.firewall')\
-        .objectForKey('EnableFirewall').js
-        EOS
-        )"
+        - name: cis_lvl1
+        - name: cis_lvl2
+        - name: disa_stig
+          severity: medium
+      enforcement_info:
+        check:
+          shell: |-
+            profile="$(/usr/bin/osascript -l JavaScript << EOS
+            $.NSUserDefaults.alloc.initWithSuiteName('com.apple.security.firewall')\
+            .objectForKey('EnableFirewall').js
+            EOS
+            )"
 
-        plist="$(/usr/bin/defaults read /Library/Preferences/com.apple.alf globalstate 2>/dev/null)"
+            plist="$(/usr/bin/defaults read /Library/Preferences/com.apple.alf globalstate 2>/dev/null)"
 
-        if [[ "$profile" == "true" ]] && [[ "$plist" =~ [1,2] ]]; then
-          echo "true"
-        else
-          echo "false"
-        fi
-      fix: |-
-        [source,bash]
-        ----
-        /usr/bin/defaults write /Library/Preferences/com.apple.alf globalstate -int 1
-        ----
+            if [[ "$profile" == "true" ]] && [[ "$plist" =~ [1,2] ]]; then
+              echo "true"
+            else
+              echo "false"
+            fi
+          result:
+            string: 'true'
     '13.0':
-      severity: medium
       benchmarks:
-        - cis_lvl1
-        - cis_lvl2
-        - disa_stig
-      check: |-
-        profile="$(/usr/bin/osascript -l JavaScript << EOS
-        $.NSUserDefaults.alloc.initWithSuiteName('com.apple.security.firewall')\
-        .objectForKey('EnableFirewall').js
-        EOS
-        )"
+        - name: cis_lvl1
+        - name: cis_lvl2
+        - name: disa_stig
+          severity: medium
+      enforcement_info:
+        check:
+          shell: |-
+            profile="$(/usr/bin/osascript -l JavaScript << EOS
+            $.NSUserDefaults.alloc.initWithSuiteName('com.apple.security.firewall')\
+            .objectForKey('EnableFirewall').js
+            EOS
+            )"
 
-        plist="$(/usr/bin/defaults read /Library/Preferences/com.apple.alf globalstate 2>/dev/null)"
+            plist="$(/usr/bin/defaults read /Library/Preferences/com.apple.alf globalstate 2>/dev/null)"
 
-        if [[ "$profile" == "true" ]] && [[ "$plist" =~ [1,2] ]]; then
-          echo "true"
-        else
-          echo "false"
-        fi
-      fix: |-
-        [source,bash]
-        ----
-        /usr/bin/defaults write /Library/Preferences/com.apple.alf globalstate -int 1
-        ----
+            if [[ "$profile" == "true" ]] && [[ "$plist" =~ [1,2] ]]; then
+              echo "true"
+            else
+              echo "false"
+            fi
+          result:
+            string: 'true'
+    enforcement_info:
+      check:
+        shell: |-
+          /usr/bin/osascript -l JavaScript << EOS
+          $.NSUserDefaults.alloc.initWithSuiteName('com.apple.security.firewall')\
+          .objectForKey('EnableFirewall').js
+          EOS
+        result:
+          string: 'true'
+      fix:
+        shell: /usr/bin/defaults write /Library/Preferences/com.apple.alf globalstate -int 1
+    introduced: '10.12'
 tags:
   - 800-53r5_low
   - 800-53r5_moderate
@@ -132,5 +134,6 @@ tags:
   - cmmc_lvl1
   - cnssi-1253_moderate
 mobileconfig_info:
-  com.apple.security.firewall:
-    EnableFirewall: true
+  - PayloadType: com.apple.security.firewall
+    PayloadContent:
+      - EnableFirewall: true

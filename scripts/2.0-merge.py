@@ -1282,7 +1282,7 @@ def main():
                         if fix_code:
                             _yaml["platforms"]["macOS"][_os]["enforcement_info"]["fix"]["shell"] = fix_code
                         if fix_note:
-                            _yaml["platforms"]["macOS"][_os]["enforcement_info"]["fix"]["note"] = fix_note
+                            _yaml["platforms"]["macOS"][_os]["enforcement_info"]["fix"]["additional_info"] = fix_note
                         _yaml["platforms"]["macOS"][_os].pop("fix")
 
                     if _yaml["platforms"]["macOS"][_os]["enforcement_info"] == {}:
@@ -1309,7 +1309,7 @@ def main():
                         if fix_code:
                             _yaml["platforms"]["macOS"]["enforcement_info"]["fix"]["shell"] = fix_code
                         if fix_note:
-                            _yaml["platforms"]["macOS"]["enforcement_info"]["fix"]["note"] = fix_note
+                            _yaml["platforms"]["macOS"]["enforcement_info"]["fix"]["additional_info"] = fix_note
                     _yaml["platforms"]["macOS"].pop("fix")
 
                 if _yaml["platforms"]["macOS"]["enforcement_info"] == {}:

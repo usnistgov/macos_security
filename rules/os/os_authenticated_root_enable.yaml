@@ -54,34 +54,40 @@ references:
       - 3.11
 platforms:
   macOS:
-    check: $OS_VALUE
-    result:
-      integer: 1
-    fix: |
-      [source,bash]
-      ----
-      /usr/bin/csrutil authenticated-root enable
-      ----
-      NOTE: To re-enable "Authenticated Root", boot the affected system into "Recovery" mode, launch "Terminal" from the "Utilities" menu, and run the command.
     '15.0':
-      severity: medium
       benchmarks:
-        - cis_lvl1
-        - cis_lvl2
-        - disa_stig
-      check: /usr/libexec/mdmclient QuerySecurityInfo | /usr/bin/grep -c "AuthenticatedRootVolumeEnabled = 1;"
+        - name: cis_lvl1
+        - name: cis_lvl2
+        - name: disa_stig
+          severity: medium
     '14.0':
-      severity: medium
       benchmarks:
-        - cis_lvl1
-        - cis_lvl2
-        - disa_stig
-      check: /usr/bin/csrutil authenticated-root | /usr/bin/grep -c 'enabled'
+        - name: cis_lvl1
+        - name: cis_lvl2
+        - name: disa_stig
+          severity: medium
+      enforcement_info:
+        check:
+          shell: /usr/bin/csrutil authenticated-root | /usr/bin/grep -c 'enabled'
+          result:
+            integer: 1
     '13.0':
       benchmarks:
-        - cis_lvl1
-        - cis_lvl2
-      check: /usr/bin/csrutil authenticated-root | /usr/bin/grep -c 'enabled'
+        - name: cis_lvl1
+        - name: cis_lvl2
+      enforcement_info:
+        check:
+          shell: /usr/bin/csrutil authenticated-root | /usr/bin/grep -c 'enabled'
+          result:
+            integer: 1
+    enforcement_info:
+      check:
+        shell: /usr/libexec/mdmclient QuerySecurityInfo | /usr/bin/grep -c "AuthenticatedRootVolumeEnabled = 1;"
+        result:
+          integer: 1
+      fix:
+        shell: /usr/bin/csrutil authenticated-root enable
+        additional_info: 'NOTE: To re-enable "Authenticated Root", boot the affected system into "Recovery" mode, launch "Terminal" from the "Utilities" menu, and run the command.'
 tags:
   - 800-53r5_low
   - 800-53r5_moderate

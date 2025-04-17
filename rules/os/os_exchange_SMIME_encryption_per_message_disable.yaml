@@ -18,13 +18,15 @@ references:
 platforms:
   iOS:
     '18.0':
-      severity: medium
       benchmarks:
-        - indigo_high
+        - name: indigo_high
+          severity: medium
     '17.0':
-      severity: medium
       benchmarks:
-        - indigo_high
+        - name: indigo_high
+          severity: medium
+    introduced: '12.0'
 mobileconfig_info:
-  com.apple.mail.managed:
-    SMIMEEnableEncryptionPerMessageSwitch: false
+  - PayloadType: com.apple.mail.managed
+    PayloadContent:
+      - SMIMEEnableEncryptionPerMessageSwitch: false

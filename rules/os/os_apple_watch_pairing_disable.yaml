@@ -37,24 +37,29 @@ references:
 platforms:
   iOS:
     '18.0':
-      severity: medium
       supervised: true
       benchmarks:
-        - ios_stig
-        - indigo_base
-        - indigo_high
+        - name: ios_stig
+          severity: medium
+        - name: indigo_base
+          severity: medium
+        - name: indigo_high
+          severity: medium
     '17.0':
-      severity: medium
       supervised: true
       benchmarks:
-        - ios_stig
-        - indigo_base
-        - indigo_high
+        - name: ios_stig
+          severity: medium
+        - name: indigo_base
+          severity: medium
+        - name: indigo_high
+          severity: medium
     '16.0':
-      severity: medium
       supervised: true
       benchmarks:
-        - ios_stig
+        - name: ios_stig
+          severity: medium
+    introduced: '9.0'
 tags:
   - 800-53r5_low
   - 800-53r5_moderate
@@ -63,5 +68,6 @@ tags:
   - cnssi-1253_low
   - cnssi-1253_high
 mobileconfig_info:
-  com.apple.applicationaccess:
-    allowPairedWatch: false
+  - PayloadType: com.apple.applicationaccess
+    PayloadContent:
+      - allowPairedWatch: false

@@ -23,24 +23,22 @@ references:
       - 4.1
 platforms:
   macOS:
-    check: |
-      /bin/ls /Users/ | /usr/bin/grep -c "Guest"
-    result:
-      integer: 0
-    fix: |
-      [source,bash]
-      ----
-      /bin/rm -Rf /Users/Guest
-      ----
     '15.0':
       benchmarks:
-        - cis_lvl1
-        - cis_lvl2
+        - name: cis_lvl1
+        - name: cis_lvl2
     '14.0':
       benchmarks:
-        - cis_lvl1
-        - cis_lvl2
+        - name: cis_lvl1
+        - name: cis_lvl2
     '13.0':
       benchmarks:
-        - cis_lvl1
-        - cis_lvl2
+        - name: cis_lvl1
+        - name: cis_lvl2
+    enforcement_info:
+      check:
+        shell: /bin/ls /Users/ | /usr/bin/grep -c "Guest"
+        result:
+          integer: 0
+      fix:
+        shell: /bin/rm -Rf /Users/Guest

@@ -18,11 +18,13 @@ platforms:
     '18.0':
       supervised: false
       benchmarks:
-        - indigo_high
+        - name: indigo_high
     '17.0':
       supervised: false
       benchmarks:
-        - indigo_high
+        - name: indigo_high
+    introduced: '7.0'
 mobileconfig_info:
-  com.apple.applicationaccess:
-    allowOTAPKIUpdates: true
+  - PayloadType: com.apple.applicationaccess
+    PayloadContent:
+      - allowOTAPKIUpdates: true

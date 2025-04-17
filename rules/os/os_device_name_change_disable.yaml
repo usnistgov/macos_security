@@ -18,13 +18,15 @@ platforms:
     '18.0':
       supervised: true
       benchmarks:
-        - indigo_base
-        - indigo_high
+        - name: indigo_base
+        - name: indigo_high
     '17.0':
       supervised: true
       benchmarks:
-        - indigo_base
-        - indigo_high
+        - name: indigo_base
+        - name: indigo_high
+    introduced: '9.0'
 mobileconfig_info:
-  com.apple.applicationaccess:
-    allowDeviceNameModification: false
+  - PayloadType: com.apple.applicationaccess
+    PayloadContent:
+      - allowDeviceNameModification: false

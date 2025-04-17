@@ -23,26 +23,24 @@ references:
       - 2.6
 platforms:
   macOS:
-    check: |
-      /usr/sbin/nvram -p | /usr/bin/grep -c "amfi_get_out_of_my_way=1"
-    result:
-      integer: 0
-    fix: |
-      [source,bash]
-      ----
-      /usr/sbin/nvram boot-args=""
-      ----
     '15.0':
       benchmarks:
-        - cis_lvl1
-        - cis_lvl2
+        - name: cis_lvl1
+        - name: cis_lvl2
     '14.0':
       benchmarks:
-        - cis_lvl1
-        - cis_lvl2
+        - name: cis_lvl1
+        - name: cis_lvl2
     '13.0':
       benchmarks:
-        - cis_lvl1
-        - cis_lvl2
+        - name: cis_lvl1
+        - name: cis_lvl2
+    enforcement_info:
+      check:
+        shell: /usr/sbin/nvram -p | /usr/bin/grep -c "amfi_get_out_of_my_way=1"
+        result:
+          integer: 0
+      fix:
+        shell: /usr/sbin/nvram boot-args=""
 tags:
   - cisv8

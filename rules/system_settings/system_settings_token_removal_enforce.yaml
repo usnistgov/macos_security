@@ -38,26 +38,28 @@ references:
       - AC.L2-3.1.10
 platforms:
   macOS:
-    check: |
-      /usr/bin/osascript -l JavaScript << EOS
-      $.NSUserDefaults.alloc.initWithSuiteName('com.apple.security.smartcard')\
-      .objectForKey('tokenRemovalAction').js
-      EOS
-    result:
-      integer: 1
-    fix: This is implemented by a Configuration Profile.
     '15.0':
-      severity: medium
       benchmarks:
-        - disa_stig
+        - name: disa_stig
+          severity: medium
     '14.0':
-      severity: medium
       benchmarks:
-        - disa_stig
+        - name: disa_stig
+          severity: medium
     '13.0':
-      severity: medium
       benchmarks:
-        - disa_stig
+        - name: disa_stig
+          severity: medium
+    enforcement_info:
+      check:
+        shell: |-
+          /usr/bin/osascript -l JavaScript << EOS
+          $.NSUserDefaults.alloc.initWithSuiteName('com.apple.security.smartcard')\
+          .objectForKey('tokenRemovalAction').js
+          EOS
+        result:
+          integer: 1
+    introduced: 10.13.4
 tags:
   - 800-53r5_moderate
   - 800-53r5_high
@@ -67,5 +69,6 @@ tags:
   - cmmc_lvl2
   - cnssi-1253_moderate
 mobileconfig_info:
-  com.apple.security.smartcard:
-    tokenRemovalAction: 1
+  - PayloadType: com.apple.security.smartcard
+    PayloadContent:
+      - tokenRemovalAction: 1

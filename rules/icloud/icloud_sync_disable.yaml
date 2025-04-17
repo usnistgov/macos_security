@@ -19,8 +19,6 @@ references:
         - CCE-93407-5
       ios_16:
         - CCE-93207-9
-      visionos_2:
-        - CCE-94484-3
     800-53r5:
       - AC-20
       - AC-20(1)
@@ -78,67 +76,68 @@ references:
         - ANNEX K
 platforms:
   macOS:
-    check: |
-      /usr/bin/osascript -l JavaScript << EOS
-      $.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess')\
-      .objectForKey('allowCloudDesktopAndDocuments').js
-      EOS
-    result:
-      string: 'false'
-    fix: |
-      This is implemented by a Configuration Profile.
     '15.0':
-      severity: medium
       benchmarks:
-        - cis_lvl2
-        - disa_stig
+        - name: cis_lvl2
+        - name: disa_stig
+          severity: medium
     '14.0':
-      severity: medium
       benchmarks:
-        - cis_lvl2
-        - disa_stig
+        - name: cis_lvl2
+        - name: disa_stig
+          severity: medium
     '13.0':
       benchmarks:
-        - cis_lvl2
+        - name: cis_lvl2
+    enforcement_info:
+      check:
+        shell: |-
+          /usr/bin/osascript -l JavaScript << EOS
+          $.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess')\
+          .objectForKey('allowCloudDesktopAndDocuments').js
+          EOS
+        result:
+          string: 'false'
+    introduced: 10.12.4
   iOS:
     '18.0':
-      severity: medium
       supervised: true
       benchmarks:
-        - cis_lvl1_enterprise
-        - cis_lvl2_enterprise
-        - ios_stig
-        - indigo_high
+        - name: cis_lvl1_enterprise
+        - name: cis_lvl2_enterprise
+        - name: ios_stig
+          severity: medium
+        - name: indigo_high
+          severity: medium
       mobileconfig_info:
-        com.apple.applicationaccess:
-          allowCloudDocumentSync: false
+        - PayloadType: com.apple.applicationaccess
+          PayloadContent:
+            - allowCloudDocumentSync: false
     '17.0':
-      severity: medium
       supervised: true
       benchmarks:
-        - cis_lvl1_enterprise
-        - cis_lvl2_enterprise
-        - ios_stig
-        - indigo_high
+        - name: cis_lvl1_enterprise
+        - name: cis_lvl2_enterprise
+        - name: ios_stig
+          severity: medium
+        - name: indigo_high
+          severity: medium
       mobileconfig_info:
-        com.apple.applicationaccess:
-          allowCloudDocumentSync: false
+        - PayloadType: com.apple.applicationaccess
+          PayloadContent:
+            - allowCloudDocumentSync: false
     '16.0':
-      severity: medium
       supervised: true
       benchmarks:
-        - cis_lvl1_enterprise
-        - cis_lvl2_enterprise
-        - ios_stig
+        - name: cis_lvl1_enterprise
+        - name: cis_lvl2_enterprise
+        - name: ios_stig
+          severity: medium
       mobileconfig_info:
-        com.apple.applicationaccess:
-          allowCloudDocumentSync: false
-  visionOS:
-    '2.0':
-      supervised: true
-      mobileconfig_info:
-        com.apple.applicationaccess:
-          allowCloudDocumentSync: false
+        - PayloadType: com.apple.applicationaccess
+          PayloadContent:
+            - allowCloudDocumentSync: false
+    introduced: n/a
 tags:
   - 800-53r5_low
   - 800-53r5_moderate
@@ -150,4 +149,7 @@ tags:
   - cmmc_lvl2
   - cmmc_lvl1
   - cnssi-1253_moderate
-mobileconfig_info: $OS_VALUE
+mobileconfig_info:
+  - PayloadType: com.apple.applicationaccess
+    PayloadContent:
+      - allowCloudDesktopAndDocuments: false

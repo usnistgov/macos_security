@@ -31,26 +31,34 @@ references:
 platforms:
   iOS:
     '18.0':
-      severity: medium
       supervised: false
       benchmarks:
-        - ios_stig
-        - indigo_base
-        - indigo_high
+        - name: ios_stig
+          severity: medium
+        - name: indigo_base
+          severity: medium
+        - name: indigo_high
+          severity: medium
     '17.0':
-      severity: medium
       supervised: false
       benchmarks:
-        - ios_stig
-        - ios_stig_byoad
-        - indigo_base
-        - indigo_high
+        - name: ios_stig
+          severity: medium
+        - name: ios_stig_byoad
+          severity: medium
+        - name: indigo_base
+          severity: medium
+        - name: indigo_high
+          severity: medium
     '16.0':
-      severity: medium
       supervised: false
       benchmarks:
-        - ios_stig
-        - ios_stig_byoad
+        - name: ios_stig
+          severity: medium
+        - name: ios_stig_byoad
+          severity: medium
+    introduced: '-1'
 mobileconfig_info:
-  com.apple.eas.account:
-    ssl: true
+  - PayloadType: com.apple.eas.account
+    PayloadContent:
+      - ssl: true

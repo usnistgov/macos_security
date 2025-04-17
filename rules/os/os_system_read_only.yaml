@@ -19,15 +19,16 @@ references:
       - SI-7
 platforms:
   macOS:
-    check: |
-      /usr/sbin/system_profiler SPStorageDataType | /usr/bin/awk '/Mount Point: \/$/{x=NR+2}(NR==x){print $2}'
-    result:
-      string: 'No'
-    fix: |
-      NOTE: To remount the System volume as Read Only, rebooting the computer will mount it as Read Only.
     '15.0': {}
     '14.0': {}
     '13.0': {}
+    enforcement_info:
+      check:
+        shell: '/usr/sbin/system_profiler SPStorageDataType | /usr/bin/awk ''/Mount Point: \/$/{x=NR+2}(NR==x){print $2}'''
+        result:
+          string: 'No'
+      fix:
+        additional_info: 'NOTE: To remount the System volume as Read Only, rebooting the computer will mount it as Read Only.'
 tags:
   - 800-53r5_moderate
   - 800-53r5_high

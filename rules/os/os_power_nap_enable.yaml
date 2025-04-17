@@ -24,15 +24,13 @@ references:
         - CCE-91849-0
 platforms:
   macOS:
-    check: |
-      /usr/bin/pmset -g custom | /usr/bin/awk '/powernap/ { sum+=$2 } END {print sum}'
-    result:
-      integer: 1
-    fix: |
-      [source,bash]
-      ----
-      /usr/bin/pmset -a powernap 1
-      ----
     '15.0': {}
     '14.0': {}
     '13.0': {}
+    enforcement_info:
+      check:
+        shell: /usr/bin/pmset -g custom | /usr/bin/awk '/powernap/ { sum+=$2 } END {print sum}'
+        result:
+          integer: 1
+      fix:
+        shell: /usr/bin/pmset -a powernap 1

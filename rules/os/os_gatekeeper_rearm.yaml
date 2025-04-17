@@ -24,17 +24,18 @@ references:
       - 10.5
 platforms:
   macOS:
-    check: |
-      /usr/bin/osascript -l JavaScript << EOS
-      $.NSUserDefaults.alloc.initWithSuiteName('com.apple.security')\
-      .objectForKey('GKAutoRearm').js
-      EOS
-    result:
-      string: 'true'
-    fix: |
-      This is implemented by a Configuration Profile.
     '14.0': {}
     '13.0': {}
+    enforcement_info:
+      check:
+        shell: |-
+          /usr/bin/osascript -l JavaScript << EOS
+          $.NSUserDefaults.alloc.initWithSuiteName('com.apple.security')\
+          .objectForKey('GKAutoRearm').js
+          EOS
+        result:
+          string: 'true'
+    introduced: '-1'
 tags:
   - 800-53r5_low
   - 800-53r5_moderate
@@ -47,6 +48,7 @@ tags:
   - cmmc_lvl2
   - cmmc_lvl1
 mobileconfig_info:
-  com.apple.ManagedClient.preferences:
-    com.apple.security:
-      GKAutoRearm: true
+  - PayloadType: com.apple.ManagedClient.preferences
+    PayloadContent:
+      - com.apple.security:
+          GKAutoRearm: true

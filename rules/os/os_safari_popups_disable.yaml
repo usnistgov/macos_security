@@ -18,11 +18,13 @@ platforms:
     '18.0':
       supervised: false
       benchmarks:
-        - indigo_high
+        - name: indigo_high
     '17.0':
       supervised: false
       benchmarks:
-        - indigo_high
+        - name: indigo_high
+    introduced: '4.0'
 mobileconfig_info:
-  com.apple.applicationaccess:
-    safariAllowPopups: false
+  - PayloadType: com.apple.applicationaccess
+    PayloadContent:
+      - safariAllowPopups: false

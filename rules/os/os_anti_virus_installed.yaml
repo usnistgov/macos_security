@@ -33,49 +33,37 @@ references:
       - 10.2
 platforms:
   macOS:
-    check: $OS_VALUE
-    result:
-      integer: 2
-    fix: $OS_VALUE
     '15.0':
-      severity: high
       benchmarks:
-        - cis_lvl1
-        - cis_lvl2
-      check: '/usr/bin/xprotect status | /usr/bin/grep -cE "(launch scans: enabled|background scans: enabled)"'
-      fix: |-
-        [source,bash]
-        ----
-        /bin/launchctl load -w /Library/Apple/System/Library/LaunchDaemons/com.apple.XProtect.daemon.scan.plist
-        /bin/launchctl load -w /Library/Apple/System/Library/LaunchDaemons/com.apple.XprotectFramework.PluginService.plist
-        ----
-
-        NOTE: These services cannot be unloaded or loaded while System Integrity Protection (SIP) is enabled.
+        - name: cis_lvl1
+        - name: cis_lvl2
     '14.0':
-      severity: high
       benchmarks:
-        - cis_lvl1
-        - cis_lvl2
-      check: /bin/launchctl list | /usr/bin/grep -cE "(com.apple.XprotectFramework.PluginService$|com.apple.XProtect.daemon.scan$)"
-      fix: |-
-        [source,bash]
-        ----
-        /bin/launchctl load -w /Library/Apple/System/Library/LaunchDaemons/com.apple.XProtect.daemon.scan.plist
-        /bin/launchctl load -w /Library/Apple/System/Library/LaunchDaemons/com.apple.XprotectFramework.PluginService.plist
-        ----
-
-        NOTE: These services cannot be unloaded or loaded while System Integrity Protection (SIP) is enabled.
+        - name: cis_lvl1
+        - name: cis_lvl2
+      enforcement_info:
+        check:
+          shell: /bin/launchctl list | /usr/bin/grep -cE "(com.apple.XprotectFramework.PluginService$|com.apple.XProtect.daemon.scan$)"
+          result:
+            integer: 2
     '13.0':
-      severity: high
       benchmarks:
-        - disa_stig
-      check: /bin/launchctl list | /usr/bin/grep -cE "(com.apple.XprotectFramework.PluginService$|com.apple.XProtect.daemon.scan$)"
-      fix: |-
-        [source,bash]
-        ----
-        /bin/launchctl load -w /Library/Apple/System/Library/LaunchDaemons/com.apple.XProtect.daemon.scan.plist
-        /bin/launchctl load -w /Library/Apple/System/Library/LaunchDaemons/com.apple.XprotectFramework.PluginService.plist
-        ----
-        NOTE: These services cannot be unloaded or loaded while System Integrity Protection (SIP) is enabled.
+        - name: disa_stig
+          severity: high
+      enforcement_info:
+        check:
+          shell: /bin/launchctl list | /usr/bin/grep -cE "(com.apple.XprotectFramework.PluginService$|com.apple.XProtect.daemon.scan$)"
+          result:
+            integer: 2
+    enforcement_info:
+      check:
+        shell: '/usr/bin/xprotect status | /usr/bin/grep -cE "(launch scans: enabled|background scans: enabled)"'
+        result:
+          integer: 2
+      fix:
+        shell: |-
+          /bin/launchctl load -w /Library/Apple/System/Library/LaunchDaemons/com.apple.XProtect.daemon.scan.plist
+          /bin/launchctl load -w /Library/Apple/System/Library/LaunchDaemons/com.apple.XprotectFramework.PluginService.plist
+        additional_info: 'NOTE: These services cannot be unloaded or loaded while System Integrity Protection (SIP) is enabled.'
 tags:
   - cisv8

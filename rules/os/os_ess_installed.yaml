@@ -25,21 +25,22 @@ references:
         - APPL-13-000015
 platforms:
   macOS:
-    check: |
-      Ask the System Administrator (SA) or Information System Security Officer (ISSO) if the approved ESS solution is loaded on the system.
-      If the installed components of the ESS solution are not at the DoD approved minimal versions, this is a finding.
-    fix: |
-      Install the approved ESS solution onto the system.
     '15.0':
-      severity: medium
       benchmarks:
-        - disa_stig
+        - name: disa_stig
+          severity: medium
     '14.0':
-      severity: medium
       benchmarks:
-        - disa_stig
-    '13.0':
-      severity: medium
+        - name: disa_stig
+          severity: medium
+    '13.0': {}
+    enforcement_info:
+      check:
+        shell: |-
+          Ask the System Administrator (SA) or Information System Security Officer (ISSO) if the approved ESS solution is loaded on the system.
+          If the installed components of the ESS solution are not at the DoD approved minimal versions, this is a finding.
+      fix:
+        additional_info: Install the approved ESS solution onto the system.
 tags:
   - manual
   - cisv8

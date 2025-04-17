@@ -33,35 +33,34 @@ platforms:
     '18.0':
       supervised: false
       benchmarks:
-        - cis_lvl1_byod
-        - cis_lvl2_byod
-        - cis_lvl1_enterprise
-        - cis_lvl2_enterprise
-        - indigo_high
-      mobileconfig_info:
-        com.apple.applicationaccess:
-          safariAcceptCookies: 1.5
+        - name: cis_lvl1_byod
+        - name: cis_lvl2_byod
+        - name: cis_lvl1_enterprise
+        - name: cis_lvl2_enterprise
+        - name: indigo_high
     '17.0':
       supervised: false
       benchmarks:
-        - cis_lvl1_byod
-        - cis_lvl2_byod
-        - cis_lvl1_enterprise
-        - cis_lvl2_enterprise
-        - indigo_high
+        - name: cis_lvl1_byod
+        - name: cis_lvl2_byod
+        - name: cis_lvl1_enterprise
+        - name: cis_lvl2_enterprise
+        - name: indigo_high
       mobileconfig_info:
-        com.apple.applicationaccess:
-          safariAcceptCookies: 1.0
+        - PayloadType: com.apple.applicationaccess
+          PayloadContent:
+            - safariAcceptCookies: 1.0
     '16.0':
       supervised: false
       benchmarks:
-        - cis_lvl1_byod
-        - cis_lvl2_byod
-        - cis_lvl1_enterprise
-        - cis_lvl2_enterprise
-      mobileconfig_info:
-        com.apple.applicationaccess:
-          safariAcceptCookies: 1.5
+        - name: cis_lvl1_byod
+        - name: cis_lvl2_byod
+        - name: cis_lvl1_enterprise
+        - name: cis_lvl2_enterprise
+    introduced: '4.0'
 tags:
   - cisv8
-mobileconfig_info: $OS_VALUE
+mobileconfig_info:
+  - PayloadType: com.apple.applicationaccess
+    PayloadContent:
+      - safariAcceptCookies: 1.5

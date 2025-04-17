@@ -13,15 +13,13 @@ references:
         - CCE-91903-5
 platforms:
   macOS:
-    check: |
-      /usr/bin/sntp $(/usr/sbin/systemsetup -getnetworktimeserver | /usr/bin/awk '{print $4}') | /usr/bin/awk -F'.' '/\+\/\-/{if (substr($1,2) >= 270) {print "No"} else {print "Yes"}}'
-    result:
-      string: 'Yes'
-    fix: |
-      [source,bash]
-      ----
-      /usr/bin/sntp -Ss $(/usr/sbin/systemsetup -getnetworktimeserver | /usr/bin/awk '{print $4}')
-      ----
     '15.0': {}
     '14.0': {}
     '13.0': {}
+    enforcement_info:
+      check:
+        shell: /usr/bin/sntp $(/usr/sbin/systemsetup -getnetworktimeserver | /usr/bin/awk '{print $4}') | /usr/bin/awk -F'.' '/\+\/\-/{if (substr($1,2) >= 270) {print "No"} else {print "Yes"}}'
+        result:
+          string: 'Yes'
+      fix:
+        shell: /usr/bin/sntp -Ss $(/usr/sbin/systemsetup -getnetworktimeserver | /usr/bin/awk '{print $4}')

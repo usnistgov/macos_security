@@ -19,17 +19,19 @@ platforms:
     '18.0':
       supervised: true
       benchmarks:
-        - indigo_base
-        - indigo_high
+        - name: indigo_base
+        - name: indigo_high
     '17.0':
       supervised: true
       benchmarks:
-        - indigo_base
-        - indigo_high
+        - name: indigo_base
+        - name: indigo_high
+    introduced: '15.0'
 tags:
   - manual
 mobileconfig_info:
-  com.apple.applicationaccess:
-    blockedAppBundleIDs:
-      - bundleID1
-      - bundleID2
+  - PayloadType: com.apple.applicationaccess
+    PayloadContent:
+      - blockedAppBundleIDs:
+          - bundleID1
+          - bundleID2

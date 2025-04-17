@@ -51,30 +51,35 @@ references:
 platforms:
   iOS:
     '18.0':
-      severity: medium
       supervised: false
       benchmarks:
-        - cis_lvl2_byod
-        - cis_lvl2_enterprise
-        - ios_stig
-        - indigo_base
-        - indigo_high
+        - name: cis_lvl2_byod
+        - name: cis_lvl2_enterprise
+        - name: ios_stig
+          severity: medium
+        - name: indigo_base
+          severity: medium
+        - name: indigo_high
+          severity: medium
     '17.0':
-      severity: medium
       supervised: false
       benchmarks:
-        - cis_lvl2_byod
-        - cis_lvl2_enterprise
-        - ios_stig
-        - indigo_base
-        - indigo_high
+        - name: cis_lvl2_byod
+        - name: cis_lvl2_enterprise
+        - name: ios_stig
+          severity: medium
+        - name: indigo_base
+          severity: medium
+        - name: indigo_high
+          severity: medium
     '16.0':
-      severity: medium
       supervised: false
       benchmarks:
-        - cis_lvl2_byod
-        - cis_lvl2_enterprise
-        - ios_stig
+        - name: cis_lvl2_byod
+        - name: cis_lvl2_enterprise
+        - name: ios_stig
+          severity: medium
+    introduced: '9.2'
 tags:
   - 800-53r5_low
   - 800-53r5_moderate
@@ -84,5 +89,6 @@ tags:
   - cnssi-1253_low
   - cnssi-1253_high
 mobileconfig_info:
-  com.apple.mail.managed:
-    allowMailDrop: false
+  - PayloadType: com.apple.mail.managed
+    PayloadContent:
+      - allowMailDrop: false

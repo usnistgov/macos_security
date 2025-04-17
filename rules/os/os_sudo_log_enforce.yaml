@@ -30,15 +30,20 @@ references:
 platforms:
   macOS:
     '15.0':
-      severity: medium
       benchmarks:
-        - cis_lvl1
-        - cis_lvl2
-        - disa_stig
-    check: |
-      /usr/bin/sudo /usr/bin/sudo -V | /usr/bin/grep -c "Log when a command is allowed by sudoers"
-    result:
-      integer: 1
+        - name: cis_lvl1
+        - name: cis_lvl2
+        - name: disa_stig
+          severity: medium
+    enforcement_info:
+      check:
+        shell: /usr/bin/sudo /usr/bin/sudo -V | /usr/bin/grep -c "Log when a command is allowed by sudoers"
+        result:
+          integer: 1
+      fix:
+        shell: |-
+          /usr/bin/find /etc/sudoers* -type f -exec sed -i '' '/^Defaults[[:blank:]]*\!log_allowed/s/^/# /' '{}' \;
+          /bin/echo "Defaults log_allowed" >> /etc/sudoers.d/mscp
 tags:
   - 800-53r5_moderate
   - 800-53r5_high

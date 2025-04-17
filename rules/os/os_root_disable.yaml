@@ -48,31 +48,29 @@ references:
       - 5.4
 platforms:
   macOS:
-    check: |
-      /usr/bin/dscl . -read /Users/root UserShell 2>&1 | /usr/bin/grep -c "/usr/bin/false"
-    result:
-      integer: 1
-    fix: |
-      [source,bash]
-      ----
-      /usr/bin/dscl . -create /Users/root UserShell /usr/bin/false
-      ----
     '15.0':
-      severity: medium
       benchmarks:
-        - cis_lvl1
-        - cis_lvl2
-        - disa_stig
+        - name: cis_lvl1
+        - name: cis_lvl2
+        - name: disa_stig
+          severity: medium
     '14.0':
-      severity: medium
       benchmarks:
-        - cis_lvl1
-        - cis_lvl2
-        - disa_stig
+        - name: cis_lvl1
+        - name: cis_lvl2
+        - name: disa_stig
+          severity: medium
     '13.0':
       benchmarks:
-        - cis_lvl1
-        - cis_lvl2
+        - name: cis_lvl1
+        - name: cis_lvl2
+    enforcement_info:
+      check:
+        shell: /usr/bin/dscl . -read /Users/root UserShell 2>&1 | /usr/bin/grep -c "/usr/bin/false"
+        result:
+          integer: 1
+      fix:
+        shell: /usr/bin/dscl . -create /Users/root UserShell /usr/bin/false
 tags:
   - 800-53r5_low
   - 800-53r5_moderate

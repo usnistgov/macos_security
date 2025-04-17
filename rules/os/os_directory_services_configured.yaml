@@ -22,19 +22,18 @@ references:
       - 6.7
 platforms:
   macOS:
-    check: |
-      /usr/bin/dscl localhost -list . | /usr/bin/grep -qvE '(Contact|Search|Local|^$)'; /bin/echo $?
-    result:
-      integer: 0
-    fix: |
-      Integrate the system into an existing directory services infrastructure.
-    '15.0':
-      severity: medium
-    '14.0':
-      severity: medium
+    '15.0': {}
+    '14.0': {}
     '13.0':
-      severity: high
       benchmarks:
-        - disa_stig
+        - name: disa_stig
+          severity: high
+    enforcement_info:
+      check:
+        shell: /usr/bin/dscl localhost -list . | /usr/bin/grep -qvE '(Contact|Search|Local|^$)'; /bin/echo $?
+        result:
+          integer: 0
+      fix:
+        additional_info: Integrate the system into an existing directory services infrastructure.
 tags:
   - cisv8

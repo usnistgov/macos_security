@@ -48,33 +48,38 @@ references:
       - 4.3
 platforms:
   macOS:
-    check: |
-      /usr/bin/security authorizationdb read system.login.screensaver 2>&1 | /usr/bin/grep -c '<string>$ODV</string>'
-    result:
-      integer: 1
-    fix: |
-      [source,bash]
-      ----
-      /usr/bin/security authorizationdb write system.login.screensaver "$ODV"
-      ----
     '15.0':
-      severity: medium
       benchmarks:
-        - cis_lvl1
-        - cis_lvl2
-        - disa_stig
+        - name: cis_lvl1
+        - name: cis_lvl2
+        - name: disa_stig
+          severity: medium
     '14.0':
-      severity: medium
       benchmarks:
-        - cis_lvl1
-        - cis_lvl2
-        - disa_stig
+        - name: cis_lvl1
+        - name: cis_lvl2
+        - name: disa_stig
+          severity: medium
     '13.0':
       benchmarks:
-        - cis_lvl1
-        - cis_lvl2
+        - name: cis_lvl1
+        - name: cis_lvl2
+    enforcement_info:
+      check:
+        shell: /usr/bin/security authorizationdb read system.login.screensaver 2>&1 | /usr/bin/grep -c '<string>$ODV</string>'
+        result:
+          integer: 1
+      fix:
+        shell: /usr/bin/security authorizationdb write system.login.screensaver "$ODV"
 odv:
-  hint: Review the /System/Library/Security/authorization.plist file for more information.
+  hint:
+    datatype: enum
+    description: Refer to system.login.screensaver in /System/Library/Security/authorization.plist
+    validation:
+      enumValues:
+        - authenticate-session-owner
+        - authenticate-session-owner-or-admin
+        - use-login-window-ui
   recommended: authenticate-session-owner
   cis_lvl1: use-login-window-ui
   cis_lvl2: use-login-window-ui

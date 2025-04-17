@@ -19,10 +19,12 @@ platforms:
   iOS:
     '18.0':
       benchmarks:
-        - indigo_high
+        - name: indigo_high
     '17.0':
       benchmarks:
-        - indigo_high
+        - name: indigo_high
+    introduced: '10.0'
 mobileconfig_info:
-  com.apple.mail.managed:
-    SMIMESigningEnabled: true
+  - PayloadType: com.apple.mail.managed
+    PayloadContent:
+      - SMIMESigningEnabled: true

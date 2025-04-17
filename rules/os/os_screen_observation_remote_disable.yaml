@@ -18,13 +18,15 @@ platforms:
     '18.0':
       supervised: false
       benchmarks:
-        - indigo_base
-        - indigo_high
+        - name: indigo_base
+        - name: indigo_high
     '17.0':
       supervised: false
       benchmarks:
-        - indigo_base
-        - indigo_high
+        - name: indigo_base
+        - name: indigo_high
+    introduced: '9.3'
 mobileconfig_info:
-  com.apple.applicationaccess:
-    allowRemoteScreenObservation: false
+  - PayloadType: com.apple.applicationaccess
+    PayloadContent:
+      - allowRemoteScreenObservation: false

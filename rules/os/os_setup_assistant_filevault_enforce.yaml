@@ -25,19 +25,20 @@ references:
       - 3.11
 platforms:
   macOS:
-    check: |
-      /usr/bin/osascript -l JavaScript << EOS
-      $.NSUserDefaults.alloc.initWithSuiteName('com.apple.MCX.FileVault2')\
-      .objectForKey('ForceEnableInSetupAssistant')
-      EOS
-    result:
-      integer: 1
-    fix: |
-      NOTE: See the FileVault supplemental to implement this rule.
-    '15.0':
-      severity: high
-    '14.0':
-      severity: high
+    '15.0': {}
+    '14.0': {}
+    enforcement_info:
+      check:
+        shell: |-
+          /usr/bin/osascript -l JavaScript << EOS
+          $.NSUserDefaults.alloc.initWithSuiteName('com.apple.MCX.FileVault2')\
+          .objectForKey('ForceEnableInSetupAssistant')
+          EOS
+        result:
+          integer: 1
+      fix:
+        additional_info: 'NOTE: See the FileVault supplemental to implement this rule.'
+    introduced: '14.0'
 tags:
   - 800-53r5_moderate
   - 800-53r5_high
@@ -47,5 +48,6 @@ tags:
   - cnssi-1253_low
   - cnssi-1253_high
 mobileconfig_info:
-  com.apple.MCX.FileVault2:
-    ForceEnableInSetupAssistant: true
+  - PayloadType: com.apple.MCX.FileVault2
+    PayloadContent:
+      - ForceEnableInSetupAssistant: true

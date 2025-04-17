@@ -1,7 +1,7 @@
 id: system_settings_improve_search_disable
 title: Disable Improve Search Information to Apple
 discussion: |
-  Sending data to Apple to help improve search _MUST_ be disabled.
+  Sending data to Apple to help improve search _MUST_ be disabled. This will disable "Improve Search" within Spotlight in System Settings.
 
   The information system _MUST_ be configured to provide only essential capabilities. Disabling the submission of search data will mitigate the risk of unwanted data being sent to Apple.
 references:
@@ -36,16 +36,19 @@ references:
 platforms:
   macOS:
     '15.0':
-      severity: medium
       benchmarks:
-        - disa_stig
-    check: |
-      /usr/bin/osascript -l JavaScript << EOS
-      $.NSUserDefaults.alloc.initWithSuiteName('com.apple.assistant.support')\
-      .objectForKey('Search Queries Data Sharing Status').js
-      EOS
-    result:
-      integer: 2
+        - name: disa_stig
+          severity: medium
+    enforcement_info:
+      check:
+        shell: |-
+          /usr/bin/osascript -l JavaScript << EOS
+          $.NSUserDefaults.alloc.initWithSuiteName('com.apple.assistant.support')\
+          .objectForKey('Search Queries Data Sharing Status').js
+          EOS
+        result:
+          integer: 2
+    introduced: '-1'
 tags:
   - 800-53r5_low
   - 800-53r5_moderate
@@ -61,5 +64,6 @@ tags:
   - cmmc_lvl1
   - cnssi-1253_moderate
 mobileconfig_info:
-  com.apple.assistant.support:
-    Search Queries Data Sharing Status: 2
+  - PayloadType: com.apple.assistant.support
+    PayloadContent:
+      - Search Queries Data Sharing Status: 2

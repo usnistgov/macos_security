@@ -47,42 +47,43 @@ references:
       - 6.8
 platforms:
   macOS:
-    check: |
-      /usr/bin/osascript -l JavaScript << EOS
-      function run() {
-        let pref1 = ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('com.apple.MCX')\
-      .objectForKey('DisableGuestAccount'))
-        let pref2 = ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('com.apple.MCX')\
-      .objectForKey('EnableGuestAccount'))
-        if ( pref1 == true && pref2 == false ) {
-          return("true")
-        } else {
-          return("false")
-        }
-      }
-      EOS
-    result:
-      string: 'true'
-    fix: |
-      This is implemented by a Configuration Profile.
     '15.0':
-      severity: medium
       benchmarks:
-        - cis_lvl1
-        - cis_lvl2
-        - disa_stig
+        - name: cis_lvl1
+        - name: cis_lvl2
+        - name: disa_stig
+          severity: medium
     '14.0':
-      severity: medium
       benchmarks:
-        - cis_lvl1
-        - cis_lvl2
-        - disa_stig
+        - name: cis_lvl1
+        - name: cis_lvl2
+        - name: disa_stig
+          severity: medium
     '13.0':
-      severity: high
       benchmarks:
-        - cis_lvl1
-        - cis_lvl2
-        - disa_stig
+        - name: cis_lvl1
+        - name: cis_lvl2
+        - name: disa_stig
+          severity: high
+    enforcement_info:
+      check:
+        shell: |-
+          /usr/bin/osascript -l JavaScript << EOS
+          function run() {
+            let pref1 = ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('com.apple.MCX')\
+          .objectForKey('DisableGuestAccount'))
+            let pref2 = ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('com.apple.MCX')\
+          .objectForKey('EnableGuestAccount'))
+            if ( pref1 == true && pref2 == false ) {
+              return("true")
+            } else {
+              return("false")
+            }
+          }
+          EOS
+        result:
+          string: 'true'
+    introduced: '-1'
 tags:
   - 800-53r5_low
   - 800-53r5_moderate
@@ -95,6 +96,7 @@ tags:
   - cmmc_lvl1
   - cnssi-1253_moderate
 mobileconfig_info:
-  com.apple.MCX:
-    DisableGuestAccount: true
-    EnableGuestAccount: false
+  - PayloadType: com.apple.MCX
+    PayloadContent:
+      - DisableGuestAccount: true
+      - EnableGuestAccount: false

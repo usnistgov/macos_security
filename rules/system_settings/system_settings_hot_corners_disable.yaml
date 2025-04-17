@@ -33,24 +33,24 @@ references:
       - AC.L2-3.1.10
 platforms:
   macOS:
-    check: |
-      /usr/bin/profiles -P -o stdout | /usr/bin/grep -Ec '"wvous-bl-corner" = 0|"wvous-br-corner" = 0|"wvous-tl-corner" = 0|"wvous-tr-corner" = 0'
-    result:
-      integer: 4
-    fix: |
-      This is implemented by a Configuration Profile.
     '15.0':
-      severity: medium
       benchmarks:
-        - disa_stig
+        - name: disa_stig
+          severity: medium
     '14.0':
-      severity: medium
       benchmarks:
-        - disa_stig
+        - name: disa_stig
+          severity: medium
     '13.0':
-      severity: medium
       benchmarks:
-        - disa_stig
+        - name: disa_stig
+          severity: medium
+    enforcement_info:
+      check:
+        shell: /usr/bin/profiles -P -o stdout | /usr/bin/grep -Ec '"wvous-bl-corner" = 0|"wvous-br-corner" = 0|"wvous-tl-corner" = 0|"wvous-tr-corner" = 0'
+        result:
+          integer: 4
+    introduced: '-1'
 tags:
   - 800-53r5_moderate
   - 800-53r5_high
@@ -60,9 +60,10 @@ tags:
   - cmmc_lvl2
   - cnssi-1253_moderate
 mobileconfig_info:
-  com.apple.ManagedClient.preferences:
-    com.apple.dock:
-      wvous-bl-corner: 0
-      wvous-br-corner: 0
-      wvous-tr-corner: 0
-      wvous-tl-corner: 0
+  - PayloadType: com.apple.ManagedClient.preferences
+    PayloadContent:
+      - com.apple.dock:
+          wvous-bl-corner: 0
+          wvous-br-corner: 0
+          wvous-tr-corner: 0
+          wvous-tl-corner: 0

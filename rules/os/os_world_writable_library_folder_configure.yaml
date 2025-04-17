@@ -25,26 +25,25 @@ references:
       - 3.3
 platforms:
   macOS:
-    check: |
-      /usr/bin/find /System/Volumes/Data/Library -type d -perm -2 -ls 2>&1 | /usr/bin/grep -v Caches | /usr/bin/grep -v /Preferences/Audio/Data | /usr/bin/wc -l | /usr/bin/xargs
-    result:
-      integer: 0
-    fix: |
-      [source,bash]
-      ----
-      IFS=$'\n'
-      for libPermissions in $( /usr/bin/find /System/Volumes/Data/Library -type d -perm -2 2>&1 | /usr/bin/grep -v Caches | /usr/bin/grep -v /Preferences/Audio/Data ); do
-        /bin/chmod -R o-w "$libPermissions"
-      done
-      ----
     '15.0':
       benchmarks:
-        - cis_lvl2
+        - name: cis_lvl2
     '14.0':
       benchmarks:
-        - cis_lvl2
+        - name: cis_lvl2
     '13.0':
       benchmarks:
-        - cis_lvl2
+        - name: cis_lvl2
+    enforcement_info:
+      check:
+        shell: /usr/bin/find /System/Volumes/Data/Library -type d -perm -2 -ls 2>&1 | /usr/bin/grep -v Caches | /usr/bin/grep -v /Preferences/Audio/Data | /usr/bin/wc -l | /usr/bin/xargs
+        result:
+          integer: 0
+      fix:
+        shell: |-
+          IFS=$'\n'
+          for libPermissions in $( /usr/bin/find /System/Volumes/Data/Library -type d -perm -2 2>&1 | /usr/bin/grep -v Caches | /usr/bin/grep -v /Preferences/Audio/Data ); do
+            /bin/chmod -R o-w "$libPermissions"
+          done
 tags:
   - cisv8

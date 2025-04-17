@@ -26,36 +26,40 @@ references:
       - 4.3
 platforms:
   macOS:
-    check: |
-      /usr/bin/osascript -l JavaScript << EOS
-      function run() {
-        let timeout = ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('com.apple.screensaver')\
-      .objectForKey('loginWindowIdleTime'))
-        if ( timeout <= $ODV ) {
-          return("true")
-        } else {
-          return("false")
-        }
-      }
-      EOS
-    result:
-      string: 'true'
-    fix: |
-      This is implemented by a Configuration Profile.
-    '15.0':
-      severity: medium
-    '14.0':
-      severity: medium
+    '15.0': {}
+    '14.0': {}
     '13.0':
-      severity: medium
       benchmarks:
-        - disa_stig
+        - name: disa_stig
+          severity: medium
+    enforcement_info:
+      check:
+        shell: |-
+          /usr/bin/osascript -l JavaScript << EOS
+          function run() {
+            let timeout = ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('com.apple.screensaver')\
+          .objectForKey('loginWindowIdleTime'))
+            if ( timeout <= $ODV ) {
+              return("true")
+            } else {
+              return("false")
+            }
+          }
+          EOS
+        result:
+          string: 'true'
+    introduced: '10.11'
 odv:
-  hint: Number of seconds.
+  hint:
+    datatype: number
+    description: Number of seconds, e.g. 1200
+    validation:
+      min: 1
   recommended: 1200
   stig: 900
 tags:
   - cnssi-1253_moderate
 mobileconfig_info:
-  com.apple.screensaver:
-    loginWindowIdleTime: $ODV
+  - PayloadType: com.apple.screensaver
+    PayloadContent:
+      - loginWindowIdleTime: $ODV

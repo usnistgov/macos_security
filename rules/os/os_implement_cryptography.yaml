@@ -1,15 +1,17 @@
 id: os_implement_cryptography
 title: Configure the System to Implement Approved Cryptography to Protect Information
-discussion: |
+discussion: |-
   The information system _IS_ configured to implement approved cryptography to protect information.
 
   Use of weak or untested encryption algorithms undermines the purposes of utilizing encryption to protect data. The operating system must implement cryptographic modules that adhere to the higher standards that have been tested, validated, and approved by the federal government.
 
-  Apple is committed to the FIPS validation process and historically has always submitted and validated the cryptographic modules in macOS. macOS Sequoia will be submitted for FIPS validation.
+  Apple is committed to the FIPS validation process and historically has always submitted and validated the cryptographic modules in macOS.
 
   link:https://csrc.nist.gov/Projects/cryptographic-module-validation-program/validated-modules[]
 
   link:https://support.apple.com/en-us/HT201159[]
+
+  NOTE: The technology supports this requirement and cannot be configured to be out of compliance. The technology inherently meets this requirement using FIPS Validated Cryptographic Modules.
 references:
   nist:
     cce:
@@ -33,13 +35,12 @@ references:
       - SC.L2-3.13.11
 platforms:
   macOS:
-    check: |
-      The technology supports this requirement and cannot be configured to be out of compliance. The technology inherently meets this requirement using FIPS Validated Cryptographic Modules.
-    fix: |
-      The technology inherently meets this requirement. No fix is required.
     '15.0': {}
     '14.0': {}
     '13.0': {}
+    enforcement_info:
+      fix:
+        additional_info: The technology inherently meets this requirement. No fix is required.
 tags:
   - 800-53r5_low
   - 800-53r5_moderate

@@ -42,24 +42,26 @@ references:
       - 5.2
 platforms:
   macOS:
-    check: |
-      /usr/bin/pwpolicy -getaccountpolicies 2> /dev/null | /usr/bin/tail +2 | /usr/bin/xmllint --xpath 'boolean(//*[contains(text(),"policyAttributePassword matches '\''$ODV'\''")])' -
-    result:
-      string: 'true'
-    fix: |
-      This is implemented by a Configuration Profile.
     '15.0':
-      severity: medium
       benchmarks:
-        - cis_lvl2
-        - disa_stig
+        - name: cis_lvl2
+        - name: disa_stig
+          severity: medium
     '14.0':
-      severity: medium
       benchmarks:
-        - cis_lvl2
-        - disa_stig
+        - name: cis_lvl2
+        - name: disa_stig
+          severity: medium
+    enforcement_info:
+      check:
+        shell: /usr/bin/pwpolicy -getaccountpolicies 2> /dev/null | /usr/bin/tail +2 | /usr/bin/xmllint --xpath 'boolean(//*[contains(text(),"policyAttributePassword matches '\''$ODV'\''")])' -
+        result:
+          string: 'true'
+    introduced: '14.0'
 odv:
-  hint: Custom regex (recommended is 1 upper and 1 lowercase)
+  hint:
+    datatype: regex
+    description: Custom regex, e.g. ^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).*$
   recommended: ^(?=.*[A-Z])(?=.*[a-z]).*$
   cis_lvl2: ^(?=.*[A-Z])(?=.*[a-z]).*$
   stig: ^(?=.*[A-Z])(?=.*[a-z]).*$
@@ -74,11 +76,12 @@ tags:
   - 800-53r5_moderate
   - 800-53r5_high
 mobileconfig_info:
-  com.apple.mobiledevice.passwordpolicy:
-    customRegex:
-      passwordContentRegex: $ODV
-      passwordContentDescription:
-        default: Password must match custom regex.
+  - PayloadType: com.apple.mobiledevice.passwordpolicy
+    PayloadContent:
+      - customRegex:
+          passwordContentRegex: $ODV
+          passwordContentDescription:
+            default: Password must match custom regex.
 ddm_info:
   declarationtype: com.apple.configuration.passcode.settings
   ddm_key: CustomRegex

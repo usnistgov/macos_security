@@ -17,23 +17,29 @@ platforms:
   macOS:
     '14.0':
       benchmarks:
-        - cis_lvl2
-    check: |
-      error_count=0
-      if /usr/sbin/ioreg -rd1 -c IOPlatformExpertDevice 2>&1 | /usr/bin/grep -q "MacBook"; then
-        sleepMode=$(/usr/bin/pmset -b -g | /usr/bin/grep '^\s*sleep' 2>&1 | /usr/bin/awk '{print $2}')
-        displaysleepMode=$(/usr/bin/pmset -b -g | /usr/bin/grep displaysleep 2>&1 | /usr/bin/awk '{print $2}')
+        - name: cis_lvl2
+    enforcement_info:
+      check:
+        shell: |-
+          error_count=0
+          if /usr/sbin/ioreg -rd1 -c IOPlatformExpertDevice 2>&1 | /usr/bin/grep -q "MacBook"; then
+            sleepMode=$(/usr/bin/pmset -b -g | /usr/bin/grep '^\s*sleep' 2>&1 | /usr/bin/awk '{print $2}')
+            displaysleepMode=$(/usr/bin/pmset -b -g | /usr/bin/grep displaysleep 2>&1 | /usr/bin/awk '{print $2}')
 
-        if [[ "$sleepMode" == "" ]] || [[ "$sleepMode" -gt 15 ]]; then
-          ((error_count++))
-        fi
-        if [[ "$displaysleepMode" == "" ]] || [[ "$displaysleepMode" -gt 10 ]] || [[ "$displaysleepMode" -lt "$sleepMode" ]]; then
-          ((error_count++))
-        fi
-      fi
-      echo "$error_count"
-    result:
-      integer: 0
+            if [[ "$sleepMode" == "" ]] || [[ "$sleepMode" -gt 15 ]]; then
+              ((error_count++))
+            fi
+            if [[ "$displaysleepMode" == "" ]] || [[ "$displaysleepMode" -gt 10 ]] || [[ "$displaysleepMode" -lt "$sleepMode" ]]; then
+              ((error_count++))
+            fi
+          fi
+          echo "$error_count"
+        result:
+          integer: 0
+      fix:
+        shell: |-
+          /usr/bin/pmset -a sleep 15
+          /usr/bin/pmset -a displaysleep 10
 tags:
   - cisv8
   - arm64

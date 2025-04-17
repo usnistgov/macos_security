@@ -15,6 +15,8 @@ platforms:
   visionOS:
     '2.0':
       supervised: true
+    introduced: '2.0'
 mobileconfig_info:
-  com.apple.applicationaccess:
-    allowUIAppInstallation: false
+  - PayloadType: com.apple.applicationaccess
+    PayloadContent:
+      - allowUIAppInstallation: false

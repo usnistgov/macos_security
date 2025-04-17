@@ -20,11 +20,13 @@ platforms:
     '18.0':
       supervised: false
       benchmarks:
-        - indigo_high
+        - name: indigo_high
     '17.0':
       supervised: false
       benchmarks:
-        - indigo_high
+        - name: indigo_high
+    introduced: '6.0'
 mobileconfig_info:
-  com.apple.mail.managed:
-    disableMailRecentsSyncing: true
+  - PayloadType: com.apple.mail.managed
+    PayloadContent:
+      - disableMailRecentsSyncing: true

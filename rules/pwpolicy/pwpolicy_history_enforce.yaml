@@ -1,13 +1,11 @@
 id: pwpolicy_history_enforce
 title: Prohibit Password Reuse for a Minimum of $ODV Generations
 discussion: |
-  The macOS _MUST_ be configured to enforce a password history of at least $ODV previous passwords when a password is created.
+  The device _MUST_ be configured to enforce a password history of at least $ODV previous passwords when a password is created.
 
-  This rule ensures that users are  not allowed to re-use a password that was used in any of the $ODV previous password generations.
+  This rule ensures that users are not allowed to re-use a password that was used in any of the $ODV previous password generations.
 
   Limiting password reuse protects against malicious users attempting to gain access to the system via brute-force hacking methods.
-
-  NOTE: The guidance for password based authentication in NIST 800-53 (Rev 5) and NIST 800-63B state that complexity rules should be organizationally defined. The values defined are based off of common complexity values. But your organization may define its own password complexity rules.
 references:
   nist:
     cce:
@@ -32,8 +30,6 @@ references:
       - SRG-OS-000077-GPOS-00045
       - SRG-OS-000775-GPOS-00230
     disa_stig:
-      macos_15:
-        - APPL-15-003009
       macos_14:
         - APPL-14-003009
       macos_13:
@@ -64,45 +60,52 @@ references:
         - ANNEX K
 platforms:
   macOS:
-    check: |
-      /usr/bin/pwpolicy -getaccountpolicies 2> /dev/null | /usr/bin/tail +2 | /usr/bin/xmllint --xpath '//dict/key[text()="policyAttributePasswordHistoryDepth"]/following-sibling::*[1]/text()' - | /usr/bin/awk '{ if ($1 >= $ODV ) {print "yes"} else {print "no"}}' | /usr/bin/uniq
-    result:
-      string: 'yes'
-    fix: |
-      This is implemented by a Configuration Profile.
     '15.0':
-      severity: medium
       benchmarks:
-        - cis_lvl1
-        - cis_lvl2
-        - disa_stig
+        - name: cis_lvl1
+        - name: cis_lvl2
+        - name: disa_stig
+          severity: medium
     '14.0':
-      severity: medium
       benchmarks:
-        - cis_lvl1
-        - cis_lvl2
-        - disa_stig
+        - name: cis_lvl1
+        - name: cis_lvl2
+        - name: disa_stig
+          severity: medium
     '13.0':
-      severity: medium
       benchmarks:
-        - cis_lvl1
-        - cis_lvl2
-        - disa_stig
+        - name: cis_lvl1
+        - name: cis_lvl2
+        - name: disa_stig
+          severity: medium
+    enforcement_info:
+      check:
+        shell: /usr/bin/pwpolicy -getaccountpolicies 2> /dev/null | /usr/bin/tail +2 | /usr/bin/xmllint --xpath '//dict/key[text()="policyAttributePasswordHistoryDepth"]/following-sibling::*[1]/text()' - | /usr/bin/awk '{ if ($1 >= $ODV ) {print "yes"} else {print "no"}}' | /usr/bin/uniq
+        result:
+          string: 'yes'
+    introduced: '10.7'
   iOS:
     '18.0':
-      severity: high
       supervised: false
       benchmarks:
-        - ios_stig
-        - indigo_base
-        - indigo_high
+        - name: ios_stig
+          severity: high
+        - name: indigo_base
+          severity: high
+        - name: indigo_high
+          severity: high
     '17.0':
       supervised: false
       benchmarks:
-        - indigo_base
-        - indigo_high
+        - name: indigo_base
+        - name: indigo_high
+    introduced: '4.0'
 odv:
-  hint: Number of previous passwords.
+  hint:
+    datatype: number
+    description: Number of previous passwords, e.g. 5
+    validation:
+      min: 0
   recommended: 2
   cis_lvl1: 15
   cis_lvl2: 15
@@ -120,8 +123,9 @@ tags:
   - cmmc_lvl2
   - cnssi-1253_moderate
 mobileconfig_info:
-  com.apple.mobiledevice.passwordpolicy:
-    pinHistory: $ODV
+  - PayloadType: com.apple.mobiledevice.passwordpolicy
+    PayloadContent:
+      - pinHistory: $ODV
 ddm_info:
   declarationtype: com.apple.configuration.passcode.settings
   ddm_key: PasscodeReuseLimit

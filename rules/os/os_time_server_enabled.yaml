@@ -17,7 +17,7 @@ references:
       - AU-12(1)
       - SC-45(1)
     800-171r3:
-      - 3.3.7
+      - 03.03.07
   disa:
     cci:
       - CCI-002046
@@ -48,47 +48,30 @@ references:
       - 8.4
 platforms:
   macOS:
-    check: |
-      /bin/launchctl list | /usr/bin/grep -c com.apple.timed
-    result:
-      integer: 1
-    fix: $OS_VALUE
     '15.0':
-      severity: medium
       benchmarks:
-        - cis_lvl1
-        - cis_lvl2
-        - disa_stig
-      fix: |-
-        [source,bash]
-        ----
-        /bin/launchctl load -w /System/Library/LaunchDaemons/com.apple.timed.plist
-        ----
-
-        NOTE: The service `timed` cannot be unloaded or loaded while System Integrity Protection (SIP) is enabled.
+        - name: cis_lvl1
+        - name: cis_lvl2
+        - name: disa_stig
+          severity: medium
     '14.0':
-      severity: medium
       benchmarks:
-        - cis_lvl1
-        - cis_lvl2
-        - disa_stig
-      fix: |-
-        [source,bash]
-        ----
-        /bin/launchctl load -w /System/Library/LaunchDaemons/com.apple.timed.plist
-        ----
-
-        NOTE: The service `timed` cannot be unloaded or loaded while System Integrity Protection (SIP) is enabled.
+        - name: cis_lvl1
+        - name: cis_lvl2
+        - name: disa_stig
+          severity: medium
     '13.0':
-      severity: medium
       benchmarks:
-        - disa_stig
-      fix: |-
-        [source,bash]
-        ----
-        /bin/launchctl load -w /System/Library/LaunchDaemons/com.apple.timed.plist
-        ----
-        NOTE: The service `timed` cannot be unloaded or loaded while System Integrity Protection (SIP) is enabled.
+        - name: disa_stig
+          severity: medium
+    enforcement_info:
+      check:
+        shell: /bin/launchctl list | /usr/bin/grep -c com.apple.timed
+        result:
+          integer: 1
+      fix:
+        shell: /bin/launchctl load -w /System/Library/LaunchDaemons/com.apple.timed.plist
+        additional_info: 'NOTE: The service `timed` cannot be unloaded or loaded while System Integrity Protection (SIP) is enabled.'
 tags:
   - 800-171
   - 800-53r5_low

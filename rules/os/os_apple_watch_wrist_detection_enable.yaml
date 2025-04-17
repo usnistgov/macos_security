@@ -45,34 +45,37 @@ references:
 platforms:
   iOS:
     '18.0':
-      severity: low
       supervised: false
       benchmarks:
-        - cis_lvl1_byod
-        - cis_lvl2_byod
-        - cis_lvl1_enterprise
-        - cis_lvl2_enterprise
-        - ios_stig
+        - name: cis_lvl1_byod
+        - name: cis_lvl2_byod
+        - name: cis_lvl1_enterprise
+        - name: cis_lvl2_enterprise
+        - name: ios_stig
+          severity: low
     '17.0':
-      severity: low
       supervised: false
       benchmarks:
-        - cis_lvl1_byod
-        - cis_lvl2_byod
-        - cis_lvl1_enterprise
-        - cis_lvl2_enterprise
-        - ios_stig
-        - ios_stig_byoad
+        - name: cis_lvl1_byod
+        - name: cis_lvl2_byod
+        - name: cis_lvl1_enterprise
+        - name: cis_lvl2_enterprise
+        - name: ios_stig
+          severity: low
+        - name: ios_stig_byoad
+          severity: low
     '16.0':
-      severity: low
       supervised: false
       benchmarks:
-        - cis_lvl1_byod
-        - cis_lvl2_byod
-        - cis_lvl1_enterprise
-        - cis_lvl2_enterprise
-        - ios_stig
-        - ios_stig_byoad
+        - name: cis_lvl1_byod
+        - name: cis_lvl2_byod
+        - name: cis_lvl1_enterprise
+        - name: cis_lvl2_enterprise
+        - name: ios_stig
+          severity: low
+        - name: ios_stig_byoad
+          severity: low
+    introduced: '8.2'
 tags:
   - 800-53r5_low
   - 800-53r5_moderate
@@ -82,5 +85,6 @@ tags:
   - cnssi-1253_low
   - cnssi-1253_high
 mobileconfig_info:
-  com.apple.applicationaccess:
-    forceWatchWristDetection: true
+  - PayloadType: com.apple.applicationaccess
+    PayloadContent:
+      - forceWatchWristDetection: true

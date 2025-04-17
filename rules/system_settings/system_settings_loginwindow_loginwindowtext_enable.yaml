@@ -23,34 +23,38 @@ references:
       - 4.1
 platforms:
   macOS:
-    check: |
-      /usr/bin/osascript -l JavaScript << EOS | /usr/bin/base64
-      $.NSUserDefaults.alloc.initWithSuiteName('com.apple.loginwindow')\
-      .objectForKey('LoginwindowText').js
-      EOS
-    result:
-      base64: $ODV
-    fix: |
-      This is implemented by a Configuration Profile.
     '15.0':
       benchmarks:
-        - cis_lvl1
-        - cis_lvl2
+        - name: cis_lvl1
+        - name: cis_lvl2
     '14.0':
       benchmarks:
-        - cis_lvl1
-        - cis_lvl2
+        - name: cis_lvl1
+        - name: cis_lvl2
     '13.0':
       benchmarks:
-        - cis_lvl1
-        - cis_lvl2
+        - name: cis_lvl1
+        - name: cis_lvl2
+    enforcement_info:
+      check:
+        shell: |-
+          /usr/bin/osascript -l JavaScript << EOS | /usr/bin/base64
+          $.NSUserDefaults.alloc.initWithSuiteName('com.apple.loginwindow')\
+          .objectForKey('LoginwindowText').js
+          EOS
+        result:
+          base64: $ODV
+    introduced: '10.7'
 odv:
-  hint: Organization's approved message.
+  hint:
+    datatype: string
+    description: Text to be displayed at the loginwindow. The visible characters are limited at the loginwindow screen. Avoid special characters and complex formatting for best results.
   recommended: Center for Internet Security Test Message
   cis_lvl1: Center for Internet Security Test Message
   cis_lvl2: Center for Internet Security Test Message
 tags:
   - cisv8
 mobileconfig_info:
-  com.apple.loginwindow:
-    LoginwindowText: $ODV
+  - PayloadType: com.apple.loginwindow
+    PayloadContent:
+      - LoginwindowText: $ODV

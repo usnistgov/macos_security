@@ -55,33 +55,31 @@ references:
       - 3.3
 platforms:
   macOS:
-    check: |
-      /bin/ls -n $(/usr/bin/grep '^dir' /etc/security/audit_control | /usr/bin/awk -F: '{print $2}') | /usr/bin/awk '{s+=$4} END {print s}'
-    result:
-      integer: 0
-    fix: |
-      [source,bash]
-      ----
-      /usr/bin/chgrp -R wheel /var/audit/*
-      ----
     '15.0':
-      severity: medium
       benchmarks:
-        - cis_lvl1
-        - cis_lvl2
-        - disa_stig
+        - name: cis_lvl1
+        - name: cis_lvl2
+        - name: disa_stig
+          severity: medium
     '14.0':
-      severity: medium
       benchmarks:
-        - cis_lvl1
-        - cis_lvl2
-        - disa_stig
+        - name: cis_lvl1
+        - name: cis_lvl2
+        - name: disa_stig
+          severity: medium
     '13.0':
-      severity: medium
       benchmarks:
-        - cis_lvl1
-        - cis_lvl2
-        - disa_stig
+        - name: cis_lvl1
+        - name: cis_lvl2
+        - name: disa_stig
+          severity: medium
+    enforcement_info:
+      check:
+        shell: '/bin/ls -n $(/usr/bin/grep ''^dir'' /etc/security/audit_control | /usr/bin/awk -F: ''{print $2}'') | /usr/bin/awk ''{s+=$4} END {print s}'''
+        result:
+          integer: 0
+      fix:
+        shell: /usr/bin/chgrp -R wheel /var/audit/*
 tags:
   - 800-53r5_low
   - 800-53r5_moderate

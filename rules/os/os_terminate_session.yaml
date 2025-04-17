@@ -1,7 +1,9 @@
 id: os_terminate_session
 title: Terminate all sessions and network connections when maintenance is completed
-discussion: |
+discussion: |-
   Terminates session and network connections when non-local maintenance is completed.
+
+  NOTE: The technology supports this requirement and cannot be configured to be out of compliance. The technology inherently meets this requirement.
 references:
   nist:
     cce:
@@ -13,12 +15,11 @@ references:
         - CCE-91901-9
 platforms:
   macOS:
-    check: |
-      The technology supports this requirement and cannot be configured to be out of compliance. The technology inherently meets this requirement.
-    fix: |
-      The technology inherently meets this requirement. No fix is required.
     '15.0': {}
     '14.0': {}
     '13.0': {}
+    enforcement_info:
+      fix:
+        additional_info: The technology inherently meets this requirement. No fix is required.
 tags:
   - inherent

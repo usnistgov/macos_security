@@ -56,26 +56,27 @@ references:
       - 6.5
 platforms:
   macOS:
-    check: |
-      /usr/bin/osascript -l JavaScript << EOS
-      $.NSUserDefaults.alloc.initWithSuiteName('com.apple.security.smartcard')\
-      .objectForKey('allowSmartCard').js
-      EOS
-    result:
-      string: 'true'
-    fix: |
-      This is implemented by a Configuration Profile.
     '15.0':
-      severity: medium
       benchmarks:
-        - disa_stig
+        - name: disa_stig
+          severity: medium
     '14.0':
-      severity: medium
       benchmarks:
-        - disa_stig
+        - name: disa_stig
+          severity: medium
     '13.0':
       benchmarks:
-        - disa_stig
+        - name: disa_stig
+    enforcement_info:
+      check:
+        shell: |-
+          /usr/bin/osascript -l JavaScript << EOS
+          $.NSUserDefaults.alloc.initWithSuiteName('com.apple.security.smartcard')\
+          .objectForKey('allowSmartCard').js
+          EOS
+        result:
+          string: 'true'
+    introduced: 10.12.4
 tags:
   - 800-171
   - 800-53r5_low
@@ -88,5 +89,6 @@ tags:
   - cmmc_lvl1
   - cnssi-1253_moderate
 mobileconfig_info:
-  com.apple.security.smartcard:
-    allowSmartCard: true
+  - PayloadType: com.apple.security.smartcard
+    PayloadContent:
+      - allowSmartCard: true

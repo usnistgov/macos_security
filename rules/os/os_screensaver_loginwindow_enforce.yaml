@@ -25,37 +25,30 @@ references:
       - AC.L2-3.1.10
 platforms:
   macOS:
-    check: |
-      /usr/bin/osascript -l JavaScript << EOS
-      $.NSUserDefaults.alloc.initWithSuiteName('com.apple.screensaver')\
-      .objectForKey('moduleName').js
-      EOS
-    result: $OS_VALUE
-    fix: |
-      This is implemented by a Configuration Profile.
-    '15.0':
-      severity: medium
-      result:
-        string: Sequoia
-      mobileconfig_info:
-        com.apple.screensaver:
-          moduleName: Sequoia
+    '15.0': {}
     '14.0':
-      severity: medium
-      result:
-        string: Sonoma
       mobileconfig_info:
-        com.apple.screensaver:
-          moduleName: Sonoma
+        - PayloadType: com.apple.screensaver
+          PayloadContent:
+            - moduleName: Sonoma
     '13.0':
-      severity: medium
       benchmarks:
-        - disa_stig
-      result:
-        string: Ventura
+        - name: disa_stig
+          severity: medium
       mobileconfig_info:
-        com.apple.screensaver:
-          moduleName: Ventura
+        - PayloadType: com.apple.screensaver
+          PayloadContent:
+            - moduleName: Ventura
+    enforcement_info:
+      check:
+        shell: |-
+          /usr/bin/osascript -l JavaScript << EOS
+          $.NSUserDefaults.alloc.initWithSuiteName('com.apple.screensaver')\
+          .objectForKey('moduleName').js
+          EOS
+        result:
+          string: Sequoia
+    introduced: '10.11'
 tags:
   - 800-53r5_moderate
   - 800-53r5_high
@@ -64,4 +57,7 @@ tags:
   - cnssi-1253_high
   - cmmc_lvl2
   - cnssi-1253_moderate
-mobileconfig_info: $OS_VALUE
+mobileconfig_info:
+  - PayloadType: com.apple.screensaver
+    PayloadContent:
+      - moduleName: Sequoia

@@ -1,7 +1,9 @@
 id: os_unique_identification
 title: Uniquely Identify Users and Processes
-discussion: |
+discussion: |-
   The macOS is a UNIX 03-compliant operating system. The system uniquely identifies and authenticates organizational users or processes.
+
+  NOTE: The technology supports this requirement and cannot be configured to be out of compliance. The technology inherently meets this requirement.
 references:
   nist:
     cce:
@@ -24,13 +26,12 @@ references:
       - 6.1
 platforms:
   macOS:
-    check: |
-      The technology supports this requirement and cannot be configured to be out of compliance. The technology inherently meets this requirement.
-    fix: |
-      The technology inherently meets this requirement. No fix is required.
     '15.0': {}
     '14.0': {}
     '13.0': {}
+    enforcement_info:
+      fix:
+        additional_info: The technology inherently meets this requirement. No fix is required.
 tags:
   - 800-171
   - 800-53r5_low

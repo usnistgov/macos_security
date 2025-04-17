@@ -34,22 +34,22 @@ references:
       - AC.L2-3.1.5
 platforms:
   macOS:
-    check: |
-      /usr/libexec/mdmclient QuerySecurityInfo | /usr/bin/grep -c "IsRecoveryLockEnabled = 1"
-    result:
-      integer: 1
-    fix: |
-      NOTE: The SetRecoveryLock command can be used to set a Recovery Lock password and must be from your MDM.
     '15.0':
-      severity: medium
       benchmarks:
-        - disa_stig
+        - name: disa_stig
+          severity: medium
     '14.0':
-      severity: medium
       benchmarks:
-        - disa_stig
-    '13.0':
-      severity: medium
+        - name: disa_stig
+          severity: medium
+    '13.0': {}
+    enforcement_info:
+      check:
+        shell: /usr/libexec/mdmclient QuerySecurityInfo | /usr/bin/grep -c "IsRecoveryLockEnabled = 1"
+        result:
+          integer: 1
+      fix:
+        additional_info: 'NOTE: The SetRecoveryLock command can be used to set a Recovery Lock password and must be from your MDM.'
 tags:
   - 800-53r5_moderate
   - 800-53r5_high

@@ -40,30 +40,33 @@ references:
         - APPL-13-002017
 platforms:
   macOS:
-    check: |
-      /usr/bin/osascript -l JavaScript << EOS
-      $.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess')\
-      .objectForKey('allowCamera').js
-      EOS
-    result:
-      string: 'false'
-    fix: |
-      This is implemented by a Configuration Profile.
     '15.0':
-      severity: medium
       benchmarks:
-        - disa_stig
+        - name: disa_stig
+          severity: medium
     '14.0':
-      severity: medium
       benchmarks:
-        - disa_stig
+        - name: disa_stig
+          severity: medium
     '13.0':
-      severity: medium
       benchmarks:
-        - disa_stig
+        - name: disa_stig
+          severity: medium
+    enforcement_info:
+      check:
+        shell: |-
+          /usr/bin/osascript -l JavaScript << EOS
+          $.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess')\
+          .objectForKey('allowCamera').js
+          EOS
+        result:
+          string: 'false'
+    introduced: '10.11'
   visionOS:
     '2.0':
       supervised: true
+    introduced: '2.0'
 mobileconfig_info:
-  com.apple.applicationaccess:
-    allowCamera: false
+  - PayloadType: com.apple.applicationaccess
+    PayloadContent:
+      - allowCamera: false
