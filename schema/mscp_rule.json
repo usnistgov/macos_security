@@ -324,12 +324,26 @@
             "type": "object",
             "description": "Operating System Definition",
             "properties": {
-                "severity": {
-                    "description": "Severity level of the issue, typically defined in a benchmark.",
-                    "$ref": "#/$defs/ArrayOfObjects"
-                },
                 "benchmarks": {
-                    "$ref": "#/$defs/ArrayOfStrings"
+                    "description": "Identifies which benchmarks include this rule.",
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "name": {
+                                "type": "string"
+                            },
+                            "severity": {
+                                "description": "Severity level of the issue, typically defined in a benchmark.",
+                                "type": "string",
+                                "enum": [
+                                    "high",
+                                    "medium",
+                                    "low"
+                                ]
+                            }
+                        }
+                    }
                 },
                 "mobileconfig_info": {
                     "$ref": "#/$defs/mobileConfigDef"
@@ -341,7 +355,7 @@
         },
         "mobileConfigDef": {
             "type": "array",
-            "description": "Definition for supported Mobile Device Management configurations",
+            "description": "Definition for supported Mobile Device Management (MDM) configurations",
             "items": {
                 "type": "object",
                 "properties": {
@@ -367,7 +381,7 @@
         },
         "ddmDef": {
             "type": "object",
-            "description": "Definition for supported Declarative Device Management components",
+            "description": "Definition for supported Declarative Device Management (DDM) components",
             "properties": {
                 "declarationtype": {
                     "type": "string",
@@ -456,7 +470,7 @@
         },
         "enforcement_infoDef": {
             "type": "object",
-            "description": "enforcement_info containsbthe check, result, fix, and default state used by the generated compliance script",
+            "description": "This section contains the check, result, fix, and default state used by the generated compliance script",
             "properties": {
                 "check": {
                     "type": "object",
@@ -487,8 +501,17 @@
                     }
                 },
                 "default_state": {
-                    "description": "Shell command(s) to restore the system to a default factory state.",
-                    "type": "string"
+                    "description": "Describes the means to return the system to a default state.",
+                    "type": "object",
+                    "properties": {
+                        "shell": {
+                            "type": "string",
+                            "description": "Shell command(s) to restore the system to a default factory state."
+                        },
+                        "note": {
+                            "type": "string"
+                        }
+                    }
                 }
             },
             "additionalProperties": false

@@ -4,7 +4,7 @@
 
 GIT_STATUS=$(git status --porcelain=v1 2>/dev/null | wc -l | xargs)
 
-if [[ ! $GIT_STATUS == 0 ]];then
+if [[ ! $GIT_STATUS == 0 ]]; then
     echo "There are unstaged changes here, please resolve before continuing."
     exit 1
 fi
@@ -37,7 +37,7 @@ done
 
 # rename visionOS folder for simplicity
 
-if [[ -d "_work/visionos_2.0" ]];then
+if [[ -d "_work/visionos_2.0" ]]; then
     rm -rf "_work/visionos_2.0"
 fi
 
