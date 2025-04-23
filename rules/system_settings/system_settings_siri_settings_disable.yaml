@@ -5,13 +5,13 @@ discussion: |
 
   Hiding the System Settings pane prevents the users from configuring Siri.
 
-  NOTE: Disabling the Siri System Settings pane blocks the user from opting into Apple Intelligence.
+  NOTE: On macOS 15 and later, disabling the Siri System Settings pane blocks the user from opting into Apple Intelligence.
 references:
   nist:
     cce:
-      sequoia:
+      macos_15:
         - CCE-94393-6
-      sonoma:
+      macos_14:
         - CCE-93019-8
     800-53r5:
       - CM-7
@@ -26,9 +26,9 @@ references:
     srg:
       - SRG-OS-000095-GPOS-00049
     disa_stig:
-      sequoia:
+      macos_15:
         - APPL-15-002053
-      sonoma:
+      macos_14:
         - APPL-14-002053
     cmmc:
       - CM.L2-3.4.6
@@ -39,20 +39,20 @@ references:
       - 4.8
 platforms:
   macOS:
-    check: |
-      /usr/bin/profiles show -output stdout-xml | /usr/bin/xmllint --xpath '//key[text()="DisabledSystemSettings"]/following-sibling::*[1]' - | /usr/bin/grep -c com.apple.Siri-Settings.extension
-    result:
-      integer: 1
-    fix: |
-      This is implemented by a Configuration Profile.
-    sequoia:
-      severity: medium
+    '15.0':
       benchmarks:
-        - disa_stig
-    sonoma:
-      severity: medium
+        - name: disa_stig
+          severity: medium
+    '14.0':
       benchmarks:
-        - disa_stig
+        - name: disa_stig
+          severity: medium
+    enforcement_info:
+      check:
+        shell: /usr/bin/profiles show -output stdout-xml | /usr/bin/xmllint --xpath '//key[text()="DisabledSystemSettings"]/following-sibling::*[1]' - | /usr/bin/grep -c com.apple.Siri-Settings.extension
+        result:
+          integer: 1
+    introduced: '13.0'
 tags:
   - 800-53r5_low
   - 800-53r5_moderate
@@ -63,6 +63,7 @@ tags:
   - cnssi-1253_low
   - cnssi-1253_high
 mobileconfig_info:
-  com.apple.systempreferences:
-    DisabledSystemSettings:
-      - com.apple.Siri-Settings.extension
+  - PayloadType: com.apple.systempreferences
+    PayloadContent:
+      - DisabledSystemSettings:
+          - com.apple.Siri-Settings.extension

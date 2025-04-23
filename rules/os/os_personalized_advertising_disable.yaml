@@ -13,7 +13,7 @@ references:
         - CCE-93442-2
       ios_16:
         - CCE-93242-6
-      visionos_2.0:
+      visionos_2:
         - CCE-94505-5
     800-53r5:
       - AC-20
@@ -38,37 +38,40 @@ references:
         - ANNEX K
 platforms:
   iOS:
-    ios_18:
+    '18.0':
       supervised: false
       benchmarks:
-        - cis_lvl1_byod
-        - cis_lvl2_byod
-        - cis_lvl1_enterprise
-        - cis_lvl2_enterprise
-        - indigo_high
-    ios_17:
+        - name: cis_lvl1_byod
+        - name: cis_lvl2_byod
+        - name: cis_lvl1_enterprise
+        - name: cis_lvl2_enterprise
+        - name: indigo_high
+    '17.0':
       supervised: false
       benchmarks:
-        - cis_lvl1_byod
-        - cis_lvl2_byod
-        - cis_lvl1_enterprise
-        - cis_lvl2_enterprise
-        - indigo_high
-    ios_16:
+        - name: cis_lvl1_byod
+        - name: cis_lvl2_byod
+        - name: cis_lvl1_enterprise
+        - name: cis_lvl2_enterprise
+        - name: indigo_high
+    '16.0':
       supervised: false
       benchmarks:
-        - cis_lvl1_byod
-        - cis_lvl2_byod
-        - cis_lvl1_enterprise
-        - cis_lvl2_enterprise
+        - name: cis_lvl1_byod
+        - name: cis_lvl2_byod
+        - name: cis_lvl1_enterprise
+        - name: cis_lvl2_enterprise
+    introduced: '14.0'
   visionOS:
-    visionos_2.0:
+    '2.0':
       supervised: false
+    introduced: '2.0'
 tags:
   - 800-53r5_low
   - 800-53r5_moderate
   - 800-53r5_high
   - cisv8
 mobileconfig_info:
-  com.apple.applicationaccess:
-    allowApplePersonalizedAdvertising: false
+  - PayloadType: com.apple.applicationaccess
+    PayloadContent:
+      - allowApplePersonalizedAdvertising: false

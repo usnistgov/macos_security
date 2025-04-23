@@ -1,8 +1,11 @@
 ---
 id: os_enterprise_books_disable
 title: Ensure Backup of Enterprise Books is set to Disabled
-discussion: |-
-  Apps _MUST_ be installed from authorized application repositories. Disallowing enterprise app trust prevents apps from being provisioned by universal provisioning profiles.
+discussion:
+  If a user is able to configure the security setting, the user could inadvertently
+  or maliciously set it to a value that poses unacceptable risk to DoD information
+  systems. An adversary could exploit vulnerabilities created by the weaker configuration
+  to compromise DoD sensitive information.
 check: " "
 fix: This is implemented by a Configuration Profile
 references:
@@ -25,7 +28,7 @@ references:
     controls v8:
       - N/A
 operating_system:
-  - name: iOS
+  - name: ios
     version:
       - 18.0
 tags:

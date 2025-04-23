@@ -1,8 +1,10 @@
 ---
 id: os_disallow_enterprise_app_trust
 title: Disallow Apps to be Installed from Unauthorized Sources
-discussion: |-
-  Apps _MUST_ be installed from authorized application repositories. Disallowing enterprise app trust prevents apps from being provisioned by universal provisioning profiles.
+discussion:
+  Apps _MUST_ be installed from authorized application repositories. Disallowing
+  enterprise app trust prevents apps from being provisioned by universal provisioning
+  profiles.
 check: " "
 fix: This is implemented by a Configuration Profile
 references:
@@ -24,7 +26,7 @@ references:
     controls v8:
       - N/A
 operating_system:
-  - name: iOS
+  - name: ios
     version:
       - 18.0
 tags:

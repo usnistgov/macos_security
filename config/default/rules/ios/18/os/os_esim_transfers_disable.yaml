@@ -14,7 +14,7 @@ references:
   800-53r5:
     - N/A
 operating_system:
-  - name: iOS
+  - name: ios
     version:
       - 18.0
 tags:

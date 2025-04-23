@@ -14,60 +14,42 @@ discussion: |
 references:
   nist:
     cce:
-      sequoia:
+      macos_15:
         - CCE-94293-8
-      sonoma:
+      macos_14:
         - CCE-92888-7
-      ventura:
+      macos_13:
         - CCE-91877-1
-      monterey:
-        - CCE-91112-3
-      big_sur:
-        - CCE-85511-4
   cis:
     benchmark:
-      sequoia:
+      macos_15:
         - 6.1.1 (level 1)
-      sonoma:
+      macos_14:
         - 6.1.1 (level 1)
-      ventura:
+      macos_13:
         - 6.1.1 (level 1)
-      monterey:
-        - 6.2 (level 1)
-      big_sur:
-        - 6.2 (level 1)
     controls_v8:
       - 2.3
 platforms:
   macOS:
-    check: |
-      /usr/bin/sudo -u "$CURRENT_USER" /usr/bin/defaults read .GlobalPreferences AppleShowAllExtensions 2>/dev/null
-    result:
-      boolean: 1
-    fix: |
-      [source,bash]
-      ----
-      /usr/bin/sudo -u "$CURRENT_USER" /usr/bin/defaults write /Users/"$CURRENT_USER"/Library/Preferences/.GlobalPreferences AppleShowAllExtensions -bool true
-      ----
-    sequoia:
+    '15.0':
       benchmarks:
-        - cis_lvl1
-        - cis_lvl2
-    sonoma:
+        - name: cis_lvl1
+        - name: cis_lvl2
+    '14.0':
       benchmarks:
-        - cis_lvl1
-        - cis_lvl2
-    ventura:
+        - name: cis_lvl1
+        - name: cis_lvl2
+    '13.0':
       benchmarks:
-        - cis_lvl1
-        - cis_lvl2
-    monterey:
-      benchmarks:
-        - cis_lvl1
-        - cis_lvl2
-    big_sur:
-      benchmarks:
-        - cis_lvl1
-        - cis_lvl2
+        - name: cis_lvl1
+        - name: cis_lvl2
+    enforcement_info:
+      check:
+        shell: /usr/bin/sudo -u "$CURRENT_USER" /usr/bin/defaults read .GlobalPreferences AppleShowAllExtensions 2>/dev/null
+        result:
+          integer: 1
+      fix:
+        shell: /usr/bin/sudo -u "$CURRENT_USER" /usr/bin/defaults write /Users/"$CURRENT_USER"/Library/Preferences/.GlobalPreferences AppleShowAllExtensions -bool true
 tags:
   - cisv8

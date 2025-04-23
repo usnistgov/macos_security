@@ -34,25 +34,30 @@ references:
         - ANNEX K
 platforms:
   iOS:
-    ios_18:
-      severity: medium
+    '18.0':
       supervised: false
       benchmarks:
-        - ios_stig
-        - indigo_base
-        - indigo_high
-    ios_17:
-      severity: medium
+        - name: ios_stig
+          severity: medium
+        - name: indigo_base
+          severity: medium
+        - name: indigo_high
+          severity: medium
+    '17.0':
       supervised: false
       benchmarks:
-        - ios_stig
-        - indigo_base
-        - indigo_high
-    ios_16:
-      severity: medium
+        - name: ios_stig
+          severity: medium
+        - name: indigo_base
+          severity: medium
+        - name: indigo_high
+          severity: medium
+    '16.0':
       supervised: false
       benchmarks:
-        - ios_stig
+        - name: ios_stig
+          severity: medium
+    introduced: '14.5'
 tags:
   - 800-53r5_moderate
   - 800-53r5_high
@@ -60,5 +65,6 @@ tags:
   - cnssi-1253_low
   - cnssi-1253_high
 mobileconfig_info:
-  com.apple.applicationaccess:
-    allowAutoUnlock: false
+  - PayloadType: com.apple.applicationaccess
+    PayloadContent:
+      - allowAutoUnlock: false

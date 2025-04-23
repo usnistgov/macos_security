@@ -7,9 +7,8 @@ import plistlib
 from pathlib import Path
 from typing import Any
 
-import yaml
-
 # Additional python modules
+import yaml
 from loguru import logger
 
 # Local python modules
@@ -35,9 +34,39 @@ yaml.add_representer(str, _str_presenter)
 yaml.representer.SafeRepresenter.add_representer(str, _str_presenter)
 
 
-def open_file(file_path: Path) -> str:
+def open_file(file_path: Path) -> Any:
     """
-    Attempts to open a file and read it's contents with error checking and logging
+    Attempts to open a file and read its contents with error checking and logging.
+
+    Args:
+        file_path (Path): The path to the file to be opened.
+
+    Returns:
+        str: The content of the file if successful.
+
+    Raises:
+        FileNotFoundError: If the file does not exist.
+        PermissionError: If there are insufficient permissions to access the file.
+        IOError: If an I/O error occurs during file operations.
+        Exception: For any other unexpected errors.
+    """
+
+    match file_path.suffix:
+        case ".yaml" | ".yml":
+            return open_yaml(file_path)
+        case ".csv":
+            return open_csv(file_path)
+        case ".plist":
+            return open_plist(file_path)
+        case ".json":
+            return open_json(file_path)
+        case _:
+            return open_text(file_path)
+
+
+def open_text(file_path: Path) -> str:
+    """
+    Attempts to open a text file and read it's contents with error checking and logging
 
     Args:
         file_path (Path): The path to the file to be opened.
@@ -47,7 +76,7 @@ def open_file(file_path: Path) -> str:
     """
 
     try:
-        logger.debug(f"Attempting to open file: {file_path}")
+        logger.debug(f"Attempting to open text file: {file_path}")
         return file_path.read_text(encoding=ENCODING)
 
     except (FileNotFoundError, PermissionError, IOError, Exception) as e:
@@ -89,13 +118,13 @@ def open_yaml(file_path: Path) -> dict[str, Any]:
 
 def open_csv(file_path: Path) -> dict[str, Any]:
     """
-    Attempts to open a csv file and read it's contents with error checking and logging
+    Attempts to open a csv file and read its contents with error checking and logging
 
     Args:
         file_path (Path): The path to the file to be opened.
 
     Returns:
-        dict[str, Any]: The content of the file if successful, None if otherwise.
+        dict[str, Any]: The content of the file as a list of dictionaries if successful.
     """
 
     try:
@@ -112,16 +141,28 @@ def open_csv(file_path: Path) -> dict[str, Any]:
         raise
 
 
-def open_plist(file_path: Path) -> dict[str, dict[str, bool]]:
+def open_plist(file_path: Path) -> dict[str, dict[str, bool]] | None:
     """
-    Attempts to open a plist file and read its contents with error checking and logging
+    Attempts to open a plist file and read its contents with error checking and logging.
 
-    Args:
-        file_path (Path): The path to the file to be opened.
+    This function uses the `plistlib` module to parse the contents of a plist file.
+    It includes error handling for various exceptions such as invalid file format,
+    file not found, permission issues, and other I/O errors. Errors are logged
+    appropriately before being raised.
 
-    Returns:
-        Optional[dict[str, Any]]: The content of the file if successful, None if otherwise.
+        file_path (Path): The path to the plist file to be opened.
+
+        dict[str, dict[str, bool]] | None: The parsed content of the plist file as a dictionary
+        if successful, or None if an error occurs.
+
+    Raises:
+        plistlib.InvalidFileException: If the file is not a valid plist.
+        FileNotFoundError: If the file does not exist.
+        PermissionError: If there are insufficient permissions to read the file.
+        IOError: If an I/O error occurs while accessing the file.
+        Exception: For any other unexpected errors.
     """
+
     try:
         logger.debug("Attempting to open plist: {}", file_path)
 
@@ -132,6 +173,40 @@ def open_plist(file_path: Path) -> dict[str, dict[str, bool]]:
             "An error occurred while processing the file: {}. Error: {}", file_path, e
         )
         raise
+
+    except (FileNotFoundError, PermissionError, IOError, Exception) as e:
+        logger.error(
+            "An error occurred while opening the file: {}. Error: {}", file_path, e
+        )
+        raise
+
+
+def open_json(file_path: Path) -> dict[str, Any]:
+    """
+    Opens a JSON file and returns its contents as a dictionary.
+
+    Args:
+        file_path (Path): The path to the JSON file to be opened.
+
+    Returns:
+        dict[str, Any]: The contents of the JSON file as a dictionary.
+
+    Raises:
+        FileNotFoundError: If the file does not exist.
+        PermissionError: If there is insufficient permission to read the file.
+        IOError: If an I/O error occurs while reading the file.
+        Exception: For any other exceptions that may occur during file handling.
+
+    Logs:
+        Logs debug information when attempting to open the file.
+        Logs an error message if an exception occurs during file handling.
+    """
+
+    try:
+        logger.debug("Attempting to open JSON: {}", file_path)
+
+        with file_path.open("r") as file:
+            return json.load(file)
 
     except (FileNotFoundError, PermissionError, IOError, Exception) as e:
         logger.error(
@@ -228,8 +303,6 @@ def create_json(file_path: Path, data: dict[str, Any]) -> None:
     """
     try:
         file_path.write_text(json.dumps(data, indent=2))
-        # with file_path.open("w") as file:
-        #     json.dump(data, file, indent=2)
     except Exception as e:
         logger.error(
             "An error occurred while processing the file: {}. Error: {}", file_path, e

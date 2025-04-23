@@ -1,16 +1,16 @@
----
 title: "iOS/iPadOS 18.0: Security Configuration - All Rules"
 description: |
   This guide describes the actions to take when securing a iOS/iPadOS 18.0 system against the All Rules security baseline.
 
   Information System Security Officers and benchmark creators can use this catalog of settings in order to assist them in security benchmark creation. This list is a catalog, not a checklist or benchmark, and satisfaction of every item is not likely to be possible or sensible in many operational scenarios.
-authors:
-  - name: Bob Gendler
-    organization: National Institute of Standards and Technology
-  - name: Dan Brodjieski
-    organization: National Aeronautics and Space Administration
-  - name: Allen Golbig
-    organization: Jamf
+authors: |
+  *macOS Security Compliance Project*
+
+  |===
+  |Bob Gendler|National Institute of Standards and Technology
+  |Dan Brodjieski|National Aeronautics and Space Administration
+  |Allen Golbig|Jamf
+  |===
 parent_values: "recommended"
 profile:
   - section: "icloud"
@@ -23,7 +23,7 @@ profile:
       - icloud_photos_disable
       - icloud_shared_photo_stream_disable
       - icloud_sync_disable
-  - section: "operatingsystem"
+  - section: "ios"
     rules:
       - os_account_modification_disable
       - os_airdrop_disable

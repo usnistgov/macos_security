@@ -1,26 +1,22 @@
 id: os_notify_account_enable
 title: 'Configure the System to Notify upon Account Enabled Actions '
-discussion: |
+discussion: |-
   The macOS should be configured to automatically notify system administrators and Information System Security Officers (ISSOs) when accounts are enabled.
 
   Once an attacker establishes initial access to a system, the attacker often attempts to create a persistent method of reestablishing and maintaining access by enabling a new or previously disabled account.  Configuring the information system to send a notification when  a new or disabled account is enabled is one method for mitigating this risk. A comprehensive account management process should not only notify when accounts are enabled, but also maintain an audit record of these actions.  Such a process greatly reduces the risk that accounts will be surreptitiously enabled and provides logging that can be used for forensic purposes.
 
   To enable notifications and audit logging of enabled accounts, many operating systems can be integrated with enterprise-level auditing mechanisms that meet or exceed this requirement.
+
+  NOTE: The technology does not support this requirement. This is an applicable-does not meet finding.
 references:
   nist:
     cce:
-      sequoia:
+      macos_15:
         - CCE-94240-9
-      sonoma:
+      macos_14:
         - CCE-92836-6
-      ventura:
+      macos_13:
         - CCE-91832-6
-      monterey:
-        - CCE-90961-4
-      big_sur:
-        - CCE-85345-7
-      catalina:
-        - CCE-84897-8
   disa:
     srg:
       - SRG-OS-000304-GPOS-00121
@@ -35,16 +31,8 @@ references:
       - SRG-OS-000303-GPOS-00120
 platforms:
   macOS:
-    check: |
-      The technology does not support this requirement. This is an applicable-does not meet finding.
-    fix: |
-      This requirement is a permanent finding and cannot be fixed. An appropriate mitigation for the system must be implemented, but this finding cannot be considered fixed.
-    sequoia: {}
-    sonoma: {}
-    ventura: {}
-    monterey: {}
-    big_sur: {}
-    catalina: {}
+    '15.0': {}
+    '14.0': {}
+    '13.0': {}
 tags:
   - permanent
-  - cnssi-1253

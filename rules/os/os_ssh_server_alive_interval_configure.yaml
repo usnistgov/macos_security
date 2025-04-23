@@ -11,18 +11,12 @@ discussion: |
 references:
   nist:
     cce:
-      sequoia:
+      macos_15:
         - CCE-94301-9
-      sonoma:
+      macos_14:
         - CCE-92896-0
-      ventura:
+      macos_13:
         - CCE-91885-4
-      monterey:
-        - CCE-91006-7
-      big_sur:
-        - CCE-85381-2
-      catalina:
-        - CCE-84919-0
     800-53r5:
       - SC-10
       - AC-12
@@ -35,130 +29,56 @@ references:
     srg:
       - SRG-OS-000163-GPOS-00072
     disa_stig:
-      sequoia:
+      macos_15:
         - APPL-15-000110
-      sonoma:
+      macos_14:
         - APPL-14-000110
     cmmc:
       - AC.L2-3.1.11
       - SC.L2-3.13.9
 platforms:
   macOS:
-    check: $OS_VALUE
-    result: $OS_VALUE
-    fix: $OS_VALUE
-    sequoia:
-      severity: medium
+    '15.0':
       benchmarks:
-        - disa_stig
-      check: |-
-        ret="pass"
-        for u in $(/usr/bin/dscl . -list /Users UniqueID | /usr/bin/awk '$2 > 500 {print $1}'); do
-          sshCheck=$(/usr/bin/sudo -u $u /usr/bin/ssh -G . | /usr/bin/grep -c "^serveraliveinterval $ODV")
-          if [[ "$sshCheck" == "0" ]]; then
-            ret="fail"
-            break
-          fi
-        done
-        /bin/echo $ret
-      fix: "[source,bash]\n----\ninclude_dir=$(/usr/bin/awk '/^Include/ {print $2}' /etc/ssh/ssh_config | /usr/bin/tr -d '*')\n\nssh_config_string=(\"ServerAliveInterval $ODV\")\nfor ssh_config in $ssh_config_string; do\n  ssh_setting=$(echo $ssh_config | /usr/bin/cut -d \" \" -f1)\n  /usr/bin/grep -qEi \"^$ssh_setting\" \"${include_dir}01-mscp-ssh.conf\" && /usr/bin/sed -i \"\" \"s/^$ssh_setting.*/${ssh_config}/\" \"${include_dir}01-mscp-ssh.conf\" || echo \"$ssh_config\" >> \"${include_dir}01-mscp-ssh.conf\"\n  for u in $(/usr/bin/dscl . list /users shell | /usr/bin/egrep -v '(^_)|(root)|(/usr/bin/false)' | /usr/bin/awk '{print $1}'); do\n    config=$(/usr/bin/sudo -u $u /usr/bin/ssh -Gv . 2>&1)\n    configfiles=$(echo \"$config\" | /usr/bin/awk '/Reading configuration data/ {print $NF}'| /usr/bin/tr -d '\\r')\n    configarray=( ${(f)configfiles} )\n    if ! echo $config | /usr/bin/grep -q -i \"$ssh_config\" ; then\n      for c in $configarray; do\n        if [[ \"$c\" == \"/etc/ssh/crypto.conf\" ]]; then\n          continue\n        fi\n  \n        /usr/bin/sudo -u $u /usr/bin/grep -qEi \"^$ssh_setting\" \"$c\" && /usr/bin/sed -i \"\" \"s/^$ssh_setting.*/${ssh_config}/I\" \"$c\"\n        if [[ \"$c\" =~ \".ssh/config\" ]]; then\n          if /usr/bin/grep -qEi \"$ssh_setting\" \"$c\" 2> /dev/null; then\n            old_file=$(cat ~$u/.ssh/config)\n            echo \"$ssh_config\" > ~$u/.ssh/config\n            echo \"$old_file\" >> ~$u/.ssh/config\n          fi\n        fi\n      done\n    fi\n  done\ndone\n----"
-      result:
-        string: pass
-    sonoma:
-      severity: medium
+        - name: disa_stig
+          severity: medium
+      enforcement_info:
+        fix:
+          shell: "include_dir=$(/usr/bin/awk '/^Include/ {print $2}' /etc/ssh/ssh_config | /usr/bin/tr -d '*')\n\nssh_config_string=(\"ServerAliveInterval $ODV\")\nfor ssh_config in $ssh_config_string; do\n  ssh_setting=$(echo $ssh_config | /usr/bin/cut -d \" \" -f1)\n  /usr/bin/grep -qEi \"^$ssh_setting\" \"${include_dir}01-mscp-ssh.conf\" && /usr/bin/sed -i \"\" \"s/^$ssh_setting.*/${ssh_config}/\" \"${include_dir}01-mscp-ssh.conf\" || echo \"$ssh_config\" >> \"${include_dir}01-mscp-ssh.conf\"\n  for u in $(/usr/bin/dscl . list /users shell | /usr/bin/egrep -v '(^_)|(root)|(/usr/bin/false)' | /usr/bin/awk '{print $1}'); do\n    config=$(/usr/bin/sudo -u $u /usr/bin/ssh -Gv . 2>&1)\n    configfiles=$(echo \"$config\" | /usr/bin/awk '/Reading configuration data/ {print $NF}'| /usr/bin/tr -d '\\r')\n    configarray=( ${(f)configfiles} )\n    if ! echo $config | /usr/bin/grep -q -i \"$ssh_config\" ; then\n      for c in $configarray; do\n        if [[ \"$c\" == \"/etc/ssh/crypto.conf\" ]]; then\n          continue\n        fi\n   \n        /usr/bin/sudo -u $u /usr/bin/grep -qEi \"^$ssh_setting\" \"$c\" && /usr/bin/sed -i \"\" \"s/^$ssh_setting.*/${ssh_config}/I\" \"$c\"\n        if [[ \"$c\" =~ \".ssh/config\" ]]; then\n          if /usr/bin/grep -qEi \"$ssh_setting\" \"$c\" 2> /dev/null; then\n            old_file=$(cat ~$u/.ssh/config)\n            echo \"$ssh_config\" > ~$u/.ssh/config\n            echo \"$old_file\" >> ~$u/.ssh/config\n          fi\n        fi\n      done\n    fi\n  done\ndone"
+    '14.0':
       benchmarks:
-        - disa_stig
-      check: |-
-        ret="pass"
-        for u in $(/usr/bin/dscl . -list /Users UniqueID | /usr/bin/awk '$2 > 500 {print $1}'); do
-          sshCheck=$(/usr/bin/sudo -u $u /usr/bin/ssh -G . | /usr/bin/grep -c "^serveraliveinterval $ODV")
-          if [[ "$sshCheck" == "0" ]]; then
-            ret="fail"
-            break
-          fi
-        done
-        /bin/echo $ret
-      fix: |-
-        [source,bash]
-        ----
-        for u in $(/usr/bin/dscl . -list /Users UniqueID | /usr/bin/awk '$2 > 500 {print $1}'); do
-          config=$(/usr/bin/sudo -u $u /usr/bin/ssh -Gv . 2>&1 | /usr/bin/awk '/Reading configuration data/ {print $NF}'| /usr/bin/tr -d '\r')
-          configarray=( ${(f)config} )
-          for c in $configarray; do
-            /usr/bin/sudo -u $u /usr/bin/grep -q '^ServerAliveInterval' "$c" && /usr/bin/sed -i '' 's/.*ServerAliveInterval.*/ServerAliveInterval $ODV/' "$c" || /bin/echo 'ServerAliveInterval $ODV' >> "$c"
+        - name: disa_stig
+          severity: medium
+    '13.0': {}
+    enforcement_info:
+      check:
+        shell: |-
+          ret="pass"
+          for u in $(/usr/bin/dscl . -list /Users UniqueID | /usr/bin/awk '$2 > 500 {print $1}'); do
+            sshCheck=$(/usr/bin/sudo -u $u /usr/bin/ssh -G . | /usr/bin/grep -c "^serveraliveinterval $ODV")
+            if [[ "$sshCheck" == "0" ]]; then
+              ret="fail"
+              break
+            fi
           done
-        done
-        ----
-      result:
-        string: pass
-    ventura:
-      check: |-
-        ret="pass"
-        for u in $(/usr/bin/dscl . -list /Users UniqueID | /usr/bin/awk '$2 > 500 {print $1}'); do
-          sshCheck=$(/usr/bin/sudo -u $u /usr/bin/ssh -G . | /usr/bin/grep -c "^serveraliveinterval $ODV")
-          if [[ "$sshCheck" == "0" ]]; then
-            ret="fail"
-            break
-          fi
-        done
-        /bin/echo $ret
-      fix: |-
-        [source,bash]
-        ----
-        for u in $(/usr/bin/dscl . -list /Users UniqueID | /usr/bin/awk '$2 > 500 {print $1}'); do
-          config=$(/usr/bin/sudo -u $u /usr/bin/ssh -Gv . 2>&1 | /usr/bin/awk '/Reading configuration data/ {print $NF}'| /usr/bin/tr -d '\r')
-          configarray=( ${(f)config} )
-          for c in $configarray; do
-            /usr/bin/sudo -u $u /usr/bin/grep -q '^ServerAliveInterval' "$c" && /usr/bin/sed -i '' 's/.*ServerAliveInterval.*/ServerAliveInterval $ODV/' "$c" || /bin/echo 'ServerAliveInterval $ODV' >> "$c"
+          /bin/echo $ret
+        result:
+          string: pass
+      fix:
+        shell: |-
+          for u in $(/usr/bin/dscl . -list /Users UniqueID | /usr/bin/awk '$2 > 500 {print $1}'); do
+            config=$(/usr/bin/sudo -u $u /usr/bin/ssh -Gv . 2>&1 | /usr/bin/awk '/Reading configuration data/ {print $NF}'| /usr/bin/tr -d '\r')
+            configarray=( ${(f)config} )
+            for c in $configarray; do
+              /usr/bin/sudo -u $u /usr/bin/grep -q '^ServerAliveInterval' "$c" && /usr/bin/sed -i '' 's/.*ServerAliveInterval.*/ServerAliveInterval $ODV/' "$c" || /bin/echo 'ServerAliveInterval $ODV' >> "$c"
+            done
           done
-        done
-        ----
-      result:
-        string: pass
-    monterey:
-      check: |-
-        ret="pass"
-        for u in $(/usr/bin/dscl . -list /Users UniqueID | /usr/bin/awk '$2 > 500 {print $1}'); do
-          sshCheck=$(/usr/bin/sudo -u $u /usr/bin/ssh -G . | /usr/bin/grep -c "^serveraliveinterval $ODV")
-          if [[ "$sshCheck" == "0" ]]; then
-            ret="fail"
-            break
-          fi
-        done
-        /bin/echo $ret
-      fix: |-
-        [source,bash]
-        ----
-        for u in $(/usr/bin/dscl . -list /Users UniqueID | /usr/bin/awk '$2 > 500 {print $1}'); do
-          config=$(/usr/bin/sudo -u $u /usr/bin/ssh -Gv . 2>&1 | /usr/bin/awk '/Reading configuration data/ {print $NF}'| /usr/bin/tr -d '\r')
-          configarray=( ${(f)config} )
-          for c in $configarray; do
-            /usr/bin/sudo -u $u /usr/bin/grep -q '^ServerAliveInterval' "$c" && /usr/bin/sed -i '' 's/.*ServerAliveInterval.*/ServerAliveInterval $ODV/' "$c" || /bin/echo 'ServerAliveInterval $ODV' >> "$c"
-          done
-        done
-        ----
-      result:
-        string: pass
-    big_sur:
-      check: /usr/bin/awk '/^ServerAliveInterval/{print $2}' /etc/ssh/ssh_config
-      fix: |-
-        [source,bash]
-        ----
-        /usr/bin/grep -q '^ServerAliveInterval' /etc/ssh/ssh_config && /usr/bin/sed -i.bak  's/.*ServerAliveInterval.*/ServerAliveInterval $ODV/' /etc/ssh/ssh_config || /bin/echo 'ServerAliveInterval $ODV' >> /etc/ssh/ssh_config
-        ----
-      result:
-        integer: $ODV
-    catalina:
-      check: /usr/bin/awk '/^ServerAliveInterval/{print $2}' /etc/ssh/ssh_config
-      fix: |-
-        [source,bash]
-        ----
-        /usr/bin/grep -q '^ServerAliveInterval' /etc/ssh/ssh_config && /usr/bin/sed -i.bak  's/.*ServerAliveInterval.*/ServerAliveInterval $ODV/' /etc/ssh/ssh_config || /bin/echo 'ServerAliveInterval $ODV' >> /etc/ssh/ssh_config
-        ----
-      result:
-        integer: $ODV
 odv:
-  hint: Number of seconds.
+  hint:
+    datatype: number
+    description: Number of seconds, e.g. 900
+    validation:
+      min: 1
   recommended: 900
   stig: 900
 tags:
@@ -169,4 +89,3 @@ tags:
   - cnssi-1253_high
   - cmmc_lvl2
   - cnssi-1253_moderate
-  - cnssi-1253

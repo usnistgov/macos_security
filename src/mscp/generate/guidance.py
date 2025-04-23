@@ -6,6 +6,7 @@ import sys
 import tempfile
 from base64 import b64encode
 from pathlib import Path
+from typing import Any
 
 # Additional python modules
 from loguru import logger
@@ -69,7 +70,9 @@ def generate_guidance(args: argparse.Namespace) -> None:
     custom: bool = not any(Path(config["custom"]["root_dir"]).iterdir())
     show_all_tags: bool = False
 
-    current_version_data: dict = get_version_data(args.os_name, args.os_version)
+    current_version_data: dict[str, Any] = get_version_data(
+        args.os_name, args.os_version
+    )
 
     output_basename: str = args.baseline.name
     baseline_name: str = args.baseline.stem
@@ -132,7 +135,7 @@ def generate_guidance(args: argparse.Namespace) -> None:
         logger.info("Generating declarative components")
         generate_ddm(build_path, baseline, baseline_name)
 
-    if args.script:
+    if args.script and args.os_name == "macos":
         logger.info("Generating compliance script")
         generate_script(build_path, baseline_name, audit_name, baseline, log_reference)
 
@@ -165,8 +168,11 @@ def generate_guidance(args: argparse.Namespace) -> None:
         logger.info("Generating declarative components")
         generate_ddm(build_path, baseline, baseline_name)
 
-        logger.info("Generating compliance script")
-        generate_script(build_path, baseline_name, audit_name, baseline, log_reference)
+        if args.os_name == "macos":
+            logger.info("Generating compliance script")
+            generate_script(
+                build_path, baseline_name, audit_name, baseline, log_reference
+            )
 
         logger.info("Generating Excel document")
         generate_excel(spreadsheet_output_file, baseline)

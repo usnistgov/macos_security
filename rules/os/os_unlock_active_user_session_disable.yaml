@@ -9,18 +9,12 @@ discussion: |
 references:
   nist:
     cce:
-      sequoia:
+      macos_15:
         - CCE-94322-5
-      sonoma:
+      macos_14:
         - CCE-92919-0
-      ventura:
+      macos_13:
         - CCE-91907-6
-      monterey:
-        - CCE-91022-4
-      big_sur:
-        - CCE-85395-2
-      catalina:
-        - CCE-84804-4
     800-53r5:
       - IA-2
       - IA-2(5)
@@ -35,96 +29,57 @@ references:
       - SRG-OS-000109-GPOS-00056
       - SRG-OS-000104-GPOS-00051
     disa_stig:
-      sequoia:
+      macos_15:
         - APPL-15-000090
-      sonoma:
+      macos_14:
         - APPL-14-000090
     cmmc:
       - IA.L1-3.5.1
       - IA.L1-3.5.2
   cis:
     benchmark:
-      sequoia:
+      macos_15:
         - 5.7 (level 1)
-      sonoma:
+      macos_14:
         - 5.7 (level 1)
-      ventura:
-        - 5.7 (level 1)
-      monterey:
-        - 5.7 (level 1)
-      big_sur:
+      macos_13:
         - 5.7 (level 1)
     controls_v8:
       - 4.3
 platforms:
   macOS:
-    check: $OS_VALUE
-    result:
-      integer: 1
-    fix: $OS_VALUE
-    sequoia:
-      severity: medium
+    '15.0':
       benchmarks:
-        - cis_lvl1
-        - cis_lvl2
-        - disa_stig
-      check: /usr/bin/security authorizationdb read system.login.screensaver 2>&1 | /usr/bin/grep -c '<string>$ODV</string>'
-      fix: |-
-        [source,bash]
-        ----
-        /usr/bin/security authorizationdb write system.login.screensaver "$ODV"
-        ----
-    sonoma:
-      severity: medium
+        - name: cis_lvl1
+        - name: cis_lvl2
+        - name: disa_stig
+          severity: medium
+    '14.0':
       benchmarks:
-        - cis_lvl1
-        - cis_lvl2
-        - disa_stig
-      check: /usr/bin/security authorizationdb read system.login.screensaver 2>&1 | /usr/bin/grep -c '<string>$ODV</string>'
-      fix: |-
-        [source,bash]
-        ----
-        /usr/bin/security authorizationdb write system.login.screensaver "$ODV"
-        ----
-    ventura:
+        - name: cis_lvl1
+        - name: cis_lvl2
+        - name: disa_stig
+          severity: medium
+    '13.0':
       benchmarks:
-        - cis_lvl1
-        - cis_lvl2
-      check: /usr/bin/security authorizationdb read system.login.screensaver 2>&1 | /usr/bin/grep -c '<string>$ODV</string>'
-      fix: |-
-        [source,bash]
-        ----
-        /usr/bin/security authorizationdb write system.login.screensaver "$ODV"
-        ----
-    monterey:
-      benchmarks:
-        - cis_lvl1
-        - cis_lvl2
-      check: /usr/bin/security authorizationdb read system.login.screensaver 2>&1 | /usr/bin/grep -c '<string>$ODV</string>'
-      fix: |-
-        [source,bash]
-        ----
-        /usr/bin/security authorizationdb write system.login.screensaver "$ODV"
-        ----
-    big_sur:
-      benchmarks:
-        - cis_lvl1
-        - cis_lvl2
-      check: /usr/bin/security authorizationdb read system.login.screensaver 2>&1 | /usr/bin/grep -c 'use-login-window-ui'
-      fix: |-
-        [source,bash]
-        ----
-        /usr/bin/security authorizationdb write system.login.screensaver "use-login-window-ui"
-        ----
-    catalina:
-      check: /usr/bin/security authorizationdb read system.login.screensaver 2>&1 | /usr/bin/grep -c 'use-login-window-ui'
-      fix: |-
-        [source,bash]
-        ----
-        /usr/bin/security authorizationdb write system.login.screensaver "use-login-window-ui"
-        ----
+        - name: cis_lvl1
+        - name: cis_lvl2
+    enforcement_info:
+      check:
+        shell: /usr/bin/security authorizationdb read system.login.screensaver 2>&1 | /usr/bin/grep -c '<string>$ODV</string>'
+        result:
+          integer: 1
+      fix:
+        shell: /usr/bin/security authorizationdb write system.login.screensaver "$ODV"
 odv:
-  hint: Review the /System/Library/Security/authorization.plist file for more information.
+  hint:
+    datatype: enum
+    description: Refer to system.login.screensaver in /System/Library/Security/authorization.plist
+    validation:
+      enumValues:
+        - authenticate-session-owner
+        - authenticate-session-owner-or-admin
+        - use-login-window-ui
   recommended: authenticate-session-owner
   cis_lvl1: use-login-window-ui
   cis_lvl2: use-login-window-ui
@@ -140,4 +95,3 @@ tags:
   - cmmc_lvl2
   - cmmc_lvl1
   - cnssi-1253_moderate
-  - cnssi-1253

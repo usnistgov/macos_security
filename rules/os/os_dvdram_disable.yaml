@@ -15,66 +15,50 @@ discussion: |
 references:
   nist:
     cce:
-      sequoia:
+      macos_15:
         - CCE-94183-1
-      sonoma:
+      macos_14:
         - CCE-92782-2
-      ventura:
+      macos_13:
         - CCE-91780-7
-      monterey:
-        - CCE-91101-6
-      big_sur:
-        - CCE-85547-8
     800-53r5:
       - MP-7
     800-171r3:
       - 03.08.07
   disa:
     disa_stig:
-      ventura:
+      macos_13:
         - APPL-13-005051
-      monterey:
-        - APPL-12-005051
-      big_sur:
-        - APPL-12-005051
     cmmc:
       - MP.L2-3.8.7
       - MP.L2-3.8.8
 platforms:
   macOS:
-    check: |
-      /usr/bin/osascript -l JavaScript << EOS
-      ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('com.apple.systemuiserver')\
-      .objectForKey('mount-controls'))["dvdram"]
-      EOS
-    result:
-      string: deny
-    fix: |
-      This is implemented by a Configuration Profile.
-    sequoia:
-      severity: medium
-    sonoma:
-      severity: medium
-    ventura:
-      severity: medium
+    '15.0': {}
+    '14.0': {}
+    '13.0':
       benchmarks:
-        - disa_stig
-    monterey:
-      severity: medium
-      benchmarks:
-        - disa_stig
-    big_sur:
-      severity: medium
-      benchmarks:
-        - disa_stig
+        - name: disa_stig
+          severity: medium
+    enforcement_info:
+      check:
+        shell: |-
+          /usr/bin/osascript -l JavaScript << EOS
+          ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('com.apple.systemuiserver')\
+          .objectForKey('mount-controls'))["dvdram"]
+          EOS
+        result:
+          string: deny
+    introduced: '10.7'
 tags:
   - cnssi-1253_low
   - cnssi-1253_high
   - cmmc_lvl2
   - cnssi-1253_moderate
 mobileconfig_info:
-  com.apple.systemuiserver:
-    mount-controls:
-      dvdram:
-        - alert
-        - eject
+  - PayloadType: com.apple.systemuiserver
+    PayloadContent:
+      - mount-controls:
+          dvdram:
+            - alert
+            - eject

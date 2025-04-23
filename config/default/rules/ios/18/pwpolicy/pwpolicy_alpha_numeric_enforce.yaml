@@ -17,7 +17,7 @@ references:
     - ANNEX D (Section 5.9.1 - Device-Code)
     - ANNEX K
 operating_system:
-  - name: iOS
+  - name: ios
     version:
       - 18.0
 tags:

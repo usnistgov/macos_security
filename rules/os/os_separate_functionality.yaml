@@ -1,6 +1,6 @@
 id: os_separate_functionality
 title: Configure the System to Separate User and System Functionality
-discussion: |
+discussion: |-
   The information system _IS_ configured to separate user and system functionality.
 
   Operating system management functionality includes functions necessary for administration and requires privileged user access. Allowing non-privileged users to access operating system management functionality capabilities increases the risk that non-privileged users may obtain elevated privileges. Operating system management functionality includes functions necessary to administer console, network components, workstations, or servers and typically requires privileged user access.
@@ -8,26 +8,24 @@ discussion: |
   The inherent configuration of the macOS allows only privileged users to access operating system management functionalities.
 
   link:https://developer.apple.com/library/archive/documentation/MacOSX/Conceptual/BPSystemStartup/Chapters/DesigningDaemons.html[]
+
+  NOTE: The technology supports this requirement and cannot be configured to be out of compliance. The technology inherently meets this requirement.
 references:
   nist:
     cce:
-      sequoia:
+      macos_15:
         - CCE-94291-2
-      sonoma:
+      macos_14:
         - CCE-92886-1
-      ventura:
+      macos_13:
         - CCE-91876-3
-      monterey:
-        - CCE-90999-4
-      big_sur:
-        - CCE-85377-0
-      catalina:
-        - CCE-84888-7
     800-53r5:
       - SC-2
       - MA-4(1)
     800-171r3:
-      - 3.13.3
+      - 03.01.03
+      - 03.01.05
+      - 03.01.07
   disa:
     srg:
       - SRG-OS-000132-GPOS-00067
@@ -35,16 +33,12 @@ references:
       - SC.L2-3.13.3
 platforms:
   macOS:
-    check: |
-      The technology supports this requirement and cannot be configured to be out of compliance. The technology inherently meets this requirement.
-    fix: |
-      The technology inherently meets this requirement. No fix is required.
-    sequoia: {}
-    sonoma: {}
-    ventura: {}
-    monterey: {}
-    big_sur: {}
-    catalina: {}
+    '15.0': {}
+    '14.0': {}
+    '13.0': {}
+    enforcement_info:
+      fix:
+        additional_info: The technology inherently meets this requirement. No fix is required.
 tags:
   - 800-53r5_moderate
   - 800-53r5_high
@@ -54,4 +48,3 @@ tags:
   - cnssi-1253_high
   - cmmc_lvl2
   - cnssi-1253_moderate
-  - cnssi-1253

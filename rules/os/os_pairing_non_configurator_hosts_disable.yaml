@@ -31,27 +31,29 @@ references:
         - ANNEX K
 platforms:
   iOS:
-    ios_18:
+    '18.0':
       supervised: true
       benchmarks:
-        - cis_lvl2_enterprise
-        - indigo_base
-        - indigo_high
-    ios_17:
+        - name: cis_lvl2_enterprise
+        - name: indigo_base
+        - name: indigo_high
+    '17.0':
       supervised: true
       benchmarks:
-        - cis_lvl2_enterprise
-        - indigo_base
-        - indigo_high
-    ios_16:
+        - name: cis_lvl2_enterprise
+        - name: indigo_base
+        - name: indigo_high
+    '16.0':
       supervised: true
       benchmarks:
-        - cis_lvl2_enterprise
+        - name: cis_lvl2_enterprise
+    introduced: '7.0'
 tags:
   - 800-53r5_low
   - 800-53r5_moderate
   - 800-53r5_high
   - cisv8
 mobileconfig_info:
-  com.apple.applicationaccess:
-    allowHostPairing: false
+  - PayloadType: com.apple.applicationaccess
+    PayloadContent:
+      - allowHostPairing: false

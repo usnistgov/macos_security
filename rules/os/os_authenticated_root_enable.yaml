@@ -11,16 +11,12 @@ discussion: |
 references:
   nist:
     cce:
-      sequoia:
+      macos_15:
         - CCE-94164-1
-      sonoma:
+      macos_14:
         - CCE-92764-0
-      ventura:
+      macos_13:
         - CCE-91762-5
-      monterey:
-        - CCE-90907-7
-      big_sur:
-        - CCE-85298-8
     800-53r5:
       - AC-3
       - CM-5
@@ -37,9 +33,9 @@ references:
     srg:
       - SRG-OS-000080-GPOS-00048
     disa_stig:
-      sequoia:
+      macos_15:
         - APPL-15-005070
-      sonoma:
+      macos_14:
         - APPL-14-005070
     cmmc:
       - AC.L1-3.1.1
@@ -47,59 +43,51 @@ references:
       - SC.L2-3.13.11
   cis:
     benchmark:
-      sequoia:
+      macos_15:
         - 5.1.4 (level 1)
-      sonoma:
+      macos_14:
         - 5.1.4 (level 1)
-      ventura:
-        - 5.1.4 (level 1)
-      monterey:
-        - 5.1.4 (level 1)
-      big_sur:
+      macos_13:
         - 5.1.4 (level 1)
     controls_v8:
       - 3.6
       - 3.11
 platforms:
   macOS:
-    check: $OS_VALUE
-    result:
-      integer: 1
-    fix: |
-      [source,bash]
-      ----
-      /usr/bin/csrutil authenticated-root enable
-      ----
-      NOTE: To re-enable "Authenticated Root", boot the affected system into "Recovery" mode, launch "Terminal" from the "Utilities" menu, and run the command.
-    sequoia:
-      severity: medium
+    '15.0':
       benchmarks:
-        - cis_lvl1
-        - cis_lvl2
-        - disa_stig
-      check: /usr/libexec/mdmclient QuerySecurityInfo | /usr/bin/grep -c "AuthenticatedRootVolumeEnabled = 1;"
-    sonoma:
-      severity: medium
+        - name: cis_lvl1
+        - name: cis_lvl2
+        - name: disa_stig
+          severity: medium
+    '14.0':
       benchmarks:
-        - cis_lvl1
-        - cis_lvl2
-        - disa_stig
-      check: /usr/bin/csrutil authenticated-root | /usr/bin/grep -c 'enabled'
-    ventura:
+        - name: cis_lvl1
+        - name: cis_lvl2
+        - name: disa_stig
+          severity: medium
+      enforcement_info:
+        check:
+          shell: /usr/bin/csrutil authenticated-root | /usr/bin/grep -c 'enabled'
+          result:
+            integer: 1
+    '13.0':
       benchmarks:
-        - cis_lvl1
-        - cis_lvl2
-      check: /usr/bin/csrutil authenticated-root | /usr/bin/grep -c 'enabled'
-    monterey:
-      benchmarks:
-        - cis_lvl1
-        - cis_lvl2
-      check: /usr/bin/csrutil authenticated-root | /usr/bin/grep -c 'enabled'
-    big_sur:
-      benchmarks:
-        - cis_lvl1
-        - cis_lvl2
-      check: /usr/bin/csrutil authenticated-root | /usr/bin/grep -c 'enabled'
+        - name: cis_lvl1
+        - name: cis_lvl2
+      enforcement_info:
+        check:
+          shell: /usr/bin/csrutil authenticated-root | /usr/bin/grep -c 'enabled'
+          result:
+            integer: 1
+    enforcement_info:
+      check:
+        shell: /usr/libexec/mdmclient QuerySecurityInfo | /usr/bin/grep -c "AuthenticatedRootVolumeEnabled = 1;"
+        result:
+          integer: 1
+      fix:
+        shell: /usr/bin/csrutil authenticated-root enable
+        additional_info: 'NOTE: To re-enable "Authenticated Root", boot the affected system into "Recovery" mode, launch "Terminal" from the "Utilities" menu, and run the command.'
 tags:
   - 800-53r5_low
   - 800-53r5_moderate

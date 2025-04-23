@@ -30,7 +30,12 @@ def run_command(command: str) -> tuple[str | None, str | None]:
         return result.stdout.strip(), None
 
     except subprocess.CalledProcessError as e:
-        logger.error("Command failed with return code {}: {}", e.returncode, e.stderr)
+        logger.error(
+            "Command '{}' failed with return code {}: {}",
+            command,
+            e.returncode,
+            e.stderr,
+        )
 
         return None, f"Command failed: {e.stderr}"
 

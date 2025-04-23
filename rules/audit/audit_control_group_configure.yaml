@@ -5,16 +5,12 @@ discussion: |
 references:
   nist:
     cce:
-      sequoia:
+      macos_15:
         - CCE-94107-0
-      sonoma:
+      macos_14:
         - CCE-92707-9
-      ventura:
+      macos_13:
         - CCE-91707-0
-      monterey:
-        - CCE-91089-3
-      big_sur:
-        - CCE-85496-8
     800-53r5:
       - AU-9
     800-171r3:
@@ -37,61 +33,47 @@ references:
       - SRG-OS-000258-GPOS-00099
       - SRG-OS-000058-GPOS-00028
     disa_stig:
-      sequoia:
+      macos_15:
         - APPL-15-001110
-      sonoma:
+      macos_14:
         - APPL-14-001110
     cmmc:
       - AU.L2-3.3.8
   cis:
     benchmark:
-      sequoia:
+      macos_15:
         - 3.5 (level 1)
-      sonoma:
+      macos_14:
         - 3.5 (level 1)
-      ventura:
-        - 3.5 (level 1)
-      monterey:
-        - 3.5 (level 1)
-      big_sur:
+      macos_13:
         - 3.5 (level 1)
     controls_v8:
       - 3.3
 platforms:
   macOS:
-    check: |
-      /bin/ls -dn /etc/security/audit_control | /usr/bin/awk '{print $4}'
-    result:
-      integer: 0
-    fix: |
-      [source,bash]
-      ----
-      /usr/bin/chgrp wheel /etc/security/audit_control
-      ----
-    sequoia:
-      severity: medium
+    '15.0':
       benchmarks:
-        - cis_lvl1
-        - cis_lvl2
-        - disa_stig
-    sonoma:
-      severity: medium
+        - name: cis_lvl1
+        - name: cis_lvl2
+        - name: disa_stig
+          severity: medium
+    '14.0':
       benchmarks:
-        - cis_lvl1
-        - cis_lvl2
-        - disa_stig
-    ventura:
+        - name: cis_lvl1
+        - name: cis_lvl2
+        - name: disa_stig
+          severity: medium
+    '13.0':
       benchmarks:
-        - cis_lvl1
-        - cis_lvl2
-    monterey:
-      benchmarks:
-        - cis_lvl1
-        - cis_lvl2
-    big_sur:
-      benchmarks:
-        - cis_lvl1
-        - cis_lvl2
+        - name: cis_lvl1
+        - name: cis_lvl2
+    enforcement_info:
+      check:
+        shell: /bin/ls -dn /etc/security/audit_control | /usr/bin/awk '{print $4}'
+        result:
+          integer: 0
+      fix:
+        shell: /usr/bin/chgrp wheel /etc/security/audit_control
 tags:
   - cisv8
   - cnssi-1253_low

@@ -17,16 +17,18 @@ references:
         - ANNEX D (Section 5.6.1 - Mail)
 platforms:
   iOS:
-    ios_18:
+    '18.0':
       supervised: false
       benchmarks:
-        - indigo_base
-        - indigo_high
-    ios_17:
+        - name: indigo_base
+        - name: indigo_high
+    '17.0':
       supervised: false
       benchmarks:
-        - indigo_base
-        - indigo_high
+        - name: indigo_base
+        - name: indigo_high
+    introduced: '5.0'
 mobileconfig_info:
-  com.apple.mail.managed:
-    PreventMove: true
+  - PayloadType: com.apple.mail.managed
+    PayloadContent:
+      - PreventMove: true

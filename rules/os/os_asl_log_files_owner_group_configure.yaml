@@ -7,18 +7,12 @@ discussion: |
 references:
   nist:
     cce:
-      sequoia:
+      macos_15:
         - CCE-94161-7
-      sonoma:
+      macos_14:
         - CCE-92761-6
-      ventura:
+      macos_13:
         - CCE-91759-1
-      monterey:
-        - CCE-90904-4
-      big_sur:
-        - CCE-85463-8
-      catalina:
-        - CCE-84928-1
     800-53r5:
       - SI-11
   disa:
@@ -29,57 +23,36 @@ references:
       - SRG-OS-000206-GPOS-00084
       - SRG-OS-000205-GPOS-00083
     disa_stig:
-      sequoia:
+      macos_15:
         - APPL-15-004001
-      sonoma:
+      macos_14:
         - APPL-14-004001
-      ventura:
+      macos_13:
         - APPL-13-004001
-      monterey:
-        - APPL-12-004001
-      big_sur:
-        - APPL-11-004001
-      catalina:
-        - AOSX-15-004001
 platforms:
   macOS:
-    check: |
-      /usr/bin/stat -f '%Su:%Sg:%N' $(/usr/bin/grep -e '^>' /etc/asl.conf /etc/asl/* | /usr/bin/awk '{ print $2 }') 2> /dev/null | /usr/bin/awk '!/^root:wheel:/{print $1}' | /usr/bin/wc -l | /usr/bin/tr -d ' '
-    result:
-      integer: 0
-    fix: |
-      [source,bash]
-      ----
-      /usr/sbin/chown root:wheel $(/usr/bin/stat -f '%Su:%Sg:%N' $(/usr/bin/grep -e '^>' /etc/asl.conf /etc/asl/* | /usr/bin/awk '{ print $2 }') 2> /dev/null | /usr/bin/awk '!/^root:wheel:/{print $1}' | /usr/bin/awk -F":" '!/^root:wheel:/{print $3}')
-      ----
-    sequoia:
-      severity: medium
+    '15.0':
       benchmarks:
-        - disa_stig
-    sonoma:
-      severity: medium
+        - name: disa_stig
+          severity: medium
+    '14.0':
       benchmarks:
-        - disa_stig
-    ventura:
-      severity: medium
+        - name: disa_stig
+          severity: medium
+    '13.0':
       benchmarks:
-        - disa_stig
-    monterey:
-      severity: medium
-      benchmarks:
-        - disa_stig
-    big_sur:
-      severity: medium
-      benchmarks:
-        - disa_stig
-    catalina:
-      severity: medium
-      benchmarks:
-        - disa_stig
+        - name: disa_stig
+          severity: medium
+    enforcement_info:
+      check:
+        shell: /usr/bin/stat -f '%Su:%Sg:%N' $(/usr/bin/grep -e '^>' /etc/asl.conf /etc/asl/* | /usr/bin/awk '{ print $2 }') 2> /dev/null | /usr/bin/awk '!/^root:wheel:/{print $1}' | /usr/bin/wc -l | /usr/bin/tr -d ' '
+        result:
+          integer: 0
+      fix:
+        shell: /usr/sbin/chown root:wheel $(/usr/bin/stat -f '%Su:%Sg:%N' $(/usr/bin/grep -e '^>' /etc/asl.conf /etc/asl/* | /usr/bin/awk '{ print $2 }') 2> /dev/null | /usr/bin/awk '!/^root:wheel:/{print $1}' | /usr/bin/awk -F":" '!/^root:wheel:/{print $3}')
 tags:
   - 800-53r5_moderate
   - 800-53r5_high
   - cnssi-1253_low
   - cnssi-1253_high
   - cnssi-1253_moderate
-  - manual

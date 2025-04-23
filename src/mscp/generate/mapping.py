@@ -5,13 +5,14 @@ import argparse
 import re
 import sys
 from pathlib import Path
+from typing import Any
 
 # Additional python modules
 from loguru import logger
 
 # Local python modules
 from src.mscp.classes import Author, Baseline, Macsecurityrule
-from src.mscp.common_utils import config, get_version_data, make_dir, open_csv
+from src.mscp.common_utils import config, get_version_data, make_dir, open_file
 
 
 def update_rule_with_custom_controls(
@@ -34,14 +35,16 @@ def update_rule_with_custom_controls(
 
 
 def generate_mapping(args: argparse.Namespace) -> None:
-    current_version_data: dict = get_version_data(args.os_name, args.os_version)
+    current_version_data: dict[str, Any] = get_version_data(
+        args.os_name, args.os_version
+    )
 
     rules: list[Macsecurityrule] = Macsecurityrule.collect_all_rules(
         args.os_name, args.os_version
     )
     custom_rules: list[Macsecurityrule] = []
 
-    csv_data: dict = open_csv(args.csv)
+    csv_data: dict[str, Any] = open_file(args.csv)
 
     if len(csv_data.keys()) < 2:
         logger.error("The CSV File can only contain 2 headers.")

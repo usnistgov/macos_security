@@ -5,43 +5,21 @@ discussion: |
 references:
   nist:
     cce:
-      sequoia:
+      macos_15:
         - CCE-94318-3
-      sonoma:
+      macos_14:
         - CCE-92915-8
-      ventura:
+      macos_13:
         - CCE-91903-5
-      monterey:
-        - CCE-91119-8
-      big_sur:
-        - CCE-85516-3
-  cis:
-    benchmark:
-      monterey:
-        - 2.2.2 (level 1)
-      big_sur:
-        - 2.2.2 (level 1)
 platforms:
   macOS:
-    check: |
-      /usr/bin/sntp $(/usr/sbin/systemsetup -getnetworktimeserver | /usr/bin/awk '{print $4}') | /usr/bin/awk -F'.' '/\+\/\-/{if (substr($1,2) >= 270) {print "No"} else {print "Yes"}}'
-    result:
-      string: 'Yes'
-    fix: |
-      [source,bash]
-      ----
-      /usr/bin/sntp -Ss $(/usr/sbin/systemsetup -getnetworktimeserver | /usr/bin/awk '{print $4}')
-      ----
-    sequoia: {}
-    sonoma: {}
-    ventura: {}
-    monterey:
-      benchmarks:
-        - cis_lvl1
-        - cis_lvl2
-    big_sur:
-      benchmarks:
-        - cis_lvl1
-        - cis_lvl2
-tags:
-  - cisv8
+    '15.0': {}
+    '14.0': {}
+    '13.0': {}
+    enforcement_info:
+      check:
+        shell: /usr/bin/sntp $(/usr/sbin/systemsetup -getnetworktimeserver | /usr/bin/awk '{print $4}') | /usr/bin/awk -F'.' '/\+\/\-/{if (substr($1,2) >= 270) {print "No"} else {print "Yes"}}'
+        result:
+          string: 'Yes'
+      fix:
+        shell: /usr/bin/sntp -Ss $(/usr/sbin/systemsetup -getnetworktimeserver | /usr/bin/awk '{print $4}')

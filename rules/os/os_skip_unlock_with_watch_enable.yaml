@@ -7,14 +7,12 @@ discussion: |
 references:
   nist:
     cce:
-      sequoia:
+      macos_15:
         - CCE-94297-9
-      sonoma:
+      macos_14:
         - CCE-92892-9
-      ventura:
+      macos_13:
         - CCE-91881-3
-      monterey:
-        - CCE-91002-6
     800-53r5:
       - AC-20
     800-171r3:
@@ -26,14 +24,12 @@ references:
     srg:
       - SRG-OS-000095-GPOS-00049
     disa_stig:
-      sequoia:
+      macos_15:
         - APPL-15-005056
-      sonoma:
+      macos_14:
         - APPL-14-005056
-      ventura:
+      macos_13:
         - APPL-13-005056
-      monterey:
-        - APPL-12-005056
     cmmc:
       - AC.L1-3.1.20
   cis:
@@ -41,31 +37,28 @@ references:
       - 4.1
 platforms:
   macOS:
-    check: |
-      /usr/bin/osascript -l JavaScript << EOS
-      $.NSUserDefaults.alloc.initWithSuiteName('com.apple.SetupAssistant.managed')\
-      .objectForKey('SkipUnlockWithWatch').js
-      EOS
-    result:
-      string: 'true'
-    fix: |
-      This is implemented by a Configuration Profile.
-    sequoia:
-      severity: medium
+    '15.0':
       benchmarks:
-        - disa_stig
-    sonoma:
-      severity: medium
+        - name: disa_stig
+          severity: medium
+    '14.0':
       benchmarks:
-        - disa_stig
-    ventura:
-      severity: medium
+        - name: disa_stig
+          severity: medium
+    '13.0':
       benchmarks:
-        - disa_stig
-    monterey:
-      severity: medium
-      benchmarks:
-        - disa_stig
+        - name: disa_stig
+          severity: medium
+    enforcement_info:
+      check:
+        shell: |-
+          /usr/bin/osascript -l JavaScript << EOS
+          $.NSUserDefaults.alloc.initWithSuiteName('com.apple.SetupAssistant.managed')\
+          .objectForKey('SkipUnlockWithWatch').js
+          EOS
+        result:
+          string: 'true'
+    introduced: '12.0'
 tags:
   - 800-53r5_low
   - 800-53r5_moderate
@@ -78,5 +71,6 @@ tags:
   - cmmc_lvl1
   - cnssi-1253_moderate
 mobileconfig_info:
-  com.apple.SetupAssistant.managed:
-    SkipUnlockWithWatch: true
+  - PayloadType: com.apple.SetupAssistant.managed
+    PayloadContent:
+      - SkipUnlockWithWatch: true

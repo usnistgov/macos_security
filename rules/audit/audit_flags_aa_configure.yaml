@@ -9,18 +9,12 @@ discussion: |
 references:
   nist:
     cce:
-      sequoia:
+      macos_15:
         - CCE-94115-3
-      sonoma:
+      macos_14:
         - CCE-92715-2
-      ventura:
+      macos_13:
         - CCE-91715-3
-      monterey:
-        - CCE-90861-6
-      big_sur:
-        - CCE-85261-6
-      catalina:
-        - CCE-84711-1
     800-53r5:
       - AC-2(12)
       - AU-12
@@ -50,33 +44,23 @@ references:
       - SRG-OS-000458-GPOS-00203
       - SRG-OS-000468-GPOS-00212
     disa_stig:
-      sequoia:
+      macos_15:
         - APPL-15-001044
-      sonoma:
+      macos_14:
         - APPL-14-001044
-      ventura:
+      macos_13:
         - APPL-13-001044
-      monterey:
-        - APPL-12-001044
-      big_sur:
-        - APPL-11-001044
-      catalina:
-        - AOSX-15-001044
     cmmc:
       - AU.L2-3.3.3
       - AU.L2-3.3.6
       - SI.L2-3.14.3
   cis:
     benchmark:
-      sequoia:
+      macos_15:
         - 3.2 (level 2)
-      sonoma:
+      macos_14:
         - 3.2 (level 2)
-      ventura:
-        - 3.2 (level 2)
-      monterey:
-        - 3.2 (level 2)
-      big_sur:
+      macos_13:
         - 3.2 (level 2)
     controls_v8:
       - 3.14
@@ -84,44 +68,28 @@ references:
       - 8.5
 platforms:
   macOS:
-    check: |
-      /usr/bin/awk -F':' '/^flags/ { print $NF }' /etc/security/audit_control | /usr/bin/tr ',' '\n' | /usr/bin/grep -Ec 'aa'
-    result:
-      integer: 1
-    fix: |
-      [source,bash]
-      ----
-      /usr/bin/grep -qE "^flags.*[^-]aa" /etc/security/audit_control || /usr/bin/sed -i.bak '/^flags/ s/$/,aa/' /etc/security/audit_control; /usr/sbin/audit -s
-      ----
-    sequoia:
-      severity: medium
+    '15.0':
       benchmarks:
-        - cis_lvl2
-        - disa_stig
-    sonoma:
-      severity: medium
+        - name: cis_lvl2
+        - name: disa_stig
+          severity: medium
+    '14.0':
       benchmarks:
-        - cis_lvl2
-        - disa_stig
-    ventura:
-      severity: medium
+        - name: cis_lvl2
+        - name: disa_stig
+          severity: medium
+    '13.0':
       benchmarks:
-        - cis_lvl2
-        - disa_stig
-    monterey:
-      severity: medium
-      benchmarks:
-        - cis_lvl2
-        - disa_stig
-    big_sur:
-      severity: medium
-      benchmarks:
-        - cis_lvl2
-        - disa_stig
-    catalina:
-      severity: medium
-      benchmarks:
-        - disa_stig
+        - name: cis_lvl2
+        - name: disa_stig
+          severity: medium
+    enforcement_info:
+      check:
+        shell: /usr/bin/awk -F':' '/^flags/ { print $NF }' /etc/security/audit_control | /usr/bin/tr ',' '\n' | /usr/bin/grep -Ec 'aa'
+        result:
+          integer: 1
+      fix:
+        shell: /usr/bin/grep -qE "^flags.*[^-]aa" /etc/security/audit_control || /usr/bin/sed -i.bak '/^flags/ s/$/,aa/' /etc/security/audit_control; /usr/sbin/audit -s
 tags:
   - 800-53r5_privacy
   - 800-53r5_low
@@ -133,4 +101,3 @@ tags:
   - cnssi-1253_high
   - cmmc_lvl2
   - cnssi-1253_moderate
-  - cnssi-1253

@@ -14,7 +14,7 @@ discussion: |
 references:
   nist:
     cce:
-      ventura:
+      macos_13:
         - CCE-92009-0
   disa:
     cci:
@@ -22,19 +22,22 @@ references:
     srg:
       - SRG-OS-000095-GPOS-00049
     disa_stig:
-      ventura:
+      macos_13:
         - APPL-13-002032
 platforms:
   macOS:
-    ventura:
-      severity: medium
+    '13.0':
       benchmarks:
-        - disa_stig
-    check: |
-      /usr/bin/profiles show -output stdout-xml | /usr/bin/xmllint --xpath '//key[text()="DisabledPreferencePanes"]/following-sibling::*[1]' - | /usr/bin/grep -c "com.apple.preferences.internetaccounts"
-    result:
-      integer: 1
+        - name: disa_stig
+          severity: medium
+    enforcement_info:
+      check:
+        shell: /usr/bin/profiles show -output stdout-xml | /usr/bin/xmllint --xpath '//key[text()="DisabledPreferencePanes"]/following-sibling::*[1]' - | /usr/bin/grep -c "com.apple.preferences.internetaccounts"
+        result:
+          integer: 1
+    introduced: '10.7'
 mobileconfig_info:
-  com.apple.systempreferences:
-    DisabledPreferencePanes:
-      - com.apple.preferences.internetaccounts
+  - PayloadType: com.apple.systempreferences
+    PayloadContent:
+      - DisabledPreferencePanes:
+          - com.apple.preferences.internetaccounts

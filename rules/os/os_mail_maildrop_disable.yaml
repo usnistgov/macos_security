@@ -50,31 +50,36 @@ references:
         - ANNEX D (Section 5.6.1 - Mail)
 platforms:
   iOS:
-    ios_18:
-      severity: medium
+    '18.0':
       supervised: false
       benchmarks:
-        - cis_lvl2_byod
-        - cis_lvl2_enterprise
-        - ios_stig
-        - indigo_base
-        - indigo_high
-    ios_17:
-      severity: medium
+        - name: cis_lvl2_byod
+        - name: cis_lvl2_enterprise
+        - name: ios_stig
+          severity: medium
+        - name: indigo_base
+          severity: medium
+        - name: indigo_high
+          severity: medium
+    '17.0':
       supervised: false
       benchmarks:
-        - cis_lvl2_byod
-        - cis_lvl2_enterprise
-        - ios_stig
-        - indigo_base
-        - indigo_high
-    ios_16:
-      severity: medium
+        - name: cis_lvl2_byod
+        - name: cis_lvl2_enterprise
+        - name: ios_stig
+          severity: medium
+        - name: indigo_base
+          severity: medium
+        - name: indigo_high
+          severity: medium
+    '16.0':
       supervised: false
       benchmarks:
-        - cis_lvl2_byod
-        - cis_lvl2_enterprise
-        - ios_stig
+        - name: cis_lvl2_byod
+        - name: cis_lvl2_enterprise
+        - name: ios_stig
+          severity: medium
+    introduced: '9.2'
 tags:
   - 800-53r5_low
   - 800-53r5_moderate
@@ -84,5 +89,6 @@ tags:
   - cnssi-1253_low
   - cnssi-1253_high
 mobileconfig_info:
-  com.apple.mail.managed:
-    allowMailDrop: false
+  - PayloadType: com.apple.mail.managed
+    PayloadContent:
+      - allowMailDrop: false

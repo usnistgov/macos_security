@@ -9,11 +9,11 @@ discussion: |
 references:
   nist:
     cce:
-      sequoia:
+      macos_15:
         - CCE-94412-4
-      sonoma:
+      macos_14:
         - CCE-93008-1
-      ventura:
+      macos_13:
         - CCE-91998-5
     800-53r5:
       - AC-4
@@ -34,22 +34,16 @@ references:
       - 12.6
 platforms:
   macOS:
-    check: |
-      /usr/sbin/networksetup -listallnetworkservices | /usr/bin/grep -c "*Wi-Fi"
-    result:
-      integer: 1
-    fix: |
-      To disable Wi-Fi on a macOS system, run the following command.
-      [source,bash]
-      ----
-      /usr/sbin/networksetup -setnetworkserviceenabled "Wi-Fi" off
-      ----
-    sequoia:
-      severity: medium
-    sonoma:
-      severity: medium
-    ventura:
-      severity: medium
+    '15.0': {}
+    '14.0': {}
+    '13.0': {}
+    enforcement_info:
+      check:
+        shell: /usr/sbin/networksetup -listallnetworkservices | /usr/bin/grep -c "*Wi-Fi"
+        result:
+          integer: 1
+      fix:
+        shell: /usr/sbin/networksetup -setnetworkserviceenabled "Wi-Fi" off
 tags:
   - manual
   - 800-53r5_low

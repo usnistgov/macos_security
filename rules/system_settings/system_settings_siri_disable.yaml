@@ -7,11 +7,11 @@ discussion: |
 references:
   nist:
     cce:
-      sequoia:
+      macos_15:
         - CCE-94391-0
-      sonoma:
+      macos_14:
         - CCE-92987-7
-      ventura:
+      macos_13:
         - CCE-91976-1
     800-53r5:
       - AC-20
@@ -29,11 +29,11 @@ references:
     srg:
       - SRG-OS-000095-GPOS-00049
     disa_stig:
-      sequoia:
+      macos_15:
         - APPL-15-002020
-      sonoma:
+      macos_14:
         - APPL-14-002020
-      ventura:
+      macos_13:
         - APPL-13-002020
     cmmc:
       - AC.L1-3.1.20
@@ -45,47 +45,41 @@ references:
       - 4.8
 platforms:
   macOS:
-    check: $OS_VALUE
-    result:
-      string: 'false'
-    fix: |
-      This is implemented by a Configuration Profile.
-    sequoia:
-      severity: medium
+    '15.0':
       benchmarks:
-        - disa_stig
-      check: |-
-        /usr/bin/osascript -l JavaScript << EOS
-        $.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess')\
-        .objectForKey('allowAssistant').js
-        EOS
-      mobileconfig_info:
-        com.apple.applicationaccess:
-          allowAssistant: false
-    sonoma:
-      severity: medium
+        - name: disa_stig
+          severity: medium
+    '14.0':
       benchmarks:
-        - disa_stig
-      check: |-
-        /usr/bin/osascript -l JavaScript << EOS
-        $.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess')\
-        .objectForKey('allowAssistant').js
-        EOS
-      mobileconfig_info:
-        com.apple.applicationaccess:
-          allowAssistant: false
-    ventura:
-      severity: medium
+        - name: disa_stig
+          severity: medium
+    '13.0':
       benchmarks:
-        - disa_stig
-      check: |-
-        /usr/bin/osascript -l JavaScript << EOS
-        $.NSUserDefaults.alloc.initWithSuiteName('com.apple.ironwood.support')\
-        .objectForKey('Ironwood Allowed').js
-        EOS
+        - name: disa_stig
+          severity: medium
       mobileconfig_info:
-        com.apple.ironwood.support:
-          Ironwood Allowed: false
+        - PayloadType: com.apple.ironwood.support
+          PayloadContent:
+            - Ironwood Allowed: false
+      enforcement_info:
+        check:
+          shell: |-
+            /usr/bin/osascript -l JavaScript << EOS
+            $.NSUserDefaults.alloc.initWithSuiteName('com.apple.ironwood.support')\
+            .objectForKey('Ironwood Allowed').js
+            EOS
+          result:
+            string: 'false'
+    enforcement_info:
+      check:
+        shell: |-
+          /usr/bin/osascript -l JavaScript << EOS
+          $.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess')\
+          .objectForKey('allowAssistant').js
+          EOS
+        result:
+          string: 'false'
+    introduced: '14.0'
 tags:
   - 800-53r5_low
   - 800-53r5_moderate
@@ -97,4 +91,7 @@ tags:
   - cmmc_lvl2
   - cmmc_lvl1
   - cnssi-1253_moderate
-mobileconfig_info: $OS_VALUE
+mobileconfig_info:
+  - PayloadType: com.apple.applicationaccess
+    PayloadContent:
+      - allowAssistant: false

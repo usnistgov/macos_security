@@ -10,11 +10,11 @@ discussion: |
 references:
   nist:
     cce:
-      sequoia:
+      macos_15:
         - CCE-94352-2
-      sonoma:
+      macos_14:
         - CCE-92949-7
-      ventura:
+      macos_13:
         - CCE-91936-5
     800-53r5:
       - AC-18
@@ -32,11 +32,11 @@ references:
       - SRG-OS-000481-GPOS-00481
       - SRG-OS-000480-GPOS-00228
     disa_stig:
-      sequoia:
+      macos_15:
         - APPL-15-002062
-      sonoma:
+      macos_14:
         - APPL-14-002062
-      ventura:
+      macos_13:
         - APPL-13-002062
     cmmc:
       - AC.L2-3.1.16
@@ -47,27 +47,28 @@ references:
       - 13.9
 platforms:
   macOS:
-    check: |
-      /usr/bin/osascript -l JavaScript << EOS
-      $.NSUserDefaults.alloc.initWithSuiteName('com.apple.MCXBluetooth')\
-      .objectForKey('DisableBluetooth').js
-      EOS
-    result:
-      string: 'true'
-    fix: |
-      This is implemented by a Configuration Profile.
-    sequoia:
-      severity: high
+    '15.0':
       benchmarks:
-        - disa_stig
-    sonoma:
-      severity: high
+        - name: disa_stig
+          severity: high
+    '14.0':
       benchmarks:
-        - disa_stig
-    ventura:
-      severity: low
+        - name: disa_stig
+          severity: high
+    '13.0':
       benchmarks:
-        - disa_stig
+        - name: disa_stig
+          severity: low
+    enforcement_info:
+      check:
+        shell: |-
+          /usr/bin/osascript -l JavaScript << EOS
+          $.NSUserDefaults.alloc.initWithSuiteName('com.apple.MCXBluetooth')\
+          .objectForKey('DisableBluetooth').js
+          EOS
+        result:
+          string: 'true'
+    introduced: '-1'
 tags:
   - 800-53r5_low
   - 800-53r5_moderate
@@ -79,6 +80,7 @@ tags:
   - cmmc_lvl2
   - cnssi-1253_moderate
 mobileconfig_info:
-  com.apple.ManagedClient.preferences:
-    com.apple.MCXBluetooth:
-      DisableBluetooth: true
+  - PayloadType: com.apple.ManagedClient.preferences
+    PayloadContent:
+      - com.apple.MCXBluetooth:
+          DisableBluetooth: true

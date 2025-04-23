@@ -10,7 +10,7 @@ from typing import Union
 from loguru import logger
 
 # Local python modules
-from src.mscp import __version__
+from src.mscp import __version__, validate_yaml_file
 from src.mscp.generate import (
     generate_baseline,
     generate_checklist,
@@ -308,6 +308,18 @@ def main() -> None:
         choices=["2", "3"],
     )
 
+    validate_parser: argparse.ArgumentParser = subparsers.add_parser(
+        "validate", help="Validates the YAML files in the rules directory."
+    )
+    validate_parser.set_defaults(func=validate_yaml_file)
+
+    validate_parser.add_argument(
+        "-i",
+        "--only_invalid",
+        help="Only show invalid files.",
+        action="store_true",
+    )
+
     try:
         args = parser.parse_args()
     except argparse.ArgumentError as e:
@@ -320,15 +332,15 @@ def main() -> None:
         parser.print_help()
         sys.exit()
 
-    if args.os_name == "ios" and args.os_version < 18:
+    if args.os_name == "ios" and args.os_version < 16:
         logger.warning(
-            "iOS/iPadOS 17 and below is not supported, please use mSCP version 1.0."
+            "iOS/iPadOS 16 and below is not supported, please use mSCP version 1.0."
         )
         sys.exit()
 
-    if args.os_name == "macos" and args.os_version < 15:
+    if args.os_name == "macos" and args.os_version < 13:
         logger.warning(
-            "macOS 14 and below is not supported, please use mSCP version 1.0."
+            "macOS 13 and below is not supported, please use mSCP version 1.0."
         )
         sys.exit()
 
@@ -339,6 +351,12 @@ def main() -> None:
     if args.debug:
         logger.info("Debug mode enabled.")
         logger.level("DEBUG")
+
+    if args.os_name != "macos" and args.script:
+        logger.error(
+            "Compliance script generation is only supported for macOS. Please remove the --script flag."
+        )
+        sys.exit()
 
     args.func(args)
 

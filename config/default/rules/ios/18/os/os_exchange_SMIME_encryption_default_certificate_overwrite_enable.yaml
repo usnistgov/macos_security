@@ -16,7 +16,7 @@ references:
   indigo:
     - ANNEX D (Section 5.6.1 - Mail)
 operating_system:
-  - name: iOS
+  - name: ios
     version:
       - 18.0
 tags:

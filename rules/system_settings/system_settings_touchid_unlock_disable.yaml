@@ -11,11 +11,11 @@ discussion: |
 references:
   nist:
     cce:
-      sequoia:
+      macos_15:
         - CCE-94408-2
-      sonoma:
+      macos_14:
         - CCE-93003-2
-      ventura:
+      macos_13:
         - CCE-91994-4
     800-53r5:
       - IA-5
@@ -27,32 +27,33 @@ references:
     srg:
       - SRG-OS-000028-GPOS-00009
     disa_stig:
-      sequoia:
+      macos_15:
         - APPL-15-002090
-      sonoma:
+      macos_14:
         - APPL-14-002090
     cmmc:
       - AC.L2-3.1.10
 platforms:
   macOS:
-    check: |
-      /usr/bin/osascript -l JavaScript << EOS
-      $.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess')\
-      .objectForKey('allowFingerprintForUnlock').js
-      EOS
-    result:
-      string: 'false'
-    fix: |
-      This is implemented by a Configuration Profile.
-    sequoia:
-      severity: medium
+    '15.0':
       benchmarks:
-        - disa_stig
-    sonoma:
-      severity: medium
+        - name: disa_stig
+          severity: medium
+    '14.0':
       benchmarks:
-        - disa_stig
-    ventura: {}
+        - name: disa_stig
+          severity: medium
+    '13.0': {}
+    enforcement_info:
+      check:
+        shell: |-
+          /usr/bin/osascript -l JavaScript << EOS
+          $.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess')\
+          .objectForKey('allowFingerprintForUnlock').js
+          EOS
+        result:
+          string: 'false'
+    introduced: 10.12.4
 tags:
   - 800-53r5_moderate
   - 800-53r5_high
@@ -62,5 +63,6 @@ tags:
   - cmmc_lvl2
   - cnssi-1253_moderate
 mobileconfig_info:
-  com.apple.applicationaccess:
-    allowFingerprintForUnlock: false
+  - PayloadType: com.apple.applicationaccess
+    PayloadContent:
+      - allowFingerprintForUnlock: false

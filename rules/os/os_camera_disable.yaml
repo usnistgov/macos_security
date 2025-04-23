@@ -17,19 +17,13 @@ discussion: |
 references:
   nist:
     cce:
-      sequoia:
+      macos_15:
         - CCE-94172-4
-      sonoma:
+      macos_14:
         - CCE-92772-3
-      ventura:
+      macos_13:
         - CCE-91770-8
-      monterey:
-        - CCE-90910-1
-      big_sur:
-        - CCE-85301-0
-      catalina:
-        - CCE-84751-7
-      visionos_2.0:
+      visionos_2:
         - CCE-94493-4
   disa:
     cci:
@@ -38,56 +32,41 @@ references:
     srg:
       - SRG-OS-000095-GPOS-00049
     disa_stig:
-      sequoia:
+      macos_15:
         - APPL-15-002017
-      sonoma:
+      macos_14:
         - APPL-14-002017
-      ventura:
+      macos_13:
         - APPL-13-002017
-      monterey:
-        - APPL-12-002017
-      big_sur:
-        - APPL-11-002017
-      catalina:
-        - AOSX-15-002017
 platforms:
   macOS:
-    check: |
-      /usr/bin/osascript -l JavaScript << EOS
-      $.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess')\
-      .objectForKey('allowCamera').js
-      EOS
-    result:
-      string: 'false'
-    fix: |
-      This is implemented by a Configuration Profile.
-    sequoia:
-      severity: medium
+    '15.0':
       benchmarks:
-        - disa_stig
-    sonoma:
-      severity: medium
+        - name: disa_stig
+          severity: medium
+    '14.0':
       benchmarks:
-        - disa_stig
-    ventura:
-      severity: medium
+        - name: disa_stig
+          severity: medium
+    '13.0':
       benchmarks:
-        - disa_stig
-    monterey:
-      severity: medium
-      benchmarks:
-        - disa_stig
-    big_sur:
-      severity: medium
-      benchmarks:
-        - disa_stig
-    catalina:
-      severity: medium
-      benchmarks:
-        - disa_stig
+        - name: disa_stig
+          severity: medium
+    enforcement_info:
+      check:
+        shell: |-
+          /usr/bin/osascript -l JavaScript << EOS
+          $.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess')\
+          .objectForKey('allowCamera').js
+          EOS
+        result:
+          string: 'false'
+    introduced: '10.11'
   visionOS:
-    visionos_2.0:
+    '2.0':
       supervised: true
+    introduced: '2.0'
 mobileconfig_info:
-  com.apple.applicationaccess:
-    allowCamera: false
+  - PayloadType: com.apple.applicationaccess
+    PayloadContent:
+      - allowCamera: false

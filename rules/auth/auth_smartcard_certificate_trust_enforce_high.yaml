@@ -11,49 +11,39 @@ discussion: |
 references:
   nist:
     cce:
-      sequoia:
+      macos_15:
         - CCE-94136-9
-      sonoma:
+      macos_14:
         - CCE-92736-8
-      ventura:
+      macos_13:
         - CCE-91737-7
-      monterey:
-        - CCE-90881-4
-      big_sur:
-        - CCE-85278-0
-      catalina:
-        - CCE-84725-1
     800-53r5:
       - IA-5(2)
       - SC-17
   disa:
-    disa_stig:
-      catalina:
-        - AOSX-15-003002
     cmmc:
       - SC.L2-3.13.10
 platforms:
   macOS:
-    check: |
-      /usr/bin/osascript -l JavaScript << EOS
-      $.NSUserDefaults.alloc.initWithSuiteName('com.apple.security.smartcard')\
-      .objectForKey('checkCertificateTrust').js
-      EOS
-    result:
-      integer: 3
-    fix: |
-      This is implemented by a Configuration Profile.
-    sequoia: {}
-    sonoma: {}
-    ventura: {}
-    monterey: {}
-    big_sur: {}
-    catalina: {}
+    '15.0': {}
+    '14.0': {}
+    '13.0': {}
+    enforcement_info:
+      check:
+        shell: |-
+          /usr/bin/osascript -l JavaScript << EOS
+          $.NSUserDefaults.alloc.initWithSuiteName('com.apple.security.smartcard')\
+          .objectForKey('checkCertificateTrust').js
+          EOS
+        result:
+          integer: 3
+    introduced: 10.12.4
 tags:
   - 800-53r5_high
   - cnssi-1253_high
   - cnssi-1253_moderate
   - cnssi-1253_low
 mobileconfig_info:
-  com.apple.security.smartcard:
-    checkCertificateTrust: 3
+  - PayloadType: com.apple.security.smartcard
+    PayloadContent:
+      - checkCertificateTrust: 3

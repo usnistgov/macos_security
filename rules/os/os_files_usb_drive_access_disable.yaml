@@ -43,26 +43,29 @@ references:
         - ANNEX K
 platforms:
   iOS:
-    ios_18:
-      severity: medium
+    '18.0':
       supervised: true
       benchmarks:
-        - cis_lvl2_enterprise
-        - ios_stig
-        - indigo_high
-    ios_17:
-      severity: medium
+        - name: cis_lvl2_enterprise
+        - name: ios_stig
+          severity: medium
+        - name: indigo_high
+          severity: medium
+    '17.0':
       supervised: true
       benchmarks:
-        - cis_lvl2_enterprise
-        - ios_stig
-        - indigo_high
-    ios_16:
-      severity: medium
+        - name: cis_lvl2_enterprise
+        - name: ios_stig
+          severity: medium
+        - name: indigo_high
+          severity: medium
+    '16.0':
       supervised: true
       benchmarks:
-        - cis_lvl2_enterprise
-        - ios_stig
+        - name: cis_lvl2_enterprise
+        - name: ios_stig
+          severity: medium
+    introduced: '13.0'
 tags:
   - 800-53r5_moderate
   - 800-53r5_high
@@ -71,5 +74,6 @@ tags:
   - cnssi-1253_low
   - cnssi-1253_high
 mobileconfig_info:
-  com.apple.applicationaccess:
-    allowFilesUSBDriveAccess: false
+  - PayloadType: com.apple.applicationaccess
+    PayloadContent:
+      - allowFilesUSBDriveAccess: false

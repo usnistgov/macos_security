@@ -11,7 +11,7 @@ references:
         - CCE-93429-9
       ios_16:
         - CCE-93229-3
-      visionos_2.0:
+      visionos_2:
         - CCE-94500-6
     800-53r5:
       - CM-6
@@ -37,32 +37,37 @@ references:
         - ANNEX D (Section 5.6.1 - Mail)
 platforms:
   iOS:
-    ios_18:
-      severity: medium
+    '18.0':
       supervised: true
       benchmarks:
-        - cis_lvl1_enterprise
-        - cis_lvl2_enterprise
-        - ios_stig
-        - indigo_base
-        - indigo_high
-    ios_17:
+        - name: cis_lvl1_enterprise
+        - name: cis_lvl2_enterprise
+        - name: ios_stig
+          severity: medium
+        - name: indigo_base
+          severity: medium
+        - name: indigo_high
+          severity: medium
+    '17.0':
       supervised: true
       benchmarks:
-        - cis_lvl1_enterprise
-        - cis_lvl2_enterprise
-        - indigo_base
-        - indigo_high
-    ios_16:
+        - name: cis_lvl1_enterprise
+        - name: cis_lvl2_enterprise
+        - name: indigo_base
+        - name: indigo_high
+    '16.0':
       supervised: true
       benchmarks:
-        - cis_lvl1_enterprise
-        - cis_lvl2_enterprise
+        - name: cis_lvl1_enterprise
+        - name: cis_lvl2_enterprise
+    introduced: '6.0'
   visionOS:
-    visionos_2.0:
+    '2.0':
       supervised: true
+    introduced: '2.0'
 tags:
   - cisv8
 mobileconfig_info:
-  com.apple.applicationaccess:
-    allowUIConfigurationProfileInstallation: false
+  - PayloadType: com.apple.applicationaccess
+    PayloadContent:
+      - allowUIConfigurationProfileInstallation: false

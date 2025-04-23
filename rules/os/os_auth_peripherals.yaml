@@ -1,22 +1,18 @@
 id: os_auth_peripherals
 title: Must Authenticate Before Establishing a Connection
-discussion: |
+discussion: |-
   Organizational devices requiring unique device-to-device identification and authentication may be defined by type, by device, or by a combination of type/device. Information systems typically use either shared known information (e.g., Media Access Control [MAC] or Transmission Control Protocol/Internet Protocol [TCP/IP] addresses) for device identification or organizational authentication solutions (e.g., IEEE 802.1x and Extensible Authentication Protocol [EAP], Radius server with EAP-Transport Layer Security [TLS] authentication, Kerberos) to identify/authenticate devices on local and/or wide area networks. Organizations determine the required strength of authentication mechanisms by the security categories of information systems. Because of the challenges of applying this control on large scale, organizations are encouraged to only apply the control to those limited number (and type) of devices that truly need to support this capability.
+
+  NOTE: The technology does support this requirement, however, third party solutions are required to implement at an infrastructure level.
 references:
   nist:
     cce:
-      sequoia:
+      macos_15:
         - CCE-94163-3
-      sonoma:
+      macos_14:
         - CCE-92763-2
-      ventura:
+      macos_13:
         - CCE-91761-7
-      monterey:
-        - CCE-90906-9
-      big_sur:
-        - CCE-85297-0
-      catalina:
-        - CCE-84741-8
     800-53r5:
       - IA-3
     800-171r3:
@@ -32,16 +28,9 @@ references:
       - 13.9
 platforms:
   macOS:
-    check: |
-      The technology does support this requirement, however, third party solutions are required to implement at an infrastructure level.
-    fix: |
-      This requirement is a permanent finding and can be fixed by implementing a third party solution.
-    sequoia: {}
-    sonoma: {}
-    ventura: {}
-    monterey: {}
-    big_sur: {}
-    catalina: {}
+    '15.0': {}
+    '14.0': {}
+    '13.0': {}
 tags:
   - 800-53r5_moderate
   - 800-53r5_high
@@ -52,4 +41,3 @@ tags:
   - cmmc_lvl2
   - cmmc_lvl1
   - cnssi-1253_moderate
-  - cnssi-1253

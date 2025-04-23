@@ -1,6 +1,6 @@
 id: os_crypto_audit
 title: Protect Audit Integrity with Cryptographic Mechanisms
-discussion: |
+discussion: |-
   The information system _IS_ configured to implement cryptographic mechanisms to protect the integrity of audit information and audit tools.
 
   The Apple T2 Security Chip includes a dedicated Advanced Encryption Standard (AES) crypto engine built into the direct memory access (DMA) path between the flash storage and main system memory, which powers line-speed encrypted storage with FileVault and makes internal volume highly efficient.
@@ -8,21 +8,17 @@ discussion: |
   link:https://www.apple.com/euro/mac/shared/docs/Apple_T2_Security_Chip_Overview.pdf[]
 
   NOTE: This will only apply to a Mac that includes a T2 security chip.
+
+  NOTE: The technology supports this requirement and cannot be configured to be out of compliance. The technology inherently meets this requirement.
 references:
   nist:
     cce:
-      sequoia:
+      macos_15:
         - CCE-94179-9
-      sonoma:
+      macos_14:
         - CCE-92779-8
-      ventura:
+      macos_13:
         - CCE-91777-3
-      monterey:
-        - CCE-90915-0
-      big_sur:
-        - CCE-85305-1
-      catalina:
-        - CCE-84889-5
     800-53r5:
       - AU-9(3)
   disa:
@@ -30,16 +26,12 @@ references:
       - SRG-OS-000278-GPOS-00108
 platforms:
   macOS:
-    check: |
-      The technology supports this requirement and cannot be configured to be out of compliance. The technology inherently meets this requirement.
-    fix: |
-      The technology inherently meets this requirement. No fix is required.
-    sequoia: {}
-    sonoma: {}
-    ventura: {}
-    monterey: {}
-    big_sur: {}
-    catalina: {}
+    '15.0': {}
+    '14.0': {}
+    '13.0': {}
+    enforcement_info:
+      fix:
+        additional_info: The technology inherently meets this requirement. No fix is required.
 tags:
   - 800-53r5_high
   - inherent

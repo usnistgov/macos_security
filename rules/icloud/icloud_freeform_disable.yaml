@@ -7,9 +7,9 @@ discussion: |
 references:
   nist:
     cce:
-      sequoia:
+      macos_15:
         - CCE-94145-0
-      sonoma:
+      macos_14:
         - CCE-92746-7
     800-53r5:
       - AC-20
@@ -27,9 +27,9 @@ references:
     srg:
       - SRG-OS-000095-GPOS-00049
     disa_stig:
-      sequoia:
+      macos_15:
         - APPL-15-002270
-      sonoma:
+      macos_14:
         - APPL-14-002270
     cmmc:
       - AC.L1-3.1.20
@@ -42,23 +42,24 @@ references:
       - 15.3
 platforms:
   macOS:
-    check: |
-      /usr/bin/osascript -l JavaScript << EOS
-      $.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess')\
-      .objectForKey('allowCloudFreeform').js
-      EOS
-    result:
-      string: 'false'
-    fix: |
-      This is implemented by a Configuration Profile.
-    sequoia:
-      severity: medium
+    '15.0':
       benchmarks:
-        - disa_stig
-    sonoma:
-      severity: medium
+        - name: disa_stig
+          severity: medium
+    '14.0':
       benchmarks:
-        - disa_stig
+        - name: disa_stig
+          severity: medium
+    enforcement_info:
+      check:
+        shell: |-
+          /usr/bin/osascript -l JavaScript << EOS
+          $.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess')\
+          .objectForKey('allowCloudFreeform').js
+          EOS
+        result:
+          string: 'false'
+    introduced: '14.0'
 tags:
   - 800-53r5_low
   - 800-53r5_moderate
@@ -71,5 +72,6 @@ tags:
   - cmmc_lvl1
   - cnssi-1253_moderate
 mobileconfig_info:
-  com.apple.applicationaccess:
-    allowCloudFreeform: false
+  - PayloadType: com.apple.applicationaccess
+    PayloadContent:
+      - allowCloudFreeform: false

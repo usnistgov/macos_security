@@ -1,26 +1,22 @@
 id: os_limit_dos_attacks
 title: Limit Impact of Denial of Service Attacks
-discussion: |
+discussion: |-
   The macOS should be configured to limit the impact of Denial of Service (DoS) attacks.
 
   DoS attacks leave authorized users unable to access information systems, devices, or other network resources due to the actions of a malicious cyber threat actor. When this occurs, the organization must operate at degraded capacity; often resulting in an inability to accomplish its mission.
 
   To limit the impact of DoS attacks, organizations may choose to employ increased capacity and service redundancy, which has the potential to reduce systems' susceptibility to some DoS attacks. Managing excess capacity may include, for example, establishing selected usage priorities, quotas, or partitioning. Many operating systems can be integrated with enterprise-level firewalls and networking equipment that meet or exceed this requirement.
+
+  NOTE: The technology does not support this requirement. This is an applicable-does not meet finding.
 references:
   nist:
     cce:
-      sequoia:
+      macos_15:
         - CCE-94218-5
-      sonoma:
+      macos_14:
         - CCE-92816-8
-      ventura:
+      macos_13:
         - CCE-91812-8
-      monterey:
-        - CCE-90942-4
-      big_sur:
-        - CCE-85332-5
-      catalina:
-        - CCE-84904-2
     800-53r5:
       - SC-5(2)
   disa:
@@ -28,16 +24,9 @@ references:
       - SRG-OS-000142-GPOS-00071
 platforms:
   macOS:
-    check: |
-      The technology does not support this requirement. This is an applicable-does not meet finding.
-    fix: |
-      This requirement is a permanent finding and cannot be fixed. An appropriate mitigation for the system must be implemented, but this finding cannot be considered fixed.
-    sequoia: {}
-    sonoma: {}
-    ventura: {}
-    monterey: {}
-    big_sur: {}
-    catalina: {}
+    '15.0': {}
+    '14.0': {}
+    '13.0': {}
 tags:
   - permanent
   - cnssi-1253_high

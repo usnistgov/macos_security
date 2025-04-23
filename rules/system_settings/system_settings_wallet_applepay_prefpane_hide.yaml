@@ -9,7 +9,7 @@ discussion: |
 references:
   nist:
     cce:
-      ventura:
+      macos_13:
         - CCE-92013-2
   disa:
     cci:
@@ -19,19 +19,22 @@ references:
       - SRG-OS-000095-GPOS-00049
       - SRG-OS-000370-GPOS-00155
     disa_stig:
-      ventura:
+      macos_13:
         - APPL-13-002052
 platforms:
   macOS:
-    ventura:
-      severity: medium
+    '13.0':
       benchmarks:
-        - disa_stig
-    check: |
-      /usr/bin/profiles show -output stdout-xml | /usr/bin/xmllint --xpath '//key[text()="HiddenPreferencePanes"]/following-sibling::*[1]' - | /usr/bin/grep -c com.apple.preferences.wallet
-    result:
-      integer: 1
+        - name: disa_stig
+          severity: medium
+    enforcement_info:
+      check:
+        shell: /usr/bin/profiles show -output stdout-xml | /usr/bin/xmllint --xpath '//key[text()="HiddenPreferencePanes"]/following-sibling::*[1]' - | /usr/bin/grep -c com.apple.preferences.wallet
+        result:
+          integer: 1
+    introduced: '-1'
 mobileconfig_info:
-  com.apple.systempreferences:
-    HiddenPreferencePanes:
-      - com.apple.preferences.wallet
+  - PayloadType: com.apple.systempreferences
+    PayloadContent:
+      - HiddenPreferencePanes:
+          - com.apple.preferences.wallet

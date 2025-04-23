@@ -7,18 +7,12 @@ discussion: |
 references:
   nist:
     cce:
-      sequoia:
+      macos_15:
         - CCE-94105-4
-      sonoma:
+      macos_14:
         - CCE-92705-3
-      ventura:
+      macos_13:
         - CCE-91705-4
-      monterey:
-        - CCE-90855-8
-      big_sur:
-        - CCE-85255-8
-      catalina:
-        - CCE-84707-9
     800-53r5:
       - AU-5(1)
   disa:
@@ -29,55 +23,40 @@ references:
       - SRG-OS-000046-GPOS-00022
       - SRG-OS-000343-GPOS-00134
     disa_stig:
-      sequoia:
+      macos_15:
         - APPL-15-001030
-      sonoma:
+      macos_14:
         - APPL-14-001030
-      ventura:
+      macos_13:
         - APPL-13-001030
-      monterey:
-        - APPL-12-001030
-      big_sur:
-        - APPL-11-001030
-      catalina:
-        - AOSX-15-001030
 platforms:
   macOS:
-    check: |
-      /usr/bin/awk -F: '/^minfree/{print $2}' /etc/security/audit_control
-    result:
-      integer: $ODV
-    fix: |
-      [source,bash]
-      ----
-      /usr/bin/sed -i.bak 's/.*minfree.*/minfree:$ODV/' /etc/security/audit_control; /usr/sbin/audit -s
-      ----
-    sequoia:
-      severity: low
+    '15.0':
       benchmarks:
-        - disa_stig
-    sonoma:
-      severity: low
+        - name: disa_stig
+          severity: low
+    '14.0':
       benchmarks:
-        - disa_stig
-    ventura:
-      severity: low
+        - name: disa_stig
+          severity: low
+    '13.0':
       benchmarks:
-        - disa_stig
-    monterey:
-      severity: medium
-      benchmarks:
-        - disa_stig
-    big_sur:
-      severity: medium
-      benchmarks:
-        - disa_stig
-    catalina:
-      severity: medium
-      benchmarks:
-        - disa_stig
+        - name: disa_stig
+          severity: low
+    enforcement_info:
+      check:
+        shell: '/usr/bin/awk -F: ''/^minfree/{print $2}'' /etc/security/audit_control'
+        result:
+          integer: $ODV
+      fix:
+        shell: /usr/bin/sed -i.bak 's/.*minfree.*/minfree:$ODV/' /etc/security/audit_control; /usr/sbin/audit -s
 odv:
-  hint: Percentage of free space.
+  hint:
+    datatype: number
+    description: Percentage of free space, e.g. 25
+    validation:
+      min: 1
+      max: 100
   recommended: 25
   stig: 25
 tags:

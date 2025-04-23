@@ -1,26 +1,22 @@
 id: os_provide_automated_account_management
 title: Employ Automated Mechanisms for Account Management Functions
-discussion: |
+discussion: |-
   The organization should employ automated mechanisms to support the management of information system accounts.
 
   The use of automated mechanisms prevents against human error and provide a faster and more efficient means of relaying time-sensitive information and account management.
 
   To employ automated mechanisms for account management functions, many operating systems can be integrated with an enterprise-level directory service that meets or exceeds this requirement.
+
+  NOTE: The technology does not support this requirement. This is an applicable-does not meet finding.
 references:
   nist:
     cce:
-      sequoia:
+      macos_15:
         - CCE-94267-2
-      sonoma:
+      macos_14:
         - CCE-92863-0
-      ventura:
+      macos_13:
         - CCE-91858-1
-      monterey:
-        - CCE-90984-6
-      big_sur:
-        - CCE-85364-8
-      catalina:
-        - CCE-84899-4
     800-53r5:
       - AC-2(1)
   disa:
@@ -28,20 +24,12 @@ references:
       - SRG-OS-000001-GPOS-00001
 platforms:
   macOS:
-    check: |
-      The technology does not support this requirement. This is an applicable-does not meet finding.
-    fix: |
-      This requirement is a permanent finding and cannot be fixed. An appropriate mitigation for the system must be implemented, but this finding cannot be considered fixed.
-    sequoia: {}
-    sonoma: {}
-    ventura: {}
-    monterey: {}
-    big_sur: {}
-    catalina: {}
+    '15.0': {}
+    '14.0': {}
+    '13.0': {}
 tags:
   - 800-53r5_moderate
   - 800-53r5_high
   - permanent
   - cnssi-1253_high
   - cnssi-1253_moderate
-  - cnssi-1253

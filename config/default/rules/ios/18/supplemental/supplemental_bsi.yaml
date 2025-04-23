@@ -1,36 +1,15 @@
 ---
 id: supplemental_bsi
 title: BSI Supplemental
-discussion: |
-  These controls require additional considerations for your environment based on indigo,  in accordance with the recommendations of BSI (Bundesamt für Sicherheit in der Informationstechnik, German Federal Office for Information Security).
-
-  [cols="20%h, 80%a"]
-  |===
-  |Section 5.8
-  |Restrictions - App-Installation
-
-  |
-  |os_application_allow_list +
-  os_application_deny_list
-  |===
-
-  [cols="20%h, 80%a"]
-  |===
-  |Section 6.1.6
-  |Manual configuration - operational requirements
-
-  |
-  |os_live_text_disable
-  |===
-
-  [cols="20%h, 80%a"]
-  |===
-  |Section 6.3
-  |Manual configuration - Update management
-
-  |
-  |os_update_auto_RSR_allow
-  |===
+discussion:
+  "These controls require additional considerations for your environment\
+  \ based on indigo,  in accordance with the recommendations of BSI (Bundesamt f\xFC\
+  r Sicherheit in der Informationstechnik, German Federal Office for Information Security).\n\
+  \n[cols=\"20%h, 80%a\"]\n|===\n|Section 5.8\n|Restrictions - App-Installation\n\n\
+  |\n|os_application_allow_list +\nos_application_deny_list\n|===\n\n[cols=\"20%h,\
+  \ 80%a\"]\n|===\n|Section 6.1.6\n|Manual configuration - operational requirements\n\
+  \n|\n|os_live_text_disable\n|===\n\n[cols=\"20%h, 80%a\"]\n|===\n|Section 6.3\n\
+  |Manual configuration - Update management\n\n|\n|os_update_auto_RSR_allow\n|===\n"
 check: ""
 fix: ""
 references:
@@ -41,7 +20,7 @@ references:
   indigo:
     - ANNEX K
 operating_system:
-  - name: iOS
+  - name: ios
     version:
       - 18.0
 tags:

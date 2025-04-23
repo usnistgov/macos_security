@@ -6,25 +6,19 @@ discussion: |-
 references:
   nist:
     cce:
-      sequoia:
+      macos_15:
         - CCE-94156-7
-      sonoma:
+      macos_14:
         - CCE-92756-6
-      ventura:
+      macos_13:
         - CCE-91754-2
-      monterey:
-        - CCE-90898-8
-      big_sur:
-        - CCE-85293-9
-      catalina:
-        - CCE-84747-5
       ios_18:
         - CCE-94422-3
       ios_17:
         - CCE-93408-3
       ios_16:
         - CCE-93208-7
-      visionos_2.0:
+      visionos_2:
         - CCE-94486-8
     800-53r5:
       - AC-3
@@ -45,18 +39,12 @@ references:
       - SRG-OS-000080-GPOS-00048
       - SRG-OS-000095-GPOS-00049
     disa_stig:
-      sequoia:
+      macos_15:
         - APPL-15-002009
-      sonoma:
+      macos_14:
         - APPL-14-002009
-      ventura:
+      macos_13:
         - APPL-13-002009
-      monterey:
-        - APPL-12-002009
-      big_sur:
-        - APPL-11-002009
-      catalina:
-        - AOSX-15-002009
       ios_18:
         - AIOS-18-010200
         - AIOS-18-012500
@@ -73,16 +61,12 @@ references:
       - CM.L2-3.4.7
   cis:
     benchmark:
-      sequoia:
+      macos_15:
         - 2.3.1.1 (level 1)
-      sonoma:
+      macos_14:
         - 2.3.1.1 (level 1)
-      ventura:
+      macos_13:
         - 2.3.1.1 (level 1)
-      monterey:
-        - 2.4.11 (level 1)
-      big_sur:
-        - 2.4.11 (level 1)
     controls_v8:
       - 4.1
       - 4.8
@@ -95,72 +79,63 @@ references:
         - ANNEX K
 platforms:
   macOS:
-    check: |
-      /usr/bin/osascript -l JavaScript << EOS
-      $.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess')\
-      .objectForKey('allowAirDrop').js
-      EOS
-    result:
-      string: 'false'
-    fix: |
-      This is implemented by a Configuration Profile.
-    sequoia:
-      severity: medium
+    '15.0':
       benchmarks:
-        - cis_lvl1
-        - cis_lvl2
-        - disa_stig
-    sonoma:
-      severity: medium
+        - name: cis_lvl1
+        - name: cis_lvl2
+        - name: disa_stig
+          severity: medium
+    '14.0':
       benchmarks:
-        - cis_lvl1
-        - cis_lvl2
-        - disa_stig
-    ventura:
-      severity: low
+        - name: cis_lvl1
+        - name: cis_lvl2
+        - name: disa_stig
+          severity: medium
+    '13.0':
       benchmarks:
-        - cis_lvl1
-        - cis_lvl2
-        - disa_stig
-    monterey:
-      severity: medium
-      benchmarks:
-        - cis_lvl1
-        - cis_lvl2
-        - disa_stig
-    big_sur:
-      severity: medium
-      benchmarks:
-        - cis_lvl1
-        - cis_lvl2
-        - disa_stig
-    catalina:
-      severity: medium
-      benchmarks:
-        - disa_stig
+        - name: cis_lvl1
+        - name: cis_lvl2
+        - name: disa_stig
+          severity: low
+    enforcement_info:
+      check:
+        shell: |-
+          /usr/bin/osascript -l JavaScript << EOS
+          $.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess')\
+          .objectForKey('allowAirDrop').js
+          EOS
+        result:
+          string: 'false'
+    introduced: '10.13'
   iOS:
-    ios_18:
-      severity: medium
+    '18.0':
       supervised: true
       benchmarks:
-        - ios_stig
-        - indigo_base
-        - indigo_high
-    ios_17:
-      severity: medium
+        - name: ios_stig
+          severity: medium
+        - name: indigo_base
+          severity: medium
+        - name: indigo_high
+          severity: medium
+    '17.0':
       supervised: true
       benchmarks:
-        - ios_stig
-        - indigo_base
-        - indigo_high
-    ios_16:
-      severity: medium
+        - name: ios_stig
+          severity: medium
+        - name: indigo_base
+          severity: medium
+        - name: indigo_high
+          severity: medium
+    '16.0':
       supervised: true
       benchmarks:
-        - ios_stig
+        - name: ios_stig
+          severity: medium
+    introduced: '7.0'
   visionOS:
-    visionos_2.0:
+    '2.0':
       supervised: true
+    introduced: '2.0'
 tags:
   - 800-53r5_low
   - 800-53r5_moderate
@@ -172,7 +147,7 @@ tags:
   - cmmc_lvl2
   - cmmc_lvl1
   - cnssi-1253_moderate
-  - cnssi-1253
 mobileconfig_info:
-  com.apple.applicationaccess:
-    allowAirDrop: false
+  - PayloadType: com.apple.applicationaccess
+    PayloadContent:
+      - allowAirDrop: false

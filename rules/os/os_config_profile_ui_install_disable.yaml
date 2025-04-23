@@ -5,11 +5,11 @@ discussion: |
 references:
   nist:
     cce:
-      sequoia:
+      macos_15:
         - CCE-94177-3
-      sonoma:
+      macos_14:
         - CCE-92777-2
-      ventura:
+      macos_13:
         - CCE-91775-7
     800-53r5:
       - CM-5
@@ -20,18 +20,19 @@ references:
       - CM.L2-3.4.5
 platforms:
   macOS:
-    check: |
-      /usr/bin/osascript -l JavaScript << EOS
-      $.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess')\
-      .objectForKey('allowUIConfigurationProfileInstallation').js
-      EOS
-    result:
-      string: 'false'
-    fix: |
-      This is implemented by a Configuration Profile.
-    sequoia: {}
-    sonoma: {}
-    ventura: {}
+    '15.0': {}
+    '14.0': {}
+    '13.0': {}
+    enforcement_info:
+      check:
+        shell: |-
+          /usr/bin/osascript -l JavaScript << EOS
+          $.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess')\
+          .objectForKey('allowUIConfigurationProfileInstallation').js
+          EOS
+        result:
+          string: 'false'
+    introduced: '13.0'
 tags:
   - 800-53r5_low
   - 800-53r5_moderate
@@ -42,5 +43,6 @@ tags:
   - cmmc_lvl2
   - cnssi-1253_moderate
 mobileconfig_info:
-  com.apple.applicationaccess:
-    allowUIConfigurationProfileInstallation: false
+  - PayloadType: com.apple.applicationaccess
+    PayloadContent:
+      - allowUIConfigurationProfileInstallation: false

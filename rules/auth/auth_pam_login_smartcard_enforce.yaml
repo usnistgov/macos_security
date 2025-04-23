@@ -11,18 +11,12 @@ discussion: |
 references:
   nist:
     cce:
-      sequoia:
+      macos_15:
         - CCE-94132-8
-      sonoma:
+      macos_14:
         - CCE-92732-7
-      ventura:
+      macos_13:
         - CCE-91733-6
-      monterey:
-        - CCE-90877-2
-      big_sur:
-        - CCE-85274-9
-      catalina:
-        - CCE-84721-0
     800-53r5:
       - IA-2(1)
       - IA-2(2)
@@ -46,18 +40,12 @@ references:
       - SRG-OS-000105-GPOS-00052
       - SRG-OS-000705-GPOS-00150
     disa_stig:
-      sequoia:
+      macos_15:
         - APPL-15-003050
-      sonoma:
+      macos_14:
         - APPL-14-003050
-      ventura:
+      macos_13:
         - APPL-13-003050
-      monterey:
-        - APPL-12-003050
-      big_sur:
-        - APPL-11-003050
-      catalina:
-        - AOSX-15-003050
     cmmc:
       - IA.L2-3.5.3
       - IA.L2-3.5.4
@@ -68,57 +56,44 @@ references:
       - 6.5
 platforms:
   macOS:
-    check: |
-      /usr/bin/grep -Ec '^(auth\s+sufficient\s+pam_smartcard.so|auth\s+required\s+pam_deny.so)' /etc/pam.d/login
-    result:
-      integer: 2
-    fix: |
-      [source,bash]
-      ----
-      /bin/cat > /etc/pam.d/login << LOGIN_END
-      # login: auth account password session
-      auth        sufficient    pam_smartcard.so
-      auth        optional      pam_krb5.so use_kcminit
-      auth        optional      pam_ntlm.so try_first_pass
-      auth        optional      pam_mount.so try_first_pass
-      auth        required      pam_opendirectory.so try_first_pass
-      auth        required      pam_deny.so
-      account     required      pam_nologin.so
-      account     required      pam_opendirectory.so
-      password    required      pam_opendirectory.so
-      session     required      pam_launchd.so
-      session     required      pam_uwtmp.so
-      session     optional      pam_mount.so
-      LOGIN_END
+    '15.0':
+      benchmarks:
+        - name: disa_stig
+          severity: medium
+    '14.0':
+      benchmarks:
+        - name: disa_stig
+          severity: medium
+    '13.0':
+      benchmarks:
+        - name: disa_stig
+          severity: medium
+    enforcement_info:
+      check:
+        shell: /usr/bin/grep -Ec '^(auth\s+sufficient\s+pam_smartcard.so|auth\s+required\s+pam_deny.so)' /etc/pam.d/login
+        result:
+          integer: 2
+      fix:
+        shell: |-
+          /bin/cat > /etc/pam.d/login << LOGIN_END
+          # login: auth account password session
+          auth        sufficient    pam_smartcard.so
+          auth        optional      pam_krb5.so use_kcminit
+          auth        optional      pam_ntlm.so try_first_pass
+          auth        optional      pam_mount.so try_first_pass
+          auth        required      pam_opendirectory.so try_first_pass
+          auth        required      pam_deny.so
+          account     required      pam_nologin.so
+          account     required      pam_opendirectory.so
+          password    required      pam_opendirectory.so
+          session     required      pam_launchd.so
+          session     required      pam_uwtmp.so
+          session     optional      pam_mount.so
+          LOGIN_END
 
 
-      /bin/chmod 644 /etc/pam.d/login
-      /usr/sbin/chown root:wheel /etc/pam.d/login
-      ----
-    sequoia:
-      severity: medium
-      benchmarks:
-        - disa_stig
-    sonoma:
-      severity: medium
-      benchmarks:
-        - disa_stig
-    ventura:
-      severity: medium
-      benchmarks:
-        - disa_stig
-    monterey:
-      severity: medium
-      benchmarks:
-        - disa_stig
-    big_sur:
-      severity: medium
-      benchmarks:
-        - disa_stig
-    catalina:
-      severity: medium
-      benchmarks:
-        - disa_stig
+          /bin/chmod 644 /etc/pam.d/login
+          /usr/sbin/chown root:wheel /etc/pam.d/login
 tags:
   - 800-53r5_low
   - 800-53r5_moderate
@@ -129,7 +104,6 @@ tags:
   - cnssi-1253_high
   - cmmc_lvl2
   - cnssi-1253_moderate
-  - cnssi-1253
 ddm_info:
   declarationtype: com.apple.configuration.services.configuration-files
   service: com.apple.pam

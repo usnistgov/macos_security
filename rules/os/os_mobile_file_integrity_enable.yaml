@@ -4,64 +4,43 @@ discussion: Mobile file integrity _MUST_ be enabled.
 references:
   nist:
     cce:
-      sequoia:
+      macos_15:
         - CCE-94231-8
-      sonoma:
+      macos_14:
         - CCE-92828-3
-      ventura:
+      macos_13:
         - CCE-91824-3
-      monterey:
-        - CCE-91109-9
-      big_sur:
-        - CCE-85508-0
   cis:
     benchmark:
-      sequoia:
+      macos_15:
         - 5.1.3 (level 1)
-      sonoma:
+      macos_14:
         - 5.1.3 (level 1)
-      ventura:
-        - 5.1.3 (level 1)
-      monterey:
-        - 5.1.3 (level 1)
-      big_sur:
+      macos_13:
         - 5.1.3 (level 1)
     controls_v8:
       - 2.3
       - 2.6
 platforms:
   macOS:
-    check: |
-      /usr/sbin/nvram -p | /usr/bin/grep -c "amfi_get_out_of_my_way=1"
-    result:
-      integer: 0
-    fix: |
-      [source,bash]
-      ----
-      /usr/sbin/nvram boot-args=""
-      ----
-    sequoia:
+    '15.0':
       benchmarks:
-        - cis_lvl1
-        - cis_lvl2
-    sonoma:
+        - name: cis_lvl1
+        - name: cis_lvl2
+    '14.0':
       benchmarks:
-        - cis_lvl1
-        - cis_lvl2
-    ventura:
+        - name: cis_lvl1
+        - name: cis_lvl2
+    '13.0':
       benchmarks:
-        - cis_lvl1
-        - cis_lvl2
-    monterey:
-      benchmarks:
-        - cis_lvl1
-        - cis_lvl2
-    big_sur:
-      benchmarks:
-        - cis_lvl1
-        - cis_lvl2
+        - name: cis_lvl1
+        - name: cis_lvl2
+    enforcement_info:
+      check:
+        shell: /usr/sbin/nvram -p | /usr/bin/grep -c "amfi_get_out_of_my_way=1"
+        result:
+          integer: 0
+      fix:
+        shell: /usr/sbin/nvram boot-args=""
 tags:
   - cisv8
-  - 800-53r5_low
-  - 800-53r5_moderate
-  - 800-53r5_high

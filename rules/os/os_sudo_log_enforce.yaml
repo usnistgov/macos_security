@@ -5,7 +5,7 @@ discussion: |
 references:
   nist:
     cce:
-      sequoia:
+      macos_15:
         - CCE-94310-0
     800-53r5:
       - AC-6(9)
@@ -17,7 +17,7 @@ references:
     srg:
       - SRG-OS-000064-GPOS-00033
     disa_stig:
-      sequoia:
+      macos_15:
         - APPL-15-000190
     cmmc:
       - AU.L2-3.3.3
@@ -25,20 +25,25 @@ references:
       - SI.L2-3.14.3
   cis:
     benchmark:
-      sequoia:
+      macos_15:
         - 5.11 (level 1)
 platforms:
   macOS:
-    sequoia:
-      severity: medium
+    '15.0':
       benchmarks:
-        - cis_lvl1
-        - cis_lvl2
-        - disa_stig
-    check: |
-      /usr/bin/sudo /usr/bin/sudo -V | /usr/bin/grep -c "Log when a command is allowed by sudoers"
-    result:
-      integer: 1
+        - name: cis_lvl1
+        - name: cis_lvl2
+        - name: disa_stig
+          severity: medium
+    enforcement_info:
+      check:
+        shell: /usr/bin/sudo /usr/bin/sudo -V | /usr/bin/grep -c "Log when a command is allowed by sudoers"
+        result:
+          integer: 1
+      fix:
+        shell: |-
+          /usr/bin/find /etc/sudoers* -type f -exec sed -i '' '/^Defaults[[:blank:]]*\!log_allowed/s/^/# /' '{}' \;
+          /bin/echo "Defaults log_allowed" >> /etc/sudoers.d/mscp
 tags:
   - 800-53r5_moderate
   - 800-53r5_high

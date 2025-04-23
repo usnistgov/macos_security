@@ -20,7 +20,7 @@ references:
   disa_stig:
     - AIOS-18-015000
 operating_system:
-  - name: iOS
+  - name: ios
     version:
       - 18.0
 tags:

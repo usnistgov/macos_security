@@ -27,7 +27,7 @@ references:
     controls v8:
       - N/A
 operating_system:
-  - name: iOS
+  - name: ios
     version:
       - 18.0
 tags:

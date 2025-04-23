@@ -9,22 +9,16 @@ discussion: |
 
   The information system initiates session audits at system start-up.
 
-  NOTE: Security auditing is NOT enabled by default on macOS Sequoia.
+  NOTE: Security auditing is NOT enabled by default on macOS 14 and later.
 references:
   nist:
     cce:
-      sequoia:
+      macos_15:
         - CCE-94104-7
-      sonoma:
+      macos_14:
         - CCE-92704-6
-      ventura:
+      macos_13:
         - CCE-91704-7
-      monterey:
-        - CCE-90854-1
-      big_sur:
-        - CCE-85254-1
-      catalina:
-        - CCE-84706-1
     800-53r5:
       - AU-3
       - AU-3(1)
@@ -93,165 +87,91 @@ references:
       - SRG-OS-000055-GPOS-00026
       - SRG-OS-000755-GPOS-00220
     disa_stig:
-      sequoia:
+      macos_15:
         - APPL-15-001003
-      sonoma:
+      macos_14:
         - APPL-14-001003
-      ventura:
+      macos_13:
         - APPL-13-001003
-      monterey:
-        - APPL-12-001003
-      big_sur:
-        - APPL-11-001003
-      catalina:
-        - AOSX-15-001003
     cmmc:
       - AU.L2-3.3.2
       - AU.L2-3.3.6
   cis:
     benchmark:
-      sequoia:
+      macos_15:
         - 3.1 (level 1)
-      sonoma:
+      macos_14:
         - 3.1 (level 1)
-      ventura:
-        - 3.1 (level 1)
-      monterey:
-        - 3.1 (level 1)
-      big_sur:
+      macos_13:
         - 3.1 (level 1)
     controls_v8:
       - 8.2
       - 8.5
 platforms:
   macOS:
-    check: $OS_VALUE
-    result: $OS_VALUE
-    fix: $OS_VALUE
-    sequoia:
-      severity: medium
+    '15.0':
       benchmarks:
-        - cis_lvl1
-        - cis_lvl2
-        - disa_stig
-      check: |-
-        LAUNCHD_RUNNING=$(/bin/launchctl list | /usr/bin/grep -c com.apple.auditd)
-        AUDITD_RUNNING=$(/usr/sbin/audit -c | /usr/bin/grep -c "AUC_AUDITING")
-        if [[ $LAUNCHD_RUNNING == 1 ]] && [[ -e /etc/security/audit_control ]] && [[ $AUDITD_RUNNING == 1 ]]; then
-          echo "pass"
-        else
-          echo "fail"
-        fi
-      fix: |-
-        [source,bash]
-        ----
-        if [[ ! -e /etc/security/audit_control ]] && [[ -e /etc/security/audit_control.example ]];then
-          /bin/cp /etc/security/audit_control.example /etc/security/audit_control
-        fi
+        - name: cis_lvl1
+        - name: cis_lvl2
+        - name: disa_stig
+          severity: medium
+    '14.0':
+      benchmarks:
+        - name: cis_lvl1
+        - name: cis_lvl2
+        - name: disa_stig
+          severity: medium
+    '13.0':
+      benchmarks:
+        - name: cis_lvl1
+        - name: cis_lvl2
+        - name: disa_stig
+          severity: medium
+      enforcement_info:
+        check:
+          shell: |-
+            LAUNCHD_RUNNING=$(/bin/launchctl list | /usr/bin/grep -c com.apple.auditd)
+            if [[ $LAUNCHD_RUNNING == 1 ]] && [[ -e /etc/security/audit_control ]]; then
+              echo "pass"
+            else
+              echo "fail"
+            fi
+          result:
+            string: pass
+        fix:
+          shell: |-
+            LAUNCHD_RUNNING=$(/bin/launchctl list | /usr/bin/grep -c com.apple.auditd)
 
-        /bin/launchctl enable system/com.apple.auditd
-        /bin/launchctl bootstrap system /System/Library/LaunchDaemons/com.apple.auditd.plist
-        /usr/sbin/audit -i
-        ----
-      result:
-        string: pass
-    sonoma:
-      severity: medium
-      benchmarks:
-        - cis_lvl1
-        - cis_lvl2
-        - disa_stig
-      check: |-
-        LAUNCHD_RUNNING=$(/bin/launchctl list | /usr/bin/grep -c com.apple.auditd)
-        AUDITD_RUNNING=$(/usr/sbin/audit -c | /usr/bin/grep -c "AUC_AUDITING")
-        if [[ $LAUNCHD_RUNNING == 1 ]] && [[ -e /etc/security/audit_control ]] && [[ $AUDITD_RUNNING == 1 ]]; then
-          echo "pass"
-        else
-          echo "fail"
-        fi
-      fix: |-
-        [source,bash]
-        ----
-        if [[ ! -e /etc/security/audit_control ]] && [[ -e /etc/security/audit_control.example ]];then
-          /bin/cp /etc/security/audit_control.example /etc/security/audit_control
-        fi
+            if [[ ! $LAUNCHD_RUNNING == 1 ]]; then
+              /bin/launchctl load -w /System/Library/LaunchDaemons/com.apple.auditd.plist
+            fi
 
-        /bin/launchctl enable system/com.apple.auditd
-        /bin/launchctl bootstrap system /System/Library/LaunchDaemons/com.apple.auditd.plist
-        /usr/sbin/audit -i
-        ----
-      result:
-        string: pass
-    ventura:
-      severity: medium
-      benchmarks:
-        - cis_lvl1
-        - cis_lvl2
-        - disa_stig
-      check: |-
-        LAUNCHD_RUNNING=$(/bin/launchctl list | /usr/bin/grep -c com.apple.auditd)
-        if [[ $LAUNCHD_RUNNING == 1 ]] && [[ -e /etc/security/audit_control ]]; then
-          echo "pass"
-        else
-          echo "fail"
-        fi
-      fix: |-
-        [source,bash]
-        ----
-        LAUNCHD_RUNNING=$(/bin/launchctl list | /usr/bin/grep -c com.apple.auditd)
+            if [[ ! -e /etc/security/audit_control ]] && [[ -e /etc/security/audit_control.example ]];then
+              /bin/cp /etc/security/audit_control.example /etc/security/audit_control
+            else
+              /usr/bin/touch /etc/security/audit_control
+            fi
+    enforcement_info:
+      check:
+        shell: |-
+          LAUNCHD_RUNNING=$(/bin/launchctl list | /usr/bin/grep -c com.apple.auditd)
+          AUDITD_RUNNING=$(/usr/sbin/audit -c | /usr/bin/grep -c "AUC_AUDITING")
+          if [[ $LAUNCHD_RUNNING == 1 ]] && [[ -e /etc/security/audit_control ]] && [[ $AUDITD_RUNNING == 1 ]]; then
+            echo "pass"
+          else
+            echo "fail"
+          fi
+        result:
+          string: pass
+      fix:
+        shell: |-
+          if [[ ! -e /etc/security/audit_control ]] && [[ -e /etc/security/audit_control.example ]];then
+            /bin/cp /etc/security/audit_control.example /etc/security/audit_control
+          fi
 
-        if [[ ! $LAUNCHD_RUNNING == 1 ]]; then
-          /bin/launchctl load -w /System/Library/LaunchDaemons/com.apple.auditd.plist
-        fi
-
-        if [[ ! -e /etc/security/audit_control ]] && [[ -e /etc/security/audit_control.example ]];then
-          /bin/cp /etc/security/audit_control.example /etc/security/audit_control
-        else
-          /usr/bin/touch /etc/security/audit_control
-        fi
-        ----
-      result:
-        string: pass
-    monterey:
-      severity: medium
-      benchmarks:
-        - cis_lvl1
-        - cis_lvl2
-        - disa_stig
-      check: /bin/launchctl list | /usr/bin/grep -c com.apple.auditd
-      fix: |-
-        [source,bash]
-        ----
-        /bin/launchctl load -w /System/Library/LaunchDaemons/com.apple.auditd.plist
-        ----
-      result:
-        integer: 1
-    big_sur:
-      severity: medium
-      benchmarks:
-        - cis_lvl1
-        - cis_lvl2
-        - disa_stig
-      check: /bin/launchctl list | /usr/bin/grep -c com.apple.auditd
-      fix: |-
-        [source,bash]
-        ----
-        /bin/launchctl load -w /System/Library/LaunchDaemons/com.apple.auditd.plist
-        ----
-      result:
-        integer: 1
-    catalina:
-      severity: medium
-      benchmarks:
-        - disa_stig
-      check: /bin/launchctl list | /usr/bin/grep -c com.apple.auditd
-      fix: |-
-        [source,bash]
-        ----
-        /bin/launchctl load -w /System/Library/LaunchDaemons/com.apple.auditd.plist
-        ----
-      result:
-        integer: 1
+          /bin/launchctl enable system/com.apple.auditd
+          /bin/launchctl bootstrap system /System/Library/LaunchDaemons/com.apple.auditd.plist
+          /usr/sbin/audit -i
 tags:
   - 800-53r5_low
   - 800-53r5_moderate
@@ -262,4 +182,3 @@ tags:
   - cnssi-1253_high
   - cmmc_lvl2
   - cnssi-1253_moderate
-  - cnssi-1253

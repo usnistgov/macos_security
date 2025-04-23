@@ -5,18 +5,12 @@ discussion: |
 references:
   nist:
     cce:
-      sequoia:
+      macos_15:
         - CCE-94162-5
-      sonoma:
+      macos_14:
         - CCE-92762-4
-      ventura:
+      macos_13:
         - CCE-91760-9
-      monterey:
-        - CCE-90905-1
-      big_sur:
-        - CCE-85465-3
-      catalina:
-        - CCE-84930-7
     800-53r5:
       - SI-11
   disa:
@@ -27,57 +21,36 @@ references:
       - SRG-OS-000206-GPOS-00084
       - SRG-OS-000205-GPOS-00083
     disa_stig:
-      sequoia:
+      macos_15:
         - APPL-15-004002
-      sonoma:
+      macos_14:
         - APPL-14-004002
-      ventura:
+      macos_13:
         - APPL-13-004002
-      monterey:
-        - APPL-12-004002
-      big_sur:
-        - APPL-11-004002
-      catalina:
-        - AOSX-15-004002
 platforms:
   macOS:
-    check: |
-      /usr/bin/stat -f '%A:%N' $(/usr/bin/grep -e '^>' /etc/asl.conf /etc/asl/* | /usr/bin/awk '{ print $2 }') 2> /dev/null | /usr/bin/awk '!/640/{print $1}' | /usr/bin/wc -l | /usr/bin/tr -d ' '
-    result:
-      integer: 0
-    fix: |
-      [source,bash]
-      ----
-      /bin/chmod 640 $(/usr/bin/stat -f '%A:%N' $(/usr/bin/grep -e '^>' /etc/asl.conf /etc/asl/* | /usr/bin/awk '{ print $2 }') 2> /dev/null | /usr/bin/awk -F":" '!/640/{print $2}')
-      ----
-    sequoia:
-      severity: medium
+    '15.0':
       benchmarks:
-        - disa_stig
-    sonoma:
-      severity: medium
+        - name: disa_stig
+          severity: medium
+    '14.0':
       benchmarks:
-        - disa_stig
-    ventura:
-      severity: medium
+        - name: disa_stig
+          severity: medium
+    '13.0':
       benchmarks:
-        - disa_stig
-    monterey:
-      severity: medium
-      benchmarks:
-        - disa_stig
-    big_sur:
-      severity: medium
-      benchmarks:
-        - disa_stig
-    catalina:
-      severity: medium
-      benchmarks:
-        - disa_stig
+        - name: disa_stig
+          severity: medium
+    enforcement_info:
+      check:
+        shell: /usr/bin/stat -f '%A:%N' $(/usr/bin/grep -e '^>' /etc/asl.conf /etc/asl/* | /usr/bin/awk '{ print $2 }') 2> /dev/null | /usr/bin/awk '!/640/{print $1}' | /usr/bin/wc -l | /usr/bin/tr -d ' '
+        result:
+          integer: 0
+      fix:
+        shell: /bin/chmod 640 $(/usr/bin/stat -f '%A:%N' $(/usr/bin/grep -e '^>' /etc/asl.conf /etc/asl/* | /usr/bin/awk '{ print $2 }') 2> /dev/null | /usr/bin/awk -F":" '!/640/{print $2}')
 tags:
   - 800-53r5_moderate
   - 800-53r5_high
   - cnssi-1253_low
   - cnssi-1253_high
   - cnssi-1253_moderate
-  - manual

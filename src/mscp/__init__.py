@@ -26,6 +26,7 @@ __all__ = [
     "local_report",
     "mapping",
     "main",
+    "validate_yaml_file",
 ]
 
 from .classes.baseline import Baseline
@@ -48,4 +49,5 @@ from .common_utils.file_handling import (
     remove_file,
 )
 from .common_utils.run_command import run_command
+from .common_utils.validate_rules import validate_yaml_file
 from .generate import baseline, checklist, guidance, local_report, mapping

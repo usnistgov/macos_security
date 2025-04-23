@@ -1,13 +1,13 @@
 id: system_settings_improve_assistive_voice_disable
 title: Disable Sending Audio Recordings and Transcripts to Apple
 discussion: |
-  The ability for Apple to store and review audio of your audio recordings and transcripts of your vocal shortcuts and voice control interactions _MUST_ be disabled.
+  The ability for Apple to store and review audio of your audio recordings and transcripts of your vocal shortcuts and voice control interactions _MUST_ be disabled. This will disable "Improve Assistive Voice Features" in Privacy & Security within System Settings.
 
   The information system _MUST_ be configured to provide only essential capabilities. Disabling the submission of this information will mitigate the risk of unwanted data being sent to Apple.
 references:
   nist:
     cce:
-      sequoia:
+      macos_15:
         - CCE-94370-4
     800-53r5:
       - AC-20
@@ -23,7 +23,7 @@ references:
     srg:
       - SRG-OS-000095-GPOS-00049
     disa_stig:
-      sequoia:
+      macos_15:
         - APPL-15-002023
     cmmc:
       - AC.L1-3.1.20
@@ -31,26 +31,29 @@ references:
       - CM.L2-3.4.7
   cis:
     benchmark:
-      sequoia:
+      macos_15:
         - 2.6.3.3 (level 1)
     controls_v8:
       - 4.1
       - 4.8
 platforms:
   macOS:
-    sequoia:
-      severity: medium
+    '15.0':
       benchmarks:
-        - cis_lvl1
-        - cis_lvl2
-        - disa_stig
-    check: |
-      /usr/bin/osascript -l JavaScript << EOS
-      $.NSUserDefaults.alloc.initWithSuiteName('com.apple.Accessibility')\
-      .objectForKey('AXSAudioDonationSiriImprovementEnabled').js
-      EOS
-    result:
-      string: 'false'
+        - name: cis_lvl1
+        - name: cis_lvl2
+        - name: disa_stig
+          severity: medium
+    enforcement_info:
+      check:
+        shell: |-
+          /usr/bin/osascript -l JavaScript << EOS
+          $.NSUserDefaults.alloc.initWithSuiteName('com.apple.Accessibility')\
+          .objectForKey('AXSAudioDonationSiriImprovementEnabled').js
+          EOS
+        result:
+          string: 'false'
+    introduced: '-1'
 tags:
   - 800-53r5_low
   - 800-53r5_moderate
@@ -66,5 +69,6 @@ tags:
   - cmmc_lvl1
   - cnssi-1253_moderate
 mobileconfig_info:
-  com.apple.Accessibility:
-    AXSAudioDonationSiriImprovementEnabled: false
+  - PayloadType: com.apple.Accessibility
+    PayloadContent:
+      - AXSAudioDonationSiriImprovementEnabled: false

@@ -1,4 +1,3 @@
-# config/config.yaml
 ---
 logging_config: "config/logging_config.yaml"
 output_dir: "build/"

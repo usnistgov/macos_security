@@ -7,18 +7,12 @@ discussion: |
 references:
   nist:
     cce:
-      sequoia:
+      macos_15:
         - CCE-94130-2
-      sonoma:
+      macos_14:
         - CCE-92730-1
-      ventura:
+      macos_13:
         - CCE-91731-0
-      monterey:
-        - CCE-90875-6
-      big_sur:
-        - CCE-85272-3
-      catalina:
-        - CCE-84719-4
     800-53r5:
       - AU-11
       - AU-4
@@ -30,84 +24,59 @@ references:
     srg:
       - SRG-OS-000341-GPOS-00132
     disa_stig:
-      sequoia:
+      macos_15:
         - APPL-15-001029
-      sonoma:
+      macos_14:
         - APPL-14-001029
-      ventura:
+      macos_13:
         - APPL-13-001029
-      monterey:
-        - APPL-12-001029
-      big_sur:
-        - APPL-11-001029
-      catalina:
-        - AOSX-15-001029
     cmmc:
       - AU.L2-3.3.1
   cis:
     benchmark:
-      sequoia:
+      macos_15:
         - 3.4 (level 1)
-      sonoma:
+      macos_14:
         - 3.4 (level 1)
-      ventura:
-        - 3.4 (level 1)
-      monterey:
-        - 3.4 (level 1)
-      big_sur:
+      macos_13:
         - 3.4 (level 1)
     controls_v8:
       - 8.1
       - 8.3
 platforms:
   macOS:
-    check: |
-      /usr/bin/awk -F: '/expire-after/{print $2}' /etc/security/audit_control
-    result:
-      string: $ODV
-    fix: |
-      [source,bash]
-      ----
-      /usr/bin/sed -i.bak 's/^expire-after.*/expire-after:$ODV/' /etc/security/audit_control; /usr/sbin/audit -s
-      ----
-    sequoia:
-      severity: low
+    '15.0':
       benchmarks:
-        - cis_lvl1
-        - cis_lvl2
-        - disa_stig
-    sonoma:
-      severity: low
+        - name: cis_lvl1
+        - name: cis_lvl2
+        - name: disa_stig
+          severity: low
+    '14.0':
       benchmarks:
-        - cis_lvl1
-        - cis_lvl2
-        - disa_stig
-    ventura:
-      severity: low
+        - name: cis_lvl1
+        - name: cis_lvl2
+        - name: disa_stig
+          severity: low
+    '13.0':
       benchmarks:
-        - cis_lvl1
-        - cis_lvl2
-    monterey:
-      severity: medium
-      benchmarks:
-        - cis_lvl1
-        - cis_lvl2
-        - disa_stig
-    big_sur:
-      severity: medium
-      benchmarks:
-        - cis_lvl1
-        - cis_lvl2
-        - disa_stig
-    catalina:
-      severity: medium
-      benchmarks:
-        - disa_stig
+        - name: cis_lvl1
+        - name: cis_lvl2
+    enforcement_info:
+      check:
+        shell: '/usr/bin/awk -F: ''/expire-after/{print $2}'' /etc/security/audit_control'
+        result:
+          string: $ODV
+      fix:
+        shell: /usr/bin/sed -i.bak 's/^expire-after.*/expire-after:$ODV/' /etc/security/audit_control; /usr/sbin/audit -s
 odv:
-  hint: See man audit_control for possible values.
+  hint:
+    datatype: string
+    description: Time or disk size, e.g. 60d OR 5G, see the man page for audit_control
+    validation:
+      regex: ^\d+[shdyBKMG](\s(AND|OR)\s\d+[shdyBKMG])?$
   recommended: 7d
-  cis_lvl1: 60d OR 1G
-  cis_lvl2: 60d OR 1G
+  cis_lvl1: 60d OR 5G
+  cis_lvl2: 60d OR 5G
   stig: 7d
 tags:
   - 800-171
@@ -120,4 +89,3 @@ tags:
   - cnssi-1253_high
   - cmmc_lvl2
   - cnssi-1253_moderate
-  - cnssi-1253

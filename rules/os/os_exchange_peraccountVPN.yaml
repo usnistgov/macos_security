@@ -17,19 +17,23 @@ references:
         - ANNEX D (Section 5.6.1 - Mail)
 platforms:
   iOS:
-    ios_18:
+    '18.0':
       supervised: false
       benchmarks:
-        - indigo_base
-        - indigo_high
-    ios_17:
+        - name: indigo_base
+        - name: indigo_high
+    '17.0':
       supervised: false
       benchmarks:
-        - indigo_base
-        - indigo_high
+        - name: indigo_base
+        - name: indigo_high
+    introduced: '14.0'
 odv:
-  hint: Use UUID to leverage the specific VPNUUID
+  hint:
+    datatype: string
+    description: Provide a UUID to leverage the specific VPNUUID
   recommended: VPNUUID
 mobileconfig_info:
-  com.apple.mail.managed:
-    VPNUUID: $ODV
+  - PayloadType: com.apple.mail.managed
+    PayloadContent:
+      - VPNUUID: $ODV

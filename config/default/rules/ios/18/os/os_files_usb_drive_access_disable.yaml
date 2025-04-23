@@ -2,7 +2,7 @@
 id: os_files_usb_drive_access_disable
 title: Ensure Allow USB drive access in Files app is set to Disabled
 discussion: |
-  USB drive access in Files app _MUST_ be disabled.
+  USB drive acces in Files app _MUST_ be disabled.
 check: " "
 fix: |
   This is implemented by a Configuration Profile.
@@ -29,7 +29,7 @@ references:
     controls v8:
       - 1.2
 operating_system:
-  - name: iOS
+  - name: ios
     version:
       - 18.0
 tags:

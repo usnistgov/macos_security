@@ -19,18 +19,12 @@ discussion: |
 references:
   nist:
     cce:
-      sequoia:
+      macos_15:
         - CCE-94346-4
-      sonoma:
+      macos_14:
         - CCE-92942-2
-      ventura:
+      macos_13:
         - CCE-91929-0
-      monterey:
-        - CCE-91042-2
-      big_sur:
-        - CCE-85414-1
-      catalina:
-        - CCE-84940-6
     800-53r5:
       - AC-2(2)
   disa:
@@ -41,274 +35,67 @@ references:
       - SRG-OS-000002-GPOS-00002
       - SRG-OS-000123-GPOS-00064
     disa_stig:
-      sequoia:
+      macos_15:
         - APPL-15-000012
-      sonoma:
+      macos_14:
         - APPL-14-000012
-      ventura:
+      macos_13:
         - APPL-13-000012
-      monterey:
-        - APPL-12-000012
-      big_sur:
-        - APPL-11-000012
-      catalina:
-        - AOSX-15-000012
 platforms:
   macOS:
-    check: $OS_VALUE
-    fix: $OS_VALUE
-    sequoia:
-      severity: medium
+    '15.0':
       benchmarks:
-        - disa_stig
-      check: |-
-        Verify if a password policy is enforced by a directory service by asking the System Administrator (SA) or Information System Security Officer (ISSO).
-
-        If no policy is enforced by a directory service, a password policy can be set with the "pwpolicy" utility. The variable names may vary depending on how the policy was set.
-
-        If there are no temporary or emergency accounts defined on the system, this is Not Applicable.
-
-        To check if the password policy is configured to disable a temporary or emergency account after 72 hours, run the following command to output the password policy to the screen, substituting the correct user name in place of username:
-
-        /usr/bin/pwpolicy -u username getaccountpolicies | tail -n +2
-
-        If there is no output, and password policy is not controlled by a directory service, this is a finding.
-
-        Otherwise, look for the line "<key>policyCategoryAuthentication</key>".
-
-        In the array that follows, there should be a <dict> section that contains a check <string> that allows users to log in if "policyAttributeCurrentTime" is less than the result of adding "policyAttributeCreationTime" to 72 hours (259299 seconds). The check might use a variable defined in its "policyParameters" section.
-
-        If the check does not exist or if the check adds too great an amount of time to "policyAttributeCreationTime", this is a finding.
-      fix: |-
-        This setting may be enforced using local policy or by a directory service.
-
-        To set local policy to disable a temporary or emergency user, create a plain text file containing the following:
-
-        <dict>
-        <key>policyCategoryAuthentication</key>
-        <array>
-        <dict>
-        <key>policyContent</key>
-        <string>policyAttributeCurrentTime &lt; policyAttributeCreationTime+259299</string>
-        <key>policyIdentifier</key>
-        <string>Disable Tmp Accounts </string>
-        </dict>
-        </array>
-        </dict>
-
-        After saving the file and exiting to the command prompt, run the following command to load the new policy file, substituting the correct user name in place of "username" and the path to the file in place of "/path/to/file".
-
-        /usr/bin/pwpolicy -u username setaccountpolicies /path/to/file
-    sonoma:
-      severity: medium
+        - name: disa_stig
+          severity: medium
+    '14.0':
       benchmarks:
-        - disa_stig
-      check: |-
-        Verify if a password policy is enforced by a directory service by asking the System Administrator (SA) or Information System Security Officer (ISSO).
-
-        If no policy is enforced by a directory service, a password policy can be set with the "pwpolicy" utility. The variable names may vary depending on how the policy was set.
-
-        If there are no temporary or emergency accounts defined on the system, this is Not Applicable.
-
-        To check if the password policy is configured to disable a temporary or emergency account after 72 hours, run the following command to output the password policy to the screen, substituting the correct user name in place of username:
-
-        /usr/bin/pwpolicy -u username getaccountpolicies | tail -n +2
-
-        If there is no output, and password policy is not controlled by a directory service, this is a finding.
-
-        Otherwise, look for the line "<key>policyCategoryAuthentication</key>".
-
-        In the array that follows, there should be a <dict> section that contains a check <string> that allows users to log in if "policyAttributeCurrentTime" is less than the result of adding "policyAttributeCreationTime" to 72 hours (259299 seconds). The check might use a variable defined in its "policyParameters" section.
-
-        If the check does not exist or if the check adds too great an amount of time to "policyAttributeCreationTime", this is a finding.
-      fix: |-
-        This setting may be enforced using local policy or by a directory service.
-
-        To set local policy to disable a temporary or emergency user, create a plain text file containing the following:
-
-        <dict>
-        <key>policyCategoryAuthentication</key>
-        <array>
-        <dict>
-        <key>policyContent</key>
-        <string>policyAttributeCurrentTime &lt; policyAttributeCreationTime+259299</string>
-        <key>policyIdentifier</key>
-        <string>Disable Tmp Accounts </string>
-        </dict>
-        </array>
-        </dict>
-
-        After saving the file and exiting to the command prompt, run the following command to load the new policy file, substituting the correct user name in place of "username" and the path to the file in place of "/path/to/file".
-
-        /usr/bin/pwpolicy -u username setaccountpolicies /path/to/file
-    ventura:
-      severity: medium
+        - name: disa_stig
+          severity: medium
+    '13.0':
       benchmarks:
-        - disa_stig
-      check: |-
-        Verify if a password policy is enforced by a directory service by asking the System Administrator (SA) or Information System Security Officer (ISSO).
+        - name: disa_stig
+          severity: medium
+    enforcement_info:
+      check:
+        shell: |-
+          Verify if a password policy is enforced by a directory service by asking the System Administrator (SA) or Information System Security Officer (ISSO).
 
-        If no policy is enforced by a directory service, a password policy can be set with the "pwpolicy" utility. The variable names may vary depending on how the policy was set.
+          If no policy is enforced by a directory service, a password policy can be set with the "pwpolicy" utility. The variable names may vary depending on how the policy was set.
 
-        If there are no temporary or emergency accounts defined on the system, this is Not Applicable.
+          If there are no temporary or emergency accounts defined on the system, this is Not Applicable.
 
-        To check if the password policy is configured to disable a temporary or emergency account after 72 hours, run the following command to output the password policy to the screen, substituting the correct user name in place of username:
+          To check if the password policy is configured to disable a temporary or emergency account after 72 hours, run the following command to output the password policy to the screen, substituting the correct user name in place of username:
 
-        /usr/bin/pwpolicy -u username getaccountpolicies | tail -n +2
+          /usr/bin/pwpolicy -u username getaccountpolicies | tail -n +2
 
-        If there is no output, and password policy is not controlled by a directory service, this is a finding.
+          If there is no output, and password policy is not controlled by a directory service, this is a finding.
 
-        Otherwise, look for the line "<key>policyCategoryAuthentication</key>".
+          Otherwise, look for the line "<key>policyCategoryAuthentication</key>".
 
-        In the array that follows, there should be a <dict> section that contains a check <string> that allows users to log in if "policyAttributeCurrentTime" is less than the result of adding "policyAttributeCreationTime" to 72 hours (259299 seconds). The check might use a variable defined in its "policyParameters" section.
+          In the array that follows, there should be a <dict> section that contains a check <string> that allows users to log in if "policyAttributeCurrentTime" is less than the result of adding "policyAttributeCreationTime" to 72 hours (259299 seconds). The check might use a variable defined in its "policyParameters" section.
 
-        If the check does not exist or if the check adds too great an amount of time to "policyAttributeCreationTime", this is a finding.
-      fix: |-
-        This setting may be enforced using local policy or by a directory service.
+          If the check does not exist or if the check adds too great an amount of time to "policyAttributeCreationTime", this is a finding.
+      fix:
+        additional_info: |-
+          This setting may be enforced using local policy or by a directory service.
 
-        To set local policy to disable a temporary or emergency user, create a plain text file containing the following:
+          To set local policy to disable a temporary or emergency user, create a plain text file containing the following:
 
-        <dict>
-        <key>policyCategoryAuthentication</key>
-        <array>
-        <dict>
-        <key>policyContent</key>
-        <string>policyAttributeCurrentTime < policyAttributeCreationTime+259299</string>
-        <key>policyIdentifier</key>
-        <string>Disable Tmp Accounts </string>
-        </dict>
-        </array>
-        </dict>
+          <dict>
+          <key>policyCategoryAuthentication</key>
+          <array>
+          <dict>
+          <key>policyContent</key>
+          <string>policyAttributeCurrentTime &lt; policyAttributeCreationTime+259299</string>
+          <key>policyIdentifier</key>
+          <string>Disable Tmp Accounts </string>
+          </dict>
+          </array>
+          </dict>
 
-        After saving the file and exiting to the command prompt, run the following command to load the new policy file, substituting the correct user name in place of "username" and the path to the file in place of "/path/to/file".
+          After saving the file and exiting to the command prompt, run the following command to load the new policy file, substituting the correct user name in place of "username" and the path to the file in place of "/path/to/file".
 
-        /usr/bin/pwpolicy -u username setaccountpolicies /path/to/file
-    monterey:
-      severity: medium
-      benchmarks:
-        - disa_stig
-      check: |-
-        Verify if a password policy is enforced by a directory service by asking the System Administrator (SA) or Information System Security Officer (ISSO).
-
-        If no policy is enforced by a directory service, a password policy can be set with the "pwpolicy" utility. The variable names may vary depending on how the policy was set.
-
-        If there are no temporary or emergency accounts defined on the system, this is Not Applicable.
-
-        To check if the password policy is configured to disable a temporary or emergency account after 72 hours, run the following command to output the password policy to the screen, substituting the correct user name in place of username:
-
-        /usr/bin/pwpolicy -u username getaccountpolicies | tail -n +2
-
-        If there is no output, and password policy is not controlled by a directory service, this is a finding.
-
-        Otherwise, look for the line "<key>policyCategoryAuthentication</key>".
-
-        In the array that follows, there should be a <dict> section that contains a check <string> that allows users to log in if "policyAttributeCurrentTime" is less than the result of adding "policyAttributeCreationTime" to 72 hours (259299 seconds). The check might use a variable defined in its "policyParameters" section.
-
-        If the check does not exist or if the check adds too great an amount of time to "policyAttributeCreationTime", this is a finding.
-      fix: |-
-        This setting may be enforced using local policy or by a directory service.
-
-        To set local policy to disable a temporary or emergency user, create a plain text file containing the following:
-
-        <dict>
-        <key>policyCategoryAuthentication</key>
-        <array>
-        <dict>
-        <key>policyContent</key>
-        <string>policyAttributeCurrentTime < policyAttributeCreationTime+259299</string>
-        <key>policyIdentifier</key>
-        <string>Disable Tmp Accounts </string>
-        </dict>
-        </array>
-        </dict>
-
-        After saving the file and exiting to the command prompt, run the following command to load the new policy file, substituting the correct user name in place of "username" and the path to the file in place of "/path/to/file".
-
-        /usr/bin/pwpolicy -u username setaccountpolicies /path/to/file
-    big_sur:
-      severity: medium
-      benchmarks:
-        - disa_stig
-      check: |-
-        Verify if a password policy is enforced by a directory service by asking the System Administrator (SA) or Information System Security Officer (ISSO).
-
-        If no policy is enforced by a directory service, a password policy can be set with the "pwpolicy" utility. The variable names may vary depending on how the policy was set.
-
-        If there are no temporary or emergency accounts defined on the system, this is Not Applicable.
-
-        To check if the password policy is configured to disable a temporary or emergency account after 72 hours, run the following command to output the password policy to the screen, substituting the correct user name in place of username:
-
-        /usr/bin/pwpolicy -u username getaccountpolicies | tail -n +2
-
-        If there is no output, and password policy is not controlled by a directory service, this is a finding.
-
-        Otherwise, look for the line "<key>policyCategoryAuthentication</key>".
-
-        In the array that follows, there should be a <dict> section that contains a check <string> that allows users to log in if "policyAttributeCurrentTime" is less than the result of adding "policyAttributeCreationTime" to 72 hours (259299 seconds). The check might use a variable defined in its "policyParameters" section.
-
-        If the check does not exist or if the check adds too great an amount of time to "policyAttributeCreationTime", this is a finding.
-      fix: |-
-        This setting may be enforced using local policy or by a directory service.
-
-        To set local policy to disable a temporary or emergency user, create a plain text file containing the following:
-
-        <dict>
-        <key>policyCategoryAuthentication</key>
-        <array>
-        <dict>
-        <key>policyContent</key>
-        <string>policyAttributeCurrentTime < policyAttributeCreationTime+259299</string>
-        <key>policyIdentifier</key>
-        <string>Disable Tmp Accounts </string>
-        </dict>
-        </array>
-        </dict>
-
-        After saving the file and exiting to the command prompt, run the following command to load the new policy file, substituting the correct user name in place of "username" and the path to the file in place of "/path/to/file".
-
-        /usr/bin/pwpolicy -u username setaccountpolicies /path/to/file
-    catalina:
-      severity: medium
-      benchmarks:
-        - disa_stig
-      check: |-
-        Verify if a password policy is enforced by a directory service by asking the System Administrator (SA) or Information System Security Officer (ISSO).
-
-        If no policy is enforced by a directory service, a password policy can be set with the "pwpolicy" utility. The variable names may vary depending on how the policy was set.
-
-        If there are no temporary or emergency accounts defined on the system, this is Not Applicable.
-
-        To check if the password policy is configured to disable a temporary or emergency account after 72 hours, run the following command to output the password policy to the screen, substituting the correct user name in place of username:
-
-        /usr/bin/sudo /usr/bin/pwpolicy -u username getaccountpolicies | tail -n +2
-
-        If there is no output, and password policy is not controlled by a directory service, this is a finding.
-
-        Otherwise, look for the line "<key>policyCategoryAuthentication</key>".
-
-        In the array that follows, there should be a <dict> section that contains a check <string> that allows users to log in if "policyAttributeCurrentTime" is less than the result of adding "policyAttributeCreationTime" to 72 hours (259299 seconds). The check might use a variable defined in its "policyParameters" section.
-
-        If the check does not exist or if the check adds too great an amount of time to "policyAttributeCreationTime", this is a finding.
-      fix: |-
-        This setting may be enforced using local policy or by a directory service.
-
-        To set local policy to disable a temporary or emergency user, create a plain text file containing the following:
-
-        <dict>
-        <key>policyCategoryAuthentication</key>
-        <array>
-        <dict>
-        <key>policyContent</key>
-        <string>policyAttributeCurrentTime < policyAttributeCreationTime+259299</string>
-        <key>policyIdentifier</key>
-        <string>Disable Tmp Accounts </string>
-        </dict>
-        </array>
-        </dict>
-
-        After saving the file and exiting to the command prompt, run the following command to load the new policy file, substituting the correct user name in place of "username" and the path to the file in place of "/path/to/file".
-
-        /usr/bin/pwpolicy -u username setaccountpolicies /path/to/file
+          /usr/bin/pwpolicy -u username setaccountpolicies /path/to/file
 tags:
   - 800-53r5_moderate
   - 800-53r5_high

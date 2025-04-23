@@ -15,16 +15,18 @@ references:
         - ANNEX K
 platforms:
   iOS:
-    ios_18:
+    '18.0':
       supervised: false
       benchmarks:
-        - indigo_base
-        - indigo_high
-    ios_17:
+        - name: indigo_base
+        - name: indigo_high
+    '17.0':
       supervised: false
       benchmarks:
-        - indigo_base
-        - indigo_high
+        - name: indigo_base
+        - name: indigo_high
+    introduced: '11.0'
 mobileconfig_info:
-  com.apple.applicationaccess:
-    forceClassroomUnpromptedScreenObservation: false
+  - PayloadType: com.apple.applicationaccess
+    PayloadContent:
+      - forceClassroomUnpromptedScreenObservation: false

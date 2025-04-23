@@ -1,26 +1,22 @@
 id: os_notify_unauthorized_baseline_change
 title: Configure the System to Notify upon Baseline Configuration Changes
-discussion: |
+discussion: |-
   The macOS should be configured to automatically notify system administrators, Information System Security Officers (ISSOs), and (IMOs) when baseline configurations are modified.
 
   Unauthorized changes to the baseline configuration could make the system vulnerable to various attacks or allow unauthorized access to the operating system. Changes to operating system configurations can have unintended side effects, some of which may  present security threats. Detecting such changes and providing an automated response can help avoid unintended, negative consequences that could ultimately affect the state of the operating system.
 
   To enable notifications and audit logging of changes made to baseline configurations, many operating systems can be integrated with enterprise-level auditing mechanisms that meet or exceed this requirement.
+
+  NOTE: The technology does not support this requirement. This is an applicable-does not meet finding.
 references:
   nist:
     cce:
-      sequoia:
+      macos_15:
         - CCE-94243-3
-      sonoma:
+      macos_14:
         - CCE-92839-0
-      ventura:
+      macos_13:
         - CCE-91835-9
-      monterey:
-        - CCE-90964-8
-      big_sur:
-        - CCE-85348-1
-      catalina:
-        - CCE-84911-7
     800-53r5:
       - CM-3(5)
   disa:
@@ -28,16 +24,9 @@ references:
       - SRG-OS-000363-GPOS-00150
 platforms:
   macOS:
-    check: |
-      The technology does not support this requirement. This is an applicable-does not meet finding.
-    fix: |
-      This requirement is a permanent finding and cannot be fixed. An appropriate mitigation for the system must be implemented, but this finding cannot be considered fixed.
-    sequoia: {}
-    sonoma: {}
-    ventura: {}
-    monterey: {}
-    big_sur: {}
-    catalina: {}
+    '15.0': {}
+    '14.0': {}
+    '13.0': {}
 tags:
   - permanent
   - cnssi-1253_high

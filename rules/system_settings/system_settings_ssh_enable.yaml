@@ -5,11 +5,11 @@ discussion: |
 references:
   nist:
     cce:
-      sequoia:
+      macos_15:
         - CCE-94400-9
-      sonoma:
+      macos_14:
         - CCE-92995-0
-      ventura:
+      macos_13:
         - CCE-91985-2
     800-53r5:
       - IA-2(8)
@@ -28,20 +28,16 @@ references:
       - IA.L2-3.5.4
 platforms:
   macOS:
-    check: |
-      /bin/launchctl print-disabled system | /usr/bin/grep -c '"com.openssh.sshd" => enabled'
-    result:
-      integer: 1
-    fix: |
-      [source,bash]
-      ----
-      /bin/launchctl enable system/com.openssh.sshd
-      ----
-    sequoia:
-      severity: medium
-    sonoma:
-      severity: medium
-    ventura: {}
+    '15.0': {}
+    '14.0': {}
+    '13.0': {}
+    enforcement_info:
+      check:
+        shell: /bin/launchctl print-disabled system | /usr/bin/grep -c '"com.openssh.sshd" => enabled'
+        result:
+          integer: 1
+      fix:
+        shell: /bin/launchctl enable system/com.openssh.sshd
 tags:
   - 800-53r5_low
   - 800-53r5_moderate

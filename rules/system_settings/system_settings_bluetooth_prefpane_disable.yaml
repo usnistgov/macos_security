@@ -9,7 +9,7 @@ discussion: |
 references:
   nist:
     cce:
-      ventura:
+      macos_13:
         - CCE-92012-4
   disa:
     cci:
@@ -19,19 +19,22 @@ references:
       - SRG-OS-000379-GPOS-00164
       - SRG-OS-000481-GPOS-00481
     disa_stig:
-      ventura:
+      macos_13:
         - APPL-13-002062
 platforms:
   macOS:
-    ventura:
-      severity: low
+    '13.0':
       benchmarks:
-        - disa_stig
-    check: |
-      /usr/bin/profiles show -output stdout-xml | /usr/bin/xmllint --xpath '//key[text()="DisabledPreferencePanes"]/following-sibling::*[1]' - | /usr/bin/grep -c com.apple.preferences.Bluetooth
-    result:
-      integer: 1
+        - name: disa_stig
+          severity: low
+    enforcement_info:
+      check:
+        shell: /usr/bin/profiles show -output stdout-xml | /usr/bin/xmllint --xpath '//key[text()="DisabledPreferencePanes"]/following-sibling::*[1]' - | /usr/bin/grep -c com.apple.preferences.Bluetooth
+        result:
+          integer: 1
+    introduced: '10.7'
 mobileconfig_info:
-  com.apple.systempreferences:
-    DisabledPreferencePanes:
-      - com.apple.preferences.Bluetooth
+  - PayloadType: com.apple.systempreferences
+    PayloadContent:
+      - DisabledPreferencePanes:
+          - com.apple.preferences.Bluetooth

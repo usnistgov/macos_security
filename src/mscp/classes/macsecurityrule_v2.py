@@ -20,7 +20,7 @@ from src.mscp.common_utils import (
     create_yaml,
     get_version_data,
     make_dir,
-    open_yaml,
+    open_file,
     sanitize_input,
 )
 
@@ -39,7 +39,39 @@ class Sectionmap(Enum):
     SYSTEM_SETTINGS = "systemsettings"
 
 
-class NistReferences(BaseModel):
+class BaseModelWithAccessors(BaseModel):
+    """
+    A base class that provides `get`, `__getitem__`, and `__setitem__` methods
+    for all derived classes.
+    """
+
+    def get(self, attr: str, default: Any = None) -> Any:
+        """
+        Get the value of an attribute, or return the default if it doesn't exist.
+        """
+        return getattr(self, attr, default)
+
+    def __getitem__(self, key: str) -> Any:
+        """
+        Allow dictionary-like access to attributes.
+        """
+        if key in self.model_fields:
+            return getattr(self, key)
+        raise KeyError(f"{key} is not a valid attribute of {self.__class__.__name__}")
+
+    def __setitem__(self, key: str, value: Any) -> None:
+        """
+        Allow dictionary-like setting of attributes.
+        """
+        if key in self.model_fields:
+            setattr(self, key, value)
+        else:
+            raise KeyError(
+                f"{key} is not a valid attribute of {self.__class__.__name__}"
+            )
+
+
+class NistReferences(BaseModelWithAccessors):
     cce: dict[str, list[str]] | None = None
     nist_800_53r5: list[str] | None = None
     nist_800_171r3: list[str] | None = None
@@ -53,24 +85,8 @@ class NistReferences(BaseModel):
         if self.nist_800_171r3:
             self.nist_800_171r3 = sorted(self.nist_800_171r3)
 
-    def get(self, attr, default=None):
-        return getattr(self, attr, default)
 
-    def __getitem__(self, key: str) -> Any:
-        if key in self.model_fields:
-            return getattr(self, key)
-        raise KeyError(f"{key} is not a valid attribute of {self.__class__.__name__}")
-
-    def __setitem__(self, key: str, value: Any) -> None:
-        if key in self.model_fields:
-            setattr(self, key, value)
-        else:
-            raise KeyError(
-                f"{key} is not a valid attribute of {self.__class__.__name__}"
-            )
-
-
-class DisaReferences(BaseModel):
+class DisaReferences(BaseModelWithAccessors):
     cci: list[str] | None = None
     srg: list[str] | None = None
     disa_stig: dict[str, list[str]] | None = None
@@ -87,24 +103,8 @@ class DisaReferences(BaseModel):
         if self.cmmc:
             self.cmmc = sorted(self.cmmc)
 
-    def get(self, attr, default=None):
-        return getattr(self, attr, default)
 
-    def __getitem__(self, key: str) -> Any:
-        if key in self.model_fields:
-            return getattr(self, key)
-        raise KeyError(f"{key} is not a valid attribute of {self.__class__.__name__}")
-
-    def __setitem__(self, key: str, value: Any) -> None:
-        if key in self.model_fields:
-            setattr(self, key, value)
-        else:
-            raise KeyError(
-                f"{key} is not a valid attribute of {self.__class__.__name__}"
-            )
-
-
-class CisReferences(BaseModel):
+class CisReferences(BaseModelWithAccessors):
     benchmark: dict[str, list[str]] | None = None
     controls_v8: list[str] | None = None
 
@@ -115,24 +115,8 @@ class CisReferences(BaseModel):
         if self.controls_v8:
             self.controls_v8 = sorted(self.controls_v8)
 
-    def get(self, attr, default=None):
-        return getattr(self, attr, default)
 
-    def __getitem__(self, key: str) -> Any:
-        if key in self.model_fields:
-            return getattr(self, key)
-        raise KeyError(f"{key} is not a valid attribute of {self.__class__.__name__}")
-
-    def __setitem__(self, key: str, value: Any) -> None:
-        if key in self.model_fields:
-            setattr(self, key, value)
-        else:
-            raise KeyError(
-                f"{key} is not a valid attribute of {self.__class__.__name__}"
-            )
-
-
-class bisReferences(BaseModel):
+class bisReferences(BaseModelWithAccessors):
     indigo: list[str] | None = None
 
     def __init__(self, **data: Any) -> None:
@@ -140,45 +124,13 @@ class bisReferences(BaseModel):
         if self.indigo:
             self.indigo = sorted(self.indigo)
 
-    def get(self, attr, default=None):
-        return getattr(self, attr, default)
 
-    def __getitem__(self, key: str) -> Any:
-        if key in self.model_fields:
-            return getattr(self, key)
-        raise KeyError(f"{key} is not a valid attribute of {self.__class__.__name__}")
-
-    def __setitem__(self, key: str, value: Any) -> None:
-        if key in self.model_fields:
-            setattr(self, key, value)
-        else:
-            raise KeyError(
-                f"{key} is not a valid attribute of {self.__class__.__name__}"
-            )
-
-
-class Mobileconfigpayload(BaseModel):
+class Mobileconfigpayload(BaseModelWithAccessors):
     payload_type: str
     payload_content: dict[str, Any]
 
-    def get(self, attr, default=None):
-        return getattr(self, attr, default)
 
-    def __getitem__(self, key: str) -> Any:
-        if key in self.model_fields:
-            return getattr(self, key)
-        raise KeyError(f"{key} is not a valid attribute of {self.__class__.__name__}")
-
-    def __setitem__(self, key: str, value: Any) -> None:
-        if key in self.model_fields:
-            setattr(self, key, value)
-        else:
-            raise KeyError(
-                f"{key} is not a valid attribute of {self.__class__.__name__}"
-            )
-
-
-class References(BaseModel):
+class References(BaseModelWithAccessors):
     model_config: ConfigDict = ConfigDict(extra="ignore")
 
     nist: NistReferences
@@ -187,24 +139,8 @@ class References(BaseModel):
     bis: bisReferences | None = None
     custom: list[str] | None = None
 
-    def get(self, attr, default=None):
-        return getattr(self, attr, default)
 
-    def __getitem__(self, key: str) -> Any:
-        if key in self.model_fields:
-            return getattr(self, key)
-        raise KeyError(f"{key} is not a valid attribute of {self.__class__.__name__}")
-
-    def __setitem__(self, key: str, value: Any) -> None:
-        if key in self.model_fields:
-            setattr(self, key, value)
-        else:
-            raise KeyError(
-                f"{key} is not a valid attribute of {self.__class__.__name__}"
-            )
-
-
-class Platformconfig(BaseModel):
+class Platformconfig(BaseModelWithAccessors):
     severity: str
     benchmarks: list[str]
     fix: str | None = None
@@ -214,7 +150,7 @@ class Platformconfigios(Platformconfig):
     supervised: bool
 
 
-class Platform(BaseModel):
+class Platform(BaseModelWithAccessors):
     model_config: ConfigDict = ConfigDict(extra="ignore")
 
     check: str
@@ -230,24 +166,8 @@ class Platform(BaseModel):
     ios_17: Platformconfigios | None = None
     ios_18: Platformconfigios | None = None
 
-    def get(self, attr, default=None):
-        return getattr(self, attr, default)
 
-    def __getitem__(self, key: str) -> Any:
-        if key in self.model_fields:
-            return getattr(self, key)
-        raise KeyError(f"{key} is not a valid attribute of {self.__class__.__name__}")
-
-    def __setitem__(self, key: str, value: Any) -> None:
-        if key in self.model_fields:
-            setattr(self, key, value)
-        else:
-            raise KeyError(
-                f"{key} is not a valid attribute of {self.__class__.__name__}"
-            )
-
-
-class Macsecurityrule(BaseModel):
+class Macsecurityrule(BaseModelWithAccessors):
     """
     Represents a security rule for macOS systems.
 
@@ -343,7 +263,7 @@ class Macsecurityrule(BaseModel):
         mobileconfig_info: list[dict[str, Any]] = []
         mechanism: str = "Manual"
         os_version_str: str = str(os_version)
-        current_version_data: dict = get_version_data(os_type, os_version)
+        current_version_data: dict[str, Any] = get_version_data(os_type, os_version)
 
         os_name: str = current_version_data["os_name"]
 
@@ -373,7 +293,7 @@ class Macsecurityrule(BaseModel):
                 logger.warning("Rule file not found for rule: {}", rule_id)
                 continue
 
-            rule_yaml: dict = open_yaml(rule_file)
+            rule_yaml: dict[str, Any] = open_file(rule_file)
             payloads: list[Mobileconfigpayload] = []
 
             rule_yaml["rule_id"] = rule_yaml.pop("id")
@@ -545,7 +465,7 @@ class Macsecurityrule(BaseModel):
         ]
 
         section_data: dict = {
-            section_file.stem: open_yaml(section_file).get("name", "")
+            section_file.stem: open_file(section_file).get("name", "")
             for section_dir in section_dirs
             for section_file in section_dir.glob("*.y*ml")
             if section_file.is_file()
@@ -563,10 +483,10 @@ class Macsecurityrule(BaseModel):
                 if not folder.is_dir():
                     continue
 
-                for yaml_file in folder.rglob("*.y*ml"):
+                for rule_file in folder.rglob("*"):
                     try:
-                        rule_yaml: dict = open_yaml(yaml_file)
-                        folder_name: str = yaml_file.parent.name
+                        rule_yaml: dict = open_file(rule_file)
+                        folder_name: str = rule_file.parent.name
                         logger.debug("{} folder: {}", rule_yaml["id"], folder_name)
                         section_name: str = section_data.get(
                             Sectionmap[folder_name.upper()].value, ""
@@ -601,7 +521,7 @@ class Macsecurityrule(BaseModel):
 
                     except Exception as e:
                         logger.error(
-                            "Failed to load rule from file {}: {}", yaml_file, e
+                            "Failed to load rule from file {}: {}", rule_file, e
                         )
 
         return rules
@@ -909,7 +829,7 @@ class Macsecurityrule(BaseModel):
 
         if self.odv is not None and "custom" in self.odv:
             self.odv.pop("custom")
-            self.references.pop("custom")
+            self["references"].pop("custom")
 
         self.to_yaml(rule_file_path)
 
@@ -1120,19 +1040,3 @@ class Macsecurityrule(BaseModel):
                 print(tag)
 
         return all_tags
-
-    def get(self, attr, default=None):
-        return getattr(self, attr, default)
-
-    def __getitem__(self, key: str) -> Any:
-        if key in self.model_fields:
-            return getattr(self, key)
-        raise KeyError(f"{key} is not a valid attribute of {self.__class__.__name__}")
-
-    def __setitem__(self, key: str, value: Any) -> None:
-        if key in self.model_fields:
-            setattr(self, key, value)
-        else:
-            raise KeyError(
-                f"{key} is not a valid attribute of {self.__class__.__name__}"
-            )

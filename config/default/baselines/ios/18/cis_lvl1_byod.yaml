@@ -1,18 +1,19 @@
----
 title: "iOS/iPadOS 18.0: Security Configuration - CIS Apple iOS 18 v1.0.0 Benchmark (Level 1) - End-User Owned Devices"
 description: |
   This guide describes the actions to take when securing a iOS/iPadOS 18.0 system against the CIS Apple iOS 18 v1.0.0 Benchmark (Level 1) - End-User Owned Devices security baseline.
-authors:
-  - name: Edward Byrd
-    organization: Center for Internet Security
-  - name: Allen Golbig
-    organization: Jamf
+authors: |
+  *macOS Security Compliance Project*
+
+  |===
+  |Edward Byrd|Center for Internet Security
+  |Allen Golbig|Jamf
+  |===
 parent_values: "cis_lvl1_byod"
 profile:
   - section: "icloud"
     rules:
       - icloud_managed_apps_store_data_disabled
-  - section: "operatingsystem"
+  - section: "ios"
     rules:
       - os_airdrop_unmanaged_destination_enable
       - os_allow_documents_managed_sources_unmanaged_destinations_disable

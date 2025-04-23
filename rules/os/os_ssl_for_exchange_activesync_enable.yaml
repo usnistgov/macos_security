@@ -30,27 +30,35 @@ references:
         - ANNEX D (Section 5.6.1 - Mail)
 platforms:
   iOS:
-    ios_18:
-      severity: medium
+    '18.0':
       supervised: false
       benchmarks:
-        - ios_stig
-        - indigo_base
-        - indigo_high
-    ios_17:
-      severity: medium
+        - name: ios_stig
+          severity: medium
+        - name: indigo_base
+          severity: medium
+        - name: indigo_high
+          severity: medium
+    '17.0':
       supervised: false
       benchmarks:
-        - ios_stig
-        - ios_stig_byoad
-        - indigo_base
-        - indigo_high
-    ios_16:
-      severity: medium
+        - name: ios_stig
+          severity: medium
+        - name: ios_stig_byoad
+          severity: medium
+        - name: indigo_base
+          severity: medium
+        - name: indigo_high
+          severity: medium
+    '16.0':
       supervised: false
       benchmarks:
-        - ios_stig
-        - ios_stig_byoad
+        - name: ios_stig
+          severity: medium
+        - name: ios_stig_byoad
+          severity: medium
+    introduced: '-1'
 mobileconfig_info:
-  com.apple.eas.account:
-    ssl: true
+  - PayloadType: com.apple.eas.account
+    PayloadContent:
+      - ssl: true

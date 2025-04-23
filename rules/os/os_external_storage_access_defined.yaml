@@ -7,7 +7,7 @@ discussion: |-
 references:
   nist:
     cce:
-      sequoia:
+      macos_15:
         - CCE-94188-0
     800-53r5:
       - MP-7
@@ -19,11 +19,14 @@ references:
       - MP.L2-3.8.8
 platforms:
   macOS:
-    sequoia: {}
-    check: |
-      /usr/bin/plutil -convert json /var/db/ManagedConfigurationFiles/DiskManagement/DiskManagement_Settings.plist -o - | /usr/bin/jq '.Restrictions | .ExternalStorage'
-    result:
-      string: $ODV
+    '15.0': {}
+    enforcement_info:
+      check:
+        shell: /usr/bin/plutil -convert json /var/db/ManagedConfigurationFiles/DiskManagement/DiskManagement_Settings.plist -o - | /usr/bin/jq '.Restrictions | .ExternalStorage'
+        result:
+          string: $ODV
+      fix:
+        additional_info: This is implemented by a Declarative Device Management.
 tags:
   - cmmc_lvl2
   - 800-53r5_low
@@ -37,5 +40,12 @@ ddm_info:
   ddm_key: ExternalStorage
   ddm_value: $ODV
 odv:
-  hint: Allowed, ReadOnly, or Disallowed
+  hint:
+    datatype: enum
+    description: Allowed|ReadOnly|Disallowed
+    validation:
+      enumValues:
+        - Allowed
+        - ReadOnly
+        - Disallowed
   recommended: Allowed

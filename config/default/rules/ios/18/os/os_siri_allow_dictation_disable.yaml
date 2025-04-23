@@ -19,7 +19,7 @@ references:
   indigo:
     - ANNEX K
 operating_system:
-  - name: iOS
+  - name: ios
     version:
       - 18.0
 tags:

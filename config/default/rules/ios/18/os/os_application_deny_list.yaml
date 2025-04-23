@@ -15,7 +15,7 @@ references:
     - ANNEX D (Section 5.8 - App-Installation)
     - ANNEX N
 operating_system:
-  - name: iOS
+  - name: ios
     version:
       - 18.0
 tags:
@@ -23,10 +23,9 @@ tags:
   - manual
   - indigo_base
   - indigo_high
-mobileconfig: true
+mobileconfig: false
 mobileconfig_info:
-  - PayloadType: com.apple.applicationaccess
-    PayloadContent:
-      blockedAppBundleIDs:
-        - bundleID1
-        - bundleID2
+  com.apple.applicationaccess:
+    blockedAppBundleIDs:
+      - bundleID1
+      - bundleID2

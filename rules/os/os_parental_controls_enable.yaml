@@ -9,51 +9,39 @@ discussion: |
 references:
   nist:
     cce:
-      sequoia:
+      macos_15:
         - CCE-94246-6
-      sonoma:
+      macos_14:
         - CCE-92842-4
-      ventura:
+      macos_13:
         - CCE-91837-5
-      monterey:
-        - CCE-90966-3
-      big_sur:
-        - CCE-85350-7
-      catalina:
-        - CCE-84773-1
     800-53r5:
       - CM-7(2)
     800-171r3:
-      - 3.4.7
+      - 03.04.06
   cis:
     controls_v8:
       - 4.8
 platforms:
   macOS:
-    check: |
-      /usr/bin/osascript -l JavaScript << EOS
-      $.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess.new')\
-      .objectForKey('familyControlsEnabled').js
-      EOS
-    result:
-      string: 'true'
-    fix: |
-      This is implemented by a Configuration Profile.
-    sequoia: {}
-    sonoma: {}
-    ventura: {}
-    monterey: {}
-    big_sur: {}
-    catalina: {}
+    '15.0': {}
+    '14.0': {}
+    '13.0': {}
+    enforcement_info:
+      check:
+        shell: |-
+          /usr/bin/osascript -l JavaScript << EOS
+          $.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess.new')\
+          .objectForKey('familyControlsEnabled').js
+          EOS
+        result:
+          string: 'true'
+    introduced: '10.7'
 tags:
   - cnssi-1253_low
   - cnssi-1253_high
   - cnssi-1253_moderate
-  - 800-53r5_moderate
-  - 800-53r5_high
-  - 800-171
-  - cisv8
-  - cnssi-1253
 mobileconfig_info:
-  com.apple.applicationaccess.new:
-    familyControlsEnabled: true
+  - PayloadType: com.apple.applicationaccess.new
+    PayloadContent:
+      - familyControlsEnabled: true

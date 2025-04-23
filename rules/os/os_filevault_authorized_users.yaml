@@ -5,63 +5,33 @@ discussion: |
 references:
   nist:
     cce:
-      sequoia:
+      macos_15:
         - CCE-94191-4
-      sonoma:
+      macos_14:
         - CCE-92790-5
-      ventura:
+      macos_13:
         - CCE-91788-0
-      monterey:
-        - CCE-90921-8
-      big_sur:
-        - CCE-85311-9
-      catalina:
-        - CCE-84932-3
     800-53r5:
       - AC-2(11)
   disa:
     disa_stig:
-      ventura:
+      macos_13:
         - APPL-13-000032
-      monterey:
-        - APPL-12-000032
-      big_sur:
-        - APPL-11-000032
-      catalina:
-        - AOSX-15-000032
 platforms:
   macOS:
-    check: |
-      /usr/bin/fdesetup list | /usr/bin/awk -F',' '{print $1}'
-    result:
-      string: a list containing authorized users that can unlock FileVault
-    fix: |
-      Remove the user that is not authorized to unlock FileVault using the fdesetup command.
-
-      [source,bash]
-      ----
-      /usr/bin/fdesetup remove -user NOT_AUTHORIZED_USERNAME
-      ----
-    sequoia:
-      severity: medium
-    sonoma:
-      severity: medium
-    ventura:
-      severity: medium
+    '15.0': {}
+    '14.0': {}
+    '13.0':
       benchmarks:
-        - disa_stig
-    monterey:
-      severity: medium
-      benchmarks:
-        - disa_stig
-    big_sur:
-      severity: medium
-      benchmarks:
-        - disa_stig
-    catalina:
-      severity: medium
-      benchmarks:
-        - disa_stig
+        - name: disa_stig
+          severity: medium
+    enforcement_info:
+      check:
+        shell: /usr/bin/fdesetup list | /usr/bin/awk -F',' '{print $1}'
+        result:
+          string: a list containing authorized users that can unlock FileVault
+      fix:
+        shell: /usr/bin/fdesetup remove -user NOT_AUTHORIZED_USERNAME
 tags:
   - 800-53r5_high
   - manual

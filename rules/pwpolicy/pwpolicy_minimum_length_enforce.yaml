@@ -1,21 +1,20 @@
 id: pwpolicy_minimum_length_enforce
 title: Require a Minimum Password Length of $ODV Characters
-discussion: "The macOS _MUST_ be configured to require a minimum of $ODV characters be used when a password is created.\n\nThis rule enforces password complexity by requiring users to set passwords that are less vulnerable to malicious users.\n\nNOTE: To comply with Executive Order 14028, \u201CImproving the Nation's Cybersecurity\u201D, OMB M-22-09, \u201CMoving the U.S. Government Toward Zero Trust Cybersecurity Principles\u201D, and NIST SP-800-63b, \u201CDigital Identity Guidelines: Authentication and Lifecycle Management\u201D federal, military, and intelligence communities must adopt the following configuration settings. Password policies must not require the use of complexity policies such as upper characters, lower characters, or special characters. Password policies must also not require the use of regular rotation. Password policies should define a minimum length. Multifactor authentication should be used where ever possible.\n"
+discussion: |
+  The macOS _MUST_ be configured to require a minimum of $ODV characters be used when a password is created.
+
+  This rule enforces password complexity by requiring users to set passwords that are less vulnerable to malicious users.
+
+  NOTE: To comply with Executive Order 14028, "Improving the Nation's Cybersecurity", OMB M-22-09, "Moving the U.S. Government Toward Zero Trust Cybersecurity Principles", and NIST SP-800-63b, "Digital Identity Guidelines: Authentication and Lifecycle Management" federal, military, and intelligence communities must adopt the following configuration settings. Password policies must not require the use of complexity policies such as upper characters, lower characters, or special characters. Password policies must also not require the use of regular rotation. Password policies should define a minimum length. Multifactor authentication should be used where ever possible.
 references:
   nist:
     cce:
-      sequoia:
+      macos_15:
         - CCE-94340-7
-      sonoma:
+      macos_14:
         - CCE-92936-4
-      ventura:
+      macos_13:
         - CCE-91923-3
-      monterey:
-        - CCE-91036-4
-      big_sur:
-        - CCE-85409-1
-      catalina:
-        - CCE-84816-8
       ios_18:
         - CCE-94477-7
       ios_17:
@@ -33,18 +32,12 @@ references:
     srg:
       - SRG-OS-000078-GPOS-00046
     disa_stig:
-      sequoia:
+      macos_15:
         - APPL-15-003010
-      sonoma:
+      macos_14:
         - APPL-14-003010
-      ventura:
+      macos_13:
         - APPL-13-003010
-      monterey:
-        - APPL-12-003010
-      big_sur:
-        - APPL-11-003010
-      catalina:
-        - AOSX-15-003010
       ios_18:
         - AIOS-18-006500
       ios_17:
@@ -59,15 +52,11 @@ references:
       - IA.L2-3.5.9
   cis:
     benchmark:
-      sequoia:
+      macos_15:
         - 5.2.2 (level 1)
-      sonoma:
+      macos_14:
         - 5.2.2 (level 1)
-      ventura:
-        - 5.2.2 (level 1)
-      monterey:
-        - 5.2.2 (level 1)
-      big_sur:
+      macos_13:
         - 5.2.2 (level 1)
       ios_18:
         - 2.4.3 (level 1 - End-User Owned Devices)
@@ -90,82 +79,77 @@ references:
         - ANNEX K
 platforms:
   macOS:
-    check: |
-      /usr/bin/pwpolicy -getaccountpolicies 2> /dev/null | /usr/bin/tail +2 | /usr/bin/xmllint --xpath 'boolean(//*[contains(text(),"policyAttributePassword matches '\''.{$ODV,}'\''")])' -
-    result:
-      string: 'true'
-    fix: |
-      This is implemented by a Configuration Profile.
-    sequoia:
-      severity: medium
+    '15.0':
       benchmarks:
-        - cis_lvl1
-        - cis_lvl2
-        - disa_stig
-    sonoma:
-      severity: medium
+        - name: cis_lvl1
+        - name: cis_lvl2
+        - name: disa_stig
+          severity: medium
+    '14.0':
       benchmarks:
-        - cis_lvl1
-        - cis_lvl2
-        - disa_stig
-    ventura:
-      severity: medium
+        - name: cis_lvl1
+        - name: cis_lvl2
+        - name: disa_stig
+          severity: medium
+    '13.0':
       benchmarks:
-        - cis_lvl1
-        - cis_lvl2
-        - disa_stig
-    monterey:
-      severity: medium
-      benchmarks:
-        - cis_lvl1
-        - cis_lvl2
-        - disa_stig
-    big_sur:
-      severity: medium
-      benchmarks:
-        - cis_lvl1
-        - cis_lvl2
-        - disa_stig
-    catalina:
-      severity: medium
-      benchmarks:
-        - disa_stig
+        - name: cis_lvl1
+        - name: cis_lvl2
+        - name: disa_stig
+          severity: medium
+    enforcement_info:
+      check:
+        shell: /usr/bin/pwpolicy -getaccountpolicies 2> /dev/null | /usr/bin/tail +2 | /usr/bin/xmllint --xpath 'boolean(//*[contains(text(),"policyAttributePassword matches '\''.{$ODV,}'\''")])' -
+        result:
+          string: 'true'
+    introduced: '10.7'
   iOS:
-    ios_18:
-      severity: medium
+    '18.0':
       supervised: false
       benchmarks:
-        - cis_lvl1_byod
-        - cis_lvl2_byod
-        - cis_lvl1_enterprise
-        - cis_lvl2_enterprise
-        - ios_stig
-        - indigo_base
-        - indigo_high
-    ios_17:
-      severity: medium
+        - name: cis_lvl1_byod
+        - name: cis_lvl2_byod
+        - name: cis_lvl1_enterprise
+        - name: cis_lvl2_enterprise
+        - name: ios_stig
+          severity: medium
+        - name: indigo_base
+          severity: medium
+        - name: indigo_high
+          severity: medium
+    '17.0':
       supervised: false
       benchmarks:
-        - cis_lvl1_byod
-        - cis_lvl2_byod
-        - cis_lvl1_enterprise
-        - cis_lvl2_enterprise
-        - ios_stig
-        - ios_stig_byoad
-        - indigo_base
-        - indigo_high
-    ios_16:
-      severity: medium
+        - name: cis_lvl1_byod
+        - name: cis_lvl2_byod
+        - name: cis_lvl1_enterprise
+        - name: cis_lvl2_enterprise
+        - name: ios_stig
+          severity: medium
+        - name: ios_stig_byoad
+          severity: medium
+        - name: indigo_base
+          severity: medium
+        - name: indigo_high
+          severity: medium
+    '16.0':
       supervised: false
       benchmarks:
-        - cis_lvl1_byod
-        - cis_lvl2_byod
-        - cis_lvl1_enterprise
-        - cis_lvl2_enterprise
-        - ios_stig
-        - ios_stig_byoad
+        - name: cis_lvl1_byod
+        - name: cis_lvl2_byod
+        - name: cis_lvl1_enterprise
+        - name: cis_lvl2_enterprise
+        - name: ios_stig
+          severity: medium
+        - name: ios_stig_byoad
+          severity: medium
+    introduced: '4.0'
 odv:
-  hint: Minimum passcode length.
+  hint:
+    datatype: number
+    description: Minimum password length. e.g. 15
+    validation:
+      min: 1
   recommended: 6
   cis_lvl1: 15
   cis_lvl2: 15
@@ -188,10 +172,10 @@ tags:
   - cnssi-1253_high
   - cmmc_lvl2
   - cnssi-1253_moderate
-  - cnssi-1253
 mobileconfig_info:
-  com.apple.mobiledevice.passwordpolicy:
-    minLength: $ODV
+  - PayloadType: com.apple.mobiledevice.passwordpolicy
+    PayloadContent:
+      - minLength: $ODV
 ddm_info:
   declarationtype: com.apple.configuration.passcode.settings
   ddm_key: MinimumLength

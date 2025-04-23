@@ -11,7 +11,7 @@ references:
         - CCE-93414-1
       ios_16:
         - CCE-93214-5
-      visionos_2.0:
+      visionos_2:
         - CCE-94491-8
     800-53r5:
       - AC-3
@@ -44,42 +44,45 @@ references:
         - ANNEX K
 platforms:
   iOS:
-    ios_18:
+    '18.0':
       supervised: false
       benchmarks:
-        - cis_lvl1_byod
-        - cis_lvl2_byod
-        - cis_lvl1_enterprise
-        - cis_lvl2_enterprise
-        - indigo_base
-        - indigo_high
-    ios_17:
+        - name: cis_lvl1_byod
+        - name: cis_lvl2_byod
+        - name: cis_lvl1_enterprise
+        - name: cis_lvl2_enterprise
+        - name: indigo_base
+        - name: indigo_high
+    '17.0':
       supervised: false
       benchmarks:
-        - cis_lvl1_byod
-        - cis_lvl2_byod
-        - cis_lvl1_enterprise
-        - cis_lvl2_enterprise
-        - ios_stig_byoad
-        - indigo_base
-        - indigo_high
-    ios_16:
-      severity: medium
+        - name: cis_lvl1_byod
+        - name: cis_lvl2_byod
+        - name: cis_lvl1_enterprise
+        - name: cis_lvl2_enterprise
+        - name: ios_stig_byoad
+        - name: indigo_base
+        - name: indigo_high
+    '16.0':
       supervised: false
       benchmarks:
-        - cis_lvl1_byod
-        - cis_lvl2_byod
-        - cis_lvl1_enterprise
-        - cis_lvl2_enterprise
-        - ios_stig_byoad
+        - name: cis_lvl1_byod
+        - name: cis_lvl2_byod
+        - name: cis_lvl1_enterprise
+        - name: cis_lvl2_enterprise
+        - name: ios_stig_byoad
+          severity: medium
+    introduced: '7.0'
   visionOS:
-    visionos_2.0:
+    '2.0':
       supervised: false
+    introduced: '2.0'
 tags:
   - 800-53r5_low
   - 800-53r5_moderate
   - 800-53r5_high
   - cisv8
 mobileconfig_info:
-  com.apple.applicationaccess:
-    allowOpenFromUnmanagedToManaged: false
+  - PayloadType: com.apple.applicationaccess
+    PayloadContent:
+      - allowOpenFromUnmanagedToManaged: false

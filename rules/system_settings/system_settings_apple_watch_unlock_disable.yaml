@@ -9,11 +9,11 @@ discussion: |
 references:
   nist:
     cce:
-      sequoia:
+      macos_15:
         - CCE-94349-8
-      sonoma:
+      macos_14:
         - CCE-92945-5
-      ventura:
+      macos_13:
         - CCE-91933-2
     800-53r5:
       - IA-5
@@ -25,37 +25,38 @@ references:
     srg:
       - SRG-OS-000028-GPOS-00009
     disa_stig:
-      sequoia:
+      macos_15:
         - APPL-15-000001
-      sonoma:
+      macos_14:
         - APPL-14-000001
-      ventura:
+      macos_13:
         - APPL-13-000001
     cmmc:
       - AC.L2-3.1.10
 platforms:
   macOS:
-    check: |
-      /usr/bin/osascript -l JavaScript << EOS
-      $.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess')\
-      .objectForKey('allowAutoUnlock').js
-      EOS
-    result:
-      string: 'false'
-    fix: |
-      This is implemented by a Configuration Profile.
-    sequoia:
-      severity: medium
+    '15.0':
       benchmarks:
-        - disa_stig
-    sonoma:
-      severity: medium
+        - name: disa_stig
+          severity: medium
+    '14.0':
       benchmarks:
-        - disa_stig
-    ventura:
-      severity: medium
+        - name: disa_stig
+          severity: medium
+    '13.0':
       benchmarks:
-        - disa_stig
+        - name: disa_stig
+          severity: medium
+    enforcement_info:
+      check:
+        shell: |-
+          /usr/bin/osascript -l JavaScript << EOS
+          $.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess')\
+          .objectForKey('allowAutoUnlock').js
+          EOS
+        result:
+          string: 'false'
+    introduced: '10.12'
 tags:
   - 800-53r5_moderate
   - 800-53r5_high
@@ -65,5 +66,6 @@ tags:
   - cmmc_lvl2
   - cnssi-1253_moderate
 mobileconfig_info:
-  com.apple.applicationaccess:
-    allowAutoUnlock: false
+  - PayloadType: com.apple.applicationaccess
+    PayloadContent:
+      - allowAutoUnlock: false

@@ -9,7 +9,7 @@ discussion: |
 references:
   nist:
     cce:
-      ventura:
+      macos_13:
         - CCE-92006-6
   disa:
     cci:
@@ -17,19 +17,22 @@ references:
     srg:
       - SRG-OS-000370-GPOS-00155
     disa_stig:
-      ventura:
+      macos_13:
         - APPL-13-002031
 platforms:
   macOS:
-    ventura:
-      severity: high
+    '13.0':
       benchmarks:
-        - disa_stig
-    check: |
-      /usr/bin/profiles show -output stdout-xml | /usr/bin/xmllint --xpath '//key[text()="DisabledPreferencePanes"]/following-sibling::*[1]' - | /usr/bin/grep -c "com.apple.preferences.AppleIDPrefPane"
-    result:
-      integer: 1
+        - name: disa_stig
+          severity: high
+    enforcement_info:
+      check:
+        shell: /usr/bin/profiles show -output stdout-xml | /usr/bin/xmllint --xpath '//key[text()="DisabledPreferencePanes"]/following-sibling::*[1]' - | /usr/bin/grep -c "com.apple.preferences.AppleIDPrefPane"
+        result:
+          integer: 1
+    introduced: '10.7'
 mobileconfig_info:
-  com.apple.systempreferences:
-    DisabledPreferencePanes:
-      - com.apple.preferences.AppleIDPrefPane
+  - PayloadType: com.apple.systempreferences
+    PayloadContent:
+      - DisabledPreferencePanes:
+          - com.apple.preferences.AppleIDPrefPane

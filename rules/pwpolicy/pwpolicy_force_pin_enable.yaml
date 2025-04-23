@@ -35,28 +35,36 @@ references:
         - Annex D (Section 5.9.1 - Device-Code)
 platforms:
   iOS:
-    ios_18:
-      severity: high
+    '18.0':
       benchmarks:
-        - ios_stig
-        - indigo_base
-        - indigo_high
-    ios_17:
-      severity: high
+        - name: ios_stig
+          severity: high
+        - name: indigo_base
+          severity: high
+        - name: indigo_high
+          severity: high
+    '17.0':
       benchmarks:
-        - ios_stig
-        - ios_stig_byoad
-        - indigo_base
-        - indigo_high
-    ios_16:
-      severity: high
+        - name: ios_stig
+          severity: high
+        - name: ios_stig_byoad
+          severity: high
+        - name: indigo_base
+          severity: high
+        - name: indigo_high
+          severity: high
+    '16.0':
       benchmarks:
-        - ios_stig
-        - ios_stig_byoad
+        - name: ios_stig
+          severity: high
+        - name: ios_stig_byoad
+          severity: high
+    introduced: '4.0'
 tags:
   - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
 mobileconfig_info:
-  com.apple.mobiledevice.passwordpolicy:
-    forcePIN: true
+  - PayloadType: com.apple.mobiledevice.passwordpolicy
+    PayloadContent:
+      - forcePIN: true

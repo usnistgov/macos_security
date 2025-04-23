@@ -17,12 +17,14 @@ references:
       - SC-7(10)
   bsi:
     indigo:
-      - ANNEX K
+      ios_18:
+        - ANNEX K
 platforms:
   iOS:
-    ios_18:
+    '18.0':
       benchmarks:
-        - indigo_high
+        - name: indigo_high
+    introduced: '8.0'
 tags:
   - 800-53r5_low
   - 800-53r5_moderate
@@ -31,5 +33,6 @@ tags:
   - cnssi-1253_low
   - cnssi-1253_high
 mobileconfig_info:
-  com.apple.applicationaccess:
-    allowEnterpriseBookMetadataSync: false
+  - PayloadType: com.apple.applicationaccess
+    PayloadContent:
+      - allowEnterpriseBookMetadataSync: false

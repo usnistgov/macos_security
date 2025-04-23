@@ -7,63 +7,40 @@ discussion: |
 references:
   nist:
     cce:
-      sequoia:
+      macos_15:
         - CCE-94187-2
-      sonoma:
+      macos_14:
         - CCE-92787-1
-      ventura:
+      macos_13:
         - CCE-91785-6
-      monterey:
-        - CCE-90930-9
-      big_sur:
-        - CCE-85467-9
-      catalina:
-        - CCE-84931-5
   disa:
     cci:
       - CCI-001233
     srg:
       - SRG-OS-000191-GPOS-00080
     disa_stig:
-      sonoma:
+      macos_14:
         - APPL-14-000015
-      ventura:
+      macos_13:
         - APPL-13-000015
-      monterey:
-        - APPL-12-000015
-      big_sur:
-        - APPL-11-000015
-      catalina:
-        - AOSX-15-000015
 platforms:
   macOS:
-    check: |
-      Ask the System Administrator (SA) or Information System Security Officer (ISSO) if the approved ESS solution is loaded on the system.
-      If the installed components of the ESS solution are not at the DoD approved minimal versions, this is a finding.
-    fix: |
-      Install the approved ESS solution onto the system.
-    sequoia:
-      severity: medium
+    '15.0':
       benchmarks:
-        - disa_stig
-    sonoma:
-      severity: medium
+        - name: disa_stig
+          severity: medium
+    '14.0':
       benchmarks:
-        - disa_stig
-    ventura:
-      severity: medium
-    monterey:
-      severity: medium
-      benchmarks:
-        - disa_stig
-    big_sur:
-      severity: medium
-      benchmarks:
-        - disa_stig
-    catalina:
-      severity: medium
-      benchmarks:
-        - disa_stig
+        - name: disa_stig
+          severity: medium
+    '13.0': {}
+    enforcement_info:
+      check:
+        shell: |-
+          Ask the System Administrator (SA) or Information System Security Officer (ISSO) if the approved ESS solution is loaded on the system.
+          If the installed components of the ESS solution are not at the DoD approved minimal versions, this is a finding.
+      fix:
+        additional_info: Install the approved ESS solution onto the system.
 tags:
   - manual
   - cisv8

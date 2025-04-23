@@ -1,6 +1,7 @@
 # common_utils/__init__.py
 
 from .config import config
+from .constants import CONFIG_PATH, SCHEMA_PATH
 from .file_handling import (
     append_text,
     create_csv,
@@ -12,6 +13,7 @@ from .file_handling import (
     open_csv,
     open_file,
     open_plist,
+    open_text,
     open_yaml,
     remove_dir,
     remove_dir_contents,
@@ -33,6 +35,7 @@ __all__ = [
     "open_csv",
     "open_file",
     "open_plist",
+    "open_text",
     "open_yaml",
     "remove_dir",
     "remove_dir_contents",
@@ -40,4 +43,6 @@ __all__ = [
     "run_command",
     "sanitize_input",
     "get_version_data",
+    "CONFIG_PATH",
+    "SCHEMA_PATH",
 ]

@@ -1,21 +1,22 @@
 id: pwpolicy_special_character_enforce
 title: Require Passwords Contain a Minimum of One Special Character
-discussion: "The macOS _MUST_ be configured to require at least one special character be used when a password is created.\n\nSpecial characters are those characters that are not alphanumeric. Examples include: ~ ! @ # $ % ^ *.\n\nThis rule enforces password complexity by requiring users to set passwords that are less vulnerable to malicious users.\n\nNOTE: To comply with Executive Order 14028, \u201CImproving the Nation's Cybersecurity\u201D, OMB M-22-09, \u201CMoving the U.S. Government Toward Zero Trust Cybersecurity Principles\u201D, and NIST SP-800-63b, \u201CDigital Identity Guidelines: Authentication and Lifecycle Management\u201D federal, military, and intelligence communities must adopt the following configuration settings. Password policies must not require the use of complexity policies such as upper characters, lower characters, or special characters. Password policies must also not require the use of regular rotation. Password policies should define a minimum length. Multifactor authentication should be used where ever possible.\n"
+discussion: |
+  The macOS _MUST_ be configured to require at least one special character be used when a password is created.
+
+  Special characters are those characters that are not alphanumeric. Examples include: ~ ! @ # $ % ^ *.
+
+  This rule enforces password complexity by requiring users to set passwords that are less vulnerable to malicious users.
+
+  NOTE: To comply with Executive Order 14028, "Improving the Nation's Cybersecurity", OMB M-22-09, "Moving the U.S. Government Toward Zero Trust Cybersecurity Principles", and NIST SP-800-63b, "Digital Identity Guidelines: Authentication and Lifecycle Management" federal, military, and intelligence communities must adopt the following configuration settings. Password policies must not require the use of complexity policies such as upper characters, lower characters, or special characters. Password policies must also not require the use of regular rotation. Password policies should define a minimum length. Multifactor authentication should be used where ever possible.
 references:
   nist:
     cce:
-      sequoia:
+      macos_15:
         - CCE-94344-9
-      sonoma:
+      macos_14:
         - CCE-92940-6
-      ventura:
+      macos_13:
         - CCE-91927-4
-      monterey:
-        - CCE-91040-6
-      big_sur:
-        - CCE-85413-3
-      catalina:
-        - CCE-84819-2
     800-53r5:
       - IA-5(1)
     800-171r3:
@@ -27,102 +28,66 @@ references:
     srg:
       - SRG-OS-000266-GPOS-00101
     disa_stig:
-      sequoia:
+      macos_15:
         - APPL-15-003011
-      sonoma:
+      macos_14:
         - APPL-14-003011
-      ventura:
+      macos_13:
         - APPL-13-003011
-      monterey:
-        - APPL-12-003011
-      big_sur:
-        - APPL-11-003011
-      catalina:
-        - AOSX-15-003011
     cmmc:
       - IA.L2-3.5.7
       - IA.L2-3.5.8
       - IA.L2-3.5.9
   cis:
     benchmark:
-      sequoia:
+      macos_15:
         - 5.2.5 (level 2)
-      sonoma:
+      macos_14:
         - 5.2.5 (level 2)
-      ventura:
-        - 5.2.5 (level 2)
-      monterey:
-        - 5.2.5 (level 2)
-      big_sur:
+      macos_13:
         - 5.2.5 (level 2)
     controls_v8:
       - 5.2
 platforms:
   macOS:
-    check: $OS_VALUE
-    result:
-      string: 'true'
-    fix: |
-      This is implemented by a Configuration Profile.
-    sequoia:
-      severity: medium
+    '15.0':
       benchmarks:
-        - cis_lvl2
-        - disa_stig
-      check: /usr/bin/pwpolicy -getaccountpolicies 2>/dev/null | /usr/bin/tail -n +2 | /usr/bin/xmllint --xpath "//string[contains(text(), \"policyAttributePassword matches '(.*[^a-zA-Z0-9].*){\")]" - 2>/dev/null | /usr/bin/awk -F"{|}" '{if ($2 >= $ODV) {print "true"} else {print "false"}}'
-      mobileconfig_info:
-        com.apple.mobiledevice.passwordpolicy:
-          minComplexChars: $ODV
-    sonoma:
-      severity: medium
+        - name: cis_lvl2
+        - name: disa_stig
+          severity: medium
+    '14.0':
       benchmarks:
-        - cis_lvl2
-        - disa_stig
-      check: /usr/bin/pwpolicy -getaccountpolicies 2>/dev/null | /usr/bin/tail -n +2 | /usr/bin/xmllint --xpath "//string[contains(text(), \"policyAttributePassword matches '(.*[^a-zA-Z0-9].*){\")]" - 2>/dev/null | /usr/bin/awk -F"{|}" '{if ($2 >= $ODV) {print "true"} else {print "false"}}'
+        - name: cis_lvl2
+        - name: disa_stig
+          severity: medium
       mobileconfig_info:
-        com.apple.mobiledevice.passwordpolicy:
-          minComplexChars: 1
-    ventura:
-      severity: medium
+        - PayloadType: com.apple.mobiledevice.passwordpolicy
+          PayloadContent:
+            - minComplexChars: 1
+    '13.0':
       benchmarks:
-        - cis_lvl2
-        - disa_stig
-      check: /usr/bin/pwpolicy -getaccountpolicies 2>/dev/null | /usr/bin/tail -n +2 | /usr/bin/xmllint --xpath "//string[contains(text(), \"policyAttributePassword matches '(.*[^a-zA-Z0-9].*){\")]" - 2>/dev/null | /usr/bin/awk -F"{|}" '{if ($2 >= $ODV) {print "true"} else {print "false"}}'
+        - name: cis_lvl2
+        - name: disa_stig
+          severity: medium
       mobileconfig_info:
-        com.apple.mobiledevice.passwordpolicy:
-          minComplexChars: 1
-    monterey:
-      severity: medium
-      benchmarks:
-        - cis_lvl2
-        - disa_stig
-      check: /usr/bin/pwpolicy -getaccountpolicies 2> /dev/null | /usr/bin/tail +2 | /usr/bin/xmllint --xpath 'boolean(//*[contains(text(),"policyAttributePassword matches '\''(.*[^a-zA-Z0-9].*){$ODV,}'\''")])' -
-      mobileconfig_info:
-        com.apple.mobiledevice.passwordpolicy:
-          minComplexChars: $ODV
-    big_sur:
-      severity: medium
-      benchmarks:
-        - cis_lvl2
-        - disa_stig
-      check: /usr/bin/pwpolicy -getaccountpolicies 2> /dev/null | /usr/bin/tail +2 | /usr/bin/xmllint --xpath 'boolean(//*[contains(text(),"policyAttributePassword matches '\''(.*[^a-zA-Z0-9].*){$ODV,}'\''")])' -
-      mobileconfig_info:
-        com.apple.mobiledevice.passwordpolicy:
-          minComplexChars: $ODV
-    catalina:
-      severity: medium
-      benchmarks:
-        - disa_stig
-      check: /usr/bin/pwpolicy -getaccountpolicies 2> /dev/null | /usr/bin/tail +2 | /usr/bin/xmllint --xpath 'boolean(//*[contains(text(),"policyAttributePassword matches '\''(.*[^a-zA-Z0-9].*){$ODV,}'\''")])' -
-      mobileconfig_info:
-        com.apple.mobiledevice.passwordpolicy:
-          minComplexChars: $ODV
+        - PayloadType: com.apple.mobiledevice.passwordpolicy
+          PayloadContent:
+            - minComplexChars: 1
+    enforcement_info:
+      check:
+        shell: /usr/bin/pwpolicy -getaccountpolicies 2>/dev/null | /usr/bin/tail -n +2 | /usr/bin/xmllint --xpath "//string[contains(text(), \"policyAttributePassword matches '(.*[^a-zA-Z0-9].*){\")]" - 2>/dev/null | /usr/bin/awk -F"{|}" '{if ($2 >= $ODV) {print "true"} else {print "false"}}'
+        result:
+          string: 'true'
+    introduced: '10.7'
 odv:
-  hint: Number of special characters.
+  hint:
+    datatype: number
+    description: Number of special characters, e.g. 1
+    validation:
+      min: 1
   recommended: 1
   cis_lvl2: 1
   stig: 1
-  cis_lvl1: 1
 tags:
   - cisv8
   - cnssi-1253_low
@@ -133,8 +98,10 @@ tags:
   - 800-53r5_low
   - 800-53r5_moderate
   - 800-53r5_high
-  - cnssi-1253
-mobileconfig_info: $OS_VALUE
+mobileconfig_info:
+  - PayloadType: com.apple.mobiledevice.passwordpolicy
+    PayloadContent:
+      - minComplexChars: $ODV
 ddm_info:
   declarationtype: com.apple.configuration.passcode.settings
   ddm_key: MinimumComplexCharacters

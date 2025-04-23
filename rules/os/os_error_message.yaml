@@ -1,33 +1,25 @@
 id: os_error_message
 title: Generate Error Messages without Exploitable Information
-discussion: |
+discussion: |-
   The information system _IS_ configured to generate error messages that provide the information necessary for corrective actions without revealing information that could be exploited by adversaries.
+
+  NOTE: The technology supports this requirement and cannot be configured to be out of compliance. The technology inherently meets this requirement.
 references:
   nist:
     cce:
-      sequoia:
+      macos_15:
         - CCE-94186-4
-      sonoma:
+      macos_14:
         - CCE-92786-3
-      ventura:
+      macos_13:
         - CCE-91784-9
-      monterey:
-        - CCE-90918-4
-      big_sur:
-        - CCE-85307-7
-      catalina:
-        - CCE-84887-9
 platforms:
   macOS:
-    check: |
-      The technology supports this requirement and cannot be configured to be out of compliance. The technology inherently meets this requirement.
-    fix: |
-      The technology inherently meets this requirement. No fix is required.
-    sequoia: {}
-    sonoma: {}
-    ventura: {}
-    monterey: {}
-    big_sur: {}
-    catalina: {}
+    '15.0': {}
+    '14.0': {}
+    '13.0': {}
+    enforcement_info:
+      fix:
+        additional_info: The technology inherently meets this requirement. No fix is required.
 tags:
   - inherent

@@ -1,7 +1,7 @@
 id: pwpolicy_max_grace_period_enforce
 title: Ensure Maximum grace period for device lock is set to Immediately
 discussion: |
-  The iOS grace period for device lock _MUST_ be configured to immediately.
+  The iOS grace period for device lock _MUST_ be configured to $ODV minutes.
 references:
   nist:
     cce:
@@ -47,41 +47,52 @@ references:
         - ANNEX D (Section 5.9.1 - Device-Code)
 platforms:
   iOS:
-    ios_18:
-      severity: medium
+    '18.0':
       supervised: false
       benchmarks:
-        - cis_lvl1_byod
-        - cis_lvl2_byod
-        - cis_lvl1_enterprise
-        - cis_lvl2_enterprise
-        - ios_stig
-        - indigo_base
-        - indigo_high
-    ios_17:
-      severity: medium
+        - name: cis_lvl1_byod
+        - name: cis_lvl2_byod
+        - name: cis_lvl1_enterprise
+        - name: cis_lvl2_enterprise
+        - name: ios_stig
+          severity: medium
+        - name: indigo_base
+          severity: medium
+        - name: indigo_high
+          severity: medium
+    '17.0':
       supervised: false
       benchmarks:
-        - cis_lvl1_byod
-        - cis_lvl2_byod
-        - cis_lvl1_enterprise
-        - cis_lvl2_enterprise
-        - ios_stig
-        - ios_stig_byoad
-        - indigo_base
-        - indigo_high
-    ios_16:
-      severity: medium
+        - name: cis_lvl1_byod
+        - name: cis_lvl2_byod
+        - name: cis_lvl1_enterprise
+        - name: cis_lvl2_enterprise
+        - name: ios_stig
+          severity: medium
+        - name: ios_stig_byoad
+          severity: medium
+        - name: indigo_base
+          severity: medium
+        - name: indigo_high
+          severity: medium
+    '16.0':
       supervised: false
       benchmarks:
-        - cis_lvl1_byod
-        - cis_lvl2_byod
-        - cis_lvl1_enterprise
-        - cis_lvl2_enterprise
-        - ios_stig
-        - ios_stig_byoad
+        - name: cis_lvl1_byod
+        - name: cis_lvl2_byod
+        - name: cis_lvl1_enterprise
+        - name: cis_lvl2_enterprise
+        - name: ios_stig
+          severity: medium
+        - name: ios_stig_byoad
+          severity: medium
+    introduced: '4.0'
 odv:
-  hint: Maximum Grace Period in Minutes.
+  hint:
+    datatype: number
+    description: Maximum grace period in minutes, e.g. 5
+    validation:
+      min: 1
   recommended: 0
   cis_lvl1_byod: 0
   cis_lvl2_byod: 0
@@ -100,5 +111,6 @@ tags:
   - cnssi-1253_low
   - cnssi-1253_high
 mobileconfig_info:
-  com.apple.mobiledevice.passwordpolicy:
-    maxGracePeriod: $ODV
+  - PayloadType: com.apple.mobiledevice.passwordpolicy
+    PayloadContent:
+      - maxGracePeriod: $ODV

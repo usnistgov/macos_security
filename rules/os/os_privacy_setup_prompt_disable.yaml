@@ -7,18 +7,12 @@ discussion: |
 references:
   nist:
     cce:
-      sequoia:
+      macos_15:
         - CCE-94264-9
-      sonoma:
+      macos_14:
         - CCE-92860-6
-      ventura:
+      macos_13:
         - CCE-91855-7
-      monterey:
-        - CCE-90981-2
-      big_sur:
-        - CCE-85362-2
-      catalina:
-        - CCE-84781-4
     800-53r5:
       - CM-7
       - CM-7(1)
@@ -30,18 +24,12 @@ references:
     srg:
       - SRG-OS-000095-GPOS-00049
     disa_stig:
-      sequoia:
+      macos_15:
         - APPL-15-002036
-      sonoma:
+      macos_14:
         - APPL-14-002036
-      ventura:
+      macos_13:
         - APPL-13-002036
-      monterey:
-        - APPL-12-002036
-      big_sur:
-        - APPL-11-002036
-      catalina:
-        - AOSX-15-002036
     cmmc:
       - CM.L2-3.4.6
       - CM.L2-3.4.7
@@ -51,39 +39,28 @@ references:
       - 4.8
 platforms:
   macOS:
-    check: |
-      /usr/bin/osascript -l JavaScript << EOS
-      $.NSUserDefaults.alloc.initWithSuiteName('com.apple.SetupAssistant.managed')\
-      .objectForKey('SkipPrivacySetup').js
-      EOS
-    result:
-      string: 'true'
-    fix: |
-      This is implemented by a Configuration Profile.
-    sequoia:
-      severity: medium
+    '15.0':
       benchmarks:
-        - disa_stig
-    sonoma:
-      severity: medium
+        - name: disa_stig
+          severity: medium
+    '14.0':
       benchmarks:
-        - disa_stig
-    ventura:
-      severity: medium
+        - name: disa_stig
+          severity: medium
+    '13.0':
       benchmarks:
-        - disa_stig
-    monterey:
-      severity: medium
-      benchmarks:
-        - disa_stig
-    big_sur:
-      severity: medium
-      benchmarks:
-        - disa_stig
-    catalina:
-      severity: medium
-      benchmarks:
-        - disa_stig
+        - name: disa_stig
+          severity: medium
+    enforcement_info:
+      check:
+        shell: |-
+          /usr/bin/osascript -l JavaScript << EOS
+          $.NSUserDefaults.alloc.initWithSuiteName('com.apple.SetupAssistant.managed')\
+          .objectForKey('SkipPrivacySetup').js
+          EOS
+        result:
+          string: 'true'
+    introduced: 10.13.4
 tags:
   - 800-171
   - cisv8
@@ -92,5 +69,6 @@ tags:
   - cmmc_lvl2
   - cnssi-1253_moderate
 mobileconfig_info:
-  com.apple.SetupAssistant.managed:
-    SkipPrivacySetup: true
+  - PayloadType: com.apple.SetupAssistant.managed
+    PayloadContent:
+      - SkipPrivacySetup: true

@@ -9,18 +9,12 @@ discussion: |
 references:
   nist:
     cce:
-      sequoia:
+      macos_15:
         - CCE-94135-1
-      sonoma:
+      macos_14:
         - CCE-92735-0
-      ventura:
+      macos_13:
         - CCE-91736-9
-      monterey:
-        - CCE-90880-6
-      big_sur:
-        - CCE-85277-2
-      catalina:
-        - CCE-84724-4
     800-53r5:
       - IA-2(1)
       - IA-2(2)
@@ -45,11 +39,11 @@ references:
       - SRG-OS-000105-GPOS-00052
       - SRG-OS-000068-GPOS-00036
     disa_stig:
-      sequoia:
+      macos_15:
         - APPL-15-003030
-      sonoma:
+      macos_14:
         - APPL-14-003030
-      ventura:
+      macos_13:
         - APPL-13-003020
     cmmc:
       - IA.L1-3.5.1
@@ -62,29 +56,27 @@ references:
       - 6.5
 platforms:
   macOS:
-    check: |
-      /usr/bin/osascript -l JavaScript << EOS
-      $.NSUserDefaults.alloc.initWithSuiteName('com.apple.security.smartcard')\
-      .objectForKey('allowSmartCard').js
-      EOS
-    result:
-      string: 'true'
-    fix: |
-      This is implemented by a Configuration Profile.
-    sequoia:
-      severity: medium
+    '15.0':
       benchmarks:
-        - disa_stig
-    sonoma:
-      severity: medium
+        - name: disa_stig
+          severity: medium
+    '14.0':
       benchmarks:
-        - disa_stig
-    ventura:
+        - name: disa_stig
+          severity: medium
+    '13.0':
       benchmarks:
-        - disa_stig
-    monterey: {}
-    big_sur: {}
-    catalina: {}
+        - name: disa_stig
+    enforcement_info:
+      check:
+        shell: |-
+          /usr/bin/osascript -l JavaScript << EOS
+          $.NSUserDefaults.alloc.initWithSuiteName('com.apple.security.smartcard')\
+          .objectForKey('allowSmartCard').js
+          EOS
+        result:
+          string: 'true'
+    introduced: 10.12.4
 tags:
   - 800-171
   - 800-53r5_low
@@ -96,7 +88,7 @@ tags:
   - cmmc_lvl2
   - cmmc_lvl1
   - cnssi-1253_moderate
-  - cnssi-1253
 mobileconfig_info:
-  com.apple.security.smartcard:
-    allowSmartCard: true
+  - PayloadType: com.apple.security.smartcard
+    PayloadContent:
+      - allowSmartCard: true

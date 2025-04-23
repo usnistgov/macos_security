@@ -1,26 +1,22 @@
 id: os_logical_access
 title: Enforce Approved Authorization for Logical Access
-discussion: |
+discussion: |-
   The information system _IS_ configured to enforce an approved authorization process before granting users logical access.
 
   The inherent configuration of the macOS does not grant users logical access without authorization. Authorization is achieved on the macOS through permissions, which are controlled at many levels, from the Mach and BSD components of the kernel, through higher levels of the operating system and, for networked applications, through the networking protocols. Permissions can be granted at the level of directories, subdirectories, files or applications, or specific data within files or functions within applications.
 
   link:https://developer.apple.com/library/archive/documentation/Security/Conceptual/AuthenticationAndAuthorizationGuide/Permissions/Permissions.html[]
+
+  NOTE: The technology supports this requirement and cannot be configured to be out of compliance. The technology inherently meets this requirement.
 references:
   nist:
     cce:
-      sequoia:
+      macos_15:
         - CCE-94220-1
-      sonoma:
+      macos_14:
         - CCE-92818-4
-      ventura:
+      macos_13:
         - CCE-91814-4
-      monterey:
-        - CCE-90944-0
-      big_sur:
-        - CCE-85334-1
-      catalina:
-        - CCE-84857-2
     800-53r5:
       - AC-3
     800-171r3:
@@ -36,16 +32,12 @@ references:
       - 6.7
 platforms:
   macOS:
-    check: |
-      The technology supports this requirement and cannot be configured to be out of compliance. The technology inherently meets this requirement.
-    fix: |
-      The technology inherently meets this requirement. No fix is required.
-    sequoia: {}
-    sonoma: {}
-    ventura: {}
-    monterey: {}
-    big_sur: {}
-    catalina: {}
+    '15.0': {}
+    '14.0': {}
+    '13.0': {}
+    enforcement_info:
+      fix:
+        additional_info: The technology inherently meets this requirement. No fix is required.
 tags:
   - 800-53r5_low
   - 800-53r5_moderate
@@ -58,4 +50,3 @@ tags:
   - cmmc_lvl2
   - cmmc_lvl1
   - cnssi-1253_moderate
-  - cnssi-1253

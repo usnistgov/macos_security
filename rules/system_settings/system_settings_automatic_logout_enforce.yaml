@@ -12,11 +12,11 @@ discussion: |
 references:
   nist:
     cce:
-      sequoia:
+      macos_15:
         - CCE-94351-4
-      sonoma:
+      macos_14:
         - CCE-92948-9
-      ventura:
+      macos_13:
         - CCE-91935-7
     800-53r5:
       - AC-12
@@ -30,35 +30,40 @@ references:
     srg:
       - SRG-OS-000279-GPOS-00109
     disa_stig:
-      sequoia:
+      macos_15:
         - APPL-15-000160
-      sonoma:
+      macos_14:
         - APPL-14-000160
     cmmc:
       - AC.L2-3.1.10
       - AC.L2-3.1.11
 platforms:
   macOS:
-    check: |
-      /usr/bin/osascript -l JavaScript << EOS
-      $.NSUserDefaults.alloc.initWithSuiteName('.GlobalPreferences')\
-      .objectForKey('com.apple.autologout.AutoLogOutDelay').js
-      EOS
-    result:
-      integer: $ODV
-    fix: |
-      This is implemented by a Configuration Profile.
-    sequoia:
-      severity: medium
+    '15.0':
       benchmarks:
-        - disa_stig
-    sonoma:
-      severity: medium
+        - name: disa_stig
+          severity: medium
+    '14.0':
       benchmarks:
-        - disa_stig
-    ventura: {}
+        - name: disa_stig
+          severity: medium
+    '13.0': {}
+    enforcement_info:
+      check:
+        shell: |-
+          /usr/bin/osascript -l JavaScript << EOS
+          $.NSUserDefaults.alloc.initWithSuiteName('.GlobalPreferences')\
+          .objectForKey('com.apple.autologout.AutoLogOutDelay').js
+          EOS
+        result:
+          integer: $ODV
+    introduced: '10.7'
 odv:
-  hint: Number of seconds
+  hint:
+    datatype: number
+    description: Number of seconds, e.g. 86400
+    validation:
+      min: 1
   recommended: 86400
   stig: 86400
 tags:
@@ -70,5 +75,6 @@ tags:
   - cmmc_lvl2
   - cnssi-1253_moderate
 mobileconfig_info:
-  .GlobalPreferences:
-    com.apple.autologout.AutoLogOutDelay: $ODV
+  - PayloadType: .GlobalPreferences
+    PayloadContent:
+      - com.apple.autologout.AutoLogOutDelay: $ODV

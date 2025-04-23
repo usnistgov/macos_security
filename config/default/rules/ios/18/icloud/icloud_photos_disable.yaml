@@ -33,7 +33,7 @@ references:
       - 4.8
       - 15.3
 operating_system:
-  - name: iOS
+  - name: ios
     version:
       - 18.0
 tags:

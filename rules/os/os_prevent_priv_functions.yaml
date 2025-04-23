@@ -1,6 +1,6 @@
 id: os_prevent_priv_functions
 title: Configure the System to Block Non-Privileged Users from Executing Privileged Functions
-discussion: |
+discussion: |-
   The information system _IS_ configured to block standard users from executing privileged functions.
 
   Privileged functions include disabling, circumventing, or altering implemented security safeguards and countermeasures.
@@ -8,21 +8,17 @@ discussion: |
   The inherent configuration of the macOS does not allow for non-privileged users to be able to execute functions requiring privilege.
 
   link:https://developer.apple.com/library/archive/documentation/Security/Conceptual/AuthenticationAndAuthorizationGuide/Introduction/Introduction.html[]
+
+  NOTE: The technology supports this requirement and cannot be configured to be out of compliance. The technology inherently meets this requirement.
 references:
   nist:
     cce:
-      sequoia:
+      macos_15:
         - CCE-94261-5
-      sonoma:
+      macos_14:
         - CCE-92857-2
-      ventura:
+      macos_13:
         - CCE-91852-4
-      monterey:
-        - CCE-90978-8
-      big_sur:
-        - CCE-85360-6
-      catalina:
-        - CCE-84856-4
     800-53r5:
       - AC-6(10)
     800-171r3:
@@ -34,16 +30,12 @@ references:
       - AC.L2-3.1.7
 platforms:
   macOS:
-    check: |
-      The technology supports this requirement and cannot be configured to be out of compliance. The technology inherently meets this requirement.
-    fix: |
-      The technology inherently meets this requirement. No fix is required.
-    sequoia: {}
-    sonoma: {}
-    ventura: {}
-    monterey: {}
-    big_sur: {}
-    catalina: {}
+    '15.0': {}
+    '14.0': {}
+    '13.0': {}
+    enforcement_info:
+      fix:
+        additional_info: The technology inherently meets this requirement. No fix is required.
 tags:
   - 800-53r5_moderate
   - 800-53r5_high
@@ -53,4 +45,3 @@ tags:
   - cnssi-1253_high
   - cmmc_lvl2
   - cnssi-1253_moderate
-  - cnssi-1253

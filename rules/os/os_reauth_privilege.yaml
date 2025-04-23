@@ -1,22 +1,18 @@
 id: os_reauth_privilege
 title: Require users to reauthenticate for privilege escalation
-discussion: |
+discussion: |-
   Without reauthentication, users may access resources or perform tasks for which they do not have authorization. When operating systems provide the capability to escalate a functional capability, it is critical the user reauthenticate.
+
+  NOTE: The technology supports this requirement and cannot be configured to be out of compliance. The technology inherently meets this requirement.
 references:
   nist:
     cce:
-      sequoia:
+      macos_15:
         - CCE-94272-2
-      sonoma:
+      macos_14:
         - CCE-92868-9
-      ventura:
+      macos_13:
         - CCE-91863-1
-      monterey:
-        - CCE-90987-9
-      big_sur:
-        - CCE-85367-1
-      catalina:
-        - CCE-84890-3
     800-53r5:
       - IA-11
     800-171r3:
@@ -27,16 +23,12 @@ references:
       - SRG-OS-000373-GPOS-00156
 platforms:
   macOS:
-    check: |
-      The technology supports this requirement and cannot be configured to be out of compliance. The technology inherently meets this requirement.
-    fix: |
-      The technology inherently meets this requirement. No fix is required.
-    sequoia: {}
-    sonoma: {}
-    ventura: {}
-    monterey: {}
-    big_sur: {}
-    catalina: {}
+    '15.0': {}
+    '14.0': {}
+    '13.0': {}
+    enforcement_info:
+      fix:
+        additional_info: The technology inherently meets this requirement. No fix is required.
 tags:
   - 800-171
   - inherent

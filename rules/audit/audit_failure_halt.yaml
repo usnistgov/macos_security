@@ -7,18 +7,12 @@ discussion: |
 references:
   nist:
     cce:
-      sequoia:
+      macos_15:
         - CCE-94111-2
-      sonoma:
+      macos_14:
         - CCE-92711-1
-      ventura:
+      macos_13:
         - CCE-91711-2
-      monterey:
-        - CCE-90857-4
-      big_sur:
-        - CCE-85257-4
-      catalina:
-        - CCE-84708-7
     800-53r5:
       - AU-5
     800-171r3:
@@ -29,55 +23,35 @@ references:
     srg:
       - SRG-OS-000047-GPOS-00023
     disa_stig:
-      sequoia:
+      macos_15:
         - APPL-15-001010
-      sonoma:
+      macos_14:
         - APPL-14-001010
-      ventura:
+      macos_13:
         - APPL-13-001010
-      monterey:
-        - APPL-12-001010
-      big_sur:
-        - APPL-11-001010
-      catalina:
-        - AOSX-15-001010
     cmmc:
       - AU.L2-3.3.4
 platforms:
   macOS:
-    check: |
-      /usr/bin/awk -F':' '/^policy/ {print $NF}' /etc/security/audit_control | /usr/bin/tr ',' '\n' | /usr/bin/grep -Ec 'ahlt'
-    result:
-      integer: 1
-    fix: |
-      [source,bash]
-      ----
-      /usr/bin/sed -i.bak 's/^policy.*/policy: ahlt,argv/' /etc/security/audit_control; /usr/sbin/audit -s
-      ----
-    sequoia:
-      severity: medium
+    '15.0':
       benchmarks:
-        - disa_stig
-    sonoma:
-      severity: medium
+        - name: disa_stig
+          severity: medium
+    '14.0':
       benchmarks:
-        - disa_stig
-    ventura:
-      severity: medium
+        - name: disa_stig
+          severity: medium
+    '13.0':
       benchmarks:
-        - disa_stig
-    monterey:
-      severity: medium
-      benchmarks:
-        - disa_stig
-    big_sur:
-      severity: medium
-      benchmarks:
-        - disa_stig
-    catalina:
-      severity: medium
-      benchmarks:
-        - disa_stig
+        - name: disa_stig
+          severity: medium
+    enforcement_info:
+      check:
+        shell: /usr/bin/awk -F':' '/^policy/ {print $NF}' /etc/security/audit_control | /usr/bin/tr ',' '\n' | /usr/bin/grep -Ec 'ahlt'
+        result:
+          integer: 1
+      fix:
+        shell: '/usr/bin/sed -i.bak ''s/^policy.*/policy: ahlt,argv/'' /etc/security/audit_control; /usr/sbin/audit -s'
 tags:
   - 800-53r5_low
   - 800-53r5_moderate
@@ -87,4 +61,3 @@ tags:
   - cnssi-1253_high
   - cmmc_lvl2
   - cnssi-1253_moderate
-  - cnssi-1253

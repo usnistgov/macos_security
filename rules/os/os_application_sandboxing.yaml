@@ -1,40 +1,32 @@
 id: os_application_sandboxing
 title: Ensure Separate Execution Domain for Processes
-discussion: |
+discussion: |-
   The inherent configuration of the macOS _IS_ in compliance as Apple has implemented multiple features Mandatory access controls (MAC), System Integrity Protection (SIP), and application sandboxing.
 
   link:https://support.apple.com/guide/security/system-integrity-protection-secb7ea06b49/web[]
 
   link:https://developer.apple.com/library/archive/documentation/Security/Conceptual/AppSandboxDesignGuide/AboutAppSandbox/AboutAppSandbox.html[]
+
+  NOTE: The technology supports this requirement and cannot be configured to be out of compliance. The technology inherently meets this requirement.
 references:
   nist:
     cce:
-      sequoia:
+      macos_15:
         - CCE-94160-9
-      sonoma:
+      macos_14:
         - CCE-92760-8
-      ventura:
+      macos_13:
         - CCE-91758-3
-      monterey:
-        - CCE-90903-6
-      big_sur:
-        - CCE-85474-5
-      catalina:
-        - CCE-84943-0
     800-53r5:
       - SC-39
 platforms:
   macOS:
-    check: |
-      The technology supports this requirement and cannot be configured to be out of compliance. The technology inherently meets this requirement.
-    fix: |
-      The technology inherently meets this requirement. No fix is required.
-    sequoia: {}
-    sonoma: {}
-    ventura: {}
-    monterey: {}
-    big_sur: {}
-    catalina: {}
+    '15.0': {}
+    '14.0': {}
+    '13.0': {}
+    enforcement_info:
+      fix:
+        additional_info: The technology inherently meets this requirement. No fix is required.
 tags:
   - inherent
   - 800-53r5_low

@@ -1,15 +1,15 @@
 id: os_on_device_dictation_enforce
 title: Enforce On Device Dictation
 discussion: |
-  Dictation _MUST_ be restricted to on device only to prevent potential data exfiltration.
+  The system _MUST_ be configured for on device dictation.
 
-  The information system _MUST_ be configured to provide only essential capabilities.
+  By enforcing on device dictation this will mitigate the risk of unwanted data being sent to Apple.
 references:
   nist:
     cce:
-      sequoia:
+      macos_15:
         - CCE-94245-8
-      sonoma:
+      macos_14:
         - CCE-92841-6
       ios_18:
         - CCE-94452-0
@@ -17,7 +17,7 @@ references:
         - CCE-93436-4
       ios_16:
         - CCE-93236-8
-      visionos_2.0:
+      visionos_2:
         - CCE-94502-2
     800-53r5:
       - AC-20
@@ -33,9 +33,9 @@ references:
     srg:
       - SRG-OS-000095-GPOS-00049
     disa_stig:
-      sequoia:
+      macos_15:
         - APPL-15-002220
-      sonoma:
+      macos_14:
         - APPL-14-002220
       ios_18:
         - AIOS-18-014400
@@ -49,9 +49,9 @@ references:
       - CM.L2-3.4.7
   cis:
     benchmark:
-      sequoia:
+      macos_15:
         - 2.18.1 (level 1)
-      sonoma:
+      macos_14:
         - 2.18.1 (level 1)
     controls_v8:
       - 4.1
@@ -64,50 +64,57 @@ references:
         - ANNEX K
 platforms:
   macOS:
-    check: |
-      /usr/bin/osascript -l JavaScript << EOS
-      $.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess')\
-      .objectForKey('forceOnDeviceOnlyDictation').js
-      EOS
-    result:
-      string: 'true'
-    fix: |
-      This is implemented by a Configuration Profile.
-    sequoia:
-      severity: medium
+    '15.0':
       benchmarks:
-        - cis_lvl1
-        - cis_lvl2
-        - disa_stig
-    sonoma:
-      severity: medium
+        - name: cis_lvl1
+        - name: cis_lvl2
+        - name: disa_stig
+          severity: medium
+    '14.0':
       benchmarks:
-        - cis_lvl1
-        - cis_lvl2
-        - disa_stig
+        - name: cis_lvl1
+        - name: cis_lvl2
+        - name: disa_stig
+          severity: medium
+    enforcement_info:
+      check:
+        shell: |-
+          /usr/bin/osascript -l JavaScript << EOS
+          $.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess')\
+          .objectForKey('forceOnDeviceOnlyDictation').js
+          EOS
+        result:
+          string: 'true'
+    introduced: '14.0'
   iOS:
-    ios_18:
-      severity: medium
+    '18.0':
       supervised: false
       benchmarks:
-        - ios_stig
-        - indigo_base
-        - indigo_high
-    ios_17:
-      severity: medium
+        - name: ios_stig
+          severity: medium
+        - name: indigo_base
+          severity: medium
+        - name: indigo_high
+          severity: medium
+    '17.0':
       supervised: false
       benchmarks:
-        - ios_stig
-        - indigo_base
-        - indigo_high
-    ios_16:
-      severity: medium
+        - name: ios_stig
+          severity: medium
+        - name: indigo_base
+          severity: medium
+        - name: indigo_high
+          severity: medium
+    '16.0':
       supervised: false
       benchmarks:
-        - ios_stig
+        - name: ios_stig
+          severity: medium
+    introduced: '14.5'
   visionOS:
-    visionos_2.0:
+    '2.0':
       supervised: false
+    introduced: '2.0'
 tags:
   - arm64
   - 800-53r5_low
@@ -121,5 +128,6 @@ tags:
   - cmmc_lvl1
   - cnssi-1253_moderate
 mobileconfig_info:
-  com.apple.applicationaccess:
-    forceOnDeviceOnlyDictation: true
+  - PayloadType: com.apple.applicationaccess
+    PayloadContent:
+      - forceOnDeviceOnlyDictation: true

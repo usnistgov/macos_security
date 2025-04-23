@@ -5,123 +5,64 @@ discussion: |
 references:
   nist:
     cce:
-      sequoia:
+      macos_15:
         - CCE-94298-7
-      sonoma:
+      macos_14:
         - CCE-92893-7
-      ventura:
+      macos_13:
         - CCE-91882-1
-      monterey:
-        - CCE-85140-2
-      big_sur:
-        - CCE-85548-6
   cis:
     benchmark:
-      sequoia:
+      macos_15:
         - 1.7 (level 1)
-      sonoma:
+      macos_14:
         - 1.7 (level 1)
-      ventura:
-        - 1.7 (level 1)
-      monterey:
-        - 1.7 (level 1)
-      big_sur:
+      macos_13:
         - 1.7 (level 1)
     controls_v8:
       - 7.3
       - 7.4
 platforms:
   macOS:
-    check: $OS_VALUE
-    result:
-      string: 'true'
-    fix: |
-      This is implemented by a Configuration Profile.
-    sequoia:
+    '15.0':
       benchmarks:
-        - cis_lvl1
-        - cis_lvl2
-      check: |-
-        /usr/bin/osascript -l JavaScript << EOS
-        function run() {
-          let timeout = ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess')\
-        .objectForKey('enforcedSoftwareUpdateDelay')) || 0
-          if ( timeout <= $ODV ) {
-            return("true")
-          } else {
-            return("false")
-          }
-        }
-        EOS
-    sonoma:
+        - name: cis_lvl1
+        - name: cis_lvl2
+    '14.0':
       benchmarks:
-        - cis_lvl1
-        - cis_lvl2
-      check: |-
-        /usr/bin/osascript -l JavaScript << EOS
-        function run() {
-          let timeout = ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess')\
-        .objectForKey('enforcedSoftwareUpdateDelay')) || 0
-          if ( timeout <= $ODV ) {
-            return("true")
-          } else {
-            return("false")
-          }
-        }
-        EOS
-    ventura:
+        - name: cis_lvl1
+        - name: cis_lvl2
+    '13.0':
       benchmarks:
-        - cis_lvl1
-        - cis_lvl2
-      check: |-
-        /usr/bin/osascript -l JavaScript << EOS
-        function run() {
-          let timeout = ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess')\
-        .objectForKey('enforcedSoftwareUpdateDelay')) || 0
-          if ( timeout <= $ODV ) {
-            return("true")
-          } else {
-            return("false")
+        - name: cis_lvl1
+        - name: cis_lvl2
+    enforcement_info:
+      check:
+        shell: |-
+          /usr/bin/osascript -l JavaScript << EOS
+          function run() {
+            let timeout = ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess')\
+          .objectForKey('enforcedSoftwareUpdateDelay')) || 0
+            if ( timeout <= $ODV ) {
+              return("true")
+            } else {
+              return("false")
+            }
           }
-        }
-        EOS
-    monterey:
-      benchmarks:
-        - cis_lvl1
-        - cis_lvl2
-      check: |-
-        /usr/bin/osascript -l JavaScript << EOS
-        function run() {
-          let timeout = ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess')\
-        .objectForKey('enforcedSoftwareUpdateDelay')) || 0
-          if ( timeout <= $ODV ) {
-            return("true")
-          } else {
-            return("false")
-          }
-        }
-        EOS
-    big_sur:
-      benchmarks:
-        - cis_lvl1
-        - cis_lvl2
-      check: |-
-        /usr/bin/osascript -l JavaScript << EOS
-        function run() {
-          let timeout = ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess')\
-        .objectForKey('enforcedSoftwareUpdateDelay'))
-          if ( timeout <= $ODV ) {
-            return("true")
-          } else {
-            return("false")
-          }
-        }
-        EOS
+          EOS
+        result:
+          string: 'true'
+    introduced: 10.13.4
 odv:
-  hint: Number of days.
+  hint:
+    datatype: number
+    description: Number of days, e.g. 30
+    validation:
+      min: 1
   recommended: 30
   cis_lvl1: 30
   cis_lvl2: 30
 mobileconfig_info:
-  com.apple.applicationaccess:
-    enforcedSoftwareUpdateDelay: $ODV
+  - PayloadType: com.apple.applicationaccess
+    PayloadContent:
+      - enforcedSoftwareUpdateDelay: $ODV

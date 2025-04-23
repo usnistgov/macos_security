@@ -5,18 +5,12 @@ discussion: |
 references:
   nist:
     cce:
-      sequoia:
+      macos_15:
         - CCE-94235-9
-      sonoma:
+      macos_14:
         - CCE-92831-7
-      ventura:
+      macos_13:
         - CCE-91827-6
-      monterey:
-        - CCE-90956-4
-      big_sur:
-        - CCE-85342-4
-      catalina:
-        - CCE-84772-3
     800-53r5:
       - AC-3
       - AC-17
@@ -29,86 +23,53 @@ references:
     srg:
       - SRG-OS-000080-GPOS-00048
     disa_stig:
-      sequoia:
+      macos_15:
         - APPL-15-002003
-      sonoma:
+      macos_14:
         - APPL-14-002003
-      ventura:
+      macos_13:
         - APPL-13-002003
-      monterey:
-        - APPL-12-002003
-      big_sur:
-        - APPL-11-002003
-      catalina:
-        - AOSX-15-002003
     cmmc:
       - AC.L1-3.1.1
   cis:
     benchmark:
-      sequoia:
+      macos_15:
         - 4.3 (level 1)
-      sonoma:
+      macos_14:
         - 4.3 (level 1)
-      ventura:
-        - 4.3 (level 1)
-      monterey:
-        - 4.3 (level 1)
-      big_sur:
+      macos_13:
         - 4.3 (level 1)
     controls_v8:
       - 4.1
       - 4.8
 platforms:
   macOS:
-    check: $OS_VALUE
-    result:
-      integer: 1
-    fix: |
-      [source,bash]
-      ----
-      /bin/launchctl disable system/com.apple.nfsd
-      ----
-      The system may need to be restarted for the update to take effect.
-    sequoia:
-      severity: medium
+    '15.0':
       benchmarks:
-        - cis_lvl1
-        - cis_lvl2
-        - disa_stig
-      check: /bin/launchctl print-disabled system | /usr/bin/grep -c '"com.apple.nfsd" => disabled'
-    sonoma:
-      severity: medium
+        - name: cis_lvl1
+        - name: cis_lvl2
+        - name: disa_stig
+          severity: medium
+    '14.0':
       benchmarks:
-        - cis_lvl1
-        - cis_lvl2
-        - disa_stig
-      check: /bin/launchctl print-disabled system | /usr/bin/grep -c '"com.apple.nfsd" => disabled'
-    ventura:
-      severity: medium
+        - name: cis_lvl1
+        - name: cis_lvl2
+        - name: disa_stig
+          severity: medium
+    '13.0':
       benchmarks:
-        - cis_lvl1
-        - cis_lvl2
-        - disa_stig
-      check: /bin/launchctl print-disabled system | /usr/bin/grep -c '"com.apple.nfsd" => disabled'
-    monterey:
-      severity: medium
-      benchmarks:
-        - cis_lvl1
-        - cis_lvl2
-        - disa_stig
-      check: /bin/launchctl print-disabled system | /usr/bin/grep -c '"com.apple.nfsd" => true'
-    big_sur:
-      severity: medium
-      benchmarks:
-        - cis_lvl1
-        - cis_lvl2
-        - disa_stig
-      check: /bin/launchctl print-disabled system | /usr/bin/grep -c '"com.apple.nfsd" => true'
-    catalina:
-      severity: medium
-      benchmarks:
-        - disa_stig
-      check: /bin/launchctl print-disabled system | /usr/bin/grep -c '"com.apple.nfsd" => true'
+        - name: cis_lvl1
+        - name: cis_lvl2
+        - name: disa_stig
+          severity: medium
+    enforcement_info:
+      check:
+        shell: /bin/launchctl print-disabled system | /usr/bin/grep -c '"com.apple.nfsd" => disabled'
+        result:
+          integer: 1
+      fix:
+        shell: /bin/launchctl disable system/com.apple.nfsd
+        additional_info: The system may need to be restarted for the update to take effect.
 tags:
   - 800-53r5_low
   - 800-53r5_moderate
@@ -120,4 +81,3 @@ tags:
   - cmmc_lvl2
   - cmmc_lvl1
   - cnssi-1253_moderate
-  - cnssi-1253

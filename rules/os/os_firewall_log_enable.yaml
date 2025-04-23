@@ -9,16 +9,10 @@ discussion: |
 references:
   nist:
     cce:
-      sonoma:
+      macos_14:
         - CCE-92793-9
-      ventura:
+      macos_13:
         - CCE-91791-4
-      monterey:
-        - CCE-90924-2
-      big_sur:
-        - CCE-85313-5
-      catalina:
-        - CCE-84757-4
     800-53r5:
       - AU-12
       - SC-7
@@ -31,13 +25,9 @@ references:
       - SC.L1-3.13.1
   cis:
     benchmark:
-      sonoma:
+      macos_14:
         - 3.6 (level 1)
-      ventura:
-        - 3.6 (level 1)
-      monterey:
-        - 3.6 (level 1)
-      big_sur:
+      macos_13:
         - 3.6 (level 1)
     controls_v8:
       - 4.5
@@ -45,107 +35,33 @@ references:
       - 8.5
 platforms:
   macOS:
-    check: $OS_VALUE
-    result: $OS_VALUE
-    fix: $OS_VALUE
-    sonoma:
+    '14.0':
       benchmarks:
-        - cis_lvl1
-        - cis_lvl2
-      check: |-
-        /usr/bin/osascript -l JavaScript << EOS
-        function run() {
-          let pref1 = $.NSUserDefaults.alloc.initWithSuiteName('com.apple.security.firewall')\
-          .objectForKey('EnableLogging').js
-          let pref2 = $.NSUserDefaults.alloc.initWithSuiteName('com.apple.security.firewall')\
-          .objectForKey('LoggingOption').js
-          if ( pref1 == true && pref2 == "detail" ){
-            return("true")
-          } else {
-            return("false")
+        - name: cis_lvl1
+        - name: cis_lvl2
+    '13.0':
+      benchmarks:
+        - name: cis_lvl1
+        - name: cis_lvl2
+    enforcement_info:
+      check:
+        shell: |-
+          /usr/bin/osascript -l JavaScript << EOS
+          function run() {
+            let pref1 = $.NSUserDefaults.alloc.initWithSuiteName('com.apple.security.firewall')\
+            .objectForKey('EnableLogging').js
+            let pref2 = $.NSUserDefaults.alloc.initWithSuiteName('com.apple.security.firewall')\
+            .objectForKey('LoggingOption').js
+            if ( pref1 == true && pref2 == "detail" ){
+              return("true")
+            } else {
+              return("false")
+            }
           }
-        }
-        EOS
-      fix: This is implemented by a Configuration Profile.
-      result:
-        string: 'true'
-      mobileconfig_info:
-        com.apple.security.firewall:
-          EnableLogging: true
-          LoggingOption: detail
-    ventura:
-      benchmarks:
-        - cis_lvl1
-        - cis_lvl2
-      check: |-
-        /usr/bin/osascript -l JavaScript << EOS
-        function run() {
-          let pref1 = $.NSUserDefaults.alloc.initWithSuiteName('com.apple.security.firewall')\
-          .objectForKey('EnableLogging').js
-          let pref2 = $.NSUserDefaults.alloc.initWithSuiteName('com.apple.security.firewall')\
-          .objectForKey('LoggingOption').js
-          if ( pref1 == true && pref2 == "detail" ){
-            return("true")
-          } else {
-            return("false")
-          }
-        }
-        EOS
-      fix: This is implemented by a Configuration Profile.
-      result:
-        string: 'true'
-      mobileconfig_info:
-        com.apple.security.firewall:
-          EnableLogging: true
-          LoggingOption: detail
-    monterey:
-      benchmarks:
-        - cis_lvl1
-        - cis_lvl2
-      check: |-
-        /usr/bin/osascript -l JavaScript << EOS
-        function run() {
-          let pref1 = $.NSUserDefaults.alloc.initWithSuiteName('com.apple.security.firewall')\
-          .objectForKey('EnableLogging').js
-          let pref2 = $.NSUserDefaults.alloc.initWithSuiteName('com.apple.security.firewall')\
-          .objectForKey('LoggingOption').js
-          if ( pref1 == true && pref2 == "detail" ){
-            return("true")
-          } else {
-            return("false")
-          }
-        }
-        EOS
-      fix: This is implemented by a Configuration Profile.
-      result:
-        string: 'true'
-      mobileconfig_info:
-        com.apple.security.firewall:
-          EnableLogging: true
-          LoggingOption: detail
-    big_sur:
-      benchmarks:
-        - cis_lvl1
-        - cis_lvl2
-      check: /usr/libexec/ApplicationFirewall/socketfilterfw --getloggingmode | /usr/bin/grep -c "Log mode is on"
-      fix: |-
-        [source,bash]
-        ----
-        /usr/libexec/ApplicationFirewall/socketfilterfw --setloggingmode on
-        ----
-      result:
-        integer: 1
-      mobileconfig_info: null
-    catalina:
-      check: /usr/libexec/ApplicationFirewall/socketfilterfw --getloggingmode | /usr/bin/grep -c "Log mode is on"
-      fix: |-
-        [source,bash]
-        ----
-        /usr/libexec/ApplicationFirewall/socketfilterfw --setloggingmode on
-        ----
-      result:
-        integer: 1
-      mobileconfig_info: null
+          EOS
+        result:
+          string: 'true'
+    introduced: '12.0'
 tags:
   - 800-53r5_low
   - 800-53r5_moderate
@@ -157,5 +73,8 @@ tags:
   - cnssi-1253_high
   - cmmc_lvl2
   - cmmc_lvl1
-  - cnssi-1253
-mobileconfig_info: $OS_VALUE
+mobileconfig_info:
+  - PayloadType: com.apple.security.firewall
+    PayloadContent:
+      - EnableLogging: true
+      - LoggingOption: detail

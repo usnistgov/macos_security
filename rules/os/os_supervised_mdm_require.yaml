@@ -29,18 +29,18 @@ references:
       - 'FMT_SMF_EXT.1.1 #47'
 platforms:
   iOS:
-    ios_18:
-      severity: medium
+    '18.0':
       benchmarks:
-        - ios_stig
-    ios_17:
-      severity: medium
+        - name: ios_stig
+          severity: medium
+    '17.0':
       benchmarks:
-        - ios_stig
-    ios_16:
-      severity: medium
+        - name: ios_stig
+          severity: medium
+    '16.0':
       benchmarks:
-        - ios_stig
+        - name: ios_stig
+          severity: medium
 tags:
   - manual
   - 800-53r5_low

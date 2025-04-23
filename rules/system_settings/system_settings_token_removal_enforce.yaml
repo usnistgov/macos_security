@@ -12,11 +12,11 @@ discussion: |
 references:
   nist:
     cce:
-      sequoia:
+      macos_15:
         - CCE-94406-6
-      sonoma:
+      macos_14:
         - CCE-93001-6
-      ventura:
+      macos_13:
         - CCE-91991-0
     800-53r5:
       - AC-11
@@ -28,36 +28,38 @@ references:
     srg:
       - SRG-OS-000030-GPOS-00011
     disa_stig:
-      sequoia:
+      macos_15:
         - APPL-15-000005
-      sonoma:
+      macos_14:
         - APPL-14-000005
-      ventura:
+      macos_13:
         - APPL-13-000005
     cmmc:
       - AC.L2-3.1.10
 platforms:
   macOS:
-    check: |
-      /usr/bin/osascript -l JavaScript << EOS
-      $.NSUserDefaults.alloc.initWithSuiteName('com.apple.security.smartcard')\
-      .objectForKey('tokenRemovalAction').js
-      EOS
-    result:
-      integer: 1
-    fix: This is implemented by a Configuration Profile.
-    sequoia:
-      severity: medium
+    '15.0':
       benchmarks:
-        - disa_stig
-    sonoma:
-      severity: medium
+        - name: disa_stig
+          severity: medium
+    '14.0':
       benchmarks:
-        - disa_stig
-    ventura:
-      severity: medium
+        - name: disa_stig
+          severity: medium
+    '13.0':
       benchmarks:
-        - disa_stig
+        - name: disa_stig
+          severity: medium
+    enforcement_info:
+      check:
+        shell: |-
+          /usr/bin/osascript -l JavaScript << EOS
+          $.NSUserDefaults.alloc.initWithSuiteName('com.apple.security.smartcard')\
+          .objectForKey('tokenRemovalAction').js
+          EOS
+        result:
+          integer: 1
+    introduced: 10.13.4
 tags:
   - 800-53r5_moderate
   - 800-53r5_high
@@ -67,5 +69,6 @@ tags:
   - cmmc_lvl2
   - cnssi-1253_moderate
 mobileconfig_info:
-  com.apple.security.smartcard:
-    tokenRemovalAction: 1
+  - PayloadType: com.apple.security.smartcard
+    PayloadContent:
+      - tokenRemovalAction: 1

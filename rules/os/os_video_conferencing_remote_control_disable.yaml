@@ -9,14 +9,17 @@ references:
         - CCE-94561-8
   bsi:
     indigo:
-      - ANNEX K
+      ios_18:
+        - ANNEX K
 platforms:
   iOS:
-    ios_18:
+    '18.0':
       supervised: false
       benchmarks:
-        - indigo_base
-        - indigo_high
+        - name: indigo_base
+        - name: indigo_high
+    introduced: '-1'
 mobileconfig_info:
-  com.apple.applicationaccess:
-    allowVideoConferenceingRemoteControl: false
+  - PayloadType: com.apple.applicationaccess
+    PayloadContent:
+      - allowVideoConferenceingRemoteControl: false

@@ -1,14 +1,13 @@
----
 title: "iOS/iPadOS 18.0: Security Configuration - Apple iOS/iPadOS 18 STIG - Ver 1, Rel 1"
 description: |
   This guide describes the actions to take when securing a iOS/iPadOS 18.0 system against the Apple iOS/iPadOS 18 STIG - Ver 1, Rel 1 security baseline.
 authors:
-  - name: Allen Golbig
-    organization: Jamf
   - name: Bob Gendler
     organization: National Institute of Standards and Technology
   - name: Dan Brodjieski
     organization: National Aeronautics and Space Administration
+  - name: Allen Golbig
+    organization: Jamf
   - name: Marco Piñeyro
     organization: Department of State
 parent_values: "ios_stig"

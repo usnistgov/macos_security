@@ -15,11 +15,11 @@ references:
         - ANNEX K
 platforms:
   iOS:
-    ios_18:
+    '18.0':
       benchmarks:
-        - indigo_high
-    ios_17:
+        - name: indigo_high
+    '17.0':
       benchmarks:
-        - indigo_high
+        - name: indigo_high
 tags:
   - manual

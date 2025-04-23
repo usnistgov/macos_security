@@ -1,8 +1,9 @@
 ---
 id: os_allow_contacts_read_managed_sources_unmanaged_destinations_disable
 title: Ensure Managed Apps Cannot Read Unmanaged Contact Accounts
-discussion: |-
-  Managed Apps _MUST_ not be allowed to read contacts from unamanged contact destinations.
+discussion:
+  "Managed Apps _MUST_ not be allowed to read contacts from unamanged contact
+  destinations. "
 check: " "
 fix: This is implemented by a Configuration Profile
 references:
@@ -31,7 +32,7 @@ references:
     controls v8:
       - N/A
 operating_system:
-  - name: iOS
+  - name: ios
     version:
       - 18.0
 tags:

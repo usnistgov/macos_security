@@ -7,11 +7,11 @@ discussion: |
 references:
   nist:
     cce:
-      sequoia:
+      macos_15:
         - CCE-94203-7
-      sonoma:
+      macos_14:
         - CCE-92803-6
-      ventura:
+      macos_13:
         - CCE-92007-4
     800-53r5:
       - AC-6
@@ -19,45 +19,46 @@ references:
       - 03.01.05
   disa:
     disa_stig:
-      ventura:
+      macos_13:
         - APPL-13-002068
 platforms:
   macOS:
-    check: |-
-      Verify the macOS system is configured so that permissions are set correctly on user home directories with the following commands:
-      /bin/ls -le /Users
-
-      This command will return a listing of the permissions of the root of every user account configured on the system. For each of the users, the permissions must be "drwxr-xr-x+", with the user listed as the owner and the group listed as \"staff\". The plus(+) sign indicates an associated Access Control List, which must be:
-      0: group:everyone deny delete
-
-      For every authorized user account, also run the following command:
-      /usr/bin/sudo /bin/ls -le /Users/userid, where userid is an existing user.
-
-      This command will return the permissions of all the objects under the users' home directory. The permissions for each of the subdirectories must be:
-      drwx------+
-      0: group:everyone deny delete
-
-      The exception is the \"Public\" directory, whose permissions must match the following:
-
-      drwxr-xr-x+
-      0: group:everyone deny delete
-
-      If the permissions returned by either of these checks differ from what is shown, this is a finding.
-    result: ''
-    fix: |-
-      Configure the macOS system to set the appropriate permissions for each user on the system with the following command:
-
-      `/usr/sbin/diskutil resetUserPermissions / DeviceNode UID`, where "DeviceNode UID" is the ID number for the user whose home directory permissions need to be repaired.
-
-      NOTE: Using the `/usr/sbin/diskutil resetUserPermissions` command will only reset the permissions on the default folder set. Other folders in the home directory will not be affected.
-    sequoia:
-      severity: medium
-    sonoma:
-      severity: medium
-    ventura:
-      severity: medium
+    '15.0': {}
+    '14.0': {}
+    '13.0':
       benchmarks:
-        - disa_stig
+        - name: disa_stig
+          severity: medium
+    enforcement_info:
+      check:
+        shell: |-
+          Verify the macOS system is configured so that permissions are set correctly on user home directories with the following commands:
+          /bin/ls -le /Users
+
+          This command will return a listing of the permissions of the root of every user account configured on the system. For each of the users, the permissions must be "drwxr-xr-x+", with the user listed as the owner and the group listed as \"staff\". The plus(+) sign indicates an associated Access Control List, which must be:
+          0: group:everyone deny delete
+
+          For every authorized user account, also run the following command:
+          /usr/bin/sudo /bin/ls -le /Users/userid, where userid is an existing user.
+
+          This command will return the permissions of all the objects under the users' home directory. The permissions for each of the subdirectories must be:
+          drwx------+
+          0: group:everyone deny delete
+
+          The exception is the \"Public\" directory, whose permissions must match the following:
+
+          drwxr-xr-x+
+          0: group:everyone deny delete
+
+          If the permissions returned by either of these checks differ from what is shown, this is a finding.
+        result: {}
+      fix:
+        additional_info: |-
+          Configure the macOS system to set the appropriate permissions for each user on the system with the following command:
+
+          `/usr/sbin/diskutil resetUserPermissions / DeviceNode UID`, where "DeviceNode UID" is the ID number for the user whose home directory permissions need to be repaired.
+
+          NOTE: Using the `/usr/sbin/diskutil resetUserPermissions` command will only reset the permissions on the default folder set. Other folders in the home directory will not be affected.
 tags:
   - manual
   - cnssi-1253_moderate

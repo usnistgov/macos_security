@@ -5,9 +5,9 @@ discussion: |
 references:
   nist:
     cce:
-      sequoia:
+      macos_15:
         - CCE-94180-7
-      sonoma:
+      macos_14:
         - CCE-93017-2
     800-53r5:
       - AC-20
@@ -23,9 +23,9 @@ references:
     srg:
       - SRG-OS-000095-GPOS-00049
     disa_stig:
-      sequoia:
+      macos_15:
         - APPL-15-002230
-      sonoma:
+      macos_14:
         - APPL-14-002230
     cmmc:
       - AC.L1-3.1.20
@@ -37,23 +37,24 @@ references:
       - 4.8
 platforms:
   macOS:
-    check: |
-      /usr/bin/osascript -l JavaScript << EOS
-      $.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess')\
-      .objectForKey('allowDictation').js
-      EOS
-    result:
-      string: 'false'
-    fix: |
-      This is implemented by a Configuration Profile.
-    sequoia:
-      severity: medium
+    '15.0':
       benchmarks:
-        - disa_stig
-    sonoma:
-      severity: medium
+        - name: disa_stig
+          severity: medium
+    '14.0':
       benchmarks:
-        - disa_stig
+        - name: disa_stig
+          severity: medium
+    enforcement_info:
+      check:
+        shell: |-
+          /usr/bin/osascript -l JavaScript << EOS
+          $.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess')\
+          .objectForKey('allowDictation').js
+          EOS
+        result:
+          string: 'false'
+    introduced: '10.13'
 tags:
   - i386
   - 800-53r5_low
@@ -67,5 +68,6 @@ tags:
   - cmmc_lvl1
   - cnssi-1253_moderate
 mobileconfig_info:
-  com.apple.applicationaccess:
-    allowDictation: false
+  - PayloadType: com.apple.applicationaccess
+    PayloadContent:
+      - allowDictation: false

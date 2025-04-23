@@ -34,21 +34,22 @@ references:
         - ANNEX K
 platforms:
   iOS:
-    ios_18:
-      severity: medium
+    '18.0':
       supervised: false
       benchmarks:
-        - indigo_high
-    ios_17:
-      severity: medium
+        - name: indigo_high
+          severity: medium
+    '17.0':
       supervised: false
       benchmarks:
-        - indigo_high
-    ios_16:
-      severity: medium
+        - name: indigo_high
+          severity: medium
+    '16.0':
       supervised: false
       benchmarks:
-        - ios_stig
+        - name: ios_stig
+          severity: medium
+    introduced: '5.0'
 tags:
   - 800-53r5_low
   - 800-53r5_moderate
@@ -57,5 +58,6 @@ tags:
   - cnssi-1253_low
   - cnssi-1253_high
 mobileconfig_info:
-  com.apple.applicationaccess:
-    allowPhotoStream: false
+  - PayloadType: com.apple.applicationaccess
+    PayloadContent:
+      - allowPhotoStream: false

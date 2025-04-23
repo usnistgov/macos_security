@@ -7,26 +7,18 @@ discussion: |
 references:
   nist:
     cce:
-      sequoia:
+      macos_15:
         - CCE-94153-4
-      sonoma:
+      macos_14:
         - CCE-92754-1
-      ventura:
+      macos_13:
         - CCE-91752-6
-      monterey:
-        - CCE-90896-2
-      big_sur:
-        - CCE-85292-1
-      catalina:
-        - CCE-84740-0
       ios_18:
         - CCE-94421-5
       ios_17:
         - CCE-93407-5
       ios_16:
         - CCE-93207-9
-      visionos_2.0:
-        - CCE-94484-3
     800-53r5:
       - AC-20
       - AC-20(1)
@@ -42,9 +34,9 @@ references:
     srg:
       - SRG-OS-000095-GPOS-00049
     disa_stig:
-      sequoia:
+      macos_15:
         - APPL-15-002150
-      sonoma:
+      macos_14:
         - APPL-14-002150
       ios_18:
         - AIOS-18-003200
@@ -58,16 +50,12 @@ references:
       - CM.L2-3.4.7
   cis:
     benchmark:
-      sequoia:
+      macos_15:
         - 2.1.1.3 (level 2)
-      sonoma:
+      macos_14:
         - 2.1.1.3 (level 2)
-      ventura:
+      macos_13:
         - 2.1.1.3 (level 2)
-      monterey:
-        - 2.6.1.3 (level 2)
-      big_sur:
-        - 2.6.1.3 (level 2)
       ios_18:
         - 3.2.1.5 (level 1 - Institutionally-Owned Devices)
       ios_17:
@@ -88,74 +76,68 @@ references:
         - ANNEX K
 platforms:
   macOS:
-    check: |
-      /usr/bin/osascript -l JavaScript << EOS
-      $.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess')\
-      .objectForKey('allowCloudDesktopAndDocuments').js
-      EOS
-    result:
-      string: 'false'
-    fix: |
-      This is implemented by a Configuration Profile.
-    sequoia:
-      severity: medium
+    '15.0':
       benchmarks:
-        - cis_lvl2
-        - disa_stig
-    sonoma:
-      severity: medium
+        - name: cis_lvl2
+        - name: disa_stig
+          severity: medium
+    '14.0':
       benchmarks:
-        - cis_lvl2
-        - disa_stig
-    ventura:
+        - name: cis_lvl2
+        - name: disa_stig
+          severity: medium
+    '13.0':
       benchmarks:
-        - cis_lvl2
-    monterey:
-      benchmarks:
-        - cis_lvl2
-    big_sur:
-      benchmarks:
-        - cis_lvl2
-    catalina: {}
+        - name: cis_lvl2
+    enforcement_info:
+      check:
+        shell: |-
+          /usr/bin/osascript -l JavaScript << EOS
+          $.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess')\
+          .objectForKey('allowCloudDesktopAndDocuments').js
+          EOS
+        result:
+          string: 'false'
+    introduced: 10.12.4
   iOS:
-    ios_18:
-      severity: medium
+    '18.0':
       supervised: true
       benchmarks:
-        - cis_lvl1_enterprise
-        - cis_lvl2_enterprise
-        - ios_stig
-        - indigo_high
+        - name: cis_lvl1_enterprise
+        - name: cis_lvl2_enterprise
+        - name: ios_stig
+          severity: medium
+        - name: indigo_high
+          severity: medium
       mobileconfig_info:
-        com.apple.applicationaccess:
-          allowCloudDocumentSync: false
-    ios_17:
-      severity: medium
+        - PayloadType: com.apple.applicationaccess
+          PayloadContent:
+            - allowCloudDocumentSync: false
+    '17.0':
       supervised: true
       benchmarks:
-        - cis_lvl1_enterprise
-        - cis_lvl2_enterprise
-        - ios_stig
-        - indigo_high
+        - name: cis_lvl1_enterprise
+        - name: cis_lvl2_enterprise
+        - name: ios_stig
+          severity: medium
+        - name: indigo_high
+          severity: medium
       mobileconfig_info:
-        com.apple.applicationaccess:
-          allowCloudDocumentSync: false
-    ios_16:
-      severity: medium
+        - PayloadType: com.apple.applicationaccess
+          PayloadContent:
+            - allowCloudDocumentSync: false
+    '16.0':
       supervised: true
       benchmarks:
-        - cis_lvl1_enterprise
-        - cis_lvl2_enterprise
-        - ios_stig
+        - name: cis_lvl1_enterprise
+        - name: cis_lvl2_enterprise
+        - name: ios_stig
+          severity: medium
       mobileconfig_info:
-        com.apple.applicationaccess:
-          allowCloudDocumentSync: false
-  visionOS:
-    visionos_2.0:
-      supervised: true
-      mobileconfig_info:
-        com.apple.applicationaccess:
-          allowCloudDocumentSync: false
+        - PayloadType: com.apple.applicationaccess
+          PayloadContent:
+            - allowCloudDocumentSync: false
+    introduced: n/a
 tags:
   - 800-53r5_low
   - 800-53r5_moderate
@@ -167,5 +149,7 @@ tags:
   - cmmc_lvl2
   - cmmc_lvl1
   - cnssi-1253_moderate
-  - cnssi-1253
-mobileconfig_info: $OS_VALUE
+mobileconfig_info:
+  - PayloadType: com.apple.applicationaccess
+    PayloadContent:
+      - allowCloudDesktopAndDocuments: false

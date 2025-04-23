@@ -15,14 +15,16 @@ references:
         - ANNEX D (Section 5.7 - Interfaces)
 platforms:
   iOS:
-    ios_18:
+    '18.0':
       supervised: true
       benchmarks:
-        - indigo_high
-    ios_17:
+        - name: indigo_high
+    '17.0':
       supervised: true
       benchmarks:
-        - indigo_high
+        - name: indigo_high
+    introduced: '14.5'
 mobileconfig_info:
-  com.apple.applicationaccess:
-    forceWiFiToAllowedNetworksOnly: true
+  - PayloadType: com.apple.applicationaccess
+    PayloadContent:
+      - forceWiFiToAllowedNetworksOnly: true

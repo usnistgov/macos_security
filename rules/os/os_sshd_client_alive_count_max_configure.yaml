@@ -7,22 +7,18 @@ discussion: |
 
   NOTE: This setting is not intended to manage idle user sessions where there is no input from the client. Its purpose is to monitor for interruptions in network connectivity and force the session to terminate after the connection appears to be broken.
 
+  NOTE: /etc/ssh/sshd_config will be automatically modified to its original state following any update or major upgrade to the operating system.
+
   NOTE: On macOS 15.2 and higher the SSH configuration can be reset to the macOS default by running /usr/libexec/reset-ssh-configuration.
 references:
   nist:
     cce:
-      sequoia:
+      macos_15:
         - CCE-94303-5
-      sonoma:
+      macos_14:
         - CCE-92898-6
-      ventura:
+      macos_13:
         - CCE-91886-2
-      monterey:
-        - CCE-91007-5
-      big_sur:
-        - CCE-85456-2
-      catalina:
-        - CCE-84792-1
     800-53r5:
       - SC-10
     800-171r3:
@@ -33,165 +29,60 @@ references:
     srg:
       - SRG-OS-000163-GPOS-00072
     disa_stig:
-      sequoia:
+      macos_15:
         - APPL-15-000052
-      sonoma:
+      macos_14:
         - APPL-14-000052
-      ventura:
+      macos_13:
         - APPL-13-000052
-      monterey:
-        - APPL-12-000052
-      big_sur:
-        - APPL-11-000052
-      catalina:
-        - AOSX-15-000052
     cmmc:
       - SC.L2-3.13.9
 platforms:
   macOS:
-    check: $OS_VALUE
-    result: $OS_VALUE
-    fix: $OS_VALUE
-    sequoia:
-      severity: medium
+    '15.0':
       benchmarks:
-        - disa_stig
-      check: /usr/sbin/sshd -G | /usr/bin/awk '/clientalivecountmax/{print $2}'
-      fix: |-
-        [source,bash]
-        ----
-        include_dir=$(/usr/bin/awk '/^Include/ {print $2}' /etc/ssh/sshd_config | /usr/bin/tr -d '*')
-
-        if [[ -z $include_dir ]]; then
-          /usr/bin/sed -i.bk "1s/.*/Include \/etc\/ssh\/sshd_config.d\/\*/" /etc/ssh/sshd_config
-        fi
-
-        /usr/bin/grep -qxF 'clientalivecountmax $ODV' "${include_dir}01-mscp-sshd.conf" 2>/dev/null || echo "clientalivecountmax $ODV" >> "${include_dir}01-mscp-sshd.conf"
-
-        for file in $(ls ${include_dir}); do
-          if [[ "$file" == "100-macos.conf" ]]; then
-              continue
-          fi
-          if [[ "$file" == "01-mscp-sshd.conf" ]]; then
-              break
-          fi
-          /bin/mv ${include_dir}${file} ${include_dir}20-${file}
-        done
-        ----
-      result:
-        integer: $ODV
-    sonoma:
-      severity: medium
+        - name: disa_stig
+          severity: medium
+    '14.0':
       benchmarks:
-        - disa_stig
-      check: /usr/sbin/sshd -G | /usr/bin/awk '/clientalivecountmax/{print $2}'
-      fix: |-
-        [source,bash]
-        ----
-        include_dir=$(/usr/bin/awk '/^Include/ {print $2}' /etc/ssh/sshd_config | /usr/bin/tr -d '*')
-
-        if [[ -z $include_dir ]]; then
-          /usr/bin/sed -i.bk "1s/.*/Include \/etc\/ssh\/sshd_config.d\/\*/" /etc/ssh/sshd_config
-        fi
-
-        /usr/bin/grep -qxF 'clientalivecountmax $ODV' "${include_dir}01-mscp-sshd.conf" 2>/dev/null || echo "clientalivecountmax $ODV" >> "${include_dir}01-mscp-sshd.conf"
-
-        for file in $(ls ${include_dir}); do
-          if [[ "$file" == "100-macos.conf" ]]; then
-              continue
-          fi
-          if [[ "$file" == "01-mscp-sshd.conf" ]]; then
-              break
-          fi
-          /bin/mv ${include_dir}${file} ${include_dir}20-${file}
-        done
-        ----
-      result:
-        integer: $ODV
-    ventura:
-      severity: medium
+        - name: disa_stig
+          severity: medium
+    '13.0':
       benchmarks:
-        - disa_stig
-      check: /usr/sbin/sshd -T | /usr/bin/awk '/clientalivecountmax/{print $2}'
-      fix: |-
-        [source,bash]
-        ----
-        include_dir=$(/usr/bin/awk '/^Include/ {print $2}' /etc/ssh/sshd_config | /usr/bin/tr -d '*')
+        - name: disa_stig
+          severity: medium
+    enforcement_info:
+      check:
+        shell: /usr/sbin/sshd -G | /usr/bin/awk '/clientalivecountmax/{print $2}'
+        result:
+          integer: $ODV
+      fix:
+        shell: |-
+          include_dir=$(/usr/bin/awk '/^Include/ {print $2}' /etc/ssh/sshd_config | /usr/bin/tr -d '*')
 
-        if [[ -z $include_dir ]]; then
-          /usr/bin/sed -i.bk "1s/.*/Include \/etc\/ssh\/sshd_config.d\/\*/" /etc/ssh/sshd_config
-        fi
-
-        /usr/bin/grep -qxF 'clientalivecountmax $ODV' "${include_dir}01-mscp-sshd.conf" 2>/dev/null || echo "clientalivecountmax $ODV" >> "${include_dir}01-mscp-sshd.conf"
-
-        for file in $(ls ${include_dir}); do
-          if [[ "$file" == "100-macos.conf" ]]; then
-              continue
+          if [[ -z $include_dir ]]; then
+            /usr/bin/sed -i.bk "1s/.*/Include \/etc\/ssh\/sshd_config.d\/\*/" /etc/ssh/sshd_config
           fi
-          if [[ "$file" == "01-mscp-sshd.conf" ]]; then
-              break
-          fi
-          /bin/mv ${include_dir}${file} ${include_dir}20-${file}
-        done
-        ----
-      result:
-        integer: $ODV
-    monterey:
-      severity: medium
-      benchmarks:
-        - disa_stig
-      check: /usr/sbin/sshd -T | /usr/bin/awk '/clientalivecountmax/{print $2}'
-      fix: |-
-        [source,bash]
-        ----
-        include_dir=$(/usr/bin/awk '/^Include/ {print $2}' /etc/ssh/sshd_config | /usr/bin/tr -d '*')
 
-        if [[ -z $include_dir ]]; then
-          /usr/bin/sed -i.bk "1s/.*/Include \/etc\/ssh\/sshd_config.d\/\*/" /etc/ssh/sshd_config
-        fi
+          /usr/bin/grep -qxF 'clientalivecountmax $ODV' "${include_dir}01-mscp-sshd.conf" 2>/dev/null || echo "clientalivecountmax $ODV" >> "${include_dir}01-mscp-sshd.conf"
 
-        /usr/bin/grep -qxF 'clientalivecountmax $ODV' "${include_dir}01-mscp-sshd.conf" 2>/dev/null || echo "clientalivecountmax $ODV" >> "${include_dir}01-mscp-sshd.conf"
-
-        for file in $(ls ${include_dir}); do
-          if [[ "$file" == "100-macos.conf" ]]; then
-              continue
-          fi
-          if [[ "$file" == "01-mscp-sshd.conf" ]]; then
-              break
-          fi
-          /bin/mv ${include_dir}${file} ${include_dir}20-${file}
-        done
-        ----
-      result:
-        integer: $ODV
-    big_sur:
-      severity: medium
-      benchmarks:
-        - disa_stig
-      check: /usr/bin/grep -c "^ClientAliveCountMax $ODV" /etc/ssh/sshd_config
-      fix: |-
-        [source,bash]
-        ----
-        /usr/bin/sed -i.bak 's/.*ClientAliveCountMax.*/ClientAliveCountMax $ODV/' /etc/ssh/sshd_config; /bin/launchctl kickstart -k system/com.openssh.sshd
-        ----
-      result:
-        integer: 1
-    catalina:
-      severity: medium
-      benchmarks:
-        - disa_stig
-      check: /usr/bin/grep -c "^ClientAliveCountMax $ODV" /etc/ssh/sshd_config
-      fix: |-
-        [source,bash]
-        ----
-        /usr/bin/sed -i.bak 's/.*ClientAliveCountMax.*/ClientAliveCountMax $ODV/' /etc/ssh/sshd_config; /bin/launchctl kickstart -k system/com.openssh.sshd
-        ----
-      result:
-        integer: 1
+          for file in $(ls ${include_dir}); do
+            if [[ "$file" == "100-macos.conf" ]]; then
+                continue
+            fi
+            if [[ "$file" == "01-mscp-sshd.conf" ]]; then
+                break
+            fi
+            /bin/mv ${include_dir}${file} ${include_dir}20-${file}
+          done
 odv:
-  hint: Number of seconds.
+  hint:
+    datatype: number
+    description: Number of seconds, e.g. 0
+    validation:
+      min: 0
   recommended: 0
-  stig: 0
+  stig: 1
 tags:
   - 800-53r5_moderate
   - 800-53r5_high

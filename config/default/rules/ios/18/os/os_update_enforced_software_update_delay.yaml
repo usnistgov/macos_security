@@ -14,7 +14,7 @@ references:
   indigo:
     - ANNEX D (Section 6.3.1.2 - Update management)
 operating_system:
-  - name: iOS
+  - name: ios
     version:
       - 18.0
 tags:

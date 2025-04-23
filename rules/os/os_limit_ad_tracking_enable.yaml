@@ -41,23 +41,26 @@ references:
         - ANNEX K
 platforms:
   iOS:
-    ios_18:
-      severity: low
+    '18.0':
       supervised: false
       benchmarks:
-        - ios_stig
-        - indigo_high
-    ios_17:
-      severity: low
+        - name: ios_stig
+          severity: low
+        - name: indigo_high
+          severity: low
+    '17.0':
       supervised: false
       benchmarks:
-        - ios_stig
-        - indigo_high
-    ios_16:
-      severity: low
+        - name: ios_stig
+          severity: low
+        - name: indigo_high
+          severity: low
+    '16.0':
       supervised: false
       benchmarks:
-        - ios_stig
+        - name: ios_stig
+          severity: low
+    introduced: '7.0'
 tags:
   - 800-53r5_low
   - 800-53r5_moderate
@@ -67,5 +70,6 @@ tags:
   - cnssi-1253_low
   - cnssi-1253_high
 mobileconfig_info:
-  com.apple.applicationaccess:
-    forceLimitAdTracking: true
+  - PayloadType: com.apple.applicationaccess
+    PayloadContent:
+      - forceLimitAdTracking: true

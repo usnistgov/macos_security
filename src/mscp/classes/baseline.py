@@ -12,7 +12,7 @@ from loguru import logger
 from pydantic import BaseModel, Field
 
 # Local python modules
-from src.mscp.common_utils import config, create_yaml, open_yaml
+from src.mscp.common_utils import config, create_yaml, open_file
 
 from .macsecurityrule import Macsecurityrule
 
@@ -62,14 +62,14 @@ class Baseline(BaseModel):
         if custom:
             section_dir = Path(config["custom"]["sections_dir"])
 
-        baseline_data = open_yaml(file_path)
+        baseline_data = open_file(file_path)
         authors = [Author(**author) for author in baseline_data.get("authors", [])]
 
         # Parse profiles
         profiles: list[Profile] = []
         for prof in baseline_data.get("profile", []):
             logger.debug(f"Section Name: {prof['section']}")
-            section_data: dict[str, str] = open_yaml(
+            section_data: dict[str, str] = open_file(
                 Path(section_dir, f"{prof['section']}.yaml")
             )
             logger.debug(f"Section Data: {section_data}")
@@ -150,7 +150,7 @@ class Baseline(BaseModel):
         section_descriptions: dict = {}
 
         for yaml_file in Path(config["defaults"]["sections_dir"]).glob("*.y*ml"):
-            section_data: dict = open_yaml(yaml_file)
+            section_data: dict = open_file(yaml_file)
 
             section_descriptions[section_data.get("name")] = section_data.get(
                 "description", ""

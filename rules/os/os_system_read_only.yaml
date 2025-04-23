@@ -7,36 +7,28 @@ discussion: |
 references:
   nist:
     cce:
-      sequoia:
+      macos_15:
         - CCE-94313-4
-      sonoma:
+      macos_14:
         - CCE-92910-9
-      ventura:
+      macos_13:
         - CCE-91898-7
-      monterey:
-        - CCE-91016-6
-      big_sur:
-        - CCE-85388-7
-      catalina:
-        - CCE-84851-5
     800-53r5:
       - SC-34
       - MA-4(1)
       - SI-7
 platforms:
   macOS:
-    check: |
-      /usr/sbin/system_profiler SPStorageDataType | /usr/bin/awk '/Mount Point: \/$/{x=NR+2}(NR==x){print $2}'
-    result:
-      string: 'No'
-    fix: |
-      NOTE: To remount the System volume as Read Only, rebooting the computer will mount it as Read Only.
-    sequoia: {}
-    sonoma: {}
-    ventura: {}
-    monterey: {}
-    big_sur: {}
-    catalina: {}
+    '15.0': {}
+    '14.0': {}
+    '13.0': {}
+    enforcement_info:
+      check:
+        shell: '/usr/sbin/system_profiler SPStorageDataType | /usr/bin/awk ''/Mount Point: \/$/{x=NR+2}(NR==x){print $2}'''
+        result:
+          string: 'No'
+      fix:
+        additional_info: 'NOTE: To remount the System volume as Read Only, rebooting the computer will mount it as Read Only.'
 tags:
   - 800-53r5_moderate
   - 800-53r5_high

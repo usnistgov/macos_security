@@ -11,7 +11,7 @@ references:
         - CCE-93426-5
       ios_16:
         - CCE-93226-9
-      visionos_2.0:
+      visionos_2:
         - CCE-94498-3
     800-53r5:
       - AU-12(1)
@@ -35,39 +35,42 @@ references:
         - ANNEX K
 platforms:
   iOS:
-    ios_18:
+    '18.0':
       supervised: false
       benchmarks:
-        - cis_lvl1_byod
-        - cis_lvl2_byod
-        - cis_lvl1_enterprise
-        - cis_lvl2_enterprise
-        - indigo_base
-        - indigo_high
-    ios_17:
+        - name: cis_lvl1_byod
+        - name: cis_lvl2_byod
+        - name: cis_lvl1_enterprise
+        - name: cis_lvl2_enterprise
+        - name: indigo_base
+        - name: indigo_high
+    '17.0':
       supervised: false
       benchmarks:
-        - cis_lvl1_byod
-        - cis_lvl2_byod
-        - cis_lvl1_enterprise
-        - cis_lvl2_enterprise
-        - indigo_base
-        - indigo_high
-    ios_16:
+        - name: cis_lvl1_byod
+        - name: cis_lvl2_byod
+        - name: cis_lvl1_enterprise
+        - name: cis_lvl2_enterprise
+        - name: indigo_base
+        - name: indigo_high
+    '16.0':
       supervised: false
       benchmarks:
-        - cis_lvl1_byod
-        - cis_lvl2_byod
-        - cis_lvl1_enterprise
-        - cis_lvl2_enterprise
+        - name: cis_lvl1_byod
+        - name: cis_lvl2_byod
+        - name: cis_lvl1_enterprise
+        - name: cis_lvl2_enterprise
+    introduced: '12.0'
   visionOS:
-    visionos_2.0:
+    '2.0':
       supervised: true
+    introduced: '2.0'
 tags:
   - 800-53r5_low
   - 800-53r5_moderate
   - 800-53r5_high
   - cisv8
 mobileconfig_info:
-  com.apple.applicationaccess:
-    forceAutomaticDateAndTime: true
+  - PayloadType: com.apple.applicationaccess
+    PayloadContent:
+      - forceAutomaticDateAndTime: true

@@ -11,14 +11,12 @@ discussion: |
 references:
   nist:
     cce:
-      sequoia:
+      macos_15:
         - CCE-94120-3
-      sonoma:
+      macos_14:
         - CCE-92720-2
-      ventura:
+      macos_13:
         - CCE-91721-1
-      monterey:
-        - CCE-90865-7
     800-53r5:
       - AC-2(12)
       - AU-12
@@ -38,13 +36,11 @@ references:
       - SI.L2-3.14.3
   cis:
     benchmark:
-      sequoia:
+      macos_15:
         - 3.2 (level 2)
-      sonoma:
+      macos_14:
         - 3.2 (level 2)
-      ventura:
-        - 3.2 (level 2)
-      monterey:
+      macos_13:
         - 3.2 (level 2)
     controls_v8:
       - 3.14
@@ -52,31 +48,22 @@ references:
       - 8.5
 platforms:
   macOS:
-    check: |
-      /usr/bin/awk -F':' '/^flags/ { print $NF }' /etc/security/audit_control | /usr/bin/tr ',' '\n' | /usr/bin/grep -Ec '\-fm'
-    result:
-      integer: 1
-    fix: |
-      [source,bash]
-      ----
-      /usr/bin/grep -qE "^flags.*-fm" /etc/security/audit_control || /usr/bin/sed -i.bak '/^flags/ s/$/,-fm/' /etc/security/audit_control;/usr/sbin/audit -s
-      ----
-    sequoia:
-      severity: medium
+    '15.0':
       benchmarks:
-        - cis_lvl2
-    sonoma:
-      severity: medium
+        - name: cis_lvl2
+    '14.0':
       benchmarks:
-        - cis_lvl2
-    ventura:
-      severity: medium
+        - name: cis_lvl2
+    '13.0':
       benchmarks:
-        - cis_lvl2
-    monterey:
-      severity: medium
-      benchmarks:
-        - cis_lvl2
+        - name: cis_lvl2
+    enforcement_info:
+      check:
+        shell: /usr/bin/awk -F':' '/^flags/ { print $NF }' /etc/security/audit_control | /usr/bin/tr ',' '\n' | /usr/bin/grep -Ec '\-fm'
+        result:
+          integer: 1
+      fix:
+        shell: /usr/bin/grep -qE "^flags.*-fm" /etc/security/audit_control || /usr/bin/sed -i.bak '/^flags/ s/$/,-fm/' /etc/security/audit_control;/usr/sbin/audit -s
 tags:
   - 800-53r5_privacy
   - 800-53r5_low

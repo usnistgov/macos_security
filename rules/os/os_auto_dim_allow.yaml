@@ -9,8 +9,10 @@ references:
         - CCE-94519-6
 platforms:
   iOS:
-    ios_18:
+    '18.0':
       supervised: false
+    introduced: '17.4'
 mobileconfig_info:
-  com.apple.applicationaccess:
-    allowAutoDim: true
+  - PayloadType: com.apple.applicationaccess
+    PayloadContent:
+      - allowAutoDim: true

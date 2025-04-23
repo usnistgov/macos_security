@@ -7,17 +7,20 @@ discussion: |-
 references:
   nist:
     cce:
-      sequoia:
+      macos_15:
         - CCE-94232-6
     800-53r5:
       - AC-20(4)
 platforms:
   macOS:
-    sequoia: {}
-    check: |
-      /usr/bin/plutil -convert json /var/db/ManagedConfigurationFiles/DiskManagement/DiskManagement_Settings.plist -o - | /usr/bin/jq '.Restrictions | .ExternalStorage'
-    result:
-      string: $ODV
+    '15.0': {}
+    enforcement_info:
+      check:
+        shell: /usr/bin/plutil -convert json /var/db/ManagedConfigurationFiles/DiskManagement/DiskManagement_Settings.plist -o - | /usr/bin/jq '.Restrictions | .ExternalStorage'
+        result:
+          string: $ODV
+      fix:
+        additional_info: This is implemented by a Declarative Device Management.
 tags:
   - none
 ddm_info:
@@ -25,5 +28,12 @@ ddm_info:
   ddm_key: NetworkStorage
   ddm_value: $ODV
 odv:
-  hint: Allowed, ReadOnly, or Disallowed
+  hint:
+    datatype: enum
+    description: Allowed|ReadOnly|Disallowed
+    validation:
+      enumValues:
+        - Allowed
+        - ReadOnly
+        - Disallowed
   recommended: Allowed

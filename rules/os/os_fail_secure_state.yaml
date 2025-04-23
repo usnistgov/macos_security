@@ -1,6 +1,6 @@
 id: os_fail_secure_state
 title: Configure System to Fail to a Known Safe State if System Initialization, Shutdown, or Abort Fails
-discussion: |
+discussion: |-
   The information system _IS_ configured to fail to a known safe state in the event of a failed system initialization, shutdown, or abort.
 
   Failure to a known safe state helps prevent systems from failing to a state that may cause loss of data or unauthorized access to system resources.
@@ -8,21 +8,17 @@ discussion: |
   Apple File System (APFS) is the default file system for Mac computers using macOS 10.13 and all later versions. APFS includes native encryption, safe document saves, stable snapshots, and crash protection; these features ensure that the macOS fails to safe state.
 
   link:https://developer.apple.com/videos/play/wwdc2017/715/[]
+
+  NOTE: The technology supports this requirement and cannot be configured to be out of compliance. The technology inherently meets this requirement.
 references:
   nist:
     cce:
-      sequoia:
+      macos_15:
         - CCE-94190-6
-      sonoma:
+      macos_14:
         - CCE-92789-7
-      ventura:
+      macos_13:
         - CCE-91787-2
-      monterey:
-        - CCE-90920-0
-      big_sur:
-        - CCE-85309-3
-      catalina:
-        - CCE-84860-6
     800-53r5:
       - SC-24
   disa:
@@ -31,16 +27,12 @@ references:
       - SRG-OS-000184-GPOS-00078
 platforms:
   macOS:
-    check: |
-      The technology supports this requirement and cannot be configured to be out of compliance. The technology inherently meets this requirement.
-    fix: |
-      The technology inherently meets this requirement. No fix is required.
-    sequoia: {}
-    sonoma: {}
-    ventura: {}
-    monterey: {}
-    big_sur: {}
-    catalina: {}
+    '15.0': {}
+    '14.0': {}
+    '13.0': {}
+    enforcement_info:
+      fix:
+        additional_info: The technology inherently meets this requirement. No fix is required.
 tags:
   - 800-53r5_high
   - inherent

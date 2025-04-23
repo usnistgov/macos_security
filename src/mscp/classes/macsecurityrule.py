@@ -24,6 +24,38 @@ from src.mscp.common_utils import (
 )
 
 
+class BaseModelWithAccessors(BaseModel):
+    """
+    A base class that provides `get`, `__getitem__`, and `__setitem__` methods
+    for all derived classes.
+    """
+
+    def get(self, attr: str, default: Any = None) -> Any:
+        """
+        Get the value of an attribute, or return the default if it doesn't exist.
+        """
+        return getattr(self, attr, default)
+
+    def __getitem__(self, key: str) -> Any:
+        """
+        Allow dictionary-like access to attributes.
+        """
+        if key in self.model_fields:
+            return getattr(self, key)
+        raise KeyError(f"{key} is not a valid attribute of {self.__class__.__name__}")
+
+    def __setitem__(self, key: str, value: Any) -> None:
+        """
+        Allow dictionary-like setting of attributes.
+        """
+        if key in self.model_fields:
+            setattr(self, key, value)
+        else:
+            raise KeyError(
+                f"{key} is not a valid attribute of {self.__class__.__name__}"
+            )
+
+
 class Sectionmap(Enum):
     AUDIT = "auditing"
     AUTH = "authentication"
@@ -38,7 +70,7 @@ class Sectionmap(Enum):
     SYSTEM_SETTINGS = "systemsettings"
 
 
-class Cis(BaseModel):
+class Cis(BaseModelWithAccessors):
     """
     Cis class represents a model for CIS (Center for Internet Security) benchmarks and controls.
 
@@ -50,24 +82,8 @@ class Cis(BaseModel):
     benchmark: list[str] | None = None
     controls_v8: list[float] | None = None
 
-    def get(self, attr, default=None):
-        return getattr(self, attr, default)
 
-    def __getitem__(self, key: str) -> Any:
-        if key in self.model_fields:
-            return getattr(self, key)
-        raise KeyError(f"{key} is not a valid attribute of {self.__class__.__name__}")
-
-    def __setitem__(self, key: str, value: Any) -> None:
-        if key in self.model_fields:
-            setattr(self, key, value)
-        else:
-            raise KeyError(
-                f"{key} is not a valid attribute of {self.__class__.__name__}"
-            )
-
-
-class Operatingsystem(BaseModel):
+class Operatingsystem(BaseModelWithAccessors):
     """
     Represents an operating system with a name and version.
 
@@ -79,24 +95,8 @@ class Operatingsystem(BaseModel):
     name: str
     version: list[float]
 
-    def get(self, attr, default=None):
-        return getattr(self, attr, default)
 
-    def __getitem__(self, key: str) -> Any:
-        if key in self.model_fields:
-            return getattr(self, key)
-        raise KeyError(f"{key} is not a valid attribute of {self.__class__.__name__}")
-
-    def __setitem__(self, key: str, value: Any) -> None:
-        if key in self.model_fields:
-            setattr(self, key, value)
-        else:
-            raise KeyError(
-                f"{key} is not a valid attribute of {self.__class__.__name__}"
-            )
-
-
-class Mobileconfigpayload(BaseModel):
+class Mobileconfigpayload(BaseModelWithAccessors):
     """
     A class representing a mobile configuration payload.
 
@@ -108,24 +108,8 @@ class Mobileconfigpayload(BaseModel):
     payload_type: str
     payload_content: dict[str, Any]
 
-    def get(self, attr, default=None):
-        return getattr(self, attr, default)
 
-    def __getitem__(self, key: str) -> Any:
-        if key in self.model_fields:
-            return getattr(self, key)
-        raise KeyError(f"{key} is not a valid attribute of {self.__class__.__name__}")
-
-    def __setitem__(self, key: str, value: Any) -> None:
-        if key in self.model_fields:
-            setattr(self, key, value)
-        else:
-            raise KeyError(
-                f"{key} is not a valid attribute of {self.__class__.__name__}"
-            )
-
-
-class References(BaseModel):
+class References(BaseModelWithAccessors):
     """
     References class represents a collection of various security references.
 
@@ -183,24 +167,8 @@ class References(BaseModel):
         if self.custom_refs:
             self.custom_refs = sorted(set(self.custom_refs))
 
-    def get(self, attr, default=None):
-        return getattr(self, attr, default)
 
-    def __getitem__(self, key: str) -> Any:
-        if key in self.model_fields:
-            return getattr(self, key)
-        raise KeyError(f"{key} is not a valid attribute of {self.__class__.__name__}")
-
-    def __setitem__(self, key: str, value: Any) -> None:
-        if key in self.model_fields:
-            setattr(self, key, value)
-        else:
-            raise KeyError(
-                f"{key} is not a valid attribute of {self.__class__.__name__}"
-            )
-
-
-class Macsecurityrule(BaseModel):
+class Macsecurityrule(BaseModelWithAccessors):
     """
     Macsecurityrule class represents a security rule for macOS systems.
 
@@ -591,7 +559,6 @@ class Macsecurityrule(BaseModel):
                     payload.payload_type, payload.payload_content
                 )
         self.fix = rulefix
-        # return rulefix
 
     def _fill_in_odv(self, parent_values: str) -> None:
         """
@@ -785,9 +752,6 @@ class Macsecurityrule(BaseModel):
                 return dict_element
             case _:
                 raise ValueError(f"Unsupported value type: {type(value)}")
-
-    def get(self, attr, default=None):
-        return getattr(self, attr, default)
 
     @staticmethod
     @logger.catch
@@ -1045,16 +1009,3 @@ class Macsecurityrule(BaseModel):
                 print(tag)
 
         return all_tags
-
-    def __getitem__(self, key: str) -> Any:
-        if key in self.model_fields:
-            return getattr(self, key)
-        raise KeyError(f"{key} is not a valid attribute of {self.__class__.__name__}")
-
-    def __setitem__(self, key: str, value: Any) -> None:
-        if key in self.model_fields:
-            setattr(self, key, value)
-        else:
-            raise KeyError(
-                f"{key} is not a valid attribute of {self.__class__.__name__}"
-            )

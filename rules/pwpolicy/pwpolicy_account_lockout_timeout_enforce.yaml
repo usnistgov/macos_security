@@ -7,18 +7,12 @@ discussion: |
 references:
   nist:
     cce:
-      sequoia:
+      macos_15:
         - CCE-94332-4
-      sonoma:
+      macos_14:
         - CCE-92928-1
-      ventura:
+      macos_13:
         - CCE-91916-7
-      monterey:
-        - CCE-91030-7
-      big_sur:
-        - CCE-85403-4
-      catalina:
-        - CCE-84810-1
     800-53r5:
       - AC-7
     800-171r3:
@@ -31,79 +25,56 @@ references:
       - SRG-OS-000329-GPOS-00128
       - SRG-OS-000021-GPOS-00005
     disa_stig:
-      sequoia:
+      macos_15:
         - APPL-15-000060
-      sonoma:
+      macos_14:
         - APPL-14-000060
-      ventura:
+      macos_13:
         - APPL-13-000022
-      monterey:
-        - APPL-12-000022
-      big_sur:
-        - APPL-11-000022
-      catalina:
-        - AOSX-15-000021
     cmmc:
       - AC.L2-3.1.8
   cis:
     benchmark:
-      sequoia:
+      macos_15:
         - 5.2.1 (level 1)
-      sonoma:
+      macos_14:
         - 5.2.1 (level 1)
-      ventura:
-        - 5.2.1 (level 1)
-      monterey:
+      macos_13:
         - 5.2.1 (level 1)
     controls_v8:
       - 6.2
 platforms:
   macOS:
-    check: $OS_VALUE
-    result:
-      string: 'yes'
-    fix: |
-      This is implemented by a Configuration Profile.
-    sequoia:
-      severity: medium
+    '15.0':
       benchmarks:
-        - cis_lvl1
-        - cis_lvl2
-        - disa_stig
-      check: /usr/bin/pwpolicy -getaccountpolicies 2> /dev/null | /usr/bin/tail +2 | /usr/bin/xmllint --xpath '//dict/key[text()="autoEnableInSeconds"]/following-sibling::integer[1]/text()' - | /usr/bin/awk '{ if ($1/60 >= $ODV ) {print "yes"} else {print "no"}}' | /usr/bin/uniq
-    sonoma:
-      severity: medium
+        - name: cis_lvl1
+        - name: cis_lvl2
+        - name: disa_stig
+          severity: medium
+    '14.0':
       benchmarks:
-        - cis_lvl1
-        - cis_lvl2
-        - disa_stig
-      check: /usr/bin/pwpolicy -getaccountpolicies 2> /dev/null | /usr/bin/tail +2 | /usr/bin/xmllint --xpath '//dict/key[text()="autoEnableInSeconds"]/following-sibling::integer[1]/text()' - | /usr/bin/awk '{ if ($1/60 >= $ODV ) {print "yes"} else {print "no"}}' | /usr/bin/uniq
-    ventura:
-      severity: medium
+        - name: cis_lvl1
+        - name: cis_lvl2
+        - name: disa_stig
+          severity: medium
+    '13.0':
       benchmarks:
-        - cis_lvl1
-        - cis_lvl2
-        - disa_stig
-      check: /usr/bin/pwpolicy -getaccountpolicies 2> /dev/null | /usr/bin/tail +2 | /usr/bin/xmllint --xpath '//dict/key[text()="autoEnableInSeconds"]/following-sibling::integer[1]/text()' - | /usr/bin/awk '{ if ($1/60 >= $ODV ) {print "yes"} else {print "no"}}' | /usr/bin/uniq
-    monterey:
-      severity: medium
-      benchmarks:
-        - cis_lvl1
-        - cis_lvl2
-        - disa_stig
-      check: /usr/bin/pwpolicy -getaccountpolicies 2> /dev/null | /usr/bin/tail +2 | /usr/bin/xmllint --xpath '//dict/key[text()="autoEnableInSeconds"]/following-sibling::integer[1]/text()' - | /usr/bin/awk '{ if ($1/60 >= $ODV ) {print "yes"} else {print "no"}}'
-    big_sur:
-      severity: medium
-      benchmarks:
-        - disa_stig
-      check: /usr/bin/pwpolicy -getaccountpolicies 2> /dev/null | /usr/bin/tail +2 | /usr/bin/xmllint --xpath '//dict/key[text()="autoEnableInSeconds"]/following-sibling::integer[1]/text()' - | /usr/bin/awk '{ if ($1/60 >= $ODV ) {print "yes"} else {print "no"}}'
-    catalina:
-      severity: medium
-      benchmarks:
-        - disa_stig
-      check: /usr/bin/pwpolicy -getaccountpolicies 2> /dev/null | /usr/bin/tail +2 | /usr/bin/xmllint --xpath '//dict/key[text()="autoEnableInSeconds"]/following-sibling::integer[1]/text()' - | /usr/bin/awk '{ if ($1/60 >= $ODV ) {print "yes"} else {print "no"}}'
+        - name: cis_lvl1
+        - name: cis_lvl2
+        - name: disa_stig
+          severity: medium
+    enforcement_info:
+      check:
+        shell: /usr/bin/pwpolicy -getaccountpolicies 2> /dev/null | /usr/bin/tail +2 | /usr/bin/xmllint --xpath '//dict/key[text()="autoEnableInSeconds"]/following-sibling::integer[1]/text()' - | /usr/bin/awk '{ if ($1/60 >= $ODV ) {print "yes"} else {print "no"}}' | /usr/bin/uniq
+        result:
+          string: 'yes'
+    introduced: '10.10'
 odv:
-  hint: Number of minutes.
+  hint:
+    datatype: number
+    description: Number of minutes, e.g. 15
+    validation:
+      min: 1
   recommended: 15
   stig: 15
   cis_lvl1: 15
@@ -118,10 +89,10 @@ tags:
   - cnssi-1253_high
   - cmmc_lvl2
   - cnssi-1253_moderate
-  - cnssi-1253
 mobileconfig_info:
-  com.apple.mobiledevice.passwordpolicy:
-    minutesUntilFailedLoginReset: $ODV
+  - PayloadType: com.apple.mobiledevice.passwordpolicy
+    PayloadContent:
+      - minutesUntilFailedLoginReset: $ODV
 ddm_info:
   declarationtype: com.apple.configuration.passcode.settings
   ddm_key: MaximumGracePeriodInMinutes

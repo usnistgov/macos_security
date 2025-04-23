@@ -5,18 +5,12 @@ discussion: |
 references:
   nist:
     cce:
-      sequoia:
+      macos_15:
         - CCE-94286-2
-      sonoma:
+      macos_14:
         - CCE-92881-2
-      ventura:
+      macos_13:
         - CCE-91872-2
-      monterey:
-        - CCE-90995-2
-      big_sur:
-        - CCE-85375-4
-      catalina:
-        - CCE-84786-3
     800-53r5:
       - AC-11(1)
     800-171r3:
@@ -25,97 +19,36 @@ references:
     cci:
       - CCI-000060
     disa_stig:
-      ventura:
+      macos_13:
         - APPL-13-000006
-      monterey:
-        - APPL-12-000006
-      big_sur:
-        - APPL-11-000006
     cmmc:
       - AC.L2-3.1.10
 platforms:
   macOS:
-    check: $OS_VALUE
-    result: $OS_VALUE
-    fix: |
-      This is implemented by a Configuration Profile.
-    sequoia:
-      severity: medium
-      check: |-
-        /usr/bin/osascript -l JavaScript << EOS
-        $.NSUserDefaults.alloc.initWithSuiteName('com.apple.screensaver')\
-        .objectForKey('moduleName').js
-        EOS
-      result:
-        string: Sequoia
+    '15.0': {}
+    '14.0':
       mobileconfig_info:
-        com.apple.screensaver:
-          moduleName: Sequoia
-    sonoma:
-      severity: medium
-      check: |-
-        /usr/bin/osascript -l JavaScript << EOS
-        $.NSUserDefaults.alloc.initWithSuiteName('com.apple.screensaver')\
-        .objectForKey('moduleName').js
-        EOS
-      result:
-        string: Sonoma
-      mobileconfig_info:
-        com.apple.screensaver:
-          moduleName: Sonoma
-    ventura:
-      severity: medium
+        - PayloadType: com.apple.screensaver
+          PayloadContent:
+            - moduleName: Sonoma
+    '13.0':
       benchmarks:
-        - disa_stig
-      check: |-
-        /usr/bin/osascript -l JavaScript << EOS
-        $.NSUserDefaults.alloc.initWithSuiteName('com.apple.screensaver')\
-        .objectForKey('moduleName').js
-        EOS
-      result:
-        string: Ventura
+        - name: disa_stig
+          severity: medium
       mobileconfig_info:
-        com.apple.screensaver:
-          moduleName: Ventura
-    monterey:
-      severity: low
-      benchmarks:
-        - disa_stig
-      check: |-
-        /usr/bin/osascript -l JavaScript << EOS
-        $.NSUserDefaults.alloc.initWithSuiteName('com.apple.screensaver')\
-        .objectForKey('loginWindowModulePath').js
-        EOS
-      result:
-        string: /System/Library/Screen Savers/Flurry.saver
-      mobileconfig_info:
-        com.apple.screensaver:
-          loginWindowModulePath: /System/Library/Screen Savers/Flurry.saver
-    big_sur:
-      severity: low
-      benchmarks:
-        - disa_stig
-      check: |-
-        /usr/bin/osascript -l JavaScript << EOS
-        $.NSUserDefaults.alloc.initWithSuiteName('com.apple.screensaver')\
-        .objectForKey('loginWindowModulePath').js
-        EOS
-      result:
-        string: /System/Library/Screen Savers/Flurry.saver
-      mobileconfig_info:
-        com.apple.screensaver:
-          loginWindowModulePath: /System/Library/Screen Savers/Flurry.saver
-    catalina:
-      check: |-
-        /usr/bin/osascript -l JavaScript << EOS
-        $.NSUserDefaults.alloc.initWithSuiteName('com.apple.screensaver')\
-        .objectForKey('loginWindowModulePath').js
-        EOS
-      result:
-        string: /System/Library/Screen Savers/Flurry.saver
-      mobileconfig_info:
-        com.apple.screensaver:
-          loginWindowModulePath: /System/Library/Screen Savers/Flurry.saver
+        - PayloadType: com.apple.screensaver
+          PayloadContent:
+            - moduleName: Ventura
+    enforcement_info:
+      check:
+        shell: |-
+          /usr/bin/osascript -l JavaScript << EOS
+          $.NSUserDefaults.alloc.initWithSuiteName('com.apple.screensaver')\
+          .objectForKey('moduleName').js
+          EOS
+        result:
+          string: Sequoia
+    introduced: '10.11'
 tags:
   - 800-53r5_moderate
   - 800-53r5_high
@@ -124,5 +57,7 @@ tags:
   - cnssi-1253_high
   - cmmc_lvl2
   - cnssi-1253_moderate
-  - cnssi-1253
-mobileconfig_info: $OS_VALUE
+mobileconfig_info:
+  - PayloadType: com.apple.screensaver
+    PayloadContent:
+      - moduleName: Sequoia

@@ -9,16 +9,12 @@ discussion: |
 references:
   nist:
     cce:
-      sequoia:
+      macos_15:
         - CCE-94274-8
-      sonoma:
+      macos_14:
         - CCE-92870-5
-      ventura:
+      macos_13:
         - CCE-91865-6
-      monterey:
-        - CCE-90989-5
-      big_sur:
-        - CCE-85483-6
     800-53r5:
       - AC-6
     800-171r3:
@@ -29,39 +25,31 @@ references:
     srg:
       - SRG-OS-000480-GPOS-00227
     disa_stig:
-      sequoia:
+      macos_15:
         - APPL-15-005120
-      sonoma:
+      macos_14:
         - APPL-14-005120
     cmmc:
       - AC.L1-3.1.1
       - AC.L2-3.1.5
 platforms:
   macOS:
-    check: |
-      /usr/libexec/mdmclient QuerySecurityInfo | /usr/bin/grep -c "IsRecoveryLockEnabled = 1"
-    result:
-      integer: 1
-    fix: $OS_VALUE
-    sequoia:
-      severity: medium
+    '15.0':
       benchmarks:
-        - disa_stig
-      fix: 'NOTE: The SetRecoveryLock command can be used to set a Recovery Lock password and must be from your MDM.'
-    sonoma:
-      severity: medium
+        - name: disa_stig
+          severity: medium
+    '14.0':
       benchmarks:
-        - disa_stig
-      fix: 'NOTE: The SetRecoveryLock command can be used to set a Recovery Lock password and must be from your MDM.'
-    ventura:
-      severity: medium
-      fix: 'NOTE: The SetRecoveryLock command can be used to set a Recovery Lock password and must be from your MDM.'
-    monterey:
-      severity: medium
-      fix: 'NOTE: The SetRecoveryLock command can be used to set a Recovery Lock password.'
-    big_sur:
-      severity: medium
-      fix: 'NOTE: The SetRecoveryLock command can be used to set a Recovery Lock password.'
+        - name: disa_stig
+          severity: medium
+    '13.0': {}
+    enforcement_info:
+      check:
+        shell: /usr/libexec/mdmclient QuerySecurityInfo | /usr/bin/grep -c "IsRecoveryLockEnabled = 1"
+        result:
+          integer: 1
+      fix:
+        additional_info: 'NOTE: The SetRecoveryLock command can be used to set a Recovery Lock password and must be from your MDM.'
 tags:
   - 800-53r5_moderate
   - 800-53r5_high

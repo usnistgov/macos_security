@@ -26,23 +26,25 @@ references:
       - 4.1
 platforms:
   iOS:
-    ios_18:
+    '18.0':
       supervised: true
       benchmarks:
-        - cis_lvl2_enterprise
-    ios_17:
+        - name: cis_lvl2_enterprise
+    '17.0':
       supervised: true
       benchmarks:
-        - cis_lvl2_enterprise
-    ios_16:
+        - name: cis_lvl2_enterprise
+    '16.0':
       supervised: true
       benchmarks:
-        - cis_lvl2_enterprise
+        - name: cis_lvl2_enterprise
+    introduced: '7.0'
 tags:
   - 800-53r5_low
   - 800-53r5_moderate
   - 800-53r5_high
   - cisv8
 mobileconfig_info:
-  com.apple.applicationaccess:
-    allowAppCellularDataModification: false
+  - PayloadType: com.apple.applicationaccess
+    PayloadContent:
+      - allowAppCellularDataModification: false

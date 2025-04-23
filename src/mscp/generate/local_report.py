@@ -17,7 +17,7 @@ from openpyxl.chart.legend import Legend
 from openpyxl.styles import Alignment
 
 # Local python modules
-from src.mscp.common_utils import config, open_plist, sanitize_input
+from src.mscp.common_utils import config, open_file, sanitize_input
 
 
 def generate_local_report(args: argparse.Namespace) -> None:
@@ -52,7 +52,7 @@ def generate_local_report(args: argparse.Namespace) -> None:
     logger.debug(f"HTML output path: {html_output_path}")
 
     if args.plist:
-        plist_data = open_plist(args.plist)
+        plist_data = open_file(args.plist)
     else:
         plist_dir = Path("/Library/Preferences")
         plist_files = list(plist_dir.glob("org.*.audit.plist"))
@@ -73,7 +73,7 @@ def generate_local_report(args: argparse.Namespace) -> None:
             choice_idx = int(choice) - 1
             if choice_idx < 0 or choice_idx >= len(plist_files):
                 raise ValueError
-            plist_data = open_plist(plist_files[choice_idx])
+            plist_data = open_file(plist_files[choice_idx])
         except ValueError:
             logger.error("Invalid selection")
             sys.exit(1)

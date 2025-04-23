@@ -9,18 +9,12 @@ discussion: |
 references:
   nist:
     cce:
-      sequoia:
+      macos_15:
         - CCE-94317-5
-      sonoma:
+      macos_14:
         - CCE-92914-1
-      ventura:
+      macos_13:
         - CCE-91902-7
-      monterey:
-        - CCE-91018-2
-      big_sur:
-        - CCE-85391-1
-      catalina:
-        - CCE-84853-1
     800-53r5:
       - AC-3
       - IA-5(1)
@@ -37,18 +31,12 @@ references:
       - SRG-OS-000080-GPOS-00048
       - SRG-OS-000074-GPOS-00042
     disa_stig:
-      sequoia:
+      macos_15:
         - APPL-15-002038
-      sonoma:
+      macos_14:
         - APPL-14-002038
-      ventura:
+      macos_13:
         - APPL-13-002038
-      monterey:
-        - APPL-12-002038
-      big_sur:
-        - APPL-11-002038
-      catalina:
-        - AOSX-15-002038
     cmmc:
       - AC.L1-3.1.1
       - IA.L2-3.5.7
@@ -61,45 +49,26 @@ references:
       - 5.2
 platforms:
   macOS:
-    check: $OS_VALUE
-    result:
-      integer: 1
-    fix: |
-      [source,bash]
-      ----
-      /bin/launchctl disable system/com.apple.tftpd
-      ----
-      The system may need to be restarted for the update to take effect.
-    sequoia:
-      severity: high
+    '15.0':
       benchmarks:
-        - disa_stig
-      check: /bin/launchctl print-disabled system | /usr/bin/grep -c '"com.apple.tftpd" => disabled'
-    sonoma:
-      severity: high
+        - name: disa_stig
+          severity: high
+    '14.0':
       benchmarks:
-        - disa_stig
-      check: /bin/launchctl print-disabled system | /usr/bin/grep -c '"com.apple.tftpd" => disabled'
-    ventura:
-      severity: high
+        - name: disa_stig
+          severity: high
+    '13.0':
       benchmarks:
-        - disa_stig
-      check: /bin/launchctl print-disabled system | /usr/bin/grep -c '"com.apple.tftpd" => disabled'
-    monterey:
-      severity: high
-      benchmarks:
-        - disa_stig
-      check: /bin/launchctl print-disabled system | /usr/bin/grep -c '"com.apple.tftpd" => true'
-    big_sur:
-      severity: high
-      benchmarks:
-        - disa_stig
-      check: /bin/launchctl print-disabled system | /usr/bin/grep -c '"com.apple.tftpd" => true'
-    catalina:
-      severity: medium
-      benchmarks:
-        - disa_stig
-      check: /bin/launchctl print-disabled system | /usr/bin/grep -c '"com.apple.tftpd" => true'
+        - name: disa_stig
+          severity: high
+    enforcement_info:
+      check:
+        shell: /bin/launchctl print-disabled system | /usr/bin/grep -c '"com.apple.tftpd" => disabled'
+        result:
+          integer: 1
+      fix:
+        shell: /bin/launchctl disable system/com.apple.tftpd
+        additional_info: The system may need to be restarted for the update to take effect.
 tags:
   - 800-53r5_low
   - 800-53r5_moderate
@@ -111,4 +80,3 @@ tags:
   - cmmc_lvl2
   - cmmc_lvl1
   - cnssi-1253_moderate
-  - cnssi-1253

@@ -1,33 +1,25 @@
 id: os_remote_access_methods
 title: Control remote access methods
-discussion: |
+discussion: |-
   The information system monitors and controls remote access methods.
+
+  NOTE: The technology supports this requirement and cannot be configured to be out of compliance. The technology inherently meets this requirement.
 references:
   nist:
     cce:
-      sequoia:
+      macos_15:
         - CCE-94275-5
-      sonoma:
+      macos_14:
         - CCE-92871-3
-      ventura:
+      macos_13:
         - CCE-91866-4
-      monterey:
-        - CCE-90990-3
-      big_sur:
-        - CCE-85369-7
-      catalina:
-        - CCE-84868-9
 platforms:
   macOS:
-    check: |
-      The technology supports this requirement and cannot be configured to be out of compliance. The technology inherently meets this requirement.
-    fix: |
-      The technology inherently meets this requirement. No fix is required.
-    sequoia: {}
-    sonoma: {}
-    ventura: {}
-    monterey: {}
-    big_sur: {}
-    catalina: {}
+    '15.0': {}
+    '14.0': {}
+    '13.0': {}
+    enforcement_info:
+      fix:
+        additional_info: The technology inherently meets this requirement. No fix is required.
 tags:
   - inherent
