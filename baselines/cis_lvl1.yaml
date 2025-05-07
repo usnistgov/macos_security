@@ -1,6 +1,6 @@
-title: "macOS 15.0: Security Configuration - CIS Apple macOS 15.0 Sequoia v1.0.0 Benchmark (Level 1)"
+title: "macOS 15.0: Security Configuration - CIS Apple macOS 15.0 Sequoia v1.1.0 Benchmark (Level 1)"
 description: |
-  This guide describes the actions to take when securing a macOS 15.0 system against the CIS Apple macOS 15.0 Sequoia v1.0.0 Benchmark (Level 1) security baseline.
+  This guide describes the actions to take when securing a macOS 15.0 system against the CIS Apple macOS 15.0 Sequoia v1.1.0 Benchmark (Level 1) security baseline.
 authors: |
   *macOS Security Compliance Project*
 
@@ -39,9 +39,12 @@ profile:
       - os_home_folders_secure
       - os_httpd_disable
       - os_install_log_retention_configure
+      - os_mail_summary_disable
       - os_mdm_require
       - os_mobile_file_integrity_enable
       - os_nfsd_disable
+      - os_notes_transcription_disable
+      - os_notes_transcription_summary_disable
       - os_on_device_dictation_enforce
       - os_password_hint_remove
       - os_power_nap_disable
@@ -63,6 +66,7 @@ profile:
       - os_time_server_enabled
       - os_unlock_active_user_session_disable
       - os_world_writable_system_folder_configure
+      - os_writing_tools_disable
   - section: "passwordpolicy"
     rules:
       - pwpolicy_account_lockout_enforce
@@ -78,6 +82,8 @@ profile:
       - system_settings_bluetooth_sharing_disable
       - system_settings_critical_update_install_enforce
       - system_settings_diagnostics_reports_disable
+      - system_settings_external_intelligence_disable
+      - system_settings_external_intelligence_sign_in_disable
       - system_settings_filevault_enforce
       - system_settings_firewall_enable
       - system_settings_firewall_stealth_mode_enable
