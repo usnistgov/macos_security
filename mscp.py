@@ -21,7 +21,7 @@ def setup_logging(environment: str = "development") -> None:
         case "development":
             log_level_str = "DEBUG"
         case "production":
-            log_level_str = "INFO"
+            log_level_str = "WARNING"
         case "testing":
             log_level_str = "DEBUG"
         case _:
