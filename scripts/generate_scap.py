@@ -3474,6 +3474,11 @@ def generate_scap(all_rules, all_baselines, args, stig):
     </oval_definitions>
   </component>
 </data-stream-collection>'''.format(date_time_string,version_yaml['cpe'],version_yaml['os'])
+    total_scap = total_scap.replace("&", "&amp;")
+    total_scap = total_scap.replace("<", "&lt;")
+    total_scap = total_scap.replace(">", "&gt;")
+    total_scap = total_scap.replace("\"", "&quot;")
+    total_scap = total_scap.replace("'", "&apos;")
     scap_file = output
     with open(scap_file + "temp",'w') as rite:
         if export_as == "scap":
