@@ -12,7 +12,7 @@ authors: |
   |===
   |Jordy Witteman|Root3
   |===
-parent_values: "recommended"
+parent_values: "nlmapgov_base"
 profile:
   - section: "auditing"
     rules:
