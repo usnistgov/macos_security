@@ -10,7 +10,8 @@ from typing import Union
 from loguru import logger
 
 # Local python modules
-from src.mscp import __version__, validate_yaml_file
+from src.mscp import __version__
+from src.mscp.common_utils import validate_yaml_file
 from src.mscp.generate import (
     generate_baseline,
     generate_checklist,

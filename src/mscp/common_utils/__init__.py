@@ -21,6 +21,7 @@ from .file_handling import (
 )
 from .run_command import run_command
 from .sanitize_input import sanitize_input
+from .validate_rules import validate_yaml_file
 from .version_data import get_version_data
 
 __all__ = [
@@ -45,4 +46,5 @@ __all__ = [
     "get_version_data",
     "CONFIG_PATH",
     "SCHEMA_PATH",
+    "validate_yaml_file",
 ]
