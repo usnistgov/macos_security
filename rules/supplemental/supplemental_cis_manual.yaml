@@ -23,13 +23,13 @@ discussion: |
   2.6.7 Audit Lockdown Mode +
   2.7.2 Audit iPhone Mirroring +
   2.8.1 Audit Universal Control Settings +
-  2.9.1.1 Ensure the OS Is Not Active When Resuming from Standby (Intel) +
-  2.11.2 Audit Touch ID +
-  2.13.1 Audit Passwords System Preference Setting +
+  2.10.1.1 Ensure the OS Is Not Active When Resuming from Standby (Intel) +
+  2.12.2 Audit Touch ID +
   2.14.1 Audit Game Center Settings +
   2.15.1 Audit Notification & Focus Settings +
   2.16.1 Audit Wallet & Apple Pay Settings +
   2.17.1 Audit Internet Accounts for Authorized Use +
+  6.5.1 Audit Passwords System Preference Setting +
   |===
 
   [cols="15%h, 85%a"]

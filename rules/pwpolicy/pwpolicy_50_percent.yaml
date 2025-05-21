@@ -35,6 +35,5 @@ tags:
   - 800-53r4_moderate
   - 800-53r4_high
   - permanent
-  - srg
 mobileconfig: false
 mobileconfig_info:
