@@ -1,4 +1,4 @@
-#! .venv_macadmins/bin/python3
+#! .venv/bin/python3
 # filename: mscp.py
 
 # Standard python modules
