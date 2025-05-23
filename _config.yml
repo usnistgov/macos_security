@@ -1,0 +1,6 @@
+# Site settings
+title: "NIST Pages Template"
+description: "Providing a page template for pages.nist.gov hosting groups."
+
+baseurl: "/Pages-Template"
+rooturl: ""

@@ -1,0 +1,77 @@
+.nist {
+  margin: 0;
+  padding: 0;
+}
+.nist-header {
+  box-sizing: border-box;
+  background: #000;
+  color: #fff;
+  padding: 10px 20px 4px;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  position: relative;
+  margin-bottom: 0px;
+}
+.nist-header:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+.nist-header * {
+  box-sizing: inherit;
+}
+.nist-header a, .nist-header a:link, .nist-header a:visited {
+  color: #EEE;
+  text-decoration: none;
+}
+.nist-header h1 {
+  margin: 0 10px 0 0;
+  float: left;
+  font-size: 0;
+}
+.nist-header h1 a {
+  font-weight: normal;
+  font-size: 20px;
+  height: 40px;
+  width: 280px;
+  background: url('nist_logo.png') no-repeat;
+  background-size: 280px auto;
+  text-indent: -9999px;
+  overflow: hidden;
+  display: inline-block;
+}
+.nist-header-text {
+  position: absolute;
+  left: -9999px;
+  background: yellow;
+}
+.nist-links {
+  float: right;
+}
+a.nist-links-button {
+  display: inline-block;
+  padding: 6px;
+  margin: 0 2px;
+  border-radius: 3px;
+  border: 1px solid #666;
+  font-size: 14px;
+}
+.nist-header a.nist-links-button:hover,
+.nist-header a.nist-links-button:focus {
+  background: #ccc;
+  color: #333;
+}
+
+@media screen and (max-width: 700px) {
+  .nist-header {
+    padding: 6px 10px;
+  }
+  .nist-header h1 a {
+    height: 26px;
+    width: 80px;
+    background: url('nist_logo_mark.png') 0 4px no-repeat;
+    background-size: 80px auto;
+  }
+  .mobile-hide {
+    display:none !important;
+  }
+}
