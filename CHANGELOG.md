@@ -1,0 +1,97 @@
+# Changelog
+
+This document provides a high-level view of the changes to the macOS Security Compliance Project.
+
+## [Sequoia, Revision 1.1] - 2024-12-16]
+
+* Rules
+  * Added Rules
+    * os_iphone_mirroring_disable
+    * os_mail_summary_disable
+    * os_photos_enhanced_search_disable
+    * system_settings_external_intelligence_disable
+    * system_settings_external_intelligence_sign_in_disable
+  * Modified Rules
+    * os_sleep_and_display_sleep_apple_silicon_enable
+    * os_sudo_log_enforce
+    * os_world_writable_library_folder_configure
+    * os_password_autofill_disable
+    * pwpolicy_alpha_numeric_enforce
+    * pwpolicy_custom_regex_enforce
+    * pwpolicy_lower_case_character_enforce.yaml
+    * pwpolicy_max_lifetime_enforce
+    * pwpolicy_minimum_lifetime_enforce
+    * pwpolicy_history_enforce
+    * pwpolicy_account_lockout_timeout_enforce
+    * pwpolicy_account_lockout_enforce
+    * pwpolicy_prevent_dictionary_words
+    * pwpolicy_simple_sequence_disable
+    * pwpolicy_special_character_enforce
+    * pwpolicy_upper_case_character_enforce.yaml
+    * system_settings_improve_assistive_voice_disable
+  * Removed Rules
+    * system_settings_cd_dvd_sharing_disable
+  * Bug Fixes
+* Baselines
+  * Added DISA STIG v1r1
+  * Added CIS Level (Draft -> Final)
+  * Updated CNSSI-1253
+
+## [Sequoia, Revision 1.0] - 2024-09-12
+
+* Rules
+  * Added Rules
+    * os_genmoji_disable
+    * os_image_generation_disable
+    * os_iphone_mirroring_disable
+    * os_sudo_log_enforce
+    * os_writing_tools_disable
+  * Modified Rules
+    * os_anti_virus_installed
+    * os_gatekeeper_enable
+    * os_ssh_fips_compliant
+    * system_settings_firewall_enable
+    * system_settings_firewall_stealth_mode_enable
+    * system_settings_gatekeeper_identified_developers_allowed
+    * system_settings_media_sharing_disabled
+    * DDM Support
+      * auth_pam_login_smartcard_enforce
+      * auth_pam_su_smartcard_enforce
+      * auth_pam_sudo_smartcard_enforce
+      * auth_ssh_password_authentication_disable
+      * os_external_storage_restriction
+      * os_network_storage_restriction
+      * os_policy_banner_ssh_enforce
+      * os_sshd_channel_timeout_configure
+      * os_sshd_client_alive_count_max_configure
+      * os_sshd_client_alive_interval_configure
+      * os_sshd_fips_compliant
+      * os_sshd_login_grace_time_configure
+      * os_sshd_permit_root_login_configure
+      * os_sshd_unused_connection_timeout_configure
+      * os_sudo_timeout_configure
+      * pwpolicy_account_lockout_enforce
+      * pwpolicy_account_lockout_timeout_enforce
+      * pwpolicy_alpha_numeric_enforce
+      * pwpolicy_custom_regex_enforce
+      * pwpolicy_history_enforce
+      * pwpolicy_max_lifetime_enforce
+      * pwpolicy_minimum_length_enforce
+      * pwpolicy_simple_sequence_disable
+      * pwpolicy_special_character_enforce
+    * Removed Rules
+      * os_firewall_log_enable
+      * os_gatekeeper_rearm
+      * os_safari_popups_disabled
+    * Bug Fixes
+* Baselines
+  * Modified existing baselines
+  * Updated 800-171 to Revision 3
+* Scripts
+  * generate_guidance
+    * Support for Declarative Device Management (DDM)
+    * Added support for severity
+  * generate_baseline
+  * generate_mappings
+  * generate_scap
+    * Added support for severity

@@ -45,7 +45,7 @@ Civilian agencies are to use the National Checklist Program as required by [NIST
 
 ## Changelog
 
-Refer to the [CHANGELOG](CHANGELOG.adoc) for a complete list of changes.
+Refer to the [CHANGELOG](CHANGELOG.md) for a complete list of changes.
 
 ## NIST Disclaimer
 
