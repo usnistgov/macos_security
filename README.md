@@ -16,7 +16,7 @@ This project can be used as a resource to easily create customized security base
 
 To learn more about the project, please see the [wiki](https://github.com/usnistgov/macos_security/wiki).
 
-If you are interested in supporting the development of the project, refer to the [contributor guidance](CONTRIBUTING.adoc) for more information.
+If you are interested in supporting the development of the project, refer to the [contributor guidance](CONTRIBUTING.md) for more information.
 
 ## Usage
 
