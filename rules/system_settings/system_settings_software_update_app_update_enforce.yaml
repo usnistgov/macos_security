@@ -32,6 +32,8 @@ references:
     controls v8:
       - 7.3
       - 7.4
+  bio:
+    - 8.08.01
 macOS:
   - '15.0'
 tags:

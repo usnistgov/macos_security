@@ -30,6 +30,8 @@ references:
     - SRG-OS-000405-GPOS-00184
   cmmc:
     - SC.L2-3.13.10
+  bio:
+    - 8.01.01
 macOS:
   - '15.0'
 tags:
