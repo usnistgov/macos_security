@@ -50,3 +50,5 @@ platforms:
           /usr/bin/pmset -a standbydelayhigh 900
           /usr/bin/pmset -a highstandbythreshold 90
           /usr/bin/pmset -a hibernatemode 25
+tags:
+  - none

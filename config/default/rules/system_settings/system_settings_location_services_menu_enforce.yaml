@@ -40,3 +40,5 @@ platforms:
           integer: 1
       fix:
         shell: /usr/bin/defaults write /Library/Preferences/com.apple.locationmenu.plist ShowSystemServices -bool true
+tags:
+  - cis_lvl2

@@ -5,7 +5,9 @@ from pydantic import BaseModel
 
 class LoguruFormatter(BaseModel):
     padding: int = 0
-    log_format: str = "<green>{time:YYYY-MM-DD HH:mm:ss}</green> | {name}:{function}:{line}{extra[padding]} | {level} | <level>{message}</level>\n{exception}"
+    log_format: str = (
+        "<green>{time:YYYY-MM-DD HH:mm:ss}</green> | {name}:{function}:{line}{extra[padding]} | <level>{level}</level> | <level>{message}</level>\n{exception}"
+    )
 
     def format_log(self, record: dict) -> str:
         length = len("{name}:{function}:{line}".format(**record))

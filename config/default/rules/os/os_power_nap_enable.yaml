@@ -34,3 +34,5 @@ platforms:
           integer: 1
       fix:
         shell: /usr/bin/pmset -a powernap 1
+tags:
+  - none

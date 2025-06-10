@@ -53,6 +53,9 @@ platforms:
         result:
           string: 'true'
     introduced: 10.13.4
+tags:
+  - cis_lvl1
+  - cis_lvl2
 odv:
   hint:
     datatype: number

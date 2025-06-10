@@ -23,3 +23,5 @@ platforms:
           string: 'Yes'
       fix:
         shell: /usr/bin/sntp -Ss $(/usr/sbin/systemsetup -getnetworktimeserver | /usr/bin/awk '{print $4}')
+tags:
+  - none

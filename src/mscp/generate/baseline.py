@@ -14,7 +14,8 @@ from src.mscp.common_utils import (
     config,
     get_version_data,
     make_dir,
-    open_yaml,
+    open_file,
+    remove_dir_contents,
     sanitize_input,
 )
 
@@ -22,8 +23,8 @@ from src.mscp.common_utils import (
 def generate_baseline(args: argparse.Namespace) -> None:
     build_path: Path = Path(config.get("output_dir", ""), "baselines")
     baseline_output_file: Path = build_path / f"{args.keyword}.yaml"
-    mscp_data: dict = open_yaml(Path(config.get("mspc_data", "")))
-    baselines_data: dict = open_yaml(
+    mscp_data: dict = open_file(Path(config.get("mspc_data", "")))
+    baselines_data: dict = open_file(
         Path(config.get("includes_dir", ""), "800-53_baselines.yaml")
     )
     established_benchmarks: tuple = tuple(["stig", "cis_lvl1", "cis_lvl2"])
@@ -36,16 +37,15 @@ def generate_baseline(args: argparse.Namespace) -> None:
     all_rules: list[Macsecurityrule] = Macsecurityrule.collect_all_rules(
         args.os_name, args.os_version, parent_values="Default"
     )
-    all_tags: list[str] = Macsecurityrule.get_tags(all_rules)
+    all_tags: list[str] = sorted(
+        set(tag for rule in all_rules for tag in rule.tags if "800-53r4" not in tag)
+        | {"all_rules"}
+    )
 
     if not build_path.exists():
         make_dir(build_path)
     else:
-        for root, dirs, files in build_path.walk(top_down=False):
-            for name in files:
-                (root / name).unlink()
-            for name in dirs:
-                (root / name).rmdir()
+        remove_dir_contents(build_path)
 
     if args.list_tags:
         for tag in all_tags:

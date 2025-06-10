@@ -7,6 +7,7 @@ authors:
       organization: National Aeronautics and Space Administration
     - name: Allen Golbig
       organization: Jamf
+
   800-53r5_high: &800_53r5_high_authors
     <<: *all_rules_authors
 
@@ -79,6 +80,14 @@ authors:
     - name: Aaron Kegerreis
       organization: Defense Information Systems Agency
 
+  bsi: &bsi_authors
+    - name: Henry Stamerjohann
+      organization: Zentral Pro Services GmbH
+    - name: Allen Golbig
+      organization: Jamf
+    - name: Bob Gendler
+      organization: National Institute of Standards and Technology
+
 titles:
   all_rules: All Rules
   800-53r5_high: NIST SP 800-53 Rev 5 High Impact
@@ -117,22 +126,25 @@ baselines:
 
       Information System Security Officers and benchmark creators can use this catalog of settings in order to assist them in security benchmark creation. This list is a catalog, not a checklist or benchmark, and satisfaction of every item is not likely to be possible or sensible in many operational scenarios.
     authors: *all_rules_authors
+    tag: all_rules
 
   800-53r5_high:
-    title: "macOS 15.0: Security Configuration - NIST SP 800-53 Rev 5 High Impact"
+    title: "$os_type $os_version: Security Configuration - NIST SP 800-53 Rev 5 High Impact"
     description: |
       This guide describes the actions to take when securing a $os_type $os_version system against the NIST SP 800-53 Rev 5 High Impact security baseline.
 
       Information System Security Officers and benchmark creators can use this catalog of settings in order to assist them in security benchmark creation. This list is a catalog, not a checklist or benchmark, and satisfaction of every item is not likely to be possible or sensible in many operational scenarios.
     authors: *800_53r5_high_authors
+    tag: 800-53r5_high
 
   800-53r5_moderate:
-    title: "macOS 15.0: Security Configuration - NIST SP 800-53 Rev 5 Moderate Impact"
+    title: "$os_type $os_version: Security Configuration - NIST SP 800-53 Rev 5 Moderate Impact"
     description: |
       This guide describes the actions to take when securing a $os_type $os_version system against the NIST SP 800-53 Rev 5 Moderate Impact security baseline.
 
       Information System Security Officers and benchmark creators can use this catalog of settings in order to assist them in security benchmark creation. This list is a catalog, not a checklist or benchmark, and satisfaction of every item is not likely to be possible or sensible in many operational scenarios.
     authors: *800_53r5_moderate_authors
+    tag: 800-53r5_moderate
 
   800-53r5_low:
     title: "$os_type $os_version: Security Configuration - NIST SP 800-53 Rev 5 Low Impact"
@@ -141,6 +153,7 @@ baselines:
 
       Information System Security Officers and benchmark creators can use this catalog of settings in order to assist them in security benchmark creation. This list is a catalog, not a checklist or benchmark, and satisfaction of every item is not likely to be possible or sensible in many operational scenarios.
     authors: *800_53r5_low_authors
+    tag: 800-53r5_low
 
   800-171:
     title: "$os_type $os_version: Security Configuration - NIST 800-171 Rev 3"
@@ -149,6 +162,7 @@ baselines:
 
       Information System Security Officers and benchmark creators can use this catalog of settings in order to assist them in security benchmark creation. This list is a catalog, not a checklist or benchmark, and satisfaction of every item is not likely to be possible or sensible in many operational scenarios.
     authors: *800_171_authors
+    tag: 800-171
 
   cis_lvl1:
     title: "$os_type $os_version: Security Configuration - CIS Apple $os_type $os_version $os_name v1.0.0 Benchmark (Level 1)"
@@ -157,6 +171,7 @@ baselines:
 
       Information System Security Officers and benchmark creators can use this catalog of settings in order to assist them in security benchmark creation. This list is a catalog, not a checklist or benchmark, and satisfaction of every item is not likely to be possible or sensible in many operational scenarios.
     authors: *cis_lvl1_authors
+    tag: cis_lvl1
 
   cis_lvl2:
     title: "$os_type $os_version: Security Configuration - CIS Apple $os_type $os_version $os_name v1.0.0 Benchmark (Level 2)"
@@ -165,6 +180,7 @@ baselines:
 
       Information System Security Officers and benchmark creators can use this catalog of settings in order to assist them in security benchmark creation. This list is a catalog, not a checklist or benchmark, and satisfaction of every item is not likely to be possible or sensible in many operational scenarios.
     authors: *cis_lvl2_authors
+    tag: cis_lvl2
 
   cmmc_lvl1:
     title: "$os_type $os_version: Security Configuration - US CMMC 2.0 Level 1"
@@ -173,6 +189,7 @@ baselines:
 
       Information System Security Officers and benchmark creators can use this catalog of settings in order to assist them in security benchmark creation. This list is a catalog, not a checklist or benchmark, and satisfaction of every item is not likely to be possible or sensible in many operational scenarios.
     authors: *cmmc_lvl1_authors
+    tag: cmmc_lvl1
 
   cmmc_lvl2:
     title: "$os_type $os_version: Security Configuration - US CMMC 2.0 Level 2"
@@ -181,6 +198,7 @@ baselines:
 
       Information System Security Officers and benchmark creators can use this catalog of settings in order to assist them in security benchmark creation. This list is a catalog, not a checklist or benchmark, and satisfaction of every item is not likely to be possible or sensible in many operational scenarios.
     authors: *cmmc_lvl2_authors
+    tag: cmmc_lvl2
 
   cisv8:
     title: "$os_type $os_version: Security Configuration - CIS Controls Version 8"
@@ -189,6 +207,7 @@ baselines:
 
       Information System Security Officers and benchmark creators can use this catalog of settings in order to assist them in security benchmark creation. This list is a catalog, not a checklist or benchmark, and satisfaction of every item is not likely to be possible or sensible in many operational scenarios.
     authors: *cis_v8_authors
+    tag: cisv8
 
   cnssi-1253_low:
     title: "$os_type $os_version: Security Configuration - Committee on National Security Systems Instruction No. 1253 (Low)"
@@ -197,6 +216,8 @@ baselines:
 
       Information System Security Officers and benchmark creators can use this catalog of settings in order to assist them in security benchmark creation. This list is a catalog, not a checklist or benchmark, and satisfaction of every item is not likely to be possible or sensible in many operational scenarios.
     authors: *cnssi_1253_low_authors
+    tag: cnssi-1253_low
+
   cnssi-1253_moderate:
     title: "$os_type $os_version: Security Configuration - Committee on National Security Systems Instruction No. 1253 (Moderate)"
     description: |
@@ -204,6 +225,7 @@ baselines:
 
       Information System Security Officers and benchmark creators can use this catalog of settings in order to assist them in security benchmark creation. This list is a catalog, not a checklist or benchmark, and satisfaction of every item is not likely to be possible or sensible in many operational scenarios.
     authors: *cnssi_1253_moderate_authors
+    tag: cnssi-1253_moderate
 
   cnssi-1253_high:
     title: "$os_type $os_version: Security Configuration - Committee on National Security Systems Instruction No. 1253 (High)"
@@ -212,6 +234,7 @@ baselines:
 
       Information System Security Officers and benchmark creators can use this catalog of settings in order to assist them in security benchmark creation. This list is a catalog, not a checklist or benchmark, and satisfaction of every item is not likely to be possible or sensible in many operational scenarios.
     authors: *cnssi_1253_high_authors
+    tag: cnssi-1253_high
 
   stig:
     title: "$os_type $os_version: Security Configuration - Apple os_type $os_version ($os_name) STIG - Ver 1, Rel 1"
@@ -220,6 +243,25 @@ baselines:
 
       Information System Security Officers and benchmark creators can use this catalog of settings in order to assist them in security benchmark creation. This list is a catalog, not a checklist or benchmark, and satisfaction of every item is not likely to be possible or sensible in many operational scenarios.
     authors: *stig_authors
+    tag: stig
+
+  indigo_base:
+    title: "$os_type $os_version: Security Configuration - BSI indigo Base Configuration"
+    description: |
+      This guide describes the actions to take when securing a $os_type $os_version system against the BSI indigo Base Configuration security baseline.
+
+      Information System Security Officers and benchmark creators can use this catalog of settings in order to assist them in security benchmark creation. This list is a catalog, not a checklist or benchmark, and satisfaction of every item is not likely to be possible or sensible in many operational scenarios.
+    authors: *bsi_authors
+    tag: indigo_base
+
+  indigo_high:
+    title: "$os_type $os_version: Security Configuration - BSI indigo High Configuration"
+    description: |
+      This guide describes the actions to take when securing a $os_type $os_version system against the BSI indigo High Configuration security baseline.
+
+      Information System Security Officers and benchmark creators can use this catalog of settings in order to assist them in security benchmark creation. This list is a catalog, not a checklist or benchmark, and satisfaction of every item is not likely to be possible or sensible in many operational scenarios.
+    authors: *bsi_authors
+    tag: indigo_high
 
 versions:
   platforms:

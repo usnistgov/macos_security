@@ -197,7 +197,7 @@ class Macsecurityrule(BaseModelWithAccessors):
     references: References
     odv: dict[str, Any] | None = None
     finding: bool = False
-    tags: list[str]
+    tags: list[str] | None = None
     result_value: str | int | bool | None = None
     mobileconfig_info: list[Mobileconfigpayload] | None = None
     ddm_info: dict[str, Any] | None = None
@@ -283,6 +283,22 @@ class Macsecurityrule(BaseModelWithAccessors):
 
             rule_yaml: dict[str, Any] = open_file(rule_file)
 
+            if os_type not in rule_yaml.get("platforms", {}):
+                logger.debug(
+                    "Rule {} does not support the OS type: {}. Skipping rule.",
+                    rule_id,
+                    os_type,
+                )
+                continue
+
+            if os_version_str not in rule_yaml["platforms"][os_type]:
+                logger.debug(
+                    "Rule {} does not support the OS version: {}. Skipping rule.",
+                    rule_id,
+                    os_version_str,
+                )
+                continue
+
             rule_yaml["rule_id"] = rule_yaml.pop("id")
 
             if "custom" in rule_file.parts:
@@ -293,10 +309,12 @@ class Macsecurityrule(BaseModelWithAccessors):
             )
 
             if enforcement_info and "n_a" not in rule_yaml["tags"]:
-                if (
-                    "result"
-                    in rule_yaml["platforms"][os_type]["enforcement_info"]["check"]
-                ):
+                check_shell = enforcement_info.get("check", {}).get("shell")
+                check_result = enforcement_info.get("check", {}).get("result")
+                fix_shell = enforcement_info.get("fix", {}).get("shell")
+                additonal_info = enforcement_info.get("fix", {}).get("additional_info")
+
+                if check_result:
                     for k, v in rule_yaml["platforms"][os_type]["enforcement_info"][
                         "check"
                     ]["result"].items():
@@ -307,19 +325,23 @@ class Macsecurityrule(BaseModelWithAccessors):
                             result_encoded: bytes = base64.b64encode(v.encode("UTF-8"))
                             result_value = result_encoded.decode("utf-8")
                             break
-                else:
-                    continue
 
-                if "shell" in enforcement_info.get(
-                    "check", {}
-                ) and "shell" in enforcement_info.get("fix", {}):
+                if check_shell and fix_shell:
                     mechanism = "Script"
 
-                    if "shell" in enforcement_info.get("fix", {}):
-                        fix_value = enforcement_info["fix"]["shell"]
+                    check_value = check_shell
+                    fix_value = fix_shell
 
-                if "shell" in enforcement_info.get("check", {}):
-                    check_value = enforcement_info["check"]["shell"]
+                if check_shell:
+                    check_value = check_shell
+
+                if (
+                    not check_shell
+                    or not fix_shell
+                    or not check_value
+                    and additonal_info
+                ):
+                    fix_value = additonal_info
 
             if "mobileconfig_info" in rule_yaml:
                 mechanism = "Configuration Profile"
@@ -363,14 +385,17 @@ class Macsecurityrule(BaseModelWithAccessors):
                 case "inherent":
                     mechanism = "Inherent"
                     fix_value = "The control cannot be configured out of compliance."
+                    section = Sectionmap.INHERENT.value
                 case "permanent":
                     mechanism = "Permanent"
                     fix_value = "The control is not able to be configured to meet the requirement. It is recommended to implement a third-party solution to meet the control."
+                    section = Sectionmap.PERMANENT.value
                 case "not_applicable" | "n_a":
                     mechanism = "N/A"
                     fix_value = (
                         "The control is not applicable when configuring a macOS system."
                     )
+                    section = Sectionmap.NOT_APPLICABLE.value
 
             ref: dict[str, Any] = rule_yaml["references"]
             nist: dict[str, Any] = ref.get("nist", {})
@@ -484,33 +509,28 @@ class Macsecurityrule(BaseModelWithAccessors):
         Returns:
             list[Macsecurityrule]: A list of Macsecurityrule instances.
         """
+
+        logger.info("=== LOADING ALL RULES ===")
+
         rules: list[Macsecurityrule] = []
-        os_version_str: str = str(os_version)
-        sub_sections: list[str] = [
-            "permanent",
-            "inherent",
-            "n_a",
-            "srg",
-            "supplemental",
-        ]
+
         section_dirs: list[Path] = [
             Path(config["custom"]["sections_dir"]),
             Path(config["defaults"]["sections_dir"]),
         ]
 
         rules_dirs: list[Path] = [
-            Path(config["custom"]["rules_dir"], os_type, os_version_str),
-            Path(config["defaults"]["rules_dir"], os_type, os_version_str),
+            Path(config["custom"]["rules_dir"]),
+            Path(config["defaults"]["rules_dir"]),
         ]
 
-        section_data: dict = {
+        section_data: dict[str, str] = {
             section_file.stem: open_file(section_file).get("name", "")
             for section_dir in section_dirs
             for section_file in section_dir.glob("*.y*ml")
             if section_file.is_file()
         }
 
-        # Iterate through each folder in the base path
         for rule_dir in rules_dirs:
             if not rule_dir.exists() or not rule_dir.is_dir():
                 logger.warning(
@@ -522,11 +542,14 @@ class Macsecurityrule(BaseModelWithAccessors):
                 if not folder.is_dir():
                     continue
 
+                if folder.name == "sysprefs":
+                    continue
+
                 for rule_file in folder.rglob("*"):
                     try:
-                        rule_yaml: dict = open_file(rule_file)
+                        rule_name: str = rule_file.stem
                         folder_name: str = rule_file.parent.name
-                        logger.debug("{} folder: {}", rule_yaml["id"], folder_name)
+                        logger.debug("{} folder: {}", rule_name, folder_name)
                         section_name: str = section_data.get(
                             Sectionmap[folder_name.upper()].value, ""
                         )
@@ -542,14 +565,8 @@ class Macsecurityrule(BaseModelWithAccessors):
                             )
                             continue
 
-                        for tag in rule_yaml.get("tags", []):
-                            if tag in sub_sections:
-                                section_name = section_data.get(
-                                    Sectionmap[tag.upper()].value, ""
-                                )
-
                         rules += cls.load_rules(
-                            rule_ids=[rule_yaml.get("id", "")],
+                            rule_ids=[rule_name],
                             os_type=os_type,
                             os_version=os_version,
                             parent_values=parent_values,
@@ -562,6 +579,8 @@ class Macsecurityrule(BaseModelWithAccessors):
                         logger.error(
                             "Failed to load rule from file {}: {}", rule_file, e
                         )
+
+        logger.info("=== ALL RULES LOADED ===")
 
         return rules
 
@@ -1074,30 +1093,3 @@ class Macsecurityrule(BaseModelWithAccessors):
             }
 
         self.references = References(**clean_dict(self.references.model_dump()))
-
-    @staticmethod
-    def get_tags(rules: list["Macsecurityrule"], list_tags: bool = False) -> list[str]:
-        """
-        Generate a sorted list of unique tags from the provided rules, optionally
-        print the tags if list_tags is True.
-
-        Args:
-            rules (list[Macsecurityrule]): List of all Macsecurityrule objects.
-            list_tags (bool): If True, prints all unique tags.
-
-        Returns:
-            list[str]: Sorted list of unique tags, including 'all_rules'.
-        """
-
-        all_tags: list[str] = sorted(set(tag for rule in rules for tag in rule.tags))
-
-        if "all_rules" not in all_tags:
-            all_tags.append("all_rules")
-
-        all_tags.sort()
-
-        if list_tags:
-            for tag in all_tags:
-                print(tag)
-
-        return all_tags
