@@ -9,10 +9,10 @@ from loguru import logger
 
 # Local python modules
 from .config import config
-from .file_handling import open_yaml
+from .file_handling import open_file
 
 
-def get_version_data(os_name: str, os_version: int) -> dict[str, Any]:
+def get_version_data(os_name: str, os_version: float) -> dict[str, Any]:
     """
     Retrieve version data for a given operating system name and version.
 
@@ -29,19 +29,16 @@ def get_version_data(os_name: str, os_version: int) -> dict[str, Any]:
         Exception: If there is an error parsing the version file.
     """
 
-    os_version_float: float = float(os_version)
     version_file: Path = Path(config["includes_dir"], "version.yaml")
     try:
         logger.info("Attempting to open version file: {}", version_file)
-        version_data: dict = open_yaml(version_file)
-        platforms = version_data.get("platforms", {})
-        os_entries = platforms.get(os_name, [])
+        version_data: dict = open_file(version_file)
 
         return next(
             (
                 entry
-                for entry in os_entries
-                if entry.get("os_version") == os_version_float
+                for entry in version_data.get("platforms", {}).get(os_name, [])
+                if entry.get("os_version") == os_version
             ),
             {},
         )

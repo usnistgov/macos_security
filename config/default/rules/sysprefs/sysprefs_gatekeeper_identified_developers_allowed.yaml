@@ -1,0 +1,76 @@
+id: sysprefs_gatekeeper_identified_developers_allowed
+title: Apply Gatekeeper Settings to Block Applications from Unidentified Developers
+discussion: |
+  The information system implements cryptographic mechanisms to authenticate software prior to installation.
+
+  Gatekeeper settings must be configured correctly to only allow the system to run applications downloaded from the Mac App Store or applications signed with a valid Apple Developer ID code. Administrator users will still have the option to override these settings on a per-app basis. Gatekeeper is a security feature that ensures that applications must be digitally signed by an Apple-issued certificate in order to run. Digital signatures allow the macOS to verify that the application has not been modified by a malicious third party.
+references:
+  nist:
+    cce:
+      monterey:
+        - CCE-91057-0
+      big_sur:
+        - CCE-85429-9
+      catalina:
+        - CCE-84834-1
+    800-53r5:
+      - CM-14
+      - CM-5
+      - SI-7(15)
+      - SI-7(1)
+  disa:
+    cci:
+      - CCI-000366
+    srg:
+      - SRG-OS-000480-GPOS-00227
+    disa_stig:
+      monterey:
+        - APPL-12-002060
+      big_sur:
+        - APPL-11-002060
+      catalina:
+        - AOSX-15-002060
+platforms:
+  macOS:
+    check: |
+      /usr/sbin/spctl --status --verbose | /usr/bin/grep -c "developer id enabled"
+    result:
+      integer: 1
+    fix: $OS_VALUE
+    monterey:
+      severity: medium
+      benchmarks:
+        - disa_stig
+      fix: |-
+        [source,bash]
+        ----
+        /usr/sbin/spctl --global-enable; /usr/sbin/spctl --enable
+        ----
+    big_sur:
+      severity: medium
+      benchmarks:
+        - disa_stig
+      fix: |-
+        [source,bash]
+        ----
+        /usr/sbin/spctl --master-enable; /usr/sbin/spctl --enable
+        ----
+    catalina:
+      severity: medium
+      benchmarks:
+        - disa_stig
+      fix: |-
+        [source,bash]
+        ----
+        /usr/sbin/spctl --master-enable; /usr/sbin/spctl --enable
+        ----
+tags:
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_high
+  - 800-171
+  - cnssi-1253
+mobileconfig_info:
+  com.apple.systempolicy.control:
+    AllowIdentifiedDevelopers: true
+    EnableAssessment: true

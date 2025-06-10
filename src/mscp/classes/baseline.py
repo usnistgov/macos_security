@@ -17,21 +17,50 @@ from src.mscp.common_utils import config, create_yaml, open_file
 from .macsecurityrule import Macsecurityrule
 
 
-class Author(BaseModel):
+class BaseModelWithAccessors(BaseModel):
+    """
+    A base class that provides `get`, `__getitem__`, and `__setitem__` methods
+    for all derived classes.
+    """
+
+    def get(self, attr: str, default: Any = None) -> Any:
+        """
+        Get the value of an attribute, or return the default if it doesn't exist.
+        """
+        return getattr(self, attr, default)
+
+    def __getitem__(self, key: str) -> Any:
+        """
+        Allow dictionary-like access to attributes.
+        """
+        if key in self.model_fields:
+            return getattr(self, key)
+        raise KeyError(f"{key} is not a valid attribute of {self.__class__.__name__}")
+
+    def __setitem__(self, key: str, value: Any) -> None:
+        """
+        Allow dictionary-like setting of attributes.
+        """
+        if key in self.model_fields:
+            setattr(self, key, value)
+        else:
+            raise KeyError(
+                f"{key} is not a valid attribute of {self.__class__.__name__}"
+            )
+
+
+class Author(BaseModelWithAccessors):
     name: str | None
     organization: str | None
 
 
-class Profile(BaseModel):
+class Profile(BaseModelWithAccessors):
     section: str
     description: str
     rules: list[Macsecurityrule]
 
-    def get(self, attr, default=None):
-        return getattr(self, attr, default)
 
-
-class Baseline(BaseModel):
+class Baseline(BaseModelWithAccessors):
     authors: list[Author]
     profile: list[Profile]
     name: str
@@ -58,21 +87,44 @@ class Baseline(BaseModel):
 
         logger.info(f"Attempting to open Baseline file: {file_path}")
 
-        section_dir: Path = Path(config["defaults"]["sections_dir"])
-        if custom:
-            section_dir = Path(config["custom"]["sections_dir"])
+        section_dirs: list[Path] = []
 
-        baseline_data = open_file(file_path)
+        # section_dir: Path = Path(config["defaults"]["sections_dir"])
+        if custom:
+            section_dirs = [
+                Path(config["custom"]["sections_dir"]),
+                Path(config["defaults"]["sections_dir"]),
+            ]
+        else:
+            section_dirs = [Path(config["defaults"]["sections_dir"])]
+
+        baseline_data: dict[str, Any] = open_file(file_path)
         authors = [Author(**author) for author in baseline_data.get("authors", [])]
+        baseline_tag = file_path.stem.replace("_test", "")
 
         # Parse profiles
         profiles: list[Profile] = []
         for prof in baseline_data.get("profile", []):
             logger.debug(f"Section Name: {prof['section']}")
-            section_data: dict[str, str] = open_file(
-                Path(section_dir, f"{prof['section']}.yaml")
+
+            section_file = next(
+                (
+                    file
+                    for section_dir in section_dirs
+                    if section_dir.exists()
+                    for file in section_dir.rglob(f"{prof['section']}.y*ml")
+                ),
+                None,
             )
+
+            if not section_file:
+                logger.warning("Rule file not found for rule: {}", prof["section"])
+                continue
+
+            section_data: dict[str, str] = open_file(Path(section_file))
+
             logger.debug(f"Section Data: {section_data}")
+
             profiles.append(
                 Profile(
                     section=section_data.get("name", "").strip(),
@@ -83,6 +135,7 @@ class Baseline(BaseModel):
                         os_version,
                         baseline_data.get("parent_values", ""),
                         section_data.get("name", "").strip(),
+                        baseline_tag,
                         custom,
                     ),
                 )
@@ -101,7 +154,6 @@ class Baseline(BaseModel):
         return baseline
 
     @classmethod
-    @logger.catch
     def create_new(
         cls,
         output_file: Path,
@@ -128,10 +180,13 @@ class Baseline(BaseModel):
         os_name: str = re.search(
             r"(macos|ios|visionos)", version_data["cpe"], re.IGNORECASE
         ).group()
+
         os_version: float = version_data["os_version"]
+
         baseline_title: str = (
             f"{os_name} {os_version}: Security Configuration - {full_title} {baseline_name}"
         )
+
         description: str = (
             f"|\n  This guide describes the actions to take when securing a {os_name} {os_version} system against the {full_title} {baseline_name} security baseline.\n"
         )
@@ -194,7 +249,6 @@ class Baseline(BaseModel):
 
         baseline.to_yaml(output_path=output_file)
 
-    @logger.catch
     def to_dataframe(self) -> pd.DataFrame:
         """
         Convert the profiles and rules from the Baseline object into a Pandas DataFrame.
@@ -216,7 +270,6 @@ class Baseline(BaseModel):
 
         return pd.DataFrame(rules)
 
-    @logger.catch
     def to_yaml(self, output_path: Path) -> None:
         """
         Serializes the baseline model to a YAML file with a specific order for keys and profiles.
@@ -290,7 +343,6 @@ class Baseline(BaseModel):
         return getattr(self, attr, default)
 
     @classmethod
-    @logger.catch
     def load_all_from_folder(
         cls, folder_path: Path, os_name: str, os_version: int, custom: bool = False
     ) -> list["Baseline"]:

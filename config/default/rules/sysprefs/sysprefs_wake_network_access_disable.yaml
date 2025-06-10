@@ -1,0 +1,40 @@
+id: sysprefs_wake_network_access_disable
+title: Ensure Wake for Network Access Is Disabled
+discussion: |
+  Wake for network access _MUST_ be disabled.
+references:
+  nist:
+    cce:
+      monterey:
+        - CCE-91146-1
+      big_sur:
+        - CCE-85537-9
+  cis:
+    benchmark:
+      monterey:
+        - 2.8.2 (level 1)
+      big_sur:
+        - 2.8.2 (level 1)
+    controls_v8:
+      - 4.8
+platforms:
+  macOS:
+    check: |
+      /usr/bin/pmset -g custom | /usr/bin/awk '/womp/{print $2}'
+    result:
+      integer: 0
+    fix: |
+      [source,bash]
+      ----
+      /usr/bin/pmset -a womp 0
+      ----
+    monterey:
+      benchmarks:
+        - cis_lvl1
+        - cis_lvl2
+    big_sur:
+      benchmarks:
+        - cis_lvl1
+        - cis_lvl2
+tags:
+  - cisv8

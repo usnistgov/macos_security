@@ -1,0 +1,46 @@
+id: sysprefs_afp_disable
+title: Disable Apple Filing Protocol Sharing
+discussion: |
+  If the system does not require Apple Filing Protocol (AFP) Sharing, support it is non-essential and _MUST_ be disabled.
+
+  The information system _MUST_ be configured to provide only essential capabilities. Disabling AFP helps prevent the unauthorized connection of devices and the unauthorized transfer of information.
+references:
+  nist:
+    cce:
+      catalina:
+        - CCE-84823-4
+    800-53r5:
+      - AC-3
+      - AC-17
+  disa:
+    cci:
+      - CCI-000381
+    srg:
+      - SRG-OS-000095-GPOS-00049
+    disa_stig:
+      catalina:
+        - AOSX-15-002002
+  cis:
+    controls_v8:
+      - 4.1
+      - 4.8
+platforms:
+  macOS:
+    catalina:
+      severity: medium
+      benchmarks:
+        - disa_stig
+    check: |
+      /bin/launchctl print-disabled system | /usr/bin/grep -c '"com.apple.AppleFileServer" => true'
+    result:
+      integer: 1
+tags:
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_high
+  - 800-53r4_low
+  - 800-53r4_moderate
+  - 800-53r4_high
+  - 800-171
+  - cnssi-1253
+  - cisv8

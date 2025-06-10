@@ -104,6 +104,8 @@ def generate_excel(file_out: Path, baseline: Baseline) -> None:
 
     logger.debug("Converting baseline to DataFrame.")
     dataframe = baseline.to_dataframe()
+    dataframe.to_excel(file_out)
+    exit()
     df_copy: pd.DataFrame = dataframe.copy()
 
     logger.debug("Modifying DataFrame content.")

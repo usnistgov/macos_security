@@ -1,0 +1,40 @@
+id: system_settings_siri_prefpane_disable
+title: Disable the System Preference Pane for Siri
+discussion: |
+  This is required for compliance with the DISA STIG for macOS.
+
+  The domain *com.apple.systempreferences* has been deprecated by Apple in macOS 13. The recommended way to disable System Setting Panes is to use the *DisabledSystemSettings* key.
+
+  link:https://developer.apple.com/documentation/devicemanagement/systempreferences[]
+references:
+  nist:
+    cce:
+      macos_13:
+        - CCE-92011-6
+  disa:
+    cci:
+      - CCI-000381
+      - CCI-001774
+    srg:
+      - SRG-OS-000095-GPOS-00049
+      - SRG-OS-000370-GPOS-00155
+    disa_stig:
+      macos_13:
+        - APPL-13-002053
+platforms:
+  macOS:
+    '13.0':
+      benchmarks:
+        - name: disa_stig
+          severity: medium
+    enforcement_info:
+      check:
+        shell: /usr/bin/profiles show -output stdout-xml | /usr/bin/xmllint --xpath '//key[text()="DisabledPreferencePanes"]/following-sibling::*[1]' - | /usr/bin/grep -c com.apple.preference.speech
+        result:
+          integer: 1
+    introduced: '10.7'
+mobileconfig_info:
+  - PayloadType: com.apple.systempreferences
+    PayloadContent:
+      - DisabledPreferencePanes:
+          - com.apple.preference.speech

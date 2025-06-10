@@ -76,6 +76,7 @@ payloads_types:
   - com.apple.networkusagerules
   - com.apple.notificationsettings
   - com.apple.osxserver.account
+  - com.apple.photos.shareddefaults
   - com.apple.preference.security
   - com.apple.profileRemovalPassword
   - com.apple.proxy.http.global

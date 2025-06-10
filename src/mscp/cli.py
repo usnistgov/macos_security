@@ -61,9 +61,9 @@ def main() -> None:
 
     parser.add_argument(
         "--os_version",
-        default=15,
-        type=int,
-        help="Operating system version (eg: 14, 15).",
+        default=15.0,
+        type=float,
+        help="Operating system version (eg: 14.0, 15.0).",
     )
 
     parser.add_argument(

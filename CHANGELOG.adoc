@@ -39,7 +39,8 @@ IMPORTANT: This release is a major update and includes breaking changes. Please 
 === Templates
 * Created shell script Jinja templates for compliance checking
 * Created markdown and asciidoc Jinja templates for guidance generation
-
+* Created checklist Jinja templates for compliance checking
+* Created local report Jinja templates for compliance checking
 
 == [Sequoia, Revision 1.1] - 2024-12-16
 * Rules

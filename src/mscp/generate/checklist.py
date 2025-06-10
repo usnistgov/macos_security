@@ -19,7 +19,7 @@ from lxml.etree import Element, XMLParser, fromstring
 
 # Local python modules
 from src.mscp.classes import Baseline
-from src.mscp.common_utils import config, create_file, create_json, open_plist
+from src.mscp.common_utils import config, create_file, create_json, open_file
 
 XML_PARSER: XMLParser = XMLParser(recover=True, ns_clean=True, encoding="utf-8")
 
@@ -122,38 +122,58 @@ def map_stig_data(
             "group_title": group["title"],
             "rule_title": group["rule"]["title"],
             "fix_text": group["rule"]["fixtext"]["text"],
-            "false_positives": ""
-            if group["rule"]["description"]["falsepositives"] == ""
-            else group["rule"]["description"]["falsepositives"],
-            "false_negatives": ""
-            if group["rule"]["description"]["falsenegatives"] == ""
-            else group["rule"]["description"]["falsenegatives"],
+            "false_positives": (
+                ""
+                if group["rule"]["description"]["falsepositives"] == ""
+                else group["rule"]["description"]["falsepositives"]
+            ),
+            "false_negatives": (
+                ""
+                if group["rule"]["description"]["falsenegatives"] == ""
+                else group["rule"]["description"]["falsenegatives"]
+            ),
             "discussion": group["rule"]["description"]["vulndiscussion"],
             "check_content": group["rule"]["check"]["check-content"],
-            "documentable": ""
-            if group["rule"]["description"]["documentable"] == ""
-            else group["rule"]["description"]["documentable"],
-            "mitigations": ""
-            if group["rule"]["description"]["mitigations"] == ""
-            else group["rule"]["description"]["mitigations"],
-            "potential_impacts": ""
-            if group["rule"]["description"]["potentialimpacts"] == ""
-            else group["rule"]["description"]["potentialimpacts"],
-            "third_party_tools": ""
-            if group["rule"]["description"]["thirdpartytools"] == ""
-            else group["rule"]["description"]["thirdpartytools"],
-            "mitigation_control": ""
-            if group["rule"]["description"]["mitigationcontrol"] == ""
-            else group["rule"]["description"]["mitigationcontrol"],
-            "responsibility": ""
-            if group["rule"]["description"]["responsibility"] == ""
-            else group["rule"]["description"]["responsibility"],
-            "security_override_guidance": ""
-            if group["rule"]["description"]["severityoverrideguidance"] == ""
-            else group["rule"]["description"]["severityoverrideguidance"],
-            "ia_controls": ""
-            if group["rule"]["description"]["iacontrols"] == ""
-            else group["rule"]["description"]["iacontrols"],
+            "documentable": (
+                ""
+                if group["rule"]["description"]["documentable"] == ""
+                else group["rule"]["description"]["documentable"]
+            ),
+            "mitigations": (
+                ""
+                if group["rule"]["description"]["mitigations"] == ""
+                else group["rule"]["description"]["mitigations"]
+            ),
+            "potential_impacts": (
+                ""
+                if group["rule"]["description"]["potentialimpacts"] == ""
+                else group["rule"]["description"]["potentialimpacts"]
+            ),
+            "third_party_tools": (
+                ""
+                if group["rule"]["description"]["thirdpartytools"] == ""
+                else group["rule"]["description"]["thirdpartytools"]
+            ),
+            "mitigation_control": (
+                ""
+                if group["rule"]["description"]["mitigationcontrol"] == ""
+                else group["rule"]["description"]["mitigationcontrol"]
+            ),
+            "responsibility": (
+                ""
+                if group["rule"]["description"]["responsibility"] == ""
+                else group["rule"]["description"]["responsibility"]
+            ),
+            "security_override_guidance": (
+                ""
+                if group["rule"]["description"]["severityoverrideguidance"] == ""
+                else group["rule"]["description"]["severityoverrideguidance"]
+            ),
+            "ia_controls": (
+                ""
+                if group["rule"]["description"]["iacontrols"] == ""
+                else group["rule"]["description"]["iacontrols"]
+            ),
             "check_content_ref": {
                 "href": group["rule"]["check"]["check-content-ref"]["href"],
                 "name": group["rule"]["check"]["check-content-ref"]["name"],
@@ -164,9 +184,11 @@ def map_stig_data(
                 {
                     "id": group["id"],
                     "title": group["title"],
-                    "description": "<GroupDescription></GroupDescription>"
-                    if group["description"]["groupdescription"] is None
-                    else group["description"]["groupdescription"],
+                    "description": (
+                        "<GroupDescription></GroupDescription>"
+                        if group["description"]["groupdescription"] is None
+                        else group["description"]["groupdescription"]
+                    ),
                 }
             ],
             "createdAt": created,
@@ -249,7 +271,7 @@ def generate_checklist(args: argparse.Namespace) -> None:
     logger.debug(f"Plist File: {args.plist}")
     logger.debug(f"Stig File: {args.disastig}")
 
-    plist_data: dict[str, dict[str, Any]] = open_plist(args.plist)
+    plist_data: dict[str, dict[str, Any]] = open_file(args.plist)
 
     if ".zip" in args.disastig.suffix:
         stig_data = extract_manual_xml(args.disastig)

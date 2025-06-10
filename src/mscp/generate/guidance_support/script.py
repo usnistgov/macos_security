@@ -1,7 +1,6 @@
 # mscp/generate/script.py
 
 # Standard python modules
-import re
 from itertools import groupby
 from pathlib import Path
 from typing import Any
@@ -39,12 +38,17 @@ def group_ulify(elements: list[str]) -> str:
     grouped = [list(i) for _, i in groupby(elements, lambda a: a.split("(")[0])]
     result = ""
     for group in grouped:
-        result += "\n# * " + ", ".join(group)
+        if not result:
+            result += "\n# * " + ", ".join(group)
+        else:
+            result += "\n  # * " + ", ".join(group)
     return result.strip()
 
 
 @logger.catch
-def generate_log_reference(rule_yaml: dict[str, Any], reference: str) -> list[str]:
+def generate_log_reference(
+    rule_yaml: dict[str, Any], reference: str
+) -> list[str] | str:
     """
     Generate the log reference ID based on the rule_yaml and reference type.
 
@@ -53,12 +57,14 @@ def generate_log_reference(rule_yaml: dict[str, Any], reference: str) -> list[st
     """
     cis_ref = ["cis", "cis_lvl1", "cis_lvl2", "cisv8"]
 
+    log_reference_id: list[str] | str
+
     if reference == "default":
-        log_reference_id = [rule_yaml["rule_id"]]
+        log_reference_id = rule_yaml["rule_id"]
     elif reference in cis_ref:
         if "v8" in reference:
             log_reference_id = [
-                f"CIS Controls-{', '.join(map(str, rule_yaml['references']['cis']['controls v8']))}"
+                f"CIS Controls-{', '.join(map(str, rule_yaml['references']['cis']['controls_v8']))}"
             ]
         else:
             log_reference_id = [f"CIS-{rule_yaml['references']['cis']['benchmark'][0]}"]
@@ -70,11 +76,7 @@ def generate_log_reference(rule_yaml: dict[str, Any], reference: str) -> list[st
             try:
                 # Try to find it in custom references
                 rule_yaml["references"]["custom"][reference]
-            except KeyError:
-                # Fallback to default
-                log_reference_id = [rule_yaml["rule_id"]]
-            else:
-                # If found in custom references
+
                 if isinstance(rule_yaml["references"]["custom"][reference], list):
                     log_reference_id = rule_yaml["references"]["custom"][reference] + [
                         [rule_yaml["rule_id"]]
@@ -82,18 +84,11 @@ def generate_log_reference(rule_yaml: dict[str, Any], reference: str) -> list[st
                 else:
                     log_reference_id = [
                         rule_yaml["references"]["custom"][reference],
-                        [rule_yaml["rule_id"]],
+                        rule_yaml["rule_id"],
                     ]
-        else:
-            # If found in standard references
-            if isinstance(rule_yaml["references"][reference], list):
-                log_reference_id = rule_yaml["references"][reference] + [
-                    rule_yaml["rule_id"]
-                ]
-            else:
-                log_reference_id = [rule_yaml["references"][reference]] + [
-                    rule_yaml["rule_id"]
-                ]
+            except KeyError:
+                # Fallback to default
+                log_reference_id = rule_yaml["rule_id"]
 
     return log_reference_id
 
@@ -112,37 +107,6 @@ def quotify(fix_code: str) -> str:
     string = fix_code.replace("'", "'\"'\"'")
     string = string.replace("%", "%%")
     return string
-
-
-def get_fix_code(fix_yaml: str) -> str:
-    """
-    Extract fix code from the YAML block.
-    Note:
-        This is used as a Jinja filter in the script template.
-    """
-    if not isinstance(fix_yaml, str):
-        raise TypeError("Expected a string for fix_yaml")
-
-    fix_string = fix_yaml.split("[source,bash]")[1]
-    fix_code = re.search(r"(?:----((?:.*?\r?\n?)*)----)+", fix_string)
-
-    if fix_code is None:
-        raise ValueError("No fix code found in the provided YAML block")
-
-    return fix_code.group(1)
-
-
-@logger.catch
-def escape_double_quotes(text: str) -> str:
-    """
-    Escape double quotes for Bash.
-
-    Note:
-        This is used as a Jinja filter in the script template.
-    """
-    if not isinstance(text, str):
-        raise TypeError("Expected a string for text")
-    return text.replace('"', '\\"')
 
 
 @logger.catch
@@ -180,11 +144,11 @@ def generate_script(
     baseline_name: str,
     audit_name: str,
     baseline: Baseline,
-    log_referance: str,
+    log_reference: str,
 ) -> None:
     output_file: Path = Path(build_path, f"{baseline_name}_compliance.sh")
     env: Environment = Environment(
-        loader=FileSystemLoader(config["shell_template_dir"]),
+        loader=FileSystemLoader(config["defaults"]["shell_template_dir"]),
         trim_blocks=True,
         lstrip_blocks=True,
     )
@@ -192,18 +156,15 @@ def generate_script(
 
     env.filters["group_ulify"] = group_ulify
     env.filters["log_reference"] = generate_log_reference
-    env.filters["get_fix_code"] = get_fix_code
     env.filters["quotify"] = quotify
-
-    for profile in baseline.profile:
-        for rule in profile.rules:
-            rule.check = escape_double_quotes(rule.check)
-            rule.fix = escape_double_quotes(rule.fix)
 
     baseline_dict: dict[str, Any] = dict(baseline)
 
     rendered_output = script_template.render(
-        baseline=baseline_dict, baseline_name=baseline_name, audit_name=audit_name
+        baseline=baseline_dict,
+        baseline_name=baseline_name,
+        audit_name=audit_name,
+        reference_log_id=log_reference,
     )
 
     generate_audit_plist(build_path, baseline_name, baseline)

@@ -162,7 +162,6 @@ html input[type="button"],
 input[type="reset"],
 input[type="submit"] {
   -webkit-appearance: button;
-  -moz-appearance: button;
   appearance: button;
   cursor: pointer
 }
@@ -807,7 +806,7 @@ p a>code:hover {
   margin-top: 0;
   margin-bottom: 0;
   max-width: 62.5em;
-  zoom: 1;
+  *zoom: 1;
   position: relative;
   padding-left: .9375em;
   padding-right: .9375em

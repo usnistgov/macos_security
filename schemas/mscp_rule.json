@@ -1,523 +1,523 @@
 {
-  "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "title": "macOS Security Compliance Project Rule",
-  "description": "Schema for a macOS Security Compliance Project rule, detailing security configurations and requirements for Apple platforms.",
-  "version": "2.0.0",
-  "required": [
-    "id",
-    "title",
-    "discussion",
-    "references",
-    "platforms"
-  ],
-  "additionalProperties": false,
-  "properties": {
-    "id": {
-      "description": "Unique identifier for each rule. The filename for the rule should match this id",
-      "type": "string"
-    },
-    "title": {
-      "description": "Title of the rule as it will appear in the documentation",
-      "type": "string"
-    },
-    "discussion": {
-      "description": "The discussion may contain a description of the rule, rationale, or other information that will appear in the generated documentation",
-      "type": "string"
-    },
-    "tags": {
-      "description": "Metadata keywords used in searching for rules and for cross-referencing.",
-      "$ref": "#/$defs/ArrayOfStrings",
-      "minItems": 1
-    },
-    "odv": {
-      "description": "Organization Defined Values are determined by a benchmark or customized by the organization.",
-      "type": "object",
-      "properties": {
-        "hint": {
-          "type": "object",
-          "properties": {
-            "datatype": {
-              "type": "string"
-            },
-            "description": {
-              "type": "string"
-            },
-            "validation": {
-              "type": "object",
-              "properties": {
-                "min": {
-                  "type": "number"
-                },
-                "max": {
-                  "type": "number"
-                },
-                "regex": {
-                  "type": "string"
-                },
-                "enumValues": {
-                  "$ref": "#/$defs/ArrayOfStrings"
-                }
-              },
-              "additionalProperties": false
-            }
-          },
-          "required": [
-            "description",
-            "datatype"
-          ],
-          "additionalProperties": false
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "title": "macOS Security Compliance Project Rule",
+    "description": "Schema for a macOS Security Compliance Project rule, detailing security configurations and requirements for Apple platforms.",
+    "version": "2.0.0",
+    "required": [
+        "id",
+        "title",
+        "discussion",
+        "references",
+        "platforms"
+    ],
+    "additionalProperties": false,
+    "properties": {
+        "id": {
+            "description": "Unique identifier for each rule. The filename for the rule should match this id",
+            "type": "string"
         },
-        "recommended": {
-          "$ref": "#/$defs/AnyofStringIntegerBooleanArrayObject"
-        }
-      },
-      "required": [
-        "hint",
-        "recommended"
-      ],
-      "additionalProperties": true
-    },
-    "references": {
-      "description": "Identifiers used to cross-reference other published security documentation as it relates to MSCP controls",
-      "type": "object",
-      "properties": {
-        "nist": {
-          "description": "References to NIST publications and documents",
-          "type": "object",
-          "properties": {
-            "cce": {
-              "type": "object",
-              "additionalProperties": {
-                "$ref": "#/$defs/ArrayOfStrings"
-              }
-            },
-            "800-53r5": {
-              "type": "array",
-              "items": {
-                "type": "string",
-                "pattern": "^[A-Z]{2}-\\d{1,3}(\\(\\d+[a-z]?\\))*$"
-              }
-            },
-            "800-171r3": {
-              "type": "array",
-              "items": {
-                "type": "string",
-                "pattern": "^\\d{1,2}\\.\\d{1,2}\\.\\d{1,2}$"
-              }
-            }
-          },
-          "required": [
-            "cce"
-          ]
+        "title": {
+            "description": "Title of the rule as it will appear in the documentation",
+            "type": "string"
         },
-        "disa": {
-          "type": "object",
-          "properties": {
-            "cci": {
-              "$ref": "#/$defs/ArrayOfStrings"
-            },
-            "srg": {
-              "$ref": "#/$defs/ArrayOfStrings"
-            },
-            "disa_stig": {
-              "type": "object",
-              "additionalProperties": {
-                "$ref": "#/$defs/ArrayOfStrings"
-              }
-            },
-            "cmmc": {
-              "$ref": "#/$defs/ArrayOfStrings"
-            }
-          }
+        "discussion": {
+            "description": "The discussion may contain a description of the rule, rationale, or other information that will appear in the generated documentation",
+            "type": "string"
         },
-        "cis": {
-          "type": "object",
-          "properties": {
-            "benchmark": {
-              "type": "object",
-              "additionalProperties": {
-                "$ref": "#/$defs/ArrayOfStrings"
-              }
-            },
-            "controls_v8": {
-              "type": "array",
-              "items": {
-                "anyOf": [
-                  {
-                    "type": "string"
-                  },
-                  {
-                    "type": "number"
-                  }
-                ]
-              }
-            }
-          }
+        "tags": {
+            "description": "Metadata keywords used in searching for rules and for cross-referencing.",
+            "$ref": "#/$defs/ArrayOfStrings",
+            "minItems": 1
         },
-        "bsi": {
-          "type": "object",
-          "properties": {
-            "indigo": {
-              "type": "object",
-              "additionalProperties": {
-                "$ref": "#/$defs/ArrayOfStrings"
-              }
-            }
-          }
-        }
-      },
-      "required": [
-        "nist"
-      ],
-      "additionalProperties": true
-    },
-    "platforms": {
-      "type": "object",
-      "properties": {
-        "macOS": {
-          "type": "object",
-          "description": "Schema for identifying components to support macOS",
-          "properties": {
-            "enforcement_info": {
-              "$ref": "#/$defs/enforcement_infoDef"
-            },
-            "13.0": {
-              "$ref": "#/$defs/osDef"
-            },
-            "14.0": {
-              "$ref": "#/$defs/osDef"
-            },
-            "15.0": {
-              "$ref": "#/$defs/osDef"
-            },
-            "introduced": {
-              "type": "string",
-              "pattern": "^(\\d+(\\.\\d+){1,2}|-1)$"
-            }
-          },
-          "additionalProperties": false
-        },
-        "iOS": {
-          "type": "object",
-          "description": "Schema for identifying components to support iOS",
-          "properties": {
-            "16.0": {
-              "allOf": [
-                {
-                  "$ref": "#/$defs/osDef"
-                },
-                {
-                  "type": "object",
-                  "properties": {
-                    "supervised": {
-                      "type": "boolean"
-                    }
-                  }
-                }
-              ]
-            },
-            "17.0": {
-              "allOf": [
-                {
-                  "$ref": "#/$defs/osDef"
-                },
-                {
-                  "type": "object",
-                  "properties": {
-                    "supervised": {
-                      "type": "boolean"
-                    }
-                  }
-                }
-              ]
-            },
-            "18.0": {
-              "allOf": [
-                {
-                  "$ref": "#/$defs/osDef"
-                },
-                {
-                  "type": "object",
-                  "properties": {
-                    "supervised": {
-                      "type": "boolean"
-                    }
-                  }
-                }
-              ]
-            },
-            "introduced": {
-              "type": "string"
-            },
-            "additionalProperties": false
-          }
-        },
-        "visionOS": {
-          "type": "object",
-          "description": "Schema for identifying components to support visionOS",
-          "properties": {
-            "2.0": {
-              "allOf": [
-                {
-                  "$ref": "#/$defs/osDef"
-                },
-                {
-                  "type": "object",
-                  "properties": {
-                    "supervised": {
-                      "type": "boolean"
-                    }
-                  }
-                }
-              ]
-            },
-            "introduced": {
-              "type": "string"
-            },
-            "additionalProperties": false
-          }
-        }
-      }
-    },
-    "mobileconfig_info": {
-      "$ref": "#/$defs/mobileConfigDef"
-    },
-    "ddm_info": {
-      "$ref": "#/$defs/ddmDef"
-    }
-  },
-  "$defs": {
-    "ArrayOfStrings": {
-      "type": "array",
-      "items": {
-        "type": "string"
-      }
-    },
-    "ArrayOfObjects": {
-      "type": "array",
-      "items": {
-        "type": "object"
-      }
-    },
-    "AnyofStringIntegerBooleanArrayObject": {
-      "anyOf": [
-        {
-          "type": "string"
-        },
-        {
-          "type": "number"
-        },
-        {
-          "type": "boolean"
-        },
-        {
-          "type": "array",
-          "$ref": "#/$defs/ArrayOfStrings"
-        },
-        {
-          "type": "object",
-          "additionalProperties": true
-        }
-      ]
-    },
-    "osDef": {
-      "type": "object",
-      "description": "Operating System Definition",
-      "properties": {
-        "benchmarks": {
-          "description": "Identifies which benchmarks include this rule.",
-          "type": "array",
-          "items": {
+        "odv": {
+            "description": "Organization Defined Values are determined by a benchmark or customized by the organization.",
             "type": "object",
             "properties": {
-              "name": {
-                "type": "string"
-              },
-              "severity": {
-                "description": "Severity level of the issue, typically defined in a benchmark.",
-                "type": "string",
-                "enum": [
-                  "high",
-                  "medium",
-                  "low"
-                ]
-              }
+                "hint": {
+                    "type": "object",
+                    "properties": {
+                        "datatype": {
+                            "type": "string"
+                        },
+                        "description": {
+                            "type": "string"
+                        },
+                        "validation": {
+                            "type": "object",
+                            "properties": {
+                                "min": {
+                                    "type": "number"
+                                },
+                                "max": {
+                                    "type": "number"
+                                },
+                                "regex": {
+                                    "type": "string"
+                                },
+                                "enumValues": {
+                                    "$ref": "#/$defs/ArrayOfStrings"
+                                }
+                            },
+                            "additionalProperties": false
+                        }
+                    },
+                    "required": [
+                        "description",
+                        "datatype"
+                    ],
+                    "additionalProperties": false
+                },
+                "recommended": {
+                    "$ref": "#/$defs/AnyofStringIntegerBooleanArrayObject"
+                }
+            },
+            "required": [
+                "hint",
+                "recommended"
+            ],
+            "additionalProperties": true
+        },
+        "references": {
+            "description": "Identifiers used to cross-reference other published security documentation as it relates to MSCP controls",
+            "type": "object",
+            "properties": {
+                "nist": {
+                    "description": "References to NIST publications and documents",
+                    "type": "object",
+                    "properties": {
+                        "cce": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "$ref": "#/$defs/ArrayOfStrings"
+                            }
+                        },
+                        "800-53r5": {
+                            "type": "array",
+                            "items": {
+                                "type": "string",
+                                "pattern": "^[A-Z]{2}-\\d{1,3}(\\(\\d+[a-z]?\\))*$"
+                            }
+                        },
+                        "800-171r3": {
+                            "type": "array",
+                            "items": {
+                                "type": "string",
+                                "pattern": "^\\d{1,2}\\.\\d{1,2}\\.\\d{1,2}$"
+                            }
+                        }
+                    },
+                    "required": [
+                        "cce"
+                    ]
+                },
+                "disa": {
+                    "type": "object",
+                    "properties": {
+                        "cci": {
+                            "$ref": "#/$defs/ArrayOfStrings"
+                        },
+                        "srg": {
+                            "$ref": "#/$defs/ArrayOfStrings"
+                        },
+                        "disa_stig": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "$ref": "#/$defs/ArrayOfStrings"
+                            }
+                        },
+                        "cmmc": {
+                            "$ref": "#/$defs/ArrayOfStrings"
+                        }
+                    }
+                },
+                "cis": {
+                    "type": "object",
+                    "properties": {
+                        "benchmark": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "$ref": "#/$defs/ArrayOfStrings"
+                            }
+                        },
+                        "controls_v8": {
+                            "type": "array",
+                            "items": {
+                                "anyOf": [
+                                    {
+                                        "type": "string"
+                                    },
+                                    {
+                                        "type": "number"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                },
+                "bsi": {
+                    "type": "object",
+                    "properties": {
+                        "indigo": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "$ref": "#/$defs/ArrayOfStrings"
+                            }
+                        }
+                    }
+                }
+            },
+            "required": [
+                "nist"
+            ],
+            "additionalProperties": true
+        },
+        "platforms": {
+            "type": "object",
+            "properties": {
+                "macOS": {
+                    "type": "object",
+                    "description": "Schema for identifying components to support macOS",
+                    "properties": {
+                        "enforcement_info": {
+                            "$ref": "#/$defs/enforcement_infoDef"
+                        },
+                        "13.0": {
+                            "$ref": "#/$defs/osDef"
+                        },
+                        "14.0": {
+                            "$ref": "#/$defs/osDef"
+                        },
+                        "15.0": {
+                            "$ref": "#/$defs/osDef"
+                        },
+                        "introduced": {
+                            "type": "string",
+                            "pattern": "^(\\d+(\\.\\d+){1,2}|-1)$"
+                        }
+                    },
+                    "additionalProperties": false
+                },
+                "iOS": {
+                    "type": "object",
+                    "description": "Schema for identifying components to support iOS",
+                    "properties": {
+                        "16.0": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/$defs/osDef"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "supervised": {
+                                            "type": "boolean"
+                                        }
+                                    }
+                                }
+                            ]
+                        },
+                        "17.0": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/$defs/osDef"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "supervised": {
+                                            "type": "boolean"
+                                        }
+                                    }
+                                }
+                            ]
+                        },
+                        "18.0": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/$defs/osDef"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "supervised": {
+                                            "type": "boolean"
+                                        }
+                                    }
+                                }
+                            ]
+                        },
+                        "introduced": {
+                            "type": "string"
+                        },
+                        "additionalProperties": false
+                    }
+                },
+                "visionOS": {
+                    "type": "object",
+                    "description": "Schema for identifying components to support visionOS",
+                    "properties": {
+                        "2.0": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/$defs/osDef"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "supervised": {
+                                            "type": "boolean"
+                                        }
+                                    }
+                                }
+                            ]
+                        },
+                        "introduced": {
+                            "type": "string"
+                        },
+                        "additionalProperties": false
+                    }
+                }
             }
-          }
         },
         "mobileconfig_info": {
-          "$ref": "#/$defs/mobileConfigDef"
+            "$ref": "#/$defs/mobileConfigDef"
         },
-        "enforcement_info": {
-          "$ref": "#/$defs/enforcement_infoDef"
+        "ddm_info": {
+            "$ref": "#/$defs/ddmDef"
         }
-      }
     },
-    "mobileConfigDef": {
-      "type": "array",
-      "description": "Definition for supported Mobile Device Management (MDM) configurations",
-      "items": {
-        "type": "object",
-        "properties": {
-          "PayloadType": {
-            "type": "string"
-          },
-          "PayloadContent": {
+    "$defs": {
+        "ArrayOfStrings": {
             "type": "array",
             "items": {
-              "type": "object",
-              "additionalProperties": {
-                "$ref": "#/$defs/AnyofStringIntegerBooleanArrayObject"
-              }
+                "type": "string"
             }
-          }
         },
-        "required": [
-          "PayloadType",
-          "PayloadContent"
-        ],
-        "additionalProperties": false
-      }
-    },
-    "ddmDef": {
-      "type": "object",
-      "description": "Definition for supported Declarative Device Management (DDM) components",
-      "properties": {
-        "declarationtype": {
-          "type": "string",
-          "enum": [
-            "com.apple.configuration.services.configuration-files",
-            "com.apple.configuration.diskmanagement.settings",
-            "com.apple.configuration.passcode.settings"
-          ]
-        },
-        "service": {
-          "type": "string",
-          "enum": [
-            "com.apple.sshd",
-            "com.apple.sudo",
-            "com.apple.pam",
-            "com.apple.cups",
-            "com.apple.apache.httpd",
-            "com.apple.bash",
-            "com.apple.zsh"
-          ]
-        },
-        "config_file": {
-          "type": "string"
-        },
-        "configuration_key": {
-          "type": "string"
-        },
-        "configuration_value": {
-          "$ref": "#/$defs/AnyofStringIntegerBooleanArrayObject"
-        },
-        "ddm_key": {
-          "type": "string"
-        },
-        "ddm_value": {
-          "$ref": "#/$defs/AnyofStringIntegerBooleanArrayObject"
-        },
-        "if": {
-          "properties": {
-            "declaration_type": {
-              "const": "com.apple.configuration.services.configuration-files"
+        "ArrayOfObjects": {
+            "type": "array",
+            "items": {
+                "type": "object"
             }
-          }
         },
-        "then": {
-          "required": [
-            "service",
-            "config_file",
-            "configuration_value",
-            "configuration_key"
-          ]
+        "AnyofStringIntegerBooleanArrayObject": {
+            "anyOf": [
+                {
+                    "type": "string"
+                },
+                {
+                    "type": "number"
+                },
+                {
+                    "type": "boolean"
+                },
+                {
+                    "type": "array",
+                    "$ref": "#/$defs/ArrayOfStrings"
+                },
+                {
+                    "type": "object",
+                    "additionalProperties": true
+                }
+            ]
         },
-        "else": {
-          "required": [
-            "declaration_type",
-            "ddm_key",
-            "ddm_value"
-          ]
+        "osDef": {
+            "type": "object",
+            "description": "Operating System Definition",
+            "properties": {
+                "benchmarks": {
+                    "description": "Identifies which benchmarks include this rule.",
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "name": {
+                                "type": "string"
+                            },
+                            "severity": {
+                                "description": "Severity level of the issue, typically defined in a benchmark.",
+                                "type": "string",
+                                "enum": [
+                                    "high",
+                                    "medium",
+                                    "low"
+                                ]
+                            }
+                        }
+                    }
+                },
+                "mobileconfig_info": {
+                    "$ref": "#/$defs/mobileConfigDef"
+                },
+                "enforcement_info": {
+                    "$ref": "#/$defs/enforcement_infoDef"
+                }
+            }
+        },
+        "mobileConfigDef": {
+            "type": "array",
+            "description": "Definition for supported Mobile Device Management (MDM) configurations",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "PayloadType": {
+                        "type": "string"
+                    },
+                    "PayloadContent": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "$ref": "#/$defs/AnyofStringIntegerBooleanArrayObject"
+                            }
+                        }
+                    }
+                },
+                "required": [
+                    "PayloadType",
+                    "PayloadContent"
+                ],
+                "additionalProperties": false
+            }
+        },
+        "ddmDef": {
+            "type": "object",
+            "description": "Definition for supported Declarative Device Management (DDM) components",
+            "properties": {
+                "declarationtype": {
+                    "type": "string",
+                    "enum": [
+                        "com.apple.configuration.services.configuration-files",
+                        "com.apple.configuration.diskmanagement.settings",
+                        "com.apple.configuration.passcode.settings"
+                    ]
+                },
+                "service": {
+                    "type": "string",
+                    "enum": [
+                        "com.apple.sshd",
+                        "com.apple.sudo",
+                        "com.apple.pam",
+                        "com.apple.cups",
+                        "com.apple.apache.httpd",
+                        "com.apple.bash",
+                        "com.apple.zsh"
+                    ]
+                },
+                "config_file": {
+                    "type": "string"
+                },
+                "configuration_key": {
+                    "type": "string"
+                },
+                "configuration_value": {
+                    "$ref": "#/$defs/AnyofStringIntegerBooleanArrayObject"
+                },
+                "ddm_key": {
+                    "type": "string"
+                },
+                "ddm_value": {
+                    "$ref": "#/$defs/AnyofStringIntegerBooleanArrayObject"
+                },
+                "if": {
+                    "properties": {
+                        "declaration_type": {
+                            "const": "com.apple.configuration.services.configuration-files"
+                        }
+                    }
+                },
+                "then": {
+                    "required": [
+                        "service",
+                        "config_file",
+                        "configuration_value",
+                        "configuration_key"
+                    ]
+                },
+                "else": {
+                    "required": [
+                        "declaration_type",
+                        "ddm_key",
+                        "ddm_value"
+                    ]
+                }
+            },
+            "additionalProperties": false
+        },
+        "resultDef": {
+            "type": "object",
+            "description": "Result Definition for return values from shell checks",
+            "properties": {
+                "string": {
+                    "type": "string"
+                },
+                "integer": {
+                    "anyOf": [
+                        {
+                            "type": "integer"
+                        },
+                        {
+                            "type": "string",
+                            "enum": [
+                                "$ODV"
+                            ]
+                        }
+                    ]
+                },
+                "boolean": {
+                    "type": "boolean"
+                }
+            }
+        },
+        "enforcement_infoDef": {
+            "type": "object",
+            "description": "This section contains the check, result, fix, and default state used by the generated compliance script",
+            "properties": {
+                "check": {
+                    "type": "object",
+                    "properties": {
+                        "shell": {
+                            "type": "string",
+                            "description": "Shell command(s) to evaluate the state of a configuration."
+                        },
+                        "result": {
+                            "$ref": "#/$defs/resultDef"
+                        },
+                        "additional_info": {
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "shell",
+                        "result"
+                    ]
+                },
+                "fix": {
+                    "type": "object",
+                    "properties": {
+                        "shell": {
+                            "type": "string",
+                            "description": "Shell command(s) to fix the configuration if the check command fails."
+                        },
+                        "additional_info": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "default_state": {
+                    "description": "Describes the means to return the system to a default state.",
+                    "type": "object",
+                    "properties": {
+                        "shell": {
+                            "type": "string",
+                            "description": "Shell command(s) to restore the system to a default factory state."
+                        },
+                        "note": {
+                            "type": "string"
+                        }
+                    }
+                }
+            },
+            "additionalProperties": false
         }
-      },
-      "additionalProperties": false
-    },
-    "resultDef": {
-      "type": "object",
-      "description": "Result Definition for return values from shell checks",
-      "properties": {
-        "string": {
-          "type": "string"
-        },
-        "integer": {
-          "anyOf": [
-            {
-              "type": "integer"
-            },
-            {
-              "type": "string",
-              "enum": [
-                "$ODV"
-              ]
-            }
-          ]
-        },
-        "boolean": {
-          "type": "boolean"
-        }
-      }
-    },
-    "enforcement_infoDef": {
-      "type": "object",
-      "description": "This section contains the check, result, fix, and default state used by the generated compliance script",
-      "properties": {
-        "check": {
-          "type": "object",
-          "properties": {
-            "shell": {
-              "type": "string",
-              "description": "Shell command(s) to evaluate the state of a configuration."
-            },
-            "result": {
-              "$ref": "#/$defs/resultDef"
-            },
-            "additional_info": {
-              "type": "string"
-            }
-          },
-          "required": [
-            "shell",
-            "result"
-          ]
-        },
-        "fix": {
-          "type": "object",
-          "properties": {
-            "shell": {
-              "type": "string",
-              "description": "Shell command(s) to fix the configuration if the check command fails."
-            },
-            "additional_info": {
-              "type": "string"
-            }
-          }
-        },
-        "default_state": {
-          "description": "Describes the means to return the system to a default state.",
-          "type": "object",
-          "properties": {
-            "shell": {
-              "type": "string",
-              "description": "Shell command(s) to restore the system to a default factory state."
-            },
-            "note": {
-              "type": "string"
-            }
-          }
-        }
-      },
-      "additionalProperties": false
     }
-  }
 }

@@ -6,7 +6,7 @@ from collections import OrderedDict
 from enum import Enum
 from pathlib import Path
 from typing import Any
-from uuid import UUID, uuid4
+from uuid import uuid4
 
 from loguru import logger
 
@@ -18,10 +18,25 @@ from pydantic import BaseModel, ConfigDict, Field
 from src.mscp.common_utils import (
     config,
     create_yaml,
+    get_version_data,
     make_dir,
-    open_yaml,
+    open_file,
     sanitize_input,
 )
+
+
+class Sectionmap(Enum):
+    AUDIT = "auditing"
+    AUTH = "authentication"
+    ICLOUD = "icloud"
+    INHERENT = "inherent"
+    OS = "operatingsystem"
+    NOT_APPLICABLE = "not_applicable"
+    PWPOLICY = "passwordpolicy"
+    PERMANENT = "permanent"
+    SRG = "srg"
+    SUPPLEMENTAL = "supplemental"
+    SYSTEM_SETTINGS = "systemsettings"
 
 
 class BaseModelWithAccessors(BaseModel):
@@ -56,201 +71,157 @@ class BaseModelWithAccessors(BaseModel):
             )
 
 
-class Sectionmap(Enum):
-    AUDIT = "auditing"
-    AUTH = "authentication"
-    ICLOUD = "icloud"
-    INHERENT = "inherent"
-    OS = "operatingsystem"
-    NOT_APPLICABLE = "not_applicable"
-    PWPOLICY = "passwordpolicy"
-    PERMANENT = "permanent"
-    SRG = "srg"
-    SUPPLEMENTAL = "supplemental"
-    SYSTEM_SETTINGS = "systemsettings"
+class NistReferences(BaseModelWithAccessors):
+    cce: dict[str, list[str]] | None = None
+    nist_800_53r5: list[str] | None = None
+    nist_800_171r3: list[str] | None = None
+
+    def __init__(self, **data):
+        super().__init__(**data)
+        if self.cce:
+            self.cce = OrderedDict(sorted(self.cce.items()))
+        if self.nist_800_53r5:
+            self.nist_800_53r5 = sorted(self.nist_800_53r5)
+        if self.nist_800_171r3:
+            self.nist_800_171r3 = sorted(self.nist_800_171r3)
 
 
-class Cis(BaseModelWithAccessors):
-    """
-    Cis class represents a model for CIS (Center for Internet Security) benchmarks and controls.
+class DisaReferences(BaseModelWithAccessors):
+    cci: list[str] | None = None
+    srg: list[str] | None = None
+    disa_stig: list[str] | None = None
+    cmmc: list[str] | None = None
+    severity: str | None = None
 
-    Attributes:
-        benchmark (list[str] | None): A list of benchmark identifiers or None if not specified.
-        controls_v8 (list[float] | None): A list of control version 8 identifiers or None if not specified.
-    """
+    def __init__(self, **data):
+        super().__init__(**data)
+        if self.cci:
+            self.cci = sorted(self.cci)
+        if self.srg:
+            self.srg = sorted(self.srg)
+        if self.disa_stig:
+            self.disa_stig = sorted(self.disa_stig)
+        if self.cmmc:
+            self.cmmc = sorted(self.cmmc)
 
+
+class CisReferences(BaseModelWithAccessors):
     benchmark: list[str] | None = None
     controls_v8: list[float] | None = None
 
-
-class Operatingsystem(BaseModelWithAccessors):
-    """
-    Represents an operating system with a name and version.
-
-    Attributes:
-        name (str): The name of the operating system.
-        version (list[float]): The version of the operating system.
-    """
-
-    name: str
-    version: list[float]
+    def __init__(self, **data: Any) -> None:
+        super().__init__(**data)
+        if self.benchmark:
+            self.benchmark = sorted(self.benchmark)
+        if self.controls_v8:
+            self.controls_v8 = sorted(self.controls_v8)
 
 
-class Mobileconfigpayload(BaseModelWithAccessors):
-    """
-    A class representing a mobile configuration payload.
-
-    Attributes:
-        payload_type (str): The type of the payload.
-        payload_content (dict[str, Any]): The content of the payload.
-    """
-
-    payload_type: str
-    payload_content: dict[str, Any]
-
-
-class References(BaseModelWithAccessors):
-    """
-    References class represents a collection of various security references.
-
-    Attributes:
-        cci (list[str] | None): List of CCI (Control Correlation Identifier) references.
-        cce (list[str] | None): List of CCE (Common Configuration Enumeration) references.
-        nist_controls (list[str] | None): List of NIST 800-53r5 (National Institute of Standards and Technology) control references.
-        nist_171 (list[str] | None): List of NIST 800-171 references.
-        disa_stig (list[str] | None): List of DISA STIG (Defense Information Systems Agency Security Technical Implementation Guide) references.
-        srg (list[str] | None): List of SRG (Security Requirements Guide) references.
-        cis (Cis): CIS (Center for Internet Security) references.
-        cmmc (list[str] | None): List of CMMC (Cybersecurity Maturity Model Certification) references.
-        sfr (list[str] | None): List of SFR (Security Functional Requirements) references.
-        indigo (list[str] | None): List of Indigo references.
-        custom_refs (dict[str, Any] | None): Dictionary of custom references.
-    """
-
-    model_config = ConfigDict(extra="ignore")
-
-    cci: list[str] | None = None
-    cce: list[str] | None = None
-    nist_controls: list[str] | None = None
-    nist_171: list[str] | None = None
-    disa_stig: list[str] | None = None
-    srg: list[str] | None = None
-    cis: Cis
-    cmmc: list[str] | None = None
-    sfr: list[str] | None = None
+class bsiReferences(BaseModelWithAccessors):
     indigo: list[str] | None = None
-    custom_refs: list[str] | None = None
+    severity: str | None = None
 
     def __init__(self, **data: Any) -> None:
         super().__init__(**data)
-
-        if self.cci:
-            self.cci = sorted(set(self.cci))
-        if self.cce:
-            self.cce = sorted(set(self.cce))
-        if self.nist_controls:
-            self.nist_controls = sorted(
-                set(self.nist_controls), key=lambda x: (x.split("(")[0], x)
-            )
-        if self.nist_171:
-            self.nist_171 = sorted(set(self.nist_171))
-        if self.disa_stig:
-            self.disa_stig = sorted(set(self.disa_stig))
-        if self.srg:
-            self.srg = sorted(set(self.srg))
-        if self.cmmc:
-            self.cmmc = sorted(set(self.cmmc))
-        if self.sfr:
-            self.sfr = sorted(set(self.sfr))
         if self.indigo:
-            self.indigo = sorted(set(self.indigo))
-        if self.custom_refs:
-            self.custom_refs = sorted(set(self.custom_refs))
+            self.indigo = sorted(self.indigo)
+
+
+class Mobileconfigpayload(BaseModelWithAccessors):
+    payload_type: str
+    payload_content: list[dict[str, Any]]
+
+
+class References(BaseModelWithAccessors):
+    model_config: ConfigDict = ConfigDict(extra="ignore")
+
+    nist: NistReferences
+    disa: DisaReferences | None = None
+    cis: CisReferences | None = None
+    bsi: bsiReferences | None = None
+    custom: list[str] | None = None
 
 
 class Macsecurityrule(BaseModelWithAccessors):
     """
-    Macsecurityrule class represents a security rule for macOS systems.
+    Macsecurityrule
+
+    A data model representing a macOS security rule, including its metadata, configuration, and mechanisms for enforcement and customization.
 
     Attributes:
         title (str): The title of the security rule.
-        rule_id (str): The unique identifier for the rule.
-        severity (str | None): The severity level of the rule.
-        discussion (str): A detailed discussion about the rule.
-        check (str): The check procedure for the rule.
-        fix (str): The fix procedure for the rule.
-        references (References): References related to the rule.
-        odv (dict[str, Any] | None): Organizational Defined Values (ODV) for the rule.
-        finding (bool): Indicates if the rule has a finding.
-        tags (list[str]): Tags associated with the rule.
-        result (dict[str, Any] | None): The result of the rule check.
-        result_value (Any): The value of the result.
-        mobileconfig (bool): Indicates if the rule is related to mobile configuration.
-        mobileconfig_info (list[Mobileconfigpayload] | None): Information about mobile configuration payloads.
-        ddm_info (dict[str, Any] | None): Information about Device Management.
-        customized (bool): Indicates if the rule is customized.
-        operating_system (list[Operatingsystem]): List of operating systems the rule applies to.
-        mechanism (str): The mechanism for applying the rule.
-        section (str): The section the rule belongs to.
-        uuid (str): The unique identifier for the rule instance.
+        rule_id (str): Unique identifier for the rule.
+        severity (str): Severity level of the rule.
+        discussion (str): Detailed discussion or rationale for the rule.
+        references (References): Reference information (e.g., NIST, CIS) associated with the rule.
+        odv (dict[str, Any] | None): Organizational Defined Values for the rule, if applicable.
+        finding (bool): Indicates if the rule is a finding.
+        tags (list[str]): List of tags categorizing the rule.
+        result_value (Any): The expected result value for compliance.
+        mobileconfig (bool): Whether the rule can be enforced via a configuration profile.
+        mobileconfig_info (list[Mobileconfigpayload]): Information about the configuration profile payloads.
+        ddm_info (dict[str, Any]): Declarative Device Management information.
+        customized (bool): Indicates if the rule has been customized.
+        mechanism (str): The enforcement mechanism for the rule (e.g., Manual, Script, Configuration Profile).
+        section (str | None): The section or category to which the rule belongs.
+        uuid (str): Universally unique identifier for the rule instance.
+        platforms (dict[str, Platforms]): Platform-specific data for the rule.
+        os_name (str): Name of the operating system.
+        os_type (str): Type of the operating system.
 
-    Methods:
-        load_rules(cls, rule_ids, os_name, os_version, parent_values, section, custom=False, generate_baseline=False) -> list["Macsecurityrule"]:
-            Load Macsecurityrule objects from YAML files for the given rule IDs.
+    Class Methods:
+        load_rules: Load Macsecurityrule objects from YAML files for the given rule IDs.
+        collect_all_rules: Populate Macsecurityrule objects from YAML files in a folder, mapping folder names to section filenames.
+        odv_query: Interactively query the user to include/exclude rules and set Organizational Defined Values (ODVs).
+        get_tags: Generate a sorted list of unique tags from the provided rules.
 
-        collect_all_rules(cls, os_name, os_version, generate_baseline=True, parent_values="default") -> list["Macsecurityrule"]:
+    Instance Methods:
+        _format_mobileconfig_fix: Generate a formatted XML-like string for the `mobileconfig_info` field.
+        _fill_in_odv: Replace placeholders ('$ODV') in the instance attributes with the appropriate override value.
+        _format_payload: Format a single payload type and its content as a string.
+        _add_payload_content: Add payload content as XML elements to the parent node.
+        _create_value_element: Create an XML element based on the type of the provided value.
+        write_odv_custom_rule: Write a custom ODV rule to a YAML file.
+        remove_odv_custom_rule: Remove the custom rule from the ODV and update the corresponding YAML file.
+        to_yaml: Serialize the rule to a YAML file, preserving key order and cleaning references.
+        to_dict: Convert the Macsecurityrule instance to a dictionary.
+        _clean_references: Clean the references dictionary by removing any keys with values that are None or in ("NA", "N/A").
 
-        format_mobileconfig_fix(self) -> str:
-
-        encode_base64_result(result: dict[str, Any]) -> str:
-            Encodes the 'base64' key's value in the given dictionary into Base64 format, updates the dictionary with the encoded value, and returns the encoded string.
-
-        write_odv_custom_rule(self, odv: Any) -> None:
-
-        remove_odv_custom_rule(self) -> None:
-
-        odv_query(cls, rules: list["Macsecurityrule"], benchmark: str) -> list["Macsecurityrule"]:
-
-        to_yaml(self, output_path: Path) -> None:
-            Serializes the Macsecurityrule instance to a YAML file.
-
-        to_dict(self) -> dict[str, Any]:
-
-        get_tags(rules: list["Macsecurityrule"], list_tags: bool = False) -> list[str]:
-            Generate a sorted list of unique tags from the provided rules, optionally print the tags if list_tags is True.
+    Usage:
+        This class is used to represent, load, manipulate, and serialize macOS security rules, supporting both standard and custom configurations, and providing mechanisms for user interaction and compliance reporting.
     """
 
     title: str
     rule_id: str
-    severity: str | None = None
     discussion: str
-    check: str
-    fix: str
     references: References
     odv: dict[str, Any] | None = None
     finding: bool = False
     tags: list[str]
-    result: dict[str, Any] | None
-    result_value: Any
-    mobileconfig: bool = False
-    mobileconfig_info: list[Mobileconfigpayload] | None
+    result_value: str | int | bool | None = None
+    mobileconfig_info: list[Mobileconfigpayload] | None = None
     ddm_info: dict[str, Any] | None = None
     customized: bool = False
-    operating_system: list[Operatingsystem]
     mechanism: str
-    section: str
-    uuid: UUID = Field(default_factory=uuid4)
-    # uuid: str = Field(default_factory=lambda: str(uuid4()))
+    section: str | None
+    uuid: str = Field(default_factory=lambda: str(uuid4()))
+    platforms: dict[str, dict[str, Any]] = Field(default_factory=dict)
+    os_name: str
+    os_type: str
+    os_version: float = Field(default_factory=float)
+    check: str | None = None
+    fix: str | None = None
+    severity: str | None = None
 
     @classmethod
-    @logger.catch
     def load_rules(
         cls,
         rule_ids: list[str],
-        os_name: str,
-        os_version: int,
+        os_type: str,
+        os_version: float,
         parent_values: str,
         section: str,
+        baseline_tag: str | None = None,
         custom: bool = False,
         generate_baseline: bool = False,
     ) -> list["Macsecurityrule"]:
@@ -259,7 +230,7 @@ class Macsecurityrule(BaseModelWithAccessors):
 
         Args:
             rule_ids (list[str]): List of rule IDs to load.
-            os_name (str): Operating system name.
+            os_type (str): Operating system name.
             os_version (int): Operating system version.
             parent_values (str): Parent values to apply when filling in ODV.
             section (str): Section name for the rules.
@@ -272,31 +243,36 @@ class Macsecurityrule(BaseModelWithAccessors):
 
         logger.info("=== LOADING {} RULES ===", section.upper())
 
-        rules_dirs: list[Path] = []
         rules: list[Macsecurityrule] = []
-        mobileconfig_info: list[dict[str, Any]] = []
-        mechanism: str = "Manual"
         os_version_str: str = str(os_version)
+        os_version_int: int = int(os_version)
+        current_version_data: dict[str, Any] = get_version_data(os_type, os_version)
+        os_name: str = current_version_data["os_name"]
+        os_typeversion: str = f"{os_type}_{os_version_int}".lower()
+        os_type = os_type.replace("os", "OS")
 
-        if custom:
-            rules_dirs = [
-                Path(config["custom"]["rules_dir"], os_name, os_version_str),
-                Path(config["defaults"]["rules_dir"], os_name, os_version_str),
-            ]
-        else:
-            rules_dirs = [
-                Path(config["defaults"]["rules_dir"], os_name, os_version_str)
-            ]
+        rules_dirs: list[Path] = [
+            Path(config["custom"]["rules_dir"]),
+            Path(config["defaults"]["rules_dir"]),
+        ]
 
         for rule_id in rule_ids:
             logger.debug("Transforming rule: {}", rule_id)
+
+            result_value: str | int | bool | None = None
+            check_value: str | None = None
+            fix_value: str | None = None
+            mechanism: str = "Manual"
+            payloads: list[Mobileconfigpayload] | None = []
+            severity: str | None = None
 
             rule_file = next(
                 (
                     file
                     for rules_dir in rules_dirs
                     if rules_dir.exists()
-                    for file in rules_dir.rglob(f"{rule_id}.y*ml")
+                    for pattern in (f"{rule_id}.y*ml", f"{rule_id}.json")
+                    for file in rules_dir.rglob(pattern)
                 ),
                 None,
             )
@@ -305,93 +281,149 @@ class Macsecurityrule(BaseModelWithAccessors):
                 logger.warning("Rule file not found for rule: {}", rule_id)
                 continue
 
-            rule_yaml: dict = open_yaml(rule_file)
-            payloads: list[Mobileconfigpayload] = []
+            rule_yaml: dict[str, Any] = open_file(rule_file)
 
             rule_yaml["rule_id"] = rule_yaml.pop("id")
 
-            result_value: str | int | bool | None = None
+            if "custom" in rule_file.parts:
+                rule_yaml["customized"] = True
 
-            if not rule_yaml.get("result"):
-                rule_yaml["result"] = rule_yaml.get("result", None)
-            else:
-                if isinstance(rule_yaml["result"], dict):
-                    for k, v in rule_yaml["result"].items():
+            enforcement_info = rule_yaml["platforms"][os_type].get(
+                "enforcement_info", {}
+            )
+
+            if enforcement_info and "n_a" not in rule_yaml["tags"]:
+                if (
+                    "result"
+                    in rule_yaml["platforms"][os_type]["enforcement_info"]["check"]
+                ):
+                    for k, v in rule_yaml["platforms"][os_type]["enforcement_info"][
+                        "check"
+                    ]["result"].items():
                         if isinstance(v, (int, bool, str)):
                             result_value = v
                             break
                         elif k == "base64":
-                            result_value = cls.encode_base64_result(v)
+                            result_encoded: bytes = base64.b64encode(v.encode("UTF-8"))
+                            result_value = result_encoded.decode("utf-8")
                             break
+                else:
+                    continue
 
-            if rule_yaml["mobileconfig"]:
+                if "shell" in enforcement_info.get(
+                    "check", {}
+                ) and "shell" in enforcement_info.get("fix", {}):
+                    mechanism = "Script"
+
+                    if "shell" in enforcement_info.get("fix", {}):
+                        fix_value = enforcement_info["fix"]["shell"]
+
+                if "shell" in enforcement_info.get("check", {}):
+                    check_value = enforcement_info["check"]["shell"]
+
+            if "mobileconfig_info" in rule_yaml:
                 mechanism = "Configuration Profile"
 
-                mobileconfig_info = rule_yaml.get("mobileconfig_info", [{}])
+                for entry in rule_yaml["mobileconfig_info"]:
+                    payload_type: str = str(entry.get("PayloadType", ""))
+                    payload_content: list[dict[str, Any]] = entry.get(
+                        "PayloadContent", []
+                    )
 
-                if isinstance(mobileconfig_info, dict):
-                    for payload_type, payload_content in mobileconfig_info.items():
-                        if isinstance(payload_content, dict):
-                            payloads.append(
-                                Mobileconfigpayload(
-                                    payload_type=payload_type,
-                                    payload_content=payload_content,
-                                )
-                            )
-                        else:
-                            logger.warning(
-                                "Invalid payload content for payload type {}: {}",
-                                payload_type,
-                                payload_content,
-                            )
-                elif isinstance(mobileconfig_info, list):
-                    for entry in mobileconfig_info:
-                        payload_type: str = str(entry.get("PayloadType", ""))
-                        payload_content = entry.get("PayloadContent", {})
-                        logger.debug(
-                            "The payload content type is: {}", type(payload_content)
+                    payloads.append(
+                        Mobileconfigpayload(
+                            payload_type=payload_type,
+                            payload_content=payload_content,
                         )
-                        payloads.append(
-                            Mobileconfigpayload(
-                                payload_type=payload_type,
-                                payload_content=payload_content,
-                            )
-                        )
+                    )
+
+                if check_value and "osascript" in check_value:
+                    # Get the first key from the first payload_content dict
+                    first_key = list(payloads[0].payload_content[0].keys())[0]
+                    check_value = f"/usr/bin/osascript -l JavaScript -e \"$.NSUserDefaults.alloc.initWithSuiteName('{payloads[0].payload_type}').objectForKey('{first_key}')\""
 
                 rule_yaml.pop("mobileconfig_info", None)
+            else:
+                payloads = None
 
-            if "[source,bash]" in rule_yaml["fix"]:
-                mechanism = "Script"
+            benchmarks: list[dict[str, str]] = rule_yaml["platforms"][os_type][
+                os_version_str
+            ].get("benchmarks", [])
+
+            if benchmarks and baseline_tag:
+                for benchmark in benchmarks:
+                    if (
+                        benchmark.get("name") == baseline_tag
+                        and "severity" in benchmark
+                    ):
+                        severity = benchmark["severity"]
+                        break
 
             match rule_yaml["tags"]:
                 case "inherent":
-                    mechanism = "The control cannot be configured out of compliance."
+                    mechanism = "Inherent"
+                    fix_value = "The control cannot be configured out of compliance."
                 case "permanent":
-                    mechanism = "The control is not able to be configured to meet the requirement. It is recommended to implement a third-party solution to meet the control."
-                case "not_applicable":
-                    mechanism = (
+                    mechanism = "Permanent"
+                    fix_value = "The control is not able to be configured to meet the requirement. It is recommended to implement a third-party solution to meet the control."
+                case "not_applicable" | "n_a":
+                    mechanism = "N/A"
+                    fix_value = (
                         "The control is not applicable when configuring a macOS system."
                     )
 
-            if "800-53r5" in rule_yaml["references"]:
-                rule_yaml["references"]["nist_controls"] = rule_yaml["references"].pop(
-                    "800-53r5"
-                )
+            ref: dict[str, Any] = rule_yaml["references"]
+            nist: dict[str, Any] = ref.get("nist", {})
+            disa: dict[str, Any] = ref.get("disa", {})
+            cis: dict[str, Any] = ref.get("cis", {})
+            bsi: dict[str, Any] = ref.get("bsi", {})
 
-            if rule_yaml.get("references", {}).get("800-171r3"):
-                rule_yaml["references"]["nist_171"] = rule_yaml["references"].pop(
-                    "800-171r3"
-                )
+            # Map NIST references
+            nist_map = {
+                "800-53r5": "nist_800_53r5",
+                "800-171r3": "nist_800_171r3",
+                "cce": "cce",
+            }
 
-            if rule_yaml.get("references", {}).get("cis", None) is None:
-                rule_yaml["references"]["cis"] = Cis().model_dump()
-            else:
-                if "controls v8" in rule_yaml["references"]["cis"]:
-                    rule_yaml["references"]["cis"]["controls_v8"] = rule_yaml[
-                        "references"
-                    ]["cis"].pop("controls v8")
-                    if type(rule_yaml["references"]["cis"]["controls_v8"]) is not float:
-                        rule_yaml["references"]["cis"]["controls_v8"] = None
+            for src, dst in nist_map.items():
+                if src in nist and nist[src] is not None:
+                    value = nist.pop(src)
+                    if src == "cce" and isinstance(value, dict):
+                        value = value.get(os_typeversion)
+                        if value is not None and not isinstance(value, dict):
+                            # Ensure cce is always a dict[str, list[str]] or None
+                            value = None
+                    if dst in ("nist_800_53r5", "nist_800_171r3"):
+                        if value is not None and not isinstance(value, list):
+                            value = [value] if isinstance(value, str) else None
+                    nist[dst] = value
+
+            # Map CIS benchmark
+            if cis and "benchmark" in cis:
+                if isinstance(cis["benchmark"], dict):
+                    cis["benchmark"] = cis["benchmark"].get(os_typeversion)
+                if cis["benchmark"] is not None and not isinstance(
+                    cis["benchmark"], list
+                ):
+                    cis["benchmark"] = [cis["benchmark"]]
+
+            # Map DISA references
+            if disa:
+                if "disa_stig" in disa and isinstance(disa["disa_stig"], dict):
+                    disa["disa_stig"] = disa["disa_stig"].get(os_typeversion)
+                    if disa["disa_stig"] is not None and not isinstance(
+                        disa["disa_stig"], list
+                    ):
+                        disa["disa_stig"] = [disa["disa_stig"]]
+
+            # Map BSI references
+            if bsi:
+                if "indigo" in bsi and isinstance(bsi["indigo"], dict):
+                    bsi["indigo"] = bsi["indigo"].get(os_typeversion)
+                    if bsi["indigo"] is not None and not isinstance(
+                        bsi["indigo"], list
+                    ):
+                        bsi["indigo"] = [bsi["indigo"]]
 
             rule = cls(
                 **rule_yaml,
@@ -399,16 +431,28 @@ class Macsecurityrule(BaseModelWithAccessors):
                 mobileconfig_info=payloads,
                 mechanism=mechanism,
                 section=section,
+                os_name=os_name,
+                os_type=os_type,
+                os_version=os_version,
+                check=check_value,
+                fix=fix_value,
+                severity=severity,
             )
 
-            if rule.mobileconfig:
+            # if rule.rule_id == "os_external_storage_access_defined":
+            # ic(rule)
+            # exit()
+
+            if rule.mobileconfig_info:
                 logger.debug("Formatting mobileconfig_info for rule: {}", rule.rule_id)
-                rule.format_mobileconfig_fix()
-                # formatted_mobileconfig = rule.format_mobileconfig_fix()
-                # rule.fix = formatted_mobileconfig
+                rule._format_mobileconfig_fix()
                 logger.success("Formatted mobileconfig_info for rule: {}", rule.rule_id)
 
-            if rule.odv is not None and not generate_baseline:
+            if (
+                rule.odv is not None
+                and not generate_baseline
+                and parent_values is not None
+            ):
                 rule._fill_in_odv(parent_values)
 
             logger.success("Transformed rule: {}", rule_id)
@@ -421,10 +465,9 @@ class Macsecurityrule(BaseModelWithAccessors):
         return rules
 
     @classmethod
-    @logger.catch
     def collect_all_rules(
         cls,
-        os_name: str,
+        os_type: str,
         os_version: int,
         generate_baseline: bool = True,
         parent_values: str = "default",
@@ -434,7 +477,7 @@ class Macsecurityrule(BaseModelWithAccessors):
         Map folder names to specific section filenames for the `section` attribute.
 
         Args:
-            os_name (str): Operating system name.
+            os_type (str): Operating system name.
             os_version (int): Operating system version.
             parent_values (str): Parent values for rule initialization.
 
@@ -443,26 +486,25 @@ class Macsecurityrule(BaseModelWithAccessors):
         """
         rules: list[Macsecurityrule] = []
         os_version_str: str = str(os_version)
-        sub_sections: tuple[str, str, str, str, str] = (
+        sub_sections: list[str] = [
             "permanent",
             "inherent",
             "n_a",
             "srg",
             "supplemental",
-        )
-
+        ]
         section_dirs: list[Path] = [
             Path(config["custom"]["sections_dir"]),
             Path(config["defaults"]["sections_dir"]),
         ]
 
         rules_dirs: list[Path] = [
-            Path(config["custom"]["rules_dir"], os_name, os_version_str),
-            Path(config["defaults"]["rules_dir"], os_name, os_version_str),
+            Path(config["custom"]["rules_dir"], os_type, os_version_str),
+            Path(config["defaults"]["rules_dir"], os_type, os_version_str),
         ]
 
         section_data: dict = {
-            section_file.stem: open_yaml(section_file).get("name", "")
+            section_file.stem: open_file(section_file).get("name", "")
             for section_dir in section_dirs
             for section_file in section_dir.glob("*.y*ml")
             if section_file.is_file()
@@ -480,10 +522,10 @@ class Macsecurityrule(BaseModelWithAccessors):
                 if not folder.is_dir():
                     continue
 
-                for yaml_file in folder.rglob("*.y*ml"):
+                for rule_file in folder.rglob("*"):
                     try:
-                        rule_yaml: dict = open_yaml(yaml_file)
-                        folder_name: str = yaml_file.parent.name
+                        rule_yaml: dict = open_file(rule_file)
+                        folder_name: str = rule_file.parent.name
                         logger.debug("{} folder: {}", rule_yaml["id"], folder_name)
                         section_name: str = section_data.get(
                             Sectionmap[folder_name.upper()].value, ""
@@ -508,7 +550,7 @@ class Macsecurityrule(BaseModelWithAccessors):
 
                         rules += cls.load_rules(
                             rule_ids=[rule_yaml.get("id", "")],
-                            os_name=os_name,
+                            os_type=os_type,
                             os_version=os_version,
                             parent_values=parent_values,
                             section=section_name,
@@ -518,20 +560,18 @@ class Macsecurityrule(BaseModelWithAccessors):
 
                     except Exception as e:
                         logger.error(
-                            "Failed to load rule from file {}: {}", yaml_file, e
+                            "Failed to load rule from file {}: {}", rule_file, e
                         )
 
         return rules
 
-    @logger.catch
-    def format_mobileconfig_fix(self) -> None:
+    def _format_mobileconfig_fix(self) -> None:
         """
         Generate a formatted XML-like string for the `mobileconfig_info` field.
 
         Handles special cases such as `com.apple.ManagedClient.preferences`.
 
-        Returns:
-            str: A formatted string representing the mobileconfig payloads.
+        This method updates the `fix` attribute of the instance but does not return anything.
         """
         if not self.mobileconfig_info:
             return
@@ -545,20 +585,116 @@ class Macsecurityrule(BaseModelWithAccessors):
                     "This payload requires the additional settings to be sub-payloads within, "
                     "containing their defined payload types.\n\n"
                 )
-                # Recursively process nested payloads
-                for (
-                    nested_payload_type,
-                    nested_payload_content,
-                ) in payload.payload_content.items():
-                    nested_fix = self._format_payload(
-                        nested_payload_type, nested_payload_content
+
+                if isinstance(payload.payload_content, list):
+                    for item in payload.payload_content:
+                        if isinstance(item, dict):
+                            for (
+                                nested_payload_type,
+                                nested_payload_content,
+                            ) in item.items():
+                                nested_fix = self._format_payload(
+                                    nested_payload_type, nested_payload_content
+                                )
+                                rulefix += nested_fix
+                        else:
+                            logger.warning(
+                                "Unexpected item type in payload_content list: {}",
+                                type(item),
+                            )
+
+                if isinstance(payload.payload_content, dict):
+                    # Recursively process nested payloads
+                    for (
+                        nested_payload_type,
+                        nested_payload_content,
+                    ) in payload.payload_content.items():
+                        nested_fix = self._format_payload(
+                            nested_payload_type, nested_payload_content
+                        )
+                        rulefix += nested_fix
+
+            rulefix += self._format_payload(
+                payload.payload_type, payload.payload_content
+            )
+
+        self._update_fix_for_configuration_profile()
+
+    def _update_fix_for_configuration_profile(self) -> None:
+        """
+        Update the `fix` attribute or the enforcement info for configuration profiles.
+        """
+        if self.mechanism == "Configuration Profile":
+            if (
+                not self.platforms.get(self.os_type, {})
+                .get("enforcement_info", {})
+                .get("fix")
+            ):
+                if self.mobileconfig_info and len(self.mobileconfig_info) > 0:
+                    self.fix = (
+                        f"Create a configuration profile containing the following keys in the "
+                        f"({self.mobileconfig_info[0].payload_type}) payload type:\n\n"
+                        + self._format_payload(
+                            self.mobileconfig_info[0].payload_type,
+                            self.mobileconfig_info[0].payload_content,
+                        )
                     )
-                    rulefix += nested_fix
             else:
-                rulefix += self._format_payload(
-                    payload.payload_type, payload.payload_content
-                )
-        self.fix = rulefix
+                if self.mobileconfig_info and len(self.mobileconfig_info) > 0:
+                    self.platforms[self.os_type]["enforcement_info"]["fix"] = (
+                        self._format_payload(
+                            self.mobileconfig_info[0].payload_type,
+                            self.mobileconfig_info[0].payload_content,
+                        )
+                    )
+
+    def _format_payload(
+        self, payload_type: str, payload_content: list[dict] | dict
+    ) -> str:
+        """
+        Format a single payload type and its content.
+
+        Args:
+            payload_type (str): The type of the payload.
+            payload_content (dict): The content of the payload.
+
+        Returns:
+            str: A formatted string representing the payload.
+        """
+        # output = f"Create a configuration profile containing the following keys in the ({payload_type}) payload type:\n\n"
+        output = "[source,xml]\n----\n"
+
+        # Generate XML for the payload content
+        root = etree.Element("Payload", attrib=None, nsmap=None)
+        if isinstance(payload_content, list):
+            for payload in payload_content:
+                if isinstance(payload, dict):
+                    elements = []
+                    for key, value in payload.items():
+                        # Create a <key> element
+                        key_element = etree.Element("key", attrib=None, nsmap=None)
+                        key_element.text = key
+                        elements.append(key_element)
+
+                        # Create the corresponding value element
+                        value_element = self._create_value_element(value)
+                        elements.append(value_element)
+
+                    # Append all elements to the root element
+                    for element in elements:
+                        root.append(element)
+
+        # Pretty-print the XML content
+        output += (
+            etree.tostring(root, encoding="unicode", pretty_print=True)
+            .strip()
+            .replace("<root>", "")
+            .replace("</root>", "")
+            + "\n"
+        )
+
+        output += "----\n\n"
+        return output
 
     def _fill_in_odv(self, parent_values: str) -> None:
         """
@@ -583,83 +719,40 @@ class Macsecurityrule(BaseModelWithAccessors):
         odv_value = odv_lookup.get(parent_values)
 
         # Replace $ODV in text fields
-        fields_to_process: tuple[str, ...] = ("title", "discussion", "check", "fix")
+        fields_to_process: tuple[str, ...] = (
+            "title",
+            "discussion",
+            "check",
+            "fix",
+            "result_value",
+        )
         for field in fields_to_process:
-            if hasattr(self, field) and "$ODV" in getattr(self, field, ""):
-                updated_value = getattr(self, field).replace("$ODV", str(odv_value))
+            value = getattr(self, field, None)
+            if value is not None and isinstance(value, str) and "$ODV" in value:
+                updated_value = value.replace("$ODV", str(odv_value))
                 setattr(self, field, updated_value)
 
-        # Replace $ODV in result
-        if isinstance(self.result, dict):
-            for key, value in self.result.items():
-                if isinstance(value, str) and "$ODV" in value:
-                    self.result[key] = value.replace("$ODV", str(odv_value))
+        # Helper function to recursively replace $ODV in nested structures
+        def replace_odv_in_obj(obj):
+            if isinstance(obj, str) and "$ODV" in obj:
+                return obj.replace("$ODV", str(odv_value))
+            elif isinstance(obj, dict):
+                return {k: replace_odv_in_obj(v) for k, v in obj.items()}
+            elif isinstance(obj, list):
+                return [replace_odv_in_obj(item) for item in obj]
+            else:
+                return obj
 
         # Replace $ODV in mobileconfig_info
         if self.mobileconfig_info is not None:
             for payload in self.mobileconfig_info:
-                for key, value in payload.payload_content.items():
-                    if isinstance(value, str) and "$ODV" in value:
-                        payload.payload_content[key] = value.replace(
-                            "$ODV", str(odv_value)
-                        )
-                    elif isinstance(value, dict):
-                        for subkey, subvalue in value.items():
-                            if isinstance(subvalue, str) and "$ODV" in subvalue:
-                                value[subkey] = subvalue.replace("$ODV", str(odv_value))
+                payload.payload_content = replace_odv_in_obj(payload.payload_content)
 
         # Replace $ODV in ddm_info
         if self.ddm_info is not None:
-            for key, value in self.ddm_info.items():
-                if isinstance(value, str) and "$ODV" in value:
-                    self.ddm_info[key] = value.replace("$ODV", str(odv_value))
-                elif isinstance(value, dict):
-                    for subkey, subvalue in value.items():
-                        if isinstance(subvalue, str) and "$ODV" in subvalue:
-                            value[subkey] = subvalue.replace("$ODV", str(odv_value))
-
-    @logger.catch
-    def _format_payload(self, payload_type: str, payload_content: dict) -> str:
-        """
-        Format a single payload type and its content.
-
-        Args:
-            payload_type (str): The type of the payload.
-            payload_content (dict): The content of the payload.
-
-        Returns:
-            str: A formatted string representing the payload.
-        """
-        output = f"Create a configuration profile containing the following keys in the ({payload_type}) payload type:\n\n"
-        output += "[source,xml]\n----\n"
-
-        # Generate XML for the payload content
-        root = etree.Element("Payload", attrib=None, nsmap=None)
-        self._add_payload_content(root, payload_content)
-
-        elements = []
-        for key, value in payload_content.items():
-            # Create a <key> element
-            key_element = etree.Element("key", attrib=None, nsmap=None)
-            key_element.text = key
-            elements.append(key_element)
-
-            # Create the corresponding value element
-            value_element = self._create_value_element(value)
-            elements.append(value_element)
-
-        # Pretty-print each element individually
-        for element in elements:
-            output += (
-                etree.tostring(element, encoding="unicode", pretty_print=True).strip()
-                + "\n"
-            )
-
-        output += "----\n\n"
-        return output
+            self.ddm_info = replace_odv_in_obj(self.ddm_info)
 
     @staticmethod
-    @logger.catch
     def _add_payload_content(parent: etree.Element, content: dict) -> None:
         """
         Add payload content as XML elements to the parent node.
@@ -702,11 +795,13 @@ class Macsecurityrule(BaseModelWithAccessors):
                     )
                     Macsecurityrule._add_payload_content(dict_element, value)
                 case _:
+                    logger.error(
+                        "Unsupported value type: {} for value: {}", type(value), value
+                    )
                     raise ValueError(
                         f"Unsupported value type: {type(value)} for key: {key}"
                     )
 
-    @logger.catch
     def _create_value_element(self, value: Any) -> etree.Element:
         """
         Creates an XML element based on the type of the provided value.
@@ -751,28 +846,10 @@ class Macsecurityrule(BaseModelWithAccessors):
                 self._add_payload_content(dict_element, value)
                 return dict_element
             case _:
+                logger.error(
+                    "Unsupported value type: {} for value: {}", type(value), value
+                )
                 raise ValueError(f"Unsupported value type: {type(value)}")
-
-    @staticmethod
-    @logger.catch
-    def encode_base64_result(result: dict[str, Any]) -> str:
-        """
-        Encodes the 'base64' key's value in the given dictionary into Base64 format,
-        updates the dictionary with the encoded value, and returns the encoded string.
-
-        Args:
-            result (dict[str, Any]): A dictionary with a 'base64' key containing a string value.
-
-        Returns:
-            str: The Base64-encoded string.
-        """
-        if "base64" in result:
-            result_string_bytes: bytes = f"{result['base64']}\n".encode("UTF-8")
-            result_encoded: bytes = base64.b64encode(result_string_bytes)
-            result["base64"] = result_encoded.decode()
-            return result["base64"]
-
-        return ""
 
     def write_odv_custom_rule(self, odv: Any) -> None:
         """
@@ -817,11 +894,11 @@ class Macsecurityrule(BaseModelWithAccessors):
 
         if self.odv is not None and "custom" in self.odv:
             self.odv.pop("custom")
+            self["references"].pop("custom")
 
         self.to_yaml(rule_file_path)
 
     @classmethod
-    @logger.catch
     def odv_query(
         cls, rules: list["Macsecurityrule"], benchmark: str
     ) -> list["Macsecurityrule"]:
@@ -917,48 +994,51 @@ class Macsecurityrule(BaseModelWithAccessors):
 
         return included_rules
 
-    @logger.catch
     def to_yaml(self, output_path: Path) -> None:
-        key_order: tuple[str, ...] = (
+        key_order: list[str] = [
             "id",
             "title",
             "discussion",
-            "check",
-            "result",
-            "fix",
             "references",
             "customized",
-            "operating_system",
+            "platforms",
             "tags",
-            "severity",
             "odv",
             "mobileconfig",
             "mobileconfig_info",
             "ddm_info",
-        )
+        ]
+
         required_keys: tuple[str, ...] = (
             "id",
             "title",
             "discussion",
-            "check",
-            "fix",
-            "operating_system",
             "references",
+            "platforms",
         )
 
         rule_file_path: Path = output_path / f"{self.rule_id}.yaml"
         serialized_data: dict[str, Any] = self.model_dump()
         ordered_data = OrderedDict()
 
-        serialized_data["references"]["800-53r5"] = serialized_data["references"].pop(
-            "nist_controls"
-        )
-        serialized_data["references"]["800-171r3"] = serialized_data["references"].pop(
-            "nist_171"
-        )
+        self._clean_references()
+
+        serialized_data["references"]["nist"]["800-53r5"] = serialized_data[
+            "references"
+        ].pop("nist_800_53r5")
+        serialized_data["references"]["nist"]["800-171r3"] = serialized_data[
+            "references"
+        ].pop("nist_800_171")
 
         for key in serialized_data["references"]:
-            serialized_data["references"][key].sort()
+            if isinstance(serialized_data["references"][key], list):
+                serialized_data["references"][key] = sorted(
+                    [
+                        item
+                        for item in serialized_data["references"][key]
+                        if item not in [None, "NA", "N/A"]
+                    ]
+                )
 
         for key in key_order:
             if key in serialized_data:
@@ -972,7 +1052,6 @@ class Macsecurityrule(BaseModelWithAccessors):
 
         create_yaml(rule_file_path, clean_dict)
 
-    @logger.catch
     def to_dict(self) -> dict[str, Any]:
         """
         Convert the Macsecurityrule instance to a dictionary.
@@ -982,8 +1061,21 @@ class Macsecurityrule(BaseModelWithAccessors):
         """
         return self.model_dump()
 
+    def _clean_references(self) -> None:
+        """
+        Clean the references dictionary by removing any keys with values that are None or in ("NA", "N/A").
+        """
+
+        def clean_dict(d: dict) -> dict:
+            return {
+                k: clean_dict(v) if isinstance(v, dict) else v
+                for k, v in d.items()
+                if v is not None and v not in ("NA", "N/A")
+            }
+
+        self.references = References(**clean_dict(self.references.model_dump()))
+
     @staticmethod
-    @logger.catch
     def get_tags(rules: list["Macsecurityrule"], list_tags: bool = False) -> list[str]:
         """
         Generate a sorted list of unique tags from the provided rules, optionally

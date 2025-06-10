@@ -174,8 +174,8 @@ def generate_guidance(args: argparse.Namespace) -> None:
                 build_path, baseline_name, audit_name, baseline, log_reference
             )
 
-        logger.info("Generating Excel document")
-        generate_excel(spreadsheet_output_file, baseline)
+        # logger.info("Generating Excel document")
+        # generate_excel(spreadsheet_output_file, baseline)
 
         logger.info("Generating markdown documents")
         generate_markdown_documents(

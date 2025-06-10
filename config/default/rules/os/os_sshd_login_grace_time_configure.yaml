@@ -1,0 +1,90 @@
+id: os_sshd_login_grace_time_configure
+title: Set Login Grace Time to $ODV
+discussion: |
+  If SSHD is enabled then it _MUST_ be configured to wait only $ODV seconds before timing out logon attempts.
+
+  NOTE: On macOS 15.2 and higher the SSH configuration can be reset to the macOS default by running /usr/libexec/reset-ssh-configuration.
+references:
+  nist:
+    cce:
+      macos_15:
+        - CCE-94306-8
+      macos_14:
+        - CCE-92904-2
+      macos_13:
+        - CCE-91892-0
+    800-53r5:
+      - SC-10
+    800-171r3:
+      - 03.13.09
+  disa:
+    cci:
+      - CCI-001133
+    srg:
+      - SRG-OS-000163-GPOS-00072
+    disa_stig:
+      macos_15:
+        - APPL-15-000053
+      macos_14:
+        - APPL-14-000053
+      macos_13:
+        - APPL-13-000053
+    cmmc:
+      - SC.L2-3.13.9
+platforms:
+  macOS:
+    '15.0':
+      benchmarks:
+        - name: disa_stig
+          severity: medium
+    '14.0':
+      benchmarks:
+        - name: disa_stig
+          severity: medium
+    '13.0':
+      benchmarks:
+        - name: disa_stig
+          severity: medium
+    enforcement_info:
+      check:
+        shell: /usr/sbin/sshd -G | /usr/bin/awk '/logingracetime/{print $2}'
+        result:
+          integer: $ODV
+      fix:
+        shell: |-
+          include_dir=$(/usr/bin/awk '/^Include/ {print $2}' /etc/ssh/sshd_config | /usr/bin/tr -d '*')
+
+          if [[ -z $include_dir ]]; then
+            /usr/bin/sed -i.bk "1s/.*/Include \/etc\/ssh\/sshd_config.d\/\*/" /etc/ssh/sshd_config
+          fi
+
+          /usr/bin/grep -qxF 'logingracetime $ODV' "${include_dir}01-mscp-sshd.conf" 2>/dev/null || echo "logingracetime $ODV" >> "${include_dir}01-mscp-sshd.conf"
+
+          for file in $(ls ${include_dir}); do
+            if [[ "$file" == "100-macos.conf" ]]; then
+                continue
+            fi
+            if [[ "$file" == "01-mscp-sshd.conf" ]]; then
+                break
+            fi
+            /bin/mv ${include_dir}${file} ${include_dir}20-${file}
+          done
+odv:
+  hint:
+    datatype: number
+    description: Number of seconds, e.g. 30
+    validation:
+      min: 1
+  recommended: 30
+  stig: 30
+tags:
+  - cnssi-1253_low
+  - cnssi-1253_high
+  - cmmc_lvl2
+  - cnssi-1253_moderate
+ddm_info:
+  declarationtype: com.apple.configuration.services.configuration-files
+  service: com.apple.sshd
+  config_file: sshd_config
+  configuration_key: LoginGraceTime
+  configuration_value: $ODV

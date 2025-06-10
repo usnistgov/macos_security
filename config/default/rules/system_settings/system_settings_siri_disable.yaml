@@ -1,0 +1,97 @@
+id: system_settings_siri_disable
+title: Disable Siri
+discussion: |
+  Support for Siri is non-essential and _MUST_ be disabled.
+
+  The information system _MUST_ be configured to provide only essential capabilities.
+references:
+  nist:
+    cce:
+      macos_15:
+        - CCE-94391-0
+      macos_14:
+        - CCE-92987-7
+      macos_13:
+        - CCE-91976-1
+    800-53r5:
+      - AC-20
+      - CM-7
+      - CM-7(1)
+      - SC-7(10)
+    800-171r3:
+      - 03.01.20
+      - 03.04.06
+      - 03.04.08
+  disa:
+    cci:
+      - CCI-000381
+      - CCI-001774
+    srg:
+      - SRG-OS-000095-GPOS-00049
+    disa_stig:
+      macos_15:
+        - APPL-15-002020
+      macos_14:
+        - APPL-14-002020
+      macos_13:
+        - APPL-13-002020
+    cmmc:
+      - AC.L1-3.1.20
+      - CM.L2-3.4.6
+      - CM.L2-3.4.7
+  cis:
+    controls_v8:
+      - 4.1
+      - 4.8
+platforms:
+  macOS:
+    '15.0':
+      benchmarks:
+        - name: disa_stig
+          severity: medium
+    '14.0':
+      benchmarks:
+        - name: disa_stig
+          severity: medium
+    '13.0':
+      benchmarks:
+        - name: disa_stig
+          severity: medium
+      mobileconfig_info:
+        - PayloadType: com.apple.ironwood.support
+          PayloadContent:
+            - Ironwood Allowed: false
+      enforcement_info:
+        check:
+          shell: |-
+            /usr/bin/osascript -l JavaScript << EOS
+            $.NSUserDefaults.alloc.initWithSuiteName('com.apple.ironwood.support')\
+            .objectForKey('Ironwood Allowed').js
+            EOS
+          result:
+            string: 'false'
+    enforcement_info:
+      check:
+        shell: |-
+          /usr/bin/osascript -l JavaScript << EOS
+          $.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess')\
+          .objectForKey('allowAssistant').js
+          EOS
+        result:
+          string: 'false'
+    introduced: '14.0'
+tags:
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_high
+  - 800-171
+  - cisv8
+  - cnssi-1253_low
+  - cnssi-1253_high
+  - cmmc_lvl2
+  - cmmc_lvl1
+  - cnssi-1253_moderate
+mobileconfig_info:
+  - PayloadType: com.apple.applicationaccess
+    PayloadContent:
+      - allowAssistant: false

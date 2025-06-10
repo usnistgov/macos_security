@@ -62,31 +62,38 @@ pause(){
 
 # logging function
 logmessage(){
-  if [[ ! $quiet ]];then
-    echo "$(date -u) $1" | /usr/bin/tee -a "$audit_log"
-  elif [[ ${quiet[2][2]} == 1 ]];then
-    if [[ $1 == *" failed"* ]] || [[ $1 == *"exemption"* ]] ;then
-      echo "$(date -u) $1" | /usr/bin/tee -a "$audit_log"
-    else
-      echo "$(date -u) $1" | /usr/bin/tee -a "$audit_log" > /dev/null
+  local level="${2:-INFO}"
+  local timestamp=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
+  local message="$1"
+
+  # Format: [LEVEL] [TIMESTAMP] MESSAGE
+  local log_entry="[$level] [$timestamp] $message"
+
+  # Always log to file
+  echo "$log_entry" >> "$audit_log"
+
+  # Handle quiet levels for console output
+  if [[ ! $quiet ]]; then
+    echo "$log_entry"
+  elif [[ ${quiet[2][2]} == 1 ]]; then
+    if [[ "$message" == *"failed"* ]] || [[ "$message" == *"exemption"* ]]; then
+      echo "$log_entry"
     fi
-  else
-    echo "$(date -u) $1" | /usr/bin/tee -a "$audit_log" > /dev/null
   fi
 }
 
 logcsv(){
-  local rule_name="%1"
-  local status="$2"
-  local result="%3"
-  local expected="%4"
-  local exemption="%5"
+  local rule_name="$1"
+  local result_status="$2"
+  local result="$3"
+  local expected="$4"
+  local exemption="$5"
 
   if [[ ! -f "$audit_csv" ]]; then
     echo "Rule,Status,Result,Expected,Exemption" > "$audit_csv"
   fi
 
-  echo "$rule_name,$status,$result,$expected,$exemption" >> "$audit_csv"
+  echo "$rule_name,$result_status,$result,$expected,$exemption" >> "$audit_csv"
 }
 
 ask() {
@@ -137,8 +144,8 @@ show_menus() {
   echo "        M A I N - M E N U"
   echo "  macOS Security Compliance Tool"
   echo "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
-  echo "Last compliance scan: $lastComplianceScan
-"
+  echo "Last compliance scan: $lastComplianceScan"
+  echo ""
   echo "1. View Last Compliance Report"
   echo "2. Run New Compliance Scan"
   echo "3. Run Commands to remediate non-compliant settings"
@@ -164,10 +171,12 @@ reset_plist(){
     echo "Clearing results from all MSCP baselines"
     find /Library/Preferences -name "org.*.audit.plist" -exec rm -f '{}' \;
     find /Library/Logs -name "*_baseline.log" -exec rm -f '{}' \;
+    find /Library/Logs -name "*_baseline.csv" -exec rm -f '{}' \;
   else
     echo "Clearing results from /Library/Preferences/org.{{ audit_name }}.audit.plist"
-    rm -f /Library/Preferences/org.{{ audit_name }}.audit.plist
-    rm -f /Library/Logs/{{ audit_name }}_baseline.log
+    rm -f "$audit_plist"
+    rm -f "$audit_log"
+    rm -f "$audit_csv"
   fi
 }
 
@@ -181,28 +190,24 @@ compliance_count(){
 
   for rule in ${rule_names[@]}; do
     finding=$(/usr/libexec/PlistBuddy -c "Print $rule:finding" $audit_plist)
-    if [[ $finding == "false" ]];then
-      compliant=$((compliant+1))
-    elif [[ $finding == "true" ]];then
-      is_exempt=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.{{ audit_name }}.audit').objectForKey("$rule"))["exempt"]
-EOS
-)
+    if [[ $finding == "false" ]]; then
+      compliant=$((compliant + 1))
+    elif [[ $finding == "true" ]]; then
+      is_exempt=$(/usr/bin/osascript -l JavaScript -e "ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.$baseline_name.audit').objectForKey('$rule_id'))['exempt']")
+
       if [[ $is_exempt == "1" ]]; then
-        exempt_count=$((exempt_count+1))
-        non_compliant=$((non_compliant+1))
+        exempt_count=$((exempt_count + 1))
+        non_compliant=$((non_compliant + 1))
       else
-        non_compliant=$((non_compliant+1))
+        non_compliant=$((non_compliant + 1))
       fi
     fi
   done
 
   # Enable output of just the compliant or non-compliant numbers.
-  if [[ $1 = "compliant" ]]
-  then
+  if [[ $1 = "compliant" ]]; then
     echo $compliant
-  elif [[ $1 = "non-compliant" ]]
-  then
+  elif [[ $1 = "non-compliant" ]]; then
     echo $non_compliant
   else # no matching args output the array
     array=($compliant $non_compliant $exempt_count)
@@ -227,7 +232,7 @@ generate_report(){
 }
 
 view_report(){
-  if [[ $lastComplianceScan == "No scans have been run" ]];then
+  if [[ $lastComplianceScan == "No scans have been run" ]]; then
     echo "no report to run, please run new scan"
     pause
   else
@@ -250,93 +255,80 @@ audit_rule(){
   local rule_id="$1"
   local check_command="$2"
   local expected_result="$3"
-  local result_value_placeholder="$4"
-  local log_reference_id="$5"
-  local rule_arch="$6"
+  local log_reference_id="$4"
+  local rule_arch="$5"
+  local result_status="passed"
+  local finding="NO"
+  local exemption_output=""
 
   if [[ "$arch" == "$rule_arch" ]] || [[ -z "$rule_arch" ]]; then
     local result_value=$(eval "$check_command")
+    local exempt=$(/usr/bin/osascript -l JavaScript -e "ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.$baseline_name.audit').objectForKey('$rule_id'))['exempt']")
+    local exempt_reason=$(/usr/bin/osascript -l JavaScript -e "ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.$baseline_name.audit').objectForKey('$rule_id'))['exempt_reason']")
 
-    local exempt=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.$baseline_name.audit').objectForKey('$rule_id'))["exempt"]
-EOS
-)
-    local exempt_reason=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.$baseline_name.audit').objectForKey('$rule_id'))["exempt_reason"]
-EOS
-)
-    customref="$(echo "$log_reference_id" | rev | cut -d ' ' -f 2- | rev)"
-    customref="$(echo "$customref" | tr " " ",")"
-    if [[ "$result_value" == "$result_value_placeholder" ]]; then
-      logmessage "$log_reference_id passed (Result: $result_value, Expected: \"$expected_result\")"
-      /usr/bin/defaults write "$audit_plist" "$rule_id" -dict-add finding -bool NO
-      if [[ ! "$customref" == "$rule_id" ]]; then
-        /usr/bin/defaults write "$audit_plist" "$rule_id" -dict-add reference -string "$customref"
-      fi
-      /usr/bin/logger "mSCP: $baseline_name - $log_reference_id passed (Result: $result_value, Expected: \"$expected_result\")"
-    else
-      if [[ ! "$exempt" == "1" ]] || [[ -z "$exempt" ]]; then
-        logmessage "$log_reference_id failed (Result: $result_value, Expected: \"$expected_result\")"
-        /usr/bin/defaults write "$audit_plist" "$rule_id" -dict-add finding -bool YES
-        if [[ ! "$customref" == "$rule_id" ]]; then
-          /usr/bin/defaults write "$audit_plist" "$rule_id" -dict-add reference -string "$customref"
-        fi
-        /usr/bin/logger "mSCP: $baseline_name - $log_reference_id failed (Result: $result_value, Expected: \"$expected_result\")"
-      else
-        logmessage "$log_reference_id failed (Result: $result_value, Expected: \"$expected_result\") - Exemption Allowed (Reason: \"$exempt_reason\")"
-        /usr/bin/defaults write "$audit_plist" "$rule_id" -dict-add finding -bool YES
-        if [[ ! "$customref" == "$rule_id" ]]; then
-          /usr/bin/defaults write "$audit_plist" "$rule_id" -dict-add reference -string "$customref"
-        fi
-        /usr/bin/logger "mSCP: $baseline_name - $log_reference_id failed (Result: $result_value, Expected: \"$expected_result\") - Exemption Allowed (Reason: \"$exempt_reason\")"
-        /bin/sleep 1
+    customref="$(echo "$log_reference_id" | rev | cut -d ' ' -f 2- | rev | tr ' ' ',')"
+
+    if [[ "$result_value" != "$expected_result" ]]; then
+      result_status="failed"
+      finding="YES"
+
+      if [[ "$exempt" == "1" ]]; then
+        exemption_output="- Exemption Allowed (Reason: \"$exempt_reason\")"
       fi
     fi
+
+    logmessage "$log_reference_id $result_status (Result: $result_value, Expected: \"$expected_result\") $exemption_output"
+    logcsv "$rule_id" "$result_status" "$result_value" "$expected_result" "$exemption_output"
+    /usr/bin/defaults write "$audit_plist" "$rule_id" -dict-add finding -bool $finding
+
+    if [[ ! "$customref" == "$rule_id" ]]; then
+      /usr/bin/defaults write "$audit_plist" "$rule_id" -dict-add reference -string "$customref"
+    fi
+
+    /usr/bin/logger "mSCP: $baseline_name - $log_reference_id $result_status (Result: $result_value, Expected: \"$expected_result\") $exemption_output"
+
   else
     logmessage "$log_reference_id does not apply to this architecture"
+    logcsv "$rule_id" "N/A" "" "" ""
     /usr/bin/defaults write "$audit_plist" "$rule_id" -dict-add finding -bool NO
   fi
 }
 
 rule_fix(){
-  local rule_id="$1"
-  local audit_plist="$2"
-  local fix_code="$3"
-  local audit_score=$($plb -c "print $rule_id:finding" $audit_plist)
-
-  local exempt=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.$baseline_name.audit').objectForKey('$rule_id'))["exempt"]
-EOS
-)
-
-  local exempt_reason=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.$baseline_name.audit').objectForKey('$rule_id'))["exempt_reason"]
-EOS
-)
+  local audit_score=$($plb -c "print $1:finding" $audit_plist)
+  local exempt=$(/usr/bin/osascript -l JavaScript -e "ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.$baseline_name.audit').objectForKey('$1'))["exempt"]")
+  local exempt_reason=$(/usr/bin/osascript -l JavaScript -e "ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.$baseline_name.audit').objectForKey('$1'))["exempt_reason"]")
 
   if [[ ! $exempt == "1" ]] || [[ -z $exempt ]]; then
     if [[ $audit_score == "true" ]]; then
-      ask "$rule_id - Run the command(s)-> $fix_code" N
+      ask "$1 - Run the command(s)-> $2" N
       if [[ $? == 0 ]]; then
-        logmessage "Running the command to configure the settings for: $rule_id ..."
-        eval "$fix_code"
+        logmessage "Running the command to configure the settings for: $1 ..."
+        eval "$2"
       fi
     else
-      logmessage "Settings for: $rule_id already configured, continuing..."
+      logmessage "Settings for: $1 already configured, continuing..."
     fi
   elif [[ ! -z "$exempt_reason" ]]; then
-    logmessage "$rule_id has an exemption, remediation skipped (Reason: \"$exempt_reason\")"
+    logmessage "$1 has an exemption, remediation skipped (Reason: \"$exempt_reason\")"
   fi
 }
 
-
 run_scan(){
+  local timestamp=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
+
   # append to existing logfile
   if [[ $(/usr/bin/tail -n 1 "$audit_log" 2>/dev/null) = *"Remediation complete" ]]; then
-    echo "$(date -u) Beginning {{ audit_name }} baseline scan" >> "$audit_log"
+    logmessage "Remediation complete, starting new scan"
   else
-    echo "$(date -u) Beginning {{ audit_name }} baseline scan" > "$audit_log"
+    logmessage "Beginning new compliance scan"
   fi
+
+  # run mcxrefresh
+  /usr/bin/mcxrefresh -u $CURR_USER_UID
+
+  # write timestamp of last compliance check
+  /usr/bin/defaults write "$audit_plist" lastComplianceCheck "$timestamp"
 
   {% for profile in baseline.profile %}
   {% for rule in profile.rules %}
@@ -344,17 +336,11 @@ run_scan(){
   {% endfor %}
   {% endfor %}
 
-  # run mcxrefresh
-  /usr/bin/mcxrefresh -u $CURR_USER_UID
-
-  # write timestamp of last compliance check
-  /usr/bin/defaults write "$audit_plist" lastComplianceCheck "$(date +"%Y-%m-%d %H:%M:%S%z")"
-
 } 2>/dev/null
 
 run_fix(){
   if [[ ! -e "$audit_plist" ]]; then
-    echo "Audit plist doesn't exist, please run Audit Check First" | tee -a "$audit_log"
+    logmessage "Audit plist doesn't exist, please run Audit Check First"
 
     if [[ ! $fix ]]; then
       pause
@@ -374,14 +360,8 @@ run_fix(){
     fi
   fi
 
-  {% for profile in baseline.profile %}
-  {% for rule in profile.rules %}
-    {% include "fix.jinja" %}
-  {% endfor %}
-  {% endfor %}
-
   # append to existing logfile
-  echo "$(date -u) Beginning remediation of non-compliant settings" >> "$audit_log"
+  logmessage "Beginning remediation of non-compliant settings"
 
   # remove uchg on audit_control
   /usr/bin/chflags nouchg /etc/security/audit_control
@@ -389,11 +369,19 @@ run_fix(){
   # run mcxrefresh
   /usr/bin/mcxrefresh -u $CURR_USER_UID
 
+  {% for profile in baseline.profile %}
+  {% for rule in profile.rules %}
+    {% include "fix.jinja" %}
+  {% endfor %}
+  {% endfor %}
+
 } 2>/dev/null
 
+exit2 () { printf >&2 "%s:  %s: '%s'\n%s\n" "$CMD" "$1" "$2"; print -l $usage; exit 2; }
+check_cli () { { [ "$1" != "$EOL" ] && [ "$1" != '--' ]; } || exit2 "missing argument" "$2"; }
+
 usage=(
-    "$0 Usage"
-    "$0 [--check] [--fix] [--cfc] [--stats] [--compliant] [--non_compliant] [--reset] [--reset-all] [--quiet=<value>]"
+    "Usage: ${CMD:=${0##*/}} [--check] [--fix] [--cfc] [--stats] [--compliant] [--non_compliant] [--reset] [--reset-all] [--quiet=<value>]"
     " "
     "Optional parameters:"
     "--check            :   run the compliance checks without interaction"
@@ -408,29 +396,41 @@ usage=(
     "                       2 - show minimal output"
   )
 
-zparseopts -D -E -help=flag_help -check=check -fix=fix -stats=stats -compliant=compliant_opt -non_compliant=non_compliant_opt -reset=reset -reset-all=reset_all -cfc=cfc -quiet:=quiet || { print -l $usage && return }
+set -- "$@" "${EOL:=$(printf '\1\3\3\7')}"
 
-[[ -z "$flag_help" ]] || { print -l $usage && return }
-
-if [[ ! -z $quiet ]];then
-  [[ ! -z ${quiet[2][2]} ]] || { print -l $usage && return }
+if [[ ! -z $audit_plist ]]; then
+  cp preferences/org.800-53r5_high_test.audit.plist /Library/Preferences/org.800-53r5_high_test.audit.plist
 fi
 
-if [[ $reset ]] || [[ $reset_all ]]; then reset_plist; fi
-
-if [[ $check ]] || [[ $fix ]] || [[ $cfc ]] || [[ $stats ]] || [[ $compliant_opt ]] || [[ $non_compliant_opt ]]; then
-  if [[ $fix ]]; then run_fix; fi
-  if [[ $check ]]; then run_scan; fi
-  if [[ $cfc ]]; then run_scan; run_fix; run_scan; fi
-  if [[ $stats ]];then generate_stats; fi
-  if [[ $compliant_opt ]];then compliance_count "compliant"; fi
-  if [[ $non_compliant_opt ]];then compliance_count "non-compliant"; fi
-else
+if [[ $# -eq 1 ]]; then
   while true; do
     show_menus
     read_options
   done
 fi
+
+while [ "$1" != "$EOL" ]; do
+  opt="$1"
+  case "$opt" in
+    --check ) check_cli "$1" "$opt"; run_scan; shift ;;
+    --fix ) check_cli "$1" "$opt"; run_fix; shift ;;
+    --cfc ) check_cli "$1" "$opt"; run_scan; run_fix; run_scan; shift ;;
+    --stats ) check_cli "$1" "$opt"; generate_stats; shift ;;
+    --compliant ) check_cli "$1" "$opt"; compliance_count "compliant"; shift ;;
+    --non_compliant ) check_cli "$1" "$opt"; compliance_count "non-compliant"; shift ;;
+    --reset ) check_cli "$1" "$opt"; reset_plist; shift ;;
+    --reset-all ) check_cli "$1" "$opt"; reset_plist; shift ;;
+    --quiet=* ) check_cli "$1" "$opt"; quiet[2][2]="${opt#--quiet=}"; shift ;;
+    --help ) print -l $usage; exit 0 ;;
+
+    # process special cases
+    --) while [ "$1" != "$EOL" ]; do set -- "$@" "$1"; shift; done;;   # parse remaining as positional
+    --[!=]*=*) set -- "${opt%%=*}" "${opt#*=}" "$@";;                  # "--opt=arg"  ->  "--opt" "arg"
+    -[A-Za-z0-9] | -*[!A-Za-z0-9]*) exit2 "invalid option" "$opt";;    # anything invalid like '-*'
+    -?*) other="${opt#-?}"; set -- "${opt%$other}" "-${other}" "$@";;  # "-abc"  ->  "-a" "-bc"
+    *) set -- "$@" "$opt";;
+  esac
+done; shift
 
 if [[ "$ssh_key_check" -ne 0 ]]; then
   /bin/rm /etc/ssh/ssh_host_rsa_key

@@ -1,14 +1,11 @@
 == Authors
-[width="100%",cols="1,3"]
-
 *macOS Security Compliance Project*
 
-{% if "cis" in baseline.title %}
-CIS Critical Security Controls® (CIS Controls®) are referenced with the permission and support of the Center for Internet Security® (CIS®)
-{% endif %}
+{{ "CIS Critical Security Controls® (CIS Controls®) are referenced with the permission and support of the Center for Internet Security® (CIS®)" if "cis" in baseline.title else "" }}
 
-!===
+[width="100%",cols="1,3"]
+|===
 {% for author in baseline.authors -%}
 |{{ author.name }}|{{ author.organization }}
 {% endfor -%}
-!===
+|===

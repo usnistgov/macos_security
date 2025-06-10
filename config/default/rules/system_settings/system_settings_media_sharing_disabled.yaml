@@ -1,0 +1,150 @@
+id: system_settings_media_sharing_disabled
+title: Disable Media Sharing
+discussion: |
+  Media sharing _MUST_ be disabled.
+
+  When Media Sharing is enabled, the computer starts a network listening service that shares the contents of the user's music collection with other users in the same subnet.
+
+  The information system _MUST_ be configured to provide only essential capabilities. Disabling Media Sharing helps prevent the unauthorized connection of devices and the unauthorized transfer of information. Disabling Media Sharing mitigates this risk.
+
+  Note: On macOS versions prior to 15, the Media Sharing settings panel may still allow you to check "Home Sharing" and "Share media with guests," but the service itself will not be activated.
+references:
+  nist:
+    cce:
+      macos_15:
+        - CCE-94381-1
+      macos_14:
+        - CCE-92977-8
+      macos_13:
+        - CCE-91966-2
+    800-53r5:
+      - AC-3
+      - AC-17
+    800-171r3:
+      - 03.01.02
+      - 03.04.06
+  disa:
+    cci:
+      - CCI-000213
+    srg:
+      - SRG-OS-000080-GPOS-00048
+    disa_stig:
+      macos_15:
+        - APPL-15-002100
+      macos_14:
+        - APPL-14-002100
+    cmmc:
+      - AC.L1-3.1.1
+  cis:
+    benchmark:
+      macos_15:
+        - 2.3.3.10 (level 2)
+      macos_14:
+        - 2.3.3.10 (level 2)
+      macos_13:
+        - 2.3.3.10 (level 2)
+    controls_v8:
+      - 4.1
+      - 4.8
+platforms:
+  macOS:
+    '15.0':
+      benchmarks:
+        - name: cis_lvl2
+        - name: disa_stig
+          severity: medium
+    '14.0':
+      benchmarks:
+        - name: cis_lvl2
+        - name: disa_stig
+          severity: medium
+      mobileconfig_info:
+        - PayloadType: com.apple.preferences.sharing.SharingPrefsExtension
+          PayloadContent:
+            - homeSharingUIStatus: 0
+            - legacySharingUIStatus: 0
+            - mediaSharingUIStatus: 0
+      enforcement_info:
+        check:
+          shell: |-
+            /usr/bin/osascript -l JavaScript << EOS
+            function run() {
+              let pref1 = ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('com.apple.preferences.sharing.SharingPrefsExtension')\
+              .objectForKey('homeSharingUIStatus'))
+              let pref2 = ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('com.apple.preferences.sharing.SharingPrefsExtension')\
+              .objectForKey('legacySharingUIStatus'))
+              let pref3 = ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('com.apple.preferences.sharing.SharingPrefsExtension')\
+              .objectForKey('mediaSharingUIStatus'))
+              if ( pref1 == 0 && pref2 == 0 && pref3 == 0 ) {
+                return("true")
+              } else {
+                return("false")
+              }
+            }
+            EOS
+          result:
+            string: 'true'
+    '13.0':
+      benchmarks:
+        - name: cis_lvl2
+      mobileconfig_info:
+        - PayloadType: com.apple.preferences.sharing.SharingPrefsExtension
+          PayloadContent:
+            - homeSharingUIStatus: 0
+            - legacySharingUIStatus: 0
+            - mediaSharingUIStatus: 0
+      enforcement_info:
+        check:
+          shell: |-
+            /usr/bin/osascript -l JavaScript << EOS
+            function run() {
+              let pref1 = ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('com.apple.preferences.sharing.SharingPrefsExtension')\
+              .objectForKey('homeSharingUIStatus'))
+              let pref2 = ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('com.apple.preferences.sharing.SharingPrefsExtension')\
+              .objectForKey('legacySharingUIStatus'))
+              let pref3 = ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('com.apple.preferences.sharing.SharingPrefsExtension')\
+              .objectForKey('mediaSharingUIStatus'))
+              if ( pref1 == 0 && pref2 == 0 && pref3 == 0 ) {
+                return("true")
+              } else {
+                return("false")
+              }
+            }
+            EOS
+          result:
+            string: 'true'
+    enforcement_info:
+      check:
+        shell: |-
+          /usr/bin/osascript -l JavaScript << EOS
+          function run() {
+            let pref1 = ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess')\
+          .objectForKey('allowMediaSharing'))
+            let pref2 = ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess')\
+          .objectForKey('allowMediaSharingModification'))
+            if ( pref1 == false && pref2 == false ) {
+              return("true")
+            } else {
+              return("false")
+            }
+          }
+          EOS
+        result:
+          string: 'true'
+    introduced: '-1'
+tags:
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_high
+  - 800-171
+  - cisv8
+  - cnssi-1253_low
+  - cnssi-1253_high
+  - cmmc_lvl2
+  - cmmc_lvl1
+  - cnssi-1253_moderate
+mobileconfig_info:
+  - PayloadType: com.apple.applicationaccess
+    PayloadContent:
+      - allowMediaSharing: false
+      - allowMediaSharingModification: false

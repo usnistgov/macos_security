@@ -1,0 +1,46 @@
+id: os_malicious_code_prevention
+title: Ensure the System Implements Malicious Code Protection Mechanisms
+discussion: "The inherent configuration of the macOS _IS_ in compliance as Apple has designed the system with three layers of protection against malware. Each layer of protection is comprised of one or more malicious code protection mechanisms, which are automatically implemented and which, collectively, meet the requirements of all applicable federal laws, Executive Orders, directives, policies, regulations, standards, and guidance for malicious code prevention.\n\n1. This  first layer of defense targets the distribution of malware; the aim is to prevent malware from ever launching.\nThe following mechanisms are inherent to the macOS design and constitute the first layer of protection against malicious code:\n*\tThe Apple App Store: the safest way to add new applications to a Mac is by downloading them from the App Store; all apps available for download from the App Store have been reviewed for signs of tampering and signed by Apple to indicate that the app meets security requirements and does not contain malware.\n*\tXProtect: a built-in, signature-based, anti-virus, anti-malware technology inherent to all Macs. XProtect automatically detects and blocks the execution of known malware.\n  *\tIn macOS 10.15 and all subsequent releases, XProtect checks for known malicious content when:\n    *\tan app is first launched,\n    *\tan app has been changed (in the file system), and\n    *\tXProtect signatures are updated.\n*\tYARA: another built-in tool (inherent to all Macs), which conducts signature-based detection of malware. Apple updates YARA rules regularly.\n*\tGatekeeper: a security feature inherent to all Macs; Gatekeeper scans apps to detect malware and/or revocations of a developer's signing certificate and prevents unsafe apps from running.\n*\tNotarization: Apple performs regular, automated scans to detect signs of malicious content and to verify developer ID-signed software; when no issues are found, Apple notarizes the software and delivers the results of scans to the system owner.\n\n2. The second layer of defense targets malware that manages to appear on a Mac before it runs; the aim is to quickly identify and block any malware present on a Mac in order to prevent the malware from running and further spreading.\nThe following mechanisms are inherent to the macOS design and constitute the second layer of protection against malicious code:\n*\tXProtect (defined above).\n*\tGatekeeper (defined above).\n*\tNotarization (defined above).\n\n3.  The third layer of defense targets infected Mac system(s); the aim is to remediate Macs on which malware has managed to successfully execute.\nThe following mechanism is inherent to the macOS design and constitutes the third layer of protection against malicious code:\n*\tApple's XProtect: a technology included on all macOS systems. XProtect will remediate infections upon receiving updated information delivered and when infections are detected\n\nlink:https://support.apple.com/guide/security/protecting-against-malware-sec469d47bd8/1/web/1[]\n\nlink:https://support.apple.com/guide/security/app-security-overview-sec35dd877d0/web[]\n\nNOTE: The technology supports this requirement and cannot be configured to be out of compliance. The technology inherently meets this requirement."
+references:
+  nist:
+    cce:
+      macos_15:
+        - CCE-94224-3
+      macos_14:
+        - CCE-92821-8
+      macos_13:
+        - CCE-91817-7
+    800-53r5:
+      - SI-3
+    800-171r3:
+      - 03.14.02
+  disa:
+    cmmc:
+      - SI.L1-3.14.1
+      - SI.L1-3.14.2
+      - SI.L1-3.14.4
+  cis:
+    controls_v8:
+      - 10.1
+      - 10.2
+      - 10.5
+platforms:
+  macOS:
+    '15.0': {}
+    '14.0': {}
+    '13.0': {}
+    enforcement_info:
+      fix:
+        additional_info: The technology inherently meets this requirement. No fix is required.
+tags:
+  - 800-171
+  - inherent
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_high
+  - cisv8
+  - cnssi-1253_low
+  - cnssi-1253_high
+  - cmmc_lvl2
+  - cmmc_lvl1
+  - cnssi-1253_moderate

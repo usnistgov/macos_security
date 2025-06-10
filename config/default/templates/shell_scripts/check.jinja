@@ -1,33 +1,20 @@
-{% set check_tags = ["permanent", "inherent", "n_a"] %}
+{% set check_tags = ["permanent", "inherent", "n_a", "not_applicable"] %}
+{% set rule_arch = "" %}
 {% if "supplemental" not in rule.rule_id and not (rule.tags | select("in", check_tags) | list) %}
   {% if rule.check %}
   #####----- Rule: {{ rule.rule_id }} -----#####
   ## Addresses the following NIST 800-53 controls:
-  {{ rule.references.nist_controls | group_ulify if rule.references.nist_controls is not none else "# * N/A" }}
+  {{ rule.references.nist.nist_800_53r5 | group_ulify if rule.references.nist.nist_800_53r5 is not none else "# * N/A" }}
 
   {% if "arm64" in rule.tags %}
-  rule_arch="arm64"
+  {% set rule_arch = "arm64" %}
   {% elif "i386" in rule.tags %}
-  rule_arch="i386"
-  {% else %}
-  rule_arch=""
+  {% set rule_arch = "i386" %}
   {% endif %}
-  rule_id="{{ rule.rule_id }}"
-  check_command="{{ rule.check | replace("\\\\", "\\") | trim | safe }}"
-  expected_result="{{ rule.result | string }}"
-  {% if rule.result is not none %}
-  {% if "integer" in rule.result %}
-  result_value="{{ rule["result"]["integer"] }}"
-  {% elif "boolean" in rule.result %}
-  result_value="{{ rule["result"]["boolean"] }}"
-  {% elif "string" in rule.result %}
-  result_value="{{ rule["result"]["string"] }}"
-  {% elif "base64" in rule.result %}
-  result_value="{{ rule["result"]["base64"] }}"
-  {% endif %}
-  {% endif %}
-  log_reference_id="{{ rule | log_reference(reference) }}"
 
-  audit_rule "$rule_id" "$check_command" "$expected_result" "$result_value" "$log_reference_id" "$rule_arch"
+  check_command="{{ rule.check | replace("\\\\", "\\") | replace('\"', '\\\"') | replace('$', '\$') | trim | safe }}"
+
+  audit_rule "{{ rule.rule_id }}" "$check_command" "{{ rule.result_value | string }}" "{{ rule | log_reference(reference_log_id) }}" "{{ rule_arch }}"
+
   {% endif %}
 {% endif %}

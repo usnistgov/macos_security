@@ -1,5 +1,6 @@
 :doctype: book
 :stylesdir: {{ styles_dir }}
+:imagesdir: {{ images_dir }}
 :stylesheet: asciidoctor.css
 :experimental:
 :reproducible:
@@ -18,23 +19,25 @@ endif::[]
 :xrefstyle: full
 :source-highlighter: rouge
 :nofooter:
-{% if "800" in baseline.title | upper or show_all_tags %}:show_171:{% else %}:show_171!:{% endif %}
-{% if "STIG" in baseline.title | upper or show_all_tags %}:show_STIG:{% else %}:show_STIG!:{% endif %}
-{% if "CIS" in baseline.title | upper or show_all_tags %}:show_cis:{% else %}:show_cis!:{% endif %}
-{% if "CMMC" in baseline.title | upper or show_all_tags %}:show_CMMC:{% else %}:show_CMMC!:{% endif %}
-{% if "INDIGO" in baseline.title | upper or show_all_tags %}:show_indigo:{% else %}:show_indigo!:{% endif %}
+{% if "800-171" in baseline.title | upper or show_all_tags %}:show_171:{% else %}:show_171!:{% endif +%}
+{% if "STIG" in baseline.title | upper or show_all_tags %}:show_STIG:{% else %}:show_STIG!:{% endif +%}
+{% if "CIS" in baseline.title | upper or show_all_tags %}:show_cis:{% else %}:show_cis!:{% endif +%}
+{% if "CMMC" in baseline.title | upper or show_all_tags %}:show_CMMC:{% else %}:show_CMMC!:{% endif +%}
+{% if "INDIGO" in baseline.title | upper or show_all_tags %}:show_indigo:{% else %}:show_indigo!:{% endif +%}
+{% if show_all_tags %}:show_tags:{% else %}:show_tags!:{% endif +%}
 :version: {{ version }} ({{ release_date }})
 :os: {{ os_version }}
 :proj-title: {{ baseline.title }}
 :document-title: {{ html_title }}
 :document-subtitle: {{ html_subtitle }}
 {{ document_subtitle2 }}
+:logo-image: image:{{ logo }}[align=center]
 ifdef::backend-pdf[]
 = {document-title}: {document-subtitle}
 {version}
 :pdf-themesdir: {stylesdir}
 :pdf-theme: {{ pdf_theme }}
-:title-logo-image: image:data:image/png;base64,{{ pdflogo }}[align=center]
+:title-logo-image: {logo-image}
 :nofooter!:
 endif::[]
 :data-uri:
@@ -42,11 +45,9 @@ endif::[]
 ifdef::backend-html5[]
 :notitle:
 
-{% if show_all_tags %}:show_tags:{% else %}:show_tags!:{% endif %}
-
 [cols="55s"]
 |======
-|image:{{ logo }}[]
+|{logo-image}
 |======
 
 [cols="^.^1s",width="100%"]

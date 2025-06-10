@@ -10,8 +10,6 @@ from loguru import logger
 
 # Local python modules
 from src.mscp.classes import Author, Baseline, Macsecurityrule
-
-# from src.mscp.classes.macsecurityrule import Macsecurityrule
 from src.mscp.common_utils import (
     config,
     get_version_data,
@@ -57,7 +55,11 @@ def generate_baseline(args: argparse.Namespace) -> None:
 
     if args.controls:
         included_controls: list[str] = sorted(
-            {control for rule in all_rules for control in rule.references.nist_controls}
+            {
+                control
+                for rule in all_rules
+                for control in rule.references.nist.nist_800_53r5
+            }
         )
 
         needed_controls: list[str] = [

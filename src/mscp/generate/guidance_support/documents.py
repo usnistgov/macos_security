@@ -3,6 +3,7 @@
 # Standard python modules
 import re
 import sys
+from collections.abc import Mapping
 from itertools import groupby
 from pathlib import Path
 from typing import Any
@@ -153,6 +154,34 @@ def replace_include_with_file_content(text: str) -> str:
     return pattern.sub(replace_block, text)
 
 
+def get_nested(
+    obj: Mapping[str, Any] | list, keys: list[str | int], default: Any = None
+) -> Any:
+    """
+    Safely access nested dictionary keys (and optionally list indices).
+
+    Args:
+        obj: The base dictionary or mapping.
+        keys: A list of keys or indices to access, in order.
+        default: The value to return if any key/index is missing or invalid.
+
+    Returns:
+        The value at the nested path or the default.
+    """
+    current = obj
+    for key in keys:
+        if isinstance(current, Mapping) and isinstance(key, str):
+            current = current.get(key, default)
+        elif isinstance(current, list) and isinstance(key, int):
+            if 0 <= key < len(current):
+                current = current[key]
+            else:
+                return default
+        else:
+            return default
+    return current
+
+
 def render_template(
     output_file: Path,
     template_name: str,
@@ -166,6 +195,7 @@ def render_template(
     custom: bool,
     template_dir: str,
     misc_dir: str,
+    logo_dir: str,
 ) -> None:
     """
     Renders the template with the provided parameters and writes the output to a file.
@@ -190,20 +220,23 @@ def render_template(
 
     env: Environment = Environment(
         loader=FileSystemLoader(template_dir),
-        # trim_blocks=True,
-        # lstrip_blocks=True,
+        trim_blocks=True,
+        lstrip_blocks=True,
         autoescape=False,
     )
 
     styles_dir: Path = Path(misc_dir).absolute()
+    images_dir: Path = Path(logo_dir).absolute()
 
     env.filters["group_ulify"] = group_ulify
-    env.filters["group_ulify_md"] = group_ulify_md
     env.filters["include_replace"] = replace_include_with_file_content
     env.filters["render_rules"] = render_rules
-    env.filters["render_rules_md"] = render_rules_md
     env.filters["convert_source_blocks"] = convert_source_blocks
-    env.filters["replace_include_with_file_content"] = replace_include_with_file_content
+    env.filters["get_nested"] = get_nested
+
+    if output_file.suffix == ".md":
+        env.filters["group_ulify"] = group_ulify_md
+        env.filters["render_rules"] = render_rules_md
 
     template: Template = env.get_template(template_name)
 
@@ -223,7 +256,8 @@ def render_template(
         html_subtitle=html_subtitle,
         document_subtitle2=document_subtitle2,
         styles_dir=styles_dir,
-        logo=logo_path,
+        images_dir=images_dir,
+        logo=logo_path.name,
         pdflogo=b64logo.decode("ascii"),
         pdf_theme=pdf_theme,
         show_all_tags=show_all_tags,
@@ -265,12 +299,14 @@ def generate_asciidoc_documents(
     Returns:
         None
     """
-    template_dir = config["defaults"]["adoc_templates_dir"]
-    misc_dir = config["defaults"]["misc_dir"]
+    template_dir: str = config["defaults"]["adoc_templates_dir"]
+    misc_dir: str = config["defaults"]["misc_dir"]
+    logo_dir: str = config["defaults"]["images_dir"]
 
     if custom:
         template_dir = config["custom"]["adoc_templates_dir"]
         misc_dir = config["custom"]["misc_dir"]
+        logo_dir = config["custom"]["images_dir"]
 
     render_template(
         output_file,
@@ -285,6 +321,7 @@ def generate_asciidoc_documents(
         custom,
         template_dir,
         misc_dir,
+        logo_dir,
     )
 
     gems_asciidoctor: Path = Path("mscp_gems/bin/asciidoctor")
@@ -348,11 +385,14 @@ def generate_markdown_documents(
     """
     template_dir = config["defaults"]["md_templates_dir"]
     misc_dir = config["defaults"]["misc_dir"]
+    logo_dir: str = config["defaults"]["images_dir"]
+
     # html_path = output_file.with_suffix(".html")
 
     if custom:
         template_dir = config["custom"]["md_templates_dir"]
         misc_dir = config["custom"]["misc_dir"]
+        logo_dir = config["custom"]["images_dir"]
 
     render_template(
         output_file,
@@ -367,6 +407,7 @@ def generate_markdown_documents(
         custom,
         template_dir,
         misc_dir,
+        logo_dir,
     )
 
     # logger.debug("Converting Markdown to HTML")

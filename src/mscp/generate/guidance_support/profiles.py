@@ -31,7 +31,7 @@ def get_payload_content_by_type(
     grouped_content = defaultdict(list)
 
     for rule in rules:
-        if rule.mobileconfig:
+        if rule.mobileconfig_info:
             for payload in rule.mobileconfig_info:
                 payload_type = payload.payload_type
                 payload_content = payload.payload_content
@@ -128,7 +128,7 @@ def generate_profiles(
         rule
         for profile in baseline.profile
         for rule in profile.rules
-        if rule.mobileconfig
+        if rule.mobileconfig_info
         and any(
             payload.payload_type not in manifests_file.get("payloads_types", [])
             for payload in rule.mobileconfig_info
@@ -139,7 +139,7 @@ def generate_profiles(
         rule
         for profile in baseline.profile
         for rule in profile.rules
-        if rule.mobileconfig
+        if rule.mobileconfig_info
         and any(
             payload.payload_type in manifests_file.get("payloads_types", [])
             for payload in rule.mobileconfig_info
@@ -156,6 +156,8 @@ def generate_profiles(
     for payload_type, settings_list in grouped_payloads.items():
         logger.debug("Payload Type: {}", payload_type)
         logger.debug("Settings List: {}", repr(settings_list))
+
+        flat_settings = [s for sublist in settings_list for s in sublist]
 
         payload_base_name = (
             f"com.apple{payload_type}" if payload_type.startswith(".") else payload_type
@@ -189,13 +191,13 @@ def generate_profiles(
         )
 
         if payload_type == "com.apple.ManagedClient.preferences":
-            for settings in settings_list:
+            for settings in flat_settings:
                 for domain, payload_content in settings.items():
                     new_profile.add_mcx_payload(
                         [domain, "Forced", payload_content], baseline_name
                     )
         else:
-            settings: dict = {k: v for d in settings_list for k, v in d.items()}
+            settings: dict = {k: v for d in flat_settings for k, v in d.items()}
             new_profile.add_payload(payload_type, settings, baseline_name)
 
         new_profile.save_to_plist(unsigned_mobileconfig_file_path)

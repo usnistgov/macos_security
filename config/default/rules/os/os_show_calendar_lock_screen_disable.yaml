@@ -1,0 +1,60 @@
+id: os_show_calendar_lock_screen_disable
+title: Ensure Calendar Notifications when the Device is Locked is set to Disabled
+discussion: Many mobile devices display notifications on the lock screen so users can obtain relevant information in a timely manner without having to frequently unlock the phone to determine if there are new notifications. However, in many cases, these notifications can contain sensitive information. When they are available on the lock screen, an adversary can see them merely by being in close physical proximity to the device. Configuring the MOS to not send notifications to the lock screen mitigates this risk.
+references:
+  nist:
+    cce:
+      ios_18:
+        - CCE-94464-5
+      ios_17:
+        - CCE-93448-9
+      ios_16:
+        - CCE-93248-3
+    800-53r5:
+      - AC-11(1)
+  disa:
+    cci:
+      - CCI-000060
+    disa_stig:
+      ios_18:
+        - AIOS-18-007600
+      ios_17:
+        - AIOS-17-007600
+        - AIOS-17-707600
+      ios_16:
+        - AIOS-16-007600
+        - AIOS-16-707600
+    sfr:
+      - 'FMT_SMF_EXT.1.1 #18'
+platforms:
+  iOS:
+    '18.0':
+      supervised: false
+      benchmarks:
+        - name: ios_stig
+          severity: medium
+    '17.0':
+      supervised: false
+      benchmarks:
+        - name: ios_stig
+          severity: medium
+        - name: ios_stig_byoad
+          severity: medium
+    '16.0':
+      supervised: false
+      benchmarks:
+        - name: ios_stig
+          severity: medium
+        - name: ios_stig_byoad
+          severity: medium
+    introduced: '7.0'
+tags:
+  - 800-53r5_moderate
+  - 800-53r5_high
+  - cnssi-1253_moderate
+  - cnssi-1253_low
+  - cnssi-1253_high
+mobileconfig_info:
+  - PayloadType: com.apple.applicationaccess
+    PayloadContent:
+      - allowLockScreenTodayView: false
