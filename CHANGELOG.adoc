@@ -42,6 +42,9 @@ IMPORTANT: This release is a major update and includes breaking changes. Please 
 * Created checklist Jinja templates for compliance checking
 * Created local report Jinja templates for compliance checking
 
+=== Miscellaneous
+* Refactored mscp-data to support better baseline generation
+
 == [Sequoia, Revision 1.1] - 2024-12-16
 * Rules
 ** Added Rules
