@@ -1,0 +1,3 @@
+  name: "Permanent Findings"
+  description: |
+    This section contains the controls that are defined in NIST 800-53 revision 5 but are unable to be configured natively within macOS. It is recommended to implement a third-party solution to meet the controls in this section.

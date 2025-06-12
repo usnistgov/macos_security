@@ -1,0 +1,5 @@
+  name: "macOS"
+  description: |
+    This section contains the configuration and enforcement of operating system settings.
+
+    NOTE: The check/fix commands outlined in this section _MUST_ be run by a user with elevated privileges. 

@@ -1,0 +1,56 @@
+  <?xml version="1.0" encoding="UTF-8"?>
+  <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+  <plist version="1.0">
+  <dict>
+    <key>policyCategoryAuthentication</key>
+    <array>
+      <dict>
+        <key>policyContent</key>
+        <string>policyAttributeLastAuthenticationTime &gt; policyAttributeCurrentTime - (policyAttributeInactiveDays * 24 * 60 * 60)</string>
+        <key>policyIdentifier</key>
+        <string>Inactive Account</string>
+        <key>policyParameters</key>
+        <dict>
+          <key>policyAttributeInactiveDays</key>
+          <integer>35</integer>
+        </dict>
+      </dict>
+    </array>
+    <key>policyCategoryPasswordContent</key>
+    <array>
+      <dict>
+        <key>policyContent</key>
+        <string>policyAttributePassword matches '(.*[A-Z].*){1,}+'</string>
+        <key>policyIdentifier</key>
+        <string>Must have at least 1 uppercase letter</string>
+        <key>policyParameters</key>
+        <dict>
+          <key>minimumAlphaCharactersUpperCase</key>
+          <integer>1</integer>
+        </dict>
+      </dict>
+      <dict>
+        <key>policyContent</key>
+        <string>policyAttributePassword matches '(.*[a-z].*){1,}+'</string>
+        <key>policyIdentifier</key>
+        <string>Must have at least 1 lowercase letter</string>
+        <key>policyParameters</key>
+        <dict>
+          <key>minimumAlphaCharactersLowerCase</key>
+          <integer>1</integer>
+        </dict>
+      </dict>
+      <dict>
+        <key>policyContent</key>
+        <string>policyAttributeLastPasswordChangeTime &lt; policyAttributeCurrentTime - (policyAttributeMinimumLifetimeHours * 60 * 60)</string>
+        <key>policyIdentifier</key>
+        <string>Minimum Password Lifetime</string>
+        <key>policyParameters</key>
+        <dict>
+          <key>policyAttributeMinimumLifetimeHours</key>
+          <integer>24</integer>
+        </dict>
+      </dict>
+    </array>
+  </dict>
+</plist>

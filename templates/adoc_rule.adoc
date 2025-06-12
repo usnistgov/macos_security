@@ -1,0 +1,70 @@
+=== $rule_title
+
+$rule_discussion
+
+To check the state of the system, run the following command(s):
+[source,bash,options="nowrap"]
+----
+$rule_check
+----
+
+If the result is not *$rule_result*, this is a finding.
+
+====
+**Remediation Description**
+
+Perform the following to configure the system to meet the requirements:
+
+$rule_fix
+====
+
+[cols="15%h, 85%a"]
+|===
+
+|ID
+|$rule_id 
+
+$severity
+
+|References
+|
+
+[cols="20%h,80%a"]
+[frame="none"]
+[grid="cols"]
+!===
+
+!800-53r5
+!$rule_80053r5
+
+ifdef::show_171[]
+!800-171r3
+!$rule_800171
+endif::[]
+
+ifdef::show_STIG[]
+!DISA STIG(s)
+!$rule_disa_stig
+endif::[]
+
+ifdef::show_CIS[]
+$rule_cis
+endif::[]
+
+ifdef::show_CMMC[]
+!CMMC
+!$rule_cmmc
+endif::[]
+
+!CCE
+!$rule_cce
+
+ifdef::show_tags[]
+!TAGS
+!$rule_tags
+endif::[]
+
+!===
+
+|
+|===

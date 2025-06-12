@@ -1,0 +1,27 @@
+These additional utilities are macOS ONLY
+ 
+mscp_local_report.py
+    mscp_local_report will generate an Excel and HTML document that shows a pie chart with the compliance percentage and a table with the rule name and result.
+
+    Additional python modules required:
+        * openpyxl
+        * pandas
+        * matplotlib
+    pip3 install MODULENAME
+
+    Usage:
+    Run a compliance scan using the compliance script generated from generate_guidance.py
+    ./mscp_local_report.py -p /Library/Preferences/org.BASELINE.audit.plist -o /Path/To/Output/FILENAME
+        - This will generate an HTML and XLSX file with the filename.
+
+generate_checklist.py
+    The generate_checklist script will generate a .ckl XML file for use with the DISA STIG Viewer and eMass systems.
+
+    Usage:
+    When using generate_guidance.py, run it using the -r option to include references and -s to create a compliance script.
+        ./generate_guidance.py -s -r disa_stig /path/to/disa/stig/baseline_file
+    Then run a compliance scan using the generated content.
+        sudo build/BASELINE/BASELINE_compliance.sh --check
+    Download the DISA STIG for the specific version of the operating system from the DoD Cyber Exchange (https://public.cyber.mil/stigs/downloads/)
+    Then run the generate_checklist script
+        ./generate_checklist.py -p /Library/Preferences/org.BASELINE.audit.plist -d /PATH/TO/DISA/STIG/Manual/xccdf/file > /Path/To/Output.ckl

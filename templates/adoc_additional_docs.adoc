@@ -1,0 +1,68 @@
+== Applicable Documents
+=== Government Documents
+////
+ASSOCIATED DOCUMENTS
+  Add Government and Non-Government documents related to this handbook in this section.
+  Add to the tables between the |==== tags, below the header line
+  Example:
+    [%header, cols=2*a]                            <-- table format block
+    |====                                          <-- table opening tag
+    |Document Number or Descriptor|Document Title                <-- header line
+                                                   <-- empty line for readability (optional)
+
+                                                   <-- empty line for readability (optional)
+    |====                                          <-- table closing tag
+////
+[%header, cols=2*a]
+.National Institute of Standards and Technology (NIST)
+|===
+|Document Number or Descriptor
+|Document Title
+|link:https://nvd.nist.gov/800-53[NIST Special Publication 800-53 Rev 5]|_NIST Special Publication 800-53 Rev 5.1.1_
+|link:https://www.nist.gov/itl/tig/projects/special-publication-800-63[NIST Special Publication 800-63]|_NIST Special Publication 800-63_
+|link:https://csrc.nist.gov/pubs/sp/800/171/r3/final[NIST Special Publication 800-171]|_NIST Special Publication 800-171 Rev 3_
+|link:https://csrc.nist.gov/pubs/sp/800/219/r1/final[NIST Special Publication 800-219]|_NIST Special Publication 800-219 Rev 1_
+|===
+
+[%header, cols=2*a]
+.Defense Information Systems Agency (DISA)
+|===
+|Document Number or Descriptor
+|Document Title
+|link:https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Apple_macOS_15_V1R1_STIG.zip[STIG Ver 1, Rel 1]|_Apple macOS 15 (Sequoia) STIG_
+|===
+
+[%header, cols=2*a]
+.Cybersecurity Maturity Model Certification (CMMC)
+|===
+|Document Number or Descriptor
+|Document Title
+|link:https://dodcio.defense.gov/Portals/0/Documents/CMMC/ModelOverview_V2.0_FINAL2_20211202_508.pdf[CMMC Model Overview v2.0]|_Cybersecurity Maturity Model Certification (CMMC) Model Overview v2.0_
+|===
+
+[%header, cols=2*a]
+.Committee on National Security Systems (CNSS)
+|===
+|Document Number or Descriptor
+|Document Title
+|link:https://www.cnss.gov/CNSS/issuances/Instructions.cfm[CNSSI No. 1253]|_Security Categorization and Control Selection for National Security Systems_
+|===
+
+=== Non-Government Documents
+[%header, cols=2*a]
+.Apple
+|===
+|Document Number or Descriptor
+|Document Title
+|link:https://support.apple.com/guide/security/welcome/web[Apple Platform Security Guide]|_Apple Platform Security_
+|link:https://support.apple.com/guide/deployment/welcome/web[Apple Platform Deployment]|_Apple Platform Deployment_
+|link:https://support.apple.com/guide/certifications/welcome/web[Apple Platform Certifications]|_Apple Platform Certifications_
+|link:https://developer.apple.com/documentation/devicemanagement/profile-specific_payload_keys[Profile-Specific Payload Keys]|_Profile-Specific Payload Keys_
+|===
+[%header, cols=2*a]
+.Center for Internet Security
+|===
+|Document Number or Descriptor
+|Document Title
+|link:https://www.cisecurity.org/benchmark/apple_os/[Apple macOS 14.0]|_CIS Apple macOS 14.0 Benchmark version 1.1.0_
+|===

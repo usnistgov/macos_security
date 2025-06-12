@@ -1,0 +1,3 @@
+Known Issues:
+
+Automation of the password policy remediation is not currently implemented in the compliance script. The path to your pwpolicy.xml must be defined in the compliance script in the variables section, line 433.

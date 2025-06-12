@@ -1,0 +1,57 @@
+:doctype: book
+:stylesdir: ../../templates/
+:stylesheet: asciidoctor.css
+:experimental:
+:reproducible:
+:icons: font
+:chapter-label:
+:listing-caption: Listing
+:sectnums:
+ifdef::backend-html5[]
+:toc: preamble
+endif::[]
+ifdef::backend-pdf[]
+:toc: []
+endif::[]
+:toclevels: 4
+:xrefstyle: full
+:source-highlighter: rouge
+:nofooter:
+$nist171_attribute
+$stig_attribute
+$cis_attribute
+$cmmc_attribute
+:version: $version ($release_date)
+:os: $os_version
+:proj-title: $html_header_title
+:document-title: $html_title
+:document-subtitle: $html_subtitle
+$document_subtitle2
+ifdef::backend-pdf[]
+= {document-title}: {document-subtitle}
+$version ($release_date)
+:pdf-themesdir: ../templates
+:pdf-theme: $pdf_theme
+:title-logo-image: image:data:image/png;base64,$pdflogo[align=center]
+:nofooter!:
+endif::[]
+:data-uri:
+:allow-uri-read:
+ifdef::backend-html5[]
+:notitle:
+
+
+$tag_attribute
+
+[cols="55s"]
+|======
+|image:$logo[]
+|======
+
+[cols="^.^1s",width="100%"]
+|======
+|+++ <span id="os" name="+++{os}+++"></span><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<div class="doctitle">+++{document-title}+++</div><div class="docsub">+++{document-subtitle}+++</div><div class="docver">+++{document-subtitle2}+++</div><div class="docver">+++{version}+++</div><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br><br><br><br><br><br>+++
+|======
+endif::[]
