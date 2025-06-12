@@ -13,7 +13,7 @@ from pydantic import BaseModel, Field
 # Local python modules
 from src.mscp.common_utils import config, create_yaml, open_file
 
-from . import Macsecurityrule
+from .macsecurityrule import Macsecurityrule
 
 
 class BaseModelWithAccessors(BaseModel):
