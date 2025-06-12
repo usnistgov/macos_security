@@ -215,14 +215,13 @@ def open_json(file_path: Path) -> dict[str, Any]:
         raise
 
 
-def create_yaml(file_path: Path, data: dict[str, Any], sort_keys: bool = False) -> None:
+def create_yaml(file_path: Path, data: dict[str, Any]) -> None:
     """
     Create YAML file.
 
     Args:
         file_path (Path): The path to the file that the data will be added to.
         data (dict): The data that will be added to the file.
-        yaml_type (str): What type of yaml are you outputting, baseline or rule.
         sort_keys (bool): Sort the keys. Default is False
     Returns:
         None: The function writes directly to the file and does not return a value.
@@ -233,15 +232,15 @@ def create_yaml(file_path: Path, data: dict[str, Any], sort_keys: bool = False) 
         if not file_path.exists():
             file_path.touch()
 
-        file_path.write_bytes(
+        file_path.write_text(
             yaml.dump(
                 dict(data),
                 default_flow_style=False,
-                sort_keys=sort_keys,
+                sort_keys=False,
                 explicit_start=True,
                 indent=2,
-                encoding=ENCODING,
-            )
+            ),
+            encoding=ENCODING,
         )
 
         logger.success("Created YAML: {}", file_path)

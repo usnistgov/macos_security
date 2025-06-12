@@ -1,7 +1,6 @@
 # mscp/classes/baseline.py
 
 # Standard python modules
-import re
 from collections import OrderedDict, defaultdict
 from pathlib import Path
 from typing import Any
@@ -14,7 +13,7 @@ from pydantic import BaseModel, Field
 # Local python modules
 from src.mscp.common_utils import config, create_yaml, open_file
 
-from .macsecurityrule import Macsecurityrule
+from . import Macsecurityrule
 
 
 class BaseModelWithAccessors(BaseModel):
@@ -64,8 +63,8 @@ class Baseline(BaseModelWithAccessors):
     authors: list[Author]
     profile: list[Profile]
     name: str
-    title: str = Field(default="")
-    description: str = Field(default="")
+    title: str = ""
+    description: str = ""
     parent_values: str = ""
 
     @classmethod
@@ -158,43 +157,62 @@ class Baseline(BaseModelWithAccessors):
         cls,
         output_file: Path,
         rules: list[Macsecurityrule],
-        version_data: dict[str, Any],
-        baseline_name: str,
+        baseline_name: str | None,
         authors: list[Author],
         full_title: str,
-        benchmark: str = "recommended",
+        benchmark: str,
+        os_type: str,
+        os_version: float,
+        baseline_dict: dict[str, Any] = Field(default_factory=dict[str, Any]),
     ) -> None:
         """
-        Create and save a Baseline object as a YAML file with grouped and sorted rules.
+        Creates a new baseline YAML file based on the provided rules, metadata, and configuration.
 
         Args:
-            output_file (Path): Path to save the baseline YAML file.
-            rules (list[Macsecurityrule]): List of rules to include in the baseline.
-            version_data (Dict[str, Any]): Version information, including OS and CPE.
-            baseline_name (str): Name of the baseline.
-            authors (list[Authors]): List of authors.
-            full_title (str): Full title for the baseline.
-            benchmark (str, optional): Benchmark type. Defaults to recommended.
+            output_file (Path): The path where the baseline YAML file will be written.
+            rules (list[Macsecurityrule]): A list of security rule objects to include in the baseline.
+            baseline_name (str | None): The name of the baseline, or None if not specified.
+            authors (list[Author]): A list of authors to attribute to the baseline.
+            full_title (str): The full title of the baseline.
+            benchmark (str): The benchmark type (e.g., "recommended").
+            os_type (str): The operating system type (e.g., "macOS").
+            os_version (float): The version of the operating system.
+            baseline_dict (dict[str, Any], optional): Additional baseline metadata. Defaults to an empty dict.
+
+        Returns:
+            None
+
+        Side Effects:
+            - Writes the generated baseline to both the specified output file and a custom output file.
+            - Reads section descriptions from YAML files in the configured sections directory.
+
+        Notes:
+            - The function groups rules into sections, including special sections such as "Inherent", "Permanent", "Not Applicable", and "Supplemental".
+            - Section descriptions are loaded from YAML files in the sections directory.
+            - The resulting baseline is serialized to YAML format and saved to disk.
         """
 
-        os_name: str = re.search(
-            r"(macos|ios|visionos)", version_data["cpe"], re.IGNORECASE
-        ).group()
-
-        os_version: float = version_data["os_version"]
-
-        baseline_title: str = (
-            f"{os_name} {os_version}: Security Configuration - {full_title} {baseline_name}"
+        description: str = ""
+        os_type = os_type.replace("os", "OS")
+        custom_output_file: Path = Path(
+            config["custom"]["baseline_dir"], output_file.name
         )
 
-        description: str = (
-            f"|\n  This guide describes the actions to take when securing a {os_name} {os_version} system against the {full_title} {baseline_name} security baseline.\n"
-        )
+        if baseline_dict is None:
+            baseline_dict["title"] = (
+                f"{os_type} {os_version}: Security Configuration - {full_title} {baseline_name}"
+            )
 
-        if benchmark == "recommended":
-            description += "\n  Information System Security Officers and benchmark creators can use this catalog of settings in order to assist them in security benchmark creation. This list is a catalog, not a checklist or benchmark, and satisfaction of every item is not likely to be possible or sensible in many operational scenarios."
+            description: str = (
+                f"This guide describes the actions to take when securing a {os_type} {os_version} system against the {full_title} {baseline_name} security baseline.\n"
+            )
 
-        special_sections: dict = {
+            if benchmark == "recommended":
+                description += "\nInformation System Security Officers and benchmark creators can use this catalog of settings in order to assist them in security benchmark creation. This list is a catalog, not a checklist or benchmark, and satisfaction of every item is not likely to be possible or sensible in many operational scenarios."
+
+            baseline_dict["description"] = description.strip()
+
+        special_sections: dict[str, str] = {
             "inherent": "Inherent",
             "permanent": "Permanent",
             "n_a": "Not Applicable",
@@ -202,7 +220,7 @@ class Baseline(BaseModelWithAccessors):
         }
 
         grouped_rules = defaultdict(list)
-        section_descriptions: dict = {}
+        section_descriptions = {}
 
         for yaml_file in Path(config["defaults"]["sections_dir"]).glob("*.y*ml"):
             section_data: dict = open_file(yaml_file)
@@ -214,7 +232,7 @@ class Baseline(BaseModelWithAccessors):
         for rule in rules:
             matched: bool = False
             for tag, section_name in special_sections.items():
-                if tag in rule.tags:
+                if rule.tags is not None and tag in rule.tags:
                     grouped_rules[section_name].append(rule)
                     matched = True
                     break
@@ -239,15 +257,15 @@ class Baseline(BaseModelWithAccessors):
         ]
 
         baseline = cls(
+            **baseline_dict,
             authors=authors,
             profile=profiles,
             name=output_file.stem,
-            title=baseline_title.strip(),
-            description=description.strip(),
             parent_values=benchmark,
         )
 
         baseline.to_yaml(output_path=output_file)
+        baseline.to_yaml(output_path=custom_output_file)
 
     def to_dataframe(self) -> pd.DataFrame:
         """
@@ -338,9 +356,6 @@ class Baseline(BaseModelWithAccessors):
 
         create_yaml(output_path, ordered_data)
         logger.success("Created baseline yaml: {}", output_path)
-
-    def get(self, attr, default=None):
-        return getattr(self, attr, default)
 
     @classmethod
     def load_all_from_folder(

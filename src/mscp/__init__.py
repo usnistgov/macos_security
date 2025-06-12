@@ -5,6 +5,7 @@ __version__ = "2.0.0"
 __all__ = [
     "Baseline",
     "Macsecurityrule",
+    "FileHandler",
     "Payload",
     "config",
     "append_text",
@@ -30,6 +31,7 @@ __all__ = [
 ]
 
 from .classes.baseline import Baseline
+from .classes.filehandler import FileHandler
 from .classes.macsecurityrule import Macsecurityrule
 from .classes.payload import Payload
 from .cli import main

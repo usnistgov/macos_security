@@ -22,6 +22,7 @@ class FileHandler(BaseModel):
         Initialize the FileHandler with a file path.
         """
         super().__init__()
+        self.setup_yaml()
         self.file_path = file_path
 
     @staticmethod

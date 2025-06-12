@@ -1,109 +1,4 @@
 ---
-authors:
-  all_rules: &all_rules_authors
-    - name: Bob Gendler
-      organization: National Institute of Standards and Technology
-    - name: Dan Brodjieski
-      organization: National Aeronautics and Space Administration
-    - name: Allen Golbig
-      organization: Jamf
-
-  800-53r5_high: &800_53r5_high_authors
-    <<: *all_rules_authors
-
-  800-53r5_moderate: &800_53r5_moderate_authors
-    <<: *all_rules_authors
-
-  800-53r5_low: &800_53r5_low_authors
-    <<: *all_rules_authors
-
-  800-171: &800_171_authors
-    <<: *all_rules_authors
-
-  cis_lvl1: &cis_lvl1_authors
-    - name: Edward Byrd
-      organization: Center for Internet Security
-    - name: Ron Colvin
-      organization: Center for Internet Security
-    - name: Allen Golbig
-      organization: Jamf
-
-  cis_lvl2: &cis_lvl2_authors
-    - name: Edward Byrd
-      organization: Center for Internet Security
-    - name: Ron Colvin
-      organization: Center for Internet Security
-    - name: Allen Golbig
-      organization: Jamf
-
-  cisv8: &cis_v8_authors
-    - *all_rules_authors
-    - name: Edward Byrd|
-      organization: Center for Internet Security
-
-  cmmc_lvl1: &cmmc_lvl1_authors
-    - *all_rules_authors
-    - name: John Mahlman
-      organization: Leidos
-
-  cmmc_lvl2: &cmmc_lvl2_authors
-    - *all_rules_authors
-    - name: John Mahlman
-      organization: Leidos
-
-  cnssi-1253_low: &cnssi_1253_low_authors
-    - name: Bob Gendler
-      organization: National Institute of Standards and Technology
-    - name: Rob Lamb
-      organization: Los Alamos National Laboratory
-    - name: Ekkehard Koch
-      organization: ""
-
-  cnssi-1253_moderate: &cnssi_1253_moderate_authors
-    - name: Bob Gendler
-      organization: National Institute of Standards and Technology
-    - name: Rob Lamb
-      organization: Los Alamos National Laboratory
-    - name: Ekkehard Koch
-      organization: ""
-
-  cnssi-1253_high: &cnssi_1253_high_authors
-    - name: Bob Gendler
-      organization: National Institute of Standards and Technology
-    - name: Rob Lamb
-      organization: Los Alamos National Laboratory
-    - name: Ekkehard Koch
-      organization: ""
-
-  stig: &stig_authors
-    - *all_rules_authors
-    - name: Aaron Kegerreis
-      organization: Defense Information Systems Agency
-
-  bsi: &bsi_authors
-    - name: Henry Stamerjohann
-      organization: Zentral Pro Services GmbH
-    - name: Allen Golbig
-      organization: Jamf
-    - name: Bob Gendler
-      organization: National Institute of Standards and Technology
-
-titles:
-  all_rules: All Rules
-  800-53r5_high: NIST SP 800-53 Rev 5 High Impact
-  800-53r5_moderate: NIST SP 800-53 Rev 5 Moderate Impact
-  800-53r5_low: NIST SP 800-53 Rev 5 Low Impact
-  800-171: NIST 800-171 Rev 3
-  cis_lvl1: CIS Apple macOS 15.0 Sequoia v1.0.0 Benchmark (Level 1)
-  cis_lvl2: CIS Apple macOS 15.0 Sequoia v1.0.0 Benchmark (Level 2)
-  cmmc_lvl1: US CMMC 2.0 Level 1
-  cmmc_lvl2: US CMMC 2.0 Level 2
-  cisv8: CIS Controls Version 8
-  cnssi-1253_low: Committee on National Security Systems Instruction No. 1253 (Low)
-  cnssi-1253_moderate: Committee on National Security Systems Instruction No. 1253 (Moderate)
-  cnssi-1253_high: Committee on National Security Systems Instruction No. 1253 (High)
-  stig: Apple macOS 15 (Sequoia) STIG - Ver 1, Rel 1
-
 ddm:
   supported_types:
     - com.apple.configuration.services.configuration-files
@@ -125,7 +20,13 @@ baselines:
       This guide describes the actions to take when securing a $os_type $os_version system against the All Rules security baseline.
 
       Information System Security Officers and benchmark creators can use this catalog of settings in order to assist them in security benchmark creation. This list is a catalog, not a checklist or benchmark, and satisfaction of every item is not likely to be possible or sensible in many operational scenarios.
-    authors: *all_rules_authors
+    authors: &all_rules_authors
+      - name: Bob Gendler
+        organization: National Institute of Standards and Technology
+      - name: Dan Brodjieski
+        organization: National Aeronautics and Space Administration
+      - name: Allen Golbig
+        organization: Jamf
     tag: all_rules
 
   800-53r5_high:
@@ -134,7 +35,7 @@ baselines:
       This guide describes the actions to take when securing a $os_type $os_version system against the NIST SP 800-53 Rev 5 High Impact security baseline.
 
       Information System Security Officers and benchmark creators can use this catalog of settings in order to assist them in security benchmark creation. This list is a catalog, not a checklist or benchmark, and satisfaction of every item is not likely to be possible or sensible in many operational scenarios.
-    authors: *800_53r5_high_authors
+    authors: *all_rules_authors
     tag: 800-53r5_high
 
   800-53r5_moderate:
@@ -143,7 +44,7 @@ baselines:
       This guide describes the actions to take when securing a $os_type $os_version system against the NIST SP 800-53 Rev 5 Moderate Impact security baseline.
 
       Information System Security Officers and benchmark creators can use this catalog of settings in order to assist them in security benchmark creation. This list is a catalog, not a checklist or benchmark, and satisfaction of every item is not likely to be possible or sensible in many operational scenarios.
-    authors: *800_53r5_moderate_authors
+    authors: *all_rules_authors
     tag: 800-53r5_moderate
 
   800-53r5_low:
@@ -152,7 +53,7 @@ baselines:
       This guide describes the actions to take when securing a $os_type $os_version system against the NIST SP 800-53 Rev 5 Low Impact security baseline.
 
       Information System Security Officers and benchmark creators can use this catalog of settings in order to assist them in security benchmark creation. This list is a catalog, not a checklist or benchmark, and satisfaction of every item is not likely to be possible or sensible in many operational scenarios.
-    authors: *800_53r5_low_authors
+    authors: *all_rules_authors
     tag: 800-53r5_low
 
   800-171:
@@ -161,7 +62,7 @@ baselines:
       This guide describes the actions to take when securing a $os_type $os_version system against the NIST 800-171 Rev 3 security baseline.
 
       Information System Security Officers and benchmark creators can use this catalog of settings in order to assist them in security benchmark creation. This list is a catalog, not a checklist or benchmark, and satisfaction of every item is not likely to be possible or sensible in many operational scenarios.
-    authors: *800_171_authors
+    authors: *all_rules_authors
     tag: 800-171
 
   cis_lvl1:
@@ -170,7 +71,13 @@ baselines:
       This guide describes the actions to take when securing a $os_type $os_version system against the CIS Apple $os_type $os_version $os_name v1.0.0 Benchmark (Level 1) security baseline.
 
       Information System Security Officers and benchmark creators can use this catalog of settings in order to assist them in security benchmark creation. This list is a catalog, not a checklist or benchmark, and satisfaction of every item is not likely to be possible or sensible in many operational scenarios.
-    authors: *cis_lvl1_authors
+    authors: &cis_authors
+        - name: Edward Byrd
+          organization: Center for Internet Security
+        - name: Ron Colvin
+          organization: Center for Internet Security
+        - name: Allen Golbig
+          organization: Jamf
     tag: cis_lvl1
 
   cis_lvl2:
@@ -179,7 +86,7 @@ baselines:
       This guide describes the actions to take when securing a $os_type $os_version system against the CIS Apple $os_type $os_version $os_name v1.0.0 Benchmark (Level 2) security baseline.
 
       Information System Security Officers and benchmark creators can use this catalog of settings in order to assist them in security benchmark creation. This list is a catalog, not a checklist or benchmark, and satisfaction of every item is not likely to be possible or sensible in many operational scenarios.
-    authors: *cis_lvl2_authors
+    authors: *cis_authors
     tag: cis_lvl2
 
   cmmc_lvl1:
@@ -188,7 +95,11 @@ baselines:
       This guide describes the actions to take when securing a $os_type $os_version system against the US CMMC 2.0 Level 1 security baseline.
 
       Information System Security Officers and benchmark creators can use this catalog of settings in order to assist them in security benchmark creation. This list is a catalog, not a checklist or benchmark, and satisfaction of every item is not likely to be possible or sensible in many operational scenarios.
-    authors: *cmmc_lvl1_authors
+    authors: &cmmc_authors
+      - *all_rules_authors
+      - name: John Mahlman
+        organization: Leidos
+
     tag: cmmc_lvl1
 
   cmmc_lvl2:
@@ -197,7 +108,7 @@ baselines:
       This guide describes the actions to take when securing a $os_type $os_version system against the US CMMC 2.0 Level 2 security baseline.
 
       Information System Security Officers and benchmark creators can use this catalog of settings in order to assist them in security benchmark creation. This list is a catalog, not a checklist or benchmark, and satisfaction of every item is not likely to be possible or sensible in many operational scenarios.
-    authors: *cmmc_lvl2_authors
+    authors: *cmmc_authors
     tag: cmmc_lvl2
 
   cisv8:
@@ -206,7 +117,10 @@ baselines:
       This guide describes the actions to take when securing a $os_type $os_version system against the CIS Controls Version 8 security baseline.
 
       Information System Security Officers and benchmark creators can use this catalog of settings in order to assist them in security benchmark creation. This list is a catalog, not a checklist or benchmark, and satisfaction of every item is not likely to be possible or sensible in many operational scenarios.
-    authors: *cis_v8_authors
+    authors:
+      - *all_rules_authors
+      - name: Edward Byrd
+        organization: Center for Internet Security
     tag: cisv8
 
   cnssi-1253_low:
@@ -215,7 +129,13 @@ baselines:
       This guide describes the actions to take when securing a $os_type $os_version system against the Committee on National Security Systems Instruction No. 1253 (Low) security baseline.
 
       Information System Security Officers and benchmark creators can use this catalog of settings in order to assist them in security benchmark creation. This list is a catalog, not a checklist or benchmark, and satisfaction of every item is not likely to be possible or sensible in many operational scenarios.
-    authors: *cnssi_1253_low_authors
+    authors: &cnssi_1253_authors
+      - name: Bob Gendler
+        organization: National Institute of Standards and Technology
+      - name: Rob Lamb
+        organization: Los Alamos National Laboratory
+      - name: Ekkehard Koch
+        organization: ""
     tag: cnssi-1253_low
 
   cnssi-1253_moderate:
@@ -224,7 +144,7 @@ baselines:
       This guide describes the actions to take when securing a $os_type $os_version system against the Committee on National Security Systems Instruction No. 1253 (Moderate) security baseline.
 
       Information System Security Officers and benchmark creators can use this catalog of settings in order to assist them in security benchmark creation. This list is a catalog, not a checklist or benchmark, and satisfaction of every item is not likely to be possible or sensible in many operational scenarios.
-    authors: *cnssi_1253_moderate_authors
+    authors: *cnssi_1253_authors
     tag: cnssi-1253_moderate
 
   cnssi-1253_high:
@@ -233,7 +153,7 @@ baselines:
       This guide describes the actions to take when securing a $os_type $os_version system against the Committee on National Security Systems Instruction No. 1253 (High) security baseline.
 
       Information System Security Officers and benchmark creators can use this catalog of settings in order to assist them in security benchmark creation. This list is a catalog, not a checklist or benchmark, and satisfaction of every item is not likely to be possible or sensible in many operational scenarios.
-    authors: *cnssi_1253_high_authors
+    authors: *cnssi_1253_authors
     tag: cnssi-1253_high
 
   stig:
@@ -242,7 +162,10 @@ baselines:
       This guide describes the actions to take when securing a $os_type $os_version system against the Apple os_type $os_version ($os_name) STIG - Ver 1, Rel 1 security baseline.
 
       Information System Security Officers and benchmark creators can use this catalog of settings in order to assist them in security benchmark creation. This list is a catalog, not a checklist or benchmark, and satisfaction of every item is not likely to be possible or sensible in many operational scenarios.
-    authors: *stig_authors
+    authors:
+      - *all_rules_authors
+      - name: Aaron Kegerreis
+        organization: Defense Information Systems Agency
     tag: stig
 
   indigo_base:
@@ -251,7 +174,13 @@ baselines:
       This guide describes the actions to take when securing a $os_type $os_version system against the BSI indigo Base Configuration security baseline.
 
       Information System Security Officers and benchmark creators can use this catalog of settings in order to assist them in security benchmark creation. This list is a catalog, not a checklist or benchmark, and satisfaction of every item is not likely to be possible or sensible in many operational scenarios.
-    authors: *bsi_authors
+    authors: &bsi_authors
+      - name: Henry Stamerjohann
+        organization: Zentral Pro Services GmbH
+      - name: Allen Golbig
+        organization: Jamf
+      - name: Bob Gendler
+        organization: National Institute of Standards and Technology
     tag: indigo_base
 
   indigo_high:

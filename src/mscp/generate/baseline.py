@@ -4,50 +4,53 @@
 import argparse
 import sys
 from pathlib import Path
+from typing import Any
 
 # Additional python modules
 from loguru import logger
 
 # Local python modules
 from src.mscp.classes import Author, Baseline, Macsecurityrule
-from src.mscp.common_utils import (
-    config,
-    get_version_data,
-    make_dir,
-    open_file,
-    remove_dir_contents,
-    sanitize_input,
-)
+from src.mscp.common_utils import config, make_dir, open_file, sanitize_input
 
 
 def generate_baseline(args: argparse.Namespace) -> None:
     build_path: Path = Path(config.get("output_dir", ""), "baselines")
     baseline_output_file: Path = build_path / f"{args.keyword}.yaml"
-    mscp_data: dict = open_file(Path(config.get("mspc_data", "")))
+    mscp_data: dict[str, Any] = open_file(Path(config.get("mspc_data", "")))
     baselines_data: dict = open_file(
         Path(config.get("includes_dir", ""), "800-53_baselines.yaml")
     )
-    established_benchmarks: tuple = tuple(["stig", "cis_lvl1", "cis_lvl2"])
+    established_benchmarks: tuple[str, ...] = ("stig", "cis_lvl1", "cis_lvl2")
     benchmark: str = "recommended"
     full_title: str = args.keyword
     authors: list[Author] = []
-    baseline_name: str = ""
+    baseline_name: str | None = None
 
-    current_version_data: dict = get_version_data(args.os_name, args.os_version)
-    all_rules: list[Macsecurityrule] = Macsecurityrule.collect_all_rules(
-        args.os_name, args.os_version, parent_values="Default"
-    )
-    all_tags: list[str] = sorted(
-        set(tag for rule in all_rules for tag in rule.tags if "800-53r4" not in tag)
-        | {"all_rules"}
-    )
+    def replace_vars(text: str) -> str:
+        return text.replace("$os_type", str(args.os_name.replace("os", "OS"))).replace(
+            "$os_version", str(args.os_version)
+        )
 
     if not build_path.exists():
         make_dir(build_path)
-    else:
-        remove_dir_contents(build_path)
+
+    all_rules: list[Macsecurityrule] = Macsecurityrule.collect_all_rules(
+        args.os_name, args.os_version, parent_values="Default"
+    )
+
+    all_tags: list[str] = sorted(
+        set(
+            tag
+            for rule in all_rules
+            for tag in (rule.tags or [])
+            if "800-53r4" not in tag
+        )
+        | {"all_rules"}
+    )
 
     if args.list_tags:
+        logger.debug(all_tags)
         for tag in all_tags:
             print(tag)
 
@@ -58,7 +61,7 @@ def generate_baseline(args: argparse.Namespace) -> None:
             {
                 control
                 for rule in all_rules
-                for control in rule.references.nist.nist_800_53r5
+                for control in (rule.references.nist.nist_800_53r5 or [])
             }
         )
 
@@ -74,31 +77,40 @@ def generate_baseline(args: argparse.Namespace) -> None:
 
         sys.exit()
 
+    if not args.keyword:
+        logger.info(
+            "No rules found for the keyword provided, please verify from the following list:"
+        )
+        logger.debug(all_tags)
+        for tag in all_tags:
+            print(tag)
+
+        sys.exit()
+
+    baseline_dict: dict[str, Any] = mscp_data.get("baselines", {}).get(args.keyword, {})
+
+    if not baseline_dict:
+        logger.warning(f"No baseline found for keyword: {args.keyword}")
+
     found_rules: list[Macsecurityrule] = [
         rule
         for rule in all_rules
         if args.keyword in rule.tags or args.keyword == "all_rules"
     ]
 
-    if not args.keyword:
-        logger.info(
-            "No rules found for the keyword provided, please verify from the following list:"
-        )
-        logger.info(all_tags)
-        for tag in all_tags:
-            print(tag)
-
-        sys.exit()
+    baseline_dict["title"] = replace_vars(baseline_dict["title"])
+    baseline_dict["description"] = replace_vars(baseline_dict["description"])
 
     if any(bm in args.keyword for bm in established_benchmarks):
         benchmark = args.keyword
 
-    if args.keyword in mscp_data.get("authors", {}):
-        author_dicts: dict = mscp_data["authors"][args.keyword]["names"]
-        authors = [Author(**author) for author in author_dicts]
+    authors: list[Author] = [
+        Author(**author)
+        for group in baseline_dict.get("authors", [])
+        for author in (group if isinstance(group, list) else [group])
+    ]
 
-    if args.keyword in mscp_data["titles"] and not args.tailor:
-        full_title = mscp_data["titles"][args.keyword]
+    baseline_dict.pop("authors", None)
 
     if args.tailor:
         full_title = ""
@@ -126,9 +138,11 @@ def generate_baseline(args: argparse.Namespace) -> None:
     Baseline.create_new(
         output_file=baseline_output_file,
         rules=odv_baseline_rules if args.tailor else found_rules,
-        version_data=current_version_data,
         baseline_name=baseline_name,
         benchmark=benchmark,
         authors=authors,
         full_title=full_title,
+        os_type=args.os_name,
+        os_version=args.os_version,
+        baseline_dict=baseline_dict,
     )
