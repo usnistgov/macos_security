@@ -10,27 +10,26 @@ export default defineConfig({
 			logo: {
 				src: './src/assets/logo.png',
 			},
-			head: [
-				{
-					tag: 'link',
-					attrs: {
-						rel: 'stylesheet',
-						href: 'https://pages.nist.gov/nist-header-footer/css/nist-combined.css',
-					},
-
-				},
-				{
-					tag: 'script',
-					attrs: {
-						src: 'https://pages.nist.gov/nist-header-footer/js/nist-header-footer-v-2.0.js',
-						type: 'text/javascript',
-						defer: 'defer',
-					},
-				},
-			],
 			customCss: [
 				// Path to your custom CSS file
 				'./src/styles/custom.css',
+			],
+head: [
+			  {
+			    tag: 'link',
+    			    attrs: {
+				rel: 'stylesheet',
+			        href: './nist-combined.css',
+				},
+			},
+			{
+                            tag: 'script',
+                            attrs: {
+                                src: './nist-header-footer.js',
+                                type: 'text/javascript',
+                                defer: 'defer',
+				 },
+                        },
 			],
 			social: {
 				slack: 'https://macadmins.slack.com/archives/C0158JKQTC5',
@@ -53,6 +52,7 @@ export default defineConfig({
 						{ label: 'Tailoring', link: '/guides/how-to/tailoring/' },
 						{ label: 'Generate Guidance', link: '/guides/how-to/generate-guidance/' },
 						{ label: 'Generate Configuration Profiles', link: '/guides/how-to/generate-profiles/' },
+						{ label: 'Generate DDM Components', link: '/guides/how-to/generate-declarative/' },
 						{ label: 'Compliance Script', link: '/guides/how-to/compliance-script/' },
 						{ label: 'Exemptions', link: '/guides/how-to/exemptions/' },
 						{ label: 'Customization', link: '/guides/how-to/customization/' },

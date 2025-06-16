@@ -64,3 +64,17 @@ Thu Jan 21 15:09:41 UTC 2021 auth_smartcard_enforce has an exemption (Reason: Br
 
 **💡 TIP**\
 To add a custom reference in front of the rule in the `{baseline}_baseline.log` use the `-r` flag along with the custom reference **(case sensitive)** when running the `generate_guidance.py` script.
+
+Compliance Script Command Line Argument Reference
+
+|Argument|Description|
+|-------|---|
+|--check|`optional` Run the compliance checks without interaction|
+|--fix|`optional` Run the remediation commands without interaction|
+|--cfc|`optional` Runs a check, fix, check without interaction|
+|--stats|`optional` Display the statistics from last compliance check|
+|--compliant|`optional` Reports the number of compliant checks|
+|--non_compliant|`optional` Reports the number of non compliant checks|
+|--reset|`optional` Clear out all results for current baseline|
+|--reset-all|`optional` Clear out all results for ALL mSCP baselines|
+|--quiet=\<value\>|`optional`&ensp;`1`: show only failed and exempted checks in output\\&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;`2`: show minimal output|
