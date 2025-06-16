@@ -16,7 +16,7 @@ concurrency:
 
 env:
   BUILD_PATH: "."
-  SITE_PATH: "https://brodjieski.github.io/"
+  SITE_PATH: "https://pages.nist.gov/"
   BASE_PATH: "/macos_security"
 
 jobs:

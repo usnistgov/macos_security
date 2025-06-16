@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', function () {
           this.responseText;
     }
   };
-  headerRequest.open('GET', 'https://brodjieski.github.io/macos_security/' +
+  headerRequest.open('GET', 'https://pages.nist.gov/macos_security/' +
       'boilerplate-header.html' + cache);
   headerRequest.send();
 
@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', function () {
           this.responseText;
     }
   };
-  footerRequest.open('GET', 'https://brodjieski.github.io/macos_security/' +
+  footerRequest.open('GET', 'https://pages.nist.gov/macos_security/' +
       'boilerplate-footer.html' + cache);
   footerRequest.send();
 
