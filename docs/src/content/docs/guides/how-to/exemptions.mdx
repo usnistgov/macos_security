@@ -1,0 +1,25 @@
+---
+title: Exemptions
+description: A exemptions reference.
+---
+
+The `org.{baseline}.audit.plist` is used to set an exemption to rules that users in your organization have approval to be configured out of compliance. Exemptions allow these systems to be reported as compliant even when the setting is configured different from the rule’s expected result. While the check will still be identified as a finding in the logs and .plist file, having it also marked as exempt will allow reporting tools to exclude it from being non-compliant.
+
+This file can either exist in `/Library/Preferences/org.{baseline}.audit.plist` or applied via a custom configuration profile.
+
+To set an exemption for a rule, `exempt` should be set to true and an `exempt_reason` should be added. To set an exemption for `auth_smartcard_enforce` the rule, run the following:
+
+```
+sudo /usr/libexec/PlistBuddy -c "Add :auth_smartcard_enforce:exempt bool true" /Library/Preferences/org.800-53r5_moderate.audit.plist
+sudo /usr/libexec/PlistBuddy -c "Add :auth_smartcard_enforce:exempt_reason string 'Reader Issues'" /Library/Preferences/org.800-53r5_moderate.audit.plist
+
+/usr/libexec/PlistBuddy -c "Print auth_smartcard_enforce" /Library/Preferences/org.800-53r5_moderate.audit.plist
+Dict {
+    finding = true
+    exempt = true
+    exempt_reason = Reader Issues
+}
+```
+
+**📌 NOTE**\
+If `org.{baseline}.audit.plist` is not set, the script will default `exempt` to false.
