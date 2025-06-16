@@ -1,6 +1,0 @@
-.DS_Store
-.vscode
-*.lock
-.bundle
-bin
-mscp_gems
