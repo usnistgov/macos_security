@@ -19,13 +19,13 @@ head: [
 			    tag: 'link',
     			    attrs: {
 				rel: 'stylesheet',
-			        href: './nist-combined.css',
+			        href: 'https://pages.nist.gov/nist-header-footer/css/nist-combined.css',
 				},
 			},
 			{
                             tag: 'script',
                             attrs: {
-                                src: './nist-header-footer.js',
+                                src: 'https://pages.nist.gov/nist-header-footer/js/nist-header-footer-v-2.0.js',
                                 type: 'text/javascript',
                                 defer: 'defer',
 				 },
