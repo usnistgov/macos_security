@@ -1,0 +1,36 @@
+---
+title: macOS Security Compliance Project
+description: The macOS security compliance project is an open source effort to provide a programmatic approach to generating security guidance.
+template: splash
+hero:
+  tagline: This is the macOS Security Compliance Project Wiki
+  image:
+    file: ../../assets/logo.png
+  actions:
+    - text: Introduction
+      link: /macos_security/guides/introduction/
+      icon: right-arrow
+    - text: Getting Started
+      link: /macos_security/guides/getting-started/
+      icon: external
+      variant: minimal
+---
+
+import { Card, CardGrid } from '@astrojs/starlight/components';
+
+## Quick Links
+
+<CardGrid cols={3}>
+	<Card title="How To" icon="setting">
+		Learn how to generate baselines, guidance documents, configuration profiles, and more.
+		[View How-To Guides](/macos_security/guides/how-to/generate-baseline/)
+	</Card>
+	<Card title="Repository" icon="document">
+		Explore the repository structure, including baselines, rules, sections, and scripts.
+		[Browse Repository](/macos_security/reference/layout/)
+	</Card>
+	<Card title="More Information" icon="open-book">
+		Find additional resources, contribution notes, presentations and training, and the FAQ.
+		[Learn More](/macos_security/reference/more/resources/)
+	</Card>
+</CardGrid>

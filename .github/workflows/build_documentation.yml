@@ -1,0 +1,53 @@
+name: Build documentation site to nist-pages
+
+on:
+  push:
+    branches: ["main"]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+env:
+  BUILD_PATH: "."
+  SITE_PATH: "https://brodjieski.github.io/"
+  BASE_PATH: "/macos_security"
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup PNPM
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: pnpm
+          cache-dependency-path: ${{ env.BUILD_PATH }}/docs/pnpm-lock.yaml
+      - name: Install dependencies
+        run: pnpm install
+        working-directory: ${{ env.BUILD_PATH }}/docs
+      - name: Build with Astro
+        run: |
+          pnpm astro build \
+            --site "${{ env.SITE_PATH }}" \
+            --base "${{ env.BASE_PATH }}"
+        working-directory: ${{ env.BUILD_PATH }}/docs
+      - name: Upload to nist-pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ${{ env.BUILD_PATH }}/docs/dist
+          publish_branch: nist-pages

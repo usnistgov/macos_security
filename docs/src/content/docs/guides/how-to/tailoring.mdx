@@ -1,0 +1,49 @@
+---
+title: Tailoring
+description: A tailoring reference.
+---
+
+The project makes it simple for organizations to construct a tailored benchmark whether starting from one of the NIST 800-53 control baselines, or customizing an already established benchmark. Tailoring a benchmark is different than customizing specific rules. See [Customization](https://github.com/usnistgov/macos_security/wiki/Customization) to learn more.
+
+**Organization Defined Values**
+
+Organization Defined Values, or ODVs, are values determined for controls that meet both the security and functional requirements in an organization. Benchmark authors, like DISA and CIS provide these values for their respective published guidance. In the project, we include recommended values, as well as the defined values for the DISA STIG and CIS Benchmarks as part of the ODV field in the YAML.
+
+## Tailoring a Benchmark
+
+Running the generate_baseline script with the new `-t` argument will step you through the tailoring process. The process will start by prompting for the following:
+
+* Benchmark Name
+* Author’s Name
+* Organization
+
+```
+➜  macos_security git:(sequoia) ./scripts/generate_baseline.py -k 800-53r5_moderate -t
+Enter a name for your tailored benchmark or press Enter for the default value (800-53r5_moderate): MyOrgs_Benchmark
+Enter your name: Allen Golbig
+Enter your organization: MyOrg
+The inclusion of any given rule is a risk-based-decision (RBD).  While each rule is mapped to an 800-53 control, deploying it in your organization should be part of the decision-making process.
+You will be prompted to include each rule, and for those with specific organizational defined values (ODV), you will be prompted for those as well.
+```
+
+Once completed, you will be prompted whether or not to include each rule in your benchmark. 
+
+```
+Would you like to include the rule for "audit_acls_files_configure" in your benchmark? [Y/n/all/?]:
+```
+
+**📌 NOTE**\
+The `?` option with display additional details about the rule, to help an organization decide if it meets their requirements.
+
+If a rule contains an ODV, you will be prompted to assign a value that meets your organization’s requirements.   
+
+```
+Number of failed attempts.
+Enter the ODV for "pwpolicy_account_lockout_enforce" or press Enter for the recommended value (3):
+```
+
+After the tailoring process is completed, a new yaml file will be created in `build/baselines` and custom rules containing their ODV values will be created in `custom/rules/`. Now you can run the generate guidance script against that tailored benchmark.
+
+```
+./scripts/generate_guidance.py build/baselines/MyOrgs_Benchmark.yaml -p -s -x
+```
