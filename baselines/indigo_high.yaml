@@ -3,10 +3,6 @@ description: |
   This guide describes the actions to take when securing a iOS/iPadOS 18.0 system against the BSI indigo iOS 18.x High Configuration security baseline.
 
   Information System Security Officers and benchmark creators can use this catalog of settings in order to assist them in security benchmark creation. This list is a catalog, not a checklist or benchmark, and satisfaction of every item is not likely to be possible or sensible in many operational scenarios.
-
-  References: 
-  BSI-VSA-10900, Version 1.2, dated 07 March 2025  
-  BSI-VSA-10901, Version 1.2, dated 07 March 2025
 authors: |
   *macOS Security Compliance Project*
 
@@ -15,18 +11,18 @@ authors: |
   |Allen Golbig|Jamf
   |Bob Gendler|National Institute of Standards and Technology
   |===
-parent_values: "indigo_high"
+parent_values: "recommended"
 profile:
   - section: "icloud"
     rules:
       - icloud_backup_disabled
+      - icloud_drive_disable
       - icloud_enterprisebook_metadata_sync_disable
       - icloud_keychain_disable
       - icloud_managed_apps_store_data_disabled
       - icloud_photo_stream_disable
       - icloud_photos_disable
       - icloud_shared_photo_stream_disable
-      - icloud_drive_disable
   - section: "ios"
     rules:
       - os_account_modification_disable
@@ -35,7 +31,6 @@ profile:
       - os_airplay_incoming_password_require
       - os_airplay_outgoing_password_require
       - os_airprint_force_trusted_TLS
-      - os_airprint_disable
       - os_allow_contacts_read_managed_sources_unmanaged_destinations_disable
       - os_allow_contacts_write_managed_sources_unmanaged_destinations_disable
       - os_allow_documents_managed_sources_unmanaged_destinations_disable
