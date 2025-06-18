@@ -18,6 +18,12 @@ from xml.sax.saxutils import escape
 
 warnings.filterwarnings("ignore", category=DeprecationWarning) 
 
+def validate_file(arg):
+    if (file := Path(arg)).is_file():
+        return file
+    else:
+        raise FileNotFoundError(arg)
+
 def format_mobileconfig_fix(mobileconfig):
     """Takes a list of domains and setting from a mobileconfig, and reformats it for the output of the fix section of the guide.
     """
@@ -88,6 +94,22 @@ def replace_ocil(xccdf, x):
     result = re.sub(regex, substr, xccdf, 0, re.MULTILINE)
     return result
 
+def disa_stig_rules(stig_id, stig):
+    newtitle = str()
+    regex = r"<title>(SRG.*\d)<\/title>.*.{}".format(stig_id)
+    matches = re.search(regex,stig)
+    #SRG
+    if matches:   
+        newtitle = str(matches.group(1))
+
+    regex = r"Rule id=\"(.*\S)\" we.*.{}".format(stig_id)
+    matches = re.search(regex,stig)
+    #RuleID
+    if matches:
+        newtitle = newtitle + ", " + str(matches.group(1).split("_")[0])
+            
+    # srg-123-456. SV-7891234
+    return newtitle	
 
 def create_args():
     
@@ -101,10 +123,11 @@ def create_args():
                         help="List the available keyword tags to search for.", action="store_true")
     parser.add_argument("-b", "--baseline", default="None",
                         help="Choose a baseline to generate an xml file for, if none is specified it will generate for every rule found.", action="store")
+    parser.add_argument('--disastig','-d', default=None, type=validate_file, help="DISA STIG File", required=False)                        
 
     return parser.parse_args()
 
-def generate_scap(all_rules, all_baselines, args):
+def generate_scap(all_rules, all_baselines, args, stig):
     
     export_as = ""
 
@@ -305,7 +328,10 @@ def generate_scap(all_rules, all_baselines, args):
                 rule_yaml['check'] = rule_yaml['check'].replace("$ODV",odv_value)
                 
                 rule_yaml['fix'] = rule_yaml['fix'].replace("$ODV",odv_value)
-            
+                
+
+
+                
                 if "result" in rule_yaml:
                     for result_value in rule_yaml['result']:
                         if "$ODV" == rule_yaml['result'][result_value]:
@@ -327,7 +353,9 @@ def generate_scap(all_rules, all_baselines, args):
                 
             except:
                 odv_label = "recommended"
-                
+            if args.disastig and args.oval:
+                rule_yaml['title'] = disa_stig_rules(rule_yaml['references']['disa_stig'][0], stig)   
+
             for baseline in all_baselines:
                     found_rules = []
                     for tag in rule_yaml['tags']:
@@ -735,7 +763,7 @@ def generate_scap(all_rules, all_baselines, args):
                     <criterion comment="{}" test_ref="oval:mscp:tst:{}" />
                 </criteria> 
             </definition>
-            '''.format(x,rule_yaml['title'],cce,rule_yaml['id'] + "_" + odv_label,rule_yaml['discussion'].rstrip(),rule_yaml['id'] + "_" + odv_label,x)
+            '''.format(x,rule_yaml['title'],cce,rule_yaml['id'] + "_" + odv_label,rule_yaml['discussion'].rstrip().replace("&","&amp;"),rule_yaml['id'] + "_" + odv_label,x)
 
                                 oval_test = oval_test + '''
             <plist511_test xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" check="all" check_existence="only_one_exists" comment="{}_test" id="oval:mscp:tst:{}" version="2">
@@ -824,7 +852,7 @@ def generate_scap(all_rules, all_baselines, args):
                     <criterion comment="{}" test_ref="oval:mscp:tst:{}" />
                 </criteria> 
             </definition>
-            '''.format(x,rule_yaml['title'],cce,rule_yaml['id'] + "_" + odv_label,rule_yaml['discussion'].rstrip(),rule_yaml['id'] + "_" + odv_label,x)
+            '''.format(x,rule_yaml['title'],cce,rule_yaml['id'] + "_" + odv_label,rule_yaml['discussion'].rstrip().replace("&","&amp;"),rule_yaml['id'] + "_" + odv_label,x)
 
                             oval_test = oval_test + '''
             <plist511_test xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" check="all" check_existence="only_one_exists" comment="{}_test" id="oval:mscp:tst:{}" version="2">
@@ -890,7 +918,7 @@ def generate_scap(all_rules, all_baselines, args):
                     <criterion comment="{}" test_ref="oval:mscp:tst:{}" />
                 </criteria> 
             </definition>
-            '''.format(x,rule_yaml['title'],cce,rule_yaml['id'] + "_" + odv_label,rule_yaml['discussion'].rstrip(),rule_yaml['id'] + "_" + odv_label,x)
+            '''.format(x,rule_yaml['title'],cce,rule_yaml['id'] + "_" + odv_label,rule_yaml['discussion'].rstrip().replace("&","&amp;"),rule_yaml['id'] + "_" + odv_label,x)
 
                             oval_test = oval_test + '''
             <plist511_test xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" check="all" check_existence="only_one_exists" comment="{}_test" id="oval:mscp:tst:{}" version="2">
@@ -955,7 +983,7 @@ def generate_scap(all_rules, all_baselines, args):
                     <criterion comment="{}" test_ref="oval:mscp:tst:{}" />
                 </criteria> 
             </definition>
-            '''.format(x,rule_yaml['title'],cce,rule_yaml['id'] + "_" + odv_label,rule_yaml['discussion'].rstrip(),rule_yaml['id'] + "_" + odv_label,x)
+            '''.format(x,rule_yaml['title'],cce,rule_yaml['id'] + "_" + odv_label,rule_yaml['discussion'].rstrip().replace("&","&amp;"),rule_yaml['id'] + "_" + odv_label,x)
 
                             oval_test = oval_test + '''
             <plist511_test xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" check="all" check_existence="only_one_exists" comment="{}_test" id="oval:mscp:tst:{}" version="2">
@@ -1021,7 +1049,7 @@ def generate_scap(all_rules, all_baselines, args):
                     <criterion comment="{}" test_ref="oval:mscp:tst:{}" />
                 </criteria> 
             </definition>
-            '''.format(x,rule_yaml['title'],cce,rule_yaml['id'] + "_" + odv_label,rule_yaml['discussion'].rstrip(),rule_yaml['id'] + "_" + odv_label,x)
+            '''.format(x,rule_yaml['title'],cce,rule_yaml['id'] + "_" + odv_label,rule_yaml['discussion'].rstrip().replace("&","&amp;"),rule_yaml['id'] + "_" + odv_label,x)
 
                             oval_test = oval_test + '''
             <plist511_test xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" check="all" check_existence="only_one_exists" comment="{}_test" id="oval:mscp:tst:{}" version="2">
@@ -1092,7 +1120,7 @@ def generate_scap(all_rules, all_baselines, args):
                     <criterion comment="{}" test_ref="oval:mscp:tst:{}" />
                 </criteria> 
             </definition>
-            '''.format(x,rule_yaml['title'],cce,rule_yaml['id'] + "_" + odv_label,rule_yaml['discussion'].rstrip(),rule_yaml['id'] + "_" + odv_label,x)
+            '''.format(x,rule_yaml['title'],cce,rule_yaml['id'] + "_" + odv_label,rule_yaml['discussion'].rstrip().replace("&","&amp;"),rule_yaml['id'] + "_" + odv_label,x)
 
                         oval_test = oval_test + '''
             <plist511_test xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" check="all" check_existence="only_one_exists" comment="{}_test" id="oval:mscp:tst:{}" version="2">
@@ -1176,7 +1204,7 @@ def generate_scap(all_rules, all_baselines, args):
                         <criterion comment="com.apple.syspolicy.kernel-extension-policy" test_ref="oval:mscp:tst:{}" />
                         <criterion comment="com.apple.TCC.configuration-profile-policy" test_ref="oval:mscp:tst:{}" />
                     </criteria> 
-                </definition>'''.format(x,rule_yaml['title'],cce,rule_yaml['id'] + "_" + odv_label,rule_yaml['discussion'],x,x+899,x+799)
+                </definition>'''.format(x,rule_yaml['title'],cce,rule_yaml['id'] + "_" + odv_label,rule_yaml['discussion'].replace("&","&amp;"),x,x+899,x+799)
 
                             oval_test = oval_test + '''
                                 <file_test id="oval:mscp:tst:{}" version="1" comment="com.apple.extensiblesso_test" check_existence="all_exist" check="all" xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#unix">
@@ -1223,7 +1251,7 @@ def generate_scap(all_rules, all_baselines, args):
                         <criterion comment="{}" test_ref="oval:mscp:tst:{}" />
                     </criteria>
                 </definition>
-                '''.format(x,rule_yaml['title'],cce,rule_yaml['id'] + "_" + odv_label,rule_yaml['discussion'],rule_yaml['id'] + "_" + odv_label,x)
+                '''.format(x,rule_yaml['title'],cce,rule_yaml['id'] + "_" + odv_label,rule_yaml['discussion'].replace("&","&amp;"),rule_yaml['id'] + "_" + odv_label,x)
 
                         oval_test = oval_test + '''
                             <systemprofiler_test xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" check="all" check_existence="only_one_exists" comment="{}_test" id="oval:mscp:tst:{}" version="2">
@@ -1294,7 +1322,7 @@ def generate_scap(all_rules, all_baselines, args):
                         <criterion comment="{}" test_ref="oval:mscp:tst:{}" />
                         <criterion comment="{}" test_ref="oval:mscp:tst:{}" />
                     </criteria>
-                </definition> '''.format(x,rule_yaml['title'],cce,rule_yaml['id'] + "_" + odv_label,rule_yaml['discussion'],rule_yaml['id'] +"_standbydelayhigh",x, rule_yaml['id'] +"_standbydelaylow",x+877, rule_yaml['id'] +"_highstandbythreshold",x+888)
+                </definition> '''.format(x,rule_yaml['title'],cce,rule_yaml['id'] + "_" + odv_label,rule_yaml['discussion'].replace("&","&amp;"),rule_yaml['id'] +"_standbydelayhigh",x, rule_yaml['id'] +"_standbydelaylow",x+877, rule_yaml['id'] +"_highstandbythreshold",x+888)
                         
                         
                         oval_test = oval_test + '''
@@ -1406,7 +1434,7 @@ def generate_scap(all_rules, all_baselines, args):
                     <criterion comment="{}" test_ref="oval:mscp:tst:{}" />
                     <criterion comment="{}_sudoers.d" test_ref="oval:mscp:tst:{}"/>
                 </criteria>
-            </definition> '''.format(x,rule_yaml['title'],cce,rule_yaml['id'] + "_" + odv_label,rule_yaml['discussion'],rule_yaml['id'] + "_" + odv_label,x,rule_yaml['id'] + "_" + odv_label, x, rule_yaml['id'] + "_" + odv_label,x+5051)
+            </definition> '''.format(x,rule_yaml['title'],cce,rule_yaml['id'] + "_" + odv_label,rule_yaml['discussion'].replace("&","&amp;"),rule_yaml['id'] + "_" + odv_label,x,rule_yaml['id'] + "_" + odv_label, x, rule_yaml['id'] + "_" + odv_label,x+5051)
                     
                         oval_test = oval_test + '''
                 <textfilecontent54_test id="oval:mscp:tst:{}" version="1" comment="{}_test" check_existence="all_exist" check="all" xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#independent">
@@ -1435,7 +1463,7 @@ def generate_scap(all_rules, all_baselines, args):
                 <textfilecontent54_object id="oval:mscp:obj:{}" version="1" comment="{}__sudoers.d_object" xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#independent">
                 <behaviors ignore_case="true"/>
                 <path>/etc/sudoers.d/</path>
-                <filename operation="pattern match">*</filename>
+                <filename operation="pattern match">.*</filename>
                 <pattern operation="pattern match">{}</pattern>
                 <instance datatype="int">1</instance>
             </textfilecontent54_object>'''.format(x+5051, rule_yaml['id'] + "_" + odv_label, check_string)
@@ -1460,7 +1488,7 @@ def generate_scap(all_rules, all_baselines, args):
                     <criterion comment="{}_tty_ticket" test_ref="oval:mscp:tst:{}" />
                     <criterion comment="{}_sudoers.d_tty_ticket" test_ref="oval:mscp:tst:{}"/>
                 </criteria>
-            </definition> '''.format(x,rule_yaml['title'],cce,rule_yaml['id'] + "_" + odv_label,rule_yaml['discussion'],rule_yaml['id'] + "_" + odv_label,x,rule_yaml['id'] + "_" + odv_label, x+8000, rule_yaml['id'] + "_" + odv_label,x+8001, rule_yaml['id'] + "_" + odv_label,x+8002,rule_yaml['id'] + "_" + odv_label,x+8003)
+            </definition> '''.format(x,rule_yaml['title'],cce,rule_yaml['id'] + "_" + odv_label,rule_yaml['discussion'].replace("&","&amp;"),rule_yaml['id'] + "_" + odv_label,x,rule_yaml['id'] + "_" + odv_label, x+8000, rule_yaml['id'] + "_" + odv_label,x+8001, rule_yaml['id'] + "_" + odv_label,x+8002,rule_yaml['id'] + "_" + odv_label,x+8003)
                     
                             oval_test = oval_test + '''
                     <textfilecontent54_test id="oval:mscp:tst:{}" version="1" comment="{}_test" check_existence="none_exist" check="all" xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#independent">
@@ -1500,7 +1528,7 @@ def generate_scap(all_rules, all_baselines, args):
                     <textfilecontent54_object id="oval:mscp:obj:{}" version="1" comment="{}__sudoers.d_object" xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#independent">
                     <behaviors ignore_case="true"/>
                     <path>/etc/sudoers.d/</path>
-                    <filename operation="pattern match">*</filename>
+                    <filename operation="pattern match">.*</filename>
                     <pattern operation="pattern match">timestamp_type</pattern>
                     <instance datatype="int">1</instance>
                 </textfilecontent54_object>'''.format(x+8000, rule_yaml['id'] + "_" + odv_label)
@@ -1509,7 +1537,7 @@ def generate_scap(all_rules, all_baselines, args):
                     <textfilecontent54_object id="oval:mscp:obj:{}" version="1" comment="{}__sudoers.d_object" xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#independent">
                     <behaviors ignore_case="true"/>
                     <path>/etc/sudoers.d/</path>
-                    <filename operation="pattern match">*</filename>
+                    <filename operation="pattern match">.*</filename>
                     <pattern operation="pattern match">!tty_tickets</pattern>
                     <instance datatype="int">1</instance>
                 </textfilecontent54_object>'''.format(x+8001, rule_yaml['id'] + "_" + odv_label)
@@ -1517,7 +1545,7 @@ def generate_scap(all_rules, all_baselines, args):
                     <textfilecontent54_object id="oval:mscp:obj:{}" version="1" comment="{}__sudoers.d_object" xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#independent">
                     <behaviors ignore_case="true"/>
                     <path>/etc/sudoers.d/</path>
-                    <filename operation="pattern match">*</filename>
+                    <filename operation="pattern match">.*</filename>
                     <pattern operation="pattern match">!tty_tickets</pattern>
                     <instance datatype="int">1</instance>
                 </textfilecontent54_object>'''.format(x+8002, rule_yaml['id'] + "_" + odv_label)
@@ -1538,7 +1566,7 @@ def generate_scap(all_rules, all_baselines, args):
                     <criterion comment="{}" test_ref="oval:mscp:tst:{}" />
                     <criterion comment="{}_sudoers.d" test_ref="oval:mscp:tst:{}"/>
                 </criteria>
-            </definition> '''.format(x,rule_yaml['title'],cce,rule_yaml['id'] + "_" + odv_label,rule_yaml['discussion'],rule_yaml['id'] + "_" + odv_label,x,rule_yaml['id'] + "_" + odv_label, x+8000, rule_yaml['id'] + "_" + odv_label,x+8001, rule_yaml['id'] + "_" + odv_label,x+8002,rule_yaml['id'] + "_" + odv_label,x+8003)
+            </definition> '''.format(x,rule_yaml['title'],cce,rule_yaml['id'] + "_" + odv_label,rule_yaml['discussion'].replace("&","&amp;"),rule_yaml['id'] + "_" + odv_label,x,rule_yaml['id'] + "_" + odv_label, x+8000, rule_yaml['id'] + "_" + odv_label,x+8001, rule_yaml['id'] + "_" + odv_label,x+8002,rule_yaml['id'] + "_" + odv_label,x+8003)
                     
                             oval_test = oval_test + '''
                     <textfilecontent54_test id="oval:mscp:tst:{}" version="1" comment="{}_test" check_existence="at_least_one_exists" check="all" xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#independent">
@@ -1565,7 +1593,7 @@ def generate_scap(all_rules, all_baselines, args):
                     <textfilecontent54_object id="oval:mscp:obj:{}" version="1" comment="{}__sudoers.d_object" xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#independent">
                     <behaviors ignore_case="true"/>
                     <path>/etc/sudoers.d/</path>
-                    <filename operation="pattern match">*</filename>
+                    <filename operation="pattern match">.*</filename>
                     <pattern operation="pattern match">{}</pattern>
                     <instance datatype="int">1</instance>
                 </textfilecontent54_object>'''.format(x+7000, rule_yaml['id'] + "_" + odv_label, check_string)
@@ -1587,7 +1615,7 @@ def generate_scap(all_rules, all_baselines, args):
                     <criterion comment="{}_ssh_config.d" test_ref="oval:mscp:tst:{}"/>
                     <criterion comment="{}_.ssh" test_ref="oval:mscp:tst:{}"/>
                 </criteria>
-            </definition> '''.format(x,rule_yaml['title'],cce,rule_yaml['id'] + "_" + odv_label,rule_yaml['discussion'],rule_yaml['id'] + "_" + odv_label,x,rule_yaml['id'] + "_" + odv_label, x+5010, rule_yaml['id'] + "_" + odv_label,x+5025)
+            </definition> '''.format(x,rule_yaml['title'],cce,rule_yaml['id'] + "_" + odv_label,rule_yaml['discussion'].replace("&","&amp;"),rule_yaml['id'] + "_" + odv_label,x,rule_yaml['id'] + "_" + odv_label, x+5010, rule_yaml['id'] + "_" + odv_label,x+5025)
                     
                     oval_test = oval_test + '''
                 <textfilecontent54_test id="oval:mscp:tst:{}" version="1" comment="{}_test" check_existence="all_exist" check="all" xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#independent">
@@ -1627,7 +1655,7 @@ def generate_scap(all_rules, all_baselines, args):
                 <textfilecontent54_object id="oval:mscp:obj:{}" version="1" comment="{}__ssh_config.d_object" xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#independent">
                 <behaviors ignore_case="true"/>
                 <path>/etc/ssh/ssh_config.d/</path>
-                <filename operation="pattern match">*</filename>
+                <filename operation="pattern match">.*</filename>
                 <pattern operation="pattern match">{}</pattern>
                 <instance datatype="int">1</instance>
             </textfilecontent54_object>'''.format(x+5010, rule_yaml['id'] + "_" + odv_label, ssh_config_pattern)
@@ -1679,7 +1707,7 @@ def generate_scap(all_rules, all_baselines, args):
                     <criterion comment="{}" test_ref="oval:mscp:tst:{}" />
                     <criterion comment="{}_sshd_config.d" test_ref="oval:mscp:tst:{}"/>
                 </criteria>
-            </definition> '''.format(x,rule_yaml['title'],cce,rule_yaml['id'] + "_" + odv_label,rule_yaml['discussion'],rule_yaml['id'] + "_" + odv_label,x,rule_yaml['id'] + "_" + odv_label, x+6000, rule_yaml['id'] + "_" + odv_label,x+6001)
+            </definition> '''.format(x,rule_yaml['title'],cce,rule_yaml['id'] + "_" + odv_label,rule_yaml['discussion'].replace("&","&amp;"),rule_yaml['id'] + "_" + odv_label,x,rule_yaml['id'] + "_" + odv_label, x+6000, rule_yaml['id'] + "_" + odv_label,x+6001)
                     
                     oval_test = oval_test + '''
                 <textfilecontent54_test id="oval:mscp:tst:{}" version="1" comment="{}_test" check_existence="all_exist" check="all" xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#independent">
@@ -1706,7 +1734,7 @@ def generate_scap(all_rules, all_baselines, args):
                 <textfilecontent54_object id="oval:mscp:obj:{}" version="1" comment="{}__sshd_config.d_object" xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#independent">
                 <behaviors ignore_case="true"/>
                 <path>/etc/ssh/sshd_config.d/</path>
-                <filename operation="pattern match">*</filename>
+                <filename operation="pattern match">.*</filename>
                 <pattern operation="pattern match">{}</pattern>
                 <instance datatype="int">1</instance>
             </textfilecontent54_object>'''.format(x+6000, rule_yaml['id'] + "_" + odv_label, fipslist)
@@ -1727,7 +1755,7 @@ def generate_scap(all_rules, all_baselines, args):
                     <criterion comment="{}" test_ref="oval:mscp:tst:{}" />
                     <criterion comment="{}_sshd_config.d" test_ref="oval:mscp:tst:{}"/>
                 </criteria>
-            </definition> '''.format(x,rule_yaml['title'],cce,rule_yaml['id'] + "_" + odv_label,rule_yaml['discussion'],rule_yaml['id'] + "_" + odv_label,x,rule_yaml['id'] + "_" + odv_label, x+6000, rule_yaml['id'] + "_" + odv_label,x+6001)
+            </definition> '''.format(x,rule_yaml['title'],cce,rule_yaml['id'] + "_" + odv_label,rule_yaml['discussion'].replace("&","&amp;"),rule_yaml['id'] + "_" + odv_label,x,rule_yaml['id'] + "_" + odv_label, x+6000, rule_yaml['id'] + "_" + odv_label,x+6001)
                     
                     oval_test = oval_test + '''
                 <textfilecontent54_test id="oval:mscp:tst:{}" version="1" comment="{}_test" check_existence="all_exist" check="all" xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#independent">
@@ -1771,7 +1799,7 @@ def generate_scap(all_rules, all_baselines, args):
                 <textfilecontent54_object id="oval:mscp:obj:{}" version="1" comment="{}__sshd_config.d_object" xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#independent">
                 <behaviors ignore_case="true"/>
                 <path>/etc/ssh/sshd_config.d/</path>
-                <filename operation="pattern match">*</filename>
+                <filename operation="pattern match">.*</filename>
                 <pattern operation="pattern match">{}</pattern>
                 <instance datatype="int">1</instance>
             </textfilecontent54_object>'''.format(x+6000, rule_yaml['id'] + "_" + odv_label, sshd_config_pattern)
@@ -1793,7 +1821,7 @@ def generate_scap(all_rules, all_baselines, args):
                         <criterion comment="{}" test_ref="oval:mscp:tst:{}" />
 
                     </criteria>
-                </definition> '''.format(x,rule_yaml['title'],cce,rule_yaml['id'] + "_" + odv_label,rule_yaml['discussion'],rule_yaml['id'] + "_" + odv_label,x)
+                </definition> '''.format(x,rule_yaml['title'],cce,rule_yaml['id'] + "_" + odv_label,rule_yaml['discussion'].replace("&","&amp;"),rule_yaml['id'] + "_" + odv_label,x)
                         
                         oval_test = oval_test + '''
                 <plist511_test xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" check="all" check_existence="at_least_one_exists" comment="{}_test" id="oval:mscp:tst:{}" version="2">
@@ -1836,7 +1864,7 @@ def generate_scap(all_rules, all_baselines, args):
 
                 </criteria>
             </definition>
-            '''.format(x,rule_yaml['title'],cce,rule_yaml['id'] + "_" + odv_label,rule_yaml['discussion'],rule_yaml['id'] + "_" + odv_label,x)
+            '''.format(x,rule_yaml['title'],cce,rule_yaml['id'] + "_" + odv_label,rule_yaml['discussion'].replace("&","&amp;"),rule_yaml['id'] + "_" + odv_label,x)
                     oval_test = oval_test + '''
             <plist511_test xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" check="all" check_existence="only_one_exists" comment="{}_test" id="oval:mscp:tst:{}" version="2">
                 <object object_ref="oval:mscp:obj:{}" />
@@ -1878,7 +1906,7 @@ def generate_scap(all_rules, all_baselines, args):
                         <criterion comment="{}" test_ref="oval:mscp:tst:{}" />
 
                     </criteria>
-                </definition> '''.format(x,rule_yaml['title'],cce,rule_yaml['id'] + "_" + odv_label,rule_yaml['discussion'],rule_yaml['id'] + "_" + odv_label,x)
+                </definition> '''.format(x,rule_yaml['title'],cce,rule_yaml['id'] + "_" + odv_label,rule_yaml['discussion'].replace("&","&amp;"),rule_yaml['id'] + "_" + odv_label,x)
 
                         oval_test = oval_test + '''
                         <systemsetup_test xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" check="all" check_existence="only_one_exists" comment="{}_test" id="oval:mscp:tst:{}" version="2">
@@ -1928,7 +1956,7 @@ def generate_scap(all_rules, all_baselines, args):
                         <description>{}</description> 
                     </metadata> 
                 <criteria>
-                    '''.format(x,rule_yaml['title'],cce,rule_yaml['id'] + "_" + odv_label,rule_yaml['discussion'],rule_yaml['id'] + "_" + odv_label,x)
+                    '''.format(x,rule_yaml['title'],cce,rule_yaml['id'] + "_" + odv_label,rule_yaml['discussion'].replace("&","&amp;"),rule_yaml['id'] + "_" + odv_label,x)
                     
                     for multi_grep in matchy_match.split("|"):
                         
@@ -2030,7 +2058,7 @@ def generate_scap(all_rules, all_baselines, args):
                     <criterion comment="{}_3" test_ref="oval:mscp:tst:{}" />
                     <criterion comment="{}_4" test_ref="oval:mscp:tst:{}" />
                 </criteria>
-            </definition> '''.format(x,rule_yaml['title'],cce,rule_yaml['id'] + "_" + odv_label,rule_yaml['discussion'],rule_yaml['id'] + "_" + odv_label,x,rule_yaml['id'] + "_" + odv_label,x+5000,rule_yaml['id'] + "_" + odv_label,x+5001,rule_yaml['id'] + "_" + odv_label,x+5002)
+            </definition> '''.format(x,rule_yaml['title'],cce,rule_yaml['id'] + "_" + odv_label,rule_yaml['discussion'].replace("&","&amp;"),rule_yaml['id'] + "_" + odv_label,x,rule_yaml['id'] + "_" + odv_label,x+5000,rule_yaml['id'] + "_" + odv_label,x+5001,rule_yaml['id'] + "_" + odv_label,x+5002)
                     
                         oval_test = oval_test + '''
                         <plist511_test xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" check="all" check_existence="all_exist" comment="{}_1_test" id="oval:mscp:tst:{}" version="2">
@@ -2152,7 +2180,7 @@ def generate_scap(all_rules, all_baselines, args):
                 <criteria>
                     <criterion comment="{}" test_ref="oval:mscp:tst:{}" />
                 </criteria>
-            </definition> '''.format(x,rule_yaml['title'],cce,rule_yaml['id'] + "_" + odv_label,rule_yaml['discussion'],rule_yaml['id'] + "_" + odv_label,x)
+            </definition> '''.format(x,rule_yaml['title'],cce,rule_yaml['id'] + "_" + odv_label,rule_yaml['discussion'].replace("&","&amp;"),rule_yaml['id'] + "_" + odv_label,x)
                     
                     oval_test = oval_test + '''
                         <plist511_test xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" check="all" check_existence="all_exist" comment="{}_test" id="oval:mscp:tst:{}" version="2">
@@ -2361,7 +2389,7 @@ def generate_scap(all_rules, all_baselines, args):
                         <criterion comment="{}" test_ref="oval:mscp:tst:{}" />
 
                     </criteria>
-                </definition> '''.format(x,rule_yaml['title'],cce,rule_yaml['id'] + "_" + odv_label,rule_yaml['discussion'],rule_yaml['id'] + "_" + odv_label,x)
+                </definition> '''.format(x,rule_yaml['title'],cce,rule_yaml['id'] + "_" + odv_label,rule_yaml['discussion'].replace("&","&amp;"),rule_yaml['id'] + "_" + odv_label,x)
 
                                 oval_test = oval_test + '''
                                     <authorizationdb_test xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" check="all" check_existence="only_one_exists" comment="{}_test" id="oval:mscp:tst:{}" version="2">
@@ -2394,7 +2422,7 @@ def generate_scap(all_rules, all_baselines, args):
                     <criteria>
                         <criterion comment="{}" test_ref="oval:mscp:tst:{}" />
                     </criteria>
-                </definition> '''.format(x,rule_yaml['title'],cce,rule_yaml['id'] + "_" + odv_label,rule_yaml['discussion'],rule_yaml['id'] + "_" + odv_label,x)
+                </definition> '''.format(x,rule_yaml['title'],cce,rule_yaml['id'] + "_" + odv_label,rule_yaml['discussion'].replace("&","&amp;"),rule_yaml['id'] + "_" + odv_label,x)
 
                                 oval_test = oval_test + '''
                 <authorizationdb_test xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" check="all" check_existence="only_one_exists" comment="{}_test" id="oval:mscp:tst:{}" version="2">
@@ -2429,7 +2457,7 @@ def generate_scap(all_rules, all_baselines, args):
                             <reference source="macos_security" ref_id="{}"/>
                             <description>{}</description> 
                         </metadata> 
-                    <criteria operator="AND">'''.format(x,rule_yaml['title'],cce,rule_yaml['id'] + "_" + odv_label,rule_yaml['discussion'])
+                    <criteria operator="AND">'''.format(x,rule_yaml['title'],cce,rule_yaml['id'] + "_" + odv_label,rule_yaml['discussion'].replace("&","&amp;"))
 
                                 for match in matchy_match:
                                     
@@ -2479,7 +2507,7 @@ def generate_scap(all_rules, all_baselines, args):
                     <criterion comment="{}" test_ref="oval:mscp:tst:{}" />
                 
                 </criteria> 
-            </definition> '''.format(x,rule_yaml['title'],cce,rule_yaml['id'] + "_" + odv_label,rule_yaml['discussion'],rule_yaml['id'] + "_" + odv_label,x)
+            </definition> '''.format(x,rule_yaml['title'],cce,rule_yaml['id'] + "_" + odv_label,rule_yaml['discussion'].replace("&","&amp;"),rule_yaml['id'] + "_" + odv_label,x)
                     oval_test = oval_test + '''
                             <file_test id="oval:mscp:tst:{}" version="1" comment="{}_test" check_existence="none_exist" check="none satisfy" xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#unix">
                 <object object_ref="oval:mscp:obj:{}"/>
@@ -2587,7 +2615,7 @@ def generate_scap(all_rules, all_baselines, args):
                         <criterion comment="{}" test_ref="oval:mscp:tst:{}" />
                     </criteria> 
                 </definition> 
-            '''.format(x,rule_yaml['title'],cce,rule_yaml['id'] + "_" + odv_label,rule_yaml['discussion'].rstrip(),rule_yaml['id'] + "_" + odv_label,x)
+            '''.format(x,rule_yaml['title'],cce,rule_yaml['id'] + "_" + odv_label,rule_yaml['discussion'].replace("&","&amp;").rstrip(),rule_yaml['id'] + "_" + odv_label,x)
 
                         oval_test = oval_test + '''
                 <file_test id="oval:mscp:tst:{}" version="1" comment="{}_test" check_existence="all_exist" check="all" xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#unix">
@@ -2795,7 +2823,7 @@ def generate_scap(all_rules, all_baselines, args):
                         <criterion comment="{}" test_ref="oval:mscp:tst:{}" />
                     </criteria>
                 </definition> 
-                '''.format(x,rule_yaml['title'],cce,rule_yaml['id'] + "_" + odv_label,rule_yaml['discussion'],rule_yaml['id'] + "_" + odv_label,x)
+                '''.format(x,rule_yaml['title'],cce,rule_yaml['id'] + "_" + odv_label,rule_yaml['discussion'].replace("&","&amp;"),rule_yaml['id'] + "_" + odv_label,x)
                                 
                                 oval_test = oval_test + '''
                 <accountinfo_test xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" check="all" check_existence="only_one_exists" comment="{}_test" id="oval:mscp:tst:{}" version="2">
@@ -3446,6 +3474,11 @@ def generate_scap(all_rules, all_baselines, args):
     </oval_definitions>
   </component>
 </data-stream-collection>'''.format(date_time_string,version_yaml['cpe'],version_yaml['os'])
+    # total_scap = total_scap.replace("&", "&amp;")
+    # total_scap = total_scap.replace("<", "&lt;")
+    # total_scap = total_scap.replace(">", "&gt;")
+    # total_scap = total_scap.replace("\"", "&quot;")
+    # total_scap = total_scap.replace("'", "&apos;")
     scap_file = output
     with open(scap_file + "temp",'w') as rite:
         if export_as == "scap":
@@ -3467,8 +3500,8 @@ def generate_scap(all_rules, all_baselines, args):
             cmd = cmd + " " + scap_file + "temp --format --output " + scap_file
             
             os.popen(cmd).read()
-            if os.path.exists(scap_file):
-                os.remove(scap_file + "temp")    
+            # if os.path.exists(scap_file):
+                # os.remove(scap_file + "temp")    
 
 def get_rule_yaml(rule_file, custom=False, baseline_name=""):
     """ Takes a rule file, checks for a custom version, and returns the yaml for the rule
@@ -3698,9 +3731,12 @@ def main():
     original_working_directory = os.getcwd()
 
     os.chdir(file_dir)
-
+    stig = ''
     all_rules = collect_rules()
-    
+    if args.disastig:
+        file = open(args.disastig, "r")
+        stig = file.read()
+
     all_rules_pruned = []
 
     # for rule in all_rules:
@@ -3726,7 +3762,7 @@ def main():
             if rule.rule_id not in all_rules_pruned:
                 all_rules_pruned.append(rule.rule_id)
     
-    generate_scap(all_rules_pruned, all_baselines, args)
+    generate_scap(all_rules_pruned, all_baselines, args, stig)
 
     os.chdir(original_working_directory)
 
