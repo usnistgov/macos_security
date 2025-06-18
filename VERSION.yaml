@@ -1,5 +1,5 @@
 os: "15.0"
 platform: macOS
-version: "Sequoia Guidance, Revision 1.1"
+version: "Sequoia Guidance, Revision 2.0"
 cpe: o:apple:macos:15.0
-date: "2024-12-16"
+date: "2025-06-XX"
