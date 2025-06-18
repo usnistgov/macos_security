@@ -16,11 +16,11 @@ profile:
   - section: "icloud"
     rules:
       - icloud_backup_disabled
+      - icloud_drive_disable
       - icloud_keychain_disable
       - icloud_managed_apps_store_data_disabled
       - icloud_photos_disable
       - icloud_private_relay_disable
-      - icloud_sync_disable
   - section: "visionos"
     rules:
       - os_account_modification_disable
