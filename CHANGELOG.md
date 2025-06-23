@@ -2,7 +2,71 @@
 
 This document provides a high-level view of the changes to the macOS Security Compliance Project.
 
-## [Sequoia, Revision 1.1] - 2024-12-16]
+## [Sequoia, Revision 1.2] - 2025-06-XX
+* Rules
+  * Added Rules
+    * os_mail_smart_reply_disable
+    * os_notes_transcription_disable
+    * os_notes_transcription_summary_disable
+    * os_safari_reader_summary_disable
+    * os_sshd_per_source_penalties_configure
+  * Modified Rules
+    * os_genmoji_disable.yaml
+    * os_implement_cryptography.yaml
+    * os_iphone_mirroring_disable.yaml
+    * os_mail_summary_disable.yaml
+    * os_nfsd_disable.yaml
+    * os_parental_controls_enable.yaml
+    * os_password_hint_remove.yaml
+    * os_power_nap_disable.yaml
+    * os_separate_functionality.yaml
+    * os_sleep_and_display_sleep_apple_silicon_enable.yaml
+    * os_sudo_log_enforce.yaml
+    * os_time_server_enabled.yaml
+    * os_writing_tools_disable.yaml
+    * pwpolicy_50_percent.yaml
+    * pwpolicy_history_enforce.yaml
+    * pwpolicy_upper_case_character_enforce.yaml
+    * supplemental_cis_manual.yaml
+    * system_settings_automatic_login_disable.yaml
+    * system_settings_bluetooth_sharing_disable.yaml
+    * system_settings_content_caching_disable.yaml
+    * system_settings_external_intelligence_disable.yaml
+    * system_settings_external_intelligence_sign_in_disable.yaml
+    * system_settings_guest_access_smb_disable.yaml
+    * system_settings_guest_account_disable.yaml
+    * system_settings_improve_assistive_voice_disable.yaml
+    * system_settings_improve_search_disable.yaml
+    * system_settings_internet_sharing_disable.yaml
+    * system_settings_loginwindow_loginwindowtext_enable.yaml
+    * system_settings_loginwindow_prompt_username_password_enforce.yaml
+    * system_settings_media_sharing_disabled.yaml
+    * system_settings_password_hints_disable.yaml
+    * system_settings_printer_sharing_disable.yaml
+    * system_settings_rae_disable.yaml
+    * system_settings_remote_management_disable.yaml
+    * system_settings_screen_sharing_disable.yaml
+    * system_settings_screensaver_ask_for_password_delay_enforce.yaml
+    * system_settings_screensaver_timeout_enforce.yaml
+    * system_settings_siri_disable.yaml
+    * system_settings_siri_listen_disable.yaml
+    * system_settings_smbd_disable.yaml
+    * system_settings_software_update_enforce.yaml
+    * system_settings_ssh_disable.yaml
+    * system_settings_time_server_configure.yaml
+    * system_settings_time_server_enforce.yaml
+    * system_settings_wake_network_access_disable.yaml
+  * Bug Fixes
+* Baselines
+    * Updated CIS to v1.1.0
+    * Updated DISA STIG Ver 1, Rel 3
+* Scripts
+  * generate_guidance
+    * bug fixes
+  * generate_scap.py
+    * bug fixes
+
+## [Sequoia, Revision 1.1] - 2024-12-16
 
 * Rules
   * Added Rules
