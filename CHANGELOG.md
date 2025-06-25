@@ -2,22 +2,21 @@
 
 This document provides a high-level view of the changes to the macOS Security Compliance Project.
 
-## [Sonoma, Removed 3.2] - 2025-06-XX
+## [Sonoma, Revision 3.2] - 2025-06-XX
 
 * Rules
   * Modified Rules
     * os_parental_controls_enable.yaml
     * os_separate_functionality.yaml
     * os_time_server_enabled.yaml
-    * os_world_writable_library_folder_configure.yaml
-    * pwpolicy_account_lockout_enforce.yaml
-    * pwpolicy_account_lockout_timeout_enforce.yaml
-    * pwpolicy_history_enforce.yaml
-    * pwpolicy_special_character_enforce.yaml
     * system_settings_software_update_enforce.yaml
     * system_settings_time_server_configure.yaml
     * system_settings_time_server_enforce.yaml
-
+* Scripts
+  * generate_guidance
+    * bug fixes
+  * generate_scap
+    * bug fixes
 
 ## [Sonoma, Revision 3.1] - 2024-12-16
 
