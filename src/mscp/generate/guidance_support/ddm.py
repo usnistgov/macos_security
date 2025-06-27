@@ -8,12 +8,10 @@ from collections import defaultdict
 from pathlib import Path
 from typing import Any
 
-# Additional python modules
-from loguru import logger
-
 # Local python modules
-from src.mscp.classes import Baseline, Macsecurityrule
-from src.mscp.common_utils import append_text, config, make_dir, open_yaml, remove_dir
+from ...classes import Baseline, Macsecurityrule
+from ...common_utils import append_text, config, make_dir, open_yaml, remove_dir
+from ...common_utils.logger_instance import logger
 
 
 def generate_ddm_activation(output_path: Path, identifier: str) -> None:

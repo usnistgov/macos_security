@@ -7,12 +7,12 @@ import sys
 from pathlib import Path
 from typing import Any
 
-# Additional python modules
-from loguru import logger
-
 # Local python modules
-from src.mscp.classes import Author, Baseline, Macsecurityrule
-from src.mscp.common_utils import config, get_version_data, make_dir, open_file
+from ..classes import Author, Baseline, Macsecurityrule
+from ..common_utils import config, get_version_data, make_dir, open_file
+from ..common_utils.logger_instance import logger
+
+# Additional python modules
 
 
 def update_rule_with_custom_controls(

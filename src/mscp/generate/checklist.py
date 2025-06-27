@@ -14,12 +14,12 @@ from uuid import uuid4
 
 # Additional python modules
 from jinja2 import Environment, FileSystemLoader
-from loguru import logger
 from lxml.etree import Element, XMLParser, fromstring
 
 # Local python modules
-from src.mscp.classes import Baseline
-from src.mscp.common_utils import config, create_file, create_json, open_file
+from ..classes import Baseline
+from ..common_utils import config, create_file, create_json, open_file
+from ..common_utils.logger_instance import logger
 
 XML_PARSER: XMLParser = XMLParser(recover=True, ns_clean=True, encoding="utf-8")
 

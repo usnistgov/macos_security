@@ -6,12 +6,12 @@ from datetime import date
 from pathlib import Path
 from typing import Any
 
-# Additional python modules
-from loguru import logger
-
 # Local python modules
-from src.mscp.classes import Baseline, Macsecurityrule, Payload
-from src.mscp.common_utils import config, make_dir, open_yaml, run_command
+from ...classes import Baseline, Macsecurityrule, Payload
+from ...common_utils import config, make_dir, open_yaml, run_command
+from ...common_utils.logger_instance import logger
+
+# Additional python modules
 
 
 @logger.catch

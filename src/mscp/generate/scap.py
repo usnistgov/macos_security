@@ -11,11 +11,11 @@ from icecream import ic
 
 # Additional python modules
 from jinja2 import Environment, FileSystemLoader
-from loguru import logger
 
 # Local python modules
-from src.mscp.classes import Baseline, Macsecurityrule
-from src.mscp.common_utils import config, get_version_data, make_dir
+from ..classes import Macsecurityrule
+from ..common_utils import config, get_version_data
+from ..common_utils.logger_instance import logger
 
 
 def create_scap(
@@ -79,7 +79,9 @@ def generate_scap(args: argparse.Namespace) -> None:
     filenameversion = (
         current_version_data["version"].split(", ", maxsplit=1)[-1].replace(" ", "_")
     )
-    base_filename: str = f"{args.os_name}_{current_version_data.get('os', None)}_Security_Compliance_Benchmark-{filenameversion}.xml"
+    base_filename: str = (
+        f"{args.os_name}_{current_version_data.get('os', None)}_Security_Compliance_Benchmark-{filenameversion}.xml"
+    )
 
     if args.oval:
         export_as = "oval"

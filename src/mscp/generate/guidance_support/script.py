@@ -7,14 +7,13 @@ from typing import Any
 
 # Additional python modules
 from jinja2 import Environment, FileSystemLoader
-from loguru import logger
 
 # Local python modules
-from src.mscp.classes import Baseline
-from src.mscp.common_utils import config, create_plist, make_dir
+from ...classes import Baseline
+from ...common_utils import config, create_plist, make_dir
+from ...common_utils.logger_instance import logger
 
 
-@logger.catch
 def group_ulify(elements: list[str]) -> str:
     """
     Converts a list of strings into a grouped unordered list format.
@@ -45,7 +44,6 @@ def group_ulify(elements: list[str]) -> str:
     return result.strip()
 
 
-@logger.catch
 def generate_log_reference(
     rule_yaml: dict[str, Any], reference: str
 ) -> list[str] | str:
@@ -93,7 +91,6 @@ def generate_log_reference(
     return log_reference_id
 
 
-@logger.catch
 def quotify(fix_code: str) -> str:
     """
     Escape single quotes and format percentages for Bash.
@@ -109,7 +106,6 @@ def quotify(fix_code: str) -> str:
     return string
 
 
-@logger.catch
 def generate_audit_plist(
     build_path: Path, baseline_name: str, baseline: Baseline
 ) -> None:

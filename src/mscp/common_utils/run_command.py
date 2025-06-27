@@ -4,8 +4,8 @@
 import shlex
 import subprocess
 
-# Additional python modules
-from loguru import logger
+# Local python modules
+from .logger_instance import logger
 
 
 def run_command(command: str) -> tuple[str | None, str | None]:

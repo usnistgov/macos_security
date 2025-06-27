@@ -4,21 +4,26 @@
 import argparse
 import sys
 from pathlib import Path
-from typing import Union
-
-# Additional python modules
-from loguru import logger
 
 # Local python modules
-from src.mscp import __version__
-from src.mscp.common_utils import validate_yaml_file
-from src.mscp.generate import (
+from . import __version__
+from .common_utils import set_logger, validate_yaml_file
+from .common_utils.logger_instance import logger
+from .generate import (
     generate_baseline,
     generate_checklist,
     generate_guidance,
     generate_local_report,
     generate_mapping,
 )
+
+# Additional python modules
+
+
+logger.enable("mscp")
+logger = set_logger()
+logger.info("=== Logging Initialized ===")
+logger.info("LOGGING LEVEL: WARNING")
 
 
 class Customparser(argparse.ArgumentParser):
@@ -37,7 +42,7 @@ class Customparser(argparse.ArgumentParser):
         sys.exit(2)
 
 
-def validate_file(arg: str) -> Union[Path, None]:
+def validate_file(arg: str) -> Path | None:
     if (file := Path(arg)).is_file():
         return file
     else:
@@ -45,7 +50,7 @@ def validate_file(arg: str) -> Union[Path, None]:
         sys.exit()
 
 
-def main() -> None:
+def parse_cli() -> None:
     parser = Customparser(
         description="CLI tool for managing baseline and compliance documents.",
         prog="mscp",
@@ -323,10 +328,16 @@ def main() -> None:
 
     try:
         args = parser.parse_args()
+
     except argparse.ArgumentError as e:
-        logger.debug("Argument Error: {}", e)
+        logger.error("Argument Error: {}", e)
         parser.print_help()
         sys.exit()
+
+    if args.debug:
+        logger = set_logger(debug=True)
+        logger.info("=== Logging level changed ===")
+        logger.info("LOGGING LEVEL: DEBUG")
 
     if not hasattr(args, "func"):
         logger.error("Functionality for {} is not implemented yet.", args.subcommand)
@@ -349,10 +360,6 @@ def main() -> None:
         logger.warning("visionOS is not supported at this time.")
         sys.exit()
 
-    if args.debug:
-        logger.info("Debug mode enabled.")
-        logger.level("DEBUG")
-
     if args.os_name != "macos" and args.script:
         logger.error(
             "Compliance script generation is only supported for macOS. Please remove the --script flag."
@@ -363,4 +370,4 @@ def main() -> None:
 
 
 if __name__ == "__main__":
-    main()
+    sys.exit(parse_cli())

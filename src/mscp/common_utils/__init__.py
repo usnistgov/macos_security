@@ -19,6 +19,7 @@ from .file_handling import (
     remove_dir_contents,
     remove_file,
 )
+from .logging_config import set_logger
 from .run_command import run_command
 from .sanitize_input import sanitize_input
 from .validate_rules import validate_yaml_file
@@ -44,6 +45,7 @@ __all__ = [
     "run_command",
     "sanitize_input",
     "get_version_data",
+    "set_logger",
     "CONFIG_PATH",
     "SCHEMA_PATH",
     "validate_yaml_file",

@@ -8,14 +8,12 @@ from pathlib import Path
 from typing import Any
 from uuid import uuid4
 
-from loguru import logger
-
 # Additional python modules
 from lxml import etree
 from pydantic import BaseModel, ConfigDict, Field
 
 # Local python modules
-from src.mscp.common_utils import (
+from ..common_utils import (
     config,
     create_yaml,
     get_version_data,
@@ -23,6 +21,7 @@ from src.mscp.common_utils import (
     open_file,
     sanitize_input,
 )
+from ..common_utils.logger_instance import logger
 
 
 class Sectionmap(Enum):
@@ -55,7 +54,7 @@ class BaseModelWithAccessors(BaseModel):
         """
         Allow dictionary-like access to attributes.
         """
-        if key in self.model_fields:
+        if key in self.__class__.model_fields:
             return getattr(self, key)
         raise KeyError(f"{key} is not a valid attribute of {self.__class__.__name__}")
 
@@ -63,7 +62,7 @@ class BaseModelWithAccessors(BaseModel):
         """
         Allow dictionary-like setting of attributes.
         """
-        if key in self.model_fields:
+        if key in self.__class__.model_fields:
             setattr(self, key, value)
         else:
             raise KeyError(
@@ -464,10 +463,6 @@ class Macsecurityrule(BaseModelWithAccessors):
                 severity=severity,
             )
 
-            # if rule.rule_id == "os_external_storage_access_defined":
-            # ic(rule)
-            # exit()
-
             if rule.mobileconfig_info:
                 logger.debug("Formatting mobileconfig_info for rule: {}", rule.rule_id)
                 rule._format_mobileconfig_fix()
@@ -545,7 +540,7 @@ class Macsecurityrule(BaseModelWithAccessors):
                 if folder.name == "sysprefs":
                     continue
 
-                for rule_file in folder.rglob("*"):
+                for rule_file in folder.rglob("*.y*ml"):
                     try:
                         rule_name: str = rule_file.stem
                         folder_name: str = rule_file.parent.name

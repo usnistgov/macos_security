@@ -6,12 +6,10 @@ import sys
 from pathlib import Path
 from typing import Any
 
-# Additional python modules
-from loguru import logger
-
 # Local python modules
-from src.mscp.classes import Author, Baseline, Macsecurityrule
-from src.mscp.common_utils import config, make_dir, open_file, sanitize_input
+from ..classes import Author, Baseline, Macsecurityrule
+from ..common_utils import config, make_dir, open_file, sanitize_input
+from ..common_utils.logger_instance import logger
 
 
 def generate_baseline(args: argparse.Namespace) -> None:

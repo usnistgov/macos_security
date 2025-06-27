@@ -7,12 +7,11 @@ from typing import Any
 
 # Additional python modules
 import pandas as pd
-from loguru import logger
 from pydantic import BaseModel, Field
 
 # Local python modules
-from src.mscp.common_utils import config, create_yaml, open_file
-
+from ..common_utils import config, create_yaml, open_file
+from ..common_utils.logger_instance import logger
 from .macsecurityrule import Macsecurityrule
 
 
@@ -32,7 +31,7 @@ class BaseModelWithAccessors(BaseModel):
         """
         Allow dictionary-like access to attributes.
         """
-        if key in self.model_fields:
+        if key in self.__class__.model_fields:
             return getattr(self, key)
         raise KeyError(f"{key} is not a valid attribute of {self.__class__.__name__}")
 
@@ -40,7 +39,7 @@ class BaseModelWithAccessors(BaseModel):
         """
         Allow dictionary-like setting of attributes.
         """
-        if key in self.model_fields:
+        if key in self.__class__.model_fields:
             setattr(self, key, value)
         else:
             raise KeyError(

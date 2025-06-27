@@ -9,8 +9,9 @@ from typing import Any
 
 # Additional python modules
 import yaml
-from loguru import logger
 from pydantic import BaseModel
+
+from ..common_utils.logger_instance import logger
 
 
 class FileHandler(BaseModel):

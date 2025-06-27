@@ -16,7 +16,7 @@
 
 | Document Number or Descriptor | Document Title |
 |-------------------------------|----------------|
-{% if os_name == "macOS" %}
+{% if os_name == "macos" %}
 {% if os_version == "15.0" %}
 | [STIG Ver 1, Rel 1](https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Apple_macOS_15_V1R1_STIG.zip) | _Apple macOS 15 (Sequoia) STIG_ |
 {% elif os_version == "14.0" %}
@@ -26,7 +26,7 @@
 {% elif os_version == "12.0" %}
 | [STIG Ver 1, Rel 8](https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Apple_macOS_12_V1R8_STIG.zip) | _Apple macOS 12 (Monterey) STIG_ |
 {% endif %}
-{% elif os_name == "iOS" %}
+{% elif os_name == "ios" %}
 {% if os_version == "18.0" %}
 | [STIG Ver 1, Rel 1](https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Apple_iOS-iPadOS_18_V1R1_STIG.zip) | _Apple iOS/iPadOS 18 STIG - Ver 1, Rel 1_ |
 {% elif os_version == "17.0" %}
@@ -36,7 +36,7 @@
 | [STIG Ver 2, Rel 1](https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Apple_iOS-iPadOS_16_V2R1_STIG.zip) | _Apple iOS/iPadOS 16 STIG - Ver 2, Rel 1_ |
 | [STIG Ver 1, Rel 1](https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Apple_iOS-iPadOS_16_BYOAD_Y23M08_STIG.zip) | _Apple iOS/iPadOS 16 BYOAD STIG - Ver 1, Rel 1_ |
 {% endif %}
-{% elif os_name == "visionOS" %}
+{% elif os_name == "visionos" %}
 | | _Currently Unavailable_ |
 {% endif %}
 {% endif %}
@@ -68,7 +68,7 @@
 
 | Document Number or Descriptor | Document Title |
 |--------------------------------------------------------------------|------------------------------------------------|
-{% if os_name == "macOS" %}
+{% if os_name == "macos" %}
 {% if os_version == "15.0" %}
 | [Apple macOS 15.0](https://www.cisecurity.org/benchmark/apple_os/) | _CIS Apple macOS 15.0 Benchmark version 1.0.0_ |
 {% elif os_version == "14.0" %}
@@ -78,7 +78,7 @@
 {% elif os_version == "12.0" %}
 | [Apple macOS 12.0](https://www.cisecurity.org/benchmark/apple_os/) | _CIS Apple macOS 12.0 Benchmark version 3.1.0_ |
 {% endif %}
-{% elif os_name == "iOS" %}
+{% elif os_name == "ios" %}
 {% if os_version == "18.0" %}
 | [Apple iOS/iPadOS](https://www.cisecurity.org/benchmark/apple_ios) | _CIS Apple iOS 18 and iPadOS 18 Version 1.0.0_ |
 {% elif os_version == "17.0" %}
@@ -86,6 +86,6 @@
 {% elif os_version == "16.0" %}
 | [Apple iOS/iPadOS](https://www.cisecurity.org/benchmark/apple_ios) | _CIS Apple iOS 16 and iPadOS 16 Version 1.1.0_ |
 {% endif %}
-{% elif os_name == "visionOS" %}
+{% elif os_name == "visionos" %}
 | Apple visionOS                                                     | _Currently Unavailable_                        |
 {% endif %}

@@ -4,12 +4,13 @@
 # from pathlib import Path
 
 # Additional python modules
-from loguru import logger
+
 
 from .constants import CONFIG_PATH
 
 # Local python modules
 from .file_handling import open_file
+from .logger_instance import logger
 
 # CONFIG_PATH: Path = Path.cwd() / "config" / "config.yaml"
 

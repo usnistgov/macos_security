@@ -9,7 +9,7 @@ class LoguruFormatter(BaseModel):
         "<green>{time:YYYY-MM-DD HH:mm:ss}</green> | {name}:{function}:{line}{extra[padding]} | <level>{level}</level> | <level>{message}</level>\n{exception}"
     )
 
-    def format_log(self, record: dict) -> str:
+    def format_log(self, record) -> str:
         length = len("{name}:{function}:{line}".format(**record))
         self.padding = max(self.padding, length)
 

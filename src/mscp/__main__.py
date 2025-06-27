@@ -1,11 +1,10 @@
-#! .venv/bin/python3
-# filename: mscp.py
+# src/mscp/__main__.py
 
 # Standard python modules
 import sys
 
 # Local python modules
-from src.mscp.cli import parse_cli
+from .cli import parse_cli
 
 
 def main() -> None:

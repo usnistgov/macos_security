@@ -2479,3 +2479,18 @@ table.grid-all {
   font-size: 25px;
   text-align: center;
 }
+
+.title-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  min-height: 100vh;
+  justify-content: space-between;
+  padding: 50px 20px;
+}
+
+.document-info {
+  margin-top: auto;
+  margin-bottom: auto;
+}

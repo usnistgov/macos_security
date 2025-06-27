@@ -4,8 +4,10 @@
 from collections.abc import Sequence
 from typing import Any, Type
 
+# Local python modules
+from .logger_instance import logger
+
 # Additional python modules
-from loguru import logger
 
 
 def sanitize_input(

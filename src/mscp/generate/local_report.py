@@ -11,13 +11,13 @@ from pathlib import Path
 import matplotlib.pyplot as plt
 import pandas as pd
 from jinja2 import Environment, FileSystemLoader
-from loguru import logger
 from openpyxl.chart import PieChart, Reference
 from openpyxl.chart.legend import Legend
 from openpyxl.styles import Alignment
 
 # Local python modules
-from src.mscp.common_utils import config, open_file, sanitize_input
+from ..common_utils import config, open_file, sanitize_input
+from ..common_utils.logger_instance import logger
 
 
 def generate_local_report(args: argparse.Namespace) -> None:

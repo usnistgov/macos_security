@@ -8,19 +8,17 @@ from base64 import b64encode
 from pathlib import Path
 from typing import Any
 
-# Additional python modules
-from loguru import logger
-
 # Local python modules
-from src.mscp.classes import Baseline
-from src.mscp.common_utils import (
+from ..classes import Baseline
+from ..common_utils import (
     config,
     get_version_data,
     make_dir,
     remove_dir_contents,
     run_command,
 )
-from src.mscp.generate.guidance_support import (
+from ..common_utils.logger_instance import logger
+from ..generate.guidance_support import (
     generate_asciidoc_documents,
     generate_ddm,
     generate_excel,
@@ -30,7 +28,6 @@ from src.mscp.generate.guidance_support import (
 )
 
 
-@logger.catch
 def verify_signing_hash(cert_hash: str) -> bool:
     """
     Attempts to validate the existence of the certificate provided by the hash
@@ -59,7 +56,6 @@ def verify_signing_hash(cert_hash: str) -> bool:
     return True
 
 
-@logger.catch
 def generate_guidance(args: argparse.Namespace) -> None:
     logo_path: Path = Path(
         config["defaults"]["images_dir"], "mscp_banner.png"

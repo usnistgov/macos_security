@@ -9,9 +9,9 @@ from typing import Any
 
 # Additional python modules
 import yaml
-from loguru import logger
 
 # Local python modules
+from .logger_instance import logger
 
 ENCODING = "utf-8"
 

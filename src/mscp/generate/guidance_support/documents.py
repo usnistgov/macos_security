@@ -11,11 +11,11 @@ from typing import Any
 # Additional python modules
 # import markdown2
 from jinja2 import Environment, FileSystemLoader, Template
-from loguru import logger
 
 # Local python modules
-from src.mscp.classes import Baseline
-from src.mscp.common_utils import config, run_command
+from ...classes import Baseline
+from ...common_utils import config, run_command
+from ...common_utils.logger_instance import logger
 
 
 def group_ulify(elements: list[str]) -> str:
@@ -63,7 +63,7 @@ def group_ulify_md(elements: list[str]) -> str:
     elements.sort()
     grouped = [list(i) for _, i in groupby(elements, lambda a: a.split("(")[0])]
 
-    return "<br>".join("- " + ", ".join(group) for group in grouped).strip()
+    return "<br />".join("- " + ", ".join(group) for group in grouped).strip()
 
 
 def extract_from_title(title: str) -> str:

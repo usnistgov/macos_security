@@ -5,12 +5,13 @@ from pathlib import Path
 from typing import Any, Optional
 from uuid import uuid4
 
-# Additional python modules
-from loguru import logger
 from pydantic import BaseModel, Field
 
 # Local python modules
-from src.mscp.common_utils import create_plist, open_plist
+from ..common_utils import create_plist, open_plist
+from ..common_utils.logger_instance import logger
+
+# Additional python modules
 
 
 class Payload(BaseModel):

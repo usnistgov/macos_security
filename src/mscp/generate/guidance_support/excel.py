@@ -5,11 +5,11 @@ from pathlib import Path
 
 # Additional python modules
 import pandas as pd
-from loguru import logger
 from openpyxl.styles import Alignment, Font
 from openpyxl.utils import get_column_letter
 
-from src.mscp.classes import Baseline
+from ...classes import Baseline
+from ...common_utils.logger_instance import logger
 
 
 def generate_excel(file_out: Path, baseline: Baseline) -> None:

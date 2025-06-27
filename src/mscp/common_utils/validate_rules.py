@@ -6,11 +6,11 @@ from pathlib import Path
 
 from jsonschema import Draft202012Validator, ValidationError
 
-# Additional python modules
-from loguru import logger
-
 # Local python modules
 from . import SCHEMA_PATH, config, open_file
+from .logger_instance import logger
+
+# Additional python modules
 
 
 def validate_yaml_file(args: argparse.Namespace) -> None:

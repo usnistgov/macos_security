@@ -4,12 +4,12 @@
 from pathlib import Path
 from typing import Any
 
-# Additional python modules
-from loguru import logger
-
 # Local python modules
 from .config import config
 from .file_handling import open_file
+from .logger_instance import logger
+
+# Additional python modules
 
 
 def get_version_data(os_name: str, os_version: float) -> dict[str, Any]:
