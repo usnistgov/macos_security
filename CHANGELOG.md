@@ -23,6 +23,7 @@ This document provides a high-level view of the changes to the macOS Security Co
     * os_sleep_and_display_sleep_apple_silicon_enable.yaml
     * os_sudo_log_enforce.yaml
     * os_time_server_enabled.yaml
+    * os_unlock_active_user_session_disable
     * os_writing_tools_disable.yaml
     * pwpolicy_50_percent.yaml
     * pwpolicy_history_enforce.yaml
