@@ -2998,7 +2998,7 @@ def generate_scap(all_rules, all_baselines, args, stig):
                     pass
                 try:
                     if "launchctl" in command[2] or "launchctl" in rule_yaml['fix']:
-                        if "disable" in command[2] and "=> true" in rule_yaml['check'] or "unload -w" in rule_yaml['fix'] or "disable" in command[2] and "=> disabled" in rule_yaml['check']:
+                        if ("disable" in command[2] and "=> true" in rule_yaml['check'] or "unload -w" in rule_yaml['fix'] or "disable" in command[2] and "=> disabled" in rule_yaml['check']) or ("disable" in rule_yaml['fix']):
                             oval_definition = oval_definition + '''
                 <definition id="oval:mscp:def:{}" version="1" class="compliance"> 
                     <metadata> 
@@ -3011,8 +3011,7 @@ def generate_scap(all_rules, all_baselines, args, stig):
                         <criterion comment="{}_plist" test_ref="oval:mscp:tst:{}" />
                         <criterion comment="{}_launchctl" test_ref="oval:mscp:tst:{}" />
                     </criteria>
-                </definition> '''.format(x,rule_yaml['title'],cce,rule_yaml['id'] + "_" + odv_label,rule_yaml['discussion'].rstrip(),rule_yaml['id'] + "_" + odv_label,x,rule_yaml['id'] + "_" + odv_label,x+999)
-
+                </definition> '''.format(x,rule_yaml['title'],cce,rule_yaml['id'] + "_" + odv_label,rule_yaml['discussion'].rstrip(),rule_yaml['id'] + "_" + odv_label,x,rule_yaml['id'] + "_" + odv_label,x+999)                            
                             oval_test = oval_test + '''
                 <plist511_test xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" check="all" check_existence="only_one_exists" comment="{}_plist_test" id="oval:mscp:tst:{}" version="2">
                     <object object_ref="oval:mscp:obj:{}" />
@@ -3025,9 +3024,11 @@ def generate_scap(all_rules, all_baselines, args, stig):
                             
                             domain = str()
                             if "launchctl" not in rule_yaml['check']:
-                                domain = rule_yaml['fix'].split()[4].split('/')[4].replace(".plist","")
-                                
-                            else:
+                                if "launchctl disable system/" in rule_yaml["fix"]:
+                                    domain = rule_yaml['fix'].split()[4].split('/')[1]
+                                else:
+                                    domain = rule_yaml['fix'].split()[4].split('/')[4].replace(".plist","")
+                            else:                                
                                 s = command[5].split()[2]
                                 domain = re.search('"(.*?)"', s).group(1)
                             
@@ -3050,7 +3051,7 @@ def generate_scap(all_rules, all_baselines, args, stig):
                     <value_of datatype="boolean" operation="equals">{}</value_of>
                 </plist511_state>'''.format(rule_yaml['id'] + "_" + odv_label,x,status)
                         
-                        elif "launchctl unload" in rule_yaml['fix']:
+                        elif "launchctl unload" in rule_yaml['fix'] or "launchctl disable" in rule_yaml['fix']:
                             oval_definition = oval_definition + '''
                 <definition id="oval:mscp:def:{}" version="1" class="compliance"> 
                     <metadata> 
@@ -3106,7 +3107,6 @@ def generate_scap(all_rules, all_baselines, args, stig):
                         <state state_ref="oval:mscp:ste:{}" />
                     </plist511_test>'''.format(rule_yaml['id'] + "_" + odv_label,x,x,x)
                             plist = rule_yaml['fix'].split(" ")[2].replace(".plist","")
-                            # plist = rule_yaml['check'].split("read")[1].split()[0].replace(".plist","")
                             
                             if "ByHost" in rule_yaml['fix'] or "currentHost" in rule_yaml['fix']:
                                 
@@ -3277,11 +3277,8 @@ def generate_scap(all_rules, all_baselines, args, stig):
 
                             x = x+1
                     
-                            continue
-
-
+                            continue                        
                         else:
-                            
                             oval_definition = oval_definition + '''
                 <definition id="oval:mscp:def:{}" version="1" class="compliance"> 
                         <metadata> 
