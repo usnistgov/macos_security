@@ -2,7 +2,7 @@
 
 This document provides a high-level view of the changes to the macOS Security Compliance Project.
 
-## [Sequoia, Revision 2.0] - 2025-06-XX
+## [Sequoia, Revision 2.0] - 2025-07-01
 * Rules
   * Added Rules
     * os_mail_smart_reply_disable
