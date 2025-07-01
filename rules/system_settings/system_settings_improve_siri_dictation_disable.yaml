@@ -31,6 +31,10 @@ references:
   800-171r3:
     - 03.01.20
     - 03.04.06
+  srg:
+    - SRG-OS-000095-GPOS-00049
+  disa_stig:
+    - APPL-14-002210
   cis:
     benchmark:
       - 2.6.3 (level 2)
