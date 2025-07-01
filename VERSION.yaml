@@ -2,4 +2,4 @@ os: "16.0"
 platform: iOS/iPadOS
 version: "iOS 16 Guidance, Revision 4.0"
 cpe: o:apple:ios:16.0
-date: "2025-06-XX"
+date: "2025-07-01"
