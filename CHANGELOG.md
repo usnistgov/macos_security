@@ -2,7 +2,7 @@
 
 This document provides a high-level view of the changes to the macOS Security Compliance Project.
 
-## [iOS 17, Revision 3.1] - 2025-06-XX
+## [iOS 17, Revision 4.0] - 2025-07-01
 * Rules
   * bug fixes
 * Scripts
