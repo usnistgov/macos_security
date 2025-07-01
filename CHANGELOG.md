@@ -2,7 +2,7 @@
 
 This document provides a high-level view of the changes to the macOS Security Compliance Project.
 
-## [iOS 18, Revision 1.2] - 2026-06-XX
+## [iOS 18, Revision 2.0] - 2026-07-01
 * Rules
   * Added Rules
     * os_default_browser_modification_disable.yaml
