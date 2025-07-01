@@ -10,7 +10,7 @@ from typing import Any
 
 # Local python modules
 from ...classes import Baseline, Macsecurityrule
-from ...common_utils import append_text, config, make_dir, open_yaml, remove_dir
+from ...common_utils import append_text, config, make_dir, open_file, remove_dir
 from ...common_utils.logger_instance import logger
 
 
@@ -106,7 +106,7 @@ def generate_ddm(build_path: Path, baseline: Baseline, baseline_name: str) -> No
         )
     """
 
-    mscp_data: dict[str, Any] = open_yaml(Path(config.get("mspc_data", "")))
+    mscp_data: dict[str, Any] = open_file(Path(config.get("mspc_data", "")))
     ddm_output_path: Path = Path(build_path, "declarative")
     activations_output_path: Path = Path(ddm_output_path, "activations")
     assets_output_path: Path = Path(ddm_output_path, "assets")

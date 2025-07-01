@@ -11,10 +11,7 @@ from ...classes import Baseline, Macsecurityrule, Payload
 from ...common_utils import config, make_dir, open_yaml, run_command
 from ...common_utils.logger_instance import logger
 
-# Additional python modules
 
-
-@logger.catch
 def get_payload_content_by_type(
     rules: list[Macsecurityrule],
 ) -> dict[str, list[dict[str, Any]]]:
@@ -193,9 +190,7 @@ def generate_profiles(
         if payload_type == "com.apple.ManagedClient.preferences":
             for settings in flat_settings:
                 for domain, payload_content in settings.items():
-                    new_profile.add_mcx_payload(
-                        [domain, "Forced", payload_content], baseline_name
-                    )
+                    new_profile.add_mcx_payload(domain, payload_content, baseline_name)
         else:
             settings: dict = {k: v for d in flat_settings for k, v in d.items()}
             new_profile.add_payload(payload_type, settings, baseline_name)
@@ -210,6 +205,17 @@ def generate_profiles(
             )
 
         new_profile.finalize_and_save_plist(settings_plist_file_path)
+
+        logger.info(
+            f"Configuration profile for {payload_type} saved to {unsigned_mobileconfig_file_path}"
+        )
+
+    managed_client_file: Path = (
+        plist_output_path / "com.apple.ManagedClient.preferences.plist"
+    )
+
+    if managed_client_file.exists():
+        managed_client_file.unlink()
 
     # Final message
     print(

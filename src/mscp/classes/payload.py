@@ -2,13 +2,13 @@
 
 # Standard python modules
 from pathlib import Path
-from typing import Any, Optional
+from typing import Any
 from uuid import uuid4
 
 from pydantic import BaseModel, Field
 
 # Local python modules
-from ..common_utils import create_plist, open_plist
+from ..common_utils import create_file, open_file
 from ..common_utils.logger_instance import logger
 
 # Additional python modules
@@ -47,7 +47,7 @@ class Payload(BaseModel):
     organization: str = ""
     description: str = ""
     displayname: str = ""
-    uuid: Optional[str] = Field(default_factory=lambda: str(uuid4()))
+    uuid: str | None = Field(default_factory=lambda: str(uuid4()))
     payload_version: int = 1
     payload_scope: str = "System"
     payload_type: str = "Configuration"
@@ -70,7 +70,6 @@ class Payload(BaseModel):
     )
     payload_content: list[dict[str, Any]] = Field(default_factory=list)
 
-    @logger.catch
     def add_payload(
         self, payload_type: str, settings: dict[str, Any], baseline_name: str
     ) -> None:
@@ -87,49 +86,49 @@ class Payload(BaseModel):
         """
         uuid = self._make_new_uuid()
 
-        payload = {
+        payload: dict[str, int | str] = {
             "PayloadVersion": self.payload_version,
             "PayloadUUID": uuid,
             "PayloadType": payload_type,
             "PayloadIdentifier": f"alacarte.macOS.{baseline_name}.{uuid}",
         }
-        # Merge settings directly into the payload dictionary
+
         payload.update(settings)
         self.payload_content.append(payload)
 
-    @logger.catch
-    def add_mcx_payload(self, settings: list[Any], baseline_name: str) -> None:
+    def add_mcx_payload(
+        self, domain: str, settings: dict[str, Any], baseline_name: str
+    ) -> None:
         """
-        Add a Managed Client preferences payload.
+        Add a Managed Client preferences payload to the payload content.
+
+        This method constructs a payload dictionary for Managed Client preferences (MCX)
+        using the provided domain and settings, associates it with a unique identifier,
+        and appends it to the internal payload content list.
 
         Args:
-            settings (List[Any]): A list containing the domain and keys for the MCX settings.
-                - settings[0] (str): The domain for the MCX settings.
-                - settings[1] (str): A space-separated string of keys.
-                - settings[2] (Any): The value associated with each key.
-            baseline_name (str): The name of the baseline to be used in the PayloadIdentifier.
+            domain (str): The preference domain to be managed (e.g., 'com.apple.screensaver').
+            settings (dict[str, Any]): The MCX preference settings to enforce for the domain.
+            baseline_name (str): The name of the baseline, used in the PayloadIdentifier.
 
         Returns:
             None
         """
-        keys = settings[1]
-        plist_dict = {key: settings[2] for key in keys.split()}
-        uuid = self._make_new_uuid()
 
-        domain = settings[0]
+        uuid: str = self._make_new_uuid()
+
         payload = {
             "PayloadVersion": self.payload_version,
             "PayloadUUID": uuid,
             "PayloadType": "com.apple.ManagedClient.preferences",
             "PayloadIdentifier": f"alacarte.macOS.{baseline_name}.{uuid}",
             "PayloadContent": {
-                domain: {"Forced": [{"mcx_preference_settings": plist_dict}]}
+                domain: {"Forced": [{"mcx_preference_settings": settings}]}
             },
         }
 
         self.payload_content.append(payload)
 
-    @logger.catch
     def save_to_plist(self, output_path: Path) -> None:
         """
         Save the profile to a plist file.
@@ -153,10 +152,26 @@ class Payload(BaseModel):
             "PayloadContent": self.payload_content,
         }
 
-        create_plist(output_path, data)
+        create_file(output_path, data)
+        if output_path.suffix == ".plist":
+            payload_content = {}
+            for payload in self.payload_content:
+                filtered_payload = {}
+                for k, v in payload.items():
+                    if k not in (
+                        "PayloadVersion",
+                        "PayloadUUID",
+                        "PayloadType",
+                        "PayloadIdentifier",
+                    ):
+                        filtered_payload[k] = v
+
+                payload_content.update(filtered_payload)
+
+            create_file(output_path, payload_content)
+
         logger.success(f"Configuration profile written to {output_path}")
 
-    @logger.catch
     def finalize_and_save_plist(self, output_path: Path) -> None:
         """
         Save a final plist with additional processing for MCX settings.
@@ -188,15 +203,11 @@ class Payload(BaseModel):
         for domain, value in payload["PayloadContent"].items():
             preferences_file = output_path.parent / f"{domain}.plist"
             preferences_file.touch(exist_ok=True)
-            settings_dict = self._open_or_create_plist(preferences_file)
-
-            settings_dict.update(
-                {
-                    k: v
-                    for forced_setting in value["Forced"]
-                    for k, v in forced_setting["mcx_preference_settings"].items()
-                }
-            )
+            settings_dict = {
+                k: v
+                for forced_setting in value["Forced"]
+                for k, v in forced_setting["mcx_preference_settings"].items()
+            }
 
             self._save_plist(preferences_file, settings_dict)
 
@@ -210,9 +221,13 @@ class Payload(BaseModel):
         Returns:
             dict[str, Any]: The contents of the plist file.
         """
+
+        if not preferences_file.exists():
+            return {}
+
         try:
             logger.info("Opening plist file: {}", preferences_file)
-            return open_plist(preferences_file)
+            return open_file(preferences_file)
         except Exception as e:
             logger.warning(f"Error opening plist file {preferences_file}: {e}")
             return {}
@@ -228,11 +243,10 @@ class Payload(BaseModel):
             settings_dict (dict[str, Any]): The settings to save.
         """
         try:
-            create_plist(preferences_file, settings_dict)
+            create_file(preferences_file, settings_dict)
             logger.success(f"Settings plist written to {preferences_file}")
         except Exception as e:
             logger.error(f"Error creating plist file {preferences_file}: {e}")
 
-    @logger.catch
     def _make_new_uuid(self) -> str:
         return str(uuid4())

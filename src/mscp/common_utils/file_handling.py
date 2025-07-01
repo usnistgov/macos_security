@@ -56,7 +56,7 @@ def open_file(file_path: Path) -> Any:
             return open_yaml(file_path)
         case ".csv":
             return open_csv(file_path)
-        case ".plist":
+        case ".plist" | ".mobileconfig":
             return open_plist(file_path)
         case ".json":
             return open_json(file_path)
@@ -215,6 +215,36 @@ def open_json(file_path: Path) -> dict[str, Any]:
         raise
 
 
+def create_file(file_path: Path, data: Any) -> None:
+    """
+    Attempts to create a file with error checking and logging.
+
+    Args:
+        file_path (Path): The path to the file to be created.
+
+    Returns:
+        None: The function writes directly to the file and does not return a value.
+
+    Raises:
+        FileNotFoundError: If the file does not exist.
+        PermissionError: If there are insufficient permissions to access the file.
+        IOError: If an I/O error occurs during file operations.
+        Exception: For any other unexpected errors.
+    """
+
+    match file_path.suffix:
+        case ".yaml" | ".yml":
+            create_yaml(file_path, data)
+        case ".csv":
+            create_csv(file_path, data)
+        case ".plist" | ".mobileconfig":
+            create_plist(file_path, data)
+        case ".json":
+            create_json(file_path, data)
+        case _:
+            create_text(file_path, data)
+
+
 def create_yaml(file_path: Path, data: dict[str, Any]) -> None:
     """
     Create YAML file.
@@ -258,7 +288,7 @@ def create_yaml(file_path: Path, data: dict[str, Any]) -> None:
         raise
 
 
-def create_file(file_path: Path, data: str) -> None:
+def create_text(file_path: Path, data: str) -> None:
     """
     Write the supplied data to a file.
 

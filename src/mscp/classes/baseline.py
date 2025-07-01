@@ -104,13 +104,14 @@ class Baseline(BaseModelWithAccessors):
         profiles: list[Profile] = []
         for prof in baseline_data.get("profile", []):
             logger.debug(f"Section Name: {prof['section']}")
+            section_clean: str = prof["section"].replace(" ", "").lower()
 
             section_file = next(
                 (
                     file
                     for section_dir in section_dirs
                     if section_dir.exists()
-                    for file in section_dir.rglob(f"{prof['section']}.y*ml")
+                    for file in section_dir.rglob(f"{section_clean}.y*ml")
                 ),
                 None,
             )

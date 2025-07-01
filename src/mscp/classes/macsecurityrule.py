@@ -3,7 +3,7 @@
 # Standard python modules
 import base64
 from collections import OrderedDict
-from enum import Enum
+from enum import StrEnum
 from pathlib import Path
 from typing import Any
 from uuid import uuid4
@@ -24,7 +24,7 @@ from ..common_utils import (
 from ..common_utils.logger_instance import logger
 
 
-class Sectionmap(Enum):
+class Sectionmap(StrEnum):
     AUDIT = "auditing"
     AUTH = "authentication"
     ICLOUD = "icloud"
@@ -384,17 +384,17 @@ class Macsecurityrule(BaseModelWithAccessors):
                 case "inherent":
                     mechanism = "Inherent"
                     fix_value = "The control cannot be configured out of compliance."
-                    section = Sectionmap.INHERENT.value
+                    section = Sectionmap.INHERENT
                 case "permanent":
                     mechanism = "Permanent"
                     fix_value = "The control is not able to be configured to meet the requirement. It is recommended to implement a third-party solution to meet the control."
-                    section = Sectionmap.PERMANENT.value
+                    section = Sectionmap.PERMANENT
                 case "not_applicable" | "n_a":
                     mechanism = "N/A"
                     fix_value = (
                         "The control is not applicable when configuring a macOS system."
                     )
-                    section = Sectionmap.NOT_APPLICABLE.value
+                    section = Sectionmap.NOT_APPLICABLE
 
             ref: dict[str, Any] = rule_yaml["references"]
             nist: dict[str, Any] = ref.get("nist", {})
@@ -546,7 +546,7 @@ class Macsecurityrule(BaseModelWithAccessors):
                         folder_name: str = rule_file.parent.name
                         logger.debug("{} folder: {}", rule_name, folder_name)
                         section_name: str = section_data.get(
-                            Sectionmap[folder_name.upper()].value, ""
+                            Sectionmap[folder_name.upper()], ""
                         )
                         logger.debug("Section Name: {}", section_name)
                         custom: bool = False

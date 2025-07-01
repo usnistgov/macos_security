@@ -10,7 +10,7 @@ from jinja2 import Environment, FileSystemLoader
 
 # Local python modules
 from ...classes import Baseline
-from ...common_utils import config, create_plist, make_dir
+from ...common_utils import config, create_file, make_dir
 from ...common_utils.logger_instance import logger
 
 
@@ -127,7 +127,7 @@ def generate_audit_plist(
     }
 
     try:
-        create_plist(plist_file_path, plist_dict)
+        create_file(plist_file_path, plist_dict)
 
         logger.info("Generated default audit plist.")
 

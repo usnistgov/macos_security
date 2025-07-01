@@ -45,20 +45,19 @@ endif::[]
 ifdef::backend-html5[]
 :notitle:
 
-[cols="55s"]
-|======
-|{logo-image}
-|======
+++++
+<div class="title-page">
+++++
+{logo-image}
 
-[cols="^.^1s",width="100%"]
-|======
-|+++ <span id="os" name="+++{os}+++"></span>
-<br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
-<div class="doctitle">+++{document-title}+++</div>
-<div class="docsub">+++{document-subtitle}+++</div>
-<div class="docver">+++{document-subtitle2}+++</div>
-<div class="docver">+++{version}+++</div>
-<br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
-<br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />+++
-|======
+[subs=attributes]
+++++
+  <div class="document-info" id="os" name="{os}">
+    <h1 class="doctitle">{document-title}</h1>
+    <h2 class="docsub">{document-subtitle}</h2>
+    <h3 class="docver">{document-subtitle2}</h3>
+    <h3 class="docver">{version}</h3>
+  </div>
+</div>
+++++
 endif::[]
