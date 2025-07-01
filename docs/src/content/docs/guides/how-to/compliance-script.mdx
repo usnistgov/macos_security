@@ -3,7 +3,7 @@ title: Compliance Script
 description: A compliance-script reference.
 ---
 
-Adding the `-s` flag to the `generate-guidance.py` script will generate a compliance script, which can be used to check/fix a system.
+Adding the `-s` flag to the `generate-guidance.py` script will generate a compliance script, written for Z Shell (zsh), which can be used to check/fix a system.
 
 ```
 ➜  macos_security git:(sequoia) ./scripts/generate_guidance.py -s baselines/800-53r5_moderate.yaml
@@ -28,7 +28,7 @@ When generating the compliance script a `org.{baseline}.audit.plist` will be cre
 
 The `{baseline}_compliance.sh` script can run interactively or with the --check/--fix/--cfc flags. To run the script interactively run the following command:
 
-```
+```zsh
 sudo ./build/800-53r5_moderate/800-53r5_moderate_compliance.sh
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -67,7 +67,10 @@ To add a custom reference in front of the rule in the `{baseline}_baseline.log` 
 
 ## Compliance Script Command Line Argument Reference
 
-```
+**📌 NOTE**\
+The compliance script expects to be run in a Z Shell (zsh), trying to execute the script using `sh` or `bash` will result in errors.
+
+```zsh
 ./mscp_compliance.sh Usage
 ./mscp_compliance.sh [--check] [--fix] [--cfc] [--stats] [--compliant] [--non_compliant] [--reset] [--reset-all] [--quiet=<value>]
 
