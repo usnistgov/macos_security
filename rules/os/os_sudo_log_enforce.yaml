@@ -9,7 +9,7 @@ result:
 fix: |
   [source,bash]
   ----
-  /usr/bin/find /etc/sudoers* -type f -exec sed -i '' '/Defaults \!log_allowed/d' '{}' \;
+  /usr/bin/find /etc/sudoers* -type f -exec sed -i '' '/^Defaults[[:blank:]]*\!log_allowed/s/^/# /' '{}' \;
   /bin/echo "Defaults log_allowed" >> /etc/sudoers.d/mscp
   ----
 references:

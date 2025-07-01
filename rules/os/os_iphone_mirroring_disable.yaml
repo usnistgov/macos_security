@@ -33,14 +33,14 @@ references:
     - SRG-OS-000080-GPOS-00048
     - SRG-OS-000095-GPOS-00049
   disa_stig:
-    - N/A
+    - APPL-15-002271
   800-171r3:
     - 03.01.02
     - 03.01.20
     - 03.04.06
   cis:
     benchmark:
-      - 2.3.1.1 (level 1)
+      - N/A
     controls v8:
       - 4.1
       - 4.8
@@ -60,8 +60,6 @@ tags:
   - 800-53r4_moderate
   - 800-53r4_high
   - 800-171
-  - cis_lvl1
-  - cis_lvl2
   - cisv8
   - cnssi-1253_low
   - cnssi-1253_high

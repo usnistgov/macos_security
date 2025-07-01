@@ -1,7 +1,7 @@
 id: os_genmoji_disable
 title: Disable Genmoji AI Creation
 discussion: |-
-  Apple Intelligence features that use off device AI _MUST_ be disabled.
+  Apple Intelligence features such as Genmoji that use off device AI _MUST_ be disabled.
 check: |
   /usr/bin/osascript -l JavaScript << EOS
   $.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess')\

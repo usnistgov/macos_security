@@ -82,9 +82,12 @@ profile:
       - os_iphone_mirroring_disable
       - os_ir_support_disable
       - os_loginwindow_adminhostinfo_undefined
+      - os_mail_smart_reply_disable
       - os_mail_summary_disable
       - os_mdm_require
       - os_nfsd_disable
+      - os_notes_transcription_disable
+      - os_notes_transcription_summary_disable
       - os_on_device_dictation_enforce
       - os_password_proximity_disable
       - os_password_sharing_disable
@@ -97,6 +100,7 @@ profile:
       - os_rapid_security_response_removal_disable
       - os_recovery_lock_enable
       - os_root_disable
+      - os_safari_reader_summary_disable
       - os_screensaver_loginwindow_enforce
       - os_sip_enable
       - os_siri_prompt_disable
@@ -163,6 +167,7 @@ profile:
       - system_settings_screensaver_timeout_enforce
       - system_settings_siri_disable
       - system_settings_smbd_disable
+      - system_settings_ssh_disable
       - system_settings_ssh_enable
       - system_settings_system_wide_preferences_configure
       - system_settings_time_server_configure

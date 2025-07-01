@@ -117,3 +117,4 @@ payloads_types:
   - com.apple.preferences.sharing.SharingPrefsExtension
   - com.apple.controlcenter
   - com.apple.Accessibility
+  - com.apple.photos.shareddefaults

@@ -1,7 +1,7 @@
 id: system_settings_improve_assistive_voice_disable
 title: Disable Sending Audio Recordings and Transcripts to Apple
 discussion: |
-  The ability for Apple to store and review audio of your audio recordings and transcripts of your vocal shortcuts and voice control interactions _MUST_ be disabled.
+  The ability for Apple to store and review audio of your audio recordings and transcripts of your vocal shortcuts and voice control interactions _MUST_ be disabled. This will disable "Improve Assistive Voice Features" in Privacy & Security within System Settings.
 
   The information system _MUST_ be configured to provide only essential capabilities. Disabling the submission of this information will mitigate the risk of unwanted data being sent to Apple.
 check: |

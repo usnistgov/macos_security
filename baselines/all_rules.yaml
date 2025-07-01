@@ -117,6 +117,7 @@ profile:
       - os_library_validation_enabled
       - os_loginwindow_adminhostinfo_undefined
       - os_mail_app_disable
+      - os_mail_smart_reply_disable
       - os_mail_summary_disable
       - os_mdm_require
       - os_messages_app_disable
@@ -125,6 +126,8 @@ profile:
       - os_newsyslog_files_owner_group_configure
       - os_newsyslog_files_permissions_configure
       - os_nfsd_disable
+      - os_notes_transcription_disable
+      - os_notes_transcription_summary_disable
       - os_on_device_dictation_enforce
       - os_parental_controls_enable
       - os_password_autofill_disable
@@ -146,6 +149,7 @@ profile:
       - os_safari_advertising_privacy_protection_enable
       - os_safari_open_safe_downloads_disable
       - os_safari_prevent_cross-site_tracking_enable
+      - os_safari_reader_summary_disable
       - os_safari_show_full_website_address_enable
       - os_safari_show_status_bar_enabled
       - os_safari_warn_fraudulent_website_enable
@@ -168,6 +172,7 @@ profile:
       - os_sshd_client_alive_interval_configure
       - os_sshd_fips_compliant
       - os_sshd_login_grace_time_configure
+      - os_sshd_per_source_penalties_configure
       - os_sshd_permit_root_login_configure
       - os_sshd_unused_connection_timeout_configure
       - os_sudo_log_enforce
