@@ -2,7 +2,7 @@
 
 This document provides a high-level view of the changes to the macOS Security Compliance Project.
 
-## [Ventura, Revision 5.2] - 2025-06-XX
+## [Ventura, Revision 6.0] - 2025-06-XX
 
 * Rules
   * Modified Rules
