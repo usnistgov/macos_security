@@ -1423,18 +1423,18 @@ def generate_scap(all_rules, all_baselines, args, stig):
                     
                     if "grep" in rule_yaml['check'].split("|")[1]:
                         oval_definition = oval_definition + '''
-                        <definition id="oval:mscp:def:{}" version="1" class="compliance"> 
+                        <definition id="oval:mscp:def:{0}" version="1" class="compliance"> 
                     <metadata> 
-                        <title>{}</title> 
-                        <reference source="CCE" ref_id="{}"/>
-                        <reference source="macos_security" ref_id="{}"/>
-                        <description>{}</description> 
+                        <title>{1}</title> 
+                        <reference source="CCE" ref_id="{2}"/>
+                        <reference source="macos_security" ref_id="{3}"/>
+                        <description>{4}</description> 
                     </metadata> 
                 <criteria operator="OR">
-                    <criterion comment="{}" test_ref="oval:mscp:tst:{}" />
-                    <criterion comment="{}_sudoers.d" test_ref="oval:mscp:tst:{}"/>
+                    <criterion comment="{5}" test_ref="oval:mscp:tst:{6}" />
+                    <criterion comment="{7}_sudoers.d" test_ref="oval:mscp:tst:{8}"/>
                 </criteria>
-            </definition> '''.format(x,rule_yaml['title'],cce,rule_yaml['id'] + "_" + odv_label,rule_yaml['discussion'].replace("&","&amp;"),rule_yaml['id'] + "_" + odv_label,x,rule_yaml['id'] + "_" + odv_label, x, rule_yaml['id'] + "_" + odv_label,x+5051)
+            </definition> '''.format(x,rule_yaml['title'],cce,rule_yaml['id'] + "_" + odv_label,rule_yaml['discussion'].replace("&","&amp;"),rule_yaml['id'] + "_" + odv_label,x,rule_yaml['id'] + "_" + odv_label, x+5051)
                     
                         oval_test = oval_test + '''
                 <textfilecontent54_test id="oval:mscp:tst:{}" version="1" comment="{}_test" check_existence="all_exist" check="all" xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#independent">
@@ -3497,8 +3497,8 @@ def generate_scap(all_rules, all_baselines, args, stig):
             cmd = cmd + " " + scap_file + "temp --format --output " + scap_file
             
             os.popen(cmd).read()
-            # if os.path.exists(scap_file):
-                # os.remove(scap_file + "temp")    
+            if os.path.exists(scap_file):
+                os.remove(scap_file + "temp")    
 
 def get_rule_yaml(rule_file, custom=False, baseline_name=""):
     """ Takes a rule file, checks for a custom version, and returns the yaml for the rule
