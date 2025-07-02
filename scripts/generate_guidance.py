@@ -126,7 +126,7 @@ def get_check_code(check_yaml):
     except:
         return check_yaml
     # print check_string
-    check_code = re.search("(?:----((?:.*?\r?\n?)*)----)+", check_string)
+    check_code = re.search(r"----\n?(.*?)\n?----", check_string, re.DOTALL)
     # print(check_code.group(1).rstrip())
     return check_code.group(1).strip()
 
@@ -140,7 +140,7 @@ def quotify(fix_code):
 
 def get_fix_code(fix_yaml):
     fix_string = fix_yaml.split("[source,bash]")[1]
-    fix_code = re.search("(?:----((?:.*?\r?\n?)*)----)+", fix_string)
+    fix_code = re.search(r"----\n?(.*?)\n?----", fix_string, re.DOTALL)
     return fix_code.group(1)
 
 
