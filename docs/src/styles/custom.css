@@ -1,0 +1,32 @@
+
+/* Light mode colors rgba(49, 100, 49, 1) */
+:root {
+  --sl-color-accent: rgb(49, 100, 49);
+}
+
+/* Dark mode colors */
+:root[data-theme='dark'] {
+  --sl-color-accent: rgb(49, 100, 49);
+}
+
+#nistheadergoeshere {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  width: 100%;
+}
+
+#nistfootergoeshere {
+  position: relative;
+  z-index: 1000;
+}
+
+.header {
+  #position: fixed;
+  top: 40px;
+  left: 0;
+  width: 100%;
+
+}

@@ -1,0 +1,60 @@
+---
+title: Introduction
+description: A macOS Security Compliance Project Overview.
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+The macOS security compliance project is an open source effort to provide a programmatic approach to generating security guidance.  This project can be used to create customized security baselines of technical security controls by leveraging a library of rules which are mapped to compliance requirements in existing security guides or used to develop customized guidance. Through the use of a library of rules that enhance security, and mapping them back to existing guides and policies, a single project can support multiple security guides and regulated industry policies while also allowing for documentation and QA to be uniformly managed through a single effort.  This approach simplifies, and radically accelerates, the updating of annual security guidance through a unification and standardization of effort.
+
+Rationale for this project:
+
+* Normalize and accelerate annual adoption of OS/Hardware by having guidance available to meet the needs of new operating systems on release
+* Reduce worldwide effort in creating annual guidance by unifying and consolidating compliance efforts into a single project
+* Develop a methodology to foster collaboration between baseline authors, reducing overhead and redundancy
+* Unify approach in setting controls
+* Provide MDM/EMM/security/audit vendors and Apple insight into customer hardening needs
+
+<Aside type="note">
+This project is a programmatic approach to security policy and can produce output content to be used IN CONJUNCTION with management and security tools to achieve compliance.
+</Aside>
+
+The project includes guidance from the following publications, sourced from various government agencies:
+
+* NIST 800-53 (https://csrc.nist.gov/publications/detail/sp/800-53/rev-5/final)
+  * FISMA High
+  * FISMA Moderate
+  * FISMA Low
+* NIST 800-171 (https://csrc.nist.gov/pubs/sp/800/171/r3/final)
+* DISA STIG (https://public.cyber.mil/stigs/downloads/)
+* CMMC 2.0 (https://dodcio.defense.gov/CMMC/)
+* CNSSI-1253 (https://www.dcsa.mil/portals/91/documents/ctp/nao/CNSSI_No1253.pdf)
+* indigo (https://www.bsi.bund.de/EN/Themen/Oeffentliche-Verwaltung/Zulassung/mobile_Kommunikation/mobileKommunikation_node.html#doc919528bodyText2)
+  * indigo Base (iOS Only)
+  * indigo High (iOS Only)
+
+Non-governmental organizations may use other standards. For example, the Center for Internet Security (CIS) is a nonprofit that publishes its benchmarks. The following CIS projects are supported by the project: 
+
+* CIS Benchmarks (https://www.cisecurity.org/benchmark)
+* CIS Critical Security Controls Version 8 (https://www.cisecurity.org/controls/v8/)
+
+## Development Team 
+
+This effort is a joint project of federal operational IT Security staff and macOS Administrators and is published as a collaboration of: National Institute of Standards and Technology (NIST) (https://www.nist.gov), National Aeronautics and Space Administration (NASA) (https://www.nasa.gov), Defense Information Systems Agency (DISA) (https://www.disa.mil), and Los Alamos National Lab (LANL) (https://www.lanl.gov).  
+
+## Objective
+
+To develop an extensible, modern approach to security guidance that can be used by any organization (Government, Enterprise, Education) with the need to adhere to security compliance frameworks and policy. Project outputs include scripts, documentation, and configuration profile payloads that can be applied using modern management tools.
+
+## Audience   
+
+* System Administrators
+  * Choose individual actions or a complete guide to generate baseline documentation, configuration profile payloads, and scripts
+* Security Professionals
+  * Review reporting of applied controls against guidance
+* Policy Authors
+  * Map policy metadata to a library of identified and verified controls in order to create/update baselines
+* MDM/EMM/Security/Compliance Tool Vendors
+  * Easily support the configuration, verification, and reporting of security guidance and controls in a product - without recreation or reinterpretation - through the use of trusted source material
+* Privacy Officers
+  * Easily ensure that adequate privacy controls are enabled for institutional organizations

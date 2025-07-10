@@ -1,0 +1,39 @@
+---
+title: Generate Guidance
+description: A generate-guidance reference.
+---
+
+To generate the guidance files (AsciiDoc, HTML, and PDF) run the `generate_guidance.py` script and point it to either one of the built-in `baseline.yaml` files or a custom `baseline.yaml` file created by the `generate_baseline.py` script.
+
+**❗ IMPORTANT**\
+Never work off the `main` branch, always `git checkout` one of the OS branches.
+
+**Built-in Baseline**
+
+```bash
+➜  macos_security git:(sequoia) ./scripts/generate_guidance.py baselines/800-53r5_moderate.yaml
+Profile YAML: baselines/800-53r5_moderate.yaml
+Output path: /Users/mscp/src/macos_security/build/800-53r5_moderate/800-53r5_moderate.adoc
+Generating HTML file from AsciiDoc...
+Generating PDF file from AsciiDoc...
+
+➜  macos_security git:(sequoia) ls -dn 800-53r5_moderate/*
+-rw-r--r--  1 501  20   259522 Jan 19 15:23 800-53_moderate/800-53r5_moderate.adoc
+-rw-r--r--  1 501  20   859486 Jan 19 15:23 800-53_moderate/800-53r5_moderate.html
+-rw-r--r--  1 501  20  2667622 Jan 19 15:23 800-53_moderate/800-53r5_moderate.pdf
+```
+
+**Custom Baseline**
+
+```bash
+macos_security git:(sequoia) ./scripts/generate_guidance.py build/baselines/800-53r5_moderate.yaml
+Profile YAML: build/baselines/800-53r5_moderate.yaml
+Output path: /Users/mscp/src/macos_security/build/800-53r4_moderate/800-53r5_moderate.adoc
+Generating HTML file from AsciiDoc...
+Generating PDF file from AsciiDoc...
+
+➜  macos_security git:(sequoia) ls -dn build/800-53r5_moderate/*
+-rw-r--r--  1 501  20   260525 Jan 19 13:47 build/800-53r5_moderate/800-53r5_moderate.adoc
+-rw-r--r--  1 501  20   861254 Jan 19 13:47 build/800-53r5_moderate/800-53r5_moderate.html
+-rw-r--r--  1 501  20  2675654 Jan 19 13:47 build/800-53r5_moderate/800-53r5_moderate.pdf
+```
