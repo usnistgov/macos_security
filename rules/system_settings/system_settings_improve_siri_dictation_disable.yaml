@@ -29,6 +29,8 @@ references:
     disa_stig:
       macos_15:
         - APPL-15-002210
+      macos_14:
+        - APPL-14-002210
       macos_13:
         - APPL-13-002021
     cmmc:

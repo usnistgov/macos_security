@@ -10,6 +10,9 @@ discussion: |
   NOTE: On macOS 15.2 and higher the SSH configuration can be reset to the macOS default by running /usr/libexec/reset-ssh-configuration.
 references:
   nist:
+    cce:
+      macos_15:
+        - CCE-94589-9
     800-53r5:
       - SC-5
 platforms:

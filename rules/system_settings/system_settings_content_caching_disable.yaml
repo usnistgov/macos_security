@@ -34,7 +34,7 @@ references:
   cis:
     benchmark:
       macos_15:
-        - 2.3.3.9 (level 2)
+        - 2.3.3.8 (level 2)
       macos_14:
         - 2.3.3.9 (level 2)
       macos_13:

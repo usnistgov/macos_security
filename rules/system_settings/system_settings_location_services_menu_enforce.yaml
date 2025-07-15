@@ -26,6 +26,7 @@ platforms:
   macOS:
     '15.0':
       benchmarks:
+        - name: cis_lvl1
         - name: cis_lvl2
     '14.0':
       benchmarks:

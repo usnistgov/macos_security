@@ -13,8 +13,6 @@ references:
         - CCE-92031-4
   cis:
     benchmark:
-      macos_15:
-        - 2.5.2 (level 1)
       macos_14:
         - 2.5.2 (level 1)
       macos_13:
@@ -24,10 +22,7 @@ references:
       - 4.8
 platforms:
   macOS:
-    '15.0':
-      benchmarks:
-        - name: cis_lvl1
-        - name: cis_lvl2
+    '15.0': {}
     '14.0':
       benchmarks:
         - name: cis_lvl1

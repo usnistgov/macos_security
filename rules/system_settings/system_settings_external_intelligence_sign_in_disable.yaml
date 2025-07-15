@@ -26,13 +26,19 @@ references:
       - CM.L2-3.4.6
       - CM.L2-3.4.7
   cis:
+    benchmark:
+      macos_15:
+        - 2.5.1.1 (level 1)
     controls_v8:
       - 4.1
       - 4.8
       - 15.3
 platforms:
   macOS:
-    '15.0': {}
+    '15.0':
+      benchmarks:
+        - name: cis_lvl1
+        - name: cis_lvl2
     enforcement_info:
       check:
         shell: |-

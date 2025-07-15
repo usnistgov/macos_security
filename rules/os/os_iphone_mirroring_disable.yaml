@@ -48,7 +48,10 @@ references:
         - ANNEX K
 platforms:
   macOS:
-    '15.0': {}
+    '15.0':
+      benchmarks:
+        - name: disa_stig
+          severity: medium
     enforcement_info:
       check:
         shell: |-

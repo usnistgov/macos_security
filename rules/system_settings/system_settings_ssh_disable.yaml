@@ -26,7 +26,7 @@ references:
   cis:
     benchmark:
       macos_15:
-        - 2.3.3.5 (level 1)
+        - 2.3.3.4 (level 1)
       macos_14:
         - 2.3.3.5 (level 1)
       macos_13:
@@ -59,12 +59,13 @@ platforms:
           /bin/launchctl disable system/com.openssh.sshd
         additional_info: 'NOTE: Systemsetup with -setremotelogin flag will fail unless you grant Full Disk Access to systemsetup or its parent process. Requires supervision.'
 tags:
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_high
+  - 800-171
   - cisv8
   - cnssi-1253_low
   - cnssi-1253_high
   - cmmc_lvl2
   - cmmc_lvl1
   - cnssi-1253_moderate
-  - 800-53r5_low
-  - 800-53r5_moderate
-  - 800-53r5_high
