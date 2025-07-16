@@ -20,7 +20,7 @@ on:
   schedule:
     - cron: "0 * * * *" # Every hour
   push:
-    branches: ["main"]
+    branches: ["main", "dev_2.0"]
     paths:
       - .renovaterc.json5
 
