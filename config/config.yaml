@@ -1,0 +1,34 @@
+---
+logging_config: "config/logging_config.yaml"
+output_dir: "build/"
+includes_dir: "config/includes"
+mspc_data: "config/includes/mscp-data.yaml"
+environment: "development"
+shell_template_dir: "config/default/templates/shell_scripts"
+log_output_file: mscp.log
+
+defaults:
+  adoc_templates_dir: "config/default/templates/asciidoctor"
+  baseline_dir: "config/default/baselines"
+  images_dir: "config/default/images"
+  md_templates_dir: "config/default/templates/markdown"
+  misc_dir: "config/default/misc"
+  root_dir: "config/default"
+  rules_dir: "config/default/rules"
+  scap_templates_dir: "config/default/templates/scap"
+  shell_template_dir: "config/default/templates/shell_scripts"
+  sections_dir: "config/default/sections"
+  templates_dir: "config/default/templates"
+
+custom:
+  adoc_templates_dir: "config/custom/templates/asciidoctor"
+  baseline_dir: "config/custom/baselines"
+  images_dir: "config/custom/images"
+  md_templates_dir: "config/custom/templates/markdown"
+  misc_dir: "config/custom/misc"
+  root_dir: "config/custom"
+  rules_dir: "config/custom/rules"
+  scap_templates_dir: "config/custom/templates/scap"
+  shell_template_dir: "config/custom/templates/shell_scripts"
+  sections_dir: "config/custom/sections"
+  templates_dir: "config/custom/templates"

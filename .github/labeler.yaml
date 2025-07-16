@@ -1,0 +1,25 @@
+---
+area/rules:
+  - changed-files:
+      - any-glob-to-any-file: config/default/rules/**/**/*
+area/baseline:
+  - changed-files:
+      - any-glob-to-any-file: config/default/baselines/**/**/*
+area/images:
+  - changed-files:
+      - any-glob-to-any-file: config/default/images/**/*
+area/misc:
+  - changed-files:
+      - any-glob-to-any-file: config/default/misc/**/*
+area/sections:
+  - changed-files:
+      - any-glob-to-any-file: config/default/sections/**/*
+area/templates:
+  - changed-files:
+      - any-glob-to-any-file: config/default/templates/**/*
+area/github:
+  - changed-files:
+      - any-glob-to-any-file: .github/**/*
+area/mscp_api:
+  - changed-files:
+      - any-glob-to-any-file: src/mscp/**/*

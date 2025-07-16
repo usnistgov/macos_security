@@ -1,0 +1,97 @@
+id: icloud_backup_disabled
+title: Ensure iCloud Backup is set to Disabled
+discussion: |
+  iCloud backup _MUST_ be disabled.
+references:
+  nist:
+    cce:
+      ios_18:
+        - CCE-94415-7
+      ios_17:
+        - CCE-93401-8
+      ios_16:
+        - CCE-93201-2
+      visionos_2:
+        - CCE-94479-3
+    800-53r5:
+      - SC-4
+      - AC-20
+      - AC-20(1)
+      - CM-7
+      - CM-7(1)
+      - SC-7(10)
+  disa:
+    cci:
+      - CCI-001090
+    disa_stig:
+      ios_18:
+        - AIOS-18-003000
+      ios_17:
+        - AIOS-17-003000
+      ios_16:
+        - AIOS-16-003000
+    sfr:
+      - 'FMT_MOF_EXT.1.2 #40'
+  cis:
+    benchmark:
+      ios_18:
+        - 3.2.1.4 (level 1 - Institutionally-Owned Devices)
+      ios_17:
+        - 3.2.1.4 (level 1 - Institutionally-Owned Devices)
+      ios_16:
+        - 3.2.1.4 (level 1 - Institutionally-Owned Devices)
+    controls_v8:
+      - 2.3
+  bsi:
+    indigo:
+      ios_17:
+        - ANNEX D (Section 5.4 - iCloud restrictions)
+        - ANNEX K
+platforms:
+  iOS:
+    '18.0':
+      supervised: false
+      benchmarks:
+        - name: cis_lvl1_enterprise
+        - name: cis_lvl2_enterprise
+        - name: ios_stig
+          severity: medium
+        - name: indigo_base
+          severity: medium
+        - name: indigo_high
+          severity: medium
+    '17.0':
+      supervised: false
+      benchmarks:
+        - name: cis_lvl1_enterprise
+        - name: cis_lvl2_enterprise
+        - name: ios_stig
+          severity: medium
+        - name: indigo_base
+          severity: medium
+        - name: indigo_high
+          severity: medium
+    '16.0':
+      supervised: false
+      benchmarks:
+        - name: cis_lvl1_enterprise
+        - name: cis_lvl2_enterprise
+        - name: ios_stig
+          severity: medium
+    introduced: '5.0'
+  visionOS:
+    '2.0':
+      supervised: false
+    introduced: '2.0'
+tags:
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_high
+  - cisv8
+  - cnssi-1253_moderate
+  - cnssi-1253_low
+  - cnssi-1253_high
+mobileconfig_info:
+  - PayloadType: com.apple.applicationaccess
+    PayloadContent:
+      - allowCloudBackup: false

@@ -1,0 +1,69 @@
+---
+name: Feature Proposal
+description: Suggest an idea for this project
+title: '[Feature Proposal]: <title>'
+labels: ["Feature Proposal"]
+body:
+  - type: checkboxes
+    attributes:
+      label: Is there an existing issue for this?
+      description: Please search to see if an issue already exists for the feature you are requesting
+      options:
+        - label: I have searched the existing issues
+          required: true
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem to solve
+      description: What problem do we solve?
+      placeholder: Describe the problem...
+
+  - type: textarea
+    id: users
+    attributes:
+      label: Intended users
+      description: "Who will use this feature? If known, include any of the following: types of users (e.g. Member)"
+      placeholder: Describe the intended users...
+
+  - type: textarea
+    id: details
+    attributes:
+      label: Further details
+      description: Include use cases, benefits, and/or goals (contributes to our vision?)
+      placeholder: Provide further details...
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposal
+      description: How are we going to solve the problem?
+      placeholder: Describe the proposal...
+
+  - type: textarea
+    id: documentation
+    attributes:
+      label: Documentation
+      description: Relevant documentation to the feature
+      placeholder: Provide documentation...
+
+  - type: textarea
+    id: testing
+    attributes:
+      label: Testing
+      description: What risks does this change pose? How might it affect the quality of the product? What additional test coverage or changes to tests will be needed?
+      placeholder: Describe the testing...
+
+  - type: textarea
+    id: success
+    attributes:
+      label: What does success look like, and how can we measure that?
+      description: Define both the success metrics and acceptance criteria. Note that success metrics indicate the desired business outcomes, while acceptance criteria indicate when the solution is working correctly. If there is no way to measure success, link to an issue that will implement a way to measure this.
+      placeholder: Describe what success looks like...
+
+  - type: textarea
+    id: links
+    attributes:
+      label: Links / references
+      description: Any relevant links or references
+      placeholder: Provide links or references...

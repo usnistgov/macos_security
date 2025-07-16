@@ -1,0 +1,122 @@
+---
+name: Lint Code Base
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - 'archive/**'
+  pull_request:
+    types: [opened, synchronize, reopened]
+    branches:
+      - main
+    paths-ignore:
+      - 'archive/**'
+
+jobs:
+  pythonlint:
+    name: pythonlint
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+        with:
+          fetch-depth: 0
+
+      - name: Get changed files
+        id: changed-files
+        uses: tj-actions/changed-files@dcc7a0cba800f454d79fff4b993e8c3555bcc0a8 # v45
+        with:
+          files: |
+            **.py
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+
+      - name: Install dependencies
+        run: |
+          pip install flake8
+
+      - name: Lint Python files
+        run: flake8 src/mscp --ignore=E501
+
+  yamllint:
+    name: yamllint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+        with:
+          fetch-depth: 0
+
+      - name: Get changed files
+        id: changed-files
+        uses: tj-actions/changed-files@dcc7a0cba800f454d79fff4b993e8c3555bcc0a8 # v45
+        with:
+          files: |
+            **.yml
+            **.yaml
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+
+      - name: Install yamllint
+        if: steps.changed-files.outputs.any_changed == 'true'
+        shell: bash
+        run: |
+          pip install --user yamllint
+
+      - name: Run yamllint
+        if: steps.changed-files.outputs.any_changed == 'true'
+        run: |
+          yamllint --config-file .github/linters/.yamllint.yaml --format github ${{ steps.changed-files.outputs.all_changed_files }}
+
+  markdownlint:
+    name: markdownlint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+        with:
+          fetch-depth: 0
+
+      - name: Get changed files
+        id: changed-files
+        uses: tj-actions/changed-files@dcc7a0cba800f454d79fff4b993e8c3555bcc0a8 # v45
+        with:
+          files: |
+            **.md
+
+      - name: Run markdownlint-cli2
+        if: steps.changed-files.outputs.any_changed == 'true'
+        uses: bjw-s/action-markdownlint-cli2@c3c44cc6f77516007f1a85d982ed6276e840dcec # v0.1
+        with:
+          markdownlint_config: .github/linters/.markdownlint.yaml
+          file_pattern: ${{ steps.changed-files.outputs.all_changed_files }}
+
+  lint_success:
+    needs:
+      - pythonlint
+      - yamllint
+      - markdownlint
+    if: |
+      always()
+    name: Lint successful
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check job status
+        if: >-
+          ${{
+              (
+                contains(needs.*.result, 'failure') || contains(needs.*.result, 'cancelled')
+              )
+          }}
+        run: exit 1

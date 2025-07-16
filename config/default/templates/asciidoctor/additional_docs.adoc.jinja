@@ -1,0 +1,101 @@
+== Applicable Documents
+=== Government Documents
+
+[%header, cols=2*a]
+.National Institute of Standards and Technology (NIST)
+|===
+|Document Number or Descriptor
+|Document Title
+|link:https://nvd.nist.gov/800-53[NIST Special Publication 800-53 Rev 5]|_NIST Special Publication 800-53 Rev 5.1.1_
+|link:https://www.nist.gov/itl/tig/projects/special-publication-800-63[NIST Special Publication 800-63]|_NIST Special Publication 800-63_
+|link:https://csrc.nist.gov/pubs/sp/800/171/r3/final[NIST Special Publication 800-171]|_NIST Special Publication 800-171 Rev 3_
+|link:https://csrc.nist.gov/pubs/sp/800/219/r1/final[NIST Special Publication 800-219]|_NIST Special Publication 800-219 Rev 1_
+|===
+
+{% if "STIG" in baseline.title %}
+[%header, cols=2*a]
+.Defense Information Systems Agency (DISA)
+|===
+|Document Number or Descriptor
+|Document Title
+{% if os_name == "macos" %}
+{% if os_version == "15.0" %}
+|link:https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Apple_macOS_15_V1R1_STIG.zip[STIG Ver 1, Rel 1]|_Apple macOS 15 (Sequoia) STIG_
+{% elif os_version == "14.0" %}
+|link:https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Apple_macOS_14_V1R1_STIG.zip[STIG Ver 1, Rel 1]|_Apple macOS 14 (Sonoma) STIG_
+{% elif os_version == "13.0" %}
+|link:https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Apple_macOS_13_V1R3_STIG.zip[STIG Ver 1, Rel 3]|_Apple macOS 13 (Ventura) STIG_
+{% elif os_version == "12.0" %}
+|link:https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Apple_macOS_12_V1R8_STIG.zip[STIG Ver 1, Rel 8]|_Apple macOS 12 (Monterey) STIG_
+{% endif %}
+{% elif os_name == "ios" %}
+{% if os_version == "18.0" %}
+|link:https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Apple_iOS-iPadOS_18_V1R1_STIG.zip[STIG Ver 1, Rel 1]|_Apple iOS/iPadOS 18 STIG - Ver 1, Rel 1_
+{% elif os_version == "17.0" %}
+|link:https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Apple_iOS-iPadOS_17_V2R1_STIG.zip[STIG Ver 2, Rel 1]|_Apple iOS/iPadOS 17 STIG - Ver 2, Rel 1_
+|link:https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Apple_iOS-iPadOS_17_BYOAD_Y24M02_STIG.zip[STIG Ver 1, Rel 1]|_Apple iOS/iPadOS 17 BYOAD STIG - Ver 1, Rel 1_
+{% elif os_version == "16.0" %}
+|link:https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Apple_iOS-iPadOS_16_V2R1_STIG.zip[STIG Ver2, Rel 1]|_Apple iOS/iPadOS 16 STIG - Ver 2, Rel 1_
+|link:https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Apple_iOS-iPadOS_16_BYOAD_Y23M08_STIG.zip[STIG Ver 1, Rel 1]|_Apple iOS/iPadOS 16 BYOAD STIG - Ver 1, Rel 1_
+{% endif %}
+{% elif os_name == "visionos" %}
+| | _Currently Unavailable_
+{% endif %}
+|===
+{% endif %}
+
+[%header, cols=2*a]
+.Cybersecurity Maturity Model Certification (CMMC)
+|===
+|Document Number or Descriptor
+|Document Title
+|link:https://dodcio.defense.gov/Portals/0/Documents/CMMC/ModelOverview_V2.0_FINAL2_20211202_508.pdf[CMMC Model Overview v2.0]|_Cybersecurity Maturity Model Certification (CMMC) Model Overview v2.0_
+|===
+
+[%header, cols=2*a]
+.Committee on National Security Systems (CNSS)
+|===
+|Document Number or Descriptor
+|Document Title
+|link:https://www.cnss.gov/CNSS/issuances/Instructions.cfm[CNSSI No. 1253]|_Security Categorization and Control Selection for National Security Systems_
+|===
+
+=== Non-Government Documents
+[%header, cols=2*a]
+.Apple
+|===
+|Document Number or Descriptor
+|Document Title
+|link:https://support.apple.com/guide/security/welcome/web[Apple Platform Security Guide]|_Apple Platform Security_
+|link:https://support.apple.com/guide/deployment/welcome/web[Apple Platform Deployment]|_Apple Platform Deployment_
+|link:https://support.apple.com/guide/certifications/welcome/web[Apple Platform Certifications]|_Apple Platform Certifications_
+|link:https://developer.apple.com/documentation/devicemanagement/profile-specific_payload_keys[Profile-Specific Payload Keys]|_Profile-Specific Payload Keys_
+|===
+
+[%header, cols=2*a]
+.Center for Internet Security
+|===
+|Document Number or Descriptor
+|Document Title
+{% if os_name == "macos" %}
+{% if os_version == "15.0" %}
+|link:https://www.cisecurity.org/benchmark/apple_os/[Apple macOS 15.0]|_CIS Apple macOS 15.0 Benchmark version 1.0.0_
+{% elif os_version == "14.0" %}
+|link:https://www.cisecurity.org/benchmark/apple_os/[Apple macOS 14.0]|_CIS Apple macOS 14.0 Benchmark version 2.0.0_
+{% elif os_version == "13.0" %}
+|link:https://www.cisecurity.org/benchmark/apple_os/[Apple macOS 13.0]|_CIS Apple macOS 13.0 Benchmark version 3.0.0_
+{% elif os_version == "12.0" %}
+|link:https://www.cisecurity.org/benchmark/apple_os/[Apple macOS 12.0]|_CIS Apple macOS 12.0 Benchmark version 3.1.0_
+{% endif %}
+{% elif os_name == "ios" %}
+{% if os_version == "18.0" %}
+|link:https://www.cisecurity.org/benchmark/apple_ios[Apple iOS/iPadOS]|_CIS Apple iOS 18 and iPadOS 18 Version 1.0.0_
+{% elif os_version == "17.0" %}
+|link:https://www.cisecurity.org/benchmark/apple_ios[Apple iOS/iPadOS]|_CIS Apple iOS 17 and iPadOS 17 Version 1.1.0_
+{% elif os_version == "16.0" %}
+|link:https://www.cisecurity.org/benchmark/apple_ios[Apple iOS/iPadOS]|_CIS Apple iOS 16 and iPadOS 16 Version 1.1.0_
+{% endif %}
+{% elif os_name == "visionos" %}
+| | _Currently Unavailable_
+{% endif %}
+|===

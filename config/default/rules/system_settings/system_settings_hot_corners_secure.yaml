@@ -1,0 +1,68 @@
+id: system_settings_hot_corners_secure
+title: Secure Hot Corners
+discussion: |
+  Hot corners _MUST_ be secured.
+
+  The information system conceals, via the session lock, information previously visible on the display with a publicly viewable image. Although hot comers can be used to initiate a session lock or to launch useful applications, they can also be configured to disable an automatic session lock from initiating. Such a configuration introduces the risk that a user might forget to manually lock the screen before stepping away from the computer.
+references:
+  nist:
+    cce:
+      macos_15:
+        - CCE-94369-6
+      macos_14:
+        - CCE-92966-1
+      macos_13:
+        - CCE-91955-5
+    800-53r5:
+      - AC-11(1)
+    800-171r3:
+      - 03.01.10
+  disa:
+    cmmc:
+      - AC.L2-3.1.10
+  cis:
+    benchmark:
+      macos_15:
+        - 2.7.1 (level 2)
+      macos_14:
+        - 2.7.1 (level 2)
+      macos_13:
+        - 2.7.1 (level 2)
+    controls_v8:
+      - 4.3
+platforms:
+  macOS:
+    '15.0':
+      benchmarks:
+        - name: cis_lvl2
+    '14.0':
+      benchmarks:
+        - name: cis_lvl2
+    '13.0':
+      benchmarks:
+        - name: cis_lvl2
+    enforcement_info:
+      check:
+        shell: |-
+          bl_corner="$(/usr/bin/defaults read /Users/"$CURRENT_USER"/Library/Preferences/com.apple.dock wvous-bl-corner 2>/dev/null)"
+          tl_corner="$(/usr/bin/defaults read /Users/"$CURRENT_USER"/Library/Preferences/com.apple.dock wvous-tl-corner 2>/dev/null)"
+          tr_corner="$(/usr/bin/defaults read /Users/"$CURRENT_USER"/Library/Preferences/com.apple.dock wvous-tr-corner 2>/dev/null)"
+          br_corner="$(/usr/bin/defaults read /Users/"$CURRENT_USER"/Library/Preferences/com.apple.dock wvous-br-corner 2>/dev/null)"
+
+          if [[ "$bl_corner" != "6" ]] && [[ "$tl_corner" != "6" ]] && [[ "$tr_corner" != "6" ]] && [[ "$br_corner" != "6" ]]; then
+            echo "0"
+          fi
+        result:
+          integer: 0
+      fix:
+        shell: |-
+          /usr/bin/sudo -u "$CURRENT_USER" /usr/bin/defaults delete /Users/"$CURRENT_USER"/Library/Preferences/com.apple.dock wvous-bl-corner 2>/dev/null
+          /usr/bin/sudo -u "$CURRENT_USER" /usr/bin/defaults delete /Users/"$CURRENT_USER"/Library/Preferences/com.apple.dock wvous-tl-corner 2>/dev/null
+          /usr/bin/sudo -u "$CURRENT_USER" /usr/bin/defaults delete /Users/"$CURRENT_USER"/Library/Preferences/com.apple.dock wvous-tr-corner 2>/dev/null
+          /usr/bin/sudo -u "$CURRENT_USER" /usr/bin/defaults delete /Users/"$CURRENT_USER"/Library/Preferences/com.apple.dock wvous-br-corner 2>/dev/null
+tags:
+  - cisv8
+  - cnssi-1253_low
+  - cnssi-1253_high
+  - cmmc_lvl2
+  - cnssi-1253_moderate
