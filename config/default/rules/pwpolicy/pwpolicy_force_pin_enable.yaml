@@ -1,0 +1,70 @@
+id: pwpolicy_force_pin_enable
+title: Ensure Force Pin is set to Enabled
+discussion: |-
+  Passwords provide a form of access control that prevents unauthorized individuals from accessing computing resources and sensitive data. Passwords may also be a source of entropy for generation of key encryption or data encryption keys. If a password is not required to access data, this data is accessible to any adversary who obtains physical possession of the device. Requiring that a password be successfully entered before the mobile device data is unencrypted mitigates this risk.
+
+  Note: MDF PP v2.0 requires a Password Authentication Factor and requires management of its length and complexity. It leaves open whether the existence of a password is subject to management. This requirement addresses the configuration to require a password, which is critical to the cybersecurity posture of the device.
+references:
+  nist:
+    cce:
+      ios_18:
+        - CCE-94474-4
+      ios_17:
+        - CCE-93457-0
+      ios_16:
+        - CCE-93257-4
+    800-53r5:
+      - SC-28
+  disa:
+    cci:
+      - CCI-001199
+    disa_stig:
+      ios_18:
+        - AIOS-18-010400
+      ios_17:
+        - AIOS-17-010400
+        - AIOS-17-710400
+      ios_16:
+        - AIOS-16-010400
+        - AIOS-16-710400
+    sfr:
+      - FIA_UAU_EXT.1.1
+  bsi:
+    indigo:
+      ios_17:
+        - Annex D (Section 5.9.1 - Device-Code)
+platforms:
+  iOS:
+    '18.0':
+      benchmarks:
+        - name: ios_stig
+          severity: high
+        - name: indigo_base
+          severity: high
+        - name: indigo_high
+          severity: high
+    '17.0':
+      benchmarks:
+        - name: ios_stig
+          severity: high
+        - name: ios_stig_byoad
+          severity: high
+        - name: indigo_base
+          severity: high
+        - name: indigo_high
+          severity: high
+    '16.0':
+      benchmarks:
+        - name: ios_stig
+          severity: high
+        - name: ios_stig_byoad
+          severity: high
+    introduced: '4.0'
+tags:
+  - cnssi-1253_moderate
+  - cnssi-1253_low
+  - cnssi-1253_high
+mobileconfig_info:
+  - PayloadType: com.apple.mobiledevice.passwordpolicy
+    PayloadContent:
+      - forcePIN: true

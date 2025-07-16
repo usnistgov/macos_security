@@ -1,0 +1,47 @@
+id: sysprefs_wallet_applepay_prefpane_disable
+title: Disable the System Preference Pane for Wallet and Apple Pay
+discussion: |
+  The system preference pane for Wallet and Apple Pay _MUST_ be disabled.
+
+  Disabling the system preference pane prevents the users from configuring Wallet and Apple Pay.
+references:
+  nist:
+    cce:
+      monterey:
+        - CCE-91147-9
+      big_sur:
+        - CCE-85485-1
+    800-53r5:
+      - CM-7
+      - CM-7(5)
+  disa:
+    cci:
+      - CCI-001774
+      - CCI-000381
+    srg:
+      - SRG-OS-000095-GPOS-00049
+    disa_stig:
+      monterey:
+        - APPL-12-002052
+      big_sur:
+        - APPL-11-002052
+platforms:
+  macOS:
+    check: |
+      /usr/bin/profiles show -output stdout-xml | /usr/bin/xmllint --xpath '//key[text()="DisabledPreferencePanes"]/following-sibling::*[1]' - | /usr/bin/grep -c com.apple.preferences.wallet
+    result:
+      integer: 1
+    fix: |
+      This is implemented by a Configuration Profile.
+    monterey:
+      severity: medium
+      benchmarks:
+        - disa_stig
+    big_sur:
+      severity: medium
+      benchmarks:
+        - disa_stig
+mobileconfig_info:
+  com.apple.systempreferences:
+    DisabledPreferencePanes:
+      - com.apple.preferences.wallet

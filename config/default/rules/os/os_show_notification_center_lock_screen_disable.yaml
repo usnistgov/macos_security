@@ -1,0 +1,99 @@
+id: os_show_notification_center_lock_screen_disable
+title: Ensure Show Notification Center in Lock screen is set to Disabled
+discussion: |
+  Notification Center _MUST_ be disabled in the lock screen.
+references:
+  nist:
+    cce:
+      ios_18:
+        - CCE-94466-0
+      ios_17:
+        - CCE-93450-5
+      ios_16:
+        - CCE-93250-9
+    800-53r5:
+      - AC-11(1)
+  disa:
+    cci:
+      - CCI-000060
+    disa_stig:
+      ios_18:
+        - AIOS-18-007500
+      ios_17:
+        - AIOS-17-007600
+        - AIOS-17-707600
+      ios_16:
+        - AIOS-16-007500
+        - AIOS-16-707500
+    sfr:
+      - 'FMT_SMF_EXT.1.1 #18'
+  cis:
+    benchmark:
+      ios_18:
+        - 2.2.1.15 (level 1 - End-User Owned Devices)
+        - 3.2.1.32 (level 1 - Institutionally-Owned Devices)
+      ios_17:
+        - 2.2.1.15 (level 1 - End-User Owned Devices)
+        - 3.2.1.32 (level 1 - Institutionally-Owned Devices)
+      ios_16:
+        - 2.2.1.15 (level 1 - End-User Owned Devices)
+        - 3.2.1.32 (level 1 - Institutionally-Owned Devices)
+    controls_v8:
+      - 4.3
+  bsi:
+    indigo:
+      ios_17:
+        - ANNEX K
+platforms:
+  iOS:
+    '18.0':
+      supervised: false
+      benchmarks:
+        - name: cis_lvl1_byod
+        - name: cis_lvl2_byod
+        - name: cis_lvl1_enterprise
+        - name: cis_lvl2_enterprise
+        - name: ios_stig
+          severity: medium
+        - name: indigo_base
+          severity: medium
+        - name: indigo_high
+          severity: medium
+    '17.0':
+      supervised: false
+      benchmarks:
+        - name: cis_lvl1_byod
+        - name: cis_lvl2_byod
+        - name: cis_lvl1_enterprise
+        - name: cis_lvl2_enterprise
+        - name: ios_stig
+          severity: medium
+        - name: ios_stig_byoad
+          severity: medium
+        - name: indigo_base
+          severity: medium
+        - name: indigo_high
+          severity: medium
+    '16.0':
+      supervised: false
+      benchmarks:
+        - name: cis_lvl1_byod
+        - name: cis_lvl2_byod
+        - name: cis_lvl1_enterprise
+        - name: cis_lvl2_enterprise
+        - name: ios_stig
+          severity: medium
+        - name: ios_stig_byoad
+          severity: medium
+    introduced: '7.0'
+tags:
+  - 800-53r5_moderate
+  - 800-53r5_high
+  - cisv8
+  - cnssi-1253_moderate
+  - cnssi-1253_low
+  - cnssi-1253_high
+mobileconfig_info:
+  - PayloadType: com.apple.applicationaccess
+    PayloadContent:
+      - allowLockScreenNotificationsView: false

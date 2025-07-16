@@ -1,0 +1,13 @@
+{% set check_tags = ["permanent", "inherent", "n_a", "not_applicable"] %}
+{% if "supplemental" not in rule.rule_id and not (rule.tags | select("in", check_tags) | list) %}
+{% if rule.fix is not none and rule.fix | length > 0 %}
+  #####----- Rule: {{ rule.rule_id }} -----#####
+  ## Addresses the following NIST 800-53 controls:
+  {{ rule.references.nist.nist_800_53r5 | group_ulify if rule.references.nist.nist_800_53r5 is not none else "# * N/A" }}
+
+  fix_code="{{ rule.fix | replace("\\\\", "\\") | replace('\"', '\\\"') | replace('$', '\$') | trim | safe }}"
+
+  rule_fix "{{ rule.rule_id }}" "$fix_code"
+
+{% endif %}
+{% endif %}

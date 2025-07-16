@@ -1,0 +1,41 @@
+id: sysprefs_bluetooth_prefpane_disable
+title: Disable the Bluetooth System Preference Pane
+discussion: |
+  The Bluetooth System Preference pane _MUST_ be disabled to prevent access to the bluetooth configuration.
+references:
+  nist:
+    cce:
+      monterey:
+        - CCE-91150-3
+      big_sur:
+        - CCE-85492-7
+  disa:
+    cci:
+      - CCI-002418
+    srg:
+      - SRG-OS-000481-GPOS-000481
+    disa_stig:
+      monterey:
+        - APPL-12-002062
+      big_sur:
+        - APPL-11-002062
+platforms:
+  macOS:
+    check: |
+      /usr/bin/profiles show -output stdout-xml | /usr/bin/xmllint --xpath '//key[text()="DisabledPreferencePanes"]/following-sibling::*[1]' - | /usr/bin/grep -c com.apple.preferences.Bluetooth
+    result:
+      integer: 1
+    fix: |
+      This is implemented by a Configuration Profile.
+    monterey:
+      severity: medium
+      benchmarks:
+        - disa_stig
+    big_sur:
+      severity: medium
+      benchmarks:
+        - disa_stig
+mobileconfig_info:
+  com.apple.systempreferences:
+    DisabledPreferencePanes:
+      - com.apple.preferences.Bluetooth

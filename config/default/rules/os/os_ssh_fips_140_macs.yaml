@@ -1,0 +1,61 @@
+id: os_ssh_fips_140_macs
+title: Limit SSH to FIPS 140 Validated Message Authentication Code Algorithms
+discussion: |
+  SSH _MUST_ be configured to limit the Message Authentication Codes (MACs) to algorithms that are FIPS 140 validated.
+
+  FIPS 140-2 is the current standard for validating that mechanisms used to access cryptographic modules utilize authentication that meets federal requirements.
+
+  Operating systems utilizing encryption _MUST_ use FIPS validated mechanisms for authenticating to cryptographic modules.
+
+  NOTE: /etc/ssh/ssh_config will be automatically modified to its original state following any update or major upgrade to the operating system.
+references:
+  nist:
+    cce:
+      big_sur:
+        - CCE-85383-8
+      catalina:
+        - CCE-84917-4
+    800-53r5:
+      - AC-17(2)
+      - IA-7
+      - SC-13
+      - SC-8(1)
+  disa:
+    cci:
+      - CCI-000087
+      - CCI-000068
+      - CCI-000803
+      - CCI-002890
+      - CCI-003123
+    srg:
+      - SRG-OS-000033-GPOS-00014
+      - SRG-OS-000120-GPOS-00061
+      - SRG-OS-000125-GPOS-00065
+      - SRG-OS-000250-GPOS-00093
+      - SRG-OS-000393-GPOS-00173
+      - SRG-OS-000394-GPOS-00174
+    disa_stig:
+      big_sur:
+        - APPL-11-000055
+platforms:
+  macOS:
+    check: |
+      /usr/bin/grep -c "^MACs hmac-sha2-256,hmac-sha2-512" /etc/ssh/ssh_config
+    result:
+      integer: 1
+    fix: |
+      [source,bash]
+      ----
+      /usr/bin/grep -q '^MACs' /etc/ssh/ssh_config && /usr/bin/sed -i.bak  's/.*MACs.*/MACs hmac-sha2-256,hmac-sha2-512/' /etc/ssh/ssh_config || /bin/echo 'MACs hmac-sha2-256,hmac-sha2-512' >> /etc/ssh/ssh_config
+      ----
+    big_sur:
+      severity: medium
+      benchmarks:
+        - disa_stig
+    catalina: {}
+tags:
+  - 800-53r5_moderate
+  - 800-53r5_high
+  - 800-53r5_low
+  - 800-171
+  - cnssi-1253

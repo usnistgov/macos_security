@@ -1,0 +1,30 @@
+id: os_exchange_SMIME_signing_enabled
+title: Enable S/MIME signing of mails.
+discussion: |
+  The iOS device needs some specific configurations for the Exchange setup to meet the minimum requirements.
+
+  The usage of S/MIME signing _MUST_ be configured to set mail signing as the default.
+references:
+  nist:
+    cce:
+      ios_18:
+        - CCE-94530-3
+      ios_17:
+        - CCE-93482-8
+  bsi:
+    indigo:
+      ios_17:
+        - ANNEX D (Section 5.6.1 - Mail)
+platforms:
+  iOS:
+    '18.0':
+      benchmarks:
+        - name: indigo_high
+    '17.0':
+      benchmarks:
+        - name: indigo_high
+    introduced: '10.0'
+mobileconfig_info:
+  - PayloadType: com.apple.mail.managed
+    PayloadContent:
+      - SMIMESigningEnabled: true

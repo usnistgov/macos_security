@@ -1,0 +1,54 @@
+id: system_settings_install_macos_updates_enforce
+title: Enforce macOS Updates are Automatically Installed
+discussion: |
+  Software Update _MUST_ be configured to enforce automatic installation of macOS updates is enabled.
+references:
+  nist:
+    cce:
+      macos_15:
+        - CCE-94373-8
+      macos_14:
+        - CCE-92968-7
+      macos_13:
+        - CCE-91957-1
+  cis:
+    benchmark:
+      macos_15:
+        - 1.4 (level 1)
+      macos_14:
+        - 1.4 (level 1)
+      macos_13:
+        - 1.4 (level 1)
+    controls_v8:
+      - 7.3
+      - 7.4
+platforms:
+  macOS:
+    '15.0':
+      benchmarks:
+        - name: cis_lvl1
+        - name: cis_lvl2
+    '14.0':
+      benchmarks:
+        - name: cis_lvl1
+        - name: cis_lvl2
+    '13.0':
+      benchmarks:
+        - name: cis_lvl1
+        - name: cis_lvl2
+    enforcement_info:
+      check:
+        shell: |-
+          /usr/bin/osascript -l JavaScript << EOS
+          $.NSUserDefaults.alloc.initWithSuiteName('com.apple.SoftwareUpdate')\
+          .objectForKey('AutomaticallyInstallMacOSUpdates').js
+          EOS
+        result:
+          string: 'true'
+    introduced: '10.15'
+tags:
+  - cisv8
+mobileconfig_info:
+  - PayloadType: com.apple.SoftwareUpdate
+    PayloadContent:
+      - AutomaticallyInstallMacOSUpdates: true

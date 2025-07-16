@@ -1,0 +1,105 @@
+id: sysprefs_filevault_enforce
+title: Enforce FileVault
+discussion: |
+  FileVault _MUST_ be enforced.
+
+  The information system implements cryptographic mechanisms to protect the confidentiality and integrity of information stored on digital media during transport outside of controlled areas.
+references:
+  nist:
+    cce:
+      monterey:
+        - CCE-91053-9
+      big_sur:
+        - CCE-85425-7
+      catalina:
+        - CCE-84830-9
+    800-53r5:
+      - SC-28
+      - SC-28(1)
+  disa:
+    cci:
+      - CCI-001199
+      - CCI-002475
+      - CCI-002476
+    srg:
+      - SRG-OS-000185-GPOS-00079
+      - SRG-OS-000404-GPOS-00183
+      - SRG-OS-000405-GPOS-00184
+    disa_stig:
+      monterey:
+        - APPL-12-005020
+      big_sur:
+        - APPL-11-005020
+      catalina:
+        - AOSX-15-005020
+  cis:
+    benchmark:
+      monterey:
+        - 2.5.1.1 (level 1)
+      big_sur:
+        - 2.5.1.1 (level 1)
+    controls_v8:
+      - 3.6
+      - 3.11
+platforms:
+  macOS:
+    check: $OS_VALUE
+    result:
+      integer: 1
+    fix: |
+      NOTE: See the FileVault supplemental to implement this rule.
+    monterey:
+      severity: medium
+      benchmarks:
+        - cis_lvl1
+        - cis_lvl2
+        - disa_stig
+      check: |-
+        dontAllowDisable=$(/usr/bin/osascript -l JavaScript << EOS
+        $.NSUserDefaults.alloc.initWithSuiteName('com.apple.MCX')\
+        .objectForKey('dontAllowFDEDisable').js
+        EOS
+        )
+        fileVault=$(/usr/bin/fdesetup status | /usr/bin/grep -c "FileVault is On.")
+        if [[ "$dontAllowDisable" == "true" ]] && [[ "$fileVault" == 1 ]]; then
+          echo "1"
+        else
+          echo "0"
+        fi
+      mobileconfig_info:
+        com.apple.MCX:
+          dontAllowFDEDisable: true
+    big_sur:
+      severity: medium
+      benchmarks:
+        - cis_lvl1
+        - cis_lvl2
+        - disa_stig
+      check: |-
+        dontAllowDisable=$(/usr/bin/osascript -l JavaScript << EOS
+        $.NSUserDefaults.alloc.initWithSuiteName('com.apple.MCX')\
+        .objectForKey('dontAllowFDEDisable').js
+        EOS
+        )
+        fileVault=$(/usr/bin/fdesetup status | /usr/bin/grep -c "FileVault is On.")
+        if [[ "$dontAllowDisable" == "true" ]] && [[ "$fileVault" == 1 ]]; then
+          echo "1"
+        else
+          echo "0"
+        fi
+      mobileconfig_info:
+        com.apple.MCX:
+          dontAllowFDEDisable: true
+    catalina:
+      severity: medium
+      benchmarks:
+        - disa_stig
+      check: /usr/bin/fdesetup status | /usr/bin/grep -c "FileVault is On."
+      mobileconfig_info: null
+tags:
+  - 800-53r5_moderate
+  - 800-53r5_high
+  - 800-171
+  - cisv8
+  - cnssi-1253
+mobileconfig_info: $OS_VALUE

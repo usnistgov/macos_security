@@ -1,0 +1,101 @@
+id: os_authenticated_root_enable
+title: Enable Authenticated Root
+discussion: |
+  Authenticated Root _MUST_ be enabled.
+
+  When Authenticated Root is enabled the macOS is booted from a signed volume that is cryptographically protected to prevent tampering with the system volume.
+
+  NOTE: Authenticated Root is enabled by default on macOS systems.
+
+  WARNING: If more than one partition with macOS is detected, the csrutil command will hang awaiting input.
+references:
+  nist:
+    cce:
+      macos_15:
+        - CCE-94164-1
+      macos_14:
+        - CCE-92764-0
+      macos_13:
+        - CCE-91762-5
+    800-53r5:
+      - AC-3
+      - CM-5
+      - SC-34
+      - SI-7(6)
+      - SI-7
+      - MA-4(1)
+    800-171r3:
+      - 03.01.02
+      - 03.04.05
+  disa:
+    cci:
+      - CCI-000213
+    srg:
+      - SRG-OS-000080-GPOS-00048
+    disa_stig:
+      macos_15:
+        - APPL-15-005070
+      macos_14:
+        - APPL-14-005070
+    cmmc:
+      - AC.L1-3.1.1
+      - CM.L2-3.4.5
+      - SC.L2-3.13.11
+  cis:
+    benchmark:
+      macos_15:
+        - 5.1.4 (level 1)
+      macos_14:
+        - 5.1.4 (level 1)
+      macos_13:
+        - 5.1.4 (level 1)
+    controls_v8:
+      - 3.6
+      - 3.11
+platforms:
+  macOS:
+    '15.0':
+      benchmarks:
+        - name: cis_lvl1
+        - name: cis_lvl2
+        - name: disa_stig
+          severity: medium
+    '14.0':
+      benchmarks:
+        - name: cis_lvl1
+        - name: cis_lvl2
+        - name: disa_stig
+          severity: medium
+      enforcement_info:
+        check:
+          shell: /usr/bin/csrutil authenticated-root | /usr/bin/grep -c 'enabled'
+          result:
+            integer: 1
+    '13.0':
+      benchmarks:
+        - name: cis_lvl1
+        - name: cis_lvl2
+      enforcement_info:
+        check:
+          shell: /usr/bin/csrutil authenticated-root | /usr/bin/grep -c 'enabled'
+          result:
+            integer: 1
+    enforcement_info:
+      check:
+        shell: /usr/libexec/mdmclient QuerySecurityInfo | /usr/bin/grep -c "AuthenticatedRootVolumeEnabled = 1;"
+        result:
+          integer: 1
+      fix:
+        shell: /usr/bin/csrutil authenticated-root enable
+        additional_info: 'NOTE: To re-enable "Authenticated Root", boot the affected system into "Recovery" mode, launch "Terminal" from the "Utilities" menu, and run the command.'
+tags:
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_high
+  - 800-171
+  - cisv8
+  - cnssi-1253_low
+  - cnssi-1253_high
+  - cmmc_lvl2
+  - cmmc_lvl1
+  - cnssi-1253_moderate

@@ -1,0 +1,111 @@
+id: sysprefs_media_sharing_disabled
+title: Disable Media Sharing
+discussion: |
+  Media sharing _MUST_ be disabled.
+
+  When Media Sharing is enabled, the computer starts a network listening service that shares the contents of the user's music collection with other users in the same subnet.
+
+  The information system _MUST_ be configured to provide only essential capabilities. Disabling Media Sharing helps prevent the unauthorized connection of devices and the unauthorized transfer of information. Disabling Media Sharing mitigates this risk.
+
+  NOTE: The Media Sharing preference panel will still allow "Home Sharing" and "Share media with guests" to be checked but the service will not be enabled.
+references:
+  nist:
+    cce:
+      monterey:
+        - CCE-91066-1
+      big_sur:
+        - CCE-85436-4
+      catalina:
+        - CCE-84771-5
+    800-53r5:
+      - AC-3
+      - AC-17
+  cis:
+    benchmark:
+      monterey:
+        - 2.4.12 (level 2)
+      big_sur:
+        - 2.4.12 (level 2)
+    controls_v8:
+      - 4.1
+      - 4.8
+platforms:
+  macOS:
+    check: $OS_VALUE
+    result: $OS_VALUE
+    fix: $OS_VALUE
+    monterey:
+      benchmarks:
+        - cis_lvl2
+      check: |-
+        /usr/bin/osascript -l JavaScript << EOS
+        function run() {
+          let pref1 = ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('com.apple.preferences.sharing.SharingPrefsExtension')\
+          .objectForKey('homeSharingUIStatus'))
+          let pref2 = ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('com.apple.preferences.sharing.SharingPrefsExtension')\
+          .objectForKey('legacySharingUIStatus'))
+          let pref3 = ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('com.apple.preferences.sharing.SharingPrefsExtension')\
+          .objectForKey('mediaSharingUIStatus'))
+          if ( pref1 == 0 && pref2 == 0 && pref3 == 0 ) {
+            return("true")
+          } else {
+            return("false")
+          }
+        }
+        EOS
+      fix: This is implemented by a Configuration Profile.
+      result:
+        string: 'true'
+      mobileconfig_info:
+        com.apple.preferences.sharing.SharingPrefsExtension:
+          homeSharingUIStatus: 0
+          legacySharingUIStatus: 0
+          mediaSharingUIStatus: 0
+    big_sur:
+      benchmarks:
+        - cis_lvl2
+      check: |-
+        /usr/bin/osascript -l JavaScript << EOS
+        function run() {
+          let pref1 = ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('com.apple.preferences.sharing.SharingPrefsExtension')\
+          .objectForKey('homeSharingUIStatus'))
+          let pref2 = ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('com.apple.preferences.sharing.SharingPrefsExtension')\
+          .objectForKey('legacySharingUIStatus'))
+          let pref3 = ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('com.apple.preferences.sharing.SharingPrefsExtension')\
+          .objectForKey('mediaSharingUIStatus'))
+          if ( pref1 == 0 && pref2 == 0 && pref3 == 0 ) {
+            return("true")
+          } else {
+            return("false")
+          }
+        }
+        EOS
+      fix: This is implemented by a Configuration Profile.
+      result:
+        string: 'true'
+      mobileconfig_info:
+        com.apple.preferences.sharing.SharingPrefsExtension:
+          homeSharingUIStatus: 0
+          legacySharingUIStatus: 0
+          mediaSharingUIStatus: 0
+    catalina:
+      check: /usr/bin/sudo -u "$CURRENT_USER" /usr/bin/defaults read com.apple.amp.mediasharingd | /usr/bin/grep -Ec '("public-sharing-enabled" = 0;|"home-sharing-enabled" = 0;)'
+      fix: |-
+        [source,bash]
+        ----
+        /usr/bin/sudo -u "$CURRENT_USER" /usr/bin/defaults write com.apple.amp.mediasharingd public-sharing-enabled -int 0
+        /usr/bin/sudo -u "$CURRENT_USER" /usr/bin/defaults write com.apple.amp.mediasharingd home-sharing-enabled -int 0
+        /usr/bin/pkill -9 AMPLibraryAgent
+        /usr/bin/pkill -9 mediasharingd
+        ----
+      result:
+        integer: 2
+      mobileconfig_info: null
+tags:
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_high
+  - 800-171
+  - cisv8
+  - cnssi-1253
+mobileconfig_info: $OS_VALUE

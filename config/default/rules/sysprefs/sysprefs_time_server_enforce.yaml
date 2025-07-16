@@ -1,0 +1,78 @@
+id: sysprefs_time_server_enforce
+title: Enable macOS Time Synchronization Daemon (timed)
+discussion: |
+  The timed service _MUST_ be enabled on all networked systems and configured to set time automatically from the approved time server.
+
+  This rule ensures the uniformity of time stamps for information systems with multiple system clocks and systems connected over a network.
+references:
+  nist:
+    cce:
+      monterey:
+        - CCE-91081-0
+      big_sur:
+        - CCE-85449-7
+      catalina:
+        - CCE-84847-3
+    800-53r5:
+      - AU-12(1)
+      - SC-45(1)
+  disa:
+    cci:
+      - CCI-001891
+      - CCI-002046
+    srg:
+      - SRG-OS-000355-GPOS-00143
+      - SRG-OS-000356-GPOS-00144
+    disa_stig:
+      monterey:
+        - APPL-12-000014
+      big_sur:
+        - APPL-11-000014
+      catalina:
+        - AOSX-15-000014
+  cis:
+    benchmark:
+      monterey:
+        - 2.2.1 (level 1)
+      big_sur:
+        - 2.2.1 (level 1)
+    controls_v8:
+      - 8.4
+platforms:
+  macOS:
+    check: |
+      /usr/bin/osascript -l JavaScript << EOS
+      $.NSUserDefaults.alloc.initWithSuiteName('com.apple.timed')\
+      .objectForKey('TMAutomaticTimeOnlyEnabled').js
+      EOS
+    result:
+      string: 'true'
+    fix: |
+      This is implemented by a Configuration Profile.
+    monterey:
+      severity: medium
+      benchmarks:
+        - cis_lvl1
+        - cis_lvl2
+        - disa_stig
+    big_sur:
+      severity: medium
+      benchmarks:
+        - cis_lvl1
+        - cis_lvl2
+        - disa_stig
+    catalina:
+      severity: medium
+      benchmarks:
+        - disa_stig
+tags:
+  - 800-171
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_high
+  - cisv8
+  - cnssi-1253
+mobileconfig_info:
+  com.apple.ManagedClient.preferences:
+    com.apple.timed:
+      TMAutomaticTimeOnlyEnabled: true

@@ -1,0 +1,84 @@
+id: os_sudo_timeout_configure
+title: Configure Sudo Timeout Period to $ODV
+discussion: |
+  The file /etc/sudoers _MUST_ include a timestamp_timeout of $ODV.
+references:
+  nist:
+    cce:
+      macos_15:
+        - CCE-94311-8
+      macos_14:
+        - CCE-92908-3
+      macos_13:
+        - CCE-91895-3
+  disa:
+    cci:
+      - CCI-002038
+    srg:
+      - SRG-OS-000373-GPOS-00156
+    disa_stig:
+      macos_15:
+        - APPL-15-004022
+      macos_14:
+        - APPL-14-004022
+      macos_13:
+        - APPL-13-004022
+  cis:
+    benchmark:
+      macos_15:
+        - 5.4 (level 1)
+      macos_14:
+        - 5.4 (level 1)
+      macos_13:
+        - 5.4 (level 1)
+    controls_v8:
+      - 4.3
+platforms:
+  macOS:
+    '15.0':
+      benchmarks:
+        - name: cis_lvl1
+        - name: cis_lvl2
+        - name: disa_stig
+          severity: medium
+    '14.0':
+      benchmarks:
+        - name: cis_lvl1
+        - name: cis_lvl2
+        - name: disa_stig
+          severity: medium
+    '13.0':
+      benchmarks:
+        - name: cis_lvl1
+        - name: cis_lvl2
+        - name: disa_stig
+    enforcement_info:
+      check:
+        shell: '/usr/bin/sudo /usr/bin/sudo -V | /usr/bin/grep -c "Authentication timestamp timeout: $ODV.0 minutes"'
+        result:
+          integer: 1
+      fix:
+        shell: |-
+          /usr/bin/find /etc/sudoers* -type f -exec sed -i '' '/timestamp_timeout/d' '{}' \;
+          /bin/echo "Defaults timestamp_timeout=$ODV" >> /etc/sudoers.d/mscp
+odv:
+  hint:
+    datatype: number
+    description: Number of minutes, e.g. 0
+    validation:
+      min: 0
+  recommended: 0
+  cis_lvl1: 0
+  cis_lvl2: 0
+  stig: 0
+tags:
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_high
+  - cisv8
+ddm_info:
+  declarationtype: com.apple.configuration.services.configuration-files
+  service: com.apple.sudo
+  config_file: sudoers
+  configuration_key: Defaults timestamp_timeout=
+  configuration_value: $ODV

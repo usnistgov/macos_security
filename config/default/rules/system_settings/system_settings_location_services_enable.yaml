@@ -1,0 +1,51 @@
+id: system_settings_location_services_enable
+title: Enable Location Services
+discussion: |
+  Location Services _MUST_ be enabled.
+references:
+  nist:
+    cce:
+      macos_15:
+        - CCE-94377-9
+      macos_14:
+        - CCE-92973-7
+      macos_13:
+        - CCE-91963-9
+  cis:
+    benchmark:
+      macos_15:
+        - 2.6.1.1 (level 2)
+      macos_14:
+        - 2.6.1.1 (level 2)
+      macos_13:
+        - 2.6.1.1 (level 2)
+    controls_v8:
+      - 4.1
+      - 4.8
+platforms:
+  macOS:
+    '15.0':
+      benchmarks:
+        - name: cis_lvl2
+    '14.0':
+      benchmarks:
+        - name: cis_lvl2
+    '13.0':
+      benchmarks:
+        - name: cis_lvl2
+    enforcement_info:
+      check:
+        shell: |-
+          /usr/bin/sudo -u _locationd /usr/bin/osascript -l JavaScript << EOS
+          $.NSUserDefaults.alloc.initWithSuiteName('com.apple.locationd')\
+          .objectForKey('LocationServicesEnabled').js
+          EOS
+        result:
+          string: 'true'
+      fix:
+        shell: |-
+          /usr/bin/defaults write /var/db/locationd/Library/Preferences/ByHost/com.apple.locationd LocationServicesEnabled -bool true;
+          pid=$(/bin/launchctl list | /usr/bin/awk '/com.apple.locationd/ { print $1 }')
+          kill -9 $pid
+tags:
+  - cisv8

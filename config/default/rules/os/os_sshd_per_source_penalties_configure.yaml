@@ -1,0 +1,57 @@
+id: os_sshd_per_source_penalties_configure
+title: Configure SSHD PerSourcePenalties
+discussion: |
+  If SSHD is enabled then it _MUST_ be configured with the Per Source Penalties configured.
+
+  Per Source Penalities controls penalties for various conditions that may represent attacks on sshd.
+
+  Penalties are enabled by default.
+
+  NOTE: On macOS 15.2 and higher the SSH configuration can be reset to the macOS default by running /usr/libexec/reset-ssh-configuration.
+references:
+  nist:
+    cce:
+      macos_15:
+        - CCE-94589-9
+    800-53r5:
+      - SC-5
+platforms:
+  macOS:
+    '15.0': {}
+    enforcement_info:
+      check:
+        shell: /usr/sbin/sshd -G | /usr/bin/grep -q "persourcepenalties no" && echo "no" || echo "yes"
+        result:
+          string: 'yes'
+      fix:
+        shell: |-
+          include_dir=$(/usr/bin/awk '/^Include/ {print $2}' /etc/ssh/sshd_config | /usr/bin/tr -d '*')
+
+          if [[ -z $include_dir ]]; then
+            /usr/bin/sed -i.bk "1s/.*/Include \/etc\/ssh\/sshd_config.d\/\*/" /etc/ssh/sshd_config
+          fi
+
+          /usr/bin/grep -qxF 'persourcepenalties yes' "${include_dir}01-mscp-sshd.conf" 2>/dev/null || echo "persourcepenalties yes" >> "${include_dir}01-mscp-sshd.conf"
+
+          for file in $(ls ${include_dir}); do
+            if [[ "$file" == "100-macos.conf" ]]; then
+                continue
+            fi
+            if [[ "$file" == "01-mscp-sshd.conf" ]]; then
+                break
+            fi
+            /bin/mv ${include_dir}${file} ${include_dir}20-${file}
+          done
+tags:
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_high
+  - cnssi-1253_low
+  - cnssi-1253_high
+  - cnssi-1253_moderate
+ddm_info:
+  declarationtype: com.apple.configuration.services.configuration-files
+  service: com.apple.sshd
+  config_file: sshd_config
+  configuration_key: persourcepenalties
+  configuration_value: 'yes'

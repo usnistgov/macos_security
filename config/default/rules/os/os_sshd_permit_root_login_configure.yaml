@@ -1,0 +1,83 @@
+id: os_sshd_permit_root_login_configure
+title: Disable Root Login for SSH
+discussion: |
+  If SSH is enabled to assure individual accountability and prevent unauthorized access, logging in as root via SSH _MUST_ be disabled.
+
+  The macOS system _MUST_ require individuals to be authenticated with an individual authenticator prior to using a group authenticator, and administrator users _MUST_ never log in directly as root.
+
+  NOTE: On macOS 15.2 and higher the SSH configuration can be reset to the macOS default by running /usr/libexec/reset-ssh-configuration.
+references:
+  nist:
+    cce:
+      macos_15:
+        - CCE-94307-6
+      macos_14:
+        - CCE-92905-9
+      macos_13:
+        - CCE-91893-8
+    800-53r5:
+      - IA-2(5)
+  disa:
+    cci:
+      - CCI-000770
+      - CCI-001813
+      - CCI-004045
+    srg:
+      - SRG-OS-000364-GPOS-00151
+      - SRG-OS-000109-GPOS-00056
+    disa_stig:
+      macos_15:
+        - APPL-15-001100
+      macos_14:
+        - APPL-14-001100
+      macos_13:
+        - APPL-13-001100
+platforms:
+  macOS:
+    '15.0':
+      benchmarks:
+        - name: disa_stig
+          severity: medium
+    '14.0':
+      benchmarks:
+        - name: disa_stig
+          severity: medium
+    '13.0':
+      benchmarks:
+        - name: disa_stig
+          severity: medium
+    enforcement_info:
+      check:
+        shell: /usr/sbin/sshd -G | /usr/bin/awk '/permitrootlogin/{print $2}'
+        result:
+          string: 'no'
+      fix:
+        shell: |-
+          include_dir=$(/usr/bin/awk '/^Include/ {print $2}' /etc/ssh/sshd_config | /usr/bin/tr -d '*')
+
+          if [[ -z $include_dir ]]; then
+            /usr/bin/sed -i.bk "1s/.*/Include \/etc\/ssh\/sshd_config.d\/\*/" /etc/ssh/sshd_config
+          fi
+
+          /usr/bin/grep -qxF 'permitrootlogin no' "${include_dir}01-mscp-sshd.conf" 2>/dev/null || echo "permitrootlogin no" >> "${include_dir}01-mscp-sshd.conf"
+
+          for file in $(ls ${include_dir}); do
+            if [[ "$file" == "100-macos.conf" ]]; then
+                continue
+            fi
+            if [[ "$file" == "01-mscp-sshd.conf" ]]; then
+                break
+            fi
+            /bin/mv ${include_dir}${file} ${include_dir}20-${file}
+          done
+tags:
+  - 800-53r5_high
+  - cnssi-1253_low
+  - cnssi-1253_high
+  - cnssi-1253_moderate
+ddm_info:
+  declarationtype: com.apple.configuration.services.configuration-files
+  service: com.apple.sshd
+  config_file: sshd_config
+  configuration_key: PermitRootLogin
+  configuration_value: false

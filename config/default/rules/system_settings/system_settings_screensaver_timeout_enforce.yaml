@@ -1,0 +1,106 @@
+id: system_settings_screensaver_timeout_enforce
+title: Enforce Screen Saver Timeout
+discussion: |
+  The screen saver timeout _MUST_ be set to $ODV seconds or a shorter length of time.
+
+  This rule ensures that a full session lock is triggered within no more than $ODV seconds of inactivity.
+references:
+  nist:
+    cce:
+      macos_15:
+        - CCE-94390-2
+      macos_14:
+        - CCE-92986-9
+      macos_13:
+        - CCE-91975-3
+    800-53r5:
+      - AC-11
+      - IA-11
+    800-171r3:
+      - 03.01.10
+      - 03.05.01
+  disa:
+    cci:
+      - CCI-000057
+    srg:
+      - SRG-OS-000029-GPOS-00010
+    disa_stig:
+      macos_15:
+        - APPL-15-000070
+      macos_14:
+        - APPL-14-000070
+      macos_13:
+        - APPL-13-000004
+    cmmc:
+      - AC.L2-3.1.10
+  cis:
+    benchmark:
+      macos_15:
+        - 2.11.1 (level 1)
+      macos_14:
+        - 2.10.1 (level 1)
+      macos_13:
+        - 2.10.1 (level 1)
+    controls_v8:
+      - 4.3
+platforms:
+  macOS:
+    '15.0':
+      benchmarks:
+        - name: cis_lvl1
+        - name: cis_lvl2
+        - name: disa_stig
+          severity: medium
+    '14.0':
+      benchmarks:
+        - name: cis_lvl1
+        - name: cis_lvl2
+        - name: disa_stig
+          severity: medium
+    '13.0':
+      benchmarks:
+        - name: cis_lvl1
+        - name: cis_lvl2
+        - name: disa_stig
+          severity: medium
+    enforcement_info:
+      check:
+        shell: |-
+          /usr/bin/osascript -l JavaScript << EOS
+          function run() {
+            let timeout = ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('com.apple.screensaver')\
+          .objectForKey('idleTime'))
+            if ( timeout <= $ODV ) {
+              return("true")
+            } else {
+              return("false")
+            }
+          }
+          EOS
+        result:
+          string: 'true'
+    introduced: '-1'
+odv:
+  hint:
+    datatype: number
+    description: Number of seconds, e.g. 1200
+    validation:
+      min: 1
+  recommended: 1200
+  cis_lvl1: 1200
+  cis_lvl2: 1200
+  stig: 900
+tags:
+  - 800-53r5_moderate
+  - 800-53r5_high
+  - 800-53r5_low
+  - 800-171
+  - cisv8
+  - cnssi-1253_low
+  - cnssi-1253_high
+  - cmmc_lvl2
+  - cnssi-1253_moderate
+mobileconfig_info:
+  - PayloadType: com.apple.screensaver
+    PayloadContent:
+      - idleTime: $ODV

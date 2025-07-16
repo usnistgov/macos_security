@@ -1,0 +1,41 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "mscp"
+dynamic = ["version"]
+description = 'The macOS Security Compliance Project is an open source effort to provide a programmatic approach to generating security guidance.'
+readme = "README.md"
+requires-python = ">=3.12"
+license-files  = ["LICEN[CS]E*"]
+keywords = []
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Programming Language :: Python",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+]
+dependencies = [
+  "jinja2==3.1.6",
+  "loguru==0.7.3",
+  "lxml==5.4.0",
+  "matplotlib==3.10.3",
+  "openpyxl==3.1.5",
+  "pandas==2.3.0",
+  "pydantic==2.11.6",
+  "pyyaml==6.0.2",
+  "jsonschema==4.24.0",
+]
+
+[project.urls]
+Homepage = "https://pages.nist.gov/macos_security/"
+Issues = "https://github.com/usnistgov/macos_security/issues"
+Source = "https://github.com/usnistgov/macos_security"
+
+[project.scripts]
+mscp = "mscp.__main__:main"
+
+[tool.hatch.version]
+path = "src/mscp/__init__.py"

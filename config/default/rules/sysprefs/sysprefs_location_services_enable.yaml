@@ -1,0 +1,39 @@
+id: sysprefs_location_services_enable
+title: Enable Location Services
+discussion: |
+  Location Services _MUST_ be enabled.
+references:
+  nist:
+    cce:
+      monterey:
+        - CCE-91132-1
+      big_sur:
+        - CCE-85527-0
+  cis:
+    benchmark:
+      monterey:
+        - 2.5.3 (level 2)
+      big_sur:
+        - 2.5.3 (level 2)
+    controls_v8:
+      - 4.1
+      - 4.8
+platforms:
+  macOS:
+    check: |
+      /usr/bin/defaults read /var/db/locationd/Library/Preferences/ByHost/com.apple.locationd.plist LocationServicesEnabled
+    result:
+      boolean: 1
+    fix: |
+      [source,bash]
+      ----
+      /usr/bin/defaults write /var/db/locationd/Library/Preferences/ByHost/com.apple.locationd LocationServicesEnabled -bool true; /bin/launchctl kickstart -k system/com.apple.locationd
+      ----
+    monterey:
+      benchmarks:
+        - cis_lvl2
+    big_sur:
+      benchmarks:
+        - cis_lvl2
+tags:
+  - cisv8

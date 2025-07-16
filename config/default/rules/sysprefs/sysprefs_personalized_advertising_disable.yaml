@@ -1,0 +1,65 @@
+id: sysprefs_personalized_advertising_disable
+title: Disable Personalized Advertising
+discussion: |
+  Ad tracking and targeted ads _MUST_ be disabled.
+
+  The information system _MUST_ be configured to provide only essential capabilities. Disabling ad tracking ensures that applications and advertisers are unable to track users' interests and deliver targeted advertisements.
+references:
+  nist:
+    cce:
+      monterey:
+        - CCE-91068-7
+      big_sur:
+        - CCE-85438-0
+    800-53r5:
+      - AC-20
+      - CM-7
+      - CM-7(1)
+      - SC-7(10)
+  cis:
+    benchmark:
+      monterey:
+        - 2.5.6 (level 1)
+      big_sur:
+        - 2.5.6 (level 1)
+    controls_v8:
+      - 4.1
+      - 4.8
+platforms:
+  macOS:
+    check: $OS_VALUE
+    result:
+      string: 'false'
+    fix: |
+      This is implemented by a Configuration Profile.
+    monterey:
+      benchmarks:
+        - cis_lvl1
+        - cis_lvl2
+      check: |-
+        /usr/bin/osascript -l JavaScript << EOS
+        $.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess')\
+        .objectForKey('allowApplePersonalizedAdvertising').js
+        EOS
+      mobileconfig_info:
+        com.apple.applicationaccess:
+          allowApplePersonalizedAdvertising: false
+    big_sur:
+      benchmarks:
+        - cis_lvl1
+        - cis_lvl2
+      check: |-
+        /usr/bin/osascript -l JavaScript << EOS
+        $.NSUserDefaults.alloc.initWithSuiteName('com.apple.AdLib')\
+        .objectForKey('allowApplePersonalizedAdvertising').js
+        EOS
+      mobileconfig_info:
+        com.apple.AdLib:
+          allowApplePersonalizedAdvertising: false
+tags:
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_high
+  - 800-171
+  - cisv8
+mobileconfig_info: $OS_VALUE

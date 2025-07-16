@@ -1,0 +1,79 @@
+id: sysprefs_system_wide_preferences_configure
+title: Require Administrator Password to Modify System-Wide Preferences
+discussion: |
+  The system _MUST_ be configured to require an administrator password in order to modify the system-wide preferences in System Preferences.
+
+  Some Preference Panes in System Preferences contain settings that affect the entire system. Requiring a password to unlock these system-wide settings reduces the risk of a non-authorized user modifying system configurations.
+references:
+  nist:
+    cce:
+      monterey:
+        - CCE-91079-4
+      big_sur:
+        - CCE-85389-5
+      catalina:
+        - CCE-84937-2
+    800-53r5:
+      - AC-6
+      - AC-6(2)
+      - AC-6(1)
+  disa:
+    cci:
+      - CCI-002235
+    srg:
+      - SRG-OS-000324-GPOS-00125
+    disa_stig:
+      monterey:
+        - APPL-12-002069
+      big_sur:
+        - APPL-11-002069
+      catalina:
+        - AOSX-15-002069
+  cis:
+    benchmark:
+      monterey:
+        - 2.5.9 (level 1)
+      big_sur:
+        - 2.5.9 (level 1)
+    controls_v8:
+      - 4.1
+platforms:
+  macOS:
+    check: |
+      /usr/bin/security authorizationdb read system.preferences 2> /dev/null |  /usr/bin/grep -A 1 "<key>shared</key>" | /usr/bin/grep -c "<false/>"
+    result:
+      integer: 1
+    fix: |
+      [source,bash]
+      ----
+      /usr/bin/security authorizationdb read system.preferences > /tmp/system.preferences.plist
+      key_value=$(/usr/libexec/PlistBuddy -c "Print :shared" /tmp/system.preferences.plist 2>&1)
+      if [[ "$key_value" == *"Does Not Exist"* ]]; then
+        /usr/libexec/PlistBuddy -c "Add :shared bool false" /tmp/system.preferences.plist
+      else
+        /usr/libexec/PlistBuddy -c "Set :shared false" /tmp/system.preferences.plist
+      fi
+      /usr/bin/security authorizationdb write system.preferences < /tmp/system.preferences.plist
+      ----
+    monterey:
+      severity: medium
+      benchmarks:
+        - cis_lvl1
+        - cis_lvl2
+        - disa_stig
+    big_sur:
+      severity: medium
+      benchmarks:
+        - cis_lvl1
+        - cis_lvl2
+        - disa_stig
+    catalina:
+      severity: medium
+      benchmarks:
+        - disa_stig
+tags:
+  - 800-53r5_moderate
+  - 800-53r5_high
+  - 800-171
+  - cisv8
+  - cnssi-1253

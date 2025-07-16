@@ -1,0 +1,49 @@
+id: os_safari_show_status_bar_enabled
+title: Ensure Show Safari shows the Status Bar is Enabled
+discussion: |
+  Safari _MUST_ be configured to show the status bar.
+references:
+  nist:
+    cce:
+      macos_15:
+        - CCE-94284-7
+      macos_14:
+        - CCE-93015-6
+      macos_13:
+        - CCE-92030-6
+  cis:
+    benchmark:
+      macos_15:
+        - 6.3.10 (level 1)
+      macos_14:
+        - 6.3.10 (level 1)
+      macos_13:
+        - 6.3.10 (level 1)
+    controls_v8:
+      - 9.1
+platforms:
+  macOS:
+    '15.0':
+      benchmarks:
+        - name: cis_lvl1
+        - name: cis_lvl2
+    '14.0':
+      benchmarks:
+        - name: cis_lvl1
+        - name: cis_lvl2
+    '13.0':
+      benchmarks:
+        - name: cis_lvl1
+        - name: cis_lvl2
+    enforcement_info:
+      check:
+        shell: /usr/bin/profiles -P -o stdout | /usr/bin/grep -c 'ShowOverlayStatusBar = 1' | /usr/bin/awk '{ if ($1 >= 1) {print "1"} else {print "0"}}'
+        result:
+          integer: 1
+    introduced: '-1'
+tags:
+  - cisv8
+mobileconfig_info:
+  - PayloadType: com.apple.Safari
+    PayloadContent:
+      - ShowOverlayStatusBar: true

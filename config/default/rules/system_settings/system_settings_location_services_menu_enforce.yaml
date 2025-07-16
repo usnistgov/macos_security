@@ -1,0 +1,43 @@
+id: system_settings_location_services_menu_enforce
+title: Ensure Location Services Is In the Menu Bar
+discussion: |
+  Location Services menu item _MUST_ be enabled.
+references:
+  nist:
+    cce:
+      macos_15:
+        - CCE-94378-7
+      macos_14:
+        - CCE-92974-5
+      macos_13:
+        - CCE-91963-9
+  cis:
+    benchmark:
+      macos_15:
+        - 2.6.1.2 (level 2)
+      macos_14:
+        - 2.6.1.2 (level 2)
+      macos_13:
+        - 2.6.1.2 (level 2)
+    controls_v8:
+      - 4.1
+      - 4.8
+platforms:
+  macOS:
+    '15.0':
+      benchmarks:
+        - name: cis_lvl1
+        - name: cis_lvl2
+    '14.0':
+      benchmarks:
+        - name: cis_lvl2
+    '13.0':
+      benchmarks:
+        - name: cis_lvl2
+    enforcement_info:
+      check:
+        shell: /usr/bin/defaults read /Library/Preferences/com.apple.locationmenu.plist ShowSystemServices
+        result:
+          integer: 1
+      fix:
+        shell: /usr/bin/defaults write /Library/Preferences/com.apple.locationmenu.plist ShowSystemServices -bool true

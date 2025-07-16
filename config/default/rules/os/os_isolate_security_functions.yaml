@@ -1,0 +1,34 @@
+id: os_isolate_security_functions
+title: Configure the System to Separate User and System Functionality
+discussion: |-
+  The information system _IS_ configured to isolate security functions from non-security functions.
+
+  link:https://support.apple.com/guide/security/welcome/web[]
+
+  NOTE: The technology supports this requirement and cannot be configured to be out of compliance. The technology inherently meets this requirement.
+references:
+  nist:
+    cce:
+      macos_15:
+        - CCE-94215-1
+      macos_14:
+        - CCE-92813-5
+      macos_13:
+        - CCE-91809-4
+    800-53r5:
+      - SC-3
+  disa:
+    srg:
+      - SRG-OS-000134-GPOS-00068
+platforms:
+  macOS:
+    '15.0': {}
+    '14.0': {}
+    '13.0': {}
+    enforcement_info:
+      fix:
+        additional_info: The technology inherently meets this requirement. No fix is required.
+tags:
+  - 800-53r5_high
+  - inherent
+  - cnssi-1253_high

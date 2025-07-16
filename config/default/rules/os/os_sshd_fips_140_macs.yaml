@@ -1,0 +1,55 @@
+id: os_sshd_fips_140_macs
+title: Limit SSHD to FIPS 140 Validated Message Authentication Code Algorithms
+discussion: |
+  If SSHD is enabled then it _MUST_ be configured to limit the Message Authentication Codes (MACs) to algorithms that are FIPS 140 validated.
+
+  FIPS 140-2 is the current standard for validating that mechanisms used to access cryptographic modules utilize authentication that meets federal requirements.
+
+  Operating systems utilizing encryption _MUST_ use FIPS validated mechanisms for authenticating to cryptographic modules.
+
+  NOTE: /etc/ssh/sshd_config will be automatically modified to its original state following any update or major upgrade to the operating system.
+references:
+  nist:
+    cce:
+      big_sur:
+        - CCE-85453-9
+      catalina:
+        - CCE-84795-4
+    800-53r5:
+      - AC-17(2)
+      - IA-7
+      - SC-13
+      - SC-8(1)
+  disa:
+    cci:
+      - CCI-000087
+      - CCI-000068
+      - CCI-000803
+      - CCI-002890
+      - CCI-003123
+    srg:
+      - SRG-OS-000033-GPOS-00014
+    disa_stig:
+      big_sur:
+        - APPL-11-000055
+      catalina:
+        - AOSX-15-000055
+platforms:
+  macOS:
+    check: |
+      /usr/bin/grep -c "^MACs hmac-sha2-256,hmac-sha2-512" /etc/ssh/sshd_config
+    result:
+      integer: 1
+    fix: |
+      [source,bash]
+      ----
+      /usr/bin/grep -q '^MACs' /etc/ssh/sshd_config && /usr/bin/sed -i.bak  's/.*MACs.*/MACs hmac-sha2-256,hmac-sha2-512/' /etc/ssh/sshd_config || /bin/echo 'MACs hmac-sha2-256,hmac-sha2-512' >> /etc/ssh/sshd_config; /bin/launchctl kickstart -k system/com.openssh.sshd
+      ----
+    big_sur:
+      severity: medium
+      benchmarks:
+        - disa_stig
+    catalina:
+      severity: medium
+      benchmarks:
+        - disa_stig

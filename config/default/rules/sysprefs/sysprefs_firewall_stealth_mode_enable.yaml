@@ -1,0 +1,116 @@
+id: sysprefs_firewall_stealth_mode_enable
+title: Enable Firewall Stealth Mode
+discussion: |
+  Firewall Stealth Mode _MUST_ be enabled.
+
+  When stealth mode is enabled, the Mac will not respond to any probing requests, and only requests from authorized applications will still be authorized.
+
+  [IMPORTANT]
+  ====
+  Enabling firewall stealth mode may prevent certain remote mechanisms used for maintenance and compliance scanning from properly functioning. Information System Security Officers (ISSOs) are advised to first fully weigh the potential risks posed to their organization before opting not to enable stealth mode.
+  ====
+references:
+  nist:
+    cce:
+      monterey:
+        - CCE-91056-2
+      big_sur:
+        - CCE-85428-1
+      catalina:
+        - CCE-84833-3
+    800-53r5:
+      - CM-7
+      - CM-7(1)
+      - SC-7(16)
+      - SC-7
+  disa:
+    srg:
+      - SRG-OS-000480-GPOS-00232
+    disa_stig:
+      monterey:
+        - APPL-12-005050
+      big_sur:
+        - APPL-11-005050
+      catalina:
+        - AOSX-15-005050
+  cis:
+    benchmark:
+      monterey:
+        - 2.5.2.2 (level 1)
+      big_sur:
+        - 2.5.2.2 (level 1)
+    controls_v8:
+      - 4.1
+      - 4.5
+      - 4.8
+platforms:
+  macOS:
+    check: $OS_VALUE
+    result: $OS_VALUE
+    fix: $OS_VALUE
+    monterey:
+      severity: medium
+      benchmarks:
+        - cis_lvl1
+        - cis_lvl2
+        - disa_stig
+      check: |-
+        profile="$(/usr/bin/osascript -l JavaScript << EOS
+        $.NSUserDefaults.alloc.initWithSuiteName('com.apple.security.firewall')\
+        .objectForKey('EnableStealthMode').js
+        EOS
+        )"
+
+        plist=$(/usr/bin/defaults read /Library/Preferences/com.apple.alf stealthenabled 2>/dev/null)
+
+        if [[ "$profile" == "true" ]] && [[ $plist == 1 ]]; then
+          echo "true"
+        else
+          echo "false"
+        fi
+      fix: |-
+        [source,bash]
+        ----
+        /usr/bin/defaults write /Library/Preferences/com.apple.alf stealthenabled -int 1
+        ----
+      result:
+        string: 'true'
+      mobileconfig_info:
+        com.apple.security.firewall:
+          EnableStealthMode: true
+    big_sur:
+      severity: medium
+      benchmarks:
+        - cis_lvl1
+        - cis_lvl2
+        - disa_stig
+      check: /usr/libexec/ApplicationFirewall/socketfilterfw --getstealthmode | /usr/bin/grep -c "Stealth mode enabled"
+      fix: |-
+        [source,bash]
+        ----
+        /usr/libexec/ApplicationFirewall/socketfilterfw --setstealthmode on
+        ----
+      result:
+        integer: 1
+      mobileconfig_info: null
+    catalina:
+      severity: medium
+      benchmarks:
+        - disa_stig
+      check: /usr/libexec/ApplicationFirewall/socketfilterfw --getstealthmode | /usr/bin/grep -c "Stealth mode enabled"
+      fix: |-
+        [source,bash]
+        ----
+        /usr/libexec/ApplicationFirewall/socketfilterfw --setstealthmode on
+        ----
+      result:
+        integer: 1
+      mobileconfig_info: null
+tags:
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_high
+  - 800-171
+  - cisv8
+  - cnssi-1253
+mobileconfig_info: $OS_VALUE
