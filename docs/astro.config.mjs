@@ -13,6 +13,7 @@ export default defineConfig({
 			customCss: [
 				// Path to your custom CSS file
 				'./src/styles/custom.css',
+				'./src/styles/home_page.css',
 			],
 head: [
 			  {

@@ -1,11 +1,12 @@
 ---
 title: macOS Security Compliance Project
-description: The macOS security compliance project is an open source effort to provide a programmatic approach to generating security guidance.
+description: The macOS Security Compliance Project delivers open source, automated security guidance for macOS, based on NIST SP 800-53 and 800-219. Developed by federal experts and recognized by Apple, it enables organizations to create customized security baselines and technical controls with ease.
 template: splash
 hero:
-  tagline: This is the macOS Security Compliance Project Wiki
+  tagline: Comprehensive, open source macOS security guidance—built by federal experts, based on NIST SP 800-53 and 800-219, and recognized by Apple.
   image:
     file: ../../assets/logo.png
+    class: hero-logo-effect
   actions:
     - text: Introduction
       link: /macos_security/guides/introduction/
@@ -21,16 +22,31 @@ import { Card, CardGrid } from '@astrojs/starlight/components';
 ## Quick Links
 
 <CardGrid cols={3}>
-	<Card title="How To" icon="setting">
+	<Card title="How To Guides" icon="open-book">
 		Learn how to generate baselines, guidance documents, configuration profiles, and more.
-		[View How-To Guides](/macos_security/guides/how-to/generate-baseline/)
+		<ul class="howto-link-list">
+			<li><a href="/macos_security/guides/how-to/generate-baseline/">Generate Baseline<span class="arrow"></span></a></li>
+			<li><a href="/macos_security/guides/how-to/generate-guidance/">Generate Guidance<span class="arrow"></span></a></li>
+			<li><a href="/macos_security/guides/how-to/generate-profiles/">Generate Configuration Profiles<span class="arrow"></span></a></li>
+			<li><a href="/macos_security/guides/how-to/scripts/">View All How-To Guides<span class="arrow"></span></a></li>
+		</ul>
 	</Card>
-	<Card title="Repository" icon="document">
+	<Card title="Repository" icon="seti:folder">
 		Explore the repository structure, including baselines, rules, sections, and scripts.
-		[Browse Repository](/macos_security/reference/layout/)
-	</Card>
-	<Card title="More Information" icon="open-book">
-		Find additional resources, contribution notes, presentations and training, and the FAQ.
-		[Learn More](/macos_security/reference/more/resources/)
+		<ul class="howto-link-list">
+			<li><a href="/macos_security/reference/layout/">Repository Layout<span class="arrow"></span></a></li>
+			<li><a href="/macos_security/reference/baselines/">Baselines<span class="arrow"></span></a></li>
+			<li><a href="/macos_security/reference/rules/">Rules<span class="arrow"></span></a></li>
+			<li><a href="/macos_security/reference/scripts/">Scripts<span class="arrow"></span></a></li>
+		</ul>
 	</Card>
 </CardGrid>
+
+<Card title="More Information & FAQ" icon="comment" style={{ width: "100%", marginTop: "2rem" }}>
+	Looking for more details, help, or community resources?
+	<ul class="howto-link-list">
+		<li><a href="/macos_security/reference/more/resources/">MSCP Resources<span class="arrow"></span></a></li>
+		<li><a href="/macos_security/reference/more/contributing/">How-To Contribute<span class="arrow"></span></a></li>
+		<li><a href="/macos_security/reference/more/faq/">Frequently Asked Questions (FAQ)<span class="arrow"></span></a></li>
+	</ul>
+</Card>

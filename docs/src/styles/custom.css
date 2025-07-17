@@ -1,4 +1,4 @@
-
+/* Color theme variables */
 /* Light mode colors rgba(49, 100, 49, 1) */
 :root {
   --sl-color-accent: rgb(49, 100, 49);
@@ -9,6 +9,7 @@
   --sl-color-accent: rgb(49, 100, 49);
 }
 
+/* NIST header styles */
 #nistheadergoeshere {
   position: fixed;
   top: 0;
@@ -18,15 +19,27 @@
   width: 100%;
 }
 
+/* NIST footer styles */
 #nistfootergoeshere {
   position: relative;
   z-index: 1000;
 }
 
+/* Custom header styles */
 .header {
   #position: fixed;
   top: 40px;
   left: 0;
   width: 100%;
+}
 
+/* Site title transition and hover effect */
+.site-title {
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.site-title:hover {
+  color: #007aff; /* or your accent color */
+  cursor: pointer;
+  transform: translateY(-4px);
 }

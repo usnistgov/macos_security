@@ -1,0 +1,123 @@
+/* Hero image and HTML container styles */
+.hero img,
+.hero > .hero-html {
+    object-fit: contain;
+    /* Responsive width and height */
+    width: min(90%, 32rem);
+    height: auto;
+    margin-inline: auto;
+    /* Initial rotation and scale */
+    transform: rotate(5deg) scale(1.05);
+    transition: all 0.3s;
+}
+
+/* Hover effect: stronger glow, increased brightness, and opposite rotation/scale */
+.hero img:hover,
+.hero > .hero-html:hover {
+    transform: rotate(-5deg) scale(1.12);
+}
+
+/* Light mode hero image color */
+/* Applies a lighter green glow and increased brightness to hero images in light mode */
+:root:not([data-theme='dark']) .hero img {
+    /* Lighter green glow for light mode */
+    filter: drop-shadow(0 0 16px #7ed957) brightness(1.1);
+}
+
+/* Dark mode hero image color */
+/* Applies a deeper green glow and increased brightness to hero images in dark mode */
+:root[data-theme='dark'] .hero img {
+    /* Deeper green glow for dark mode */
+    filter: drop-shadow(0 0 16px #236c2b) brightness(1.1);
+}
+
+/* Button colors: background always dark green, text adapts to mode */
+/* Define CSS variables for hero button background and text color based on theme */
+:root:not([data-theme='dark']) {
+    --hero-btn-bg: #236c2b; /* dark green background */
+    --hero-btn-color: #fff; /* lighter text for light mode */
+}
+:root[data-theme='dark'] {
+    --hero-btn-bg: #236c2b; /* dark green background */
+    --hero-btn-color: #fff; /* lighter text for dark mode */
+}
+
+/* Hero button styles */
+/* Styles for hero section buttons, using theme variables for background and text color */
+.hero .Button {
+    background: var(--hero-btn-bg, #7ed957); /* fallback to light green if variable not set */
+    color: var(--hero-btn-color, #222); /* fallback to dark text if variable not set */
+    border: none;
+    padding: 0.75em 1.5em;
+    border-radius: 0.5em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s, color 0.3s;
+}
+
+/* Color flop on hover */
+.hero .Button:hover {
+    background: var(--hero-btn-color, #222);
+    color: var(--hero-btn-bg, #7ed957);
+}
+
+/* Color flop for Starlight hero primary buttons (text only, works in both modes, custom color) */
+.hero .sl-link-button.primary:hover {
+    color: var(--hero-primary-hover);
+}
+
+/* Color flop for Starlight hero secondary buttons (text only, works in both modes, custom color) */
+.hero .sl-link-button.secondary:hover {
+    color: var(--hero-link-color);
+}
+
+/* Color flop for Starlight hero minimal buttons (text only, works in both modes) */
+.hero .sl-link-button.minimal:hover {
+    color: var(--hero-link-color);
+}
+
+/* Stronger glow for minimal button hover in light mode only */
+:root:not([data-theme='dark']) .hero .sl-link-button.minimal:hover {
+    text-shadow:
+        0 0 8px #fff,
+        0 0 16px #7ed957;
+}
+
+/* Custom button color for primary and secondary hero buttons */
+.hero .sl-link-button.primary,
+.hero .sl-link-button.secondary {
+    background: var(--hero-btn-bg);
+    color: var(--hero-btn-color);
+    border: none;
+}
+
+/* How-to link list styles */
+.howto-link-list {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+.howto-link-list li {
+	border-bottom: 1px solid var(--sl-color-gray-6);
+	padding: 0.25rem 0;
+	margin: 0;
+}
+.howto-link-list li:last-child {
+	border-bottom: none;
+}
+.howto-link-list a {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	text-decoration: none;
+}
+.howto-link-list .arrow {
+	display: inline-block;
+	width: 1rem;
+	height: 1rem;
+	background-color: currentColor;
+	mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M17.92 11.62a1.001 1.001 0 0 0-.21-.33l-5-5a1.003 1.003 0 1 0-1.42 1.42l3.3 3.29H7a1 1 0 0 0 0 2h7.59l-3.3 3.29a1.002 1.002 0 0 0 .325 1.639 1 1 0 0 0 1.095-.219l5-5a1 1 0 0 0 .21-.33 1 1 0 0 0 0-.76Z'%3E%3C/path%3E%3C/svg%3E");
+	-webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M17.92 11.62a1.001 1.001 0 0 0-.21-.33l-5-5a1.003 1.003 0 1 0-1.42 1.42l3.3 3.29H7a1 1 0 0 0 0 2h7.59l-3.3 3.29a1.002 1.002 0 0 0 .325 1.639 1 1 0 0 0 1.095-.219l5-5a1 1 0 0 0 .21-.33 1 1 0 0 0 0-.76Z'%3E%3C/path%3E%3C/svg%3E");
+	mask-size: 100%;
+	-webkit-mask-size: 100%;
+}
