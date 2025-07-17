@@ -14,7 +14,7 @@ To modify an existing rule do the following:
 
 **Example (Configure macOS to Use an Authorized Time Server)**
 
-```YAML
+```yaml
 references:
  custom:
    MSCP:
@@ -38,7 +38,7 @@ If you want to include a custom version of rule that still explains the control,
 
 **Example Rule (No Check/Result/Fix)**
 
-```YAML
+```yaml
 check: |
 result: |
 fix: | 
