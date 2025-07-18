@@ -4,7 +4,7 @@ import starlight from '@astrojs/starlight';
 export default defineConfig({
 	integrations: [
 		starlight({
-			title: 'macOS Security Compliance Project',
+			title: 'mSCP',
 			favicon: '/favicon.png',
 			logo: {
 				src: './src/assets/logo.png',

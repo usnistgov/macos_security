@@ -9,6 +9,10 @@
   --sl-color-accent: rgb(49, 100, 49);
 }
 
+/* ---------------------------------------------------------------------- */
+/* This section contains custom styles for the NIST Header */
+/* ---------------------------------------------------------------------- */
+
 /* NIST header styles */
 #nistheadergoeshere {
   position: fixed;
@@ -22,7 +26,8 @@
 /* NIST footer styles */
 #nistfootergoeshere {
   position: relative;
-  z-index: 1000;
+  z-index: 0;
+  margin-top: 50px;
 }
 
 /* Custom header styles */
@@ -32,6 +37,46 @@
   left: 0;
   width: 100%;
 }
+
+/* Do not apply .header styles if inside .expressive-code */
+.expressive-code .header {
+  position: static !important;
+  top: unset !important;
+  left: unset !important;
+  width: unset !important;
+}
+
+/* Sidebar content - push down to avoid overlap with header */
+.sidebar-content,
+.right-sidebar-content,
+.right-sidebar-panel {
+  margin-top: 45px;
+}
+
+/* Bring down the mobile TOC summary */
+#starlight__on-this-page--mobile {
+  margin-top: 40px;
+}
+
+/* Bring the body down to avoid overlap with header */
+body {
+  margin-top: 30px;
+}
+
+/* Only Apply the following style when in mobile view */
+@media (max-width: 50rem) {
+  @layer starlight.core {
+    starlight-menu-button > button {
+      position: fixed;
+      /* Only adjust vertical position, do not change size */
+      top: calc((var(--sl-nav-height) - var(--sl-menu-button-size)) / 2 + 40px);
+      inset-inline-end: var(--sl-nav-pad-x);
+      z-index: var(--sl-z-index-navbar);
+    }
+  }
+}
+/* ---------------------------------------------------------------------- */
+/* ---------------------------------------------------------------------- */
 
 /* Site title transition and hover effect */
 .site-title {

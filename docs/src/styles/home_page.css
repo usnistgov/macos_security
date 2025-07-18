@@ -121,3 +121,14 @@
 	mask-size: 100%;
 	-webkit-mask-size: 100%;
 }
+
+/* Responsive: shrink hero image on mobile screens and add padding */
+@media (max-width: 600px) {
+  .hero img,
+  .hero > .hero-html {
+    width: 85vw;
+    max-width: 20rem;
+    padding: 1rem; /* Add padding for small screens */
+    padding-top: 3rem; /* Add extra space from the top */
+  }
+}
