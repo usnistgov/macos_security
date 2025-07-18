@@ -37,11 +37,21 @@ head: [
 ],
 			sidebar: [
 				{
-					label: 'Introduction',
+					label: 'Welcome',
+					collapsed: false,
 					items: [
-						{ label: 'Home', link: '/' },
-						{ label: 'Introduction', link: '/guides/introduction/' },
-						{ label: 'Getting Started', link: '/guides/getting-started/' },
+						{ label: 'Introduction', link: '/welcome/introduction/' },
+						{ label: 'Getting Started', link: '/welcome/getting-started/' },
+					],
+				},
+				{
+					label: 'Baselines',
+					collapsed: true,
+					items: [
+						{ label: 'What Are Baselines?', link: '/baselines/what-are-baselines/' },
+						{ label: 'How To Generate Baseline', link: '/baselines/how-to-generate-baselines/' },
+						{ label: 'How To Tailor A Baseline', link: '/baselines/tailoring-a-baseline/' },
+						{ label: 'Baseline File Layout', link: '/baselines/baseline-file-layout/' },
 					],
 				},
 				{
