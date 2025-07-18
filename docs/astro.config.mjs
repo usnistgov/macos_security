@@ -1,4 +1,3 @@
-
 import { defineConfig } from 'astro/config';
 import starlight from '@astrojs/starlight';
 
@@ -32,10 +31,10 @@ head: [
 				 },
                         },
 			],
-			social: {
-				slack: 'https://macadmins.slack.com/archives/C0158JKQTC5',
-				github: 'https://github.com/usnistgov/macos_security',
-			},
+			social: [
+	{ icon: 'github', label: 'GitHub', href: 'https://github.com/usnistgov/macos_security' },
+	{ icon: 'slack', label: 'Slack', href: 'https://macadmins.slack.com/archives/C0158JKQTC5' },
+],
 			sidebar: [
 				{
 					label: 'Introduction',
@@ -87,3 +86,4 @@ head: [
 		}),
 	],
 });
+
