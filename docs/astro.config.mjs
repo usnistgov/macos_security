@@ -42,6 +42,7 @@ head: [
 					items: [
 						{ label: 'Introduction', link: '/welcome/introduction/' },
 						{ label: 'Getting Started', link: '/welcome/getting-started/' },
+						{ label: 'Quick Guide', link: '/welcome/quick-guide/' },
 					],
 				},
 				{

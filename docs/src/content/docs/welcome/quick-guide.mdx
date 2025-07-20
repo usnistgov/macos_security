@@ -1,0 +1,84 @@
+---
+title: Quick Guide
+description: High-level overview for generating all project files.
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+This quick guide provides provides a high-level overview of the steps required required to generate all files with the macOS Security Compliance Project. For comprehensive instructions, follow the links provided for each step or explore the sidebar for in-depth guides and explanations.
+
+---
+
+## 1. Prepare Your Environment
+
+- Ensure all [prerequisites](./getting-started) are installed (Python, required modules, etc.).
+- Download or clone the repository and select the correct branch for your macOS version.
+
+<Aside type="note">
+See [Getting Started](/welcome/getting-started/) for setup details.
+</Aside>
+
+---
+
+## 2. Generate Baselines
+
+- Use the `generate_guidance.py` script to create baseline YAML files tailored to your selected macOS version.
+- The generated baseline will depend on your chosen operating system and the specific compliance requirements you need to meet.
+
+<Aside type="note">
+See [How To Generate Baseline](/baselines/how-to-generate-baselines/) for setup details.
+</Aside>
+
+---
+
+## 3. Produce Guidance Documentation
+
+- Run the documentation generation scripts to create human-readable guidance (Markdown, PDF, etc.).
+
+<Aside type="note">
+See the <strong>guidance</strong> folder for more information.
+</Aside>
+
+---
+
+## 4. Create DDM and SCAP Content
+
+- Generate DDM and SCAP content for automated compliance checking.
+
+<Aside type="note">
+See the <strong>ddm-scap</strong> folder for step-by-step details.
+</Aside>
+
+---
+
+## 5. Generate Mappings and Compliance Scripts
+
+- Produce mapping files and scripts to support compliance workflows.
+
+<Aside type="note">
+See the <strong>mappings</strong> folder for further guidance.
+</Aside>
+
+---
+
+## 6. Make Exemptions (Optional)
+
+- Customize or exempt specific rules as needed for your environment.
+
+<Aside type="note">
+See the <strong>exemptions</strong> folder for customization options.
+</Aside>
+
+---
+
+## 7. Tailor and Customize Output
+
+- Adjust and tailor generated content to fit your organization's requirements.
+
+<Aside type="note">
+See the <strong>customization</strong> folder for advanced tailoring.
+</Aside>
+
+---
+
+For more details on any step, refer to the corresponding folder or the Guides section of this website.
