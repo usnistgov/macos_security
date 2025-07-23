@@ -68,6 +68,18 @@ body:has(.sl-banner) {
   margin-top: 40px;
 }
 
+/* Add extra scroll offset when clicking anchor links */
+sl-anchor-link,
+.sl-heading-wrapper,
+.sl-heading-wrapper h1,
+.sl-heading-wrapper h2,
+.sl-heading-wrapper h3,
+.sl-heading-wrapper h4,
+.sl-heading-wrapper h5,
+.sl-heading-wrapper h6 {
+  scroll-margin-top: 30px;
+}
+
 /* Only Apply the following style when in mobile view */
 @media (max-width: 50rem) {
   @layer starlight.core {
