@@ -15,7 +15,7 @@ fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-    - CCE-94404-1
+    - N/A
   cci:
     - CCI-001891
     - CCI-002046
@@ -32,7 +32,7 @@ references:
     - SRG-OS-000355-GPOS-00143
     - SRG-OS-000356-GPOS-00144
   disa_stig:
-    - APPL-15-000170
+    - N/A
   800-171r3:
     - 03.03.07
   cis:
@@ -43,7 +43,7 @@ references:
   cmmc:
     - AU.L2-3.3.7
 macOS:
-  - '15.0'
+  - '26.0'
 odv:
   hint: Name of timeserver. As of macOS 10.13 only one time server is supported.
   recommended: time.nist.gov

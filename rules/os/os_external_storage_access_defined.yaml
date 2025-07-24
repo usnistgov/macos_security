@@ -12,7 +12,7 @@ fix: |
   This is implemented by a Declarative Device Management.
 references:
   cce:
-    - CCE-94188-0
+    - N/A
   cci:
     - N/A
   800-53r5:
@@ -30,7 +30,7 @@ odv:
   hint: Allowed, ReadOnly, or Disallowed
   recommended: Allowed     
 macOS:
-  - '15.0'
+  - '26.0'
 tags:
   - cmmc_lvl2
   - 800-53r5_low

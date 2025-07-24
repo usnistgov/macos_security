@@ -14,7 +14,7 @@ fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-    - CCE-94340-7
+    - N/A
   cci:
     - CCI-000205
     - CCI-004066
@@ -26,7 +26,7 @@ references:
   srg:
     - SRG-OS-000078-GPOS-00046
   disa_stig:
-    - APPL-15-003010
+    - N/A
   800-171r3:
     - 03.05.07
   cis:
@@ -39,7 +39,7 @@ references:
     - IA.L2-3.5.8
     - IA.L2-3.5.9
 macOS:
-  - '15.0'
+  - '26.0'
 odv:
   hint: Minimum password length.
   recommended: 15

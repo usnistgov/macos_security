@@ -17,7 +17,7 @@ fix: |
   ----
 references:
   cce:
-    - CCE-94115-3
+    - N/A
   cci:
     - CCI-000172
     - CCI-001814
@@ -47,7 +47,7 @@ references:
     - SRG-OS-000458-GPOS-00203
     - SRG-OS-000468-GPOS-00212
   disa_stig:
-    - APPL-15-001044
+    - N/A
   800-171r3:
     - 03.03.01
     - 03.03.03
@@ -63,7 +63,7 @@ references:
     - AU.L2-3.3.6
     - SI.L2-3.14.3
 macOS:
-  - '15.0'
+  - '26.0'
 tags:
   - 800-53r5_privacy
   - 800-53r4_low

@@ -19,7 +19,7 @@ fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-    - CCE-94136-9
+    - N/A
   cci:
     - N/A
   800-53r5:
@@ -35,7 +35,7 @@ references:
   cmmc:
     - SC.L2-3.13.10
 macOS:
-  - '15.0'
+  - '26.0'
 tags:
   - 800-53r4_high
   - 800-53r5_high

@@ -12,7 +12,7 @@ fix: |
   Integrate the system into an existing directory services infrastructure.
 references:
   cce:
-    - CCE-94181-5
+    - N/A
   cci:
     - N/A
   800-53r5:
@@ -29,7 +29,7 @@ references:
     controls v8:
       - 6.7
 macOS:
-  - '15.0'
+  - '26.0'
 tags:
   - cisv8
 severity: medium

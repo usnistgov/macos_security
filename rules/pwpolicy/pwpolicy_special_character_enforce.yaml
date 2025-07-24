@@ -16,7 +16,7 @@ fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-    - CCE-94344-9
+    - N/A
   cci:
     - CCI-001619
     - CCI-004066
@@ -28,7 +28,7 @@ references:
   srg:
     - SRG-OS-000266-GPOS-00101
   disa_stig:
-    - APPL-15-003011
+    - N/A
   800-171r3:
     - 03.05.07
   cis:
@@ -41,7 +41,7 @@ references:
     - IA.L2-3.5.8
     - IA.L2-3.5.9
 macOS:
-  - '15.0'
+  - '26.0'
 odv:
   hint: Number of special characters.
   recommended: 1

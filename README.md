@@ -1,7 +1,7 @@
 ![Alt text](templates/images/mscp_banner_outline.png)
 
 ![Alt text](https://badgen.net/badge/icon/apple?icon=apple&label)
-![Alt text](https://badgen.net/badge/icon/15.0?icon=apple&label)
+![Alt text](https://badgen.net/badge/icon/26.0?icon=apple&label)
 
 > [!IMPORTANT]
 > We recommend working off of one of the OS branches, rather than the `main` branch.

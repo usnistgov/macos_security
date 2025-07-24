@@ -81,7 +81,7 @@ references:
   disa_stig:
     - N/A
 macOS:
-  - '15.0'
+  - '26.0'
 tags:
   - cis_lvl1
   - cis_lvl2

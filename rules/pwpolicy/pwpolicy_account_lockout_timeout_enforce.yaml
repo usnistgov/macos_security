@@ -12,7 +12,7 @@ fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-    - CCE-94332-4
+    - N/A
   cci:
     - CCI-002238
     - CCI-000044
@@ -24,7 +24,7 @@ references:
     - SRG-OS-000329-GPOS-00128
     - SRG-OS-000021-GPOS-00005
   disa_stig:
-    - APPL-15-000060
+    - N/A
   800-171r3:
     - 03.01.08
   cis:
@@ -35,7 +35,7 @@ references:
   cmmc:
     - AC.L2-3.1.8
 macOS:
-  - '15.0'
+  - '26.0'
 odv:
   hint: Number of minutes.
   recommended: 15

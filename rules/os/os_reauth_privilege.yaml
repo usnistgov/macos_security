@@ -8,7 +8,7 @@ fix: |
   The technology inherently meets this requirement. No fix is required.
 references:
   cce:
-    - CCE-94272-2
+    - N/A
   cci:
     - N/A
   800-53r5:
@@ -23,7 +23,7 @@ references:
   800-171r3:
     - 03.05.01
 macOS:
-  - '15.0'
+  - '26.0'
 tags:
   - 800-171
   - inherent

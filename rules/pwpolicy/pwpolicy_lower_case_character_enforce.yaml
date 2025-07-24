@@ -40,7 +40,7 @@ fix: |
   NOTE: See the password policy supplemental on more information on how to implement password policies on macOS.
 references:
   cce:
-    - CCE-94338-1
+    - N/A
   cci:
     - N/A
   800-53r5:
@@ -64,7 +64,7 @@ references:
     - IA.L2-3.5.8
     - IA.L2-3.5.9
 macOS:
-  - '15.0'
+  - '26.0'
 odv:
   hint: Number of lowercase characters.
   recommended: 1

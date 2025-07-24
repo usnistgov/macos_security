@@ -10,7 +10,7 @@ fix: |
   This requirement is a permanent finding and cannot be fixed. An appropriate mitigation for the system must be implemented, but this finding cannot be considered fixed.
 references:
   cce:
-    - CCE-94271-4
+    - N/A
   cci:
     - N/A
   800-53r5:
@@ -24,7 +24,7 @@ references:
   800-171r3:
     - 03.05.01
 macOS:
-  - '15.0'
+  - '26.0'
 tags:
   - 800-171
   - 800-53r5_low

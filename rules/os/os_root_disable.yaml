@@ -15,7 +15,7 @@ fix: |
   ----
 references:
   cce:
-    - CCE-94279-7
+    - N/A
   cci:
     - CCI-000764
     - CCI-000770
@@ -42,9 +42,9 @@ references:
     - SRG-OS-000109-GPOS-00056
     - SRG-OS-000104-GPOS-00051
   disa_stig:
-    - APPL-15-000100
+    - N/A
 macOS:
-  - '15.0'
+  - '26.0'
 tags:
   - 800-53r5_low
   - 800-53r5_moderate

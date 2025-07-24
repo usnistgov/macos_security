@@ -25,7 +25,7 @@ fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-    - CCE-94172-4
+    - N/A
   cci:
     - CCI-000381
     - CCI-001774
@@ -36,9 +36,9 @@ references:
   srg:
     - SRG-OS-000095-GPOS-00049
   disa_stig:
-    - APPL-15-002017
+    - N/A
 macOS:
-  - '15.0'
+  - '26.0'
 tags:
   - stig
 severity: medium

@@ -192,7 +192,7 @@ references:
   cmmc:
     - N/A
 macOS:
-  - '15.0'
+  - '26.0'
 tags:
   - 800-171
   - 800-53r4_high
