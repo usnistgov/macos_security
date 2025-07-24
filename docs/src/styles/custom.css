@@ -6,7 +6,7 @@
 
 /* Dark mode colors */
 :root[data-theme='dark'] {
-  --sl-color-accent: rgb(49, 100, 49);
+  --sl-color-accent-high: #6ab549 !important;
 }
 
 /* ---------------------------------------------------------------------- */
@@ -101,7 +101,24 @@ sl-anchor-link,
 }
 
 .site-title:hover {
-  color: #007aff; /* or your accent color */
+  color: #6ab549; /* dark for light mode */
   cursor: pointer;
   transform: translateY(-4px);
+}
+
+:root[data-theme='dark'] .site-title:hover {
+  color: rgb(49, 100, 49); /* light for dark mode */
+}
+
+@keyframes shake {
+  0% { transform: rotate(0deg); }
+  20% { transform: rotate(-8deg); }
+  40% { transform: rotate(8deg); }
+  60% { transform: rotate(-8deg); }
+  80% { transform: rotate(8deg); }
+  100% { transform: rotate(0deg); }
+}
+
+.site-title:hover img {
+  animation: shake 0.4s;
 }
