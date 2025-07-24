@@ -53,6 +53,7 @@ tags:
   - cnssi-1253_low
   - cnssi-1253_high
   - nlmapgov_base
+  - nlmapgov_plus
 severity: medium
 mobileconfig: false
 mobileconfig_info:

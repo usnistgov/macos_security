@@ -29,6 +29,7 @@ references:
 odv:
   hint: Allowed, ReadOnly, or Disallowed
   recommended: Allowed     
+  nlmapgov_plus: ReadOnly
 macOS:
   - '15.0'
 tags:
@@ -39,6 +40,7 @@ tags:
   - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
+  - nlmapgov_plus
 mobileconfig: false
 mobileconfig_info:
 ddm_info:

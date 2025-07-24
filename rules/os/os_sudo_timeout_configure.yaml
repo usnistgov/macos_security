@@ -46,6 +46,7 @@ tags:
   - cis_lvl2
   - cisv8
   - stig
+  - nlmapgov_plus
 severity: medium
 mobileconfig: false
 mobileconfig_info:

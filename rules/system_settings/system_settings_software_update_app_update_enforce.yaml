@@ -41,6 +41,7 @@ tags:
   - cis_lvl2
   - cisv8
   - nlmapgov_base
+  - nlmapgov_plus
 mobileconfig: true
 mobileconfig_info:
   com.apple.SoftwareUpdate:

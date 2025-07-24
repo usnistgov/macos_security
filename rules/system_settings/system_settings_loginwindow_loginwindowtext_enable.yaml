@@ -41,11 +41,13 @@ odv:
   cis_lvl1: Center for Internet Security Test Message
   cis_lvl2: Center for Internet Security Test Message
   nlmapgov_base: NLMAPGOV Test Message
+  nlmapgov_plus: NLMAPGOV Test Message
 tags:
   - cis_lvl1
   - cis_lvl2
   - cisv8
   - nlmapgov_base
+  - nlmapgov_plus
 mobileconfig: true
 mobileconfig_info:
   com.apple.loginwindow:

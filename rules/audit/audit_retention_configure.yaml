@@ -49,6 +49,7 @@ odv:
   cis_lvl2: 60d OR 5G
   stig: 7d
   nlmapgov_base: 180d
+  nlmapgov_plus: 180d
 tags:
   - 800-171
   - 800-53r5_privacy
@@ -67,6 +68,7 @@ tags:
   - stig
   - cnssi-1253_moderate
   - nlmapgov_base
+  - nlmapgov_plus
 severity: low
 mobileconfig: false
 mobileconfig_info:

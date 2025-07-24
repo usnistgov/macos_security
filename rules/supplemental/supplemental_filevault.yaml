@@ -92,5 +92,6 @@ tags:
   - stig
   - supplemental
   - nlmapgov_base
+  - nlmapgov_plus
 mobileconfig: false
 mobileconfig_info:

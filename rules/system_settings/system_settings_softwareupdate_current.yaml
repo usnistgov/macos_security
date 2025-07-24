@@ -50,6 +50,7 @@ tags:
   - cis_lvl2
   - cisv8
   - nlmapgov_base
+  - nlmapgov_plus
 severity: medium
 mobileconfig: false
 mobileconfig_info:

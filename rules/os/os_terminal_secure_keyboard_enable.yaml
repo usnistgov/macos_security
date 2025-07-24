@@ -37,6 +37,7 @@ tags:
   - cis_lvl1
   - cis_lvl2
   - cisv8
+  - nlmapgov_plus
 mobileconfig: true
 mobileconfig_info:
   com.apple.Terminal:

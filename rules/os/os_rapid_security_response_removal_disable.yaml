@@ -48,6 +48,7 @@ tags:
   - cmmc_lvl2
   - cmmc_lvl1
   - cnssi-1253_moderate
+  - nlmapgov_plus
 mobileconfig: true
 mobileconfig_info:
   com.apple.applicationaccess:

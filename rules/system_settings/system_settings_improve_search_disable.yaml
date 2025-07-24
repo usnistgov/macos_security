@@ -65,6 +65,7 @@ tags:
   - cnssi-1253_moderate
   - cis_lvl1
   - cis_lvl2
+  - nlmapgov_plus
 severity: medium
 mobileconfig: true
 mobileconfig_info:
