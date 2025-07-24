@@ -27,8 +27,6 @@ Civilian agencies are to use the National Checklist Program as required by [NIST
 
 ## Authors
 
-
-|||
 |----|----|
 |Bob Gendler|NIST|
 |Allen Golbig|Jamf
