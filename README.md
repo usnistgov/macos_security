@@ -6,7 +6,7 @@
 > [!IMPORTANT]
 > We recommend working off of one of the OS branches, rather than the `main` branch.
 
-The macOS Security Compliance Project is an link:LICENSE.md[open source] effort to provide a programmatic approach to generating security guidance. The configuration settings in this document were derived from National Institute of Standards and Technology (NIST) Special Publication (SP) 800-53, _Security and Privacy Controls for Information Systems and Organizations_, Revision 5. This is a joint project of federal operational IT Security staff from the National Institute of Standards and Technology (NIST), National Aeronautics and Space Administration (NASA), Defense Information Systems Agency (DISA), and Los Alamos National Laboratory (LANL).
+The macOS Security Compliance Project is an [open source](LICENSE.md) effort to provide a programmatic approach to generating security guidance. The configuration settings in this document were derived from National Institute of Standards and Technology (NIST) Special Publication (SP) 800-53, _Security and Privacy Controls for Information Systems and Organizations_, Revision 5. This is a joint project of federal operational IT Security staff from the National Institute of Standards and Technology (NIST), National Aeronautics and Space Administration (NASA), Defense Information Systems Agency (DISA), and Los Alamos National Laboratory (LANL).
 
 This project is the technical implementation of NIST Special Publication, 800-219 (Rev. 1) [Automated Secure Configuration Guidance from the macOS Security Compliance Project (mSCP)](https://csrc.nist.gov/pubs/sp/800/219/r1/final).  NIST Special Publication 800-219 is the official guidance from for automated secure configuration for macOS.
 
