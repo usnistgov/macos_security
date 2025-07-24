@@ -3,6 +3,8 @@ title: What Are Baselines?
 description: An overview of baselines and how to use them in the project.
 ---
 
+import { Aside } from '@astrojs/starlight/components';
+
 A **baseline** is a collection of security rules and configuration settings that define a minimum standard for compliance with a specific security framework or policy. Baselines help organizations ensure their systems meet required security controls and best practices. In this project, a baseline is represented as a YAML file that lists all the rules relevant to a particular compliance target, such as NIST 800-53, DISA-STIG, CIS, or CMMC.
 
 Each baseline is tailored to a specific operating system (macOS, iOS/iPadOS, or visionOS) and compliance level (such as High, Moderate, or Low). This ensures that the security guidance and automation generated from a baseline are appropriate for the OS and the compliance requirements you are targeting. Selecting the correct baseline for your OS and compliance needs is essential for generating accurate guidance and scripts.
@@ -21,7 +23,7 @@ The baselines provided in this project are derived from widely recognized securi
 
 ## Baselines Available in This Project
 
-The project provides a variety of baselines, each designed for a specific OS and compliance framework. These files are located in the `/baselines/` folder of the repository. Below is a summary of the available baselines:
+The project provides a variety of baselines, each designed for a specific OS and compliance framework. These files are located in the `/baselines/` folder of the repository.  Below is a summary of the available baselines:
 
 - **NIST 800-53** (macOS, iOS/iPadOS, visionOS)
   - High: `800-53r5_high.yaml`
@@ -56,8 +58,9 @@ The project provides a variety of baselines, each designed for a specific OS and
   - Base: `indigo_base.yaml`
   - High: `indigo_high.yaml`
 
-> **Note:** Each baseline is specific to the OS and compliance level it is designed for. For example, a macOS baseline for NIST 800-53 High will differ from an iOS baseline for CIS Level 1.
-
+<Aside type="note">
+*Each baseline is specific to the OS and compliance level it is designed for. For example, a macOS baseline for NIST 800-53 High will differ from an iOS baseline for CIS Level 1.*
+</Aside>
 ---
 
 ## Checking Available Baselines for the Selected Branch
@@ -101,3 +104,15 @@ srg
 stig
 supplemental
 ```
+
+---
+
+## More About Baselines
+
+- **Purpose:** Baselines provide a clear, measurable standard for system configuration and security, serving as a benchmark for compliance efforts.
+- **Maintenance:** Baselines are periodically reviewed and updated to reflect changes in security standards, best practices, and emerging threats.
+- **Customization:** Organizations can adapt baselines to fit their specific operational requirements or risk tolerance.
+- **Auditing:** Baselines are essential during audits, providing evidence that systems are configured according to recognized standards.
+- **Automation:** Baselines enable automated tools to assess, enforce, and remediate system configurations.
+- **Versioning:** Each baseline may have versions to track updates and changes over time.
+- **Community Contributions:** Contributions from the community help keep baselines current and relevant.

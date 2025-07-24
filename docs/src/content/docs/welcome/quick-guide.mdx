@@ -1,84 +1,109 @@
 ---
 title: Quick Guide
 description: High-level overview for generating all project files.
+tableOfContents: false
 ---
 
-import { Aside } from '@astrojs/starlight/components';
+import { Steps, Aside } from '@astrojs/starlight/components';
 
-This quick guide provides provides a high-level overview of the steps required required to generate all files with the macOS Security Compliance Project. For comprehensive instructions, follow the links provided for each step or explore the sidebar for in-depth guides and explanations.
 
----
+If you're new to the project, start with this Quick Guide for a high-level overview of the workflow. After reviewing these steps, check out each step's corresponding "How To" section in the documentation menu. These sections explain in more detail what each step does, why it's important, and what outputs to expect.
 
-## 1. Prepare Your Environment
-
-- Ensure all [prerequisites](./getting-started) are installed (Python, required modules, etc.).
-- Download or clone the repository and select the correct branch for your macOS version.
+This quick guide provides a high-level overview of the steps required to generate all files with the macOS Security Compliance Project.
 
 <Aside type="note">
-See [Getting Started](/welcome/getting-started/) for setup details.
+For details about each step, check out the corresponding menu item and the "What are..." section for that topic to understand its purpose and outputs.
 </Aside>
 
----
+<Steps>
+<ol>
+  <li>
+    <strong>1. Prepare Your Environment</strong>
+    <ul>
+      <li>Ensure all <a href="/welcome/getting-started/">prerequisites</a> are installed (Python, required modules, etc.).</li>
+      <li>Download or clone the repository.</li>
+    </ul>
+    <Aside type="note">
+      See <a href="/welcome/getting-started/">Getting Started</a> for setup details.
+    </Aside>
+  </li>
+  <li>
+    <strong>2. Verify and Select the Correct Branch</strong>
+    <ul>
+      <li>Checkout the branch that matches your target OS version (e.g., <code>sequoia</code>).</li>
+    </ul>
+    <Aside type="caution">
+      <strong>*Always use the branch matching your target OS version. Do not use the <code>main</code> branch for workflow or development.*</strong>
+    </Aside>
+  </li>
+  <li>
+    <strong>3. Generate a Baseline</strong>
+    <ul>
+      <li>Use <a href="/baselines/how-to-generate-baselines/">generate_baseline.py</a> to create a baseline YAML file for your compliance needs.</li>
+      <li><span style="display:inline-block;font-size:0.85em;font-weight:500;padding:0.1em 0.5em;border-radius:0.3em;background:var(--sl-color-bg-inline-code,#f5f5f5);color:var(--sl-color-text-accent,#0070f3);margin-left:0.5em;border:1px solid var(--sl-color-border,#eaeaea);">Optional</span> <a href="/baselines/tailoring-a-baseline/">Tailor the baseline</a> to your organization using the <code>-t</code> flag.</li>
+    </ul>
+    <Aside type="note">
+      See <a href="/baselines/how-to-generate-baselines/">How To Generate Baseline</a> for details.
+    </Aside>
+  </li>
+  <li>
+    <strong>4. Personalize: Customize Rules</strong> <span style="display:inline-block;font-size:0.85em;font-weight:500;padding:0.1em 0.5em;border-radius:0.3em;background:var(--sl-color-bg-inline-code,#f5f5f5);color:var(--sl-color-text-accent,#0070f3);margin-left:0.5em;border:1px solid var(--sl-color-border,#eaeaea);">Optional</span>
+    <ul>
+      <li><a href="/personalization/customize-rules/">Customize rules</a> by modifying or adding rule YAML files in the <code>custom</code> folder as needed.</li>
+    </ul>
+    <Aside type="note">
+      See <a href="/personalization/customize-rules/">Customization</a> for more information.
+    </Aside>
+  </li>
+  <li>
+    <strong>5. Generate Guidance Documentation</strong> <span style="display:inline-block;font-size:0.85em;font-weight:500;padding:0.1em 0.5em;border-radius:0.3em;background:var(--sl-color-bg-inline-code,#f5f5f5);color:var(--sl-color-text-accent,#0070f3);margin-left:0.5em;border:1px solid var(--sl-color-border,#eaeaea);">Optional</span>
+    <ul>
+      <li>Run <a href="/guidance/how-to-generate-guidance/">generate_guidance.py</a> to create human-readable guidance (AsciiDoc, HTML, PDF, etc.).</li>
+    </ul>
+    <Aside type="note">
+      See <a href="/guidance/how-to-generate-guidance/">How To Generate Guidance</a> for details.
+    </Aside>
+  </li>
+  <li>
+    <strong>6. Generate Configuration Profiles</strong>
+    <ul>
+      <li>Add the <code>-p</code> flag to <code>generate_guidance.py</code> to generate configuration profiles for supported rules.</li>
+    </ul>
+    <Aside type="note">
+      See <a href="/configuration-profiles/how-to-generate-configuration-profiles/">How To Generate Configuration Profiles</a> for details.
+    </Aside>
+  </li>
+  <li>
+    <strong>7. Generate DDM Content</strong>
+    <ul>
+      <li>Add the <code>-D</code> flag to <code>generate_guidance.py</code> to generate Declarative Device Management (DDM) components.</li>
+    </ul>
+    <Aside type="note">
+      See <a href="/ddm-components/how-to-generate-ddm-components/">How To Generate DDM Components</a> for details.
+    </Aside>
+  </li>
+  <li>
+    <strong>8. Generate Compliance Scripts</strong>
+    <ul>
+      <li>Add the <code>-s</code> flag to <code>generate_guidance.py</code> to generate a compliance script for automated checking and remediation.</li>
+    </ul>
+    <Aside type="note">
+      See <a href="/compliance-scripts/how-to-generate-compliance-scripts/">How To Generate Compliance Scripts</a> for details.
+    </Aside>
+  </li>
+  <li>
+    <strong>9. Make Exemptions</strong> <span style="display:inline-block;font-size:0.85em;font-weight:500;padding:0.1em 0.5em;border-radius:0.3em;background:var(--sl-color-bg-inline-code,#f5f5f5);color:var(--sl-color-text-accent,#0070f3);margin-left:0.5em;border:1px solid var(--sl-color-border,#eaeaea);">Optional</span>
+    <ul>
+      <li>Customize or exempt specific rules as needed for your environment.</li>
+    </ul>
+    <Aside type="note">
+      See the <strong>exemptions</strong> folder or the project's wiki for customization options.
+    </Aside>
+  </li>
+</ol>
+</Steps>
 
-## 2. Generate Baselines
-
-- Use the `generate_guidance.py` script to create baseline YAML files tailored to your selected macOS version.
-- The generated baseline will depend on your chosen operating system and the specific compliance requirements you need to meet.
-
-<Aside type="note">
-See [How To Generate Baseline](/baselines/how-to-generate-baselines/) for setup details.
+<Aside type="tip">
+<strong>Need help?</strong>  
+If you encounter issues, check the Guides section, review the <a href="/more-information/faq/">FAQ</a>, or visit the project's <a href="https://github.com/usnistgov/macos_security/wiki">wiki</a> for troubleshooting and community support.
 </Aside>
-
----
-
-## 3. Produce Guidance Documentation
-
-- Run the documentation generation scripts to create human-readable guidance (Markdown, PDF, etc.).
-
-<Aside type="note">
-See the <strong>guidance</strong> folder for more information.
-</Aside>
-
----
-
-## 4. Create DDM and SCAP Content
-
-- Generate DDM and SCAP content for automated compliance checking.
-
-<Aside type="note">
-See the <strong>ddm-scap</strong> folder for step-by-step details.
-</Aside>
-
----
-
-## 5. Generate Mappings and Compliance Scripts
-
-- Produce mapping files and scripts to support compliance workflows.
-
-<Aside type="note">
-See the <strong>mappings</strong> folder for further guidance.
-</Aside>
-
----
-
-## 6. Make Exemptions (Optional)
-
-- Customize or exempt specific rules as needed for your environment.
-
-<Aside type="note">
-See the <strong>exemptions</strong> folder for customization options.
-</Aside>
-
----
-
-## 7. Tailor and Customize Output
-
-- Adjust and tailor generated content to fit your organization's requirements.
-
-<Aside type="note">
-See the <strong>customization</strong> folder for advanced tailoring.
-</Aside>
-
----
-
-For more details on any step, refer to the corresponding folder or the Guides section of this website.
