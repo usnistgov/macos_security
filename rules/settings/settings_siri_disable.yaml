@@ -9,14 +9,14 @@ fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-    - CCE-94512-1
+    - N/A
   800-53r5:
     - AC-20
     - CM-7
     - CM-7(1)
     - SC-7(10)
 visionOS:
-  - '2.0'
+  - '26.0'
 tags:
   - visionos
   - 800-53r5_low

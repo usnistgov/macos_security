@@ -7,13 +7,13 @@ fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-    - CCE-94501-4
+    - N/A
   800-53r5:
     - AC-17
     - AC-17(1)
     - AC-17(3)
 visionOS:
-  - '2.0'
+  - '26.0'
 tags:
   - visionos
   - 800-53r5_low

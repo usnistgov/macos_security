@@ -9,12 +9,12 @@ fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-    - CCE-94506-3
+    - N/A
   800-53r5:
     - AC-23
     - SC-7(10)
 visionOS:
-  - '2.0'
+  - '26.0'
 tags:
   - visionos
 supervised: false

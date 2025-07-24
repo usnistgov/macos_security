@@ -7,11 +7,11 @@ fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-    - CCE-94495-9
+    - N/A
   800-53r5:
     - CM-11
 visionOS:
-  - '2.0'
+  - '26.0'
 tags:
   - visionos
   - 800-53r5_low
