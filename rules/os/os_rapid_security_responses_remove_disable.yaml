@@ -7,7 +7,7 @@ fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-    - CCE-94545-1
+    - N/A
   800-53r5:
     - SI-2
     - SI-2(5)
@@ -15,7 +15,7 @@ references:
   indigo:
     - ANNEX D (Section 6.3.1.3 - Rapid security response)
 iOS:
-  - "18.0"
+  - "26.0"
 tags:
   - ios
   - indigo_high

@@ -9,7 +9,7 @@ fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-    - CCE-94477-7
+    - N/A
   cci: 
     - CCI-000205
   800-53r5:
@@ -17,7 +17,7 @@ references:
   sfr:
     - 'FMT_SMF_EXT.1.1 #1a'
   disa_stig:
-    - AIOS-18-006500
+    - N/A
   indigo:
     - ANNEX D (Section 5.9 - Device authentication)
     - ANNEX K
@@ -28,7 +28,7 @@ references:
     controls v8:
       - 5.2
 iOS:
-  - "18.0"
+  - "26.0"
 odv:
   hint: "Minimum passcode length."
   recommended: 6

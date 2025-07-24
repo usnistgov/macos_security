@@ -9,7 +9,7 @@ fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-    - CCE-94422-3
+    - N/A
   cci: 
     - CCI-002536
     - CCI-000366
@@ -24,7 +24,7 @@ references:
     - 'FMT_SMF_EXT.1.1/WLAN'
     - 'FMT_SMF_EXT.1.1 #47'
   disa_stig:
-    - AIOS-18-010200
+    - N/A
     - AIOS-18-012500
   indigo:
     - ANNEX K
@@ -34,7 +34,7 @@ references:
     controls v8:
       - N/A
 iOS:
-  - "18.0"
+  - "26.0"
 tags:
   - ios
   - 800-53r5_low

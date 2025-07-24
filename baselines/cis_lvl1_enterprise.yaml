@@ -1,6 +1,7 @@
 title: "iOS/iPadOS 18.0: Security Configuration - CIS Apple iOS 18 v1.0.0 Benchmark (Level 1) - Institutionally-Owned Devices"
 description: |
-  This guide describes the actions to take when securing a iOS/iPadOS 18.0 system against the CIS Apple iOS 18 v1.0.0 Benchmark (Level 1) - Institutionally-Owned Devices security baseline.
+  This guide describes the actions to take when securing a iOS/iPadOS iOS:
+  - "26.0"system against the CIS Apple iOS 18 v1.0.0 Benchmark (Level 1) - Institutionally-Owned Devices security baseline.
 authors: |
   *macOS Security Compliance Project*
 

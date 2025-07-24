@@ -9,13 +9,13 @@ fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-    - CCE-94515-4
+    - N/A
   800-53r5:
     - N/A
   indigo:
     - N/A
 iOS:
-  - "18.0"
+  - "26.0"
 tags:
   - ios
 supervised: false

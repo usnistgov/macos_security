@@ -6,7 +6,7 @@ check: ' '
 fix: This is implemented by a Configuration Profile
 references:
   cce:
-    - CCE-94420-7
+    - N/A
   cci:
     - CCI-000097
     - CCI-000366
@@ -20,7 +20,7 @@ references:
   sfr:
     - 'FMT_MOF_EXT.1.2 #40'
   disa_stig:
-    - AIOS-18-003500
+    - N/A
   indigo:
     - ANNEX D (Section 5.4 - iCloud restrictions) 
     - ANNEX K
@@ -30,7 +30,7 @@ references:
     controls v8:
       - N/A
 iOS:
-  - "18.0"
+  - "26.0"
 tags:
   - ios
   - 800-53r5_low

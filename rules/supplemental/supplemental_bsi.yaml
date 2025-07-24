@@ -41,7 +41,7 @@ references:
   indigo:
     - ANNEX K
 iOS:
-  - "18.0"
+  - "26.0"
 tags:
   - indigo_base
   - indigo_high

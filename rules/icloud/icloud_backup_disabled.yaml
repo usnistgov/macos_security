@@ -7,7 +7,7 @@ fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-    - CCE-94415-7
+    - N/A
   cci:
     - CCI-001090
   800-53r5:
@@ -20,7 +20,7 @@ references:
   sfr:
     - 'FMT_MOF_EXT.1.2 #40'
   disa_stig:
-    - AIOS-18-003000
+    - N/A
   indigo:
     - ANNEX D (Section 5.4 - iCloud restrictions)
     - ANNEX K
@@ -30,7 +30,7 @@ references:
     controls v8:
       - 2.3
 iOS:
-  - "18.0"
+  - "26.0"
 tags:
   - ios
   - 800-53r5_low

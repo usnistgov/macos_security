@@ -6,7 +6,7 @@ check: ''
 fix: Enroll the iOS/iPadOS device in a supervised MDM.
 references:
   cce:
-    - CCE-94469-4
+    - N/A
   cci:
     - CCI-000366
     - CCI-000097
@@ -17,14 +17,14 @@ references:
   sfr:
     - 'FMT_SMF_EXT.1.1 #47'
   disa_stig:
-    - AIOS-18-013200
+    - N/A
   cis:
     benchmark:
       - N/A
     controls v8:
       - N/A
 iOS:
-  - "18.0"
+  - "26.0"
 tags:
   - manual
   - ios

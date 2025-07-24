@@ -6,7 +6,7 @@ check: ' '
 fix: This is implemented by a Configuration Profile
 references:
   cce:
-    - CCE-94468-6
+    - N/A
   cci:
     - CCI-000764
   800-53r5:
@@ -14,7 +14,7 @@ references:
   sfr:
     - 'FMT_SMF_EXT.1.1 #47'
   disa_stig:
-    - AIOS-18-011300
+    - N/A
   indigo:
     - ANNEX D (Section 5.6.1 - Mail) 
   cis:
@@ -23,7 +23,7 @@ references:
     controls v8:
       - N/A
 iOS:
-  - "18.0"
+  - "26.0"
 tags:
   - ios
   - ios_stig

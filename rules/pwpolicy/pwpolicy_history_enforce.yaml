@@ -7,7 +7,7 @@ fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-    - CCE-94565-9
+    - N/A
   800-53r5:
     - IA-5(1)
   indigo:
@@ -18,9 +18,9 @@ references:
   sfr:
     - 'FMT_SMF.1.1 #47'
   disa_stig:
-    - AIOS-18-006950
+    - N/A
 iOS:
-  - "18.0"
+  - "26.0"
 odv:
   hint: Number of previous passwords.
   recommended: 2

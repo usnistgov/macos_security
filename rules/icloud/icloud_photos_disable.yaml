@@ -8,7 +8,7 @@ check: ' '
 fix: This is implemented by a Configuration Profile
 references:
   cce:
-    - CCE-94419-9
+    - N/A
   cci:
     - CCI-000381
   800-53r5:
@@ -20,7 +20,7 @@ references:
   sfr:
     - 'FMT_SMF_EXT.1.1 #47'
   disa_stig:
-    - AIOS-18-003450
+    - N/A
   indigo:
     - ANNEX D (Section 5.4 - iCloud restrictions)
     - ANNEX K  
@@ -32,7 +32,7 @@ references:
       - 4.8
       - 15.3
 iOS:
-  - "18.0"
+  - "26.0"
 tags:
   - ios
   - 800-53r5_low

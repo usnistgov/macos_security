@@ -6,7 +6,7 @@ check: ' '
 fix: This is implemented by a Configuration Profile
 references:
   cce:
-    - CCE-94418-1
+    - N/A
   cci:
     - CCI-000097
     - CCI-000366
@@ -30,7 +30,7 @@ references:
     controls v8:
       - N/A
 iOS:
-  - "18.0"
+  - "26.0"
 tags:
   - ios
   - 800-53r5_low

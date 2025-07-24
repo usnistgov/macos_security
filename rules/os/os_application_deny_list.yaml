@@ -7,14 +7,14 @@ fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-    - CCE-94517-0
+    - N/A
   800-53r5:
     - N/A
   indigo:
     - ANNEX D (Section 5.8 - App-Installation)
     - ANNEX N
 iOS:
-  - "18.0"
+  - "26.0"
 tags:
   - ios
   - manual

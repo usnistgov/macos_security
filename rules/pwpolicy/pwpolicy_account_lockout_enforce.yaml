@@ -9,7 +9,7 @@ fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-    - CCE-94473-6
+    - N/A
   cci:
     - CCI-000044
   800-53r5:
@@ -18,7 +18,7 @@ references:
     - 'FMT_SMF_EXT.1.1 #2c'
     - 'FIA_AFL_EXT.1.5'
   disa_stig:
-    - AIOS-18-006900
+    - N/A
   indigo:
     - ANNEX D (Section 5.9.1 - Device-Code)
     - ANNEX K
@@ -29,7 +29,7 @@ references:
     controls v8:
       - 4.3
 iOS:
-  - "18.0"
+  - "26.0"
 odv:
   hint: "Number of failed attempts."
   recommended: 6

@@ -9,13 +9,13 @@ fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-    - CCE-94525-3
+    - N/A
   800-53r5:
     - N/A
   indigo:
     - ANNEX D (Section 5.6.1 - Mail)   
 iOS:
-  - "18.0"
+  - "26.0"
 tags:
   - ios
   - indigo_high

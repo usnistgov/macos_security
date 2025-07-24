@@ -7,7 +7,7 @@ fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-    - CCE-94537-8
+    - N/A
   cci: 
     - CCI-000366
   800-53r5:
@@ -20,9 +20,9 @@ references:
   indigo:
     - ANNEX K
   disa_stig:
-    - AIOS-18-015800
+    - N/A
 iOS:
-  - "18.0"
+  - "26.0"
 tags:
   - ios
   - indigo_base

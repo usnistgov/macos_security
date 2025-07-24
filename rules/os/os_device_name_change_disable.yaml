@@ -7,13 +7,13 @@ fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-    - CCE-94522-0
+    - N/A
   800-53r5:
     - N/A
   indigo:
     - ANNEX K
 iOS:
-  - "18.0"
+  - "26.0"
 tags:
   - ios
   - indigo_base

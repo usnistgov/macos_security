@@ -7,13 +7,13 @@ fix: |
   This is implemented manually by the user.
 references:
   cce:
-    - CCE-94539-4
+    - N/A
   800-53r5:
     - N/A
   indigo:
     - ANNEX K
 iOS:
-  - "18.0"
+  - "26.0"
 tags:
   - manual
   - ios

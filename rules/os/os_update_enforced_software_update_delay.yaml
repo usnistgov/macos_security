@@ -7,13 +7,13 @@ fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-    - CCE-94560-0
+    - N/A
   800-53r5:
     - N/A
   indigo:
     - ANNEX D (Section 6.3.1.2 - Update management)
 iOS:
-  - "18.0"
+  - "26.0"
 odv:
   hint: "Enforced a software update delay in days"
   recommended: 30
