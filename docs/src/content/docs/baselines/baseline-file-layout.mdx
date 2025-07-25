@@ -1,0 +1,84 @@
+---
+title: Baseline File Layout
+description: A baselines reference.
+---
+
+Baseline files define the controls and rules that make up a security profile. They are used to generate guides, scripts, and mobileconfig files for macOS security.
+
+## Baseline File Structure
+
+A baseline file typically includes the following fields:
+
+### title
+A human-readable name for the baseline.  
+*Example:*  
+```yaml
+title: "Apple macOS 13 (Ventura) Test Baseline"
+```
+
+### description
+A brief summary describing the purpose and scope of the baseline.  
+*Example:*  
+```yaml
+description: |
+  This guide describes the prudent actions to take when securing a macOS 13 system against the Test Baseline.
+```
+
+### authors
+A list of authors and their organizations.  
+*Example:*  
+```yaml
+authors: |
+  |===
+  |John Smith|NIST
+  |Jack Doe|NIST
+  |===
+```
+
+### profile
+Defines the structure of the baseline, mapping sections to their associated rules:  
+- **section**: The name of the section (as defined in the `sections` directory) to be included in the guide.
+- **rules**: A list of rule IDs that are part of this section. Each rule ID should match the filename and ID of a corresponding rule in the `rules` directory.
+
+*Example:*
+```yaml
+profile:
+  - section: "Authentication"
+    rules:
+      - auth_pam_login_smartcard_enforce
+      - auth_pam_su_smartcard_enforce
+      - auth_pam_sudo_smartcard_enforce
+      - auth_smartcard_allow
+  - section: "Auditing"
+    rules:
+      - audit_acls_files_configure
+      - audit_acls_files_mode_configure
+      - audit_acls_folder_wheel_configure
+```
+
+---
+
+## Complete Example Baseline File
+
+```yaml
+title: "Apple macOS 13 (Ventura) Test Baseline"
+description: |
+  This guide describes the prudent actions to take when securing a macOS 13 system against the Test Baseline.
+authors: |
+  |===
+  |John Smith|NIST
+  |Jack Doe|NIST
+  |===
+profile:
+  - section: "Authentication"
+    rules:
+      - auth_pam_login_smartcard_enforce
+      - auth_pam_su_smartcard_enforce
+      - auth_pam_sudo_smartcard_enforce
+      - auth_smartcard_allow
+  - section: "Auditing"
+    rules:
+      - audit_acls_files_configure
+      - audit_acls_files_mode_configure
+      - audit_acls_folder_wheel_configure
+```

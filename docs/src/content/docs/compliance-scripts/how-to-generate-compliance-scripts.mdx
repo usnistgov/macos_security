@@ -1,0 +1,125 @@
+---
+title: How To Generate Compliance Scripts
+description: An overview of how to generate configuration profiles.
+---
+
+import { Steps, FileTree, Aside } from '@astrojs/starlight/components';
+
+The primary script for generating compliance scripts is located here in the `macos_security` repository:
+
+<FileTree>
+- macos_security/
+    - scripts/
+        - generate_guidance.py
+</FileTree>
+    <Aside type="caution">
+      <strong>*Always use the branch matching your target OS version. Do not use the <code>main</code> branch for workflow or development.*</strong>
+    </Aside>
+
+## Steps to Generate a Compliance Script
+
+<Steps>
+1. **Run the Compliance Script Generator**
+
+   Use the `-s` flag with `generate_guidance.py` to generate a compliance script for your baseline YAML file:
+
+   ```sh
+   ./scripts/generate_guidance.py -s baselines/800-53r5_moderate.yaml
+   ```
+
+2. **Review the Output**
+
+   The script will generate several files in the `build/BASELINE/` directory:
+
+   <FileTree>
+   - build/
+       - 800-53r5_moderate/
+           - 800-53r5_moderate.adoc
+           - 800-53r5_moderate.html
+           - 800-53r5_moderate.pdf
+           - 800-53r5_moderate_compliance.sh
+           - preferences/
+               - org.800-53r5_moderate.audit.plist
+   </FileTree>
+</Steps>
+
+## What Gets Generated?
+
+- **Compliance Script**: `{baseline}_compliance.sh`  
+  The main script to check/fix compliance.
+- **Audit Plist**: `org.{baseline}.audit.plist`  
+  Used for exemptions and compliance tracking.
+- **Reports**: `.adoc`, `.html`, `.pdf`  
+  Documentation and reports for the baseline.
+
+<Aside>
+See the section on [Exemptions](https://github.com/usnistgov/macos_security/wiki/exemptions) for more information about how exemptions are implemented.
+</Aside>
+
+## Running the Compliance Script
+
+You can run the script interactively or with command-line flags:
+
+```zsh
+sudo ./build/800-53r5_moderate/800-53r5_moderate_compliance.sh
+```
+
+This will present an interactive menu:
+
+```
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        M A I N - M E N U
+  macOS Security Compliance Tool
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Last compliance scan: No scans have been run
+
+1. View Last Compliance Report
+2. Run New Compliance Scan
+3. Run Commands to remediate non-compliant settings
+4. Exit
+Enter choice [ 1 - 4 ]
+```
+
+**Note:**  
+The `--cfc` flag will trigger a check/fix/check when running the compliance script.
+
+After running, results are written to:
+
+- `/Library/Preferences/org.{baseline}.audit.plist`
+- `/Library/Logs/{baseline}_baseline.log`
+
+**Example log output:**
+
+```
+Thu Jan 21 15:09:41 UTC 2021 auth_pam_login_smartcard_enforce passed (Result: 2, Expected: {integer: 2})
+Thu Jan 21 15:09:41 UTC 2021 auth_smartcard_allow passed (Result: 1, Expected: {integer: 1})
+Thu Jan 21 15:09:41 UTC 2021 auth_pam_sudo_smartcard_enforce passed (Result: 2, Expected: {integer: 2})
+Thu Jan 21 15:09:41 UTC 2021 auth_smartcard_certificate_trust_enforce_moderate passed (Result: 2, Expected: {integer: 2})
+Thu Jan 21 15:09:41 UTC 2021 auth_smartcard_enforce has an exemption (Reason: Broken Reader)
+```
+
+<Aside>
+To add a custom reference in front of the rule in the `{baseline}_baseline.log`, use the `-r` flag with your custom reference (case sensitive) when running `generate_guidance.py`.
+</Aside>
+
+## Compliance Script Command Line Reference
+
+**Note:**  
+The compliance script expects to be run in a Z Shell (zsh). Running with `sh` or `bash` will result in errors.
+
+```zsh
+./mscp_compliance.sh Usage
+./mscp_compliance.sh [--check] [--fix] [--cfc] [--stats] [--compliant] [--non_compliant] [--reset] [--reset-all] [--quiet=<value>]
+
+Optional parameters:
+--check            :   run the compliance checks without interaction
+--fix              :   run the remediation commands without interaction
+--cfc              :   runs a check, fix, check without interaction
+--stats            :   display the statistics from last compliance check
+--compliant        :   reports the number of compliant checks
+--non_compliant    :   reports the number of non_compliant checks
+--reset            :   clear out all results for current baseline
+--reset-all        :   clear out all results for ALL MSCP baselines
+--quiet=<value>    :   1 - show only failed and exempted checks in output
+                       2 - show minimal output
+```

@@ -1,0 +1,109 @@
+---
+title: Quick Guide
+description: High-level overview for generating all project files.
+tableOfContents: false
+---
+
+import { Steps, Aside } from '@astrojs/starlight/components';
+
+
+If you're new to the project, start with this Quick Guide for a high-level overview of the workflow. After reviewing these steps, check out each step's corresponding "How To" section in the documentation menu. These sections explain in more detail what each step does, why it's important, and what outputs to expect.
+
+This quick guide provides a high-level overview of the steps required to generate all files with the macOS Security Compliance Project.
+
+<Aside type="note">
+For details about each step, check out the corresponding menu item and the "What are..." section for that topic to understand its purpose and outputs.
+</Aside>
+
+<Steps>
+<ol>
+  <li>
+    <strong>1. Prepare Your Environment</strong>
+    <ul>
+      <li>Ensure all <a href="/macos_security/welcome/getting-started/">prerequisites</a> are installed (Python, required modules, etc.).</li>
+      <li>Download or clone the repository.</li>
+    </ul>
+    <Aside type="note">
+      See <a href="/macos_security/welcome/getting-started/">Getting Started</a> for setup details.
+    </Aside>
+  </li>
+  <li>
+    <strong>2. Verify and Select the Correct Branch</strong>
+    <ul>
+      <li>Checkout the branch that matches your target OS version (e.g., <code>sequoia</code>).</li>
+    </ul>
+    <Aside type="caution">
+      <strong>*Always use the branch matching your target OS version. Do not use the <code>main</code> branch for workflow or development.*</strong>
+    </Aside>
+  </li>
+  <li>
+    <strong>3. Generate a Baseline</strong>
+    <ul>
+      <li>Use <a href="/macos_security/baselines/how-to-generate-baselines/">generate_baseline.py</a> to create a baseline YAML file for your compliance needs.</li>
+      <li><span style="display:inline-block;font-size:0.85em;font-weight:500;padding:0.1em 0.5em;border-radius:0.3em;background:var(--sl-color-bg-inline-code,#f5f5f5);color:var(--sl-color-text-accent,#0070f3);margin-left:0.5em;border:1px solid var(--sl-color-border,#eaeaea);">Optional</span> <a href="/macos_security/baselines/tailoring-a-baseline/">Tailor the baseline</a> to your organization using the <code>-t</code> flag.</li>
+    </ul>
+    <Aside type="note">
+      See <a href="/macos_security/baselines/how-to-generate-baselines/">How To Generate Baseline</a> for details.
+    </Aside>
+  </li>
+  <li>
+    <strong>4. Personalize: Customize Rules</strong> <span style="display:inline-block;font-size:0.85em;font-weight:500;padding:0.1em 0.5em;border-radius:0.3em;background:var(--sl-color-bg-inline-code,#f5f5f5);color:var(--sl-color-text-accent,#0070f3);margin-left:0.5em;border:1px solid var(--sl-color-border,#eaeaea);">Optional</span>
+    <ul>
+      <li><a href="/macos_security/personalization/customize-rules/">Customize rules</a> by modifying or adding rule YAML files in the <code>custom</code> folder as needed.</li>
+    </ul>
+    <Aside type="note">
+      See <a href="/macos_security/personalization/customize-rules/">Customization</a> for more information.
+    </Aside>
+  </li>
+  <li>
+    <strong>5. Generate Guidance Documentation</strong> <span style="display:inline-block;font-size:0.85em;font-weight:500;padding:0.1em 0.5em;border-radius:0.3em;background:var(--sl-color-bg-inline-code,#f5f5f5);color:var(--sl-color-text-accent,#0070f3);margin-left:0.5em;border:1px solid var(--sl-color-border,#eaeaea);">Optional</span>
+    <ul>
+      <li>Run <a href="/macos_security/guidance/how-to-generate-guidance/">generate_guidance.py</a> to create human-readable guidance (AsciiDoc, HTML, PDF, etc.).</li>
+    </ul>
+    <Aside type="note">
+      See <a href="/macos_security/guidance/how-to-generate-guidance/">How To Generate Guidance</a> for details.
+    </Aside>
+  </li>
+  <li>
+    <strong>6. Generate Configuration Profiles</strong>
+    <ul>
+      <li>Add the <code>-p</code> flag to <code>generate_guidance.py</code> to generate configuration profiles for supported rules.</li>
+    </ul>
+    <Aside type="note">
+      See <a href="/macos_security/configuration-profiles/how-to-generate-configuration-profiles/">How To Generate Configuration Profiles</a> for details.
+    </Aside>
+  </li>
+  <li>
+    <strong>7. Generate DDM Content</strong>
+    <ul>
+      <li>Add the <code>-D</code> flag to <code>generate_guidance.py</code> to generate Declarative Device Management (DDM) components.</li>
+    </ul>
+    <Aside type="note">
+      See <a href="/macos_security/ddm-components/how-to-generate-ddm-components/">How To Generate DDM Components</a> for details.
+    </Aside>
+  </li>
+  <li>
+    <strong>8. Generate Compliance Scripts</strong>
+    <ul>
+      <li>Add the <code>-s</code> flag to <code>generate_guidance.py</code> to generate a compliance script for automated checking and remediation.</li>
+    </ul>
+    <Aside type="note">
+      See <a href="/macos_security/compliance-scripts/how-to-generate-compliance-scripts/">How To Generate Compliance Scripts</a> for details.
+    </Aside>
+  </li>
+  <li>
+    <strong>9. Make Exemptions</strong> <span style="display:inline-block;font-size:0.85em;font-weight:500;padding:0.1em 0.5em;border-radius:0.3em;background:var(--sl-color-bg-inline-code,#f5f5f5);color:var(--sl-color-text-accent,#0070f3);margin-left:0.5em;border:1px solid var(--sl-color-border,#eaeaea);">Optional</span>
+    <ul>
+      <li>Customize or exempt specific rules as needed for your environment.</li>
+    </ul>
+    <Aside type="note">
+      See the <strong>exemptions</strong> folder or the project's wiki for customization options.
+    </Aside>
+  </li>
+</ol>
+</Steps>
+
+<Aside type="tip">
+<strong>Need help?</strong>  
+If you encounter issues, check the Guides section, review the <a href="/macos_security/more-information/faq/">FAQ</a>, or visit the project's <a href="https://github.com/usnistgov/macos_security/wiki">wiki</a> for troubleshooting and community support.
+</Aside>

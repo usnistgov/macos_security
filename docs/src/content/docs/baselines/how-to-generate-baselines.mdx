@@ -1,0 +1,70 @@
+---
+title: How To Generate Baselines
+description: An overview on how to generate a baseline.
+tableOfContents: false
+---
+
+import { Steps, FileTree, Aside } from '@astrojs/starlight/components';
+
+The primary script for generating baselines is located here in the `macos_security` repository:
+
+<FileTree>
+- macos_security/
+    - scripts/                  ---> Project scripts
+        - generate_baseline.py    ---> Script to generate baselines
+</FileTree>
+
+    <Aside type="caution">
+      <strong>*Always use the branch matching your target OS version. Do not use the <code>main</code> branch for workflow or development.*</strong>
+    </Aside>
+
+Follow these steps to generate a baseline:
+
+<Steps>
+
+1. **Select or Download the Correct Branch**
+
+   - Make sure you are on the branch you want to work from.
+   - If using `git`, run `git checkout <branch-name>` to switch branches if needed.
+
+2. **Choose the Baseline to Generate**
+
+   - Identify the baseline you want to generate (e.g., CIS_lvl1, STIG, etc.).
+   - Use the `-l` flag to list available baseline options for the selected branch:
+     ```sh
+     ./macos_security-sequoia/scripts/generate_baseline.sh -l
+     ```
+
+3. **Generate the Selected Baseline**
+
+   - Use the `-k` flag with the selected tag to generate the baseline:
+     ```sh
+     ./macos_security-sequoia/scripts/generate_baseline.sh -k 800-53r5_moderate
+     ```
+     This example generates a baseline for `800-53r5_moderate`.
+
+   - Use the `-t` flag to customize the baseline for your organization:
+     ```sh
+     ./macos_security-sequoia/scripts/generate_baseline.sh -k 800-53r5_moderate -t
+     ```
+     If you use `-t`, you will be prompted with questions to tailor the baseline. See [How to Tailor a Baseline](./how-to-tailor-a-baseline) for more details.
+
+4. **Locate the Generated Files**
+
+   - After running the generation command, the baseline files are created in the following directories:
+
+</Steps>
+
+<FileTree>
+- macos_security/
+    - build/
+        - baselines/
+            - BASELINENAME.yaml   ---> The generated baseline file (name depends on your selection or customization)
+    - custom/
+        - rules/
+            - *.yaml             ---> Custom values you set if you used `-t`
+</FileTree>
+
+
+   These files are required to generate the guidance files.  
+For more information, see [How to Tailor a Baseline](../how-to-tailor-a-baseline) or review the [baseline file layout](../baseline-file-layout).

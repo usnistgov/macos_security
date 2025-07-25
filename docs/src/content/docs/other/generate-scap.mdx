@@ -1,0 +1,111 @@
+---
+title: Generate SCAP
+description: A generate-scap reference.
+---
+
+import { Steps, FileTree, Aside } from '@astrojs/starlight/components';
+
+    <Aside type="caution">
+      <strong>*Always use the branch matching your target OS version. Do not use the <code>main</code> branch for workflow or development.*</strong>
+    </Aside>
+To generate SCAP, OVAL, or XCCDF documents, use the <code>generate_scap.py</code> script.
+
+<Steps>
+  <ol>
+    <li>
+      <strong>List available baselines:</strong>
+      <br />
+      <code>./scripts/generate_scap.py -l</code>
+    </li>
+    <li>
+      <strong>Generate SCAP 1.3 document for all baselines:</strong>
+      <br />
+      <code>./scripts/generate_scap.py</code>
+    </li>
+    <li>
+      <strong>Generate only XCCDF or OVAL:</strong>
+      <br />
+      <code>./scripts/generate_scap.py -x</code> <em>(XCCDF)</em><br />
+      <code>./scripts/generate_scap.py -o</code> <em>(OVAL)</em>
+    </li>
+    <li>
+      <strong>Generate for a specific baseline:</strong>
+      <br />
+      <code>./scripts/generate_scap.py -b stig -x</code>
+    </li>
+  </ol>
+</Steps>
+
+<Aside type="note">
+The script detects baselines as tags listed in rule files under <code>rules/</code> and <code>custom/</code> folders.
+</Aside>
+
+<FileTree>
+  <ul>
+    <li>
+      build/
+      <ul>
+        <li>[generated SCAP/XCCDF/OVAL files]</li>
+      </ul>
+    </li>
+    <li>
+      rules/
+      <ul>
+        <li>[rule files with baseline tags]</li>
+      </ul>
+    </li>
+    <li>
+      custom/
+      <ul>
+        <li>[custom rule files with baseline tags]</li>
+      </ul>
+    </li>
+    <li>
+      scripts/
+      <ul>
+        <li>generate_scap.py</li>
+      </ul>
+    </li>
+  </ul>
+</FileTree>
+
+**Example Output:**
+```bash
+➜  macos_security git:(sequoia) ./scripts/generate_scap.py
+./scripts/generate_scap.py -l 
+800-171
+800-53r4_high
+800-53r4_low
+800-53r4_moderate
+800-53r5_high
+800-53r5_low
+800-53r5_moderate
+800-53r5_privacy
+cis_lvl1
+cis_lvl2
+cisv8
+cnssi-1253
+stig
+➜  macos_security git:(ventura) ./scripts/generate_scap.py -b stig -x
+```
+This generates an XCCDF document in the <code>build</code> folder for just the <code>stig</code> baseline.
+
+## SCAP References
+
+[Security Content Automation Protocol (SCAP) 1.3](https://csrc.nist.gov/projects/security-content-automation-protocol/scap-releases/scap-1-3)
+
+<Aside type="note">
+That page has links to most of the SCAP-related normative documents.
+</Aside>
+
+An SCAP data stream (typically) consists of several XML documents knit together in a containing XML document.
+The component documents are:
+- An XCCDF document
+- An OVAL document referenced by the XCCDF document
+- An OCIL document referenced by the XCCDF document
+- A CPE dictionary document referenced by the XCCDF document
+- An OVAL document referenced by the CPE dictionary document
+
+[National Checklist Program for IT Products Guidelines for Checklist Users and Developers](https://csrc.nist.gov/publications/detail/sp/800-70/rev-4/final)
+
+[National Checklist Program Repository](https://nvd.nist.gov/ncp/repository)

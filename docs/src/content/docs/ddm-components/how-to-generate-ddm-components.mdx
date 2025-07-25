@@ -1,0 +1,52 @@
+---
+title: How To Generate DDM Components
+description: An overview of how to generate DDM configuration components.
+tableOfContents: false
+---
+
+import { Steps, FileTree, Aside } from '@astrojs/starlight/components';
+
+The primary script for generating DDM components is located here in the `macos_security` repository:
+
+<FileTree>
+- macos_security/
+    - scripts/
+        - generate_guidance.py
+</FileTree>
+    <Aside type="caution">
+      <strong>*Always use the branch matching your target OS version. Do not use the <code>main</code> branch for workflow or development.*</strong>
+    </Aside>
+
+To generate all DDM components, run:
+
+```sh
+./scripts/generate_guidance.py -D baselines/all_rules.yaml -p -s
+```
+
+This will create DDM components in the following directories:
+
+<FileTree>
+- Build/
+    - BASELINENAME/
+        - activations/
+            - org.mscp.all_rules.activation.diskmanagement.settings.json
+            - org.mscp.all_rules.activation.pam.json
+            - org.mscp.all_rules.activation.passcode.settings.json
+            - org.mscp.all_rules.activation.sshd.json
+            - org.mscp.all_rules.activation.sudo.json
+        - assets/
+            - com.apple.pam.zip
+            - com.apple.sshd.zip
+            - com.apple.sudo.zip
+            - org.mscp.all_rules.asset.pam.json
+            - org.mscp.all_rules.asset.sshd.json
+            - org.mscp.all_rules.asset.sudo.json
+        - configurations/
+            - org.mscp.all_rules.config.diskmanagement.settings.json
+            - org.mscp.all_rules.config.pam.json
+            - org.mscp.all_rules.config.passcode.settings.json
+            - org.mscp.all_rules.config.sshd.json
+            - org.mscp.all_rules.config.sudo.json
+</FileTree>
+
+For more information, see [How to Generate Baselines](../how-to-generate-baselines) or review the [baseline file layout](../baseline-file-layout).

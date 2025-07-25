@@ -1,0 +1,127 @@
+---
+title: Rules File Layout
+description: A rules reference.
+---
+
+A rule file defines a single security control for macOS. Each rule is written in YAML and should follow the structure below.
+
+## Rule File Fields
+
+### id
+A unique identifier for the rule. This should match the filename (without the `.yaml` extension).
+
+### title
+A human-readable title for the rule.
+
+### discussion
+A concise description of the rule's intent and context.
+
+### check
+A shell-based or script-based check to validate compliance.
+
+### result
+The expected result from the check.
+
+### fix
+Remediation steps or configuration to enforce the rule. If a fix includes `[source,bash]`, it will be used for script generation.
+
+### references
+Mappings to CCEs, security frameworks, and controls relevant to the rule.
+
+### macOS
+The macOS versions for which this rule is validated.
+
+### odv
+(Optional) Organization Defined Values. If present, should include a hint and default/recommended values.
+
+### tags
+Keywords for categorizing and searching rules.
+
+### severity
+The severity level of the rule (e.g., low, medium, high).
+
+### mobileconfig
+Set to `true` if the rule can be enforced via a configuration profile.
+
+### mobileconfig_info
+Required if `mobileconfig` is `true`. Contains the configuration profile payload.
+
+---
+
+## Example Rule File
+
+```yaml
+id: system_settings_bluetooth_disable
+title: Disable Bluetooth When no Approved Device is Connected
+discussion: |
+  The macOS system _MUST_ be configured to disable Bluetooth unless there is an approved device connected.
+
+  [IMPORTANT]
+  ====
+  Information System Security Officers (ISSOs) may make the risk-based decision not to disable Bluetooth, so as to maintain necessary functionality, but they are advised to first fully weigh the potential risks posed to their organization.
+  ====
+check: |
+  /usr/bin/osascript -l JavaScript << EOS
+  $.NSUserDefaults.alloc.initWithSuiteName('com.apple.MCXBluetooth')\
+  .objectForKey('DisableBluetooth').js
+  EOS
+result:
+  string: 'true'
+fix: |
+  This is implemented by a Configuration Profile.
+references:
+  cce:
+    - CCE-94352-2
+  cci:
+    - CCI-001967
+    - CCI-002418
+  800-53r5:
+    - AC-18
+    - SC-8
+    - AC-18(3)
+  800-53r4:
+    - AC-18(3)
+    - SC-8
+  srg:
+    - SRG-OS-000423-GPOS-00187
+    - SRG-OS-000481-GPOS-00481
+    - SRG-OS-000480-GPOS-00228
+  disa_stig:
+    - APPL-15-002062
+  800-171r2:
+    - 3.13.8
+    - N/A
+  800-171r3:
+    - 03.01.16
+    - 03.13.08
+  cis:
+    benchmark:
+      - N/A
+    controls v8:
+      - 4.8
+      - 12.6
+      - 13.9
+  cmmc:
+    - AC.L2-3.1.16
+macOS:
+  - '15.0'
+tags:
+  - 800-53r5_low
+  - 800-53r4_moderate
+  - 800-53r4_high
+  - 800-53r5_moderate
+  - 800-53r5_high
+  - 800-171
+  - cisv8
+  - cnssi-1253_low
+  - cnssi-1253_high
+  - cmmc_lvl2
+  - stig
+  - cnssi-1253_moderate
+severity: high
+mobileconfig: true
+mobileconfig_info:
+  com.apple.ManagedClient.preferences:
+    com.apple.MCXBluetooth:
+      DisableBluetooth: true
+```

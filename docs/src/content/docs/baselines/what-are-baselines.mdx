@@ -1,0 +1,118 @@
+---
+title: What Are Baselines?
+description: An overview of baselines and how to use them in the project.
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+A **baseline** is a collection of security rules and configuration settings that define a minimum standard for compliance with a specific security framework or policy. Baselines help organizations ensure their systems meet required security controls and best practices. In this project, a baseline is represented as a YAML file that lists all the rules relevant to a particular compliance target, such as NIST 800-53, DISA-STIG, CIS, or CMMC.
+
+Each baseline is tailored to a specific operating system (macOS, iOS/iPadOS, or visionOS) and compliance level (such as High, Moderate, or Low). This ensures that the security guidance and automation generated from a baseline are appropriate for the OS and the compliance requirements you are targeting. Selecting the correct baseline for your OS and compliance needs is essential for generating accurate guidance and scripts.
+
+The baselines provided in this project are derived from widely recognized security standards and frameworks, including:
+- [NIST SP 800-53](https://csrc.nist.gov/publications/detail/sp/800-53/rev-5/final)
+- [DISA-STIG](https://public.cyber.mil/stigs/)
+- [NIST SP 800-171](https://csrc.nist.gov/pubs/sp/800/171/r3/final)
+- [CIS Benchmarks](https://www.cisecurity.org/cis-benchmarks/)
+- [CIS Controls V8](https://www.cisecurity.org/controls/v8)
+- [CMMC](https://dodcio.defense.gov/cmmc/About/)
+- CNSSI 1254
+- Indigo (internal or community-driven baseline for iOS)
+
+---
+
+## Baselines Available in This Project
+
+The project provides a variety of baselines, each designed for a specific OS and compliance framework. These files are located in the `/baselines/` folder of the repository.  Below is a summary of the available baselines:
+
+- **NIST 800-53** (macOS, iOS/iPadOS, visionOS)
+  - High: `800-53r5_high.yaml`
+  - Moderate: `800-53r5_moderate.yaml`
+  - Low: `800-53r5_low.yaml`
+- **DISA-STIG**
+  - macOS: `DISA-STIG.yaml`
+  - iOS/iPadOS: 
+    - iOS STIG: `ios_stig.yaml`
+    - iOS STIG BYOAD: `ios_stig_byoad.yaml`
+- **NIST 800-171**
+  - `800-171.yaml`
+- **CIS Benchmarks**
+  - macOS:
+    - Level 1: `cis_lvl1.yaml`
+    - Level 2: `cis_lvl2.yaml` (includes Level 1)
+  - iOS/iPadOS:
+    - Level 1 BYOD: `cis_lvl1_byod.yaml`
+    - Level 2 BYOD: `cis_lvl2_byod.yaml`
+    - Level 1 Enterprise: `cis_lvl1_enterprise.yaml`
+    - Level 2 Enterprise: `cis_lvl2_enterprise.yaml`
+- **CIS Controls V8**
+  - `cisv8.yaml`
+- **CMMC**
+  - Level 1: `cmmc_lvl1.yaml`
+  - Level 2: `cmmc_lvl2.yaml`
+- **CNSSI 1254**
+  - High: `cnssi-1254_high.yaml`
+  - Moderate: `cnssi-1254_moderate.yaml`
+  - Low: `cnssi-1254_low.yaml`
+- **Indigo (iOS Only)**
+  - Base: `indigo_base.yaml`
+  - High: `indigo_high.yaml`
+
+<Aside type="note">
+*Each baseline is specific to the OS and compliance level it is designed for. For example, a macOS baseline for NIST 800-53 High will differ from an iOS baseline for CIS Level 1.*
+</Aside>
+---
+
+## Checking Available Baselines for the Selected Branch
+
+To see all available baseline tags for the currently checked-out branch, run:
+
+```bash
+./scripts/generate_baseline.py -l
+```
+
+This will list all baseline tags available for your current branch.
+
+Example output:
+
+```bash
+800-171
+800-53r4_high
+800-53r4_low
+800-53r4_moderate
+800-53r5_high
+800-53r5_low
+800-53r5_moderate
+800-53r5_privacy
+all_rules
+arm64
+cis_lvl1
+cis_lvl2
+cisv8
+cmmc_lvl1
+cmmc_lvl2
+cnssi-1253_high
+cnssi-1253_low
+cnssi-1253_moderate
+i386
+inherent
+manual
+n_a
+none
+permanent
+srg
+stig
+supplemental
+```
+
+---
+
+## More About Baselines
+
+- **Purpose:** Baselines provide a clear, measurable standard for system configuration and security, serving as a benchmark for compliance efforts.
+- **Maintenance:** Baselines are periodically reviewed and updated to reflect changes in security standards, best practices, and emerging threats.
+- **Customization:** Organizations can adapt baselines to fit their specific operational requirements or risk tolerance.
+- **Auditing:** Baselines are essential during audits, providing evidence that systems are configured according to recognized standards.
+- **Automation:** Baselines enable automated tools to assess, enforce, and remediate system configurations.
+- **Versioning:** Each baseline may have versions to track updates and changes over time.
+- **Community Contributions:** Contributions from the community help keep baselines current and relevant.
