@@ -13,11 +13,12 @@ references:
   800-53r5:
     - N/A
   indigo:
-    - N/A
+    - Annex K
 iOS:
   - "18.0"
 tags:
   - ios
+  - indigo_high
 supervised: false
 mobileconfig: true
 mobileconfig_info:

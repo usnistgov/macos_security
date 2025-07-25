@@ -50,6 +50,12 @@ profile:
       - os_mail_maildrop_disable
       - os_mail_move_messages_disable
       - os_mail_summary_disable
+      - os_notes_transcription_disable
+      - os_notes_transcription_summary_disable
+      - os_external_intelligence_integration_disable
+      - os_external_intelligence_integration_sign_in_disable
+      - os_mail_smart_reply_disable
+      - os_visual_intelligence_summary
       - os_marketplace_prevent
       - os_new_device_proximity_disable
       - os_on_device_dictation_enforce

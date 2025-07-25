@@ -30,6 +30,7 @@ profile:
       - os_airdrop_unmanaged_destination_enable
       - os_airplay_incoming_password_require
       - os_airplay_outgoing_password_require
+      - os_airprint_disable
       - os_airprint_force_trusted_TLS
       - os_allow_contacts_read_managed_sources_unmanaged_destinations_disable
       - os_allow_contacts_write_managed_sources_unmanaged_destinations_disable
@@ -49,6 +50,7 @@ profile:
       - os_diagnostics_reports_modification_disable
       - os_disallow_enterprise_app_trust
       - os_enterprise_books_disable
+      - os_esim_transfers_disable
       - os_exchange_SMIME_encryption_certificate_overwirte_disable
       - os_exchange_SMIME_encryption_default_certificate_overwrite_enable
       - os_exchange_SMIME_encryption_enforce
@@ -75,6 +77,13 @@ profile:
       - os_mail_maildrop_disable
       - os_mail_move_messages_disable
       - os_mail_summary_disable
+      - os_notes_transcription_disable
+      - os_notes_transcription_summary_disable
+      - os_external_intelligence_integration_disable
+      - os_external_intelligence_integration_sign_in_disable
+      - os_mail_smart_reply_disable
+      - os_visual_intelligence_summary
+      - os_personalized_handwriting_disable
       - os_marketplace_prevent
       - os_network_known_only
       - os_new_device_proximity_disable
@@ -88,6 +97,7 @@ profile:
       - os_predictive_keyboard_disable
       - os_rapid_security_responses_install_enable
       - os_rapid_security_responses_remove_disable
+      - os_rcs_messaging_disable
       - os_require_managed_pasteboard_enforce
       - os_safari_JavaScript_disable
       - os_safari_cookies_set
