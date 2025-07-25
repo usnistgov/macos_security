@@ -20,7 +20,7 @@ references:
   disa_stig:
     - AIOS-18-015700      
   indigo:
-    - N/A
+    - ANNEX K
 iOS:
   - "18.1"
 tags:
@@ -29,6 +29,8 @@ tags:
   - 800-53r5_moderate
   - 800-53r5_high
   - ios_stig
+  - indigo_base
+  - indigo_high
 supervised: false
 mobileconfig: true
 mobileconfig_info:
