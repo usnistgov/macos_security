@@ -5,8 +5,10 @@
 //
 // Usage:
 //   1. Add this to your page where you want the button:
+//
 //        <div id="github-button-container"></div>
 //        <script src="/scripts/github-buttons.js"></script>
+//
 //   2. The button will automatically update for light/dark mode.
 //
 // ------------------------------------------------------------
