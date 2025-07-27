@@ -7,18 +7,29 @@ const GITHUB_OWNER = 'usnistgov';
 const GITHUB_REPO = 'macos_security';
 const CONTAINER_ID = 'github-latest-release';
 
-function renderReleaseInfo({ tag_name, name, html_url, published_at }) {
+function renderReleaseInfo({ tag_name, name, html_url, published_at, body }) {
   const date = published_at
     ? new Date(published_at).toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' })
     : '';
+
+  let notes = '';
+  if (body) {
+    notes = body.replace(/</g, "&lt;");
+    notes = notes.replace(
+      /\*\*Full Changelog\*\*:\s*(https?:\/\/[^\s]+)/g,
+      (match, url) =>
+        `<a href="${url}" target="_blank" rel="noopener">Full Changelog</a>`
+    );
+    notes = `<div class="github-release-notes" style="margin-top:1em; font-size:0.98em; color:var(--sl-color-text, #444); white-space:pre-line;">${notes}</div>`;
+  }
   return `
     <div class="github-release-info">
-      <strong>Latest Release:</strong>
-      <a href="${html_url}" target="_blank" rel="noopener">
+      <strong><a href="${html_url}" target="_blank" rel="noopener">
         ${name || tag_name}
-      </a>
-      <span style="color: #888; font-size: 0.9em;">(${tag_name})</span>
-      ${date ? `<div style="font-size:0.9em; color:var(--sl-color-text, #666); margin-top:2px;">Released: ${date}</div>` : ''}
+      </a></strong>
+      <span style="color: #888; font-size: 0.9em; font-style: italic;">(${tag_name})</span>
+      ${date ? `<div style="font-size:0.9em; color:var(--sl-color-text, #666); margin-top:2px;">Released: <strong>${date}</strong></div>` : ''}
+      ${notes}
       <div style="margin-top:0.7em;">
         <a href="https://github.com/${GITHUB_OWNER}/${GITHUB_REPO}/releases" target="_blank" rel="noopener" style="font-size:0.95em;">
           View all releases &rarr;

@@ -26,7 +26,7 @@ function getGitHubButtonHTML() {
     data-show-count="true"
     data-color-scheme="${colorScheme}"
     aria-label="Star usnistgov/macos_security on GitHub"
-  ></a>`;
+  >Star</a>`;
 }
 
 // Insert or update the GitHub button in the container

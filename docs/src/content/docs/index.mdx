@@ -2,6 +2,8 @@
 title: macOS Security Compliance Project
 description: The macOS Security Compliance Project delivers open source, automated security guidance for macOS, based on NIST SP 800-53 and 800-219. Developed by federal experts and recognized by Apple, it enables organizations to create customized security baselines and technical controls with ease.
 template: splash
+editUrl: false
+lastUpdated: false
 hero:
   tagline: Comprehensive, open source macOS security guidance—built by federal experts, based on NIST SP 800-53 and 800-219, and recognized by Apple.
   image:
@@ -19,8 +21,12 @@ hero:
 
 import { Card, CardGrid } from '@astrojs/starlight/components';
 
-## Quick Links
 
+## Latest Release:
+<div id="github-latest-release"></div>
+<script src="/scripts/github-latest-release.js"></script> 
+
+## Quick Links
 <CardGrid cols={3}>
 	<Card title="How To Guides" icon="open-book">
 		Learn how to generate baselines, guidance documents, configuration profiles, and more.
