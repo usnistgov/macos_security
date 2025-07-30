@@ -5,7 +5,7 @@ discussion: |
 
   macOS has a privilege that can be granted to any user that will allow that user to unlock active user's sessions. Disabling the admins and/or user's ability to log into another user's active and locked session prevents unauthorized persons from viewing potentially sensitive and/or personal information.
   
-  NOTE: Configuring this setting will change the user experience and disable TouchID from unlocking the screensaver. To restore the user experience and allow TouchID to unlock the screensaver, you can run `/usr/bin/sudo /usr/bin/defaults write /Library/Preferences/com.apple.loginwindow screenUnlockMode -int 1`. This setting can also be deployed with a configuration profile.
+  NOTE: Configuring this setting will change the user experience and disable TouchID from unlocking the screensaver. A configuration profile will be generated to include the setting that restores the expected behavior. You can also apply the settings using `/usr/bin/sudo /usr/bin/defaults write /Library/Preferences/com.apple.loginwindow screenUnlockMode -int 1`.
 
   WARNING: This rule may cause issues when platformSSO is configured. 
 check: |
@@ -71,5 +71,7 @@ tags:
   - stig
   - cnssi-1253_moderate
 severity: medium
-mobileconfig: false
+mobileconfig: true
 mobileconfig_info:
+  com.apple.loginwindow:
+    screenUnlockMode: 1
