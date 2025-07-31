@@ -109,16 +109,3 @@ sl-anchor-link,
 :root[data-theme='dark'] .site-title:hover {
   color: rgb(49, 100, 49); /* light for dark mode */
 }
-
-@keyframes shake {
-  0% { transform: rotate(0deg); }
-  20% { transform: rotate(-8deg); }
-  40% { transform: rotate(8deg); }
-  60% { transform: rotate(-8deg); }
-  80% { transform: rotate(8deg); }
-  100% { transform: rotate(0deg); }
-}
-
-.site-title:hover img {
-  animation: shake 0.4s;
-}
