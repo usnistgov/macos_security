@@ -10,6 +10,7 @@ log_output_file: mscp.log
 defaults:
   adoc_templates_dir: "config/default/templates/asciidoctor"
   baseline_dir: "config/default/baselines"
+  documents_templates_dir: "config/default/templates/documents"
   images_dir: "config/default/images"
   md_templates_dir: "config/default/templates/markdown"
   misc_dir: "config/default/misc"
@@ -23,6 +24,7 @@ defaults:
 custom:
   adoc_templates_dir: "config/custom/templates/asciidoctor"
   baseline_dir: "config/custom/baselines"
+  documents_templates_dir: "config/custom/templates/documents"
   images_dir: "config/custom/images"
   md_templates_dir: "config/custom/templates/markdown"
   misc_dir: "config/custom/misc"

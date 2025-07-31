@@ -14,7 +14,7 @@ from jinja2 import Environment, FileSystemLoader, Template
 
 # Local python modules
 from ...classes import Baseline, Macsecurityrule
-from ...common_utils import config, run_command
+from ...common_utils import config, open_file, run_command
 from ...common_utils.logger_instance import logger
 
 
@@ -100,32 +100,6 @@ def render_rules_md(rule_set: list[str]) -> str:
     return "<br>".join(f"- {rule}" for rule in rule_set)
 
 
-def convert_source_blocks(text: str) -> str:
-    """
-    Converts [source,xml] and [source,bash] blocks to Markdown code blocks with appropriate highlighting.
-
-    Args:
-        text (str): The input text containing [source,xml] or [source,bash] blocks.
-
-    Returns:
-        str: The processed text with code blocks.
-    """
-    if text is None:
-        return ""
-
-    # Regular expression to match [source,xml] or [source,bash] blocks
-    pattern = re.compile(r"\[source,(xml|bash)\]\n----\n(.*?)\n----", re.DOTALL)
-
-    # Function to replace matched blocks with Markdown code blocks
-    def replace_block(match):
-        language = match.group(1)
-        content = match.group(2).strip()
-        return f"```{language}\n{content}\n```"
-
-    # Replace all [source,xml] and [source,bash] blocks in the text
-    return pattern.sub(replace_block, text)
-
-
 def replace_include_with_file_content(text: str) -> str:
     """
     Searches the text for `include::` directives, extracts the filenames, reads the file content,
@@ -161,24 +135,30 @@ def asciidoc_to_markdown(value: str) -> str:
     lines = value.splitlines()
     result = []
     i = 0
+
     link_pattern = re.compile(r"link:(\S+)\[(.*?)\]")
 
     def link_replacer(match):
         url, text = match.group(1), match.group(2)
-        # If text is empty, use the URL as the link text
         return f"[{text if text else url}]({url})"
 
     while i < len(lines):
-        line = lines[i].strip()
+        line = lines[i].rstrip()
 
-        # Convert NOTE:
-        if line.startswith("NOTE:"):
-            line = link_pattern.sub(link_replacer, line)
-            result.append(f"> **NOTE:** {line[5:].strip()}")
+        # Header: == -> ##, === -> ###, etc.
+        if re.match(r"^(=+)\s+.+", line):
+            level, content = re.match(r"^(=+)\s+(.+)", line).groups()
+            result.append(f"{'#' * len(level)} {content}")
 
-        # Convert [IMPORTANT] blocks
+        # NOTE block
+        elif line.startswith("NOTE:"):
+            result.append(
+                f"> **NOTE:** {link_pattern.sub(link_replacer, line[5:].strip())}"
+            )
+
+        # [IMPORTANT] block
         elif (
-            line == "[IMPORTANT]"
+            line.strip() == "[IMPORTANT]"
             and i + 1 < len(lines)
             and lines[i + 1].strip() == "===="
         ):
@@ -189,10 +169,81 @@ def asciidoc_to_markdown(value: str) -> str:
                 i += 1
             result.append("> **IMPORTANT:** " + " ".join(important_lines))
 
+        # [source] blocks
+        elif line.startswith("[source"):
+            language = ""
+            # Extract just the language before the first comma
+            lang_match = re.match(r"\[source\s*,?\s*([a-zA-Z0-9_+-]+)?", line)
+            if lang_match:
+                language = lang_match.group(1) or ""
+
+            if i + 1 < len(lines) and lines[i + 1].strip() in ("----", "...."):
+                fence = lines[i + 1].strip()
+                i += 2
+                code_lines = []
+                while i < len(lines) and lines[i].strip() != fence:
+                    code_lines.append(lines[i])
+                    i += 1
+
+                result.append(f"```{language}".strip())
+                result.extend(code_lines)
+                result.append("```")
+
+        # Code block without [source]
+        elif line.strip() in ("----", "...."):
+            fence = line.strip()
+            i += 1
+            code_lines = []
+            while i < len(lines) and lines[i].strip() != fence:
+                code_lines.append(lines[i])
+                i += 1
+            result.append("```")
+            result.extend(code_lines)
+            result.append("```")
+
+        # Table with |===
+        elif line.strip() == "|===":
+            i += 1
+            table_rows = []
+            while i < len(lines) and lines[i].strip() != "|===":
+                table_line = lines[i].strip()
+                if table_line.startswith("|"):
+                    cells = [cell.strip() for cell in table_line.lstrip("|").split("|")]
+                    table_rows.append(cells)
+                i += 1
+
+            if table_rows:
+                header = "| " + " | ".join(table_rows[0]) + " |"
+                separator = "| " + " | ".join(["---"] * len(table_rows[0])) + " |"
+                result.append(header)
+                result.append(separator)
+                for row in table_rows[1:]:
+                    result.append("| " + " | ".join(row) + " |")
+
+        # Skip AsciiDoc block attributes like [cols=...], [width=...], [options=...], etc.
+        elif re.match(
+            r"^\[(cols|width|options|grid|frame|stripes|halign|valign|%|role|.*)=.*\]$",
+            line,
+        ):
+            pass
+
+        # Handle AsciiDoc block titles like `.Some Title`
+        elif re.match(r"^\.(?!\d+\s)(.+)$", line):
+            block_title = re.match(r"^\.(.+)$", line).group(1).strip()
+            result.append(f"**{block_title}**")
+
+        # Unordered List (* -> -)
+        elif line.strip().startswith("* "):
+            result.append("- " + line.strip()[2:])
+
+        # Ordered List (. or 1. 2. etc.)
+        elif re.match(r"^\.\s+.+", line):
+            result.append("1. " + line.strip()[2:])
+        elif re.match(r"^\d+\.\s+.+", line):
+            result.append(line.strip())
+
         else:
-            # Convert AsciiDoc links to Markdown links
-            line = link_pattern.sub(link_replacer, line)
-            result.append(line)
+            result.append(link_pattern.sub(link_replacer, line.strip()))
 
         i += 1
 
@@ -241,6 +292,7 @@ def render_template(
     template_dir: str,
     misc_dir: str,
     logo_dir: str,
+    output_format: str = "adoc",
 ) -> None:
     """
     Renders the template with the provided parameters and writes the output to a file.
@@ -272,6 +324,7 @@ def render_template(
 
     styles_dir: Path = Path(misc_dir).absolute()
     images_dir: Path = Path(logo_dir).absolute()
+    acronyms_file: Path = Path(config["includes_dir"], "acronyms.yaml").absolute()
 
     env.filters["group_ulify"] = group_ulify
     env.filters["include_replace"] = replace_include_with_file_content
@@ -282,7 +335,7 @@ def render_template(
         Macsecurityrule.mobileconfig_info_to_xml
     )
 
-    if output_file.suffix == ".md":
+    if output_format == "markdown":
         env.filters["group_ulify"] = group_ulify_md
         env.filters["render_rules"] = render_rules_md
         env.filters["asciidoc_to_markdown"] = asciidoc_to_markdown
@@ -290,6 +343,7 @@ def render_template(
     template: Template = env.get_template(template_name)
 
     baseline_dict: dict[str, Any] = baseline.model_dump()
+    acronyms_data: dict[str, Any] = open_file(acronyms_file)
 
     html_title, html_subtitle = map(str.strip, baseline.title.split(":", 1))
     document_subtitle2: str = ":document-subtitle2:"
@@ -315,12 +369,15 @@ def render_template(
         version=version_info.get("compliance_version", None),
         release_date=version_info.get("date", None),
         custom=custom,
+        format=output_format,
+        acronyms=acronyms_data.get("acronyms", []),
+        terminology=acronyms_data.get("terminology", []),
     )
 
     output_file.write_text(rendered_output)
 
 
-def generate_asciidoc_documents(
+def generate_documents(
     output_file: Path,
     baseline: Baseline,
     b64logo: bytes,
@@ -330,36 +387,20 @@ def generate_asciidoc_documents(
     version_info: dict[str, Any],
     show_all_tags: bool = False,
     custom: bool = False,
+    output_format: str = "adoc",
 ) -> None:
-    """
-    Generates AsciiDoc documentation based on the provided baseline and other parameters.
-
-    Args:
-        output_file (Path): The path to the output file where the generated document will be saved.
-        baseline (Baseline): The baseline object containing the data to be included in the document.
-        b64logo (bytes): The base64 encoded logo to be included in the document.
-        pdf_theme (str): The theme to be used for the PDF generation.
-        logo_path (Path): The path to the logo file.
-        os_name (str): The name of the operating system.
-        version_info (dict[str, Any]): A dictionary containing version information.
-        show_all_tags (bool, optional): Flag to indicate whether to show all tags. Defaults to False.
-        custom (bool, optional): Flag to indicate whether to use custom templates and styles. Defaults to False.
-
-    Returns:
-        None
-    """
-    template_dir: str = config["defaults"]["adoc_templates_dir"]
+    template_dir: str = config["defaults"]["documents_templates_dir"]
     misc_dir: str = config["defaults"]["misc_dir"]
     logo_dir: str = config["defaults"]["images_dir"]
 
     if custom:
-        template_dir = config["custom"]["adoc_templates_dir"]
+        template_dir = config["custom"]["documents_templates_dir"]
         misc_dir = config["custom"]["misc_dir"]
         logo_dir = config["custom"]["images_dir"]
 
     render_template(
         output_file,
-        "main.adoc.jinja",
+        "main.jinja",
         baseline,
         b64logo,
         pdf_theme,
@@ -371,97 +412,36 @@ def generate_asciidoc_documents(
         template_dir,
         misc_dir,
         logo_dir,
+        output_format,
     )
 
-    gems_asciidoctor: Path = Path("mscp_gems/bin/asciidoctor")
-    gems_asciidoctor_pdf: Path = Path("mscp_gems/bin/asciidoctor-pdf")
+    if output_format == "adoc":
+        gems_asciidoctor: Path = Path("mscp_gems/bin/asciidoctor")
+        gems_asciidoctor_pdf: Path = Path("mscp_gems/bin/asciidoctor-pdf")
 
-    output, error = run_command("which asciidoctor")
-    logger.debug(f"which asciidoctor output: {output}, error: {error}")
-
-    if not output:
-        if not gems_asciidoctor.exists():
-            logger.error("Asciidoctor not installed!!")
-            sys.exit()
-
-    output, error = run_command(f"bundle exec asciidoctor {output_file}")
-    if error:
-        logger.error(f"Error converting to ADOC: {error}")
-        sys.exit()
-
-    if not show_all_tags:
-        output, error = run_command("which asciidoctor-pdf")
-        logger.debug(f"which asciidoctor-pdf output: {output}, error: {error}")
+        output, error = run_command("which asciidoctor")
+        logger.debug(f"which asciidoctor output: {output}, error: {error}")
 
         if not output:
-            if not gems_asciidoctor_pdf.exists():
+            if not gems_asciidoctor.exists():
                 logger.error("Asciidoctor not installed!!")
                 sys.exit()
 
-        output, error = run_command(f"bundle exec asciidoctor-pdf {output_file}")
+        output, error = run_command(f"bundle exec asciidoctor {output_file}")
         if error:
             logger.error(f"Error converting to ADOC: {error}")
             sys.exit()
 
+        if not show_all_tags:
+            output, error = run_command("which asciidoctor-pdf")
+            logger.debug(f"which asciidoctor-pdf output: {output}, error: {error}")
 
-def generate_markdown_documents(
-    output_file: Path,
-    baseline: Baseline,
-    b64logo: bytes,
-    pdf_theme: str,
-    logo_path: Path,
-    os_name: str,
-    version_info: dict[str, Any],
-    show_all_tags: bool = False,
-    custom: bool = False,
-) -> None:
-    """
-    Generates Markdown documentation based on the provided baseline and other parameters.
+            if not output:
+                if not gems_asciidoctor_pdf.exists():
+                    logger.error("Asciidoctor not installed!!")
+                    sys.exit()
 
-    Args:
-        output_file (Path): The path to the output file where the generated document will be saved.
-        baseline (Baseline): The baseline object containing the data to be included in the document.
-        b64logo (bytes): The base64 encoded logo to be included in the document.
-        pdf_theme (str): The theme to be used for the PDF generation.
-        logo_path (Path): The path to the logo file.
-        os_name (str): The name of the operating system.
-        version_info (dict[str, Any]): A dictionary containing version information.
-        show_all_tags (bool, optional): Flag to indicate whether to show all tags. Defaults to False.
-        custom (bool, optional): Flag to indicate whether to use custom templates and styles. Defaults to False.
-
-    Returns:
-        None
-    """
-    template_dir = config["defaults"]["md_templates_dir"]
-    misc_dir = config["defaults"]["misc_dir"]
-    logo_dir: str = config["defaults"]["images_dir"]
-
-    # html_path = output_file.with_suffix(".html")
-
-    if custom:
-        template_dir = config["custom"]["md_templates_dir"]
-        misc_dir = config["custom"]["misc_dir"]
-        logo_dir = config["custom"]["images_dir"]
-
-    render_template(
-        output_file,
-        "main.md.jinja",
-        baseline,
-        b64logo,
-        pdf_theme,
-        logo_path,
-        os_name,
-        version_info,
-        show_all_tags,
-        custom,
-        template_dir,
-        misc_dir,
-        logo_dir,
-    )
-
-    # logger.debug("Converting Markdown to HTML")
-    # html = markdown2.markdown(
-    #     output_file.read_text(), extras=["fenced-code-blocks", "tables", "admonitions"]
-    # )
-    # html_path.write_text(html)
-    # logger.success(f"HTML file generated: {html_path}")
+            output, error = run_command(f"bundle exec asciidoctor-pdf {output_file}")
+            if error:
+                logger.error(f"Error converting to ADOC: {error}")
+                sys.exit()

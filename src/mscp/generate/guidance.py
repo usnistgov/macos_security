@@ -19,10 +19,9 @@ from ..common_utils import (
 )
 from ..common_utils.logger_instance import logger
 from ..generate.guidance_support import (
-    generate_asciidoc_documents,
     generate_ddm,
+    generate_documents,
     generate_excel,
-    generate_markdown_documents,
     generate_profiles,
     generate_script,
 )
@@ -174,7 +173,7 @@ def generate_guidance(args: argparse.Namespace) -> None:
         # generate_excel(spreadsheet_output_file, baseline)
 
         logger.info("Generating markdown documents")
-        generate_markdown_documents(
+        generate_documents(
             md_output_file,
             baseline,
             b64logo,
@@ -184,9 +183,10 @@ def generate_guidance(args: argparse.Namespace) -> None:
             current_version_data,
             show_all_tags,
             custom,
+            output_format="markdown",
         )
 
-    generate_asciidoc_documents(
+    generate_documents(
         adoc_output_file,
         baseline,
         b64logo,

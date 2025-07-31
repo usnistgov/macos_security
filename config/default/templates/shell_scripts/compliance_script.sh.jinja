@@ -193,7 +193,7 @@ compliance_count(){
     if [[ $finding == "false" ]]; then
       compliant=$((compliant + 1))
     elif [[ $finding == "true" ]]; then
-      is_exempt=$(/usr/bin/osascript -l JavaScript -e "ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.$baseline_name.audit').objectForKey('$rule_id'))['exempt']")
+      is_exempt=$(/usr/bin/osascript -l JavaScript -e "ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.$baseline_name.audit').objectForKey('$rule'))['exempt']")
 
       if [[ $is_exempt == "1" ]]; then
         exempt_count=$((exempt_count + 1))

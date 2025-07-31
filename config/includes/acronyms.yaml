@@ -1,0 +1,109 @@
+acronyms:
+  - term: AIP
+    definition: Azure Information Protection
+  - term: ATO
+    definition: Authorization to Operate
+  - term: BYOD
+    definition: Bring Your Own Device
+  - term: CAC
+    definition: Common Access Card
+  - term: CM
+    definition: Configuration Management
+  - term: COPE
+    definition: Corporate Owned Personally Enabled
+  - term: CSP
+    definition: Cloud Solution Provider
+  - term: DADMS
+    definition: DON Application and Database Management System
+  - term: DBCAC
+    definition: Defense Business Cybersecurity Assessment Criteria
+  - term: DCP
+    definition: Dynamic Control Plane
+  - term: DEE
+    definition: DoD Enterprise Email
+  - term: DFARS
+    definition: Defense Federal Acquisition Regulation Supplement
+  - term: DISA
+    definition: Defense Information Systems Agency
+  - term: DISN
+    definition: Defense Information Systems Network
+  - term: DLP
+    definition: Data Loss Prevention
+  - term: DON
+    definition: Department of the Navy
+  - term: DRS
+    definition: Dynamic Role Switching
+  - term: EMM
+    definition: Enterprise Mobility Management
+  - term: ESI
+    definition: Enterprise Software Initiative
+  - term: ESS
+    definition: Enterprise Software Solutions
+  - term: FIPS
+    definition: Federal Information Processing Standard
+  - term: GFE
+    definition: Government Furnished Equipment
+  - term: GOTS
+    definition: Government Off-the-Shelf
+  - term: IATT
+    definition: Interim Authorization to Test
+  - term: IAVM
+    definition: Information Assurance Vulnerability Management
+  - term: ICAM
+    definition: Identity, Credential, and Access Management
+  - term: IL5
+    definition: Impact Level 5
+  - term: Intune
+    definition: Microsoft Endpoint Manager
+  - term: iOS
+    definition: iPhone Operating System
+  - term: ITSM
+    definition: Information Technology Service Management
+  - term: JAMF
+    definition: Joint Apple Management Framework
+  - term: MAM
+    definition: Mobile Application Management
+  - term: MDM
+    definition: Mobile Device Management
+  - term: MEM
+    definition: Microsoft Endpoint Manager
+  - term: MFA
+    definition: Multi-Factor Authentication
+  - term: MHS
+    definition: Military Health System
+  - term: NIPR
+    definition: Non-classified Internet Protocol Router Network
+  - term: NIST
+    definition: National Institute of Standards and Technology
+  - term: O365
+    definition: Microsoft Office 365
+  - term: OCM
+    definition: Organizational Change Management
+  - term: PII
+    definition: Personally Identifiable Information
+  - term: PKI
+    definition: Public Key Infrastructure
+  - term: SaaS
+    definition: Software as a Service
+  - term: SCAP
+    definition: Security Content Automation Protocol
+  - term: SECNAV
+    definition: Secretary of the Navy
+  - term: SORN
+    definition: System of Records Notice
+  - term: STIG
+    definition: Security Technical Implementation Guide
+  - term: UEM
+    definition: Unified Endpoint Management
+  - term: URL
+    definition: Uniform Resource Locator
+  - term: VPN
+    definition: Virtual Private Network
+  - term: VPP
+    definition: Volume Purchase Program
+
+terminology:
+  - term: Baseline
+    definition: A baseline is a predefined set of controls (also referred to as "a catalog" of settings) that address the protection needs of an organization's information systems. A baseline serves as a starting point for the creation of security benchmarks.
+  - term: Benchmark
+    definition: Benchmarks are a defined list of settings with values that an organization has defined.

@@ -73,7 +73,7 @@ platforms:
             integer: $ODV
     enforcement_info:
       check:
-        shell: /usr/sbin/sshd -G | /usr/bin/awk '/channeltimeout/{print $2}'
+        shell: /usr/sbin/sshd -G | /usr/bin/awk -F "=" '/channeltimeout session:*/{print $2}'
         result:
           string: $ODV
       fix:

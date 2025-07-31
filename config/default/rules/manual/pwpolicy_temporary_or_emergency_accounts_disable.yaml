@@ -66,7 +66,10 @@ platforms:
 
           To check if the password policy is configured to disable a temporary or emergency account after 72 hours, run the following command to output the password policy to the screen, substituting the correct user name in place of username:
 
+          [source,bash]
+          ----
           /usr/bin/pwpolicy -u username getaccountpolicies | tail -n +2
+          ----
 
           If there is no output, and password policy is not controlled by a directory service, this is a finding.
 
@@ -88,7 +91,7 @@ platforms:
             <array>
               <dict>
                 <key>policyContent</key>
-                <string>policyAttributeCurrentTime &lt; policyAttributeCreationTime+259299</string>
+                <string>policyAttributeCurrentTime < policyAttributeCreationTime+259299</string>
                 <key>policyIdentifier</key>
                 <string>Disable Tmp Accounts </string>
               </dict>

@@ -17,9 +17,6 @@ from .generate import (
     generate_mapping,
 )
 
-# Additional python modules
-
-
 logger.enable("mscp")
 logger = set_logger()
 logger.info("=== Logging Initialized ===")
@@ -51,6 +48,15 @@ def validate_file(arg: str) -> Path | None:
 
 
 def parse_cli() -> None:
+    parent_parser = Customparser()
+    parent_parser.add_argument(
+        "-D",
+        "--debug",
+        required=False,
+        help="Enable debug output.",
+        action="store_true",
+    )
+
     parser = Customparser(
         description="CLI tool for managing baseline and compliance documents.",
         prog="mscp",
@@ -72,14 +78,6 @@ def parse_cli() -> None:
     )
 
     parser.add_argument(
-        "-D",
-        "--debug",
-        required=False,
-        help="Enable debug output.",
-        action="store_true",
-    )
-
-    parser.add_argument(
         "-V",
         "--version",
         action="version",
@@ -98,6 +96,8 @@ def parse_cli() -> None:
     baseline_parser: argparse.ArgumentParser = subparsers.add_parser(
         "baseline",
         help="Given a keyword tag, generate a generic baseline.yaml file containing rules with the tag.",
+        parents=[parent_parser],
+        add_help=False,
     )
     baseline_parser.set_defaults(func=generate_baseline)
     baseline_parser.add_argument(
@@ -127,7 +127,10 @@ def parse_cli() -> None:
 
     # 'guidance' subcommand
     guidance_parser: argparse.ArgumentParser = subparsers.add_parser(
-        "guidance", help="Given a baseline, create guidance documents and files."
+        "guidance",
+        help="Given a baseline, create guidance documents and files.",
+        parents=[parent_parser],
+        add_help=False,
     )
     guidance_parser.set_defaults(func=generate_guidance)
     guidance_parser.add_argument(
@@ -214,6 +217,8 @@ def parse_cli() -> None:
     mapping_parser: argparse.ArgumentParser = subparsers.add_parser(
         "mapping",
         help="Easily generate custom rules from compliance framework mappings",
+        parents=[parent_parser],
+        add_help=False,
     )
     mapping_parser.set_defaults(func=generate_mapping)
     mapping_parser.add_argument(
@@ -234,6 +239,8 @@ def parse_cli() -> None:
     scap_parser: argparse.ArgumentParser = subparsers.add_parser(
         "scap",
         help="Easily generate xccdf, oval, or scap datastream. If no option is defined, it will generate an scap datastream file.",
+        parents=[parent_parser],
+        add_help=False,
     )
     # scap_parser.set_defaults(func=parser.print_help)
     scap_parser.add_argument(
@@ -267,7 +274,10 @@ def parse_cli() -> None:
     )
 
     local_report_parser: argparse.ArgumentParser = subparsers.add_parser(
-        "local_report", help="Creates local report in Excel format."
+        "local_report",
+        help="Creates local report in Excel format.",
+        parents=[parent_parser],
+        add_help=False,
     )
     local_report_parser.set_defaults(func=generate_local_report)
     local_report_parser.add_argument(
@@ -282,7 +292,10 @@ def parse_cli() -> None:
     )
 
     checklist_parser: argparse.ArgumentParser = subparsers.add_parser(
-        "stig_checklist", help="Creates DISA STIG Checklist"
+        "stig_checklist",
+        help="Creates DISA STIG Checklist",
+        parents=[parent_parser],
+        add_help=False,
     )
     checklist_parser.set_defaults(func=generate_checklist)
     checklist_parser.add_argument(
@@ -315,7 +328,10 @@ def parse_cli() -> None:
     )
 
     validate_parser: argparse.ArgumentParser = subparsers.add_parser(
-        "validate", help="Validates the YAML files in the rules directory."
+        "validate",
+        help="Validates the YAML files in the rules directory.",
+        parents=[parent_parser],
+        add_help=False,
     )
     validate_parser.set_defaults(func=validate_yaml_file)
 
