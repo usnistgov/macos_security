@@ -8,8 +8,7 @@ from typing import Any
 
 # Local python modules
 from ...classes import Baseline, Macsecurityrule, Payload
-from ...common_utils import config, make_dir, open_yaml, run_command
-from ...common_utils.logger_instance import logger
+from ...common_utils import config, logger, make_dir, open_file, run_command
 
 
 def get_payload_content_by_type(
@@ -111,7 +110,7 @@ def generate_profiles(
     plist_output_path: Path = Path(build_path, "mobileconfigs", "preferences")
     create_date: date = date.today()
 
-    manifests_file: dict = open_yaml(
+    manifests_file: dict = open_file(
         Path(config.get("includes_dir", ""), "supported_payloads.yaml")
     )
 

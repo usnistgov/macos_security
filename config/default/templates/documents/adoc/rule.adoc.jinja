@@ -4,10 +4,10 @@
 {% set fix_shell = rule | get_nested(["platforms", rule.os_type, "enforcement_info", "fix", "shell"]) %}
 === {{ rule.title }}
 
-{% if not "supplemental" in rule.tags %}
-{{ rule.discussion }}
-{% else %}
+{% if rule.tags is defined or rule.tags is not none  and "supplemental" in rule.tags %}
 {{ rule.discussion | include_replace }}
+{% else %}
+{{ rule.discussion }}
 {% endif %}
 
 {% if rule.mechanism == "manual" %}
@@ -15,8 +15,9 @@
 {% endif -%}
 
 {% if not rule.tags | select('in', check_tags) | list %}
-{% if not "supplemental" in rule.tags %}
-{% if rule.os_type == "macOS" %}
+{# {% if not "supplemental" in rule.tags %} #}
+{% if rule.tags is not defined or rule.tags is none or "supplemental" not in rule.tags %}
+{% if rule.os_name == "macos" %}
 To check the state of the system, run the following command(s):
 [source,bash,options="nowrap"]
 ----
@@ -30,7 +31,9 @@ To check the state of the system, run the following command(s):
 {{ rule.check if rule.check is not none }}
 {% endif %}
 
-If the result is not *{{ rule.result_value }}*, this is a finding.
+{% if rule.os_name == "macos" %}
+If the result is not _{{ rule.result_value }}_, this is a finding.
+{% endif %}
 
 ====
 **Remediation Description**
@@ -64,7 +67,14 @@ To check the state of the system, run the following command(s):
 ----
 {% endif %}
 {% else %}
+{% if rule.os_name == "macos" %}
 {{ rule.fix }}
+{% else %}
+[source,xml]
+----
+{{ rule.mobileconfig_info | mobileconfig_payloads_to_xml -}}
+----
+{% endif %}
 {% endif %}
 {% endif %}
 ====
@@ -99,7 +109,7 @@ ifdef::show_STIG[]
 !DISA STIG(s)
 !
 {{ rule.references.disa.disa_stig | render_rules if rule.references.disa.disa_stig is not none }}
-{% if rule | get_nested(["references", "disa", "sfr"]) %}
+{% if rule.references.disa.sfr is not none %}
 !SFR
 !
 {{ rule.references.disa.sfr | render_rules if rule.references.disa.sfr is not none }}
@@ -128,7 +138,7 @@ ifdef::show_CMMC[]
 {{ rule.references.disa.cmmc | render_rules if rule.references.disa.cmmc is not none }}
 endif::[]
 
-{% if rule | get_nested(["references", "nist", "cce"]) %}
+{% if rule.references.nist.cce is not none %}
 !CCE
 !
 {{ rule.references.nist.cce | render_rules if rule.references.nist.cce is not none }}

@@ -26,12 +26,12 @@ IMPORTANT: This release is a major update and includes breaking changes. Please 
 * All document creation has been moved to a Jinja template
 * Add debug and version switch to CLI
 * Add markdown switch to guidance CLI
-* Add generate_markdown_documents function for handleing markdown guidance generation
-* Add generate_asciidoc_documents function for handling asciidoc guidance generation
+* Add generate_documents function for handleing markdown and asciidoc guidance generation
 * Add render_template function for rendering Jinja templates for document generation
 
 === Rules
 * All rules updated to support the new API
+* All ios_stig rules have been modified to be just disa_stig with baseline logic to support the correct OS
 
 === Baselines
 * All baselines updated to support the new API
@@ -44,6 +44,7 @@ IMPORTANT: This release is a major update and includes breaking changes. Please 
 
 === Miscellaneous
 * Refactored mscp-data to support better baseline generation
+* Created a mscp_data variable to store throughout the codebase
 
 == [Sequoia, Revision 1.1] - 2024-12-16
 * Rules

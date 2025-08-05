@@ -47,7 +47,7 @@ platforms:
       supervised: true
       benchmarks:
         - name: cis_lvl2_enterprise
-        - name: ios_stig
+        - name: disa_stig
           severity: medium
         - name: indigo_high
           severity: medium
@@ -55,7 +55,7 @@ platforms:
       supervised: true
       benchmarks:
         - name: cis_lvl2_enterprise
-        - name: ios_stig
+        - name: disa_stig
           severity: medium
         - name: indigo_high
           severity: medium
@@ -63,7 +63,7 @@ platforms:
       supervised: true
       benchmarks:
         - name: cis_lvl2_enterprise
-        - name: ios_stig
+        - name: disa_stig
           severity: medium
     introduced: '13.0'
 tags:

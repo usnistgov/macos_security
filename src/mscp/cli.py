@@ -7,8 +7,7 @@ from pathlib import Path
 
 # Local python modules
 from . import __version__
-from .common_utils import set_logger, validate_yaml_file
-from .common_utils.logger_instance import logger
+from .common_utils import logger, set_logger, validate_yaml_file
 from .generate import (
     generate_baseline,
     generate_checklist,
@@ -16,11 +15,6 @@ from .generate import (
     generate_local_report,
     generate_mapping,
 )
-
-logger.enable("mscp")
-logger = set_logger()
-logger.info("=== Logging Initialized ===")
-logger.info("LOGGING LEVEL: WARNING")
 
 
 class Customparser(argparse.ArgumentParser):
@@ -344,7 +338,6 @@ def parse_cli() -> None:
 
     try:
         args = parser.parse_args()
-
     except argparse.ArgumentError as e:
         logger.error("Argument Error: {}", e)
         parser.print_help()
@@ -376,14 +369,20 @@ def parse_cli() -> None:
         logger.warning("visionOS is not supported at this time.")
         sys.exit()
 
-    if args.os_name != "macos" and args.script:
-        logger.error(
-            "Compliance script generation is only supported for macOS. Please remove the --script flag."
-        )
-        sys.exit()
+    if args.subcommand == "guidance":
+        if args.os_name != "macos" and args.script:
+            logger.error(
+                "Compliance script generation is only supported for macOS. Please remove the --script flag."
+            )
+            sys.exit()
 
     args.func(args)
 
 
 if __name__ == "__main__":
+    logger.enable("mscp")
+    logger = set_logger()
+    logger.info("=== Logging Initialized ===")
+    logger.info("LOGGING LEVEL: WARNING")
+
     sys.exit(parse_cli())

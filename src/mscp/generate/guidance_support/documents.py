@@ -14,8 +14,7 @@ from jinja2 import Environment, FileSystemLoader, Template
 
 # Local python modules
 from ...classes import Baseline, Macsecurityrule
-from ...common_utils import config, open_file, run_command
-from ...common_utils.logger_instance import logger
+from ...common_utils import config, logger, open_file, run_command
 
 
 def group_ulify(elements: list[str]) -> str:
@@ -329,7 +328,6 @@ def render_template(
     env.filters["group_ulify"] = group_ulify
     env.filters["include_replace"] = replace_include_with_file_content
     env.filters["render_rules"] = render_rules
-    env.filters["convert_source_blocks"] = convert_source_blocks
     env.filters["get_nested"] = get_nested
     env.filters["mobileconfig_payloads_to_xml"] = (
         Macsecurityrule.mobileconfig_info_to_xml

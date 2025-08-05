@@ -10,8 +10,7 @@ from jinja2 import Environment, FileSystemLoader
 
 # Local python modules
 from ...classes import Baseline
-from ...common_utils import config, create_file, make_dir
-from ...common_utils.logger_instance import logger
+from ...common_utils import config, create_file, logger, make_dir
 
 
 def group_ulify(elements: list[str]) -> str:

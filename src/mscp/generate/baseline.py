@@ -3,32 +3,138 @@
 # Standard python modules
 import argparse
 import sys
+from collections import defaultdict
 from pathlib import Path
 from typing import Any
 
 # Local python modules
 from ..classes import Author, Baseline, Macsecurityrule
-from ..common_utils import config, make_dir, open_file, sanitize_input
-from ..common_utils.logger_instance import logger
+from ..common_utils import (
+    config,
+    logger,
+    make_dir,
+    mscp_data,
+    open_file,
+    sanitize_input,
+)
+
+
+def collect_tags_and_benchmarks(
+    rules: list[Macsecurityrule],
+) -> tuple[list[str], dict[str, set[str]]]:
+    tags_set: set[str] = set()
+    benchmark_platforms: dict[str, set[str]] = defaultdict(set)
+
+    for rule in rules:
+        for tag in rule.tags or []:
+            tags_set.add(tag)
+
+        for os_type, versions in (rule.platforms or {}).items():
+            if not isinstance(versions, dict):
+                continue
+            for version_info in versions.values():
+                if not isinstance(version_info, dict):
+                    continue
+                for benchmark in version_info.get("benchmarks", []):
+                    if isinstance(benchmark, dict) and isinstance(
+                        benchmark.get("name"), str
+                    ):
+                        benchmark_platforms[benchmark["name"]].add(os_type)
+
+    return sorted(tags_set), benchmark_platforms
+
+
+def print_keyword_summary(
+    tags: list[str], benchmark_platforms: dict[str, set[str]]
+) -> None:
+    logger.debug(tags)
+    logger.debug(benchmark_platforms)
+
+    print("Available keywords (tags and benchmarks):\n")
+
+    print("Tags (applicable to all platforms):")
+    for tag in sorted(tags):
+        print(f"  {tag}")
+    print()
+
+    print("Benchmarks (platform-specific):")
+    for benchmark in sorted(benchmark_platforms):
+        platforms_str = ", ".join(sorted(benchmark_platforms[benchmark]))
+        print(f"  {benchmark} (Platforms: {platforms_str})")
+    print()
+
+    print("Special keywords:")
+    print("  all_rules")
+
+    sys.exit()
+
+
+def rule_has_benchmark_for_version(
+    rule: Macsecurityrule, keyword: str, os_type: str, os_version: str
+) -> bool:
+    os_type = os_type.replace("os", "OS")
+    platforms = rule.platforms or {}
+    version_map = platforms.get(os_type, {})
+    if not isinstance(version_map, dict):
+        return False
+
+    version_info = version_map.get(os_version)
+    if not isinstance(version_info, dict):
+        return False
+
+    for benchmark in version_info.get("benchmarks", []):
+        if isinstance(benchmark, dict) and benchmark.get("name") == keyword:
+            return True
+
+    return False
 
 
 def generate_baseline(args: argparse.Namespace) -> None:
     build_path: Path = Path(config.get("output_dir", ""), "baselines")
     baseline_output_file: Path = build_path / f"{args.keyword}.yaml"
-    mscp_data: dict[str, Any] = open_file(Path(config.get("mspc_data", "")))
     baselines_data: dict = open_file(
         Path(config.get("includes_dir", ""), "800-53_baselines.yaml")
     )
     established_benchmarks: tuple[str, ...] = ("stig", "cis_lvl1", "cis_lvl2")
+    misc_tags: tuple[str, str, str, str] = (
+        "permanent",
+        "inherent",
+        "n_a",
+        "not_applicable",
+    )
     benchmark: str = "recommended"
     full_title: str = args.keyword
     authors: list[Author] = []
     baseline_name: str | None = None
 
     def replace_vars(text: str) -> str:
-        return text.replace("$os_type", str(args.os_name.replace("os", "OS"))).replace(
-            "$os_version", str(args.os_version)
+        os_list = (
+            mscp_data.get("versions", {}).get("platforms", {}).get(args.os_name, [])
         )
+
+        for entry in os_list:
+            if entry.get("os_version") == args.os_version:
+                os_name = entry.get("os_name").capitalize()
+
+        match args.os_name:
+            case "macos":
+                clean_text = (
+                    text.replace("$os_type", "macOS")
+                    .replace("$os_version", str(args.os_version))
+                    .replace("$os_name", os_name)
+                )
+            case "ios":
+                clean_text = (
+                    text.replace("($os_name) ", "")
+                    .replace("$os_type", "iOS/iPadOS")
+                    .replace("$os_version", str(args.os_version))
+                )
+            case "visionos":
+                clean_text = text.replace("$os_type", "visionOS").replace(
+                    "$os_version", str(args.os_version)
+                )
+
+        return clean_text
 
     if not build_path.exists():
         make_dir(build_path)
@@ -37,22 +143,10 @@ def generate_baseline(args: argparse.Namespace) -> None:
         args.os_name, args.os_version, parent_values="Default"
     )
 
-    all_tags: list[str] = sorted(
-        set(
-            tag
-            for rule in all_rules
-            for tag in (rule.tags or [])
-            if "800-53r4" not in tag
-        )
-        | {"all_rules"}
-    )
+    all_tags, benchmark_map = collect_tags_and_benchmarks(all_rules)
 
     if args.list_tags:
-        logger.debug(all_tags)
-        for tag in all_tags:
-            print(tag)
-
-        sys.exit()
+        print_keyword_summary(all_tags, benchmark_map)
 
     if args.controls:
         included_controls: list[str] = sorted(
@@ -79,21 +173,23 @@ def generate_baseline(args: argparse.Namespace) -> None:
         logger.info(
             "No rules found for the keyword provided, please verify from the following list:"
         )
-        logger.debug(all_tags)
-        for tag in all_tags:
-            print(tag)
-
-        sys.exit()
+        print_keyword_summary(all_tags, benchmark_map)
 
     baseline_dict: dict[str, Any] = mscp_data.get("baselines", {}).get(args.keyword, {})
 
     if not baseline_dict:
         logger.warning(f"No baseline found for keyword: {args.keyword}")
+        print_keyword_summary(all_tags, benchmark_map)
 
-    found_rules: list[Macsecurityrule] = [
+    found_rules = [
         rule
         for rule in all_rules
-        if args.keyword in rule.tags or args.keyword == "all_rules"
+        if rule_has_benchmark_for_version(
+            rule, args.keyword, args.os_name, str(args.os_version)
+        )
+        or (rule.tags is not None and args.keyword in rule.tags)
+        or any(item in misc_tags for item in rule.tags or [])
+        or args.keyword == "all_rules"
     ]
 
     baseline_dict["title"] = replace_vars(baseline_dict["title"])
@@ -109,6 +205,15 @@ def generate_baseline(args: argparse.Namespace) -> None:
     ]
 
     baseline_dict.pop("authors", None)
+
+    if args.keyword == "disa_stig":
+        match args.os_name:
+            case "macos":
+                name = "Marco Piñeyro"
+            case "ios":
+                name = "Aaron Kegerreis"
+
+        authors[:] = [author for author in authors if author.name != name]
 
     if args.tailor:
         full_title = ""

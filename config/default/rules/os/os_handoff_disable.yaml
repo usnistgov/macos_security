@@ -107,7 +107,7 @@ platforms:
       benchmarks:
         - name: cis_lvl2_byod
         - name: cis_lvl2_enterprise
-        - name: ios_stig
+        - name: disa_stig
           severity: low
         - name: indigo_base
           severity: low
@@ -118,7 +118,7 @@ platforms:
       benchmarks:
         - name: cis_lvl2_byod
         - name: cis_lvl2_enterprise
-        - name: ios_stig
+        - name: disa_stig
           severity: low
         - name: indigo_base
           severity: low
@@ -129,7 +129,7 @@ platforms:
       benchmarks:
         - name: cis_lvl2_byod
         - name: cis_lvl2_enterprise
-        - name: ios_stig
+        - name: disa_stig
           severity: low
     introduced: '8.0'
   visionOS:

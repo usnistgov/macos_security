@@ -47,7 +47,7 @@ platforms:
     '16.0':
       supervised: false
       benchmarks:
-        - name: ios_stig
+        - name: disa_stig
           severity: medium
     introduced: '5.0'
 tags:

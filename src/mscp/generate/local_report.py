@@ -16,8 +16,7 @@ from openpyxl.chart.legend import Legend
 from openpyxl.styles import Alignment
 
 # Local python modules
-from ..common_utils import config, open_file, sanitize_input
-from ..common_utils.logger_instance import logger
+from ..common_utils import config, logger, open_file, sanitize_input
 
 
 def generate_local_report(args: argparse.Namespace) -> None:

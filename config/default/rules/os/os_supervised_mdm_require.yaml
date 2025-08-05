@@ -31,15 +31,15 @@ platforms:
   iOS:
     '18.0':
       benchmarks:
-        - name: ios_stig
+        - name: disa_stig
           severity: medium
     '17.0':
       benchmarks:
-        - name: ios_stig
+        - name: disa_stig
           severity: medium
     '16.0':
       benchmarks:
-        - name: ios_stig
+        - name: disa_stig
           severity: medium
 tags:
   - manual

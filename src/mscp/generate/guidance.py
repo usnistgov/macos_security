@@ -13,11 +13,12 @@ from ..classes import Baseline
 from ..common_utils import (
     config,
     get_version_data,
+    logger,
     make_dir,
+    mscp_data,
     remove_dir_contents,
     run_command,
 )
-from ..common_utils.logger_instance import logger
 from ..generate.guidance_support import (
     generate_ddm,
     generate_documents,
@@ -66,7 +67,7 @@ def generate_guidance(args: argparse.Namespace) -> None:
     show_all_tags: bool = False
 
     current_version_data: dict[str, Any] = get_version_data(
-        args.os_name, args.os_version
+        args.os_name, args.os_version, mscp_data
     )
 
     output_basename: str = args.baseline.name
@@ -143,7 +144,7 @@ def generate_guidance(args: argparse.Namespace) -> None:
 
     if args.markdown:
         logger.info("Generating markdown documents")
-        generate_markdown_documents(
+        generate_documents(
             md_output_file,
             baseline,
             b64logo,
@@ -153,6 +154,7 @@ def generate_guidance(args: argparse.Namespace) -> None:
             current_version_data,
             show_all_tags,
             custom,
+            output_format="markdown",
         )
 
     if args.all:

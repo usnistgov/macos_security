@@ -18,8 +18,7 @@ from lxml.etree import Element, XMLParser, fromstring
 
 # Local python modules
 from ..classes import Baseline
-from ..common_utils import config, create_file, create_json, open_file
-from ..common_utils.logger_instance import logger
+from ..common_utils import config, create_file, create_json, logger, open_file
 
 XML_PARSER: XMLParser = XMLParser(recover=True, ns_clean=True, encoding="utf-8")
 

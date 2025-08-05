@@ -13,7 +13,7 @@ import yaml
 # Local python modules
 from .logger_instance import logger
 
-ENCODING = "utf-8"
+ENCODING: str = "utf-8"
 
 
 def _str_presenter(dumper, data):
@@ -269,6 +269,7 @@ def create_yaml(file_path: Path, data: dict[str, Any]) -> None:
                 sort_keys=False,
                 explicit_start=True,
                 indent=2,
+                allow_unicode=True,
             ),
             encoding=ENCODING,
         )

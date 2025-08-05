@@ -10,8 +10,7 @@ from typing import Any
 
 # Local python modules
 from ...classes import Baseline, Macsecurityrule
-from ...common_utils import append_text, config, make_dir, open_file, remove_dir
-from ...common_utils.logger_instance import logger
+from ...common_utils import append_text, logger, make_dir, mscp_data, remove_dir
 
 
 def generate_ddm_activation(output_path: Path, identifier: str) -> None:
@@ -106,7 +105,6 @@ def generate_ddm(build_path: Path, baseline: Baseline, baseline_name: str) -> No
         )
     """
 
-    mscp_data: dict[str, Any] = open_file(Path(config.get("mspc_data", "")))
     ddm_output_path: Path = Path(build_path, "declarative")
     activations_output_path: Path = Path(ddm_output_path, "activations")
     assets_output_path: Path = Path(ddm_output_path, "assets")
@@ -181,7 +179,7 @@ def generate_ddm(build_path: Path, baseline: Baseline, baseline_name: str) -> No
     sha256_hash = hashlib.sha256()
     for ddm_type in mscp_data.get("ddm", {}).get("supported_types", []):
         if ddm_type not in ddm_dict.keys():
-            logger.error(f"Unsupported ddm type: {ddm_type}")
+            logger.debug(f"Unsupported ddm type: {ddm_type}")
             continue
 
         if "files" in ddm_type:

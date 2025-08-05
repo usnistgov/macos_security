@@ -18,6 +18,7 @@ from ..common_utils import (
     create_yaml,
     get_version_data,
     make_dir,
+    mscp_data,
     open_file,
     sanitize_input,
 )
@@ -30,7 +31,8 @@ class Sectionmap(StrEnum):
     ICLOUD = "icloud"
     INHERENT = "inherent"
     OS = "operatingsystem"
-    NOT_APPLICABLE = "not_applicable"
+    MANUAL = "manual"
+    NOT_APPLICABLE = "notapplicable"
     PWPOLICY = "passwordpolicy"
     PERMANENT = "permanent"
     SRG = "srg"
@@ -90,6 +92,7 @@ class DisaReferences(BaseModelWithAccessors):
     srg: list[str] | None = None
     disa_stig: list[str] | None = None
     cmmc: list[str] | None = None
+    sfr: list[str] | None = None
     severity: str | None = None
 
     def __init__(self, **data):
@@ -98,6 +101,8 @@ class DisaReferences(BaseModelWithAccessors):
             self.cci = sorted(self.cci)
         if self.srg:
             self.srg = sorted(self.srg)
+        if self.sfr:
+            self.sfr = sorted(self.sfr)
         if self.disa_stig:
             self.disa_stig = sorted(self.disa_stig)
         if self.cmmc:
@@ -245,7 +250,9 @@ class Macsecurityrule(BaseModelWithAccessors):
         rules: list[Macsecurityrule] = []
         os_version_str: str = str(os_version)
         os_version_int: int = int(os_version)
-        current_version_data: dict[str, Any] = get_version_data(os_type, os_version)
+        current_version_data: dict[str, Any] = get_version_data(
+            os_type, os_version, mscp_data
+        )
         os_name: str = current_version_data["os_name"]
         os_typeversion: str = f"{os_type}_{os_version_int}".lower()
         os_type = os_type.replace("os", "OS")
@@ -307,7 +314,9 @@ class Macsecurityrule(BaseModelWithAccessors):
                 "enforcement_info", {}
             )
 
-            if enforcement_info and "n_a" not in rule_yaml["tags"]:
+            tags = rule_yaml.get("tags", [])
+
+            if enforcement_info and section != "notapplicable":
                 check_shell = enforcement_info.get("check", {}).get("shell")
                 check_result = enforcement_info.get("check", {}).get("result")
                 fix_shell = enforcement_info.get("fix", {}).get("shell")
@@ -380,21 +389,22 @@ class Macsecurityrule(BaseModelWithAccessors):
                         severity = benchmark["severity"]
                         break
 
-            match rule_yaml["tags"]:
-                case "inherent":
-                    mechanism = "Inherent"
-                    fix_value = "The control cannot be configured out of compliance."
-                    section = Sectionmap.INHERENT
-                case "permanent":
-                    mechanism = "Permanent"
-                    fix_value = "The control is not able to be configured to meet the requirement. It is recommended to implement a third-party solution to meet the control."
-                    section = Sectionmap.PERMANENT
-                case "not_applicable" | "n_a":
-                    mechanism = "N/A"
-                    fix_value = (
-                        "The control is not applicable when configuring a macOS system."
-                    )
-                    section = Sectionmap.NOT_APPLICABLE
+            if tags:
+                match rule_yaml["tags"]:
+                    case "inherent":
+                        mechanism = "Inherent"
+                        fix_value = (
+                            "The control cannot be configured out of compliance."
+                        )
+                        section = Sectionmap.INHERENT
+                    case "permanent":
+                        mechanism = "Permanent"
+                        fix_value = "The control is not able to be configured to meet the requirement. It is recommended to implement a third-party solution to meet the control."
+                        section = Sectionmap.PERMANENT
+                    case "not_applicable" | "n_a":
+                        mechanism = "N/A"
+                        fix_value = "The control is not applicable when configuring a macOS system."
+                        section = Sectionmap.NOT_APPLICABLE
 
             ref: dict[str, Any] = rule_yaml["references"]
             nist: dict[str, Any] = ref.get("nist", {})
@@ -796,6 +806,10 @@ class Macsecurityrule(BaseModelWithAccessors):
                 int_element = etree.Element("integer", attrib=None, nsmap=None)
                 int_element.text = str(value)
                 return int_element
+            case float():
+                float_element = etree.Element("real", attrib=None, nsmap=None)
+                float_element.text = str(value)
+                return float_element
             case str():
                 str_element = etree.Element("string", attrib=None, nsmap=None)
                 str_element.text = value

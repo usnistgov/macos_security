@@ -156,8 +156,8 @@ baselines:
     authors: *cnssi_1253_authors
     tag: cnssi-1253_high
 
-  stig:
-    title: "$os_type $os_version: Security Configuration - Apple os_type $os_version ($os_name) STIG - Ver 1, Rel 1"
+  disa_stig:
+    title: "$os_type $os_version: Security Configuration - Apple $os_type $os_version ($os_name) STIG - Ver 1, Rel 1"
     description: |
       This guide describes the actions to take when securing a $os_type $os_version system against the Apple os_type $os_version ($os_name) STIG - Ver 1, Rel 1 security baseline.
 
@@ -166,7 +166,9 @@ baselines:
       - *all_rules_authors
       - name: Aaron Kegerreis
         organization: Defense Information Systems Agency
-    tag: stig
+      - name: Marco Piñeyro
+        organization: Department of State
+    tag: disa_stig
 
   indigo_base:
     title: "$os_type $os_version: Security Configuration - BSI indigo Base Configuration"

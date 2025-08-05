@@ -2,30 +2,12 @@
 
 ![mscp_banner_outline](config/default/images/mscp_banner_outline.png)
 
-<!-- settings: -->
-<!-- :idprefix: -->
-<!-- :idseparator: - -->
-<!-- ifndef::env-github[:icons: font] -->
-<!-- ifdef::env-github[] -->
-<!-- :status: -->
-<!-- :outfilesuffix: .adoc -->
-<!-- :caution-caption: :fire: -->
-<!-- :important-caption: :exclamation: -->
-<!-- :note-caption: :paperclip: -->
-<!-- :tip-caption: :bulb: -->
-<!-- :warning-caption: :warning: -->
-<!-- endif::[] -->
-<!-- :uri-org: https://github.com/usnistgov -->
-<!-- :uri-repo: {uri-org}/macos_security -->
-
-<!-- ifdef::status[] -->
 [![apple](https://badgen.net/badge/icon/apple?icon=apple&label)](https://www.apple.com/)
 [![14.0](https://badgen.net/badge/icon/14.0?icon=apple&label)](https://www.apple.com/macos)
-<!-- endif::[] -->
 
 **IMPORTANT:** We recommend working off of one of the OS branches, rather than the `main` branch.
 
-The macOS Security Compliance Project is an [open source](LICENSE.md) effort to provide a programmatic approach to generating security guidance. The configuration settings in this document were derived from National Institute of Standards and Technology (NIST) Special Publication (SP) 800-53, _Security and Privacy Controls for Information Systems and Organizations_, Revision 5. This is a joint project of federal operational IT Security staff from the National Institute of Standards and Technology (NIST), National Aeronautics and Space Administration (NASA), Defense Information Systems Agency (DISA), and Los Alamos National Laboratory (LANL).
+The macOS Security Compliance Project is an [open source][license] effort to provide a programmatic approach to generating security guidance. The configuration settings in this document were derived from National Institute of Standards and Technology (NIST) Special Publication (SP) 800-53, _Security and Privacy Controls for Information Systems and Organizations_, Revision 5. This is a joint project of federal operational IT Security staff from the National Institute of Standards and Technology (NIST), National Aeronautics and Space Administration (NASA), Defense Information Systems Agency (DISA), and Los Alamos National Laboratory (LANL).
 
 This project is the technical implementation of NIST Special Publication, 800-219 (Rev. 1) [Automated Secure Configuration Guidance from the macOS Security Compliance Project (mSCP)](https://csrc.nist.gov/pubs/sp/800/219/r1/final). NIST Special Publication 800-219 is the official guidance from for automated secure configuration for macOS.
 
@@ -33,13 +15,13 @@ Apple acknowledges the macOS Security Compliance Project with information on the
 
 This project can be used as a resource to easily create customized security baselines of technical security controls by leveraging a library of atomic actions which are mapped to the compliance requirements defined in NIST SP 800-53 (Rev. 5). It can also be used to develop customized guidance to meet the particular cybersecurity needs of any organization.
 
-To learn more about the project, please see the [wiki]({uri-repo}/wiki).
+To learn more about the project, please see the [macOS Security Compliance Project Documentation][documentation].
 
-If you are interested in supporting the development of the project, refer to the [contributor guidance](.github/CONTRIBUTING.md) for more information.
+If you are interested in supporting the development of the project, refer to the [contributor guidance][contributor] for more information.
 
 ## Usage
 
-Civilian agencies are to use the National Checklist Program as required by [NIST 800-70](https://csrc.nist.gov/publications/detail/sp/800-70/rev-4/final).
+Civilian agencies are to use the National Checklist Program as required by [NIST 800-70][NIST 800-70].
 
 > **NOTE**
 >
@@ -69,3 +51,8 @@ Refer to the [CHANGELOG](CHANGELOG.adoc) for a complete list of changes.
 ## NIST Disclaimer
 
 Any identification of commercial or open-source software in this document is done so purely in order to specify the methodology adequately. Such identification is not intended to imply recommendation or endorsement by the National Institute of Standards and Technology, nor is it intended to imply that the software identified are necessarily the best available for the purpose.
+
+[license]: LICENSE.md "Project License"
+[documentation]: https://pages.nist.gov/macos_security/ "macOS Security Compliance Project Documentation"
+[contributor]: .github/CONTRIBUTING.md "Contributor guidance"
+[NIST 800-70]: https://csrc.nist.gov/publications/detail/sp/800-70/rev-4/final "NIST 800-70"

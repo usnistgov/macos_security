@@ -5,10 +5,10 @@
 
 ### {{ rule.title }}
 
-{% if not "supplemental" in rule.tags %}
-{{ rule.discussion | asciidoc_to_markdown }}
-{% else %}
+{% if rule.tags is defined or rule.tags is not none and "supplemental" in rule.tags %}
 {{ rule.discussion | include_replace | asciidoc_to_markdown }}
+{% else %}
+{{ rule.discussion | asciidoc_to_markdown }}
 {% endif %}
 
 {%- if rule.mechanism == "manual" %}
@@ -16,8 +16,8 @@
 {% endif -%}
 
 {% if not rule.tags | select('in', check_tags) | list %}
-{% if not "supplemental" in rule.tags %}
-{% if rule.os_type == "macOS" %}
+{% if rule.tags is not defined or rule.tags is none or "supplemental" not in rule.tags %}
+{% if rule.os_name == "macos" %}
 To check the state of the system, run the following command(s):
 
 ```bash
@@ -28,10 +28,12 @@ To check the state of the system, run the following command(s):
 {%- endif -%}
 ```
 {% else %}
-{{ rule.check if rule.check is not none }} 
+{{ rule.check if rule.check is not none }}
 {% endif %}
 
+{% if rule.os_name == "macos" %}
 If the result is not _{{ rule.result_value }}_, this is a finding.
+{% endif %}
 
 <table class="remediation">
 <tr>
@@ -47,7 +49,7 @@ Perform the following to configure the system to meet the requirements:<br />
 To check the state of the system, run the following command(s):
 
 ```bash
-{{ rule.fix | convert_source_blocks if rule.fix is not none else fix_shell }}
+{{ rule.fix | asciidoc_to_markdown if rule.fix is not none else fix_shell }}
 ```
 
 {% elif additional_info is not none %}
@@ -65,7 +67,13 @@ To check the state of the system, run the following command(s):
 ```
 {% endif %}
 {% else %}
-{{ rule.fix | convert_source_blocks }}
+{% if rule.os_name == "macos" %}
+{{ rule.fix | asciidoc_to_markdown }}
+{% else %}
+```xml
+{{ rule.mobileconfig_info | mobileconfig_payloads_to_xml -}}
+```
+{% endif %}
 {% endif %}
 
 </p>
@@ -102,10 +110,12 @@ To check the state of the system, run the following command(s):
           <td><strong>DISA STIG(s)</strong></td>
           <td>{{ rule.references.disa.disa_stig | render_rules if rule.references.disa.disa_stig is not none }}</td>
         </tr>
+        {% if rule.references.disa.sfr is not none %}
         <tr>
           <td><strong>SFR</strong></td>
           <td>{{ rule.references.disa.sfr | render_rules if rule.references.disa.sfr is not none }}</td>
         </tr>
+        {% endif %}
         {% endif %}
         {% if "CIS" in baseline.title | upper or show_all_tags %}
         <tr>
@@ -129,7 +139,7 @@ To check the state of the system, run the following command(s):
           <td>{{ rule.references.disa.cmmc | render_rules if rule.references.disa.cmmc is not none }}</td>
         </tr>
         {% endif %}
-        {% if rule | get_nested(["references", "disa", "sfr"]) %}
+        {% if rule.references.nist.cce is not none %}
         <tr>
           <td><strong>CCE</strong></td>
           <td>{{ rule.references.nist.cce | render_rules }}</td>

@@ -90,7 +90,7 @@ platforms:
     '18.0':
       supervised: false
       benchmarks:
-        - name: ios_stig
+        - name: disa_stig
           severity: medium
         - name: indigo_base
           severity: medium
@@ -99,7 +99,7 @@ platforms:
     '17.0':
       supervised: false
       benchmarks:
-        - name: ios_stig
+        - name: disa_stig
           severity: medium
         - name: indigo_base
           severity: medium
@@ -108,7 +108,7 @@ platforms:
     '16.0':
       supervised: false
       benchmarks:
-        - name: ios_stig
+        - name: disa_stig
           severity: medium
     introduced: '14.5'
   visionOS:

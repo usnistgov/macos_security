@@ -14,8 +14,7 @@ from jinja2 import Environment, FileSystemLoader
 
 # Local python modules
 from ..classes import Macsecurityrule
-from ..common_utils import config, get_version_data
-from ..common_utils.logger_instance import logger
+from ..common_utils import config, get_version_data, logger, mscp_data
 
 
 def create_scap(
@@ -59,7 +58,9 @@ def generate_scap(args: argparse.Namespace) -> None:
     output_file: Path = Path(config["output_dir"])
     all_baselines: list[str] = [args.baseline.stem if args.baseline else ""]
 
-    current_version_data: dict = get_version_data(args.os_name, args.os_version)
+    current_version_data: dict = get_version_data(
+        args.os_name, args.os_version, mscp_data
+    )
     # all_rules: list[Macsecurityrule] = Macsecurityrule.collect_all_rules(args.os_name, args.os_version, parent_values="Default")
     # all_tags: list[str] = Macsecurityrule.get_tags(all_rules)
 

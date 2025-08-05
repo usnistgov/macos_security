@@ -5,4 +5,3 @@ from pathlib import Path
 
 SCHEMA_PATH = "schema/mscp_rule.json"
 CONFIG_PATH: Path = Path.cwd() / "config" / "config.yaml"
-ENCODING = "utf-8"

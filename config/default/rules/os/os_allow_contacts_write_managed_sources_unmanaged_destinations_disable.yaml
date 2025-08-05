@@ -47,7 +47,7 @@ platforms:
     '18.0':
       supervised: false
       benchmarks:
-        - name: ios_stig
+        - name: disa_stig
           severity: low
         - name: indigo_base
           severity: low
@@ -56,7 +56,7 @@ platforms:
     '17.0':
       supervised: false
       benchmarks:
-        - name: ios_stig
+        - name: disa_stig
           severity: low
         - name: ios_stig_byoad
           severity: low
@@ -67,7 +67,7 @@ platforms:
     '16.0':
       supervised: false
       benchmarks:
-        - name: ios_stig
+        - name: disa_stig
           severity: low
         - name: ios_stig_byoad
           severity: low

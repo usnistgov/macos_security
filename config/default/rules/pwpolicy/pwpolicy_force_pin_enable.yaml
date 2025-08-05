@@ -37,7 +37,7 @@ platforms:
   iOS:
     '18.0':
       benchmarks:
-        - name: ios_stig
+        - name: disa_stig
           severity: high
         - name: indigo_base
           severity: high
@@ -45,7 +45,7 @@ platforms:
           severity: high
     '17.0':
       benchmarks:
-        - name: ios_stig
+        - name: disa_stig
           severity: high
         - name: ios_stig_byoad
           severity: high
@@ -55,7 +55,7 @@ platforms:
           severity: high
     '16.0':
       benchmarks:
-        - name: ios_stig
+        - name: disa_stig
           severity: high
         - name: ios_stig_byoad
           severity: high

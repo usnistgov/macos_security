@@ -22,7 +22,7 @@ platforms:
     '18.0':
       supervised: true
       benchmarks:
-        - name: ios_stig
+        - name: disa_stig
           severity: medium
     introduced: '17.2'
 mobileconfig_info:

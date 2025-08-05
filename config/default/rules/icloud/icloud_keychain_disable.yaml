@@ -103,7 +103,7 @@ platforms:
       benchmarks:
         - name: cis_lvl1_enterprise
         - name: cis_lvl2_enterprise
-        - name: ios_stig
+        - name: disa_stig
           severity: medium
         - name: indigo_base
           severity: medium
@@ -114,7 +114,7 @@ platforms:
       benchmarks:
         - name: cis_lvl1_enterprise
         - name: cis_lvl2_enterprise
-        - name: ios_stig
+        - name: disa_stig
         - name: indigo_base
         - name: indigo_high
     '16.0':

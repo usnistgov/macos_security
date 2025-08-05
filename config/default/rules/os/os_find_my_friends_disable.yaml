@@ -40,21 +40,21 @@ platforms:
     '18.0':
       supervised: true
       benchmarks:
-        - name: ios_stig
+        - name: disa_stig
           severity: low
         - name: indigo_high
           severity: low
     '17.0':
       supervised: true
       benchmarks:
-        - name: ios_stig
+        - name: disa_stig
           severity: low
         - name: indigo_high
           severity: low
     '16.0':
       supervised: true
       benchmarks:
-        - name: ios_stig
+        - name: disa_stig
           severity: low
     introduced: '13.0'
 tags:

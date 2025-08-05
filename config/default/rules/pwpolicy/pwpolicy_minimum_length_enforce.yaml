@@ -114,7 +114,7 @@ platforms:
         - name: cis_lvl2_byod
         - name: cis_lvl1_enterprise
         - name: cis_lvl2_enterprise
-        - name: ios_stig
+        - name: disa_stig
           severity: medium
         - name: indigo_base
           severity: medium
@@ -127,7 +127,7 @@ platforms:
         - name: cis_lvl2_byod
         - name: cis_lvl1_enterprise
         - name: cis_lvl2_enterprise
-        - name: ios_stig
+        - name: disa_stig
           severity: medium
         - name: ios_stig_byoad
           severity: medium
@@ -142,7 +142,7 @@ platforms:
         - name: cis_lvl2_byod
         - name: cis_lvl1_enterprise
         - name: cis_lvl2_enterprise
-        - name: ios_stig
+        - name: disa_stig
           severity: medium
         - name: ios_stig_byoad
           severity: medium
@@ -161,7 +161,7 @@ odv:
   cis_lvl2_byod: 6
   cis_lvl1_enterprise: 6
   cis_lvl2_enterprise: 6
-  ios_stig: 6
+  disa_stig: 6
   ios_stig_byoad: 6
   indigo_base: 8
   indigo_high: 8

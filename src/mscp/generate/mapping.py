@@ -9,7 +9,7 @@ from typing import Any
 
 # Local python modules
 from ..classes import Author, Baseline, Macsecurityrule
-from ..common_utils import config, get_version_data, make_dir, open_file
+from ..common_utils import config, get_version_data, make_dir, mscp_data, open_file
 from ..common_utils.logger_instance import logger
 
 # Additional python modules
@@ -36,7 +36,7 @@ def update_rule_with_custom_controls(
 
 def generate_mapping(args: argparse.Namespace) -> None:
     current_version_data: dict[str, Any] = get_version_data(
-        args.os_name, args.os_version
+        args.os_name, args.os_version, mscp_data
     )
 
     rules: list[Macsecurityrule] = Macsecurityrule.collect_all_rules(

@@ -24,7 +24,7 @@ platforms:
     '18.0':
       supervised: false
       benchmarks:
-        - name: ios_stig
+        - name: disa_stig
     introduced: '18.1'
 tags:
   - 800-53r5_low

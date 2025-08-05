@@ -2,7 +2,7 @@
 logging_config: "config/logging_config.yaml"
 output_dir: "build/"
 includes_dir: "config/includes"
-mspc_data: "config/includes/mscp-data.yaml"
+mscp_data: "config/includes/mscp-data.yaml"
 environment: "development"
 shell_template_dir: "config/default/templates/shell_scripts"
 log_output_file: mscp.log
