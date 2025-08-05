@@ -1,4 +1,4 @@
-
+/* Color theme variables */
 /* Light mode colors rgba(49, 100, 49, 1) */
 :root {
   --sl-color-accent: rgb(49, 100, 49);
@@ -6,9 +6,14 @@
 
 /* Dark mode colors */
 :root[data-theme='dark'] {
-  --sl-color-accent: rgb(49, 100, 49);
+  --sl-color-accent-high: #6ab549 !important;
 }
 
+/* ---------------------------------------------------------------------- */
+/* This section contains custom styles for the NIST Header */
+/* ---------------------------------------------------------------------- */
+
+/* NIST header styles */
 #nistheadergoeshere {
   position: fixed;
   top: 0;
@@ -18,15 +23,89 @@
   width: 100%;
 }
 
+/* NIST footer styles */
 #nistfootergoeshere {
   position: relative;
-  z-index: 1000;
+  z-index: 0;
+  margin-top: 50px;
 }
 
+/* Custom header styles */
 .header {
   #position: fixed;
   top: 40px;
   left: 0;
   width: 100%;
+}
 
+/* Do not apply .header styles if inside .expressive-code */
+.expressive-code .header {
+  position: static !important;
+  top: unset !important;
+  left: unset !important;
+  width: unset !important;
+}
+
+/* Sidebar content - push down to avoid overlap with header */
+.sidebar-content,
+.right-sidebar-content,
+.right-sidebar-panel {
+  margin-top: 45px;
+}
+
+/* Bring down the mobile TOC summary */
+#starlight__on-this-page--mobile {
+  margin-top: 40px;
+}
+
+/* Bring the body down to avoid overlap with header */
+body {
+  margin-top: 30px;
+}
+
+/* If sl-banner is present, increase body margin-top */
+body:has(.sl-banner) {
+  margin-top: 40px;
+}
+
+/* Add extra scroll offset when clicking anchor links */
+sl-anchor-link,
+.sl-heading-wrapper,
+.sl-heading-wrapper h1,
+.sl-heading-wrapper h2,
+.sl-heading-wrapper h3,
+.sl-heading-wrapper h4,
+.sl-heading-wrapper h5,
+.sl-heading-wrapper h6 {
+  scroll-margin-top: 30px;
+}
+
+/* Only Apply the following style when in mobile view */
+@media (max-width: 50rem) {
+  @layer starlight.core {
+    starlight-menu-button > button {
+      position: fixed;
+      /* Only adjust vertical position, do not change size */
+      top: calc((var(--sl-nav-height) - var(--sl-menu-button-size)) / 2 + 40px);
+      inset-inline-end: var(--sl-nav-pad-x);
+      z-index: var(--sl-z-index-navbar);
+    }
+  }
+}
+/* ---------------------------------------------------------------------- */
+/* ---------------------------------------------------------------------- */
+
+/* Site title transition and hover effect */
+.site-title {
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.site-title:hover {
+  color: #6ab549; /* dark for light mode */
+  cursor: pointer;
+  transform: translateY(-4px);
+}
+
+:root[data-theme='dark'] .site-title:hover {
+  color: rgb(49, 100, 49); /* light for dark mode */
 }

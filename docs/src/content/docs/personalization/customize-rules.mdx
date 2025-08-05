@@ -1,0 +1,65 @@
+---
+title: Customizing Rules
+description: A customization reference.
+---
+import { Steps, FileTree, Aside } from '@astrojs/starlight/components';
+
+The project supports **modifying existing rules** and **adding new rules** to a baseline to meet your organization's requirements. Customizing a rule means changing the rule's content itself, while [tailoring](./Tailoring-rules) is about selecting which rules to include in a benchmark.
+
+<Aside type="note">
+For existing rules, only keep the fields you want to customize. This ensures your custom rules remain compatible as the project updates for future OS releases.
+</Aside>
+
+## Modifying an Existing Rule
+
+<Steps>
+1. **Copy** the existing rule file to the `custom` folder. The filename must remain the same.
+2. **Remove** any fields that don’t need to be modified.
+3. **Edit** the fields to match your organization’s requirements.
+4. **Run** `generate_guidance.py`. The custom version of the rule will be included in the output.
+</Steps>
+
+**Example: Configure macOS to Use an Authorized Time Server**
+
+```yaml
+references:
+  custom:
+    MSCP:
+      - MSCP-OS-001
+    URL:
+      - https://developer.apple.com/documentation/devicemanagement/timeserver
+    Remediation Tool:
+      - MDM
+```
+
+---
+
+## Adding a New Rule
+
+<Steps>
+1. **Create** a new `rules.yaml` file in the `custom` folder.
+   - If your rule uses a configuration profile payload not already in the project, add it to `supported_payloads.yaml` in the `includes` folder.
+2. **Run** `generate_baseline.py` to add the new rule to your baseline.
+3. **Run** `generate_guidance.py` against your customized baseline.
+</Steps>
+
+---
+
+## Use Case: Informational Rules (No Check/Result/Fix)
+
+If you want a custom rule that explains a control but does **not** include a check, result, or fix, add the `manual` tag. This ensures it does **not** appear in the compliance script.
+
+**Example Rule (No Check/Result/Fix)**
+
+```yaml
+check: |
+result: |
+fix: | 
+tag:
+  - manual
+```
+
+---
+
+*Customizing rules helps ensure your security baseline is both robust and tailored to your organization's needs.*
+*Customizing rules helps ensure your security baseline is both robust and tailored to your organization's needs.*
