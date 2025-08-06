@@ -5,13 +5,14 @@ name: "Labeler"
 on:
   workflow_dispatch:
   push:
-    branches: ["main", "dev_2.0"]
+    branches:
+      - dev_2.0
     paths-ignore:
       - 'archive/**'
   pull_request_target:
     types: [opened, synchronize, reopened]
     branches:
-      - main
+      - dev_2.0
     paths-ignore:
       - 'archive/**'
 

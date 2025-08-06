@@ -4,13 +4,13 @@ name: Lint Code Base
 on:
   workflow_dispatch:
   push:
-    branches: ["main", "dev_2.0"]
+    branches:
+      - dev_2.0
     paths-ignore:
       - 'archive/**'
   pull_request:
-    types: [opened, synchronize, reopened]
     branches:
-      - main
+      - dev_2.0
     paths-ignore:
       - 'archive/**'
 
@@ -19,7 +19,7 @@ jobs:
     name: pythonlint
     runs-on: ubuntu-latest
     permissions:
-      contents: read
+      pull-requests: read
     steps:
       - name: Checkout
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
@@ -31,23 +31,28 @@ jobs:
         uses: tj-actions/changed-files@dcc7a0cba800f454d79fff4b993e8c3555bcc0a8 # v45
         with:
           files: |
-            **.py
+            src/mscp/**.py
 
       - name: Set up Python
+        if: steps.changed-files.outputs.any_changed == 'true'
         uses: actions/setup-python@v5
         with:
-          python-version: '3.13'
+          python-version: '3.12.1'
 
       - name: Install dependencies
+        if: steps.changed-files.outputs.any_changed == 'true'
         run: |
-          pip install flake8
+          python3 -m pip install --upgrade flake8 flake8-bugbear
 
       - name: Lint Python files
-        run: flake8 src/mscp --ignore=E501
+        if: steps.changed-files.outputs.any_changed == 'true'
+        run: flake8 --config .github/linters/tox.ini src/mscp
 
   yamllint:
     name: yamllint
     runs-on: ubuntu-latest
+    permissions:
+      pull-requests: read
     steps:
       - name: Checkout
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
@@ -63,6 +68,7 @@ jobs:
             **.yaml
 
       - name: Set up Python
+        if: steps.changed-files.outputs.any_changed == 'true'
         uses: actions/setup-python@v5
         with:
           python-version: '3.13'
@@ -81,6 +87,8 @@ jobs:
   markdownlint:
     name: markdownlint
     runs-on: ubuntu-latest
+    permissions:
+      pull-requests: read
     steps:
       - name: Checkout
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4

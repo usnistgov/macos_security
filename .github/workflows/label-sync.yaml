@@ -5,9 +5,16 @@ name: "Label Sync"
 on:
   workflow_dispatch:
   push:
-    branches: ["main", "dev_2.0"]
+    branches:
+      - dev_2.0
     paths: [".github/labels.yaml"]
 
+  pull_request_target:
+    types: [opened, synchronize, reopened]
+    branches:
+      - dev_2.0
+    paths-ignore:
+      - 'archive/**'
 jobs:
   label-sync:
     name: Label Sync
