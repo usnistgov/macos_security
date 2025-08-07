@@ -1,14 +1,14 @@
 ---
 area/rules:
   - changed-files:
-      - any-glob-to-any-file: 
-        - config/default/rules/**/**/*
-        - rules/**/**/*
+      - any-glob-to-any-file:
+          - config/default/rules/**/**/*
+          - rules/**/**/*
 area/baseline:
   - changed-files:
-      - any-glob-to-any-file: 
-        - config/default/baselines/**/**/*
-        - baselines/**/**/*
+      - any-glob-to-any-file:
+          - config/default/baselines/**/**/*
+          - baselines/**/**/*
 area/images:
   - changed-files:
       - any-glob-to-any-file: config/default/images/**/*
