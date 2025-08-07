@@ -201,7 +201,7 @@ class Macsecurityrule(BaseModelWithAccessors):
     references: References
     odv: dict[str, Any] | None = None
     finding: bool = False
-    tags: list[str] | None = None
+    tags: list[str] = Field(default_factory=list)
     result_value: str | int | bool | None = None
     mobileconfig_info: list[Mobileconfigpayload] | None = None
     ddm_info: dict[str, Any] | None = None
@@ -271,6 +271,7 @@ class Macsecurityrule(BaseModelWithAccessors):
             mechanism: str = "Manual"
             payloads: list[Mobileconfigpayload] | None = []
             severity: str | None = None
+            tags: list[str] = []
 
             rule_file = next(
                 (
@@ -288,6 +289,8 @@ class Macsecurityrule(BaseModelWithAccessors):
                 continue
 
             rule_yaml: dict[str, Any] = open_file(rule_file)
+
+            tags: list[str] = rule_yaml.get("tags", [])
 
             if os_type not in rule_yaml.get("platforms", {}):
                 logger.debug(
@@ -314,9 +317,7 @@ class Macsecurityrule(BaseModelWithAccessors):
                 "enforcement_info", {}
             )
 
-            tags = rule_yaml.get("tags", [])
-
-            if enforcement_info and section != "notapplicable":
+            if enforcement_info and "n_a" not in tags:
                 check_shell = enforcement_info.get("check", {}).get("shell")
                 check_result = enforcement_info.get("check", {}).get("result")
                 fix_shell = enforcement_info.get("fix", {}).get("shell")
@@ -389,22 +390,21 @@ class Macsecurityrule(BaseModelWithAccessors):
                         severity = benchmark["severity"]
                         break
 
-            if tags:
-                match rule_yaml["tags"]:
-                    case "inherent":
-                        mechanism = "Inherent"
-                        fix_value = (
-                            "The control cannot be configured out of compliance."
-                        )
-                        section = Sectionmap.INHERENT
-                    case "permanent":
-                        mechanism = "Permanent"
-                        fix_value = "The control is not able to be configured to meet the requirement. It is recommended to implement a third-party solution to meet the control."
-                        section = Sectionmap.PERMANENT
-                    case "not_applicable" | "n_a":
-                        mechanism = "N/A"
-                        fix_value = "The control is not applicable when configuring a macOS system."
-                        section = Sectionmap.NOT_APPLICABLE
+            match tags:
+                case "inherent":
+                    mechanism = "Inherent"
+                    fix_value = "The control cannot be configured out of compliance."
+                    section = Sectionmap.INHERENT
+                case "permanent":
+                    mechanism = "Permanent"
+                    fix_value = "The control is not able to be configured to meet the requirement. It is recommended to implement a third-party solution to meet the control."
+                    section = Sectionmap.PERMANENT
+                case "not_applicable" | "n_a":
+                    mechanism = "N/A"
+                    fix_value = (
+                        "The control is not applicable when configuring a macOS system."
+                    )
+                    section = Sectionmap.NOT_APPLICABLE
 
             ref: dict[str, Any] = rule_yaml["references"]
             nist: dict[str, Any] = ref.get("nist", {})
@@ -1174,3 +1174,29 @@ class Macsecurityrule(BaseModelWithAccessors):
                 return dict_element
             case _:
                 raise ValueError(f"Unsupported value type: {type(value)}")
+
+    @classmethod
+    def get_tags(
+        cls,
+        rules: list["Macsecurityrule"],
+    ) -> list:
+        """
+        Collects all tags associated with a set of rules.
+
+        Args:
+            rules (list[Macsecurityrule]): List of rules to process.
+
+        Returns:
+            list[]: List of tags found within the rule set.
+        """
+        
+        found_tags: list[str] = []
+
+        for rule in rules:
+            rule_tags = rule.get("tags")
+
+            found_tags += rule_tags
+        
+        unique_tags = set(found_tags)
+
+        return sorted(unique_tags)
