@@ -31,8 +31,6 @@ def set_logger(debug: bool = False, verbosity: int = 0) -> loguru.Logger:
             {
                 "sink": sys.stderr,
                 "level": log_level,
-                "format": formatter.format_log,
-                "filter": lambda record: record["level"].name != "SUCCESS",
             },
             {
                 "sink": Path("logs", "mscp.log"),
