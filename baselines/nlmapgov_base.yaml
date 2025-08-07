@@ -16,8 +16,20 @@ parent_values: "nlmapgov_base"
 profile:
   - section: "auditing"
     rules:
+      - audit_acls_files_configure
+      - audit_acls_folders_configure
       - audit_auditd_enabled
+      - audit_control_acls_configure
+      - audit_control_group_configure
+      - audit_control_mode_configure
+      - audit_control_owner_configure
+      - audit_files_group_configure
+      - audit_files_mode_configure
+      - audit_files_owner_configure
       - audit_flags_ad_configure
+      - audit_folder_group_configure
+      - audit_folder_owner_configure
+      - audit_folders_mode_configure
       - audit_retention_configure
   - section: "macos"
     rules:
@@ -34,9 +46,14 @@ profile:
       - pwpolicy_minimum_length_enforce
   - section: "systemsettings"
     rules:
+      - system_settings_automatic_login_disable
+      - system_settings_critical_update_install_enforce
       - system_settings_filevault_enforce
+      - system_settings_find_my_disable
+      - system_settings_gatekeeper_identified_developers_allowed
       - system_settings_gatekeeper_override_disallow
       - system_settings_guest_account_disable
+      - system_settings_install_macos_updates_enforce
       - system_settings_loginwindow_loginwindowtext_enable
       - system_settings_software_update_app_update_enforce
       - system_settings_software_update_download_enforce
@@ -49,7 +66,7 @@ profile:
       - os_secure_enclave
   - section: "Permanent"
     rules:
-      - pwpolicy_prevent_dictionary_words
+      - audit_off_load_records
   - section: "Supplemental"
     rules:
       - supplemental_filevault

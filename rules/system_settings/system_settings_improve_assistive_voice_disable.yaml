@@ -45,6 +45,8 @@ references:
     - AC.L1-3.1.20
     - CM.L2-3.4.6
     - CM.L2-3.4.7
+  bio:
+    - 8.12
 macOS:
   - '15.0'
 tags:

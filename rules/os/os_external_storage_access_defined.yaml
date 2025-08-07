@@ -25,7 +25,9 @@ references:
     - 03.08.07
   cmmc:
     - MP.L2-3.8.7
-    - MP.L2-3.8.8   
+    - MP.L2-3.8.8
+  bio:
+    - 8.12   
 odv:
   hint: Allowed, ReadOnly, or Disallowed
   recommended: Allowed     

@@ -26,6 +26,8 @@ references:
       - 6.3.10 (level 1)
     controls v8:
       - 9.1
+  bio:
+    - 8.27.01
 macOS:
   - '15.0'
 tags:

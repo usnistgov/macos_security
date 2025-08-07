@@ -51,6 +51,8 @@ references:
     - CM.L2-3.4.6
     - CM.L2-3.4.7
     - SC.L1-3.13.1
+  bio:
+    - 8.27.01
 macOS:
   - '15.0'
 tags:

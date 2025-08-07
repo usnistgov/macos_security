@@ -43,6 +43,8 @@ references:
     - SRG-OS-000104-GPOS-00051
   disa_stig:
     - APPL-15-000100
+  bio:
+    - 5.16.02
 macOS:
   - '15.0'
 tags:
@@ -62,7 +64,6 @@ tags:
   - cmmc_lvl1
   - stig
   - cnssi-1253_moderate
-  - nlmapgov_base
   - nlmapgov_plus
 severity: medium
 mobileconfig: false

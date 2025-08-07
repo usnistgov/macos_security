@@ -42,6 +42,8 @@ references:
       - 3.6
       - 3.11
       - 11.3
+  bio:
+    - 8.12
 macOS:
   - '15.0'
 tags:

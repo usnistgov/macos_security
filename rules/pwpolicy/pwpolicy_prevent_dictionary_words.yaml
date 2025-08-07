@@ -31,6 +31,5 @@ macOS:
   - '15.0'
 tags:
   - permanent
-  - nlmapgov_base
 mobileconfig: false
 mobileconfig_info:
