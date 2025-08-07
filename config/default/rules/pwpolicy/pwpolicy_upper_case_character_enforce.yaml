@@ -1,0 +1,96 @@
+id: pwpolicy_upper_case_character_enforce
+title: Require Passwords Contain a Minimum of One Uppercase Character
+discussion: |
+  The macOS should be configured to forbid users to use dictionary words for passwords.
+
+  If the operating system allows users to select passwords based on dictionary words, this increases the window of opportunity for a malicious user to guess the password.
+
+  To prevent users from using dictionary words for passwords, many operating systems can be integrated with an enterprise-level directory service that meets or exceeds this requirement.
+
+  NOTE: To comply with Executive Order 14028, "Improving the Nation's Cybersecurity", OMB M-22-09, "Moving the U.S. Government Toward Zero Trust Cybersecurity Principles", and NIST SP-800-63b, "Digital Identity Guidelines: Authentication and Lifecycle Management" federal, military, and intelligence communities must adopt the following configuration settings. Password policies must not require the use of complexity policies such as upper characters, lower characters, or special characters. Password policies must also not require the use of regular rotation. Password policies should define a minimum length. Multifactor authentication should be used where ever possible.
+references:
+  nist:
+    cce:
+      macos_15:
+        - CCE-94347-2
+      macos_14:
+        - CCE-92943-0
+      macos_13:
+        - CCE-91930-8
+    800-53r5:
+      - IA-5(1)
+    800-171r3:
+      - 03.05.07
+  disa:
+    cmmc:
+      - IA.L2-3.5.7
+      - IA.L2-3.5.8
+      - IA.L2-3.5.9
+  cis:
+    benchmark:
+      macos_13:
+        - 5.2.6 (level 2)
+    controls_v8:
+      - 5.2
+platforms:
+  macOS:
+    '15.0': {}
+    '14.0': {}
+    '13.0':
+      benchmarks:
+        - name: cis_lvl2
+    enforcement_info:
+      check:
+        shell: |
+          /usr/bin/pwpolicy -getaccountpolicies 2> /dev/null \
+            | /usr/bin/tail +2 \
+            | /usr/bin/xmllint --xpath '//dict/key[text()="minimumAlphaCharactersUpperCase"]/following-sibling::integer[1]/text()' - 2>/dev/null \
+            | /usr/bin/awk -v ODV="$ODV" '{ if ($1 >= ODV) print "true"; else print "false" }'
+        result:
+          string: 'yes'
+      fix:
+        additional_info: |-
+          This setting may be enforced using local policy or by a directory service.
+
+          To set local policy to require at least $ODV lowercase letter, edit the current password policy to contain the following <dict> within the "policyCategoryPasswordContent":
+
+          [source,xml]
+          ----
+          <dict>
+            <key>policyContent</key>
+            <string>policyAttributePassword matches '(.*[A-Z].*){$ODV,}+'</string>
+            <key>policyIdentifier</key>
+            <string>Must have at least $ODV uppercase letter</string>
+            <key>policyParameters</key>
+            <dict>
+              <key>minimumAlphaCharactersUpperCase</key>
+              <integer>$ODV</integer>
+            </dict>
+          </dict>
+          ----
+          After saving the file and exiting to the command prompt, run the following command to load the new policy file, substituting the path to the file in place of "$pwpolicy_file".
+
+          [source,bash]
+          ----
+          /usr/bin/pwpolicy setaccountpolicies $pwpolicy_file
+          ----
+          NOTE: See the password policy supplemental on more information on how to implement password policies on macOS.
+odv:
+  hint:
+    datatype: number
+    description: Number of uppercase characters, e.g. 1
+    validation:
+      min: 1
+  recommended: 1
+  cis_lvl1: 1
+  cis_lvl2: 1
+tags:
+  - cnssi-1253_moderate
+  - cnssi-1253_low
+  - cnssi-1253_high
+  - 800-171
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_high
+  - cisv8
+  - cmmc_lvl2

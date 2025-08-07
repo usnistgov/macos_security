@@ -1,0 +1,108 @@
+id: icloud_managed_apps_store_data_disabled
+title: Ensure Managed Apps Storing Data in iCloud is Set to Disabled
+discussion: |
+  Managed Apps _MUST_ not store data in iCloud.
+references:
+  nist:
+    cce:
+      ios_18:
+        - CCE-94417-3
+      ios_17:
+        - CCE-93403-4
+      ios_16:
+        - CCE-93203-8
+      visionos_2:
+        - CCE-94481-9
+    800-53r5:
+      - AC-20
+      - AC-20(1)
+      - CM-7
+      - CM-7(1)
+      - SC-7(10)
+  disa:
+    cci:
+      - CCI-000097
+      - CCI-000366
+      - CCI-000370
+    disa_stig:
+      ios_18:
+        - AIOS-18-003600
+      ios_17:
+        - AIOS-17-003600
+        - AIOS-17-703600
+      ios_16:
+        - AIOS-16-003600
+        - AIOS-16-703600
+        - AIOS-16-009200
+        - AIOS-16-709200
+    sfr:
+      - 'FMT_MOF_EXT.1.2 #40'
+  cis:
+    benchmark:
+      ios_18:
+        - 2.2.1.3 (level 1 - End-User Owned Devices)
+        - 3.2.1.7 (level 1 - Institutionally-Owned Devices)
+      ios_17:
+        - 2.2.1.3 (level 1 - End-User Owned Devices)
+        - 3.2.1.7 (level 1 - Institutionally-Owned Devices)
+      ios_16:
+        - 2.2.1.3 (level 1 - End-User Owned Devices)
+        - 3.2.1.7 (level 1 - Institutionally-Owned Devices)
+    controls_v8:
+      - 2.3
+  bsi:
+    indigo:
+      ios_17:
+        - ANNEX D (Section 5.4 - iCloud restrictions)
+        - ANNEX K
+platforms:
+  iOS:
+    '18.0':
+      supervised: false
+      benchmarks:
+        - name: cis_lvl1_byod
+        - name: cis_lvl2_byod
+        - name: cis_lvl1_enterprise
+        - name: cis_lvl2_enterprise
+        - name: disa_stig
+          severity: medium
+        - name: indigo_base
+          severity: medium
+        - name: indigo_high
+          severity: medium
+    '17.0':
+      supervised: false
+      benchmarks:
+        - name: cis_lvl1_byod
+        - name: cis_lvl2_byod
+        - name: cis_lvl1_enterprise
+        - name: cis_lvl2_enterprise
+        - name: disa_stig
+        - name: ios_stig_byoad
+        - name: indigo_base
+        - name: indigo_high
+    '16.0':
+      supervised: false
+      benchmarks:
+        - name: cis_lvl1_byod
+        - name: cis_lvl2_byod
+        - name: cis_lvl1_enterprise
+        - name: cis_lvl2_enterprise
+        - name: disa_stig
+          severity: medium
+        - name: ios_stig_byoad
+          severity: medium
+    introduced: '8.0'
+  visionOS:
+    '2.0':
+      supervised: false
+    introduced: '2.0'
+tags:
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_high
+  - cisv8
+mobileconfig_info:
+  - PayloadType: com.apple.applicationaccess
+    PayloadContent:
+      - allowManagedAppsCloudSync: false

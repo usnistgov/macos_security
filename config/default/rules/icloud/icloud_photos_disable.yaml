@@ -1,0 +1,135 @@
+id: icloud_photos_disable
+title: Disable iCloud Photo Library
+discussion: |
+  The built-in Photos.app's connection to Apple's iCloud service _MUST_ be disabled.
+
+  Apple's iCloud service does not provide an organization with enough control over the storage and access of data and, therefore, automated photo synchronization _MUST_ be controlled by an organization approved service.
+references:
+  nist:
+    cce:
+      macos_15:
+        - CCE-94150-0
+      macos_14:
+        - CCE-92751-7
+      macos_13:
+        - CCE-91749-2
+      ios_18:
+        - CCE-94419-9
+      ios_17:
+        - CCE-93405-9
+      ios_16:
+        - CCE-93205-3
+      visionos_2:
+        - CCE-94482-7
+    800-53r5:
+      - AC-20
+      - AC-20(1)
+      - CM-7
+      - CM-7(1)
+      - SC-7(10)
+    800-171r3:
+      - 03.01.20
+      - 03.04.06
+  disa:
+    cci:
+      - CCI-000381
+      - CCI-001774
+    srg:
+      - SRG-OS-000095-GPOS-00049
+    disa_stig:
+      macos_15:
+        - APPL-15-002043
+      macos_14:
+        - APPL-14-002043
+      macos_13:
+        - APPL-13-002043
+      ios_18:
+        - AIOS-18-003450
+      ios_17:
+        - AIOS-17-003450
+      ios_16:
+        - AIOS-16-011000
+    cmmc:
+      - AC.L1-3.1.20
+      - CM.L2-3.4.6
+      - CM.L2-3.4.7
+  cis:
+    benchmark:
+      ios_18:
+        - AIOS-18-003450
+    controls_v8:
+      - 4.1
+      - 4.8
+      - 15.3
+  bsi:
+    indigo:
+      ios_18:
+        - ANNEX D (Section 5.4 - iCloud restrictions)
+        - ANNEX K
+      ios_17:
+        - ANNEX D (Section 5.4 - iCloud restrictions)
+        - ANNEX K
+platforms:
+  macOS:
+    '15.0':
+      benchmarks:
+        - name: disa_stig
+          severity: medium
+    '14.0':
+      benchmarks:
+        - name: disa_stig
+          severity: medium
+    '13.0':
+      benchmarks:
+        - name: disa_stig
+          severity: medium
+    enforcement_info:
+      check:
+        shell: |-
+          /usr/bin/osascript -l JavaScript << EOS
+          $.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess')\
+          .objectForKey('allowCloudPhotoLibrary').js
+          EOS
+        result:
+          string: 'false'
+    introduced: '10.12'
+  iOS:
+    '18.0':
+      supervised: false
+      benchmarks:
+        - name: disa_stig
+          severity: medium
+        - name: indigo_high
+          severity: medium
+    '17.0':
+      supervised: false
+      benchmarks:
+        - name: disa_stig
+          severity: medium
+        - name: indigo_high
+          severity: medium
+    '16.0':
+      supervised: false
+      benchmarks:
+        - name: disa_stig
+          severity: medium
+    introduced: '9.0'
+  visionOS:
+    '2.0':
+      supervised: false
+    introduced: '2.0'
+tags:
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_high
+  - 800-171
+  - cisv8
+  - cnssi-1253_low
+  - cnssi-1253_high
+  - cmmc_lvl2
+  - cmmc_lvl1
+  - cnssi-1253_moderate
+mobileconfig_info:
+  - PayloadType: com.apple.applicationaccess
+    PayloadContent:
+      - allowCloudPhotoLibrary: false

@@ -1,0 +1,89 @@
+id: os_user_app_installation_prohibit
+title: Prohibit User Installation of Software into /Users/
+discussion: |
+  Users _MUST_ not be allowed to install software.
+
+  Allowing regular users to install software, without explicit privileges, presents the risk of untested and potentially malicious software being installed on the system. Explicit privileges (escalated or administrative privileges) provide the regular user with explicit capabilities and control that exceeds the rights of a regular user.
+
+  On macOS, restrict users from installing and running software from the /Users/ folder.
+
+  [IMPORTANT]
+  ====
+  For macOS, Apple has deprecated the use of link:https://github.com/apple/device-management/blob/eb51fb0cb9626cac4717858556912c257a734ce0/mdm/profiles/com.apple.applicationaccess.new.yaml#L67-L70[application restriction controls], using these controls may not work as expected. Third party software may be required to fulfill the compliance requirements.
+  ====
+references:
+  nist:
+    cce:
+      macos_15:
+        - CCE-94323-3
+      macos_14:
+        - CCE-92920-8
+      macos_13:
+        - CCE-91908-4
+      visionos_2:
+        - CCE-94510-5
+    800-53r5:
+      - CM-11(2)
+  disa:
+    cci:
+      - CCI-001812
+      - CCI-003980
+    srg:
+      - SRG-OS-000362-GPOS-00149
+    disa_stig:
+      macos_15:
+        - APPL-15-005080
+      macos_14:
+        - APPL-14-005080
+    cmmc:
+      - CM.L2-3.4.9
+platforms:
+  macOS:
+    '15.0':
+      benchmarks:
+        - name: disa_stig
+          severity: medium
+    '14.0':
+      benchmarks:
+        - name: disa_stig
+          severity: medium
+    '13.0': {}
+    enforcement_info:
+      check:
+        shell: |-
+          /usr/bin/osascript -l JavaScript << EOS
+          function run() {
+            let pref1 = ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess.new')\
+            .objectForKey('familyControlsEnabled'))
+            let pathlist = $.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess.new')\
+            .objectForKey('pathBlackList').js
+            for ( let app in pathlist ) {
+                if ( ObjC.unwrap(pathlist[app]) == "/Users/" && pref1 == true ){
+                    return("true")
+                }
+            }
+            return("false")
+            }
+          EOS
+        result:
+          string: 'true'
+    introduced: '10.7'
+  visionOS:
+    '2.0':
+      supervised: true
+      mobileconfig_info:
+        - PayloadType: com.apple.applicationaccess
+          PayloadContent:
+            - allowAppInstallation: false
+    introduced: n/a
+tags:
+  - cnssi-1253_low
+  - cnssi-1253_high
+  - cmmc_lvl2
+  - cnssi-1253_moderate
+mobileconfig_info:
+  - PayloadType: com.apple.applicationaccess.new
+    PayloadContent:
+      - familyControlsEnabled: true
+      - pathBlackList:
+          - /Users/

@@ -1,8 +1,52 @@
+:idprefix:
+:idseparator: -
+ifndef::env-github[:icons: font]
+ifdef::env-github[]
+:status:
+//:outfilesuffix: .adoc
+:caution-caption: :fire:
+:important-caption: :exclamation:
+:note-caption: :paperclip:
+:tip-caption: :bulb:
+:warning-caption: :warning:
+endif::[]
+:uri-org: https://github.com/usnistgov
+:uri-repo: {uri-org}/macos_security
+
 = Changelog
 
 This document provides a high-level view of the changes to the macOS Security Compliance Project.
 
-== [Sequoia, Revision 1.1] - 2024-12-16]
+== [mSCP 2.x] - 2025-02-28
+IMPORTANT: This release is a major update and includes breaking changes. Please review the documentation before upgrading.
+
+=== Scripts
+* All scripts have been moved from individual files to a single API
+* All Apple Operating Systems have been consolidated into a single API
+* All document creation has been moved to a Jinja template
+* Add debug and version switch to CLI
+* Add markdown switch to guidance CLI
+* Add generate_documents function for handleing markdown and asciidoc guidance generation
+* Add render_template function for rendering Jinja templates for document generation
+
+=== Rules
+* All rules updated to support the new API
+* All ios_stig rules have been modified to be just disa_stig with baseline logic to support the correct OS
+
+=== Baselines
+* All baselines updated to support the new API
+
+=== Templates
+* Created shell script Jinja templates for compliance checking
+* Created markdown and asciidoc Jinja templates for guidance generation
+* Created checklist Jinja templates for compliance checking
+* Created local report Jinja templates for compliance checking
+
+=== Miscellaneous
+* Refactored mscp-data to support better baseline generation
+* Created a mscp_data variable to store throughout the codebase
+
+== [Sequoia, Revision 1.1] - 2024-12-16
 * Rules
 ** Added Rules
 *** os_iphone_mirroring_disable

@@ -1,0 +1,22 @@
+# This is a CODEOWNERS file.
+# Lines starting with '#' are comments.
+# Each line is a file pattern followed by one or more owners.
+
+# The '*' pattern matches all files in the repository.
+# *       @stephenbeale @robertgendler @jmahlman
+
+# Specific directories can have different owners.
+# For example, the 'src' directory:
+# src/    @stephenbeale @another-contributor
+
+# Specific files can have different owners.
+# For example, the 'README.md' file:
+# README.md   @stephenbeale
+
+# You can also specify teams as owners.
+# For example, the 'docs' directory:
+# docs/   @team-docs
+
+# You can specify multiple owners for a file or directory.
+# For example, the 'scripts' directory:
+# scripts/    @stephenbeale @team-scripts

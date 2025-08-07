@@ -1,0 +1,164 @@
+{% set check_tags = ["permanent", "inherent", "n_a", "not_applicable"] %}
+{% set additional_info = rule | get_nested(["platforms", rule.os_type, "enforcement_info", "fix", "additional_info"]) %}
+{% set check_shell = rule | get_nested(["platforms", rule.os_type, "enforcement_info", "check", "shell"]) %}
+{% set fix_shell = rule | get_nested(["platforms", rule.os_type, "enforcement_info", "fix", "shell"]) %}
+
+### {{ rule.title }}
+
+{% if rule.tags is defined or rule.tags is not none and "supplemental" in rule.tags %}
+{{ rule.discussion | include_replace | asciidoc_to_markdown }}
+{% else %}
+{{ rule.discussion | asciidoc_to_markdown }}
+{% endif %}
+
+{%- if rule.mechanism == "manual" %}
+> **NOTE**: This rule is marked as manual and may not be able to be automated. It is also excluded in the compliance scan and will not report any results.
+{% endif -%}
+
+{% if not rule.tags | select('in', check_tags) | list %}
+{% if rule.tags is not defined or rule.tags is none or "supplemental" not in rule.tags %}
+{% if rule.os_name == "macos" %}
+To check the state of the system, run the following command(s):
+
+```bash
+{% if check_shell is not none %}
+{{ check_shell }}
+{% else %}
+{{ rule.check | replace("\\\\", "\\") | replace('\\"', '"') | trim | safe }}
+{%- endif -%}
+```
+{% else %}
+{{ rule.check if rule.check is not none }}
+{% endif %}
+
+{% if rule.os_name == "macos" %}
+If the result is not _{{ rule.result_value }}_, this is a finding.
+{% endif %}
+
+<table class="remediation">
+<tr>
+<td>
+<p>
+<strong>Remediation Description</strong><br /><br />
+
+{% if rule.fix is not none %}
+Perform the following to configure the system to meet the requirements:<br />
+{% endif %}
+
+{% if rule.mobileconfig_info is none and rule.fix is not none or fix_shell %}
+To check the state of the system, run the following command(s):
+
+```bash
+{{ rule.fix | asciidoc_to_markdown if rule.fix is not none else fix_shell }}
+```
+
+{% elif additional_info is not none %}
+{{ additional_info | asciidoc_to_markdown }}
+{% elif rule.mobileconfig_info is not none and fix_shell %}
+{% if fix_shell %}
+```bash
+{{ fix_shell -}}
+```
+{% endif %}
+
+{% if rule.mobileconfig_info %}
+```xml
+{{ rule.mobileconfig_info | mobileconfig_payloads_to_xml -}}
+```
+{% endif %}
+{% else %}
+{% if rule.os_name == "macos" %}
+{{ rule.fix | asciidoc_to_markdown }}
+{% else %}
+```xml
+{{ rule.mobileconfig_info | mobileconfig_payloads_to_xml -}}
+```
+{% endif %}
+{% endif %}
+
+</p>
+</td>
+</tr>
+</table>
+{% endif %}
+
+<table class="outer-table" border="1">
+  <tr>
+    <td> ID </td>
+    {% if rule.severity is not none %}
+    <td>{{ rule.rule_id }}<br />{{ rule.severity }}</td>
+    {% else %}
+    <td>{{ rule.rule_id }}</td>
+    {% endif %}
+  </tr>
+  <tr>
+    <td>References</td>
+    <td>
+      <table class="nested-table">
+        <tr>
+          <td><strong>800-53r5</strong></td>
+          <td>{{ rule.references.nist.nist_800_53r5 | group_ulify if rule.references.nist.nist_800_53r5 is not none }}</td>
+        </tr>
+        {% if "800-171" in baseline.title | upper or show_all_tags %}
+        <tr>
+          <td><strong>800-171r3</strong></td>
+          <td>{{ rule.references.nist.nist_800_171r3 | render_rules if rule.references.nist.nist_800_171r3 is not none }}</td>
+        </tr>
+        {% endif %}
+        {% if "STIG" in baseline.title | upper or show_all_tags %}
+        <tr>
+          <td><strong>DISA STIG(s)</strong></td>
+          <td>{{ rule.references.disa.disa_stig | render_rules if rule.references.disa.disa_stig is not none }}</td>
+        </tr>
+        {% if rule.references.disa.sfr is not none %}
+        <tr>
+          <td><strong>SFR</strong></td>
+          <td>{{ rule.references.disa.sfr | render_rules if rule.references.disa.sfr is not none }}</td>
+        </tr>
+        {% endif %}
+        {% endif %}
+        {% if "CIS" in baseline.title | upper or show_all_tags %}
+        <tr>
+          <td><strong>CIS Benchmark</strong></td>
+          <td>{{ rule.references.cis.benchmark | render_rules if rule.references.cis.benchmark is not none }}</td>
+        </tr>
+        <tr>
+          <td><strong>CIS Controls V8</strong></td>
+          <td>{{ rule.references.cis.controls_v8 | render_rules if rule.references.cis.controls_v8 is not none }}</td>
+        </tr>
+        {% endif %}
+        {% if "INDIGO" in baseline.title | upper or show_all_tags %}
+        <tr>
+          <td><strong>indigo<strong></td>
+          <td>{{ rule.references.bsi.indigo | render_rules if rule.references.bsi.indigo is not none }}</td>
+        </tr>
+        {% endif %}
+        {% if "CMMC" in baseline.title | upper or show_all_tags %}
+        <tr>
+          <td><strong>CMMC</strong></td>
+          <td>{{ rule.references.disa.cmmc | render_rules if rule.references.disa.cmmc is not none }}</td>
+        </tr>
+        {% endif %}
+        {% if rule.references.nist.cce is not none %}
+        <tr>
+          <td><strong>CCE</strong></td>
+          <td>{{ rule.references.nist.cce | render_rules }}</td>
+        </tr>
+        {% endif %}
+        {% if custom %}
+        <tr>
+          <td><strong>Custom References</strong></td>
+          <td>{{ rule.references.custom_refs | render_rules if rule.references.cce is not none }}</td>
+        </tr>
+        {% endif %}
+        {% if show_all_tags %}
+        <tr>
+          <td><strong>TAGS</strong></td>
+          <td>{{ rule.tags | render_rules }}</td>
+        </tr>
+        {% endif %}
+      </table>
+    </td>
+  </tr>
+</table>
+{% endif %}

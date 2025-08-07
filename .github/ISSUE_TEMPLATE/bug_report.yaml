@@ -1,0 +1,79 @@
+---
+name: Bug report
+description: Create a report to help us improve
+title: '[Bug]: '
+labels: ["bug", "triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        **Please read this!**
+
+        Before opening a new issue, make sure to search for keywords in the issues filtered by the "regression" or "bug" label and verify the issue you're about to submit isn't a duplicate.
+  - type: checkboxes
+    attributes:
+      label: Is there an existing issue for this?
+      description: Please search to see if an issue already exists for the bug you encountered.
+      options:
+        - label: I have searched the existing issues
+          required: true
+  - type: input
+    id: summary
+    attributes:
+      label: Summary
+      description: Summarize the bug encountered concisely
+      placeholder: 'Enter a brief summary of the bug'
+  - type: textarea
+    id: steps-to-reproduce
+    attributes:
+      label: Steps to reproduce
+      description: How one can reproduce the issue - this is very important
+      placeholder: 'Describe the steps to reproduce the issue'
+  - type: input
+    id: operating-system-version
+    attributes:
+      label: Operating System version
+      description: macOS Version and build
+      placeholder: 'Enter the macOS version and build'
+  - type: dropdown
+    id: processor_type
+    attributes:
+      label: Intel or Apple Silicon
+      description: Intel based process or Apple Silicon Mac
+      multiple: false
+      options:
+        - Apple Silicon
+        - Intel
+      default: 0
+    validations:
+      required: true
+  - type: textarea
+    id: current-bug-behavior
+    attributes:
+      label: What is the current *bug* behavior?
+      description: What actually happens
+      placeholder: 'Describe the current bug behavior'
+  - type: textarea
+    id: expected-correct-behavior
+    attributes:
+      label: What is the expected *correct* behavior?
+      description: What you should see instead
+      placeholder: 'Describe the expected correct behavior'
+  - type: textarea
+    id: relevant-logs-and-screenshots
+    attributes:
+      label: Relevant logs and/or screenshots
+      description: Paste any relevant logs - please use code blocks (```) to format console output, logs, and code as it's tough to read otherwise.
+      placeholder: 'Paste relevant logs or screenshots'
+  - type: textarea
+    id: output-of-checks
+    attributes:
+      label: Output of checks
+      description: Paste any output that occurs with the bug
+      placeholder: 'Paste the output of checks'
+  - type: textarea
+    id: possible-fixes
+    attributes:
+      label: Possible fixes
+      description: If you can, link to the line of code that might be responsible for the problem
+      placeholder: 'Suggest possible fixes'

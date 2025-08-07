@@ -1,0 +1,11 @@
+{% for baseline in baselines %}
+<Profile id="xccdf_gov.nist.mscp.content_profile_{{ baseline.name }}">
+  <title>{{ baseline.name }}</title>
+  <description>This profile selects all rules tagged as {{ baseline.name }}</description>
+  {% for profile in baseline.profile%}
+  {% for rule in profile.rules %}
+  <select idref="xccdf_gov.nist.mscp.content_rule_{{ rule.rule_id }}" selected="true"/>
+  {% endfor %}
+  {% endfor %}
+</Profile>
+{% endfor %}

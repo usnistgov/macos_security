@@ -1,0 +1,79 @@
+id: os_require_managed_pasteboard_enforce
+title: Ensure copy/paste of data from Managed to Unmanaged Applications is Disabled
+discussion: "The device _MUST_ be configured to disable copy/paste of data from managed to unmanaged applications.\n\nIf 'true', copy and paste functionality respects the 'allowOpenFromManagedToUnmanaged' and 'allowOpenFromUnmanagedToManaged' restrictions. "
+references:
+  nist:
+    cce:
+      ios_18:
+        - CCE-94459-5
+      ios_17:
+        - CCE-93443-0
+      ios_16:
+        - CCE-93243-4
+      visionos_2:
+        - CCE-94506-3
+    800-53r5:
+      - AC-23
+      - SC-7(10)
+  disa:
+    cci:
+      - CCI-000366
+      - CCI-000097
+      - CCI-000370
+    disa_stig:
+      ios_18:
+        - AIOS-18-014600
+      ios_17:
+        - AIOS-17-014600
+        - AIOS-17-714600
+      ios_16:
+        - AIOS-16-014600
+        - AIOS-16-714600
+    sfr:
+      - 'FMT_SMF_EXT.1.1 #47'
+  bsi:
+    indigo:
+      ios_17:
+        - ANNEX K
+platforms:
+  iOS:
+    '18.0':
+      supervised: false
+      benchmarks:
+        - name: disa_stig
+          severity: medium
+        - name: indigo_base
+          severity: medium
+        - name: indigo_high
+          severity: medium
+    '17.0':
+      supervised: false
+      benchmarks:
+        - name: disa_stig
+          severity: medium
+        - name: ios_stig_byoad
+          severity: medium
+        - name: indigo_base
+          severity: medium
+        - name: indigo_high
+          severity: medium
+    '16.0':
+      supervised: false
+      benchmarks:
+        - name: disa_stig
+          severity: medium
+        - name: ios_stig_byoad
+          severity: medium
+    introduced: '15.0'
+  visionOS:
+    '2.0':
+      supervised: false
+    introduced: '2.0'
+tags:
+  - cnssi-1253_moderate
+  - cnssi-1253_low
+  - cnssi-1253_high
+mobileconfig_info:
+  - PayloadType: com.apple.applicationaccess
+    PayloadContent:
+      - requireManagedPasteboard: true

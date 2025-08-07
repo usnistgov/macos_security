@@ -1,0 +1,25 @@
+id: os_map_pki_identity
+title: Map identity for PKI based authentication
+discussion: |-
+  Without mapping the certificate used to authenticate to the user account, the ability to determine the identity of the individual user or group will not be available for forensic analysis.
+
+  NOTE: For directory bound systems, the technology supports this requirement and cannot be configured to be out of compliance. The technology inherently meets this requirement.
+references:
+  nist:
+    cce:
+      macos_15:
+        - CCE-94226-8
+      macos_14:
+        - CCE-92823-4
+      macos_13:
+        - CCE-91819-3
+platforms:
+  macOS:
+    '15.0': {}
+    '14.0': {}
+    '13.0': {}
+    enforcement_info:
+      fix:
+        additional_info: For directory bound systems, the technology inherently meets this requirement. No fix is required.
+tags:
+  - inherent

@@ -1,0 +1,59 @@
+platforms:
+  macos:
+    - os_version: 15.0
+      os_name: "sequoia"
+      compliance_version: "Sequoia Guidance, Revision 1.1"
+      revision: 1.1
+      cpe: o:apple:macos:15.0
+      date: "2024-12-16"
+
+    - os_version: 14.0
+      os_name: "sonoma"
+      compliance_version: "Sonoma Guidance, Revision 3.1"
+      revision: 3.1
+      cpe: o:apple:macos:14.0
+      date: "2024-12-16"
+
+    - os_version: 13.0
+      os_name: "ventura"
+      compliance_version: "Ventura Guidance, Revision 5.1"
+      revision: 5.1
+      cpe: o:apple:macos:13.0
+      date: "2024-12-16"
+
+    - os_version: 12.0
+      os_name: "monterey"
+      compliance_version: "Monterey Guidance, Revision 6.0"
+      revision: 6.0
+      cpe: o:apple:macos:12.0
+      date: "2024-04-24"
+
+  ios:
+    - os_version: 18.0
+      os_name: "ios_18"
+      compliance_version: "iOS 18 Guidance, Revision 1.1"
+      revision: 1.1
+      cpe: o:apple:ios:18.0
+      date: "2024-12-16"
+
+    - os_version: 17.0
+      os_name: "ios_17"
+      compliance_version: "iOS 17 Guidance, Revision 3.0"
+      revision: 3.0
+      cpe: o:apple:ios:17.0
+      date: "2024-09-12"
+
+    - os_version: 16.0
+      os_name: "ios_16"
+      compliance_version: "iOS 16 Guidance, Revision 3.0"
+      revision: 3.0
+      cpe: o:apple:ios:16.0
+      date: "2024-09-12"
+
+  visionos:
+    - os_version: 2.0
+      os_name: "visionos_2"
+      compliance_version: "visionOS 2.0 Guidance, Revision 1.0"
+      revision: 1.0
+      cpe: o:apple:visionos:2.0
+      date: "2024-09-12"

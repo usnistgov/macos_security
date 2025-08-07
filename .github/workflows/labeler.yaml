@@ -1,0 +1,30 @@
+---
+# yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
+name: "Labeler"
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - dev_2.0
+    paths-ignore:
+      - 'archive/**'
+  pull_request_target:
+    types: [opened, synchronize, reopened]
+    branches:
+      - dev_2.0
+    paths-ignore:
+      - 'archive/**'
+
+jobs:
+  labeler:
+    name: Labeler
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+    steps:
+      - name: Labeler
+        uses: actions/labeler@v5
+        with:
+          configuration-path: .github/labeler.yaml

@@ -1,0 +1,41 @@
+id: sysprefs_time_machine_auto_backup_enable
+title: Configure Time Machine for Automatic Backups
+discussion: |
+  Automatic backups _MUST_ be enabled when using Time Machine.
+references:
+  nist:
+    cce:
+      monterey:
+        - CCE-91142-0
+      big_sur:
+        - CCE-85535-3
+  cis:
+    benchmark:
+      monterey:
+        - 2.7.1 (level 2)
+      big_sur:
+        - 2.7.1 (level 2)
+    controls_v8:
+      - 11.2
+platforms:
+  macOS:
+    check: |
+      /usr/bin/osascript -l JavaScript << EOS
+      $.NSUserDefaults.alloc.initWithSuiteName('com.apple.TimeMachine')\
+      .objectForKey('AutoBackup').js
+      EOS
+    result:
+      string: 'true'
+    fix: |
+      This is implemented by a Configuration Profile.
+    monterey:
+      benchmarks:
+        - cis_lvl2
+    big_sur:
+      benchmarks:
+        - cis_lvl2
+tags:
+  - cisv8
+mobileconfig_info:
+  com.apple.TimeMachine:
+    AutoBackup: true
