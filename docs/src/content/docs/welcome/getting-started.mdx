@@ -1,0 +1,92 @@
+---
+title: Getting Started
+description: A getting-started reference.
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+The macOS Security Compliance Project is developed and maintained on [GitHub](https://github.com/usnistgov/macos_security).  
+**Each branch of the repository contains the rules and resources specific to a particular macOS version.** To work with the project or run its workflows, there are some prerequisites you need to install first.
+
+---
+
+## Prerequisites
+
+Before you begin, ensure you have the following installed on your system:
+
+- **Git** (optional, only needed if you want to clone the repository instead of downloading files directly from GitHub)  
+  [Download Git](https://git-scm.com/downloads) or use your system's package manager (see note below).
+- **Python 3** (required for running the project scripts and generating files)  
+  [Download Python](https://www.python.org/downloads/) or install via your package manager (see note below).
+  - Python modules:
+    - `pyyaml`
+    - `xlwt`
+    - These can be installed using `pip` after Python is set up.  
+      For example:  
+      ```bash
+      pip3 install pyyaml xlwt --user
+      ```
+- **Ruby** (optional, only needed for working with certain documentation formats)  
+  [Download Ruby](https://www.ruby-lang.org/en/downloads/) or install via your package manager (see note below).
+  - Gems:
+    - `asciidoctor`
+    - `asciidoctor-pdf`
+    - `rouge`
+    - These can be installed using `gem` or `bundle` after Ruby is set up.
+
+---
+
+## Downloading the Repository
+
+You can obtain the project files in one of two ways:
+
+- **Download directly from GitHub:**  
+
+  Visit the [GitHub repository](https://github.com/usnistgov/macos_security), select the branch that matches your target OS version (e.g., `sequoia`) using the branch dropdown, then use the "Download ZIP" option.  
+
+   <Aside type="caution">
+   *<strong>Always pull or checkout the branch that matches your target OS version (e.g., <code>sequoia</code>). Do not use the <code>main</code> branch for workflow or development.</strong>*
+   </Aside>
+
+  <small>*If you download the ZIP for the correct branch, you can [skip to Working with Project Files](#working-with-project-files).* </small>
+
+**OR**
+
+- **Clone using Git:**  
+
+  ```bash
+  git clone https://github.com/usnistgov/macos_security.git
+  cd macos_security
+  ```
+  Then, continue below to select the correct branch.
+
+---
+
+## Selecting the Correct Branch
+
+Before you begin working, select the repository branch that corresponds to the macOS version you intend to work with.
+
+<Aside type="caution">
+*<strong>Always pull or checkout the branch that matches your target OS version (e.g., <code>sequoia</code>). Do not use the <code>main</code> branch for workflow or development.</strong>*
+</Aside>
+
+To switch to the appropriate branch:
+```bash
+git checkout sequoia
+```
+
+---
+
+## Working with Project Files
+
+All the files you will work with are located in the `macos_security` folder. The contents of this folder are specific to the branch you have selected and include the tools and resources required to generate project outputs.
+
+Within this folder, you can:
+- Generate baselines
+- Produce guidance documentation
+- Create DDM and SCAP content
+- Generate mappings and compliance scripts
+- Make exemptions
+- Customize and tailor the output content to your needs
+
+For next steps, feel free to check out the [Quick Guide](/welcome/quick-guide/) for a quick overview, explore the Guides section of this website, or visit the project's [wiki](https://github.com/usnistgov/macos_security/wiki).

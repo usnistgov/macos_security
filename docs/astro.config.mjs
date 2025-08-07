@@ -1,11 +1,10 @@
-
 import { defineConfig } from 'astro/config';
 import starlight from '@astrojs/starlight';
 
 export default defineConfig({
 	integrations: [
 		starlight({
-			title: 'macOS Security Compliance Project',
+			title: 'mSCP',
 			favicon: '/favicon.png',
 			logo: {
 				src: './src/assets/logo.png',
@@ -13,6 +12,7 @@ export default defineConfig({
 			customCss: [
 				// Path to your custom CSS file
 				'./src/styles/custom.css',
+				'./src/styles/home_page.css',
 			],
 head: [
 			  {
@@ -31,58 +31,110 @@ head: [
 				 },
                         },
 			],
-			social: {
-				slack: 'https://macadmins.slack.com/archives/C0158JKQTC5',
-				github: 'https://github.com/usnistgov/macos_security',
-			},
+			social: [
+	{ icon: 'github', label: 'GitHub', href: 'https://github.com/usnistgov/macos_security' },
+	{ icon: 'slack', label: 'Slack', href: 'https://macadmins.slack.com/archives/C0158JKQTC5' },
+],
 			sidebar: [
 				{
-					label: 'Introduction',
+					label: 'Welcome',
+					collapsed: false,
 					items: [
-						{ label: 'Home', link: '/' },
-						{ label: 'Introduction', link: '/guides/introduction/' },
-						{ label: 'Getting Started', link: '/guides/getting-started/' },
+						{ label: 'Introduction', link: '/welcome/introduction/' },
+						{ label: 'Getting Started', link: '/welcome/getting-started/' },
+						{ label: 'Quick Guide', link: '/welcome/quick-guide/' },
 					],
 				},
 				{
-					label: 'How To',
-					collapsed: false,
+					label: 'Baselines',
+					collapsed: true,
 					items: [
-						{ label: 'Generate a Baseline', link: '/guides/how-to/generate-baseline/' },
-						{ label: 'Tailoring', link: '/guides/how-to/tailoring/' },
-						{ label: 'Generate Guidance', link: '/guides/how-to/generate-guidance/' },
-						{ label: 'Generate Configuration Profiles', link: '/guides/how-to/generate-profiles/' },
-						{ label: 'Generate DDM Components', link: '/guides/how-to/generate-declarative/' },
-						{ label: 'Compliance Script', link: '/guides/how-to/compliance-script/' },
-						{ label: 'Exemptions', link: '/guides/how-to/exemptions/' },
-						{ label: 'Customization', link: '/guides/how-to/customization/' },
-						{ label: 'Generate Mapping', link: '/guides/how-to/generate-mapping/' },
-						{ label: 'Generate SCAP', link: '/guides/how-to/generate-scap/' },
+						{ label: 'What Are Baselines?', link: '/baselines/what-are-baselines/' },
+						{ label: 'How To Generate Baseline', link: '/baselines/how-to-generate-baselines/' },
+						{ label: 'Baseline File Layout', link: '/baselines/baseline-file-layout/' },
+						{ label: 'Tailoring a Baseline', link: '/baselines/tailoring-a-baseline/' },
+					],
+				},
+				{
+					label: 'Guidance',
+					collapsed: true,
+					items: [
+						{ label: 'What Is Guidance?', link: '/guidance/what-is-guidance/' },
+						{ label: 'How To Generate Guidance', link: '/guidance/how-to-generate-guidance/' },
+						{ label: 'Guidance File Layout', link: '/guidance/guidance-file-example/' },
+					],
+				},
+				{
+					label: 'Configuration Profiles',
+					collapsed: true,
+					items: [
+						{ label: 'What Are Configuration Profiles?', link: '/configuration-profiles/what-are-configuration-profiles/' },
+						{ label: 'How to Generate Configuration Profiles', link: '/configuration-profiles/how-to-generate-configuration-profiles/' },
+						{ label: 'Configuration Profile Layout', link: '/configuration-profiles/configuration-profile-layout/' },
+					],
+				},
+				{
+					label: 'DDM Components',
+					collapsed: true,
+					items: [
+						{ label: 'What is DDM?', link: '/ddm-components/what-is-ddm/' },
+						{ label: 'How to Generate DDM Components', link: '/ddm-components/how-to-generate-ddm-components/' },
+						{ label: 'DDM Component Layout', link: '/ddm-components/ddm-component-layout/' },
+					],
+				},
+				{
+					label: 'Compliance Scripts',
+					collapsed: true,
+					items: [
+						{ label: 'What Are Compliance Scripts?', link: '/compliance-scripts/what-are-compliance-scripts/' },
+						{ label: 'How to Generate Compliance Scripts', link: '/compliance-scripts/how-to-generate-compliance-scripts/' },
+						{ label: 'Compliance Script Layout', link: '/compliance-scripts/compliance-script-layout/' },
+					],
+				},
+				{
+					label: 'Other Generated Content',
+					collapsed: true,
+					items: [
+						{ label: 'Generate Mapping', link: '/other/generate-mapping/' },
+						{ label: 'Generate SCAP', link: '/other/generate-scap/' },
+					],
+				},
+				{
+					label: 'Personalization',
+					collapsed: true,
+					items: [
+						{ label: 'Tailoring Rules', link: '/personalization/tailoring-rules/' },
+						{ label: 'Customize Rules', link: '/personalization/customize-rules/' },
+						{ label: 'Exempting Rules', link: '/personalization/exempting-rules/' },
 					],
 				},
 				{
 					label: 'Repository',
 					collapsed: true,
 					items: [
-						{ label: 'Layout', link: '/reference/layout/' },
-						{ label: 'Baselines', link: '/reference/baselines/' },
-						{ label: 'Includes', link: '/reference/includes/' },
-						{ label: 'Rules', link: '/reference/rules/' },
-						{ label: 'Sections', link: '/reference/sections/' },
-						{ label: 'Scripts', link: '/reference/scripts/' },
+						{ label: 'Directory Layout', link: '/repository/directory-layout/' },
+						{ label: 'Includes Directory', link: '/repository/includes-directory/' },
+						{ label: 'Rules File Layout', link: '/repository/rule-file-layout/' },
+						{ label: 'Sections File Layout', link: '/repository/sections-file-layout/' },
+						{ label: 'Script Arguments List', link: '/repository/script-arguments-list/' },
 					],
 				},
 				{
 					label: 'More Information',
 					collapsed: true,
 					items: [
-						{ label: 'mSCP Resources', link: '/reference/more/resources/' },
-						{ label: 'Contributing', link: '/reference/more/contributing/' },
-						{ label: 'Vendor Attribution', link: '/reference/more/vendor-attribution/' },
-						{ label: 'FAQ', link: '/reference/more/faq/' },
+						{ label: 'mSCP Training/Resources', link: '/more-information/resources/' },
+						{ label: 'Contributing', link: '/more-information/contributing/' },
+						{ label: 'Vendor Attribution', link: '/more-information/vendor-attribution/' },
+						{ label: 'FAQ', link: '/more-information/faq/' },
 					],
 				},
 			],
+			editLink: {
+				baseUrl: 'https://github.com/usnistgov/macos_security/edit/main/docs/',
+			},
+			lastUpdated: true,
 		}),
 	],
 });
+
