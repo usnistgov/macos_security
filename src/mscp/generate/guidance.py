@@ -199,3 +199,5 @@ def generate_guidance(args: argparse.Namespace) -> None:
         show_all_tags,
         custom,
     )
+
+    print(f"MSCP DOCUMENT GENERATION COMPLETE! All of the documents can be found in this folder: /{build_path}/")
