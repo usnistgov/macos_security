@@ -70,7 +70,7 @@ platforms:
       check:
         shell: |
           /usr/bin/pwpolicy -getaccountpolicies 2> /dev/null \
-            | /usr/bin/tail -n +2 \
+            | /usr/bin/tail +2 \
             | /usr/bin/xmllint --xpath '//dict/key[text()="policyAttributeExpiresEveryNDays"]/following-sibling::*[1]/text()' -
         result:
           integer: $ODV

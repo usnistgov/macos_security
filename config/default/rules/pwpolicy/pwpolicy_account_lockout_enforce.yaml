@@ -96,7 +96,7 @@ platforms:
           severity: medium
     enforcement_info:
       check:
-        shell: /usr/bin/pwpolicy -getaccountpolicies 2> /dev/null | /usr/bin/tail -n +2 | /usr/bin/xmllint --xpath '//dict/key[text()="policyAttributeMaximumFailedAuthentications"]/following-sibling::integer[1]/text()' - | /usr/bin/awk '{ if ($1 <= $ODV) {print "yes"} else {print "no"}}' | /usr/bin/uniq
+        shell: /usr/bin/pwpolicy -getaccountpolicies 2> /dev/null | /usr/bin/tail +2 | /usr/bin/xmllint --xpath '//dict/key[text()="policyAttributeMaximumFailedAuthentications"]/following-sibling::integer[1]/text()' - | /usr/bin/awk '{ if ($1 <= $ODV) {print "yes"} else {print "no"}}' | /usr/bin/uniq
         result:
           string: 'yes'
     introduced: '10.7'

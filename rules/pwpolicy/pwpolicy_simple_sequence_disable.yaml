@@ -66,7 +66,7 @@ platforms:
         - name: disa_stig
     enforcement_info:
       check:
-        shell: /usr/bin/pwpolicy -getaccountpolicies 2> /dev/null | /usr/bin/tail -n +2 | /usr/bin/xmllint --xpath '//dict/key[text()="policyIdentifier"]/following-sibling::*[1]/text()' - | /usr/bin/grep "allowSimple" -c
+        shell: /usr/bin/pwpolicy -getaccountpolicies 2> /dev/null | /usr/bin/tail +2 | /usr/bin/xmllint --xpath '//dict/key[text()="policyIdentifier"]/following-sibling::*[1]/text()' - | /usr/bin/grep "allowSimple" -c
         result:
           integer: 1
     introduced: '10.7'

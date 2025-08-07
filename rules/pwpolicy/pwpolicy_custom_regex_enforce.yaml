@@ -54,7 +54,7 @@ platforms:
           severity: medium
     enforcement_info:
       check:
-        shell: /usr/bin/pwpolicy -getaccountpolicies 2> /dev/null | /usr/bin/tail -n +2 | /usr/bin/xmllint --xpath 'boolean(//*[contains(text(),"policyAttributePassword matches '\''$ODV'\''")])' -
+        shell: /usr/bin/pwpolicy -getaccountpolicies 2> /dev/null | /usr/bin/tail +2 | /usr/bin/xmllint --xpath 'boolean(//*[contains(text(),"policyAttributePassword matches '\''$ODV'\''")])' -
         result:
           string: 'true'
     introduced: '14.0'

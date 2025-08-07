@@ -77,7 +77,7 @@ platforms:
       check:
         shell: |
           /usr/bin/pwpolicy getaccountpolicies 2>/dev/null \
-            | /usr/bin/tail -n +2 \
+            | /usr/bin/tail +2 \
             | /usr/bin/xmllint --xpath "//string[contains(text(),'policyAttributePassword matches')]/text()" - 2>/dev/null \
             | /usr/bin/sed -nE "s/.*\{([0-9]+),\}.*/\1/p" \
             | awk -v ODV="$ODV" '{ if ($1 >= ODV) print "true"; else print "false" }'

@@ -75,7 +75,7 @@ platforms:
       check:
         shell: |
           /usr/bin/pwpolicy -getaccountpolicies 2> /dev/null \
-            | /usr/bin/tail -n +2 \
+            | /usr/bin/tail +2 \
             | /usr/bin/xmllint --xpath '//dict/key[text()="policyIdentifier"]/following-sibling::*[1]/text()' - /dev/null \
             | /usr/bin/grep "allowSimple" -c
         result:
