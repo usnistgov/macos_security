@@ -34,6 +34,11 @@ references:
     - AC.L1-3.1.20
     - CM.L2-3.4.6
     - CM.L2-3.4.7
+  cis:
+    benchmark:
+      - 2.5.1.2 (level 1)
+    controls v8:
+      - N/A
 macOS:
   - '15.0'
 tags:
@@ -47,6 +52,8 @@ tags:
   - cmmc_lvl2
   - cmmc_lvl1
   - cnssi-1253_moderate
+  - cis_lvl1
+  - cis_lvl2
 mobileconfig: true
 mobileconfig_info:
   com.apple.applicationaccess:

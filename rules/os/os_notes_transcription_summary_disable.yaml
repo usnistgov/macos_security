@@ -29,7 +29,12 @@ references:
     - SC-7(10)
   800-171r3:
     - 03.01.20
-    - 03.04.06    
+    - 03.04.06
+  cis:
+    benchmark:
+      - 2.5.1.4 (level 1)
+    controls v8:
+      - N/A
   cmmc:
     - AC.L1-3.1.20
     - CM.L2-3.4.6
@@ -46,6 +51,8 @@ tags:
   - cmmc_lvl2
   - cmmc_lvl1
   - cnssi-1253_moderate
+  - cis_lvl1
+  - cis_lvl2
 mobileconfig: true
 mobileconfig_info:
   com.apple.applicationaccess:
