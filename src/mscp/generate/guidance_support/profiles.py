@@ -217,7 +217,7 @@ def generate_profiles(
         managed_client_file.unlink()
 
     # Final message
-    print(
+    logger.info(
         """
         CAUTION: These configuration profiles are intended for evaluation in a TEST
         environment. Certain configuration profiles (Smartcards), when applied could

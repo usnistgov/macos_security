@@ -177,9 +177,9 @@ def generate_ddm(build_path: Path, baseline: Baseline, baseline_name: str) -> No
             ddm_dict[declaration_type][ddm_key] = ddm_value
 
     sha256_hash = hashlib.sha256()
-    for ddm_type in mscp_data.get("ddm", {}).get("supported_types", []):
-        if ddm_type not in ddm_dict.keys():
-            logger.debug(f"Unsupported ddm type: {ddm_type}")
+    for ddm_type in ddm_dict.keys():
+        if ddm_type not in mscp_data.get("ddm", {}).get("supported_types", []):
+            logger.error(f"Unsupported ddm type: {ddm_type}")
             continue
 
         if "files" in ddm_type:

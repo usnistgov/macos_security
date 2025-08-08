@@ -13,8 +13,15 @@ from ..classes.loguruformatter import LoguruFormatter
 from .logger_instance import logger
 
 
-def set_logger(debug: bool = False) -> loguru.Logger:
-    log_level: str = "DEBUG" if debug else "INFO"
+def set_logger(debug: bool = False, verbosity: int = 0) -> loguru.Logger:
+    log_level: str = "ERROR"
+
+    if verbosity == 1:
+        log_level = "WARNING"
+    elif verbosity == 2:
+        log_level = "INFO"
+    elif verbosity > 2 or debug:
+        log_level = "DEBUG"
 
     formatter = LoguruFormatter()
     logger.remove()
@@ -24,8 +31,6 @@ def set_logger(debug: bool = False) -> loguru.Logger:
             {
                 "sink": sys.stderr,
                 "level": log_level,
-                "format": formatter.format_log,
-                "filter": lambda record: record["level"].name != "SUCCESS",
             },
             {
                 "sink": Path("logs", "mscp.log"),

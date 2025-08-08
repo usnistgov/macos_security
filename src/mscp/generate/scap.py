@@ -7,8 +7,6 @@ from datetime import datetime
 from pathlib import Path
 from typing import Any
 
-from icecream import ic
-
 # Additional python modules
 from jinja2 import Environment, FileSystemLoader
 
@@ -54,6 +52,7 @@ def create_scap(
 
 
 def generate_scap(args: argparse.Namespace) -> None:
+    logger.error("generate_scap() NEEDS TO BE BUILT")
     export_as: str = "scap"
     output_file: Path = Path(config["output_dir"])
     all_baselines: list[str] = [args.baseline.stem if args.baseline else ""]
@@ -70,8 +69,6 @@ def generate_scap(args: argparse.Namespace) -> None:
 
     #     sys.exit()
 
-    ic(all_baselines)
-    ic(len(all_baselines))
     sys.exit()
     all_rules_pruned: list[Macsecurityrule] = [
         rule for rule in all_rules if baseline_name in rule.tags
@@ -103,5 +100,3 @@ def generate_scap(args: argparse.Namespace) -> None:
         logger.info(f"{args.os_name} will only export as XCCDF")
 
     output_file = output_file / base_filename
-
-    ic(args)

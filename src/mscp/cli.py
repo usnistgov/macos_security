@@ -347,6 +347,10 @@ def parse_cli() -> None:
         logger = set_logger(debug=True)
         logger.info("=== Logging level changed ===")
         logger.info("LOGGING LEVEL: DEBUG")
+    else:
+        logger = set_logger()
+        logger.info("=== Logging level changed ===")
+        logger.info("LOGGING LEVEL: ERROR")
 
     if not hasattr(args, "func"):
         logger.error("Functionality for {} is not implemented yet.", args.subcommand)
