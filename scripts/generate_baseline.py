@@ -19,15 +19,24 @@ def main() -> None:
     parser = Customparser(
         description="CLI tool for generating baselines and benchmarks from MSCP.",
     )
+
+
+    # Platform options
     parser.add_argument(
+        "-O", 
         "--os_name",
+        type=str,
         choices=["macos", "ios", "visionos"],
         default="macos",
-        help="Which operating system being checked.",
-        type=str,
+        help="Target operating system for the baseline (default: macOS)."
     )
-
     parser.add_argument(
+        "--list-platforms",
+        action="store_true",
+        help="List all available platforms and their OS versions."
+    )
+    parser.add_argument(
+        "-o",
         "--os_version",
         default=15.0,
         type=float,
@@ -60,6 +69,12 @@ def main() -> None:
         "--list_tags",
         help="List the available keyword tags to search for.",
         action="store_true",
+    )
+    parser.add_argument(
+        "--output-dir",
+        type=str,
+        default=None,
+        help="Directory to write the baseline file (default: ../build/baselines/<platform>)"
     )
     parser.add_argument(
         "-t",
@@ -97,11 +112,6 @@ def main() -> None:
         logger.info("=== Logging level changed ===")
         logger.info("LOGGING LEVEL: DEBUG")
 
-    if not hasattr(args, "func"):
-        logger.error("Functionality for {} is not implemented yet.", args.subcommand)
-        parser.print_help()
-        sys.exit()
-
     if args.os_name == "ios" and args.os_version < 16:
         logger.warning(
             "iOS/iPadOS 16 and below is not supported, please use mSCP version 1.0."
@@ -113,17 +123,6 @@ def main() -> None:
             "macOS 13 and below is not supported, please use mSCP version 1.0."
         )
         sys.exit()
-
-    if args.os_name == "visionos":
-        logger.warning("visionOS is not supported at this time.")
-        sys.exit()
-
-    if args.os_name != "macos" and args.script:
-        logger.error(
-            "Compliance script generation is only supported for macOS. Please remove the --script flag."
-        )
-        sys.exit()
-
 
     args.func(args)
 
