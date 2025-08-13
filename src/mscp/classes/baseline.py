@@ -7,7 +7,7 @@ from typing import Any
 
 # Additional python modules
 import pandas as pd
-from pydantic import BaseModel, Field
+from pydantic import BaseModel
 
 # Local python modules
 from ..common_utils import config, create_yaml, open_file
@@ -163,7 +163,7 @@ class Baseline(BaseModelWithAccessors):
         benchmark: str,
         os_type: str,
         os_version: float,
-        baseline_dict: dict[str, Any] = Field(default_factory=dict[str, Any]),
+        baseline_dict: dict[str, Any],
     ) -> None:
         """
         Creates a new baseline YAML file based on the provided rules, metadata, and configuration.

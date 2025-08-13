@@ -2,7 +2,7 @@
 
 # Standard python modules
 from collections.abc import Sequence
-from typing import Any, Type
+from typing import Any
 
 # Local python modules
 from .logger_instance import logger
@@ -12,7 +12,7 @@ from .logger_instance import logger
 
 def sanitize_input(
     prompt: str,
-    type_: Type[Any] | None = None,
+    type_: type[Any] | None = None,
     range_: Sequence[Any] | None = None,
     default_: Any | None = None,
 ) -> Any:

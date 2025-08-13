@@ -7,15 +7,16 @@ import sys
 from .cli import parse_cli
 from .common_utils import logger, set_logger
 
+logger.enable("mscp")
+
 
 def main() -> None:
+    logger = set_logger()
+    logger.info("=== Logging Initialized ===")
+    logger.info("LOGGING LEVEL: ERROR")
+
     parse_cli()
 
 
 if __name__ == "__main__":
-    logger.enable("mscp")
-    logger = set_logger()
-    logger.info("=== Logging Initialized ===")
-    logger.info("LOGGING LEVEL: INFO")
-
     sys.exit(main())
