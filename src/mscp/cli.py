@@ -2,12 +2,12 @@
 
 # Standard python modules
 import argparse
-import sys
 import platform
+import sys
 from pathlib import Path
 
 # Local python modules
-from .common_utils import logger, set_logger, validate_yaml_file, supported_languages
+from .common_utils import logger, set_logger, supported_languages, validate_yaml_file
 from .generate import (
     generate_baseline,
     generate_checklist,
@@ -16,6 +16,8 @@ from .generate import (
     generate_mapping,
     generate_scap,
 )
+
+logger.enable("mscp")
 
 
 class Customparser(argparse.ArgumentParser):
@@ -49,14 +51,24 @@ def validate_file(arg: str) -> Path | None:
         sys.exit()
 
 
-def parse_cli() -> None:
-    parent_parser = Customparser()
+def parse_cli(program: str | None = "mscp") -> None:
+    logger = set_logger()
+    parent_parser = Customparser(add_help=False)
     parent_parser.add_argument(
         "-D",
         "--debug",
         required=False,
         help="Enable debug output.",
         action="store_true",
+    )
+
+    benchmark_parser = Customparser(add_help=False)
+    benchmark_parser.add_argument(
+        "-B",
+        "--benchmark",
+        default=None,
+        help="Benchmark to use for the rules.",
+        action="store",
     )
 
     parent_parser.add_argument(
@@ -88,6 +100,21 @@ def parse_cli() -> None:
         help="Operating system version (eg: 14.0, 15.0).",
     )
 
+    parser.add_argument(
+        "--log_level",
+        default="ERROR",
+        choices=["DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"],
+        help="Set the logging level.",
+        type=str.upper,
+    )
+
+    parser.add_argument(
+        "-V",
+        "--version",
+        action="version",
+        version=f"%(prog)s {__version__}",
+    )
+
     # Sub Parsers for individual commands
     subparsers = parser.add_subparsers(
         title="Subcommands",
@@ -100,7 +127,7 @@ def parse_cli() -> None:
     baseline_parser: argparse.ArgumentParser = subparsers.add_parser(
         "baseline",
         help="Given a keyword tag, generate a generic baseline.yaml file containing rules with the tag.",
-        parents=[parent_parser],
+        parents=[parent_parser, benchmark_parser],
         add_help=False,
     )
     baseline_parser.set_defaults(func=generate_baseline)
@@ -133,7 +160,7 @@ def parse_cli() -> None:
     guidance_parser: argparse.ArgumentParser = subparsers.add_parser(
         "guidance",
         help="Given a baseline, create guidance documents and files.",
-        parents=[parent_parser],
+        parents=[parent_parser, benchmark_parser],
         add_help=False,
     )
     guidance_parser.set_defaults(func=generate_guidance)
@@ -376,8 +403,8 @@ def parse_cli() -> None:
         parser.print_help()
         sys.exit()
 
-    if args.debug:
-        logger = set_logger(debug=True)
+    if args.debug or args.log_level == "DEBUG":
+        logger = set_logger("DEBUG")
         logger.info("=== Logging level changed ===")
         logger.info("LOGGING LEVEL: DEBUG")
     else:
@@ -420,9 +447,4 @@ def parse_cli() -> None:
 
 
 if __name__ == "__main__":
-    logger.enable("mscp")
-    logger = set_logger()
-    logger.info("=== Logging Initialized ===")
-    logger.info("LOGGING LEVEL: WARNING")
-
     sys.exit(parse_cli())

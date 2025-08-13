@@ -212,7 +212,9 @@ class Baseline(BaseModelWithAccessors):
             )
 
         if "description" not in baseline_dict:
-            description: str = f"This guide describes the actions to take when securing a {os_type} {os_version} system against the {full_title}{f' {baseline_name}' if baseline_name else ''} security benchmark.\n"
+            description: str = (
+                f"This guide describes the actions to take when securing a {os_type} {os_version} system against the {full_title}{f' {baseline_name}' if baseline_name else ''} security benchmark.\n"
+            )
 
             if benchmark == "recommended":
                 description += "\nInformation System Security Officers and benchmark creators can use this catalog of settings in order to assist them in security benchmark creation. This list is a catalog, not a checklist or benchmark, and satisfaction of every item is not likely to be possible or sensible in many operational scenarios."

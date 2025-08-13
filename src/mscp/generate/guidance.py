@@ -25,8 +25,8 @@ from ..generate.guidance_support import (
     generate_documents,
     generate_excel,
     generate_profiles,
-    generate_script,
     generate_restore_script,
+    generate_script,
 )
 
 
@@ -73,6 +73,10 @@ def generate_guidance(args: argparse.Namespace) -> None:
     pdf_theme: str = "mscp-theme.yml"
     custom: bool = not any(Path(config["custom"]["root_dir"]).iterdir())
     show_all_tags: bool = False
+
+    current_version_data: dict[str, Any] = get_version_data(
+        args.os_name, args.os_version, mscp_data
+    )
 
     output_basename: str = args.baseline.name
     baseline_name: str = args.baseline.stem

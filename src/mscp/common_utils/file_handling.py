@@ -4,16 +4,28 @@
 import csv
 import json
 import plistlib
+from collections.abc import Callable
 from pathlib import Path
 from typing import Any
 
 # Additional python modules
 import yaml
 
+from .error_handling import (
+    COMMON_ERRORS,
+    CSV_ERRORS,
+    JSON_ERRORS,
+    PLIST_ERRORS,
+    YAML_ERRORS,
+    log_expected_errors,
+)
+
 # Local python modules
 from .logger_instance import logger
 
 ENCODING: str = "utf-8"
+READ_HANDLERS: dict[str, Callable[[Path], object]] = {}
+WRITE_HANDLERS: dict[str, Callable[[Path, Any], None]] = {}
 
 
 def _str_presenter(dumper, data):
@@ -34,36 +46,39 @@ yaml.add_representer(str, _str_presenter)
 yaml.representer.SafeRepresenter.add_representer(str, _str_presenter)
 
 
-def open_file(file_path: Path, language: str = "en") -> Any:
-    """
-    Attempts to open a file and read its contents with error checking and logging.
+def register_read_handler(*extensions: str):
+    def decorator(func: Callable[[Path], object]):
+        for ext in extensions:
+            READ_HANDLERS[ext.lower()] = func
+        return func
 
-    Args:
-        file_path (Path): The path to the file to be opened.
-
-    Returns:
-        str: The content of the file if successful.
-
-    Raises:
-        FileNotFoundError: If the file does not exist.
-        PermissionError: If there are insufficient permissions to access the file.
-        IOError: If an I/O error occurs during file operations.
-        Exception: For any other unexpected errors.
-    """
-
-    match file_path.suffix:
-        case ".yaml" | ".yml":
-            return open_yaml(file_path, language=language)
-        case ".csv":
-            return open_csv(file_path)
-        case ".plist" | ".mobileconfig":
-            return open_plist(file_path)
-        case ".json":
-            return open_json(file_path)
-        case _:
-            return open_text(file_path)
+    return decorator
 
 
+def register_write_handler(*suffixes: str):
+    def decorator(func: Callable[[Path, Any], None]):
+        for suffix in suffixes:
+            WRITE_HANDLERS[suffix.lower()] = func
+        return func
+
+    return decorator
+
+
+def open_file(file_path: Path) -> Any:
+    handler = READ_HANDLERS.get(file_path.suffix.lower(), open_text)
+    return handler(file_path)
+
+
+def create_file(file_path: Path, data: Any) -> None:
+    writer = WRITE_HANDLERS.get(file_path.suffix.lower())
+    if writer:
+        writer(file_path, data)
+    else:
+        logger.warning("No writer registered for {}, using fallback", file_path.suffix)
+        create_text(file_path, data)
+
+
+@log_expected_errors(COMMON_ERRORS, context="Reading text file: ")
 def open_text(file_path: Path) -> str:
     """
     Attempts to open a text file and read it's contents with error checking and logging
@@ -75,21 +90,13 @@ def open_text(file_path: Path) -> str:
         str: The content of the file if successful, None if otherwise.
     """
 
-    try:
-        logger.debug(f"Attempting to open text file: {file_path}")
-        return file_path.read_text(encoding=ENCODING)
-
-    except Exception as e:
-        logger.error(
-            f"An error occurred while opening the file: {file_path}. Error: {e}"
-        )
-        raise
+    logger.debug(f"Attempting to open text file: {file_path}")
+    return file_path.read_text(encoding=ENCODING)
 
 
-def open_yaml(
-    file_path: Path,
-    language: str = None,
-) -> dict[str, Any]:
+@register_read_handler(".yaml", ".yml")
+@log_expected_errors(YAML_ERRORS, context="Reading YAML file: ")
+def open_yaml(file_path: Path) -> dict[str, Any]:
     """
     Attempts to open a yaml file and read its contents with error checking and logging.
     Supports !localize tags for automatic gettext localization.
@@ -104,24 +111,14 @@ def open_yaml(
         dict[str, Any]: The content of the file if successful, empty dict otherwise.
     """
 
-    try:
-        logger.debug("Attempting to open YAML: {}", file_path)
-        # Note: localization should be configured globally before YAML processing
-        # configure_localization_for_yaml is now called at the application level
+    logger.debug("Attempting to open YAML: {}", file_path)
 
-        data = yaml.safe_load(file_path.read_text(encoding=ENCODING))
-        return data if isinstance(data, dict) else {}
-
-    except (
-        yaml.YAMLError,
-        Exception,
-    ) as e:
-        logger.error(
-            "An error occurred while opening the file: {}. Error: {}", file_path, e
-        )
-        raise
+    data = yaml.safe_load(file_path.read_text(encoding=ENCODING))
+    return data if isinstance(data, dict) else {}
 
 
+@register_read_handler(".csv")
+@log_expected_errors(CSV_ERRORS, context="Reading CSV file: ")
 def open_csv(file_path: Path) -> dict[str, Any]:
     """
     Attempts to open a csv file and read its contents with error checking and logging
@@ -133,20 +130,13 @@ def open_csv(file_path: Path) -> dict[str, Any]:
         dict[str, Any]: The content of the file as a list of dictionaries if successful.
     """
 
-    try:
-        logger.debug("Attempting to open CSV: {}", file_path)
-        data = csv.DictReader(
-            file_path.read_text(encoding="utf-8-sig"), dialect="excel"
-        )
-        return data if isinstance(data, dict) else {}
-
-    except (csv.Error, Exception) as e:
-        logger.error(
-            f"An error occurred while opening the file: {file_path}. Error: {e}"
-        )
-        raise
+    logger.debug("Attempting to open CSV: {}", file_path)
+    data = csv.DictReader(file_path.read_text(encoding="utf-8-sig"), dialect="excel")
+    return data if isinstance(data, dict) else {}
 
 
+@register_read_handler(".plist", ".mobileconfig")
+@log_expected_errors(PLIST_ERRORS, context="Reading plist file: ")
 def open_plist(file_path: Path) -> dict[str, dict[str, bool]] | None:
     """
     Attempts to open a plist file and read its contents with error checking and logging.
@@ -160,33 +150,16 @@ def open_plist(file_path: Path) -> dict[str, dict[str, bool]] | None:
 
         dict[str, dict[str, bool]] | None: The parsed content of the plist file as a dictionary
         if successful, or None if an error occurs.
-
-    Raises:
-        plistlib.InvalidFileException: If the file is not a valid plist.
-        FileNotFoundError: If the file does not exist.
-        PermissionError: If there are insufficient permissions to read the file.
-        IOError: If an I/O error occurs while accessing the file.
-        Exception: For any other unexpected errors.
     """
 
-    try:
-        logger.debug("Attempting to open plist: {}", file_path)
+    logger.debug("Attempting to open plist: {}", file_path)
 
-        with file_path.open("rb") as file:
-            return plistlib.load(file)
-    except plistlib.InvalidFileException as e:
-        logger.error(
-            "An error occurred while processing the file: {}. Error: {}", file_path, e
-        )
-        raise
-
-    except Exception as e:
-        logger.error(
-            "An error occurred while opening the file: {}. Error: {}", file_path, e
-        )
-        raise
+    with file_path.open("rb") as file:
+        return plistlib.load(file)
 
 
+@register_read_handler(".json")
+@log_expected_errors(JSON_ERRORS, context="Reading JSON file: ")
 def open_json(file_path: Path) -> dict[str, Any]:
     """
     Opens a JSON file and returns its contents as a dictionary.
@@ -208,49 +181,38 @@ def open_json(file_path: Path) -> dict[str, Any]:
         Logs an error message if an exception occurs during file handling.
     """
 
-    try:
-        logger.debug("Attempting to open JSON: {}", file_path)
+    logger.debug("Attempting to open JSON: {}", file_path)
 
-        with file_path.open("r") as file:
-            return json.load(file)
-
-    except Exception as e:
-        logger.error(
-            "An error occurred while opening the file: {}. Error: {}", file_path, e
-        )
-        raise
+    with file_path.open("r") as file:
+        return json.load(file)
 
 
-def create_file(file_path: Path, data: Any) -> None:
-    """
-    Attempts to create a file with error checking and logging.
+# def create_file(file_path: Path, data: Any) -> None:
+#     """
+#     Attempts to create a file with error checking and logging.
 
-    Args:
-        file_path (Path): The path to the file to be created.
+#     Args:
+#         file_path (Path): The path to the file to be created.
 
-    Returns:
-        None: The function writes directly to the file and does not return a value.
+#     Returns:
+#         None: The function writes directly to the file and does not return a value.
+#     """
 
-    Raises:
-        FileNotFoundError: If the file does not exist.
-        PermissionError: If there are insufficient permissions to access the file.
-        IOError: If an I/O error occurs during file operations.
-        Exception: For any other unexpected errors.
-    """
-
-    match file_path.suffix:
-        case ".yaml" | ".yml":
-            create_yaml(file_path, data)
-        case ".csv":
-            create_csv(file_path, data)
-        case ".plist" | ".mobileconfig":
-            create_plist(file_path, data)
-        case ".json":
-            create_json(file_path, data)
-        case _:
-            create_text(file_path, data)
+#     match file_path.name:
+#         case name if re.search(r"\.ya?ml$", name):
+#             create_yaml(file_path, data)
+#         case name if re.search(r"\.csv$", name):
+#             create_csv(file_path, data)
+#         case name if re.search(r"\.(plist|mobileconfig)$", name):
+#             create_plist(file_path, data)
+#         case name if re.search(r"\.json$", name):
+#             create_json(file_path, data)
+#         case _:
+#             create_text(file_path, data)
 
 
+@register_write_handler(".yaml", ".yml")
+@log_expected_errors(YAML_ERRORS, context="Creating YAML file: ")
 def create_yaml(file_path: Path, data: dict[str, Any]) -> None:
     """
     Create YAML file.
@@ -262,39 +224,27 @@ def create_yaml(file_path: Path, data: dict[str, Any]) -> None:
     Returns:
         None: The function writes directly to the file and does not return a value.
     """
-    try:
-        logger.debug("Attempting to create YAML: {}", file_path)
+    logger.debug("Attempting to create YAML: {}", file_path)
 
-        if not file_path.exists():
-            file_path.touch()
+    if not file_path.exists():
+        file_path.touch()
 
-        file_path.write_text(
-            yaml.dump(
-                dict(data),
-                default_flow_style=False,
-                sort_keys=False,
-                explicit_start=True,
-                indent=2,
-                allow_unicode=True,
-            ),
-            encoding=ENCODING,
-        )
+    file_path.write_text(
+        yaml.dump(
+            dict(data),
+            default_flow_style=False,
+            sort_keys=False,
+            explicit_start=True,
+            indent=2,
+            allow_unicode=True,
+        ),
+        encoding=ENCODING,
+    )
 
-        logger.success("Created YAML: {}", file_path)
-
-    except yaml.YAMLError as e:
-        logger.error(
-            "An error occurred while processing the file: {}. Error: {}", file_path, e
-        )
-        raise
-
-    except Exception as e:
-        logger.error(
-            "An error occurred while opening the file: {}. Error: {}", file_path, e
-        )
-        raise
+    logger.success("Created YAML: {}", file_path)
 
 
+@log_expected_errors(COMMON_ERRORS, context="Creating text file: ")
 def create_text(file_path: Path, data: str) -> None:
     """
     Write the supplied data to a file.
@@ -306,26 +256,19 @@ def create_text(file_path: Path, data: str) -> None:
     Returns:
         None: The function writes directly to the file and does not return a value.
     """
-    try:
-        file_path.write_text(data, encoding=ENCODING)
-    except IOError as e:
-        logger.error(
-            "An error occurred while opening the file: {}. Error: {}", file_path, e
-        )
-        raise
+
+    file_path.write_text(data, encoding=ENCODING)
 
 
+@register_write_handler(".plist", ".mobileconfig")
+@log_expected_errors(PLIST_ERRORS, context="Creating plist file: ")
 def create_plist(file_path: Path, data: dict[str, Any]) -> None:
-    try:
-        with file_path.open("wb") as file:
-            plistlib.dump(data, file)
-    except Exception as e:
-        logger.error(
-            "An error occurred while processing the file: {}. Error: {}", file_path, e
-        )
-        raise
+    with file_path.open("wb") as file:
+        plistlib.dump(data, file)
 
 
+@register_write_handler(".json")
+@log_expected_errors(JSON_ERRORS, context="Creating JSON file: ")
 def create_json(file_path: Path, data: dict[str, Any]) -> None:
     """
     Creates a JSON file at the specified file path with the given data.
@@ -337,15 +280,11 @@ def create_json(file_path: Path, data: dict[str, Any]) -> None:
     Raises:
         Exception: If an error occurs while writing to the file, it logs the error and re-raises the exception.
     """
-    try:
-        file_path.write_text(json.dumps(data, indent=1))
-    except Exception as e:
-        logger.error(
-            "An error occurred while processing the file: {}. Error: {}", file_path, e
-        )
-        raise
+    file_path.write_text(json.dumps(data, indent=1))
 
 
+@register_write_handler(".csv")
+@log_expected_errors(CSV_ERRORS, context="Creating CSV file: ")
 def create_csv(file_path: Path, data: list[dict[str, Any]]) -> None:
     """
     Creates a CSV file at the specified file path with the given data.
@@ -357,18 +296,13 @@ def create_csv(file_path: Path, data: list[dict[str, Any]]) -> None:
     Raises:
         Exception: If an error occurs while writing to the file, it logs the error and re-raises the exception.
     """
-    try:
-        with file_path.open("w", newline="", encoding=ENCODING) as file:
-            writer = csv.DictWriter(file, fieldnames=data[0].keys())
-            writer.writeheader()
-            writer.writerows(data)
-    except Exception as e:
-        logger.error(
-            "An error occurred while processing the file: {}. Error: {}", file_path, e
-        )
-        raise
+    with file_path.open("w", newline="", encoding=ENCODING) as file:
+        writer = csv.DictWriter(file, fieldnames=data[0].keys())
+        writer.writeheader()
+        writer.writerows(data)
 
 
+@log_expected_errors(COMMON_ERRORS, context="Creating directory: ")
 def make_dir(folder_path: Path) -> None:
     """
     Creates a directory at the specified folder path if it does not already exist.
@@ -376,24 +310,15 @@ def make_dir(folder_path: Path) -> None:
     Args:
         folder_path (Path): The path of the folder to be created.
 
-    Raises:
-        OSError: If the directory creation fails.
-
     Logs:
         Success message if the directory is created successfully.
-        Error message if the directory creation fails.
-        Debug message with the error details if the directory creation fails.
     """
     if not folder_path.exists():
-        try:
-            folder_path.mkdir(parents=True)
-            logger.success("Created folder: {}", folder_path)
-        except OSError as e:
-            logger.error("Creation of {} failed.", folder_path)
-            logger.debug("Error message: {}", str(e))
-            raise
+        folder_path.mkdir(parents=True)
+        logger.success("Created folder: {}", folder_path)
 
 
+@log_expected_errors(COMMON_ERRORS, context="Appending text to file: ")
 def append_text(
     file_path: Path, text: str, encoding: str = ENCODING, errors=None, newline=None
 ) -> None:
@@ -410,19 +335,15 @@ def append_text(
     Returns:
         None: The function writes directly to the file and does not return a value.
     """
-    try:
-        logger.debug(f"Appending to file: {file_path}")
-        with file_path.open(
-            mode="a", encoding=encoding, errors=errors, newline=newline
-        ) as f:
-            f.write(f"{text}\n")
-            logger.success("Appended to file: {}", file_path)
-
-    except Exception as e:
-        logger.error(f"Error occurred: {e}")
-        raise
+    logger.debug(f"Appending to file: {file_path}")
+    with file_path.open(
+        mode="a", encoding=encoding, errors=errors, newline=newline
+    ) as f:
+        f.write(f"{text}\n")
+        logger.success("Appended to file: {}", file_path)
 
 
+@log_expected_errors(COMMON_ERRORS, context="Removing directory: ")
 def remove_dir(folder_path: Path) -> None:
     """
     Remove a directory and all its contents.
@@ -436,24 +357,24 @@ def remove_dir(folder_path: Path) -> None:
     Raises:
         OSError: If an error occurs during the removal process.
     """
-    if folder_path.exists():
-        try:
-            logger.debug("Removing folder: {}", folder_path)
-            for root, dirs, files in folder_path.walk(top_down=False):
-                for name in files:
-                    (root / name).unlink()
-                for name in dirs:
-                    (root / name).rmdir()
 
-            folder_path.rmdir()
-            logger.success("Removed folder: {}", folder_path)
+    if not folder_path.exists():
+        logger.warning("Directory does not exist: {}", folder_path)
+        return
 
-        except OSError as e:
-            logger.error("Removal of {} failed.", folder_path)
-            logger.debug("Error message: {}", str(e))
-            raise
+    logger.debug("Attempting to remove folder: {}", folder_path)
+
+    for root, dirs, files in folder_path.walk(top_down=False):
+        for name in files:
+            (root / name).unlink()
+        for name in dirs:
+            (root / name).rmdir()
+
+    folder_path.rmdir()
+    logger.success("Removed folder: {}", folder_path)
 
 
+@log_expected_errors(COMMON_ERRORS, context="Removing directory contents: ")
 def remove_dir_contents(folder_path: Path) -> None:
     """
     Remove the contents of a directory without removing the directory itself.
@@ -467,23 +388,23 @@ def remove_dir_contents(folder_path: Path) -> None:
     Raises:
         OSError: If an error occurs during the removal process.
     """
-    if folder_path.exists():
-        try:
-            logger.debug("Removing contents of folder: {}", folder_path)
-            for root, dirs, files in folder_path.walk(top_down=False):
-                for name in files:
-                    (root / name).unlink()
-                for name in dirs:
-                    (root / name).rmdir()
 
-            logger.success("Removed contents of folder: {}", folder_path)
+    if not folder_path.exists():
+        logger.warning("Directory does not exist: {}", folder_path)
+        return
 
-        except OSError as e:
-            logger.error("Removal of {} failed.", folder_path)
-            logger.debug("Error message: {}", str(e))
-            raise
+    logger.debug("Removing contents of folder: {}", folder_path)
+
+    for root, dirs, files in folder_path.walk(top_down=False):
+        for name in files:
+            (root / name).unlink()
+        for name in dirs:
+            (root / name).rmdir()
+
+    logger.success("Removed contents of folder: {}", folder_path)
 
 
+@log_expected_errors(COMMON_ERRORS, context="Removing file: ")
 def remove_file(file_path: Path) -> None:
     """
     Remove the specified file if it exists.
@@ -499,16 +420,12 @@ def remove_file(file_path: Path) -> None:
         Warning: If the file is not found.
         Error: If an error occurs while removing the file.
     """
-    if file_path.exists():
-        try:
-            file_path.unlink()
-            logger.success("Removed file: {}", file_path)
 
-        except FileNotFoundError:
-            logger.warning("File Name not found: {}", file_path)
+    if not file_path.exists():
+        logger.warning("File does not exist: {}", file_path)
+        return
 
-        except OSError as e:
-            logger.error(
-                "An error occurred while removing the file: {}. Error: {}", file_path, e
-            )
-            raise
+    logger.debug("Attempting to remove file: {}", file_path)
+
+    file_path.unlink()
+    logger.success("Removed file: {}", file_path)

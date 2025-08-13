@@ -1,8 +1,15 @@
 # common_utils/__init__.py
 
 from .config import config
-from .constants import CONFIG_PATH, SCHEMA_PATH
 from .customization import collect_overrides
+from .error_handling import (
+    COMMON_ERRORS,
+    CSV_ERRORS,
+    JSON_ERRORS,
+    PLIST_ERRORS,
+    YAML_ERRORS,
+    log_expected_errors,
+)
 from .file_handling import (
     append_text,
     create_csv,
@@ -25,9 +32,9 @@ from .localization import configure_localization_for_yaml, supported_languages
 from .logger_instance import logger
 from .logging_config import set_logger
 from .mscp_data import get_mscp_data, mscp_data
+from .prompt_for_odv import prompt_for_odv
 from .run_command import run_command
 from .sanitize_input import sanitize_input
-from .prompt_for_odv import prompt_for_odv
 from .validate_rules import validate_yaml_file
 from .version_data import get_version_data
 
@@ -56,10 +63,14 @@ __all__ = [
     "get_mscp_data",
     "set_logger",
     "config",
-    "CONFIG_PATH",
-    "SCHEMA_PATH",
     "validate_yaml_file",
     "logger",
+    "log_expected_errors",
+    "YAML_ERRORS",
+    "JSON_ERRORS",
+    "PLIST_ERRORS",
+    "CSV_ERRORS",
+    "COMMON_ERRORS",
     "supported_languages",
     "configure_localization_for_yaml",
     "collect_overrides",
