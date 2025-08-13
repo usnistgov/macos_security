@@ -7,10 +7,12 @@ from pathlib import Path
 from jsonschema import Draft202012Validator, ValidationError
 
 # Local python modules
-from . import SCHEMA_PATH, config, open_file
+from . import config, open_file
 from .logger_instance import logger
 
 # Additional python modules
+
+SCHEMA_PATH = "schema/mscp_rule.json"
 
 
 def validate_yaml_file(args: argparse.Namespace) -> None:

@@ -1,7 +1,14 @@
 # common_utils/__init__.py
 
 from .config import config
-from .constants import CONFIG_PATH, SCHEMA_PATH
+from .error_handling import (
+    COMMON_ERRORS,
+    CSV_ERRORS,
+    JSON_ERRORS,
+    PLIST_ERRORS,
+    YAML_ERRORS,
+    log_expected_errors,
+)
 from .file_handling import (
     append_text,
     create_csv,
@@ -52,8 +59,12 @@ __all__ = [
     "get_mscp_data",
     "set_logger",
     "config",
-    "CONFIG_PATH",
-    "SCHEMA_PATH",
     "validate_yaml_file",
     "logger",
+    "log_expected_errors",
+    "YAML_ERRORS",
+    "JSON_ERRORS",
+    "PLIST_ERRORS",
+    "CSV_ERRORS",
+    "COMMON_ERRORS",
 ]

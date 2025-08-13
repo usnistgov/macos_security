@@ -245,7 +245,7 @@ class Macsecurityrule(BaseModelWithAccessors):
             list[Macsecurityrule]: A list of loaded Macsecurityrule objects.
         """
 
-        logger.info("=== LOADING {} RULES ===", section.upper())
+        logger.debug("=== LOADING {} RULES ===", section.upper())
 
         rules: list[Macsecurityrule] = []
         os_version_str: str = str(os_version)
@@ -490,9 +490,46 @@ class Macsecurityrule(BaseModelWithAccessors):
             rules.append(rule)
 
         logger.debug("NUMBER OF {} LOADED RULES: {}", section.upper(), len(rules))
-        logger.info("=== RULES {} LOADED ===", section.upper())
+        logger.debug("=== RULES {} LOADED ===", section.upper())
 
         return rules
+
+    @classmethod
+    def load_rule_from_file(
+        cls,
+        rule_file: Path,
+        folder: Path,
+        section_data: dict[str, str],
+        os_type: str,
+        os_version: int,
+        parent_values: str,
+        generate_baseline: bool,
+    ) -> list["Macsecurityrule"]:
+        try:
+            rule_name = rule_file.stem
+            folder_name = rule_file.parent.name
+            logger.debug("{} folder: {}", rule_name, folder_name)
+
+            section_name = section_data.get(Sectionmap[folder_name.upper()], "")
+            if not section_name:
+                logger.warning("Folder '{}' not found in section mapping.", folder_name)
+                return []
+
+            custom = "custom" in str(folder).lower()
+
+            return cls.load_rules(
+                rule_ids=[rule_name],
+                os_type=os_type,
+                os_version=os_version,
+                parent_values=parent_values,
+                section=section_name,
+                custom=custom,
+                generate_baseline=generate_baseline,
+            )
+
+        except Exception as e:
+            logger.error("Failed to load rule from file {}: {}", rule_file, e)
+            return []
 
     @classmethod
     def collect_all_rules(
@@ -519,17 +556,16 @@ class Macsecurityrule(BaseModelWithAccessors):
 
         rules: list[Macsecurityrule] = []
 
-        section_dirs: list[Path] = [
+        section_dirs = [
             Path(config["custom"]["sections_dir"]),
             Path(config["defaults"]["sections_dir"]),
         ]
-
-        rules_dirs: list[Path] = [
+        rules_dirs = [
             Path(config["custom"]["rules_dir"]),
             Path(config["defaults"]["rules_dir"]),
         ]
 
-        section_data: dict[str, str] = {
+        section_data = {
             section_file.stem: open_file(section_file).get("name", "")
             for section_dir in section_dirs
             for section_file in section_dir.glob("*.y*ml")
@@ -544,49 +580,21 @@ class Macsecurityrule(BaseModelWithAccessors):
                 continue
 
             for folder in rule_dir.iterdir():
-                if not folder.is_dir():
-                    continue
-
-                if folder.name == "sysprefs":
+                if not folder.is_dir() or folder.name == "sysprefs":
                     continue
 
                 for rule_file in folder.rglob("*.y*ml"):
-                    try:
-                        rule_name: str = rule_file.stem
-                        folder_name: str = rule_file.parent.name
-                        logger.debug("{} folder: {}", rule_name, folder_name)
-                        section_name: str = section_data.get(
-                            Sectionmap[folder_name.upper()], ""
-                        )
-                        logger.debug("Section Name: {}", section_name)
-                        custom: bool = False
-
-                        if "custom" in str(folder).lower():
-                            custom = True
-
-                        if not section_name:
-                            logger.warning(
-                                "Folder '{}' not found in section mapping.", folder_name
-                            )
-                            continue
-
-                        rules += cls.load_rules(
-                            rule_ids=[rule_name],
-                            os_type=os_type,
-                            os_version=os_version,
-                            parent_values=parent_values,
-                            section=section_name,
-                            custom=custom,
-                            generate_baseline=generate_baseline,
-                        )
-
-                    except Exception as e:
-                        logger.error(
-                            "Failed to load rule from file {}: {}", rule_file, e
-                        )
+                    rules += cls.load_rule_from_file(
+                        rule_file=rule_file,
+                        folder=folder,
+                        section_data=section_data,
+                        os_type=os_type,
+                        os_version=os_version,
+                        parent_values=parent_values,
+                        generate_baseline=generate_baseline,
+                    )
 
         logger.info("=== ALL RULES LOADED ===")
-
         return rules
 
     def _format_mobileconfig_fix(self) -> None:

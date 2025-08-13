@@ -70,6 +70,9 @@ def generate_guidance(args: argparse.Namespace) -> None:
         args.os_name, args.os_version, mscp_data
     )
 
+    if args.benchmark and not args.baseline:
+        print("do at thing")
+        sys.exit()
     output_basename: str = args.baseline.name
     baseline_name: str = args.baseline.stem
     audit_name: str = str(baseline_name)
