@@ -60,6 +60,8 @@ tags:
   - cnssi-1253_moderate
   - cis_lvl1
   - cis_lvl2
+  - cmmc_lvl1
+  - cmmc_lvl2
 severity: medium
 mobileconfig: true
 mobileconfig_info:
