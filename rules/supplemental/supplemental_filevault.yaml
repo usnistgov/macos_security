@@ -67,6 +67,10 @@ references:
     - N/A
   cmmc:
     - N/A
+  bio:
+    - 8.01.01
+    - 8.24.03
+    - 8.24.04
 macOS:
   - '15.0'
 tags:
@@ -87,5 +91,7 @@ tags:
   - cnssi-1253_low
   - stig
   - supplemental
+  - nlmapgov_base
+  - nlmapgov_plus
 mobileconfig: false
 mobileconfig_info:

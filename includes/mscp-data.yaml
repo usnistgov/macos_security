@@ -77,6 +77,12 @@ authors:
       - Allen Golbig|Jamf
       - Bob Gendler|National Institute of Standards and Technology
       - Aaron Kegerreis|Defense Information Systems Agency
+  nlmapgov_base:
+    names:
+      - Jordy Witteman|Root3
+  nlmapgov_plus:
+    names:
+      - Jordy Witteman|Root3
 titles:
   all_rules: All Rules
   800-53r5_high: NIST SP 800-53 Rev 5 High Impact
@@ -92,6 +98,8 @@ titles:
   cnssi-1253_moderate: Committee on National Security Systems Instruction No. 1253 (Moderate)
   cnssi-1253_high: Committee on National Security Systems Instruction No. 1253 (High)
   stig: Apple macOS 15 (Sequoia) STIG - Ver 1, Rel 3
+  nlmapgov_base: NLMAPGOV - Nederlandse Maatregelenset Apple Platformen Overheid (base)
+  nlmapgov_plus: NLMAPGOV - Nederlandse Maatregelenset Apple Platformen Overheid (plus)
 ddm:
   supported_types:
     - com.apple.configuration.services.configuration-files

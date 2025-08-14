@@ -42,11 +42,14 @@ references:
       - 3.6
       - 3.11
       - 11.3
+  bio:
+    - 8.12
 macOS:
   - '15.0'
 tags:
   - cis_lvl1
   - cis_lvl2
   - cisv8
+  - nlmapgov_plus
 mobileconfig: false
 mobileconfig_info:

@@ -36,6 +36,8 @@ references:
     - AU.L2-3.3.3
     - AU.L2-3.3.6
     - SI.L2-3.14.3
+  bio:
+    - 8.18.02
 macOS:
   - '15.0'
 tags:
@@ -50,6 +52,8 @@ tags:
   - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
+  - nlmapgov_base
+  - nlmapgov_plus
 severity: medium
 mobileconfig: false
 mobileconfig_info:
