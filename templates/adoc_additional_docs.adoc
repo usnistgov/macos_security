@@ -48,6 +48,14 @@ ASSOCIATED DOCUMENTS
 |link:https://www.cnss.gov/CNSS/issuances/Instructions.cfm[CNSSI No. 1253]|_Security Categorization and Control Selection for National Security Systems_
 |===
 
+[%header, cols=2*a]
+.Baseline Informatiebeveiliging Overheid (BIO)
+|===
+|Document Number or Descriptor
+|Document Title 
+|link:https://github.com/MinBZK/Baseline-Informatiebeveiliging-Overheid[BIO2]|_BIO2_
+|===
+
 === Non-Government Documents
 [%header, cols=2*a]
 .Apple
