@@ -3,7 +3,6 @@
 *.lock
 .bundle
 bin
-mscp_gems
-docs/node_modules/
-docs/.astro/
-docs/package-lock.json
+node_modules/
+.astro/
+package-lock.json

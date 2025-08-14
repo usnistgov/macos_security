@@ -1,0 +1,60 @@
+---
+title: macOS Security Compliance Project
+description: The macOS Security Compliance Project delivers open source, automated security guidance for macOS, based on NIST SP 800-53 and 800-219. Developed by federal experts and recognized by Apple, it enables organizations to create customized security baselines and technical controls with ease.
+template: splash
+editUrl: false
+lastUpdated: false
+hero:
+  tagline: Comprehensive, open source macOS security guidance—built by federal experts, based on NIST SP 800-53 and 800-219, and recognized by Apple.
+  image:
+    file: ../../assets/logo.png
+    class: hero-logo-effect
+  actions:
+    - text: Introduction
+      link: /macos_security/welcome/introduction/
+      icon: right-arrow
+    - text: Getting Started
+      link: /macos_security/welcome/getting-started/
+      icon: external
+      variant: minimal
+---
+
+import { Card, CardGrid } from '@astrojs/starlight/components';
+
+
+## Latest Release:
+<div id="github-latest-release"></div>
+<script src="/scripts/github-latest-release.js"></script> 
+
+## Quick Links
+<CardGrid cols={3}>
+	<Card title="How To Guides" icon="open-book">
+		Learn how to generate baselines, guidance documents, configuration profiles, and more.
+		<ul class="howto-link-list">
+			<li><a href="/macos_security/welcome/getting-started/">Getting Started<span class="arrow"></span></a></li>
+			<li><a href="/macos_security/baselines/how-to-generate-baselines/">Generate Baseline<span class="arrow"></span></a></li>
+			<li><a href="/macos_security/guidance/how-to-generate-guidance/">Generate Guidance<span class="arrow"></span></a></li>
+			<li><a href="/macos_security/configuration-profiles/how-to-generate-configuration-profiles/">Generate Configuration Profiles<span class="arrow"></span></a></li>
+			<li><a href="/macos_security/compliance-scripts/how-to-generate-compliance-scripts/">Generate Compliance Scripts<span class="arrow"></span></a></li>
+		</ul>
+	</Card>
+	<Card title="Repository Reference" icon="seti:folder">
+		Explore the repository structure, including baselines, rules, sections, and scripts.
+		<ul class="howto-link-list">
+			<li><a href="/macos_security/repository/directory-layout/">Repository Layout<span class="arrow"></span></a></li>
+			<li><a href="/macos_security/repository/rule-file-layout/">Rules File Layout<span class="arrow"></span></a></li>
+			<li><a href="/macos_security/repository/sections-file-layout/">Sections File Layout<span class="arrow"></span></a></li>
+			<li><a href="/macos_security/repository/includes-directory/">Includes Directory<span class="arrow"></span></a></li>
+			<li><a href="/macos_security/repository/script-arguments-list/">Scripts Arguments<span class="arrow"></span></a></li>
+		</ul>
+	</Card>
+</CardGrid>
+
+<Card title="More Information & FAQ" icon="comment" style={{ width: "100%", marginTop: "2rem" }}>
+	Looking for more details, help, or community resources?
+	<ul class="howto-link-list">
+		<li><a href="/macos_security/more-information/resources/">mSCP Resources<span class="arrow"></span></a></li>
+		<li><a href="/macos_security/more-information/contributing/">How-To Contribute<span class="arrow"></span></a></li>
+		<li><a href="/macos_security/more-information/faq/">Frequently Asked Questions (FAQ)<span class="arrow"></span></a></li>
+	</ul>
+</Card>
