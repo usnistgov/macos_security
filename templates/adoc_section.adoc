@@ -1,4 +1,0 @@
-== $section_name
-
-$description
-
