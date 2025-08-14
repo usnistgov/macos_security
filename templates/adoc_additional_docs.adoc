@@ -53,7 +53,8 @@ ASSOCIATED DOCUMENTS
 |===
 |Document Number or Descriptor
 |Document Title 
-|link:https://github.com/MinBZK/Baseline-Informatiebeveiliging-Overheid[BIO2]|_BIO2_
+|link:https://www.bio-overheid.nl/category/producten/bio[BIO]|_Baseline Informatiebeveiliging Overheid (BIO)_
+|link:https://github.com/MinBZK/Baseline-Informatiebeveiliging-Overheid[BIO2 GitHub Repository]|_BIO2 GitHub Repository_
 |===
 
 === Non-Government Documents
