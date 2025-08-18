@@ -42,6 +42,7 @@ tags:
   - cnssi-1253_high
   - cnssi-1253_moderate
   - cnssi-1253_low
+  - cmmc_lvl2
 mobileconfig: true
 mobileconfig_info:
   com.apple.security.smartcard:
