@@ -11,7 +11,7 @@ fix: |
   Install the approved ESS solution onto the system.
 references:
   cce:
-    - N/A
+    - CCE-95187-1
   cci:
     - CCI-001233
   800-53r5:
