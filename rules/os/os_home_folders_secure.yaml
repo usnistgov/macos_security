@@ -30,7 +30,7 @@ references:
     - SRG-OS-000480-GPOS-00230
     - SRG-OS-000480-GPOS-00228
   disa_stig:
-    - N/A
+    - APPL-26-002068
   800-171r3:
     - 03.01.05
   cis:

@@ -31,7 +31,7 @@ references:
     - IA-2
     - IA-2(5)
   disa_stig:
-    - N/A
+    - APPL-26-000090
   srg:
     - SRG-OS-000109-GPOS-00056
     - SRG-OS-000104-GPOS-00051

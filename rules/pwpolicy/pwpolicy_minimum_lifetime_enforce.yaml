@@ -47,7 +47,7 @@ references:
   800-53r4:
     - IA-5(1)
   disa_stig:
-    - N/A
+    - APPL-26-003070
   srg:
     - SRG-OS-000075-GPOS-00043
   800-171r3:

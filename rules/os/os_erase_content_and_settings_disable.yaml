@@ -27,7 +27,7 @@ references:
     - SRG-OS-000480-GPOS-00227
     - SRG-OS-000095-GPOS-00049
   disa_stig:
-    - N/A
+    - APPL-26-005061
   cmmc:
     - CM.L2-3.4.6
     - CM.L2-3.4.7
