@@ -91,7 +91,7 @@ references:
     - SRG-OS-000033-GPOS-00014
     - SRG-OS-000396-GPOS-00176
   disa_stig:
-    - N/A
+    - APPL-26-000057
   800-171r3:
     - 03.13.08
     - 03.13.11

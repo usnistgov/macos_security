@@ -46,7 +46,7 @@ references:
     - SRG-OS-000378-GPOS-00163
     - SRG-OS-000690-GPOS-00140
   disa_stig:
-    - N/A
+    - APPL-26-005090
 macOS:
   - '26.0'
 tags:

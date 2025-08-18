@@ -41,7 +41,7 @@ references:
   srg:
     - SRG-OS-000362-GPOS-00149
   disa_stig:
-    - N/A
+    - APPL-26-005080
   cmmc:
     - CM.L2-3.4.9
 macOS:
