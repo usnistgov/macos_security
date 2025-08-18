@@ -12,7 +12,7 @@ fix: |
   NOTE: To remount the System volume as Read Only, rebooting the computer will mount it as Read Only.
 references:
   cce:
-    - N/A
+    - CCE-95319-0
   cci:
     - N/A
   800-53r5:

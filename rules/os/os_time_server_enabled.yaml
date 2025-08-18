@@ -17,7 +17,7 @@ fix: |
   NOTE: The service `timed` cannot be unloaded or loaded while System Integrity Protection (SIP) is enabled.
 references:
   cce:
-    - N/A
+    - CCE-95325-7
   cci:
     - CCI-002046
     - CCI-001891
