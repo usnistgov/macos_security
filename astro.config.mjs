@@ -30,6 +30,22 @@ head: [
                                 defer: 'defer',
 				 },
                         },
+			{
+		tag: 'script',
+		attrs: {
+			async: 'async',
+			src: 'https://www.googletagmanager.com/gtag/js?id=G-QBDGYZRSGT',
+		},
+	},
+	{
+		tag: 'script',
+		children: `
+			window.dataLayer = window.dataLayer || [];
+			function gtag(){dataLayer.push(arguments);}
+			gtag('js', new Date());
+			gtag('config', 'G-QBDGYZRSGT');
+		`,
+	},
 			],
 			social: [
 	{ icon: 'github', label: 'GitHub', href: 'https://github.com/usnistgov/macos_security' },
