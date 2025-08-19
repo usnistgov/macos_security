@@ -140,6 +140,7 @@ head: [
 					collapsed: true,
 					items: [
 						{ label: 'mSCP Training/Resources', link: '/more-information/resources/' },
+						{ label: 'Additional Documents', link: '/more-information/additional-documents/' },
 						{ label: 'Contributing', link: '/more-information/contributing/' },
 						{ label: 'Vendor Attribution', link: '/more-information/vendor-attribution/' },
 						{ label: 'FAQ', link: '/more-information/faq/' },
