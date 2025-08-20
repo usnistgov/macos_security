@@ -12,7 +12,6 @@ import yaml
 
 # Local python modules
 from .logger_instance import logger
-from .localization import configure_localization_for_yaml
 
 ENCODING: str = "utf-8"
 
@@ -107,9 +106,8 @@ def open_yaml(
 
     try:
         logger.debug("Attempting to open YAML: {}", file_path)
-        print(language)
-        # Configure localization for YAML processing
-        configure_localization_for_yaml(language=language)
+        # Note: localization should be configured globally before YAML processing
+        # configure_localization_for_yaml is now called at the application level
 
         data = yaml.safe_load(file_path.read_text(encoding=ENCODING))
         return data if isinstance(data, dict) else {}

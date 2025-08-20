@@ -19,6 +19,7 @@ from ..common_utils import (
     remove_dir_contents,
     run_command,
 )
+from ..common_utils.localization import configure_localization_for_yaml
 from ..generate.guidance_support import (
     generate_ddm,
     generate_documents,
@@ -57,6 +58,10 @@ def verify_signing_hash(cert_hash: str) -> bool:
 
 
 def generate_guidance(args: argparse.Namespace) -> None:
+    # Configure localization at the beginning based on the CLI language parameter
+    logger.debug(f"Language parameter from CLI: {args.language}")
+    configure_localization_for_yaml(language=args.language)
+    
     logo_path: Path = Path(
         config["defaults"]["images_dir"], "mscp_banner.png"
     ).absolute()

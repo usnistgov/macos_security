@@ -6,6 +6,7 @@ import yaml
 from typing import Optional
 
 # Local python modules
+from .config import config
 from .logger_instance import logger
 
 # Global variable to store the gettext localization function
@@ -24,7 +25,7 @@ def setup_gettext_localization(language: str = "en") -> None:
     global _localization_function
 
     domain: str = "messages"
-    localedir: str = "config/locales"
+    localedir: str = config["defaults"]["locales_dir"]
 
     try:
         # Set up the localization
@@ -100,9 +101,13 @@ def configure_localization_for_yaml(
         domain (str): localization domain name. Defaults to "messages".
         localedir (str): Path to the locales directory. Defaults to "config/locales".
     """
+    logger.debug(f"configure_localization_for_yaml called with language: {language}")
     # Register YAML constructors if not already done
     register_yaml_constructors()
 
     # Configure gettext if language is specified
     if language:
+        logger.debug(f"Setting up gettext for language: {language}")
         setup_gettext_localization(language=language)
+    else:
+        logger.debug("No language specified, keeping current gettext config")

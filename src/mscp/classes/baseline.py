@@ -172,6 +172,7 @@ class Baseline(BaseModelWithAccessors):
         os_type: str,
         os_version: float,
         baseline_dict: dict[str, Any] = Field(default_factory=dict[str, Any]),
+        language: str = "en",
     ) -> None:
         """
         Creates a new baseline YAML file based on the provided rules, metadata, and configuration.
@@ -231,7 +232,7 @@ class Baseline(BaseModelWithAccessors):
         section_descriptions = {}
 
         for yaml_file in Path(config["defaults"]["sections_dir"]).glob("*.y*ml"):
-            section_data: dict = open_file(yaml_file)
+            section_data: dict = open_file(yaml_file, language)
 
             section_descriptions[section_data.get("name")] = section_data.get(
                 "description", ""
