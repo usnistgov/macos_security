@@ -7,7 +7,7 @@ from pathlib import Path
 
 # Local python modules
 from . import __version__
-from .common_utils import logger, set_logger, validate_yaml_file
+from .common_utils import logger, set_logger, validate_yaml_file, supported_languages
 from .generate import (
     generate_baseline,
     generate_checklist,
@@ -150,6 +150,20 @@ def parse_cli() -> None:
         action="store",
         type=validate_file,
     )
+    guidance_parser.add_argument(
+        "-L",
+        "--language",
+        default="en",
+        help="Generate guidance using a supported language.",
+        action="store",
+        choices=supported_languages,
+    )
+    # guidance_parser.add_argument(
+    #     "--list-languages",
+    #     default=False,
+    #     help="List the available languages that are supported.",
+    #     action="store_true",
+    # )
     guidance_parser.add_argument(
         "-p",
         "--profiles",

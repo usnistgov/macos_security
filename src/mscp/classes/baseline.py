@@ -10,7 +10,7 @@ import pandas as pd
 from pydantic import BaseModel, Field
 
 # Local python modules
-from ..common_utils import config, create_yaml, open_file
+from ..common_utils import config, create_yaml, open_file, get_language_data
 from ..common_utils.logger_instance import logger
 from .macsecurityrule import Macsecurityrule
 
@@ -68,7 +68,7 @@ class Baseline(BaseModelWithAccessors):
 
     @classmethod
     def from_yaml(
-        cls, file_path: Path, os_name: str, os_version: int, custom: bool = False
+        cls, file_path: Path, os_name: str, os_version: int, language: str = "en", custom: bool = False
     ) -> "Baseline":
         """
         Load a Baseline object from a YAML file, including profiles and associated rules.
@@ -96,9 +96,11 @@ class Baseline(BaseModelWithAccessors):
         else:
             section_dirs = [Path(config["defaults"]["sections_dir"])]
 
-        baseline_data: dict[str, Any] = open_file(file_path)
+        baseline_data: dict[str, Any] = open_file(file_path, language)
         authors = [Author(**author) for author in baseline_data.get("authors", [])]
         baseline_tag = file_path.stem.replace("_test", "")
+
+        localization_sections = get_language_data(language, "sections")
 
         # Parse profiles
         profiles: list[Profile] = []
@@ -120,9 +122,14 @@ class Baseline(BaseModelWithAccessors):
                 logger.warning("Rule file not found for rule: {}", prof["section"])
                 continue
 
-            section_data: dict[str, str] = open_file(Path(section_file))
+            section_data: dict[str, str] = open_file(Path(section_file), language)
 
             logger.debug(f"Section Data: {section_data}")
+
+            if prof["section"] in localization_sections:
+                for k,v in localization_sections[prof["section"]].items():
+                    logger.info(f"Found localization ({language}) for {k} in {prof["section"]}")
+                    section_data[k] = v
 
             profiles.append(
                 Profile(
@@ -135,6 +142,7 @@ class Baseline(BaseModelWithAccessors):
                         baseline_data.get("parent_values", ""),
                         section_data.get("name", "").strip(),
                         baseline_tag,
+                        language,
                         custom,
                     ),
                 )

@@ -16,6 +16,7 @@ from pydantic import BaseModel, ConfigDict, Field
 from ..common_utils import (
     config,
     create_yaml,
+    get_language_data,
     get_version_data,
     make_dir,
     mscp_data,
@@ -226,6 +227,7 @@ class Macsecurityrule(BaseModelWithAccessors):
         parent_values: str,
         section: str,
         baseline_tag: str | None = None,
+        language: str = "en",
         custom: bool = False,
         generate_baseline: bool = False,
     ) -> list["Macsecurityrule"]:
@@ -238,6 +240,7 @@ class Macsecurityrule(BaseModelWithAccessors):
             os_version (int): Operating system version.
             parent_values (str): Parent values to apply when filling in ODV.
             section (str): Section name for the rules.
+            language (str): Language used for rule text.
             custom (bool): Whether to include custom rules.
             generate_baseline (bool): Whether to generate a baseline.
 
@@ -261,6 +264,8 @@ class Macsecurityrule(BaseModelWithAccessors):
             Path(config["custom"]["rules_dir"]),
             Path(config["defaults"]["rules_dir"]),
         ]
+
+        localization_rules = get_language_data(language, "rules")
 
         for rule_id in rule_ids:
             logger.debug("Transforming rule: {}", rule_id)
@@ -288,7 +293,7 @@ class Macsecurityrule(BaseModelWithAccessors):
                 logger.warning("Rule file not found for rule: {}", rule_id)
                 continue
 
-            rule_yaml: dict[str, Any] = open_file(rule_file)
+            rule_yaml: dict[str, Any] = open_file(rule_file, language)
 
             tags: list[str] = rule_yaml.get("tags", [])
 
@@ -307,6 +312,13 @@ class Macsecurityrule(BaseModelWithAccessors):
                     os_version_str,
                 )
                 continue
+
+            if rule_yaml["id"] in localization_rules:
+                for k, v in localization_rules[rule_yaml["id"]].items():
+                    logger.info(
+                        f"Found localization ({language}) for {k} in {rule_yaml['id']}"
+                    )
+                    rule_yaml[k] = v
 
             rule_yaml["rule_id"] = rule_yaml.pop("id")
 
@@ -1189,14 +1201,14 @@ class Macsecurityrule(BaseModelWithAccessors):
         Returns:
             list[]: List of tags found within the rule set.
         """
-        
+
         found_tags: list[str] = []
 
         for rule in rules:
             rule_tags = rule.get("tags")
 
             found_tags += rule_tags
-        
+
         unique_tags = set(found_tags)
 
         return sorted(unique_tags)

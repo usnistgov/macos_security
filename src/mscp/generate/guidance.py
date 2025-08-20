@@ -79,7 +79,7 @@ def generate_guidance(args: argparse.Namespace) -> None:
     spreadsheet_output_file: Path = Path(build_path, f"{baseline_name}.xlsx")
 
     baseline: Baseline = Baseline.from_yaml(
-        args.baseline, args.os_name, args.os_version, custom
+        args.baseline, args.os_name, args.os_version, args.language, custom
     )
 
     if args.audit_name:
@@ -155,6 +155,7 @@ def generate_guidance(args: argparse.Namespace) -> None:
             show_all_tags,
             custom,
             output_format="markdown",
+            language=args.language,
         )
 
     if args.all:
@@ -186,6 +187,7 @@ def generate_guidance(args: argparse.Namespace) -> None:
             show_all_tags,
             custom,
             output_format="markdown",
+            language=args.language,
         )
 
     generate_documents(
@@ -198,6 +200,9 @@ def generate_guidance(args: argparse.Namespace) -> None:
         current_version_data,
         show_all_tags,
         custom,
+        language=args.language,
     )
 
-    print(f"MSCP DOCUMENT GENERATION COMPLETE! All of the documents can be found in this folder: /{build_path}/")
+    print(
+        f"MSCP DOCUMENT GENERATION COMPLETE! All of the documents can be found in this folder: /{build_path}/"
+    )
