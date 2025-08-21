@@ -16,7 +16,6 @@ from pydantic import BaseModel, ConfigDict, Field
 from ..common_utils import (
     config,
     create_yaml,
-    get_language_data,
     get_version_data,
     make_dir,
     mscp_data,
@@ -265,8 +264,6 @@ class Macsecurityrule(BaseModelWithAccessors):
             Path(config["defaults"]["rules_dir"]),
         ]
 
-        localization_rules = get_language_data(language, "rules")
-
         for rule_id in rule_ids:
             logger.debug("Transforming rule: {}", rule_id)
 
@@ -312,13 +309,6 @@ class Macsecurityrule(BaseModelWithAccessors):
                     os_version_str,
                 )
                 continue
-
-            if rule_yaml["id"] in localization_rules:
-                for k, v in localization_rules[rule_yaml["id"]].items():
-                    logger.info(
-                        f"Found localization ({language}) for {k} in {rule_yaml['id']}"
-                    )
-                    rule_yaml[k] = v
 
             rule_yaml["rule_id"] = rule_yaml.pop("id")
 

@@ -77,6 +77,14 @@ def parse_cli() -> None:
         action="version",
         version=f"%(prog)s {__version__}",
     )
+    parser.add_argument(
+        "-L",
+        "--language",
+        default="en",
+        help="Generate guidance using a supported language.",
+        action="store",
+        choices=supported_languages,
+    )
 
     # Sub Parsers for individual commands
     subparsers = parser.add_subparsers(
@@ -158,12 +166,6 @@ def parse_cli() -> None:
         action="store",
         choices=supported_languages,
     )
-    # guidance_parser.add_argument(
-    #     "--list-languages",
-    #     default=False,
-    #     help="List the available languages that are supported.",
-    #     action="store_true",
-    # )
     guidance_parser.add_argument(
         "-p",
         "--profiles",

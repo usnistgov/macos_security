@@ -26,7 +26,7 @@ from .logging_config import set_logger
 from .mscp_data import get_mscp_data, mscp_data
 from .run_command import run_command
 from .sanitize_input import sanitize_input
-from .supported_languages import supported_languages, get_language_data
+from .supported_languages import supported_languages
 from .validate_rules import validate_yaml_file
 from .version_data import get_version_data
 
@@ -59,6 +59,5 @@ __all__ = [
     "validate_yaml_file",
     "logger",
     "supported_languages",
-    "get_language_data",
     "configure_localization_for_yaml",
 ]

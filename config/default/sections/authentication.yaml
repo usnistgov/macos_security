@@ -1,6 +1,6 @@
 ---
-name: "Authentication"
-description: |
+name: !localize "Authentication"
+description: !localize |
   This section contains the configuration of authentication settings, including the enforcement of smartcard authentication.
 
   NOTE: See additional guidance in the Smartcard Supplemental.
