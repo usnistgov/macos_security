@@ -76,6 +76,7 @@ def localize_constructor(loader, node):
         str: The localized string using the configured gettext function
     """
     value = loader.construct_scalar(node)
+    logger.debug(f"attempting to localize with value: {value}")
     return _localization_function(value)
 
 
