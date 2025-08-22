@@ -23,11 +23,13 @@ def get_supported_languages() -> list[str]:
         list[str]: A list containing the available supported languages for localization.
     """
 
-    localization_path =  Path(config["defaults"]["locales_dir"])
-    
-    languages: list[str] = []
-    logger.debug(f"Enumerating available languages from the localization path: {localization_path}")
-    
+    localization_path = Path(config["defaults"]["locales_dir"])
+
+    languages: list[str] = ["en"]
+    logger.debug(
+        f"Enumerating available languages from the localization path: {localization_path}"
+    )
+
     for item in localization_path.iterdir():
         if item.is_dir():
             logger.debug(f"Found possible supported language file: {item}")
@@ -35,12 +37,14 @@ def get_supported_languages() -> list[str]:
 
     return languages
 
+
 def get_language_data(
     language: str,
     category: str,
-    ) -> dict[str, Any]:
-
-    language_file =  Path(config["defaults"]["locales_dir"], language, category).with_suffix(".yaml")
+) -> dict[str, Any]:
+    language_file = Path(
+        config["defaults"]["locales_dir"], language, category
+    ).with_suffix(".yaml")
 
     try:
         logger.info("Attempting to open language file: {}", language_file)
