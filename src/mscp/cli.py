@@ -54,6 +54,7 @@ def parse_cli() -> None:
     parser = Customparser(
         description="CLI tool for managing baseline and compliance documents.",
         prog="mscp",
+        formatter_class=argparse.ArgumentDefaultsHelpFormatter,
     )
 
     parser.add_argument(
