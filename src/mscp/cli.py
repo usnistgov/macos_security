@@ -1,6 +1,8 @@
 # mscp/cli.py
 
 # Standard python modules
+from __future__ import annotations
+
 import argparse
 import sys
 from pathlib import Path
@@ -15,8 +17,6 @@ from .generate import (
     generate_local_report,
     generate_mapping,
 )
-
-logger.enable("mscp")
 
 
 class Customparser(argparse.ArgumentParser):
@@ -45,13 +45,23 @@ def validate_file(arg: str) -> Path | None:
 
 def parse_cli(program: str | None = "mscp") -> None:
     logger = set_logger()
+
     parent_parser = Customparser(add_help=False)
+
     parent_parser.add_argument(
-        "-D",
-        "--debug",
-        required=False,
-        help="Enable debug output.",
-        action="store_true",
+        "-v",
+        "--verbose",
+        action="count",
+        default=0,
+        help="Increase output verbosity (-v, -vv)",
+    )
+
+    parent_parser.add_argument(
+        "-q",
+        "--quiet",
+        action="count",
+        default=0,
+        help="Reduce output verbosity (-q, -qq)",
     )
 
     benchmark_parser = Customparser(add_help=False)
@@ -81,14 +91,6 @@ def parse_cli(program: str | None = "mscp") -> None:
         default=15.0,
         type=float,
         help="Operating system version (eg: 14.0, 15.0).",
-    )
-
-    parser.add_argument(
-        "--log_level",
-        default="ERROR",
-        choices=["DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"],
-        help="Set the logging level.",
-        type=str.upper,
     )
 
     parser.add_argument(
@@ -333,7 +335,6 @@ def parse_cli(program: str | None = "mscp") -> None:
     )
 
     checklist_parser.add_argument(
-        "-v",
         "--checklist_version",
         help="STIG Checklist Version",
         default="3",
@@ -359,20 +360,12 @@ def parse_cli(program: str | None = "mscp") -> None:
     try:
         args = parser.parse_args()
 
-        if args.log_level != "ERROR":
-            logger = set_logger(args.log_level)
-            logger.info("=== Logging level changed ===")
-            logger.info("LOGGING LEVEL: {}", args.log_level)
+        logger = set_logger(args.verbose, args.quiet)
 
     except argparse.ArgumentError as e:
         logger.error("Argument Error: {}", e)
         parser.print_help()
         sys.exit()
-
-    if args.debug or args.log_level == "DEBUG":
-        logger = set_logger("DEBUG")
-        logger.info("=== Logging level changed ===")
-        logger.info("LOGGING LEVEL: DEBUG")
 
     if not hasattr(args, "func"):
         logger.error("Functionality for {} is not implemented yet.", args.subcommand)
@@ -397,13 +390,13 @@ def parse_cli(program: str | None = "mscp") -> None:
 
     if args.subcommand == "guidance":
         if args.os_name != "macos" and args.script:
-            logger.error(
-                "Compliance script generation is only supported for macOS. Please remove the --script flag."
-            )
-            sys.exit()
+            logger.error("Compliance script generation is only supported for macOS.")
+            args.script = False
 
     args.func(args)
 
 
 if __name__ == "__main__":
+    logger.enable("mscp")
+
     sys.exit(parse_cli())

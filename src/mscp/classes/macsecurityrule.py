@@ -25,6 +25,7 @@ from ..common_utils import (
 from ..common_utils.logger_instance import logger
 
 
+# TODO: Create a way to combine a partial custom rule with a default rule
 class Sectionmap(StrEnum):
     AUDIT = "auditing"
     AUTH = "authentication"
@@ -868,7 +869,7 @@ class Macsecurityrule(BaseModelWithAccessors):
         )
 
         # Helper function to recursively replace $ODV in nested structures
-        def replace_odv_in_obj(obj):
+        def replace_odv_in_obj(obj: str | dict | list | None) -> Any:
             if isinstance(obj, str) and "$ODV" in obj:
                 return obj.replace("$ODV", str(odv_value))
             elif isinstance(obj, dict):
@@ -977,7 +978,9 @@ class Macsecurityrule(BaseModelWithAccessors):
             get_odv: bool = False
 
             # Default inclusion logic for certain tags
-            if any(tag in rule.tags for tag in _always_include):
+            if rule.tags is not None and any(
+                tag in rule.tags for tag in _always_include
+            ):
                 include = "y"
             elif include_all:
                 if rule.rule_id not in queried_rule_ids:
@@ -1144,41 +1147,3 @@ class Macsecurityrule(BaseModelWithAccessors):
             )
 
         return output
-
-    @staticmethod
-    def _create_static_value_element(value: Any) -> etree.Element:
-        """
-        Static helper to create an XML element based on the type of the provided value.
-
-        Args:
-            value (Any): The value to be converted into an XML element.
-
-        Returns:
-            etree.Element: The created XML element.
-        """
-        match value:
-            case bool():
-                return etree.Element("true" if value else "false")
-            case int():
-                int_element = etree.Element("integer")
-                int_element.text = str(value)
-                return int_element
-            case str():
-                str_element = etree.Element("string")
-                str_element.text = value
-                return str_element
-            case list():
-                array_element = etree.Element("array")
-                for item in value:
-                    item_element = etree.SubElement(array_element, "string")
-                    item_element.text = item
-                return array_element
-            case dict():
-                dict_element = etree.Element("dict")
-                for k, v in value.items():
-                    key_elem = etree.SubElement(dict_element, "key")
-                    key_elem.text = k
-                    dict_element.append(Macsecurityrule._create_static_value_element(v))
-                return dict_element
-            case _:
-                raise ValueError(f"Unsupported value type: {type(value)}")

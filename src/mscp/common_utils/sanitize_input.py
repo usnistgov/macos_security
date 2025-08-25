@@ -21,8 +21,8 @@ def sanitize_input(
 
     Args:
         prompt (str): The input prompt to display to the user.
-        type_ (Type[Any], optional): The type to cast the input to (e.g., int, float, str). Defaults to None.
-        range_ (Iterable[Any], optional): A range or list of acceptable values. Defaults to None.
+        type_ (type[Any], optional): The type to cast the input to (e.g., int, float, str). Defaults to None.
+        range_ (Sequence[Any], optional): A range or list of acceptable values. Defaults to None.
         default_ (Any, optional): A default value to use if the user provides no input. Defaults to None.
 
     Returns:

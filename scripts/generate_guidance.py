@@ -14,7 +14,8 @@ from src.mscp.common_utils.logger_instance import logger
 from src.mscp.common_utils.logging_config import set_logger
 
 logger.enable("mscp")
-GLOBAL_ARGS = {"--os_name", "--os_version", "--log_level"}
+
+GLOBAL_ARGS = {"--os_name", "--os_version", "-v", "-q"}
 
 if __name__ == "__main__":
     logger = set_logger()

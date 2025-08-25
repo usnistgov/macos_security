@@ -1,5 +1,9 @@
 # outer __init__.py
 
+from loguru import logger
+
+logger.disable("mscp")
+
 __version__ = "2.0.0"
 
 from .classes.baseline import Baseline
@@ -35,8 +39,6 @@ from .common_utils.sanitize_input import sanitize_input
 from .common_utils.validate_rules import validate_yaml_file
 from .common_utils.version_data import get_version_data
 from .generate import baseline, checklist, guidance, local_report, mapping
-
-logger.disable("mscp")
 
 __all__ = [
     "__version__",

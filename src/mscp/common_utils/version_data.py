@@ -28,11 +28,7 @@ def get_version_data(
         Exception: If there is an error parsing the version file.
     """
 
-    # version_file: Path = Path(config["includes_dir"], "version.yaml")
     try:
-        # logger.info("Attempting to open version file: {}", version_file)
-        # version_data: dict = open_file(version_file)
-
         return next(
             (
                 entry
@@ -43,6 +39,10 @@ def get_version_data(
             ),
             {},
         )
+
+    except FileNotFoundError:
+        logger.error("Project not supported for {} version {}", os_name, os_version)
+        return {}
 
     except Exception as e:
         logger.error("Error parsing mscp_data file: {}", e)
