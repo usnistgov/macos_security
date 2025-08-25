@@ -23,7 +23,7 @@ check: |
 
   echo $RESULT
 result:
-  string: "pass"
+  string: "PASS"
 fix: |
   [source,bash]
   ----
