@@ -21,6 +21,7 @@ from ..common_utils import (
     mscp_data,
     open_file,
     sanitize_input,
+    collect_overrides,
 )
 from ..common_utils.logger_instance import logger
 
@@ -178,7 +179,6 @@ class Macsecurityrule(BaseModelWithAccessors):
         collect_all_rules: Populate Macsecurityrule objects from YAML files in a folder, mapping folder names to section filenames.
         odv_query: Interactively query the user to include/exclude rules and set Organizational Defined Values (ODVs).
         get_tags: Generate a sorted list of unique tags from the provided rules.
-        collect_custom_rules: Collects all custom rules from the defined custom rules location.
 
     Instance Methods:
         _format_mobileconfig_fix: Generate a formatted XML-like string for the `mobileconfig_info` field.
@@ -314,7 +314,7 @@ class Macsecurityrule(BaseModelWithAccessors):
 
             # process any customized rules
             customized_fields = []
-            custom_rule_dict = cls.collect_custom_rules()
+            custom_rule_dict = collect_overrides(Path(config["custom"]["rules_dir"]))
 
             if rule_yaml["rule_id"] in custom_rule_dict:
                 logger.info(f"Found customization for {rule_yaml['rule_id']}")
@@ -1214,38 +1214,3 @@ class Macsecurityrule(BaseModelWithAccessors):
         unique_tags = set(found_tags)
 
         return sorted(unique_tags)
-
-    @classmethod
-    def collect_custom_rules(cls) -> dict[str, Any]:
-        """
-        Collects all custom rules from the defined custom rules location.
-
-        Returns:
-            dict[str, Any]: Dictionary of discovered custom rules data.
-        """
-
-        custom_rules = {}
-        custom_rules_dir = Path(config["custom"]["rules_dir"])
-
-        for rule_file in custom_rules_dir.rglob("*.y*ml"):
-            try:
-                logger.info("Attempting to open custom rule file: {}", rule_file)
-                custom_rule_data: dict[str, Any] = open_file(rule_file)
-
-                rule_id: str = custom_rule_data.get("id", "")
-
-                if not rule_id:
-                    logger.warning(
-                        "Custom rule file does not contain required id: field, attempting to fall back to filename as id."
-                    )
-                    rule_id = rule_file.stem
-
-                custom_rules[rule_id] = {}
-
-                for k, v in custom_rule_data.items():
-                    custom_rules[rule_id][k] = v
-
-            except Exception as e:
-                logger.error("Failed to load rule from file {}: {}", rule_file, e)
-
-        return custom_rules
