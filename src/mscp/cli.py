@@ -1,6 +1,8 @@
 # mscp/cli.py
 
 # Standard python modules
+from __future__ import annotations
+
 import argparse
 import platform
 import sys
@@ -16,8 +18,6 @@ from .generate import (
     generate_mapping,
     generate_scap,
 )
-
-logger.enable("mscp")
 
 
 class Customparser(argparse.ArgumentParser):
@@ -53,13 +53,23 @@ def validate_file(arg: str) -> Path | None:
 
 def parse_cli(program: str | None = "mscp") -> None:
     logger = set_logger()
+
     parent_parser = Customparser(add_help=False)
+
     parent_parser.add_argument(
-        "-D",
-        "--debug",
-        required=False,
-        help="Enable debug output.",
-        action="store_true",
+        "-v",
+        "--verbose",
+        action="count",
+        default=0,
+        help="Increase output verbosity (-v, -vv)",
+    )
+
+    parent_parser.add_argument(
+        "-q",
+        "--quiet",
+        action="count",
+        default=0,
+        help="Reduce output verbosity (-q, -qq)",
     )
 
     benchmark_parser = Customparser(add_help=False)
@@ -98,14 +108,6 @@ def parse_cli(program: str | None = "mscp") -> None:
         default=get_macos_version(),
         type=float,
         help="Operating system version (eg: 14.0, 15.0).",
-    )
-
-    parser.add_argument(
-        "--log_level",
-        default="ERROR",
-        choices=["DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"],
-        help="Set the logging level.",
-        type=str.upper,
     )
 
     parser.add_argument(
@@ -397,19 +399,12 @@ def parse_cli(program: str | None = "mscp") -> None:
     try:
         args = parser.parse_args()
 
-        logger = set_logger(verbosity=args.verbose)
+        logger = set_logger(args.verbose, args.quiet)
+
     except argparse.ArgumentError as e:
         logger.error("Argument Error: {}", e)
         parser.print_help()
         sys.exit()
-
-    if args.debug or args.log_level == "DEBUG":
-        logger = set_logger("DEBUG")
-        logger.info("=== Logging level changed ===")
-        logger.info("LOGGING LEVEL: DEBUG")
-    else:
-        logger.info("=== Logging level changed ===")
-        logger.debug("LOGGING LEVEL: CRITICAL")
 
     if not hasattr(args, "func"):
         logger.error("Functionality for {} is not implemented yet.", args.subcommand)
@@ -439,12 +434,10 @@ def parse_cli(program: str | None = "mscp") -> None:
             )
             sys.exit()
 
-        # if generating consolidated profile, assume to do all profiles
-        if args.consolidated_profile or args.granular_profiles:
-            args.profiles = True
-
     args.func(args)
 
 
 if __name__ == "__main__":
+    logger.enable("mscp")
+
     sys.exit(parse_cli())

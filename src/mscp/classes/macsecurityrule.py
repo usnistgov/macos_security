@@ -27,6 +27,7 @@ from ..common_utils import (
 from ..common_utils.logger_instance import logger
 
 
+# TODO: Create a way to combine a partial custom rule with a default rule
 class Sectionmap(StrEnum):
     AUDIT = "auditing"
     AUTH = "authentication"
@@ -969,7 +970,7 @@ class Macsecurityrule(BaseModelWithAccessors):
         )
 
         # Helper function to recursively replace $ODV in nested structures
-        def replace_odv_in_obj(obj):
+        def replace_odv_in_obj(obj: str | dict | list | None) -> Any:
             if isinstance(obj, str) and "$ODV" in obj:
                 return obj.replace("$ODV", str(odv_value))
             elif isinstance(obj, dict):
@@ -1076,7 +1077,9 @@ class Macsecurityrule(BaseModelWithAccessors):
             get_odv: bool = False
 
             # Default inclusion logic for certain tags
-            if any(tag in rule.tags for tag in _always_include):
+            if rule.tags is not None and any(
+                tag in rule.tags for tag in _always_include
+            ):
                 include = "y"
             elif include_all:
                 if rule.rule_id not in queried_rule_ids:
