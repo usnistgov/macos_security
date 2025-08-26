@@ -5,7 +5,7 @@ discussion: |-
   
   NOTE: Apple's built in method using declative device management method only allows you to set network storage manament to Allowed, ReadOnly, and Disallowed.
 check: |
-  /usr/bin/plutil -convert json /var/db/ManagedConfigurationFiles/DiskManagement/DiskManagement_Settings.plist -o - | /usr/bin/jq '.Restrictions | .ExternalStorage'
+  /usr/bin/plutil -convert json /var/db/ManagedConfigurationFiles/DiskManagement/DiskManagement_Settings.plist -o - | /usr/bin/jq --raw-output '.Restrictions.NetworkStorage'
 result:
   string: $ODV
 fix: |
