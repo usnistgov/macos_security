@@ -3,7 +3,7 @@ title: Disable Remote Management
 discussion: |
   Remote Management _MUST_ be disabled.
 check: |
-  /usr/libexec/mdmclient QuerySecurityInfo | /usr/bin/grep -c "RemoteDesktopEnabled = 0"
+  /usr/libexec/mdmclient QuerySecurityInfo 2>/dev/null | /usr/bin/grep -c "RemoteDesktopEnabled = 0"
 result:
   integer: 1
 fix: |
