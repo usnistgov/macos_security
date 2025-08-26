@@ -1,0 +1,76 @@
+---
+title: Introduction
+description: A macOS Security Compliance Project Overview.
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+The **macOS Security Compliance Project** is an open source initiative providing a programmatic approach to generating security guidance for macOS. This project enables the creation of customized security baselines by leveraging a comprehensive library of rules mapped to compliance requirements from established security guides, or for developing custom guidance.
+
+By mapping security-enhancing rules to existing guides and policies, this project supports multiple security frameworks and regulated industry policies. Documentation and QA are uniformly managed, simplifying and accelerating the annual update process through unified and standardized efforts.
+
+---
+
+## Why This Project?
+
+- **Accelerate Adoption:** Ensure guidance is available for new OS/hardware releases.
+- **Reduce Global Effort:** Unify and consolidate compliance work into a single project.
+- **Foster Collaboration:** Develop methodologies to reduce overhead and redundancy among baseline authors.
+- **Standardize Controls:** Unify the approach to setting security controls.
+- **Inform Vendors:** Provide MDM/EMM/security/audit vendors and Apple with insight into customer hardening needs.
+
+<Aside type="note">
+<em>This project provides a programmatic approach to security policy and produces output content to be used <strong>in conjunction</strong> with management and security tools to achieve compliance.</em>
+</Aside>
+
+---
+
+## Supported Publications
+
+The project includes guidance from the following sources:
+
+### Government Publications
+
+- **NIST 800-53** ([link](https://csrc.nist.gov/publications/detail/sp/800-53/rev-5/final))
+  - FISMA High
+  - FISMA Moderate
+  - FISMA Low
+- **NIST 800-171** ([link](https://csrc.nist.gov/pubs/sp/800/171/r3/final))
+- **DISA STIG** ([link](https://public.cyber.mil/stigs/downloads/))
+- **CMMC 2.0** ([link](https://dodcio.defense.gov/CMMC/))
+- **CNSSI-1253** ([link](https://www.dcsa.mil/portals/91/documents/ctp/nao/CNSSI_No1253.pdf))
+- **indigo** ([link](https://www.bsi.bund.de/EN/Themen/Oeffentliche-Verwaltung/Zulassung/mobile_Kommunikation/mobileKommunikation_node.html#doc919528bodyText2))
+  - indigo Base (iOS Only)
+  - indigo High (iOS Only)
+
+### Non-Governmental Standards
+
+- **CIS Benchmarks** ([link](https://www.cisecurity.org/benchmark))
+- **CIS Critical Security Controls v8** ([link](https://www.cisecurity.org/controls/v8/))
+
+---
+
+## Development Team
+
+This project is a collaboration between federal IT Security staff and macOS Administrators, published by:
+
+- [National Institute of Standards and Technology (NIST)](https://www.nist.gov)
+- [National Aeronautics and Space Administration (NASA)](https://www.nasa.gov)
+- [Defense Information Systems Agency (DISA)](https://www.disa.mil)
+- [Los Alamos National Lab (LANL)](https://www.lanl.gov)
+
+---
+
+## Objective
+
+To develop an extensible, modern approach to security guidance usable by any organization (Government, Enterprise, Education) needing to adhere to security compliance frameworks and policy. Project outputs include scripts, documentation, and configuration profile payloads for use with modern management tools.
+
+---
+
+## Audience
+
+- **System Administrators:** Generate baseline documentation, configuration profile payloads, and scripts.
+- **Security Professionals:** Review reporting of applied controls against guidance.
+- **Policy Authors:** Map policy metadata to a library of verified controls to create or update baselines.
+- **MDM/EMM/Security/Compliance Tool Vendors:** Support configuration, verification, and reporting of security guidance and controls in products using trusted source material.
+- **Privacy Officers:** Ensure adequate privacy controls are enabled for institutional organizations.

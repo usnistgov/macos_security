@@ -1,0 +1,164 @@
+/**
+ * @file
+ * Header and Footer styles
+ *
+ */
+
+/* Header Styles */
+.nist-header {
+  background: #000;
+  font-family: Helvetica, Arial, sans-serif;
+  padding: 10px 16px 0;
+  font-size: 16px;
+}
+
+.nist-header__logo-link {
+  display: inline-block;
+  height: 35px;
+}
+
+/* For Bootstrap Users - Updated the vertical align property since it interfered with NIST SVG icon. */
+.nist-header__logo-link svg {
+  vertical-align: inherit;
+}
+
+.nist-header__logo-icon {
+  fill: #fff;
+  display: inline-block;
+  height: 16px;
+  position: relative;
+  top: -2px;
+  margin-right: 2px;
+}
+
+.nist-header__logo-image {
+  fill: #fff;
+  display: inline-block;
+  height: 24px;
+  width: 90px;
+}
+
+/* Limit main content area width */
+.nist-main {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 1200px;
+  padding: 0 16px;
+  box-sizing: border-box;
+}
+
+/* Make sure body has no margin or padding when using only this header component */
+body {
+  padding: 0;
+  margin: 0;
+}
+
+/* Footer styles */
+
+.nist-footer {
+  background: #2e2e2e;
+  position: relative;
+  z-index: 200;
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  box-sizing: border-box;
+  color: white;
+  padding: 40px 0px;
+}
+
+.nist-footer__inner {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 1200px;
+  padding: 0 16px;
+}
+
+.nist-footer__inner:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.nist-footer a {
+  color: white;
+  text-decoration: none;
+}
+
+.nist-footer .nist-footer__logo img {
+  width: 340px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 30px;
+}
+
+.nist-footer__logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.nist-footer__menu {
+  clear: both;
+  margin-bottom: 10px;
+}
+
+.nist-footer__menu.first {
+  padding-top: 20px;
+}
+
+.nist-footer__menu ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  text-align: center;
+}
+
+.nist-footer__menu-item {
+  display: inline-block;
+  font-size: 14px;
+  padding: 0;
+  margin-left: 0;
+}
+
+.nist-footer__menu-item:after {
+  content: '|';
+  margin-right: 1.6px;
+  display: inherit;
+  position: static;
+  font: inherit;
+  line-height: inherit;
+  color: inherit;
+}
+
+.nist-footer__menu-item:last-child:after {
+  content: none;
+}
+
+.nist-footer__menu-item a {
+  font-weight: normal;
+  margin-right: 6px;
+  white-space: nowrap;
+  padding: 0.5em 0;
+  display: inline-block;
+}
+
+/**
+ * Stick footer to bottom of page
+ * Source: https://css-tricks.com/couple-takes-sticky-footer/
+ */
+
+html.nist-footer-bottom,
+html.nist-footer-bottom body {
+  height: 100%;
+}
+html.nist-footer-bottom body {
+  display: flex;
+  flex-direction: column;
+}
+html.nist-footer-bottom #main {
+  flex: 1 0 auto;
+}
+html.nist-footer-bottom .nist-footer {
+  flex-shrink: 0;
+}
