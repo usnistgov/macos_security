@@ -118,7 +118,6 @@ profile:
       - system_settings_screen_sharing_disable
       - system_settings_screensaver_ask_for_password_delay_enforce
       - system_settings_screensaver_timeout_enforce
-      - system_settings_siri_listen_disable
       - system_settings_sleep_enforce
       - system_settings_smbd_disable
       - system_settings_software_update_app_update_enforce
