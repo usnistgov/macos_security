@@ -2,7 +2,7 @@ name: Build documentation site to nist-pages
 
 on:
   push:
-    branches: ["main"]
+    branches: ["nist-pages"]
   workflow_dispatch:
 
 permissions:
@@ -35,19 +35,19 @@ jobs:
         with:
           node-version: "20"
           cache: pnpm
-          cache-dependency-path: ${{ env.BUILD_PATH }}/docs/pnpm-lock.yaml
+          cache-dependency-path: ${{ env.BUILD_PATH }}/pnpm-lock.yaml
       - name: Install dependencies
         run: pnpm install
-        working-directory: ${{ env.BUILD_PATH }}/docs
+        working-directory: ${{ env.BUILD_PATH }}
       - name: Build with Astro
         run: |
           pnpm astro build \
             --site "${{ env.SITE_PATH }}" \
             --base "${{ env.BASE_PATH }}"
-        working-directory: ${{ env.BUILD_PATH }}/docs
+        working-directory: ${{ env.BUILD_PATH }}
       - name: Upload to nist-pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ${{ env.BUILD_PATH }}/docs/dist
+          publish_dir: ${{ env.BUILD_PATH }}/dist
           publish_branch: nist-pages
