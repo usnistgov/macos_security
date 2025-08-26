@@ -2,7 +2,7 @@ name: Build documentation site to nist-pages
 
 on:
   push:
-    branches: ["nist-page-docs"]
+    branches: ["nist-pages-docs"]
   workflow_dispatch:
 
 permissions:
