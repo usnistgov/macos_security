@@ -148,7 +148,7 @@ head: [
 				},
 			],
 			editLink: {
-				baseUrl: 'https://github.com/usnistgov/macos_security/edit/nist-pages-docs/docs/',
+				baseUrl: 'https://github.com/usnistgov/macos_security/edit/nist-pages-docs/',
 			},
 			lastUpdated: true,
 		}),
