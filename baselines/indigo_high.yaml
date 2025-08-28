@@ -59,8 +59,12 @@ profile:
       - os_exchange_SMIME_signing_enabled
       - os_exchange_SMIME_signing_overwrite_disable
       - os_exchange_mail_recents_sync_disable
+      - os_exchange_notes_disable
+      - os_exchange_notes_user_override_disable
       - os_exchange_peraccountVPN
       - os_exchange_prevent_move_enforce
+      - os_exchange_reminders_disable
+      - os_exchange_reminders_user_override_disable
       - os_files_network_drive_access_disable
       - os_files_usb_drive_access_disable
       - os_find_my_friends_disable
