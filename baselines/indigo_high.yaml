@@ -1,13 +1,13 @@
-title: "iOS/iPadOS 18.0: Security Configuration - BSI indigo iOS 18.x High Configuration"
+title: "iOS/iPadOS 18.5: Security Configuration - BSI indigo iOS 18.5 High Configuration - Version 1.3"
 description: |
-  This guide describes the actions to take when securing a iOS/iPadOS 18.0 system against the BSI indigo iOS 18.x High Configuration security baseline.
+  This guide describes the actions to take when securing an iOS/iPadOS 18.5 system against the BSI indigo iOS 18.5 High Configuration security baseline, version 1.3, released on 2025-07-17.
 
   Information System Security Officers and benchmark creators can use this catalog of settings in order to assist them in security benchmark creation. This list is a catalog, not a checklist or benchmark, and satisfaction of every item is not likely to be possible or sensible in many operational scenarios.
 authors: |
   *macOS Security Compliance Project*
 
   |===
-  |Henry Stamerjohann|Zentral Pro Services GmbH
+  |Henry Stamerjohann|Declarative IT GmbH
   |Allen Golbig|Jamf
   |Bob Gendler|National Institute of Standards and Technology
   |===
@@ -30,6 +30,7 @@ profile:
       - os_airdrop_unmanaged_destination_enable
       - os_airplay_incoming_password_require
       - os_airplay_outgoing_password_require
+      - os_airprint_disable
       - os_airprint_force_trusted_TLS
       - os_allow_contacts_read_managed_sources_unmanaged_destinations_disable
       - os_allow_contacts_write_managed_sources_unmanaged_destinations_disable
@@ -41,6 +42,7 @@ profile:
       - os_authentication_password_autofill_enable
       - os_auto_correction_disable
       - os_auto_unlock_disable
+      - os_call_recording_disable
       - os_chat_disable
       - os_definition_lookup_disable
       - os_device_name_change_disable
@@ -48,6 +50,7 @@ profile:
       - os_diagnostics_reports_modification_disable
       - os_disallow_enterprise_app_trust
       - os_enterprise_books_disable
+      - os_esim_transfers_disable
       - os_exchange_SMIME_encryption_certificate_overwirte_disable
       - os_exchange_SMIME_encryption_default_certificate_overwrite_enable
       - os_exchange_SMIME_encryption_enforce
@@ -56,8 +59,12 @@ profile:
       - os_exchange_SMIME_signing_enabled
       - os_exchange_SMIME_signing_overwrite_disable
       - os_exchange_mail_recents_sync_disable
+      - os_exchange_notes_disable
+      - os_exchange_notes_user_override_disable
       - os_exchange_peraccountVPN
       - os_exchange_prevent_move_enforce
+      - os_exchange_reminders_disable
+      - os_exchange_reminders_user_override_disable
       - os_files_network_drive_access_disable
       - os_files_usb_drive_access_disable
       - os_find_my_friends_disable
@@ -74,6 +81,13 @@ profile:
       - os_mail_maildrop_disable
       - os_mail_move_messages_disable
       - os_mail_summary_disable
+      - os_notes_transcription_disable
+      - os_notes_transcription_summary_disable
+      - os_external_intelligence_integration_disable
+      - os_external_intelligence_integration_sign_in_disable
+      - os_mail_smart_reply_disable
+      - os_visual_intelligence_summary
+      - os_personalized_handwriting_disable
       - os_marketplace_prevent
       - os_network_known_only
       - os_new_device_proximity_disable
@@ -87,6 +101,7 @@ profile:
       - os_predictive_keyboard_disable
       - os_rapid_security_responses_install_enable
       - os_rapid_security_responses_remove_disable
+      - os_rcs_messaging_disable
       - os_require_managed_pasteboard_enforce
       - os_safari_JavaScript_disable
       - os_safari_cookies_set

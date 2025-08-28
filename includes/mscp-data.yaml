@@ -104,12 +104,12 @@ authors:
       - Bob Gendler|National Institute of Standards and Technology  
   indigo_base:
     names:
-      - Henry Stamerjohann|Zentral Pro Services GmbH
+      - Henry Stamerjohann|Declarative IT GmbH
       - Allen Golbig|Jamf
       - Bob Gendler|National Institute of Standards and Technology 
   indigo_high:
     names:
-      - Henry Stamerjohann|Zentral Pro Services GmbH
+      - Henry Stamerjohann|Declarative IT GmbH
       - Allen Golbig|Jamf
       - Bob Gendler|National Institute of Standards and Technology       
 titles:
@@ -124,8 +124,8 @@ titles:
   cisv8: CIS Controls Version 8
   ios_stig:  Apple iOS/iPadOS 18 STIG - Ver 1, Rel 1
   ios_stig_byoad: Apple iOS/iPadOS 18 BYOAD STIG - Ver 1, Rel 1
-  indigo_base: BSI indigo iOS 18.x Base Configuration
-  indigo_high: BSI indigo iOS 18.x High Configuration
+  indigo_base: BSI indigo iOS 18.5 Base Configuration - Ver 1.3
+  indigo_high: BSI indigo iOS 18.5 High Configuration - Ver 1.3
 ddm:
   supported_types: []
   services: []  
