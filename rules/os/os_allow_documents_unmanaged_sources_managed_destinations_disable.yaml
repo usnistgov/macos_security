@@ -40,8 +40,6 @@ tags:
   - cis_lvl1_enterprise
   - cis_lvl2_enterprise
   - cisv8
-  - indigo_base
-  - indigo_high
 supervised: false
 mobileconfig: true
 mobileconfig_info:

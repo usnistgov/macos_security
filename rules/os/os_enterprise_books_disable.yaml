@@ -17,7 +17,7 @@ references:
   disa_stig:
     - N/A
   indigo:
-    - ANNEX K
+    - N/A
   cis:
     benchmark:
       - N/A
@@ -28,7 +28,6 @@ iOS:
 tags:
   - ios
   - ios_stig
-  - indigo_high
 severity: "medium"
 supervised: false
 mobileconfig: true

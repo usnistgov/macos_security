@@ -16,8 +16,6 @@ iOS:
   - "26.0"
 tags:
   - ios
-  - indigo_base
-  - indigo_high
 supervised: false
 mobileconfig: true
 mobileconfig_info:

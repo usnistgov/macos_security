@@ -22,7 +22,6 @@ iOS:
   - "26.0"
 tags:
   - ios
-  - indigo_high
   - 800-53r5_low
   - 800-53r5_moderate
   - 800-53r5_high  

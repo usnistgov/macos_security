@@ -18,8 +18,6 @@ iOS:
 tags:
   - ios
   - manual
-  - indigo_base
-  - indigo_high
 supervised: true
 mobileconfig: false # Set to true when implementing
 mobileconfig_info:

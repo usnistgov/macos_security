@@ -25,8 +25,6 @@ tags:
   - 800-53r5_low 
   - 800-53r5_moderate 
   - 800-53r5_high
-  - indigo_base
-  - indigo_high
 supervised: false
 mobileconfig: true
 mobileconfig_info:

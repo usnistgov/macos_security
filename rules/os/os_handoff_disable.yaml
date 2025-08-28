@@ -24,7 +24,7 @@ references:
   sfr:
     - 'FMT_SMF_EXT.1.1 #47'
   indigo:
-    - ANNEX K
+    - N/A
   cis:
     benchmark:
       - 2.2.1.11 (level 2 - End-User Owned Devices)
@@ -42,8 +42,6 @@ tags:
   - cis_lvl2_enterprise
   - cisv8
   - ios_stig
-  - indigo_base
-  - indigo_high
   - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high

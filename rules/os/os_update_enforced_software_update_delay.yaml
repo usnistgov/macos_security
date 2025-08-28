@@ -21,8 +21,6 @@ odv:
   indigo_high: 14
 tags:
   - ios
-  - indigo_base
-  - indigo_high
 supervised: true
 mobileconfig: true
 mobileconfig_info:

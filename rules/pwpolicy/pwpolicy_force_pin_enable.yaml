@@ -29,8 +29,6 @@ iOS:
 tags:
   - ios
   - ios_stig
-  - indigo_base
-  - indigo_high
   - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high

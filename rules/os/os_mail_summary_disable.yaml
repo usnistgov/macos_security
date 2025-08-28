@@ -24,8 +24,6 @@ iOS:
   - "26.0"
 tags:
   - ios
-  - indigo_base
-  - indigo_high
 mobileconfig: true
 mobileconfig_info:
   com.apple.applicationaccess:
