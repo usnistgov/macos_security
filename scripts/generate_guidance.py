@@ -594,23 +594,12 @@ def generate_profiles(
             newProfile.addNewPayload(payload, settings, baseline_name)
             consolidated_profile.addNewPayload(payload, settings, baseline_name)
 
+        with open(settings_plist_file_path, "wb") as settings_plist_file:
+            newProfile.finalizeAndSavePlist(settings_plist_file)
+        with open(unsigned_mobileconfig_file_path, "wb") as unsigned_mobileconfig_file:
+            newProfile.finalizeAndSave(unsigned_mobileconfig_file)
         if signing:
-            unsigned_file_path = os.path.join(unsigned_mobileconfig_file_path)
-            unsigned_config_file = open(unsigned_file_path, "wb")
-            newProfile.finalizeAndSave(unsigned_config_file)
-            settings_config_file = open(settings_plist_file_path, "wb")
-            newProfile.finalizeAndSavePlist(settings_config_file)
-            unsigned_config_file.close()
-            # sign the profiles
-            sign_config_profile(unsigned_file_path, signed_mobileconfig_file_path, hash)
-            # delete the unsigned
-
-        else:
-            config_file = open(unsigned_mobileconfig_file_path, "wb")
-            settings_config_file = open(settings_plist_file_path, "wb")
-            newProfile.finalizeAndSave(config_file)
-            newProfile.finalizeAndSavePlist(settings_config_file)
-            config_file.close()
+            sign_config_profile(unsigned_mobileconfig_file_path, signed_mobileconfig_file_path, hash)
 
 
     consolidated_plist_file_path = os.path.join(settings_plist_output_path, f"{baseline_name}.plist")
