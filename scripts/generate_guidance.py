@@ -518,6 +518,15 @@ def generate_profiles(
         )
         for error in profile_errors:
             print(error)
+
+    consolidated_profile = PayloadDict(
+        identifier="consolidated." + baseline_name,
+        uuid=False,
+        organization="macOS Security Compliance Project",
+        displayname=f"{baseline_name} settings",
+        description=f"Consolidated configuration settings for {baseline_name}."
+    )
+
     # process the payloads from the yaml file and generate new config profile for each type
     for payload, settings in profile_types.items():
         if payload.startswith("."):
@@ -566,33 +575,36 @@ def generate_profiles(
         if payload == "com.apple.ManagedClient.preferences":
             for item in settings:
                 newProfile.addMCXPayload(item, baseline_name)
+                consolidated_profile.addMCXPayload(item, baseline_name)
         # handle these payloads for array settings
         elif (payload == "com.apple.applicationaccess.new") or (
             payload == "com.apple.systempreferences"
         ):
-            newProfile.addNewPayload(
-                payload, concatenate_payload_settings(settings), baseline_name
-            )
+            newProfile.addNewPayload(payload, concatenate_payload_settings(settings), baseline_name)
+            consolidated_profile.addNewPayload(payload, concatenate_payload_settings(settings), baseline_name)
         else:
             newProfile.addNewPayload(payload, settings, baseline_name)
+            consolidated_profile.addNewPayload(payload, settings, baseline_name)
 
+        with open(settings_plist_file_path, "wb") as settings_plist_file:
+            newProfile.finalizeAndSavePlist(settings_plist_file)
+        with open(unsigned_mobileconfig_file_path, "wb") as unsigned_mobileconfig_file:
+            newProfile.finalizeAndSave(unsigned_mobileconfig_file)
         if signing:
-            unsigned_file_path = os.path.join(unsigned_mobileconfig_file_path)
-            unsigned_config_file = open(unsigned_file_path, "wb")
-            newProfile.finalizeAndSave(unsigned_config_file)
-            settings_config_file = open(settings_plist_file_path, "wb")
-            newProfile.finalizeAndSavePlist(settings_config_file)
-            unsigned_config_file.close()
-            # sign the profiles
-            sign_config_profile(unsigned_file_path, signed_mobileconfig_file_path, hash)
-            # delete the unsigned
+            sign_config_profile(unsigned_mobileconfig_file_path, signed_mobileconfig_file_path, hash)
 
-        else:
-            config_file = open(unsigned_mobileconfig_file_path, "wb")
-            settings_config_file = open(settings_plist_file_path, "wb")
-            newProfile.finalizeAndSave(config_file)
-            newProfile.finalizeAndSavePlist(settings_config_file)
-            config_file.close()
+
+    consolidated_plist_file_path = os.path.join(settings_plist_output_path, f"{baseline_name}.plist")
+    with open(consolidated_plist_file_path, "wb") as consolidated_plist_file:
+        consolidated_profile.finalizeAndSavePlist(consolidated_plist_file)
+
+    consolidated_mobileconfig_file_path = os.path.join(unsigned_mobileconfig_output_path, f"{baseline_name}.mobileconfig")
+    with open(consolidated_mobileconfig_file_path, "wb") as consolidated_mobileconfig_file:
+        consolidated_profile.finalizeAndSave(consolidated_mobileconfig_file)
+
+    if signing:
+        signed_consolidated_mobileconfig_path = os.path.join(signed_mobileconfig_output_path, f"{baseline_name}.mobileconfig")
+        sign_config_profile(consolidated_mobileconfig_file_path, signed_consolidated_mobileconfig_path, hash)
 
     print(
         f"""
@@ -874,17 +886,16 @@ def default_audit_plist(baseline_name, build_path, baseline_yaml):
         plist_output_path, "org." + baseline_name + ".audit.plist"
     )
 
-    plist_file = open(plist_file_path, "wb")
+    with open(plist_file_path, "wb") as plist_file:
+        plist_dict = {}
 
-    plist_dict = {}
+        for sections in baseline_yaml["profile"]:
+            for profile_rule in sections["rules"]:
+                if profile_rule.startswith("supplemental"):
+                    continue
+                plist_dict[profile_rule] = {"exempt": False}
 
-    for sections in baseline_yaml["profile"]:
-        for profile_rule in sections["rules"]:
-            if profile_rule.startswith("supplemental"):
-                continue
-            plist_dict[profile_rule] = {"exempt": False}
-
-    plistlib.dump(plist_dict, plist_file)
+        plistlib.dump(plist_dict, plist_file)
 
 
 def generate_script(baseline_name, audit_name, build_path, baseline_yaml, reference):
