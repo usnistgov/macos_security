@@ -6,11 +6,15 @@ discussion: |
   NOTE: The built in web server service is disabled at startup by default macOS.
 check: |
   result="FAIL"
-  disabled=$(/bin/launchctl print-disabled system | /usr/bin/grep '"org.apache.httpd" => disabled')
+  enabled=$(/bin/launchctl print-disabled system | /usr/bin/grep '"org.apache.httpd" => enabled')
   running=$(/bin/launchctl print system/org.apache.httpd 2>/dev/null)
   
-  if [[ -z "$running" ]] && [[ ! -z "$disabled" ]]; then
+  if [[ -z "$running" ]] && [[ -z "$enabled" ]]; then
     result="PASS"
+  elif [[ -n "$running" ]]; then
+    result=result+" RUNNING"
+  elif [[ -n "$enabled" ]]; then
+    result=result+" ENABLED"
   fi
   echo $result
 result:

@@ -3,7 +3,18 @@ title: Disable SSH Server for Remote Access Sessions
 discussion: |
   SSH service _MUST_ be disabled for remote access.
 check: |
-  /bin/launchctl print-disabled system | /usr/bin/grep -c '"com.openssh.sshd" => disabled'
+  result="FAIL"
+  enabled=$(/bin/launchctl print-disabled system | /usr/bin/grep '"com.openssh.sshd" => enabled')
+  running=$(/bin/launchctl print system/com.openssh.sshd 2>/dev/null)
+  
+  if [[ -z "$running" ]] && [[ -z "$enabled" ]]; then
+    result="PASS"
+  elif [[ -n "$running" ]]; then
+    result=result+" RUNNING"
+  elif [[ -n "$enabled" ]]; then
+    result=result+" ENABLED"
+  fi
+  echo $result
 result:
   integer: 1
 fix: |
