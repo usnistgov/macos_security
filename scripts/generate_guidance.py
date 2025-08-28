@@ -901,17 +901,16 @@ def default_audit_plist(baseline_name, build_path, baseline_yaml):
         plist_output_path, "org." + baseline_name + ".audit.plist"
     )
 
-    plist_file = open(plist_file_path, "wb")
+    with open(plist_file_path, "wb") as plist_file:
+        plist_dict = {}
 
-    plist_dict = {}
+        for sections in baseline_yaml["profile"]:
+            for profile_rule in sections["rules"]:
+                if profile_rule.startswith("supplemental"):
+                    continue
+                plist_dict[profile_rule] = {"exempt": False}
 
-    for sections in baseline_yaml["profile"]:
-        for profile_rule in sections["rules"]:
-            if profile_rule.startswith("supplemental"):
-                continue
-            plist_dict[profile_rule] = {"exempt": False}
-
-    plistlib.dump(plist_dict, plist_file)
+        plistlib.dump(plist_dict, plist_file)
 
 
 def generate_script(baseline_name, audit_name, build_path, baseline_yaml, reference):
