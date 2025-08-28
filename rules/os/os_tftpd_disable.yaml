@@ -13,6 +13,10 @@ check: |
   
   if [[ -z "$running" ]] && [[ -z "$enabled" ]]; then
     result="PASS"
+  elif [[ -n "$running" ]]; then
+    result=result+" RUNNING"
+  elif [[ -n "$enabled" ]]; then
+    result=result+" ENABLED"
   fi
   echo $result
 result:
