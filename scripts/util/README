@@ -1,4 +1,21 @@
 These additional utilities are macOS ONLY
+
+ensure_defaults_keys.sh
+    This helper script ensures critical defaults keys exist with proper values to prevent "does not exist" errors when checking compliance. It's automatically executed by compliance scripts generated from generate_guidance.py.
+
+    Background: Certain MDM systems and custom Configuration Profile deployment tools (like JamfNow) may not automatically create defaults keys when applying profiles, especially on fresh systems or when keys have never been set. This causes compliance checks to fail with "does not exist" errors even when the MDM profile is correctly configured.
+
+    The script initializes missing keys that may not exist on fresh systems, particularly for:
+    - Control Center menu visibility settings
+    - Accessibility privacy preferences  
+    - Safari security settings
+    - Terminal security preferences
+    - Search and Siri privacy settings
+
+    After creating the keys with compliant defaults, mcxrefresh ensures Configuration Profiles take precedence over these baseline values.
+
+    Usage: Typically runs automatically, but can be executed manually:
+    sudo ./scripts/ensure_defaults_keys.sh
  
 mscp_local_report.py
     mscp_local_report will generate an Excel and HTML document that shows a pie chart with the compliance percentage and a table with the rule name and result.

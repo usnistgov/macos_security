@@ -5,21 +5,9 @@ discussion: |
 
   Turning off guest access prevents anonymous users from accessing files.
 check: |
-  /usr/bin/osascript -l JavaScript << EOS
-  function run() {
-    let pref1 = ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('com.apple.MCX')\
-  .objectForKey('DisableGuestAccount'))
-    let pref2 = ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('com.apple.MCX')\
-  .objectForKey('EnableGuestAccount'))
-    if ( pref1 == true && pref2 == false ) {
-      return("true")
-    } else {
-      return("false")
-    }
-  }
-  EOS
+  /usr/bin/defaults read /Library/Preferences/com.apple.loginwindow GuestEnabled
 result:
-  string: 'true'
+  integer: 0
 fix: |
   This is implemented by a Configuration Profile.
 references:

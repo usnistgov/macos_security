@@ -5,12 +5,9 @@ discussion: |
 
   The information system _MUST_ be configured to provide only essential capabilities. Disabling the submission of this information will mitigate the risk of unwanted data being sent to Apple.
 check: |
-  /usr/bin/osascript -l JavaScript << EOS
-  $.NSUserDefaults.alloc.initWithSuiteName('com.apple.Accessibility')\
-  .objectForKey('AXSAudioDonationSiriImprovementEnabled').js
-  EOS
+  /usr/bin/sudo -u "$CURRENT_USER" /usr/bin/defaults read com.apple.Accessibility AXSAudioDonationSiriImprovementEnabled
 result:
-  string: "false"
+  integer: 0
 fix: |
   This is implemented by a Configuration Profile.
 references:

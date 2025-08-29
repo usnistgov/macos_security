@@ -1142,6 +1142,15 @@ fi
 # run mcxrefresh
 /usr/bin/mcxrefresh -u $CURR_USER_UID
 
+# ensure critical defaults keys exist to prevent check errors
+script_dir="$(cd "$(dirname "${{BASH_SOURCE[0]}}")" && pwd)"
+if [[ -f "$script_dir/../scripts/ensure_defaults_keys.sh" ]]; then
+    echo "$(date -u) Running defaults key initialization..." >> "$audit_log"
+    "$script_dir/../scripts/ensure_defaults_keys.sh" >> "$audit_log" 2>&1
+else
+    echo "$(date -u) Warning: ensure_defaults_keys.sh not found, some checks may fail with 'does not exist' errors" >> "$audit_log"
+fi
+
 # write timestamp of last compliance check
 /usr/bin/defaults write "$audit_plist" lastComplianceCheck "$(date +"%Y-%m-%d %H:%M:%S%z")"
     """

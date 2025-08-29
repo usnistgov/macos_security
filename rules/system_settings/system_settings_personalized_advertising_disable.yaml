@@ -5,12 +5,9 @@ discussion: |
 
   The information system _MUST_ be configured to provide only essential capabilities. Disabling ad tracking ensures that applications and advertisers are unable to track users' interests and deliver targeted advertisements.
 check: |
-  /usr/bin/osascript -l JavaScript << EOS
-  $.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess')\
-  .objectForKey('allowApplePersonalizedAdvertising').js
-  EOS
+  /usr/bin/sudo -u "$CURRENT_USER" /usr/bin/defaults read com.apple.AdLib allowApplePersonalizedAdvertising
 result:
-  string: 'false'
+  integer: 0
 fix: |
   This is implemented by a Configuration Profile.
 references:
