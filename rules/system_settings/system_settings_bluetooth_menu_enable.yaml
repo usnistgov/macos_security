@@ -3,10 +3,12 @@ title: Enable Bluetooth Menu
 discussion: |
   The bluetooth menu _MUST_ be enabled.
 check: |
-  /usr/bin/osascript -l JavaScript << EOS
-  $.NSUserDefaults.alloc.initWithSuiteName('com.apple.controlcenter')\
-  .objectForKey('Bluetooth').js
-  EOS
+
+  if [ -n "${CACHED_PROFILES_FILE:-}" ] && [ -f "${CACHED_PROFILES_FILE}" ]; then
+    /usr/bin/grep -qE 'Bluetooth = 18' "${CACHED_PROFILES_FILE}" && echo 18 || echo 0
+  else
+    /usr/bin/sudo /usr/bin/profiles -P -o stdout | /usr/bin/grep -qE 'Bluetooth = 18' && echo 18 || echo 0
+  fi
 result:
   integer: 18
 fix: |

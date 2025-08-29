@@ -6,10 +6,12 @@ discussion: |
   The information system _MUST_ be configured to provide only essential capabilities. Disabling the submission of search data will mitigate the risk of unwanted data being sent to Apple.
   
 check: |
-  /usr/bin/osascript -l JavaScript << EOS
-  $.NSUserDefaults.alloc.initWithSuiteName('com.apple.assistant.support')\
-  .objectForKey('Search Queries Data Sharing Status').js
-  EOS
+
+  if [ -n "${CACHED_PROFILES_FILE:-}" ] && [ -f "${CACHED_PROFILES_FILE}" ]; then
+    /usr/bin/grep -qE '"Search Queries Data Sharing Status" = 2' "${CACHED_PROFILES_FILE}" && echo 2 || echo 1
+  else
+    /usr/bin/sudo /usr/bin/profiles -P -o stdout | /usr/bin/grep -qE '"Search Queries Data Sharing Status" = 2' && echo 2 || echo 1
+  fi
 result:
   integer: 2
 fix: |

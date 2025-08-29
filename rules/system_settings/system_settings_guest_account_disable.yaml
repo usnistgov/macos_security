@@ -5,21 +5,21 @@ discussion: |
 
   Turning off guest access prevents anonymous users from accessing files.
 check: |
-  /usr/bin/osascript -l JavaScript << EOS
-  function run() {
-    let pref1 = ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('com.apple.MCX')\
-  .objectForKey('DisableGuestAccount'))
-    let pref2 = ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('com.apple.MCX')\
-  .objectForKey('EnableGuestAccount'))
-    if ( pref1 == true && pref2 == false ) {
-      return("true")
-    } else {
-      return("false")
-    }
-  }
-  EOS
+  if [ -n "${CACHED_PROFILES_FILE:-}" ] && [ -f "${CACHED_PROFILES_FILE}" ]; then
+    if /usr/bin/grep -qE 'DisableGuestAccount = 1' "${CACHED_PROFILES_FILE}" && /usr/bin/grep -qE 'EnableGuestAccount = 0' "${CACHED_PROFILES_FILE}"; then
+      echo 0
+    else
+      echo 1
+    fi
+  else
+    if /usr/bin/sudo /usr/bin/profiles -P -o stdout | /usr/bin/grep -qE 'DisableGuestAccount = 1' && /usr/bin/sudo /usr/bin/profiles -P -o stdout | /usr/bin/grep -qE 'EnableGuestAccount = 0'; then
+      echo 0
+    else
+      echo 1
+    fi
+  fi
 result:
-  string: 'true'
+  integer: 0
 fix: |
   This is implemented by a Configuration Profile.
 references:

@@ -5,12 +5,14 @@ discussion: |
 
   The information system _MUST_ be configured to provide only essential capabilities. Disabling the submission of this information will mitigate the risk of unwanted data being sent to Apple.
 check: |
-  /usr/bin/osascript -l JavaScript << EOS
-  $.NSUserDefaults.alloc.initWithSuiteName('com.apple.Accessibility')\
-  .objectForKey('AXSAudioDonationSiriImprovementEnabled').js
-  EOS
+
+  if [ -n "${CACHED_PROFILES_FILE:-}" ] && [ -f "${CACHED_PROFILES_FILE}" ]; then
+    /usr/bin/grep -qE 'AXSAudioDonationSiriImprovementEnabled = 0' "${CACHED_PROFILES_FILE}" && echo 0 || echo 1
+  else
+    /usr/bin/sudo /usr/bin/profiles -P -o stdout | /usr/bin/grep -qE 'AXSAudioDonationSiriImprovementEnabled = 0' && echo 0 || echo 1
+  fi
 result:
-  string: "false"
+  integer: 0
 fix: |
   This is implemented by a Configuration Profile.
 references:

@@ -1142,6 +1142,29 @@ fi
 # run mcxrefresh
 /usr/bin/mcxrefresh -u $CURR_USER_UID
 
+# Cache profile data to avoid multiple sudo prompts
+echo "$(date -u) Caching profile data..." >> "$audit_log"
+CACHED_PROFILES_FILE="/tmp/cached_profiles_$$.txt"
+if [[ $EUID -eq 0 ]]; then
+    # Already running as root, no sudo needed
+    /usr/bin/profiles -P -o stdout > "$CACHED_PROFILES_FILE" 2>/dev/null
+    cache_result=$?
+else
+    # Not root, need sudo (shouldn't happen since script requires root)
+    /usr/bin/sudo /usr/bin/profiles -P -o stdout > "$CACHED_PROFILES_FILE" 2>/dev/null
+    cache_result=$?
+fi
+
+if [[ $cache_result -eq 0 && -s "$CACHED_PROFILES_FILE" ]]; then
+    export CACHED_PROFILES_FILE
+    echo "$(date -u) Profile data cached to $CACHED_PROFILES_FILE" >> "$audit_log"
+else
+    echo "$(date -u) Warning: Could not cache profile data (exit code: $cache_result)" >> "$audit_log"
+    rm -f "$CACHED_PROFILES_FILE" 2>/dev/null
+    unset CACHED_PROFILES_FILE
+fi
+
+
 # write timestamp of last compliance check
 /usr/bin/defaults write "$audit_plist" lastComplianceCheck "$(date +"%Y-%m-%d %H:%M:%S%z")"
     """
@@ -1382,6 +1405,12 @@ fi
     zsh_check_footer = """
 lastComplianceScan=$(defaults read "$audit_plist" lastComplianceCheck)
 echo "Results written to $audit_plist"
+
+# Clean up cached profile data
+if [[ -n "$CACHED_PROFILES_FILE" && -f "$CACHED_PROFILES_FILE" ]]; then
+    rm -f "$CACHED_PROFILES_FILE"
+    echo "$(date -u) Cleaned up cached profile data" >> "$audit_log"
+fi
 
 if [[ ! $check ]] && [[ ! $cfc ]];then
     pause
@@ -2160,6 +2189,23 @@ def main():
     print("Profile YAML:", args.baseline.name)
     print("Output path:", adoc_output_file.name)
 
+    # Cache profile data for rules to avoid multiple sudo prompts
+    try:
+        print("Caching profile data...")
+        cache_file = os.path.join(tempfile.gettempdir(), f"cached_profiles_{os.getpid()}.txt")
+        process = subprocess.run(["/usr/bin/sudo", "/usr/bin/profiles", "-P", "-o", "stdout"], 
+                               capture_output=True, text=True, check=True)
+        with open(cache_file, 'w') as f:
+            f.write(process.stdout)
+        os.environ['CACHED_PROFILES_FILE'] = cache_file
+        print(f"Profile data cached to {cache_file}")
+    except subprocess.CalledProcessError as e:
+        print(f"Warning: Could not cache profile data: {e}")
+        # Continue without caching - rules will fall back to individual sudo calls
+    except Exception as e:
+        print(f"Warning: Profile caching failed: {e}")
+        # Continue without caching
+
     if args.hash:
         signing = True
         if not verify_signing_hash(args.hash):
@@ -2714,6 +2760,15 @@ def main():
             print(
                 "If you would like to generate the PDF file from the AsciiDoc file, install the ruby gem for asciidoctor-pdf"
             )
+
+    # cleanup cached profile data
+    cache_file = os.environ.get('CACHED_PROFILES_FILE')
+    if cache_file and os.path.exists(cache_file):
+        try:
+            os.remove(cache_file)
+            print(f"Cleaned up profile cache: {cache_file}")
+        except Exception as e:
+            print(f"Warning: Could not cleanup cache file: {e}")
 
     # finally revert back to the prior directory
     os.chdir(original_working_directory)
