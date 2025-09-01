@@ -601,11 +601,6 @@ def generate_profiles(
         if signing:
             sign_config_profile(unsigned_mobileconfig_file_path, signed_mobileconfig_file_path, hash)
 
-
-    consolidated_plist_file_path = os.path.join(settings_plist_output_path, f"{baseline_name}.plist")
-    with open(consolidated_plist_file_path, "wb") as consolidated_plist_file:
-        consolidated_profile.finalizeAndSavePlist(consolidated_plist_file)
-
     consolidated_mobileconfig_file_path = os.path.join(unsigned_mobileconfig_output_path, f"{baseline_name}.mobileconfig")
     with open(consolidated_mobileconfig_file_path, "wb") as consolidated_mobileconfig_file:
         consolidated_profile.finalizeAndSave(consolidated_mobileconfig_file)
