@@ -1,7 +1,7 @@
 id: os_image_wand_disable
 title: Disable Apple Intelligence ImageWand
 discussion: |-
-  Apple Intelligence features such as Apple ImageWand that use off device AI _MUST_ be disabled.
+  Apple Intelligence features such as Apple ImageWand _MUST_ be disabled.
 check: " "
 result:
   string: 'false'
@@ -11,11 +11,8 @@ references:
   cce:
     - CCE-95580-7
   800-53r5:
-    - AC-20
-    - AC-20(1)
     - CM-7
     - CM-7(1)
-    - SC-7(10)
 visionOS:
   - "2.4"
 tags:
