@@ -49,6 +49,6 @@ mobileconfig: false
 mobileconfig_info:
 ddm_info:
   declarationtype: com.apple.configuration.softwareupdate.settings
-  ddm_key: 
-    AutomaticActions: InstallSecurityUpdate
-  ddm_value: AlwaysOn
+  ddm_key: AutomaticActions
+  ddm_value: 
+    InstallSecurityUpdate: AlwaysOn

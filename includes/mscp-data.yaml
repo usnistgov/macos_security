@@ -97,6 +97,7 @@ ddm:
     - com.apple.configuration.services.configuration-files
     - com.apple.configuration.passcode.settings
     - com.apple.configuration.diskmanagement.settings
+    - com.apple.configuration.softwareupdate.settings
   services:
     com.apple.bash: /etc/
     com.apple.pam: /etc/pam.d/

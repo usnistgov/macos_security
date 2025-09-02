@@ -38,6 +38,6 @@ mobileconfig: false
 mobileconfig_info:
 ddm_info:
   declarationtype: com.apple.configuration.softwareupdate.settings
-  ddm_key: 
-    AutomaticActions: Download
-  ddm_value: AlwaysOn
+  ddm_key: AutomaticActions
+  ddm_value: 
+    Download: AlwaysOn
