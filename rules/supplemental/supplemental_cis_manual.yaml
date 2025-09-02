@@ -25,7 +25,7 @@ discussion: |
   2.1.1.6 Audit Find My Mac +
   2.1.2 Audit App Store Password Settings +
   2.3.3.11 Ensure Computer Name Does Not Contain PII or Protected Organizational Information +
-  2.4.3 Audit Menu Bar and Control Center Icons + 
+  2.4.1 Audit Menu Bar and Control Center Icons + 
   2.5.2.2 Ensure Listen for Siri is Disabled +
   2.6.1.3 Audit Location Services Access +
   2.6.2.1 Audit Full Disk Access for Applications +
@@ -33,7 +33,6 @@ discussion: |
   2.6.7 Audit Lockdown Mode +
   2.7.2 Audit iPhone Mirroring +
   2.8.1 Audit Universal Control Settings +
-  2.9.1 Ensure Help Apple Improve Search Is Disabled Draft +
   2.10.1.1 Ensure the OS Is Not Active When Resuming from Standby (Intel) +
   2.12.2 Audit Touch ID +
   2.14.1 Audit Game Center Settings +
@@ -71,7 +70,8 @@ discussion: |
   |Applications
 
   |Recommendations
-  |6.2.1 Ensure Protect Mail Activity in Mail Is Enabled +
+  |6.1.1 Ensure Show All Filename Extensions Setting is Enabled +
+  6.2.1 Ensure Protect Mail Activity in Mail Is Enabled +
   6.3.2 Audit History and Remove History Items +
   6.3.5 Audit Hide IP Address in Safari Setting +
   6.3.8 Audit Autofill +
@@ -96,7 +96,6 @@ macOS:
 tags:
   - cis_lvl1
   - cis_lvl2
-  - cisv8
   - supplemental
 mobileconfig: false
 mobileconfig_info:
