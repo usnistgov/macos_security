@@ -11,11 +11,8 @@ references:
   cci: 
     - N/A
   800-53r5:
-    - AC-20
-    - AC-20(1)
     - CM-7
     - CM-7(1)
-    - SC-7(10)
   sfr:
     - N/A
   disa_stig:
