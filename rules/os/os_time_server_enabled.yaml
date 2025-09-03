@@ -5,7 +5,7 @@ discussion: |
 
   NOTE: The time synchronization daemon is enabled by default on macOS.
 check: |
-  /bin/launchctl list | /usr/bin/grep -c com.apple.timed
+  /bin/launchctl print system | /usr/bin/grep -c -E '\tcom.apple.timed'
 result:
   integer: 1
 fix: |

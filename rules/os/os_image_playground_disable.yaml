@@ -1,7 +1,7 @@
-id: os_image_generation_disable
-title: Disable AI Image Generation
+id: os_image_playground_disable
+title: Disable Apple Intelligence Image Playground
 discussion: |-
-  Apple Intelligence features that use off device AI _MUST_ be disabled.
+    Apple Intelligence features such as Image Playground _MUST_ be disabled.
 check: |
   /usr/bin/osascript -l JavaScript << EOS
   $.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess')\
@@ -22,16 +22,11 @@ references:
   disa_stig:
     - APPL-26-005150
   800-53r5:
-    - AC-20
-    - AC-20(1)
     - CM-7
     - CM-7(1)
-    - SC-7(10)
   800-171r3:
-    - 03.01.20
     - 03.04.06    
   cmmc:
-    - AC.L1-3.1.20
     - CM.L2-3.4.6
     - CM.L2-3.4.7
 macOS:

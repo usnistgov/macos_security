@@ -7,7 +7,7 @@ discussion: |
 
   NOTE: This will only return a proper result on a T2 or Apple Silicon Macs.
 check: |
-  /usr/libexec/mdmclient QuerySecurityInfo | /usr/bin/grep -c "SecureBootLevel = full"
+  /usr/libexec/mdmclient QuerySecurityInfo 2>/dev/null | /usr/bin/grep -c "SecureBootLevel = full"
 result:
   integer: 1
 fix: |

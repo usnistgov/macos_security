@@ -38,7 +38,7 @@ references:
     - APPL-26-002024
   cis:
     benchmark:
-      - 2.9.1 (level 1)
+      - 2.9.1
     controls v8:
       - 4.1
       - 4.8

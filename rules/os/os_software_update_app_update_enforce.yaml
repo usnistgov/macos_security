@@ -1,4 +1,4 @@
-id: system_settings_software_update_app_update_enforce
+id: os_software_update_app_update_enforce
 title: Enforce Software Update App Update Updates Automatically
 discussion: |
   Software Update _MUST_ be configured to enforce automatic updates of App Updates is enabled.
