@@ -78,6 +78,8 @@ profile:
       - system_settings_bluetooth_sharing_disable
       - system_settings_critical_update_install_enforce
       - system_settings_diagnostics_reports_disable
+      - system_settings_external_intelligence_disable
+      - system_settings_external_intelligence_sign_in_disable
       - system_settings_find_my_disable
       - system_settings_firewall_enable
       - system_settings_firewall_stealth_mode_enable
