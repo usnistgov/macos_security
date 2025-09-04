@@ -32,6 +32,6 @@ tags:
 severity: "high"
 supervised: false
 mobileconfig: true
-mobileconfig_info: 
+mobileconfig_info:
   com.apple.applicationaccess:
     allowAssistant: false
