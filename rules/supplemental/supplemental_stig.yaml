@@ -26,10 +26,11 @@ discussion: |
   AIOS-18-711900| Apple iOS/iPadOS 18 users must complete required training.
   |AIOS-18-012000 +
   AIOS-18-712000| A managed photo app must be used to take and store work-related photos.
-  |AIOS-18-012650| Apple iOS/iPadOS 18 must implement the management setting: approved Apple Watches must be managed by an MDM.
-  |AIOS-18-013500| Apple iOS must implement the management setting: Not allow a user to remove Apple iOS configuration profiles that enforce DoD security requirements.
-  |AIOS-18-014700| Apple iOS/iPadOS 18 must have DOD root and intermediate PKI certificates installed.
-  |AIOS-18-015500| Apple iOS/iPadOS 18 must disable the download of iOS/iPadOS beta updates.
+  |AIOS-18-012650| Apple iOS/iPadOS 18 must implement the management setting: approved Apple Watches must be managed by an MDM. +
+  |AIOS-18-013500| Apple iOS must implement the management setting: Not allow a user to remove Apple iOS configuration profiles that enforce DoD security requirements. +
+  |AIOS-18-014700| Apple iOS/iPadOS 18 must have DOD root and intermediate PKI certificates installed. +
+  |AIOS-18-015500| Apple iOS/iPadOS 18 must disable the download of iOS/iPadOS beta updates. +
+  |AIOS-18-017700| DOD Apple iOS/iPadOS 18 devices must have a Mobile Threat Detection (MTD) app installed. +
   |===
 check: |
 fix: |

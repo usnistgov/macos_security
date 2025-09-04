@@ -1,15 +1,13 @@
-id: os_airprint_disable
-title: "Disable AirPrint"
+id: os_ibeacon_airprint_disable
+title: "Disable Discovery of AirPrint Printers using iBeacons"
 discussion: |
-  The iOS built-in AirPrint capability _MUST_ be disabled.
-
-  The service AirPrint _MUST_ be disabled to prevent intendedly printing content on unknown printers and leaking data.
+  iBeacon discovery _MUST_ be disabled to prevent AirPrint Bluebooth beacons from being potentially exploited for network phishing.
 check: " "
 fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-    - CCE-94515-4
+    - N/A
   cci:
     - CCI-000366  
   800-53r5:
@@ -17,9 +15,9 @@ references:
   sfr:
     - 'FMT_MOF_EXT.1.2 #47'    
   disa_stig:
-    - AIOS-18-016600
+    - AIOS-18-016700
   indigo:
-    - Annex K
+    - N/A
 iOS:
   - "18.0"
 tags:
@@ -28,9 +26,8 @@ tags:
   - 800-53r5_low
   - 800-53r5_moderate
   - 800-53r5_high 
-  - indigo_high
 supervised: false
 mobileconfig: true
 mobileconfig_info:
   com.apple.applicationaccess:
-    allowAirPrint: false
+    allowAirPrintiBeaconDiscovery: false

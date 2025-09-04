@@ -10,17 +10,25 @@ fix: |
 references:
   cce:
     - CCE-94551-9
+  cci:
+    - CCI-000366
   800-53r5:
     - AC-20
     - CM-7
     - CM-7(1)
     - SC-7(10)
+  sfr:
+    - 'FMT_MOF_EXT.1.2 #47'
+  disa_stig:
+    - AIOS-18-016100
+    - AIOS-18-016300
   indigo:
     - ANNEX K
 iOS:
   - "18.0"
 tags:
   - ios
+  - ios_stig
   - indigo_base
   - indigo_high
   - 800-53r5_low
