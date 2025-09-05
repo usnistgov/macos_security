@@ -23,6 +23,8 @@ references:
     - N/A
   srg:
     - SRG-OS-000001-GPOS-00001
+  bio:
+    - 5.16.02
 macOS:
   - '15.0'
 tags:
@@ -34,5 +36,6 @@ tags:
   - cnssi-1253_high
   - srg
   - cnssi-1253_moderate
+  - nlmapgov_plus
 mobileconfig: false
 mobileconfig_info:

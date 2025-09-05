@@ -1,0 +1,120 @@
+---
+title: Scripts Arugments List
+description: A scripts reference.
+---
+
+
+This page explains the main scripts used for generating content in this repository, including their arguments and usage examples.
+
+---
+
+## `generate_guidance.py`
+
+Generates various outputs from a baseline YAML file:
+
+- AsciiDoc document
+- HTML guide (from AsciiDoc)
+- PDF guide (from AsciiDoc)
+- Configuration Profiles
+- Compliance Script
+- Excel Document
+
+**Usage:**
+
+```bash
+python3 ./scripts/generate_guidance.py -h
+usage: generate_guidance.py [-h] [-l LOGO] [-p] [-r REFERENCE] [-s] [-x] [-H HASH] baseline
+
+Given a baseline, create guidance documents and files.
+
+positional arguments:
+  baseline              Baseline YAML file used to create the guide.
+
+optional arguments:
+  -h, --help            Show this help message and exit.
+  -l LOGO, --logo LOGO  Full path to logo file to be included in the guide.
+  -p, --profiles        Generate configuration profiles for the rules.
+  -r REFERENCE, --reference REFERENCE
+                        Use the reference ID instead of rule ID for identification.
+  -s, --script          Generate the compliance script for the rules.
+  -x, --xls             Generate the Excel (xls) document for the rules.
+  -H HASH, --hash HASH  Sign the configuration profiles with subject key ID (hash value without spaces)
+```
+
+<aside>
+💡 <b>Tip:</b> The first argument must be the baseline YAML file you want to use.
+</aside>
+
+**Example:**
+
+```bash
+python3 scripts/generate_guidance.py baselines/800-53r5_moderate.yaml
+# Output:
+# Profile YAML: baselines/800-53r5_moderate.yaml
+# Output path: /Users/mscp/src/macos_security/build/800-53r5_moderate/800-53r5_moderate.adoc
+# Generating HTML file from AsciiDoc...
+# Generating PDF file from AsciiDoc...
+```
+
+---
+
+## `generate_baseline.py`
+
+Creates a `baseline.yaml` file for content generation. The output is saved under `build/baselines`.
+
+**Usage:**
+
+```bash
+python3 scripts/generate_baseline.py -h
+usage: generate_baseline.py [-h] [-c] [-k KEYWORD] [-l] [-t]
+
+Given a keyword tag, generate a generic baseline.yaml file containing rules with the tag.
+
+optional arguments:
+  -h, --help            Show this help message and exit.
+  -c, --controls        Output the 800-53 controls covered by the rules.
+  -k KEYWORD, --keyword KEYWORD
+                        Keyword tag to collect rules containing the tag.
+  -l, --list_tags       List the available keyword tags to search for.
+  -t, --tailor          Customize the baseline to your organization's values.
+```
+
+<aside>
+📌 <b>Note:</b> If you run the script without any flags, it will list all possible keywords.
+</aside>
+
+**Example:**
+
+```bash
+python3 scripts/generate_baseline.py -k all_rules
+```
+
+---
+
+## `generate_scap.py`
+
+Creates OVAL checks and SCAP content for compliance automation.
+
+**Usage:**
+
+```bash
+usage: generate_scap.py [-h] [-x] [-o] [-l] [-b BASELINE]
+
+Easily generate xccdf, oval, or scap datastream. If no option is defined, it will generate a SCAP datastream file.
+
+optional arguments:
+  -h, --help            Show this help message and exit.
+  -x, --xccdf           Generate an XCCDF file.
+  -o, --oval            Generate an OVAL file of the checks.
+  -l, --list_tags       List the available keyword tags to search for.
+  -b BASELINE, --baseline BASELINE
+                        Choose a baseline to generate an XML file for. If none is specified, it will generate for every rule found.
+```
+
+**Example:**
+
+```bash
+git checkout monterey
+python3 scripts/generate_scap.py
+# Builds an SCAP 1.3 document in build/macOS_12.0_Security_Compliance_Benchmark-Revision_3.xml 
+```

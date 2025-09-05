@@ -49,6 +49,10 @@ references:
       - 5.1
   cmmc:
     - CM.L2-3.4.2
+  bio:
+    - 8.01.01
+    - 8.01.02
+    - 8.09
 macOS:
   - '15.0'
 tags:
@@ -67,6 +71,8 @@ tags:
   - cmmc_lvl2
   - stig
   - cnssi-1253_moderate
+  - nlmapgov_base
+  - nlmapgov_plus
 severity: medium
 mobileconfig: false
 mobileconfig_info:

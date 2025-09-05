@@ -66,6 +66,8 @@ references:
   cmmc:
     - IA.L1-3.5.1
     - IA.L1-3.5.2
+  bio:
+    - 8.27.01
 macOS:
   - '15.0'
 odv:
@@ -91,6 +93,7 @@ tags:
   - cmmc_lvl1
   - stig
   - cnssi-1253_moderate
+  - nlmapgov_plus
 severity: medium
 mobileconfig: true
 mobileconfig_info:
