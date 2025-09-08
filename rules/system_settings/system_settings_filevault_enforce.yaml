@@ -4,6 +4,8 @@ discussion: |
   FileVault _MUST_ be enforced.
 
   The information system implements cryptographic mechanisms to protect the confidentiality and integrity of information stored on digital media during transport outside of controlled areas.
+
+  NOTE: See the FileVault supplemental to implement this rule.
 check: |
   dontAllowDisable=$(/usr/bin/osascript -l JavaScript << EOS
   $.NSUserDefaults.alloc.initWithSuiteName('com.apple.MCX')\
