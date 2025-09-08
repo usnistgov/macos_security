@@ -1463,6 +1463,26 @@ usage=(
     "--quiet=<value>    :   1 - show only failed and exempted checks in output"
     "                       2 - show minimal output"
   )
+  
+# Look for managed arguments for compliance script
+if [[ $# -eq 0 ]];then
+    compliance_args=$(/usr/bin/osascript -l JavaScript << 'EOS'
+var defaults = $.NSUserDefaults.alloc.initWithSuiteName('org.{audit_name}.audit');
+var args = defaults.objectForKey('compliance_args');
+if (args && args.count > 0) {{
+    var result = [];
+    for (var i = 0; i < args.count; i++) {{
+        result.push(ObjC.unwrap(args.objectAtIndex(i)));
+    }}
+    result.join(' ');
+    }}
+EOS
+)
+    if [[ -n "$compliance_args" ]]; then
+        logmessage "Managed arguments found for compliance script, setting: $compliance_args"
+        eval "set -- $compliance_args"
+    fi
+fi
 
 # Look for managed arguments for compliance script
 if [[ $# -eq 0 ]];then
