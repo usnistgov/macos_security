@@ -1483,25 +1483,6 @@ EOS
         eval "set -- $compliance_args"
     fi
 fi
-
-# Look for managed arguments for compliance script
-if [[ $# -eq 0 ]];then
-    compliance_args=$(/usr/bin/osascript -l JavaScript << 'EOS'
-var defaults = $.NSUserDefaults.alloc.initWithSuiteName('org.{audit_name}.audit');
-var args = defaults.objectForKey('compliance_args');
-if (args && args.count > 0) {{
-    var result = [];
-    for (var i = 0; i < args.count; i++) {{
-        result.push(ObjC.unwrap(args.objectAtIndex(i)));
-    }}
-    result.join(' ');
-    }}
-EOS
-)
-    if [[ -n "$compliance_args" ]]; then
-        eval "set -- $compliance_args"
-    fi
-fi
   
 zparseopts -D -E -help=flag_help -check=check -fix=fix -stats=stats -compliant=compliant_opt -non_compliant=non_compliant_opt -reset=reset -reset-all=reset_all -cfc=cfc -quiet:=quiet || {{ print -l $usage && return }}
 
