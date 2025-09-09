@@ -18,7 +18,7 @@ check: |
   fi
   echo $result
 result:
-  integer: 1
+  string: PASS
 fix: |
   [source,bash]
   ----
