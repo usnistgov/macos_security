@@ -56,7 +56,7 @@ profile:
       - os_safari_password_autofill_disable
       - os_show_calendar_lock_screen_disable
       - os_show_notification_center_lock_screen_disable
-      - os_siri_assistant_diable
+      - os_siri_assistant_disable
       - os_siri_when_locked_disabled
       - os_spell_check_disable
       - os_supervised_mdm_require
