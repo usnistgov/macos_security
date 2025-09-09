@@ -22,7 +22,7 @@ references:
   indigo:
   - N/A
 iOS:
-- '18.4'
+- '26.0'
 tags:
 - ios
 - 800-53r5_low

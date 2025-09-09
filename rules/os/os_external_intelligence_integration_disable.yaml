@@ -24,7 +24,7 @@ references:
   disa_stig:
   - N/A
 iOS:
-- '18.2'
+- '26.0'
 tags:
 - ios
 - ios_stig
