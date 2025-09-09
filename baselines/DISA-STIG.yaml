@@ -1,6 +1,6 @@
-title: "macOS 15.0: Security Configuration - Apple macOS 15 (Sequoia) STIG - Ver 1, Rel 3"
+title: "macOS 15.0: Security Configuration - Apple macOS 15 (Sequoia) STIG - Ver 1, Rel 4"
 description: |
-  This guide describes the actions to take when securing a macOS 15.0 system against the Apple macOS 15 (Sequoia) STIG - Ver 1, Rel 3 security baseline.
+  This guide describes the actions to take when securing a macOS 15.0 system against the Apple macOS 15 (Sequoia) STIG - Ver 1, Rel 4 security baseline.
 authors: |
   *macOS Security Compliance Project*
 
