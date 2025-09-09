@@ -96,12 +96,6 @@ authors:
       - Dan Brodjieski|National Aeronautics and Space Administration
       - Allen Golbig|Jamf
       - Bob Gendler|National Institute of Standards and Technology
-  ios_stig_byoad:
-    names: 
-      - Marco Piñeyro|Department of State
-      - Dan Brodjieski|National Aeronautics and Space Administration
-      - Allen Golbig|Jamf
-      - Bob Gendler|National Institute of Standards and Technology  
   indigo_base:
     names:
       - Henry Stamerjohann|Declarative IT GmbH
@@ -122,8 +116,7 @@ titles:
   cis_lvl1_enterprise: CIS Apple iOS 18 v1.0.0 Benchmark (Level 1) - Institutionally-Owned Devices
   cis_lvl2_enterprise: CIS Apple iOS 18 v1.0.0 Benchmark (Level 2) - Institutionally-Owned Devices
   cisv8: CIS Controls Version 8
-  ios_stig:  Apple iOS/iPadOS 18 STIG - Ver 1, Rel 1
-  ios_stig_byoad: Apple iOS/iPadOS 18 BYOAD STIG - Ver 1, Rel 1
+  ios_stig:  Apple iOS/iPadOS 18 STIG - Ver 2, Rel 1
   indigo_base: BSI indigo iOS 18.5 Base Configuration - Ver 1.3
   indigo_high: BSI indigo iOS 18.5 High Configuration - Ver 1.3
 ddm:

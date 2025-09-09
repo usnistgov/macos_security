@@ -36,7 +36,6 @@ odv:
   cis_lvl1_enterprise: 2
   cis_lvl2_enterprise: 2
   ios_stig: 5
-  ios_stig_byoad: 5
   indigo_base: 2
   indigo_high: 2
 tags:
