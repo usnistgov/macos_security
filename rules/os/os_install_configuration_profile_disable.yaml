@@ -1,21 +1,26 @@
 id: os_install_configuration_profile_disable
-title: "Ensure Allow Installing Configuration Profiles is Set to Disabled"
-discussion: |
-  Configuration profiles _MUST_ be installed via an organization's MDM.
-check: ""
-fix: |
-  This is implemented by a Configuration Profile.
+title: Ensure Allow Installing Configuration Profiles is Set to Disabled
+discussion: 'Configuration profiles _MUST_ be installed via an organization''s MDM.
+
+  '
+check: ''
+fix: 'This is implemented by a Configuration Profile.
+
+  '
 references:
   cce:
-    - CCE-95581-5
+  - CCE-95581-5
   800-53r5:
-    - CM-6
-    - CM-7
-    - CM-7(1)
+  - CM-6
+  - CM-7
+  - CM-7(1)
 visionOS:
-  - '26.0'
+- '26.0'
 tags:
-  - visionos
+- visionos
+- cnssi-1253_moderate
+- cnssi-1253_low
+- cnssi-1253_high
 supervised: true
 mobileconfig: true
 mobileconfig_info:

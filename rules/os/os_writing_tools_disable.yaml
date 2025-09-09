@@ -1,26 +1,31 @@
 id: os_writing_tools_disable
-title: "Ensure the ability to use AI writing tools is set to Disabled"
-discussion: |
-  AI writing tools _MUST_ be disabled.
-check: " "
-fix: |
-  This is implemented by a Configuration Profile.
+title: Ensure the ability to use AI writing tools is set to Disabled
+discussion: 'AI writing tools _MUST_ be disabled.
+
+  '
+check: ' '
+fix: 'This is implemented by a Configuration Profile.
+
+  '
 references:
   cce:
-    - CCE-95596-3
+  - CCE-95596-3
   800-53r5:
-    - AC-20
-    - AC-20(1)
-    - CM-7
-    - CM-7(1)
-    - SC-7(10)
+  - AC-20
+  - AC-20(1)
+  - CM-7
+  - CM-7(1)
+  - SC-7(10)
 visionOS:
-  - "2.4"
+- '2.4'
 tags:
-  - visionos
-  - 800-53r5_low 
-  - 800-53r5_moderate 
-  - 800-53r5_high
+- visionos
+- 800-53r5_low
+- 800-53r5_moderate
+- 800-53r5_high
+- cnssi-1253_moderate
+- cnssi-1253_low
+- cnssi-1253_high
 supervised: true
 mobileconfig: true
 mobileconfig_info:

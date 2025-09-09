@@ -1,21 +1,31 @@
 id: os_user_ui_app_installation_prohibit
 title: Prohibit User Installation of Software from App Store
-discussion: |
-  Users _MUST_ not be allowed to install software from App Store.
+discussion: 'Users _MUST_ not be allowed to install software from App Store.
 
-  Allowing regular users to install software, without explicit privileges, presents the risk of untested and potentially malicious software being installed on the system. Explicit privileges (escalated or administrative privileges) provide the regular user with explicit capabilities and control that exceeds the rights of a regular user.
-check: ""
-fix: |
-  This is implemented by a Configuration Profile.
+
+  Allowing regular users to install software, without explicit privileges, presents
+  the risk of untested and potentially malicious software being installed on the system.
+  Explicit privileges (escalated or administrative privileges) provide the regular
+  user with explicit capabilities and control that exceeds the rights of a regular
+  user.
+
+  '
+check: ''
+fix: 'This is implemented by a Configuration Profile.
+
+  '
 references:
   cce:
-    - CCE-95595-5
+  - CCE-95595-5
   800-53r5:
-    - CM-11(2)
+  - CM-11(2)
 visionOS:
-  - '26.0'
+- '26.0'
 tags:
-  - visionos
+- visionos
+- cnssi-1253_moderate
+- cnssi-1253_low
+- cnssi-1253_high
 supervised: true
 mobileconfig: true
 mobileconfig_info:

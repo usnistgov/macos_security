@@ -1,24 +1,30 @@
 id: os_erase_contents_and_settings_disable
-title: "Ensure Allow Erase All Content and Settings is set to Disabled"
-discussion: |
-  Erase all contents and settings _MUST_ be disabled on institutionally owned devices.
-check: ""
-fix: |
-  This is implemented by a Configuration Profile.
+title: Ensure Allow Erase All Content and Settings is set to Disabled
+discussion: 'Erase all contents and settings _MUST_ be disabled on institutionally
+  owned devices.
+
+  '
+check: ''
+fix: 'This is implemented by a Configuration Profile.
+
+  '
 references:
   cce:
-    - CCE-95572-4
+  - CCE-95572-4
   800-53r5:
-    - CM-6
-    - CM-7
-    - CM-7(1)
+  - CM-6
+  - CM-7
+  - CM-7(1)
 visionOS:
-  - '26.0'
+- '26.0'
 tags:
-  - visionos
-  - 800-53r5_low
-  - 800-53r5_moderate
-  - 800-53r5_high  
+- visionos
+- 800-53r5_low
+- 800-53r5_moderate
+- 800-53r5_high
+- cnssi-1253_moderate
+- cnssi-1253_low
+- cnssi-1253_high
 supervised: true
 mobileconfig: true
 mobileconfig_info:

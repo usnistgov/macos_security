@@ -1,21 +1,31 @@
 id: os_user_app_installation_prohibit
 title: Prohibit User Installation of Software
-discussion: |
-  Users _MUST_ not be allowed to install software.
+discussion: 'Users _MUST_ not be allowed to install software.
 
-  Allowing regular users to install software, without explicit privileges, presents the risk of untested and potentially malicious software being installed on the system. Explicit privileges (escalated or administrative privileges) provide the regular user with explicit capabilities and control that exceeds the rights of a regular user.
-check: ""
-fix: |
-  This is implemented by a Configuration Profile.
+
+  Allowing regular users to install software, without explicit privileges, presents
+  the risk of untested and potentially malicious software being installed on the system.
+  Explicit privileges (escalated or administrative privileges) provide the regular
+  user with explicit capabilities and control that exceeds the rights of a regular
+  user.
+
+  '
+check: ''
+fix: 'This is implemented by a Configuration Profile.
+
+  '
 references:
   cce:
-    - CCE-95594-8
+  - CCE-95594-8
   800-53r5:
-    - CM-11(2)
+  - CM-11(2)
 visionOS:
-  - '26.0'
+- '26.0'
 tags:
-  - visionos
+- visionos
+- cnssi-1253_moderate
+- cnssi-1253_low
+- cnssi-1253_high
 supervised: true
 mobileconfig: true
 mobileconfig_info:

@@ -1,26 +1,31 @@
 id: icloud_drive_disable
-title: "Ensure Allow iCloud Documents and Data is set to Disabled"
-discussion: |
-  Institutionally owned devices _MUST_ not sync data through iCloud.
-check: ""
-fix: |
-  This is implemented by a Configuration Profile.
+title: Ensure Allow iCloud Documents and Data is set to Disabled
+discussion: 'Institutionally owned devices _MUST_ not sync data through iCloud.
+
+  '
+check: ''
+fix: 'This is implemented by a Configuration Profile.
+
+  '
 references:
   cce:
-    - CCE-95555-9
+  - CCE-95555-9
   800-53r5:
-    - AC-20
-    - AC-20(1)
-    - CM-7
-    - CM-7(1)
-    - SC-7(10)
+  - AC-20
+  - AC-20(1)
+  - CM-7
+  - CM-7(1)
+  - SC-7(10)
 visionOS:
-  - '26.0'
+- '26.0'
 tags:
-  - visionos
-  - 800-53r5_low
-  - 800-53r5_moderate
-  - 800-53r5_high  
+- visionos
+- 800-53r5_low
+- 800-53r5_moderate
+- 800-53r5_high
+- cnssi-1253_moderate
+- cnssi-1253_low
+- cnssi-1253_high
 supervised: true
 mobileconfig: true
 mobileconfig_info:

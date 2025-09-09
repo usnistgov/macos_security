@@ -1,22 +1,30 @@
 id: os_require_managed_pasteboard_enforce
-title: "Ensure copy/paste of data from Managed to Unmanaged Applications is Disabled"
-discussion: |
-  The device _MUST_ be configured to disable copy/paste of data from managed to unmanaged applications.
+title: Ensure copy/paste of data from Managed to Unmanaged Applications is Disabled
+discussion: 'The device _MUST_ be configured to disable copy/paste of data from managed
+  to unmanaged applications.
 
-  If 'true', copy and paste functionality respects the 'allowOpenFromManagedToUnmanaged' and 'allowOpenFromUnmanagedToManaged' restrictions.
-check: ""
-fix: |
-  This is implemented by a Configuration Profile.
+
+  If ''true'', copy and paste functionality respects the ''allowOpenFromManagedToUnmanaged''
+  and ''allowOpenFromUnmanagedToManaged'' restrictions.
+
+  '
+check: ''
+fix: 'This is implemented by a Configuration Profile.
+
+  '
 references:
   cce:
-    - CCE-95589-8
+  - CCE-95589-8
   800-53r5:
-    - AC-23
-    - SC-7(10)
+  - AC-23
+  - SC-7(10)
 visionOS:
-  - '26.0'
+- '26.0'
 tags:
-  - visionos
+- visionos
+- cnssi-1253_moderate
+- cnssi-1253_low
+- cnssi-1253_high
 supervised: false
 mobileconfig: true
 mobileconfig_info:

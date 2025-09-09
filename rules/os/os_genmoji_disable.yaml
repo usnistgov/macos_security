@@ -1,23 +1,28 @@
 id: os_genmoji_disable
-title: "Ensure the ability to create Genmojis is set to Disabled"
-discussion: |
-  Use of Genmoji _MUST_ be disabled.
-check: " "
-fix: |
-  This is implemented by a Configuration Profile.
+title: Ensure the ability to create Genmojis is set to Disabled
+discussion: 'Use of Genmoji _MUST_ be disabled.
+
+  '
+check: ' '
+fix: 'This is implemented by a Configuration Profile.
+
+  '
 references:
   cce:
-    - CCE-95577-3
+  - CCE-95577-3
   800-53r5:
-    - CM-7
-    - CM-7(1)
+  - CM-7
+  - CM-7(1)
 visionOS:
-  - "2.4"
+- '2.4'
 tags:
-  - visionos
-  - 800-53r5_low 
-  - 800-53r5_moderate 
-  - 800-53r5_high
+- visionos
+- 800-53r5_low
+- 800-53r5_moderate
+- 800-53r5_high
+- cnssi-1253_moderate
+- cnssi-1253_low
+- cnssi-1253_high
 supervised: true
 mobileconfig: true
 mobileconfig_info:
