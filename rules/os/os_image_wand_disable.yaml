@@ -1,33 +1,36 @@
 id: os_image_wand_disable
 title: Disable Apple Intelligence ImageWand
-discussion: |-
-  Apple Intelligence features such as Apple ImageWand _MUST_ be disabled.
-check: " "
+discussion: Apple Intelligence features such as Apple ImageWand _MUST_ be disabled.
+check: ' '
 result:
   string: 'false'
-fix: |
-  This is implemented by a Configuration Profile.
+fix: 'This is implemented by a Configuration Profile.
+
+  '
 references:
   cce:
-    - CCE-95483-4
+  - CCE-95483-4
   cci:
-    - N/A
+  - N/A
   800-53r5:
-    - CM-7
-    - CM-7(1)
+  - CM-7
+  - CM-7(1)
   sfr:
-    - N/A
+  - N/A
   disa_stig:
-    - N/A
+  - N/A
   indigo:
-    - ANNEX K
+  - ANNEX K
 iOS:
-  - "26.0"
+- '26.0'
 tags:
-  - ios
-  - 800-53r5_low 
-  - 800-53r5_moderate 
-  - 800-53r5_high
+- ios
+- 800-53r5_low
+- 800-53r5_moderate
+- 800-53r5_high
+- cnssi-1253_moderate
+- cnssi-1253_low
+- cnssi-1253_high
 mobileconfig: true
 mobileconfig_info:
   com.apple.applicationaccess:

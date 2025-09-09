@@ -1,34 +1,44 @@
 id: os_call_recording_disable
-title: "Disable Call Recording"
-discussion: |
-  The built-in Call Recording _MUST_ be disabled in certain organizations or jurisdictions by legal statutes and/or privacy laws.
+title: Disable Call Recording
+discussion: 'The built-in Call Recording _MUST_ be disabled in certain organizations
+  or jurisdictions by legal statutes and/or privacy laws.
 
-  The Call Recording service announces to all users that a cellular phone call is about to be recorded. When recording stops (either manually by the user or by ending the call), the recording is saved to a new note in the Notes app. This functionality may be prohibited by certain organizations or jurisdictions by legal statutes and/or privacy laws.
 
-check: " "
-fix: |
-  This is implemented by a Configuration Profile.
+  The Call Recording service announces to all users that a cellular phone call is
+  about to be recorded. When recording stops (either manually by the user or by ending
+  the call), the recording is saved to a new note in the Notes app. This functionality
+  may be prohibited by certain organizations or jurisdictions by legal statutes and/or
+  privacy laws.
+
+  '
+check: ' '
+fix: 'This is implemented by a Configuration Profile.
+
+  '
 references:
   cce:
-    - CCE-95449-5
+  - CCE-95449-5
   800-53r5:
-    - CM-6
+  - CM-6
   cci:
-    - CCI-000366
+  - CCI-000366
   sfr:
-    - 'FMT_MOF_EXT.1.2 #47'    
+  - 'FMT_MOF_EXT.1.2 #47'
   disa_stig:
-    - N/A
+  - N/A
   indigo:
-    - N/A
+  - N/A
 iOS:
-  - "18.1"
+- '18.1'
 tags:
-  - ios
-  - 800-53r5_low
-  - 800-53r5_moderate
-  - 800-53r5_high
-  - ios_stig
+- ios
+- 800-53r5_low
+- 800-53r5_moderate
+- 800-53r5_high
+- ios_stig
+- cnssi-1253_moderate
+- cnssi-1253_low
+- cnssi-1253_high
 supervised: false
 mobileconfig: true
 mobileconfig_info:

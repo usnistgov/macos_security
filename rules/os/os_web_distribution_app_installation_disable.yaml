@@ -1,31 +1,36 @@
 id: os_web_distribution_app_installation_disable
-title: "Ensure the ability to install apps directly from the web is set to Disabled"
-discussion: |
-  Web distrubtion of app installation _MUST_ be disabled.
-check: " "
-fix: |
-  This is implemented by a Configuration Profile.
+title: Ensure the ability to install apps directly from the web is set to Disabled
+discussion: 'Web distrubtion of app installation _MUST_ be disabled.
+
+  '
+check: ' '
+fix: 'This is implemented by a Configuration Profile.
+
+  '
 references:
   cce:
-    - CCE-95544-3
+  - CCE-95544-3
   cci:
-    - CCI-000366
+  - CCI-000366
   800-53r5:
-    - CM-11
+  - CM-11
   indigo:
-    - ANNEX K
+  - ANNEX K
   sfr:
-    - 'FMT_SMF_EXT.1.1 #3'
+  - 'FMT_SMF_EXT.1.1 #3'
   disa_stig:
-    - N/A
+  - N/A
 iOS:
-  - "26.0"
+- '26.0'
 tags:
-  - ios
-  - 800-53r5_low
-  - 800-53r5_moderate
-  - 800-53r5_high
-  - ios_stig
+- ios
+- 800-53r5_low
+- 800-53r5_moderate
+- 800-53r5_high
+- ios_stig
+- cnssi-1253_moderate
+- cnssi-1253_low
+- cnssi-1253_high
 severity: medium
 supervised: false
 mobileconfig: true

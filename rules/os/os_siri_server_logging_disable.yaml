@@ -1,31 +1,36 @@
 id: os_siri_server_logging_disable
-title: "Disallow Siri server side logging"
-discussion: |
-  The iOS built-in Siri service _MUST_ be disabled to prevent organizational data from being synchronized to Apple servers.
+title: Disallow Siri server side logging
+discussion: "The iOS built-in Siri service _MUST_ be disabled to prevent organizational\
+  \ data from being synchronized to Apple servers.\n\nApple's Siri service does not\
+  \ provide an organization with enough control over the storage and access of data,\
+  \ and, therefore, automated synchronization _MUST_ be controlled by an organization\
+  \ approved service.  \n"
+check: ' '
+fix: 'This is implemented by a Configuration Profile.
 
-  Apple's Siri service does not provide an organization with enough control over the storage and access of data, and, therefore, automated synchronization _MUST_ be controlled by an organization approved service.  
-check: " "
-fix: |
-  This is implemented by a Configuration Profile.
+  '
 references:
   cce:
-    - CCE-95527-8
+  - CCE-95527-8
   800-53r5:
-    - AC-20
-    - CM-7
-    - CM-7(1)
-    - SC-7(10)
+  - AC-20
+  - CM-7
+  - CM-7(1)
+  - SC-7(10)
   indigo:
-    - ANNEX K
+  - ANNEX K
 iOS:
-  - "26.0"
+- '26.0'
 tags:
-  - ios
-  - 800-53r5_low
-  - 800-53r5_moderate
-  - 800-53r5_high  
+- ios
+- 800-53r5_low
+- 800-53r5_moderate
+- 800-53r5_high
+- cnssi-1253_moderate
+- cnssi-1253_low
+- cnssi-1253_high
 supervised: false
 mobileconfig: true
-mobileconfig_info: 
+mobileconfig_info:
   com.apple.applicationaccess:
     allowSiriServerLogging: false

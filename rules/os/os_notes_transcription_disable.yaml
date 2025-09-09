@@ -1,30 +1,36 @@
 id: os_notes_transcription_disable
 title: Disable Apple Intelligence Notes Transcription
-discussion: |
-  Apple Intelligence features such as Notes Transcription that use off device AI _MUST_ be disabled.
-check: " "
-fix: |
-  This is implemented by a Configuration Profile.
+discussion: 'Apple Intelligence features such as Notes Transcription that use off
+  device AI _MUST_ be disabled.
+
+  '
+check: ' '
+fix: 'This is implemented by a Configuration Profile.
+
+  '
 references:
   cce:
-    - CCE-95499-0
-  cci: 
-    - N/A
+  - CCE-95499-0
+  cci:
+  - N/A
   800-53r5:
-    - AC-20
-    - AC-20(1)
-    - CM-7
-    - CM-7(1)
-    - SC-7(10)
+  - AC-20
+  - AC-20(1)
+  - CM-7
+  - CM-7(1)
+  - SC-7(10)
   indigo:
-    - N/A
+  - N/A
 iOS:
-  - "18.4"
+- '18.4'
 tags:
-  - ios
-  - 800-53r5_low 
-  - 800-53r5_moderate 
-  - 800-53r5_high
+- ios
+- 800-53r5_low
+- 800-53r5_moderate
+- 800-53r5_high
+- cnssi-1253_moderate
+- cnssi-1253_low
+- cnssi-1253_high
 supervised: true
 mobileconfig: true
 mobileconfig_info:

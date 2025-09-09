@@ -1,26 +1,30 @@
 id: os_rapid_security_responses_install_enable
-title: "Allow to install Rapid Security Responses"
-discussion: |
-  The iOS device _MUST_ be configured to allow the user to install Rapid Security Responses to enable the user to be up to date with security fixes.  
-check: " "
-fix: |
-  This is implemented by a Configuration Profile.
+title: Allow to install Rapid Security Responses
+discussion: "The iOS device _MUST_ be configured to allow the user to install Rapid\
+  \ Security Responses to enable the user to be up to date with security fixes.  \n"
+check: ' '
+fix: 'This is implemented by a Configuration Profile.
+
+  '
 references:
   cce:
-    - CCE-95510-4
+  - CCE-95510-4
   800-53r5:
-    - SI-2
-    - SI-2(5)
-    - SI-3
+  - SI-2
+  - SI-2(5)
+  - SI-3
   indigo:
-    - ANNEX D (Section 6.3.1.3 - Rapid security response)
+  - ANNEX D (Section 6.3.1.3 - Rapid security response)
 iOS:
-  - "26.0"
+- '26.0'
 tags:
-  - ios
-  - 800-53r5_low
-  - 800-53r5_moderate
-  - 800-53r5_high  
+- ios
+- 800-53r5_low
+- 800-53r5_moderate
+- 800-53r5_high
+- cnssi-1253_moderate
+- cnssi-1253_low
+- cnssi-1253_high
 supervised: true
 mobileconfig: true
 mobileconfig_info:
