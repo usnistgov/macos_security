@@ -932,9 +932,15 @@ fi
 
 ###################  COMMANDS START BELOW THIS LINE  ###################
 
+# Check if the current shell is Zsh
+if [[ -z "$ZSH_NAME" ]]; then
+  echo "ERROR: This script must be run in Zsh."
+  exit 1
+fi
+
 ## Must be run as root
 if [[ $EUID -ne 0 ]]; then
-    echo "This script must be run as root"
+    echo "ERROR: This script must be run as root"
     exit 1
 fi
 
