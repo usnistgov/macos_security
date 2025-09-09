@@ -11,20 +11,24 @@ references:
   cce:
     - CCE-94519-6
   cci:
-    - N/A
+    - CCI-000366
   800-53r5:
-    - N/A
+    - CM-7
   sfr:
-    - N/A
+    - 'FMT_MOF_EXT.1.2 #47'
   disa_stig:
-    - N/A
+    - AIOS-18-017200
   indigo:
     - ANNEX K
 iOS:
   - "18.0"
 tags:
   - ios
+  - ios_stig
   - indigo_high
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_high    
 mobileconfig: true
 mobileconfig_info:
   com.apple.applicationaccess:

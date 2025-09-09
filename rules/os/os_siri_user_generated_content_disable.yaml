@@ -10,11 +10,17 @@ fix: |
 references:
   cce:
     - CCE-94553-5
+  cci:
+    - CCI-000366
   800-53r5:
     - AC-20
     - CM-7
     - CM-7(1)
     - SC-7(10)
+  sfr:
+    - 'FMT_MOF_EXT.1.2 #47'
+  disa_stig:
+    - AIOS-18-016200
   indigo:
     - ANNEX K
 iOS:

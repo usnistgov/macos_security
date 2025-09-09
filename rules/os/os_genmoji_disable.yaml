@@ -8,22 +8,20 @@ fix: |
 references:
   cce:
     - CCE-94535-2
-  cci: 
-    - N/A
+  cci:
+    - CCI-000366
   800-53r5:
-    - AC-20
-    - AC-20(1)
     - CM-7
     - CM-7(1)
-    - SC-7(10)
   sfr:
-    - N/A
+    - 'FMT_MOF_EXT.1.2 #47'
   disa_stig:
-    - N/A
+    - AIOS-18-017400
 iOS:
   - "18.0"
 tags:
   - ios
+  - ios_stig
   - 800-53r5_low 
   - 800-53r5_moderate 
   - 800-53r5_high
