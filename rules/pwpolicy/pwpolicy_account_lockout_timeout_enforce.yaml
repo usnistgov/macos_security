@@ -1,13 +1,13 @@
 id: pwpolicy_account_lockout_timeout_enforce
-title: "Set Account Lockout Time to $ODV Minutes"
+title: Set Account Lockout Time to $ODV Minutes
 discussion: |
   The macOS _MUST_ be configured to enforce a lockout time period of at least $ODV minutes when the maximum number of failed logon attempts is reached.
 
   This rule protects against malicious users attempting to gain access to the system via brute-force hacking methods.
 check: |
-  /usr/bin/pwpolicy -getaccountpolicies 2> /dev/null | /usr/bin/tail +2 | /usr/bin/xmllint --xpath '//dict/key[text()="autoEnableInSeconds"]/following-sibling::integer[1]/text()' - | /usr/bin/awk '{ if ($1/60 >= $ODV ) {print "yes"} else {print "no"}}' | /usr/bin/uniq
+  /usr/bin/pwpolicy -getaccountpolicies 2> /dev/null | /usr/bin/tail +2 | /usr/bin/xmllint --xpath '//dict/key[text()="autoEnableInSeconds"]/following-sibling::integer[1]/text()' - | /usr/bin/awk '{ if ($1/60 >= $ODV ) {print "pass"} else {print "fail"}}' | /usr/bin/uniq
 result:
-  string: "yes"
+  string: 'pass'
 fix: |
   This is implemented by a Configuration Profile.
 references:

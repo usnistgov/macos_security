@@ -1,17 +1,17 @@
 id: pwpolicy_special_character_enforce
-title: "Require Passwords Contain a Minimum of One Special Character"
+title: Require Passwords Contain a Minimum of One Special Character
 discussion: |
   The macOS _MUST_ be configured to require at least one special character be used when a password is created.
 
   Special characters are those characters that are not alphanumeric. Examples include: ~ ! @ # $ % ^ *.
- 
+
   This rule enforces password complexity by requiring users to set passwords that are less vulnerable to malicious users.
- 
-  NOTE: The guidance for password based authentication in NIST 800-53 (Rev 5) and NIST 800-63B state that complexity rules should be organizationally defined. The values defined are based off of common complexity values. But your organization may define its own password complexity rules.
+
+  NOTE: To comply with Executive Order 14028, “Improving the Nation's Cybersecurity”, OMB M-22-09, “Moving the U.S. Government Toward Zero Trust Cybersecurity Principles”, and NIST SP-800-63b, “Digital Identity Guidelines: Authentication and Lifecycle Management” federal, military, and intelligence communities must adopt the following configuration settings. Password policies must not require the use of complexity policies such as upper characters, lower characters, or special characters. Password policies must also not require the use of regular rotation. Password policies should define a minimum length. Multifactor authentication should be used where ever possible.
 check: |
-  /usr/bin/pwpolicy -getaccountpolicies 2>/dev/null | /usr/bin/tail -n +2 | /usr/bin/xmllint --xpath "//string[contains(text(), \"policyAttributePassword matches '(.*[^a-zA-Z0-9].*){\")]" - 2>/dev/null | /usr/bin/awk -F"{|}" '{if ($2 >= $ODV) {print "true"} else {print "false"}}'
+  /usr/bin/pwpolicy -getaccountpolicies 2>/dev/null | /usr/bin/tail -n +2 | /usr/bin/xmllint --xpath "//string[contains(text(), \"policyAttributePassword matches '(.*[^a-zA-Z0-9].*){\")]" - 2>/dev/null | /usr/bin/awk -F"{|}" '{if ($2 >= $ODV) {print "pass"} else {print "fail"}}'
 result:
-  string: "true"
+  string: 'pass'
 fix: |
   This is implemented by a Configuration Profile.
 references:

@@ -1,5 +1,5 @@
 id: pwpolicy_history_enforce
-title: "Prohibit Password Reuse for a Minimum of $ODV Generations"
+title: Prohibit Password Reuse for a Minimum of $ODV Generations
 discussion: |
   The macOS _MUST_ be configured to enforce a password history of at least $ODV previous passwords when a password is created.
 
@@ -9,9 +9,9 @@ discussion: |
 
   NOTE: The guidance for password based authentication in NIST 800-53 (Rev 5) and NIST 800-63B state that complexity rules should be organizationally defined. The values defined are based off of common complexity values. But your organization may define its own password complexity rules.
 check: |
-  /usr/bin/pwpolicy -getaccountpolicies 2> /dev/null | /usr/bin/tail +2 | /usr/bin/xmllint --xpath '//dict/key[text()="policyAttributePasswordHistoryDepth"]/following-sibling::*[1]/text()' - | /usr/bin/awk '{ if ($1 >= $ODV ) {print "yes"} else {print "no"}}' | /usr/bin/uniq
+  /usr/bin/pwpolicy -getaccountpolicies 2> /dev/null | /usr/bin/tail +2 | /usr/bin/xmllint --xpath '//dict/key[text()="policyAttributePasswordHistoryDepth"]/following-sibling::*[1]/text()' - | /usr/bin/awk '{ if ($1 >= $ODV ) {print "pass"} else {print "fail"}}' | /usr/bin/uniq
 result:
-  string: "yes"
+  string: 'pass'
 fix: |
   This is implemented by a Configuration Profile.
 references:
