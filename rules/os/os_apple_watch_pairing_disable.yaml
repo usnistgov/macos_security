@@ -5,7 +5,8 @@ discussion: |
   
   NOTE: Any currently paired Apple Watch is unpaired and the watch's content is erased.
 check: ''
-fix: This is implemented by a Configuration Profile
+fix: |
+  This is implemented by a Configuration Profile
 references:
   cce:
     - CCE-95441-2

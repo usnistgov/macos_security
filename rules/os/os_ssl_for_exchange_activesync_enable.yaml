@@ -1,9 +1,10 @@
 id: os_ssl_for_exchange_activesync_enable
 title: "Ensure SSL for Exchange ActiveSync"
-discussion: |-
+discussion: |
   Exchange email messages are a form of data in transit and thus are vulnerable to eavesdropping and man-in-the-middle attacks. Secure Sockets Layer (SSL), also referred to as Transport Layer Security (TLS), provides encryption and authentication services that mitigate the risk of breach.
 check: ' '
-fix: This is implemented by a Configuration Profile
+fix: |
+  This is implemented by a Configuration Profile
 references:
   cce:
     - CCE-95531-0

@@ -1,13 +1,10 @@
 id: os_safari_reader_summary_disable
 title: Disable Apple Intelligence Safari Reader Summary
-discussion: 'Apple Intelligence features such as Safari Reader Summary that use off
-  device AI _MUST_ be disabled.
-
-  '
+discussion: |
+  Apple Intelligence features such as Safari Reader Summary that use off device AI _MUST_ be disabled.
 check: ' '
-fix: 'This is implemented by a Configuration Profile.
-
-  '
+fix: |
+  This is implemented by a Configuration Profile.
 references:
   cce:
   - CCE-95518-7

@@ -1,12 +1,10 @@
 id: os_iphone_widgets_on_mac_disable
 title: Disable use of iPhone widgets on Mac
-discussion: 'iPhone widgets on Mac _MUST_ be disabled.
-
-  '
+discussion: |
+  iPhone widgets on Mac _MUST_ be disabled.
 check: ' '
-fix: 'This is implemented by a Configuration Profile.
-
-  '
+fix: |
+  This is implemented by a Configuration Profile.
 references:
   cce:
   - CCE-95487-5

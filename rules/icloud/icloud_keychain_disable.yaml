@@ -1,11 +1,10 @@
 id: icloud_keychain_disable
 title: Disable iCloud Keychain Sync
-discussion: "The iOS system's ability to automatically synchronize a user's passwords\
-  \ to their iCloud account _MUST_ be disabled. \n"
+discussion: |
+  The iOS system's ability to automatically synchronize a user's passwords to their iCloud account _MUST_ be disabled.
 check: ' '
-fix: 'This is implemented by a Configuration Profile.
-
-  '
+fix: |
+  This is implemented by a Configuration Profile.
 references:
   cce:
   - CCE-95425-5

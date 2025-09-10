@@ -1,11 +1,10 @@
 id: os_marketplace_prevent
 title: Prevent 3rd party marketplaces
-discussion: "The iOS device _MUST_ be configured to prevent 3rd party market places\
-  \ to be installed.  \n"
+discussion: |
+  The iOS device _MUST_ be configured to prevent 3rd party market places to be installed.
 check: ' '
-fix: 'This is implemented by a Configuration Profile.
-
-  '
+fix: |
+  This is implemented by a Configuration Profile.
 references:
   cce:
   - CCE-95495-8

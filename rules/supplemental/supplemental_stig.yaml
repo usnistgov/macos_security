@@ -14,10 +14,10 @@ discussion: |
   AIOS-18-708400| Apple iOS/iPadOS 18 must be configured to display the DoD advisory warning message at startup or each time the user unlocks the device.
   |AIOS-18-009200 +
   AIOS-18-709200| Apple iOS/iPadOS 18 must be configured to not allow backup of [all applications, configuration data] to locally connected systems.
-  |AIOS-18-009800| Apple iOS/iPadOS 18 must be configured to disable multiuser modes.
+  |AIOS-18-009800| Apple iOS/iPadOS 18 must be configured to disable multi-user modes.
   |AIOS-18-009900 +
-  AIOS-18-709900| Apple iOS/iPadOS 18 must be configured to [selection: wipe protected data, wipe sensitive data] upon unenrollment from MDM.
-  |AIOS-18-010000|  Apple iOS/iPadOS 18 must be configured to [selection: remove Enterprise applications, remove all noncore applications (any nonfactory installed application)] upon unenrollment from MDM.
+  AIOS-18-709900| Apple iOS/iPadOS 18 must be configured to [selection: wipe protected data, wipe sensitive data] upon un-enrollment from MDM.
+  |AIOS-18-010000|  Apple iOS/iPadOS 18 must be configured to [selection: remove Enterprise applications, remove all non-core applications (any non-factory installed application)] upon un-enrollment from MDM.
   |AIOS-18-011200 +
   AIOS-18-711200| iPhone and iPad must have the latest available iOS/iPadOS operating system installed.
   |AIOS-18-011600| Apple iOS/iPadOS 18 must implement the management setting: Not have any Family Members in Family Sharing.
@@ -50,4 +50,4 @@ tags:
   - ios_stig
   - supplemental
 mobileconfig: false
-mobileconfig_info:  
+mobileconfig_info:

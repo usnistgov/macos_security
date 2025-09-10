@@ -5,7 +5,8 @@ discussion: |
 
   Sharing the location of a device may be an violation to an organization and potentially put users at risk.
 check: ''
-fix: This is implemented by a Configuration Profile
+fix: |
+  This is implemented by a Configuration Profile
 references:
   cce:
     - CCE-95477-6

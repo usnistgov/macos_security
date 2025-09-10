@@ -1,12 +1,10 @@
 id: os_personalized_handwriting_disable
 title: Ensure the ability to analyse handwriting is set to Disabled
-discussion: 'AI handwriting analysis _MUST_ be disabled.
-
-  '
+discussion: |
+  AI handwriting analysis _MUST_ be disabled.
 check: ' '
-fix: 'This is implemented by a Configuration Profile.
-
-  '
+fix: |
+  This is implemented by a Configuration Profile.
 references:
   cce:
   - CCE-95508-8

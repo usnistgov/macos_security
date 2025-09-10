@@ -1,12 +1,10 @@
 id: os_system_settings_find_my_friends_modification_disable
 title: Disable Find My Friends Modification
-discussion: 'The Find My service modification _MUST_ be disabled.
-
-  '
+discussion: |
+  The Find My service modification _MUST_ be disabled.
 check: ' '
-fix: 'This is implemented by a Configuration Profile.
-
-  '
+fix: |
+  This is implemented by a Configuration Profile.
 references:
   cce:
   - CCE-95534-4

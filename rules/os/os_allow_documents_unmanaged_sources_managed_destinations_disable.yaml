@@ -1,9 +1,8 @@
 id: os_allow_documents_unmanaged_sources_managed_destinations_disable
 title: Ensure Allow documents from unmanaged sources in managed destinations is set
   to Disabled
-discussion: 'Documents from unmanaged sources _MUST_ not be allowed in managed destinations.
-
-  '
+discussion: |
+  Documents from unmanaged sources _MUST_ not be allowed in managed destinations.
 check: ' '
 fix: 'This is implemented by a Configuration Profile.
 

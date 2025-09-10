@@ -11,7 +11,7 @@ references:
   800-53r5:
     - AC-17(02)
   indigo:
-    - ANNEX K  
+    - ANNEX K
 iOS:
   - "26.0"
 tags:

@@ -1,13 +1,12 @@
 id: pwpolicy_alpha_numeric_enforce
 title: Require Passwords Contain a Minimum of One Numeric Character
-discussion: "The iOS _MUST_ be configured to require at least one numeric character\
-  \ be used when a password is created.\n\nThis rule enforces password complexity\
-  \ by requiring users to set passwords that are less vulnerable to malicious users.\
-  \ \n"
+discussion: |
+  The iOS _MUST_ be configured to require at least one numeric character be used when a password is created.
+  
+  This rule enforces password complexity by requiring users to set passwords that are less vulnerable to malicious users.
 check: ''
-fix: 'This is implemented by a Configuration Profile.
-
-  '
+fix: |
+  This is implemented by a Configuration Profile.
 references:
   cce:
   - CCE-95547-6

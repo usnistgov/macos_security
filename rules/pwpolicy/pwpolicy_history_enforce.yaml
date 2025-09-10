@@ -1,11 +1,10 @@
 id: pwpolicy_history_enforce
 title: Prohibit Password Reuse for a Minimum of $ODV Generations
-discussion: "The iOS _MUST_ be configured to enforce a password history of at least\
-  \ $ODV previous passwords when a password is created.  \n"
+discussion: |
+  The iOS _MUST_ be configured to enforce a password history of at least $ODV previous passwords when a password is created.
 check: ' '
-fix: 'This is implemented by a Configuration Profile.
-
-  '
+fix: |
+  This is implemented by a Configuration Profile.
 references:
   cce:
   - CCE-95549-2

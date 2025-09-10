@@ -5,7 +5,8 @@ discussion: |
 
   The user _MUST_ not be enabled to have the option to decide wether to encrypt a mail communication. Encryption _MUST_ be the default.
 check: " "
-fix: This is implemented by a Configuration Profile
+fix: |
+  This is implemented by a Configuration Profile
 references:
   cce:
     - CCE-95466-9
