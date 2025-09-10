@@ -1,12 +1,9 @@
 id: os_airdrop_unmanaged_destination_enable
 title: Ensure Treat AirDrop as unmanaged destination is set to Enabled
-discussion: 'AirDrop _MUST_ be treated as an unmanaged destination.
-
-  '
-check: ''
-fix: 'This is implemented by a Configuration Profile.
-
-  '
+discussion: |
+  AirDrop _MUST_ be treated as an unmanaged destination.
+check: ' '
+fix: This is implemented by a Configuration Profile.
 references:
   cce:
   - CCE-95562-5

@@ -1,16 +1,13 @@
 id: os_on_device_dictation_enforce
 title: Ensure On Device Dictation is Enforced
-discussion: 'The device _MUST_ be configured for on device dictation.
+discussion: |
+  The device _MUST_ be configured for on device dictation.
 
 
   By enforcing on device dictation this will mitigate the risk of unwanted data being
   sent to Apple.
-
-  '
-check: ''
-fix: 'This is implemented by a Configuration Profile.
-
-  '
+check: ' '
+fix: This is implemented by a Configuration Profile.
 references:
   cce:
   - CCE-95585-6

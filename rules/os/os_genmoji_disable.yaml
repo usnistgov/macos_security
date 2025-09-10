@@ -1,12 +1,9 @@
 id: os_genmoji_disable
 title: Ensure the ability to create Genmojis is set to Disabled
-discussion: 'Use of Genmoji _MUST_ be disabled.
-
-  '
+discussion: |
+  Use of Genmoji _MUST_ be disabled.
 check: ' '
-fix: 'This is implemented by a Configuration Profile.
-
-  '
+fix: This is implemented by a Configuration Profile.
 references:
   cce:
   - CCE-95577-3

@@ -1,17 +1,14 @@
 id: icloud_private_relay_disable
 title: Disable iCloud Private Relay
-discussion: 'Enterprise networks may be required to audit all network traffic by policy,
+discussion: |
+  Enterprise networks may be required to audit all network traffic by policy,
   therefore, iCloud Private Relay _MUST_ be disabled.
 
 
   Network administrators can also prevent the use of this feature by blocking DNS
   resolution of mask.icloud.com and mask-h2.icloud.com.
-
-  '
-check: ''
-fix: 'This is implemented by a Configuration Profile.
-
-  '
+check: ' '
+fix: This is implemented by a Configuration Profile.
 references:
   cce:
   - CCE-95559-1

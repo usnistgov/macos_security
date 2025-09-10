@@ -1,12 +1,9 @@
 id: os_force_date_and_time_enable
 title: Ensure Force automatic date and time is set to Enabled
-discussion: 'Automatic date and time _MUST_ be enabled.
-
-  '
-check: ''
-fix: 'This is implemented by a Configuration Profile.
-
-  '
+discussion: |
+  Automatic date and time _MUST_ be enabled.
+check: ' '
+fix: This is implemented by a Configuration Profile.
 references:
   cce:
   - CCE-95576-5

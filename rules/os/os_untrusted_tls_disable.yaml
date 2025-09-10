@@ -2,9 +2,8 @@ id: os_untrusted_tls_disable
 title: "Ensure Allow Users to Accept Untrusted TLS Certificates is set to Disabled"
 discussion: |
   Users _MUST_ not be allowed to accept self-signed or unverified certificates.
-check: ""
-fix: |
-  This is implemented by a Configuration Profile.
+check: ' '
+fix: This is implemented by a ConfigurationProfile.
 references:
   cce:
     - CCE-95593-0

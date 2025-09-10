@@ -1,12 +1,9 @@
 id: os_image_playground_disable
 title: Ensure the ability to use AI image generation is set to Disabled
-discussion: 'AI image generation _MUST_ be disabled.
-
-  '
+discussion: |
+  AI image generation _MUST_ be disabled.
 check: ' '
-fix: 'This is implemented by a Configuration Profile.
-
-  '
+fix: This is implemented by a Configuration Profile.
 references:
   cce:
   - CCE-95579-9

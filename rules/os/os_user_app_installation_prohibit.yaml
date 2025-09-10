@@ -1,6 +1,7 @@
 id: os_user_app_installation_prohibit
 title: Prohibit User Installation of Software
-discussion: 'Users _MUST_ not be allowed to install software.
+discussion: |
+  Users _MUST_ not be allowed to install software.
 
 
   Allowing regular users to install software, without explicit privileges, presents
@@ -8,12 +9,8 @@ discussion: 'Users _MUST_ not be allowed to install software.
   Explicit privileges (escalated or administrative privileges) provide the regular
   user with explicit capabilities and control that exceeds the rights of a regular
   user.
-
-  '
-check: ''
-fix: 'This is implemented by a Configuration Profile.
-
-  '
+check: ' '
+fix: This is implemented by a Configuration Profile.
 references:
   cce:
   - CCE-95594-8

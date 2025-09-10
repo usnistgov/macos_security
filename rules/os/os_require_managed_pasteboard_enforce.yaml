@@ -1,17 +1,14 @@
 id: os_require_managed_pasteboard_enforce
 title: Ensure copy/paste of data from Managed to Unmanaged Applications is Disabled
-discussion: 'The device _MUST_ be configured to disable copy/paste of data from managed
+discussion: |
+  The device _MUST_ be configured to disable copy/paste of data from managed
   to unmanaged applications.
 
 
   If ''true'', copy and paste functionality respects the ''allowOpenFromManagedToUnmanaged''
   and ''allowOpenFromUnmanagedToManaged'' restrictions.
-
-  '
-check: ''
-fix: 'This is implemented by a Configuration Profile.
-
-  '
+check: ' '
+fix: This is implemented by a Configuration Profile.
 references:
   cce:
   - CCE-95589-8

@@ -1,12 +1,11 @@
 id: os_handoff_disable
 title: Disable Handoff
-discussion: "Handoff _MUST_ be disabled. \n\nHandoff allows you to continue working\
-  \ on a document or project when the user switches from one Apple device to another.\
-  \ Disabling Handoff prevents data transfers to unauthorized devices.\n"
-check: ''
-fix: 'This is implemented by a Configuration Profile.
+discussion: |
+  Handoff _MUST_ be disabled. 
 
-  '
+  Handoff allows you to continue working on a document or project when the user switches from one Apple device to another. Disabling Handoff prevents data transfers to unauthorized devices.
+check: ' '
+fix: This is implemented by a Configuration Profile.
 references:
   cce:
   - CCE-95578-1

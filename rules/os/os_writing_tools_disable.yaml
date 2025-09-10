@@ -1,12 +1,9 @@
 id: os_writing_tools_disable
 title: Ensure the ability to use AI writing tools is set to Disabled
-discussion: 'AI writing tools _MUST_ be disabled.
-
-  '
+discussion: |
+  AI writing tools _MUST_ be disabled.
 check: ' '
-fix: 'This is implemented by a Configuration Profile.
-
-  '
+fix: This is implemented by a Configuration Profile.
 references:
   cce:
   - CCE-95596-3

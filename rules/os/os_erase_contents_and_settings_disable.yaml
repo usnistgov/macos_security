@@ -1,13 +1,10 @@
 id: os_erase_contents_and_settings_disable
 title: Ensure Allow Erase All Content and Settings is set to Disabled
-discussion: 'Erase all contents and settings _MUST_ be disabled on institutionally
+discussion: |
+  Erase all contents and settings _MUST_ be disabled on institutionally
   owned devices.
-
-  '
-check: ''
-fix: 'This is implemented by a Configuration Profile.
-
-  '
+check: ' '
+fix: This is implemented by a Configuration Profile.
 references:
   cce:
   - CCE-95572-4

@@ -4,9 +4,7 @@ discussion: Apple Intelligence features such as Apple ImageWand _MUST_ be disabl
 check: ' '
 result:
   string: 'false'
-fix: 'This is implemented by a Configuration Profile.
-
-  '
+fix: This is implemented by a Configuration Profile.
 references:
   cce:
   - CCE-95580-7

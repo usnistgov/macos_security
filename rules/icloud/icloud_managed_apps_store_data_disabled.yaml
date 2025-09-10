@@ -1,12 +1,9 @@
 id: icloud_managed_apps_store_data_disabled
 title: Ensure Managed Apps Storing Data in iCloud is Set to Disabled
-discussion: 'Managed Apps _MUST_ not store data in iCloud.
-
-  '
-check: ''
-fix: 'This is implemented by a Configuration Profile.
-
-  '
+discussion: |
+  Managed Apps _MUST_ not store data in iCloud.
+check: ' '
+fix: This is implemented by a Configuration Profile.
 references:
   cce:
   - CCE-95557-5

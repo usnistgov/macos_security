@@ -1,12 +1,9 @@
 id: os_files_network_drive_access_disable
 title: Ensure Allow network drive access in Files app is set to Disabled
-discussion: 'Network drive access in Files app _MUST_ be disabled.
-
-  '
-check: ''
-fix: 'This is implemented by a Configuration Profile.
-
-  '
+discussion: |
+  Network drive access in Files app _MUST_ be disabled.
+check: ' '
+fix: This is implemented by a Configuration Profile.
 references:
   cce:
   - CCE-95575-7

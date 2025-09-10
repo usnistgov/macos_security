@@ -15,8 +15,7 @@ discussion: |
 
   If the camera is not disconnected, covered, or physically disabled, the following configuration is required.
 check: ""
-fix: |
-  This is implemented by a Configuration Profile.
+fix: This is implemented by a ConfigurationProfile.
 references:
   cce:
     - CCE-95568-2

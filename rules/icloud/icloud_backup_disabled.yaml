@@ -1,12 +1,9 @@
 id: icloud_backup_disabled
 title: Ensure iCloud Backup is set to Disabled
-discussion: 'iCloud backup _MUST_ be disabled.
-
-  '
-check: ''
-fix: 'This is implemented by a Configuration Profile.
-
-  '
+discussion: |
+  iCloud backup _MUST_ be disabled.
+check: ' '
+fix: This is implemented by a Configuration Profile.
 references:
   cce:
   - CCE-95554-2
