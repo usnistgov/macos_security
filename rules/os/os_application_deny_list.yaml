@@ -11,8 +11,7 @@ references:
   800-53r5:
     - N/A
   indigo:
-    - ANNEX D (Section 5.8 - App-Installation)
-    - ANNEX N
+    - N/A
 iOS:
   - "26.0"
 tags:

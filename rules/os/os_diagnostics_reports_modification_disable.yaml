@@ -15,7 +15,7 @@ references:
     - AC-20
     - SC-7(10)
   indigo:
-    - ANNEX K  
+    - N/A
 iOS:
   - "26.0"
 tags:

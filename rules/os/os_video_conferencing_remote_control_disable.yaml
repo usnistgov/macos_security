@@ -13,10 +13,6 @@ references:
   800-53r5:
     - N/A
   indigo:
-    - ANNEX K
-  sfr:
-    - N/A
-  disa_stig:
     - N/A
 iOS:
   - "26.0"

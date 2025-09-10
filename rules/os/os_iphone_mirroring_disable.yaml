@@ -18,9 +18,7 @@ references:
   sfr:
   - 'FMT_MOF_EXT.1.2 #47'
   indigo:
-  - ANNEX K
-  disa_stig:
-  - N/A
+    - N/A
 iOS:
 - '26.0'
 tags:

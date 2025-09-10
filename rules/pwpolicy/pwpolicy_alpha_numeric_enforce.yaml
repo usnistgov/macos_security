@@ -13,8 +13,7 @@ references:
   800-53r5:
   - IA-5(1)
   indigo:
-  - ANNEX D (Section 5.9.1 - Device-Code)
-  - ANNEX K
+    - N/A
 iOS:
 - '26.0'
 tags:

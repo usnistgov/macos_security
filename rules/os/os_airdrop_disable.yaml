@@ -28,11 +28,6 @@ references:
     - AIOS-18-012500
   indigo:
     - N/A
-  cis:
-    benchmark:
-      - N/A
-    controls v8:
-      - N/A
 iOS:
   - "26.0"
 tags:

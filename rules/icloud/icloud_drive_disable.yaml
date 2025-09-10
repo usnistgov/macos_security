@@ -24,11 +24,6 @@ references:
     - N/A
   indigo:
     - N/A
-  cis:
-    benchmark:
-      - 3.2.1.5 (level 1 - Institutionally-Owned Devices)
-    controls v8:
-      - 2.3
 iOS:
   - "26.0"
 tags:

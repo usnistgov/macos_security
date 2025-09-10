@@ -20,7 +20,7 @@ references:
   disa_stig:
   - N/A
   indigo:
-  - ANNEX K
+    - N/A
 iOS:
 - '26.0'
 tags:

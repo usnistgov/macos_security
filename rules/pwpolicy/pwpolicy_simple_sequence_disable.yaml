@@ -20,12 +20,6 @@ references:
     - N/A
   indigo:
     - N/A
-  cis:
-    benchmark:
-      - 2.4.1 (level 1 - End-User Owned Devices)
-      - 3.4.1 (level 1 - Institutionally-Owned Devices)
-    controls v8:
-      - 5.2
 iOS:
   - "26.0"
 tags:

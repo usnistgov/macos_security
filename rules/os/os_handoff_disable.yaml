@@ -25,12 +25,6 @@ references:
     - 'FMT_SMF_EXT.1.1 #47'
   indigo:
     - N/A
-  cis:
-    benchmark:
-      - 2.2.1.11 (level 2 - End-User Owned Devices)
-      - 3.2.1.24 (level 2 - Institutionally-Owned Devices)
-    controls v8:
-      - 3.3
 iOS:
   - "26.0"
 tags:

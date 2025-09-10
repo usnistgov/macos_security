@@ -11,7 +11,7 @@ references:
   800-53r5:
     - N/A
   indigo:
-    - ANNEX K
+    - N/A
 iOS:
   - "26.0"
 tags:

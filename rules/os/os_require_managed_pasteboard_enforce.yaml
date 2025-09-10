@@ -23,11 +23,6 @@ references:
     - N/A
   indigo:
     - N/A
-  cis:
-    benchmark:
-      - N/A
-    controls v8:
-      - N/A
 iOS:
   - "26.0"
 tags:

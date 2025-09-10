@@ -11,14 +11,7 @@ references:
   800-53r5:
   - IA-5(1)
   indigo:
-  - ANNEX D (Section 5.9.1 - Device-Code)
-  - ANNEX K
-  cci:
-  - CCI-004061
-  sfr:
-  - 'FMT_SMF.1.1 #47'
-  disa_stig:
-  - N/A
+    - N/A
 iOS:
 - '26.0'
 odv:
