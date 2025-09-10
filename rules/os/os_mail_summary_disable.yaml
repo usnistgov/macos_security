@@ -18,10 +18,23 @@ references:
     - N/A
   indigo:
     - N/A
+  cis:
+    benchmark:
+      - 2.9.3 (level 1 - End-User Owned Devices)
+      - 3.10.3 (level 1 - Institutionally-Owned Devices)
+    controls v8:
+      - 4.1
+      - 4.8
+      - 15.3
 iOS:
   - "26.0"
 tags:
   - ios
+  - cis_lvl1_byod
+  - cis_lvl2_byod
+  - cis_lvl1_enterprise
+  - cis_lvl2_enterprise
+  - cisv8
 mobileconfig: true
 mobileconfig_info:
   com.apple.applicationaccess:
