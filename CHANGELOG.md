@@ -13,12 +13,17 @@ This document provides a high-level view of the changes to the macOS Security Co
     * system_settings_security_update_install
   * Modified Rules
     * audit_auditd_enabled
+    * os_authenticated_root_enable
     * os_external_storage_access_defined
     * os_httpd_disable
     * os_network_storage_restriction
+    * os_recovery_lock_enable
     * os_screensaver_loginwindow_enforce
+    * os_secure_boot_verify
     * os_tftpd_disable
     * os_time_server_enabled
+    * os_unlock_active_user_session_disable
+    * os_world_writable_library_folder_configure
     * os_uucp_disable
     * pwpolicy_account_lockout_enforce
     * pwpolicy_account_lockout_timeout_enforce
@@ -37,8 +42,9 @@ This document provides a high-level view of the changes to the macOS Security Co
     * system_settings_ssh_disable
     * system_settings_time_machine_encrypted_configure
   * Removed Rules
-    * system_settings_security_update_install
+    * os_loginwindow_adminhostinfo_undefined
     * os_show_filename_extensions_enable
+    * system_settings_security_update_install
     * system_settings_software_update_enforce
   * Bug Fixes
 * Baselines
@@ -48,8 +54,8 @@ This document provides a high-level view of the changes to the macOS Security Co
     * Added flag for consolidated configuration profile
     * Updated DDM logic for nested keys
     * Added shell check to compliance script
-    * Updated current user check 
-  * generate_baseline
+    * Updated current user check in compliance script
+    * Support for Managed Arguments in compliance script
     * Bug Fixes
   * generate_scap
     * Support for oval 5.12.1
