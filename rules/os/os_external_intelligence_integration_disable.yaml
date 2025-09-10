@@ -22,7 +22,6 @@ iOS:
 - '26.0'
 tags:
 - ios
-- ios_stig
 - cnssi-1253_moderate
 - cnssi-1253_low
 - cnssi-1253_high

@@ -19,7 +19,7 @@ references:
   disa_stig:
   - N/A
   indigo:
-    - N/A
+  - N/A
 iOS:
 - '26.0'
 tags:
@@ -27,7 +27,6 @@ tags:
 - 800-53r5_low
 - 800-53r5_moderate
 - 800-53r5_high
-- ios_stig
 - cnssi-1253_moderate
 - cnssi-1253_low
 - cnssi-1253_high

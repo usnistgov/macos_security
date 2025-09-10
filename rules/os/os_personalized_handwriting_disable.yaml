@@ -19,7 +19,9 @@ references:
   sfr:
   - N/A
   indigo:
-    - N/A
+  - N/A
+  disa_stig:
+  - N/A
 iOS:
 - '26.0'
 tags:

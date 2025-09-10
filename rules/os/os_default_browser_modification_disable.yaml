@@ -15,7 +15,7 @@ references:
   - CM-7(1)
   - CM-6
   indigo:
-    - N/A
+  - N/A
 iOS:
 - '26.0'
 tags:

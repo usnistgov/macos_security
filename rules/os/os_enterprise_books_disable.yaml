@@ -11,13 +11,18 @@ references:
     - CCI-000366
     - CCI-002110
   800-53r5:
-    - CM-6 b
+    - CM-6
   sfr:
     - 'FMT_MOF_EXT.1.2 #40'
   disa_stig:
     - N/A
   indigo:
     - N/A
+  cis:
+    benchmark:
+      - N/A
+    controls v8:
+      - N/A
 iOS:
   - "26.0"
 tags:

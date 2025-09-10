@@ -13,7 +13,7 @@ references:
   - SI-2(5)
   - SI-3
   indigo:
-    - N/A
+  - N/A
 iOS:
 - '26.0'
 tags:

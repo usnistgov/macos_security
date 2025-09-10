@@ -7,19 +7,19 @@ fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-  - CCE-95500-5
+   - CCE-95500-5
   cci:
-  - N/A
+   - N/A
   800-53r5:
-  - AC-20
-  - AC-20(1)
-  - CM-7
-  - CM-7(1)
-  - SC-7(10)
+   - AC-20
+   - AC-20(1)
+   - CM-7
+   - CM-7(1)
+   - SC-7(10)
   indigo:
-    - N/A
+   - N/A
 iOS:
-- '26.0'
+ - '26.0'
 tags:
 - ios
 - 800-53r5_low

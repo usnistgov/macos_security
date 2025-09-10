@@ -24,6 +24,13 @@ references:
     - N/A
   indigo:
     - N/A
+  cis:
+    benchmark:
+      - N/A
+    controls v8:
+      - 4.1
+      - 4.8
+      - 15.3
 iOS:
   - "26.0"
 tags:
