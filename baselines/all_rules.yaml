@@ -115,6 +115,7 @@ profile:
       - os_iphone_mirroring_disable
       - os_ir_support_disable
       - os_library_validation_enabled
+      - os_loginwindow_adminhostinfo_disabled
       - os_mail_app_disable
       - os_mail_smart_reply_disable
       - os_mail_summary_disable
@@ -146,8 +147,10 @@ profile:
       - os_removable_media_disable
       - os_root_disable
       - os_safari_advertising_privacy_protection_enable
+      - os_safari_clear_history_disable
       - os_safari_open_safe_downloads_disable
       - os_safari_prevent_cross-site_tracking_enable
+      - os_safari_private_browsing_disable
       - os_safari_reader_summary_disable
       - os_safari_show_full_website_address_enable
       - os_safari_show_status_bar_enabled
@@ -156,12 +159,12 @@ profile:
       - os_screensaver_timeout_loginwindow_enforce
       - os_secure_boot_verify
       - os_setup_assistant_filevault_enforce
-      - os_show_filename_extensions_enable
       - os_sip_enable
       - os_siri_prompt_disable
       - os_skip_screen_time_prompt_enable
       - os_skip_unlock_with_watch_enable
       - os_sleep_and_display_sleep_apple_silicon_enable
+      - os_software_update_app_update_enforce
       - os_software_update_deferral
       - os_ssh_fips_compliant
       - os_ssh_server_alive_count_max_configure
@@ -219,6 +222,7 @@ profile:
       - system_settings_content_caching_disable
       - system_settings_critical_update_install_enforce
       - system_settings_diagnostics_reports_disable
+      - system_settings_download_software_update_enforce
       - system_settings_external_intelligence_disable
       - system_settings_external_intelligence_sign_in_disable
       - system_settings_filevault_enforce
@@ -252,13 +256,12 @@ profile:
       - system_settings_screensaver_ask_for_password_delay_enforce
       - system_settings_screensaver_password_enforce
       - system_settings_screensaver_timeout_enforce
+      - system_settings_security_update_install
       - system_settings_siri_disable
       - system_settings_siri_listen_disable
       - system_settings_siri_settings_disable
       - system_settings_smbd_disable
-      - system_settings_software_update_app_update_enforce
       - system_settings_software_update_download_enforce
-      - system_settings_software_update_enforce
       - system_settings_softwareupdate_current
       - system_settings_ssh_disable
       - system_settings_ssh_enable
