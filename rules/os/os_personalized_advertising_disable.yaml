@@ -1,10 +1,10 @@
 id: os_personalized_advertising_disable
-title: Disable Personalized Advertising
+title: "Disable Personalized Advertising"
 discussion: |
   Ad tracking and targeted ads _MUST_ be disabled. 
   
   The information system _MUST_ be configured to provide only essential capabilities. Disabling ad tracking ensures that applications and advertisers are unable to track users' interests and deliver targeted advertisements.
-check: ' '
+check: " "
 fix: |
   This is implemented by a Configuration Profile.
 references:
@@ -29,7 +29,7 @@ references:
     controls v8:
     - 4.8
 iOS:
-- '26.0'
+- "26.0"
 tags:
 - ios
 - 800-53r5_low

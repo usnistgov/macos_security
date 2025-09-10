@@ -1,8 +1,8 @@
 id: os_web_distribution_app_installation_disable
-title: Ensure the ability to install apps directly from the web is set to Disabled
+title: Ensure the Ability to Install Apps Directly from the Web is Set to Disabled
 discussion: |
   Web distrubtion of app installation _MUST_ be disabled.
-check: ' '
+check: " "
 fix: |
   This is implemented by a Configuration Profile.
 references:
@@ -15,11 +15,11 @@ references:
   indigo:
   - N/A
   sfr:
-  - 'FMT_SMF_EXT.1.1 #3'
+  - "FMT_SMF_EXT.1.1 #3"
   disa_stig:
   - N/A
 iOS:
-- '26.0'
+- "26.0"
 tags:
 - ios
 - 800-53r5_low

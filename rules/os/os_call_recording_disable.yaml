@@ -1,10 +1,10 @@
 id: os_call_recording_disable
-title: Disable Call Recording
+title: "Disable Call Recording"
 discussion: |
   The built-in Call Recording _MUST_ be disabled in certain organizations or jurisdictions by legal statutes and/or privacy laws.
 
   The Call Recording service announces to all users that a cellular phone call is about to be recorded. When recording stops (either manually by the user or by ending the call), the recording is saved to a new note in the Notes app. This functionality may be prohibited by certain organizations or jurisdictions by legal statutes and/or privacy laws.
-check: ' '
+check: " "
 fix: |
   This is implemented by a Configuration Profile.
 references:
@@ -15,13 +15,13 @@ references:
   cci:
   - CCI-000366
   sfr:
-  - 'FMT_MOF_EXT.1.2 #47'
+  - "FMT_MOF_EXT.1.2 #47"
   disa_stig:
   - N/A
   indigo:
   - N/A
 iOS:
-- '26.0'
+- "26.0"
 tags:
 - ios
 - 800-53r5_low

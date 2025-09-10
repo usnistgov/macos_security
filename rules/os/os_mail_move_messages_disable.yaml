@@ -1,5 +1,5 @@
 id: os_mail_move_messages_disable
-title: "Ensure Allow user to move messages from this account is set to Disabled"
+title: "Ensure Allow User to Move Messages from This Account is Set to Disabled"
 discussion: |
   Mail from institutionally configured mail accounts _MUST_ not be allowed to move to personal mail accounts.
 check: " "
@@ -19,7 +19,7 @@ references:
     - SC-4
     - SC-07(10)
   sfr:
-    - 'FMT_SMF_EXT.1.1 #47'
+    - "FMT_SMF_EXT.1.1 #47"
   disa_stig:
     - N/A
   indigo:

@@ -1,5 +1,5 @@
 id: os_exchange_SMIME_signing_overwrite_disable
-title: "Disable changing the S/MIME signing settings."
+title: "Disable Modifying the S/MIME Signing Settings"
 discussion: |
   The iOS device needs some specific configurations for the Exchange setup to meet the minimum requirements. 
 

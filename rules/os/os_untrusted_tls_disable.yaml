@@ -1,5 +1,5 @@
 id: os_untrusted_tls_disable
-title: "Ensure Allow Users to Accept Untrusted TLS Certificates is set to Disabled"
+title: "Ensure Allow Users to Accept Untrusted TLS Certificates is Set to Disabled"
 discussion: |
   Users _MUST_ not be allowed to accept self-signed or unverified certificates.
 check: " "

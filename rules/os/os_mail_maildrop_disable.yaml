@@ -1,5 +1,5 @@
 id: os_mail_maildrop_disable
-title: "Ensure Allow Mail Drop is set to Disabled"
+title: "Ensure Allow Mail Drop is Set to Disabled"
 discussion: |
   Mail Drop _MUST_ be disabled.
 check: " "
@@ -19,7 +19,7 @@ references:
     - CM-7(1)
     - SC-07(10)
   sfr:
-    - 'FMT_SMF_EXT.1.1 #47'
+    - "FMT_SMF_EXT.1.1 #47"
   disa_stig:
     - N/A
   indigo:

@@ -1,5 +1,5 @@
 id: os_voice_dialing_when_locked_disabled
-title: "Ensure Allow voice dialing while device is locked is set to Disabled"
+title: "Ensure Allow Voice Dialing While Device is Locked is Set to Disabled"
 discussion: |
   Voice dialing while the device is locked _MUST_ be disabled.
 check: " "
@@ -14,7 +14,7 @@ references:
     - CM-7
     - CM-7(1)
   sfr:
-    - 'FMT_SMF_EXT.1.1 #8b'
+    - "FMT_SMF_EXT.1.1 #8b"
   disa_stig:
     - N/A
   indigo:

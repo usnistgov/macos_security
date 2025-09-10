@@ -15,7 +15,7 @@ references:
   800-53r5:
     - AC-7
   sfr:
-    - 'FMT_SMF_EXT.1.1 #2c'
+    - "FMT_SMF_EXT.1.1 #2c"
     - 'FIA_AFL_EXT.1.5'
   disa_stig:
     - N/A

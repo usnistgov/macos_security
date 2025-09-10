@@ -1,5 +1,5 @@
 id: os_safari_cookies_set
-title: "Ensure Accept cookies is set to From websites I visit or From current website only"
+title: "Ensure 'Accept cookies' is set to 'From websites I visit' or 'From current website only'"
 discussion: |
   Acceptance of cookies _MUST_ be only from sites visited.
 check: " "

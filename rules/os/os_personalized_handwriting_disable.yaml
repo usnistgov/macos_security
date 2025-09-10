@@ -1,8 +1,8 @@
 id: os_personalized_handwriting_disable
-title: Ensure the ability to analyse handwriting is set to Disabled
+title: "Ensure the ability to Analyze Handwriting is Set to Disabled"
 discussion: |
   AI handwriting analysis _MUST_ be disabled.
-check: ' '
+check: " "
 fix: |
   This is implemented by a Configuration Profile.
 references:
@@ -23,7 +23,7 @@ references:
   disa_stig:
   - N/A
 iOS:
-- '26.0'
+- "26.0"
 tags:
 - ios
 - 800-53r5_low

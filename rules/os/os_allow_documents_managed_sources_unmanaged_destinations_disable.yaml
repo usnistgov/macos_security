@@ -17,8 +17,8 @@ references:
     - SC-7(10)
     - SC-39
   sfr:
-    - 'FMT_SMF_EXT.1.1 #42'
-    - 'FDP_ACF_EXT.1.2'
+    - "FMT_SMF_EXT.1.1 #42"
+    - "FDP_ACF_EXT.1.2"
   disa_stig:
     - N/A
   indigo:

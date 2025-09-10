@@ -4,7 +4,7 @@ discussion: |
   Pairing an Apple Watch _MUST_ be disabled.
   
   NOTE: Any currently paired Apple Watch is unpaired and the watch's content is erased.
-check: ''
+check: " "
 fix: |
   This is implemented by a Configuration Profile
 references:
@@ -18,7 +18,7 @@ references:
     - CM-7
     - CM-7(1)
   sfr:
-    - 'FMT_SMF_EXT.1.1 #47'
+    - "FMT_SMF_EXT.1.1 #47"
   disa_stig:
     - N/A
   indigo:

@@ -1,5 +1,5 @@
 id: os_predictive_keyboard_disable
-title: "Disable the use of predictable keyboards"
+title: "Disable the Use of Predictable Keyboards"
 discussion: |
   The device _MUST_ be configured that the usage of the predictable keyboard feature is not possible.  
 check: " "

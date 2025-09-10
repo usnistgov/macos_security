@@ -1,5 +1,5 @@
 id: os_exchange_SMIME_signing_enabled
-title: "Enable S/MIME signing of mails."
+title: "Enable S/MIME Signing"
 discussion: |
   The iOS device needs some specific configurations for the Exchange setup to meet the minimum requirements. 
 

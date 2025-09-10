@@ -2,7 +2,7 @@ id: os_supervised_mdm_require
 title: "Enforce Supervised Enrollment in Mobile Device Management"
 discussion: |
   iOS/iPadOS _MUST_ be supervised by a Mobile Device Management (MDM) software.
-check: ''
+check: " "
 fix: |
   Enroll the iOS/iPadOS device in a supervised MDM.
 references:
@@ -16,7 +16,7 @@ references:
     - CM-2
     - CM-6
   sfr:
-    - 'FMT_SMF_EXT.1.1 #47'
+    - "FMT_SMF_EXT.1.1 #47"
   disa_stig:
     - N/A
   cis:

@@ -19,7 +19,7 @@ references:
     - MP-2
     - SC-7(10)
   sfr:
-    - 'FMT_SMF_EXT.1.1 #47'
+    - "FMT_SMF_EXT.1.1 #47"
   disa_stig:
     - N/A
   indigo:

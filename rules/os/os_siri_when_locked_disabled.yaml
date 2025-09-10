@@ -1,5 +1,5 @@
 id: os_siri_when_locked_disabled
-title: "Ensure Allow Siri while device is locked is set to Disabled"
+title: "Ensure Allow Siri While Device is Locked is Set to Disabled"
 discussion: |
   Accessing Siri while the device is locked _MUST_ be disabled.
 check: " "
@@ -16,7 +16,7 @@ references:
     - CM-7(1)
     - SC-7(10)
   sfr:
-    - 'FMT_SMF_EXT.1.1 #8b'
+    - "FMT_SMF_EXT.1.1 #8b"
   disa_stig:
     - N/A
   indigo:

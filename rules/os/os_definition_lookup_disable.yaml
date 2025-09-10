@@ -1,8 +1,8 @@
 id: os_definition_lookup_disable
-title: Disable Definition Lookup on the device.
+title: "Disable Definition Lookup on the Device"
 discussion: |
   The iOS device _MUST_ be configured not use the spell check feature of the OS.
-check: ' '
+check: " "
 fix: |
   This is implemented by a Configuration Profile.
 references:
@@ -16,7 +16,7 @@ references:
   indigo:
   - N/A
 iOS:
-- '26.0'
+- "26.0"
 tags:
 - ios
 - 800-53r5_low

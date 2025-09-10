@@ -2,7 +2,7 @@ id: os_application_deny_list
 title: "Apps not allowed on the device"
 discussion: |
   In case specific apps are allowed to be used on the device a specific list _SHOULD_VALUEONDEMAND_ needs to be defined by the MDM. These apps will not open on the device.
-check: ' '
+check: " "
 fix: |
   This is implemented by a Configuration Profile.
 references:

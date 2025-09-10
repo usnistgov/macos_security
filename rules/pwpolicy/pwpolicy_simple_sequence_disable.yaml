@@ -15,7 +15,7 @@ references:
   800-53r5:
     - IA-5(1)
   sfr:
-    - 'FMT_SMF_EXT.1.1 #1b'
+    - "FMT_SMF_EXT.1.1 #1b"
   disa_stig:
     - N/A
   indigo:

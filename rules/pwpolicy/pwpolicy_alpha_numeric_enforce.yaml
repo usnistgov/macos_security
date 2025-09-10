@@ -4,7 +4,7 @@ discussion: |
   The iOS _MUST_ be configured to require at least one numeric character be used when a password is created.
   
   This rule enforces password complexity by requiring users to set passwords that are less vulnerable to malicious users.
-check: ''
+check: " "
 fix: |
   This is implemented by a Configuration Profile.
 references:
@@ -15,7 +15,7 @@ references:
   indigo:
   - N/A
 iOS:
-- '26.0'
+- "26.0"
 tags:
 - ios
 - 800-53r5_low

@@ -1,8 +1,8 @@
 id: os_show_control_center_lock_screen_disable
-title: Ensure Show Control Center in Lock screen is set to Disabled
+title: "Ensure Show Control Center in Lock Screen is Set to Disabled"
 discussion: |
   Control Center _MUST_ be disabled in the lock screen.
-check: ' '
+check: " "
 fix: |
   This is implemented by a Configuration Profile.
 references:
@@ -25,7 +25,7 @@ references:
     controls v8:
     - 4.3
 iOS:
-- '26.0'
+- "26.0"
 tags:
 - ios
 - 800-53r5_moderate

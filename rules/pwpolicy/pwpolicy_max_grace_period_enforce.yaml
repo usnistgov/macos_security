@@ -1,5 +1,5 @@
 id: pwpolicy_max_grace_period_enforce
-title: "Ensure Maximum grace period for device lock is set to Immediately"
+title: "Ensure Maximum Grace Period for Device Lock is Set to Immediately"
 discussion: |
   The iOS grace period for device lock _MUST_ be configured to immediately.
 check: " "
@@ -14,7 +14,7 @@ references:
     - AC-11
     - IA-11
   sfr:
-    - 'FMT_SMF_EXT.1.1 #2a'
+    - "FMT_SMF_EXT.1.1 #2a"
   disa_stig:
     - N/A
   indigo:

@@ -1,5 +1,5 @@
 id: os_show_notification_center_lock_screen_disable
-title: "Ensure Show Notification Center in Lock screen is set to Disabled"
+title: "Ensure Show Notification Center in Lock Screen is Set to Disabled"
 discussion: |
   Notification Center _MUST_ be disabled in the lock screen.
 check: " "
@@ -13,7 +13,7 @@ references:
   800-53r5:
     - AC-11(1)
   sfr:
-    - 'FMT_SMF_EXT.1.1 #18'
+    - "FMT_SMF_EXT.1.1 #18"
   disa_stig:
     - N/A
   indigo:

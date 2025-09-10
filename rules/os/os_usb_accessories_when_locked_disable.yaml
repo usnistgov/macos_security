@@ -1,5 +1,5 @@
 id: os_usb_accessories_when_locked_disable
-title: "Ensure Allow USB accessories while the device is locked is set to Disabled"
+title: "Ensure Allow USB Accessories While the Device is Locked is Set to Disabled"
 discussion: |
   USB devices _MUST_ not be allowed to connect while the device is locked.
 check: " "
@@ -18,7 +18,7 @@ references:
     - SC-7(10)
     - SC-41
   sfr:
-    - 'FMT_SMF_EXT.1.1 #47'
+    - "FMT_SMF_EXT.1.1 #47"
   disa_stig:
     - N/A
   indigo:

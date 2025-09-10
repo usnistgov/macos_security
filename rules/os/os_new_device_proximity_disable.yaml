@@ -1,5 +1,5 @@
 id: os_new_device_proximity_disable
-title: "Ensure Allow setting up new nearby devices is set to Disabled"
+title: "Ensure Allow Setting Up New Nearby Devices is Set to Disabled"
 discussion: |
   The setting up of new nearby devices _MUST_ be disabled.
 check: " "
@@ -17,7 +17,7 @@ references:
     - CM-7
     - CM-7(1)
   sfr:
-    - 'FMT_SMF_EXT.1.1 #47'
+    - "FMT_SMF_EXT.1.1 #47"
   disa_stig:
     - N/A
   indigo:

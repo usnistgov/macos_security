@@ -1,5 +1,5 @@
 id: os_exchange_SMIME_encryption_per_message_disable
-title: "Disable encryption selection option per mail."
+title: "Disable Encryption Selection Option per Mail Message"
 discussion: |
   The iOS device needs some specific configurations for the Exchange setup to meet the minimum requirements. 
 

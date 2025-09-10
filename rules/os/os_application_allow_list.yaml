@@ -10,7 +10,7 @@ discussion: |
   Preinstalled application: Additional non-core applications included in the OS build by the OS vendor, MDM vendor, or wireless carrier.
 
   NOTE: See rule YAML file for implementation comments.
-check: ' '
+check: " "
 fix: |
   This is implemented by a Configuration Profile
 references:
@@ -22,7 +22,7 @@ references:
     - CM-7
     - CM-7(5)
   sfr:
-    - 'FMT_SMF_EXT.1.1 #8b'
+    - "FMT_SMF_EXT.1.1 #8b"
   disa_stig:
     - N/A
   indigo:

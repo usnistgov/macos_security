@@ -1,8 +1,8 @@
 id: os_pairing_non_configurator_hosts_disable
-title: Ensure Allow pairing with non-Configurator hosts is set to Disabled
+title: "Ensure Allow Pairing with Non-Configurator Hosts is Set to Disabled"
 discussion: |
   Host pairing with a non-Configurator host _MUST_ be disabled.
-check: ' '
+check: " "
 fix: |
   This is implemented by a Configuration Profile.
 references:
@@ -26,7 +26,7 @@ references:
     controls v8:
     - 4.8
 iOS:
-- '26.0'
+- "26.0"
 tags:
 - ios
 - 800-53r5_low

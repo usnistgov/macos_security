@@ -2,7 +2,7 @@ id: icloud_photo_stream_disable
 title: "Ensure Photo Stream is set to Disabled"
 discussion: |
   If a user is able to configure the security setting, the user could inadvertently or maliciously set it to a value that poses unacceptable risk to DoD information systems. An adversary could exploit vulnerabilities created by the weaker configuration to compromise DoD sensitive information.
-check: ' '
+check: " "
 fix: |
   This is implemented by a Configuration Profile
 references:
@@ -19,7 +19,7 @@ references:
     - CM-7(1)
     - SC-7(10)
   sfr:
-    - 'FMT_MOF_EXT.1.2 #40'
+    - "FMT_MOF_EXT.1.2 #40"
   disa_stig:
     - N/A
   indigo:

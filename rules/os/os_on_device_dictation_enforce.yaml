@@ -4,7 +4,7 @@ discussion: |
   The device _MUST_ be configured for on device dictation.
 
   By enforcing on device dictation this will mitigate the risk of unwanted data being sent to Apple.
-check: ''
+check: " "
 fix: |
   This is implemented by a Configuration Profile
 references:
@@ -19,7 +19,7 @@ references:
     - AC-20
     - SC-7(10)
   sfr:
-    - 'FMT_SMF_EXT.1.1 #47'
+    - "FMT_SMF_EXT.1.1 #47"
   disa_stig:
     - N/A
   indigo:

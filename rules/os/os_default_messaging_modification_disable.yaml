@@ -1,8 +1,8 @@
 id: os_default_messaging_modification_disable
-title: Disable Modifying the Default Messaging Application
+title: "Disable Modifying the Default Messaging Application"
 discussion: |
   The ability to modify the default messaging application _MUST_ be disabled to prevent unauthorized changes to the device''s behavior.
-check: ' '
+check: " "
 fix: |
   This is implemented by a Configuration Profile.
 references:
@@ -17,7 +17,7 @@ references:
   indigo:
   - N/A
 iOS:
-- '26.0'
+- "26.0"
 tags:
 - ios
 - 800-53r5_low

@@ -1,5 +1,5 @@
 id: os_files_network_drive_access_disable
-title: "Ensure Allow network drive access in Files app is set to Disabled"
+title: "Ensure Allow Network Drive Access in Files App is Set to Disabled"
 discussion: |
   Network drive access in Files app _MUST_ be disabled.
 check: " "
@@ -15,7 +15,7 @@ references:
   800-53r5:
     - AC-20(2)
   sfr:
-    - 'FMT_SMF_EXT.1.1 #47'
+    - "FMT_SMF_EXT.1.1 #47"
   disa_stig:
     - N/A
   indigo:

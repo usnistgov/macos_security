@@ -19,7 +19,7 @@ references:
     - CM-7(1)
     - SC-7(10)
   sfr:
-    - 'FMT_MOF_EXT.1.2 #40'
+    - "FMT_MOF_EXT.1.2 #40"
   disa_stig:
     - N/A
   indigo:

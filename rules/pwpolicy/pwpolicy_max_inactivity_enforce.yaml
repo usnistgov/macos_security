@@ -1,5 +1,5 @@
 id: pwpolicy_max_inactivity_enforce
-title: "Ensure Maximum Auto-Lock is set to $ODV minutes or less"
+title: "Ensure Maximum Auto-Lock is Set to $ODV Minutes or Less"
 discussion: |
   The iOS _MUST_ be configured to auto-lock after $ODV minutes.
 check: " "
@@ -14,7 +14,7 @@ references:
     - AC-11
     - IA-11
   sfr:
-    - 'FMT_SMF_EXT.1.1 #2b'
+    - "FMT_SMF_EXT.1.1 #2b"
   disa_stig:
     - N/A
   indigo:

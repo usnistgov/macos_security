@@ -1,12 +1,12 @@
 id: os_system_settings_find_my_device_disable
-title: Disable Find My Device
+title: "Disable Find My Device"
 discussion: |
   The Find My service _MUST_ be disabled.
 
   A Mobile Device Management (MDM) solution _MUST_ be used to carry out remote locking and wiping instead of Apple's Find My service.
 
   Apple's Find My service uses a personal AppleID for authentication. Organizations should rely on MDM solutions, which have much more secure authentication requirements, to perform remote lock and remote wipe.
-check: ' '
+check: " "
 fix: |
   This is implemented by a Configuration Profile.
 references:
@@ -19,7 +19,7 @@ references:
   indigo:
   - N/A
 iOS:
-- '26.0'
+- "26.0"
 tags:
 - ios
 - 800-53r5_low

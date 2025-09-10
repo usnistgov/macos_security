@@ -1,5 +1,5 @@
 id: os_screen_observation_unprompted_disable
-title: "Prevent unprompted screen observation."
+title: "Prevent Unprompted Screen Observation."
 discussion: |
   The iOS device _MUST_ be configured to prevent automatic acceptance for unprompted screen observations to prevent data leakage via the classroom app.
 check: " "

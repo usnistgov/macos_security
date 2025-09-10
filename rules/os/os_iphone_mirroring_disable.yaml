@@ -1,8 +1,8 @@
 id: os_iphone_mirroring_disable
-title: Ensure the ability to mirror a device is set to Disabled
+title: "Ensure the Ability to Mirror a Device is Set to Disabled"
 discussion: |
   Device mirroring _MUST_ be disabled.
-check: ' '
+check: " "
 fix: |
   This is implemented by a Configuration Profile.
 references:
@@ -16,13 +16,13 @@ references:
    - CM-7
    - CM-7(1)
   sfr:
-   - 'FMT_MOF_EXT.1.2 #47'
+   - "FMT_MOF_EXT.1.2 #47"
   indigo:
    - N/A
   disa_stig:
    - N/A
 iOS:
- - '26.0'
+ - "26.0"
 tags:
  - ios
  - cnssi-1253_moderate

@@ -1,5 +1,5 @@
 id: os_video_conferencing_remote_control_disable
-title: "Ensure the remotely control a system via videoconferencing is set to Disabled"
+title: "Ensure the Remote Control of a System via Videoconferencing is Set to Disabled"
 discussion: |
   Video conferencing remote control _MUST_ be disabled.
 check: " "

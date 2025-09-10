@@ -1,5 +1,5 @@
 id: os_exchange_SMIME_signing_certificate_overwirte_disable
-title: "Disable changing the S/MIME signing settings."
+title: "Disable changing the S/MIME signing settings"
 discussion: |
   The iOS device needs some specific configurations for the Exchange setup to meet the minimum requirements.
 

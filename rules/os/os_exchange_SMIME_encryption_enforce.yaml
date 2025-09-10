@@ -1,5 +1,5 @@
 id: os_exchange_SMIME_encryption_enforce
-title: "Setting S/MIME encrytion as default."
+title: "Setting S/MIME Encryption as Default"
 discussion: |
   The iOS device needs some specific configurations for the Exchange setup to meet the minimum requirements.
 
