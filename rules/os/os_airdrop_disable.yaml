@@ -25,7 +25,6 @@ references:
     - 'FMT_SMF_EXT.1.1 #47'
   disa_stig:
     - N/A
-    - AIOS-18-012500
   indigo:
     - N/A
 iOS:
