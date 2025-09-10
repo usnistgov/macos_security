@@ -767,9 +767,14 @@ def generate_ddm(baseline_name, build_path, parent_dir, baseline_yaml):
         else:
             ddm_key = ddm_rule["ddm_info"]["ddm_key"]
             ddm_key_value = ddm_rule["ddm_info"]["ddm_value"]
-            ddm_dict.setdefault(ddm_rule["ddm_info"]["declarationtype"], {}).update(
-                {ddm_key: ddm_key_value}
-            )
+            if ddm_key in ddm_dict.get(ddm_rule["ddm_info"]["declarationtype"], ""):
+                ddm_dict[ddm_rule["ddm_info"]["declarationtype"]][ddm_key].update(
+                    ddm_key_value
+                )
+            else:
+                ddm_dict.setdefault(ddm_rule["ddm_info"]["declarationtype"], {}).update(
+                    {ddm_key: ddm_key_value}
+                )
 
     for ddm_type in mscp_data_yaml["ddm"]["supported_types"]:
         if ddm_type not in ddm_dict.keys():
@@ -927,9 +932,15 @@ fi
 
 ###################  COMMANDS START BELOW THIS LINE  ###################
 
+# Check if the current shell is Zsh
+if [[ -z "$ZSH_NAME" ]]; then
+  echo "ERROR: This script must be run in Zsh."
+  exit 1
+fi
+
 ## Must be run as root
 if [[ $EUID -ne 0 ]]; then
-    echo "This script must be run as root"
+    echo "ERROR: This script must be run as root"
     exit 1
 fi
 
@@ -1478,7 +1489,7 @@ EOS
         eval "set -- $compliance_args"
     fi
 fi
-
+  
 zparseopts -D -E -help=flag_help -check=check -fix=fix -stats=stats -compliant=compliant_opt -non_compliant=non_compliant_opt -reset=reset -reset-all=reset_all -cfc=cfc -quiet:=quiet || {{ print -l $usage && return }}
 
 [[ -z "$flag_help" ]] || {{ print -l $usage && return }}
@@ -1600,7 +1611,7 @@ def fill_in_odv(resulting_yaml, parent_values):
                 if isinstance(value, dict):
                     for _value in value:
                         if "$ODV" in str(value[_value]):
-                            resulting_yaml["ddm_info"][ddm_type] = odv
+                            resulting_yaml["ddm_info"][ddm_type][_value] = odv
                 if "$ODV" in value:
                     resulting_yaml["ddm_info"][ddm_type] = odv
 
