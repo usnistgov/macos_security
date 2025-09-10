@@ -1,6 +1,6 @@
-title: "iOS/iPadOS 18.0: Security Configuration - Apple iOS/iPadOS 18 STIG - Ver 1, Rel 1"
+title: "iOS/iPadOS 18.0: Security Configuration - Apple iOS/iPadOS 18 STIG - Ver 2, Rel 1"
 description: |
-  This guide describes the actions to take when securing a iOS/iPadOS 18.0 system against the Apple iOS/iPadOS 18 STIG - Ver 1, Rel 1 security baseline.
+  This guide describes the actions to take when securing a iOS/iPadOS 18.0 system against the Apple iOS/iPadOS 18 STIG - Ver 2, Rel 1 security baseline.
 authors: |
   *macOS Security Compliance Project*
 
@@ -26,6 +26,9 @@ profile:
       - os_airdrop_unmanaged_destination_enable
       - os_airplay_incoming_password_require
       - os_airplay_outgoing_password_require
+      - os_airprint_credential_storage_disable
+      - os_airprint_disable
+      - os_airprint_force_trusted_TLS
       - os_allow_contacts_read_managed_sources_unmanaged_destinations_disable
       - os_allow_contacts_write_managed_sources_unmanaged_destinations_disable
       - os_allow_documents_managed_sources_unmanaged_destinations_disable
@@ -33,18 +36,30 @@ profile:
       - os_apple_watch_wrist_detection_enable
       - os_application_allow_list
       - os_auto_unlock_disable
+      - os_automatic_app_download_disable
       - os_call_recording_disable
       - os_diagnostics_reports_disable
       - os_disallow_enterprise_app_trust
       - os_enterprise_books_disable
+      - os_erase_contents_and_settings_disable
       - os_esim_delete
+      - os_esim_transfers_disable
+      - os_exchange_notes_disable
+      - os_exchange_notes_user_override_disable
+      - os_exchange_reminders_disable
+      - os_exchange_reminders_user_override_disable
       - os_external_intelligence_integration_disable
       - os_external_intelligence_integration_sign_in_disable
+      - os_facetime_disable
       - os_files_network_drive_access_disable
       - os_files_usb_drive_access_disable
       - os_find_my_friends_disable
       - os_force_encrypted_backups_enable
+      - os_genmoji_disable
       - os_handoff_disable
+      - os_ibeacon_airprint_disable
+      - os_image_playground_disable
+      - os_image_wand_disable
       - os_install_configuration_profile_disable
       - os_install_vpn_configuration_disable
       - os_iphone_widgets_on_mac_disable
@@ -52,9 +67,11 @@ profile:
       - os_mail_maildrop_disable
       - os_mail_move_messages_disable
       - os_marketplace_prevent
+      - os_movie_content_allowed
       - os_new_device_proximity_disable
       - os_on_device_dictation_enforce
       - os_on_device_translation_enforce
+      - os_pairing_non_configurator_hosts_disable
       - os_password_autofill_disable
       - os_password_proximity_disable
       - os_password_sharing_disable
@@ -62,9 +79,11 @@ profile:
       - os_safari_password_autofill_disable
       - os_show_calendar_lock_screen_disable
       - os_show_notification_center_lock_screen_disable
+      - os_siri_assistant_disable
       - os_siri_when_locked_disabled
       - os_ssl_for_exchange_activesync_enable
       - os_supervised_mdm_require
+      - os_tv_content_allowed
       - os_usb_accessories_when_locked_disable
       - os_web_distribution_app_installation_disable
   - section: "passwordpolicy"
