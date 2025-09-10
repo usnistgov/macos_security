@@ -26,7 +26,7 @@ references:
   disa_stig:
     - N/A
   indigo:
-    - ANNEX D (Section 5.8 - App-Installation)
+    - N/A
   cis:
     benchmark:
       - N/A

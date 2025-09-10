@@ -23,7 +23,7 @@ references:
   disa_stig:
     - N/A
   indigo:
-    - ANNEX D (Section 5.6.1 - Mail) 
+    - N/A
   cis:
     benchmark:
       - 2.7.2 (level 2 - End-User Owned Devices)

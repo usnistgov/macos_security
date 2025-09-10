@@ -22,8 +22,7 @@ references:
   disa_stig:
     - N/A
   indigo:
-    - ANNEX D (Section 5.6.3 - Contacts)
-    - ANNEX K
+    - N/A
   cis:
     benchmark:
       - 2.2.1.8 (level 1 - End-User Owned Devices)

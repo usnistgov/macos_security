@@ -17,7 +17,7 @@ references:
   disa_stig:
   - N/A
   indigo:
-  - N/A
+    - N/A
   cis:
     benchmark:
     - 2.2.1.14 (level 1 - End-User Owned Devices)

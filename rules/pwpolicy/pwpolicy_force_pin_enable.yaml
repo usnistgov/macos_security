@@ -19,7 +19,7 @@ references:
   disa_stig:
     - N/A
   indigo:
-    - Annex D (Section 5.9.1 - Device-Code)
+    - N/A
   cis:
     benchmark:
       - N/A

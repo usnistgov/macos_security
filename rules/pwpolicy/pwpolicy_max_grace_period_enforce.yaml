@@ -18,7 +18,7 @@ references:
   disa_stig:
     - N/A
   indigo:
-    - ANNEX D (Section 5.9.1 - Device-Code) 
+    - N/A
   cis:
     benchmark:
       - 2.4.5 (level 1 - End-User Owned Devices)

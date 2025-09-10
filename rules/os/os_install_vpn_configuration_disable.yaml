@@ -23,7 +23,7 @@ references:
   disa_stig:
     - N/A
   indigo:
-    - ANNEX D (Section 5.10.3 - Manual VPN)
+    - N/A
   cis:
     benchmark:
       - 3.2.1.16 (level 1 - Institutionally-Owned Devices)

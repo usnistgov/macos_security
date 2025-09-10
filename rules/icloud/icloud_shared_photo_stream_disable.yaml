@@ -23,8 +23,7 @@ references:
   disa_stig:
     - N/A
   indigo:
-    - ANNEX D (Section 5.4 - iCloud restrictions) 
-    - ANNEX K
+    - N/A
   cis:
     benchmark:
       - N/A

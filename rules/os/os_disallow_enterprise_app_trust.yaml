@@ -16,7 +16,7 @@ references:
   disa_stig:
     - N/A
   indigo:
-    - ANNEX D - (Section 5.8.5) 
+    - N/A
   cis:
     benchmark:
       - N/A
