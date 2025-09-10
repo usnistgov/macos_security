@@ -47,7 +47,6 @@ references:
 iOS:
   - "26.0"
 tags:
-  - ios_stig
   - supplemental
 mobileconfig: false
 mobileconfig_info:
