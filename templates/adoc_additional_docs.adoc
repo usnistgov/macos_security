@@ -75,5 +75,5 @@ ASSOCIATED DOCUMENTS
 |===
 |Document Number or Descriptor
 |Document Title
-|link:https://www.cisecurity.org/benchmark/apple_ios[Apple iOS/iPadOS]|_CIS Apple iOS 17 and iPadOS 17 Version 1.0.0_
+|link:https://www.cisecurity.org/benchmark/apple_ios[Apple iOS/iPadOS]|_CIS Apple iOS 17 and iPadOS 17 Version 1.1.0_
 |===
