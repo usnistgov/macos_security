@@ -247,7 +247,7 @@ class PayloadDict:
         payload_dict["PayloadUUID"] = makeNewUUID()
         payload_dict["PayloadType"] = payload_content_dict["PayloadType"]
         payload_dict["PayloadIdentifier"] = (
-            f"alacarte.macOS.{baseline_name}.{payload_dict['PayloadUUID']}"
+            f"mscp.{payload_content_dict['PayloadType']}.{payload_dict['PayloadUUID']}"
         )
 
         payload_dict["PayloadContent"] = payload_content_dict
@@ -267,7 +267,7 @@ class PayloadDict:
         payload_dict["PayloadUUID"] = makeNewUUID()
         payload_dict["PayloadType"] = payload_content_dict["PayloadType"]
         payload_dict["PayloadIdentifier"] = (
-            f"alacarte.macOS.{baseline_name}.{payload_dict['PayloadUUID']}"
+            f"mscp.{payload_content_dict['PayloadType']}.{payload_dict['PayloadUUID']}"
         )
 
         payload_dict["PayloadContent"] = payload_content_dict
@@ -289,7 +289,7 @@ class PayloadDict:
         payload_dict["PayloadUUID"] = makeNewUUID()
         payload_dict["PayloadType"] = payload_type
         payload_dict["PayloadIdentifier"] = (
-            f"alacarte.macOS.{baseline_name}.{payload_dict['PayloadUUID']}"
+            f"mscp.{payload_type}.{payload_dict['PayloadUUID']}"
         )
 
         # Add the settings to the payload
@@ -569,13 +569,14 @@ def generate_profiles(
             displayname=displayname,
             description=description,
         )
-
         if payload == "com.apple.ManagedClient.preferences":
             for item in settings:
                 newProfile.addMCXPayload(item, baseline_name)
         # handle these payloads for array settings
-        elif (payload == "com.apple.applicationaccess.new") or (
-            payload == "com.apple.systempreferences"
+        elif (
+            (payload == "com.apple.applicationaccess.new")
+            or (payload == "com.apple.systempreferences")
+            or (payload == "com.apple.SetupAssistant.managed")
         ):
             newProfile.addNewPayload(
                 payload, concatenate_payload_settings(settings), baseline_name

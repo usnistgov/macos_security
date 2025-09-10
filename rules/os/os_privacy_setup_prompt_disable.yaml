@@ -53,4 +53,5 @@ severity: medium
 mobileconfig: true
 mobileconfig_info:
   com.apple.SetupAssistant.managed:
-    SkipPrivacySetup: true
+    SkipSetupItems:
+      - Privacy

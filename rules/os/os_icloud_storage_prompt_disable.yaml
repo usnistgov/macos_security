@@ -58,4 +58,5 @@ severity: medium
 mobileconfig: true
 mobileconfig_info:
   com.apple.SetupAssistant.managed:
-    SkipiCloudStorageSetup: true
+    SkipSetupItems:
+      - iCloudStorage

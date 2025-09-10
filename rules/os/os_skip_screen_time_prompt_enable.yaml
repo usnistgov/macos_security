@@ -43,4 +43,5 @@ severity: low
 mobileconfig: true
 mobileconfig_info:
   com.apple.SetupAssistant.managed:
-    SkipScreenTime: true
+    SkipSetupItems:
+      - ScreenTime

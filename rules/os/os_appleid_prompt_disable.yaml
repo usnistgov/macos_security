@@ -57,4 +57,5 @@ severity: medium
 mobileconfig: true
 mobileconfig_info:
   com.apple.SetupAssistant.managed:
-    SkipCloudSetup: true
+    SkipSetupItems:
+      - AppleID

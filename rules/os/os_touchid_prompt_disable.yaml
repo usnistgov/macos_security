@@ -55,4 +55,5 @@ severity: medium
 mobileconfig: true
 mobileconfig_info:
   com.apple.SetupAssistant.managed:
-    SkipTouchIDSetup: true
+    SkipSetupItems:
+      - Biometric
