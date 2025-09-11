@@ -14,7 +14,7 @@ Apple acknowledges the macOS Security Compliance Project with information on the
 
 This project can be used as a resource to easily create customized security baselines of technical security controls by leveraging a library of atomic actions which are mapped to the compliance requirements defined in NIST SP 800-53 (Rev. 5). It can also be used to develop customized guidance to meet the particular cybersecurity needs of any organization.
 
-To learn more about the project, please see the [wiki](https://github.com/usnistgov/macos_security/wiki).
+To learn more about the project, [click here](http://pages.nist.gov/macos_security/).
 
 If you are interested in supporting the development of the project, refer to the [contributor guidance](CONTRIBUTING.md) for more information.
 
