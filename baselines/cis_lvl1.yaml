@@ -94,6 +94,7 @@ profile:
       - system_settings_improve_siri_dictation_disable
       - system_settings_install_macos_updates_enforce
       - system_settings_internet_sharing_disable
+      - system_settings_location_services_menu_enforce
       - system_settings_loginwindow_loginwindowtext_enable
       - system_settings_loginwindow_prompt_username_password_enforce
       - system_settings_password_hints_disable
