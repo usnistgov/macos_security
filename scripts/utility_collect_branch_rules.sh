@@ -11,7 +11,7 @@ fi
 
 # branches to check out
 
-branches=("sequoia" "sonoma" "ventura" "monterey" "catalina" "big_sur" "ios_16" "ios_17" "ios_18" "visionos")
+branches=("tahoe" "sequoia" "sonoma" "ios_26" "ios_17" "ios_18" "visionos_26")
 
 # get all of the branches checked out and latest information pulled down
 
@@ -37,11 +37,11 @@ done
 
 # rename visionOS folder for simplicity
 
-if [[ -d "_work/visionos_2.0" ]]; then
-    rm -rf "_work/visionos_2.0"
-fi
+#if [[ -d "_work/visionos_2.0" ]]; then
+#    rm -rf "_work/visionos_2.0"
+#fi
 
-mv _work/visionos _work/visionos_2.0
+#mv _work/visionos _work/visionos_2.0
 
 # clone apple's device-management repo
 
