@@ -2,9 +2,9 @@ id: os_skip_screen_time_prompt_enable
 title: Disable Screen Time Prompt During Setup Assistant
 discussion: The prompt for Screen Time setup during Setup Assistant _MUST_ be disabled.
 check: |
-  /usr/bin/osascript -l JavaScript << EOS
+  /usr/bin/osascript -l JavaScript 2>/dev/null << EOS
   $.NSUserDefaults.alloc.initWithSuiteName('com.apple.SetupAssistant.managed')\
-  .objectForKey('ScreenTime').js
+  .objectForKey('SkipSetupItems').containsObject("ScreenTime")
   EOS
 result:
   string: 'true'
