@@ -30,8 +30,6 @@ references:
       - SRG-OS-000077-GPOS-00045
       - SRG-OS-000775-GPOS-00230
     disa_stig:
-      macos_14:
-        - APPL-14-003009
       macos_13:
         - APPL-13-003009
       ios_18:
@@ -64,14 +62,10 @@ platforms:
       benchmarks:
         - name: cis_lvl1
         - name: cis_lvl2
-        - name: disa_stig
-          severity: medium
     '14.0':
       benchmarks:
         - name: cis_lvl1
         - name: cis_lvl2
-        - name: disa_stig
-          severity: medium
     '13.0':
       benchmarks:
         - name: cis_lvl1
