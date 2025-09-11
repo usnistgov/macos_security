@@ -1,6 +1,6 @@
-title: "macOS 14.0: Security Configuration - CIS Apple macOS 14.0 Sonoma v2.0.0 Benchmark (Level 2)"
+title: "macOS 14.0: Security Configuration - CIS Apple macOS 14.0 Sonoma v2.1.0 Benchmark (Level 2)"
 description: |
-  This guide describes the actions to take when securing a macOS 14.0 system against the CIS Apple macOS 14.0 Sonoma v2.0.0 Benchmark (Level 2) security baseline.
+  This guide describes the actions to take when securing a macOS 14.0 system against the CIS Apple macOS 14.0 Sonoma v2.1.0 Benchmark (Level 2) security baseline.
 authors: |
   *macOS Security Compliance Project*
 
@@ -118,6 +118,7 @@ profile:
       - system_settings_screen_sharing_disable
       - system_settings_screensaver_ask_for_password_delay_enforce
       - system_settings_screensaver_timeout_enforce
+      - system_settings_siri_disable
       - system_settings_sleep_enforce
       - system_settings_smbd_disable
       - system_settings_software_update_app_update_enforce
