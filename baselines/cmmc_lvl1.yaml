@@ -67,6 +67,7 @@ profile:
       - os_safari_reader_summary_disable
       - os_sip_enable
       - os_siri_prompt_disable
+      - os_skip_apple_intelligence_enable
       - os_skip_unlock_with_watch_enable
       - os_tftpd_disable
       - os_unlock_active_user_session_disable

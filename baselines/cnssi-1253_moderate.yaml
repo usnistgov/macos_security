@@ -140,6 +140,7 @@ profile:
       - os_setup_assistant_filevault_enforce
       - os_sip_enable
       - os_siri_prompt_disable
+      - os_skip_apple_intelligence_enable
       - os_skip_screen_time_prompt_enable
       - os_skip_unlock_with_watch_enable
       - os_ssh_fips_compliant
