@@ -30,6 +30,7 @@ profile:
       - os_authentication_password_autofill_enable
       - os_diagnostics_reports_disable
       - os_erase_contents_and_settings_disable
+      - os_external_intelligence_integration_sign_in_disable
       - os_files_network_drive_access_disable
       - os_files_usb_drive_access_disable
       - os_force_date_and_time_enable
@@ -40,8 +41,10 @@ profile:
       - os_limit_ad_tracking_enable
       - os_mail_maildrop_disable
       - os_mail_move_messages_disable
+      - os_mail_summary_disable
       - os_modify_cellular_data_app_settings_disable
       - os_new_device_proximity_disable
+      - os_notes_transcription_summary_disable
       - os_pairing_non_configurator_hosts_disable
       - os_password_proximity_disable
       - os_personalized_advertising_disable
@@ -55,6 +58,7 @@ profile:
       - os_untrusted_tls_disable
       - os_usb_accessories_when_locked_disable
       - os_voice_dialing_when_locked_disabled
+      - os_writing_tools_disable
   - section: "passwordpolicy"
     rules:
       - pwpolicy_account_lockout_enforce
