@@ -8,20 +8,20 @@ discussion: |-
 references:
   nist:
     cce:
+      macos_26:
+        - CCE-95229-1
       macos_15:
         - CCE-94229-2
       macos_14:
         - CCE-92826-7
-      macos_13:
-        - CCE-91822-7
   cis:
     controls_v8:
       - 5.6
 platforms:
   macOS:
+    '26.0': {}
     '15.0': {}
     '14.0': {}
-    '13.0': {}
     enforcement_info:
       fix:
         additional_info: For directory bound systems, the technology inherently meets this requirement. No fix is required.

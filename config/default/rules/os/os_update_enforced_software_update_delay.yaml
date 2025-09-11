@@ -5,6 +5,8 @@ discussion: |
 references:
   nist:
     cce:
+      ios_26:
+        - CCE-95539-3
       ios_18:
         - CCE-94560-0
       ios_17:
@@ -15,6 +17,8 @@ references:
         - ANNEX D (Section 6.3.1.2 - Update management)
 platforms:
   iOS:
+    '26.0':
+      supervised: true
     '18.0':
       supervised: true
       benchmarks:
@@ -34,8 +38,8 @@ odv:
       min: 1
       max: 90
   recommended: 30
-  indigo_base: 30
-  indigo_high: 30
+  indigo_base: 14
+  indigo_high: 14
 mobileconfig_info:
   - PayloadType: com.apple.applicationaccess
     PayloadContent:

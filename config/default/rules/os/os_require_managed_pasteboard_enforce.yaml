@@ -4,14 +4,14 @@ discussion: "The device _MUST_ be configured to disable copy/paste of data from 
 references:
   nist:
     cce:
+      ios_26:
+        - CCE-95512-0
       ios_18:
         - CCE-94459-5
       ios_17:
         - CCE-93443-0
-      ios_16:
-        - CCE-93243-4
-      visionos_2:
-        - CCE-94506-3
+      visionos_26:
+        - CCE-95589-8
     800-53r5:
       - AC-23
       - SC-7(10)
@@ -26,9 +26,6 @@ references:
       ios_17:
         - AIOS-17-014600
         - AIOS-17-714600
-      ios_16:
-        - AIOS-16-014600
-        - AIOS-16-714600
     sfr:
       - 'FMT_SMF_EXT.1.1 #47'
   bsi:
@@ -37,10 +34,12 @@ references:
         - ANNEX K
 platforms:
   iOS:
+    '26.0':
+      supervised: false
     '18.0':
       supervised: false
       benchmarks:
-        - name: disa_stig
+        - name: ios_stig
           severity: medium
         - name: indigo_base
           severity: medium
@@ -49,7 +48,7 @@ platforms:
     '17.0':
       supervised: false
       benchmarks:
-        - name: disa_stig
+        - name: ios_stig
           severity: medium
         - name: ios_stig_byoad
           severity: medium
@@ -57,16 +56,9 @@ platforms:
           severity: medium
         - name: indigo_high
           severity: medium
-    '16.0':
-      supervised: false
-      benchmarks:
-        - name: disa_stig
-          severity: medium
-        - name: ios_stig_byoad
-          severity: medium
     introduced: '15.0'
   visionOS:
-    '2.0':
+    '26.0':
       supervised: false
     introduced: '2.0'
 tags:

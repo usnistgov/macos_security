@@ -9,6 +9,8 @@ discussion: |
 references:
   nist:
     cce:
+      macos_26:
+        - CCE-95314-1
       macos_15:
         - CCE-94308-4
       macos_14:
@@ -27,6 +29,8 @@ references:
       - SRG-OS-000163-GPOS-00072
       - SRG-OS-000279-GPOS-00109
     disa_stig:
+      macos_26:
+        - APPL-26-000130
       macos_15:
         - APPL-15-000130
       macos_14:
@@ -36,6 +40,10 @@ references:
       - SC.L2-3.13.9
 platforms:
   macOS:
+    '26.0':
+      benchmarks:
+        - name: disa_stig
+          severity: medium
     '15.0':
       benchmarks:
         - name: disa_stig

@@ -9,12 +9,12 @@ discussion: |
 references:
   nist:
     cce:
+      macos_26:
+        - CCE-95195-4
       macos_15:
         - CCE-94195-5
       macos_14:
         - CCE-92795-4
-      macos_13:
-        - CCE-91793-0
     800-53r5:
       - CM-14
       - CM-5
@@ -31,12 +31,12 @@ references:
       - SRG-OS-000366-GPOS-00153
       - SRG-OS-000480-GPOS-00228
     disa_stig:
+      macos_26:
+        - APPL-26-002064
       macos_15:
         - APPL-15-002064
       macos_14:
         - APPL-14-002064
-      macos_13:
-        - APPL-13-002064
     cmmc:
       - CM.L2-3.4.5
       - SI.L1-3.14.1
@@ -44,18 +44,26 @@ references:
       - SI.L1-3.14.4
   cis:
     benchmark:
+      macos_26:
+        - 2.6.5 (level 1)
       macos_15:
         - 2.6.5 (level 1)
       macos_14:
         - 2.6.5 (level 1)
-      macos_13:
-        - 2.6.4 (level 1)
     controls_v8:
       - 10.1
       - 10.2
       - 10.5
 platforms:
   macOS:
+    '26.0':
+      benchmarks:
+        - name: cis_lvl1
+        - name: cis_lvl2
+        - name: disa_stig
+          severity: high
+      enforcement_info:
+        fix: {}
     '15.0':
       benchmarks:
         - name: cis_lvl1
@@ -65,17 +73,6 @@ platforms:
       enforcement_info:
         fix: {}
     '14.0':
-      benchmarks:
-        - name: cis_lvl1
-        - name: cis_lvl2
-        - name: disa_stig
-          severity: high
-      enforcement_info:
-        check:
-          shell: /usr/sbin/spctl --status | /usr/bin/grep -c "assessments enabled"
-          result:
-            integer: 1
-    '13.0':
       benchmarks:
         - name: cis_lvl1
         - name: cis_lvl2

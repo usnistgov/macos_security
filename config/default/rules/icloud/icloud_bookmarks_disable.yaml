@@ -7,12 +7,12 @@ discussion: |
 references:
   nist:
     cce:
+      macos_26:
+        - CCE-95142-6
       macos_15:
         - CCE-94142-7
       macos_14:
         - CCE-92743-4
-      macos_13:
-        - CCE-91743-5
     800-53r5:
       - AC-20
       - AC-20(1)
@@ -29,12 +29,12 @@ references:
     srg:
       - SRG-OS-000095-GPOS-00049
     disa_stig:
+      macos_26:
+        - APPL-26-002042
       macos_15:
         - APPL-15-002042
       macos_14:
         - APPL-14-002042
-      macos_13:
-        - APPL-13-002042
     cmmc:
       - AC.L1-3.1.20
       - CM.L2-3.4.6
@@ -46,15 +46,15 @@ references:
       - 15.3
 platforms:
   macOS:
+    '26.0':
+      benchmarks:
+        - name: disa_stig
+          severity: medium
     '15.0':
       benchmarks:
         - name: disa_stig
           severity: medium
     '14.0':
-      benchmarks:
-        - name: disa_stig
-          severity: medium
-    '13.0':
       benchmarks:
         - name: disa_stig
           severity: medium

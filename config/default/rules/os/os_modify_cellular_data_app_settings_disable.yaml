@@ -5,36 +5,36 @@ discussion: |
 references:
   nist:
     cce:
+      ios_26:
+        - CCE-95496-6
       ios_18:
         - CCE-94450-4
       ios_17:
         - CCE-93434-9
-      ios_16:
-        - CCE-93234-3
     800-53r5:
       - CM-7
       - CM-7(1)
   cis:
     benchmark:
+      ios_26:
+        - 3.2.1.18 (level 2 - Institutionally-Owned Devices)
       ios_18:
         - 3.2.1.18 (level 2 - Institutionally-Owned Devices)
       ios_17:
-        - 3.2.1.18 (level 2 - Institutionally-Owned Devices)
-      ios_16:
         - 3.2.1.18 (level 2 - Institutionally-Owned Devices)
     controls_v8:
       - 4.1
 platforms:
   iOS:
+    '26.0':
+      supervised: true
+      benchmarks:
+        - name: cis_lvl2_enterprise
     '18.0':
       supervised: true
       benchmarks:
         - name: cis_lvl2_enterprise
     '17.0':
-      supervised: true
-      benchmarks:
-        - name: cis_lvl2_enterprise
-    '16.0':
       supervised: true
       benchmarks:
         - name: cis_lvl2_enterprise
@@ -44,6 +44,9 @@ tags:
   - 800-53r5_moderate
   - 800-53r5_high
   - cisv8
+  - cnssi-1253_moderate
+  - cnssi-1253_low
+  - cnssi-1253_high
 mobileconfig_info:
   - PayloadType: com.apple.applicationaccess
     PayloadContent:

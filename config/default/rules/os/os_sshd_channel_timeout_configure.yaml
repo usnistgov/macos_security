@@ -11,6 +11,8 @@ discussion: |
 references:
   nist:
     cce:
+      macos_26:
+        - CCE-95307-5
       macos_15:
         - CCE-94302-7
       macos_14:
@@ -29,6 +31,8 @@ references:
       - SRG-OS-000163-GPOS-00072
       - SRG-OS-000279-GPOS-00109
     disa_stig:
+      macos_26:
+        - APPL-26-000120
       macos_15:
         - APPL-15-000120
       macos_14:
@@ -38,11 +42,23 @@ references:
       - SC.L2-3.13.9
 platforms:
   macOS:
+    '26.0':
+      benchmarks:
+        - name: disa_stig
+          severity: medium
     '15.0':
       benchmarks:
         - name: disa_stig
           severity: medium
+    '14.0':
+      benchmarks:
+        - name: disa_stig
+          severity: medium
       enforcement_info:
+        check:
+          shell: /usr/sbin/sshd -G | /usr/bin/awk -F "=" '/channeltimeout session:*/{print $2}'
+          result:
+            integer: $ODV
         fix:
           shell: |-
             include_dir=$(/usr/bin/awk '/^Include/ {print $2}' /etc/ssh/sshd_config | /usr/bin/tr -d '*')
@@ -51,7 +67,7 @@ platforms:
               /usr/bin/sed -i.bk "1s/.*/Include \/etc\/ssh\/sshd_config.d\/\*/" /etc/ssh/sshd_config
             fi
 
-            /usr/bin/grep -qxF 'channeltimeout $ODV' "${include_dir}01-mscp-sshd.conf" 2>/dev/null || echo "channeltimeout $ODV" >> "${include_dir}01-mscp-sshd.conf"
+            /usr/bin/grep -qxF 'channeltimeout session:*=$ODV' "${include_dir}01-mscp-sshd.conf" 2>/dev/null || echo "channeltimeout session:*=$ODV" >> "${include_dir}01-mscp-sshd.conf"
 
             for file in $(ls ${include_dir}); do
               if [[ "$file" == "100-macos.conf" ]]; then
@@ -62,18 +78,9 @@ platforms:
               fi
               /bin/mv ${include_dir}${file} ${include_dir}20-${file}
             done
-    '14.0':
-      benchmarks:
-        - name: disa_stig
-          severity: medium
-      enforcement_info:
-        check:
-          shell: /usr/sbin/sshd -G | /usr/bin/awk -F "=" '/channeltimeout session:*/{print $2}'
-          result:
-            integer: $ODV
     enforcement_info:
       check:
-        shell: /usr/sbin/sshd -G | /usr/bin/awk -F "=" '/channeltimeout session:*/{print $2}'
+        shell: /usr/sbin/sshd -G | /usr/bin/awk '/channeltimeout/{print $2}'
         result:
           string: $ODV
       fix:
@@ -84,7 +91,7 @@ platforms:
             /usr/bin/sed -i.bk "1s/.*/Include \/etc\/ssh\/sshd_config.d\/\*/" /etc/ssh/sshd_config
           fi
 
-          /usr/bin/grep -qxF 'channeltimeout session:*=$ODV' "${include_dir}01-mscp-sshd.conf" 2>/dev/null || echo "channeltimeout session:*=$ODV" >> "${include_dir}01-mscp-sshd.conf"
+          /usr/bin/grep -qxF 'channeltimeout $ODV' "${include_dir}01-mscp-sshd.conf" 2>/dev/null || echo "channeltimeout $ODV" >> "${include_dir}01-mscp-sshd.conf"
 
           for file in $(ls ${include_dir}); do
             if [[ "$file" == "100-macos.conf" ]]; then

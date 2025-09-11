@@ -5,12 +5,12 @@ discussion: |
 references:
   nist:
     cce:
+      macos_26:
+        - CCE-95211-9
       macos_15:
         - CCE-94212-8
       macos_14:
         - CCE-92811-9
-      macos_13:
-        - CCE-91807-8
     800-53r5:
       - AU-11
       - AU-4
@@ -22,6 +22,8 @@ references:
     srg:
       - SRG-OS-000341-GPOS-00132
     disa_stig:
+      macos_26:
+        - APPL-26-004050
       macos_15:
         - APPL-15-004050
       macos_14:
@@ -30,17 +32,23 @@ references:
       - AU.L2-3.3.1
   cis:
     benchmark:
+      macos_26:
+        - 3.3 (level 1)
       macos_15:
         - 3.3 (level 1)
       macos_14:
-        - 3.3 (level 1)
-      macos_13:
         - 3.3 (level 1)
     controls_v8:
       - 8.1
       - 8.3
 platforms:
   macOS:
+    '26.0':
+      benchmarks:
+        - name: cis_lvl1
+        - name: cis_lvl2
+        - name: disa_stig
+          severity: medium
     '15.0':
       benchmarks:
         - name: cis_lvl1
@@ -53,10 +61,6 @@ platforms:
         - name: cis_lvl2
         - name: disa_stig
           severity: medium
-    '13.0':
-      benchmarks:
-        - name: cis_lvl1
-        - name: cis_lvl2
     enforcement_info:
       check:
         shell: /usr/sbin/aslmanager -dd 2>&1 | /usr/bin/awk '/\/var\/log\/install.log$/ {count++} /Processing module com.apple.install/,/Finished/ { for (i=1;i<=NR;i++) { if ($i == "TTL" && $(i+2) >= $ODV) { ttl="True" }; if ($i == "MAX") {max="True"}}} END{if (count > 1) { print "Multiple config files for /var/log/install, manually remove the extra files"} else if (max == "True") { print "all_max setting is configured, must be removed" } if (ttl != "True") { print "TTL not configured" } else { print "Yes" }}'

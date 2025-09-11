@@ -15,12 +15,12 @@ discussion: |-
 references:
   nist:
     cce:
+      macos_26:
+        - CCE-95208-5
       macos_15:
         - CCE-94209-4
       macos_14:
         - CCE-92808-5
-      macos_13:
-        - CCE-91804-5
     800-53r5:
       - SC-13
     800-171r3:
@@ -35,9 +35,9 @@ references:
       - SC.L2-3.13.11
 platforms:
   macOS:
+    '26.0': {}
     '15.0': {}
     '14.0': {}
-    '13.0': {}
     enforcement_info:
       fix:
         additional_info: The technology inherently meets this requirement. No fix is required.

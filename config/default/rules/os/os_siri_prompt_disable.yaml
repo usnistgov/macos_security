@@ -7,12 +7,12 @@ discussion: |
 references:
   nist:
     cce:
+      macos_26:
+        - CCE-95299-4
       macos_15:
         - CCE-94295-3
       macos_14:
         - CCE-92890-3
-      macos_13:
-        - CCE-91879-7
     800-53r5:
       - AC-20
       - CM-7
@@ -27,12 +27,12 @@ references:
     srg:
       - SRG-OS-000095-GPOS-00049
     disa_stig:
+      macos_26:
+        - APPL-26-002039
       macos_15:
         - APPL-15-002039
       macos_14:
         - APPL-14-002039
-      macos_13:
-        - APPL-13-002039
     cmmc:
       - AC.L1-3.1.20
       - CM.L2-3.4.6
@@ -43,28 +43,54 @@ references:
       - 4.8
 platforms:
   macOS:
+    '26.0':
+      benchmarks:
+        - name: disa_stig
+          severity: medium
     '15.0':
       benchmarks:
         - name: disa_stig
           severity: medium
+      mobileconfig_info:
+        - PayloadType: com.apple.SetupAssistant.managed
+          PayloadContent:
+            - SkipSiriSetup: true
+      enforcement_info:
+        check:
+          shell: |-
+            /usr/bin/osascript -l JavaScript << EOS
+            $.NSUserDefaults.alloc.initWithSuiteName('com.apple.SetupAssistant.managed')\
+            .objectForKey('SkipSiriSetup').js
+            EOS
+          result:
+            string: 'true'
     '14.0':
       benchmarks:
         - name: disa_stig
           severity: medium
-    '13.0':
-      benchmarks:
-        - name: disa_stig
-          severity: medium
+      mobileconfig_info:
+        - PayloadType: com.apple.SetupAssistant.managed
+          PayloadContent:
+            - SkipSiriSetup: true
+      enforcement_info:
+        check:
+          shell: |-
+            /usr/bin/osascript -l JavaScript << EOS
+            $.NSUserDefaults.alloc.initWithSuiteName('com.apple.SetupAssistant.managed')\
+            .objectForKey('SkipSiriSetup').js
+            EOS
+          result:
+            string: 'true'
     enforcement_info:
       check:
         shell: |-
-          /usr/bin/osascript -l JavaScript << EOS
+          /usr/bin/osascript -l JavaScript 2>/dev/null << EOS
           $.NSUserDefaults.alloc.initWithSuiteName('com.apple.SetupAssistant.managed')\
-          .objectForKey('SkipSiriSetup').js
+          .objectForKey('SkipSetupItems').containsObject("Siri")
           EOS
         result:
           string: 'true'
-    introduced: '10.12'
+    introduced: '15.0'
 tags:
   - 800-53r5_low
   - 800-53r5_moderate
@@ -79,4 +105,5 @@ tags:
 mobileconfig_info:
   - PayloadType: com.apple.SetupAssistant.managed
     PayloadContent:
-      - SkipSiriSetup: true
+      - SkipSetupItems:
+          - Siri

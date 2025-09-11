@@ -7,12 +7,12 @@ discussion: |
 references:
   nist:
     cce:
+      macos_26:
+        - CCE-95394-3
       macos_15:
         - CCE-94387-8
       macos_14:
         - CCE-92983-6
-      macos_13:
-        - CCE-91972-0
     800-53r5:
       - AC-3
       - AC-17
@@ -25,50 +25,78 @@ references:
     srg:
       - SRG-OS-000080-GPOS-00048
     disa_stig:
+      macos_26:
+        - APPL-26-002050
       macos_15:
         - APPL-15-002050
       macos_14:
         - APPL-14-002050
-      macos_13:
-        - APPL-13-002050
     cmmc:
       - AC.L1-3.1.1
   cis:
     benchmark:
+      macos_26:
+        - 2.3.3.1 (level 1)
       macos_15:
         - 2.3.3.1 (level 1)
       macos_14:
-        - 2.3.3.2 (level 1)
-      macos_13:
-        - 2.3.3.2 (level 1)
+        - 2.3.3.1 (level 1)
     controls_v8:
       - 4.1
       - 4.8
 platforms:
   macOS:
+    '26.0':
+      benchmarks:
+        - name: cis_lvl1
+        - name: cis_lvl2
+        - name: disa_stig
+          severity: medium
+      enforcement_info:
+        fix:
+          shell: |-
+            /bin/launchctl bootout system/com.apple.screensharing
+            /bin/launchctl disable system/com.apple.screensharing
+          additional_info: NOTE - This will apply to the whole system
     '15.0':
       benchmarks:
         - name: cis_lvl1
         - name: cis_lvl2
         - name: disa_stig
           severity: medium
+      enforcement_info:
+        check:
+          shell: /bin/launchctl print-disabled system | /usr/bin/grep -c '"com.apple.screensharing" => disabled'
+          result:
+            integer: 1
     '14.0':
       benchmarks:
         - name: cis_lvl1
         - name: cis_lvl2
         - name: disa_stig
           severity: medium
-    '13.0':
-      benchmarks:
-        - name: cis_lvl1
-        - name: cis_lvl2
-        - name: disa_stig
-          severity: medium
+      enforcement_info:
+        check:
+          shell: /bin/launchctl print-disabled system | /usr/bin/grep -c '"com.apple.screensharing" => disabled'
+          result:
+            integer: 1
     enforcement_info:
       check:
-        shell: /bin/launchctl print-disabled system | /usr/bin/grep -c '"com.apple.screensharing" => disabled'
+        shell: |-
+          result="FAIL"
+          enabled=$(/bin/launchctl print-disabled system | /usr/bin/grep '"com.apple.screensharing" => enabled')
+          running=$(/bin/launchctl print system/com.apple.screensharing 2>/dev/null)
+
+          if [[ -z "$running" ]] && [[ -z "$enabled" ]]; then
+            result="PASS"
+          elif [[ -n "$running" ]]; then
+            result=result+" RUNNING"
+          elif [[ -n "$enabled" ]]; then
+            result=result+" ENABLED"
+          fi
+          echo $result
         result:
-          integer: 1
+          string: PASS
       fix:
         shell: /bin/launchctl disable system/com.apple.screensharing
         additional_info: NOTE - This will apply to the whole system

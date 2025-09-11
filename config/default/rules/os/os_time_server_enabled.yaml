@@ -7,12 +7,12 @@ discussion: |
 references:
   nist:
     cce:
+      macos_26:
+        - CCE-95325-7
       macos_15:
         - CCE-94319-1
       macos_14:
         - CCE-92916-6
-      macos_13:
-        - CCE-91904-3
     800-53r5:
       - AU-12(1)
       - SC-45(1)
@@ -30,16 +30,18 @@ references:
       - SRG-OS-000356-GPOS-00144
       - SRG-OS-000785-GPOS-00250
     disa_stig:
+      macos_26:
+        - APPL-26-000180
       macos_15:
         - APPL-15-000180
       macos_14:
         - APPL-14-000180
-      macos_13:
-        - APPL-13-000014
     cmmc:
       - AU.L2-3.3.7
   cis:
     benchmark:
+      macos_26:
+        - 2.3.2.2 (level 1)
       macos_15:
         - 2.3.2.2 (level 1)
       macos_14:
@@ -48,25 +50,37 @@ references:
       - 8.4
 platforms:
   macOS:
+    '26.0':
+      benchmarks:
+        - name: cis_lvl1
+        - name: cis_lvl2
+        - name: disa_stig
+          severity: medium
     '15.0':
       benchmarks:
         - name: cis_lvl1
         - name: cis_lvl2
         - name: disa_stig
           severity: medium
+      enforcement_info:
+        check:
+          shell: /bin/launchctl list | /usr/bin/grep -c com.apple.timed
+          result:
+            integer: 1
     '14.0':
       benchmarks:
         - name: cis_lvl1
         - name: cis_lvl2
         - name: disa_stig
           severity: medium
-    '13.0':
-      benchmarks:
-        - name: disa_stig
-          severity: medium
+      enforcement_info:
+        check:
+          shell: /bin/launchctl list | /usr/bin/grep -c com.apple.timed
+          result:
+            integer: 1
     enforcement_info:
       check:
-        shell: /bin/launchctl list | /usr/bin/grep -c com.apple.timed
+        shell: /bin/launchctl print system | /usr/bin/grep -c -E '\tcom.apple.timed'
         result:
           integer: 1
       fix:

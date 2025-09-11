@@ -5,12 +5,12 @@ discussion: |
 references:
   nist:
     cce:
+      macos_26:
+        - CCE-95290-3
       macos_15:
         - CCE-94286-2
       macos_14:
         - CCE-92881-2
-      macos_13:
-        - CCE-91872-2
     800-53r5:
       - AC-11(1)
     800-171r3:
@@ -18,27 +18,21 @@ references:
   disa:
     cci:
       - CCI-000060
-    disa_stig:
-      macos_13:
-        - APPL-13-000006
     cmmc:
       - AC.L2-3.1.10
 platforms:
   macOS:
-    '15.0': {}
+    '26.0': {}
+    '15.0':
+      mobileconfig_info:
+        - PayloadType: com.apple.screensaver
+          PayloadContent:
+            - moduleName: Sequoia
     '14.0':
       mobileconfig_info:
         - PayloadType: com.apple.screensaver
           PayloadContent:
             - moduleName: Sonoma
-    '13.0':
-      benchmarks:
-        - name: disa_stig
-          severity: medium
-      mobileconfig_info:
-        - PayloadType: com.apple.screensaver
-          PayloadContent:
-            - moduleName: Ventura
     enforcement_info:
       check:
         shell: |-
@@ -47,7 +41,7 @@ platforms:
           .objectForKey('moduleName').js
           EOS
         result:
-          string: Sequoia
+          string: Tahoe
     introduced: '10.11'
 tags:
   - 800-53r5_moderate
@@ -60,4 +54,4 @@ tags:
 mobileconfig_info:
   - PayloadType: com.apple.screensaver
     PayloadContent:
-      - moduleName: Sequoia
+      - moduleName: Tahoe

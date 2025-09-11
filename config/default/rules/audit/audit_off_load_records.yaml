@@ -11,12 +11,12 @@ discussion: |-
 references:
   nist:
     cce:
+      macos_26:
+        - CCE-95127-7
       macos_15:
         - CCE-94127-8
       macos_14:
         - CCE-92727-7
-      macos_13:
-        - CCE-91728-6
     800-53r5:
       - AU-4(1)
   disa:
@@ -28,9 +28,9 @@ references:
       - 8.9
 platforms:
   macOS:
+    '26.0': {}
     '15.0': {}
     '14.0': {}
-    '13.0': {}
 tags:
   - permanent
   - cisv8

@@ -4,12 +4,16 @@ discussion: Apple Intelligence features such as Safari Reader Summary that use o
 references:
   nist:
     cce:
+      macos_26:
+        - CCE-95286-1
       macos_15:
         - CCE-94570-9
+      ios_26:
+        - CCE-95518-7
       ios_18:
         - CCE-94577-4
-      visionos_2:
-        - CCE-94587-3
+      visionos_26:
+        - CCE-95591-4
     800-53r5:
       - AC-20
       - AC-20(1)
@@ -31,6 +35,7 @@ references:
       - CM.L2-3.4.7
 platforms:
   macOS:
+    '26.0': {}
     '15.0': {}
     enforcement_info:
       check:
@@ -43,11 +48,13 @@ platforms:
           string: 'false'
     introduced: '15.4'
   iOS:
+    '26.0':
+      supervised: true
     '18.0':
       supervised: true
     introduced: '18.4'
   visionOS:
-    '2.0':
+    '26.0':
       supervised: true
     introduced: '2.4'
 tags:

@@ -5,14 +5,14 @@ discussion: |
 references:
   nist:
     cce:
+      ios_26:
+        - CCE-95439-6
       ios_18:
         - CCE-94427-2
       ios_17:
         - CCE-93413-3
-      ios_16:
-        - CCE-93213-7
-      visionos_2:
-        - CCE-94490-0
+      visionos_26:
+        - CCE-95565-8
     800-53r5:
       - AC-3
       - MP-2
@@ -28,21 +28,18 @@ references:
       ios_17:
         - AIOS-17-009700
         - AIOS-17-709700
-      ios_16:
-        - AIOS-16-009700
-        - AIOS-16-709700
     sfr:
       - 'FMT_SMF_EXT.1.1 #42'
       - FDP_ACF_EXT.1.2
   cis:
     benchmark:
+      ios_26:
+        - 2.2.1.8 (level 1 - End-User Owned Devices)
+        - 3.2.1.21 (level 1 - Institutionally-Owned Devices)
       ios_18:
         - 2.2.1.8 (level 1 - End-User Owned Devices)
         - 3.2.1.21 (level 1 - Institutionally-Owned Devices)
       ios_17:
-        - 2.2.1.8 (level 1 - End-User Owned Devices)
-        - 3.2.1.21 (level 1 - Institutionally-Owned Devices)
-      ios_16:
         - 2.2.1.8 (level 1 - End-User Owned Devices)
         - 3.2.1.21 (level 1 - Institutionally-Owned Devices)
     controls_v8:
@@ -54,6 +51,13 @@ references:
         - ANNEX K
 platforms:
   iOS:
+    '26.0':
+      supervised: false
+      benchmarks:
+        - name: cis_lvl1_byod
+        - name: cis_lvl2_byod
+        - name: cis_lvl1_enterprise
+        - name: cis_lvl2_enterprise
     '18.0':
       supervised: false
       benchmarks:
@@ -61,7 +65,7 @@ platforms:
         - name: cis_lvl2_byod
         - name: cis_lvl1_enterprise
         - name: cis_lvl2_enterprise
-        - name: disa_stig
+        - name: ios_stig
           severity: medium
         - name: indigo_base
           severity: medium
@@ -74,7 +78,7 @@ platforms:
         - name: cis_lvl2_byod
         - name: cis_lvl1_enterprise
         - name: cis_lvl2_enterprise
-        - name: disa_stig
+        - name: ios_stig
           severity: medium
         - name: ios_stig_byoad
           severity: medium
@@ -82,20 +86,9 @@ platforms:
           severity: medium
         - name: indigo_high
           severity: medium
-    '16.0':
-      supervised: false
-      benchmarks:
-        - name: cis_lvl1_byod
-        - name: cis_lvl2_byod
-        - name: cis_lvl1_enterprise
-        - name: cis_lvl2_enterprise
-        - name: disa_stig
-          severity: medium
-        - name: ios_stig_byoad
-          severity: medium
     introduced: '7.0'
   visionOS:
-    '2.0':
+    '26.0':
       supervised: false
     introduced: '2.0'
 tags:

@@ -5,23 +5,31 @@ discussion: |
 references:
   nist:
     cce:
+      ios_26:
+        - CCE-95503-9
       ios_18:
         - CCE-94454-6
       ios_17:
         - CCE-93438-0
-      ios_16:
-        - CCE-93238-4
     800-53r5:
       - CM-6
       - CM-7
       - CM-7(1)
+  disa:
+    cci:
+      - CCI-000366
+    disa_stig:
+      ios_18:
+        - AIOS-18-016500
+    sfr:
+      - 'FMT_MOF_EXT.1.2 #47'
   cis:
     benchmark:
+      ios_26:
+        - 3.2.1.20 (level 2 - Institutionally-Owned Devices)
       ios_18:
         - 3.2.1.20 (level 2 - Institutionally-Owned Devices)
       ios_17:
-        - 3.2.1.20 (level 2 - Institutionally-Owned Devices)
-      ios_16:
         - 3.2.1.20 (level 2 - Institutionally-Owned Devices)
     controls_v8:
       - 4.8
@@ -31,10 +39,15 @@ references:
         - ANNEX K
 platforms:
   iOS:
+    '26.0':
+      supervised: true
+      benchmarks:
+        - name: cis_lvl2_enterprise
     '18.0':
       supervised: true
       benchmarks:
         - name: cis_lvl2_enterprise
+        - name: ios_stig
         - name: indigo_base
         - name: indigo_high
     '17.0':
@@ -43,16 +56,15 @@ platforms:
         - name: cis_lvl2_enterprise
         - name: indigo_base
         - name: indigo_high
-    '16.0':
-      supervised: true
-      benchmarks:
-        - name: cis_lvl2_enterprise
     introduced: '7.0'
 tags:
   - 800-53r5_low
   - 800-53r5_moderate
   - 800-53r5_high
   - cisv8
+  - cnssi-1253_moderate
+  - cnssi-1253_low
+  - cnssi-1253_high
 mobileconfig_info:
   - PayloadType: com.apple.applicationaccess
     PayloadContent:

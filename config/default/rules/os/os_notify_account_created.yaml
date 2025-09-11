@@ -11,12 +11,12 @@ discussion: |-
 references:
   nist:
     cce:
+      macos_26:
+        - CCE-95240-8
       macos_15:
         - CCE-94238-3
       macos_14:
         - CCE-92834-1
-      macos_13:
-        - CCE-91830-0
   disa:
     srg:
       - SRG-OS-000304-GPOS-00121
@@ -31,8 +31,8 @@ references:
       - SRG-OS-000303-GPOS-00120
 platforms:
   macOS:
+    '26.0': {}
     '15.0': {}
     '14.0': {}
-    '13.0': {}
 tags:
   - permanent
