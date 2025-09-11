@@ -5,9 +5,9 @@ discussion: |
 
   macOS prompts new users through enabling TouchID during Setup Assistant; this is not essential and, therefore, _MUST_ be disabled to prevent against the risk of individuals electing to enable TouchID to override organization-wide settings.
 check: |
-  /usr/bin/osascript -l JavaScript << EOS
+  /usr/bin/osascript -l JavaScript 2>/dev/null << EOS
   $.NSUserDefaults.alloc.initWithSuiteName('com.apple.SetupAssistant.managed')\
-  .objectForKey('SkipTouchIDSetup').js
+  .objectForKey('SkipSetupItems').containsObject("Biometric")
   EOS
 result:
   string: 'true'
