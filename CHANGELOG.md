@@ -2,26 +2,34 @@
 
 This document provides a high-level view of the changes to the macOS Security Compliance Project.
 
-## [Tahoe, Revision 1.0] - 2025-09-
+## [Tahoe, Revision 1.0] - 2025-09-11
 
 * Rules
   * Added Rules
     * os_loginwindow_adminhostinfo_disabled
     * os_safari_clear_history_disable
     * os_safari_private_browsing_disable
+    * os_skip_apple_intelligence_enable
     * system_settings_download_software_update_enforce
     * system_settings_security_update_install
   * Modified Rules
     * audit_auditd_enabled
+    * os_appleid_prompt_disable
     * os_authenticated_root_enable
     * os_external_storage_access_defined
     * os_httpd_disable
+    * os_icloud_storage_prompt_disable
     * os_network_storage_restriction
+    * os_privacy_setup_prompt_disable
     * os_recovery_lock_enable
     * os_screensaver_loginwindow_enforce
     * os_secure_boot_verify
+    * os_siri_prompt_disable
+    * os_skip_screen_time_prompt_enable
+    * os_skip_unlock_with_watch_enable
     * os_tftpd_disable
     * os_time_server_enabled
+    * os_touchid_prompt_disable
     * os_unlock_active_user_session_disable
     * os_world_writable_library_folder_configure
     * os_uucp_disable

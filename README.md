@@ -35,7 +35,7 @@ Civilian agencies are to use the National Checklist Program as required by [NIST
 |Dan Brodjieski|NASA
 |John Mahlman IV|Leidos
 |Aaron Kegerreis|DISA
-|Henry Stamerjohann|Zentral Pro Services GmbH
+|Henry Stamerjohann|Declarative IT GmbH
 |Marco A Piñeryo II|State Department
 |Jason Blake|NIST
 |Blair Heiserman|NIST
