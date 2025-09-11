@@ -13,7 +13,7 @@ fix: |
   ----
 references:
   cce:
-    - CCE-94378-7
+    - CCE-95385-1
   cci:
     - N/A
   800-53r5:
@@ -33,8 +33,9 @@ references:
       - 4.1
       - 4.8
 macOS:
-  - '15.0'
+  - '26.0'
 tags:
+  - cis_lvl1
   - cis_lvl2
 mobileconfig: false
 mobileconfig_info:

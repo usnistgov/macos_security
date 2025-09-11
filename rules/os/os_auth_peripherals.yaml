@@ -8,7 +8,7 @@ fix: |
   This requirement is a permanent finding and can be fixed by implementing a third party solution.
 references:
   cce:
-    - CCE-94163-3
+    - CCE-95163-2
   cci:
     - N/A
   800-53r5:
@@ -30,7 +30,7 @@ references:
   cmmc:
     - IA.L1-3.5.2
 macOS:
-  - '15.0'
+  - '26.0'
 tags:
   - 800-53r5_moderate
   - 800-53r5_high

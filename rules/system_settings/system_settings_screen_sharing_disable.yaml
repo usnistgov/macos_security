@@ -5,18 +5,30 @@ discussion: |
 
   The information system _MUST_ be configured to provide only essential capabilities. Disabling screen sharing and ARD helps prevent the unauthorized connection of devices, the unauthorized transfer of information, and unauthorized tunneling.
 check: |
-  /bin/launchctl print-disabled system | /usr/bin/grep -c '"com.apple.screensharing" => disabled'
+  result="FAIL"
+  enabled=$(/bin/launchctl print-disabled system | /usr/bin/grep '"com.apple.screensharing" => enabled')
+  running=$(/bin/launchctl print system/com.apple.screensharing 2>/dev/null)
+  
+  if [[ -z "$running" ]] && [[ -z "$enabled" ]]; then
+    result="PASS"
+  elif [[ -n "$running" ]]; then
+    result=result+" RUNNING"
+  elif [[ -n "$enabled" ]]; then
+    result=result+" ENABLED"
+  fi
+  echo $result
 result:
-  integer: 1
+  string: PASS
 fix: |
   [source,bash]
   ----
+  /bin/launchctl bootout system/com.apple.screensharing
   /bin/launchctl disable system/com.apple.screensharing
   ----
   NOTE - This will apply to the whole system
 references:
   cce:
-    - CCE-94387-8
+    - CCE-95394-3
   cci:
     - CCI-000213
   800-53r5:
@@ -28,7 +40,7 @@ references:
   srg:
     - SRG-OS-000080-GPOS-00048
   disa_stig:
-    - APPL-15-002050
+    - APPL-26-002050
   800-171r3:
     - 03.01.02
     - 03.04.06
@@ -41,7 +53,7 @@ references:
   cmmc:
     - AC.L1-3.1.1
 macOS:
-  - '15.0'
+  - '26.0'
 tags:
   - 800-53r5_low
   - 800-53r5_moderate

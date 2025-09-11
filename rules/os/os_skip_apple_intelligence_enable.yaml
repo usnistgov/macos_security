@@ -1,0 +1,57 @@
+id: os_skip_apple_intelligence_enable
+title: Disable Apple Intelligence During Setup Assistant
+discussion: |
+  The prompt for setting up Apple Intelligence during Setup Assistant _MUST_ be disabled.
+check: |
+  /usr/bin/osascript -l JavaScript 2>/dev/null << EOS
+  $.NSUserDefaults.alloc.initWithSuiteName('com.apple.SetupAssistant.managed')\
+  .objectForKey('SkipSetupItems').containsObject("Intelligence")
+  EOS
+result:
+  string: 'true'
+fix: |
+  This is implemented by a Configuration Profile.
+references:
+  cce:
+    - CCE-95603-7
+  cci:
+    - N/A
+  800-53r5:
+    - AC-4
+    - AC-20
+    - CM-7
+  800-53r4:
+    - AC-20
+  srg:
+    - N/A
+  disa_stig:
+    - N/A
+  800-171r3:
+    - 03.01.20
+    - 03.04.06
+  cis:
+    benchmark:
+      - N/A
+    controls v8:
+      - 4.1
+  cmmc:
+    - AC.L1-3.1.20
+macOS:
+  - '26.0'
+tags:
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_high
+  - 800-171
+  - cisv8
+  - cnssi-1253_low
+  - cnssi-1253_high
+  - cmmc_lvl2
+  - cmmc_lvl1
+  - cnssi-1253_moderate
+severity: medium
+mobileconfig: true
+mobileconfig_info:
+  com.apple.SetupAssistant.managed:
+    SkipSetupItems:
+      - Intelligence

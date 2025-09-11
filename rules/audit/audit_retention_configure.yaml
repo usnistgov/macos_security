@@ -15,7 +15,7 @@ fix: |
   ----
 references:
   cce:
-    - CCE-94130-2
+    - CCE-95130-1
   cci:
     - CCI-001849
   800-53r5:
@@ -27,7 +27,7 @@ references:
   srg:
     - SRG-OS-000341-GPOS-00132
   disa_stig:
-    - APPL-15-001029
+    - APPL-26-001029
   cis:
     benchmark:
       - 3.4 (level 1)
@@ -39,7 +39,7 @@ references:
   800-171r3:
     - 03.03.03
 macOS:
-  - '15.0'
+  - '26.0'
 odv:
   hint: See man audit_control for possible values.
   recommended: 7d

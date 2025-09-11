@@ -126,7 +126,7 @@ def get_check_code(check_yaml):
     except:
         return check_yaml
     # print check_string
-    check_code = re.search("(?:----((?:.*?\r?\n?)*)----)+", check_string)
+    check_code = re.search(r"----\n?(.*?)\n?----", check_string, re.DOTALL)
     # print(check_code.group(1).rstrip())
     return check_code.group(1).strip()
 
@@ -140,7 +140,7 @@ def quotify(fix_code):
 
 def get_fix_code(fix_yaml):
     fix_string = fix_yaml.split("[source,bash]")[1]
-    fix_code = re.search("(?:----((?:.*?\r?\n?)*)----)+", fix_string)
+    fix_code = re.search(r"----\n?(.*?)\n?----", fix_string, re.DOTALL)
     return fix_code.group(1)
 
 
@@ -174,33 +174,26 @@ def format_mobileconfig_fix(mobileconfig):
                     rulefix = rulefix + (f"<string>{item[1]}</string>\n")
                 elif type(item[1]) == dict:
                     rulefix = rulefix + "<dict>\n"
-                    for k,v in item[1].items():
+                    for k, v in item[1].items():
                         if type(v) == dict:
-                            rulefix = rulefix + \
-                                (f"    <key>{k}</key>\n")
-                            rulefix = rulefix + \
-                                (f"    <dict>\n")
-                            for x,y in v.items():
-                                rulefix = rulefix + \
-                                    (f"      <key>{x}</key>\n")
-                                rulefix  = rulefix + \
-                                    (f"      <string>{y}</string>\n")
-                            rulefix = rulefix + \
-                            (f"    </dict>\n")
+                            rulefix = rulefix + (f"    <key>{k}</key>\n")
+                            rulefix = rulefix + (f"    <dict>\n")
+                            for x, y in v.items():
+                                rulefix = rulefix + (f"      <key>{x}</key>\n")
+                                rulefix = rulefix + (f"      <string>{y}</string>\n")
+                            rulefix = rulefix + (f"    </dict>\n")
                             break
                         if isinstance(v, list):
                             rulefix = rulefix + "    <array>\n"
                             for setting in v:
-                                rulefix = rulefix + \
-                                    (f"        <string>{setting}</string>\n")
+                                rulefix = rulefix + (
+                                    f"        <string>{setting}</string>\n"
+                                )
                             rulefix = rulefix + "    </array>\n"
                         else:
-                            rulefix = rulefix + \
-                                    (f"    <key>{k}</key>\n")
-                            rulefix = rulefix + \
-                                    (f"    <string>{v}</string>\n")
+                            rulefix = rulefix + (f"    <key>{k}</key>\n")
+                            rulefix = rulefix + (f"    <string>{v}</string>\n")
                     rulefix = rulefix + "</dict>\n"
-                    
 
             rulefix = rulefix + "----\n\n"
 
@@ -219,20 +212,24 @@ class PayloadDict:
     The actual plist content can be accessed as a dictionary via the 'data' attribute.
     """
 
-    def __init__(self, identifier, uuid=False, description='', organization='', displayname=''):
+    def __init__(
+        self, identifier, uuid=False, description="", organization="", displayname=""
+    ):
         self.data = {}
         self.data["PayloadVersion"] = 1
         self.data["PayloadOrganization"] = organization
         if uuid:
             self.data["PayloadUUID"] = uuid
         else:
-            self.data['PayloadUUID'] = makeNewUUID()
-        self.data['PayloadType'] = 'Configuration'
-        self.data['PayloadScope'] = 'System'
-        self.data['PayloadDescription'] = description
-        self.data['PayloadDisplayName'] = displayname
-        self.data['PayloadIdentifier'] = identifier
-        self.data['ConsentText'] = {"default": "THE SOFTWARE IS PROVIDED 'AS IS' WITHOUT ANY WARRANTY OF ANY KIND, EITHER EXPRESSED, IMPLIED, OR STATUTORY, INCLUDING, BUT NOT LIMITED TO, ANY WARRANTY THAT THE SOFTWARE WILL CONFORM TO SPECIFICATIONS, ANY IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND FREEDOM FROM INFRINGEMENT, AND ANY WARRANTY THAT THE DOCUMENTATION WILL CONFORM TO THE SOFTWARE, OR ANY WARRANTY THAT THE SOFTWARE WILL BE ERROR FREE.  IN NO EVENT SHALL NIST BE LIABLE FOR ANY DAMAGES, INCLUDING, BUT NOT LIMITED TO, DIRECT, INDIRECT, SPECIAL OR CONSEQUENTIAL DAMAGES, ARISING OUT OF, RESULTING FROM, OR IN ANY WAY CONNECTED WITH THIS SOFTWARE, WHETHER OR NOT BASED UPON WARRANTY, CONTRACT, TORT, OR OTHERWISE, WHETHER OR NOT INJURY WAS SUSTAINED BY PERSONS OR PROPERTY OR OTHERWISE, AND WHETHER OR NOT LOSS WAS SUSTAINED FROM, OR AROSE OUT OF THE RESULTS OF, OR USE OF, THE SOFTWARE OR SERVICES PROVIDED HEREUNDER."}
+            self.data["PayloadUUID"] = makeNewUUID()
+        self.data["PayloadType"] = "Configuration"
+        self.data["PayloadScope"] = "System"
+        self.data["PayloadDescription"] = description
+        self.data["PayloadDisplayName"] = displayname
+        self.data["PayloadIdentifier"] = identifier
+        self.data["ConsentText"] = {
+            "default": "THE SOFTWARE IS PROVIDED 'AS IS' WITHOUT ANY WARRANTY OF ANY KIND, EITHER EXPRESSED, IMPLIED, OR STATUTORY, INCLUDING, BUT NOT LIMITED TO, ANY WARRANTY THAT THE SOFTWARE WILL CONFORM TO SPECIFICATIONS, ANY IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND FREEDOM FROM INFRINGEMENT, AND ANY WARRANTY THAT THE DOCUMENTATION WILL CONFORM TO THE SOFTWARE, OR ANY WARRANTY THAT THE SOFTWARE WILL BE ERROR FREE.  IN NO EVENT SHALL NIST BE LIABLE FOR ANY DAMAGES, INCLUDING, BUT NOT LIMITED TO, DIRECT, INDIRECT, SPECIAL OR CONSEQUENTIAL DAMAGES, ARISING OUT OF, RESULTING FROM, OR IN ANY WAY CONNECTED WITH THIS SOFTWARE, WHETHER OR NOT BASED UPON WARRANTY, CONTRACT, TORT, OR OTHERWISE, WHETHER OR NOT INJURY WAS SUSTAINED BY PERSONS OR PROPERTY OR OTHERWISE, AND WHETHER OR NOT LOSS WAS SUSTAINED FROM, OR AROSE OUT OF THE RESULTS OF, OR USE OF, THE SOFTWARE OR SERVICES PROVIDED HEREUNDER."
+        }
 
         # An empty list for 'sub payloads' that we'll fill later
         self.data["PayloadContent"] = []
@@ -246,10 +243,12 @@ class PayloadDict:
         payload_dict = {}
 
         # Boilerplate
-        payload_dict['PayloadVersion'] = 1
-        payload_dict['PayloadUUID'] = makeNewUUID()
-        payload_dict['PayloadType'] = payload_content_dict['PayloadType']
-        payload_dict['PayloadIdentifier'] = f"alacarte.macOS.{baseline_name}.{payload_dict['PayloadUUID']}"
+        payload_dict["PayloadVersion"] = 1
+        payload_dict["PayloadUUID"] = makeNewUUID()
+        payload_dict["PayloadType"] = payload_content_dict["PayloadType"]
+        payload_dict["PayloadIdentifier"] = (
+            f"mscp.{payload_content_dict['PayloadType']}.{payload_dict['PayloadUUID']}"
+        )
 
         payload_dict["PayloadContent"] = payload_content_dict
         # Add the payload to the profile
@@ -264,10 +263,12 @@ class PayloadDict:
         payload_dict = {}
 
         # Boilerplate
-        payload_dict['PayloadVersion'] = 1
-        payload_dict['PayloadUUID'] = makeNewUUID()
-        payload_dict['PayloadType'] = payload_content_dict['PayloadType']
-        payload_dict['PayloadIdentifier'] = f"alacarte.macOS.{baseline_name}.{payload_dict['PayloadUUID']}"
+        payload_dict["PayloadVersion"] = 1
+        payload_dict["PayloadUUID"] = makeNewUUID()
+        payload_dict["PayloadType"] = payload_content_dict["PayloadType"]
+        payload_dict["PayloadIdentifier"] = (
+            f"mscp.{payload_content_dict['PayloadType']}.{payload_dict['PayloadUUID']}"
+        )
 
         payload_dict["PayloadContent"] = payload_content_dict
         # Add the payload to the profile
@@ -284,10 +285,12 @@ class PayloadDict:
         payload_dict = {}
 
         # Boilerplate
-        payload_dict['PayloadVersion'] = 1
-        payload_dict['PayloadUUID'] = makeNewUUID()
-        payload_dict['PayloadType'] = payload_type
-        payload_dict['PayloadIdentifier'] = f"alacarte.macOS.{baseline_name}.{payload_dict['PayloadUUID']}"
+        payload_dict["PayloadVersion"] = 1
+        payload_dict["PayloadUUID"] = makeNewUUID()
+        payload_dict["PayloadType"] = payload_type
+        payload_dict["PayloadIdentifier"] = (
+            f"mscp.{payload_type}.{payload_dict['PayloadUUID']}"
+        )
 
         # Add the settings to the payload
         for setting in settings:
@@ -450,16 +453,20 @@ def generate_profiles(
     for sections in baseline_yaml["profile"]:
         for profile_rule in sections["rules"]:
             logging.debug(f"checking for rule file for {profile_rule}")
-            if glob.glob('../custom/rules/**/{}.y*ml'.format(profile_rule),recursive=True):
-                rule = glob.glob('../custom/rules/**/{}.y*ml'.format(profile_rule),recursive=True)[0]
-                custom=True
+            if glob.glob(
+                "../custom/rules/**/{}.y*ml".format(profile_rule), recursive=True
+            ):
+                rule = glob.glob(
+                    "../custom/rules/**/{}.y*ml".format(profile_rule), recursive=True
+                )[0]
+                custom = True
                 logging.debug(f"{rule}")
-            elif glob.glob('../rules/*/{}.y*ml'.format(profile_rule)):
-                rule = glob.glob('../rules/*/{}.y*ml'.format(profile_rule))[0]
-                custom=False
+            elif glob.glob("../rules/*/{}.y*ml".format(profile_rule)):
+                rule = glob.glob("../rules/*/{}.y*ml".format(profile_rule))[0]
+                custom = False
                 logging.debug(f"{rule}")
 
-            #for rule in glob.glob('../rules/*/{}.y*ml'.format(profile_rule)) + glob.glob('../custom/rules/**/{}.y*ml'.format(profile_rule),recursive=True):
+            # for rule in glob.glob('../rules/*/{}.y*ml'.format(profile_rule)) + glob.glob('../custom/rules/**/{}.y*ml'.format(profile_rule),recursive=True):
             rule_yaml = get_rule_yaml(rule, baseline_yaml, custom)
 
             if rule_yaml["mobileconfig"]:
@@ -555,20 +562,21 @@ def generate_profiles(
         organization = "macOS Security Compliance Project"
         displayname = f"[{baseline_name}] {payload} settings"
 
-        newProfile = PayloadDict(identifier=identifier,
-                                 uuid=False,
-                                 organization=organization,
-                                 displayname=displayname,
-                                 description=description)
-
-
-
+        newProfile = PayloadDict(
+            identifier=identifier,
+            uuid=False,
+            organization=organization,
+            displayname=displayname,
+            description=description,
+        )
         if payload == "com.apple.ManagedClient.preferences":
             for item in settings:
                 newProfile.addMCXPayload(item, baseline_name)
         # handle these payloads for array settings
-        elif (payload == "com.apple.applicationaccess.new") or (
-            payload == "com.apple.systempreferences"
+        elif (
+            (payload == "com.apple.applicationaccess.new")
+            or (payload == "com.apple.systempreferences")
+            or (payload == "com.apple.SetupAssistant.managed")
         ):
             newProfile.addNewPayload(
                 payload, concatenate_payload_settings(settings), baseline_name
@@ -619,17 +627,19 @@ def zip_folder(folder_to_zip):
 
     return zip_object.filename
 
-def create_ddm_activation(identifier, ddm_output_path):
 
-    ddm_output_path = f'{ddm_output_path}/activations'
-    ddm_identifier = f'{identifier.replace("config","activation").replace("asset","activation")}'
+def create_ddm_activation(identifier, ddm_output_path):
+    ddm_output_path = f"{ddm_output_path}/activations"
+    ddm_identifier = (
+        f"{identifier.replace('config', 'activation').replace('asset', 'activation')}"
+    )
     ddm_json = {}
     ddm_json["Identifier"] = ddm_identifier
     ddm_json["Type"] = "com.apple.activation.simple"
-    ddm_json["Payload"] = { "StandardConfigurations" : [ identifier ]}
+    ddm_json["Payload"] = {"StandardConfigurations": [identifier]}
 
     ddm_object = json.dumps(ddm_json, indent=4)
-    
+
     logging.debug(f"Building declarative activation for {ddm_identifier}...")
 
     # Writing the .json to disk
@@ -639,25 +649,22 @@ def create_ddm_activation(identifier, ddm_output_path):
         except OSError:
             print("Creation of the directory %s failed" % ddm_output_path)
 
-    with open(
-        ddm_output_path + "/" + ddm_identifier + ".json", "w"
-    ) as outfile:
+    with open(ddm_output_path + "/" + ddm_identifier + ".json", "w") as outfile:
         outfile.write(ddm_object)
 
     return
 
-def create_ddm_conf(identifier, service, ddm_output_path):
 
-    ddm_output_path = f'{ddm_output_path}/configurations'
-    ddm_identifier = f'{identifier.replace("asset","config")}'
+def create_ddm_conf(identifier, service, ddm_output_path):
+    ddm_output_path = f"{ddm_output_path}/configurations"
+    ddm_identifier = f"{identifier.replace('asset', 'config')}"
     ddm_json = {}
     ddm_json["Identifier"] = ddm_identifier
     ddm_json["Type"] = "com.apple.configuration.services.configuration-files"
-    ddm_json["Payload"] = { "ServiceType" : service,
-                            "DataAssetReference" : identifier }
+    ddm_json["Payload"] = {"ServiceType": service, "DataAssetReference": identifier}
 
     ddm_object = json.dumps(ddm_json, indent=4)
-    
+
     logging.debug(f"Building declarative configuration for {ddm_identifier}...")
 
     # Writing the .json to disk
@@ -667,12 +674,11 @@ def create_ddm_conf(identifier, service, ddm_output_path):
         except OSError:
             print("Creation of the directory %s failed" % ddm_output_path)
 
-    with open(
-        ddm_output_path + "/" + ddm_identifier + ".json", "w"
-    ) as outfile:
+    with open(ddm_output_path + "/" + ddm_identifier + ".json", "w") as outfile:
         outfile.write(ddm_object)
 
-    return 
+    return
+
 
 def generate_ddm(baseline_name, build_path, parent_dir, baseline_yaml):
     """Generate the declarative management artifacts for the rules in the provided baseline YAML file"""
@@ -712,7 +718,7 @@ def generate_ddm(baseline_name, build_path, parent_dir, baseline_yaml):
             rule_yaml = get_rule_yaml(rule, baseline_yaml, custom)
             if "ddm_info" in rule_yaml.keys():
                 if rule_yaml["ddm_info"]:
-                    logging.debug(f'adding {rule_yaml["id"]}')
+                    logging.debug(f"adding {rule_yaml['id']}")
                     ddm_rules.append(rule_yaml)
 
     for ddm_rule in ddm_rules:
@@ -748,25 +754,28 @@ def generate_ddm(baseline_name, build_path, parent_dir, baseline_yaml):
             )
             if ddm_rule["ddm_info"]["configuration_key"] == "file":
                 service_config_file.write(
-                    f'{ddm_rule["ddm_info"]["configuration_value"]}\n'
+                    f"{ddm_rule['ddm_info']['configuration_value']}\n"
                 )
             else:
                 service_config_file.write(
-                    f'{ddm_rule["ddm_info"]["configuration_key"]} {ddm_rule["ddm_info"]["configuration_value"]}\n'
+                    f"{ddm_rule['ddm_info']['configuration_key']} {ddm_rule['ddm_info']['configuration_value']}\n"
                 )
 
             # add configuration-files type to ddm_dict
-            ddm_dict.setdefault(ddm_rule["ddm_info"]["declarationtype"], {}).update(
-                {}
-            )
+            ddm_dict.setdefault(ddm_rule["ddm_info"]["declarationtype"], {}).update({})
 
             service_config_file.close()
         else:
             ddm_key = ddm_rule["ddm_info"]["ddm_key"]
             ddm_key_value = ddm_rule["ddm_info"]["ddm_value"]
-            ddm_dict.setdefault(ddm_rule["ddm_info"]["declarationtype"], {}).update(
-                {ddm_key: ddm_key_value}
-            )
+            if ddm_key in ddm_dict.get(ddm_rule["ddm_info"]["declarationtype"], ""):
+                ddm_dict[ddm_rule["ddm_info"]["declarationtype"]][ddm_key].update(
+                    ddm_key_value
+                )
+            else:
+                ddm_dict.setdefault(ddm_rule["ddm_info"]["declarationtype"], {}).update(
+                    {ddm_key: ddm_key_value}
+                )
 
     for ddm_type in mscp_data_yaml["ddm"]["supported_types"]:
         if ddm_type not in ddm_dict.keys():
@@ -792,19 +801,19 @@ def generate_ddm(baseline_name, build_path, parent_dir, baseline_yaml):
                                     sha256_hash.update(byte_block)
                                 zip_sha = sha256_hash.hexdigest()
 
-                            ddm_identifier = f'org.mscp.{baseline_name}.asset.{service.split(".")[2]}'
+                            ddm_identifier = f"org.mscp.{baseline_name}.asset.{service.split('.')[2]}"
                             # create declaration for asset created
                             ddm_json = {}
                             ddm_json["Identifier"] = ddm_identifier
                             ddm_json["Type"] = "com.apple.asset.data"
                             ddm_json["Payload"] = {}
                             ddm_json["Payload"]["Reference"] = {}
-                            ddm_json["Payload"]["Reference"][
-                                "ContentType"
-                            ] = "application/zip"
-                            ddm_json["Payload"]["Reference"][
-                                "DataURL"
-                            ] = f"https://hostname.site.com/{service}.zip"
+                            ddm_json["Payload"]["Reference"]["ContentType"] = (
+                                "application/zip"
+                            )
+                            ddm_json["Payload"]["Reference"]["DataURL"] = (
+                                f"https://hostname.site.com/{service}.zip"
+                            )
                             ddm_json["Payload"]["Reference"]["Hash-SHA-256"] = zip_sha
                             ddm_json["Authentication"] = {}
                             ddm_json["Authentication"]["Type"] = "None"
@@ -812,21 +821,25 @@ def generate_ddm(baseline_name, build_path, parent_dir, baseline_yaml):
                             ddm_object = json.dumps(ddm_json, indent=4)
 
                             # Writing the .json to disk
-                            ddm_asset_output_path = f'{ddm_output_path}/assets'
+                            ddm_asset_output_path = f"{ddm_output_path}/assets"
                             if not (os.path.isdir(ddm_asset_output_path)):
                                 try:
                                     os.makedirs(ddm_asset_output_path)
                                 except OSError:
-                                    print("Creation of the directory %s failed" % ddm_asset_output_path)
-                            
+                                    print(
+                                        "Creation of the directory %s failed"
+                                        % ddm_asset_output_path
+                                    )
+
                             with open(
-                                ddm_asset_output_path + "/" + ddm_identifier + ".json", "w"
+                                ddm_asset_output_path + "/" + ddm_identifier + ".json",
+                                "w",
                             ) as outfile:
                                 outfile.write(ddm_object)
-                            
+
                             # move .zips to assets
-                            shutil.move(zip_file,ddm_asset_output_path)
-                            
+                            shutil.move(zip_file, ddm_asset_output_path)
+
                             # create activation
                             create_ddm_activation(ddm_identifier, ddm_output_path)
 
@@ -834,7 +847,7 @@ def generate_ddm(baseline_name, build_path, parent_dir, baseline_yaml):
                             create_ddm_conf(ddm_identifier, service, ddm_output_path)
         else:
             logging.debug(f"Building any declarations for {ddm_type}...")
-            ddm_identifier = f'org.mscp.{baseline_name}.config.{ddm_type.replace("com.apple.configuration.", "")}'
+            ddm_identifier = f"org.mscp.{baseline_name}.config.{ddm_type.replace('com.apple.configuration.', '')}"
             ddm_json = {}
             ddm_json["Identifier"] = ddm_identifier
             ddm_json["Type"] = ddm_type
@@ -843,18 +856,20 @@ def generate_ddm(baseline_name, build_path, parent_dir, baseline_yaml):
             ddm_object = json.dumps(ddm_json, indent=4)
 
             # Writing the .json to disk
-            ddm_config_output_path = f'{ddm_output_path}/configurations'
+            ddm_config_output_path = f"{ddm_output_path}/configurations"
             if not (os.path.isdir(ddm_config_output_path)):
                 try:
                     os.makedirs(ddm_config_output_path)
                 except OSError:
-                    print("Creation of the directory %s failed" % ddm_config_output_path)
-            
+                    print(
+                        "Creation of the directory %s failed" % ddm_config_output_path
+                    )
+
             with open(
                 ddm_config_output_path + "/" + ddm_identifier + ".json", "w"
             ) as outfile:
                 outfile.write(ddm_object)
-            
+
             # create activation
             create_ddm_activation(ddm_identifier, ddm_output_path)
 
@@ -888,8 +903,7 @@ def default_audit_plist(baseline_name, build_path, baseline_yaml):
 
 
 def generate_script(baseline_name, audit_name, build_path, baseline_yaml, reference):
-    """Generates the zsh script from the rules in the baseline YAML
-    """
+    """Generates the zsh script from the rules in the baseline YAML"""
     compliance_script_file = open(
         build_path + "/" + baseline_name + "_compliance.sh", "w"
     )
@@ -919,9 +933,15 @@ fi
 
 ###################  COMMANDS START BELOW THIS LINE  ###################
 
+# Check if the current shell is Zsh
+if [[ -z "$ZSH_NAME" ]]; then
+  echo "ERROR: This script must be run in Zsh."
+  exit 1
+fi
+
 ## Must be run as root
 if [[ $EUID -ne 0 ]]; then
-    echo "This script must be run as root"
+    echo "ERROR: This script must be run as root"
     exit 1
 fi
 
@@ -937,7 +957,7 @@ fi
 plb="/usr/libexec/PlistBuddy"
 
 # get the currently logged in user
-CURRENT_USER=$( /usr/sbin/scutil <<< "show State:/Users/ConsoleUser" | /usr/bin/awk '/Name :/ && ! /loginwindow/ {{ print $3 }}')
+CURRENT_USER=$(/usr/bin/defaults read /Library/Preferences/com.apple.loginwindow lastUserName)
 CURR_USER_UID=$(/usr/bin/id -u $CURRENT_USER)
 
 # get system architecture
@@ -1150,13 +1170,17 @@ fi
     for sections in baseline_yaml["profile"]:
         for profile_rule in sections["rules"]:
             logging.debug(f"checking for rule file for {profile_rule}")
-            if glob.glob('../custom/rules/**/{}.y*ml'.format(profile_rule),recursive=True):
-                rule = glob.glob('../custom/rules/**/{}.y*ml'.format(profile_rule),recursive=True)[0]
-                custom=True
+            if glob.glob(
+                "../custom/rules/**/{}.y*ml".format(profile_rule), recursive=True
+            ):
+                rule = glob.glob(
+                    "../custom/rules/**/{}.y*ml".format(profile_rule), recursive=True
+                )[0]
+                custom = True
                 logging.debug(f"{rule}")
-            elif glob.glob('../rules/*/{}.y*ml'.format(profile_rule)):
-                rule = glob.glob('../rules/*/{}.y*ml'.format(profile_rule))[0]
-                custom=False
+            elif glob.glob("../rules/*/{}.y*ml".format(profile_rule)):
+                rule = glob.glob("../rules/*/{}.y*ml".format(profile_rule))[0]
+                custom = False
                 logging.debug(f"{rule}")
 
             rule_yaml = get_rule_yaml(rule, baseline_yaml, custom)
@@ -1190,7 +1214,7 @@ fi
             elif reference in cis_ref:
                 if "v8" in reference:
                     log_reference_id = [
-                        f"CIS Controls-{', '.join(map(str,rule_yaml['references']['cis']['controls v8']))}"
+                        f"CIS Controls-{', '.join(map(str, rule_yaml['references']['cis']['controls v8']))}"
                     ]
                 else:
                     log_reference_id = [
@@ -1252,12 +1276,12 @@ fi
             elif "boolean" in result:
                 result_value = str(result["boolean"]).lower()
             elif "string" in result:
-                result_value = result['string']
+                result_value = result["string"]
             elif "base64" in result:
-                result_string_bytes = f'{result["base64"]}\n'.encode("UTF-8")
+                result_string_bytes = f"{result['base64']}\n".encode("UTF-8")
                 result_encoded = base64.b64encode(result_string_bytes)
-                result['base64'] = result_encoded.decode()
-                result_value = result['base64']
+                result["base64"] = result_encoded.decode()
+                result_value = result["base64"]
             else:
                 continue
 
@@ -1343,7 +1367,7 @@ fi
             if "[source,bash]" in fix_text:
                 nist_controls_commented = nist_controls.replace("\n", "\n#")
                 zsh_fix_text = f"""
-#####----- Rule: {rule_yaml['id']} -----#####
+#####----- Rule: {rule_yaml["id"]} -----#####
 ## Addresses the following NIST 800-53 controls: {nist_controls_commented}
 
 # check to see if rule is exempt
@@ -1351,28 +1375,28 @@ unset exempt
 unset exempt_reason
 
 exempt=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.{baseline_name}.audit').objectForKey('{rule_yaml['id']}'))["exempt"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.{baseline_name}.audit').objectForKey('{rule_yaml["id"]}'))["exempt"]
 EOS
 )
 
 exempt_reason=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
-ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.{baseline_name}.audit').objectForKey('{rule_yaml['id']}'))["exempt_reason"]
+ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.{baseline_name}.audit').objectForKey('{rule_yaml["id"]}'))["exempt_reason"]
 EOS
 )
 
-{rule_yaml['id']}_audit_score=$($plb -c "print {rule_yaml['id']}:finding" $audit_plist)
+{rule_yaml["id"]}_audit_score=$($plb -c "print {rule_yaml["id"]}:finding" $audit_plist)
 if [[ ! $exempt == "1" ]] || [[ -z $exempt ]];then
-    if [[ ${rule_yaml['id']}_audit_score == "true" ]]; then
-        ask '{rule_yaml['id']} - Run the command(s)-> {quotify(get_fix_code(rule_yaml['fix']).strip())} ' N
+    if [[ ${rule_yaml["id"]}_audit_score == "true" ]]; then
+        ask '{rule_yaml["id"]} - Run the command(s)-> {quotify(get_fix_code(rule_yaml["fix"]).strip())} ' N
         if [[ $? == 0 ]]; then
-            logmessage "Running the command to configure the settings for: {rule_yaml['id']} ..."
-            {get_fix_code(rule_yaml['fix']).strip()}
+            logmessage "Running the command to configure the settings for: {rule_yaml["id"]} ..."
+            {get_fix_code(rule_yaml["fix"]).strip()}
         fi
     else
-        logmessage "Settings for: {rule_yaml['id']} already configured, continuing..."
+        logmessage "Settings for: {rule_yaml["id"]} already configured, continuing..."
     fi
 elif [[ ! -z "$exempt_reason" ]];then
-    logmessage "{rule_yaml['id']} has an exemption, remediation skipped (Reason: \"$exempt_reason\")"
+    logmessage "{rule_yaml["id"]} has an exemption, remediation skipped (Reason: \"$exempt_reason\")"
 fi
     """
 
@@ -1425,10 +1449,10 @@ echo "$(date -u) Beginning remediation of non-compliant settings" >> "$audit_log
     """
 
     # write the footer for the script
-    zsh_fix_footer = """
+    zsh_fix_footer = f"""
 echo "$(date -u) Remediation complete" >> "$audit_log"
 
-} 2>/dev/null
+}} 2>/dev/null
 
 usage=(
     "$0 Usage"
@@ -1446,13 +1470,33 @@ usage=(
     "--quiet=<value>    :   1 - show only failed and exempted checks in output"
     "                       2 - show minimal output"
   )
+  
+# Look for managed arguments for compliance script
+if [[ $# -eq 0 ]];then
+    compliance_args=$(/usr/bin/osascript -l JavaScript << 'EOS'
+var defaults = $.NSUserDefaults.alloc.initWithSuiteName('org.{audit_name}.audit');
+var args = defaults.objectForKey('compliance_args');
+if (args && args.count > 0) {{
+    var result = [];
+    for (var i = 0; i < args.count; i++) {{
+        result.push(ObjC.unwrap(args.objectAtIndex(i)));
+    }}
+    result.join(' ');
+    }}
+EOS
+)
+    if [[ -n "$compliance_args" ]]; then
+        logmessage "Managed arguments found for compliance script, setting: $compliance_args"
+        eval "set -- $compliance_args"
+    fi
+fi
+  
+zparseopts -D -E -help=flag_help -check=check -fix=fix -stats=stats -compliant=compliant_opt -non_compliant=non_compliant_opt -reset=reset -reset-all=reset_all -cfc=cfc -quiet:=quiet || {{ print -l $usage && return }}
 
-zparseopts -D -E -help=flag_help -check=check -fix=fix -stats=stats -compliant=compliant_opt -non_compliant=non_compliant_opt -reset=reset -reset-all=reset_all -cfc=cfc -quiet:=quiet || { print -l $usage && return }
-
-[[ -z "$flag_help" ]] || { print -l $usage && return }
+[[ -z "$flag_help" ]] || {{ print -l $usage && return }}
 
 if [[ ! -z $quiet ]];then
-  [[ ! -z ${quiet[2][2]} ]] || { print -l $usage && return }
+  [[ ! -z ${{quiet[2][2]}} ]] || {{ print -l $usage && return }}
 fi
 
 if [[ $reset ]] || [[ $reset_all ]]; then reset_plist; fi
@@ -1530,24 +1574,45 @@ def fill_in_odv(resulting_yaml, parent_values):
                 if "$ODV" in str(resulting_yaml["result"][result_value]):
                     resulting_yaml["result"][result_value] = odv
 
-        if resulting_yaml['mobileconfig_info']:
-            for mobileconfig_type in resulting_yaml['mobileconfig_info']:
-                if isinstance(resulting_yaml['mobileconfig_info'][mobileconfig_type], dict):
-                    for mobileconfig_value in resulting_yaml['mobileconfig_info'][mobileconfig_type]:
-                        if "$ODV" in str(resulting_yaml['mobileconfig_info'][mobileconfig_type][mobileconfig_value]):
-                            if type(resulting_yaml['mobileconfig_info'][mobileconfig_type][mobileconfig_value]) == dict:
-                                for k,v in resulting_yaml['mobileconfig_info'][mobileconfig_type][mobileconfig_value].items():
+        if resulting_yaml["mobileconfig_info"]:
+            for mobileconfig_type in resulting_yaml["mobileconfig_info"]:
+                if isinstance(
+                    resulting_yaml["mobileconfig_info"][mobileconfig_type], dict
+                ):
+                    for mobileconfig_value in resulting_yaml["mobileconfig_info"][
+                        mobileconfig_type
+                    ]:
+                        if "$ODV" in str(
+                            resulting_yaml["mobileconfig_info"][mobileconfig_type][
+                                mobileconfig_value
+                            ]
+                        ):
+                            if (
+                                type(
+                                    resulting_yaml["mobileconfig_info"][
+                                        mobileconfig_type
+                                    ][mobileconfig_value]
+                                )
+                                == dict
+                            ):
+                                for k, v in resulting_yaml["mobileconfig_info"][
+                                    mobileconfig_type
+                                ][mobileconfig_value].items():
                                     if v == "$ODV":
-                                        resulting_yaml['mobileconfig_info'][mobileconfig_type][mobileconfig_value][k] = odv
+                                        resulting_yaml["mobileconfig_info"][
+                                            mobileconfig_type
+                                        ][mobileconfig_value][k] = odv
                             else:
-                                resulting_yaml['mobileconfig_info'][mobileconfig_type][mobileconfig_value] = odv
+                                resulting_yaml["mobileconfig_info"][mobileconfig_type][
+                                    mobileconfig_value
+                                ] = odv
 
         if "ddm_info" in resulting_yaml.keys():
             for ddm_type, value in resulting_yaml["ddm_info"].items():
                 if isinstance(value, dict):
                     for _value in value:
                         if "$ODV" in str(value[_value]):
-                            resulting_yaml["ddm_info"][ddm_type] = odv
+                            resulting_yaml["ddm_info"][ddm_type][_value] = odv
                 if "$ODV" in value:
                     resulting_yaml["ddm_info"][ddm_type] = odv
 
@@ -1560,7 +1625,10 @@ def get_rule_yaml(
     """Takes a rule file, checks for a custom version, and returns the yaml for the rule"""
     global resulting_yaml
     resulting_yaml = {}
-    names = [os.path.basename(x) for x in glob.glob('../custom/rules/**/*.y*ml', recursive=True)]
+    names = [
+        os.path.basename(x)
+        for x in glob.glob("../custom/rules/**/*.y*ml", recursive=True)
+    ]
     file_name = os.path.basename(rule_file)
 
     # get parent values
@@ -1785,14 +1853,14 @@ def generate_xls(baseline_name, build_path, baseline_yaml):
         sheet1.write(counter, 10, srg_refs, topWrap)
         sheet1.col(10).width = 500 * 15
 
-        sfr_refs = (str(rule.rule_sfr)).strip('[]\'')
-        sfr_refs = sfr_refs.replace(", ", "\n").replace("\'", "")
+        sfr_refs = (str(rule.rule_sfr)).strip("[]'")
+        sfr_refs = sfr_refs.replace(", ", "\n").replace("'", "")
 
         sheet1.write(counter, 11, sfr_refs, topWrap)
         sheet1.col(11).width = 500 * 15
 
-        disa_refs = (str(rule.rule_disa_stig)).strip('[]\'')
-        disa_refs = disa_refs.replace(", ", "\n").replace("\'", "")
+        disa_refs = (str(rule.rule_disa_stig)).strip("[]'")
+        disa_refs = disa_refs.replace(", ", "\n").replace("'", "")
 
         sheet1.write(counter, 12, disa_refs, topWrap)
         sheet1.col(12).width = 500 * 15
@@ -1808,15 +1876,15 @@ def generate_xls(baseline_name, build_path, baseline_yaml):
                     cis = cis.replace(", ", "\n")
                     sheet1.write(counter, 14, cis, topWrap)
                     sheet1.col(14).width = 500 * 15
-        
-        cmmc_refs = (str(rule.rule_cmmc)).strip('[]\'')
-        cmmc_refs = cmmc_refs.replace(", ", "\n").replace("\'", "")
+
+        cmmc_refs = (str(rule.rule_cmmc)).strip("[]'")
+        cmmc_refs = cmmc_refs.replace(", ", "\n").replace("'", "")
 
         sheet1.write(counter, 15, cmmc_refs, topWrap)
         sheet1.col(15).width = 500 * 15
 
-        indigo_refs = (str(rule.rule_indigo)).strip('[]\'')
-        indigo_refs = indigo_refs.replace(", ", "\n").replace("\'", "")
+        indigo_refs = (str(rule.rule_indigo)).strip("[]'")
+        indigo_refs = indigo_refs.replace(", ", "\n").replace("'", "")
 
         sheet1.write(counter, 16, indigo_refs, topWrap)
         sheet1.col(16).width = 500 * 15
@@ -1833,11 +1901,11 @@ def generate_xls(baseline_name, build_path, baseline_yaml):
         severity = ""
         if isinstance(rule.rule_severity, dict):
             try:
-                severity = f'{rule.rule_severity[baseline_yaml["parent_values"]]}'
+                severity = f"{rule.rule_severity[baseline_yaml['parent_values']]}"
             except KeyError:
                 severity = ""
         elif isinstance(rule.rule_severity, str):
-            severity = f'{rule.rule_severity}'
+            severity = f"{rule.rule_severity}"
 
         sheet1.write(counter, 18, severity, topWrap)
         sheet1.col(18).width = 400 * 15
@@ -1859,8 +1927,6 @@ def generate_xls(baseline_name, build_path, baseline_yaml):
                 added_ref = added_ref.replace(", ", "\n").replace("'", "")
                 sheet1.write(counter, custom_ref_column[title], added_ref, topWrap)
 
-        
-
         tall_style = easyxf("font:height 640;")  # 36pt
 
         sheet1.row(counter).set_style(tall_style)
@@ -1873,31 +1939,35 @@ def generate_xls(baseline_name, build_path, baseline_yaml):
 def create_rules(baseline_yaml):
     """Takes a baseline yaml file and parses the rules, returns a list of containing rules"""
     all_rules = []
-    #expected keys and references
-    keys = ['mobileconfig',
-            'macOS',
-            'severity',
-            'title',
-            'check',
-            'fix',
-            'tags',
-            'id',
-            'references',
-            'odv',
-            'result',
-            'discussion',
-            'customized']
-    references = ['disa_stig',
-                  'cci',
-                  'cce',
-                  '800-53r5',
-                  '800-171r3',
-                  'cis',
-                  'cmmc',
-                  'indigo',
-                  'srg',
-                  'sfr',
-                  'custom']
+    # expected keys and references
+    keys = [
+        "mobileconfig",
+        "macOS",
+        "severity",
+        "title",
+        "check",
+        "fix",
+        "tags",
+        "id",
+        "references",
+        "odv",
+        "result",
+        "discussion",
+        "customized",
+    ]
+    references = [
+        "disa_stig",
+        "cci",
+        "cce",
+        "800-53r5",
+        "800-171r3",
+        "cis",
+        "cmmc",
+        "indigo",
+        "srg",
+        "sfr",
+        "custom",
+    ]
 
     for sections in baseline_yaml["profile"]:
         for profile_rule in sections["rules"]:
@@ -1929,30 +1999,33 @@ def create_rules(baseline_yaml):
                         except:
                             # print("expected reference '{}' is missing in key '{}' for rule{}".format(reference, key, rule))
                             rule_yaml[key].update({reference: ["None"]})
-            all_rules.append(MacSecurityRule(rule_yaml['title'].replace('|', r'\|'),
-                                        rule_yaml['id'].replace('|', r'\|'),
-                                        rule_yaml['severity'],
-                                        rule_yaml['discussion'],  #.replace('|', r'\|'),
-                                        rule_yaml['check'].replace('|', r'\|'),
-                                        rule_yaml['fix'].replace('|', r'\|'),
-                                        rule_yaml['references']['cci'],
-                                        rule_yaml['references']['cce'],
-                                        rule_yaml['references']['800-53r5'],
-                                        rule_yaml['references']['800-171r3'],
-                                        rule_yaml['references']['disa_stig'],
-                                        rule_yaml['references']['srg'],
-                                        rule_yaml['references']['sfr'],
-                                        rule_yaml['references']['cis'],
-                                        rule_yaml['references']['cmmc'],
-                                        rule_yaml['references']['indigo'],
-                                        rule_yaml['references']['custom'],
-                                        rule_yaml['odv'],
-                                        rule_yaml['tags'],
-                                        rule_yaml['result'],
-                                        rule_yaml['mobileconfig'],
-                                        rule_yaml['mobileconfig_info'],
-                                        rule_yaml['customized']
-                                        ))
+            all_rules.append(
+                MacSecurityRule(
+                    rule_yaml["title"].replace("|", r"\|"),
+                    rule_yaml["id"].replace("|", r"\|"),
+                    rule_yaml["severity"],
+                    rule_yaml["discussion"],  # .replace('|', r'\|'),
+                    rule_yaml["check"].replace("|", r"\|"),
+                    rule_yaml["fix"].replace("|", r"\|"),
+                    rule_yaml["references"]["cci"],
+                    rule_yaml["references"]["cce"],
+                    rule_yaml["references"]["800-53r5"],
+                    rule_yaml["references"]["800-171r3"],
+                    rule_yaml["references"]["disa_stig"],
+                    rule_yaml["references"]["srg"],
+                    rule_yaml["references"]["sfr"],
+                    rule_yaml["references"]["cis"],
+                    rule_yaml["references"]["cmmc"],
+                    rule_yaml["references"]["indigo"],
+                    rule_yaml["references"]["custom"],
+                    rule_yaml["odv"],
+                    rule_yaml["tags"],
+                    rule_yaml["result"],
+                    rule_yaml["mobileconfig"],
+                    rule_yaml["mobileconfig_info"],
+                    rule_yaml["customized"],
+                )
+            )
 
     return all_rules
 
@@ -2026,7 +2099,8 @@ def create_args():
         help="sign the configuration profiles with subject key ID (hash value without spaces)",
     )
     parser.add_argument(
-        "-a", "--audit_name",
+        "-a",
+        "--audit_name",
         default=None,
         help="name of audit plist and log - defaults to baseline name",
     )
@@ -2181,19 +2255,20 @@ def main():
     with open(version_file) as r:
         version_yaml = yaml.load(r, Loader=yaml.SafeLoader)
 
-    adoc_templates = [ "adoc_rule_ios",
-                    "adoc_rule",
-                    "adoc_supplemental",
-                    "adoc_rule_no_setting",
-                    "adoc_rule_custom_refs",
-                    "adoc_section",
-                    "adoc_header",
-                    "adoc_footer",
-                    "adoc_foreword",
-                    "adoc_scope",
-                    "adoc_authors",
-                    "adoc_acronyms",
-                    "adoc_additional_docs"
+    adoc_templates = [
+        "adoc_rule_ios",
+        "adoc_rule",
+        "adoc_supplemental",
+        "adoc_rule_no_setting",
+        "adoc_rule_custom_refs",
+        "adoc_section",
+        "adoc_header",
+        "adoc_footer",
+        "adoc_foreword",
+        "adoc_scope",
+        "adoc_authors",
+        "adoc_acronyms",
+        "adoc_additional_docs",
     ]
     adoc_templates_dict = {}
 
@@ -2217,10 +2292,10 @@ def main():
         pdf_theme = themes[0]
 
     # Setup AsciiDoc templates
-    with open(adoc_templates_dict['adoc_rule_ios']) as adoc_rule_ios_file:
+    with open(adoc_templates_dict["adoc_rule_ios"]) as adoc_rule_ios_file:
         adoc_rule_ios_template = Template(adoc_rule_ios_file.read())
 
-    with open(adoc_templates_dict['adoc_rule']) as adoc_rule_file:
+    with open(adoc_templates_dict["adoc_rule"]) as adoc_rule_file:
         adoc_rule_template = Template(adoc_rule_file.read())
 
     with open(adoc_templates_dict["adoc_supplemental"]) as adoc_supplemental_file:
@@ -2273,11 +2348,11 @@ def main():
         adoc_cmmc_show = ":show_CMMC:"
     else:
         adoc_cmmc_show = ":show_CMMC!:"
-   
-    if "indigo" in baseline_yaml['title']:
+
+    if "indigo" in baseline_yaml["title"]:
         adoc_indigo_show = ":show_indigo:"
     else:
-        adoc_indigo_show=":show_indigo!:"        
+        adoc_indigo_show = ":show_indigo!:"
 
     if "800" in baseline_yaml["title"]:
         adoc_171_show = ":show_171:"
@@ -2289,7 +2364,7 @@ def main():
         adoc_STIG_show = ":show_STIG:"
         adoc_cis_show = ":show_cis:"
         adoc_cmmc_show = ":show_CMMC:"
-        adoc_indigo_show=":show_indigo:"
+        adoc_indigo_show = ":show_indigo:"
         adoc_171_show = ":show_171:"
     else:
         adoc_tag_show = ":show_tags!:"
@@ -2345,13 +2420,12 @@ def main():
     adoc_output_file.write(adoc_additional_docs_template)
 
     # Create sections and rules
-    for sections in baseline_yaml['profile']:
-        section_yaml_file = sections['section'].lower() + '.yaml'
-        #check for custom section
-        if section_yaml_file in glob.glob1('../custom/sections/', '*.y*ml'):
-            #print(f"Custom settings found for section: {sections['section']}")
-            override_section = os.path.join(
-                f'../custom/sections/{section_yaml_file}')
+    for sections in baseline_yaml["profile"]:
+        section_yaml_file = sections["section"].lower() + ".yaml"
+        # check for custom section
+        if section_yaml_file in glob.glob1("../custom/sections/", "*.y*ml"):
+            # print(f"Custom settings found for section: {sections['section']}")
+            override_section = os.path.join(f"../custom/sections/{section_yaml_file}")
             with open(override_section) as r:
                 section_yaml = yaml.load(r, Loader=yaml.SafeLoader)
         else:
@@ -2368,12 +2442,16 @@ def main():
 
         # Read all rules in the section and output them
 
-        for rule in sections['rules']:
-            logging.debug(f'processing rule id: {rule}')
-            rule_path = glob.glob('../rules/*/{}.y*ml'.format(rule))
+        for rule in sections["rules"]:
+            logging.debug(f"processing rule id: {rule}")
+            rule_path = glob.glob("../rules/*/{}.y*ml".format(rule))
             if not rule_path:
-                print(f"Rule file not found in library, checking in custom folder for rule: {rule}")
-                rule_path = glob.glob('../custom/rules/**/{}.y*ml'.format(rule), recursive=True)
+                print(
+                    f"Rule file not found in library, checking in custom folder for rule: {rule}"
+                )
+                rule_path = glob.glob(
+                    "../custom/rules/**/{}.y*ml".format(rule), recursive=True
+                )
             try:
                 rule_file = os.path.basename(rule_path[0])
             except IndexError:
@@ -2381,12 +2459,14 @@ def main():
                     f"defined rule {rule} does not have valid yaml file, check that rule ID and filename match."
                 )
 
-            #check for custom rule
-            if glob.glob('../custom/rules/**/{}.y*ml'.format(rule), recursive=True):
+            # check for custom rule
+            if glob.glob("../custom/rules/**/{}.y*ml".format(rule), recursive=True):
                 print(f"Custom settings found for rule: {rule}")
-                #override_rule = glob.glob('../custom/rules/**/{}'.format(rule_file), recursive=True)[0]
-                rule_location = glob.glob('../custom/rules/**/{}.y*ml'.format(rule), recursive=True)[0]
-                custom=True
+                # override_rule = glob.glob('../custom/rules/**/{}'.format(rule_file), recursive=True)[0]
+                rule_location = glob.glob(
+                    "../custom/rules/**/{}.y*ml".format(rule), recursive=True
+                )[0]
+                custom = True
             else:
                 rule_location = rule_path[0]
                 custom = False
@@ -2444,25 +2524,25 @@ def main():
                 cmmc = ulify(rule_yaml["references"]["cmmc"])
 
             try:
-                rule_yaml['references']['indigo']
+                rule_yaml["references"]["indigo"]
             except KeyError:
                 indigo = ""
             else:
-                indigo = ulify(rule_yaml['references']['indigo'])
+                indigo = ulify(rule_yaml["references"]["indigo"])
 
             try:
                 rule_yaml["references"]["srg"]
             except KeyError:
                 srg = "- N/A"
             else:
-                srg = ulify(rule_yaml['references']['srg'])
-            
+                srg = ulify(rule_yaml["references"]["srg"])
+
             try:
-                rule_yaml['references']['sfr']
+                rule_yaml["references"]["sfr"]
             except KeyError:
-                sfr = '- N/A'
+                sfr = "- N/A"
             else:
-                sfr = ulify(rule_yaml['references']['sfr'])
+                sfr = ulify(rule_yaml["references"]["sfr"])
 
             try:
                 rule_yaml["references"]["custom"]
@@ -2476,7 +2556,7 @@ def main():
             except KeyError:
                 rulefix = "No fix Found"
             else:
-                rulefix = rule_yaml['fix']  # .replace('|', r'\|')
+                rulefix = rule_yaml["fix"]  # .replace('|', r'\|')
 
             try:
                 rule_yaml["tags"]
@@ -2503,14 +2583,14 @@ def main():
                 result_value = result["base64"]
             else:
                 result_value = "N/A"
-            
+
             # determine severity, if severity is determined, build asciidoc table row for references
             # uses 'parent_values' from baseline.yaml file to determine which/if any severity to use
             severity = ""
             if "severity" in rule_yaml.keys():
                 if isinstance(rule_yaml["severity"], dict):
                     try:
-                        severity = f'|Severity\n|{rule_yaml["severity"][baseline_yaml["parent_values"]]}'
+                        severity = f"|Severity\n|{rule_yaml['severity'][baseline_yaml['parent_values']]}"
                     except KeyError:
                         severity = ""
 
@@ -2536,22 +2616,25 @@ def main():
                 nist_controls = "- N/A"
 
             if "manual" in tags:
-                discussion = rule_yaml['discussion'] + '\n\nNOTE: This rule is marked as manual and may not be able to be automated. It is also excluded in the compliance scan and will not report any results.\n'
+                discussion = (
+                    rule_yaml["discussion"]
+                    + "\n\nNOTE: This rule is marked as manual and may not be able to be automated. It is also excluded in the compliance scan and will not report any results.\n"
+                )
             else:
-                discussion = rule_yaml['discussion']
+                discussion = rule_yaml["discussion"]
 
-            if 'supplemental' in tags:
+            if "supplemental" in tags:
                 rule_adoc = adoc_supplemental_template.substitute(
-                    rule_title=rule_yaml['title'].replace('|', r'\|'),
-                    rule_id=rule_yaml['id'].replace('|', r'\|'),
+                    rule_title=rule_yaml["title"].replace("|", r"\|"),
+                    rule_id=rule_yaml["id"].replace("|", r"\|"),
                     rule_discussion=discussion,
                 )
             elif custom_refs:
                 rule_adoc = adoc_rule_custom_refs_template.substitute(
-                    rule_title=rule_yaml['title'].replace('|', r'\|'),
-                    rule_id=rule_yaml['id'].replace('|', r'\|'),
-                    rule_discussion=discussion,  #.replace('|', r'\|'),
-                    rule_check=rule_yaml['check'],  # .replace('|', r'\|'),
+                    rule_title=rule_yaml["title"].replace("|", r"\|"),
+                    rule_id=rule_yaml["id"].replace("|", r"\|"),
+                    rule_discussion=discussion,  # .replace('|', r'\|'),
+                    rule_check=rule_yaml["check"],  # .replace('|', r'\|'),
                     rule_fix=rulefix,
                     rule_cci=cci,
                     rule_80053r5=nist_controls,
@@ -2566,14 +2649,14 @@ def main():
                     rule_srg=srg,
                     rule_sfr=sfr,
                     rule_result=result_value,
-                    severity=severity
+                    severity=severity,
                 )
             elif ("permanent" in tags) or ("inherent" in tags) or ("n_a" in tags):
                 rule_adoc = adoc_rule_no_setting_template.substitute(
-                    rule_title=rule_yaml['title'].replace('|', r'\|'),
-                    rule_id=rule_yaml['id'].replace('|', r'\|'),
-                    rule_discussion=discussion,  #.replace('|', r'\|'),
-                    rule_check=rule_yaml['check'],  # .replace('|', r'\|'),
+                    rule_title=rule_yaml["title"].replace("|", r"\|"),
+                    rule_id=rule_yaml["id"].replace("|", r"\|"),
+                    rule_discussion=discussion,  # .replace('|', r'\|'),
+                    rule_check=rule_yaml["check"],  # .replace('|', r'\|'),
                     rule_fix=rulefix,
                     rule_80053r5=nist_controls,
                     rule_800171=nist_800171,
@@ -2586,13 +2669,16 @@ def main():
                     rule_srg=srg,
                 )
             else:
-                #using the same rule template for ios/ipados/visionos
-                if version_yaml['platform'] == "iOS/iPadOS" or version_yaml['platform'] == "visionOS":
+                # using the same rule template for ios/ipados/visionos
+                if (
+                    version_yaml["platform"] == "iOS/iPadOS"
+                    or version_yaml["platform"] == "visionOS"
+                ):
                     rule_adoc = adoc_rule_ios_template.substitute(
-                        rule_title=rule_yaml['title'].replace('|', r'\|'),
-                        rule_id=rule_yaml['id'].replace('|', r'\|'),
-                        rule_discussion=discussion,  #.replace('|', r'\|'),
-                        rule_check=rule_yaml['check'],  # .replace('|', r'\|'),
+                        rule_title=rule_yaml["title"].replace("|", r"\|"),
+                        rule_id=rule_yaml["id"].replace("|", r"\|"),
+                        rule_discussion=discussion,  # .replace('|', r'\|'),
+                        rule_check=rule_yaml["check"],  # .replace('|', r'\|'),
                         rule_fix=rulefix,
                         rule_cci=cci,
                         rule_80053r5=nist_controls,
@@ -2606,14 +2692,14 @@ def main():
                         rule_srg=srg,
                         rule_sfr=sfr,
                         rule_result=result_value,
-                        severity=severity
+                        severity=severity,
                     )
                 else:
                     rule_adoc = adoc_rule_template.substitute(
-                        rule_title=rule_yaml['title'].replace('|', r'\|'),
-                        rule_id=rule_yaml['id'].replace('|', r'\|'),
-                        rule_discussion=discussion,  #.replace('|', r'\|'),
-                        rule_check=rule_yaml['check'],  # .replace('|', r'\|'),
+                        rule_title=rule_yaml["title"].replace("|", r"\|"),
+                        rule_id=rule_yaml["id"].replace("|", r"\|"),
+                        rule_discussion=discussion,  # .replace('|', r'\|'),
+                        rule_check=rule_yaml["check"],  # .replace('|', r'\|'),
                         rule_fix=rulefix,
                         rule_cci=cci,
                         rule_80053r5=nist_controls,
@@ -2627,7 +2713,7 @@ def main():
                         rule_srg=srg,
                         rule_sfr=sfr,
                         rule_result=result_value,
-                        severity=severity
+                        severity=severity,
                     )
 
             adoc_output_file.write(rule_adoc)
@@ -2639,7 +2725,7 @@ def main():
     adoc_output_file.write(footer_adoc)
     adoc_output_file.close()
 
-    if  args.audit_name:
+    if args.audit_name:
         audit_name = args.audit_name
     else:
         audit_name = baseline_name
@@ -2656,7 +2742,9 @@ def main():
 
     if args.script:
         print("Generating compliance script...")
-        generate_script(baseline_name, audit_name, build_path, baseline_yaml, log_reference)
+        generate_script(
+            baseline_name, audit_name, build_path, baseline_yaml, log_reference
+        )
         default_audit_plist(baseline_name, build_path, baseline_yaml)
 
     if args.xls:

@@ -15,7 +15,7 @@ fix: |
   ----
 references:
   cce:
-    - CCE-94366-2
+    - CCE-95373-7
   cci:
     - N/A
   800-171r3:
@@ -38,7 +38,7 @@ references:
   cmmc:
     - AC.L1-3.1.2
 macOS:
-  - '15.0'
+  - '26.0'
 tags:
   - 800-53r5_low
   - 800-53r5_moderate
@@ -54,5 +54,6 @@ tags:
   - cnssi-1253_high
   - cmmc_lvl2
   - cmmc_lvl1
+  - cnssi-1253_moderate
 mobileconfig: false
 mobileconfig_info:

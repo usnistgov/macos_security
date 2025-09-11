@@ -22,7 +22,7 @@ fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-    - CCE-94287-0
+    - CCE-95291-1
   cci:
     - CCI-000057
   800-53r5:
@@ -38,10 +38,8 @@ references:
       - N/A
     controls v8:
       - 4.3
-  cmmc:
-    - AC.L2-3.1.10
 macOS:
-  - '15.0'
+  - '26.0'
 odv:
   hint: Number of seconds.
   recommended: 1200

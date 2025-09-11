@@ -5,20 +5,20 @@ discussion: |
 
   NOTE: Some vendors are known to create world-writable folders to the System Library folder. You may need to add more exclusions to this check and fix to match your environment.
 check: |
-  /usr/bin/find /System/Volumes/Data/Library -type d -perm -2 -ls 2>&1 | /usr/bin/grep -v Caches | /usr/bin/grep -v /Preferences/Audio/Data | /usr/bin/wc -l | /usr/bin/xargs
+  /usr/bin/find /Library -type d -perm -002 ! -perm -1000 ! -xattrname com.apple.rootless 2>/dev/null | /usr/bin/wc -l | /usr/bin/xargs
 result:
   integer: 0
 fix: |
   [source,bash]
   ----
   IFS=$'\n'
-  for libPermissions in $( /usr/bin/find /System/Volumes/Data/Library -type d -perm -2 2>&1 | /usr/bin/grep -v Caches | /usr/bin/grep -v /Preferences/Audio/Data ); do
+  for libPermissions in $(/usr/bin/find /Library -type d -perm -002 ! -perm -1000 ! -xattrname com.apple.rootless 2>/dev/null); do
     /bin/chmod -R o-w "$libPermissions"
   done
   ----
 references:
   cce:
-    - CCE-94326-6
+    - CCE-95332-3
   cci:
     - N/A
   800-53r5:
@@ -37,7 +37,7 @@ references:
     controls v8:
       - 3.3
 macOS:
-  - '15.0'
+  - '26.0'
 tags:
   - cis_lvl2
   - cisv8

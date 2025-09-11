@@ -15,7 +15,7 @@ fix: |
   ----
 references:
   cce:
-    - CCE-94105-4
+    - CCE-95105-3
   cci:
     - CCI-000139
     - CCI-001855
@@ -27,9 +27,9 @@ references:
     - SRG-OS-000046-GPOS-00022
     - SRG-OS-000343-GPOS-00134
   disa_stig:
-    - APPL-15-001030
+    - APPL-26-001030
 macOS:
-  - '15.0'
+  - '26.0'
 odv:
   hint: Percentage of free space.
   recommended: 25

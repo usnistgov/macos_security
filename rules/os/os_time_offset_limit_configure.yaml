@@ -13,7 +13,7 @@ fix: |
   ----
 references:
   cce:
-    - CCE-94318-3
+    - CCE-95324-0
   cci:
     - N/A
   800-53r5:
@@ -32,7 +32,7 @@ references:
     controls v8:
       - N/A
 macOS:
-  - '15.0'
+  - '26.0'
 tags:
   - none
 mobileconfig: false

@@ -5,14 +5,14 @@ discussion: |
 
   This rule protects against malicious users attempting to gain access to the system via brute-force hacking methods.
 check: |
-  /usr/bin/pwpolicy -getaccountpolicies 2> /dev/null | /usr/bin/tail +2 | /usr/bin/xmllint --xpath '//dict/key[text()="policyAttributeMaximumFailedAuthentications"]/following-sibling::integer[1]/text()' - | /usr/bin/awk '{ if ($1 <= $ODV) {print "yes"} else {print "no"}}' | /usr/bin/uniq
+  /usr/bin/pwpolicy -getaccountpolicies 2> /dev/null | /usr/bin/tail +2 | /usr/bin/xmllint --xpath '//dict/key[text()="policyAttributeMaximumFailedAuthentications"]/following-sibling::integer[1]/text()' - | /usr/bin/awk '{ if ($1 <= $ODV) {print "pass"} else {print "fail"}}' | /usr/bin/uniq
 result:
-  string: 'yes'
+  string: 'pass'
 fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-    - CCE-94331-6
+    - CCE-95337-2
   cci:
     - CCI-000044
     - CCI-002238
@@ -24,7 +24,7 @@ references:
     - SRG-OS-000329-GPOS-00128
     - SRG-OS-000021-GPOS-00005
   disa_stig:
-    - APPL-15-000022
+    - APPL-26-000022
   800-171r3:
     - 03.01.08
   cis:
@@ -35,7 +35,7 @@ references:
   cmmc:
     - AC.L2-3.1.8
 macOS:
-  - '15.0'
+  - '26.0'
 odv:
   hint: Number of failed attempts.
   recommended: 3

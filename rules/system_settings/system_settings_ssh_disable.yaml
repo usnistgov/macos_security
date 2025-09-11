@@ -3,9 +3,20 @@ title: Disable SSH Server for Remote Access Sessions
 discussion: |
   SSH service _MUST_ be disabled for remote access.
 check: |
-  /bin/launchctl print-disabled system | /usr/bin/grep -c '"com.openssh.sshd" => disabled'
+  result="FAIL"
+  enabled=$(/bin/launchctl print-disabled system | /usr/bin/grep '"com.openssh.sshd" => enabled')
+  running=$(/bin/launchctl print system/com.openssh.sshd 2>/dev/null)
+  
+  if [[ -z "$running" ]] && [[ -z "$enabled" ]]; then
+    result="PASS"
+  elif [[ -n "$running" ]]; then
+    result=result+" RUNNING"
+  elif [[ -n "$enabled" ]]; then
+    result=result+" ENABLED"
+  fi
+  echo $result
 result:
-  integer: 1
+  string: PASS
 fix: |
   [source,bash]
   ----
@@ -15,7 +26,7 @@ fix: |
   NOTE: Systemsetup with -setremotelogin flag will fail unless you grant Full Disk Access to systemsetup or its parent process. Requires supervision.
 references:
   cce:
-    - CCE-94399-3
+    - CCE-95406-5
   cci:
     - N/A
   800-53r5:
@@ -44,7 +55,7 @@ references:
     - CM.L2-3.4.6
     - CM.L2-3.4.7
 macOS:
-  - '15.0'
+  - '26.0'
 tags:
   - 800-53r5_low
   - 800-53r5_moderate

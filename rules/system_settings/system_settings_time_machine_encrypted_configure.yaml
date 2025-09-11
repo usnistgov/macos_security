@@ -3,15 +3,7 @@ title: Ensure Time Machine Volumes are Encrypted
 discussion: |
   Time Machine volumes _MUST_ be encrypted.
 check: |
-  error_count=0
-  for tm in $(/usr/bin/tmutil destinationinfo 2>/dev/null| /usr/bin/awk -F': ' '/Name/{print $2}'); do
-    tmMounted=$(/usr/sbin/diskutil info "${tm}" 2>/dev/null | /usr/bin/awk '/Mounted/{print $2}')
-    tmEncrypted=$(/usr/sbin/diskutil info "${tm}" 2>/dev/null | /usr/bin/awk '/FileVault/{print $2}')
-    if [[ "$tmMounted" = "Yes" && "$tmEncrypted" = "No" ]]; then
-        ((error_count++))
-    fi
-  done
-  echo "$error_count"
+  /usr/bin/sudo /usr/bin/defaults read /Library/Preferences/com.apple.TimeMachine.plist | grep -c NotEncrypted
 result:
   integer: 0
 fix: |
@@ -22,7 +14,7 @@ fix: |
   . Click *Use Disk*
 references:
   cce:
-    - CCE-94403-3
+    - CCE-95410-7
   cci:
     - N/A
   800-53r5:
@@ -43,7 +35,7 @@ references:
       - 3.11
       - 11.3
 macOS:
-  - '15.0'
+  - '26.0'
 tags:
   - cis_lvl1
   - cis_lvl2

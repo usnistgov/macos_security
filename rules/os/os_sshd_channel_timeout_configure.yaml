@@ -35,7 +35,7 @@ fix: |
   ----
 references:
   cce:
-    - CCE-94302-7
+    - CCE-95307-5
   cci:
     - CCI-001133
     - CCI-002361
@@ -48,7 +48,7 @@ references:
     - SRG-OS-000163-GPOS-00072
     - SRG-OS-000279-GPOS-00109
   disa_stig:
-    - APPL-15-000120
+    - APPL-26-000120
   800-171r3:
     - 03.01.11
     - 03.13.09
@@ -60,7 +60,7 @@ odv:
   recommended: session:*=900
   stig: session:*=900
 macOS:
-  - '15.0'
+  - '26.0'
 tags:
   - 800-53r5_moderate
   - 800-53r5_high

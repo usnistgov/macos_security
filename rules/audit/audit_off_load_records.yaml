@@ -12,7 +12,7 @@ fix: |
   This requirement is a permanent finding and cannot be fixed. An appropriate mitigation for the system must be implemented, but this finding cannot be considered fixed.
 references:
   cce:
-    - CCE-94127-8
+    - CCE-95127-7
   cci:
     - N/A
   800-53r5:
@@ -30,7 +30,7 @@ references:
     controls v8:
       - 8.9
 macOS:
-  - '15.0'
+  - '26.0'
 tags:
   - permanent
   - cisv8

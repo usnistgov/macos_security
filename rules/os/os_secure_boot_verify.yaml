@@ -7,14 +7,14 @@ discussion: |
 
   NOTE: This will only return a proper result on a T2 or Apple Silicon Macs.
 check: |
-  /usr/libexec/mdmclient QuerySecurityInfo | /usr/bin/grep -c "SecureBootLevel = full"
+  /usr/libexec/mdmclient QuerySecurityInfo 2>/dev/null | /usr/bin/grep -c "SecureBootLevel = full"
 result:
   integer: 1
 fix: |
   NOTE: Boot into Recovery Mode and enable Full Secure Boot
 references:
   cce:
-    - CCE-94288-8
+    - CCE-95292-9
   cci:
     - CCI-002696
     - CCI-002699
@@ -31,9 +31,9 @@ references:
     - SRG-OS-000445-GPOS-00199
     - SRG-OS-000446-GPOS-00200
   disa_stig:
-    - APPL-15-005100
+    - APPL-26-005100
 macOS:
-  - '15.0'
+  - '26.0'
 tags:
   - 800-53r5_high
   - 800-53r5_moderate

@@ -13,7 +13,7 @@ fix: |
   ----
 references:
   cce:
-    - CCE-94410-8
+    - CCE-95417-2
   cci:
     - N/A
   800-53r5:
@@ -32,7 +32,7 @@ references:
     controls v8:
       - 4.8
 macOS:
-  - '15.0'
+  - '26.0'
 tags:
   - cis_lvl1
   - cis_lvl2

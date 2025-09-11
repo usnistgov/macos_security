@@ -20,7 +20,7 @@ fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-    - CCE-94298-7
+    - CCE-95303-4
   cci:
     - N/A
   800-53r5:
@@ -35,12 +35,12 @@ references:
     - N/A
   cis:
     benchmark:
-      - 1.7 (level 1)
+      - 1.6 (level 1)
     controls v8:
       - 7.3
       - 7.4
 macOS:
-  - '15.0'
+  - '26.0'
 odv:
   hint: Number of days.
   recommended: 30

@@ -13,12 +13,12 @@ fix: |
   [source,bash]
   ----
   /usr/bin/defaults write /var/db/locationd/Library/Preferences/ByHost/com.apple.locationd LocationServicesEnabled -bool true; 
-  pid=$(/bin/launchctl list | /usr/bin/awk '/com.apple.locationd/ { print $1 }')
+  pid=$(/bin/launchctl print system | /usr/bin/awk '/\tcom.apple.locationd/ {print $1}')
   kill -9 $pid
   ----
 references:
   cce:
-    - CCE-94377-9
+    - CCE-95384-4
   cci:
     - N/A
   800-53r5:
@@ -38,7 +38,7 @@ references:
       - 4.1
       - 4.8
 macOS:
-  - '15.0'
+  - '26.0'
 tags:
   - cis_lvl2
   - cisv8

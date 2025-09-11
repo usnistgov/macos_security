@@ -9,9 +9,9 @@ discussion: |
 
   The information system initiates session audits at system start-up.
 
-  NOTE: Security auditing is NOT enabled by default on macOS Sequoia.
+  NOTE: Security auditing is NOT enabled by default on macOS Tahoe.
 check: |
-  LAUNCHD_RUNNING=$(/bin/launchctl list | /usr/bin/grep -c com.apple.auditd)
+  LAUNCHD_RUNNING=$(/bin/launchctl print system | /usr/bin/grep -c -E '\tcom.apple.auditd')
   AUDITD_RUNNING=$(/usr/sbin/audit -c | /usr/bin/grep -c "AUC_AUDITING")
   if [[ $LAUNCHD_RUNNING == 1 ]] && [[ -e /etc/security/audit_control ]] && [[ $AUDITD_RUNNING == 1 ]]; then
     echo "pass"
@@ -33,7 +33,7 @@ fix: |
   ----
 references:
   cce:
-    - CCE-94104-7
+    - CCE-95104-6
   cci:
     - CCI-000130
     - CCI-000131
@@ -104,7 +104,7 @@ references:
     - SRG-OS-000055-GPOS-00026
     - SRG-OS-000755-GPOS-00220
   disa_stig:
-    - APPL-15-001003
+    - APPL-26-001003
   800-171r3:
     - 03.03.02
     - 03.03.03
@@ -119,7 +119,7 @@ references:
     - AU.L2-3.3.2
     - AU.L2-3.3.6
 macOS:
-  - '15.0'
+  - '26.0'
 tags:
   - 800-53r5_low
   - 800-53r5_moderate

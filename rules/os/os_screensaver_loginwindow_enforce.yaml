@@ -8,12 +8,12 @@ check: |
   .objectForKey('moduleName').js
   EOS
 result:
-  string: Sequoia
+  string: Tahoe
 fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-    - CCE-94286-2
+    - CCE-95290-3
   cci:
     - CCI-000060
   800-53r5:
@@ -29,7 +29,7 @@ references:
   cmmc:
     - AC.L2-3.1.10
 macOS:
-  - '15.0'
+  - '26.0'
 tags:
   - 800-53r5_moderate
   - 800-53r5_high
@@ -44,4 +44,4 @@ severity: medium
 mobileconfig: true
 mobileconfig_info:
   com.apple.screensaver:
-    moduleName: Sequoia
+    moduleName: Tahoe

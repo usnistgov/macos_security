@@ -8,7 +8,7 @@ fix: |
   The technology inherently meets this requirement. No fix is required.
 references:
   cce:
-    - CCE-94325-8
+    - CCE-95331-5
   cci:
     - N/A
   800-53r5:
@@ -20,7 +20,7 @@ references:
   srg:
     - SRG-OS-000395-GPOS-00175
 macOS:
-  - '15.0'
+  - '26.0'
 tags:
   - inherent
   - cnssi-1253_low

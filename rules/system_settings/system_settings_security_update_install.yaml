@@ -1,0 +1,54 @@
+id: system_settings_security_update_install
+title: Enforce Automatic Installs of Available Security Updates using DDM.
+discussion: |
+  Ensure that available security updates are installed as soon as they are available from Apple and that the user cannot modify the setting within System Settings.
+check: |
+  /usr/bin/plutil -convert json /var/db/softwareupdate/SoftwareUpdateDDMStatePersistence.plist -o - | /usr/bin/jq --raw-output .'SUCorePersistedStatePolicyFields.SUCoreDDMDeclarationGlobalSettings.automaticallyInstallSystemAndSecurityUpdates'
+result:
+  integer: 1
+fix: |
+  This is implemented by Declarative Device Management (DDM).
+references:
+  cce:
+    - CCE-95602-9
+  cci:
+    - N/A
+  800-53r5:
+    - SI-2
+  800-53r4:
+    - N/A
+  srg:
+    - N/A
+  disa_stig:
+    - N/A
+  800-171r3:
+    - 03.14.01
+  cis:
+    benchmark:
+      - N/A
+    controls v8:
+      - 7.3
+      - 7.4
+      - 7.7
+  cmmc:
+    - SI.L1-3.14.1
+    - SI.L1-3.14.4
+macOS:
+  - '26.0'
+tags:
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_high
+  - cisv8
+  - cnssi-1253_low
+  - cnssi-1253_high
+  - cmmc_lvl2
+  - cmmc_lvl1
+  - cnssi-1253_moderate
+mobileconfig: false
+mobileconfig_info:
+ddm_info:
+  declarationtype: com.apple.configuration.softwareupdate.settings
+  ddm_key: AutomaticActions
+  ddm_value: 
+    InstallSecurityUpdate: AlwaysOn

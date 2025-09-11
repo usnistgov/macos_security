@@ -37,7 +37,7 @@ fix: |
   ----
 references:
   cce:
-    - CCE-94304-3
+    - CCE-95309-1
   cci:
     - CCI-001133
   800-53r5:
@@ -48,7 +48,7 @@ references:
   srg:
     - SRG-OS-000163-GPOS-00072
   disa_stig:
-    - APPL-15-000051
+    - APPL-26-000051
   800-171r3:
     - 03.01.11
     - 03.13.09
@@ -56,7 +56,7 @@ references:
     - AC.L2-3.1.11
     - SC.L2-3.13.9
 macOS:
-  - '15.0'
+  - '26.0'
 odv:
   hint: Number of seconds.
   recommended: 900

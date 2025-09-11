@@ -19,7 +19,7 @@ fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-    - CCE-94176-5
+    - CCE-95176-4
   cci:
     - CCI-000366
   800-53r5:
@@ -30,12 +30,12 @@ references:
   srg:
     - SRG-OS-000480-GPOS-00227
   disa_stig:
-    - APPL-15-005130
+    - APPL-26-005130
   800-171r3:
     - 03.14.02
   cis:
     benchmark:
-      - 1.6 (level 1)
+      - 1.5 (level 1)
     controls v8:
       - 7.3
       - 7.4
@@ -45,7 +45,7 @@ references:
     - SI.L1-3.14.2
     - SI.L1-3.14.4
 macOS:
-  - '15.0'
+  - '26.0'
 tags:
   - 800-53r5_low
   - 800-53r5_moderate

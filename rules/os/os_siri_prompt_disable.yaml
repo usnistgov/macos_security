@@ -5,9 +5,9 @@ discussion: |
 
   Organizations _MUST_ apply organization-wide configuration settings. The macOS Siri Assistant Setup prompt guides new users through enabling their own specific Siri settings; this is not essential and, therefore, _MUST_ be disabled to prevent against the risk of individuals electing Siri settings with the potential to override organization-wide settings.
 check: |
-  /usr/bin/osascript -l JavaScript << EOS
+  /usr/bin/osascript -l JavaScript 2>/dev/null << EOS
   $.NSUserDefaults.alloc.initWithSuiteName('com.apple.SetupAssistant.managed')\
-  .objectForKey('SkipSiriSetup').js
+  .objectForKey('SkipSetupItems').containsObject("Siri")
   EOS
 result:
   string: 'true'
@@ -15,7 +15,7 @@ fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-    - CCE-94295-3
+    - CCE-95299-4
   cci:
     - CCI-000381
     - CCI-001774
@@ -30,7 +30,7 @@ references:
   srg:
     - SRG-OS-000095-GPOS-00049
   disa_stig:
-    - APPL-15-002039
+    - APPL-26-002039
   800-171r3:
     - 03.01.20
     - 03.04.06
@@ -45,7 +45,7 @@ references:
     - CM.L2-3.4.6
     - CM.L2-3.4.7
 macOS:
-  - '15.0'
+  - '26.0'
 tags:
   - 800-53r5_low
   - 800-53r5_moderate
@@ -65,4 +65,5 @@ severity: medium
 mobileconfig: true
 mobileconfig_info:
   com.apple.SetupAssistant.managed:
-    SkipSiriSetup: true
+    SkipSetupItems:
+      - Siri

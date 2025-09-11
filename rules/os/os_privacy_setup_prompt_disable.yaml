@@ -5,9 +5,9 @@ discussion: |
 
   Organizations _MUST_ apply organization-wide configuration settings. The macOS Privacy Setup services prompt guides new users through enabling their own specific privacy settings; this is not essential and, therefore, _MUST_ be disabled to prevent against the risk of individuals electing privacy settings with the potential to override organization-wide settings.
 check: |
-  /usr/bin/osascript -l JavaScript << EOS
+  /usr/bin/osascript -l JavaScript 2>/dev/null << EOS
   $.NSUserDefaults.alloc.initWithSuiteName('com.apple.SetupAssistant.managed')\
-  .objectForKey('SkipPrivacySetup').js
+  .objectForKey('SkipSetupItems').containsObject("Privacy")
   EOS
 result:
   string: 'true'
@@ -15,7 +15,7 @@ fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-    - CCE-94264-9
+    - CCE-95267-1
   cci:
     - CCI-000381
   800-53r5:
@@ -27,7 +27,7 @@ references:
   srg:
     - SRG-OS-000095-GPOS-00049
   disa_stig:
-    - APPL-15-002036
+    - APPL-26-002036
   cis:
     benchmark:
       - N/A
@@ -40,7 +40,7 @@ references:
   800-171r3:
     - 03.04.06
 macOS:
-  - '15.0'
+  - '26.0'
 tags:
   - 800-171
   - cisv8
@@ -53,4 +53,5 @@ severity: medium
 mobileconfig: true
 mobileconfig_info:
   com.apple.SetupAssistant.managed:
-    SkipPrivacySetup: true
+    SkipSetupItems:
+      - Privacy

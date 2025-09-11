@@ -1,7 +1,7 @@
 ![Alt text](templates/images/mscp_banner_outline.png)
 
 ![Alt text](https://badgen.net/badge/icon/apple?icon=apple&label)
-![Alt text](https://badgen.net/badge/icon/15.0?icon=apple&label)
+![Alt text](https://badgen.net/badge/icon/26.0?icon=apple&label)
 
 > [!IMPORTANT]
 > We recommend working off of one of the OS branches, rather than the `main` branch.
@@ -14,7 +14,7 @@ Apple acknowledges the macOS Security Compliance Project with information on the
 
 This project can be used as a resource to easily create customized security baselines of technical security controls by leveraging a library of atomic actions which are mapped to the compliance requirements defined in NIST SP 800-53 (Rev. 5). It can also be used to develop customized guidance to meet the particular cybersecurity needs of any organization.
 
-To learn more about the project, please see the [wiki](https://github.com/usnistgov/macos_security/wiki).
+To learn more about the project, [click here](http://pages.nist.gov/macos_security/).
 
 If you are interested in supporting the development of the project, refer to the [contributor guidance](CONTRIBUTING.md) for more information.
 
@@ -35,7 +35,7 @@ Civilian agencies are to use the National Checklist Program as required by [NIST
 |Dan Brodjieski|NASA
 |John Mahlman IV|Leidos
 |Aaron Kegerreis|DISA
-|Henry Stamerjohann|Zentral Pro Services GmbH
+|Henry Stamerjohann|Declarative IT GmbH
 |Marco A Piñeryo II|State Department
 |Jason Blake|NIST
 |Blair Heiserman|NIST

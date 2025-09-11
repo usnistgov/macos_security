@@ -24,7 +24,7 @@ fix: |
   ----
 references:
   cce:
-    - CCE-94257-3
+    - CCE-95260-6
   cci:
     - N/A
   800-53r5:
@@ -49,7 +49,7 @@ references:
     - CM.L2-3.4.6
     - CM.L2-3.4.7
 macOS:
-  - '15.0'
+  - '26.0'
 tags:
   - cis_lvl1
   - cis_lvl2

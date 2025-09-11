@@ -23,7 +23,7 @@ fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-    - CCE-94165-8
+    - CCE-95165-7
   cci:
     - N/A
   800-53r5:
@@ -40,7 +40,7 @@ references:
     - MP.L2-3.8.7
     - MP.L2-3.8.8
 macOS:
-  - '15.0'
+  - '26.0'
 tags:
   - cnssi-1253_low
   - cnssi-1253_high

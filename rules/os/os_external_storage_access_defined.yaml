@@ -5,14 +5,14 @@ discussion: |-
   
   NOTE: Apple's built in method using declative device management method only allows you to set external storage manament to Allowed, ReadOnly, and Disallowed.
 check: |
-  /usr/bin/plutil -convert json /var/db/ManagedConfigurationFiles/DiskManagement/DiskManagement_Settings.plist -o - | /usr/bin/jq '.Restrictions | .ExternalStorage'
+  /usr/bin/plutil -convert json /var/db/ManagedConfigurationFiles/DiskManagement/DiskManagement_Settings.plist -o - | /usr/bin/jq --raw-output '.Restrictions.ExternalStorage'
 result:
   string: $ODV
 fix: |
-  This is implemented by a Declarative Device Management.
+  This is implemented by Declarative Device Management (DDM).
 references:
   cce:
-    - CCE-94188-0
+    - CCE-95188-9
   cci:
     - N/A
   800-53r5:
@@ -30,7 +30,7 @@ odv:
   hint: Allowed, ReadOnly, or Disallowed
   recommended: Allowed     
 macOS:
-  - '15.0'
+  - '26.0'
 tags:
   - cmmc_lvl2
   - 800-53r5_low

@@ -35,7 +35,7 @@ fix: |
   ----
 references:
   cce:
-    - CCE-94589-9
+    - CCE-95312-5
   cci:
     - N/A
   800-53r5:
@@ -49,7 +49,7 @@ references:
   cmmc:
     - N/A
 macOS:
-  - '15.0'
+  - '26.0'
 tags:
   - 800-53r5_low
   - 800-53r5_moderate

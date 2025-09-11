@@ -1,6 +1,6 @@
-title: "macOS 15.0: Security Configuration - Committee on National Security Systems Instruction No. 1253 (Moderate)"
+title: "macOS 26.0: Security Configuration - Committee on National Security Systems Instruction No. 1253 (Moderate)"
 description: |
-  This guide describes the actions to take when securing a macOS 15.0 system against the Committee on National Security Systems Instruction No. 1253 (Moderate) security baseline.
+  This guide describes the actions to take when securing a macOS 26.0 system against the Committee on National Security Systems Instruction No. 1253 (Moderate) security baseline.
 
   Information System Security Officers and benchmark creators can use this catalog of settings in order to assist them in security benchmark creation. This list is a catalog, not a checklist or benchmark, and satisfaction of every item is not likely to be possible or sensible in many operational scenarios.
 authors: |
@@ -102,12 +102,14 @@ profile:
       - os_home_folders_secure
       - os_httpd_disable
       - os_icloud_storage_prompt_disable
-      - os_image_generation_disable
+      - os_image_playground_disable
       - os_install_log_retention_configure
+      - os_iphone_mirroring_disable
       - os_ir_support_disable
-      - os_loginwindow_adminhostinfo_undefined
+      - os_loginwindow_adminhostinfo_disabled
       - os_mail_app_disable
       - os_mail_smart_reply_disable
+      - os_mail_summary_disable
       - os_mdm_require
       - os_messages_app_disable
       - os_newsyslog_files_owner_group_configure
@@ -121,6 +123,7 @@ profile:
       - os_password_hint_remove
       - os_password_proximity_disable
       - os_password_sharing_disable
+      - os_photos_enhanced_search_disable
       - os_policy_banner_loginwindow_enforce
       - os_policy_banner_ssh_configure
       - os_policy_banner_ssh_enforce
@@ -137,6 +140,7 @@ profile:
       - os_setup_assistant_filevault_enforce
       - os_sip_enable
       - os_siri_prompt_disable
+      - os_skip_apple_intelligence_enable
       - os_skip_screen_time_prompt_enable
       - os_skip_unlock_with_watch_enable
       - os_ssh_fips_compliant
@@ -196,6 +200,7 @@ profile:
       - system_settings_firewall_stealth_mode_enable
       - system_settings_gatekeeper_identified_developers_allowed
       - system_settings_gatekeeper_override_disallow
+      - system_settings_guest_access_smb_disable
       - system_settings_guest_account_disable
       - system_settings_hot_corners_disable
       - system_settings_hot_corners_secure
@@ -216,6 +221,7 @@ profile:
       - system_settings_screensaver_ask_for_password_delay_enforce
       - system_settings_screensaver_password_enforce
       - system_settings_screensaver_timeout_enforce
+      - system_settings_security_update_install
       - system_settings_siri_disable
       - system_settings_siri_settings_disable
       - system_settings_smbd_disable
@@ -283,3 +289,6 @@ profile:
       - os_managed_access_control_points
       - os_non_repudiation
       - os_nonlocal_maintenance
+  - section: "Supplemental"
+    rules:
+      - supplemental_password_policy

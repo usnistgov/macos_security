@@ -19,7 +19,7 @@ fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-    - CCE-94136-9
+    - CCE-95136-8
   cci:
     - N/A
   800-53r5:
@@ -35,13 +35,14 @@ references:
   cmmc:
     - SC.L2-3.13.10
 macOS:
-  - '15.0'
+  - '26.0'
 tags:
   - 800-53r4_high
   - 800-53r5_high
   - cnssi-1253_high
   - cnssi-1253_moderate
   - cnssi-1253_low
+  - cmmc_lvl2
 mobileconfig: true
 mobileconfig_info:
   com.apple.security.smartcard:

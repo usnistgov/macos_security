@@ -18,7 +18,7 @@ fix: |
   The technology partially meets this requirement. An appropriate mitigation for the system must be implemented for full compliance.
 references:
   cce:
-    - CCE-94265-6
+    - CCE-95268-9
   800-53r5:
     - SC-15
   800-53r4:
@@ -34,7 +34,7 @@ references:
   800-171r3:
     - 03.13.12
 macOS:
-  - '15.0'
+  - '26.0'
 tags:
   - 800-171
   - inherent

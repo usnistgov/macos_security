@@ -4,6 +4,8 @@ discussion: |
   FileVault _MUST_ be enforced.
 
   The information system implements cryptographic mechanisms to protect the confidentiality and integrity of information stored on digital media during transport outside of controlled areas.
+
+  NOTE: See the FileVault supplemental to implement this rule.
 check: |
   dontAllowDisable=$(/usr/bin/osascript -l JavaScript << EOS
   $.NSUserDefaults.alloc.initWithSuiteName('com.apple.MCX')\
@@ -22,7 +24,7 @@ fix: |
   NOTE: See the FileVault supplemental to implement this rule.
 references:
   cce:
-    - CCE-94360-5
+    - CCE-95367-9
   cci:
     - CCI-001199
     - CCI-002475
@@ -38,7 +40,7 @@ references:
     - SRG-OS-000405-GPOS-00184
     - SRG-OS-000404-GPOS-00183
   disa_stig:
-    - APPL-15-005020
+    - APPL-26-005020
   800-171r3:
     - 03.13.08
   cis:
@@ -50,7 +52,7 @@ references:
   cmmc:
     - SC.L2-3.13.16
 macOS:
-  - '15.0'
+  - '26.0'
 tags:
   - 800-53r5_moderate
   - 800-53r5_high

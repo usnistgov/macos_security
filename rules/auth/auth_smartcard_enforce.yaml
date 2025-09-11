@@ -21,7 +21,7 @@ fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-    - CCE-94138-5
+    - CCE-95138-4
   cci:
     - CCI-000186
     - CCI-000765
@@ -61,7 +61,7 @@ references:
     - SRG-OS-000105-GPOS-00052
     - SRG-OS-000705-GPOS-00150
   disa_stig:
-    - APPL-15-003020
+    - APPL-26-003020
   800-171r3:
     - 03.05.01
     - 03.05.03
@@ -79,7 +79,7 @@ references:
     - IA.L2-3.5.3
     - IA.L2-3.5.4
 macOS:
-  - '15.0'
+  - '26.0'
 tags:
   - 800-53r5_low
   - 800-53r5_moderate

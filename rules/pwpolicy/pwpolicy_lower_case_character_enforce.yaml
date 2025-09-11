@@ -9,9 +9,9 @@ discussion: |
 
   NOTE: macOS 14 supports password policy complexity with custom regex deployed with a mobileconfig file. To use a mobileconfig file use *pwpolicy_custom_regex_enforce*.
 check: |
-  /usr/bin/pwpolicy -getaccountpolicies 2> /dev/null | /usr/bin/tail +2 | /usr/bin/xmllint --xpath '//dict/key[text()="minimumAlphaCharactersLowerCase"]/following-sibling::integer[1]/text()' - | /usr/bin/awk '{ if ($1 >= $ODV ) {print "yes"} else {print "no"}}'
+  /usr/bin/pwpolicy -getaccountpolicies 2> /dev/null | /usr/bin/tail +2 | /usr/bin/xmllint --xpath '//dict/key[text()="minimumAlphaCharactersLowerCase"]/following-sibling::integer[1]/text()' - | /usr/bin/awk '{ if ($1 >= $ODV ) {print "pass"} else {print "fail"}}'
 result:
-  string: 'yes'
+  string: 'pass'
 fix: |
   This setting may be enforced using local policy or by a directory service.
 
@@ -27,7 +27,7 @@ fix: |
   <key>policyParameters</key>
   <dict>
   <key>minimumAlphaCharactersLowerCase</key>
-  <integer>1</integer>
+  <integer>$ODV</integer>
   </dict>
   </dict>
   ----
@@ -40,7 +40,7 @@ fix: |
   NOTE: See the password policy supplemental on more information on how to implement password policies on macOS.
 references:
   cce:
-    - CCE-94338-1
+    - CCE-95344-8
   cci:
     - N/A
   800-53r5:
@@ -64,7 +64,7 @@ references:
     - IA.L2-3.5.8
     - IA.L2-3.5.9
 macOS:
-  - '15.0'
+  - '26.0'
 odv:
   hint: Number of lowercase characters.
   recommended: 1

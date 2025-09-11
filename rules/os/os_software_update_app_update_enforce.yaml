@@ -1,4 +1,4 @@
-id: system_settings_software_update_app_update_enforce
+id: os_software_update_app_update_enforce
 title: Enforce Software Update App Update Updates Automatically
 discussion: |
   Software Update _MUST_ be configured to enforce automatic updates of App Updates is enabled.
@@ -13,7 +13,7 @@ fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-    - CCE-94395-1
+    - CCE-95402-4
   cci:
     - N/A
   800-53r5:
@@ -33,7 +33,7 @@ references:
       - 7.3
       - 7.4
 macOS:
-  - '15.0'
+  - '26.0'
 tags:
   - cis_lvl1
   - cis_lvl2
