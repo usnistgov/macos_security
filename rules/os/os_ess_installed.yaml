@@ -19,21 +19,13 @@ references:
     srg:
       - SRG-OS-000191-GPOS-00080
     disa_stig:
-      macos_14:
-        - APPL-14-000015
       macos_13:
         - APPL-13-000015
 platforms:
   macOS:
-    '15.0':
-      benchmarks:
+    '13.0':
         - name: disa_stig
           severity: medium
-    '14.0':
-      benchmarks:
-        - name: disa_stig
-          severity: medium
-    '13.0': {}
     enforcement_info:
       check:
         shell: |-
