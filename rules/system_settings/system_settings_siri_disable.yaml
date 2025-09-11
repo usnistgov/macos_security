@@ -7,12 +7,12 @@ discussion: |
 references:
   nist:
     cce:
+      macos_26:
+        - CCE-95398-4
       macos_15:
         - CCE-94391-0
       macos_14:
         - CCE-92987-7
-      macos_13:
-        - CCE-91976-1
     800-53r5:
       - AC-20
       - CM-7
@@ -29,25 +29,35 @@ references:
     srg:
       - SRG-OS-000095-GPOS-00049
     disa_stig:
+      macos_26:
+        - APPL-26-002020
       macos_15:
         - APPL-15-002020
       macos_14:
         - APPL-14-002020
-      macos_13:
-        - APPL-13-002020
     cmmc:
       - AC.L1-3.1.20
       - CM.L2-3.4.6
       - CM.L2-3.4.7
   cis:
     benchmark:
+      macos_26:
+        - 2.5.2.1 (level 1)
       macos_15:
         - 2.5.2.1 (level 1)
+      macos_14:
+        - 2.5.1 (level 1)
     controls_v8:
       - 4.1
       - 4.8
 platforms:
   macOS:
+    '26.0':
+      benchmarks:
+        - name: cis_lvl1
+        - name: cis_lvl2
+        - name: disa_stig
+          severity: medium
     '15.0':
       benchmarks:
         - name: cis_lvl1
@@ -56,25 +66,10 @@ platforms:
           severity: medium
     '14.0':
       benchmarks:
+        - name: cis_lvl1
+        - name: cis_lvl2
         - name: disa_stig
           severity: medium
-    '13.0':
-      benchmarks:
-        - name: disa_stig
-          severity: medium
-      mobileconfig_info:
-        - PayloadType: com.apple.ironwood.support
-          PayloadContent:
-            - Ironwood Allowed: false
-      enforcement_info:
-        check:
-          shell: |-
-            /usr/bin/osascript -l JavaScript << EOS
-            $.NSUserDefaults.alloc.initWithSuiteName('com.apple.ironwood.support')\
-            .objectForKey('Ironwood Allowed').js
-            EOS
-          result:
-            string: 'false'
     enforcement_info:
       check:
         shell: |-

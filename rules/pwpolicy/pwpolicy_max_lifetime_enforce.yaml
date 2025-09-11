@@ -4,12 +4,12 @@ discussion: "The system _MUST_ be configured to enforce a maximum password lifet
 references:
   nist:
     cce:
+      macos_26:
+        - CCE-95345-5
       macos_15:
         - CCE-94339-9
       macos_14:
         - CCE-92935-6
-      macos_13:
-        - CCE-91922-5
     800-53r5:
       - IA-5
     800-171r3:
@@ -22,27 +22,33 @@ references:
       - SRG-OS-000076-GPOS-00044
       - SRG-OS-000775-GPOS-00230
     disa_stig:
+      macos_26:
+        - APPL-26-003008
       macos_15:
         - APPL-15-003008
       macos_14:
         - APPL-14-003008
-      macos_13:
-        - APPL-13-003008
     cmmc:
       - IA.L2-3.5.8
       - IA.L2-3.5.9
   cis:
     benchmark:
+      macos_26:
+        - 5.2.7 (level 1)
       macos_15:
         - 5.2.7 (level 1)
       macos_14:
-        - 5.2.7 (level 1)
-      macos_13:
         - 5.2.7 (level 1)
     controls_v8:
       - 5.3
 platforms:
   macOS:
+    '26.0':
+      benchmarks:
+        - name: cis_lvl1
+        - name: cis_lvl2
+        - name: disa_stig
+          severity: medium
     '15.0':
       benchmarks:
         - name: cis_lvl1
@@ -55,17 +61,11 @@ platforms:
         - name: cis_lvl2
         - name: disa_stig
           severity: medium
-    '13.0':
-      benchmarks:
-        - name: cis_lvl1
-        - name: cis_lvl2
-        - name: disa_stig
-          severity: medium
     enforcement_info:
       check:
-        shell: /usr/bin/pwpolicy -getaccountpolicies 2> /dev/null | /usr/bin/tail +2 | /usr/bin/xmllint --xpath '//dict/key[text()="policyAttributeExpiresEveryNDays"]/following-sibling::*[1]/text()' -
+        shell: /usr/bin/pwpolicy -getaccountpolicies 2> /dev/null | /usr/bin/tail +2 | /usr/bin/xmllint --xpath '//dict/key[text()="policyAttributeExpiresEveryNDays"]/following-sibling::*[1]/text()' - | /usr/bin/awk '{ if ($1 <= $ODV ) {print "pass"} else {print "fail"}}' | /usr/bin/uniq
         result:
-          integer: $ODV
+          string: pass
     introduced: '10.7'
 odv:
   hint:

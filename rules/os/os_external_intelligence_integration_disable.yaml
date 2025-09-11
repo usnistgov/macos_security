@@ -5,10 +5,12 @@ discussion: |
 references:
   nist:
     cce:
+      ios_26:
+        - CCE-95473-5
       ios_18:
         - CCE-94517-0
-      visionos_2:
-        - CCE-94580-8
+      visionos_26:
+        - CCE-95573-2
     800-53r5:
       - CM-6
       - CM-7
@@ -23,6 +25,8 @@ references:
       - 'FMT_MOF_EXT.1.2 #47'
 platforms:
   iOS:
+    '26.0':
+      supervised: true
     '18.0':
       supervised: true
       benchmarks:
@@ -30,10 +34,13 @@ platforms:
           severity: medium
     introduced: '18.2'
   visionOS:
-    '2.0':
+    '26.0':
       supervised: true
     introduced: '2.4'
 tags:
+  - cnssi-1253_moderate
+  - cnssi-1253_low
+  - cnssi-1253_high
   - 800-53r5_low
   - 800-53r5_moderate
   - 800-53r5_high

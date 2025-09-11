@@ -5,14 +5,14 @@ discussion: |
 references:
   nist:
     cce:
+      ios_26:
+        - CCE-95484-2
       ios_18:
         - CCE-94444-7
       ios_17:
         - CCE-93429-9
-      ios_16:
-        - CCE-93229-3
-      visionos_2:
-        - CCE-94500-6
+      visionos_26:
+        - CCE-95581-5
     800-53r5:
       - CM-6
       - CM-7
@@ -23,11 +23,11 @@ references:
         - AIOS-18-015500
   cis:
     benchmark:
+      ios_26:
+        - 3.2.1.15 (level 1 - Institutionally-Owned Devices)
       ios_18:
         - 3.2.1.15 (level 1 - Institutionally-Owned Devices)
       ios_17:
-        - 3.2.1.15 (level 1 - Institutionally-Owned Devices)
-      ios_16:
         - 3.2.1.15 (level 1 - Institutionally-Owned Devices)
     controls_v8:
       - 4.1
@@ -37,6 +37,11 @@ references:
         - ANNEX D (Section 5.6.1 - Mail)
 platforms:
   iOS:
+    '26.0':
+      supervised: true
+      benchmarks:
+        - name: cis_lvl1_enterprise
+        - name: cis_lvl2_enterprise
     '18.0':
       supervised: true
       benchmarks:
@@ -55,18 +60,16 @@ platforms:
         - name: cis_lvl2_enterprise
         - name: indigo_base
         - name: indigo_high
-    '16.0':
-      supervised: true
-      benchmarks:
-        - name: cis_lvl1_enterprise
-        - name: cis_lvl2_enterprise
     introduced: '6.0'
   visionOS:
-    '2.0':
+    '26.0':
       supervised: true
     introduced: '2.0'
 tags:
   - cisv8
+  - cnssi-1253_moderate
+  - cnssi-1253_low
+  - cnssi-1253_high
 mobileconfig_info:
   - PayloadType: com.apple.applicationaccess
     PayloadContent:

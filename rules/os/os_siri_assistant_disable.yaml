@@ -1,0 +1,52 @@
+id: os_siri_assistant_disable
+title: Disable Siri service
+discussion: |
+  The iOS built-in Siri service _MUST_ be disabled to prevent organizational data from being synchronized to Apple servers.
+
+  Apple's Siri service does not provide an organization with enough control over the storage and access of data, and, therefore, automated synchronization _MUST_ be controlled by an organization approved service.
+references:
+  nist:
+    cce:
+      ios_18:
+        - CCE-94551-9
+    800-53r5:
+      - AC-20
+      - CM-7
+      - CM-7(1)
+      - SC-7(10)
+  disa:
+    cci:
+      - CCI-000366
+    disa_stig:
+      ios_18:
+        - AIOS-18-016100
+        - AIOS-18-016300
+    sfr:
+      - 'FMT_MOF_EXT.1.2 #47'
+  bsi:
+    indigo:
+      ios_18:
+        - ANNEX K
+platforms:
+  iOS:
+    '18.0':
+      supervised: false
+      benchmarks:
+        - name: ios_stig
+          severity: high
+        - name: indigo_base
+          severity: high
+        - name: indigo_high
+          severity: high
+    introduced: '5.0'
+tags:
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_high
+  - cnssi-1253_moderate
+  - cnssi-1253_low
+  - cnssi-1253_high
+mobileconfig_info:
+  - PayloadType: com.apple.applicationaccess
+    PayloadContent:
+      - allowAssistant: false

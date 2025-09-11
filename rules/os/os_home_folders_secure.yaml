@@ -7,12 +7,12 @@ discussion: |
 references:
   nist:
     cce:
+      macos_26:
+        - CCE-95203-6
       macos_15:
         - CCE-94204-5
       macos_14:
         - CCE-92804-4
-      macos_13:
-        - CCE-91800-3
     800-53r5:
       - AC-6
     800-171r3:
@@ -24,25 +24,35 @@ references:
       - SRG-OS-000480-GPOS-00230
       - SRG-OS-000480-GPOS-00228
     disa_stig:
+      macos_26:
+        - APPL-26-002068
       macos_15:
         - APPL-15-002068
       macos_14:
         - APPL-14-002068
     cmmc:
       - AC.L1-3.1.1
+      - AC.L1-3.1.2
       - AC.L2-3.1.5
+      - AC.L2-3.1.6
   cis:
     benchmark:
+      macos_26:
+        - 5.1.1 (level 1)
       macos_15:
         - 5.1.1 (level 1)
       macos_14:
-        - 5.1.1 (level 1)
-      macos_13:
         - 5.1.1 (level 1)
     controls_v8:
       - 3.3
 platforms:
   macOS:
+    '26.0':
+      benchmarks:
+        - name: cis_lvl1
+        - name: cis_lvl2
+        - name: disa_stig
+          severity: medium
     '15.0':
       benchmarks:
         - name: cis_lvl1
@@ -55,10 +65,6 @@ platforms:
         - name: cis_lvl2
         - name: disa_stig
           severity: medium
-    '13.0':
-      benchmarks:
-        - name: cis_lvl1
-        - name: cis_lvl2
     enforcement_info:
       check:
         shell: /usr/bin/find /System/Volumes/Data/Users -mindepth 1 -maxdepth 1 -type d ! \( -perm 700 -o -perm 711 \) | /usr/bin/grep -v "Shared" | /usr/bin/grep -v "Guest" | /usr/bin/wc -l | /usr/bin/xargs

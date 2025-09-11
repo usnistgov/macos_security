@@ -7,12 +7,12 @@ discussion: |
 references:
   nist:
     cce:
+      macos_26:
+        - CCE-95282-0
       macos_15:
         - CCE-94279-7
       macos_14:
         - CCE-92875-4
-      macos_13:
-        - CCE-91870-6
     800-53r5:
       - IA-2
       - IA-2(5)
@@ -29,6 +29,8 @@ references:
       - SRG-OS-000109-GPOS-00056
       - SRG-OS-000104-GPOS-00051
     disa_stig:
+      macos_26:
+        - APPL-26-000100
       macos_15:
         - APPL-15-000100
       macos_14:
@@ -38,16 +40,22 @@ references:
       - IA.L1-3.5.2
   cis:
     benchmark:
+      macos_26:
+        - 5.6 (level 1)
       macos_15:
         - 5.6 (level 1)
       macos_14:
-        - 5.6 (level 1)
-      macos_13:
         - 5.6 (level 1)
     controls_v8:
       - 5.4
 platforms:
   macOS:
+    '26.0':
+      benchmarks:
+        - name: cis_lvl1
+        - name: cis_lvl2
+        - name: disa_stig
+          severity: medium
     '15.0':
       benchmarks:
         - name: cis_lvl1
@@ -60,10 +68,6 @@ platforms:
         - name: cis_lvl2
         - name: disa_stig
           severity: medium
-    '13.0':
-      benchmarks:
-        - name: cis_lvl1
-        - name: cis_lvl2
     enforcement_info:
       check:
         shell: /usr/bin/dscl . -read /Users/root UserShell 2>&1 | /usr/bin/grep -c "/usr/bin/false"

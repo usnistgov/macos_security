@@ -5,14 +5,14 @@ discussion: |
 references:
   nist:
     cce:
+      ios_26:
+        - CCE-95432-1
       ios_18:
         - CCE-94423-1
       ios_17:
         - CCE-93409-1
-      ios_16:
-        - CCE-93209-5
-      visionos_2:
-        - CCE-94487-6
+      visionos_26:
+        - CCE-95562-5
     800-53r5:
       - AC-3
       - AC-20
@@ -30,20 +30,17 @@ references:
       ios_17:
         - AIOS-17-011500
         - AIOS-17-711500
-      ios_16:
-        - AIOS-16-011500
-        - AIOS-16-711500
     sfr:
       - 'FMT_SMF_EXT.1.1 #47'
   cis:
     benchmark:
+      ios_26:
+        - 2.2.1.10 (level 1 - End-User Owned Devices)
+        - 3.2.1.23 (level 1 - Institutionally-Owned Devices)
       ios_18:
         - 2.2.1.10 (level 1 - End-User Owned Devices)
         - 3.2.1.23 (level 1 - Institutionally-Owned Devices)
       ios_17:
-        - 2.2.1.10 (level 1 - End-User Owned Devices)
-        - 3.2.1.23 (level 1 - Institutionally-Owned Devices)
-      ios_16:
         - 2.2.1.10 (level 1 - End-User Owned Devices)
         - 3.2.1.23 (level 1 - Institutionally-Owned Devices)
     controls_v8:
@@ -55,6 +52,13 @@ references:
         - ANNEX K
 platforms:
   iOS:
+    '26.0':
+      supervised: false
+      benchmarks:
+        - name: cis_lvl1_byod
+        - name: cis_lvl2_byod
+        - name: cis_lvl1_enterprise
+        - name: cis_lvl2_enterprise
     '18.0':
       supervised: false
       benchmarks:
@@ -83,20 +87,9 @@ platforms:
           severity: medium
         - name: indigo_high
           severity: medium
-    '16.0':
-      supervised: false
-      benchmarks:
-        - name: cis_lvl1_byod
-        - name: cis_lvl2_byod
-        - name: cis_lvl1_enterprise
-        - name: cis_lvl2_enterprise
-        - name: ios_stig
-          severity: medium
-        - name: ios_stig_byoad
-          severity: medium
     introduced: '9.0'
   visionOS:
-    '2.0':
+    '26.0':
       supervised: false
     introduced: '2.0'
 tags:

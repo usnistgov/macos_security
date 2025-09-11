@@ -7,27 +7,20 @@ discussion: |
 references:
   nist:
     cce:
+      macos_26:
+        - CCE-95181-4
       macos_15:
         - CCE-94181-5
       macos_14:
         - CCE-92780-6
-      macos_13:
-        - CCE-91778-1
-  disa:
-    disa_stig:
-      macos_13:
-        - APPL-13-000016
   cis:
     controls_v8:
       - 6.7
 platforms:
   macOS:
+    '26.0': {}
     '15.0': {}
     '14.0': {}
-    '13.0':
-      benchmarks:
-        - name: disa_stig
-          severity: high
     enforcement_info:
       check:
         shell: /usr/bin/dscl localhost -list . | /usr/bin/grep -qvE '(Contact|Search|Local|^$)'; /bin/echo $?

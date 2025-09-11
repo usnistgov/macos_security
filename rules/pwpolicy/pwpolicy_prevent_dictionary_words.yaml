@@ -4,19 +4,19 @@ discussion: "The macOS should be configured to forbid users to use dictionary wo
 references:
   nist:
     cce:
+      macos_26:
+        - CCE-95348-9
       macos_15:
         - CCE-94342-3
       macos_14:
         - CCE-92938-0
-      macos_13:
-        - CCE-91925-8
   disa:
     srg:
       - SRG-OS-000480-GPOS-00225
 platforms:
   macOS:
+    '26.0': {}
     '15.0': {}
     '14.0': {}
-    '13.0': {}
 tags:
   - permanent

@@ -71,6 +71,7 @@ Gemfile.lock
 # MSCP specific files/folders
 /bin/
 /mscp_gems/
+_work/
 
 # misc
 /.private/

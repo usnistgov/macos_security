@@ -7,12 +7,12 @@ discussion: |-
 references:
   nist:
     cce:
+      macos_26:
+        - CCE-95178-0
       macos_15:
         - CCE-94178-1
       macos_14:
         - CCE-92778-0
-      macos_13:
-        - CCE-91776-5
     800-53r5:
       - SI-2(2)
   disa:
@@ -20,9 +20,9 @@ references:
       - SRG-OS-000191-GPOS-00080
 platforms:
   macOS:
+    '26.0': {}
     '15.0': {}
     '14.0': {}
-    '13.0': {}
 tags:
   - 800-53r5_moderate
   - 800-53r5_high

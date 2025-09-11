@@ -5,14 +5,14 @@ discussion: |
 references:
   nist:
     cce:
+      ios_26:
+        - CCE-95475-0
       ios_18:
         - CCE-94438-9
       ios_17:
         - CCE-93423-2
-      ios_16:
-        - CCE-93223-6
-      visionos_2:
-        - CCE-94497-5
+      visionos_26:
+        - CCE-95575-7
     800-53r5:
       - AC-20(2)
   disa:
@@ -25,17 +25,15 @@ references:
         - AIOS-18-014300
       ios_17:
         - AIOS-17-014300
-      ios_16:
-        - AIOS-16-014300
     sfr:
       - 'FMT_SMF_EXT.1.1 #47'
   cis:
     benchmark:
+      ios_26:
+        - 3.2.1.9 (level 2 - Institutionally-Owned Devices)
       ios_18:
         - 3.2.1.9 (level 2 - Institutionally-Owned Devices)
       ios_17:
-        - 3.2.1.9 (level 2 - Institutionally-Owned Devices)
-      ios_16:
         - 3.2.1.9 (level 2 - Institutionally-Owned Devices)
     controls_v8:
       - 1.2
@@ -45,6 +43,10 @@ references:
         - ANNEX K
 platforms:
   iOS:
+    '26.0':
+      supervised: true
+      benchmarks:
+        - name: cis_lvl2_enterprise
     '18.0':
       supervised: true
       benchmarks:
@@ -61,13 +63,9 @@ platforms:
           severity: medium
         - name: indigo_high
           severity: medium
-    '16.0':
-      supervised: true
-      benchmarks:
-        - name: cis_lvl2_enterprise
     introduced: '13.1'
   visionOS:
-    '2.0':
+    '26.0':
       supervised: true
     introduced: '2.0'
 tags:

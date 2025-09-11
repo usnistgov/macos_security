@@ -9,12 +9,12 @@ discussion: |
 references:
   nist:
     cce:
+      macos_26:
+        - CCE-95330-7
       macos_15:
         - CCE-94324-1
       macos_14:
         - CCE-92921-6
-      macos_13:
-        - CCE-91909-2
     800-53r5:
       - AC-3
       - AC-17
@@ -27,12 +27,12 @@ references:
     srg:
       - SRG-OS-000080-GPOS-00048
     disa_stig:
+      macos_26:
+        - APPL-26-002006
       macos_15:
         - APPL-15-002006
       macos_14:
         - APPL-14-002006
-      macos_13:
-        - APPL-13-002006
     cmmc:
       - AC.L1-3.1.1
   cis:
@@ -42,23 +42,51 @@ references:
       - 4.8
 platforms:
   macOS:
+    '26.0':
+      benchmarks:
+        - name: disa_stig
+          severity: medium
+      enforcement_info:
+        fix:
+          shell: |-
+            /bin/launchctl bootout system/com.apple.uucp
+            /bin/launchctl disable system/com.apple.uucp
+          additional_info: The system may need to be restarted for the update to take effect.
     '15.0':
       benchmarks:
         - name: disa_stig
           severity: medium
+      enforcement_info:
+        check:
+          shell: /bin/launchctl print-disabled system | /usr/bin/grep -c '"com.apple.uucp" => disabled'
+          result:
+            integer: 1
     '14.0':
       benchmarks:
         - name: disa_stig
           severity: medium
-    '13.0':
-      benchmarks:
-        - name: disa_stig
-          severity: medium
+      enforcement_info:
+        check:
+          shell: /bin/launchctl print-disabled system | /usr/bin/grep -c '"com.apple.uucp" => disabled'
+          result:
+            integer: 1
     enforcement_info:
       check:
-        shell: /bin/launchctl print-disabled system | /usr/bin/grep -c '"com.apple.uucp" => disabled'
+        shell: |-
+          result="FAIL"
+          enabled=$(/bin/launchctl print-disabled system | /usr/bin/grep '"com.apple.uucp" => enabled')
+          running=$(/bin/launchctl print system/com.apple.uucp 2>/dev/null)
+
+          if [[ -z "$running" ]] && [[ -z "$enabled" ]]; then
+            result="PASS"
+          elif [[ -n "$running" ]]; then
+            result=result+" RUNNING"
+          elif [[ -n "$enabled" ]]; then
+            result=result+" ENABLED"
+          fi
+          echo $result
         result:
-          integer: 1
+          string: PASS
       fix:
         shell: /bin/launchctl disable system/com.apple.uucp
         additional_info: The system may need to be restarted for the update to take effect.

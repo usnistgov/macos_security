@@ -5,32 +5,38 @@ discussion: |
 references:
   nist:
     cce:
+      macos_26:
+        - CCE-95384-4
       macos_15:
         - CCE-94377-9
       macos_14:
         - CCE-92973-7
-      macos_13:
-        - CCE-91963-9
   cis:
     benchmark:
+      macos_26:
+        - 2.6.1.1 (level 2)
       macos_15:
         - 2.6.1.1 (level 2)
       macos_14:
-        - 2.6.1.1 (level 2)
-      macos_13:
         - 2.6.1.1 (level 2)
     controls_v8:
       - 4.1
       - 4.8
 platforms:
   macOS:
+    '26.0':
+      benchmarks:
+        - name: cis_lvl2
+      enforcement_info:
+        fix:
+          shell: |-
+            /usr/bin/defaults write /var/db/locationd/Library/Preferences/ByHost/com.apple.locationd LocationServicesEnabled -bool true;
+            pid=$(/bin/launchctl print system | /usr/bin/awk '/\tcom.apple.locationd/ {print $1}')
+            kill -9 $pid
     '15.0':
       benchmarks:
         - name: cis_lvl2
     '14.0':
-      benchmarks:
-        - name: cis_lvl2
-    '13.0':
       benchmarks:
         - name: cis_lvl2
     enforcement_info:

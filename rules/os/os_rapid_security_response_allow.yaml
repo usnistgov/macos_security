@@ -5,12 +5,12 @@ discussion: |
 references:
   nist:
     cce:
+      macos_26:
+        - CCE-95272-1
       macos_15:
         - CCE-94269-8
       macos_14:
         - CCE-92865-5
-      macos_13:
-        - CCE-91860-7
     800-53r5:
       - SI-2
       - SI-2(5)
@@ -25,9 +25,9 @@ references:
       - SI.L1-3.14.4
 platforms:
   macOS:
+    '26.0': {}
     '15.0': {}
     '14.0': {}
-    '13.0': {}
     enforcement_info:
       check:
         shell: |-

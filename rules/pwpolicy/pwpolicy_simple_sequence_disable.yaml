@@ -4,47 +4,42 @@ discussion: "The system _MUST_ be configured to prohibit the use of repeating, a
 references:
   nist:
     cce:
+      macos_26:
+        - CCE-95349-7
       macos_15:
         - CCE-94343-1
       macos_14:
         - CCE-92939-8
-      macos_13:
-        - CCE-91926-6
+      ios_26:
+        - CCE-95553-4
       ios_18:
         - CCE-94478-5
       ios_17:
         - CCE-93461-2
-      ios_16:
-        - CCE-93261-6
     800-53r5:
       - IA-5(1)
     800-171r3:
       - 03.05.07
   disa:
     disa_stig:
-      macos_13:
-        - APPL-13-003011
       ios_18:
         - AIOS-18-006600
       ios_17:
         - AIOS-17-006600
         - AIOS-17-706600
-      ios_16:
-        - AIOS-16-006600
-        - AIOS-16-706600
     cmmc:
       - IA.L2-3.5.7
       - IA.L2-3.5.8
       - IA.L2-3.5.9
   cis:
     benchmark:
+      ios_26:
+        - 2.4.1 (level 1 - End-User Owned Devices)
+        - 3.4.1 (level 1 - Institutionally-Owned Devices)
       ios_18:
         - 2.4.1 (level 1 - End-User Owned Devices)
         - 3.4.1 (level 1 - Institutionally-Owned Devices)
       ios_17:
-        - 2.4.1 (level 1 - End-User Owned Devices)
-        - 3.4.1 (level 1 - Institutionally-Owned Devices)
-      ios_16:
         - 2.4.1 (level 1 - End-User Owned Devices)
         - 3.4.1 (level 1 - Institutionally-Owned Devices)
     controls_v8:
@@ -59,11 +54,9 @@ references:
         - ANNEX K
 platforms:
   macOS:
+    '26.0': {}
     '15.0': {}
     '14.0': {}
-    '13.0':
-      benchmarks:
-        - name: disa_stig
     enforcement_info:
       check:
         shell: /usr/bin/pwpolicy -getaccountpolicies 2> /dev/null | /usr/bin/tail +2 | /usr/bin/xmllint --xpath '//dict/key[text()="policyIdentifier"]/following-sibling::*[1]/text()' - | /usr/bin/grep "allowSimple" -c
@@ -71,6 +64,13 @@ platforms:
           integer: 1
     introduced: '10.7'
   iOS:
+    '26.0':
+      supervised: false
+      benchmarks:
+        - name: cis_lvl1_byod
+        - name: cis_lvl2_byod
+        - name: cis_lvl1_enterprise
+        - name: cis_lvl2_enterprise
     '18.0':
       supervised: false
       benchmarks:
@@ -98,17 +98,6 @@ platforms:
         - name: indigo_base
           severity: medium
         - name: indigo_high
-          severity: medium
-    '16.0':
-      supervised: false
-      benchmarks:
-        - name: cis_lvl1_byod
-        - name: cis_lvl2_byod
-        - name: cis_lvl1_enterprise
-        - name: cis_lvl2_enterprise
-        - name: ios_stig
-          severity: medium
-        - name: ios_stig_byoad
           severity: medium
     introduced: '4.0'
 tags:

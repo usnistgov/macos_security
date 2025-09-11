@@ -5,17 +5,17 @@ discussion: |
 references:
   nist:
     cce:
+      macos_26:
+        - CCE-95324-0
       macos_15:
         - CCE-94318-3
       macos_14:
         - CCE-92915-8
-      macos_13:
-        - CCE-91903-5
 platforms:
   macOS:
+    '26.0': {}
     '15.0': {}
     '14.0': {}
-    '13.0': {}
     enforcement_info:
       check:
         shell: /usr/bin/sntp $(/usr/sbin/systemsetup -getnetworktimeserver | /usr/bin/awk '{print $4}') | /usr/bin/awk -F'.' '/\+\/\-/{if (substr($1,2) >= 270) {print "No"} else {print "Yes"}}'

@@ -5,13 +5,33 @@ discussion: |
 references:
   nist:
     cce:
+      ios_26:
+        - CCE-95462-8
       ios_18:
         - CCE-94524-6
+    800-53r5:
+      - CM-7
+  disa:
+    cci:
+      - CCI-000366
+    disa_stig:
+      ios_18:
+        - AIOS-18-017900
+    sfr:
+      - 'FMT_MOF_EXT.1.2 #47'
 platforms:
   iOS:
+    '26.0':
+      supervised: false
     '18.0':
       supervised: false
+      benchmarks:
+        - name: ios_stig
     introduced: '18.0'
+tags:
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_high
 mobileconfig_info:
   - PayloadType: com.apple.applicationaccess
     PayloadContent:

@@ -4,12 +4,12 @@ discussion: "The macOS _MUST_ be configured to enforce a minimum password lifeti
 references:
   nist:
     cce:
+      macos_26:
+        - CCE-95347-1
       macos_15:
         - CCE-94341-5
       macos_14:
         - CCE-92937-2
-      macos_13:
-        - CCE-91924-1
     800-53r5:
       - IA-5
     800-171r3:
@@ -21,6 +21,8 @@ references:
     srg:
       - SRG-OS-000075-GPOS-00043
     disa_stig:
+      macos_26:
+        - APPL-26-003070
       macos_15:
         - APPL-15-003070
       macos_14:
@@ -33,6 +35,10 @@ references:
       - 4.7
 platforms:
   macOS:
+    '26.0':
+      benchmarks:
+        - name: disa_stig
+          severity: medium
     '15.0':
       benchmarks:
         - name: disa_stig
@@ -41,12 +47,11 @@ platforms:
       benchmarks:
         - name: disa_stig
           severity: medium
-    '13.0': {}
     enforcement_info:
       check:
-        shell: /usr/bin/pwpolicy -getaccountpolicies 2> /dev/null | /usr/bin/tail +2 | /usr/bin/xmllint --xpath '//dict/key[text()="policyAttributeMinimumLifetimeHours"]/following-sibling::integer[1]/text()' - | /usr/bin/awk '{ if ($1 >= $ODV ) {print "yes"} else {print "no"}}'
+        shell: /usr/bin/pwpolicy -getaccountpolicies 2> /dev/null | /usr/bin/tail +2 | /usr/bin/xmllint --xpath '//dict/key[text()="policyAttributeMinimumLifetimeHours"]/following-sibling::integer[1]/text()' - | /usr/bin/awk '{ if ($1 >= $ODV ) {print "pass"} else {print "fail"}}'
         result:
-          string: 'yes'
+          string: pass
       fix:
         additional_info: |-
           This setting may be enforced using local policy or by a directory service.

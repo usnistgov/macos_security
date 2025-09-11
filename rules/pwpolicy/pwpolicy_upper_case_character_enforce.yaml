@@ -4,12 +4,12 @@ discussion: "The macOS should be configured to forbid users to use dictionary wo
 references:
   nist:
     cce:
+      macos_26:
+        - CCE-95353-9
       macos_15:
         - CCE-94347-2
       macos_14:
         - CCE-92943-0
-      macos_13:
-        - CCE-91930-8
     800-53r5:
       - IA-5(1)
     800-171r3:
@@ -20,23 +20,18 @@ references:
       - IA.L2-3.5.8
       - IA.L2-3.5.9
   cis:
-    benchmark:
-      macos_13:
-        - 5.2.6 (level 2)
     controls_v8:
       - 5.2
 platforms:
   macOS:
+    '26.0': {}
     '15.0': {}
     '14.0': {}
-    '13.0':
-      benchmarks:
-        - name: cis_lvl2
     enforcement_info:
       check:
-        shell: /usr/bin/pwpolicy -getaccountpolicies 2> /dev/null | /usr/bin/tail +2 | /usr/bin/xmllint --xpath '//dict/key[text()="minimumAlphaCharactersUpperCase"]/following-sibling::integer[1]/text()' - | /usr/bin/awk '{ if ($1 >= $ODV ) {print "yes"} else {print "no"}}'
+        shell: /usr/bin/pwpolicy -getaccountpolicies 2> /dev/null | /usr/bin/tail +2 | /usr/bin/xmllint --xpath '//dict/key[text()="minimumAlphaCharactersUpperCase"]/following-sibling::integer[1]/text()' - | /usr/bin/awk '{ if ($1 >= $ODV ) {print "pass"} else {print "fail"}}'
         result:
-          string: 'yes'
+          string: pass
       fix:
         additional_info: |-
           This setting may be enforced using local policy or by a directory service.
@@ -71,15 +66,7 @@ odv:
     validation:
       min: 1
   recommended: 1
-  cis_lvl1: 1
-  cis_lvl2: 1
 tags:
   - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
-  - 800-171
-  - 800-53r5_low
-  - 800-53r5_moderate
-  - 800-53r5_high
-  - cisv8
-  - cmmc_lvl2

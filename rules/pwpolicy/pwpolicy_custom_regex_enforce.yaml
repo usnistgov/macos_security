@@ -4,6 +4,8 @@ discussion: "The macOS _MUST_ be configured to meet complexity requirements defi
 references:
   nist:
     cce:
+      macos_26:
+        - CCE-95340-6
       macos_15:
         - CCE-94334-0
       macos_14:
@@ -24,6 +26,8 @@ references:
       - SRG-OS-000070-GPOS-00038
       - SRG-OS-000069-GPOS-00037
     disa_stig:
+      macos_26:
+        - APPL-26-003060
       macos_15:
         - APPL-15-003060
       macos_14:
@@ -34,6 +38,8 @@ references:
       - IA.L2-3.5.9
   cis:
     benchmark:
+      macos_26:
+        - 5.2.6 (level 2)
       macos_15:
         - 5.2.6 (level 2)
       macos_14:
@@ -42,6 +48,11 @@ references:
       - 5.2
 platforms:
   macOS:
+    '26.0':
+      benchmarks:
+        - name: cis_lvl2
+        - name: disa_stig
+          severity: medium
     '15.0':
       benchmarks:
         - name: cis_lvl2

@@ -4,12 +4,12 @@ discussion: Many mobile devices display notifications on the lock screen so user
 references:
   nist:
     cce:
+      ios_26:
+        - CCE-95522-9
       ios_18:
         - CCE-94464-5
       ios_17:
         - CCE-93448-9
-      ios_16:
-        - CCE-93248-3
     800-53r5:
       - AC-11(1)
   disa:
@@ -21,26 +21,18 @@ references:
       ios_17:
         - AIOS-17-007600
         - AIOS-17-707600
-      ios_16:
-        - AIOS-16-007600
-        - AIOS-16-707600
     sfr:
       - 'FMT_SMF_EXT.1.1 #18'
 platforms:
   iOS:
+    '26.0':
+      supervised: false
     '18.0':
       supervised: false
       benchmarks:
         - name: ios_stig
           severity: medium
     '17.0':
-      supervised: false
-      benchmarks:
-        - name: ios_stig
-          severity: medium
-        - name: ios_stig_byoad
-          severity: medium
-    '16.0':
       supervised: false
       benchmarks:
         - name: ios_stig

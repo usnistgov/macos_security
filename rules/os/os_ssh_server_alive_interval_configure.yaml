@@ -11,12 +11,12 @@ discussion: |
 references:
   nist:
     cce:
+      macos_26:
+        - CCE-95306-7
       macos_15:
         - CCE-94301-9
       macos_14:
         - CCE-92896-0
-      macos_13:
-        - CCE-91885-4
     800-53r5:
       - SC-10
       - AC-12
@@ -29,6 +29,8 @@ references:
     srg:
       - SRG-OS-000163-GPOS-00072
     disa_stig:
+      macos_26:
+        - APPL-26-000110
       macos_15:
         - APPL-15-000110
       macos_14:
@@ -38,6 +40,13 @@ references:
       - SC.L2-3.13.9
 platforms:
   macOS:
+    '26.0':
+      benchmarks:
+        - name: disa_stig
+          severity: medium
+      enforcement_info:
+        fix:
+          shell: "include_dir=$(/usr/bin/awk '/^Include/ {print $2}' /etc/ssh/ssh_config | /usr/bin/tr -d '*')\n\nssh_config_string=(\"ServerAliveInterval $ODV\")\nfor ssh_config in $ssh_config_string; do\n  ssh_setting=$(echo $ssh_config | /usr/bin/cut -d \" \" -f1)\n  /usr/bin/grep -qEi \"^$ssh_setting\" \"${include_dir}01-mscp-ssh.conf\" && /usr/bin/sed -i \"\" \"s/^$ssh_setting.*/${ssh_config}/\" \"${include_dir}01-mscp-ssh.conf\" || echo \"$ssh_config\" >> \"${include_dir}01-mscp-ssh.conf\"\n  for u in $(/usr/bin/dscl . list /users shell | /usr/bin/egrep -v '(^_)|(root)|(/usr/bin/false)' | /usr/bin/awk '{print $1}'); do\n    config=$(/usr/bin/sudo -u $u /usr/bin/ssh -Gv . 2>&1)\n    configfiles=$(echo \"$config\" | /usr/bin/awk '/Reading configuration data/ {print $NF}'| /usr/bin/tr -d '\\r')\n    configarray=( ${(f)configfiles} )\n    if ! echo $config | /usr/bin/grep -q -i \"$ssh_config\" ; then\n      for c in $configarray; do\n        if [[ \"$c\" == \"/etc/ssh/crypto.conf\" ]]; then\n          continue\n        fi\n   \n        /usr/bin/sudo -u $u /usr/bin/grep -qEi \"^$ssh_setting\" \"$c\" && /usr/bin/sed -i \"\" \"s/^$ssh_setting.*/${ssh_config}/I\" \"$c\"\n        if [[ \"$c\" =~ \".ssh/config\" ]]; then\n          if /usr/bin/grep -qEi \"$ssh_setting\" \"$c\" 2> /dev/null; then\n            old_file=$(cat ~$u/.ssh/config)\n            echo \"$ssh_config\" > ~$u/.ssh/config\n            echo \"$old_file\" >> ~$u/.ssh/config\n          fi\n        fi\n      done\n    fi\n  done\ndone"
     '15.0':
       benchmarks:
         - name: disa_stig
@@ -49,7 +58,16 @@ platforms:
       benchmarks:
         - name: disa_stig
           severity: medium
-    '13.0': {}
+      enforcement_info:
+        fix:
+          shell: |-
+            for u in $(/usr/bin/dscl . -list /Users UniqueID | /usr/bin/awk '$2 > 500 {print $1}'); do
+              config=$(/usr/bin/sudo -u $u /usr/bin/ssh -Gv . 2>&1 | /usr/bin/awk '/Reading configuration data/ {print $NF}'| /usr/bin/tr -d '\r')
+              configarray=( ${(f)config} )
+              for c in $configarray; do
+                /usr/bin/sudo -u $u /usr/bin/grep -q '^ServerAliveInterval' "$c" && /usr/bin/sed -i '' 's/.*ServerAliveInterval.*/ServerAliveInterval $ODV/' "$c" || /bin/echo 'ServerAliveInterval $ODV' >> "$c"
+              done
+            done
     enforcement_info:
       check:
         shell: |-
@@ -66,11 +84,32 @@ platforms:
           string: pass
       fix:
         shell: |-
-          for u in $(/usr/bin/dscl . -list /Users UniqueID | /usr/bin/awk '$2 > 500 {print $1}'); do
-            config=$(/usr/bin/sudo -u $u /usr/bin/ssh -Gv . 2>&1 | /usr/bin/awk '/Reading configuration data/ {print $NF}'| /usr/bin/tr -d '\r')
-            configarray=( ${(f)config} )
-            for c in $configarray; do
-              /usr/bin/sudo -u $u /usr/bin/grep -q '^ServerAliveInterval' "$c" && /usr/bin/sed -i '' 's/.*ServerAliveInterval.*/ServerAliveInterval $ODV/' "$c" || /bin/echo 'ServerAliveInterval $ODV' >> "$c"
+          include_dir=$(/usr/bin/awk '/^Include/ {print $2}' /etc/ssh/ssh_config | /usr/bin/tr -d '*')
+
+          ssh_config_string=("ServerAliveInterval $ODV")
+          for ssh_config in $ssh_config_string; do
+            ssh_setting=$(echo $ssh_config | /usr/bin/cut -d " " -f1)
+            /usr/bin/grep -qEi "^$ssh_setting" "${include_dir}01-mscp-ssh.conf" && /usr/bin/sed -i "" "s/^$ssh_setting.*/${ssh_config}/" "${include_dir}01-mscp-ssh.conf" || echo "$ssh_config" >> "${include_dir}01-mscp-ssh.conf"
+            for u in $(/usr/bin/dscl . list /users shell | /usr/bin/egrep -v '(^_)|(root)|(/usr/bin/false)' | /usr/bin/awk '{print $1}'); do
+              config=$(/usr/bin/sudo -u $u /usr/bin/ssh -Gv . 2>&1)
+              configfiles=$(echo "$config" | /usr/bin/awk '/Reading configuration data/ {print $NF}'| /usr/bin/tr -d '\r')
+              configarray=( ${(f)configfiles} )
+              if ! echo $config | /usr/bin/grep -q -i "$ssh_config" ; then
+                for c in $configarray; do
+                  if [[ "$c" == "/etc/ssh/crypto.conf" ]]; then
+                    continue
+                  fi
+
+                  /usr/bin/sudo -u $u /usr/bin/grep -qEi "^$ssh_setting" "$c" && /usr/bin/sed -i "" "s/^$ssh_setting.*/${ssh_config}/I" "$c"
+                  if [[ "$c" =~ ".ssh/config" ]]; then
+                    if /usr/bin/grep -qEi "$ssh_setting" "$c" 2> /dev/null; then
+                      old_file=$(cat ~$u/.ssh/config)
+                      echo "$ssh_config" > ~$u/.ssh/config
+                      echo "$old_file" >> ~$u/.ssh/config
+                    fi
+                  fi
+                done
+              fi
             done
           done
 odv:

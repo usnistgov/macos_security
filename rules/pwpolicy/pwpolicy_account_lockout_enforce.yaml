@@ -7,18 +7,18 @@ discussion: |
 references:
   nist:
     cce:
+      macos_26:
+        - CCE-95337-2
       macos_15:
         - CCE-94331-6
       macos_14:
         - CCE-92927-3
-      macos_13:
-        - CCE-91915-9
+      ios_26:
+        - CCE-95546-8
       ios_18:
         - CCE-94473-6
       ios_17:
         - CCE-93456-2
-      ios_16:
-        - CCE-93256-6
     800-53r5:
       - AC-7
     800-171r3:
@@ -31,37 +31,34 @@ references:
       - SRG-OS-000329-GPOS-00128
       - SRG-OS-000021-GPOS-00005
     disa_stig:
+      macos_26:
+        - APPL-26-000022
       macos_15:
         - APPL-15-000022
       macos_14:
         - APPL-14-000022
-      macos_13:
-        - APPL-13-000022
       ios_18:
         - AIOS-18-006900
       ios_17:
         - AIOS-17-006900
         - AIOS-17-706900
-      ios_16:
-        - AIOS-16-006900
-        - AIOS-16-706900
     cmmc:
       - AC.L2-3.1.8
   cis:
     benchmark:
+      macos_26:
+        - 5.2.1 (level 1)
       macos_15:
         - 5.2.1 (level 1)
       macos_14:
         - 5.2.1 (level 1)
-      macos_13:
-        - 5.2.1 (level 1)
+      ios_26:
+        - 2.4.6 (level 1 - End-User Owned Devices)
+        - 3.4.6 (level 1 - Institutionally-Owned Devices)
       ios_18:
         - 2.4.6 (level 1 - End-User Owned Devices)
         - 3.4.6 (level 1 - Institutionally-Owned Devices)
       ios_17:
-        - 2.4.6 (level 1 - End-User Owned Devices)
-        - 3.4.6 (level 1 - Institutionally-Owned Devices)
-      ios_16:
         - 2.4.6 (level 1 - End-User Owned Devices)
         - 3.4.6 (level 1 - Institutionally-Owned Devices)
     controls_v8:
@@ -76,6 +73,12 @@ references:
         - ANNEX K
 platforms:
   macOS:
+    '26.0':
+      benchmarks:
+        - name: cis_lvl1
+        - name: cis_lvl2
+        - name: disa_stig
+          severity: medium
     '15.0':
       benchmarks:
         - name: cis_lvl1
@@ -88,19 +91,20 @@ platforms:
         - name: cis_lvl2
         - name: disa_stig
           severity: medium
-    '13.0':
-      benchmarks:
-        - name: cis_lvl1
-        - name: cis_lvl2
-        - name: disa_stig
-          severity: medium
     enforcement_info:
       check:
-        shell: /usr/bin/pwpolicy -getaccountpolicies 2> /dev/null | /usr/bin/tail +2 | /usr/bin/xmllint --xpath '//dict/key[text()="policyAttributeMaximumFailedAuthentications"]/following-sibling::integer[1]/text()' - | /usr/bin/awk '{ if ($1 <= $ODV) {print "yes"} else {print "no"}}' | /usr/bin/uniq
+        shell: /usr/bin/pwpolicy -getaccountpolicies 2> /dev/null | /usr/bin/tail +2 | /usr/bin/xmllint --xpath '//dict/key[text()="policyAttributeMaximumFailedAuthentications"]/following-sibling::integer[1]/text()' - | /usr/bin/awk '{ if ($1 <= $ODV) {print "pass"} else {print "fail"}}' | /usr/bin/uniq
         result:
-          string: 'yes'
+          string: pass
     introduced: '10.7'
   iOS:
+    '26.0':
+      supervised: false
+      benchmarks:
+        - name: cis_lvl1_byod
+        - name: cis_lvl2_byod
+        - name: cis_lvl1_enterprise
+        - name: cis_lvl2_enterprise
     '18.0':
       supervised: false
       benchmarks:
@@ -129,17 +133,6 @@ platforms:
           severity: medium
         - name: indigo_high
           severity: medium
-    '16.0':
-      supervised: false
-      benchmarks:
-        - name: cis_lvl1_byod
-        - name: cis_lvl2_byod
-        - name: cis_lvl1_enterprise
-        - name: cis_lvl2_enterprise
-        - name: ios_stig
-          severity: medium
-        - name: ios_stig_byoad
-          severity: medium
     introduced: '4.0'
 odv:
   hint:
@@ -156,9 +149,9 @@ odv:
   cis_lvl1_enterprise: 6
   cis_lvl2_enterprise: 6
   ios_stig: 10
-  ios_stig_byoad: 10
   indigo_base: 10
   indigo_high: 10
+  ios_stig_byoad: 10
 tags:
   - 800-171
   - 800-53r5_low

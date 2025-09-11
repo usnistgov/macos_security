@@ -5,8 +5,12 @@ discussion: |
 references:
   nist:
     cce:
+      macos_26:
+        - CCE-95212-7
       macos_15:
         - CCE-94213-6
+      ios_26:
+        - CCE-95486-7
       ios_18:
         - CCE-94537-8
     800-53r5:
@@ -28,6 +32,8 @@ references:
       - SRG-OS-000080-GPOS-00048
       - SRG-OS-000095-GPOS-00049
     disa_stig:
+      macos_26:
+        - APPL-26-002271
       macos_15:
         - APPL-15-002271
       ios_18:
@@ -48,6 +54,10 @@ references:
         - ANNEX K
 platforms:
   macOS:
+    '26.0':
+      benchmarks:
+        - name: disa_stig
+          severity: medium
     '15.0':
       benchmarks:
         - name: disa_stig
@@ -63,6 +73,8 @@ platforms:
           string: 'false'
     introduced: '15.0'
   iOS:
+    '26.0':
+      supervised: false
     '18.0':
       supervised: false
       benchmarks:
@@ -79,6 +91,7 @@ tags:
   - cnssi-1253_high
   - cmmc_lvl2
   - cmmc_lvl1
+  - cnssi-1253_moderate
 mobileconfig_info:
   - PayloadType: com.apple.applicationaccess
     PayloadContent:

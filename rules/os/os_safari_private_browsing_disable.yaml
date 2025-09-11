@@ -1,0 +1,28 @@
+id: os_safari_private_browsing_disable
+title: Ensure Private Browsing in Safari Is Disabled
+discussion: |
+  Private browsing _MUST_ be disabled in Safari.
+references:
+  nist:
+    cce:
+      macos_26:
+        - CCE-95599-7
+platforms:
+  macOS:
+    '26.0': {}
+    enforcement_info:
+      check:
+        shell: |-
+          /usr/bin/osascript -l JavaScript << EOS
+          $.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess')\
+          .objectForKey('allowSafariPrivateBrowsing').js
+          EOS
+        result:
+          string: 'false'
+    introduced: '-1'
+tags:
+  - none
+mobileconfig_info:
+  - PayloadType: com.apple.applicationaccess
+    PayloadContent:
+      - allowSafariPrivateBrowsing: false

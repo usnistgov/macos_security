@@ -9,12 +9,14 @@ discussion: |
 references:
   nist:
     cce:
+      macos_26:
+        - CCE-95343-0
       macos_15:
         - CCE-94337-3
       macos_14:
         - CCE-92932-3
-      macos_13:
-        - CCE-91920-9
+      ios_26:
+        - CCE-95549-2
       ios_18:
         - CCE-94565-9
       ios_17:
@@ -32,8 +34,6 @@ references:
     disa_stig:
       macos_14:
         - APPL-14-003009
-      macos_13:
-        - APPL-13-003009
       ios_18:
         - AIOS-18-006950
     cmmc:
@@ -42,11 +42,11 @@ references:
       - IA.L2-3.5.9
   cis:
     benchmark:
+      macos_26:
+        - 5.2.8 (level 1)
       macos_15:
         - 5.2.8 (level 1)
       macos_14:
-        - 5.2.8 (level 1)
-      macos_13:
         - 5.2.8 (level 1)
     controls_v8:
       - 5.2
@@ -60,31 +60,27 @@ references:
         - ANNEX K
 platforms:
   macOS:
+    '26.0':
+      benchmarks:
+        - name: cis_lvl1
+        - name: cis_lvl2
     '15.0':
       benchmarks:
         - name: cis_lvl1
         - name: cis_lvl2
-        - name: disa_stig
-          severity: medium
     '14.0':
       benchmarks:
         - name: cis_lvl1
         - name: cis_lvl2
-        - name: disa_stig
-          severity: medium
-    '13.0':
-      benchmarks:
-        - name: cis_lvl1
-        - name: cis_lvl2
-        - name: disa_stig
-          severity: medium
     enforcement_info:
       check:
-        shell: /usr/bin/pwpolicy -getaccountpolicies 2> /dev/null | /usr/bin/tail +2 | /usr/bin/xmllint --xpath '//dict/key[text()="policyAttributePasswordHistoryDepth"]/following-sibling::*[1]/text()' - | /usr/bin/awk '{ if ($1 >= $ODV ) {print "yes"} else {print "no"}}' | /usr/bin/uniq
+        shell: /usr/bin/pwpolicy -getaccountpolicies 2> /dev/null | /usr/bin/tail +2 | /usr/bin/xmllint --xpath '//dict/key[text()="policyAttributePasswordHistoryDepth"]/following-sibling::*[1]/text()' - | /usr/bin/awk '{ if ($1 >= $ODV ) {print "pass"} else {print "fail"}}' | /usr/bin/uniq
         result:
-          string: 'yes'
+          string: pass
     introduced: '10.7'
   iOS:
+    '26.0':
+      supervised: false
     '18.0':
       supervised: false
       benchmarks:

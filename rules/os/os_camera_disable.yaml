@@ -17,14 +17,14 @@ discussion: |
 references:
   nist:
     cce:
+      macos_26:
+        - CCE-95172-3
       macos_15:
         - CCE-94172-4
       macos_14:
         - CCE-92772-3
-      macos_13:
-        - CCE-91770-8
-      visionos_2:
-        - CCE-94493-4
+      visionos_26:
+        - CCE-95568-2
   disa:
     cci:
       - CCI-000381
@@ -32,23 +32,23 @@ references:
     srg:
       - SRG-OS-000095-GPOS-00049
     disa_stig:
+      macos_26:
+        - APPL-26-002017
       macos_15:
         - APPL-15-002017
       macos_14:
         - APPL-14-002017
-      macos_13:
-        - APPL-13-002017
 platforms:
   macOS:
+    '26.0':
+      benchmarks:
+        - name: disa_stig
+          severity: medium
     '15.0':
       benchmarks:
         - name: disa_stig
           severity: medium
     '14.0':
-      benchmarks:
-        - name: disa_stig
-          severity: medium
-    '13.0':
       benchmarks:
         - name: disa_stig
           severity: medium
@@ -63,7 +63,7 @@ platforms:
           string: 'false'
     introduced: '10.11'
   visionOS:
-    '2.0':
+    '26.0':
       supervised: true
     introduced: '2.0'
 mobileconfig_info:

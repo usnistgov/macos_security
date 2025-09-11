@@ -11,12 +11,12 @@ discussion: |
 references:
   nist:
     cce:
+      macos_26:
+        - CCE-95293-7
       macos_15:
         - CCE-94289-6
       macos_14:
         - CCE-92884-6
-      macos_13:
-        - CCE-91874-8
     800-53r5:
       - SC-28(3)
   disa:
@@ -27,9 +27,9 @@ references:
       - SC.L2-3.13.10
 platforms:
   macOS:
+    '26.0': {}
     '15.0': {}
     '14.0': {}
-    '13.0': {}
     enforcement_info:
       check:
         shell: /usr/sbin/ioreg -w 0 -c AppleSEPManager | /usr/bin/grep -q 'AppleSEPManager'; /bin/echo $?

@@ -6,20 +6,20 @@ discussion: |-
 references:
   nist:
     cce:
+      macos_26:
+        - CCE-95156-6
       macos_15:
         - CCE-94156-7
       macos_14:
         - CCE-92756-6
-      macos_13:
-        - CCE-91754-2
+      ios_26:
+        - CCE-95431-3
       ios_18:
         - CCE-94422-3
       ios_17:
         - CCE-93408-3
-      ios_16:
-        - CCE-93208-7
-      visionos_2:
-        - CCE-94486-8
+      visionos_26:
+        - CCE-95561-7
     800-53r5:
       - AC-3
       - AC-20
@@ -39,21 +39,20 @@ references:
       - SRG-OS-000080-GPOS-00048
       - SRG-OS-000095-GPOS-00049
     disa_stig:
+      macos_26:
+        - APPL-26-002009
       macos_15:
         - APPL-15-002009
       macos_14:
         - APPL-14-002009
-      macos_13:
-        - APPL-13-002009
+      ios_26:
+        - AO26-POOP-00001
       ios_18:
         - AIOS-18-010200
         - AIOS-18-012500
       ios_17:
         - AIOS-17-010200
         - AIOS-17-012500
-      ios_16:
-        - AIOS-16-010200
-        - AIOS-16-012500
     cmmc:
       - AC.L1-3.1.1
       - AC.L1-3.1.20
@@ -61,11 +60,11 @@ references:
       - CM.L2-3.4.7
   cis:
     benchmark:
+      macos_26:
+        - 2.3.1.1 (level 1)
       macos_15:
         - 2.3.1.1 (level 1)
       macos_14:
-        - 2.3.1.1 (level 1)
-      macos_13:
         - 2.3.1.1 (level 1)
     controls_v8:
       - 4.1
@@ -79,6 +78,12 @@ references:
         - ANNEX K
 platforms:
   macOS:
+    '26.0':
+      benchmarks:
+        - name: cis_lvl1
+        - name: cis_lvl2
+        - name: disa_stig
+          severity: medium
     '15.0':
       benchmarks:
         - name: cis_lvl1
@@ -91,12 +96,6 @@ platforms:
         - name: cis_lvl2
         - name: disa_stig
           severity: medium
-    '13.0':
-      benchmarks:
-        - name: cis_lvl1
-        - name: cis_lvl2
-        - name: disa_stig
-          severity: low
     enforcement_info:
       check:
         shell: |-
@@ -108,6 +107,11 @@ platforms:
           string: 'false'
     introduced: '10.13'
   iOS:
+    '26.0':
+      supervised: true
+      benchmarks:
+        - name: ios_stig
+          severity: medium
     '18.0':
       supervised: true
       benchmarks:
@@ -126,14 +130,9 @@ platforms:
           severity: medium
         - name: indigo_high
           severity: medium
-    '16.0':
-      supervised: true
-      benchmarks:
-        - name: ios_stig
-          severity: medium
     introduced: '7.0'
   visionOS:
-    '2.0':
+    '26.0':
       supervised: true
     introduced: '2.0'
 tags:

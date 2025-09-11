@@ -1,18 +1,18 @@
 id: os_httpd_disable
 title: Disable the Built-in Web Server
 discussion: |
-  The built-in web server is a non-essential service built into macOS and _MUST_ be disabled.
+  The built-in web server which is managed by launchd is a non-essential service built into macOS and _MUST_ be disabled and not running.
 
   NOTE: The built in web server service is disabled at startup by default macOS.
 references:
   nist:
     cce:
+      macos_26:
+        - CCE-95204-4
       macos_15:
         - CCE-94205-2
       macos_14:
         - CCE-92805-1
-      macos_13:
-        - CCE-91801-1
     800-53r5:
       - AC-3
       - AC-17
@@ -25,50 +25,77 @@ references:
     srg:
       - SRG-OS-000080-GPOS-00048
     disa_stig:
+      macos_26:
+        - APPL-26-002008
       macos_15:
         - APPL-15-002008
       macos_14:
         - APPL-14-002008
-      macos_13:
-        - APPL-13-002008
     cmmc:
       - AC.L1-3.1.1
   cis:
     benchmark:
+      macos_26:
+        - 4.2 (level 1)
       macos_15:
         - 4.2 (level 1)
       macos_14:
-        - 4.2 (level 1)
-      macos_13:
         - 4.2 (level 1)
     controls_v8:
       - 4.1
       - 4.8
 platforms:
   macOS:
+    '26.0':
+      benchmarks:
+        - name: cis_lvl1
+        - name: cis_lvl2
+        - name: disa_stig
+          severity: medium
+      enforcement_info:
+        fix:
+          shell: |-
+            /usr/sbin/apachectl stop 2>/dev/null
+            /bin/launchctl disable system/org.apache.httpd
     '15.0':
       benchmarks:
         - name: cis_lvl1
         - name: cis_lvl2
         - name: disa_stig
           severity: medium
+      enforcement_info:
+        check:
+          shell: /bin/launchctl print-disabled system | /usr/bin/grep -c '"org.apache.httpd" => disabled'
+          result:
+            integer: 1
     '14.0':
       benchmarks:
         - name: cis_lvl1
         - name: cis_lvl2
         - name: disa_stig
           severity: medium
-    '13.0':
-      benchmarks:
-        - name: cis_lvl1
-        - name: cis_lvl2
-        - name: disa_stig
-          severity: medium
+      enforcement_info:
+        check:
+          shell: /bin/launchctl print-disabled system | /usr/bin/grep -c '"org.apache.httpd" => disabled'
+          result:
+            integer: 1
     enforcement_info:
       check:
-        shell: /bin/launchctl print-disabled system | /usr/bin/grep -c '"org.apache.httpd" => disabled'
+        shell: |-
+          result="FAIL"
+          enabled=$(/bin/launchctl print-disabled system | /usr/bin/grep '"org.apache.httpd" => enabled')
+          running=$(/bin/launchctl print system/org.apache.httpd 2>/dev/null)
+
+          if [[ -z "$running" ]] && [[ -z "$enabled" ]]; then
+            result="PASS"
+          elif [[ -n "$running" ]]; then
+            result=result+" RUNNING"
+          elif [[ -n "$enabled" ]]; then
+            result=result+" ENABLED"
+          fi
+          echo $result
         result:
-          integer: 1
+          string: PASS
       fix:
         shell: /bin/launchctl disable system/org.apache.httpd
 tags:

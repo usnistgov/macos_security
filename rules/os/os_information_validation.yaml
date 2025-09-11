@@ -4,19 +4,19 @@ discussion: "Check the validity of the following information inputs: organizatio
 references:
   nist:
     cce:
+      macos_26:
+        - CCE-95210-1
       macos_15:
         - CCE-94211-0
       macos_14:
         - CCE-92810-1
-      macos_13:
-        - CCE-91806-0
     800-53r5:
       - SI-10
 platforms:
   macOS:
+    '26.0': {}
     '15.0': {}
     '14.0': {}
-    '13.0': {}
     enforcement_info:
       fix:
         additional_info: The requirement is NA. No fix is required.

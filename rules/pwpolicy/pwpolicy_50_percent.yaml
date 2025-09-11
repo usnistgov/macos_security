@@ -11,12 +11,12 @@ discussion: |-
 references:
   nist:
     cce:
+      macos_26:
+        - CCE-95335-6
       macos_15:
         - CCE-94329-0
       macos_14:
         - CCE-92925-7
-      macos_13:
-        - CCE-91913-4
     800-171r3:
       - 03.05.07
   disa:
@@ -24,9 +24,9 @@ references:
       - SRG-OS-000072-GPOS-00040
 platforms:
   macOS:
+    '26.0': {}
     '15.0': {}
     '14.0': {}
-    '13.0': {}
 tags:
   - 800-171
   - permanent

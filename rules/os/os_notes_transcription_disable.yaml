@@ -4,8 +4,12 @@ discussion: Apple Intelligence features such as Notes Transcription that use off
 references:
   nist:
     cce:
+      macos_26:
+        - CCE-95238-2
       macos_15:
         - CCE-94568-3
+      ios_26:
+        - CCE-95499-0
       ios_18:
         - CCE-94575-8
     800-53r5:
@@ -29,10 +33,16 @@ references:
       - CM.L2-3.4.7
   cis:
     benchmark:
+      macos_26:
+        - 2.5.1.4 (level 1)
       macos_15:
         - 2.5.1.4 (level 1)
 platforms:
   macOS:
+    '26.0':
+      benchmarks:
+        - name: cis_lvl1
+        - name: cis_lvl2
     '15.0':
       benchmarks:
         - name: cis_lvl1
@@ -48,6 +58,8 @@ platforms:
           string: 'false'
     introduced: '15.4'
   iOS:
+    '26.0':
+      supervised: true
     '18.0':
       supervised: true
     introduced: '18.4'

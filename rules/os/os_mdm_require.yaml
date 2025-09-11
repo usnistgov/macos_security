@@ -20,12 +20,12 @@ discussion: |
 references:
   nist:
     cce:
+      macos_26:
+        - CCE-95227-5
       macos_15:
         - CCE-94227-6
       macos_14:
         - CCE-92824-2
-      macos_13:
-        - CCE-91820-1
     800-53r5:
       - CM-2
       - CM-6
@@ -38,6 +38,8 @@ references:
     srg:
       - SRG-OS-000480-GPOS-00227
     disa_stig:
+      macos_26:
+        - APPL-26-005110
       macos_15:
         - APPL-15-005110
       macos_14:
@@ -55,6 +57,10 @@ references:
       - 5.1
 platforms:
   macOS:
+    '26.0':
+      benchmarks:
+        - name: disa_stig
+          severity: medium
     '15.0':
       benchmarks:
         - name: cis_lvl1
@@ -67,7 +73,6 @@ platforms:
         - name: cis_lvl2
         - name: disa_stig
           severity: medium
-    '13.0': {}
     enforcement_info:
       check:
         shell: '/usr/bin/profiles status -type enrollment | /usr/bin/awk -F: ''/MDM enrollment/ {print $2}'' | /usr/bin/grep -c "Yes (User Approved)"'

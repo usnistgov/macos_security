@@ -5,12 +5,12 @@ discussion: |
 references:
   nist:
     cce:
+      ios_26:
+        - CCE-95442-0
       ios_18:
         - CCE-94430-6
       ios_17:
         - CCE-93416-6
-      ios_16:
-        - CCE-93216-0
     800-53r5:
       - AC-3
       - CM-7
@@ -24,26 +24,30 @@ references:
       ios_17:
         - AIOS-17-011800
         - AIOS-17-711800
-      ios_16:
-        - AIOS-16-011800
-        - AIOS-16-711800
     sfr:
       - 'FMT_SMF_EXT.1.1 #47'
   cis:
     benchmark:
+      ios_26:
+        - 2.2.1.13 (level 1 - End-User Owned Devices)
+        - 3.2.1.27 (level 1 - Institutionally-Owned Devices)
       ios_18:
         - 2.2.1.13 (level 1 - End-User Owned Devices)
         - 3.2.1.27 (level 1 - Institutionally-Owned Devices)
       ios_17:
         - 2.2.1.13 (level 1 - End-User Owned Devices)
         - 3.2.1.27 (level 1 - Institutionally-Owned Devices)
-      ios_16:
-        - 2.2.1.13 (level 1 - End-User Owned Devices)
-        - 3.2.1.27 (level 1 - Institutionally-Owned Devices)
     controls_v8:
       - 3.3
 platforms:
   iOS:
+    '26.0':
+      supervised: false
+      benchmarks:
+        - name: cis_lvl1_byod
+        - name: cis_lvl2_byod
+        - name: cis_lvl1_enterprise
+        - name: cis_lvl2_enterprise
     '18.0':
       supervised: false
       benchmarks:
@@ -54,17 +58,6 @@ platforms:
         - name: ios_stig
           severity: low
     '17.0':
-      supervised: false
-      benchmarks:
-        - name: cis_lvl1_byod
-        - name: cis_lvl2_byod
-        - name: cis_lvl1_enterprise
-        - name: cis_lvl2_enterprise
-        - name: ios_stig
-          severity: low
-        - name: ios_stig_byoad
-          severity: low
-    '16.0':
       supervised: false
       benchmarks:
         - name: cis_lvl1_byod

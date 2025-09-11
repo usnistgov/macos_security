@@ -1,0 +1,31 @@
+id: system_settings_download_software_update_enforce
+title: Enforce Software Update Downloads Updates Automatically using DDM.
+discussion: |
+  Software Update _MUST_ be configured to enforce automatic downloads of updates from Apple and that the user cannot modify the setting within System Settings.
+references:
+  nist:
+    cce:
+      macos_26:
+        - CCE-95403-2
+  cis:
+    controls_v8:
+      - 7.3
+      - 7.4
+platforms:
+  macOS:
+    '26.0': {}
+    enforcement_info:
+      check:
+        shell: /usr/bin/plutil -convert json /var/db/softwareupdate/SoftwareUpdateDDMStatePersistence.plist -o - | /usr/bin/jq --raw-output .'SUCorePersistedStatePolicyFields.SUCoreDDMDeclarationGlobalSettings.automaticallyDownload'
+        result:
+          integer: 1
+      fix:
+        additional_info: This is implemented by Declarative Device Management (DDM).
+tags:
+  - cisv8
+  - ddm
+ddm_info:
+  declarationtype: com.apple.configuration.softwareupdate.settings
+  ddm_key: AutomaticActions
+  ddm_value:
+    Download: AlwaysOn

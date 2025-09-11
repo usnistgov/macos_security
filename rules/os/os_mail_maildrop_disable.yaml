@@ -5,12 +5,12 @@ discussion: |
 references:
   nist:
     cce:
+      ios_26:
+        - CCE-95491-7
       ios_18:
         - CCE-94448-8
       ios_17:
         - CCE-93432-3
-      ios_16:
-        - CCE-93232-7
     800-53r5:
       - AC-3
       - AC-20
@@ -27,19 +27,17 @@ references:
         - AIOS-18-011000
       ios_17:
         - AIOS-17-011000
-      ios_16:
-        - AIOS-16-011000
     sfr:
       - 'FMT_SMF_EXT.1.1 #47'
   cis:
     benchmark:
+      ios_26:
+        - 2.7.2 (level 2 - End-User Owned Devices)
+        - 3.7.2 (level 2 - Institutionally-Owned Devices)
       ios_18:
         - 2.7.2 (level 2 - End-User Owned Devices)
         - 3.7.2 (level 2 - Institutionally-Owned Devices)
       ios_17:
-        - 2.7.2 (level 2 - End-User Owned Devices)
-        - 3.7.2 (level 2 - Institutionally-Owned Devices)
-      ios_16:
         - 2.7.2 (level 2 - End-User Owned Devices)
         - 3.7.2 (level 2 - Institutionally-Owned Devices)
     controls_v8:
@@ -50,6 +48,11 @@ references:
         - ANNEX D (Section 5.6.1 - Mail)
 platforms:
   iOS:
+    '26.0':
+      supervised: false
+      benchmarks:
+        - name: cis_lvl2_byod
+        - name: cis_lvl2_enterprise
     '18.0':
       supervised: false
       benchmarks:
@@ -71,13 +74,6 @@ platforms:
         - name: indigo_base
           severity: medium
         - name: indigo_high
-          severity: medium
-    '16.0':
-      supervised: false
-      benchmarks:
-        - name: cis_lvl2_byod
-        - name: cis_lvl2_enterprise
-        - name: ios_stig
           severity: medium
     introduced: '9.2'
 tags:

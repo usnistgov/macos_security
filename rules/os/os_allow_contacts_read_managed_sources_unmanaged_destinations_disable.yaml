@@ -4,14 +4,14 @@ discussion: 'Managed Apps _MUST_ not be allowed to read contacts from unamanged 
 references:
   nist:
     cce:
+      ios_26:
+        - CCE-95437-0
       ios_18:
         - CCE-94425-6
       ios_17:
         - CCE-93411-7
-      ios_16:
-        - CCE-93211-1
-      visionos_2:
-        - CCE-94488-4
+      visionos_26:
+        - CCE-95563-3
     800-53r5:
       - AC-3
       - MP-2
@@ -28,9 +28,6 @@ references:
       ios_17:
         - AIOS-17-012400
         - AIOS-17-712400
-      ios_16:
-        - AIOS-16-012400
-        - AIOS-16-012400
     sfr:
       - 'FMT_SMF_EXT.1.1 #42'
       - FDP_ACF_EXT.1.2
@@ -41,6 +38,8 @@ references:
         - ANNEX K
 platforms:
   iOS:
+    '26.0':
+      supervised: false
     '18.0':
       supervised: false
       benchmarks:
@@ -61,16 +60,9 @@ platforms:
           severity: low
         - name: indigo_high
           severity: low
-    '16.0':
-      supervised: false
-      benchmarks:
-        - name: ios_stig
-          severity: low
-        - name: ios_stig_byoad
-          severity: low
     introduced: '12.0'
   visionOS:
-    '2.0':
+    '26.0':
       supervised: false
     introduced: '2.0'
 tags:

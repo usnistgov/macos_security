@@ -5,27 +5,34 @@ discussion: |
 references:
   nist:
     cce:
+      ios_26:
+        - CCE-95451-1
       ios_18:
         - CCE-94571-7
-      visionos_2:
-        - CCE-94579-0
+      visionos_26:
+        - CCE-95569-0
     800-53r5:
       - CM-7
       - CM-7(1)
       - CM-6
 platforms:
   iOS:
+    '26.0':
+      supervised: true
     '18.0':
       supervised: true
     introduced: '18.2'
   visionOS:
-    '2.0':
+    '26.0':
       supervised: true
     introduced: '2.2'
 tags:
   - 800-53r5_low
   - 800-53r5_moderate
   - 800-53r5_high
+  - cnssi-1253_moderate
+  - cnssi-1253_low
+  - cnssi-1253_high
 mobileconfig_info:
   - PayloadType: com.apple.applicationaccess
     PayloadContent:

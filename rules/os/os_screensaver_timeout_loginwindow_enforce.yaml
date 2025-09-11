@@ -7,31 +7,23 @@ discussion: |
 references:
   nist:
     cce:
+      macos_26:
+        - CCE-95291-1
       macos_15:
         - CCE-94287-0
       macos_14:
         - CCE-92882-0
-      macos_13:
-        - CCE-92010-8
   disa:
     cci:
       - CCI-000057
-    disa_stig:
-      macos_13:
-        - APPL-13-000004
-    cmmc:
-      - AC.L2-3.1.10
   cis:
     controls_v8:
       - 4.3
 platforms:
   macOS:
+    '26.0': {}
     '15.0': {}
     '14.0': {}
-    '13.0':
-      benchmarks:
-        - name: disa_stig
-          severity: medium
     enforcement_info:
       check:
         shell: |-
@@ -56,7 +48,6 @@ odv:
     validation:
       min: 1
   recommended: 1200
-  stig: 900
 tags:
   - cnssi-1253_moderate
 mobileconfig_info:

@@ -1,0 +1,55 @@
+id: os_loginwindow_adminhostinfo_disabled
+title: Prevent AdminHostInfo from Being Available at Login Window
+discussion: |
+  The system _MUST_ be configured to not display sensitive information at the login window. If the key `AdminHostInfo` is configured with a string value, it will allow the HostName, IP Address, and operating system version and build to be displayed when clicking on the clock area of the login window.
+
+  Configuring this key to be an integer value, since it expects a string value, will effectively disable the behavior.
+
+  NOTE: This configuration requires it to be deployed via Managed Preferences rather than directly to com.apple.loginwindow.
+references:
+  nist:
+    cce:
+      macos_26:
+        - CCE-95600-3
+    800-53r5:
+      - AC-11(1)
+    800-171r3:
+      - 03.01.10
+  disa:
+    cci:
+      - CCI-000060
+    srg:
+      - SRG-OS-000031-GPOS-00012
+    disa_stig:
+      macos_26:
+        - APPL-26-000009
+platforms:
+  macOS:
+    '26.0':
+      benchmarks:
+        - name: disa_stig
+          severity: medium
+    enforcement_info:
+      check:
+        shell: |-
+          /usr/bin/osascript -l JavaScript << EOS
+          $.NSUserDefaults.alloc.initWithSuiteName('com.apple.loginwindow')\
+          .integerForKey('AdminHostInfo')
+          EOS
+        result:
+          integer: -1
+    introduced: '-1'
+tags:
+  - 800-53r5_moderate
+  - 800-53r5_high
+  - 800-53r4_moderate
+  - 800-53r4_high
+  - 800-171
+  - cnssi-1253_low
+  - cnssi-1253_high
+  - cnssi-1253_moderate
+mobileconfig_info:
+  - PayloadType: com.apple.ManagedClient.preferences
+    PayloadContent:
+      - com.apple.loginwindow:
+          AdminHostInfo: -1

@@ -5,14 +5,14 @@ discussion: |
 references:
   nist:
     cce:
+      ios_26:
+        - CCE-95485-9
       ios_18:
         - CCE-94445-4
       ios_17:
         - CCE-93430-7
-      ios_16:
-        - CCE-93462-0
-      visionos_2:
-        - CCE-94501-4
+      visionos_26:
+        - CCE-95582-3
     800-53r5:
       - AC-17
       - AC-17(1)
@@ -28,18 +28,15 @@ references:
       ios_17:
         - AIOS-17-001000
         - AIOS-17-701000
-      ios_16:
-        - AIOS-16-001000
-        - AIOS-16-701000
     sfr:
       - 'FMT_SMF_EXT.1.1 #3'
   cis:
     benchmark:
+      ios_26:
+        - 3.2.1.16 (level 1 - Institutionally-Owned Devices)
       ios_18:
         - 3.2.1.16 (level 1 - Institutionally-Owned Devices)
       ios_17:
-        - 3.2.1.16 (level 1 - Institutionally-Owned Devices)
-      ios_16:
         - 3.2.1.16 (level 1 - Institutionally-Owned Devices)
     controls_v8:
       - 12.7
@@ -49,6 +46,11 @@ references:
         - ANNEX D (Section 5.10.3 - Manual VPN)
 platforms:
   iOS:
+    '26.0':
+      supervised: true
+      benchmarks:
+        - name: cis_lvl1_enterprise
+        - name: cis_lvl2_enterprise
     '18.0':
       supervised: true
       benchmarks:
@@ -73,18 +75,9 @@ platforms:
           severity: low
         - name: indigo_high
           severity: low
-    '16.0':
-      supervised: true
-      benchmarks:
-        - name: cis_lvl1_enterprise
-        - name: cis_lvl2_enterprise
-        - name: ios_stig
-          severity: low
-        - name: ios_stig_byoad
-          severity: low
     introduced: '11.0'
   visionOS:
-    '2.0':
+    '26.0':
       supervised: true
     introduced: '2.0'
 tags:
