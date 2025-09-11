@@ -9,7 +9,7 @@ discussion: |
 
   The information system initiates session audits at system start-up.
 
-  NOTE: Security auditing is NOT enabled by default on macOS Sequoia.
+  NOTE: Security auditing is NOT enabled by default on macOS Tahoe.
 check: |
   LAUNCHD_RUNNING=$(/bin/launchctl print system | /usr/bin/grep -c -E '\tcom.apple.auditd')
   AUDITD_RUNNING=$(/usr/sbin/audit -c | /usr/bin/grep -c "AUC_AUDITING")
