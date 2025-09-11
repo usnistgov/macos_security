@@ -15,31 +15,25 @@ discussion: |
 references:
   nist:
     cce:
+      macos_26:
+        - CCE-95183-0
       macos_15:
         - CCE-94183-1
       macos_14:
         - CCE-92782-2
-      macos_13:
-        - CCE-91780-7
     800-53r5:
       - MP-7
     800-171r3:
       - 03.08.07
   disa:
-    disa_stig:
-      macos_13:
-        - APPL-13-005051
     cmmc:
       - MP.L2-3.8.7
       - MP.L2-3.8.8
 platforms:
   macOS:
+    '26.0': {}
     '15.0': {}
     '14.0': {}
-    '13.0':
-      benchmarks:
-        - name: disa_stig
-          severity: medium
     enforcement_info:
       check:
         shell: |-

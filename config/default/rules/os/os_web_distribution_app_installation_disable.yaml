@@ -5,6 +5,8 @@ discussion: |
 references:
   nist:
     cce:
+      ios_26:
+        - CCE-95544-3
       ios_18:
         - CCE-94562-6
     800-53r5:
@@ -17,16 +19,14 @@ references:
         - AIOS-18-015000
     sfr:
       - 'FMT_SMF_EXT.1.1 #3'
-  bsi:
-    indigo:
-      ios_18:
-        - ANNEX K
 platforms:
   iOS:
+    '26.0':
+      supervised: false
     '18.0':
       supervised: false
       benchmarks:
-        - name: disa_stig
+        - name: ios_stig
           severity: medium
         - name: indigo_base
           severity: medium
@@ -37,6 +37,9 @@ tags:
   - 800-53r5_low
   - 800-53r5_moderate
   - 800-53r5_high
+  - cnssi-1253_moderate
+  - cnssi-1253_low
+  - cnssi-1253_high
 mobileconfig_info:
   - PayloadType: com.apple.applicationaccess
     PayloadContent:

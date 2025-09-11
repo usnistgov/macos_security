@@ -7,12 +7,12 @@ discussion: |
 references:
   nist:
     cce:
+      macos_26:
+        - CCE-95318-2
       macos_15:
         - CCE-94312-6
       macos_14:
         - CCE-92909-1
-      macos_13:
-        - CCE-91896-1
     800-53r5:
       - CM-5(1)
       - IA-11
@@ -25,22 +25,30 @@ references:
       - SRG-OS-000373-GPOS-00157
       - SRG-OS-000373-GPOS-00156
     disa_stig:
+      macos_26:
+        - APPL-26-004060
       macos_15:
         - APPL-15-004060
       macos_14:
         - APPL-14-004060
   cis:
     benchmark:
+      macos_26:
+        - 5.5 (level 1)
       macos_15:
         - 5.5 (level 1)
       macos_14:
-        - 5.5 (level 1)
-      macos_13:
         - 5.5 (level 1)
     controls_v8:
       - 4.3
 platforms:
   macOS:
+    '26.0':
+      benchmarks:
+        - name: cis_lvl1
+        - name: cis_lvl2
+        - name: disa_stig
+          severity: medium
     '15.0':
       benchmarks:
         - name: cis_lvl1
@@ -53,10 +61,6 @@ platforms:
         - name: cis_lvl2
         - name: disa_stig
           severity: medium
-    '13.0':
-      benchmarks:
-        - name: cis_lvl1
-        - name: cis_lvl2
     enforcement_info:
       check:
         shell: '/usr/bin/sudo /usr/bin/sudo -V | /usr/bin/awk -F": " ''/Type of authentication timestamp record/{print $2}'''

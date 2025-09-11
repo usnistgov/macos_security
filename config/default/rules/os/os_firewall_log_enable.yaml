@@ -11,8 +11,6 @@ references:
     cce:
       macos_14:
         - CCE-92793-9
-      macos_13:
-        - CCE-91791-4
     800-53r5:
       - AU-12
       - SC-7
@@ -27,8 +25,6 @@ references:
     benchmark:
       macos_14:
         - 3.6 (level 1)
-      macos_13:
-        - 3.6 (level 1)
     controls_v8:
       - 4.5
       - 8.2
@@ -36,10 +32,6 @@ references:
 platforms:
   macOS:
     '14.0':
-      benchmarks:
-        - name: cis_lvl1
-        - name: cis_lvl2
-    '13.0':
       benchmarks:
         - name: cis_lvl1
         - name: cis_lvl2
@@ -66,6 +58,9 @@ tags:
   - 800-53r5_low
   - 800-53r5_moderate
   - 800-53r5_high
+  - 800-53r4_low
+  - 800-53r4_moderate
+  - 800-53r4_high
   - 800-171
   - cisv8
   - cnssi-1253_moderate

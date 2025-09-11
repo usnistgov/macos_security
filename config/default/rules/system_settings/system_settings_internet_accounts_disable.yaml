@@ -10,12 +10,12 @@ discussion: |
 references:
   nist:
     cce:
+      macos_26:
+        - CCE-95381-0
       macos_15:
         - CCE-94374-6
       macos_14:
         - CCE-92969-5
-      macos_13:
-        - CCE-91938-1
     800-53r5:
       - CM-7
       - CM-7(1)
@@ -37,9 +37,9 @@ references:
       - 15.2
 platforms:
   macOS:
+    '26.0': {}
     '15.0': {}
     '14.0': {}
-    '13.0': {}
     enforcement_info:
       check:
         shell: /usr/bin/profiles show -output stdout-xml | /usr/bin/xmllint --xpath '//key[text()="DisabledSystemSettings"]/following-sibling::*[1]' - | /usr/bin/grep -c com.apple.Internet-Accounts-Settings.extension

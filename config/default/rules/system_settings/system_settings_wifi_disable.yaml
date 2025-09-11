@@ -9,12 +9,12 @@ discussion: |
 references:
   nist:
     cce:
+      macos_26:
+        - CCE-95419-8
       macos_15:
         - CCE-94412-4
       macos_14:
         - CCE-93008-1
-      macos_13:
-        - CCE-91998-5
     800-53r5:
       - AC-4
       - AC-18
@@ -34,9 +34,9 @@ references:
       - 12.6
 platforms:
   macOS:
+    '26.0': {}
     '15.0': {}
     '14.0': {}
-    '13.0': {}
     enforcement_info:
       check:
         shell: /usr/sbin/networksetup -listallnetworkservices | /usr/bin/grep -c "*Wi-Fi"

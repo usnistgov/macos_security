@@ -7,12 +7,12 @@ discussion: |
 references:
   nist:
     cce:
+      macos_26:
+        - CCE-95372-9
       macos_15:
         - CCE-94365-4
       macos_14:
         - CCE-92962-0
-      macos_13:
-        - CCE-91951-4
     800-53r5:
       - CM-5
       - SI-7(15)
@@ -23,9 +23,9 @@ references:
       - CM.L2-3.4.5
 platforms:
   macOS:
+    '26.0': {}
     '15.0': {}
     '14.0': {}
-    '13.0': {}
     enforcement_info:
       check:
         shell: |-

@@ -7,8 +7,6 @@ references:
     cce:
       macos_14:
         - CCE-92796-2
-      macos_13:
-        - CCE-91794-8
     800-53r5:
       - CM-5
     800-171r3:
@@ -25,7 +23,6 @@ references:
 platforms:
   macOS:
     '14.0': {}
-    '13.0': {}
     enforcement_info:
       check:
         shell: |-
@@ -40,6 +37,8 @@ tags:
   - 800-53r5_low
   - 800-53r5_moderate
   - 800-53r5_high
+  - 800-53r4_moderate
+  - 800-53r4_high
   - 800-171
   - cisv8
   - cnssi-1253_moderate

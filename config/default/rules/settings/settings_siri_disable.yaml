@@ -3,12 +3,13 @@ title: Disable Siri
 discussion: |
   Support for Siri is non-essential and _MUST_ be disabled.
 
+
   The information system _MUST_ be configured to provide only essential capabilities.
 references:
   nist:
     cce:
-      visionos_2:
-        - CCE-94512-1
+      visionos_26:
+        - CCE-95598-9
     800-53r5:
       - AC-20
       - CM-7
@@ -16,13 +17,16 @@ references:
       - SC-7(10)
 platforms:
   visionOS:
-    '2.0':
+    '26.0':
       supervised: false
     introduced: '2.0'
 tags:
   - 800-53r5_low
   - 800-53r5_moderate
   - 800-53r5_high
+  - cnssi-1253_moderate
+  - cnssi-1253_low
+  - cnssi-1253_high
 mobileconfig_info:
   - PayloadType: com.apple.applicationaccess
     PayloadContent:

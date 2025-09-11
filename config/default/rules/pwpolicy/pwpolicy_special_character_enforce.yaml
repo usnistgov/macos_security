@@ -11,12 +11,12 @@ discussion: |
 references:
   nist:
     cce:
+      macos_26:
+        - CCE-95350-5
       macos_15:
         - CCE-94344-9
       macos_14:
         - CCE-92940-6
-      macos_13:
-        - CCE-91927-4
     800-53r5:
       - IA-5(1)
     800-171r3:
@@ -28,28 +28,33 @@ references:
     srg:
       - SRG-OS-000266-GPOS-00101
     disa_stig:
+      macos_26:
+        - APPL-26-003011
       macos_15:
         - APPL-15-003011
       macos_14:
         - APPL-14-003011
-      macos_13:
-        - APPL-13-003011
     cmmc:
       - IA.L2-3.5.7
       - IA.L2-3.5.8
       - IA.L2-3.5.9
   cis:
     benchmark:
+      macos_26:
+        - 5.2.5 (level 2)
       macos_15:
         - 5.2.5 (level 2)
       macos_14:
-        - 5.2.5 (level 2)
-      macos_13:
         - 5.2.5 (level 2)
     controls_v8:
       - 5.2
 platforms:
   macOS:
+    '26.0':
+      benchmarks:
+        - name: cis_lvl2
+        - name: disa_stig
+          severity: medium
     '15.0':
       benchmarks:
         - name: cis_lvl2
@@ -64,25 +69,11 @@ platforms:
         - PayloadType: com.apple.mobiledevice.passwordpolicy
           PayloadContent:
             - minComplexChars: 1
-    '13.0':
-      benchmarks:
-        - name: cis_lvl2
-        - name: disa_stig
-          severity: medium
-      mobileconfig_info:
-        - PayloadType: com.apple.mobiledevice.passwordpolicy
-          PayloadContent:
-            - minComplexChars: 1
     enforcement_info:
       check:
-        shell: |
-          /usr/bin/pwpolicy getaccountpolicies 2>/dev/null \
-            | /usr/bin/tail +2 \
-            | /usr/bin/xmllint --xpath "//string[contains(text(),'policyAttributePassword matches')]/text()" - 2>/dev/null \
-            | /usr/bin/sed -nE "s/.*\{([0-9]+),\}.*/\1/p" \
-            | awk -v ODV="$ODV" '{ if ($1 >= ODV) print "true"; else print "false" }'
+        shell: /usr/bin/pwpolicy -getaccountpolicies 2>/dev/null | /usr/bin/tail -n +2 | /usr/bin/xmllint --xpath "//string[contains(text(), \"policyAttributePassword matches '(.*[^a-zA-Z0-9].*){\")]" - 2>/dev/null | /usr/bin/awk -F"{|}" '{if ($2 >= $ODV) {print "pass"} else {print "fail"}}'
         result:
-          string: 'true'
+          string: pass
     introduced: '10.7'
 odv:
   hint:

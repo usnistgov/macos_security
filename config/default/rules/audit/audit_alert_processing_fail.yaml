@@ -7,16 +7,16 @@ discussion: |-
 references:
   nist:
     cce:
+      macos_26:
+        - CCE-95103-8
       macos_15:
         - CCE-94103-9
       macos_14:
         - CCE-92703-8
-      macos_13:
-        - CCE-91703-9
 platforms:
   macOS:
+    '26.0': {}
     '15.0': {}
     '14.0': {}
-    '13.0': {}
 tags:
   - permanent

@@ -9,12 +9,12 @@ discussion: |-
 references:
   nist:
     cce:
+      macos_26:
+        - CCE-95218-4
       macos_15:
         - CCE-94219-3
       macos_14:
         - CCE-92817-6
-      macos_13:
-        - CCE-91813-6
     800-53r5:
       - AC-10
   disa:
@@ -22,9 +22,9 @@ references:
       - SRG-OS-000027-GPOS-00008
 platforms:
   macOS:
+    '26.0': {}
     '15.0': {}
     '14.0': {}
-    '13.0': {}
     enforcement_info:
       fix:
         additional_info: The technology inherently meets this requirement. No fix is required.

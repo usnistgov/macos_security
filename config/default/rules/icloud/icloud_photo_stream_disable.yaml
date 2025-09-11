@@ -5,12 +5,12 @@ discussion: |
 references:
   nist:
     cce:
+      ios_26:
+        - CCE-95427-1
       ios_18:
         - CCE-94418-1
       ios_17:
         - CCE-93404-2
-      ios_16:
-        - CCE-93204-6
     800-53r5:
       - AC-20
       - AC-20(1)
@@ -22,9 +22,6 @@ references:
       - CCI-000097
       - CCI-000366
       - CCI-000370
-    disa_stig:
-      ios_16:
-        - AIOS-16-003400
     sfr:
       - 'FMT_MOF_EXT.1.2 #40'
   bsi:
@@ -34,6 +31,8 @@ references:
         - ANNEX K
 platforms:
   iOS:
+    '26.0':
+      supervised: false
     '18.0':
       supervised: false
       benchmarks:
@@ -43,11 +42,6 @@ platforms:
       supervised: false
       benchmarks:
         - name: indigo_high
-          severity: medium
-    '16.0':
-      supervised: false
-      benchmarks:
-        - name: disa_stig
           severity: medium
     introduced: '5.0'
 tags:

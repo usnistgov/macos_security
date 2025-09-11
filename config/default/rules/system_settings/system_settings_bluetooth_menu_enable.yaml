@@ -5,34 +5,29 @@ discussion: |
 references:
   nist:
     cce:
+      macos_26:
+        - CCE-95359-6
       macos_15:
         - CCE-94353-0
       macos_14:
         - CCE-92950-5
-      macos_13:
-        - CCE-91937-3
   cis:
     benchmark:
       macos_15:
         - 2.4.2 (level 1)
       macos_14:
         - 2.4.2 (level 1)
-      macos_13:
-        - 2.4.2 (level 1)
     controls_v8:
       - 4.8
       - 13.9
 platforms:
   macOS:
+    '26.0': {}
     '15.0':
       benchmarks:
         - name: cis_lvl1
         - name: cis_lvl2
     '14.0':
-      benchmarks:
-        - name: cis_lvl1
-        - name: cis_lvl2
-    '13.0':
       benchmarks:
         - name: cis_lvl1
         - name: cis_lvl2

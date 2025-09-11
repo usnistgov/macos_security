@@ -5,26 +5,19 @@ discussion: |
 references:
   nist:
     cce:
+      macos_26:
+        - CCE-95191-3
       macos_15:
         - CCE-94191-4
       macos_14:
         - CCE-92790-5
-      macos_13:
-        - CCE-91788-0
     800-53r5:
       - AC-2(11)
-  disa:
-    disa_stig:
-      macos_13:
-        - APPL-13-000032
 platforms:
   macOS:
+    '26.0': {}
     '15.0': {}
     '14.0': {}
-    '13.0':
-      benchmarks:
-        - name: disa_stig
-          severity: medium
     enforcement_info:
       check:
         shell: /usr/bin/fdesetup list | /usr/bin/awk -F',' '{print $1}'

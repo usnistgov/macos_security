@@ -5,21 +5,21 @@ discussion: |
 references:
   nist:
     cce:
+      ios_26:
+        - CCE-95515-3
       ios_18:
         - CCE-94461-1
       ios_17:
         - CCE-93464-6
-      ios_16:
-        - CCE-93263-2
   cis:
     benchmark:
+      ios_26:
+        - 2.2.2.1 (level 1 - End-User Owned Devices)
+        - 3.2.2.1 (level 1 - Institutionally-Owned Devices)
       ios_18:
         - 2.2.2.1 (level 1 - End-User Owned Devices)
         - 3.2.2.1 (level 1 - Institutionally-Owned Devices)
       ios_17:
-        - 2.2.2.1 (level 1 - End-User Owned Devices)
-        - 3.2.2.1 (level 1 - Institutionally-Owned Devices)
-      ios_16:
         - 2.2.2.1 (level 1 - End-User Owned Devices)
         - 3.2.2.1 (level 1 - Institutionally-Owned Devices)
     controls_v8:
@@ -30,6 +30,13 @@ references:
         - ANNEX K
 platforms:
   iOS:
+    '26.0':
+      supervised: false
+      benchmarks:
+        - name: cis_lvl1_byod
+        - name: cis_lvl2_byod
+        - name: cis_lvl1_enterprise
+        - name: cis_lvl2_enterprise
     '18.0':
       supervised: false
       benchmarks:
@@ -46,13 +53,6 @@ platforms:
         - name: cis_lvl1_enterprise
         - name: cis_lvl2_enterprise
         - name: indigo_high
-    '16.0':
-      supervised: false
-      benchmarks:
-        - name: cis_lvl1_byod
-        - name: cis_lvl2_byod
-        - name: cis_lvl1_enterprise
-        - name: cis_lvl2_enterprise
     introduced: '4.0'
 tags:
   - cisv8

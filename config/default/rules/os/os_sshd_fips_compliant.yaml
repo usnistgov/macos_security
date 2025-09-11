@@ -13,12 +13,12 @@ discussion: |
 references:
   nist:
     cce:
+      macos_26:
+        - CCE-95310-9
       macos_15:
         - CCE-94305-0
       macos_14:
         - CCE-92902-6
-      macos_13:
-        - CCE-91890-4
     800-53r5:
       - AC-17(2)
       - IA-7
@@ -46,14 +46,12 @@ references:
       - SRG-OS-000393-GPOS-00173
       - SRG-OS-000396-GPOS-00176
     disa_stig:
+      macos_26:
+        - APPL-26-000054
       macos_15:
         - APPL-15-000054
       macos_14:
         - APPL-14-000054
-      macos_13:
-        - APPL-13-000054
-        - APPL-13-000055
-        - APPL-13-000056
     cmmc:
       - AC.L2-3.1.13
       - MP.L2-3.8.6
@@ -61,40 +59,14 @@ references:
       - SC.L2-3.13.11
 platforms:
   macOS:
+    '26.0':
+      benchmarks:
+        - name: disa_stig
+          severity: high
     '15.0':
       benchmarks:
         - name: disa_stig
           severity: high
-      enforcement_info:
-        fix:
-          shell: |-
-            if [ -f /etc/ssh/crypto.conf ] && /usr/bin/grep -q "Include /etc/ssh/crypto.conf" /etc/ssh/sshd_config.d/100-macos.conf 2>/bin/null; then
-              /bin/ln -fs /etc/ssh/crypto/fips.conf /etc/ssh/crypto.conf
-            fi
-
-            include_dir=$(/usr/bin/awk '/^Include/ {print $2}' /etc/ssh/sshd_config | /usr/bin/tr -d '*')
-
-            if [[ -z $include_dir ]]; then
-              /usr/bin/sed -i.bk "1s/.*/Include \/etc\/ssh\/sshd_config.d\/\*/" /etc/ssh/sshd_config
-            fi
-
-            fips_sshd_config=("Ciphers aes128-gcm@openssh.com" "HostbasedAcceptedAlgorithms ecdsa-sha2-nistp256,ecdsa-sha2-nistp256-cert-v01@openssh.com" "HostKeyAlgorithms ecdsa-sha2-nistp256-cert-v01@openssh.com,sk-ecdsa-sha2-nistp256-cert-v01@openssh.com,ecdsa-sha2-nistp256,sk-ecdsa-sha2-nistp256@openssh.com" "KexAlgorithms ecdh-sha2-nistp256" "MACs hmac-sha2-256-etm@openssh.com,hmac-sha2-256" "PubkeyAcceptedAlgorithms ecdsa-sha2-nistp256,ecdsa-sha2-nistp256-cert-v01@openssh.com,sk-ecdsa-sha2-nistp256-cert-v01@openssh.com" "CASignatureAlgorithms ecdsa-sha2-nistp256,sk-ecdsa-sha2-nistp256@openssh.com")
-            sshd_config=$(/usr/sbin/sshd -G)
-            for config in $fips_sshd_config; do
-              if ! echo $sshd_config | /usr/bin/grep -q -i "$config" 2>/dev/null; then
-                /usr/bin/grep -qxF "$config" "${include_dir}01-mscp-sshd.conf" 2>/dev/null || echo "$config" >> "${include_dir}01-mscp-sshd.conf"
-              fi
-            done
-
-            for file in $(ls ${include_dir}); do
-              if [[ "$file" == "100-macos.conf" ]]; then
-                  continue
-              fi
-              if [[ "$file" == "01-mscp-sshd.conf" ]]; then
-                  break
-              fi
-              /bin/mv ${include_dir}${file} ${include_dir}20-${file}
-            done
     '14.0':
       benchmarks:
         - name: disa_stig
@@ -111,22 +83,29 @@ platforms:
             echo $total
           result:
             integer: 7
-    '13.0':
-      benchmarks:
-        - name: disa_stig
-          severity: medium
-      enforcement_info:
-        check:
+        fix:
           shell: |-
+            include_dir=$(/usr/bin/awk '/^Include/ {print $2}' /etc/ssh/sshd_config | /usr/bin/tr -d '*')
+
+            if [[ -z $include_dir ]]; then
+              /usr/bin/sed -i.bk "1s/.*/Include \/etc\/ssh\/sshd_config.d\/\*/" /etc/ssh/sshd_config
+            fi
+
             fips_sshd_config=("Ciphers aes128-gcm@openssh.com" "HostbasedAcceptedAlgorithms ecdsa-sha2-nistp256,ecdsa-sha2-nistp256-cert-v01@openssh.com" "HostKeyAlgorithms ecdsa-sha2-nistp256,ecdsa-sha2-nistp256-cert-v01@openssh.com" "KexAlgorithms ecdh-sha2-nistp256" "MACs hmac-sha2-256" "PubkeyAcceptedAlgorithms ecdsa-sha2-nistp256,ecdsa-sha2-nistp256-cert-v01@openssh.com" "CASignatureAlgorithms ecdsa-sha2-nistp256")
-            total=0
+
             for config in $fips_sshd_config; do
-              total=$(expr $(/usr/sbin/sshd -G | /usr/bin/grep -i -c "$config") + $total)
+              /usr/bin/grep -qxF "$config" "${include_dir}01-mscp-sshd.conf" 2>/dev/null || echo "$config" >> "${include_dir}01-mscp-sshd.conf"
             done
 
-            echo $total
-          result:
-            integer: 7
+            for file in $(ls ${include_dir}); do
+              if [[ "$file" == "100-macos.conf" ]]; then
+                  continue
+              fi
+              if [[ "$file" == "01-mscp-sshd.conf" ]]; then
+                  break
+              fi
+              /bin/mv ${include_dir}${file} ${include_dir}20-${file}
+            done
     enforcement_info:
       check:
         shell: |-
@@ -141,16 +120,22 @@ platforms:
           integer: 7
       fix:
         shell: |-
+          if [ -f /etc/ssh/crypto.conf ] && /usr/bin/grep -q "Include /etc/ssh/crypto.conf" /etc/ssh/sshd_config.d/100-macos.conf 2>/bin/null; then
+            /bin/ln -fs /etc/ssh/crypto/fips.conf /etc/ssh/crypto.conf
+          fi
+
           include_dir=$(/usr/bin/awk '/^Include/ {print $2}' /etc/ssh/sshd_config | /usr/bin/tr -d '*')
 
           if [[ -z $include_dir ]]; then
             /usr/bin/sed -i.bk "1s/.*/Include \/etc\/ssh\/sshd_config.d\/\*/" /etc/ssh/sshd_config
           fi
 
-          fips_sshd_config=("Ciphers aes128-gcm@openssh.com" "HostbasedAcceptedAlgorithms ecdsa-sha2-nistp256,ecdsa-sha2-nistp256-cert-v01@openssh.com" "HostKeyAlgorithms ecdsa-sha2-nistp256,ecdsa-sha2-nistp256-cert-v01@openssh.com" "KexAlgorithms ecdh-sha2-nistp256" "MACs hmac-sha2-256" "PubkeyAcceptedAlgorithms ecdsa-sha2-nistp256,ecdsa-sha2-nistp256-cert-v01@openssh.com" "CASignatureAlgorithms ecdsa-sha2-nistp256")
-
+          fips_sshd_config=("Ciphers aes128-gcm@openssh.com" "HostbasedAcceptedAlgorithms ecdsa-sha2-nistp256,ecdsa-sha2-nistp256-cert-v01@openssh.com" "HostKeyAlgorithms ecdsa-sha2-nistp256-cert-v01@openssh.com,sk-ecdsa-sha2-nistp256-cert-v01@openssh.com,ecdsa-sha2-nistp256,sk-ecdsa-sha2-nistp256@openssh.com" "KexAlgorithms ecdh-sha2-nistp256" "MACs hmac-sha2-256-etm@openssh.com,hmac-sha2-256" "PubkeyAcceptedAlgorithms ecdsa-sha2-nistp256,ecdsa-sha2-nistp256-cert-v01@openssh.com,sk-ecdsa-sha2-nistp256-cert-v01@openssh.com" "CASignatureAlgorithms ecdsa-sha2-nistp256,sk-ecdsa-sha2-nistp256@openssh.com")
+          sshd_config=$(/usr/sbin/sshd -G)
           for config in $fips_sshd_config; do
-            /usr/bin/grep -qxF "$config" "${include_dir}01-mscp-sshd.conf" 2>/dev/null || echo "$config" >> "${include_dir}01-mscp-sshd.conf"
+            if ! echo $sshd_config | /usr/bin/grep -q -i "$config" 2>/dev/null; then
+              /usr/bin/grep -qxF "$config" "${include_dir}01-mscp-sshd.conf" 2>/dev/null || echo "$config" >> "${include_dir}01-mscp-sshd.conf"
+            fi
           done
 
           for file in $(ls ${include_dir}); do
