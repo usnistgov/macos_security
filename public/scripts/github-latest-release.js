@@ -110,6 +110,10 @@ function injectReleaseBoxStyles() {
     [data-theme="dark"] .github-release-info strong {
       color: #fff;
     }
+    .github-release-notes {
+      overflow-wrap: anywhere;
+      word-break: break-word;
+    }
   `;
   document.head.appendChild(style);
 }
