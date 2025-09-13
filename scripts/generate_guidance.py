@@ -1487,7 +1487,7 @@ EOS
 )
     if [[ -n "$compliance_args" ]]; then
         logmessage "Managed arguments found for compliance script, setting: $compliance_args"
-        eval "set -- $compliance_args"
+        set -- ${{(z)compliance_args}}
     fi
 fi
   
