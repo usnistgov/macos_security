@@ -111,10 +111,10 @@ titles:
   800-53r5_high: NIST SP 800-53 Rev 5 High Impact
   800-53r5_moderate: NIST SP 800-53 Rev 5 Moderate Impact
   800-53r5_low: NIST SP 800-53 Rev 5 Low Impact
-  cis_lvl1_byod: CIS Apple iOS 18 v1.0.0 Benchmark (Level 1) - End-User Owned Devices
-  cis_lvl2_byod: CIS Apple iOS 18 v1.0.0 Benchmark (Level 2) - End-User Owned Devices
-  cis_lvl1_enterprise: CIS Apple iOS 18 v1.0.0 Benchmark (Level 1) - Institutionally-Owned Devices
-  cis_lvl2_enterprise: CIS Apple iOS 18 v1.0.0 Benchmark (Level 2) - Institutionally-Owned Devices
+  cis_lvl1_byod: CIS Apple iOS 26 v1.0.0 DRAFT Benchmark (Level 1) - End-User Owned Devices
+  cis_lvl2_byod: CIS Apple iOS 26 v1.0.0 DRAFT Benchmark (Level 2) - End-User Owned Devices
+  cis_lvl1_enterprise: CIS Apple iOS 26 v1.0.0 DRAFT Benchmark (Level 1) - Institutionally-Owned Devices
+  cis_lvl2_enterprise: CIS Apple iOS 26 v1.0.0 DRAFT Benchmark (Level 2) - Institutionally-Owned Devices
   cisv8: CIS Controls Version 8
   ios_stig:  Apple iOS/iPadOS 26 STIG - Ver 1, Rel 1  
   indigo_base: BSI indigo iOS 26.x Base Configuration
