@@ -1,0 +1,32 @@
+name: Spell Check 
+
+on:
+  push:
+    branches-ignore:
+      - main
+  pull_request:
+    branches-ignore:
+      - main
+
+jobs:
+  spell-check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Install Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20
+
+      - name: Install CSpell
+        run: npm install -g cspell@latest
+      
+      - name: Pull cspell config and dictionary from main
+        run: |
+          git fetch origin main
+          git checkout origin/main -- .github/cspell/  
+
+      - name: Check spelling
+        run: npx cspell --no-progress --no-summary --config .github/cspell/cspell.json "**"
