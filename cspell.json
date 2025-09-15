@@ -1,0 +1,18 @@
+{
+  "version": "0.2",
+  "language": "en",
+  "dictionaries": ["en_US", "technical-terms", "project-words"],
+  "words": [],
+  "ignoreWords": [],
+  "ignorePaths": [
+    "**/build/**",
+    "**/scripts/**"
+  ],
+  "dictionaryDefinitions":[
+    {
+        "name": "project-words",
+        "path": "./.github/project-words.txt",
+        "addWords": true
+    }
+  ],
+}
