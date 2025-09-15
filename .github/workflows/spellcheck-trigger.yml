@@ -10,6 +10,6 @@ on:
 
 jobs:
   call-spellcheck:
-    uses: ./.github/workflows/spellcheck-reusable.yml
+    uses: ./.github/workflows/spellcheck-reusable.yml@main
     with:
       branch: ${{ github.ref_name }}   # pass the current branch
