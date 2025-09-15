@@ -1,0 +1,15 @@
+name: Spell Check Trigger
+
+on:
+  push:
+    branches-ignore:
+      - main
+  pull_request:
+    branches-ignore:
+      - main
+
+jobs:
+  call-spellcheck:
+    uses: ./.github/workflows/spellcheck-reusable.yml
+    with:
+      branch: ${{ github.ref_name }}   # pass the current branch
