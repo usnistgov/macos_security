@@ -13,12 +13,12 @@
   "dictionaryDefinitions":[
     {
         "name": "project-words",
-        "path": "./.github/project-words.txt",
+        "path": "./project-words.txt",
         "addWords": true
     },
     {
         "name": "project-names",
-        "path": "./.github/project-names.txt",
+        "path": "./project-names.txt",
         "addWords": true
     }
   ],
