@@ -1,17 +1,23 @@
 {
   "version": "0.2",
   "language": "en",
-  "dictionaries": ["en_US", "technical-terms", "project-words"],
+  "dictionaries": ["en_US", "technical-terms", "project-words", "project-names"],
   "words": [],
   "ignoreWords": [],
   "ignorePaths": [
     "**/build/**",
-    "**/scripts/**"
+    "**/scripts/**",
+    "*.css"
   ],
   "dictionaryDefinitions":[
     {
         "name": "project-words",
         "path": "./.github/project-words.txt",
+        "addWords": true
+    },
+    {
+        "name": "project-names",
+        "path": "./.github/project-names.txt",
         "addWords": true
     }
   ],
