@@ -253,3 +253,4 @@ setglobalstate
 setloggingopt
 setallowsigned
 setallowsignedapp
+dontAllowFDEDisable
