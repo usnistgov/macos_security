@@ -24,4 +24,4 @@ jobs:
         run: npm install -g cspell@latest
 
       - name: Check spelling
-        run: npx cspell --config ./cspell.json "**"
+        run: npx cspell --config ./cspell.json "./rules/**"

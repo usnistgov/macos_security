@@ -43,6 +43,7 @@ cupsctl
 declarationtype
 deidentification
 destroyfvkeyonstandby
+disa
 diskmanagement
 diskutil
 displaysleep
@@ -58,6 +59,8 @@ exfiltration
 facetime
 fdesetup
 filevault
+fips
+FIPS
 firmwarepasswd
 genmoji
 Genmoji
@@ -162,6 +165,7 @@ softwareupdate
 spoofable
 standbydelayhigh
 standbydelaylow
+stig
 startupdisk
 sysadminctl
 syscall
