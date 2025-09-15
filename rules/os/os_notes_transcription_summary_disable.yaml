@@ -1,5 +1,5 @@
 id: os_notes_transcription_summary_disable
-title: D"isable Apple Intelligence Notes Transcription Summary"
+title: "Disable Apple Intelligence Notes Transcription Summary"
 discussion: |
   Apple Intelligence features such as Notes Transcription Summary that use off device AI _MUST_ be disabled.
 check: " "
