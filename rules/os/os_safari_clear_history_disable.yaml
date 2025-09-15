@@ -1,7 +1,7 @@
 id: os_safari_clear_history_disable
 title: Ensure Clearing of Browsing History in Safari Is Disabled
 discussion: |
-  Clearing of browser history _MUST_ be disabled in Safari.
+  Cleanring of browser history _MUST_ be disabled in Safari.
 check: |
   /usr/bin/osascript -l JavaScript << EOS
   $.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess')\
