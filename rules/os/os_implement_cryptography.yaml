@@ -5,11 +5,11 @@ discussion: |
 
   Use of weak or untested encryption algorithms undermines the purposes of utilizing encryption to protect data. The operating system must implement cryptographic modules that adhere to the higher standards that have been tested, validated, and approved by the federal government.
 
-  Apple is committed to the FIPS validation process and historically has always submitted and validated the cryptographic modules in macOS. macOS Sequoia will be submitted for FIPS validation.
+  Apple is committed to the FIPS validation process and historically has always submitted and validated the cryptographic modules in macOS. macOS Tahoe for Apple Silicon will be submitted for FIPS validation. macOS Tahoe for Intel based processors will _NOT_ be submitted for FIPS validation.
 
   link:https://csrc.nist.gov/Projects/cryptographic-module-validation-program/validated-modules[]
 
-  link:https://support.apple.com/en-us/HT201159[]
+  link:https://support.apple.com/guide/sccc/welcome/web[]
 check: |
   The technology supports this requirement and cannot be configured to be out of compliance. The technology inherently meets this requirement using FIPS Validated Cryptographic Modules.
 fix: |
