@@ -273,6 +273,7 @@ uwtmp
 venv
 visionos
 vulndiscussion
+waivable
 webcontent
 womp
 wvous
