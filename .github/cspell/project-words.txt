@@ -194,6 +194,7 @@ PSSO
 pwpolicy
 pydantic
 pyyaml
+reauthentication
 Remediator
 rootok
 rstrip
