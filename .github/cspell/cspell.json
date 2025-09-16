@@ -2,7 +2,7 @@
   "version": "0.2",
   "language": "en",
   "allowCompoundWords": true,
-  "dictionaries": ["en_US", "technical-terms", "project-words", "project-names"],
+  "dictionaries": ["project-words", "project-names"],
   "words": [],
   "ignoreWords": [],
   "ignorePaths": [
