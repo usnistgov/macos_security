@@ -15,7 +15,7 @@ references:
   cce:
     - CCE-95603-7
   cci:
-    - N/A
+    - CCI-000381
   800-53r5:
     - AC-4
     - AC-20
@@ -23,9 +23,9 @@ references:
   800-53r4:
     - AC-20
   srg:
-    - N/A
+    - SRG-OS-000095-GPOS-000049
   disa_stig:
-    - N/A
+    - APPL-26-005170
   800-171r3:
     - 03.01.20
     - 03.04.06
@@ -49,6 +49,7 @@ tags:
   - cmmc_lvl2
   - cmmc_lvl1
   - cnssi-1253_moderate
+  - stig
 severity: medium
 mobileconfig: true
 mobileconfig_info:
