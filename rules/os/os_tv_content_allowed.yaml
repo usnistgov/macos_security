@@ -1,5 +1,5 @@
 id: os_tv_content_allowed
-title: "Disable Movie Content"
+title: "Disable TV Content"
 discussion: |
   TV Rating content _MUST_ be set to $ODV on the device.
 
@@ -18,21 +18,21 @@ fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-    - N/A
+    - CCE-94526-1
   cci:
-    - CCI-000366    
+    - CCI-000366
   800-53r5:
     - CM-7
   sfr:
     - 'FMT_MOF_EXT.1.2 #47'
   disa_stig:
-    - AIOS-18-017100    
+    - AIOS-18-017100
   indigo:
     - N/A
 iOS:
   - "18.0"
 odv:
-  hint: "Maximum Auto-Lock in Minutes."
+  hint: "Ratings Level"
   recommended: 0
   ios_stig: 0
 tags:
@@ -40,7 +40,7 @@ tags:
   - ios_stig
   - 800-53r5_low
   - 800-53r5_moderate
-  - 800-53r5_high  
+  - 800-53r5_high
 supervised: false
 mobileconfig: true
 mobileconfig_info:
