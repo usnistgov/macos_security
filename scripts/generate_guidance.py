@@ -402,7 +402,7 @@ def concatenate_payload_settings(settings):
 
 
 def generate_profiles(
-    baseline_name, build_path, parent_dir, baseline_yaml, signing, hash=""
+    baseline_name, build_path, parent_dir, baseline_yaml, signing, hash="", generate_domain=True, generate_consolidated=True
 ):
     """Generate the configuration profiles for the rules in the provided baseline YAML file"""
 
@@ -594,20 +594,22 @@ def generate_profiles(
             newProfile.addNewPayload(payload, settings, baseline_name)
             consolidated_profile.addNewPayload(payload, settings, baseline_name)
 
-        with open(settings_plist_file_path, "wb") as settings_plist_file:
-            newProfile.finalizeAndSavePlist(settings_plist_file)
-        with open(unsigned_mobileconfig_file_path, "wb") as unsigned_mobileconfig_file:
-            newProfile.finalizeAndSave(unsigned_mobileconfig_file)
+        if generate_domain:
+            with open(settings_plist_file_path, "wb") as settings_plist_file:
+                newProfile.finalizeAndSavePlist(settings_plist_file)
+            with open(unsigned_mobileconfig_file_path, "wb") as unsigned_mobileconfig_file:
+                newProfile.finalizeAndSave(unsigned_mobileconfig_file)
+            if signing:
+                sign_config_profile(unsigned_mobileconfig_file_path, signed_mobileconfig_file_path, hash)
+
+    if generate_consolidated:
+        consolidated_mobileconfig_file_path = os.path.join(unsigned_mobileconfig_output_path, f"{baseline_name}.mobileconfig")
+        with open(consolidated_mobileconfig_file_path, "wb") as consolidated_mobileconfig_file:
+            consolidated_profile.finalizeAndSave(consolidated_mobileconfig_file)
+
         if signing:
-            sign_config_profile(unsigned_mobileconfig_file_path, signed_mobileconfig_file_path, hash)
-
-    consolidated_mobileconfig_file_path = os.path.join(unsigned_mobileconfig_output_path, f"{baseline_name}.mobileconfig")
-    with open(consolidated_mobileconfig_file_path, "wb") as consolidated_mobileconfig_file:
-        consolidated_profile.finalizeAndSave(consolidated_mobileconfig_file)
-
-    if signing:
-        signed_consolidated_mobileconfig_path = os.path.join(signed_mobileconfig_output_path, f"{baseline_name}.mobileconfig")
-        sign_config_profile(consolidated_mobileconfig_file_path, signed_consolidated_mobileconfig_path, hash)
+            signed_consolidated_mobileconfig_path = os.path.join(signed_mobileconfig_output_path, f"{baseline_name}.mobileconfig")
+            sign_config_profile(consolidated_mobileconfig_file_path, signed_consolidated_mobileconfig_path, hash)
 
     print(
         f"""
@@ -2071,7 +2073,14 @@ def create_args():
         "-p",
         "--profiles",
         default=None,
-        help="Generate configuration profiles for the rules.",
+        help="Generate domain-specific configuration profiles for the rules.",
+        action="store_true",
+    )
+    parser.add_argument(
+        "-P",
+        "--consolidated-profile",
+        default=None,
+        help="Generate consolidated configuration profile for all rules.",
         action="store_true",
     )
     parser.add_argument(
@@ -2736,10 +2745,20 @@ def main():
     else:
         audit_name = baseline_name
 
-    if args.profiles:
-        print("Generating configuration profiles...")
+    if args.profiles or args.consolidated_profile:
+        # Build message based on what's being generated
+        messages = []
+        if args.profiles:
+            messages.append("domain-specific")
+        if args.consolidated_profile:
+            messages.append("consolidated")
+
+        print(f"Generating {' and '.join(messages)} configuration profiles...")
+
+        # Single call to generate_profiles with both parameters
         generate_profiles(
-            baseline_name, build_path, parent_dir, baseline_yaml, signing, args.hash
+            baseline_name, build_path, parent_dir, baseline_yaml, signing, args.hash,
+            generate_domain=args.profiles, generate_consolidated=args.consolidated_profile
         )
 
     if args.ddm:
