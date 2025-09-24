@@ -953,14 +953,6 @@ if [[ $EUID -ne 0 ]]; then
     exit 1
 fi
 
-ssh_key_check=0
-if /usr/sbin/sshd -T &> /dev/null || /usr/sbin/sshd -G &>/dev/null; then
-    ssh_key_check=0
-else
-    /usr/bin/ssh-keygen -q -N "" -t rsa -b 4096 -f /etc/ssh/ssh_host_rsa_key
-    ssh_key_check=1
-fi
-
 # path to PlistBuddy
 plb="/usr/libexec/PlistBuddy"
 
@@ -1521,12 +1513,6 @@ else
         show_menus
         read_options
     done
-fi
-
-if [[ "$ssh_key_check" -ne 0 ]]; then
-    /bin/rm /etc/ssh/ssh_host_rsa_key
-    /bin/rm /etc/ssh/ssh_host_rsa_key.pub
-    ssh_key_check=0
 fi
     """
 
