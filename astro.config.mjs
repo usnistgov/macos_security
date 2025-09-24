@@ -33,16 +33,12 @@ head: [
 			{
 		tag: 'script',
 		attrs: {
-			is: 'inline',
-			async: 'async',
 			src: 'https://www.googletagmanager.com/gtag/js?id=G-QBDGYZRSGT',
+			async: true,
 		},
 	},
 	{
 		tag: 'script',
-		attrs: {
-			is: 'inline',
-		},
 		children: `
 			window.dataLayer = window.dataLayer || [];
 			function gtag(){dataLayer.push(arguments);}
@@ -158,4 +154,3 @@ head: [
 		}),
 	],
 });
-
