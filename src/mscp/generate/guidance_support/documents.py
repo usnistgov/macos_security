@@ -417,43 +417,43 @@ def generate_documents(
         gems_asciidoctor: Path = Path("mscp_gems/bin/asciidoctor")
         gems_asciidoctor_pdf: Path = Path("mscp_gems/bin/asciidoctor-pdf")
 
-    output, error = run_command("which asciidoctor")
-    logger.debug(f"which asciidoctor output: {output}, error: {error}")
+    # output, error = run_command("which asciidoctor")
+    # logger.debug(f"which asciidoctor output: {output}, error: {error}")
 
-    if not output:
-        if not gems_asciidoctor.exists():
-            logger.error("Asciidoctor not installed!!")
-            sys.exit()
+    # if not output:
+    #     if not gems_asciidoctor.exists():
+    #         logger.error("Asciidoctor not installed!!")
+    #         sys.exit()
 
-    output, error = run_command(f"asciidoctor {output_file}")
+    output, error = run_command(f"bundle exec asciidoctor {output_file}")
     if error:
         logger.error(f"Error converting to ADOC: {error}")
         sys.exit()
 
     if not show_all_tags:
-        output, error = run_command("which asciidoctor-pdf")
-        logger.debug(f"which asciidoctor-pdf output: {output}, error: {error}")
+        # output, error = run_command("which asciidoctor-pdf")
+        # logger.debug(f"which asciidoctor-pdf output: {output}, error: {error}")
 
-        if not output:
-            if not gems_asciidoctor.exists():
-                logger.error("Asciidoctor not installed!!")
-                sys.exit()
+        # if not output:
+        #     if not gems_asciidoctor.exists():
+        #         logger.error("Asciidoctor not installed!!")
+        #         sys.exit()
 
-        output, error = run_command(f"asciidoctor-pdf {output_file}")
+        output, error = run_command(f"bundle exec asciidoctor-pdf {output_file}")
         if error:
             logger.error(f"Error converting to ADOC: {error}")
             sys.exit()
 
         if not show_all_tags:
-            output, error = run_command("which asciidoctor-pdf")
-            logger.debug(f"which asciidoctor-pdf output: {output}, error: {error}")
+            # output, error = run_command("which asciidoctor-pdf")
+            # logger.debug(f"which asciidoctor-pdf output: {output}, error: {error}")
 
-            if not output:
-                if not gems_asciidoctor_pdf.exists():
-                    logger.error("Asciidoctor not installed!!")
-                    sys.exit()
+            # if not output:
+            #     if not gems_asciidoctor_pdf.exists():
+            #         logger.error("Asciidoctor not installed!!")
+            #         sys.exit()
 
-            output, error = run_command(f"asciidoctor-pdf {output_file}")
+            output, error = run_command(f"bundle exec asciidoctor-pdf {output_file}")
             if error:
                 logger.error(f"Error converting to ADOC: {error}")
                 sys.exit()
