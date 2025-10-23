@@ -9,7 +9,7 @@ discussion: |
 
   link:https://csrc.nist.gov/Projects/cryptographic-module-validation-program/validated-modules[]
 
-  link:https://support.apple.com/en-us/HT201159[]
+  link:https://support.apple.com/guide/sccc/welcome/web[]
 check: |
   The technology supports this requirement and cannot be configured to be out of compliance. The technology inherently meets this requirement.
 fix: |

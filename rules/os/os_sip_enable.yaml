@@ -15,7 +15,7 @@ fix: |
   ----
   /usr/bin/csrutil enable
   ----
-  NOTE: To reenable "System Integrity Protection", boot the affected system into "Recovery" mode, launch "Terminal" from the "Utilities" menu, and run the command.
+  NOTE: To re-enable "System Integrity Protection", boot the affected system into "Recovery" mode, launch "Terminal" from the "Utilities" menu, and run the command.
 references:
   cce:
     - CCE-92889-5
