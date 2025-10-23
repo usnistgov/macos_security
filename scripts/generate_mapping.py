@@ -505,10 +505,10 @@ profile:'''.format(other_header,other_header,version_yaml['os'],version_yaml['ve
 
 
     try:
-        if os.path.isdir("../build/" + other_header.lower() + "/baseline/") == False:
-            os.mkdir("../build/" + other_header.lower() + "/baseline")
+        if os.path.isdir("../build/baselines/") == False:
+            os.mkdir("../build/baselines")
 
-        with open("../build/" + other_header.lower() + "/baseline/" + other_header.lower().replace(" ","_") + ".yaml",'w') as fw:
+        with open("../build/baselines/" + other_header.lower().replace(" ","_") + ".yaml",'w') as fw:
             fw.write(full_baseline)
             print(other_header.lower().replace(" ","_") + ".yaml baseline file created in build/" + other_header + "/baseline/")
 
