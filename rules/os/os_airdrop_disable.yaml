@@ -26,7 +26,7 @@ references:
   disa_stig:
     - AO26-POOP-00001
   indigo:
-    - N/A
+    - ANNEX K
   cis:
     benchmark:
       - N/A
@@ -39,6 +39,8 @@ tags:
   - 800-53r5_low
   - 800-53r5_moderate
   - 800-53r5_high
+  - indigo_base
+  - indigo_high
   - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high

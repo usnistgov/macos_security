@@ -24,7 +24,7 @@ references:
   disa_stig:
     - N/A
   indigo:
-    - N/A
+    - ANNEX K
   cis:
     benchmark:
       - N/A
@@ -38,6 +38,7 @@ tags:
   - 800-53r5_moderate
   - 800-53r5_high
   - cisv8
+  - indigo_high
   - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high

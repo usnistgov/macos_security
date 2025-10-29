@@ -19,7 +19,7 @@ references:
   disa_stig:
     - N/A
   indigo:
-    - N/A
+    - ANNEX D (Section 5.9.1 - Device-Code)
   cis:
     benchmark:
       - N/A
@@ -29,6 +29,8 @@ iOS:
   - "26.0"
 tags:
   - ios
+  - indigo_base
+  - indigo_high
   - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high

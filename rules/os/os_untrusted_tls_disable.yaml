@@ -17,7 +17,7 @@ references:
   sfr:
     - N/A
   indigo:
-    - N/A
+    - ANNEX K
   cis:
     benchmark:
       - 2.2.1.6 (level 2 - End-User Owned Devices)
@@ -31,6 +31,7 @@ tags:
   - cis_lvl2_byod
   - cis_lvl2_enterprise
   - cisv8
+  - indigo_high
 supervised: false
 mobileconfig: true
 mobileconfig_info:

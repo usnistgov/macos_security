@@ -17,7 +17,7 @@ references:
   disa_stig:
     - N/A
   indigo:
-    - N/A
+    - ANNEX K
   cis:
     benchmark:
       - 2.9.3 (level 1 - End-User Owned Devices)
@@ -35,6 +35,8 @@ tags:
   - cis_lvl1_enterprise
   - cis_lvl2_enterprise
   - cisv8
+  - indigo_base
+  - indigo_high
 mobileconfig: true
 mobileconfig_info:
   com.apple.applicationaccess:

@@ -26,7 +26,7 @@ references:
   disa_stig:
     - N/A
   indigo:
-    - N/A
+    - ANNEX D (Section 5.8 - App-Installation)
   cis:
     benchmark:
       - N/A
@@ -39,6 +39,8 @@ tags:
   - 800-53r5_moderate
   - 800-53r5_high
   - manual
+  - indigo_base
+  - indigo_high
   - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high

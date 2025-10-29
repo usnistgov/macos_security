@@ -19,7 +19,7 @@ references:
   disa_stig:
     - N/A
   indigo:
-    - N/A
+    - ANNEX K
   cis:
     benchmark:
       - 3.2.1.9 (level 2 - Institutionally-Owned Devices)
@@ -33,6 +33,8 @@ tags:
   - 800-53r5_high
   - cis_lvl2_enterprise
   - cisv8
+  - indigo_base
+  - indigo_high
   - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
