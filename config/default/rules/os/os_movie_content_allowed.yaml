@@ -14,6 +14,9 @@ discussion: |
   - `0`: None
 references:
   nist:
+    cce:
+      ios_18:
+        - CCE-94525-3
     800-53r5:
       - CM-7
   disa:
@@ -41,6 +44,6 @@ mobileconfig_info:
       - ratingMovies: $ODV
 odv:
   hint:
-    description: Maximum Auto-Lock in Minutes.
+    description: Ratings Level
   recommended: 0
   ios_stig: 0

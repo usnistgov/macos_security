@@ -15,6 +15,13 @@ references:
       - 03.01.20
       - 03.04.06
   disa:
+    cci:
+      - CCI-000381
+    srg:
+      - SRG-OS-000095-GPOS-000049
+    disa_stig:
+      macos_26:
+        - APPL-26-005170
     cmmc:
       - AC.L1-3.1.20
   cis:
@@ -22,7 +29,10 @@ references:
       - 4.1
 platforms:
   macOS:
-    '26.0': {}
+    '26.0':
+      benchmarks:
+        - name: disa_stig
+          severity: medium
     enforcement_info:
       check:
         shell: |-

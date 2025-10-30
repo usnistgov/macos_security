@@ -1,5 +1,5 @@
 id: os_tv_content_allowed
-title: Disable Movie Content
+title: Disable TV Content
 discussion: |
   TV Rating content _MUST_ be set to $ODV on the device.
 
@@ -15,6 +15,9 @@ discussion: |
   - `0`: None
 references:
   nist:
+    cce:
+      ios_18:
+        - CCE-94526-1
     800-53r5:
       - CM-7
   disa:
@@ -42,6 +45,6 @@ mobileconfig_info:
       - ratingTVShows: $ODV
 odv:
   hint:
-    description: Maximum Auto-Lock in Minutes.
+    description: Ratings Level
   recommended: 0
   ios_stig: 0

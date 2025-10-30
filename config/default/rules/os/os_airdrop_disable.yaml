@@ -45,8 +45,6 @@ references:
         - APPL-15-002009
       macos_14:
         - APPL-14-002009
-      ios_26:
-        - AO26-POOP-00001
       ios_18:
         - AIOS-18-010200
         - AIOS-18-012500
@@ -109,9 +107,6 @@ platforms:
   iOS:
     '26.0':
       supervised: true
-      benchmarks:
-        - name: ios_stig
-          severity: medium
     '18.0':
       supervised: true
       benchmarks:

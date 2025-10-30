@@ -168,7 +168,7 @@ def main():
     original_working_directory = os.getcwd()
 
     os.chdir(file_dir)
-    build_path = os.path.join(parent_dir, "rules")
+    build_path = os.path.join(parent_dir, "config", "default", "rules")
     # build_path = os.path.join(parent_dir, 'build', 'rules', 'v2.0')
     if not (os.path.isdir(build_path)):
         try:
@@ -257,7 +257,9 @@ def main():
             section = id_.split("_")[0]
             if section == "system":
                 section = "system_settings"
-            section_build_path = os.path.join(parent_dir, "rules", section)
+            section_build_path = os.path.join(
+                parent_dir, "config", "default", "rules", section
+            )
 
             if not (os.path.isdir(section_build_path)):
                 try:
