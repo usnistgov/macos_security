@@ -24,7 +24,7 @@ references:
     - "FMT_SMF_EXT.1.1/WLAN"
     - "FMT_SMF_EXT.1.1 #47"
   disa_stig:
-    - AO26-POOP-00001
+    - N/A
   indigo:
     - N/A
   cis:
