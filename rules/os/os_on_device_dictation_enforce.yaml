@@ -4,6 +4,8 @@ discussion: |
   Dictation _MUST_ be restricted to on device only to prevent potential data exfiltration.
 
   The information system _MUST_ be configured to provide only essential capabilities.
+  
+  IMPORTANT: Device dictation enforcing is not supported on Intel devices. This rule is only applicable to Apple Silicon devices.
 check: |
   /usr/bin/osascript -l JavaScript << EOS
   $.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess')\
