@@ -9,19 +9,19 @@ discussion: |-
 references:
   nist:
     cce:
+      macos_26:
+        - CCE-95256-4
       macos_15:
         - CCE-94253-2
       macos_14:
         - CCE-92849-9
-      macos_13:
-        - CCE-91844-1
     800-53r5:
       - SI-18
 platforms:
   macOS:
+    '26.0': {}
     '15.0': {}
     '14.0': {}
-    '13.0': {}
     enforcement_info:
       fix:
         additional_info: The requirement is NA. No fix is required.

@@ -15,9 +15,8 @@
 {% endif -%}
 
 {% if not rule.tags | select('in', check_tags) | list %}
-{# {% if not "supplemental" in rule.tags %} #}
 {% if rule.tags is not defined or rule.tags is none or "supplemental" not in rule.tags %}
-{% if rule.os_name == "macos" %}
+{% if os_name == "macos" %}
 To check the state of the system, run the following command(s):
 [source,bash,options="nowrap"]
 ----
@@ -31,7 +30,7 @@ To check the state of the system, run the following command(s):
 {{ rule.check if rule.check is not none }}
 {% endif %}
 
-{% if rule.os_name == "macos" %}
+{% if os_name == "macos" %}
 If the result is not _{{ rule.result_value }}_, this is a finding.
 {% endif %}
 
@@ -67,7 +66,7 @@ To check the state of the system, run the following command(s):
 ----
 {% endif %}
 {% else %}
-{% if rule.os_name == "macos" %}
+{% if os_name == "macos" %}
 {{ rule.fix }}
 {% else %}
 [source,xml]
@@ -85,8 +84,9 @@ To check the state of the system, run the following command(s):
 
 |ID
 |{{ rule.rule_id }}
-{{ rule.severity if rule.severity is not none and rule.tags not in check_tags }}
-
+{% if rule.severity is not none and rule.tags not in check_tags %}
+|Severity|{{ rule.severity }}
+{% endif %}
 |References
 |
 

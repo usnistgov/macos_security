@@ -7,12 +7,12 @@ discussion: |
 references:
   nist:
     cce:
+      macos_26:
+        - CCE-95187-1
       macos_15:
         - CCE-94187-2
       macos_14:
         - CCE-92787-1
-      macos_13:
-        - CCE-91785-6
   disa:
     cci:
       - CCI-001233
@@ -21,19 +21,14 @@ references:
     disa_stig:
       macos_14:
         - APPL-14-000015
-      macos_13:
-        - APPL-13-000015
 platforms:
   macOS:
-    '15.0':
-      benchmarks:
-        - name: disa_stig
-          severity: medium
+    '26.0': {}
+    '15.0': {}
     '14.0':
       benchmarks:
         - name: disa_stig
           severity: medium
-    '13.0': {}
     enforcement_info:
       check:
         shell: |-

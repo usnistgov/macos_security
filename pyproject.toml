@@ -23,10 +23,11 @@ dependencies = [
   "lxml==5.4.0",
   "matplotlib==3.10.3",
   "openpyxl==3.1.5",
-  "pandas==2.3.0",
+  "pandas==2.3.2",
   "pydantic==2.11.6",
   "pyyaml==6.0.2",
   "jsonschema==4.24.0",
+  "ruamel.yaml==0.18.15"
 ]
 
 [project.urls]
@@ -39,3 +40,6 @@ mscp = "mscp.__main__:main"
 
 [tool.hatch.version]
 path = "src/mscp/__init__.py"
+
+[tool.mypy]
+exclude = ["legacy"]

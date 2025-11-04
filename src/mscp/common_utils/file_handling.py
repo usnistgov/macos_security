@@ -4,12 +4,15 @@
 import csv
 import json
 import plistlib
-from collections.abc import Callable
+from collections.abc import Callable, MutableMapping
 from pathlib import Path
 from typing import Any
 
 # Additional python modules
-import yaml
+# import yaml
+from ruamel.yaml import YAML
+from ruamel.yaml.comments import CommentedMap
+from ruamel.yaml.scalarstring import LiteralScalarString
 
 from .error_handling import (
     COMMON_ERRORS,
@@ -27,23 +30,25 @@ ENCODING: str = "utf-8"
 READ_HANDLERS: dict[str, Callable[[Path], object]] = {}
 WRITE_HANDLERS: dict[str, Callable[[Path, Any], None]] = {}
 
-
-def _str_presenter(dumper, data):
-    """
-    Preserve multiline strings when dumping yaml.
-    https://github.com/yaml/pyyaml/issues/240
-    """
-    if "\n" in data:
-        # Remove trailing spaces messing out the output.
-        block = "\n".join([line.rstrip() for line in data.splitlines()])
-        if data.endswith("\n"):
-            block += "\n"
-        return dumper.represent_scalar("tag:yaml.org,2002:str", block, style="|")
-    return dumper.represent_scalar("tag:yaml.org,2002:str", data)
+yaml = YAML()
+yaml.preserve_quotes = True
+yaml.explicit_start = True
+yaml.indent(mapping=2, sequence=4, offset=2)
+yaml.allow_unicode = True
+yaml.width = 4096
 
 
-yaml.add_representer(str, _str_presenter)
-yaml.representer.SafeRepresenter.add_representer(str, _str_presenter)
+def _to_literal_scalars(obj):
+    if isinstance(obj, dict):
+        return {k: _to_literal_scalars(v) for k, v in obj.items()}
+    if isinstance(obj, list):
+        return [_to_literal_scalars(v) for v in obj]
+    if isinstance(obj, str) and "\n" in obj:
+        lit = LiteralScalarString(obj)
+        # Optional: control trailing newline behavior
+        # lit.fa.set_chomp('strip')  # -> |-
+        return lit
+    return obj
 
 
 def register_read_handler(*extensions: str):
@@ -96,21 +101,25 @@ def open_text(file_path: Path) -> str:
 
 @register_read_handler(".yaml", ".yml")
 @log_expected_errors(YAML_ERRORS, context="Reading YAML file: ")
-def open_yaml(file_path: Path) -> dict[str, Any]:
+def open_yaml(file_path: Path) -> CommentedMap | MutableMapping | None:
     """
-    Attempts to open a yaml file and read it's contents with error checking and logging
+    Attempts to open a yaml file and read its contents with error checking and logging
 
     Args:
         file_path (Path): The path to the file to be opened.
 
     Returns:
-        dict[str, Any]: The content of the file if successful, None if otherwise.
+        dict[str, Any]: The content of the file if successful, {} otherwise.
     """
-
     logger.debug("Attempting to open YAML: {}", file_path)
 
-    data = yaml.safe_load(file_path.read_text(encoding=ENCODING))
-    return data if isinstance(data, dict) else {}
+    with file_path.open("r", encoding=ENCODING) as f:
+        data: MutableMapping | None = yaml.load(f)
+        if data is None:
+            return CommentedMap()
+        if not isinstance(data, MutableMapping):
+            raise TypeError(f"Unexpected YAML structure in {file_path}")
+        return data
 
 
 @register_read_handler(".csv")
@@ -183,33 +192,9 @@ def open_json(file_path: Path) -> dict[str, Any]:
         return json.load(file)
 
 
-# def create_file(file_path: Path, data: Any) -> None:
-#     """
-#     Attempts to create a file with error checking and logging.
-
-#     Args:
-#         file_path (Path): The path to the file to be created.
-
-#     Returns:
-#         None: The function writes directly to the file and does not return a value.
-#     """
-
-#     match file_path.name:
-#         case name if re.search(r"\.ya?ml$", name):
-#             create_yaml(file_path, data)
-#         case name if re.search(r"\.csv$", name):
-#             create_csv(file_path, data)
-#         case name if re.search(r"\.(plist|mobileconfig)$", name):
-#             create_plist(file_path, data)
-#         case name if re.search(r"\.json$", name):
-#             create_json(file_path, data)
-#         case _:
-#             create_text(file_path, data)
-
-
 @register_write_handler(".yaml", ".yml")
 @log_expected_errors(YAML_ERRORS, context="Creating YAML file: ")
-def create_yaml(file_path: Path, data: dict[str, Any]) -> None:
+def create_yaml(file_path: Path, data: MutableMapping) -> None:
     """
     Create YAML file.
 
@@ -222,20 +207,14 @@ def create_yaml(file_path: Path, data: dict[str, Any]) -> None:
     """
     logger.debug("Attempting to create YAML: {}", file_path)
 
+    normalized = _to_literal_scalars(data)
+    clean_data: CommentedMap = CommentedMap(normalized)
+
     if not file_path.exists():
         file_path.touch()
 
-    file_path.write_text(
-        yaml.dump(
-            dict(data),
-            default_flow_style=False,
-            sort_keys=False,
-            explicit_start=True,
-            indent=2,
-            allow_unicode=True,
-        ),
-        encoding=ENCODING,
-    )
+    with file_path.open("w", encoding=ENCODING) as f:
+        yaml.dump(clean_data, f)
 
     logger.success("Created YAML: {}", file_path)
 

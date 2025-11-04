@@ -1,0 +1,36 @@
+id: os_exchange_reminders_user_override_disable
+title: Ensure Reminders service override is disabled for Exchange ActiveSync
+discussion: Exchange ActiveSync system can disable the Reminders service for an account, but it can be reenabled by the user. The Reminders service is completely disabled when the 'EnableRemindersUserOverridable' setting is set to 'false'.
+references:
+  nist:
+    cce:
+      ios_18:
+        - CCE-94468-6
+  disa:
+    cci:
+      - CCI-000764
+    disa_stig:
+      ios_18:
+        - AIOS-18-011300
+    sfr:
+      - 'FMT_SMF_EXT.1.1 #47'
+  bsi:
+    indigo:
+      ios_18:
+        - ANNEX D (Section 5.6.1 - Mail)
+platforms:
+  iOS:
+    '18.0':
+      supervised: false
+      benchmarks:
+        - name: ios_stig
+          severity: medium
+        - name: indigo_base
+          severity: medium
+        - name: indigo_high
+          severity: medium
+    introduced: '13.0'
+mobileconfig_info:
+  - PayloadType: com.apple.eas.account
+    PayloadContent:
+      - EnableRemindersUserOverridable: false

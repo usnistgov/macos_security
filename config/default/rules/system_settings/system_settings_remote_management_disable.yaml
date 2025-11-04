@@ -5,12 +5,12 @@ discussion: |
 references:
   nist:
     cce:
+      macos_26:
+        - CCE-95393-5
       macos_15:
         - CCE-94386-0
       macos_14:
         - CCE-92982-8
-      macos_13:
-        - CCE-91971-2
     800-53r5:
       - CM-7
       - CM-7(1)
@@ -23,6 +23,8 @@ references:
     srg:
       - SRG-OS-000095-GPOS-00049
     disa_stig:
+      macos_26:
+        - APPL-26-002250
       macos_15:
         - APPL-15-002250
       macos_14:
@@ -32,18 +34,24 @@ references:
       - CM.L2-3.4.7
   cis:
     benchmark:
+      macos_26:
+        - 2.3.3.5 (level 1)
       macos_15:
         - 2.3.3.5 (level 1)
       macos_14:
-        - 2.3.3.6 (level 1)
-      macos_13:
-        - 2.3.3.6 (level 1)
+        - 2.3.3.5 (level 1)
     controls_v8:
       - 4.1
       - 4.8
       - 5.4
 platforms:
   macOS:
+    '26.0':
+      benchmarks:
+        - name: cis_lvl1
+        - name: cis_lvl2
+        - name: disa_stig
+          severity: medium
     '15.0':
       benchmarks:
         - name: cis_lvl1
@@ -56,13 +64,14 @@ platforms:
         - name: cis_lvl2
         - name: disa_stig
           severity: medium
-    '13.0':
-      benchmarks:
-        - name: cis_lvl1
-        - name: cis_lvl2
+      enforcement_info:
+        check:
+          shell: /usr/libexec/mdmclient QuerySecurityInfo | /usr/bin/grep -c "RemoteDesktopEnabled = 0"
+          result:
+            integer: 1
     enforcement_info:
       check:
-        shell: /usr/libexec/mdmclient QuerySecurityInfo | /usr/bin/grep -c "RemoteDesktopEnabled = 0"
+        shell: /usr/libexec/mdmclient QuerySecurityInfo 2>/dev/null | /usr/bin/grep -c "RemoteDesktopEnabled = 0"
         result:
           integer: 1
       fix:

@@ -7,20 +7,20 @@ discussion: |
 references:
   nist:
     cce:
+      macos_26:
+        - CCE-95199-6
       macos_15:
         - CCE-94199-7
       macos_14:
         - CCE-92799-6
-      macos_13:
-        - CCE-91797-1
+      ios_26:
+        - CCE-95481-8
       ios_18:
         - CCE-94443-9
       ios_17:
         - CCE-93428-1
-      ios_16:
-        - CCE-93228-5
-      visionos_2:
-        - CCE-94499-1
+      visionos_26:
+        - CCE-95578-1
     800-53r5:
       - AC-3
       - AC-20
@@ -40,18 +40,16 @@ references:
       - SRG-OS-000080-GPOS-00048
       - SRG-OS-000095-GPOS-00049
     disa_stig:
+      macos_26:
+        - APPL-26-005058
       macos_15:
         - APPL-15-005058
       macos_14:
         - APPL-14-005058
-      macos_13:
-        - APPL-13-005058
       ios_18:
         - AIOS-18-010800
       ios_17:
         - AIOS-17-010800
-      ios_16:
-        - AIOS-16-010800
     cmmc:
       - AC.L1-3.1.1
       - AC.L1-3.1.20
@@ -59,13 +57,13 @@ references:
       - CM.L2-3.4.7
   cis:
     benchmark:
+      ios_26:
+        - 2.2.1.11 (level 2 - End-User Owned Devices)
+        - 3.2.1.24 (level 2 - Institutionally-Owned Devices)
       ios_18:
         - 2.2.1.11 (level 2 - End-User Owned Devices)
         - 3.2.1.24 (level 2 - Institutionally-Owned Devices)
       ios_17:
-        - 2.2.1.11 (level 2 - End-User Owned Devices)
-        - 3.2.1.24 (level 2 - Institutionally-Owned Devices)
-      ios_16:
         - 2.2.1.11 (level 2 - End-User Owned Devices)
         - 3.2.1.24 (level 2 - Institutionally-Owned Devices)
     controls_v8:
@@ -79,6 +77,10 @@ references:
         - ANNEX K
 platforms:
   macOS:
+    '26.0':
+      benchmarks:
+        - name: disa_stig
+          severity: medium
     '15.0':
       benchmarks:
         - name: disa_stig
@@ -87,10 +89,6 @@ platforms:
       benchmarks:
         - name: disa_stig
           severity: medium
-    '13.0':
-      benchmarks:
-        - name: disa_stig
-          severity: low
     enforcement_info:
       check:
         shell: |-
@@ -102,12 +100,17 @@ platforms:
           string: 'false'
     introduced: '10.15'
   iOS:
+    '26.0':
+      supervised: false
+      benchmarks:
+        - name: cis_lvl2_byod
+        - name: cis_lvl2_enterprise
     '18.0':
       supervised: false
       benchmarks:
         - name: cis_lvl2_byod
         - name: cis_lvl2_enterprise
-        - name: disa_stig
+        - name: ios_stig
           severity: low
         - name: indigo_base
           severity: low
@@ -118,22 +121,15 @@ platforms:
       benchmarks:
         - name: cis_lvl2_byod
         - name: cis_lvl2_enterprise
-        - name: disa_stig
+        - name: ios_stig
           severity: low
         - name: indigo_base
           severity: low
         - name: indigo_high
           severity: low
-    '16.0':
-      supervised: false
-      benchmarks:
-        - name: cis_lvl2_byod
-        - name: cis_lvl2_enterprise
-        - name: disa_stig
-          severity: low
     introduced: '8.0'
   visionOS:
-    '2.0':
+    '26.0':
       supervised: false
     introduced: '2.0'
 tags:

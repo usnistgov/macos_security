@@ -7,18 +7,20 @@ discussion: |
 references:
   nist:
     cce:
+      macos_26:
+        - CCE-95247-3
       macos_15:
         - CCE-94245-8
       macos_14:
         - CCE-92841-6
+      ios_26:
+        - CCE-95501-3
       ios_18:
         - CCE-94452-0
       ios_17:
         - CCE-93436-4
-      ios_16:
-        - CCE-93236-8
-      visionos_2:
-        - CCE-94502-2
+      visionos_26:
+        - CCE-95585-6
     800-53r5:
       - AC-20
       - CM-7
@@ -33,6 +35,8 @@ references:
     srg:
       - SRG-OS-000095-GPOS-00049
     disa_stig:
+      macos_26:
+        - APPL-26-002220
       macos_15:
         - APPL-15-002220
       macos_14:
@@ -41,14 +45,14 @@ references:
         - AIOS-18-014400
       ios_17:
         - AIOS-17-014400
-      ios_16:
-        - AIOS-16-014400
     cmmc:
       - AC.L1-3.1.20
       - CM.L2-3.4.6
       - CM.L2-3.4.7
   cis:
     benchmark:
+      macos_26:
+        - 2.18.1 (level 1)
       macos_15:
         - 2.18.1 (level 1)
       macos_14:
@@ -64,6 +68,12 @@ references:
         - ANNEX K
 platforms:
   macOS:
+    '26.0':
+      benchmarks:
+        - name: cis_lvl1
+        - name: cis_lvl2
+        - name: disa_stig
+          severity: medium
     '15.0':
       benchmarks:
         - name: cis_lvl1
@@ -87,10 +97,12 @@ platforms:
           string: 'true'
     introduced: '14.0'
   iOS:
+    '26.0':
+      supervised: false
     '18.0':
       supervised: false
       benchmarks:
-        - name: disa_stig
+        - name: ios_stig
           severity: medium
         - name: indigo_base
           severity: medium
@@ -99,20 +111,15 @@ platforms:
     '17.0':
       supervised: false
       benchmarks:
-        - name: disa_stig
+        - name: ios_stig
           severity: medium
         - name: indigo_base
           severity: medium
         - name: indigo_high
           severity: medium
-    '16.0':
-      supervised: false
-      benchmarks:
-        - name: disa_stig
-          severity: medium
     introduced: '14.5'
   visionOS:
-    '2.0':
+    '26.0':
       supervised: false
     introduced: '2.0'
 tags:

@@ -113,7 +113,7 @@ def parse_cli(program: str | None = "mscp") -> None:
         "baseline",
         help="Given a keyword tag, generate a generic baseline.yaml file containing rules with the tag.",
         parents=[parent_parser, benchmark_parser],
-        add_help=False,
+        add_help=True,
     )
     baseline_parser.set_defaults(func=generate_baseline)
     baseline_parser.add_argument(
@@ -146,7 +146,7 @@ def parse_cli(program: str | None = "mscp") -> None:
         "guidance",
         help="Given a baseline, create guidance documents and files.",
         parents=[parent_parser, benchmark_parser],
-        add_help=False,
+        add_help=True,
     )
     guidance_parser.set_defaults(func=generate_guidance)
     guidance_parser.add_argument(
@@ -234,7 +234,7 @@ def parse_cli(program: str | None = "mscp") -> None:
         "mapping",
         help="Easily generate custom rules from compliance framework mappings",
         parents=[parent_parser],
-        add_help=False,
+        add_help=True,
     )
     mapping_parser.set_defaults(func=generate_mapping)
     mapping_parser.add_argument(
@@ -256,7 +256,7 @@ def parse_cli(program: str | None = "mscp") -> None:
         "scap",
         help="Easily generate xccdf, oval, or scap datastream. If no option is defined, it will generate an scap datastream file.",
         parents=[parent_parser],
-        add_help=False,
+        add_help=True,
     )
     # scap_parser.set_defaults(func=parser.print_help)
     scap_parser.add_argument(
@@ -293,7 +293,7 @@ def parse_cli(program: str | None = "mscp") -> None:
         "local_report",
         help="Creates local report in Excel format.",
         parents=[parent_parser],
-        add_help=False,
+        add_help=True,
     )
     local_report_parser.set_defaults(func=generate_local_report)
     local_report_parser.add_argument(
@@ -311,7 +311,7 @@ def parse_cli(program: str | None = "mscp") -> None:
         "stig_checklist",
         help="Creates DISA STIG Checklist",
         parents=[parent_parser],
-        add_help=False,
+        add_help=True,
     )
     checklist_parser.set_defaults(func=generate_checklist)
     checklist_parser.add_argument(
@@ -346,7 +346,7 @@ def parse_cli(program: str | None = "mscp") -> None:
         "validate",
         help="Validates the YAML files in the rules directory.",
         parents=[parent_parser],
-        add_help=False,
+        add_help=True,
     )
     validate_parser.set_defaults(func=validate_yaml_file)
 

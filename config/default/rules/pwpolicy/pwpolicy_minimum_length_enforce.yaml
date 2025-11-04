@@ -9,18 +9,18 @@ discussion: |
 references:
   nist:
     cce:
+      macos_26:
+        - CCE-95346-3
       macos_15:
         - CCE-94340-7
       macos_14:
         - CCE-92936-4
-      macos_13:
-        - CCE-91923-3
+      ios_26:
+        - CCE-95552-6
       ios_18:
         - CCE-94477-7
       ios_17:
         - CCE-93460-4
-      ios_16:
-        - CCE-93260-8
     800-53r5:
       - IA-5(1)
     800-171r3:
@@ -32,39 +32,36 @@ references:
     srg:
       - SRG-OS-000078-GPOS-00046
     disa_stig:
+      macos_26:
+        - APPL-26-003010
       macos_15:
         - APPL-15-003010
       macos_14:
         - APPL-14-003010
-      macos_13:
-        - APPL-13-003010
       ios_18:
         - AIOS-18-006500
       ios_17:
         - AIOS-17-006500
         - AIOS-17-706500
-      ios_16:
-        - AIOS-16-006500
-        - AIOS-16-706500
     cmmc:
       - IA.L2-3.5.7
       - IA.L2-3.5.8
       - IA.L2-3.5.9
   cis:
     benchmark:
+      macos_26:
+        - 5.2.2 (level 1)
       macos_15:
         - 5.2.2 (level 1)
       macos_14:
         - 5.2.2 (level 1)
-      macos_13:
-        - 5.2.2 (level 1)
+      ios_26:
+        - 2.4.3 (level 1 - End-User Owned Devices)
+        - 3.4.3 (level 1 - Institutionally-Owned Devices)
       ios_18:
         - 2.4.3 (level 1 - End-User Owned Devices)
         - 3.4.3 (level 1 - Institutionally-Owned Devices)
       ios_17:
-        - 2.4.3 (level 1 - End-User Owned Devices)
-        - 3.4.3 (level 1 - Institutionally-Owned Devices)
-      ios_16:
         - 2.4.3 (level 1 - End-User Owned Devices)
         - 3.4.3 (level 1 - Institutionally-Owned Devices)
     controls_v8:
@@ -79,6 +76,12 @@ references:
         - ANNEX K
 platforms:
   macOS:
+    '26.0':
+      benchmarks:
+        - name: cis_lvl1
+        - name: cis_lvl2
+        - name: disa_stig
+          severity: medium
     '15.0':
       benchmarks:
         - name: cis_lvl1
@@ -91,22 +94,20 @@ platforms:
         - name: cis_lvl2
         - name: disa_stig
           severity: medium
-    '13.0':
-      benchmarks:
-        - name: cis_lvl1
-        - name: cis_lvl2
-        - name: disa_stig
-          severity: medium
     enforcement_info:
       check:
-        shell: |
-          /usr/bin/pwpolicy -getaccountpolicies 2> /dev/null \
-            | /usr/bin/tail +2 \
-            | /usr/bin/xmllint --xpath 'boolean(//*[contains(text(),"policyAttributePassword matches '\''.{$ODV,}'\''")])' -
+        shell: '/usr/bin/pwpolicy -getaccountpolicies 2>/dev/null | tail +2 | grep -oE "policyAttributePassword matches ''.\{[0-9]+," | awk -F''[{,]'' -v ODV=$ODV ''{if ($2 > max) max=$2} END {print (max >= ODV) ? "pass" : "fail"}'''
         result:
-          string: 'true'
+          string: pass
     introduced: '10.7'
   iOS:
+    '26.0':
+      supervised: false
+      benchmarks:
+        - name: cis_lvl1_byod
+        - name: cis_lvl2_byod
+        - name: cis_lvl1_enterprise
+        - name: cis_lvl2_enterprise
     '18.0':
       supervised: false
       benchmarks:
@@ -114,7 +115,7 @@ platforms:
         - name: cis_lvl2_byod
         - name: cis_lvl1_enterprise
         - name: cis_lvl2_enterprise
-        - name: disa_stig
+        - name: ios_stig
           severity: medium
         - name: indigo_base
           severity: medium
@@ -127,24 +128,13 @@ platforms:
         - name: cis_lvl2_byod
         - name: cis_lvl1_enterprise
         - name: cis_lvl2_enterprise
-        - name: disa_stig
+        - name: ios_stig
           severity: medium
         - name: ios_stig_byoad
           severity: medium
         - name: indigo_base
           severity: medium
         - name: indigo_high
-          severity: medium
-    '16.0':
-      supervised: false
-      benchmarks:
-        - name: cis_lvl1_byod
-        - name: cis_lvl2_byod
-        - name: cis_lvl1_enterprise
-        - name: cis_lvl2_enterprise
-        - name: disa_stig
-          severity: medium
-        - name: ios_stig_byoad
           severity: medium
     introduced: '4.0'
 odv:
@@ -156,15 +146,15 @@ odv:
   recommended: 6
   cis_lvl1: 15
   cis_lvl2: 15
-  stig: 15
+  stig: 14
   cis_lvl1_byod: 6
   cis_lvl2_byod: 6
   cis_lvl1_enterprise: 6
   cis_lvl2_enterprise: 6
-  disa_stig: 6
-  ios_stig_byoad: 6
+  ios_stig: 6
   indigo_base: 8
   indigo_high: 8
+  ios_stig_byoad: 6
 tags:
   - 800-171
   - 800-53r5_low

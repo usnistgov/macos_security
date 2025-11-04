@@ -5,14 +5,14 @@ discussion: |
 references:
   nist:
     cce:
+      ios_26:
+        - CCE-95440-4
       ios_18:
         - CCE-94428-0
       ios_17:
         - CCE-93414-1
-      ios_16:
-        - CCE-93214-5
-      visionos_2:
-        - CCE-94491-8
+      visionos_26:
+        - CCE-95566-6
     800-53r5:
       - AC-3
       - MP-2
@@ -22,17 +22,15 @@ references:
     disa_stig:
       ios_17:
         - AIOS-17-714900
-      ios_16:
-        - AIOS-16-714900
   cis:
     benchmark:
+      ios_26:
+        - 2.2.1.9 (level 1 - End-User Owned Devices)
+        - 3.2.1.22 (level 1 - Institutionally-Owned Devices)
       ios_18:
         - 2.2.1.9 (level 1 - End-User Owned Devices)
         - 3.2.1.22 (level 1 - Institutionally-Owned Devices)
       ios_17:
-        - 2.2.1.9 (level 1 - End-User Owned Devices)
-        - 3.2.1.22 (level 1 - Institutionally-Owned Devices)
-      ios_16:
         - 2.2.1.9 (level 1 - End-User Owned Devices)
         - 3.2.1.22 (level 1 - Institutionally-Owned Devices)
     controls_v8:
@@ -44,6 +42,13 @@ references:
         - ANNEX K
 platforms:
   iOS:
+    '26.0':
+      supervised: false
+      benchmarks:
+        - name: cis_lvl1_byod
+        - name: cis_lvl2_byod
+        - name: cis_lvl1_enterprise
+        - name: cis_lvl2_enterprise
     '18.0':
       supervised: false
       benchmarks:
@@ -63,18 +68,9 @@ platforms:
         - name: ios_stig_byoad
         - name: indigo_base
         - name: indigo_high
-    '16.0':
-      supervised: false
-      benchmarks:
-        - name: cis_lvl1_byod
-        - name: cis_lvl2_byod
-        - name: cis_lvl1_enterprise
-        - name: cis_lvl2_enterprise
-        - name: ios_stig_byoad
-          severity: medium
     introduced: '7.0'
   visionOS:
-    '2.0':
+    '26.0':
       supervised: false
     introduced: '2.0'
 tags:
@@ -82,6 +78,9 @@ tags:
   - 800-53r5_moderate
   - 800-53r5_high
   - cisv8
+  - cnssi-1253_moderate
+  - cnssi-1253_low
+  - cnssi-1253_high
 mobileconfig_info:
   - PayloadType: com.apple.applicationaccess
     PayloadContent:

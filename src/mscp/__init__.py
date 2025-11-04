@@ -7,7 +7,6 @@ logger.disable("mscp")
 __version__ = "2.0.0"
 
 from .classes.baseline import Baseline
-from .classes.filehandler import FileHandler
 from .classes.loguruformatter import LoguruFormatter
 from .classes.macsecurityrule import Macsecurityrule
 from .classes.payload import Payload
@@ -44,7 +43,6 @@ __all__ = [
     "__version__",
     "Baseline",
     "Macsecurityrule",
-    "FileHandler",
     "LoguruFormatter",
     "Payload",
     "config",

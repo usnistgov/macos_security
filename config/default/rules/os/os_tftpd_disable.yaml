@@ -9,12 +9,12 @@ discussion: |
 references:
   nist:
     cce:
+      macos_26:
+        - CCE-95323-2
       macos_15:
         - CCE-94317-5
       macos_14:
         - CCE-92914-1
-      macos_13:
-        - CCE-91902-7
     800-53r5:
       - AC-3
       - IA-5(1)
@@ -31,12 +31,12 @@ references:
       - SRG-OS-000080-GPOS-00048
       - SRG-OS-000074-GPOS-00042
     disa_stig:
+      macos_26:
+        - APPL-26-002038
       macos_15:
         - APPL-15-002038
       macos_14:
         - APPL-14-002038
-      macos_13:
-        - APPL-13-002038
     cmmc:
       - AC.L1-3.1.1
       - IA.L2-3.5.7
@@ -49,23 +49,51 @@ references:
       - 5.2
 platforms:
   macOS:
+    '26.0':
+      benchmarks:
+        - name: disa_stig
+          severity: high
+      enforcement_info:
+        fix:
+          shell: |-
+            /bin/launchctl bootout system/com.apple.tftpd
+            /bin/launchctl disable system/com.apple.tftpd
+          additional_info: The system may need to be restarted for the update to take effect.
     '15.0':
       benchmarks:
         - name: disa_stig
           severity: high
+      enforcement_info:
+        check:
+          shell: /bin/launchctl print-disabled system | /usr/bin/grep -c '"com.apple.tftpd" => disabled'
+          result:
+            integer: 1
     '14.0':
       benchmarks:
         - name: disa_stig
           severity: high
-    '13.0':
-      benchmarks:
-        - name: disa_stig
-          severity: high
+      enforcement_info:
+        check:
+          shell: /bin/launchctl print-disabled system | /usr/bin/grep -c '"com.apple.tftpd" => disabled'
+          result:
+            integer: 1
     enforcement_info:
       check:
-        shell: /bin/launchctl print-disabled system | /usr/bin/grep -c '"com.apple.tftpd" => disabled'
+        shell: |-
+          result="FAIL"
+          enabled=$(/bin/launchctl print-disabled system | /usr/bin/grep '"com.apple.tftpd" => enabled')
+          running=$(/bin/launchctl print system/com.apple.tftpd 2>/dev/null)
+
+          if [[ -z "$running" ]] && [[ -z "$enabled" ]]; then
+            result="PASS"
+          elif [[ -n "$running" ]]; then
+            result=result+" RUNNING"
+          elif [[ -n "$enabled" ]]; then
+            result=result+" ENABLED"
+          fi
+          echo $result
         result:
-          integer: 1
+          string: PASS
       fix:
         shell: /bin/launchctl disable system/com.apple.tftpd
         additional_info: The system may need to be restarted for the update to take effect.

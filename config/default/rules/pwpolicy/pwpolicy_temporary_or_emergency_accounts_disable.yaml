@@ -19,12 +19,12 @@ discussion: |
 references:
   nist:
     cce:
+      macos_26:
+        - CCE-95352-1
       macos_15:
         - CCE-94346-4
       macos_14:
         - CCE-92942-2
-      macos_13:
-        - CCE-91929-0
     800-53r5:
       - AC-2(2)
   disa:
@@ -35,23 +35,23 @@ references:
       - SRG-OS-000002-GPOS-00002
       - SRG-OS-000123-GPOS-00064
     disa_stig:
+      macos_26:
+        - APPL-26-000012
       macos_15:
         - APPL-15-000012
       macos_14:
         - APPL-14-000012
-      macos_13:
-        - APPL-13-000012
 platforms:
   macOS:
+    '26.0':
+      benchmarks:
+        - name: disa_stig
+          severity: medium
     '15.0':
       benchmarks:
         - name: disa_stig
           severity: medium
     '14.0':
-      benchmarks:
-        - name: disa_stig
-          severity: medium
-    '13.0':
       benchmarks:
         - name: disa_stig
           severity: medium
@@ -66,10 +66,7 @@ platforms:
 
           To check if the password policy is configured to disable a temporary or emergency account after 72 hours, run the following command to output the password policy to the screen, substituting the correct user name in place of username:
 
-          [source,bash]
-          ----
           /usr/bin/pwpolicy -u username getaccountpolicies | tail -n +2
-          ----
 
           If there is no output, and password policy is not controlled by a directory service, this is a finding.
 
@@ -84,27 +81,21 @@ platforms:
 
           To set local policy to disable a temporary or emergency user, create a plain text file containing the following:
 
-          [source,xml]
-          ----
           <dict>
-            <key>policyCategoryAuthentication</key>
-            <array>
-              <dict>
-                <key>policyContent</key>
-                <string>policyAttributeCurrentTime < policyAttributeCreationTime+259299</string>
-                <key>policyIdentifier</key>
-                <string>Disable Tmp Accounts </string>
-              </dict>
-            </array>
+          <key>policyCategoryAuthentication</key>
+          <array>
+          <dict>
+          <key>policyContent</key>
+          <string>policyAttributeCurrentTime &lt; policyAttributeCreationTime+259299</string>
+          <key>policyIdentifier</key>
+          <string>Disable Tmp Accounts </string>
           </dict>
-          ---
+          </array>
+          </dict>
 
           After saving the file and exiting to the command prompt, run the following command to load the new policy file, substituting the correct user name in place of "username" and the path to the file in place of "/path/to/file".
 
-          [source,bash]
-          ----
           /usr/bin/pwpolicy -u username setaccountpolicies /path/to/file
-          ----
 tags:
   - 800-53r5_moderate
   - 800-53r5_high

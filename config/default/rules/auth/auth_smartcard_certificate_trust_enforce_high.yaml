@@ -11,12 +11,12 @@ discussion: |
 references:
   nist:
     cce:
+      macos_26:
+        - CCE-95136-8
       macos_15:
         - CCE-94136-9
       macos_14:
         - CCE-92736-8
-      macos_13:
-        - CCE-91737-7
     800-53r5:
       - IA-5(2)
       - SC-17
@@ -25,9 +25,9 @@ references:
       - SC.L2-3.13.10
 platforms:
   macOS:
+    '26.0': {}
     '15.0': {}
     '14.0': {}
-    '13.0': {}
     enforcement_info:
       check:
         shell: |-
@@ -43,6 +43,7 @@ tags:
   - cnssi-1253_high
   - cnssi-1253_moderate
   - cnssi-1253_low
+  - cmmc_lvl2
 mobileconfig_info:
   - PayloadType: com.apple.security.smartcard
     PayloadContent:

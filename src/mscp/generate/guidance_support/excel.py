@@ -12,6 +12,7 @@ from ...classes import Baseline
 from ...common_utils.logger_instance import logger
 
 
+# TODO: Refactor to use new YAML format for rules
 def generate_excel(file_out: Path, baseline: Baseline) -> None:
     """
     Generates an Excel file from the given baseline data.

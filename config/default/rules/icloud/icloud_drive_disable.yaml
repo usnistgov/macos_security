@@ -7,20 +7,20 @@ discussion: |
 references:
   nist:
     cce:
+      macos_26:
+        - CCE-95144-2
       macos_15:
         - CCE-94144-3
       macos_14:
         - CCE-92745-9
-      macos_13:
-        - CCE-91745-0
+      ios_26:
+        - CCE-95423-0
       ios_18:
         - CCE-94421-5
       ios_17:
         - CCE-93407-5
-      ios_16:
-        - CCE-93207-9
-      visionos_2:
-        - CCE-94484-3
+      visionos_26:
+        - CCE-95555-9
     800-53r5:
       - AC-20
       - AC-20(1)
@@ -37,29 +37,27 @@ references:
     srg:
       - SRG-OS-000095-GPOS-00049
     disa_stig:
+      macos_26:
+        - APPL-26-002041
       macos_15:
         - APPL-15-002041
       macos_14:
         - APPL-14-002041
-      macos_13:
-        - APPL-13-002041
       ios_18:
         - AIOS-18-003200
       ios_17:
         - AIOS-17-003200
-      ios_16:
-        - AIOS-16-003200
     cmmc:
       - AC.L1-3.1.20
       - CM.L2-3.4.6
       - CM.L2-3.4.7
   cis:
     benchmark:
+      ios_26:
+        - 3.2.1.5 (level 1 - Institutionally-Owned Devices)
       ios_18:
         - 3.2.1.5 (level 1 - Institutionally-Owned Devices)
       ios_17:
-        - 3.2.1.5 (level 1 - Institutionally-Owned Devices)
-      ios_16:
         - 3.2.1.5 (level 1 - Institutionally-Owned Devices)
     controls_v8:
       - 4.1
@@ -75,15 +73,15 @@ references:
         - ANNEX K
 platforms:
   macOS:
+    '26.0':
+      benchmarks:
+        - name: disa_stig
+          severity: medium
     '15.0':
       benchmarks:
         - name: disa_stig
           severity: medium
     '14.0':
-      benchmarks:
-        - name: disa_stig
-          severity: medium
-    '13.0':
       benchmarks:
         - name: disa_stig
           severity: medium
@@ -98,12 +96,17 @@ platforms:
           string: 'false'
     introduced: '10.11'
   iOS:
+    '26.0':
+      supervised: true
+      benchmarks:
+        - name: cis_lvl1_enterprise
+        - name: cis_lvl2_enterprise
     '18.0':
       supervised: true
       benchmarks:
         - name: cis_lvl1_enterprise
         - name: cis_lvl2_enterprise
-        - name: disa_stig
+        - name: ios_stig
           severity: medium
         - name: indigo_high
           severity: medium
@@ -112,20 +115,13 @@ platforms:
       benchmarks:
         - name: cis_lvl1_enterprise
         - name: cis_lvl2_enterprise
-        - name: disa_stig
+        - name: ios_stig
           severity: medium
         - name: indigo_high
           severity: medium
-    '16.0':
-      supervised: true
-      benchmarks:
-        - name: cis_lvl1_enterprise
-        - name: cis_lvl2_enterprise
-        - name: disa_stig
-          severity: medium
     introduced: '5.0'
   visionOS:
-    '2.0':
+    '26.0':
       supervised: true
     introduced: '2.0'
 tags:

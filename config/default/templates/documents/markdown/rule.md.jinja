@@ -1,7 +1,7 @@
 {% set check_tags = ["permanent", "inherent", "n_a", "not_applicable"] %}
 {% set additional_info = rule | get_nested(["platforms", rule.os_type, "enforcement_info", "fix", "additional_info"]) %}
-{% set check_shell = rule | get_nested(["platforms", rule.os_type, "enforcement_info", "check", "shell"]) %}
-{% set fix_shell = rule | get_nested(["platforms", rule.os_type, "enforcement_info", "fix", "shell"]) %}
+{% set check_shell = rule | get_nested(["platforms", rule.os_type, "enforcement_info", "check", "shell"]) | safe %}
+{% set fix_shell = rule | get_nested(["platforms", rule.os_type, "enforcement_info", "fix", "shell"]) | safe %}
 
 ### {{ rule.title }}
 
@@ -17,7 +17,7 @@
 
 {% if not rule.tags | select('in', check_tags) | list %}
 {% if rule.tags is not defined or rule.tags is none or "supplemental" not in rule.tags %}
-{% if rule.os_name == "macos" %}
+{% if os_name == "macos" %}
 To check the state of the system, run the following command(s):
 
 ```bash
@@ -31,7 +31,7 @@ To check the state of the system, run the following command(s):
 {{ rule.check if rule.check is not none }}
 {% endif %}
 
-{% if rule.os_name == "macos" %}
+{% if os_name == "macos" %}
 If the result is not _{{ rule.result_value }}_, this is a finding.
 {% endif %}
 
@@ -49,7 +49,7 @@ Perform the following to configure the system to meet the requirements:<br />
 To check the state of the system, run the following command(s):
 
 ```bash
-{{ rule.fix | asciidoc_to_markdown if rule.fix is not none else fix_shell }}
+{{ rule.fix | asciidoc_to_markdown if rule.fix is not none else fix_shell| asciidoc_to_markdown  }}
 ```
 
 {% elif additional_info is not none %}
@@ -57,7 +57,7 @@ To check the state of the system, run the following command(s):
 {% elif rule.mobileconfig_info is not none and fix_shell %}
 {% if fix_shell %}
 ```bash
-{{ fix_shell -}}
+{{ fix_shell | asciidoc_to_markdown -}}
 ```
 {% endif %}
 
@@ -67,7 +67,7 @@ To check the state of the system, run the following command(s):
 ```
 {% endif %}
 {% else %}
-{% if rule.os_name == "macos" %}
+{% if os_name == "macos" %}
 {{ rule.fix | asciidoc_to_markdown }}
 {% else %}
 ```xml
@@ -84,13 +84,15 @@ To check the state of the system, run the following command(s):
 
 <table class="outer-table" border="1">
   <tr>
-    <td> ID </td>
-    {% if rule.severity is not none %}
-    <td>{{ rule.rule_id }}<br />{{ rule.severity }}</td>
-    {% else %}
+    <td>ID</td>
     <td>{{ rule.rule_id }}</td>
-    {% endif %}
   </tr>
+  {% if rule.severity is not none and rule.tags not in check_tags %}
+  <tr>
+    <td>Severity</td>
+    <td>{{ rule.severity }}</td>
+  </tr>
+  {% endif %}
   <tr>
     <td>References</td>
     <td>

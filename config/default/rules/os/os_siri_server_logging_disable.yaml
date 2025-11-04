@@ -7,6 +7,8 @@ discussion: |
 references:
   nist:
     cce:
+      ios_26:
+        - CCE-95527-8
       ios_18:
         - CCE-94552-7
       ios_17:
@@ -22,6 +24,8 @@ references:
         - ANNEX K
 platforms:
   iOS:
+    '26.0':
+      supervised: false
     '18.0':
       supervised: false
       benchmarks:
@@ -35,6 +39,9 @@ tags:
   - 800-53r5_low
   - 800-53r5_moderate
   - 800-53r5_high
+  - cnssi-1253_moderate
+  - cnssi-1253_low
+  - cnssi-1253_high
 mobileconfig_info:
   - PayloadType: com.apple.applicationaccess
     PayloadContent:

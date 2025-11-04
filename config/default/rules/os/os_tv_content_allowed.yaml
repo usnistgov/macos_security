@@ -1,0 +1,47 @@
+id: os_tv_content_allowed
+title: Disable Movie Content
+discussion: |
+  TV Rating content _MUST_ be set to $ODV on the device.
+
+  Possible values, with the U.S. description of the rating level:
+
+  - `1000`: All
+  - `600`: TV-MA
+  - `500`: TV-14
+  - `400`: TV-PG
+  - `300`: TV-G
+  - `200`: TV-Y7
+  - `100`: TV-Y
+  - `0`: None
+references:
+  nist:
+    800-53r5:
+      - CM-7
+  disa:
+    cci:
+      - CCI-000366
+    disa_stig:
+      ios_18:
+        - AIOS-18-017100
+    sfr:
+      - 'FMT_MOF_EXT.1.2 #47'
+platforms:
+  iOS:
+    '18.0':
+      supervised: false
+      benchmarks:
+        - name: ios_stig
+    introduced: '4.0'
+tags:
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_high
+mobileconfig_info:
+  - PayloadType: com.apple.applicationaccess
+    PayloadContent:
+      - ratingTVShows: $ODV
+odv:
+  hint:
+    description: Maximum Auto-Lock in Minutes.
+  recommended: 0
+  ios_stig: 0

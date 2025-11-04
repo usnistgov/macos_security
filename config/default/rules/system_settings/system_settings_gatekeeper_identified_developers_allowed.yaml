@@ -7,12 +7,12 @@ discussion: |
 references:
   nist:
     cce:
+      macos_26:
+        - CCE-95371-1
       macos_15:
         - CCE-94364-7
       macos_14:
         - CCE-92961-2
-      macos_13:
-        - CCE-91950-6
     800-53r5:
       - CM-14
       - CM-5
@@ -28,16 +28,22 @@ references:
       - SRG-OS-000366-GPOS-00153
       - SRG-OS-000480-GPOS-00228
     disa_stig:
+      macos_26:
+        - APPL-26-002060
       macos_15:
         - APPL-15-002060
       macos_14:
         - APPL-14-002060
-      macos_13:
-        - APPL-13-002060
     cmmc:
       - CM.L2-3.4.5
 platforms:
   macOS:
+    '26.0':
+      benchmarks:
+        - name: disa_stig
+          severity: high
+      enforcement_info:
+        fix: {}
     '15.0':
       benchmarks:
         - name: disa_stig
@@ -48,15 +54,6 @@ platforms:
       benchmarks:
         - name: disa_stig
           severity: high
-      enforcement_info:
-        check:
-          shell: /usr/sbin/spctl --status --verbose | /usr/bin/grep -c "developer id enabled"
-          result:
-            integer: 1
-    '13.0':
-      benchmarks:
-        - name: disa_stig
-          severity: medium
       enforcement_info:
         check:
           shell: /usr/sbin/spctl --status --verbose | /usr/bin/grep -c "developer id enabled"

@@ -3,6 +3,8 @@
 # Standard python modules
 import base64
 from collections import OrderedDict
+from collections.abc import MutableMapping
+from copy import deepcopy
 from enum import StrEnum
 from pathlib import Path
 from typing import Any
@@ -10,12 +12,14 @@ from uuid import uuid4
 
 # Additional python modules
 from lxml import etree
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import Field
+from ruamel.yaml.comments import CommentedMap
 
 # Local python modules
 from ..common_utils import (
     config,
-    create_yaml,
+    create_file,
+    deep_merge,
     get_version_data,
     make_dir,
     mscp_data,
@@ -23,9 +27,9 @@ from ..common_utils import (
     sanitize_input,
 )
 from ..common_utils.logger_instance import logger
+from .basemodel import BaseModelWithAccessors
 
 
-# TODO: Create a way to combine a partial custom rule with a default rule
 class Sectionmap(StrEnum):
     AUDIT = "auditing"
     AUTH = "authentication"
@@ -39,38 +43,6 @@ class Sectionmap(StrEnum):
     SRG = "srg"
     SUPPLEMENTAL = "supplemental"
     SYSTEM_SETTINGS = "systemsettings"
-
-
-class BaseModelWithAccessors(BaseModel):
-    """
-    A base class that provides `get`, `__getitem__`, and `__setitem__` methods
-    for all derived classes.
-    """
-
-    def get(self, attr: str, default: Any = None) -> Any:
-        """
-        Get the value of an attribute, or return the default if it doesn't exist.
-        """
-        return getattr(self, attr, default)
-
-    def __getitem__(self, key: str) -> Any:
-        """
-        Allow dictionary-like access to attributes.
-        """
-        if key in self.__class__.model_fields:
-            return getattr(self, key)
-        raise KeyError(f"{key} is not a valid attribute of {self.__class__.__name__}")
-
-    def __setitem__(self, key: str, value: Any) -> None:
-        """
-        Allow dictionary-like setting of attributes.
-        """
-        if key in self.__class__.model_fields:
-            setattr(self, key, value)
-        else:
-            raise KeyError(
-                f"{key} is not a valid attribute of {self.__class__.__name__}"
-            )
 
 
 class NistReferences(BaseModelWithAccessors):
@@ -138,8 +110,6 @@ class Mobileconfigpayload(BaseModelWithAccessors):
 
 
 class References(BaseModelWithAccessors):
-    model_config: ConfigDict = ConfigDict(extra="ignore")
-
     nist: NistReferences
     disa: DisaReferences | None = None
     cis: CisReferences | None = None
@@ -202,7 +172,7 @@ class Macsecurityrule(BaseModelWithAccessors):
     references: References
     odv: dict[str, Any] | None = None
     finding: bool = False
-    tags: list[str] | None = None
+    tags: list[str] = Field(default_factory=list)
     result_value: str | int | bool | None = None
     mobileconfig_info: list[Mobileconfigpayload] | None = None
     ddm_info: dict[str, Any] | None = None
@@ -258,10 +228,8 @@ class Macsecurityrule(BaseModelWithAccessors):
         os_typeversion: str = f"{os_type}_{os_version_int}".lower()
         os_type = os_type.replace("os", "OS")
 
-        rules_dirs: list[Path] = [
-            Path(config["custom"]["rules_dir"]),
-            Path(config["defaults"]["rules_dir"]),
-        ]
+        custom_dir: Path = Path(config.get("custom", {}).get("rules_dir", ""))
+        defaults_dir: Path = Path(config.get("defaults", {}).get("rules_dir", ""))
 
         for rule_id in rule_ids:
             logger.debug("Transforming rule: {}", rule_id)
@@ -270,25 +238,36 @@ class Macsecurityrule(BaseModelWithAccessors):
             check_value: str | None = None
             fix_value: str | None = None
             mechanism: str = "Manual"
-            payloads: list[Mobileconfigpayload] | None = []
+            payloads: list[Mobileconfigpayload] = []
             severity: str | None = None
+            tags: list[str] = []
+            rule_yaml: MutableMapping | CommentedMap | None = None
 
-            rule_file = next(
-                (
-                    file
-                    for rules_dir in rules_dirs
-                    if rules_dir.exists()
-                    for pattern in (f"{rule_id}.y*ml", f"{rule_id}.json")
-                    for file in rules_dir.rglob(pattern)
-                ),
-                None,
-            )
+            custom_file: Path | None = _find_rule_file(custom_dir, rule_id)
+            default_file: Path | None = _find_rule_file(defaults_dir, rule_id)
 
-            if not rule_file:
+            if default_file and custom_file:
+                logger.debug(
+                    "Found default (%s) and custom (%s) for %s; merging (default <- custom).",
+                    default_file,
+                    custom_file,
+                    rule_id,
+                )
+                default_data: CommentedMap = open_file(default_file) or CommentedMap()
+                custom_data: CommentedMap = open_file(custom_file) or CommentedMap()
+                rule_yaml = deep_merge(deepcopy(default_data), custom_data)
+
+                rule_yaml["customized"] = True
+
+            elif custom_file or default_file:
+                rule_file: Path = custom_file or default_file
+                rule_yaml = open_file(rule_file) or CommentedMap()
+                if custom_file:
+                    rule_yaml["customized"] = True
+
+            else:
                 logger.warning("Rule file not found for rule: {}", rule_id)
                 continue
-
-            rule_yaml: dict[str, Any] = open_file(rule_file)
 
             if os_type not in rule_yaml.get("platforms", {}):
                 logger.debug(
@@ -308,16 +287,17 @@ class Macsecurityrule(BaseModelWithAccessors):
 
             rule_yaml["rule_id"] = rule_yaml.pop("id")
 
-            if "custom" in rule_file.parts:
-                rule_yaml["customized"] = True
-
             enforcement_info = rule_yaml["platforms"][os_type].get(
                 "enforcement_info", {}
             )
 
             tags = rule_yaml.get("tags", [])
 
-            if enforcement_info and section != "notapplicable":
+            if (
+                enforcement_info
+                and section != "notapplicable"
+                or section != "Not Applicable"
+            ):
                 check_shell = enforcement_info.get("check", {}).get("shell")
                 check_result = enforcement_info.get("check", {}).get("result")
                 fix_shell = enforcement_info.get("fix", {}).get("shell")
@@ -368,14 +348,12 @@ class Macsecurityrule(BaseModelWithAccessors):
                         )
                     )
 
-                if check_value and "osascript" in check_value:
-                    # Get the first key from the first payload_content dict
-                    first_key = list(payloads[0].payload_content[0].keys())[0]
-                    check_value = f"/usr/bin/osascript -l JavaScript -e \"$.NSUserDefaults.alloc.initWithSuiteName('{payloads[0].payload_type}').objectForKey('{first_key}').js\""
+                # if check_value and "osascript" in check_value:
+                #     # Get the first key from the first payload_content dict
+                #     first_key = list(payloads[0].payload_content[0].keys())[0]
+                #     check_value = f"/usr/bin/osascript -l JavaScript -e \"$.NSUserDefaults.alloc.initWithSuiteName('{payloads[0].payload_type}').objectForKey('{first_key}').js\""
 
                 rule_yaml.pop("mobileconfig_info", None)
-            else:
-                payloads = None
 
             benchmarks: list[dict[str, str]] = rule_yaml["platforms"][os_type][
                 os_version_str
@@ -390,22 +368,23 @@ class Macsecurityrule(BaseModelWithAccessors):
                         severity = benchmark["severity"]
                         break
 
-            if tags:
-                match rule_yaml["tags"]:
-                    case "inherent":
-                        mechanism = "Inherent"
-                        fix_value = (
-                            "The control cannot be configured out of compliance."
-                        )
-                        section = Sectionmap.INHERENT
-                    case "permanent":
-                        mechanism = "Permanent"
-                        fix_value = "The control is not able to be configured to meet the requirement. It is recommended to implement a third-party solution to meet the control."
-                        section = Sectionmap.PERMANENT
-                    case "not_applicable" | "n_a":
-                        mechanism = "N/A"
-                        fix_value = "The control is not applicable when configuring a macOS system."
-                        section = Sectionmap.NOT_APPLICABLE
+            match tags:
+                case "inherent":
+                    mechanism = "Inherent"
+                    fix_value = "The control cannot be configured out of compliance."
+                    section = Sectionmap.INHERENT
+                case "permanent":
+                    mechanism = "Permanent"
+                    fix_value = "The control is not able to be configured to meet the requirement. It is recommended to implement a third-party solution to meet the control."
+                    section = Sectionmap.PERMANENT
+                case "not_applicable" | "n_a":
+                    mechanism = "N/A"
+                    fix_value = (
+                        "The control is not applicable when configuring a macOS system."
+                    )
+                    section = Sectionmap.NOT_APPLICABLE
+                case _:
+                    pass
 
             ref: dict[str, Any] = rule_yaml["references"]
             nist: dict[str, Any] = ref.get("nist", {})
@@ -865,7 +844,9 @@ class Macsecurityrule(BaseModelWithAccessors):
         fields_to_process: tuple[str, ...] = (
             "title",
             "discussion",
+            "check",
             "fix",
+            "result_value",
         )
 
         # Helper function to recursively replace $ODV in nested structures
@@ -1097,7 +1078,7 @@ class Macsecurityrule(BaseModelWithAccessors):
             if value or key in required_keys
         }
 
-        create_yaml(rule_file_path, clean_dict)
+        create_file(rule_file_path, clean_dict)
 
     def to_dict(self) -> dict[str, Any]:
         """
@@ -1147,3 +1128,15 @@ class Macsecurityrule(BaseModelWithAccessors):
             )
 
         return output
+
+
+def _find_rule_file(rules_dir: Path, rule_id: str) -> Path | None:
+    if not rules_dir or not rules_dir.exists():
+        return None
+
+    for pattern in (f"{rule_id}.y*ml", f"{rule_id}.json"):
+        match = next(rules_dir.rglob(pattern), None)
+        if match:
+            return match
+
+    return None

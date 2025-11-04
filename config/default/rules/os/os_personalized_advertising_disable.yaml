@@ -7,27 +7,27 @@ discussion: |
 references:
   nist:
     cce:
+      ios_26:
+        - CCE-95507-0
       ios_18:
         - CCE-94458-7
       ios_17:
         - CCE-93442-2
-      ios_16:
-        - CCE-93242-6
-      visionos_2:
-        - CCE-94505-5
+      visionos_26:
+        - CCE-95588-0
     800-53r5:
       - AC-20
       - CM-7
       - CM-7(1)
   cis:
     benchmark:
+      ios_26:
+        - 2.2.1.5 (level 1 - End-User Owned Devices)
+        - 3.2.1.11 (level 1 - Institutionally-Owned Devices)
       ios_18:
         - 2.2.1.5 (level 1 - End-User Owned Devices)
         - 3.2.1.11 (level 1 - Institutionally-Owned Devices)
       ios_17:
-        - 2.2.1.5 (level 1 - End-User Owned Devices)
-        - 3.2.1.11 (level 1 - Institutionally-Owned Devices)
-      ios_16:
         - 2.2.1.5 (level 1 - End-User Owned Devices)
         - 3.2.1.11 (level 1 - Institutionally-Owned Devices)
     controls_v8:
@@ -38,6 +38,13 @@ references:
         - ANNEX K
 platforms:
   iOS:
+    '26.0':
+      supervised: false
+      benchmarks:
+        - name: cis_lvl1_byod
+        - name: cis_lvl2_byod
+        - name: cis_lvl1_enterprise
+        - name: cis_lvl2_enterprise
     '18.0':
       supervised: false
       benchmarks:
@@ -54,16 +61,9 @@ platforms:
         - name: cis_lvl1_enterprise
         - name: cis_lvl2_enterprise
         - name: indigo_high
-    '16.0':
-      supervised: false
-      benchmarks:
-        - name: cis_lvl1_byod
-        - name: cis_lvl2_byod
-        - name: cis_lvl1_enterprise
-        - name: cis_lvl2_enterprise
     introduced: '14.0'
   visionOS:
-    '2.0':
+    '26.0':
       supervised: false
     introduced: '2.0'
 tags:
@@ -71,6 +71,9 @@ tags:
   - 800-53r5_moderate
   - 800-53r5_high
   - cisv8
+  - cnssi-1253_moderate
+  - cnssi-1253_low
+  - cnssi-1253_high
 mobileconfig_info:
   - PayloadType: com.apple.applicationaccess
     PayloadContent:

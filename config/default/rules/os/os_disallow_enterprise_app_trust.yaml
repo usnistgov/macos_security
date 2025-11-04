@@ -4,14 +4,14 @@ discussion: Apps _MUST_ be installed from authorized application repositories. D
 references:
   nist:
     cce:
+      ios_26:
+        - CCE-95458-6
       ios_18:
         - CCE-94435-5
       ios_17:
         - CCE-93463-8
-      ios_16:
-        - CCE-93262-4
-      visionos_2:
-        - CCE-94495-9
+      visionos_26:
+        - CCE-95571-6
     800-53r5:
       - CM-11
   disa:
@@ -23,9 +23,6 @@ references:
       ios_17:
         - AIOS-17-007000
         - AIOS-17-707000
-      ios_16:
-        - AIOS-16-007000
-        - AIOS-16-707000
     sfr:
       - 'FMT_SMF_EXT.1.1 #8a'
   bsi:
@@ -34,10 +31,12 @@ references:
         - ANNEX D - (Section 5.8.5)
 platforms:
   iOS:
+    '26.0':
+      supervised: false
     '18.0':
       supervised: false
       benchmarks:
-        - name: disa_stig
+        - name: ios_stig
           severity: low
         - name: indigo_base
           severity: low
@@ -46,7 +45,7 @@ platforms:
     '17.0':
       supervised: false
       benchmarks:
-        - name: disa_stig
+        - name: ios_stig
           severity: low
         - name: ios_stig_byoad
           severity: low
@@ -54,16 +53,9 @@ platforms:
           severity: low
         - name: indigo_high
           severity: low
-    '16.0':
-      supervised: false
-      benchmarks:
-        - name: disa_stig
-          severity: low
-        - name: ios_stig_byoad
-          severity: low
     introduced: '9.0'
   visionOS:
-    '2.0':
+    '26.0':
       supervised: false
     introduced: '2.0'
 tags:

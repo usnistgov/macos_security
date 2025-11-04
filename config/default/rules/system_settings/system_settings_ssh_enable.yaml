@@ -5,12 +5,12 @@ discussion: |
 references:
   nist:
     cce:
+      macos_26:
+        - CCE-95407-3
       macos_15:
         - CCE-94400-9
       macos_14:
         - CCE-92995-0
-      macos_13:
-        - CCE-91985-2
     800-53r5:
       - IA-2(8)
       - AC-3
@@ -28,9 +28,9 @@ references:
       - IA.L2-3.5.4
 platforms:
   macOS:
+    '26.0': {}
     '15.0': {}
     '14.0': {}
-    '13.0': {}
     enforcement_info:
       check:
         shell: /bin/launchctl print-disabled system | /usr/bin/grep -c '"com.openssh.sshd" => enabled'

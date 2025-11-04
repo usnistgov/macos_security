@@ -207,13 +207,61 @@ def get_authors(
     return authors
 
 
+# TODO Generate Title programmatically based on keyword
+def generate_title(os_type: str, os_version: str, keyword: str) -> str:
+    title: str = ""
+    suffix: str = ""
+
+    base_map = {
+        "800-53r5": "NIST SP 800-53 Rev 5",
+        "800-171": "NIST 800-171 Rev 3",
+        "cmmc": "US CMMC 2.0",
+        "cisv8": "CIS Controls Version 8",
+        "cnssi-1253": "Committee on National Security Systems Instruction No. 1253",
+    }
+    impact_map = {
+        "high": "High Impact",
+        "moderate": "Moderate Impact",
+        "low": "Low Impact",
+        "lvl1": "Level 1",
+        "lvl2": "Level 2",
+        "base": "Base Configuration",
+    }
+
+    # Split keyword
+    parts = keyword.split("_")
+    base = parts[0]
+    impact = parts[1] if len(parts) > 1 else ""
+
+    base_name = base_map.get(base, base)
+    impact_name = impact_map.get(impact, impact.capitalize() if impact else "")
+
+    # Compose title
+    if impact_name:
+        title = f"{os_type} {os_version}: Security Configuration - {base_name} {impact_name}"
+    else:
+        title = f"{os_type} {os_version}: Security Configuration - {base_name}"
+
+    return title
+
+
+# TODO Generate Description programmatically based on keyword
+def create_description() -> str: ...
+
+
 def generate_baseline(args: argparse.Namespace) -> None:
     build_path: Path = Path(config.get("output_dir", ""), "baselines")
     baseline_output_file: Path = build_path / f"{args.keyword}.yaml"
     baselines_data: dict = open_file(
         Path(config.get("includes_dir", ""), "800-53_baselines.yaml")
     )
-    established_benchmarks: tuple[str, ...] = ("stig", "cis_lvl1", "cis_lvl2")
+    established_benchmarks: tuple[str, ...] = (
+        "disa_stig",
+        "cis_lvl1",
+        "cis_lvl2",
+        "indigo_base",
+        "indigo_high",
+    )
     misc_tags: tuple[str, str, str, str] = (
         "permanent",
         "inherent",
@@ -224,6 +272,7 @@ def generate_baseline(args: argparse.Namespace) -> None:
     full_title: str = args.keyword
     authors: list[Author] = []
     baseline_name: str | None = None
+    keyword_type: str = "baselines"
 
     if not build_path.exists():
         make_dir(build_path)
@@ -246,8 +295,11 @@ def generate_baseline(args: argparse.Namespace) -> None:
         )
         print_keyword_summary(all_tags, benchmark_map)
 
+    if args.keyword in benchmark_map:
+        keyword_type = "benchmarks"
+
     baseline_dict: dict[str, Any] = validate_baseline_keyword(
-        args.keyword, mscp_data.get("baselines", {}), all_tags, benchmark_map
+        args.keyword, mscp_data.get(keyword_type, {}), all_tags, benchmark_map
     )
 
     found_rules: list[Macsecurityrule] = filter_rules_by_keyword(

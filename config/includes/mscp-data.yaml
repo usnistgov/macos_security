@@ -13,6 +13,125 @@ ddm:
     com.apple.zsh: /etc/
     com.apple.cups: /etc/cups/
 
+authors:
+  - name: Bob Gendler
+    organization: National Institute of Standards and Technology
+    associated_baselines:
+      - all_rules
+      - 800-53r5
+      - 800-171
+      - cmmc
+      - cisv8
+      - cnssi-1253
+    associated_benchmarks:
+      - disa_stig
+      - indigo
+
+  - name: Dan Brodjieski
+    organization: National Aeronautics and Space Administration
+    associated_baselines:
+      - all_rules
+      - 800-53r5
+      - 800-171
+      - cmmc
+      - cisv8
+      - cnssi-1253
+    associated_benchmarks:
+      - disa_stig
+      - indigo
+
+  - name: Allen Golbig
+    organization: Jamf
+    associated_baselines:
+      - all_rules
+      - 800-53r5
+      - 800-171
+      - cmmc
+      - cisv8
+      - cnssi-1253
+    associated_benchmarks:
+      - cis
+      - indigo
+
+  - name: John Mahlman
+    organization: Leidos
+    associated_baselines:
+      - cmmc
+    associated_benchmarks: []
+
+  - name: Edward Byrd
+    organization: Center for Internet Security
+    associated_baselines:
+      - cisv8
+    associated_benchmarks:
+      - cis
+
+  - name: Ron Colvin
+    organization: Center for Internet Security
+    associated_baselines: []
+    associated_benchmarks:
+      - cis
+
+  - name: Rob Lamb
+    organization: Los Alamos National Laboratory
+    associated_baselines:
+      - cnssi-1253
+    associated_benchmarks: []
+
+  - name: Ekkehard Koch
+    organization: ""
+    associated_baselines:
+      - cnssi-1253
+    associated_benchmarks: []
+
+  - name: Aaron Kegerreis
+    organization: Defense Information Systems Agency
+    associated_baselines: []
+    associated_benchmarks:
+      - disa_stig
+
+  - name: Marco Piñeyro
+    organization: Department of State
+    associated_baselines: []
+    associated_benchmarks:
+      - disa_stig
+
+  - name: Henry Stamerjohann
+    organization: Zentral Pro Services GmbH
+    associated_baselines: []
+    associated_benchmarks:
+      - indigo
+
+baseline:
+  all_rules:
+    name: All Rules
+
+  800-53r5:
+    name: NIST SP 800-53 Rev 5
+
+  800-171:
+    name: NIST 800-171 Rev 3
+
+  cmmc:
+    name: US CMMC 2.0
+
+  cisv8:
+    name: CIS Controls Version 8
+
+  cnssi-1253:
+    name: Committee on National Security Systems Instruction No. 1253
+
+benchmark:
+  cis:
+    name: CIS Apple Benchmark
+
+  disa_stig:
+    name: Apple STIG
+
+  indigo:
+    name: BSI indigo Configuration
+
+
 baselines:
   all_rules:
     title: "$os_type $os_version: Security Configuration - All Rules"
@@ -27,7 +146,6 @@ baselines:
         organization: National Aeronautics and Space Administration
       - name: Allen Golbig
         organization: Jamf
-    tag: all_rules
 
   800-53r5_high:
     title: "$os_type $os_version: Security Configuration - NIST SP 800-53 Rev 5 High Impact"
@@ -36,7 +154,6 @@ baselines:
 
       Information System Security Officers and benchmark creators can use this catalog of settings in order to assist them in security benchmark creation. This list is a catalog, not a checklist or benchmark, and satisfaction of every item is not likely to be possible or sensible in many operational scenarios.
     authors: *all_rules_authors
-    tag: 800-53r5_high
 
   800-53r5_moderate:
     title: "$os_type $os_version: Security Configuration - NIST SP 800-53 Rev 5 Moderate Impact"
@@ -45,7 +162,6 @@ baselines:
 
       Information System Security Officers and benchmark creators can use this catalog of settings in order to assist them in security benchmark creation. This list is a catalog, not a checklist or benchmark, and satisfaction of every item is not likely to be possible or sensible in many operational scenarios.
     authors: *all_rules_authors
-    tag: 800-53r5_moderate
 
   800-53r5_low:
     title: "$os_type $os_version: Security Configuration - NIST SP 800-53 Rev 5 Low Impact"
@@ -54,7 +170,6 @@ baselines:
 
       Information System Security Officers and benchmark creators can use this catalog of settings in order to assist them in security benchmark creation. This list is a catalog, not a checklist or benchmark, and satisfaction of every item is not likely to be possible or sensible in many operational scenarios.
     authors: *all_rules_authors
-    tag: 800-53r5_low
 
   800-171:
     title: "$os_type $os_version: Security Configuration - NIST 800-171 Rev 3"
@@ -63,31 +178,6 @@ baselines:
 
       Information System Security Officers and benchmark creators can use this catalog of settings in order to assist them in security benchmark creation. This list is a catalog, not a checklist or benchmark, and satisfaction of every item is not likely to be possible or sensible in many operational scenarios.
     authors: *all_rules_authors
-    tag: 800-171
-
-  cis_lvl1:
-    title: "$os_type $os_version: Security Configuration - CIS Apple $os_type $os_version $os_name v1.0.0 Benchmark (Level 1)"
-    description: |
-      This guide describes the actions to take when securing a $os_type $os_version system against the CIS Apple $os_type $os_version $os_name v1.0.0 Benchmark (Level 1) security baseline.
-
-      Information System Security Officers and benchmark creators can use this catalog of settings in order to assist them in security benchmark creation. This list is a catalog, not a checklist or benchmark, and satisfaction of every item is not likely to be possible or sensible in many operational scenarios.
-    authors: &cis_authors
-        - name: Edward Byrd
-          organization: Center for Internet Security
-        - name: Ron Colvin
-          organization: Center for Internet Security
-        - name: Allen Golbig
-          organization: Jamf
-    tag: cis_lvl1
-
-  cis_lvl2:
-    title: "$os_type $os_version: Security Configuration - CIS Apple $os_type $os_version $os_name v1.0.0 Benchmark (Level 2)"
-    description: |
-      This guide describes the actions to take when securing a $os_type $os_version system against the CIS Apple $os_type $os_version $os_name v1.0.0 Benchmark (Level 2) security baseline.
-
-      Information System Security Officers and benchmark creators can use this catalog of settings in order to assist them in security benchmark creation. This list is a catalog, not a checklist or benchmark, and satisfaction of every item is not likely to be possible or sensible in many operational scenarios.
-    authors: *cis_authors
-    tag: cis_lvl2
 
   cmmc_lvl1:
     title: "$os_type $os_version: Security Configuration - US CMMC 2.0 Level 1"
@@ -100,8 +190,6 @@ baselines:
       - name: John Mahlman
         organization: Leidos
 
-    tag: cmmc_lvl1
-
   cmmc_lvl2:
     title: "$os_type $os_version: Security Configuration - US CMMC 2.0 Level 2"
     description: |
@@ -109,7 +197,6 @@ baselines:
 
       Information System Security Officers and benchmark creators can use this catalog of settings in order to assist them in security benchmark creation. This list is a catalog, not a checklist or benchmark, and satisfaction of every item is not likely to be possible or sensible in many operational scenarios.
     authors: *cmmc_authors
-    tag: cmmc_lvl2
 
   cisv8:
     title: "$os_type $os_version: Security Configuration - CIS Controls Version 8"
@@ -121,7 +208,6 @@ baselines:
       - *all_rules_authors
       - name: Edward Byrd
         organization: Center for Internet Security
-    tag: cisv8
 
   cnssi-1253_low:
     title: "$os_type $os_version: Security Configuration - Committee on National Security Systems Instruction No. 1253 (Low)"
@@ -136,7 +222,6 @@ baselines:
         organization: Los Alamos National Laboratory
       - name: Ekkehard Koch
         organization: ""
-    tag: cnssi-1253_low
 
   cnssi-1253_moderate:
     title: "$os_type $os_version: Security Configuration - Committee on National Security Systems Instruction No. 1253 (Moderate)"
@@ -145,7 +230,6 @@ baselines:
 
       Information System Security Officers and benchmark creators can use this catalog of settings in order to assist them in security benchmark creation. This list is a catalog, not a checklist or benchmark, and satisfaction of every item is not likely to be possible or sensible in many operational scenarios.
     authors: *cnssi_1253_authors
-    tag: cnssi-1253_moderate
 
   cnssi-1253_high:
     title: "$os_type $os_version: Security Configuration - Committee on National Security Systems Instruction No. 1253 (High)"
@@ -154,12 +238,34 @@ baselines:
 
       Information System Security Officers and benchmark creators can use this catalog of settings in order to assist them in security benchmark creation. This list is a catalog, not a checklist or benchmark, and satisfaction of every item is not likely to be possible or sensible in many operational scenarios.
     authors: *cnssi_1253_authors
-    tag: cnssi-1253_high
+
+benchmarks:
+  cis_lvl1:
+    title: "$os_type $os_version: Security Configuration - CIS Apple $os_type $os_version $os_name v1.0.0 Benchmark (Level 1)"
+    description: |
+      This guide describes the actions to take when securing a $os_type $os_version system against the CIS Apple $os_type $os_version $os_name v1.0.0 Benchmark (Level 1) security baseline.
+
+      Information System Security Officers and benchmark creators can use this catalog of settings in order to assist them in security benchmark creation. This list is a catalog, not a checklist or benchmark, and satisfaction of every item is not likely to be possible or sensible in many operational scenarios.
+    authors: &cis_authors
+        - name: Edward Byrd
+          organization: Center for Internet Security
+        - name: Ron Colvin
+          organization: Center for Internet Security
+        - name: Allen Golbig
+          organization: Jamf
+
+  cis_lvl2:
+    title: "$os_type $os_version: Security Configuration - CIS Apple $os_type $os_version $os_name v1.0.0 Benchmark (Level 2)"
+    description: |
+      This guide describes the actions to take when securing a $os_type $os_version system against the CIS Apple $os_type $os_version $os_name v1.0.0 Benchmark (Level 2) security baseline.
+
+      Information System Security Officers and benchmark creators can use this catalog of settings in order to assist them in security benchmark creation. This list is a catalog, not a checklist or benchmark, and satisfaction of every item is not likely to be possible or sensible in many operational scenarios.
+    authors: *cis_authors
 
   disa_stig:
     title: "$os_type $os_version: Security Configuration - Apple $os_type $os_version ($os_name) STIG - Ver 1, Rel 1"
     description: |
-      This guide describes the actions to take when securing a $os_type $os_version system against the Apple os_type $os_version ($os_name) STIG - Ver 1, Rel 1 security baseline.
+      This guide describes the actions to take when securing a $os_type $os_version system against the Apple $os_type $os_version ($os_name) STIG - Ver 1, Rel 1 security baseline.
 
       Information System Security Officers and benchmark creators can use this catalog of settings in order to assist them in security benchmark creation. This list is a catalog, not a checklist or benchmark, and satisfaction of every item is not likely to be possible or sensible in many operational scenarios.
     authors:
@@ -168,7 +274,6 @@ baselines:
         organization: Defense Information Systems Agency
       - name: Marco Piñeyro
         organization: Department of State
-    tag: disa_stig
 
   indigo_base:
     title: "$os_type $os_version: Security Configuration - BSI indigo Base Configuration"
@@ -183,7 +288,6 @@ baselines:
         organization: Jamf
       - name: Bob Gendler
         organization: National Institute of Standards and Technology
-    tag: indigo_base
 
   indigo_high:
     title: "$os_type $os_version: Security Configuration - BSI indigo High Configuration"
@@ -192,7 +296,6 @@ baselines:
 
       Information System Security Officers and benchmark creators can use this catalog of settings in order to assist them in security benchmark creation. This list is a catalog, not a checklist or benchmark, and satisfaction of every item is not likely to be possible or sensible in many operational scenarios.
     authors: *bsi_authors
-    tag: indigo_high
 
 versions:
   platforms:
@@ -247,3 +350,80 @@ versions:
         revision: 1.0
         cpe: o:apple:visionos:2.0
         date: "2024-09-12"
+
+additional_links:
+  platforms:
+    macos:
+      "15.0":
+        disa_stig:
+          - url: "https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Apple_macOS_15_V1R4_STIG.zip"
+            label: "STIG Ver 1, Rel 4"
+            title: "Apple macOS 15 (Sequoia) STIG"
+        cis:
+          - url: "https://www.cisecurity.org/benchmark/apple_os/"
+            label: "Apple macOS 15.0"
+            title: "CIS Apple macOS 15.0 Benchmark version 1.1.0"
+      "14.0":
+        disa_stig:
+          - url: "https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Apple_macOS_14_V2R3_STIG.zip"
+            label: "STIG Ver 2, Rel 3"
+            title: "Apple macOS 14 (Sonoma) STIG"
+        cis:
+          - url: "https://www.cisecurity.org/benchmark/apple_os/"
+            label: "Apple macOS 14.0"
+            title: "CIS Apple macOS 14.0 Benchmark version 2.1.0"
+      "13.0":
+        disa_stig:
+          - url: "https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Apple_macOS_13_V1R5_STIG.zip"
+            label: "STIG Ver 1, Rel 5"
+            title: "Apple macOS 13 (Ventura) STIG"
+        cis:
+          - url: "https://www.cisecurity.org/benchmark/apple_os/"
+            label: "Apple macOS 13.0"
+            title: "CIS Apple macOS 13.0 Benchmark version 3.1.0"
+
+    ios:
+      "18.0":
+        disa_stig:
+          - url: "https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Apple_iOS-iPadOS_18_V2R1_STIG.zip"
+            label: "STIG Ver 1, Rel 4"
+            title: "Apple iOS/iPadOS 18 STIG - Ver 2, Rel 1"
+        cis:
+          - url: "https://www.cisecurity.org/benchmark/apple_ios"
+            label: "Apple iOS/iPadOS"
+            title: "CIS Apple iOS 18 and iPadOS 18 Version 1.1.0"
+      "17.0":
+        disa_stig:
+          - url: "https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Apple_iOS-iPadOS_17_V2R2_STIG.zip"
+            label: "STIG Ver 2, Rel 1"
+            title: "Apple iOS/iPadOS 17 STIG - Ver 2, Rel 1"
+          - url: "https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Apple_iOS-iPadOS_17_BYOAD_Y24M02_STIG.zip"
+            label: "STIG Ver 1, Rel 1"
+            title: "Apple iOS/iPadOS 17 BYOAD STIG - Ver 1, Rel 1"
+        cis:
+          - url: "https://www.cisecurity.org/benchmark/apple_ios"
+            label: "Apple iOS/iPadOS"
+            title: "CIS Apple iOS 17 and iPadOS 17 Version 1.1.0"
+      "16.0":
+        disa_stig:
+          - url: "https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Apple_iOS-iPadOS_16_V2R2_STIG.zip"
+            label: "STIG Ver 2, Rel 1"
+            title: "Apple iOS/iPadOS 16 STIG - Ver 2, Rel 2"
+          - url: "https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Apple_iOS-iPadOS_16_BYOAD_Y25M07_STIG.zip"
+            label: "STIG Ver 1, Rel 1"
+            title: "Apple iOS/iPadOS 16 BYOAD STIG - Ver 1, Rel 1"
+        cis:
+          - url: "https://www.cisecurity.org/benchmark/apple_ios"
+            label: "Apple iOS/iPadOS"
+            title: "CIS Apple iOS 16 and iPadOS 16 Version 1.1.0"
+
+    visionos:
+      "2.0":
+        disa_stig:
+          - url: ""
+            label: ""
+            title: "Currently Unavailable"
+        cis:
+          - url: ""
+            label: ""
+            title: "Currently Unavailable"

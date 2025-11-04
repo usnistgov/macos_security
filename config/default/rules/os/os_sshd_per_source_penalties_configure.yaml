@@ -11,12 +11,15 @@ discussion: |
 references:
   nist:
     cce:
+      macos_26:
+        - CCE-95312-5
       macos_15:
         - CCE-94589-9
     800-53r5:
       - SC-5
 platforms:
   macOS:
+    '26.0': {}
     '15.0': {}
     enforcement_info:
       check:

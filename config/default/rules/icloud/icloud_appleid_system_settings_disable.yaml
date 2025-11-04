@@ -7,12 +7,12 @@ discussion: |
 references:
   nist:
     cce:
+      macos_26:
+        - CCE-95141-8
       macos_15:
         - CCE-94141-9
       macos_14:
         - CCE-92742-6
-      macos_13:
-        - CCE-91939-9
     800-53r5:
       - AC-20
       - AC-20(1)
@@ -32,9 +32,9 @@ references:
       - 4.8
 platforms:
   macOS:
+    '26.0': {}
     '15.0': {}
     '14.0': {}
-    '13.0': {}
     enforcement_info:
       check:
         shell: /usr/bin/profiles show -output stdout-xml | /usr/bin/xmllint --xpath '//key[text()="DisabledSystemSettings"]/following-sibling::*[1]' - | /usr/bin/grep -c "com.apple.systempreferences.AppleIDSettings"

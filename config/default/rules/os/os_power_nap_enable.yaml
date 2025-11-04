@@ -16,17 +16,17 @@ discussion: |
 references:
   nist:
     cce:
+      macos_26:
+        - CCE-95261-4
       macos_15:
         - CCE-94258-1
       macos_14:
         - CCE-92854-9
-      macos_13:
-        - CCE-91849-0
 platforms:
   macOS:
+    '26.0': {}
     '15.0': {}
     '14.0': {}
-    '13.0': {}
     enforcement_info:
       check:
         shell: /usr/bin/pmset -g custom | /usr/bin/awk '/powernap/ { sum+=$2 } END {print sum}'

@@ -17,7 +17,8 @@ class MyDumper(yaml.Dumper):
 
 def str_presenter(dumper, data):
     """configures yaml for dumping multiline strings
-    Ref: https://stackoverflow.com/questions/8640959/how-can-i-control-what-scalar-form-pyyaml-uses-for-my-data"""
+    Ref: https://stackoverflow.com/questions/8640959/how-can-i-control-what-scalar-form-pyyaml-uses-for-my-data
+    """
     clean_data = data.replace(" \n", "\n")
     if clean_data.count("\n") > 0:  # check for multiline string
         return dumper.represent_scalar("tag:yaml.org,2002:str", clean_data, style="|")
@@ -45,7 +46,9 @@ def remove_none_fields(data, parent_key=None):
 
         result = {}
         for key, value in data.items():
-            processed_value = remove_none_fields(value, key)  # Pass the key to track parent
+            processed_value = remove_none_fields(
+                value, key
+            )  # Pass the key to track parent
             if processed_value is not None:
                 result[key] = processed_value
         return result if result else None
@@ -61,7 +64,10 @@ def remove_none_fields(data, parent_key=None):
 
 
 def restructure_mobileconfig(rule_yaml):
-    if "mobileconfig_info" in rule_yaml.keys() and rule_yaml["mobileconfig_info"] is not None:
+    if (
+        "mobileconfig_info" in rule_yaml.keys()
+        and rule_yaml["mobileconfig_info"] is not None
+    ):
         mobileconfig_info_obj = []
         for obj, data in rule_yaml["mobileconfig_info"].items():
             payload = {}
@@ -109,7 +115,9 @@ def get_introduced(payloadtype, key, os):
                 else:
                     # try go get introduced from payload parent
                     if os in payloadtype["payload"]["supportedOS"].keys():
-                        version = payloadtype["payload"]["supportedOS"][os]["introduced"]
+                        version = payloadtype["payload"]["supportedOS"][os][
+                            "introduced"
+                        ]
             except KeyError:
                 # try go get introduced from payload parent
                 if os in payloadtype["payload"]["supportedOS"].keys():
@@ -161,7 +169,7 @@ def main():
     original_working_directory = os.getcwd()
 
     os.chdir(file_dir)
-    build_path = os.path.join(parent_dir, "rules")
+    build_path = os.path.join(parent_dir, "config", "default", "rules")
     # build_path = os.path.join(parent_dir, 'build', 'rules', 'v2.0')
     if not (os.path.isdir(build_path)):
         try:
@@ -186,7 +194,15 @@ def main():
         discussions_yaml = yaml.load(y, Loader=yaml.SafeLoader)
 
     # os_supported = ["sequoia", "sonoma", "ventura", "monterey", "big_sur", "catalina", "ios_18", "ios_17", "ios_16", "visionos_2.0"]
-    os_supported = ["sequoia", "sonoma", "ventura", "ios_18", "ios_17", "ios_16", "visionos_2.0"]
+    os_supported = [
+        "tahoe",
+        "sequoia",
+        "sonoma",
+        "ios_18",
+        "ios_17",
+        "ios_26",
+        "visionos_26",
+    ]
     # for os_list in glob.glob("../_work/*"):
     #     os_supported.add(os_list.split("/")[2])
 
@@ -216,8 +232,16 @@ def main():
             id_to_os[rule["id"]].append(os_version)
 
     new_yaml = {}
-    duplicates = {id_: os_versions for id_, os_versions in id_to_os.items() if len(os_versions) > 1}
-    non_duplicates = {id_: os_versions[0] for id_, os_versions in id_to_os.items() if len(os_versions) == 1}
+    duplicates = {
+        id_: os_versions
+        for id_, os_versions in id_to_os.items()
+        if len(os_versions) > 1
+    }
+    non_duplicates = {
+        id_: os_versions[0]
+        for id_, os_versions in id_to_os.items()
+        if len(os_versions) == 1
+    }
 
     try:
         if os.path.isfile(build_path) or os.path.islink(build_path):
@@ -234,7 +258,9 @@ def main():
             section = id_.split("_")[0]
             if section == "system":
                 section = "system_settings"
-            section_build_path = os.path.join(parent_dir, "rules", section)
+            section_build_path = os.path.join(
+                parent_dir, "config", "default", "rules", section
+            )
 
             if not (os.path.isdir(section_build_path)):
                 try:
@@ -267,7 +293,8 @@ def main():
             if "odv" in rule_yaml:
                 new_yaml.update({"odv": rule_yaml["odv"]})
             if (
-                os_ == "sequoia"
+                os_ == "tahoe"
+                or os_ == "sequoia"
                 or os_ == "sonoma"
                 or os_ == "ventura"
                 or os_ == "monterey"
@@ -277,30 +304,48 @@ def main():
                 new_yaml["platforms"] = {"macOS": {}}
                 new_yaml["platforms"]["macOS"].update({os_: {}})
 
-                new_yaml["platforms"]["macOS"].update({"check": rule_yaml["check"].strip()})
+                new_yaml["platforms"]["macOS"].update(
+                    {"check": rule_yaml["check"].strip()}
+                )
                 if "fix" in rule_yaml:
-                    new_yaml["platforms"]["macOS"].update({"fix": rule_yaml["fix"].strip()})
+                    new_yaml["platforms"]["macOS"].update(
+                        {"fix": rule_yaml["fix"].strip()}
+                    )
                 if "result" in rule_yaml:
-                    new_yaml["platforms"]["macOS"].update({"result": rule_yaml["result"]})
+                    new_yaml["platforms"]["macOS"].update(
+                        {"result": rule_yaml["result"]}
+                    )
                 new_yaml["platforms"]["macOS"].update({os_: {}})
                 if "severity" in rule_yaml:
-                    new_yaml["platforms"]["macOS"][os_].update({"severity": rule_yaml["severity"]})
+                    new_yaml["platforms"]["macOS"][os_].update(
+                        {"severity": rule_yaml["severity"]}
+                    )
 
                 if "cis_lvl1" in rule_yaml["tags"]:
                     # new_yaml['platforms']['macOS'][os_]['benchmarks'].append("cis_lvl1")
-                    new_yaml["platforms"]["macOS"][os_].update({"benchmarks": ["cis_lvl1"]})
+                    new_yaml["platforms"]["macOS"][os_].update(
+                        {"benchmarks": ["cis_lvl1"]}
+                    )
                     new_yaml["tags"].remove("cis_lvl1")
                 if "cis_lvl2" in rule_yaml["tags"]:
                     if "benchmarks" in new_yaml["platforms"]["macOS"][os_]:
-                        new_yaml["platforms"]["macOS"][os_]["benchmarks"].append("cis_lvl2")
+                        new_yaml["platforms"]["macOS"][os_]["benchmarks"].append(
+                            "cis_lvl2"
+                        )
                     else:
-                        new_yaml["platforms"]["macOS"][os_].update({"benchmarks": ["cis_lvl2"]})
+                        new_yaml["platforms"]["macOS"][os_].update(
+                            {"benchmarks": ["cis_lvl2"]}
+                        )
                     new_yaml["tags"].remove("cis_lvl2")
                 if "stig" in rule_yaml["tags"]:
                     if "benchmarks" in new_yaml["platforms"]["macOS"][os_]:
-                        new_yaml["platforms"]["macOS"][os_]["benchmarks"].append("disa_stig")
+                        new_yaml["platforms"]["macOS"][os_]["benchmarks"].append(
+                            "disa_stig"
+                        )
                     else:
-                        new_yaml["platforms"]["macOS"][os_].update({"benchmarks": ["disa_stig"]})
+                        new_yaml["platforms"]["macOS"][os_].update(
+                            {"benchmarks": ["disa_stig"]}
+                        )
                     new_yaml["tags"].remove("stig")
                 # print(new_yaml)
             if "ddm_info" in rule_yaml:
@@ -312,107 +357,171 @@ def main():
 
                 new_yaml["platforms"]["visionOS"].update({os_: {}})
                 if "severity" in rule_yaml:
-                    new_yaml["platforms"]["visionOS"][os_].update({"severity": rule_yaml["severity"]})
+                    new_yaml["platforms"]["visionOS"][os_].update(
+                        {"severity": rule_yaml["severity"]}
+                    )
                 if "supervised" in rule_yaml:
-                    new_yaml["platforms"]["visionOS"][os_].update({"supervised": rule_yaml["supervised"]})
+                    new_yaml["platforms"]["visionOS"][os_].update(
+                        {"supervised": rule_yaml["supervised"]}
+                    )
 
-            if os_ == "ios_18" or os_ == "ios_17" or os_ == "ios_16":
+            if os_ == "ios_18" or os_ == "ios_17" or os_ == "ios_16" or os == "ios_26":
                 new_yaml["tags"].remove("ios")
                 new_yaml["platforms"] = {"iOS": {}}
 
                 new_yaml["platforms"]["iOS"].update({os_: {}})
                 if "severity" in rule_yaml:
-                    new_yaml["platforms"]["iOS"][os_].update({"severity": rule_yaml["severity"]})
+                    new_yaml["platforms"]["iOS"][os_].update(
+                        {"severity": rule_yaml["severity"]}
+                    )
                 if "supervised" in rule_yaml:
-                    new_yaml["platforms"]["iOS"][os_].update({"supervised": rule_yaml["supervised"]})
+                    new_yaml["platforms"]["iOS"][os_].update(
+                        {"supervised": rule_yaml["supervised"]}
+                    )
 
                 if "cis_lvl1_byod" in rule_yaml["tags"]:
-                    new_yaml["platforms"]["iOS"][os_].update({"benchmarks": ["cis_lvl1_byod"]})
+                    new_yaml["platforms"]["iOS"][os_].update(
+                        {"benchmarks": ["cis_lvl1_byod"]}
+                    )
                     new_yaml["tags"].remove("cis_lvl1_byod")
                 if "cis_lvl2_byod" in rule_yaml["tags"]:
                     if "benchmarks" in new_yaml["platforms"]["iOS"][os_]:
-                        new_yaml["platforms"]["iOS"][os_]["benchmarks"].append("cis_lvl2_byod")
+                        new_yaml["platforms"]["iOS"][os_]["benchmarks"].append(
+                            "cis_lvl2_byod"
+                        )
                     else:
-                        new_yaml["platforms"]["iOS"][os_].update({"benchmarks": ["cis_lvl2_byod"]})
+                        new_yaml["platforms"]["iOS"][os_].update(
+                            {"benchmarks": ["cis_lvl2_byod"]}
+                        )
                     new_yaml["tags"].remove("cis_lvl2_byod")
                 if "cis_lvl1_enterprise" in rule_yaml["tags"]:
                     if "benchmarks" in new_yaml["platforms"]["iOS"][os_]:
-                        new_yaml["platforms"]["iOS"][os_]["benchmarks"].append("cis_lvl1_enterprise")
+                        new_yaml["platforms"]["iOS"][os_]["benchmarks"].append(
+                            "cis_lvl1_enterprise"
+                        )
                     else:
-                        new_yaml["platforms"]["iOS"][os_].update({"benchmarks": ["cis_lvl1_enterprise"]})
+                        new_yaml["platforms"]["iOS"][os_].update(
+                            {"benchmarks": ["cis_lvl1_enterprise"]}
+                        )
                     new_yaml["tags"].remove("cis_lvl1_enterprise")
                 if "cis_lvl2_enterprise" in rule_yaml["tags"]:
                     if "benchmarks" in new_yaml["platforms"]["iOS"][os_]:
-                        new_yaml["platforms"]["iOS"][os_]["benchmarks"].append("cis_lvl2_enterprise")
+                        new_yaml["platforms"]["iOS"][os_]["benchmarks"].append(
+                            "cis_lvl2_enterprise"
+                        )
                     else:
-                        new_yaml["platforms"]["iOS"][os_].update({"benchmarks": ["cis_lvl2_enterprise"]})
+                        new_yaml["platforms"]["iOS"][os_].update(
+                            {"benchmarks": ["cis_lvl2_enterprise"]}
+                        )
                     new_yaml["tags"].remove("cis_lvl2_enterprise")
                 if "ios_stig" in rule_yaml["tags"]:
                     if "benchmarks" in new_yaml["platforms"]["iOS"][os_]:
-                        new_yaml["platforms"]["iOS"][os_]["benchmarks"].append("ios_stig")
+                        new_yaml["platforms"]["iOS"][os_]["benchmarks"].append(
+                            "ios_stig"
+                        )
                     else:
-                        new_yaml["platforms"]["iOS"][os_].update({"benchmarks": ["ios_stig"]})
+                        new_yaml["platforms"]["iOS"][os_].update(
+                            {"benchmarks": ["ios_stig"]}
+                        )
                     new_yaml["tags"].remove("ios_stig")
                 if "ios_stig_byoad" in rule_yaml["tags"]:
                     if "benchmarks" in new_yaml["platforms"]["iOS"][os_]:
-                        new_yaml["platforms"]["iOS"][os_]["benchmarks"].append("ios_stig_byoad")
+                        new_yaml["platforms"]["iOS"][os_]["benchmarks"].append(
+                            "ios_stig_byoad"
+                        )
                     else:
-                        new_yaml["platforms"]["iOS"][os_].update({"benchmarks": ["ios_stig_byoad"]})
+                        new_yaml["platforms"]["iOS"][os_].update(
+                            {"benchmarks": ["ios_stig_byoad"]}
+                        )
                     new_yaml["tags"].remove("ios_stig_byoad")
                 if "indigo_base" in rule_yaml["tags"]:
                     if "benchmarks" in new_yaml["platforms"]["iOS"][os_]:
-                        new_yaml["platforms"]["iOS"][os_]["benchmarks"].append("indigo_base")
+                        new_yaml["platforms"]["iOS"][os_]["benchmarks"].append(
+                            "indigo_base"
+                        )
                     else:
-                        new_yaml["platforms"]["iOS"][os_].update({"benchmarks": ["indigo_base"]})
+                        new_yaml["platforms"]["iOS"][os_].update(
+                            {"benchmarks": ["indigo_base"]}
+                        )
                     new_yaml["tags"].remove("indigo_base")
                 if "indigo_high" in rule_yaml["tags"]:
                     if "benchmarks" in new_yaml["platforms"]["iOS"][os_]:
-                        new_yaml["platforms"]["iOS"][os_]["benchmarks"].append("indigo_high")
+                        new_yaml["platforms"]["iOS"][os_]["benchmarks"].append(
+                            "indigo_high"
+                        )
                     else:
-                        new_yaml["platforms"]["iOS"][os_].update({"benchmarks": ["indigo_high"]})
+                        new_yaml["platforms"]["iOS"][os_].update(
+                            {"benchmarks": ["indigo_high"]}
+                        )
                     new_yaml["tags"].remove("indigo_high")
 
             if "800-53r5" in rule_yaml["references"]:
-                new_yaml["references"]["nist"].update({"800-53r5": rule_yaml["references"]["800-53r5"]})
+                new_yaml["references"]["nist"].update(
+                    {"800-53r5": rule_yaml["references"]["800-53r5"]}
+                )
 
             if "800-171r3" in rule_yaml["references"]:
-                new_yaml["references"]["nist"].update({"800-171r3": rule_yaml["references"]["800-171r3"]})
+                new_yaml["references"]["nist"].update(
+                    {"800-171r3": rule_yaml["references"]["800-171r3"]}
+                )
             if "cci" in rule_yaml["references"]:
                 new_yaml["references"].update({"disa": {}})
-                new_yaml["references"]["disa"].update({"cci": rule_yaml["references"]["cci"]})
+                new_yaml["references"]["disa"].update(
+                    {"cci": rule_yaml["references"]["cci"]}
+                )
 
             if "srg" in rule_yaml["references"]:
                 if "disa" in new_yaml["references"]:
-                    new_yaml["references"]["disa"].update({"srg": rule_yaml["references"]["srg"]})
+                    new_yaml["references"]["disa"].update(
+                        {"srg": rule_yaml["references"]["srg"]}
+                    )
                 else:
                     new_yaml["references"].update({"disa": {}})
-                    new_yaml["references"]["disa"].update({"srg": rule_yaml["references"]["srg"]})
+                    new_yaml["references"]["disa"].update(
+                        {"srg": rule_yaml["references"]["srg"]}
+                    )
             if "disa_stig" in rule_yaml["references"]:
                 if "disa" in new_yaml["references"]:
                     new_yaml["references"]["disa"].update({"disa_stig": {}})
-                    new_yaml["references"]["disa"]["disa_stig"].update({os_: rule_yaml["references"]["disa_stig"]})
+                    new_yaml["references"]["disa"]["disa_stig"].update(
+                        {os_: rule_yaml["references"]["disa_stig"]}
+                    )
                 else:
                     new_yaml["references"].update({"disa": {}})
                     new_yaml["references"]["disa"].update({"disa_stig": {}})
-                    new_yaml["references"]["disa"]["disa_stig"].update({os_: rule_yaml["references"]["disa_stig"]})
+                    new_yaml["references"]["disa"]["disa_stig"].update(
+                        {os_: rule_yaml["references"]["disa_stig"]}
+                    )
             if "sfr" in rule_yaml["references"]:
                 if "disa" in new_yaml["references"]:
-                    new_yaml["references"]["disa"].update({"sfr": rule_yaml["references"]["sfr"]})
+                    new_yaml["references"]["disa"].update(
+                        {"sfr": rule_yaml["references"]["sfr"]}
+                    )
                 else:
                     new_yaml["references"].update({"disa": {}})
-                    new_yaml["references"]["disa"].update({"sfr": rule_yaml["references"]["sfr"]})
+                    new_yaml["references"]["disa"].update(
+                        {"sfr": rule_yaml["references"]["sfr"]}
+                    )
             if "cmmc" in rule_yaml["references"]:
                 if "disa" in new_yaml["references"]:
-                    new_yaml["references"]["disa"].update({"cmmc": rule_yaml["references"]["cmmc"]})
+                    new_yaml["references"]["disa"].update(
+                        {"cmmc": rule_yaml["references"]["cmmc"]}
+                    )
                 else:
                     new_yaml["references"].update({"disa": {}})
-                    new_yaml["references"]["disa"].update({"cmmc": rule_yaml["references"]["cmmc"]})
+                    new_yaml["references"]["disa"].update(
+                        {"cmmc": rule_yaml["references"]["cmmc"]}
+                    )
             if "indigo" in rule_yaml["references"]:
                 if "bsi" in new_yaml["references"]:
-                    new_yaml["references"]["bsi"].update({"indigo": {os_: rule_yaml["references"]["indigo"]}})
+                    new_yaml["references"]["bsi"].update(
+                        {"indigo": {os_: rule_yaml["references"]["indigo"]}}
+                    )
                 else:
                     new_yaml["references"].update({"bsi": {}})
-                    new_yaml["references"]["bsi"].update({"indigo": {os_: rule_yaml["references"]["indigo"]}})
+                    new_yaml["references"]["bsi"].update(
+                        {"indigo": {os_: rule_yaml["references"]["indigo"]}}
+                    )
             if "cis" in rule_yaml["references"]:
                 if "benchmark" in rule_yaml["references"]["cis"]:
                     if "cis" in new_yaml["references"]:
@@ -429,7 +538,11 @@ def main():
                 if "controls v8" in rule_yaml["references"]["cis"]:
                     if "cis" in new_yaml["references"]:
                         new_yaml["references"]["cis"].update(
-                            {"controls_v8": rule_yaml["references"]["cis"]["controls v8"]}
+                            {
+                                "controls_v8": rule_yaml["references"]["cis"][
+                                    "controls v8"
+                                ]
+                            }
                         )
                     else:
                         new_yaml["references"].update({"cis": {}})
@@ -441,7 +554,13 @@ def main():
                 # print(replace_na_with_none(new_yaml))
                 if yaml_full_path not in files_created:
                     files_created.append(yaml_full_path)
-                yaml.dump(new_yaml, wfile, Dumper=MyDumper, sort_keys=False, width=float("inf"))
+                yaml.dump(
+                    new_yaml,
+                    wfile,
+                    Dumper=MyDumper,
+                    sort_keys=False,
+                    width=float("inf"),
+                )
 
     if duplicates:
         rules_to_review = []
@@ -462,19 +581,26 @@ def main():
                     except OSError:
                         print(f"Creation of the directory {build_path} failed")
 
-                with open("../_work/{}/rules/{}/{}.yaml".format(os_, section, id_)) as r:
+                with open(
+                    "../_work/{}/rules/{}/{}.yaml".format(os_, section, id_)
+                ) as r:
                     rule_yam = yaml.load(r, Loader=yaml.SafeLoader)
                     rule_yaml = replace_na_with_none(rule_yam)
                     new_mobileconfig = restructure_mobileconfig(rule_yaml)
                     rule_yaml["mobileconfig_info"] = new_mobileconfig
-                    if "This is implemented by a Configuration Profile" in rule_yaml["fix"]:
+                    if (
+                        "This is implemented by a Configuration Profile"
+                        in rule_yaml["fix"]
+                    ):
                         rule_yaml.pop("fix")
                     os_specifics.update({os_: {}})
 
                     # if "discussion" in rule_yaml:
                     #     os_specifics[os_].update({"discussion":rule_yaml['discussion'].strip().replace(" \n","\n")})
                     if "check" in rule_yaml:
-                        os_specifics[os_].update({"check": rule_yaml["check"].strip().replace(" \n", "\n")})
+                        os_specifics[os_].update(
+                            {"check": rule_yaml["check"].strip().replace(" \n", "\n")}
+                        )
                     else:
                         os_specifics[os_].update({"check": ""})
                     if "result" in rule_yaml:
@@ -489,7 +615,9 @@ def main():
                     else:
                         os_specifics[os_].update({"fix": ""})
                     if "mobileconfig" in rule_yaml:
-                        os_specifics[os_].update({"mobileconfig": rule_yaml["mobileconfig_info"]})
+                        os_specifics[os_].update(
+                            {"mobileconfig": rule_yaml["mobileconfig_info"]}
+                        )
                     else:
                         os_specifics[os_].update({"mobileconfig": ""})
 
@@ -501,7 +629,9 @@ def main():
                             update_rule_yam = yaml.load(ryam, Loader=yaml.SafeLoader)
                             update_rule_yaml = replace_na_with_none(update_rule_yam)
 
-                            update_rule_yaml["references"]["nist"]["cce"].update({os_: rule_yaml["references"]["cce"]})
+                            update_rule_yaml["references"]["nist"]["cce"].update(
+                                {os_: rule_yaml["references"]["cce"]}
+                            )
 
                             if "odv" in rule_yaml:
                                 if "odv" in update_rule_yaml:
@@ -512,56 +642,107 @@ def main():
 
                             if "indigo" in rule_yaml["references"]:
                                 if "bsi" in update_rule_yaml["references"]:
-                                    if "indigo" in update_rule_yaml["references"]["bsi"]:
-                                        update_rule_yaml["references"]["bsi"]["indigo"].update(
+                                    if (
+                                        "indigo"
+                                        in update_rule_yaml["references"]["bsi"]
+                                    ):
+                                        update_rule_yaml["references"]["bsi"][
+                                            "indigo"
+                                        ].update(
                                             {os_: rule_yaml["references"]["indigo"]}
                                         )
                                     else:
-                                        update_rule_yaml["references"]["bsi"].update({"indigo": {}})
-                                        update_rule_yaml["references"]["bsi"]["indigo"].update(
+                                        update_rule_yaml["references"]["bsi"].update(
+                                            {"indigo": {}}
+                                        )
+                                        update_rule_yaml["references"]["bsi"][
+                                            "indigo"
+                                        ].update(
                                             {os_: rule_yaml["references"]["indigo"]}
                                         )
                                 else:
                                     update_rule_yaml["references"].update({"bsi": {}})
-                                    update_rule_yaml["references"]["bsi"].update({"indigo": {}})
-                                    update_rule_yaml["references"]["bsi"]["indigo"].update(
-                                        {os_: rule_yaml["references"]["indigo"]}
+                                    update_rule_yaml["references"]["bsi"].update(
+                                        {"indigo": {}}
                                     )
+                                    update_rule_yaml["references"]["bsi"][
+                                        "indigo"
+                                    ].update({os_: rule_yaml["references"]["indigo"]})
 
                             if "cis" in rule_yaml["references"]:
                                 if "benchmark" in rule_yaml["references"]["cis"]:
                                     if "cis" in update_rule_yaml["references"]:
-                                        if "benchmark" in update_rule_yaml["references"]["cis"]:
-                                            update_rule_yaml["references"]["cis"]["benchmark"].update(
-                                                {os_: rule_yaml["references"]["cis"]["benchmark"]}
+                                        if (
+                                            "benchmark"
+                                            in update_rule_yaml["references"]["cis"]
+                                        ):
+                                            update_rule_yaml["references"]["cis"][
+                                                "benchmark"
+                                            ].update(
+                                                {
+                                                    os_: rule_yaml["references"]["cis"][
+                                                        "benchmark"
+                                                    ]
+                                                }
                                             )
                                         else:
-                                            update_rule_yaml["references"]["cis"].update({"benchmark": {}})
-                                            update_rule_yaml["references"]["cis"]["benchmark"].update(
-                                                {os_: rule_yaml["references"]["cis"]["benchmark"]}
+                                            update_rule_yaml["references"][
+                                                "cis"
+                                            ].update({"benchmark": {}})
+                                            update_rule_yaml["references"]["cis"][
+                                                "benchmark"
+                                            ].update(
+                                                {
+                                                    os_: rule_yaml["references"]["cis"][
+                                                        "benchmark"
+                                                    ]
+                                                }
                                             )
                                     else:
-                                        update_rule_yaml["references"].update({"cis": {}})
-                                        update_rule_yaml["references"]["cis"].update({"benchmark": {}})
-                                        update_rule_yaml["references"]["cis"]["benchmark"].update(
-                                            {os_: rule_yaml["references"]["cis"]["benchmark"]}
+                                        update_rule_yaml["references"].update(
+                                            {"cis": {}}
+                                        )
+                                        update_rule_yaml["references"]["cis"].update(
+                                            {"benchmark": {}}
+                                        )
+                                        update_rule_yaml["references"]["cis"][
+                                            "benchmark"
+                                        ].update(
+                                            {
+                                                os_: rule_yaml["references"]["cis"][
+                                                    "benchmark"
+                                                ]
+                                            }
                                         )
 
                             if "disa_stig" in rule_yaml["references"]:
                                 if "disa" in update_rule_yaml["references"]:
-                                    if "disa_stig" in update_rule_yaml["references"]["disa"]:
-                                        update_rule_yaml["references"]["disa"]["disa_stig"].update(
+                                    if (
+                                        "disa_stig"
+                                        in update_rule_yaml["references"]["disa"]
+                                    ):
+                                        update_rule_yaml["references"]["disa"][
+                                            "disa_stig"
+                                        ].update(
                                             {os_: rule_yaml["references"]["disa_stig"]}
                                         )
                                     else:
-                                        update_rule_yaml["references"]["disa"].update({"disa_stig": {}})
-                                        update_rule_yaml["references"]["disa"]["disa_stig"].update(
+                                        update_rule_yaml["references"]["disa"].update(
+                                            {"disa_stig": {}}
+                                        )
+                                        update_rule_yaml["references"]["disa"][
+                                            "disa_stig"
+                                        ].update(
                                             {os_: rule_yaml["references"]["disa_stig"]}
                                         )
                                 else:
                                     update_rule_yaml["references"].update({"disa": {}})
-                                    update_rule_yaml["references"]["disa"].update({"disa_stig": {}})
-                                    update_rule_yaml["references"]["disa"]["disa_stig"].update(
+                                    update_rule_yaml["references"]["disa"].update(
+                                        {"disa_stig": {}}
+                                    )
+                                    update_rule_yaml["references"]["disa"][
+                                        "disa_stig"
+                                    ].update(
                                         {os_: rule_yaml["references"]["disa_stig"]}
                                     )
 
@@ -587,127 +768,191 @@ def main():
                                     continue
                                 update_rule_yaml["tags"].append(new_tag)
 
-                            if os_ == "visionos_2.0" or "ios" in os_:
+                            if (
+                                os_ == "visionos_2.0"
+                                or os_ == "visionos_26"
+                                or "ios" in os_
+                            ):
                                 # print("HELLO")
                                 # print(os_)
-                                if os_ == "visionos_2.0":
+                                if os_ == "visionos_2.0" or os_ == "visionos_26":
                                     # print("hello vision")
-                                    update_rule_yaml["platforms"].update({"visionOS": {}})
-                                    update_rule_yaml["platforms"]["visionOS"].update({os_: {}})
+                                    update_rule_yaml["platforms"].update(
+                                        {"visionOS": {}}
+                                    )
+                                    update_rule_yaml["platforms"]["visionOS"].update(
+                                        {os_: {}}
+                                    )
 
                                     if "supervised" in rule_yaml:
-                                        update_rule_yaml["platforms"]["visionOS"][os_].update(
+                                        update_rule_yaml["platforms"]["visionOS"][
+                                            os_
+                                        ].update(
                                             {"supervised": rule_yaml["supervised"]}
                                         )
                                     # print(update_rule_yaml)
                                 else:
                                     if "iOS" not in update_rule_yaml["platforms"]:
-                                        update_rule_yaml["platforms"].update({"iOS": {}})
-
-                                    update_rule_yaml["platforms"]["iOS"].update({os_: {}})
-
-                                    if "severity" in rule_yaml:
-                                        update_rule_yaml["platforms"]["iOS"][os_].update(
-                                            {"severity": rule_yaml["severity"]}
+                                        update_rule_yaml["platforms"].update(
+                                            {"iOS": {}}
                                         )
 
+                                    update_rule_yaml["platforms"]["iOS"].update(
+                                        {os_: {}}
+                                    )
+
+                                    if "severity" in rule_yaml:
+                                        update_rule_yaml["platforms"]["iOS"][
+                                            os_
+                                        ].update({"severity": rule_yaml["severity"]})
+
                                     if "supervised" in rule_yaml:
-                                        update_rule_yaml["platforms"]["iOS"][os_].update(
+                                        update_rule_yaml["platforms"]["iOS"][
+                                            os_
+                                        ].update(
                                             {"supervised": rule_yaml["supervised"]}
                                         )
 
                                     if "cis_lvl1_byod" in rule_yaml["tags"]:
-                                        update_rule_yaml["platforms"]["iOS"][os_].update(
-                                            {"benchmarks": ["cis_lvl1_byod"]}
-                                        )
+                                        update_rule_yaml["platforms"]["iOS"][
+                                            os_
+                                        ].update({"benchmarks": ["cis_lvl1_byod"]})
                                         if "cis_lvl1_byod" in update_rule_yaml["tags"]:
-                                            update_rule_yaml["tags"].remove("cis_lvl1_byod")
+                                            update_rule_yaml["tags"].remove(
+                                                "cis_lvl1_byod"
+                                            )
 
                                     if "cis_lvl2_byod" in rule_yaml["tags"]:
-                                        if "benchmarks" in update_rule_yaml["platforms"]["iOS"][os_]:
-                                            update_rule_yaml["platforms"]["iOS"][os_]["benchmarks"].append(
-                                                "cis_lvl2_byod"
-                                            )
+                                        if (
+                                            "benchmarks"
+                                            in update_rule_yaml["platforms"]["iOS"][os_]
+                                        ):
+                                            update_rule_yaml["platforms"]["iOS"][os_][
+                                                "benchmarks"
+                                            ].append("cis_lvl2_byod")
                                         else:
-                                            update_rule_yaml["platforms"]["iOS"][os_].update(
-                                                {"benchmarks": ["cis_lvl2_byod"]}
-                                            )
+                                            update_rule_yaml["platforms"]["iOS"][
+                                                os_
+                                            ].update({"benchmarks": ["cis_lvl2_byod"]})
 
                                         if "cis_lvl2_byod" in update_rule_yaml["tags"]:
-                                            update_rule_yaml["tags"].remove("cis_lvl2_byod")
+                                            update_rule_yaml["tags"].remove(
+                                                "cis_lvl2_byod"
+                                            )
 
                                     if "cis_lvl1_enterprise" in rule_yaml["tags"]:
-                                        if "benchmarks" in update_rule_yaml["platforms"]["iOS"][os_]:
-                                            update_rule_yaml["platforms"]["iOS"][os_]["benchmarks"].append(
-                                                "cis_lvl1_enterprise"
-                                            )
+                                        if (
+                                            "benchmarks"
+                                            in update_rule_yaml["platforms"]["iOS"][os_]
+                                        ):
+                                            update_rule_yaml["platforms"]["iOS"][os_][
+                                                "benchmarks"
+                                            ].append("cis_lvl1_enterprise")
                                         else:
-                                            update_rule_yaml["platforms"]["iOS"][os_].update(
+                                            update_rule_yaml["platforms"]["iOS"][
+                                                os_
+                                            ].update(
                                                 {"benchmarks": ["cis_lvl1_enterprise"]}
                                             )
-                                        if "cis_lvl1_enterprise" in update_rule_yaml["tags"]:
-                                            update_rule_yaml["tags"].remove("cis_lvl1_enterprise")
-                                    if "cis_lvl2_enterprise" in rule_yaml["tags"]:
-                                        if "benchmarks" in update_rule_yaml["platforms"]["iOS"][os_]:
-                                            update_rule_yaml["platforms"]["iOS"][os_]["benchmarks"].append(
-                                                "cis_lvl2_enterprise"
+                                        if (
+                                            "cis_lvl1_enterprise"
+                                            in update_rule_yaml["tags"]
+                                        ):
+                                            update_rule_yaml["tags"].remove(
+                                                "cis_lvl1_enterprise"
                                             )
+                                    if "cis_lvl2_enterprise" in rule_yaml["tags"]:
+                                        if (
+                                            "benchmarks"
+                                            in update_rule_yaml["platforms"]["iOS"][os_]
+                                        ):
+                                            update_rule_yaml["platforms"]["iOS"][os_][
+                                                "benchmarks"
+                                            ].append("cis_lvl2_enterprise")
                                         else:
-                                            update_rule_yaml["platforms"]["iOS"][os_].update(
+                                            update_rule_yaml["platforms"]["iOS"][
+                                                os_
+                                            ].update(
                                                 {"benchmarks": ["cis_lvl2_enterprise"]}
                                             )
 
-                                        if "cis_lvl2_enterprise" in update_rule_yaml["tags"]:
-                                            update_rule_yaml["tags"].remove("cis_lvl2_enterprise")
-                                    if "ios_stig" in rule_yaml["tags"]:
-                                        if "benchmarks" in update_rule_yaml["platforms"]["iOS"][os_]:
-                                            update_rule_yaml["platforms"]["iOS"][os_]["benchmarks"].append("ios_stig")
-                                        else:
-                                            update_rule_yaml["platforms"]["iOS"][os_].update(
-                                                {"benchmarks": ["ios_stig"]}
+                                        if (
+                                            "cis_lvl2_enterprise"
+                                            in update_rule_yaml["tags"]
+                                        ):
+                                            update_rule_yaml["tags"].remove(
+                                                "cis_lvl2_enterprise"
                                             )
+                                    if "ios_stig" in rule_yaml["tags"]:
+                                        if (
+                                            "benchmarks"
+                                            in update_rule_yaml["platforms"]["iOS"][os_]
+                                        ):
+                                            update_rule_yaml["platforms"]["iOS"][os_][
+                                                "benchmarks"
+                                            ].append("ios_stig")
+                                        else:
+                                            update_rule_yaml["platforms"]["iOS"][
+                                                os_
+                                            ].update({"benchmarks": ["ios_stig"]})
 
                                         if "ios_stig" in update_rule_yaml["tags"]:
                                             update_rule_yaml["tags"].remove("ios_stig")
                                     if "ios_stig_byoad" in rule_yaml["tags"]:
-                                        if "benchmarks" in update_rule_yaml["platforms"]["iOS"][os_]:
-                                            update_rule_yaml["platforms"]["iOS"][os_]["benchmarks"].append(
-                                                "ios_stig_byoad"
-                                            )
+                                        if (
+                                            "benchmarks"
+                                            in update_rule_yaml["platforms"]["iOS"][os_]
+                                        ):
+                                            update_rule_yaml["platforms"]["iOS"][os_][
+                                                "benchmarks"
+                                            ].append("ios_stig_byoad")
                                         else:
-                                            update_rule_yaml["platforms"]["iOS"][os_].update(
-                                                {"benchmarks": ["ios_stig_byoad"]}
-                                            )
+                                            update_rule_yaml["platforms"]["iOS"][
+                                                os_
+                                            ].update({"benchmarks": ["ios_stig_byoad"]})
 
                                         if "ios_stig_byoad" in update_rule_yaml["tags"]:
-                                            update_rule_yaml["tags"].remove("ios_stig_byoad")
+                                            update_rule_yaml["tags"].remove(
+                                                "ios_stig_byoad"
+                                            )
                                     if "indigo_base" in rule_yaml["tags"]:
-                                        if "benchmarks" in update_rule_yaml["platforms"]["iOS"][os_]:
-                                            update_rule_yaml["platforms"]["iOS"][os_]["benchmarks"].append(
-                                                "indigo_base"
-                                            )
+                                        if (
+                                            "benchmarks"
+                                            in update_rule_yaml["platforms"]["iOS"][os_]
+                                        ):
+                                            update_rule_yaml["platforms"]["iOS"][os_][
+                                                "benchmarks"
+                                            ].append("indigo_base")
                                         else:
-                                            update_rule_yaml["platforms"]["iOS"][os_].update(
-                                                {"benchmarks": ["indigo_base"]}
-                                            )
+                                            update_rule_yaml["platforms"]["iOS"][
+                                                os_
+                                            ].update({"benchmarks": ["indigo_base"]})
 
                                         if "indigo_base" in update_rule_yaml["tags"]:
-                                            update_rule_yaml["tags"].remove("indigo_base")
+                                            update_rule_yaml["tags"].remove(
+                                                "indigo_base"
+                                            )
                                     if "indigo_high" in rule_yaml["tags"]:
-                                        if "benchmarks" in update_rule_yaml["platforms"]["iOS"][os_]:
-                                            update_rule_yaml["platforms"]["iOS"][os_]["benchmarks"].append(
-                                                "indigo_high"
-                                            )
+                                        if (
+                                            "benchmarks"
+                                            in update_rule_yaml["platforms"]["iOS"][os_]
+                                        ):
+                                            update_rule_yaml["platforms"]["iOS"][os_][
+                                                "benchmarks"
+                                            ].append("indigo_high")
                                         else:
-                                            update_rule_yaml["platforms"]["iOS"][os_].update(
-                                                {"benchmarks": ["indigo_high"]}
-                                            )
+                                            update_rule_yaml["platforms"]["iOS"][
+                                                os_
+                                            ].update({"benchmarks": ["indigo_high"]})
 
                                         if "indigo_high" in update_rule_yaml["tags"]:
-                                            update_rule_yaml["tags"].remove("indigo_high")
+                                            update_rule_yaml["tags"].remove(
+                                                "indigo_high"
+                                            )
 
                             if (
-                                os_ == "sequoia"
+                                os_ == "tahoe"
+                                or os_ == "sequoia"
                                 or os_ == "sonoma"
                                 or os_ == "ventura"
                                 or os_ == "monterey"
@@ -716,10 +961,17 @@ def main():
                             ):
                                 if "macOS" not in update_rule_yaml["platforms"]:
                                     update_rule_yaml["platforms"].update({"macOS": {}})
-                                    update_rule_yaml["platforms"]["macOS"].update({os_: {}})
+                                    update_rule_yaml["platforms"]["macOS"].update(
+                                        {os_: {}}
+                                    )
                                 else:
-                                    if os_ not in update_rule_yaml["platforms"]["macOS"]:
-                                        update_rule_yaml["platforms"]["macOS"].update({os_: {}})
+                                    if (
+                                        os_
+                                        not in update_rule_yaml["platforms"]["macOS"]
+                                    ):
+                                        update_rule_yaml["platforms"]["macOS"].update(
+                                            {os_: {}}
+                                        )
 
                                 if "severity" in rule_yaml:
                                     update_rule_yaml["platforms"]["macOS"][os_].update(
@@ -727,47 +979,82 @@ def main():
                                     )
 
                                 if "cis_lvl1" in rule_yaml["tags"]:
-                                    update_rule_yaml["platforms"]["macOS"][os_].update({"benchmarks": ["cis_lvl1"]})
+                                    update_rule_yaml["platforms"]["macOS"][os_].update(
+                                        {"benchmarks": ["cis_lvl1"]}
+                                    )
 
                                 if "cis_lvl2" in rule_yaml["tags"]:
-                                    if "benchmarks" in update_rule_yaml["platforms"]["macOS"][os_]:
-                                        update_rule_yaml["platforms"]["macOS"][os_]["benchmarks"].append("cis_lvl2")
+                                    if (
+                                        "benchmarks"
+                                        in update_rule_yaml["platforms"]["macOS"][os_]
+                                    ):
+                                        update_rule_yaml["platforms"]["macOS"][os_][
+                                            "benchmarks"
+                                        ].append("cis_lvl2")
                                     else:
-                                        update_rule_yaml["platforms"]["macOS"][os_].update({"benchmarks": ["cis_lvl2"]})
+                                        update_rule_yaml["platforms"]["macOS"][
+                                            os_
+                                        ].update({"benchmarks": ["cis_lvl2"]})
 
                                 if "stig" in rule_yaml["tags"]:
-                                    if "benchmarks" in update_rule_yaml["platforms"]["macOS"][os_]:
-                                        update_rule_yaml["platforms"]["macOS"][os_]["benchmarks"].append("disa_stig")
+                                    if (
+                                        "benchmarks"
+                                        in update_rule_yaml["platforms"]["macOS"][os_]
+                                    ):
+                                        update_rule_yaml["platforms"]["macOS"][os_][
+                                            "benchmarks"
+                                        ].append("disa_stig")
                                     else:
-                                        update_rule_yaml["platforms"]["macOS"][os_].update(
-                                            {"benchmarks": ["disa_stig"]}
-                                        )
+                                        update_rule_yaml["platforms"]["macOS"][
+                                            os_
+                                        ].update({"benchmarks": ["disa_stig"]})
 
-                                if "check" not in update_rule_yaml["platforms"]["macOS"]:
+                                if (
+                                    "check"
+                                    not in update_rule_yaml["platforms"]["macOS"]
+                                ):
                                     if "check" in rule_yaml:
                                         # update_rule_yaml['platforms']['macOS'].update({"check", rule_yaml['check']})
                                         update_rule_yaml["platforms"]["macOS"].update(
-                                            {"check": rule_yaml["check"].strip().replace(" \n", "\n")}
+                                            {
+                                                "check": rule_yaml["check"]
+                                                .strip()
+                                                .replace(" \n", "\n")
+                                            }
                                         )
                                         # update_rule_yaml['platforms']['macOS'].update({"result", rule_yaml['result']})
-                                        update_rule_yaml["platforms"]["macOS"].update({"result": rule_yaml["result"]})
+                                        update_rule_yaml["platforms"]["macOS"].update(
+                                            {"result": rule_yaml["result"]}
+                                        )
                                 if "fix" not in update_rule_yaml["platforms"]["macOS"]:
                                     if "fix" in rule_yaml:
                                         # fix_code, fix_note = cleanup_fix(rule_yaml['fix'])
                                         # rule_yaml['fix'] = fix_code
-                                        update_rule_yaml["platforms"]["macOS"].update({"fix": rule_yaml["fix"]})
+                                        update_rule_yaml["platforms"]["macOS"].update(
+                                            {"fix": rule_yaml["fix"]}
+                                        )
 
                             if "ddm_info" in rule_yaml:
-                                update_rule_yaml.update({"ddm_info": rule_yaml["ddm_info"]})
+                                update_rule_yaml.update(
+                                    {"ddm_info": rule_yaml["ddm_info"]}
+                                )
 
                             with open(yaml_full_path, "w") as wfile:
-                                yaml.dump(update_rule_yaml, wfile, Dumper=MyDumper, sort_keys=False, width=float("inf"))
+                                yaml.dump(
+                                    update_rule_yaml,
+                                    wfile,
+                                    Dumper=MyDumper,
+                                    sort_keys=False,
+                                    width=float("inf"),
+                                )
                     else:
                         new_yaml = {
                             "id": rule_yaml["id"],
                             "title": rule_yaml["title"],
                             "discussion": rule_yaml["discussion"],
-                            "references": {"nist": {"cce": {os_: rule_yaml["references"]["cce"]}}},
+                            "references": {
+                                "nist": {"cce": {os_: rule_yaml["references"]["cce"]}}
+                            },
                             "platforms": {},
                             "tags": rule_yaml["tags"],
                         }
@@ -783,13 +1070,16 @@ def main():
                             new_yaml["tags"].remove("800-53r4_high")
 
                         if "mobileconfig_info" in rule_yaml:
-                            new_yaml.update({"mobileconfig_info": rule_yaml["mobileconfig_info"]})
+                            new_yaml.update(
+                                {"mobileconfig_info": rule_yaml["mobileconfig_info"]}
+                            )
                         if "ddm_info" in rule_yaml:
                             new_yaml.update({"ddm_info": rule_yaml["ddm_info"]})
                         if "odv" in rule_yaml:
                             new_yaml.update({"odv": rule_yaml["odv"]})
                         if (
-                            os_ == "sequoia"
+                            os_ == "tahoe"
+                            or os_ == "sequoia"
                             or os_ == "sonoma"
                             or os_ == "ventura"
                             or os_ == "monterey"
@@ -798,111 +1088,180 @@ def main():
                         ):
                             new_yaml["platforms"] = {"macOS": {}}
 
-                            new_yaml["platforms"]["macOS"].update({"check": rule_yaml["check"].strip()})
+                            new_yaml["platforms"]["macOS"].update(
+                                {"check": rule_yaml["check"].strip()}
+                            )
                             if "result" in rule_yaml:
-                                rule_yaml["result"] = correct_result_key(rule_yaml["result"])
-                                new_yaml["platforms"]["macOS"].update({"result": rule_yaml["result"]})
+                                rule_yaml["result"] = correct_result_key(
+                                    rule_yaml["result"]
+                                )
+                                new_yaml["platforms"]["macOS"].update(
+                                    {"result": rule_yaml["result"]}
+                                )
                             new_yaml["platforms"]["macOS"].update({os_: {}})
                             if "severity" in rule_yaml:
-                                new_yaml["platforms"]["macOS"][os_].update({"severity": rule_yaml["severity"]})
+                                new_yaml["platforms"]["macOS"][os_].update(
+                                    {"severity": rule_yaml["severity"]}
+                                )
 
                             if "cis_lvl1" in rule_yaml["tags"]:
                                 # new_yaml['platforms']['macOS'][os_]['benchmarks'].append("cis_lvl1")
-                                new_yaml["platforms"]["macOS"][os_].update({"benchmarks": ["cis_lvl1"]})
+                                new_yaml["platforms"]["macOS"][os_].update(
+                                    {"benchmarks": ["cis_lvl1"]}
+                                )
                                 new_yaml["tags"].remove("cis_lvl1")
                             if "cis_lvl2" in rule_yaml["tags"]:
                                 if "benchmarks" in new_yaml["platforms"]["macOS"][os_]:
-                                    new_yaml["platforms"]["macOS"][os_]["benchmarks"].append("cis_lvl2")
+                                    new_yaml["platforms"]["macOS"][os_][
+                                        "benchmarks"
+                                    ].append("cis_lvl2")
                                 else:
-                                    new_yaml["platforms"]["macOS"][os_].update({"benchmarks": ["cis_lvl2"]})
+                                    new_yaml["platforms"]["macOS"][os_].update(
+                                        {"benchmarks": ["cis_lvl2"]}
+                                    )
                                 new_yaml["tags"].remove("cis_lvl2")
                             if "stig" in rule_yaml["tags"]:
                                 if "benchmarks" in new_yaml["platforms"]["macOS"][os_]:
-                                    new_yaml["platforms"]["macOS"][os_]["benchmarks"].append("disa_stig")
+                                    new_yaml["platforms"]["macOS"][os_][
+                                        "benchmarks"
+                                    ].append("disa_stig")
                                 else:
-                                    new_yaml["platforms"]["macOS"][os_].update({"benchmarks": ["disa_stig"]})
+                                    new_yaml["platforms"]["macOS"][os_].update(
+                                        {"benchmarks": ["disa_stig"]}
+                                    )
                                 new_yaml["tags"].remove("stig")
                             # print(new_yaml)
-                        if os_ == "ios_18" or os_ == "ios_17" or os_ == "ios_16":
+                        if (
+                            os_ == "ios_18"
+                            or os_ == "ios_17"
+                            or os_ == "ios_16"
+                            or os_ == "ios_26"
+                        ):
                             new_yaml["tags"].remove("ios")
                             new_yaml["platforms"].update({"iOS": {}})
                             new_yaml["platforms"]["iOS"].update({os_: {}})
 
                             if "severity" in rule_yaml:
-                                new_yaml["platforms"]["iOS"][os_].update({"severity": rule_yaml["severity"]})
+                                new_yaml["platforms"]["iOS"][os_].update(
+                                    {"severity": rule_yaml["severity"]}
+                                )
                             if "supervised" in rule_yaml:
-                                new_yaml["platforms"]["iOS"][os_].update({"supervised": rule_yaml["supervised"]})
+                                new_yaml["platforms"]["iOS"][os_].update(
+                                    {"supervised": rule_yaml["supervised"]}
+                                )
 
                             if "cis_lvl1_byod" in rule_yaml["tags"]:
-                                new_yaml["platforms"]["iOS"][os_].update({"benchmarks": ["cis_lvl1_byod"]})
+                                new_yaml["platforms"]["iOS"][os_].update(
+                                    {"benchmarks": ["cis_lvl1_byod"]}
+                                )
                                 new_yaml["tags"].remove("cis_lvl1_byod")
                             if "cis_lvl2_byod" in rule_yaml["tags"]:
                                 if "benchmarks" in new_yaml["platforms"]["iOS"][os_]:
-                                    new_yaml["platforms"]["iOS"][os_]["benchmarks"].append("cis_lvl2_byod")
+                                    new_yaml["platforms"]["iOS"][os_][
+                                        "benchmarks"
+                                    ].append("cis_lvl2_byod")
                                 else:
-                                    new_yaml["platforms"]["iOS"][os_].update({"benchmarks": ["cis_lvl2_byod"]})
+                                    new_yaml["platforms"]["iOS"][os_].update(
+                                        {"benchmarks": ["cis_lvl2_byod"]}
+                                    )
                                 new_yaml["tags"].remove("cis_lvl2_byod")
                             if "cis_lvl1_enterprise" in rule_yaml["tags"]:
                                 if "benchmarks" in new_yaml["platforms"]["iOS"][os_]:
-                                    new_yaml["platforms"]["iOS"][os_]["benchmarks"].append("cis_lvl1_enterprise")
+                                    new_yaml["platforms"]["iOS"][os_][
+                                        "benchmarks"
+                                    ].append("cis_lvl1_enterprise")
                                 else:
-                                    new_yaml["platforms"]["iOS"][os_].update({"benchmarks": ["cis_lvl1_enterprise"]})
+                                    new_yaml["platforms"]["iOS"][os_].update(
+                                        {"benchmarks": ["cis_lvl1_enterprise"]}
+                                    )
                                 new_yaml["tags"].remove("cis_lvl1_enterprise")
                             if "cis_lvl2_enterprise" in rule_yaml["tags"]:
                                 if "benchmarks" in new_yaml["platforms"]["iOS"][os_]:
-                                    new_yaml["platforms"]["iOS"][os_]["benchmarks"].append("cis_lvl2_enterprise")
+                                    new_yaml["platforms"]["iOS"][os_][
+                                        "benchmarks"
+                                    ].append("cis_lvl2_enterprise")
                                 else:
-                                    new_yaml["platforms"]["iOS"][os_].update({"benchmarks": ["cis_lvl2_enterprise"]})
+                                    new_yaml["platforms"]["iOS"][os_].update(
+                                        {"benchmarks": ["cis_lvl2_enterprise"]}
+                                    )
                                 new_yaml["tags"].remove("cis_lvl2_enterprise")
                             if "ios_stig" in rule_yaml["tags"]:
                                 if "benchmarks" in new_yaml["platforms"]["iOS"][os_]:
-                                    new_yaml["platforms"]["iOS"][os_]["benchmarks"].append("ios_stig")
+                                    new_yaml["platforms"]["iOS"][os_][
+                                        "benchmarks"
+                                    ].append("ios_stig")
                                 else:
-                                    new_yaml["platforms"]["iOS"][os_].update({"benchmarks": ["ios_stig"]})
+                                    new_yaml["platforms"]["iOS"][os_].update(
+                                        {"benchmarks": ["ios_stig"]}
+                                    )
                                 new_yaml["tags"].remove("ios_stig")
                             if "ios_stig_byoad" in rule_yaml["tags"]:
                                 if "benchmarks" in new_yaml["platforms"]["iOS"][os_]:
-                                    new_yaml["platforms"]["iOS"][os_]["benchmarks"].append("ios_stig_byoad")
+                                    new_yaml["platforms"]["iOS"][os_][
+                                        "benchmarks"
+                                    ].append("ios_stig_byoad")
                                 else:
-                                    new_yaml["platforms"]["iOS"][os_].update({"benchmarks": ["ios_stig_byoad"]})
+                                    new_yaml["platforms"]["iOS"][os_].update(
+                                        {"benchmarks": ["ios_stig_byoad"]}
+                                    )
                                 new_yaml["tags"].remove("ios_stig_byoad")
                             if "indigo_base" in rule_yaml["tags"]:
                                 if "benchmarks" in new_yaml["platforms"]["iOS"][os_]:
-                                    new_yaml["platforms"]["iOS"][os_]["benchmarks"].append("indigo_base")
+                                    new_yaml["platforms"]["iOS"][os_][
+                                        "benchmarks"
+                                    ].append("indigo_base")
                                 else:
-                                    new_yaml["platforms"]["iOS"][os_].update({"benchmarks": ["indigo_base"]})
+                                    new_yaml["platforms"]["iOS"][os_].update(
+                                        {"benchmarks": ["indigo_base"]}
+                                    )
                                 new_yaml["tags"].remove("indigo_base")
                             if "indigo_high" in rule_yaml["tags"]:
                                 if "benchmarks" in new_yaml["platforms"]["iOS"][os_]:
-                                    new_yaml["platforms"]["iOS"][os_]["benchmarks"].append("indigo_high")
+                                    new_yaml["platforms"]["iOS"][os_][
+                                        "benchmarks"
+                                    ].append("indigo_high")
                                 else:
-                                    new_yaml["platforms"]["iOS"][os_].update({"benchmarks": ["indigo_high"]})
+                                    new_yaml["platforms"]["iOS"][os_].update(
+                                        {"benchmarks": ["indigo_high"]}
+                                    )
                                 new_yaml["tags"].remove("indigo_high")
 
-                        if os_ == "visionos_2.0":
+                        if os_ == "visionos_2.0" or os_ == "visionos_26":
                             new_yaml["tags"].remove("visionos")
                             new_yaml["platforms"].update({"visionOS": {}})
 
                             new_yaml["platforms"]["visionOS"].update({os_: {}})
 
                             if "supervised" in rule_yaml:
-                                new_yaml["platforms"]["visionOS"][os_].update({"supervised": rule_yaml["supervised"]})
+                                new_yaml["platforms"]["visionOS"][os_].update(
+                                    {"supervised": rule_yaml["supervised"]}
+                                )
 
                         if "800-53r5" in rule_yaml["references"]:
-                            new_yaml["references"]["nist"].update({"800-53r5": rule_yaml["references"]["800-53r5"]})
+                            new_yaml["references"]["nist"].update(
+                                {"800-53r5": rule_yaml["references"]["800-53r5"]}
+                            )
 
                         if "800-171r3" in rule_yaml["references"]:
-                            new_yaml["references"]["nist"].update({"800-171r3": rule_yaml["references"]["800-171r3"]})
+                            new_yaml["references"]["nist"].update(
+                                {"800-171r3": rule_yaml["references"]["800-171r3"]}
+                            )
                         if "cci" in rule_yaml["references"]:
                             new_yaml["references"].update({"disa": {}})
-                            new_yaml["references"]["disa"].update({"cci": rule_yaml["references"]["cci"]})
+                            new_yaml["references"]["disa"].update(
+                                {"cci": rule_yaml["references"]["cci"]}
+                            )
 
                         if "srg" in rule_yaml["references"]:
                             if "disa" in new_yaml["references"]:
-                                new_yaml["references"]["disa"].update({"srg": rule_yaml["references"]["srg"]})
+                                new_yaml["references"]["disa"].update(
+                                    {"srg": rule_yaml["references"]["srg"]}
+                                )
                             else:
                                 new_yaml["references"].update({"disa": {}})
-                                new_yaml["references"]["disa"].update({"srg": rule_yaml["references"]["srg"]})
+                                new_yaml["references"]["disa"].update(
+                                    {"srg": rule_yaml["references"]["srg"]}
+                                )
                         if "disa_stig" in rule_yaml["references"]:
                             if "disa" in new_yaml["references"]:
                                 new_yaml["references"]["disa"].update({"disa_stig": {}})
@@ -917,34 +1276,58 @@ def main():
                                 )
                         if "sfr" in rule_yaml["references"]:
                             if "disa" in new_yaml["references"]:
-                                new_yaml["references"]["disa"].update({"sfr": rule_yaml["references"]["sfr"]})
+                                new_yaml["references"]["disa"].update(
+                                    {"sfr": rule_yaml["references"]["sfr"]}
+                                )
                             else:
                                 new_yaml["references"].update({"disa": {}})
-                                new_yaml["references"]["disa"].update({"sfr": rule_yaml["references"]["sfr"]})
+                                new_yaml["references"]["disa"].update(
+                                    {"sfr": rule_yaml["references"]["sfr"]}
+                                )
                         if "cmmc" in rule_yaml["references"]:
                             if "disa" in new_yaml["references"]:
-                                new_yaml["references"]["disa"].update({"cmmc": rule_yaml["references"]["cmmc"]})
+                                new_yaml["references"]["disa"].update(
+                                    {"cmmc": rule_yaml["references"]["cmmc"]}
+                                )
                             else:
                                 new_yaml["references"].update({"disa": {}})
-                                new_yaml["references"]["disa"].update({"cmmc": rule_yaml["references"]["cmmc"]})
+                                new_yaml["references"]["disa"].update(
+                                    {"cmmc": rule_yaml["references"]["cmmc"]}
+                                )
 
                         if "cis" in rule_yaml["references"]:
                             if "benchmark" in rule_yaml["references"]["cis"]:
                                 if "cis" in new_yaml["references"]:
-                                    new_yaml["references"]["cis"].update({"benchmark": {}})
+                                    new_yaml["references"]["cis"].update(
+                                        {"benchmark": {}}
+                                    )
                                     new_yaml["references"]["cis"]["benchmark"].update(
-                                        {os_: rule_yaml["references"]["cis"]["benchmark"]}
+                                        {
+                                            os_: rule_yaml["references"]["cis"][
+                                                "benchmark"
+                                            ]
+                                        }
                                     )
                                 else:
                                     new_yaml["references"].update({"cis": {}})
-                                    new_yaml["references"]["cis"].update({"benchmark": {}})
+                                    new_yaml["references"]["cis"].update(
+                                        {"benchmark": {}}
+                                    )
                                     new_yaml["references"]["cis"]["benchmark"].update(
-                                        {os_: rule_yaml["references"]["cis"]["benchmark"]}
+                                        {
+                                            os_: rule_yaml["references"]["cis"][
+                                                "benchmark"
+                                            ]
+                                        }
                                     )
                             if "controls v8" in rule_yaml["references"]["cis"]:
                                 if "cis" in new_yaml["references"]:
                                     new_yaml["references"]["cis"].update(
-                                        {"controls_v8": rule_yaml["references"]["cis"]["controls v8"]}
+                                        {
+                                            "controls_v8": rule_yaml["references"][
+                                                "cis"
+                                            ]["controls v8"]
+                                        }
                                     )
                                 else:
                                     new_yaml["references"].update({"cis": {}})
@@ -953,7 +1336,13 @@ def main():
                                     )
 
                         with open(yaml_full_path, "w") as wfile:
-                            yaml.dump(new_yaml, wfile, Dumper=MyDumper, sort_keys=False, width=float("inf"))
+                            yaml.dump(
+                                new_yaml,
+                                wfile,
+                                Dumper=MyDumper,
+                                sort_keys=False,
+                                width=float("inf"),
+                            )
 
             # if os_ == "sequoia" or os_ == "sonoma" or os_ == "ventura" or os_ == "monterey" or os_ == "big_sur" or os_ == "catalina":
             platforms = list(os_specifics.keys())
@@ -971,7 +1360,9 @@ def main():
 
             for platform in platforms[1:]:
                 if os_specifics[platform]["mobileconfig"] != base_value:
-                    configprofile_differences[platform] = os_specifics[platform]["mobileconfig"]
+                    configprofile_differences[platform] = os_specifics[platform][
+                        "mobileconfig"
+                    ]
             # print(rule_yaml['id'])
             # print(configprofile_differences)
 
@@ -992,15 +1383,31 @@ def main():
                 base_os = platforms[0]
                 for p in platforms:
                     base_os = platforms[0]
-                    if base_os == "ios_16" or base_os == "ios_17" or base_os == "ios_18" or base_os == "visionos_2.0":
+                    if (
+                        base_os == "ios_16"
+                        or base_os == "ios_17"
+                        or base_os == "ios_18"
+                        or base_os == "ios_26"
+                        or base_os == "visionos_2.0"
+                        or base_os == "visionos_26"
+                    ):
                         base_os = p
-                    if base_os != "ios_16" or base_os != "ios_17" or base_os != "ios_18" or base_os != "visionos_2.0":
+                    if (
+                        base_os != "ios_16"
+                        or base_os != "ios_17"
+                        or base_os != "ios_18"
+                        or base_os != "ios_26"
+                        or base_os != "visionos_2.0"
+                        or base_os != "visionos_26"
+                    ):
                         break
                 base_value = os_specifics[base_os][key]
                 differences = {}
 
                 for platform in platforms[1:]:
-                    if ("ios" in platform or "vision" in platform and key == "check") or (
+                    if (
+                        "ios" in platform or "vision" in platform and key == "check"
+                    ) or (
                         "ios" in platform or "vision" in platform and key == "result"
                     ):
                         continue
@@ -1029,16 +1436,22 @@ def main():
 
                             # print(differences)
                             # print("++++++++++++")
-                            differences_yaml["platforms"]["macOS"][operating_sys].update({"check": value["check"]})
+                            differences_yaml["platforms"]["macOS"][
+                                operating_sys
+                            ].update({"check": value["check"]})
                         if key == "result":
                             if value["result"] == " " or value["result"] == "":
                                 continue
                             # if "result" in differences_yaml['platforms']['macOS']:
                             # if operating_sys != "sequoia":
-                            differences_yaml["platforms"]["macOS"][operating_sys].update({"result": value["result"]})
+                            differences_yaml["platforms"]["macOS"][
+                                operating_sys
+                            ].update({"result": value["result"]})
 
                         if key == "fix":
-                            differences_yaml["platforms"]["macOS"][operating_sys].update({"fix": value["fix"]})
+                            differences_yaml["platforms"]["macOS"][
+                                operating_sys
+                            ].update({"fix": value["fix"]})
 
                         # if key == "mobileconfig":
                         #     differences_yaml['platforms']['macOS'][operating_sys].update({"mobileconfig": value})
@@ -1060,32 +1473,39 @@ def main():
 
                 if configprofile_differences and key == "mobileconfig":
                     for operating_sys, value in os_specifics.items():
-                        if operating_sys == "visionos_2.0":
-                            differences_yaml["platforms"]["visionOS"][operating_sys].update(
-                                {"mobileconfig_info": value["mobileconfig"]}
-                            )
+                        if operating_sys == "visionos_26":
+                            differences_yaml["platforms"]["visionOS"][
+                                operating_sys
+                            ].update({"mobileconfig_info": value["mobileconfig"]})
                         elif "ios" in operating_sys:
                             differences_yaml["platforms"]["iOS"][operating_sys].update(
                                 {"mobileconfig_info": value["mobileconfig"]}
                             )
                         elif (
-                            os_ == "sequoia"
+                            os_ == "tahoe"
+                            or os_ == "sequoia"
                             or os_ == "sonoma"
                             or os_ == "ventura"
                             or os_ == "monterey"
                             or os_ == "big_sur"
                             or os_ == "catalina"
                         ):
-                            differences_yaml["platforms"]["macOS"][operating_sys].update(
-                                {"mobileconfig_info": value["mobileconfig"]}
-                            )
+                            differences_yaml["platforms"]["macOS"][
+                                operating_sys
+                            ].update({"mobileconfig_info": value["mobileconfig"]})
                         # print(differences_yaml['id'])
                         # print(value['mobileconfig'])
                         # print(operating_sys)
                     # differences_yaml['mobileconfig_info'] = "$OS_VALUE"
 
                 with open(yaml_full_path, "w") as wfile:
-                    yaml.dump(differences_yaml, wfile, Dumper=MyDumper, sort_keys=False, width=float("inf"))
+                    yaml.dump(
+                        differences_yaml,
+                        wfile,
+                        Dumper=MyDumper,
+                        sort_keys=False,
+                        width=float("inf"),
+                    )
 
             with open(yaml_full_path, "r") as r_again:
                 re_order_ya = yaml.load(r_again, Loader=yaml.SafeLoader)
@@ -1104,58 +1524,86 @@ def main():
             ]
             ordered_keys = sorted(
                 re_order_yam.keys(),
-                key=lambda k: (yaml_key_order.index(k) if k in yaml_key_order else len(yaml_key_order), k),
+                key=lambda k: (
+                    (
+                        yaml_key_order.index(k)
+                        if k in yaml_key_order
+                        else len(yaml_key_order)
+                    ),
+                    k,
+                ),
             )
             re_order_yam = {key: re_order_yam[key] for key in ordered_keys}
 
             priority_os_order = [
+                "tahoe",
                 "sequoia",
                 "sonoma",
                 "ventura",
                 "monterey",
                 "big_sur",
                 "catalina",
+                "ios_26",
                 "ios_18",
                 "ios_17",
                 "ios_16",
-                "visionos_2.0",
+                "visionos_26",
             ]
             ordered_keys = sorted(
                 re_order_yam["references"]["nist"]["cce"].keys(),
-                key=lambda k: (priority_os_order.index(k) if k in priority_os_order else len(priority_os_order), k),
+                key=lambda k: (
+                    (
+                        priority_os_order.index(k)
+                        if k in priority_os_order
+                        else len(priority_os_order)
+                    ),
+                    k,
+                ),
             )
             re_order_yam["references"]["nist"]["cce"] = {
-                key: re_order_yam["references"]["nist"]["cce"][key] for key in ordered_keys
+                key: re_order_yam["references"]["nist"]["cce"][key]
+                for key in ordered_keys
             }
             if "disa" in re_order_yam["references"]:
                 if "disa_stig" in re_order_yam["references"]["disa"]:
                     ordered_keys = sorted(
                         re_order_yam["references"]["disa"]["disa_stig"].keys(),
                         key=lambda k: (
-                            priority_os_order.index(k) if k in priority_os_order else len(priority_os_order),
+                            (
+                                priority_os_order.index(k)
+                                if k in priority_os_order
+                                else len(priority_os_order)
+                            ),
                             k,
                         ),
                     )
                     re_order_yam["references"]["disa"]["disa_stig"] = {
-                        key: re_order_yam["references"]["disa"]["disa_stig"][key] for key in ordered_keys
+                        key: re_order_yam["references"]["disa"]["disa_stig"][key]
+                        for key in ordered_keys
                     }
             if "cis" in re_order_yam["references"]:
                 if "benchmark" in re_order_yam["references"]["cis"]:
                     ordered_keys = sorted(
                         re_order_yam["references"]["cis"]["benchmark"].keys(),
                         key=lambda k: (
-                            priority_os_order.index(k) if k in priority_os_order else len(priority_os_order),
+                            (
+                                priority_os_order.index(k)
+                                if k in priority_os_order
+                                else len(priority_os_order)
+                            ),
                             k,
                         ),
                     )
                     re_order_yam["references"]["cis"]["benchmark"] = {
-                        key: re_order_yam["references"]["cis"]["benchmark"][key] for key in ordered_keys
+                        key: re_order_yam["references"]["cis"]["benchmark"][key]
+                        for key in ordered_keys
                     }
 
             priority_macos_order = [
                 "check",
                 "result",
                 "fix",
+                "tahoe",
                 "sequoia",
                 "sonoma",
                 "ventura",
@@ -1163,20 +1611,33 @@ def main():
                 "big_sur",
                 "catalina",
             ]
-            priority_ios_order = ["ios_18", "ios_17", "ios_16"]
+            priority_ios_order = ["ios_26", "ios_18", "ios_17", "ios_16"]
             platform_order = ["macOS", "iOS", "visionOS"]
             # print(re_order_yam)
             ordered_keys = sorted(
                 re_order_yam["platforms"].keys(),
-                key=lambda k: (platform_order.index(k) if k in platform_order else len(platform_order), k),
+                key=lambda k: (
+                    (
+                        platform_order.index(k)
+                        if k in platform_order
+                        else len(platform_order)
+                    ),
+                    k,
+                ),
             )
-            re_order_yam["platforms"] = {key: re_order_yam["platforms"][key] for key in ordered_keys}
+            re_order_yam["platforms"] = {
+                key: re_order_yam["platforms"][key] for key in ordered_keys
+            }
 
             if "macOS" in re_order_yam["platforms"]:
                 ordered_keys = sorted(
                     re_order_yam["platforms"]["macOS"].keys(),
                     key=lambda k: (
-                        priority_macos_order.index(k) if k in priority_macos_order else len(priority_macos_order),
+                        (
+                            priority_macos_order.index(k)
+                            if k in priority_macos_order
+                            else len(priority_macos_order)
+                        ),
                         k,
                     ),
                 )
@@ -1187,11 +1648,17 @@ def main():
                 ordered_keys = sorted(
                     re_order_yam["platforms"]["iOS"].keys(),
                     key=lambda k: (
-                        priority_ios_order.index(k) if k in priority_ios_order else len(priority_ios_order),
+                        (
+                            priority_ios_order.index(k)
+                            if k in priority_ios_order
+                            else len(priority_ios_order)
+                        ),
                         k,
                     ),
                 )
-                re_order_yam["platforms"]["iOS"] = {key: re_order_yam["platforms"]["iOS"][key] for key in ordered_keys}
+                re_order_yam["platforms"]["iOS"] = {
+                    key: re_order_yam["platforms"]["iOS"][key] for key in ordered_keys
+                }
 
             if "mobileconfig_info" in re_order_yam:
                 if re_order_yam["mobileconfig_info"] == None:
@@ -1200,7 +1667,13 @@ def main():
             with open(yaml_full_path, "w") as wfile:
                 if yaml_full_path not in files_created:
                     files_created.append(yaml_full_path)
-                yaml.dump(re_order_yam, wfile, Dumper=MyDumper, sort_keys=False, width=float("inf"))
+                yaml.dump(
+                    re_order_yam,
+                    wfile,
+                    Dumper=MyDumper,
+                    sort_keys=False,
+                    width=float("inf"),
+                )
 
     print("review the following rules across branches for minor differences")
     for r in rules_to_review:
@@ -1229,8 +1702,10 @@ def main():
                     "requirement is NA" in _yaml["platforms"]["macOS"]["check"]
                     or "inherently" in _yaml["platforms"]["macOS"]["check"]
                     or "does not meet finding" in _yaml["platforms"]["macOS"]["check"]
-                    or "technology does support this requirement" in _yaml["platforms"]["macOS"]["check"]
-                    or "technology partially supports" in _yaml["platforms"]["macOS"]["check"]
+                    or "technology does support this requirement"
+                    in _yaml["platforms"]["macOS"]["check"]
+                    or "technology partially supports"
+                    in _yaml["platforms"]["macOS"]["check"]
                 ):
                     check_text = _yaml["platforms"]["macOS"]["check"]
                     fix_text = _yaml["platforms"]["macOS"]["fix"]
@@ -1246,7 +1721,10 @@ def main():
                     _yaml["platforms"]["macOS"][_os]["enforcement_info"] = {}
 
                     if "check" in _yaml["platforms"]["macOS"][_os]:
-                        if _yaml["platforms"]["macOS"]["check"] == _yaml["platforms"]["macOS"][_os]["check"]:
+                        if (
+                            _yaml["platforms"]["macOS"]["check"]
+                            == _yaml["platforms"]["macOS"][_os]["check"]
+                        ):
                             print(f"{_yaml['id']} - main check matches check of {_os}")
                             _yaml["platforms"]["macOS"][_os].pop("check")
                             # if "result" in _yaml['platforms']['macOS'][_os]:
@@ -1254,35 +1732,47 @@ def main():
                         # move it into compliance object
 
                     if "check" in _yaml["platforms"]["macOS"][_os]:
-                        _yaml["platforms"]["macOS"][_os]["enforcement_info"]["check"] = {}
-                        _yaml["platforms"]["macOS"][_os]["enforcement_info"]["check"]["shell"] = _yaml["platforms"][
-                            "macOS"
-                        ][_os]["check"]
+                        _yaml["platforms"]["macOS"][_os]["enforcement_info"][
+                            "check"
+                        ] = {}
+                        _yaml["platforms"]["macOS"][_os]["enforcement_info"]["check"][
+                            "shell"
+                        ] = _yaml["platforms"]["macOS"][_os]["check"]
                         _yaml["platforms"]["macOS"][_os].pop("check")
                     if (
                         "result" in _yaml["platforms"]["macOS"][_os]
-                        and "check" in _yaml["platforms"]["macOS"][_os]["enforcement_info"]
+                        and "check"
+                        in _yaml["platforms"]["macOS"][_os]["enforcement_info"]
                     ):
-                        _yaml["platforms"]["macOS"][_os]["enforcement_info"]["check"]["result"] = _yaml["platforms"][
-                            "macOS"
-                        ][_os]["result"]
+                        _yaml["platforms"]["macOS"][_os]["enforcement_info"]["check"][
+                            "result"
+                        ] = _yaml["platforms"]["macOS"][_os]["result"]
                         _yaml["platforms"]["macOS"][_os].pop("result")
                     elif "result" in _yaml["platforms"]["macOS"][_os]:
                         _yaml["platforms"]["macOS"][_os].pop("result")
 
                     if "fix" in _yaml["platforms"]["macOS"][_os]:
-                        if _yaml["platforms"]["macOS"]["fix"] == _yaml["platforms"]["macOS"][_os]["fix"]:
+                        if (
+                            _yaml["platforms"]["macOS"]["fix"]
+                            == _yaml["platforms"]["macOS"][_os]["fix"]
+                        ):
                             print(f"{_yaml['id']} - main fix matches fix of {_os}")
                             _yaml["platforms"]["macOS"][_os].pop("fix")
 
                     # move it into compliance object
                     if "fix" in _yaml["platforms"]["macOS"][_os]:
-                        fix_code, fix_note = cleanup_fix(_yaml["platforms"]["macOS"][_os]["fix"])
+                        fix_code, fix_note = cleanup_fix(
+                            _yaml["platforms"]["macOS"][_os]["fix"]
+                        )
                         _yaml["platforms"]["macOS"][_os]["enforcement_info"]["fix"] = {}
                         if fix_code:
-                            _yaml["platforms"]["macOS"][_os]["enforcement_info"]["fix"]["shell"] = fix_code
+                            _yaml["platforms"]["macOS"][_os]["enforcement_info"]["fix"][
+                                "shell"
+                            ] = fix_code
                         if fix_note:
-                            _yaml["platforms"]["macOS"][_os]["enforcement_info"]["fix"]["additional_info"] = fix_note
+                            _yaml["platforms"]["macOS"][_os]["enforcement_info"]["fix"][
+                                "additional_info"
+                            ] = fix_note
                         _yaml["platforms"]["macOS"][_os].pop("fix")
 
                     if _yaml["platforms"]["macOS"][_os]["enforcement_info"] == {}:
@@ -1291,15 +1781,15 @@ def main():
                 _yaml["platforms"]["macOS"]["enforcement_info"] = {}
                 if "check" in _yaml["platforms"]["macOS"]:
                     _yaml["platforms"]["macOS"]["enforcement_info"]["check"] = {}
-                    _yaml["platforms"]["macOS"]["enforcement_info"]["check"]["shell"] = _yaml["platforms"]["macOS"][
-                        "check"
-                    ]
+                    _yaml["platforms"]["macOS"]["enforcement_info"]["check"][
+                        "shell"
+                    ] = _yaml["platforms"]["macOS"]["check"]
                     _yaml["platforms"]["macOS"].pop("check")
 
                 if "result" in _yaml["platforms"]["macOS"]:
-                    _yaml["platforms"]["macOS"]["enforcement_info"]["check"]["result"] = _yaml["platforms"]["macOS"][
+                    _yaml["platforms"]["macOS"]["enforcement_info"]["check"][
                         "result"
-                    ]
+                    ] = _yaml["platforms"]["macOS"]["result"]
                     _yaml["platforms"]["macOS"].pop("result")
 
                 if "fix" in _yaml["platforms"]["macOS"]:
@@ -1307,9 +1797,13 @@ def main():
                     if "inherently" not in fix_code and "permanent" not in fix_note:
                         _yaml["platforms"]["macOS"]["enforcement_info"]["fix"] = {}
                         if fix_code:
-                            _yaml["platforms"]["macOS"]["enforcement_info"]["fix"]["shell"] = fix_code
+                            _yaml["platforms"]["macOS"]["enforcement_info"]["fix"][
+                                "shell"
+                            ] = fix_code
                         if fix_note:
-                            _yaml["platforms"]["macOS"]["enforcement_info"]["fix"]["additional_info"] = fix_note
+                            _yaml["platforms"]["macOS"]["enforcement_info"]["fix"][
+                                "additional_info"
+                            ] = fix_note
                     _yaml["platforms"]["macOS"].pop("fix")
 
                 if _yaml["platforms"]["macOS"]["enforcement_info"] == {}:
@@ -1356,7 +1850,9 @@ def main():
 
                     for opsys in os_list:
                         if payloadtype in apple_profiles.keys():
-                            version = get_introduced(apple_profiles[payloadtype], payloadkey, opsys)
+                            version = get_introduced(
+                                apple_profiles[payloadtype], payloadkey, opsys
+                            )
                             if version == "-1":
                                 unknown_keys.append(payloadkey)
                             _yaml["platforms"][opsys]["introduced"] = version
@@ -1366,11 +1862,18 @@ def main():
 
                 for platform in _yaml["platforms"].keys():
                     for _os in _yaml["platforms"][platform].keys():
-                        if _os == "check" or _os == "fix" or _os == "result" or _os == "introduced":
+                        if (
+                            _os == "check"
+                            or _os == "fix"
+                            or _os == "result"
+                            or _os == "introduced"
+                        ):
                             continue
                         if (
-                            "mobileconfig_info" in _yaml["platforms"][platform][_os].keys()
-                            and _yaml["mobileconfig_info"] == _yaml["platforms"][platform][_os]["mobileconfig_info"]
+                            "mobileconfig_info"
+                            in _yaml["platforms"][platform][_os].keys()
+                            and _yaml["mobileconfig_info"]
+                            == _yaml["platforms"][platform][_os]["mobileconfig_info"]
                         ):
                             _yaml["platforms"][platform][_os].pop("mobileconfig_info")
 
@@ -1393,7 +1896,13 @@ def main():
                 odv_rules.append(_yaml["id"])
 
         with open(file, "w") as nf:
-            yaml.dump(remove_none_fields(_yaml), nf, Dumper=MyDumper, sort_keys=False, width=float("inf"))
+            yaml.dump(
+                remove_none_fields(_yaml),
+                nf,
+                Dumper=MyDumper,
+                sort_keys=False,
+                width=float("inf"),
+            )
 
     print("\n\nthe following keys are not found in apple git")
     for k in unknown_keys:
@@ -1420,6 +1929,13 @@ def replace_keys_by_path(data, path=None):
                     new_k = "visionos_2"
                 elif path == ["platforms", "visionOS"]:
                     new_k = "2.0"
+            if k == "visionos_26":
+                if path == ["references", "nist", "cce"]:
+                    new_k = "visionos_26"
+                elif path == ["references", "disa", "disa_stig"]:
+                    new_k = "visionos_26"
+                elif path == ["platforms", "visionOS"]:
+                    new_k = "26.0"
                 # else:
                 #     new_k = k  # leave as-is
             if k == "ios_18":
@@ -1438,9 +1954,9 @@ def replace_keys_by_path(data, path=None):
                     new_k = "17.0"
                 # else:
                 #     new_k = k  # leave as-is
-            if k == "ios_18":
+            if k == "ios_26":
                 if path == ["platforms", "iOS"]:
-                    new_k = "18.0"
+                    new_k = "26.0"
                 # else:
                 #     new_k = k  # leave as-is
             if k == "ventura":
@@ -1474,6 +1990,16 @@ def replace_keys_by_path(data, path=None):
                     new_k = "macos_15"
                 elif path == ["platforms", "macOS"]:
                     new_k = "15.0"
+            if k == "tahoe":
+                if path == ["references", "nist", "cce"]:
+                    new_k = "macos_26"
+                elif path == ["references", "disa", "disa_stig"]:
+                    new_k = "macos_26"
+                elif path == ["references", "cis", "benchmark"]:
+                    new_k = "macos_26"
+                elif path == ["platforms", "macOS"]:
+                    new_k = "26.0"
+
                 # else:
                 #     new_k = k  # leave as-is
             # else:

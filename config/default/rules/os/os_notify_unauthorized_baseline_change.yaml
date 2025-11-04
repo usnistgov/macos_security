@@ -11,12 +11,12 @@ discussion: |-
 references:
   nist:
     cce:
+      macos_26:
+        - CCE-95245-7
       macos_15:
         - CCE-94243-3
       macos_14:
         - CCE-92839-0
-      macos_13:
-        - CCE-91835-9
     800-53r5:
       - CM-3(5)
   disa:
@@ -24,9 +24,9 @@ references:
       - SRG-OS-000363-GPOS-00150
 platforms:
   macOS:
+    '26.0': {}
     '15.0': {}
     '14.0': {}
-    '13.0': {}
 tags:
   - permanent
   - cnssi-1253_high

@@ -7,6 +7,8 @@ discussion: |-
 references:
   nist:
     cce:
+      macos_26:
+        - CCE-95188-9
       macos_15:
         - CCE-94188-0
     800-53r5:
@@ -19,14 +21,25 @@ references:
       - MP.L2-3.8.8
 platforms:
   macOS:
+    '26.0': {}
     '15.0': {}
     enforcement_info:
       check:
-        shell: /usr/bin/plutil -convert json /var/db/ManagedConfigurationFiles/DiskManagement/DiskManagement_Settings.plist -o - | /usr/bin/jq '.Restrictions | .ExternalStorage'
+        shell: /usr/bin/plutil -convert json /var/db/ManagedConfigurationFiles/DiskManagement/DiskManagement_Settings.plist -o - | /usr/bin/jq --raw-output '.Restrictions.ExternalStorage'
         result:
           string: $ODV
       fix:
-        additional_info: This is implemented by a Declarative Device Management.
+        additional_info: This is implemented by Declarative Device Management (DDM).
+odv:
+  hint:
+    datatype: enum
+    description: Allowed|ReadOnly|Disallowed
+    validation:
+      enumValues:
+        - Allowed
+        - ReadOnly
+        - Disallowed
+  recommended: Allowed
 tags:
   - cmmc_lvl2
   - 800-53r5_low
@@ -39,13 +52,3 @@ ddm_info:
   declarationtype: com.apple.configuration.diskmanagement.settings
   ddm_key: ExternalStorage
   ddm_value: $ODV
-odv:
-  hint:
-    datatype: enum
-    description: Allowed|ReadOnly|Disallowed
-    validation:
-      enumValues:
-        - Allowed
-        - ReadOnly
-        - Disallowed
-  recommended: Allowed

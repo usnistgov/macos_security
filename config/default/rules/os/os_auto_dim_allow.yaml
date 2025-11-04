@@ -5,10 +5,14 @@ discussion: |
 references:
   nist:
     cce:
+      ios_26:
+        - CCE-95447-9
       ios_18:
         - CCE-94519-6
 platforms:
   iOS:
+    '26.0':
+      supervised: false
     '18.0':
       supervised: false
     introduced: '17.4'

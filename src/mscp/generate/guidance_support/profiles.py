@@ -45,11 +45,20 @@ def get_payload_content_by_type(
                     grouped_content[payload_type].append(payload_content)
                 else:
                     # Merge list values for the same key
-                    for key, value in payload_content.items():
-                        if isinstance(value, list):
-                            existing_content.setdefault(key, []).extend(value)
-                        else:
-                            existing_content[key] = value
+                    for payload_dict in payload_content:
+                        for key, value in payload_dict.items():
+                            if isinstance(value, list):
+                                existing_content.setdefault(key, []).extend(value)
+                            else:
+                                if (
+                                    key in existing_content
+                                    and existing_content[key] != value
+                                ):
+                                    logger.warning(
+                                        f"Conflicting non-list values for key '{key}' in payload_type '{payload_type}': "
+                                        f"{existing_content[key]} vs {value}. Overwriting with latest value."
+                                    )
+                                existing_content[key] = value
 
     return dict(grouped_content)
 
@@ -71,7 +80,6 @@ def sign_config_profile(in_file: Path, out_file: Path, cert_hash: str) -> None:
         logger.info(f"Signed Configuration profile written to {out_file}")
 
 
-@logger.catch
 def generate_profiles(
     build_path: Path,
     baseline_name: str,
@@ -217,7 +225,7 @@ def generate_profiles(
         managed_client_file.unlink()
 
     # Final message
-    print(
+    logger.info(
         """
         CAUTION: These configuration profiles are intended for evaluation in a TEST
         environment. Certain configuration profiles (Smartcards), when applied could

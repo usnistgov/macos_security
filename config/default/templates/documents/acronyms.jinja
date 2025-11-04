@@ -2,7 +2,7 @@
 
 {% if format == "adoc" %}
 .Acronyms and Abbreviations
-[cols="1,3", options="header"]
+[width="100%",cols="1,3"]
 |===
 {% for acronym in acronyms %}
 | {{ acronym.term }} | {{ acronym.definition }}
@@ -21,21 +21,21 @@
 
 <table>
 {% for acronym in acronyms %}
-<tr>
-<td>{{ acronym.term }}</td>
-<td>{{ acronym.definition }}</td>
-</tr>
+  <tr>
+    <td>{{ acronym.term }}</td>
+    <td>{{ acronym.definition }}</td>
+  </tr>
 {% endfor %}
 </table>
 
 ### Definitions
 
 <table>
-{% for term in terminology %}
-<tr>
-<td>{{ term.term }}</td>
-<td>{{ term.definition }}</td>
-</tr>
-{% endfor %}
+  {% for term in terminology %}
+  <tr>
+    <td>{{ term.term }}</td>
+    <td>{{ term.definition }}</td>
+  </tr>
+  {% endfor %}
 </table>
 {% endif %}

@@ -5,16 +5,17 @@ from pathlib import Path
 from typing import Any
 from uuid import uuid4
 
-from pydantic import BaseModel, Field
+from pydantic import Field
 
 # Local python modules
 from ..common_utils import create_file, open_file
 from ..common_utils.logger_instance import logger
+from .basemodel import BaseModelWithAccessors
 
 # Additional python modules
 
 
-class Payload(BaseModel):
+class Payload(BaseModelWithAccessors):
     """
     A class to represent a configuration profile payload.
 
@@ -70,9 +71,7 @@ class Payload(BaseModel):
     )
     payload_content: list[dict[str, Any]] = Field(default_factory=list)
 
-    def add_payload(
-        self, payload_type: str, settings: dict[str, Any], baseline_name: str
-    ) -> None:
+    def add_payload(self, payload_type: str, settings: dict[str, Any], baseline_name: str) -> None:
         """
         Add a payload to the profile.
 
@@ -96,9 +95,7 @@ class Payload(BaseModel):
         payload.update(settings)
         self.payload_content.append(payload)
 
-    def add_mcx_payload(
-        self, domain: str, settings: dict[str, Any], baseline_name: str
-    ) -> None:
+    def add_mcx_payload(self, domain: str, settings: dict[str, Any], baseline_name: str) -> None:
         """
         Add a Managed Client preferences payload to the payload content.
 
@@ -122,9 +119,7 @@ class Payload(BaseModel):
             "PayloadUUID": uuid,
             "PayloadType": "com.apple.ManagedClient.preferences",
             "PayloadIdentifier": f"alacarte.macOS.{baseline_name}.{uuid}",
-            "PayloadContent": {
-                domain: {"Forced": [{"mcx_preference_settings": settings}]}
-            },
+            "PayloadContent": {domain: {"Forced": [{"mcx_preference_settings": settings}]}},
         }
 
         self.payload_content.append(payload)
@@ -232,9 +227,7 @@ class Payload(BaseModel):
             logger.warning(f"Error opening plist file {preferences_file}: {e}")
             return {}
 
-    def _save_plist(
-        self, preferences_file: Path, settings_dict: dict[str, Any]
-    ) -> None:
+    def _save_plist(self, preferences_file: Path, settings_dict: dict[str, Any]) -> None:
         """
         Save the settings dictionary to a plist file.
 

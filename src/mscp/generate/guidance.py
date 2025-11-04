@@ -81,7 +81,7 @@ def generate_guidance(args: argparse.Namespace) -> None:
     md_output_file: Path = Path(build_path, f"{baseline_name}.md")
     spreadsheet_output_file: Path = Path(build_path, f"{baseline_name}.xlsx")
 
-    baseline: Baseline = Baseline.from_yaml(
+    baseline: Baseline = Baseline.from_file(
         args.baseline, args.os_name, args.os_version, custom
     )
 
@@ -201,4 +201,8 @@ def generate_guidance(args: argparse.Namespace) -> None:
         current_version_data,
         show_all_tags,
         custom,
+    )
+
+    print(
+        f"MSCP DOCUMENT GENERATION COMPLETE! All of the documents can be found in this folder: /{build_path}/"
     )

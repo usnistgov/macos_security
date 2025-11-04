@@ -7,12 +7,12 @@ discussion: |
 references:
   nist:
     cce:
+      macos_26:
+        - CCE-95383-6
       macos_15:
         - CCE-94376-1
       macos_14:
         - CCE-92972-9
-      macos_13:
-        - CCE-91962-1
     800-53r5:
       - CM-7
       - CM-7(1)
@@ -25,26 +25,32 @@ references:
     srg:
       - SRG-OS-000095-GPOS-00049
     disa_stig:
+      macos_26:
+        - APPL-26-002004
       macos_15:
         - APPL-15-002004
       macos_14:
         - APPL-14-002004
-      macos_13:
-        - APPL-13-002004
     cmmc:
       - CM.L2-3.4.6
       - CM.L2-3.4.7
 platforms:
   macOS:
+    '26.0':
+      benchmarks:
+        - name: disa_stig
+          severity: medium
+      enforcement_info:
+        fix:
+          shell: |-
+            /usr/bin/defaults write /var/db/locationd/Library/Preferences/ByHost/com.apple.locationd LocationServicesEnabled -bool false;
+            pid=$(/bin/launchctl print system | /usr/bin/awk '/\tcom.apple.locationd/ {print $1}')
+            kill -9 $pid
     '15.0':
       benchmarks:
         - name: disa_stig
           severity: medium
     '14.0':
-      benchmarks:
-        - name: disa_stig
-          severity: medium
-    '13.0':
       benchmarks:
         - name: disa_stig
           severity: medium

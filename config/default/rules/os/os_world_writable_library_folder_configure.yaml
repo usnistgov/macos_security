@@ -7,42 +7,53 @@ discussion: |
 references:
   nist:
     cce:
+      macos_26:
+        - CCE-95332-3
       macos_15:
         - CCE-94326-6
       macos_14:
         - CCE-92923-2
-      macos_13:
-        - CCE-91911-8
   cis:
     benchmark:
+      macos_26:
+        - 5.1.7 (level 2)
       macos_15:
         - 5.1.7 (level 2)
       macos_14:
-        - 5.1.7 (level 2)
-      macos_13:
         - 5.1.7 (level 2)
     controls_v8:
       - 3.3
 platforms:
   macOS:
+    '26.0':
+      benchmarks:
+        - name: cis_lvl2
     '15.0':
       benchmarks:
         - name: cis_lvl2
     '14.0':
       benchmarks:
         - name: cis_lvl2
-    '13.0':
-      benchmarks:
-        - name: cis_lvl2
+      enforcement_info:
+        check:
+          shell: /usr/bin/find /System/Volumes/Data/Library -type d -perm -2 -ls 2>&1 | /usr/bin/grep -v Caches | /usr/bin/grep -v /Preferences/Audio/Data | /usr/bin/wc -l | /usr/bin/xargs
+          result:
+            integer: 0
+        fix:
+          shell: |-
+            IFS=$'\n'
+            for libPermissions in $( /usr/bin/find /System/Volumes/Data/Library -type d -perm -2 2>&1 | /usr/bin/grep -v Caches | /usr/bin/grep -v /Preferences/Audio/Data ); do
+              /bin/chmod -R o-w "$libPermissions"
+            done
     enforcement_info:
       check:
-        shell: /usr/bin/find /System/Volumes/Data/Library -type d -perm -2 -ls 2>&1 | /usr/bin/grep -v Caches | /usr/bin/grep -v /Preferences/Audio/Data | /usr/bin/wc -l | /usr/bin/xargs
+        shell: /usr/bin/find /Library -type d -perm -002 ! -perm -1000 ! -xattrname com.apple.rootless 2>/dev/null | /usr/bin/wc -l | /usr/bin/xargs
         result:
           integer: 0
       fix:
         shell: |-
           IFS=$'\n'
-          for libPermissions in $( /usr/bin/find /System/Volumes/Data/Library -type d -perm -2 2>&1 | /usr/bin/grep -v Caches | /usr/bin/grep -v /Preferences/Audio/Data ); do
+          for libPermissions in $(/usr/bin/find /Library -type d -perm -002 ! -perm -1000 ! -xattrname com.apple.rootless 2>/dev/null); do
             /bin/chmod -R o-w "$libPermissions"
           done
 tags:

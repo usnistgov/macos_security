@@ -7,8 +7,8 @@ discussion: |
 references:
   nist:
     cce:
-      ios_18:
-        - CCE-94551-9
+      ios_26:
+        - CCE-95526-0
       ios_17:
         - CCE-93499-2
     800-53r5:
@@ -16,19 +16,10 @@ references:
       - CM-7
       - CM-7(1)
       - SC-7(10)
-  bsi:
-    indigo:
-      ios_17:
-        - ANNEX K
 platforms:
   iOS:
-    '18.0':
+    '26.0':
       supervised: false
-      benchmarks:
-        - name: indigo_base
-          severity: high
-        - name: indigo_high
-          severity: high
     '17.0':
       supervised: false
       benchmarks:

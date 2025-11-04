@@ -18,15 +18,11 @@ references:
         - CCE-94293-8
       macos_14:
         - CCE-92888-7
-      macos_13:
-        - CCE-91877-1
   cis:
     benchmark:
       macos_15:
         - 6.1.1 (level 1)
       macos_14:
-        - 6.1.1 (level 1)
-      macos_13:
         - 6.1.1 (level 1)
     controls_v8:
       - 2.3
@@ -37,10 +33,6 @@ platforms:
         - name: cis_lvl1
         - name: cis_lvl2
     '14.0':
-      benchmarks:
-        - name: cis_lvl1
-        - name: cis_lvl2
-    '13.0':
       benchmarks:
         - name: cis_lvl1
         - name: cis_lvl2

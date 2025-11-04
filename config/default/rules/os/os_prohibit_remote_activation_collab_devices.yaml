@@ -17,12 +17,12 @@ discussion: |-
 references:
   nist:
     cce:
+      macos_26:
+        - CCE-95268-9
       macos_15:
         - CCE-94265-6
       macos_14:
         - CCE-92861-4
-      macos_13:
-        - CCE-91856-5
     800-53r5:
       - SC-15
     800-171r3:
@@ -32,9 +32,9 @@ references:
       - SC.L2-3.13.12
 platforms:
   macOS:
+    '26.0': {}
     '15.0': {}
     '14.0': {}
-    '13.0': {}
     enforcement_info:
       fix:
         additional_info: The technology partially meets this requirement. An appropriate mitigation for the system must be implemented for full compliance.

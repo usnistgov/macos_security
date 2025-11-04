@@ -4,23 +4,40 @@ discussion: Apple Intelligence features such as Apple ImageWand that use off dev
 references:
   nist:
     cce:
+      ios_26:
+        - CCE-95483-4
       ios_18:
         - CCE-94519-6
-      visionos_2:
-        - CCE-94584-0
+      visionos_26:
+        - CCE-95580-7
+    800-53r5:
+      - CM-7
+  disa:
+    cci:
+      - CCI-000366
+    disa_stig:
+      ios_18:
+        - AIOS-18-017200
+    sfr:
+      - 'FMT_MOF_EXT.1.2 #47'
 platforms:
   iOS:
+    '26.0': {}
     '18.0':
       benchmarks:
+        - name: ios_stig
         - name: indigo_high
     introduced: '18.0'
   visionOS:
-    '2.0': {}
+    '26.0': {}
     introduced: '2.4'
 tags:
   - 800-53r5_low
   - 800-53r5_moderate
   - 800-53r5_high
+  - cnssi-1253_moderate
+  - cnssi-1253_low
+  - cnssi-1253_high
 mobileconfig_info:
   - PayloadType: com.apple.applicationaccess
     PayloadContent:

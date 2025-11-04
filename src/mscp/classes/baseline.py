@@ -7,44 +7,12 @@ from typing import Any
 
 # Additional python modules
 import pandas as pd
-from pydantic import BaseModel
+from ruamel.yaml.comments import CommentedMap
 
 # Local python modules
-from ..common_utils import config, create_yaml, open_file
-from ..common_utils.logger_instance import logger
+from ..common_utils import config, create_file, logger, open_file
+from .basemodel import BaseModelWithAccessors
 from .macsecurityrule import Macsecurityrule
-
-
-class BaseModelWithAccessors(BaseModel):
-    """
-    A base class that provides `get`, `__getitem__`, and `__setitem__` methods
-    for all derived classes.
-    """
-
-    def get(self, attr: str, default: Any = None) -> Any:
-        """
-        Get the value of an attribute, or return the default if it doesn't exist.
-        """
-        return getattr(self, attr, default)
-
-    def __getitem__(self, key: str) -> Any:
-        """
-        Allow dictionary-like access to attributes.
-        """
-        if key in self.__class__.model_fields:
-            return getattr(self, key)
-        raise KeyError(f"{key} is not a valid attribute of {self.__class__.__name__}")
-
-    def __setitem__(self, key: str, value: Any) -> None:
-        """
-        Allow dictionary-like setting of attributes.
-        """
-        if key in self.__class__.model_fields:
-            setattr(self, key, value)
-        else:
-            raise KeyError(
-                f"{key} is not a valid attribute of {self.__class__.__name__}"
-            )
 
 
 class Author(BaseModelWithAccessors):
@@ -67,7 +35,7 @@ class Baseline(BaseModelWithAccessors):
     parent_values: str = ""
 
     @classmethod
-    def from_yaml(
+    def from_file(
         cls, file_path: Path, os_name: str, os_version: int, custom: bool = False
     ) -> "Baseline":
         """
@@ -85,18 +53,12 @@ class Baseline(BaseModelWithAccessors):
 
         logger.info(f"Attempting to open Baseline file: {file_path}")
 
-        section_dirs: list[Path] = []
+        section_dirs: list[Path] = [
+            Path(config["custom"]["sections_dir"]),
+            Path(config["defaults"]["sections_dir"]),
+        ]
 
-        # section_dir: Path = Path(config["defaults"]["sections_dir"])
-        if custom:
-            section_dirs = [
-                Path(config["custom"]["sections_dir"]),
-                Path(config["defaults"]["sections_dir"]),
-            ]
-        else:
-            section_dirs = [Path(config["defaults"]["sections_dir"])]
-
-        baseline_data: dict[str, Any] = open_file(file_path)
+        baseline_data: CommentedMap = open_file(file_path) or CommentedMap()
         authors = [Author(**author) for author in baseline_data.get("authors", [])]
         baseline_tag = file_path.stem.replace("_test", "")
 
@@ -120,7 +82,7 @@ class Baseline(BaseModelWithAccessors):
                 logger.warning("Rule file not found for rule: {}", prof["section"])
                 continue
 
-            section_data: dict[str, str] = open_file(Path(section_file))
+            section_data: CommentedMap = open_file(Path(section_file)) or CommentedMap()
 
             logger.debug(f"Section Data: {section_data}")
 
@@ -194,18 +156,14 @@ class Baseline(BaseModelWithAccessors):
 
         description: str = ""
         os_type = os_type.replace("os", "OS")
-        custom_output_file: Path = Path(
-            config["custom"]["baseline_dir"], output_file.name
-        )
+        custom_output_file: Path = Path(config["custom"]["baseline_dir"], output_file.name)
 
         if baseline_dict is None:
             baseline_dict["title"] = (
                 f"{os_type} {os_version}: Security Configuration - {full_title} {baseline_name}"
             )
 
-            description: str = (
-                f"This guide describes the actions to take when securing a {os_type} {os_version} system against the {full_title} {baseline_name} security baseline.\n"
-            )
+            description = f"This guide describes the actions to take when securing a {os_type} {os_version} system against the {full_title} {baseline_name} security baseline.\n"
 
             if benchmark == "recommended":
                 description += "\nInformation System Security Officers and benchmark creators can use this catalog of settings in order to assist them in security benchmark creation. This list is a catalog, not a checklist or benchmark, and satisfaction of every item is not likely to be possible or sensible in many operational scenarios."
@@ -223,11 +181,9 @@ class Baseline(BaseModelWithAccessors):
         section_descriptions = {}
 
         for yaml_file in Path(config["defaults"]["sections_dir"]).glob("*.y*ml"):
-            section_data: dict = open_file(yaml_file)
+            section_data: dict[str, str] = open_file(yaml_file)
 
-            section_descriptions[section_data.get("name")] = section_data.get(
-                "description", ""
-            )
+            section_descriptions[section_data.get("name")] = section_data.get("description", "")
 
         for rule in rules:
             matched: bool = False
@@ -241,16 +197,12 @@ class Baseline(BaseModelWithAccessors):
                 grouped_rules[rule.section].append(rule)
 
         for section in grouped_rules:
-            grouped_rules[section] = sorted(
-                grouped_rules[section], key=lambda r: r.rule_id
-            )
+            grouped_rules[section] = sorted(grouped_rules[section], key=lambda r: r.rule_id)
 
         profiles = [
             Profile(
                 section=section,
-                description=section_descriptions.get(
-                    section, "No description available"
-                ),
+                description=section_descriptions.get(section, "No description available"),
                 rules=grouped_rules[section],
             )
             for section in grouped_rules
@@ -264,8 +216,8 @@ class Baseline(BaseModelWithAccessors):
             parent_values=benchmark,
         )
 
-        baseline.to_yaml(output_path=output_file)
-        baseline.to_yaml(output_path=custom_output_file)
+        baseline.to_file(output_path=output_file)
+        baseline.to_file(output_path=custom_output_file)
 
     def to_dataframe(self) -> pd.DataFrame:
         """
@@ -288,7 +240,7 @@ class Baseline(BaseModelWithAccessors):
 
         return pd.DataFrame(rules)
 
-    def to_yaml(self, output_path: Path) -> None:
+    def to_file(self, output_path: Path) -> None:
         """
         Serializes the baseline model to a YAML file with a specific order for keys and profiles.
 
@@ -354,7 +306,7 @@ class Baseline(BaseModelWithAccessors):
                 else:
                     ordered_data[key] = serialized_data[key]
 
-        create_yaml(output_path, ordered_data)
+        create_file(output_path, ordered_data)
         logger.success("Created baseline yaml: {}", output_path)
 
     @classmethod
@@ -381,7 +333,7 @@ class Baseline(BaseModelWithAccessors):
 
         for yaml_file in baseline_folder.glob("*.yaml"):
             logger.debug(f"Loading YAML file: {yaml_file}")
-            baseline = cls.from_yaml(yaml_file, os_name, os_version, custom)
+            baseline = cls.from_file(yaml_file, os_name, os_version, custom)
             baselines.append(baseline)
 
         logger.success("Loaded {} baselines", len(baselines))
