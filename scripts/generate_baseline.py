@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#! /usr/bin/env python3
 # filename: scripts/generate_baseline.py
 
 # Standard python modules
@@ -13,11 +13,21 @@ from src.mscp.cli import parse_cli
 from src.mscp.common_utils.logger_instance import logger
 from src.mscp.common_utils.logging_config import set_logger
 
+logger.enable("mscp")
+
+GLOBAL_ARGS = {"--os_name", "--os_version", "-v", "-q"}
+
 if __name__ == "__main__":
-    logger.enable("mscp")
     logger = set_logger()
     logger.info("=== Logging Initialized ===")
     logger.info("LOGGING LEVEL: INFO")
 
-    sys.argv.insert(1, Path(__file__).stem.split("_")[1])
-    sys.exit(parse_cli())
+    insert_at: int = 1
+    while insert_at < len(sys.argv):
+        if sys.argv[insert_at] in GLOBAL_ARGS:
+            insert_at += 2
+        else:
+            break
+
+    sys.argv.insert(insert_at, Path(__file__).stem.split("_")[1])
+    sys.exit(parse_cli(Path(__file__).name))

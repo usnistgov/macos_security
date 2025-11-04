@@ -7,7 +7,7 @@ import sys
 from collections.abc import Mapping
 from itertools import groupby
 from pathlib import Path
-from typing import Any, Sequence, Dict, List
+from typing import Any, Dict, List, Sequence
 
 # Additional python modules
 # import markdown2
@@ -15,7 +15,7 @@ from jinja2 import Environment, FileSystemLoader, Template
 
 # Local python modules
 from ...classes import Baseline, Macsecurityrule
-from ...common_utils import config, logger, open_file, run_command
+from ...common_utils import config, logger, mscp_data, open_file, run_command
 
 
 def group_ulify(elements: list[str]) -> str:
@@ -179,120 +179,150 @@ def replace_include_with_file_content(text: str) -> str:
 
 
 def asciidoc_to_markdown(value: str) -> str:
+    if value is None:
+        return ""
+
     lines = value.splitlines()
     result = []
     i = 0
 
     link_pattern = re.compile(r"link:(\S+)\[(.*?)\]")
 
-    def link_replacer(match):
-        url, text = match.group(1), match.group(2)
-        return f"[{text if text else url}]({url})"
+    def replace_links(text: str) -> str:
+        def _replacer(match):
+            url, text = match.group(1), match.group(2)
+            return f"[{text if text else url}]({url})"
+
+        return link_pattern.sub(_replacer, text)
+
+    # ---------- Handlers ----------
+
+    def header(line: str):
+        m = re.match(r"^(=+)\s+(.+)", line)
+        if not m:
+            return None
+        level, content = m.groups()
+        return [f"{'#' * len(level)} {content}"]
+
+    def note(line: str):
+        if not line.startswith("NOTE:"):
+            return None
+        return [f"> **NOTE:** {replace_links(line[5:].strip())}"]
+
+    def important_block(i: int):
+        if not (
+            lines[i].strip() == "[IMPORTANT]"
+            and i + 1 < len(lines)
+            and lines[i + 1].strip() == "===="
+        ):
+            return None
+        j = i + 2
+        content = []
+        while j < len(lines) and lines[j].strip() != "====":
+            content.append(lines[j].strip())
+            j += 1
+        return j + 1, ["> **IMPORTANT:** " + " ".join(content)]
+
+    def source_block(i: int):
+        if not lines[i].startswith("[source"):
+            return None
+        m = re.match(r"\[source\s*,?\s*([a-zA-Z0-9_+-]+)?", lines[i])
+        language = m.group(1) if m else ""
+        if i + 1 >= len(lines) or lines[i + 1].strip() not in ("----", "...."):
+            return None
+        fence = lines[i + 1].strip()
+        j = i + 2
+        code = []
+        while j < len(lines) and lines[j].strip() != fence:
+            code.append(lines[j])
+            j += 1
+        return j + 1, [f"```{language}".strip(), *code, "```"]
+
+    def code_block(i: int):
+        if lines[i].strip() not in ("----", "...."):
+            return None
+        fence = lines[i].strip()
+        j = i + 1
+        code = []
+        while j < len(lines) and lines[j].strip() != fence:
+            code.append(lines[j])
+            j += 1
+        return j + 1, ["```", *code, "```"]
+
+    def table(i: int):
+        if lines[i].strip() != "|===":
+            return None
+        j = i + 1
+        rows = []
+        while j < len(lines) and lines[j].strip() != "|===":
+            line = lines[j].strip()
+            if line.startswith("|"):
+                cells = [cell.strip() for cell in line.lstrip("|").split("|")]
+                rows.append(cells)
+            j += 1
+        if not rows:
+            return j + 1, []
+        header = "| " + " | ".join(rows[0]) + " |"
+        separator = "| " + " | ".join(["---"] * len(rows[0])) + " |"
+        body = ["| " + " | ".join(row) + " |" for row in rows[1:]]
+        return j + 1, [header, separator, *body]
+
+    def skip_attrs(line: str):
+        if re.match(
+            r"^\[(cols|width|options|grid|frame|stripes|halign|valign|%|role|.*)=.*\]$",
+            line,
+        ):
+            return []
+        return None
+
+    def block_title(line: str):
+        m = re.match(r"^\.(?!\d+\s)(.+)$", line)
+        if not m:
+            return None
+        return [f"**{m.group(1).strip()}**"]
+
+    def list_item(line: str):
+        if line.strip().startswith("* "):
+            return ["- " + line.strip()[2:]]
+        if re.match(r"^\.\s+.+", line):
+            return ["1. " + line.strip()[2:]]
+        if re.match(r"^\d+\.\s+.+", line):
+            return [line.strip()]
+        return None
+
+    def fallback(line: str):
+        return [replace_links(line.strip())]
+
+    # ---------- Main loop ----------
 
     while i < len(lines):
         line = lines[i].rstrip()
 
-        # Header: == -> ##, === -> ###, etc.
-        if re.match(r"^(=+)\s+.+", line):
-            level, content = re.match(r"^(=+)\s+(.+)", line).groups()
-            result.append(f"{'#' * len(level)} {content}")
-
-        # NOTE block
-        elif line.startswith("NOTE:"):
-            result.append(
-                f"> **NOTE:** {link_pattern.sub(link_replacer, line[5:].strip())}"
-            )
-
-        # [IMPORTANT] block
-        elif (
-            line.strip() == "[IMPORTANT]"
-            and i + 1 < len(lines)
-            and lines[i + 1].strip() == "===="
-        ):
-            i += 2
-            important_lines = []
-            while i < len(lines) and lines[i].strip() != "====":
-                important_lines.append(lines[i].strip())
-                i += 1
-            result.append("> **IMPORTANT:** " + " ".join(important_lines))
-
-        # [source] blocks
-        elif line.startswith("[source"):
-            language = ""
-            # Extract just the language before the first comma
-            lang_match = re.match(r"\[source\s*,?\s*([a-zA-Z0-9_+-]+)?", line)
-            if lang_match:
-                language = lang_match.group(1) or ""
-
-            if i + 1 < len(lines) and lines[i + 1].strip() in ("----", "...."):
-                fence = lines[i + 1].strip()
-                i += 2
-                code_lines = []
-                while i < len(lines) and lines[i].strip() != fence:
-                    code_lines.append(lines[i])
-                    i += 1
-
-                result.append(f"```{language}".strip())
-                result.extend(code_lines)
-                result.append("```")
-
-        # Code block without [source]
-        elif line.strip() in ("----", "...."):
-            fence = line.strip()
+        # Single-line handlers
+        out = (
+            header(line)
+            or note(line)
+            or skip_attrs(line)
+            or block_title(line)
+            or list_item(line)
+        )
+        if out is not None:
+            result.extend(out)
             i += 1
-            code_lines = []
-            while i < len(lines) and lines[i].strip() != fence:
-                code_lines.append(lines[i])
-                i += 1
-            result.append("```")
-            result.extend(code_lines)
-            result.append("```")
+            continue
 
-        # Table with |===
-        elif line.strip() == "|===":
-            i += 1
-            table_rows = []
-            while i < len(lines) and lines[i].strip() != "|===":
-                table_line = lines[i].strip()
-                if table_line.startswith("|"):
-                    cells = [cell.strip() for cell in table_line.lstrip("|").split("|")]
-                    table_rows.append(cells)
-                i += 1
-
-            if table_rows:
-                header = "| " + " | ".join(table_rows[0]) + " |"
-                separator = "| " + " | ".join(["---"] * len(table_rows[0])) + " |"
-                result.append(header)
-                result.append(separator)
-                for row in table_rows[1:]:
-                    result.append("| " + " | ".join(row) + " |")
-
-        # Skip AsciiDoc block attributes like [cols=...], [width=...], [options=...], etc.
-        elif re.match(
-            r"^\[(cols|width|options|grid|frame|stripes|halign|valign|%|role|.*)=.*\]$",
-            line,
-        ):
-            pass
-
-        # Handle AsciiDoc block titles like `.Some Title`
-        elif re.match(r"^\.(?!\d+\s)(.+)$", line):
-            block_title = re.match(r"^\.(.+)$", line).group(1).strip()
-            result.append(f"**{block_title}**")
-
-        # Unordered List (* -> -)
-        elif line.strip().startswith("* "):
-            result.append("- " + line.strip()[2:])
-
-        # Ordered List (. or 1. 2. etc.)
-        elif re.match(r"^\.\s+.+", line):
-            result.append("1. " + line.strip()[2:])
-        elif re.match(r"^\d+\.\s+.+", line):
-            result.append(line.strip())
-
+        # Multi-line handlers
+        for block in (important_block, source_block, code_block, table):
+            block_out = block(i)
+            if block_out:
+                consumed, out = block_out
+                result.extend(out)
+                i = consumed
+                break
         else:
-            result.append(link_pattern.sub(link_replacer, line.strip()))
-
-        i += 1
+            # Fallback
+            result.extend(fallback(line))
+            i += 1
 
     return "\n".join(result)
 
@@ -381,6 +411,7 @@ def render_template(
     styles_dir: Path = Path(misc_dir).absolute()
     images_dir: Path = Path(logo_dir).absolute()
     acronyms_file: Path = Path(config["includes_dir"], "acronyms.yaml").absolute()
+    os_version_str: str = str(version_info.get("os_version", None))
 
     env.filters["group_ulify"] = group_ulify
     env.filters["include_replace"] = replace_include_with_file_content
@@ -408,7 +439,7 @@ def render_template(
     if "Tailored from" in baseline.title:
         html_subtitle: str = html_subtitle.split("(")[0]
         html_subtitle2: str = extract_from_title(baseline.title)
-        document_subtitle2: str = f"{document_subtitle2} {html_subtitle2}"
+        document_subtitle2 = f"{document_subtitle2} {html_subtitle2}"
 
     rendered_output = template.render(
         baseline=baseline_dict,
@@ -422,13 +453,17 @@ def render_template(
         pdf_theme=pdf_theme,
         show_all_tags=show_all_tags,
         os_name=os_name.strip().lower(),
-        os_version=str(version_info.get("os_version", None)),
+        os_version=os_version_str,
         version=version_info.get("compliance_version", None),
         release_date=version_info.get("date", None),
         custom=custom,
         format=output_format,
         acronyms=acronyms_data.get("acronyms", []),
         terminology=acronyms_data.get("terminology", []),
+        additional_links=mscp_data.get("additional_links", {})
+        .get("platforms", {})
+        .get(os_name, {})
+        .get(os_version_str, []),
     )
 
     output_file.write_text(rendered_output)

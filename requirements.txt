@@ -7,3 +7,4 @@ pandas==2.2.3
 pydantic==2.10.6
 pyyaml==6.0.2
 jsonschema==4.23.0
+ruamel.yaml==0.18.15

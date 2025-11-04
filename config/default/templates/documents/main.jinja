@@ -2,11 +2,11 @@
 {% include "adoc/header.adoc.jinja" %}
 {% elif format == "markdown" %}
 {% include "markdown/header.md.jinja" %}
-{% endif %}
+{% endif +%}
 
-{% include "foreword.jinja" %}
+{%+ include "foreword.jinja" +%}
 
-{% include "scope.jinja" %}
+{%+ include "scope.jinja" +%}
 
 {% include "authors.jinja" %}
 
@@ -18,6 +18,6 @@
 {% include "markdown/additional_docs.md.jinja" %}
 {% endif %}
 
-{% for profile in baseline.profile +%}
+{% for profile in baseline.profile %}
 {% include "section.jinja" %}
 {% endfor %}

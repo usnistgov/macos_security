@@ -5,16 +5,17 @@ from pathlib import Path
 from typing import Any
 from uuid import uuid4
 
-from pydantic import BaseModel, Field
+from pydantic import Field
 
 # Local python modules
 from ..common_utils import create_file, open_file
 from ..common_utils.logger_instance import logger
+from .basemodel import BaseModelWithAccessors
 
 # Additional python modules
 
 
-class Payload(BaseModel):
+class Payload(BaseModelWithAccessors):
     """
     A class to represent a configuration profile payload.
 
@@ -121,7 +122,7 @@ class Payload(BaseModel):
             "PayloadVersion": self.payload_version,
             "PayloadUUID": uuid,
             "PayloadType": "com.apple.ManagedClient.preferences",
-            "PayloadIdentifier": f"mscp.{domain}.{uuid}",
+            "PayloadIdentifier": f"alacarte.macOS.{baseline_name}.{uuid}",
             "PayloadContent": {
                 domain: {"Forced": [{"mcx_preference_settings": settings}]}
             },

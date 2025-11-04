@@ -88,7 +88,9 @@ def generate_guidance(args: argparse.Namespace) -> None:
         build_path, f"{baseline_name}_{args.language}.xlsx"
     )
 
-    baseline: Baseline = Baseline.from_yaml(args.baseline, args.language, custom)
+    baseline: Baseline = Baseline.from_file(
+        args.baseline, args.os_name, args.os_version, custom
+    )
 
     current_version_data: dict[str, Any] = get_version_data(
         baseline.platform["os"], baseline.platform["version"], mscp_data
@@ -241,7 +243,6 @@ def generate_guidance(args: argparse.Namespace) -> None:
         current_version_data,
         show_all_tags,
         custom,
-        language=args.language,
     )
 
     print(

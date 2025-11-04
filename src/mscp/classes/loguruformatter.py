@@ -1,16 +1,12 @@
 # /mscp/classes/loguruformatter.py
 
-from pydantic import BaseModel
+from .basemodel import BaseModelWithAccessors
 
 
-class LoguruFormatter(BaseModel):
+class LoguruFormatter(BaseModelWithAccessors):
     padding: int = 0
-    log_format: str = (
-        "<green>{time:YYYY-MM-DD HH:mm:ss}</green> | <level>{level}</level> | <level>{message}</level>"
-    )
-    log_format_debug: str = (
-        "<green>{time:YYYY-MM-DD HH:mm:ss}</green> | {name}:{function}:{line}{extra[padding]} | <level>{level}</level> | <level>{message}</level>\n{exception}"
-    )
+    log_format: str = "<green>{time:YYYY-MM-DD HH:mm:ss}</green> | <level>{level}</level> | <level>{message}</level>"
+    log_format_debug: str = "<green>{time:YYYY-MM-DD HH:mm:ss}</green> | {name}:{function}:{line}{extra[padding]} | <level>{level}</level> | <level>{message}</level>\n{exception}"
 
     def format_log(self, record) -> str:
         return self.log_format

@@ -1,8 +1,10 @@
 # common_utils/__init__.py
 
+from .combine_yaml import deep_merge
 from .config import config
 from .customization import collect_overrides
 from .error_handling import (
+    COMMAND_ERRORS,
     COMMON_ERRORS,
     CSV_ERRORS,
     JSON_ERRORS,
@@ -71,6 +73,8 @@ __all__ = [
     "PLIST_ERRORS",
     "CSV_ERRORS",
     "COMMON_ERRORS",
+    "COMMAND_ERRORS",
+    "deep_merge",
     "supported_languages",
     "configure_localization_for_yaml",
     "collect_overrides",

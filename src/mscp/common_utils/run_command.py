@@ -4,50 +4,52 @@
 import shlex
 import subprocess
 
-# Local python modules
+from .error_handling import COMMAND_ERRORS, log_expected_errors
 from .logger_instance import logger
 
+# Local python modules
 
-def run_command(
-    command: str, capture_output: bool = True, text: bool = True, check: bool = True
-) -> tuple[str | None, str | None]:
+
+def _command_fallback(e: Exception) -> tuple[None, str]:
+    """
+    Build a structured error return value for run_command().
+    Suppresses logging for 'which asciidoctor*' checks.
+    """
+    cmd = getattr(e, "cmd", None)
+    stderr = getattr(e, "stderr", None)
+
+    if isinstance(cmd, (list, tuple)):
+        cmd_str = " ".join(cmd)
+    else:
+        cmd_str = str(cmd) if cmd else ""
+
+    if cmd_str.startswith("which asciidoctor"):
+        logger.debug("Expected asciidoctor check failed: %s", stderr or str(e))
+        return None, f"Command failed (expected check): {stderr or str(e)}"
+
+    logger.error("Command '%s' failed: %s", cmd_str or "<unknown>", stderr or str(e))
+    return None, f"Command failed: {stderr or str(e)}"
+
+
+@log_expected_errors(
+    COMMAND_ERRORS,
+    suppress=True,
+    fallback=_command_fallback,
+)
+def run_command(command: str) -> tuple[str | None, str | None]:
     """
     Executes a shell command and returns its output or an error message.
-        result = subprocess.run(args, capture_output=True, text=True, check=True)
-    Parameters:
-        command (str): The command to be executed.
 
     Returns:
-        Tuple[Optional[str], Optional[str]]: A tuple containing the command output if successful, or an error message if the command fails.
+        (stdout, None) on success
+        (None, "Command failed: <details>") on failure
     """
     args = shlex.split(command)
-    try:
-        logger.info("Executing command: {}", command)
+    logger.info("Executing command: {}", command)
 
-        result = subprocess.run(
-            args, capture_output=capture_output, text=text, check=check
-        )
+    result = subprocess.run(args, capture_output=True, text=True, check=True)
 
-        logger.success("Command executed successfully: {}", command)
-        if text:
-            logger.debug("Command output: {}", result.stdout.strip())
+    logger.success("Command executed successfully: {}", command)
+    logger.debug("Command output: {}", result.stdout.strip())
 
-            return result.stdout.strip(), None
-        else:
-            return None, None
-
-    except subprocess.CalledProcessError as e:
-        logger.error(
-            "Command '{}' failed with return code {}: {}",
-            command,
-            e.returncode,
-            e.stderr,
-        )
-
-        return None, f"Command failed: {e.stderr}"
-
-    except OSError as e:
-        logger.error("OS error when running command: {}", command)
-        logger.error("OS error when running command: {}, Error: {}", command, str(e))
-
-        return None, f"OS error occurred: {str(e)}"
+    return result.stdout.strip(), None

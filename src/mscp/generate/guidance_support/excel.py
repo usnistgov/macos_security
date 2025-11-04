@@ -1,14 +1,14 @@
 # mscp/generate/excel.py
 
 # Standard python modules
-from pathlib import Path
 import json
+from pathlib import Path
 
 # Additional python modules
 import pandas as pd
 from openpyxl.styles import Alignment, Font
-from openpyxl.worksheet.table import Table, TableStyleInfo
 from openpyxl.utils import get_column_letter
+from openpyxl.worksheet.table import Table, TableStyleInfo
 
 from ...classes import Baseline
 from ...common_utils.logger_instance import logger
@@ -87,12 +87,12 @@ def auto_fit_columns(
                     if cell.alignment is None or not cell.alignment.wrapText:
                         # Keep other alignment attributes if present
                         cell.alignment = Alignment(
-                            horizontal=cell.alignment.horizontal
-                            if cell.alignment
-                            else None,
-                            vertical=cell.alignment.vertical
-                            if cell.alignment
-                            else None,
+                            horizontal=(
+                                cell.alignment.horizontal if cell.alignment else None
+                            ),
+                            vertical=(
+                                cell.alignment.vertical if cell.alignment else None
+                            ),
                             wrapText=True,
                         )
 
@@ -228,6 +228,7 @@ def expand_dicts_and_format_lists(
     return out
 
 
+# TODO: Refactor to use new YAML format for rules
 def generate_excel(file_out: Path, baseline: Baseline) -> None:
     """
     Generates an Excel file from the given baseline data.

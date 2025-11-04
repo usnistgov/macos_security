@@ -7,6 +7,8 @@ discussion: |
 references:
   nist:
     cce:
+      ios_26:
+        - CCE-95463-6
       ios_18:
         - CCE-94525-3
       ios_17:
@@ -17,6 +19,8 @@ references:
         - ANNEX D (Section 5.6.1 - Mail)
 platforms:
   iOS:
+    '26.0':
+      supervised: false
     '18.0':
       supervised: false
       benchmarks:

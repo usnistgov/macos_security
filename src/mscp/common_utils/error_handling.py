@@ -3,12 +3,17 @@
 import csv
 import json
 import plistlib
+import subprocess
 from collections.abc import Callable, Iterable
 from functools import wraps
 from typing import Any
 
 # Additional python modules
-import yaml
+from ruamel.yaml import YAMLError
+from ruamel.yaml.constructor import ConstructorError
+from ruamel.yaml.parser import ParserError
+from ruamel.yaml.representer import RepresenterError
+from ruamel.yaml.scanner import ScannerError
 
 # Local python modules
 from .logger_instance import logger
@@ -20,13 +25,17 @@ COMMON_ERRORS = (
     IOError,
 )
 
-YAML_ERRORS = COMMON_ERRORS + (yaml.YAMLError,)
-
+YAML_ERRORS = COMMON_ERRORS + (
+    YAMLError,
+    ConstructorError,
+    ScannerError,
+    ParserError,
+    RepresenterError,
+)
 JSON_ERRORS = COMMON_ERRORS + (json.JSONDecodeError,)
-
 PLIST_ERRORS = COMMON_ERRORS + (plistlib.InvalidFileException,)
-
 CSV_ERRORS = COMMON_ERRORS + (csv.Error,)
+COMMAND_ERRORS = COMMON_ERRORS + (subprocess.CalledProcessError,)
 
 
 def handle_expected_errors(
@@ -35,12 +44,16 @@ def handle_expected_errors(
     *,
     suppress: bool = False,
     context: str = "",
+    fallback: Any = None,
 ) -> Any:
     try:
         return func()
     except tuple(expected_exceptions) as e:
-        logger.error(f"{context}Error: {e}")
-        if not suppress:
+        if suppress:
+            if callable(fallback):
+                return fallback(e)
+        else:
+            logger.error(f"{context}Error: {e}")
             raise
     except Exception:
         raise
@@ -51,6 +64,7 @@ def log_expected_errors(
     *,
     suppress: bool = False,
     context: str = "",
+    fallback: Any = None,
 ):
     def decorator(func: Callable):
         @wraps(func)
@@ -60,6 +74,7 @@ def log_expected_errors(
                 expected_exceptions,
                 suppress=suppress,
                 context=context,
+                fallback=fallback,
             )
 
         return wrapper
