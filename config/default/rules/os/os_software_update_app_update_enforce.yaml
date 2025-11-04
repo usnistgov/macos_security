@@ -10,7 +10,7 @@ references:
   cis:
     benchmark:
       macos_26:
-        - 1.5 (level 1)
+        - 1.4 (level 1)
     controls_v8:
       - 7.3
       - 7.4
