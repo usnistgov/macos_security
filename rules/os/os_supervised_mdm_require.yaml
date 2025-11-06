@@ -7,7 +7,7 @@ fix: |
   Enroll the iOS/iPadOS device in a supervised MDM.
 references:
   cce:
-    - CCE-95532-8
+    - N/A
   cci:
     - CCI-000366
     - CCI-000097
