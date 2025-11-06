@@ -1,6 +1,6 @@
-title: "macOS 26.0: Security Configuration - CIS Apple macOS 26.0 Tahoe v1.0.0 Benchmark (Level 1) - DRAFT"
+title: "macOS 26.0: Security Configuration - CIS Apple macOS 26.0 Tahoe v1.0.0 Benchmark (Level 1)"
 description: |
-  This guide describes the actions to take when securing a macOS 26.0 system against the CIS Apple macOS 26.0 Tahoe v1.0.0 Benchmark (Level 1) - DRAFT security baseline.
+  This guide describes the actions to take when securing a macOS 26.0 system against the CIS Apple macOS 26.0 Tahoe v1.0.0 Benchmark (Level 1) security baseline.
 authors: |
   *macOS Security Compliance Project*
 
