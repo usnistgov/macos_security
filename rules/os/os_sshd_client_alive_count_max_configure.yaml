@@ -21,22 +21,10 @@ fix: |
     /usr/bin/sed -i.bk "1s/.*/Include \/etc\/ssh\/sshd_config.d\/\*/" /etc/ssh/sshd_config
   fi
 
-  if /usr/bin/grep -qF 'clientalivecountmax' "${include_dir}01-mscp-sshd.conf" 2>/dev/null
-  then
-    temp_config=$(/usr/bin/mktemp)
-    /bin/chmod 644 "${temp_config}"
-    
-    /usr/bin/awk -v ODV="$ODV" '
-        /^clientalivecountmax [0-9]+$/ {
-            $0 = "clientalivecountmax " ODV
-        }
-        1
-    ' "${include_dir}01-mscp-sshd.conf" > "${temp_config}"
-    
-    /bin/mv -f "${temp_config}" "${include_dir}01-mscp-sshd.conf"
-  else
-    echo "clientalivecountmax $ODV" >> "${include_dir}01-mscp-sshd.conf"
-  fi
+  ssh_config=("ClientAliveCountMax $ODV")
+  ssh_setting=$(echo $ssh_config | /usr/bin/cut -d " " -f1)
+
+  /usr/bin/grep -qEi "^$ssh_setting" "${include_dir}01-mscp-ssh.conf" && /usr/bin/sed -i "" "s/^$ssh_setting.*/${ssh_config}/" "${include_dir}01-mscp-ssh.conf" || echo "$ssh_config" >> "${include_dir}01-mscp-ssh.conf"
   
   for file in $(ls ${include_dir}); do
     if [[ "$file" == "100-macos.conf" ]]; then
