@@ -26,7 +26,7 @@ fix: |
   ssh_config=("ClientAliveInterval $ODV")
   ssh_setting=$(echo $ssh_config | /usr/bin/cut -d " " -f1)
 
-  /usr/bin/grep -qEi "^$ssh_setting" "${include_dir}01-mscp-ssh.conf" && /usr/bin/sed -i "" "s/^$ssh_setting.*/${ssh_config}/" "${include_dir}01-mscp-ssh.conf" || echo "$ssh_config" >> "${include_dir}01-mscp-ssh.conf"
+  /usr/bin/grep -qEi "^$ssh_setting" "${include_dir}01-mscp-sshd.conf" && /usr/bin/sed -i "" "s/^$ssh_setting.*/${ssh_config}/" "${include_dir}01-mscp-sshd.conf" || echo "$ssh_config" >> "${include_dir}01-mscp-sshd.conf"
 
   for file in $(ls ${include_dir}); do
     if [[ "$file" == "100-macos.conf" ]]; then
