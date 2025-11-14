@@ -7,7 +7,7 @@ fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-    - CCE-95423-0
+    - N/A
   cci:
     - CCI-000097
     - CCI-000366
@@ -23,7 +23,8 @@ references:
   disa_stig:
     - N/A
   indigo:
-    - N/A
+    - ANNEX D (Section 5.4 - iCloud restrictions) 
+    - ANNEX K
   cis:
     benchmark:
       - 3.2.1.5 (level 1 - Institutionally-Owned Devices)
@@ -39,6 +40,7 @@ tags:
   - cis_lvl1_enterprise
   - cis_lvl2_enterprise
   - cisv8
+  - indigo_high
   - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high

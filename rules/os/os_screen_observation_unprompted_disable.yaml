@@ -7,15 +7,17 @@ fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-    - CCE-95520-3
+    - N/A
   800-53r5:
     - N/A
   indigo:
-    - N/A
+    - ANNEX K
 iOS:
   - "26.0"
 tags:
   - ios
+  - indigo_base
+  - indigo_high
 supervised: false
 mobileconfig: true
 mobileconfig_info:

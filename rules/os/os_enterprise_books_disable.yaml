@@ -6,7 +6,7 @@ check: " "
 fix: This is implemented by a Configuration Profile
 references:
   cce:
-    - CCE-95459-4
+    - N/A
   cci:
     - CCI-000366
     - CCI-002110
@@ -17,7 +17,7 @@ references:
   disa_stig:
     - N/A
   indigo:
-    - N/A
+    - ANNEX K
   cis:
     benchmark:
       - N/A
@@ -27,6 +27,8 @@ iOS:
   - "26.0"
 tags:
   - ios
+  - ios_stig
+  - indigo_high
 severity: "medium"
 supervised: false
 mobileconfig: true

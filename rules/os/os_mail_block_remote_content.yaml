@@ -7,15 +7,17 @@ fix: |
   This is implemented manually by the user.
 references:
   cce:
-    - CCE-95490-9
+    - N/A
   800-53r5:
     - N/A
   indigo:
-    - N/A
+    - ANNEX K
 iOS:
   - "26.0"
 tags:
   - manual
   - ios
+  - indigo_base
+  - indigo_high
 mobileconfig: false
 mobileconfig_info:

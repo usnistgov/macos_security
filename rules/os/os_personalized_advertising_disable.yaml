@@ -21,7 +21,7 @@ references:
   disa_stig:
   - N/A
   indigo:
-    - N/A
+    - ANNEX K
   cis:
     benchmark:
     - 2.2.1.5 (level 1 - End-User Owned Devices)
@@ -40,6 +40,7 @@ tags:
 - cis_lvl1_enterprise
 - cis_lvl2_enterprise
 - cisv8
+- indigo_high
 - cnssi-1253_moderate
 - cnssi-1253_low
 - cnssi-1253_high

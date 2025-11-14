@@ -7,15 +7,16 @@ fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-    - CCE-95436-2
+    - N/A
   800-53r5:
     - AC-17(02)
   indigo:
-    - N/A
+    - ANNEX K  
 iOS:
   - "26.0"
 tags:
   - ios
+  - indigo_high
   - 800-53r5_moderate
   - 800-53r5_high  
 supervised: false

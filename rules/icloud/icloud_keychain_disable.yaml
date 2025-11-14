@@ -23,7 +23,8 @@ references:
   disa_stig:
   - N/A
   indigo:
-    - N/A
+    - ANNEX D (Section 5.4 - iCloud restrictions)
+    - ANNEX K
   cis:
     benchmark:
     - 3.2.1.6 (level 1 - Institutionally-Owned Devices)
@@ -41,6 +42,8 @@ tags:
 - cis_lvl1_enterprise
 - cis_lvl2_enterprise
 - cisv8
+- indigo_base
+- indigo_high
 - cnssi-1253_moderate
 - cnssi-1253_low
 - cnssi-1253_high

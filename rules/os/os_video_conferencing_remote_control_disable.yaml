@@ -7,13 +7,13 @@ fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-    - CCE-95541-9
+    - N/A
   cci: 
     - N/A
   800-53r5:
     - N/A
   indigo:
-    - N/A
+    - ANNEX K
   sfr:
     - N/A
   disa_stig:
@@ -22,6 +22,8 @@ iOS:
   - "26.0"
 tags:
   - ios
+  - indigo_base
+  - indigo_high
 supervised: false
 mobileconfig: true
 mobileconfig_info:

@@ -9,7 +9,7 @@ fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-    - CCE-95552-6
+    - N/A
   cci: 
     - CCI-000205
   800-53r5:
@@ -19,7 +19,8 @@ references:
   disa_stig:
     - N/A
   indigo:
-    - N/A
+    - ANNEX D (Section 5.9 - Device authentication)
+    - ANNEX K
   cis:
     benchmark:
       - 2.4.3 (level 1 - End-User Owned Devices)
@@ -49,6 +50,8 @@ tags:
   - cis_lvl1_enterprise
   - cis_lvl2_enterprise
   - cisv8
+  - indigo_base
+  - indigo_high
   - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high

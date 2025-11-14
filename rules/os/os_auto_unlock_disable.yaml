@@ -8,7 +8,7 @@ check: " "
 fix: This is implemented by a Configuration Profile
 references:
   cce:
-    - CCE-95448-7
+    - N/A
   cci:
     - CCI-000767
     - CCI-002235
@@ -19,7 +19,7 @@ references:
   disa_stig:
     - N/A
   indigo:
-    - N/A
+    - ANNEX K
   cis:
     benchmark:
       - N/A
@@ -31,6 +31,8 @@ tags:
   - ios
   - 800-53r5_moderate
   - 800-53r5_high
+  - indigo_base
+  - indigo_high
   - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high

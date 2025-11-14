@@ -9,15 +9,16 @@ fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-    - CCE-95497-4
+    - N/A
   800-53r5:
     - N/A
   indigo:
-    - N/A
+    - ANNEX D (Section 5.7 - Interfaces)
 iOS:
   - "26.0"
 tags:
   - ios
+  - indigo_high
 supervised: true
 mobileconfig: true
 mobileconfig_info:

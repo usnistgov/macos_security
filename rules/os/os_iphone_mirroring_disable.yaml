@@ -18,13 +18,15 @@ references:
   sfr:
    - "FMT_MOF_EXT.1.2 #47"
   indigo:
-   - N/A
+   - ANNEX K
   disa_stig:
    - N/A
 iOS:
  - "26.0"
 tags:
  - ios
+ - indigo_base
+ - indigo_high
  - cnssi-1253_moderate
  - cnssi-1253_low
  - cnssi-1253_high

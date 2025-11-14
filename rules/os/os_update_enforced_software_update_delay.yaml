@@ -7,11 +7,11 @@ fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-    - CCE-95539-3
+    - N/A
   800-53r5:
     - N/A
   indigo:
-    - N/A
+    - ANNEX D (Section 6.3.1.2 - Update management)
 iOS:
   - "26.0"
 odv:
@@ -21,6 +21,8 @@ odv:
   indigo_high: 14
 tags:
   - ios
+  - indigo_base
+  - indigo_high
 supervised: true
 mobileconfig: true
 mobileconfig_info:

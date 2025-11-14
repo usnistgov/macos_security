@@ -18,10 +18,14 @@ references:
   - "FMT_MOF_EXT.1.2 #47"
   disa_stig:
   - N/A
+  indigo:
+  - ANNEX K
 iOS:
 - "26.0"
 tags:
 - ios
+- indigo_base
+- indigo_high
 - cnssi-1253_moderate
 - cnssi-1253_low
 - cnssi-1253_high
