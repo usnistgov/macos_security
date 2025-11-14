@@ -1,4 +1,4 @@
-id: os_siri_assistant_diable
+id: os_siri_assistant_disable
 title: "Disable Siri service"
 discussion: |
   The iOS built-in Siri service _MUST_ be disabled to prevent organizational data from being synchronized to Apple servers.

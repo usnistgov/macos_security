@@ -50,7 +50,7 @@ This document provides a high-level view of the changes to the macOS Security Co
     * os_screen_observation_remote_disable
     * os_screen_observation_unprompted_disable
     * os_siri_allow_dictation_disable
-    * os_siri_assistant_diable
+    * os_siri_assistant_disable
     * os_siri_server_logging_disable
     * os_siri_user_generated_content_disable
     * os_spell_check_disable
