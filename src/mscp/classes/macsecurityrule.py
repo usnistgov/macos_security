@@ -21,6 +21,7 @@ from ..common_utils import (
     mscp_data,
     open_file,
     sanitize_input,
+    collect_overrides,
 )
 from ..common_utils.logger_instance import logger
 
@@ -165,7 +166,7 @@ class Macsecurityrule(BaseModelWithAccessors):
         mobileconfig (bool): Whether the rule can be enforced via a configuration profile.
         mobileconfig_info (list[Mobileconfigpayload]): Information about the configuration profile payloads.
         ddm_info (dict[str, Any]): Declarative Device Management information.
-        customized (bool): Indicates if the rule has been customized.
+        customized (list[str]): List of fields customized by overrides.
         mechanism (str): The enforcement mechanism for the rule (e.g., Manual, Script, Configuration Profile).
         section (str | None): The section or category to which the rule belongs.
         uuid (str): Universally unique identifier for the rule instance.
@@ -205,7 +206,7 @@ class Macsecurityrule(BaseModelWithAccessors):
     result_value: str | int | bool | None = None
     mobileconfig_info: list[Mobileconfigpayload] | None = None
     ddm_info: dict[str, Any] | None = None
-    customized: bool = False
+    customized: list[str] = Field(default_factory=list)
     mechanism: str
     section: str | None
     uuid: str = Field(default_factory=lambda: str(uuid4()))
@@ -226,6 +227,7 @@ class Macsecurityrule(BaseModelWithAccessors):
         parent_values: str,
         section: str,
         baseline_tag: str | None = None,
+        language: str = "en",
         custom: bool = False,
         generate_baseline: bool = False,
     ) -> list["Macsecurityrule"]:
@@ -238,6 +240,7 @@ class Macsecurityrule(BaseModelWithAccessors):
             os_version (int): Operating system version.
             parent_values (str): Parent values to apply when filling in ODV.
             section (str): Section name for the rules.
+            language (str): Language used for rule text.
             custom (bool): Whether to include custom rules.
             generate_baseline (bool): Whether to generate a baseline.
 
@@ -258,7 +261,6 @@ class Macsecurityrule(BaseModelWithAccessors):
         os_type = os_type.replace("os", "OS")
 
         rules_dirs: list[Path] = [
-            Path(config["custom"]["rules_dir"]),
             Path(config["defaults"]["rules_dir"]),
         ]
 
@@ -288,7 +290,7 @@ class Macsecurityrule(BaseModelWithAccessors):
                 logger.warning("Rule file not found for rule: {}", rule_id)
                 continue
 
-            rule_yaml: dict[str, Any] = open_file(rule_file)
+            rule_yaml: dict[str, Any] = open_file(rule_file, language)
 
             tags: list[str] = rule_yaml.get("tags", [])
 
@@ -310,8 +312,20 @@ class Macsecurityrule(BaseModelWithAccessors):
 
             rule_yaml["rule_id"] = rule_yaml.pop("id")
 
-            if "custom" in rule_file.parts:
-                rule_yaml["customized"] = True
+            # process any customized rules
+            customized_fields = []
+            custom_rule_dict = collect_overrides(Path(config["custom"]["rules_dir"]))
+
+            if rule_yaml["rule_id"] in custom_rule_dict:
+                logger.info(f"Found customization for {rule_yaml['rule_id']}")
+                for custom_rule_key, custom_rule_value in custom_rule_dict[
+                    rule_yaml["rule_id"]
+                ].items():
+                    logger.debug(
+                        f"Found customization ({custom_rule_value}) for {custom_rule_key} in {rule_yaml['rule_id']}"
+                    )
+                    rule_yaml[custom_rule_key] = custom_rule_value
+                    customized_fields.append(custom_rule_key)
 
             enforcement_info = rule_yaml["platforms"][os_type].get(
                 "enforcement_info", {}
@@ -464,6 +478,7 @@ class Macsecurityrule(BaseModelWithAccessors):
             rule = cls(
                 **rule_yaml,
                 result_value=result_value,
+                customized=customized_fields,
                 mobileconfig_info=payloads,
                 mechanism=mechanism,
                 section=section,
@@ -527,7 +542,6 @@ class Macsecurityrule(BaseModelWithAccessors):
         ]
 
         rules_dirs: list[Path] = [
-            Path(config["custom"]["rules_dir"]),
             Path(config["defaults"]["rules_dir"]),
         ]
 
@@ -1196,14 +1210,14 @@ class Macsecurityrule(BaseModelWithAccessors):
         Returns:
             list[]: List of tags found within the rule set.
         """
-        
+
         found_tags: list[str] = []
 
         for rule in rules:
             rule_tags = rule.get("tags")
 
             found_tags += rule_tags
-        
+
         unique_tags = set(found_tags)
 
         return sorted(unique_tags)

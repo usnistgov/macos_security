@@ -7,7 +7,7 @@ from pathlib import Path
 
 # Local python modules
 from . import __version__
-from .common_utils import logger, set_logger, validate_yaml_file
+from .common_utils import logger, set_logger, validate_yaml_file, supported_languages
 from .generate import (
     generate_baseline,
     generate_checklist,
@@ -54,6 +54,7 @@ def parse_cli() -> None:
     parser = Customparser(
         description="CLI tool for managing baseline and compliance documents.",
         prog="mscp",
+        formatter_class=argparse.ArgumentDefaultsHelpFormatter,
     )
 
     parser.add_argument(
@@ -76,6 +77,14 @@ def parse_cli() -> None:
         "--version",
         action="version",
         version=f"%(prog)s {__version__}",
+    )
+    parser.add_argument(
+        "-L",
+        "--language",
+        default="en",
+        help="Generate guidance using a supported language.",
+        action="store",
+        choices=supported_languages,
     )
 
     # Sub Parsers for individual commands
@@ -149,6 +158,14 @@ def parse_cli() -> None:
         help="Full path to logo file to be included in the guide.",
         action="store",
         type=validate_file,
+    )
+    guidance_parser.add_argument(
+        "-L",
+        "--language",
+        default="en",
+        help="Generate guidance using a supported language.",
+        action="store",
+        choices=supported_languages,
     )
     guidance_parser.add_argument(
         "-p",

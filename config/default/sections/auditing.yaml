@@ -1,6 +1,6 @@
 ---
-name: "Auditing"
-description: |
+name: !localize "Auditing"
+description: !localize |
   This section contains the configuration and enforcement of the OpenBSM settings.
 
   NOTE: The BSM Audit subsystem has been marked as deprecated by Apple.
