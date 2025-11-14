@@ -11,14 +11,14 @@
 {% endif %}
 
 {% if rule.mechanism == "manual" %}
-:grey_exclamation: {% trans %} This rule is marked as manual and may not be able to be automated. It is also excluded in the compliance scan and will not report any results. {% endtrans %}
+:grey_exclamation: This rule is marked as manual and may not be able to be automated. It is also excluded in the compliance scan and will not report any results.
 {% endif -%}
 
 {% if not rule.tags | select('in', check_tags) | list %}
 {# {% if not "supplemental" in rule.tags %} #}
 {% if rule.tags is not defined or rule.tags is none or "supplemental" not in rule.tags %}
 {% if rule.os_name == "macos" %}
-{% trans %}To check the state of the system, run the following command(s){% endtrans %}:
+To check the state of the system, run the following command(s):
 [source,bash,options="nowrap"]
 ----
 {% if check_shell is not none %}
@@ -32,18 +32,18 @@
 {% endif %}
 
 {% if rule.os_name == "macos" %}
-{% trans %}If the result is not{% endtrans %} _{{ rule.result_value }}_, {% trans %}this is a finding{% endtrans %}.
+If the result is not _{{ rule.result_value }}_, this is a finding.
 {% endif %}
 
 ====
-**{% trans %}Remediation Description{% endtrans %}**
+**Remediation Description**
 
 {% if rule.fix is not none %}
-{% trans %}Perform the following to configure the system to meet the requirements{% endtrans %}:
+Perform the following to configure the system to meet the requirements:
 {% endif %}
 
 {% if rule.mobileconfig_info is none and rule.fix is not none or fix_shell %}
-{% trans %}To check the state of the system, run the following command(s){% endtrans %}:
+To check the state of the system, run the following command(s):
 
 [source,bash,options="nowrap"]
 ----
@@ -87,7 +87,7 @@
 |{{ rule.rule_id }}
 {{ rule.severity if rule.severity is not none and rule.tags not in check_tags }}
 
-|{% trans %}References{% endtrans %}
+|References
 |
 
 [cols="20%h,80%a"]

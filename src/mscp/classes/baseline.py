@@ -68,12 +68,7 @@ class Baseline(BaseModelWithAccessors):
 
     @classmethod
     def from_yaml(
-        cls,
-        file_path: Path,
-        os_name: str,
-        os_version: int,
-        language: str = "en",
-        custom: bool = False,
+        cls, file_path: Path, os_name: str, os_version: int, custom: bool = False
     ) -> "Baseline":
         """
         Load a Baseline object from a YAML file, including profiles and associated rules.
@@ -101,7 +96,7 @@ class Baseline(BaseModelWithAccessors):
         else:
             section_dirs = [Path(config["defaults"]["sections_dir"])]
 
-        baseline_data: dict[str, Any] = open_file(file_path, language)
+        baseline_data: dict[str, Any] = open_file(file_path)
         authors = [Author(**author) for author in baseline_data.get("authors", [])]
         baseline_tag = file_path.stem.replace("_test", "")
 
@@ -125,7 +120,7 @@ class Baseline(BaseModelWithAccessors):
                 logger.warning("Rule file not found for rule: {}", prof["section"])
                 continue
 
-            section_data: dict[str, str] = open_file(Path(section_file), language)
+            section_data: dict[str, str] = open_file(Path(section_file))
 
             logger.debug(f"Section Data: {section_data}")
 
@@ -140,7 +135,6 @@ class Baseline(BaseModelWithAccessors):
                         baseline_data.get("parent_values", ""),
                         section_data.get("name", "").strip(),
                         baseline_tag,
-                        language,
                         custom,
                     ),
                 )
@@ -170,7 +164,6 @@ class Baseline(BaseModelWithAccessors):
         os_type: str,
         os_version: float,
         baseline_dict: dict[str, Any] = Field(default_factory=dict[str, Any]),
-        language: str = "en",
     ) -> None:
         """
         Creates a new baseline YAML file based on the provided rules, metadata, and configuration.
@@ -210,7 +203,9 @@ class Baseline(BaseModelWithAccessors):
                 f"{os_type} {os_version}: Security Configuration - {full_title} {baseline_name}"
             )
 
-            description: str = f"This guide describes the actions to take when securing a {os_type} {os_version} system against the {full_title} {baseline_name} security baseline.\n"
+            description: str = (
+                f"This guide describes the actions to take when securing a {os_type} {os_version} system against the {full_title} {baseline_name} security baseline.\n"
+            )
 
             if benchmark == "recommended":
                 description += "\nInformation System Security Officers and benchmark creators can use this catalog of settings in order to assist them in security benchmark creation. This list is a catalog, not a checklist or benchmark, and satisfaction of every item is not likely to be possible or sensible in many operational scenarios."
@@ -228,7 +223,7 @@ class Baseline(BaseModelWithAccessors):
         section_descriptions = {}
 
         for yaml_file in Path(config["defaults"]["sections_dir"]).glob("*.y*ml"):
-            section_data: dict = open_file(yaml_file, language)
+            section_data: dict = open_file(yaml_file)
 
             section_descriptions[section_data.get("name")] = section_data.get(
                 "description", ""

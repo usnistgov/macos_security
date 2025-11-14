@@ -34,7 +34,7 @@ yaml.add_representer(str, _str_presenter)
 yaml.representer.SafeRepresenter.add_representer(str, _str_presenter)
 
 
-def open_file(file_path: Path, language: str = "en") -> Any:
+def open_file(file_path: Path) -> Any:
     """
     Attempts to open a file and read its contents with error checking and logging.
 
@@ -53,7 +53,7 @@ def open_file(file_path: Path, language: str = "en") -> Any:
 
     match file_path.suffix:
         case ".yaml" | ".yml":
-            return open_yaml(file_path, language=language)
+            return open_yaml(file_path)
         case ".csv":
             return open_csv(file_path)
         case ".plist" | ".mobileconfig":
@@ -86,28 +86,19 @@ def open_text(file_path: Path) -> str:
         raise
 
 
-def open_yaml(
-    file_path: Path,
-    language: str = None,
-) -> dict[str, Any]:
+def open_yaml(file_path: Path) -> dict[str, Any]:
     """
-    Attempts to open a yaml file and read its contents with error checking and logging.
-    Supports !localize tags for automatic gettext localization.
+    Attempts to open a yaml file and read it's contents with error checking and logging
 
     Args:
         file_path (Path): The path to the file to be opened.
-        language (str, optional): Language code for localization (e.g., "de", "fr"). If None, uses current gettext config.
-        domain (str): localization domain name. Defaults to "messages".
-        localedir (str): Path to the locales directory. Defaults to "config/locales".
 
     Returns:
-        dict[str, Any]: The content of the file if successful, empty dict otherwise.
+        dict[str, Any]: The content of the file if successful, None if otherwise.
     """
 
     try:
         logger.debug("Attempting to open YAML: {}", file_path)
-        # Note: localization should be configured globally before YAML processing
-        # configure_localization_for_yaml is now called at the application level
 
         data = yaml.safe_load(file_path.read_text(encoding=ENCODING))
         return data if isinstance(data, dict) else {}

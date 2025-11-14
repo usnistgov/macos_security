@@ -12,7 +12,6 @@ defaults:
   baseline_dir: "config/default/baselines"
   documents_templates_dir: "config/default/templates/documents"
   images_dir: "config/default/images"
-  locales_dir: "config/locales"
   md_templates_dir: "config/default/templates/markdown"
   misc_dir: "config/default/misc"
   root_dir: "config/default"

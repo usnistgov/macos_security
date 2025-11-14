@@ -1,6 +1,6 @@
 ---
-name: !localize "Manual"
-description: !localize |
+name: "Manual"
+description: |
   This section contains the configuration and enforcement of manual security settings that can not be set by automated means.
 
   These settings are typically enforced through user education, administrative procedures, or manual configuration by system administrators. They may include policies that require user action to implement, such as disabling Wi-Fi when not connected to a trusted network, or ensuring that mobile devices are properly managed and secured.
