@@ -76,7 +76,7 @@ profile:
       - os_safari_reader_summary_disable
       - os_screenshots_disable
       - os_siri_allow_dictation_disable
-      - os_siri_assistant_diable
+      - os_siri_assistant_disable
       - os_siri_server_logging_disable
       - os_siri_user_generated_content_disable
       - os_siri_when_locked_disabled
