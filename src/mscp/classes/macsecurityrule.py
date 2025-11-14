@@ -368,10 +368,12 @@ class Macsecurityrule(BaseModelWithAccessors):
                         )
                     )
 
-                if check_value and "osascript" in check_value:
-                    # Get the first key from the first payload_content dict
-                    first_key = list(payloads[0].payload_content[0].keys())[0]
-                    check_value = f"/usr/bin/osascript -l JavaScript -e \"$.NSUserDefaults.alloc.initWithSuiteName('{payloads[0].payload_type}').objectForKey('{first_key}').js\""
+                # Not all mobile configs follow this pattern
+
+                # if check_value and "osascript" in check_value:
+                #     # Get the first key from the first payload_content dict
+                #     first_key = list(payloads[0].payload_content[0].keys())[0]
+                #     check_value = f"/usr/bin/osascript -l JavaScript -e \"$.NSUserDefaults.alloc.initWithSuiteName('{payloads[0].payload_type}').objectForKey('{first_key}').js\""
 
                 rule_yaml.pop("mobileconfig_info", None)
             else:
@@ -851,12 +853,17 @@ class Macsecurityrule(BaseModelWithAccessors):
 
         odv_lookup: dict[str, Any] = self.odv
         odv_value: str | int | bool | None = odv_lookup.get(parent_values)
-
+        if odv_value is None:
+            return
         # Replace $ODV in text fields
+
+        #Added check and result to the ODV fields processed
         fields_to_process: tuple[str, ...] = (
             "title",
             "discussion",
+            "check",
             "fix",
+            "result_value"
         )
 
         # Helper function to recursively replace $ODV in nested structures
@@ -869,7 +876,7 @@ class Macsecurityrule(BaseModelWithAccessors):
                 return [replace_odv_in_obj(item) for item in obj]
             else:
                 return obj
-
+        
         for field in fields_to_process:
             value = getattr(self, field, None)
             if value is not None:

@@ -6,6 +6,7 @@ import sys
 from mscp.common_utils import set_logger
 from mscp.generate import (
     generate_scap,
+    
 )
 from mscp.cli import Customparser, validate_file
 
@@ -24,10 +25,9 @@ def main() -> None:
     parser.add_argument(
         "-b",
         "--baseline",
-        default=None,
+        default="all_rules",
         help="Baseline YAML file used to create the guide.",
-        type=validate_file,
-        action="store",
+        type=str
     )
     parser.add_argument(
         "-x",
