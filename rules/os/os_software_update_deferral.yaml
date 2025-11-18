@@ -4,18 +4,16 @@ discussion: |
   Software updates _MUST_ be deferred for $ODV days or less.
 check: |
   /usr/bin/osascript -l JavaScript << EOS
-  function run() {
-    let timeout = ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess')\
+  let timeout = ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess')\
   .objectForKey('enforcedSoftwareUpdateDelay')) || 0
-    if ( timeout <= $ODV ) {
-      return("true")
-    } else {
-      return("false")
-    }
+  if ( timeout <= $ODV ) {
+      "true"
+  } else {
+      "false"
   }
   EOS
 result:
-  string: 'true'
+  string: "true"
 fix: |
   This is implemented by a Configuration Profile.
 references:
@@ -40,7 +38,7 @@ references:
       - 7.3
       - 7.4
 macOS:
-  - '26.0'
+  - "26.0"
 odv:
   hint: Number of days.
   recommended: 30
