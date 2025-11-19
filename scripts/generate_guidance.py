@@ -214,7 +214,13 @@ class PayloadDict:
     """
 
     def __init__(
-        self, identifier, uuid=False, description="", organization="", displayname=""
+        self,
+        identifier,
+        uuid=False,
+        description="",
+        organization="",
+        displayname="",
+        identical_payload_identifier_uuid=False,
     ):
         self.data = {}
         self.data["PayloadVersion"] = 1
@@ -227,13 +233,19 @@ class PayloadDict:
         self.data["PayloadScope"] = "System"
         self.data["PayloadDescription"] = description
         self.data["PayloadDisplayName"] = displayname
-        self.data["PayloadIdentifier"] = identifier
+        if identical_payload_identifier_uuid:
+            self.data["PayloadIdentifier"] = self.data["PayloadUUID"]
+        else:
+            self.data["PayloadIdentifier"] = identifier
         self.data["ConsentText"] = {
             "default": "THE SOFTWARE IS PROVIDED 'AS IS' WITHOUT ANY WARRANTY OF ANY KIND, EITHER EXPRESSED, IMPLIED, OR STATUTORY, INCLUDING, BUT NOT LIMITED TO, ANY WARRANTY THAT THE SOFTWARE WILL CONFORM TO SPECIFICATIONS, ANY IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND FREEDOM FROM INFRINGEMENT, AND ANY WARRANTY THAT THE DOCUMENTATION WILL CONFORM TO THE SOFTWARE, OR ANY WARRANTY THAT THE SOFTWARE WILL BE ERROR FREE.  IN NO EVENT SHALL NIST BE LIABLE FOR ANY DAMAGES, INCLUDING, BUT NOT LIMITED TO, DIRECT, INDIRECT, SPECIAL OR CONSEQUENTIAL DAMAGES, ARISING OUT OF, RESULTING FROM, OR IN ANY WAY CONNECTED WITH THIS SOFTWARE, WHETHER OR NOT BASED UPON WARRANTY, CONTRACT, TORT, OR OTHERWISE, WHETHER OR NOT INJURY WAS SUSTAINED BY PERSONS OR PROPERTY OR OTHERWISE, AND WHETHER OR NOT LOSS WAS SUSTAINED FROM, OR AROSE OUT OF THE RESULTS OF, OR USE OF, THE SOFTWARE OR SERVICES PROVIDED HEREUNDER."
         }
 
         # An empty list for 'sub payloads' that we'll fill later
         self.data["PayloadContent"] = []
+
+        # Store the flag for use later
+        self.identical_payload_identifier_uuid = identical_payload_identifier_uuid
 
     def _updatePayload(self, payload_content_dict, baseline_name):
         """Update the profile with the payload settings. Takes the settings dictionary which will be the
@@ -267,9 +279,12 @@ class PayloadDict:
         payload_dict["PayloadVersion"] = 1
         payload_dict["PayloadUUID"] = makeNewUUID()
         payload_dict["PayloadType"] = payload_content_dict["PayloadType"]
-        payload_dict["PayloadIdentifier"] = (
-            f"mscp.{payload_content_dict['PayloadType']}.{payload_dict['PayloadUUID']}"
-        )
+        if self.identical_payload_identifier_uuid:
+            payload_dict["PayloadIdentifier"] = payload_dict["PayloadUUID"]
+        else:
+            payload_dict["PayloadIdentifier"] = (
+                f"mscp.{payload_content_dict['PayloadType']}.{payload_dict['PayloadUUID']}"
+            )
 
         payload_dict["PayloadContent"] = payload_content_dict
         # Add the payload to the profile
@@ -289,9 +304,12 @@ class PayloadDict:
         payload_dict["PayloadVersion"] = 1
         payload_dict["PayloadUUID"] = makeNewUUID()
         payload_dict["PayloadType"] = payload_type
-        payload_dict["PayloadIdentifier"] = (
-            f"mscp.{payload_type}.{payload_dict['PayloadUUID']}"
-        )
+        if self.identical_payload_identifier_uuid:
+            payload_dict["PayloadIdentifier"] = payload_dict["PayloadUUID"]
+        else:
+            payload_dict["PayloadIdentifier"] = (
+                f"mscp.{payload_type}.{payload_dict['PayloadUUID']}"
+            )
 
         # Add the settings to the payload
         for setting in settings:
@@ -409,6 +427,8 @@ def generate_profiles(
     baseline_yaml,
     signing,
     hash="",
+    no_created_date=False,
+    identical_payload_identifier_uuid=False,
     generate_domain=True,
     generate_consolidated=True,
 ):
@@ -569,12 +589,15 @@ def generate_profiles(
                     signed_mobileconfig_output_path, payload + ".mobileconfig"
                 )
         identifier = payload + f".{baseline_name}"
-        created = date.today()
-        description = (
-            "Created: {}\nConfiguration settings for the {} preference domain.".format(
+        if no_created_date:
+            description = "Configuration settings for the {} preference domain.".format(
+                payload
+            )
+        else:
+            created = date.today()
+            description = "Created: {}\nConfiguration settings for the {} preference domain.".format(
                 created, payload
             )
-        )
 
         organization = "macOS Security Compliance Project"
         displayname = f"[{baseline_name}] {payload} settings"
@@ -585,6 +608,7 @@ def generate_profiles(
             organization=organization,
             displayname=displayname,
             description=description,
+            identical_payload_identifier_uuid=identical_payload_identifier_uuid,
         )
         if payload == "com.apple.ManagedClient.preferences":
             for item in settings:
@@ -2131,6 +2155,18 @@ def create_args():
         default=None,
         help="name of audit plist and log - defaults to baseline name",
     )
+    parser.add_argument(
+        "--no-created-date",
+        default=False,
+        help="Do not add the created date to the profile description",
+        action="store_true",
+    )
+    parser.add_argument(
+        "--identical-payload-identifier-uuid",
+        default=False,
+        help="Use the same UUID for each PayloadIdentifier and PayloadUUID pair within Configuration Profiles",
+        action="store_true",
+    )
     return parser.parse_args()
 
 
@@ -2775,6 +2811,8 @@ def main():
             baseline_yaml,
             signing,
             args.hash,
+            args.no_created_date,
+            args.identical_payload_identifier_uuid,
             generate_domain=args.profiles,
             generate_consolidated=args.consolidated_profile,
         )
