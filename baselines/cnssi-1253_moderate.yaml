@@ -283,3 +283,6 @@ profile:
       - os_managed_access_control_points
       - os_non_repudiation
       - os_nonlocal_maintenance
+  - section: "Supplemental"
+    rules:
+      - supplemental_password_policy

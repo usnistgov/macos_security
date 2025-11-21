@@ -2,6 +2,57 @@
 
 This document provides a high-level view of the changes to the macOS Security Compliance Project.
 
+## [Sequoia, Revision 3.0] - 2025-09-11
+* Rules
+  * Modified Rules
+    * auth_smartcard_certificate_trust_enforce_high
+    * os_authenticated_root_enable
+    * os_ess_installed
+    * os_external_storage_access_defined
+    * os_home_folders_secure
+    * os_iphone_mirroring_disable
+    * os_network_storage_restriction
+    * os_recovery_lock_enable
+    * os_screensaver_timeout_loginwindow_enforce
+    * os_secure_boot_verify
+    * os_unlock_active_user_session_disable
+    * os_world_writable_library_folder_configure
+    * pwpolicy_account_lockout_enforce
+    * pwpolicy_account_lockout_timeout_enforce
+    * pwpolicy_history_enforce
+    * pwpolicy_lower_case_character_enforce
+    * pwpolicy_max_lifetime_enforce
+    * pwpolicy_minimum_length_enforce
+    * pwpolicy_minimum_lifetime_enforce
+    * pwpolicy_special_character_enforce
+    * pwpolicy_upper_case_character_enforce
+    * supplemental_password_policy
+    * system_settings_bluetooth_sharing_disable
+    * system_settings_external_intelligence_disable
+    * system_settings_external_intelligence_sign_in_disable
+    * system_settings_filevault_enforce
+    * system_settings_hot_corners_secure
+    * system_settings_location_services_menu_enforce
+    * system_settings_remote_management_disable
+    * system_settings_time_machine_encrypted_configure
+  * Bug Fixes
+* Baselines
+  * Modified existing baselines
+* Scripts
+  * generate_baseline
+    * Updated regex
+  * generate_guidance
+    * Added flag for consolidated configuration profile
+    * Updated DDM logic for nested keys
+    * Added shell check to compliance script
+    * Updated current user check in compliance script
+    * Support for Managed Arguments in compliance script
+    * Bug Fixes
+  * generate_scap
+    * Support for oval 5.12.1
+    * Support for scap 1.4
+    * Added shellcommand for all tests
+
 ## [Sequoia, Revision 2.0] - 2025-07-01
 * Rules
   * Added Rules

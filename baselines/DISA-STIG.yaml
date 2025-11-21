@@ -1,6 +1,6 @@
-title: "macOS 15.0: Security Configuration - Apple macOS 15 (Sequoia) STIG - Ver 1, Rel 3"
+title: "macOS 15.0: Security Configuration - Apple macOS 15 (Sequoia) STIG - Ver 1, Rel 4"
 description: |
-  This guide describes the actions to take when securing a macOS 15.0 system against the Apple macOS 15 (Sequoia) STIG - Ver 1, Rel 3 security baseline.
+  This guide describes the actions to take when securing a macOS 15.0 system against the Apple macOS 15 (Sequoia) STIG - Ver 1, Rel 4 security baseline.
 authors: |
   *macOS Security Compliance Project*
 
@@ -77,7 +77,6 @@ profile:
       - os_config_data_install_enforce
       - os_dictation_disable
       - os_erase_content_and_settings_disable
-      - os_ess_installed
       - os_facetime_app_disable
       - os_filevault_autologin_disable
       - os_firmware_password_require
@@ -89,6 +88,7 @@ profile:
       - os_icloud_storage_prompt_disable
       - os_image_generation_disable
       - os_install_log_retention_configure
+      - os_iphone_mirroring_disable
       - os_loginwindow_adminhostinfo_undefined
       - os_mdm_require
       - os_newsyslog_files_owner_group_configure
@@ -135,7 +135,6 @@ profile:
       - pwpolicy_account_lockout_timeout_enforce
       - pwpolicy_alpha_numeric_enforce
       - pwpolicy_custom_regex_enforce
-      - pwpolicy_history_enforce
       - pwpolicy_max_lifetime_enforce
       - pwpolicy_minimum_length_enforce
       - pwpolicy_minimum_lifetime_enforce
