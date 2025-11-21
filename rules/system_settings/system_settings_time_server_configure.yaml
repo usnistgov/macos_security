@@ -52,8 +52,8 @@ odv:
   cis_lvl1: time.apple.com
   cis_lvl2: time.apple.com
   stig: time.nist.gov
-  nlmapgov_base: time.europe.apple.com
-  nlmapgov_plus: time.europe.apple.com
+  nlmapgov_base: time.apple.com
+  nlmapgov_plus: time.apple.com
 tags:
   - 800-171
   - 800-53r5_low
