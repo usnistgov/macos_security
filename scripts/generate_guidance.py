@@ -42,6 +42,7 @@ class MacSecurityRule:
         cis,
         cmmc,
         indigo,
+        bio,
         custom_refs,
         odv,
         tags,
@@ -66,6 +67,7 @@ class MacSecurityRule:
         self.rule_cis = cis
         self.rule_cmmc = cmmc
         self.rule_indigo = indigo
+        self.rule_bio = bio
         self.rule_custom_refs = custom_refs
         self.rule_odv = odv
         self.rule_result_value = result_value
@@ -90,6 +92,7 @@ class MacSecurityRule:
             rule_cis=self.rule_cis,
             rule_cmmc=self.rule_cmmc,
             rule_indigo=self.rule_indigo,
+            rule_bio=self.rule_bio,
             rule_srg=self.rule_srg,
             rule_result=self.rule_result_value,
         )
@@ -402,7 +405,14 @@ def concatenate_payload_settings(settings):
 
 
 def generate_profiles(
-    baseline_name, build_path, parent_dir, baseline_yaml, signing, hash="", generate_domain=True, generate_consolidated=True
+    baseline_name,
+    build_path,
+    parent_dir,
+    baseline_yaml,
+    signing,
+    hash="",
+    generate_domain=True,
+    generate_consolidated=True,
 ):
     """Generate the configuration profiles for the rules in the provided baseline YAML file"""
 
@@ -531,7 +541,7 @@ def generate_profiles(
         uuid=False,
         organization="macOS Security Compliance Project",
         displayname=f"{baseline_name} settings",
-        description=f"Consolidated configuration settings for {baseline_name}."
+        description=f"Consolidated configuration settings for {baseline_name}.",
     )
 
     # process the payloads from the yaml file and generate new config profile for each type
@@ -588,8 +598,12 @@ def generate_profiles(
             or (payload == "com.apple.systempreferences")
             or (payload == "com.apple.SetupAssistant.managed")
         ):
-            newProfile.addNewPayload(payload, concatenate_payload_settings(settings), baseline_name)
-            consolidated_profile.addNewPayload(payload, concatenate_payload_settings(settings), baseline_name)
+            newProfile.addNewPayload(
+                payload, concatenate_payload_settings(settings), baseline_name
+            )
+            consolidated_profile.addNewPayload(
+                payload, concatenate_payload_settings(settings), baseline_name
+            )
         else:
             newProfile.addNewPayload(payload, settings, baseline_name)
             consolidated_profile.addNewPayload(payload, settings, baseline_name)
@@ -597,19 +611,33 @@ def generate_profiles(
         if generate_domain:
             with open(settings_plist_file_path, "wb") as settings_plist_file:
                 newProfile.finalizeAndSavePlist(settings_plist_file)
-            with open(unsigned_mobileconfig_file_path, "wb") as unsigned_mobileconfig_file:
+            with open(
+                unsigned_mobileconfig_file_path, "wb"
+            ) as unsigned_mobileconfig_file:
                 newProfile.finalizeAndSave(unsigned_mobileconfig_file)
             if signing:
-                sign_config_profile(unsigned_mobileconfig_file_path, signed_mobileconfig_file_path, hash)
+                sign_config_profile(
+                    unsigned_mobileconfig_file_path, signed_mobileconfig_file_path, hash
+                )
 
     if generate_consolidated:
-        consolidated_mobileconfig_file_path = os.path.join(unsigned_mobileconfig_output_path, f"{baseline_name}.mobileconfig")
-        with open(consolidated_mobileconfig_file_path, "wb") as consolidated_mobileconfig_file:
+        consolidated_mobileconfig_file_path = os.path.join(
+            unsigned_mobileconfig_output_path, f"{baseline_name}.mobileconfig"
+        )
+        with open(
+            consolidated_mobileconfig_file_path, "wb"
+        ) as consolidated_mobileconfig_file:
             consolidated_profile.finalizeAndSave(consolidated_mobileconfig_file)
 
         if signing:
-            signed_consolidated_mobileconfig_path = os.path.join(signed_mobileconfig_output_path, f"{baseline_name}.mobileconfig")
-            sign_config_profile(consolidated_mobileconfig_file_path, signed_consolidated_mobileconfig_path, hash)
+            signed_consolidated_mobileconfig_path = os.path.join(
+                signed_mobileconfig_output_path, f"{baseline_name}.mobileconfig"
+            )
+            sign_config_profile(
+                consolidated_mobileconfig_file_path,
+                signed_consolidated_mobileconfig_path,
+                hash,
+            )
 
     print(
         f"""
@@ -1771,9 +1799,10 @@ def generate_xls(baseline_name, build_path, baseline_yaml):
     sheet1.write(0, 14, "CIS v8", headers)
     sheet1.write(0, 15, "CMMC", headers)
     sheet1.write(0, 16, "indigo", headers)
-    sheet1.write(0, 17, "CCI", headers)
-    sheet1.write(0, 18, "Severity", headers)
-    sheet1.write(0, 19, "Modified Rule", headers)
+    sheet1.write(0, 17, "BIO", headers)
+    sheet1.write(0, 18, "CCI", headers)
+    sheet1.write(0, 19, "Severity", headers)
+    sheet1.write(0, 20, "Modified Rule", headers)
     sheet1.set_panes_frozen(True)
     sheet1.set_horz_split_pos(1)
     sheet1.set_vert_split_pos(2)
@@ -1883,11 +1912,17 @@ def generate_xls(baseline_name, build_path, baseline_yaml):
         sheet1.write(counter, 16, indigo_refs, topWrap)
         sheet1.col(16).width = 500 * 15
 
+        bio_refs = (str(rule.rule_bio)).strip("[]'")
+        bio_refs = bio_refs.replace(", ", "\n").replace("'", "")
+
+        sheet1.write(counter, 17, bio_refs, topWrap)
+        sheet1.col(17).width = 500 * 15
+
         cci = (str(rule.rule_cci)).strip("[]'")
         cci = cci.replace(", ", "\n").replace("'", "")
 
-        sheet1.write(counter, 17, cci, topWrap)
-        sheet1.col(17).width = 400 * 15
+        sheet1.write(counter, 18, cci, topWrap)
+        sheet1.col(18).width = 400 * 15
 
         # determine severity
         # uses 'parent_values' from baseline.yaml file to determine which/if any severity to use
@@ -1901,14 +1936,14 @@ def generate_xls(baseline_name, build_path, baseline_yaml):
         elif isinstance(rule.rule_severity, str):
             severity = f"{rule.rule_severity}"
 
-        sheet1.write(counter, 18, severity, topWrap)
-        sheet1.col(18).width = 400 * 15
+        sheet1.write(counter, 19, severity, topWrap)
+        sheet1.col(19).width = 400 * 15
 
         customized = (str(rule.rule_customized)).strip("[]'")
         customized = customized.replace(", ", "\n").replace("'", "")
 
-        sheet1.write(counter, 19, customized, topWrap)
-        sheet1.col(19).width = 400 * 15
+        sheet1.write(counter, 20, customized, topWrap)
+        sheet1.col(20).width = 400 * 15
 
         if rule.rule_custom_refs != ["None"]:
             for title, ref in rule.rule_custom_refs.items():
@@ -1958,6 +1993,7 @@ def create_rules(baseline_yaml):
         "cis",
         "cmmc",
         "indigo",
+        "bio",
         "srg",
         "sfr",
         "custom",
@@ -2011,6 +2047,7 @@ def create_rules(baseline_yaml):
                     rule_yaml["references"]["cis"],
                     rule_yaml["references"]["cmmc"],
                     rule_yaml["references"]["indigo"],
+                    rule_yaml["references"]["bio"],
                     rule_yaml["references"]["custom"],
                     rule_yaml["odv"],
                     rule_yaml["tags"],
@@ -2360,6 +2397,11 @@ def main():
     else:
         adoc_171_show = ":show_171!:"
 
+    if "NLMAPGOV" in baseline_yaml["title"].upper():
+        adoc_BIO_show = ":show_BIO:"
+    else:
+        adoc_BIO_show = ":show_BIO!:"
+
     if args.gary:
         adoc_tag_show = ":show_tags:"
         adoc_STIG_show = ":show_STIG:"
@@ -2367,6 +2409,7 @@ def main():
         adoc_cmmc_show = ":show_CMMC:"
         adoc_indigo_show = ":show_indigo:"
         adoc_171_show = ":show_171:"
+        adoc_BIO_show = ":show_BIO:"
     else:
         adoc_tag_show = ":show_tags!:"
 
@@ -2395,6 +2438,7 @@ def main():
         cis_attribute=adoc_cis_show,
         cmmc_attribute=adoc_cmmc_show,
         indigo_attribute=adoc_indigo_show,
+        bio_attribute=adoc_BIO_show,
         version=version_yaml["version"],
         os_version=version_yaml["os"],
         release_date=version_yaml["date"],
@@ -2532,6 +2576,13 @@ def main():
                 indigo = ulify(rule_yaml["references"]["indigo"])
 
             try:
+                rule_yaml["references"]["bio"]
+            except KeyError:
+                bio = ""
+            else:
+                bio = ulify(rule_yaml["references"]["bio"])
+
+            try:
                 rule_yaml["references"]["srg"]
             except KeyError:
                 srg = "- N/A"
@@ -2644,6 +2695,7 @@ def main():
                     rule_cis=cis,
                     rule_cmmc=cmmc,
                     rule_indigo=indigo,
+                    rule_bio=bio,
                     rule_cce=cce,
                     rule_custom_refs=custom_refs,
                     rule_tags=tags,
@@ -2665,6 +2717,7 @@ def main():
                     rule_cis=cis,
                     rule_cmmc=cmmc,
                     rule_indigo=indigo,
+                    rule_bio=bio,
                     rule_cce=cce,
                     rule_tags=tags,
                     rule_srg=srg,
@@ -2688,6 +2741,7 @@ def main():
                         rule_cis=cis,
                         rule_cmmc=cmmc,
                         rule_indigo=indigo,
+                        rule_bio=bio,
                         rule_cce=cce,
                         rule_tags=tags,
                         rule_srg=srg,
@@ -2709,6 +2763,7 @@ def main():
                         rule_cis=cis,
                         rule_cmmc=cmmc,
                         rule_indigo=indigo,
+                        rule_bio=bio,
                         rule_cce=cce,
                         rule_tags=tags,
                         rule_srg=srg,
@@ -2743,8 +2798,14 @@ def main():
 
         # Single call to generate_profiles with both parameters
         generate_profiles(
-            baseline_name, build_path, parent_dir, baseline_yaml, signing, args.hash,
-            generate_domain=args.profiles, generate_consolidated=args.consolidated_profile
+            baseline_name,
+            build_path,
+            parent_dir,
+            baseline_yaml,
+            signing,
+            args.hash,
+            generate_domain=args.profiles,
+            generate_consolidated=args.consolidated_profile,
         )
 
     if args.ddm:

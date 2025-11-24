@@ -50,6 +50,8 @@ references:
     - IA.L2-3.5.7
     - IA.L2-3.5.8
     - IA.L2-3.5.9
+  bio:
+    - 8.27.01
 macOS:
   - '15.0'
 tags:
@@ -67,6 +69,7 @@ tags:
   - cmmc_lvl1
   - stig
   - cnssi-1253_moderate
+  - nlmapgov_plus
 severity: high
 mobileconfig: false
 mobileconfig_info:

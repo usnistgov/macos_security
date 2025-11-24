@@ -38,6 +38,8 @@ references:
       - 8.3
   cmmc:
     - AU.L2-3.3.1
+  bio:
+    - 8.19.01
 macOS:
   - '15.0'
 odv:
@@ -46,6 +48,7 @@ odv:
   cis_lvl1: 365
   cis_lvl2: 365
   stig: 365
+  nlmapgov_plus: 365
 tags:
   - cis_lvl1
   - cis_lvl2
@@ -55,6 +58,7 @@ tags:
   - cmmc_lvl2
   - stig
   - cnssi-1253_moderate
+  - nlmapgov_plus
 severity: medium
 mobileconfig: false
 mobileconfig_info:

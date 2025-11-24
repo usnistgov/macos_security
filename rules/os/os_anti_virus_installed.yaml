@@ -36,12 +36,19 @@ references:
       - 10.5
       - 10.1
       - 10.2
+  bio:
+    - 8.07.01
+    - 8.07.03
+    - 8.07.04
+    - 8.19.01
 macOS:
   - '15.0'
 tags:
   - cis_lvl1
   - cis_lvl2
   - cisv8
+  - nlmapgov_base
+  - nlmapgov_plus
 severity: "high"
 mobileconfig: false
 mobileconfig_info:

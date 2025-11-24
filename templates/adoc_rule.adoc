@@ -56,6 +56,11 @@ ifdef::show_CMMC[]
 !$rule_cmmc
 endif::[]
 
+ifdef::show_BIO[]
+!BIO
+!$rule_bio
+endif::[]
+
 !CCE
 !$rule_cce
 

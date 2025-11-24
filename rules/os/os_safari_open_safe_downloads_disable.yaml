@@ -27,12 +27,16 @@ references:
     controls v8:
       - 9.1
       - 9.6
+  bio:
+    - 8.07.01
 macOS:
   - '15.0'
 tags:
   - cis_lvl1
   - cis_lvl2
   - cisv8
+  - nlmapgov_base
+  - nlmapgov_plus
 mobileconfig: true
 mobileconfig_info:
   com.apple.Safari:
