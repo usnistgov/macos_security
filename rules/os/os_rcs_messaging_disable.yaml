@@ -1,0 +1,26 @@
+id: os_rcs_messaging_disable
+title: "Disable RCS messaging"
+discussion: |
+  This setting disables RCS messaging, supported on iOS 18.1 and later, to prevent enhanced messaging with non-iPhone users. 
+  
+  RCS enables sending messages, photos, and videos via cellular data but is not available on all carriers.
+check: " "
+fix: |
+  This is implemented by a Configuration Profile.
+references:
+  cce:
+    - N/A
+  800-53r5:
+    - N/A
+  indigo:
+    - Annex K
+iOS:
+  - "26.0"
+tags:
+  - ios
+  - indigo_high
+supervised: false
+mobileconfig: true
+mobileconfig_info:
+  com.apple.applicationaccess:
+    allowRCSMessaging: false
