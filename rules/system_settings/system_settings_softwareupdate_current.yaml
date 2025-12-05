@@ -2,11 +2,11 @@ id: system_settings_softwareupdate_current
 title: Ensure Software Update is Updated and Current
 discussion: |
   Make sure Software Update is updated and current.
-
-  NOTE: Automatic fix can cause unplanned restarts and may lose work.
+  
+  link:https://support.apple.com/en-us/108382[Update macOS on Mac] or if enrolled in an MDM consult your MDM's documentation for automated methods.
 check: |
   softwareupdate_date_epoch=$(/bin/date -j -f "%Y-%m-%d" "$(/usr/bin/defaults read /Library/Preferences/com.apple.SoftwareUpdate.plist LastFullSuccessfulDate | /usr/bin/awk '{print $1}')" "+%s")
-  thirty_days_epoch=$(/bin/date -v -30d "+%s")
+  thirty_days_epoch=$(/bin/date -v -$ODV "+%s")
   if [[ $softwareupdate_date_epoch -lt $thirty_days_epoch ]]; then
     /bin/echo "0"
   else
@@ -15,38 +15,50 @@ check: |
 result:
   integer: 1
 fix: |
-  [source,bash]
-  ----
-  /usr/sbin/softwareupdate -i -a
-  ----
-  NOTE - This will apply to the whole system
+  NOTE: See discussion on how to install software updates.
 references:
   cce:
     - CCE-95405-7
   cci:
-    - N/A
+    - CCI-002605
   800-53r5:
-    - N/A
-  800-53r4:
-    - N/A
+    - SI-2
   srg:
-    - N/A
+    - SRG-OS-000439-GPOS-00195
   disa_stig:
-    - N/A
+    - APPL-26-999999
   800-171r3:
-    - N/A
+    - 03.14.01
+    - 03.14.02
   cis:
     benchmark:
       - 1.1 (level 1)
     controls v8:
       - 7.3
       - 7.4
+  cmmc:
+    - SI.L1-3.14.1
+    - SI.L1-3.14.2
+    - SI.L1-3.14.4      
 macOS:
   - '26.0'
+odv:
+  hint: Maximum Days of Deferral
+  recommended: 30
+  cis_lvl1: 30
+  cis_lvl2: 30
+  stig: 30
 tags:
   - cis_lvl1
   - cis_lvl2
   - cisv8
+  - stig
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_high
+  - 800-171
+  - cmmc_lvl2
+  - cmmc_lvl1
 severity: medium
 mobileconfig: false
 mobileconfig_info:
