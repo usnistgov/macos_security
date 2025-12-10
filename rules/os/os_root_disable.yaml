@@ -5,13 +5,13 @@ discussion: |
 
   The macOS system _MUST_ require individuals to be authenticated with an individual authenticator prior to using a group authenticator, and administrator users _MUST_ never log in directly as root.
 check: |
-  /usr/bin/dscl . -read /Users/root UserShell 2>&1 | /usr/bin/grep -c "/usr/bin/false"
+  /usr/bin/dscl . -read /Users/root UserShell 2>&1 | /usr/bin/grep -c "/sbin/nologin"
 result:
   integer: 1
 fix: |
   [source,bash]
   ----
-  /usr/bin/dscl . -create /Users/root UserShell /usr/bin/false
+  /usr/bin/dscl . -create /Users/root UserShell /sbin/nologin
   ----
 references:
   cce:
