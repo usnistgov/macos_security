@@ -9,14 +9,20 @@ fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-  - CCE-95528-6
+    - CCE-95528-6
+  cci:
+    - N/A  
   800-53r5:
-  - AC-20
-  - CM-7
-  - CM-7(1)
-  - SC-7(10)
+    - AC-20
+    - CM-7
+    -  CM-7(1)
+    - SC-7(10)
   indigo:
-  - ANNEX K
+    - ANNEX K
+  sfr:
+    - N/A
+  disa_stig:
+    - N/A  
 iOS:
 - "26.0"
 tags:
