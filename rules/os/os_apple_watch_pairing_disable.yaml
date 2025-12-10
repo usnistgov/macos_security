@@ -1,10 +1,10 @@
 id: os_apple_watch_pairing_disable
-title: "Ensure Apple Watch Pairing is Disabled"
+title: Ensure Apple Watch Pairing is Disabled
 discussion: |
   Pairing an Apple Watch _MUST_ be disabled.
-  
+
   NOTE: Any currently paired Apple Watch is unpaired and the watch's content is erased.
-check: " "
+check: ' '
 fix: |
   This is implemented by a Configuration Profile
 references:
@@ -18,9 +18,9 @@ references:
     - CM-7
     - CM-7(1)
   sfr:
-    - "FMT_SMF_EXT.1.1 #47"
+    - 'FMT_SMF_EXT.1.1 #47'
   disa_stig:
-    - N/A
+    - AIOS-18-012600
   indigo:
     - ANNEX K
   cis:
@@ -29,7 +29,7 @@ references:
     controls v8:
       - N/A
 iOS:
-  - "26.0"
+  - '26.0'
 tags:
   - ios
   - 800-53r5_low
@@ -40,6 +40,7 @@ tags:
   - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
+  - ios_stig
 severity: medium
 supervised: true
 mobileconfig: true

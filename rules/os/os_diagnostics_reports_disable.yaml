@@ -1,35 +1,35 @@
 id: os_diagnostics_reports_disable
-title: "Disable Sending Diagnostic and Usage Data to Apple"
+title: Disable Sending Diagnostic and Usage Data to Apple
 discussion: |
   The ability to submit diagnostic data to Apple _MUST_ be disabled.
-  
-  The information system _MUST_ be configured to provide only essential capabilities. Disabling the submission of diagnostic and usage information will mitigate the risk of unwanted data being sent to Apple. 
-check: " "
+
+  The information system _MUST_ be configured to provide only essential capabilities. Disabling the submission of diagnostic and usage information will mitigate the risk of unwanted data being sent to Apple.
+check: ' '
 fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
     - N/A
-  cci: 
+  cci:
     - CCI-001199
   800-53r5:
     - AC-20
     - SC-7(10)
     - SI-11
   sfr:
-    - "FMT_SMF_EXT.1.1 #47a"
+    - 'FMT_SMF_EXT.1.1 #47a'
   disa_stig:
-    - N/A
+    - AIOS-18-013400
   indigo:
     - ANNEX K
   cis:
-    benchmark: 
+    benchmark:
       - 2.2.1.12 (level 1 - End-User Owned Devices)
       - 3.2.1.25 (level 1 - Institutionally-Owned Devices)
     controls v8:
       - 4.8
 iOS:
-  - "26.0"
+  - '26.0'
 tags:
   - ios
   - 800-53r5_low
@@ -45,7 +45,8 @@ tags:
   - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
-severity: "medium"
+  - ios_stig
+severity: medium
 supervised: false
 mobileconfig: true
 mobileconfig_info:

@@ -1,35 +1,36 @@
 id: os_marketplace_prevent
-title: "Prevent Third Party Marketplaces"
+title: Prevent Third Party Marketplaces
 discussion: |
   The iOS device _MUST_ be configured to prevent third party marketplaces from being installed.
-check: " "
+check: ' '
 fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-   - CCE-95495-8
+    - CCE-95495-8
   cci:
-   - CCI-000366
+    - CCI-000366
   sfr:
-   - "FMT_MOF_EXT.1.2 #47"
+    - 'FMT_MOF_EXT.1.2 #47'
   800-53r5:
-   - CM-11
+    - CM-11
   disa_stig:
-   - N/A
+    - AIOS-18-014900
   indigo:
-   - ANNEX K
+    - ANNEX K
 iOS:
-- "26.0"
+  - '26.0'
 tags:
-- ios
-- indigo_base
-- indigo_high
-- 800-53r5_low
-- 800-53r5_moderate
-- 800-53r5_high
-- cnssi-1253_moderate
-- cnssi-1253_low
-- cnssi-1253_high
+  - ios
+  - indigo_base
+  - indigo_high
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_high
+  - cnssi-1253_moderate
+  - cnssi-1253_low
+  - cnssi-1253_high
+  - ios_stig
 severity: medium
 supervised: true
 mobileconfig: true

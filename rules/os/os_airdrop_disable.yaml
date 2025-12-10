@@ -1,16 +1,16 @@
 id: os_airdrop_disable
-title: "Ensure AirDrop is set to Disabled"
+title: Ensure AirDrop is set to Disabled
 discussion: |
   AirDrop _MUST_ be disabled to prevent file transfers to or from unauthorized devices.
-  
-  AirDrop allows users to share and receive files from other nearby Apple devices. 
-check: " "
+
+  AirDrop allows users to share and receive files from other nearby Apple devices.
+check: ' '
 fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
     - N/A
-  cci: 
+  cci:
     - CCI-002536
     - CCI-000366
     - CCI-000097
@@ -21,10 +21,11 @@ references:
     - CM-7
     - CM-7(1)
   sfr:
-    - "FMT_SMF_EXT.1.1/WLAN"
-    - "FMT_SMF_EXT.1.1 #47"
+    - FMT_SMF_EXT.1.1/WLAN
+    - 'FMT_SMF_EXT.1.1 #47'
   disa_stig:
-    - N/A
+    - AIOS-18-010200
+    - AIOS-18-012500
   indigo:
     - ANNEX K
   cis:
@@ -33,7 +34,7 @@ references:
     controls v8:
       - N/A
 iOS:
-  - "26.0"
+  - '26.0'
 tags:
   - ios
   - 800-53r5_low
@@ -44,7 +45,8 @@ tags:
   - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
-severity: "medium"
+  - ios_stig
+severity: medium
 supervised: true
 mobileconfig: true
 mobileconfig_info:

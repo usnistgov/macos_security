@@ -1,8 +1,8 @@
 id: icloud_shared_photo_stream_disable
-title: "Ensure Shared Photo Stream is set to Disabled"
+title: Ensure Shared Photo Stream is set to Disabled
 discussion: |
   If a user is able to configure the security setting, the user could inadvertently or maliciously set it to a value that poses unacceptable risk to DoD information systems. An adversary could exploit vulnerabilities created by the weaker configuration to compromise DoD sensitive information.
-check: " "
+check: ' '
 fix: |
   This is implemented by a Configuration Profile
 references:
@@ -19,11 +19,11 @@ references:
     - CM-7(1)
     - SC-7(10)
   sfr:
-    - "FMT_MOF_EXT.1.2 #40"
+    - 'FMT_MOF_EXT.1.2 #40'
   disa_stig:
-    - N/A
+    - AIOS-18-003500
   indigo:
-    - ANNEX D (Section 5.4 - iCloud restrictions) 
+    - ANNEX D (Section 5.4 - iCloud restrictions)
     - ANNEX K
   cis:
     benchmark:
@@ -31,7 +31,7 @@ references:
     controls v8:
       - N/A
 iOS:
-  - "26.0"
+  - '26.0'
 tags:
   - ios
   - 800-53r5_low
@@ -41,7 +41,8 @@ tags:
   - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
-severity: "medium"
+  - ios_stig
+severity: medium
 supervised: false
 mobileconfig: true
 mobileconfig_info:

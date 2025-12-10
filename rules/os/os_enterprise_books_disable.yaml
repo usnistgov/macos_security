@@ -1,8 +1,8 @@
 id: os_enterprise_books_disable
-title: "Ensure Backup of Enterprise Books is set to Disabled"
+title: Ensure Backup of Enterprise Books is set to Disabled
 discussion: |
   If a user is able to configure the security setting, the user could inadvertently or maliciously set it to a value that poses unacceptable risk to DoD information systems. An adversary could exploit vulnerabilities created by the weaker configuration to compromise DoD sensitive information.
-check: " "
+check: ' '
 fix: This is implemented by a Configuration Profile
 references:
   cce:
@@ -13,9 +13,9 @@ references:
   800-53r5:
     - CM-6
   sfr:
-    - "FMT_MOF_EXT.1.2 #40"
+    - 'FMT_MOF_EXT.1.2 #40'
   disa_stig:
-    - N/A
+    - AIOS-18-003700
   indigo:
     - ANNEX K
   cis:
@@ -24,12 +24,12 @@ references:
     controls v8:
       - N/A
 iOS:
-  - "26.0"
+  - '26.0'
 tags:
   - ios
   - ios_stig
   - indigo_high
-severity: "medium"
+severity: medium
 supervised: false
 mobileconfig: true
 mobileconfig_info:

@@ -1,21 +1,26 @@
 id: os_esim_transfers_disable
-title: "Ensure the ability to transfer an eSIM is set to Disabled"
+title: Ensure the ability to transfer an eSIM is set to Disabled
 discussion: |
   Outgoing transfers of eSIMs _MUST_ be disabled.
-check: " "
+check: ' '
 fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
     - N/A
-  cci: 
-    - N/A
+  cci:
+    - CCI-000366
   800-53r5:
     - N/A
+  sfr:
+    - 'FMT_MOF_EXT.1.2 #47'
+  disa_stig:
+    - AIOS-18-017900
 iOS:
-  - "26.0"
+  - '26.0'
 tags:
   - ios
+  - ios_stig
 supervised: false
 mobileconfig: true
 mobileconfig_info:

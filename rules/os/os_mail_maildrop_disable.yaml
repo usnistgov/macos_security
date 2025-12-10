@@ -1,14 +1,14 @@
 id: os_mail_maildrop_disable
-title: "Ensure Allow Mail Drop is Set to Disabled"
+title: Ensure Allow Mail Drop is Set to Disabled
 discussion: |
   Mail Drop _MUST_ be disabled.
-check: " "
+check: ' '
 fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
     - N/A
-  cci: 
+  cci:
     - CCI-000366
     - CCI-000370
     - CCI-002314
@@ -19,11 +19,11 @@ references:
     - CM-7(1)
     - SC-07(10)
   sfr:
-    - "FMT_SMF_EXT.1.1 #47"
+    - 'FMT_SMF_EXT.1.1 #47'
   disa_stig:
-    - N/A
+    - AIOS-18-011000
   indigo:
-    - ANNEX D (Section 5.6.1 - Mail) 
+    - ANNEX D (Section 5.6.1 - Mail)
   cis:
     benchmark:
       - 2.7.2 (level 2 - End-User Owned Devices)
@@ -31,7 +31,7 @@ references:
     controls v8:
       - 3.3
 iOS:
-  - "26.0"
+  - '26.0'
 tags:
   - ios
   - 800-53r5_low
@@ -45,7 +45,8 @@ tags:
   - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
-severity: "medium"
+  - ios_stig
+severity: medium
 supervised: false
 mobileconfig: true
 mobileconfig_info:

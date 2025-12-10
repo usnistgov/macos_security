@@ -1,5 +1,5 @@
 id: os_movie_content_allowed
-title: "Disable Movie Content"
+title: Disable Movie Content
 discussion: |
   Movie Rating content _MUST_ be set to $ODV on the device.
 
@@ -12,7 +12,7 @@ discussion: |
   - `200`: PG
   - `100`: G
   - `0`: None
-check: " "
+check: ' '
 fix: |
   This is implemented by a Configuration Profile.
 references:
@@ -25,13 +25,13 @@ references:
   sfr:
     - 'FMT_MOF_EXT.1.2 #47'
   disa_stig:
-    - AIOS-26-017000
+    - AIOS-18-017000
   indigo:
     - N/A
 iOS:
-  - "26.0"
+  - '26.0'
 odv:
-  hint: "Ratings Level"
+  hint: Ratings Level
   recommended: 0
   ios_stig: 0
 tags:

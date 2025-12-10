@@ -1,8 +1,8 @@
 id: os_disallow_enterprise_app_trust
-title: "Disallow Apps to be Installed from Unauthorized Sources"
+title: Disallow Apps to be Installed from Unauthorized Sources
 discussion: |
   Apps _MUST_ be installed from authorized application repositories. Disallowing enterprise app trust prevents apps from being provisioned by universal provisioning profiles.
-check: " "
+check: ' '
 fix: This is implemented by a Configuration Profile
 references:
   cce:
@@ -12,18 +12,18 @@ references:
   800-53r5:
     - CM-11
   sfr:
-    - "FMT_SMF_EXT.1.1 #8a"
+    - 'FMT_SMF_EXT.1.1 #8a'
   disa_stig:
-    - N/A
+    - AIOS-18-007000
   indigo:
-    - ANNEX D - (Section 5.8.5) 
+    - ANNEX D - (Section 5.8.5)
   cis:
     benchmark:
       - N/A
     controls v8:
       - N/A
 iOS:
-  - "26.0"
+  - '26.0'
 tags:
   - ios
   - 800-53r5_low
@@ -34,6 +34,7 @@ tags:
   - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
+  - ios_stig
 severity: low
 supervised: false
 mobileconfig: true

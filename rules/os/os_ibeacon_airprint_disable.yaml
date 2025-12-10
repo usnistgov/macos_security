@@ -1,31 +1,31 @@
 id: os_ibeacon_airprint_disable
-title: "Disable Discovery of AirPrint Printers using iBeacons"
+title: Disable Discovery of AirPrint Printers using iBeacons
 discussion: |
   iBeacon discovery _MUST_ be disabled to prevent AirPrint Bluebooth beacons from being potentially exploited for network phishing.
-check: " "
+check: ' '
 fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
     - N/A
   cci:
-    - CCI-000366  
+    - CCI-000366
   800-53r5:
     - CM-6
   sfr:
-    - 'FMT_MOF_EXT.1.2 #47'    
+    - 'FMT_MOF_EXT.1.2 #47'
   disa_stig:
-    - AIOS-26-016700
+    - AIOS-18-016700
   indigo:
     - N/A
 iOS:
-  - "26.0"
+  - '26.0'
 tags:
   - ios
   - ios_stig
   - 800-53r5_low
   - 800-53r5_moderate
-  - 800-53r5_high 
+  - 800-53r5_high
 supervised: true
 mobileconfig: true
 mobileconfig_info:

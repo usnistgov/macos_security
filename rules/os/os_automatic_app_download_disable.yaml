@@ -1,8 +1,8 @@
 id: os_automatic_app_download_disable
-title: "Disallow Automatic Downloads of Apps Purchased on other Apple Devices."
+title: Disallow Automatic Downloads of Apps Purchased on other Apple Devices.
 discussion: |
   The automatic download of apps to a mobile device could cause the exposure of sensitive  information when an unauthorized app is installed.
-check: " "
+check: ' '
 fix: |
   This is implemented by a Configuration Profile.
 references:
@@ -16,17 +16,17 @@ references:
   sfr:
     - 'FMT_MOF_EXT.1.2 #47'
   disa_stig:
-    - AIOS-18-016400
+    - AIOS-18-016200
   indigo:
     - N/A
 iOS:
-  - "18.0"
+  - '26.0'
 tags:
   - ios
-  - ios_stig  
+  - ios_stig
   - 800-53r5_low
   - 800-53r5_moderate
-  - 800-53r5_high  
+  - 800-53r5_high
 supervised: true
 mobileconfig: true
 mobileconfig_info:

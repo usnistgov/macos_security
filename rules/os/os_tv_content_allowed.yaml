@@ -1,5 +1,5 @@
 id: os_tv_content_allowed
-title: "Disable TV Content"
+title: Disable TV Content
 discussion: |
   TV Rating content _MUST_ be set to $ODV on the device.
 
@@ -13,7 +13,7 @@ discussion: |
   - `200`: TV-Y7
   - `100`: TV-Y
   - `0`: None
-check: " "
+check: ' '
 fix: |
   This is implemented by a Configuration Profile.
 references:
@@ -26,13 +26,13 @@ references:
   sfr:
     - 'FMT_MOF_EXT.1.2 #47'
   disa_stig:
-    - AIOS-26-017100
+    - AIOS-18-017100
   indigo:
     - N/A
 iOS:
-  - "26.0"
+  - '26.0'
 odv:
-  hint: "Ratings Level"
+  hint: Ratings Level
   recommended: 0
   ios_stig: 0
 tags:
