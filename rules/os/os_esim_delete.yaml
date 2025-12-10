@@ -15,7 +15,7 @@ references:
   sfr:
     - 'FMT_MOF_EXT.1.2 #47'
   disa_stig:
-    - AIOS-18-015100
+    - AIOS-26-015100
 iOS:
   - '26.0'
 tags:

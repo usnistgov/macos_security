@@ -19,7 +19,7 @@ references:
   sfr:
     - 'FMT_MOF_EXT.1.2 #47'
   disa_stig:
-    - AIOS-18-015400
+    - AIOS-26-015400
   cis:
     benchmark:
       - 2.9.1 (level 1 - End-User Owned Devices)

@@ -1,35 +1,43 @@
-id: os_image_playground_disable
-title: Ensure the Ability to Use AI Image Generation is Set to Disabled
+id: os_bluetooth_modification_disable
+title: "Bluetooth Status Modification Disabled"
 discussion: |
-  AI image generation _MUST_ be disabled.
-check: ' '
+  The ability to enable or disable Bluetooth _MUST_ be disabled. 
+check: " "
 fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-    - CCE-95482-6
+    - N/A
   cci:
     - CCI-000366
   800-53r5:
     - CM-7
     - CM-7(1)
+    - SC-07(10)
   sfr:
-    - 'FMT_MOF_EXT.1.2 #47'
+    - 'FMT_SMF.1.1 #47'
   disa_stig:
-    - AIOS-26-017300
+    - AIOS-26-018200
+  indigo:
+    - N/A
+  cis:
+    benchmark:
+      - N/A
+    controls v8:
+      - N/A
 iOS:
-  - '26.0'
+  - "26.0"
 tags:
   - ios
+  - ios_stig
   - 800-53r5_low
   - 800-53r5_moderate
   - 800-53r5_high
   - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
-  - ios_stig
 supervised: false
 mobileconfig: true
 mobileconfig_info:
   com.apple.applicationaccess:
-    allowImagePlayground: false
+    allowScreenShot: false

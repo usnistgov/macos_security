@@ -21,7 +21,7 @@ references:
   sfr:
     - 'FMT_SMF_EXT.1.1 #47'
   disa_stig:
-    - AIOS-18-003450
+    - AIOS-26-003450
   indigo:
     - ANNEX D (Section 5.4 - iCloud restrictions)
     - ANNEX K

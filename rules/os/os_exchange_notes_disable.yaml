@@ -20,7 +20,7 @@ references:
     controls v8:
       - N/A
   disa_stig:
-    - AIOS-18-011300
+    - AIOS-26-011300
 iOS:
   - '26.0'
 tags:

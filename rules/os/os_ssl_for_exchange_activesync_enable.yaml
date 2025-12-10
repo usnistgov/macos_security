@@ -15,7 +15,7 @@ references:
   sfr:
     - 'FMT_SMF_EXT.1.1 #47'
   disa_stig:
-    - AIOS-18-011300
+    - AIOS-26-011300
   indigo:
     - ANNEX D (Section 5.6.1 - Mail)
   cis:

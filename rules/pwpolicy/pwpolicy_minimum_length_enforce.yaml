@@ -17,7 +17,7 @@ references:
   sfr:
     - 'FMT_SMF_EXT.1.1 #1a'
   disa_stig:
-    - AIOS-18-006500
+    - AIOS-26-006500
   indigo:
     - ANNEX D (Section 5.9 - Device authentication)
     - ANNEX K

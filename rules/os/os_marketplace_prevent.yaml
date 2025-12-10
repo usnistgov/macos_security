@@ -15,7 +15,7 @@ references:
   800-53r5:
     - CM-11
   disa_stig:
-    - AIOS-18-014900
+    - AIOS-26-014900
   indigo:
     - ANNEX K
 iOS:

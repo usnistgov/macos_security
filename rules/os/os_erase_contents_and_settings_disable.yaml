@@ -17,7 +17,7 @@ references:
   sfr:
     - 'FMT_SMF.1.1 #47'
   disa_stig:
-    - AIOS-18-016000
+    - AIOS-26-016000
   cis:
     benchmark:
       - 3.2.1.12 (level 1 - Institutionally-Owned Devices)

@@ -19,7 +19,7 @@ references:
   sfr:
     - N/A
   disa_stig:
-    - AIOS-18-015500
+    - AIOS-26-015500
   indigo:
     - ANNEX K
   cis:

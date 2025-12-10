@@ -21,7 +21,7 @@ references:
   sfr:
     - 'FMT_SMF_EXT.1.1 #3'
   disa_stig:
-    - AIOS-18-001000
+    - AIOS-26-001000
   indigo:
     - ANNEX D (Section 5.10.3 - Manual VPN)
   cis:

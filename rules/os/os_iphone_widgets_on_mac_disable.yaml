@@ -16,7 +16,7 @@ references:
   sfr:
     - 'FMT_SMF_EXT.1.1 #8b'
   disa_stig:
-    - AIOS-18-010850
+    - AIOS-26-010850
   cis:
     benchmark:
       - N/A
