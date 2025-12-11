@@ -2,6 +2,7 @@ id: os_hide_apps_disable
 title: Disable Ability to Hide Apps
 discussion: |
   Hidden apps cannot be seen by enterprise management applications (e.g., MDM server), and therefore, unauthorized apps or apps with embedded malware could be installed and hidden from the MDM or mobile threat detection (MTD) apps. Hidden apps may lead to the compromise of sensitive data.
+check: ' '
 fix: |
   This is implemented by a Configuration Profile.
 references:
