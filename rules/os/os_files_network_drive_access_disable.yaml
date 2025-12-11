@@ -1,23 +1,31 @@
 id: os_files_network_drive_access_disable
-title: Ensure Allow network drive access in Files app is set to Disabled
+title: Ensure Allow Network Drive Access in Files App is Set to Disabled
 discussion: |
   Network drive access in Files app _MUST_ be disabled.
 check: ' '
-fix: This is implemented by a Configuration Profile.
+fix: |
+  This is implemented by a Configuration Profile.
 references:
   cce:
-  - CCE-95575-7
+    - N/A
+  cci:
+    - CCI-000366
+    - CCI-000097
+    - CCI-000370
   800-53r5:
-  - AC-20(2)
+    - AC-20(2)
+  sfr:
+    - 'FMT_SMF_EXT.1.1 #47'
+  disa_stig:
+    - AVOS-02-014300
 visionOS:
-- '26.0'
+  - '26.0'
 tags:
-- visionos
-- 800-53r5_moderate
-- 800-53r5_high
-- cnssi-1253_moderate
-- cnssi-1253_low
-- cnssi-1253_high
+  - visionos
+  - visionos_stig
+  - 800-53r5_moderate
+  - 800-53r5_high
+severity: medium
 supervised: true
 mobileconfig: true
 mobileconfig_info:

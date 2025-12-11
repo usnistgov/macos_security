@@ -4,24 +4,30 @@ discussion: |
   The device _MUST_ be configured to disable copy/paste of data from managed
   to unmanaged applications.
 
-
   If ''true'', copy and paste functionality respects the ''allowOpenFromManagedToUnmanaged''
   and ''allowOpenFromUnmanagedToManaged'' restrictions.
 check: ' '
 fix: This is implemented by a Configuration Profile.
 references:
   cce:
-  - CCE-95589-8
+    - CCE-95589-8
+  cci:
+    - CCI-000366
   800-53r5:
-  - AC-23
-  - SC-7(10)
+    - AC-23
+    - SC-7(10)
+  sfr:
+    - 'FMT_SMF.1.1 #47'
+  disa_stig:
+    - AVOS-02-014600
 visionOS:
-- '26.0'
+  - '26.0'
 tags:
-- visionos
-- cnssi-1253_moderate
-- cnssi-1253_low
-- cnssi-1253_high
+  - visionos
+  - visionos_stig
+  - cnssi-1253_moderate
+  - cnssi-1253_low
+  - cnssi-1253_high
 supervised: false
 mobileconfig: true
 mobileconfig_info:

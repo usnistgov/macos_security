@@ -1,0 +1,43 @@
+id: supplemental_stig
+title: "DISA STIG Supplemental"
+discussion: |
+  These controls are controls that require additional considerations for your environment. 
+  
+  [cols="20%h, 80%a"]
+  |===
+  |STIG ID
+  |Rule Title
+  |AVOS-02-001000| Apple visionOS 2 must allow the administrator (MDM) to perform the following management function: enable/disable VPN protection across the device and [selection: on a per-app basis, on a per-group of applications processes basis].
+  |AVOS-02-008400| Apple visionOS 2 must be configured to display the DOD advisory warning message at startup or each time the user unlocks the device.
+  |AVOS-02-009900| Apple visionOS 2 must be configured to [selection: wipe protected data, wipe sensitive data] upon unenrollment from MDM.
+  |AVOS-02-010000| Apple visionOS 2 must be configured to [selection: remove Enterprise applications, remove all noncore applications (any nonfactory-installed application)] upon unenrollment from MDM.
+  |AVOS-02-011200| Vision Pro must have the latest available visionOS operating system installed.
+  |AVOS-02-011900| Apple visionOS 2 users must complete required training.
+  |AVOS-02-012000| A managed photo app must be used to take and store work-related photos.
+  |AVOS-02-013200| The Apple visionOS 2 must be supervised by the MDM.
+  |AVOS-02-013500| Apple visionOS must implement the management setting: not allow a user to remove Apple visionOS configuration profiles that enforce DOD security requirements.
+  |AVOS-02-014700| Apple visionOS 2 must have DOD root and intermediate PKI certificates installed.
+  |AVOS-02-015900| Apple Vision Pro hardware must not be modified to use the Developer Strap unless use is approved on a case-by-case basis by the authorizing official (AO).
+  |AVOS-02-017700| DOD Apple visionOS 2 devices must have a Mobile Threat Detection (MTD) app installed.
+  |AVOS-02-019000| Apple visionOS 2 must implement the management setting: disable the Bluetooth radio.
+  |===
+check: |
+fix: |
+references:
+  cci:
+    - N/A
+  800-53r5:
+    - N/A
+  800-53r4:
+    - N/A
+  srg:
+    - N/A
+  disa_stig:
+    - N/A
+visionos:
+  - "26.0"
+tags:
+  - supplemental
+  - visionos_stig
+mobileconfig: false
+mobileconfig_info:
