@@ -28,6 +28,7 @@ iOS:
   - '26.0'
 tags:
   - ios
+  - ios_stig
   - 800-53r5_moderate
   - 800-53r5_high
   - cis_lvl1_byod
@@ -40,7 +41,6 @@ tags:
   - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
-  - ios_stig
 severity: medium
 supervised: false
 mobileconfig: true

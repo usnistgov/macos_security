@@ -40,4 +40,4 @@ supervised: false
 mobileconfig: true
 mobileconfig_info:
   com.apple.applicationaccess:
-    allowScreenShot: false
+    allowBluetoothModification: false
