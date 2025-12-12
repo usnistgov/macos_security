@@ -1,6 +1,7 @@
 # mscp/generate/documents.py
 
 # Standard python modules
+import gettext
 import re
 import sys
 from collections.abc import Mapping
@@ -292,6 +293,7 @@ def render_template(
     misc_dir: str,
     logo_dir: str,
     output_format: str = "adoc",
+    language: str = "en",
 ) -> None:
     """
     Renders the template with the provided parameters and writes the output to a file.
@@ -313,12 +315,19 @@ def render_template(
     Returns:
         None
     """
+    translations = gettext.translation(
+        domain="messages",
+        localedir=config["defaults"]["locales_dir"],
+        languages=[language],
+        fallback=True
+    )
 
     env: Environment = Environment(
         loader=FileSystemLoader(template_dir),
         trim_blocks=True,
         lstrip_blocks=True,
         autoescape=False,
+        extensions=["jinja2.ext.i18n"],
     )
 
     styles_dir: Path = Path(misc_dir).absolute()
@@ -332,6 +341,7 @@ def render_template(
     env.filters["mobileconfig_payloads_to_xml"] = (
         Macsecurityrule.mobileconfig_info_to_xml
     )
+    env.install_gettext_translations(translations)
 
     if output_format == "markdown":
         env.filters["group_ulify"] = group_ulify_md
@@ -341,7 +351,7 @@ def render_template(
     template: Template = env.get_template(template_name)
 
     baseline_dict: dict[str, Any] = baseline.model_dump()
-    acronyms_data: dict[str, Any] = open_file(acronyms_file)
+    acronyms_data: dict[str, Any] = open_file(acronyms_file, language)
 
     html_title, html_subtitle = map(str.strip, baseline.title.split(":", 1))
     document_subtitle2: str = ":document-subtitle2:"
@@ -386,6 +396,7 @@ def generate_documents(
     show_all_tags: bool = False,
     custom: bool = False,
     output_format: str = "adoc",
+    language: str = "en",
 ) -> None:
     template_dir: str = config["defaults"]["documents_templates_dir"]
     misc_dir: str = config["defaults"]["misc_dir"]
@@ -411,6 +422,7 @@ def generate_documents(
         misc_dir,
         logo_dir,
         output_format,
+        language,
     )
 
     if output_format == "adoc":

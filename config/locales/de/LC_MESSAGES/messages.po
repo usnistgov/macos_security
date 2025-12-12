@@ -1,0 +1,135 @@
+# German translations for PROJECT.
+# Copyright (C) 2025 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2025.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2025-08-19 10:20-0400\n"
+"PO-Revision-Date: 2025-08-19 10:20-0400\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: de\n"
+"Language-Team: de <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.17.0\n"
+
+#: default/templates/documents/foreword.jinja:1
+msgid "Foreword"
+msgstr "Vorwort"
+
+#: default/templates/documents/foreword.jinja:3
+msgid ""
+"The macOS Security Compliance Project is an open source effort to provide"
+" a programmatic approach to generating security guidance. The "
+"configuration settings in this document were derived from National "
+"Institute of Standards and Technology (NIST) Special Publication (SP) "
+"800-53, _Security and Privacy Controls for Information Systems and "
+"Organizations_, Revision 5."
+msgstr "Das macOS Security Compliance Project ist ein Open-Source-Projekt, das einen programmatischen Ansatz zur Erstellung von Sicherheitsrichtlinien bietet. Die Konfigurationseinstellungen in diesem Dokument stammen aus der Sonderveröffentlichung (SP) 800-53 des National Institute of Standards and Technology (NIST), Revision 5."
+
+#: default/templates/documents/foreword.jinja:5
+msgid ""
+"This project can be used as a resource to easily create customized "
+"security baselines of technical security controls by leveraging a library"
+" of atomic actions which are mapped to the compliance requirements "
+"defined in NIST SP 800-53 (Rev. 5). It can also be used to develop "
+"customized guidance to meet the particular cybersecurity needs of any "
+"organization."
+msgstr "Dieses Projekt dient als Ressource zur einfachen Erstellung individueller Sicherheitsgrundlagen für technische Sicherheitskontrollen. Dabei wird eine Bibliothek atomarer Aktionen genutzt, die den Compliance-Anforderungen des NIST SP 800-53 (Rev. 5) entsprechen. Darüber hinaus können damit individuelle Leitlinien entwickelt werden, die den spezifischen Cybersicherheitsanforderungen jeder Organisation gerecht werden."
+
+#: default/templates/documents/foreword.jinja:7
+msgid ""
+"The objective of this effort was to simplify and radically accelerate the"
+" process of producing up-to-date macOS security guidance that is also "
+"accessible to any organization and tailorable to meet each organization's"
+" specific security needs."
+msgstr "Ziel dieser Bemühungen war es, den Prozess der Erstellung aktueller macOS-Sicherheitsrichtlinien zu vereinfachen und drastisch zu beschleunigen. Diese Richtlinien sollen zudem für jedes Unternehmen zugänglich und an die spezifischen Sicherheitsanforderungen jedes Unternehmens anpassbar sein."
+
+#: default/templates/documents/foreword.jinja:9
+msgid ""
+"Any and all risk based decisions to tailor the content produced by this "
+"project in order to meet the needs of a specific organization shall be "
+"approved by the responsible Information System Owner (ISO) and "
+"Authorizing Official (AO) and formally documented in their System "
+"Security Plan (SSP). While the project attempts to provide settings to "
+"meet compliance requirements, it is recommended that each rule be "
+"reviewed by your organization's Information System Security Officer "
+"(ISSO) prior to implementation."
+msgstr "Alle risikobasierten Entscheidungen zur Anpassung der im Rahmen dieses Projekts erstellten Inhalte an die Anforderungen einer bestimmten Organisation müssen vom zuständigen Informationssysteminhaber (ISO) und dem zuständigen Autorisierungsbeauftragten (AO) genehmigt und im jeweiligen Systemsicherheitsplan (SSP) formal dokumentiert werden. Obwohl das Projekt versucht, Einstellungen zur Einhaltung der Compliance-Anforderungen bereitzustellen, wird empfohlen, jede Regel vor der Implementierung vom Informationssystemsicherheitsbeauftragten (ISSO) Ihrer Organisation zu überprüfen."
+
+#: default/templates/documents/scope.jinja:2
+msgid "Scope"
+msgstr "Umfang"
+
+#: default/templates/documents/adoc/additional_docs.adoc.jinja:1
+msgid "Applicable Documents"
+msgstr "Mitgeltende Unterlagen"
+
+#: default/templates/documents/adoc/additional_docs.adoc.jinja:3
+msgid "Government Documents"
+msgstr "Regierungsdokumente"
+
+#: default/templates/documents/adoc/additional_docs.adoc.jinja:8
+#: default/templates/documents/adoc/additional_docs.adoc.jinja:20
+#: default/templates/documents/adoc/additional_docs.adoc.jinja:51
+#: default/templates/documents/adoc/additional_docs.adoc.jinja:59
+#: default/templates/documents/adoc/additional_docs.adoc.jinja:69
+#: default/templates/documents/adoc/additional_docs.adoc.jinja:80
+msgid "Document Number or Descriptor"
+msgstr "Dokumentnummer oder -beschreibung"
+
+#: default/templates/documents/adoc/additional_docs.adoc.jinja:9
+#: default/templates/documents/adoc/additional_docs.adoc.jinja:21
+#: default/templates/documents/adoc/additional_docs.adoc.jinja:52
+#: default/templates/documents/adoc/additional_docs.adoc.jinja:60
+#: default/templates/documents/adoc/additional_docs.adoc.jinja:70
+#: default/templates/documents/adoc/additional_docs.adoc.jinja:81
+msgid "Document Title"
+msgstr "Dokumenttitel"
+
+#: default/templates/documents/adoc/additional_docs.adoc.jinja:64
+msgid "Non-Government Documents"
+msgstr "Nichtstaatliche Dokumente"
+
+#: default/templates/documents/adoc/rule.adoc.jinja:14
+msgid ""
+" This rule is marked as manual and may not be able to be automated. It is"
+" also excluded in the compliance scan and will not report any results. "
+msgstr "Diese Regel ist als manuell gekennzeichnet und kann möglicherweise nicht automatisiert werden. Sie ist außerdem vom Compliance-Scan ausgeschlossen und meldet keine Ergebnisse."
+
+#: default/templates/documents/adoc/rule.adoc.jinja:21
+msgid "To check the state of the system, run the following command(s)"
+msgstr "Um den Status des Systems zu überprüfen, führen Sie die folgenden Befehle aus"
+
+#: default/templates/documents/adoc/rule.adoc.jinja:35
+msgid "If the result is not"
+msgstr "Wenn das Ergebnis nicht"
+
+#: default/templates/documents/adoc/rule.adoc.jinja:35
+msgid "this is a finding"
+msgstr "Das ist eine Erkenntnis"
+
+#: default/templates/documents/adoc/rule.adoc.jinja:39
+msgid "Remediation Description"
+msgstr "Beschreibung der Sanierungsmaßnahme"
+
+#: default/templates/documents/adoc/rule.adoc.jinja:42
+msgid "Perform the following to configure the system to meet the requirements"
+msgstr "Führen Sie die folgenden Schritte aus, um das System so zu konfigurieren, dass es die Anforderungen erfüllt"
+
+#: default/templates/documents/adoc/rule.adoc.jinja:90
+msgid "References"
+msgstr "Referenzen"
+
+msgid ""
+"Operating System"
+msgstr "Betriebssystem"
+
+msgid ""
+"This section contains the configuration and enforcement of operating system settings.\n"
+msgstr "Dieser Abschnitt enthält die Konfiguration und Durchsetzung von Betriebssystemeinstellungen."

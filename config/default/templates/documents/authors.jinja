@@ -1,4 +1,5 @@
-{{ "== Authors" if format == "adoc" else "## Authors" }}
+{{ "== " if format == "adoc" else "## " }}{% trans %}Authors{% endtrans %}
+
 *macOS Security Compliance Project*
 
 {{ "CIS Critical Security Controls® (CIS Controls®) are referenced with the permission and support of the Center for Internet Security® (CIS®)" if "cis" in baseline.title else "" }}

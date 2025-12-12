@@ -1,3 +1,4 @@
-{{ "== Scope" if format == "adoc" else "## Scope" }}
+
+{{ "== " if format == "adoc" else "## " }}{% trans %}Scope{% endtrans %}
 
 {{ baseline.description }}
