@@ -1,5 +1,5 @@
 id: os_supported_operating_system
-title: Secure Name Address Resolution Service
+title: The macOS Version Must Be Supported by the Vendor
 discussion: |
   Unsupported software and systems should not be used because fixes to newly identified bugs will not be implemented by the vendor. The lack of support can result in potential vulnerabilities.
 
