@@ -1,5 +1,5 @@
 id: os_allow_prerelease_disable
-title: Disable the ability to install PreRelease Software
+title: Disable the Ability to Install PreRelease Software
 discussion: |
   Beta software may contain features that could lead to the compromise of sensitive information or provide a vector for the attack on a network.
 check: ' '
