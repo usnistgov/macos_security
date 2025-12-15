@@ -1,6 +1,6 @@
-title: "macOS 26.0: Security Configuration - Apple macOS 15 (Sequoia) STIG - Ver 1, Rel 4"
+title: "macOS 26.0: Security Configuration - Apple macOS 26 (Tahoe) STIG - Ver 1, Rel 1"
 description: |
-  This guide describes the actions to take when securing a macOS 26.0 system against the Apple macOS 15 (Sequoia) STIG - Ver 1, Rel 4 security baseline.
+  This guide describes the actions to take when securing a macOS 26.0 system against the Apple macOS 26 (Tahoe) STIG - Ver 1, Rel 1 security baseline.
 authors: |
   *macOS Security Compliance Project*
 
@@ -78,7 +78,6 @@ profile:
       - os_erase_content_and_settings_disable
       - os_facetime_app_disable
       - os_filevault_autologin_disable
-      - os_firmware_password_require
       - os_gatekeeper_enable
       - os_genmoji_disable
       - os_handoff_disable
