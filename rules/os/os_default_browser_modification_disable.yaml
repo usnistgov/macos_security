@@ -7,21 +7,21 @@ check: ' '
 fix: This is implemented by a Configuration Profile.
 references:
   cce:
-  - CCE-95569-0
+    - CCE-95569-0
   800-53r5:
-  - CM-7
-  - CM-6
-  - CM-6(1)
+    - CM-7
+    - CM-6
+    - CM-6(1)
 visionOS:
-- '2.4'
+  - '26.0'
 tags:
-- visionos
-- 800-53r5_low
-- 800-53r5_moderate
-- 800-53r5_high
-- cnssi-1253_moderate
-- cnssi-1253_low
-- cnssi-1253_high
+  - visionos
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_high
+  - cnssi-1253_moderate
+  - cnssi-1253_low
+  - cnssi-1253_high
 supervised: true
 mobileconfig: true
 mobileconfig_info:

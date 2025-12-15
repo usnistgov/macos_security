@@ -1,21 +1,21 @@
-id: os_genmoji_disable
-title: Ensure the ability to create Genmojis is set to Disabled
+id: os_allow_prerelease_disable
+title: Disable the Ability to Install PreRelease Software
 discussion: |
-  Use of Genmoji _MUST_ be disabled.
+  Beta software may contain features that could lead to the compromise of sensitive information or provide a vector for the attack on a network.
 check: ' '
 fix: This is implemented by a Configuration Profile.
 references:
   cce:
-    - CCE-95577-3
+    - N/A
   cci:
     - CCI-000366
   800-53r5:
+    - CM-6
     - CM-7
-    - CM-7(1)
   sfr:
     - 'FMT_MOF_EXT.1.2 #47'
   disa_stig:
-    - AVOS-02-017400
+    - AVOS-02-015500
 visionOS:
   - '26.0'
 tags:
@@ -30,5 +30,5 @@ tags:
 supervised: true
 mobileconfig: true
 mobileconfig_info:
-  com.apple.applicationaccess:
-    allowGenmoji: false
+  com.apple.softwareupdate:
+    AllowPreReleaseInstallation: false

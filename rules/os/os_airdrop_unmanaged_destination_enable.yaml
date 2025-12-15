@@ -6,24 +6,31 @@ check: ' '
 fix: This is implemented by a Configuration Profile.
 references:
   cce:
-  - CCE-95562-5
+    - CCE-95562-5
+  cci:
+    - CCI-002007
   800-53r5:
-  - AC-3
-  - AC-20
-  - CM-7
-  - CM-7(1)
-  - MP-2
-  - SC-7(10)
+    - AC-3
+    - AC-20
+    - CM-7
+    - CM-7(1)
+    - MP-2
+    - SC-7(10)
+  sfr:
+    - 'FMT_SMF.1.1 #47'
+  disa_stig:
+    - AVOS-02-011500
 visionOS:
-- '26.0'
+  - '26.0'
 tags:
-- visionos
-- 800-53r5_low
-- 800-53r5_moderate
-- 800-53r5_high
-- cnssi-1253_moderate
-- cnssi-1253_low
-- cnssi-1253_high
+  - visionos
+  - visionos_stig
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_high
+  - cnssi-1253_moderate
+  - cnssi-1253_low
+  - cnssi-1253_high
 supervised: false
 mobileconfig: true
 mobileconfig_info:

@@ -1,0 +1,59 @@
+title: "visionOS 26.0: Security Configuration - Apple visionOS 2 Security Technical Implementation Guide Release 1"
+description: |
+  This guide describes the actions to take when securing a visionOS 26.0 system against the Apple visionOS 2 Security Technical Implementation Guide Release 1 security baseline.
+authors: |
+  *macOS Security Compliance Project*
+
+  |===
+  |Bob Gendler|National Institute of Standards and Technology
+  |===
+parent_values: "visionos_stig"
+profile:
+  - section: "icloud"
+    rules:
+      - icloud_backup_disabled
+      - icloud_drive_disable
+      - icloud_keychain_disable
+      - icloud_managed_apps_store_data_disabled
+      - icloud_photos_disable
+  - section: "visionos"
+    rules:
+      - os_airdrop_disable
+      - os_airdrop_unmanaged_destination_enable
+      - os_allow_contacts_read_managed_sources_unmanaged_destinations_disable
+      - os_allow_contacts_write_managed_sources_unmanaged_destinations_disable
+      - os_allow_documents_managed_sources_unmanaged_destinations_disable
+      - os_allow_enterprise_trust_disabled
+      - os_allow_prerelease_disable
+      - os_diagnostics_reports_disable
+      - os_erase_contents_and_settings_disable
+      - os_external_intelligence_integration_disable
+      - os_external_intelligence_integration_sign_in_disable
+      - os_files_network_drive_access_disable
+      - os_genmoji_disable
+      - os_handoff_disable
+      - os_image_playground_disable
+      - os_lock_screen_notification_disable
+      - os_mail_maildrop_disable
+      - os_mail_move_messages_disable
+      - os_on_device_dictation_enforce
+      - os_password_autofill_disable
+      - os_password_sharing_disable
+      - os_require_managed_pasteboard_enforce
+      - os_safari_password_autofill_disable
+      - os_screenshots_disable
+      - os_ssl_for_exchange_activesync_enable
+  - section: "passwordpolicy"
+    rules:
+      - pwpolicy_account_lockout_enforce
+      - pwpolicy_force_pin_enable
+      - pwpolicy_history_enforce
+      - pwpolicy_max_inactivity_enforce
+      - pwpolicy_minimum_length_enforce
+      - pwpolicy_simple_sequence_disable
+  - section: "settings"
+    rules:
+      - settings_siri_disable
+  - section: "Supplemental"
+    rules:
+      - supplemental_stig

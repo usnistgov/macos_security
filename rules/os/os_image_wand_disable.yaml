@@ -7,12 +7,12 @@ result:
 fix: This is implemented by a Configuration Profile.
 references:
   cce:
-  - CCE-95580-7
+    - CCE-95580-7
   800-53r5:
-  - CM-7
-  - CM-7(1)
+    - CM-7
+    - CM-7(1)
 visionOS:
-- '2.4'
+  - '26.0'
 tags:
 - visionos
 - 800-53r5_low
