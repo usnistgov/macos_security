@@ -1,8 +1,8 @@
 id: icloud_drive_disable
-title: "Ensure Allow iCloud Documents and Data is set to Disabled"
+title: Ensure Allow iCloud Documents and Data is set to Disabled
 discussion: |
   Institutionally owned devices _MUST_ not sync data through iCloud.
-check: " "
+check: ' '
 fix: |
   This is implemented by a Configuration Profile.
 references:
@@ -19,11 +19,11 @@ references:
     - CM-7(1)
     - SC-7(10)
   sfr:
-    - "FMT_MOF_EXT.1.2 #40"
+    - 'FMT_MOF_EXT.1.2 #40'
   disa_stig:
-    - N/A
+    - AIOS-26-003200
   indigo:
-    - ANNEX D (Section 5.4 - iCloud restrictions) 
+    - ANNEX D (Section 5.4 - iCloud restrictions)
     - ANNEX K
   cis:
     benchmark:
@@ -31,7 +31,7 @@ references:
     controls v8:
       - 2.3
 iOS:
-  - "26.0"
+  - '26.0'
 tags:
   - ios
   - 800-53r5_low
@@ -44,7 +44,8 @@ tags:
   - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
-severity: "medium"
+  - ios_stig
+severity: medium
 supervised: true
 mobileconfig: true
 mobileconfig_info:

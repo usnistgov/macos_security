@@ -1,14 +1,14 @@
 id: os_mail_move_messages_disable
-title: "Ensure Allow User to Move Messages from This Account is Set to Disabled"
+title: Ensure Allow User to Move Messages from This Account is Set to Disabled
 discussion: |
-  Mail from institutionally configured mail accounts _MUST_ not be allowed to move to personal mail accounts.
-check: " "
+  Mail from institutionally configured mail accounts _MUST_ not be allowed to move to personal mail accounts to prevent data leakage.
+check: ' '
 fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
     - N/A
-  cci: 
+  cci:
     - CCI-000366
     - CCI-000370
     - CCI-000764
@@ -19,11 +19,11 @@ references:
     - SC-4
     - SC-07(10)
   sfr:
-    - "FMT_SMF_EXT.1.1 #47"
+    - 'FMT_SMF_EXT.1.1 #47'
   disa_stig:
-    - N/A
+    - AIOS-26-011400
   indigo:
-    - ANNEX D (Section 5.6.1 - Mail) 
+    - ANNEX D (Section 5.6.1 - Mail)
   cis:
     benchmark:
       - 2.7.1 (level 1 - End-User Owned Devices)
@@ -31,7 +31,7 @@ references:
     controls v8:
       - 3.3
 iOS:
-  - "26.0"
+  - '26.0'
 tags:
   - ios
   - 800-53r5_low
@@ -47,9 +47,10 @@ tags:
   - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
-severity: "medium"
+  - ios_stig
+severity: medium
 supervised: false
 mobileconfig: true
 mobileconfig_info:
   com.apple.mail.managed:
-    PreventMove: false
+    PreventMove: true

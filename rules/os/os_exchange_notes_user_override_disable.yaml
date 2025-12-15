@@ -1,7 +1,6 @@
 id: os_exchange_notes_user_override_disable
-title: "Ensure Notes service override is disabled for Exchange ActiveSync"
-discussion: |-
-  Exchange ActiveSync Notes service can be disabled for a user. Setting EnableNotesUserOverridable to false prevents the user from altering the service status.
+title: Ensure Notes service override is disabled for Exchange ActiveSync
+discussion: Exchange ActiveSync Notes service can be disabled for a user. Setting EnableNotesUserOverridable to false prevents the user from altering the service status.
 check: ' '
 fix: This is implemented by a Configuration Profile
 references:
@@ -14,18 +13,21 @@ references:
   sfr:
     - 'FMT_SMF_EXT.1.1 #47'
   indigo:
-    - ANNEX D (Section 5.6.1 - Mail) 
+    - ANNEX D (Section 5.6.1 - Mail)
   cis:
     benchmark:
       - N/A
     controls v8:
       - N/A
+  disa_stig:
+    - AIOS-26-011300
 iOS:
-  - "26.0"
+  - '26.0'
 tags:
   - ios
   - indigo_base
   - indigo_high
+  - ios_stig
 severity: medium
 supervised: false
 mobileconfig: true

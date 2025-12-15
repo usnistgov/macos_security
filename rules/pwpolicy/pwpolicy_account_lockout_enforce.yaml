@@ -1,10 +1,10 @@
 id: pwpolicy_account_lockout_enforce
-title: "Limit Consecutive Failed Login Attempts to $ODV"
+title: Limit Consecutive Failed Login Attempts to $ODV
 discussion: |
   The iOS _MUST_ be configured to limit the number of failed login attempts to a maximum of $ODV.
 
-  This rule protects against malicious users attempting to gain access to the system via brute-force hacking methods. 
-check: " "
+  This rule protects against malicious users attempting to gain access to the system via brute-force hacking methods.
+check: ' '
 fix: |
   This is implemented by a Configuration Profile.
 references:
@@ -15,10 +15,10 @@ references:
   800-53r5:
     - AC-7
   sfr:
-    - "FMT_SMF_EXT.1.1 #2c"
-    - 'FIA_AFL_EXT.1.5'
+    - 'FMT_SMF_EXT.1.1 #2c'
+    - FIA_AFL_EXT.1.5
   disa_stig:
-    - N/A
+    - AIOS-26-006900
   indigo:
     - ANNEX D (Section 5.9.1 - Device-Code)
     - ANNEX K
@@ -29,14 +29,14 @@ references:
     controls v8:
       - 4.3
 iOS:
-  - "26.0"
+  - '26.0'
 odv:
-  hint: "Number of failed attempts."
+  hint: Number of failed attempts.
   recommended: 6
   cis_lvl1_byod: 6
   cis_lvl2_byod: 6
   cis_lvl1_enterprise: 6
-  cis_lvl2_enterprise: 6  
+  cis_lvl2_enterprise: 6
   ios_stig: 10
   ios_stig_byoad: 10
   indigo_base: 10
@@ -56,7 +56,8 @@ tags:
   - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
-severity: "medium"
+  - ios_stig
+severity: medium
 supervised: false
 mobileconfig: true
 mobileconfig_info:

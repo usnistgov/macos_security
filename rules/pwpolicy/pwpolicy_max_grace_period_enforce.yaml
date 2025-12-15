@@ -1,24 +1,24 @@
 id: pwpolicy_max_grace_period_enforce
-title: "Ensure Maximum Grace Period for Device Lock is Set to Immediately"
+title: Ensure Maximum Grace Period for Device Lock is Set to Immediately
 discussion: |
   The iOS grace period for device lock _MUST_ be configured to immediately.
-check: " "
+check: ' '
 fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
     - N/A
-  cci: 
+  cci:
     - CCI-000057
   800-53r5:
     - AC-11
     - IA-11
   sfr:
-    - "FMT_SMF_EXT.1.1 #2a"
+    - 'FMT_SMF_EXT.1.1 #2a'
   disa_stig:
-    - N/A
+    - AIOS-26-006800
   indigo:
-    - ANNEX D (Section 5.9.1 - Device-Code) 
+    - ANNEX D (Section 5.9.1 - Device-Code)
   cis:
     benchmark:
       - 2.4.5 (level 1 - End-User Owned Devices)
@@ -26,9 +26,9 @@ references:
     controls v8:
       - 4.3
 iOS:
-  - "26.0"
+  - '26.0'
 odv:
-  hint: "Maximum Grace Period in Minutes."
+  hint: Maximum Grace Period in Minutes.
   recommended: 0
   cis_lvl1_byod: 0
   cis_lvl2_byod: 0
@@ -53,7 +53,8 @@ tags:
   - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
-severity: "medium"
+  - ios_stig
+severity: medium
 supervised: false
 mobileconfig: true
 mobileconfig_info:

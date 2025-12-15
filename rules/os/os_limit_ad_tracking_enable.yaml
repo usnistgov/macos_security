@@ -1,10 +1,10 @@
 id: os_limit_ad_tracking_enable
-title: "Enable Limit Ad Tracking"
+title: Enable Limit Ad Tracking
 discussion: |
   Ad tracking and targeted ads _MUST_ be disabled.
 
   The information system _MUST_ be configured to provide only essential capabilities. Disabling ad tracking ensures that applications and advertisers are unable to track users' interests and deliver targeted advertisements.
-check: " "
+check: ' '
 fix: |
   This is implemented by a Configuration Profile
 references:
@@ -20,9 +20,9 @@ references:
     - CM-7(1)
     - SC-7(10)
   sfr:
-    - "FMT_SMF_EXT.1.1 #47"
+    - 'FMT_SMF_EXT.1.1 #47'
   disa_stig:
-    - N/A
+    - AIOS-26-010500
   indigo:
     - ANNEX K
   cis:
@@ -31,7 +31,7 @@ references:
     controls v8:
       - 4.8
 iOS:
-  - "26.0"
+  - '26.0'
 tags:
   - ios
   - 800-53r5_low
@@ -42,6 +42,7 @@ tags:
   - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
+  - ios_stig
 severity: low
 supervised: false
 mobileconfig: true

@@ -1,14 +1,14 @@
 id: os_usb_accessories_when_locked_disable
-title: "Ensure Allow USB Accessories While the Device is Locked is Set to Disabled"
+title: Ensure Allow USB Accessories While the Device is Locked is Set to Disabled
 discussion: |
   USB devices _MUST_ not be allowed to connect while the device is locked.
-check: " "
+check: ' '
 fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
     - N/A
-  cci: 
+  cci:
     - CCI-000366
     - CCI-000097
     - CCI-000370
@@ -18,9 +18,9 @@ references:
     - SC-7(10)
     - SC-41
   sfr:
-    - "FMT_SMF_EXT.1.1 #47"
+    - 'FMT_SMF_EXT.1.1 #47'
   disa_stig:
-    - N/A
+    - AIOS-26-012200
   indigo:
     - ANNEX K
   cis:
@@ -29,7 +29,7 @@ references:
     controls v8:
       - 1.2
 iOS:
-  - "26.0"
+  - '26.0'
 tags:
   - ios
   - 800-53r5_low
@@ -43,7 +43,8 @@ tags:
   - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
-severity: "medium"
+  - ios_stig
+severity: medium
 supervised: true
 mobileconfig: true
 mobileconfig_info:

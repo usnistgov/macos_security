@@ -1,0 +1,31 @@
+id: os_hide_apps_disable
+title: Disable Ability to Hide Apps
+discussion: |
+  Hidden apps cannot be seen by enterprise management applications (e.g., MDM server), and therefore, unauthorized apps or apps with embedded malware could be installed and hidden from the MDM or mobile threat detection (MTD) apps. Hidden apps may lead to the compromise of sensitive data.
+check: ' '
+fix: |
+  This is implemented by a Configuration Profile.
+references:
+  cce:
+    - N/A
+  cci:
+    - CCI-000366 
+  800-53r5:
+    - CM-7
+    - CM-7(1)
+    - SC-07(10)
+  sfr:
+    - 'FMT_SMF.1.1 #47'
+  disa_stig:
+    - 'AIOS-26-015600'
+iOS:
+  - "26.0"  
+tags:
+  - ios
+  - ios_stig
+severity: medium
+supervised: true
+mobileconfig: true
+mobileconfig_info:
+  com.apple.applicationaccess:
+    allowAppsToBeHidden: false

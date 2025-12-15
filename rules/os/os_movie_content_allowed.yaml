@@ -1,0 +1,47 @@
+id: os_movie_content_allowed
+title: Disable Movie Content
+discussion: |
+  Movie Rating content _MUST_ be set to $ODV on the device.
+
+  Possible values, with the U.S. description of the rating level:
+
+  - `1000`: All
+  - `500`: NC-17
+  - `400`: R
+  - `300`: PG-13
+  - `200`: PG
+  - `100`: G
+  - `0`: None
+check: ' '
+fix: |
+  This is implemented by a Configuration Profile.
+references:
+  cce:
+    - N/A
+  cci:
+    - CCI-000366
+  800-53r5:
+    - CM-7
+  sfr:
+    - 'FMT_MOF_EXT.1.2 #47'
+  disa_stig:
+    - AIOS-26-017000
+  indigo:
+    - N/A
+iOS:
+  - '26.0'
+odv:
+  hint: Ratings Level
+  recommended: 0
+  ios_stig: 0
+tags:
+  - ios
+  - ios_stig
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_high
+supervised: false
+mobileconfig: true
+mobileconfig_info:
+  com.apple.applicationaccess:
+    ratingMovies: $ODV

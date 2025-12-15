@@ -1,35 +1,48 @@
 id: supplemental_stig
 title: "DISA STIG Supplemental"
 discussion: |
-  These controls are controls that require additional considerations for your environment. 
+  These are controls that require additional considerations for your environment.
   
   [cols="20%h, 80%a"]
   |===
   |STIG ID
   |Rule Title
 
-  |AIOS-18-007400 +
-  AIOS-18-707400| Apple iOS/iPadOS 18 allowlist must be configured to not include applications with the following characteristics: - Backs up MD data to non-DoD cloud servers (including user and application access to cloud backup services); - Transmits MD diagnostic data to non-DoD servers; - Allows synchronization of data or applications between devices associated with user; and - Allows unencrypted (or encrypted but not FIPS 140-2/FIPS 140-3 validated) data sharing with other MDs or printers.
-  |AIOS-18-008400 +
-  AIOS-18-708400| Apple iOS/iPadOS 18 must be configured to display the DoD advisory warning message at startup or each time the user unlocks the device.
-  |AIOS-18-009200 +
-  AIOS-18-709200| Apple iOS/iPadOS 18 must be configured to not allow backup of [all applications, configuration data] to locally connected systems.
-  |AIOS-18-009800| Apple iOS/iPadOS 18 must be configured to disable multi-user modes.
-  |AIOS-18-009900 +
-  AIOS-18-709900| Apple iOS/iPadOS 18 must be configured to [selection: wipe protected data, wipe sensitive data] upon un-enrollment from MDM.
-  |AIOS-18-010000|  Apple iOS/iPadOS 18 must be configured to [selection: remove Enterprise applications, remove all non-core applications (any non-factory installed application)] upon un-enrollment from MDM.
-  |AIOS-18-011200 +
-  AIOS-18-711200| iPhone and iPad must have the latest available iOS/iPadOS operating system installed.
-  |AIOS-18-011600| Apple iOS/iPadOS 18 must implement the management setting: Not have any Family Members in Family Sharing.
-  |AIOS-18-011700| Apple iOS/iPadOS 18 must implement the management setting: not share location data through iCloud.
-  |AIOS-18-011900 +
-  AIOS-18-711900| Apple iOS/iPadOS 18 users must complete required training.
-  |AIOS-18-012000 +
-  AIOS-18-712000| A managed photo app must be used to take and store work-related photos.
-  |AIOS-18-012650| Apple iOS/iPadOS 18 must implement the management setting: approved Apple Watches must be managed by an MDM.
-  |AIOS-18-013500| Apple iOS must implement the management setting: Not allow a user to remove Apple iOS configuration profiles that enforce DoD security requirements.
-  |AIOS-18-014700| Apple iOS/iPadOS 18 must have DOD root and intermediate PKI certificates installed.
-  |AIOS-18-015500| Apple iOS/iPadOS 18 must disable the download of iOS/iPadOS beta updates.
+  |AIOS-26-001000| Apple iOS/iPadOS 26 must allow the administrator (MDM) to perform the following management function: enable/disable VPN protection across the device and [selection: on a per-app basis, on a per-group of applications processes basis].
+  |AIOS-26-007400| Apple iOS/iPadOS 26 allowlist must be configured to not include applications with the following characteristics: - Backs up MD data to non-DoD cloud servers (including user and application access to cloud backup services); - Transmits MD diagnostic data to non-DoD servers; - Allows synchronization of data or applications between devices associated with user; and - Allows unencrypted (or encrypted but not FIPS 140-2/FIPS 140-3 validated) data sharing with other MDs or printers.
+  |AIOS-26-008400| Apple iOS/iPadOS 26 must be configured to display the DoD advisory warning message at startup or each time the user unlocks the device.
+  |AIOS-26-009200| Apple iOS/iPadOS 26 must be configured to not allow backup of [all applications, configuration data] to locally connected systems.
+  |AIOS-26-009800| Apple iOS/iPadOS 26 must be configured to disable multi-user modes.
+  |AIOS-26-009900| Apple iOS/iPadOS 26 must be configured to [selection: wipe protected data, wipe sensitive data] upon un-enrollment from MDM.
+  |AIOS-26-010000| Apple iOS/iPadOS 26 must be configured to [selection: remove Enterprise applications, remove all non-core applications (any non-factory installed application)] upon un-enrollment from MDM.
+  |AIOS-26-011200| iPhone and iPad must have the latest available iOS/iPadOS operating system installed.
+  |AIOS-26-011600| Apple iOS/iPadOS 26 must implement the management setting: Not have any Family Members in Family Sharing.
+  |AIOS-26-011700| Apple iOS/iPadOS 26 must implement the management setting: not share location data through iCloud.
+  |AIOS-26-011900| Apple iOS/iPadOS 26 users must complete required training.
+  |AIOS-26-012000| A managed photo app must be used to take and store work-related photos.
+  |AIOS-26-012650| Apple iOS/iPadOS 26 must implement the management setting: approved Apple Watches must be managed by an MDM.
+  |AIOS-26-013500| Apple iOS must implement the management setting: Not allow a user to remove Apple iOS configuration profiles that enforce DoD security requirements.
+  |AIOS-26-014700| Apple iOS/iPadOS 26 must have DOD root and intermediate PKI certificates installed.
+  |AIOS-26-015500| Apple iOS/iPadOS 26 must disable the download of iOS/iPadOS beta updates.
+  |AIOS-26-017700| Apple iOS/iPadOS 26 must have Mobile Threat Detection app installed.
+  |AIOS-26-018300| Apple iOS/iPadOS 26 must be configurated to disable Wi-Fi Aware.
+  |===
+
+  These are controls that will not be configurable if the following are applied.
+
+  - `AIOS-26-016100` Apple iOS/iPadOS 26 must disable the use voice assistant (Siri) unless required to meet Section 508 compliance requirements.
+  - `AIOS-26-016600` Apple iOS/iPadOS 26 must disable AirPrint.
+
+  [cols="20%h, 80%a"]
+  |===
+  |STIG ID
+  |Rule Title
+
+  |AIOS-26-016200| Apple iOS/iPadOS 26 must disable the use voice assistant (Show user-generated content in Siri) unless required to meet Section 508 compliance requirements.
+  |AIOS-26-016300| Apple iOS/iPadOS 26 must disable the use voice assistant (Siri suggestions) unless required to meet Section 508 compliance requirements.
+  |AIOS-26-016700| Apple iOS/iPadOS 26 must disable AirPrint: Allow discovery of AirPrint printers using iBeacons.
+  |AIOS-26-016800| Apple iOS/iPadOS 26 must disable AirPrint: Allow storage of AirPrint credentials in Keychain.
+  |AIOS-26-016900| Apple iOS/iPadOS 26 must allow AirPrint feature: Disallow AirPrint to destinations with untrusted certificates.
   |===
 check: |
 fix: |
@@ -48,5 +61,6 @@ iOS:
   - "26.0"
 tags:
   - supplemental
+  - ios_stig
 mobileconfig: false
 mobileconfig_info:

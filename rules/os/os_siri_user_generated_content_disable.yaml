@@ -9,18 +9,25 @@ fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-  - CCE-95528-6
+    - CCE-95528-6
+  cci:
+    - CCI-000366
   800-53r5:
-  - AC-20
-  - CM-7
-  - CM-7(1)
-  - SC-7(10)
+    - AC-20
+    - CM-7
+    -  CM-7(1)
+    - SC-7(10)
   indigo:
-  - ANNEX K
+    - ANNEX K
+  sfr:
+    - 'FMT_MOF_EXT.1.2 #47'
+  disa_stig:
+    - AIOS-26-016200
 iOS:
 - "26.0"
 tags:
 - ios
+- ios_stig
 - indigo_base
 - indigo_high
 - 800-53r5_low

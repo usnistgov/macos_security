@@ -1,7 +1,7 @@
-id: os_esim_transfers_disable
-title: Ensure the ability to transfer an eSIM is set to Disabled
+id: os_facetime_disable
+title: Disable FaceTime App
 discussion: |
-  Outgoing transfers of eSIMs _MUST_ be disabled.
+  FaceTime _MUST_ be disabled.
 check: ' '
 fix: |
   This is implemented by a Configuration Profile.
@@ -11,18 +11,25 @@ references:
   cci:
     - CCI-000366
   800-53r5:
-    - N/A
+    - CM-6
+    - CM-7
   sfr:
     - 'FMT_MOF_EXT.1.2 #47'
   disa_stig:
-    - AIOS-26-017900
+    - AIOS-26-017800
+  indigo:
+    - N/A
 iOS:
   - '26.0'
 tags:
   - ios
   - ios_stig
-supervised: false
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_high
+severity: high
+supervised: true
 mobileconfig: true
 mobileconfig_info:
   com.apple.applicationaccess:
-    allowESIMOutgoingTransfers: false
+    allowVideoConferencing: false

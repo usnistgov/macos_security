@@ -20,11 +20,12 @@ references:
   indigo:
    - ANNEX K
   disa_stig:
-   - N/A
+   - AIOS-26-015800
 iOS:
  - "26.0"
 tags:
  - ios
+ - ios_stig
  - indigo_base
  - indigo_high
  - cnssi-1253_moderate

@@ -1,9 +1,9 @@
-id: os_exchange_prevent_move_enforce
-title: "Prevent move manged mails to another account."
+id: os_exchange_SMIME_signing_certificate_overwrite_disable
+title: "Disable changing the S/MIME signing settings"
 discussion: |
   The iOS device needs some specific configurations for the Exchange setup to meet the minimum requirements.
 
-  The setting, prevent moving to another account _MUST_ be configured to prevent data leakage.
+  The option for a user to overwrite the of S/MIME configuration _MUST_ prevented.
 check: " "
 fix: |
   This is implemented by a Configuration Profile.
@@ -18,10 +18,8 @@ iOS:
   - "26.0"
 tags:
   - ios
-  - indigo_base
   - indigo_high
-supervised: false
 mobileconfig: true
 mobileconfig_info:
   com.apple.mail.managed: 
-    PreventMove: true
+    SMIMESigningCertificateUUIDUserOverrideable: false
