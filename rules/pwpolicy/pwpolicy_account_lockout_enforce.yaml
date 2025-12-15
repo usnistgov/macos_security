@@ -18,7 +18,7 @@ references:
     - 'FMT_SMF.1.1 #2'
     - 'FIA_AFL_EXT.1.5'
   disa_stig:
-    - AVOS-26-006900
+    - AVOS-02-006900
 visionOS:
   - '26.0'
 odv:
