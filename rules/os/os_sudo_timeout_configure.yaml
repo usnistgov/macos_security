@@ -11,6 +11,7 @@ fix: |
   ----
   /usr/bin/find /etc/sudoers* -type f -exec sed -i '' '/timestamp_timeout/d' '{}' \;
   /bin/echo "Defaults timestamp_timeout=$ODV" >> /etc/sudoers.d/mscp
+  /bin/chmod 440 /etc/sudoers.d/mscp
   ----
 references:
   cce:
