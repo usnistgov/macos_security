@@ -54,7 +54,7 @@ ASSOCIATED DOCUMENTS
 |===
 |Document Number or Descriptor
 |Document Title 
-|link:https://www.bsi.bund.de/EN/Themen/Oeffentliche-Verwaltung/Zulassung/mobile_Kommunikation/mobileKommunikation_node.html#doc919528bodyText2[indigo]|_indigo iOS 18.0.1 and iPadOS 18.0.1 Version 1.0_
+|link:https://www.bsi.bund.de/EN/Themen/Oeffentliche-Verwaltung/Zulassung/mobile_Kommunikation/mobileKommunikation_node.html#doc919528bodyText2[indigo]|_indigo iOS 26.0.1 and iPadOS 26.0.1 Version 1.4_
 |===
 
 === Non-Government Documents
