@@ -1,0 +1,37 @@
+id: os_mail_maildrop_disable
+title: Ensure Allow Mail Drop is Set to Disabled
+discussion: |
+  Mail Drop _MUST_ be disabled.
+check: ' '
+fix: |
+  This is implemented by a Configuration Profile.
+references:
+  cce:
+    - N/A
+  cci:
+    - CCI-000366
+    - CCI-002314
+  800-53r5:
+    - AC-3
+    - AC-20
+    - CM-7
+    - CM-7(1)
+    - SC-07(10)
+  sfr:
+    - 'FMT_SMF_EXT.1.1 #47'
+  disa_stig:
+    - AVOS-02-011000
+visionOS:
+  - '26.0'
+tags:
+  - visionos
+  - visionos_stig
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_high
+severity: medium
+supervised: false
+mobileconfig: true
+mobileconfig_info:
+  com.apple.mail.managed:
+    allowMailDrop: false

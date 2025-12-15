@@ -1,0 +1,29 @@
+id: os_ssl_for_exchange_activesync_enable
+title: Ensure SSL for Exchange ActiveSync
+discussion: |
+  Exchange email messages are a form of data in transit and thus are vulnerable to eavesdropping and man-in-the-middle attacks. Secure Sockets Layer (SSL), also referred to as Transport Layer Security (TLS), provides encryption and authentication services that mitigate the risk of breach.
+check: ' '
+fix: |
+  This is implemented by a Configuration Profile
+references:
+  cce:
+    - N/A
+  cci:
+    - CCI-000764
+  800-53r5:
+    - N/A
+  sfr:
+    - 'FMT_SMF_EXT.1.1 #47'
+  disa_stig:
+    - AVOS-02-011300
+visionOS:
+  - '26.0'
+tags:
+  - visionos
+  - visionos_stig
+severity: medium
+supervised: false
+mobileconfig: true
+mobileconfig_info:
+  com.apple.eas.account:
+    ssl: true

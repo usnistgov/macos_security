@@ -1,0 +1,34 @@
+id: pwpolicy_simple_sequence_disable
+title: Prohibit Repeating, Ascending, and Descending Character Sequences
+discussion: |
+  The visionOS device _MUST_ be configured to prohibit the use of repeating, ascending, and descending character sequences when a passcode is created.
+
+  This rule enforces password complexity by requiring users to set passcodes that are less vulnerable to malicious users.
+check: ' '
+fix: |
+  This is implemented by a Configuration Profile.
+references:
+  cce:
+    - N/A
+  cci:
+    - CCI-004066
+  800-53r5:
+    - IA-5(1)
+  sfr:
+    - 'FMT_SMF.1.1 #1'
+  disa_stig:
+    - AVOS-02-006600
+visionOS:
+  - '26.0'
+tags:
+  - visionos
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_high
+  - visionos_stig
+severity: medium
+supervised: false
+mobileconfig: true
+mobileconfig_info:
+  com.apple.mobiledevice.passwordpolicy:
+    allowSimple: false
