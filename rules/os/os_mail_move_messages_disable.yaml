@@ -7,7 +7,7 @@ fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-    - N/A
+    - CCE-96713-3
   cci:
     - CCI-000764
   800-53r5:
