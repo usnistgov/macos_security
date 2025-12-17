@@ -1,6 +1,6 @@
-title: "macOS 15.0: Security Configuration - Apple macOS 15 (Sequoia) STIG - Ver 1, Rel 4"
+title: "macOS 15.0: Security Configuration - Apple macOS 15 (Sequoia) STIG - Ver 1, Rel 5"
 description: |
-  This guide describes the actions to take when securing a macOS 15.0 system against the Apple macOS 15 (Sequoia) STIG - Ver 1, Rel 4 security baseline.
+  This guide describes the actions to take when securing a macOS 15.0 system against the Apple macOS 15 (Sequoia) STIG - Ver 1, Rel 5 security baseline.
 authors: |
   *macOS Security Compliance Project*
 
@@ -176,6 +176,7 @@ profile:
       - system_settings_siri_disable
       - system_settings_siri_settings_disable
       - system_settings_smbd_disable
+      - system_settings_softwareupdate_current
       - system_settings_system_wide_preferences_configure
       - system_settings_time_server_configure
       - system_settings_time_server_enforce
