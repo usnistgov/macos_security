@@ -2,6 +2,58 @@
 
 This document provides a high-level view of the changes to the macOS Security Compliance Project.
 
+## [Tahoe, Revision 1.1] – YYYY-MM-DD
+
+* Rules
+  * Added Rules
+    * os_loginwindow_adminhostinfo_disabled
+    * os_safari_clear_history_disable
+    * os_safari_private_browsing_disable
+    * os_skip_apple_intelligence_enable
+    * system_settings_download_software_update_enforce
+    * system_settings_security_update_install
+  * Modified Rules
+    * audit_auditd_enabled
+    * os_icloud_storage_prompt_disable
+    * os_privacy_setup_prompt_disable
+    * os_recovery_lock_enable
+    * os_secure_boot_verify
+    * os_siri_prompt_disable
+    * os_skip_screen_time_prompt_enable
+    * os_skip_unlock_with_watch_enable
+    * os_time_server_enabled
+    * os_touchid_prompt_disable
+    * os_unlock_active_user_session_disable
+    * pwpolicy_account_lockout_enforce
+    * pwpolicy_account_lockout_timeout_enforce
+    * pwpolicy_history_enforce
+    * pwpolicy_lower_case_character_enforce
+    * pwpolicy_upper_case_character_enforce
+    * pwpolicy_special_character_enforce
+    * pwpolicy_minimum_length_enforce
+    * pwpolicy_minimum_lifetime_enforce
+    * pwpolicy_max_lifetime_enforce
+    * system_settings_location_services_enable
+    * system_settings_location_services_disable
+    * system_settings_screen_sharing_disable
+    * system_settings_ssh_disable
+    * system_settings_bluetooth_sharing_disable
+    * system_settings_hot_corners_secure
+    * system_settings_time_machine_encrypted_configure
+  * Removed Rules
+    * system_settings_software_update_enforce
+  * Bug Fixes
+* Baselines
+  * Added STIG - Ver 1, Rel 1
+  * Modified existing baselines
+* Scripts
+  * generate_guidance
+    * Bug fixes related to consolidated configuration profile generation
+    * Improved handling of Declarative Device Management (DDM) nested keys
+    * Compliance script stability improvements
+  * generate_scap
+    * Minor fixes to SCAP/XCCDF output generation
+
 ## [Tahoe, Revision 1.0] - 2025-09-11
 
 * Rules
