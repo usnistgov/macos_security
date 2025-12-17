@@ -1,5 +1,5 @@
 os: "26.0"
 platform: visionOS
-version: "visionOS 26.0 Guidance, Revision 1.0"
+version: "visionOS 26.0 Guidance, Revision 2.0"
 cpe: o:apple:visionos:26.0
-date: "2025-09-11"
+date: "2025-12-18"
