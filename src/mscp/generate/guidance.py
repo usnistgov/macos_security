@@ -19,6 +19,7 @@ from ..common_utils import (
     remove_dir_contents,
     run_command,
 )
+from ..common_utils.localization import configure_localization_for_yaml
 from ..generate.guidance_support import (
     generate_ddm,
     generate_documents,
@@ -57,6 +58,10 @@ def verify_signing_hash(cert_hash: str) -> bool:
 
 
 def generate_guidance(args: argparse.Namespace) -> None:
+    # Configure localization at the beginning based on the CLI language parameter
+    logger.debug(f"Language parameter from CLI: {args.language}")
+    configure_localization_for_yaml(language=args.language)
+    
     logo_path: Path = Path(
         config["defaults"]["images_dir"], "mscp_banner.png"
     ).absolute()
@@ -79,7 +84,7 @@ def generate_guidance(args: argparse.Namespace) -> None:
     spreadsheet_output_file: Path = Path(build_path, f"{baseline_name}.xlsx")
 
     baseline: Baseline = Baseline.from_yaml(
-        args.baseline, args.os_name, args.os_version, custom
+        args.baseline, args.os_name, args.os_version, args.language, custom
     )
 
     if args.audit_name:
@@ -155,6 +160,7 @@ def generate_guidance(args: argparse.Namespace) -> None:
             show_all_tags,
             custom,
             output_format="markdown",
+            language=args.language,
         )
 
     if args.all:
@@ -186,6 +192,7 @@ def generate_guidance(args: argparse.Namespace) -> None:
             show_all_tags,
             custom,
             output_format="markdown",
+            language=args.language,
         )
 
     generate_documents(
@@ -198,6 +205,9 @@ def generate_guidance(args: argparse.Namespace) -> None:
         current_version_data,
         show_all_tags,
         custom,
+        language=args.language,
     )
 
-    print(f"MSCP DOCUMENT GENERATION COMPLETE! All of the documents can be found in this folder: /{build_path}/")
+    print(
+        f"MSCP DOCUMENT GENERATION COMPLETE! All of the documents can be found in this folder: /{build_path}/"
+    )

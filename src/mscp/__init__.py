@@ -57,7 +57,11 @@ from .common_utils.file_handling import (
     remove_dir_contents,
     remove_file,
 )
+from .common_utils.localization import configure_localization_for_yaml
 from .common_utils.logging_config import set_logger
 from .common_utils.run_command import run_command
 from .common_utils.validate_rules import validate_yaml_file
 from .generate import baseline, checklist, guidance, local_report, mapping
+
+# initialize the localization constructor for all yaml
+configure_localization_for_yaml()
