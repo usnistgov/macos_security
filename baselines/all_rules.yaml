@@ -30,6 +30,7 @@ profile:
       - os_airdrop_unmanaged_destination_enable
       - os_airplay_incoming_password_require
       - os_airplay_outgoing_password_require
+      - os_airprint_credential_storage_disable
       - os_airprint_disable
       - os_airprint_force_trusted_TLS
       - os_allow_contacts_read_managed_sources_unmanaged_destinations_disable
@@ -44,7 +45,10 @@ profile:
       - os_auto_correction_disable
       - os_auto_dim_allow
       - os_auto_unlock_disable
+      - os_automatic_app_download_disable
+      - os_bluetooth_modification_disable
       - os_call_recording_disable
+      - os_camera_disable
       - os_chat_disable
       - os_default_browser_modification_disable
       - os_default_calling_modification_disable
@@ -58,18 +62,22 @@ profile:
       - os_erase_contents_and_settings_disable
       - os_esim_delete
       - os_esim_transfers_disable
-      - os_exchange_SMIME_encryption_certificate_overwirte_disable
+      - os_exchange_SMIME_encryption_certificate_overwrite_disable
       - os_exchange_SMIME_encryption_default_certificate_overwrite_enable
       - os_exchange_SMIME_encryption_enforce
       - os_exchange_SMIME_encryption_per_message_disable
-      - os_exchange_SMIME_signing_certificate_overwirte_disable
+      - os_exchange_SMIME_signing_certificate_overwrite_disable
       - os_exchange_SMIME_signing_enabled
       - os_exchange_SMIME_signing_overwrite_disable
       - os_exchange_mail_recents_sync_disable
+      - os_exchange_notes_disable
+      - os_exchange_notes_user_override_disable
       - os_exchange_peraccountVPN
-      - os_exchange_prevent_move_enforce
+      - os_exchange_reminders_disable
+      - os_exchange_reminders_user_override_disable
       - os_external_intelligence_integration_disable
       - os_external_intelligence_integration_sign_in_disable
+      - os_facetime_disable
       - os_files_network_drive_access_disable
       - os_files_usb_drive_access_disable
       - os_find_my_friends_disable
@@ -77,6 +85,8 @@ profile:
       - os_force_encrypted_backups_enable
       - os_genmoji_disable
       - os_handoff_disable
+      - os_hide_apps_disable
+      - os_ibeacon_airprint_disable
       - os_image_playground_disable
       - os_image_wand_disable
       - os_install_configuration_profile_disable
@@ -92,6 +102,7 @@ profile:
       - os_mail_summary_disable
       - os_marketplace_prevent
       - os_modify_cellular_data_app_settings_disable
+      - os_movie_content_allowed
       - os_network_known_only
       - os_new_device_proximity_disable
       - os_notes_transcription_disable
@@ -107,6 +118,7 @@ profile:
       - os_predictive_keyboard_disable
       - os_rapid_security_responses_install_enable
       - os_rapid_security_responses_remove_disable
+      - os_rcs_messaging_disable
       - os_require_managed_pasteboard_enforce
       - os_safari_JavaScript_disable
       - os_safari_cookies_set
@@ -130,6 +142,7 @@ profile:
       - os_supervised_mdm_require
       - os_system_settings_find_my_device_disable
       - os_system_settings_find_my_friends_modification_disable
+      - os_tv_content_allowed
       - os_unpaired_boot_disable
       - os_untrusted_tls_disable
       - os_update_OTAPKI_allow

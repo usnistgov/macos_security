@@ -30,6 +30,7 @@ profile:
       - os_airdrop_unmanaged_destination_enable
       - os_airplay_incoming_password_require
       - os_airplay_outgoing_password_require
+      - os_airprint_credential_storage_disable
       - os_airprint_force_trusted_TLS
       - os_allow_contacts_read_managed_sources_unmanaged_destinations_disable
       - os_allow_contacts_write_managed_sources_unmanaged_destinations_disable
@@ -40,6 +41,8 @@ profile:
       - os_application_allow_list
       - os_authentication_password_autofill_enable
       - os_auto_unlock_disable
+      - os_automatic_app_download_disable
+      - os_bluetooth_modification_disable
       - os_call_recording_disable
       - os_chat_disable
       - os_default_browser_modification_disable
@@ -50,6 +53,7 @@ profile:
       - os_diagnostics_reports_modification_disable
       - os_disallow_enterprise_app_trust
       - os_erase_contents_and_settings_disable
+      - os_facetime_disable
       - os_files_network_drive_access_disable
       - os_files_usb_drive_access_disable
       - os_find_my_friends_disable
@@ -57,6 +61,7 @@ profile:
       - os_force_encrypted_backups_enable
       - os_genmoji_disable
       - os_handoff_disable
+      - os_ibeacon_airprint_disable
       - os_image_playground_disable
       - os_image_wand_disable
       - os_install_vpn_configuration_disable
@@ -66,6 +71,7 @@ profile:
       - os_mail_smart_reply_disable
       - os_marketplace_prevent
       - os_modify_cellular_data_app_settings_disable
+      - os_movie_content_allowed
       - os_new_device_proximity_disable
       - os_notes_transcription_disable
       - os_notes_transcription_summary_disable
@@ -94,6 +100,7 @@ profile:
       - os_supervised_mdm_require
       - os_system_settings_find_my_device_disable
       - os_system_settings_find_my_friends_modification_disable
+      - os_tv_content_allowed
       - os_usb_accessories_when_locked_disable
       - os_visual_intelligence_summary
       - os_voice_dialing_when_locked_disabled
