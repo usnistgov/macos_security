@@ -2,6 +2,11 @@
 
 This document provides a high-level view of the changes to the macOS Security Compliance Project.
 
+## [Sequoia, Revision 3.1] - XXXX-XX-XX
+* Baselines
+  * Added NLMAPGOV - Nederlandse Maatregelenset Apple Platformen Overheid (base/plus)
+  * Modified existing baselines
+
 ## [Sequoia, Revision 3.0] - 2025-09-11
 * Rules
   * Modified Rules
