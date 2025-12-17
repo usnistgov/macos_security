@@ -24,15 +24,15 @@ references:
   cce:
     - CCE-94398-5
   cci:
-    - N/A
+    - CCI-002605
   800-53r5:
     - N/A
   800-53r4:
     - N/A
   srg:
-    - N/A
+    - SRG-OS-000439-GPOS-00195
   disa_stig:
-    - N/A
+    - APPL-15-999999
   800-171r3:
     - N/A
   cis:
@@ -51,6 +51,7 @@ tags:
   - cisv8
   - nlmapgov_base
   - nlmapgov_plus
+  - stig
 severity: medium
 mobileconfig: false
 mobileconfig_info:

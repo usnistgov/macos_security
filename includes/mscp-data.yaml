@@ -97,7 +97,7 @@ titles:
   cnssi-1253_low: Committee on National Security Systems Instruction No. 1253 (Low)
   cnssi-1253_moderate: Committee on National Security Systems Instruction No. 1253 (Moderate)
   cnssi-1253_high: Committee on National Security Systems Instruction No. 1253 (High)
-  stig: Apple macOS 15 (Sequoia) STIG - Ver 1, Rel 4
+  stig: Apple macOS 15 (Sequoia) STIG - Ver 1, Rel 5
   nlmapgov_base: NLMAPGOV - Nederlandse Maatregelenset Apple Platformen Overheid (base)
   nlmapgov_plus: NLMAPGOV - Nederlandse Maatregelenset Apple Platformen Overheid (plus)
 ddm:
