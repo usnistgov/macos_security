@@ -30,6 +30,8 @@ profile:
       - os_allow_contacts_write_managed_sources_unmanaged_destinations_disable
       - os_allow_documents_managed_sources_unmanaged_destinations_disable
       - os_allow_documents_unmanaged_sources_managed_destinations_disable
+      - os_allow_enterprise_trust_disabled
+      - os_allow_prerelease_disable
       - os_authentication_password_autofill_enable
       - os_default_browser_modification_disable
       - os_diagnostics_reports_disable
@@ -44,6 +46,9 @@ profile:
       - os_image_playground_disable
       - os_image_wand_disable
       - os_install_vpn_configuration_disable
+      - os_lock_screen_notification_disable
+      - os_mail_maildrop_disable
+      - os_mail_move_messages_disable
       - os_mail_smart_reply_disable
       - os_mail_summary_disable
       - os_on_device_dictation_enforce
@@ -54,6 +59,14 @@ profile:
       - os_safari_reader_summary_disable
       - os_screenshots_disable
       - os_writing_tools_disable
+  - section: "passwordpolicy"
+    rules:
+      - pwpolicy_account_lockout_enforce
+      - pwpolicy_force_pin_enable
+      - pwpolicy_history_enforce
+      - pwpolicy_max_inactivity_enforce
+      - pwpolicy_minimum_length_enforce
+      - pwpolicy_simple_sequence_disable
   - section: "settings"
     rules:
       - settings_opticid_unlock_disable

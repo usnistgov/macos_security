@@ -26,6 +26,7 @@ profile:
       - os_allow_contacts_write_managed_sources_unmanaged_destinations_disable
       - os_allow_documents_managed_sources_unmanaged_destinations_disable
       - os_allow_documents_unmanaged_sources_managed_destinations_disable
+      - os_allow_prerelease_disable
       - os_authentication_password_autofill_enable
       - os_default_browser_modification_disable
       - os_diagnostics_reports_disable
@@ -33,7 +34,6 @@ profile:
       - os_erase_contents_and_settings_disable
       - os_external_intelligence_integration_disable
       - os_external_intelligence_integration_sign_in_disable
-      - os_files_network_drive_access_disable
       - os_force_date_and_time_enable
       - os_genmoji_disable
       - os_handoff_disable
@@ -54,6 +54,9 @@ profile:
       - os_user_app_installation_prohibit
       - os_user_ui_app_installation_prohibit
       - os_writing_tools_disable
+  - section: "passwordpolicy"
+    rules:
+      - pwpolicy_force_pin_enable
   - section: "settings"
     rules:
       - settings_opticid_unlock_disable

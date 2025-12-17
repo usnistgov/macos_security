@@ -30,6 +30,8 @@ profile:
       - os_allow_contacts_write_managed_sources_unmanaged_destinations_disable
       - os_allow_documents_managed_sources_unmanaged_destinations_disable
       - os_allow_documents_unmanaged_sources_managed_destinations_disable
+      - os_allow_enterprise_trust_disabled
+      - os_allow_prerelease_disable
       - os_authentication_password_autofill_enable
       - os_camera_disable
       - os_default_browser_modification_disable
@@ -46,6 +48,9 @@ profile:
       - os_image_wand_disable
       - os_install_configuration_profile_disable
       - os_install_vpn_configuration_disable
+      - os_lock_screen_notification_disable
+      - os_mail_maildrop_disable
+      - os_mail_move_messages_disable
       - os_mail_smart_reply_disable
       - os_mail_summary_disable
       - os_on_device_dictation_enforce
@@ -56,11 +61,23 @@ profile:
       - os_safari_password_autofill_disable
       - os_safari_reader_summary_disable
       - os_screenshots_disable
+      - os_ssl_for_exchange_activesync_enable
       - os_untrusted_tls_disable
       - os_user_app_installation_prohibit
       - os_user_ui_app_installation_prohibit
       - os_writing_tools_disable
+  - section: "passwordpolicy"
+    rules:
+      - pwpolicy_account_lockout_enforce
+      - pwpolicy_force_pin_enable
+      - pwpolicy_history_enforce
+      - pwpolicy_max_inactivity_enforce
+      - pwpolicy_minimum_length_enforce
+      - pwpolicy_simple_sequence_disable
   - section: "settings"
     rules:
       - settings_opticid_unlock_disable
       - settings_siri_disable
+  - section: "Supplemental"
+    rules:
+      - supplemental_stig
