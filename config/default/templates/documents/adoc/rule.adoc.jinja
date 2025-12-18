@@ -144,10 +144,8 @@ endif::[]
 {{ rule.references.nist.cce | render_rules if rule.references.nist.cce is not none }}
 {% endif %}
 
-{% if custom %}
-! Custom References
-!
-{{ rule.references.custom_refs | render_rules if rule.references.custom_refs is not none }}
+{% if "references" in rule.customized %}
+{{ rule.references.custom_refs.references | render_references if rule.references.custom_refs is not none }}
 {% endif %}
 
 ifdef::show_tags[]

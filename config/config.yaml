@@ -30,7 +30,7 @@ custom:
   md_templates_dir: "config/custom/templates/markdown"
   misc_dir: "config/custom/misc"
   root_dir: "config/custom"
-  rules_dir: "custom/rules"
+  rules_dir: "config/custom/rules"
   scap_templates_dir: "config/custom/templates/scap"
   shell_template_dir: "config/custom/templates/shell_scripts"
   sections_dir: "config/custom/sections"

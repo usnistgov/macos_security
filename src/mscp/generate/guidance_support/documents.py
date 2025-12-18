@@ -7,7 +7,7 @@ import sys
 from collections.abc import Mapping
 from itertools import groupby
 from pathlib import Path
-from typing import Any
+from typing import Any, Sequence, Dict, List
 
 # Additional python modules
 # import markdown2
@@ -72,6 +72,53 @@ def extract_from_title(title: str) -> str:
         if (match := re.search(r"(?<=\()(.*?)(?=\s*\))", title, re.IGNORECASE))
         else ""
     )
+
+
+def render_references(reference_set: Sequence[Dict[str, Any]]) -> str:
+    """
+    Convert a list of dictionaries into AsciiDoc table rows (no header, no |===).
+
+    Parameters
+    ----------
+    reference_set : Sequence[Dict[str, Any]]
+        A list (or tuple) of dictionaries.
+
+    Returns
+    -------
+    str
+        Newline-separated AsciiDoc table rows, e.g., '| key | value'.
+    """
+
+    def _escape_cell(text: Any) -> str:
+        s = str(text)
+        return s.replace("|", r"\|")
+
+    rows: List[List[str]] = []
+
+    def _walk(path: List[str], value: Any) -> None:
+        if isinstance(value, (list, tuple)):
+            # Join list elements; str() for non-scalar reference_set
+            joined = "\n- ".join(map(str, value))
+            rows.append(path + [_escape_cell(joined)])
+        else:
+            rows.append(path + [_escape_cell(value)])
+
+    # Validate and traverse each input dict
+    for d in reference_set:
+        if not isinstance(d, dict):
+            raise TypeError("All elements of 'reference_set' must be dictionaries.")
+        for k in d.keys():
+            _walk([str(k)], d[k])
+
+    if not rows:
+        return ""  # nothing to emit
+
+    # Determine deepest path and pad each row to keep a rectangular table
+    max_cols = max(len(r) for r in rows)
+    padded = [r + [""] * (max_cols - len(r)) for r in rows]
+
+    # Assemble rows (each line starts with '| ')
+    return "\n".join("!" + "\n!\n- ".join(r) for r in padded)
 
 
 def render_rules(rule_set: list[str]) -> str:
@@ -319,7 +366,7 @@ def render_template(
         domain="messages",
         localedir=config["defaults"]["locales_dir"],
         languages=[language],
-        fallback=True
+        fallback=True,
     )
 
     env: Environment = Environment(
@@ -337,6 +384,7 @@ def render_template(
     env.filters["group_ulify"] = group_ulify
     env.filters["include_replace"] = replace_include_with_file_content
     env.filters["render_rules"] = render_rules
+    env.filters["render_references"] = render_references
     env.filters["get_nested"] = get_nested
     env.filters["mobileconfig_payloads_to_xml"] = (
         Macsecurityrule.mobileconfig_info_to_xml
@@ -356,7 +404,7 @@ def render_template(
     html_title, html_subtitle = map(str.strip, baseline.title.split(":", 1))
     document_subtitle2: str = ":document-subtitle2:"
 
-    if "Talored from" in baseline.title:
+    if "Tailored from" in baseline.title:
         html_subtitle: str = html_subtitle.split("(")[0]
         html_subtitle2: str = extract_from_title(baseline.title)
         document_subtitle2: str = f"{document_subtitle2} {html_subtitle2}"

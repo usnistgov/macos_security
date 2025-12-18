@@ -132,6 +132,15 @@ class bsiReferences(BaseModelWithAccessors):
             self.indigo = sorted(self.indigo)
 
 
+class customReferences(BaseModelWithAccessors):
+    references: list[Any] | None = None
+
+    def __init__(self, **data: Any) -> None:
+        super().__init__(**data)
+        if self.references:
+            self.references = sorted(self.references)
+
+
 class Mobileconfigpayload(BaseModelWithAccessors):
     payload_type: str
     payload_content: list[dict[str, Any]]
@@ -144,7 +153,7 @@ class References(BaseModelWithAccessors):
     disa: DisaReferences | None = None
     cis: CisReferences | None = None
     bsi: bsiReferences | None = None
-    custom: list[str] | None = None
+    custom_refs: customReferences | None = None
 
 
 class Macsecurityrule(BaseModelWithAccessors):
@@ -324,8 +333,14 @@ class Macsecurityrule(BaseModelWithAccessors):
                     logger.debug(
                         f"Found customization ({custom_rule_value}) for {custom_rule_key} in {rule_yaml['rule_id']}"
                     )
-                    rule_yaml[custom_rule_key] = custom_rule_value
                     customized_fields.append(custom_rule_key)
+                    if custom_rule_key == "references":
+                        rule_yaml[custom_rule_key].update(custom_rule_value)
+                        continue
+                    if custom_rule_key == "tags":
+                        rule_yaml[custom_rule_key] += custom_rule_value
+                        continue
+                    rule_yaml[custom_rule_key] = custom_rule_value
 
             enforcement_info = rule_yaml["platforms"][os_type].get(
                 "enforcement_info", {}
@@ -422,11 +437,24 @@ class Macsecurityrule(BaseModelWithAccessors):
                     )
                     section = Sectionmap.NOT_APPLICABLE
 
-            ref: dict[str, Any] = rule_yaml["references"]
-            nist: dict[str, Any] = ref.get("nist", {})
-            disa: dict[str, Any] = ref.get("disa", {})
-            cis: dict[str, Any] = ref.get("cis", {})
-            bsi: dict[str, Any] = ref.get("bsi", {})
+            reference_keys = rule_yaml["references"].keys()
+            nist: dict[str, Any] = {}
+            disa: dict[str, Any] = {}
+            cis: dict[str, Any] = {}
+            bsi: dict[str, Any] = {}
+            custom_refs: dict[str, Any] = {}
+
+            for ref_key in reference_keys:
+                if ref_key == "nist":
+                    nist: dict[str, Any] = rule_yaml["references"].get("nist", {})
+                elif ref_key == "disa":
+                    disa: dict[str, Any] = rule_yaml["references"].get("disa", {})
+                elif ref_key == "cis":
+                    cis: dict[str, Any] = rule_yaml["references"].get("cis", {})
+                elif ref_key == "bsi":
+                    bsi: dict[str, Any] = rule_yaml["references"].get("bsi", {})
+                else:
+                    custom_refs[ref_key] = rule_yaml["references"].get(ref_key, {})
 
             # Map NIST references
             nist_map = {
@@ -474,6 +502,11 @@ class Macsecurityrule(BaseModelWithAccessors):
                         bsi["indigo"], list
                     ):
                         bsi["indigo"] = [bsi["indigo"]]
+            # Map custom references
+            if custom_refs:
+                # custom_refs["references"] = custom_refs
+                rule_yaml["references"]["custom_refs"] = {}
+                rule_yaml["references"]["custom_refs"]["references"] = [custom_refs]
 
             rule = cls(
                 **rule_yaml,
@@ -871,13 +904,13 @@ class Macsecurityrule(BaseModelWithAccessors):
             return
         # Replace $ODV in text fields
 
-        #Added check and result to the ODV fields processed
+        # Added check and result to the ODV fields processed
         fields_to_process: tuple[str, ...] = (
             "title",
             "discussion",
             "check",
             "fix",
-            "result_value"
+            "result_value",
         )
 
         # Helper function to recursively replace $ODV in nested structures
@@ -890,7 +923,7 @@ class Macsecurityrule(BaseModelWithAccessors):
                 return [replace_odv_in_obj(item) for item in obj]
             else:
                 return obj
-        
+
         for field in fields_to_process:
             value = getattr(self, field, None)
             if value is not None:
@@ -1210,14 +1243,14 @@ class Macsecurityrule(BaseModelWithAccessors):
         Returns:
             list[]: List of tags found within the rule set.
         """
-        
+
         found_tags: list[str] = []
 
         for rule in rules:
             rule_tags = rule.get("tags")
 
             found_tags += rule_tags
-        
+
         unique_tags = set(found_tags)
 
         return sorted(unique_tags)
