@@ -3,7 +3,7 @@ title: Prohibit Password Reuse for a Minimum of $ODV Generations
 discussion: |
   The macOS _MUST_ be configured to enforce a password history of at least $ODV previous passwords when a password is created.
 
-  This rule ensures that users are  not allowed to re-use a password that was used in any of the $ODV previous password generations.
+  This rule ensures that users are  not allowed to reuse a password that was used in any of the $ODV previous password generations.
 
   Limiting password reuse protects against malicious users attempting to gain access to the system via brute-force hacking methods.
 

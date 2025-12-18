@@ -1,0 +1,32 @@
+id: os_supported_operating_system
+title: The macOS Version Must Be Supported by the Vendor
+discussion: |
+  Unsupported software and systems should not be used because fixes to newly identified bugs will not be implemented by the vendor. The lack of support can result in potential vulnerabilities.
+
+  Software and systems at unsupported servicing levels or releases will not receive security updates for new vulnerabilities, which leaves them subject to exploitation.
+
+  When maintenance updates and patches are no longer available, software is no longer considered supported and should be upgraded or decommissioned.
+check: |
+  The technology supports this requirement and cannot be configured to be out of compliance. The technology inherently meets this requirement.
+fix: |
+  The technology inherently meets this requirement. No fix is required.
+references:
+  cce:
+    - CCE-95604-5
+  cci:
+    - CCI-003376
+  800-53r5:
+    - N/A
+  800-53r4:
+    - N/A
+  disa_stig:
+    - APPL-26-006000
+  srg:
+    - SRG-OS-000830-GPOS-00300
+macOS:
+  - '26.0'
+tags:
+  - inherent
+  - stig
+mobileconfig: false
+mobileconfig_info:
