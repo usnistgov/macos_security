@@ -2,7 +2,7 @@
 
 This document provides a high-level view of the changes to the macOS Security Compliance Project.
 
-## [Tahoe, Revision 1.1] – YYYY-MM-DD
+## [Tahoe, Revision 2.0] – 2025-12-18
 
 * Rules
   * Added Rules
