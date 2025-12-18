@@ -2,7 +2,7 @@
 
 This document provides a high-level view of the changes to the macOS Security Compliance Project.
 
-## [visionOS 26.0, Revision 1.1] - XXXX-XX-XX
+## [visionOS 26.0, Revision 1.1] - 2025-12-18
 
 * Rules
   * Added Rules
