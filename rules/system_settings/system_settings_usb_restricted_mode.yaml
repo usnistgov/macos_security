@@ -9,18 +9,16 @@ discussion: |
   ====
 check: |
   /usr/bin/osascript -l JavaScript << EOS
-    function run() {
-      let pref1 = ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess')\
-    .objectForKey('allowUSBRestrictedMode'))
-      if ( pref1 == false ) {
-        return("false")
-      } else {
-        return("true")
-      }
-    }
+  let pref1 = ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess')\
+  .objectForKey('allowUSBRestrictedMode'))
+  if ( pref1 == false ) {
+      "false"
+  } else {
+      "true"
+  }
   EOS
 result:
-  string: 'true'
+  string: "true"
 fix: |
   This is implemented by a Configuration Profile.
 references:
@@ -48,7 +46,7 @@ references:
   disa_stig:
     - APPL-26-005090
 macOS:
-  - '26.0'
+  - "26.0"
 tags:
   - 800-53r5_low
   - 800-53r5_moderate
