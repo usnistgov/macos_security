@@ -6,7 +6,7 @@ references:
   nist:
     cce:
       ios_26:
-        - CCE-95422-2
+        - CCE-95631-8
       ios_18:
         - CCE-94415-7
       ios_17:
@@ -24,10 +24,14 @@ references:
     cci:
       - CCI-001090
     disa_stig:
+      ios_26:
+        - AIOS-26-003000
       ios_18:
         - AIOS-18-003000
       ios_17:
         - AIOS-17-003000
+      visionos_26:
+        - AVOS-02-003000
     sfr:
       - 'FMT_MOF_EXT.1.2 #40'
   cis:
@@ -45,6 +49,9 @@ references:
       ios_17:
         - ANNEX D (Section 5.4 - iCloud restrictions)
         - ANNEX K
+      ios_26:
+        - ANNEX D (Section 5.4 - iCloud restrictions)
+        - ANNEX K
 platforms:
   iOS:
     '26.0':
@@ -52,6 +59,12 @@ platforms:
       benchmarks:
         - name: cis_lvl1_enterprise
         - name: cis_lvl2_enterprise
+        - name: ios_stig
+          severity: medium
+        - name: indigo_base
+          severity: medium
+        - name: indigo_high
+          severity: medium
     '18.0':
       supervised: false
       benchmarks:

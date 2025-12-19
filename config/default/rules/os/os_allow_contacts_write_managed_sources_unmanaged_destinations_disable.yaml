@@ -5,7 +5,7 @@ references:
   nist:
     cce:
       ios_26:
-        - CCE-95438-8
+        - CCE-95645-8
       ios_18:
         - CCE-94426-4
       ios_17:
@@ -23,11 +23,15 @@ references:
       - CCI-000051
       - CCI-000370
     disa_stig:
+      ios_26:
+        - AIOS-26-012300
       ios_18:
         - AIOS-18-012300
       ios_17:
         - AIOS-17-012300
         - AIOS-17-712300
+      visionos_26:
+        - AVOS-02-012300
     sfr:
       - 'FMT_SMF_EXT.1.1 #42'
       - FDP_ACF_EXT.1.2
@@ -39,10 +43,20 @@ references:
       ios_17:
         - ANNEX D (Section 5.6.3 - Contacts)
         - ANNEX K
+      ios_26:
+        - ANNEX D (Section 5.6.3 - Contacts)
+        - ANNEX K
 platforms:
   iOS:
     '26.0':
       supervised: false
+      benchmarks:
+        - name: ios_stig
+          severity: low
+        - name: indigo_base
+          severity: low
+        - name: indigo_high
+          severity: low
     '18.0':
       supervised: false
       benchmarks:

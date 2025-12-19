@@ -6,7 +6,7 @@ references:
   nist:
     cce:
       ios_26:
-        - CCE-95427-1
+        - CCE-95634-2
       ios_18:
         - CCE-94418-1
       ios_17:
@@ -29,10 +29,16 @@ references:
       ios_17:
         - ANNEX D (Section 5.4 - iCloud restrictions)
         - ANNEX K
+      ios_26:
+        - ANNEX D (Section 5.4 - iCloud restrictions)
+        - ANNEX K
 platforms:
   iOS:
     '26.0':
       supervised: false
+      benchmarks:
+        - name: indigo_high
+          severity: medium
     '18.0':
       supervised: false
       benchmarks:

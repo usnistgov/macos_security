@@ -19,10 +19,19 @@ references:
     indigo:
       ios_17:
         - ANNEX K
+      ios_26:
+        - ANNEX K
+  disa:
+    disa_stig:
+      ios_26:
+        - AIOS-26-013100
 platforms:
   iOS:
     '26.0':
       supervised: true
+      benchmarks:
+        - name: ios_stig
+        - name: indigo_high
     '18.0':
       supervised: true
       benchmarks:

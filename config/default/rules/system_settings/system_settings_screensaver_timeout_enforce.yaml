@@ -79,7 +79,7 @@ platforms:
           EOS
         result:
           string: 'true'
-    introduced: '-1'
+    introduced: '10.11'
 odv:
   hint:
     datatype: number
@@ -90,6 +90,7 @@ odv:
   cis_lvl1: 1200
   cis_lvl2: 1200
   stig: 900
+  nlmapgov_plus: 300
 tags:
   - 800-53r5_moderate
   - 800-53r5_high
@@ -100,6 +101,7 @@ tags:
   - cnssi-1253_high
   - cmmc_lvl2
   - cnssi-1253_moderate
+  - nlmapgov_plus
 mobileconfig_info:
   - PayloadType: com.apple.screensaver
     PayloadContent:

@@ -3,7 +3,7 @@ title: Ensure Software Update is Updated and Current
 discussion: |
   Make sure Software Update is updated and current.
 
-  NOTE: Automatic fix can cause unplanned restarts and may lose work.
+  link:https://support.apple.com/en-us/108382[Update macOS on Mac] or if enrolled in an MDM consult your MDM's documentation for automated methods.
 references:
   nist:
     cce:
@@ -13,6 +13,25 @@ references:
         - CCE-94398-5
       macos_14:
         - CCE-92993-5
+    800-53r5:
+      - SI-2
+    800-171r3:
+      - 03.14.01
+      - 03.14.02
+  disa:
+    cci:
+      - CCI-002605
+    srg:
+      - SRG-OS-000439-GPOS-00195
+    disa_stig:
+      macos_26:
+        - APPL-26-999999
+      macos_15:
+        - APPL-15-999999
+    cmmc:
+      - SI.L1-3.14.1
+      - SI.L1-3.14.2
+      - SI.L1-3.14.4
   cis:
     benchmark:
       macos_26:
@@ -30,19 +49,50 @@ platforms:
       benchmarks:
         - name: cis_lvl1
         - name: cis_lvl2
+        - name: disa_stig
+          severity: medium
+      enforcement_info:
+        fix:
+          additional_info: 'NOTE: See discussion on how to install software updates.'
     '15.0':
       benchmarks:
         - name: cis_lvl1
         - name: cis_lvl2
+        - name: disa_stig
+          severity: medium
+      enforcement_info:
+        check:
+          shell: |-
+            softwareupdate_date_epoch=$(/bin/date -j -f "%Y-%m-%d" "$(/usr/bin/defaults read /Library/Preferences/com.apple.SoftwareUpdate.plist LastFullSuccessfulDate | /usr/bin/awk '{print $1}')" "+%s")
+            thirty_days_epoch=$(/bin/date -v -30d "+%s")
+            if [[ $softwareupdate_date_epoch -lt $thirty_days_epoch ]]; then
+              /bin/echo "0"
+            else
+              /bin/echo "1"
+            fi
+          result:
+            integer: 1
     '14.0':
       benchmarks:
         - name: cis_lvl1
         - name: cis_lvl2
+      enforcement_info:
+        check:
+          shell: |-
+            softwareupdate_date_epoch=$(/bin/date -j -f "%Y-%m-%d" "$(/usr/bin/defaults read /Library/Preferences/com.apple.SoftwareUpdate.plist LastFullSuccessfulDate | /usr/bin/awk '{print $1}')" "+%s")
+            thirty_days_epoch=$(/bin/date -v -30d "+%s")
+            if [[ $softwareupdate_date_epoch -lt $thirty_days_epoch ]]; then
+              /bin/echo "0"
+            else
+              /bin/echo "1"
+            fi
+          result:
+            integer: 1
     enforcement_info:
       check:
         shell: |-
           softwareupdate_date_epoch=$(/bin/date -j -f "%Y-%m-%d" "$(/usr/bin/defaults read /Library/Preferences/com.apple.SoftwareUpdate.plist LastFullSuccessfulDate | /usr/bin/awk '{print $1}')" "+%s")
-          thirty_days_epoch=$(/bin/date -v -30d "+%s")
+          thirty_days_epoch=$(/bin/date -v -$ODV "+%s")
           if [[ $softwareupdate_date_epoch -lt $thirty_days_epoch ]]; then
             /bin/echo "0"
           else
@@ -53,5 +103,20 @@ platforms:
       fix:
         shell: /usr/sbin/softwareupdate -i -a
         additional_info: NOTE - This will apply to the whole system
+odv:
+  hint:
+    description: Maximum Days of Deferral
+  recommended: 30
+  cis_lvl1: 30
+  cis_lvl2: 30
+  stig: 30
 tags:
   - cisv8
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_high
+  - 800-171
+  - cmmc_lvl2
+  - cmmc_lvl1
+  - nlmapgov_base
+  - nlmapgov_plus

@@ -23,6 +23,8 @@ references:
         - CCE-94172-4
       macos_14:
         - CCE-92772-3
+      ios_26:
+        - CCE-95605-2
       visionos_26:
         - CCE-95568-2
   disa:
@@ -38,6 +40,8 @@ references:
         - APPL-15-002017
       macos_14:
         - APPL-14-002017
+      ios_26:
+        - AIOS-26-018100
 platforms:
   macOS:
     '26.0':
@@ -62,6 +66,13 @@ platforms:
         result:
           string: 'false'
     introduced: '10.11'
+  iOS:
+    '26.0':
+      supervised: true
+      benchmarks:
+        - name: ios_stig
+          severity: medium
+    introduced: '4.0'
   visionOS:
     '26.0':
       supervised: true

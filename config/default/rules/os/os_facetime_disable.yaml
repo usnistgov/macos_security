@@ -4,6 +4,9 @@ discussion: |
   FaceTime _MUST_ be disabled.
 references:
   nist:
+    cce:
+      ios_26:
+        - CCE-95627-6
     800-53r5:
       - CM-6
       - CM-7
@@ -11,12 +14,19 @@ references:
     cci:
       - CCI-000366
     disa_stig:
+      ios_26:
+        - AIOS-26-017800
       ios_18:
         - AIOS-18-017800
     sfr:
       - 'FMT_MOF_EXT.1.2 #47'
 platforms:
   iOS:
+    '26.0':
+      supervised: true
+      benchmarks:
+        - name: ios_stig
+          severity: high
     '18.0':
       supervised: true
       benchmarks:

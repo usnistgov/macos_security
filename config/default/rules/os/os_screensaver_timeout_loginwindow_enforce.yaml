@@ -40,7 +40,7 @@ platforms:
           EOS
         result:
           string: 'true'
-    introduced: '10.11'
+    introduced: '-1'
 odv:
   hint:
     datatype: number

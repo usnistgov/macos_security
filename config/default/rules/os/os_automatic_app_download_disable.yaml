@@ -4,6 +4,9 @@ discussion: |
   The automatic download of apps to a mobile device could cause the exposure of sensitive  information when an unauthorized app is installed.
 references:
   nist:
+    cce:
+      ios_26:
+        - CCE-95654-0
     800-53r5:
       - CM-7
       - CM-7(1)
@@ -11,12 +14,18 @@ references:
     cci:
       - CCI-000366
     disa_stig:
+      ios_26:
+        - AIOS-26-016400
       ios_18:
         - AIOS-18-016200
     sfr:
       - 'FMT_MOF_EXT.1.2 #47'
 platforms:
   iOS:
+    '26.0':
+      supervised: true
+      benchmarks:
+        - name: ios_stig
     '18.0':
       supervised: true
       benchmarks:

@@ -8,7 +8,7 @@ references:
   nist:
     cce:
       ios_26:
-        - CCE-95474-3
+        - CCE-95627-6
       ios_18:
         - CCE-94518-8
       visionos_26:
@@ -21,10 +21,18 @@ references:
     cci:
       - CCI-000366
     disa_stig:
+      ios_26:
+        - AIOS-26-015400
       ios_18:
         - AIOS-18-015400
+      visionos_26:
+        - AVOS-02-015400
     sfr:
       - 'FMT_MOF_EXT.1.2 #47'
+  bsi:
+    indigo:
+      ios_26:
+        - ANNEX K
   cis:
     benchmark:
       ios_26:
@@ -39,6 +47,12 @@ platforms:
         - name: cis_lvl2_byod
         - name: cis_lvl1_enterprise
         - name: cis_lvl2_enterprise
+        - name: ios_stig
+          severity: medium
+        - name: indigo_base
+          severity: medium
+        - name: indigo_high
+          severity: medium
     '18.0':
       supervised: true
       benchmarks:

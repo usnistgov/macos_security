@@ -5,12 +5,20 @@ discussion: |
 
   RCS enables sending messages, photos, and videos via cellular data but is not available on all carriers.
 references:
+  nist:
+    cce:
+      ios_26:
+        - CCE-95678-9
   bsi:
     indigo:
-      ios_18:
+      ios_26:
         - Annex K
 platforms:
   iOS:
+    '26.0':
+      supervised: false
+      benchmarks:
+        - name: indigo_high
     '18.0':
       supervised: false
       benchmarks:
