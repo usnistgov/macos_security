@@ -14,6 +14,7 @@ from .generate import (
     generate_guidance,
     generate_local_report,
     generate_mapping,
+    generate_scap,
 )
 
 
@@ -246,21 +247,20 @@ def parse_cli() -> None:
         help="Specify framework for the source. If no framework is specified, the default is 800-53r5.",
         action="store",
     )
-
+    
     scap_parser: argparse.ArgumentParser = subparsers.add_parser(
         "scap",
         help="Easily generate xccdf, oval, or scap datastream. If no option is defined, it will generate an scap datastream file.",
         parents=[parent_parser],
         add_help=False,
     )
-    # scap_parser.set_defaults(func=parser.print_help)
+    scap_parser.set_defaults(func=generate_scap)
     scap_parser.add_argument(
         "-b",
         "--baseline",
         default=None,
-        help="Baseline YAML file used to create the guide.",
-        type=validate_file,
-        action="store",
+        help="Choose a baseline to generate an xml file for, if none is specified it will generate for every rule found.",
+        action="store_true",
     )
     scap_parser.add_argument(
         "-x",
