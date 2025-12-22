@@ -43,11 +43,11 @@ references:
 macOS:
   - '26.0'
 odv:
-  hint: Maximum Days of Deferral
-  recommended: 30
-  cis_lvl1: 30
-  cis_lvl2: 30
-  stig: 30
+  hint: Maximum Days of Deferral (e.g. 30d)
+  recommended: 30d
+  cis_lvl1: 30d
+  cis_lvl2: 30d
+  stig: 30d
 tags:
   - cis_lvl1
   - cis_lvl2
