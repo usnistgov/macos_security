@@ -42,6 +42,8 @@ def collect_tags_and_benchmarks(
                     ):
                         benchmark_platforms[benchmark["name"]].add(os_type)
 
+    tags_set.add("all_rules")
+
     return sorted(tags_set), benchmark_platforms
 
 
@@ -63,9 +65,6 @@ def print_keyword_summary(
         platforms_str = ", ".join(sorted(benchmark_platforms[benchmark]))
         print(f"  {benchmark} (Platforms: {platforms_str})")
     print()
-
-    print("Special keywords:")
-    print("  all_rules")
 
     sys.exit()
 
@@ -96,21 +95,26 @@ def generate_baseline(args: argparse.Namespace) -> None:
     configure_localization_for_yaml(language=args.language)
 
     build_path: Path = Path(config.get("output_dir", ""), "baselines")
-    baseline_output_file: Path = build_path / f"{args.keyword}.yaml"
+    baseline_output_file: Path = (
+        build_path
+        / f"{args.keyword}_{args.os_name}_{args.os_version}_{args.language}.yaml"
+    )
+
     baselines_data: dict = open_file(
         Path(config.get("includes_dir", ""), "800-53_baselines.yaml")
     )
     established_benchmarks: tuple[str, ...] = ("stig", "cis_lvl1", "cis_lvl2")
-    misc_tags: tuple[str, str, str, str] = (
-        "permanent",
-        "inherent",
-        "n_a",
-        "not_applicable",
-    )
+    # removing misc_tags, unsure we need it.
+    # misc_tags: tuple[str, str, str, str] = (
+    #     "permanent",
+    #     "inherent",
+    #     "n_a",
+    #     "not_applicable",
+    # )
     benchmark: str = "recommended"
     full_title: str = args.keyword
     authors: list[Author] = []
-    baseline_name: str | None = None
+    baseline_name: str | None = ""
 
     def replace_vars(text: str) -> str:
         os_list = (
@@ -174,17 +178,19 @@ def generate_baseline(args: argparse.Namespace) -> None:
 
         sys.exit()
 
-    if not args.keyword:
+    if (
+        args.keyword not in all_tags
+        and not args.keyword
+        and args.keyword not in benchmark_map
+    ):
         logger.info(
             "No rules found for the keyword provided, please verify from the following list:"
         )
         print_keyword_summary(all_tags, benchmark_map)
 
-    baseline_dict: dict[str, Any] = mscp_data.get("baselines", {}).get(args.keyword, {})
-
-    if not baseline_dict:
-        logger.warning(f"No baseline found for keyword: {args.keyword}")
-        print_keyword_summary(all_tags, benchmark_map)
+    # baseline_dict: dict[str, Any] = mscp_data.get("baselines", {}).get(
+    #     args.keyword, {"title": "custom", "description": "custom"}
+    # )
 
     found_rules = [
         rule
@@ -193,32 +199,37 @@ def generate_baseline(args: argparse.Namespace) -> None:
             rule, args.keyword, args.os_name, str(args.os_version)
         )
         or (rule.tags is not None and args.keyword in rule.tags)
-        or any(item in misc_tags for item in rule.tags or [])
+        # or any(item in misc_tags for item in rule.tags or [])
         or args.keyword == "all_rules"
     ]
 
-    baseline_dict["title"] = replace_vars(baseline_dict["title"])
-    baseline_dict["description"] = replace_vars(baseline_dict["description"])
+    baseline_dict = {}
+    # baseline_dict["title"] = replace_vars(baseline_dict["title"])
+    # baseline_dict["description"] = replace_vars(baseline_dict["description"])
 
     if any(bm in args.keyword for bm in established_benchmarks):
         benchmark = args.keyword
 
-    authors: list[Author] = [
-        Author(**author)
-        for group in baseline_dict.get("authors", [])
-        for author in (group if isinstance(group, list) else [group])
-    ]
+    authors_dict: dict[str, Any] = mscp_data.get("authors", {})
 
-    baseline_dict.pop("authors", None)
+    authors: list[Author] = []
+    for author in authors_dict:
+        if "mscp" in author["benchmarks"] or args.keyword in author["benchmarks"]:
+            normalized_authors = author if isinstance(author, list) else [author]
 
-    if args.keyword == "disa_stig":
-        match args.os_name:
-            case "macos":
-                name = "Marco Piñeyro"
-            case "ios":
-                name = "Aaron Kegerreis"
+            for each_author in normalized_authors:
+                authors.append(Author(**each_author))
 
-        authors[:] = [author for author in authors if author.name != name]
+    # baseline_dict.pop("authors", None)
+
+    # if args.keyword == "disa_stig":
+    #     match args.os_name:
+    #         case "macos":
+    #             name = "Marco Piñeyro"
+    #         case "ios":
+    #             name = "Aaron Kegerreis"
+
+    #     authors[:] = [author for author in authors if author.name != name]
 
     if args.tailor:
         full_title = ""

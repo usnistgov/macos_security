@@ -61,7 +61,7 @@ def generate_guidance(args: argparse.Namespace) -> None:
     # Configure localization at the beginning based on the CLI language parameter
     logger.debug(f"Language parameter from CLI: {args.language}")
     configure_localization_for_yaml(language=args.language)
-    
+
     logo_path: Path = Path(
         config["defaults"]["images_dir"], "mscp_banner.png"
     ).absolute()
@@ -71,10 +71,6 @@ def generate_guidance(args: argparse.Namespace) -> None:
     custom: bool = not any(Path(config["custom"]["root_dir"]).iterdir())
     show_all_tags: bool = False
 
-    current_version_data: dict[str, Any] = get_version_data(
-        args.os_name, args.os_version, mscp_data
-    )
-
     output_basename: str = args.baseline.name
     baseline_name: str = args.baseline.stem
     audit_name: str = str(baseline_name)
@@ -83,8 +79,10 @@ def generate_guidance(args: argparse.Namespace) -> None:
     md_output_file: Path = Path(build_path, f"{baseline_name}.md")
     spreadsheet_output_file: Path = Path(build_path, f"{baseline_name}.xlsx")
 
-    baseline: Baseline = Baseline.from_yaml(
-        args.baseline, args.os_name, args.os_version, args.language, custom
+    baseline: Baseline = Baseline.from_yaml(args.baseline, args.language, custom)
+
+    current_version_data: dict[str, Any] = get_version_data(
+        baseline.platform["os"], baseline.platform["version"], mscp_data
     )
 
     if args.audit_name:
@@ -155,7 +153,7 @@ def generate_guidance(args: argparse.Namespace) -> None:
             b64logo,
             pdf_theme,
             logo_path,
-            args.os_name,
+            baseline.platform["os"],
             current_version_data,
             show_all_tags,
             custom,
@@ -187,7 +185,7 @@ def generate_guidance(args: argparse.Namespace) -> None:
             b64logo,
             pdf_theme,
             logo_path,
-            args.os_name,
+            baseline.platform["os"],
             current_version_data,
             show_all_tags,
             custom,
@@ -201,7 +199,7 @@ def generate_guidance(args: argparse.Namespace) -> None:
         b64logo,
         pdf_theme,
         logo_path,
-        args.os_name,
+        baseline.platform["os"],
         current_version_data,
         show_all_tags,
         custom,
