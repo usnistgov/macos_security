@@ -59,7 +59,6 @@ tags:
   - 800-171
   - cmmc_lvl2
   - cmmc_lvl1
-  - test
 severity: medium
 mobileconfig: false
 mobileconfig_info:
