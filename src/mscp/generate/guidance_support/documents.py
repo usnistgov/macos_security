@@ -375,6 +375,7 @@ def render_template(
         lstrip_blocks=True,
         autoescape=False,
         extensions=["jinja2.ext.i18n"],
+        keep_trailing_newline=True,
     )
 
     styles_dir: Path = Path(misc_dir).absolute()
