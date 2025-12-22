@@ -65,7 +65,9 @@ def create_scap(
 
 
 def generate_scap(args: argparse.Namespace) -> None:
-    logger.error("generate_scap() NEEDS TO BE BUILT")
+    # logger.error("generate_scap() NEEDS TO BE BUILT")
+    
+    
     export_as: str = "scap"
     output_file: Path = Path(config["output_dir"])
 
@@ -123,7 +125,9 @@ def generate_scap(args: argparse.Namespace) -> None:
     )
     
     all_tags, benchmark_map = collect_tags_and_benchmarks(all_rules)
-    all_baseline_benchmark = []    
+    all_baseline_benchmark = []   
+    if args.baseline == None:
+        args.baseline = "all_rules"
     if args.baseline == "all_rules":
 
         for k,v in benchmark_map.items():            

@@ -2,6 +2,8 @@ id: os_software_update_deferral
 title: Ensure Software Update Deferment Is Less Than or Equal to $ODV Days
 discussion: |
   Software updates _MUST_ be deferred for $ODV days or less.
+
+  If you need to defer software updates, create a Restrictions profile using the com.apple.applicationaccess domain and the key enforcedSoftwareUpdateDelay.
 references:
   nist:
     cce:
@@ -32,10 +34,18 @@ platforms:
       benchmarks:
         - name: cis_lvl1
         - name: cis_lvl2
+      mobileconfig_info:
+        - PayloadType: com.apple.applicationaccess
+          PayloadContent:
+            - enforcedSoftwareUpdateDelay: $ODV
     '14.0':
       benchmarks:
         - name: cis_lvl1
         - name: cis_lvl2
+      mobileconfig_info:
+        - PayloadType: com.apple.applicationaccess
+          PayloadContent:
+            - enforcedSoftwareUpdateDelay: $ODV
     enforcement_info:
       check:
         shell: |-
@@ -52,7 +62,6 @@ platforms:
           EOS
         result:
           string: 'true'
-    introduced: 10.13.4
 odv:
   hint:
     datatype: number
@@ -62,7 +71,3 @@ odv:
   recommended: 30
   cis_lvl1: 30
   cis_lvl2: 30
-mobileconfig_info:
-  - PayloadType: com.apple.applicationaccess
-    PayloadContent:
-      - enforcedSoftwareUpdateDelay: $ODV

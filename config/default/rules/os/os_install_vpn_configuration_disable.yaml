@@ -6,7 +6,7 @@ references:
   nist:
     cce:
       ios_26:
-        - CCE-95485-9
+        - CCE-95662-3
       ios_18:
         - CCE-94445-4
       ios_17:
@@ -23,6 +23,8 @@ references:
       - CCI-000370
       - CCI-000066
     disa_stig:
+      ios_26:
+        - AIOS-26-001000
       ios_18:
         - AIOS-18-001000
       ios_17:
@@ -44,6 +46,8 @@ references:
     indigo:
       ios_17:
         - ANNEX D (Section 5.10.3 - Manual VPN)
+      ios_26:
+        - ANNEX D (Section 5.10.3 - Manual VPN)
 platforms:
   iOS:
     '26.0':
@@ -51,6 +55,12 @@ platforms:
       benchmarks:
         - name: cis_lvl1_enterprise
         - name: cis_lvl2_enterprise
+        - name: ios_stig
+          severity: low
+        - name: indigo_base
+          severity: low
+        - name: indigo_high
+          severity: low
     '18.0':
       supervised: true
       benchmarks:

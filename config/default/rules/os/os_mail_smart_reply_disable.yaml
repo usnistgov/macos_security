@@ -33,6 +33,10 @@ references:
       - AC.L1-3.1.20
       - CM.L2-3.4.6
       - CM.L2-3.4.7
+  bsi:
+    indigo:
+      ios_26:
+        - ANNEX K
 platforms:
   macOS:
     '26.0': {}
@@ -50,6 +54,9 @@ platforms:
   iOS:
     '26.0':
       supervised: true
+      benchmarks:
+        - name: indigo_base
+        - name: indigo_high
     '18.0':
       supervised: true
     introduced: '18.4'

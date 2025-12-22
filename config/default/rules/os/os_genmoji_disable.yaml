@@ -31,8 +31,12 @@ references:
         - APPL-26-005140
       macos_15:
         - APPL-15-005140
+      ios_26:
+        - AIOS-26-017400
       ios_18:
         - AIOS-18-017400
+      visionos_26:
+        - AVOS-02-017400
     cmmc:
       - CM.L2-3.4.6
       - CM.L2-3.4.7
@@ -57,6 +61,8 @@ platforms:
   iOS:
     '26.0':
       supervised: false
+      benchmarks:
+        - name: ios_stig
     '18.0':
       supervised: false
       benchmarks:

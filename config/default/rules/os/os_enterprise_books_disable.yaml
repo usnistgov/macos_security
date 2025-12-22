@@ -5,7 +5,7 @@ references:
   nist:
     cce:
       ios_26:
-        - CCE-95459-4
+        - CCE-95611-0
       ios_18:
         - CCE-94436-3
       ios_17:
@@ -17,6 +17,8 @@ references:
       - CCI-000366
       - CCI-002110
     disa_stig:
+      ios_26:
+        - AIOS-26-003700
       ios_18:
         - AIOS-18-003700
       ios_17:
@@ -28,10 +30,17 @@ references:
     indigo:
       ios_17:
         - ANNEX K
+      ios_26:
+        - ANNEX K
 platforms:
   iOS:
     '26.0':
       supervised: false
+      benchmarks:
+        - name: ios_stig
+          severity: medium
+        - name: indigo_high
+          severity: medium
     '18.0':
       supervised: false
       benchmarks:

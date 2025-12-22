@@ -7,7 +7,7 @@ discussion: |
 
   NOTE: Configuring this setting will change the user experience and disable TouchID from unlocking the screensaver. A configuration profile will be generated to include the setting that restores the expected behavior. You can also apply the settings using `/usr/bin/sudo /usr/bin/defaults write /Library/Preferences/com.apple.loginwindow screenUnlockMode -int 1`.
 
-  WARNING: This rule may cause issues when platformSSO is configured.
+  WARNING: Do not apply this rule if your organization uses smartcards and Platform Single Sign-On (PSSO).
 references:
   nist:
     cce:
@@ -133,6 +133,7 @@ tags:
   - cmmc_lvl2
   - cmmc_lvl1
   - cnssi-1253_moderate
+  - nlmapgov_plus
 mobileconfig_info:
   - PayloadType: com.apple.loginwindow
     PayloadContent:

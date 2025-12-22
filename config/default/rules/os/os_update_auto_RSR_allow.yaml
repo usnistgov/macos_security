@@ -6,7 +6,7 @@ references:
   nist:
     cce:
       ios_26:
-        - CCE-95538-5
+        - CCE-95698-7
       ios_18:
         - CCE-94559-2
       ios_17:
@@ -15,9 +15,13 @@ references:
     indigo:
       ios_17:
         - ANNEX K
+      ios_26:
+        - ANNEX K
 platforms:
   iOS:
-    '26.0': {}
+    '26.0':
+      benchmarks:
+        - name: indigo_high
     '18.0':
       benchmarks:
         - name: indigo_high

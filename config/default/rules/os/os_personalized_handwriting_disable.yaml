@@ -15,10 +15,16 @@ references:
       - CM-7
       - CM-7(1)
       - SC-7(10)
+  bsi:
+    indigo:
+      ios_26:
+        - ANNEX K
 platforms:
   iOS:
     '26.0':
       supervised: false
+      benchmarks:
+        - name: indigo_high
     '18.0':
       supervised: false
       benchmarks:

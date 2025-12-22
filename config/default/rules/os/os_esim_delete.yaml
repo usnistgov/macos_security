@@ -15,6 +15,8 @@ references:
     cci:
       - CCI-001033
     disa_stig:
+      ios_26:
+        - AIOS-26-015100
       ios_18:
         - AIOS-18-015100
     sfr:
@@ -23,6 +25,9 @@ platforms:
   iOS:
     '26.0':
       supervised: true
+      benchmarks:
+        - name: ios_stig
+          severity: medium
     '18.0':
       supervised: true
       benchmarks:

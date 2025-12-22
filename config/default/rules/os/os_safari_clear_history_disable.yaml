@@ -1,5 +1,5 @@
 id: os_safari_clear_history_disable
-title: Ensure Clearning of Browsing History in Safari Is Disabled
+title: Ensure Clearing of Browsing History in Safari Is Disabled
 discussion: |
   Clearing of browser history _MUST_ be disabled in Safari.
 references:

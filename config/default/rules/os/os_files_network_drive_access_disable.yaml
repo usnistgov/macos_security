@@ -6,13 +6,13 @@ references:
   nist:
     cce:
       ios_26:
-        - CCE-95475-0
+        - CCE-95629-2
       ios_18:
         - CCE-94438-9
       ios_17:
         - CCE-93423-2
       visionos_26:
-        - CCE-95575-7
+        - CCE-96709-1
     800-53r5:
       - AC-20(2)
   disa:
@@ -21,10 +21,14 @@ references:
       - CCI-000097
       - CCI-000370
     disa_stig:
+      ios_26:
+        - AIOS-26-014300
       ios_18:
         - AIOS-18-014300
       ios_17:
         - AIOS-17-014300
+      visionos_26:
+        - AVOS-02-014300
     sfr:
       - 'FMT_SMF_EXT.1.1 #47'
   cis:
@@ -41,12 +45,20 @@ references:
     indigo:
       ios_17:
         - ANNEX K
+      ios_26:
+        - ANNEX K
 platforms:
   iOS:
     '26.0':
       supervised: true
       benchmarks:
         - name: cis_lvl2_enterprise
+        - name: ios_stig
+          severity: medium
+        - name: indigo_base
+          severity: medium
+        - name: indigo_high
+          severity: medium
     '18.0':
       supervised: true
       benchmarks:

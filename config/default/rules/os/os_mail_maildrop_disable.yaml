@@ -6,11 +6,13 @@ references:
   nist:
     cce:
       ios_26:
-        - CCE-95491-7
+        - CCE-95666-4
       ios_18:
         - CCE-94448-8
       ios_17:
         - CCE-93432-3
+      visionos_26:
+        - CCE-96710-9
     800-53r5:
       - AC-3
       - AC-20
@@ -23,10 +25,14 @@ references:
       - CCI-000370
       - CCI-002314
     disa_stig:
+      ios_26:
+        - AIOS-26-011000
       ios_18:
         - AIOS-18-011000
       ios_17:
         - AIOS-17-011000
+      visionos_26:
+        - AVOS-02-011000
     sfr:
       - 'FMT_SMF_EXT.1.1 #47'
   cis:
@@ -46,6 +52,8 @@ references:
     indigo:
       ios_17:
         - ANNEX D (Section 5.6.1 - Mail)
+      ios_26:
+        - ANNEX D (Section 5.6.1 - Mail)
 platforms:
   iOS:
     '26.0':
@@ -53,6 +61,12 @@ platforms:
       benchmarks:
         - name: cis_lvl2_byod
         - name: cis_lvl2_enterprise
+        - name: ios_stig
+          severity: medium
+        - name: indigo_base
+          severity: medium
+        - name: indigo_high
+          severity: medium
     '18.0':
       supervised: false
       benchmarks:
@@ -76,6 +90,10 @@ platforms:
         - name: indigo_high
           severity: medium
     introduced: '9.2'
+  visionOS:
+    '26.0':
+      supervised: false
+    introduced: '1.1'
 tags:
   - 800-53r5_low
   - 800-53r5_moderate

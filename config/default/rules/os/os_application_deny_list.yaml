@@ -6,7 +6,7 @@ references:
   nist:
     cce:
       ios_26:
-        - CCE-95444-6
+        - CCE-95650-8
       ios_18:
         - CCE-94517-0
       ios_17:
@@ -16,10 +16,16 @@ references:
       ios_17:
         - ANNEX D (Section 5.8 - App-Installation)
         - ANNEX N
+      ios_26:
+        - ANNEX D (Section 5.8 - App-Installation)
+        - ANNEX N
 platforms:
   iOS:
     '26.0':
       supervised: true
+      benchmarks:
+        - name: indigo_base
+        - name: indigo_high
     '18.0':
       supervised: true
       benchmarks:

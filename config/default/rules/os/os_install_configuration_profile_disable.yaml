@@ -19,6 +19,8 @@ references:
       - CM-7(1)
   disa:
     disa_stig:
+      ios_26:
+        - AIOS-26-015500
       ios_18:
         - AIOS-18-015500
   cis:
@@ -35,6 +37,8 @@ references:
     indigo:
       ios_17:
         - ANNEX D (Section 5.6.1 - Mail)
+      ios_26:
+        - ANNEX K
 platforms:
   iOS:
     '26.0':
@@ -42,6 +46,12 @@ platforms:
       benchmarks:
         - name: cis_lvl1_enterprise
         - name: cis_lvl2_enterprise
+        - name: ios_stig
+          severity: medium
+        - name: indigo_base
+          severity: medium
+        - name: indigo_high
+          severity: medium
     '18.0':
       supervised: true
       benchmarks:

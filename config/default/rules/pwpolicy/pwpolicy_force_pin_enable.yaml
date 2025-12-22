@@ -8,31 +8,46 @@ references:
   nist:
     cce:
       ios_26:
-        - CCE-95548-4
+        - CCE-96705-9
       ios_18:
         - CCE-94474-4
       ios_17:
         - CCE-93457-0
+      visionos_26:
+        - CCE-96716-6
     800-53r5:
       - SC-28
   disa:
     cci:
       - CCI-001199
     disa_stig:
+      ios_26:
+        - AIOS-26-010400
       ios_18:
         - AIOS-18-010400
       ios_17:
         - AIOS-17-010400
         - AIOS-17-710400
+      visionos_26:
+        - AVOS-02-010400
     sfr:
       - FIA_UAU_EXT.1.1
   bsi:
     indigo:
       ios_17:
         - Annex D (Section 5.9.1 - Device-Code)
+      ios_26:
+        - ANNEX D (Section 5.9.1 - Device-Code)
 platforms:
   iOS:
-    '26.0': {}
+    '26.0':
+      benchmarks:
+        - name: ios_stig
+          severity: high
+        - name: indigo_base
+          severity: high
+        - name: indigo_high
+          severity: high
     '18.0':
       benchmarks:
         - name: ios_stig
@@ -52,10 +67,15 @@ platforms:
         - name: indigo_high
           severity: high
     introduced: '4.0'
+  visionOS:
+    '26.0': {}
+    introduced: '2.0'
 tags:
   - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
+  - 800-53r5_moderate
+  - 800-53r5_high
 mobileconfig_info:
   - PayloadType: com.apple.mobiledevice.passwordpolicy
     PayloadContent:

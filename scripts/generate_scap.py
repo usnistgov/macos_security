@@ -26,7 +26,7 @@ def main() -> None:
         "-b",
         "--baseline",
         default="all_rules",
-        help="Baseline YAML file used to create the guide.",
+        help="Choose a baseline to generate an xml file for, if none is specified it will generate for every rule found.",
         type=str
     )
     parser.add_argument(

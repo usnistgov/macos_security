@@ -11,22 +11,28 @@ references:
       macos_14:
         - CCE-92939-8
       ios_26:
-        - CCE-95553-4
+        - CCE-96723-2
       ios_18:
         - CCE-94478-5
       ios_17:
         - CCE-93461-2
+      visionos_26:
+        - CCE-96720-8
     800-53r5:
       - IA-5(1)
     800-171r3:
       - 03.05.07
   disa:
     disa_stig:
+      ios_26:
+        - AIOS-26-006600
       ios_18:
         - AIOS-18-006600
       ios_17:
         - AIOS-17-006600
         - AIOS-17-706600
+      visionos_26:
+        - AVOS-02-006600
     cmmc:
       - IA.L2-3.5.7
       - IA.L2-3.5.8
@@ -52,6 +58,9 @@ references:
       ios_17:
         - ANNEX D (Section 5.9 - Device authentication)
         - ANNEX K
+      ios_26:
+        - ANNEX D (Section 5.9 - Device authentication)
+        - ANNEX K
 platforms:
   macOS:
     '26.0': {}
@@ -71,6 +80,12 @@ platforms:
         - name: cis_lvl2_byod
         - name: cis_lvl1_enterprise
         - name: cis_lvl2_enterprise
+        - name: ios_stig
+          severity: medium
+        - name: indigo_base
+          severity: medium
+        - name: indigo_high
+          severity: medium
     '18.0':
       supervised: false
       benchmarks:
@@ -100,6 +115,10 @@ platforms:
         - name: indigo_high
           severity: medium
     introduced: '4.0'
+  visionOS:
+    '26.0':
+      supervised: false
+    introduced: '2.0'
 tags:
   - 800-171
   - 800-53r5_low

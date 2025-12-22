@@ -6,11 +6,13 @@ references:
   nist:
     cce:
       ios_26:
-        - CCE-95492-5
+        - CCE-95667-2
       ios_18:
         - CCE-94449-6
       ios_17:
         - CCE-93433-1
+      visionos_26:
+        - CCE-96713-3
     800-53r5:
       - AC-21
       - CM-7
@@ -23,11 +25,15 @@ references:
       - CCI-000370
       - CCI-000764
     disa_stig:
+      ios_26:
+        - AIOS-26-011400
       ios_18:
         - AIOS-18-011400
       ios_17:
         - AIOS-17-011400
         - AIOS-17-711400
+      visionos_26:
+        - AVOS-02-011400
     sfr:
       - 'FMT_SMF_EXT.1.1 #47'
   cis:
@@ -47,6 +53,8 @@ references:
     indigo:
       ios_17:
         - ANNEX D (Section 5.6.1 - Mail)
+      ios_26:
+        - ANNEX D (Section 5.6.1 - Mail)
 platforms:
   iOS:
     '26.0':
@@ -56,6 +64,16 @@ platforms:
         - name: cis_lvl2_byod
         - name: cis_lvl1_enterprise
         - name: cis_lvl2_enterprise
+        - name: ios_stig
+          severity: medium
+        - name: indigo_base
+          severity: medium
+        - name: indigo_high
+          severity: medium
+      mobileconfig_info:
+        - PayloadType: com.apple.mail.managed
+          PayloadContent:
+            - PreventMove: true
     '18.0':
       supervised: false
       benchmarks:
@@ -85,6 +103,14 @@ platforms:
         - name: indigo_high
           severity: medium
     introduced: '5.0'
+  visionOS:
+    '26.0':
+      supervised: false
+      mobileconfig_info:
+        - PayloadType: com.apple.mail.managed
+          PayloadContent:
+            - PreventMove: true
+    introduced: '1.1'
 tags:
   - 800-53r5_low
   - 800-53r5_moderate

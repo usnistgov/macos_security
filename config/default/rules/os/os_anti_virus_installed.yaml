@@ -59,3 +59,5 @@ platforms:
         additional_info: 'NOTE: These services cannot be unloaded or loaded while System Integrity Protection (SIP) is enabled.'
 tags:
   - cisv8
+  - nlmapgov_base
+  - nlmapgov_plus

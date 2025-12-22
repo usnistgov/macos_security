@@ -4,18 +4,27 @@ discussion: |
   iBeacon discovery _MUST_ be disabled to prevent AirPrint Bluebooth beacons from being potentially exploited for network phishing.
 references:
   nist:
+    cce:
+      ios_26:
+        - CCE-95661-5
     800-53r5:
       - CM-6
   disa:
     cci:
       - CCI-000366
     disa_stig:
+      ios_26:
+        - AIOS-26-016700
       ios_18:
         - AIOS-18-016700
     sfr:
       - 'FMT_MOF_EXT.1.2 #47'
 platforms:
   iOS:
+    '26.0':
+      supervised: true
+      benchmarks:
+        - name: ios_stig
     '18.0':
       supervised: true
       benchmarks:
