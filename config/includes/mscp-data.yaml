@@ -22,7 +22,7 @@ authors:
     organization: National Aeronautics and Space Administration
     benchmarks:
     - mscp
-  - name: Bob Gendler
+  - name: Allen Golbig
     organization: Jamf
     benchmarks:
     - mscp
