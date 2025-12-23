@@ -346,7 +346,6 @@ class Macsecurityrule(BaseModelWithAccessors):
             enforcement_info = rule_yaml["platforms"][os_type].get(
                 "enforcement_info", {}
             )
-
             if enforcement_info and "n_a" not in tags:
                 check_shell = enforcement_info.get("check", {}).get("shell")
                 check_result = enforcement_info.get("check", {}).get("result")
@@ -533,10 +532,11 @@ class Macsecurityrule(BaseModelWithAccessors):
                 severity=severity,
             )
 
-            if rule.mobileconfig_info:
-                logger.debug("Formatting mobileconfig_info for rule: {}", rule.rule_id)
-                rule._format_mobileconfig_fix()
-                logger.success("Formatted mobileconfig_info for rule: {}", rule.rule_id)
+            # removed to prevent any fix: code from being generated in compliance script for mobileconfigs
+            # if rule.mobileconfig_info:
+            #     logger.debug("Formatting mobileconfig_info for rule: {}", rule.rule_id)
+            #     rule._format_mobileconfig_fix()
+            #     logger.success("Formatted mobileconfig_info for rule: {}", rule.rule_id)
 
             if (
                 rule.odv is not None
