@@ -17,57 +17,57 @@ authors:
   - name: Bob Gendler
     organization: National Institute of Standards and Technology
     benchmarks:
-    - mscp
+      - mscp
   - name: Dan Brodjieski
     organization: National Aeronautics and Space Administration
     benchmarks:
-    - mscp
+      - mscp
   - name: Allen Golbig
     organization: Jamf
     benchmarks:
-    - mscp
+      - mscp
   - name: Edward Byrd
     organization: Center for Internet Security
     benchmarks:
-    - cis_lvl1
-    - cis_lvl2
-    - cisv8
+      - cis_lvl1
+      - cis_lvl2
+      - cisv8
   - name: John Mahlman
     organization: Leidos
     benchmarks:
-    - cmmc_lvl1
-    - cmmc_lvl2
+      - cmmc_lvl1
+      - cmmc_lvl2
   - name: Rob Lamb
     organization: Los Alamos National Laboratory
     benchmarks:
-    - cnssi-1253_low
-    - cnssi-1253_moderate
-    - cnssi-1253_high
+      - cnssi-1253_low
+      - cnssi-1253_moderate
+      - cnssi-1253_high
   - name: Ekkehard Koch
     organization: ""
     benchmarks:
-    - cnssi-1253_low
-    - cnssi-1253_moderate
-    - cnssi-1253_high
+      - cnssi-1253_low
+      - cnssi-1253_moderate
+      - cnssi-1253_high
   - name: Aaron Kegerreis
     organization: Defense Information Systems Agency
     benchmarks:
-    - disa_stig
+      - disa_stig
   - name: Marco Piñeyro
     organization: Department of State
     benchmarks:
-    - ios_stig
-    - ios_byoad
+      - ios_stig
+      - ios_byoad
   - name: Henry Stamerjohann
     organization: Declarative IT GmbH
     benchmarks:
-    - indigo_base
-    - indigo_high
+      - indigo_base
+      - indigo_high
   - name: Jordy Witteman
     organization: Root3
     benchmarks:
-    - nlmapgov_base
-    - nlmapgov_plus
+      - nlmapgov_base
+      - nlmapgov_plus
 
 versions:
   platforms:
@@ -78,7 +78,7 @@ versions:
         revision: 1.1
         cpe: o:apple:macos:26.0
         date: "2025-12-16"
-      
+
       - os_version: 15.0
         os_name: "sequoia"
         compliance_version: "Sequoia Guidance, Revision 1.1"
