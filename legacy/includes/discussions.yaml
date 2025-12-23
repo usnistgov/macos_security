@@ -193,7 +193,7 @@
     Apple's iCloud service does not provide an organization with enough control over the storage and access of data and, therefore, password management and synchronization _MUST_ be controlled by an organization approved service.
 - id: os_files_network_drive_access_disable
   discussion: |
-    Network drive acces in Files app _MUST_ be disabled.
+    Network drive access in Files app _MUST_ be disabled.
 - id: pwpolicy_max_grace_period_enforce
   discussion: |
     The iOS grace period for device lock _MUST_ be configured to $ODV minutes.

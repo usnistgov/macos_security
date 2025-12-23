@@ -1,4 +1,4 @@
-id: os_exchange_SMIME_encryption_certificate_overwirte_disable
+id: os_exchange_SMIME_encryption_certificate_overwrite_disable
 title: Disable changing the S/MIME encryption settings.
 discussion: |
   The iOS device needs some specific configurations for the Exchange setup to meet the minimum requirements.

@@ -351,7 +351,7 @@ class Macsecurityrule(BaseModelWithAccessors):
                 check_shell = enforcement_info.get("check", {}).get("shell")
                 check_result = enforcement_info.get("check", {}).get("result")
                 fix_shell = enforcement_info.get("fix", {}).get("shell")
-                additonal_info = enforcement_info.get("fix", {}).get("additional_info")
+                additional_info = enforcement_info.get("fix", {}).get("additional_info")
 
                 if check_result:
                     for k, v in rule_yaml["platforms"][os_type]["enforcement_info"][
@@ -378,7 +378,7 @@ class Macsecurityrule(BaseModelWithAccessors):
                     not check_shell
                     or not fix_shell
                     or not check_value
-                    and additonal_info
+                    and additional_info
                 ):
                     fix_value = None
 

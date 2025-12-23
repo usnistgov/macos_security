@@ -1,4 +1,4 @@
-# src/mspc/common_utils/constants.py
+# src/mscp/common_utils/constants.py
 
 # Standard python modules
 from pathlib import Path
