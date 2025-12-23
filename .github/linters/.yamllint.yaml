@@ -2,6 +2,7 @@
 ignore: |
   docs/
   .vscode/
+  legacy/
 
 extends: default
 
