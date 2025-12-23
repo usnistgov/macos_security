@@ -99,6 +99,7 @@ profile:
       - system_settings_security_update_install
       - system_settings_siri_disable
       - system_settings_smbd_disable
+      - system_settings_softwareupdate_current
       - system_settings_ssh_disable
       - system_settings_ssh_enable
       - system_settings_system_wide_preferences_configure

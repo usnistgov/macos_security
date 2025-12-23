@@ -10,7 +10,7 @@ check: |
 result:
   string: 'false'
 fix: |
-  This is implemented by a Configuration Profile
+  This is implemented by a Configuration Profile.
 references:
   cce:
     - CCE-95212-7

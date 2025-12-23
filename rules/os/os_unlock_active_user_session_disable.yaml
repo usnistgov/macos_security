@@ -7,7 +7,7 @@ discussion: |
   
   NOTE: Configuring this setting will change the user experience and disable TouchID from unlocking the screensaver. A configuration profile will be generated to include the setting that restores the expected behavior. You can also apply the settings using `/usr/bin/sudo /usr/bin/defaults write /Library/Preferences/com.apple.loginwindow screenUnlockMode -int 1`.
 
-  WARNING: This rule may cause issues when platformSSO is configured. 
+  WARNING: Do not apply this rule if your organization uses smartcards and Platform Single Sign-On (PSSO).
 check: |
   RESULT="FAIL"
   SS_RULE=$(/usr/bin/security -q authorizationdb read system.login.screensaver  2>&1 | /usr/bin/xmllint --xpath "//dict/key[.='rule']/following-sibling::array[1]/string/text()" -)
