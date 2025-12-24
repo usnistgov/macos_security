@@ -3,6 +3,7 @@
 # Standard python modules
 import argparse
 import sys
+import platform
 from pathlib import Path
 
 # Local python modules
@@ -17,6 +18,11 @@ from .generate import (
     generate_scap,
 )
 
+def get_macos_version() -> float:
+    version_str, _, _ = platform.mac_ver()
+    if version_str:
+        major = int(version_str.split(".")[0])
+        return float(major)
 
 class Customparser(argparse.ArgumentParser):
     """
@@ -68,7 +74,7 @@ def parse_cli() -> None:
 
     parser.add_argument(
         "--os_version",
-        default=15.0,
+        default=get_macos_version(),
         type=float,
         help="Operating system version (eg: 14.0, 15.0).",
     )
