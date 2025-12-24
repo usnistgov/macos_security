@@ -289,7 +289,7 @@ run_scan(){
 
   {% for profile in baseline.profile %}
   {% for rule in profile.rules %}
-    {% if "manual" not in (rule.tags | select("in", check_tags) | list) %}
+    {% if "manual" not in rule.tags %}
       {% include "check.jinja" %}
     {% endif %}
   {% endfor %}
