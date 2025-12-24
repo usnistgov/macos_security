@@ -19,18 +19,16 @@ fi
 
 ###################  COMMANDS START BELOW THIS LINE  ###################
 
+# Check if the current shell is Zsh
+if [[ -z "$ZSH_NAME" ]]; then
+  echo "ERROR: This script must be run in Zsh."
+  exit 1
+fi
+
 ## Must be run as root
 if [[ $EUID -ne 0 ]]; then
   echo "This script must be run as root"
   exit 1
-fi
-
-ssh_key_check=0
-if /usr/sbin/sshd -T &> /dev/null || /usr/sbin/sshd -G &>/dev/null; then
-  ssh_key_check=0
-else
-  /usr/bin/ssh-keygen -q -N "" -t rsa -b 4096 -f /etc/ssh/ssh_host_rsa_key
-  ssh_key_check=1
 fi
 
 # path to PlistBuddy
@@ -178,6 +176,7 @@ reset_plist(){
     rm -f "$audit_log"
     rm -f "$audit_csv"
   fi
+  exit 0
 }
 
 # Generate the Compliant and Non-Compliant counts. Returns: Array (Compliant, Non-Compliant)
@@ -398,42 +397,46 @@ usage=(
 
 set -- "$@" "${EOL:=$(printf '\1\3\3\7')}"
 
-if [[ ! -z $audit_plist ]]; then
-  cp preferences/org.800-53r5_high_test.audit.plist /Library/Preferences/org.800-53r5_high_test.audit.plist
+# Look for managed arguments for compliance script
+if [[ $# -eq 0 ]];then
+    compliance_args=$(/usr/bin/osascript -l JavaScript << 'EOS'
+var defaults = $.NSUserDefaults.alloc.initWithSuiteName('{{ baseline_name }}');
+var args = defaults.objectForKey('compliance_args');
+if (args && args.count > 0) {
+    var result = [];
+    for (var i = 0; i < args.count; i++) {
+        result.push(ObjC.unwrap(args.objectAtIndex(i)));
+    }
+    result.join(' ');
+    }
+EOS
+)
+    if [[ -n "$compliance_args" ]]; then
+        logmessage "Managed arguments found for compliance script, setting: $compliance_args"
+        set -- ${(z)compliance_args}
+    fi
+fi
+  
+zparseopts -D -E -help=flag_help -check=check -fix=fix -stats=stats -compliant=compliant_opt -non_compliant=non_compliant_opt -reset=reset -reset-all=reset_all -cfc=cfc -quiet:=quiet || { print -l $usage && return }
+
+[[ -z "$flag_help" ]] || { print -l $usage && return }
+
+if [[ ! -z $quiet ]];then
+  [[ ! -z ${quiet[2][2]} ]] || { print -l $usage && return }
 fi
 
-if [[ $# -eq 1 ]]; then
-  while true; do
-    show_menus
-    read_options
-  done
-fi
+if [[ $reset ]] || [[ $reset_all ]]; then reset_plist; fi
 
-while [ "$1" != "$EOL" ]; do
-  opt="$1"
-  case "$opt" in
-    --check ) check_cli "$1" "$opt"; run_scan; shift ;;
-    --fix ) check_cli "$1" "$opt"; run_fix; shift ;;
-    --cfc ) check_cli "$1" "$opt"; run_scan; run_fix; run_scan; shift ;;
-    --stats ) check_cli "$1" "$opt"; generate_stats; shift ;;
-    --compliant ) check_cli "$1" "$opt"; compliance_count "compliant"; shift ;;
-    --non_compliant ) check_cli "$1" "$opt"; compliance_count "non-compliant"; shift ;;
-    --reset ) check_cli "$1" "$opt"; reset_plist; shift ;;
-    --reset-all ) check_cli "$1" "$opt"; reset_plist; shift ;;
-    --quiet=* ) check_cli "$1" "$opt"; quiet[2][2]="${opt#--quiet=}"; shift ;;
-    --help ) print -l $usage; exit 0 ;;
-
-    # process special cases
-    --) while [ "$1" != "$EOL" ]; do set -- "$@" "$1"; shift; done;;   # parse remaining as positional
-    --[!=]*=*) set -- "${opt%%=*}" "${opt#*=}" "$@";;                  # "--opt=arg"  ->  "--opt" "arg"
-    -[A-Za-z0-9] | -*[!A-Za-z0-9]*) exit2 "invalid option" "$opt";;    # anything invalid like '-*'
-    -?*) other="${opt#-?}"; set -- "${opt%$other}" "-${other}" "$@";;  # "-abc"  ->  "-a" "-bc"
-    *) set -- "$@" "$opt";;
-  esac
-done; shift
-
-if [[ "$ssh_key_check" -ne 0 ]]; then
-  /bin/rm /etc/ssh/ssh_host_rsa_key
-  /bin/rm /etc/ssh/ssh_host_rsa_key.pub
-  ssh_key_check=0
-fi
+if [[ $check ]] || [[ $fix ]] || [[ $cfc ]] || [[ $stats ]] || [[ $compliant_opt ]] || [[ $non_compliant_opt ]]; then
+    if [[ $fix ]]; then run_fix; fi
+    if [[ $check ]]; then run_scan; fi
+    if [[ $cfc ]]; then run_scan; run_fix; run_scan; fi
+    if [[ $stats ]];then generate_stats; fi
+    if [[ $compliant_opt ]];then compliance_count "compliant"; fi
+    if [[ $non_compliant_opt ]];then compliance_count "non-compliant"; fi
+else
+    while true; do
+        show_menus
+        read_options
+    done
+fi    

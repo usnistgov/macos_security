@@ -9,7 +9,6 @@ __version__ = "2.0.0"
 __all__ = [
     "Baseline",
     "Macsecurityrule",
-    "FileHandler",
     "LoguruFormatter",
     "Payload",
     "config",
@@ -37,7 +36,7 @@ __all__ = [
 ]
 
 from .classes.baseline import Baseline
-from .classes.filehandler import FileHandler
+
 from .classes.loguruformatter import LoguruFormatter
 from .classes.macsecurityrule import Macsecurityrule
 from .classes.payload import Payload

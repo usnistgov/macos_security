@@ -17,9 +17,9 @@
 {% if not rule.tags | select('in', check_tags) | list %}
 {# {% if not "supplemental" in rule.tags %} #}
 {% if rule.tags is not defined or rule.tags is none or "supplemental" not in rule.tags %}
-{% if rule.os_name == "macos" %}
+{% if rule.os_type == "macOS" %}
 {% trans %}To check the state of the system, run the following command(s){% endtrans %}:
-[source,bash,options="nowrap"]
+[source,zsh,options="nowrap"]
 ----
 {% if check_shell is not none %}
 {{ check_shell }}
@@ -31,7 +31,7 @@
 {{ rule.check if rule.check is not none }}
 {% endif %}
 
-{% if rule.os_name == "macos" %}
+{% if rule.os_type == "macOS" %}
 {% trans %}If the result is not{% endtrans %} _{{ rule.result_value }}_, {% trans %}this is a finding{% endtrans %}.
 {% endif %}
 
@@ -43,9 +43,9 @@
 {% endif %}
 
 {% if rule.mobileconfig_info is none and rule.fix is not none or fix_shell %}
-{% trans %}To check the state of the system, run the following command(s){% endtrans %}:
+{% trans %}Run the following command(s){% endtrans %}:
 
-[source,bash,options="nowrap"]
+[source,zsh,options="nowrap"]
 ----
 {{ rule.fix if rule.fix is not none else fix_shell }}
 ----
@@ -54,7 +54,7 @@
 {{ additional_info }}
 {% elif rule.mobileconfig_info is not none and fix_shell %}
 {% if fix_shell %}
-[source,bash,options="nowrap"]
+[source,zsh,options="nowrap"]
 ----
 {{ fix_shell -}}
 ----
@@ -70,6 +70,8 @@
 {% if rule.os_name == "macos" %}
 {{ rule.fix }}
 {% else %}
+Deploy a configuration profile containing the following payload.
+
 [source,xml]
 ----
 {{ rule.mobileconfig_info | mobileconfig_payloads_to_xml -}}
@@ -144,10 +146,8 @@ endif::[]
 {{ rule.references.nist.cce | render_rules if rule.references.nist.cce is not none }}
 {% endif %}
 
-{% if custom %}
-! Custom References
-!
-{{ rule.references.custom_refs | render_rules if rule.references.custom_refs is not none }}
+{% if "references" in rule.customized %}
+{{ rule.references.custom_refs.references | render_references if rule.references.custom_refs is not none }}
 {% endif %}
 
 ifdef::show_tags[]

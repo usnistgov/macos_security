@@ -38,7 +38,7 @@ def get_version_data(
                 entry
                 for entry in mscp_data.get("versions", {})
                 .get("platforms", {})
-                .get(os_name, [])
+                .get(os_name.lower(), [])
                 if entry.get("os_version") == os_version
             ),
             {},

@@ -119,7 +119,7 @@
               {% endif %}
               Result: {{ rule.result if rule.result is not none else "" }}
               </description>
-              {% for reference in rule.refrences %}
+              {% for reference in rule.references %}
               {% if reference.nist_controls and reference.nist_controls not none or "N/A" %}
               <reference href="https://csrc.nist.gov/publications/detail/sp/800-53/rev-5/final">NIST SP 800-53r5: {{ reference.nist_controls | set_reference }}</reference>
               {% endif %}
