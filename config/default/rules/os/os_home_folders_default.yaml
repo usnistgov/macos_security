@@ -24,7 +24,7 @@ platforms:
     '14.0': {}
     enforcement_info:
       check:
-        manual: |-
+        shell: |-
           Verify the macOS system is configured so that permissions are set correctly on user home directories with the following commands:
           /bin/ls -le /Users
 

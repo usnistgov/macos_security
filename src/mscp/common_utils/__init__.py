@@ -27,6 +27,7 @@ from .logging_config import set_logger
 from .mscp_data import get_mscp_data, mscp_data
 from .run_command import run_command
 from .sanitize_input import sanitize_input
+from .prompt_for_odv import prompt_for_odv
 from .validate_rules import validate_yaml_file
 from .version_data import get_version_data
 
@@ -49,6 +50,7 @@ __all__ = [
     "remove_file",
     "run_command",
     "sanitize_input",
+    "prompt_for_odv",
     "get_version_data",
     "mscp_data",
     "get_mscp_data",

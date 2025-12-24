@@ -3,7 +3,7 @@ title: Disable AirPrint
 discussion: |
   The iOS built-in AirPrint capability _MUST_ be disabled.
 
-  The service AirPrint _MUST_ be disabled to prevent intendedly printing content on unknown printers and leaking data.
+  The service AirPrint _MUST_ be disabled to prevent inadvertently printing content on unknown printers and leaking data.
 references:
   nist:
     cce:

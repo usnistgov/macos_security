@@ -64,14 +64,13 @@ class Baseline(BaseModelWithAccessors):
     name: str
     title: str = ""
     description: str = ""
+    platform: dict[str, Any] = {}
     parent_values: str = ""
 
     @classmethod
     def from_yaml(
         cls,
         file_path: Path,
-        os_name: str,
-        os_version: int,
         language: str = "en",
         custom: bool = False,
     ) -> "Baseline":
@@ -105,6 +104,8 @@ class Baseline(BaseModelWithAccessors):
         authors = [Author(**author) for author in baseline_data.get("authors", [])]
         baseline_tag = file_path.stem.replace("_test", "")
 
+        platform: dict[str, Any] = baseline_data["platform"]
+
         # Parse profiles
         profiles: list[Profile] = []
         for prof in baseline_data.get("profile", []):
@@ -135,8 +136,8 @@ class Baseline(BaseModelWithAccessors):
                     description=section_data.get("description", "").strip(),
                     rules=Macsecurityrule.load_rules(
                         prof.get("rules", []),
-                        os_name,
-                        os_version,
+                        platform["os"],
+                        platform["version"],
                         baseline_data.get("parent_values", ""),
                         section_data.get("name", "").strip(),
                         baseline_tag,
@@ -153,6 +154,7 @@ class Baseline(BaseModelWithAccessors):
             name=file_path.stem,
             title=baseline_data.get("title", ""),
             description=baseline_data.get("description", ""),
+            platform=platform,
             parent_values=baseline_data.get("parent_values", ""),
         )
 
@@ -201,21 +203,22 @@ class Baseline(BaseModelWithAccessors):
 
         description: str = ""
         os_type = os_type.replace("os", "OS")
-        custom_output_file: Path = Path(
-            config["custom"]["baseline_dir"], output_file.name
-        )
+        # custom_output_file: Path = Path(
+        #     config["custom"]["baseline_dir"], output_file.name
+        # )
 
-        if baseline_dict is None:
+        if "title" not in baseline_dict:
             baseline_dict["title"] = (
-                f"{os_type} {os_version}: Security Configuration - {full_title} {baseline_name}"
+                f"{os_type} {os_version}: Security Configuration - {full_title}{f' {baseline_name}' if baseline_name else ''}"
             )
 
-            description: str = f"This guide describes the actions to take when securing a {os_type} {os_version} system against the {full_title} {baseline_name} security baseline.\n"
+        if "description" not in baseline_dict:
+            description: str = f"This guide describes the actions to take when securing a {os_type} {os_version} system against the {full_title}{f' {baseline_name}' if baseline_name else ''} security benchmark.\n"
 
             if benchmark == "recommended":
                 description += "\nInformation System Security Officers and benchmark creators can use this catalog of settings in order to assist them in security benchmark creation. This list is a catalog, not a checklist or benchmark, and satisfaction of every item is not likely to be possible or sensible in many operational scenarios."
 
-            baseline_dict["description"] = description.strip()
+        baseline_dict["description"] = description.strip()
 
         special_sections: dict[str, str] = {
             "inherent": "Inherent",
@@ -267,10 +270,11 @@ class Baseline(BaseModelWithAccessors):
             profile=profiles,
             name=output_file.stem,
             parent_values=benchmark,
+            platform={"os": os_type, "version": os_version},
         )
 
         baseline.to_yaml(output_path=output_file)
-        baseline.to_yaml(output_path=custom_output_file)
+        # baseline.to_yaml(output_path=custom_output_file)
 
     def to_dataframe(self) -> pd.DataFrame:
         """
@@ -322,6 +326,7 @@ class Baseline(BaseModelWithAccessors):
             "description",
             "authors",
             "parent_values",
+            "platform",
             "profile",
         ]
         profile_order: list[str] = [
