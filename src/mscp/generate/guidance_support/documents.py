@@ -474,9 +474,9 @@ def generate_documents(
         language,
     )
 
-    if output_format == "adoc":
-        gems_asciidoctor: Path = Path("mscp_gems/bin/asciidoctor")
-        gems_asciidoctor_pdf: Path = Path("mscp_gems/bin/asciidoctor-pdf")
+    # if output_format == "adoc":
+    #     gems_asciidoctor: Path = Path("mscp_gems/bin/asciidoctor")
+    #     gems_asciidoctor_pdf: Path = Path("mscp_gems/bin/asciidoctor-pdf")
 
     # output, error = run_command("which asciidoctor")
     # logger.debug(f"which asciidoctor output: {output}, error: {error}")
@@ -485,6 +485,10 @@ def generate_documents(
     #     if not gems_asciidoctor.exists():
     #         logger.error("Asciidoctor not installed!!")
     #         sys.exit()
+    output, error = run_command("bundle install --gemfile Gemfile --path mscp_gems --binstubs")
+    if error:
+        logger.error(f"Bundle install failed: {error}")
+        sys.exit()
 
     output, error = run_command(f"bundle exec asciidoctor {output_file}")
     if error:
@@ -499,6 +503,10 @@ def generate_documents(
         #     if not gems_asciidoctor.exists():
         #         logger.error("Asciidoctor not installed!!")
         #         sys.exit()
+        output, error = run_command("bundle install --gemfile Gemfile --path mscp_gems --binstubs")
+        if error:
+            logger.error(f"Bundle install failed: {error}")
+            sys.exit()
 
         output, error = run_command(f"bundle exec asciidoctor-pdf {output_file}")
         if error:
@@ -513,6 +521,10 @@ def generate_documents(
             #     if not gems_asciidoctor_pdf.exists():
             #         logger.error("Asciidoctor not installed!!")
             #         sys.exit()
+            output, error = run_command("bundle install --gemfile Gemfile --path mscp_gems --binstubs")
+            if error:
+                logger.error(f"Bundle install failed: {error}")
+                sys.exit()
 
             output, error = run_command(f"bundle exec asciidoctor-pdf {output_file}")
             if error:

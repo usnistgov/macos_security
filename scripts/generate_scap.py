@@ -3,6 +3,7 @@
 
 import argparse
 import sys
+import platform
 from mscp.common_utils import set_logger
 from mscp.generate import (
     generate_scap,
@@ -10,6 +11,11 @@ from mscp.generate import (
 )
 from mscp.cli import Customparser, validate_file
 
+def get_macos_version() -> float:
+    version_str, _, _ = platform.mac_ver()
+    if version_str:
+        major = int(version_str.split(".")[0])
+        return float(major)
 
 def main() -> None:
     logger = set_logger()
@@ -67,7 +73,7 @@ def main() -> None:
     parser.add_argument(
         "-o",
         "--os_version",
-        default=15.0,
+        default=get_macos_version(),
         type=float,
         help="Operating system version (eg: 14.0, 15.0).",
     )

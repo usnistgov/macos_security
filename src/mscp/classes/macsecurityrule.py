@@ -40,6 +40,7 @@ class Sectionmap(StrEnum):
     SRG = "srg"
     SUPPLEMENTAL = "supplemental"
     SYSTEM_SETTINGS = "systemsettings"
+    SETTINGS = "settings"
 
 
 class BaseModelWithAccessors(BaseModel):
