@@ -250,48 +250,6 @@ generate_stats(){
   echo "PASSED: $compliant FAILED: $non_compliant, $percentage percent compliant!"
 }
 
-audit_rule(){
-  local rule_id="$1"
-  local check_command="$2"
-  local expected_result="$3"
-  local log_reference_id="$4"
-  local rule_arch="$5"
-  local result_status="passed"
-  local finding="NO"
-  local exemption_output=""
-
-  if [[ "$arch" == "$rule_arch" ]] || [[ -z "$rule_arch" ]]; then
-    local result_value=$(eval "$check_command")
-    local exempt=$(/usr/bin/osascript -l JavaScript -e "ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.$baseline_name.audit').objectForKey('$rule_id'))['exempt']")
-    local exempt_reason=$(/usr/bin/osascript -l JavaScript -e "ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.$baseline_name.audit').objectForKey('$rule_id'))['exempt_reason']")
-
-    customref="$(echo "$log_reference_id" | rev | cut -d ' ' -f 2- | rev | tr ' ' ',')"
-
-    if [[ "$result_value" != "$expected_result" ]]; then
-      result_status="failed"
-      finding="YES"
-
-      if [[ "$exempt" == "1" ]]; then
-        exemption_output="- Exemption Allowed (Reason: \"$exempt_reason\")"
-      fi
-    fi
-
-    logmessage "$log_reference_id $result_status (Result: $result_value, Expected: \"$expected_result\") $exemption_output"
-    logcsv "$rule_id" "$result_status" "$result_value" "$expected_result" "$exemption_output"
-    /usr/bin/defaults write "$audit_plist" "$rule_id" -dict-add finding -bool $finding
-
-    if [[ ! "$customref" == "$rule_id" ]]; then
-      /usr/bin/defaults write "$audit_plist" "$rule_id" -dict-add reference -string "$customref"
-    fi
-
-    /usr/bin/logger "mSCP: $baseline_name - $log_reference_id $result_status (Result: $result_value, Expected: \"$expected_result\") $exemption_output"
-
-  else
-    logmessage "$log_reference_id does not apply to this architecture"
-    logcsv "$rule_id" "N/A" "" "" ""
-    /usr/bin/defaults write "$audit_plist" "$rule_id" -dict-add finding -bool NO
-  fi
-}
 
 rule_fix(){
   local audit_score=$($plb -c "print $1:finding" $audit_plist)
@@ -400,7 +358,7 @@ set -- "$@" "${EOL:=$(printf '\1\3\3\7')}"
 # Look for managed arguments for compliance script
 if [[ $# -eq 0 ]];then
     compliance_args=$(/usr/bin/osascript -l JavaScript << 'EOS'
-var defaults = $.NSUserDefaults.alloc.initWithSuiteName('org.mycustom.audit');
+var defaults = $.NSUserDefaults.alloc.initWithSuiteName('org.{{ baseline_name }}.audit');
 var args = defaults.objectForKey('compliance_args');
 if (args && args.count > 0) {
     var result = [];
