@@ -190,6 +190,9 @@
                         "15.0": {
                             "$ref": "#/$defs/osDef"
                         },
+                        "26.0": {
+                            "$ref": "#/$defs/osDef"
+                        },
                         "introduced": {
                             "type": "string",
                             "pattern": "^(\\d+(\\.\\d+){1,2}|-1)$"
@@ -246,6 +249,21 @@
                                 }
                             ]
                         },
+                        "26.0": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/$defs/osDef"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "supervised": {
+                                            "type": "boolean"
+                                        }
+                                    }
+                                }
+                            ]
+                        },
                         "introduced": {
                             "type": "string"
                         },
@@ -257,6 +275,21 @@
                     "description": "Schema for identifying components to support visionOS",
                     "properties": {
                         "2.0": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/$defs/osDef"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "supervised": {
+                                            "type": "boolean"
+                                        }
+                                    }
+                                }
+                            ]
+                        },
+                        "26.0": {
                             "allOf": [
                                 {
                                     "$ref": "#/$defs/osDef"
