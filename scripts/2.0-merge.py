@@ -364,7 +364,7 @@ def main():
                         {"supervised": rule_yaml["supervised"]}
                     )
 
-            if os_ == "ios_18" or os_ == "ios_17" or os_ == "ios_16" or os == "ios_26":
+            if os_ == "ios_18" or os_ == "ios_17" or os_ == "ios_16" or os_ == "ios_26":
                 new_yaml["tags"].remove("ios")
                 new_yaml["platforms"] = {"iOS": {}}
 
