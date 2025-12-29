@@ -1,4 +1,4 @@
-# mscp/common_utils/sanatize_input.py
+# mscp/common_utils/sanitize_input.py
 
 # Standard python modules
 from collections.abc import Sequence
