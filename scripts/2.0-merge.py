@@ -185,11 +185,11 @@ def main():
             apple_profiles[payloadtype] = apple_yam
 
     # load odv.json for reference
-    with open("../includes/odv.json") as o:
+    with open("../legacy/includes/odv.json") as o:
         odv_json = json.load(o)
 
     # load discussions.yaml for reference
-    with open("../includes/discussions.yaml") as y:
+    with open("../legacy/includes/discussions.yaml") as y:
         discussions_yaml = yaml.load(y, Loader=yaml.SafeLoader)
 
     # os_supported = ["sequoia", "sonoma", "ventura", "monterey", "big_sur", "catalina", "ios_18", "ios_17", "ios_16", "visionos_2.0"]
