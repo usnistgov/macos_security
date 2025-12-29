@@ -335,3 +335,4 @@ xccdfrules
 xtrace
 ylabel
 zipf
+zparseopts
