@@ -1,26 +1,27 @@
 #!/usr/bin/env python3
 # filename: generate_guidance.py
 # description: Process a given baseline, and output guidance files
-import sys
-import plistlib
-import glob
-import os
-import yaml
-import re
 import argparse
-import subprocess
-import logging
-import tempfile
 import base64
-import shutil
-import json
+import glob
 import hashlib
+import json
+import logging
+import os
+import plistlib
+import re
+import shutil
+import subprocess
+import sys
+import tempfile
 from datetime import date
-from xlwt import Workbook, easyxf
-from string import Template
 from itertools import groupby
+from string import Template
 from uuid import uuid4
 from zipfile import ZipFile
+
+import yaml
+from xlwt import Workbook, easyxf
 
 
 class MacSecurityRule:
@@ -177,11 +178,11 @@ def format_mobileconfig_fix(mobileconfig):
                     for k, v in item[1].items():
                         if type(v) == dict:
                             rulefix = rulefix + (f"    <key>{k}</key>\n")
-                            rulefix = rulefix + (f"    <dict>\n")
+                            rulefix = rulefix + ("    <dict>\n")
                             for x, y in v.items():
                                 rulefix = rulefix + (f"      <key>{x}</key>\n")
                                 rulefix = rulefix + (f"      <string>{y}</string>\n")
-                            rulefix = rulefix + (f"    </dict>\n")
+                            rulefix = rulefix + ("    </dict>\n")
                             break
                         if isinstance(v, list):
                             rulefix = rulefix + "    <array>\n"
@@ -213,7 +214,13 @@ class PayloadDict:
     """
 
     def __init__(
-        self, identifier, uuid=False, description="", organization="", displayname=""
+        self,
+        identifier,
+        uuid=False,
+        description="",
+        organization="",
+        displayname="",
+        identical_payload_identifier_uuid=False,
     ):
         self.data = {}
         self.data["PayloadVersion"] = 1
@@ -226,13 +233,19 @@ class PayloadDict:
         self.data["PayloadScope"] = "System"
         self.data["PayloadDescription"] = description
         self.data["PayloadDisplayName"] = displayname
-        self.data["PayloadIdentifier"] = identifier
+        if identical_payload_identifier_uuid:
+            self.data["PayloadIdentifier"] = self.data["PayloadUUID"]
+        else:
+            self.data["PayloadIdentifier"] = identifier
         self.data["ConsentText"] = {
             "default": "THE SOFTWARE IS PROVIDED 'AS IS' WITHOUT ANY WARRANTY OF ANY KIND, EITHER EXPRESSED, IMPLIED, OR STATUTORY, INCLUDING, BUT NOT LIMITED TO, ANY WARRANTY THAT THE SOFTWARE WILL CONFORM TO SPECIFICATIONS, ANY IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND FREEDOM FROM INFRINGEMENT, AND ANY WARRANTY THAT THE DOCUMENTATION WILL CONFORM TO THE SOFTWARE, OR ANY WARRANTY THAT THE SOFTWARE WILL BE ERROR FREE.  IN NO EVENT SHALL NIST BE LIABLE FOR ANY DAMAGES, INCLUDING, BUT NOT LIMITED TO, DIRECT, INDIRECT, SPECIAL OR CONSEQUENTIAL DAMAGES, ARISING OUT OF, RESULTING FROM, OR IN ANY WAY CONNECTED WITH THIS SOFTWARE, WHETHER OR NOT BASED UPON WARRANTY, CONTRACT, TORT, OR OTHERWISE, WHETHER OR NOT INJURY WAS SUSTAINED BY PERSONS OR PROPERTY OR OTHERWISE, AND WHETHER OR NOT LOSS WAS SUSTAINED FROM, OR AROSE OUT OF THE RESULTS OF, OR USE OF, THE SOFTWARE OR SERVICES PROVIDED HEREUNDER."
         }
 
         # An empty list for 'sub payloads' that we'll fill later
         self.data["PayloadContent"] = []
+
+        # Store the flag for use later
+        self.identical_payload_identifier_uuid = identical_payload_identifier_uuid
 
     def _updatePayload(self, payload_content_dict, baseline_name):
         """Update the profile with the payload settings. Takes the settings dictionary which will be the
@@ -266,9 +279,12 @@ class PayloadDict:
         payload_dict["PayloadVersion"] = 1
         payload_dict["PayloadUUID"] = makeNewUUID()
         payload_dict["PayloadType"] = payload_content_dict["PayloadType"]
-        payload_dict["PayloadIdentifier"] = (
-            f"mscp.{payload_content_dict['PayloadType']}.{payload_dict['PayloadUUID']}"
-        )
+        if self.identical_payload_identifier_uuid:
+            payload_dict["PayloadIdentifier"] = payload_dict["PayloadUUID"]
+        else:
+            payload_dict["PayloadIdentifier"] = (
+                f"mscp.{payload_content_dict['PayloadType']}.{payload_dict['PayloadUUID']}"
+            )
 
         payload_dict["PayloadContent"] = payload_content_dict
         # Add the payload to the profile
@@ -288,9 +304,12 @@ class PayloadDict:
         payload_dict["PayloadVersion"] = 1
         payload_dict["PayloadUUID"] = makeNewUUID()
         payload_dict["PayloadType"] = payload_type
-        payload_dict["PayloadIdentifier"] = (
-            f"mscp.{payload_type}.{payload_dict['PayloadUUID']}"
-        )
+        if self.identical_payload_identifier_uuid:
+            payload_dict["PayloadIdentifier"] = payload_dict["PayloadUUID"]
+        else:
+            payload_dict["PayloadIdentifier"] = (
+                f"mscp.{payload_type}.{payload_dict['PayloadUUID']}"
+            )
 
         # Add the settings to the payload
         for setting in settings:
@@ -402,7 +421,16 @@ def concatenate_payload_settings(settings):
 
 
 def generate_profiles(
-    baseline_name, build_path, parent_dir, baseline_yaml, signing, hash="", generate_domain=True, generate_consolidated=True
+    baseline_name,
+    build_path,
+    parent_dir,
+    baseline_yaml,
+    signing,
+    hash="",
+    no_created_date=False,
+    identical_payload_identifier_uuid=False,
+    generate_domain=True,
+    generate_consolidated=True,
 ):
     """Generate the configuration profiles for the rules in the provided baseline YAML file"""
 
@@ -531,7 +559,7 @@ def generate_profiles(
         uuid=False,
         organization="macOS Security Compliance Project",
         displayname=f"{baseline_name} settings",
-        description=f"Consolidated configuration settings for {baseline_name}."
+        description=f"Consolidated configuration settings for {baseline_name}.",
     )
 
     # process the payloads from the yaml file and generate new config profile for each type
@@ -561,12 +589,15 @@ def generate_profiles(
                     signed_mobileconfig_output_path, payload + ".mobileconfig"
                 )
         identifier = payload + f".{baseline_name}"
-        created = date.today()
-        description = (
-            "Created: {}\nConfiguration settings for the {} preference domain.".format(
+        if no_created_date:
+            description = "Configuration settings for the {} preference domain.".format(
+                payload
+            )
+        else:
+            created = date.today()
+            description = "Created: {}\nConfiguration settings for the {} preference domain.".format(
                 created, payload
             )
-        )
 
         organization = "macOS Security Compliance Project"
         displayname = f"[{baseline_name}] {payload} settings"
@@ -577,6 +608,7 @@ def generate_profiles(
             organization=organization,
             displayname=displayname,
             description=description,
+            identical_payload_identifier_uuid=identical_payload_identifier_uuid,
         )
         if payload == "com.apple.ManagedClient.preferences":
             for item in settings:
@@ -588,8 +620,12 @@ def generate_profiles(
             or (payload == "com.apple.systempreferences")
             or (payload == "com.apple.SetupAssistant.managed")
         ):
-            newProfile.addNewPayload(payload, concatenate_payload_settings(settings), baseline_name)
-            consolidated_profile.addNewPayload(payload, concatenate_payload_settings(settings), baseline_name)
+            newProfile.addNewPayload(
+                payload, concatenate_payload_settings(settings), baseline_name
+            )
+            consolidated_profile.addNewPayload(
+                payload, concatenate_payload_settings(settings), baseline_name
+            )
         else:
             newProfile.addNewPayload(payload, settings, baseline_name)
             consolidated_profile.addNewPayload(payload, settings, baseline_name)
@@ -597,22 +633,36 @@ def generate_profiles(
         if generate_domain:
             with open(settings_plist_file_path, "wb") as settings_plist_file:
                 newProfile.finalizeAndSavePlist(settings_plist_file)
-            with open(unsigned_mobileconfig_file_path, "wb") as unsigned_mobileconfig_file:
+            with open(
+                unsigned_mobileconfig_file_path, "wb"
+            ) as unsigned_mobileconfig_file:
                 newProfile.finalizeAndSave(unsigned_mobileconfig_file)
             if signing:
-                sign_config_profile(unsigned_mobileconfig_file_path, signed_mobileconfig_file_path, hash)
+                sign_config_profile(
+                    unsigned_mobileconfig_file_path, signed_mobileconfig_file_path, hash
+                )
 
     if generate_consolidated:
-        consolidated_mobileconfig_file_path = os.path.join(unsigned_mobileconfig_output_path, f"{baseline_name}.mobileconfig")
-        with open(consolidated_mobileconfig_file_path, "wb") as consolidated_mobileconfig_file:
+        consolidated_mobileconfig_file_path = os.path.join(
+            unsigned_mobileconfig_output_path, f"{baseline_name}.mobileconfig"
+        )
+        with open(
+            consolidated_mobileconfig_file_path, "wb"
+        ) as consolidated_mobileconfig_file:
             consolidated_profile.finalizeAndSave(consolidated_mobileconfig_file)
 
         if signing:
-            signed_consolidated_mobileconfig_path = os.path.join(signed_mobileconfig_output_path, f"{baseline_name}.mobileconfig")
-            sign_config_profile(consolidated_mobileconfig_file_path, signed_consolidated_mobileconfig_path, hash)
+            signed_consolidated_mobileconfig_path = os.path.join(
+                signed_mobileconfig_output_path, f"{baseline_name}.mobileconfig"
+            )
+            sign_config_profile(
+                consolidated_mobileconfig_file_path,
+                signed_consolidated_mobileconfig_path,
+                hash,
+            )
 
     print(
-        f"""
+        """
     CAUTION: These configuration profiles are intended for evaluation in a TEST
     environment. Certain configuration profiles (Smartcards), when applied could
     leave a system in a state where a user can no longer login with a password.
@@ -782,9 +832,9 @@ def generate_ddm(baseline_name, build_path, parent_dir, baseline_yaml):
                     ddm_key_value
                 )
             else:
-                ddm_dict.setdefault(ddm_rule["ddm_info"]["declarationtype"], {}).update(
-                    {ddm_key: ddm_key_value}
-                )
+                ddm_dict.setdefault(
+                    ddm_rule["ddm_info"]["declarationtype"], {}
+                ).update({ddm_key: ddm_key_value})
 
     for ddm_type in mscp_data_yaml["ddm"]["supported_types"]:
         if ddm_type not in ddm_dict.keys():
@@ -1080,9 +1130,9 @@ compliance_count(){{
     compliant=0
     non_compliant=0
     exempt_count=0
-    
+
     rule_names=($(/usr/libexec/PlistBuddy -c "Print" $audit_plist | awk '/= Dict/ {{print $1}}'))
-    
+
     for rule in ${{rule_names[@]}}; do
         finding=$(/usr/libexec/PlistBuddy -c "Print $rule:finding" $audit_plist)
         if [[ $finding == "false" ]];then
@@ -1095,7 +1145,7 @@ EOS
             if [[ $is_exempt == "1" ]]; then
                 exempt_count=$((exempt_count+1))
                 non_compliant=$((non_compliant+1))
-            else    
+            else
                 non_compliant=$((non_compliant+1))
             fi
         fi
@@ -1307,7 +1357,7 @@ EOS
     exempt_reason=$(/usr/bin/osascript -l JavaScript << EOS 2>/dev/null
 ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.{7}.audit').objectForKey('{0}'))["exempt_reason"]
 EOS
-)   
+)
     customref="$(echo "{5}" | rev | cut -d ' ' -f 2- | rev)"
     customref="$(echo "$customref" | tr " " ",")"
     if [[ $result_value == "{4}" ]]; then
@@ -1470,7 +1520,7 @@ usage=(
     "--quiet=<value>    :   1 - show only failed and exempted checks in output"
     "                       2 - show minimal output"
   )
-  
+
 # Look for managed arguments for compliance script
 if [[ $# -eq 0 ]];then
     compliance_args=$(/usr/bin/osascript -l JavaScript << 'EOS'
@@ -1490,7 +1540,7 @@ EOS
         set -- ${{(z)compliance_args}}
     fi
 fi
-  
+
 zparseopts -D -E -help=flag_help -check=check -fix=fix -stats=stats -compliant=compliant_opt -non_compliant=non_compliant_opt -reset=reset -reset-all=reset_all -cfc=cfc -quiet:=quiet || {{ print -l $usage && return }}
 
 [[ -z "$flag_help" ]] || {{ print -l $usage && return }}
@@ -1663,7 +1713,7 @@ def get_rule_yaml(
     for yaml_field in og_rule_yaml:
         # print('processing field {} for rule {}'.format(yaml_field, file_name))
         if yaml_field == "references":
-            if not "references" in resulting_yaml:
+            if "references" not in resulting_yaml:
                 resulting_yaml["references"] = {}
             for ref in og_rule_yaml["references"]:
                 try:
@@ -2104,6 +2154,18 @@ def create_args():
         "--audit_name",
         default=None,
         help="name of audit plist and log - defaults to baseline name",
+    )
+    parser.add_argument(
+        "--no-created-date",
+        default=False,
+        help="Do not add the created date to the profile description",
+        action="store_true",
+    )
+    parser.add_argument(
+        "--identical-payload-identifier-uuid",
+        default=False,
+        help="Use the same UUID for each PayloadIdentifier and PayloadUUID pair within Configuration Profiles",
+        action="store_true",
     )
     return parser.parse_args()
 
@@ -2743,8 +2805,16 @@ def main():
 
         # Single call to generate_profiles with both parameters
         generate_profiles(
-            baseline_name, build_path, parent_dir, baseline_yaml, signing, args.hash,
-            generate_domain=args.profiles, generate_consolidated=args.consolidated_profile
+            baseline_name,
+            build_path,
+            parent_dir,
+            baseline_yaml,
+            signing,
+            args.hash,
+            args.no_created_date,
+            args.identical_payload_identifier_uuid,
+            generate_domain=args.profiles,
+            generate_consolidated=args.consolidated_profile,
         )
 
     if args.ddm:
