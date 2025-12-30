@@ -5,13 +5,11 @@ import argparse
 import sys
 from datetime import datetime
 from pathlib import Path
-from typing import Any
 from xml.sax.saxutils import escape
 from xml.dom import minidom
 
 
 # Additional python modules
-from jinja2 import Environment, FileSystemLoader
 
 # Local python modules
 from ..classes import Macsecurityrule
@@ -144,8 +142,9 @@ def generate_scap(args: argparse.Namespace) -> None:
                 try:
                     if b in rule["odv"]:
                         odv_tag = b
-                except:
-                    pass
+                except (TypeError, KeyError) as e:
+                    logger.warning(f"Error when looking up ODV for {rule.rule_id}: {e}")
+
                 rule._fill_in_odv(b)
 
                 xccdfProfiles = (
@@ -247,10 +246,10 @@ def generate_scap(args: argparse.Namespace) -> None:
                 else:
                     selected_os_benchmark.append(benchmark)
 
-        if rule.odv != None:
+        if rule.odv is not None:
             if args.baseline == "all_rules":
                 selected_os_benchmark.append("recommended")
-            for k, v in rule.odv.items():
+            for k, _ in rule.odv.items():
                 if k == "hint":
                     continue
                 if k in selected_os_benchmark:

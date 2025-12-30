@@ -7,7 +7,7 @@ from typing import Any
 
 # Additional python modules
 import pandas as pd
-from pydantic import BaseModel, Field
+from pydantic import BaseModel
 
 # Local python modules
 from ..common_utils import config, create_yaml, open_file
