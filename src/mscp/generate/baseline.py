@@ -8,7 +8,6 @@ from pathlib import Path
 from typing import Any
 
 # Local python modules
-from ..common_utils.localization import configure_localization_for_yaml
 from ..classes import Author, Baseline, Macsecurityrule
 from ..common_utils import (
     config,

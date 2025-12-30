@@ -79,7 +79,7 @@ def open_text(file_path: Path) -> str:
         logger.debug(f"Attempting to open text file: {file_path}")
         return file_path.read_text(encoding=ENCODING)
 
-    except (FileNotFoundError, PermissionError, IOError, Exception) as e:
+    except Exception as e:
         logger.error(
             f"An error occurred while opening the file: {file_path}. Error: {e}"
         )
@@ -113,10 +113,7 @@ def open_yaml(
         return data if isinstance(data, dict) else {}
 
     except (
-        FileNotFoundError,
-        PermissionError,
         yaml.YAMLError,
-        IOError,
         Exception,
     ) as e:
         logger.error(
@@ -143,7 +140,7 @@ def open_csv(file_path: Path) -> dict[str, Any]:
         )
         return data if isinstance(data, dict) else {}
 
-    except (FileNotFoundError, PermissionError, csv.Error, IOError, Exception) as e:
+    except (csv.Error, Exception) as e:
         logger.error(
             f"An error occurred while opening the file: {file_path}. Error: {e}"
         )
@@ -183,7 +180,7 @@ def open_plist(file_path: Path) -> dict[str, dict[str, bool]] | None:
         )
         raise
 
-    except (FileNotFoundError, PermissionError, IOError, Exception) as e:
+    except Exception as e:
         logger.error(
             "An error occurred while opening the file: {}. Error: {}", file_path, e
         )
@@ -217,7 +214,7 @@ def open_json(file_path: Path) -> dict[str, Any]:
         with file_path.open("r") as file:
             return json.load(file)
 
-    except (FileNotFoundError, PermissionError, IOError, Exception) as e:
+    except Exception as e:
         logger.error(
             "An error occurred while opening the file: {}. Error: {}", file_path, e
         )
@@ -311,7 +308,7 @@ def create_text(file_path: Path, data: str) -> None:
     """
     try:
         file_path.write_text(data, encoding=ENCODING)
-    except (FileNotFoundError, PermissionError, IOError) as e:
+    except IOError as e:
         logger.error(
             "An error occurred while opening the file: {}. Error: {}", file_path, e
         )

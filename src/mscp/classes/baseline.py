@@ -171,7 +171,7 @@ class Baseline(BaseModelWithAccessors):
         benchmark: str,
         os_type: str,
         os_version: float,
-        baseline_dict: dict[str, Any] = Field(default_factory=dict[str, Any]),
+        baseline_dict: dict[str, Any],
         language: str = "en",
     ) -> None:
         """

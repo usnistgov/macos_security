@@ -1,8 +1,6 @@
 # mscp/generate/scap.py
 
 # Standard python modules
-from datetime import datetime
-from time import sleep
 import argparse
 import sys
 from datetime import datetime
@@ -16,7 +14,7 @@ from xml.dom import minidom
 from jinja2 import Environment, FileSystemLoader
 
 # Local python modules
-from ..classes import Macsecurityrule, Baseline
+from ..classes import Macsecurityrule
 from ..common_utils import config, get_version_data, logger, mscp_data
 
 from .baseline import (
@@ -35,54 +33,10 @@ def pretty_format_xml(xml_string: str) -> str:
     )
 
 
-def create_scap(
-    output_path: Path,
-    version_info: dict[str, Any],
-    rules: list[Macsecurityrule],
-    os_name: str,
-    export_as: str,
-) -> None:
-    date_time: str = datetime.now().isoformat(timespec="seconds")
-    os_type: str = ""
-    env: Environment = Environment(
-        loader=FileSystemLoader(config["defaults"]["scap_templates_dir"]),
-        trim_blocks=True,
-        lstrip_blocks=True,
-    )
-    main_template = env.get_template("main.xml.jinja")
-
-    match os_name:
-        case "ios":
-            os_type = "iOS/iPadOS"
-        case "visionos":
-            os_type = "visionOS"
-        case _:
-            os_type = "macOS"
-
-    rule_dict_list: list[dict] = [rule.to_dict() for rule in rules]
-
-    rendered_output = main_template.render(
-        date_time=date_time,
-        guidance=version_info.get("version", ""),
-        os_version=version_info.get("os", ""),
-        cpe=version_info.get("cpe", ""),
-        os_type=os_type,
-        rules=rule_dict_list,
-    )
-
-
 def generate_scap(args: argparse.Namespace) -> None:
     # logger.error("generate_scap() NEEDS TO BE BUILT")
 
-    export_as: str = "scap"
     output_file: Path = Path(config["output_dir"])
-
-    misc_tags: tuple[str, str, str, str] = (
-        "permanent",
-        "inherent",
-        "n_a",
-        "not_applicable",
-    )
 
     if args.list_tags:
         all_rules: list[Macsecurityrule] = Macsecurityrule.collect_all_rules(
@@ -131,7 +85,7 @@ def generate_scap(args: argparse.Namespace) -> None:
 
     all_tags, benchmark_map = collect_tags_and_benchmarks(all_rules)
     all_baseline_benchmark = []
-    if args.baseline == None:
+    if args.baseline is None:
         args.baseline = "all_rules"
     if args.baseline == "all_rules":
         for k, v in benchmark_map.items():
@@ -224,8 +178,11 @@ def generate_scap(args: argparse.Namespace) -> None:
                         separator.join(rule["references"].nist.nist_800_53r5)
                     )
                 )
-        except:
-            pass
+        except (TypeError, KeyError, AttributeError) as e:
+            logger.warning(
+                f"Error when trying to build 800-53r5 references for {rule.rule_id}: {e}"
+            )
+
         try:
             if len(rule["references"].nist.nist_800_171r3) > 0:
                 xccdf_references = (
@@ -234,8 +191,11 @@ def generate_scap(args: argparse.Namespace) -> None:
                         separator.join(rule["references"].nist.nist_800_171r3)
                     )
                 )
-        except:
-            pass
+        except (TypeError, KeyError, AttributeError) as e:
+            logger.warning(
+                f"Error when trying to build 800-171r3 references for {rule.rule_id}: {e}"
+            )
+
         try:
             if len(rule["references"].disa.disa_stig) > 0:
                 xccdf_references = (
@@ -244,8 +204,11 @@ def generate_scap(args: argparse.Namespace) -> None:
                         separator.join(rule["references"].disa.disa_stig)
                     )
                 )
-        except:
-            pass
+        except (TypeError, KeyError, AttributeError) as e:
+            logger.warning(
+                f"Error when trying to build DISA STIG references for {rule.rule_id}: {e}"
+            )
+
         try:
             if len(rule["references"].cis.benchmark) > 0:
                 xccdf_references = (
@@ -254,8 +217,10 @@ def generate_scap(args: argparse.Namespace) -> None:
                         separator.join(rule["references"].cis.benchmark)
                     )
                 )
-        except:
-            pass
+        except (TypeError, KeyError, AttributeError) as e:
+            logger.warning(
+                f"Error when trying to build CIS benchmark references for {rule.rule_id}: {e}"
+            )
 
         try:
             if len(rule["references"].cis.controls_v8) > 0:
@@ -268,8 +233,10 @@ def generate_scap(args: argparse.Namespace) -> None:
                         cisv8[0:-2]
                     )
                 )
-        except:
-            pass
+        except (TypeError, KeyError, AttributeError) as e:
+            logger.warning(
+                f"Error when trying to build CIS Controls references for {rule.rule_id}: {e}"
+            )
 
         selected_os_benchmark = []
         for benchmark, v in benchmark_map.items():
@@ -288,7 +255,7 @@ def generate_scap(args: argparse.Namespace) -> None:
                     continue
                 if k in selected_os_benchmark:
                     check_content = str()
-                    if args.xccdf == None and args.oval == None:
+                    if args.xccdf is None and args.oval is None:
                         check_content = """<check system="http://oval.mitre.org/XMLSchema/oval-definitions-5"><check-content-ref href="oval.xml" name="oval:mscp:def:{}"/></check>""".format(
                             oval_counter
                         )
@@ -421,7 +388,7 @@ def generate_scap(args: argparse.Namespace) -> None:
             check_existence = "all_exist"
             count_found = False
             check_content = str()
-            if args.xccdf == None and args.oval == None:
+            if args.xccdf is None and args.oval is None:
                 check_content = """<check system="http://oval.mitre.org/XMLSchema/oval-definitions-5"><check-content-ref href="oval.xml" name="oval:mscp:def:{}"/></check>""".format(
                     oval_counter
                 )
@@ -572,7 +539,7 @@ def generate_scap(args: argparse.Namespace) -> None:
 
     oval_states = "<states>" + oval_states + "</states>"
 
-    if args.oval == None and args.xccdf == None and args.os_name == "macos":
+    if args.oval is None and args.xccdf is None and args.os_name == "macos":
         scap = """<?xml version="1.0" encoding="UTF-8"?><data-stream-collection xmlns="http://scap.nist.gov/schema/scap/source/1.2" id="scap_gov.nist.mscp.content_collection_macOS_{0}.0" schematron-version="1.4"><data-stream timestamp="{1}" id="scap_gov.nist.mscp.content_datastream_macOS_{0}.0" scap-version="1.4" use-case="CONFIGURATION"><dictionaries><component-ref xmlns:ns0="http://www.w3.org/1999/xlink" id="scap_gov.nist.mscp.content_cref_macOS_{0}_macOS-cpe-dictionary.xml" ns0:type="simple" ns0:href="#scap_gov.nist.mscp.content_comp_macOS_{0}_macOS-cpe-dictionary.xml"><catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog">  <uri name="macOS-cpe-oval.xml" uri="#scap_gov.nist.mscp.content_cref_macOS_{0}_macOS-cpe-oval.xml"/></catalog></component-ref></dictionaries><checklists><component-ref xmlns:ns0="http://www.w3.org/1999/xlink" id="scap_gov.nist.mscp.content_cref_macOS_{0}_xccdf.xml" ns0:type="simple" ns0:href="#scap_gov.nist.mscp.content_comp_macOS_{0}_xccdf.xml"><catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog">  <uri name="oval.xml" uri="#scap_gov.nist.mscp.content_cref_macOS_{0}_check_1"/>  <uri name="ocil.xml" uri="#scap_gov.nist.mscp.content_cref_macOS_{0}_check_2"/></catalog></component-ref></checklists><checks><component-ref xmlns:ns0="http://www.w3.org/1999/xlink" id="scap_gov.nist.mscp.content_cref_macOS_{0}_macOS-cpe-oval.xml" ns0:type="simple" ns0:href="#scap_gov.nist.mscp.content_comp_macOS_{0}_macOS-cpe-oval.xml"/><component-ref xmlns:ns0="http://www.w3.org/1999/xlink" id="scap_gov.nist.mscp.content_cref_macOS_{0}_check_1" ns0:type="simple" ns0:href="#scap_gov.nist.mscp.content_comp_macOS_{0}_check_1"/><component-ref xmlns:ns0="http://www.w3.org/1999/xlink" id="scap_gov.nist.mscp.content_cref_macOS_{0}_check_2" ns0:type="simple" ns0:href="#scap_gov.nist.mscp.content_comp_macOS_{0}_check_2"/></checks></data-stream>""".format(
             current_version_data["os_version"], date_time_string
         )
@@ -623,7 +590,6 @@ def generate_scap(args: argparse.Namespace) -> None:
     base_filename: str = f"{args.os_name}_{current_version_data.get('os_version', None)}_Security_Compliance_Benchmark-Revision-{filenameversion}.xml"
 
     if args.oval:
-        export_as = "oval"
         base_filename = base_filename.replace(".xml", "_oval.xml")
         totaloutput = pretty_format_xml(
             oval
@@ -636,7 +602,6 @@ def generate_scap(args: argparse.Namespace) -> None:
         )
 
     if args.xccdf:
-        export_as = "xccdf"
         base_filename = base_filename.replace(".xml", "_xccdf.xml")
         totaloutput = pretty_format_xml(
             xccdf
@@ -651,11 +616,11 @@ def generate_scap(args: argparse.Namespace) -> None:
         logger.error("OVAL generation is only available for MacOS")
         sys.exit()
 
-    if args.os_name != "macos" and args.oval == None and args.xccdf == None:
+    if args.os_name != "macos" and args.oval is None and args.xccdf is None:
         logger.error("SCAP generation is only available for MacOS")
         sys.exit()
 
-    if args.oval == None and args.xccdf == None and args.os_name == "macos":
+    if args.oval is None and args.xccdf is None and args.os_name == "macos":
         scap = """<?xml version="1.0" encoding="UTF-8"?><data-stream-collection xmlns="http://scap.nist.gov/schema/scap/source/1.2" id="scap_gov.nist.mscp.content_collection_macOS_{0}.0" schematron-version="1.4"><data-stream timestamp="{1}" id="scap_gov.nist.mscp.content_datastream_macOS_{0}.0" scap-version="1.4" use-case="CONFIGURATION"><dictionaries><component-ref xmlns:ns0="http://www.w3.org/1999/xlink" id="scap_gov.nist.mscp.content_cref_macOS_{0}_macOS-cpe-dictionary.xml" ns0:type="simple" ns0:href="#scap_gov.nist.mscp.content_comp_macOS_{0}_macOS-cpe-dictionary.xml"><catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog">  <uri name="macOS-cpe-oval.xml" uri="#scap_gov.nist.mscp.content_cref_macOS_{0}_macOS-cpe-oval.xml"/></catalog></component-ref></dictionaries><checklists><component-ref xmlns:ns0="http://www.w3.org/1999/xlink" id="scap_gov.nist.mscp.content_cref_macOS_{0}_xccdf.xml" ns0:type="simple" ns0:href="#scap_gov.nist.mscp.content_comp_macOS_{0}_xccdf.xml"><catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog">  <uri name="oval.xml" uri="#scap_gov.nist.mscp.content_cref_macOS_{0}_check_1"/>  <uri name="ocil.xml" uri="#scap_gov.nist.mscp.content_cref_macOS_{0}_check_2"/></catalog></component-ref></checklists><checks><component-ref xmlns:ns0="http://www.w3.org/1999/xlink" id="scap_gov.nist.mscp.content_cref_macOS_{0}_macOS-cpe-oval.xml" ns0:type="simple" ns0:href="#scap_gov.nist.mscp.content_comp_macOS_{0}_macOS-cpe-oval.xml"/><component-ref xmlns:ns0="http://www.w3.org/1999/xlink" id="scap_gov.nist.mscp.content_cref_macOS_{0}_check_1" ns0:type="simple" ns0:href="#scap_gov.nist.mscp.content_comp_macOS_{0}_check_1"/><component-ref xmlns:ns0="http://www.w3.org/1999/xlink" id="scap_gov.nist.mscp.content_cref_macOS_{0}_check_2" ns0:type="simple" ns0:href="#scap_gov.nist.mscp.content_comp_macOS_{0}_check_2"/></checks></data-stream>""".format(
             current_version_data["os_version"], date_time_string
         )

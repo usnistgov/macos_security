@@ -7,7 +7,6 @@ import platform
 from pathlib import Path
 
 # Local python modules
-from . import __version__
 from .common_utils import logger, set_logger, validate_yaml_file, supported_languages
 from .generate import (
     generate_baseline,
@@ -346,6 +345,8 @@ def parse_cli() -> None:
         action="store_true",
     )
 
+    logger = set_logger()
+
     try:
         args = parser.parse_args()
     except argparse.ArgumentError as e:
@@ -358,7 +359,6 @@ def parse_cli() -> None:
         logger.info("=== Logging level changed ===")
         logger.info("LOGGING LEVEL: DEBUG")
     else:
-        logger = set_logger()
         logger.info("=== Logging level changed ===")
         logger.info("LOGGING LEVEL: ERROR")
 
