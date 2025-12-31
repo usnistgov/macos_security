@@ -10,8 +10,9 @@ from pathlib import Path
 import loguru
 
 # Local python modules
-from ..classes.loguruformatter import LoguruFormatter
+# from ..classes.loguruformatter import LoguruFormatter
 from .logger_instance import logger
+
 
 def function_filter(record):
     """
@@ -21,6 +22,7 @@ def function_filter(record):
     """
     filter = os.environ.get("MSCP_DEV_FILTER", "")
     return filter in record["module"].lower()
+
 
 def set_logger(debug: bool = False, verbosity: int = 0) -> loguru.Logger:
     log_level: str = "ERROR"
@@ -32,7 +34,7 @@ def set_logger(debug: bool = False, verbosity: int = 0) -> loguru.Logger:
     elif verbosity > 2 or debug:
         log_level = "DEBUG"
 
-    formatter = LoguruFormatter()
+    # formatter = LoguruFormatter()
     logger.remove()
 
     logger.configure(

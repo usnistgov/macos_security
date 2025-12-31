@@ -75,9 +75,11 @@ def generate_guidance(args: argparse.Namespace) -> None:
     baseline_name: str = args.baseline.stem
     audit_name: str = str(baseline_name)
     build_path: Path = Path(config.get("output_dir", ""), baseline_name)
-    adoc_output_file: Path = Path(build_path, f"{baseline_name}.adoc")
-    md_output_file: Path = Path(build_path, f"{baseline_name}.md")
-    spreadsheet_output_file: Path = Path(build_path, f"{baseline_name}.xlsx")
+    adoc_output_file: Path = Path(build_path, f"{baseline_name}_{args.language}.adoc")
+    md_output_file: Path = Path(build_path, f"{baseline_name}_{args.language}.md")
+    spreadsheet_output_file: Path = Path(
+        build_path, f"{baseline_name}_{args.language}.xlsx"
+    )
 
     baseline: Baseline = Baseline.from_yaml(args.baseline, args.language, custom)
 

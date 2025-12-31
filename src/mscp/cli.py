@@ -7,7 +7,6 @@ import platform
 from pathlib import Path
 
 # Local python modules
-from . import __version__
 from .common_utils import logger, set_logger, validate_yaml_file, supported_languages
 from .generate import (
     generate_baseline,
@@ -18,11 +17,6 @@ from .generate import (
     generate_scap,
 )
 
-def get_macos_version() -> float:
-    version_str, _, _ = platform.mac_ver()
-    if version_str:
-        major = int(version_str.split(".")[0])
-        return float(major)
 
 class Customparser(argparse.ArgumentParser):
     """
@@ -38,6 +32,13 @@ class Customparser(argparse.ArgumentParser):
         logger.error(f"Argument Error: {message}")
         self.print_help()
         sys.exit(2)
+
+
+def get_macos_version() -> float:
+    version_str, _, _ = platform.mac_ver()
+    if version_str:
+        major = int(version_str.split(".")[0])
+        return float(major)
 
 
 def validate_file(arg: str) -> Path | None:
@@ -77,21 +78,6 @@ def parse_cli() -> None:
         default=get_macos_version(),
         type=float,
         help="Operating system version (eg: 14.0, 15.0).",
-    )
-
-    parser.add_argument(
-        "-V",
-        "--version",
-        action="version",
-        version=f"%(prog)s {__version__}",
-    )
-    parser.add_argument(
-        "-L",
-        "--language",
-        default="en",
-        help="Generate guidance using a supported language.",
-        action="store",
-        choices=supported_languages,
     )
 
     # Sub Parsers for individual commands
@@ -253,7 +239,7 @@ def parse_cli() -> None:
         help="Specify framework for the source. If no framework is specified, the default is 800-53r5.",
         action="store",
     )
-    
+
     scap_parser: argparse.ArgumentParser = subparsers.add_parser(
         "scap",
         help="Easily generate xccdf, oval, or scap datastream. If no option is defined, it will generate an scap datastream file.",
@@ -359,6 +345,8 @@ def parse_cli() -> None:
         action="store_true",
     )
 
+    logger = set_logger()
+
     try:
         args = parser.parse_args()
     except argparse.ArgumentError as e:
@@ -371,7 +359,6 @@ def parse_cli() -> None:
         logger.info("=== Logging level changed ===")
         logger.info("LOGGING LEVEL: DEBUG")
     else:
-        logger = set_logger()
         logger.info("=== Logging level changed ===")
         logger.info("LOGGING LEVEL: ERROR")
 

@@ -203,7 +203,7 @@ def generate_excel(file_out: Path, baseline: Baseline) -> None:
         for cell in sheet[1]:
             cell.font = header_font
 
-        for row_idx, row in enumerate(
+        for _, row in enumerate(
             sheet.iter_rows(
                 min_row=2, max_row=sheet.max_row, min_col=1, max_col=sheet.max_column
             ),

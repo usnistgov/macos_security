@@ -343,7 +343,7 @@ def generate_checklist(args: argparse.Namespace) -> None:
         stig_data, baseline, stig_uuid, checklist_created_date, checklist_updated_date
     )
 
-    if args.version == "3":
+    if args.checklist_version == "3":
         create_json(output_file, stig_output_dict)
     else:
         output_file.replace(output_file.with_suffix(".ckl"))

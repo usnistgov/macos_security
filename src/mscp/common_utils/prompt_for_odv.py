@@ -5,11 +5,7 @@ from typing import Any, Dict, Optional
 import re
 
 # Local python modules
-from .logger_instance import logger
-
-
-import re
-from typing import Any, Dict, Optional
+# from .logger_instance import logger
 
 
 def prompt_for_odv(
@@ -114,7 +110,6 @@ def prompt_for_odv(
     # ---- main loop ----------------------------------------------------------
 
     dt = (odv_hint.get("datatype") or "").strip().lower()
-    desc = odv_hint.get("description", "")
     rules = odv_hint.get("validation", {}) or {}
 
     # Build a friendly prompt line
@@ -150,8 +145,8 @@ def prompt_for_odv(
         # Coerce user entry
         try:
             value = _coerce(raw, dt)
-        except ValueError as ex:
-            print(f"\nERROR - Value must be a valid integer")
+        except ValueError:
+            print("\nERROR - Value must be a valid integer")
             continue
 
         # Validate combined rules

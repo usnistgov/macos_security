@@ -185,11 +185,11 @@ def main():
             apple_profiles[payloadtype] = apple_yam
 
     # load odv.json for reference
-    with open("../includes/odv.json") as o:
+    with open("../legacy/includes/odv.json") as o:
         odv_json = json.load(o)
 
     # load discussions.yaml for reference
-    with open("../includes/discussions.yaml") as y:
+    with open("../legacy/includes/discussions.yaml") as y:
         discussions_yaml = yaml.load(y, Loader=yaml.SafeLoader)
 
     # os_supported = ["sequoia", "sonoma", "ventura", "monterey", "big_sur", "catalina", "ios_18", "ios_17", "ios_16", "visionos_2.0"]
@@ -364,7 +364,7 @@ def main():
                         {"supervised": rule_yaml["supervised"]}
                     )
 
-            if os_ == "ios_18" or os_ == "ios_17" or os_ == "ios_16" or os == "ios_26":
+            if os_ == "ios_18" or os_ == "ios_17" or os_ == "ios_16" or os_ == "ios_26":
                 new_yaml["tags"].remove("ios")
                 new_yaml["platforms"] = {"iOS": {}}
 

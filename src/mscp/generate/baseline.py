@@ -8,7 +8,6 @@ from pathlib import Path
 from typing import Any
 
 # Local python modules
-from ..common_utils.localization import configure_localization_for_yaml
 from ..classes import Author, Baseline, Macsecurityrule
 from ..common_utils import (
     config,
@@ -90,14 +89,9 @@ def rule_has_benchmark_for_version(
 
 
 def generate_baseline(args: argparse.Namespace) -> None:
-    # Configure localization at the beginning based on the CLI language parameter
-    logger.debug(f"Language parameter from CLI: {args.language}")
-    configure_localization_for_yaml(language=args.language)
-
     build_path: Path = Path(config.get("output_dir", ""), "baselines")
     baseline_output_file: Path = (
-        build_path
-        / f"{args.keyword}_{args.os_name}_{args.os_version}_{args.language}.yaml"
+        build_path / f"{args.keyword}_{args.os_name}_{args.os_version}.yaml"
     )
 
     baselines_data: dict = open_file(

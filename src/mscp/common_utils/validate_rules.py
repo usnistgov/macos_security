@@ -32,10 +32,15 @@ def validate_yaml_file(args: argparse.Namespace) -> None:
         try:
             validator.validate(data)
             if not args.only_invalid:
+                print(f"✅ VALID:   {yaml}")
                 logger.info(f"✅ VALID:   {yaml}")
         except ValidationError as e:
+            print(f"❌ INVALID: {yaml}")
+            print(f"   → {e.message}")
             logger.warning(f"❌ INVALID: {yaml}")
             logger.warning(f"   → {e.message}")
         except Exception as e:
+            print(f"⚠️ ERROR:   {yaml}")
+            print(f"   → {e}")
             logger.error(f"⚠️ ERROR:   {yaml}")
             logger.error(f"   → {e}")
