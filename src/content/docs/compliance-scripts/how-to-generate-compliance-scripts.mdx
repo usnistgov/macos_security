@@ -1,125 +1,113 @@
 ---
-title: How To Generate Compliance Scripts
-description: An overview of how to generate configuration profiles.
+title: How to Generate Compliance Scripts
+description: Create a compliance script from your baseline.
 ---
 
 import { Steps, FileTree, Aside } from '@astrojs/starlight/components';
 
-The primary script for generating compliance scripts is located here in the `macos_security` repository:
+export const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : import.meta.env.BASE_URL + '/';
 
-<FileTree>
-- macos_security/
-    - scripts/
-        - generate_guidance.py
-</FileTree>
-    <Aside type="caution">
-      <strong>*Always use the branch matching your target OS version. Do not use the <code>main</code> branch for workflow or development.*</strong>
-    </Aside>
+Compliance scripts are generated using the `generate_guidance.py` script with the `-s` flag. The script reads your baseline and creates a zsh script ready for deployment.
 
-## Steps to Generate a Compliance Script
+<Aside type="note">
+You need a baseline first. See <a href={`${base}baselines/how-to-generate-baselines/`}>How to Generate Baselines</a> if you haven't created one.
+</Aside>
+
+<Aside type="caution" title="Always Use the Correct Branch (mSCP 1.0)">
+Each macOS version has its own branch (`sequoia`, `sonoma`, `ventura`, etc.). **Never use the `main` branch** — it won't work for generating content.
+
+**mSCP 2.0 (currently in beta)** will remove the per-branch requirement and introduce easier installation methods.
+</Aside>
+
+---
+
+## Generate a Compliance Script
 
 <Steps>
-1. **Run the Compliance Script Generator**
 
-   Use the `-s` flag with `generate_guidance.py` to generate a compliance script for your baseline YAML file:
+1. **Run the generation script**
 
-   ```sh
+   ```bash
+   ./scripts/generate_guidance.py -s baselines/BASELINE_NAME.yaml
+   ```
+
+   Example:
+   ```bash
    ./scripts/generate_guidance.py -s baselines/800-53r5_moderate.yaml
    ```
 
-2. **Review the Output**
+2. **Find your files**
 
-   The script will generate several files in the `build/BASELINE/` directory:
+   The `-s` flag generates the compliance script and audit plist. Guidance documents are also created by default.
 
    <FileTree>
    - build/
        - 800-53r5_moderate/
-           - 800-53r5_moderate.adoc
-           - 800-53r5_moderate.html
-           - 800-53r5_moderate.pdf
-           - 800-53r5_moderate_compliance.sh
+           - 800-53r5_moderate_compliance.sh - Compliance script
+           - 800-53r5_moderate.adoc - AsciiDoc guidance
+           - 800-53r5_moderate.html - HTML guidance
+           - 800-53r5_moderate.pdf - PDF guidance
            - preferences/
                - org.800-53r5_moderate.audit.plist
    </FileTree>
+
 </Steps>
 
-## What Gets Generated?
+---
 
-- **Compliance Script**: `{baseline}_compliance.sh`  
-  The main script to check/fix compliance.
-- **Audit Plist**: `org.{baseline}.audit.plist`  
-  Used for exemptions and compliance tracking.
-- **Reports**: `.adoc`, `.html`, `.pdf`  
-  Documentation and reports for the baseline.
+## Running the Script
 
-<Aside>
-See the section on [Exemptions](https://github.com/usnistgov/macos_security/wiki/exemptions) for more information about how exemptions are implemented.
-</Aside>
-
-## Running the Compliance Script
-
-You can run the script interactively or with command-line flags:
+Run with sudo for full access to system settings:
 
 ```zsh
-sudo ./build/800-53r5_moderate/800-53r5_moderate_compliance.sh
+sudo ./build/BASELINE_NAME/BASELINE_NAME_compliance.sh
 ```
 
-This will present an interactive menu:
+| Flag | Description |
+|:-----|:------------|
+| *(no flags)* | Interactive menu mode |
+| `--check` | Run compliance checks without interaction |
+| `--fix` | Run remediation commands without interaction |
+| `--cfc` | Run check, fix, check sequence |
+| `--stats` | Display statistics from last scan |
+| `--compliant` | Report number of compliant checks |
+| `--non_compliant` | Report number of non-compliant checks |
+| `--reset` | Clear results for current baseline |
+| `--reset-all` | Clear results for all mSCP baselines |
 
-```
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-        M A I N - M E N U
-  macOS Security Compliance Tool
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Last compliance scan: No scans have been run
-
-1. View Last Compliance Report
-2. Run New Compliance Scan
-3. Run Commands to remediate non-compliant settings
-4. Exit
-Enter choice [ 1 - 4 ]
-```
-
-**Note:**  
-The `--cfc` flag will trigger a check/fix/check when running the compliance script.
-
-After running, results are written to:
-
-- `/Library/Preferences/org.{baseline}.audit.plist`
-- `/Library/Logs/{baseline}_baseline.log`
-
-**Example log output:**
-
-```
-Thu Jan 21 15:09:41 UTC 2021 auth_pam_login_smartcard_enforce passed (Result: 2, Expected: {integer: 2})
-Thu Jan 21 15:09:41 UTC 2021 auth_smartcard_allow passed (Result: 1, Expected: {integer: 1})
-Thu Jan 21 15:09:41 UTC 2021 auth_pam_sudo_smartcard_enforce passed (Result: 2, Expected: {integer: 2})
-Thu Jan 21 15:09:41 UTC 2021 auth_smartcard_certificate_trust_enforce_moderate passed (Result: 2, Expected: {integer: 2})
-Thu Jan 21 15:09:41 UTC 2021 auth_smartcard_enforce has an exemption (Reason: Broken Reader)
-```
-
-<Aside>
-To add a custom reference in front of the rule in the `{baseline}_baseline.log`, use the `-r` flag with your custom reference (case sensitive) when running `generate_guidance.py`.
+<Aside type="tip">
+The script must be run with zsh. Running with `sh` or `bash` will result in errors.
 </Aside>
 
-## Compliance Script Command Line Reference
+---
 
-**Note:**  
-The compliance script expects to be run in a Z Shell (zsh). Running with `sh` or `bash` will result in errors.
+## Runtime Output
 
-```zsh
-./mscp_compliance.sh Usage
-./mscp_compliance.sh [--check] [--fix] [--cfc] [--stats] [--compliant] [--non_compliant] [--reset] [--reset-all] [--quiet=<value>]
+When executed, the script creates:
 
-Optional parameters:
---check            :   run the compliance checks without interaction
---fix              :   run the remediation commands without interaction
---cfc              :   runs a check, fix, check without interaction
---stats            :   display the statistics from last compliance check
---compliant        :   reports the number of compliant checks
---non_compliant    :   reports the number of non_compliant checks
---reset            :   clear out all results for current baseline
---reset-all        :   clear out all results for ALL MSCP baselines
---quiet=<value>    :   1 - show only failed and exempted checks in output
-                       2 - show minimal output
-```
+| File | Location |
+|:-----|:---------|
+| Audit plist | `/Library/Preferences/org.BASELINE_NAME.audit.plist` |
+| Log file | `/Library/Logs/BASELINE_NAME_baseline.log` |
+
+---
+
+## Next Steps
+
+- <a href={`${base}compliance-scripts/compliance-script-layout/`}>Compliance Script Layout</a> - Understand the script structure
+- <a href={`${base}compliance-scripts/what-are-compliance-scripts/`}>What Are Compliance Scripts?</a> - Learn more about compliance scripts
+
+<style>{`
+  .sl-markdown-content th {
+    background: var(--sl-color-accent-low);
+    font-weight: 600;
+  }
+  .sl-markdown-content td, .sl-markdown-content th {
+    padding: 0.6rem 1rem;
+  }
+  .sl-markdown-content td code {
+    background: var(--sl-color-bg-inline-code);
+    padding: 0.15em 0.35em;
+    font-size: 0.85em;
+  }
+`}</style>

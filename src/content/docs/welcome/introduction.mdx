@@ -1,80 +1,169 @@
 ---
 title: Introduction
-description: A macOS Security Compliance Project Overview.
+description: An overview of the macOS Security Compliance Project.
 ---
 
 import { Aside } from '@astrojs/starlight/components';
 
-The **macOS Security Compliance Project** is an open source initiative providing a programmatic approach to generating security guidance for macOS. This project enables the creation of customized security baselines by leveraging a comprehensive library of rules mapped to compliance requirements from established security guides, or for developing custom guidance.
+The **macOS Security Compliance Project (mSCP)** is an open source effort to provide a programmatic approach to generating security guidance for macOS.
 
-By mapping security-enhancing rules to existing guides and policies, this project supports multiple security frameworks and regulated industry policies. Documentation and QA are uniformly managed, simplifying and accelerating the annual update process through unified and standardized efforts.
+The project maintains a library of security rules, each mapped to one or more compliance frameworks (NIST 800-53, CIS Benchmarks, DISA STIG, and others). You select a framework, run a script, and generate tailored outputs: baseline YAML files, human-readable guidance documents, MDM configuration profiles, and shell scripts for checking and remediating settings.
+
+mSCP was created by a collaboration of federal agencies including NIST, NASA, DISA, and Los Alamos National Lab. It is recognized by Apple and updated with each major macOS release to ensure guidance stays current.
+
+<Aside type="tip">
+mSCP is not designed to replace your existing MDM or compliance tools. It generates the content, your tools deploy and verify it.
+</Aside>
+
+---
+
+## What You Get
+
+Run the scripts and generate:
+
+- **Security baselines** - YAML files defining which rules apply to your environment
+- **Guidance documents** - HTML and PDF documentation for auditors and teams
+- **Configuration profiles** - Ready-to-deploy `.mobileconfig` files for MDM
+- **Compliance scripts** - Shell scripts to check and fix settings on any Mac
+- **SCAP/OVAL content** - For compliance scanning tools
+
+---
+
+## Who It's For
+
+| Role | How You'll Use It |
+|:-----|:------------------|
+| **System Administrators** | Generate profiles and scripts to harden Macs |
+| **Security Professionals** | Audit systems against compliance frameworks |
+| **Policy Authors** | Create or customize baselines for your org |
+| **MDM/Compliance Vendors** | Integrate trusted security guidance into products |
+| **Privacy Officers** | Verify privacy controls are in place |
+
+---
+
+## Supported Frameworks
+
+<div class="framework-grid">
+  <div class="framework-category">
+    <h4>Government</h4>
+    <ul>
+      <li><a href="https://csrc.nist.gov/publications/detail/sp/800-53/rev-5/final">NIST 800-53 Rev 5</a> <span class="levels">High, Moderate, Low</span></li>
+      <li><a href="https://csrc.nist.gov/pubs/sp/800/171/r3/final">NIST 800-171</a></li>
+      <li><a href="https://public.cyber.mil/stigs/downloads/">DISA STIG</a></li>
+      <li><a href="https://dodcio.defense.gov/CMMC/">CMMC 2.0</a> <span class="levels">Level 1, Level 2</span></li>
+      <li><a href="https://www.dcsa.mil/portals/91/documents/ctp/nao/CNSSI_No1253.pdf">CNSSI-1253</a> <span class="levels">High, Moderate, Low</span></li>
+    </ul>
+  </div>
+  <div class="framework-category">
+    <h4>Industry</h4>
+    <ul>
+      <li><a href="https://www.cisecurity.org/benchmark">CIS Benchmarks</a> <span class="levels">Level 1, Level 2</span></li>
+      <li><a href="https://www.cisecurity.org/controls/v8/">CIS Controls v8</a></li>
+    </ul>
+  </div>
+  <div class="framework-category">
+    <h4>International</h4>
+    <ul>
+      <li><a href="https://www.bsi.bund.de/EN/Themen/Oeffentliche-Verwaltung/Zulassung/mobile_Kommunikation/mobileKommunikation_node.html">indigo</a> <span class="levels">Germany, iOS only</span></li>
+      <li><a href="https://www.bio-overheid.nl/category/producten/bio">BIO</a> <span class="levels">Netherlands</span></li>
+      <li>NLMAPGOV Apple Baselines <span class="levels">Base, Plus</span></li>
+    </ul>
+  </div>
+</div>
+
+<style>{`
+  /* Framework grid */
+  .framework-grid {
+    display: table;
+    width: 100%;
+    border-spacing: 1.5rem 0;
+    margin: 1.5rem -1.5rem;
+  }
+  .framework-category {
+    display: table-cell;
+    background: var(--sl-color-bg-nav);
+    border: 1px solid var(--sl-color-gray-5);
+    border-radius: 8px;
+    padding: 1.25rem;
+    width: 33.33%;
+    vertical-align: top;
+  }
+  .framework-category h4 {
+    margin: 0 0 0.75rem 0;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--sl-color-accent);
+    color: var(--sl-color-accent);
+    font-size: 0.95rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .framework-category ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .framework-category li {
+    padding: 0.4rem 0;
+    border-bottom: 1px solid var(--sl-color-gray-6);
+  }
+  .framework-category li:last-child {
+    border-bottom: none;
+  }
+  .framework-category a {
+    font-weight: 500;
+  }
+  .levels {
+    display: block;
+    font-size: 0.8rem;
+    color: var(--sl-color-gray-3);
+    margin-top: 0.15rem;
+  }
+
+  /* Mobile: stack framework boxes */
+  @media (max-width: 768px) {
+    .framework-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+    .framework-category {
+      display: block;
+      width: 100%;
+    }
+  }
+
+  /* Who It's For table */
+  .sl-markdown-content th {
+    background: var(--sl-color-accent-low);
+    font-weight: 600;
+  }
+  .sl-markdown-content td, .sl-markdown-content th {
+    padding: 0.75rem 1rem;
+  }
+
+  /* What You Get list */
+  .sl-markdown-content ul li strong {
+    color: var(--sl-color-accent-high);
+  }
+`}</style>
 
 ---
 
 ## Why This Project?
 
-- **Accelerate Adoption:** Ensure guidance is available for new OS/hardware releases.
-- **Reduce Global Effort:** Unify and consolidate compliance work into a single project.
-- **Foster Collaboration:** Develop methodologies to reduce overhead and redundancy among baseline authors.
-- **Standardize Controls:** Unify the approach to setting security controls.
-- **Inform Vendors:** Provide MDM/EMM/security/audit vendors and Apple with insight into customer hardening needs.
-
-<Aside type="note">
-<em>This project provides a programmatic approach to security policy and produces output content to be used <strong>in conjunction</strong> with management and security tools to achieve compliance.</em>
-</Aside>
-
----
-
-## Supported Publications
-
-The project includes guidance from the following sources:
-
-### Government Publications
-
-- **NIST 800-53** ([link](https://csrc.nist.gov/publications/detail/sp/800-53/rev-5/final))
-  - FISMA High
-  - FISMA Moderate
-  - FISMA Low
-- **NIST 800-171** ([link](https://csrc.nist.gov/pubs/sp/800/171/r3/final))
-- **DISA STIG** ([link](https://public.cyber.mil/stigs/downloads/))
-- **CMMC 2.0** ([link](https://dodcio.defense.gov/CMMC/))
-- **CNSSI-1253** ([link](https://www.dcsa.mil/portals/91/documents/ctp/nao/CNSSI_No1253.pdf))
-- **indigo** ([link](https://www.bsi.bund.de/EN/Themen/Oeffentliche-Verwaltung/Zulassung/mobile_Kommunikation/mobileKommunikation_node.html#doc919528bodyText2))
-  - indigo Base (iOS Only)
-  - indigo High (iOS Only)
-- **BIO** ([Link](https://www.bio-overheid.nl/category/producten/bio) and [Link](https://github.com/MinBZK/Baseline-Informatiebeveiliging-Overheid))
-- **NLMAPGOV Apple Baselines**
-  - NLMAPGOV Base
-  - NLMAPGOV Plus
-
-### Non-Governmental Standards
-
-- **CIS Benchmarks** ([link](https://www.cisecurity.org/benchmark))
-- **CIS Critical Security Controls v8** ([link](https://www.cisecurity.org/controls/v8/))
+- **Ready when you are** - Guidance available for new macOS releases
+- **Single source of truth** - One project, many frameworks
+- **Community-driven** - Collaborate instead of duplicating effort
+- **Recognized by Apple** - Built with input from Apple's security team
 
 ---
 
 ## Development Team
 
-This project is a collaboration between federal IT Security staff and macOS Administrators, published by:
+A collaboration between federal IT security staff and macOS administrators:
 
 - [National Institute of Standards and Technology (NIST)](https://www.nist.gov)
 - [National Aeronautics and Space Administration (NASA)](https://www.nasa.gov)
 - [Defense Information Systems Agency (DISA)](https://www.disa.mil)
 - [Los Alamos National Lab (LANL)](https://www.lanl.gov)
-
----
-
-## Objective
-
-To develop an extensible, modern approach to security guidance usable by any organization (Government, Enterprise, Education) needing to adhere to security compliance frameworks and policy. Project outputs include scripts, documentation, and configuration profile payloads for use with modern management tools.
-
----
-
-## Audience
-
-- **System Administrators:** Generate baseline documentation, configuration profile payloads, and scripts.
-- **Security Professionals:** Review reporting of applied controls against guidance.
-- **Policy Authors:** Map policy metadata to a library of verified controls to create or update baselines.
-- **MDM/EMM/Security/Compliance Tool Vendors:** Support configuration, verification, and reporting of security guidance and controls in products using trusted source material.
-- **Privacy Officers:** Ensure adequate privacy controls are enabled for institutional organizations.

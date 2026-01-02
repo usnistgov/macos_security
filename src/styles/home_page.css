@@ -91,6 +91,21 @@
     border: none;
 }
 
+/* Quick Links card styles */
+.card {
+	background: transparent !important;
+	border: 1px solid var(--sl-color-gray-6, #eee) !important;
+	border-radius: 8px !important;
+	box-shadow: none !important;
+}
+[data-theme="dark"] .card {
+	background: transparent !important;
+	border-color: var(--sl-color-gray-5, #2a2d35) !important;
+}
+.card:hover {
+	border-color: var(--sl-color-accent) !important;
+}
+
 /* How-to link list styles */
 .howto-link-list {
 	list-style: none;

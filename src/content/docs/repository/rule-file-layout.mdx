@@ -1,50 +1,59 @@
 ---
-title: Rules File Layout
-description: A rules reference.
+title: Rule File Layout
+description: Structure of rule YAML files.
 ---
 
-A rule file defines a single security control for macOS. Each rule is written in YAML and should follow the structure below.
+import { Aside } from '@astrojs/starlight/components';
 
-## Rule File Fields
+export const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : import.meta.env.BASE_URL + '/';
 
-### id
-A unique identifier for the rule. This should match the filename (without the `.yaml` extension).
+A rule file defines a single security control for macOS. Each rule is written in YAML and must follow the structure below.
 
-### title
-A human-readable title for the rule.
+---
 
-### discussion
-A concise description of the rule's intent and context.
+## Required Fields
 
-### check
-A shell-based or script-based check to validate compliance.
+| Field | Description |
+|:------|:------------|
+| `id` | Unique identifier matching the filename (without `.yaml`) |
+| `title` | Human-readable title for the rule |
+| `discussion` | Description of the rule's intent and context |
+| `check` | Shell command or script to validate compliance |
+| `result` | Expected result from the check |
+| `fix` | Remediation steps or configuration to enforce the rule |
+| `tags` | Keywords for categorizing and filtering rules |
 
-### result
-The expected result from the check.
+---
 
-### fix
-Remediation steps or configuration to enforce the rule. If a fix includes `[source,bash]`, it will be used for script generation.
+## Optional Fields
 
-### references
-Mappings to CCEs, security frameworks, and controls relevant to the rule.
+| Field | Description |
+|:------|:------------|
+| `references` | Mappings to CCEs, security frameworks, and controls |
+| `macOS` | macOS versions this rule is validated for |
+| `odv` | Organization Defined Values with hint and defaults |
+| `severity` | Severity level (low, medium, high) |
+| `mobileconfig` | Set to `true` if enforceable via configuration profile |
+| `mobileconfig_info` | Configuration profile payload (required if `mobileconfig` is true) |
+| `ddm_info` | DDM configuration declaration (for DDM-supported settings) |
 
-### macOS
-The macOS versions for which this rule is validated.
+---
 
-### odv
-(Optional) Organization Defined Values. If present, should include a hint and default/recommended values.
+## References Structure
 
-### tags
-Keywords for categorizing and searching rules.
+The `references` field maps to various compliance frameworks:
 
-### severity
-The severity level of the rule (e.g., low, medium, high).
-
-### mobileconfig
-Set to `true` if the rule can be enforced via a configuration profile.
-
-### mobileconfig_info
-Required if `mobileconfig` is `true`. Contains the configuration profile payload.
+| Key | Framework |
+|:----|:----------|
+| `cce` | Common Configuration Enumeration |
+| `cci` | Control Correlation Identifier |
+| `800-53r5` | NIST SP 800-53 Rev 5 |
+| `800-53r4` | NIST SP 800-53 Rev 4 |
+| `800-171r3` | NIST SP 800-171 Rev 3 |
+| `srg` | Security Requirements Guide |
+| `disa_stig` | DISA STIG identifiers |
+| `cis` | CIS Benchmarks and Controls |
+| `cmmc` | CMMC level mappings |
 
 ---
 
@@ -54,12 +63,8 @@ Required if `mobileconfig` is `true`. Contains the configuration profile payload
 id: system_settings_bluetooth_disable
 title: Disable Bluetooth When no Approved Device is Connected
 discussion: |
-  The macOS system _MUST_ be configured to disable Bluetooth unless there is an approved device connected.
-
-  [IMPORTANT]
-  ====
-  Information System Security Officers (ISSOs) may make the risk-based decision not to disable Bluetooth, so as to maintain necessary functionality, but they are advised to first fully weigh the potential risks posed to their organization.
-  ====
+  The macOS system _MUST_ be configured to disable Bluetooth unless
+  there is an approved device connected.
 check: |
   /usr/bin/osascript -l JavaScript << EOS
   $.NSUserDefaults.alloc.initWithSuiteName('com.apple.MCXBluetooth')\
@@ -72,52 +77,17 @@ fix: |
 references:
   cce:
     - CCE-94352-2
-  cci:
-    - CCI-001967
-    - CCI-002418
   800-53r5:
     - AC-18
     - SC-8
-    - AC-18(3)
-  800-53r4:
-    - AC-18(3)
-    - SC-8
-  srg:
-    - SRG-OS-000423-GPOS-00187
-    - SRG-OS-000481-GPOS-00481
-    - SRG-OS-000480-GPOS-00228
   disa_stig:
     - APPL-15-002062
-  800-171r2:
-    - 3.13.8
-    - N/A
-  800-171r3:
-    - 03.01.16
-    - 03.13.08
-  cis:
-    benchmark:
-      - N/A
-    controls v8:
-      - 4.8
-      - 12.6
-      - 13.9
-  cmmc:
-    - AC.L2-3.1.16
 macOS:
   - '15.0'
 tags:
-  - 800-53r5_low
-  - 800-53r4_moderate
-  - 800-53r4_high
   - 800-53r5_moderate
   - 800-53r5_high
-  - 800-171
-  - cisv8
-  - cnssi-1253_low
-  - cnssi-1253_high
-  - cmmc_lvl2
   - stig
-  - cnssi-1253_moderate
 severity: high
 mobileconfig: true
 mobileconfig_info:
@@ -125,3 +95,29 @@ mobileconfig_info:
     com.apple.MCXBluetooth:
       DisableBluetooth: true
 ```
+
+<Aside type="tip">
+The `id` field must match the filename. For example, `system_settings_bluetooth_disable.yaml` must have `id: system_settings_bluetooth_disable`.
+</Aside>
+
+---
+
+## Next Steps
+
+- <a href={`${base}repository/sections-file-layout/`}>Sections File Layout</a> - Understand section YAML structure
+- <a href={`${base}personalization/customize-rules/`}>Customize Rules</a> - Create custom rules
+
+<style>{`
+  .sl-markdown-content th {
+    background: var(--sl-color-accent-low);
+    font-weight: 600;
+  }
+  .sl-markdown-content td, .sl-markdown-content th {
+    padding: 0.6rem 1rem;
+  }
+  .sl-markdown-content td code {
+    background: var(--sl-color-bg-inline-code);
+    padding: 0.15em 0.35em;
+    font-size: 0.85em;
+  }
+`}</style>

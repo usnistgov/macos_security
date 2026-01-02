@@ -1,111 +1,107 @@
 ---
 title: Generate SCAP
-description: A generate-scap reference.
+description: Create SCAP, XCCDF, and OVAL documents from your rules.
 ---
 
 import { Steps, FileTree, Aside } from '@astrojs/starlight/components';
 
-    <Aside type="caution">
-      <strong>*Always use the branch matching your target OS version. Do not use the <code>main</code> branch for workflow or development.*</strong>
-    </Aside>
-To generate SCAP, OVAL, or XCCDF documents, use the <code>generate_scap.py</code> script.
+export const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : import.meta.env.BASE_URL + '/';
 
-<Steps>
-  <ol>
-    <li>
-      <strong>List available baselines:</strong>
-      <br />
-      <code>./scripts/generate_scap.py -l</code>
-    </li>
-    <li>
-      <strong>Generate SCAP 1.3 document for all baselines:</strong>
-      <br />
-      <code>./scripts/generate_scap.py</code>
-    </li>
-    <li>
-      <strong>Generate only XCCDF or OVAL:</strong>
-      <br />
-      <code>./scripts/generate_scap.py -x</code> <em>(XCCDF)</em><br />
-      <code>./scripts/generate_scap.py -o</code> <em>(OVAL)</em>
-    </li>
-    <li>
-      <strong>Generate for a specific baseline:</strong>
-      <br />
-      <code>./scripts/generate_scap.py -b stig -x</code>
-    </li>
-  </ol>
-</Steps>
+The `generate_scap.py` script creates security compliance documents in SCAP (Security Content Automation Protocol) formats. These documents can be used with SCAP-compatible scanning tools.
 
-<Aside type="note">
-The script detects baselines as tags listed in rule files under <code>rules/</code> and <code>custom/</code> folders.
+<Aside type="caution" title="Always Use the Correct Branch (mSCP 1.0)">
+Each macOS version has its own branch (`sequoia`, `sonoma`, `ventura`, etc.). **Never use the `main` branch** — it won't work for generating content.
+
+**mSCP 2.0 (currently in beta)** will remove the per-branch requirement and introduce easier installation methods.
 </Aside>
 
-<FileTree>
-  <ul>
-    <li>
-      build/
-      <ul>
-        <li>[generated SCAP/XCCDF/OVAL files]</li>
-      </ul>
-    </li>
-    <li>
-      rules/
-      <ul>
-        <li>[rule files with baseline tags]</li>
-      </ul>
-    </li>
-    <li>
-      custom/
-      <ul>
-        <li>[custom rule files with baseline tags]</li>
-      </ul>
-    </li>
-    <li>
-      scripts/
-      <ul>
-        <li>generate_scap.py</li>
-      </ul>
-    </li>
-  </ul>
-</FileTree>
+---
 
-**Example Output:**
-```bash
-➜  macos_security git:(sequoia) ./scripts/generate_scap.py
-./scripts/generate_scap.py -l 
-800-171
-800-53r4_high
-800-53r4_low
-800-53r4_moderate
-800-53r5_high
-800-53r5_low
-800-53r5_moderate
-800-53r5_privacy
-cis_lvl1
-cis_lvl2
-cisv8
-cnssi-1253
-stig
-➜  macos_security git:(ventura) ./scripts/generate_scap.py -b stig -x
-```
-This generates an XCCDF document in the <code>build</code> folder for just the <code>stig</code> baseline.
+## Output Formats
+
+| Format | Description |
+|:-------|:------------|
+| **SCAP** | Complete SCAP 1.4 datastream (default) |
+| **XCCDF** | eXtensible Configuration Checklist Description Format |
+| **OVAL** | Open Vulnerability and Assessment Language |
+
+---
+
+## Generate SCAP Documents
+
+<Steps>
+
+1. **List available baselines**
+
+   ```bash
+   ./scripts/generate_scap.py -l
+   ```
+
+2. **Generate SCAP for all rules**
+
+   ```bash
+   ./scripts/generate_scap.py
+   ```
+
+3. **Generate for a specific baseline**
+
+   ```bash
+   ./scripts/generate_scap.py -b stig
+   ```
+
+4. **Find your files**
+
+   Output is saved to `build/`:
+
+   | File | Description |
+   |:-----|:------------|
+   | `*_xccdf.xml` | XCCDF document |
+   | `*_oval.xml` | OVAL document |
+   | `*.xml` | Complete SCAP datastream |
+
+</Steps>
+
+---
+
+## Command Reference
+
+| Flag | Description |
+|:-----|:------------|
+| `-l` | List available baseline tags |
+| `-b BASELINE` | Generate for a specific baseline |
+| `-x` | Generate only XCCDF |
+| `-o` | Generate only OVAL |
+| `-d FILE` | Include DISA STIG references from file |
+
+---
 
 ## SCAP References
 
-[Security Content Automation Protocol (SCAP) 1.3](https://csrc.nist.gov/projects/security-content-automation-protocol/scap-releases/scap-1-3)
+- [Security Content Automation Protocol (SCAP) 1.4](https://csrc.nist.gov/Projects/security-content-automation-protocol/scap-releases/scap-1-4)
+- [National Checklist Program Repository](https://ncp.nist.gov/repository)
 
 <Aside type="note">
-That page has links to most of the SCAP-related normative documents.
+A SCAP datastream typically includes XCCDF, OVAL, OCIL, and CPE dictionary documents combined into a single XML file.
 </Aside>
 
-An SCAP data stream (typically) consists of several XML documents knit together in a containing XML document.
-The component documents are:
-- An XCCDF document
-- An OVAL document referenced by the XCCDF document
-- An OCIL document referenced by the XCCDF document
-- A CPE dictionary document referenced by the XCCDF document
-- An OVAL document referenced by the CPE dictionary document
+---
 
-[National Checklist Program for IT Products Guidelines for Checklist Users and Developers](https://csrc.nist.gov/publications/detail/sp/800-70/rev-4/final)
+## Next Steps
 
-[National Checklist Program Repository](https://nvd.nist.gov/ncp/repository)
+- <a href={`${base}other/generate-mapping/`}>Generate Mapping</a> - Create custom framework mappings
+- <a href={`${base}guidance/how-to-generate-guidance/`}>How to Generate Guidance</a> - Generate documentation from your baseline
+
+<style>{`
+  .sl-markdown-content th {
+    background: var(--sl-color-accent-low);
+    font-weight: 600;
+  }
+  .sl-markdown-content td, .sl-markdown-content th {
+    padding: 0.6rem 1rem;
+  }
+  .sl-markdown-content td code {
+    background: var(--sl-color-bg-inline-code);
+    padding: 0.15em 0.35em;
+    font-size: 0.85em;
+  }
+`}</style>

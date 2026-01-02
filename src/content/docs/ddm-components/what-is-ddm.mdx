@@ -1,44 +1,81 @@
 ---
-title: What is Declarative Device Management (DDM)?
-description: An overview of baselines and how to use them in the project.
+title: What is DDM?
+description: Apple's modern framework for device management.
 ---
 
 import { Aside } from '@astrojs/starlight/components';
 
-Declarative Device Management (DDM) is Apple's modern framework for managing Apple devices, introduced to provide a more efficient, scalable, and responsive approach to device management compared to traditional MDM (Mobile Device Management). DDM enables devices to take a more active role in their own management by evaluating conditions and applying configurations locally, rather than relying solely on server-driven commands.
+export const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : import.meta.env.BASE_URL + '/';
 
-### Why Do You Need DDM?
+**Declarative Device Management (DDM)** is Apple's modern approach to managing devices. Unlike traditional MDM where the server sends commands, DDM lets devices manage themselves based on declared configurations.
 
-- **Efficiency:** DDM reduces the need for constant communication between the device and the management server. Devices can react to changes and apply configurations immediately, improving responsiveness and reducing network traffic.
-- **Scalability:** By shifting logic and evaluation to the device, DDM allows organizations to manage large fleets of Apple devices more effectively.
-- **Reliability:** Devices can enforce compliance and configuration even when offline, ensuring that security and policy requirements are always met.
-- **Security:** DDM supports more granular and secure management of settings, profiles, and compliance checks, aligning with Apple's latest security and privacy standards.
+The mSCP project generates DDM components from your baseline, ready to deploy via your MDM solution.
 
-### The Old Way: Traditional MDM
-
-Before DDM, Apple devices were managed using Mobile Device Management (MDM), a server-driven approach where the management server dictated all device configurations, compliance checks, and actions. In this model:
-
-- The server sends commands and configuration profiles to the device.
-- The device passively waits for instructions and reports back its status.
-- Any change or compliance check requires a round-trip to the server.
-- Devices are less responsive to changes when offline or between server check-ins.
-
-**Limitations of Traditional MDM:**
-- **Latency:** Devices may not react instantly to policy changes or compliance issues, especially if they are offline or have infrequent check-ins.
-- **Scalability:** As organizations grow, the server becomes a bottleneck, handling all logic and state for every device.
-- **Reliability:** Devices cannot enforce or adapt policies without server communication.
-- **Limited Autonomy:** Devices are unable to make decisions or enforce compliance on their own.
-
-### Why Apple is Shifting to DDM
-
-Apple is moving away from traditional MDM because modern device fleets require:
-
-- **Real-time responsiveness:** Devices should react to changes and enforce policies immediately, even when offline.
-- **Distributed logic:** Offloading evaluation and compliance to the device itself reduces server load and increases scalability.
-- **Better user experience:** Devices can provide instant feedback and adapt to user or environment changes without waiting for server instructions.
-- **Enhanced security and privacy:** DDM enables more granular, secure, and privacy-respecting management.
-
-<Aside type="tip">
-<strong>In summary:</strong>  
-The shift from MDM to DDM is about empowering devices to be smarter, more autonomous, and more secure—meeting the needs of modern organizations and users.
+<Aside type="note">
+DDM requires macOS 14 or later and an MDM solution that supports declarative management.
 </Aside>
+
+---
+
+## DDM vs Traditional MDM
+
+| Aspect | Traditional MDM | DDM |
+|:-------|:----------------|:----|
+| **Control** | Server sends commands to device | Device applies declared configurations |
+| **Responsiveness** | Waits for server check-in | Applies changes immediately |
+| **Offline behavior** | Limited until reconnected | Enforces policies even offline |
+| **Scalability** | Server handles all logic | Logic distributed to devices |
+
+---
+
+## Why DDM Matters
+
+| Benefit | Description |
+|:--------|:------------|
+| **Faster response** | Devices apply settings immediately without waiting for server |
+| **Offline enforcement** | Policies remain active even without network connectivity |
+| **Reduced server load** | Devices handle their own compliance evaluation |
+| **Better security** | Granular control with Apple's latest security standards |
+
+---
+
+## What the Project Generates
+
+The project creates DDM declarations in three categories:
+
+| Component | Description |
+|:----------|:------------|
+| **Activations** | Enable configurations on the device |
+| **Configurations** | Settings declarations for various Apple declaration types |
+| **Assets** | Data files referenced by configurations (e.g., zipped config files) |
+
+Output location: `build/BASELINE_NAME/declarative/`
+
+---
+
+## Helpful Links
+
+- [Apple Developer: Declarative Device Management](https://developer.apple.com/documentation/devicemanagement/leveraging_the_declarative_management_data_model_to_scale_devices)
+- [Apple WWDC: Declarative Device Management](https://developer.apple.com/videos/play/wwdc2021/10131/)
+
+---
+
+## Next Steps
+
+- <a href={`${base}ddm-components/how-to-generate-ddm-components/`}>How to Generate DDM Components</a> - Create DDM files from your baseline
+- <a href={`${base}ddm-components/ddm-component-layout/`}>DDM Component Layout</a> - Understand the file structure
+
+<style>{`
+  .sl-markdown-content th {
+    background: var(--sl-color-accent-low);
+    font-weight: 600;
+  }
+  .sl-markdown-content td, .sl-markdown-content th {
+    padding: 0.6rem 1rem;
+  }
+  .sl-markdown-content td code {
+    background: var(--sl-color-bg-inline-code);
+    padding: 0.15em 0.35em;
+    font-size: 0.85em;
+  }
+`}</style>

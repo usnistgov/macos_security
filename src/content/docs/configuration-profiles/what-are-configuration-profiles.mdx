@@ -1,29 +1,82 @@
 ---
 title: What Are Configuration Profiles?
-description: An overview of baselines and how to use them in the project.
-
+description: XML files that enforce security settings on Apple devices.
 ---
 
 import { Aside } from '@astrojs/starlight/components';
 
-**Apple Configuration Profiles** are XML files (.mobileconfig) used to define settings, restrictions, and policies for macOS, iOS, iPadOS, and tvOS devices. They allow administrators to manage and enforce configurations such as Wi-Fi settings, VPN, certificates, security restrictions, and more across Apple devices.
+export const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : import.meta.env.BASE_URL + '/';
 
-### How Configuration Profiles Work
+**Configuration profiles** are XML files (.mobileconfig) that define settings and restrictions for Apple devices. They allow administrators to enforce security configurations across macOS, iOS, iPadOS, and tvOS devices.
 
-Configuration profiles are created by IT administrators and can be distributed to devices via Mobile Device Management (MDM) solutions, Apple Configurator, email, or direct download. Once installed, the profile automatically applies the specified settings to the device. Profiles can be signed to ensure authenticity and integrity.
+The mSCP project generates configuration profiles from your baseline, ready to deploy via MDM.
 
-### End-User Experience
-
-For end-users, configuration profiles are typically deployed silently and automatically through the organization's MDM solution. Once the profile is pushed to the device, most restrictions and settings are enforced immediately—users may notice changes right away, or in some cases, a reboot may be required before all settings take full effect.
-
-Profiles can be viewed or removed in **System Settings > Privacy & Security > Profiles** (macOS) or **Settings > General > VPN & Device Management** (iOS/iPadOS).
-
-<Aside type="note">
-If a configuration profile is deployed via a Mobile Device Management (MDM) solution, the user cannot remove it manually. Only the MDM administrator can remove or update these profiles, ensuring organizational control and compliance.
+<Aside type="tip">
+Configuration profiles enforce settings that users cannot override. This ensures compliance with your security baseline.
 </Aside>
 
-### Helpful Links
+---
+
+## How They Work
+
+| Step | Description |
+|:-----|:------------|
+| **Generate** | Run `generate_guidance.py -p` to create profiles from your baseline |
+| **Deploy** | Upload profiles to your MDM solution |
+| **Enforce** | Settings are applied automatically to managed devices |
+
+Profiles can also be signed with a certificate (`-H` flag) to ensure authenticity and prevent tampering.
+
+---
+
+## What the Project Generates
+
+| Type | Flag | Description |
+|:-----|:-----|:------------|
+| **Individual profiles** | `-p` | One profile per payload type (recommended for flexibility) |
+| **Consolidated profile** | `-P` | All settings in a single profile |
+| **Signed profiles** | `-H HASH` | Profiles signed with your certificate |
+
+Output location: `build/BASELINE_NAME/mobileconfigs/`
+
+---
+
+## End-User Experience
+
+- Profiles are deployed silently through MDM
+- Settings take effect immediately (some may require reboot)
+- Users can view profiles in **System Settings > Privacy & Security > Profiles**
+
+<Aside type="note">
+Profiles deployed via MDM cannot be removed by users. Only the MDM administrator can remove or update them.
+</Aside>
+
+---
+
+## Helpful Links
 
 - [Apple Platform Deployment: Configuration Profiles](https://support.apple.com/guide/deployment/configuration-profiles-depca5db5d51/web)
-- [Apple Developer Documentation: Configuration Profile Reference](https://developer.apple.com/documentation/devicemanagement/configuration-profile)
-- [About configuration profiles on Mac](https://support.apple.com/guide/mac-help/mchlp2469/mac)
+- [Apple Developer: Device Management Profile](https://developer.apple.com/documentation/devicemanagement/profile)
+- [Configuration profiles on Mac](https://support.apple.com/guide/mac-help/configuration-profiles-standardize-settings-mh35561/mac)
+
+---
+
+## Next Steps
+
+- <a href={`${base}configuration-profiles/how-to-generate-configuration-profiles/`}>How to Generate Configuration Profiles</a> - Create profiles from your baseline
+- <a href={`${base}configuration-profiles/configuration-profile-layout/`}>Configuration Profile Layout</a> - Understand the file structure
+
+<style>{`
+  .sl-markdown-content th {
+    background: var(--sl-color-accent-low);
+    font-weight: 600;
+  }
+  .sl-markdown-content td, .sl-markdown-content th {
+    padding: 0.6rem 1rem;
+  }
+  .sl-markdown-content td code {
+    background: var(--sl-color-bg-inline-code);
+    padding: 0.15em 0.35em;
+    font-size: 0.85em;
+  }
+`}</style>

@@ -1,17 +1,77 @@
 ---
-title: Includes
-description: Reference for the includes directory.
+title: Includes Directory
+description: Supporting files and resources for generation scripts.
 ---
 
-The `includes/` directory contains reusable YAML libraries that support the repository's build scripts.  
-These libraries provide structured data and helper content used to:
+import { FileTree, Aside } from '@astrojs/starlight/components';
 
-- Build validation scripts
-- Generate mobileconfig files
-- Assemble guide documents
+export const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : import.meta.env.BASE_URL + '/';
 
-**Purpose:**  
-Centralize supporting YAML files so scripts can efficiently parse and reuse information across different outputs.
+The `includes/` directory contains supporting files used by the generation scripts. These files provide baseline data, configuration profile templates, and payload definitions.
 
-**Tip:**  
-Keep this directory organized and up-to-date to ensure all scripts have access to the latest supporting data.
+---
+
+## Files Reference
+
+| File | Description |
+|:-----|:------------|
+| `800-53_baselines.yaml` | NIST 800-53 control baseline definitions |
+| `mscp-data.yaml` | Project metadata and configuration |
+| `supported_payloads.yaml` | Supported configuration profile payloads |
+| `pwpolicy.xml` | Password policy configuration template |
+| `com.apple.alf.private_data.mobileconfig` | Application firewall profile template |
+| `com.apple.security.authorization.mobileconfig` | Security authorization profile template |
+| `enablePF-mscp.sh` | Packet filter enablement script |
+
+---
+
+## Key Files
+
+### supported_payloads.yaml
+
+Defines which configuration profile payloads the project supports. When adding custom rules that use new payloads, add them here.
+
+### 800-53_baselines.yaml
+
+Contains the NIST 800-53 control mappings used by the `-c` flag in `generate_baseline.py` to output controls covered by rules.
+
+### mscp-data.yaml
+
+Project-wide metadata including version information and default settings.
+
+---
+
+## Directory Structure
+
+<FileTree>
+- includes/
+    - 800-53_baselines.yaml
+    - mscp-data.yaml
+    - supported_payloads.yaml
+    - pwpolicy.xml
+    - com.apple.alf.private_data.mobileconfig
+    - com.apple.security.authorization.mobileconfig
+    - enablePF-mscp.sh
+</FileTree>
+
+---
+
+## Next Steps
+
+- <a href={`${base}repository/directory-layout/`}>Directory Layout</a> - Repository structure overview
+- <a href={`${base}personalization/customize-rules/`}>Customize Rules</a> - Add custom payloads for new rules
+
+<style>{`
+  .sl-markdown-content th {
+    background: var(--sl-color-accent-low);
+    font-weight: 600;
+  }
+  .sl-markdown-content td, .sl-markdown-content th {
+    padding: 0.6rem 1rem;
+  }
+  .sl-markdown-content td code {
+    background: var(--sl-color-bg-inline-code);
+    padding: 0.15em 0.35em;
+    font-size: 0.85em;
+  }
+`}</style>

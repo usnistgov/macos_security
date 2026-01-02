@@ -1,90 +1,101 @@
 ---
 title: DDM Component Layout
-description: An overview of how to generate configuration profiles.
+description: Understand the structure of DDM declarations.
 ---
 
 import { Aside } from '@astrojs/starlight/components';
 
-This page provides a detailed breakdown of a DDM payload for `com.apple.configuration.passcode.settings`. Each setting is explained to help you understand how to configure passcode requirements effectively.
+export const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : import.meta.env.BASE_URL + '/';
 
-## Identifier
+DDM declarations are JSON files that define device configurations. Understanding the structure helps you troubleshoot deployments or customize declarations.
 
-- **Identifier**: A unique string that identifies this configuration profile.  
-  _Example_: `"org.mscp.all_rules.config.passcode.settings"`
-
-## Type
-
-- **Type**: Specifies the type of configuration.  
-  _Example_: `"com.apple.configuration.passcode.settings"`
-
-## Payload
-
-- **Payload**: Contains the actual settings for the passcode policy.
-
-### MaximumFailedAttempts
-
-- **MaximumFailedAttempts**: The number of failed passcode attempts allowed before the device is locked or wiped.  
-  _Example_: `3`
-
-### MaximumGracePeriodInMinutes
-
-- **MaximumGracePeriodInMinutes**: The maximum time (in minutes) allowed after unlocking before the passcode is required again.  
-  _Example_: `15`
-
-### RequireAlphanumericPasscode
-
-- **RequireAlphanumericPasscode**: If `true`, the passcode must include both letters and numbers.  
-  _Example_: `true`
-
-### CustomRegex
-
-- **CustomRegex**: A custom regular expression that the passcode must match.  
-  _Example_: `^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).*$`  
-  _This requires at least one uppercase letter, one lowercase letter, and one digit._
-
-### PasscodeReuseLimit
-
-- **PasscodeReuseLimit**: The number of previous passcodes that cannot be reused.  
-  _Example_: `5`
-
-### MaximumPasscodeAgeInDays
-
-- **MaximumPasscodeAgeInDays**: The maximum number of days a passcode can be used before it must be changed.  
-  _Example_: `60`
-
-### MinimumLength
-
-- **MinimumLength**: The minimum number of characters required for the passcode.  
-  _Example_: `15`
-
-### RequireComplexPasscode
-
-- **RequireComplexPasscode**: If `true`, the passcode must meet complexity requirements (such as including special characters).  
-  _Example_: `true`
-
-### MinimumComplexCharacters
-
-- **MinimumComplexCharacters**: The minimum number of complex (non-alphanumeric) characters required in the passcode.  
-  _Example_: `1`
+<Aside type="tip">
+You don't need to create declarations manually. The `generate_guidance.py -D` script creates them for you. This page explains what's inside.
+</Aside>
 
 ---
 
-## Complete Example
+## Component Types
+
+The project generates DDM declarations that work together:
+
+| Type | Purpose |
+|:-----|:--------|
+| **Activation** | Enables a configuration on the device |
+| **Configuration** | Defines what settings to apply |
+
+---
+
+## Common Structure
+
+All DDM declarations share these keys:
+
+| Key | Description |
+|:----|:------------|
+| `Identifier` | Unique identifier for this declaration |
+| `Type` | The Apple declaration type |
+| `Payload` | The declaration-specific settings |
+
+---
+
+## Activation Declaration
+
+Activations enable configurations on the device.
 
 ```json
 {
-    "Identifier": "org.mscp.all_rules.config.passcode.settings",
-    "Type": "com.apple.configuration.passcode.settings",
-    "Payload": {
-        "MaximumFailedAttempts": 3,
-        "MaximumGracePeriodInMinutes": 15,
-        "RequireAlphanumericPasscode": true,
-        "CustomRegex": "^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).*$",
-        "PasscodeReuseLimit": 5,
-        "MaximumPasscodeAgeInDays": 60,
-        "MinimumLength": 15,
-        "RequireComplexPasscode": true,
-        "MinimumComplexCharacters": 1
-    }
+  "Identifier": "org.mscp.baseline_name.activation.service",
+  "Type": "com.apple.activation.simple",
+  "Payload": {
+    "StandardConfigurations": ["org.mscp.baseline_name.config.service"]
+  }
 }
 ```
+
+| Key | Description |
+|:----|:------------|
+| `StandardConfigurations` | Array of configuration identifiers to activate |
+
+---
+
+## Configuration Declaration
+
+Configurations define the settings to apply. For service configurations:
+
+```json
+{
+  "Identifier": "org.mscp.baseline_name.config.service",
+  "Type": "com.apple.configuration.services.configuration-files",
+  "Payload": {
+    "ServiceType": "com.apple.service",
+    "DataAssetReference": "org.mscp.baseline_name.asset.service"
+  }
+}
+```
+
+| Key | Description |
+|:----|:------------|
+| `ServiceType` | The Apple service being configured |
+| `DataAssetReference` | Identifier of the asset containing the config files |
+
+---
+
+## Next Steps
+
+- <a href={`${base}ddm-components/how-to-generate-ddm-components/`}>How to Generate DDM Components</a> - Create DDM files from your baseline
+- <a href={`${base}ddm-components/what-is-ddm/`}>What is DDM?</a> - Learn more about declarative management
+
+<style>{`
+  .sl-markdown-content th {
+    background: var(--sl-color-accent-low);
+    font-weight: 600;
+  }
+  .sl-markdown-content td, .sl-markdown-content th {
+    padding: 0.6rem 1rem;
+  }
+  .sl-markdown-content td code {
+    background: var(--sl-color-bg-inline-code);
+    padding: 0.15em 0.35em;
+    font-size: 0.85em;
+  }
+`}</style>

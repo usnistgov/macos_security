@@ -109,3 +109,18 @@ sl-anchor-link,
 :root[data-theme='dark'] .site-title:hover {
   color: rgb(49, 100, 49); /* light for dark mode */
 }
+
+/* ---------------------------------------------------------------------- */
+/* mSCP 2.0 Overview Page Styles */
+/* ---------------------------------------------------------------------- */
+
+/* Feature boxes hover effect */
+.feature-box {
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.feature-box:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  border-color: var(--sl-color-accent) !important;
+}

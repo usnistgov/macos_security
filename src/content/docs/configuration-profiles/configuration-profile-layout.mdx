@@ -1,44 +1,75 @@
 ---
 title: Configuration Profile Layout
-description: An overview of how to generate configuration profiles.
+description: Understand the structure of .mobileconfig files.
 ---
 
 import { Aside } from '@astrojs/starlight/components';
 
+export const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : import.meta.env.BASE_URL + '/';
 
-This page provides a detailed breakdown of a macOS configuration profile in XML (plist) format. Each element is explained to help you understand how to configure and interpret configuration profiles.
+Configuration profiles are XML files in Apple's property list (plist) format. Understanding the structure helps you troubleshoot profiles or make manual adjustments.
 
-## ConsentText
+<Aside type="tip">
+You don't need to create profiles manually. The `generate_guidance.py -p` script creates them for you. This page explains what's inside.
+</Aside>
 
-- **ConsentText**: Text displayed to users to inform them about terms, conditions, or warnings before applying the profile.
-  - **default**: The default consent message shown to users.
+---
+
+## Profile Structure Overview
+
+A configuration profile has two main parts:
+
+| Section | Description |
+|:--------|:------------|
+| **Profile-level keys** | Metadata about the profile itself (name, organization, UUID) |
+| **PayloadContent** | Array of payloads containing the actual settings |
+
+---
+
+## Profile-Level Keys
+
+These keys describe the profile:
+
+| Key | Description |
+|:----|:------------|
+| `PayloadDisplayName` | Name shown in System Settings |
+| `PayloadDescription` | Description of the profile's purpose |
+| `PayloadIdentifier` | Unique identifier for the profile |
+| `PayloadOrganization` | Organization that created the profile |
+| `PayloadUUID` | Unique UUID for this profile |
+| `PayloadVersion` | Version number (usually `1`) |
+| `PayloadType` | Always `Configuration` for profiles |
+| `PayloadScope` | `System` or `User` |
+| `ConsentText` | Terms displayed before installation |
+
+---
 
 ## PayloadContent
 
-- **PayloadContent**: An array of dictionaries, each representing a payload (setting or policy) included in the profile.
+The `PayloadContent` array contains one or more payloads. Each payload configures a specific feature or preference domain.
 
-### Example Payload (com.apple.screensaver)
+**Each payload includes:**
 
-- **PayloadIdentifier**: A unique identifier for this payload.
-- **PayloadType**: The type of payload, specifying the domain or feature being configured.
-- **PayloadUUID**: A unique UUID for this payload.
-- **PayloadVersion**: The version number of this payload.
-- **askForPassword**: If `true`, requires a password to unlock the screensaver.
-- **askForPasswordDelay**: The delay (in seconds) before requiring a password after the screensaver starts.
-- **idleTime**: Time (in seconds) of inactivity before the screensaver activates.
-- **loginWindowIdleTime**: Time (in seconds) of inactivity at the login window before the screensaver activates.
-- **moduleName**: The name of the screensaver module to use.
+| Key | Description |
+|:----|:------------|
+| `PayloadType` | The preference domain (e.g., `com.apple.screensaver`) |
+| `PayloadIdentifier` | Unique identifier for this payload |
+| `PayloadUUID` | Unique UUID for this payload |
+| `PayloadVersion` | Version number |
+| *(settings)* | Domain-specific keys and values |
 
-## Other Top-Level Keys
+---
 
-- **PayloadDescription**: A description of the profile and its purpose.
-- **PayloadDisplayName**: The display name for the profile.
-- **PayloadIdentifier**: A unique identifier for the entire profile.
-- **PayloadOrganization**: The organization responsible for the profile.
-- **PayloadScope**: The scope of the profile (e.g., `System`).
-- **PayloadType**: The type of the profile (should be `Configuration`).
-- **PayloadUUID**: A unique UUID for the profile.
-- **PayloadVersion**: The version number of the profile.
+## Example: Screensaver Payload
+
+This payload configures screensaver settings:
+
+| Key | Value | Description |
+|:----|:------|:------------|
+| `PayloadType` | `com.apple.screensaver` | The preference domain |
+| `askForPassword` | `true` | Require password to unlock |
+| `askForPasswordDelay` | `5` | Seconds before password required |
+| `idleTime` | `1200` | Seconds before screensaver starts |
 
 ---
 
@@ -97,3 +128,25 @@ Configuration settings for the com.apple.screensaver preference domain.</string>
 </dict>
 </plist>
 ```
+
+---
+
+## Next Steps
+
+- <a href={`${base}configuration-profiles/how-to-generate-configuration-profiles/`}>How to Generate Configuration Profiles</a> - Create profiles from your baseline
+- <a href={`${base}configuration-profiles/what-are-configuration-profiles/`}>What Are Configuration Profiles?</a> - Learn more about profiles
+
+<style>{`
+  .sl-markdown-content th {
+    background: var(--sl-color-accent-low);
+    font-weight: 600;
+  }
+  .sl-markdown-content td, .sl-markdown-content th {
+    padding: 0.6rem 1rem;
+  }
+  .sl-markdown-content td code {
+    background: var(--sl-color-bg-inline-code);
+    padding: 0.15em 0.35em;
+    font-size: 0.85em;
+  }
+`}</style>

@@ -1,75 +1,90 @@
 ---
 title: Compliance Script Layout
-description: An overview of how to generate configuration profiles.
+description: Understand the structure of the generated compliance script.
 ---
 
 import { Aside } from '@astrojs/starlight/components';
 
-Below are the main parameters and interactive options available in the compliance script.  
-Due to the script's complexity and flexibility, we provide an overview of its usage and interface rather than the full layout.
+export const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : import.meta.env.BASE_URL + '/';
 
-## Running the Script
+The compliance script is a zsh script with functions for checking settings, applying fixes, and reporting results. Understanding the structure helps you troubleshoot or customize the script.
 
-You can run the script either interactively or by using command-line flags:
+<Aside type="tip">
+You don't need to modify the script manually. The `generate_guidance.py -s` script creates it for you. This page explains what's inside.
+</Aside>
 
-```zsh
-sudo ./build/800-53r5_moderate/800-53r5_moderate_compliance.sh
-```
+---
 
-### Interactive Menu Example
+## Script Structure
 
-When run interactively, you'll see a menu like this:
+| Section | Description |
+|:--------|:------------|
+| **Header** | Shebang, variables, paths to audit plist and log file |
+| **Utility functions** | Logging, prompts, menu display |
+| **Rule checks** | Individual check function for each rule |
+| **Rule fixes** | Individual fix function for each rule |
+| **Main logic** | Menu system and command-line argument handling |
 
-```
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-        M A I N - M E N U
-  macOS Security Compliance Tool
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Last compliance scan: No scans have been run
+---
 
-1. View Last Compliance Report
-2. Run New Compliance Scan
-3. Run Commands to remediate non-compliant settings
-4. Exit
-Enter choice [ 1 - 4 ]
-```
+## Key Functions
 
-## Command-Line Options
+| Function | Purpose |
+|:---------|:--------|
+| `run_scan` | Execute all rule checks and write results to plist |
+| `run_fix` | Apply remediation commands for non-compliant settings |
+| `generate_stats` | Display pass/fail counts and compliance percentage |
+| `show_menus` | Display interactive menu |
+| `logmessage` | Write results to log file |
 
-You can also use command-line flags for automated or non-interactive use:
+---
 
-```zsh
-./mscp_compliance.sh Usage
-./mscp_compliance.sh [--check] [--fix] [--cfc] [--stats] [--compliant] [--non_compliant] [--reset] [--reset-all] [--quiet=<value>]
-```
+## How Rules Are Checked
 
-**Optional parameters:**
+Each rule in your baseline becomes a check block in the script:
 
-- `--check`  
-  Run the compliance checks without interaction.
+1. **Extract current value** - Run a command to get the current system setting
+2. **Compare to expected** - Check if the value matches the baseline requirement
+3. **Log result** - Record pass, fail, or exempt status to the audit plist
 
-- `--fix`  
-  Run the remediation commands without interaction.
+---
 
-- `--cfc`  
-  Runs a check, fix, and check cycle without interaction.
+## How Fixes Are Applied
 
-- `--stats`  
-  Display statistics from the last compliance check.
+Each rule with a fix becomes a fix block in the script:
 
-- `--compliant`  
-  Report the number of compliant checks.
+1. **Check exemption** - Skip if the rule is marked exempt
+2. **Check compliance** - Skip if the rule already passed
+3. **Prompt user** - Ask for confirmation (unless running with `--fix`)
+4. **Apply fix** - Run the remediation command
 
-- `--non_compliant`  
-  Report the number of non-compliant checks.
+---
 
-- `--reset`  
-  Clear all results for the current baseline.
+## Output Files
 
-- `--reset-all`  
-  Clear all results for all MSCP baselines.
+| File | Purpose |
+|:-----|:--------|
+| `/Library/Preferences/org.BASELINE_NAME.audit.plist` | Stores check results and exemptions |
+| `/Library/Logs/BASELINE_NAME_baseline.log` | Timestamped log of all actions |
 
-- `--quiet=<value>`  
-  Control output verbosity:  
-  &nbsp;&nbsp;`1` – Show only failed and exempted checks  
-  &nbsp;&nbsp;`2` – Show minimal output
+---
+
+## Next Steps
+
+- <a href={`${base}compliance-scripts/how-to-generate-compliance-scripts/`}>How to Generate Compliance Scripts</a> - Create a script from your baseline
+- <a href={`${base}compliance-scripts/what-are-compliance-scripts/`}>What Are Compliance Scripts?</a> - Learn more about compliance scripts
+
+<style>{`
+  .sl-markdown-content th {
+    background: var(--sl-color-accent-low);
+    font-weight: 600;
+  }
+  .sl-markdown-content td, .sl-markdown-content th {
+    padding: 0.6rem 1rem;
+  }
+  .sl-markdown-content td code {
+    background: var(--sl-color-bg-inline-code);
+    padding: 0.15em 0.35em;
+    font-size: 0.85em;
+  }
+`}</style>

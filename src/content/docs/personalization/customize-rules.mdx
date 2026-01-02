@@ -1,65 +1,157 @@
 ---
-title: Customizing Rules
-description: A customization reference.
+title: Customize Rules
+description: Modify existing rules or add new rules to meet your organization's requirements.
 ---
+
 import { Steps, FileTree, Aside } from '@astrojs/starlight/components';
 
-The project supports **modifying existing rules** and **adding new rules** to a baseline to meet your organization's requirements. Customizing a rule means changing the rule's content itself, while [tailoring](./Tailoring-rules) is about selecting which rules to include in a benchmark.
+export const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : import.meta.env.BASE_URL + '/';
 
-<Aside type="note">
-For existing rules, only keep the fields you want to customize. This ensures your custom rules remain compatible as the project updates for future OS releases.
+Customizing lets you modify rule content (check commands, fixes, references) or add entirely new rules. This is different from <a href={`${base}personalization/tailoring-rules/`}>tailoring</a>, which selects which rules to include and sets ODV values.
+
+<Aside type="tip">
+Only include fields you want to change in your custom rule file. The project automatically merges your customizations with the original rule, keeping your changes compatible across OS updates.
 </Aside>
 
-## Modifying an Existing Rule
+<Aside type="caution" title="Always Use the Correct Branch (mSCP 1.0)">
+Each macOS version has its own branch (`sequoia`, `sonoma`, `ventura`, etc.). **Never use the `main` branch** — it won't work for generating content.
 
-<Steps>
-1. **Copy** the existing rule file to the `custom` folder. The filename must remain the same.
-2. **Remove** any fields that don’t need to be modified.
-3. **Edit** the fields to match your organization’s requirements.
-4. **Run** `generate_guidance.py`. The custom version of the rule will be included in the output.
-</Steps>
-
-**Example: Configure macOS to Use an Authorized Time Server**
-
-```yaml
-references:
-  custom:
-    MSCP:
-      - MSCP-OS-001
-    URL:
-      - https://developer.apple.com/documentation/devicemanagement/timeserver
-    Remediation Tool:
-      - MDM
-```
+**mSCP 2.0 (currently in beta)** will remove the per-branch requirement and introduce easier installation methods.
+</Aside>
 
 ---
 
-## Adding a New Rule
+## How Merging Works
+
+When you create a custom rule file, the project:
+
+1. Loads your custom version from `custom/rules/`
+2. Loads the original rule from `rules/`
+3. Uses your custom values where they differ
+4. Keeps original values for fields you didn't customize
+5. Merges `tags` and `references` (concatenates rather than replaces)
+
+---
+
+## Modify an Existing Rule
 
 <Steps>
-1. **Create** a new `rules.yaml` file in the `custom` folder.
-   - If your rule uses a configuration profile payload not already in the project, add it to `supported_payloads.yaml` in the `includes` folder.
-2. **Run** `generate_baseline.py` to add the new rule to your baseline.
-3. **Run** `generate_guidance.py` against your customized baseline.
+
+1. **Create your custom rule file**
+
+   Create a YAML file in `custom/rules/` with the **same filename** as the original rule.
+
+2. **Include only fields to customize**
+
+   Add only the fields you want to change:
+
+   ```yaml
+   references:
+     custom:
+       MSCP:
+         - MSCP-OS-001
+       URL:
+         - https://example.com/policy
+   ```
+
+3. **Generate your outputs**
+
+   ```bash
+   ./scripts/generate_guidance.py baselines/YOUR_BASELINE.yaml
+   ```
+
+   The custom values merge with the original rule automatically.
+
 </Steps>
 
 ---
 
-## Use Case: Informational Rules (No Check/Result/Fix)
+## Add a New Rule
 
-If you want a custom rule that explains a control but does **not** include a check, result, or fix, add the `manual` tag. This ensures it does **not** appear in the compliance script.
+<Steps>
 
-**Example Rule (No Check/Result/Fix)**
+1. **Create your rule file**
+
+   Create a new YAML file in `custom/rules/` with your rule ID as the filename (e.g., `my_org_custom_rule.yaml`).
+
+2. **Define the required fields**
+
+   | Field | Description |
+   |:------|:------------|
+   | `id` | Unique rule identifier |
+   | `title` | Human-readable name |
+   | `discussion` | Why this rule matters |
+   | `check` | Command to verify compliance |
+   | `result` | Expected output format |
+   | `fix` | Remediation instructions |
+   | `tags` | Include your baseline tag |
+
+3. **Add payload support (if needed)**
+
+   If your rule uses a configuration profile payload not in the project, add it to `includes/supported_payloads.yaml`.
+
+4. **Generate your baseline**
+
+   ```bash
+   ./scripts/generate_baseline.py -k YOUR_TAG
+   ```
+
+5. **Generate your outputs**
+
+   ```bash
+   ./scripts/generate_guidance.py baselines/YOUR_BASELINE.yaml
+   ```
+
+</Steps>
+
+---
+
+## Informational Rules (No Check/Fix)
+
+For rules that explain a control but don't require compliance checking, use the `manual` tag. These rules appear in guidance documents but not in compliance scripts.
 
 ```yaml
+id: my_org_policy_statement
+title: Organization Security Policy
+discussion: |
+  This control documents the organization's security policy requirements.
 check: |
 result: |
-fix: | 
-tag:
+fix: |
+tags:
   - manual
+  - my_org_baseline
 ```
 
 ---
 
-*Customizing rules helps ensure your security baseline is both robust and tailored to your organization's needs.*
-*Customizing rules helps ensure your security baseline is both robust and tailored to your organization's needs.*
+## File Structure
+
+<FileTree>
+- custom/
+    - rules/
+        - os_authenticated_root_enable.yaml - Override existing rule
+        - my_org_custom_rule.yaml - New custom rule
+</FileTree>
+
+---
+
+## Next Steps
+
+- <a href={`${base}personalization/tailoring-rules/`}>Tailoring Rules</a> - Select rules and set ODV values
+- <a href={`${base}personalization/exempting-rules/`}>Exempting Rules</a> - Exclude rules from compliance checks
+
+<style>{`
+  .sl-markdown-content th {
+    background: var(--sl-color-accent-low);
+    font-weight: 600;
+  }
+  .sl-markdown-content td, .sl-markdown-content th {
+    padding: 0.6rem 1rem;
+  }
+  .sl-markdown-content td code {
+    background: var(--sl-color-bg-inline-code);
+    padding: 0.15em 0.35em;
+    font-size: 0.85em;
+  }
+`}</style>
