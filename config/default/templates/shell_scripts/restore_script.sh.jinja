@@ -141,18 +141,31 @@ ask() {
 }
 
 rule_default_state(){
-  ask "$1 - Run the command(s)-> $2" N
-  if [[ $? == 0 ]]; then
-    logmessage "Running the command to restore the settings for: $1 ..."
-    eval "$2"
+  if [[ "${RULE_TO_RESTORE}" ]]; then
+    if [[ "${RULE_TO_RESTORE}" == "$1" ]]; then
+      logmessage "Running the command to restore the settings for: $1 ..."
+      eval "$2"
+    else
+      NO_MATCH=0
+    fi
+  else 
+    ask "$1 - Run the command(s)-> $2" N
+    if [[ $? == 0 ]]; then
+      logmessage "Running the command to restore the settings for: $1 ..."
+      eval "$2"
+    fi
   fi
 }
 
 run_default_state(){
   # append to existing logfile
-  logmessage "Beginning restoration of default settings"
+  if [[ "${RULE_TO_RESTORE}" ]]; then
+    logmessage "Beginning restoration of default settings for ${RULE_TO_RESTORE}"
+  else
+    logmessage "Beginning restoration of default settings"
+  fi
 
-  if [[ ! $all ]]; then
+  if [[ ! $all && -z $RULE_TO_RESTORE ]]; then
     ask 'THE SOFTWARE IS PROVIDED "AS IS" WITHOUT ANY WARRANTY OF ANY KIND, EITHER EXPRESSED, IMPLIED, OR STATUTORY, INCLUDING, BUT NOT LIMITED TO, ANY WARRANTY THAT THE SOFTWARE WILL CONFORM TO SPECIFICATIONS, ANY IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND FREEDOM FROM INFRINGEMENT, AND ANY WARRANTY THAT THE DOCUMENTATION WILL CONFORM TO THE SOFTWARE, OR ANY WARRANTY THAT THE SOFTWARE WILL BE ERROR FREE.  IN NO EVENT SHALL NIST BE LIABLE FOR ANY DAMAGES, INCLUDING, BUT NOT LIMITED TO, DIRECT, INDIRECT, SPECIAL OR CONSEQUENTIAL DAMAGES, ARISING OUT OF, RESULTING FROM, OR IN ANY WAY CONNECTED WITH THIS SOFTWARE, WHETHER OR NOT BASED UPON WARRANTY, CONTRACT, TORT, OR OTHERWISE, WHETHER OR NOT INJURY WAS SUSTAINED BY PERSONS OR PROPERTY OR OTHERWISE, AND WHETHER OR NOT LOSS WAS SUSTAINED FROM, OR AROSE OUT OF THE RESULTS OF, OR USE OF, THE SOFTWARE OR SERVICES PROVIDED HEREUNDER. WOULD YOU LIKE TO CONTINUE? ' N
 
     if [[ $? != 0 ]]; then
@@ -169,11 +182,12 @@ run_default_state(){
 } 2>/dev/null
 
 usage=(
-    "Usage: ${CMD:=${0##*/}} [--all] [--quiet=<value>]"
+    "Usage: ${CMD:=${0##*/}} [--all] [--quiet=<value>] [--rule <rule_id>]"
     " "
     "Optional parameters:"
     "--all              :   run the restore to default state on all rules"
     "--quiet            :   do not display log messages to stdout"
+    "--rule <rule_id>   :   restore default state for rule_id"
   )
 
 set -- "$@" "${EOL:=$(printf '\1\3\3\7')}"
@@ -202,4 +216,15 @@ zparseopts -D -E -help=flag_help -all=all -quiet:=quiet || { print -l $usage && 
 
 [[ -z "$flag_help" ]] || { print -l $usage && return }
 
+{% raw %}
+# check to see if a rule_id was passed, if so define it for processing
+if (( ${#rule} >= 2 )); then
+  RULE_TO_RESTORE=${rule[2]}
+else
+  RULE_TO_RESTORE=''
+fi
+{% endraw %}
+
 run_default_state
+
+if [[ $NO_MATCH ]]; then logmessage "Could not restore default state for $RULE_TO_RESTORE : no matching rule found." ERROR; fi
