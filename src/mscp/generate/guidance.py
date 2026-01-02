@@ -26,6 +26,7 @@ from ..generate.guidance_support import (
     generate_excel,
     generate_profiles,
     generate_script,
+    generate_restore_script,
 )
 
 
@@ -139,6 +140,9 @@ def generate_guidance(args: argparse.Namespace) -> None:
     if args.script and args.os_name == "macos":
         logger.info("Generating compliance script")
         generate_script(build_path, baseline_name, audit_name, baseline, log_reference)
+        generate_restore_script(
+            build_path, baseline_name, audit_name, baseline, log_reference
+        )
 
     if args.xlsx:
         logger.info("Generating Excel document")
@@ -174,7 +178,20 @@ def generate_guidance(args: argparse.Namespace) -> None:
         if args.os_name == "macos":
             logger.info("Generating compliance script")
             generate_script(
-                build_path, baseline_name, audit_name, baseline, log_reference
+                build_path,
+                baseline_name,
+                audit_name,
+                baseline,
+                log_reference,
+                current_version_data,
+            )
+            generate_restore_script(
+                build_path,
+                baseline_name,
+                audit_name,
+                baseline,
+                log_reference,
+                current_version_data,
             )
 
         # logger.info("Generating Excel document")

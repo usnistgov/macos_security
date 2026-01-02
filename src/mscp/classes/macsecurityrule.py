@@ -228,6 +228,7 @@ class Macsecurityrule(BaseModelWithAccessors):
     check: str | None = None
     fix: str | None = None
     severity: str | None = None
+    default_state: str | None = None
 
     @classmethod
     def load_rules(
@@ -281,6 +282,7 @@ class Macsecurityrule(BaseModelWithAccessors):
             result_value: str | int | bool | None = None
             check_value: str | None = None
             fix_value: str | None = None
+            default_state_value: str | None = None
             mechanism: str = "Manual"
             payloads: list[Mobileconfigpayload] | None = []
             severity: str | None = None
@@ -352,6 +354,9 @@ class Macsecurityrule(BaseModelWithAccessors):
                 check_result = enforcement_info.get("check", {}).get("result")
                 fix_shell = enforcement_info.get("fix", {}).get("shell")
                 additional_info = enforcement_info.get("fix", {}).get("additional_info")
+                default_state_shell = enforcement_info.get("default_state", {}).get(
+                    "shell"
+                )
 
                 if check_result:
                     for k, v in rule_yaml["platforms"][os_type]["enforcement_info"][
@@ -373,6 +378,9 @@ class Macsecurityrule(BaseModelWithAccessors):
 
                 if check_shell:
                     check_value = check_shell
+
+                if default_state_shell:
+                    default_state_value = default_state_shell
 
                 if (
                     not check_shell
@@ -530,6 +538,7 @@ class Macsecurityrule(BaseModelWithAccessors):
                 os_version=os_version,
                 check=check_value,
                 fix=fix_value,
+                default_state=default_state_value,
                 severity=severity,
             )
 
