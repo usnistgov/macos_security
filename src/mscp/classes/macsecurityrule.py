@@ -184,6 +184,11 @@ class Macsecurityrule(BaseModelWithAccessors):
         platforms (dict[str, Platforms]): Platform-specific data for the rule.
         os_name (str): Name of the operating system.
         os_type (str): Type of the operating system.
+        os_version: float = Field(default_factory=float)
+        check (str): The commands to evaluate the state of a rule.
+        fix: (str): The commands to remediate and set the configuration for a rule.
+        severity: (str): The category for impact assigned to a rule.
+        default_state: (str): The command to restore the system to the default configuration for a rule.
 
     Class Methods:
         load_rules: Load Macsecurityrule objects from YAML files for the given rule IDs.

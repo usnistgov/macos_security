@@ -167,6 +167,20 @@ def parse_cli() -> None:
         action="store_true",
     )
     guidance_parser.add_argument(
+        "-P",
+        "--consolidated-profile",
+        default=False,
+        help="Include a single consolidated configuration profile when generating profiles.",
+        action="store_true",
+    )
+    guidance_parser.add_argument(
+        "-G",
+        "--granular-profiles",
+        default=False,
+        help="Include granular per-setting configuration profiles when generating profiles.",
+        action="store_true",
+    )
+    guidance_parser.add_argument(
         "-r",
         "--reference",
         default=None,
@@ -382,6 +396,10 @@ def parse_cli() -> None:
     if args.os_name == "visionos":
         logger.warning("visionOS is not supported at this time.")
         sys.exit()
+
+    # if generating consolidated profile, assume to do all profiles
+    if args.consolidated_profile or args.granular_profiles:
+        args.profiles = True
 
     if args.subcommand == "guidance":
         if args.os_name != "macos" and args.script:
