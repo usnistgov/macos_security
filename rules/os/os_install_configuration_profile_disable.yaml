@@ -27,6 +27,12 @@ references:
       - 3.2.1.15 (level 1 - Institutionally-Owned Devices)
     controls v8:
       - 4.1
+  cmmc:
+    - AU.L2-3.3.3
+    - CM.L2-3.4.1
+    - CM.L2-3.4.2
+    - CM.L2-3.4.6
+    - CM.L2-3.4.7
 iOS:
   - '26.0'
 tags:
@@ -36,6 +42,8 @@ tags:
   - cisv8
   - indigo_base
   - indigo_high
+  - cmmc_lvl2
+  - cmmc_lvl3
   - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high

@@ -19,6 +19,10 @@ references:
     - 'FMT_SMF.1.1 #47'
   disa_stig:
     - AIOS-26-006950
+  cmmc:
+    - IA.L2-3.5.8
+    - IA.L2-3.5.9
+    - IA.L2-3.5.7
 iOS:
   - '26.0'
 odv:
@@ -33,6 +37,8 @@ tags:
   - 800-53r5_high
   - indigo_base
   - indigo_high
+  - cmmc_lvl2
+  - cmmc_lvl3
   - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high

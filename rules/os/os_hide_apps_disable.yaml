@@ -13,16 +13,21 @@ references:
   800-53r5:
     - CM-7
     - CM-7(1)
-    - SC-07(10)
+    - SC-7(10)
   sfr:
     - 'FMT_SMF.1.1 #47'
   disa_stig:
     - 'AIOS-26-015600'
+  cmmc:
+    - CM.L2-3.4.6
+    - CM.L2-3.4.7
 iOS:
   - "26.0"  
 tags:
   - ios
   - ios_stig
+  - cmmc_lvl2
+  - cmmc_lvl3
 severity: medium
 supervised: true
 mobileconfig: true

@@ -15,7 +15,10 @@ references:
     - AC-20
     - SC-7(10)
   indigo:
-    - ANNEX K  
+    - ANNEX K
+  cmmc:
+    - AC.L1-B.1.III
+    - AC.L2-3.1.20
 iOS:
   - "26.0"
 tags:
@@ -25,6 +28,9 @@ tags:
   - 800-53r5_low
   - 800-53r5_moderate
   - 800-53r5_high
+  - cmmc_lvl1
+  - cmmc_lvl2
+  - cmmc_lvl3
   - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high

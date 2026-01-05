@@ -25,6 +25,8 @@ references:
       - N/A
     controls v8:
       - N/A
+  cmmc:
+    - AC.L2-3.1.10
 iOS:
   - '26.0'
 tags:
@@ -33,6 +35,8 @@ tags:
   - 800-53r5_high
   - indigo_base
   - indigo_high
+  - cmmc_lvl2
+  - cmmc_lvl3
   - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high

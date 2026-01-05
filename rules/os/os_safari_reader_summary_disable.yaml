@@ -7,29 +7,37 @@ fix: |
   This is implemented by a Configuration Profile.
 references:
   cce:
-  - CCE-95518-7
+    - CCE-95518-7
   cci:
-  - N/A
+    - N/A
   800-53r5:
-  - AC-20
-  - AC-20(1)
-  - CM-7
-  - CM-7(1)
-  - SC-7(10)
+    - AC-20
+    - AC-20(1)
+    - CM-7
+    - CM-7(1)
+    - SC-7(10)
   indigo:
-  - ANNEX K
+    - ANNEX K
+  cmmc:
+    - AC.L1-B.1.III
+    - AC.L2-3.1.20
+    - CM.L2-3.4.6
+    - CM.L2-3.4.7
 iOS:
-- "26.0"
+  - "26.0"
 tags:
-- ios
-- 800-53r5_low
-- 800-53r5_moderate
-- 800-53r5_high
-- indigo_base
-- indigo_high
-- cnssi-1253_moderate
-- cnssi-1253_low
-- cnssi-1253_high
+  - ios
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_high
+  - indigo_base
+  - indigo_high
+  - cmmc_lvl1
+  - cmmc_lvl2
+  - cmmc_lvl3
+  - cnssi-1253_moderate
+  - cnssi-1253_low
+  - cnssi-1253_high
 supervised: true
 mobileconfig: true
 mobileconfig_info:

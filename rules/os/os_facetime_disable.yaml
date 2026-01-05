@@ -19,6 +19,11 @@ references:
     - AIOS-26-017800
   indigo:
     - N/A
+  cmmc:
+    - AU.L2-3.3.3
+    - CM.L2-3.4.1
+    - CM.L2-3.4.2
+    - CM.L2-3.4.6
 iOS:
   - '26.0'
 tags:
@@ -27,6 +32,8 @@ tags:
   - 800-53r5_low
   - 800-53r5_moderate
   - 800-53r5_high
+  - cmmc_lvl2
+  - cmmc_lvl3
 severity: high
 supervised: true
 mobileconfig: true

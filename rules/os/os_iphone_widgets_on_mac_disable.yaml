@@ -22,14 +22,19 @@ references:
       - N/A
     controls v8:
       - N/A
+  cmmc:
+    - CM.L2-3.4.6
+    - CM.L2-3.4.7
 iOS:
   - '26.0'
 tags:
   - ios
+  - ios_stig
+  - cmmc_lvl2
+  - cmmc_lvl3
   - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
-  - ios_stig
 severity: low
 supervised: true
 mobileconfig: true

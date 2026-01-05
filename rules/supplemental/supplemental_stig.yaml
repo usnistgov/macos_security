@@ -58,7 +58,7 @@ references:
   disa_stig:
     - N/A
 iOS:
-  - "26.0"
+  - '26.0'
 tags:
   - supplemental
   - ios_stig
