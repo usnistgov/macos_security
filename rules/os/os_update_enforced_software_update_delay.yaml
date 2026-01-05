@@ -13,7 +13,7 @@ references:
   indigo:
     - ANNEX D (Section 6.3.1.2 - Update management)
 iOS:
-  - "26.0"
+  - '26.0'
 odv:
   hint: "Enforced a software update delay in days"
   recommended: 30

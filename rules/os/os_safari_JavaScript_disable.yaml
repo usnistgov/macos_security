@@ -13,7 +13,7 @@ references:
   indigo:
     - ANNEX K
 iOS:
-  - "26.0"
+  - '26.0'
 tags:
   - ios
   - indigo_high

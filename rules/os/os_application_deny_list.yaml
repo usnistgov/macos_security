@@ -14,7 +14,7 @@ references:
     - ANNEX D (Section 5.8 - App-Installation)
     - ANNEX N
 iOS:
-  - "26.0"
+  - '26.0'
 tags:
   - ios
   - manual

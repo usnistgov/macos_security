@@ -28,7 +28,7 @@ references:
   cmmc:
     - AU.L2-3.3.7
 iOS:
-  - "26.0"
+  - '26.0'
 tags:
   - ios
   - 800-53r5_low

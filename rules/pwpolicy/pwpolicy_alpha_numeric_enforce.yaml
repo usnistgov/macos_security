@@ -20,7 +20,7 @@ references:
     - IA.L2-3.5.9
     - IA.L2-3.5.7
 iOS:
-  - "26.0"
+  - '26.0'
 tags:
   - ios
   - 800-53r5_low

@@ -26,7 +26,7 @@ references:
     - CM.L2-3.4.6
     - CM.L2-3.4.7
 iOS:
-  - "26.0"
+  - '26.0'
 tags:
   - ios
   - 800-53r5_low

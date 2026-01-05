@@ -13,7 +13,7 @@ references:
   800-53r5:
     - N/A
 iOS:
-  - "26.0"
+  - '26.0'
 tags:
   - ios
 supervised: false

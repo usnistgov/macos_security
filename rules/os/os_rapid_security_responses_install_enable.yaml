@@ -24,7 +24,7 @@ references:
     - SI.L2-3.14.4
     - RA.L2-3.11.3
 iOS:
-  - "26.0"
+  - '26.0'
 tags:
   - ios
   - indigo_base

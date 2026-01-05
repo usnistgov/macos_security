@@ -37,7 +37,7 @@ references:
     - MP.L2-3.8.2
     - SI.L2-3.14.2
 iOS:
-  - "26.0"
+  - '26.0'
 tags:
   - ios
   - 800-53r5_low
