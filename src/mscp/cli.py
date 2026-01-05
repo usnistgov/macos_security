@@ -397,16 +397,16 @@ def parse_cli() -> None:
         logger.warning("visionOS is not supported at this time.")
         sys.exit()
 
-    # if generating consolidated profile, assume to do all profiles
-    if args.consolidated_profile or args.granular_profiles:
-        args.profiles = True
-
     if args.subcommand == "guidance":
         if args.os_name != "macos" and args.script:
             logger.error(
                 "Compliance script generation is only supported for macOS. Please remove the --script flag."
             )
             sys.exit()
+
+        # if generating consolidated profile, assume to do all profiles
+        if args.consolidated_profile or args.granular_profiles:
+            args.profiles = True
 
     args.func(args)
 
