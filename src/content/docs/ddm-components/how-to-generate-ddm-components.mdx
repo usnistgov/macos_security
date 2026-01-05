@@ -1,52 +1,86 @@
 ---
-title: How To Generate DDM Components
-description: An overview of how to generate DDM configuration components.
-tableOfContents: false
+title: How to Generate DDM Components
+description: Create DDM declarations from your baseline.
 ---
 
 import { Steps, FileTree, Aside } from '@astrojs/starlight/components';
 
-The primary script for generating DDM components is located here in the `macos_security` repository:
+export const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : import.meta.env.BASE_URL + '/';
 
-<FileTree>
-- macos_security/
-    - scripts/
-        - generate_guidance.py
-</FileTree>
-    <Aside type="caution">
-      <strong>*Always use the branch matching your target OS version. Do not use the <code>main</code> branch for workflow or development.*</strong>
-    </Aside>
+DDM components are generated using the `generate_guidance.py` script with the `-D` flag. The script reads your baseline and creates JSON declarations ready for MDM deployment.
 
-To generate all DDM components, run:
+<Aside type="note">
+You need a baseline first. See <a href={`${base}baselines/how-to-generate-baselines/`}>How to Generate Baselines</a> if you haven't created one.
+</Aside>
 
-```sh
-./scripts/generate_guidance.py -D baselines/all_rules.yaml -p -s
-```
+<Aside type="caution" title="Always Use the Correct Branch (mSCP 1.0)">
+Each macOS version has its own branch (`sequoia`, `sonoma`, `ventura`, etc.). **Never use the `main` branch** — it won't work for generating content.
 
-This will create DDM components in the following directories:
+**mSCP 2.0 (currently in beta)** will remove the per-branch requirement and introduce easier installation methods.
+</Aside>
 
-<FileTree>
-- Build/
-    - BASELINENAME/
-        - activations/
-            - org.mscp.all_rules.activation.diskmanagement.settings.json
-            - org.mscp.all_rules.activation.pam.json
-            - org.mscp.all_rules.activation.passcode.settings.json
-            - org.mscp.all_rules.activation.sshd.json
-            - org.mscp.all_rules.activation.sudo.json
-        - assets/
-            - com.apple.pam.zip
-            - com.apple.sshd.zip
-            - com.apple.sudo.zip
-            - org.mscp.all_rules.asset.pam.json
-            - org.mscp.all_rules.asset.sshd.json
-            - org.mscp.all_rules.asset.sudo.json
-        - configurations/
-            - org.mscp.all_rules.config.diskmanagement.settings.json
-            - org.mscp.all_rules.config.pam.json
-            - org.mscp.all_rules.config.passcode.settings.json
-            - org.mscp.all_rules.config.sshd.json
-            - org.mscp.all_rules.config.sudo.json
-</FileTree>
+---
 
-For more information, see [How to Generate Baselines](../how-to-generate-baselines) or review the [baseline file layout](../baseline-file-layout).
+## Generate DDM Components
+
+<Steps>
+
+1. **Run the generation script**
+
+   ```bash
+   ./scripts/generate_guidance.py -D baselines/BASELINE_NAME.yaml
+   ```
+
+   Example:
+   ```bash
+   ./scripts/generate_guidance.py -D baselines/800-53r5_moderate.yaml
+   ```
+
+2. **Find your files**
+
+   DDM declarations are saved to `build/BASELINE_NAME/declarative/`:
+
+   <FileTree>
+   - build/
+       - 800-53r5_moderate/
+           - declarative/
+               - activations/ - Activation declarations (.json)
+               - configurations/ - Configuration declarations (.json)
+               - assets/ - Asset declarations and data files (.json, .zip)
+   </FileTree>
+
+</Steps>
+
+---
+
+## Command Reference
+
+| Flag | Description |
+|:-----|:------------|
+| `-D` | Generate DDM declarations |
+
+<Aside type="tip">
+You can combine `-D` with other flags to generate multiple outputs at once. For example, `-D -p -s` generates DDM components, configuration profiles, and compliance scripts together.
+</Aside>
+
+---
+
+## Next Steps
+
+- <a href={`${base}ddm-components/ddm-component-layout/`}>DDM Component Layout</a> - Understand the file structure
+- <a href={`${base}ddm-components/what-is-ddm/`}>What is DDM?</a> - Learn more about declarative management
+
+<style>{`
+  .sl-markdown-content th {
+    background: var(--sl-color-accent-low);
+    font-weight: 600;
+  }
+  .sl-markdown-content td, .sl-markdown-content th {
+    padding: 0.6rem 1rem;
+  }
+  .sl-markdown-content td code {
+    background: var(--sl-color-bg-inline-code);
+    padding: 0.15em 0.35em;
+    font-size: 0.85em;
+  }
+`}</style>

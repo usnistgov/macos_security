@@ -1,7 +1,11 @@
 ---
 title: FAQ
-description: A faq reference.
+description: Frequently asked questions about the macOS Security Compliance Project.
 ---
+
+import { Aside } from '@astrojs/starlight/components';
+
+export const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : import.meta.env.BASE_URL + '/';
 
 ## Why create this project?
 
@@ -11,7 +15,8 @@ Every year, Apple releases a new version of macOS. Traditionally, security profe
 
 ## How can I contribute, ask questions, or report bugs?
 
-We encourage everyone to participate!  
+We encourage everyone to participate!
+
 - **Open an issue** on our [GitHub repository](https://github.com/usnistgov/macos_security/issues) to:
   - Ask questions
   - Report bugs or problems
@@ -36,7 +41,7 @@ No, an MDM is not strictly required to implement all controls. However, as macOS
 
 ## Where can I find more help or documentation?
 
-- Browse our [documentation site](https://usnistgov.github.io/macos_security/)
+- Browse our [documentation site](https://pages.nist.gov/macos_security/)
 - Check the [GitHub Discussions](https://github.com/usnistgov/macos_security/discussions) for community Q&A
 - Open an [issue](https://github.com/usnistgov/macos_security/issues) for specific questions or problems
 
@@ -45,12 +50,18 @@ No, an MDM is not strictly required to implement all controls. However, as macOS
 ## How do I stay up to date with project changes?
 
 - Watch or star the [GitHub repository](https://github.com/usnistgov/macos_security)
-- Join the [MacAdmins Slack](https://macadmins.slack.com/archives/C0158JKQTC5)  
+- Join the [MacAdmins Slack](https://macadmins.slack.com/archives/C0158JKQTC5)
   We recommend the `#macos_security_compliance` channel for project updates and discussion.
 
 ---
 
-<aside>
-Have a question not answered here?  
-Open an issue or join the discussion on [GitHub](https://github.com/usnistgov/macos_security/issues)!
-</aside>
+<Aside type="tip">
+Have a question not answered here? Open an issue or join the discussion on [GitHub](https://github.com/usnistgov/macos_security/issues)!
+</Aside>
+
+---
+
+## Next Steps
+
+- <a href={`${base}more-information/contributing/`}>Contributing</a> - How to contribute to the project
+- <a href={`${base}more-information/resources/`}>Resources</a> - Additional resources and links

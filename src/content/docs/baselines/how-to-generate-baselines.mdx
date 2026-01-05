@@ -1,70 +1,121 @@
 ---
-title: How To Generate Baselines
-description: An overview on how to generate a baseline.
-tableOfContents: false
+title: How to Generate Baselines
+description: Create a baseline YAML file for your compliance framework.
 ---
 
-import { Steps, FileTree, Aside } from '@astrojs/starlight/components';
+import { Steps, Aside, FileTree } from '@astrojs/starlight/components';
 
-The primary script for generating baselines is located here in the `macos_security` repository:
+export const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : import.meta.env.BASE_URL + '/';
 
-<FileTree>
-- macos_security/
-    - scripts/                  ---> Project scripts
-        - generate_baseline.py    ---> Script to generate baselines
-</FileTree>
+Generating a baseline creates the YAML file that defines which security rules apply to your environment. This file is required before you can generate guidance documents, configuration profiles, or compliance scripts.
 
-    <Aside type="caution">
-      <strong>*Always use the branch matching your target OS version. Do not use the <code>main</code> branch for workflow or development.*</strong>
-    </Aside>
+<Aside type="note">
+New to the project? Complete the <a href={`${base}welcome/getting-started/`}>Getting Started</a> guide first to install dependencies and clone the repository.
+</Aside>
 
-Follow these steps to generate a baseline:
+<Aside type="caution" title="Always Use the Correct Branch (mSCP 1.0)">
+Each macOS version has its own branch (`sequoia`, `sonoma`, `ventura`, etc.). **Never use the `main` branch** — it won't work for generating content.
+
+**mSCP 2.0 (currently in beta)** will remove the per-branch requirement and introduce easier installation methods.
+</Aside>
+
+---
+
+## Generate a Baseline
 
 <Steps>
 
-1. **Select or Download the Correct Branch**
+1. **List available baselines**
 
-   - Make sure you are on the branch you want to work from.
-   - If using `git`, run `git checkout <branch-name>` to switch branches if needed.
+   ```bash
+   ./scripts/generate_baseline.py -l
+   ```
 
-2. **Choose the Baseline to Generate**
+2. **Generate your baseline**
 
-   - Identify the baseline you want to generate (e.g., CIS_lvl1, STIG, etc.).
-   - Use the `-l` flag to list available baseline options for the selected branch:
-     ```sh
-     ./macos_security-sequoia/scripts/generate_baseline.sh -l
-     ```
+   ```bash
+   ./scripts/generate_baseline.py -k BASELINE_NAME
+   ```
 
-3. **Generate the Selected Baseline**
+   Example:
+   ```bash
+   ./scripts/generate_baseline.py -k 800-53r5_moderate
+   ```
 
-   - Use the `-k` flag with the selected tag to generate the baseline:
-     ```sh
-     ./macos_security-sequoia/scripts/generate_baseline.sh -k 800-53r5_moderate
-     ```
-     This example generates a baseline for `800-53r5_moderate`.
+3. **Find your file**
 
-   - Use the `-t` flag to customize the baseline for your organization:
-     ```sh
-     ./macos_security-sequoia/scripts/generate_baseline.sh -k 800-53r5_moderate -t
-     ```
-     If you use `-t`, you will be prompted with questions to tailor the baseline. See [How to Tailor a Baseline](./how-to-tailor-a-baseline) for more details.
-
-4. **Locate the Generated Files**
-
-   - After running the generation command, the baseline files are created in the following directories:
+   The baseline is saved to:
+   ```
+   build/baselines/BASELINE_NAME.yaml
+   ```
 
 </Steps>
+
+---
+
+## Customize with Tailoring
+
+Add the `-t` flag to customize the baseline for your organization:
+
+```bash
+./scripts/generate_baseline.py -k 800-53r5_moderate -t
+```
+
+This starts an interactive process where you can:
+- Include or exclude specific rules
+- Set organization-specific values (like password length or timeout periods)
+
+Custom values are saved to `custom/rules/` for reuse.
+
+<Aside type="tip">
+Tailoring is optional. You can generate a baseline without customization and modify it later.
+</Aside>
+
+---
+
+## Command Reference
+
+| Flag | Description |
+|:-----|:------------|
+| `-h` | Show help message |
+| `-l` | List all available baselines |
+| `-k NAME` | Generate baseline for the specified framework |
+| `-t` | Enable interactive tailoring |
+| `-c` | Show NIST 800-53 controls covered by the baseline |
+
+---
+
+## Output Files
 
 <FileTree>
 - macos_security/
     - build/
         - baselines/
-            - BASELINENAME.yaml   ---> The generated baseline file (name depends on your selection or customization)
+            - **BASELINE_NAME.yaml** - The generated baseline file
     - custom/
         - rules/
-            - *.yaml             ---> Custom values you set if you used `-t`
+            - *.yaml - Custom values (if you used `-t`)
 </FileTree>
 
+---
 
-   These files are required to generate the guidance files.  
-For more information, see [How to Tailor a Baseline](../how-to-tailor-a-baseline) or review the [baseline file layout](../baseline-file-layout).
+## Next Steps
+
+- <a href={`${base}baselines/tailoring-a-baseline/`}>Tailoring a Baseline</a> - Detailed guide on customization
+- <a href={`${base}baselines/baseline-file-layout/`}>Baseline File Layout</a> - Understand the YAML structure
+- <a href={`${base}guidance/how-to-generate-guidance/`}>How to Generate Guidance</a> - Create outputs from your baseline
+
+<style>{`
+  .sl-markdown-content th {
+    background: var(--sl-color-accent-low);
+    font-weight: 600;
+  }
+  .sl-markdown-content td, .sl-markdown-content th {
+    padding: 0.6rem 1rem;
+  }
+  .sl-markdown-content td code {
+    background: var(--sl-color-bg-inline-code);
+    padding: 0.15em 0.35em;
+    font-size: 0.85em;
+  }
+`}</style>

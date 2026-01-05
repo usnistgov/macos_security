@@ -1,50 +1,107 @@
 ---
-title: Exemptions
-description: A exemptions reference.
+title: Exempting Rules
+description: Mark rules as approved exceptions for your organization.
 ---
-import { Steps, FileTree, Aside } from '@astrojs/starlight/components';
 
-Exemptions allow you to mark certain rules as "approved exceptions" for your organization. Systems with exemptions are reported as compliant, even if the setting differs from the rule’s expected result.
+import { Steps, Aside } from '@astrojs/starlight/components';
 
-> **Note:** The check will still be logged as a finding, but marking it as exempt allows reporting tools to exclude it from non-compliance.
+export const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : import.meta.env.BASE_URL + '/';
+
+Exemptions let you mark rules as approved exceptions. When a rule is exempt, the compliance script reports it as an exemption rather than a failure, and skips remediation for that rule.
+
+<Aside type="note">
+Exempt rules still log as findings, but the script displays "Exemption Allowed" with your reason instead of prompting for remediation.
+</Aside>
 
 ---
 
 ## How Exemptions Work
 
-Exemptions are set in the `org.{baseline}.audit.plist` file, which can be placed in `/Library/Preferences/org.{baseline}.audit.plist` or applied via a custom configuration profile.
+Exemptions are stored in the audit plist file at:
+
+```
+/Library/Preferences/org.{baseline_name}.audit.plist
+```
+
+Each exempted rule has two keys:
+
+| Key | Type | Description |
+|:----|:-----|:------------|
+| `exempt` | Boolean | `true` to mark as exempt |
+| `exempt_reason` | String | Why the exemption is approved |
 
 ---
 
-## Setting an Exemption
+## Set an Exemption Locally
 
 <Steps>
-1. **Set** `exempt` to `true` for the rule.
-2. **Add** an `exempt_reason` describing why the exemption is needed.
+
+1. **Set the exempt flag**
+
+   ```bash
+   sudo /usr/libexec/PlistBuddy -c "Add :RULE_ID:exempt bool true" /Library/Preferences/org.BASELINE.audit.plist
+   ```
+
+2. **Add the reason**
+
+   ```bash
+   sudo /usr/libexec/PlistBuddy -c "Add :RULE_ID:exempt_reason string 'Your reason'" /Library/Preferences/org.BASELINE.audit.plist
+   ```
+
+3. **Verify the exemption**
+
+   ```bash
+   /usr/libexec/PlistBuddy -c "Print :RULE_ID" /Library/Preferences/org.BASELINE.audit.plist
+   ```
+
+   Output:
+   ```
+   Dict {
+       finding = true
+       exempt = true
+       exempt_reason = Your reason
+   }
+   ```
+
 </Steps>
 
-**Example: Exempting `auth_smartcard_enforce`**
+**Example:** Exempt `auth_smartcard_enforce` from the 800-53r5_moderate baseline:
 
-```sh
+```bash
 sudo /usr/libexec/PlistBuddy -c "Add :auth_smartcard_enforce:exempt bool true" /Library/Preferences/org.800-53r5_moderate.audit.plist
-sudo /usr/libexec/PlistBuddy -c "Add :auth_smartcard_enforce:exempt_reason string 'Reader Issues'" /Library/Preferences/org.800-53r5_moderate.audit.plist
-
-/usr/libexec/PlistBuddy -c "Print auth_smartcard_enforce" /Library/Preferences/org.800-53r5_moderate.audit.plist
-```
-
-**Result:**
-```plaintext
-Dict {
-    finding = true
-    exempt = true
-    exempt_reason = Reader Issues
-}
+sudo /usr/libexec/PlistBuddy -c "Add :auth_smartcard_enforce:exempt_reason string 'Hardware reader not available'" /Library/Preferences/org.800-53r5_moderate.audit.plist
 ```
 
 ---
 
-<Aside type="note">
-If `org.{baseline}.audit.plist` is not set, the script will default `exempt` to `false`.
+## Deploy Exemptions via MDM
+
+For enterprise deployments, deploy exemptions as a managed preference profile targeting the `org.{baseline_name}.audit` preference domain.
+
+The compliance script checks for managed preferences and respects exemptions set through MDM.
+
+<Aside type="tip">
+When generating compliance outputs with `-s`, the project creates a default audit plist in `build/{baseline}/preferences/` that you can use as a template for your MDM deployment.
 </Aside>
 
-*Exemptions help you document and manage approved exceptions in your compliance reporting.*
+---
+
+## Next Steps
+
+- <a href={`${base}personalization/tailoring-rules/`}>Tailoring Rules</a> - Select rules and set ODV values
+- <a href={`${base}personalization/customize-rules/`}>Customize Rules</a> - Modify rule behavior beyond ODVs
+
+<style>{`
+  .sl-markdown-content th {
+    background: var(--sl-color-accent-low);
+    font-weight: 600;
+  }
+  .sl-markdown-content td, .sl-markdown-content th {
+    padding: 0.6rem 1rem;
+  }
+  .sl-markdown-content td code {
+    background: var(--sl-color-bg-inline-code);
+    padding: 0.15em 0.35em;
+    font-size: 0.85em;
+  }
+`}</style>

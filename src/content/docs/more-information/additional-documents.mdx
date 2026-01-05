@@ -1,72 +1,100 @@
 ---
 title: Additional Documents
-description: Associated documents government and non-government
+description: Government and non-government documents related to macOS security compliance.
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+export const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : import.meta.env.BASE_URL + '/';
+
+Reference documents from government agencies and industry organizations that inform the macOS Security Compliance Project.
+
 ---
 
 ## Government Documents
 
-These documents are published by official government agencies and provide standards, guidelines, and requirements for cybersecurity and information assurance. They are widely referenced for compliance and best practices.
+These documents are published by official government agencies and provide standards, guidelines, and requirements for cybersecurity and information assurance.
 
-#### National Institute of Standards and Technology (NIST)
+### National Institute of Standards and Technology (NIST)
 
-| Document Number or Descriptor | Document Title |
-|------------------------------|---------------|
-| [NIST Special Publication 800-53 Rev 5](https://nvd.nist.gov/800-53) | *NIST Special Publication 800-53 Rev 5.1.1* |
-| [NIST Special Publication 800-63](https://www.nist.gov/itl/tig/projects/special-publication-800-63) | *NIST Special Publication 800-63* |
-| [NIST Special Publication 800-171](https://csrc.nist.gov/pubs/sp/800/171/r3/final) | *NIST Special Publication 800-171 Rev 3* |
-| [NIST Special Publication 800-219](https://csrc.nist.gov/pubs/sp/800/219/r1/final) | *NIST Special Publication 800-219 Rev 1* |
-
-<br/>
+| Document | Title |
+|:---------|:------|
+| [NIST SP 800-53 Rev 5](https://nvd.nist.gov/800-53) | Security and Privacy Controls for Information Systems and Organizations |
+| [NCP Tahoe Checklist](https://ncp.nist.gov/checklist/1301) | mSCP Guidance for macOS 26 (Tahoe) |
+| [NIST SP 800-63](https://www.nist.gov/itl/tig/projects/special-publication-800-63) | Digital Identity Guidelines |
+| [NIST SP 800-171 Rev 3](https://csrc.nist.gov/pubs/sp/800/171/r3/final) | Protecting Controlled Unclassified Information in Nonfederal Systems |
+| [NIST SP 800-219 Rev 1](https://csrc.nist.gov/pubs/sp/800/219/r1/final) | macOS Security Compliance Project (mSCP) |
 
 ### Defense Information Systems Agency (DISA)
 
-| Document Number or Descriptor | Document Title |
-|------------------------------|---------------|
-| [STIG Ver 1, Rel 3](https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Apple_macOS_15_V1R3_STIG.zip) | *Apple macOS 15 (Sequoia) STIG* |
-
-<br/>
+| Document | Title |
+|:---------|:------|
+| [macOS 26 STIG](https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Apple_macOS_26_V1R1_STIG.zip) | Apple macOS 26 (Tahoe) STIG |
+| [macOS 15 STIG](https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Apple_macOS_15_V1R3_STIG.zip) | Apple macOS 15 (Sequoia) STIG |
+| [macOS 14 STIG](https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Apple_macOS_14_V2R4_STIG.zip) | Apple macOS 14 (Sonoma) STIG |
+| [macOS 13 STIG](https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Apple_macOS_13_V1R5_STIG.zip) | Apple macOS 13 (Ventura) STIG |
 
 ### Cybersecurity Maturity Model Certification (CMMC)
 
-| Document Number or Descriptor | Document Title |
-|------------------------------|---------------|
-| [CMMC Model Overview v2.0](https://dodcio.defense.gov/Portals/0/Documents/CMMC/ModelOverview_V2.0_FINAL2_20211202_508.pdf) | *Cybersecurity Maturity Model Certification (CMMC) Model Overview v2.0* |
-
-<br/>
+| Document | Title |
+|:---------|:------|
+| [CMMC Model Overview v2.0](https://dodcio.defense.gov/Portals/0/Documents/CMMC/ModelOverview_V2.0_FINAL2_20211202_508.pdf) | Cybersecurity Maturity Model Certification Model Overview |
 
 ### Committee on National Security Systems (CNSS)
 
-| Document Number or Descriptor | Document Title |
-|------------------------------|---------------|
-| [CNSSI No. 1253](https://www.cnss.gov/CNSS/issuances/Instructions.cfm) | *Security Categorization and Control Selection for National Security Systems* |
-
-<br/>
+| Document | Title |
+|:---------|:------|
+| [CNSSI No. 1253](https://www.cnss.gov/CNSS/issuances/Instructions.cfm) | Security Categorization and Control Selection for National Security Systems |
 
 ### Germany (BSI)
 
-| Document Number or Descriptor | Document Title |
-|------------------------------|---------------|
-| [BSI List of Approved Products (Indigo)](https://www.bsi.bund.de/DE/Themen/Oeffentliche-Verwaltung/Zulassung/Liste-zugelassener-Produkte/liste-zugelassener-produkte_node.html) | *BSI List of Approved Products (Indigo)* |
+| Document | Title |
+|:---------|:------|
+| [BSI Approved Products (Indigo)](https://www.bsi.bund.de/DE/Themen/Oeffentliche-Verwaltung/Zulassung/Liste-zugelassener-Produkte/liste-zugelassener-produkte_node.html) | BSI List of Approved Products |
 
-<br/>
+---
 
 ## Non-Government Documents
 
-These documents are produced by private organizations and industry groups. They offer additional guidance, platform-specific information, and security benchmarks that complement government standards.
+These documents are produced by private organizations and industry groups, offering platform-specific guidance and security benchmarks.
 
 ### Apple
 
-| Document Number or Descriptor | Document Title |
-|------------------------------|---------------|
-| [Apple Platform Security Guide](https://support.apple.com/guide/security/welcome/web) | *Apple Platform Security* |
-| [Apple Platform Deployment](https://support.apple.com/guide/deployment/welcome/web) | *Apple Platform Deployment* |
-| [Apple Platform Certifications](https://support.apple.com/guide/certifications/welcome/web) | *Apple Platform Certifications* |
-| [Profile-Specific Payload Keys](https://developer.apple.com/documentation/devicemanagement/profile-specific_payload_keys) | *Profile-Specific Payload Keys* |
+| Document | Title |
+|:---------|:------|
+| [Apple Platform Security](https://support.apple.com/guide/security/welcome/web) | Apple Platform Security Guide |
+| [Apple Platform Deployment](https://support.apple.com/guide/deployment/welcome/web) | Apple Platform Deployment Guide |
+| [Apple Platform Certifications](https://support.apple.com/guide/certifications/welcome/web) | Apple Platform Certifications |
+| [Profile-Specific Payload Keys](https://developer.apple.com/documentation/devicemanagement/profile-specific_payload_keys) | MDM Profile Payload Reference |
 
-<br/>
+### Center for Internet Security (CIS)
 
-### Center for Internet Security
+| Document | Title |
+|:---------|:------|
+| [CIS macOS 26 Benchmark](https://www.cisecurity.org/benchmark/apple_os/) | CIS Apple macOS 26 (Tahoe) Benchmark v1.0.0 |
+| [CIS macOS 15 Benchmark](https://www.cisecurity.org/benchmark/apple_os/) | CIS Apple macOS 15 (Sequoia) Benchmark |
 
-| Document Number or Descriptor | Document Title |
-|------------------------------|---------------|
-| [Apple macOS 15.0](https://www.cisecurity.org/benchmark/apple_os/) | *CIS Apple macOS 15.0 Benchmark version 1.1.0* |
+---
+
+## Next Steps
+
+- <a href={`${base}more-information/resources/`}>Resources</a> - Training and tools
+- <a href={`${base}more-information/vendor-attribution/`}>Vendor Attribution</a> - Vendors implementing mSCP
+
+<style>{`
+  .sl-markdown-content th {
+    background: var(--sl-color-accent-low);
+    font-weight: 600;
+  }
+  .sl-markdown-content td, .sl-markdown-content th {
+    padding: 0.6rem 1rem;
+  }
+  .sl-markdown-content td code {
+    background: var(--sl-color-bg-inline-code);
+    padding: 0.15em 0.35em;
+    font-size: 0.85em;
+  }
+  .sl-markdown-content h3 {
+    margin-top: 1.5rem;
+  }
+`}</style>

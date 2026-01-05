@@ -1,77 +1,140 @@
 ---
-title: Tailoring a baseline
-description: Step-by-step guide to tailoring a security baseline for your organization.
-tableOfContents: false
+title: Tailoring a Baseline
+description: Customize a baseline to fit your organization's requirements.
 ---
 
-import { Steps, FileTree } from '@astrojs/starlight/components';
+import { Steps, Aside, FileTree } from '@astrojs/starlight/components';
 
-Tailoring allows you to create a custom security baseline that fits your organization's needs. The tailoring process lets you select which rules to include and set organization-defined values (ODVs) for controls that require them.
+export const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : import.meta.env.BASE_URL + '/';
 
-<FileTree>
-- macos_security/
-    - scripts/
-        - generate_baseline.py    ---> Script to generate and tailor baselines
-</FileTree>
+Tailoring lets you customize a baseline to fit your organization's specific needs. You can include or exclude rules and set organization-defined values like password length or screen lock timeout.
 
-Follow these steps to tailor a baseline:
+<Aside type="tip">
+Tailoring is optional. If the default baseline meets your needs, you can skip this step and generate outputs directly.
+</Aside>
+
+---
+
+## When to Tailor
+
+Consider tailoring when you need to:
+
+- **Exclude rules** that don't apply to your environment
+- **Set custom values** for settings like password requirements or timeout periods
+- **Document exceptions** for rules your organization can't implement
+- **Create a named baseline** specific to your organization
+
+---
+
+## Tailor a Baseline
 
 <Steps>
 
-1. **Start the Tailoring Script**
+1. **Run the tailoring command**
 
-   - Run the script with the `-t` flag to begin tailoring:
-     ```sh
-     ./macos_security/scripts/generate_baseline.py -k 800-53r5_moderate -t
-     ```
-     Replace `800-53r5_moderate` with your desired baseline tag.
+   ```bash
+   ./scripts/generate_baseline.py -k BASELINE_NAME -t
+   ```
 
-2. **Enter Basic Information**
+   Example:
+   ```bash
+   ./scripts/generate_baseline.py -k 800-53r5_moderate -t
+   ```
 
-   - You will be prompted for:
-     - Benchmark Name
-     - Author’s Name
-     - Organization
+2. **Enter baseline information**
 
-3. **Select Rules to Include**
+   You'll be prompted for:
+   - Baseline name
+   - Author name
+   - Organization
 
-   - For each rule, you will be asked whether to include it in your tailored baseline:
-     ```
-     Would you like to include the rule for "audit_acls_files_configure" in your benchmark? [Y/n/all/?]:
-     ```
-   - Enter `?` to see more details about a rule.
+3. **Select rules to include**
 
-4. **Set Organization Defined Values (ODVs)**
+   For each rule, choose whether to include it:
+   ```
+   Include "audit_acls_files_configure"? [Y/n/all/?]:
+   ```
 
-   - If a rule requires an ODV, you will be prompted to enter a value or accept the recommended default:
-     ```
-     Number of failed attempts.
-     Enter the ODV for "pwpolicy_account_lockout_enforce" or press Enter for the recommended value (3):
-     ```
+   | Option | Action |
+   |:-------|:-------|
+   | `Y` | Include this rule (default) |
+   | `n` | Exclude this rule |
+   | `all` | Include all remaining rules |
+   | `?` | Show rule details |
 
-5. **Review Output Files**
+   <Aside type="note">
+   Some rules marked as "inherent" are automatically included without prompting.
+   </Aside>
 
-   - After completing the prompts, the following files are created:
+4. **Set organization-defined values**
+
+   For rules that need custom values, enter your setting or press Enter for the default:
+   ```
+   Enter value for "pwpolicy_account_lockout_enforce"
+   or press Enter for recommended (3):
+   ```
+
+5. **Find your files**
+
+   Your tailored baseline and custom values are saved:
+
+   <FileTree>
+   - macos_security/
+       - build/
+           - baselines/
+               - **YOUR_BASELINE.yaml** - Tailored baseline
+       - custom/
+           - rules/
+               - *.yaml - Custom ODV values
+   </FileTree>
 
 </Steps>
 
-<FileTree>
-- macos_security/
-    - build/
-        - baselines/
-            - YOUR_BENCHMARK.yaml   ---> The tailored baseline file
-    - custom/
-        - rules/
-            - *.yaml                ---> Custom ODV values for tailored rules
-</FileTree>
+---
 
-Each tailored rule with a custom ODV will have a YAML file like:
+## Custom ODV Files
+
+When you set a custom value, a YAML file is created in `custom/rules/`:
 
 ```yaml
+---
 odv:
-  custom: 11
+  custom: 5
 ```
 
-- The `odv.custom` value reflects your organization's choice for that rule.
+This file overrides the default value for that rule. Your custom values are preserved and reused when you regenerate the baseline.
 
-*Use these tailored files to generate guidance or further customize your security posture. For more details, see [Customization](https://github.com/usnistgov/macos_security/wiki/Customization).*
+---
+
+## Example Workflow
+
+```bash
+# Generate a tailored NIST 800-53 Moderate baseline
+./scripts/generate_baseline.py -k 800-53r5_moderate -t
+
+# Generate outputs from your tailored baseline
+./scripts/generate_guidance.py -s -p build/baselines/my_org_baseline.yaml
+```
+
+---
+
+## Next Steps
+
+- <a href={`${base}guidance/how-to-generate-guidance/`}>How to Generate Guidance</a> - Create outputs from your tailored baseline
+- <a href={`${base}baselines/baseline-file-layout/`}>Baseline File Layout</a> - Understand the YAML structure
+- <a href={`${base}personalization/customize-rules/`}>Customize Rules</a> - Advanced rule customization
+
+<style>{`
+  .sl-markdown-content th {
+    background: var(--sl-color-accent-low);
+    font-weight: 600;
+  }
+  .sl-markdown-content td, .sl-markdown-content th {
+    padding: 0.6rem 1rem;
+  }
+  .sl-markdown-content td code {
+    background: var(--sl-color-bg-inline-code);
+    padding: 0.15em 0.35em;
+    font-size: 0.85em;
+  }
+`}</style>

@@ -6,22 +6,48 @@ lastUpdated: false
 hero:
   title: '404 – You&apos;re Lost!'
   tagline: |
-    Looks like you wandered off the path of greatness into a no man's land.<br>
-    Find your way back to the best macOS compliance project ever!
+    Looks like you wandered off the secure path into uncharted territory.<br>
+    Don't worry, even the best sysadmins take a wrong turn sometimes!
   image:
     file: ../../assets/logo.png
     class: hero-logo-effect
-    style: |
-      width: 120px;
-      margin-bottom: 2rem;
-      opacity: 0.8;
   actions:
-    - text: Go Back Home
-      link: /
-      icon: right-arrow
+    - text: Return to Safety
+      link: /macos_security/
+      icon: left-arrow
       variant: primary
-    - text: Head To Getting Started
+    - text: Getting Started
       link: /macos_security/welcome/getting-started/
-      icon: right-arrow
-      variant: primary
+      icon: rocket
+      variant: secondary
 ---
+
+import { Aside } from '@astrojs/starlight/components';
+
+<style>{`
+  .sl-markdown-content {
+    padding-bottom: 0 !important;
+    margin-bottom: 0 !important;
+  }
+`}</style>
+
+<div style="text-align: center; margin-top: 1rem;">
+
+### How did you get here?
+
+<div style="font-family: monospace; background: var(--sl-color-bg-inline-code); padding: 1rem; border-radius: 8px; display: inline-block; margin: 1rem 0;">
+$ cd /correct/path<br/>
+-bash: /correct/path: No such file or directory
+</div>
+
+</div>
+
+<Aside type="tip" title="Pro tip">
+Try checking the URL for typos, or use the navigation menu to find what you're looking for. The sidebar is your friend!
+</Aside>
+
+<div style="text-align: center; margin-top: 1rem; margin-bottom: -2rem; color: var(--sl-color-gray-3); font-size: 0.9rem;">
+
+*"In a world of vulnerabilities, a 404 is the least of your worries."*
+
+</div>

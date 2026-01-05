@@ -1,0 +1,360 @@
+---
+title: mSCP 2.0 Beta
+description: Overview of the upcoming mSCP 2.0 release and its new unified architecture.
+---
+
+import { Aside, Steps } from '@astrojs/starlight/components';
+
+export const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : import.meta.env.BASE_URL + '/';
+
+<div class="beta-banner">
+  <span class="beta-tag">BETA</span>
+  <div class="beta-text">
+    <strong>mSCP 2.0 is in active development</strong><br/>
+    Available on the <a href="https://github.com/usnistgov/macos_security/tree/dev_2.0">dev_2.0 branch</a>. Not for production use.<br/>
+    All information is subject to change.
+  </div>
+</div>
+
+mSCP 2.0 is a major architectural evolution — a **unified codebase** that eliminates the need for separate branches per macOS version.
+
+---
+
+## What's New
+
+<div style="display: flex; flex-wrap: wrap; gap: 1rem;">
+  <div class="feature-box" style="flex: 1 1 calc(50% - 0.5rem); min-width: 250px; padding: 1.25rem; background: linear-gradient(135deg, var(--sl-color-green-low) 0%, var(--sl-color-green-low) 100%); border-radius: 12px; border: 1px solid var(--sl-color-green); margin: 0 !important;">
+    <div style="font-size: 2rem; margin-bottom: 0.75rem;">📦</div>
+    <strong style="display: block; margin-bottom: 0.5rem; font-size: 1.1rem; color: var(--sl-color-green-high);">Unified Repository</strong>
+    <span style="font-size: 0.9rem; line-height: 1.5;">One branch for all macOS versions — no more per-version branches.</span>
+  </div>
+  <div class="feature-box" style="flex: 1 1 calc(50% - 0.5rem); min-width: 250px; padding: 1.25rem; background: linear-gradient(135deg, var(--sl-color-blue-low) 0%, var(--sl-color-blue-low) 100%); border-radius: 12px; border: 1px solid var(--sl-color-blue); margin: 0 !important;">
+    <div style="font-size: 2rem; margin-bottom: 0.75rem;">📋</div>
+    <strong style="display: block; margin-bottom: 0.5rem; font-size: 1.1rem; color: var(--sl-color-blue-high);">Multi-Version Rules</strong>
+    <span style="font-size: 0.9rem; line-height: 1.5;">Each rule contains configs for macOS 14, 15, 26+ in one file.</span>
+  </div>
+  <div class="feature-box" style="flex: 1 1 calc(50% - 0.5rem); min-width: 250px; padding: 1.25rem; background: linear-gradient(135deg, var(--sl-color-purple-low) 0%, var(--sl-color-purple-low) 100%); border-radius: 12px; border: 1px solid var(--sl-color-purple); margin: 0 !important;">
+    <div style="font-size: 2rem; margin-bottom: 0.75rem;">🗂️</div>
+    <strong style="display: block; margin-bottom: 0.5rem; font-size: 1.1rem; color: var(--sl-color-purple-high);">Organized References</strong>
+    <span style="font-size: 0.9rem; line-height: 1.5;">References grouped by source: nist, disa, cis.</span>
+  </div>
+  <div class="feature-box" style="flex: 1 1 calc(50% - 0.5rem); min-width: 250px; padding: 1.25rem; background: linear-gradient(135deg, var(--sl-color-orange-low) 0%, var(--sl-color-orange-low) 100%); border-radius: 12px; border: 1px solid var(--sl-color-orange); margin: 0 !important;">
+    <div style="font-size: 2rem; margin-bottom: 0.75rem;">⚡</div>
+    <strong style="display: block; margin-bottom: 0.5rem; font-size: 1.1rem; color: var(--sl-color-orange-high);">Simplified Setup</strong>
+    <span style="font-size: 0.9rem; line-height: 1.5;">Just pip3 install -r requirements.txt to get started.</span>
+  </div>
+</div>
+
+---
+
+## At a Glance
+
+| | mSCP 1.0 | mSCP 2.0 |
+|:--|:---------|:---------|
+| **Repository** | Branch per macOS version | Single unified branch |
+| **Rules** | One version per file | All versions in one file |
+| **References** | Flat (`800-53r5`, `disa_stig`) | Nested (`nist.800-53r5`, `disa.disa_stig`) |
+| **Maintenance** | Update each branch | Single source of truth |
+
+---
+
+## Rule Comparison
+
+The biggest change is how rules handle multiple macOS versions:
+
+<div class="rule-compare">
+
+**mSCP 1.0** — Separate file per version in each branch:
+```yaml
+macOS: ['15.0']
+references:
+  cce: [CCE-94195-5]
+  disa_stig: [APPL-15-002064]
+```
+
+**mSCP 2.0** — All versions in one file:
+```yaml
+references:
+  nist:
+    cce:
+      macos_26: [CCE-95195-4]
+      macos_15: [CCE-94195-5]
+      macos_14: [CCE-92795-4]
+  disa:
+    disa_stig:
+      macos_26: [APPL-26-002064]
+      macos_15: [APPL-15-002064]
+      macos_14: [APPL-14-002064]
+
+platforms:
+  macOS:
+    '26.0':
+      benchmarks:
+        - name: disa_stig
+          severity: high
+    '15.0':
+      benchmarks:
+        - name: disa_stig
+          severity: high
+```
+
+</div>
+
+<Aside type="tip" title="Key Takeaway">
+Version-specific data (CCE, STIG IDs, benchmarks) now lives in one rule file — no separate branches needed.
+</Aside>
+
+---
+
+## Directory Structure
+
+```
+macos_security/
+├── config/
+│   └── default/
+│       ├── rules/           # Rule YAML files
+│       │   ├── audit/
+│       │   ├── auth/
+│       │   ├── os/
+│       │   ├── pwpolicy/
+│       │   └── system_settings/
+│       └── baselines/       # Baseline definitions
+├── src/
+│   └── mscp/                # Python CLI package
+│       ├── cli.py
+│       ├── classes/
+│       └── generate/
+├── schema/                  # YAML schema definitions
+├── rules → config/default/rules      # Symlink
+├── baselines → config/default/baselines
+└── custom/                  # User customizations
+```
+
+---
+
+## Installation
+
+<Aside type="note">
+For testing only. Requirements may change before release.
+</Aside>
+
+<Steps>
+
+1. ### Clone the dev_2.0 Branch
+
+   ```bash
+   git clone -b dev_2.0 https://github.com/usnistgov/macos_security.git
+   cd macos_security
+   ```
+
+2. ### Install Prerequisites
+
+   Requires Python 3.12.1 or higher.
+
+   **Python packages (required):**
+   ```bash
+   pip3 install -r requirements.txt
+   ```
+
+   **Ruby gems (optional — only needed for PDF output):**
+   ```bash
+   gem install asciidoctor asciidoctor-pdf rouge --user-install
+   ```
+
+   <details>
+   <summary>**Want isolated installs?** Click to expand</summary>
+
+   **Python virtual environment:**
+   ```bash
+   python3 -m venv .venv
+   source .venv/bin/activate
+   pip3 install -r requirements.txt
+   deactivate  # when done
+   ```
+
+   </details>
+
+</Steps>
+
+---
+
+## Why the Change?
+
+<div class="benefits-list">
+
+- **Faster Updates** — Rule changes apply to all versions at once
+- **Less Maintenance** — No branch synchronization headaches
+- **Clear Version Support** — See all supported versions in one file
+- **Version Overrides** — Different checks per macOS version when needed
+- **Easier Contributions** — Work in one branch, not many
+
+</div>
+
+---
+
+## Status
+
+<div style="display: flex; gap: 1rem;">
+  <div style="flex: 1; padding: 1rem 1.25rem; border-radius: 8px; background: var(--sl-color-green-low); border: 1px solid var(--sl-color-green); margin: 0 !important;">
+    <strong style="color: var(--sl-color-green-high);">Completed</strong>
+    <ul style="margin: 0.75rem 0 0 0; padding-left: 1.25rem;">
+      <li>Unified multi-version rule format</li>
+      <li>Restructured references (nist/disa/cis)</li>
+      <li>New directory layout</li>
+      <li>Python package setup</li>
+    </ul>
+  </div>
+  <div style="flex: 1; padding: 1rem 1.25rem; border-radius: 8px; background: var(--sl-color-orange-low); border: 1px solid var(--sl-color-orange); margin: 0 !important;">
+    <strong style="color: var(--sl-color-orange-high);">In Progress</strong>
+    <ul style="margin: 0.75rem 0 0 0; padding-left: 1.25rem;">
+      <li>Full feature parity with 1.0</li>
+      <li>CLI documentation</li>
+      <li>Migration guide</li>
+      <li>Production release</li>
+    </ul>
+  </div>
+</div>
+
+---
+
+## Get Involved
+
+<div class="involve-grid">
+  <a href="https://github.com/usnistgov/macos_security/tree/dev_2.0" class="involve-item">
+    <strong>Test the Beta</strong>
+    <span>Try the dev_2.0 branch</span>
+  </a>
+  <a href="https://github.com/usnistgov/macos_security/issues" class="involve-item">
+    <strong>Report Issues</strong>
+    <span>GitHub Issues</span>
+  </a>
+  <a href="https://github.com/usnistgov/macos_security/discussions" class="involve-item">
+    <strong>Discuss</strong>
+    <span>GitHub Discussions</span>
+  </a>
+  <a href="https://macadmins.slack.com/archives/C0158JKQTC5" class="involve-item">
+    <strong>Chat</strong>
+    <span>#macos_security_compliance</span>
+  </a>
+</div>
+
+---
+
+## Next Steps
+
+- <a href={`${base}welcome/getting-started/`}>Getting Started (mSCP 1.0)</a> — Current stable version
+- <a href={`${base}more-information/resources/`}>Resources</a> — Training and tools
+
+<style>{`
+  /* Beta Banner */
+  .beta-banner {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    background: linear-gradient(135deg, var(--sl-color-orange-low) 0%, var(--sl-color-yellow-low) 100%);
+    border: 2px solid var(--sl-color-orange);
+    border-radius: 12px;
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+  .beta-tag {
+    background: var(--sl-color-orange);
+    color: var(--sl-color-black);
+    font-weight: 800;
+    font-size: 0.75rem;
+    padding: 0.35rem 0.75rem;
+    border-radius: 6px;
+    letter-spacing: 0.05em;
+    flex-shrink: 0;
+  }
+  .beta-text {
+    font-size: 0.95rem;
+    line-height: 1.5;
+  }
+  .beta-text a {
+    color: var(--sl-color-orange-high);
+    font-weight: 600;
+  }
+
+  /* Rule Compare */
+  .rule-compare {
+    background: var(--sl-color-bg-inline-code);
+    border-radius: 8px;
+    padding: 1.25rem;
+  }
+  .rule-compare p {
+    margin: 0 0 0.5rem 0;
+  }
+  .rule-compare pre {
+    margin: 0.5rem 0 1.25rem 0 !important;
+  }
+  .rule-compare pre:last-child {
+    margin-bottom: 0 !important;
+  }
+
+  /* Benefits List */
+  .benefits-list {
+    background: var(--sl-color-bg-inline-code);
+    border-radius: 8px;
+    padding: 1.25rem 1.5rem;
+  }
+  .benefits-list p {
+    margin: 0.5rem 0;
+    padding-left: 0.5rem;
+    border-left: 3px solid var(--sl-color-accent);
+  }
+
+  /* Get Involved */
+  .involve-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+  .involve-item {
+    flex: 1 1 calc(50% - 0.375rem);
+    min-width: 200px;
+    display: block;
+    padding: 1rem;
+    background: var(--sl-color-bg-inline-code);
+    border: 1px solid var(--sl-color-gray-5);
+    border-radius: 8px;
+    text-decoration: none;
+    transition: border-color 0.2s, background 0.2s, transform 0.2s;
+    margin: 0 !important;
+  }
+  .involve-item:hover {
+    border-color: var(--sl-color-accent);
+    background: var(--sl-color-accent-low);
+    transform: translateY(-2px);
+  }
+  .involve-item strong {
+    display: block;
+    color: var(--sl-color-white);
+    margin-bottom: 0.25rem;
+  }
+  .involve-item span {
+    font-size: 0.85rem;
+    color: var(--sl-color-gray-2);
+  }
+
+  /* General Styling */
+  .sl-markdown-content th {
+    background: var(--sl-color-accent-low);
+    font-weight: 600;
+  }
+  .sl-markdown-content td, .sl-markdown-content th {
+    padding: 0.6rem 1rem;
+  }
+  .sl-markdown-content pre {
+    border-left: 4px solid var(--sl-color-accent);
+  }
+  .sl-markdown-content h2 {
+    margin-top: 2rem;
+  }
+
+  /* Step headers */
+  .sl-steps h3 {
+    font-size: 1.1rem;
+    margin-top: 0;
+  }
+`}</style>

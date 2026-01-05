@@ -1,109 +1,307 @@
 ---
 title: Quick Guide
-description: High-level overview for generating all project files.
-tableOfContents: false
+description: Step-by-step workflow for generating security compliance files.
 ---
 
-import { Steps, Aside } from '@astrojs/starlight/components';
+import { Steps, Aside, Card, CardGrid } from '@astrojs/starlight/components';
 
+export const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : import.meta.env.BASE_URL + '/';
 
-If you're new to the project, start with this Quick Guide for a high-level overview of the workflow. After reviewing these steps, check out each step's corresponding "How To" section in the documentation menu. These sections explain in more detail what each step does, why it's important, and what outputs to expect.
+<style>{`
+  /* Command boxes */
+  .sl-markdown-content pre {
+    border-left: 4px solid var(--sl-color-accent);
+  }
 
-This quick guide provides a high-level overview of the steps required to generate all files with the macOS Security Compliance Project.
+  /* Better table styling */
+  .sl-markdown-content table {
+    font-size: 0.9rem;
+  }
+  .sl-markdown-content th {
+    background: var(--sl-color-accent-low);
+  }
 
-<Aside type="note">
-For details about each step, check out the corresponding menu item and the "What are..." section for that topic to understand its purpose and outputs.
+  /* Flag highlighting */
+  .sl-markdown-content td code {
+    background: var(--sl-color-accent-low);
+    color: var(--sl-color-accent-high);
+    padding: 0.15em 0.4em;
+    font-weight: 600;
+  }
+
+  /* Section dividers */
+  .sl-markdown-content hr {
+    border-color: var(--sl-color-accent-low);
+    margin: 2.5rem 0;
+  }
+
+  /* Quick ref box */
+  .quick-ref {
+    background: var(--sl-color-bg-inline-code);
+    border-radius: 8px;
+    padding: 1rem 1.25rem;
+    margin: 1rem 0;
+  }
+  .quick-ref code {
+    background: var(--sl-color-accent-low);
+    color: var(--sl-color-accent-high);
+  }
+`}</style>
+
+<Aside type="caution" title="Always Use the Correct Branch (mSCP 1.0)">
+Each macOS version has its own branch (`sequoia`, `sonoma`, `ventura`, etc.).
+**Never use the `main` branch** — it won't work for generating content.
+
+**mSCP 2.0 (currently in beta)** will remove the per-branch requirement and introduce easier installation methods.
 </Aside>
+
+<Aside type="note" title="Local Installation Required">
+The scripts must be run locally from a cloned repository. There is no remote execution or `curl | bash` option available.
+</Aside>
+
+---
+
+## 5-Step Workflow
+
+<small>*Already completed <a href={`${base}welcome/getting-started/`}>Getting Started</a>? Skip to [Step 3: Generate a Baseline](#generate-a-baseline).*</small>
 
 <Steps>
-<ol>
-  <li>
-    <strong>1. Prepare Your Environment</strong>
-    <ul>
-      <li>Ensure all <a href="/macos_security/welcome/getting-started/">prerequisites</a> are installed (Python, required modules, etc.).</li>
-      <li>Download or clone the repository.</li>
-    </ul>
-    <Aside type="note">
-      See <a href="/macos_security/welcome/getting-started/">Getting Started</a> for setup details.
-    </Aside>
-  </li>
-  <li>
-    <strong>2. Verify and Select the Correct Branch</strong>
-    <ul>
-      <li>Checkout the branch that matches your target OS version (e.g., <code>sequoia</code>).</li>
-    </ul>
-    <Aside type="caution">
-      <strong>*Always use the branch matching your target OS version. Do not use the <code>main</code> branch for workflow or development.*</strong>
-    </Aside>
-  </li>
-  <li>
-    <strong>3. Generate a Baseline</strong>
-    <ul>
-      <li>Use <a href="/macos_security/baselines/how-to-generate-baselines/">generate_baseline.py</a> to create a baseline YAML file for your compliance needs.</li>
-      <li><span style="display:inline-block;font-size:0.85em;font-weight:500;padding:0.1em 0.5em;border-radius:0.3em;background:var(--sl-color-bg-inline-code,#f5f5f5);color:var(--sl-color-text-accent,#0070f3);margin-left:0.5em;border:1px solid var(--sl-color-border,#eaeaea);">Optional</span> <a href="/macos_security/baselines/tailoring-a-baseline/">Tailor the baseline</a> to your organization using the <code>-t</code> flag.</li>
-    </ul>
-    <Aside type="note">
-      See <a href="/macos_security/baselines/how-to-generate-baselines/">How To Generate Baseline</a> for details.
-    </Aside>
-  </li>
-  <li>
-    <strong>4. Personalize: Customize Rules</strong> <span style="display:inline-block;font-size:0.85em;font-weight:500;padding:0.1em 0.5em;border-radius:0.3em;background:var(--sl-color-bg-inline-code,#f5f5f5);color:var(--sl-color-text-accent,#0070f3);margin-left:0.5em;border:1px solid var(--sl-color-border,#eaeaea);">Optional</span>
-    <ul>
-      <li><a href="/macos_security/personalization/customize-rules/">Customize rules</a> by modifying or adding rule YAML files in the <code>custom</code> folder as needed.</li>
-    </ul>
-    <Aside type="note">
-      See <a href="/macos_security/personalization/customize-rules/">Customization</a> for more information.
-    </Aside>
-  </li>
-  <li>
-    <strong>5. Generate Guidance Documentation</strong> <span style="display:inline-block;font-size:0.85em;font-weight:500;padding:0.1em 0.5em;border-radius:0.3em;background:var(--sl-color-bg-inline-code,#f5f5f5);color:var(--sl-color-text-accent,#0070f3);margin-left:0.5em;border:1px solid var(--sl-color-border,#eaeaea);">Optional</span>
-    <ul>
-      <li>Run <a href="/macos_security/guidance/how-to-generate-guidance/">generate_guidance.py</a> to create human-readable guidance (AsciiDoc, HTML, PDF, etc.).</li>
-    </ul>
-    <Aside type="note">
-      See <a href="/macos_security/guidance/how-to-generate-guidance/">How To Generate Guidance</a> for details.
-    </Aside>
-  </li>
-  <li>
-    <strong>6. Generate Configuration Profiles</strong>
-    <ul>
-      <li>Add the <code>-p</code> flag to <code>generate_guidance.py</code> to generate configuration profiles for supported rules.</li>
-    </ul>
-    <Aside type="note">
-      See <a href="/macos_security/configuration-profiles/how-to-generate-configuration-profiles/">How To Generate Configuration Profiles</a> for details.
-    </Aside>
-  </li>
-  <li>
-    <strong>7. Generate DDM Content</strong>
-    <ul>
-      <li>Add the <code>-D</code> flag to <code>generate_guidance.py</code> to generate Declarative Device Management (DDM) components.</li>
-    </ul>
-    <Aside type="note">
-      See <a href="/macos_security/ddm-components/how-to-generate-ddm-components/">How To Generate DDM Components</a> for details.
-    </Aside>
-  </li>
-  <li>
-    <strong>8. Generate Compliance Scripts</strong>
-    <ul>
-      <li>Add the <code>-s</code> flag to <code>generate_guidance.py</code> to generate a compliance script for automated checking and remediation.</li>
-    </ul>
-    <Aside type="note">
-      See <a href="/macos_security/compliance-scripts/how-to-generate-compliance-scripts/">How To Generate Compliance Scripts</a> for details.
-    </Aside>
-  </li>
-  <li>
-    <strong>9. Make Exemptions</strong> <span style="display:inline-block;font-size:0.85em;font-weight:500;padding:0.1em 0.5em;border-radius:0.3em;background:var(--sl-color-bg-inline-code,#f5f5f5);color:var(--sl-color-text-accent,#0070f3);margin-left:0.5em;border:1px solid var(--sl-color-border,#eaeaea);">Optional</span>
-    <ul>
-      <li>Customize or exempt specific rules as needed for your environment.</li>
-    </ul>
-    <Aside type="note">
-      See the <strong>exemptions</strong> folder or the project's wiki for customization options.
-    </Aside>
-  </li>
-</ol>
+
+1. ### Install Prerequisites
+
+   macOS includes Python 3 and Ruby. You just need to install the packages:
+
+   **Python packages (required):**
+   ```bash
+   pip3 install pyyaml xlwt --user
+   ```
+
+   **Ruby gems (optional — only needed for PDF output):**
+   ```bash
+   gem install asciidoctor asciidoctor-pdf rouge --user-install
+   ```
+
+   <details>
+   <summary>**Want isolated installs?** Click to expand</summary>
+
+   A **virtual environment** keeps packages separate from your system Python — useful if you don't want to install packages globally or need to avoid conflicts.
+
+   **Python virtual environment:**
+   ```bash
+   # Create environment (once)
+   python3 -m venv venv
+
+   # Activate before running scripts
+   source venv/bin/activate
+
+   # Install packages inside the environment
+   pip3 install -r requirements.txt
+
+   # When done, deactivate
+   deactivate
+   ```
+
+   **Ruby local bundle:**
+   ```bash
+   bundle install --path vendor/bundle
+   ```
+
+   </details>
+
+2. ### Clone & Checkout Branch
+
+   ```bash
+   git clone https://github.com/usnistgov/macos_security.git
+   cd macos_security
+   git checkout sequoia
+   ```
+
+   Replace `sequoia` with your target macOS version.
+
+3. ### Generate a Baseline
+
+   <div class="quick-ref">
+
+   **List baselines:** `./scripts/generate_baseline.py -l`
+
+   **Generate:** `./scripts/generate_baseline.py -k BASELINE_NAME`
+
+   **With tailoring:** `./scripts/generate_baseline.py -k BASELINE_NAME -t`
+
+   </div>
+
+   ```bash
+   # Example: Generate NIST 800-53 Moderate baseline
+   ./scripts/generate_baseline.py -k 800-53r5_moderate
+   ```
+
+4. ### Generate Outputs
+
+   Run `generate_guidance.py` with the flags you need:
+
+   ```bash
+   ./scripts/generate_guidance.py [flags] baselines/BASELINE_NAME.yaml
+   ```
+
+   | Flag | Output |
+   |:-----|:-------|
+   | *(none)* | Guidance docs (`.adoc`, `.html`, `.pdf`) |
+   | `-s` | Compliance script |
+   | `-p` | Configuration profiles (one per payload) |
+   | `-P` | Single consolidated profile |
+   | `-D` | DDM components |
+   | `-x` | Excel spreadsheet |
+
+   **Example — Generate all common outputs:**
+   ```bash
+   ./scripts/generate_guidance.py -s -p -x baselines/800-53r5_moderate.yaml
+   ```
+
+5. ### Use Your Files
+
+   Everything goes to `build/BASELINE_NAME/`:
+
+   ```
+   build/800-53r5_moderate/
+   ├── 800-53r5_moderate.adoc
+   ├── 800-53r5_moderate.html
+   ├── 800-53r5_moderate.pdf
+   ├── 800-53r5_moderate_compliance.sh
+   ├── mobileconfigs/
+   ├── preferences/
+   ├── activations/    ← DDM (if -D used)
+   ├── assets/
+   └── configurations/
+   ```
+
 </Steps>
 
-<Aside type="tip">
-<strong>Need help?</strong>  
-If you encounter issues, check the Guides section, review the <a href="/macos_security/more-information/faq/">FAQ</a>, or visit the project's <a href="https://github.com/usnistgov/macos_security/wiki">wiki</a> for troubleshooting and community support.
+---
+
+## Running the Compliance Script
+
+<Aside type="note">
+The script must run in **zsh** (default on macOS). Using `bash` or `sh` will cause errors.
 </Aside>
+
+**Interactive mode:**
+```zsh
+sudo ./build/800-53r5_moderate/800-53r5_moderate_compliance.sh
+```
+
+**Automated mode:**
+
+| Flag | What it does |
+|:-----|:-------------|
+| `--check` | Run checks only |
+| `--fix` | Run fixes only |
+| `--cfc` | Check → Fix → Check |
+| `--stats` | Show last run statistics |
+| `--compliant` | Report compliant count |
+| `--non_compliant` | Report non-compliant count |
+| `--reset` | Clear results for this baseline |
+| `--reset-all` | Clear results for all baselines |
+| `--quiet=1` | Show failed/exempt only |
+| `--quiet=2` | Minimal output |
+
+```zsh
+# Quick check
+sudo ./build/800-53r5_moderate/800-53r5_moderate_compliance.sh --check
+
+# Full remediation
+sudo ./build/800-53r5_moderate/800-53r5_moderate_compliance.sh --cfc --quiet=2
+```
+
+---
+
+## Available Baselines
+
+**Example baselines (may vary by branch):**
+
+| Framework | Baseline Name |
+|:----------|:--------------|
+| **NIST 800-53 Rev 5** | `800-53r5_high`, `800-53r5_moderate`, `800-53r5_low` |
+| **NIST 800-171** | `800-171` |
+| **DISA STIG** | `DISA-STIG` |
+| **CIS Benchmarks** | `cis_lvl1`, `cis_lvl2`, `cisv8` |
+| **CMMC 2.0** | `cmmc_lvl1`, `cmmc_lvl2` |
+| **CNSSI 1253** | `cnssi-1253_high`, `cnssi-1253_moderate`, `cnssi-1253_low` |
+| **All Rules** | `all_rules` |
+
+---
+
+## Script Reference
+
+### `generate_baseline.py`
+Creates the baseline YAML file.
+
+| Flag | Purpose |
+|:-----|:--------|
+| `-l` | List available baselines |
+| `-k NAME` | Generate baseline |
+| `-t` | Interactive tailoring |
+| `-c` | Show 800-53 controls |
+
+### `generate_guidance.py`
+Generates all outputs from a baseline.
+
+| Flag | Purpose |
+|:-----|:--------|
+| `-s` | Compliance script |
+| `-p` | Config profiles |
+| `-P` | Consolidated profile |
+| `-D` | DDM components |
+| `-x` | Excel file |
+| `-l LOGO` | Custom logo |
+| `-H HASH` | Sign profiles |
+| `-a NAME` | Custom audit name |
+| `-r REF` | Custom reference ID |
+
+### `generate_scap.py`
+Generates SCAP/OVAL content for compliance scanning tools.
+
+| Flag | Purpose |
+|:-----|:--------|
+| `-x` | XCCDF file |
+| `-o` | OVAL file |
+| `-b NAME` | Specific baseline |
+| `-d FILE` | Include DISA STIG references from file |
+| `-l` | List tags |
+
+---
+
+## Common Workflows
+
+### Compliance Check
+Scan a Mac for compliance issues:
+```bash
+./scripts/generate_baseline.py -k 800-53r5_moderate
+./scripts/generate_guidance.py -s baselines/800-53r5_moderate.yaml
+sudo ./build/800-53r5_moderate/800-53r5_moderate_compliance.sh --check
+```
+
+### MDM Deployment Package
+Generate profiles and DDM for device management:
+```bash
+./scripts/generate_baseline.py -k DISA-STIG -t
+./scripts/generate_guidance.py -p -D -s build/baselines/DISA-STIG.yaml
+```
+
+### Full Documentation Set
+Create all outputs for documentation and audit:
+```bash
+./scripts/generate_baseline.py -k cis_lvl2
+./scripts/generate_guidance.py -s -p -x baselines/cis_lvl2.yaml
+```
+
+---
+
+## Customization Options
+
+| Option | Description | Link |
+|:-------|:------------|:-----|
+| **Tailor Baseline** | Select rules and set Organization Defined Values | <a href={`${base}baselines/tailoring-a-baseline/`}>Learn more →</a> |
+| **Customize Rules** | Modify rules in `custom/rules/` folder | <a href={`${base}personalization/customize-rules/`}>Learn more →</a> |
+| **Exempt Rules** | Mark rules as approved exceptions | <a href={`${base}personalization/exempting-rules/`}>Learn more →</a> |
+| **Sign Profiles** | Sign with your certificate using `-H HASH` | <a href={`${base}configuration-profiles/how-to-generate-configuration-profiles/`}>Learn more →</a> |
+

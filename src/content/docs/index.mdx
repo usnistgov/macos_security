@@ -21,31 +21,109 @@ hero:
 
 import { Card, CardGrid } from '@astrojs/starlight/components';
 
+export const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : import.meta.env.BASE_URL + '/';
 
-## Latest Release:
+## Latest Release
 <div id="github-latest-release"></div>
-<script src="/macos_security/scripts/github-latest-release.js"></script> 
+<script src={`${base}scripts/github-latest-release.js`}></script>
+
+## mSCP Branches
+<div id="github-branch-table">Loading branch information...</div>
+
+<script>
+{`
+(function() {
+  var GITHUB_OWNER = 'usnistgov';
+  var GITHUB_REPO = 'macos_security';
+  var BRANCHES = [
+    { name: 'dev_2.0', display: 'mSCP 2.0', macOS: 'Unified Branch', current: false, beta: true },
+    { name: 'tahoe', display: 'Tahoe', macOS: 'macOS 26', current: true },
+    { name: 'sequoia', display: 'Sequoia', macOS: 'macOS 15', current: false },
+    { name: 'sonoma', display: 'Sonoma', macOS: 'macOS 14', current: false }
+  ];
+
+  function formatDate(dateString) {
+    if (!dateString) return 'N/A';
+    return new Date(dateString).toLocaleDateString(undefined, {
+      year: 'numeric', month: 'short', day: 'numeric'
+    });
+  }
+
+  function fetchBranchInfo(branchName) {
+    return fetch('https://api.github.com/repos/' + GITHUB_OWNER + '/' + GITHUB_REPO + '/branches/' + branchName)
+      .then(function(res) { return res.ok ? res.json() : null; })
+      .then(function(data) {
+        if (!data) return null;
+        return { lastCommit: data.commit && data.commit.commit && data.commit.commit.author && data.commit.commit.author.date };
+      })
+      .catch(function() { return null; });
+  }
+
+  function renderBranches(branchData) {
+    var items = branchData.map(function(b) {
+      var badge = b.current ? '<span style="background:#316431;color:#fff;font-size:0.65em;font-weight:600;padding:0.1em 0.4em;border-radius:3px;margin-left:0.4em;">Current</span>' :
+                  b.beta ? '<span style="background:#f5a623;color:#111;font-size:0.65em;font-weight:600;padding:0.1em 0.4em;border-radius:3px;margin-left:0.4em;">Beta</span>' : '';
+      var date = b.info ? formatDate(b.info.lastCommit) : '...';
+      return '<span class="branch-group"><a href="https://github.com/' + GITHUB_OWNER + '/' + GITHUB_REPO + '/tree/' + b.name + '" target="_blank" rel="noopener" class="branch-card"><span style="font-weight:600;color:var(--sl-color-white);">' + b.display + '</span>' + badge + '<span class="sep">·</span><span class="meta">' + b.macOS + '</span><span class="sep">·</span><span class="meta">' + date + '</span></a><a href="https://github.com/' + GITHUB_OWNER + '/' + GITHUB_REPO + '/commits/' + b.name + '" target="_blank" rel="noopener" class="changelog-btn" title="View changelog"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></a></span>';
+    }).join('');
+    return '<div style="display:flex;flex-wrap:wrap;gap:0.5em;justify-content:center;">' + items + '</div>' +
+      '<style>' +
+      '.branch-group{display:inline-flex;align-items:stretch;margin:0 !important;}' +
+      '.branch-group *{margin:0 !important;}' +
+      '.branch-card{display:inline-flex;align-items:center;gap:0.5em;padding:0.4em 0.7em;background:transparent;text-decoration:none;font-size:0.85em;border:1px solid var(--sl-color-gray-5);border-left:3px solid #316431;border-radius:6px 0 0 6px;transition:border-color 0.15s ease;}' +
+      '.branch-card:hover{border-color:#316431;border-left-color:#316431;}' +
+      '[data-theme="dark"] .branch-card{border-left-color:#6ab549;}' +
+      '[data-theme="dark"] .branch-card:hover{border-color:#6ab549;}' +
+      '.changelog-btn{display:inline-flex;align-items:center;padding:0.4em 0.5em;background:transparent;text-decoration:none;font-size:0.85em;color:var(--sl-color-gray-2);border:1px solid var(--sl-color-gray-5);border-radius:0 6px 6px 0;margin-left:-1px;transition:all 0.15s ease;position:relative;}' +
+      '.changelog-btn:hover{border-color:#316431;color:#316431;z-index:1;}' +
+      '[data-theme="dark"] .changelog-btn:hover{border-color:#6ab549;color:#6ab549;}' +
+      '.sep{color:var(--sl-color-gray-3);}' +
+      '.meta{color:var(--sl-color-gray-2);}' +
+      '</style>';
+  }
+
+  function loadTable() {
+    var container = document.getElementById('github-branch-table');
+    if (!container) return;
+    var initialData = BRANCHES.map(function(b) { return Object.assign({}, b, { info: null }); });
+    container.innerHTML = renderBranches(initialData);
+    var promises = BRANCHES.map(function(branch) {
+      return fetchBranchInfo(branch.name).then(function(info) {
+        return Object.assign({}, branch, { info: info });
+      });
+    });
+    Promise.all(promises).then(function(data) { container.innerHTML = renderBranches(data); });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', loadTable);
+  } else {
+    loadTable();
+  }
+})();
+`}
+</script>
 
 ## Quick Links
 <CardGrid cols={3}>
 	<Card title="How To Guides" icon="open-book">
 		Learn how to generate baselines, guidance documents, configuration profiles, and more.
 		<ul class="howto-link-list">
-			<li><a href="/macos_security/welcome/getting-started/">Getting Started<span class="arrow"></span></a></li>
-			<li><a href="/macos_security/baselines/how-to-generate-baselines/">Generate Baseline<span class="arrow"></span></a></li>
-			<li><a href="/macos_security/guidance/how-to-generate-guidance/">Generate Guidance<span class="arrow"></span></a></li>
-			<li><a href="/macos_security/configuration-profiles/how-to-generate-configuration-profiles/">Generate Configuration Profiles<span class="arrow"></span></a></li>
-			<li><a href="/macos_security/compliance-scripts/how-to-generate-compliance-scripts/">Generate Compliance Scripts<span class="arrow"></span></a></li>
+			<li><a href={`${base}welcome/getting-started/`}>Getting Started<span class="arrow"></span></a></li>
+			<li><a href={`${base}baselines/how-to-generate-baselines/`}>Generate Baseline<span class="arrow"></span></a></li>
+			<li><a href={`${base}guidance/how-to-generate-guidance/`}>Generate Guidance<span class="arrow"></span></a></li>
+			<li><a href={`${base}configuration-profiles/how-to-generate-configuration-profiles/`}>Generate Configuration Profiles<span class="arrow"></span></a></li>
+			<li><a href={`${base}compliance-scripts/how-to-generate-compliance-scripts/`}>Generate Compliance Scripts<span class="arrow"></span></a></li>
 		</ul>
 	</Card>
 	<Card title="Repository Reference" icon="seti:folder">
 		Explore the repository structure, including baselines, rules, sections, and scripts.
 		<ul class="howto-link-list">
-			<li><a href="/macos_security/repository/directory-layout/">Repository Layout<span class="arrow"></span></a></li>
-			<li><a href="/macos_security/repository/rule-file-layout/">Rules File Layout<span class="arrow"></span></a></li>
-			<li><a href="/macos_security/repository/sections-file-layout/">Sections File Layout<span class="arrow"></span></a></li>
-			<li><a href="/macos_security/repository/includes-directory/">Includes Directory<span class="arrow"></span></a></li>
-			<li><a href="/macos_security/repository/script-arguments-list/">Scripts Arguments<span class="arrow"></span></a></li>
+			<li><a href={`${base}repository/directory-layout/`}>Repository Layout<span class="arrow"></span></a></li>
+			<li><a href={`${base}repository/rule-file-layout/`}>Rules File Layout<span class="arrow"></span></a></li>
+			<li><a href={`${base}repository/sections-file-layout/`}>Sections File Layout<span class="arrow"></span></a></li>
+			<li><a href={`${base}repository/includes-directory/`}>Includes Directory<span class="arrow"></span></a></li>
+			<li><a href={`${base}repository/script-arguments-list/`}>Scripts Arguments<span class="arrow"></span></a></li>
 		</ul>
 	</Card>
 </CardGrid>
@@ -53,8 +131,8 @@ import { Card, CardGrid } from '@astrojs/starlight/components';
 <Card title="More Information & FAQ" icon="comment" style={{ width: "100%", marginTop: "2rem" }}>
 	Looking for more details, help, or community resources?
 	<ul class="howto-link-list">
-		<li><a href="/macos_security/more-information/resources/">mSCP Resources<span class="arrow"></span></a></li>
-		<li><a href="/macos_security/more-information/contributing/">How-To Contribute<span class="arrow"></span></a></li>
-		<li><a href="/macos_security/more-information/faq/">Frequently Asked Questions (FAQ)<span class="arrow"></span></a></li>
+		<li><a href={`${base}more-information/resources/`}>mSCP Resources<span class="arrow"></span></a></li>
+		<li><a href={`${base}more-information/contributing/`}>How-To Contribute<span class="arrow"></span></a></li>
+		<li><a href={`${base}more-information/faq/`}>Frequently Asked Questions (FAQ)<span class="arrow"></span></a></li>
 	</ul>
 </Card>

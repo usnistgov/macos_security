@@ -2,6 +2,9 @@ import { defineConfig } from 'astro/config';
 import starlight from '@astrojs/starlight';
 
 export default defineConfig({
+	site: 'https://pages.nist.gov',
+	base: '/macos_security',
+	trailingSlash: 'always',
 	integrations: [
 		starlight({
 			title: 'mSCP',
@@ -62,6 +65,14 @@ head: [
 					],
 				},
 				{
+					label: 'mSCP 2.0 (Beta)',
+					collapsed: false,
+					badge: { text: 'New', variant: 'success' },
+					items: [
+						{ label: 'Overview', link: '/mscp-2/overview/' },
+					],
+				},
+				{
 					label: 'Baselines',
 					collapsed: true,
 					items: [
@@ -77,7 +88,7 @@ head: [
 					items: [
 						{ label: 'What Is Guidance?', link: '/guidance/what-is-guidance/' },
 						{ label: 'How To Generate Guidance', link: '/guidance/how-to-generate-guidance/' },
-						{ label: 'Guidance File Layout', link: '/guidance/guidance-file-example/' },
+						{ label: 'Guidance File Example', link: '/guidance/guidance-file-example/' },
 					],
 				},
 				{

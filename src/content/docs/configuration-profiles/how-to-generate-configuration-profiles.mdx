@@ -1,61 +1,148 @@
 ---
-title: How To Generate Configuration Profiles
-description: An overview of how to generate configuration profiles.
-tableOfContents: false
+title: How to Generate Configuration Profiles
+description: Create .mobileconfig files from your baseline.
 ---
 
 import { Steps, FileTree, Aside } from '@astrojs/starlight/components';
 
-The primary script for generating configuration profiles is located here in the `macos_security` repository:
+export const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : import.meta.env.BASE_URL + '/';
 
-<FileTree>
-- macos_security/
-    - scripts/                       ---> Project scripts
-        - generate_guidance.py          ---> Script to generate configuration profiles
-</FileTree>
-    <Aside type="caution">
-      <strong>*Always use the branch matching your target OS version. Do not use the <code>main</code> branch for workflow or development.*</strong>
-    </Aside>
+Configuration profiles are generated using the `generate_guidance.py` script with the `-p` flag. The script reads your baseline and creates `.mobileconfig` files ready for MDM deployment.
 
-Follow these steps to generate configuration profiles:
+<Aside type="note">
+You need a baseline first. See <a href={`${base}baselines/how-to-generate-baselines/`}>How to Generate Baselines</a> if you haven't created one.
+</Aside>
+
+<Aside type="caution" title="Always Use the Correct Branch (mSCP 1.0)">
+Each macOS version has its own branch (`sequoia`, `sonoma`, `ventura`, etc.). **Never use the `main` branch** — it won't work for generating content.
+
+**mSCP 2.0 (currently in beta)** will remove the per-branch requirement and introduce easier installation methods.
+</Aside>
+
+---
+
+## Generate Configuration Profiles
 
 <Steps>
 
-1. **Prepare Your Rules YAML**
+1. **Generate unsigned profiles**
 
-   - Ensure your rules YAML file contains rules with `mobileconfig: true` and the appropriate `mobileconfig_info` section.  
-     Example:
-     ```yaml
-     mobileconfig: true
-     mobileconfig_info:
-       com.apple.security.smartcard:
-         enforceSmartCard: true
-     ```
+   ```bash
+   ./scripts/generate_guidance.py -p baselines/BASELINE_NAME.yaml
+   ```
 
-2. **Generate Unsigned Configuration Profiles**
+   Example:
+   ```bash
+   ./scripts/generate_guidance.py -p baselines/800-53r5_moderate.yaml
+   ```
 
-   - Run the following command to generate unsigned configuration profiles and corresponding plists:
-     ```sh
-     ./scripts/generate_guidance.py -p build/baselines/800-53r5_moderate.yaml
-     ```
+2. **Find your files**
 
-3. **(Optional) Generate Signed Configuration Profiles**
+   Profiles are saved to `build/BASELINE_NAME/mobileconfigs/`:
 
-   - If you want to generate signed configuration profiles, you need the certificate Subject Key ID (not the SHA-1 hash).
-   - Retrieve the Subject Key ID with:
-     ```sh
-     skid=$(security find-certificate -c "CodeSigning Certificate Name" -p | openssl asn1parse | awk -F: '/X509v3 Subject Key Identifier/ {getline; print $1}')
-     security find-certificate -c "CodeSigning Certificate Name" -p | openssl asn1parse -strparse $skid | awk -F: '/HEX DUMP/{print $4}'
-     ```
-   - Then use the `-H` flag with the Subject Key ID to generate signed profiles:
-     ```sh
-     ./scripts/generate_guidance.py -p -H <HASHVALUE> build/baselines/800-53r5_moderate.yaml
-     ```
-
-4. **Locate the Generated Files**
-
-   - After running the script, the configuration profiles and plists will be created in the appropriate output directories.
+   <FileTree>
+   - build/
+       - 800-53r5_moderate/
+           - mobileconfigs/
+               - unsigned/ - Unsigned profiles (.mobileconfig)
+               - preferences/ - Preference plists (.plist)
+   </FileTree>
 
 </Steps>
 
-For more information, see [How to Generate Baselines](../how-to-generate-baselines) or review the [baseline file layout](../baseline-file-layout).
+---
+
+## Generate Signed Profiles
+
+Signed profiles verify authenticity and prevent tampering. You need a signing certificate installed in your keychain.
+
+<Steps>
+
+1. **Get your certificate's Subject Key ID**
+
+   First, find the offset:
+   ```bash
+   security find-certificate -c "Your Certificate Name" -p | \
+     openssl asn1parse | \
+     awk -F: '/X509v3 Subject Key Identifier/ {getline; print $1}'
+   ```
+
+   Then extract the hash using that offset (replace `OFFSET` with the number from above):
+   ```bash
+   security find-certificate -c "Your Certificate Name" -p | \
+     openssl asn1parse -strparse OFFSET | \
+     awk -F: '/HEX DUMP/{print $4}'
+   ```
+
+   Replace `"Your Certificate Name"` with your signing certificate's common name.
+
+2. **Generate signed profiles**
+
+   ```bash
+   ./scripts/generate_guidance.py -p -H SUBJECT_KEY_ID baselines/BASELINE_NAME.yaml
+   ```
+
+   Example:
+   ```bash
+   ./scripts/generate_guidance.py -p -H ABC123DEF456 baselines/800-53r5_moderate.yaml
+   ```
+
+3. **Find your signed files**
+
+   <FileTree>
+   - build/
+       - 800-53r5_moderate/
+           - mobileconfigs/
+               - unsigned/ - Unsigned profiles
+               - signed/ - Signed profiles
+               - preferences/ - Preference plists
+   </FileTree>
+
+</Steps>
+
+<Aside type="tip">
+Signing is optional. Signed profiles verify the profile hasn't been modified and can prevent unauthorized changes.
+</Aside>
+
+---
+
+## Command Reference
+
+| Flag | Description |
+|:-----|:------------|
+| `-p` | Generate individual profiles (one per payload type) |
+| `-P` | Generate a single consolidated profile |
+| `-H HASH` | Sign profiles with your certificate's Subject Key ID |
+
+---
+
+## Individual vs Consolidated Profiles
+
+| Type | Flag | Best For |
+|:-----|:-----|:---------|
+| **Individual** | `-p` | Flexibility - deploy only the profiles you need |
+| **Consolidated** | `-P` | Simplicity - one profile with all settings |
+
+Most organizations prefer individual profiles (`-p`) for easier management and troubleshooting.
+
+---
+
+## Next Steps
+
+- <a href={`${base}configuration-profiles/configuration-profile-layout/`}>Configuration Profile Layout</a> - Understand the file structure
+- <a href={`${base}guidance/how-to-generate-guidance/`}>How to Generate Guidance</a> - Generate all outputs at once
+
+<style>{`
+  .sl-markdown-content th {
+    background: var(--sl-color-accent-low);
+    font-weight: 600;
+  }
+  .sl-markdown-content td, .sl-markdown-content th {
+    padding: 0.6rem 1rem;
+  }
+  .sl-markdown-content td code {
+    background: var(--sl-color-bg-inline-code);
+    padding: 0.15em 0.35em;
+    font-size: 0.85em;
+  }
+`}</style>

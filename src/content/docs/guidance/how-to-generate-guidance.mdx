@@ -1,103 +1,153 @@
 ---
-title: How To Generate Guidance
-description: An overview on how to generate guidance from an existing baseline.
-tableOfContents: false
+title: How to Generate Guidance
+description: Create documentation, scripts, and profiles from your baseline.
 ---
 
 import { Steps, FileTree, Aside } from '@astrojs/starlight/components';
 
-To generate guidance files (AsciiDoc, HTML, and PDF) from an existing baseline, use the `generate_guidance.py` script in the `macos_security` repository.
+export const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : import.meta.env.BASE_URL + '/';
+
+The `generate_guidance.py` script creates outputs from your baseline. By default it generates documentation (AsciiDoc, HTML, PDF). With additional flags, you can also generate compliance scripts, configuration profiles, and more.
 
 <Aside type="note">
-*The guidance information is generated directly from the baseline YAML file you created or selected. All recommendations, control details, and configuration steps in the guidance output are based on the contents of your chosen baseline.*
+New to the project? Complete the <a href={`${base}welcome/getting-started/`}>Getting Started</a> guide and <a href={`${base}baselines/how-to-generate-baselines/`}>generate a baseline</a> first.
 </Aside>
 
-<FileTree>
-- macos_security/
-    - scripts/
-        - generate_guidance.py   ---> Script to generate guidance files
-    - build/
-        - baselines/
-            - BASELINENAME.yaml  ---> Your generated or customized baseline file
-</FileTree>
+<Aside type="caution" title="Always Use the Correct Branch (mSCP 1.0)">
+Each macOS version has its own branch (`sequoia`, `sonoma`, `ventura`, etc.). **Never use the `main` branch** — it won't work for generating content.
 
-    <Aside type="caution">
-      <strong>*Always use the branch matching your target OS version. Do not use the <code>main</code> branch for workflow or development.*</strong>
-    </Aside>
+**mSCP 2.0 (currently in beta)** will remove the per-branch requirement and introduce easier installation methods.
+</Aside>
+
+---
+
+## Generate Guidance
 
 <Steps>
-1. **Ensure You Are Using the Correct Baseline File**
 
-   - Use either a baseline you generated (custom baseline) or one of the built-in baselines provided by the project.
+1. **Run the script with your baseline**
 
-2. **Run the Guidance Generation Script**
+   ```bash
+   ./scripts/generate_guidance.py baselines/BASELINE_NAME.yaml
+   ```
 
-   - Point the script to your baseline YAML file:
-     ```sh
-     ./scripts/generate_guidance.py build/baselines/BASELINENAME.yaml
-     ```
-     Replace `BASELINENAME.yaml` with your actual baseline file.
+   Example:
+   ```bash
+   ./scripts/generate_guidance.py baselines/800-53r5_moderate.yaml
+   ```
 
-   - The script will generate AsciiDoc, HTML, and PDF guidance documents.
+2. **Add flags for additional outputs**
 
-3. **Locate the Generated Guidance Files**
+   ```bash
+   ./scripts/generate_guidance.py -s -p baselines/800-53r5_moderate.yaml
+   ```
 
-   - The output files will be created in a directory under `build/` matching your baseline name, for example:
+   This generates guidance docs plus compliance script (`-s`) and configuration profiles (`-p`).
 
-     <FileTree>
-     - macos_security/
-         - build/
-             - 800-53r5_moderate/
-                 - 800-53r5_moderate.adoc
-                 - 800-53r5_moderate.html
-                 - 800-53r5_moderate.pdf
-     </FileTree>
+3. **Find your files**
+
+   All outputs are saved to `build/BASELINE_NAME/`:
+
+   <FileTree>
+   - build/
+       - 800-53r5_moderate/
+           - **800-53r5_moderate.adoc** - AsciiDoc source
+           - **800-53r5_moderate.html** - Web documentation
+           - **800-53r5_moderate.pdf** - Printable documentation
+           - **800-53r5_moderate_compliance.sh** - Compliance script (if -s)
+           - **800-53r5_moderate.xls** - Excel spreadsheet (if -x)
+           - mobileconfigs/ - Configuration profiles (if -p)
+               - unsigned/ - Unsigned profiles
+               - signed/ - Signed profiles (if -H)
+               - preferences/ - Preference plists
+           - declarative/ - DDM components (if -D)
+               - activations/
+               - configurations/
+               - assets/
+           - preferences/ - Audit preference files
+   </FileTree>
+
 </Steps>
 
-## Built-in Baseline vs Custom Baseline
+---
 
-When generating guidance, you can use either a **built-in baseline** or a **custom baseline**:
+## Command Reference
 
-- **Built-in Baseline:**  
-  These are standard baseline YAML files provided by the project and located in the `baselines/` directory. They represent default security configurations such as NIST 800-53, CIS, or STIG profiles.
+| Flag | Output |
+|:-----|:-------|
+| *(none)* | Guidance documents (.adoc, .html, .pdf) |
+| `-s` | Compliance script |
+| `-p` | Configuration profiles (one per payload) |
+| `-P` | Single consolidated configuration profile |
+| `-D` | Declarative Device Management (DDM) components |
+| `-x` | Excel spreadsheet |
 
-  <FileTree>
-  - macos_security/
-      - baselines/
-          - 800-53r5_moderate.yaml
-  </FileTree>
+**Additional options:**
 
-  Example usage:
-  ```sh
-  ./scripts/generate_guidance.py baselines/800-53r5_moderate.yaml
-  ```
-  The output files will be generated in a directory under `build/` matching the baseline name.
+| Flag | Description |
+|:-----|:------------|
+| `-h` | Show help message |
+| `-l LOGO` | Include custom logo in documentation |
+| `-H HASH` | Sign configuration profiles with certificate |
+| `-a NAME` | Custom name for audit plist and log |
+| `-r REF` | Use reference ID instead of rule ID |
 
-- **Custom Baseline:**  
-  These are baselines you have tailored for your organization, typically created using the baseline generation and tailoring scripts. Custom baseline files are usually found in `build/baselines/`.
+---
 
-  <FileTree>
-  - macos_security/
-      - build/
-          - baselines/
-              - 800-53r5_moderate.yaml
-  </FileTree>
+## Common Examples
 
-  Example usage:
-  ```sh
-  ./scripts/generate_guidance.py build/baselines/800-53r5_moderate.yaml
-  ```
-  The output files will be generated in a directory under `build/` matching your custom baseline.
+**Generate documentation only:**
+```bash
+./scripts/generate_guidance.py baselines/800-53r5_moderate.yaml
+```
 
-Both approaches produce guidance files in AsciiDoc, HTML, and PDF formats, but custom baselines allow you to reflect organization-specific requirements and tailoring.
+**Generate everything for MDM deployment:**
+```bash
+./scripts/generate_guidance.py -s -p -D baselines/DISA-STIG.yaml
+```
 
-Example output files:
+**Generate with signed profiles:**
+```bash
+./scripts/generate_guidance.py -p -H YOUR_CERT_HASH baselines/cis_lvl2.yaml
+```
 
-<FileTree>
-- macos_security/
-    - build/
-        - 800-53r5_moderate/
-            - 800-53r5_moderate.adoc
-            - 800-53r5_moderate.html
-            - 800-53r5_moderate.pdf
-</FileTree>
+**Generate documentation with custom logo:**
+```bash
+./scripts/generate_guidance.py -l /path/to/logo.png baselines/800-53r5_moderate.yaml
+```
+
+---
+
+## Built-in vs Custom Baselines
+
+You can use either type of baseline:
+
+| Type | Location | Use Case |
+|:-----|:---------|:---------|
+| **Built-in** | `baselines/` | Standard frameworks without customization |
+| **Custom** | `build/baselines/` | Tailored baselines for your organization |
+
+Both produce the same outputs. Custom baselines reflect your organization's specific settings and excluded rules.
+
+---
+
+## Next Steps
+
+- <a href={`${base}configuration-profiles/how-to-generate-configuration-profiles/`}>How to Generate Configuration Profiles</a> - Details on the `-p` flag
+- <a href={`${base}compliance-scripts/how-to-generate-compliance-scripts/`}>How to Generate Compliance Scripts</a> - Details on the `-s` flag
+- <a href={`${base}guidance/guidance-file-example/`}>Guidance File Example</a> - See a sample PDF output
+
+<style>{`
+  .sl-markdown-content th {
+    background: var(--sl-color-accent-low);
+    font-weight: 600;
+  }
+  .sl-markdown-content td, .sl-markdown-content th {
+    padding: 0.6rem 1rem;
+  }
+  .sl-markdown-content td code {
+    background: var(--sl-color-bg-inline-code);
+    padding: 0.15em 0.35em;
+    font-size: 0.85em;
+  }
+`}</style>

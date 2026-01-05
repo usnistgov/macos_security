@@ -1,17 +1,24 @@
 ---
 title: Sections File Layout
-description: A sections reference.
+description: Structure of section YAML files for guide organization.
 ---
 
-The `sections/` directory contains YAML files that define the major sections of your security guide. Each section file provides a name and a description, which are used to organize and present rules in generated documentation.
+import { Aside } from '@astrojs/starlight/components';
+
+export const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : import.meta.env.BASE_URL + '/';
+
+The `sections/` directory contains YAML files that define the major sections of your security guide. Each section file provides a name and description used to organize rules in generated documentation.
+
+---
 
 ## Section File Structure
 
-- **name**:  
-  The display name of the section as it will appear in the guide.
+| Field | Description |
+|:------|:------------|
+| `name` | Display name of the section in the guide |
+| `description` | Description shown in the guide for context |
 
-- **description**:  
-  A description of the section, shown in the guide for context.
+---
 
 ## Example Section File
 
@@ -23,24 +30,48 @@ description: |
   NOTE: The check/fix commands outlined in this section _MUST_ be run by a user with elevated privileges.
 ```
 
-## Common Sections
+---
 
-Below are typical section names you may find in this repository:
+## Available Sections
 
-```
-. auditing
-. authentication
-. icloud
-. inherent
-. macos
-. not_applicable
-. passwordpolicy
-. permanent
-. srg
-. supplemental
-. system_settings
-. systempreferences
-```
+The project includes these section files:
 
-**Tip:**  
-Keep section names and descriptions clear and concise to ensure guides are easy to navigate and understand.
+| Section | Description |
+|:--------|:------------|
+| `auditing.yaml` | OpenBSM audit configuration |
+| `authentication.yaml` | Authentication and smartcard settings |
+| `icloud.yaml` | iCloud and Apple ID settings |
+| `inherent.yaml` | Inherent macOS security features |
+| `macos.yaml` | General macOS settings |
+| `not_applicable.yaml` | Rules not applicable to this platform |
+| `passwordpolicy.yaml` | Password policy settings |
+| `permanent.yaml` | Permanently enabled security features |
+| `srg.yaml` | Security Requirements Guide mappings |
+| `supplemental.yaml` | Additional supporting information |
+| `systemsettings.yaml` | System Settings configuration |
+
+<Aside type="tip">
+Section filenames correspond to rule category directories. For example, rules in `rules/auth/` appear under the `authentication` section.
+</Aside>
+
+---
+
+## Next Steps
+
+- <a href={`${base}repository/rule-file-layout/`}>Rule File Layout</a> - Understand rule YAML structure
+- <a href={`${base}repository/directory-layout/`}>Directory Layout</a> - Repository structure overview
+
+<style>{`
+  .sl-markdown-content th {
+    background: var(--sl-color-accent-low);
+    font-weight: 600;
+  }
+  .sl-markdown-content td, .sl-markdown-content th {
+    padding: 0.6rem 1rem;
+  }
+  .sl-markdown-content td code {
+    background: var(--sl-color-bg-inline-code);
+    padding: 0.15em 0.35em;
+    font-size: 0.85em;
+  }
+`}</style>

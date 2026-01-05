@@ -1,84 +1,149 @@
 ---
 title: Baseline File Layout
-description: A baselines reference.
+description: Understand the structure of baseline YAML files.
 ---
 
-Baseline files define the controls and rules that make up a security profile. They are used to generate guides, scripts, and mobileconfig files for macOS security.
+import { Aside } from '@astrojs/starlight/components';
 
-## Baseline File Structure
+export const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : import.meta.env.BASE_URL + '/';
 
-A baseline file typically includes the following fields:
+A baseline file is a YAML document that defines which security rules apply to a specific compliance framework. Understanding the structure helps you customize baselines or create your own.
+
+<Aside type="tip">
+You don't need to create baseline files manually. The `generate_baseline.py` script creates them for you. This page is for understanding what's inside.
+</Aside>
+
+---
+
+## File Structure Overview
+
+| Field | Purpose |
+|:------|:--------|
+| `title` | Human-readable name for the baseline |
+| `description` | Brief summary of the baseline's purpose |
+| `authors` | List of contributors and their organizations |
+| `parent_values` | Default configuration level for organization-defined values |
+| `profile` | Sections and rules that make up the baseline |
+
+---
+
+## Field Details
 
 ### title
-A human-readable name for the baseline.  
-*Example:*  
+
+The display name shown in generated documentation.
+
 ```yaml
-title: "Apple macOS 13 (Ventura) Test Baseline"
+title: "macOS 15 (Sequoia): NIST 800-53r5 Moderate"
 ```
 
 ### description
-A brief summary describing the purpose and scope of the baseline.  
-*Example:*  
+
+A summary that appears at the top of generated guides. Use the `|` character for multi-line text.
+
 ```yaml
 description: |
-  This guide describes the prudent actions to take when securing a macOS 13 system against the Test Baseline.
+  This guide describes the actions to take when
+  securing a macOS 15 system against the NIST
+  800-53 Rev 5 Moderate baseline.
 ```
 
 ### authors
-A list of authors and their organizations.  
-*Example:*  
+
+Contributors listed in AsciiDoc table format. This appears in generated documentation.
+
 ```yaml
 authors: |
   |===
+  |Name|Organization
   |John Smith|NIST
-  |Jack Doe|NIST
+  |Jane Doe|NASA
   |===
 ```
 
-### profile
-Defines the structure of the baseline, mapping sections to their associated rules:  
-- **section**: The name of the section (as defined in the `sections` directory) to be included in the guide.
-- **rules**: A list of rule IDs that are part of this section. Each rule ID should match the filename and ID of a corresponding rule in the `rules` directory.
+### parent_values
 
-*Example:*
+Sets the default configuration level for organization-defined values (ODVs). Common values include `recommended`, `cis_lvl1`, or `cis_lvl2`.
+
+```yaml
+parent_values: "recommended"
+```
+
+<Aside type="note">
+Organization-defined values are settings like password length or screen lock timeout that vary by organization. This field sets the default values to use.
+</Aside>
+
+### profile
+
+The core of the baseline. Organizes rules into sections for the generated documentation.
+
+- **section** - Category name (matches files in the `sections/` folder)
+- **rules** - List of rule IDs (matches files in the `rules/` folder)
+
 ```yaml
 profile:
   - section: "Authentication"
     rules:
       - auth_pam_login_smartcard_enforce
       - auth_pam_su_smartcard_enforce
-      - auth_pam_sudo_smartcard_enforce
       - auth_smartcard_allow
   - section: "Auditing"
     rules:
       - audit_acls_files_configure
       - audit_acls_files_mode_configure
-      - audit_acls_folder_wheel_configure
 ```
 
 ---
 
-## Complete Example Baseline File
+## Complete Example
 
 ```yaml
-title: "Apple macOS 13 (Ventura) Test Baseline"
+title: "macOS 15 (Sequoia): NIST 800-53r5 Moderate"
 description: |
-  This guide describes the prudent actions to take when securing a macOS 13 system against the Test Baseline.
+  This guide describes the actions to take when securing
+  a macOS 15 system against the NIST 800-53 Rev 5 Moderate baseline.
 authors: |
   |===
+  |Name|Organization
   |John Smith|NIST
-  |Jack Doe|NIST
+  |Jane Doe|NASA
   |===
+parent_values: "recommended"
 profile:
   - section: "Authentication"
     rules:
       - auth_pam_login_smartcard_enforce
       - auth_pam_su_smartcard_enforce
-      - auth_pam_sudo_smartcard_enforce
       - auth_smartcard_allow
   - section: "Auditing"
     rules:
       - audit_acls_files_configure
       - audit_acls_files_mode_configure
-      - audit_acls_folder_wheel_configure
+  - section: "System Settings"
+    rules:
+      - system_settings_firewall_enable
+      - system_settings_gatekeeper_enable
 ```
+
+---
+
+## Next Steps
+
+- <a href={`${base}baselines/how-to-generate-baselines/`}>How to Generate Baselines</a> - Create a baseline from a framework
+- <a href={`${base}baselines/tailoring-a-baseline/`}>Tailoring a Baseline</a> - Customize rules and values
+- <a href={`${base}rules/what-are-rules/`}>What Are Rules</a> - Understand the rules that baselines reference
+
+<style>{`
+  .sl-markdown-content th {
+    background: var(--sl-color-accent-low);
+    font-weight: 600;
+  }
+  .sl-markdown-content td, .sl-markdown-content th {
+    padding: 0.6rem 1rem;
+  }
+  .sl-markdown-content td code {
+    background: var(--sl-color-bg-inline-code);
+    padding: 0.15em 0.35em;
+    font-size: 0.85em;
+  }
+`}</style>

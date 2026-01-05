@@ -1,18 +1,69 @@
 ---
 title: What Are Compliance Scripts?
-description: An overview of baselines and how to use them in the project.
-tableOfContents: false
+description: Zsh scripts that check and fix security settings on macOS.
 ---
 
 import { Aside } from '@astrojs/starlight/components';
 
+export const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : import.meta.env.BASE_URL + '/';
 
-Compliance scripts in the NIST macOS Security Compliance Project (mSCP) are automated scripts designed to check and enforce security settings on macOS systems. These scripts are generated from the project's baselines, which define recommended security controls and configurations.
+**Compliance scripts** are zsh scripts that check macOS security settings against your baseline and optionally fix non-compliant settings. They handle settings that can't be enforced through configuration profiles or DDM.
 
-The compliance scripts allow organizations to:
+The mSCP project generates a compliance script from your baseline, designed to be deployed via MDM or run locally.
 
-- **Assess**: Automatically check a system's current configuration against the selected baseline.
-- **Remediate**: Apply changes to bring the system into compliance with the baseline.
-- **Report**: Generate output showing which settings are compliant or non-compliant.
+---
 
-These scripts are typically generated using the project's tooling and can be run locally or integrated into enterprise management workflows. They help ensure that macOS devices meet NIST and organizational security requirements efficiently and consistently.
+## What the Script Does
+
+| Feature | Description |
+|:--------|:------------|
+| **Check** | Scan current settings against the baseline and report status |
+| **Fix** | Remediate non-compliant settings to match the baseline |
+| **Exemptions** | Respect rules marked as exempt (configured via MDM) |
+| **Interactive** | Menu-driven mode for running scans and viewing reports |
+
+---
+
+## When to Use Compliance Scripts
+
+| Use Case | Description |
+|:---------|:------------|
+| **Settings not supported by profiles** | Some security settings can only be configured via script |
+| **Auditing** | Generate compliance reports for review |
+| **Remediation** | Fix settings that drift from the baseline |
+| **Standalone Macs** | Devices not managed by MDM |
+
+<Aside type="tip">
+Deploy the compliance script via your MDM solution to run it across managed devices. The script complements configuration profiles by handling settings that profiles can't enforce.
+</Aside>
+
+---
+
+## What the Project Generates
+
+| Output | Location |
+|:-------|:---------|
+| `BASELINE_NAME_compliance.sh` | `build/BASELINE_NAME/` |
+| `org.BASELINE_NAME.audit.plist` | `build/BASELINE_NAME/preferences/` |
+
+---
+
+## Next Steps
+
+- <a href={`${base}compliance-scripts/how-to-generate-compliance-scripts/`}>How to Generate Compliance Scripts</a> - Create a script from your baseline
+- <a href={`${base}compliance-scripts/compliance-script-layout/`}>Compliance Script Layout</a> - Understand the script structure
+
+<style>{`
+  .sl-markdown-content th {
+    background: var(--sl-color-accent-low);
+    font-weight: 600;
+  }
+  .sl-markdown-content td, .sl-markdown-content th {
+    padding: 0.6rem 1rem;
+  }
+  .sl-markdown-content td code {
+    background: var(--sl-color-bg-inline-code);
+    padding: 0.15em 0.35em;
+    font-size: 0.85em;
+  }
+`}</style>

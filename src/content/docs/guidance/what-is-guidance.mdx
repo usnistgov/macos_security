@@ -1,16 +1,79 @@
 ---
 title: What is Guidance?
-description: An overview of baselines and how to use them in the project.
-tableOfContents: false 
+description: Human-readable documentation generated from your baseline.
 ---
 
 import { Aside } from '@astrojs/starlight/components';
 
-**Guidance** provides clear documentation for security controls, describing what each control is, its purpose, and how it protects your systems.
+export const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : import.meta.env.BASE_URL + '/';
 
-- **Explanations of security controls:** Clarifies the intent and importance of each control, and how it contributes to securing macOS systems.
-- **Implementation steps:** Offers detailed instructions for configuring macOS settings to meet baseline requirements.
-- **Assessment procedures:** Outlines methods to verify that systems are properly configured and compliant with security objectives.
-- **References and rationale:** Includes links to relevant NIST standards, Apple documentation, and other authoritative sources to support each control.
+**Guidance** is the human-readable documentation generated from your baseline. It explains each security control: what it does, why it matters, how to implement it, and how to verify compliance.
 
-You can generate guidance files based on the created baseline in formats such as AsciiDoc, HTML, and PDF. These documents are often required by organizations for submission, enabling administrators to efficiently document and justify how the baseline is enforced and the reasoning behind each control.
+Once you have a baseline, run the `generate_guidance.py` script to create documentation in multiple formats.
+
+<Aside type="tip">
+Guidance documents are often required for audits and compliance submissions. They provide evidence that your organization understands and has implemented the required security controls.
+</Aside>
+
+---
+
+## Output Formats
+
+| Format | Description |
+|:-------|:------------|
+| **AsciiDoc (.adoc)** | Source format for the documentation |
+| **HTML (.html)** | Web-viewable documentation |
+| **PDF (.pdf)** | Printable format for auditors and compliance teams |
+
+---
+
+## What's Included
+
+Each guidance document contains:
+
+**Document sections:**
+- Foreword and scope
+- Authors and contributors
+- Acronyms and terminology
+
+**For each security rule:**
+
+| Section | Description |
+|:--------|:------------|
+| **Discussion** | What the control does and why it's important |
+| **Check** | How to verify the setting is correctly applied |
+| **Fix** | How to configure macOS to meet the requirement |
+| **Result** | Expected values when compliant |
+| **References** | Links to NIST 800-53, CIS, DISA STIG, and Apple documentation |
+| **Severity** | Impact level of the control |
+
+---
+
+## Example Use Cases
+
+- **Compliance audits** - Provide documentation showing how your systems meet framework requirements
+- **Security reviews** - Share implementation details with security teams
+- **Change management** - Document what settings are being applied and why
+- **Training** - Help administrators understand the security controls
+
+---
+
+## Next Steps
+
+- <a href={`${base}guidance/how-to-generate-guidance/`}>How to Generate Guidance</a> - Create guidance from your baseline
+- <a href={`${base}guidance/guidance-file-example/`}>Guidance File Example</a> - See a sample PDF output
+
+<style>{`
+  .sl-markdown-content th {
+    background: var(--sl-color-accent-low);
+    font-weight: 600;
+  }
+  .sl-markdown-content td, .sl-markdown-content th {
+    padding: 0.6rem 1rem;
+  }
+  .sl-markdown-content td code {
+    background: var(--sl-color-bg-inline-code);
+    padding: 0.15em 0.35em;
+    font-size: 0.85em;
+  }
+`}</style>

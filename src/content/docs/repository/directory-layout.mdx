@@ -1,83 +1,95 @@
 ---
-title: Directory Layout 
-description: A layout reference.
+title: Directory Layout
+description: Overview of the mSCP repository structure.
 ---
 
-import { FileTree } from '@astrojs/starlight/components';
+import { FileTree, Aside } from '@astrojs/starlight/components';
 
-## Repository Layout Overview
+export const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : import.meta.env.BASE_URL + '/';
 
-Below is a quick reference to the main directories in this repository and their purposes.
+This page describes the directory structure of the macOS Security Compliance Project repository.
 
-| Directory      | Description                                                                                  |
-| -------------- | -------------------------------------------------------------------------------------------- |
-| `baselines/`   | Baseline profiles containing all rules (e.g., NIST, CIS, DISA STIG, CMMC, CNSSI, indigo).    |
-| `build/`       | Output directory for generated scripts, documents, and mobileconfig files.                   |
-| `custom/`      | Custom rules and sections for organization-specific requirements.                            |
-| `includes/`    | Supporting YAML libraries for build scripts.                                                 |
-| `rules/`       | YAML files, one per rule, for securing the operating system.                                 |
-| `SCAP/`        | Makefile, scripts, and content for SCAP document generation.                                 |
-| `scripts/`     | Scripts for generating reports, baselines, and configurations.                               |
-| `sections/`    | YAML configurations for guide sections, mapping to rule categories.                          |
-| `templates/`   | AsciiDoc templates for generating documentation guides.                                      |
+---
+
+## Repository Structure
 
 <FileTree>
-- baselines/
-    - baseline.yaml
-- build/
-- custom/
-- includes/
-- rules/
-- SCAP/
-- scripts/
-- sections/
-- templates/
+- baselines/ - Baseline YAML files for compliance frameworks
+- build/ - Generated output files
+- custom/ - Organization-specific customizations
+- includes/ - Supporting YAML libraries and resources
+- rules/ - Individual rule YAML files
+- scripts/ - Generation and utility scripts
+- sections/ - Section definition files for guides
+- templates/ - AsciiDoc templates for documentation
 </FileTree>
 
 ---
 
-## Directory Details
+## Directory Reference
 
-### `baselines/`
-Contains baseline files for various standards and frameworks:
-- NIST SP 800-53 rev5 (Low, Moderate, High)
-- NIST SP 800-171 Rev2
-- DISA STIG
-- CIS Level 1 & 2
-- CIS Controls Version 8
-- CMMC Level 1 & 2
-- CNSSI 1253 (Low, Moderate, High)
-- indigo Base & High
-- A comprehensive baseline for all repository rules
+| Directory | Description |
+|:----------|:------------|
+| `baselines/` | Baseline profiles for NIST 800-53, CIS, DISA STIG, CMMC, and more |
+| `build/` | Output directory for generated scripts, documents, and profiles |
+| `custom/` | Custom rules and sections for organization-specific requirements |
+| `includes/` | Supporting YAML files and resources for build scripts |
+| `rules/` | YAML files defining individual security rules |
+| `scripts/` | Python scripts for generating content |
+| `sections/` | YAML files defining guide sections |
+| `templates/` | AsciiDoc templates for documentation |
 
-### `build/`
-Stores all generated outputs, such as documents and mobileconfig files.
+---
 
-### `custom/`
-For organization-specific customizations of rules and sections.  
-**Note:** Filenames must match the originals to override them during guide generation.
+## Rules Directory
 
-### `includes/`
-YAML-based libraries and supporting files for build scripts.
+The `rules/` directory contains subdirectories organized by category:
 
-### `rules/`
-Contains individual YAML files for each rule, organized by category:
-- **audit**: OpenBSM settings
-- **auth**: Smartcard authentication
-- **icloud**: Apple iCloud/Apple ID configuration
-- **os**: General OS settings
-- **pwpolicy**: Password policy enforcement
-- **supplemental**: Additional supporting information
-- **system_settings**: System Settings/Preferences configuration
+| Category | Description |
+|:---------|:------------|
+| `audit/` | OpenBSM auditing settings |
+| `auth/` | Authentication and smartcard settings |
+| `icloud/` | Apple iCloud and Apple ID configuration |
+| `os/` | General operating system settings |
+| `pwpolicy/` | Password policy enforcement |
+| `supplemental/` | Additional supporting information |
+| `system_settings/` | System Settings configuration |
 
-### `SCAP/`
-Resources for SCAP document generation, including XSL files, CPE OVAL/definitions, and scripts.
+---
 
-### `scripts/`
-Scripts for generating reports, baselines, and configurations, plus required resources.
+## Custom Directory
 
-### `sections/`
-YAML files defining guide sections, mapping to rule categories.
+The `custom/` directory mirrors the main structure for organization-specific overrides:
 
-### `templates/`
-AsciiDoc templates for generating documentation guides.
+<FileTree>
+- custom/
+    - rules/ - Custom rule overrides
+    - sections/ - Custom section overrides
+</FileTree>
+
+<Aside type="note">
+Custom files must use the **same filename** as the original to override during generation.
+</Aside>
+
+---
+
+## Next Steps
+
+- <a href={`${base}repository/rule-file-layout/`}>Rule File Layout</a> - Understand rule YAML structure
+- <a href={`${base}repository/sections-file-layout/`}>Sections File Layout</a> - Understand section YAML structure
+- <a href={`${base}repository/includes-directory/`}>Includes Directory</a> - Supporting files reference
+
+<style>{`
+  .sl-markdown-content th {
+    background: var(--sl-color-accent-low);
+    font-weight: 600;
+  }
+  .sl-markdown-content td, .sl-markdown-content th {
+    padding: 0.6rem 1rem;
+  }
+  .sl-markdown-content td code {
+    background: var(--sl-color-bg-inline-code);
+    padding: 0.15em 0.35em;
+    font-size: 0.85em;
+  }
+`}</style>

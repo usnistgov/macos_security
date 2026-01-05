@@ -1,17 +1,36 @@
 ---
 title: Generate Mapping
-description: A generate-mapping reference.
+description: Create custom rules and baselines for unsupported compliance frameworks.
 ---
 
 import { Steps, FileTree, Aside } from '@astrojs/starlight/components';
 
-The **generate mapping** script helps you quickly create custom rules and baselines for a compliance framework not published by the project. This is done by providing a CSV that maps controls from your framework (Column 1) to a supported framework (Column 2).
+export const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : import.meta.env.BASE_URL + '/';
 
-<Aside>
-💡 <strong>Tip:</strong> This is useful when you need to align your organization's controls with industry standards.
+The `generate_mapping.py` script creates custom rules and baselines for compliance frameworks not included in the project. You provide a CSV that maps your framework's controls to a supported framework (like NIST 800-53r5).
+
+<Aside type="tip">
+Use this when you need to align your organization's controls with frameworks the project doesn't directly support.
 </Aside>
 
+<Aside type="caution" title="Always Use the Correct Branch (mSCP 1.0)">
+Each macOS version has its own branch (`sequoia`, `sonoma`, `ventura`, etc.). **Never use the `main` branch** — it won't work for generating content.
+
+**mSCP 2.0 (currently in beta)** will remove the per-branch requirement and introduce easier installation methods.
+</Aside>
+
+---
+
 ## CSV Format
+
+Create a CSV with two columns:
+
+| Column | Description |
+|:-------|:------------|
+| **Column 1** | Your framework's control identifier |
+| **Column 2** | Corresponding controls from a supported framework |
+
+The first row should contain the framework names:
 
 ```csv
 800-171r2,800-53r5
@@ -21,59 +40,68 @@ The **generate mapping** script helps you quickly create custom rules and baseli
 3.1.4,AC-5
 ```
 
-- **Column 1:** Your framework's control identifier (e.g., 800-171r2 3.1.1)
-- **Column 2:** Supported framework controls (e.g., 800-53r5 AC-2)
+---
 
-<aside>
-By default, the script maps to <strong>NIST SP 800-53r5</strong>. Use the <code>-f</code> option to map to another supported framework.
-</aside>
+## Generate Custom Mapping
 
-## Generate Custom Rule Files
-    <Aside type="caution">
-      <strong>*Always use the branch matching your target OS version. Do not use the <code>main</code> branch for workflow or development.*</strong>
-    </Aside>
+<Steps>
 
-Run the script with your mapping CSV:
+1. **Run the mapping script**
 
-```shell
-./scripts/generate_mapping.py ~/Desktop/171-to-53.csv
+   ```bash
+   ./scripts/generate_mapping.py PATH_TO_CSV
+   ```
+
+   Example:
+   ```bash
+   ./scripts/generate_mapping.py ~/Desktop/171-to-53.csv
+   ```
+
+2. **Find your files**
+
+   | Output | Location |
+   |:-------|:---------|
+   | Custom rule files | `build/800-171r2/rules/` |
+   | Generated baseline | `build/baselines/800-171r2.yaml` |
+
+</Steps>
+
+---
+
+## Command Reference
+
+| Flag | Description |
+|:-----|:------------|
+| `-f FRAMEWORK` | Source framework to map from (default: `800-53r5`) |
+
+Example mapping to CIS Controls:
+
+```bash
+./scripts/generate_mapping.py ~/Desktop/cis-mapping.csv -f "cis/controls v8"
 ```
 
-Example output:
-```
-Mapping CSV: /Users/mscp/Desktop/171-to-53.csv
-Source compliance framework: 800-53r5
-auth_pam_login_smartcard_enforce - 800-53r5 IA-2(1) maps to 800-171r2 3.5.3
-auth_pam_login_smartcard_enforce - 800-53r5 IA-2(8) maps to 800-171r2 3.5.4
-auth_smartcard_allow - 800-53r5 IA-2(1) maps to 800-171r2 3.5.3
-auth_pam_sudo_smartcard_enforce - 800-53r5 IA-2(1) maps to 800-171r2 3.5.3
-auth_pam_sudo_smartcard_enforce - 800-53r5 IA-2(8) maps to 800-171r2 3.5.4
-auth_smartcard_enforce - 800-53r5 IA-2 maps to 800-171r2 3.5.1
-...
-sysprefs_improve_siri_dictation_disable - 800-53r5 AC-20 maps to 800-171r2 3.1.20
-sysprefs_improve_siri_dictation_disable - 800-53r5 CM-7 maps to 800-171r2 3.4.6
-sysprefs_improve_siri_dictation_disable - 800-53r5 CM-7(1) maps to 800-171r2 3.4.7
-800-171r2.yaml baseline file created in build/800-171r2/baseline/
-Move all of the folders in rules into the custom folder.
-```
-
-<FileTree>
-- build/
-   - 800-171r2/
-     - baseline/
-        - 800-171r2.yaml
-- rules/
-    - ... (move generated folders here into your custom folder)
-</FileTree>
-
-<Aside>
-<strong>Note:</strong> Move all generated folders in <code>rules/</code> into your <code>custom</code> folder for further customization.
+<Aside type="note">
+The `-f` value must match a column header in your CSV.
 </Aside>
 
-## Mapping to Other Frameworks
+---
 
-For frameworks such as **CIS Controls v8**, set the Column 2 header to `cis/controls v8` and use the same value with the `-f` option.
+## Next Steps
 
-<aside>
-Example: <code>./scripts/generate_mapping.py ~/Desktop/cis-mapping.csv -f "cis/controls v8"</code>
-</aside>
+- <a href={`${base}baselines/tailoring-a-baseline/`}>Tailoring a Baseline</a> - Customize the generated baseline
+- <a href={`${base}guidance/how-to-generate-guidance/`}>How to Generate Guidance</a> - Generate documentation from your baseline
+
+<style>{`
+  .sl-markdown-content th {
+    background: var(--sl-color-accent-low);
+    font-weight: 600;
+  }
+  .sl-markdown-content td, .sl-markdown-content th {
+    padding: 0.6rem 1rem;
+  }
+  .sl-markdown-content td code {
+    background: var(--sl-color-bg-inline-code);
+    padding: 0.15em 0.35em;
+    font-size: 0.85em;
+  }
+`}</style>
