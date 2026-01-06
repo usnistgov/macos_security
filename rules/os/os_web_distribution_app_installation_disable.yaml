@@ -1,7 +1,7 @@
 id: os_web_distribution_app_installation_disable
 title: Ensure the Ability to Install Apps Directly from the Web is Set to Disabled
 discussion: |
-  Web distrubtion of app installation _MUST_ be disabled.
+  Web distribution of app installation _MUST_ be disabled.
 check: ' '
 fix: |
   This is implemented by a Configuration Profile.

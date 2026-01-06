@@ -25,7 +25,7 @@ discussion: |
   |AIOS-26-014700| Apple iOS/iPadOS 26 must have DOD root and intermediate PKI certificates installed.
   |AIOS-26-015500| Apple iOS/iPadOS 26 must disable the download of iOS/iPadOS beta updates.
   |AIOS-26-017700| Apple iOS/iPadOS 26 must have Mobile Threat Detection app installed.
-  |AIOS-26-018300| Apple iOS/iPadOS 26 must be configurated to disable Wi-Fi Aware.
+  |AIOS-26-018300| Apple iOS/iPadOS 26 must be configured to disable Wi-Fi Aware.
   |===
 
   These are controls that will not be configurable if the following are applied.
