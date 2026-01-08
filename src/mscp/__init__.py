@@ -70,6 +70,7 @@ __all__ = [
     "guidance",
     "local_report",
     "mapping",
+    "language",
     "parse_cli",
     "validate_yaml_file",
     "set_logger",

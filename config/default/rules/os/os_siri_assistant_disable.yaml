@@ -7,39 +7,23 @@ discussion: |
 references:
   nist:
     cce:
-<<<<<<< HEAD
       ios_26:
-<<<<<<<< HEAD:config/default/rules/os/os_siri_assistant_disable.yaml
         - CCE-95689-6
       ios_18:
         - CCE-94551-9
-========
-        - CCE-95526-0
->>>>>>>> b1441058 (feat: Add partial custom rule submission):config/default/rules/os/os_siri_assistant_diable.yaml
       ios_17:
         - CCE-93499-2
-=======
-      ios_18:
-        - CCE-94551-9
->>>>>>> b1441058 (feat: Add partial custom rule submission)
     800-53r5:
       - AC-20
       - CM-7
       - CM-7(1)
       - SC-7(10)
-<<<<<<< HEAD
-<<<<<<<< HEAD:config/default/rules/os/os_siri_assistant_disable.yaml
-=======
->>>>>>> b1441058 (feat: Add partial custom rule submission)
   disa:
     cci:
       - CCI-000366
     disa_stig:
-<<<<<<< HEAD
       ios_26:
         - AIOS-26-016100
-=======
->>>>>>> b1441058 (feat: Add partial custom rule submission)
       ios_18:
         - AIOS-18-016100
         - AIOS-18-016300
@@ -47,7 +31,6 @@ references:
       - 'FMT_MOF_EXT.1.2 #47'
   bsi:
     indigo:
-<<<<<<< HEAD
       ios_17:
         - ANNEX K
       ios_26:
@@ -63,12 +46,6 @@ platforms:
           severity: high
         - name: indigo_high
           severity: high
-=======
-      ios_18:
-        - ANNEX K
-platforms:
-  iOS:
->>>>>>> b1441058 (feat: Add partial custom rule submission)
     '18.0':
       supervised: false
       benchmarks:
@@ -78,13 +55,6 @@ platforms:
           severity: high
         - name: indigo_high
           severity: high
-<<<<<<< HEAD
-========
-platforms:
-  iOS:
-    '26.0':
-      supervised: false
->>>>>>>> b1441058 (feat: Add partial custom rule submission):config/default/rules/os/os_siri_assistant_diable.yaml
     '17.0':
       supervised: false
       benchmarks:
@@ -92,8 +62,6 @@ platforms:
           severity: high
         - name: indigo_high
           severity: high
-=======
->>>>>>> b1441058 (feat: Add partial custom rule submission)
     introduced: '5.0'
 tags:
   - 800-53r5_low

@@ -4,16 +4,18 @@
 from __future__ import annotations
 
 import argparse
-import platform
 import sys
 from pathlib import Path
+from platform import mac_ver
 
 # Local python modules
+from . import __version__
 from .common_utils import logger, set_logger, supported_languages, validate_yaml_file
 from .generate import (
     generate_baseline,
     generate_checklist,
     generate_guidance,
+    generate_language,
     generate_local_report,
     generate_mapping,
     generate_scap,
@@ -36,14 +38,23 @@ class Customparser(argparse.ArgumentParser):
         sys.exit(2)
 
 
-def get_macos_version() -> float:
-    version_str, _, _ = platform.mac_ver()
-    if version_str:
-        major = int(version_str.split(".")[0])
+def get_mac_os_version() -> float:
+    """
+    Retrieves the macOS version as a float.
+
+    Returns:
+        float: The macOS version.
+    """
+    version_str = mac_ver()[0]
+    try:
+        major = version_str.split(".")[0]
         return float(major)
+    except (ValueError, IndexError):
+        logger.error(f"Unable to parse macOS version from string: {version_str}")
+        sys.exit()
 
 
-def validate_file(arg: str) -> Path | None:
+def validate_file(arg: str) -> Path:
     if (file := Path(arg)).is_file():
         return file
     else:
@@ -105,7 +116,7 @@ def parse_cli(program: str | None = "mscp") -> None:
 
     parser.add_argument(
         "--os_version",
-        default=get_macos_version(),
+        default=get_mac_os_version(),
         type=float,
         help="Operating system version (eg: 14.0, 15.0).",
     )
@@ -396,6 +407,39 @@ def parse_cli(program: str | None = "mscp") -> None:
         action="store_true",
     )
 
+    language_parser: argparse.ArgumentParser = subparsers.add_parser(
+        "language",
+        help="List supported languages for localization.",
+        parents=[parent_parser],
+        add_help=True,
+    )
+    language_parser.set_defaults(func=generate_language)
+
+    language_parser.add_argument(
+        "baseline",
+        default=None,
+        help="Baseline YAML file used to create the guide.",
+        type=validate_file,
+    )
+    language_parser.add_argument(
+        "-c",
+        "--custom",
+        action="store_true",
+        help="Load custom configurations (passed to Baseline.from_file)",
+    )
+    language_parser.add_argument(
+        "-o",
+        "--output",
+        default="messages.pot",
+        help="Output POT path (default: messages.pot)",
+    )
+    language_parser.add_argument(
+        "-d",
+        "--domain",
+        default="messages",
+        help="gettext domain (default: messages)",
+    )
+
     try:
         args = parser.parse_args()
 
@@ -440,4 +484,5 @@ def parse_cli(program: str | None = "mscp") -> None:
 if __name__ == "__main__":
     logger.enable("mscp")
 
-    sys.exit(parse_cli())
+    raise SystemExit(parse_cli())
+    # sys.exit(parse_cli())

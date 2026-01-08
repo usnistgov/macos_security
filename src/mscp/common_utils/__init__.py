@@ -29,6 +29,7 @@ from .file_handling import (
     remove_dir,
     remove_dir_contents,
     remove_file,
+    yaml,
 )
 from .localization import configure_localization_for_yaml, supported_languages
 from .logger_instance import logger
@@ -57,6 +58,7 @@ __all__ = [
     "remove_dir",
     "remove_dir_contents",
     "remove_file",
+    "yaml",
     "run_command",
     "sanitize_input",
     "prompt_for_odv",
@@ -77,5 +79,4 @@ __all__ = [
     "deep_merge",
     "supported_languages",
     "configure_localization_for_yaml",
-    "collect_overrides",
 ]

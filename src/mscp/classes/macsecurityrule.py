@@ -7,7 +7,7 @@ from collections.abc import MutableMapping
 from copy import deepcopy
 from enum import StrEnum
 from pathlib import Path
-from typing import Any
+from typing import Any, cast
 from uuid import uuid4
 
 # Additional python modules
@@ -52,8 +52,7 @@ class NistReferences(BaseModelWithAccessors):
     nist_800_53r5: list[str] | None = None
     nist_800_171r3: list[str] | None = None
 
-    def __init__(self, **data):
-        super().__init__(**data)
+    def model_post_init(self, __context) -> None:
         if self.cce:
             self.cce = sorted(self.cce)
         if self.nist_800_53r5:
@@ -69,8 +68,7 @@ class DisaReferences(BaseModelWithAccessors):
     cmmc: list[str] | None = None
     sfr: list[str] | None = None
 
-    def __init__(self, **data):
-        super().__init__(**data)
+    def model_post_init(self, __context) -> None:
         if self.cci:
             self.cci = sorted(self.cci)
         if self.srg:
@@ -87,8 +85,7 @@ class CisReferences(BaseModelWithAccessors):
     benchmark: list[str] | None = None
     controls_v8: list[float] | None = None
 
-    def __init__(self, **data: Any) -> None:
-        super().__init__(**data)
+    def model_post_init(self, __context) -> None:
         if self.benchmark:
             self.benchmark = sorted(self.benchmark)
         if self.controls_v8:
@@ -98,8 +95,7 @@ class CisReferences(BaseModelWithAccessors):
 class bsiReferences(BaseModelWithAccessors):
     indigo: list[str] | None = None
 
-    def __init__(self, **data: Any) -> None:
-        super().__init__(**data)
+    def model_post_init(self, __context) -> None:
         if self.indigo:
             self.indigo = sorted(self.indigo)
 
@@ -127,59 +123,6 @@ class References(BaseModelWithAccessors):
 
 
 class Macsecurityrule(BaseModelWithAccessors):
-    """
-    Macsecurityrule
-
-    A data model representing a macOS security rule, including its metadata, configuration, and mechanisms for enforcement and customization.
-
-    Attributes:
-        title (str): The title of the security rule.
-        rule_id (str): Unique identifier for the rule.
-        severity (str): Severity level of the rule.
-        discussion (str): Detailed discussion or rationale for the rule.
-        references (References): Reference information (e.g., NIST, CIS) associated with the rule.
-        odv (dict[str, Any] | None): Organizational Defined Values for the rule, if applicable.
-        finding (bool): Indicates if the rule is a finding.
-        tags (list[str]): List of tags categorizing the rule.
-        result_value (Any): The expected result value for compliance.
-        mobileconfig (bool): Whether the rule can be enforced via a configuration profile.
-        mobileconfig_info (list[Mobileconfigpayload]): Information about the configuration profile payloads.
-        ddm_info (dict[str, Any]): Declarative Device Management information.
-        customized (list[str]): List of fields customized by overrides.
-        mechanism (str): The enforcement mechanism for the rule (e.g., Manual, Script, Configuration Profile).
-        section (str | None): The section or category to which the rule belongs.
-        uuid (str): Universally unique identifier for the rule instance.
-        platforms (dict[str, Platforms]): Platform-specific data for the rule.
-        os_name (str): Name of the operating system.
-        os_type (str): Type of the operating system.
-        os_version: float = Field(default_factory=float)
-        check (str): The commands to evaluate the state of a rule.
-        fix: (str): The commands to remediate and set the configuration for a rule.
-        severity: (dict[str, Any]): The category for impact assigned to a rule for associated benchmarks.
-        default_state: (str): The command to restore the system to the default configuration for a rule.
-
-    Class Methods:
-        load_rules: Load Macsecurityrule objects from YAML files for the given rule IDs.
-        collect_all_rules: Populate Macsecurityrule objects from YAML files in a folder, mapping folder names to section filenames.
-        odv_query: Interactively query the user to include/exclude rules and set Organizational Defined Values (ODVs).
-        get_tags: Generate a sorted list of unique tags from the provided rules.
-
-    Instance Methods:
-        _format_mobileconfig_fix: Generate a formatted XML-like string for the `mobileconfig_info` field.
-        _fill_in_odv: Replace placeholders ('$ODV') in the instance attributes with the appropriate override value.
-        format_payload: Format a single payload type and its content as a string.
-        _add_payload_content: Add payload content as XML elements to the parent node.
-        _create_value_element: Create an XML element based on the type of the provided value.
-        write_odv_custom_rule: Write a custom ODV rule to a YAML file.
-        remove_odv_custom_rule: Remove the custom rule from the ODV and update the corresponding YAML file.
-        to_yaml: Serialize the rule to a YAML file, preserving key order and cleaning references.
-        to_dict: Convert the Macsecurityrule instance to a dictionary.
-        _clean_references: Clean the references dictionary by removing any keys with values that are None or in ("NA", "N/A").
-
-    Usage:
-        This class is used to represent, load, manipulate, and serialize macOS security rules, supporting both standard and custom configurations, and providing mechanisms for user interaction and compliance reporting.
-    """
-
     title: str
     rule_id: str
     discussion: str
@@ -200,8 +143,14 @@ class Macsecurityrule(BaseModelWithAccessors):
     os_version: float = Field(default_factory=float)
     check: str | None = None
     fix: str | None = None
-    severity: dict[str, Any] | None = None
-    default_state: str | None = None
+    severity: str | None = None
+    title_key: str | None = None
+    discussion_key: str | None = None
+
+    def model_post_init(self, __context) -> None:
+        slug = self.slugify(self.rule_id, default="rule")
+        self.title_key = self.l10n_key("rule", slug, "title")
+        self.discussion_key = self.l10n_key("rule", slug, "discussion")
 
     @classmethod
     def load_rules(
@@ -215,22 +164,6 @@ class Macsecurityrule(BaseModelWithAccessors):
         baseline_tag: str | None = None,
         language: str = "en",
     ) -> list["Macsecurityrule"]:
-        """
-        Load Macsecurityrule objects from YAML files for the given rule IDs.
-
-        Args:
-            rule_ids (list[str]): List of rule IDs to load.
-            os_type (str): Operating system name.
-            os_version (int): Operating system version.
-            parent_values (str): Parent values to apply when filling in ODV.
-            section (str): Section name for the rules.
-            language (str): Language used for rule text.
-            custom (bool): Whether to include custom rules.
-
-        Returns:
-            list[Macsecurityrule]: A list of loaded Macsecurityrule objects.
-        """
-
         logger.debug("=== LOADING {} RULES ===", section.upper())
 
         rules: list[Macsecurityrule] = []
@@ -282,16 +215,16 @@ class Macsecurityrule(BaseModelWithAccessors):
                 rule_yaml["customized"] = True
 
             elif custom_file or default_file:
-                rule_file: Path = custom_file or default_file
+                rule_file: Path = cast(Path, custom_file or default_file)
                 rule_yaml = open_file(rule_file) or CommentedMap()
-                if custom_file:
+                if custom_file and rule_yaml:
                     rule_yaml["customized"] = True
 
             else:
                 logger.warning("Rule file not found for rule: {}", rule_id)
                 continue
 
-            if os_type not in rule_yaml.get("platforms", {}):
+            if rule_yaml is None or os_type not in rule_yaml.get("platforms", {}):
                 logger.debug(
                     "Rule {} does not support the OS type: {}. Skipping rule.",
                     rule_id,
@@ -590,19 +523,6 @@ class Macsecurityrule(BaseModelWithAccessors):
         tailoring: bool = False,
         parent_values: str = "default",
     ) -> list["Macsecurityrule"]:
-        """
-        Populate Macsecurityrule objects from YAML files in a folder.
-        Map folder names to specific section filenames for the `section` attribute.
-
-        Args:
-            os_type (str): Operating system name.
-            os_version (int): Operating system version.
-            parent_values (str): Parent values for rule initialization.
-
-        Returns:
-            list[Macsecurityrule]: A list of Macsecurityrule instances.
-        """
-
         logger.info("=== LOADING ALL RULES ===")
 
         rules: list[Macsecurityrule] = []
@@ -759,17 +679,6 @@ class Macsecurityrule(BaseModelWithAccessors):
         payload_content: list[dict] | dict,
         jinja_filter: bool = False,
     ) -> str:
-        """
-        Format a single payload type and its content.
-
-        Args:
-            payload_type (str): The type of the payload.
-            payload_content (dict): The content of the payload.
-
-        Returns:
-            str: A formatted string representing the payload.
-        """
-
         output: str = ""
 
         if not jinja_filter:
@@ -801,7 +710,6 @@ class Macsecurityrule(BaseModelWithAccessors):
             .strip()
             .replace("<root>", "")
             .replace("</root>", "")
-            + "\n"
         )
 
         if not jinja_filter:

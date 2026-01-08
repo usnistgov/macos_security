@@ -22,8 +22,15 @@ class Author(BaseModelWithAccessors):
 
 class Profile(BaseModelWithAccessors):
     section: str
+    section_key: str | None = None
     description: str
+    description_key: str | None = None
     rules: list[Macsecurityrule]
+
+    def model_post_init(self, __context) -> None:
+        slug = self.slugify(self.section, default="profile")
+        self.section_key = self.l10n_key("profile", slug, "section")
+        self.description_key = self.l10n_key("profile", slug, "description")
 
 
 class Baseline(BaseModelWithAccessors):
@@ -34,6 +41,13 @@ class Baseline(BaseModelWithAccessors):
     description: str = ""
     platform: dict[str, Any] = {}
     parent_values: str = ""
+    title_key: str | None = None
+    description_key: str | None = None
+
+    def model_post_init(self, __context) -> None:
+        slug = self.slugify(self.name, default="baseline")
+        self.title_key = self.l10n_key("baseline", slug, "title")
+        self.description_key = self.l10n_key("baseline", slug, "description")
 
     @classmethod
     def from_file(

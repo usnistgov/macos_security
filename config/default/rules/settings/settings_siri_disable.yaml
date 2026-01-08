@@ -3,7 +3,6 @@ title: Disable Siri
 discussion: |
   Support for Siri is non-essential and _MUST_ be disabled.
 
-
   The information system _MUST_ be configured to provide only essential capabilities.
 references:
   nist:

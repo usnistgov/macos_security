@@ -1,7 +1,9 @@
-{{ "== Acronyms and Definitions" if format == "adoc" else "## Acronyms and Definitions" }}
+{% from "macros/common_macros.jinja" import h2, h3, render_desc %}
 
-{% if format == "adoc" %}
-.Acronyms and Abbreviations
+{{ h2(_("Acronyms and Definitions")) }}
+
+{% if output_format == "adoc" %}
+.{{ _("Acronyms and Abbreviations") }}
 [width="100%",cols="1,3"]
 |===
 {% for acronym in acronyms %}
@@ -9,33 +11,33 @@
 {% endfor %}
 |===
 
-.Definitions
+.{{ _("Definitions") }}
 [width="100%",cols="1,3"]
 |===
 {% for term in terminology %}
 | {{ term.term }} | {{ term.definition }}
 {% endfor %}
 |===
-{% elif format == "markdown" %}
-### Acronyms and Abbreviations
+{% elif output_format == "markdown" %}
+{{ h3(_("Acronyms and Abbreviations")) }}
 
 <table>
 {% for acronym in acronyms %}
-  <tr>
-    <td>{{ acronym.term }}</td>
-    <td>{{ acronym.definition }}</td>
-  </tr>
+<tr>
+<td>{{ acronym.term }}</td>
+<td>{{ acronym.definition }}</td>
+</tr>
 {% endfor %}
 </table>
 
-### Definitions
+{{ h3(_("Definitions")) }}
 
 <table>
-  {% for term in terminology %}
-  <tr>
-    <td>{{ term.term }}</td>
-    <td>{{ term.definition }}</td>
-  </tr>
-  {% endfor %}
+{% for term in terminology %}
+<tr>
+<td>{{ term.term }}</td>
+<td>{{ term.definition }}</td>
+</tr>
+{% endfor %}
 </table>
 {% endif %}

@@ -1,0 +1,34 @@
+{# macros/list_macros.jinja #}
+
+{# Wraps group_ulify output for MD vs AsciiDoc #}
+{% macro grouped_list(elements, output_format) -%}
+{% if not elements %}
+{# nothing to render #}
+{% else %}
+{% set fmt = (output_format or "") | lower %}
+{% set base = elements | group_ulify %}
+
+{% if fmt in ["md", "markdown"] %}
+{{ base | replace("\n", "<br />") }}
+{% else %}
+{{ base }}
+{% endif %}
+{% endif %}
+{%- endmacro %}
+
+
+{# Wraps render_rules output for MD vs AsciiDoc #}
+{% macro rules_list(rule_set, output_format) -%}
+{% if not rule_set %}
+{# nothing to render #}
+{% else %}
+{% set fmt = (output_format or "") | lower %}
+{% set base = rule_set | render_rules %}
+
+{% if fmt in ["md", "markdown"] %}
+{{ base | replace("\n", "<br />") }}
+{% else %}
+{{ base }}
+{% endif %}
+{% endif %}
+{%- endmacro %}

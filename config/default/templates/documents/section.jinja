@@ -1,17 +1,9 @@
-{% if format == "adoc" %}
-== {{ profile.section }}
+{% from "macros/common_macros.jinja" import h2, render_desc %}
+{% set desc = t(profile.description_key, profile.description) %}
+{{ h2(t(profile.section_key, profile.section)) }}
 
-{{ profile.description }}
+{{ render_desc(desc) }}
 
-{% for rule in profile.rules +%}
-{% include "adoc/rule.adoc.jinja" %}
-{%+ endfor %}
-{% elif format == "markdown" %}
-## {{ profile.section }}
-
-{{ profile.description | asciidoc_to_markdown | trim }}
-
-{% for rule in profile.rules +%}
-{% include "markdown/rule.md.jinja" %}
-{%+ endfor %}
-{% endif %}
+{% for rule in profile.rules %}
+{% include "documents/rule.jinja" %}
+{% endfor %}

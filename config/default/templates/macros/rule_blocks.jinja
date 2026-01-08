@@ -1,0 +1,289 @@
+{# templates/macros/rule_blocks.jinja #}
+{% import "macros/list_macros.jinja" as lm %}
+{% import "macros/common_macros.jinja" as cm %}
+
+{% macro code_block(lang, content, output_format) -%}
+{% set fmt = (output_format or "") | lower %}
+
+{% if fmt in ["md", "markdown"] -%}
+```{{ lang }}
+{{ content }}
+```
+{%- elif fmt in ["adoc", "asciidoc"] -%}
+[source,{{ lang }}{% if lang == "bash" %},options="nowrap"{% endif %}]
+----
+{{ content }}
+----
+{%- else -%}
+{{ content }}
+{%- endif %}
+{%- endmacro %}
+
+{# Creates the header of the rule #}
+{% macro rule_header(rule, output_format) -%}
+{{ cm.h3(rule.title) }}
+{% if is_supplemental %}
+{{ rule.discussion | include_replace if output_format == "adoc" else rule.discussion | include_replace | asciidoc_to_markdown }}
+{% else %}
+{{ rule.discussion if output_format == "adoc" else rule.discussion | asciidoc_to_markdown }}
+{% endif %}
+{% if rule.mechanism == "manual" %}
+{{ ("NOTE:" if output_format == "adoc" else "> **NOTE**:") }} {{ _("This rule is marked as manual and may not be able to be automated. It is also excluded in the compliance scan and will not report any results.") }}
+{% endif %}
+{%- endmacro %}
+
+{# Creates the check block of the rule #}
+{% macro rule_check(rule, os_name, check_shell, output_format) -%}
+{% if os_name == "macos" %}
+To check the state of the system, run the following command(s):
+{% if check_shell is not none %}
+{% set cmd = check_shell | safe %}
+{% else %}
+{% set cmd = rule.check | replace("\\\\", "\\") | replace('\\"', '"') | trim | safe %}
+{% endif %}
+{{ code_block("bash", cmd, output_format) }}
+
+If the result is not _{{ rule.result_value }}_, this is a finding.
+{% else %}
+{{ rule.check if rule.check is not none }}
+{% endif %}
+{%- endmacro %}
+
+{# Creates the remediation block for the rule #}
+{% macro remediation(rule, rc, os_name, output_format) -%}
+{# Example using the code_block helper we already have #}
+{# CASE 1: No mobileconfig, but some kind of fix (text or shell) #}
+{% if not rc.has_mobileconfig and (rc.has_fix_text or rc.has_fix_shell) %}
+{% set fix_text = rule.fix if rc.has_fix_text else rc.fix_shell %}
+{{ code_block("bash", fix_text, output_format) }}
+
+{# CASE 2: Additional info + some kind of fix (prefer shell) #}
+{% elif rc.has_additional and (rc.has_fix_shell or rc.has_fix_text) %}
+{% if rc.has_fix_shell %}
+{{ code_block("bash", rc.fix_shell, output_format) }}
+{% elif rc.has_fix_text %}
+{{ code_block("bash", rule.fix, output_format) }}
+{% endif %}
+
+{% if output_format in ["md", "markdown"] %}
+{{ rc.additional_info | asciidoc_to_markdown | trim }}
+{% else %}
+{{ rc.additional_info }}
+{% endif %}
+
+{# CASE 3: Additional info only #}
+{% elif rc.has_additional %}
+{% if output_format in ["md", "markdown"] %}
+{{ rc.additional_info | asciidoc_to_markdown | trim }}
+{% else %}
+{{ rc.additional_info }}
+{% endif %}
+
+{# CASE 4: mobileconfig available (+ optional shell fix) #}
+{% elif rc.has_mobileconfig %}
+{% if rc.has_fix_shell %}
+{{ code_block("bash", rc.fix_shell, output_format) }}
+{% endif %}
+
+{{ code_block("xml", rule.mobileconfig_info | mobileconfig_payloads_to_xml, output_format) }}
+
+{# CASE 5: fallback (macOS text fix, else mobileconfig if present) #}
+{% else %}
+{% if os_name == "macos" and rc.has_fix_text %}
+{{ rule.fix }}
+{% elif rc.has_mobileconfig %}
+{{ code_block("xml", rule.mobileconfig_info | mobileconfig_payloads_to_xml, output_format) }}
+{% endif %}
+{% endif %}
+{%- endmacro %}
+
+{# Creates the References section of the rule #}
+{% macro rule_references(rule, rc, baseline, custom, show_all_tags, output_format) -%}
+{% set fmt = (output_format or "") | lower %}
+
+{# per-framework visibility flags #}
+{% set show_171    = rc.show_171 %}
+{% set show_stig   = rc.show_stig %}
+{% set show_cis    = rc.show_cis %}
+{% set show_indigo = rc.show_indigo %}
+{% set show_cmmc   = rc.show_cmmc %}
+
+{% if fmt in ["md", "markdown"] %}
+<table class="outer-table" border="1">
+<tr>
+<td>ID</td>
+<td>{{ rule.rule_id }}</td>
+</tr>
+{% if rule.severity is not none and (rule.tags not in rc.check_tags) %}
+<tr>
+<td>Severity</td>
+<td>{{ rule.severity }}</td>
+</tr>
+{% endif %}
+<tr>
+<td>References</td>
+<td>
+<table class="inner-table" border="0">
+{% if rule.references.nist.nist_800_53r5 is not none %}
+<tr>
+<td><strong>800-53r5</strong></td>
+<td>{{ lm.grouped_list(rule.references.nist.nist_800_53r5, output_format) }}</td>
+</tr>
+{% endif %}
+{% if show_171 and rule.references.nist.nist_800_171r3 is not none %}
+<tr>
+<td><strong>800-171r3</strong></td>
+<td>{{ lm.rules_list(rule.references.nist.nist_800_171r3, output_format)}}</td>
+</tr>
+{% endif %}
+{% if show_stig and rule.references.disa.disa_stig is not none %}
+<tr>
+<td><strong>DISA STIG(s)</strong></td>
+<td>{{ lm.rules_list(rule.references.disa.disa_stig, output_format)}}</td>
+</tr>
+{% endif %}
+{% if show_stig and rule.references.disa.sfr is not none %}
+<tr>
+<td><strong>SFR</strong></td>
+<td>{{ lm.rules_list(rule.references.disa.sfr, output_format)}}</td>
+</tr>
+{% endif %}
+{% if show_cis and rule.references.cis.benchmark is not none %}
+<tr>
+<td><strong>CIS Benchmark</strong></td>
+<td>{{ lm.rules_list(rule.references.cis.benchmark, output_format)}}</td>
+</tr>
+{% endif %}
+{% if show_cis and rule.references.cis.controls_v8 is not none %}
+<tr>
+<td><strong>CIS Controls V8</strong></td>
+<td>{{ lm.rules_list(rule.references.cis.controls_v8, output_format)}}</td>
+</tr>
+{% endif %}
+{% if show_indigo and rule.references.bsi.indigo is not none %}
+<tr>
+<td><strong>indigo</strong></td>
+<td>{{ lm.rules_list(rule.references.bsi.indigo, output_format)}}</td>
+</tr>
+{% endif %}
+{% if show_cmmc and rule.references.disa.cmmc is not none %}
+<tr>
+<td><strong>CMMC</strong></td>
+<td>{{ lm.rules_list(rule.references.disa.cmmc, output_format)}}</td>
+</tr>
+{% endif %}
+{% if rule.references.nist.cce is not none %}
+<tr>
+<td><strong>CCE</strong></td>
+<td>{{ lm.rules_list(rule.references.nist.cce, output_format)}}</td>
+</tr>
+{% endif %}
+{% if custom and rule.references.custom_refs is not none %}
+<tr>
+<td><strong>Custom References</strong></td>
+<td>{{ lm.rules_list(rule.references.custom_refs, output_format)}}</td>
+</tr>
+{% endif %}
+{% if rule.tags is not none and show_all_tags %}
+<tr>
+<td><strong>TAGS</strong></td>
+<td>{{ lm.rules_list(rule.tags, output_format)}}</td>
+</tr>
+{% endif %}
+</table>
+</td>
+</tr>
+</table>
+{% elif fmt in ["adoc", "asciidoc"] %}
+[cols="15%h, 85%a"]
+|===
+
+|ID
+|{{ rule.rule_id }}
+{% if rule.severity is not none and (rule.tags not in rc.check_tags) %}
+|Severity
+|{{ rule.severity }}
+{% endif %}
+|References
+|
+
+[cols="20%h,80%a"]
+[frame="none"]
+[grid="cols"]
+!===
+
+!800-53r5
+!
+{{ lm.grouped_list(rule.references.nist.nist_800_53r5, output_format) if rule.references.nist.nist_800_53r5 is not none }}
+
+{% if show_171 and rule.references.nist.nist_800_171r3 is not none %}
+!800-171r3
+!
+{{ lm.rules_list(rule.references.nist.nist_800_171r3, output_format)}}
+{% endif %}
+
+{% if show_stig and rule.references.disa.disa_stig is not none %}
+!DISA STIG(s)
+!
+{{ lm.rules_list(rule.references.disa.disa_stig, output_format) }}
+{% endif %}
+
+{% if show_stig and rule.references.disa.sfr is not none %}
+!SFR
+!
+{{ lm.rules_list(rule.references.disa.sfr, output_format) }}
+{% endif %}
+
+{% if show_cis and rule.references.cis.benchmark is not none %}
+!CIS Benchmark
+!
+{{ lm.rules_list(rule.references.cis.benchmark, output_format) }}
+{% endif %}
+
+{% if show_cis and rule.references.cis.controls_v8 is not none %}
+!CIS Controls V8
+!
+{{ lm.rules_list(rule.references.cis.controls_v8, output_format) }}
+{% endif %}
+
+{% if show_indigo and rule.references.bsi.indigo is not none %}
+!indigo
+!
+{{ lm.rules_list(rule.references.bsi.indigo, output_format) }}
+{% endif %}
+
+{% if show_cmmc and rule.references.disa.cmmc is not none %}
+!CMMC
+!
+{{ lm.rules_list(rule.references.disa.cmmc, output_format) }}
+{% endif %}
+
+{% if rule.references.nist.cce is not none %}
+!CCE
+!
+{{ lm.rules_list(rule.references.nist.cce, output_format) }}
+{% endif %}
+
+{% if custom and rule.references.custom_refs is not none %}
+!Custom References
+!
+{{ lm.rules_list(rule.references.custom_refs, output_format) }}
+{% endif %}
+
+{% if rule.tags is not none and show_all_tags %}
+!TAGS
+!
+{{ lm.rules_list(rule.tags, output_format) }}
+{% endif %}
+
+!===
+
+|
+|===
+{% else %}
+ID: {{ rule.rule_id }}
+{% if rule.severity is not none and (rule.tags not in rc.check_tags) %}
+Severity: {{ rule.severity }}
+{% endif %}
+{% endif %}
+{%- endmacro %}

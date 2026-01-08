@@ -2,15 +2,13 @@
 
 # Standard python modules
 import gettext
-import yaml
 from pathlib import Path
 from typing import Any
 
 # Local python modules
 from .config import config
+from .file_handling import open_file, yaml
 from .logger_instance import logger
-from .file_handling import open_file
-
 
 # Global variable to store the gettext localization function
 _localization_function = gettext.gettext
@@ -28,7 +26,7 @@ def setup_gettext_localization(language: str = "en") -> None:
     global _localization_function
 
     domain: str = "messages"
-    localedir: str = config["defaults"]["locales_dir"]
+    localedir: str = config["localization_dir"]
 
     try:
         # Set up the localization
@@ -90,8 +88,7 @@ def register_yaml_constructors() -> None:
     This function should be called once to enable !localize tag support
     in YAML files.
     """
-    yaml.add_constructor("!localize", localize_constructor)
-    yaml.SafeLoader.add_constructor("!localize", localize_constructor)
+    yaml.constructor.add_constructor("!localize", localize_constructor)
 
 
 def configure_localization_for_yaml(
@@ -128,7 +125,7 @@ def get_supported_languages() -> list[str]:
         list[str]: A list containing the available supported languages for localization.
     """
 
-    localization_path = Path(config["defaults"]["locales_dir"])
+    localization_path = Path(config["localization_dir"])
 
     languages: list[str] = ["en"]
     logger.debug(
@@ -147,9 +144,9 @@ def get_language_data(
     language: str,
     category: str,
 ) -> dict[str, Any]:
-    language_file = Path(
-        config["defaults"]["locales_dir"], language, category
-    ).with_suffix(".yaml")
+    language_file = Path(config["localization_dir"], language, category).with_suffix(
+        ".yaml"
+    )
 
     try:
         logger.info("Attempting to open language file: {}", language_file)

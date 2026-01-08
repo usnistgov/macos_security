@@ -1,6 +1,7 @@
 # mscp/classes/basemodel.py
 
 # Standard python modules
+import re
 from typing import Any
 
 # Additional python modules
@@ -14,6 +15,26 @@ class BaseModelWithAccessors(BaseModel):
     """
 
     model_config: ConfigDict = ConfigDict(extra="ignore")
+
+    @staticmethod
+    def slugify(value: str, *, default: str = "item") -> str:
+        """
+        Convert a human-readable string into a stable-ish slug.
+        Example: "Audit & Logging" -> "audit_logging"
+        """
+        value = (value or "").strip().lower()
+        value = re.sub(r"[^a-z0-9]+", "_", value)
+        value = value.strip("_")
+        return value or default
+
+    @classmethod
+    def l10n_key(cls, namespace: str, identifier: str, field: str) -> str:
+        """
+        Build a consistent localization key: "<namespace>.<identifier>.<field>"
+        Example: l10n_key("profile", "auditing", "description")
+        -> "profile.auditing.description"
+        """
+        return f"{namespace}.{identifier}.{field}"
 
     def get(self, attr: str, default: Any = None) -> Any:
         """
@@ -36,4 +57,6 @@ class BaseModelWithAccessors(BaseModel):
         if key in self.__class__.model_fields:
             setattr(self, key, value)
         else:
-            raise KeyError(f"{key} is not a valid attribute of {self.__class__.__name__}")
+            raise KeyError(
+                f"{key} is not a valid attribute of {self.__class__.__name__}"
+            )
