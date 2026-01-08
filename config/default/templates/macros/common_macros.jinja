@@ -1,0 +1,22 @@
+{# macros/common_macros.jinja #}
+
+{% macro h2(text) -%}
+{{ ("== " if output_format == "adoc" else "## ") ~ text }}
+{%- endmacro %}
+
+{% macro h3(text) -%}
+{{ ("=== " if output_format == "adoc" else "### ") ~ text }}
+{%- endmacro %}
+
+{% macro render_desc(text) -%}
+{{ output_format}}
+{%- if output_format == "adoc" -%}
+{{ text }}
+{%- else -%}
+{{ text | asciidoc_to_markdown | trim }}
+{%- endif -%}
+{%- endmacro %}
+
+{% macro em(text) -%}
+{%- if output_format == "adoc" -%}_{{ text }}_{%- else -%}*{{ text }}*{%- endif -%}
+{%- endmacro %}

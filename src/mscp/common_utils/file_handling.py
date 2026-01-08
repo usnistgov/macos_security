@@ -219,6 +219,7 @@ def create_yaml(file_path: Path, data: MutableMapping) -> None:
     logger.success("Created YAML: {}", file_path)
 
 
+@register_write_handler(".md", ".adoc")
 @log_expected_errors(COMMON_ERRORS, context="Creating text file: ")
 def create_text(file_path: Path, data: str) -> None:
     """
@@ -255,7 +256,7 @@ def create_json(file_path: Path, data: dict[str, Any]) -> None:
     Raises:
         Exception: If an error occurs while writing to the file, it logs the error and re-raises the exception.
     """
-    file_path.write_text(json.dumps(data, indent=1))
+    file_path.write_text(json.dumps(data, indent=4))
 
 
 @register_write_handler(".csv")

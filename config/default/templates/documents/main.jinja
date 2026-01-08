@@ -1,23 +1,15 @@
-{% if format == "adoc" %}
-{% include "adoc/header.adoc.jinja" %}
-{% elif format == "markdown" %}
-{% include "markdown/header.md.jinja" %}
-{% endif +%}
+{% include "documents/header.jinja" %}
 
-{%+ include "foreword.jinja" +%}
+{% include "documents/foreword.jinja" %}
 
-{%+ include "scope.jinja" +%}
+{% include "documents/scope.jinja" %}
 
-{% include "authors.jinja" %}
+{% include "documents/authors.jinja" %}
 
-{% include "acronyms.jinja" %}
+{% include "documents/acronyms.jinja" %}
 
-{% if format == "adoc" %}
-{% include "adoc/additional_docs.adoc.jinja" %}
-{% elif format == "markdown" %}
-{% include "markdown/additional_docs.md.jinja" %}
-{% endif %}
+{% include "documents/additional_docs.jinja" %}
 
 {% for profile in baseline.profile %}
-{% include "section.jinja" %}
+{% include "documents/section.jinja" %}
 {% endfor %}

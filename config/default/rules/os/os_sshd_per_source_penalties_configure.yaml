@@ -3,7 +3,7 @@ title: Configure SSHD PerSourcePenalties
 discussion: |
   If SSHD is enabled then it _MUST_ be configured with the Per Source Penalties configured.
 
-  Per Source Penalities controls penalties for various conditions that may represent attacks on sshd.
+  Per Source Penalties controls penalties for various conditions that may represent attacks on sshd.
 
   Penalties are enabled by default.
 

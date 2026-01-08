@@ -14,7 +14,7 @@ references:
       macos_14:
         - CCE-92745-9
       ios_26:
-        - CCE-95423-0
+        - CCE-95632-6
       ios_18:
         - CCE-94421-5
       ios_17:
@@ -43,10 +43,14 @@ references:
         - APPL-15-002041
       macos_14:
         - APPL-14-002041
+      ios_26:
+        - AIOS-26-003200
       ios_18:
         - AIOS-18-003200
       ios_17:
         - AIOS-17-003200
+      visionos_26:
+        - AVOS-02-003200
     cmmc:
       - AC.L1-3.1.20
       - CM.L2-3.4.6
@@ -69,6 +73,9 @@ references:
         - ANNEX D (Section 5.4 - iCloud restrictions)
         - ANNEX K
       ios_17:
+        - ANNEX D (Section 5.4 - iCloud restrictions)
+        - ANNEX K
+      ios_26:
         - ANNEX D (Section 5.4 - iCloud restrictions)
         - ANNEX K
 platforms:
@@ -101,6 +108,10 @@ platforms:
       benchmarks:
         - name: cis_lvl1_enterprise
         - name: cis_lvl2_enterprise
+        - name: ios_stig
+          severity: medium
+        - name: indigo_high
+          severity: medium
     '18.0':
       supervised: true
       benchmarks:
@@ -135,6 +146,7 @@ tags:
   - cmmc_lvl2
   - cmmc_lvl1
   - cnssi-1253_moderate
+  - nlmapgov_plus
 mobileconfig_info:
   - PayloadType: com.apple.applicationaccess
     PayloadContent:

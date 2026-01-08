@@ -1,0 +1,120 @@
+{# templates/documents/additional_docs.jinja #}
+{% from "macros/common_macros.jinja" import h2, h3, em, render_desc %}
+
+{% set is_adoc = (output_format == "adoc") %}
+{% set show_stig = "STIG" in (baseline.title | upper or "") %}
+
+{% macro doc_table(section_title, rows) -%}
+{%- if not rows or rows | length == 0 -%}{# nothing #}
+{%- elif is_adoc -%}
+[%header, cols=2*a]
+.{{ _(section_title) }}
+|===
+|{{ _("Document Number or Descriptor") }}
+|{{ _("Document Title") }}
+{% for r in rows %}
+|link:{{ r.url }}[{{ r.label }}]|_{{ _(r.title) }}_
+{% endfor %}
+|===
+{%- else -%}
+#### {{ _(section_title) }}
+
+| {{ _("Document Number or Descriptor") }} | {{ _("Document Title") }} |
+|---|---|
+{% for r in rows %}
+| [{{ r.label }}]({{ r.url }}) | _{{ _(r.title) }}_ |
+{% endfor %}
+{%- endif -%}
+{%- endmacro %}
+
+
+{% set nist_docs = [
+  {
+    "url": "https://nvd.nist.gov/800-53",
+    "label": "NIST Special Publication 800-53 Rev 5",
+    "title": "NIST Special Publication 800-53 Rev 5.1.1",
+  },
+  {
+    "url": "https://www.nist.gov/itl/tig/projects/special-publication-800-63",
+    "label": "NIST Special Publication 800-63",
+    "title": "NIST Special Publication 800-63",
+  },
+  {
+    "url": "https://csrc.nist.gov/pubs/sp/800/171/r3/final",
+    "label": "NIST Special Publication 800-171",
+    "title": "NIST Special Publication 800-171 Rev 3",
+  },
+] %}
+
+{% set apple_docs = [
+  {
+    "url": "https://support.apple.com/guide/security/welcome/web",
+    "label": "Apple Platform Security Guide",
+    "title": "Apple Platform Security",
+  },
+  {
+    "url": "https://support.apple.com/guide/deployment/welcome/web",
+    "label": "Apple Platform Deployment",
+    "title": "Apple Platform Deployment",
+  },
+  {
+    "url": "https://support.apple.com/guide/certifications/welcome/web",
+    "label": "Apple Platform Certifications",
+    "title": "Apple Platform Certifications",
+  },
+  {
+    "url": "https://developer.apple.com/documentation/devicemanagement/profilespecification/profile-specific_payload_keys",
+    "label": "Profile-Specific Payload Keys",
+    "title": "Profile-Specific Payload Keys",
+  },
+] %}
+
+{% set cmmc_docs = [
+  {
+    "url": "https://dodcio.defense.gov/Portals/0/Documents/CMMC/ModelOverview_V2.0_FINAL2_20211202_508.pdf",
+    "label": "CMMC Model Overview v2.0",
+    "title": "Cybersecurity Maturity Model Certification (CMMC) Model Overview v2.0",
+  },
+] %}
+
+{% set cnss_docs = [
+  {
+    "url": "https://www.cnss.gov/CNSS/issuances/Instructions.cfm",
+    "label": "CNSSI No. 1253",
+    "title": "Security Categorization and Control Selection for National Security Systems",
+  },
+] %}
+
+{% set cis_docs = [] %}
+{% for link in additional_links.cis %}
+  {% set _ = cis_docs.append({
+    "url": link.url,
+    "label": link.label,
+    "title": link.title
+  }) %}
+{% endfor %}
+
+{% set stig_docs = [] %}
+{% if show_stig and additional_links.stig is defined %}
+  {% for link in additional_links.stig %}
+    {% set _ = stig_docs.append({"url": link.url, "label": link.label, "title": link.title}) %}
+  {% endfor %}
+{% endif %}
+
+{{ h2(_("Applicable Documents")) }}
+{{ "\n" if output_format == "markdown" }}{{ h3(_("Government Documents")) }}
+
+{{ doc_table(_("National Institute of Standards and Technology (NIST)"), nist_docs) }}
+
+{% if show_stig %}
+{{ doc_table(_("Defense Information Systems Agency (DISA)"), stig_docs) }}
+{% endif %}
+
+{{ doc_table(_("Cybersecurity Maturity Model Certification (CMMC)"), cmmc_docs) }}
+
+{{ doc_table(_("Committee on National Security Systems (CNSS)"), cnss_docs) }}
+
+{{ h3(_("Non-Government Documents")) }}
+
+{{ doc_table(_("Apple"), apple_docs) }}
+{{ doc_table(_("Center for Internet Security"), cis_docs) }}

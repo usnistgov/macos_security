@@ -1,0 +1,23 @@
+id: os_exchange_SMIME_signing_certificate_overwrite_disable
+title: Disable changing the S/MIME signing settings
+discussion: |
+  The iOS device needs some specific configurations for the Exchange setup to meet the minimum requirements.
+
+  The option for a user to overwrite the of S/MIME configuration _MUST_ prevented.
+references:
+  nist:
+    cce:
+      ios_26:
+        - CCE-95624-3
+  bsi:
+    indigo:
+      ios_26:
+        - ANNEX D (Section 5.6.1 - Mail)
+platforms: {}
+tags:
+  - ios
+  - indigo_high
+mobileconfig_info:
+  - PayloadType: com.apple.mail.managed
+    PayloadContent:
+      - SMIMESigningCertificateUUIDUserOverrideable: false

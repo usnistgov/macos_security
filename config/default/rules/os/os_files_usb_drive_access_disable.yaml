@@ -1,12 +1,12 @@
 id: os_files_usb_drive_access_disable
 title: Ensure Allow USB drive access in Files app is set to Disabled
 discussion: |
-  USB drive acces in Files app _MUST_ be disabled.
+  USB drive access in Files app _MUST_ be disabled.
 references:
   nist:
     cce:
       ios_26:
-        - CCE-95476-8
+        - CCE-95630-0
       ios_18:
         - CCE-94439-7
       ios_17:
@@ -19,6 +19,8 @@ references:
       - CCI-000097
       - CCI-000370
     disa_stig:
+      ios_26:
+        - AIOS-26-013300
       ios_18:
         - AIOS-18-013300
       ios_17:
@@ -39,12 +41,20 @@ references:
     indigo:
       ios_17:
         - ANNEX K
+      ios_26:
+        - ANNEX K
 platforms:
   iOS:
     '26.0':
       supervised: true
       benchmarks:
         - name: cis_lvl2_enterprise
+        - name: ios_stig
+          severity: medium
+        - name: indigo_base
+          severity: medium
+        - name: indigo_high
+          severity: medium
     '18.0':
       supervised: true
       benchmarks:

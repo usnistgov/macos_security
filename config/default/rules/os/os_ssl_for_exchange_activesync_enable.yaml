@@ -5,30 +5,45 @@ references:
   nist:
     cce:
       ios_26:
-        - CCE-95531-0
+        - CCE-95692-0
       ios_18:
         - CCE-94468-6
       ios_17:
         - CCE-93452-1
+      visionos_26:
+        - CCE-96714-1
   disa:
     cci:
       - CCI-000764
     disa_stig:
+      ios_26:
+        - AIOS-26-011300
       ios_18:
         - AIOS-18-011300
       ios_17:
         - AIOS-17-011300
         - AIOS-17-711300
+      visionos_26:
+        - AVOS-02-011300
     sfr:
       - 'FMT_SMF_EXT.1.1 #47'
   bsi:
     indigo:
       ios_17:
         - ANNEX D (Section 5.6.1 - Mail)
+      ios_26:
+        - ANNEX D (Section 5.6.1 - Mail)
 platforms:
   iOS:
     '26.0':
       supervised: false
+      benchmarks:
+        - name: ios_stig
+          severity: medium
+        - name: indigo_base
+          severity: medium
+        - name: indigo_high
+          severity: medium
     '18.0':
       supervised: false
       benchmarks:
@@ -49,6 +64,10 @@ platforms:
           severity: medium
         - name: indigo_high
           severity: medium
+    introduced: '-1'
+  visionOS:
+    '26.0':
+      supervised: false
     introduced: '-1'
 mobileconfig_info:
   - PayloadType: com.apple.eas.account

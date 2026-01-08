@@ -22,8 +22,15 @@ class Author(BaseModelWithAccessors):
 
 class Profile(BaseModelWithAccessors):
     section: str
+    section_key: str | None = None
     description: str
+    description_key: str | None = None
     rules: list[Macsecurityrule]
+
+    def model_post_init(self, __context) -> None:
+        slug = self.slugify(self.section, default="profile")
+        self.section_key = self.l10n_key("profile", slug, "section")
+        self.description_key = self.l10n_key("profile", slug, "description")
 
 
 class Baseline(BaseModelWithAccessors):
@@ -33,6 +40,13 @@ class Baseline(BaseModelWithAccessors):
     title: str = ""
     description: str = ""
     parent_values: str = ""
+    title_key: str | None = None
+    description_key: str | None = None
+
+    def model_post_init(self, __context) -> None:
+        slug = self.slugify(self.name, default="baseline")
+        self.title_key = self.l10n_key("baseline", slug, "title")
+        self.description_key = self.l10n_key("baseline", slug, "description")
 
     @classmethod
     def from_file(
@@ -156,7 +170,9 @@ class Baseline(BaseModelWithAccessors):
 
         description: str = ""
         os_type = os_type.replace("os", "OS")
-        custom_output_file: Path = Path(config["custom"]["baseline_dir"], output_file.name)
+        custom_output_file: Path = Path(
+            config["custom"]["baseline_dir"], output_file.name
+        )
 
         if baseline_dict is None:
             baseline_dict["title"] = (
@@ -183,7 +199,9 @@ class Baseline(BaseModelWithAccessors):
         for yaml_file in Path(config["defaults"]["sections_dir"]).glob("*.y*ml"):
             section_data: dict[str, str] = open_file(yaml_file)
 
-            section_descriptions[section_data.get("name")] = section_data.get("description", "")
+            section_descriptions[section_data.get("name")] = section_data.get(
+                "description", ""
+            )
 
         for rule in rules:
             matched: bool = False
@@ -197,12 +215,16 @@ class Baseline(BaseModelWithAccessors):
                 grouped_rules[rule.section].append(rule)
 
         for section in grouped_rules:
-            grouped_rules[section] = sorted(grouped_rules[section], key=lambda r: r.rule_id)
+            grouped_rules[section] = sorted(
+                grouped_rules[section], key=lambda r: r.rule_id
+            )
 
         profiles = [
             Profile(
                 section=section,
-                description=section_descriptions.get(section, "No description available"),
+                description=section_descriptions.get(
+                    section, "No description available"
+                ),
                 rules=grouped_rules[section],
             )
             for section in grouped_rules

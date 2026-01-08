@@ -37,7 +37,7 @@ from .common_utils.run_command import run_command
 from .common_utils.sanitize_input import sanitize_input
 from .common_utils.validate_rules import validate_yaml_file
 from .common_utils.version_data import get_version_data
-from .generate import baseline, checklist, guidance, local_report, mapping
+from .generate import baseline, checklist, guidance, language, local_report, mapping
 
 __all__ = [
     "__version__",
@@ -73,6 +73,7 @@ __all__ = [
     "guidance",
     "local_report",
     "mapping",
+    "language",
     "parse_cli",
     "validate_yaml_file",
     "set_logger",

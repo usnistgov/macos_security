@@ -17,6 +17,8 @@ references:
     cci:
       - CCI-000366
     disa_stig:
+      ios_26:
+        - AIOS-26-014900
       ios_18:
         - AIOS-18-014900
     sfr:
@@ -25,10 +27,19 @@ references:
     indigo:
       ios_17:
         - ANNEX K
+      ios_26:
+        - ANNEX K
 platforms:
   iOS:
     '26.0':
       supervised: true
+      benchmarks:
+        - name: ios_stig
+          severity: medium
+        - name: indigo_base
+          severity: medium
+        - name: indigo_high
+          severity: medium
     '18.0':
       supervised: true
       benchmarks:

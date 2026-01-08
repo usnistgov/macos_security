@@ -17,14 +17,24 @@ references:
     cci:
       - CCI-000366
     disa_stig:
+      ios_26:
+        - AIOS-26-015700
       ios_18:
         - AIOS-18-015700
     sfr:
       - 'FMT_MOF_EXT.1.2 #47'
+  bsi:
+    indigo:
+      ios_26:
+        - ANNEX K
 platforms:
   iOS:
     '26.0':
       supervised: false
+      benchmarks:
+        - name: ios_stig
+        - name: indigo_base
+        - name: indigo_high
     '18.0':
       supervised: false
       benchmarks:

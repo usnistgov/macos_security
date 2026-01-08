@@ -102,6 +102,12 @@ authors:
     associated_benchmarks:
       - indigo
 
+  - name: Jordy Witteman
+    organization: Root3
+    benchmarks:
+      - nlmapgov_base
+      - nlmapgov_plus
+
 baseline:
   all_rules:
     name: All Rules
@@ -300,6 +306,13 @@ benchmarks:
 versions:
   platforms:
     macos:
+      - os_version: 26.0
+        os_name: "tahoe"
+        compliance_version: "Tahoe Guidance, Revision X.X"
+        revision: 1.1
+        cpe: o:apple:macos:26.0
+        date: "2025-12-16"
+
       - os_version: 15.0
         os_name: "sequoia"
         compliance_version: "Sequoia Guidance, Revision 1.1"
@@ -322,6 +335,13 @@ versions:
         date: "2024-12-16"
 
     ios:
+      - os_version: 26.0
+        os_name: "ios_26"
+        compliance_version: "iOS 26 Guidance, Revision X.X"
+        revision: 1.0
+        cpe: o:apple:ios:26.0
+        date: "2025-12-16"
+
       - os_version: 18.0
         os_name: "ios_18"
         compliance_version: "iOS 18 Guidance, Revision 1.1"
@@ -344,6 +364,13 @@ versions:
         date: "2024-09-12"
 
     visionos:
+      - os_version: 26.0
+        os_name: "visionos_26"
+        compliance_version: "visionOS 26.0 Guidance, Revision X.X"
+        revision: 1.0
+        cpe: o:apple:visionos:26.0
+        date: "2025-09-12"
+
       - os_version: 2.0
         os_name: "visionos_2"
         compliance_version: "visionOS 2.0 Guidance, Revision 1.0"
@@ -354,6 +381,15 @@ versions:
 additional_links:
   platforms:
     macos:
+      "26.0":
+        disa_stig:
+          - url: "https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Apple_macOS_26_V1R1_STIG.zip"
+            label: "STIG Ver 1, Rel 1"
+            title: "Apple macOS 26 (Tahoe) STIG"
+        cis:
+          - url: "https://www.cisecurity.org/benchmark/apple_os/"
+            label: "Apple macOS 26.0"
+            title: "CIS Apple macOS 26.0 Benchmark version 1.0.0"
       "15.0":
         disa_stig:
           - url: "https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Apple_macOS_15_V1R4_STIG.zip"
@@ -383,6 +419,15 @@ additional_links:
             title: "CIS Apple macOS 13.0 Benchmark version 3.1.0"
 
     ios:
+      "26.0":
+        disa_stig:
+          - url: "https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Apple_iOS-iPadOS_26_V1R1_STIG.zip"
+            label: "STIG Ver 1, Rel 1"
+            title: "Apple iOS/iPadOS 26 STIG - Ver 1, Rel 1"
+        cis:
+          - url: "https://www.cisecurity.org/benchmark/apple_ios"
+            label: "Apple iOS/iPadOS"
+            title: "CIS Apple iOS 26 and iPadOS 26 Version 1.0.0"
       "18.0":
         disa_stig:
           - url: "https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Apple_iOS-iPadOS_18_V2R1_STIG.zip"

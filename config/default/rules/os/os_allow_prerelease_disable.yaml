@@ -1,0 +1,37 @@
+id: os_allow_prerelease_disable
+title: Disable the Ability to Install PreRelease Software
+discussion: |
+  Beta software may contain features that could lead to the compromise of sensitive information or provide a vector for the attack on a network.
+references:
+  nist:
+    cce:
+      visionos_26:
+        - CCE-96711-7
+    800-53r5:
+      - CM-6
+      - CM-7
+  disa:
+    cci:
+      - CCI-000366
+    disa_stig:
+      visionos_26:
+        - AVOS-02-015500
+    sfr:
+      - 'FMT_MOF_EXT.1.2 #47'
+platforms:
+  visionOS:
+    '26.0':
+      supervised: true
+    introduced: '-1'
+tags:
+  - visionos_stig
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_high
+  - cnssi-1253_moderate
+  - cnssi-1253_low
+  - cnssi-1253_high
+mobileconfig_info:
+  - PayloadType: com.apple.softwareupdate
+    PayloadContent:
+      - AllowPreReleaseInstallation: false

@@ -21,6 +21,8 @@ references:
         - CCE-94565-9
       ios_17:
         - CCE-93511-4
+      visionos_26:
+        - CCE-96717-4
     800-53r5:
       - IA-5(1)
     800-171r3:
@@ -32,10 +34,16 @@ references:
       - SRG-OS-000077-GPOS-00045
       - SRG-OS-000775-GPOS-00230
     disa_stig:
+      macos_15:
+        - APPL-15-003009
       macos_14:
         - APPL-14-003009
+      ios_26:
+        - AIOS-26-006950
       ios_18:
         - AIOS-18-006950
+      visionos_26:
+        - AVOS-02-006950
     cmmc:
       - IA.L2-3.5.7
       - IA.L2-3.5.8
@@ -56,6 +64,9 @@ references:
         - ANNEX D (Section 5.9.1 - Device-Code)
         - ANNEX K
       ios_17:
+        - ANNEX D (Section 5.9.1 - Device-Code)
+        - ANNEX K
+      ios_26:
         - ANNEX D (Section 5.9.1 - Device-Code)
         - ANNEX K
 platforms:
@@ -81,6 +92,13 @@ platforms:
   iOS:
     '26.0':
       supervised: false
+      benchmarks:
+        - name: ios_stig
+          severity: high
+        - name: indigo_base
+          severity: high
+        - name: indigo_high
+          severity: high
     '18.0':
       supervised: false
       benchmarks:
@@ -96,18 +114,23 @@ platforms:
         - name: indigo_base
         - name: indigo_high
     introduced: '4.0'
+  visionOS:
+    '26.0':
+      supervised: false
+    introduced: '2.0'
 odv:
   hint:
     datatype: number
     description: Number of previous passwords, e.g. 5
     validation:
       min: 0
-  recommended: 2
+  recommended: 5
   cis_lvl1: 15
   cis_lvl2: 15
   stig: 5
   indigo_base: 2
   indigo_high: 2
+  visionos_stig: 2
 tags:
   - 800-171
   - 800-53r5_low

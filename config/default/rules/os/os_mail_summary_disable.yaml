@@ -9,7 +9,7 @@ references:
       macos_15:
         - CCE-94521-2
       ios_26:
-        - CCE-95494-1
+        - CCE-95668-0
       ios_18:
         - CCE-94520-4
       visionos_26:
@@ -41,6 +41,8 @@ references:
     indigo:
       ios_18:
         - ANNEX K
+      ios_26:
+        - ANNEX K
 platforms:
   macOS:
     '26.0':
@@ -68,6 +70,8 @@ platforms:
         - name: cis_lvl2_byod
         - name: cis_lvl1_enterprise
         - name: cis_lvl2_enterprise
+        - name: indigo_base
+        - name: indigo_high
     '18.0':
       benchmarks:
         - name: indigo_base

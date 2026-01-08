@@ -1,0 +1,108 @@
+# German translations for PROJECT.
+# Copyright (C) 2026 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2026-01-07 11:16-0700\n"
+"PO-Revision-Date: 2026-01-07 11:19-0700\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: de\n"
+"Language-Team: de <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.17.0\n"
+
+#: config/default/templates/documents/acronyms.jinja:3
+msgid "Acronyms and Definitions"
+msgstr ""
+
+#: config/default/templates/documents/acronyms.jinja:6
+#: config/default/templates/documents/acronyms.jinja:22
+msgid "Acronyms and Abbreviations"
+msgstr ""
+
+#: config/default/templates/documents/acronyms.jinja:14
+#: config/default/templates/documents/acronyms.jinja:33
+msgid "Definitions"
+msgstr ""
+
+#: config/default/templates/documents/additional_docs.jinja:13
+#: config/default/templates/documents/additional_docs.jinja:22
+msgid "Document Number or Descriptor"
+msgstr ""
+
+#: config/default/templates/documents/additional_docs.jinja:14
+#: config/default/templates/documents/additional_docs.jinja:22
+msgid "Document Title"
+msgstr ""
+
+#: config/default/templates/documents/additional_docs.jinja:104
+msgid "Applicable Documents"
+msgstr ""
+
+#: config/default/templates/documents/additional_docs.jinja:105
+msgid "Government Documents"
+msgstr ""
+
+#: config/default/templates/documents/additional_docs.jinja:107
+msgid "National Institute of Standards and Technology (NIST)"
+msgstr ""
+
+#: config/default/templates/documents/additional_docs.jinja:110
+msgid "Defense Information Systems Agency (DISA)"
+msgstr ""
+
+#: config/default/templates/documents/additional_docs.jinja:113
+msgid "Cybersecurity Maturity Model Certification (CMMC)"
+msgstr ""
+
+#: config/default/templates/documents/additional_docs.jinja:115
+msgid "Committee on National Security Systems (CNSS)"
+msgstr ""
+
+#: config/default/templates/documents/additional_docs.jinja:117
+msgid "Non-Government Documents"
+msgstr ""
+
+#: config/default/templates/documents/additional_docs.jinja:119
+msgid "Apple"
+msgstr ""
+
+#: config/default/templates/documents/additional_docs.jinja:120
+msgid "Center for Internet Security"
+msgstr ""
+
+#: config/default/templates/documents/authors.jinja:3
+msgid "Authors"
+msgstr ""
+
+#: config/default/templates/documents/authors.jinja:5
+msgid "macOS Security Compliance Project"
+msgstr ""
+
+#: config/default/templates/documents/authors.jinja:8
+msgid ""
+"CIS Critical Security Controls® (CIS Controls®) are referenced with the "
+"permission and support of the Center for Internet Security® (CIS®)"
+msgstr ""
+
+#: config/default/templates/documents/foreword.jinja:2
+msgid "Foreword"
+msgstr ""
+
+#: config/default/templates/documents/scope.jinja:3
+msgid "Scope"
+msgstr ""
+
+#: config/default/templates/macros/rule_blocks.jinja:31
+msgid ""
+"This rule is marked as manual and may not be able to be automated. It is "
+"also excluded in the compliance scan and will not report any results."
+msgstr ""
+

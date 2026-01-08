@@ -13,7 +13,7 @@ references:
       macos_14:
         - CCE-92756-6
       ios_26:
-        - CCE-95431-3
+        - CCE-95637-5
       ios_18:
         - CCE-94422-3
       ios_17:
@@ -46,13 +46,17 @@ references:
       macos_14:
         - APPL-14-002009
       ios_26:
-        - AO26-POOP-00001
+        - AIOS-26-010200
+        - AIOS-26-012500
       ios_18:
         - AIOS-18-010200
         - AIOS-18-012500
       ios_17:
         - AIOS-17-010200
         - AIOS-17-012500
+      visionos_26:
+        - AVOS-02-012500
+        - AVOS-02-010200
     cmmc:
       - AC.L1-3.1.1
       - AC.L1-3.1.20
@@ -75,6 +79,8 @@ references:
       ios_18:
         - ANNEX K
       ios_17:
+        - ANNEX K
+      ios_26:
         - ANNEX K
 platforms:
   macOS:
@@ -111,6 +117,10 @@ platforms:
       supervised: true
       benchmarks:
         - name: ios_stig
+          severity: medium
+        - name: indigo_base
+          severity: medium
+        - name: indigo_high
           severity: medium
     '18.0':
       supervised: true

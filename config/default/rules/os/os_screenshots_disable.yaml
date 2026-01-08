@@ -17,6 +17,12 @@ references:
       - CM-7
       - CM-7(1)
       - SC-07(10)
+  disa:
+    disa_stig:
+      ios_26:
+        - AIOS-26-018000
+      visionos_26:
+        - AVOS-02-018000
   cis:
     benchmark:
       ios_26:
@@ -31,12 +37,17 @@ references:
     indigo:
       ios_17:
         - ANNEX K
+      ios_26:
+        - ANNEX K
 platforms:
   iOS:
     '26.0':
       supervised: false
       benchmarks:
         - name: cis_lvl2_enterprise
+        - name: ios_stig
+        - name: indigo_base
+        - name: indigo_high
     '18.0':
       supervised: false
       benchmarks:

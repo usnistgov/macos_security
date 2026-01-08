@@ -14,7 +14,7 @@ references:
       macos_14:
         - CCE-92751-7
       ios_26:
-        - CCE-95428-9
+        - CCE-95635-9
       ios_18:
         - CCE-94419-9
       ios_17:
@@ -43,10 +43,14 @@ references:
         - APPL-15-002043
       macos_14:
         - APPL-14-002043
+      ios_26:
+        - AIOS-26-003450
       ios_18:
         - AIOS-18-003450
       ios_17:
         - AIOS-17-003450
+      visionos_26:
+        - AVOS-02-003450
     cmmc:
       - AC.L1-3.1.20
       - CM.L2-3.4.6
@@ -65,6 +69,9 @@ references:
         - ANNEX D (Section 5.4 - iCloud restrictions)
         - ANNEX K
       ios_17:
+        - ANNEX D (Section 5.4 - iCloud restrictions)
+        - ANNEX K
+      ios_26:
         - ANNEX D (Section 5.4 - iCloud restrictions)
         - ANNEX K
 platforms:
@@ -94,6 +101,11 @@ platforms:
   iOS:
     '26.0':
       supervised: false
+      benchmarks:
+        - name: ios_stig
+          severity: medium
+        - name: indigo_high
+          severity: medium
     '18.0':
       supervised: false
       benchmarks:

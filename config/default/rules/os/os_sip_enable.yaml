@@ -116,7 +116,7 @@ platforms:
           integer: 1
       fix:
         shell: /usr/bin/csrutil enable
-        additional_info: 'NOTE: To reenable "System Integrity Protection", boot the affected system into "Recovery" mode, launch "Terminal" from the "Utilities" menu, and run the command.'
+        additional_info: 'NOTE: To re-enable "System Integrity Protection", boot the affected system into "Recovery" mode, launch "Terminal" from the "Utilities" menu, and run the command.'
 tags:
   - 800-53r5_low
   - 800-53r5_moderate
@@ -128,3 +128,5 @@ tags:
   - cmmc_lvl2
   - cmmc_lvl1
   - cnssi-1253_moderate
+  - nlmapgov_base
+  - nlmapgov_plus

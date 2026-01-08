@@ -1,3 +1,5 @@
-{{ "== Scope" if format == "adoc" else "## Scope" }}
+{% from "macros/common_macros.jinja" import h2, render_desc %}
 
-{{ baseline.description }}
+{{ h2(_("Scope")) }}
+
+{{ render_desc(_(baseline.description)) }}

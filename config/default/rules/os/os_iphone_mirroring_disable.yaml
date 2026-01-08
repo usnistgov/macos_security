@@ -36,6 +36,8 @@ references:
         - APPL-26-002271
       macos_15:
         - APPL-15-002271
+      ios_26:
+        - AIOS-26-015800
       ios_18:
         - AIOS-18-015800
     cmmc:
@@ -51,6 +53,8 @@ references:
   bsi:
     indigo:
       ios_18:
+        - ANNEX K
+      ios_26:
         - ANNEX K
 platforms:
   macOS:
@@ -75,6 +79,10 @@ platforms:
   iOS:
     '26.0':
       supervised: false
+      benchmarks:
+        - name: ios_stig
+        - name: indigo_base
+        - name: indigo_high
     '18.0':
       supervised: false
       benchmarks:

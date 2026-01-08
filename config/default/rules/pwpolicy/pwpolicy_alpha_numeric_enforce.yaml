@@ -64,6 +64,9 @@ references:
       ios_17:
         - ANNEX D (Section 5.9.1 - Device-Code)
         - ANNEX K
+      ios_26:
+        - ANNEX D (Section 5.9.1 - Device-Code)
+        - ANNEX K
 platforms:
   macOS:
     '26.0':
@@ -90,6 +93,9 @@ platforms:
   iOS:
     '26.0':
       supervised: false
+      benchmarks:
+        - name: indigo_base
+        - name: indigo_high
     '18.0':
       supervised: false
       benchmarks:

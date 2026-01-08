@@ -1,0 +1,35 @@
+{% from "macros/rule_blocks.jinja" import rule_header,rule_check,remediation,rule_references %}
+
+{% set rc = rule | rule_context(baseline.title, show_all_tags) %}
+
+{{ rule_header(rule, output_format) }}
+{% if not rc.is_supplemental %}
+{% if not rc.is_not_applicable or not rc.is_inherent or not rc.is_permanent %}
+{{ rule_check(rule, os_name, rc.check_shell, output_format) }}
+{% endif %}
+
+{% if output_format == "markdown"%}
+<table class="remediation">
+<tr>
+<td>
+<p>
+<strong>Remediation Description</strong><br /><br />
+{% elif output_format == "adoc" %}
+====
+**Remediation Description**
+{% endif %}
+
+{% if rule.fix is not none %}
+Perform the following to configure the system to meet the requirements:
+{% endif %}
+{{ remediation(rule, rc, os_name, output_format) }}
+{% if output_format == "markdown"%}
+</p>
+</td>
+</tr>
+</table>
+{% elif output_format == "adoc" %}
+====
+{% endif %}
+{{ rule_references(rule, rc, baseline, custom, show_all_tags, output_format) }}
+{% endif %}

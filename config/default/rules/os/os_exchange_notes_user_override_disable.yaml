@@ -4,22 +4,35 @@ discussion: Exchange ActiveSync Notes service can be disabled for a user. Settin
 references:
   nist:
     cce:
+      ios_26:
+        - CCE-95615-1
       ios_18:
         - CCE-94468-6
   disa:
     cci:
       - CCI-000764
     disa_stig:
+      ios_26:
+        - AIOS-26-011300
       ios_18:
         - AIOS-18-011300
     sfr:
       - 'FMT_SMF_EXT.1.1 #47'
   bsi:
     indigo:
-      ios_18:
+      ios_26:
         - ANNEX D (Section 5.6.1 - Mail)
 platforms:
   iOS:
+    '26.0':
+      supervised: false
+      benchmarks:
+        - name: ios_stig
+          severity: medium
+        - name: indigo_base
+          severity: medium
+        - name: indigo_high
+          severity: medium
     '18.0':
       supervised: false
       benchmarks:

@@ -37,6 +37,10 @@ references:
         - 2.5.1.4 (level 1)
       macos_15:
         - 2.5.1.4 (level 1)
+  bsi:
+    indigo:
+      ios_26:
+        - ANNEX K
 platforms:
   macOS:
     '26.0':
@@ -60,6 +64,9 @@ platforms:
   iOS:
     '26.0':
       supervised: true
+      benchmarks:
+        - name: indigo_base
+        - name: indigo_high
     '18.0':
       supervised: true
     introduced: '18.4'

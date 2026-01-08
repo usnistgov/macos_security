@@ -21,8 +21,12 @@ references:
     cci:
       - CCI-000366
     disa_stig:
+      ios_26:
+        - AIOS-26-016000
       ios_18:
         - AIOS-18-016000
+      visionos_26:
+        - AVOS-02-016000
     sfr:
       - 'FMT_SMF.1.1 #47'
   cis:
@@ -42,6 +46,7 @@ platforms:
       benchmarks:
         - name: cis_lvl1_enterprise
         - name: cis_lvl2_enterprise
+        - name: ios_stig
     '18.0':
       supervised: true
       benchmarks:

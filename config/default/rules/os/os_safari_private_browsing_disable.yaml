@@ -19,7 +19,7 @@ platforms:
           EOS
         result:
           string: 'false'
-    introduced: '-1'
+    introduced: '26.0'
 tags:
   - none
 mobileconfig_info:

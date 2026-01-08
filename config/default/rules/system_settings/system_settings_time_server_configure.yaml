@@ -88,6 +88,8 @@ odv:
   cis_lvl1: time.apple.com
   cis_lvl2: time.apple.com
   stig: time.nist.gov
+  nlmapgov_base: time.apple.com
+  nlmapgov_plus: time.apple.com
 tags:
   - 800-171
   - 800-53r5_low
@@ -98,6 +100,8 @@ tags:
   - cnssi-1253_high
   - cmmc_lvl2
   - cnssi-1253_moderate
+  - nlmapgov_base
+  - nlmapgov_plus
 mobileconfig_info:
   - PayloadType: com.apple.MCX
     PayloadContent:

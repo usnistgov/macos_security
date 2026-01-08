@@ -1,7 +1,7 @@
 id: system_settings_external_intelligence_sign_in_disable
 title: Disable External Intelligence Integration Sign In
 discussion: |
-  The ability to sign into an external intelligence systems _MUST_ be disabled unless approved by the organiztion. Disabling external intelligence integration will mitigate the risk of data being sent to unapproved third party.
+  The ability to sign into an external intelligence systems _MUST_ be disabled unless approved by the organization. Disabling external intelligence integration will mitigate the risk of data being sent to unapproved third party.
 
   The information system _MUST_ be configured to provide only essential capabilities.
 references:

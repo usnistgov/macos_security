@@ -7,7 +7,7 @@ name = "mscp"
 dynamic = ["version"]
 description = 'The macOS Security Compliance Project is an open source effort to provide a programmatic approach to generating security guidance.'
 readme = "README.md"
-requires-python = ">=3.12"
+requires-python = ">=3.14"
 license-files  = ["LICEN[CS]E*"]
 keywords = []
 classifiers = [
@@ -20,14 +20,14 @@ classifiers = [
 dependencies = [
   "jinja2==3.1.6",
   "loguru==0.7.3",
-  "lxml==5.4.0",
-  "matplotlib==3.10.3",
+  "lxml==6.0.2",
+  "matplotlib==3.10.8",
   "openpyxl==3.1.5",
-  "pandas==2.3.2",
-  "pydantic==2.11.6",
-  "pyyaml==6.0.2",
-  "jsonschema==4.24.0",
-  "ruamel.yaml==0.18.15"
+  "pandas==2.3.3",
+  "pydantic==2.12.5",
+  "pyyaml==6.0.3",
+  "jsonschema==4.25.1",
+  "ruamel.yaml==0.19.1"
 ]
 
 [project.urls]
@@ -43,3 +43,6 @@ path = "src/mscp/__init__.py"
 
 [tool.mypy]
 exclude = ["legacy"]
+
+[dependency-groups]
+dev = ["icecream==2.1.8", "mypy==1.19.1", "babel==2.17.0"]
