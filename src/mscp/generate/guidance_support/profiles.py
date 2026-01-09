@@ -4,7 +4,7 @@
 from collections import defaultdict
 from datetime import date
 from pathlib import Path
-from typing import Any
+from typing import Any, Dict, List
 
 # Local python modules
 from ...classes import Baseline, Macsecurityrule, Payload
@@ -109,6 +109,24 @@ def generate_profiles(
         - Displays a caution message about the use of the generated profiles in a test environment.
     """
 
+    def merge_flat_settings(flat_settings: List[Dict[str, Any]]) -> Dict[str, Any]:
+        agg: defaultdict[str, List[Any]] = defaultdict(list)
+        result: Dict[str, Any] = {}
+
+        for d in flat_settings:
+            for k, v in d.items():
+                if isinstance(v, list):
+                    agg[k].extend(v)  # accumulate list values
+                else:
+                    result[k] = v  # last non-list value wins
+
+        # move list aggregates into the final result
+        for k, vals in agg.items():
+            # if a non-list value was already set for k, keep the aggregated list anyway
+            result[k] = vals
+
+        return result
+
     unsigned_output_path: Path = Path(build_path, "mobileconfigs", "unsigned")
     signed_output_path: Path = Path(build_path, "mobileconfigs", "signed")
     plist_output_path: Path = Path(build_path, "mobileconfigs", "preferences")
@@ -120,7 +138,9 @@ def generate_profiles(
 
     make_dir(unsigned_output_path)
     make_dir(plist_output_path)
-    make_dir(granular_output_path)
+
+    if granular:
+        make_dir(granular_output_path)
 
     if signing:
         make_dir(signed_output_path)
@@ -221,7 +241,7 @@ def generate_profiles(
                                 granular_output_path / f"{setting}.mobileconfig"
                             )
         else:
-            settings: dict = {k: v for d in flat_settings for k, v in d.items()}
+            settings = merge_flat_settings(flat_settings)
             new_profile.add_payload(payload_type, settings, baseline_name)
             consolidated_profile.add_payload(payload_type, settings, baseline_name)
 
