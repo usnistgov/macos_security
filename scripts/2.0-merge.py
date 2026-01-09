@@ -1866,6 +1866,8 @@ def main():
                 description = _yaml["odv"]["hint"]
                 datatype = None
                 validation = None
+                if "stig" in _yaml["odv"].keys():
+                    _yaml["odv"]["disa_stig"] = _yaml["odv"].pop("stig")
                 for r in odv_json:
                     if r["ruleId"] == _yaml["id"]:
                         datatype = r["type"]
