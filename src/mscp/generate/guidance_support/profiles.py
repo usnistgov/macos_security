@@ -132,10 +132,6 @@ def generate_profiles(
     plist_output_path: Path = Path(build_path, "mobileconfigs", "preferences")
     granular_output_path: Path = Path(build_path, "mobileconfigs", "granular")
 
-    manifests_file: dict = open_file(
-        Path(config.get("includes_dir", ""), "supported_payloads.yaml")
-    )
-
     make_dir(unsigned_output_path)
     make_dir(plist_output_path)
 
@@ -145,34 +141,11 @@ def generate_profiles(
     if signing:
         make_dir(signed_output_path)
 
-    profile_errors: list[Macsecurityrule] = [
-        rule
-        for profile in baseline.profile
-        for rule in profile.rules
-        if rule.mobileconfig_info
-        and any(
-            payload.payload_type not in manifests_file.get("payloads_types", [])
-            for payload in rule.mobileconfig_info
-        )
-    ]
-
     valid_rules: list[Macsecurityrule] = [
-        rule
-        for profile in baseline.profile
-        for rule in profile.rules
-        if rule.mobileconfig_info
-        and any(
-            payload.payload_type in manifests_file.get("payloads_types", [])
-            for payload in rule.mobileconfig_info
-        )
+        rule for profile in baseline.profile for rule in profile.rules
     ]
 
     grouped_payloads: dict = get_payload_content_by_type(valid_rules)
-
-    if len(profile_errors) != 0:
-        logger.info(f"There were errors found in {len(profile_errors)} rules")
-        for error in profile_errors:
-            logger.info(f"Correct the following rule: {error.rule_id}")
 
     consolidated_profile = Payload(
         identifier=f"consolidated.{baseline_name}",
