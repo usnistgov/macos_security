@@ -1,7 +1,7 @@
 id: os_update_auto_RSR_allow
 title: "Auto install RSR Updates"
 discussion: |
-  The user _MUST_ manually enable automatic install of RSR updtes in Settings/General/Updates/Automatic Updates/Block Remote Content  
+  The user _MUST_ manually enable automatic install of RSR updates in Settings/General/Updates/Automatic Updates/Block Remote Content  
 check: " "
 fix: |
   This is implemented manually by the user.
