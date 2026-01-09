@@ -90,7 +90,7 @@ class Payload(BaseModel):
             "PayloadVersion": self.payload_version,
             "PayloadUUID": uuid,
             "PayloadType": payload_type,
-            "PayloadIdentifier": f"alacarte.macOS.{baseline_name}.{uuid}",
+            "PayloadIdentifier": f"mscp.{payload_type}.{uuid}",
         }
 
         payload.update(settings)
@@ -121,7 +121,7 @@ class Payload(BaseModel):
             "PayloadVersion": self.payload_version,
             "PayloadUUID": uuid,
             "PayloadType": "com.apple.ManagedClient.preferences",
-            "PayloadIdentifier": f"alacarte.macOS.{baseline_name}.{uuid}",
+            "PayloadIdentifier": f"mscp.{domain}.{uuid}",
             "PayloadContent": {
                 domain: {"Forced": [{"mcx_preference_settings": settings}]}
             },

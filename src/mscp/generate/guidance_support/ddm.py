@@ -15,7 +15,7 @@ from ...common_utils import append_text, logger, make_dir, mscp_data, remove_dir
 
 def generate_ddm_activation(output_path: Path, identifier: str) -> None:
     """
-    Generates a DDM (Device Deployment Manifest) activation JSON file and appends it to the specified output path.
+    Generates a DDM (Declarative Device Management) activation JSON file and appends it to the specified output path.
 
     Args:
         output_path (Path): The file path where the generated activation JSON will be appended.
@@ -178,10 +178,6 @@ def generate_ddm(build_path: Path, baseline: Baseline, baseline_name: str) -> No
 
     sha256_hash = hashlib.sha256()
     for ddm_type in ddm_dict.keys():
-        if ddm_type not in mscp_data.get("ddm", {}).get("supported_types", []):
-            logger.error(f"Unsupported ddm type: {ddm_type}")
-            continue
-
         if "files" in ddm_type:
             for service in mscp_data.get("ddm", {}).get("services", {}):
                 logger.debug(f"Service Name: {service}")

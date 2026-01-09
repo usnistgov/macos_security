@@ -26,6 +26,7 @@ from ..generate.guidance_support import (
     generate_excel,
     generate_profiles,
     generate_script,
+    generate_restore_script,
 )
 
 
@@ -128,9 +129,23 @@ def generate_guidance(args: argparse.Namespace) -> None:
     if args.profiles:
         logger.info("Generating configuration profiles")
         if not signing:
-            generate_profiles(build_path, baseline_name, baseline)
+            generate_profiles(
+                build_path,
+                baseline_name,
+                baseline,
+                consolidated=args.consolidated_profile,
+                granular=args.granular_profiles,
+            )
         else:
-            generate_profiles(build_path, baseline_name, baseline, signing, args.hash)
+            generate_profiles(
+                build_path,
+                baseline_name,
+                baseline,
+                signing,
+                args.hash,
+                consolidated=args.consolidated_profile,
+                granular=args.granular_profiles,
+            )
 
     if args.ddm:
         logger.info("Generating declarative components")
@@ -139,6 +154,9 @@ def generate_guidance(args: argparse.Namespace) -> None:
     if args.script and args.os_name == "macos":
         logger.info("Generating compliance script")
         generate_script(build_path, baseline_name, audit_name, baseline, log_reference)
+        generate_restore_script(
+            build_path, baseline_name, audit_name, baseline, log_reference
+        )
 
     if args.xlsx:
         logger.info("Generating Excel document")
@@ -166,7 +184,13 @@ def generate_guidance(args: argparse.Namespace) -> None:
     if args.all:
         logger.info("Generating all support files")
         logger.info("Generating configuration profiles")
-        generate_profiles(build_path, baseline_name, baseline)
+        generate_profiles(
+            build_path,
+            baseline_name,
+            baseline,
+            consolidated=args.consolidated_profile,
+            granular=args.granular_profiles,
+        )
 
         logger.info("Generating declarative components")
         generate_ddm(build_path, baseline, baseline_name)
@@ -174,7 +198,20 @@ def generate_guidance(args: argparse.Namespace) -> None:
         if args.os_name == "macos":
             logger.info("Generating compliance script")
             generate_script(
-                build_path, baseline_name, audit_name, baseline, log_reference
+                build_path,
+                baseline_name,
+                audit_name,
+                baseline,
+                log_reference,
+                current_version_data,
+            )
+            generate_restore_script(
+                build_path,
+                baseline_name,
+                audit_name,
+                baseline,
+                log_reference,
+                current_version_data,
             )
 
         # logger.info("Generating Excel document")

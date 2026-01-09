@@ -252,7 +252,7 @@
         "ruleId": "system_settings_screensaver_ask_for_password_delay_enforce",
         "type": "number",
         "validation": {
-            "min": 1
+            "min": 0
         },
         "note": "Number of seconds, e.g. 5"
     },

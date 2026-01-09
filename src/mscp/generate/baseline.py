@@ -89,7 +89,7 @@ def rule_has_benchmark_for_version(
 
 
 def generate_baseline(args: argparse.Namespace) -> None:
-    build_path: Path = Path(config.get("output_dir", ""), "baselines")
+    build_path: Path = Path(config["custom"].get("baseline_dir", ""))
     baseline_output_file: Path = (
         build_path / f"{args.keyword}_{args.os_name}_{args.os_version}.yaml"
     )
