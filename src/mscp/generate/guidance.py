@@ -214,8 +214,8 @@ def generate_guidance(args: argparse.Namespace) -> None:
                 current_version_data,
             )
 
-        # logger.info("Generating Excel document")
-        # generate_excel(spreadsheet_output_file, baseline)
+        logger.info("Generating Excel document")
+        generate_excel(spreadsheet_output_file, baseline)
 
         logger.info("Generating markdown documents")
         generate_documents(

@@ -76,14 +76,14 @@ class BaseModelWithAccessors(BaseModel):
 
 
 class NistReferences(BaseModelWithAccessors):
-    cce: dict[str, list[str]] | None = None
+    cce: list[str] | None = None
     nist_800_53r5: list[str] | None = None
     nist_800_171r3: list[str] | None = None
 
     def __init__(self, **data):
         super().__init__(**data)
         if self.cce:
-            self.cce = OrderedDict(sorted(self.cce.items()))
+            self.cce = sorted(self.cce)
         if self.nist_800_53r5:
             self.nist_800_53r5 = sorted(self.nist_800_53r5)
         if self.nist_800_171r3:
@@ -96,7 +96,6 @@ class DisaReferences(BaseModelWithAccessors):
     disa_stig: list[str] | None = None
     cmmc: list[str] | None = None
     sfr: list[str] | None = None
-    severity: str | None = None
 
     def __init__(self, **data):
         super().__init__(**data)
@@ -126,7 +125,6 @@ class CisReferences(BaseModelWithAccessors):
 
 class bsiReferences(BaseModelWithAccessors):
     indigo: list[str] | None = None
-    severity: str | None = None
 
     def __init__(self, **data: Any) -> None:
         super().__init__(**data)
@@ -187,7 +185,7 @@ class Macsecurityrule(BaseModelWithAccessors):
         os_version: float = Field(default_factory=float)
         check (str): The commands to evaluate the state of a rule.
         fix: (str): The commands to remediate and set the configuration for a rule.
-        severity: (str): The category for impact assigned to a rule.
+        severity: (dict[str, Any]): The category for impact assigned to a rule for associated benchmarks.
         default_state: (str): The command to restore the system to the default configuration for a rule.
 
     Class Methods:
@@ -232,7 +230,7 @@ class Macsecurityrule(BaseModelWithAccessors):
     os_version: float = Field(default_factory=float)
     check: str | None = None
     fix: str | None = None
-    severity: str | None = None
+    severity: dict[str, Any] | None = None
     default_state: str | None = None
 
     @classmethod
@@ -290,7 +288,7 @@ class Macsecurityrule(BaseModelWithAccessors):
             default_state_value: str | None = None
             mechanism: str = "Manual"
             payloads: list[Mobileconfigpayload] | None = []
-            severity: str | None = None
+            severity: dict[str, Any] | None = {}
             tags: list[str] = []
 
             rule_file = next(
@@ -428,14 +426,11 @@ class Macsecurityrule(BaseModelWithAccessors):
                 os_version_str
             ].get("benchmarks", [])
 
-            if benchmarks and baseline_tag:
+            if benchmarks:
                 for benchmark in benchmarks:
-                    if (
-                        benchmark.get("name") == baseline_tag
-                        and "severity" in benchmark
-                    ):
-                        severity = benchmark["severity"]
-                        break
+                    name = benchmark.get("name")
+                    if "severity" in benchmark:
+                        severity[name] = benchmark["severity"]
 
             match tags:
                 case "inherent":
@@ -484,9 +479,10 @@ class Macsecurityrule(BaseModelWithAccessors):
                     value = nist.pop(src)
                     if src == "cce" and isinstance(value, dict):
                         value = value.get(os_typeversion)
-                        if value is not None and not isinstance(value, dict):
-                            # Ensure cce is always a dict[str, list[str]] or None
-                            value = None
+                        # print(value)
+                        # if value is not None and not isinstance(value, dict):
+                        #     # Ensure cce is always a dict[str, list[str]] or None
+                        #     value = None
                     if dst in ("nist_800_53r5", "nist_800_171r3"):
                         if value is not None and not isinstance(value, list):
                             value = [value] if isinstance(value, str) else None

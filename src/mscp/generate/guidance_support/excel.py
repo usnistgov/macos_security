@@ -2,14 +2,230 @@
 
 # Standard python modules
 from pathlib import Path
+import json
 
 # Additional python modules
 import pandas as pd
 from openpyxl.styles import Alignment, Font
+from openpyxl.worksheet.table import Table, TableStyleInfo
 from openpyxl.utils import get_column_letter
 
 from ...classes import Baseline
 from ...common_utils.logger_instance import logger
+
+
+def _to_string_item(x):
+    """
+    Convert an item to a string safely.
+    - Strings and scalars become their str() representation.
+    - Dicts become compact JSON.
+    - Other objects fall back to str().
+    """
+    if isinstance(x, (str, int, float, bool)):
+        return str(x)
+    elif isinstance(x, dict):
+        # Compact, stable JSON string for dicts
+        return json.dumps(x, ensure_ascii=False, sort_keys=True)
+    else:
+        return str(x)
+
+
+def _line_display_len(s: str) -> int:
+    """
+    Returns the display length of a string. If wcwidth is available, uses it for
+    better visual width (e.g., emojis / East Asian wide chars). Otherwise, len(s).
+    """
+    if not s:
+        return 0
+    return len(s)
+
+
+def _cell_longest_line_len(cell) -> int:
+    """
+    Returns the display length of the longest line in the cell.
+    - Splits on standard line breaks.
+    - Treats non-string values as their string representation.
+    - Safely handles None.
+    """
+    val = cell.value
+    if val is None:
+        return 0
+
+    try:
+        s = str(val)
+    except Exception:
+        return 0
+
+    # Normalize line endings and split
+    lines = s.replace("\r\n", "\n").replace("\r", "\n").split("\n")
+    return max((_line_display_len(line) for line in lines), default=0)
+
+
+def auto_fit_columns(
+    sheet, threshold_length: int = 120, buffer: int = 2, wrap_multiline: bool = True
+):
+    """
+    Auto-fit width of each column in `sheet` based on the longest line per cell.
+    - threshold_length: max width to set for any column (your cap).
+    - buffer: add a few extra characters of padding.
+    - wrap_multiline: optionally enable wrapText for cells that contain newlines.
+    """
+    EXCEL_MAX_COL_WIDTH = 255  # Excel hard limit
+
+    for col_cells in sheet.iter_cols():
+        max_len = 0
+
+        for cell in col_cells:
+            longest = _cell_longest_line_len(cell)
+            if longest > max_len:
+                max_len = longest
+
+            # Optional: enable wrapText if the cell actually has newlines
+            if wrap_multiline:
+                val = cell.value
+                if isinstance(val, str) and ("\n" in val or "\r" in val):
+                    if cell.alignment is None or not cell.alignment.wrapText:
+                        # Keep other alignment attributes if present
+                        cell.alignment = Alignment(
+                            horizontal=cell.alignment.horizontal
+                            if cell.alignment
+                            else None,
+                            vertical=cell.alignment.vertical
+                            if cell.alignment
+                            else None,
+                            wrapText=True,
+                        )
+
+        # Column letter (e.g., 'A')
+        column_letter = get_column_letter(col_cells[0].column)
+
+        # Compute final width with buffer and caps
+        target_width = max_len + buffer
+        target_width = min(target_width, threshold_length, EXCEL_MAX_COL_WIDTH)
+
+        sheet.column_dimensions[column_letter].width = target_width
+
+
+def format_list_cell(x, unwrap_single=True, sep="\n"):
+    """
+    Format a cell that may be a list:
+    - Empty list -> pd.NA
+    - Single-item list (unwrap_single=True) -> that item
+    - Multi-item list -> newline-separated string (items coerced to string)
+    - Non-list values returned unchanged
+    """
+    if not isinstance(x, list):
+        return x
+    if len(x) == 0:
+        return pd.NA
+    if unwrap_single and len(x) == 1:
+        return x[0]
+    return sep.join(_to_string_item(item) for item in x)
+
+
+def _ensure_unique_names(names, taken):
+    """
+    Ensure new column names do not collide with existing ones.
+    If collision occurs, append __dupN suffix.
+    """
+    finalized = []
+    for base in names:
+        name = base
+        i = 1
+        while name in taken:
+            name = f"{base}__dup{i}"
+            i += 1
+        finalized.append(name)
+        taken.add(name)
+    return finalized
+
+
+def expand_dict_column(
+    df,
+    col,
+    unwrap_single_lists=True,
+    list_sep="\n",
+    drop_original=True,
+    flatten_sep=".",
+):
+    """
+    Expand dictionaries found in df[col] into new columns named '{col}:{keypath}',
+    flattening nested keys with `flatten_sep`. Lists encountered inside dict values
+    are formatted per `format_list_cell`. Original column can be dropped.
+    """
+    # Identify rows with dicts
+    mask = df[col].apply(lambda v: isinstance(v, dict))
+
+    if not mask.any():
+        return df
+
+    # Normalize the dicts (nested keys flattened with flatten_sep)
+    expanded = pd.json_normalize(df.loc[mask, col], sep=flatten_sep)
+
+    # Align to full DataFrame index (non-dict rows get NaN)
+    expanded = expanded.reindex(df.index)
+
+    # Format lists inside the expanded dict values
+    expanded = expanded.map(
+        lambda v: format_list_cell(v, unwrap_single_lists, list_sep)
+    )
+
+    # Prefix with original column name
+    new_names = [f"{col}:{c}" for c in expanded.columns]
+
+    # Avoid collisions with existing columns
+    taken = set(df.columns)
+    expanded.columns = _ensure_unique_names(new_names, taken)
+
+    # Concatenate expanded columns
+    out = pd.concat([df, expanded], axis=1)
+
+    # Optionally drop the original dict column
+    if drop_original:
+        out = out.drop(columns=[col])
+
+    return out
+
+
+def expand_dicts_and_format_lists(
+    df,
+    unwrap_single_lists=True,
+    list_sep="\n",
+    drop_original_dict_cols=True,
+    flatten_sep=".",
+):
+    """
+    Process the entire DataFrame:
+      1) For every column that contains dictionaries in any row:
+         - Expand into '{col}:{keypath}' columns.
+         - Drop the original dict column (configurable).
+         - Format lists found inside those dict values.
+      2) For every remaining column that contains lists in any row:
+         - Unwrap single-item lists.
+         - Join multi-item lists with `list_sep`.
+    """
+    out = df.copy()
+
+    # First pass: expand dict-containing columns
+    for col in list(out.columns):
+        if out[col].apply(lambda v: isinstance(v, dict)).any():
+            out = expand_dict_column(
+                out,
+                col,
+                unwrap_single_lists=unwrap_single_lists,
+                list_sep=list_sep,
+                drop_original=drop_original_dict_cols,
+                flatten_sep=flatten_sep,
+            )
+
+    # Second pass: format standalone list-containing columns
+    for col in list(out.columns):
+        if out[col].apply(lambda v: isinstance(v, list)).any():
+            out[col] = out[col].apply(
+                lambda v: format_list_cell(v, unwrap_single_lists, list_sep)
+            )
+
+    return out
 
 
 def generate_excel(file_out: Path, baseline: Baseline) -> None:
@@ -25,10 +241,10 @@ def generate_excel(file_out: Path, baseline: Baseline) -> None:
 
     This function performs the following steps:
     1. Logs the start of the Excel generation process.
-    2. Defines mappings for renaming columns and lists of columns to process.
-    3. Converts the baseline data to a DataFrame and makes a copy of it.
+    2. Converts the baseline data to a DataFrame and makes a copy of it.
+    3. Drops unwanted columns from the DataFrame.
     4. Modifies the DataFrame content, including handling nested structures and renaming columns.
-    5. Ensures all required columns are present in the DataFrame.
+    5. Ensures all required columns are present in the DataFrame, dropping any columns that have all None values.
     6. Writes the DataFrame to an Excel file using the openpyxl engine.
     7. Applies formatting to the Excel sheet, including setting column widths, header fonts, and cell alignments.
     8. Logs the successful generation of the Excel file.
@@ -37,168 +253,81 @@ def generate_excel(file_out: Path, baseline: Baseline) -> None:
         Any exceptions raised during the process will be logged.
     """
     logger.info("Starting Excel generation process.")
-    rename_mapping = {
-        "title": "Title",
-        "rule_id": "Rule ID",
-        "severity": "Severity",
-        "discussion": "Discussion",
-        "mechanism": "Mechanism",
-        "check": "Check",
-        "fix": "Fix",
-        "cci": "CCI",
-        "cce": "CCE",
-        "nist_controls": "800-53r5",
-        "nist_171": "800-171",
-        "disa_stig": "DISA STIG",
-        "srg": "SRG",
-        "sfr": "SFR",
-        "cmmc": "CMMC",
-        "indigo": "indigo",
-        "custom_refs": "Custom References",
-        "tags": "Tags",
-        "result": "Check Result",
-        "customized": "Modified Rule",
-        "benchmark": "CIS Benchmark",
-        "controls_v8": "CIS Controls v8",
-    }
-
-    list_columns = [
-        "cci",
-        "cce",
-        "nist_controls",
-        "nist_171",
-        "disa_stig",
-        "srg",
-        "sfr",
-        "cmmc",
-        "indigo",
-        "custom_refs",
-        "odv",
-        "tags",
-        "benchmark",
-        "controls_v8",
-    ]
-
-    required_columns = [
-        "CCE",
-        "Rule ID",
-        "Title",
-        "Discussion",
-        "Mechanism",
-        "Check",
-        "Check Result",
-        "Fix",
-        "800-53r5",
-        "800-171",
-        "SRG",
-        "SFR",
-        "DISA STIG",
-        "CIS Benchmark",
-        "CIS Controls v8",
-        "CMMC",
-        "indigo",
-        "CCI",
-        "Severity",
-        "Modified Rule",
-    ]
 
     logger.debug("Converting baseline to DataFrame.")
     dataframe = baseline.to_dataframe()
-    dataframe.to_excel(file_out)
-    exit()
-    df_copy: pd.DataFrame = dataframe.copy()
 
-    logger.debug("Modifying DataFrame content.")
-    df_copy["section"] = df_copy["section"].astype(pd.CategoricalDtype(ordered=True))
+    # drop unnecessary columns
+    dataframe.drop("finding", axis=1, inplace=True)
+    dataframe.drop("uuid", axis=1, inplace=True)
+    dataframe.drop("section", axis=1, inplace=True)
+    dataframe.drop("platforms", axis=1, inplace=True)
+    dataframe.drop("os_name", axis=1, inplace=True)
+    dataframe.drop("os_type", axis=1, inplace=True)
+    dataframe.drop("os_version", axis=1, inplace=True)
+    dataframe.drop("odv", axis=1, inplace=True)
+    dataframe.drop("tags", axis=1, inplace=True)
+    dataframe.drop("mobileconfig_info", axis=1, inplace=True)
+    dataframe.drop("ddm_info", axis=1, inplace=True)
 
-    df_details = (
-        df_copy["cis"]
-        .apply(lambda x: {} if pd.isna(x) else x)
-        .apply(pd.Series)[["benchmark", "controls_v8"]]
+    column_order = [
+        "rule_id",
+        "title",
+        "discussion",
+        "mechanism",
+        "check",
+        "result_value",
+        "fix",
+        "default_state",
+        "severity",
+        "customized",
+        "nist",
+        "disa",
+        "cis",
+        "bsi",
+        "custom_refs",
+    ]
+
+    sorted_dataframe = dataframe[column_order]
+
+    df2 = expand_dicts_and_format_lists(
+        sorted_dataframe,
+        unwrap_single_lists=True,  # single-item lists -> element
+        list_sep="\n",  # multi-item lists -> newline-separated
+        drop_original_dict_cols=True,  # drop dict columns (like CIS) after expansion
+        flatten_sep=".",  # nested keys flattened with dots
     )
-    df_copy = pd.concat([df_copy, df_details], axis=1)
-    df_copy["check"] = (
-        df_copy["check"].apply(lambda x: {} if pd.isna(x) else x).apply(pd.Series)
-    )
 
-    df_copy.columns = (
-        df_copy.columns.str.strip()
-        .str.strip("[]")
-        .str.replace(r"\|", "|", regex=True)
-        .str.replace(r"N/A", "", regex=True)
-    )
+    # move CCE to front, and customized to back
+    cce_column = df2.pop("nist:cce")
+    df2.insert(0, "nist:cce", cce_column)
 
-    for col in list_columns:
-        if col in df_copy.columns:
-            df_copy[col] = df_copy[col].apply(
-                lambda x: "\n".join(x) if isinstance(x, list) else ""
-            )
+    df2["customized"] = df2.pop("customized")
 
-    df_copy = df_copy.drop(columns=["odv", "result_value"])
-    df_copy.rename(columns=rename_mapping, inplace=True)
+    # drop any columns that don't have any values
+    df2.dropna(axis=1, how="all", inplace=True)
 
-    for col in required_columns:
-        if col not in df_copy.columns:
-            df_copy[col] = ""
-
-    df_copy = df_copy[required_columns]
+    # convert column headers to uppercase
+    df2.columns = df2.columns.str.upper()
 
     logger.debug("Writing DataFrame to Excel file.")
-    with pd.ExcelWriter(file_out, engine="openpyxl") as writer:
-        df_copy.to_excel(writer, index=False, header=True, sheet_name="Sheet 1")
 
-        sheet = writer.sheets["Sheet 1"]
+    with pd.ExcelWriter(file_out, engine="openpyxl") as writer:
+        df2.to_excel(writer, index=False, header=True, sheet_name=baseline.name)
+
+        sheet = writer.sheets[baseline.name]
         header_font: Font = Font(bold=True)
         top: Alignment = Alignment(vertical="top")
         topWrap: Alignment = Alignment(
             vertical="top", wrap_text=True, horizontal="left"
         )
 
-        column_widths: dict = {
-            0: 15,
-            1: 50,
-            2: 70,
-            3: 95,
-            4: 25,
-            5: 150,
-            6: 25,
-            7: 200,
-            8: 15,
-            9: 15,
-            10: 25,
-            11: 15,
-            12: 15,
-            13: 15,
-            14: 15,
-            15: 15,
-            16: 15,
-            17: 15,
-            18: 15,
-            19: 15,
-        }
-
-        column_alignment: dict = {
-            "CCE": top,
-            "Rule ID": top,
-            "Title": top,
-            "Discussion": topWrap,
-            "Mechanism": top,
-            "Check": topWrap,
-            "Check Result": topWrap,
-            "Fix": topWrap,
-            "800-53r5": topWrap,
-            "800-171": topWrap,
-            "SRG": topWrap,
-            "SFR": topWrap,
-            "DISA STIG": topWrap,
-            "CIS Benchmark": topWrap,
-            "CIS Controls v8": topWrap,
-            "CMMC": topWrap,
-            "indigo": topWrap,
-            "CCI": topWrap,
-            "Severity": topWrap,
-            "Modified Rule": topWrap,
-        }
+        top_columns: list = [
+            "title",
+            "rule_id",
+            "result_value",
+            "mechanism",
+        ]
 
         for cell in sheet[1]:
             cell.font = header_font
@@ -210,14 +339,23 @@ def generate_excel(file_out: Path, baseline: Baseline) -> None:
             start=2,
         ):
             for col_idx, cell in enumerate(row, start=1):
-                column_name = df_copy.columns[col_idx - 1]
-                if column_name in column_alignment:
-                    cell.font = Font(size=12)
-                    cell.alignment = column_alignment[column_name]
+                column_name = df2.columns[col_idx - 1]
+                if column_name in top_columns:
+                    cell.alignment = top
+                else:
+                    cell.alignment = topWrap
 
-        for col_idx, width in column_widths.items():
-            column_letter = get_column_letter(col_idx + 1)
-            sheet.column_dimensions[column_letter].width = width
+        auto_fit_columns(sheet, threshold_length=120, buffer=2, wrap_multiline=True)
+
+        # Create and add a table for easy use
+        max_row = sheet.max_row
+        max_col = sheet.max_column
+        ref_range = f"A1:{get_column_letter(max_col)}{max_row}"
+
+        style = TableStyleInfo(name="TableStyleMedium2")
+        table = Table(displayName=baseline.name, ref=ref_range)
+        table.tableStyleInfo = style
+        sheet.add_table(table)
 
         sheet.freeze_panes = "C2"
 
