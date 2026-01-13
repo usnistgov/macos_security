@@ -1004,7 +1004,7 @@ class Macsecurityrule(BaseModelWithAccessors):
 
         try:
             rule_file_path.unlink()
-            logger.info("Custome rule file deleted: {}", rule_file_path)
+            logger.info("Custom rule file deleted: {}", rule_file_path)
         except FileNotFoundError:
             logger.warning("Rule file not found: {}", rule_file_path)
 
