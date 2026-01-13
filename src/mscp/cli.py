@@ -59,6 +59,14 @@ def parse_cli() -> None:
         action="store_true",
     )
 
+    parent_parser.add_argument(
+        "-v",
+        "--verbose",
+        action="count",
+        default=0,
+        help="Increase output verbosity (-v, -vv)",
+    )
+
     parser = Customparser(
         description="CLI tool for managing baseline and compliance documents.",
         prog="mscp",
@@ -336,7 +344,7 @@ def parse_cli() -> None:
     )
 
     checklist_parser.add_argument(
-        "-v",
+        "-V",
         "--checklist_version",
         help="STIG Checklist Version",
         default="3",
@@ -359,10 +367,10 @@ def parse_cli() -> None:
         action="store_true",
     )
 
-    logger = set_logger()
-
     try:
         args = parser.parse_args()
+
+        logger = set_logger(verbosity=args.verbose)
     except argparse.ArgumentError as e:
         logger.error("Argument Error: {}", e)
         parser.print_help()
@@ -374,7 +382,7 @@ def parse_cli() -> None:
         logger.info("LOGGING LEVEL: DEBUG")
     else:
         logger.info("=== Logging level changed ===")
-        logger.info("LOGGING LEVEL: ERROR")
+        logger.debug("LOGGING LEVEL: CRITICAL")
 
     if not hasattr(args, "func"):
         logger.error("Functionality for {} is not implemented yet.", args.subcommand)
