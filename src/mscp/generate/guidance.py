@@ -41,14 +41,16 @@ def verify_signing_hash(cert_hash: str) -> bool:
         bool: If the certificate is valid, returns True.
     """
 
-    with tempfile.NamedTemporaryFile(mode="w", delete=True) as in_file:
-        unsigned_tmp_file_path = in_file.name
-        in_file.write("temporary file for signing")
+    with tempfile.NamedTemporaryFile(mode="w", delete=False) as in_file:
+        unsigned_tmp_file_path = Path(in_file.name)
+        in_file.write("temporary file for signing\n")
         in_file.flush()
 
-        cmd: str = f"security cms -SZ {cert_hash} -i {unsigned_tmp_file_path}"
+    cmd: str = f"security cms -SZ {cert_hash} -i {unsigned_tmp_file_path}"
 
-        stdout, error = run_command(cmd)
+    stdout, error = run_command(cmd, text=False, check=False)
+
+    unsigned_tmp_file_path.unlink()
 
     if error:
         logger.error(f"Verification failed for hash {cert_hash}. Error: {error}")
@@ -128,24 +130,15 @@ def generate_guidance(args: argparse.Namespace) -> None:
 
     if args.profiles:
         logger.info("Generating configuration profiles")
-        if not signing:
-            generate_profiles(
-                build_path,
-                baseline_name,
-                baseline,
-                consolidated=args.consolidated_profile,
-                granular=args.granular_profiles,
-            )
-        else:
-            generate_profiles(
-                build_path,
-                baseline_name,
-                baseline,
-                signing,
-                args.hash,
-                consolidated=args.consolidated_profile,
-                granular=args.granular_profiles,
-            )
+        generate_profiles(
+            build_path,
+            baseline_name,
+            baseline,
+            signing,
+            args.hash,
+            consolidated=args.consolidated_profile,
+            granular=args.granular_profiles,
+        )
 
     if args.ddm:
         logger.info("Generating declarative components")
@@ -188,6 +181,8 @@ def generate_guidance(args: argparse.Namespace) -> None:
             build_path,
             baseline_name,
             baseline,
+            signing,
+            args.hash,
             consolidated=args.consolidated_profile,
             granular=args.granular_profiles,
         )
