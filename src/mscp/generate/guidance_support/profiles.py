@@ -2,13 +2,12 @@
 
 # Standard python modules
 from collections import defaultdict
-from datetime import date
 from pathlib import Path
 from typing import Any, Dict, List
 
 # Local python modules
 from ...classes import Baseline, Macsecurityrule, Payload
-from ...common_utils import config, logger, make_dir, open_file, run_command
+from ...common_utils import logger, make_dir, run_command
 
 
 def get_payload_content_by_type(
