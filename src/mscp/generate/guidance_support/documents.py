@@ -474,59 +474,27 @@ def generate_documents(
         language,
     )
 
-    # if output_format == "adoc":
-    #     gems_asciidoctor: Path = Path("mscp_gems/bin/asciidoctor")
-    #     gems_asciidoctor_pdf: Path = Path("mscp_gems/bin/asciidoctor-pdf")
+    if output_format == "adoc":
+        asciidoctor_path, _ = run_command("bundle show asciidoctor")
+        asciidoctor_pdf_path, _ = run_command("bundle show asciidoctor-pdf")
 
-    # output, error = run_command("which asciidoctor")
-    # logger.debug(f"which asciidoctor output: {output}, error: {error}")
+        if (
+            "Could not find gem" in asciidoctor_path
+            or "Could not find gem" in asciidoctor_pdf_path
+        ):
+            output, error = run_command(
+                "bundle install --gemfile Gemfile --path mscp_gems --binstubs"
+            )
+            if error:
+                logger.error(f"Bundle install failed: {error}")
+                sys.exit()
 
-    # if not output:
-    #     if not gems_asciidoctor.exists():
-    #         logger.error("Asciidoctor not installed!!")
-    #         sys.exit()
-    output, error = run_command("bundle install --gemfile Gemfile --path mscp_gems --binstubs")
-    if error:
-        logger.error(f"Bundle install failed: {error}")
-        sys.exit()
-
-    output, error = run_command(f"bundle exec asciidoctor {output_file}")
-    if error:
-        logger.error(f"Error converting to ADOC: {error}")
-        sys.exit()
-
-    if not show_all_tags:
-        # output, error = run_command("which asciidoctor-pdf")
-        # logger.debug(f"which asciidoctor-pdf output: {output}, error: {error}")
-
-        # if not output:
-        #     if not gems_asciidoctor.exists():
-        #         logger.error("Asciidoctor not installed!!")
-        #         sys.exit()
-        output, error = run_command("bundle install --gemfile Gemfile --path mscp_gems --binstubs")
+        output, error = run_command(f"bundle exec asciidoctor {output_file}")
         if error:
-            logger.error(f"Bundle install failed: {error}")
+            logger.error(f"Error converting to ADOC: {error}")
             sys.exit()
 
         output, error = run_command(f"bundle exec asciidoctor-pdf {output_file}")
         if error:
             logger.error(f"Error converting to ADOC: {error}")
             sys.exit()
-
-        if not show_all_tags:
-            # output, error = run_command("which asciidoctor-pdf")
-            # logger.debug(f"which asciidoctor-pdf output: {output}, error: {error}")
-
-            # if not output:
-            #     if not gems_asciidoctor_pdf.exists():
-            #         logger.error("Asciidoctor not installed!!")
-            #         sys.exit()
-            output, error = run_command("bundle install --gemfile Gemfile --path mscp_gems --binstubs")
-            if error:
-                logger.error(f"Bundle install failed: {error}")
-                sys.exit()
-
-            output, error = run_command(f"bundle exec asciidoctor-pdf {output_file}")
-            if error:
-                logger.error(f"Error converting to ADOC: {error}")
-                sys.exit()

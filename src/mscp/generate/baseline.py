@@ -89,7 +89,7 @@ def rule_has_benchmark_for_version(
 
 
 def generate_baseline(args: argparse.Namespace) -> None:
-    build_path: Path = Path(config.get("output_dir", ""), "baselines")
+    build_path: Path = Path(config["custom"].get("baseline_dir", ""))
     baseline_output_file: Path = (
         build_path / f"{args.keyword}_{args.os_name}_{args.os_version}.yaml"
     )
@@ -143,7 +143,7 @@ def generate_baseline(args: argparse.Namespace) -> None:
         make_dir(build_path)
 
     all_rules: list[Macsecurityrule] = Macsecurityrule.collect_all_rules(
-        args.os_name, args.os_version, parent_values="Default"
+        args.os_name, args.os_version, args.tailor, parent_values="Default"
     )
 
     all_tags, benchmark_map = collect_tags_and_benchmarks(all_rules)
@@ -234,7 +234,9 @@ def generate_baseline(args: argparse.Namespace) -> None:
         )
         custom_author_name: str = sanitize_input("Enter your name: ")
         custom_author_org: str = sanitize_input("Enter your organization: ")
-        baseline_output_file = build_path / f"{tailored_filename}.yaml"
+        baseline_output_file: Path = (
+            build_path / f"{tailored_filename}_{args.os_name}_{args.os_version}.yaml"
+        )
         authors.append(Author(name=custom_author_name, organization=custom_author_org))
 
         if tailored_filename == args.keyword:

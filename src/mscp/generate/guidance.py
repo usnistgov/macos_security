@@ -26,6 +26,7 @@ from ..generate.guidance_support import (
     generate_excel,
     generate_profiles,
     generate_script,
+    generate_restore_script,
 )
 
 
@@ -40,14 +41,16 @@ def verify_signing_hash(cert_hash: str) -> bool:
         bool: If the certificate is valid, returns True.
     """
 
-    with tempfile.NamedTemporaryFile(mode="w", delete=True) as in_file:
-        unsigned_tmp_file_path = in_file.name
-        in_file.write("temporary file for signing")
+    with tempfile.NamedTemporaryFile(mode="w", delete=False) as in_file:
+        unsigned_tmp_file_path = Path(in_file.name)
+        in_file.write("temporary file for signing\n")
         in_file.flush()
 
-        cmd: str = f"security cms -SZ {cert_hash} -i {unsigned_tmp_file_path}"
+    cmd: str = f"security cms -SZ {cert_hash} -i {unsigned_tmp_file_path}"
 
-        stdout, error = run_command(cmd)
+    stdout, error = run_command(cmd, text=False, check=False)
+
+    unsigned_tmp_file_path.unlink()
 
     if error:
         logger.error(f"Verification failed for hash {cert_hash}. Error: {error}")
@@ -127,10 +130,15 @@ def generate_guidance(args: argparse.Namespace) -> None:
 
     if args.profiles:
         logger.info("Generating configuration profiles")
-        if not signing:
-            generate_profiles(build_path, baseline_name, baseline)
-        else:
-            generate_profiles(build_path, baseline_name, baseline, signing, args.hash)
+        generate_profiles(
+            build_path,
+            baseline_name,
+            baseline,
+            signing,
+            args.hash,
+            consolidated=args.consolidated_profile,
+            granular=args.granular_profiles,
+        )
 
     if args.ddm:
         logger.info("Generating declarative components")
@@ -139,6 +147,9 @@ def generate_guidance(args: argparse.Namespace) -> None:
     if args.script and args.os_name == "macos":
         logger.info("Generating compliance script")
         generate_script(build_path, baseline_name, audit_name, baseline, log_reference)
+        generate_restore_script(
+            build_path, baseline_name, audit_name, baseline, log_reference
+        )
 
     if args.xlsx:
         logger.info("Generating Excel document")
@@ -166,7 +177,15 @@ def generate_guidance(args: argparse.Namespace) -> None:
     if args.all:
         logger.info("Generating all support files")
         logger.info("Generating configuration profiles")
-        generate_profiles(build_path, baseline_name, baseline)
+        generate_profiles(
+            build_path,
+            baseline_name,
+            baseline,
+            signing,
+            args.hash,
+            consolidated=args.consolidated_profile,
+            granular=args.granular_profiles,
+        )
 
         logger.info("Generating declarative components")
         generate_ddm(build_path, baseline, baseline_name)
@@ -174,11 +193,24 @@ def generate_guidance(args: argparse.Namespace) -> None:
         if args.os_name == "macos":
             logger.info("Generating compliance script")
             generate_script(
-                build_path, baseline_name, audit_name, baseline, log_reference
+                build_path,
+                baseline_name,
+                audit_name,
+                baseline,
+                log_reference,
+                current_version_data,
+            )
+            generate_restore_script(
+                build_path,
+                baseline_name,
+                audit_name,
+                baseline,
+                log_reference,
+                current_version_data,
             )
 
-        # logger.info("Generating Excel document")
-        # generate_excel(spreadsheet_output_file, baseline)
+        logger.info("Generating Excel document")
+        generate_excel(spreadsheet_output_file, baseline)
 
         logger.info("Generating markdown documents")
         generate_documents(

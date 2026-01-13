@@ -59,6 +59,14 @@ def parse_cli() -> None:
         action="store_true",
     )
 
+    parent_parser.add_argument(
+        "-v",
+        "--verbose",
+        action="count",
+        default=0,
+        help="Increase output verbosity (-v, -vv)",
+    )
+
     parser = Customparser(
         description="CLI tool for managing baseline and compliance documents.",
         prog="mscp",
@@ -164,6 +172,20 @@ def parse_cli() -> None:
         "-p",
         "--profiles",
         help="Generate configuration profiles for the rules.",
+        action="store_true",
+    )
+    guidance_parser.add_argument(
+        "-P",
+        "--consolidated-profile",
+        default=False,
+        help="Include a single consolidated configuration profile when generating profiles.",
+        action="store_true",
+    )
+    guidance_parser.add_argument(
+        "-G",
+        "--granular-profiles",
+        default=False,
+        help="Include granular per-setting configuration profiles when generating profiles.",
         action="store_true",
     )
     guidance_parser.add_argument(
@@ -322,7 +344,7 @@ def parse_cli() -> None:
     )
 
     checklist_parser.add_argument(
-        "-v",
+        "-V",
         "--checklist_version",
         help="STIG Checklist Version",
         default="3",
@@ -345,10 +367,10 @@ def parse_cli() -> None:
         action="store_true",
     )
 
-    logger = set_logger()
-
     try:
         args = parser.parse_args()
+
+        logger = set_logger(verbosity=args.verbose)
     except argparse.ArgumentError as e:
         logger.error("Argument Error: {}", e)
         parser.print_help()
@@ -360,7 +382,7 @@ def parse_cli() -> None:
         logger.info("LOGGING LEVEL: DEBUG")
     else:
         logger.info("=== Logging level changed ===")
-        logger.info("LOGGING LEVEL: ERROR")
+        logger.debug("LOGGING LEVEL: CRITICAL")
 
     if not hasattr(args, "func"):
         logger.error("Functionality for {} is not implemented yet.", args.subcommand)
@@ -389,6 +411,10 @@ def parse_cli() -> None:
                 "Compliance script generation is only supported for macOS. Please remove the --script flag."
             )
             sys.exit()
+
+        # if generating consolidated profile, assume to do all profiles
+        if args.consolidated_profile or args.granular_profiles:
+            args.profiles = True
 
     args.func(args)
 

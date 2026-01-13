@@ -6,6 +6,7 @@ __all__ = [
     "generate_excel",
     "generate_profiles",
     "generate_script",
+    "generate_restore_script",
 ]
 
 
@@ -13,4 +14,4 @@ from .ddm import generate_ddm
 from .documents import generate_documents
 from .excel import generate_excel
 from .profiles import generate_profiles
-from .script import generate_script
+from .script import generate_script, generate_restore_script

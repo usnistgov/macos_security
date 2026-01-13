@@ -2,13 +2,12 @@
 
 # Standard python modules
 from collections import defaultdict
-from datetime import date
 from pathlib import Path
-from typing import Any
+from typing import Any, Dict, List
 
 # Local python modules
 from ...classes import Baseline, Macsecurityrule, Payload
-from ...common_utils import config, logger, make_dir, open_file, run_command
+from ...common_utils import logger, make_dir, run_command
 
 
 def get_payload_content_by_type(
@@ -78,6 +77,8 @@ def generate_profiles(
     baseline: Baseline,
     signing: bool = False,
     hash_value: str = "",
+    consolidated: bool = False,
+    granular: bool = False,
 ) -> None:
     """
     Generates configuration profiles based on the provided baseline and saves them to the specified build path.
@@ -88,6 +89,8 @@ def generate_profiles(
         baseline (Baseline): The baseline object containing profile and rule information.
         signing (bool, optional): Whether to sign the generated profiles. Defaults to False.
         hash_value (str, optional): The hash value used for signing the profiles. Defaults to an empty string.
+        consolidated (bool, optional): Whether to include a single consolidate profile containing all the settings.
+        granular (bool, optional): Whether to build individual profiles for every setting.
 
     Returns:
         None
@@ -105,49 +108,50 @@ def generate_profiles(
         - Displays a caution message about the use of the generated profiles in a test environment.
     """
 
+    def merge_flat_settings(flat_settings: List[Dict[str, Any]]) -> Dict[str, Any]:
+        agg: defaultdict[str, List[Any]] = defaultdict(list)
+        result: Dict[str, Any] = {}
+
+        for d in flat_settings:
+            for k, v in d.items():
+                if isinstance(v, list):
+                    agg[k].extend(v)  # accumulate list values
+                else:
+                    result[k] = v  # last non-list value wins
+
+        # move list aggregates into the final result
+        for k, vals in agg.items():
+            # if a non-list value was already set for k, keep the aggregated list anyway
+            result[k] = vals
+
+        return result
+
     unsigned_output_path: Path = Path(build_path, "mobileconfigs", "unsigned")
     signed_output_path: Path = Path(build_path, "mobileconfigs", "signed")
     plist_output_path: Path = Path(build_path, "mobileconfigs", "preferences")
-    create_date: date = date.today()
-
-    manifests_file: dict = open_file(
-        Path(config.get("includes_dir", ""), "supported_payloads.yaml")
-    )
+    granular_output_path: Path = Path(build_path, "mobileconfigs", "granular")
 
     make_dir(unsigned_output_path)
     make_dir(plist_output_path)
 
+    if granular:
+        make_dir(granular_output_path)
+
     if signing:
         make_dir(signed_output_path)
 
-    profile_errors: list[Macsecurityrule] = [
-        rule
-        for profile in baseline.profile
-        for rule in profile.rules
-        if rule.mobileconfig_info
-        and any(
-            payload.payload_type not in manifests_file.get("payloads_types", [])
-            for payload in rule.mobileconfig_info
-        )
-    ]
-
     valid_rules: list[Macsecurityrule] = [
-        rule
-        for profile in baseline.profile
-        for rule in profile.rules
-        if rule.mobileconfig_info
-        and any(
-            payload.payload_type in manifests_file.get("payloads_types", [])
-            for payload in rule.mobileconfig_info
-        )
+        rule for profile in baseline.profile for rule in profile.rules
     ]
 
     grouped_payloads: dict = get_payload_content_by_type(valid_rules)
 
-    if len(profile_errors) != 0:
-        logger.info(f"There were errors found in {len(profile_errors)} rules")
-        for error in profile_errors:
-            logger.info(f"Correct the following rule: {error.rule_id}")
+    consolidated_profile = Payload(
+        identifier=f"consolidated.{baseline_name}",
+        organization="macOS Security Compliance Project",
+        displayname=f"{baseline_name} settings",
+        description=f"Consolidated configuration settings for {baseline_name}.",
+    )
 
     for payload_type, settings_list in grouped_payloads.items():
         logger.debug("Payload Type: {}", payload_type)
@@ -171,9 +175,8 @@ def generate_profiles(
         sanitized_payload_type = "".join(
             c if c.isalnum() or c in "._-" else "_" for c in payload_type
         )
-        identifier = f"{sanitized_payload_type}.{baseline_name}"
+        identifier = f"mscp.{sanitized_payload_type}.{baseline_name}"
         description = (
-            f"Created: {create_date}\n"
             f"Configuration settings for the {payload_type} preference domain."
         )
         organization = "macOS Security Compliance Project"
@@ -190,9 +193,45 @@ def generate_profiles(
             for settings in flat_settings:
                 for domain, payload_content in settings.items():
                     new_profile.add_mcx_payload(domain, payload_content, baseline_name)
+                    consolidated_profile.add_mcx_payload(
+                        domain, payload_content, baseline_name
+                    )
+                    # generate individual profiles for each setting
+                    if granular:
+                        for setting, value in payload_content.items():
+                            granular_profile = Payload(
+                                identifier=f"mscp.{domain}.{setting}",
+                                organization=organization,
+                                description=f"Configuration for {domain}:{setting}",
+                                displayname=f"[{domain}] - {setting}",
+                            )
+
+                            granular_profile.add_mcx_payload(
+                                domain, {setting: value}, setting
+                            )
+                            granular_profile.save_to_plist(
+                                granular_output_path / f"{setting}.mobileconfig"
+                            )
         else:
-            settings: dict = {k: v for d in flat_settings for k, v in d.items()}
+            settings = merge_flat_settings(flat_settings)
             new_profile.add_payload(payload_type, settings, baseline_name)
+            consolidated_profile.add_payload(payload_type, settings, baseline_name)
+
+            # generate individual profiles for each setting
+            if granular:
+                for setting, value in settings.items():
+                    granular_profile = Payload(
+                        identifier=f"mscp.{payload_type}.{setting}",
+                        organization=organization,
+                        description=f"Configuration for {payload_type}:{setting}",
+                        displayname=f"[{payload_type}] - {setting}",
+                    )
+                    granular_profile.add_payload(
+                        payload_type, {setting: value}, setting
+                    )
+                    granular_profile.save_to_plist(
+                        granular_output_path / f"{setting}.mobileconfig"
+                    )
 
         new_profile.save_to_plist(unsigned_mobileconfig_file_path)
 
@@ -208,6 +247,19 @@ def generate_profiles(
         logger.info(
             f"Configuration profile for {payload_type} saved to {unsigned_mobileconfig_file_path}"
         )
+
+    # write consolidated profile if enabled
+    if consolidated:
+        consolidated_profile.save_to_plist(
+            unsigned_output_path / f"{baseline_name}.mobileconfig"
+        )
+
+        if signing:
+            sign_config_profile(
+                unsigned_output_path / f"{baseline_name}.mobileconfig",
+                signed_output_path / f"{baseline_name}.mobileconfig",
+                hash_value,
+            )
 
     managed_client_file: Path = (
         plist_output_path / "com.apple.ManagedClient.preferences.plist"

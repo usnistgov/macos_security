@@ -8,7 +8,9 @@ import subprocess
 from .logger_instance import logger
 
 
-def run_command(command: str) -> tuple[str | None, str | None]:
+def run_command(
+    command: str, capture_output: bool = True, text: bool = True, check: bool = True
+) -> tuple[str | None, str | None]:
     """
     Executes a shell command and returns its output or an error message.
         result = subprocess.run(args, capture_output=True, text=True, check=True)
@@ -22,12 +24,17 @@ def run_command(command: str) -> tuple[str | None, str | None]:
     try:
         logger.info("Executing command: {}", command)
 
-        result = subprocess.run(args, capture_output=True, text=True, check=True)
+        result = subprocess.run(
+            args, capture_output=capture_output, text=text, check=check
+        )
 
         logger.success("Command executed successfully: {}", command)
-        logger.debug("Command output: {}", result.stdout.strip())
+        if text:
+            logger.debug("Command output: {}", result.stdout.strip())
 
-        return result.stdout.strip(), None
+            return result.stdout.strip(), None
+        else:
+            return None, None
 
     except subprocess.CalledProcessError as e:
         logger.error(

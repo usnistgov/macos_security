@@ -1,6 +1,7 @@
 # mscp/generate/script.py
 
 # Standard python modules
+from datetime import date
 from itertools import groupby
 from pathlib import Path
 from typing import Any
@@ -140,6 +141,7 @@ def generate_script(
     audit_name: str,
     baseline: Baseline,
     log_reference: str,
+    current_version_data: dict,
 ) -> None:
     output_file: Path = Path(build_path, f"{baseline_name}_compliance.sh")
     env: Environment = Environment(
@@ -160,8 +162,52 @@ def generate_script(
         baseline_name=baseline_name,
         audit_name=audit_name,
         reference_log_id=log_reference,
+        todays_date=date.today().strftime("%Y-%m-%d"),
+        mscp_version=current_version_data["compliance_version"],
     )
 
     generate_audit_plist(build_path, baseline_name, baseline)
     output_file.write_text(rendered_output, encoding="UTF-8")
     output_file.chmod(0o755)
+
+
+def generate_restore_script(
+    build_path: Path,
+    baseline_name: str,
+    audit_name: str,
+    baseline: Baseline,
+    log_reference: str,
+    current_version_data: dict,
+) -> None:
+    output_file: Path = Path(build_path, f"{baseline_name}_restore.sh")
+    env: Environment = Environment(
+        loader=FileSystemLoader(config["defaults"]["shell_template_dir"]),
+        trim_blocks=True,
+        lstrip_blocks=True,
+    )
+    script_template = env.get_template("restore_script.sh.jinja")
+
+    env.filters["group_ulify"] = group_ulify
+    env.filters["log_reference"] = generate_log_reference
+    env.filters["quotify"] = quotify
+
+    baseline_dict: dict[str, Any] = dict(baseline)
+
+    any_rendered = any(
+        rule.get("default_state")
+        for p in baseline_dict["profile"]
+        for rule in p["rules"]
+    )
+
+    rendered_output = script_template.render(
+        baseline=baseline_dict,
+        baseline_name=baseline_name,
+        audit_name=audit_name,
+        reference_log_id=log_reference,
+        todays_date=date.today().strftime("%Y-%m-%d"),
+        mscp_version=current_version_data["compliance_version"],
+    )
+
+    if any_rendered:
+        output_file.write_text(rendered_output, encoding="UTF-8")
+        output_file.chmod(0o755)

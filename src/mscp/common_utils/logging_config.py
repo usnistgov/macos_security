@@ -25,7 +25,7 @@ def function_filter(record):
 
 
 def set_logger(debug: bool = False, verbosity: int = 0) -> loguru.Logger:
-    log_level: str = "ERROR"
+    log_level: str = "CRITICAL"
 
     if verbosity == 1:
         log_level = "WARNING"

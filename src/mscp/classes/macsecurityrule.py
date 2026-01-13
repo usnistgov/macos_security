@@ -2,7 +2,7 @@
 
 # Standard python modules
 import base64
-from collections import OrderedDict
+from collections import OrderedDict, defaultdict
 from enum import StrEnum
 from pathlib import Path
 from typing import Any
@@ -76,14 +76,14 @@ class BaseModelWithAccessors(BaseModel):
 
 
 class NistReferences(BaseModelWithAccessors):
-    cce: dict[str, list[str]] | None = None
+    cce: list[str] | None = None
     nist_800_53r5: list[str] | None = None
     nist_800_171r3: list[str] | None = None
 
     def __init__(self, **data):
         super().__init__(**data)
         if self.cce:
-            self.cce = OrderedDict(sorted(self.cce.items()))
+            self.cce = sorted(self.cce)
         if self.nist_800_53r5:
             self.nist_800_53r5 = sorted(self.nist_800_53r5)
         if self.nist_800_171r3:
@@ -96,7 +96,6 @@ class DisaReferences(BaseModelWithAccessors):
     disa_stig: list[str] | None = None
     cmmc: list[str] | None = None
     sfr: list[str] | None = None
-    severity: str | None = None
 
     def __init__(self, **data):
         super().__init__(**data)
@@ -126,7 +125,6 @@ class CisReferences(BaseModelWithAccessors):
 
 class bsiReferences(BaseModelWithAccessors):
     indigo: list[str] | None = None
-    severity: str | None = None
 
     def __init__(self, **data: Any) -> None:
         super().__init__(**data)
@@ -184,6 +182,11 @@ class Macsecurityrule(BaseModelWithAccessors):
         platforms (dict[str, Platforms]): Platform-specific data for the rule.
         os_name (str): Name of the operating system.
         os_type (str): Type of the operating system.
+        os_version: float = Field(default_factory=float)
+        check (str): The commands to evaluate the state of a rule.
+        fix: (str): The commands to remediate and set the configuration for a rule.
+        severity: (dict[str, Any]): The category for impact assigned to a rule for associated benchmarks.
+        default_state: (str): The command to restore the system to the default configuration for a rule.
 
     Class Methods:
         load_rules: Load Macsecurityrule objects from YAML files for the given rule IDs.
@@ -227,7 +230,8 @@ class Macsecurityrule(BaseModelWithAccessors):
     os_version: float = Field(default_factory=float)
     check: str | None = None
     fix: str | None = None
-    severity: str | None = None
+    severity: dict[str, Any] | None = None
+    default_state: str | None = None
 
     @classmethod
     def load_rules(
@@ -237,10 +241,9 @@ class Macsecurityrule(BaseModelWithAccessors):
         os_version: float,
         parent_values: str,
         section: str,
+        tailoring: bool | None = False,
         baseline_tag: str | None = None,
         language: str = "en",
-        custom: bool = False,
-        generate_baseline: bool = False,
     ) -> list["Macsecurityrule"]:
         """
         Load Macsecurityrule objects from YAML files for the given rule IDs.
@@ -253,7 +256,6 @@ class Macsecurityrule(BaseModelWithAccessors):
             section (str): Section name for the rules.
             language (str): Language used for rule text.
             custom (bool): Whether to include custom rules.
-            generate_baseline (bool): Whether to generate a baseline.
 
         Returns:
             list[Macsecurityrule]: A list of loaded Macsecurityrule objects.
@@ -275,15 +277,22 @@ class Macsecurityrule(BaseModelWithAccessors):
             Path(config["defaults"]["rules_dir"]),
         ]
 
+        # collect custom rules if they exist
+        if tailoring:
+            custom_rule_dict = {}
+        else:
+            custom_rule_dict = collect_overrides(Path(config["custom"]["rules_dir"]))
+
         for rule_id in rule_ids:
             logger.debug("Transforming rule: {}", rule_id)
 
             result_value: str | int | bool | None = None
             check_value: str | None = None
             fix_value: str | None = None
+            default_state_value: str | None = None
             mechanism: str = "Manual"
             payloads: list[Mobileconfigpayload] | None = []
-            severity: str | None = None
+            severity: dict[str, Any] | None = {}
             tags: list[str] = []
 
             rule_file = next(
@@ -325,7 +334,6 @@ class Macsecurityrule(BaseModelWithAccessors):
 
             # process any customized rules
             customized_fields = []
-            custom_rule_dict = collect_overrides(Path(config["custom"]["rules_dir"]))
 
             if rule_yaml["rule_id"] in custom_rule_dict:
                 logger.info(f"Found customization for {rule_yaml['rule_id']}")
@@ -340,7 +348,8 @@ class Macsecurityrule(BaseModelWithAccessors):
                         rule_yaml[custom_rule_key].update(custom_rule_value)
                         continue
                     if custom_rule_key == "tags":
-                        rule_yaml[custom_rule_key] += custom_rule_value
+                        if custom_rule_value not in rule_yaml[custom_rule_key]:
+                            rule_yaml[custom_rule_key] += custom_rule_value
                         continue
                     rule_yaml[custom_rule_key] = custom_rule_value
 
@@ -352,6 +361,9 @@ class Macsecurityrule(BaseModelWithAccessors):
                 check_result = enforcement_info.get("check", {}).get("result")
                 fix_shell = enforcement_info.get("fix", {}).get("shell")
                 additional_info = enforcement_info.get("fix", {}).get("additional_info")
+                default_state_shell = enforcement_info.get("default_state", {}).get(
+                    "shell"
+                )
 
                 if check_result:
                     for k, v in rule_yaml["platforms"][os_type]["enforcement_info"][
@@ -373,6 +385,9 @@ class Macsecurityrule(BaseModelWithAccessors):
 
                 if check_shell:
                     check_value = check_shell
+
+                if default_state_shell:
+                    default_state_value = default_state_shell
 
                 if (
                     not check_shell
@@ -415,14 +430,11 @@ class Macsecurityrule(BaseModelWithAccessors):
                 os_version_str
             ].get("benchmarks", [])
 
-            if benchmarks and baseline_tag:
+            if benchmarks:
                 for benchmark in benchmarks:
-                    if (
-                        benchmark.get("name") == baseline_tag
-                        and "severity" in benchmark
-                    ):
-                        severity = benchmark["severity"]
-                        break
+                    name = benchmark.get("name")
+                    if "severity" in benchmark:
+                        severity[name] = benchmark["severity"]
 
             match tags:
                 case "inherent":
@@ -471,9 +483,10 @@ class Macsecurityrule(BaseModelWithAccessors):
                     value = nist.pop(src)
                     if src == "cce" and isinstance(value, dict):
                         value = value.get(os_typeversion)
-                        if value is not None and not isinstance(value, dict):
-                            # Ensure cce is always a dict[str, list[str]] or None
-                            value = None
+                        # print(value)
+                        # if value is not None and not isinstance(value, dict):
+                        #     # Ensure cce is always a dict[str, list[str]] or None
+                        #     value = None
                     if dst in ("nist_800_53r5", "nist_800_171r3"):
                         if value is not None and not isinstance(value, list):
                             value = [value] if isinstance(value, str) else None
@@ -530,6 +543,7 @@ class Macsecurityrule(BaseModelWithAccessors):
                 os_version=os_version,
                 check=check_value,
                 fix=fix_value,
+                default_state=default_state_value,
                 severity=severity,
             )
 
@@ -539,11 +553,7 @@ class Macsecurityrule(BaseModelWithAccessors):
             #     rule._format_mobileconfig_fix()
             #     logger.success("Formatted mobileconfig_info for rule: {}", rule.rule_id)
 
-            if (
-                rule.odv is not None
-                and not generate_baseline
-                and parent_values is not None
-            ):
+            if rule.odv is not None and parent_values is not None:
                 rule._fill_in_odv(parent_values)
 
             logger.success("Transformed rule: {}", rule_id)
@@ -560,7 +570,7 @@ class Macsecurityrule(BaseModelWithAccessors):
         cls,
         os_type: str,
         os_version: int,
-        generate_baseline: bool = True,
+        tailoring: bool = False,
         parent_values: str = "default",
     ) -> list["Macsecurityrule"]:
         """
@@ -579,6 +589,7 @@ class Macsecurityrule(BaseModelWithAccessors):
         logger.info("=== LOADING ALL RULES ===")
 
         rules: list[Macsecurityrule] = []
+        rules_to_collect = defaultdict(list)
 
         section_dirs: list[Path] = [
             Path(config["custom"]["sections_dir"]),
@@ -619,10 +630,6 @@ class Macsecurityrule(BaseModelWithAccessors):
                             Sectionmap[folder_name.upper()], ""
                         )
                         logger.debug("Section Name: {}", section_name)
-                        custom: bool = False
-
-                        if "custom" in str(folder).lower():
-                            custom = True
 
                         if not section_name:
                             logger.warning(
@@ -630,21 +637,22 @@ class Macsecurityrule(BaseModelWithAccessors):
                             )
                             continue
 
-                        rules += cls.load_rules(
-                            rule_ids=[rule_name],
-                            os_type=os_type,
-                            os_version=os_version,
-                            parent_values=parent_values,
-                            section=section_name,
-                            custom=custom,
-                            generate_baseline=generate_baseline,
-                        )
+                        rules_to_collect[section_name].append(rule_name)
 
                     except Exception as e:
                         logger.error(
                             "Failed to load rule from file {}: {}", rule_file, e
                         )
 
+        for section, collected_rules in rules_to_collect.items():
+            rules += cls.load_rules(
+                rule_ids=collected_rules,
+                os_type=os_type,
+                os_version=os_version,
+                parent_values=parent_values,
+                section=section,
+                tailoring=tailoring,
+            )
         logger.info("=== ALL RULES LOADED ===")
 
         return rules
@@ -957,7 +965,7 @@ class Macsecurityrule(BaseModelWithAccessors):
 
     def write_odv_custom_rule(self, odv: Any) -> None:
         """
-        Writes a custom ODV (Object Data Value) rule to a YAML file.
+        Writes a custom ODV (Organization Defined Value) rule to a YAML file.
 
         Args:
             odv (Any): The custom ODV data to be written.
@@ -975,11 +983,11 @@ class Macsecurityrule(BaseModelWithAccessors):
 
         self.customized = []
 
-        self.to_yaml(rule_file_path)
+        self.to_yaml(rule_file_path, odv=True)
 
     def remove_odv_custom_rule(self) -> None:
         """
-        Removes the custom rule from the ODV (Object Data Value) and updates the corresponding YAML file.
+        Removes the custom rule from the ODV (Organization Defined Value) and updates the corresponding YAML file.
 
         This method performs the following steps:
         1. Constructs the file path for the custom rule YAML file based on the configuration and rule ID.
@@ -994,17 +1002,11 @@ class Macsecurityrule(BaseModelWithAccessors):
             f"{config['custom']['rules_dir']}", f"{self.rule_id}.yaml"
         )
 
-        if not rule_file_path.exists():
+        try:
+            rule_file_path.unlink()
+            logger.info("Custom rule file deleted: {}", rule_file_path)
+        except FileNotFoundError:
             logger.warning("Rule file not found: {}", rule_file_path)
-            return
-
-        if self.odv is not None and "custom" in self.odv:
-            self.odv.pop("custom", 0)
-
-        # if "references" in self.customized:
-        #     self.references.pop("custom_refs")
-
-        self.to_yaml(rule_file_path)
 
     @classmethod
     def odv_query(
@@ -1048,7 +1050,6 @@ class Macsecurityrule(BaseModelWithAccessors):
                     include = "y"
                     get_odv = True
                     queried_rule_ids.append(rule.rule_id)
-                    rule.remove_odv_custom_rule()
             else:
                 if rule.rule_id not in queried_rule_ids:
                     include = sanitize_input(
@@ -1067,7 +1068,6 @@ class Macsecurityrule(BaseModelWithAccessors):
                         )
                     queried_rule_ids.append(rule.rule_id)
                     get_odv = True
-                    rule.remove_odv_custom_rule()
                     if include.lower() == "all":
                         include_all = True
                         include = "y"
@@ -1077,6 +1077,8 @@ class Macsecurityrule(BaseModelWithAccessors):
                 if rule.odv == "missing":
                     continue
                 elif get_odv and rule.odv:
+                    # remove custom odv if there
+                    rule.remove_odv_custom_rule()
                     odv_hint = rule.odv.get("hint", "")
                     odv_recommended = rule.odv.get("recommended")
                     odv_benchmark = rule.odv.get(benchmark)
@@ -1101,7 +1103,7 @@ class Macsecurityrule(BaseModelWithAccessors):
 
         return included_rules
 
-    def to_yaml(self, output_path: Path) -> None:
+    def to_yaml(self, output_path: Path, odv: bool = False) -> None:
         key_order: list[str] = [
             "id",
             "title",
@@ -1151,11 +1153,21 @@ class Macsecurityrule(BaseModelWithAccessors):
             if key in serialized_data:
                 ordered_data[key] = serialized_data[key]
 
-        clean_dict: dict = {
-            key: value
-            for key, value in ordered_data.items()
-            if value or key in required_keys
-        }
+        if odv:
+            odv_fields = ["hint", "custom"]
+            clean_dict: dict = {
+                key: value for key, value in ordered_data.items() if key == "odv"
+            }
+            for key in list(clean_dict["odv"].keys()):
+                if key not in odv_fields:
+                    del clean_dict["odv"][key]
+
+        else:
+            clean_dict: dict = {
+                key: value
+                for key, value in ordered_data.items()
+                if value or key in required_keys
+            }
 
         create_yaml(rule_file_path, clean_dict)
 
