@@ -3,7 +3,9 @@ loguru==0.7.3
 lxml==5.3.0
 matplotlib==3.10.0
 openpyxl==3.1.5
+numpy==2.2.5
 pandas==2.2.3
 pydantic==2.10.6
 pyyaml==6.0.2
 jsonschema==4.23.0
+yaspin==3.4.0

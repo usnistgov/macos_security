@@ -4,10 +4,14 @@
 import gettext
 import re
 import sys
+import time
 from collections.abc import Mapping
 from itertools import groupby
 from pathlib import Path
 from typing import Any, Sequence, Dict, List
+from yaspin import inject_spinner
+from yaspin.core import Yaspin
+from yaspin.spinners import Spinners
 
 # Additional python modules
 # import markdown2
@@ -434,7 +438,8 @@ def render_template(
     output_file.write_text(rendered_output)
 
 
-def generate_documents(
+@inject_spinner()
+def generate_documents(spinner: Yaspin,
     output_file: Path,
     baseline: Baseline,
     b64logo: bytes,
@@ -475,6 +480,9 @@ def generate_documents(
     )
 
     if output_format == "adoc":
+        spinner.spinner = Spinners.dotsCircle
+        spinner.text = "Checking for asciidoctor components"
+        time.sleep(1)
         asciidoctor_path, _ = run_command("bundle show asciidoctor")
         asciidoctor_pdf_path, _ = run_command("bundle show asciidoctor-pdf")
 
@@ -482,19 +490,24 @@ def generate_documents(
             "Could not find gem" in asciidoctor_path
             or "Could not find gem" in asciidoctor_pdf_path
         ):
+            spinner.text = "Installing missing asciidoctor components"
+            time.sleep(1)
             output, error = run_command(
                 "bundle install --gemfile Gemfile --path mscp_gems --binstubs"
             )
             if error:
                 logger.error(f"Bundle install failed: {error}")
                 sys.exit()
-
+        spinner.text = "Generating HTML file from adoc"
+        time.sleep(1)
         output, error = run_command(f"bundle exec asciidoctor {output_file}")
         if error:
             logger.error(f"Error converting to ADOC: {error}")
             sys.exit()
-
+        spinner.text = "Generating PDF file from adoc"
         output, error = run_command(f"bundle exec asciidoctor-pdf {output_file}")
         if error:
             logger.error(f"Error converting to ADOC: {error}")
             sys.exit()
+        
+        spinner.ok("✔")
