@@ -18,15 +18,17 @@ classifiers = [
   "Programming Language :: Python :: 3.12",
 ]
 dependencies = [
-  "jinja2==3.1.6",
+  "jinja2==3.1.5",
   "loguru==0.7.3",
   "lxml==5.4.0",
-  "matplotlib==3.10.3",
+  "matplotlib==3.10.0",
   "openpyxl==3.1.5",
-  "pandas==2.3.0",
-  "pydantic==2.11.6",
+  "numpy==2.2.5",
+  "pandas==2.2.3",
+  "pydantic==2.10.6",
   "pyyaml==6.0.2",
-  "jsonschema==4.24.0",
+  "jsonschema==4.23.0",
+  "yaspin==3.4.0,
 ]
 
 [project.urls]
