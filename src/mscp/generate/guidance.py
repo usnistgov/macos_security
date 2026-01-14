@@ -226,7 +226,7 @@ def generate_guidance(args: argparse.Namespace) -> None:
             output_format="markdown",
             language=args.language,
         )
-
+    logger.info("Generating asciidoctor, PDF, and HTML documents")
     generate_documents(
         adoc_output_file,
         baseline,

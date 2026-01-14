@@ -41,6 +41,7 @@ class Sectionmap(StrEnum):
     SUPPLEMENTAL = "supplemental"
     SYSTEM_SETTINGS = "systemsettings"
     SETTINGS = "settings"
+    EXCLUDED = "excluded"
 
 
 class BaseModelWithAccessors(BaseModel):
@@ -201,7 +202,7 @@ class Macsecurityrule(BaseModelWithAccessors):
         _add_payload_content: Add payload content as XML elements to the parent node.
         _create_value_element: Create an XML element based on the type of the provided value.
         write_odv_custom_rule: Write a custom ODV rule to a YAML file.
-        remove_odv_custom_rule: Remove the custom rule from the ODV and update the corresponding YAML file.
+        remove_custom_rule: Remove the custom rule from the ODV and update the corresponding YAML file.
         to_yaml: Serialize the rule to a YAML file, preserving key order and cleaning references.
         to_dict: Convert the Macsecurityrule instance to a dictionary.
         _clean_references: Clean the references dictionary by removing any keys with values that are None or in ("NA", "N/A").
@@ -241,8 +242,7 @@ class Macsecurityrule(BaseModelWithAccessors):
         os_version: float,
         parent_values: str,
         section: str,
-        tailoring: bool | None = False,
-        baseline_tag: str | None = None,
+        tailoring: bool = False,
         language: str = "en",
     ) -> list["Macsecurityrule"]:
         """
@@ -983,9 +983,9 @@ class Macsecurityrule(BaseModelWithAccessors):
 
         self.customized = []
 
-        self.to_yaml(rule_file_path, odv=True)
+        self.to_yaml(rule_file_path, "odv")
 
-    def remove_odv_custom_rule(self) -> None:
+    def remove_custom_rule(self) -> None:
         """
         Removes the custom rule from the ODV (Organization Defined Value) and updates the corresponding YAML file.
 
@@ -1007,6 +1007,24 @@ class Macsecurityrule(BaseModelWithAccessors):
             logger.info("Custom rule file deleted: {}", rule_file_path)
         except FileNotFoundError:
             logger.warning("Rule file not found: {}", rule_file_path)
+
+    def write_excluded_custom_rule_discussion(self) -> None:
+        """
+        Writes a custom discussion for an excluded rule to a YAML file.
+
+        Args:
+            reason (str): The reason the rule is being excluded.
+
+        Returns:
+            None
+        """
+        rule_file_path: Path = Path(
+            f"{config['custom']['rules_dir']}", f"{self.rule_id}.yaml"
+        )
+
+        make_dir(rule_file_path.parent)
+
+        self.to_yaml(rule_file_path, "discussion")
 
     @classmethod
     def odv_query(
@@ -1074,11 +1092,12 @@ class Macsecurityrule(BaseModelWithAccessors):
 
             if include.lower() == "y":
                 included_rules.append(rule)
+                rule.remove_custom_rule()
                 if rule.odv == "missing":
                     continue
                 elif get_odv and rule.odv:
                     # remove custom odv if there
-                    rule.remove_odv_custom_rule()
+                    rule.remove_custom_rule()
                     odv_hint = rule.odv.get("hint", "")
                     odv_recommended = rule.odv.get("recommended")
                     odv_benchmark = rule.odv.get(benchmark)
@@ -1100,10 +1119,21 @@ class Macsecurityrule(BaseModelWithAccessors):
                         )
                         if odv != odv_benchmark:
                             rule.write_odv_custom_rule(odv)
+            else:
+                reason: str = sanitize_input(
+                    "Enter a reason for excluding this rule from your organization's benchmark (the reason will be added to the rule discussion): "
+                )
+                if reason:
+                    rule.discussion = f"NOTE: This rule has been excluded from the benchmark for the following reason: {reason}\n\n{rule.discussion}"
+                else:
+                    rule.discussion = f"NOTE: This rule has been excluded from the benchmark.\n\n{rule.discussion}"
+                rule.section = "Excluded"
+                rule.write_excluded_custom_rule_discussion()
+                included_rules.append(rule)
 
         return included_rules
 
-    def to_yaml(self, output_path: Path, odv: bool = False) -> None:
+    def to_yaml(self, output_path: Path, *fields) -> None:
         key_order: list[str] = [
             "id",
             "title",
@@ -1153,15 +1183,16 @@ class Macsecurityrule(BaseModelWithAccessors):
             if key in serialized_data:
                 ordered_data[key] = serialized_data[key]
 
-        if odv:
-            odv_fields = ["hint", "custom"]
-            clean_dict: dict = {
-                key: value for key, value in ordered_data.items() if key == "odv"
-            }
-            for key in list(clean_dict["odv"].keys()):
-                if key not in odv_fields:
-                    del clean_dict["odv"][key]
-
+        if fields:
+            for field in fields:
+                clean_dict: dict = {
+                    key: value for key, value in ordered_data.items() if key == field
+                }
+                if field == "odv":
+                    odv_fields = ["hint", "custom"]
+                    for key in list(clean_dict["odv"].keys()):
+                        if key not in odv_fields:
+                            del clean_dict["odv"][key]
         else:
             clean_dict: dict = {
                 key: value
