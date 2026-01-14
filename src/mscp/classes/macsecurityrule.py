@@ -5,7 +5,7 @@ import base64
 from collections import OrderedDict, defaultdict
 from enum import StrEnum
 from pathlib import Path
-from typing import Any
+from typing import Any, Optional, Iterable
 from uuid import uuid4
 
 # Additional python modules
@@ -26,6 +26,7 @@ from ..common_utils import (
 )
 from ..common_utils.logger_instance import logger
 
+_SENTINEL = object()
 
 class Sectionmap(StrEnum):
     AUDIT = "auditing"
@@ -155,6 +156,73 @@ class References(BaseModelWithAccessors):
     cis: CisReferences | None = None
     bsi: bsiReferences | None = None
     custom_refs: customReferences | None = None
+
+
+    def get_ref(
+        self,
+        key: str,
+        *,
+        default: Any = _SENTINEL,
+        case_insensitive: bool = True,
+        search_order: Iterable[str] = ("nist", "disa", "cis", "bsi", "custom_refs"),
+    ) -> Any:
+        """
+        Retrieve a value stored somewhere in the nested references.
+
+        `key` can be:
+          - 'namespace.field' (e.g., 'nist.control_id')
+          - 'field' (scans submodels in `search_order`)
+
+        Returns `default` if provided and not found; else raises KeyError.
+        """
+
+        def _dump_fields(model) -> dict[str, Any]:
+            # Use model_dump to get field values (including None)
+            d = model.model_dump(exclude_none=False)
+            if case_insensitive:
+                return {k.lower(): v for k, v in d.items()}
+            return d
+
+        # 1) Namespaced key: 'nist.control_id'
+        if "." in key:
+            ns, field = key.split(".", 1)
+            ns_attr = ns.strip()
+            field_key = field.strip()
+            if case_insensitive:
+                field_key = field_key.lower()
+
+            submodel = getattr(self, ns_attr, None)
+            if submodel is None:
+                if default is not _SENTINEL:
+                    return default
+                raise KeyError(f"Namespace '{ns_attr}' not present")
+
+            fields = _dump_fields(submodel)
+            if field_key in fields:
+                return fields[field_key]
+
+            if default is not _SENTINEL:
+                return default
+            raise KeyError(f"Field '{field}' not found in '{ns_attr}'")
+
+        # 2) Unqualified field: scan submodels in the given order
+        field_key = key.strip()
+        if case_insensitive:
+            field_key = field_key.lower()
+
+        for ns_attr in search_order:
+            submodel = getattr(self, ns_attr, None)
+            if submodel is None:
+                continue
+            fields = _dump_fields(submodel)
+            if field_key in fields:
+                return fields[field_key]
+
+        # Not found
+        if default is not _SENTINEL:
+            return default
+        raise KeyError(f"Field '{key}' not found in any namespace ({', '.join(search_order)})")
+
 
 
 class Macsecurityrule(BaseModelWithAccessors):
