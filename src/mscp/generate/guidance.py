@@ -4,9 +4,13 @@
 import argparse
 import sys
 import tempfile
+import time
 from base64 import b64encode
 from pathlib import Path
 from typing import Any
+from yaspin import inject_spinner
+from yaspin.core import Yaspin
+from yaspin.spinners import Spinners
 
 # Local python modules
 from ..classes import Baseline
@@ -59,12 +63,13 @@ def verify_signing_hash(cert_hash: str) -> bool:
     logger.info(f"Certificate hash {cert_hash} verified successfully.")
     return True
 
-
-def generate_guidance(args: argparse.Namespace) -> None:
+@inject_spinner()
+def generate_guidance(sp: Yaspin, args: argparse.Namespace) -> None:
     # Configure localization at the beginning based on the CLI language parameter
     logger.debug(f"Language parameter from CLI: {args.language}")
     configure_localization_for_yaml(language=args.language)
 
+    sp.spinner = Spinners.dotsCircle
     logo_path: Path = Path(
         config["defaults"]["images_dir"], "mscp_banner.png"
     ).absolute()
@@ -130,6 +135,8 @@ def generate_guidance(args: argparse.Namespace) -> None:
 
     if args.profiles:
         logger.info("Generating configuration profiles")
+        sp.text = "Generating configuration profiles"
+        time.sleep(1)
         generate_profiles(
             build_path,
             baseline_name,
@@ -142,10 +149,14 @@ def generate_guidance(args: argparse.Namespace) -> None:
 
     if args.ddm:
         logger.info("Generating declarative components")
+        sp.text = "Generating declarative components"
+        time.sleep(1)
         generate_ddm(build_path, baseline, baseline_name)
 
     if args.script and args.os_name == "macos":
         logger.info("Generating compliance script")
+        sp.text = "Generating compliance script"
+        time.sleep(1)
         generate_script(build_path, baseline_name, audit_name, baseline, log_reference)
         generate_restore_script(
             build_path, baseline_name, audit_name, baseline, log_reference
@@ -153,6 +164,8 @@ def generate_guidance(args: argparse.Namespace) -> None:
 
     if args.xlsx:
         logger.info("Generating Excel document")
+        sp.text = "Generating Excel document"
+        time.sleep(1)
         generate_excel(spreadsheet_output_file, baseline)
 
     if args.gary:
@@ -160,7 +173,9 @@ def generate_guidance(args: argparse.Namespace) -> None:
 
     if args.markdown:
         logger.info("Generating markdown documents")
-        generate_documents(
+        sp.text = "Generating markdown documents"
+        time.sleep(1)
+        generate_documents(sp,
             md_output_file,
             baseline,
             b64logo,
@@ -177,6 +192,8 @@ def generate_guidance(args: argparse.Namespace) -> None:
     if args.all:
         logger.info("Generating all support files")
         logger.info("Generating configuration profiles")
+        sp.text = "Generating configuration profiles"
+        time.sleep(1)
         generate_profiles(
             build_path,
             baseline_name,
@@ -188,10 +205,14 @@ def generate_guidance(args: argparse.Namespace) -> None:
         )
 
         logger.info("Generating declarative components")
+        sp.text = "Generating declarative components"
+        time.sleep(1)
         generate_ddm(build_path, baseline, baseline_name)
 
         if args.os_name == "macos":
             logger.info("Generating compliance script")
+            sp.text = "Generating compliance script"
+            time.sleep(1)
             generate_script(
                 build_path,
                 baseline_name,
@@ -210,10 +231,14 @@ def generate_guidance(args: argparse.Namespace) -> None:
             )
 
         logger.info("Generating Excel document")
+        sp.text = "Generating Excel document"
+        time.sleep(1)
         generate_excel(spreadsheet_output_file, baseline)
 
         logger.info("Generating markdown documents")
-        generate_documents(
+        sp.text = "Generating markdown"
+        time.sleep(1)
+        generate_documents(sp,
             md_output_file,
             baseline,
             b64logo,
@@ -227,7 +252,7 @@ def generate_guidance(args: argparse.Namespace) -> None:
             language=args.language,
         )
     logger.info("Generating asciidoctor, PDF, and HTML documents")
-    generate_documents(
+    generate_documents(sp,
         adoc_output_file,
         baseline,
         b64logo,
@@ -240,6 +265,5 @@ def generate_guidance(args: argparse.Namespace) -> None:
         language=args.language,
     )
 
-    print(
-        f"MSCP DOCUMENT GENERATION COMPLETE! All of the documents can be found in this folder: /{build_path}/"
-    )
+    sp.text = f"MSCP DOCUMENT GENERATION COMPLETE! All of the documents can be found in this folder: /{build_path}/"
+    sp.ok("✔")

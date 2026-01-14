@@ -438,7 +438,6 @@ def render_template(
     output_file.write_text(rendered_output)
 
 
-@inject_spinner()
 def generate_documents(spinner: Yaspin,
     output_file: Path,
     baseline: Baseline,
@@ -510,4 +509,3 @@ def generate_documents(spinner: Yaspin,
             logger.error(f"Error converting to ADOC: {error}")
             sys.exit()
         
-        spinner.ok("✔")
