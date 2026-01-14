@@ -8,6 +8,8 @@ import time
 from base64 import b64encode
 from pathlib import Path
 from typing import Any
+
+# Additional python modules
 from yaspin import inject_spinner
 from yaspin.core import Yaspin
 from yaspin.spinners import Spinners

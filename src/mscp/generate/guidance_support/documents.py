@@ -9,13 +9,12 @@ from collections.abc import Mapping
 from itertools import groupby
 from pathlib import Path
 from typing import Any, Sequence, Dict, List
+
+# Additional python modules
+from jinja2 import Environment, FileSystemLoader, Template
 from yaspin import inject_spinner
 from yaspin.core import Yaspin
 from yaspin.spinners import Spinners
-
-# Additional python modules
-# import markdown2
-from jinja2 import Environment, FileSystemLoader, Template
 
 # Local python modules
 from ...classes import Baseline, Macsecurityrule

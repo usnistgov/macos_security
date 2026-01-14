@@ -130,12 +130,15 @@ def generate_profiles(
     signed_output_path: Path = Path(build_path, "mobileconfigs", "signed")
     plist_output_path: Path = Path(build_path, "mobileconfigs", "preferences")
     granular_output_path: Path = Path(build_path, "mobileconfigs", "granular")
+    granular_signed_output_path: Path = Path(build_path, "mobileconfigs", "granular", "signed")
 
     make_dir(unsigned_output_path)
     make_dir(plist_output_path)
 
     if granular:
         make_dir(granular_output_path)
+        if signing:
+            make_dir(granular_signed_output_path)
 
     if signing:
         make_dir(signed_output_path)
@@ -212,6 +215,12 @@ def generate_profiles(
                             granular_profile.save_to_plist(
                                 granular_output_path / f"{setting}.mobileconfig"
                             )
+                            if signing:
+                                sign_config_profile(
+                                    granular_output_path / f"{setting}.mobileconfig",
+                                    granular_signed_output_path / f"{setting}.mobileconfig",
+                                    hash_value,
+                                )
         else:
             settings = merge_flat_settings(flat_settings)
             new_profile.add_payload(payload_type, settings, baseline_name)
@@ -232,6 +241,12 @@ def generate_profiles(
                     granular_profile.save_to_plist(
                         granular_output_path / f"{setting}.mobileconfig"
                     )
+                    if signing:
+                        sign_config_profile(
+                            granular_output_path / f"{setting}.mobileconfig",
+                            granular_signed_output_path / f"{setting}.mobileconfig",
+                            hash_value,
+                        )
 
         new_profile.save_to_plist(unsigned_mobileconfig_file_path)
 
