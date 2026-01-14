@@ -155,13 +155,13 @@ def generate_guidance(sp: Yaspin, args: argparse.Namespace) -> None:
         time.sleep(1)
         generate_ddm(build_path, baseline, baseline_name)
 
-    if args.script and args.os_name == "macos":
+    if args.script and baseline.platform["os"].lower() == "macos":
         logger.info("Generating compliance script")
         sp.text = "Generating compliance script"
         time.sleep(1)
-        generate_script(build_path, baseline_name, audit_name, baseline, log_reference)
+        generate_script(build_path, baseline_name, audit_name, baseline, log_reference, current_version_data)
         generate_restore_script(
-            build_path, baseline_name, audit_name, baseline, log_reference
+            build_path, baseline_name, audit_name, baseline, log_reference, current_version_data
         )
 
     if args.xlsx:
@@ -211,7 +211,7 @@ def generate_guidance(sp: Yaspin, args: argparse.Namespace) -> None:
         time.sleep(1)
         generate_ddm(build_path, baseline, baseline_name)
 
-        if args.os_name == "macos":
+        if baseline.platform["os"].lower() == "macos":
             logger.info("Generating compliance script")
             sp.text = "Generating compliance script"
             time.sleep(1)
