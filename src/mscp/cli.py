@@ -39,7 +39,7 @@ def get_macos_version() -> float:
     if version_str:
         major = int(version_str.split(".")[0])
         return float(major)
-    else
+    else:
         return 26.0
 
 
