@@ -20,69 +20,89 @@ Each macOS version has its own branch (`sequoia`, `sonoma`, `ventura`, etc.).
 
 ## Setup
 
+**Requirements:**
+- Python >= 3.12.1 (3.14 is not supported)
+  - Recommended: [Macadmins Python](https://github.com/macadmins/python)
+- Ruby >= 3.4.4 (optional — for PDF output)
+
 <Steps>
 
-1. ### Install Python Packages
+1. ### Clone the Repository
 
-   macOS includes Python 3. Just install the required packages:
-
-   ```bash
-   pip3 install pyyaml xlwt --user
-   ```
-
-   **Optional** — for PDF output, also install Ruby gems:
-   ```bash
-   gem install asciidoctor asciidoctor-pdf rouge --user-install
-   ```
-
-   <details>
-   <summary>**Want isolated installs?** Click to expand</summary>
-
-   A **virtual environment** keeps packages separate from your system Python — useful if you don't want to install packages globally or need to avoid conflicts.
-
-   **Python virtual environment:**
-   ```bash
-   # Create environment (once)
-   python3 -m venv venv
-
-   # Activate before running scripts
-   source venv/bin/activate
-
-   # Install packages inside the environment
-   pip3 install -r requirements.txt
-
-   # When done, deactivate
-   deactivate
-   ```
-
-   **Ruby local bundle:**
-   ```bash
-   bundle install --path vendor/bundle
-   ```
-
-   </details>
-
-2. ### Get the Repository
-
-   **Option A: Clone with Git** (recommended)
    ```bash
    git clone https://github.com/usnistgov/macos_security.git
    cd macos_security
    git checkout sequoia
    ```
-   Replace `sequoia` with your target macOS version.
+   Replace `sequoia` with your target macOS version (`sequoia`, `sonoma`, `ventura`, etc.).
 
-   **Option B: Download ZIP**
+   <details>
+   <summary>**Prefer to download a ZIP?** Click to expand</summary>
+
    1. Go to the [GitHub repository](https://github.com/usnistgov/macos_security)
    2. Click the branch dropdown and select your macOS version
    3. Click **Code** → **Download ZIP**
    4. Extract and open the folder
 
-3. ### Verify Setup
+   </details>
+
+2. ### Python Setup
+
+   ```bash
+   # Create virtual environment
+   python3 -m venv .venv
+   source .venv/bin/activate
+
+   # Install requirements
+   pip3 install -r requirements.txt
+   ```
+
+   <details>
+   <summary>**Having Python version issues?** Click to expand</summary>
+
+   **Check your Python version:**
+   ```bash
+   python3 --version
+   ```
+
+   **Check version inside the venv:**
+   ```bash
+   source .venv/bin/activate
+   python --version
+   ```
+
+   **List all installed Python versions:**
+   ```bash
+   ls /opt/homebrew/bin/python3*
+   ls /usr/local/bin/python3*
+   ```
+
+   **Create venv with a specific version:**
+   ```bash
+   # Remove old venv if needed
+   rm -rf .venv
+
+   # Use full path to the Python version you want
+   /opt/homebrew/bin/python3.13 -m venv .venv
+   source .venv/bin/activate
+   ```
+
+   </details>
+
+3. ### Ruby Setup (Optional — for PDF output)
+
+   ```bash
+   bundle install --binstubs --path mscp_gems
+   ```
+
+4. ### Verify Setup
 
    Run this command to confirm everything works:
    ```bash
    ./scripts/generate_baseline.py -l
+
+   # When done, deactivate the virtual environment
+   deactivate
    ```
    You should see a list of available baselines.
 
