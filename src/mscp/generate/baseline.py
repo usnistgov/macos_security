@@ -231,7 +231,7 @@ def generate_baseline(args: argparse.Namespace) -> None:
             f"Enter a name for your tailored benchmark or press Enter for the default value ({args.keyword}): ",
             str,
             default_=args.keyword,
-        )
+        ).replace(" ", "_")
         custom_author_name: str = sanitize_input("Enter your name: ")
         custom_author_org: str = sanitize_input("Enter your organization: ")
         baseline_output_file: Path = (
