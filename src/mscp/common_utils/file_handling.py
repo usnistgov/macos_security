@@ -221,7 +221,7 @@ def open_json(file_path: Path) -> dict[str, Any]:
         raise
 
 
-def create_file(file_path: Path, data: Any) -> None:
+def create_file(file_path: Path, data: Any, append: bool = False) -> None:
     """
     Attempts to create a file with error checking and logging.
 
@@ -240,18 +240,18 @@ def create_file(file_path: Path, data: Any) -> None:
 
     match file_path.suffix:
         case ".yaml" | ".yml":
-            create_yaml(file_path, data)
+            create_yaml(file_path, data, append)
         case ".csv":
-            create_csv(file_path, data)
+            create_csv(file_path, data, append)
         case ".plist" | ".mobileconfig":
-            create_plist(file_path, data)
+            create_plist(file_path, data, append)
         case ".json":
-            create_json(file_path, data)
+            create_json(file_path, data, append)
         case _:
-            create_text(file_path, data)
+            create_text(file_path, data, append)
 
 
-def create_yaml(file_path: Path, data: dict[str, Any]) -> None:
+def create_yaml(file_path: Path, data: dict[str, Any], append: bool = False) -> None:
     """
     Create YAML file.
 
@@ -295,7 +295,7 @@ def create_yaml(file_path: Path, data: dict[str, Any]) -> None:
         raise
 
 
-def create_text(file_path: Path, data: str) -> None:
+def create_text(file_path: Path, data: str, append: bool = False) -> None:
     """
     Write the supplied data to a file.
 
@@ -315,7 +315,13 @@ def create_text(file_path: Path, data: str) -> None:
         raise
 
 
-def create_plist(file_path: Path, data: dict[str, Any]) -> None:
+def create_plist(file_path: Path, data: dict[str, Any], append: bool = False) -> None:
+    # if append is set, attempt to open an existing file to retain the contents
+    if append and file_path.exists():
+        with file_path.open("rb") as file:
+            existing_settings_dict = plistlib.load(file)
+            data.update(existing_settings_dict)
+
     try:
         with file_path.open("wb") as file:
             plistlib.dump(data, file)
@@ -326,7 +332,7 @@ def create_plist(file_path: Path, data: dict[str, Any]) -> None:
         raise
 
 
-def create_json(file_path: Path, data: dict[str, Any]) -> None:
+def create_json(file_path: Path, data: dict[str, Any], append: bool = False) -> None:
     """
     Creates a JSON file at the specified file path with the given data.
 
@@ -346,7 +352,9 @@ def create_json(file_path: Path, data: dict[str, Any]) -> None:
         raise
 
 
-def create_csv(file_path: Path, data: list[dict[str, Any]]) -> None:
+def create_csv(
+    file_path: Path, data: list[dict[str, Any]], append: bool = False
+) -> None:
     """
     Creates a CSV file at the specified file path with the given data.
 
