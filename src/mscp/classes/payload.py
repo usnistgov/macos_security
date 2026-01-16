@@ -152,8 +152,10 @@ class Payload(BaseModel):
             "PayloadContent": self.payload_content,
         }
 
-        create_file(output_path, data)
-        if output_path.suffix == ".plist":
+        if output_path.suffix == ".mobileconfig":
+            create_file(output_path, data)
+            logger.success(f"Configuration profile written to {output_path}")
+        elif output_path.suffix == ".plist":
             payload_content = {}
             for payload in self.payload_content:
                 filtered_payload = {}
@@ -168,9 +170,9 @@ class Payload(BaseModel):
 
                 payload_content.update(filtered_payload)
 
-            create_file(output_path, payload_content)
+            create_file(output_path, payload_content, append=True)
 
-        logger.success(f"Configuration profile written to {output_path}")
+            logger.success(f"Preference file written to {output_path}")
 
     def finalize_and_save_plist(self, output_path: Path) -> None:
         """

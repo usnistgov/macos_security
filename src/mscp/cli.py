@@ -39,6 +39,8 @@ def get_macos_version() -> float:
     if version_str:
         major = int(version_str.split(".")[0])
         return float(major)
+    else:
+        return 26.0
 
 
 def validate_file(arg: str) -> Path | None:
@@ -192,7 +194,7 @@ def parse_cli() -> None:
         "-r",
         "--reference",
         default=None,
-        help="Use the reference ID instead of rule ID for identification.",
+        help="Use the reference ID instead of rule ID for logging in the generated compliance script.",
         action="store",
     )
     guidance_parser.add_argument(
@@ -251,6 +253,7 @@ def parse_cli() -> None:
         "-c",
         "--csv",
         default=None,
+        required=True,
         help="CSV to create custom rule files from a mapping",
         type=validate_file,
     )
@@ -298,59 +301,59 @@ def parse_cli() -> None:
         action="store_true",
     )
 
-    local_report_parser: argparse.ArgumentParser = subparsers.add_parser(
-        "local_report",
-        help="Creates local report in Excel format.",
-        parents=[parent_parser],
-        add_help=False,
-    )
-    local_report_parser.set_defaults(func=generate_local_report)
-    local_report_parser.add_argument(
-        "-p", "--plist", help="Plist input file", type=validate_file, action="store"
-    )
-    local_report_parser.add_argument(
-        "-o",
-        "--output",
-        help="Location to output report to.",
-        type=Path,
-        action="store",
-    )
+    # local_report_parser: argparse.ArgumentParser = subparsers.add_parser(
+    #     "local_report",
+    #     help="Creates local report in Excel format.",
+    #     parents=[parent_parser],
+    #     add_help=False,
+    # )
+    # local_report_parser.set_defaults(func=generate_local_report)
+    # local_report_parser.add_argument(
+    #     "-p", "--plist", help="Plist input file", type=validate_file, action="store"
+    # )
+    # local_report_parser.add_argument(
+    #     "-o",
+    #     "--output",
+    #     help="Location to output report to.",
+    #     type=Path,
+    #     action="store",
+    # )
 
-    checklist_parser: argparse.ArgumentParser = subparsers.add_parser(
-        "stig_checklist",
-        help="Creates DISA STIG Checklist",
-        parents=[parent_parser],
-        add_help=False,
-    )
-    checklist_parser.set_defaults(func=generate_checklist)
-    checklist_parser.add_argument(
-        "-p", "--plist", help="Plist input file", type=validate_file, action="store"
-    )
+    # checklist_parser: argparse.ArgumentParser = subparsers.add_parser(
+    #     "stig_checklist",
+    #     help="Creates DISA STIG Checklist",
+    #     parents=[parent_parser],
+    #     add_help=False,
+    # )
+    # checklist_parser.set_defaults(func=generate_checklist)
+    # checklist_parser.add_argument(
+    #     "-p", "--plist", help="Plist input file", type=validate_file, action="store"
+    # )
 
-    checklist_parser.add_argument(
-        "-d", "--disastig", help="DISA STIG File", type=validate_file, action="store"
-    )
+    # checklist_parser.add_argument(
+    #     "-d", "--disastig", help="DISA STIG File", type=validate_file, action="store"
+    # )
 
-    checklist_parser.add_argument(
-        "-j", "--json", help="Create JSON export", default=None, action="store_true"
-    )
+    # checklist_parser.add_argument(
+    #     "-j", "--json", help="Create JSON export", default=None, action="store_true"
+    # )
 
-    checklist_parser.add_argument(
-        "-b",
-        "--baseline",
-        help="Baseline YAML file used to create the guide.",
-        type=validate_file,
-        action="store",
-    )
+    # checklist_parser.add_argument(
+    #     "-b",
+    #     "--baseline",
+    #     help="Baseline YAML file used to create the guide.",
+    #     type=validate_file,
+    #     action="store",
+    # )
 
-    checklist_parser.add_argument(
-        "-V",
-        "--checklist_version",
-        help="STIG Checklist Version",
-        default="3",
-        action="store",
-        choices=["2", "3"],
-    )
+    # checklist_parser.add_argument(
+    #     "-V",
+    #     "--checklist_version",
+    #     help="STIG Checklist Version",
+    #     default="3",
+    #     action="store",
+    #     choices=["2", "3"],
+    # )
 
     validate_parser: argparse.ArgumentParser = subparsers.add_parser(
         "validate",
