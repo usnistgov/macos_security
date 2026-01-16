@@ -65,13 +65,14 @@ def verify_signing_hash(cert_hash: str) -> bool:
     logger.info(f"Certificate hash {cert_hash} verified successfully.")
     return True
 
+
 @inject_spinner()
 def generate_guidance(sp: Yaspin, args: argparse.Namespace) -> None:
     # Configure localization at the beginning based on the CLI language parameter
     logger.debug(f"Language parameter from CLI: {args.language}")
     configure_localization_for_yaml(language=args.language)
 
-    sp.spinner = Spinners.dotsCircle
+    sp.spinner = Spinners.dots
     logo_path: Path = Path(
         config["defaults"]["images_dir"], "mscp_banner.png"
     ).absolute()
@@ -159,9 +160,21 @@ def generate_guidance(sp: Yaspin, args: argparse.Namespace) -> None:
         logger.info("Generating compliance script")
         sp.text = "Generating compliance script"
         time.sleep(1)
-        generate_script(build_path, baseline_name, audit_name, baseline, log_reference, current_version_data)
+        generate_script(
+            build_path,
+            baseline_name,
+            audit_name,
+            baseline,
+            log_reference,
+            current_version_data,
+        )
         generate_restore_script(
-            build_path, baseline_name, audit_name, baseline, log_reference, current_version_data
+            build_path,
+            baseline_name,
+            audit_name,
+            baseline,
+            log_reference,
+            current_version_data,
         )
 
     if args.xlsx:
@@ -177,7 +190,8 @@ def generate_guidance(sp: Yaspin, args: argparse.Namespace) -> None:
         logger.info("Generating markdown documents")
         sp.text = "Generating markdown documents"
         time.sleep(1)
-        generate_documents(sp,
+        generate_documents(
+            sp,
             md_output_file,
             baseline,
             b64logo,
@@ -240,7 +254,8 @@ def generate_guidance(sp: Yaspin, args: argparse.Namespace) -> None:
         logger.info("Generating markdown documents")
         sp.text = "Generating markdown"
         time.sleep(1)
-        generate_documents(sp,
+        generate_documents(
+            sp,
             md_output_file,
             baseline,
             b64logo,
@@ -254,7 +269,8 @@ def generate_guidance(sp: Yaspin, args: argparse.Namespace) -> None:
             language=args.language,
         )
     logger.info("Generating asciidoctor, PDF, and HTML documents")
-    generate_documents(sp,
+    generate_documents(
+        sp,
         adoc_output_file,
         baseline,
         b64logo,

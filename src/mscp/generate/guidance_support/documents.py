@@ -437,7 +437,8 @@ def render_template(
     output_file.write_text(rendered_output)
 
 
-def generate_documents(spinner: Yaspin,
+def generate_documents(
+    spinner: Yaspin,
     output_file: Path,
     baseline: Baseline,
     b64logo: bytes,
@@ -478,7 +479,7 @@ def generate_documents(spinner: Yaspin,
     )
 
     if output_format == "adoc":
-        spinner.spinner = Spinners.dotsCircle
+        spinner.spinner = Spinners.dots
         spinner.text = "Checking for asciidoctor components"
         time.sleep(1)
         asciidoctor_path, _ = run_command("bundle show asciidoctor")
@@ -507,4 +508,3 @@ def generate_documents(spinner: Yaspin,
         if error:
             logger.error(f"Error converting to ADOC: {error}")
             sys.exit()
-        
