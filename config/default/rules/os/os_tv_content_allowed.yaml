@@ -47,6 +47,7 @@ odv:
   hint:
     description: Ratings Level
   recommended: 0
+  datatype: number
   ios_stig: 0
 tags:
   - 800-53r5_low
