@@ -48,7 +48,7 @@
     /usr/bin/logger "mSCP: $baseline_name - $log_reference_id $result_status (Result: $result_value, Expected: \"$expected_result\") $exemption_output"
 
   else
-    logmessage "$log_reference_id does not apply to this architecture"
+    logmessage "$rule_id does not apply to this architecture"
     logcsv "$rule_id" "N/A" "" "" ""
     /usr/bin/defaults write "$audit_plist" "$rule_id" -dict-add finding -bool NO
   fi

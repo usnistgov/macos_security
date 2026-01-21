@@ -140,8 +140,8 @@ class Baseline(BaseModelWithAccessors):
                         platform["version"],
                         baseline_data.get("parent_values", ""),
                         section_data.get("name", "").strip(),
-                        baseline_tag,
-                        language,
+                        tailoring=False,
+                        language=language,
                     ),
                 )
             )

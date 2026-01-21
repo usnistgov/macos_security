@@ -56,38 +56,15 @@ def generate_log_reference(
     cis_ref = ["cis", "cis_lvl1", "cis_lvl2", "cisv8"]
 
     log_reference_id: list[str] | str
+    try:
+        log_references = rule_yaml["references"].get_ref(reference)
+    except KeyError:
+        log_references = []
 
-    if reference == "default":
+    if reference == "default" or not log_references:
         log_reference_id = rule_yaml["rule_id"]
-    elif reference in cis_ref:
-        if "v8" in reference:
-            log_reference_id = [
-                f"CIS Controls-{', '.join(map(str, rule_yaml['references']['cis']['controls_v8']))}"
-            ]
-        else:
-            log_reference_id = [f"CIS-{rule_yaml['references']['cis']['benchmark'][0]}"]
     else:
-        try:
-            # Try to find the reference directly
-            rule_yaml["references"][reference]
-        except KeyError:
-            try:
-                # Try to find it in custom references
-                rule_yaml["references"]["custom"][reference]
-
-                if isinstance(rule_yaml["references"]["custom"][reference], list):
-                    log_reference_id = rule_yaml["references"]["custom"][reference] + [
-                        [rule_yaml["rule_id"]]
-                    ]
-                else:
-                    log_reference_id = [
-                        rule_yaml["references"]["custom"][reference],
-                        rule_yaml["rule_id"],
-                    ]
-            except KeyError:
-                # Fallback to default
-                log_reference_id = rule_yaml["rule_id"]
-
+        log_reference_id = f"{reference}-{', '.join(map(str, log_references))}"
     return log_reference_id
 
 

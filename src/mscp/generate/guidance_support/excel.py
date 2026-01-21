@@ -260,7 +260,7 @@ def generate_excel(file_out: Path, baseline: Baseline) -> None:
     # drop unnecessary columns
     dataframe.drop("finding", axis=1, inplace=True)
     dataframe.drop("uuid", axis=1, inplace=True)
-    dataframe.drop("section", axis=1, inplace=True)
+    # dataframe.drop("section", axis=1, inplace=True)
     dataframe.drop("platforms", axis=1, inplace=True)
     dataframe.drop("os_name", axis=1, inplace=True)
     dataframe.drop("os_type", axis=1, inplace=True)
@@ -273,6 +273,7 @@ def generate_excel(file_out: Path, baseline: Baseline) -> None:
     column_order = [
         "rule_id",
         "title",
+        "section",
         "discussion",
         "mechanism",
         "check",
@@ -327,6 +328,7 @@ def generate_excel(file_out: Path, baseline: Baseline) -> None:
             "rule_id",
             "result_value",
             "mechanism",
+            "section",
         ]
 
         for cell in sheet[1]:

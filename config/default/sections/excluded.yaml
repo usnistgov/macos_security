@@ -1,0 +1,4 @@
+---
+name: !localize "Excluded Rules"
+description: !localize |
+  This section contains rules that have been excluded during the tailoring process. The rules are part of the larger catalog of the macOS Security Compliance Project library and associated with the baseline that this benchmark was sourced from.
