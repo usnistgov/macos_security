@@ -28,7 +28,7 @@ dependencies = [
   "pydantic==2.10.6",
   "pyyaml==6.0.2",
   "jsonschema==4.23.0",
-  "yaspin==3.4.0,
+  "yaspin==3.4.0",
 ]
 
 [project.urls]
