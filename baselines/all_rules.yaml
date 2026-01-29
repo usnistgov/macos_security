@@ -241,7 +241,6 @@ profile:
       - system_settings_siri_disable
       - system_settings_siri_listen_disable
       - system_settings_siri_settings_disable
-      - system_settings_sleep_enforce
       - system_settings_smbd_disable
       - system_settings_software_update_app_update_enforce
       - system_settings_software_update_download_enforce
