@@ -298,6 +298,23 @@
             "max": 90
         },
         "note": "Delay the availability of a software update in days, e.g. 30"
+    },
+    {
+        "ruleId": "os_tv_content_allowed",
+        "type": "number",
+        "validation": {
+            "min": 0,
+            "max": 1000
+        },
+        "note": "Possible values, with the U.S. description of the rating level: `1000`: All | `600`: TV-MA | `500`: TV-14 | `400`: TV-PG | `300`: TV-G | `200`: TV-Y7 | `100`: TV-Y | `0`: None"
+    },
+    {
+        "ruleId": "os_movie_content_allowed",
+        "type": "number",
+        "validation": {
+            "min": 0,
+            "max": 1000
+        },
+        "note": "Possible values, with the U.S. description of the rating level: `1000`: All | `500`: NC-17 | `400`: R | `300`: PG-13 | `200`: PG | `100`: G | `0`: None"
     }
 ]
-

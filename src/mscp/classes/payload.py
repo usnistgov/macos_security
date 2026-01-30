@@ -245,7 +245,7 @@ class Payload(BaseModel):
             settings_dict (dict[str, Any]): The settings to save.
         """
         try:
-            create_file(preferences_file, settings_dict)
+            create_file(preferences_file, settings_dict, append=True)
             logger.success(f"Settings plist written to {preferences_file}")
         except Exception as e:
             logger.error(f"Error creating plist file {preferences_file}: {e}")

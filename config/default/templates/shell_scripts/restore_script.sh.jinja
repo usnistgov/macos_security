@@ -175,7 +175,9 @@ run_default_state(){
 
   {% for profile in baseline.profile %}
   {% for rule in profile.rules %}
-    {% include "restore.jinja" %}
+    {% if "manual" not in rule.tags and "Excluded" not in rule.section %}
+      {% include "restore.jinja" %}
+    {% endif %}
   {% endfor %}
   {% endfor %}
 

@@ -46,6 +46,31 @@ def collect_tags_and_benchmarks(
     return sorted(tags_set), benchmark_platforms
 
 
+def collect_established_benchmarks(
+    rules: list[Macsecurityrule],
+) -> list[str]:
+    """
+    Attempts to collect all established benchmarks in the MSCP library. An established
+    benchmark is one where an ODV has been defined for a given benchmark.
+
+    Args:
+       rules (list[Macsecurityrule]): A list of collected rules from the library.
+
+    Returns:
+        list: A sorted set of discovered benchmarks
+    """
+    established_benchmarks_set: set[str] = set()
+
+    for rule in rules:
+        for odv in rule.odv or []:
+            established_benchmarks_set.add(odv)
+
+    # remove "hint" from available benchmarks
+    established_benchmarks_set.remove("hint")
+
+    return sorted(established_benchmarks_set)
+
+
 def print_keyword_summary(
     tags: list[str], benchmark_platforms: dict[str, set[str]]
 ) -> None:
@@ -97,7 +122,7 @@ def generate_baseline(args: argparse.Namespace) -> None:
     baselines_data: dict = open_file(
         Path(config.get("includes_dir", ""), "800-53_baselines.yaml")
     )
-    established_benchmarks: tuple[str, ...] = ("stig", "cis_lvl1", "cis_lvl2")
+
     # removing misc_tags, unsure we need it.
     # misc_tags: tuple[str, str, str, str] = (
     #     "permanent",
@@ -147,6 +172,8 @@ def generate_baseline(args: argparse.Namespace) -> None:
     )
 
     all_tags, benchmark_map = collect_tags_and_benchmarks(all_rules)
+
+    established_benchmarks: tuple[str, ...] = collect_established_benchmarks(all_rules)
 
     if args.list_tags:
         print_keyword_summary(all_tags, benchmark_map)

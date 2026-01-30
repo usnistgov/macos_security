@@ -404,10 +404,6 @@ def parse_cli() -> None:
         )
         sys.exit()
 
-    if args.os_name == "visionos":
-        logger.warning("visionOS is not supported at this time.")
-        sys.exit()
-
     if args.subcommand == "guidance":
         if args.os_name != "macos" and args.script:
             logger.error(

@@ -130,7 +130,9 @@ def generate_profiles(
     signed_output_path: Path = Path(build_path, "mobileconfigs", "signed")
     plist_output_path: Path = Path(build_path, "mobileconfigs", "preferences")
     granular_output_path: Path = Path(build_path, "mobileconfigs", "granular")
-    granular_signed_output_path: Path = Path(build_path, "mobileconfigs", "granular", "signed")
+    granular_signed_output_path: Path = Path(
+        build_path, "mobileconfigs", "granular", "signed"
+    )
 
     make_dir(unsigned_output_path)
     make_dir(plist_output_path)
@@ -144,7 +146,10 @@ def generate_profiles(
         make_dir(signed_output_path)
 
     valid_rules: list[Macsecurityrule] = [
-        rule for profile in baseline.profile for rule in profile.rules
+        rule
+        for profile in baseline.profile
+        for rule in profile.rules
+        if "Excluded" not in rule.section
     ]
 
     grouped_payloads: dict = get_payload_content_by_type(valid_rules)
@@ -218,7 +223,8 @@ def generate_profiles(
                             if signing:
                                 sign_config_profile(
                                     granular_output_path / f"{setting}.mobileconfig",
-                                    granular_signed_output_path / f"{setting}.mobileconfig",
+                                    granular_signed_output_path
+                                    / f"{setting}.mobileconfig",
                                     hash_value,
                                 )
         else:

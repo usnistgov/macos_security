@@ -322,7 +322,7 @@ run_scan(){
 
   {% for profile in baseline.profile %}
   {% for rule in profile.rules %}
-    {% if "manual" not in rule.tags %}
+    {% if "manual" not in rule.tags and "Excluded" not in rule.section %}
       {% include "check.jinja" %}
     {% endif %}
   {% endfor %}
@@ -363,7 +363,9 @@ run_fix(){
 
   {% for profile in baseline.profile %}
   {% for rule in profile.rules %}
-    {% include "fix.jinja" %}
+    {% if "manual" not in rule.tags and "Excluded" not in rule.section %}
+      {% include "fix.jinja" %}
+    {% endif %}
   {% endfor %}
   {% endfor %}
 

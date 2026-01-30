@@ -86,8 +86,13 @@ Deploy a configuration profile containing the following payload.
 |===
 
 |ID
-|{{ rule.rule_id }}
-{{ rule.severity if rule.severity is not none and rule.tags not in check_tags }}
+|{{ rule.rule_id }} 
+
+{% if rule.severity is not none %}
+    |{% trans %}Severity{% endtrans %}
+    |{{ rule.severity }}
+{% endif %}
+
 
 |{% trans %}References{% endtrans %}
 |
