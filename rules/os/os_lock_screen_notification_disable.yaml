@@ -29,6 +29,6 @@ severity: high
 supervised: false
 mobileconfig: true
 mobileconfig_info:
-  com.apple.applicationaccess::
+  com.apple.applicationaccess:
     allowLockScreenNotificationsView: false
     
