@@ -419,6 +419,9 @@ class Macsecurityrule(BaseModelWithAccessors):
                         if custom_rule_value not in rule_yaml[custom_rule_key]:
                             rule_yaml[custom_rule_key] += custom_rule_value
                         continue
+                    if custom_rule_key == "platforms":
+                        rule_yaml[custom_rule_key] |= custom_rule_value
+                        continue
                     rule_yaml[custom_rule_key] = custom_rule_value
 
             enforcement_info = rule_yaml["platforms"][os_type].get(

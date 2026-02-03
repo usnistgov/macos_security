@@ -105,12 +105,17 @@ def generate_guidance(sp: Yaspin, args: argparse.Namespace) -> None:
         logo_path = args.logo
 
     if args.hash:
-        signing = True
-        if not verify_signing_hash(args.hash):
+        if sys.platform.startswith("darwin"):
+            signing = True
+            if not verify_signing_hash(args.hash):
+                logger.error(
+                    "Cannot use the provided hash to sign.  Please make sure you provide the subject key ID hash from an installed certificate"
+                )
+                sys.exit()
+        else:
             logger.error(
-                "Cannot use the provided hash to sign.  Please make sure you provide the subject key ID hash from an installed certificate"
+                "Signing of configuration profiles is only supported when run natively on macOS, ignoring..."
             )
-            sys.exit()
 
     if args.reference:
         log_reference = args.reference

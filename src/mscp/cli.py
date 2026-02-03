@@ -213,11 +213,17 @@ def parse_cli() -> None:
         help="Generate the excel (xlsx) document for the rules.",
         action="store_true",
     )
+
+    hash_help = (
+        "(macOS ONLY) sign the configuration profiles with subject key ID (hash value without spaces)"
+        if sys.platform.startswith("darwin")
+        else argparse.SUPPRESS
+    )
     guidance_parser.add_argument(
         "-H",
         "--hash",
         default=None,
-        help="sign the configuration profiles with subject key ID (hash value without spaces)",
+        help=hash_help,
         action="store",
     )
     guidance_parser.add_argument(
