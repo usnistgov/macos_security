@@ -3,6 +3,7 @@
 # Standard python modules
 import argparse
 import sys
+import time
 from pathlib import Path
 from typing import Any
 
@@ -12,6 +13,9 @@ from ..common_utils import config, make_dir, open_file
 from ..common_utils.logger_instance import logger
 
 # Additional python modules
+from yaspin import inject_spinner
+from yaspin.core import Yaspin
+from yaspin.spinners import Spinners
 
 
 def update_rule_with_custom_references(
@@ -31,7 +35,11 @@ def update_rule_with_custom_references(
     logger.info(f"Updated rule {rule.rule_id} with references: {references}")
 
 
-def generate_mapping(args: argparse.Namespace) -> None:
+@inject_spinner()
+def generate_mapping(sp: Yaspin, args: argparse.Namespace) -> None:
+    sp.spinner = Spinners.dots
+    sp.text = "Collecting rule files"
+    time.sleep(1)
     rules: list[Macsecurityrule] = Macsecurityrule.collect_all_rules(
         args.os_name, args.os_version, tailoring=True
     )
@@ -61,6 +69,8 @@ def generate_mapping(args: argparse.Namespace) -> None:
     for dir_path in [output_dir, build_path, rules_output_dir]:
         make_dir(dir_path)
 
+    sp.text = "Mapping references and creating customized rule files"
+    time.sleep(1)
     for rule in rules:
         rule_file_path: Path = output_dir / "rules" / f"{rule.rule_id}.yaml"
         control_list: list = []
@@ -110,6 +120,8 @@ def generate_mapping(args: argparse.Namespace) -> None:
         f"{args.os_name} {args.os_version}: Security Configuration - {args.framework}"
     )
 
+    sp.text = "Generating custom baseline for mapped rules"
+    time.sleep(1)
     Baseline.create_new(
         output_file=baseline_file_path,
         rules=custom_rules,
@@ -121,3 +133,9 @@ def generate_mapping(args: argparse.Namespace) -> None:
         os_version=args.os_version,
         baseline_dict={},
     )
+
+    sp.text = f"DONE!"
+    sp.ok("✔")
+
+    print(f"Generated new baseline file: {baseline_file_path}")
+    print(f"Generated customized rule files: {rules_output_dir}")

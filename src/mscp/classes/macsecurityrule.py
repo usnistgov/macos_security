@@ -5,7 +5,7 @@ import base64
 from collections import OrderedDict, defaultdict
 from enum import StrEnum
 from pathlib import Path
-from typing import Any, Optional, Iterable
+from typing import Any, Iterable
 from uuid import uuid4
 
 # Additional python modules
@@ -223,7 +223,7 @@ class References(BaseModelWithAccessors):
                 continue
             fields = _dump_fields(submodel)
             if field_key in fields:
-                return fields[field_key] or []
+                return [str(x) for x in (fields[field_key] or [])]
 
         # Not found
         if default is not _SENTINEL:

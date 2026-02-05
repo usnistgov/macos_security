@@ -289,3 +289,5 @@ def generate_baseline(args: argparse.Namespace) -> None:
         os_version=args.os_version,
         baseline_dict=baseline_dict,
     )
+
+    print(f"Generated new baseline file: {baseline_output_file}")
