@@ -5,7 +5,7 @@ import csv
 import json
 import plistlib
 from pathlib import Path
-from typing import Any
+from typing import Any, Dict
 
 # Additional python modules
 import yaml
@@ -122,29 +122,29 @@ def open_yaml(
         raise
 
 
-def open_csv(file_path: Path) -> dict[str, Any]:
-    """
-    Attempts to open a csv file and read its contents with error checking and logging
+def open_csv(file_path: Path) -> dict[str, list[str]]:
+    with file_path.open("r", newline="", encoding="utf-8-sig") as f:
+        reader = csv.reader(f)
+        headers = next(reader, None)
 
-    Args:
-        file_path (Path): The path to the file to be opened.
+        if headers is None or len(headers) != 2:
+            raise ValueError(f"Expected 2 headers, found: {headers}")
 
-    Returns:
-        dict[str, Any]: The content of the file as a list of dictionaries if successful.
-    """
+        data = {headers[0].strip(): [], headers[1].strip(): []}
 
-    try:
-        logger.debug("Attempting to open CSV: {}", file_path)
-        data = csv.DictReader(
-            file_path.read_text(encoding="utf-8-sig"), dialect="excel"
-        )
-        return data if isinstance(data, dict) else {}
+        for idx, row in enumerate(reader, start=2):
+            # Ensure row has 2 columns; pad if necessary
+            while len(row) < 2:
+                row.append("")  # Add empty string for missing column
 
-    except (csv.Error, Exception) as e:
-        logger.error(
-            f"An error occurred while opening the file: {file_path}. Error: {e}"
-        )
-        raise
+            # Strip quotes and whitespace; keep empty cells as ""
+            col1 = row[0].strip().strip('"') if row[0] else ""
+            col2 = row[1].strip().strip('"') if row[1] else ""
+
+            data[headers[0]].append(col1)
+            data[headers[1]].append(col2)
+
+    return data
 
 
 def open_plist(file_path: Path) -> dict[str, dict[str, bool]] | None:

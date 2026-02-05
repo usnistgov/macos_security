@@ -62,20 +62,20 @@ class BaseModelWithAccessors(BaseModel):
         """
         Allow dictionary-like access to attributes.
         """
-        if key in self.__class__.model_fields:
+        try:
             return getattr(self, key)
-        raise KeyError(f"{key} is not a valid attribute of {self.__class__.__name__}")
+        except AttributeError:
+            raise KeyError(key) from None
 
     def __setitem__(self, key: str, value: Any) -> None:
         """
         Allow dictionary-like setting of attributes.
         """
-        if key in self.__class__.model_fields:
+        try:
             setattr(self, key, value)
-        else:
-            raise KeyError(
-                f"{key} is not a valid attribute of {self.__class__.__name__}"
-            )
+        except AttributeError:
+            # This triggers if Pydantic config is set to 'forbid'
+            raise KeyError(f"{key} is not a valid attribute")
 
 
 class NistReferences(BaseModelWithAccessors):
@@ -136,6 +136,7 @@ class bsiReferences(BaseModelWithAccessors):
 
 
 class customReferences(BaseModelWithAccessors):
+    model_config = ConfigDict(extra="allow")
     references: list[Any] | None = None
 
     def __init__(self, **data: Any) -> None:
@@ -150,7 +151,7 @@ class Mobileconfigpayload(BaseModelWithAccessors):
 
 
 class References(BaseModelWithAccessors):
-    model_config: ConfigDict = ConfigDict(extra="ignore")
+    model_config: ConfigDict = ConfigDict(extra="allow")
 
     nist: NistReferences
     disa: DisaReferences | None = None
@@ -164,7 +165,7 @@ class References(BaseModelWithAccessors):
         *,
         default: Any = _SENTINEL,
         case_insensitive: bool = True,
-        search_order: Iterable[str] = ("nist", "disa", "cis", "bsi", "custom_refs"),
+        search_order: Iterable[str] = ("nist", "disa", "cis", "bsi"),
     ) -> Any:
         """
         Retrieve a value stored somewhere in the nested references.
@@ -1225,17 +1226,26 @@ class Macsecurityrule(BaseModelWithAccessors):
         )
 
         rule_file_path: Path = output_path
-        serialized_data: dict[str, Any] = self.model_dump()
+        serialized_data: dict[str, Any] = self.model_dump(exclude_none=True)
         ordered_data = OrderedDict()
 
         self._clean_references()
 
-        serialized_data["references"]["nist"]["800-53r5"] = serialized_data[
-            "references"
-        ].pop("nist_800_53r5", 0)
-        serialized_data["references"]["nist"]["800-171r3"] = serialized_data[
-            "references"
-        ].pop("nist_800_171", 0)
+        # handle NIST references that have keys that start with nist_
+
+        # Ensure the structure exists
+        refs = serialized_data.setdefault("references", {})
+        nist = refs.setdefault("nist", {})
+
+        # --- 800-53r5 ---
+        if (v53 := nist.pop("nist_800_53r5", None)) is None:
+            v53 = refs.pop("nist_800_53r5", 0)
+        nist["800-53r5"] = v53
+
+        # --- 800-171 ---
+        if (v171 := nist.pop("nist_800_171r3", None)) is None:
+            v171 = refs.pop("nist_800_171r3", 0)
+        nist["800-171r3"] = v171
 
         for key in serialized_data["references"]:
             if isinstance(serialized_data["references"][key], list):

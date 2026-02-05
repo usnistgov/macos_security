@@ -266,8 +266,8 @@ def parse_cli() -> None:
     mapping_parser.add_argument(
         "-f",
         "--framework",
-        default="800-53r5",
-        help="Specify framework for the source. If no framework is specified, the default is 800-53r5.",
+        default="nist_800_53r5",
+        help="Specify framework for the source. If no framework is specified, the default is nist_800_53r5.",
         action="store",
     )
 

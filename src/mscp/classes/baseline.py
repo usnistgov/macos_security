@@ -319,7 +319,7 @@ class Baseline(BaseModelWithAccessors):
         """
 
         logger.info("Creating baseline yaml")
-        serialized_data = self.model_dump()
+        serialized_data = self.model_dump(exclude_none=True)
         key_order: list[str] = [
             "title",
             "description",
