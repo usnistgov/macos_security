@@ -75,10 +75,10 @@ def generate_mapping(args: argparse.Namespace) -> None:
             ]
             references: list = []
 
-            references = rule.references.get_ref(args.framework)
-            ## TODO If none is returned, set to blank list... this should be fixed
-            if not references:
-                references: list = []
+            try:
+                references = rule.references.get_ref(args.framework)
+            except KeyError as e:
+                logger.error(e)
 
             for control in controls:
                 if control in references and control not in control_list:

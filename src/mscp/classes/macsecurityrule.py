@@ -184,6 +184,12 @@ class References(BaseModelWithAccessors):
                 return {k.lower(): v for k, v in d.items()}
             return d
 
+        # account for python limitations for attribute names (800-53r5 and 800-171r2)
+        if key == "800-53r5":
+            key = "nist_800_53r5"
+        if key == "800-1715r3":
+            key = "nist_800_171r3"
+
         # 1) Namespaced key: 'nist.control_id'
         if "." in key:
             ns, field = key.split(".", 1)
@@ -217,11 +223,12 @@ class References(BaseModelWithAccessors):
                 continue
             fields = _dump_fields(submodel)
             if field_key in fields:
-                return fields[field_key]
+                return fields[field_key] or []
 
         # Not found
         if default is not _SENTINEL:
             return default
+
         raise KeyError(
             f"Field '{key}' not found in any namespace ({', '.join(search_order)})"
         )
