@@ -5,7 +5,7 @@ import csv
 import json
 import plistlib
 from pathlib import Path
-from typing import Any, Dict
+from typing import Any, Iterable
 
 # Additional python modules
 import yaml
@@ -122,29 +122,93 @@ def open_yaml(
         raise
 
 
-def open_csv(file_path: Path) -> dict[str, list[str]]:
+def _dedupe_headers(headers: Iterable[str]) -> list[str]:
+    """
+    Make header names unique by appending '_2', '_3', ... where needed.
+    """
+    seen: dict[str, int] = {}
+    unique: list[str] = []
+    for h in headers:
+        key = (h or "").strip()
+        if key in seen:
+            seen[key] += 1
+            key = f"{key}_{seen[key]}"
+        else:
+            seen[key] = 1
+        unique.append(key)
+    return unique
+
+
+def open_csv(file_path: Path, *, dedupe=True) -> dict[str, list[str]]:
+    """
+    Return a dict mapping column header -> list of column values for any number of columns.
+    - Empty/missing cells become "".
+    - Whitespace around values is stripped.
+    - If `dedupe=True`, duplicate headers are renamed: 'Header', 'Header_2', ...
+    """
     with file_path.open("r", newline="", encoding="utf-8-sig") as f:
+        # First pass: read headers
+        peek = f.readline()
+        if not peek:
+            raise ValueError("CSV file is empty; no headers found.")
+        f.seek(0)
+
         reader = csv.reader(f)
-        headers = next(reader, None)
+        raw_headers = next(reader, None)
+        if not raw_headers:
+            raise ValueError("CSV has no header row (first row is empty).")
 
-        if headers is None or len(headers) != 2:
-            raise ValueError(f"Expected 2 headers, found: {headers}")
+        headers = [h.strip() for h in raw_headers]
+        if dedupe:
+            headers = _dedupe_headers(headers)
 
-        data = {headers[0].strip(): [], headers[1].strip(): []}
+        # Prepare accumulator
+        data: dict[str, list[str]] = {h: [] for h in headers}
 
-        for idx, row in enumerate(reader, start=2):
-            # Ensure row has 2 columns; pad if necessary
-            while len(row) < 2:
-                row.append("")  # Add empty string for missing column
+        # Second pass as DictReader to align keys/values by header
+        f.seek(0)
+        dict_reader = csv.DictReader(f)
+        # Replace DictReader.fieldnames with our processed headers to keep trimming/deduping
+        dict_reader.fieldnames = headers  # type: ignore[attr-defined]
 
-            # Strip quotes and whitespace; keep empty cells as ""
-            col1 = row[0].strip().strip('"') if row[0] else ""
-            col2 = row[1].strip().strip('"') if row[1] else ""
+        for row in dict_reader:
+            # DictReader will set missing cells to None; extras go under key None.
+            for h in headers:
+                val = row.get(h)
+                data[h].append((val or "").strip())
 
-            data[headers[0]].append(col1)
-            data[headers[1]].append(col2)
+            # If a row has more values than headers, DictReader stores them under key None
+            # We ignore them, but you could capture them by uncommenting below:
+            # extras = row.get(None)
+            # if extras:
+            #     data.setdefault("__EXTRA__", []).extend([v.strip() for v in extras])
 
     return data
+
+
+# def open_csv(file_path: Path) -> dict[str, list[str]]:
+#     with file_path.open("r", newline="", encoding="utf-8-sig") as f:
+#         reader = csv.reader(f)
+#         headers = next(reader, None)
+
+#         if headers is None or len(headers) != 2:
+#             raise ValueError(f"Expected 2 headers, found: {headers}")
+
+#         data = {headers[0].strip(): [], headers[1].strip(): []}
+
+#         for idx, row in enumerate(reader, start=2):
+#             # Ensure row has 2 columns; pad if necessary
+#             while len(row) < 2:
+#                 row.append("")  # Add empty string for missing column
+
+#             # Strip quotes and whitespace; keep empty cells as ""
+#             col1 = row[0].strip().strip('"') if row[0] else ""
+#             col2 = row[1].strip().strip('"') if row[1] else ""
+
+#             data[headers[0]].append(col1)
+#             data[headers[1]].append(col2)
+
+#     return data
 
 
 def open_plist(file_path: Path) -> dict[str, dict[str, bool]] | None:
