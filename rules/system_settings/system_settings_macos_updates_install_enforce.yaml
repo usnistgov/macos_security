@@ -1,0 +1,43 @@
+id: system_settings_macos_updates_install_enforce
+title: Enforce macOS Updates are Automatically Installed using DDM.
+discussion: |
+  Software Update _MUST_ be configured to enforce automatic installation of macOS updates and that the user cannot modify the setting within System Settings.
+check: |
+  /usr/bin/plutil -convert json /var/db/softwareupdate/SoftwareUpdateDDMStatePersistence.plist -o - | /usr/bin/jq --raw-output .'SUCorePersistedStatePolicyFields.SUCoreDDMDeclarationGlobalSettings.automaticallyInstallOSUpdates' 
+result:
+  integer: 1
+fix: |
+  This is implemented by Declarative Device Management (DDM).
+references:
+  cce:
+    - N/A
+  cci:
+    - N/A
+  800-53r5:
+    - N/A
+  800-53r4:
+    - N/A
+  srg:
+    - N/A
+  disa_stig:
+    - N/A
+  800-171r3:
+    - N/A
+  cis:
+    benchmark:
+      - N/A
+    controls v8:
+      - N/A
+  bio:
+    - 8.08.01
+macOS:
+  - '26.0'
+tags:
+  - ddm
+mobileconfig: false
+mobileconfig_info:
+ddm_info:
+  declarationtype: com.apple.configuration.softwareupdate.settings
+  ddm_key: AutomaticActions
+  ddm_value: 
+    InstallOSUpdates: AlwaysOn
