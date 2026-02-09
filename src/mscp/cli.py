@@ -15,6 +15,7 @@ from .generate import (
     generate_local_report,
     generate_mapping,
     generate_scap,
+    generate_translation,
 )
 
 
@@ -306,7 +307,25 @@ def parse_cli() -> None:
         help="List the available keyword tags to search for.",
         action="store_true",
     )
+    translation_parser: argparse.ArgumentParser = subparsers.add_parser(
+        "translation",
+        parents=[parent_parser],
+        add_help=False,
+    )
+    translation_parser.set_defaults(func=generate_translation)
 
+    translation_parser.add_argument(
+        "-o",
+        "--output",
+        default="messages.pot",
+        help="Output POT path (default: messages.pot)",
+    )
+    translation_parser.add_argument(
+        "-d",
+        "--domain",
+        default="messages",
+        help="gettext domain (default: messages)",
+    )
     # local_report_parser: argparse.ArgumentParser = subparsers.add_parser(
     #     "local_report",
     #     help="Creates local report in Excel format.",

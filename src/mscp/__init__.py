@@ -26,7 +26,7 @@ from .common_utils.localization import configure_localization_for_yaml
 from .common_utils.logging_config import set_logger
 from .common_utils.run_command import run_command
 from .common_utils.validate_rules import validate_yaml_file
-from .generate import baseline, checklist, guidance, local_report, mapping
+from .generate import baseline, checklist, guidance, local_report, mapping, translation
 
 logger.disable("mscp")
 
@@ -59,6 +59,7 @@ __all__ = [
     "parse_cli",
     "validate_yaml_file",
     "set_logger",
+    "translation",
 ]
 
 # initialize the localization constructor for all yaml
