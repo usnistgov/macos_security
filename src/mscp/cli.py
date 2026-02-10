@@ -381,21 +381,6 @@ def parse_cli() -> None:
     #     choices=["2", "3"],
     # )
 
-    validate_parser: argparse.ArgumentParser = subparsers.add_parser(
-        "validate",
-        help="Validates the YAML files in the rules directory.",
-        parents=[parent_parser],
-        add_help=False,
-    )
-    validate_parser.set_defaults(func=validate_yaml_file)
-
-    validate_parser.add_argument(
-        "-i",
-        "--only_invalid",
-        help="Only show invalid files.",
-        action="store_true",
-    )
-
     admin_parser: argparse.ArgumentParser = subparsers.add_parser(
         "admin",
         parents=[parent_parser],
@@ -424,6 +409,21 @@ def parse_cli() -> None:
         add_help=False,
     )
     add_rule_parser.set_defaults(func=add_new_rule)
+
+    validate_parser: argparse.ArgumentParser = admin_subparsers.add_parser(
+        "validate",
+        help="Validates the YAML files in the rules directory.",
+        parents=[parent_parser],
+        add_help=False,
+    )
+    validate_parser.set_defaults(func=validate_yaml_file)
+
+    validate_parser.add_argument(
+        "-a",
+        "--all_validation",
+        help="Show all validation output.",
+        action="store_true",
+    )
 
     try:
         args = parser.parse_args()
