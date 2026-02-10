@@ -7,6 +7,7 @@ import platform
 from pathlib import Path
 
 # Local python modules
+from .admin_utils import build_all_baselines, add_new_rule
 from .common_utils import logger, set_logger, validate_yaml_file, supported_languages
 from .generate import (
     generate_baseline,
@@ -58,7 +59,7 @@ def parse_cli() -> None:
         "-D",
         "--debug",
         required=False,
-        help="Enable debug output.",
+        help=argparse.SUPPRESS,
         action="store_true",
     )
 
@@ -394,6 +395,35 @@ def parse_cli() -> None:
         help="Only show invalid files.",
         action="store_true",
     )
+
+    admin_parser: argparse.ArgumentParser = subparsers.add_parser(
+        "admin",
+        parents=[parent_parser],
+        add_help=False,
+    )
+
+    admin_subparsers = admin_parser.add_subparsers(
+        title="Admin Utilities",
+        required=True,
+        description="Valid Subcommands",
+        dest="admin_command",
+    )
+
+    build_all_parser = admin_subparsers.add_parser(
+        "build-all",
+        parents=[parent_parser],
+        help="Build all baselines supported in MSCP.",
+        add_help=False,
+    )
+    build_all_parser.set_defaults(func=build_all_baselines)
+
+    add_rule_parser = admin_subparsers.add_parser(
+        "add-rule",
+        parents=[parent_parser],
+        help="Add a new rule to the MSCP library.",
+        add_help=False,
+    )
+    add_rule_parser.set_defaults(func=add_new_rule)
 
     try:
         args = parser.parse_args()
