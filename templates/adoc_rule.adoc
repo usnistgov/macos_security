@@ -59,6 +59,10 @@ ifdef::show_indigo[]
 !$rule_indigo
 endif::[]
 
+ifdef::show_BIO[]
+!BIO
+!$rule_bio
+endif::[]
 
 !CCE
 !$rule_cce
