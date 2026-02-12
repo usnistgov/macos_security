@@ -25,7 +25,6 @@ from ..common_utils import (
     remove_dir_contents,
     run_command,
 )
-from ..common_utils.localization import configure_localization_for_yaml
 from ..generate.guidance_support import (
     generate_ddm,
     generate_documents,
@@ -70,7 +69,6 @@ def verify_signing_hash(cert_hash: str) -> bool:
 def generate_guidance(sp: Yaspin, args: argparse.Namespace) -> None:
     # Configure localization at the beginning based on the CLI language parameter
     logger.debug(f"Language parameter from CLI: {args.language}")
-    configure_localization_for_yaml(language=args.language)
 
     sp.spinner = Spinners.dots
     logo_path: Path = Path(

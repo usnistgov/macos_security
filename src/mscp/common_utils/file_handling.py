@@ -8,10 +8,12 @@ from pathlib import Path
 from typing import Any, Iterable
 
 # Additional python modules
+import gettext
 import yaml
 
 # Local python modules
 from .logger_instance import logger
+
 
 ENCODING: str = "utf-8"
 
@@ -92,24 +94,40 @@ def open_yaml(
 ) -> dict[str, Any]:
     """
     Attempts to open a yaml file and read its contents with error checking and logging.
-    Supports !localize tags for automatic gettext localization.
+    Supports automatic gettext localization for specified yaml fields defined in
+    the "fields_to_translate" list.
 
     Args:
         file_path (Path): The path to the file to be opened.
         language (str, optional): Language code for localization (e.g., "de", "fr"). If None, uses current gettext config.
-        domain (str): localization domain name. Defaults to "messages".
-        localedir (str): Path to the locales directory. Defaults to "config/locales".
 
     Returns:
         dict[str, Any]: The content of the file if successful, empty dict otherwise.
     """
+    # set up localization for all yaml files
+    domain: str = "messages"
+    localedir: str = "config/locales"
+
+    t = gettext.translation(
+        domain,
+        localedir=localedir,
+        languages=[language],
+        fallback=True,
+    )
+    t.install()
+    _ = t.gettext
 
     try:
         logger.debug("Attempting to open YAML: {}", file_path)
-        # Note: localization should be configured globally before YAML processing
-        # configure_localization_for_yaml is now called at the application level
+
+        fields_to_translate = ["name", "description", "title", "discussion"]
 
         data = yaml.safe_load(file_path.read_text(encoding=ENCODING))
+
+        for field in data:
+            if field in fields_to_translate:
+                data[field] = _(data[field])
+
         return data if isinstance(data, dict) else {}
 
     except (
@@ -184,31 +202,6 @@ def open_csv(file_path: Path, *, dedupe=True) -> dict[str, list[str]]:
             #     data.setdefault("__EXTRA__", []).extend([v.strip() for v in extras])
 
     return data
-
-
-# def open_csv(file_path: Path) -> dict[str, list[str]]:
-#     with file_path.open("r", newline="", encoding="utf-8-sig") as f:
-#         reader = csv.reader(f)
-#         headers = next(reader, None)
-
-#         if headers is None or len(headers) != 2:
-#             raise ValueError(f"Expected 2 headers, found: {headers}")
-
-#         data = {headers[0].strip(): [], headers[1].strip(): []}
-
-#         for idx, row in enumerate(reader, start=2):
-#             # Ensure row has 2 columns; pad if necessary
-#             while len(row) < 2:
-#                 row.append("")  # Add empty string for missing column
-
-#             # Strip quotes and whitespace; keep empty cells as ""
-#             col1 = row[0].strip().strip('"') if row[0] else ""
-#             col2 = row[1].strip().strip('"') if row[1] else ""
-
-#             data[headers[0]].append(col1)
-#             data[headers[1]].append(col2)
-
-#     return data
 
 
 def open_plist(file_path: Path) -> dict[str, dict[str, bool]] | None:
