@@ -82,6 +82,8 @@ references:
     - AU.L2-3.3.3
     - AU.L2-3.3.6
     - SI.L2-3.14.3
+  bio:
+    - 8.18.02
 macOS:
   - '26.0'
 tags:
@@ -100,6 +102,8 @@ tags:
   - cmmc_lvl2
   - stig
   - cnssi-1253_moderate
+  - nlmapgov_base
+  - nlmapgov_plus
 severity: medium
 mobileconfig: false
 mobileconfig_info:

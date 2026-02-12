@@ -38,6 +38,8 @@ references:
     - AU.L2-3.3.1
   800-171r3:
     - 03.03.03
+  bio:
+    - 8.18.02
 macOS:
   - '26.0'
 odv:
@@ -46,6 +48,8 @@ odv:
   cis_lvl1: 60d OR 5G
   cis_lvl2: 60d OR 5G
   stig: 7d
+  nlmapgov_base: 180d
+  nlmapgov_plus: 180d
 tags:
   - 800-171
   - 800-53r5_privacy
@@ -63,6 +67,8 @@ tags:
   - cmmc_lvl2
   - stig
   - cnssi-1253_moderate
+  - nlmapgov_base
+  - nlmapgov_plus
 severity: low
 mobileconfig: false
 mobileconfig_info:

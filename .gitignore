@@ -4,3 +4,6 @@
 .bundle
 bin
 mscp_gems
+docs/node_modules/
+docs/.astro/
+docs/package-lock.json

@@ -29,11 +29,15 @@ references:
     controls v8:
       - 7.3
       - 7.4
+  bio:
+    - 8.08.01
 macOS:
   - '26.0'
 tags:
   - cisv8
   - ddm
+  - nlmapgov_base
+  - nlmapgov_plus
 mobileconfig: false
 mobileconfig_info:
 ddm_info:
