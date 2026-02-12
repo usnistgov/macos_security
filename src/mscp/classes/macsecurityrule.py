@@ -1014,6 +1014,8 @@ class Macsecurityrule(BaseModelWithAccessors):
         # Helper function to recursively replace $ODV in nested structures
         def replace_odv_in_obj(obj):
             if isinstance(obj, str) and "$ODV" in obj:
+                if obj == "$ODV":
+                    return odv_value
                 return obj.replace("$ODV", str(odv_value))
             elif isinstance(obj, dict):
                 return {k: replace_odv_in_obj(v) for k, v in obj.items()}
