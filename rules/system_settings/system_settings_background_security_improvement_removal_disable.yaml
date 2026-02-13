@@ -1,0 +1,44 @@
+id: system_settings_background_security_improvement_removal_disable
+title: Disable rollback of Background Security Improvements using DDM.
+discussion: |
+  The ability for the user to roll back Background Security Improvements _MUST_ be disabled.
+check: |
+  /usr/bin/plutil -convert json /var/db/softwareupdate/SoftwareUpdateDDMStatePersistence.plist -o - | /usr/bin/jq --raw-output .'SUCorePersistedStatePolicyFields.SUCoreDDMDeclarationGlobalSettings.enableRapidSecurityResponseRollback' 
+result:
+  string: 'false'
+fix: |
+  This is implemented by Declarative Device Management (DDM).
+references:
+  cce:
+    - N/A
+  cci:
+    - N/A
+  800-53r5:
+    - N/A
+  800-53r4:
+    - N/A
+  srg:
+    - N/A
+  disa_stig:
+    - N/A
+  800-171r3:
+    - N/A
+  cis:
+    benchmark:
+      - N/A
+    controls v8:
+      - N/A
+  bio:
+    - 8.08.01
+macOS:
+  - '26.0'
+tags:
+  - ddm
+  - nlmapgov_plus
+mobileconfig: false
+mobileconfig_info:
+ddm_info:
+  declarationtype: com.apple.configuration.softwareupdate.settings
+  ddm_key: RapidSecurityResponse
+  ddm_value: 
+    EnableRollback: false
