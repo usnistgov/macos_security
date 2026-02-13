@@ -29,6 +29,7 @@ dependencies = [
   "pyyaml==6.0.2",
   "jsonschema==4.23.0",
   "yaspin==3.4.0",
+  "babel==2.18.0",
 ]
 
 [project.urls]
