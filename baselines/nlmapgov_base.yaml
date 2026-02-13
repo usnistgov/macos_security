@@ -49,8 +49,8 @@ profile:
       - system_settings_gatekeeper_identified_developers_allowed
       - system_settings_gatekeeper_override_disallow
       - system_settings_guest_account_disable
-      - system_settings_install_macos_updates_enforce
       - system_settings_loginwindow_loginwindowtext_enable
+      - system_settings_macos_updates_install_enforce
       - system_settings_security_update_install
       - system_settings_softwareupdate_current
       - system_settings_time_server_configure

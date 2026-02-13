@@ -85,9 +85,9 @@ profile:
       - system_settings_improve_assistive_voice_disable
       - system_settings_improve_search_disable
       - system_settings_improve_siri_dictation_disable
-      - system_settings_install_macos_updates_enforce
       - system_settings_internet_sharing_disable
       - system_settings_loginwindow_loginwindowtext_enable
+      - system_settings_macos_updates_install_enforce
       - system_settings_media_sharing_disabled
       - system_settings_password_hints_disable
       - system_settings_personalized_advertising_disable
