@@ -33,7 +33,6 @@ references:
 macOS:
   - '26.0'
 tags:
-  - ddm
   - nlmapgov_base
   - nlmapgov_plus
 mobileconfig: false

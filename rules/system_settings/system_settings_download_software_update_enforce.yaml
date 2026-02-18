@@ -35,7 +35,6 @@ macOS:
   - '26.0'
 tags:
   - cisv8
-  - ddm
   - nlmapgov_base
   - nlmapgov_plus
 mobileconfig: false
