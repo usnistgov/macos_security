@@ -14,7 +14,9 @@ references:
   cci:
     - N/A
   800-53r5:
-    - N/A
+    - SI-2
+    - SI-2(5)
+    - SI-3
   800-53r4:
     - N/A
   srg:
@@ -22,18 +24,22 @@ references:
   disa_stig:
     - N/A
   800-171r3:
-    - N/A
+    - 03.14.01
+    - 03.14.02
   cis:
     benchmark:
       - N/A
     controls v8:
       - N/A
+  cmmc:
+    - SI.L1-3.14.1
+    - SI.L1-3.14.2
+    - SI.L1-3.14.4
   bio:
     - 8.08.01
 macOS:
   - '26.0'
 tags:
-  - ddm
   - nlmapgov_plus
 mobileconfig: false
 mobileconfig_info:
