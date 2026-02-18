@@ -36,8 +36,6 @@ references:
     - SI.L1-3.14.1
     - SI.L1-3.14.2
     - SI.L1-3.14.4
-  bio:
-    - 8.08.01
 macOS:
   - '26.0'
 tags:
@@ -50,7 +48,6 @@ tags:
   - cmmc_lvl2
   - cmmc_lvl1
   - cnssi-1253_moderate
-  - nlmapgov_plus
 mobileconfig: true
 mobileconfig_info:
   com.apple.applicationaccess:

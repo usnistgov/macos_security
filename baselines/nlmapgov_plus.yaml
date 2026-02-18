@@ -47,7 +47,6 @@ profile:
       - os_password_hint_remove
       - os_password_proximity_disable
       - os_password_sharing_disable
-      - os_rapid_security_response_removal_disable
       - os_root_disable
       - os_safari_advertising_privacy_protection_enable
       - os_safari_open_safe_downloads_disable
@@ -72,6 +71,7 @@ profile:
   - section: "systemsettings"
     rules:
       - system_settings_automatic_login_disable
+      - system_settings_background_security_improvement_removal_disable
       - system_settings_diagnostics_reports_disable
       - system_settings_download_software_update_enforce
       - system_settings_external_intelligence_sign_in_disable
@@ -85,9 +85,9 @@ profile:
       - system_settings_improve_assistive_voice_disable
       - system_settings_improve_search_disable
       - system_settings_improve_siri_dictation_disable
-      - system_settings_install_macos_updates_enforce
       - system_settings_internet_sharing_disable
       - system_settings_loginwindow_loginwindowtext_enable
+      - system_settings_macos_updates_install_enforce
       - system_settings_media_sharing_disabled
       - system_settings_password_hints_disable
       - system_settings_personalized_advertising_disable
