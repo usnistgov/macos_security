@@ -25,7 +25,7 @@ from .common_utils.file_handling import (
 from .common_utils.logging_config import set_logger
 from .common_utils.run_command import run_command
 from .common_utils.validate_rules import validate_yaml_file
-from .generate import baseline, checklist, guidance, local_report, mapping, translation
+from .generate import baseline, guidance, mapping, translation
 
 logger.disable("mscp")
 
@@ -51,9 +51,7 @@ __all__ = [
     "remove_file",
     "run_command",
     "baseline",
-    "checklist",
     "guidance",
-    "local_report",
     "mapping",
     "parse_cli",
     "validate_yaml_file",

@@ -1,7 +1,7 @@
 # common_utils/__init__.py
 
 from .config import config
-from .constants import CONFIG_PATH, SCHEMA_PATH
+from .constants import SCHEMA_PATH
 from .customization import collect_overrides
 from .file_handling import (
     append_text,

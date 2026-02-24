@@ -9,8 +9,10 @@ from .logger_instance import logger
 
 # Additional python modules
 
+src_path = Path(__file__).parent.parent.parent
+project_path = src_path.parent
 
-CONFIG_PATH: Path = Path.cwd() / "config" / "config.yaml"
+CONFIG_PATH: Path = project_path / "config" / "config.yaml"
 
 try:
     logger.info("Attempting to open config file: {}", CONFIG_PATH)

@@ -11,9 +11,7 @@ from .admin_utils import build_all_baselines, add_new_rule
 from .common_utils import logger, set_logger, validate_yaml_file, supported_languages
 from .generate import (
     generate_baseline,
-    generate_checklist,
     generate_guidance,
-    generate_local_report,
     generate_mapping,
     generate_scap,
     generate_localize_template,
@@ -76,6 +74,8 @@ def parse_cli() -> None:
         description="CLI tool for managing baseline and compliance documents.",
         prog="mscp",
         formatter_class=argparse.ArgumentDefaultsHelpFormatter,
+        parents=[parent_parser],
+        add_help=False,
     )
 
     parser.add_argument(
