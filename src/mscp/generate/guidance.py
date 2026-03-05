@@ -25,7 +25,6 @@ from ..common_utils import (
     remove_dir_contents,
     run_command,
 )
-from ..common_utils.localization import configure_localization_for_yaml
 from ..generate.guidance_support import (
     generate_ddm,
     generate_documents,
@@ -70,7 +69,6 @@ def verify_signing_hash(cert_hash: str) -> bool:
 def generate_guidance(sp: Yaspin, args: argparse.Namespace) -> None:
     # Configure localization at the beginning based on the CLI language parameter
     logger.debug(f"Language parameter from CLI: {args.language}")
-    configure_localization_for_yaml(language=args.language)
 
     sp.spinner = Spinners.dots
     logo_path: Path = Path(
@@ -105,12 +103,17 @@ def generate_guidance(sp: Yaspin, args: argparse.Namespace) -> None:
         logo_path = args.logo
 
     if args.hash:
-        signing = True
-        if not verify_signing_hash(args.hash):
+        if sys.platform.startswith("darwin"):
+            signing = True
+            if not verify_signing_hash(args.hash):
+                logger.error(
+                    "Cannot use the provided hash to sign.  Please make sure you provide the subject key ID hash from an installed certificate"
+                )
+                sys.exit()
+        else:
             logger.error(
-                "Cannot use the provided hash to sign.  Please make sure you provide the subject key ID hash from an installed certificate"
+                "Signing of configuration profiles is only supported when run natively on macOS, ignoring..."
             )
-            sys.exit()
 
     if args.reference:
         log_reference = args.reference

@@ -482,13 +482,12 @@ def generate_documents(
         spinner.spinner = Spinners.dots
         spinner.text = "Checking for asciidoctor components"
         time.sleep(1)
-        asciidoctor_path, _ = run_command("bundle show asciidoctor")
-        asciidoctor_pdf_path, _ = run_command("bundle show asciidoctor-pdf")
+        asciidoctor_path, asciidoctor_err = run_command("bundle show asciidoctor")
+        asciidoctor_pdf_path, asciidoctor_pdf_err = run_command(
+            "bundle show asciidoctor-pdf"
+        )
 
-        if (
-            "Could not find gem" in asciidoctor_path
-            or "Could not find gem" in asciidoctor_pdf_path
-        ):
+        if asciidoctor_err or asciidoctor_pdf_err:
             spinner.text = "Installing missing asciidoctor components"
             time.sleep(1)
             output, error = run_command(

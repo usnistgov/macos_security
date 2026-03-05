@@ -5,13 +5,15 @@ import csv
 import json
 import plistlib
 from pathlib import Path
-from typing import Any
+from typing import Any, Iterable
 
 # Additional python modules
+import gettext
 import yaml
 
 # Local python modules
 from .logger_instance import logger
+
 
 ENCODING: str = "utf-8"
 
@@ -92,24 +94,40 @@ def open_yaml(
 ) -> dict[str, Any]:
     """
     Attempts to open a yaml file and read its contents with error checking and logging.
-    Supports !localize tags for automatic gettext localization.
+    Supports automatic gettext localization for specified yaml fields defined in
+    the "fields_to_translate" list.
 
     Args:
         file_path (Path): The path to the file to be opened.
         language (str, optional): Language code for localization (e.g., "de", "fr"). If None, uses current gettext config.
-        domain (str): localization domain name. Defaults to "messages".
-        localedir (str): Path to the locales directory. Defaults to "config/locales".
 
     Returns:
         dict[str, Any]: The content of the file if successful, empty dict otherwise.
     """
+    # set up localization for all yaml files
+    domain: str = "messages"
+    localedir: str = "config/locales"
+
+    t = gettext.translation(
+        domain,
+        localedir=localedir,
+        languages=[language],
+        fallback=True,
+    )
+    t.install()
+    _ = t.gettext
 
     try:
         logger.debug("Attempting to open YAML: {}", file_path)
-        # Note: localization should be configured globally before YAML processing
-        # configure_localization_for_yaml is now called at the application level
+
+        fields_to_translate = ["name", "description", "title", "discussion"]
 
         data = yaml.safe_load(file_path.read_text(encoding=ENCODING))
+
+        for field in data:
+            if field in fields_to_translate:
+                data[field] = _(data[field])
+
         return data if isinstance(data, dict) else {}
 
     except (
@@ -122,29 +140,68 @@ def open_yaml(
         raise
 
 
-def open_csv(file_path: Path) -> dict[str, Any]:
+def _dedupe_headers(headers: Iterable[str]) -> list[str]:
     """
-    Attempts to open a csv file and read its contents with error checking and logging
-
-    Args:
-        file_path (Path): The path to the file to be opened.
-
-    Returns:
-        dict[str, Any]: The content of the file as a list of dictionaries if successful.
+    Make header names unique by appending '_2', '_3', ... where needed.
     """
+    seen: dict[str, int] = {}
+    unique: list[str] = []
+    for h in headers:
+        key = (h or "").strip()
+        if key in seen:
+            seen[key] += 1
+            key = f"{key}_{seen[key]}"
+        else:
+            seen[key] = 1
+        unique.append(key)
+    return unique
 
-    try:
-        logger.debug("Attempting to open CSV: {}", file_path)
-        data = csv.DictReader(
-            file_path.read_text(encoding="utf-8-sig"), dialect="excel"
-        )
-        return data if isinstance(data, dict) else {}
 
-    except (csv.Error, Exception) as e:
-        logger.error(
-            f"An error occurred while opening the file: {file_path}. Error: {e}"
-        )
-        raise
+def open_csv(file_path: Path, *, dedupe=True) -> dict[str, list[str]]:
+    """
+    Return a dict mapping column header -> list of column values for any number of columns.
+    - Empty/missing cells become "".
+    - Whitespace around values is stripped.
+    - If `dedupe=True`, duplicate headers are renamed: 'Header', 'Header_2', ...
+    """
+    with file_path.open("r", newline="", encoding="utf-8-sig") as f:
+        # First pass: read headers
+        peek = f.readline()
+        if not peek:
+            raise ValueError("CSV file is empty; no headers found.")
+        f.seek(0)
+
+        reader = csv.reader(f)
+        raw_headers = next(reader, None)
+        if not raw_headers:
+            raise ValueError("CSV has no header row (first row is empty).")
+
+        headers = [h.strip() for h in raw_headers]
+        if dedupe:
+            headers = _dedupe_headers(headers)
+
+        # Prepare accumulator
+        data: dict[str, list[str]] = {h: [] for h in headers}
+
+        # Second pass as DictReader to align keys/values by header
+        f.seek(0)
+        dict_reader = csv.DictReader(f)
+        # Replace DictReader.fieldnames with our processed headers to keep trimming/deduping
+        dict_reader.fieldnames = headers  # type: ignore[attr-defined]
+
+        for row in dict_reader:
+            # DictReader will set missing cells to None; extras go under key None.
+            for h in headers:
+                val = row.get(h)
+                data[h].append((val or "").strip())
+
+            # If a row has more values than headers, DictReader stores them under key None
+            # We ignore them, but you could capture them by uncommenting below:
+            # extras = row.get(None)
+            # if extras:
+            #     data.setdefault("__EXTRA__", []).extend([v.strip() for v in extras])
+
+    return data
 
 
 def open_plist(file_path: Path) -> dict[str, dict[str, bool]] | None:

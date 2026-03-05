@@ -43,12 +43,9 @@ def get_payload_content_by_type(
                 if not existing_content:
                     grouped_content[payload_type].append(payload_content)
                 else:
-                    # Merge list values for the same key
-                    for key, value in payload_content.items():
-                        if isinstance(value, list):
-                            existing_content.setdefault(key, []).extend(value)
-                        else:
-                            existing_content[key] = value
+                    logger.warning(
+                        f"Rule {rule.rule_id} is attempting to define an existing setting: {existing_content}"
+                    )
 
     return dict(grouped_content)
 

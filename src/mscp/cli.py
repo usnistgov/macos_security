@@ -7,14 +7,15 @@ import platform
 from pathlib import Path
 
 # Local python modules
+from .admin_utils import build_all_baselines, add_new_rule
 from .common_utils import logger, set_logger, validate_yaml_file, supported_languages
 from .generate import (
     generate_baseline,
-    generate_checklist,
     generate_guidance,
-    generate_local_report,
     generate_mapping,
     generate_scap,
+    generate_localize_template,
+    generate_mo_from_json,
 )
 
 
@@ -57,7 +58,7 @@ def parse_cli() -> None:
         "-D",
         "--debug",
         required=False,
-        help="Enable debug output.",
+        help=argparse.SUPPRESS,
         action="store_true",
     )
 
@@ -73,6 +74,8 @@ def parse_cli() -> None:
         description="CLI tool for managing baseline and compliance documents.",
         prog="mscp",
         formatter_class=argparse.ArgumentDefaultsHelpFormatter,
+        parents=[parent_parser],
+        add_help=False,
     )
 
     parser.add_argument(
@@ -92,10 +95,10 @@ def parse_cli() -> None:
 
     # Sub Parsers for individual commands
     subparsers = parser.add_subparsers(
-        title="Subcommands",
+        title="Generate commands",
         required=True,
-        description="Valid Subcommands",
         dest="subcommand",
+        metavar="{baseline,guidance,mapping,scap}",
     )
 
     # 'baseline' subcommand
@@ -213,11 +216,17 @@ def parse_cli() -> None:
         help="Generate the excel (xlsx) document for the rules.",
         action="store_true",
     )
+
+    hash_help = (
+        "(macOS ONLY) sign the configuration profiles with subject key ID (hash value without spaces)"
+        if sys.platform.startswith("darwin")
+        else argparse.SUPPRESS
+    )
     guidance_parser.add_argument(
         "-H",
         "--hash",
         default=None,
-        help="sign the configuration profiles with subject key ID (hash value without spaces)",
+        help=hash_help,
         action="store",
     )
     guidance_parser.add_argument(
@@ -355,19 +364,108 @@ def parse_cli() -> None:
     #     choices=["2", "3"],
     # )
 
-    validate_parser: argparse.ArgumentParser = subparsers.add_parser(
+    admin_parser: argparse.ArgumentParser = subparsers.add_parser(
+        "admin",
+        parents=[parent_parser],
+        add_help=False,
+    )
+
+    admin_subparsers = admin_parser.add_subparsers(
+        title="Admin Utilities",
+        required=True,
+        dest="admin_command",
+    )
+
+    build_all_parser = admin_subparsers.add_parser(
+        "baselines",
+        parents=[parent_parser],
+        help="Build all baselines supported in MSCP.",
+        add_help=False,
+    )
+    build_all_parser.set_defaults(func=build_all_baselines)
+
+    add_rule_parser = admin_subparsers.add_parser(
+        "create",
+        parents=[parent_parser],
+        help="Create a new rule to the MSCP library.",
+        add_help=False,
+    )
+    add_rule_parser.set_defaults(func=add_new_rule)
+
+    validate_parser: argparse.ArgumentParser = admin_subparsers.add_parser(
         "validate",
-        help="Validates the YAML files in the rules directory.",
+        help="Validates the YAML files in the rules and custom directories.",
         parents=[parent_parser],
         add_help=False,
     )
     validate_parser.set_defaults(func=validate_yaml_file)
 
     validate_parser.add_argument(
-        "-i",
-        "--only_invalid",
-        help="Only show invalid files.",
+        "-a",
+        "--all_validation",
+        help="Show all validation output.",
         action="store_true",
+    )
+    localize_template_parser: argparse.ArgumentParser = admin_subparsers.add_parser(
+        "translation-json",
+        help="Generate translation template file for localization.",
+        parents=[parent_parser],
+        add_help=False,
+    )
+    localize_template_parser.set_defaults(func=generate_localize_template)
+
+    localize_template_parser.add_argument(
+        "-o",
+        "--output",
+        default="messages.json",
+        help="Output JSON path (default: messages.json)",
+    )
+    localize_template_parser.add_argument(
+        "-d",
+        "--domain",
+        default="messages",
+        help="gettext domain (default: messages)",
+    )
+
+    mo_from_json_parser: argparse.ArgumentParser = admin_subparsers.add_parser(
+        "mo-from-json",
+        help="Generate a MO file from translated .json for localization.",
+        parents=[parent_parser],
+        add_help=False,
+    )
+    mo_from_json_parser.set_defaults(func=generate_mo_from_json)
+
+    mo_from_json_parser.add_argument(
+        "json_file",
+        default=None,
+        help="File (.json) containing translations to convert.",
+        type=validate_file,
+    )
+    mo_from_json_parser.add_argument(
+        "-m",
+        "--mo_file",
+        default="messages.mo",
+        help="Output MO file (default: messages.mo)",
+    )
+
+    mo_from_json_parser.add_argument(
+        "-l",
+        "--locale",
+        default=None,
+        required=True,
+        help="Locale of translations in provided .json file.",
+    )
+    mo_from_json_parser.add_argument(
+        "-d",
+        "--domain",
+        default="messages",
+        help="gettext domain (default: messages)",
+    )
+    mo_from_json_parser.add_argument(
+        "-f",
+        "--use_fuzzy",
+        action="store_true",
+        help="Enable the flag for fuzzy matches in translations.",
     )
 
     try:

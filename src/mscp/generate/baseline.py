@@ -113,6 +113,7 @@ def rule_has_benchmark_for_version(
     return False
 
 
+@logger.catch
 def generate_baseline(args: argparse.Namespace) -> None:
     build_path: Path = Path(config["custom"].get("baseline_dir", ""))
     baseline_output_file: Path = (
@@ -288,3 +289,5 @@ def generate_baseline(args: argparse.Namespace) -> None:
         os_version=args.os_version,
         baseline_dict=baseline_dict,
     )
+
+    print(f"Generated new baseline file: {baseline_output_file}")

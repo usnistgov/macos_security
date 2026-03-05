@@ -1,7 +1,7 @@
 # common_utils/__init__.py
 
 from .config import config
-from .constants import CONFIG_PATH, SCHEMA_PATH
+from .constants import SCHEMA_PATH
 from .customization import collect_overrides
 from .file_handling import (
     append_text,
@@ -21,7 +21,7 @@ from .file_handling import (
     remove_dir_contents,
     remove_file,
 )
-from .localization import configure_localization_for_yaml, supported_languages
+from .localization import supported_languages
 from .logger_instance import logger
 from .logging_config import set_logger
 from .mscp_data import get_mscp_data, mscp_data
@@ -61,6 +61,5 @@ __all__ = [
     "validate_yaml_file",
     "logger",
     "supported_languages",
-    "configure_localization_for_yaml",
     "collect_overrides",
 ]

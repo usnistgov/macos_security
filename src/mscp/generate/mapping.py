@@ -2,136 +2,143 @@
 
 # Standard python modules
 import argparse
-import re
 import sys
+import time
 from pathlib import Path
 from typing import Any
 
 # Local python modules
 from ..classes import Author, Baseline, Macsecurityrule
-from ..common_utils import config, get_version_data, make_dir, mscp_data, open_file
+from ..common_utils import config, make_dir, open_file
 from ..common_utils.logger_instance import logger
 
 # Additional python modules
+from yaspin import inject_spinner
+from yaspin.core import Yaspin
+from yaspin.spinners import Spinners
 
 
-def update_rule_with_custom_controls(
-    rule: Macsecurityrule, controls: list[str], header: str
+def update_rule_with_custom_references(
+    rule: Macsecurityrule, references: list[str], reference_source: str
 ) -> None:
     """
-    Update a rule with custom controls and add references.
+    Update a rule with custom references.
 
     Args:
         rule (Macsecurityrule): The rule to update.
-        controls (List[str]): The controls to add.
-        header (str): The header to map controls against.
+        references (List[str]): The references to add.
+        reference_source (str): The reference source to map references to.
     """
 
-    if not rule.references.custom_refs:
-        rule.references["custom_refs"] = {}
+    rule.references[reference_source] = references
 
-    rule.references["custom_refs"][header] = controls
-    logger.info(f"Updated rule {rule.rule_id} with controls: {controls}")
+    logger.info(f"Updated rule {rule.rule_id} with references: {references}")
 
 
-def generate_mapping(args: argparse.Namespace) -> None:
-    current_version_data: dict[str, Any] = get_version_data(
-        args.os_name, args.os_version, mscp_data
-    )
-
+@inject_spinner()
+def generate_mapping(sp: Yaspin, args: argparse.Namespace) -> None:
+    sp.spinner = Spinners.dots
+    sp.text = "Collecting rule files"
+    time.sleep(1)
     rules: list[Macsecurityrule] = Macsecurityrule.collect_all_rules(
-        args.os_name, args.os_version
+        args.os_name, args.os_version, tailoring=True
     )
-    custom_rules: list[Macsecurityrule] = []
 
     csv_data: dict[str, Any] = open_file(args.csv)
 
-    if len(csv_data.keys()) < 2:
-        logger.error("The CSV File can only contain 2 headers.")
+    if args.framework not in csv_data.keys():
+        logger.error(f"{args.framework} not found in csv header row.")
         sys.exit()
 
-    other_header, framework_header = csv_data.keys()
+    for other_header in csv_data:
+        custom_rules: list[Macsecurityrule] = []
 
-    if args.framework not in framework_header:
-        logger.error(f"{args.framework} not found in csv file.")
-        sys.exit()
-
-    baseline_name: str = other_header.replace(" ", "_").lower()
-    output_dir: Path = Path(config["output_dir"], other_header.lower())
-    baseline_file_path: Path = output_dir / "baseline" / f"{baseline_name}.yaml"
-
-    if not output_dir.exists():
-        make_dir(output_dir)
-
-    for rule in rules:
-        rule_file_path: Path = output_dir / "rules" / f"{rule.rule_id}.yaml"
-        control_list: list = []
-
-        if any(tag in rule.tags for tag in ["supplemental", "srg"]):
+        if other_header == args.framework:
             continue
 
-        for row in csv_data.values():
-            if "N/A" in row.get(args.framework):
+        build_path: Path = Path(config["custom"].get("baseline_dir", ""))
+
+        baseline_name: str = other_header.replace(" ", "_").lower()
+        output_dir: Path = Path(config["output_dir"], other_header.lower())
+        rules_output_dir: Path = output_dir / "rules"
+        baseline_file_path: Path = (
+            build_path / f"{baseline_name}_{args.os_name}_{args.os_version}.yaml"
+        )
+
+        for dir_path in [output_dir, build_path, rules_output_dir]:
+            make_dir(dir_path)
+
+        sp.text = "Mapping references and creating customized rule files"
+        time.sleep(1)
+        for rule in rules:
+            rule_file_path: Path = output_dir / "rules" / f"{rule.rule_id}.yaml"
+            control_list: list = []
+            mapped_control_list: list = []
+
+            for row, _ in enumerate(csv_data[other_header]):
+                if "N/A" in csv_data[args.framework][row]:
+                    continue
+
+                if not csv_data[other_header][row]:
+                    continue
+
+                controls: list[str] = [
+                    control.strip()
+                    for control in csv_data[args.framework][row].split(",")
+                ]
+                references: list = []
+                try:
+                    references = rule.references.get_ref(args.framework)
+                except KeyError as e:
+                    logger.error(e)
+
+                for control in controls:
+                    if control in references and control not in control_list:
+                        control_list.append(control)
+                        row_array = [
+                            item.strip()
+                            for item in csv_data[other_header][row].split(",")
+                        ]
+                        for item in row_array:
+                            logger.info(
+                                f"{rule.rule_id} - {args.framework} {control} maps to {other_header} {item}"
+                            )
+                            if item not in mapped_control_list:
+                                mapped_control_list.append(item)
+
+            if not control_list:
+                logger.debug(f"No controls matched for rule {rule.rule_id}")
                 continue
 
-            controls: list[str] = [
-                control.strip() for control in row[args.framework].split(",")
-            ]
-            references: list = []
+            update_rule_with_custom_references(rule, mapped_control_list, other_header)
 
-            match args.framework:
-                case var if re.search(r"/", var):
-                    framework_main, framework_sub = (
-                        args.framework.split("/", 1) + [None][:2]
-                    )
+            rule.tags.append(other_header)
 
-                    if rule.customized:
-                        references = (
-                            rule.references.get("custom_refs", {})
-                            .get(framework_main, {})
-                            .get(framework_sub, [])
-                        )
-                    else:
-                        references = rule.references.get(framework_main, {}).get(
-                            framework_sub, []
-                        )
-                case _:
-                    references = rule.references.get(args.framework, [])
+            rule.to_yaml(rule_file_path)
 
-            for control in controls:
-                if control in references and control not in control_list:
-                    control_list.append(control)
-                    row_array = [item.strip() for item in row[other_header].split(",")]
+            # remove added reference for additional framework processing
+            delattr(rule.references, other_header)
 
-                    for item in row_array:
-                        logger.info(
-                            f"{rule.rule_id} - {args.framework} {control} maps to {other_header} {item}"
-                        )
+            custom_rules.append(rule)
 
-        if not control_list:
-            logger.debug(f"No controls matched for rule {rule.rule_id}")
-            continue
+        baseline_title: str = f"{args.os_name} {args.os_version}: Security Configuration - {args.framework}"
 
-        update_rule_with_custom_controls(rule, control_list, other_header)
+        sp.text = "Generating custom baseline for mapped rules"
+        time.sleep(1)
+        Baseline.create_new(
+            output_file=baseline_file_path,
+            rules=custom_rules,
+            baseline_name=baseline_name,
+            benchmark="recommended",
+            authors=[Author(name="", organization="")],
+            full_title=baseline_title,
+            os_type=args.os_name,
+            os_version=args.os_version,
+            baseline_dict={},
+        )
 
-        if not rule.customized:
-            rule.customized = True
+        sp.text = f"DONE!"
+        sp.ok("✔")
 
-        rule.tags.append(other_header)
-
-        rule.to_yaml(rule_file_path)
-
-        custom_rules.append(rule)
-
-    baseline_title: str = (
-        f"{args.os_name} {args.os_version}: Security Configuration - {args.framework}"
-    )
-
-    Baseline.create_new(
-        baseline_file_path,
-        custom_rules,
-        current_version_data,
-        baseline_name,
-        [Author(name=None, organization=None)],
-        baseline_title,
-    )
+        print(f"Generated new baseline file: {baseline_file_path}")
+        print(f"Generated customized rule files: {rules_output_dir}")

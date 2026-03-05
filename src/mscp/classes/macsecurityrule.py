@@ -5,7 +5,7 @@ import base64
 from collections import OrderedDict, defaultdict
 from enum import StrEnum
 from pathlib import Path
-from typing import Any, Optional, Iterable
+from typing import Any, Iterable
 from uuid import uuid4
 
 # Additional python modules
@@ -62,20 +62,20 @@ class BaseModelWithAccessors(BaseModel):
         """
         Allow dictionary-like access to attributes.
         """
-        if key in self.__class__.model_fields:
+        try:
             return getattr(self, key)
-        raise KeyError(f"{key} is not a valid attribute of {self.__class__.__name__}")
+        except AttributeError:
+            raise KeyError(key) from None
 
     def __setitem__(self, key: str, value: Any) -> None:
         """
         Allow dictionary-like setting of attributes.
         """
-        if key in self.__class__.model_fields:
+        try:
             setattr(self, key, value)
-        else:
-            raise KeyError(
-                f"{key} is not a valid attribute of {self.__class__.__name__}"
-            )
+        except AttributeError:
+            # This triggers if Pydantic config is set to 'forbid'
+            raise KeyError(f"{key} is not a valid attribute")
 
 
 class NistReferences(BaseModelWithAccessors):
@@ -136,6 +136,7 @@ class bsiReferences(BaseModelWithAccessors):
 
 
 class customReferences(BaseModelWithAccessors):
+    model_config = ConfigDict(extra="allow")
     references: list[Any] | None = None
 
     def __init__(self, **data: Any) -> None:
@@ -150,7 +151,7 @@ class Mobileconfigpayload(BaseModelWithAccessors):
 
 
 class References(BaseModelWithAccessors):
-    model_config: ConfigDict = ConfigDict(extra="ignore")
+    model_config: ConfigDict = ConfigDict(extra="allow")
 
     nist: NistReferences
     disa: DisaReferences | None = None
@@ -164,7 +165,7 @@ class References(BaseModelWithAccessors):
         *,
         default: Any = _SENTINEL,
         case_insensitive: bool = True,
-        search_order: Iterable[str] = ("nist", "disa", "cis", "bsi", "custom_refs"),
+        search_order: Iterable[str] = ("nist", "disa", "cis", "bsi"),
     ) -> Any:
         """
         Retrieve a value stored somewhere in the nested references.
@@ -182,6 +183,12 @@ class References(BaseModelWithAccessors):
             if case_insensitive:
                 return {k.lower(): v for k, v in d.items()}
             return d
+
+        # account for python limitations for attribute names (800-53r5 and 800-171r2)
+        if key == "800-53r5":
+            key = "nist_800_53r5"
+        if key == "800-1715r3":
+            key = "nist_800_171r3"
 
         # 1) Namespaced key: 'nist.control_id'
         if "." in key:
@@ -216,11 +223,12 @@ class References(BaseModelWithAccessors):
                 continue
             fields = _dump_fields(submodel)
             if field_key in fields:
-                return fields[field_key]
+                return [str(x) for x in (fields[field_key] or [])]
 
         # Not found
         if default is not _SENTINEL:
             return default
+
         raise KeyError(
             f"Field '{key}' not found in any namespace ({', '.join(search_order)})"
         )
@@ -418,6 +426,9 @@ class Macsecurityrule(BaseModelWithAccessors):
                     if custom_rule_key == "tags":
                         if custom_rule_value not in rule_yaml[custom_rule_key]:
                             rule_yaml[custom_rule_key] += custom_rule_value
+                        continue
+                    if custom_rule_key == "platforms":
+                        rule_yaml[custom_rule_key] |= custom_rule_value
                         continue
                     rule_yaml[custom_rule_key] = custom_rule_value
 
@@ -1003,6 +1014,8 @@ class Macsecurityrule(BaseModelWithAccessors):
         # Helper function to recursively replace $ODV in nested structures
         def replace_odv_in_obj(obj):
             if isinstance(obj, str) and "$ODV" in obj:
+                if obj == "$ODV":
+                    return odv_value
                 return obj.replace("$ODV", str(odv_value))
             elif isinstance(obj, dict):
                 return {k: replace_odv_in_obj(v) for k, v in obj.items()}
@@ -1222,17 +1235,26 @@ class Macsecurityrule(BaseModelWithAccessors):
         )
 
         rule_file_path: Path = output_path
-        serialized_data: dict[str, Any] = self.model_dump()
+        serialized_data: dict[str, Any] = self.model_dump(exclude_none=True)
         ordered_data = OrderedDict()
 
         self._clean_references()
 
-        serialized_data["references"]["nist"]["800-53r5"] = serialized_data[
-            "references"
-        ].pop("nist_800_53r5", 0)
-        serialized_data["references"]["nist"]["800-171r3"] = serialized_data[
-            "references"
-        ].pop("nist_800_171", 0)
+        # handle NIST references that have keys that start with nist_
+
+        # Ensure the structure exists
+        refs = serialized_data.setdefault("references", {})
+        nist = refs.setdefault("nist", {})
+
+        # --- 800-53r5 ---
+        if (v53 := nist.pop("nist_800_53r5", None)) is None:
+            v53 = refs.pop("nist_800_53r5", 0)
+        nist["800-53r5"] = v53
+
+        # --- 800-171 ---
+        if (v171 := nist.pop("nist_800_171r3", None)) is None:
+            v171 = refs.pop("nist_800_171r3", 0)
+        nist["800-171r3"] = v171
 
         for key in serialized_data["references"]:
             if isinstance(serialized_data["references"][key], list):

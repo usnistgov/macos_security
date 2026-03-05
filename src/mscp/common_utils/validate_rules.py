@@ -18,6 +18,7 @@ def validate_yaml_file(args: argparse.Namespace) -> None:
     validator = Draft202012Validator(schema)
 
     yaml_files: list = list(Path(config["defaults"]["rules_dir"]).rglob("*.y*ml"))
+    yaml_files += list(Path(config["custom"]["rules_dir"]).rglob("*.y*ml"))
 
     if not yaml_files:
         logger.error("No YAML files found in rules directory.")
@@ -31,7 +32,7 @@ def validate_yaml_file(args: argparse.Namespace) -> None:
         data: dict = open_file(yaml)
         try:
             validator.validate(data)
-            if not args.only_invalid:
+            if args.all_validation:
                 print(f"✅ VALID:   {yaml}")
                 logger.info(f"✅ VALID:   {yaml}")
         except ValidationError as e:

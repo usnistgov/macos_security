@@ -319,7 +319,7 @@ class Baseline(BaseModelWithAccessors):
         """
 
         logger.info("Creating baseline yaml")
-        serialized_data = self.model_dump()
+        serialized_data = self.model_dump(exclude_none=True)
         key_order: list[str] = [
             "title",
             "description",
@@ -365,7 +365,6 @@ class Baseline(BaseModelWithAccessors):
 
         create_yaml(output_path, ordered_data)
         logger.success("Created baseline yaml: {}", output_path)
-        print(f"Generated new baseline file: {output_path}")
 
     @classmethod
     def load_all_from_folder(
