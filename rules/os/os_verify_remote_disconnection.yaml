@@ -19,6 +19,9 @@ references:
     - N/A
   srg:
     - SRG-OS-000395-GPOS-00175
+  hicp:
+    - 3.L.C
+    - 8.L.A
 macOS:
   - '26.0'
 tags:
@@ -27,5 +30,6 @@ tags:
   - cnssi-1253_high
   - srg
   - cnssi-1253_moderate
+  - hicp_lp
 mobileconfig: false
-mobileconfig_info:
+mobileconfig_info: null

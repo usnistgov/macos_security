@@ -36,6 +36,11 @@ references:
   cmmc:
     - SI.L1-3.14.1
     - SI.L1-3.14.4
+  hicp:
+    - 2.L.A
+    - 2.L.B
+    - 5.L.A
+    - 7.L.B
 macOS:
   - '26.0'
 tags:
@@ -50,6 +55,7 @@ tags:
   - cmmc_lvl2
   - cmmc_lvl1
   - cnssi-1253_moderate
+  - hicp_lp
 mobileconfig: true
 mobileconfig_info:
   com.apple.SoftwareUpdate:

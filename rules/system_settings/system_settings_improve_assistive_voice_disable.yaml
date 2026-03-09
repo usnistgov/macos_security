@@ -10,7 +10,7 @@ check: |
   .objectForKey('AXSAudioDonationSiriImprovementEnabled').js
   EOS
 result:
-  string: "false"
+  string: 'false'
 fix: |
   This is implemented by a Configuration Profile.
 references:
@@ -47,6 +47,10 @@ references:
     - CM.L2-3.4.7
   bio:
     - 8.12.01
+  hicp:
+    - 2.L.A
+    - 4.L.A
+    - 4.L.B
 macOS:
   - '26.0'
 tags:
@@ -67,6 +71,7 @@ tags:
   - cnssi-1253_moderate
   - stig
   - nlmapgov_plus
+  - hicp_lp
 severity: medium
 mobileconfig: true
 mobileconfig_info:

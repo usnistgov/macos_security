@@ -46,6 +46,10 @@ references:
     - AC.L2-3.1.16
     - CM.L2-3.4.6
     - CM.L2-3.4.7
+  hicp:
+    - 2.L.A
+    - 3.L.B
+    - 3.L.C
 macOS:
   - '26.0'
 tags:
@@ -61,6 +65,7 @@ tags:
   - cnssi-1253_high
   - cmmc_lvl2
   - cnssi-1253_moderate
+  - hicp_lp
 mobileconfig: true
 mobileconfig_info:
   com.apple.ManagedClient.preferences:

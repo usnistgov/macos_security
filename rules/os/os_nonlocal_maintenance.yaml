@@ -23,6 +23,8 @@ references:
     - N/A
   cmmc:
     - MA.L2-3.7.5
+  hicp:
+    - 6.L.A
 macOS:
   - '26.0'
 tags:
@@ -38,5 +40,6 @@ tags:
   - cnssi-1253_high
   - cmmc_lvl2
   - cnssi-1253_moderate
+  - hicp_lp
 mobileconfig: false
-mobileconfig_info:
+mobileconfig_info: null

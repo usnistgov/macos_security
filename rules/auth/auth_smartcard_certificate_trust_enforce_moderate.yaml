@@ -42,6 +42,9 @@ references:
     - APPL-26-001060
   cmmc:
     - SC.L2-3.13.10
+  hicp:
+    - 3.L.A
+    - 3.L.C
 macOS:
   - '26.0'
 tags:
@@ -52,6 +55,7 @@ tags:
   - stig
   - cnssi-1253_moderate
   - cnssi-1253_high
+  - hicp_lp
 severity: medium
 mobileconfig: true
 mobileconfig_info:

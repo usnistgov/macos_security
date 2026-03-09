@@ -32,6 +32,12 @@ references:
     - AC.L2-3.1.18
   800-171r3:
     - 03.01.18
+  hicp:
+    - 2.L.A
+    - 2.L.C
+    - 3.L.C
+    - 6.L.E
+    - 7.L.B
 macOS:
   - '26.0'
 tags:
@@ -45,5 +51,6 @@ tags:
   - cnssi-1253_high
   - cmmc_lvl2
   - cnssi-1253_moderate
+  - hicp_lp
 mobileconfig: false
-mobileconfig_info:
+mobileconfig_info: null

@@ -34,6 +34,8 @@ references:
     - APPL-15-005100
   bio:
     - 8.27.01
+  hicp:
+    - 2.L.C
 macOS:
   - '26.0'
 tags:
@@ -44,6 +46,7 @@ tags:
   - stig
   - cnssi-1253_moderate
   - nlmapgov_plus
+  - hicp_lp
 severity: medium
 mobileconfig: false
-mobileconfig_info:
+mobileconfig_info: null

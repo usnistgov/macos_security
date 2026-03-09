@@ -54,6 +54,10 @@ references:
   bio:
     - 8.07.01
     - 8.19.01
+  hicp:
+    - 1.L.B
+    - 2.L.A
+    - 7.L.C
 macOS:
   - '26.0'
 tags:
@@ -74,6 +78,7 @@ tags:
   - cnssi-1253_moderate
   - nlmapgov_base
   - nlmapgov_plus
+  - hicp_lp
 severity: high
 mobileconfig: true
 mobileconfig_info:

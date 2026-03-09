@@ -58,12 +58,17 @@ references:
     - AC.L1-3.1.20
     - CM.L2-3.4.6
     - CM.L2-3.4.7
+  hicp:
+    - 2.L.A
+    - 4.L.A
+    - 4.L.B
 macOS:
   - '26.0'
 tags:
   - cnssi-1253_low
   - cnssi-1253_high
   - cnssi-1253_moderate
+  - hicp_lp
 severity: low
 mobileconfig: true
 mobileconfig_info:

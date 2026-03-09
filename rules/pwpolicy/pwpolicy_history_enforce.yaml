@@ -11,7 +11,7 @@ discussion: |
 check: |
   /usr/bin/pwpolicy -getaccountpolicies 2> /dev/null | /usr/bin/tail +2 | /usr/bin/xmllint --xpath '//dict/key[text()="policyAttributePasswordHistoryDepth"]/following-sibling::*[1]/text()' - | /usr/bin/awk '{ if ($1 >= $ODV ) {print "pass"} else {print "fail"}}' | /usr/bin/uniq
 result:
-  string: 'pass'
+  string: pass
 fix: |
   This is implemented by a Configuration Profile.
 references:
@@ -39,6 +39,9 @@ references:
     - IA.L2-3.5.7
     - IA.L2-3.5.8
     - IA.L2-3.5.9
+  hicp:
+    - 2.L.A
+    - 3.L.C
 macOS:
   - '26.0'
 odv:
@@ -62,6 +65,7 @@ tags:
   - cnssi-1253_high
   - cmmc_lvl2
   - cnssi-1253_moderate
+  - hicp_lp
 severity: medium
 mobileconfig: true
 mobileconfig_info:

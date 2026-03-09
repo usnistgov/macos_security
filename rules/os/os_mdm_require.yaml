@@ -53,6 +53,8 @@ references:
     - 8.01.01
     - 8.01.02
     - 8.09.01
+  hicp:
+    - 2.L.B
 macOS:
   - '26.0'
 tags:
@@ -71,6 +73,7 @@ tags:
   - cnssi-1253_moderate
   - nlmapgov_base
   - nlmapgov_plus
+  - hicp_lp
 severity: medium
 mobileconfig: false
-mobileconfig_info:
+mobileconfig_info: null
