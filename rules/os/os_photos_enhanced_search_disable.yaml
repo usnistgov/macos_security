@@ -2,7 +2,7 @@ id: os_photos_enhanced_search_disable
 title: Disable Photos Enhanced Visual Search
 discussion: |-
   Enhanced Visual Search _MUST_ be disabled in the Photos app.
-  
+
   The information system _MUST_ be configured to provide only essential capabilities. Disabling Enhanced Visual Search will mitigate the risk of unwanted data being sent to Apple.
 check: |
   /usr/bin/osascript -l JavaScript << EOS
@@ -26,11 +26,15 @@ references:
     - SC-7(10)
   800-171r3:
     - 03.01.20
-    - 03.04.06    
+    - 03.04.06
   cmmc:
     - AC.L1-3.1.20
     - CM.L2-3.4.6
     - CM.L2-3.4.7
+  hicp:
+    - 2.L.A
+    - 4.L.A
+    - 4.L.B
 macOS:
   - '26.0'
 tags:
@@ -43,6 +47,7 @@ tags:
   - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
+  - hicp_lp
 mobileconfig: true
 mobileconfig_info:
   com.apple.photos.shareddefaults:

@@ -39,6 +39,8 @@ references:
     - CM.L2-3.4.7
   800-171r3:
     - 03.04.06
+  hicp:
+    - 2.L.A
 macOS:
   - '26.0'
 tags:
@@ -49,6 +51,7 @@ tags:
   - cmmc_lvl2
   - stig
   - cnssi-1253_moderate
+  - hicp_lp
 severity: medium
 mobileconfig: true
 mobileconfig_info:

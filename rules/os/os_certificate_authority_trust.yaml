@@ -12,7 +12,7 @@ references:
   cce:
     - CCE-95174-9
   cci:
-    - CCI-002470 
+    - CCI-002470
     - CCI-000185
     - CCI-002450
     - CCI-004909
@@ -27,6 +27,9 @@ references:
     - APPL-26-003001
   cmmc:
     - SC.L2-3.13.10
+  hicp:
+    - 3.L.A
+    - 3.L.C
 macOS:
   - '26.0'
 tags:
@@ -40,6 +43,7 @@ tags:
   - cmmc_lvl2
   - stig
   - cnssi-1253_moderate
+  - hicp_lp
 severity: high
 mobileconfig: false
-mobileconfig_info:
+mobileconfig_info: null

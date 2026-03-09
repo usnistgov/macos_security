@@ -94,6 +94,8 @@ references:
     - SI.L1-3.14.4
   bio:
     - 8.17.01
+  hicp:
+    - 2.L.C
 macOS:
   - '26.0'
 tags:
@@ -115,6 +117,7 @@ tags:
   - cnssi-1253_moderate
   - nlmapgov_base
   - nlmapgov_plus
+  - hicp_lp
 severity: high
 mobileconfig: false
-mobileconfig_info:
+mobileconfig_info: null

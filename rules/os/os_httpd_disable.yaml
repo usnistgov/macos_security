@@ -8,7 +8,7 @@ check: |
   result="FAIL"
   enabled=$(/bin/launchctl print-disabled system | /usr/bin/grep '"org.apache.httpd" => enabled')
   running=$(/bin/launchctl print system/org.apache.httpd 2>/dev/null)
-  
+
   if [[ -z "$running" ]] && [[ -z "$enabled" ]]; then
     result="PASS"
   elif [[ -n "$running" ]]; then
@@ -52,6 +52,8 @@ references:
     - AC.L1-3.1.1
   bio:
     - 8.27.01
+  hicp:
+    - 2.L.A
 macOS:
   - '26.0'
 tags:
@@ -72,6 +74,7 @@ tags:
   - stig
   - cnssi-1253_moderate
   - nlmapgov_plus
+  - hicp_lp
 severity: medium
 mobileconfig: false
-mobileconfig_info:
+mobileconfig_info: null

@@ -46,6 +46,10 @@ references:
     - CM.L2-3.4.7
   bio:
     - 8.12.01
+  hicp:
+    - 2.L.A
+    - 3.L.C
+    - 4.L.A
 macOS:
   - '26.0'
 tags:
@@ -65,6 +69,7 @@ tags:
   - cmmc_lvl1
   - cmmc_lvl2
   - nlmapgov_plus
+  - hicp_lp
 severity: medium
 mobileconfig: true
 mobileconfig_info:

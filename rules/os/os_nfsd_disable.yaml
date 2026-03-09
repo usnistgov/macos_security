@@ -2,15 +2,9 @@ id: os_nfsd_disable
 title: Disable Network File System Service
 discussion: |
   Support for Network File Systems (NFS) services is non-essential and, therefore, _MUST_ be disabled.
-check: |
-  isDisabled=$(/sbin/nfsd status | /usr/bin/awk '/nfsd service/ {print $NF}')    
-  if [[ "$isDisabled" == "disabled" ]] && [[ -z $(/usr/bin/pgrep nfsd) ]]; then
-    echo "pass"
-  else
-    echo "fail"
-  fi
+check: "isDisabled=$(/sbin/nfsd status | /usr/bin/awk '/nfsd service/ {print $NF}')   \nif [[ \"$isDisabled\" == \"disabled\" ]] && [[ -z $(/usr/bin/pgrep nfsd) ]]; then\n  echo \"pass\"\nelse\n  echo \"fail\"\nfi\n"
 result:
-  string: "pass"
+  string: pass
 fix: |
   [source,bash]
   ----
@@ -45,6 +39,9 @@ references:
     - AC.L1-3.1.1
   bio:
     - 8.27.01
+  hicp:
+    - 2.L.A
+    - 6.L.A
 macOS:
   - '26.0'
 tags:
@@ -65,6 +62,7 @@ tags:
   - stig
   - cnssi-1253_moderate
   - nlmapgov_plus
+  - hicp_lp
 severity: medium
 mobileconfig: false
-mobileconfig_info:
+mobileconfig_info: null

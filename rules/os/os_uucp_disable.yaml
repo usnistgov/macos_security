@@ -10,7 +10,7 @@ check: |
   result="FAIL"
   enabled=$(/bin/launchctl print-disabled system | /usr/bin/grep '"com.apple.uucp" => enabled')
   running=$(/bin/launchctl print system/com.apple.uucp 2>/dev/null)
-  
+
   if [[ -z "$running" ]] && [[ -z "$enabled" ]]; then
     result="PASS"
   elif [[ -n "$running" ]]; then
@@ -24,7 +24,7 @@ result:
 fix: |
   [source,bash]
   ----
-  /bin/launchctl bootout system/com.apple.uucp 
+  /bin/launchctl bootout system/com.apple.uucp
   /bin/launchctl disable system/com.apple.uucp
   ----
   The system may need to be restarted for the update to take effect.
@@ -54,6 +54,8 @@ references:
       - 4.8
   cmmc:
     - AC.L1-3.1.1
+  hicp:
+    - 2.L.A
 macOS:
   - '26.0'
 tags:
@@ -71,6 +73,7 @@ tags:
   - cmmc_lvl1
   - stig
   - cnssi-1253_moderate
+  - hicp_lp
 severity: medium
 mobileconfig: false
-mobileconfig_info:
+mobileconfig_info: null

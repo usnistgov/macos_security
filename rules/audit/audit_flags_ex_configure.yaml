@@ -53,6 +53,9 @@ references:
     - AU.L2-3.3.3
     - AU.L2-3.3.6
     - SI.L2-3.14.3
+  hicp:
+    - 3.L.C
+    - 8.L.A
 macOS:
   - '26.0'
 tags:
@@ -71,6 +74,7 @@ tags:
   - cmmc_lvl2
   - stig
   - cnssi-1253_moderate
+  - hicp_lp
 severity: medium
 mobileconfig: false
-mobileconfig_info:
+mobileconfig_info: null

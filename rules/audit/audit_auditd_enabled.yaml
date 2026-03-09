@@ -120,6 +120,8 @@ references:
     - AU.L2-3.3.6
   bio:
     - 8.18.02
+  hicp:
+    - 8.L.A
 macOS:
   - '26.0'
 tags:
@@ -140,6 +142,7 @@ tags:
   - cnssi-1253_moderate
   - nlmapgov_base
   - nlmapgov_plus
+  - hicp_lp
 severity: medium
 mobileconfig: false
-mobileconfig_info:
+mobileconfig_info: null

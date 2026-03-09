@@ -35,6 +35,12 @@ references:
     - SI.L1-3.14.4
   bio:
     - 8.08.01
+  hicp:
+    - 2.L.A
+    - 2.L.B
+    - 3.L.C
+    - 5.L.A
+    - 7.L.B
 macOS:
   - '26.0'
 tags:
@@ -49,10 +55,11 @@ tags:
   - cnssi-1253_moderate
   - nlmapgov_base
   - nlmapgov_plus
+  - hicp_lp
 mobileconfig: false
-mobileconfig_info:
+mobileconfig_info: null
 ddm_info:
   declarationtype: com.apple.configuration.softwareupdate.settings
   ddm_key: AutomaticActions
-  ddm_value: 
+  ddm_value:
     InstallSecurityUpdate: AlwaysOn

@@ -41,6 +41,9 @@ references:
     - CM.L2-3.4.7
   bio:
     - 8.27.01
+  hicp:
+    - 2.L.A
+    - 6.L.A
 macOS:
   - '26.0'
 tags:
@@ -59,6 +62,7 @@ tags:
   - stig
   - cnssi-1253_moderate
   - nlmapgov_plus
+  - hicp_lp
 severity: medium
 mobileconfig: false
-mobileconfig_info:
+mobileconfig_info: null

@@ -55,6 +55,11 @@ references:
     - SC.L2-3.13.11
   bio:
     - 5.16.02
+  hicp:
+    - 2.L.A
+    - 2.L.B
+    - 3.L.A
+    - 4.L.A
 macOS:
   - '26.0'
 tags:
@@ -75,6 +80,7 @@ tags:
   - stig
   - cnssi-1253_moderate
   - nlmapgov_plus
+  - hicp_lp
 severity: medium
 mobileconfig: false
-mobileconfig_info:
+mobileconfig_info: null
