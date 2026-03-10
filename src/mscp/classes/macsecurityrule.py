@@ -187,8 +187,10 @@ class References(BaseModelWithAccessors):
         # account for python limitations for attribute names (800-53r5 and 800-171r2)
         if key == "800-53r5":
             key = "nist_800_53r5"
-        if key == "800-1715r3":
+        if key == "800-171r3":
             key = "nist_800_171r3"
+        if key == "cis":  # assume they want to pull the benchmark reference
+            key = "benchmark"
 
         # 1) Namespaced key: 'nist.control_id'
         if "." in key:

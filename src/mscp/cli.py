@@ -197,7 +197,7 @@ def parse_cli() -> None:
         "-r",
         "--reference",
         default=None,
-        help="Use the reference ID instead of rule ID for logging in the generated compliance script.",
+        help="Use the reference ID instead of rule ID for logging in the generated compliance script. (e.g. disa_stig, cis.benchmark)",
         action="store",
     )
     guidance_parser.add_argument(
