@@ -24,6 +24,9 @@ references:
       - N/A
     controls v8:
       - N/A
+  bio:
+    - 8.09
+    - 8.18
 iOS:
   - '26.0'
 tags:
@@ -36,6 +39,8 @@ tags:
   - cnssi-1253_low
   - cnssi-1253_high
   - ios_stig
+  - nlmapgov_base
+  - nlmapgov_plus
 severity: medium
 mobileconfig: false
 mobileconfig_info: null
