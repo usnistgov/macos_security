@@ -16,6 +16,7 @@ from .generate import (
     generate_scap,
     generate_localize_template,
     generate_mo_from_json,
+    generate_manifest
 )
 
 
@@ -273,7 +274,19 @@ def parse_cli() -> None:
         help="Specify framework for the source. If no framework is specified, the default is 800-53r5.",
         action="store",
     )
-
+    manifest_parser: argparse.ArgumentParser = subparsers.add_parser(
+        "manifest",
+        help="Generate a JSON manifest from a baseline file",
+        parents=[parent_parser],
+        add_help=False,    
+    )
+    manifest_parser.set_defaults(func=generate_manifest)
+    manifest_parser.add_argument(
+        "baseline",
+        default=None,
+        help="Baseline YAML file used to create the guide.",
+        type=validate_file,
+    )
     scap_parser: argparse.ArgumentParser = subparsers.add_parser(
         "scap",
         help="Easily generate xccdf, oval, or scap datastream. If no option is defined, it will generate an scap datastream file.",

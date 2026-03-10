@@ -10,6 +10,7 @@ from .translation import (
 # from .local_report import generate_local_report
 from .mapping import generate_mapping
 from .scap import generate_scap
+from .manifest import generate_manifest
 
 __all__ = [
     "generate_baseline",
@@ -18,4 +19,5 @@ __all__ = [
     "generate_scap",
     "generate_localize_template",
     "generate_mo_from_json",
+    "generate_manifest"
 ]
