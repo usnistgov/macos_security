@@ -78,7 +78,7 @@ def generate_scap(args: argparse.Namespace) -> None:
         return clean_text
 
     all_rules: list[Macsecurityrule] = Macsecurityrule.collect_all_rules(
-        args.os_name, args.os_version, generate_baseline=False
+        args.os_name, args.os_version
     )
 
     all_tags, benchmark_map = collect_tags_and_benchmarks(all_rules)
