@@ -1,4 +1,4 @@
-id: os_software_updates_install_enforce
+id: os_software_update_install_enforce
 title: Enforce iOS/iPadOS Updates are Automatically Installed using DDM.
 discussion: |
   Software Update _MUST_ be configured to enforce automatic installation of iOS/iPadOS updates and that the user cannot modify the setting within Settings.

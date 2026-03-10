@@ -19,7 +19,7 @@ profile:
       - os_external_intelligence_integration_sign_in_disable
       - os_force_date_and_time_enable
       - os_software_update_download_enforce
-      - os_software_updates_install_enforce
+      - os_software_update_install_enforce
       - os_supervised_mdm_require
   - section: "passwordpolicy"
     rules:
