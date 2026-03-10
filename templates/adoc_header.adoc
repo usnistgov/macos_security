@@ -22,6 +22,7 @@ $stig_attribute
 $cis_attribute
 $cmmc_attribute
 $bio_attribute
+$hicp_attribute
 :version: $version ($release_date)
 :os: $os_version
 :proj-title: $html_header_title

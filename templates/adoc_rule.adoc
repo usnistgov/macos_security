@@ -61,6 +61,11 @@ ifdef::show_BIO[]
 !$rule_bio
 endif::[]
 
+ifdef::show_HICP[]
+!HICP
+!$rule_hicp
+endif::[]
+
 !CCE
 !$rule_cce
 
