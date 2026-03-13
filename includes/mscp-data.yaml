@@ -129,5 +129,6 @@ titles:
   nlmapgov_base: NLMAPGOV - Nederlandse Maatregelenset Apple Platformen Overheid (base)
   nlmapgov_plus: NLMAPGOV - Nederlandse Maatregelenset Apple Platformen Overheid (plus)
 ddm:
-  supported_types: []
+  supported_types:
+    - com.apple.configuration.softwareupdate.settings
   services: []  
