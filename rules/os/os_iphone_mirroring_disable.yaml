@@ -21,6 +21,8 @@ references:
    - ANNEX K
   disa_stig:
    - AIOS-26-015800
+  bio:
+   - 8.12
 iOS:
  - "26.0"
 tags:
@@ -31,6 +33,7 @@ tags:
  - cnssi-1253_moderate
  - cnssi-1253_low
  - cnssi-1253_high
+ - nlmapgov_plus
 supervised: false
 mobileconfig: true
 mobileconfig_info:

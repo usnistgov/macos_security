@@ -31,6 +31,7 @@ references:
   indigo:
     - ANNEX K
   bio:
+    - 8.12
     - 8.12.01
 iOS:
   - '26.0'

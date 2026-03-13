@@ -12,12 +12,15 @@ references:
     - N/A
   indigo:
     - ANNEX K
+  bio:
+    - 8.27
 iOS:
   - "26.0"
 tags:
   - ios
   - indigo_base
   - indigo_high
+  - nlmapgov_plus
 supervised: true
 mobileconfig: true
 mobileconfig_info:

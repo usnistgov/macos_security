@@ -18,6 +18,8 @@ references:
     - AIOS-26-014900
   indigo:
     - ANNEX K
+  bio:
+    - 8.27
 iOS:
   - '26.0'
 tags:
@@ -31,6 +33,7 @@ tags:
   - cnssi-1253_low
   - cnssi-1253_high
   - ios_stig
+  - nlmapgov_plus
 severity: medium
 supervised: true
 mobileconfig: true

@@ -32,6 +32,8 @@ references:
       - 4.1
       - 4.8
       - 15.3
+  bio:
+    - 8.12
 iOS:
   - '26.0'
 tags:
@@ -48,6 +50,7 @@ tags:
   - cnssi-1253_low
   - cnssi-1253_high
   - ios_stig
+  - nlmapgov_plus
 severity: medium
 supervised: false
 mobileconfig: true

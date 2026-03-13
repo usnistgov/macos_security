@@ -18,6 +18,8 @@ references:
     - 'FMT_SMF_EXT.1.1 #3'
   disa_stig:
     - AIOS-26-015000
+  bio:
+    - 8.27
 iOS:
   - '26.0'
 tags:
@@ -31,6 +33,7 @@ tags:
   - cnssi-1253_low
   - cnssi-1253_high
   - ios_stig
+  - nlmapgov_plus
 severity: medium
 supervised: false
 mobileconfig: true
