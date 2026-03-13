@@ -10,7 +10,7 @@ authors: |
   |Jordy Witteman|Root3
   |Aron van den Herik|Root3
   |===
-parent_values: "recommended"
+parent_values: "nlmapgov_plus"
 profile:
   - section: "icloud"
     rules:
@@ -53,3 +53,5 @@ profile:
   - section: "passwordpolicy"
     rules:
       - pwpolicy_force_pin_enable
+      - pwpolicy_minimum_length_enforce
+      - pwpolicy_simple_sequence_disable

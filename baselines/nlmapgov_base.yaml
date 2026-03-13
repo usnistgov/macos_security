@@ -10,7 +10,7 @@ authors: |
   |Jordy Witteman|Root3
   |Aron van den Herik|Root3
   |===
-parent_values: "recommended"
+parent_values: "nlmapgov_base"
 profile:
   - section: "ios"
     rules:
