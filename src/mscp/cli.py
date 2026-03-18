@@ -302,6 +302,7 @@ compliance script (e.g. disa_stig, cis.benchmark)
         "scap",
         help="generate xccdf, oval, or scap datastream",
         parents=[parent_parser],
+        formatter_class=SmartFormatter,
         add_help=False,
     )
     scap_parser.set_defaults(func=generate_scap)
@@ -332,6 +333,12 @@ compliance script (e.g. disa_stig, cis.benchmark)
         default=None,
         help="list the available keywords that can be used to generate the SCAP content from",
         action="store_true",
+    )
+    scap_parser.add_argument(        
+        "--disa_stig",
+        default=None,
+        help="supply path DISA STIG XCCDF file to generate an OVAL file replacing the title with SRG and Vuln IDs from the DISA STIG",
+        type=validate_file
     )
 
     # local_report_parser: argparse.ArgumentParser = subparsers.add_parser(

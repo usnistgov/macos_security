@@ -4,6 +4,7 @@
 import argparse
 import sys
 import time
+import re
 from datetime import datetime
 from pathlib import Path
 from xml.sax.saxutils import escape
@@ -35,6 +36,22 @@ def pretty_format_xml(xml_string: str) -> str:
         [line for line in pretty_xml_as_string.split("\n") if line.strip()]
     )
 
+def disa_stig_rules(stig_id, stig):
+    newtitle = str()
+    regex = r"<title>(SRG.*\d)<\/title>.*.{}".format(stig_id)
+    matches = re.search(regex,stig)
+    #SRG
+    if matches:   
+        newtitle = str(matches.group(1))
+
+    regex = r"Rule id=\"(.*\S)\" we.*.{}".format(stig_id)
+    matches = re.search(regex,stig)
+    #RuleID
+    if matches:
+        newtitle = newtitle + ", " + str(matches.group(1).split("_")[0])
+            
+    # srg-123-456. SV-7891234
+    return newtitle	
 
 @inject_spinner()
 def generate_scap(sp: Yaspin, args: argparse.Namespace) -> None:
@@ -147,8 +164,8 @@ def generate_scap(sp: Yaspin, args: argparse.Namespace) -> None:
                         odv_tag = b
                 except (TypeError, KeyError) as e:
                     logger.warning(f"Error when looking up ODV for {rule.rule_id}: {e}")
-
-                rule._fill_in_odv(b)
+                newrule = rule.model_copy(deep=True)
+                newrule._fill_in_odv(b)
 
                 xccdfProfiles = (
                     xccdfProfiles
@@ -243,30 +260,36 @@ def generate_scap(sp: Yaspin, args: argparse.Namespace) -> None:
         selected_os_benchmark = []
         for benchmark, v in benchmark_map.items():
             if list(v)[0].lower() == args.os_name.lower():
-                if args.baseline != "all_rules":
+                if args.baseline != "all_rules":                    
                     if benchmark == args.baseline:
-                        selected_os_benchmark.append(benchmark)
+                        selected_os_benchmark.append(benchmark)                        
                 else:
-                    selected_os_benchmark.append(benchmark)
-
+                    selected_os_benchmark.append(benchmark)             
+        if args.disa_stig and args.oval and args.baseline == "disa_stig":
+            file = open(args.disa_stig, "r")
+            stig = file.read()            
+            rule.title = disa_stig_rules(rule.references.get_ref("disa_stig")[0], stig)   
         if rule.odv is not None:
             if args.baseline == "all_rules":
                 selected_os_benchmark.append("recommended")
-            for k, _ in rule.odv.items():
+                            
+            for k, _ in rule.odv.items():                
+                newrule = rule.model_copy(deep=True)
                 if k == "hint":
                     continue
                 check_existence = ""
                 check_value = ""
-                count_found = False
-                if k in selected_os_benchmark:
+                count_found = False                             
+                if k in selected_os_benchmark:                    
                     check_content = str()
                     if args.xccdf is None and args.oval is None:
                         check_content = """<check system="http://oval.mitre.org/XMLSchema/oval-definitions-5"><check-content-ref href="oval.xml" name="oval:mscp:def:{}"/></check>""".format(
                             oval_counter
                         )
-                    rule._fill_in_odv(k)
-                    fix_value = "none" if rule.fix is None else escape(rule.fix)
-                    check_value = "none" if rule.check is None else escape(rule.check)
+                    
+                    newrule._fill_in_odv(k)                    
+                    fix_value = "none" if newrule.fix is None else escape(newrule.fix)
+                    check_value = "none" if newrule.check is None else escape(newrule.check)
                     count_found = False
                     check_existence = "all_exist"
                     if " 2> /dev/null" in check_value:
@@ -284,7 +307,7 @@ def generate_scap(sp: Yaspin, args: argparse.Namespace) -> None:
                                             "/usr/bin/grep -c ", "/usr/bin/grep "
                                         )
                                         count_found = True
-                                        if rule.result_value == 0:
+                                        if newrule.result_value == 0:
                                             check_existence = "none_exist"
 
                     if "launchctl list" in check_value:
@@ -306,7 +329,7 @@ def generate_scap(sp: Yaspin, args: argparse.Namespace) -> None:
                         count_found = True
 
                         check_value = "|".join(new_test)
-                        if rule.result_value == 0:
+                        if newrule.result_value == 0:
                             check_existence = "none_exist"
 
                     if "$CURRENT_USER" in check_value:
@@ -325,67 +348,67 @@ def generate_scap(sp: Yaspin, args: argparse.Namespace) -> None:
                             rule["rule_id"],
                             k,
                             rule.severity,
-                            rule["title"],
-                            escape(rule["discussion"]),
+                            newrule["title"],
+                            escape(newrule["discussion"]),
                             check_value,
-                            rule.result_value,
+                            newrule.result_value,
                             xccdf_references,
-                            rule["references"].nist.cce,
+                            rule.references.get_ref("cce")[0],                            
                             fix_value,
                             check_content,
                         )
                     )
 
-                if args.os_name == "macos":
-                    oval_def = (
-                        oval_def
-                        + """<definition id="oval:mscp:def:{0}" version="1" class="compliance"><metadata><title>{1}</title><reference source="CCE" ref_id="{2}"/><reference source="macos_security" ref_id="{3}_{4}"/><description>{5}</description></metadata><criteria><criterion comment="{3}_{4}" test_ref="oval:mscp:tst:{0}"/></criteria></definition>""".format(
-                            oval_counter,
-                            rule["title"],
-                            rule["references"].nist.cce,
-                            rule["rule_id"],
-                            k,
-                            escape(rule["discussion"]),
-                        )
-                    )
-
-                    oval_tests = (
-                        oval_tests
-                        + """<shellcommand_test xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#independent" id="oval:mscp:tst:{0}" version="1" comment="{1}_{2}_test" check_existence="{3}" check="all"><object object_ref="oval:mscp:obj:{0}"/><state state_ref="oval:mscp:ste:{0}"/></shellcommand_test>""".format(
-                            oval_counter, rule.rule_id, k, check_existence
-                        )
-                    )
-
-                    oval_objects = (
-                        oval_objects
-                        + """<shellcommand_object xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#independent" id="oval:mscp:obj:{0}" version="1" comment="{1}_{2}_object"><shell>zsh</shell><command>{3}</command></shellcommand_object>""".format(
-                            oval_counter, rule.rule_id, k, check_value
-                        )
-                    )
-
-                    if count_found:
-                        if check_existence != "none_exist":
-                            oval_states = (
-                                oval_states
-                                + """<shellcommand_state xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#independent" id="oval:mscp:ste:{0}" version="1" comment="{1}_{2}_state"><stdout_line operation="pattern match">.*</stdout_line></shellcommand_state>""".format(
-                                    oval_counter, rule.rule_id, k
-                                )
+                    if args.os_name == "macos":
+                        oval_def = (
+                            oval_def
+                            + """<definition id="oval:mscp:def:{0}" version="1" class="compliance"><metadata><title>{1}</title><reference source="CCE" ref_id="{2}"/><reference source="macos_security" ref_id="{3}_{4}"/><description>{5}</description></metadata><criteria><criterion comment="{3}_{4}" test_ref="oval:mscp:tst:{0}"/></criteria></definition>""".format(
+                                oval_counter,
+                                newrule["title"],
+                                rule.references.get_ref("cce")[0],
+                                rule["rule_id"],
+                                k,
+                                escape(newrule["discussion"]),
                             )
+                        )
+
+                        oval_tests = (
+                            oval_tests
+                            + """<shellcommand_test xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#independent" id="oval:mscp:tst:{0}" version="1" comment="{1}_{2}_test" check_existence="{3}" check="all"><object object_ref="oval:mscp:obj:{0}"/><state state_ref="oval:mscp:ste:{0}"/></shellcommand_test>""".format(
+                                oval_counter, rule.rule_id, k, check_existence
+                            )
+                        )
+
+                        oval_objects = (
+                            oval_objects
+                            + """<shellcommand_object xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#independent" id="oval:mscp:obj:{0}" version="1" comment="{1}_{2}_object"><shell>zsh</shell><command>{3}</command></shellcommand_object>""".format(
+                                oval_counter, rule.rule_id, k, check_value
+                            )
+                        )
+
+                        if count_found:
+                            if check_existence != "none_exist":
+                                oval_states = (
+                                    oval_states
+                                    + """<shellcommand_state xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#independent" id="oval:mscp:ste:{0}" version="1" comment="{1}_{2}_state"><stdout_line operation="pattern match">.*</stdout_line></shellcommand_state>""".format(
+                                        oval_counter, rule.rule_id, k
+                                    )
+                                )
+                            else:
+                                oval_states = (
+                                    oval_states
+                                    + """<shellcommand_state xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#independent" id="oval:mscp:ste:{0}" version="1" comment="{1}_{2}_state"><stdout_line check_existence="none_exist" /></shellcommand_state>""".format(
+                                        oval_counter, rule.rule_id, k
+                                    )
+                                )
+
                         else:
                             oval_states = (
                                 oval_states
-                                + """<shellcommand_state xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#independent" id="oval:mscp:ste:{0}" version="1" comment="{1}_{2}_state"><stdout_line check_existence="none_exist" /></shellcommand_state>""".format(
-                                    oval_counter, rule.rule_id, k
+                                + """<shellcommand_state xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#independent" id="oval:mscp:ste:{0}" version="1" comment="{1}_{2}state"><stdout_line operation="equals">{3}</stdout_line></shellcommand_state>""".format(
+                                    oval_counter, rule.rule_id, k, newrule.result_value
                                 )
                             )
-
-                    else:
-                        oval_states = (
-                            oval_states
-                            + """<shellcommand_state xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#independent" id="oval:mscp:ste:{0}" version="1" comment="{1}_{2}state"><stdout_line operation="equals">{3}</stdout_line></shellcommand_state>""".format(
-                                oval_counter, rule.rule_id, k, rule.result_value
-                            )
-                        )
 
         else:
             fix_value = "none" if rule.fix is None else escape(rule.fix)
@@ -455,7 +478,7 @@ def generate_scap(sp: Yaspin, args: argparse.Namespace) -> None:
                     check_value,
                     rule.result_value,
                     xccdf_references,
-                    rule["references"].nist.cce,
+                    rule.references.get_ref("cce")[0],
                     fix_value,
                     check_content,
                 )
@@ -467,7 +490,7 @@ def generate_scap(sp: Yaspin, args: argparse.Namespace) -> None:
                     + """<definition id="oval:mscp:def:{0}" version="1" class="compliance"><metadata><title>{1}</title><reference source="CCE" ref_id="{2}"/><reference source="macos_security" ref_id="{3}_{4}"/><description>{5}</description></metadata><criteria><criterion comment="{3}_{4}" test_ref="oval:mscp:tst:{0}"/></criteria></definition>""".format(
                         oval_counter,
                         rule["title"],
-                        rule["references"].nist.cce,
+                        rule.references.get_ref("cce")[0],
                         rule["rule_id"],
                         "recommended",
                         escape(rule["discussion"]),
