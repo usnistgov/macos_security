@@ -2,6 +2,8 @@ id: system_settings_macos_updates_install_enforce
 title: Enforce macOS Updates are Automatically Installed using DDM.
 discussion: |
   Software Update _MUST_ be configured to enforce automatic installation of macOS updates and that the user cannot modify the setting within System Settings.
+references:
+  nist: {}
 platforms:
   macOS:
     '26.0': {}
