@@ -346,6 +346,28 @@ def main():
                             {"benchmarks": ["disa_stig"]}
                         )
                     new_yaml["tags"].remove("stig")
+                if "nlmapgov_plus" in rule_yaml["tags"]:
+                    if "benchmarks" in new_yaml["platforms"]["macOS"][os_]:
+                        new_yaml["platforms"]["macOS"][os_]["benchmarks"].append(
+                            "nlmapgov_plus"
+                        )
+                    else:
+                        new_yaml["platforms"]["macOS"][os_].update(
+                            {"benchmarks": ["nlmapgov_plus"]}
+                        )
+                    new_yaml["tags"].remove("nlmapgov_plus")
+
+                if "nlmapgov_base" in rule_yaml["tags"]:
+                    if "benchmarks" in new_yaml["platforms"]["macOS"][os_]:
+                        new_yaml["platforms"]["macOS"][os_]["benchmarks"].append(
+                            "nlmapgov_base"
+                        )
+                    else:
+                        new_yaml["platforms"]["macOS"][os_].update(
+                            {"benchmarks": ["nlmapgov_base"]}
+                        )
+                    new_yaml["tags"].remove("nlmapgov_base")
+
                 # print(new_yaml)
             if "ddm_info" in rule_yaml:
                 new_yaml.update({"ddm_info": rule_yaml["ddm_info"]})
@@ -755,6 +777,8 @@ def main():
                                     or new_tag == "ios"
                                     or "indigo" in new_tag
                                     or "none" in new_tag
+                                    or "nlmapgov_base" in new_tag
+                                    or "nlmapgov_plus" in new_tag
                                 ):
                                     continue
                                 if "ios" in new_tag or "visionos" in new_tag:
@@ -1008,6 +1032,32 @@ def main():
                                             os_
                                         ].update({"benchmarks": ["disa_stig"]})
 
+                                if "nlmapgov_plus" in rule_yaml["tags"]:
+                                    if (
+                                        "benchmarks"
+                                        in update_rule_yaml["platforms"]["macOS"][os_]
+                                    ):
+                                        update_rule_yaml["platforms"]["macOS"][os_][
+                                            "benchmarks"
+                                        ].append("nlmapgov_plus")
+                                    else:
+                                        update_rule_yaml["platforms"]["macOS"][
+                                            os_
+                                        ].update({"benchmarks": ["nlmapgov_plus"]})
+
+                                if "nlmapgov_base" in rule_yaml["tags"]:
+                                    if (
+                                        "benchmarks"
+                                        in update_rule_yaml["platforms"]["macOS"][os_]
+                                    ):
+                                        update_rule_yaml["platforms"]["macOS"][os_][
+                                            "benchmarks"
+                                        ].append("nlmapgov_base")
+                                    else:
+                                        update_rule_yaml["platforms"]["macOS"][
+                                            os_
+                                        ].update({"benchmarks": ["nlmapgov_base"]})
+
                                 if (
                                     "check"
                                     not in update_rule_yaml["platforms"]["macOS"]
@@ -1129,6 +1179,28 @@ def main():
                                         {"benchmarks": ["disa_stig"]}
                                     )
                                 new_yaml["tags"].remove("stig")
+
+                            if "nlmapgov_plus" in rule_yaml["tags"]:
+                                if "benchmarks" in new_yaml["platforms"]["macOS"][os_]:
+                                    new_yaml["platforms"]["macOS"][os_][
+                                        "benchmarks"
+                                    ].append("nlmapgov_plus")
+                                else:
+                                    new_yaml["platforms"]["macOS"][os_].update(
+                                        {"benchmarks": ["nlmapgov_plus"]}
+                                    )
+                                new_yaml["tags"].remove("nlmapgov_plus")
+                            if "nlmapgov_base" in rule_yaml["tags"]:
+                                if "benchmarks" in new_yaml["platforms"]["macOS"][os_]:
+                                    new_yaml["platforms"]["macOS"][os_][
+                                        "benchmarks"
+                                    ].append("nlmapgov_base")
+                                else:
+                                    new_yaml["platforms"]["macOS"][os_].update(
+                                        {"benchmarks": ["nlmapgov_base"]}
+                                    )
+                                new_yaml["tags"].remove("nlmapgov_base")
+
                             # print(new_yaml)
                         if (
                             os_ == "ios_18"
