@@ -76,9 +76,9 @@ odv:
     validation:
       min: 1
   recommended: 15
-  stig: 15
   cis_lvl1: 15
   cis_lvl2: 15
+  disa_stig: 15
 tags:
   - 800-171
   - 800-53r5_low

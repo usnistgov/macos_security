@@ -75,7 +75,7 @@ odv:
     description: Custom regex, e.g. ^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).*$
   recommended: ^(?=.*[A-Z])(?=.*[a-z]).*$
   cis_lvl2: ^(?=.*[A-Z])(?=.*[a-z]).*$
-  stig: ^(?=.*[A-Z])(?=.*[a-z]).*$
+  disa_stig: ^(?=.*[A-Z])(?=.*[a-z]).*$
 tags:
   - cisv8
   - cnssi-1253_low

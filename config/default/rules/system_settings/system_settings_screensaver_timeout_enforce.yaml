@@ -89,8 +89,8 @@ odv:
   recommended: 1200
   cis_lvl1: 1200
   cis_lvl2: 1200
-  stig: 900
   nlmapgov_plus: 300
+  disa_stig: 900
 tags:
   - 800-53r5_moderate
   - 800-53r5_high

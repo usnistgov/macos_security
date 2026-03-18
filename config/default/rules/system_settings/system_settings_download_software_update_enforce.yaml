@@ -23,7 +23,8 @@ platforms:
         additional_info: This is implemented by Declarative Device Management (DDM).
 tags:
   - cisv8
-  - ddm
+  - nlmapgov_base
+  - nlmapgov_plus
 ddm_info:
   declarationtype: com.apple.configuration.softwareupdate.settings
   ddm_key: AutomaticActions

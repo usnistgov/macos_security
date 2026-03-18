@@ -76,7 +76,7 @@ odv:
     validation:
       min: 1
   recommended: 30
-  stig: 30
+  disa_stig: 30
 tags:
   - cnssi-1253_low
   - cnssi-1253_high

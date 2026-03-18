@@ -45,7 +45,11 @@ platforms:
     introduced: '4.0'
 odv:
   hint:
-    description: Ratings Level
+    datatype: number
+    description: 'Possible values, with the U.S. description of the rating level: `1000`: All | `600`: TV-MA | `500`: TV-14 | `400`: TV-PG | `300`: TV-G | `200`: TV-Y7 | `100`: TV-Y | `0`: None'
+    validation:
+      min: 0
+      max: 1000
   recommended: 0
   ios_stig: 0
 tags:

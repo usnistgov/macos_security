@@ -44,7 +44,11 @@ platforms:
     introduced: '4.0'
 odv:
   hint:
-    description: Ratings Level
+    datatype: number
+    description: 'Possible values, with the U.S. description of the rating level: `1000`: All | `500`: NC-17 | `400`: R | `300`: PG-13 | `200`: PG | `100`: G | `0`: None'
+    validation:
+      min: 0
+      max: 1000
   recommended: 0
   ios_stig: 0
 tags:

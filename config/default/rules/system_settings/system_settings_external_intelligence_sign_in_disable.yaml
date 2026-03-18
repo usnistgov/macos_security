@@ -68,6 +68,7 @@ tags:
   - cnssi-1253_moderate
   - cmmc_lvl1
   - cmmc_lvl2
+  - nlmapgov_plus
 mobileconfig_info:
   - PayloadType: com.apple.applicationaccess
     PayloadContent:
