@@ -262,6 +262,13 @@ compliance script (e.g. disa_stig, cis.benchmark)
         "-g", "--gary", help=argparse.SUPPRESS, action="store_true"
     )
     guidance_parser.add_argument(
+        "--dark",
+        default=False,
+        help=argparse.SUPPRESS,
+        action="store_true",
+    )
+
+    guidance_parser.add_argument(
         "-x",
         "--xlsx",
         help="generate an excel file for the rules in the specified baseline",
