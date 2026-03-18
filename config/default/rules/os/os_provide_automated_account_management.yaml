@@ -24,8 +24,12 @@ references:
       - SRG-OS-000001-GPOS-00001
 platforms:
   macOS:
-    '26.0': {}
-    '15.0': {}
+    '26.0':
+      benchmarks:
+        - name: nlmapgov_plus
+    '15.0':
+      benchmarks:
+        - name: nlmapgov_plus
     '14.0': {}
 tags:
   - 800-53r5_moderate
@@ -33,4 +37,3 @@ tags:
   - permanent
   - cnssi-1253_high
   - cnssi-1253_moderate
-  - nlmapgov_plus

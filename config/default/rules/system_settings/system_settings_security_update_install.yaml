@@ -22,7 +22,10 @@ references:
       - 7.7
 platforms:
   macOS:
-    '26.0': {}
+    '26.0':
+      benchmarks:
+        - name: nlmapgov_plus
+        - name: nlmapgov_base
     enforcement_info:
       check:
         shell: /usr/bin/plutil -convert json /var/db/softwareupdate/SoftwareUpdateDDMStatePersistence.plist -o - | /usr/bin/jq --raw-output .'SUCorePersistedStatePolicyFields.SUCoreDDMDeclarationGlobalSettings.automaticallyInstallSystemAndSecurityUpdates'
@@ -40,8 +43,6 @@ tags:
   - cmmc_lvl2
   - cmmc_lvl1
   - cnssi-1253_moderate
-  - nlmapgov_base
-  - nlmapgov_plus
 ddm_info:
   declarationtype: com.apple.configuration.softwareupdate.settings
   ddm_key: AutomaticActions

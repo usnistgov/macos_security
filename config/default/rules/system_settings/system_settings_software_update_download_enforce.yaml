@@ -32,6 +32,8 @@ platforms:
       benchmarks:
         - name: cis_lvl1
         - name: cis_lvl2
+        - name: nlmapgov_plus
+        - name: nlmapgov_base
     '14.0':
       benchmarks:
         - name: cis_lvl1
@@ -48,8 +50,6 @@ platforms:
     introduced: '10.15'
 tags:
   - cisv8
-  - nlmapgov_base
-  - nlmapgov_plus
 mobileconfig_info:
   - PayloadType: com.apple.SoftwareUpdate
     PayloadContent:

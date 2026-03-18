@@ -52,6 +52,7 @@ platforms:
         - name: cis_lvl2
         - name: disa_stig
           severity: medium
+        - name: nlmapgov_plus
       enforcement_info:
         fix:
           shell: |-
@@ -64,6 +65,7 @@ platforms:
         - name: cis_lvl2
         - name: disa_stig
           severity: medium
+        - name: nlmapgov_plus
       enforcement_info:
         check:
           shell: /bin/launchctl print-disabled system | /usr/bin/grep -c '"com.apple.screensharing" => disabled'
@@ -111,4 +113,3 @@ tags:
   - cmmc_lvl2
   - cmmc_lvl1
   - cnssi-1253_moderate
-  - nlmapgov_plus

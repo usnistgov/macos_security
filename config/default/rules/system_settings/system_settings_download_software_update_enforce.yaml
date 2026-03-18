@@ -13,7 +13,10 @@ references:
       - 7.4
 platforms:
   macOS:
-    '26.0': {}
+    '26.0':
+      benchmarks:
+        - name: nlmapgov_plus
+        - name: nlmapgov_base
     enforcement_info:
       check:
         shell: /usr/bin/plutil -convert json /var/db/softwareupdate/SoftwareUpdateDDMStatePersistence.plist -o - | /usr/bin/jq --raw-output .'SUCorePersistedStatePolicyFields.SUCoreDDMDeclarationGlobalSettings.automaticallyDownload'
@@ -23,8 +26,6 @@ platforms:
         additional_info: This is implemented by Declarative Device Management (DDM).
 tags:
   - cisv8
-  - nlmapgov_base
-  - nlmapgov_plus
 ddm_info:
   declarationtype: com.apple.configuration.softwareupdate.settings
   ddm_key: AutomaticActions

@@ -53,6 +53,7 @@ platforms:
       benchmarks:
         - name: disa_stig
           severity: high
+        - name: nlmapgov_plus
       enforcement_info:
         fix:
           shell: |-
@@ -63,6 +64,7 @@ platforms:
       benchmarks:
         - name: disa_stig
           severity: high
+        - name: nlmapgov_plus
       enforcement_info:
         check:
           shell: /bin/launchctl print-disabled system | /usr/bin/grep -c '"com.apple.tftpd" => disabled'
@@ -108,4 +110,3 @@ tags:
   - cmmc_lvl2
   - cmmc_lvl1
   - cnssi-1253_moderate
-  - nlmapgov_plus

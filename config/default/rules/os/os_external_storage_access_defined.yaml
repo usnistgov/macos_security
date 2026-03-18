@@ -21,8 +21,12 @@ references:
       - MP.L2-3.8.8
 platforms:
   macOS:
-    '26.0': {}
-    '15.0': {}
+    '26.0':
+      benchmarks:
+        - name: nlmapgov_plus
+    '15.0':
+      benchmarks:
+        - name: nlmapgov_plus
     enforcement_info:
       check:
         shell: /usr/bin/plutil -convert json /var/db/ManagedConfigurationFiles/DiskManagement/DiskManagement_Settings.plist -o - | /usr/bin/jq --raw-output '.Restrictions.ExternalStorage'
@@ -49,7 +53,6 @@ tags:
   - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
-  - nlmapgov_plus
 ddm_info:
   declarationtype: com.apple.configuration.diskmanagement.settings
   ddm_key: ExternalStorage

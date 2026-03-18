@@ -54,12 +54,14 @@ platforms:
         - name: cis_lvl2
         - name: disa_stig
           severity: high
+        - name: nlmapgov_plus
     '15.0':
       benchmarks:
         - name: cis_lvl1
         - name: cis_lvl2
         - name: disa_stig
           severity: high
+        - name: nlmapgov_plus
     '14.0':
       benchmarks:
         - name: cis_lvl1
@@ -100,4 +102,3 @@ tags:
   - cmmc_lvl2
   - cmmc_lvl1
   - cnssi-1253_moderate
-  - nlmapgov_plus

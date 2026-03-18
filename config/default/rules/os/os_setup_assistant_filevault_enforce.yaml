@@ -27,8 +27,12 @@ references:
       - 3.11
 platforms:
   macOS:
-    '26.0': {}
-    '15.0': {}
+    '26.0':
+      benchmarks:
+        - name: nlmapgov_plus
+    '15.0':
+      benchmarks:
+        - name: nlmapgov_plus
     '14.0': {}
     enforcement_info:
       check:
@@ -50,7 +54,6 @@ tags:
   - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
-  - nlmapgov_plus
 mobileconfig_info:
   - PayloadType: com.apple.MCX.FileVault2
     PayloadContent:

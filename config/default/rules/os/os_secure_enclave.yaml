@@ -27,8 +27,14 @@ references:
       - SC.L2-3.13.10
 platforms:
   macOS:
-    '26.0': {}
-    '15.0': {}
+    '26.0':
+      benchmarks:
+        - name: nlmapgov_plus
+        - name: nlmapgov_base
+    '15.0':
+      benchmarks:
+        - name: nlmapgov_plus
+        - name: nlmapgov_base
     '14.0': {}
     enforcement_info:
       check:
@@ -43,5 +49,3 @@ tags:
   - cnssi-1253_high
   - cmmc_lvl2
   - cnssi-1253_moderate
-  - nlmapgov_base
-  - nlmapgov_plus

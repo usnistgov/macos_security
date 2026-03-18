@@ -49,10 +49,14 @@ platforms:
       benchmarks:
         - name: disa_stig
           severity: medium
+        - name: nlmapgov_plus
+        - name: nlmapgov_base
     '15.0':
       benchmarks:
         - name: disa_stig
           severity: medium
+        - name: nlmapgov_plus
+        - name: nlmapgov_base
     '14.0':
       benchmarks:
         - name: disa_stig
@@ -89,8 +93,6 @@ tags:
   - cmmc_lvl2
   - cmmc_lvl1
   - cnssi-1253_moderate
-  - nlmapgov_base
-  - nlmapgov_plus
 mobileconfig_info:
   - PayloadType: com.apple.applicationaccess
     PayloadContent:

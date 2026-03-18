@@ -62,6 +62,8 @@ platforms:
         - name: cis_lvl2
         - name: disa_stig
           severity: high
+        - name: nlmapgov_plus
+        - name: nlmapgov_base
       enforcement_info:
         fix: {}
     '15.0':
@@ -70,6 +72,8 @@ platforms:
         - name: cis_lvl2
         - name: disa_stig
           severity: high
+        - name: nlmapgov_plus
+        - name: nlmapgov_base
       enforcement_info:
         fix: {}
     '14.0':
@@ -106,8 +110,6 @@ tags:
   - cmmc_lvl2
   - cmmc_lvl1
   - cnssi-1253_moderate
-  - nlmapgov_base
-  - nlmapgov_plus
 mobileconfig_info:
   - PayloadType: com.apple.systempolicy.control
     PayloadContent:

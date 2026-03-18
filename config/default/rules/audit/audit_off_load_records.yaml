@@ -28,8 +28,14 @@ references:
       - 8.9
 platforms:
   macOS:
-    '26.0': {}
-    '15.0': {}
+    '26.0':
+      benchmarks:
+        - name: nlmapgov_plus
+        - name: nlmapgov_base
+    '15.0':
+      benchmarks:
+        - name: nlmapgov_plus
+        - name: nlmapgov_base
     '14.0': {}
 tags:
   - permanent
@@ -37,5 +43,3 @@ tags:
   - cnssi-1253_low
   - cnssi-1253_high
   - cnssi-1253_moderate
-  - nlmapgov_base
-  - nlmapgov_plus
