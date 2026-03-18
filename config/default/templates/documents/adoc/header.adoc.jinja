@@ -1,7 +1,7 @@
 :doctype: book
 :stylesdir: {{ styles_dir }}
 :imagesdir: {{ images_dir }}
-:stylesheet: asciidoctor.css
+:stylesheet: {{ html_css }}
 :experimental:
 :reproducible:
 :icons: font
@@ -18,6 +18,9 @@ endif::[]
 :toclevels: 4
 :xrefstyle: full
 :source-highlighter: rouge
+{% if "dark" in html_css %}
+:rouge-style: base16.dark
+{% endif +%}
 :nofooter:
 {% if "800-171" in baseline.title | upper or show_all_tags %}:show_171:{% else %}:show_171!:{% endif +%}
 {% if "STIG" in baseline.title | upper or show_all_tags %}:show_STIG:{% else %}:show_STIG!:{% endif +%}

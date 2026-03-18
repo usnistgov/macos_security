@@ -21,6 +21,7 @@ defaults:
   shell_template_dir: "config/default/templates/shell_scripts"
   sections_dir: "config/default/sections"
   templates_dir: "config/default/templates"
+  themes_dir: "config/default/themes"
 
 custom:
   adoc_templates_dir: "config/custom/templates/asciidoctor"

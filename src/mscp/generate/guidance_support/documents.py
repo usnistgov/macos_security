@@ -334,13 +334,14 @@ def render_template(
     baseline: Baseline,
     b64logo: bytes,
     pdf_theme: str,
+    html_css: str,
     logo_path: Path,
     os_name: str,
     version_info: dict[str, Any],
     show_all_tags: bool,
     custom: bool,
     template_dir: str,
-    misc_dir: str,
+    themes_dir: str,
     logo_dir: str,
     output_format: str = "adoc",
     language: str = "en",
@@ -360,7 +361,7 @@ def render_template(
         show_all_tags (bool): Flag to indicate whether to show all tags.
         custom (bool): Flag to indicate whether to use custom templates and styles.
         template_dir (str): The directory containing the templates.
-        misc_dir (str): The directory containing miscellaneous files.
+        themes_dir (str): The directory containing miscellaneous files.
 
     Returns:
         None
@@ -381,7 +382,7 @@ def render_template(
         keep_trailing_newline=True,
     )
 
-    styles_dir: Path = Path(misc_dir).absolute()
+    styles_dir: Path = Path(themes_dir).absolute()
     images_dir: Path = Path(logo_dir).absolute()
     acronyms_file: Path = Path(config["includes_dir"], "acronyms.yaml").absolute()
 
@@ -423,6 +424,7 @@ def render_template(
         logo=logo_path.name,
         pdflogo=b64logo.decode("ascii"),
         pdf_theme=pdf_theme,
+        html_css=html_css,
         show_all_tags=show_all_tags,
         os_name=os_name.strip().lower(),
         os_version=str(version_info.get("os_version", None)),
@@ -443,6 +445,7 @@ def generate_documents(
     baseline: Baseline,
     b64logo: bytes,
     pdf_theme: str,
+    html_css: str,
     logo_path: Path,
     os_name: str,
     version_info: dict[str, Any],
@@ -452,12 +455,12 @@ def generate_documents(
     language: str = "en",
 ) -> None:
     template_dir: str = config["defaults"]["documents_templates_dir"]
-    misc_dir: str = config["defaults"]["misc_dir"]
+    themes_dir: str = config["defaults"]["themes_dir"]
     logo_dir: str = config["defaults"]["images_dir"]
 
     if custom:
         template_dir = config["custom"]["documents_templates_dir"]
-        misc_dir = config["custom"]["misc_dir"]
+        themes_dir = config["custom"]["themes_dir"]
         logo_dir = config["custom"]["images_dir"]
 
     render_template(
@@ -466,13 +469,14 @@ def generate_documents(
         baseline,
         b64logo,
         pdf_theme,
+        html_css,
         logo_path,
         os_name,
         version_info,
         show_all_tags,
         custom,
         template_dir,
-        misc_dir,
+        themes_dir,
         logo_dir,
         output_format,
         language,

@@ -10,7 +10,7 @@ from typing import Any
 from jinja2 import Environment, FileSystemLoader
 
 # Local python modules
-from ...classes import Baseline
+from ...classes import Baseline, Macsecurityrule
 from ...common_utils import config, create_file, logger, make_dir
 
 
@@ -44,11 +44,9 @@ def group_ulify(elements: list[str]) -> str:
     return result.strip()
 
 
-def generate_log_reference(
-    rule_yaml: dict[str, Any], reference: str
-) -> list[str] | str:
+def generate_log_reference(rule: Macsecurityrule, reference: str) -> list[str] | str:
     """
-    Generate the log reference ID based on the rule_yaml and reference type.
+    Generate the log reference ID based on the rule and reference type.
 
     Note:
         This is used as a Jinja filter in the script template.
@@ -57,14 +55,16 @@ def generate_log_reference(
 
     log_reference_id: list[str] | str
     try:
-        log_references = rule_yaml["references"].get_ref(reference)
+        log_references = rule["references"].get_ref(reference)
     except KeyError:
+        logger.error(
+            f'Unable to find the reference "{reference}" in rule "{rule["rule_id"]}"'
+        )
         log_references = []
-
     if reference == "default" or not log_references:
-        log_reference_id = rule_yaml["rule_id"]
+        log_reference_id = rule["rule_id"]
     else:
-        log_reference_id = f"{reference}-{', '.join(map(str, log_references))}"
+        log_reference_id = f"{', '.join(map(str, log_references))}"
     return log_reference_id
 
 

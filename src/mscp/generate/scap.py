@@ -3,6 +3,7 @@
 # Standard python modules
 import argparse
 import sys
+import time
 from datetime import datetime
 from pathlib import Path
 from xml.sax.saxutils import escape
@@ -10,6 +11,10 @@ from xml.dom import minidom
 
 
 # Additional python modules
+from yaspin import inject_spinner
+from yaspin.core import Yaspin
+from yaspin.spinners import Spinners
+
 
 # Local python modules
 from ..classes import Macsecurityrule
@@ -31,16 +36,17 @@ def pretty_format_xml(xml_string: str) -> str:
     )
 
 
-def generate_scap(args: argparse.Namespace) -> None:
-    # logger.error("generate_scap() NEEDS TO BE BUILT")
-
+@inject_spinner()
+def generate_scap(sp: Yaspin, args: argparse.Namespace) -> None:
+    sp.spinner = Spinners.dots
+    sp.text = "Collecting rule files"
     output_file: Path = Path(config["output_dir"])
+    all_rules: list[Macsecurityrule] = Macsecurityrule.collect_all_rules(
+        args.os_name, args.os_version
+    )
+    all_tags, benchmark_map = collect_tags_and_benchmarks(all_rules)
 
     if args.list_tags:
-        all_rules: list[Macsecurityrule] = Macsecurityrule.collect_all_rules(
-            args.os_name, args.os_version
-        )
-        all_tags, benchmark_map = collect_tags_and_benchmarks(all_rules)
         print_keyword_summary(all_tags, benchmark_map)
         sys.exit()
 
@@ -77,14 +83,8 @@ def generate_scap(args: argparse.Namespace) -> None:
 
         return clean_text
 
-    all_rules: list[Macsecurityrule] = Macsecurityrule.collect_all_rules(
-        args.os_name, args.os_version, generate_baseline=False
-    )
-
-    all_tags, benchmark_map = collect_tags_and_benchmarks(all_rules)
     all_baseline_benchmark = []
-    if args.baseline is None:
-        args.baseline = "all_rules"
+
     if args.baseline == "all_rules":
         for k, v in benchmark_map.items():
             if list(v)[0].lower() == args.os_name.lower():
@@ -126,6 +126,9 @@ def generate_scap(args: argparse.Namespace) -> None:
     oval_objects = str()
     oval_states = str()
     oval_counter = 1
+
+    sp.text = "Parsing baselines for XCCDF content"
+    time.sleep(1)
 
     for baseline in all_the_baselines:
         for b, r in baseline.items():
@@ -252,6 +255,9 @@ def generate_scap(args: argparse.Namespace) -> None:
             for k, _ in rule.odv.items():
                 if k == "hint":
                     continue
+                check_existence = ""
+                check_value = ""
+                count_found = False
                 if k in selected_os_benchmark:
                     check_content = str()
                     if args.xccdf is None and args.oval is None:
@@ -664,6 +670,12 @@ def generate_scap(args: argparse.Namespace) -> None:
 
     output_file = output_file / base_filename
 
+    sp.text = f"Writing output files"
+    time.sleep(1)
     with open(output_file, "w") as rite:
         rite.write(totaloutput)
         rite.close()
+
+    sp.text = f"DONE!"
+    sp.ok("✔")
+    print(f"Generated new SCAP file: {output_file}")
