@@ -121,7 +121,8 @@ odv:
   recommended: authenticate-session-owner
   cis_lvl1: authenticate-session-owner
   cis_lvl2: authenticate-session-owner
-  stig: authenticate-session-owner
+  nlmapgov_plus: authenticate-session-owner
+  disa_stig: authenticate-session-owner
 tags:
   - 800-53r5_low
   - 800-53r5_moderate

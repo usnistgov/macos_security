@@ -87,9 +87,9 @@ odv:
   recommended: time.nist.gov
   cis_lvl1: time.apple.com
   cis_lvl2: time.apple.com
-  stig: time.nist.gov
   nlmapgov_base: time.apple.com
   nlmapgov_plus: time.apple.com
+  disa_stig: time.nist.gov
 tags:
   - 800-171
   - 800-53r5_low

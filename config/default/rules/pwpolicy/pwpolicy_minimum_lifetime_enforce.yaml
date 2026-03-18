@@ -86,7 +86,7 @@ odv:
     validation:
       min: 1
   recommended: 24
-  stig: 24
+  disa_stig: 24
 tags:
   - cisv8
   - cnssi-1253_low

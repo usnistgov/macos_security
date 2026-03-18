@@ -127,10 +127,10 @@ odv:
   recommended: 5
   cis_lvl1: 15
   cis_lvl2: 15
-  stig: 5
   indigo_base: 2
   indigo_high: 2
   visionos_stig: 2
+  disa_stig: 5
 tags:
   - 800-171
   - 800-53r5_low

@@ -19,10 +19,14 @@ references:
         - AIOS-26-015600
     sfr:
       - 'FMT_SMF.1.1 #47'
-platforms: {}
-tags:
-  - ios
-  - ios_stig
+platforms:
+  iOS:
+    '26.0':
+      supervised: true
+      benchmarks:
+        - name: ios_stig
+          severity: medium
+    introduced: '18.0'
 mobileconfig_info:
   - PayloadType: com.apple.applicationaccess
     PayloadContent:

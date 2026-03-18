@@ -83,7 +83,7 @@ odv:
       min: 1
   recommended: 1
   cis_lvl2: 1
-  stig: 1
+  disa_stig: 1
 tags:
   - cisv8
   - cnssi-1253_low

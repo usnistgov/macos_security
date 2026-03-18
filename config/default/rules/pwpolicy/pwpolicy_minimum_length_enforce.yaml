@@ -165,7 +165,6 @@ odv:
   recommended: 6
   cis_lvl1: 15
   cis_lvl2: 15
-  stig: 14
   nlmapgov_base: 15
   nlmapgov_plus: 15
   cis_lvl1_byod: 6
@@ -177,6 +176,7 @@ odv:
   indigo_high: 8
   ios_stig_byoad: 6
   visionos_stig: 6
+  disa_stig: 14
 tags:
   - 800-171
   - 800-53r5_low

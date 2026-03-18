@@ -105,11 +105,13 @@ platforms:
         additional_info: NOTE - This will apply to the whole system
 odv:
   hint:
-    description: Maximum Days of Deferral
-  recommended: 30
-  cis_lvl1: 30
-  cis_lvl2: 30
-  stig: 30
+    description: Maximum Days of Deferral (e.g. 30d)
+  recommended: 30d
+  cis_lvl1: 30d
+  cis_lvl2: 30d
+  nlmapgov_base: 7d
+  nlmapgov_plus: 7d
+  disa_stig: 30d
 tags:
   - cisv8
   - 800-53r5_low

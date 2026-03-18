@@ -85,7 +85,7 @@ odv:
     validation:
       min: 1
   recommended: 900
-  stig: 900
+  disa_stig: 900
 tags:
   - 800-53r5_moderate
   - 800-53r5_high

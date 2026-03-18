@@ -162,7 +162,6 @@ odv:
   recommended: 6
   cis_lvl1: 5
   cis_lvl2: 5
-  stig: 3
   cis_lvl1_byod: 6
   cis_lvl2_byod: 6
   cis_lvl1_enterprise: 6
@@ -172,6 +171,7 @@ odv:
   indigo_high: 10
   ios_stig_byoad: 10
   visionos_stig: 10
+  disa_stig: 3
 tags:
   - 800-171
   - 800-53r5_low
