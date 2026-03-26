@@ -104,7 +104,15 @@ authors:
     names:
       - Henry Stamerjohann|Declarative IT GmbH
       - Allen Golbig|Jamf
-      - Bob Gendler|National Institute of Standards and Technology       
+      - Bob Gendler|National Institute of Standards and Technology
+  nlmapgov_base:
+    names:
+      - Jordy Witteman|Root3
+      - Aron van den Herik|Root3
+  nlmapgov_plus:
+    names:
+      - Jordy Witteman|Root3
+      - Aron van den Herik|Root3       
 titles:
   all_rules: All Rules
   800-53r5_high: NIST SP 800-53 Rev 5 High Impact
@@ -118,6 +126,9 @@ titles:
   ios_stig:  Apple iOS/iPadOS 26 STIG - Ver 1, Rel 1  
   indigo_base: BSI indigo iOS 26.x Base Configuration
   indigo_high: BSI indigo iOS 26.x High Configuration
+  nlmapgov_base: NLMAPGOV - Nederlandse Maatregelenset Apple Platformen Overheid (base)
+  nlmapgov_plus: NLMAPGOV - Nederlandse Maatregelenset Apple Platformen Overheid (plus)
 ddm:
-  supported_types: []
+  supported_types:
+    - com.apple.configuration.softwareupdate.settings
   services: []  

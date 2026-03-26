@@ -23,6 +23,8 @@ references:
       - N/A
     controls v8:
       - N/A
+  bio:
+    - 8.12
 iOS:
   - '26.0'
 tags:
@@ -30,6 +32,7 @@ tags:
   - indigo_base
   - indigo_high
   - ios_stig
+  - nlmapgov_plus
 severity: medium
 supervised: false
 mobileconfig: true

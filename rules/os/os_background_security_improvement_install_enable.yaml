@@ -1,0 +1,24 @@
+id: os_background_security_improvement_install_enable
+title: Enforce Background Security Improvements are Automatically Installed using DDM.
+discussion: |
+  Background Security Improments _MUST_ be configured to enforce automatic installation and that the user cannot modify the setting within Settings.
+check: " "
+fix: |
+  This is implemented by Declarative Device Management (DDM).
+references:
+  bio:
+    - 8.08
+iOS:
+  - "26.0"
+tags:
+  - ios
+  - nlmapgov_base
+  - nlmapgov_plus
+supervised: true
+mobileconfig: false
+mobileconfig_info:
+ddm_info:
+  declarationtype: com.apple.configuration.softwareupdate.settings
+  ddm_key: RapidSecurityResponse
+  ddm_value:
+    Enable: true

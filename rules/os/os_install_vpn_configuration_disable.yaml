@@ -29,6 +29,8 @@ references:
       - 3.2.1.16 (level 1 - Institutionally-Owned Devices)
     controls v8:
       - 12.7
+  bio:
+    - 8.12
 iOS:
   - '26.0'
 tags:
@@ -45,6 +47,7 @@ tags:
   - cnssi-1253_low
   - cnssi-1253_high
   - ios_stig
+  - nlmapgov_plus
 severity: low
 supervised: true
 mobileconfig: true

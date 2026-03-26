@@ -1,0 +1,24 @@
+title: "iOS/iPadOS 26.0: Security Configuration - NLMAPGOV - Nederlandse Maatregelenset Apple Platformen Overheid (base)"
+description: |
+  This guide describes the actions to take when securing a iOS/iPadOS 26.0 system against the NLMAPGOV - Nederlandse Maatregelenset Apple Platformen Overheid (base) security baseline.
+
+  Information System Security Officers and benchmark creators can use this catalog of settings in order to assist them in security benchmark creation. This list is a catalog, not a checklist or benchmark, and satisfaction of every item is not likely to be possible or sensible in many operational scenarios.
+authors: |
+  *macOS Security Compliance Project*
+
+  |===
+  |Jordy Witteman|Root3
+  |Aron van den Herik|Root3
+  |===
+parent_values: "nlmapgov_base"
+profile:
+  - section: "ios"
+    rules:
+      - os_background_security_improvement_install_enable
+      - os_force_date_and_time_enable
+      - os_software_update_download_enforce
+      - os_software_update_install_enforce
+      - os_supervised_mdm_require
+  - section: "passwordpolicy"
+    rules:
+      - pwpolicy_force_pin_enable

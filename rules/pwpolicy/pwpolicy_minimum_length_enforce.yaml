@@ -27,6 +27,8 @@ references:
       - 3.4.3 (level 1 - Institutionally-Owned Devices)
     controls v8:
       - 5.2
+  bio:
+    - 5.17
 iOS:
   - '26.0'
 odv:
@@ -40,6 +42,7 @@ odv:
   ios_stig_byoad: 6
   indigo_base: 8
   indigo_high: 8
+  nlmapgov_plus: 6
 tags:
   - ios
   - 800-53r5_low
@@ -56,6 +59,7 @@ tags:
   - cnssi-1253_low
   - cnssi-1253_high
   - ios_stig
+  - nlmapgov_plus
 severity: medium
 supervised: false
 mobileconfig: true

@@ -57,6 +57,15 @@ ASSOCIATED DOCUMENTS
 |link:https://www.bsi.bund.de/EN/Themen/Oeffentliche-Verwaltung/Zulassung/mobile_Kommunikation/mobileKommunikation_node.html#doc919528bodyText2[indigo]|_indigo iOS 26.0.1 and iPadOS 26.0.1 Version 1.4_
 |===
 
+[%header, cols=2*a]
+.Baseline Informatiebeveiliging Overheid (BIO)
+|===
+|Document Number or Descriptor
+|Document Title 
+|link:https://www.bio-overheid.nl/category/producten/bio[BIO]|_Baseline Informatiebeveiliging Overheid (BIO)_
+|link:https://github.com/MinBZK/Baseline-Informatiebeveiliging-Overheid[BIO2 GitHub Repository]|_BIO2 GitHub Repository_
+|===
+
 === Non-Government Documents
 [%header, cols=2*a]
 .Apple
