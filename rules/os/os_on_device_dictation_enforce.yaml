@@ -74,3 +74,7 @@ mobileconfig: true
 mobileconfig_info:
   com.apple.applicationaccess:
     forceOnDeviceOnlyDictation: true
+ddm_info:
+  declarationtype: com.apple.configuration.intelligence.settings
+  ddm_key: ForceOnDeviceOnlyTranslation
+  ddm_value: true

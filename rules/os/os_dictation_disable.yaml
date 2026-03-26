@@ -65,3 +65,7 @@ mobileconfig: true
 mobileconfig_info:
   com.apple.applicationaccess:
     allowDictation: false
+ddm_info:
+  declarationtype: com.apple.configuration.keyboard.settings
+  ddm_key: AllowDictation
+  ddm_value: false

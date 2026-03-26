@@ -70,3 +70,7 @@ mobileconfig: true
 mobileconfig_info:
   com.apple.applicationaccess:
     allowExternalIntelligenceIntegrationsSignIn: false
+ddm_info:
+  declarationtype: com.apple.configuration.external-intelligence.settings
+  ddm_key: AllowSignIn
+  ddm_value: false

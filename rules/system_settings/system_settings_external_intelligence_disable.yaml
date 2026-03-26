@@ -67,3 +67,7 @@ mobileconfig: true
 mobileconfig_info:
   com.apple.applicationaccess:
     allowExternalIntelligenceIntegrations: false
+ddm_info:
+  declarationtype: com.apple.configuration.external-intelligence.settings
+  ddm_key: Enabled
+  ddm_value: false    

@@ -5,13 +5,14 @@ discussion: |
 
   The macOS system _MUST_ require individuals to be authenticated with an individual authenticator prior to using a group authenticator, and administrator users _MUST_ never log in directly as root.
 check: |
-  /usr/bin/dscl . -read /Users/root UserShell 2>&1 | /usr/bin/grep -c "/usr/bin/false"
+  /usr/bin/dscl '/Local/Default' read '/Users/root' AuthenticationAuthority 2>/dev/null | /usr/bin/grep -c 'No such key: AuthenticationAuthority'
 result:
-  integer: 1
+  integer: 0
 fix: |
   [source,bash]
   ----
-  /usr/bin/dscl . -create /Users/root UserShell /usr/bin/false
+  /usr/bin/fdesetup remove -user root
+  /usr/bin/dscl '/Local/Default' delete '/Users/root' AuthenticationAuthority
   ----
 references:
   cce:
