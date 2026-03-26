@@ -9,9 +9,9 @@ discussion: |
 
   WARNING: If more than one partition with macOS is detected, the csrutil command will hang awaiting input.
 check: |
-  /usr/libexec/mdmclient QuerySecurityInfo 2>/dev/null | /usr/bin/grep -c "AuthenticatedRootVolumeEnabled = 1;"
+  /sbin/mount | /usr/bin/grep ' / ' | /usr/bin/grep -o 'sealed'
 result:
-  integer: 1
+  string: sealed
 fix: |
   [source,bash]
   ----
@@ -56,7 +56,7 @@ references:
   bio:
     - 5.16.02
 macOS:
-  - '26.0'
+  - "26.0"
 tags:
   - 800-53r5_low
   - 800-53r5_moderate
