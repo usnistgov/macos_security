@@ -4,7 +4,7 @@ discussion: |
   Apple Silicon MacBooks should set sleep timeout to 15 minutes (900 seconds) or less and the display sleep timeout should be 10 minutes (600 seconds) or less but less than the sleep setting.
 check: |
   error_count=0
-  if /usr/sbin/system_profiler SPHardwareDataType | /usr/bin/grep -q "MacBook"; then
+  if /usr/sbin/system_profiler SPHardwareDataType | /usr/bin/grep -Ei "MacBook|Mac[0-9]"; then
     cpuType=$(/usr/sbin/sysctl -n machdep.cpu.brand_string)
     if echo "$cpuType" | grep -q "Apple"; then
       sleepMode=$(/usr/bin/pmset -b -g | /usr/bin/grep '^\s*sleep' 2>&1 | /usr/bin/awk '{print $2}')
