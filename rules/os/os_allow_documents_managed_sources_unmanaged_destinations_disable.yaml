@@ -20,7 +20,7 @@ references:
     - 'FMT_SMF.1.1 #42'
     - 'FDP_ACF_EXT.1.2'
   disa_stig:
-    - AVOS-02-009700
+    - AVOS-26-009700
 visionOS:
   - '26.0'
 tags:

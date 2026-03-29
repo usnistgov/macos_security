@@ -20,7 +20,7 @@ references:
   sfr:
     - 'FMT_SMF.1.1 #47'
   disa_stig:
-    - AVOS-02-014400
+    - AVOS-26-014400
 visionOS:
   - '26.0'
 tags:

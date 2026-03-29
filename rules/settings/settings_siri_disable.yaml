@@ -19,7 +19,7 @@ references:
   sfr:
     - 'FMT_MOF_EXT.1.2 #47'
   disa_stig:
-    - AVOS-02-016100
+    - AVOS-26-016100
 visionOS:
   - '26.0'
 tags:
