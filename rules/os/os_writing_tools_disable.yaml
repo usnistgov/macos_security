@@ -48,3 +48,7 @@ mobileconfig: true
 mobileconfig_info:
   com.apple.applicationaccess:
     allowWritingTools: false
+ddm_info:
+  declarationtype: com.apple.configuration.intelligence.settings
+  ddm_key: AllowWritingTools
+  ddm_value: false

@@ -37,3 +37,7 @@ mobileconfig: true
 mobileconfig_info:
   com.apple.applicationaccess:
     allowImageWand: false
+ddm_info:
+  declarationtype: com.apple.configuration.intelligence.settings
+  ddm_key: AllowImageWand
+  ddm_value: false

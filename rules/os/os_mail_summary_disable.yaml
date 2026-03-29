@@ -41,3 +41,10 @@ mobileconfig: true
 mobileconfig_info:
   com.apple.applicationaccess:
     allowMailSummary: false
+ddm_info:
+  declarationtype: com.apple.configuration.intelligence.settings
+  ddm_key: Apps
+  ddm_value:
+    Mail: 
+      AllowSummary: false
+  

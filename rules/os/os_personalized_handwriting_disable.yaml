@@ -38,3 +38,7 @@ mobileconfig: true
 mobileconfig_info:
   com.apple.applicationaccess:
     allowPersonalizedHandwritingResults: false
+ddm_info:
+  declarationtype: com.apple.configuration.intelligence.settings
+  ddm_key: AllowPersonalizedHandwritingResults
+  ddm_value: false

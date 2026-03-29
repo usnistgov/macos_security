@@ -35,3 +35,7 @@ mobileconfig: true
 mobileconfig_info:
   com.apple.applicationaccess:
     allowVisualIntelligenceSummary: false
+ddm_info:
+  declarationtype: com.apple.configuration.intelligence.settings
+  ddm_key: AllowVisualIntelligenceSummary
+  ddm_value: false

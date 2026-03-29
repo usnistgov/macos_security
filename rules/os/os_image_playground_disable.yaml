@@ -33,3 +33,7 @@ mobileconfig: true
 mobileconfig_info:
   com.apple.applicationaccess:
     allowImagePlayground: false
+ddm_info:
+  declarationtype: com.apple.configuration.intelligence.settings
+  ddm_key: AllowImagePlayground
+  ddm_value: false    

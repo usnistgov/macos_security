@@ -42,3 +42,7 @@ mobileconfig: true
 mobileconfig_info:
   com.apple.applicationaccess:
     allowAssistant: false
+ddm_info:
+  declarationtype: com.apple.configuration.siri.settings
+  ddm_key: Enabled
+  ddm_value: false
