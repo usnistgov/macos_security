@@ -32,3 +32,7 @@ mobileconfig: true
 mobileconfig_info:
   com.apple.applicationaccess:
     allowGenmoji: false
+ddm_info:
+  declarationtype: com.apple.configuration.intelligence.settings
+  ddm_key: AllowGenmoji
+  ddm_value: false
