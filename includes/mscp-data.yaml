@@ -130,5 +130,12 @@ titles:
   nlmapgov_plus: NLMAPGOV - Nederlandse Maatregelenset Apple Platformen Overheid (plus)
 ddm:
   supported_types:
+    - com.apple.configuration.services.configuration-files
+    - com.apple.configuration.passcode.settings
+    - com.apple.configuration.diskmanagement.settings
     - com.apple.configuration.softwareupdate.settings
+    - com.apple.configuration.siri.settings
+    - com.apple.configuration.intelligence.settings
+    - com.apple.configuration.external-intelligence.settings
+    - com.apple.configuration.keyboard.settings    
   services: []  
