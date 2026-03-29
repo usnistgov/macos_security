@@ -30,5 +30,13 @@ titles:
   800-53r5_low: NIST SP 800-53 Rev 5 Low Impact
   visionos_stig: Apple visionOS 26 Security Technical Implementation Guide Release 1
 ddm:
-  supported_types: []
+  supported_types:
+    - com.apple.configuration.services.configuration-files
+    - com.apple.configuration.passcode.settings
+    - com.apple.configuration.diskmanagement.settings
+    - com.apple.configuration.softwareupdate.settings
+    - com.apple.configuration.siri.settings
+    - com.apple.configuration.intelligence.settings
+    - com.apple.configuration.external-intelligence.settings
+    - com.apple.configuration.keyboard.settings    
   services: []  
