@@ -1,0 +1,198 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "title": "macOS Security Compliance Project Manifest File",
+    "description": "Schema for a macOS Security Compliance Project Manifest file, JSON output of an organization's security benchmark.",
+    "version": "2.0.0",
+    "required": [
+      "benchmark", 
+      "parent_values", 
+      "platform", 
+      "release_info", 
+      "plist_location", 
+      "log_location", 
+      "creation_date", 
+      "rules"
+    ],
+    "additionalProperties": false,
+    "properties": {
+      "benchmark": {
+        "type": "string",
+        "description": "Unique identifier for this benchmark"
+      },
+      "parent_values": {
+        "type": "string",
+        "description": "The parent security profile or benchmark identifier"
+      },
+      "platform": {
+        "type": "object",
+        "description": "Target platform details",
+        "required": [
+          "os", 
+          "version"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "os": {
+            "type": "string",
+            "description": "Operating system name",
+            "example": "macOS, iOS, visionOS"
+          },
+          "version": {
+            "type": [
+              "string", 
+              "number"
+            ],
+            "description": "Operating system version",
+            "example": 26.0
+          },
+          "cpe": {
+            "type": "string",
+            "description": "Common Platform Enumeration (CPE) identifier"
+          }
+        }
+      },
+      "release_info": {
+        "type": "object",
+        "description": "Version and release date of this manifest",
+        "required": [
+          "version", 
+          "date"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "version": {
+            "type": ["string", "number"],
+            "description": "Release version number"            
+          },
+          "date": {
+            "type": "string",
+            "format": "date",
+            "description": "Release date in YYYY-MM-DD format"
+          }
+        }
+      },
+      "plist_location": {
+        "type": "string",
+        "description": "Absolute path to the audit plist file on the target system"
+      },
+      "log_location": {
+        "type": "string",
+        "description": "Absolute path to the baseline log file on the target system"
+      },
+      "creation_date": {
+        "type": "string",
+        "format": "date-time",
+        "description": "ISO 8601 datetime when this manifest was created"
+      },
+      "rules": {
+        "type": "array",
+        "description": "List of security rules included in this benchmark",
+        "minItems": 1,
+        "items": {
+          "type": "object",
+          "required": [
+            "id"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "id": {
+              "type": "string",
+              "description": "Unique rule identifier"
+    
+            },
+            "title": {
+              "type": "string",
+              "description": "Human-readable title of the rule"          
+            },
+            "discussion": {
+              "type": "string",
+              "description": "Detailed explanation of the rule and its rationale"
+            },
+            "references": {
+              "type": "string",
+              "description": "Semicolon-delimited list of compliance framework references (e.g. CCE, NIST, CCI, SRG, DISA STIG, CMMC, CIS)"
+            },
+            "tags": {
+              "type": "string",
+              "description": "Comma-delimited list of rule metadata tags"
+            },
+            "check": {
+              "type": "string",
+              "description": "Shell command or script used to evaluate compliance"
+            },
+            "result": {
+              "type": [
+                "string", 
+                "integer", 
+                "null"
+              ],
+              "description": "Expected output of the check command indicating a passing state. May be an integer, a string (e.g. 'pass'), or null if not applicable."
+            },
+            "fix": {
+              "type": "object",
+              "description": "Remediation details. May include a shell script, mobile config payload, and/or DDM declaration info.",
+              "additionalProperties": false,
+              "properties": {
+                "script": {
+                  "type": "string",
+                  "description": "Shell script to remediate non-compliant state"
+                },
+                "mobile_config_info": {
+                  "type": "array",
+                  "description": "Array of mobile configuration profile key-value payloads",
+                  "items": {
+                    "type": "object",
+                    "required": ["domain", "key", "value"],
+                    "additionalProperties": false,
+                    "properties": {
+                      "domain": {
+                        "type": "string",
+                        "description": "Preference domain for the configuration key"              
+                      },
+                      "key": {
+                        "type": "string",
+                        "description": "Preference key to configure"
+                      },
+                      "value": {
+                        "description": "Value to apply for the preference key"
+                      }
+                    }
+                  }
+                },
+                "ddm_info": {
+                  "type": "object",
+                  "description": "Declarative Device Management (DDM) configuration details",
+                  "required": [
+                    "declarationtype"
+                  ],
+                  "additionalProperties": false,
+                  "properties": {
+                    "declarationtype": {
+                      "type": "string",
+                      "description": "DDM declaration type identifier"                  
+                    },
+                    "service": {
+                      "type": "string",
+                      "description": "Target service name"
+                    },
+                    "config_file": {
+                      "type": "string",
+                      "description": "Configuration file name to modify"
+                    },
+                    "configuration_key": {
+                      "type": "string",
+                      "description": "Key within the configuration file to set"
+                    },
+                    "configuration_value": {
+                      "type": "string",
+                      "description": "Value to apply for the configuration key"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }

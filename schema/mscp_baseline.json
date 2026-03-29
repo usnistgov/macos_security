@@ -1,0 +1,101 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "title": "macOS Security Compliance Project Baseline File",
+    "description": "Schema for a macOS Security Compliance Project Baseline file, detailing the list of rules for an organization's defined security benchmark.",
+    "version": "2.0.0",
+    "required": [
+    "title",
+    "parent_values",
+    "platform",
+    "profile"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "title": {
+      "type": "string",
+      "description": "Human-readable title of the security configuration"
+    },
+    "description": {
+      "type": "string",
+      "description": "A summary of the security configuration and its purpose"
+    },
+    "authors": {
+      "type": "array",
+      "description": "List of authors who contributed to this security configuration",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "name"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Full name of the author"
+          },
+          "organization": {
+            "type": "string",
+            "description": "Organization the author is affiliated with"
+          }
+        }
+      }
+    },
+    "parent_values": {
+      "type": "string",
+      "description": "The parent security profile or benchmark identifier",
+      "example": "recommended, cis_lvl1, disa_stig"
+    },
+    "platform": {
+      "type": "object",
+      "description": "Target platform details",
+      "required": [
+        "os",
+        "version"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "os": {
+          "type": "string",
+          "description": "Operating system name",
+          "example": "macOS, iOS, visionOS"
+        },
+        "version": {
+          "type": [
+            "string",
+            "number"
+          ],
+          "description": "Operating system version"
+        }
+      }
+    },
+    "profile": {
+      "type": "array",
+      "description": "List of security profile sections, each containing a section name and associated rules",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "section",
+          "rules"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "section": {
+            "type": "string",
+            "description": "Name of the security configuration section"
+          },
+          "rules": {
+            "type": "array",
+            "description": "List of rule identifiers that apply to this section",
+            "minItems": 1,
+            "items": {
+              "type": "string",
+              "description": "Rule identifier string"
+            }
+          }
+        }
+      }
+    }
+  }
+}
