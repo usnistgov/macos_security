@@ -41,3 +41,7 @@ mobileconfig: true
 mobileconfig_info:
   com.apple.applicationaccess:
     allowAssistantUserGeneratedContent: false
+ddm_info:
+  declarationtype: com.apple.configuration.siri.settings
+  ddm_key: AllowUserGeneratedContent
+  ddm_value: false

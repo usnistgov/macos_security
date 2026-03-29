@@ -51,3 +51,7 @@ mobileconfig: true
 mobileconfig_info:
   com.apple.applicationaccess:
     allowAssistantWhileLocked: false
+ddm_info:
+  declarationtype: com.apple.configuration.siri.settings
+  ddm_key: AllowWhileLocked
+  ddm_value: false
