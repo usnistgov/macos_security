@@ -127,14 +127,18 @@ Manual setup with Python and Ruby.
    python3 -m venv .venv
    source .venv/bin/activate
 
-   # Install requirements
-   python3 -m pip install .
+   # Update and install tools
+   python3 -m pip install --upgrade pip setuptools wheel
+   python3 -m pip install --upgrade -r requirements.txt
    ```
 
 3. **Ruby Setup**
 
    ```bash
-   bundle install --binstubs --path mscp_gems
+   bundle config path mscp_gems
+   bundle config bin mscp_gems/bin
+   bundle install
+   bundle binstubs --all
    ```
 
 4. **Generate Content**
