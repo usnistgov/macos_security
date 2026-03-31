@@ -3,7 +3,7 @@ title: What Are Baselines?
 description: An overview of baselines and how to use them in the project.
 ---
 
-import { Aside } from '@astrojs/starlight/components';
+import { Aside, Tabs, TabItem } from '@astrojs/starlight/components';
 
 export const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : import.meta.env.BASE_URL + '/';
 
@@ -19,10 +19,24 @@ Think of a baseline as a shopping list of security settings. Your organization, 
 
 ## How Baselines Work
 
-1. **Choose a framework** - Pick the compliance standard you need (NIST, CIS, STIG, etc.)
-2. **Generate the baseline** - Run `generate_baseline.py` to create the YAML file
-3. **Customize if needed** - Tailor the baseline to your organization's requirements
-4. **Generate outputs** - Use the baseline to create profiles, scripts, and documentation
+<Tabs syncKey="mscp-version">
+  <TabItem label="mSCP 2.0 (Beta)">
+
+1. **Choose a framework** — Pick the compliance standard you need (NIST, CIS, STIG, etc.)
+2. **Generate the baseline** — Run `./mscp.py baseline -k BASELINE_NAME` to create the YAML file
+3. **Customize if needed** — Tailor the baseline to your organization's requirements
+4. **Generate outputs** — Use the baseline to create profiles, scripts, and documentation
+
+  </TabItem>
+  <TabItem label="mSCP 1.0">
+
+1. **Choose a framework** — Pick the compliance standard you need (NIST, CIS, STIG, etc.)
+2. **Generate the baseline** — Run `./scripts/generate_baseline.py -k BASELINE_NAME` to create the YAML file
+3. **Customize if needed** — Tailor the baseline to your organization's requirements
+4. **Generate outputs** — Use the baseline to create profiles, scripts, and documentation
+
+  </TabItem>
+</Tabs>
 
 Each baseline is specific to an **operating system** (macOS, iOS/iPadOS, or visionOS) and **compliance level** (High, Moderate, Low, or Level 1/2 depending on the framework).
 
@@ -30,33 +44,32 @@ Each baseline is specific to an **operating system** (macOS, iOS/iPadOS, or visi
 
 ## Available Baselines
 
-Baselines are located in the `/baselines/` folder. Here's what's available:
-
 <div class="baseline-tables">
 
 ### Government Frameworks
 
 | Framework | Baseline Files |
 |:----------|:---------------|
-| **NIST 800-53 Rev 5** | `800-53r5_high.yaml`, `800-53r5_moderate.yaml`, `800-53r5_low.yaml` |
-| **NIST 800-171** | `800-171.yaml` |
-| **DISA STIG** | macOS: `DISA-STIG.yaml`<br/>iOS: `ios_stig.yaml`, `ios_stig_byoad.yaml` |
-| **CMMC 2.0** | `cmmc_lvl1.yaml`, `cmmc_lvl2.yaml` |
-| **CNSSI 1253** | `cnssi-1253_high.yaml`, `cnssi-1253_moderate.yaml`, `cnssi-1253_low.yaml` |
+| **NIST 800-53 Rev 5** | `800-53r5_high`, `800-53r5_moderate`, `800-53r5_low`, `800-53r5_privacy` |
+| **NIST 800-171** | `800-171` |
+| **DISA STIG** | macOS: `disa_stig`<br/>iOS: `ios_stig` |
+| **CMMC 2.0** | `cmmc_lvl1`, `cmmc_lvl2` |
+| **CNSSI 1253** | `cnssi-1253_high`, `cnssi-1253_moderate`, `cnssi-1253_low` |
+| **NLM APGOV** | `nlmapgov_base`, `nlmapgov_plus` |
 
 ### Industry Frameworks
 
 | Framework | Baseline Files |
 |:----------|:---------------|
-| **CIS Benchmarks (macOS)** | `cis_lvl1.yaml`, `cis_lvl2.yaml` |
-| **CIS Benchmarks (iOS)** | `cis_lvl1_byod.yaml`, `cis_lvl2_byod.yaml`<br/>`cis_lvl1_enterprise.yaml`, `cis_lvl2_enterprise.yaml` |
-| **CIS Controls v8** | `cisv8.yaml` |
+| **CIS Benchmarks (macOS)** | `cis_lvl1`, `cis_lvl2` |
+| **CIS Benchmarks (iOS)** | `cis_lvl1_byod`, `cis_lvl2_byod`<br/>`cis_lvl1_enterprise`, `cis_lvl2_enterprise` |
+| **CIS Controls v8** | `cisv8` |
 
 ### International
 
 | Framework | Baseline Files |
 |:----------|:---------------|
-| **Indigo (iOS only)** | `indigo_base.yaml`, `indigo_high.yaml` |
+| **Indigo (iOS only)** | `indigo_base`, `indigo_high` |
 
 </div>
 
@@ -68,7 +81,40 @@ CIS Level 2 baselines include all Level 1 rules plus additional controls for hig
 
 ## List Available Baselines
 
-To see all baselines available for your current branch:
+<Tabs syncKey="mscp-version">
+  <TabItem label="mSCP 2.0 (Beta)">
+
+```bash
+./mscp.py baseline -l
+```
+
+Example output:
+```
+Available keywords (tags and benchmarks):
+
+Tags (applicable to all platforms):
+  800-171
+  800-53r5_high
+  800-53r5_low
+  800-53r5_moderate
+  800-53r5_privacy
+  cisv8
+  cmmc_lvl1
+  cmmc_lvl2
+  cnssi-1253_high
+  cnssi-1253_low
+  cnssi-1253_moderate
+  all_rules
+
+Benchmarks (platform-specific):
+  cis_lvl1 (Platforms: macOS)
+  cis_lvl2 (Platforms: macOS)
+  disa_stig (Platforms: macOS)
+  nlmapgov_plus (Platforms: macOS)
+```
+
+  </TabItem>
+  <TabItem label="mSCP 1.0">
 
 ```bash
 ./scripts/generate_baseline.py -l
@@ -79,13 +125,23 @@ Example output:
 800-53r5_high
 800-53r5_moderate
 800-53r5_low
+800-171
 cis_lvl1
 cis_lvl2
+cisv8
 DISA-STIG
 cmmc_lvl1
 cmmc_lvl2
-...
+cnssi-1253_high
+cnssi-1253_moderate
+cnssi-1253_low
+nlmapgov_base
+nlmapgov_plus
+all_rules
 ```
+
+  </TabItem>
+</Tabs>
 
 ---
 
@@ -103,9 +159,9 @@ cmmc_lvl2
 
 ## Next Steps
 
-- <a href={`${base}baselines/how-to-generate-baselines/`}>How to Generate Baselines</a> - Create your first baseline
-- <a href={`${base}baselines/tailoring-a-baseline/`}>Tailoring a Baseline</a> - Customize for your organization
-- <a href={`${base}baselines/baseline-file-layout/`}>Baseline File Layout</a> - Understand the YAML structure
+- <a href={`${base}baselines/how-to-generate-baselines/`}>How to Generate Baselines</a> — Create your first baseline
+- <a href={`${base}baselines/tailoring-a-baseline/`}>Tailoring a Baseline</a> — Customize for your organization
+- <a href={`${base}baselines/baseline-file-layout/`}>Baseline File Layout</a> — Understand the YAML structure
 
 <style>{`
   /* Table styling */

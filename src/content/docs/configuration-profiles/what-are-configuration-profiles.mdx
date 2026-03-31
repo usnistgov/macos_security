@@ -3,7 +3,7 @@ title: What Are Configuration Profiles?
 description: XML files that enforce security settings on Apple devices.
 ---
 
-import { Aside } from '@astrojs/starlight/components';
+import { Aside, Tabs, TabItem } from '@astrojs/starlight/components';
 
 export const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : import.meta.env.BASE_URL + '/';
 
@@ -19,17 +19,47 @@ Configuration profiles enforce settings that users cannot override. This ensures
 
 ## How They Work
 
+<Tabs syncKey="mscp-version">
+  <TabItem label="mSCP 2.0 (Beta)">
+
 | Step | Description |
 |:-----|:------------|
-| **Generate** | Run `generate_guidance.py -p` to create profiles from your baseline |
+| **Generate** | Run `./mscp.py guidance -p` to create profiles from your baseline |
 | **Deploy** | Upload profiles to your MDM solution |
 | **Enforce** | Settings are applied automatically to managed devices |
+
+  </TabItem>
+  <TabItem label="mSCP 1.0">
+
+| Step | Description |
+|:-----|:------------|
+| **Generate** | Run `./scripts/generate_guidance.py -p` to create profiles from your baseline |
+| **Deploy** | Upload profiles to your MDM solution |
+| **Enforce** | Settings are applied automatically to managed devices |
+
+  </TabItem>
+</Tabs>
 
 Profiles can also be signed with a certificate (`-H` flag) to ensure authenticity and prevent tampering.
 
 ---
 
 ## What the Project Generates
+
+<Tabs syncKey="mscp-version">
+  <TabItem label="mSCP 2.0 (Beta)">
+
+| Type | Flag | Description |
+|:-----|:-----|:------------|
+| **Individual profiles** | `-p` | One profile per payload type (recommended for flexibility) |
+| **Consolidated profile** | `--consolidated-profile` | All settings in a single profile |
+| **Granular profiles** | `--granular-profiles` | Granular profiles |
+| **Signed profiles** | `-H HASH` | Profiles signed with your certificate |
+
+Output location: `build/BASELINE_NAME/mobileconfigs/`
+
+  </TabItem>
+  <TabItem label="mSCP 1.0">
 
 | Type | Flag | Description |
 |:-----|:-----|:------------|
@@ -38,6 +68,9 @@ Profiles can also be signed with a certificate (`-H` flag) to ensure authenticit
 | **Signed profiles** | `-H HASH` | Profiles signed with your certificate |
 
 Output location: `build/BASELINE_NAME/mobileconfigs/`
+
+  </TabItem>
+</Tabs>
 
 ---
 

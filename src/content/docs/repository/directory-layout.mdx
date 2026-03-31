@@ -3,7 +3,7 @@ title: Directory Layout
 description: Overview of the mSCP repository structure.
 ---
 
-import { FileTree, Aside } from '@astrojs/starlight/components';
+import { FileTree, Aside, Tabs, TabItem } from '@astrojs/starlight/components';
 
 export const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : import.meta.env.BASE_URL + '/';
 
@@ -13,37 +13,72 @@ This page describes the directory structure of the macOS Security Compliance Pro
 
 ## Repository Structure
 
+<Tabs syncKey="mscp-version">
+  <TabItem label="mSCP 2.0 (Beta)">
+
 <FileTree>
-- baselines/ - Baseline YAML files for compliance frameworks
-- build/ - Generated output files
-- custom/ - Organization-specific customizations
-- includes/ - Supporting YAML libraries and resources
-- rules/ - Individual rule YAML files
-- scripts/ - Generation and utility scripts
-- sections/ - Section definition files for guides
-- templates/ - AsciiDoc templates for documentation
+- config/
+    - default/
+        - rules/ Individual rule YAML files
+        - sections/ Section definition files
+        - templates/ Documentation templates
+        - images/ Project images
+        - themes/ Theme files
+    - custom/
+        - rules/ Custom rule overrides
+        - baselines/ Generated/tailored baselines
+        - sections/ Custom section overrides
+        - templates/ Custom templates
+        - images/ Custom images
+    - includes/ Supporting YAML files and resources
+    - locales/ Localization files
+- src/
+    - mscp/ Python CLI package
+- schema/ YAML schema definitions
+- build/ Generated output files
+- rules → config/default/rules (symlink)
+- baselines → config/default/baselines (symlink)
+- custom → config/custom (symlink)
 </FileTree>
 
----
+  </TabItem>
+  <TabItem label="mSCP 1.0">
 
-## Directory Reference
+<FileTree>
+- baselines/ Baseline YAML files for compliance frameworks
+- build/ Generated output files
+- custom/ Organization-specific customizations
+- includes/ Supporting YAML libraries and resources
+- rules/ Individual rule YAML files
+- scripts/ Generation and utility scripts
+- sections/ Section definition files for guides
+- templates/ AsciiDoc templates for documentation
+</FileTree>
 
-| Directory | Description |
-|:----------|:------------|
-| `baselines/` | Baseline profiles for NIST 800-53, CIS, DISA STIG, CMMC, and more |
-| `build/` | Output directory for generated scripts, documents, and profiles |
-| `custom/` | Custom rules and sections for organization-specific requirements |
-| `includes/` | Supporting YAML files and resources for build scripts |
-| `rules/` | YAML files defining individual security rules |
-| `scripts/` | Python scripts for generating content |
-| `sections/` | YAML files defining guide sections |
-| `templates/` | AsciiDoc templates for documentation |
+  </TabItem>
+</Tabs>
 
 ---
 
 ## Rules Directory
 
-The `rules/` directory contains subdirectories organized by category:
+The rules directory contains subdirectories organized by category:
+
+<Tabs syncKey="mscp-version">
+  <TabItem label="mSCP 2.0 (Beta)">
+
+| Category | Description |
+|:---------|:------------|
+| `audit/` | OpenBSM auditing settings |
+| `auth/` | Authentication and smartcard settings |
+| `icloud/` | Apple iCloud and Apple ID configuration |
+| `os/` | General operating system settings |
+| `pwpolicy/` | Password policy enforcement |
+| `settings/` | Application and service settings |
+| `system_settings/` | System Settings configuration |
+
+  </TabItem>
+  <TabItem label="mSCP 1.0">
 
 | Category | Description |
 |:---------|:------------|
@@ -55,17 +90,36 @@ The `rules/` directory contains subdirectories organized by category:
 | `supplemental/` | Additional supporting information |
 | `system_settings/` | System Settings configuration |
 
+  </TabItem>
+</Tabs>
+
 ---
 
 ## Custom Directory
 
-The `custom/` directory mirrors the main structure for organization-specific overrides:
+<Tabs syncKey="mscp-version">
+  <TabItem label="mSCP 2.0 (Beta)">
+
+<FileTree>
+- config/custom/
+    - rules/ Custom rule overrides
+    - baselines/ Generated and tailored baselines
+    - sections/ Custom section overrides
+    - templates/ Custom templates
+    - images/ Custom images
+</FileTree>
+
+  </TabItem>
+  <TabItem label="mSCP 1.0">
 
 <FileTree>
 - custom/
-    - rules/ - Custom rule overrides
-    - sections/ - Custom section overrides
+    - rules/ Custom rule overrides
+    - sections/ Custom section overrides
 </FileTree>
+
+  </TabItem>
+</Tabs>
 
 <Aside type="note">
 Custom files must use the **same filename** as the original to override during generation.
@@ -75,9 +129,9 @@ Custom files must use the **same filename** as the original to override during g
 
 ## Next Steps
 
-- <a href={`${base}repository/rule-file-layout/`}>Rule File Layout</a> - Understand rule YAML structure
-- <a href={`${base}repository/sections-file-layout/`}>Sections File Layout</a> - Understand section YAML structure
-- <a href={`${base}repository/includes-directory/`}>Includes Directory</a> - Supporting files reference
+- <a href={`${base}repository/rule-file-layout/`}>Rule File Layout</a> — Understand rule YAML structure
+- <a href={`${base}repository/sections-file-layout/`}>Sections File Layout</a> — Understand section YAML structure
+- <a href={`${base}repository/includes-directory/`}>Includes Directory</a> — Supporting files reference
 
 <style>{`
   .sl-markdown-content th {

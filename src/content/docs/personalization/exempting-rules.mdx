@@ -3,7 +3,7 @@ title: Exempting Rules
 description: Mark rules as approved exceptions for your organization.
 ---
 
-import { Steps, Aside } from '@astrojs/starlight/components';
+import { Steps, Aside, Tabs, TabItem } from '@astrojs/starlight/components';
 
 export const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : import.meta.env.BASE_URL + '/';
 
@@ -80,9 +80,22 @@ For enterprise deployments, deploy exemptions as a managed preference profile ta
 
 The compliance script checks for managed preferences and respects exemptions set through MDM.
 
+<Tabs syncKey="mscp-version">
+  <TabItem label="mSCP 2.0 (Beta)">
+
 <Aside type="tip">
-When generating compliance outputs with `-s`, the project creates a default audit plist in `build/{baseline}/preferences/` that you can use as a template for your MDM deployment.
+When generating compliance outputs with `./mscp.py guidance -s`, the project creates a default audit plist in `build/{baseline}/preferences/` that you can use as a template for your MDM deployment.
 </Aside>
+
+  </TabItem>
+  <TabItem label="mSCP 1.0">
+
+<Aside type="tip">
+When generating compliance outputs with `./scripts/generate_guidance.py -s`, the project creates a default audit plist in `build/{baseline}/preferences/` that you can use as a template for your MDM deployment.
+</Aside>
+
+  </TabItem>
+</Tabs>
 
 ---
 

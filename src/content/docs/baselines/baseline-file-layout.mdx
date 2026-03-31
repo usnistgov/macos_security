@@ -3,27 +3,41 @@ title: Baseline File Layout
 description: Understand the structure of baseline YAML files.
 ---
 
-import { Aside } from '@astrojs/starlight/components';
+import { Aside, Tabs, TabItem } from '@astrojs/starlight/components';
 
 export const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : import.meta.env.BASE_URL + '/';
 
 A baseline file is a YAML document that defines which security rules apply to a specific compliance framework. Understanding the structure helps you customize baselines or create your own.
 
+<Tabs syncKey="mscp-version">
+  <TabItem label="mSCP 2.0 (Beta)">
+
+<Aside type="tip">
+You don't need to create baseline files manually. The `./mscp.py baseline` command creates them for you. This page is for understanding what's inside.
+</Aside>
+
+  </TabItem>
+  <TabItem label="mSCP 1.0">
+
 <Aside type="tip">
 You don't need to create baseline files manually. The `generate_baseline.py` script creates them for you. This page is for understanding what's inside.
 </Aside>
+
+  </TabItem>
+</Tabs>
 
 ---
 
 ## File Structure Overview
 
-| Field | Purpose |
-|:------|:--------|
-| `title` | Human-readable name for the baseline |
-| `description` | Brief summary of the baseline's purpose |
-| `authors` | List of contributors and their organizations |
-| `parent_values` | Default configuration level for organization-defined values |
-| `profile` | Sections and rules that make up the baseline |
+| Field | Purpose | Version |
+|:------|:--------|:--------|
+| `title` | Human-readable name for the baseline | Both |
+| `description` | Brief summary of the baseline's purpose | Both |
+| `authors` | List of contributors and their organizations | Both |
+| `parent_values` | Default configuration level for organization-defined values | Both |
+| `platform` | Target OS and version | 2.0 only |
+| `profile` | Sections and rules that make up the baseline | Both |
 
 ---
 
@@ -50,7 +64,23 @@ description: |
 
 ### authors
 
-Contributors listed in AsciiDoc table format. This appears in generated documentation.
+Contributors who appear in generated documentation.
+
+<Tabs syncKey="mscp-version">
+  <TabItem label="mSCP 2.0 (Beta)">
+
+```yaml
+authors:
+  - name: John Smith
+    organization: NIST
+  - name: Jane Doe
+    organization: NASA
+```
+
+  </TabItem>
+  <TabItem label="mSCP 1.0">
+
+Listed in AsciiDoc table format:
 
 ```yaml
 authors: |
@@ -60,6 +90,9 @@ authors: |
   |Jane Doe|NASA
   |===
 ```
+
+  </TabItem>
+</Tabs>
 
 ### parent_values
 
@@ -73,12 +106,22 @@ parent_values: "recommended"
 Organization-defined values are settings like password length or screen lock timeout that vary by organization. This field sets the default values to use.
 </Aside>
 
+### platform (mSCP 2.0 only)
+
+Specifies the target operating system and version. This field is not present in mSCP 1.0 baselines.
+
+```yaml
+platform:
+  macOS:
+    os_version: "26.0"
+```
+
 ### profile
 
 The core of the baseline. Organizes rules into sections for the generated documentation.
 
-- **section** - Category name (matches files in the `sections/` folder)
-- **rules** - List of rule IDs (matches files in the `rules/` folder)
+- **section** — Category name (matches files in the `sections/` folder)
+- **rules** — List of rule IDs (matches files in the `rules/` folder)
 
 ```yaml
 profile:
@@ -96,6 +139,42 @@ profile:
 ---
 
 ## Complete Example
+
+<Tabs syncKey="mscp-version">
+  <TabItem label="mSCP 2.0 (Beta)">
+
+```yaml
+title: "macOS 26 (Tahoe): NIST 800-53r5 Moderate"
+description: |
+  This guide describes the actions to take when securing
+  a macOS 26 system against the NIST 800-53 Rev 5 Moderate baseline.
+authors:
+  - name: John Smith
+    organization: NIST
+  - name: Jane Doe
+    organization: NASA
+parent_values: "recommended"
+platform:
+  macOS:
+    os_version: "26.0"
+profile:
+  - section: "Auditing"
+    rules:
+      - audit_acls_files_configure
+      - audit_acls_files_mode_configure
+  - section: "Authentication"
+    rules:
+      - auth_pam_login_smartcard_enforce
+      - auth_pam_su_smartcard_enforce
+      - auth_smartcard_allow
+  - section: "System Settings"
+    rules:
+      - system_settings_firewall_enable
+      - system_settings_gatekeeper_enable
+```
+
+  </TabItem>
+  <TabItem label="mSCP 1.0">
 
 ```yaml
 title: "macOS 15 (Sequoia): NIST 800-53r5 Moderate"
@@ -125,13 +204,15 @@ profile:
       - system_settings_gatekeeper_enable
 ```
 
+  </TabItem>
+</Tabs>
+
 ---
 
 ## Next Steps
 
-- <a href={`${base}baselines/how-to-generate-baselines/`}>How to Generate Baselines</a> - Create a baseline from a framework
-- <a href={`${base}baselines/tailoring-a-baseline/`}>Tailoring a Baseline</a> - Customize rules and values
-- <a href={`${base}rules/what-are-rules/`}>What Are Rules</a> - Understand the rules that baselines reference
+- <a href={`${base}baselines/how-to-generate-baselines/`}>How to Generate Baselines</a> — Create a baseline from a framework
+- <a href={`${base}baselines/tailoring-a-baseline/`}>Tailoring a Baseline</a> — Customize rules and values
 
 <style>{`
   .sl-markdown-content th {

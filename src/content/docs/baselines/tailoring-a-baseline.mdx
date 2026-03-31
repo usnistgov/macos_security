@@ -3,7 +3,7 @@ title: Tailoring a Baseline
 description: Customize a baseline to fit your organization's requirements.
 ---
 
-import { Steps, Aside, FileTree } from '@astrojs/starlight/components';
+import { Steps, Aside, FileTree, Tabs, TabItem } from '@astrojs/starlight/components';
 
 export const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : import.meta.env.BASE_URL + '/';
 
@@ -27,6 +27,83 @@ Consider tailoring when you need to:
 ---
 
 ## Tailor a Baseline
+
+<Tabs syncKey="mscp-version">
+  <TabItem label="mSCP 2.0 (Beta)">
+
+<Aside type="caution" title="mSCP 2.0 is currently in Beta">
+mSCP 2.0 may contain errors or unexpected issues. If you encounter any problems, please [report them to the project](https://github.com/usnistgov/macos_security/issues) — together we can make it a better solution.
+</Aside>
+
+<Steps>
+
+1. **Run the tailoring command**
+
+   ```bash
+   ./mscp.py baseline -k BASELINE_NAME -t
+   ```
+
+   Example:
+   ```bash
+   ./mscp.py baseline -k 800-53r5_moderate -t
+   ```
+
+2. **Enter baseline information**
+
+   You'll be prompted for:
+   - Baseline name
+   - Author name
+   - Organization
+
+3. **Select rules to include**
+
+   For each rule, choose whether to include it:
+   ```
+   Include "audit_acls_files_configure"? [Y/n/all/?]:
+   ```
+
+   | Option | Action |
+   |:-------|:-------|
+   | `Y` | Include this rule (default) |
+   | `n` | Exclude this rule |
+   | `all` | Include all remaining rules |
+   | `?` | Show rule details |
+
+   <Aside type="note">
+   Some rules marked as "inherent" are automatically included without prompting.
+   </Aside>
+
+4. **Set organization-defined values**
+
+   For rules that need custom values, enter your setting or press Enter for the default:
+   ```
+   Enter value for "pwpolicy_account_lockout_enforce"
+   or press Enter for recommended (3):
+   ```
+
+5. **Find your files**
+
+   Your tailored baseline and custom values are saved:
+
+   <FileTree>
+   - macos_security/
+       - config/
+           - custom/
+               - baselines/
+                   - **YOUR_BASELINE.yaml** Tailored baseline
+       - custom/
+           - rules/
+               - *.yaml Custom ODV values
+   </FileTree>
+
+</Steps>
+
+  </TabItem>
+  <TabItem label="mSCP 1.0">
+
+<Aside type="caution" title="Always Use the Correct Branch">
+Each macOS version has its own branch (`sequoia`, `sonoma`, `ventura`, etc.). **Never use the `main` branch** — it won't work for generating content.
+</Aside>
 
 <Steps>
 
@@ -82,13 +159,16 @@ Consider tailoring when you need to:
    - macos_security/
        - build/
            - baselines/
-               - **YOUR_BASELINE.yaml** - Tailored baseline
+               - **YOUR_BASELINE.yaml** Tailored baseline
        - custom/
            - rules/
-               - *.yaml - Custom ODV values
+               - *.yaml Custom ODV values
    </FileTree>
 
 </Steps>
+
+  </TabItem>
+</Tabs>
 
 ---
 
@@ -108,6 +188,20 @@ This file overrides the default value for that rule. Your custom values are pres
 
 ## Example Workflow
 
+<Tabs syncKey="mscp-version">
+  <TabItem label="mSCP 2.0 (Beta)">
+
+```bash
+# Generate a tailored NIST 800-53 Moderate baseline
+./mscp.py baseline -k 800-53r5_moderate -t
+
+# Generate outputs from your tailored baseline
+./mscp.py guidance custom/baselines/my_org_baseline.yaml -A
+```
+
+  </TabItem>
+  <TabItem label="mSCP 1.0">
+
 ```bash
 # Generate a tailored NIST 800-53 Moderate baseline
 ./scripts/generate_baseline.py -k 800-53r5_moderate -t
@@ -116,13 +210,16 @@ This file overrides the default value for that rule. Your custom values are pres
 ./scripts/generate_guidance.py -s -p build/baselines/my_org_baseline.yaml
 ```
 
+  </TabItem>
+</Tabs>
+
 ---
 
 ## Next Steps
 
-- <a href={`${base}guidance/how-to-generate-guidance/`}>How to Generate Guidance</a> - Create outputs from your tailored baseline
-- <a href={`${base}baselines/baseline-file-layout/`}>Baseline File Layout</a> - Understand the YAML structure
-- <a href={`${base}personalization/customize-rules/`}>Customize Rules</a> - Advanced rule customization
+- <a href={`${base}guidance/how-to-generate-guidance/`}>How to Generate Guidance</a> — Create outputs from your tailored baseline
+- <a href={`${base}baselines/baseline-file-layout/`}>Baseline File Layout</a> — Understand the YAML structure
+- <a href={`${base}personalization/customize-rules/`}>Customize Rules</a> — Advanced rule customization
 
 <style>{`
   .sl-markdown-content th {

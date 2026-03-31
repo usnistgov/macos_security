@@ -3,25 +3,61 @@ title: How to Generate Configuration Profiles
 description: Create .mobileconfig files from your baseline.
 ---
 
-import { Steps, FileTree, Aside } from '@astrojs/starlight/components';
+import { Steps, FileTree, Aside, Tabs, TabItem } from '@astrojs/starlight/components';
 
 export const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : import.meta.env.BASE_URL + '/';
 
-Configuration profiles are generated using the `generate_guidance.py` script with the `-p` flag. The script reads your baseline and creates `.mobileconfig` files ready for MDM deployment.
+Configuration profiles are generated as part of the guidance output using the `-p` flag. The script reads your baseline and creates `.mobileconfig` files ready for MDM deployment.
 
 <Aside type="note">
 You need a baseline first. See <a href={`${base}baselines/how-to-generate-baselines/`}>How to Generate Baselines</a> if you haven't created one.
 </Aside>
 
-<Aside type="caution" title="Always Use the Correct Branch (mSCP 1.0)">
-Each macOS version has its own branch (`sequoia`, `sonoma`, `ventura`, etc.). **Never use the `main` branch** — it won't work for generating content.
-
-**mSCP 2.0 (currently in beta)** will remove the per-branch requirement and introduce easier installation methods.
-</Aside>
-
 ---
 
 ## Generate Configuration Profiles
+
+<Tabs syncKey="mscp-version">
+  <TabItem label="mSCP 2.0 (Beta)">
+
+<Aside type="caution" title="mSCP 2.0 is currently in Beta">
+mSCP 2.0 may contain errors or unexpected issues. If you encounter any problems, please [report them to the project](https://github.com/usnistgov/macos_security/issues) — together we can make it a better solution.
+</Aside>
+
+<Steps>
+
+1. **Generate unsigned profiles**
+
+   ```bash
+   ./mscp.py guidance custom/baselines/BASELINE_NAME.yaml -p
+   ```
+
+   Example:
+   ```bash
+   ./mscp.py guidance custom/baselines/800-53r5_moderate_macos_26.0.yaml -p
+   ```
+
+2. **Find your files**
+
+   Profiles are saved to `build/BASELINE_NAME/mobileconfigs/`:
+
+   <FileTree>
+   - build/
+       - 800-53r5_moderate_macos_26.0/
+           - mobileconfigs/
+               - unsigned/ Unsigned profiles (.mobileconfig)
+               - preferences/ Preference plists (.plist)
+               - granular/ Granular profiles (if --granular-profiles)
+   </FileTree>
+
+</Steps>
+
+  </TabItem>
+  <TabItem label="mSCP 1.0">
+
+<Aside type="caution" title="Always Use the Correct Branch">
+Each macOS version has its own branch (`sequoia`, `sonoma`, `ventura`, etc.). **Never use the `main` branch** — it won't work for generating content.
+</Aside>
 
 <Steps>
 
@@ -44,61 +80,82 @@ Each macOS version has its own branch (`sequoia`, `sonoma`, `ventura`, etc.). **
    - build/
        - 800-53r5_moderate/
            - mobileconfigs/
-               - unsigned/ - Unsigned profiles (.mobileconfig)
-               - preferences/ - Preference plists (.plist)
+               - unsigned/ Unsigned profiles (.mobileconfig)
+               - preferences/ Preference plists (.plist)
    </FileTree>
 
 </Steps>
+
+  </TabItem>
+</Tabs>
 
 ---
 
 ## Generate Signed Profiles
 
+<Aside type="caution" title="Container Users">
+Signed profiles are not functional when running mSCP through a container. You must use the manual (local) installation method to sign profiles.
+</Aside>
+
 Signed profiles verify authenticity and prevent tampering. You need a signing certificate installed in your keychain.
 
-<Steps>
+**Step 1: Get your certificate's Subject Key ID**
 
-1. **Get your certificate's Subject Key ID**
+First, find the offset:
+```bash
+security find-certificate -c "Your Certificate Name" -p | \
+  openssl asn1parse | \
+  awk -F: '/X509v3 Subject Key Identifier/ {getline; print $1}'
+```
 
-   First, find the offset:
-   ```bash
-   security find-certificate -c "Your Certificate Name" -p | \
-     openssl asn1parse | \
-     awk -F: '/X509v3 Subject Key Identifier/ {getline; print $1}'
-   ```
+Then extract the hash using that offset (replace `OFFSET` with the number from above):
+```bash
+security find-certificate -c "Your Certificate Name" -p | \
+  openssl asn1parse -strparse OFFSET | \
+  awk -F: '/HEX DUMP/{print $4}'
+```
 
-   Then extract the hash using that offset (replace `OFFSET` with the number from above):
-   ```bash
-   security find-certificate -c "Your Certificate Name" -p | \
-     openssl asn1parse -strparse OFFSET | \
-     awk -F: '/HEX DUMP/{print $4}'
-   ```
+Replace `"Your Certificate Name"` with your signing certificate's common name.
 
-   Replace `"Your Certificate Name"` with your signing certificate's common name.
+**Step 2: Generate signed profiles**
 
-2. **Generate signed profiles**
+<Tabs syncKey="mscp-version">
+  <TabItem label="mSCP 2.0 (Beta)">
 
-   ```bash
-   ./scripts/generate_guidance.py -p -H SUBJECT_KEY_ID baselines/BASELINE_NAME.yaml
-   ```
+```bash
+./mscp.py guidance custom/baselines/BASELINE_NAME.yaml -p -H SUBJECT_KEY_ID
+```
 
-   Example:
-   ```bash
-   ./scripts/generate_guidance.py -p -H ABC123DEF456 baselines/800-53r5_moderate.yaml
-   ```
+Example:
+```bash
+./mscp.py guidance custom/baselines/800-53r5_moderate_macos_26.0.yaml -p -H ABC123DEF456
+```
 
-3. **Find your signed files**
+  </TabItem>
+  <TabItem label="mSCP 1.0">
 
-   <FileTree>
-   - build/
-       - 800-53r5_moderate/
-           - mobileconfigs/
-               - unsigned/ - Unsigned profiles
-               - signed/ - Signed profiles
-               - preferences/ - Preference plists
-   </FileTree>
+```bash
+./scripts/generate_guidance.py -p -H SUBJECT_KEY_ID baselines/BASELINE_NAME.yaml
+```
 
-</Steps>
+Example:
+```bash
+./scripts/generate_guidance.py -p -H ABC123DEF456 baselines/800-53r5_moderate.yaml
+```
+
+  </TabItem>
+</Tabs>
+
+**Step 3: Find your signed files**
+
+<FileTree>
+- build/
+    - BASELINE_NAME/
+        - mobileconfigs/
+            - unsigned/ Unsigned profiles
+            - signed/ Signed profiles
+            - preferences/ Preference plists
+</FileTree>
 
 <Aside type="tip">
 Signing is optional. Signed profiles verify the profile hasn't been modified and can prevent unauthorized changes.
@@ -108,20 +165,51 @@ Signing is optional. Signed profiles verify the profile hasn't been modified and
 
 ## Command Reference
 
+<Tabs syncKey="mscp-version">
+  <TabItem label="mSCP 2.0 (Beta)">
+
+| Flag | Description |
+|:-----|:------------|
+| `-p` | Generate individual profiles (one per payload type) |
+| `--consolidated-profile` | Generate a single consolidated profile |
+| `--granular-profiles` | Generate granular profiles |
+| `-H HASH` | Sign profiles with your certificate's Subject Key ID |
+
+  </TabItem>
+  <TabItem label="mSCP 1.0">
+
 | Flag | Description |
 |:-----|:------------|
 | `-p` | Generate individual profiles (one per payload type) |
 | `-P` | Generate a single consolidated profile |
 | `-H HASH` | Sign profiles with your certificate's Subject Key ID |
 
+  </TabItem>
+</Tabs>
+
 ---
 
 ## Individual vs Consolidated Profiles
 
+<Tabs syncKey="mscp-version">
+  <TabItem label="mSCP 2.0 (Beta)">
+
 | Type | Flag | Best For |
 |:-----|:-----|:---------|
-| **Individual** | `-p` | Flexibility - deploy only the profiles you need |
-| **Consolidated** | `-P` | Simplicity - one profile with all settings |
+| **Individual** | `-p` | Flexibility — deploy only the profiles you need |
+| **Consolidated** | `--consolidated-profile` | Simplicity — one profile with all settings |
+| **Granular** | `--granular-profiles` | Fine-grained control per payload |
+
+  </TabItem>
+  <TabItem label="mSCP 1.0">
+
+| Type | Flag | Best For |
+|:-----|:-----|:---------|
+| **Individual** | `-p` | Flexibility — deploy only the profiles you need |
+| **Consolidated** | `-P` | Simplicity — one profile with all settings |
+
+  </TabItem>
+</Tabs>
 
 Most organizations prefer individual profiles (`-p`) for easier management and troubleshooting.
 
@@ -129,8 +217,8 @@ Most organizations prefer individual profiles (`-p`) for easier management and t
 
 ## Next Steps
 
-- <a href={`${base}configuration-profiles/configuration-profile-layout/`}>Configuration Profile Layout</a> - Understand the file structure
-- <a href={`${base}guidance/how-to-generate-guidance/`}>How to Generate Guidance</a> - Generate all outputs at once
+- <a href={`${base}configuration-profiles/configuration-profile-layout/`}>Configuration Profile Layout</a> — Understand the file structure
+- <a href={`${base}guidance/how-to-generate-guidance/`}>How to Generate Guidance</a> — Generate all outputs at once
 
 <style>{`
   .sl-markdown-content th {

@@ -3,15 +3,28 @@ title: Configuration Profile Layout
 description: Understand the structure of .mobileconfig files.
 ---
 
-import { Aside } from '@astrojs/starlight/components';
+import { Aside, Tabs, TabItem } from '@astrojs/starlight/components';
 
 export const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : import.meta.env.BASE_URL + '/';
 
 Configuration profiles are XML files in Apple's property list (plist) format. Understanding the structure helps you troubleshoot profiles or make manual adjustments.
 
+<Tabs syncKey="mscp-version">
+  <TabItem label="mSCP 2.0 (Beta)">
+
 <Aside type="tip">
-You don't need to create profiles manually. The `generate_guidance.py -p` script creates them for you. This page explains what's inside.
+You don't need to create profiles manually. The `./mscp.py guidance -p` command creates them for you. This page explains what's inside.
 </Aside>
+
+  </TabItem>
+  <TabItem label="mSCP 1.0">
+
+<Aside type="tip">
+You don't need to create profiles manually. The `./scripts/generate_guidance.py -p` script creates them for you. This page explains what's inside.
+</Aside>
+
+  </TabItem>
+</Tabs>
 
 ---
 

@@ -3,22 +3,165 @@ title: Getting Started
 description: Get up and running with the macOS Security Compliance Project.
 ---
 
-import { Steps, Aside, LinkCard } from '@astrojs/starlight/components';
+import { Steps, Aside, LinkCard, LinkButton, Tabs, TabItem, Card, CardGrid, Badge } from '@astrojs/starlight/components';
 
 export const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : import.meta.env.BASE_URL + '/';
 
-Get the project files on your Mac and install the required packages. This takes about 5 minutes.
+Decide which version to set up with, then follow the steps below.
 
-<Aside type="caution" title="Always Use the Correct Branch (mSCP 1.0)">
-Each macOS version has its own branch (`sequoia`, `sonoma`, `ventura`, etc.).
-**Never use the `main` branch** — it won't work for generating content.
-
-**mSCP 2.0 (currently in beta)** will remove the per-branch requirement and introduce easier installation methods.
-</Aside>
-
----
+<CardGrid>
+  <Card title="mSCP 2.0 (Beta)" icon="rocket">
+    The newest version, runs in a container or locally (with dependencies), supports all macOS/iOS/visionOS versions in one place without switching branches.
+  </Card>
+  <Card title="mSCP 1.0" icon="setting">
+    The stable release, runs locally (with dependencies), uses separate branches for each macOS/iOS/visionOS version and requires switching branches to change versions.
+  </Card>
+</CardGrid>
 
 ## Setup
+
+<Tabs syncKey="mscp-version">
+  <TabItem label="mSCP 2.0 (Beta)">
+
+<Aside type="caution" title="mSCP 2.0 is currently in Beta">
+mSCP 2.0 may contain errors or unexpected issues. If you encounter any problems, please [report them to the project](https://github.com/usnistgov/macos_security/issues) — together we can make it a better solution.
+</Aside>
+
+<Tabs syncKey="mscp2-method">
+  <TabItem label="Container (Recommended)">
+
+**Requirements:**
+- A container solution is required:
+  - [Apple Container](https://github.com/apple/container) (Recommended)
+  - [Docker](https://www.docker.com/)
+
+<Steps>
+
+1. **Create Local Folders**
+
+   ```bash
+   mkdir -p ~/Desktop/mscp/custom
+   ```
+
+2. **Run the Container**
+
+   **Using Apple Container:**
+   ```bash
+   container run -it \
+     --volume ~/Desktop/mscp:/mscp/build \
+     --volume ~/Desktop/mscp/custom:/mscp/custom \
+     ghcr.io/usnistgov/macos_security:latest
+   ```
+
+   <details>
+   <summary>**Apple Container commands** Click to expand</summary>
+
+   **Start the container service (required before first run):**
+   ```bash
+   container system start
+   ```
+
+   **Exit the container:**
+   ```bash
+   exit
+   ```
+
+   **Stop the container service:**
+   ```bash
+   container system stop
+   ```
+
+   **Check container service status:**
+   ```bash
+   container system status
+   ```
+
+   </details>
+
+   **Or Using Docker:**
+   ```bash
+   # Note: Docker requires full paths for volume mounts
+   docker run -it \
+     --volume /Users/<username>/Desktop/mscp:/mscp/build \
+     --volume /Users/<username>/Desktop/mscp/custom:/mscp/custom \
+     ghcr.io/usnistgov/macos_security:latest
+   ```
+
+3. **Generate Content**
+
+   ```bash
+   # Create a baseline
+   ./mscp.py baseline -k cis_lvl1
+   # Output: Generated new baseline file: config/custom/baselines/cis_lvl1_macos_26.0.yaml
+
+   # Generate guidance with all outputs
+   ./mscp.py guidance custom/baselines/cis_lvl1_macos_26.0.yaml -A
+   # Output: MSCP DOCUMENT GENERATION COMPLETE! All documents in: /build/cis_lvl1_macos_26.0/
+   ```
+
+</Steps>
+
+  </TabItem>
+  <TabItem label="Manual Method (Optional)">
+
+Manual setup with Python and Ruby.
+
+**Requirements:**
+- Python >= 3.14
+  - Recommended: [Macadmins Python](https://github.com/macadmins/python)
+- Ruby >= 3.4.4
+
+<Steps>
+
+1. **Clone the Repository**
+
+   ```bash
+   git clone -b dev_2.0 https://github.com/usnistgov/macos_security.git
+   cd macos_security
+   ```
+
+2. **Python Setup**
+
+   ```bash
+   # Create virtual environment
+   python3 -m venv .venv
+   source .venv/bin/activate
+
+   # Install requirements
+   python3 -m pip install .
+   ```
+
+3. **Ruby Setup**
+
+   ```bash
+   bundle install --binstubs --path mscp_gems
+   ```
+
+4. **Generate Content**
+
+   ```bash
+   # Create a baseline
+   ./mscp.py baseline -k cis_lvl1
+
+   # Generate guidance with all outputs
+   ./mscp.py guidance custom/baselines/cis_lvl1_macos_26.0.yaml -A
+
+   # When done, deactivate the virtual environment
+   deactivate
+   ```
+
+</Steps>
+
+  </TabItem>
+</Tabs>
+
+  </TabItem>
+  <TabItem label="mSCP 1.0">
+
+<Aside type="caution" title="Always Use the Correct Branch">
+Each macOS version has its own branch (`sequoia`, `sonoma`, `ventura`, etc.).
+**Never use the `main` branch** — it won't work for generating content.
+</Aside>
 
 **Requirements:**
 - Python >= 3.12.1 (3.14 is not supported)
@@ -27,7 +170,7 @@ Each macOS version has its own branch (`sequoia`, `sonoma`, `ventura`, etc.).
 
 <Steps>
 
-1. ### Clone the Repository
+1. **Clone the Repository**
 
    ```bash
    git clone https://github.com/usnistgov/macos_security.git
@@ -46,7 +189,7 @@ Each macOS version has its own branch (`sequoia`, `sonoma`, `ventura`, etc.).
 
    </details>
 
-2. ### Python Setup
+2. **Python Setup**
 
    ```bash
    # Create virtual environment
@@ -89,13 +232,13 @@ Each macOS version has its own branch (`sequoia`, `sonoma`, `ventura`, etc.).
 
    </details>
 
-3. ### Ruby Setup (Optional — for PDF output)
+3. **Ruby Setup** (Optional — for PDF output)
 
    ```bash
    bundle install --binstubs --path mscp_gems
    ```
 
-4. ### Verify Setup
+4. **Verify Setup**
 
    Run this command to confirm everything works:
    ```bash
@@ -107,6 +250,9 @@ Each macOS version has its own branch (`sequoia`, `sonoma`, `ventura`, etc.).
    You should see a list of available baselines.
 
 </Steps>
+
+  </TabItem>
+</Tabs>
 
 ---
 
