@@ -3,29 +3,67 @@ title: How to Generate Compliance Scripts
 description: Create a compliance script from your baseline.
 ---
 
-import { Steps, FileTree, Aside } from '@astrojs/starlight/components';
+import { Steps, FileTree, Aside, Tabs, TabItem } from '@astrojs/starlight/components';
 
 export const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : import.meta.env.BASE_URL + '/';
 
-Compliance scripts are generated using the `generate_guidance.py` script with the `-s` flag. The script reads your baseline and creates a zsh script ready for deployment.
+Compliance scripts are generated as part of the guidance output using the `-s` flag. The script reads your baseline and creates a zsh script ready for deployment.
 
 <Aside type="note">
 You need a baseline first. See <a href={`${base}baselines/how-to-generate-baselines/`}>How to Generate Baselines</a> if you haven't created one.
-</Aside>
-
-<Aside type="caution" title="Always Use the Correct Branch (mSCP 1.0)">
-Each macOS version has its own branch (`sequoia`, `sonoma`, `ventura`, etc.). **Never use the `main` branch** — it won't work for generating content.
-
-**mSCP 2.0 (currently in beta)** will remove the per-branch requirement and introduce easier installation methods.
 </Aside>
 
 ---
 
 ## Generate a Compliance Script
 
+<Tabs syncKey="mscp-version">
+  <TabItem label="mSCP 2.0 (Beta)">
+
+<Aside type="caution" title="mSCP 2.0 is currently in Beta">
+mSCP 2.0 may contain errors or unexpected issues. If you encounter any problems, please [report them to the project](https://github.com/usnistgov/macos_security/issues) — together we can make it a better solution.
+</Aside>
+
 <Steps>
 
-1. **Run the generation script**
+1. **Run the command**
+
+   ```bash
+   ./mscp.py guidance custom/baselines/BASELINE_NAME.yaml -s
+   ```
+
+   Example:
+   ```bash
+   ./mscp.py guidance custom/baselines/800-53r5_moderate_macos_26.0.yaml -s
+   ```
+
+2. **Find your files**
+
+   The `-s` flag generates the compliance script and audit plist. Guidance documents are also created by default.
+
+   <FileTree>
+   - build/
+       - 800-53r5_moderate_macos_26.0/
+           - 800-53r5_moderate_macos_26.0_compliance.sh Compliance script
+           - 800-53r5_moderate_macos_26.0.adoc AsciiDoc guidance
+           - 800-53r5_moderate_macos_26.0.html HTML guidance
+           - 800-53r5_moderate_macos_26.0.pdf PDF guidance
+           - preferences/
+               - org.800-53r5_moderate_macos_26.0.audit.plist
+   </FileTree>
+
+</Steps>
+
+  </TabItem>
+  <TabItem label="mSCP 1.0">
+
+<Aside type="caution" title="Always Use the Correct Branch">
+Each macOS version has its own branch (`sequoia`, `sonoma`, `ventura`, etc.). **Never use the `main` branch** — it won't work for generating content.
+</Aside>
+
+<Steps>
+
+1. **Run the script**
 
    ```bash
    ./scripts/generate_guidance.py -s baselines/BASELINE_NAME.yaml
@@ -43,15 +81,18 @@ Each macOS version has its own branch (`sequoia`, `sonoma`, `ventura`, etc.). **
    <FileTree>
    - build/
        - 800-53r5_moderate/
-           - 800-53r5_moderate_compliance.sh - Compliance script
-           - 800-53r5_moderate.adoc - AsciiDoc guidance
-           - 800-53r5_moderate.html - HTML guidance
-           - 800-53r5_moderate.pdf - PDF guidance
+           - 800-53r5_moderate_compliance.sh Compliance script
+           - 800-53r5_moderate.adoc AsciiDoc guidance
+           - 800-53r5_moderate.html HTML guidance
+           - 800-53r5_moderate.pdf PDF guidance
            - preferences/
                - org.800-53r5_moderate.audit.plist
    </FileTree>
 
 </Steps>
+
+  </TabItem>
+</Tabs>
 
 ---
 
@@ -59,9 +100,22 @@ Each macOS version has its own branch (`sequoia`, `sonoma`, `ventura`, etc.). **
 
 Run with sudo for full access to system settings:
 
+<Tabs syncKey="mscp-version">
+  <TabItem label="mSCP 2.0 (Beta)">
+
 ```zsh
-sudo ./build/BASELINE_NAME/BASELINE_NAME_compliance.sh
+sudo ./build/800-53r5_moderate_macos_26.0/800-53r5_moderate_macos_26.0_compliance.sh
 ```
+
+  </TabItem>
+  <TabItem label="mSCP 1.0">
+
+```zsh
+sudo ./build/800-53r5_moderate/800-53r5_moderate_compliance.sh
+```
+
+  </TabItem>
+</Tabs>
 
 | Flag | Description |
 |:-----|:------------|
@@ -94,8 +148,8 @@ When executed, the script creates:
 
 ## Next Steps
 
-- <a href={`${base}compliance-scripts/compliance-script-layout/`}>Compliance Script Layout</a> - Understand the script structure
-- <a href={`${base}compliance-scripts/what-are-compliance-scripts/`}>What Are Compliance Scripts?</a> - Learn more about compliance scripts
+- <a href={`${base}compliance-scripts/compliance-script-layout/`}>Compliance Script Layout</a> — Understand the script structure
+- <a href={`${base}compliance-scripts/what-are-compliance-scripts/`}>What Are Compliance Scripts?</a> — Learn more about compliance scripts
 
 <style>{`
   .sl-markdown-content th {

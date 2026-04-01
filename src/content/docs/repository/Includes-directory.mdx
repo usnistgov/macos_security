@@ -3,15 +3,35 @@ title: Includes Directory
 description: Supporting files and resources for generation scripts.
 ---
 
-import { FileTree, Aside } from '@astrojs/starlight/components';
+import { FileTree, Aside, Tabs, TabItem } from '@astrojs/starlight/components';
 
 export const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : import.meta.env.BASE_URL + '/';
 
-The `includes/` directory contains supporting files used by the generation scripts. These files provide baseline data, configuration profile templates, and payload definitions.
+The includes directory contains supporting files used by the generation scripts. These files provide baseline data, configuration profile templates, and payload definitions.
 
 ---
 
 ## Files Reference
+
+<Tabs syncKey="mscp-version">
+  <TabItem label="mSCP 2.0 (Beta)">
+
+Located in `config/includes/`:
+
+| File | Description |
+|:-----|:------------|
+| `800-53_baselines.yaml` | NIST 800-53 control baseline definitions |
+| `mscp-data.yaml` | Project metadata and configuration |
+| `acronyms.yaml` | Acronym definitions |
+| `pwpolicy.xml` | Password policy configuration template |
+| `com.apple.alf.private_data.mobileconfig` | Application firewall profile template |
+| `com.apple.security.authorization.mobileconfig` | Security authorization profile template |
+| `enablePF-mscp.sh` | Packet filter enablement script |
+
+  </TabItem>
+  <TabItem label="mSCP 1.0">
+
+Located in `includes/`:
 
 | File | Description |
 |:-----|:------------|
@@ -23,25 +43,54 @@ The `includes/` directory contains supporting files used by the generation scrip
 | `com.apple.security.authorization.mobileconfig` | Security authorization profile template |
 | `enablePF-mscp.sh` | Packet filter enablement script |
 
+  </TabItem>
+</Tabs>
+
 ---
 
 ## Key Files
 
-### supported_payloads.yaml
+<Tabs syncKey="mscp-version">
+  <TabItem label="mSCP 2.0 (Beta)">
 
-Defines which configuration profile payloads the project supports. When adding custom rules that use new payloads, add them here.
+**800-53_baselines.yaml** — Contains the NIST 800-53 control mappings used by the `-c` flag in `./mscp.py baseline` to output controls covered by rules.
 
-### 800-53_baselines.yaml
+**mscp-data.yaml** — Project-wide metadata including version information, supported platforms, and default settings.
 
-Contains the NIST 800-53 control mappings used by the `-c` flag in `generate_baseline.py` to output controls covered by rules.
+**acronyms.yaml** — Acronym definitions used in generated documentation.
 
-### mscp-data.yaml
+  </TabItem>
+  <TabItem label="mSCP 1.0">
 
-Project-wide metadata including version information and default settings.
+**supported_payloads.yaml** — Defines which configuration profile payloads the project supports. When adding custom rules that use new payloads, add them here.
+
+**800-53_baselines.yaml** — Contains the NIST 800-53 control mappings used by the `-c` flag in `generate_baseline.py` to output controls covered by rules.
+
+**mscp-data.yaml** — Project-wide metadata including version information and default settings.
+
+  </TabItem>
+</Tabs>
 
 ---
 
 ## Directory Structure
+
+<Tabs syncKey="mscp-version">
+  <TabItem label="mSCP 2.0 (Beta)">
+
+<FileTree>
+- config/includes/
+    - 800-53_baselines.yaml
+    - mscp-data.yaml
+    - acronyms.yaml
+    - pwpolicy.xml
+    - com.apple.alf.private_data.mobileconfig
+    - com.apple.security.authorization.mobileconfig
+    - enablePF-mscp.sh
+</FileTree>
+
+  </TabItem>
+  <TabItem label="mSCP 1.0">
 
 <FileTree>
 - includes/
@@ -54,12 +103,15 @@ Project-wide metadata including version information and default settings.
     - enablePF-mscp.sh
 </FileTree>
 
+  </TabItem>
+</Tabs>
+
 ---
 
 ## Next Steps
 
-- <a href={`${base}repository/directory-layout/`}>Directory Layout</a> - Repository structure overview
-- <a href={`${base}personalization/customize-rules/`}>Customize Rules</a> - Add custom payloads for new rules
+- <a href={`${base}repository/directory-layout/`}>Directory Layout</a> — Repository structure overview
+- <a href={`${base}personalization/customize-rules/`}>Customize Rules</a> — Add custom payloads for new rules
 
 <style>{`
   .sl-markdown-content th {

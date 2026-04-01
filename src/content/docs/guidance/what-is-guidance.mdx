@@ -3,13 +3,24 @@ title: What is Guidance?
 description: Human-readable documentation generated from your baseline.
 ---
 
-import { Aside } from '@astrojs/starlight/components';
+import { Aside, Tabs, TabItem } from '@astrojs/starlight/components';
 
 export const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : import.meta.env.BASE_URL + '/';
 
 **Guidance** is the human-readable documentation generated from your baseline. It explains each security control: what it does, why it matters, how to implement it, and how to verify compliance.
 
-Once you have a baseline, run the `generate_guidance.py` script to create documentation in multiple formats.
+<Tabs syncKey="mscp-version">
+  <TabItem label="mSCP 2.0 (Beta)">
+
+Once you have a baseline, run `./mscp.py guidance` to create documentation in multiple formats.
+
+  </TabItem>
+  <TabItem label="mSCP 1.0">
+
+Once you have a baseline, run `./scripts/generate_guidance.py` to create documentation in multiple formats.
+
+  </TabItem>
+</Tabs>
 
 <Aside type="tip">
 Guidance documents are often required for audits and compliance submissions. They provide evidence that your organization understands and has implemented the required security controls.
@@ -19,11 +30,12 @@ Guidance documents are often required for audits and compliance submissions. The
 
 ## Output Formats
 
-| Format | Description |
-|:-------|:------------|
-| **AsciiDoc (.adoc)** | Source format for the documentation |
-| **HTML (.html)** | Web-viewable documentation |
-| **PDF (.pdf)** | Printable format for auditors and compliance teams |
+| Format | Description | Version |
+|:-------|:------------|:--------|
+| **AsciiDoc (.adoc)** | Source format for the documentation | Both |
+| **HTML (.html)** | Web-viewable documentation | Both |
+| **PDF (.pdf)** | Printable format for auditors and compliance teams | Both |
+| **Markdown (.md)** | Markdown format documentation | 2.0 only |
 
 ---
 

@@ -3,17 +3,11 @@ title: Generate SCAP
 description: Create SCAP, XCCDF, and OVAL documents from your rules.
 ---
 
-import { Steps, FileTree, Aside } from '@astrojs/starlight/components';
+import { Steps, FileTree, Aside, Tabs, TabItem } from '@astrojs/starlight/components';
 
 export const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : import.meta.env.BASE_URL + '/';
 
-The `generate_scap.py` script creates security compliance documents in SCAP (Security Content Automation Protocol) formats. These documents can be used with SCAP-compatible scanning tools.
-
-<Aside type="caution" title="Always Use the Correct Branch (mSCP 1.0)">
-Each macOS version has its own branch (`sequoia`, `sonoma`, `ventura`, etc.). **Never use the `main` branch** — it won't work for generating content.
-
-**mSCP 2.0 (currently in beta)** will remove the per-branch requirement and introduce easier installation methods.
-</Aside>
+The SCAP script creates security compliance documents in SCAP (Security Content Automation Protocol) formats. These documents can be used with SCAP-compatible scanning tools.
 
 ---
 
@@ -28,6 +22,52 @@ Each macOS version has its own branch (`sequoia`, `sonoma`, `ventura`, etc.). **
 ---
 
 ## Generate SCAP Documents
+
+<Tabs syncKey="mscp-version">
+  <TabItem label="mSCP 2.0 (Beta)">
+
+<Aside type="caution" title="mSCP 2.0 is currently in Beta">
+mSCP 2.0 may contain errors or unexpected issues. If you encounter any problems, please [report them to the project](https://github.com/usnistgov/macos_security/issues) — together we can make it a better solution.
+</Aside>
+
+<Steps>
+
+1. **List available baselines**
+
+   ```bash
+   ./mscp.py scap -l
+   ```
+
+2. **Generate SCAP for all rules**
+
+   ```bash
+   ./mscp.py scap
+   ```
+
+3. **Generate for a specific baseline**
+
+   ```bash
+   ./mscp.py scap -b stig
+   ```
+
+4. **Find your files**
+
+   Output is saved to `build/`:
+
+   | File | Description |
+   |:-----|:------------|
+   | `*_xccdf.xml` | XCCDF document |
+   | `*_oval.xml` | OVAL document |
+   | `*.xml` | Complete SCAP datastream |
+
+</Steps>
+
+  </TabItem>
+  <TabItem label="mSCP 1.0">
+
+<Aside type="caution" title="Always Use the Correct Branch">
+Each macOS version has its own branch (`sequoia`, `sonoma`, `ventura`, etc.). **Never use the `main` branch** — it won't work for generating content.
+</Aside>
 
 <Steps>
 
@@ -61,9 +101,26 @@ Each macOS version has its own branch (`sequoia`, `sonoma`, `ventura`, etc.). **
 
 </Steps>
 
+  </TabItem>
+</Tabs>
+
 ---
 
 ## Command Reference
+
+<Tabs syncKey="mscp-version">
+  <TabItem label="mSCP 2.0 (Beta)">
+
+| Flag | Description |
+|:-----|:------------|
+| `-l` | List available baseline tags |
+| `-b BASELINE` | Generate for a specific baseline (default: `all_rules`) |
+| `-x` | Generate only XCCDF |
+| `-o` | Generate only OVAL |
+| `--disa_stig FILE` | Include DISA STIG references from XCCDF file |
+
+  </TabItem>
+  <TabItem label="mSCP 1.0">
 
 | Flag | Description |
 |:-----|:------------|
@@ -72,6 +129,9 @@ Each macOS version has its own branch (`sequoia`, `sonoma`, `ventura`, etc.). **
 | `-x` | Generate only XCCDF |
 | `-o` | Generate only OVAL |
 | `-d FILE` | Include DISA STIG references from file |
+
+  </TabItem>
+</Tabs>
 
 ---
 
@@ -88,8 +148,8 @@ A SCAP datastream typically includes XCCDF, OVAL, OCIL, and CPE dictionary docum
 
 ## Next Steps
 
-- <a href={`${base}other/generate-mapping/`}>Generate Mapping</a> - Create custom framework mappings
-- <a href={`${base}guidance/how-to-generate-guidance/`}>How to Generate Guidance</a> - Generate documentation from your baseline
+- <a href={`${base}other/generate-mapping/`}>Generate Mapping</a> — Create custom framework mappings
+- <a href={`${base}guidance/how-to-generate-guidance/`}>How to Generate Guidance</a> — Generate documentation from your baseline
 
 <style>{`
   .sl-markdown-content th {

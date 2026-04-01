@@ -3,7 +3,7 @@ title: Quick Guide
 description: Step-by-step workflow for generating security compliance files.
 ---
 
-import { Steps, Aside, Card, CardGrid } from '@astrojs/starlight/components';
+import { Steps, Aside, Card, CardGrid, Tabs, TabItem, Badge, LinkCard } from '@astrojs/starlight/components';
 
 export const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : import.meta.env.BASE_URL + '/';
 
@@ -46,79 +46,291 @@ export const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BAS
     background: var(--sl-color-accent-low);
     color: var(--sl-color-accent-high);
   }
+
+  /* Section headers inside tabs (not picked up by TOC) */
+  .section-heading {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin: 2rem 0 1rem;
+    color: var(--sl-color-white);
+  }
 `}</style>
 
-<Aside type="caution" title="Always Use the Correct Branch (mSCP 1.0)">
-Each macOS version has its own branch (`sequoia`, `sonoma`, `ventura`, etc.).
-**Never use the `main` branch** — it won't work for generating content.
+A complete start to finish walkthrough of the macOS Security Compliance Project. Install, generate your first baseline, and create compliance documents all in one page.
 
-**mSCP 2.0 (currently in beta)** will remove the per-branch requirement and introduce easier installation methods.
+<Tabs syncKey="mscp-version">
+  <TabItem label="mSCP 2.0 (Beta)">
+
+<Aside type="caution" title="mSCP 2.0 is currently in Beta">
+mSCP 2.0 may contain errors or unexpected issues. If you encounter any problems, please [report them to the project](https://github.com/usnistgov/macos_security/issues) — together we can make it a better solution.
 </Aside>
 
-<Aside type="note" title="Local Installation Required">
-The scripts must be run locally from a cloned repository. There is no remote execution or `curl | bash` option available.
-</Aside>
+<div class="section-heading">Quick Start (Container)</div>
 
----
+Prefer to install manually with Python and Ruby? See the <a href={`${base}welcome/getting-started/`}>Getting Started</a> guide for the manual method.
 
-## 5-Step Workflow
-
-<small>*Already completed <a href={`${base}welcome/getting-started/`}>Getting Started</a>? Skip to [Step 3: Generate a Baseline](#generate-a-baseline).*</small>
+**Requirements:**
+- A container solution is required:
+  - [Apple Container](https://github.com/apple/container) (Recommended)
+  - [Docker](https://www.docker.com/)
 
 <Steps>
 
-1. ### Install Prerequisites
+1. **Create Local Folders**
 
-   macOS includes Python 3 and Ruby. You just need to install the packages:
-
-   **Python packages (required):**
    ```bash
-   pip3 install pyyaml xlwt --user
+   mkdir -p ~/Desktop/mscp/custom
    ```
 
-   **Ruby gems (optional — only needed for PDF output):**
+2. **Run the Container**
+
+   **Using Apple Container:**
    ```bash
-   gem install asciidoctor asciidoctor-pdf rouge --user-install
+   container run -it \
+     --volume ~/Desktop/mscp:/mscp/build \
+     --volume ~/Desktop/mscp/custom:/mscp/custom \
+     ghcr.io/usnistgov/macos_security:latest
    ```
 
    <details>
-   <summary>**Want isolated installs?** Click to expand</summary>
+   <summary>**Apple Container commands** Click to expand</summary>
 
-   A **virtual environment** keeps packages separate from your system Python — useful if you don't want to install packages globally or need to avoid conflicts.
-
-   **Python virtual environment:**
+   **Start the container service (required before first run):**
    ```bash
-   # Create environment (once)
-   python3 -m venv venv
-
-   # Activate before running scripts
-   source venv/bin/activate
-
-   # Install packages inside the environment
-   pip3 install -r requirements.txt
-
-   # When done, deactivate
-   deactivate
+   container system start
    ```
 
-   **Ruby local bundle:**
+   **Exit the container:**
    ```bash
-   bundle install --path vendor/bundle
+   exit
+   ```
+
+   **Stop the container service:**
+   ```bash
+   container system stop
+   ```
+
+   **Check container service status:**
+   ```bash
+   container system status
    ```
 
    </details>
 
-2. ### Clone & Checkout Branch
+   **Or Using Docker:**
+   ```bash
+   # Note: Docker requires full paths for volume mounts
+   docker run -it \
+     --volume /Users/<username>/Desktop/mscp:/mscp/build \
+     --volume /Users/<username>/Desktop/mscp/custom:/mscp/custom \
+     ghcr.io/usnistgov/macos_security:latest
+   ```
+
+3. **Generate a Baseline**
+
+   <div class="quick-ref">
+
+   **List baselines:** `./mscp.py baseline -l`
+
+   **Generate:** `./mscp.py baseline -k BASELINE_NAME`
+
+   **With tailoring:** `./mscp.py baseline -k BASELINE_NAME -t`
+
+   </div>
+
+   ```bash
+   # Example: Generate CIS Level 1 baseline
+   ./mscp.py baseline -k cis_lvl1
+   # Output: Generated new baseline file: config/custom/baselines/cis_lvl1_macos_26.0.yaml
+   ```
+
+4. **Generate Outputs**
+
+   ```bash
+   ./mscp.py guidance custom/baselines/BASELINE_NAME.yaml [flags]
+   ```
+
+   | Flag | Output |
+   |:-----|:-------|
+   | `-A` | All outputs |
+   | `-s` | Compliance script |
+   | `-p` | Configuration profiles |
+   | `-d` | DDM components |
+   | `-x` | Excel spreadsheet |
+   | `-m` | Markdown |
+
+   **Example — Generate all outputs:**
+   ```bash
+   ./mscp.py guidance custom/baselines/cis_lvl1_macos_26.0.yaml -A
+   # Output: MSCP DOCUMENT GENERATION COMPLETE! All documents in: /build/cis_lvl1_macos_26.0/
+   ```
+
+5. **Use Your Files**
+
+   Everything goes to `build/BASELINE_NAME/`:
+
+   ```
+   build/cis_lvl1_macos_26.0/
+   ├── cis_lvl1_macos_26.0.adoc
+   ├── cis_lvl1_macos_26.0.html
+   ├── cis_lvl1_macos_26.0.pdf
+   ├── cis_lvl1_macos_26.0_compliance.sh
+   ├── mobileconfigs/
+   ├── preferences/
+   ├── activations/
+   ├── assets/
+   └── configurations/
+   ```
+
+</Steps>
+
+---
+
+<div class="section-heading">Running the Compliance Script</div>
+
+<Aside type="note">
+The script must run in **zsh** (default on macOS). Using `bash` or `sh` will cause errors.
+</Aside>
+
+**Interactive mode:**
+```zsh
+sudo ./build/cis_lvl1_macos_26.0/cis_lvl1_macos_26.0_compliance.sh
+```
+
+**Automated mode:**
+
+| Flag | What it does |
+|:-----|:-------------|
+| `--check` | Run checks only |
+| `--fix` | Run fixes only |
+| `--cfc` | Check → Fix → Check |
+| `--stats` | Show last run statistics |
+| `--compliant` | Report compliant count |
+| `--non_compliant` | Report non-compliant count |
+| `--reset` | Clear results for this baseline |
+| `--reset-all` | Clear results for all baselines |
+| `--quiet=1` | Show failed/exempt only |
+| `--quiet=2` | Minimal output |
+
+```zsh
+# Quick check
+sudo ./build/cis_lvl1_macos_26.0/cis_lvl1_macos_26.0_compliance.sh --check
+
+# Full remediation
+sudo ./build/cis_lvl1_macos_26.0/cis_lvl1_macos_26.0_compliance.sh --cfc --quiet=2
+```
+
+---
+
+<div class="section-heading">Script Reference</div>
+
+**`mscp.py baseline`** — Creates the baseline YAML file.
+
+| Flag | Purpose |
+|:-----|:--------|
+| `-l` | List available baselines |
+| `-k NAME` | Generate baseline |
+| `-t` | Interactive tailoring |
+| `-c` | Show 800-53 controls |
+| `--os_name` | Target OS name |
+| `--os_version` | Target OS version |
+
+**`mscp.py guidance`** — Generates all outputs from a baseline.
+
+| Flag | Purpose |
+|:-----|:--------|
+| `-A` | All outputs |
+| `-s` | Compliance script |
+| `-p` | Config profiles |
+| `--consolidated-profile` | Single consolidated profile |
+| `--granular-profiles` | Granular profiles |
+| `-d` | DDM components |
+| `-x` | Excel file |
+| `-m` | Markdown |
+| `-l LOGO` | Custom logo |
+| `-L LANG` | Language |
+| `-H HASH` | Sign profiles |
+| `--audit_name NAME` | Custom audit name |
+| `--reference REF` | Custom reference ID |
+| `--dark` | Dark mode output |
+
+**`mscp.py scap`** — Generates SCAP/OVAL content.
+
+| Flag | Purpose |
+|:-----|:--------|
+| `-x` | XCCDF file |
+| `-o` | OVAL file |
+| `-b NAME` | Specific baseline |
+| `-l` | List tags |
+
+**`mscp.py mapping`** — Generates control mappings.
+
+---
+
+<div class="section-heading">Common Workflows</div>
+
+**Compliance Check** — Scan a Mac for compliance issues:
+```bash
+./mscp.py baseline -k 800-53r5_moderate
+./mscp.py guidance custom/baselines/800-53r5_moderate_macos_26.0.yaml -s
+sudo ./build/800-53r5_moderate_macos_26.0/800-53r5_moderate_macos_26.0_compliance.sh --check
+```
+
+**MDM Deployment Package** — Generate profiles and DDM for device management:
+```bash
+./mscp.py baseline -k DISA-STIG
+./mscp.py guidance custom/baselines/DISA-STIG_macos_26.0.yaml -p -d -s
+```
+
+**Full Documentation Set** — Create all outputs for documentation and audit:
+```bash
+./mscp.py baseline -k cis_lvl2
+./mscp.py guidance custom/baselines/cis_lvl2_macos_26.0.yaml -A
+```
+
+  </TabItem>
+  <TabItem label="mSCP 1.0">
+
+<Aside type="caution" title="Always Use the Correct Branch">
+Each macOS version has its own branch (`sequoia`, `sonoma`, `ventura`, etc.).
+**Never use the `main` branch** — it won't work for generating content.
+</Aside>
+
+<div class="section-heading">Quick Start</div>
+
+**Requirements:**
+- Python >= 3.12.1 (3.14 is not supported)
+  - Recommended: [Macadmins Python](https://github.com/macadmins/python)
+- Ruby >= 3.4.4 (optional — for PDF output)
+
+<Steps>
+
+1. **Clone & Checkout Branch**
 
    ```bash
    git clone https://github.com/usnistgov/macos_security.git
    cd macos_security
    git checkout sequoia
    ```
+   Replace `sequoia` with your target macOS version (`sequoia`, `sonoma`, `ventura`, etc.).
 
-   Replace `sequoia` with your target macOS version.
+2. **Install Dependencies**
 
-3. ### Generate a Baseline
+   ```bash
+   # Create virtual environment
+   python3 -m venv .venv
+   source .venv/bin/activate
+
+   # Install requirements
+   pip3 install -r requirements.txt
+   ```
+
+   **Ruby (optional — for PDF output):**
+   ```bash
+   bundle install --binstubs --path mscp_gems
+   ```
+
+3. **Generate a Baseline**
 
    <div class="quick-ref">
 
@@ -135,7 +347,7 @@ The scripts must be run locally from a cloned repository. There is no remote exe
    ./scripts/generate_baseline.py -k 800-53r5_moderate
    ```
 
-4. ### Generate Outputs
+4. **Generate Outputs**
 
    Run `generate_guidance.py` with the flags you need:
 
@@ -157,7 +369,7 @@ The scripts must be run locally from a cloned repository. There is no remote exe
    ./scripts/generate_guidance.py -s -p -x baselines/800-53r5_moderate.yaml
    ```
 
-5. ### Use Your Files
+5. **Use Your Files**
 
    Everything goes to `build/BASELINE_NAME/`:
 
@@ -178,7 +390,7 @@ The scripts must be run locally from a cloned repository. There is no remote exe
 
 ---
 
-## Running the Compliance Script
+<div class="section-heading">Running the Compliance Script</div>
 
 <Aside type="note">
 The script must run in **zsh** (default on macOS). Using `bash` or `sh` will cause errors.
@@ -214,7 +426,7 @@ sudo ./build/800-53r5_moderate/800-53r5_moderate_compliance.sh --cfc --quiet=2
 
 ---
 
-## Available Baselines
+<div class="section-heading">Available Baselines</div>
 
 **Example baselines (may vary by branch):**
 
@@ -230,10 +442,9 @@ sudo ./build/800-53r5_moderate/800-53r5_moderate_compliance.sh --cfc --quiet=2
 
 ---
 
-## Script Reference
+<div class="section-heading">Script Reference</div>
 
-### `generate_baseline.py`
-Creates the baseline YAML file.
+**`generate_baseline.py`** — Creates the baseline YAML file.
 
 | Flag | Purpose |
 |:-----|:--------|
@@ -242,8 +453,7 @@ Creates the baseline YAML file.
 | `-t` | Interactive tailoring |
 | `-c` | Show 800-53 controls |
 
-### `generate_guidance.py`
-Generates all outputs from a baseline.
+**`generate_guidance.py`** — Generates all outputs from a baseline.
 
 | Flag | Purpose |
 |:-----|:--------|
@@ -257,8 +467,7 @@ Generates all outputs from a baseline.
 | `-a NAME` | Custom audit name |
 | `-r REF` | Custom reference ID |
 
-### `generate_scap.py`
-Generates SCAP/OVAL content for compliance scanning tools.
+**`generate_scap.py`** — Generates SCAP/OVAL content for compliance scanning tools.
 
 | Flag | Purpose |
 |:-----|:--------|
@@ -270,38 +479,73 @@ Generates SCAP/OVAL content for compliance scanning tools.
 
 ---
 
-## Common Workflows
+<div class="section-heading">Common Workflows</div>
 
-### Compliance Check
-Scan a Mac for compliance issues:
+**Compliance Check** — Scan a Mac for compliance issues:
 ```bash
 ./scripts/generate_baseline.py -k 800-53r5_moderate
 ./scripts/generate_guidance.py -s baselines/800-53r5_moderate.yaml
 sudo ./build/800-53r5_moderate/800-53r5_moderate_compliance.sh --check
 ```
 
-### MDM Deployment Package
-Generate profiles and DDM for device management:
+**MDM Deployment Package** — Generate profiles and DDM for device management:
 ```bash
 ./scripts/generate_baseline.py -k DISA-STIG -t
 ./scripts/generate_guidance.py -p -D -s build/baselines/DISA-STIG.yaml
 ```
 
-### Full Documentation Set
-Create all outputs for documentation and audit:
+**Full Documentation Set** — Create all outputs for documentation and audit:
 ```bash
 ./scripts/generate_baseline.py -k cis_lvl2
 ./scripts/generate_guidance.py -s -p -x baselines/cis_lvl2.yaml
 ```
 
+  </TabItem>
+</Tabs>
+
 ---
 
-## Customization Options
+## Learn More
 
-| Option | Description | Link |
-|:-------|:------------|:-----|
-| **Tailor Baseline** | Select rules and set Organization Defined Values | <a href={`${base}baselines/tailoring-a-baseline/`}>Learn more →</a> |
-| **Customize Rules** | Modify rules in `custom/rules/` folder | <a href={`${base}personalization/customize-rules/`}>Learn more →</a> |
-| **Exempt Rules** | Mark rules as approved exceptions | <a href={`${base}personalization/exempting-rules/`}>Learn more →</a> |
-| **Sign Profiles** | Sign with your certificate using `-H HASH` | <a href={`${base}configuration-profiles/how-to-generate-configuration-profiles/`}>Learn more →</a> |
-
+<CardGrid>
+  <LinkCard
+    title="Baselines"
+    description="Learn what baselines are, how to generate them, and how to tailor them for your organization."
+    href={`${base}baselines/what-are-baselines/`}
+  />
+  <LinkCard
+    title="Guidance"
+    description="Generate HTML, PDF, and other documentation from your baseline."
+    href={`${base}guidance/what-is-guidance/`}
+  />
+  <LinkCard
+    title="Configuration Profiles"
+    description="Create and deploy configuration profiles via MDM."
+    href={`${base}configuration-profiles/what-are-configuration-profiles/`}
+  />
+  <LinkCard
+    title="Compliance Scripts"
+    description="Scan Macs against your baseline and remediate non-compliant settings."
+    href={`${base}compliance-scripts/what-are-compliance-scripts/`}
+  />
+  <LinkCard
+    title="DDM Components"
+    description="Generate Declarative Device Management components for modern MDM workflows."
+    href={`${base}ddm-components/what-is-ddm/`}
+  />
+  <LinkCard
+    title="Personalization"
+    description="Customize rules, tailor baselines, and exempt rules for your organization."
+    href={`${base}personalization/customize-rules/`}
+  />
+  <LinkCard
+    title="Repository Reference"
+    description="Explore the directory layout, rule files, and script arguments."
+    href={`${base}repository/directory-layout/`}
+  />
+  <LinkCard
+    title="mSCP 2.0 Overview"
+    description="Learn about the new unified architecture and what's changed in mSCP 2.0."
+    href={`${base}mscp-2/overview/`}
+  />
+</CardGrid>

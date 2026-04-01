@@ -3,25 +3,77 @@ title: How to Generate Guidance
 description: Create documentation, scripts, and profiles from your baseline.
 ---
 
-import { Steps, FileTree, Aside } from '@astrojs/starlight/components';
+import { Steps, FileTree, Aside, Tabs, TabItem } from '@astrojs/starlight/components';
 
 export const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : import.meta.env.BASE_URL + '/';
 
-The `generate_guidance.py` script creates outputs from your baseline. By default it generates documentation (AsciiDoc, HTML, PDF). With additional flags, you can also generate compliance scripts, configuration profiles, and more.
-
-<Aside type="note">
-New to the project? Complete the <a href={`${base}welcome/getting-started/`}>Getting Started</a> guide and <a href={`${base}baselines/how-to-generate-baselines/`}>generate a baseline</a> first.
-</Aside>
-
-<Aside type="caution" title="Always Use the Correct Branch (mSCP 1.0)">
-Each macOS version has its own branch (`sequoia`, `sonoma`, `ventura`, etc.). **Never use the `main` branch** — it won't work for generating content.
-
-**mSCP 2.0 (currently in beta)** will remove the per-branch requirement and introduce easier installation methods.
-</Aside>
+Generating guidance creates outputs from your baseline. By default it generates documentation (AsciiDoc, HTML, PDF). With additional flags, you can also generate compliance scripts, configuration profiles, and more.
 
 ---
 
 ## Generate Guidance
+
+<Tabs syncKey="mscp-version">
+  <TabItem label="mSCP 2.0 (Beta)">
+
+<Aside type="caution" title="mSCP 2.0 is currently in Beta">
+mSCP 2.0 may contain errors or unexpected issues. If you encounter any problems, please [report them to the project](https://github.com/usnistgov/macos_security/issues) — together we can make it a better solution.
+</Aside>
+
+<Steps>
+
+1. **Run the command with your baseline**
+
+   ```bash
+   ./mscp.py guidance custom/baselines/BASELINE_NAME.yaml
+   ```
+
+   Example:
+   ```bash
+   ./mscp.py guidance custom/baselines/800-53r5_moderate_macos_26.0.yaml
+   ```
+
+2. **Add flags for additional outputs**
+
+   ```bash
+   ./mscp.py guidance custom/baselines/800-53r5_moderate_macos_26.0.yaml -s -p
+   ```
+
+   This generates guidance docs plus compliance script (`-s`) and configuration profiles (`-p`).
+
+   Generate all outputs at once with `-A`:
+   ```bash
+   ./mscp.py guidance custom/baselines/800-53r5_moderate_macos_26.0.yaml -A
+   ```
+
+3. **Find your files**
+
+   All outputs are saved to `build/BASELINE_NAME/`:
+
+   <FileTree>
+   - build/
+       - 800-53r5_moderate_macos_26.0/
+           - **800-53r5_moderate_macos_26.0.adoc** AsciiDoc source
+           - **800-53r5_moderate_macos_26.0.html** Web documentation
+           - **800-53r5_moderate_macos_26.0.pdf** Printable documentation
+           - **800-53r5_moderate_macos_26.0.md** Markdown (if -m)
+           - **800-53r5_moderate_macos_26.0_compliance.sh** Compliance script (if -s)
+           - **800-53r5_moderate_macos_26.0.xlsx** Excel spreadsheet (if -x)
+           - mobileconfigs/ Configuration profiles (if -p)
+           - activations/ DDM components (if -d)
+           - configurations/
+           - assets/
+           - preferences/
+   </FileTree>
+
+</Steps>
+
+  </TabItem>
+  <TabItem label="mSCP 1.0">
+
+<Aside type="caution" title="Always Use the Correct Branch">
+Each macOS version has its own branch (`sequoia`, `sonoma`, `ventura`, etc.). **Never use the `main` branch** — it won't work for generating content.
+</Aside>
 
 <Steps>
 
@@ -51,27 +103,59 @@ Each macOS version has its own branch (`sequoia`, `sonoma`, `ventura`, etc.). **
    <FileTree>
    - build/
        - 800-53r5_moderate/
-           - **800-53r5_moderate.adoc** - AsciiDoc source
-           - **800-53r5_moderate.html** - Web documentation
-           - **800-53r5_moderate.pdf** - Printable documentation
-           - **800-53r5_moderate_compliance.sh** - Compliance script (if -s)
-           - **800-53r5_moderate.xls** - Excel spreadsheet (if -x)
-           - mobileconfigs/ - Configuration profiles (if -p)
-               - unsigned/ - Unsigned profiles
-               - signed/ - Signed profiles (if -H)
-               - preferences/ - Preference plists
-           - declarative/ - DDM components (if -D)
+           - **800-53r5_moderate.adoc** AsciiDoc source
+           - **800-53r5_moderate.html** Web documentation
+           - **800-53r5_moderate.pdf** Printable documentation
+           - **800-53r5_moderate_compliance.sh** Compliance script (if -s)
+           - **800-53r5_moderate.xls** Excel spreadsheet (if -x)
+           - mobileconfigs/ Configuration profiles (if -p)
+               - unsigned/ Unsigned profiles
+               - signed/ Signed profiles (if -H)
+               - preferences/ Preference plists
+           - declarative/ DDM components (if -D)
                - activations/
                - configurations/
                - assets/
-           - preferences/ - Audit preference files
+           - preferences/ Audit preference files
    </FileTree>
 
 </Steps>
 
+  </TabItem>
+</Tabs>
+
 ---
 
 ## Command Reference
+
+<Tabs syncKey="mscp-version">
+  <TabItem label="mSCP 2.0 (Beta)">
+
+| Flag | Output |
+|:-----|:-------|
+| *(none)* | Guidance documents (.adoc, .html, .pdf) |
+| `-A` | All outputs |
+| `-s` | Compliance script |
+| `-p` | Configuration profiles |
+| `--consolidated-profile` | Single consolidated configuration profile |
+| `--granular-profiles` | Granular profiles |
+| `-d` | DDM components |
+| `-x` | Excel spreadsheet (.xlsx) |
+| `-m` | Markdown documentation |
+
+**Additional options:**
+
+| Flag | Description |
+|:-----|:------------|
+| `-l LOGO` | Include custom logo in documentation |
+| `-L LANG` | Language for output |
+| `-H HASH` | Sign configuration profiles with certificate |
+| `--audit_name NAME` | Custom name for audit plist and log |
+| `--reference REF` | Use reference ID instead of rule ID |
+| `--dark` | Dark mode output |
+
+  </TabItem>
+  <TabItem label="mSCP 1.0">
 
 | Flag | Output |
 |:-----|:-------|
@@ -79,7 +163,7 @@ Each macOS version has its own branch (`sequoia`, `sonoma`, `ventura`, etc.). **
 | `-s` | Compliance script |
 | `-p` | Configuration profiles (one per payload) |
 | `-P` | Single consolidated configuration profile |
-| `-D` | Declarative Device Management (DDM) components |
+| `-D` | DDM components |
 | `-x` | Excel spreadsheet |
 
 **Additional options:**
@@ -92,9 +176,48 @@ Each macOS version has its own branch (`sequoia`, `sonoma`, `ventura`, etc.). **
 | `-a NAME` | Custom name for audit plist and log |
 | `-r REF` | Use reference ID instead of rule ID |
 
+  </TabItem>
+</Tabs>
+
 ---
 
 ## Common Examples
+
+<Tabs syncKey="mscp-version">
+  <TabItem label="mSCP 2.0 (Beta)">
+
+**Generate all outputs:**
+```bash
+./mscp.py guidance custom/baselines/800-53r5_moderate_macos_26.0.yaml -A
+```
+
+**Generate documentation only:**
+```bash
+./mscp.py guidance custom/baselines/800-53r5_moderate_macos_26.0.yaml
+```
+
+**Generate everything for MDM deployment:**
+```bash
+./mscp.py guidance custom/baselines/DISA-STIG_macos_26.0.yaml -s -p -d
+```
+
+**Generate with signed profiles:**
+```bash
+./mscp.py guidance custom/baselines/cis_lvl2_macos_26.0.yaml -p -H YOUR_CERT_HASH
+```
+
+**Generate documentation with custom logo:**
+```bash
+./mscp.py guidance custom/baselines/800-53r5_moderate_macos_26.0.yaml -l /path/to/logo.png
+```
+
+**Generate Markdown output:**
+```bash
+./mscp.py guidance custom/baselines/800-53r5_moderate_macos_26.0.yaml -m
+```
+
+  </TabItem>
+  <TabItem label="mSCP 1.0">
 
 **Generate documentation only:**
 ```bash
@@ -116,16 +239,31 @@ Each macOS version has its own branch (`sequoia`, `sonoma`, `ventura`, etc.). **
 ./scripts/generate_guidance.py -l /path/to/logo.png baselines/800-53r5_moderate.yaml
 ```
 
+  </TabItem>
+</Tabs>
+
 ---
 
 ## Built-in vs Custom Baselines
 
-You can use either type of baseline:
+<Tabs syncKey="mscp-version">
+  <TabItem label="mSCP 2.0 (Beta)">
+
+| Type | Location | Use Case |
+|:-----|:---------|:---------|
+| **Generated** | `config/custom/baselines/` | Baselines created by `./mscp.py baseline` |
+| **Tailored** | `config/custom/baselines/` | Tailored baselines for your organization |
+
+  </TabItem>
+  <TabItem label="mSCP 1.0">
 
 | Type | Location | Use Case |
 |:-----|:---------|:---------|
 | **Built-in** | `baselines/` | Standard frameworks without customization |
 | **Custom** | `build/baselines/` | Tailored baselines for your organization |
+
+  </TabItem>
+</Tabs>
 
 Both produce the same outputs. Custom baselines reflect your organization's specific settings and excluded rules.
 
@@ -133,9 +271,9 @@ Both produce the same outputs. Custom baselines reflect your organization's spec
 
 ## Next Steps
 
-- <a href={`${base}configuration-profiles/how-to-generate-configuration-profiles/`}>How to Generate Configuration Profiles</a> - Details on the `-p` flag
-- <a href={`${base}compliance-scripts/how-to-generate-compliance-scripts/`}>How to Generate Compliance Scripts</a> - Details on the `-s` flag
-- <a href={`${base}guidance/guidance-file-example/`}>Guidance File Example</a> - See a sample PDF output
+- <a href={`${base}configuration-profiles/how-to-generate-configuration-profiles/`}>How to Generate Configuration Profiles</a> — Details on the `-p` flag
+- <a href={`${base}compliance-scripts/how-to-generate-compliance-scripts/`}>How to Generate Compliance Scripts</a> — Details on the `-s` flag
+- <a href={`${base}guidance/guidance-file-example/`}>Guidance File Example</a> — See a sample PDF output
 
 <style>{`
   .sl-markdown-content th {

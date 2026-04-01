@@ -3,11 +3,24 @@ title: Sections File Layout
 description: Structure of section YAML files for guide organization.
 ---
 
-import { Aside } from '@astrojs/starlight/components';
+import { Aside, Tabs, TabItem } from '@astrojs/starlight/components';
 
 export const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : import.meta.env.BASE_URL + '/';
 
-The `sections/` directory contains YAML files that define the major sections of your security guide. Each section file provides a name and description used to organize rules in generated documentation.
+Section files define the major sections of your security guide. Each section file provides a name and description used to organize rules in generated documentation.
+
+<Tabs syncKey="mscp-version">
+  <TabItem label="mSCP 2.0 (Beta)">
+
+Section files are located in `config/default/sections/`. Custom sections go in `config/custom/sections/`.
+
+  </TabItem>
+  <TabItem label="mSCP 1.0">
+
+Section files are located in `sections/`. Custom sections go in `custom/sections/`.
+
+  </TabItem>
+</Tabs>
 
 ---
 
@@ -34,7 +47,27 @@ description: |
 
 ## Available Sections
 
-The project includes these section files:
+<Tabs syncKey="mscp-version">
+  <TabItem label="mSCP 2.0 (Beta)">
+
+| Section | Description |
+|:--------|:------------|
+| `auditing.yaml` | OpenBSM audit configuration |
+| `authentication.yaml` | Authentication and smartcard settings |
+| `excluded.yaml` | Excluded rules |
+| `icloud.yaml` | iCloud and Apple ID settings |
+| `inherent.yaml` | Inherent macOS security features |
+| `manual.yaml` | Manual verification rules |
+| `notapplicable.yaml` | Rules not applicable to this platform |
+| `operatingsystem.yaml` | General operating system settings |
+| `passwordpolicy.yaml` | Password policy settings |
+| `permanent.yaml` | Permanently enabled security features |
+| `srg.yaml` | Security Requirements Guide mappings |
+| `supplemental.yaml` | Additional supporting information |
+| `systemsettings.yaml` | System Settings configuration |
+
+  </TabItem>
+  <TabItem label="mSCP 1.0">
 
 | Section | Description |
 |:--------|:------------|
@@ -50,6 +83,9 @@ The project includes these section files:
 | `supplemental.yaml` | Additional supporting information |
 | `systemsettings.yaml` | System Settings configuration |
 
+  </TabItem>
+</Tabs>
+
 <Aside type="tip">
 Section filenames correspond to rule category directories. For example, rules in `rules/auth/` appear under the `authentication` section.
 </Aside>
@@ -58,8 +94,8 @@ Section filenames correspond to rule category directories. For example, rules in
 
 ## Next Steps
 
-- <a href={`${base}repository/rule-file-layout/`}>Rule File Layout</a> - Understand rule YAML structure
-- <a href={`${base}repository/directory-layout/`}>Directory Layout</a> - Repository structure overview
+- <a href={`${base}repository/rule-file-layout/`}>Rule File Layout</a> — Understand rule YAML structure
+- <a href={`${base}repository/directory-layout/`}>Directory Layout</a> — Repository structure overview
 
 <style>{`
   .sl-markdown-content th {

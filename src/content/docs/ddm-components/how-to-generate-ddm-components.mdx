@@ -3,29 +3,64 @@ title: How to Generate DDM Components
 description: Create DDM declarations from your baseline.
 ---
 
-import { Steps, FileTree, Aside } from '@astrojs/starlight/components';
+import { Steps, FileTree, Aside, Tabs, TabItem } from '@astrojs/starlight/components';
 
 export const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : import.meta.env.BASE_URL + '/';
 
-DDM components are generated using the `generate_guidance.py` script with the `-D` flag. The script reads your baseline and creates JSON declarations ready for MDM deployment.
+DDM components are generated as part of the guidance output. The script reads your baseline and creates JSON declarations ready for MDM deployment.
 
 <Aside type="note">
 You need a baseline first. See <a href={`${base}baselines/how-to-generate-baselines/`}>How to Generate Baselines</a> if you haven't created one.
-</Aside>
-
-<Aside type="caution" title="Always Use the Correct Branch (mSCP 1.0)">
-Each macOS version has its own branch (`sequoia`, `sonoma`, `ventura`, etc.). **Never use the `main` branch** — it won't work for generating content.
-
-**mSCP 2.0 (currently in beta)** will remove the per-branch requirement and introduce easier installation methods.
 </Aside>
 
 ---
 
 ## Generate DDM Components
 
+<Tabs syncKey="mscp-version">
+  <TabItem label="mSCP 2.0 (Beta)">
+
+<Aside type="caution" title="mSCP 2.0 is currently in Beta">
+mSCP 2.0 may contain errors or unexpected issues. If you encounter any problems, please [report them to the project](https://github.com/usnistgov/macos_security/issues) — together we can make it a better solution.
+</Aside>
+
 <Steps>
 
-1. **Run the generation script**
+1. **Run the command**
+
+   ```bash
+   ./mscp.py guidance custom/baselines/BASELINE_NAME.yaml -d
+   ```
+
+   Example:
+   ```bash
+   ./mscp.py guidance custom/baselines/800-53r5_moderate_macos_26.0.yaml -d
+   ```
+
+2. **Find your files**
+
+   DDM declarations are saved to `build/BASELINE_NAME/`:
+
+   <FileTree>
+   - build/
+       - 800-53r5_moderate_macos_26.0/
+           - activations/ Activation declarations (.json)
+           - configurations/ Configuration declarations (.json)
+           - assets/ Asset declarations and data files (.json, .zip)
+   </FileTree>
+
+</Steps>
+
+  </TabItem>
+  <TabItem label="mSCP 1.0">
+
+<Aside type="caution" title="Always Use the Correct Branch">
+Each macOS version has its own branch (`sequoia`, `sonoma`, `ventura`, etc.). **Never use the `main` branch** — it won't work for generating content.
+</Aside>
+
+<Steps>
+
+1. **Run the script**
 
    ```bash
    ./scripts/generate_guidance.py -D baselines/BASELINE_NAME.yaml
@@ -44,16 +79,33 @@ Each macOS version has its own branch (`sequoia`, `sonoma`, `ventura`, etc.). **
    - build/
        - 800-53r5_moderate/
            - declarative/
-               - activations/ - Activation declarations (.json)
-               - configurations/ - Configuration declarations (.json)
-               - assets/ - Asset declarations and data files (.json, .zip)
+               - activations/ Activation declarations (.json)
+               - configurations/ Configuration declarations (.json)
+               - assets/ Asset declarations and data files (.json, .zip)
    </FileTree>
 
 </Steps>
 
+  </TabItem>
+</Tabs>
+
 ---
 
 ## Command Reference
+
+<Tabs syncKey="mscp-version">
+  <TabItem label="mSCP 2.0 (Beta)">
+
+| Flag | Description |
+|:-----|:------------|
+| `-d` | Generate DDM declarations |
+
+<Aside type="tip">
+You can combine `-d` with other flags to generate multiple outputs at once. For example, `-d -p -s` generates DDM components, configuration profiles, and compliance scripts together. Or use `-A` to generate all outputs.
+</Aside>
+
+  </TabItem>
+  <TabItem label="mSCP 1.0">
 
 | Flag | Description |
 |:-----|:------------|
@@ -63,12 +115,15 @@ Each macOS version has its own branch (`sequoia`, `sonoma`, `ventura`, etc.). **
 You can combine `-D` with other flags to generate multiple outputs at once. For example, `-D -p -s` generates DDM components, configuration profiles, and compliance scripts together.
 </Aside>
 
+  </TabItem>
+</Tabs>
+
 ---
 
 ## Next Steps
 
-- <a href={`${base}ddm-components/ddm-component-layout/`}>DDM Component Layout</a> - Understand the file structure
-- <a href={`${base}ddm-components/what-is-ddm/`}>What is DDM?</a> - Learn more about declarative management
+- <a href={`${base}ddm-components/ddm-component-layout/`}>DDM Component Layout</a> — Understand the file structure
+- <a href={`${base}ddm-components/what-is-ddm/`}>What is DDM?</a> — Learn more about declarative management
 
 <style>{`
   .sl-markdown-content th {

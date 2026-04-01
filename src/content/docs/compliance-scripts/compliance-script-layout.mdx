@@ -3,15 +3,28 @@ title: Compliance Script Layout
 description: Understand the structure of the generated compliance script.
 ---
 
-import { Aside } from '@astrojs/starlight/components';
+import { Aside, Tabs, TabItem } from '@astrojs/starlight/components';
 
 export const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : import.meta.env.BASE_URL + '/';
 
 The compliance script is a zsh script with functions for checking settings, applying fixes, and reporting results. Understanding the structure helps you troubleshoot or customize the script.
 
+<Tabs syncKey="mscp-version">
+  <TabItem label="mSCP 2.0 (Beta)">
+
 <Aside type="tip">
-You don't need to modify the script manually. The `generate_guidance.py -s` script creates it for you. This page explains what's inside.
+You don't need to modify the script manually. The `./mscp.py guidance -s` command creates it for you. This page explains what's inside.
 </Aside>
+
+  </TabItem>
+  <TabItem label="mSCP 1.0">
+
+<Aside type="tip">
+You don't need to modify the script manually. The `./scripts/generate_guidance.py -s` script creates it for you. This page explains what's inside.
+</Aside>
+
+  </TabItem>
+</Tabs>
 
 ---
 

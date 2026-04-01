@@ -3,20 +3,14 @@ title: Generate Mapping
 description: Create custom rules and baselines for unsupported compliance frameworks.
 ---
 
-import { Steps, FileTree, Aside } from '@astrojs/starlight/components';
+import { Steps, FileTree, Aside, Tabs, TabItem } from '@astrojs/starlight/components';
 
 export const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : import.meta.env.BASE_URL + '/';
 
-The `generate_mapping.py` script creates custom rules and baselines for compliance frameworks not included in the project. You provide a CSV that maps your framework's controls to a supported framework (like NIST 800-53r5).
+The mapping script creates custom rules and baselines for compliance frameworks not included in the project. You provide a CSV that maps your framework's controls to a supported framework (like NIST 800-53r5).
 
 <Aside type="tip">
 Use this when you need to align your organization's controls with frameworks the project doesn't directly support.
-</Aside>
-
-<Aside type="caution" title="Always Use the Correct Branch (mSCP 1.0)">
-Each macOS version has its own branch (`sequoia`, `sonoma`, `ventura`, etc.). **Never use the `main` branch** — it won't work for generating content.
-
-**mSCP 2.0 (currently in beta)** will remove the per-branch requirement and introduce easier installation methods.
 </Aside>
 
 ---
@@ -44,6 +38,42 @@ The first row should contain the framework names:
 
 ## Generate Custom Mapping
 
+<Tabs syncKey="mscp-version">
+  <TabItem label="mSCP 2.0 (Beta)">
+
+<Aside type="caution" title="mSCP 2.0 is currently in Beta">
+mSCP 2.0 may contain errors or unexpected issues. If you encounter any problems, please [report them to the project](https://github.com/usnistgov/macos_security/issues) — together we can make it a better solution.
+</Aside>
+
+<Steps>
+
+1. **Run the mapping command**
+
+   ```bash
+   ./mscp.py mapping -c PATH_TO_CSV
+   ```
+
+   Example:
+   ```bash
+   ./mscp.py mapping -c ~/Desktop/171-to-53.csv
+   ```
+
+2. **Find your files**
+
+   | Output | Location |
+   |:-------|:---------|
+   | Custom rule files | `build/800-171r2/rules/` |
+   | Generated baseline | `build/baselines/800-171r2.yaml` |
+
+</Steps>
+
+  </TabItem>
+  <TabItem label="mSCP 1.0">
+
+<Aside type="caution" title="Always Use the Correct Branch">
+Each macOS version has its own branch (`sequoia`, `sonoma`, `ventura`, etc.). **Never use the `main` branch** — it won't work for generating content.
+</Aside>
+
 <Steps>
 
 1. **Run the mapping script**
@@ -66,19 +96,40 @@ The first row should contain the framework names:
 
 </Steps>
 
+  </TabItem>
+</Tabs>
+
 ---
 
 ## Command Reference
+
+<Tabs syncKey="mscp-version">
+  <TabItem label="mSCP 2.0 (Beta)">
+
+| Flag | Description |
+|:-----|:------------|
+| `-c CSV_FILE` | Path to CSV mapping file (required) |
+| `-f FRAMEWORK` | Source framework to map from (default: `800-53r5`) |
+
+Example mapping to CIS Controls:
+```bash
+./mscp.py mapping -c ~/Desktop/cis-mapping.csv -f "cis/controls v8"
+```
+
+  </TabItem>
+  <TabItem label="mSCP 1.0">
 
 | Flag | Description |
 |:-----|:------------|
 | `-f FRAMEWORK` | Source framework to map from (default: `800-53r5`) |
 
 Example mapping to CIS Controls:
-
 ```bash
 ./scripts/generate_mapping.py ~/Desktop/cis-mapping.csv -f "cis/controls v8"
 ```
+
+  </TabItem>
+</Tabs>
 
 <Aside type="note">
 The `-f` value must match a column header in your CSV.
@@ -88,8 +139,8 @@ The `-f` value must match a column header in your CSV.
 
 ## Next Steps
 
-- <a href={`${base}baselines/tailoring-a-baseline/`}>Tailoring a Baseline</a> - Customize the generated baseline
-- <a href={`${base}guidance/how-to-generate-guidance/`}>How to Generate Guidance</a> - Generate documentation from your baseline
+- <a href={`${base}baselines/tailoring-a-baseline/`}>Tailoring a Baseline</a> — Customize the generated baseline
+- <a href={`${base}guidance/how-to-generate-guidance/`}>How to Generate Guidance</a> — Generate documentation from your baseline
 
 <style>{`
   .sl-markdown-content th {

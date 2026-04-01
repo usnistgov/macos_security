@@ -10,8 +10,11 @@
     "astro": "astro"
   },
   "dependencies": {
-    "@astrojs/starlight": "^0.37.1",
-    "astro": "^5.16.6",
-    "sharp": "^0.33.5"
+    "@astrojs/starlight": "^0.38.2",
+    "astro": "^6.1.2",
+    "sharp": "^0.34.5"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": ["sharp", "esbuild"]
   }
 }

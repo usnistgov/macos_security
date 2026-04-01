@@ -3,15 +3,30 @@ title: Rule File Layout
 description: Structure of rule YAML files.
 ---
 
-import { Aside } from '@astrojs/starlight/components';
+import { Aside, Tabs, TabItem } from '@astrojs/starlight/components';
 
 export const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : import.meta.env.BASE_URL + '/';
 
-A rule file defines a single security control for macOS. Each rule is written in YAML and must follow the structure below.
+A rule file defines a single security control. Each rule is written in YAML and must follow the structure below.
 
 ---
 
 ## Required Fields
+
+<Tabs syncKey="mscp-version">
+  <TabItem label="mSCP 2.0 (Beta)">
+
+| Field | Description |
+|:------|:------------|
+| `id` | Unique identifier matching the filename (without `.yaml`) |
+| `title` | Human-readable title for the rule |
+| `discussion` | Description of the rule's intent and context |
+| `references` | Nested mappings to frameworks organized by source (`nist`, `disa`, `cis`) |
+| `platforms` | Per-OS, per-version enforcement info (check, fix, result, benchmarks) |
+| `tags` | Keywords for categorizing and filtering rules |
+
+  </TabItem>
+  <TabItem label="mSCP 1.0">
 
 | Field | Description |
 |:------|:------------|
@@ -23,9 +38,26 @@ A rule file defines a single security control for macOS. Each rule is written in
 | `fix` | Remediation steps or configuration to enforce the rule |
 | `tags` | Keywords for categorizing and filtering rules |
 
+  </TabItem>
+</Tabs>
+
 ---
 
 ## Optional Fields
+
+<Tabs syncKey="mscp-version">
+  <TabItem label="mSCP 2.0 (Beta)">
+
+| Field | Description |
+|:------|:------------|
+| `odv` | Organization Defined Values with hint and defaults |
+| `severity` | Severity level (low, medium, high) |
+| `mobileconfig` | Set to `true` if enforceable via configuration profile |
+| `mobileconfig_info` | Configuration profile payload (required if `mobileconfig` is true) |
+| `ddm_info` | DDM configuration declaration |
+
+  </TabItem>
+  <TabItem label="mSCP 1.0">
 
 | Field | Description |
 |:------|:------------|
@@ -35,29 +67,123 @@ A rule file defines a single security control for macOS. Each rule is written in
 | `severity` | Severity level (low, medium, high) |
 | `mobileconfig` | Set to `true` if enforceable via configuration profile |
 | `mobileconfig_info` | Configuration profile payload (required if `mobileconfig` is true) |
-| `ddm_info` | DDM configuration declaration (for DDM-supported settings) |
+| `ddm_info` | DDM configuration declaration |
+
+  </TabItem>
+</Tabs>
 
 ---
 
 ## References Structure
 
-The `references` field maps to various compliance frameworks:
+<Tabs syncKey="mscp-version">
+  <TabItem label="mSCP 2.0 (Beta)">
+
+References are nested by source organization:
+
+```yaml
+references:
+  nist:
+    cce:
+      macos_26: [CCE-95164-0]
+      macos_15: [CCE-94164-1]
+    800-53r5: [AC-3, CM-5, SI-7]
+    800-171r3: [03.01.02, 03.04.05]
+  disa:
+    disa_stig:
+      macos_26: [APPL-26-002064]
+      macos_15: [APPL-15-002064]
+    srg: [SRG-OS-000480-GPOS-00227]
+  cis:
+    cis: {benchmark: [N/A], controls_v8: [N/A]}
+```
+
+  </TabItem>
+  <TabItem label="mSCP 1.0">
+
+References are flat key-value pairs:
 
 | Key | Framework |
 |:----|:----------|
 | `cce` | Common Configuration Enumeration |
 | `cci` | Control Correlation Identifier |
 | `800-53r5` | NIST SP 800-53 Rev 5 |
-| `800-53r4` | NIST SP 800-53 Rev 4 |
 | `800-171r3` | NIST SP 800-171 Rev 3 |
 | `srg` | Security Requirements Guide |
 | `disa_stig` | DISA STIG identifiers |
 | `cis` | CIS Benchmarks and Controls |
 | `cmmc` | CMMC level mappings |
 
+  </TabItem>
+</Tabs>
+
 ---
 
 ## Example Rule File
+
+<Tabs syncKey="mscp-version">
+  <TabItem label="mSCP 2.0 (Beta)">
+
+```yaml
+id: os_authenticated_root_enable
+title: Enable Authenticated Root
+discussion: |
+  Authenticated Root _MUST_ be enabled.
+
+  When Authenticated Root is enabled the macOS is booted from a
+  signed volume that is cryptographically protected to prevent
+  tampering with the system volume.
+references:
+  nist:
+    cce:
+      macos_26: [CCE-95164-0]
+      macos_15: [CCE-94164-1]
+      macos_14: [CCE-92764-0]
+    800-53r5: [AC-3, CM-5, SC-34, SI-7]
+    800-171r3: [03.01.02, 03.04.05]
+  disa:
+    disa_stig:
+      macos_26: [APPL-26-002064]
+      macos_15: [APPL-15-002064]
+      macos_14: [APPL-14-002064]
+tags:
+  - 800-53r5_moderate
+  - 800-53r5_high
+  - cisv8
+  - cnssi-1253_moderate
+platforms:
+  macOS:
+    '26.0':
+      benchmarks:
+        - name: cis_lvl1
+        - name: cis_lvl2
+        - name: disa_stig
+          severity: medium
+      enforcement_info:
+        check:
+          shell: >
+            /usr/libexec/mdmclient QuerySecurityInfo 2>/dev/null |
+            /usr/bin/grep -c "AuthenticatedRootVolumeEnabled = 1;"
+          result:
+            integer: 1
+    '15.0':
+      benchmarks:
+        - name: cis_lvl1
+        - name: cis_lvl2
+        - name: disa_stig
+          severity: medium
+      enforcement_info:
+        check:
+          shell: >
+            /usr/bin/csrutil authenticated-root |
+            /usr/bin/grep -c 'enabled'
+          result:
+            integer: 1
+mobileconfig: false
+```
+
+  </TabItem>
+  <TabItem label="mSCP 1.0">
 
 ```yaml
 id: system_settings_bluetooth_disable
@@ -96,16 +222,19 @@ mobileconfig_info:
       DisableBluetooth: true
 ```
 
+  </TabItem>
+</Tabs>
+
 <Aside type="tip">
-The `id` field must match the filename. For example, `system_settings_bluetooth_disable.yaml` must have `id: system_settings_bluetooth_disable`.
+The `id` field must match the filename. For example, `os_authenticated_root_enable.yaml` must have `id: os_authenticated_root_enable`.
 </Aside>
 
 ---
 
 ## Next Steps
 
-- <a href={`${base}repository/sections-file-layout/`}>Sections File Layout</a> - Understand section YAML structure
-- <a href={`${base}personalization/customize-rules/`}>Customize Rules</a> - Create custom rules
+- <a href={`${base}repository/sections-file-layout/`}>Sections File Layout</a> — Understand section YAML structure
+- <a href={`${base}personalization/customize-rules/`}>Customize Rules</a> — Create custom rules
 
 <style>{`
   .sl-markdown-content th {

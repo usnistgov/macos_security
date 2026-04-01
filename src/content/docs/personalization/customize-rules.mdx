@@ -3,7 +3,7 @@ title: Customize Rules
 description: Modify existing rules or add new rules to meet your organization's requirements.
 ---
 
-import { Steps, FileTree, Aside } from '@astrojs/starlight/components';
+import { Steps, FileTree, Aside, Tabs, TabItem } from '@astrojs/starlight/components';
 
 export const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : import.meta.env.BASE_URL + '/';
 
@@ -11,12 +11,6 @@ Customizing lets you modify rule content (check commands, fixes, references) or 
 
 <Aside type="tip">
 Only include fields you want to change in your custom rule file. The project automatically merges your customizations with the original rule, keeping your changes compatible across OS updates.
-</Aside>
-
-<Aside type="caution" title="Always Use the Correct Branch (mSCP 1.0)">
-Each macOS version has its own branch (`sequoia`, `sonoma`, `ventura`, etc.). **Never use the `main` branch** — it won't work for generating content.
-
-**mSCP 2.0 (currently in beta)** will remove the per-branch requirement and introduce easier installation methods.
 </Aside>
 
 ---
@@ -29,7 +23,7 @@ When you create a custom rule file, the project:
 2. Loads the original rule from `rules/`
 3. Uses your custom values where they differ
 4. Keeps original values for fields you didn't customize
-5. Merges `tags` and `references` (concatenates rather than replaces)
+5. Merges `tags` (concatenates), `references` (updates), and `platforms` (merges) rather than replacing
 
 ---
 
@@ -54,15 +48,28 @@ When you create a custom rule file, the project:
          - https://example.com/policy
    ```
 
-3. **Generate your outputs**
-
-   ```bash
-   ./scripts/generate_guidance.py baselines/YOUR_BASELINE.yaml
-   ```
-
-   The custom values merge with the original rule automatically.
+3. **Generate your outputs** (see command below)
 
 </Steps>
+
+<Tabs syncKey="mscp-version">
+  <TabItem label="mSCP 2.0 (Beta)">
+
+```bash
+./mscp.py guidance custom/baselines/YOUR_BASELINE.yaml
+```
+
+  </TabItem>
+  <TabItem label="mSCP 1.0">
+
+```bash
+./scripts/generate_guidance.py baselines/YOUR_BASELINE.yaml
+```
+
+  </TabItem>
+</Tabs>
+
+The custom values merge with the original rule automatically.
 
 ---
 
@@ -86,23 +93,38 @@ When you create a custom rule file, the project:
    | `fix` | Remediation instructions |
    | `tags` | Include your baseline tag |
 
-3. **Add payload support (if needed)**
+3. **Add payload support (if needed, mSCP 1.0 only)**
 
    If your rule uses a configuration profile payload not in the project, add it to `includes/supported_payloads.yaml`.
 
-4. **Generate your baseline**
-
-   ```bash
-   ./scripts/generate_baseline.py -k YOUR_TAG
-   ```
-
-5. **Generate your outputs**
-
-   ```bash
-   ./scripts/generate_guidance.py baselines/YOUR_BASELINE.yaml
-   ```
+4. **Generate your baseline and outputs** (see commands below)
 
 </Steps>
+
+<Tabs syncKey="mscp-version">
+  <TabItem label="mSCP 2.0 (Beta)">
+
+```bash
+# Generate baseline
+./mscp.py baseline -k YOUR_TAG
+
+# Generate outputs
+./mscp.py guidance custom/baselines/YOUR_BASELINE.yaml
+```
+
+  </TabItem>
+  <TabItem label="mSCP 1.0">
+
+```bash
+# Generate baseline
+./scripts/generate_baseline.py -k YOUR_TAG
+
+# Generate outputs
+./scripts/generate_guidance.py baselines/YOUR_BASELINE.yaml
+```
+
+  </TabItem>
+</Tabs>
 
 ---
 
