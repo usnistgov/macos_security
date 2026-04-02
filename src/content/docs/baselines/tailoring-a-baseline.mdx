@@ -32,7 +32,7 @@ Consider tailoring when you need to:
   <TabItem label="mSCP 2.0 (Beta)">
 
 <Aside type="caution" title="mSCP 2.0 is currently in Beta">
-mSCP 2.0 may contain errors or unexpected issues. If you encounter any problems, please [report them to the project](https://github.com/usnistgov/macos_security/issues) — together we can make it a better solution.
+mSCP 2.0 is under active development and should not be used in production. Please [report any issues](https://github.com/usnistgov/macos_security/issues) to the project. For production deployments, refer to [mSCP 1.0](https://github.com/usnistgov/macos_security).
 </Aside>
 
 <Steps>
@@ -191,6 +191,11 @@ This file overrides the default value for that rule. Your custom values are pres
 <Tabs syncKey="mscp-version">
   <TabItem label="mSCP 2.0 (Beta)">
 
+<Aside type="caution" title="mSCP 2.0 is currently in Beta">
+mSCP 2.0 is under active development and should not be used in production. Please [report any issues](https://github.com/usnistgov/macos_security/issues) to the project. For production deployments, refer to [mSCP 1.0](https://github.com/usnistgov/macos_security).
+</Aside>
+
+
 ```bash
 # Generate a tailored NIST 800-53 Moderate baseline
 ./mscp.py baseline -k 800-53r5_moderate -t
@@ -201,6 +206,11 @@ This file overrides the default value for that rule. Your custom values are pres
 
   </TabItem>
   <TabItem label="mSCP 1.0">
+
+<Aside type="caution" title="Always Use the Correct Branch">
+Each macOS version has its own branch (`sequoia`, `sonoma`, `ventura`, etc.). **Never use the `main` branch** — it won't work for generating content.
+</Aside>
+
 
 ```bash
 # Generate a tailored NIST 800-53 Moderate baseline

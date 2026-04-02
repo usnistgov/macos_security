@@ -12,10 +12,20 @@ export const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BAS
 <Tabs syncKey="mscp-version">
   <TabItem label="mSCP 2.0 (Beta)">
 
+<Aside type="caution" title="mSCP 2.0 is currently in Beta">
+mSCP 2.0 is under active development and should not be used in production. Please [report any issues](https://github.com/usnistgov/macos_security/issues) to the project. For production deployments, refer to [mSCP 1.0](https://github.com/usnistgov/macos_security).
+</Aside>
+
+
 Once you have a baseline, run `./mscp.py guidance` to create documentation in multiple formats.
 
   </TabItem>
   <TabItem label="mSCP 1.0">
+
+<Aside type="caution" title="Always Use the Correct Branch">
+Each macOS version has its own branch (`sequoia`, `sonoma`, `ventura`, etc.). **Never use the `main` branch** — it won't work for generating content.
+</Aside>
+
 
 Once you have a baseline, run `./scripts/generate_guidance.py` to create documentation in multiple formats.
 

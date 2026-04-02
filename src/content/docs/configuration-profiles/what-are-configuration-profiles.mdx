@@ -22,6 +22,11 @@ Configuration profiles enforce settings that users cannot override. This ensures
 <Tabs syncKey="mscp-version">
   <TabItem label="mSCP 2.0 (Beta)">
 
+<Aside type="caution" title="mSCP 2.0 is currently in Beta">
+mSCP 2.0 is under active development and should not be used in production. Please [report any issues](https://github.com/usnistgov/macos_security/issues) to the project. For production deployments, refer to [mSCP 1.0](https://github.com/usnistgov/macos_security).
+</Aside>
+
+
 | Step | Description |
 |:-----|:------------|
 | **Generate** | Run `./mscp.py guidance -p` to create profiles from your baseline |
@@ -30,6 +35,11 @@ Configuration profiles enforce settings that users cannot override. This ensures
 
   </TabItem>
   <TabItem label="mSCP 1.0">
+
+<Aside type="caution" title="Always Use the Correct Branch">
+Each macOS version has its own branch (`sequoia`, `sonoma`, `ventura`, etc.). **Never use the `main` branch** — it won't work for generating content.
+</Aside>
+
 
 | Step | Description |
 |:-----|:------------|
@@ -49,6 +59,11 @@ Profiles can also be signed with a certificate (`-H` flag) to ensure authenticit
 <Tabs syncKey="mscp-version">
   <TabItem label="mSCP 2.0 (Beta)">
 
+<Aside type="caution" title="mSCP 2.0 is currently in Beta">
+mSCP 2.0 is under active development and should not be used in production. Please [report any issues](https://github.com/usnistgov/macos_security/issues) to the project. For production deployments, refer to [mSCP 1.0](https://github.com/usnistgov/macos_security).
+</Aside>
+
+
 | Type | Flag | Description |
 |:-----|:-----|:------------|
 | **Individual profiles** | `-p` | One profile per payload type (recommended for flexibility) |
@@ -60,6 +75,11 @@ Output location: `build/BASELINE_NAME/mobileconfigs/`
 
   </TabItem>
   <TabItem label="mSCP 1.0">
+
+<Aside type="caution" title="Always Use the Correct Branch">
+Each macOS version has its own branch (`sequoia`, `sonoma`, `ventura`, etc.). **Never use the `main` branch** — it won't work for generating content.
+</Aside>
+
 
 | Type | Flag | Description |
 |:-----|:-----|:------------|
