@@ -12,6 +12,9 @@ export default defineConfig({
 			logo: {
 				src: './src/assets/logo.png',
 			},
+			components: {
+				Hero: './src/components/Hero.astro',
+			},
 			customCss: [
 				// Path to your custom CSS file
 				'./src/styles/custom.css',
