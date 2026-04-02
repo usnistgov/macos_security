@@ -160,6 +160,43 @@ sl-anchor-link,
   box-shadow: 0 0 30px rgba(106, 181, 73, 0.55), 0 0 0 1px rgba(106, 181, 73, 0.5);
 }
 
+.mscp2-promo--beta {
+  animation: none;
+  border-color: rgba(234, 197, 30, 0.45);
+  background: rgba(234, 197, 30, 0.08);
+}
+
+[data-theme="dark"] .mscp2-promo--beta {
+  background: rgba(234, 197, 30, 0.06);
+}
+
+.mscp2-promo--beta:hover {
+  box-shadow: none;
+  border-color: rgba(234, 197, 30, 0.75);
+}
+
+[data-theme="dark"] .mscp2-promo--beta {
+  border-color: rgba(234, 197, 30, 0.4);
+}
+
+[data-theme="dark"] .mscp2-promo--beta:hover {
+  box-shadow: none;
+  border-color: rgba(234, 197, 30, 0.7);
+}
+
+.mscp2-promo--beta .mscp2-promo-eyebrow {
+  color: #a07c00;
+}
+
+[data-theme="dark"] .mscp2-promo--beta .mscp2-promo-eyebrow {
+  color: #eac51e;
+}
+
+.mscp2-promo--beta .mscp2-promo-badge {
+  background: #eac51e;
+  color: #111;
+}
+
 .mscp2-promo-header {
   display: flex;
   align-items: center;

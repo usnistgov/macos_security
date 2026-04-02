@@ -7,13 +7,11 @@ import { Aside, Steps } from '@astrojs/starlight/components';
 
 export const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : import.meta.env.BASE_URL + '/';
 
-<div class="beta-banner">
-  <span class="beta-tag">BETA</span>
-  <div class="beta-text">
-    <strong>mSCP 2.0 is currently in Beta</strong><br/>
-    mSCP 2.0 is under active development and should not be used in production. Please <a href="https://github.com/usnistgov/macos_security/issues">report any issues</a> to the project.<br/>
-    For production deployments, refer to <a href="https://github.com/usnistgov/macos_security">mSCP 1.0</a>.
+<div class="mscp2-promo mscp2-promo--beta">
+  <div class="mscp2-promo-eyebrow">
+    Currently in Beta <span class="mscp2-promo-badge">Beta</span>
   </div>
+  <p class="mscp2-promo-desc">mSCP 2.0 is under active development and should not be used in production. Please <a href="https://github.com/usnistgov/macos_security/issues">report any issues</a> to the project. For production deployments, refer to <a href="https://github.com/usnistgov/macos_security">mSCP 1.0</a>.</p>
 </div>
 
 mSCP 2.0 is a major architectural evolution — a **unified codebase** that eliminates the need for separate branches per macOS version.
@@ -379,36 +377,6 @@ Manual setup with virtual environment.
 - <a href={`${base}more-information/resources/`}>Resources</a> — Training and tools
 
 <style>{`
-  /* Beta Banner */
-  .beta-banner {
-    display: flex;
-    align-items: flex-start;
-    gap: 1rem;
-    background: linear-gradient(135deg, var(--sl-color-orange-low) 0%, var(--sl-color-yellow-low) 100%);
-    border: 2px solid var(--sl-color-orange);
-    border-radius: 12px;
-    padding: 1.25rem 1.5rem;
-    margin-bottom: 1.5rem;
-  }
-  .beta-tag {
-    background: var(--sl-color-orange);
-    color: var(--sl-color-black);
-    font-weight: 800;
-    font-size: 0.75rem;
-    padding: 0.35rem 0.75rem;
-    border-radius: 6px;
-    letter-spacing: 0.05em;
-    flex-shrink: 0;
-  }
-  .beta-text {
-    font-size: 0.95rem;
-    line-height: 1.5;
-  }
-  .beta-text a {
-    color: var(--sl-color-orange-high);
-    font-weight: 600;
-  }
-
   /* Rule Compare */
   .rule-compare {
     background: var(--sl-color-bg-inline-code);
