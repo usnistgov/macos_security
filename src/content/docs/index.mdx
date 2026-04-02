@@ -23,6 +23,24 @@ import { Card, CardGrid } from '@astrojs/starlight/components';
 
 export const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : import.meta.env.BASE_URL + '/';
 
+<div class="mscp2-promo">
+  <div class="mscp2-promo-eyebrow">
+    Coming Soon <span class="mscp2-promo-badge">Beta</span>
+  </div>
+  <div class="mscp2-promo-title">mSCP 2.0 — The Next Generation</div>
+  <p class="mscp2-promo-desc">mSCP just got a whole lot better. One unified branch covers macOS, iOS/iPadOS, and visionOS. No more version juggling. Everything you need, in one place. Ready to test now.</p>
+  <ul class="mscp2-promo-features">
+    <li>Unified branch for all Apple OS versions</li>
+    <li>Container support (no more local dependencies)</li>
+    <li>Modern command-line tooling</li>
+    <li>Baselines, guidance, profiles, and scripts — all in one place</li>
+  </ul>
+  <div class="mscp2-promo-actions">
+    <a href={`${base}mscp-2/overview/`} class="mscp2-promo-btn">What's New →</a>
+    <a href={`${base}welcome/getting-started/`} class="mscp2-promo-link">Try the Beta</a>
+  </div>
+</div>
+
 ## Latest Release
 <div id="github-latest-release"></div>
 <script src={`${base}scripts/github-latest-release.js`}></script>

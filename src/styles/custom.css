@@ -114,6 +114,194 @@ sl-anchor-link,
 /* mSCP 2.0 Overview Page Styles */
 /* ---------------------------------------------------------------------- */
 
+/* ---------------------------------------------------------------------- */
+/* mSCP 2.0 Promo Banner (home page) */
+/* ---------------------------------------------------------------------- */
+
+@keyframes mscp2-glow {
+  0%, 100% {
+    box-shadow: 0 0 6px rgba(49, 100, 49, 0.2), 0 0 0 1px rgba(49, 100, 49, 0.15);
+  }
+  50% {
+    box-shadow: 0 0 22px rgba(49, 100, 49, 0.45), 0 0 0 1px rgba(49, 100, 49, 0.4);
+  }
+}
+
+@keyframes mscp2-glow-dark {
+  0%, 100% {
+    box-shadow: 0 0 8px rgba(106, 181, 73, 0.2), 0 0 0 1px rgba(106, 181, 73, 0.15);
+  }
+  50% {
+    box-shadow: 0 0 28px rgba(106, 181, 73, 0.5), 0 0 0 1px rgba(106, 181, 73, 0.45);
+  }
+}
+
+.mscp2-promo {
+  border-radius: 8px;
+  padding: 1em 1.25em;
+  margin: 1em 0;
+  border: 1px solid rgba(49, 100, 49, 0.25);
+  background: transparent;
+  color: var(--sl-color-text, #333);
+  animation: mscp2-glow 3s ease-in-out infinite;
+}
+
+.mscp2-promo:hover {
+  animation-play-state: paused;
+  box-shadow: 0 0 30px rgba(49, 100, 49, 0.5), 0 0 0 1px rgba(49, 100, 49, 0.5);
+}
+
+[data-theme="dark"] .mscp2-promo {
+  border-color: rgba(106, 181, 73, 0.25);
+  animation-name: mscp2-glow-dark;
+}
+
+[data-theme="dark"] .mscp2-promo:hover {
+  box-shadow: 0 0 30px rgba(106, 181, 73, 0.55), 0 0 0 1px rgba(106, 181, 73, 0.5);
+}
+
+.mscp2-promo-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.mscp2-promo-icon {
+  color: var(--sl-color-accent, #316431);
+  flex-shrink: 0;
+  opacity: 0.7;
+}
+
+[data-theme="dark"] .mscp2-promo-icon {
+  color: var(--sl-color-accent-high, #6ab549);
+  opacity: 0.8;
+}
+
+.mscp2-promo-title-group {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.mscp2-promo-title {
+  font-size: clamp(1.4rem, 3vw, 2rem);
+  font-weight: 700;
+  color: var(--sl-color-white);
+  line-height: 1.2;
+}
+
+.mscp2-promo-badge {
+  background: #f5a623;
+  color: #111;
+  font-size: 0.75em;
+  font-weight: 600;
+  padding: 0.2em 0.6em;
+  border-radius: 4px;
+}
+
+.mscp2-promo-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 0.6rem;
+  font-size: 0.75em;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--sl-color-accent-high);
+}
+
+.mscp2-promo-desc {
+  display: block;
+  width: 100%;
+  font-size: 0.95em;
+  color: var(--sl-color-text, #444);
+  margin: 0.75em 0;
+  line-height: 1.6;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+[data-theme="dark"] .mscp2-promo-desc {
+  color: var(--sl-color-text, #ccc);
+}
+
+.mscp2-promo-features {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.35rem 2rem;
+  margin: 0 0 1rem;
+  padding: 0;
+  list-style: none;
+  color: var(--sl-color-gray-2);
+  font-size: 0.9em;
+}
+
+@media (max-width: 40rem) {
+  .mscp2-promo-features {
+    grid-template-columns: 1fr;
+  }
+}
+
+.mscp2-promo-features li::before {
+  content: '✓  ';
+  color: var(--sl-color-accent, #316431);
+  font-weight: 700;
+}
+
+[data-theme="dark"] .mscp2-promo-features li::before {
+  color: var(--sl-color-accent-high, #6ab549);
+}
+
+.mscp2-promo-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 1rem;
+  flex-wrap: wrap;
+}
+
+.mscp2-promo-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: var(--sl-color-accent, #316431);
+  color: #fff !important;
+  padding: 0.5em 1em;
+  border-radius: 6px;
+  font-size: 0.9em;
+  font-weight: 500;
+  text-decoration: none !important;
+  transition: background 0.2s, transform 0.2s;
+}
+
+.mscp2-promo-btn:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+[data-theme="dark"] .mscp2-promo-btn {
+  background: var(--sl-color-accent-high, #6ab549);
+  color: #111 !important;
+}
+
+.mscp2-promo-link {
+  color: var(--sl-color-accent, #316431);
+  font-size: 0.9em;
+  text-decoration: none;
+}
+
+.mscp2-promo-link:hover {
+  text-decoration: underline;
+}
+
+[data-theme="dark"] .mscp2-promo-link {
+  color: var(--sl-color-accent-high, #6ab549);
+}
+
+/* ---------------------------------------------------------------------- */
 /* Feature boxes hover effect */
 .feature-box {
   transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
