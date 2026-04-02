@@ -60,8 +60,6 @@ profile:
       - os_notes_transcription_summary_disable
       - os_on_device_dictation_enforce
       - os_photos_enhanced_search_disable
-      - os_rapid_security_response_allow
-      - os_rapid_security_response_removal_disable
       - os_recovery_lock_enable
       - os_root_disable
       - os_safari_reader_summary_disable

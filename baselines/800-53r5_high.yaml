@@ -104,8 +104,6 @@ profile:
       - os_policy_banner_loginwindow_enforce
       - os_policy_banner_ssh_configure
       - os_policy_banner_ssh_enforce
-      - os_rapid_security_response_allow
-      - os_rapid_security_response_removal_disable
       - os_recovery_lock_enable
       - os_root_disable
       - os_safari_reader_summary_disable
