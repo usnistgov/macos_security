@@ -6,6 +6,8 @@
     width: min(90%, 32rem);
     height: auto;
     margin-inline: auto;
+    /* Padding compensates for visual overflow caused by rotation/scale transform */
+    padding-block: 3.5rem;
     /* Initial rotation and scale */
     transform: rotate(12deg) scale(1.05);
     transition: all 0.3s;

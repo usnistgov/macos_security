@@ -5,7 +5,7 @@ template: splash
 editUrl: false
 lastUpdated: false
 hero:
-  tagline: Comprehensive, open source macOS security guidance—built by federal experts, based on NIST SP 800-53 and 800-219, and recognized by Apple.
+  tagline: "Open source Apple OS security guidance (macOS, iOS/iPadOS, visionOS)—built by government and industry experts, based on <a href='https://csrc.nist.gov/pubs/sp/800/53/r5/upd1/final'>NIST SP 800-53</a>, authoritative per <a href='https://csrc.nist.gov/pubs/sp/800/219/r1/final'>SP 800-219</a> and <a href='https://csrc.nist.gov/pubs/sp/800/70/r5/ipd'>800-70</a>, with baselines and benchmarks for government, industry, and international use. <a href='https://support.apple.com/guide/certifications/macos-security-compliance-project-apc322685bb2/web'>Recognized by Apple</a>."
   image:
     file: ../../assets/logo.png
     class: hero-logo-effect
@@ -22,6 +22,24 @@ hero:
 import { Card, CardGrid } from '@astrojs/starlight/components';
 
 export const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : import.meta.env.BASE_URL + '/';
+
+<div class="mscp2-promo">
+  <div class="mscp2-promo-eyebrow">
+    Coming Soon <span class="mscp2-promo-badge">Beta</span>
+  </div>
+  <div class="mscp2-promo-title">mSCP 2.0 — The Next Generation</div>
+  <p class="mscp2-promo-desc">mSCP just got a whole lot better. One unified branch covers macOS, iOS/iPadOS, and visionOS. No more version juggling. Everything you need, in one place. Ready to test now.</p>
+  <ul class="mscp2-promo-features">
+    <li>Unified branch for all Apple OS versions</li>
+    <li>Container support (no more local dependencies)</li>
+    <li>Modern command-line tooling</li>
+    <li>Baselines, guidance, profiles, and scripts — all in one place</li>
+  </ul>
+  <div class="mscp2-promo-actions">
+    <a href={`${base}mscp-2/overview/`} class="mscp2-promo-btn">What's New →</a>
+    <a href={`${base}welcome/getting-started/`} class="mscp2-promo-link">Try the Beta &rarr;</a>
+  </div>
+</div>
 
 ## Latest Release
 <div id="github-latest-release"></div>

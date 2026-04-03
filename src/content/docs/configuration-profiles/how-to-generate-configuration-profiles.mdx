@@ -21,7 +21,7 @@ You need a baseline first. See <a href={`${base}baselines/how-to-generate-baseli
   <TabItem label="mSCP 2.0 (Beta)">
 
 <Aside type="caution" title="mSCP 2.0 is currently in Beta">
-mSCP 2.0 may contain errors or unexpected issues. If you encounter any problems, please [report them to the project](https://github.com/usnistgov/macos_security/issues) — together we can make it a better solution.
+mSCP 2.0 is under active development and should not be used in production. Please [report any issues](https://github.com/usnistgov/macos_security/issues) to the project. For production deployments, refer to [mSCP 1.0](https://github.com/usnistgov/macos_security).
 </Aside>
 
 <Steps>
@@ -122,6 +122,11 @@ Replace `"Your Certificate Name"` with your signing certificate's common name.
 <Tabs syncKey="mscp-version">
   <TabItem label="mSCP 2.0 (Beta)">
 
+<Aside type="caution" title="mSCP 2.0 is currently in Beta">
+mSCP 2.0 is under active development and should not be used in production. Please [report any issues](https://github.com/usnistgov/macos_security/issues) to the project. For production deployments, refer to [mSCP 1.0](https://github.com/usnistgov/macos_security).
+</Aside>
+
+
 ```bash
 ./mscp.py guidance custom/baselines/BASELINE_NAME.yaml -p -H SUBJECT_KEY_ID
 ```
@@ -133,6 +138,11 @@ Example:
 
   </TabItem>
   <TabItem label="mSCP 1.0">
+
+<Aside type="caution" title="Always Use the Correct Branch">
+Each macOS version has its own branch (`sequoia`, `sonoma`, `ventura`, etc.). **Never use the `main` branch** — it won't work for generating content.
+</Aside>
+
 
 ```bash
 ./scripts/generate_guidance.py -p -H SUBJECT_KEY_ID baselines/BASELINE_NAME.yaml
@@ -168,6 +178,11 @@ Signing is optional. Signed profiles verify the profile hasn't been modified and
 <Tabs syncKey="mscp-version">
   <TabItem label="mSCP 2.0 (Beta)">
 
+<Aside type="caution" title="mSCP 2.0 is currently in Beta">
+mSCP 2.0 is under active development and should not be used in production. Please [report any issues](https://github.com/usnistgov/macos_security/issues) to the project. For production deployments, refer to [mSCP 1.0](https://github.com/usnistgov/macos_security).
+</Aside>
+
+
 | Flag | Description |
 |:-----|:------------|
 | `-p` | Generate individual profiles (one per payload type) |
@@ -177,6 +192,11 @@ Signing is optional. Signed profiles verify the profile hasn't been modified and
 
   </TabItem>
   <TabItem label="mSCP 1.0">
+
+<Aside type="caution" title="Always Use the Correct Branch">
+Each macOS version has its own branch (`sequoia`, `sonoma`, `ventura`, etc.). **Never use the `main` branch** — it won't work for generating content.
+</Aside>
+
 
 | Flag | Description |
 |:-----|:------------|
@@ -194,6 +214,11 @@ Signing is optional. Signed profiles verify the profile hasn't been modified and
 <Tabs syncKey="mscp-version">
   <TabItem label="mSCP 2.0 (Beta)">
 
+<Aside type="caution" title="mSCP 2.0 is currently in Beta">
+mSCP 2.0 is under active development and should not be used in production. Please [report any issues](https://github.com/usnistgov/macos_security/issues) to the project. For production deployments, refer to [mSCP 1.0](https://github.com/usnistgov/macos_security).
+</Aside>
+
+
 | Type | Flag | Best For |
 |:-----|:-----|:---------|
 | **Individual** | `-p` | Flexibility — deploy only the profiles you need |
@@ -202,6 +227,11 @@ Signing is optional. Signed profiles verify the profile hasn't been modified and
 
   </TabItem>
   <TabItem label="mSCP 1.0">
+
+<Aside type="caution" title="Always Use the Correct Branch">
+Each macOS version has its own branch (`sequoia`, `sonoma`, `ventura`, etc.). **Never use the `main` branch** — it won't work for generating content.
+</Aside>
+
 
 | Type | Flag | Best For |
 |:-----|:-----|:---------|

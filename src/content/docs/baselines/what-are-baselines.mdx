@@ -22,6 +22,11 @@ Think of a baseline as a shopping list of security settings. Your organization, 
 <Tabs syncKey="mscp-version">
   <TabItem label="mSCP 2.0 (Beta)">
 
+<Aside type="caution" title="mSCP 2.0 is currently in Beta">
+mSCP 2.0 is under active development and should not be used in production. Please [report any issues](https://github.com/usnistgov/macos_security/issues) to the project. For production deployments, refer to [mSCP 1.0](https://github.com/usnistgov/macos_security).
+</Aside>
+
+
 1. **Choose a framework** — Pick the compliance standard you need (NIST, CIS, STIG, etc.)
 2. **Generate the baseline** — Run `./mscp.py baseline -k BASELINE_NAME` to create the YAML file
 3. **Customize if needed** — Tailor the baseline to your organization's requirements
@@ -29,6 +34,11 @@ Think of a baseline as a shopping list of security settings. Your organization, 
 
   </TabItem>
   <TabItem label="mSCP 1.0">
+
+<Aside type="caution" title="Always Use the Correct Branch">
+Each macOS version has its own branch (`sequoia`, `sonoma`, `ventura`, etc.). **Never use the `main` branch** — it won't work for generating content.
+</Aside>
+
 
 1. **Choose a framework** — Pick the compliance standard you need (NIST, CIS, STIG, etc.)
 2. **Generate the baseline** — Run `./scripts/generate_baseline.py -k BASELINE_NAME` to create the YAML file
@@ -84,6 +94,11 @@ CIS Level 2 baselines include all Level 1 rules plus additional controls for hig
 <Tabs syncKey="mscp-version">
   <TabItem label="mSCP 2.0 (Beta)">
 
+<Aside type="caution" title="mSCP 2.0 is currently in Beta">
+mSCP 2.0 is under active development and should not be used in production. Please [report any issues](https://github.com/usnistgov/macos_security/issues) to the project. For production deployments, refer to [mSCP 1.0](https://github.com/usnistgov/macos_security).
+</Aside>
+
+
 ```bash
 ./mscp.py baseline -l
 ```
@@ -115,6 +130,11 @@ Benchmarks (platform-specific):
 
   </TabItem>
   <TabItem label="mSCP 1.0">
+
+<Aside type="caution" title="Always Use the Correct Branch">
+Each macOS version has its own branch (`sequoia`, `sonoma`, `ventura`, etc.). **Never use the `main` branch** — it won't work for generating content.
+</Aside>
+
 
 ```bash
 ./scripts/generate_baseline.py -l
