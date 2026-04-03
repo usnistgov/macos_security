@@ -56,3 +56,4 @@ mobileconfig: true
 mobileconfig_info:
   com.apple.MCX.FileVault2:
     ForceEnableInSetupAssistant: true
+    Enable: On
