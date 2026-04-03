@@ -54,3 +54,8 @@ mobileconfig: true
 mobileconfig_info:
   com.apple.SoftwareUpdate:
     CriticalUpdateInstall: true
+ddm_info:
+  declarationtype: com.apple.configuration.softwareupdate.settings
+  ddm_key: AutomaticActions
+  ddm_value:
+    InstallSecurityUpdates: AlwaysOn
