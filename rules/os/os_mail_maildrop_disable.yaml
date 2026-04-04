@@ -51,4 +51,5 @@ supervised: false
 mobileconfig: true
 mobileconfig_info:
   com.apple.mail.managed:
+    EmailAccountType: EmailTypeIMAP
     allowMailDrop: false

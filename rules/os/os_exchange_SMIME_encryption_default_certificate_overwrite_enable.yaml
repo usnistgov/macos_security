@@ -22,4 +22,5 @@ tags:
 mobileconfig: true
 mobileconfig_info:
   com.apple.mail.managed:
+    EmailAccountType: EmailTypeIMAP
     SMIMEEncryptByDefaultUserOverrideable: false
