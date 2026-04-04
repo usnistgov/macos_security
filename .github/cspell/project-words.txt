@@ -64,6 +64,7 @@ declarationtype
 deidentification
 desktopservices
 destroyfvkeyonstandby
+diable
 disa
 diskmanagement
 diskutil
@@ -168,6 +169,7 @@ osascript
 OSCP
 osxserver
 OTAPKI
+overwirte
 passwordauthentication
 passwordpolicy
 pathlist
@@ -195,6 +197,8 @@ pwpolicy
 pydantic
 pyyaml
 reauthentication
+recents
+Recents
 Remediator
 rootok
 rstrip
@@ -329,6 +333,7 @@ stigs
 STIGS
 sysprefs
 uchg
+unenrollment
 VALUEONDEMAND
 vared
 xccdfrules
