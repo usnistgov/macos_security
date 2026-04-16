@@ -11,7 +11,6 @@ import argparse
 
 class MacSecurityRule():
     def __init__(self, title, rule_id, severity, discussion, check, fix, cci, cce, nist_controls, disa_stig, srg, odv, tags, result_value, mobileconfig, mobileconfig_info):
-        self.rule_title = title
         self.rule_id = rule_id
         self.rule_severity = severity
         self.rule_discussion = discussion
