@@ -8,20 +8,18 @@ discussion: |
   The information system _MUST_ be configured to provide only essential capabilities. Disabling Media Sharing helps prevent the unauthorized connection of devices and the unauthorized transfer of information. Disabling Media Sharing mitigates this risk.
 check: |
   /usr/bin/osascript -l JavaScript << EOS
-  function run() {
-    let pref1 = ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess')\
+  let pref1 = ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess')\
   .objectForKey('allowMediaSharing'))
-    let pref2 = ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess')\
+  let pref2 = ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess')\
   .objectForKey('allowMediaSharingModification'))
-    if ( pref1 == false && pref2 == false ) {
-      return("true")
-    } else {
-      return("false")
-    }
+  if ( pref1 == false && pref2 == false ) {
+      "true"
+  } else {
+      "false"
   }
   EOS
 result:
-  string: 'true'
+  string: "true"
 fix: |
   This is implemented by a Configuration Profile.
 references:
@@ -50,7 +48,7 @@ references:
   cmmc:
     - AC.L1-3.1.1
 macOS:
-  - '26.0'
+  - "26.0"
 tags:
   - 800-53r5_low
   - 800-53r5_moderate

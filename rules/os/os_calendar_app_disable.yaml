@@ -14,21 +14,19 @@ discussion: |
   ====
 check: |
   /usr/bin/osascript -l JavaScript << EOS
-  function run() {
-    let pref1 = ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess.new')\
-    .objectForKey('familyControlsEnabled'))
-    let pathlist = $.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess.new')\
-    .objectForKey('pathBlackList').js
-    for ( let app in pathlist ) {
-        if ( ObjC.unwrap(pathlist[app]) == "/Applications/Calendar.app" && pref1 == true ){
-            return("true")
-        }
-    }
-    return("false")
-    }
+  let pref1 = ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess.new')\
+  .objectForKey('familyControlsEnabled'))
+  let pathlist = $.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess.new')\
+  .objectForKey('pathBlackList').js
+  for ( let app in pathlist ) {
+      if ( ObjC.unwrap(pathlist[app]) == "/Applications/Calendar.app" && pref1 == true ){
+          "true"
+      }
+  }
+  "false"
   EOS
 result:
-  string: 'true'
+  string: "true"
 fix: |
   This is implemented by a Configuration Profile.
 references:
@@ -62,7 +60,7 @@ references:
     - CM.L2-3.4.6
     - CM.L2-3.4.7
 macOS:
-  - '26.0'
+  - "26.0"
 tags:
   - cnssi-1253_low
   - cnssi-1253_high
