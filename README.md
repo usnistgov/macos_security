@@ -34,7 +34,7 @@ To learn more, visit the [project website](http://pages.nist.gov/macos_security/
 - DISA STIG (macOS, iOS, and visionOS)
 - iOS Indigo
 - NLMAPGOV (Base and Plus, macOS and iOS)
-- HICP — Health Industry Cybersecurity Practices (Large Organizations)
+- HICP — Health Industry Cybersecurity Practices (Large Organizations, macOS)
 
 Don't see your framework listed? Reach out through the [contributor guidance](CONTRIBUTING.md) or the [project website](http://pages.nist.gov/macos_security/) to find out how we can get it included.
 
