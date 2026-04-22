@@ -1,22 +1,50 @@
-![Alt text](templates/images/mscp_banner_outline.png)
+<p align="center"><img src="templates/images/mscp_banner_logo.png" alt="macOS Security Compliance" width="550"></p>
 
-![Alt text](https://badgen.net/badge/icon/apple?icon=apple&label)
-![Alt text](https://badgen.net/badge/icon/26.0?icon=apple&label)
+<p align="center">
+  <a href="https://www.apple.com/macos/"><img src="https://badgen.net/badge/icon/apple?icon=apple&label" alt="Apple"></a>
+  <a href="https://www.apple.com/macos/"><img src="https://badgen.net/badge/icon/26.0?icon=apple&label" alt="macOS 26.0"></a>
+  <a href="http://pages.nist.gov/macos_security/"><img src="https://badgen.net/badge/website/pages.nist.gov/blue" alt="Website"></a>
+  <a href="LICENSE.md"><img src="https://badgen.net/badge/license/CC%20BY%204.0/green" alt="License"></a>
+  <a href="https://github.com/usnistgov/macos_security/stargazers"><img src="https://badgen.net/github/stars/usnistgov/macos_security" alt="Stars"></a>
+</p>
 
 > [!IMPORTANT]
-> We recommend working off of one of the OS branches, rather than the `main` branch.
+> **Do not work off of `main`** — check out a release branch that matches your target.
+>
+> | Version | Branch | Status |
+> |---|---|---|
+> | **1.0** | per-OS (e.g., `sequoia`, `tahoe`, `ios_26`, `visionos_26`) | Stable |
+> | **2.0 Beta** | `dev_2.0` | In active development — unified across platforms |
 
-The macOS Security Compliance Project is an [open source](LICENSE.md) effort to provide a programmatic approach to generating security guidance. The configuration settings in this document were derived from National Institute of Standards and Technology (NIST) Special Publication (SP) 800-53, _Security and Privacy Controls for Information Systems and Organizations_, Revision 5. This is a joint project of federal operational IT Security staff from the National Institute of Standards and Technology (NIST), National Aeronautics and Space Administration (NASA), Defense Information Systems Agency (DISA), and Los Alamos National Laboratory (LANL).
+**Supported platforms:** macOS, iOS/iPadOS, and visionOS.
 
-This project is the technical implementation of NIST Special Publication, 800-219 (Rev. 1) [Automated Secure Configuration Guidance from the macOS Security Compliance Project (mSCP)](https://csrc.nist.gov/pubs/sp/800/219/r1/final).  NIST Special Publication 800-219 is the official guidance from for automated secure configuration for macOS.
+The macOS Security Compliance Project (mSCP) is an [open-source](LICENSE.md) project that helps organizations secure their Apple devices. You choose the security rules to enforce, and mSCP generates everything you need:
 
-Apple acknowledges the macOS Security Compliance Project with information on their [Platform Certifications](https://support.apple.com/guide/certifications/macos-security-compliance-project-apc322685bb2/web) page.
+- **Configuration profiles** to apply the rules
+- **Documentation** to explain the setup
+- **Compliance scripts** to verify and enforce rules that profiles cannot
 
-This project can be used as a resource to easily create customized security baselines of technical security controls by leveraging a library of atomic actions which are mapped to the compliance requirements defined in NIST SP 800-53 (Rev. 5). It can also be used to develop customized guidance to meet the particular cybersecurity needs of any organization.
+Beyond the built-in frameworks, organizations can build customized baselines to meet their specific cybersecurity needs. Vendors can also use mSCP as a source to build manifests, datapoints, and other compliance content for their products.
 
-To learn more about the project, [click here](http://pages.nist.gov/macos_security/).
+The security rules are derived from NIST Special Publication (SP) 800-53, _Security and Privacy Controls for Information Systems and Organizations_, Revision 5. mSCP is a joint project of federal IT security staff from the National Institute of Standards and Technology (NIST), the National Aeronautics and Space Administration (NASA), the Defense Information Systems Agency (DISA), and Los Alamos National Laboratory (LANL), along with a community of contributors who test the project and provide feedback to keep it on the cutting edge of Apple platform security.
 
-If you are interested in supporting the development of the project, refer to the [contributor guidance](CONTRIBUTING.md) for more information.
+mSCP is the technical implementation of NIST SP 800-219 (Rev. 1), [_Automated Secure Configuration Guidance from the macOS Security Compliance Project_](https://csrc.nist.gov/pubs/sp/800/219/r1/final) — the official NIST guidance for automated secure configuration of macOS. Apple also acknowledges the project on its [Platform Certifications](https://support.apple.com/guide/certifications/macos-security-compliance-project-apc322685bb2/web) page.
+
+To learn more, visit the [project website](http://pages.nist.gov/macos_security/). If you would like to contribute, see the [contributor guidance](CONTRIBUTING.md).
+
+## Supported Frameworks
+
+- NIST SP 800-53
+- NIST SP 800-171
+- CIS Benchmarks (Level 1, Level 2, v8)
+- CMMC (Level 1, Level 2)
+- CNSSI 1253
+- DISA STIG (macOS and iOS)
+- iOS Indigo
+- NLMAPGOV (Base and Plus)
+- **Custom** — tailor any of the above or build your own baseline
+
+Don't see your framework listed? Reach out through the [contributor guidance](CONTRIBUTING.md) or the [project website](http://pages.nist.gov/macos_security/) to find out how we can get it included.
 
 ## Usage
 
@@ -27,21 +55,21 @@ Civilian agencies are to use the National Checklist Program as required by [NIST
 
 ## Authors
 
-
-|||
-|----|----|
-|Bob Gendler|NIST|
-|Allen Golbig|Jamf
-|Dan Brodjieski|NASA
-|John Mahlman IV|Leidos
-|Aaron Kegerreis|DISA
-|Henry Stamerjohann|Declarative IT GmbH
-|Marco A Piñeyro II|State Department
-|Jason Blake|NIST
-|Blair Heiserman|NIST
-|Joshua Glemza|NASA
-|Elyse Anderson|NASA
-|Gary Gapinski|NASA
+| Name | Organization |
+|------|--------------|
+| Bob Gendler | NIST |
+| Allen Golbig | Jamf |
+| Dan Brodjieski | NASA |
+| John Mahlman IV | Leidos |
+| Aaron Kegerreis | DISA |
+| Henry Stamerjohann | Declarative IT GmbH |
+| Marco A Piñeyro II | State Department |
+| Jason Blake | NIST |
+| Blair Heiserman | NIST |
+| Joshua Glemza | NASA |
+| Elyse Anderson | NASA |
+| Gary Gapinski | NASA |
+| Cody Keats | Coursera |
 
 ## Changelog
 
