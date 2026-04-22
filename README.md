@@ -8,9 +8,6 @@
   <a href="https://github.com/usnistgov/macos_security/stargazers"><img src="https://badgen.net/github/stars/usnistgov/macos_security" alt="Stars"></a>
 </p>
 
-> [!IMPORTANT]
-> **Do not work off of `main`** — check out a release branch that matches your target.
-
 **Supported platforms:** macOS, iOS/iPadOS, and visionOS.
 
 The macOS Security Compliance Project (mSCP) is an [open-source](LICENSE.md) project that helps organizations secure their Apple devices. You choose the security rules to enforce, and mSCP generates everything you need:
@@ -36,7 +33,8 @@ To learn more, visit the [project website](http://pages.nist.gov/macos_security/
 - CNSSI 1253
 - DISA STIG (macOS, iOS, and visionOS)
 - iOS Indigo
-- NLMAPGOV (Base and Plus)
+- NLMAPGOV (Base and Plus, macOS and iOS)
+- HICP — Health Industry Cybersecurity Practices (Large Organizations)
 
 Don't see your framework listed? Reach out through the [contributor guidance](CONTRIBUTING.md) or the [project website](http://pages.nist.gov/macos_security/) to find out how we can get it included.
 
@@ -56,6 +54,7 @@ Civilian agencies are to use the National Checklist Program as required by [NIST
 | Dan Brodjieski | NASA |
 | John Mahlman IV | Leidos |
 | Aaron Kegerreis | DISA |
+| Cody Keats | Coursera |
 | Henry Stamerjohann | Declarative IT GmbH |
 | Marco A Piñeyro II | State Department |
 | Jason Blake | NIST |
@@ -63,7 +62,6 @@ Civilian agencies are to use the National Checklist Program as required by [NIST
 | Joshua Glemza | NASA |
 | Elyse Anderson | NASA |
 | Gary Gapinski | NASA |
-| Cody Keats | Coursera |
 
 ## Changelog
 
