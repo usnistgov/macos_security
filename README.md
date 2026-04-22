@@ -10,11 +10,6 @@
 
 > [!IMPORTANT]
 > **Do not work off of `main`** — check out a release branch that matches your target.
->
-> | Version | Branch | Status |
-> |---|---|---|
-> | **1.0** | per-OS (e.g., `sequoia`, `tahoe`, `ios_26`, `visionos_26`) | Stable |
-> | **2.0 Beta** | `dev_2.0` | In active development — unified across platforms |
 
 **Supported platforms:** macOS, iOS/iPadOS, and visionOS.
 
@@ -39,10 +34,9 @@ To learn more, visit the [project website](http://pages.nist.gov/macos_security/
 - CIS Benchmarks (Level 1, Level 2, v8)
 - CMMC (Level 1, Level 2)
 - CNSSI 1253
-- DISA STIG (macOS and iOS)
+- DISA STIG (macOS, iOS, and visionOS)
 - iOS Indigo
 - NLMAPGOV (Base and Plus)
-- **Custom** — tailor any of the above or build your own baseline
 
 Don't see your framework listed? Reach out through the [contributor guidance](CONTRIBUTING.md) or the [project website](http://pages.nist.gov/macos_security/) to find out how we can get it included.
 
