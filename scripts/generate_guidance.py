@@ -2003,6 +2003,7 @@ def create_rules(baseline_yaml):
         "cmmc",
         "indigo",
         "bio",
+        "hicp",
         "srg",
         "sfr",
         "custom",
@@ -2415,7 +2416,7 @@ def main():
     if "HICP" in baseline_yaml["title"].upper():
         adoc_HICP_show = ":show_HICP:"
     else:
-        adoc_HICP_show = ":show_BIO!:"
+        adoc_HICP_show = ":show_HICP!:"
 
     if args.gary:
         adoc_tag_show = ":show_tags:"
