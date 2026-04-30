@@ -20,6 +20,8 @@ references:
     - ANNEX K
   bio:
     - 8.27
+  cmmc:
+    - CM.L2-3.4.9
 iOS:
   - '26.0'
 tags:
@@ -29,6 +31,8 @@ tags:
   - 800-53r5_low
   - 800-53r5_moderate
   - 800-53r5_high
+  - cmmc_lvl2
+  - cmmc_lvl3
   - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high

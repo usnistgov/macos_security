@@ -28,6 +28,8 @@ references:
       - 3.4.6 (level 1 - Institutionally-Owned Devices)
     controls v8:
       - 4.3
+  cmmc:
+    - AC.L2-3.1.8
 iOS:
   - '26.0'
 odv:
@@ -51,6 +53,9 @@ tags:
   - cis_lvl1_enterprise
   - cis_lvl2_enterprise
   - cisv8
+  - cmmc_lvl1
+  - cmmc_lvl2
+  - cmmc_lvl3
   - indigo_base
   - indigo_high
   - cnssi-1253_moderate

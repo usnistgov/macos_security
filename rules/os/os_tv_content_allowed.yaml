@@ -29,6 +29,8 @@ references:
     - AIOS-26-017100
   indigo:
     - N/A
+  cmmc:
+    - CM.L2-3.4.6
 iOS:
   - '26.0'
 odv:
@@ -41,6 +43,8 @@ tags:
   - 800-53r5_low
   - 800-53r5_moderate
   - 800-53r5_high
+  - cmmc_lvl2
+  - cmmc_lvl3
 supervised: false
 mobileconfig: true
 mobileconfig_info:

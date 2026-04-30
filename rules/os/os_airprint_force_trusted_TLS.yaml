@@ -9,7 +9,7 @@ references:
   cce:
     - CCE-95643-3
   800-53r5:
-    - AC-17(02)
+    - AC-17(2)
   indigo:
     - ANNEX K
   cci:
@@ -18,11 +18,15 @@ references:
     - 'FMT_MOF_EXT.1.2 #47'
   disa_stig:
     - AIOS-26-016900
+  cmmc:
+    - AC.L2-3.1.13
 iOS:
   - '26.0'
 tags:
   - ios
   - indigo_high
+  - cmmc_lvl2
+  - cmmc_lvl3
   - 800-53r5_moderate
   - 800-53r5_high
   - ios_stig

@@ -15,7 +15,7 @@ references:
   indigo:
     - ANNEX D (Section 5.7 - Interfaces)
 iOS:
-  - "26.0"
+  - '26.0'
 tags:
   - ios
   - indigo_high

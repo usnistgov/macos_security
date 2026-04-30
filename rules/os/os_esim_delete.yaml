@@ -16,10 +16,17 @@ references:
     - 'FMT_MOF_EXT.1.2 #47'
   disa_stig:
     - AIOS-26-015100
+  cmmc:
+    - MP.L1-B.1.VII
+    - MP.L2-3.8.3
+    - MA.L2-3.7.3
 iOS:
   - '26.0'
 tags:
   - ios
+  - cmmc_lvl1
+  - cmmc_lvl2
+  - cmmc_lvl3
   - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high

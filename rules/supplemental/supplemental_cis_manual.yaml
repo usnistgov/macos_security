@@ -172,7 +172,7 @@ references:
   disa_stig:
     - N/A
 iOS:
-  - "26.0"
+  - '26.0'
 tags:
   - cis_lvl1_byod
   - cis_lvl1_enterprise

@@ -27,7 +27,7 @@ references:
   bio:
     - 8.27
 iOS:
-  - "26.0"
+  - '26.0'
 tags:
   - ios
   - cis_lvl1_byod

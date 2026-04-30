@@ -29,6 +29,10 @@ references:
       - 5.2
   bio:
     - 5.17
+  cmmc:
+    - IA.L2-3.5.8
+    - IA.L2-3.5.9
+    - IA.L2-3.5.7
 iOS:
   - '26.0'
 odv:
@@ -53,6 +57,8 @@ tags:
   - cis_lvl1_enterprise
   - cis_lvl2_enterprise
   - cisv8
+  - cmmc_lvl2
+  - cmmc_lvl3
   - indigo_base
   - indigo_high
   - cnssi-1253_moderate
