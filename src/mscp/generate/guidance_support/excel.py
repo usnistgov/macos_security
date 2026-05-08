@@ -258,7 +258,6 @@ def generate_excel(file_out: Path, baseline: Baseline) -> None:
     dataframe = baseline.to_dataframe()
 
     # drop unnecessary columns
-    dataframe.drop("finding", axis=1, inplace=True)
     dataframe.drop("uuid", axis=1, inplace=True)
     # dataframe.drop("section", axis=1, inplace=True)
     dataframe.drop("platforms", axis=1, inplace=True)

@@ -202,10 +202,8 @@ def generate_profiles(
         if payload_type == "com.apple.ManagedClient.preferences":
             for settings in flat_settings:
                 for domain, payload_content in settings.items():
-                    new_profile.add_mcx_payload(domain, payload_content, baseline_name)
-                    consolidated_profile.add_mcx_payload(
-                        domain, payload_content, baseline_name
-                    )
+                    new_profile.add_mcx_payload(domain, payload_content)
+                    consolidated_profile.add_mcx_payload(domain, payload_content)
                     # generate individual profiles for each setting
                     if granular:
                         for setting, value in payload_content.items():
@@ -231,8 +229,8 @@ def generate_profiles(
                                 )
         else:
             settings = merge_flat_settings(flat_settings)
-            new_profile.add_payload(payload_type, settings, baseline_name)
-            consolidated_profile.add_payload(payload_type, settings, baseline_name)
+            new_profile.add_payload(payload_type, settings)
+            consolidated_profile.add_payload(payload_type, settings)
 
             # generate individual profiles for each setting
             if granular:

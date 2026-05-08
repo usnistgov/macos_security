@@ -210,6 +210,24 @@ class bsiReferences(BaseModelWithAccessors):
             self.indigo = sorted(self.indigo)
 
 
+class bzkReferences(BaseModelWithAccessors):
+    """BZK (Ministerie van Binnenlandse Zaken en Koninkrijksrelaties (Netherlands
+    Ministry of the Interior and Kingdom Relations)) references.
+
+    Attributes:
+        bio (list[str] | None): BIO identifiers, sorted
+            in ascending order on construction.
+    """
+
+    bio: list[str] | None = None
+
+    def __init__(self, **data: Any) -> None:
+        """Construct from kwargs and sort the reference list."""
+        super().__init__(**data)
+        if self.bio:
+            self.bio = sorted(self.bio)
+
+
 class customReferences(BaseModelWithAccessors):
     """Open-ended custom reference container.
 
@@ -263,6 +281,7 @@ class References(BaseModelWithAccessors):
         disa (DisaReferences | None): DISA identifiers, if applicable.
         cis (CisReferences | None): CIS identifiers, if applicable.
         bsi (bsiReferences | None): BSI identifiers, if applicable.
+        bzk (bzkReferences | None): BZK identifiers, if applicable.
         custom_refs (customReferences | None): Project-specific custom
             references, if any.
     """
@@ -273,6 +292,7 @@ class References(BaseModelWithAccessors):
     disa: DisaReferences | None = None
     cis: CisReferences | None = None
     bsi: bsiReferences | None = None
+    bzk: bzkReferences | None = None
     custom_refs: customReferences | None = None
 
     def get_ref(
@@ -281,7 +301,7 @@ class References(BaseModelWithAccessors):
         *,
         default: Any = _SENTINEL,
         case_insensitive: bool = True,
-        search_order: Iterable[str] = ("nist", "disa", "cis", "bsi"),
+        search_order: Iterable[str] = ("nist", "disa", "cis", "bsi", "bzk"),
     ) -> Any:
         """Look up a reference value by namespace-qualified or bare key.
 
@@ -396,8 +416,6 @@ class Macsecurityrule(BaseModelWithAccessors):
             reference identifiers grouped by namespace.
         odv (dict[str, Any] | None): Organizational Defined Values keyed
             by benchmark name, plus optional ``hint`` / ``custom`` entries.
-        finding (bool): True if the rule is a finding rather than a
-            configuration setting. Defaults to ``False``.
         tags (list[str]): Tag list categorising the rule (e.g.
             ``"inherent"``, ``"permanent"``, ``"n_a"``,
             ``"supplemental"``).
@@ -437,7 +455,6 @@ class Macsecurityrule(BaseModelWithAccessors):
     discussion: str
     references: References
     odv: dict[str, Any] | None = None
-    finding: bool = False
     tags: list[str] = Field(default_factory=list)
     result_value: str | int | bool | None = None
     mobileconfig_info: list[Mobileconfigpayload] | None = None
