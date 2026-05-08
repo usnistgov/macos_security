@@ -161,6 +161,12 @@ head: [
 						{ label: 'FAQ', link: '/more-information/faq/' },
 					],
 				},
+				{
+					label: 'API Reference',
+					collapsed: true,
+					badge: { text: 'Beta', variant: 'success' },
+					autogenerate: { directory: 'api' },
+				},
 			],
 			editLink: {
 				baseUrl: 'https://github.com/usnistgov/macos_security/edit/nist-pages-docs/',
