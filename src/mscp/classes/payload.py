@@ -3,7 +3,7 @@
 
 Provides `Payload`, the in-memory representation of a macOS configuration
 profile (or a per-domain preference plist). Payloads accumulate sub-payload
-dictionaries and can be serialised to ``.mobileconfig`` or ``.plist`` files.
+dictionaries and can be serialized to ``.mobileconfig`` or ``.plist`` files.
 """
 
 # Standard python modules
@@ -23,14 +23,14 @@ class Payload(BaseModel):
 
     Holds the top-level metadata of a profile (identifier, organization,
     scope, etc.) along with a list of sub-payloads accumulated via
-    `add_payload` / `add_mcx_payload`. The whole payload is serialised to
+    `add_payload` / `add_mcx_payload`. The whole payload is serialized to
     disk via `save_to_plist` (raw write) or `finalize_and_save_plist`
     (which additionally splits Managed Client preference payloads into
     per-domain plists).
 
     Attributes:
         identifier (str): The ``PayloadIdentifier`` written to the profile.
-        organization (str): Owning organisation written as
+        organization (str): Owning organization written as
             ``PayloadOrganization``.
         description (str): Human-readable description written as
             ``PayloadDescription``.
@@ -76,9 +76,7 @@ class Payload(BaseModel):
     )
     payload_content: list[dict[str, Any]] = Field(default_factory=list)
 
-    def add_payload(
-        self, payload_type: str, settings: dict[str, Any], baseline_name: str
-    ) -> None:
+    def add_payload(self, payload_type: str, settings: dict[str, Any]) -> None:
         """Append a generic sub-payload to `payload_content`.
 
         Builds a payload dict with a fresh UUID and the standard
@@ -90,8 +88,6 @@ class Payload(BaseModel):
                 ``"com.apple.screensaver"``).
             settings (dict[str, Any]): Profile settings merged verbatim
                 into the payload dict.
-            baseline_name (str): Currently unused; kept for signature
-                parity with `add_mcx_payload`.
         """
         uuid = self._make_new_uuid()
 
@@ -105,9 +101,7 @@ class Payload(BaseModel):
         payload.update(settings)
         self.payload_content.append(payload)
 
-    def add_mcx_payload(
-        self, domain: str, settings: dict[str, Any], baseline_name: str
-    ) -> None:
+    def add_mcx_payload(self, domain: str, settings: dict[str, Any]) -> None:
         """Append a Managed Client (MCX) preferences sub-payload.
 
         Wraps ``settings`` in the MCX
@@ -120,8 +114,6 @@ class Payload(BaseModel):
                 ``"com.apple.screensaver"``).
             settings (dict[str, Any]): MCX preference settings to enforce
                 for ``domain``.
-            baseline_name (str): Currently unused; reserved for future use
-                in the ``PayloadIdentifier``.
         """
 
         uuid: str = self._make_new_uuid()
