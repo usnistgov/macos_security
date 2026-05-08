@@ -1,4 +1,12 @@
 # mscp/generate/guidance.py
+"""Main guidance document orchestration for the macOS Security Compliance Project.
+
+Provides `generate_guidance`, the top-level entry point that coordinates
+profile generation, DDM declarations, compliance scripts, Excel output,
+Markdown documents, JSON manifests, and AsciiDoc/PDF/HTML guidance documents
+for a given baseline.  `verify_signing_hash` validates a certificate hash
+before profile signing.
+"""
 
 # Standard python modules
 import argparse
@@ -37,14 +45,16 @@ from ..generate.guidance_support import (
 
 
 def verify_signing_hash(cert_hash: str) -> bool:
-    """
-    Attempts to validate the existence of the certificate provided by the hash
+    """Verify that *cert_hash* identifies an installed signing certificate.
+
+    Writes a temporary file, attempts to sign it with ``security cms -SZ``,
+    then removes the file.
 
     Args:
-        cert_hash (str): The certificate hash.
+        cert_hash (str): Subject Key ID hash of the certificate to verify.
 
     Returns:
-        bool: If the certificate is valid, returns True.
+        bool: ``True`` if signing succeeds, ``False`` otherwise.
     """
 
     with tempfile.NamedTemporaryFile(mode="w", delete=False) as in_file:
@@ -68,6 +78,21 @@ def verify_signing_hash(cert_hash: str) -> bool:
 
 @conditional_inject_spinner()
 def generate_guidance(sp: Yaspin, args: argparse.Namespace) -> None:
+    """Orchestrate all guidance artifacts for a given baseline.
+
+    Reads the baseline YAML and, based on ``args`` flags, delegates to the
+    appropriate sub-generators: configuration profiles, DDM declarations,
+    compliance scripts, Excel workbook, Markdown documents, JSON manifest,
+    and the primary AsciiDoc/PDF/HTML guidance document.
+
+    Args:
+        sp (Yaspin): Spinner instance injected by `conditional_inject_spinner`.
+        args (argparse.Namespace): Parsed CLI arguments. Expected attributes:
+            ``baseline``, ``os_name``, ``language``, ``dark``, ``hash``,
+            ``reference``, ``logo``, ``audit_name``, ``profiles``, ``ddm``,
+            ``script``, ``xlsx``, ``gary``, ``markdown``, ``manifest``,
+            ``all``, ``consolidated_profile``, ``granular_profiles``.
+    """
     # Configure localization at the beginning based on the CLI language parameter
     logger.debug(f"Language parameter from CLI: {args.language}")
 

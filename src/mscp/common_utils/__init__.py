@@ -1,4 +1,16 @@
 # common_utils/__init__.py
+"""Shared cross-cutting helpers used throughout mSCP.
+
+Re-exports the loguru logger (`logger`), file I/O helpers
+(create / open / remove for YAML, JSON, plist, CSV, text), the
+configuration model (`config`, `set_custom_dir`, `ensure_custom_dirs`),
+input validation utilities (`sanitize_input`, `prompt_for_odv`,
+`validate_yaml_file`, `validate_rule_folder_structure`), localization
+helpers (`get_supported_languages`), version metadata accessors
+(`get_version_data`, `get_mscp_data`, `mscp_data`), the shell-command
+runner (`run_command`), and the spinner decorator
+(`conditional_inject_spinner`).
+"""
 
 from .config import config, set_custom_dir, ensure_custom_dirs
 from .constants import SCHEMA_PATH, APPLE_OS, NIX_OS

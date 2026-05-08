@@ -1,4 +1,10 @@
 # mscp/generate/translation.py
+"""Localization template and compiled message-object generation for mSCP.
+
+Provides `generate_localize_template` (builds a ``messages.pot``-style JSON
+from section YAML, Jinja templates, and rule strings) and `generate_mo_from_json`
+(compiles a translated JSON file to a Babel ``.mo`` / ``.po`` pair).
+"""
 
 import argparse
 import json
@@ -13,14 +19,17 @@ from ..common_utils import config, open_file
 
 
 def extract_trans_text(template: str) -> list[str]:
-    """
-    Extracts the text within {% trans %} and {% endtrans %} blocks.
+    """Extract translatable strings from ``{% trans %}…{% endtrans %}`` blocks.
+
+    Strips embedded ``{{ … }}`` expressions, leading table-pipe markers,
+    and excess whitespace from each captured chunk, then de-duplicates
+    and drops empty results.
 
     Args:
-        template (str): String value containing text to extract.
+        template (str): Raw Jinja template source.
 
     Returns:
-        [str]: A list of extracted strings
+        list[str]: Unique non-empty translatable strings found in the template.
     """
     pattern = r"{%\s*trans\b.*?%}(.*?){%\s*endtrans\s*%}"
     chunks = re.findall(pattern, template, flags=re.S)
@@ -40,22 +49,16 @@ def extract_trans_text(template: str) -> list[str]:
 
 
 def generate_localize_template(args: argparse.Namespace) -> None:
-    """
-    Generates a translation template file used for localization.
+    """Build a JSON translation template from section, template, and rule strings.
+
+    Collects translatable strings from section YAML files (``name`` /
+    ``description``), Jinja templates (``{% trans %}`` blocks), and rule YAML
+    files (``title`` / ``discussion``), then writes them as a context-keyed
+    JSON file suitable for hand-translation or machine translation.
 
     Args:
-        args (argparse.Namespace): Command-line arguments containing options for generating the report.
-
-    This function creates a babel catalog to collect translation information.
-
-    It will parse all of the yaml files in /config/default/sections and add strings to translate
-    from the name and description fields to the catalog.
-
-    It will also parse all of the yaml files in /config/default/rules and add strings to translate
-    from the title and discussion fields to the catalog.
-
-    It will then output the messages.pot file from the contents of the catalog.
-
+        args (argparse.Namespace): Parsed CLI arguments. Expected attributes:
+            ``os_name``, ``os_version``, ``domain``, ``output``.
     """
 
     catalog = Catalog(
@@ -129,11 +132,16 @@ def generate_localize_template(args: argparse.Namespace) -> None:
 
 
 def generate_mo_from_json(args: argparse.Namespace) -> None:
-    """
-    Compile a translated .json file to a .mo file using Babel.
+    """Compile a translated JSON file to a Babel ``.mo`` and ``.po`` pair.
+
+    Reads a translated JSON mapping (``{ context: { "en": …, "<locale>": … } }``),
+    builds a Babel catalog for the target locale, and writes both a binary
+    ``.mo`` and a human-readable ``.po`` file under
+    ``<output_dir>/locale/<locale>/LC_MESSAGES/``.
 
     Args:
-        args (argparse.Namespace): Command-line arguments containing options for generating the report.
+        args (argparse.Namespace): Parsed CLI arguments. Expected attributes:
+            ``json_file``, ``domain``, ``locale``, ``mo_file``, ``use_fuzzy``.
     """
     json_file = Path(args.json_file)
     with json_file.open("rb") as fp:

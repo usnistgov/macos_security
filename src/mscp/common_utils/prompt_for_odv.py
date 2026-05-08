@@ -1,4 +1,11 @@
 # mscp/common_utils/prompt_for_odv.py
+"""Interactive prompt for Organization-Defined Values (ODVs).
+
+Used by `Macsecurityrule.odv_query` when tailoring a baseline. Reads an
+``odv_hint`` dict (datatype, description, validation rules), prompts
+the user, validates the response against the rules, and re-prompts on
+failure.
+"""
 
 # Standard python modules
 from typing import Any, Dict, Optional

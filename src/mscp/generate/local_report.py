@@ -1,4 +1,11 @@
 # mscp/generate/local_report.py
+"""Local compliance report generation (Excel + HTML) for mSCP.
+
+Provides `generate_local_report`, which reads a compliance audit plist,
+produces an Excel workbook with a pie chart of pass/fail results, and
+renders an HTML report using a Jinja template with the chart embedded as
+a base64 image.
+"""
 
 # Standard python modules
 import argparse
@@ -20,24 +27,19 @@ from ..common_utils import config, logger, open_file, sanitize_input
 
 
 def generate_local_report(args: argparse.Namespace) -> None:
-    """
-    Generates a local compliance report based on the provided arguments.
+    """Generate an Excel and HTML compliance report from a local audit plist.
+
+    Loads the plist (from ``args.plist`` or interactively from
+    ``/Library/Preferences``), builds a DataFrame of rule findings, writes
+    an ``.xlsx`` workbook with an embedded pie chart, and renders an HTML
+    report with the chart as a base64 image.
 
     Args:
-        args (argparse.Namespace): Command-line arguments containing options for generating the report.
-
-    The function performs the following steps:
-    1. Determines the output paths for the Excel and HTML reports.
-    2. Loads the plist data either from a specified file or by prompting the user to select one from a directory.
-    3. Extracts relevant data from the plist file and creates a pandas DataFrame.
-    4. Converts the DataFrame's 'Result' column from boolean to 'Passed' or 'Failed'.
-    5. Generates an Excel report with the compliance data, adjusts column widths, and centers the 'Result' column.
-    6. Creates a pie chart of the compliance results and inserts it into the Excel report.
-    7. Renders an HTML report using a Jinja2 template, embedding the pie chart as a base64-encoded image and including the DataFrame as an HTML table.
-    8. Writes the rendered HTML report to the specified output path.
+        args (argparse.Namespace): Parsed CLI arguments. Expected attributes:
+            ``plist`` (optional path), ``output`` (optional output path override).
 
     Raises:
-        SystemExit: If no plist files are found or if an invalid plist file selection is made.
+        SystemExit: If no plist files are found or an invalid selection is made.
     """
     plist_data: dict = {}
     excel_output_path: Path = Path(config["output_dir"], "compliance_report.xlsx")

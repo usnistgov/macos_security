@@ -1,4 +1,12 @@
 # mscp/common_utils/localization.py
+"""Localisation glue for `gettext` and YAML.
+
+Wraps `gettext.translation` so the active language can be switched at
+runtime, exposes a `localize_string` shortcut, registers a custom
+``!localize`` YAML tag that translates scalars at load time, and
+provides a `get_supported_languages` helper that enumerates the
+language subdirectories under ``config["locales_dir"]``.
+"""
 
 # Standard python modules
 import gettext
@@ -148,6 +156,19 @@ def get_language_data(
     language: str,
     category: str,
 ) -> dict[str, Any]:
+    """Load a language YAML file under ``locales_dir/<language>/<category>``.
+
+    Failures (missing file, parse error) are logged and yield an empty
+    dict so callers can fall back to defaults rather than crash.
+
+    Args:
+        language (str): Language subdirectory (e.g. ``"en"``, ``"de"``).
+        category (str): YAML file stem within that directory; the
+            ``.yaml`` suffix is appended automatically.
+
+    Returns:
+        dict[str, Any]: Parsed YAML contents, or ``{}`` on error.
+    """
     language_file = Path(
         config["locales_dir"], language, category
     ).with_suffix(".yaml")

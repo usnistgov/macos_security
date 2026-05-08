@@ -1,4 +1,11 @@
 # mscp/generate/excel.py
+"""Excel workbook generation for mSCP baselines.
+
+Provides `generate_excel`, which converts a baseline to a formatted
+``.xlsx`` workbook with auto-fitted columns, bold headers, wrapped text,
+and an Excel table style.  Helper functions handle column expansion,
+list formatting, and cell-width calculation.
+"""
 
 # Standard python modules
 from pathlib import Path
@@ -229,28 +236,16 @@ def expand_dicts_and_format_lists(
 
 
 def generate_excel(file_out: Path, baseline: Baseline) -> None:
-    """
-    Generates an Excel file from the given baseline data.
+    """Generate a formatted Excel workbook from *baseline* rule data.
+
+    Converts the baseline to a DataFrame, drops internal-only columns,
+    expands nested dict/list columns, reorders and uppercases headers,
+    and writes the result to *file_out* with bold headers, top-aligned
+    cells, auto-fitted column widths, and an Excel table style.
 
     Args:
-        file_out (Path): The output file path where the Excel file will be saved.
-        baseline (Baseline): The baseline data to be converted into an Excel file.
-
-    Returns:
-        None
-
-    This function performs the following steps:
-    1. Logs the start of the Excel generation process.
-    2. Converts the baseline data to a DataFrame and makes a copy of it.
-    3. Drops unwanted columns from the DataFrame.
-    4. Modifies the DataFrame content, including handling nested structures and renaming columns.
-    5. Ensures all required columns are present in the DataFrame, dropping any columns that have all None values.
-    6. Writes the DataFrame to an Excel file using the openpyxl engine.
-    7. Applies formatting to the Excel sheet, including setting column widths, header fonts, and cell alignments.
-    8. Logs the successful generation of the Excel file.
-
-    Raises:
-        Any exceptions raised during the process will be logged.
+        file_out (Path): Destination ``.xlsx`` path.
+        baseline (Baseline): Baseline whose rules populate the workbook.
     """
     logger.info("Starting Excel generation process.")
 

@@ -1,4 +1,14 @@
 # src/mscp/validate_rules.py
+"""Schema and folder-structure validators for rule YAML files.
+
+Wires up the ``mscp admin validate`` subcommand. `validate_yaml_file`
+walks the configured rules directory (plus any custom rules) and
+validates each file against ``schema/mscp_rule.json``;
+`validate_rule_folder_structure` is an `argparse` type validator that
+makes sure ``--rules_dir`` points at a properly organised tree.
+`get_rule_identifier` is a small helper that prefers a rule file's
+``id`` field, falling back to its filename stem.
+"""
 
 # Standard python modules
 import argparse
@@ -14,6 +24,16 @@ from .logger_instance import logger
 
 
 def get_rule_identifier(rule_file: Path) -> str:
+    """Return the rule's canonical ID, preferring the YAML ``id`` field.
+
+    Falls back to the filename stem when the YAML doesn't define one.
+
+    Args:
+        rule_file (Path): Path to a rule YAML file.
+
+    Returns:
+        str: The rule's identifier.
+    """
     rule_yaml = open_file(rule_file)
 
     if "id" in rule_yaml:
@@ -23,6 +43,18 @@ def get_rule_identifier(rule_file: Path) -> str:
 
 
 def validate_yaml_file(args: argparse.Namespace) -> None:
+    """Validate every rule YAML against ``schema/mscp_rule.json``.
+
+    Loads the schema, then iterates either ``args.rules_dir`` (if set)
+    or the default rules tree plus any custom rules. Prints / logs a
+    line per file: ``✅ VALID``, ``❌ INVALID``, or ``⚠️ ERROR``. Files
+    with duplicate rule identifiers are flagged with a warning.
+
+    Args:
+        args (argparse.Namespace): Parsed CLI arguments. Reads
+            ``rules_dir`` (override) and ``all_validation`` (when true,
+            successful files are also printed).
+    """
     schema: dict = open_file(Path(SCHEMA_PATH))
     validator = Draft202012Validator(schema)
 
