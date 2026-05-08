@@ -25,7 +25,7 @@ references:
       - SRG-OS-000405-GPOS-00184
     cmmc:
       - SC.L2-3.13.10
-  nlmapgov:
+  bzk:
     bio:
       - 8.01.01
 platforms:

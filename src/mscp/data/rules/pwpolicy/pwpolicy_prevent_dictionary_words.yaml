@@ -13,7 +13,7 @@ references:
   disa:
     srg:
       - SRG-OS-000480-GPOS-00225
-  nlmapgov:
+  bzk:
     bio:
       - 5.17.03
 platforms:

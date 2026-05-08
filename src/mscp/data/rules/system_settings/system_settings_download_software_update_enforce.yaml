@@ -7,7 +7,7 @@ references:
     cce:
       macos_26:
         - CCE-95403-2
-  nlmapgov:
+  bzk:
     bio:
       - 8.08.01
   cis:

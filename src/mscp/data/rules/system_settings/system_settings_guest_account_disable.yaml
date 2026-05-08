@@ -33,7 +33,7 @@ references:
         - APPL-14-002063
     cmmc:
       - AC.L1-3.1.2
-  nlmapgov:
+  bzk:
     bio:
       - 5.16.02
   cis:

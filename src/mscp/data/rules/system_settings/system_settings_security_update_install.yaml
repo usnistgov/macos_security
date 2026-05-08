@@ -15,7 +15,7 @@ references:
     cmmc:
       - SI.L1-3.14.1
       - SI.L1-3.14.4
-  nlmapgov:
+  bzk:
     bio:
       - 8.08.01
   cis:

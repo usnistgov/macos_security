@@ -31,7 +31,7 @@ references:
     cmmc:
       - CM.L2-3.4.6
       - CM.L2-3.4.7
-  nlmapgov:
+  bzk:
     bio:
       - 8.27.01
   cis:

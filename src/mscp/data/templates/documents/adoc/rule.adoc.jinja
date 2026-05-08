@@ -140,6 +140,12 @@ ifdef::show_indigo[]
 {{ rule.references.bsi.indigo | render_rules if rule.references.bsi.indigo is not none }}
 endif::[]
 
+ifdef::show_bio[]
+!BZK: BIO
+!
+{{ rule.references.bzk.bio | render_rules if rule.references.bzk.bio is not none }}
+endif::[]
+
 ifdef::show_CMMC[]
 !CMMC
 !

@@ -11,7 +11,7 @@ references:
         - CCE-94403-3
       macos_14:
         - CCE-92998-4
-  nlmapgov:
+  bzk:
     bio:
       - 8.12.01
       - 8.27.01

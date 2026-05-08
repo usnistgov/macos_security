@@ -498,13 +498,13 @@ def main():
                     {"cci": rule_yaml["references"]["cci"]}
                 )
             if "bio" in rule_yaml["references"]:
-                if "nlmapgov" in new_yaml["references"]:
-                    new_yaml["references"]["nlmapgov"].update(
+                if "bzk" in new_yaml["references"]:
+                    new_yaml["references"]["bzk"].update(
                         {"bio": rule_yaml["references"]["bio"]}
                     )
                 else:
-                    new_yaml["references"].update({"nlmapgov": {}})
-                    new_yaml["references"]["nlmapgov"].update(
+                    new_yaml["references"].update({"bzk": {}})
+                    new_yaml["references"]["bzk"].update(
                         {"bio": rule_yaml["references"]["bio"]}
                     )
 
@@ -1378,13 +1378,13 @@ def main():
                                 )
                         # print(os_)
                         if "bio" in rule_yaml["references"]:
-                            if "nlmapgov" in new_yaml["references"]:
-                                new_yaml["references"]["nlmapgov"].update(
+                            if "bzk" in new_yaml["references"]:
+                                new_yaml["references"]["bzk"].update(
                                     {"bio": rule_yaml["references"]["bio"]}
                                 )
                             else:
-                                new_yaml["references"].update({"nlmapgov": {}})
-                                new_yaml["references"]["nlmapgov"].update(
+                                new_yaml["references"].update({"bzk": {}})
+                                new_yaml["references"]["bzk"].update(
                                     {"bio": rule_yaml["references"]["bio"]}
                                 )
 

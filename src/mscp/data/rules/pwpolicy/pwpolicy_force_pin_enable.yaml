@@ -44,7 +44,7 @@ references:
         - Annex D (Section 5.9.1 - Device-Code)
       ios_17:
         - Annex D (Section 5.9.1 - Device-Code)
-  nlmapgov:
+  bzk:
     bio:
       - 8.24
 platforms:

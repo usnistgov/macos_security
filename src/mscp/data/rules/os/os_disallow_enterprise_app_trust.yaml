@@ -38,7 +38,7 @@ references:
         - ANNEX D - (Section 5.8.5)
       ios_17:
         - ANNEX D - (Section 5.8.5)
-  nlmapgov:
+  bzk:
     bio:
       - 8.27
 platforms:

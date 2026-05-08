@@ -48,7 +48,7 @@ references:
       ios_17:
         - ANNEX D (Section 5.3 - Description of security/key management)
         - ANNEX K
-  nlmapgov:
+  bzk:
     bio:
       - 8.12
   cis:

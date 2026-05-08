@@ -27,6 +27,7 @@ endif::[]
 {% if "CIS" in baseline.title | upper or show_all_tags %}:show_cis:{% else %}:show_cis!:{% endif +%}
 {% if "CMMC" in baseline.title | upper or show_all_tags %}:show_CMMC:{% else %}:show_CMMC!:{% endif +%}
 {% if "INDIGO" in baseline.title | upper or show_all_tags %}:show_indigo:{% else %}:show_indigo!:{% endif +%}
+{% if "NLMAPGOV" in baseline.title | upper or show_all_tags %}:show_bio:{% else %}:show_bio!:{% endif +%}
 {% if show_all_tags %}:show_tags:{% else %}:show_tags!:{% endif +%}
 :version: {{ version }} ({{ release_date }})
 :os: {{ os_version }}

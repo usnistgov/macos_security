@@ -21,7 +21,7 @@ references:
   disa:
     cmmc:
       - CM.L2-3.4.5
-  nlmapgov:
+  bzk:
     bio:
       - 8.19.01
 platforms:

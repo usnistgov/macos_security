@@ -96,7 +96,7 @@ references:
     cmmc:
       - AU.L2-3.3.2
       - AU.L2-3.3.6
-  nlmapgov:
+  bzk:
     bio:
       - 8.18.02
   cis:

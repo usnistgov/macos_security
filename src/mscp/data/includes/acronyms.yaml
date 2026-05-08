@@ -15,12 +15,16 @@ acronyms:
     definition: Address Space Layout Randomization
   - term: ASM
     definition: Apple School Manager
+  - term: BIO
+    definition: Baseline informatiebeveiliging Overheid (Netherlands Baseline Information Security for Government)
   - term: BSD
     definition: Berkeley Software Distribution
   - term: BSI
     definition: Bundesamt für Sicherheit in der Informationstechnik (German Federal Office for Information Security)
   - term: BSM
     definition: Basic Security Module
+  - term: BZK
+    definition: Ministerie van Binnenlandse Zaken en Koninkrijksrelaties (Netherlands Ministry of the Interior and Kingdom Relations)
   - term: CCE
     definition: Common Configuration Enumeration
   - term: CIS
