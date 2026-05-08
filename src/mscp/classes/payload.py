@@ -1,4 +1,10 @@
 # mscp/classes/payload.py
+"""Configuration profile payload model.
+
+Provides `Payload`, the in-memory representation of a macOS configuration
+profile (or a per-domain preference plist). Payloads accumulate sub-payload
+dictionaries and can be serialised to ``.mobileconfig`` or ``.plist`` files.
+"""
 
 # Standard python modules
 from pathlib import Path
@@ -11,36 +17,36 @@ from pydantic import BaseModel, Field
 from ..common_utils import create_file, open_file
 from ..common_utils.logger_instance import logger
 
-# Additional python modules
-
 
 class Payload(BaseModel):
-    """
-    A class to represent a configuration profile payload.
+    """A macOS configuration profile payload.
+
+    Holds the top-level metadata of a profile (identifier, organization,
+    scope, etc.) along with a list of sub-payloads accumulated via
+    `add_payload` / `add_mcx_payload`. The whole payload is serialised to
+    disk via `save_to_plist` (raw write) or `finalize_and_save_plist`
+    (which additionally splits Managed Client preference payloads into
+    per-domain plists).
 
     Attributes:
-        identifier (str): The identifier for the payload.
-        organization (str): The organization associated with the payload.
-        description (str): A description of the payload.
-        displayname (str): The display name of the payload.
-        uuid (Optional[str]): The universally unique identifier for the payload.
-        payload_version (int): The version of the payload.
-        payload_scope (str): The scope of the payload.
-        consent_text (Dict[str, str]): The consent text associated with the payload.
-        payload_content (List[Dict[str, Any]]): The content of the payload.
-
-    Methods:
-        add_payload(payload_type: str, settings: Dict[str, Any], baseline_name: str) -> None:
-            Adds a payload to the profile.
-
-        add_mcx_payload(settings: List[Any], baseline_name: str) -> None:
-            Adds a Managed Client preferences payload.
-
-        save_to_plist(output_path: Path) -> None:
-            Saves the profile to a plist file.
-
-        finalize_and_save_plist(output_path: Path) -> None:
-            Saves a final plist with additional processing for MCX settings.
+        identifier (str): The ``PayloadIdentifier`` written to the profile.
+        organization (str): Owning organisation written as
+            ``PayloadOrganization``.
+        description (str): Human-readable description written as
+            ``PayloadDescription``.
+        displayname (str): Display name written as ``PayloadDisplayName``.
+        uuid (str | None): The profile UUID. Defaults to a freshly
+            generated UUID4 string.
+        payload_version (int): Profile schema version. Defaults to ``1``.
+        payload_scope (str): Profile scope (``"System"`` or ``"User"``).
+            Defaults to ``"System"``.
+        payload_type (str): Top-level ``PayloadType``. Defaults to
+            ``"Configuration"``.
+        consent_text (dict[str, str]): Localised consent strings keyed by
+            language code (e.g. ``"default"``, ``"en"``). Defaults to a
+            built-in NIST disclaimer under ``"default"``.
+        payload_content (list[dict[str, Any]]): Sub-payload dictionaries
+            appended by `add_payload` / `add_mcx_payload`.
     """
 
     identifier: str = ""
@@ -73,16 +79,19 @@ class Payload(BaseModel):
     def add_payload(
         self, payload_type: str, settings: dict[str, Any], baseline_name: str
     ) -> None:
-        """
-        Add a payload to the profile.
+        """Append a generic sub-payload to `payload_content`.
+
+        Builds a payload dict with a fresh UUID and the standard
+        ``PayloadVersion`` / ``PayloadType`` / ``PayloadIdentifier`` keys,
+        merges ``settings`` into it, and appends it to `payload_content`.
 
         Args:
-            payload_type (str): The type of the payload.
-            settings (Dict[str, Any]): A dictionary of settings to be included in the payload.
-            baseline_name (str): The name of the baseline to be used in the payload identifier.
-
-        Returns:
-            None
+            payload_type (str): The ``PayloadType`` value (e.g.
+                ``"com.apple.screensaver"``).
+            settings (dict[str, Any]): Profile settings merged verbatim
+                into the payload dict.
+            baseline_name (str): Currently unused; kept for signature
+                parity with `add_mcx_payload`.
         """
         uuid = self._make_new_uuid()
 
@@ -99,20 +108,20 @@ class Payload(BaseModel):
     def add_mcx_payload(
         self, domain: str, settings: dict[str, Any], baseline_name: str
     ) -> None:
-        """
-        Add a Managed Client preferences payload to the payload content.
+        """Append a Managed Client (MCX) preferences sub-payload.
 
-        This method constructs a payload dictionary for Managed Client preferences (MCX)
-        using the provided domain and settings, associates it with a unique identifier,
-        and appends it to the internal payload content list.
+        Wraps ``settings`` in the MCX
+        ``PayloadContent[domain]["Forced"][0]["mcx_preference_settings"]``
+        nesting expected by ``com.apple.ManagedClient.preferences`` and
+        appends the result to `payload_content`.
 
         Args:
-            domain (str): The preference domain to be managed (e.g., 'com.apple.screensaver').
-            settings (dict[str, Any]): The MCX preference settings to enforce for the domain.
-            baseline_name (str): The name of the baseline, used in the PayloadIdentifier.
-
-        Returns:
-            None
+            domain (str): The preference domain to manage (e.g.
+                ``"com.apple.screensaver"``).
+            settings (dict[str, Any]): MCX preference settings to enforce
+                for ``domain``.
+            baseline_name (str): Currently unused; reserved for future use
+                in the ``PayloadIdentifier``.
         """
 
         uuid: str = self._make_new_uuid()
@@ -130,14 +139,21 @@ class Payload(BaseModel):
         self.payload_content.append(payload)
 
     def save_to_plist(self, output_path: Path) -> None:
-        """
-        Save the profile to a plist file.
+        """Write the assembled payload to disk.
+
+        Behaviour depends on the file extension of ``output_path``:
+
+        - ``.mobileconfig``: writes the full top-level profile dictionary
+          (identifier, scope, organisation, payload content, etc.).
+        - ``.plist``: writes only the merged inner settings, with the
+          MDM-only keys (``PayloadVersion``, ``PayloadUUID``,
+          ``PayloadType``, ``PayloadIdentifier``) stripped, in *append*
+          mode.
 
         Args:
-            output_path (Path): The path where the plist file will be saved.
-
-        Returns:
-            None
+            output_path (Path): Destination file. The extension determines
+                which format is written; other extensions are silently
+                skipped.
         """
         data = {
             "PayloadVersion": self.payload_version,
@@ -175,18 +191,17 @@ class Payload(BaseModel):
             logger.success(f"Preference file written to {output_path}")
 
     def finalize_and_save_plist(self, output_path: Path) -> None:
-        """
-        Save a final plist with additional processing for MCX settings.
+        """Write per-domain MCX plists, then save the main payload.
 
-        This method iterates through the payload content and processes any payloads
-        of type 'com.apple.ManagedClient.preferences'. For each domain in the payload
-        content, it creates or updates a plist file with the forced MCX preference settings.
+        For each MCX sub-payload in `payload_content`, splits the forced
+        preference settings out into a sibling ``<domain>.plist`` next to
+        ``output_path`` (creating the file if needed). After all MCX
+        payloads have been processed, calls `save_to_plist` to write
+        ``output_path`` itself.
 
         Args:
-            output_path (Path): The path where the final plist will be saved.
-
-        Raises:
-            Exception: If there is an error opening an existing plist file.
+            output_path (Path): Destination of the main payload. Per-domain
+                plists are written alongside it in the same directory.
         """
         for payload in self.payload_content:
             if payload.get("PayloadType") == "com.apple.ManagedClient.preferences":
