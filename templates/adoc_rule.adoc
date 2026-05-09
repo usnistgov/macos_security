@@ -56,6 +56,16 @@ ifdef::show_CMMC[]
 !$rule_cmmc
 endif::[]
 
+ifdef::show_BIO[]
+!BIO
+!$rule_bio
+endif::[]
+
+ifdef::show_HICP[]
+!HICP
+!$rule_hicp
+endif::[]
+
 !CCE
 !$rule_cce
 

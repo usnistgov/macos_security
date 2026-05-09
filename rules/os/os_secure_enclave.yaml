@@ -30,6 +30,10 @@ references:
     - SRG-OS-000405-GPOS-00184
   cmmc:
     - SC.L2-3.13.10
+  bio:
+    - 8.01.01
+  hicp:
+    - 3.L.C
 macOS:
   - '26.0'
 tags:
@@ -39,5 +43,8 @@ tags:
   - cmmc_lvl2
   - srg
   - cnssi-1253_moderate
+  - nlmapgov_base
+  - nlmapgov_plus
+  - hicp_lp
 mobileconfig: false
-mobileconfig_info:
+mobileconfig_info: null

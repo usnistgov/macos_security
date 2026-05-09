@@ -32,6 +32,9 @@ references:
     - 03.05.12
   cmmc:
     - AC.L2-3.1.10
+  hicp:
+    - 2.L.B
+    - 3.L.A
 macOS:
   - '26.0'
 tags:
@@ -45,6 +48,7 @@ tags:
   - cmmc_lvl2
   - stig
   - cnssi-1253_moderate
+  - hicp_lp
 severity: medium
 mobileconfig: true
 mobileconfig_info:

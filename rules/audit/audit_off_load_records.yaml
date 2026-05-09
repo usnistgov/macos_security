@@ -29,6 +29,8 @@ references:
       - N/A
     controls v8:
       - 8.9
+  bio:
+    - 8.18.02
 macOS:
   - '26.0'
 tags:
@@ -38,5 +40,7 @@ tags:
   - cnssi-1253_high
   - srg
   - cnssi-1253_moderate
+  - nlmapgov_base
+  - nlmapgov_plus
 mobileconfig: false
 mobileconfig_info:

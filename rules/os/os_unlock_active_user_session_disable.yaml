@@ -66,6 +66,8 @@ references:
   cmmc:
     - IA.L1-3.5.1
     - IA.L1-3.5.2
+  bio:
+    - 8.27.01
 macOS:
   - '26.0'
 odv:
@@ -74,6 +76,7 @@ odv:
   cis_lvl1: "authenticate-session-owner"
   cis_lvl2: "authenticate-session-owner"
   stig: "authenticate-session-owner"
+  nlmapgov_plus: "authenticate-session-owner"
 tags:
   - 800-53r5_low
   - 800-53r5_moderate
@@ -91,6 +94,7 @@ tags:
   - cmmc_lvl1
   - stig
   - cnssi-1253_moderate
+  - nlmapgov_plus
 severity: medium
 mobileconfig: true
 mobileconfig_info:

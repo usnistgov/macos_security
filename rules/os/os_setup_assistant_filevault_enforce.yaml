@@ -38,6 +38,12 @@ references:
       - 3.11
   cmmc:
     - SC.L2-3.13.16
+  bio:
+    - 8.01.01
+  hicp:
+    - 2.L.A
+    - 3.L.A
+    - 4.L.A
 macOS:
   - '26.0'
 tags:
@@ -48,8 +54,11 @@ tags:
   - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
+  - nlmapgov_plus
+  - hicp_lp
 severity: high
 mobileconfig: true
 mobileconfig_info:
   com.apple.MCX.FileVault2:
     ForceEnableInSetupAssistant: true
+    Enable: On

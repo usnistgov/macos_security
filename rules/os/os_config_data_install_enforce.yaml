@@ -44,6 +44,8 @@ references:
     - SI.L1-3.14.1
     - SI.L1-3.14.2
     - SI.L1-3.14.4
+  hicp:
+    - 2.L.A
 macOS:
   - '26.0'
 tags:
@@ -59,6 +61,7 @@ tags:
   - cmmc_lvl1
   - stig
   - cnssi-1253_moderate
+  - hicp_lp
 severity: medium
 mobileconfig: true
 mobileconfig_info:

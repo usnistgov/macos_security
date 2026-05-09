@@ -77,6 +77,20 @@ authors:
       - Allen Golbig|Jamf
       - Bob Gendler|National Institute of Standards and Technology
       - Aaron Kegerreis|Defense Information Systems Agency
+  nlmapgov_base:
+    names:
+      - Jordy Witteman|Root3
+      - Aron van den Herik|Root3
+  nlmapgov_plus:
+    names:
+      - Jordy Witteman|Root3
+      - Aron van den Herik|Root3
+  hicp_lp:
+    names:
+      - Elias G Kikano, MD|Emory University School of Medicine
+      - Janessa Milsap|Emory University School of Medicine
+      - Ryan Ritchie|Emory University School of Medicine
+
 titles:
   all_rules: All Rules
   800-53r5_high: NIST SP 800-53 Rev 5 High Impact
@@ -92,12 +106,19 @@ titles:
   cnssi-1253_moderate: Committee on National Security Systems Instruction No. 1253 (Moderate)
   cnssi-1253_high: Committee on National Security Systems Instruction No. 1253 (High)
   stig: Apple macOS 26 (Tahoe) STIG - Ver 1, Rel 1
+  nlmapgov_base: NLMAPGOV - Nederlandse Maatregelenset Apple Platformen Overheid (base)
+  nlmapgov_plus: NLMAPGOV - Nederlandse Maatregelenset Apple Platformen Overheid (plus)
+  hicp_lp: Health Industry Cybersecurity Practices - Large Practices
 ddm:
   supported_types:
     - com.apple.configuration.services.configuration-files
     - com.apple.configuration.passcode.settings
     - com.apple.configuration.diskmanagement.settings
     - com.apple.configuration.softwareupdate.settings
+    - com.apple.configuration.siri.settings
+    - com.apple.configuration.intelligence.settings
+    - com.apple.configuration.external-intelligence.settings
+    - com.apple.configuration.keyboard.settings
   services:
     com.apple.bash: /etc/
     com.apple.pam: /etc/pam.d/

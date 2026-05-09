@@ -1,0 +1,41 @@
+id: os_safari_allow_javascript_disable
+title: Disable JavaScript in Safari
+discussion: |-
+  Safari JavaScript execution _MUST_ be disabled.
+
+  JavaScript is a powerful scripting language that can be leveraged by malicious content to execute arbitrary code in the context of the browser, redirect users to malicious sites, or exfiltrate sensitive information. Disabling JavaScript reduces the attack surface associated with active mobile code in the web browser.
+check: |
+  /usr/bin/osascript -l JavaScript << EOS
+  $.NSUserDefaults.alloc.initWithSuiteName('com.apple.Safari')\
+  .objectForKey('allowJavaScript').js
+  EOS
+result:
+  string: 'false'
+fix: |
+  This is implemented by a Configuration Profile.
+references:
+  cce:
+    - CCE-TBD
+  cci:
+    - CCI-001167
+  srg:
+    - SRG-OS-000480-GPOS-00228
+  disa_stig:
+    - N/A
+  800-53r5:
+    - SC-18
+    - SC-18(4)
+  800-171r3:
+    - 03.13.15
+  cmmc:
+    - SC.L2-3.13.15
+macOS:
+  - '26.0'
+tags:
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_high
+mobileconfig: true
+mobileconfig_info:
+  com.apple.Safari:
+    allowJavaScript: false

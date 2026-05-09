@@ -6,7 +6,7 @@ check: |
   result="FAIL"
   enabled=$(/bin/launchctl print-disabled system | /usr/bin/grep '"com.openssh.sshd" => enabled')
   running=$(/bin/launchctl print system/com.openssh.sshd 2>/dev/null)
-  
+
   if [[ -z "$running" ]] && [[ -z "$enabled" ]]; then
     result="PASS"
   elif [[ -n "$running" ]]; then
@@ -54,6 +54,10 @@ references:
     - AC.L1-3.1.1
     - CM.L2-3.4.6
     - CM.L2-3.4.7
+  bio:
+    - 8.27.01
+  hicp:
+    - 6.L.A
 macOS:
   - '26.0'
 tags:
@@ -69,6 +73,8 @@ tags:
   - cmmc_lvl2
   - cmmc_lvl1
   - cnssi-1253_moderate
+  - nlmapgov_plus
+  - hicp_lp
 severity: high
 mobileconfig: false
-mobileconfig_info:
+mobileconfig_info: null
