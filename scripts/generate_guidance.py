@@ -531,7 +531,7 @@ def generate_profiles(
         uuid=False,
         organization="macOS Security Compliance Project",
         displayname=f"{baseline_name} settings",
-        description=f"Consolidated configuration settings for {baseline_name}."
+        description=f"Created: {date.today()}\nConsolidated configuration settings for {baseline_name}."
     )
 
     # process the payloads from the yaml file and generate new config profile for each type
