@@ -317,5 +317,9 @@ def generate_guidance(sp: Yaspin, args: argparse.Namespace) -> None:
         language=args.language,
     )
 
-    sp.text = f"MSCP DOCUMENT GENERATION COMPLETE! All of the documents can be found in this folder: {build_path}/"
-    sp.ok("✔")
+    try:
+        display_path = build_path.relative_to(Path.cwd())
+    except ValueError:
+        display_path = build_path
+        sp.text = f"MSCP DOCUMENT GENERATION COMPLETE! All of the documents can be found in this folder: {display_path}/"
+        sp.ok("✔")
