@@ -222,7 +222,13 @@ class bzkReferences(BaseModelWithAccessors):
     bio: list[str] | None = None
 
     def __init__(self, **data: Any) -> None:
-        """Construct from kwargs and sort the reference list."""
+        """Construct from kwargs, coerce items to str, and sort the reference list.
+
+        BIO identifiers such as ``8.27`` are parsed as floats by the YAML
+        loader; they are coerced to strings here before Pydantic validates.
+        """
+        if isinstance(data.get("bio"), list):
+            data["bio"] = [str(v) for v in data["bio"]]
         super().__init__(**data)
         if self.bio:
             self.bio = sorted(self.bio)
