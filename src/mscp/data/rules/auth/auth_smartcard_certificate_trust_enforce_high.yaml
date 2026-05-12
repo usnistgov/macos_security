@@ -44,6 +44,7 @@ tags:
   - cnssi-1253_moderate
   - cnssi-1253_low
   - cmmc_lvl2
+  - hicp_lp
 mobileconfig_info:
   - PayloadType: com.apple.security.smartcard
     PayloadContent:

@@ -15,6 +15,10 @@ references:
         - CCE-92745-9
       ios_26:
         - CCE-95632-6
+      ios_18:
+        - CCE-94421-5
+      ios_17:
+        - CCE-93407-5
       visionos_26:
         - CCE-95555-9
     800-53r5:
@@ -41,6 +45,10 @@ references:
         - APPL-14-002041
       ios_26:
         - AIOS-26-003200
+      ios_18:
+        - AIOS-18-003200
+      ios_17:
+        - AIOS-17-003200
       visionos_26:
         - AVOS-26-003200
     cmmc:
@@ -55,6 +63,10 @@ references:
     benchmark:
       ios_26:
         - 3.2.1.5 (level 1 - Institutionally-Owned Devices)
+      ios_18:
+        - 3.2.1.5 (level 1 - Institutionally-Owned Devices)
+      ios_17:
+        - 3.2.1.5 (level 1 - Institutionally-Owned Devices)
     controls_v8:
       - 4.1
       - 4.8
@@ -62,6 +74,12 @@ references:
   bsi:
     indigo:
       ios_26:
+        - ANNEX D (Section 5.4 - iCloud restrictions)
+        - ANNEX K
+      ios_18:
+        - ANNEX D (Section 5.4 - iCloud restrictions)
+        - ANNEX K
+      ios_17:
         - ANNEX D (Section 5.4 - iCloud restrictions)
         - ANNEX K
 platforms:
@@ -100,6 +118,24 @@ platforms:
           severity: medium
         - name: indigo_high
           severity: medium
+    '18.0':
+      supervised: true
+      benchmarks:
+        - name: cis_lvl1_enterprise
+        - name: cis_lvl2_enterprise
+        - name: ios_stig
+          severity: medium
+        - name: indigo_high
+          severity: medium
+    '17.0':
+      supervised: true
+      benchmarks:
+        - name: cis_lvl1_enterprise
+        - name: cis_lvl2_enterprise
+        - name: ios_stig
+          severity: medium
+        - name: indigo_high
+          severity: medium
     introduced: '5.0'
   visionOS:
     '26.0':
@@ -116,6 +152,7 @@ tags:
   - cmmc_lvl2
   - cmmc_lvl1
   - cnssi-1253_moderate
+  - hicp_lp
   - cmmc_lvl3
 mobileconfig_info:
   - PayloadType: com.apple.applicationaccess

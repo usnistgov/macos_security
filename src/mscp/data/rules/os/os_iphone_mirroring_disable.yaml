@@ -38,6 +38,8 @@ references:
         - APPL-15-002271
       ios_26:
         - AIOS-26-015800
+      ios_18:
+        - AIOS-18-015800
     cmmc:
       - AC.L1-3.1.1
       - AC.L1-3.1.20
@@ -98,6 +100,7 @@ tags:
   - cmmc_lvl2
   - cmmc_lvl1
   - cnssi-1253_moderate
+  - hicp_lp
   - cmmc_lvl3
 mobileconfig_info:
   - PayloadType: com.apple.applicationaccess

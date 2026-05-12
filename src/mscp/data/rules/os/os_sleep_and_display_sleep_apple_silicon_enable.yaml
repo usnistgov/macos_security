@@ -29,14 +29,54 @@ platforms:
     '15.0':
       benchmarks:
         - name: cis_lvl2
+      enforcement_info:
+        check:
+          shell: |-
+            error_count=0
+            if /usr/sbin/system_profiler SPHardwareDataType | /usr/bin/grep -q "MacBook"; then
+              cpuType=$(/usr/sbin/sysctl -n machdep.cpu.brand_string)
+              if echo "$cpuType" | grep -q "Apple"; then
+                sleepMode=$(/usr/bin/pmset -b -g | /usr/bin/grep '^\s*sleep' 2>&1 | /usr/bin/awk '{print $2}')
+                displaysleepMode=$(/usr/bin/pmset -b -g | /usr/bin/grep displaysleep 2>&1 | /usr/bin/awk '{print $2}')
+                if [[ "$sleepMode" == "" ]] || [[ "$sleepMode" -gt 15 ]]; then
+                  ((error_count++))
+                fi
+                if [[ "$displaysleepMode" == "" ]] || [[ "$displaysleepMode" -gt 10 ]] || [[ "$displaysleepMode" -gt "$sleepMode" ]]; then
+                  ((error_count++))
+                fi
+              fi
+            fi
+            echo "$error_count"
+          result:
+            integer: 0
     '14.0':
       benchmarks:
         - name: cis_lvl2
+      enforcement_info:
+        check:
+          shell: |-
+            error_count=0
+            if /usr/sbin/system_profiler SPHardwareDataType | /usr/bin/grep -q "MacBook"; then
+              cpuType=$(/usr/sbin/sysctl -n machdep.cpu.brand_string)
+              if echo "$cpuType" | grep -q "Apple"; then
+                sleepMode=$(/usr/bin/pmset -b -g | /usr/bin/grep '^\s*sleep' 2>&1 | /usr/bin/awk '{print $2}')
+                displaysleepMode=$(/usr/bin/pmset -b -g | /usr/bin/grep displaysleep 2>&1 | /usr/bin/awk '{print $2}')
+                if [[ "$sleepMode" == "" ]] || [[ "$sleepMode" -gt 15 ]]; then
+                  ((error_count++))
+                fi
+                if [[ "$displaysleepMode" == "" ]] || [[ "$displaysleepMode" -gt 10 ]] || [[ "$displaysleepMode" -gt "$sleepMode" ]]; then
+                  ((error_count++))
+                fi
+              fi
+            fi
+            echo "$error_count"
+          result:
+            integer: 0
     enforcement_info:
       check:
         shell: |-
           error_count=0
-          if /usr/sbin/system_profiler SPHardwareDataType | /usr/bin/grep -q "MacBook"; then
+          if /usr/sbin/system_profiler SPHardwareDataType 2>/dev/null  | /usr/bin/grep -Ei "MacBook|Mac[0-9]" > /dev/null ; then
             cpuType=$(/usr/sbin/sysctl -n machdep.cpu.brand_string)
             if echo "$cpuType" | grep -q "Apple"; then
               sleepMode=$(/usr/bin/pmset -b -g | /usr/bin/grep '^\s*sleep' 2>&1 | /usr/bin/awk '{print $2}')

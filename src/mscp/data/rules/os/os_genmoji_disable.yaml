@@ -33,6 +33,8 @@ references:
         - APPL-15-005140
       ios_26:
         - AIOS-26-017400
+      ios_18:
+        - AIOS-18-017400
       visionos_26:
         - AVOS-26-017400
     cmmc:
@@ -63,6 +65,8 @@ platforms:
         - name: ios_stig
     '18.0':
       supervised: false
+      benchmarks:
+        - name: ios_stig
     introduced: '18.0'
   visionOS:
     '26.0':
@@ -78,6 +82,7 @@ tags:
   - cmmc_lvl2
   - cmmc_lvl1
   - cnssi-1253_moderate
+  - hicp_lp
   - cmmc_lvl3
 mobileconfig_info:
   - PayloadType: com.apple.applicationaccess

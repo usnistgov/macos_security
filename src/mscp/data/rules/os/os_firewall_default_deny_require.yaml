@@ -35,11 +35,21 @@ references:
 platforms:
   macOS:
     '26.0': {}
-    '15.0': {}
-    '14.0': {}
+    '15.0':
+      enforcement_info:
+        check:
+          shell: /sbin/pfctl -a '*' -sr &> /dev/null | /usr/bin/grep -c "block drop in all"
+          result:
+            integer: 1
+    '14.0':
+      enforcement_info:
+        check:
+          shell: /sbin/pfctl -a '*' -sr &> /dev/null | /usr/bin/grep -c "block drop in all"
+          result:
+            integer: 1
     enforcement_info:
       check:
-        shell: /sbin/pfctl -a '*' -sr &> /dev/null | /usr/bin/grep -c "block drop in all"
+        shell: /sbin/pfctl -a '*' -sr 2> /dev/null | /usr/bin/grep -c "block drop in all"
         result:
           integer: 1
       fix:
@@ -52,3 +62,4 @@ tags:
   - cnssi-1253_high
   - cmmc_lvl2
   - cnssi-1253_moderate
+  - hicp_lp

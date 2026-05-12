@@ -7,6 +7,8 @@ references:
     cce:
       ios_26:
         - CCE-95542-7
+      ios_18:
+        - CCE-94578-2
     800-53r5:
       - AC-20
       - AC-20(1)
@@ -30,6 +32,8 @@ platforms:
       benchmarks:
         - name: indigo_base
         - name: indigo_high
+    '18.0':
+      supervised: true
     introduced: '18.3'
 tags:
   - 800-53r5_low

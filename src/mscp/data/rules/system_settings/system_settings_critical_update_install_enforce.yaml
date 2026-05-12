@@ -67,7 +67,13 @@ tags:
   - cmmc_lvl2
   - cmmc_lvl1
   - cnssi-1253_moderate
+  - hicp_lp
 mobileconfig_info:
   - PayloadType: com.apple.SoftwareUpdate
     PayloadContent:
       - CriticalUpdateInstall: true
+ddm_info:
+  declarationtype: com.apple.configuration.softwareupdate.settings
+  ddm_key: AutomaticActions
+  ddm_value:
+    InstallSecurityUpdates: AlwaysOn

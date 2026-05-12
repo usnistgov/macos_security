@@ -54,6 +54,7 @@ tags:
   - cmmc_lvl2
   - cmmc_lvl1
   - cnssi-1253_moderate
+  - hicp_lp
 mobileconfig_info:
   - PayloadType: com.apple.SetupAssistant.managed
     PayloadContent:

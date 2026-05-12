@@ -16,6 +16,8 @@ references:
     disa_stig:
       ios_26:
         - AIOS-26-017800
+      ios_18:
+        - AIOS-18-017800
     sfr:
       - 'FMT_MOF_EXT.1.2 #47'
     cmmc:
@@ -26,6 +28,11 @@ references:
 platforms:
   iOS:
     '26.0':
+      supervised: true
+      benchmarks:
+        - name: ios_stig
+          severity: high
+    '18.0':
       supervised: true
       benchmarks:
         - name: ios_stig

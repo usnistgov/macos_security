@@ -68,6 +68,7 @@ tags:
   - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
+  - hicp_lp
 mobileconfig_info:
   - PayloadType: com.apple.systempreferences
     PayloadContent:

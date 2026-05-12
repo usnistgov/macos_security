@@ -13,9 +13,15 @@ references:
     indigo:
       ios_26:
         - Annex K
+      ios_18:
+        - Annex K
 platforms:
   iOS:
     '26.0':
+      supervised: false
+      benchmarks:
+        - name: indigo_high
+    '18.0':
       supervised: false
       benchmarks:
         - name: indigo_high

@@ -20,6 +20,8 @@ references:
     disa_stig:
       ios_26:
         - AIOS-26-017200
+      ios_18:
+        - AIOS-18-017200
     sfr:
       - 'FMT_MOF_EXT.1.2 #47'
     cmmc:
@@ -39,6 +41,7 @@ platforms:
         - name: indigo_high
     '18.0':
       benchmarks:
+        - name: ios_stig
         - name: indigo_high
     introduced: '18.0'
   visionOS:

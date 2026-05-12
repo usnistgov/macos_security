@@ -75,7 +75,12 @@ tags:
   - cmmc_lvl2
   - cmmc_lvl1
   - cnssi-1253_moderate
+  - hicp_lp
 mobileconfig_info:
   - PayloadType: com.apple.applicationaccess
     PayloadContent:
       - allowDictation: false
+ddm_info:
+  declarationtype: com.apple.configuration.keyboard.settings
+  ddm_key: AllowDictation
+  ddm_value: false

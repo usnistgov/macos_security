@@ -9,6 +9,10 @@ references:
     cce:
       ios_26:
         - CCE-95689-6
+      ios_18:
+        - CCE-94551-9
+      ios_17:
+        - CCE-93499-2
     800-53r5:
       - AC-20
       - CM-7
@@ -20,6 +24,9 @@ references:
     disa_stig:
       ios_26:
         - AIOS-26-016100
+      ios_18:
+        - AIOS-18-016100
+        - AIOS-18-016300
     sfr:
       - 'FMT_MOF_EXT.1.2 #47'
     cmmc:
@@ -31,6 +38,10 @@ references:
     indigo:
       ios_26:
         - ANNEX K
+      ios_18:
+        - ANNEX K
+      ios_17:
+        - ANNEX K
 platforms:
   iOS:
     '26.0':
@@ -38,6 +49,22 @@ platforms:
       benchmarks:
         - name: ios_stig
           severity: high
+        - name: indigo_base
+          severity: high
+        - name: indigo_high
+          severity: high
+    '18.0':
+      supervised: false
+      benchmarks:
+        - name: ios_stig
+          severity: high
+        - name: indigo_base
+          severity: high
+        - name: indigo_high
+          severity: high
+    '17.0':
+      supervised: false
+      benchmarks:
         - name: indigo_base
           severity: high
         - name: indigo_high

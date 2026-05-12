@@ -68,7 +68,12 @@ tags:
   - cnssi-1253_moderate
   - cmmc_lvl1
   - cmmc_lvl2
+  - hicp_lp
 mobileconfig_info:
   - PayloadType: com.apple.applicationaccess
     PayloadContent:
       - allowExternalIntelligenceIntegrations: false
+ddm_info:
+  declarationtype: com.apple.configuration.external-intelligence.settings
+  ddm_key: Enabled
+  ddm_value: false

@@ -10,6 +10,8 @@ references:
         - CCE-94570-9
       ios_26:
         - CCE-95518-7
+      ios_18:
+        - CCE-94577-4
       visionos_26:
         - CCE-95591-4
     800-53r5:
@@ -55,6 +57,8 @@ platforms:
       benchmarks:
         - name: indigo_base
         - name: indigo_high
+    '18.0':
+      supervised: true
     introduced: '18.4'
   visionOS:
     '26.0':
@@ -70,6 +74,7 @@ tags:
   - cmmc_lvl2
   - cmmc_lvl1
   - cnssi-1253_moderate
+  - hicp_lp
   - cmmc_lvl3
 mobileconfig_info:
   - PayloadType: com.apple.applicationaccess

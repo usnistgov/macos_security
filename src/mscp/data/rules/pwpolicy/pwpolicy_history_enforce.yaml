@@ -34,6 +34,8 @@ references:
       - SRG-OS-000077-GPOS-00045
       - SRG-OS-000775-GPOS-00230
     disa_stig:
+      macos_26:
+        - APPL-15-003009
       macos_15:
         - APPL-15-003009
       macos_14:
@@ -141,6 +143,7 @@ tags:
   - cnssi-1253_high
   - cmmc_lvl2
   - cnssi-1253_moderate
+  - hicp_lp
   - cmmc_lvl3
 mobileconfig_info:
   - PayloadType: com.apple.mobiledevice.passwordpolicy

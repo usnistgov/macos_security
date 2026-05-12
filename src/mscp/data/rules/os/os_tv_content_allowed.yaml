@@ -18,6 +18,8 @@ references:
     cce:
       ios_26:
         - CCE-95694-6
+      ios_18:
+        - CCE-94526-1
     800-53r5:
       - CM-7
   disa:
@@ -26,6 +28,8 @@ references:
     disa_stig:
       ios_26:
         - AIOS-26-017100
+      ios_18:
+        - AIOS-18-017100
     sfr:
       - 'FMT_MOF_EXT.1.2 #47'
     cmmc:
@@ -36,7 +40,20 @@ platforms:
       supervised: false
       benchmarks:
         - name: ios_stig
+    '18.0':
+      supervised: false
+      benchmarks:
+        - name: ios_stig
     introduced: '4.0'
+odv:
+  hint:
+    datatype: number
+    description: 'Possible values, with the U.S. description of the rating level: `1000`: All | `600`: TV-MA | `500`: TV-14 | `400`: TV-PG | `300`: TV-G | `200`: TV-Y7 | `100`: TV-Y | `0`: None'
+    validation:
+      min: 0
+      max: 1000
+  recommended: 0
+  ios_stig: 0
 tags:
   - 800-53r5_low
   - 800-53r5_moderate
@@ -47,12 +64,3 @@ mobileconfig_info:
   - PayloadType: com.apple.applicationaccess
     PayloadContent:
       - ratingTVShows: $ODV
-odv:
-  hint:
-    datatype: number
-    description: 'Possible values, with the U.S. description of the rating level: `1000`: All | `600`: TV-MA | `500`: TV-14 | `400`: TV-PG | `300`: TV-G | `200`: TV-Y7 | `100`: TV-Y | `0`: None'
-    validation:
-      min: 0
-      max: 1000
-  recommended: 0
-  ios_stig: 0

@@ -73,6 +73,11 @@ platforms:
         - name: disa_stig
           severity: medium
         - name: nlmapgov_plus
+      enforcement_info:
+        check:
+          shell: /usr/libexec/mdmclient QuerySecurityInfo 2>/dev/null | /usr/bin/grep -c "AuthenticatedRootVolumeEnabled = 1;"
+          result:
+            integer: 1
     '14.0':
       benchmarks:
         - name: cis_lvl1
@@ -86,9 +91,9 @@ platforms:
             integer: 1
     enforcement_info:
       check:
-        shell: /usr/libexec/mdmclient QuerySecurityInfo 2>/dev/null | /usr/bin/grep -c "AuthenticatedRootVolumeEnabled = 1;"
+        shell: /sbin/mount | /usr/bin/grep ' / ' | /usr/bin/grep -o 'sealed'
         result:
-          integer: 1
+          string: sealed
       fix:
         shell: /usr/bin/csrutil authenticated-root enable
         additional_info: 'NOTE: To re-enable "Authenticated Root", boot the affected system into "Recovery" mode, launch "Terminal" from the "Utilities" menu, and run the command.'
@@ -103,3 +108,4 @@ tags:
   - cmmc_lvl2
   - cmmc_lvl1
   - cnssi-1253_moderate
+  - hicp_lp

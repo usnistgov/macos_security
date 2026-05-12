@@ -7,6 +7,8 @@ references:
     cce:
       ios_26:
         - CCE-95452-9
+      ios_18:
+        - CCE-94572-5
     800-53r5:
       - CM-7
       - CM-7(1)
@@ -21,6 +23,8 @@ references:
 platforms:
   iOS:
     '26.0':
+      supervised: true
+    '18.0':
       supervised: true
     introduced: '18.4'
 tags:
