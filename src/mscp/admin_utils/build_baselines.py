@@ -31,7 +31,7 @@ from ..generate.baseline import (
 def build_all_baselines(args: argparse.Namespace) -> None:
     """Regenerate every default baseline file for the configured platforms.
 
-    Clears `config["defaults"]["baseline_dir"]`, collects every rule for
+    Clears `config["baseline_dir"]`, collects every rule for
     `args.os_name` / `args.os_version`, derives the set of benchmarks and
     tags from those rules, and then calls `generate_baseline` once per
     discovered benchmark (per its own platform list) and once per
@@ -54,7 +54,7 @@ def build_all_baselines(args: argparse.Namespace) -> None:
     logger.info("Building all supported baselines...")
 
     # clear existing default baselines
-    baselines_dir = Path(config["defaults"].get("baseline_dir", ""))
+    baselines_dir = Path(config.get("baseline_dir", ""))
     remove_dir_contents(baselines_dir)
 
     # set default args expected by generate_baseline

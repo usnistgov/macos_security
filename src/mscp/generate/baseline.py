@@ -171,9 +171,7 @@ def generate_baseline(args: argparse.Namespace, admin=False) -> None:
             Defaults to ``False``.
     """
     if admin:
-        build_path: Path = (
-            Path(config["defaults"].get("baseline_dir", "")) / args.os_name
-        )
+        build_path: Path = Path(config.get("baseline_dir", "")) / args.os_name
     else:
         build_path: Path = Path(config["custom"].get("baseline_dir", ""))
     baseline_output_file: Path = (
@@ -329,7 +327,9 @@ def generate_baseline(args: argparse.Namespace, admin=False) -> None:
             display_path = Path(baseline_output_file).relative_to(Path.cwd())
         except ValueError:
             display_path = baseline_output_file
-        print(f"Generated new baseline file containing {len(found_rules)} rules: {display_path}")
+        print(
+            f"Generated new baseline file containing {len(found_rules)} rules: {display_path}"
+        )
     else:
         logger.error(
             f"No rules found for {args.keyword} on {args.os_name} version {args.os_version}, skipping baseline generation."
