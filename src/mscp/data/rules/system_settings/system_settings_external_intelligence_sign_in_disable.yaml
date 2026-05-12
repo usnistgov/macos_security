@@ -30,6 +30,11 @@ references:
   bzk:
     bio:
       - 8.12.01
+  hhs:
+    hicp:
+      - 2.L.A
+      - 3.L.C
+      - 4.L.A
   cis:
     benchmark:
       macos_26:

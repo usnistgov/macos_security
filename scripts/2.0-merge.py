@@ -550,6 +550,16 @@ def main():
                     new_yaml["references"]["disa"].update(
                         {"cmmc": rule_yaml["references"]["cmmc"]}
                     )
+            if "hicp" in rule_yaml["references"]:
+                if "hhs" in new_yaml["references"]:
+                    new_yaml["references"]["hhs"].update(
+                        {"hicp": rule_yaml["references"]["hicp"]}
+                    )
+                else:
+                    new_yaml["references"].update({"hhs": {}})
+                    new_yaml["references"]["hhs"].update(
+                        {"hicp": rule_yaml["references"]["hicp"]}
+                    )
             if "indigo" in rule_yaml["references"]:
                 if "bsi" in new_yaml["references"]:
                     new_yaml["references"]["bsi"]["indigo"].update(
@@ -1407,6 +1417,17 @@ def main():
                                 new_yaml["references"].update({"disa": {}})
                                 new_yaml["references"]["disa"].update(
                                     {"cmmc": rule_yaml["references"]["cmmc"]}
+                                )
+
+                        if "hicp" in rule_yaml["references"]:
+                            if "hhs" in new_yaml["references"]:
+                                new_yaml["references"]["hhs"].update(
+                                    {"hicp": rule_yaml["references"]["hicp"]}
+                                )
+                            else:
+                                new_yaml["references"].update({"hhs": {}})
+                                new_yaml["references"]["hhs"].update(
+                                    {"hicp": rule_yaml["references"]["hicp"]}
                                 )
 
                         if "cis" in rule_yaml["references"]:

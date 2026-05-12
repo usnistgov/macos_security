@@ -28,6 +28,9 @@ references:
   bzk:
     bio:
       - 8.01.01
+  hhs:
+    hicp:
+      - 3.L.C
 platforms:
   macOS:
     '26.0':

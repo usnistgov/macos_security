@@ -46,6 +46,11 @@ references:
     bio:
       - 8.07.01
       - 8.19.01
+  hhs:
+    hicp:
+      - 1.L.B
+      - 2.L.A
+      - 7.L.C
   cis:
     benchmark:
       macos_26:

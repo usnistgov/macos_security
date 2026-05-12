@@ -24,6 +24,13 @@ references:
   disa:
     cmmc:
       - AC.L2-3.1.18
+  hhs:
+    hicp:
+      - 2.L.A
+      - 2.L.C
+      - 3.L.C
+      - 6.L.E
+      - 7.L.B
   cis:
     controls_v8:
       - 6.4

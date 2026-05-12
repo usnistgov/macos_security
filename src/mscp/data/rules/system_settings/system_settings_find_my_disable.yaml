@@ -41,6 +41,12 @@ references:
   bzk:
     bio:
       - 7.10.02
+  hhs:
+    hicp:
+      - 2.L.A
+      - 2.L.B
+      - 4.L.A
+      - 5.L.A
   cis:
     controls_v8:
       - 4.1

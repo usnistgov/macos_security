@@ -49,6 +49,9 @@ references:
     cmmc:
       - IA.L2-3.5.3
       - IA.L2-3.5.4
+  hhs:
+    hicp:
+      - 3.L.C
   cis:
     controls_v8:
       - 6.3

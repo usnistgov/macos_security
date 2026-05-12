@@ -40,6 +40,9 @@ references:
     cmmc:
       - CM.L2-3.4.6
       - CM.L2-3.4.7
+  hhs:
+    hicp:
+      - 2.L.A
 platforms:
   macOS:
     '26.0':

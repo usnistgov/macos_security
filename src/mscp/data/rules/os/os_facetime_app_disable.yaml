@@ -41,6 +41,9 @@ references:
       - AC.L1-3.1.20
       - CM.L2-3.4.6
       - CM.L2-3.4.7
+  hhs:
+    hicp:
+      - 2.L.A
   cis:
     controls_v8:
       - 4.1

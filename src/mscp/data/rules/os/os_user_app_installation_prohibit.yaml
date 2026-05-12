@@ -39,6 +39,10 @@ references:
         - APPL-14-005080
     cmmc:
       - CM.L2-3.4.9
+  hhs:
+    hicp:
+      - 2.L.A
+      - 2.L.B
 platforms:
   macOS:
     '26.0':

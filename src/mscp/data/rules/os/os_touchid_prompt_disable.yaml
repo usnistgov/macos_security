@@ -31,6 +31,10 @@ references:
         - APPL-14-005054
     cmmc:
       - CM.L2-3.4.2
+  hhs:
+    hicp:
+      - 2.L.A
+      - 3.L.A
   cis:
     controls_v8:
       - 4.1

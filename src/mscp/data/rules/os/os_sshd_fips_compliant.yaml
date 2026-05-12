@@ -57,6 +57,9 @@ references:
       - MP.L2-3.8.6
       - SC.L2-3.13.8
       - SC.L2-3.13.11
+  hhs:
+    hicp:
+      - 6.L.C
 platforms:
   macOS:
     '26.0':

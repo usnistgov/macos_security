@@ -20,6 +20,9 @@ references:
   disa:
     cmmc:
       - MA.L2-3.7.5
+  hhs:
+    hicp:
+      - 6.L.A
 platforms:
   macOS:
     '26.0': {}

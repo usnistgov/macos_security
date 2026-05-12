@@ -33,6 +33,12 @@ references:
       - AC.L1-3.1.20
       - CM.L2-3.4.6
       - CM.L2-3.4.7
+  hhs:
+    hicp:
+      - 1.L.B
+      - 2.L.A
+      - 4.L.A
+      - 4.L.B
   bsi:
     indigo:
       ios_26:

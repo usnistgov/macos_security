@@ -59,6 +59,11 @@ references:
     bio:
       - 8.12.01
       - 8.27.01
+  hhs:
+    hicp:
+      - 2.L.B
+      - 4.L.A
+      - 4.L.B
   cis:
     benchmark:
       ios_26:

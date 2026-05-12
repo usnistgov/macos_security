@@ -23,6 +23,10 @@ references:
       - SRG-OS-000378-GPOS-00163
     cmmc:
       - IA.L1-3.5.2
+  hhs:
+    hicp:
+      - 3.L.A
+      - 6.L.A
   cis:
     controls_v8:
       - 13.9

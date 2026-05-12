@@ -24,6 +24,11 @@ references:
         - APPL-26-005170
     cmmc:
       - AC.L1-3.1.20
+  hhs:
+    hicp:
+      - 2.L.A
+      - 4.L.A
+      - 4.L.B
   cis:
     controls_v8:
       - 4.1

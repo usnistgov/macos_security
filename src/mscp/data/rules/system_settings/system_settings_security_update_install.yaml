@@ -18,6 +18,13 @@ references:
   bzk:
     bio:
       - 8.08.01
+  hhs:
+    hicp:
+      - 2.L.A
+      - 2.L.B
+      - 3.L.C
+      - 5.L.A
+      - 7.L.B
   cis:
     controls_v8:
       - 7.3

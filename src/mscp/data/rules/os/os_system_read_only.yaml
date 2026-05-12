@@ -17,6 +17,9 @@ references:
       - SC-34
       - MA-4(1)
       - SI-7
+  hhs:
+    hicp:
+      - 2.L.C
 platforms:
   macOS:
     '26.0': {}

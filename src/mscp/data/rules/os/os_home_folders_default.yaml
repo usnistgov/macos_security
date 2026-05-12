@@ -17,6 +17,10 @@ references:
       - AC-6
     800-171r3:
       - 03.01.05
+  hhs:
+    hicp:
+      - 2.L.B
+      - 3.L.C
 platforms:
   macOS:
     '26.0': {}

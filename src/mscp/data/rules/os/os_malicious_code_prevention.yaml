@@ -19,6 +19,11 @@ references:
       - SI.L1-3.14.1
       - SI.L1-3.14.2
       - SI.L1-3.14.4
+  hhs:
+    hicp:
+      - 2.L.A
+      - 7.L.B
+      - 8.L.A
   cis:
     controls_v8:
       - 10.1

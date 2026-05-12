@@ -61,6 +61,10 @@ references:
       - AU.L2-3.3.6
       - AU.L2-3.3.8
       - SI.L2-3.14.3
+  hhs:
+    hicp:
+      - 3.L.C
+      - 8.L.A
   cis:
     benchmark:
       macos_26:

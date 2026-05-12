@@ -64,6 +64,10 @@ references:
       - IA.L1-3.5.2
       - IA.L2-3.5.3
       - IA.L2-3.5.4
+  hhs:
+    hicp:
+      - 3.L.A
+      - ''
   cis:
     controls_v8:
       - 6.3

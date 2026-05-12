@@ -18,6 +18,10 @@ references:
   disa:
     srg:
       - SRG-OS-000395-GPOS-00175
+  hhs:
+    hicp:
+      - 3.L.C
+      - 8.L.A
 platforms:
   macOS:
     '26.0': {}

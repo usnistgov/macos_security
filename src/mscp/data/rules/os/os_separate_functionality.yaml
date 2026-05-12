@@ -31,6 +31,10 @@ references:
       - SRG-OS-000132-GPOS-00067
     cmmc:
       - SC.L2-3.13.3
+  hhs:
+    hicp:
+      - 2.L.A
+      - 3.L.C
 platforms:
   macOS:
     '26.0': {}

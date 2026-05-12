@@ -17,6 +17,9 @@ references:
         - CCE-92885-3
     800-53r5:
       - SC-21
+  hhs:
+    hicp:
+      - 6.L.C
   cis:
     controls_v8:
       - 4.9

@@ -27,6 +27,10 @@ references:
     cmmc:
       - CM.L2-3.4.6
       - CM.L2-3.4.7
+  hhs:
+    hicp:
+      - 2.L.B
+      - 3.L.A
   cis:
     controls_v8:
       - 4.1

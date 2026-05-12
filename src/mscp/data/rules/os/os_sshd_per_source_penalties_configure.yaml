@@ -17,6 +17,9 @@ references:
         - CCE-94589-9
     800-53r5:
       - SC-5
+  hhs:
+    hicp:
+      - 6.L.C
 platforms:
   macOS:
     '26.0': {}

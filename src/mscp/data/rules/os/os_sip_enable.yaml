@@ -80,6 +80,9 @@ references:
   bzk:
     bio:
       - 8.17.01
+  hhs:
+    hicp:
+      - 2.L.C
   cis:
     benchmark:
       macos_26:

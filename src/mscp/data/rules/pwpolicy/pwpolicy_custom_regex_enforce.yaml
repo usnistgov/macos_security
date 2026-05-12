@@ -36,6 +36,10 @@ references:
       - IA.L2-3.5.7
       - IA.L2-3.5.8
       - IA.L2-3.5.9
+  hhs:
+    hicp:
+      - 2.L.A
+      - 3.L.C
   cis:
     benchmark:
       macos_26:

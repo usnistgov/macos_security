@@ -19,6 +19,12 @@ references:
     cmmc:
       - SI.L1-3.14.1
       - SI.L1-3.14.4
+  hhs:
+    hicp:
+      - 2.L.A
+      - 2.L.B
+      - 5.L.A
+      - 7.L.B
   cis:
     benchmark:
       macos_26:

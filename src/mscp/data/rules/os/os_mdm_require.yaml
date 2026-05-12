@@ -51,6 +51,9 @@ references:
       - 8.01.01
       - 8.01.02
       - 8.09.01
+  hhs:
+    hicp:
+      - 2.L.B
   cis:
     benchmark:
       macos_15:
