@@ -26,7 +26,6 @@ python3 -m pip install --upgrade -r requirements.txt
 
 You can now run the `./mscp.py` CLI to get started.
 
-
 ## Ruby instructions (optional)
 
 The ruby components and configuration will take place the first time `./mscp.py guidance` is executed. The instructions here are for information and troubleshooting purposes.

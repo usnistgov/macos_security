@@ -46,11 +46,19 @@ except Exception as e:
     raise
 
 # Keys resolved against the bundled package data directory.
-_pkg_dir_keys = frozenset({
-    "baseline_dir", "documents_templates_dir", "images_dir",
-    "locales_dir", "rules_dir", "sections_dir",
-    "shell_template_dir", "templates_dir", "themes_dir",
-})
+_pkg_dir_keys = frozenset(
+    {
+        "baseline_dir",
+        "documents_templates_dir",
+        "images_dir",
+        "locales_dir",
+        "rules_dir",
+        "sections_dir",
+        "shell_template_dir",
+        "templates_dir",
+        "themes_dir",
+    }
+)
 
 for _key in ("includes_dir", "mscp_data", *_pkg_dir_keys):
     if _key in config:
@@ -58,7 +66,9 @@ for _key in ("includes_dir", "mscp_data", *_pkg_dir_keys):
 
 # Resolve user-configurable paths against CWD when relative, expand ~ when absolute-ish.
 for _key in ("output_dir", "custom_dir"):
-    _val = Path(config.get(_key, "build/" if _key == "output_dir" else "~/.mscp")).expanduser()
+    _val = Path(
+        config.get(_key, "build/" if _key == "output_dir" else "~/.mscp")
+    ).expanduser()
     config[_key] = str(_val if _val.is_absolute() else _cwd / _val)
 
 # Custom base: now guaranteed absolute.
@@ -70,7 +80,10 @@ config["custom"] = {
     "misc_dir": str(_custom_base / "misc"),
 }
 for _key in _pkg_dir_keys - _defaults_only:
-    config["custom"][_key] = str(_custom_base / Path(config[_key]).relative_to(_pkg_data))
+    config["custom"][_key] = str(
+        _custom_base / Path(config[_key]).relative_to(_pkg_data)
+    )
+
 
 def ensure_custom_dirs() -> None:
     """Create the custom directory tree on disk if it isn't already there.

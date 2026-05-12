@@ -70,31 +70,31 @@ authors:
       - nlmapgov_plus
 
 benchmarks:
-  - keyword: cis_lvl1 
+  - keyword: cis_lvl1
     description: Center for Internet Security (CIS) Benchmark for the Level 1 Profile
-  - keyword: cis_lvl1_byod 
+  - keyword: cis_lvl1_byod
     description: Center for Internet Security (CIS) Bring Your Own Device (BYOD) Benchmark for the Level 1 Profile
-  - keyword: cis_lvl1_enterprise 
+  - keyword: cis_lvl1_enterprise
     description: Center for Internet Security (CIS) Enterprise Benchmark for the Level 1 Profile
-  - keyword: cis_lvl2 
+  - keyword: cis_lvl2
     description: Center for Internet Security (CIS) Benchmark for the Level 2 Profile
-  - keyword: cis_lvl2_byod 
+  - keyword: cis_lvl2_byod
     description: Center for Internet Security (CIS) Bring Your Own Device (BYOD) Benchmark for the Level 2 Profile
-  - keyword: cis_lvl2_enterprise 
+  - keyword: cis_lvl2_enterprise
     description: Center for Internet Security (CIS) Enterprise Benchmark for the Level 2 Profile
-  - keyword: disa_stig 
+  - keyword: disa_stig
     description: Defense Information Systems Agency (DISA) Security Technical Implementation Guide (STIG)
-  - keyword: indigo_base 
+  - keyword: indigo_base
     description: Bundesamt für Sicherheit in der Informationstechnik (BSI) iOS Native Devices in Government Operations (iNDIGO) Base Settings
-  - keyword: indigo_high 
+  - keyword: indigo_high
     description: Bundesamt für Sicherheit in der Informationstechnik (BSI) iOS Native Devices in Government Operations (iNDIGO) High Settings
-  - keyword: ios_stig 
+  - keyword: ios_stig
     description: Defense Information Systems Agency (DISA) Security Technical Implementation Guide (STIG)
-  - keyword: ios_stig_byoad 
+  - keyword: ios_stig_byoad
     description: Defense Information Systems Agency (DISA) Security Technical Implementation Guide (STIG) Bring Your Own Approved Device (BYOAD)
-  - keyword: nlmapgov_base 
+  - keyword: nlmapgov_base
     description: Nederlandse Maatregelenset Apple Platformen Overheid (NLMAPGOV) Base Settings
-  - keyword: nlmapgov_plus 
+  - keyword: nlmapgov_plus
     description: Nederlandse Maatregelenset Apple Platformen Overheid (NLMAPGOV) Plus Settings
 
 versions:
