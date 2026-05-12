@@ -1,12 +1,12 @@
-id: os_safari_popups_disabled
-title: Ensure Pop-Up Windows are Blocked in Safari
+id: os_background_security_improvement_removal_disable
+title: Disable rollback of Background Security Improvements using DDM.
 discussion: |
-  Safari _MUST_ be configured to block Pop-Up windows.
+  The ability for the user to roll back Background Security Improvements _MUST_ be disabled.
 references:
   nist:
     cce:
-      macos_14:
-        - CCE-93014-9
+      ios_26:
+        - CCE-NA
   bzk:
     bio:
       - 8.08
@@ -15,7 +15,7 @@ platforms:
     '26.0':
       supervised: true
 tags:
-  - none
+  - nlmapgov_plus
 ddm_info:
   declarationtype: com.apple.configuration.softwareupdate.settings
   ddm_key: RapidSecurityResponse
