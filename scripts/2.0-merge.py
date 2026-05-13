@@ -361,6 +361,13 @@ def main():
                         )
                     new_yaml["tags"].remove("nlmapgov_plus")
 
+                if "800-53r4_low" in new_yaml["tags"]:
+                    new_yaml["tags"].remove("800-53r4_low")
+                if "800-53r4_moderate" in new_yaml["tags"]:
+                    new_yaml["tags"].remove("800-53r4_moderate")
+                if "800-53r4_high" in new_yaml["tags"]:
+                    new_yaml["tags"].remove("800-53r4_high")
+
                 if "nlmapgov_base" in rule_yaml["tags"]:
                     if "benchmarks" in new_yaml["platforms"]["macOS"][os_]:
                         new_yaml["platforms"]["macOS"][os_]["benchmarks"].append(
@@ -1231,12 +1238,7 @@ def main():
                                     )
                                 new_yaml["tags"].remove("nlmapgov_base")
 
-                        if (
-                            os_ == "ios_18"
-                            or os_ == "ios_17"
-                            or os_ == "ios_16"
-                            or os_ == "ios_26"
-                        ):
+                        if os_ == "ios_18" or os_ == "ios_17" or os_ == "ios_26":
                             new_yaml["tags"].remove("ios")
                             new_yaml["platforms"].update({"iOS": {}})
                             new_yaml["platforms"]["iOS"].update({os_: {}})
