@@ -177,6 +177,34 @@ __init__(self, **data: Any) -> None
 Construct from kwargs and sort the reference list.
 
 
+### bzkReferences
+
+```python
+class bzkReferences(BaseModelWithAccessors)
+```
+
+BZK (Ministerie van Binnenlandse Zaken en Koninkrijksrelaties (Netherlands
+Ministry of the Interior and Kingdom Relations)) references.
+
+**Attributes**
+
+- **`bio`** *(list[str] | None)* — BIO identifiers, sorted in ascending order on construction.
+
+
+#### Methods
+
+##### __init__
+
+```python
+__init__(self, **data: Any) -> None
+```
+
+Construct from kwargs, coerce items to str, and sort the reference list.
+
+BIO identifiers such as ``8.27`` are parsed as floats by the YAML
+loader; they are coerced to strings here before Pydantic validates.
+
+
 ### customReferences
 
 ```python
@@ -242,6 +270,7 @@ namespaces can be loaded without code changes.
 - **`disa`** *(DisaReferences | None)* — DISA identifiers, if applicable.
 - **`cis`** *(CisReferences | None)* — CIS identifiers, if applicable.
 - **`bsi`** *(bsiReferences | None)* — BSI identifiers, if applicable.
+- **`bzk`** *(bzkReferences | None)* — BZK identifiers, if applicable.
 - **`custom_refs`** *(customReferences | None)* — Project-specific custom references, if any.
 
 
@@ -250,7 +279,7 @@ namespaces can be loaded without code changes.
 ##### get_ref
 
 ```python
-get_ref(self, key: str, *, default: Any=_SENTINEL, case_insensitive: bool=True, search_order: Iterable[str]=('nist', 'disa', 'cis', 'bsi')) -> Any
+get_ref(self, key: str, *, default: Any=_SENTINEL, case_insensitive: bool=True, search_order: Iterable[str]=('nist', 'disa', 'cis', 'bsi', 'bzk')) -> Any
 ```
 
 Look up a reference value by namespace-qualified or bare key.
@@ -304,7 +333,6 @@ directly.
 - **`discussion`** *(str)* — Long-form discussion or rationale for the rule.
 - **`references`** *(References)* — NIST / DISA / CIS / BSI / custom reference identifiers grouped by namespace.
 - **`odv`** *(dict[str, Any] | None)* — Organizational Defined Values keyed by benchmark name, plus optional ``hint`` / ``custom`` entries.
-- **`finding`** *(bool)* — True if the rule is a finding rather than a configuration setting. Defaults to ``False``.
 - **`tags`** *(list[str])* — Tag list categorising the rule (e.g. ``"inherent"``, ``"permanent"``, ``"n_a"``, ``"supplemental"``).
 - **`result_value`** *(str | int | bool | None)* — Expected result for compliance, when applicable.
 - **`mobileconfig_info`** *(list[Mobileconfigpayload] | None)* — Configuration profile payloads when the rule is enforced via a profile; ``None`` otherwise.

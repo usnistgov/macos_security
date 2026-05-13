@@ -1,27 +1,26 @@
 ---
 title: API Reference
-description: "Domain models for mSCP."
+description: "mSCP — macOS Security Compliance Project."
 ---
 
-> Source: [`src/mscp/classes/__init__.py`](https://github.com/usnistgov/macos_security/blob/dev_2.0/src/mscp/classes/__init__.py)
+> Source: [`src/mscp/__init__.py`](https://github.com/usnistgov/macos_security/blob/dev_2.0/src/mscp/__init__.py)
 
-Domain models for mSCP.
+mSCP — macOS Security Compliance Project.
 
-Re-exports the public model classes used throughout mSCP:
+Top-level package for the mSCP toolchain. Re-exports the domain models
+(`Baseline`, `Macsecurityrule`, `Payload`, `LoguruFormatter`,
+`RuleLibrary`), the command-line entry point `parse_cli`, the generator
+entry points (`baseline`, `guidance`, `mapping`, `translation`), and the
+file / config helpers used throughout the codebase.
 
-- `Baseline`, `Profile`, `Author` — baseline document and its sections.
-- `Macsecurityrule`, `Sectionmap` — security rule model and its section
-  enumeration.
-- `Payload` — configuration profile payload model.
+The package's `loguru` logger is disabled by default; callers that want
+mSCP log output should enable it (typically via `set_logger`).
 
 
 ## Re-exports (`__all__`)
 
-`Baseline`, `Macsecurityrule`, `Payload`, `Author`, `Profile`, `Sectionmap`
+`Baseline`, `Macsecurityrule`, `LoguruFormatter`, `Payload`, `RuleLibrary`, `config`, `append_text`, `create_csv`, `create_plist`, `create_yaml`, `make_dir`, `open_csv`, `open_file`, `open_plist`, `open_yaml`, `remove_dir`, `remove_dir_contents`, `remove_file`, `run_command`, `baseline`, `guidance`, `mapping`, `parse_cli`, `validate_yaml_file`, `set_logger`, `translation`
 
 ## Modules
 
-- [`baseline`](baseline/)
-- [`loguruformatter`](loguruformatter/)
-- [`macsecurityrule`](macsecurityrule/)
-- [`payload`](payload/)
+- [`cli`](cli/)

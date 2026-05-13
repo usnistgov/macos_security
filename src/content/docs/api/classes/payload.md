@@ -9,7 +9,7 @@ Configuration profile payload model.
 
 Provides `Payload`, the in-memory representation of a macOS configuration
 profile (or a per-domain preference plist). Payloads accumulate sub-payload
-dictionaries and can be serialised to ``.mobileconfig`` or ``.plist`` files.
+dictionaries and can be serialized to ``.mobileconfig`` or ``.plist`` files.
 
 
 ## Classes
@@ -24,7 +24,7 @@ A macOS configuration profile payload.
 
 Holds the top-level metadata of a profile (identifier, organization,
 scope, etc.) along with a list of sub-payloads accumulated via
-`add_payload` / `add_mcx_payload`. The whole payload is serialised to
+`add_payload` / `add_mcx_payload`. The whole payload is serialized to
 disk via `save_to_plist` (raw write) or `finalize_and_save_plist`
 (which additionally splits Managed Client preference payloads into
 per-domain plists).
@@ -32,7 +32,7 @@ per-domain plists).
 **Attributes**
 
 - **`identifier`** *(str)* — The ``PayloadIdentifier`` written to the profile.
-- **`organization`** *(str)* — Owning organisation written as ``PayloadOrganization``.
+- **`organization`** *(str)* — Owning organization written as ``PayloadOrganization``.
 - **`description`** *(str)* — Human-readable description written as ``PayloadDescription``.
 - **`displayname`** *(str)* — Display name written as ``PayloadDisplayName``.
 - **`uuid`** *(str | None)* — The profile UUID. Defaults to a freshly generated UUID4 string.
@@ -48,7 +48,7 @@ per-domain plists).
 ##### add_payload
 
 ```python
-add_payload(self, payload_type: str, settings: dict[str, Any], baseline_name: str) -> None
+add_payload(self, payload_type: str, settings: dict[str, Any]) -> None
 ```
 
 Append a generic sub-payload to `payload_content`.
@@ -61,12 +61,11 @@ merges ``settings`` into it, and appends it to `payload_content`.
 
 - **`payload_type`** *(str)* — The ``PayloadType`` value (e.g. ``"com.apple.screensaver"``).
 - **`settings`** *(dict[str, Any])* — Profile settings merged verbatim into the payload dict.
-- **`baseline_name`** *(str)* — Currently unused; kept for signature parity with `add_mcx_payload`.
 
 ##### add_mcx_payload
 
 ```python
-add_mcx_payload(self, domain: str, settings: dict[str, Any], baseline_name: str) -> None
+add_mcx_payload(self, domain: str, settings: dict[str, Any]) -> None
 ```
 
 Append a Managed Client (MCX) preferences sub-payload.
@@ -80,7 +79,6 @@ appends the result to `payload_content`.
 
 - **`domain`** *(str)* — The preference domain to manage (e.g. ``"com.apple.screensaver"``).
 - **`settings`** *(dict[str, Any])* — MCX preference settings to enforce for ``domain``.
-- **`baseline_name`** *(str)* — Currently unused; reserved for future use in the ``PayloadIdentifier``.
 
 ##### save_to_plist
 

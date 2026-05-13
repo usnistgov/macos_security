@@ -24,7 +24,7 @@ from pathlib import Path
 REPO_ROOT = Path(__file__).resolve().parent.parent
 SOURCE_BRANCH = "dev_2.0"
 # Restrict generation to a single Python (sub)package within the source tree.
-SOURCE_PREFIX = "src/mscp/classes/"
+SOURCE_PREFIX = "src/mscp/"
 # Dotted-name prefix corresponding to SOURCE_PREFIX (e.g. "mscp.classes.").
 MODULE_PREFIX = (
     SOURCE_PREFIX.removeprefix("src/").rstrip("/").replace("/", ".") + "."
@@ -411,7 +411,7 @@ def render_module(module: ModuleDoc) -> str:
     # Top-level package index gets the group label as its title.
     top_level_dotted = MODULE_PREFIX.rstrip(".")
     title = (
-        "API Reference"
+        "mSCP 2.0 API Reference"
         if module.module_dotted == top_level_dotted
         else module.module_dotted
     )
@@ -485,7 +485,7 @@ def write_landing_page() -> None:
 
     landing.write_text(
         "---\n"
-        "title: API Reference\n"
+        "title: mSCP 2.0 API Reference\n"
         'description: "Python API reference for the mscp 2.0 classes package, generated from docstrings on the dev_2.0 branch."\n'
         "---\n\n"
         f"Reference for the `{MODULE_PREFIX.rstrip('.')}` package on the "

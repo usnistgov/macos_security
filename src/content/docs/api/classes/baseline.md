@@ -210,27 +210,3 @@ is reduced to a sorted list of rule IDs.
 **Args**
 
 - **`output_path`** *(Path)* — Destination YAML file.
-
-##### load_all_from_folder
-
-```python
-load_all_from_folder(cls, folder_path: Path, os_name: str, os_version: int, custom: bool=False) -> list['Baseline']
-```
-
-*Decorators:* `@classmethod`
-
-Load every baseline YAML under ``folder_path/os_name/os_version``.
-
-Globs ``*.yaml`` in that directory and constructs one `Baseline`
-per file via `from_yaml`.
-
-**Args**
-
-- **`folder_path`** *(Path)* — Root folder containing per-OS subtrees.
-- **`os_name`** *(str)* — Operating system name (e.g. ``"macOS"``).
-- **`os_version`** *(int)* — Operating system version subdirectory.
-- **`custom`** *(bool)* — If true, load custom-section overrides when resolving each baseline. Defaults to ``False``.
-
-**Returns**
-
-- **`list[Baseline]`** — All baselines successfully loaded from the target folder, in directory order.
