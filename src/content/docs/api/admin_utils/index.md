@@ -16,4 +16,4 @@ wired up as `argparse` subcommands in `mscp.cli`.
 
 ## Re-exports (`__all__`)
 
-`build_all_baselines`, `add_new_rule`
+`build_all_baselines`, `add_new_rule`, `generate_mscp_banners`
