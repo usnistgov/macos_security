@@ -8,7 +8,7 @@ wired up as `argparse` subcommands in `mscp.cli`.
 
 from .build_baselines import build_all_baselines
 from .rule_utilities import add_new_rule
-from .logo_generator import generate_mscp_banners
+from .banner_generator import generate_mscp_banners
 
 
 __all__ = [
