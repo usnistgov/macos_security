@@ -42,8 +42,6 @@ platforms:
 tags:
   - 800-53r5_moderate
   - 800-53r5_high
-  - 800-53r4_moderate
-  - 800-53r4_high
   - 800-171
   - cnssi-1253_low
   - cnssi-1253_high

@@ -139,12 +139,12 @@ def generate_guidance(sp: Yaspin, args: argparse.Namespace) -> None:
     else:
         logo_path = Path(
             config["images_dir"],
-            f"mscp_banner-{baseline.platform['os']}.png",
+            f"mscp_banner_{baseline.platform['os']}_{'dark' if args.dark else 'light'}.png",
         ).absolute()
 
     if not logo_path.exists():
         logger.warning(f"Logo not found at {logo_path}, using default instead.")
-        logo_path = Path(config["images_dir"], "mscp_banner.png").absolute()
+        logo_path = Path(config["images_dir"], "mscp_banner_macos_light.png").absolute()
 
     if args.hash:
         if sys.platform.startswith("darwin"):

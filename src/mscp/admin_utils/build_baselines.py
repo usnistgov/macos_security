@@ -63,7 +63,17 @@ def build_all_baselines(args: argparse.Namespace) -> None:
     args.controls = False
 
     # exclude generating baselines for these keys
-    excluded_tags = {"arm64", "i368", "inherent", "manual", "n_a", "none", "permanent"}
+    excluded_tags = {
+        "arm64",
+        "i386",
+        "inherent",
+        "manual",
+        "n_a",
+        "none",
+        "permanent",
+        "supplemental",
+        "800-53r5_privacy",
+    }
 
     all_rules: list[Macsecurityrule] = Macsecurityrule.collect_all_rules(
         args.os_name, args.os_version, args.tailor, parent_values="Default"
