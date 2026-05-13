@@ -41,7 +41,7 @@ jobs:
           import re
           from datetime import date
 
-          with open('config/includes/mscp-data.yaml', 'r') as f:
+          with open('src/mscp/data/includes/mscp-data.yaml', 'r') as f:
               content = f.read()
 
           new_build = None
@@ -60,7 +60,7 @@ jobs:
               content
           )
 
-          with open('config/includes/mscp-data.yaml', 'w') as f:
+          with open('src/mscp/data/includes/mscp-data.yaml', 'w') as f:
               f.write(content)
 
           print(new_build)
