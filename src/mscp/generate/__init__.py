@@ -1,4 +1,12 @@
 # generate/__init__.py
+"""Baseline, guidance, and artifact generation entry points for mSCP.
+
+Re-exports the top-level generator functions: `generate_baseline`
+(YAML baseline files), `generate_guidance` (human-readable guidance
+documents), `generate_mapping` (control-mapping reports),
+`generate_scap` (SCAP/XCCDF content), `generate_localize_template`
+and `generate_mo_from_json` (localization support files).
+"""
 
 from .baseline import generate_baseline
 from .guidance import generate_guidance

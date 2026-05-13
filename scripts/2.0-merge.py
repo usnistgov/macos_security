@@ -168,7 +168,7 @@ def main():
     original_working_directory = os.getcwd()
 
     os.chdir(file_dir)
-    build_path = os.path.join(parent_dir, "config", "default", "rules")
+    build_path = os.path.join(parent_dir, "src", "mscp", "data", "rules")
     # build_path = os.path.join(parent_dir, 'build', 'rules', 'v2.0')
     if not (os.path.isdir(build_path)):
         try:
@@ -185,11 +185,11 @@ def main():
             apple_profiles[payloadtype] = apple_yam
 
     # load odv.json for reference
-    with open("../legacy/includes/odv.json") as o:
+    with open("../src/mscp/data/includes/odv.json") as o:
         odv_json = json.load(o)
 
     # load discussions.yaml for reference
-    with open("../legacy/includes/discussions.yaml") as y:
+    with open("../src/mscp/data/includes/discussions.yaml") as y:
         discussions_yaml = yaml.load(y, Loader=yaml.SafeLoader)
 
     # os_supported = ["sequoia", "sonoma", "ventura", "monterey", "big_sur", "catalina", "ios_18", "ios_17", "ios_16", "visionos_2.0"]
@@ -197,9 +197,9 @@ def main():
         "tahoe",
         "sequoia",
         "sonoma",
+        "ios_26",
         "ios_18",
         "ios_17",
-        "ios_26",
         "visionos_26",
     ]
     # for os_list in glob.glob("../_work/*"):
@@ -241,7 +241,6 @@ def main():
         for id_, os_versions in id_to_os.items()
         if len(os_versions) == 1
     }
-
     try:
         if os.path.isfile(build_path) or os.path.islink(build_path):
             os.unlink(build_path)
@@ -258,7 +257,7 @@ def main():
             if section == "system":
                 section = "system_settings"
             section_build_path = os.path.join(
-                parent_dir, "config", "default", "rules", section
+                parent_dir, "src", "mscp", "data", "rules", section
             )
 
             if not (os.path.isdir(section_build_path)):
@@ -277,14 +276,19 @@ def main():
                 yaml_file_name = f"{rule_yaml['id']}.yaml"
                 yaml_full_path = os.path.join(build_path, section, yaml_file_name)
 
-            new_yaml = {
-                "id": rule_yaml["id"],
-                "title": rule_yaml["title"],
-                "discussion": rule_yaml["discussion"],
-                "references": {"nist": {"cce": {os_: rule_yaml["references"]["cce"]}}},
-                "platforms": {},
-                "tags": rule_yaml["tags"],
-            }
+            try:
+                new_yaml = {
+                    "id": rule_yaml["id"],
+                    "title": rule_yaml["title"],
+                    "discussion": rule_yaml["discussion"],
+                    "references": {
+                        "nist": {"cce": {os_: rule_yaml["references"]["cce"]}}
+                    },
+                    "platforms": {},
+                    "tags": rule_yaml["tags"],
+                }
+            except KeyError as e:
+                print(f"Rule file {r} is missing a key {e}")
             if "mobileconfig_info" in rule_yaml:
                 new_yaml.update({"mobileconfig_info": rule_yaml["mobileconfig_info"]})
             if "ddm_info" in rule_yaml:
@@ -387,7 +391,10 @@ def main():
                     )
 
             if os_ == "ios_18" or os_ == "ios_17" or os_ == "ios_16" or os_ == "ios_26":
-                new_yaml["tags"].remove("ios")
+                try:
+                    new_yaml["tags"].remove("ios")
+                except ValueError as e:
+                    print(f"rule {r} is missing ios tag.")
                 new_yaml["platforms"] = {"iOS": {}}
 
                 new_yaml["platforms"]["iOS"].update({os_: {}})
@@ -490,6 +497,16 @@ def main():
                 new_yaml["references"]["disa"].update(
                     {"cci": rule_yaml["references"]["cci"]}
                 )
+            if "bio" in rule_yaml["references"]:
+                if "bzk" in new_yaml["references"]:
+                    new_yaml["references"]["bzk"].update(
+                        {"bio": rule_yaml["references"]["bio"]}
+                    )
+                else:
+                    new_yaml["references"].update({"bzk": {}})
+                    new_yaml["references"]["bzk"].update(
+                        {"bio": rule_yaml["references"]["bio"]}
+                    )
 
             if "srg" in rule_yaml["references"]:
                 if "disa" in new_yaml["references"]:
@@ -533,15 +550,26 @@ def main():
                     new_yaml["references"]["disa"].update(
                         {"cmmc": rule_yaml["references"]["cmmc"]}
                     )
+            if "hicp" in rule_yaml["references"]:
+                if "hhs" in new_yaml["references"]:
+                    new_yaml["references"]["hhs"].update(
+                        {"hicp": rule_yaml["references"]["hicp"]}
+                    )
+                else:
+                    new_yaml["references"].update({"hhs": {}})
+                    new_yaml["references"]["hhs"].update(
+                        {"hicp": rule_yaml["references"]["hicp"]}
+                    )
             if "indigo" in rule_yaml["references"]:
                 if "bsi" in new_yaml["references"]:
-                    new_yaml["references"]["bsi"].update(
-                        {"indigo": {os_: rule_yaml["references"]["indigo"]}}
+                    new_yaml["references"]["bsi"]["indigo"].update(
+                        {"os_": {rule_yaml["references"]["indigo"]}}
                     )
                 else:
                     new_yaml["references"].update({"bsi": {}})
-                    new_yaml["references"]["bsi"].update(
-                        {"indigo": {os_: rule_yaml["references"]["indigo"]}}
+                    new_yaml["references"]["bsi"].update({"indigo": {}})
+                    new_yaml["references"]["bsi"]["indigo"].update(
+                        {os_: rule_yaml["references"]["indigo"]}
                     )
             if "cis" in rule_yaml["references"]:
                 if "benchmark" in rule_yaml["references"]["cis"]:
@@ -595,7 +623,9 @@ def main():
                 section = id_.split("_")[0]
                 if section == "system":
                     section = "system_settings"
-                section_build_path = os.path.join(parent_dir, "rules", section)
+                section_build_path = os.path.join(
+                    parent_dir, "src", "mscp", "data", "rules", section
+                )
                 if not (os.path.isdir(section_build_path)):
                     try:
                         os.makedirs(section_build_path)
@@ -1201,7 +1231,6 @@ def main():
                                     )
                                 new_yaml["tags"].remove("nlmapgov_base")
 
-                            # print(new_yaml)
                         if (
                             os_ == "ios_18"
                             or os_ == "ios_17"
@@ -1345,6 +1374,30 @@ def main():
                                 new_yaml["references"]["disa"]["disa_stig"].update(
                                     {os_: rule_yaml["references"]["disa_stig"]}
                                 )
+                        if "indigo" in rule_yaml["references"]:
+                            if "bsi" in new_yaml["references"]:
+                                new_yaml["references"]["bsi"].update({"indigo": {}})
+                                new_yaml["references"]["bsi"]["indigo"].update(
+                                    {os_: rule_yaml["references"]["indigo"]}
+                                )
+                            else:
+                                new_yaml["references"].update({"bsi": {}})
+                                new_yaml["references"]["bsi"].update({"indigo": {}})
+                                new_yaml["references"]["bsi"]["indigo"].update(
+                                    {os_: rule_yaml["references"]["indigo"]}
+                                )
+                        # print(os_)
+                        if "bio" in rule_yaml["references"]:
+                            if "bzk" in new_yaml["references"]:
+                                new_yaml["references"]["bzk"].update(
+                                    {"bio": rule_yaml["references"]["bio"]}
+                                )
+                            else:
+                                new_yaml["references"].update({"bzk": {}})
+                                new_yaml["references"]["bzk"].update(
+                                    {"bio": rule_yaml["references"]["bio"]}
+                                )
+
                         if "sfr" in rule_yaml["references"]:
                             if "disa" in new_yaml["references"]:
                                 new_yaml["references"]["disa"].update(
@@ -1364,6 +1417,17 @@ def main():
                                 new_yaml["references"].update({"disa": {}})
                                 new_yaml["references"]["disa"].update(
                                     {"cmmc": rule_yaml["references"]["cmmc"]}
+                                )
+
+                        if "hicp" in rule_yaml["references"]:
+                            if "hhs" in new_yaml["references"]:
+                                new_yaml["references"]["hhs"].update(
+                                    {"hicp": rule_yaml["references"]["hicp"]}
+                                )
+                            else:
+                                new_yaml["references"].update({"hhs": {}})
+                                new_yaml["references"]["hhs"].update(
+                                    {"hicp": rule_yaml["references"]["hicp"]}
                                 )
 
                         if "cis" in rule_yaml["references"]:
@@ -1603,7 +1667,6 @@ def main():
                 ),
             )
             re_order_yam = {key: re_order_yam[key] for key in ordered_keys}
-
             priority_os_order = [
                 "tahoe",
                 "sequoia",

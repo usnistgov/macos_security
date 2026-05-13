@@ -24,9 +24,9 @@ classifiers = [
   "Topic :: Security",
 ]
 dependencies = [
-  "jinja2>=3.1.5,<4",
+  "jinja2>=3.1.6,<4",
   "loguru>=0.7.3,<1",
-  "lxml>=6.0.0,<7",
+  "lxml>=6.1.0,<7",
   "openpyxl>=3.1.5,<4",
   "numpy>=2.3.0,<3",
   "pandas>=2.3.3,<3",
@@ -55,3 +55,9 @@ mscp = "mscp.__main__:main"
 
 [tool.hatch.version]
 path = "src/mscp/__init__.py"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/mscp"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

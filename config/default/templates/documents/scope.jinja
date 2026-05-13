@@ -1,9 +1,0 @@
-
-{{ "== " if format == "adoc" else "## " }}{% trans %}Scope{% endtrans %}
-
-{% trans %}This guide describes the actions to take when securing a{% endtrans %} {{ baseline.platform.os }} {{ baseline.platform.version }} {% trans %}system against the{% endtrans %} {{ baseline.title }} {% trans %}security benchmark{% endtrans %}.
-
-{% if baseline.parent_values == "recommended" %}
-{% trans %}Information System Security Officers and benchmark creators can use this catalog of settings in order to assist them in security benchmark creation. This list is a catalog, not a checklist or benchmark, and satisfaction of every item is not likely to be possible or sensible in many operational scenarios.{% endtrans %}
-{% endif %}
-

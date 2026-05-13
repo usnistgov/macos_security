@@ -106,7 +106,7 @@ def open_yaml(
     """
     # set up localization for all yaml files
     domain: str = "messages"
-    localedir: str = "config/locales"
+    localedir: str = str(Path(__file__).parent.parent / "data" / "locales")
 
     t = gettext.translation(
         domain,

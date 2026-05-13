@@ -1,4 +1,15 @@
 # outer __init__.py
+"""mSCP — macOS Security Compliance Project.
+
+Top-level package for the mSCP toolchain. Re-exports the domain models
+(`Baseline`, `Macsecurityrule`, `Payload`, `LoguruFormatter`,
+`RuleLibrary`), the command-line entry point `parse_cli`, the generator
+entry points (`baseline`, `guidance`, `mapping`, `translation`), and the
+file / config helpers used throughout the codebase.
+
+The package's `loguru` logger is disabled by default; callers that want
+mSCP log output should enable it (typically via `set_logger`).
+"""
 
 from loguru import logger
 from .classes.baseline import Baseline
@@ -6,6 +17,7 @@ from .classes.baseline import Baseline
 from .classes.loguruformatter import LoguruFormatter
 from .classes.macsecurityrule import Macsecurityrule
 from .classes.payload import Payload
+from .classes.rule_library import RuleLibrary
 from .cli import parse_cli
 from .common_utils.config import config
 from .common_utils.file_handling import (
@@ -36,6 +48,7 @@ __all__ = [
     "Macsecurityrule",
     "LoguruFormatter",
     "Payload",
+    "RuleLibrary",
     "config",
     "append_text",
     "create_csv",

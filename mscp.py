@@ -1,23 +1,25 @@
 #! /usr/bin/env python
-# filename: mscp.py
+# Direct-run entry point for uninstalled use.
+# If the mscp package is installed, run `mscp` instead.
+if __name__ != "__main__":
+    raise ImportError(
+        "the referenced mscp.py is a direct-run script, not a module. "
+        "this script is shadowing the installed 'mscp' package. "
+        "to resove this, remove or rename mscp.py."
+    )
 
-# Standard python modules
 import sys
 
-# Local python modules
-from src.mscp.cli import parse_cli
-from src.mscp.common_utils.logger_instance import logger
-from src.mscp.common_utils.logging_config import set_logger
+sys.path.insert(0, "src")
 
-logger.enable("mscp")
-logger = set_logger()
-logger.info("=== Logging Initialized ===")
-logger.info("LOGGING LEVEL: INFO")
+from mscp.cli import parse_cli
+from mscp.common_utils import logger, ensure_custom_dirs
 
 
 def main() -> None:
+    logger.enable("mscp")
+    ensure_custom_dirs()
     parse_cli()
 
 
-if __name__ == "__main__":
-    sys.exit(main())
+sys.exit(main())

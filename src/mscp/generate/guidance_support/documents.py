@@ -1,4 +1,14 @@
 # mscp/generate/documents.py
+"""Guidance document rendering (AsciiDoc, PDF, HTML, Markdown) for mSCP.
+
+Provides `generate_documents`, which renders a baseline through the main
+Jinja template and optionally invokes AsciiDoctor to produce PDF and HTML
+output.  `render_template` performs the actual Jinja render.  Helper Jinja
+filters are also defined here: `group_ulify`, `group_ulify_md`,
+`render_references`, `render_rules`, `render_rules_md`,
+`replace_include_with_file_content`, `asciidoc_to_markdown`, and
+`get_nested`.
+"""
 
 # Standard python modules
 import gettext
@@ -20,6 +30,7 @@ from ...classes import Baseline, Macsecurityrule
 from ...common_utils import (
     config,
     logger,
+    mscp_data,
     open_file,
     run_command,
     NIX_OS,
@@ -51,19 +62,17 @@ def group_ulify(elements: list[str]) -> str:
 
 
 def group_ulify_md(elements: list[str]) -> str:
-    """
-    Converts a list of strings into a grouped unordered list (UL) format.
+    """Convert a list of strings to a grouped ``<br />``-separated Markdown bullet list.
 
-    If the list contains the string "N/A", it returns "- N/A".
-    Otherwise, it sorts the list, groups elements by their prefix (before the first parenthesis),
-    and returns a string where each group is represented as a bullet point with its elements
-    separated by commas.
+    Like `group_ulify` but uses HTML ``<br />`` between groups for inline
+    Markdown rendering in tables.
 
     Args:
-        elements (list[str]): The list of strings to be converted.
+        elements (list[str]): Strings to group and format.
 
     Returns:
-        str: A string representing the grouped unordered list.
+        str: ``"- N/A"`` if ``"N/A"`` is in *elements*, otherwise a
+            ``<br />``-joined grouped bullet string.
     """
     if "N/A" in elements:
         return "- N/A"
@@ -75,6 +84,14 @@ def group_ulify_md(elements: list[str]) -> str:
 
 
 def extract_from_title(title: str) -> str:
+    """Extract the text inside the first parenthesised group in *title*.
+
+    Args:
+        title (str): String that may contain a ``(…)`` group.
+
+    Returns:
+        str: The content inside the first ``(…)``, or ``""`` if not found.
+    """
     return (
         match.group()
         if (match := re.search(r"(?<=\()(.*?)(?=\s*\))", title, re.IGNORECASE))
@@ -83,18 +100,17 @@ def extract_from_title(title: str) -> str:
 
 
 def render_references(reference_set: Sequence[Dict[str, Any]]) -> str:
-    """
-    Convert a list of dictionaries into AsciiDoc table rows (no header, no |===).
+    """Convert a sequence of dicts into AsciiDoc table rows (no header, no ``|===``).
 
-    Parameters
-    ----------
-    reference_set : Sequence[Dict[str, Any]]
-        A list (or tuple) of dictionaries.
+    Args:
+        reference_set (Sequence[Dict[str, Any]]): Dicts to render; list values
+            are joined with ``"\\n- "``.
 
-    Returns
-    -------
-    str
-        Newline-separated AsciiDoc table rows, e.g., '| key | value'.
+    Returns:
+        str: Newline-separated AsciiDoc cell rows, or ``""`` if *reference_set* is empty.
+
+    Raises:
+        TypeError: If any element of *reference_set* is not a dict.
     """
 
     def _escape_cell(text: Any) -> str:
@@ -130,42 +146,40 @@ def render_references(reference_set: Sequence[Dict[str, Any]]) -> str:
 
 
 def render_rules(rule_set: list[str]) -> str:
-    """
-    Renders a list of rules as a string with each rule on a new line prefixed by a dash.
+    """Render a list of rule strings as newline-separated ``"- <rule>"`` lines.
 
     Args:
-        rule_set (list): A list of rules to be rendered.
+        rule_set (list[str]): Rule strings to render.
 
     Returns:
-        str: A string representation of the rules.
+        str: Newline-joined bullet lines.
     """
     return "\n".join(f"- {rule}" for rule in rule_set)
 
 
 def render_rules_md(rule_set: list[str]) -> str:
-    """
-    Renders a list of rules as a string with each rule on a new line prefixed by a dash.
+    """Render a list of rule strings as ``<br>``-joined ``"- <rule>"`` lines for Markdown.
 
     Args:
-        rule_set (list): A list of rules to be rendered.
+        rule_set (list[str]): Rule strings to render.
 
     Returns:
-        str: A string representation of the rules.
+        str: ``<br>``-joined bullet lines.
     """
     return "<br>".join(f"- {rule}" for rule in rule_set)
 
 
 def replace_include_with_file_content(text: str) -> str:
-    """
-    Searches the text for `include::` directives, extracts the filenames, reads the file content,
-    and replaces the `include::` section with the file content.
+    """Replace AsciiDoc ``include::`` directives with the content of the referenced file.
+
+    Files are resolved relative to the configured ``includes_dir``.  Missing
+    files are logged and replaced with an HTML comment placeholder.
 
     Args:
-        text (str): The input text containing `include::` directives.
-        base_path (Path): The base path to resolve relative file paths.
+        text (str): AsciiDoc source that may contain ``include::<path>[]`` directives.
 
     Returns:
-        str: The processed text with `include::` sections replaced by file content.
+        str: Source with all ``include::`` directives replaced by file contents.
     """
     includes_dir: Path = Path(config["includes_dir"]).absolute()
     # Regular expression to match `include::` directives and extract filenames
@@ -187,6 +201,19 @@ def replace_include_with_file_content(text: str) -> str:
 
 
 def asciidoc_to_markdown(value: str) -> str:
+    """Convert a subset of AsciiDoc syntax to GitHub-flavoured Markdown.
+
+    Handles headers, NOTE/IMPORTANT admonitions, source code blocks,
+    tables (``|===``), unordered/ordered lists, block titles, and
+    ``link:url[text]`` macros.  Unsupported constructs are passed through
+    with links replaced and trailing whitespace stripped.
+
+    Args:
+        value (str): AsciiDoc source text.
+
+    Returns:
+        str: Markdown-formatted text.
+    """
     lines = value.splitlines()
     result = []
     i = 0
@@ -308,16 +335,15 @@ def asciidoc_to_markdown(value: str) -> str:
 def get_nested(
     obj: Mapping[str, Any] | list, keys: list[str | int], default: Any = None
 ) -> Any:
-    """
-    Safely access nested dictionary keys (and optionally list indices).
+    """Safely traverse a nested mapping / list using a sequence of keys or indices.
 
     Args:
-        obj: The base dictionary or mapping.
-        keys: A list of keys or indices to access, in order.
-        default: The value to return if any key/index is missing or invalid.
+        obj (Mapping | list): Root object to traverse.
+        keys (list[str | int]): Ordered path of dict keys or list indices.
+        default: Value returned when any key/index is missing or the wrong type.
 
     Returns:
-        The value at the nested path or the default.
+        Any: The value at the nested path, or *default* if unreachable.
     """
     current = obj
     for key in keys:
@@ -351,29 +377,33 @@ def render_template(
     output_format: str = "adoc",
     language: str = "en",
 ) -> None:
-    """
-    Renders the template with the provided parameters and writes the output to a file.
+    """Render a Jinja template against *baseline* data and write to *output_file*.
+
+    Configures a Jinja ``Environment`` with all mSCP filters, installs
+    gettext translations for *language*, renders the template, and writes
+    the result as text.
 
     Args:
-        output_file (Path): The path to the output file where the generated document will be saved.
-        template_name (str): The name of the template to be rendered.
-        baseline (Baseline): The baseline object containing the data to be included in the document.
-        b64logo (bytes): The base64 encoded logo to be included in the document.
-        pdf_theme (str): The theme to be used for the PDF generation.
-        logo_path (Path): The path to the logo file.
-        os_name (str): The name of the operating system.
-        version_info (dict[str, Any]): A dictionary containing version information.
-        show_all_tags (bool): Flag to indicate whether to show all tags.
-        custom (bool): Flag to indicate whether to use custom templates and styles.
-        template_dir (str): The directory containing the templates.
-        themes_dir (str): The directory containing miscellaneous files.
-
-    Returns:
-        None
+        output_file (Path): Destination for the rendered output.
+        template_name (str): Filename of the template within *template_dir*.
+        baseline (Baseline): Baseline data model.
+        b64logo (bytes): Base64-encoded logo image bytes.
+        pdf_theme (str): AsciiDoctor-PDF theme filename.
+        html_css (str): CSS filename for HTML output.
+        logo_path (Path): Absolute path to the logo file.
+        os_name (str): Operating system name string.
+        version_info (dict[str, Any]): OS/compliance version metadata.
+        show_all_tags (bool): Whether to render all tags in the document.
+        custom (bool): Whether the baseline uses a custom configuration.
+        template_dir (str): Path to the Jinja templates directory.
+        themes_dir (str): Path to the themes/styles directory.
+        logo_dir (str): Path to the images directory.
+        output_format (str): ``"adoc"`` (default) or ``"markdown"``.
+        language (str): BCP-47 language code for gettext lookup. Defaults to ``"en"``.
     """
     translations = gettext.translation(
         domain="messages",
-        localedir=config["defaults"]["locales_dir"],
+        localedir=config["locales_dir"],
         languages=[language],
         fallback=True,
     )
@@ -418,6 +448,16 @@ def render_template(
         html_subtitle: str = html_subtitle.split("(")[0]
         html_subtitle2: str = extract_from_title(baseline.title)
         document_subtitle2: str = f"{document_subtitle2} {html_subtitle2}"
+        baseline_dict["tailored"] = True
+    else:
+        benchmark = baseline.title.split()[-1]
+        benchmarks = mscp_data.get("benchmarks", "")
+        benchmark_description = next(
+            (d["description"] for d in benchmarks if d.get("keyword") == benchmark),
+            benchmark,
+        )
+        baseline_dict["tailored"] = False
+        baseline_dict["benchmark_description"] = benchmark_description
 
     rendered_output = template.render(
         baseline=baseline_dict,
@@ -460,9 +500,31 @@ def generate_documents(
     output_format: str = "adoc",
     language: str = "en",
 ) -> None:
-    template_dir: str = config["defaults"]["documents_templates_dir"]
-    themes_dir: str = config["defaults"]["themes_dir"]
-    logo_dir: str = config["defaults"]["images_dir"]
+    """Render guidance documents and, for AsciiDoc output, invoke AsciiDoctor.
+
+    Selects standard or custom template/theme directories, calls
+    `render_template`, then (when *output_format* is ``"adoc"``) runs
+    ``bundle exec asciidoctor`` and ``bundle exec asciidoctor-pdf`` to
+    produce HTML and PDF output.
+
+    Args:
+        spinner (Yaspin): Spinner for progress feedback.
+        output_file (Path): Destination ``.adoc`` or ``.md`` file.
+        baseline (Baseline): Baseline data model.
+        b64logo (bytes): Base64-encoded logo image bytes.
+        pdf_theme (str): AsciiDoctor-PDF theme filename.
+        html_css (str): CSS filename for HTML output.
+        logo_path (Path): Absolute path to the logo file.
+        os_name (str): Operating system name string.
+        version_info (dict[str, Any]): OS/compliance version metadata.
+        show_all_tags (bool): Whether to render all tags. Defaults to ``False``.
+        custom (bool): Whether to use the custom template directory. Defaults to ``False``.
+        output_format (str): ``"adoc"`` (default) or ``"markdown"``.
+        language (str): BCP-47 language code. Defaults to ``"en"``.
+    """
+    template_dir: str = config["documents_templates_dir"]
+    themes_dir: str = config["themes_dir"]
+    logo_dir: str = config["images_dir"]
 
     if custom:
         template_dir = config["custom"]["documents_templates_dir"]

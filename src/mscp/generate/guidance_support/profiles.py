@@ -1,4 +1,11 @@
 # mscp/generate/payload.py
+"""Configuration profile (mobileconfig) generation for mSCP baselines.
+
+Provides `generate_profiles`, which groups rule payload data by type and
+writes unsigned (and optionally signed) ``.mobileconfig`` files and
+preferences plists.  `get_payload_content_by_type` groups rule payloads;
+`sign_config_profile` CMS-signs a profile using a certificate hash.
+"""
 
 # Standard python modules
 from collections import defaultdict
@@ -13,15 +20,14 @@ from ...common_utils import logger, make_dir, run_command, APPLE_OS
 def get_payload_content_by_type(
     rules: list[Macsecurityrule],
 ) -> dict[str, list[dict[str, Any]]]:
-    """
-    Group the payload_content of Mobileconfigpayloads by their payload_type across a list of Macsecurityrule objects.
+    """Group mobileconfig payload content by payload type across a list of rules.
 
     Args:
-        rules (List[Macsecurityrule]): A list of Macsecurityrule objects.
+        rules (list[Macsecurityrule]): Rules to inspect for ``mobileconfig_info``.
 
     Returns:
-        Dict[str, List[Dict[str, Any]]]: A dictionary where the keys are payload_types and the values
-                                         are lists of payload_content dictionaries.
+        dict[str, list[dict[str, Any]]]: Mapping of ``payload_type`` →
+            list of ``payload_content`` dicts (duplicates are warned and skipped).
     """
     grouped_content = defaultdict(list)
 
@@ -51,13 +57,12 @@ def get_payload_content_by_type(
 
 
 def sign_config_profile(in_file: Path, out_file: Path, cert_hash: str) -> None:
-    """
-    Signs the configuration profile using the identity associated with the provided hash
+    """CMS-sign a configuration profile using the certificate identified by *cert_hash*.
 
     Args:
-        in_file (Path): The file being signed.
-        out_file (Path): The file being written to.
-        hash (str): The hash string to use for signing.
+        in_file (Path): Unsigned ``.mobileconfig`` file to sign.
+        out_file (Path): Destination path for the signed profile.
+        cert_hash (str): Subject Key ID hash of the signing certificate.
     """
 
     cmd = f"security cms -SZ {cert_hash} -i {in_file} -o {out_file}"
@@ -77,32 +82,20 @@ def generate_profiles(
     consolidated: bool = False,
     granular: bool = False,
 ) -> None:
-    """
-    Generates configuration profiles based on the provided baseline and saves them to the specified build path.
+    """Generate mobileconfig profiles from baseline rules and write them to *build_path*.
+
+    Groups rule payload content by type, writes per-type unsigned profiles,
+    optionally produces signed copies, a consolidated all-in-one profile, and
+    per-setting granular profiles.  Skips non-Apple platforms.
 
     Args:
-        build_path (Path): The path where the generated profiles will be saved.
-        baseline_name (str): The name of the baseline being used.
-        baseline (Baseline): The baseline object containing profile and rule information.
-        signing (bool, optional): Whether to sign the generated profiles. Defaults to False.
-        hash_value (str, optional): The hash value used for signing the profiles. Defaults to an empty string.
-        consolidated (bool, optional): Whether to include a single consolidate profile containing all the settings.
-        granular (bool, optional): Whether to build individual profiles for every setting.
-
-    Returns:
-        None
-
-    Raises:
-        None
-
-    Notes:
-        - Creates directories for unsigned, signed, and preferences profiles.
-        - Validates rules against supported payload types.
-        - Logs any errors found in the rules.
-        - Groups payloads by type and generates profiles for each type.
-        - Saves the generated profiles in plist format.
-        - Optionally signs the profiles if signing is enabled.
-        - Displays a caution message about the use of the generated profiles in a test environment.
+        build_path (Path): Root output directory for this baseline's artifacts.
+        baseline_name (str): Baseline name used in identifiers and filenames.
+        baseline (Baseline): Baseline containing profile rules with payload info.
+        signing (bool): Sign generated profiles with *hash_value*. Defaults to ``False``.
+        hash_value (str): Certificate hash for signing. Defaults to ``""``.
+        consolidated (bool): Write a single profile containing all settings. Defaults to ``False``.
+        granular (bool): Write individual profiles per setting. Defaults to ``False``.
     """
     if not baseline.platform["os"].lower() in APPLE_OS:
         logger.warning(
@@ -202,10 +195,8 @@ def generate_profiles(
         if payload_type == "com.apple.ManagedClient.preferences":
             for settings in flat_settings:
                 for domain, payload_content in settings.items():
-                    new_profile.add_mcx_payload(domain, payload_content, baseline_name)
-                    consolidated_profile.add_mcx_payload(
-                        domain, payload_content, baseline_name
-                    )
+                    new_profile.add_mcx_payload(domain, payload_content)
+                    consolidated_profile.add_mcx_payload(domain, payload_content)
                     # generate individual profiles for each setting
                     if granular:
                         for setting, value in payload_content.items():
@@ -231,8 +222,8 @@ def generate_profiles(
                                 )
         else:
             settings = merge_flat_settings(flat_settings)
-            new_profile.add_payload(payload_type, settings, baseline_name)
-            consolidated_profile.add_payload(payload_type, settings, baseline_name)
+            new_profile.add_payload(payload_type, settings)
+            consolidated_profile.add_payload(payload_type, settings)
 
             # generate individual profiles for each setting
             if granular:

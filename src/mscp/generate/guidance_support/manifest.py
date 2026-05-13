@@ -1,4 +1,10 @@
-# mscp/generate/scap.py
+# mscp/generate/guidance_support/manifest.py
+"""JSON manifest generation for mSCP baselines.
+
+Provides `generate_manifest`, which serialises baseline metadata and
+per-rule details (references, check command, fix payload) into a single
+JSON file used by downstream tooling to identify and audit rules.
+"""
 
 # Standard python modules
 import datetime
@@ -11,8 +17,24 @@ from typing import Any
 # Local python modules
 from ...common_utils import get_version_data, mscp_data, create_json
 
+# TODO: add proper logging to module
 
-def generate_manifest(build_path, baseline_name, baseline) -> None:
+
+def generate_manifest(build_path: Path, baseline_name: str, baseline) -> None:
+    """Write a JSON manifest summarising the baseline and all its rules.
+
+    The manifest includes platform metadata, release info, plist and log
+    paths, and a list of rules with their IDs, titles, references, tags,
+    check commands, and fix payloads (mobileconfig, DDM, or script).
+
+    Args:
+        build_path (Path): Output directory; the manifest is written as
+            ``<build_path>/<baseline_name>.json``.
+        baseline_name (str): Name of the baseline (used for file naming and
+            plist/log path strings).
+        baseline: Loaded ``Baseline`` object containing profiles and platform info.
+    """
+
     audit_name: str = str(baseline_name)
     current_version_data: dict[str, Any] = get_version_data(
         baseline.platform["os"], baseline.platform["version"], mscp_data
@@ -45,6 +67,7 @@ def generate_manifest(build_path, baseline_name, baseline) -> None:
             rule_manifest["title"] = rule.title
             rule_manifest["discussion"] = rule.discussion
             ref_parts = []
+            # TODO: visit this to properly handle the exception
             for _org, refs in rule.references:
                 if refs:
                     for item in refs:
@@ -58,7 +81,7 @@ def generate_manifest(build_path, baseline_name, baseline) -> None:
                                     k = "cis_controls_v8"
                                 ref_parts.append(f"{k}|{vals}")
                         except ValueError:
-                            raise
+                            continue
             rule_manifest["references"] = ";".join(str(x) for x in ref_parts)
             rule_manifest["tags"] = ",".join(str(x) for x in rule.tags)
             if rule.check:

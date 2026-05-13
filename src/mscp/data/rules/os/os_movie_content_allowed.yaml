@@ -1,0 +1,65 @@
+id: os_movie_content_allowed
+title: Disable Movie Content
+discussion: |
+  Movie Rating content _MUST_ be set to $ODV on the device.
+
+  Possible values, with the U.S. description of the rating level:
+
+  - `1000`: All
+  - `500`: NC-17
+  - `400`: R
+  - `300`: PG-13
+  - `200`: PG
+  - `100`: G
+  - `0`: None
+references:
+  nist:
+    cce:
+      ios_26:
+        - CCE-95669-8
+      ios_18:
+        - CCE-94525-3
+    800-53r5:
+      - CM-7
+  disa:
+    cci:
+      - CCI-000366
+    disa_stig:
+      ios_26:
+        - AIOS-26-017000
+      ios_18:
+        - AIOS-18-017000
+    sfr:
+      - 'FMT_MOF_EXT.1.2 #47'
+    cmmc:
+      - CM.L2-3.4.6
+platforms:
+  iOS:
+    '26.0':
+      supervised: false
+      benchmarks:
+        - name: ios_stig
+    '18.0':
+      supervised: false
+      benchmarks:
+        - name: ios_stig
+    introduced: '4.0'
+odv:
+  hint:
+    datatype: number
+    description: 'Possible values, with the U.S. description of the rating level: `1000`: All | `500`: NC-17 | `400`: R | `300`: PG-13 | `200`: PG | `100`: G | `0`: None'
+    validation:
+      min: 0
+      max: 1000
+  recommended: 0
+  ios_stig: 0
+tags:
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_high
+  - cmmc_lvl2
+  - cmmc_lvl3
+mobileconfig_info:
+  - PayloadType: com.apple.applicationaccess
+    PayloadContent:
+      - ratingMovies: $ODV

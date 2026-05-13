@@ -1,6 +1,18 @@
 # common_utils/__init__.py
+"""Shared cross-cutting helpers used throughout mSCP.
 
-from .config import config
+Re-exports the loguru logger (`logger`), file I/O helpers
+(create / open / remove for YAML, JSON, plist, CSV, text), the
+configuration model (`config`, `set_custom_dir`, `ensure_custom_dirs`),
+input validation utilities (`sanitize_input`, `prompt_for_odv`,
+`validate_yaml_file`, `validate_rule_folder_structure`), localization
+helpers (`get_supported_languages`), version metadata accessors
+(`get_version_data`, `get_mscp_data`, `mscp_data`), the shell-command
+runner (`run_command`), and the spinner decorator
+(`conditional_inject_spinner`).
+"""
+
+from .config import config, set_custom_dir, ensure_custom_dirs
 from .constants import SCHEMA_PATH, APPLE_OS, NIX_OS
 from .customization import collect_overrides
 from .file_handling import (
@@ -21,7 +33,7 @@ from .file_handling import (
     remove_dir_contents,
     remove_file,
 )
-from .localization import supported_languages
+from .localization import get_supported_languages
 from .logger_instance import logger
 from .logging_config import set_logger
 from .mscp_data import get_mscp_data, mscp_data
@@ -57,13 +69,15 @@ __all__ = [
     "get_mscp_data",
     "set_logger",
     "config",
+    "set_custom_dir",
+    "ensure_custom_dirs",
     "CONFIG_PATH",
     "SCHEMA_PATH",
     "APPLE_OS",
     "NIX_OS",
     "validate_yaml_file",
     "logger",
-    "supported_languages",
+    "get_supported_languages",
     "collect_overrides",
     "validate_rule_folder_structure",
     "conditional_inject_spinner",

@@ -1,4 +1,11 @@
 # mscp/generate/mapping.py
+"""Control-framework mapping and custom baseline generation for mSCP.
+
+Provides `generate_mapping`, which reads a CSV cross-walk between a known
+security framework (e.g. NIST 800-53) and one or more target frameworks,
+annotates matching rules with the mapped controls, writes per-rule YAML
+files, and generates a custom baseline for each mapped framework column.
+"""
 
 # Standard python modules
 import argparse
@@ -37,6 +44,18 @@ def update_rule_with_custom_references(
 
 @conditional_inject_spinner()
 def generate_mapping(sp: Yaspin, args: argparse.Namespace) -> None:
+    """Map rules to a target framework via a CSV cross-walk and write custom baselines.
+
+    For each non-source column in the CSV, identifies rules whose
+    ``args.framework`` references intersect the CSV rows, annotates them
+    with the mapped target controls, serializes updated rule YAML files,
+    and creates a custom baseline YAML for that column.
+
+    Args:
+        sp (Yaspin): Spinner instance injected by `conditional_inject_spinner`.
+        args (argparse.Namespace): Parsed CLI arguments. Expected attributes:
+            ``os_name``, ``os_version``, ``csv``, ``framework``.
+    """
     sp.spinner = Spinners.dots
     sp.text = "Collecting rule files"
     time.sleep(1)

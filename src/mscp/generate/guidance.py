@@ -1,4 +1,12 @@
 # mscp/generate/guidance.py
+"""Main guidance document orchestration for the macOS Security Compliance Project.
+
+Provides `generate_guidance`, the top-level entry point that coordinates
+profile generation, DDM declarations, compliance scripts, Excel output,
+Markdown documents, JSON manifests, and AsciiDoc/PDF/HTML guidance documents
+for a given baseline.  `verify_signing_hash` validates a certificate hash
+before profile signing.
+"""
 
 # Standard python modules
 import argparse
@@ -37,14 +45,16 @@ from ..generate.guidance_support import (
 
 
 def verify_signing_hash(cert_hash: str) -> bool:
-    """
-    Attempts to validate the existence of the certificate provided by the hash
+    """Verify that *cert_hash* identifies an installed signing certificate.
+
+    Writes a temporary file, attempts to sign it with ``security cms -SZ``,
+    then removes the file.
 
     Args:
-        cert_hash (str): The certificate hash.
+        cert_hash (str): Subject Key ID hash of the certificate to verify.
 
     Returns:
-        bool: If the certificate is valid, returns True.
+        bool: ``True`` if signing succeeds, ``False`` otherwise.
     """
 
     with tempfile.NamedTemporaryFile(mode="w", delete=False) as in_file:
@@ -68,6 +78,21 @@ def verify_signing_hash(cert_hash: str) -> bool:
 
 @conditional_inject_spinner()
 def generate_guidance(sp: Yaspin, args: argparse.Namespace) -> None:
+    """Orchestrate all guidance artifacts for a given baseline.
+
+    Reads the baseline YAML and, based on ``args`` flags, delegates to the
+    appropriate sub-generators: configuration profiles, DDM declarations,
+    compliance scripts, Excel workbook, Markdown documents, JSON manifest,
+    and the primary AsciiDoc/PDF/HTML guidance document.
+
+    Args:
+        sp (Yaspin): Spinner instance injected by `conditional_inject_spinner`.
+        args (argparse.Namespace): Parsed CLI arguments. Expected attributes:
+            ``baseline``, ``os_name``, ``language``, ``dark``, ``hash``,
+            ``reference``, ``logo``, ``audit_name``, ``profiles``, ``ddm``,
+            ``script``, ``xlsx``, ``gary``, ``markdown``, ``manifest``,
+            ``all``, ``consolidated_profile``, ``granular_profiles``.
+    """
     # Configure localization at the beginning based on the CLI language parameter
     logger.debug(f"Language parameter from CLI: {args.language}")
 
@@ -81,7 +106,8 @@ def generate_guidance(sp: Yaspin, args: argparse.Namespace) -> None:
         pdf_theme: str = "mscp_theme.yml"
         html_css: str = "asciidoctor.css"
 
-    custom: bool = not any(Path(config["custom"]["root_dir"]).iterdir())
+    _custom_root = Path(config["custom"]["root_dir"])
+    custom: bool = not (_custom_root.exists() and any(_custom_root.iterdir()))
     show_all_tags: bool = False
 
     output_basename: str = args.baseline.name
@@ -112,13 +138,13 @@ def generate_guidance(sp: Yaspin, args: argparse.Namespace) -> None:
         logo_path = args.logo
     else:
         logo_path = Path(
-            config["defaults"]["images_dir"],
+            config["images_dir"],
             f"mscp_banner-{baseline.platform['os']}.png",
         ).absolute()
 
     if not logo_path.exists():
         logger.warning(f"Logo not found at {logo_path}, using default instead.")
-        logo_path = Path(config["defaults"]["images_dir"], "mscp_banner.png").absolute()
+        logo_path = Path(config["images_dir"], "mscp_banner.png").absolute()
 
     if args.hash:
         if sys.platform.startswith("darwin"):
@@ -316,6 +342,9 @@ def generate_guidance(sp: Yaspin, args: argparse.Namespace) -> None:
         custom,
         language=args.language,
     )
-
-    sp.text = f"MSCP DOCUMENT GENERATION COMPLETE! All of the documents can be found in this folder: {build_path}/"
+    try:
+        display_path = Path(build_path).relative_to(Path.cwd())
+    except ValueError:
+        display_path = build_path
+    sp.text = f"MSCP DOCUMENT GENERATION COMPLETE! All of the documents can be found in this folder: {display_path}/"
     sp.ok("✔")

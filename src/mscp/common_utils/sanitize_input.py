@@ -1,4 +1,10 @@
 # mscp/common_utils/sanitize_input.py
+"""Validated `input()` wrapper used for interactive CLI prompts.
+
+`sanitize_input` reads a line from stdin, casts it to a caller-specified
+type, optionally checks it against a list / range of acceptable values,
+and falls back to a default when the user just presses Enter.
+"""
 
 # Standard python modules
 from collections.abc import Sequence

@@ -1,0 +1,119 @@
+acronyms:
+  - term: ABM
+    definition: Apple Business Manager
+  - term: AES
+    definition: Advanced Encryption Standard
+  - term: AO
+    definition: Authorizing Official
+  - term: APFS
+    definition: Apple File System
+  - term: ARD
+    definition: Apple Remote Desktop
+  - term: ASL
+    definition: Apple System Log
+  - term: ASLR
+    definition: Address Space Layout Randomization
+  - term: ASM
+    definition: Apple School Manager
+  - term: BIO
+    definition: Baseline informatiebeveiliging Overheid (Netherlands Baseline Information Security for Government)
+  - term: BSD
+    definition: Berkeley Software Distribution
+  - term: BSI
+    definition: Bundesamt für Sicherheit in der Informationstechnik (German Federal Office for Information Security)
+  - term: BSM
+    definition: Basic Security Module
+  - term: BZK
+    definition: Ministerie van Binnenlandse Zaken en Koninkrijksrelaties (Netherlands Ministry of the Interior and Kingdom Relations)
+  - term: CCE
+    definition: Common Configuration Enumeration
+  - term: CIS
+    definition: Center for Internet Security
+  - term: CM
+    definition: Configuration Management
+  - term: CMMC
+    definition: Cybersecurity Maturity Model Certification
+  - term: CNSSI
+    definition: Committee on National Security Systems Instruction
+  - term: COMSEC
+    definition: Communications Security
+  - term: CRL
+    definition: Certificate Revocation List
+  - term: CUI
+    definition: Controlled Unclassified Information
+  - term: DDM
+    definition: Declarative Device Management
+  - term: DISA
+    definition: Defense Information Systems Agency
+  - term: DMA
+    definition: Direct Memory Access
+  - term: DNS
+    definition: Domain Name System
+  - term: EAP
+    definition: Extensible Authentication Protocol
+  - term: ESS
+    definition: Enterprise Software Solutions
+  - term: FIPS
+    definition: Federal Information Processing Standard
+  - term: GUI
+    definition: Graphical User Interface
+  - term: iOS
+    definition: iPhone Operating System
+  - term: ISSO
+    definition: Information System Security Officer
+  - term: MCX
+    definition: Managed Client for Mac OS X
+  - term: MDM
+    definition: Mobile Device Management
+  - term: NFS
+    definition: Network File System
+  - term: NIST
+    definition: National Institute of Standards and Technology
+  - term: OCSP
+    definition: Online Certificate Status Protocol
+  - term: OMB
+    definition: Office of Management and Budget
+  - term: PAM
+    definition: Pluggable Authentication Modules
+  - term: PEAP
+    definition: Protected Extensible Authentication Protocol
+  - term: PKI
+    definition: Public Key Infrastructure
+  - term: PPPC
+    definition: Privacy Preferences Policy Control
+  - term: SIP
+    definition: System Integrity Protection
+  - term: SIPRNET
+    definition: Secret Internet Protocol Router Network
+  - term: SMB
+    definition: Server Message Block
+  - term: SSH
+    definition: Secure Shell
+  - term: STIG
+    definition: Security Technical Implementation Guide
+  - term: TCP
+    definition: Transmission Control Protocol
+  - term: TFTP
+    definition: Trivial File Transfer Protocol
+  - term: TLS
+    definition: Transport Layer Security
+  - term: TTL
+    definition: Time to Live
+  - term: UAMDM
+    definition: User Approved MDM
+  - term: UID
+    definition: User ID
+  - term: USB
+    definition: Universal Serial Bus
+  - term: USG
+    definition: U.S. Government
+  - term: UUCP
+    definition: Unix-to-Unix Copy
+  - term: VTC
+    definition: Video Teleconference
+
+terminology:
+  - term: Baseline
+    definition: A baseline is a predefined set of controls (also referred to as "a catalog" of settings) that address the protection needs of an organization's information systems. A baseline serves as a starting point for the creation of security benchmarks.
+  - term: Benchmark
+    definition: Benchmarks are a defined list of settings with values that an organization has defined.

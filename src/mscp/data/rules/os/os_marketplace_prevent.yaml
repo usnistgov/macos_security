@@ -1,0 +1,78 @@
+id: os_marketplace_prevent
+title: Prevent Third Party Marketplaces
+discussion: |
+  The iOS device _MUST_ be configured to prevent third party marketplaces from being installed.
+references:
+  nist:
+    cce:
+      ios_26:
+        - CCE-95495-8
+      ios_18:
+        - CCE-94540-2
+      ios_17:
+        - CCE-93489-3
+    800-53r5:
+      - CM-11
+  disa:
+    cci:
+      - CCI-000366
+    disa_stig:
+      ios_26:
+        - AIOS-26-014900
+      ios_18:
+        - AIOS-18-014900
+    sfr:
+      - 'FMT_MOF_EXT.1.2 #47'
+    cmmc:
+      - CM.L2-3.4.9
+  bsi:
+    indigo:
+      ios_26:
+        - ANNEX K
+      ios_18:
+        - ANNEX K
+      ios_17:
+        - ANNEX K
+  bzk:
+    bio:
+      - 8.27
+platforms:
+  iOS:
+    '26.0':
+      supervised: true
+      benchmarks:
+        - name: ios_stig
+          severity: medium
+        - name: indigo_base
+          severity: medium
+        - name: indigo_high
+          severity: medium
+    '18.0':
+      supervised: true
+      benchmarks:
+        - name: ios_stig
+          severity: medium
+        - name: indigo_base
+          severity: medium
+        - name: indigo_high
+          severity: medium
+    '17.0':
+      supervised: true
+      benchmarks:
+        - name: indigo_base
+        - name: indigo_high
+    introduced: '17.4'
+tags:
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_high
+  - cmmc_lvl2
+  - cmmc_lvl3
+  - cnssi-1253_moderate
+  - cnssi-1253_low
+  - cnssi-1253_high
+  - nlmapgov_plus
+mobileconfig_info:
+  - PayloadType: com.apple.applicationaccess
+    PayloadContent:
+      - allowMarketplaceAppInstallation: false

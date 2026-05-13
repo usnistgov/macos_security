@@ -3,8 +3,6 @@
 ## Requirements
 
 - Python >= 3.12.1
-  - Recommended: [Macadmins python](https://github.com/macadmins/python)
-- Ruby >= 3.4.4
 
 ## Python Instructions
 
@@ -18,15 +16,19 @@ python3 -m venv .venv
 source .venv/bin/activate
 ```
 
-### Update and install tools
+### Update pip and install python requirements
 
 ```bash
-python3 -m pip install --upgrade pip setuptools wheel
+python3 -m pip install --upgrade pip
 
 python3 -m pip install --upgrade -r requirements.txt
 ```
 
-## Ruby instructions
+You can now run the `./mscp.py` CLI to get started.
+
+## Ruby instructions (optional)
+
+The ruby components and configuration will take place the first time `./mscp.py guidance` is executed. The instructions here are for information and troubleshooting purposes.
 
 ### Setup bundle configuration file
 
@@ -41,3 +43,13 @@ bundle config bin mscp_gems/bin
 bundle install
 bundle binstubs --all
 ```
+
+## Install as python module for development (optional)
+
+Installing mSCP as a python module will allow developers to leverage the API to work with the MSCP data.
+
+```bash
+python3 -m pip install git+https://github.com/usnistgov/macos_security@dev_2.0
+```
+
+You can now use the MSCP modules by way of `import mscp` in your own python tool.

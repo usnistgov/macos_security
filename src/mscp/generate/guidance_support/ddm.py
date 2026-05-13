@@ -1,4 +1,10 @@
 # mscp/generate/ddm.py
+"""Declarative Device Management (DDM) artifact generation for mSCP.
+
+Provides `generate_ddm`, which processes ``ddm_info`` fields from baseline
+rules and writes DDM JSON configurations, assets, activations, and service
+ZIP archives under a ``declarative/`` subdirectory of the build path.
+"""
 
 # Standard python modules
 import hashlib
@@ -21,16 +27,15 @@ from ...common_utils import (
 
 
 def generate_ddm_activation(output_path: Path, identifier: str) -> None:
-    """
-    Generates a DDM (Declarative Device Management) activation JSON file and appends it to the specified output path.
+    """Write a DDM activation JSON file that references a single configuration.
+
+    Derives the activation identifier from *identifier* by replacing
+    ``"config"`` and ``"asset"`` with ``"activation"``, then appends the
+    JSON payload to *output_path*.
 
     Args:
-        output_path (Path): The file path where the generated activation JSON will be appended.
-        identifier (str): The identifier string used to generate the activation DDM identifier.
-                          It is transformed by replacing "config" and "asset" with "activation".
-
-    Returns:
-        None
+        output_path (Path): Destination file path (created or appended to).
+        identifier (str): Configuration or asset DDM identifier to activate.
     """
     activation_ddm_identifier: str = identifier.replace("config", "activation").replace(
         "asset", "activation"
@@ -46,19 +51,11 @@ def generate_ddm_activation(output_path: Path, identifier: str) -> None:
 
 
 def zip_directory(zip_path: Path, folder_path: Path) -> None:
-    """
-    Compresses the contents of a directory into a ZIP file.
+    """Recursively compress *folder_path* into *zip_path*, preserving relative paths.
 
     Args:
-        zip_path (Path): The path where the resulting ZIP file will be created.
-        folder_path (Path): The path of the directory to be compressed.
-
-    Returns:
-        None
-
-    Notes:
-        - The function recursively includes all files and subdirectories within the specified folder.
-        - The relative paths of the files within the folder are preserved in the ZIP archive.
+        zip_path (Path): Destination ZIP file path.
+        folder_path (Path): Directory to compress.
     """
     folder_path = Path(folder_path)
     try:
@@ -71,45 +68,17 @@ def zip_directory(zip_path: Path, folder_path: Path) -> None:
 
 
 def generate_ddm(build_path: Path, baseline: Baseline, baseline_name: str) -> None:
-    """
-    Generate Declarative Device Management (DDM) profiles for a given baseline.
+    """Generate DDM configuration, asset, and activation JSON files for *baseline*.
 
-    This function creates and organizes DDM files such as configurations, assets, and activations
-    based on the rules in the provided baseline. It processes `ddm_info` from the rules to generate
-    JSON files and zip archives required for DDM operations.
+    Iterates rules with ``ddm_info``, writing service configuration files and
+    ZIP archives (``com.apple.configuration.services.configuration-files``) or
+    standard declaration JSONs into ``<build_path>/declarative/{configurations,
+    assets,activations}/``.  Skips non-Apple platforms and unknown services.
 
     Args:
-        build_path (Path): The base directory where DDM output files will be stored.
-        baseline (Baseline): The Baseline object containing profiles and rules to process.
-        baseline_name (str): The name of the baseline for identifying the output files.
-
-    Returns:
-        None
-
-    Raises:
-        Various exceptions for file handling, such as IOError for archive creation errors.
-
-    Key Steps:
-        1. Parse `ddm_info` from rules in the baseline to identify supported declaration types.
-        2. Create required output directories if they don't exist.
-        3. Process configuration files (`com.apple.configuration.services.configuration-files`):
-            - Generate configuration directories and files.
-            - Append configuration settings based on `ddm_info`.
-        4. Generate and zip configuration files for supported services.
-        5. Create JSON assets, configurations, and activations for each DDM declaration type.
-
-    Notes:
-        - The `assets`, `activations`, and `configurations` folders are created in the `declarative`
-          directory under the `build_path`.
-        - Services not found in `mscp_data` are skipped with a logged error message.
-        - Unsupported DDM types are logged as errors and skipped.
-
-    Example:
-        generate_ddm(
-            build_path=Path("/path/to/build"),
-            baseline=my_baseline_object,
-            baseline_name="example_baseline"
-        )
+        build_path (Path): Root output directory for this baseline's artifacts.
+        baseline (Baseline): Baseline whose rules supply ``ddm_info`` payloads.
+        baseline_name (str): Baseline name used as part of DDM identifiers.
     """
     if not baseline.platform["os"].lower() in APPLE_OS:
         logger.warning(

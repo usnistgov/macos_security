@@ -1,4 +1,12 @@
 # mscp/common_utils/localization.py
+"""Localisation glue for `gettext` and YAML.
+
+Wraps `gettext.translation` so the active language can be switched at
+runtime, exposes a `localize_string` shortcut, registers a custom
+``!localize`` YAML tag that translates scalars at load time, and
+provides a `get_supported_languages` helper that enumerates the
+language subdirectories under ``config["locales_dir"]``.
+"""
 
 # Standard python modules
 import gettext
@@ -28,7 +36,7 @@ def setup_gettext_localization(language: str = "en") -> None:
     global _localization_function
 
     domain: str = "messages"
-    localedir: str = config["defaults"]["locales_dir"]
+    localedir: str = config["locales_dir"]
 
     try:
         # Set up the localization
@@ -103,7 +111,7 @@ def configure_localization_for_yaml(
     Args:
         language (str, optional): Language code for localization (e.g., "de", "fr"). If None, uses current gettext config.
         domain (str): localization domain name. Defaults to "messages".
-        localedir (str): Path to the locales directory. Defaults to "config/locales".
+        localedir (str): Path to the locales directory. Defaults to the bundled data/locales.
     """
     logger.debug(f"configure_localization_for_yaml called with language: {language}")
     # Register YAML constructors if not already done
@@ -128,17 +136,18 @@ def get_supported_languages() -> list[str]:
         list[str]: A list containing the available supported languages for localization.
     """
 
-    localization_path = Path(config["defaults"]["locales_dir"])
+    localization_path = Path(config["locales_dir"])
 
     languages: list[str] = ["en"]
     logger.debug(
         f"Enumerating available languages from the localization path: {localization_path}"
     )
 
-    for item in localization_path.iterdir():
-        if item.is_dir():
-            logger.debug(f"Found possible supported language file: {item}")
-            languages.append(item.stem)
+    if localization_path.exists():
+        for item in localization_path.iterdir():
+            if item.is_dir():
+                logger.debug(f"Found possible supported language file: {item}")
+                languages.append(item.stem)
 
     return languages
 
@@ -147,8 +156,21 @@ def get_language_data(
     language: str,
     category: str,
 ) -> dict[str, Any]:
+    """Load a language YAML file under ``locales_dir/<language>/<category>``.
+
+    Failures (missing file, parse error) are logged and yield an empty
+    dict so callers can fall back to defaults rather than crash.
+
+    Args:
+        language (str): Language subdirectory (e.g. ``"en"``, ``"de"``).
+        category (str): YAML file stem within that directory; the
+            ``.yaml`` suffix is appended automatically.
+
+    Returns:
+        dict[str, Any]: Parsed YAML contents, or ``{}`` on error.
+    """
     language_file = Path(
-        config["defaults"]["locales_dir"], language, category
+        config["locales_dir"], language, category
     ).with_suffix(".yaml")
 
     try:
@@ -164,6 +186,3 @@ def get_language_data(
     except Exception as e:
         logger.error("Error parsing language file: {}", e)
         return {}
-
-
-supported_languages = get_supported_languages()

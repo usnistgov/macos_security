@@ -1,0 +1,16 @@
+
+{{ "== " if format == "adoc" else "## " }}{% trans %}Scope{% endtrans %}
+
+{% if not baseline.tailored %}
+
+{% if baseline.parent_values == "recommended" %}
+{% trans %}This guide outlines the configuration settings that can be used on a{% endtrans %} {{ baseline.platform.os }} {{ baseline.platform.version }} {% trans %}system to meet security objectives recommended by {% endtrans %} {{ baseline.benchmark_description }}.
+
+{% trans %}Information System Security Officers and benchmark creators can use this catalog of settings in order to assist them in security benchmark creation. This list is a catalog, not a checklist or benchmark, and satisfaction of every item is not likely to be possible or sensible in many operational scenarios.{% endtrans %}
+{% else %}
+{% trans %}This guide describes the actions to take when securing a{% endtrans %} {{ baseline.platform.os }} {{ baseline.platform.version }} {% trans %}system against the configuration requirements outlined in the {% endtrans %} {{ baseline.benchmark_description }}.
+{% endif %}
+
+{% else %}
+{{ baseline.description }}
+{% endif %}
