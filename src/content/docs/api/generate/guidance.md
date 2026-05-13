@@ -1,6 +1,8 @@
 ---
 title: mscp.generate.guidance
 description: "Main guidance document orchestration for the macOS Security Compliance Project."
+sidebar:
+  order: 1
 ---
 
 > Source: [`src/mscp/generate/guidance.py`](https://github.com/usnistgov/macos_security/blob/dev_2.0/src/mscp/generate/guidance.py)

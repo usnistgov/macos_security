@@ -1,6 +1,8 @@
 ---
 title: mscp.cli
 description: "Command-line interface for mSCP."
+sidebar:
+  order: 1
 ---
 
 > Source: [`src/mscp/cli.py`](https://github.com/usnistgov/macos_security/blob/dev_2.0/src/mscp/cli.py)

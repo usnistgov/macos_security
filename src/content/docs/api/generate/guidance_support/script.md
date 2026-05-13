@@ -1,6 +1,8 @@
 ---
 title: mscp.generate.guidance_support.script
 description: "Compliance and restore shell script generation for mSCP baselines."
+sidebar:
+  order: 1
 ---
 
 > Source: [`src/mscp/generate/guidance_support/script.py`](https://github.com/usnistgov/macos_security/blob/dev_2.0/src/mscp/generate/guidance_support/script.py)

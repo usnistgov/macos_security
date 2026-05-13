@@ -1,6 +1,8 @@
 ---
 title: mscp.admin_utils.build_baselines
 description: "Bulk-rebuild every supported baseline."
+sidebar:
+  order: 1
 ---
 
 > Source: [`src/mscp/admin_utils/build_baselines.py`](https://github.com/usnistgov/macos_security/blob/dev_2.0/src/mscp/admin_utils/build_baselines.py)

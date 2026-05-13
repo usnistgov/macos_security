@@ -1,6 +1,8 @@
 ---
 title: mscp.common_utils.version_data
 description: "Lookup helper for per-OS / per-version metadata."
+sidebar:
+  order: 1
 ---
 
 > Source: [`src/mscp/common_utils/version_data.py`](https://github.com/usnistgov/macos_security/blob/dev_2.0/src/mscp/common_utils/version_data.py)

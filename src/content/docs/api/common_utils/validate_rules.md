@@ -1,6 +1,8 @@
 ---
 title: mscp.common_utils.validate_rules
 description: "Schema and folder-structure validators for rule YAML files."
+sidebar:
+  order: 1
 ---
 
 > Source: [`src/mscp/common_utils/validate_rules.py`](https://github.com/usnistgov/macos_security/blob/dev_2.0/src/mscp/common_utils/validate_rules.py)

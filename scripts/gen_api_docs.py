@@ -373,13 +373,40 @@ def render_function(func: FunctionDoc, heading_level: int) -> str:
         "```",
         "",
     ]
-    if func.decorators:
-        decos = ", ".join(f"`@{d}`" for d in func.decorators)
+    _IMPLICIT_DECORATORS = {"classmethod", "staticmethod", "property"}
+    extra_decos = [
+        d for d in func.decorators
+        if d not in _IMPLICIT_DECORATORS and not d.endswith((".setter", ".deleter"))
+    ]
+    if extra_decos:
+        decos = ", ".join(f"`@{d}`" for d in extra_decos)
         parts.append(f"*Decorators:* {decos}")
         parts.append("")
     if func.docstring:
         parts.append(render_docstring(func.docstring))
     return "\n".join(parts).rstrip() + "\n"
+
+
+def _method_category(method: FunctionDoc) -> str:
+    for d in method.decorators:
+        if d == "classmethod":
+            return "class_methods"
+        if d == "staticmethod":
+            return "static_methods"
+        if d == "property" or d.endswith(".setter") or d.endswith(".deleter"):
+            return "properties"
+    if method.name == "__init__":
+        return "constructor"
+    return "methods"
+
+
+_METHOD_SECTION_ORDER = [
+    ("constructor", "Constructor"),
+    ("class_methods", "Class Methods"),
+    ("static_methods", "Static Methods"),
+    ("properties", "Properties"),
+    ("methods", "Methods"),
+]
 
 
 def render_class(cls: ClassDoc, heading_level: int) -> str:
@@ -395,12 +422,21 @@ def render_class(cls: ClassDoc, heading_level: int) -> str:
     ]
     if cls.docstring:
         parts.append(render_docstring(cls.docstring))
+
     if cls.methods:
-        parts.append("")
-        parts.append(f"{'#' * (heading_level + 1)} Methods")
-        parts.append("")
+        buckets: dict[str, list[FunctionDoc]] = {key: [] for key, _ in _METHOD_SECTION_ORDER}
         for method in cls.methods:
-            parts.append(render_function(method, heading_level + 2))
+            buckets[_method_category(method)].append(method)
+
+        for key, label in _METHOD_SECTION_ORDER:
+            if not buckets[key]:
+                continue
+            parts.append("")
+            parts.append(f"{'#' * (heading_level + 1)} {label}")
+            parts.append("")
+            for method in buckets[key]:
+                parts.append(render_function(method, heading_level + 2))
+
     return "\n".join(parts).rstrip() + "\n"
 
 
@@ -416,10 +452,15 @@ def render_module(module: ModuleDoc) -> str:
         else module.module_dotted
     )
 
+    # Groups (directory index pages) sort before flat module pages in the sidebar.
+    sidebar_order = 0 if module.is_init else 1
+
     parts: list[str] = [
         "---",
         f"title: {title}",
         f'description: "{md_escape_frontmatter(description)}"',
+        "sidebar:",
+        f"  order: {sidebar_order}",
         "---",
         "",
         f"> Source: [`{SOURCE_PREFIX}{module.rel_path}`](https://github.com/usnistgov/macos_security/blob/{SOURCE_BRANCH}/{SOURCE_PREFIX}{module.rel_path})",

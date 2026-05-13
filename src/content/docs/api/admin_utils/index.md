@@ -1,6 +1,8 @@
 ---
 title: mscp.admin_utils
 description: "Administrative utilities exposed via ``mscp admin``."
+sidebar:
+  order: 0
 ---
 
 > Source: [`src/mscp/admin_utils/__init__.py`](https://github.com/usnistgov/macos_security/blob/dev_2.0/src/mscp/admin_utils/__init__.py)

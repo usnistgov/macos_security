@@ -1,6 +1,8 @@
 ---
 title: mscp.common_utils.logger_instance
 description: "Singleton `loguru` logger used throughout mSCP."
+sidebar:
+  order: 1
 ---
 
 > Source: [`src/mscp/common_utils/logger_instance.py`](https://github.com/usnistgov/macos_security/blob/dev_2.0/src/mscp/common_utils/logger_instance.py)

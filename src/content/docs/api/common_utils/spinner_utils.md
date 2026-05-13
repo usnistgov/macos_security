@@ -1,6 +1,8 @@
 ---
 title: mscp.common_utils.spinner_utils
 description: "Verbosity-aware wrapper around `yaspin`'s `inject_spinner`."
+sidebar:
+  order: 1
 ---
 
 > Source: [`src/mscp/common_utils/spinner_utils.py`](https://github.com/usnistgov/macos_security/blob/dev_2.0/src/mscp/common_utils/spinner_utils.py)

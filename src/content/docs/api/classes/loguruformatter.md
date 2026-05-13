@@ -1,6 +1,8 @@
 ---
 title: mscp.classes.loguruformatter
 description: "Custom log formatting for `loguru`."
+sidebar:
+  order: 1
 ---
 
 > Source: [`src/mscp/classes/loguruformatter.py`](https://github.com/usnistgov/macos_security/blob/dev_2.0/src/mscp/classes/loguruformatter.py)

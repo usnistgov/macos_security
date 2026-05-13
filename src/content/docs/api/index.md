@@ -1,6 +1,8 @@
 ---
-title: API Reference
+title: mSCP 2.0 API Reference
 description: "mSCP — macOS Security Compliance Project."
+sidebar:
+  order: 0
 ---
 
 > Source: [`src/mscp/__init__.py`](https://github.com/usnistgov/macos_security/blob/dev_2.0/src/mscp/__init__.py)

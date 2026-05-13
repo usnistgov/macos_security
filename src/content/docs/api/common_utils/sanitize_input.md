@@ -1,6 +1,8 @@
 ---
 title: mscp.common_utils.sanitize_input
 description: "Validated `input()` wrapper used for interactive CLI prompts."
+sidebar:
+  order: 1
 ---
 
 > Source: [`src/mscp/common_utils/sanitize_input.py`](https://github.com/usnistgov/macos_security/blob/dev_2.0/src/mscp/common_utils/sanitize_input.py)

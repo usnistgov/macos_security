@@ -1,6 +1,8 @@
 ---
 title: mscp.generate
 description: "Baseline, guidance, and artifact generation entry points for mSCP."
+sidebar:
+  order: 0
 ---
 
 > Source: [`src/mscp/generate/__init__.py`](https://github.com/usnistgov/macos_security/blob/dev_2.0/src/mscp/generate/__init__.py)

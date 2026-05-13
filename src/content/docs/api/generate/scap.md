@@ -1,6 +1,8 @@
 ---
 title: mscp.generate.scap
 description: "SCAP 1.4 / XCCDF / OVAL content generation for the macOS Security Compliance Project."
+sidebar:
+  order: 1
 ---
 
 > Source: [`src/mscp/generate/scap.py`](https://github.com/usnistgov/macos_security/blob/dev_2.0/src/mscp/generate/scap.py)

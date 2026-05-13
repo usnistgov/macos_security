@@ -1,6 +1,8 @@
 ---
 title: mscp.classes.rule_library
 description: "Collection class for Macsecurityrule objects."
+sidebar:
+  order: 1
 ---
 
 > Source: [`src/mscp/classes/rule_library.py`](https://github.com/usnistgov/macos_security/blob/dev_2.0/src/mscp/classes/rule_library.py)
@@ -37,7 +39,7 @@ to load every supported platform at once.
 - **`rules`** *(list[Macsecurityrule])* — Initial rules to populate the library with.
 
 
-#### Methods
+#### Constructor
 
 ##### __init__
 
@@ -45,13 +47,14 @@ to load every supported platform at once.
 __init__(self, rules: list[Macsecurityrule]) -> None
 ```
 
+
+#### Class Methods
+
 ##### from_rules_dir
 
 ```python
 from_rules_dir(cls) -> RuleLibrary
 ```
-
-*Decorators:* `@classmethod`
 
 Load all rules for every supported platform and OS version.
 
@@ -65,15 +68,19 @@ platform.
 
 - **`RuleLibrary`** — A new library containing rules for all supported platforms and versions.
 
+
+#### Properties
+
 ##### rules
 
 ```python
 rules(self) -> list[str]
 ```
 
-*Decorators:* `@property`
-
 list[str]: The rule IDs of every rule in the library, in order.
+
+
+#### Methods
 
 ##### get
 

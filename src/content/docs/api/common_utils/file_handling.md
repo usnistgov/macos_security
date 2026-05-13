@@ -1,6 +1,8 @@
 ---
 title: mscp.common_utils.file_handling
 description: "API reference for `mscp.common_utils.file_handling`."
+sidebar:
+  order: 1
 ---
 
 > Source: [`src/mscp/common_utils/file_handling.py`](https://github.com/usnistgov/macos_security/blob/dev_2.0/src/mscp/common_utils/file_handling.py)

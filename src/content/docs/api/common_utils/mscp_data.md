@@ -1,6 +1,8 @@
 ---
 title: mscp.common_utils.mscp_data
 description: "Loader for the mSCP project metadata file."
+sidebar:
+  order: 1
 ---
 
 > Source: [`src/mscp/common_utils/mscp_data.py`](https://github.com/usnistgov/macos_security/blob/dev_2.0/src/mscp/common_utils/mscp_data.py)

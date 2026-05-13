@@ -1,6 +1,8 @@
 ---
 title: mscp.classes
 description: "Domain models for mSCP."
+sidebar:
+  order: 0
 ---
 
 > Source: [`src/mscp/classes/__init__.py`](https://github.com/usnistgov/macos_security/blob/dev_2.0/src/mscp/classes/__init__.py)

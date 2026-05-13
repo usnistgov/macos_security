@@ -1,6 +1,8 @@
 ---
 title: mscp.classes.baseline
 description: "Baseline document model."
+sidebar:
+  order: 1
 ---
 
 > Source: [`src/mscp/classes/baseline.py`](https://github.com/usnistgov/macos_security/blob/dev_2.0/src/mscp/classes/baseline.py)
@@ -112,15 +114,13 @@ set).
 - **`parent_values`** *(str)* — Name of the parent benchmark this baseline inherits from (e.g. ``"recommended"``), or empty.
 
 
-#### Methods
+#### Class Methods
 
 ##### from_yaml
 
 ```python
 from_yaml(cls, file_path: Path, language: str='en', custom: bool=False) -> 'Baseline'
 ```
-
-*Decorators:* `@classmethod`
 
 Load a `Baseline` from a YAML file with rules resolved.
 
@@ -144,8 +144,6 @@ loads its rules via `Macsecurityrule.load_rules`.
 ```python
 create_new(cls, output_file: Path, rules: list[Macsecurityrule], baseline_name: str | None, authors: list[Author], full_title: str, benchmark: str, os_type: str, os_version: float, baseline_dict: dict[str, Any], language: str='en') -> None
 ```
-
-*Decorators:* `@classmethod`
 
 Build a new baseline from a rule set and write it to YAML.
 
@@ -174,6 +172,9 @@ when present), loads section descriptions from
 - Writes the generated baseline to ``output_file``. Reads every
 - ``*.y*ml`` file in ``config["sections_dir"]`` to resolve
 - section descriptions.
+
+
+#### Methods
 
 ##### to_dataframe
 

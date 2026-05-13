@@ -1,6 +1,8 @@
 ---
 title: mscp.generate.guidance_support
 description: "Guidance artifact sub-generators used by `generate_guidance`."
+sidebar:
+  order: 0
 ---
 
 > Source: [`src/mscp/generate/guidance_support/__init__.py`](https://github.com/usnistgov/macos_security/blob/dev_2.0/src/mscp/generate/guidance_support/__init__.py)

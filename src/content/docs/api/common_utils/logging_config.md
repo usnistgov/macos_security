@@ -1,6 +1,8 @@
 ---
 title: mscp.common_utils.logging_config
 description: "`loguru` configuration for the mSCP CLI."
+sidebar:
+  order: 1
 ---
 
 > Source: [`src/mscp/common_utils/logging_config.py`](https://github.com/usnistgov/macos_security/blob/dev_2.0/src/mscp/common_utils/logging_config.py)

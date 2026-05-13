@@ -1,6 +1,8 @@
 ---
 title: mscp.generate.guidance_support.ddm
 description: "Declarative Device Management (DDM) artifact generation for mSCP."
+sidebar:
+  order: 1
 ---
 
 > Source: [`src/mscp/generate/guidance_support/ddm.py`](https://github.com/usnistgov/macos_security/blob/dev_2.0/src/mscp/generate/guidance_support/ddm.py)

@@ -1,6 +1,8 @@
 ---
 title: mscp.generate.translation
 description: "Localization template and compiled message-object generation for mSCP."
+sidebar:
+  order: 1
 ---
 
 > Source: [`src/mscp/generate/translation.py`](https://github.com/usnistgov/macos_security/blob/dev_2.0/src/mscp/generate/translation.py)

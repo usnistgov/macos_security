@@ -1,6 +1,8 @@
 ---
 title: mscp.common_utils.localization
 description: "Localisation glue for `gettext` and YAML."
+sidebar:
+  order: 1
 ---
 
 > Source: [`src/mscp/common_utils/localization.py`](https://github.com/usnistgov/macos_security/blob/dev_2.0/src/mscp/common_utils/localization.py)

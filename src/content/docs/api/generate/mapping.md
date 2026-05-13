@@ -1,6 +1,8 @@
 ---
 title: mscp.generate.mapping
 description: "Control-framework mapping and custom baseline generation for mSCP."
+sidebar:
+  order: 1
 ---
 
 > Source: [`src/mscp/generate/mapping.py`](https://github.com/usnistgov/macos_security/blob/dev_2.0/src/mscp/generate/mapping.py)

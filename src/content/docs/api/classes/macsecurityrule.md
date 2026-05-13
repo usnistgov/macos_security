@@ -1,6 +1,8 @@
 ---
 title: mscp.classes.macsecurityrule
 description: "macOS security rule model and supporting reference types."
+sidebar:
+  order: 1
 ---
 
 > Source: [`src/mscp/classes/macsecurityrule.py`](https://github.com/usnistgov/macos_security/blob/dev_2.0/src/mscp/classes/macsecurityrule.py)
@@ -85,7 +87,7 @@ serialised output stable.
 - **`nist_800_171r3`** *(list[str] | None)* — NIST SP 800-171 Rev. 3 control identifiers. Serialised to YAML as ``800-171r3``.
 
 
-#### Methods
+#### Constructor
 
 ##### __init__
 
@@ -115,7 +117,7 @@ Each list is sorted in ascending order on construction.
 - **`sfr`** *(list[str] | None)* — Security Functional Requirement identifiers.
 
 
-#### Methods
+#### Constructor
 
 ##### __init__
 
@@ -142,7 +144,7 @@ Each list is sorted in ascending order on construction.
 - **`controls_v8`** *(list[float] | None)* — CIS Controls v8 mappings.
 
 
-#### Methods
+#### Constructor
 
 ##### __init__
 
@@ -166,7 +168,7 @@ BSI (Bundesamt für Sicherheit in der Informationstechnik) references.
 - **`indigo`** *(list[str] | None)* — BSI Indigo profile identifiers, sorted in ascending order on construction.
 
 
-#### Methods
+#### Constructor
 
 ##### __init__
 
@@ -191,7 +193,7 @@ Ministry of the Interior and Kingdom Relations)) references.
 - **`bio`** *(list[str] | None)* — BIO identifiers, sorted in ascending order on construction.
 
 
-#### Methods
+#### Constructor
 
 ##### __init__
 
@@ -223,7 +225,7 @@ unchanged.
 - **`references`** *(list[Any] | None)* — Free-form reference entries, sorted in ascending order on construction.
 
 
-#### Methods
+#### Constructor
 
 ##### __init__
 
@@ -351,15 +353,13 @@ directly.
 - **`default_state`** *(str | None)* — Shell command that restores the default configuration, when defined.
 
 
-#### Methods
+#### Class Methods
 
 ##### load_rules
 
 ```python
 load_rules(cls, rule_ids: list[str], os_type: str, os_version: float, parent_values: str, section: str, tailoring: bool=False, language: str='en') -> list['Macsecurityrule']
 ```
-
-*Decorators:* `@classmethod`
 
 Load `Macsecurityrule` objects for a list of rule IDs.
 
@@ -389,8 +389,6 @@ merge; other keys overwrite). Rules whose YAML lacks the requested
 collect_all_rules(cls, os_type: str, os_version: int, tailoring: bool=False, parent_values: str='default') -> list['Macsecurityrule']
 ```
 
-*Decorators:* `@classmethod`
-
 Load every rule under ``config["rules_dir"]`` for an OS/version.
 
 Walks each subfolder of the rules directory (skipping
@@ -409,13 +407,59 @@ matching section file, and delegates per-section loading to
 
 - **`list[Macsecurityrule]`** — All rules across all sections that match the given platform.
 
+##### odv_query
+
+```python
+odv_query(cls, rules: list['Macsecurityrule'], benchmark: str) -> list['Macsecurityrule']
+```
+
+Walk a rule list interactively to include / exclude / set ODVs.
+
+For each rule, prompts whether to include it (with options ``y``,
+``n``, ``all``, ``?``) and, when included and an ODV is defined,
+prompts for the ODV value. Excluded rules have an exclusion notice
+prepended to their `discussion`, are reassigned to the
+``"Excluded"`` section, and are still returned in the result list
+(so callers can render them as exclusions). Rules tagged
+``inherent`` are always included without prompting.
+
+This method writes to disk via `write_odv_custom_rule` and
+`write_excluded_custom_rule_discussion` as the user makes choices,
+and prints to stdout.
+
+**Args**
+
+- **`rules`** *(list[Macsecurityrule])* — Rules to walk.
+- **`benchmark`** *(str)* — Benchmark name being tailored. When equal to ``"recommended"`` the recommended ODV is used as the default; otherwise the benchmark-specific ODV is used and a warning is printed.
+
+**Returns**
+
+- **`list[Macsecurityrule]`** — Both included rules and excluded rules (with exclusion notices applied), ready to be written into a tailored baseline.
+
+##### get_tags
+
+```python
+get_tags(cls, rules: list['Macsecurityrule']) -> list
+```
+
+Return the unique set of tags across `rules`, sorted.
+
+**Args**
+
+- **`rules`** *(list[Macsecurityrule])* — Rules to scan.
+
+**Returns**
+
+- **`list[str]`** — All distinct tag values found across the input rules, in ascending order.
+
+
+#### Static Methods
+
 ##### format_payload
 
 ```python
 format_payload(payload_type: str, payload_content: list[dict] | dict, jinja_filter: bool=False) -> str
 ```
-
-*Decorators:* `@staticmethod`
 
 Render a single payload as XML wrapped for AsciiDoc output.
 
@@ -434,6 +478,29 @@ wrapped in an AsciiDoc ``[source,xml]`` block delimited by
 **Returns**
 
 - **`str`** — The rendered payload, ready to splice into generated guidance.
+
+##### mobileconfig_info_to_xml
+
+```python
+mobileconfig_info_to_xml(mobileconfig_info: list[dict[str, Any]]) -> str
+```
+
+Render a list of payloads as raw XML.
+
+Convenience wrapper around `format_payload` with
+``jinja_filter=True`` so callers (typically Jinja templates) get
+XML without the AsciiDoc source-block delimiters.
+
+**Args**
+
+- **`mobileconfig_info`** *(list[dict[str, Any]])* — Payload dicts with at least ``payload_type`` and ``payload_content`` keys (matches `Mobileconfigpayload.model_dump()`).
+
+**Returns**
+
+- **`str`** — Concatenated XML for every payload, or the empty string if `mobileconfig_info` is empty.
+
+
+#### Methods
 
 ##### write_odv_custom_rule
 
@@ -474,37 +541,6 @@ Writes a minimal YAML file under ``config["custom"]["rules_dir"]``
 containing only the ``discussion`` field. The caller is expected
 to have already prepended the exclusion notice to
 ``self.discussion``.
-
-##### odv_query
-
-```python
-odv_query(cls, rules: list['Macsecurityrule'], benchmark: str) -> list['Macsecurityrule']
-```
-
-*Decorators:* `@classmethod`
-
-Walk a rule list interactively to include / exclude / set ODVs.
-
-For each rule, prompts whether to include it (with options ``y``,
-``n``, ``all``, ``?``) and, when included and an ODV is defined,
-prompts for the ODV value. Excluded rules have an exclusion notice
-prepended to their `discussion`, are reassigned to the
-``"Excluded"`` section, and are still returned in the result list
-(so callers can render them as exclusions). Rules tagged
-``inherent`` are always included without prompting.
-
-This method writes to disk via `write_odv_custom_rule` and
-`write_excluded_custom_rule_discussion` as the user makes choices,
-and prints to stdout.
-
-**Args**
-
-- **`rules`** *(list[Macsecurityrule])* — Rules to walk.
-- **`benchmark`** *(str)* — Benchmark name being tailored. When equal to ``"recommended"`` the recommended ODV is used as the default; otherwise the benchmark-specific ODV is used and a warning is printed.
-
-**Returns**
-
-- **`list[Macsecurityrule]`** — Both included rules and excluded rules (with exclusion notices applied), ready to be written into a tailored baseline.
 
 ##### to_yaml
 
@@ -551,43 +587,3 @@ non-Pydantic value (e.g. for JSON serialisation).
 **Returns**
 
 - dict[str, Any]: All declared fields, including their nested sub-models recursively dumped.
-
-##### mobileconfig_info_to_xml
-
-```python
-mobileconfig_info_to_xml(mobileconfig_info: list[dict[str, Any]]) -> str
-```
-
-*Decorators:* `@staticmethod`
-
-Render a list of payloads as raw XML.
-
-Convenience wrapper around `format_payload` with
-``jinja_filter=True`` so callers (typically Jinja templates) get
-XML without the AsciiDoc source-block delimiters.
-
-**Args**
-
-- **`mobileconfig_info`** *(list[dict[str, Any]])* — Payload dicts with at least ``payload_type`` and ``payload_content`` keys (matches `Mobileconfigpayload.model_dump()`).
-
-**Returns**
-
-- **`str`** — Concatenated XML for every payload, or the empty string if `mobileconfig_info` is empty.
-
-##### get_tags
-
-```python
-get_tags(cls, rules: list['Macsecurityrule']) -> list
-```
-
-*Decorators:* `@classmethod`
-
-Return the unique set of tags across `rules`, sorted.
-
-**Args**
-
-- **`rules`** *(list[Macsecurityrule])* — Rules to scan.
-
-**Returns**
-
-- **`list[str]`** — All distinct tag values found across the input rules, in ascending order.

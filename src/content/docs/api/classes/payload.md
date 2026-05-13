@@ -1,6 +1,8 @@
 ---
 title: mscp.classes.payload
 description: "Configuration profile payload model."
+sidebar:
+  order: 1
 ---
 
 > Source: [`src/mscp/classes/payload.py`](https://github.com/usnistgov/macos_security/blob/dev_2.0/src/mscp/classes/payload.py)

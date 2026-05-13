@@ -1,6 +1,8 @@
 ---
 title: mscp.generate.guidance_support.documents
 description: "Guidance document rendering (AsciiDoc, PDF, HTML, Markdown) for mSCP."
+sidebar:
+  order: 1
 ---
 
 > Source: [`src/mscp/generate/guidance_support/documents.py`](https://github.com/usnistgov/macos_security/blob/dev_2.0/src/mscp/generate/guidance_support/documents.py)

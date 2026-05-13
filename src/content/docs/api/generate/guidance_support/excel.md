@@ -1,6 +1,8 @@
 ---
 title: mscp.generate.guidance_support.excel
 description: "Excel workbook generation for mSCP baselines."
+sidebar:
+  order: 1
 ---
 
 > Source: [`src/mscp/generate/guidance_support/excel.py`](https://github.com/usnistgov/macos_security/blob/dev_2.0/src/mscp/generate/guidance_support/excel.py)

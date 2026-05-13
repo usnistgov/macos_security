@@ -1,6 +1,8 @@
 ---
 title: mscp.common_utils.customization
 description: "Loader for per-rule customisation YAML overrides."
+sidebar:
+  order: 1
 ---
 
 > Source: [`src/mscp/common_utils/customization.py`](https://github.com/usnistgov/macos_security/blob/dev_2.0/src/mscp/common_utils/customization.py)

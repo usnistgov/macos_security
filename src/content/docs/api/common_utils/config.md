@@ -1,6 +1,8 @@
 ---
 title: mscp.common_utils.config
 description: "Project configuration loader."
+sidebar:
+  order: 1
 ---
 
 > Source: [`src/mscp/common_utils/config.py`](https://github.com/usnistgov/macos_security/blob/dev_2.0/src/mscp/common_utils/config.py)
