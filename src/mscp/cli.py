@@ -15,7 +15,11 @@ import platform
 from pathlib import Path
 
 # Local python modules
-from .admin_utils import build_all_baselines, add_new_rule
+from .admin_utils import (
+    build_all_baselines,
+    add_new_rule,
+    generate_mscp_banners,
+)
 from .common_utils import (
     logger,
     set_logger,
@@ -516,6 +520,14 @@ compliance script (e.g. disa_stig, cis.benchmark)
         add_help=False,
     )
     add_rule_parser.set_defaults(func=add_new_rule)
+
+    generate_banners_parser = admin_subparsers.add_parser(
+        "banners",
+        parents=[parent_parser],
+        help="generate MSCP banners with the updated color scheme for use in documentation and other collateral",
+        add_help=False,
+    )
+    generate_banners_parser.set_defaults(func=generate_mscp_banners)
 
     validate_parser: argparse.ArgumentParser = admin_subparsers.add_parser(
         "validate",
