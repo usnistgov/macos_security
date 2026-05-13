@@ -6,3 +6,4 @@ bin
 node_modules/
 .astro/
 package-lock.json
+dist/
