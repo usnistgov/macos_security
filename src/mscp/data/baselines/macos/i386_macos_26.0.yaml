@@ -1,0 +1,23 @@
+---
+title: 'macOS 26.0: Security Configuration - i386'
+description: |-
+  This guide describes the actions to take when securing a macOS 26.0 system against the i386 security benchmark.
+
+  Information System Security Officers and benchmark creators can use this catalog of settings in order to assist them in security benchmark creation. This list is a catalog, not a checklist or benchmark, and satisfaction of every item is not likely to be possible or sensible in many operational scenarios.
+authors:
+- name: Bob Gendler
+  organization: National Institute of Standards and Technology
+- name: Dan Brodjieski
+  organization: National Aeronautics and Space Administration
+- name: Allen Golbig
+  organization: Jamf
+parent_values: recommended
+platform:
+  os: macOS
+  version: 26.0
+profile:
+- section: Operating System
+  rules:
+  - os_dictation_disable
+  - os_firmware_password_require
+  - os_power_nap_disable

@@ -1,0 +1,44 @@
+---
+title: 'visionOS 26.0: Security Configuration - 800-171'
+description: |-
+  This guide describes the actions to take when securing a visionOS 26.0 system against the 800-171 security benchmark.
+
+  Information System Security Officers and benchmark creators can use this catalog of settings in order to assist them in security benchmark creation. This list is a catalog, not a checklist or benchmark, and satisfaction of every item is not likely to be possible or sensible in many operational scenarios.
+authors:
+- name: Bob Gendler
+  organization: National Institute of Standards and Technology
+- name: Dan Brodjieski
+  organization: National Aeronautics and Space Administration
+- name: Allen Golbig
+  organization: Jamf
+parent_values: recommended
+platform:
+  os: visionOS
+  version: 26.0
+profile:
+- section: iCloud
+  rules:
+  - icloud_drive_disable
+  - icloud_keychain_disable
+  - icloud_photos_disable
+  - icloud_private_relay_disable
+- section: Operating System
+  rules:
+  - os_account_modification_disable
+  - os_airdrop_disable
+  - os_genmoji_disable
+  - os_handoff_disable
+  - os_image_playground_disable
+  - os_mail_smart_reply_disable
+  - os_mail_summary_disable
+  - os_on_device_dictation_enforce
+  - os_password_autofill_disable
+  - os_password_sharing_disable
+  - os_safari_reader_summary_disable
+  - os_writing_tools_disable
+- section: Password Policy
+  rules:
+  - pwpolicy_account_lockout_enforce
+  - pwpolicy_history_enforce
+  - pwpolicy_minimum_length_enforce
+  - pwpolicy_simple_sequence_disable
