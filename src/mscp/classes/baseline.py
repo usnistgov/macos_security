@@ -22,6 +22,7 @@ from ..common_utils import config, create_yaml, open_file
 from ..common_utils.logger_instance import logger
 from .macsecurityrule import Macsecurityrule
 
+__all__ = ["Author", "Profile", "Baseline"]
 
 class BaseModelWithAccessors(BaseModel):
     """Pydantic base class with dict-style accessors.
