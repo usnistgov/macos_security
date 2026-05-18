@@ -31,6 +31,14 @@ MODULE_PREFIX = (
 )
 OUTPUT_DIR = REPO_ROOT / "src" / "content" / "docs" / "api"
 
+# Paths (relative to repo root) to exclude from documentation entirely.
+# These are internal implementation packages, not public library API.
+SKIP_PATHS = {
+    "src/mscp/generate",
+    "src/mscp/admin_utils",
+    "src/mscp/cli.py",
+}
+
 
 def run_git(*args: str) -> str:
     result = subprocess.run(
@@ -53,6 +61,8 @@ def list_python_files() -> list[str]:
         # Astro excludes underscore-prefixed slugs from routing, so skip
         # entry-point shims like __main__.py that have no API surface anyway.
         if Path(rel).name == "__main__.py":
+            continue
+        if any(rel == p or rel.startswith(p + "/") for p in SKIP_PATHS):
             continue
         files.append(rel)
     return sorted(files)
@@ -158,14 +168,21 @@ def extract_dunder_all(tree: ast.Module) -> list[str]:
 
 def parse_module(rel_path: str, source: str) -> ModuleDoc:
     tree = ast.parse(source)
+    exports = extract_dunder_all(tree)
+    exports_set = set(exports)  # non-empty only when __all__ is defined
+
     functions: list[FunctionDoc] = []
     classes: list[ClassDoc] = []
     for node in tree.body:
         if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)):
+            if exports_set and node.name not in exports_set:
+                continue
             func = parse_function(node)
             if func is not None:
                 functions.append(func)
         elif isinstance(node, ast.ClassDef):
+            if exports_set and node.name not in exports_set:
+                continue
             cls = parse_class(node)
             if cls is not None:
                 classes.append(cls)
@@ -182,7 +199,7 @@ def parse_module(rel_path: str, source: str) -> ModuleDoc:
         module_docstring=ast.get_docstring(tree),
         functions=functions,
         classes=classes,
-        exports=extract_dunder_all(tree),
+        exports=exports,
     )
 
 
