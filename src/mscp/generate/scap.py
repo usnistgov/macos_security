@@ -19,7 +19,7 @@ from xml.dom import minidom
 
 
 # Additional python modules
-from ..common_utils import conditional_inject_spinner
+from ..common_utils import conditional_inject_spinner, create_file
 from yaspin.core import Yaspin
 from yaspin.spinners import Spinners
 
@@ -736,9 +736,8 @@ def generate_scap(sp: Yaspin, args: argparse.Namespace) -> None:
 
     sp.text = "Writing output files"
     time.sleep(1)
-    with open(output_file, "w") as rite:
-        rite.write(totaloutput)
-        rite.close()
+    
+    create_file(output_file, totaloutput)
 
     sp.text = f"Generated new SCAP file: {output_file}"
     sp.ok("✔")
