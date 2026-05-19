@@ -139,7 +139,7 @@ def generate_guidance(sp: Yaspin, args: argparse.Namespace) -> None:
     else:
         logo_path = Path(
             config["images_dir"],
-            f"mscp_banner_{baseline.platform['os']}_{'dark' if args.dark else 'light'}.png",
+            f"mscp_banner_{baseline.platform['os'].lower()}_{'dark' if args.dark else 'light'}.png",
         ).absolute()
 
     if not logo_path.exists():
