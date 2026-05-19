@@ -213,6 +213,8 @@ def generate_scap(sp: Yaspin, args: argparse.Namespace) -> None:
             xccdfProfiles = xccdfProfiles + "</Profile>"
 
     for rule in all_rules:
+        if "supplemental" in rule.tags:
+            continue
         if args.baseline != "all_rules":
             if (
                 not rule_has_benchmark_for_version(
@@ -502,6 +504,7 @@ def generate_scap(sp: Yaspin, args: argparse.Namespace) -> None:
                 if rule.result_value == 0:
                     check_existence = "none_exist"
 
+            
             xccdfrules = (
                 xccdfrules
                 + """<Rule id="xccdf_gov.nist.mscp.content_rule_{0}_{1}" selected="false" role="full" severity="{2}" weight="1.0"><title>{3}</title><description>{4}
