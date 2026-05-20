@@ -2,8 +2,8 @@
 """Command-line interface for mSCP.
 
 Defines `parse_cli`, the top-level entry point invoked from
-:mod:`mscp.__main__`. Builds an `argparse` tree with subcommands
-``baseline`` / ``guidance`` / ``mapping`` / ``scap`` / ``admin`` (the
+`mscp.__main__`. Builds an `argparse` tree with subcommands
+`baseline` / `guidance` / `mapping` / `scap` / `admin` (the
 last with its own nested utilities) and dispatches to the matching
 function in `mscp.generate` or `mscp.admin_utils`.
 """
@@ -99,8 +99,8 @@ class SmartFormatter(argparse.HelpFormatter):
 
     - Single-letter / single-form options are indented to align with the
       long-form options for readability.
-    - Help strings prefixed with ``"R|"`` are emitted with their original
-      newlines preserved (a common ``argparse`` recipe for raw text).
+    - Help strings prefixed with `"R|"` are emitted with their original
+      newlines preserved (a common `argparse` recipe for raw text).
     """
 
     def _format_action_invocation(self, action):
@@ -124,14 +124,13 @@ class SmartFormatter(argparse.HelpFormatter):
 def get_macos_version() -> float:
     """Return the running host's major macOS version as a float.
 
-    Used as the default for the ``--os_version`` flag so the CLI assumes
-    the current host's version unless overridden. Falls back to ``26.0``
+    Used as the default for the `--os_version` flag so the CLI assumes
+    the current host's version unless overridden. Falls back to `26.0`
     when `platform.mac_ver` returns an empty string (e.g. when run on a
     non-macOS host).
 
     Returns:
-        float: Major version (e.g. ``15.0``), or ``26.0`` on a non-macOS
-            host.
+        float: Major version (e.g. `15.0`), or `26.0` on a non-macOS host.
     """
     version_str, _, _ = platform.mac_ver()
     if version_str:
@@ -142,9 +141,9 @@ def get_macos_version() -> float:
 
 
 def validate_file(arg: str) -> Path | None:
-    """`argparse` type validator: ensure ``arg`` points at an existing file.
+    """`argparse` type validator: ensure `arg` points at an existing file.
 
-    Used as the ``type=`` argument on flags that take a path. Logs an
+    Used as the `type=` argument on flags that take a path. Logs an
     error and calls `sys.exit` if the path doesn't resolve to a file.
 
     Args:
@@ -164,16 +163,16 @@ def validate_file(arg: str) -> Path | None:
 def parse_cli() -> None:
     """Build the mSCP argument parser, parse `sys.argv`, and dispatch.
 
-    Constructs the top-level parser plus the ``baseline``, ``guidance``,
-    ``mapping``, ``scap``, and ``admin`` subcommands (each with its own
+    Constructs the top-level parser plus the `baseline`, `guidance`,
+    `mapping`, `scap`, and `admin` subcommands (each with its own
     flags), applies log-verbosity overrides, validates the platform/OS
     arguments (rejects unsupported macOS / iOS versions), and then calls
-    the subcommand's bound ``func`` with the parsed `argparse.Namespace`.
+    the subcommand's bound `func` with the parsed `argparse.Namespace`.
 
-    Side Effects:
-        Reads ``sys.argv``; configures the global mSCP logger;
-        mutates the global `config` dict for ``output_dir`` / ``rules_dir``;
-        may call `sys.exit` on validation failure.
+    Note:
+        Reads `sys.argv`; configures the global mSCP logger; mutates the
+        global `config` dict for `output_dir` / `rules_dir`; may call
+        `sys.exit` on validation failure.
     """
     parent_parser = Customparser()
     parent_parser.add_argument(
