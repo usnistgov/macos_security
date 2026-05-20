@@ -69,9 +69,10 @@ fi
 # path to PlistBuddy
 plb="/usr/libexec/PlistBuddy"
 
-# get the currently logged in user
+# get the currently logged in user and hostname
 CURRENT_USER=$( /usr/sbin/scutil <<< "show State:/Users/ConsoleUser" | /usr/bin/awk '/Name :/ && ! /loginwindow/ { print $3 }')
 CURR_USER_UID=$(/usr/bin/id -u $CURRENT_USER)
+CURR_HOSTNAME=$(/usr/sbin/scutil --get HostName)
 
 # get system architecture
 arch=$(/usr/bin/arch)
@@ -83,8 +84,8 @@ GREEN='\e[32m'
 YELLOW='\e[33m'
 
 audit_plist="/Library/Preferences/org.{{ audit_name }}.audit.plist"
-audit_log="/Library/Logs/{{ audit_name }}_baseline.log"
-audit_csv="/Library/Logs/{{ audit_name }}_baseline.csv"
+audit_log="/Library/Logs/${CURR_HOSTNAME}_{{ audit_name }}_baseline.log"
+audit_csv="/Library/Logs/${CURR_HOSTNAME}_{{ audit_name }}_baseline.csv"
 
 baseline_name="{{ baseline_name }}"
 
@@ -321,6 +322,7 @@ run_scan(){
 
   # write timestamp of last compliance check
   /usr/bin/defaults write "$audit_plist" lastComplianceCheck "$timestamp"
+  /usr/bin/defaults write "$audit_plist" computerName "$CURR_HOSTNAME"
 
   {% for profile in baseline.profile %}
   {% for rule in profile.rules %}
