@@ -12,7 +12,16 @@ from typing import Any
 # Local python modules
 from .logger_instance import logger
 
-# Additional python modules
+OS_NAME_MAP = {
+    "tahoe": "Tahoe",
+    "sequoia": "Sequoia",
+    "sonoma": "Sonoma",
+    "ventura": "Ventura",
+    "ios_26": "iOS 26",
+    "ios_18": "iOS 18",
+    "ios_17": "iOS 17",
+    "visionos_26": "VisionOS 26",
+}
 
 
 def get_version_data(
@@ -54,7 +63,11 @@ def get_version_data(
 
         valid_versions = [e.get("os_version") for e in platforms[os_name.lower()]]
         match = next(
-            (e for e in platforms[os_name.lower()] if e.get("os_version") == os_version),
+            (
+                e
+                for e in platforms[os_name.lower()]
+                if e.get("os_version") == os_version
+            ),
             None,
         )
 
@@ -62,6 +75,10 @@ def get_version_data(
             raise ValueError(
                 f"Unknown os_version {os_version!r} for {os_name!r}. "
                 f"Valid versions: {valid_versions}"
+            )
+        else:
+            match["compliance_version"] = (
+                f"{OS_NAME_MAP.get(match['os_name'].lower(), match['os_name'])} Guidance, Revision {match['revision']}"
             )
 
         return match
