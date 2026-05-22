@@ -11,6 +11,8 @@ authors:
   organization: Jamf
 - name: Jordy Witteman
   organization: Root3
+- name: Aron van den Herik
+  organization: Root3
 parent_values: nlmapgov_base
 platform:
   os: macOS

@@ -68,6 +68,11 @@ authors:
     benchmarks:
       - nlmapgov_base
       - nlmapgov_plus
+  - name: Aron van den Herik
+    organization: Root3
+    benchmarks:
+      - nlmapgov_base
+      - nlmapgov_plus
 
 benchmarks:
   - keyword: cis_lvl1
