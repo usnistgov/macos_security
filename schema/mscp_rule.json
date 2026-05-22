@@ -421,7 +421,12 @@
                     "enum": [
                         "com.apple.configuration.services.configuration-files",
                         "com.apple.configuration.diskmanagement.settings",
-                        "com.apple.configuration.passcode.settings"
+                        "com.apple.configuration.passcode.settings",
+                        "com.apple.configuration.intelligence.settings",
+                        "com.apple.configuration.external-intelligence.settings",
+                        "com.apple.configuration.softwareupdate.settings",
+                        "com.apple.configuration.siri.settings",
+                        "com.apple.configuration.keyboard.settings"
                     ]
                 },
                 "service": {
