@@ -26,7 +26,8 @@
       "items": {
         "type": "object",
         "required": [
-          "name"
+          "name",
+          "organization"
         ],
         "additionalProperties": false,
         "properties": {
@@ -37,6 +38,10 @@
           "organization": {
             "type": "string",
             "description": "Organization the author is affiliated with"
+          },
+          "additional": {
+            "type": "boolean",
+            "description": "Author will be listed in addition to the primary MSCP contributors. Typically added as part of tailoring a baseline."
           }
         }
       }

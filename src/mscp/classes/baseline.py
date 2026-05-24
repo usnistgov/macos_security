@@ -11,7 +11,7 @@ methods to load baselines from YAML and write them back out.
 # Standard python modules
 from collections import OrderedDict, defaultdict
 from pathlib import Path
-from typing import Any
+from typing import Any, Optional
 
 # Additional python modules
 import pandas as pd
@@ -23,6 +23,7 @@ from ..common_utils.logger_instance import logger
 from .macsecurityrule import Macsecurityrule
 
 __all__ = ["Author", "Profile", "Baseline"]
+
 
 class BaseModelWithAccessors(BaseModel):
     """Pydantic base class with dict-style accessors.
@@ -75,16 +76,30 @@ class BaseModelWithAccessors(BaseModel):
 
 
 class Author(BaseModelWithAccessors):
-    """One author or owning organisation of a baseline.
+    """One author or owning organization of a baseline.
 
     Attributes:
         name (str | None): Personal name of the author, if available.
-        organization (str | None): Organisation the author represents, if
+        organization (str | None): Organization the author represents, if
             applicable.
     """
 
     name: str | None
     organization: str | None
+    additional: Optional[bool] = None
+
+    def is_additional(self) -> bool:
+        """Return true if this author is in addition to MSCP contributors.
+
+        This is a simple helper that checks the `additional` field, which
+        should be set to true for any author that is not a primary contributor
+        to MSCP. This allows generated guidance to flag such authors
+        and their contributions for special attention.
+
+        Returns:
+            bool: True when `additional` is true, false otherwise.
+        """
+        return self.additional is True
 
 
 class Profile(BaseModelWithAccessors):
