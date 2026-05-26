@@ -49,7 +49,7 @@ references:
     - 03.01.10
   cis:
     benchmark:
-      - 2.7.1 (level 2)
+      - 2.7.1 (level 1)
     controls v8:
       - 4.3
   cmmc:
@@ -57,6 +57,7 @@ references:
 macOS:
   - '26.0'
 tags:
+  - cis_lvl1
   - cis_lvl2
   - cisv8
   - cnssi-1253_low

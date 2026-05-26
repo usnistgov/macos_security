@@ -45,11 +45,14 @@ profile:
       - os_authenticated_root_enable
       - os_bonjour_disable
       - os_config_data_install_enforce
+      - os_external_apfs_hfs_volumes_encrypted
+      - os_fat_exfat_volumes_prohibit
       - os_gatekeeper_enable
       - os_guest_folder_removed
       - os_home_folders_secure
       - os_httpd_disable
       - os_install_log_retention_configure
+      - os_internal_apfs_volumes_encrypted
       - os_mail_summary_disable
       - os_mobile_file_integrity_enable
       - os_nfsd_disable

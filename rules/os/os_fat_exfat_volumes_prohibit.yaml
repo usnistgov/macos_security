@@ -1,0 +1,43 @@
+id: os_fat_exfat_volumes_prohibit
+title: Ensure No FAT32 and ExFAT Drives Are Connected
+discussion: |
+  FAT32 and ExFAT formatted drives _MUST NOT_ be connected to the system.
+
+  FAT32 and ExFAT file systems do not support native volume encryption, so data written to them is not protected at rest. Removable storage is generally formatted as FAT32 or ExFAT for cross-platform use. If the organization has a use for such devices, removable storage _MUST_ only be connected when exporting data and then immediately removed.
+check: |
+  /usr/sbin/diskutil list external | /usr/bin/grep -Ec "DOS_FAT_32|Microsoft Basic Data"
+result:
+  integer: 0
+fix: |
+  Any FAT32 or ExFAT volumes should not be connected and be removed.
+
+  NOTE: Removable storage is generally formatted in FAT32 or ExFAT that are used by additional devices. If your organization has a use for those devices, removable storage should only be connected when exporting data from them then immediately removed.
+references:
+  cce:
+    - N/A
+  cci:
+    - N/A
+  800-53r5:
+    - N/A
+  800-53r4:
+    - N/A
+  srg:
+    - N/A
+  disa_stig:
+    - N/A
+  cis:
+    benchmark:
+      - 5.3.3 (level 2)
+    controls v8:
+      - 3.6
+      - 3.11
+      - 13.6
+      - 14.8
+macOS:
+  - '26.0'
+tags:
+  - cis_lvl2
+  - cisv8
+severity: medium
+mobileconfig: false
+mobileconfig_info:
