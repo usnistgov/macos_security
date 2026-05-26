@@ -46,6 +46,8 @@ references:
         - Annex D (Section 5.9.1 - Device-Code)
   bzk:
     bio:
+      - 5.17
+      - 8.01
       - 8.24
 platforms:
   iOS:

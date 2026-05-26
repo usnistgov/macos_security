@@ -35,7 +35,7 @@ references:
       - AC.L1-3.1.2
   bzk:
     bio:
-      - 5.16.02
+      - 5.16
   hhs:
     hicp:
       - 2.L.A

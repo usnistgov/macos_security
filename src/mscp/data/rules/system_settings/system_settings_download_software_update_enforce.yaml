@@ -9,7 +9,7 @@ references:
         - CCE-95403-2
   bzk:
     bio:
-      - 8.08.01
+      - 8.08
   cis:
     controls_v8:
       - 7.3

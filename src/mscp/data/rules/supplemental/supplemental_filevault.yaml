@@ -54,10 +54,20 @@ discussion: |
   NOTE: On Intel Macs, FileVault only supports password-based unlock and cannot be done using a smartcard. Smartcard unlock for FileVault is supported on Apple Silicon Macs.
 references:
   nist: {}
+  bzk:
+    bio:
+      - 8.01
+      - 8.24
 platforms:
   macOS:
-    '26.0': {}
-    '15.0': {}
+    '26.0':
+      benchmarks:
+        - name: nlmapgov_base
+        - name: nlmapgov_plus
+    '15.0':
+      benchmarks:
+        - name: nlmapgov_base
+        - name: nlmapgov_plus
     '14.0': {}
 tags:
   - 800-171

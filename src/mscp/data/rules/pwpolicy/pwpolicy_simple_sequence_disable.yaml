@@ -37,6 +37,9 @@ references:
       - IA.L2-3.5.7
       - IA.L2-3.5.8
       - IA.L2-3.5.9
+  bzk:
+    bio:
+      - 5.17
   hhs:
     hicp:
       - 2.L.A
@@ -90,6 +93,7 @@ platforms:
           severity: medium
         - name: indigo_high
           severity: medium
+        - name: nlmapgov_plus
     '18.0':
       supervised: false
       benchmarks:

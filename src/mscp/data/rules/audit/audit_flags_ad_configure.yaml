@@ -74,7 +74,7 @@ references:
       - SI.L2-3.14.3
   bzk:
     bio:
-      - 8.18.02
+      - 8.18
   hhs:
     hicp:
       - 3.L.C

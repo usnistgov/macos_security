@@ -15,10 +15,12 @@ references:
       - SRG-OS-000480-GPOS-00225
   bzk:
     bio:
-      - 5.17.03
+      - 5.17
 platforms:
   macOS:
-    '26.0': {}
+    '26.0':
+      benchmarks:
+        - name: nlmapgov_plus
     '15.0': {}
     '14.0': {}
 tags:

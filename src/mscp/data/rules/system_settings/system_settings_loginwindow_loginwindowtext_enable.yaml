@@ -13,7 +13,7 @@ references:
         - CCE-92975-2
   bzk:
     bio:
-      - 6.03.01
+      - 6.03
   cis:
     benchmark:
       macos_26:

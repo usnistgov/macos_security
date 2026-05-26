@@ -43,7 +43,6 @@ references:
   bzk:
     bio:
       - 8.12
-      - 8.12.01
   cis:
     benchmark:
       ios_26:

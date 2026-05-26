@@ -17,7 +17,7 @@ references:
       - 03.13.03
   bzk:
     bio:
-      - 8.08.01
+      - 8.08
   cis:
     benchmark:
       macos_15:

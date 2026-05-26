@@ -40,7 +40,7 @@ references:
       - SC.L2-3.13.16
   bzk:
     bio:
-      - 8.01.01
+      - 8.01
   hhs:
     hicp:
       - 2.L.A

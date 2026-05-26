@@ -32,7 +32,7 @@ references:
       - AU.L2-3.3.1
   bzk:
     bio:
-      - 8.19.01
+      - 8.19
   cis:
     benchmark:
       macos_26:

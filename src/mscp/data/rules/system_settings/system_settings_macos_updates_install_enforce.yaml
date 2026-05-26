@@ -9,7 +9,7 @@ references:
         - CCE-NA
   bzk:
     bio:
-      - 8.08.01
+      - 8.08
 platforms:
   macOS:
     '26.0':

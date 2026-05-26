@@ -45,6 +45,9 @@ references:
       - AC.L1-3.1.20
       - CM.L2-3.4.6
       - CM.L2-3.4.7
+  bzk:
+    bio:
+      - 8.12
   hhs:
     hicp:
       - 2.L.A
@@ -88,6 +91,7 @@ platforms:
         - name: ios_stig
         - name: indigo_base
         - name: indigo_high
+        - name: nlmapgov_plus
     '18.0':
       supervised: false
       benchmarks:

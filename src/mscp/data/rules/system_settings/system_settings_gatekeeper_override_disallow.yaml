@@ -23,7 +23,7 @@ references:
       - CM.L2-3.4.5
   bzk:
     bio:
-      - 8.19.01
+      - 8.19
 platforms:
   macOS:
     '26.0':

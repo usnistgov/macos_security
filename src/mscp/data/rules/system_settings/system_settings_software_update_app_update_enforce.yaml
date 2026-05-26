@@ -11,7 +11,7 @@ references:
         - CCE-92990-1
   bzk:
     bio:
-      - 8.08.01
+      - 8.08
   cis:
     benchmark:
       macos_15:

@@ -11,6 +11,9 @@ references:
         - CCE-94396-9
       macos_14:
         - CCE-92991-9
+  bzk:
+    bio:
+      - 8.08
   cis:
     benchmark:
       macos_26:

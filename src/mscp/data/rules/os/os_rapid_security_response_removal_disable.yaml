@@ -23,7 +23,7 @@ references:
       - SI.L1-3.14.4
   bzk:
     bio:
-      - 8.08.01
+      - 8.08
 platforms:
   macOS:
     '15.0':
