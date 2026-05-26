@@ -70,13 +70,18 @@ class ListPlatformsAction(argparse.Action):
         platforms = mscp_data.get("versions", {}).get("platforms", {})
 
         if fmt == "json":
-            print(json.dumps(
-                {name: sorted(e["os_version"] for e in versions) for name, versions in platforms.items()},
-                indent=2,
-            ))
+            print(
+                json.dumps(
+                    {
+                        name: sorted((e["os_version"] for e in versions), reverse=True)
+                        for name, versions in platforms.items()
+                    },
+                    indent=2,
+                )
+            )
         else:
             platform_versions = {
-                name: sorted(e["os_version"] for e in versions)
+                name: sorted((e["os_version"] for e in versions), reverse=True)
                 for name, versions in platforms.items()
             }
             col_width = max(len(name) for name in platform_versions) + 4
@@ -84,12 +89,20 @@ class ListPlatformsAction(argparse.Action):
 
             print("Supported platforms (--os_name) and versions (--os_version):\n")
             print("  " + "".join(name.ljust(col_width) for name in platform_versions))
-            print("  " + "".join(("-" * len(name)).ljust(col_width) for name in platform_versions))
+            print(
+                "  "
+                + "".join(
+                    ("-" * len(name)).ljust(col_width) for name in platform_versions
+                )
+            )
             for i in range(max_rows):
-                print("  " + "".join(
-                    (str(v[i]) if i < len(v) else "").ljust(col_width)
-                    for v in platform_versions.values()
-                ))
+                print(
+                    "  "
+                    + "".join(
+                        (str(v[i]) if i < len(v) else "").ljust(col_width)
+                        for v in platform_versions.values()
+                    )
+                )
             print()
         parser.exit()
 
@@ -278,6 +291,15 @@ def parse_cli() -> None:
         add_help=False,
     )
     baseline_parser.set_defaults(func=generate_baseline)
+
+    baseline_parser.add_argument(
+        "-b",
+        "--baseline",
+        type=validate_file,
+        help=argparse.SUPPRESS,
+        # help="when tailoring, if you provide a baseline.yaml file, it will only prompt for rules not already included",
+        action="store",
+    )
 
     baseline_parser.add_argument(
         "-c",
