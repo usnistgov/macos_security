@@ -459,7 +459,7 @@ def render_template(
         baseline_dict["tailored"] = False
         baseline_dict["benchmark_description"] = benchmark_description
 
-    if any(author.is_additional() for author in baseline.authors):
+    if any(author.is_additional for author in baseline.authors):
         baseline_dict["additional_authors"] = True
 
     rendered_output = template.render(

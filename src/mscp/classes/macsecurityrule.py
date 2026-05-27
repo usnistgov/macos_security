@@ -22,6 +22,7 @@ from lxml import etree
 from pydantic import BaseModel, ConfigDict, Field
 
 # Local python modules
+from ._base import BaseModelWithAccessors
 from ..common_utils import (
     config,
     create_yaml,
@@ -61,47 +62,6 @@ class Sectionmap(StrEnum):
     SYSTEM_SETTINGS = "systemsettings"
     SETTINGS = "systemsettings"
     EXCLUDED = "excluded"
-
-
-class BaseModelWithAccessors(BaseModel):
-    """Pydantic base class with dict-style accessors.
-
-    Adds `get` plus ``__getitem__`` / ``__setitem__`` so subclasses can be
-    treated either as Pydantic models or as plain dict-like objects. This
-    variant differs from the one in `mscp.classes.baseline` only in that
-    `__getitem__` / `__setitem__` use `getattr` / `setattr` directly, so any
-    attribute that exists on the instance (declared field or otherwise) is
-    accessible.
-    """
-
-    def get(self, attr: str, default: Any = None) -> Any:
-        """Return the value of `attr`, or `default` if it isn't set.
-
-        Args:
-            attr (str): Attribute name to read.
-            default (Any): Value returned when ``attr`` is absent.
-                Defaults to ``None``.
-
-        Returns:
-            Any: The attribute value, or ``default`` if no such attribute
-                exists on the instance.
-        """
-        return getattr(self, attr, default)
-
-    def __getitem__(self, key: str) -> Any:
-        """Dict-style read; raises `KeyError` if the attribute is missing."""
-        try:
-            return getattr(self, key)
-        except AttributeError:
-            raise KeyError(key) from None
-
-    def __setitem__(self, key: str, value: Any) -> None:
-        """Dict-style write; raises `KeyError` if the attribute is forbidden."""
-        try:
-            setattr(self, key, value)
-        except AttributeError:
-            # This triggers if Pydantic config is set to 'forbid'
-            raise KeyError(f"{key} is not a valid attribute")
 
 
 class NistReferences(BaseModelWithAccessors):
