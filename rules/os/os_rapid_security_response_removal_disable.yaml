@@ -1,7 +1,7 @@
 id: os_rapid_security_response_removal_disable
-title: Disable User Ability from Being Able to Undo Rapid Security Responses
+title: Disable User Ability from Being Able to Undo Background Security Improvements
 discussion: |
-  Rapid security response (RSR) mechanism _MUST_ be enabled and the ability for the user to disable RSR _MUST_ be disabled.
+  Background Security Improvements (BSI) mechanism _MUST_ be enabled and the ability for the user to disable BSI _MUST_ be disabled.
 check: |
   /usr/bin/osascript -l JavaScript << EOS
   $.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess')\
