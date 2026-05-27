@@ -292,7 +292,7 @@ class Baseline(BaseModel):
                     "likely to be possible or sensible in many operational scenarios."
                 )
 
-        baseline_dict["description"] = description.strip()
+            baseline_dict["description"] = description.strip()
 
         special_sections: dict[str, str] = {
             "inherent": "Inherent",

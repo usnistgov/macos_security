@@ -320,6 +320,14 @@ def parse_cli() -> None:
         action="store_true",
     )
     baseline_parser.add_argument(
+        "-m",
+        "--migrate",
+        type=validate_file,
+        metavar="LEGACY_BASELINE",
+        help="migrate a legacy (pre-2.0) baseline YAML to the current format",
+        action="store",
+    )
+    baseline_parser.add_argument(
         "-t",
         "--tailor",
         help="create a customized baseline that is based on your organization's requirements",
@@ -742,5 +750,9 @@ compliance script (e.g. disa_stig, cis.benchmark)
         if len(sys.argv) == 2:
             baseline_parser.print_help()
             sys.exit()
+        if not args.migrate and not args.keyword and not args.list_tags:
+            logger.error("One of --keyword, --list_tags, or --migrate is required.")
+            baseline_parser.print_help()
+            sys.exit(1)
 
     args.func(args)

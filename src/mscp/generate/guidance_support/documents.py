@@ -441,7 +441,12 @@ def render_template(
     baseline_dict: dict[str, Any] = baseline.model_dump()
     acronyms_data: dict[str, Any] = open_file(acronyms_file, language)
 
-    html_title, html_subtitle = map(str.strip, baseline.title.split(":", 1))
+    _title_parts = baseline.title.split(":", 1)
+    if len(_title_parts) == 2:
+        html_title, html_subtitle = map(str.strip, _title_parts)
+    else:
+        html_title = baseline.title.strip()
+        html_subtitle = ""
     document_subtitle2: str = ":document-subtitle2:"
 
     if "Tailored from" in baseline.title:
