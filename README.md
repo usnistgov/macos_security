@@ -29,7 +29,7 @@ The security rules are derived from NIST Special Publication (SP) 800-53, _Secur
 
 mSCP is the technical implementation of NIST SP 800-219 (Rev. 2), [_Automated Secure Configuration Guidance from the macOS Security Compliance Project_](https://csrc.nist.gov/pubs/sp/800/219/r2/final) — the official NIST guidance for automated secure configuration of macOS. Apple also acknowledges the project on its [Platform Certifications](https://support.apple.com/guide/certifications/macos-security-compliance-project-apc322685bb2/web) page.
 
-To learn more, visit the [project website](http://pages.nist.gov/macos_security/). If you would like to contribute, see the [contributor guidance](CONTRIBUTING.md).
+To learn more, visit the [project website](http://pages.nist.gov/macos_security/). If you would like to contribute, see the [contributor guidance](CONTRIBUTING.adoc).
 
 ## Supported Frameworks
 
