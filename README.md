@@ -33,16 +33,16 @@ To learn more, visit the [project website](http://pages.nist.gov/macos_security/
 
 ## Supported Frameworks
 
-- NIST SP 800-53
-- NIST SP 800-171r3
+- NIST SP 800-53 <a href="https://www.apple.com/os/macos/"><img src="https://badgen.net/badge/icon/macOS?icon=apple&label" alt="macOS"></a><a href="https://www.apple.com/os/ios/"><img src="https://badgen.net/badge/icon/iOS & iPadOS?icon=apple&label" alt="iOS & iPadOS"></a><a href="https://www.apple.com/os/visionos/"><img src="https://badgen.net/badge/icon/visionOS?icon=apple&label" alt="visionOS"></a>
+- NIST SP 800-171r3 <a href="https://www.apple.com/os/macos/"><img src="https://badgen.net/badge/icon/macOS?icon=apple&label" alt="macOS"></a><a href="https://www.apple.com/os/ios/"><img src="https://badgen.net/badge/icon/iOS & iPadOS?icon=apple&label" alt="iOS & iPadOS"></a><a href="https://www.apple.com/os/visionos/"><img src="https://badgen.net/badge/icon/visionOS?icon=apple&label" alt="visionOS"></a>
 - NIST SP 800-171r2 (CMMC)
-- CIS Benchmarks (Level 1 & 2)
+- CIS Benchmarks (Level 1 & 2) <a href="https://www.apple.com/os/macos/"><img src="https://badgen.net/badge/icon/macOS?icon=apple&label" alt="macOS"></a><a href="https://www.apple.com/os/ios/"><img src="https://badgen.net/badge/icon/iOS & iPadOS?icon=apple&label" alt="iOS & iPadOS"></a><a href="https://www.apple.com/os/visionos/"><img src="https://badgen.net/badge/icon/visionOS?icon=apple&label" alt="visionOS"></a>
 - CIS Controls (v8)
-- CNSSI 1253
-- DISA STIG (macOS, iOS, and visionOS)
-- BSI Indigo (iOS/iPadOS)
-- NLMAPGOV (Base and Plus, macOS and iOS)
-- HICP — Health Industry Cybersecurity Practices (Large Organizations, macOS)
+- CNSSI 1253 <a href="https://www.apple.com/os/macos/"><img src="https://badgen.net/badge/icon/macOS?icon=apple&label" alt="macOS"></a><a href="https://www.apple.com/os/ios/"><img src="https://badgen.net/badge/icon/iOS & iPadOS?icon=apple&label" alt="iOS & iPadOS"></a><a href="https://www.apple.com/os/visionos/"><img src="https://badgen.net/badge/icon/visionOS?icon=apple&label" alt="visionOS"></a>
+- DISA STIG <a href="https://www.apple.com/os/macos/"><img src="https://badgen.net/badge/icon/macOS?icon=apple&label" alt="macOS"></a><a href="https://www.apple.com/os/ios/"><img src="https://badgen.net/badge/icon/iOS & iPadOS?icon=apple&label" alt="iOS & iPadOS"></a><a href="https://www.apple.com/os/visionos/"><img src="https://badgen.net/badge/icon/visionOS?icon=apple&label" alt="visionOS"></a>
+- BSI Indigo <a href="https://www.apple.com/os/ios/"><img src="https://badgen.net/badge/icon/iOS & iPadOS?icon=apple&label" alt="iOS & iPadOS"></a><a href="https://www.apple.com/os/visionos/"><img src="https://badgen.net/badge/icon/visionOS?icon=apple&label" alt="visionOS"></a>
+- NLMAPGOV (Base and Plus) <a href="https://www.apple.com/os/macos/"><img src="https://badgen.net/badge/icon/macOS?icon=apple&label" alt="macOS"></a><a href="https://www.apple.com/os/ios/"><img src="https://badgen.net/badge/icon/iOS & iPadOS?icon=apple&label" alt="iOS & iPadOS"></a>
+- HICP — Health Industry Cybersecurity Practices (Large Organizations) <a href="https://www.apple.com/os/macos/"><img src="https://badgen.net/badge/icon/macOS?icon=apple&label" alt="macOS"></a>
 
 Don't see your framework listed? Reach out through the [contributor guidance](CONTRIBUTING.md) or the [project website](http://pages.nist.gov/macos_security/) to find out how we can get it included.
 
