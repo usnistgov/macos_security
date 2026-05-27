@@ -1,14 +1,14 @@
 <p align="center">
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="config/default/images/mscp_readme_banner_dark.png">
-    <source media="(prefers-color-scheme: light)" srcset="config/default/images/mscp_readme_banner.png">
-    <img src="config/default/images/mscp_readme_banner.png" alt="macOS Security Compliance" width="550">
+    <source media="(prefers-color-scheme: dark)" srcset="src/mscp/data/images/mscp_readme_banner_dark.png">
+    <source media="(prefers-color-scheme: light)" srcset="src/mscp/data/images/mscp_readme_banner.png">
+    <img src="src/mscp/data/images/mscp_readme_banner.png" alt="macOS Security Compliance" width="550">
   </picture>
 </p>
 
 <p align="center">
-  <a href="https://www.apple.com/macos/"><img src="https://badgen.net/badge/icon/apple?icon=apple&label" alt="Apple"></a>
-  <a href="https://www.apple.com/macos/"><img src="https://badgen.net/badge/icon/26.0?icon=apple&label" alt="macOS 26.0"></a>
+  <a href="https://www.apple.com/os/macos/"><img src="https://badgen.net/badge/icon/apple?icon=apple&label" alt="Apple"></a>
+  <a href="https://www.apple.com/os/macos/"><img src="https://badgen.net/badge/icon/26.0?icon=apple&label" alt="macOS 26.0"></a>
   <a href="http://pages.nist.gov/macos_security/"><img src="https://badgen.net/badge/website/pages.nist.gov/blue" alt="Website"></a>
   <a href="LICENSE.md"><img src="https://badgen.net/badge/license/CC%20BY%204.0/green" alt="License"></a>
   <a href="https://github.com/usnistgov/macos_security/stargazers"><img src="https://badgen.net/github/stars/usnistgov/macos_security" alt="Stars"></a>
@@ -27,7 +27,7 @@ Beyond the built-in frameworks, organizations can build customized baselines to 
 
 The security rules are derived from NIST Special Publication (SP) 800-53, _Security and Privacy Controls for Information Systems and Organizations_, Revision 5. mSCP is a joint project of federal IT security staff from the National Institute of Standards and Technology (NIST), the National Aeronautics and Space Administration (NASA), the Defense Information Systems Agency (DISA), and Los Alamos National Laboratory (LANL), along with a community of contributors who test the project and provide feedback to keep it on the cutting edge of Apple platform security.
 
-mSCP is the technical implementation of NIST SP 800-219 (Rev. 2), [_Automated Secure Configuration Guidance from the macOS Security Compliance Project_](https://csrc.nist.gov/pubs/sp/800/219/r2/final) — the official NIST guidance for automated secure configuration of macOS. Apple also acknowledges the project on its [Platform Certifications](https://support.apple.com/guide/certifications/macos-security-compliance-project-apc322685bb2/web) page.
+mSCP is the technical implementation of NIST SP 800-219 (Rev. 2), [_Automated Secure Configuration Guidance from the macOS Security Compliance Project_](https://csrc.nist.gov/pubs/sp/800/219/r2/final) — the official NIST guidance for automated secure configuration of macOS. Apple also acknowledges the project on its Apple Platform Certifications for [macOS](https://support.apple.com/guide/certifications/macos-security-compliance-project-apc322685bb2/web) & [iOS/iPadOS](https://support.apple.com/guide/certifications/ios-and-ipados-security-compliance-project-apcb2892d3b0/web) pages.
 
 To learn more, visit the [project website](http://pages.nist.gov/macos_security/). If you would like to contribute, see the [contributor guidance](CONTRIBUTING.adoc).
 
