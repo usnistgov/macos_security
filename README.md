@@ -44,7 +44,7 @@ To learn more, visit the [project website](http://pages.nist.gov/macos_security/
 - NLMAPGOV (Base and Plus) <a href="https://www.apple.com/os/macos/"><img src="https://badgen.net/badge/icon/macOS?icon=apple&label" alt="macOS"></a><a href="https://www.apple.com/os/ios/"><img src="https://badgen.net/badge/icon/iOS & iPadOS?icon=apple&label" alt="iOS & iPadOS"></a>
 - HICP — Health Industry Cybersecurity Practices (Large Organizations) <a href="https://www.apple.com/os/macos/"><img src="https://badgen.net/badge/icon/macOS/red?icon=apple&label" alt="macOS"></a>
 
-Don't see your framework listed? Reach out through the [contributor guidance](CONTRIBUTING.md) or the [project website](http://pages.nist.gov/macos_security/) to find out how we can get it included.
+Don't see your framework listed? Reach out through the [contributor guidance](CONTRIBUTING.adoc) or the [project website](http://pages.nist.gov/macos_security/) to find out how we can get it included.
 
 ## Usage
 
