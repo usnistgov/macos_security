@@ -183,7 +183,7 @@ def generate_guidance(sp: Yaspin, args: argparse.Namespace) -> None:
         html_css: str = "asciidoctor.css"
 
     _custom_root = Path(config["custom"]["root_dir"])
-    custom: bool = not (_custom_root.exists() and any(_custom_root.iterdir()))
+    custom: bool = _custom_root.exists() and any(_custom_root.iterdir())
     show_all_tags: bool = False
 
     output_basename: str = args.baseline.name
@@ -201,7 +201,7 @@ def generate_guidance(sp: Yaspin, args: argparse.Namespace) -> None:
         build_path, f"{baseline_name}_{args.language}.xlsx"
     )
 
-    baseline: Baseline = Baseline.from_yaml(args.baseline, args.language, custom)
+    baseline: Baseline = Baseline.from_yaml(args.baseline, args.language)
 
     current_version_data: dict[str, Any] = get_version_data(
         baseline.platform["os"], baseline.platform["version"], mscp_data
@@ -213,9 +213,11 @@ def generate_guidance(sp: Yaspin, args: argparse.Namespace) -> None:
     if args.logo:
         logo_path = args.logo
     else:
-        logo_path = Path(
-            config["images_dir"],
-            f"mscp_banner_{baseline.platform['os'].lower()}_{'dark' if args.dark else 'light'}.png",
+        _logo_filename = f"mscp_banner_{baseline.platform['os'].lower()}_{'dark' if args.dark else 'light'}.png"
+        _custom_logo = Path(config["custom"]["images_dir"], _logo_filename)
+        logo_path = (
+            _custom_logo if _custom_logo.exists()
+            else Path(config["images_dir"], _logo_filename)
         ).absolute()
 
     if not logo_path.exists():
@@ -323,7 +325,6 @@ def generate_guidance(sp: Yaspin, args: argparse.Namespace) -> None:
             baseline.platform["os"],
             current_version_data,
             show_all_tags,
-            custom,
             output_format="markdown",
             language=args.language,
         )
@@ -393,7 +394,6 @@ def generate_guidance(sp: Yaspin, args: argparse.Namespace) -> None:
             baseline.platform["os"],
             current_version_data,
             show_all_tags,
-            custom,
             output_format="markdown",
             language=args.language,
         )
@@ -415,7 +415,6 @@ def generate_guidance(sp: Yaspin, args: argparse.Namespace) -> None:
         baseline.platform["os"],
         current_version_data,
         show_all_tags,
-        custom,
         language=args.language,
     )
     try:

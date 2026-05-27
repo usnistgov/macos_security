@@ -18,7 +18,7 @@ import pandas as pd
 from pydantic import BaseModel
 
 # Local python modules
-from ..common_utils import config, create_yaml, open_file
+from ..common_utils import config, create_yaml, open_file, search_paths
 from ..common_utils.logger_instance import logger
 from .macsecurityrule import Macsecurityrule
 
@@ -122,22 +122,19 @@ class Baseline(BaseModel):
         cls,
         file_path: Path,
         language: str = "en",
-        custom: bool = False,
     ) -> "Baseline":
         """Load a `Baseline` from a YAML file with rules resolved.
 
         Reads the baseline document, then for each profile entry resolves
-        the matching section file (under ``config["sections_dir"]``, plus
-        ``config["custom"]["sections_dir"]`` if `custom` is set) and
-        loads its rules via `Macsecurityrule.load_rules`.
+        the matching section file.  The custom sections directory (from
+        ``config["custom"]["sections_dir"]``) is always searched first so
+        that user-provided section files shadow the bundled defaults on a
+        per-file basis.
 
         Args:
             file_path (Path): Path to the baseline YAML file.
             language (str): Language code passed through to the file
                 loader for localised strings. Defaults to ``"en"``.
-            custom (bool): If true, also search the configured custom
-                sections directory when resolving section files.
-                Defaults to ``False``.
 
         Returns:
             Baseline: A fully populated baseline with all profiles and
@@ -147,15 +144,7 @@ class Baseline(BaseModel):
 
         logger.info(f"Attempting to open Baseline file: {file_path}")
 
-        section_dirs: list[Path] = []
-
-        if custom:
-            section_dirs = [
-                Path(config["custom"]["sections_dir"]),
-                Path(config["sections_dir"]),
-            ]
-        else:
-            section_dirs = [Path(config["sections_dir"])]
+        section_dirs: list[Path] = [Path(p) for p in search_paths("sections_dir")]
 
         baseline_data: dict[str, Any] = open_file(file_path, language)
         authors = [Author(**author) for author in baseline_data.get("authors", [])]

@@ -17,7 +17,7 @@ from jinja2 import Environment, FileSystemLoader
 
 # Local python modules
 from ...classes import Baseline, Macsecurityrule
-from ...common_utils import config, create_file, logger, make_dir, mscp_data, NIX_OS
+from ...common_utils import config, create_file, logger, make_dir, mscp_data, search_paths, NIX_OS
 
 
 def group_ulify(elements: list[str]) -> str:
@@ -158,7 +158,7 @@ def generate_script(
 
     output_file: Path = Path(build_path, f"{baseline_name}_compliance.sh")
     env: Environment = Environment(
-        loader=FileSystemLoader(config["shell_template_dir"]),
+        loader=FileSystemLoader(search_paths("shell_template_dir")),
         trim_blocks=True,
         lstrip_blocks=True,
     )
@@ -213,7 +213,7 @@ def generate_restore_script(
 
     output_file: Path = Path(build_path, f"{baseline_name}_restore.sh")
     env: Environment = Environment(
-        loader=FileSystemLoader(config["shell_template_dir"]),
+        loader=FileSystemLoader(search_paths("shell_template_dir")),
         trim_blocks=True,
         lstrip_blocks=True,
     )

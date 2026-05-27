@@ -28,6 +28,8 @@ from .common_utils import (
     get_supported_languages,
     mscp_data,
     config,
+    ensure_custom_dirs,
+    set_custom_dir,
     validate_rule_folder_structure,
 )
 from .generate import (
@@ -701,7 +703,8 @@ compliance script (e.g. disa_stig, cis.benchmark)
         if args.output_dir:
             config["output_dir"] = str(args.output_dir.expanduser().resolve())
         if args.custom_dir:
-            config["custom_dir"] = str(args.custom_dir.expanduser().resolve())
+            set_custom_dir(args.custom_dir.expanduser().resolve())
+        ensure_custom_dirs()
     except argparse.ArgumentError as e:
         logger.error("Argument Error: {}", e)
         parser.print_help()

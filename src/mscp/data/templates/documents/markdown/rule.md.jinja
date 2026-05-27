@@ -147,10 +147,10 @@
           <td>{{ rule.references.nist.cce | render_rules }}</td>
         </tr>
         {% endif %}
-        {% if custom %}
+        {% if custom and rule.references.custom_refs is not none %}
         <tr>
           <td><strong>Custom References</strong></td>
-          <td>{{ rule.references.custom_refs | render_rules if rule.references.cce is not none }}</td>
+          <td>{{ rule.references.custom_refs | render_rules }}</td>
         </tr>
         {% endif %}
         {% if show_all_tags %}

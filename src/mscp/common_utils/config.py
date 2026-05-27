@@ -73,7 +73,7 @@ for _key in ("output_dir", "custom_dir"):
 
 # Custom base: now guaranteed absolute.
 _custom_base: Path = Path(config["custom_dir"])
-_defaults_only = frozenset({"locales_dir", "shell_template_dir"})
+_defaults_only = frozenset({"locales_dir"})
 
 config["custom"] = {
     "root_dir": str(_custom_base),
@@ -83,6 +83,34 @@ for _key in _pkg_dir_keys - _defaults_only:
     config["custom"][_key] = str(
         _custom_base / Path(config[_key]).relative_to(_pkg_data)
     )
+
+
+def search_paths(dir_key: str) -> list[str]:
+    """Return an ordered list of directories for *dir_key*, custom first.
+
+    The custom path is only included when it exists on disk, so the list
+    is safe to pass directly to a Jinja2 ``FileSystemLoader`` or any
+    similar ordered-search loader.  The bundled path is always appended
+    as the final fallback.
+
+    Args:
+        dir_key (str): A key present in both ``config`` (bundled path) and
+            ``config["custom"]`` (custom override path), e.g.
+            ``"documents_templates_dir"``, ``"shell_template_dir"``,
+            ``"sections_dir"``.
+
+    Returns:
+        list[str]: ``[custom_path, bundled_path]`` when the custom directory
+            exists on disk, otherwise ``[bundled_path]``.
+    """
+    paths: list[str] = []
+    custom_dir = config["custom"].get(dir_key)
+    if custom_dir:
+        p = Path(custom_dir)
+        if p.exists():
+            paths.append(str(p))
+    paths.append(config[dir_key])
+    return paths
 
 
 def ensure_custom_dirs() -> None:
