@@ -28,6 +28,8 @@ from .common_utils import (
     get_supported_languages,
     mscp_data,
     config,
+    ensure_custom_dirs,
+    set_custom_dir,
     validate_rule_folder_structure,
 )
 from .generate import (
@@ -318,6 +320,14 @@ def parse_cli() -> None:
         "--list_tags",
         help="list the available keywords that can be used to generate a baseline YAML file",
         action="store_true",
+    )
+    baseline_parser.add_argument(
+        "-m",
+        "--migrate",
+        type=validate_file,
+        metavar="LEGACY_BASELINE",
+        help="migrate a legacy (pre-2.0) baseline YAML to the current format",
+        action="store",
     )
     baseline_parser.add_argument(
         "-t",
@@ -693,7 +703,8 @@ compliance script (e.g. disa_stig, cis.benchmark)
         if args.output_dir:
             config["output_dir"] = str(args.output_dir.expanduser().resolve())
         if args.custom_dir:
-            config["custom_dir"] = str(args.custom_dir.expanduser().resolve())
+            set_custom_dir(args.custom_dir.expanduser().resolve())
+        ensure_custom_dirs()
     except argparse.ArgumentError as e:
         logger.error("Argument Error: {}", e)
         parser.print_help()
@@ -742,5 +753,9 @@ compliance script (e.g. disa_stig, cis.benchmark)
         if len(sys.argv) == 2:
             baseline_parser.print_help()
             sys.exit()
+        if not args.migrate and not args.keyword and not args.list_tags:
+            logger.error("One of --keyword, --list_tags, or --migrate is required.")
+            baseline_parser.print_help()
+            sys.exit(1)
 
     args.func(args)

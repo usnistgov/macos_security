@@ -33,6 +33,7 @@ from ...common_utils import (
     mscp_data,
     open_file,
     run_command,
+    search_paths,
     NIX_OS,
 )
 
@@ -145,27 +146,35 @@ def render_references(reference_set: Sequence[Dict[str, Any]]) -> str:
     return "\n".join("!" + "\n!\n- ".join(r) for r in padded)
 
 
-def render_rules(rule_set: list[str]) -> str:
+def render_rules(rule_set: list[str] | None) -> str:
     """Render a list of rule strings as newline-separated ``"- <rule>"`` lines.
 
     Args:
-        rule_set (list[str]): Rule strings to render.
+        rule_set (list[str] | None): Rule strings to render. ``None`` or an
+            empty value returns an empty string.
 
     Returns:
-        str: Newline-joined bullet lines.
+        str: Newline-joined bullet lines, or ``""`` when *rule_set* is empty
+            or ``None``.
     """
+    if not rule_set:
+        return ""
     return "\n".join(f"- {rule}" for rule in rule_set)
 
 
-def render_rules_md(rule_set: list[str]) -> str:
+def render_rules_md(rule_set: list[str] | None) -> str:
     """Render a list of rule strings as ``<br>``-joined ``"- <rule>"`` lines for Markdown.
 
     Args:
-        rule_set (list[str]): Rule strings to render.
+        rule_set (list[str] | None): Rule strings to render. ``None`` or an
+            empty value returns an empty string.
 
     Returns:
-        str: ``<br>``-joined bullet lines.
+        str: ``<br>``-joined bullet lines, or ``""`` when *rule_set* is empty
+            or ``None``.
     """
+    if not rule_set:
+        return ""
     return "<br>".join(f"- {rule}" for rule in rule_set)
 
 
@@ -359,6 +368,29 @@ def get_nested(
     return current
 
 
+def _resolve_asset_dir(filename: str, dir_key: str) -> str:
+    """Return the directory that contains *filename*, preferring custom.
+
+    Checks whether ``config["custom"][dir_key] / filename`` exists.  If so,
+    returns the custom directory path; otherwise returns the bundled path
+    from ``config[dir_key]``.  This allows a user to drop a single custom
+    theme or image file into their custom directory and have it shadow the
+    bundled default without replacing the entire directory.
+
+    Args:
+        filename (str): The asset filename to look up (e.g. ``"mscp_theme.yml"``).
+        dir_key (str): Config key shared between ``config`` and
+            ``config["custom"]`` (e.g. ``"themes_dir"``).
+
+    Returns:
+        str: Absolute path to the directory that should be used.
+    """
+    custom_dir = Path(config["custom"].get(dir_key, ""))
+    if custom_dir.exists() and (custom_dir / filename).exists():
+        return str(custom_dir)
+    return config[dir_key]
+
+
 def render_template(
     output_file: Path,
     template_name: str,
@@ -371,7 +403,7 @@ def render_template(
     version_info: dict[str, Any],
     show_all_tags: bool,
     custom: bool,
-    template_dir: str,
+    template_dirs: list[str],
     themes_dir: str,
     logo_dir: str,
     output_format: str = "adoc",
@@ -385,7 +417,7 @@ def render_template(
 
     Args:
         output_file (Path): Destination for the rendered output.
-        template_name (str): Filename of the template within *template_dir*.
+        template_name (str): Filename of the template within *template_dirs*.
         baseline (Baseline): Baseline data model.
         b64logo (bytes): Base64-encoded logo image bytes.
         pdf_theme (str): AsciiDoctor-PDF theme filename.
@@ -395,7 +427,9 @@ def render_template(
         version_info (dict[str, Any]): OS/compliance version metadata.
         show_all_tags (bool): Whether to render all tags in the document.
         custom (bool): Whether the baseline uses a custom configuration.
-        template_dir (str): Path to the Jinja templates directory.
+            Passed through to the Jinja template context.
+        template_dirs (list[str]): Ordered list of directories for the Jinja
+            ``FileSystemLoader``; earlier entries shadow later ones.
         themes_dir (str): Path to the themes/styles directory.
         logo_dir (str): Path to the images directory.
         output_format (str): ``"adoc"`` (default) or ``"markdown"``.
@@ -409,7 +443,7 @@ def render_template(
     )
 
     env: Environment = Environment(
-        loader=FileSystemLoader(template_dir),
+        loader=FileSystemLoader(template_dirs),
         trim_blocks=True,
         lstrip_blocks=True,
         autoescape=False,
@@ -441,7 +475,12 @@ def render_template(
     baseline_dict: dict[str, Any] = baseline.model_dump()
     acronyms_data: dict[str, Any] = open_file(acronyms_file, language)
 
-    html_title, html_subtitle = map(str.strip, baseline.title.split(":", 1))
+    _title_parts = baseline.title.split(":", 1)
+    if len(_title_parts) == 2:
+        html_title, html_subtitle = map(str.strip, _title_parts)
+    else:
+        html_title = baseline.title.strip()
+        html_subtitle = ""
     document_subtitle2: str = ":document-subtitle2:"
 
     if "Tailored from" in baseline.title:
@@ -459,7 +498,7 @@ def render_template(
         baseline_dict["tailored"] = False
         baseline_dict["benchmark_description"] = benchmark_description
 
-    if any(author.is_additional() for author in baseline.authors):
+    if any(author.is_additional for author in baseline.authors):
         baseline_dict["additional_authors"] = True
 
     rendered_output = template.render(
@@ -499,40 +538,41 @@ def generate_documents(
     os_name: str,
     version_info: dict[str, Any],
     show_all_tags: bool = False,
-    custom: bool = False,
     output_format: str = "adoc",
     language: str = "en",
 ) -> None:
     """Render guidance documents and, for AsciiDoc output, invoke AsciiDoctor.
 
-    Selects standard or custom template/theme directories, calls
-    `render_template`, then (when *output_format* is ``"adoc"``) runs
-    ``bundle exec asciidoctor`` and ``bundle exec asciidoctor-pdf`` to
-    produce HTML and PDF output.
+    Resolves template, theme, and image directories by searching the custom
+    directory first and falling back to the bundled defaults, then calls
+    `render_template`.  For AsciiDoc output also runs ``bundle exec
+    asciidoctor`` and ``bundle exec asciidoctor-pdf`` to produce HTML and
+    PDF output.
 
     Args:
         spinner (Yaspin): Spinner for progress feedback.
         output_file (Path): Destination ``.adoc`` or ``.md`` file.
         baseline (Baseline): Baseline data model.
         b64logo (bytes): Base64-encoded logo image bytes.
-        pdf_theme (str): AsciiDoctor-PDF theme filename.
+        pdf_theme (str): AsciiDoctor-PDF theme filename or absolute path.
         html_css (str): CSS filename for HTML output.
         logo_path (Path): Absolute path to the logo file.
         os_name (str): Operating system name string.
         version_info (dict[str, Any]): OS/compliance version metadata.
         show_all_tags (bool): Whether to render all tags. Defaults to ``False``.
-        custom (bool): Whether to use the custom template directory. Defaults to ``False``.
         output_format (str): ``"adoc"`` (default) or ``"markdown"``.
         language (str): BCP-47 language code. Defaults to ``"en"``.
     """
-    template_dir: str = config["documents_templates_dir"]
-    themes_dir: str = config["themes_dir"]
-    logo_dir: str = config["images_dir"]
+    # Determine whether any custom content is active (for template context).
+    _custom_root = Path(config["custom"]["root_dir"])
+    custom: bool = _custom_root.exists() and any(_custom_root.iterdir())
 
-    if custom:
-        template_dir = config["custom"]["documents_templates_dir"]
-        themes_dir = config["custom"]["themes_dir"]
-        logo_dir = config["custom"]["images_dir"]
+    # Templates: custom files shadow bundled ones via ordered search paths.
+    _template_dirs: list[str] = search_paths("documents_templates_dir")
+
+    # Static assets: prefer the custom directory when it contains the file.
+    _themes_dir: str = _resolve_asset_dir(pdf_theme, "themes_dir")
+    _logo_dir: str = _resolve_asset_dir(logo_path.name, "images_dir")
 
     render_template(
         output_file,
@@ -546,9 +586,9 @@ def generate_documents(
         version_info,
         show_all_tags,
         custom,
-        template_dir,
-        themes_dir,
-        logo_dir,
+        _template_dirs,
+        _themes_dir,
+        _logo_dir,
         output_format,
         language,
     )

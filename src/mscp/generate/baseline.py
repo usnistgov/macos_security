@@ -16,6 +16,7 @@ from typing import Any
 
 # Local python modules
 from ..classes import Author, Baseline, Macsecurityrule
+from ..classes.legacy_baseline import LegacyBaseline
 from ..common_utils import (
     config,
     logger,
@@ -154,6 +155,88 @@ def rule_has_benchmark_for_version(
     return False
 
 
+def migrate_legacy_baseline(args: argparse.Namespace) -> None:
+    """Migrate a legacy (pre-2.0) baseline YAML to the current format.
+
+    Reads the file supplied via ``args.migrate``, resolves each rule ID
+    against the current rule library, and writes the migrated baseline to
+    the custom baselines directory.  Any rule IDs that are not found in the
+    current library are reported but do not abort the migration.
+
+    Platform is inferred from the legacy file's title.  When inference
+    fails, the ``--os_name`` / ``--os_version`` flags supplied on the
+    command line are used as the fallback.
+
+    Args:
+        args (argparse.Namespace): Parsed CLI arguments.  ``args.migrate``
+            must be a ``Path`` to the legacy YAML; ``args.os_name`` and
+            ``args.os_version`` are used as a platform fallback.
+    """
+    source: Path = args.migrate
+    build_path: Path = Path(config["custom"].get("baseline_dir", ""))
+
+    if not build_path.exists():
+        make_dir(build_path)
+
+    if not LegacyBaseline.is_legacy(source):
+        logger.error(
+            "{} does not appear to be a legacy baseline — "
+            "authors is already a list and platform is present. "
+            "No migration needed.",
+            source,
+        )
+        sys.exit(1)
+
+    lb = LegacyBaseline.from_yaml(source)
+
+    # Attempt to infer platform from the title; fall back to the CLI flags.
+    platform_override: dict | None = None
+    try:
+        inferred = lb.parse_platform()
+        os_name_lower: str = inferred["os"].lower()
+        os_version: float = inferred["version"]
+        logger.info(
+            "Platform inferred from title: {} {}",
+            inferred["os"],
+            os_version,
+        )
+    except ValueError:
+        logger.warning(
+            "Cannot infer platform from title {!r}. "
+            "Using --os_name={} --os_version={} from command line.",
+            lb.title,
+            args.os_name,
+            args.os_version,
+        )
+        platform_override = {"os": args.os_name, "version": args.os_version}
+        os_name_lower = args.os_name
+        os_version = args.os_version
+
+    # Name matches the format used by generate_baseline:
+    # {parent_values}_{os_name}_{os_version}.yaml
+    output_filename: str = f"{lb.parent_values}_{os_name_lower}_{os_version}.yaml"
+    output_path: Path = build_path / output_filename
+
+    missing = lb.migrate(output_path, platform=platform_override)
+
+    try:
+        display_path = output_path.relative_to(Path.cwd())
+    except ValueError:
+        display_path = output_path
+
+    print(f"\nMigrated baseline written to: {display_path}")
+
+    if missing:
+        print(
+            f"\n{len(missing)} rule(s) from the legacy file were not found "
+            "in the current library and were skipped:"
+        )
+        for rule_id in missing:
+            print(f"  - {rule_id}")
+    else:
+        print("All rules resolved successfully.")
+
+
 @logger.catch
 def generate_baseline(args: argparse.Namespace, admin=False) -> None:
     """Generate a YAML baseline file for the specified OS and keyword.
@@ -170,6 +253,10 @@ def generate_baseline(args: argparse.Namespace, admin=False) -> None:
             default baseline directory instead of the custom directory.
             Defaults to ``False``.
     """
+    if getattr(args, "migrate", None):
+        migrate_legacy_baseline(args)
+        return
+
     if admin:
         build_path: Path = Path(config.get("baseline_dir", "")) / args.os_name
     else:

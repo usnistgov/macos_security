@@ -48,6 +48,7 @@
 |===
 {% endif %}
 
+{% if "CMMC" in baseline.title.upper() %}
 [%header, cols=2*a]
 .Cybersecurity Maturity Model Certification (CMMC)
 |===
@@ -55,7 +56,9 @@
 |{% trans %}Document Title{% endtrans %}
 |link:https://dodcio.defense.gov/Portals/0/Documents/CMMC/ModelOverview_V2.0_FINAL2_20211202_508.pdf[CMMC Model Overview v2.0]|_Cybersecurity Maturity Model Certification (CMMC) Model Overview v2.0_
 |===
+{% endif %}
 
+{% if "CNSSI" in baseline.title.upper() %}
 [%header, cols=2*a]
 .Committee on National Security Systems (CNSS)
 |===
@@ -63,6 +66,7 @@
 |{% trans %}Document Title{% endtrans %}
 |link:https://www.cnss.gov/CNSS/issuances/Instructions.cfm[CNSSI No. 1253]|_Security Categorization and Control Selection for National Security Systems_
 |===
+{% endif %}
 
 === {% trans %}Non-Government Documents{% endtrans %}
 
@@ -79,11 +83,13 @@
 |===
 {% endif %}
 
+{% if "CIS_LVL" in baseline.title.upper() %}
 [%header, cols=2*a]
 .Center for Internet Security
 |===
 |{% trans %}Document Number or Descriptor{% endtrans %}
 |{% trans %}Document Title{% endtrans %}
+
 {% if os_name == "macos" %}
 {% if os_version == "15.0" %}
 |link:https://www.cisecurity.org/benchmark/apple_os/[Apple macOS 15.0]|_CIS Apple macOS 15.0 Benchmark version 1.0.0_
@@ -101,6 +107,8 @@
 |link:https://www.cisecurity.org/benchmark/apple_ios[Apple iOS/iPadOS]|_CIS Apple iOS 17 and iPadOS 17 Version 1.1.0_
 {% elif os_version == "16.0" %}
 |link:https://www.cisecurity.org/benchmark/apple_ios[Apple iOS/iPadOS]|_CIS Apple iOS 16 and iPadOS 16 Version 1.1.0_
+{% endif %}
+
 {% endif %}
 
 |===

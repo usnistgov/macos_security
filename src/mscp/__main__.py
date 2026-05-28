@@ -8,18 +8,17 @@ exist, then delegates to `parse_cli`.
 import sys
 
 from .cli import parse_cli
-from .common_utils import logger, ensure_custom_dirs
+from .common_utils import logger
 
 
 def main() -> None:
     """Run the mSCP CLI as a module entry point.
 
-    Enables the `mscp` loguru logger, calls `ensure_custom_dirs` to create
-    the per-user custom directories on first run, then dispatches to
-    `parse_cli`.
+    Enables the `mscp` loguru logger then delegates to `parse_cli`, which
+    calls `set_custom_dir` (if ``--custom_dir`` was supplied) and
+    `ensure_custom_dirs` before dispatching to the appropriate sub-command.
     """
     logger.enable("mscp")
-    ensure_custom_dirs()
     parse_cli()
 
 

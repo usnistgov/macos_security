@@ -3,7 +3,8 @@
 
 Re-exports the loguru logger (`logger`), file I/O helpers
 (create / open / remove for YAML, JSON, plist, CSV, text), the
-configuration model (`config`, `set_custom_dir`, `ensure_custom_dirs`),
+configuration model (`config`, `set_custom_dir`, `ensure_custom_dirs`,
+`search_paths`),
 input validation utilities (`sanitize_input`, `prompt_for_odv`,
 `validate_yaml_file`, `validate_rule_folder_structure`), localization
 helpers (`get_supported_languages`), version metadata accessors
@@ -12,7 +13,7 @@ runner (`run_command`), and the spinner decorator
 (`conditional_inject_spinner`).
 """
 
-from .config import config, set_custom_dir, ensure_custom_dirs
+from .config import config, set_custom_dir, ensure_custom_dirs, search_paths
 from .constants import SCHEMA_PATH, APPLE_OS, NIX_OS
 from .customization import collect_overrides
 from .file_handling import (
@@ -71,6 +72,7 @@ __all__ = [
     "config",
     "set_custom_dir",
     "ensure_custom_dirs",
+    "search_paths",
     "CONFIG_PATH",
     "SCHEMA_PATH",
     "APPLE_OS",

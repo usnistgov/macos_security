@@ -24,6 +24,7 @@ from yaspin.spinners import Spinners
 
 # Local python modules
 from ..classes import Baseline
+from ..classes.legacy_baseline import LegacyBaseline
 from ..common_utils import (
     config,
     get_version_data,
@@ -76,6 +77,70 @@ def verify_signing_hash(cert_hash: str) -> bool:
     return True
 
 
+def _auto_migrate_legacy(args: argparse.Namespace) -> Path:
+    """Migrate a legacy baseline to the current format and return the new path.
+
+    Called transparently by `generate_guidance` when the provided baseline
+    file is detected as pre-2.0 format.  The migrated YAML is written to the
+    custom baselines directory using the standard naming convention
+    ``{parent_values}_{os_name}_{os_version}.yaml``.
+
+    Platform is inferred from the baseline title.  If inference fails, the
+    ``--os_name`` / ``--os_version`` flags on ``args`` are used as a fallback.
+
+    Args:
+        args (argparse.Namespace): Parsed CLI arguments. ``args.baseline``
+            must be the path to the legacy YAML file; ``args.os_name`` and
+            ``args.os_version`` serve as a platform fallback.
+
+    Returns:
+        Path: Path to the migrated baseline YAML.
+    """
+    source: Path = args.baseline
+    baseline_dir: Path = Path(config["custom"].get("baseline_dir", ""))
+
+    if not baseline_dir.exists():
+        make_dir(baseline_dir)
+
+    lb = LegacyBaseline.from_yaml(source)
+
+    platform_override: dict | None = None
+    try:
+        inferred = lb.parse_platform()
+        os_name_lower: str = inferred["os"].lower()
+        os_version: float = inferred["version"]
+    except ValueError:
+        logger.warning(
+            "Cannot infer platform from legacy baseline title {!r}. "
+            "Using --os_name={} --os_version={} from command line.",
+            lb.title,
+            args.os_name,
+            args.os_version,
+        )
+        platform_override = {"os": args.os_name, "version": args.os_version}
+        os_name_lower = args.os_name
+        os_version = args.os_version
+
+    output_path: Path = (
+        baseline_dir / f"{lb.parent_values}_{os_name_lower}_{os_version}.yaml"
+    )
+
+    missing = lb.migrate(output_path, platform=platform_override)
+
+    logger.info(
+        "Auto-migrated legacy baseline {} → {}", source.name, output_path.name
+    )
+    if missing:
+        logger.warning(
+            "{} rule(s) from the legacy baseline were not found in the "
+            "current library and were skipped: {}",
+            len(missing),
+            ", ".join(missing),
+        )
+
+    return output_path
+
+
 @conditional_inject_spinner()
 def generate_guidance(sp: Yaspin, args: argparse.Namespace) -> None:
     """Orchestrate all guidance artifacts for a given baseline.
@@ -93,6 +158,17 @@ def generate_guidance(sp: Yaspin, args: argparse.Namespace) -> None:
             ``script``, ``xlsx``, ``gary``, ``markdown``, ``manifest``,
             ``all``, ``consolidated_profile``, ``granular_profiles``.
     """
+    # Transparently migrate legacy (pre-2.0) baselines before deriving any
+    # paths. Updating args.baseline here means all subsequent path derivations
+    # (basename, build_path, adoc_output_file, …) use the migrated file
+    # automatically.
+    if LegacyBaseline.is_legacy(args.baseline):
+        logger.info(
+            "Legacy baseline detected: {}. Migrating before generating guidance.",
+            args.baseline.name,
+        )
+        args.baseline = _auto_migrate_legacy(args)
+
     # Configure localization at the beginning based on the CLI language parameter
     logger.debug(f"Language parameter from CLI: {args.language}")
 
@@ -107,7 +183,7 @@ def generate_guidance(sp: Yaspin, args: argparse.Namespace) -> None:
         html_css: str = "asciidoctor.css"
 
     _custom_root = Path(config["custom"]["root_dir"])
-    custom: bool = not (_custom_root.exists() and any(_custom_root.iterdir()))
+    custom: bool = _custom_root.exists() and any(_custom_root.iterdir())
     show_all_tags: bool = False
 
     output_basename: str = args.baseline.name
@@ -125,7 +201,7 @@ def generate_guidance(sp: Yaspin, args: argparse.Namespace) -> None:
         build_path, f"{baseline_name}_{args.language}.xlsx"
     )
 
-    baseline: Baseline = Baseline.from_yaml(args.baseline, args.language, custom)
+    baseline: Baseline = Baseline.from_yaml(args.baseline, args.language)
 
     current_version_data: dict[str, Any] = get_version_data(
         baseline.platform["os"], baseline.platform["version"], mscp_data
@@ -137,9 +213,11 @@ def generate_guidance(sp: Yaspin, args: argparse.Namespace) -> None:
     if args.logo:
         logo_path = args.logo
     else:
-        logo_path = Path(
-            config["images_dir"],
-            f"mscp_banner_{baseline.platform['os'].lower()}_{'dark' if args.dark else 'light'}.png",
+        _logo_filename = f"mscp_banner_{baseline.platform['os'].lower()}_{'dark' if args.dark else 'light'}.png"
+        _custom_logo = Path(config["custom"]["images_dir"], _logo_filename)
+        logo_path = (
+            _custom_logo if _custom_logo.exists()
+            else Path(config["images_dir"], _logo_filename)
         ).absolute()
 
     if not logo_path.exists():
@@ -247,7 +325,6 @@ def generate_guidance(sp: Yaspin, args: argparse.Namespace) -> None:
             baseline.platform["os"],
             current_version_data,
             show_all_tags,
-            custom,
             output_format="markdown",
             language=args.language,
         )
@@ -317,7 +394,6 @@ def generate_guidance(sp: Yaspin, args: argparse.Namespace) -> None:
             baseline.platform["os"],
             current_version_data,
             show_all_tags,
-            custom,
             output_format="markdown",
             language=args.language,
         )
@@ -339,7 +415,6 @@ def generate_guidance(sp: Yaspin, args: argparse.Namespace) -> None:
         baseline.platform["os"],
         current_version_data,
         show_all_tags,
-        custom,
         language=args.language,
     )
     try:

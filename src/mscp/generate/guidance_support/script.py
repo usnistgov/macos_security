@@ -12,14 +12,12 @@ Jinja filter helpers `group_ulify`, `generate_log_reference`, and
 from datetime import date
 from itertools import groupby
 from pathlib import Path
-from typing import Any
-
 # Additional python modules
 from jinja2 import Environment, FileSystemLoader
 
 # Local python modules
 from ...classes import Baseline, Macsecurityrule
-from ...common_utils import config, create_file, logger, make_dir, mscp_data, NIX_OS
+from ...common_utils import config, create_file, logger, make_dir, mscp_data, search_paths, NIX_OS
 
 
 def group_ulify(elements: list[str]) -> str:
@@ -61,14 +59,14 @@ def generate_log_reference(rule: Macsecurityrule, reference: str) -> list[str] |
     """
     log_reference_id: list[str] | str
     try:
-        log_references = rule["references"].get_ref(reference)
+        log_references = rule.references.get_ref(reference)
     except KeyError:
         logger.warning(
-            f'Unable to find the reference "{reference}" in rule "{rule["rule_id"]}"'
+            f'Unable to find the reference "{reference}" in rule "{rule.rule_id}"'
         )
         log_references = []
     if reference == "default" or not log_references:
-        log_reference_id = rule["rule_id"]
+        log_reference_id = rule.rule_id
     else:
         log_reference_id = f"{', '.join(map(str, log_references))}"
     return log_reference_id
@@ -160,7 +158,7 @@ def generate_script(
 
     output_file: Path = Path(build_path, f"{baseline_name}_compliance.sh")
     env: Environment = Environment(
-        loader=FileSystemLoader(config["shell_template_dir"]),
+        loader=FileSystemLoader(search_paths("shell_template_dir")),
         trim_blocks=True,
         lstrip_blocks=True,
     )
@@ -170,10 +168,8 @@ def generate_script(
     env.filters["log_reference"] = generate_log_reference
     env.filters["quotify"] = quotify
 
-    baseline_dict: dict[str, Any] = dict(baseline)
-
     rendered_output = script_template.render(
-        baseline=baseline_dict,
+        baseline=baseline,
         baseline_name=baseline_name,
         audit_name=audit_name,
         reference_log_id=log_reference,
@@ -217,7 +213,7 @@ def generate_restore_script(
 
     output_file: Path = Path(build_path, f"{baseline_name}_restore.sh")
     env: Environment = Environment(
-        loader=FileSystemLoader(config["shell_template_dir"]),
+        loader=FileSystemLoader(search_paths("shell_template_dir")),
         trim_blocks=True,
         lstrip_blocks=True,
     )
@@ -227,16 +223,14 @@ def generate_restore_script(
     env.filters["log_reference"] = generate_log_reference
     env.filters["quotify"] = quotify
 
-    baseline_dict: dict[str, Any] = dict(baseline)
-
     any_rendered = any(
-        rule.get("default_state")
-        for p in baseline_dict["profile"]
-        for rule in p["rules"]
+        rule.default_state
+        for p in baseline.profile
+        for rule in p.rules
     )
 
     rendered_output = script_template.render(
-        baseline=baseline_dict,
+        baseline=baseline,
         baseline_name=baseline_name,
         audit_name=audit_name,
         reference_log_id=log_reference,

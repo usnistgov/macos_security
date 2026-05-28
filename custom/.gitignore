@@ -1,1 +1,10 @@
 **/*.y*ml
+**/*.jinja
+**/*.css
+**/*.*o
+**/*.sh
+**/*.xml
+**/*.json
+**/*.md
+**/*.mobileconfig
+**/*.png

@@ -11,7 +11,7 @@
 | [NIST Special Publication 800-171](https://csrc.nist.gov/pubs/sp/800/171/r3/final)                  | _NIST Special Publication 800-171 Rev 3_    |
 | [NIST Special Publication 800-219](https://csrc.nist.gov/pubs/sp/800/219/r1/final)                  | _NIST Special Publication 800-219 Rev 1_    |
 
-{% if "STIG" in baseline.title %}
+{% if "STIG" in baseline.title.upper() %}
 #### Defense Information Systems Agency (DISA)
 
 | Document Number or Descriptor | Document Title |
@@ -41,17 +41,21 @@
 {% endif %}
 {% endif %}
 
+{% if "CMMC" in baseline.title.upper() %}
 #### Cybersecurity Maturity Model Certification (CMMC)
 
 | Document Number or Descriptor | Document Title |
 |----------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------|
 | [CMMC Model Overview v2.0](https://dodcio.defense.gov/Portals/0/Documents/CMMC/ModelOverview_V2.0_FINAL2_20211202_508.pdf) | _Cybersecurity Maturity Model Certification (CMMC) Model Overview v2.0_ |
+{% endif %}
 
+{% if "CNSSI" in baseline.title.upper() %}
 #### Committee on National Security Systems (CNSS)
 
 | Document Number or Descriptor | Document Title |
 |------------------------------------------------------------------------|-------------------------------------------------------------------------------|
 | [CNSSI No. 1253](https://www.cnss.gov/CNSS/issuances/Instructions.cfm) | _Security Categorization and Control Selection for National Security Systems_ |
+{% endif %}
 
 ### Non-Government Documents
 
@@ -64,6 +68,7 @@
 | [Apple Platform Certifications](https://support.apple.com/guide/certifications/welcome/web)                               | _Apple Platform Certifications_ |
 | [Profile-Specific Payload Keys](https://developer.apple.com/documentation/devicemanagement/profile-specific_payload_keys) | _Profile-Specific Payload Keys_ |
 
+{% if "CIS_LVL" in baseline.title.upper() %}
 #### Center for Internet Security
 
 | Document Number or Descriptor | Document Title |
@@ -88,4 +93,6 @@
 {% endif %}
 {% elif os_name == "visionos" %}
 | Apple visionOS                                                     | _Currently Unavailable_                        |
+{% endif %}
+
 {% endif %}

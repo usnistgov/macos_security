@@ -11,6 +11,7 @@ Re-exports the public model classes used throughout mSCP:
 """
 
 from .baseline import Author, Baseline, Profile
+from .legacy_baseline import LegacyBaseline, LegacyProfile
 
 # from .filehandler import FileHandler
 from .macsecurityrule import Macsecurityrule, Sectionmap
@@ -19,6 +20,8 @@ from .rule_library import RuleLibrary
 
 __all__ = [
     "Baseline",
+    "LegacyBaseline",
+    "LegacyProfile",
     "Macsecurityrule",
     "Payload",
     "Author",
