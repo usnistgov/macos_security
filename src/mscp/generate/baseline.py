@@ -298,7 +298,11 @@ def generate_baseline(args: argparse.Namespace, admin=False) -> None:
         baseline_output_file: Path = (
             build_path / f"{tailored_filename}_{args.os_name}_{args.os_version}.yaml"
         )
-        authors.append(Author(name=custom_author_name, organization=custom_author_org))
+        authors.append(
+            Author(
+                name=custom_author_name, organization=custom_author_org, additional=True
+            )
+        )
 
         if tailored_filename == args.keyword:
             baseline_name = f"{tailored_filename} (Tailored)"

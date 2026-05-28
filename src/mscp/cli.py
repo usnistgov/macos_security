@@ -2,14 +2,15 @@
 """Command-line interface for mSCP.
 
 Defines `parse_cli`, the top-level entry point invoked from
-:mod:`mscp.__main__`. Builds an `argparse` tree with subcommands
-``baseline`` / ``guidance`` / ``mapping`` / ``scap`` / ``admin`` (the
+`mscp.__main__`. Builds an `argparse` tree with subcommands
+`baseline` / `guidance` / `mapping` / `scap` / `admin` (the
 last with its own nested utilities) and dispatches to the matching
 function in `mscp.generate` or `mscp.admin_utils`.
 """
 
 # Standard python modules
 import argparse
+import json
 import sys
 import platform
 from pathlib import Path
@@ -58,13 +59,61 @@ class Customparser(argparse.ArgumentParser):
         sys.exit(2)
 
 
+class ListPlatformsAction(argparse.Action):
+    def __call__(self, parser, namespace, values, option_string=None):
+        fmt = "human"
+        if "--format" in sys.argv:
+            idx = sys.argv.index("--format")
+            if idx + 1 < len(sys.argv):
+                fmt = sys.argv[idx + 1]
+
+        platforms = mscp_data.get("versions", {}).get("platforms", {})
+
+        if fmt == "json":
+            print(
+                json.dumps(
+                    {
+                        name: sorted((e["os_version"] for e in versions), reverse=True)
+                        for name, versions in platforms.items()
+                    },
+                    indent=2,
+                )
+            )
+        else:
+            platform_versions = {
+                name: sorted((e["os_version"] for e in versions), reverse=True)
+                for name, versions in platforms.items()
+            }
+            col_width = max(len(name) for name in platform_versions) + 4
+            max_rows = max(len(v) for v in platform_versions.values())
+
+            print("Supported platforms (--os_name) and versions (--os_version):\n")
+            print("  " + "".join(name.ljust(col_width) for name in platform_versions))
+            print(
+                "  "
+                + "".join(
+                    ("-" * len(name)).ljust(col_width) for name in platform_versions
+                )
+            )
+            for i in range(max_rows):
+                print(
+                    "  "
+                    + "".join(
+                        (str(v[i]) if i < len(v) else "").ljust(col_width)
+                        for v in platform_versions.values()
+                    )
+                )
+            print()
+        parser.exit()
+
+
 class SmartFormatter(argparse.HelpFormatter):
     """Help formatter with two minor tweaks for the mSCP CLI.
 
     - Single-letter / single-form options are indented to align with the
       long-form options for readability.
-    - Help strings prefixed with ``"R|"`` are emitted with their original
-      newlines preserved (a common ``argparse`` recipe for raw text).
+    - Help strings prefixed with `"R|"` are emitted with their original
+      newlines preserved (a common `argparse` recipe for raw text).
     """
 
     def _format_action_invocation(self, action):
@@ -88,14 +137,13 @@ class SmartFormatter(argparse.HelpFormatter):
 def get_macos_version() -> float:
     """Return the running host's major macOS version as a float.
 
-    Used as the default for the ``--os_version`` flag so the CLI assumes
-    the current host's version unless overridden. Falls back to ``26.0``
+    Used as the default for the `--os_version` flag so the CLI assumes
+    the current host's version unless overridden. Falls back to `26.0`
     when `platform.mac_ver` returns an empty string (e.g. when run on a
     non-macOS host).
 
     Returns:
-        float: Major version (e.g. ``15.0``), or ``26.0`` on a non-macOS
-            host.
+        float: Major version (e.g. `15.0`), or `26.0` on a non-macOS host.
     """
     version_str, _, _ = platform.mac_ver()
     if version_str:
@@ -106,9 +154,9 @@ def get_macos_version() -> float:
 
 
 def validate_file(arg: str) -> Path | None:
-    """`argparse` type validator: ensure ``arg`` points at an existing file.
+    """`argparse` type validator: ensure `arg` points at an existing file.
 
-    Used as the ``type=`` argument on flags that take a path. Logs an
+    Used as the `type=` argument on flags that take a path. Logs an
     error and calls `sys.exit` if the path doesn't resolve to a file.
 
     Args:
@@ -128,16 +176,16 @@ def validate_file(arg: str) -> Path | None:
 def parse_cli() -> None:
     """Build the mSCP argument parser, parse `sys.argv`, and dispatch.
 
-    Constructs the top-level parser plus the ``baseline``, ``guidance``,
-    ``mapping``, ``scap``, and ``admin`` subcommands (each with its own
+    Constructs the top-level parser plus the `baseline`, `guidance`,
+    `mapping`, `scap`, and `admin` subcommands (each with its own
     flags), applies log-verbosity overrides, validates the platform/OS
     arguments (rejects unsupported macOS / iOS versions), and then calls
-    the subcommand's bound ``func`` with the parsed `argparse.Namespace`.
+    the subcommand's bound `func` with the parsed `argparse.Namespace`.
 
-    Side Effects:
-        Reads ``sys.argv``; configures the global mSCP logger;
-        mutates the global `config` dict for ``output_dir`` / ``rules_dir``;
-        may call `sys.exit` on validation failure.
+    Note:
+        Reads `sys.argv`; configures the global mSCP logger; mutates the
+        global `config` dict for `output_dir` / `rules_dir`; may call
+        `sys.exit` on validation failure.
     """
     parent_parser = Customparser()
     parent_parser.add_argument(
@@ -173,8 +221,22 @@ def parse_cli() -> None:
     )
 
     parser.add_argument(
+        "--list_platforms",
+        nargs=0,
+        action=ListPlatformsAction,
+        help="list all supported platforms and versions",
+    )
+
+    parser.add_argument(
+        "--format",
+        choices=["human", "json"],
+        default="human",
+        help="output format for --list_platforms",
+    )
+
+    parser.add_argument(
         "--os_name",
-        choices=["macos", "ios", "visionos"],
+        choices=mscp_data.get("versions", {}).get("platforms", {}),
         default="macos",
         help="operating system to be referenced when generating guidance",
         type=str,
@@ -185,6 +247,15 @@ def parse_cli() -> None:
         default=get_macos_version(),
         type=float,
         help="version of the operating system to be referenced when generating guidance (eg: 14.0, 15.0).",
+    )
+
+    parser.add_argument(
+        "-C",
+        "--custom_dir",
+        default=config["custom_dir"],
+        type=Path,
+        metavar="PATH",
+        help="Path to custom directory.",
     )
 
     parser.add_argument(
@@ -220,6 +291,15 @@ def parse_cli() -> None:
         add_help=False,
     )
     baseline_parser.set_defaults(func=generate_baseline)
+
+    baseline_parser.add_argument(
+        "-b",
+        "--baseline",
+        type=validate_file,
+        help=argparse.SUPPRESS,
+        # help="when tailoring, if you provide a baseline.yaml file, it will only prompt for rules not already included",
+        action="store",
+    )
 
     baseline_parser.add_argument(
         "-c",
@@ -342,12 +422,14 @@ baseline files are generated by the `mscp.py baseline` command""",
         help="generate the compliance script for the rules in the specified baseline",
         action="store_true",
     )
+
     guidance_parser.add_argument(
         "--audit_name",
         default=None,
         help="specify the name of audit plist and log (defaults to baseline name)",
         action="store",
     )
+
     guidance_parser.add_argument(
         "--reference",
         default=None,
@@ -610,6 +692,8 @@ compliance script (e.g. disa_stig, cis.benchmark)
 
         if args.output_dir:
             config["output_dir"] = str(args.output_dir.expanduser().resolve())
+        if args.custom_dir:
+            config["custom_dir"] = str(args.custom_dir.expanduser().resolve())
     except argparse.ArgumentError as e:
         logger.error("Argument Error: {}", e)
         parser.print_help()
