@@ -11,6 +11,12 @@ authors:
   organization: National Aeronautics and Space Administration
 - name: Allen Golbig
   organization: Jamf
+- name: Elias G Kikano
+  organization: Emory University School of Medicine
+- name: Janessa Milsap
+  organization: Emory University School of Medicine
+- name: Ryan Ritchie
+  organization: Emory University School of Medicine
 parent_values: recommended
 platform:
   os: macOS
