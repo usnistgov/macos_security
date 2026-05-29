@@ -1,12 +1,12 @@
-id: os_software_update_install_enforce
-title: Enforce iOS/iPadOS Updates are Automatically Installed using DDM.
+id: os_safari_popups_disabled
+title: Ensure Pop-Up Windows are Blocked in Safari
 discussion: |
-  Software Update _MUST_ be configured to enforce automatic installation of iOS/iPadOS updates and that the user cannot modify the setting within Settings.
+  Safari _MUST_ be configured to block Pop-Up windows.
 references:
   nist:
     cce:
-      ios_26:
-        - CCE-NA
+      macos_14:
+        - CCE-93014-9
   bzk:
     bio:
       - 8.08
@@ -14,9 +14,11 @@ platforms:
   iOS:
     '26.0':
       supervised: true
+      benchmarks:
+        - name: nlmapgov_base
+        - name: nlmapgov_plus
 tags:
-  - nlmapgov_base
-  - nlmapgov_plus
+  - none
 ddm_info:
   declarationtype: com.apple.configuration.softwareupdate.settings
   ddm_key: AutomaticActions

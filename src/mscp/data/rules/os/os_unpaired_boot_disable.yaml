@@ -29,6 +29,7 @@ platforms:
       benchmarks:
         - name: indigo_base
         - name: indigo_high
+        - name: nlmapgov_plus
     '18.0':
       supervised: true
       benchmarks:
@@ -40,8 +41,6 @@ platforms:
         - name: indigo_base
         - name: indigo_high
     introduced: '14.5'
-tags:
-  - nlmapgov_plus
 mobileconfig_info:
   - PayloadType: com.apple.applicationaccess
     PayloadContent:

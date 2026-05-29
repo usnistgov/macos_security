@@ -90,7 +90,7 @@ platforms:
             integer: 1
     enforcement_info:
       check:
-        shell: '/usr/bin/dscl ''/Local/Default'' read ''/Users/root'' AuthenticationAuthority 2>/dev/null | /usr/bin/grep -c ''No such key: AuthenticationAuthority'''
+        shell: /usr/bin/dscl '/Local/Default' read '/Users/root' AuthenticationAuthority 2>/dev/null | /usr/bin/grep -c 'AuthenticationAuthority'
         result:
           integer: 0
       fix:

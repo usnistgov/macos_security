@@ -122,6 +122,7 @@ platforms:
           severity: medium
         - name: indigo_high
           severity: medium
+        - name: nlmapgov_plus
     '18.0':
       supervised: false
       benchmarks:

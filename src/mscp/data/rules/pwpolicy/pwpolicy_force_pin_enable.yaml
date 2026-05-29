@@ -57,6 +57,8 @@ platforms:
           severity: high
         - name: indigo_high
           severity: high
+        - name: nlmapgov_base
+        - name: nlmapgov_plus
     '18.0':
       benchmarks:
         - name: ios_stig
@@ -85,8 +87,6 @@ tags:
   - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
-  - nlmapgov_base
-  - nlmapgov_plus
   - 800-53r5_moderate
   - 800-53r5_high
 mobileconfig_info:

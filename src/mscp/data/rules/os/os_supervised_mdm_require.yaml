@@ -42,6 +42,8 @@ platforms:
       benchmarks:
         - name: ios_stig
           severity: medium
+        - name: nlmapgov_base
+        - name: nlmapgov_plus
     '18.0':
       benchmarks:
         - name: ios_stig
@@ -60,5 +62,3 @@ tags:
   - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
-  - nlmapgov_base
-  - nlmapgov_plus
