@@ -65,6 +65,9 @@ references:
       ios_17:
         - ANNEX D (Section 5.9 - Device authentication)
         - ANNEX K
+  bzk:
+    bio:
+      - 5.17
 platforms:
   macOS:
     '26.0': {}

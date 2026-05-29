@@ -749,6 +749,24 @@ def main():
                                         "indigo"
                                     ].update({os_: rule_yaml["references"]["indigo"]})
 
+                            if "bio" in rule_yaml["references"]:
+                                if "bzk" in update_rule_yaml["references"]:
+                                    current_bio_refs = update_rule_yaml["references"][
+                                        "bzk"
+                                    ].get("bio", {})
+                                    new_bio_refs = set(
+                                        current_bio_refs
+                                        + rule_yaml["references"]["bio"]
+                                    )
+                                    update_rule_yaml["references"]["bzk"].update(
+                                        {"bio": list(new_bio_refs)}
+                                    )
+                                else:
+                                    update_rule_yaml["references"].update({"bzk": {}})
+                                    update_rule_yaml["references"]["bzk"].update(
+                                        {"bio": rule_yaml["references"]["bio"]}
+                                    )
+
                             if "cis" in rule_yaml["references"]:
                                 if "benchmark" in rule_yaml["references"]["cis"]:
                                     if "cis" in update_rule_yaml["references"]:

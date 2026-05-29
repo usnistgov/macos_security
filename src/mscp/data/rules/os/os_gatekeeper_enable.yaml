@@ -44,8 +44,8 @@ references:
       - SI.L1-3.14.4
   bzk:
     bio:
-      - 8.07.01
       - 8.19.01
+      - 8.07.01
   hhs:
     hicp:
       - 1.L.B

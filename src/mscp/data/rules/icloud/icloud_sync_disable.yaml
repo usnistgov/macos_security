@@ -41,6 +41,7 @@ references:
   bzk:
     bio:
       - 8.12.01
+      - 8.12
       - 8.27.01
   hhs:
     hicp:

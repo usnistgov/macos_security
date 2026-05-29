@@ -37,6 +37,9 @@ references:
       - 7.3
       - 7.4
       - 7.7
+  bzk:
+    bio:
+      - 8.08.01
 platforms:
   macOS:
     '26.0':

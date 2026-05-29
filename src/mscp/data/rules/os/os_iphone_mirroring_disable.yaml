@@ -61,6 +61,9 @@ references:
         - ANNEX K
       ios_18:
         - ANNEX K
+  bzk:
+    bio:
+      - 8.12
 platforms:
   macOS:
     '26.0':
