@@ -16,6 +16,7 @@ import re
 import shutil
 import sys
 import time
+from html import escape as html_escape
 from collections.abc import Mapping
 from itertools import groupby
 from pathlib import Path
@@ -205,13 +206,6 @@ _TYPST_ESCAPE: dict[str, str] = {
     "]": "\\]",
 }
 
-# Subset escaped inside prose, where ``*`` / ``_`` are kept so intentional
-# AsciiDoc bold/italic survives the conversion to Typst.
-_TYPST_PROSE_ESCAPE: dict[str, str] = {
-    k: v for k, v in _TYPST_ESCAPE.items() if k not in ("*", "_", "[", "]")
-}
-
-
 def typst_escape(value: Any) -> str:
     """Backslash-escape every Typst-significant character in *value*.
 
@@ -312,26 +306,38 @@ def asciidoc_to_typst(value: str) -> str:
     i = 0
 
     link_pattern = re.compile(r"(?:link:)?(https?://\S+?)\[(.*?)\]")
+    bold_pattern = re.compile(r"\*{1,2}([^*\n]+?)\*{1,2}")
+    italic_pattern = re.compile(r"(?<![\w\\])_{1,2}([^_\n]+?)_{1,2}(?![\w])")
+    sentinel_pattern = re.compile("\x00(\\d+)\x00")
 
-    def _escape_prose(text: str) -> str:
-        return "".join(_TYPST_PROSE_ESCAPE.get(ch, ch) for ch in text)
+    def _full_escape(text: str) -> str:
+        return "".join(_TYPST_ESCAPE.get(ch, ch) for ch in text)
 
     def _inline(text: str) -> str:
-        # Tokenise on the AsciiDoc link macro over the *raw* text so the URL
-        # stays unescaped (it goes inside a Typst string literal) while the
-        # surrounding prose and link label are escaped for Typst markup.
-        out: list[str] = []
-        last = 0
-        for m in link_pattern.finditer(text):
-            out.append(_escape_prose(text[last : m.start()]))
+        # Protect links and *balanced* bold/italic as sentinels, then fully
+        # escape everything else.  This keeps intentional ``*bold*`` / ``_italic_``
+        # markup while neutralising stray ``*`` ``_`` ``[`` ``]`` from regexes,
+        # shell examples, or AsciiDoc artifacts (``***``) that would otherwise
+        # leave an unclosed Typst delimiter and fail compilation.
+        stash: list[str] = []
+
+        def _put(rendered: str) -> str:
+            stash.append(rendered)
+            return f"\x00{len(stash) - 1}\x00"
+
+        def _link(m: "re.Match[str]") -> str:
             url, label = m.group(1), m.group(2).strip()
             if label:
-                out.append(f'#link("{url}")[{_escape_prose(label)}]')
-            else:
-                out.append(f'#link("{url}")')
-            last = m.end()
-        out.append(_escape_prose(text[last:]))
-        return "".join(out)
+                return _put(f'#link("{url}")[{_full_escape(label)}]')
+            return _put(f'#link("{url}")')
+
+        text = link_pattern.sub(_link, text)
+        text = bold_pattern.sub(lambda m: _put(f"*{_full_escape(m.group(1))}*"), text)
+        text = italic_pattern.sub(
+            lambda m: _put(f"_{_full_escape(m.group(1))}_"), text
+        )
+        escaped = _full_escape(text)
+        return sentinel_pattern.sub(lambda m: stash[int(m.group(1))], escaped)
 
     while i < len(lines):
         line = lines[i].rstrip()
@@ -389,7 +395,7 @@ def asciidoc_to_typst(value: str) -> str:
         # Block title `.Some Title`
         elif re.match(r"^\.(?!\d+\s)(.+)$", line):
             title_text = re.match(r"^\.(.+)$", line).group(1).strip()
-            result.append(f"*{_escape_prose(title_text)}*")
+            result.append(f"*{_full_escape(title_text)}*")
 
         # Unordered list `* item` -> `- item`
         elif line.strip().startswith("* "):
@@ -404,6 +410,156 @@ def asciidoc_to_typst(value: str) -> str:
 
         i += 1
 
+    return "\n".join(result)
+
+
+# --------------------------------------------------------------------------- #
+# Ruby-free HTML backend (experimental).  Mirrors the typst helpers but emits
+# semantic HTML that reuses AsciiDoctor's CSS class names (``admonitionblock``,
+# ``listingblock``, ``ulist`` ...) so the bundled ``asciidoctor.css`` styles it
+# with no Ruby in the loop.
+# --------------------------------------------------------------------------- #
+def group_ulify_html(elements: list[str]) -> str:
+    """`group_ulify` for HTML: grouped, escaped ``<ul>`` bullet list."""
+    if "N/A" in elements:
+        return "N/A"
+    elements.sort()
+    grouped = [list(i) for _, i in groupby(elements, lambda a: a.split("(")[0])]
+    items = "".join(
+        f"<li>{html_escape(', '.join(map(str, group)))}</li>" for group in grouped
+    )
+    return f'<ul class="ulist"><ul>{items}</ul></ul>' if items else ""
+
+
+def render_rules_html(rule_set: list[str] | None) -> str:
+    """`render_rules` for HTML: escaped ``<ul>`` bullet list."""
+    if not rule_set:
+        return ""
+    # Values may be ints/floats (e.g. CIS control "3.3"); coerce before escaping.
+    items = "".join(f"<li>{html_escape(str(r))}</li>" for r in rule_set)
+    return f'<ul class="ulist"><ul>{items}</ul></ul>'
+
+
+def render_references_html(reference_set: Sequence[Dict[str, Any]]) -> str:
+    """`render_references` for HTML: ``<ul>`` of ``key: value`` bullets."""
+    lines: list[str] = []
+    for d in reference_set:
+        if not isinstance(d, dict):
+            raise TypeError("All elements of 'reference_set' must be dictionaries.")
+        for key, value in d.items():
+            joined = ", ".join(map(str, value)) if isinstance(value, (list, tuple)) else str(value)
+            lines.append(f"<li>{html_escape(str(key))}: {html_escape(joined)}</li>")
+    return f'<ul class="ulist"><ul>{"".join(lines)}</ul></ul>' if lines else ""
+
+
+def asciidoc_to_html(value: str) -> str:
+    """Convert a subset of AsciiDoc to HTML.
+
+    Handles source/code blocks (``listingblock``), ``NOTE:``/``[IMPORTANT]``
+    admonitions (``admonitionblock``), block titles, unordered/ordered lists,
+    ``link:url[text]`` macros, and ``*bold*`` / ``_italic_`` inline markup.
+    Prose is HTML-escaped; the emitted tags reuse AsciiDoctor's class names so
+    the existing CSS applies.
+
+    Args:
+        value (str): AsciiDoc source text.
+
+    Returns:
+        str: HTML fragment.
+    """
+    if value is None:
+        return ""
+
+    link_pattern = re.compile(r"(?:link:)?(https?://\S+?)\[(.*?)\]")
+
+    def _inline(text: str) -> str:
+        # Escape first, then re-introduce the small set of markup we support so
+        # user text can never inject tags.
+        out: list[str] = []
+        last = 0
+        for m in link_pattern.finditer(text):
+            out.append(html_escape(text[last : m.start()]))
+            url, label = m.group(1), m.group(2).strip()
+            out.append(f'<a href="{html_escape(url)}">{html_escape(label or url)}</a>')
+            last = m.end()
+        out.append(html_escape(text[last:]))
+        joined = "".join(out)
+        joined = re.sub(r"\*([^*]+)\*", r"<strong>\1</strong>", joined)
+        joined = re.sub(r"(?<![\w/])_([^_]+)_(?![\w/])", r"<em>\1</em>", joined)
+        return joined
+
+    def _admonition(kind: str, body: str) -> str:
+        return (
+            f'<div class="admonitionblock {kind.lower()}"><table><tr>'
+            f'<td class="icon"><div class="title">{kind.title()}</div></td>'
+            f'<td class="content">{body}</td></tr></table></div>'
+        )
+
+    lines = str(value).splitlines()
+    result: list[str] = []
+    para: list[str] = []
+    list_items: list[str] = []
+
+    def flush_para() -> None:
+        if para:
+            result.append(f'<div class="paragraph"><p>{_inline(" ".join(para))}</p></div>')
+            para.clear()
+
+    def flush_list() -> None:
+        if list_items:
+            items = "".join(f"<li><p>{it}</p></li>" for it in list_items)
+            result.append(f'<div class="ulist"><ul>{items}</ul></div>')
+            list_items.clear()
+
+    def flush_blocks() -> None:
+        flush_para()
+        flush_list()
+
+    i = 0
+    while i < len(lines):
+        line = lines[i].rstrip()
+
+        if line.startswith("[source") or line.strip() in ("----", "...."):
+            flush_blocks()
+            # Skip the [source] attribute line and/or the opening fence.
+            i += 2 if line.startswith("[source") else 1
+            code: list[str] = []
+            while i < len(lines) and lines[i].strip() not in ("----", "...."):
+                code.append(lines[i])
+                i += 1
+            body = html_escape("\n".join(code))
+            result.append(
+                '<div class="listingblock"><div class="content">'
+                f'<pre class="highlight"><code>{body}</code></pre></div></div>'
+            )
+        elif line.startswith("NOTE:"):
+            flush_blocks()
+            result.append(_admonition("NOTE", _inline(line[5:].strip())))
+        elif (
+            line.strip() == "[IMPORTANT]"
+            and i + 1 < len(lines)
+            and lines[i + 1].strip() == "===="
+        ):
+            flush_blocks()
+            i += 2
+            imp: list[str] = []
+            while i < len(lines) and lines[i].strip() != "====":
+                imp.append(lines[i].strip())
+                i += 1
+            result.append(_admonition("IMPORTANT", _inline(" ".join(imp))))
+        elif re.match(r"^\[(cols|width|options|grid|frame|stripes|%|role).*\]$", line):
+            pass
+        elif line.strip().startswith("* "):
+            flush_para()
+            list_items.append(_inline(line.strip()[2:]))
+        elif not line.strip():
+            flush_blocks()
+        else:
+            flush_list()
+            para.append(line.strip())
+        i += 1
+
+    flush_blocks()
     return "\n".join(result)
 
 
@@ -704,6 +860,20 @@ def render_template(
         env.filters["asciidoc_to_typst"] = asciidoc_to_typst
         env.filters["typst_escape"] = typst_escape
 
+    css_content: str = ""
+    if output_format == "html":
+        env.filters["group_ulify"] = group_ulify_html
+        env.filters["render_rules"] = render_rules_html
+        env.filters["render_references"] = render_references_html
+        env.filters["asciidoc_to_html"] = asciidoc_to_html
+        # Inline the bundled AsciiDoctor stylesheet so the HTML is self-contained
+        # and visually matches today's output with no Ruby in the loop.
+        _css_path = Path(themes_dir, html_css)
+        if _css_path.exists():
+            css_content = _css_path.read_text()
+        else:
+            logger.warning(f"CSS not found for HTML output: {_css_path}")
+
     template: Template = env.get_template(template_name)
 
     baseline_dict: dict[str, Any] = baseline.model_dump()
@@ -756,6 +926,7 @@ def render_template(
         acronyms=acronyms_data.get("acronyms", []),
         terminology=acronyms_data.get("terminology", []),
         NIX_OS=NIX_OS,
+        css_content=css_content,
     )
 
     output_file.write_text(rendered_output)
@@ -854,11 +1025,12 @@ def generate_documents(
     _themes_dir: str = _resolve_asset_dir(pdf_theme, "themes_dir")
     _logo_dir: str = _resolve_asset_dir(logo_path.name, "images_dir")
 
-    # Typst output uses its own self-contained template tree so the existing
-    # AsciiDoc/Markdown pipelines stay byte-for-byte unchanged.
-    main_template: str = (
-        "typst/main.typ.jinja" if output_format == "typst" else "main.jinja"
-    )
+    # Typst and HTML outputs use their own self-contained template trees so the
+    # existing AsciiDoc/Markdown pipelines stay byte-for-byte unchanged.
+    main_template: str = {
+        "typst": "typst/main.typ.jinja",
+        "html": "html/main.html.jinja",
+    }.get(output_format, "main.jinja")
 
     render_template(
         output_file,
@@ -911,3 +1083,8 @@ def generate_documents(
 
     elif output_format == "typst":
         _generate_typst_pdf(spinner, output_file, logo_path)
+
+    elif output_format == "html":
+        # Pure-Python HTML: render_template already wrote the self-contained
+        # file (CSS inlined). No external tool, no Ruby.
+        logger.info(f"Experimental Ruby-free HTML generated: {output_file}")

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="{{ baseline.platform.os }}">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="mscp (experimental Ruby-free HTML backend)">
+<title>{{ html_title | e }}{% if html_subtitle %}: {{ html_subtitle | e }}{% endif %}</title>
+<style>
+{{ css_content }}
+/* Ruby-free backend: cover page + TOC tweaks (mirrors asciidoctor-pdf cover) */
+#header .cover { min-height: 88vh; display: flex; flex-direction: column;
+  align-items: center; justify-content: center; text-align: center; }
+#header .cover .title-logo { max-width: 520px; margin-bottom: 2em; }
+#header .cover h1 { border: none; font-size: 2.4em; }
+#header .cover .details { color: #7a7a7a; font-size: 1.1em; margin-top: 0.5em; }
+#toc.toc { border: 1px solid #dddddd; border-radius: 4px; padding: 1em 1.25em;
+  margin: 1.5em 0 2em; background: #f8f8f8; }
+</style>
+</head>
+<body class="book">
+<div id="header">
+<div class="cover">
+<img class="title-logo" src="data:image/png;base64,{{ pdflogo }}" alt="macOS Security Compliance Project">
+<h1>{{ html_title | e }}{% if html_subtitle %}: {{ html_subtitle | e }}{% endif %}</h1>
+<div class="details">
+<span id="revnumber">{{ version | e }}{% if release_date %} ({{ release_date | e }}){% endif %}</span>
+</div>
+</div>
+</div>
+<div id="content">
+<div id="toc" class="toc">
+<div id="toctitle">{% trans %}Table of Contents{% endtrans %}</div>
+<ul class="sectlevel1">
+<li><a href="#_foreword">1. {% trans %}Foreword{% endtrans %}</a></li>
+<li><a href="#_scope">2. {% trans %}Scope{% endtrans %}</a></li>
+<li><a href="#_maintainers">3. {% trans %}Maintainers and Contributors{% endtrans %}</a></li>
+<li><a href="#_acronyms">4. {% trans %}Acronyms and Definitions{% endtrans %}</a></li>
+<li><a href="#_applicable_documents">5. {% trans %}Applicable Documents{% endtrans %}</a></li>
+{% set ns = namespace(n=6) %}
+{% for profile in baseline.profile %}
+<li><a href="#sect_{{ loop.index }}">{{ ns.n }}. {{ profile.section | e }}</a>
+<ul class="sectlevel2">
+{% for rule in profile.rules %}<li><a href="#{{ rule.rule_id | e }}">{{ ns.n }}.{{ loop.index }}. {{ rule.title | e }}</a></li>
+{% endfor %}</ul>
+</li>
+{% set ns.n = ns.n + 1 %}
+{% endfor %}
+</ul>
+</div>
+
+<div class="sect1"><h2 id="_foreword">1. {% trans %}Foreword{% endtrans %}</h2><div class="sectionbody">
+<div class="paragraph"><p>{% trans %}The macOS Security Compliance Project is an open source effort to provide a programmatic approach to generating security guidance. The configuration settings in this document were derived from National Institute of Standards and Technology (NIST) Special Publication (SP) 800-53, Security and Privacy Controls for Information Systems and Organizations, Revision 5.{% endtrans %}</p></div>
+<div class="paragraph"><p>{% trans %}This project can be used as a resource to easily create customized security baselines of technical security controls by leveraging a library of atomic actions which are mapped to the compliance requirements defined in NIST SP 800-53 (Rev. 5).{% endtrans %}</p></div>
+<div class="paragraph"><p>{% trans %}Any and all risk based decisions to tailor the content produced by this project in order to meet the needs of a specific organization shall be approved by the responsible Information System Owner (ISO) and Authorizing Official (AO) and formally documented in their System Security Plan (SSP).{% endtrans %}</p></div>
+</div></div>
+
+<div class="sect1"><h2 id="_scope">2. {% trans %}Scope{% endtrans %}</h2><div class="sectionbody">
+{% if not baseline.tailored %}
+{% if baseline.parent_values == "recommended" %}
+<div class="paragraph"><p>{% trans %}This guide outlines the configuration settings that can be used on a{% endtrans %} {{ baseline.platform.os | e }} {{ baseline.platform.version | e }} {% trans %}system to meet security objectives recommended by{% endtrans %} {{ baseline.benchmark_description | e }}.</p></div>
+{% else %}
+<div class="paragraph"><p>{% trans %}This guide describes the actions to take when securing a{% endtrans %} {{ baseline.platform.os | e }} {{ baseline.platform.version | e }} {% trans %}system against the configuration requirements outlined in the{% endtrans %} {{ baseline.benchmark_description | e }}.</p></div>
+{% endif %}
+{% else %}
+{{ baseline.description | asciidoc_to_html }}
+{% endif %}
+</div></div>
+
+<div class="sect1"><h2 id="_maintainers">3. {% trans %}Maintainers and Contributors{% endtrans %}</h2><div class="sectionbody">
+<div class="paragraph"><p><strong>macOS Security Compliance Project</strong></p></div>
+<table class="tableblock frame-all grid-all stretch"><thead><tr><th class="tableblock halign-left valign-top">Name</th><th class="tableblock halign-left valign-top">Organization</th></tr></thead><tbody>
+{% for author in baseline.authors %}{% if not author.additional %}<tr><td class="tableblock halign-left valign-top">{{ author.name | e }}</td><td class="tableblock halign-left valign-top">{{ author.organization | e }}</td></tr>
+{% endif %}{% endfor %}</tbody></table>
+</div></div>
+
+<div class="sect1"><h2 id="_acronyms">4. {% trans %}Acronyms and Definitions{% endtrans %}</h2><div class="sectionbody">
+<div class="paragraph"><p><strong>{% trans %}Table 1. Acronyms and Abbreviations{% endtrans %}</strong></p></div>
+<table class="tableblock frame-all grid-all stretch"><tbody>
+{% for acronym in acronyms %}<tr><td class="tableblock halign-left valign-top">{{ acronym.term | e }}</td><td class="tableblock halign-left valign-top">{{ acronym.definition | e }}</td></tr>
+{% endfor %}</tbody></table>
+<div class="paragraph"><p><strong>{% trans %}Table 2. Definitions{% endtrans %}</strong></p></div>
+<table class="tableblock frame-all grid-all stretch"><tbody>
+{% for term in terminology %}<tr><td class="tableblock halign-left valign-top">{{ term.term | e }}</td><td class="tableblock halign-left valign-top">{{ term.definition | e }}</td></tr>
+{% endfor %}</tbody></table>
+</div></div>
+
+<div class="sect1"><h2 id="_applicable_documents">5. {% trans %}Applicable Documents{% endtrans %}</h2><div class="sectionbody">
+<div class="sect2"><h3 id="_government_documents">5.1. {% trans %}Government Documents{% endtrans %}</h3>
+<div class="paragraph"><p><strong>{% trans %}Table 3. National Institute of Standards and Technology (NIST){% endtrans %}</strong></p></div>
+<table class="tableblock frame-all grid-all stretch"><thead><tr><th class="tableblock halign-left valign-top">{% trans %}Document Number or Descriptor{% endtrans %}</th><th class="tableblock halign-left valign-top">{% trans %}Document Title{% endtrans %}</th></tr></thead><tbody>
+<tr><td class="tableblock halign-left valign-top"><a href="https://nvd.nist.gov/800-53">NIST Special Publication 800-53 Rev 5</a></td><td class="tableblock halign-left valign-top"><em>Security and Privacy Controls for Information Systems and Organizations</em></td></tr>
+<tr><td class="tableblock halign-left valign-top"><a href="https://csrc.nist.gov/pubs/sp/800/219/r1/final">NIST Special Publication 800-219 Rev 1</a></td><td class="tableblock halign-left valign-top"><em>Automated Secure Configuration Guidance from the macOS Security Compliance Project</em></td></tr>
+</tbody></table>
+</div></div></div>
+
+{% set ns2 = namespace(n=6) %}
+{% for profile in baseline.profile %}
+<div class="sect1" id="sect_{{ loop.index }}"><h2>{{ ns2.n }}. {{ profile.section | e }}</h2><div class="sectionbody">
+{{ profile.description | asciidoc_to_html }}
+{% for rule in profile.rules %}
+{% include "html/rule.html.jinja" %}
+{% endfor %}
+</div></div>
+{% set ns2.n = ns2.n + 1 %}
+{% endfor %}
+
+</div>
+</body>
+</html>

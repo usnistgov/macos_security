@@ -201,6 +201,9 @@ def generate_guidance(sp: Yaspin, args: argparse.Namespace) -> None:
     typst_output_file: Path = Path(
         build_path, f"{baseline_name}_{args.language}_typst.typ"
     )
+    html_output_file: Path = Path(
+        build_path, f"{baseline_name}_{args.language}_python.html"
+    )
     spreadsheet_output_file: Path = Path(
         build_path, f"{baseline_name}_{args.language}.xlsx"
     )
@@ -465,6 +468,24 @@ def generate_guidance(sp: Yaspin, args: argparse.Namespace) -> None:
             current_version_data,
             show_all_tags,
             output_format="typst",
+            language=args.language,
+        )
+
+    if args.html_engine == "python":
+        logger.info("Generating experimental Ruby-free HTML document")
+        sp.text = "Generating experimental Ruby-free HTML document"
+        generate_documents(
+            sp,
+            html_output_file,
+            baseline,
+            b64logo,
+            pdf_theme,
+            html_css,
+            logo_path,
+            baseline.platform["os"],
+            current_version_data,
+            show_all_tags,
+            output_format="html",
             language=args.language,
         )
     try:
