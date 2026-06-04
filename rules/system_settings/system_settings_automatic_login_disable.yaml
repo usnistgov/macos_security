@@ -41,7 +41,7 @@ references:
     - IA.L1-3.5.1
     - IA.L1-3.5.2
   bio:
-    - 5.16.02
+    - 5.16
 macOS:
   - '26.0'
 tags:

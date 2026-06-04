@@ -93,7 +93,7 @@ references:
     - SI.L1-3.14.1
     - SI.L1-3.14.4
   bio:
-    - 8.17.01
+    - 8.17
   hicp:
     - 2.L.C
 macOS:

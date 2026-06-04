@@ -32,7 +32,7 @@ references:
     controls v8:
       - 4.3
   bio:
-    - 8.27.01
+    - 8.27
 macOS:
   - '26.0'
 odv:

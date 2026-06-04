@@ -28,7 +28,7 @@ references:
       - 9.1
       - 9.3
   bio:
-    - 8.27.01
+    - 8.27
 macOS:
   - '26.0'
 tags:
