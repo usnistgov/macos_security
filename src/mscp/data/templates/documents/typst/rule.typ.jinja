@@ -12,7 +12,7 @@
 
 {% if not "supplemental" in rule.tags %}
 {% if rule.mechanism == "manual" %}
-#block(width: 100%, inset: 8pt, radius: 4pt, fill: code-bg, stroke: 0.5pt + border-col)[*⚠ NOTE:* {% trans %} This rule is marked as manual and may not be able to be automated. It is also excluded in the compliance scan and will not report any results. {% endtrans %}]
+#admonition("WARNING")[{% trans %} This rule is marked as manual and may not be able to be automated. It is also excluded in the compliance scan and will not report any results. {% endtrans %}]
 {% endif %}
 
 {% if not rule.tags | select('in', check_tags) | list %}
@@ -97,8 +97,8 @@
   ],
 )
 
-#pagebreak(weak: true)
+#v(1.4em)
 {% else %}
 
-#pagebreak(weak: true)
+#v(1.4em)
 {% endif %}

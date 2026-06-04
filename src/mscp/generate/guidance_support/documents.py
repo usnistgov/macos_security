@@ -363,11 +363,11 @@ def asciidoc_to_typst(value: str) -> str:
             result.extend(code_lines)
             result.append("```")
 
-        # NOTE: admonition
+        # NOTE: admonition -> tinted callout box (see admonition() in header.typ.jinja)
         elif line.startswith("NOTE:"):
-            result.append(f"*NOTE:* {_inline(line[5:].strip())}")
+            result.append(f'#admonition("NOTE")[{_inline(line[5:].strip())}]')
 
-        # [IMPORTANT] admonition block
+        # [IMPORTANT] admonition block -> tinted callout box
         elif (
             line.strip() == "[IMPORTANT]"
             and i + 1 < len(lines)
@@ -378,7 +378,9 @@ def asciidoc_to_typst(value: str) -> str:
             while i < len(lines) and lines[i].strip() != "====":
                 important_lines.append(lines[i].strip())
                 i += 1
-            result.append("*IMPORTANT:* " + _inline(" ".join(important_lines)))
+            result.append(
+                f'#admonition("IMPORTANT")[{_inline(" ".join(important_lines))}]'
+            )
 
         # Skip AsciiDoc block attribute lines, e.g. [cols=...], [width=...]
         elif re.match(r"^\[(cols|width|options|grid|frame|stripes|%|role).*\]$", line):
