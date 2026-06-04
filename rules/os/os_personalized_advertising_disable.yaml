@@ -29,8 +29,7 @@ references:
     controls v8:
     - 4.8
   bio:
-  - 8.12
-      - 4.8
+    - 8.12
   cmmc:
     - AC.L1-B.1.III
     - AC.L2-3.1.20

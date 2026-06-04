@@ -19,6 +19,8 @@ references:
   disa_stig:
     - AIOS-26-015000
   bio:
+    - 8.07
+    - 8.19
     - 8.27
   cmmc:
     - CM.L2-3.4.9
