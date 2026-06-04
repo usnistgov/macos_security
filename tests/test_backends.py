@@ -5,7 +5,7 @@ The PDF/HTML bytes themselves are non-deterministic or large, so we don't
 golden-file them.  Instead we test the layer that actually holds logic — the
 pure AsciiDoc->Typst and AsciiDoc->HTML string transforms in ``documents.py`` —
 plus one integration test that proves the typst converter's output is *valid,
-compilable* Typst (skipped when the ``typst`` binary is unavailable, so
+compilable* Typst (skipped when the ``typst`` package is unavailable, so
 contributors without it still get a green run).
 
 Run just the fast units:   uv run --extra dev pytest tests/test_backends.py -m "not integration"
@@ -14,12 +14,15 @@ Run everything:            uv run --extra dev pytest tests/test_backends.py
 
 from __future__ import annotations
 
+import sys
 from html.parser import HTMLParser
 from pathlib import Path
+from unittest import mock
 
 import pytest
 
 from mscp.generate.guidance_support.documents import (
+    _generate_typst_pdf,
     asciidoc_to_html,
     asciidoc_to_typst,
     group_ulify_typst,
@@ -152,8 +155,8 @@ class TestRenderHelpers:
 
 # --------------------------------------------------------------------------- #
 # Integration: the converter's output must be VALID Typst. Wrap representative
-# converted prose in a minimal document and compile it. This catches escaping
-# bugs that a pure string-equality assertion would miss.
+# converted prose in a minimal document and compile it via the typst package.
+# This catches escaping bugs that a pure string-equality assertion would miss.
 # --------------------------------------------------------------------------- #
 try:
     import typst as _typst_pkg
@@ -200,6 +203,21 @@ class TestTypstCompiles:
         # Regression: real 800-53r5_moderate discussion text that used to emit
         # an "unclosed delimiter" and fail to compile.
         assert self._compile(asciidoc_to_typst(src) + "\n", tmp_path).exists()
+
+
+# --------------------------------------------------------------------------- #
+# typst is the only PDF engine — a missing package must be a hard error, not a
+# silent skip (there is no Ruby fallback anymore).
+# --------------------------------------------------------------------------- #
+class TestTypstRequired:
+    def test_missing_typst_is_hard_error(self, tmp_path):
+        # Simulate the typst package being absent: ``import typst`` raises.
+        with mock.patch.dict(sys.modules, {"typst": None}):
+            with pytest.raises(SystemExit) as exc:
+                _generate_typst_pdf(
+                    mock.MagicMock(), tmp_path / "x.typ", tmp_path / "logo.png"
+                )
+        assert exc.value.code != 0
 
 
 # --------------------------------------------------------------------------- #

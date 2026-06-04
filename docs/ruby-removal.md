@@ -1,13 +1,19 @@
-# Roadmap: removing the Ruby toolchain
+# Removing the Ruby toolchain — DONE
 
-The mSCP CLI is Python end-to-end (`uv` / `pyproject.toml`) **except** document
-generation, which is the only reason a Ruby toolchain exists. This document
-records the plan to remove it.
+> **Status: complete.** Ruby/AsciiDoctor has been removed. `mscp guidance`
+> now renders PDF with **typst** and HTML/Markdown in **pure Python**. The
+> `Gemfile`, the `adoc/` template tree, the asciidoctor-pdf themes, and the
+> `bundle exec` calls are gone. This document is kept as the record of why and
+> how. (Historical: the work landed across `feat/typst-pdf-backend` →
+> `feat/drop-ruby`.)
 
-## Why Ruby is here today
+The mSCP CLI was Python end-to-end (`uv` / `pyproject.toml`) **except** document
+generation, which was the only reason a Ruby toolchain existed.
 
-Guidance documents are rendered from Jinja templates to AsciiDoc, then
-`documents.py` shells out to AsciiDoctor:
+## Why Ruby was here
+
+Guidance documents were rendered from Jinja templates to AsciiDoc, then
+`documents.py` shelled out to AsciiDoctor:
 
 | Step | Command | Output |
 |------|---------|--------|
@@ -64,7 +70,8 @@ purpose-built.
      nothing depends on it
    - drop any Ruby setup from CI / docs / Dockerfiles
 7. **Result**: dependencies are **Python only** (`uv`), with typst pulled in as
-   the `typst` PyPI package. No Ruby, no bundler, no gem vendoring.
+   the `typst` PyPI package. No Ruby, no bundler, no gem vendoring, no separate
+   binary to install.
 
 ## Open items / risks
 

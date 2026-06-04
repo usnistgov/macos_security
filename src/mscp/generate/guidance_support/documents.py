@@ -15,7 +15,6 @@ import gettext
 import re
 import shutil
 import sys
-import time
 from html import escape as html_escape
 from collections.abc import Mapping
 from itertools import groupby
@@ -35,7 +34,6 @@ from ...common_utils import (
     logger,
     mscp_data,
     open_file,
-    run_command,
     search_paths,
     NIX_OS,
 )
@@ -182,7 +180,7 @@ def render_rules_md(rule_set: list[str] | None) -> str:
 
 
 # ---------------------------------------------------------------------------
-# Typst output helpers (experimental ``--pdf-engine typst`` backend)
+# Typst output helpers (PDF backend)
 #
 # Typst is a markup language where ``# $ * _ ` < > @ ~ [ ] \`` are
 # significant.  Literal data (rule IDs full of underscores, references,
@@ -414,7 +412,7 @@ def asciidoc_to_typst(value: str) -> str:
 
 
 # --------------------------------------------------------------------------- #
-# Ruby-free HTML backend (experimental).  Mirrors the typst helpers but emits
+# HTML backend.  Mirrors the typst helpers but emits
 # semantic HTML that reuses AsciiDoctor's CSS class names (``admonitionblock``,
 # ``listingblock``, ``ulist`` ...) so the bundled ``asciidoctor.css`` styles it
 # with no Ruby in the loop.
@@ -763,7 +761,7 @@ def _resolve_asset_dir(filename: str, dir_key: str) -> str:
     bundled default without replacing the entire directory.
 
     Args:
-        filename (str): The asset filename to look up (e.g. ``"mscp_theme.yml"``).
+        filename (str): The asset filename to look up (e.g. ``"asciidoctor.css"``).
         dir_key (str): Config key shared between ``config`` and
             ``config["custom"]`` (e.g. ``"themes_dir"``).
 
@@ -781,7 +779,6 @@ def render_template(
     template_name: str,
     baseline: Baseline,
     b64logo: bytes,
-    pdf_theme: str,
     html_css: str,
     logo_path: Path,
     os_name: str,
@@ -791,7 +788,7 @@ def render_template(
     template_dirs: list[str],
     themes_dir: str,
     logo_dir: str,
-    output_format: str = "adoc",
+    output_format: str = "html",
     language: str = "en",
 ) -> None:
     """Render a Jinja template against *baseline* data and write to *output_file*.
@@ -805,7 +802,6 @@ def render_template(
         template_name (str): Filename of the template within *template_dirs*.
         baseline (Baseline): Baseline data model.
         b64logo (bytes): Base64-encoded logo image bytes.
-        pdf_theme (str): AsciiDoctor-PDF theme filename.
         html_css (str): CSS filename for HTML output.
         logo_path (Path): Absolute path to the logo file.
         os_name (str): Operating system name string.
@@ -914,7 +910,6 @@ def render_template(
         images_dir=images_dir,
         logo=logo_path.name,
         pdflogo=b64logo.decode("ascii"),
-        pdf_theme=pdf_theme,
         html_css=html_css,
         show_all_tags=show_all_tags,
         os_name=os_name.strip().lower(),
@@ -935,10 +930,10 @@ def render_template(
 def _generate_typst_pdf(spinner: Yaspin, output_file: Path, logo_path: Path) -> None:
     """Compile a rendered ``.typ`` file to PDF using the ``typst`` package.
 
-    Experimental backend for ``--pdf-engine typst``.  typst ships as a Python
-    dependency (``uv sync``), so it is called via its binding.  Skips gracefully
-    (logs and returns, never ``sys.exit``) when the package is unavailable so
-    the rest of the run — including the AsciiDoctor output — is unaffected.
+    typst is provided as a Python dependency (``uv sync``), so it is called via
+    its binding rather than an external binary.  It is the only PDF engine, so a
+    missing package or a failed compile is a hard error (``sys.exit``) with an
+    actionable hint — there is no Ruby fallback.
 
     Args:
         spinner (Yaspin): Spinner for progress feedback.
@@ -949,10 +944,10 @@ def _generate_typst_pdf(spinner: Yaspin, output_file: Path, logo_path: Path) -> 
         import typst
     except ImportError:
         logger.error(
-            "The 'typst' package is not installed; skipping experimental typst "
-            "PDF. Install project dependencies with 'uv sync', then re-run."
+            "The 'typst' package is required to generate the PDF but is not "
+            "installed. Run 'uv sync' (it is a project dependency), then re-run."
         )
-        return
+        sys.exit(1)
 
     build_dir: Path = output_file.parent
     # Typst can only read files under its --root; copy the logo next to the
@@ -966,16 +961,16 @@ def _generate_typst_pdf(spinner: Yaspin, output_file: Path, logo_path: Path) -> 
 
     pdf_file: Path = output_file.with_suffix(".pdf")
     spinner.spinner = Spinners.dots
-    spinner.text = "Generating PDF file via typst (experimental)"
+    spinner.text = "Generating PDF file via typst"
     try:
         typst.compile(str(output_file), output=str(pdf_file), root=str(build_dir))
     except Exception as e:  # typst raises on compile errors
         logger.error(f"typst compile failed: {e}")
-        return
+        sys.exit(1)
     if not pdf_file.exists():
         logger.error("typst compile produced no PDF.")
-        return
-    logger.info(f"Experimental typst PDF generated: {pdf_file}")
+        sys.exit(1)
+    logger.info(f"PDF generated: {pdf_file}")
 
 
 def generate_documents(
@@ -983,35 +978,32 @@ def generate_documents(
     output_file: Path,
     baseline: Baseline,
     b64logo: bytes,
-    pdf_theme: str,
     html_css: str,
     logo_path: Path,
     os_name: str,
     version_info: dict[str, Any],
     show_all_tags: bool = False,
-    output_format: str = "adoc",
+    output_format: str = "html",
     language: str = "en",
 ) -> None:
-    """Render guidance documents and, for AsciiDoc output, invoke AsciiDoctor.
+    """Render a guidance document in the requested format.
 
-    Resolves template, theme, and image directories by searching the custom
-    directory first and falling back to the bundled defaults, then calls
-    `render_template`.  For AsciiDoc output also runs ``bundle exec
-    asciidoctor`` and ``bundle exec asciidoctor-pdf`` to produce HTML and
-    PDF output.
+    Resolves template and image directories (custom dir shadows bundled
+    defaults) and calls `render_template`.  For ``"typst"`` output it then
+    compiles the rendered ``.typ`` to PDF via the ``typst`` binary.  HTML and
+    Markdown are produced by Jinja alone — no external tools, no Ruby.
 
     Args:
         spinner (Yaspin): Spinner for progress feedback.
-        output_file (Path): Destination ``.adoc`` or ``.md`` file.
+        output_file (Path): Destination file (``.typ`` / ``.html`` / ``.md``).
         baseline (Baseline): Baseline data model.
         b64logo (bytes): Base64-encoded logo image bytes.
-        pdf_theme (str): AsciiDoctor-PDF theme filename or absolute path.
-        html_css (str): CSS filename for HTML output.
+        html_css (str): CSS filename; also selects the light/dark theme.
         logo_path (Path): Absolute path to the logo file.
         os_name (str): Operating system name string.
         version_info (dict[str, Any]): OS/compliance version metadata.
         show_all_tags (bool): Whether to render all tags. Defaults to ``False``.
-        output_format (str): ``"adoc"`` (default) or ``"markdown"``.
+        output_format (str): ``"typst"``, ``"html"``, or ``"markdown"``.
         language (str): BCP-47 language code. Defaults to ``"en"``.
     """
     # Determine whether any custom content is active (for template context).
@@ -1022,11 +1014,12 @@ def generate_documents(
     _template_dirs: list[str] = search_paths("documents_templates_dir")
 
     # Static assets: prefer the custom directory when it contains the file.
-    _themes_dir: str = _resolve_asset_dir(pdf_theme, "themes_dir")
+    # The stylesheet locates the themes dir for all formats now that PDF/HTML
+    # both derive their look from the CSS / typst theme.
+    _themes_dir: str = _resolve_asset_dir(html_css, "themes_dir")
     _logo_dir: str = _resolve_asset_dir(logo_path.name, "images_dir")
 
-    # Typst and HTML outputs use their own self-contained template trees so the
-    # existing AsciiDoc/Markdown pipelines stay byte-for-byte unchanged.
+    # Each format uses its own self-contained template tree.
     main_template: str = {
         "typst": "typst/main.typ.jinja",
         "html": "html/main.html.jinja",
@@ -1037,7 +1030,6 @@ def generate_documents(
         main_template,
         baseline,
         b64logo,
-        pdf_theme,
         html_css,
         logo_path,
         os_name,
@@ -1051,40 +1043,10 @@ def generate_documents(
         language,
     )
 
-    if output_format == "adoc":
-        spinner.spinner = Spinners.dots
-        spinner.text = "Checking for asciidoctor components"
-        time.sleep(1)
-        asciidoctor_path, asciidoctor_err = run_command("bundle show asciidoctor")
-        asciidoctor_pdf_path, asciidoctor_pdf_err = run_command(
-            "bundle show asciidoctor-pdf"
-        )
-
-        if asciidoctor_err or asciidoctor_pdf_err:
-            spinner.text = "Installing missing asciidoctor components"
-            time.sleep(1)
-            output, error = run_command(
-                "bundle install --gemfile Gemfile --path mscp_gems --binstubs"
-            )
-            if error:
-                logger.error(f"Bundle install failed: {error}")
-                sys.exit()
-        spinner.text = "Generating HTML file from adoc"
-        time.sleep(1)
-        output, error = run_command(f"bundle exec asciidoctor '{output_file}'")
-        if error:
-            logger.error(f"Error converting to ADOC: {error}")
-            sys.exit()
-        spinner.text = "Generating PDF file from adoc"
-        output, error = run_command(f"bundle exec asciidoctor-pdf '{output_file}'")
-        if error:
-            logger.error(f"Error converting to ADOC: {error}")
-            sys.exit()
-
-    elif output_format == "typst":
+    if output_format == "typst":
         _generate_typst_pdf(spinner, output_file, logo_path)
 
     elif output_format == "html":
         # Pure-Python HTML: render_template already wrote the self-contained
         # file (CSS inlined). No external tool, no Ruby.
-        logger.info(f"Experimental Ruby-free HTML generated: {output_file}")
+        logger.info(f"HTML generated: {output_file}")

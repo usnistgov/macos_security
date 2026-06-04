@@ -415,25 +415,6 @@ ready to use with Docusaurus, Starlight, MkDocs, or VitePress""",
         action="store_true",
     )
     guidance_parser.add_argument(
-        "--pdf-engine",
-        default="asciidoctor",
-        choices=["asciidoctor", "typst"],
-        help="""R|PDF engine for the guidance document:
-'asciidoctor' (default) uses asciidoctor-pdf;
-'typst' additionally renders an experimental
-Ruby-free PDF (<baseline>_<lang>_typst.pdf) via typst""",
-    )
-    guidance_parser.add_argument(
-        "--html-engine",
-        default="asciidoctor",
-        choices=["asciidoctor", "python"],
-        help="""R|HTML engine for the guidance document:
-'asciidoctor' (default) uses asciidoctor;
-'python' additionally renders an experimental
-Ruby-free HTML (<baseline>_<lang>_python.html)
-from Jinja templates with the bundled CSS inlined""",
-    )
-    guidance_parser.add_argument(
         "-p",
         "--profiles",
         help="generate configuration profiles for the rules in the specified baseline",
