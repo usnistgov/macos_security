@@ -5,11 +5,21 @@ discussion: |
 
   While FileVault protects the boot volume, data may be copied to attached external storage and reduce the protection afforded by FileVault. All external user data volumes (APFS or HFS+) _MUST_ be encrypted to protect user data from loss or tampering. CoreStorage has been deprecated and replaced with APFS for volume encryption.
 check: |
-  /usr/sbin/diskutil list external | /usr/bin/grep -E "APFS Volume|Apple_HFS|Logical Volume" | /usr/bin/awk '{print $NF}' | /usr/bin/xargs -n1 /usr/sbin/diskutil info 2>/dev/null | /usr/bin/awk '
-    /FileVault:/{ if ($2=="No") c++ }
-    END{print c+0}'
+  fail=$(/usr/sbin/diskutil list external | /usr/bin/grep -E "APFS Volume|Apple_HFS|Logical Volume" | /usr/bin/awk '{print $NF}' | /usr/bin/xargs -n1 /usr/sbin/diskutil info 2>/dev/null | /usr/bin/awk '
+    /Volume Name:/{name=$0; sub(/^[ \t]*Volume Name:[ \t]*/,"",name)}
+    /FileVault:/{
+      if ($2=="No") {
+        if (list=="") list=name; else list=list ", " name
+      }
+    }
+    END{print list}')
+  if [ -z "$fail" ]; then
+    /bin/echo "Yes"
+  else
+    /bin/echo "Unencrypted external volumes: $fail"
+  fi
 result:
-  integer: 0
+  string: "Yes"
 fix: |
   Use Disk Utility to erase a user disk and format as APFS (Encrypted).
 

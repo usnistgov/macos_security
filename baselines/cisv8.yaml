@@ -75,7 +75,6 @@ profile:
       - os_directory_services_configured
       - os_ess_installed
       - os_external_apfs_hfs_volumes_encrypted
-      - os_fat_exfat_volumes_prohibit
       - os_filevault_autologin_disable
       - os_gatekeeper_enable
       - os_handoff_disable

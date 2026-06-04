@@ -46,7 +46,6 @@ profile:
       - os_bonjour_disable
       - os_config_data_install_enforce
       - os_external_apfs_hfs_volumes_encrypted
-      - os_fat_exfat_volumes_prohibit
       - os_gatekeeper_enable
       - os_guest_folder_removed
       - os_home_folders_secure
