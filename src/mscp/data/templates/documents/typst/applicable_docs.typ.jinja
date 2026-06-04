@@ -1,0 +1,80 @@
+= {% trans %}Applicable Documents{% endtrans %}
+
+== {% trans %}Government Documents{% endtrans %}
+
+*National Institute of Standards and Technology (NIST)*
+
+#table(
+  columns: (1fr, 1fr),
+  stroke: 0.5pt + border-col,
+  inset: 5pt,
+  align: (left + top, left + top),
+  table.header([*{% trans %}Document Number or Descriptor{% endtrans %}*], [*{% trans %}Document Title{% endtrans %}*]),
+  [#link("https://nvd.nist.gov/800-53")[NIST Special Publication 800-53 Rev 5]], [_NIST Special Publication 800-53 Rev 5.2.0_],
+  [#link("https://pages.nist.gov/800-63-4/")[NIST SP 800-63 Digital Identity Guidelines]], [_NIST Special Publication 800-63 Rev 4_],
+  [#link("https://csrc.nist.gov/pubs/sp/800/171/r3/final")[NIST Special Publication 800-171]], [_NIST Special Publication 800-171 Rev 3_],
+  [#link("https://csrc.nist.gov/pubs/sp/800/219/r1/final")[NIST Special Publication 800-219]], [_NIST Special Publication 800-219 Rev 1_],
+)
+
+{% if "STIG" in baseline.title.upper() %}
+*Defense Information Systems Agency (DISA)*
+
+#table(
+  columns: (1fr, 1fr),
+  stroke: 0.5pt + border-col,
+  inset: 5pt,
+  align: (left + top, left + top),
+  table.header([*{% trans %}Document Number or Descriptor{% endtrans %}*], [*{% trans %}Document Title{% endtrans %}*]),
+  {% if os_name == "macos" and os_version == "26.0" %}[#link("https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Apple_macOS_26_V1R1_STIG.zip")[STIG Ver 1, Rel 1]], [_Apple macOS 26 (Tahoe) STIG_],{% endif %}
+  {% if os_name == "macos" and os_version == "15.0" %}[#link("https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Apple_macOS_15_V1R1_STIG.zip")[STIG Ver 1, Rel 1]], [_Apple macOS 15 (Sequoia) STIG_],{% endif %}
+  {% if os_name == "macos" and os_version == "14.0" %}[#link("https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Apple_macOS_14_V1R1_STIG.zip")[STIG Ver 1, Rel 1]], [_Apple macOS 14 (Sonoma) STIG_],{% endif %}
+  {% if os_name == "visionos" %}[#link("https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Apple_visionOS_2_Y25M09_STIG.zip")[STIG Ver 1, Rel 1]], [_Apple visionOS 2 STIG - Ver 1, Rel 1_],{% endif %}
+)
+{% endif %}
+
+{% if "CMMC" in baseline.title.upper() %}
+*Cybersecurity Maturity Model Certification (CMMC)*
+
+#table(
+  columns: (1fr, 1fr),
+  stroke: 0.5pt + border-col,
+  inset: 5pt,
+  align: (left + top, left + top),
+  table.header([*{% trans %}Document Number or Descriptor{% endtrans %}*], [*{% trans %}Document Title{% endtrans %}*]),
+  [#link("https://dodcio.defense.gov/Portals/0/Documents/CMMC/ModelOverview_V2.0_FINAL2_20211202_508.pdf")[CMMC Model Overview v2.0]], [_Cybersecurity Maturity Model Certification (CMMC) Model Overview v2.0_],
+)
+{% endif %}
+
+== {% trans %}Non-Government Documents{% endtrans %}
+
+{% if os_name in ["macos", "ios", "visionos"] %}
+*Apple*
+
+#table(
+  columns: (1fr, 1fr),
+  stroke: 0.5pt + border-col,
+  inset: 5pt,
+  align: (left + top, left + top),
+  table.header([*{% trans %}Document Number or Descriptor{% endtrans %}*], [*{% trans %}Document Title{% endtrans %}*]),
+  [#link("https://support.apple.com/guide/security/welcome/web")[Apple Platform Security Guide]], [_Apple Platform Security_],
+  [#link("https://support.apple.com/guide/deployment/welcome/web")[Apple Platform Deployment]], [_Apple Platform Deployment_],
+  [#link("https://support.apple.com/guide/certifications/welcome/web")[Apple Platform Certifications]], [_Apple Platform Certifications_],
+  [#link("https://developer.apple.com/documentation/devicemanagement/profile-specific_payload_keys")[Profile-Specific Payload Keys]], [_Profile-Specific Payload Keys_],
+)
+{% endif %}
+
+{% if "CIS_LVL" in baseline.title.upper() %}
+*Center for Internet Security*
+
+#table(
+  columns: (1fr, 1fr),
+  stroke: 0.5pt + border-col,
+  inset: 5pt,
+  align: (left + top, left + top),
+  table.header([*{% trans %}Document Number or Descriptor{% endtrans %}*], [*{% trans %}Document Title{% endtrans %}*]),
+  {% if os_name == "macos" and os_version == "15.0" %}[#link("https://www.cisecurity.org/benchmark/apple_os/")[Apple macOS 15.0]], [_CIS Apple macOS 15.0 Benchmark version 1.0.0_],{% endif %}
+  {% if os_name == "macos" and os_version == "14.0" %}[#link("https://www.cisecurity.org/benchmark/apple_os/")[Apple macOS 14.0]], [_CIS Apple macOS 14.0 Benchmark version 2.0.0_],{% endif %}
+)
+{% endif %}
+
+#pagebreak()

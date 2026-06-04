@@ -198,6 +198,9 @@ def generate_guidance(sp: Yaspin, args: argparse.Namespace) -> None:
         build_path: Path = Path(config.get("output_dir", ""), baseline_name)
     adoc_output_file: Path = Path(build_path, f"{baseline_name}_{args.language}.adoc")
     md_output_file: Path = Path(build_path, f"{baseline_name}_{args.language}.md")
+    typst_output_file: Path = Path(
+        build_path, f"{baseline_name}_{args.language}_typst.typ"
+    )
     spreadsheet_output_file: Path = Path(
         build_path, f"{baseline_name}_{args.language}.xlsx"
     )
@@ -444,6 +447,24 @@ def generate_guidance(sp: Yaspin, args: argparse.Namespace) -> None:
             baseline.platform["os"],
             current_version_data,
             show_all_tags,
+            language=args.language,
+        )
+
+    if not args.no_docs and args.pdf_engine == "typst":
+        logger.info("Generating experimental typst PDF document")
+        sp.text = "Generating experimental typst PDF document"
+        generate_documents(
+            sp,
+            typst_output_file,
+            baseline,
+            b64logo,
+            pdf_theme,
+            html_css,
+            logo_path,
+            baseline.platform["os"],
+            current_version_data,
+            show_all_tags,
+            output_format="typst",
             language=args.language,
         )
     try:

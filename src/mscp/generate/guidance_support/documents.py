@@ -13,6 +13,7 @@ filters are also defined here: `group_ulify`, `group_ulify_md`,
 # Standard python modules
 import gettext
 import re
+import shutil
 import sys
 import time
 from collections.abc import Mapping
@@ -177,6 +178,231 @@ def render_rules_md(rule_set: list[str] | None) -> str:
     if not rule_set:
         return ""
     return "<br>".join(f"- {rule}" for rule in rule_set)
+
+
+# ---------------------------------------------------------------------------
+# Typst output helpers (experimental ``--pdf-engine typst`` backend)
+#
+# Typst is a markup language where ``# $ * _ ` < > @ ~ [ ] \`` are
+# significant.  Literal data (rule IDs full of underscores, references,
+# titles) must be escaped before being injected into Typst markup, otherwise
+# it silently renders as emphasis/code or fails to compile.
+# ---------------------------------------------------------------------------
+
+# Characters that must be backslash-escaped when emitting literal Typst text.
+_TYPST_ESCAPE: dict[str, str] = {
+    "\\": "\\\\",
+    "#": "\\#",
+    "$": "\\$",
+    "*": "\\*",
+    "_": "\\_",
+    "`": "\\`",
+    "<": "\\<",
+    ">": "\\>",
+    "@": "\\@",
+    "~": "\\~",
+    "[": "\\[",
+    "]": "\\]",
+}
+
+# Subset escaped inside prose, where ``*`` / ``_`` are kept so intentional
+# AsciiDoc bold/italic survives the conversion to Typst.
+_TYPST_PROSE_ESCAPE: dict[str, str] = {
+    k: v for k, v in _TYPST_ESCAPE.items() if k not in ("*", "_", "[", "]")
+}
+
+
+def typst_escape(value: Any) -> str:
+    """Backslash-escape every Typst-significant character in *value*.
+
+    Used for short literal fields (rule IDs, references, titles, severity)
+    that must appear verbatim in the rendered PDF.
+
+    Args:
+        value (Any): Value to escape; ``None`` becomes ``""``.
+
+    Returns:
+        str: Typst-safe literal text.
+    """
+    if value is None:
+        return ""
+    return "".join(_TYPST_ESCAPE.get(ch, ch) for ch in str(value))
+
+
+def group_ulify_typst(elements: list[str]) -> str:
+    """`group_ulify` for Typst: groups by prefix, escapes each element.
+
+    Args:
+        elements (list[str]): Strings to group and format.
+
+    Returns:
+        str: ``"- N/A"`` if ``"N/A"`` is present, otherwise a newline-joined
+            Typst bullet list with every element escaped.
+    """
+    if "N/A" in elements:
+        return "- N/A"
+
+    elements.sort()
+    grouped = [list(i) for _, i in groupby(elements, lambda a: a.split("(")[0])]
+
+    return "\n".join(
+        "- " + ", ".join(typst_escape(e) for e in group) for group in grouped
+    ).strip()
+
+
+def render_rules_typst(rule_set: list[str] | None) -> str:
+    """`render_rules` for Typst: newline-separated escaped bullet lines.
+
+    Args:
+        rule_set (list[str] | None): Rule strings. ``None``/empty -> ``""``.
+
+    Returns:
+        str: Newline-joined ``"- <escaped rule>"`` lines.
+    """
+    if not rule_set:
+        return ""
+    return "\n".join(f"- {typst_escape(rule)}" for rule in rule_set)
+
+
+def render_references_typst(reference_set: Sequence[Dict[str, Any]]) -> str:
+    """`render_references` for Typst: flatten dicts to escaped bullet lines.
+
+    Args:
+        reference_set (Sequence[Dict[str, Any]]): Custom-reference dicts.
+
+    Returns:
+        str: Newline-joined ``"- key: value"`` Typst bullets, or ``""``.
+
+    Raises:
+        TypeError: If any element is not a dict.
+    """
+    lines: list[str] = []
+    for d in reference_set:
+        if not isinstance(d, dict):
+            raise TypeError("All elements of 'reference_set' must be dictionaries.")
+        for key, value in d.items():
+            if isinstance(value, (list, tuple)):
+                joined = ", ".join(map(str, value))
+            else:
+                joined = str(value)
+            lines.append(f"- {typst_escape(key)}: {typst_escape(joined)}")
+    return "\n".join(lines)
+
+
+def asciidoc_to_typst(value: str) -> str:
+    """Convert a subset of AsciiDoc to Typst markup.
+
+    Handles source/code blocks (emitted as Typst raw fences, contents left
+    verbatim), ``NOTE:``/``[IMPORTANT]`` admonitions, block titles,
+    unordered/ordered lists, and ``link:url[text]`` macros.  Remaining prose
+    is escaped for Typst while preserving ``*bold*`` / ``_italic_`` (shared
+    between AsciiDoc and Typst).
+
+    Args:
+        value (str): AsciiDoc source text.
+
+    Returns:
+        str: Typst-formatted text.
+    """
+    if value is None:
+        return ""
+
+    lines = str(value).splitlines()
+    result: list[str] = []
+    i = 0
+
+    link_pattern = re.compile(r"(?:link:)?(https?://\S+?)\[(.*?)\]")
+
+    def _escape_prose(text: str) -> str:
+        return "".join(_TYPST_PROSE_ESCAPE.get(ch, ch) for ch in text)
+
+    def _inline(text: str) -> str:
+        # Tokenise on the AsciiDoc link macro over the *raw* text so the URL
+        # stays unescaped (it goes inside a Typst string literal) while the
+        # surrounding prose and link label are escaped for Typst markup.
+        out: list[str] = []
+        last = 0
+        for m in link_pattern.finditer(text):
+            out.append(_escape_prose(text[last : m.start()]))
+            url, label = m.group(1), m.group(2).strip()
+            if label:
+                out.append(f'#link("{url}")[{_escape_prose(label)}]')
+            else:
+                out.append(f'#link("{url}")')
+            last = m.end()
+        out.append(_escape_prose(text[last:]))
+        return "".join(out)
+
+    while i < len(lines):
+        line = lines[i].rstrip()
+
+        # [source,lang] code block
+        if line.startswith("[source"):
+            lang_match = re.match(r"\[source\s*,?\s*([a-zA-Z0-9_+-]+)?", line)
+            language = (lang_match.group(1) or "") if lang_match else ""
+            if i + 1 < len(lines) and lines[i + 1].strip() in ("----", "...."):
+                fence = lines[i + 1].strip()
+                i += 2
+                code_lines: list[str] = []
+                while i < len(lines) and lines[i].strip() != fence:
+                    code_lines.append(lines[i])
+                    i += 1
+                result.append(f"```{language}".rstrip())
+                result.extend(code_lines)
+                result.append("```")
+
+        # Bare code block
+        elif line.strip() in ("----", "...."):
+            fence = line.strip()
+            i += 1
+            code_lines = []
+            while i < len(lines) and lines[i].strip() != fence:
+                code_lines.append(lines[i])
+                i += 1
+            result.append("```")
+            result.extend(code_lines)
+            result.append("```")
+
+        # NOTE: admonition
+        elif line.startswith("NOTE:"):
+            result.append(f"*NOTE:* {_inline(line[5:].strip())}")
+
+        # [IMPORTANT] admonition block
+        elif (
+            line.strip() == "[IMPORTANT]"
+            and i + 1 < len(lines)
+            and lines[i + 1].strip() == "===="
+        ):
+            i += 2
+            important_lines: list[str] = []
+            while i < len(lines) and lines[i].strip() != "====":
+                important_lines.append(lines[i].strip())
+                i += 1
+            result.append("*IMPORTANT:* " + _inline(" ".join(important_lines)))
+
+        # Skip AsciiDoc block attribute lines, e.g. [cols=...], [width=...]
+        elif re.match(r"^\[(cols|width|options|grid|frame|stripes|%|role).*\]$", line):
+            pass
+
+        # Block title `.Some Title`
+        elif re.match(r"^\.(?!\d+\s)(.+)$", line):
+            title_text = re.match(r"^\.(.+)$", line).group(1).strip()
+            result.append(f"*{_escape_prose(title_text)}*")
+
+        # Unordered list `* item` -> `- item`
+        elif line.strip().startswith("* "):
+            result.append("- " + _inline(line.strip()[2:]))
+
+        # Ordered list `. item` -> `+ item`
+        elif re.match(r"^\.\s+.+", line):
+            result.append("+ " + _inline(line.strip()[2:]))
+
+        else:
+            result.append(_inline(line.strip()))
+
+        i += 1
+
+    return "\n".join(result)
 
 
 def replace_include_with_file_content(text: str) -> str:
@@ -469,6 +695,13 @@ def render_template(
         env.filters["render_rules"] = render_rules_md
         env.filters["asciidoc_to_markdown"] = asciidoc_to_markdown
 
+    if output_format == "typst":
+        env.filters["group_ulify"] = group_ulify_typst
+        env.filters["render_rules"] = render_rules_typst
+        env.filters["render_references"] = render_references_typst
+        env.filters["asciidoc_to_typst"] = asciidoc_to_typst
+        env.filters["typst_escape"] = typst_escape
+
     template: Template = env.get_template(template_name)
 
     baseline_dict: dict[str, Any] = baseline.model_dump()
@@ -526,6 +759,52 @@ def render_template(
     output_file.write_text(rendered_output)
 
 
+def _generate_typst_pdf(spinner: Yaspin, output_file: Path, logo_path: Path) -> None:
+    """Compile a rendered ``.typ`` file to PDF using the ``typst`` package.
+
+    Experimental backend for ``--pdf-engine typst``.  typst ships as a Python
+    dependency (``uv sync``), so it is called via its binding.  Skips gracefully
+    (logs and returns, never ``sys.exit``) when the package is unavailable so
+    the rest of the run — including the AsciiDoctor output — is unaffected.
+
+    Args:
+        spinner (Yaspin): Spinner for progress feedback.
+        output_file (Path): The rendered ``.typ`` file to compile.
+        logo_path (Path): Absolute path to the title-page logo image.
+    """
+    try:
+        import typst
+    except ImportError:
+        logger.error(
+            "The 'typst' package is not installed; skipping experimental typst "
+            "PDF. Install project dependencies with 'uv sync', then re-run."
+        )
+        return
+
+    build_dir: Path = output_file.parent
+    # Typst can only read files under its --root; copy the logo next to the
+    # .typ and reference it by name from the template.
+    try:
+        dest_logo: Path = build_dir / logo_path.name
+        if logo_path.resolve() != dest_logo.resolve():
+            shutil.copy(logo_path, dest_logo)
+    except OSError as e:
+        logger.warning(f"Could not stage logo for typst: {e}")
+
+    pdf_file: Path = output_file.with_suffix(".pdf")
+    spinner.spinner = Spinners.dots
+    spinner.text = "Generating PDF file via typst (experimental)"
+    try:
+        typst.compile(str(output_file), output=str(pdf_file), root=str(build_dir))
+    except Exception as e:  # typst raises on compile errors
+        logger.error(f"typst compile failed: {e}")
+        return
+    if not pdf_file.exists():
+        logger.error("typst compile produced no PDF.")
+        return
+    logger.info(f"Experimental typst PDF generated: {pdf_file}")
+
+
 def generate_documents(
     spinner: Yaspin,
     output_file: Path,
@@ -573,9 +852,15 @@ def generate_documents(
     _themes_dir: str = _resolve_asset_dir(pdf_theme, "themes_dir")
     _logo_dir: str = _resolve_asset_dir(logo_path.name, "images_dir")
 
+    # Typst output uses its own self-contained template tree so the existing
+    # AsciiDoc/Markdown pipelines stay byte-for-byte unchanged.
+    main_template: str = (
+        "typst/main.typ.jinja" if output_format == "typst" else "main.jinja"
+    )
+
     render_template(
         output_file,
-        "main.jinja",
+        main_template,
         baseline,
         b64logo,
         pdf_theme,
@@ -621,3 +906,6 @@ def generate_documents(
         if error:
             logger.error(f"Error converting to ADOC: {error}")
             sys.exit()
+
+    elif output_format == "typst":
+        _generate_typst_pdf(spinner, output_file, logo_path)
