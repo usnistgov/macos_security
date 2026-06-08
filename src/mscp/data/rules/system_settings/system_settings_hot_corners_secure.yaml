@@ -32,7 +32,7 @@ references:
   cis:
     benchmark:
       macos_26:
-        - 2.7.1 (level 2)
+        - 2.7.1 (level 1)
       macos_15:
         - 2.7.1 (level 2)
       macos_14:
@@ -43,6 +43,7 @@ platforms:
   macOS:
     '26.0':
       benchmarks:
+        - name: cis_lvl1
         - name: cis_lvl2
     '15.0':
       benchmarks:

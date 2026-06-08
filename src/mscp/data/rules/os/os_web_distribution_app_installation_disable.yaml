@@ -31,6 +31,8 @@ references:
         - ANNEX K
   bzk:
     bio:
+      - 8.07
+      - 8.19
       - 8.27
 platforms:
   iOS:

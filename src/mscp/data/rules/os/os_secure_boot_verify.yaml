@@ -38,6 +38,7 @@ references:
         - APPL-14-005100
   bzk:
     bio:
+      - 8.27
       - 8.27.01
   hhs:
     hicp:

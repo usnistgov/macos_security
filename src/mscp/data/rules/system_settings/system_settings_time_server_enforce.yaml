@@ -39,7 +39,6 @@ references:
       - AU.L2-3.3.7
   bzk:
     bio:
-      - 8.17.01
       - 8.17
   cis:
     benchmark:

@@ -33,6 +33,7 @@ references:
       - CM.L2-3.4.7
   bzk:
     bio:
+      - 8.27
       - 8.27.01
   hhs:
     hicp:

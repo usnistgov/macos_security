@@ -6,10 +6,10 @@ references:
   nist:
     cce:
       macos_26:
-        - CCE-NA
+        - CCE-12345678
   bzk:
     bio:
-      - 8.08.01
+      - 8.08
 platforms:
   macOS:
     '26.0':

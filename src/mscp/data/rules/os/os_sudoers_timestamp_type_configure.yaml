@@ -33,6 +33,7 @@ references:
         - APPL-14-004060
   bzk:
     bio:
+      - 8.27
       - 8.27.01
   cis:
     benchmark:

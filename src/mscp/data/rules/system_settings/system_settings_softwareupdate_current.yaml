@@ -34,6 +34,7 @@ references:
       - SI.L1-3.14.4
   bzk:
     bio:
+      - 8.08
       - 8.08.01
   cis:
     benchmark:
@@ -113,6 +114,7 @@ platforms:
 odv:
   hint:
     description: Maximum Days of Deferral (e.g. 30d)
+    datatype: string
   recommended: 30d
   cis_lvl1: 30d
   cis_lvl2: 30d

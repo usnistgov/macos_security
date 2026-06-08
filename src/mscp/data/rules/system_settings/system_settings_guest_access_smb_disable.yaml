@@ -41,15 +41,25 @@ platforms:
       benchmarks:
         - name: cis_lvl1
         - name: cis_lvl2
+      enforcement_info:
+        check:
+          shell: /usr/bin/defaults read /Library/Preferences/SystemConfiguration/com.apple.smb.server AllowGuestAccess
+          result:
+            integer: 0
     '14.0':
       benchmarks:
         - name: cis_lvl1
         - name: cis_lvl2
+      enforcement_info:
+        check:
+          shell: /usr/bin/defaults read /Library/Preferences/SystemConfiguration/com.apple.smb.server AllowGuestAccess
+          result:
+            integer: 0
     enforcement_info:
       check:
-        shell: /usr/bin/defaults read /Library/Preferences/SystemConfiguration/com.apple.smb.server AllowGuestAccess
+        shell: /usr/sbin/sysadminctl -smbGuestAccess status 2>&1 | /usr/bin/grep -c "SMB guest access disabled"
         result:
-          integer: 0
+          integer: 1
       fix:
         shell: /usr/sbin/sysadminctl -smbGuestAccess off
 tags:

@@ -41,6 +41,7 @@ references:
   bzk:
     bio:
       - 7.10.02
+      - 7.1
   hhs:
     hicp:
       - 2.L.A

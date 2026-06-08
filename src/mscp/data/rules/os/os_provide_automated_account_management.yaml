@@ -25,6 +25,7 @@ references:
   bzk:
     bio:
       - 5.16.02
+      - 5.16
 platforms:
   macOS:
     '26.0':

@@ -35,7 +35,7 @@ references:
         - ANNEX K
   bzk:
     bio:
-      - 8.12 - 4.8
+      - 8.12
   cis:
     benchmark:
       ios_26:

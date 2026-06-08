@@ -13,6 +13,7 @@ references:
         - CCE-92880-4
   bzk:
     bio:
+      - 8.27
       - 8.27.01
   cis:
     benchmark:

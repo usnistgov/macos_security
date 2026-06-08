@@ -36,6 +36,7 @@ references:
   bzk:
     bio:
       - 5.17.03
+      - 5.17
   cis:
     benchmark:
       macos_26:
