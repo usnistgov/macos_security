@@ -20,6 +20,7 @@ from .admin_utils import (
     build_all_baselines,
     add_new_rule,
     generate_mscp_banners,
+    update_mscp_apple_release,
 )
 from .common_utils import (
     logger,
@@ -620,6 +621,30 @@ compliance script (e.g. disa_stig, cis.benchmark)
         add_help=False,
     )
     generate_banners_parser.set_defaults(func=generate_mscp_banners)
+
+    update_apple_release_parser = admin_subparsers.add_parser(
+        "update",
+        parents=[parent_parser],
+        help="update rule library with platform placeholders for new Apple release",
+        add_help=False,
+    )
+    update_apple_release_parser.set_defaults(func=update_mscp_apple_release)
+
+    update_apple_release_parser.add_argument(
+        "--new_version",
+        help="version number of Apple release to add to MSCP",
+        type=float,
+        required=True,
+        action="store",
+    )
+
+    update_apple_release_parser.add_argument(
+        "--new_name",
+        help="name of macOS from Apple release to add to MSCP",
+        type=str,
+        required=True,
+        action="store",
+    )
 
     validate_parser: argparse.ArgumentParser = admin_subparsers.add_parser(
         "validate",
