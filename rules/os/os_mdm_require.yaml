@@ -50,9 +50,8 @@ references:
   cmmc:
     - CM.L2-3.4.2
   bio:
-    - 8.01.01
-    - 8.01.02
-    - 8.09.01
+    - 8.01
+    - 8.09
   hicp:
     - 2.L.B
 macOS:

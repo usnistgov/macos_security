@@ -31,7 +31,7 @@ references:
   cmmc:
     - SC.L2-3.13.10
   bio:
-    - 8.01.01
+    - 8.01
   hicp:
     - 3.L.C
 macOS:

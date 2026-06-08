@@ -42,7 +42,7 @@ references:
   cmmc:
     - AU.L2-3.3.7
   bio:
-    - 8.17.01
+    - 8.17
 macOS:
   - '26.0'
 tags:

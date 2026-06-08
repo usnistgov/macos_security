@@ -45,7 +45,7 @@ references:
   disa_stig:
     - APPL-26-000100
   bio:
-    - 5.16.02
+    - 5.16
 macOS:
   - '26.0'
 tags:

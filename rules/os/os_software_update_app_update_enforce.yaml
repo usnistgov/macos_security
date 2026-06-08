@@ -33,7 +33,7 @@ references:
       - 7.3
       - 7.4
   bio:
-    - 8.08.01
+    - 8.08
 macOS:
   - '26.0'
 tags:

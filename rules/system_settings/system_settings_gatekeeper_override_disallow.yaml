@@ -33,7 +33,7 @@ references:
   cmmc:
     - CM.L2-3.4.5
   bio:
-    - 8.19.01
+    - 8.19
 macOS:
   - '26.0'
 tags:
