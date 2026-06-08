@@ -4,9 +4,6 @@ discussion: |
   The ability for the user to roll back Background Security Improvements _MUST_ be disabled.
 references:
   nist:
-    cce:
-      macos_26:
-        - CCE-12345678
     800-53r5:
       - SI-2
       - SI-2(5)

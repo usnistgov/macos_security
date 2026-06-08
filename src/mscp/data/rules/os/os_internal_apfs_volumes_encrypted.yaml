@@ -6,7 +6,9 @@ discussion: |
   While FileVault protects the boot volume, data may be copied to other attached internal storage and reduce the protection afforded by FileVault. All internal APFS volumes that carry user data and do not have a specific role (Preboot, Recovery, VM) _MUST_ be encrypted to protect user data from loss or tampering.
 references:
   nist:
-    cce: {}
+    cce:
+      macos_26:
+        - CCE-PLACEHOLDER
   cis:
     benchmark:
       macos_26:

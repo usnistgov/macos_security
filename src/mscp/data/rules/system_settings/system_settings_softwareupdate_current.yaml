@@ -114,7 +114,6 @@ platforms:
 odv:
   hint:
     description: Maximum Days of Deferral (e.g. 30d)
-    datatype: string
   recommended: 30d
   cis_lvl1: 30d
   cis_lvl2: 30d

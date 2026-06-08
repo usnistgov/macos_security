@@ -6,7 +6,9 @@ discussion: |
   While FileVault protects the boot volume, data may be copied to attached external storage and reduce the protection afforded by FileVault. All external user data volumes (APFS or HFS+) _MUST_ be encrypted to protect user data from loss or tampering. CoreStorage has been deprecated and replaced with APFS for volume encryption.
 references:
   nist:
-    cce: {}
+    cce:
+      macos_26:
+        - CCE-PLACEHOLDER
   cis:
     benchmark:
       macos_26:
