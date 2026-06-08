@@ -26,7 +26,7 @@ fix: |
   NOTE: APFS Encrypted disks will be described as "FileVault" whether they are the boot volume or not.
 references:
   cce:
-    - N/A
+    - CCE-96725-7
   cci:
     - N/A
   800-53r5:

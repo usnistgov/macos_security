@@ -26,7 +26,7 @@ fix: |
   NOTE: It is recommended using APFS over HFS+ where possible. If you do need to use an HFS+/CoreStorage external drive for compatibility reasons, you need to format the drive to MacOS Extended (Journaled) (or MacOS Extended (Case-Sensitive, Journaled) if Case-Sensitive is required).
 references:
   cce:
-    - N/A
+    - CCE-96724-0
   cci:
     - N/A
   800-53r5:

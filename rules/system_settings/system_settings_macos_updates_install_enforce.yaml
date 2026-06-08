@@ -10,7 +10,7 @@ fix: |
   This is implemented by Declarative Device Management (DDM).
 references:
   cce:
-    - N/A
+    - CCE-96727-3
   cci:
     - N/A
   800-53r5:
