@@ -26,6 +26,8 @@ references:
     controls v8:
       - N/A
   bio:
+    - 5.17
+    - 8.01
     - 8.24
   cmmc:
     - MP.L2-3.8.6

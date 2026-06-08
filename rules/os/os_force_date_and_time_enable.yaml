@@ -26,8 +26,7 @@ references:
     controls v8:
     - 8.4
   bio:
-  - 8.17
-      - 8.4
+    - 8.17
   cmmc:
     - AU.L2-3.3.7
 iOS:
