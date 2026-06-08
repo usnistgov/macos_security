@@ -60,8 +60,7 @@ discussion: |
   5.2.4 Ensure Complex Password Must Contain Numeric Character Is Configured +
   5.2.5 Ensure Complex Password Must Contain Special Character Is Configured +
   5.2.6 Ensure Complex Password Must Contain Uppercase and Lowercase Characters Is Configured +
-  5.3.1 Ensure All User Storage APFS Volumes are Encrypted +
-  5.3.2 Ensure All User Storage CoreStorage Volumes are Encrypted +
+  5.3.3 Audit Connected FAT32 and ExFAT Drives
   |===
 
   [cols="15%h, 85%a"]
