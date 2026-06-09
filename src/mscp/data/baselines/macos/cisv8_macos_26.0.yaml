@@ -77,6 +77,7 @@ profile:
   - os_dictation_disable
   - os_directory_services_configured
   - os_ess_installed
+  - os_external_apfs_hfs_volumes_encrypted
   - os_filevault_autologin_disable
   - os_gatekeeper_enable
   - os_handoff_disable
@@ -84,6 +85,7 @@ profile:
   - os_httpd_disable
   - os_icloud_storage_prompt_disable
   - os_install_log_retention_configure
+  - os_internal_apfs_volumes_encrypted
   - os_iphone_mirroring_disable
   - os_ir_support_disable
   - os_library_validation_enabled
