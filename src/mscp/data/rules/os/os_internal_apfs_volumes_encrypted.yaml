@@ -8,7 +8,7 @@ references:
   nist:
     cce:
       macos_26:
-        - CCE-PLACEHOLDER
+        - CCE-96725-7
   cis:
     benchmark:
       macos_26:

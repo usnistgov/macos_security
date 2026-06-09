@@ -9,6 +9,8 @@ references:
     cce:
       ios_26:
         - CCE-95678-9
+      ios_18:
+        - CCE-94530-3
   bsi:
     indigo:
       ios_26:

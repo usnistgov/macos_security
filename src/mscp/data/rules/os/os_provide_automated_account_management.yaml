@@ -24,7 +24,6 @@ references:
       - SRG-OS-000001-GPOS-00001
   bzk:
     bio:
-      - 5.16.02
       - 5.16
 platforms:
   macOS:

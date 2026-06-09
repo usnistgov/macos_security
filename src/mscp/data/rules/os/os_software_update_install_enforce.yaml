@@ -6,7 +6,7 @@ references:
   nist:
     cce:
       ios_26:
-        - CCE-PLACEHOLDER
+        - CCE-96731-5
   bzk:
     bio:
       - 8.08

@@ -18,12 +18,8 @@ references:
       - CCI-000366
   bzk:
     bio:
-      - 8.19.01
-      - 8.07.01
       - 8.07
       - 8.19
-      - 8.07.04
-      - 8.07.03
   cis:
     benchmark:
       macos_26:
