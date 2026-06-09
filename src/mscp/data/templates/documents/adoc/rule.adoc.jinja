@@ -152,6 +152,12 @@ ifdef::show_CMMC[]
 {{ rule.references.disa.cmmc | render_rules if rule.references.disa.cmmc is not none }}
 endif::[]
 
+ifdef::show_HICP[]
+!HICP
+!
+{{ rule.references.hhs.hicp | render_rules if rule.references.hhs.hicp is not none }}
+endif::[]
+
 {% if rule.references.nist.cce is not none %}
 !CCE
 !
