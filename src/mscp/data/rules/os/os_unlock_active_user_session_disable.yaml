@@ -43,6 +43,7 @@ references:
   bzk:
     bio:
       - 8.27
+      - 8.27.01
   cis:
     benchmark:
       macos_26:
