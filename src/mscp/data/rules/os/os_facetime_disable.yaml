@@ -7,6 +7,8 @@ references:
     cce:
       ios_26:
         - CCE-95627-6
+      ios_18:
+        - CCE-94531-1
     800-53r5:
       - CM-6
       - CM-7

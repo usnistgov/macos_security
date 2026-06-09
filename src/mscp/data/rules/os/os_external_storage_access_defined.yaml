@@ -21,7 +21,7 @@ references:
       - MP.L2-3.8.8
   bzk:
     bio:
-      - 8.12.01
+      - 8.12
 platforms:
   macOS:
     '26.0':

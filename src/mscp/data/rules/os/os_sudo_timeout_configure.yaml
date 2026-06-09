@@ -25,7 +25,7 @@ references:
         - APPL-14-004022
   bzk:
     bio:
-      - 8.27.01
+      - 8.27
   cis:
     benchmark:
       macos_26:
