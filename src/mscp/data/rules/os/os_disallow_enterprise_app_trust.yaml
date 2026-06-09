@@ -52,6 +52,7 @@ platforms:
           severity: low
         - name: indigo_high
           severity: low
+        - name: nlmapgov_plus
     '18.0':
       supervised: false
       benchmarks:
@@ -86,7 +87,6 @@ tags:
   - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
-  - nlmapgov_plus
 mobileconfig_info:
   - PayloadType: com.apple.applicationaccess
     PayloadContent:

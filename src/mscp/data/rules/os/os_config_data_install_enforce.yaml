@@ -53,6 +53,10 @@ references:
       - 7.3
       - 7.4
       - 7.7
+  bzk:
+    bio:
+      - 8.07.03
+      - 8.19.01
 platforms:
   macOS:
     '26.0':

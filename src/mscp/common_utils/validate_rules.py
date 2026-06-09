@@ -77,6 +77,8 @@ def validate_yaml_file(args: argparse.Namespace) -> None:
     discovered_rules = []
     for yaml in yaml_files:
         data: dict = open_file(yaml)
+        if data["id"].startswith("supplemental"):
+            continue
         if get_rule_identifier(yaml) in discovered_rules:
             print(f"⚠️ WARNING:   {yaml} may be a duplicate rule")
         else:

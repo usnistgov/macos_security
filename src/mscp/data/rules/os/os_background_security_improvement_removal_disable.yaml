@@ -14,8 +14,8 @@ platforms:
   iOS:
     '26.0':
       supervised: true
-tags:
-  - nlmapgov_plus
+      benchmarks:
+        - name: nlmapgov_plus
 ddm_info:
   declarationtype: com.apple.configuration.softwareupdate.settings
   ddm_key: RapidSecurityResponse

@@ -613,12 +613,12 @@ def generate_documents(
                 sys.exit()
         spinner.text = "Generating HTML file from adoc"
         time.sleep(1)
-        output, error = run_command(f"bundle exec asciidoctor {output_file}")
+        output, error = run_command(f"bundle exec asciidoctor '{output_file}'")
         if error:
             logger.error(f"Error converting to ADOC: {error}")
             sys.exit()
         spinner.text = "Generating PDF file from adoc"
-        output, error = run_command(f"bundle exec asciidoctor-pdf {output_file}")
+        output, error = run_command(f"bundle exec asciidoctor-pdf '{output_file}'")
         if error:
             logger.error(f"Error converting to ADOC: {error}")
             sys.exit()

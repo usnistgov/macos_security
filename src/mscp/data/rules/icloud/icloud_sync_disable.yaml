@@ -40,8 +40,8 @@ references:
       - CM.L2-3.4.7
   bzk:
     bio:
-      - 8.12.01
-      - 8.27.01
+      - 8.12
+      - 8.27
   hhs:
     hicp:
       - 2.L.B

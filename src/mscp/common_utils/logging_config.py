@@ -44,7 +44,13 @@ def function_filter(record):
         bool: ``True`` if this record should be emitted to the configured
             sinks, ``False`` to suppress it.
     """
+    lvl = record["level"].name
+
+    if lvl == "SUCCESS":
+        return False
+
     filter = os.environ.get("MSCP_DEV_FILTER", "")
+
     return filter in record["module"].lower()
 
 

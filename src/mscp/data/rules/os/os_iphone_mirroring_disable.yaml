@@ -61,6 +61,9 @@ references:
         - ANNEX K
       ios_18:
         - ANNEX K
+  bzk:
+    bio:
+      - 8.12
 platforms:
   macOS:
     '26.0':
@@ -88,6 +91,7 @@ platforms:
         - name: ios_stig
         - name: indigo_base
         - name: indigo_high
+        - name: nlmapgov_plus
     '18.0':
       supervised: false
       benchmarks:

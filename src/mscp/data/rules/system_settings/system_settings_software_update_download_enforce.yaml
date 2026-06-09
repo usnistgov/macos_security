@@ -22,6 +22,9 @@ references:
     controls_v8:
       - 7.3
       - 7.4
+  bzk:
+    bio:
+      - 8.08.01
 platforms:
   macOS:
     '26.0':

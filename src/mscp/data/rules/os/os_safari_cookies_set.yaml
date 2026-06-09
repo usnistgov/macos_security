@@ -45,6 +45,7 @@ platforms:
         - name: cis_lvl1_enterprise
         - name: cis_lvl2_enterprise
         - name: indigo_high
+        - name: nlmapgov_plus
     '18.0':
       supervised: false
       benchmarks:
@@ -68,7 +69,6 @@ platforms:
     introduced: '4.0'
 tags:
   - cisv8
-  - nlmapgov_plus
 mobileconfig_info:
   - PayloadType: com.apple.applicationaccess
     PayloadContent:

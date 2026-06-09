@@ -18,18 +18,18 @@ from .logger_instance import logger
 ENCODING: str = "utf-8"
 
 
+class MyDumper(yaml.Dumper):
+    def increase_indent(self, flow=False, indentless=False):
+        return super(MyDumper, self).increase_indent(flow, False)
+
+
 def _str_presenter(dumper, data):
-    """
-    Preserve multiline strings when dumping yaml.
-    https://github.com/yaml/pyyaml/issues/240
-    """
-    if "\n" in data:
-        # Remove trailing spaces messing out the output.
-        block = "\n".join([line.rstrip() for line in data.splitlines()])
-        if data.endswith("\n"):
-            block += "\n"
-        return dumper.represent_scalar("tag:yaml.org,2002:str", block, style="|")
-    return dumper.represent_scalar("tag:yaml.org,2002:str", data)
+    """configures yaml for dumping multiline strings
+    Ref: https://stackoverflow.com/questions/8640959/how-can-i-control-what-scalar-form-pyyaml-uses-for-my-data"""
+    clean_data = data.replace(" \n", "\n")
+    if clean_data.count("\n") > 0:  # check for multiline string
+        return dumper.represent_scalar("tag:yaml.org,2002:str", clean_data, style="|")
+    return dumper.represent_scalar("tag:yaml.org,2002:str", clean_data)
 
 
 yaml.add_representer(str, _str_presenter)
@@ -332,6 +332,8 @@ def create_yaml(file_path: Path, data: dict[str, Any], append: bool = False) -> 
                 explicit_start=True,
                 indent=2,
                 allow_unicode=True,
+                Dumper=MyDumper,
+                width=float("inf"),
             ),
             encoding=ENCODING,
         )

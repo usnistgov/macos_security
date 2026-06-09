@@ -45,6 +45,7 @@ references:
       - AU.L2-3.3.8
   bzk:
     bio:
+      - 8.18
       - 8.18.02
   cis:
     benchmark:

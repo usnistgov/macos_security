@@ -13,6 +13,7 @@ references:
         - CCE-92975-2
   bzk:
     bio:
+      - 6.03
       - 6.03.01
   cis:
     benchmark:

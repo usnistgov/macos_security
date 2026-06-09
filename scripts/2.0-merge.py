@@ -489,6 +489,28 @@ def main():
                             {"benchmarks": ["indigo_high"]}
                         )
                     new_yaml["tags"].remove("indigo_high")
+                if "nlmapgov_base" in rule_yaml["tags"]:
+                    if "benchmarks" in new_yaml["platforms"]["iOS"][os_]:
+                        new_yaml["platforms"]["iOS"][os_]["benchmarks"].append(
+                            "nlmapgov_base"
+                        )
+                    else:
+                        new_yaml["platforms"]["iOS"][os_].update(
+                            {"benchmarks": ["nlmapgov_base"]}
+                        )
+                    if "nlmapgov_base" in new_yaml["tags"]:
+                        new_yaml["tags"].remove("nlmapgov_base")
+                if "nlmapgov_plus" in rule_yaml["tags"]:
+                    if "benchmarks" in new_yaml["platforms"]["iOS"][os_]:
+                        new_yaml["platforms"]["iOS"][os_]["benchmarks"].append(
+                            "nlmapgov_plus"
+                        )
+                    else:
+                        new_yaml["platforms"]["iOS"][os_].update(
+                            {"benchmarks": ["nlmapgov_plus"]}
+                        )
+                    if "nlmapgov_plus" in new_yaml["tags"]:
+                        new_yaml["tags"].remove("nlmapgov_plus")
 
             if "800-53r5" in rule_yaml["references"]:
                 new_yaml["references"]["nist"].update(
@@ -726,6 +748,24 @@ def main():
                                     update_rule_yaml["references"]["bsi"][
                                         "indigo"
                                     ].update({os_: rule_yaml["references"]["indigo"]})
+
+                            if "bio" in rule_yaml["references"]:
+                                if "bzk" in update_rule_yaml["references"]:
+                                    current_bio_refs = update_rule_yaml["references"][
+                                        "bzk"
+                                    ].get("bio", {})
+                                    new_bio_refs = set(
+                                        current_bio_refs
+                                        + rule_yaml["references"]["bio"]
+                                    )
+                                    update_rule_yaml["references"]["bzk"].update(
+                                        {"bio": list(new_bio_refs)}
+                                    )
+                                else:
+                                    update_rule_yaml["references"].update({"bzk": {}})
+                                    update_rule_yaml["references"]["bzk"].update(
+                                        {"bio": rule_yaml["references"]["bio"]}
+                                    )
 
                             if "cis" in rule_yaml["references"]:
                                 if "benchmark" in rule_yaml["references"]["cis"]:
@@ -1008,6 +1048,40 @@ def main():
                                         if "indigo_high" in update_rule_yaml["tags"]:
                                             update_rule_yaml["tags"].remove(
                                                 "indigo_high"
+                                            )
+                                    if "nlmapgov_base" in rule_yaml["tags"]:
+                                        if (
+                                            "benchmarks"
+                                            in update_rule_yaml["platforms"]["iOS"][os_]
+                                        ):
+                                            update_rule_yaml["platforms"]["iOS"][os_][
+                                                "benchmarks"
+                                            ].append("nlmapgov_base")
+                                        else:
+                                            update_rule_yaml["platforms"]["iOS"][
+                                                os_
+                                            ].update({"benchmarks": ["nlmapgov_base"]})
+
+                                        if "nlmapgov_base" in update_rule_yaml["tags"]:
+                                            update_rule_yaml["tags"].remove(
+                                                "nlmapgov_base"
+                                            )
+                                    if "nlmapgov_plus" in rule_yaml["tags"]:
+                                        if (
+                                            "benchmarks"
+                                            in update_rule_yaml["platforms"]["iOS"][os_]
+                                        ):
+                                            update_rule_yaml["platforms"]["iOS"][os_][
+                                                "benchmarks"
+                                            ].append("nlmapgov_plus")
+                                        else:
+                                            update_rule_yaml["platforms"]["iOS"][
+                                                os_
+                                            ].update({"benchmarks": ["nlmapgov_plus"]})
+
+                                        if "nlmapgov_plus" in update_rule_yaml["tags"]:
+                                            update_rule_yaml["tags"].remove(
+                                                "nlmapgov_plus"
                                             )
 
                             if (
@@ -1327,6 +1401,26 @@ def main():
                                         {"benchmarks": ["indigo_high"]}
                                     )
                                 new_yaml["tags"].remove("indigo_high")
+                            if "nlmapgov_base" in rule_yaml["tags"]:
+                                if "benchmarks" in new_yaml["platforms"]["iOS"][os_]:
+                                    new_yaml["platforms"]["iOS"][os_][
+                                        "benchmarks"
+                                    ].append("nlmapgov_base")
+                                else:
+                                    new_yaml["platforms"]["iOS"][os_].update(
+                                        {"benchmarks": ["nlmapgov_base"]}
+                                    )
+                                new_yaml["tags"].remove("nlmapgov_base")
+                            if "nlmapgov_plus" in rule_yaml["tags"]:
+                                if "benchmarks" in new_yaml["platforms"]["iOS"][os_]:
+                                    new_yaml["platforms"]["iOS"][os_][
+                                        "benchmarks"
+                                    ].append("nlmapgov_plus")
+                                else:
+                                    new_yaml["platforms"]["iOS"][os_].update(
+                                        {"benchmarks": ["nlmapgov_plus"]}
+                                    )
+                                new_yaml["tags"].remove("nlmapgov_plus")
 
                         if os_ == "visionos_2.0" or os_ == "visionos_26":
                             new_yaml["tags"].remove("visionos")

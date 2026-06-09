@@ -141,16 +141,22 @@
           <td>{{ rule.references.disa.cmmc | render_rules if rule.references.disa.cmmc is not none }}</td>
         </tr>
         {% endif %}
+        {% if "HICP_LP" in baseline.title | upper or show_all_tags %}
+        <tr>
+          <td><strong>HICP</strong></td>
+          <td>{{ rule.references.hhs.hicp | render_rules if rule.references.hhs.hicp is not none }}</td>
+        </tr>
+        {% endif %}
         {% if rule.references.nist.cce is not none %}
         <tr>
           <td><strong>CCE</strong></td>
           <td>{{ rule.references.nist.cce | render_rules }}</td>
         </tr>
         {% endif %}
-        {% if custom and rule.references.custom_refs is not none %}
+        {% if "references" in rule.customized %}
         <tr>
           <td><strong>Custom References</strong></td>
-          <td>{{ rule.references.custom_refs | render_rules }}</td>
+          <td>{{ rule.references.custom_refs.references | render_references if rule.references.custom_refs is not none }}</td>
         </tr>
         {% endif %}
         {% if show_all_tags %}

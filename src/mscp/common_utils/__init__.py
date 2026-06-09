@@ -14,7 +14,7 @@ runner (`run_command`), and the spinner decorator
 """
 
 from .config import config, set_custom_dir, ensure_custom_dirs, search_paths
-from .constants import SCHEMA_PATH, APPLE_OS, NIX_OS
+from .constants import SCHEMA_PATH, APPLE_OS, NIX_OS, PLATFORM_MAP
 from .customization import collect_overrides
 from .file_handling import (
     append_text,
@@ -77,7 +77,7 @@ __all__ = [
     "SCHEMA_PATH",
     "APPLE_OS",
     "NIX_OS",
-    "validate_yaml_file",
+    "PLATFORM_MAPvalidate_yaml_file",
     "logger",
     "get_supported_languages",
     "collect_overrides",
