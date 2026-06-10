@@ -64,7 +64,7 @@ exclude-newer = "1 week"
 # Escape hatch: opt a single package OUT of the cooldown when you need a fix
 # immediately, e.g.  exclude-newer-package = { some-package = false }
 # Remove the override once the cooldown is acceptable for that package again.
-# exclude-newer-package = {}
+exclude-newer-package = { hatchling = false }
 
 [tool.hatch.version]
 path = "src/mscp/__init__.py"
@@ -74,3 +74,5 @@ packages = ["src/mscp"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+pythonpath = ["src"]
+addopts = "--import-mode=importlib"
