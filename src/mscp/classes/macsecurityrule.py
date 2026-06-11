@@ -194,6 +194,23 @@ class bzkReferences(BaseModelWithAccessors):
             self.bio = sorted(self.bio)
 
 
+class hhsReferences(BaseModelWithAccessors):
+    """HHS reference identifiers for a rule.
+
+    Attributes:
+        hicp (list[str] | None): HICP identifiers, sorted
+            in ascending order on construction.
+    """
+
+    hicp: list[str] | None = None
+
+    def __init__(self, **data: Any) -> None:
+        """Construct from kwargs and sort the reference list."""
+        super().__init__(**data)
+        if self.hicp:
+            self.hicp = sorted(self.hicp)
+
+
 class customReferences(BaseModelWithAccessors):
     """Open-ended custom reference container.
 
@@ -248,6 +265,7 @@ class References(BaseModelWithAccessors):
         cis (CisReferences | None): CIS identifiers, if applicable.
         bsi (bsiReferences | None): BSI identifiers, if applicable.
         bzk (bzkReferences | None): BZK identifiers, if applicable.
+        hhs (hhsReferences | None): HHS (hicp) identifiers, if applicable.
         custom_refs (customReferences | None): Project-specific custom
             references, if any.
     """
@@ -259,6 +277,7 @@ class References(BaseModelWithAccessors):
     cis: CisReferences | None = None
     bsi: bsiReferences | None = None
     bzk: bzkReferences | None = None
+    hhs: hhsReferences | None = None
     custom_refs: customReferences | None = None
 
     def get_ref(
