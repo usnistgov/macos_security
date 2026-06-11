@@ -13,7 +13,13 @@ runner (`run_command`), and the spinner decorator
 (`conditional_inject_spinner`).
 """
 
-from .config import config, set_custom_dir, ensure_custom_dirs, search_paths
+from .config import (
+    config,
+    CONFIG_PATH,
+    set_custom_dir,
+    ensure_custom_dirs,
+    search_paths,
+)
 from .constants import SCHEMA_PATH, APPLE_OS, NIX_OS, PLATFORM_MAP
 from .customization import collect_overrides
 from .file_handling import (
@@ -77,7 +83,8 @@ __all__ = [
     "SCHEMA_PATH",
     "APPLE_OS",
     "NIX_OS",
-    "PLATFORM_MAPvalidate_yaml_file",
+    "PLATFORM_MAP",
+    "validate_yaml_file",
     "logger",
     "get_supported_languages",
     "collect_overrides",
