@@ -29,7 +29,6 @@ Civilian agencies are to use the National Checklist Program as required by [NIST
 
 
 |||
-|----|----|
 |Bob Gendler|NIST|
 |Allen Golbig|Jamf
 |Dan Brodjieski|NASA
@@ -42,6 +41,7 @@ Civilian agencies are to use the National Checklist Program as required by [NIST
 |Joshua Glemza|NASA
 |Elyse Anderson|NASA
 |Gary Gapinski|NASA
+|Cemil Can Dellüller|KRZN
 
 ## Changelog
 
