@@ -1,6 +1,6 @@
-title: "DARFT: macOS 26.0: Security Configuration - BSI SYS.2.4 Clients unter macOS (Basis)"
+title: "DARFT: macOS 26.0: Security Configuration - BSI SYS.2.4 Clients unter macOS (Basis-Absicherung)"
 description: |
-  This guide describes the actions to take when securing a macOS 26.0 system against the BSI SYS.2.4 Clients unter macOS (Basis) security baseline.
+  This guide describes the actions to take when securing a macOS 26.0 system against the BSI SYS.2.4 Clients unter macOS (Basis-Absicherung) security baseline.
 authors: |
   !!!DRAFT!!!
   *macOS Security Compliance Project*

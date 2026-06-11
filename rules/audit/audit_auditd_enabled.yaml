@@ -118,6 +118,8 @@ references:
   cmmc:
     - AU.L2-3.3.2
     - AU.L2-3.3.6
+  bsi:
+    - SYS.2.4 Clients unter macOS
 macOS:
   - '26.0'
 tags:
@@ -136,6 +138,7 @@ tags:
   - cmmc_lvl2
   - stig
   - cnssi-1253_moderate
+  - bsi_sys_macos_basis
 severity: medium
 mobileconfig: false
 mobileconfig_info:
