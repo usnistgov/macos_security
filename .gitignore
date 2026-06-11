@@ -294,3 +294,6 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Local uv overrides (network-specific, not for upstream)
+uv.toml

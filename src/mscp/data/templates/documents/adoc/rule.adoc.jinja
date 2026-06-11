@@ -152,11 +152,14 @@ ifdef::show_CMMC[]
 {{ rule.references.disa.cmmc | render_rules if rule.references.disa.cmmc is not none }}
 endif::[]
 
+{% set hicp_refs = rule | get_nested(["references", "hhs", "hicp"]) %}
+{% if hicp_refs is not none %}
 ifdef::show_HICP[]
 !HICP
 !
-{{ rule.references.hhs.hicp | render_rules if rule.references.hhs.hicp is not none }}
+{{ hicp_refs | render_rules }}
 endif::[]
+{% endif %}
 
 {% if rule.references.nist.cce is not none %}
 !CCE
