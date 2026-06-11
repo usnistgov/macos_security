@@ -18,6 +18,7 @@ from ..common_utils import (
     open_file,
     create_file,
     PLATFORM_MAP,
+    SCHEMA_PATH,
     conditional_inject_spinner,
 )
 
@@ -116,6 +117,35 @@ def add_version_to_rules(
     logger.info(f"Updated {len(updated_rules)} rules for {platform}")
 
 
+def ensure_path(d, path):
+    for key in path:
+        d = d.setdefault(key, {})
+    return d
+
+
+def add_version_to_schema(
+    platform: str, previous_version: float, new_version: float
+) -> None:
+    new_version_str = str(new_version)
+    previous_version_str = str(previous_version)
+
+    schema_data_file: Path = Path(SCHEMA_PATH)
+
+    schema_data = open_file(schema_data_file)
+
+    platform = PLATFORM_MAP[platform]
+    schema_platforms = ensure_path(
+        schema_data, ["properties", "platforms", "properties", platform, "properties"]
+    )
+
+    if previous_version_str in schema_platforms.keys():
+        schema_platforms[new_version_str] = {"$ref": "#/$defs/osDef"}
+
+        create_file(schema_data_file, schema_data)
+    else:
+        print(f"{previsou_version_str} not found in {schema_platforms.keys()}")
+
+
 @conditional_inject_spinner()
 def update_mscp_apple_release(sp: Yaspin, args: argparse.Namespace) -> None:
     sp.spinner = Spinners.dots
@@ -153,6 +183,9 @@ def update_mscp_apple_release(sp: Yaspin, args: argparse.Namespace) -> None:
 
             sp.text = f"Updating MSCP rules with {args.new_version} for {platform_name}"
             add_version_to_rules(
+                platform_name, current_latest["os_version"], args.new_version
+            )
+            add_version_to_schema(
                 platform_name, current_latest["os_version"], args.new_version
             )
             mscp_data_file_updated = True
