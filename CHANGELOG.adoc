@@ -17,6 +17,14 @@ endif::[]
 
 This document provides a high-level view of the changes to the macOS Security Compliance Project.
 
+== [Unreleased]
+
+=== Scripts
+* Add `--markdown-tree` flag to `mscp guidance` - generates a paginated Markdown directory tree (one page per rule, `NN-` ordered filenames, `index.md` per section) ready to use with Docusaurus, Starlight, MkDocs, VitePress, or any CommonMark-based static site generator. Drop the output directory into a docs folder - no post-processing required. Also included in `--all`.
+
+=== Bug Fixes
+* Fix crash in `adoc/rule.adoc.jinja` when `rule.references.hhs` is absent - rules predating the HICP framework do not carry this key.
+
 == [mSCP 2.x] - 2025-02-28
 IMPORTANT: This release is a major update and includes breaking changes. Please review the documentation before upgrading.
 
