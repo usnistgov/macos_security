@@ -77,7 +77,7 @@ authors:
       - Allen Golbig|Jamf
       - Bob Gendler|National Institute of Standards and Technology
       - Aaron Kegerreis|Defense Information Systems Agency
-  bsi_sys_macos_basis:
+  bsi_sys_macos_base:
     names:
       - Cemil Can Dellüller|KRZN
 titles:
@@ -95,7 +95,7 @@ titles:
   cnssi-1253_moderate: Committee on National Security Systems Instruction No. 1253 (Moderate)
   cnssi-1253_high: Committee on National Security Systems Instruction No. 1253 (High)
   stig: Apple macOS 26 (Tahoe) STIG - Ver 1, Rel 1
-  bsi_sys_macos_basis: BSI SYS.2.4 Clients unter macOS (Basis)
+  bsi_sys_macos_base: BSI SYS.2.4 Clients unter macOS (Basis)
 ddm:
   supported_types:
     - com.apple.configuration.services.configuration-files
