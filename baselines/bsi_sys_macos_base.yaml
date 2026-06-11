@@ -1,6 +1,6 @@
 title: "DARFT: macOS 26.0: Security Configuration - BSI SYS.2.4 Clients unter macOS (Basis-Absicherung)"
 description: |
-  This guide describes the actions to take when securing a macOS 26.0 system against the BSI SYS.2.4 Clients unter macOS (Basis-Absicherung) security baseline.
+  This guide describes the actions to take when securing a macOS 26.0 system against the BSI (Bundesamt für Sicherheit in der Informationstechnik, German Federal Office for Information Security) module SYS.2.4 Clients unter macOS (Basis-Absicherung) security baseline.
 authors: |
   !!!DRAFT!!!
   *macOS Security Compliance Project*
@@ -37,6 +37,7 @@ profile:
       - os_sip_enable
       - os_sudo_log_enforce
       - os_time_server_enabled
+      - os_mobile_file_integrity_enable
   - section: "passwordpolicy"
     rules:
       - pwpolicy_minimum_length_enforce
@@ -51,9 +52,8 @@ profile:
       - system_settings_guest_account_disable
       - system_settings_install_macos_updates_enforce
       - system_settings_loginwindow_loginwindowtext_enable
-      - system_settings_software_update_app_update_enforce
+      - os_software_update_app_update_enforce
       - system_settings_software_update_download_enforce
-      - system_settings_software_update_enforce
       - system_settings_softwareupdate_current
       - system_settings_time_server_configure
       - system_settings_time_server_enforce
@@ -66,3 +66,4 @@ profile:
   - section: "Supplemental"
     rules:
       - supplemental_filevault
+      - supplemental_bsi
