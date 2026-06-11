@@ -65,7 +65,7 @@ tags:
   - cmmc_lvl2
   - stig
   - cnssi-1253_moderate
-  - bsi_sys_macos_basis
+  - bsi_sys_macos_base
 severity: medium
 mobileconfig: false
 mobileconfig_info:
