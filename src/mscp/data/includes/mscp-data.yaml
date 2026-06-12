@@ -1,9 +1,9 @@
 ---
 mscp:
-  version: "2.0.0"
+  version: '2.1'
   build: 21
-  build_date: "2026-06-11"
-
+  build_date: '2026-06-11'
+  release_date: '2026-12-12'
 ddm:
   services:
     com.apple.bash: /etc/
@@ -12,7 +12,6 @@ ddm:
     com.apple.sudo: /etc/
     com.apple.zsh: /etc/
     com.apple.cups: /etc/cups/
-
 authors:
   - name: Bob Gendler
     organization: National Institute of Standards and Technology
@@ -44,7 +43,7 @@ authors:
       - cnssi-1253_moderate
       - cnssi-1253_high
   - name: Ekkehard Koch
-    organization: ""
+    organization: ''
     benchmarks:
       - cnssi-1253_low
       - cnssi-1253_moderate
@@ -80,7 +79,6 @@ authors:
     organization: Emory University School of Medicine
     benchmarks:
       - hicp_lp
-
 benchmarks:
   - keyword: cis_lvl1
     description: Center for Internet Security (CIS) Benchmark for the Level 1 Profile
@@ -108,50 +106,23 @@ benchmarks:
     description: Nederlandse Maatregelenset Apple Platformen Overheid (NLMAPGOV) Base Settings
   - keyword: nlmapgov_plus
     description: Nederlandse Maatregelenset Apple Platformen Overheid (NLMAPGOV) Plus Settings
-
 versions:
   platforms:
     macos:
       - os_version: 26.0
-        os_name: "tahoe"
-        revision: 1.1
+        os_name: tahoe
         cpe: o:apple:macos:26.0
-        date: "2025-12-16"
-
       - os_version: 15.0
-        os_name: "sequoia"
-        revision: 1.1
+        os_name: sequoia
         cpe: o:apple:macos:15.0
-        date: "2024-12-16"
-
-      - os_version: 14.0
-        os_name: "sonoma"
-        revision: 3.1
-        cpe: o:apple:macos:14.0
-        date: "2024-12-16"
-
     ios:
       - os_version: 26.0
-        os_name: "ios_26"
-        revision: 1.0
+        os_name: ios_26
         cpe: o:apple:ios:26.0
-        date: "2025-12-16"
-
       - os_version: 18.0
-        os_name: "ios_18"
-        revision: 1.1
+        os_name: ios_18
         cpe: o:apple:ios:18.0
-        date: "2024-12-16"
-
-      - os_version: 17.0
-        os_name: "ios_17"
-        revision: 3.0
-        cpe: o:apple:ios:17.0
-        date: "2024-09-12"
-
     visionos:
       - os_version: 26.0
-        os_name: "visionos_26"
-        revision: 1.0
+        os_name: visionos_26
         cpe: o:apple:visionos:26.0
-        date: "2025-09-12"

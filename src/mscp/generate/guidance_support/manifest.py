@@ -49,8 +49,9 @@ def generate_manifest(build_path: Path, baseline_name: str, baseline) -> None:
         "cpe": current_version_data["cpe"],
     }
     manifest["release_info"] = {
-        "version": current_version_data["revision"],
-        "date": current_version_data["date"],
+        "version": mscp_data["mscp"]["version"],
+        "build": mscp_data["mscp"]["build"],
+        "date": mscp_data["mscp"]["build_date"],
     }
     manifest["plist_location"] = "/Library/Preferences/org.{}.audit.plist".format(
         baseline_name

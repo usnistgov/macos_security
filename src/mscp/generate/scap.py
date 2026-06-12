@@ -504,7 +504,6 @@ def generate_scap(sp: Yaspin, args: argparse.Namespace) -> None:
                 if rule.result_value == 0:
                     check_existence = "none_exist"
 
-            
             xccdfrules = (
                 xccdfrules
                 + """<Rule id="xccdf_gov.nist.mscp.content_rule_{0}_{1}" selected="false" role="full" severity="{2}" weight="1.0"><title>{3}</title><description>{4}
@@ -651,9 +650,7 @@ def generate_scap(sp: Yaspin, args: argparse.Namespace) -> None:
 
     totaloutput = str()
     filenameversion = (
-        str(current_version_data["revision"])
-        .split(", ", maxsplit=1)[-1]
-        .replace(" ", "_")
+        str(mscp_data["mscp"]["version"]).split(", ", maxsplit=1)[-1].replace(" ", "_")
     )
 
     base_filename: str = f"{args.os_name}_{current_version_data.get('os_version', None)}_Security_Compliance_Benchmark-Revision-{filenameversion}.xml"
@@ -736,7 +733,7 @@ def generate_scap(sp: Yaspin, args: argparse.Namespace) -> None:
 
     sp.text = "Writing output files"
     time.sleep(1)
-    
+
     create_file(output_file, totaloutput)
 
     sp.text = f"Generated new SCAP file: {output_file}"

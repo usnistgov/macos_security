@@ -234,7 +234,6 @@ def update_mscp_apple_release(sp: Yaspin, args: argparse.Namespace) -> None:
         new_release = {
             "os_version": args.new_version,
             "os_name": new_name,
-            "revision": 1.0,
             "cpe": f"o:apple:{platform_name}:{args.new_version}",
         }
 

@@ -516,7 +516,7 @@ def render_template(
         os_name=os_name.strip().lower(),
         os_version=str(version_info.get("os_version", None)),
         version=version_info.get("compliance_version", None),
-        release_date=version_info.get("date", None),
+        release_date=mscp_data["mscp"].get("release_date", None),
         custom=custom,
         format=output_format,
         acronyms=acronyms_data.get("acronyms", []),

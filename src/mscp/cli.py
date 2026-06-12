@@ -13,6 +13,7 @@ import argparse
 import json
 import sys
 import platform
+from datetime import datetime
 from pathlib import Path
 
 # Local python modules
@@ -21,6 +22,7 @@ from .admin_utils import (
     add_new_rule,
     generate_mscp_banners,
     update_mscp_apple_release,
+    update_mscp_release,
 )
 from .common_utils import (
     logger,
@@ -174,6 +176,14 @@ def validate_file(arg: str) -> Path | None:
     else:
         logger.error(f"File Not found: {arg}")
         sys.exit()
+
+
+def valid_date(date_str):
+    try:
+        datetime.strptime(date_str, "%Y-%m-%d")
+        return date_str
+    except ValueError:
+        raise argparse.ArgumentTypeError("Date must be in MM-DD-YYYY format")
 
 
 def parse_cli() -> None:
@@ -644,6 +654,31 @@ compliance script (e.g. disa_stig, cis.benchmark)
         type=str,
         required=True,
         action="store",
+    )
+    update_mscp_release_parser = admin_subparsers.add_parser(
+        "release",
+        parents=[parent_parser],
+        help="update MSCP for new release",
+        add_help=False,
+    )
+    update_mscp_release_parser.set_defaults(func=update_mscp_release)
+
+    update_mscp_release_parser.add_argument(
+        "--release_date",
+        help="date to be used for release (YYYY-MM-DD)",
+        type=valid_date,
+        required=True,
+        action="store",
+    )
+    update_mscp_release_parser.add_argument(
+        "--major",
+        help="update major version",
+        action="store_true",
+    )
+    update_mscp_release_parser.add_argument(
+        "--minor",
+        help="update minor version",
+        action="store_true",
     )
 
     validate_parser: argparse.ArgumentParser = admin_subparsers.add_parser(
