@@ -29,6 +29,8 @@ references:
     - IA.L2-3.5.5
   800-171r3:
     - 03.05.05
+  bsi:
+    - SYS.2.4 Clients unter macOS
 macOS:
   - '26.0'
 tags:
@@ -42,5 +44,6 @@ tags:
   - cnssi-1253_high
   - cmmc_lvl2
   - cnssi-1253_moderate
+  - bsi_sys_macos_base
 mobileconfig: false
 mobileconfig_info:

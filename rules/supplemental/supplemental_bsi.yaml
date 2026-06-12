@@ -1,34 +1,33 @@
 id: supplemental_bsi
 title: "BSI Supplemental"
 discussion: |
-  These controls require additional considerations for your environment based on indigo,  in accordance with the recommendations of BSI (Bundesamt für Sicherheit in der Informationstechnik, German Federal Office for Information Security).
+  These controls require additional organizational and operational considerations for the environment in accordance with the BSI  IT-Grundschutz module SYS.2.4 Clients unter macOS.
 
-  [cols="20%h, 80%a"]
+  [cols="25%h, 75%a"]
   |===
-  |Section 5.8
-  |Restrictions - App-Installation
+  |Account management
+  |Define the separation of standard user accounts and administrative accounts. Administrative accounts must only be used for administrative  activities.
 
-  | 
-  |os_application_allow_list +
-  os_application_deny_list
-  |===
+  |FileVault recovery
+  |Define secure storage, access permissions and recovery procedures for FileVault recovery keys.
 
-  [cols="20%h, 80%a"]
-  |===
-  |Section 6.1.6
-  |Manual configuration - operational requirements
+  |Apple ID and iCloud
+  |Define whether Apple IDs and iCloud services are permitted. Sensitive data must not be stored or synchronized in an uncontrolled manner.
 
-  | 
-  |os_live_text_disable
-  |===
+  |Application installation
+  |Define approved applications, prohibited applications and the software approval process.
 
-  [cols="20%h, 80%a"]
-  |===
-  |Section 6.3
-  |Manual configuration - Update management
+  |External media
+  |Define permitted removable-media types, malware scanning procedures, encryption requirements and exception handling.
 
-  | 
-  |os_update_auto_RSR_allow
+  |Update management
+  |Define testing, deployment deadlines, permitted deferrals and exception handling for security updates.
+
+  |Logging
+  |Define central log collection, retention periods, monitoring and alerting.
+
+  |Device retirement
+  |Define secure deletion, MDM removal and device-retirement procedures.
   |===
 
 check: |
@@ -39,8 +38,8 @@ references:
   800-53r5:
     - N/A
   bsi:
-    - 
-iOS:
+    - SYS.2.4 Clients unter macOS
+macOS:
   - '26.0'
 tags:
   - bsi_sys_macos_base

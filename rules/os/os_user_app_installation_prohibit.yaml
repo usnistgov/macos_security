@@ -44,6 +44,8 @@ references:
     - APPL-26-005080
   cmmc:
     - CM.L2-3.4.9
+  bsi:
+    - SYS.2.4 Clients unter macOS
 macOS:
   - '26.0'
 tags:
@@ -52,6 +54,7 @@ tags:
   - cmmc_lvl2
   - stig
   - cnssi-1253_moderate
+  - bsi_sys_macos_base
 severity: medium
 mobileconfig: true
 mobileconfig_info:

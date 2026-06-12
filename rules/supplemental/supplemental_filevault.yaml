@@ -67,6 +67,8 @@ references:
     - N/A
   cmmc:
     - N/A
+  bsi:
+    - SYS.2.4 Clients unter macOS
 macOS:
   - '26.0'
 tags:
@@ -87,5 +89,6 @@ tags:
   - cnssi-1253_low
   - stig
   - supplemental
+  - bsi_sys_macos_base
 mobileconfig: false
 mobileconfig_info:

@@ -31,11 +31,14 @@ references:
       - 2.3.4.1 (level 2)
     controls v8:
       - 11.2
+  bsi:
+    - SYS.2.4 Clients unter macOS
 macOS:
   - '26.0'
 tags:
   - cis_lvl2
   - cisv8
+  - bsi_sys_macos_base
 mobileconfig: true
 mobileconfig_info:
   com.apple.TimeMachine:

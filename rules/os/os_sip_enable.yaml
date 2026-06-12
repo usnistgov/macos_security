@@ -92,6 +92,8 @@ references:
     - SC.L2-3.13.4
     - SI.L1-3.14.1
     - SI.L1-3.14.4
+  bsi:
+    - SYS.2.4 Clients unter macOS
 macOS:
   - '26.0'
 tags:
@@ -111,6 +113,7 @@ tags:
   - cmmc_lvl1
   - stig
   - cnssi-1253_moderate
+  - bsi_sys_macos_base
 severity: high
 mobileconfig: false
 mobileconfig_info:

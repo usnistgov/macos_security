@@ -41,6 +41,8 @@ references:
     controls v8:
       - 7.3
       - 7.4
+  bsi:
+    - SYS.2.4 Clients unter macOS
 macOS:
   - '26.0'
 odv:
@@ -48,8 +50,10 @@ odv:
   recommended: 30
   cis_lvl1: 30
   cis_lvl2: 30
+  bsi_sys_macos_base: 30
 tags:
   - cis_lvl1
   - cis_lvl2
+  - bsi_sys_macos_base
 mobileconfig: false
 mobileconfig_info:

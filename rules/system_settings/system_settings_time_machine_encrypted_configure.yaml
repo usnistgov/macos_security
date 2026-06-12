@@ -34,11 +34,14 @@ references:
       - 3.6
       - 3.11
       - 11.3
+  bsi:
+    - SYS.2.4 Clients unter macOS
 macOS:
   - '26.0'
 tags:
   - cis_lvl1
   - cis_lvl2
   - cisv8
+  - bsi_sys_macos_base
 mobileconfig: false
 mobileconfig_info:

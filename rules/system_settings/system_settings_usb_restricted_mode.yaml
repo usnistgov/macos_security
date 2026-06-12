@@ -47,6 +47,8 @@ references:
     - SRG-OS-000690-GPOS-00140
   disa_stig:
     - APPL-26-005090
+  bsi:
+    - SYS.2.4 Clients unter macOS
 macOS:
   - '26.0'
 tags:
@@ -58,6 +60,7 @@ tags:
   - cmmc_lvl2
   - stig
   - cnssi-1253_moderate
+  - bsi_sys_macos_base
 severity: medium
 mobileconfig: true
 mobileconfig_info:
