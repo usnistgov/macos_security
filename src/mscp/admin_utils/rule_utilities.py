@@ -183,7 +183,7 @@ def add_version_to_schema(
 
         create_file(schema_data_file, schema_data)
     else:
-        print(f"{previous_version_str} not found in {schema_platforms.keys()}")
+        logger.warning(f"{previous_version_str} not found in {schema_platforms.keys()}")
 
 
 @conditional_inject_spinner()
