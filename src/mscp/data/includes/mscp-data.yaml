@@ -1,8 +1,8 @@
 ---
 mscp:
   version: "2.0.0"
-  build: 20
-  build_date: "2026-06-09"
+  build: 21
+  build_date: "2026-06-11"
 
 ddm:
   services:
