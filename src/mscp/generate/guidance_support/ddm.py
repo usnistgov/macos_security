@@ -204,7 +204,7 @@ def generate_ddm(build_path: Path, baseline: Baseline, baseline_name: str) -> No
                                 "DataURL": f"https://hostname.site.com/{service}.zip",
                                 "Hash-SHA-256": str(zip_sha),
                             },
-                            "Authentication": {"Type": "None"},
+                            "Authentication": {"Type": "MDM"},
                         },
                     }
 

@@ -401,7 +401,7 @@ def create_json(file_path: Path, data: dict[str, Any], append: bool = False) -> 
         Exception: If an error occurs while writing to the file, it logs the error and re-raises the exception.
     """
     try:
-        file_path.write_text(json.dumps(data, indent=1))
+        file_path.write_text(json.dumps(data, indent=4))
     except Exception as e:
         logger.error(
             "An error occurred while processing the file: {}. Error: {}", file_path, e

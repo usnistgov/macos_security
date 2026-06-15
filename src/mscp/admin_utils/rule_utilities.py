@@ -18,6 +18,7 @@ from ..common_utils import (
     open_file,
     create_file,
     PLATFORM_MAP,
+    SCHEMA_PATH,
     conditional_inject_spinner,
 )
 
@@ -92,6 +93,21 @@ def add_new_rule(args: argparse.Namespace) -> None:
 def add_version_to_rules(
     platform: str, previous_version: float, new_version: float
 ) -> None:
+    """Add a new OS version entry to every rule that already carries the previous version.
+
+    Scans all rule YAML files under `config["rules_dir"]`.  For each rule
+    that targets `platform` and already has `previous_version` listed, a
+    new empty-dict entry keyed on `new_version` is prepended to that
+    platform's version map and the file is written back to disk.
+
+    Args:
+        platform (str): Short platform key (e.g. `"macos"`); resolved
+            through `PLATFORM_MAP` before matching.
+        previous_version (float): The existing version whose presence
+            determines which rules are updated.
+        new_version (float): The version entry to insert into qualifying
+            rules.
+    """
     new_version_str = str(new_version)
     previous_version_str = str(previous_version)
 
@@ -116,8 +132,89 @@ def add_version_to_rules(
     logger.info(f"Updated {len(updated_rules)} rules for {platform}")
 
 
+def ensure_path(d, path):
+    """Walk a nested dict, creating intermediate dicts as needed, and return the deepest node.
+
+    Args:
+        d (dict): The root dictionary to traverse.
+        path (Iterable): Sequence of keys forming the path to the target node.
+
+    Returns:
+        dict: The dict at the end of `path`, newly created if absent.
+    """
+    for key in path:
+        d = d.setdefault(key, {})
+    return d
+
+
+def add_version_to_schema(
+    platform: str, previous_version: float, new_version: float
+) -> None:
+    """Insert a new OS version entry into the MSCP JSON schema.
+
+    Reads the schema file at `SCHEMA_PATH`, locates the properties block for
+    `platform`, and — if `previous_version` is already present — adds a
+    `$ref` entry for `new_version`.  The updated schema is written back to
+    disk.  If `previous_version` is not found, a message is printed and no
+    changes are made.
+
+    Args:
+        platform (str): Short platform key (e.g. `"macos"`); resolved
+            through `PLATFORM_MAP` before matching.
+        previous_version (float): The existing version that must be present
+            in the schema before the new entry is added.
+        new_version (float): The version to register under
+            `#/properties/platforms/properties/<platform>/properties`.
+    """
+    new_version_str = str(new_version)
+    previous_version_str = str(previous_version)
+
+    schema_data_file: Path = Path(SCHEMA_PATH)
+
+    schema_data = open_file(schema_data_file)
+
+    platform = PLATFORM_MAP[platform]
+    schema_platforms = ensure_path(
+        schema_data, ["properties", "platforms", "properties", platform, "properties"]
+    )
+
+    if previous_version_str in schema_platforms.keys():
+        schema_platforms[new_version_str] = {"$ref": "#/$defs/osDef"}
+
+        create_file(schema_data_file, schema_data)
+    else:
+        logger.warning(f"{previous_version_str} not found in {schema_platforms.keys()}")
+
+
 @conditional_inject_spinner()
 def update_mscp_apple_release(sp: Yaspin, args: argparse.Namespace) -> None:
+    """Register a new Apple OS release across mscp_data, rules, and the schema.
+
+    For each platform tracked in ``mscp_data["versions"]["platforms"]``, if
+    ``args.new_version`` is not already listed, this function:
+
+    1. Prepends a new release entry to ``mscp_data.yaml``.
+    2. Calls `add_version_to_rules()` to propagate the version into
+       every applicable rule file.
+    3. Calls `add_version_to_schema()` to register the version in the
+       MSCP JSON schema.
+
+    Progress is reported through the injected ``Yaspin`` spinner.
+
+    Args:
+        sp (Yaspin): Spinner instance injected by `@conditional_inject_spinner`;
+            used for progress text and completion status.
+        args (argparse.Namespace): Parsed CLI arguments.  Consumed fields:
+
+            * ``new_version`` — the OS version string to add (e.g. ``"15.5"``).
+            * ``new_name`` — the human-readable name used for macOS releases
+              (e.g. ``"Sequoia"``); other platforms derive their name
+              automatically.
+
+    Side Effects:
+        May update ``mscp_data.yaml``, rule YAML files, and the schema file
+        on disk.
+    """
     sp.spinner = Spinners.dots
 
     mscp_data_file: Path = Path(config["mscp_data"])
@@ -137,7 +234,6 @@ def update_mscp_apple_release(sp: Yaspin, args: argparse.Namespace) -> None:
         new_release = {
             "os_version": args.new_version,
             "os_name": new_name,
-            "revision": 1.0,
             "cpe": f"o:apple:{platform_name}:{args.new_version}",
         }
 
@@ -153,6 +249,9 @@ def update_mscp_apple_release(sp: Yaspin, args: argparse.Namespace) -> None:
 
             sp.text = f"Updating MSCP rules with {args.new_version} for {platform_name}"
             add_version_to_rules(
+                platform_name, current_latest["os_version"], args.new_version
+            )
+            add_version_to_schema(
                 platform_name, current_latest["os_version"], args.new_version
             )
             mscp_data_file_updated = True
