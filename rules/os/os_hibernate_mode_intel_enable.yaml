@@ -59,6 +59,6 @@ references:
 macOS:
   - '26.0'
 tags:
-  - none
+  - i386
 mobileconfig: false
 mobileconfig_info:
