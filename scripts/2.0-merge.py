@@ -901,7 +901,11 @@ def main():
                                         ].update(
                                             {"supervised": rule_yaml["supervised"]}
                                         )
-                                    # print(update_rule_yaml)
+                                    if "severity" in rule_yaml:
+                                        update_rule_yaml["platforms"]["visionOS"][
+                                            os_
+                                        ].update({"severity": rule_yaml["severity"]})
+
                                     if "visionos_stig" in rule_yaml["tags"]:
                                         if (
                                             "benchmarks"
