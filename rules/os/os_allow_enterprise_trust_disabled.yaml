@@ -27,7 +27,7 @@ tags:
 - 800-53r5_low
 - 800-53r5_moderate
 - 800-53r5_high
-severity: high
+severity: medium
 supervised: false
 mobileconfig: true
 mobileconfig_info:

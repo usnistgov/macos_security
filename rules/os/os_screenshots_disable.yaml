@@ -29,6 +29,7 @@ tags:
   - cnssi-1253_low
   - cnssi-1253_high
 supervised: false
+severity: low
 mobileconfig: true
 mobileconfig_info:
   com.apple.applicationaccess:

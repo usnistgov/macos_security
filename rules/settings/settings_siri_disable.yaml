@@ -18,13 +18,10 @@ references:
     - SC-7(10)
   sfr:
     - 'FMT_MOF_EXT.1.2 #47'
-  disa_stig:
-    - AVOS-26-016100
 visionOS:
   - '26.0'
 tags:
   - visionos
-  - visionos_stig
   - 800-53r5_low
   - 800-53r5_moderate
   - 800-53r5_high
