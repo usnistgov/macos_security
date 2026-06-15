@@ -92,6 +92,9 @@ platforms:
   visionOS:
     '26.0':
       supervised: false
+      benchmarks:
+        - name: visionos_stig
+          severity: low
     introduced: '2.0'
 tags:
   - 800-53r5_low

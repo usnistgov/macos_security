@@ -123,6 +123,9 @@ platforms:
   visionOS:
     '26.0':
       supervised: false
+      benchmarks:
+        - name: visionos_stig
+          severity: high
     introduced: '2.0'
 odv:
   hint:
