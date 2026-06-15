@@ -388,6 +388,16 @@ def main():
                 new_yaml["platforms"] = {"visionOS": {}}
 
                 new_yaml["platforms"]["visionOS"].update({os_: {}})
+                if "visionos_stig" in rule_yaml["tags"]:
+                    if "benchmarks" in new_yaml["platforms"]["visionOS"][os_]:
+                        new_yaml["platforms"]["visionOS"][os_]["benchmarks"].append(
+                            "visionos_stig"
+                        )
+                    else:
+                        new_yaml["platforms"]["visionOS"][os_].update(
+                            {"benchmarks": ["visionos_stig"]}
+                        )
+                    new_yaml["tags"].remove("visionos_stig")
                 if "severity" in rule_yaml:
                     new_yaml["platforms"]["visionOS"][os_].update(
                         {"severity": rule_yaml["severity"]}
@@ -459,16 +469,7 @@ def main():
                             {"benchmarks": ["ios_stig"]}
                         )
                     new_yaml["tags"].remove("ios_stig")
-                if "visionos_stig" in rule_yaml["tags"]:
-                    if "benchmarks" in new_yaml["platforms"]["visionOS"][os_]:
-                        new_yaml["platforms"]["visionOS"][os_]["benchmarks"].append(
-                            "visionos_stig"
-                        )
-                    else:
-                        new_yaml["platforms"]["visionOS"][os_].update(
-                            {"benchmarks": ["visionos_stig"]}
-                        )
-                    new_yaml["tags"].remove("visionos_stig")
+
                 if "ios_stig_byoad" in rule_yaml["tags"]:
                     if "benchmarks" in new_yaml["platforms"]["iOS"][os_]:
                         new_yaml["platforms"]["iOS"][os_]["benchmarks"].append(
@@ -901,6 +902,25 @@ def main():
                                             {"supervised": rule_yaml["supervised"]}
                                         )
                                     # print(update_rule_yaml)
+                                    if "visionos_stig" in rule_yaml["tags"]:
+                                        if (
+                                            "benchmarks"
+                                            in update_rule_yaml["platforms"][
+                                                "visionOS"
+                                            ][os_]
+                                        ):
+                                            update_rule_yaml["platforms"]["visionOS"][
+                                                os_
+                                            ]["benchmarks"].append("visionos_stig")
+                                        else:
+                                            update_rule_yaml["platforms"]["visionOS"][
+                                                os_
+                                            ].update({"benchmarks": ["visionos_stig"]})
+
+                                        if "visionos_stig" in update_rule_yaml["tags"]:
+                                            update_rule_yaml["tags"].remove(
+                                                "visionos_stig"
+                                            )
                                 else:
                                     if "iOS" not in update_rule_yaml["platforms"]:
                                         update_rule_yaml["platforms"].update(
@@ -1008,25 +1028,7 @@ def main():
 
                                         if "ios_stig" in update_rule_yaml["tags"]:
                                             update_rule_yaml["tags"].remove("ios_stig")
-                                    if "visionos_stig" in rule_yaml["tags"]:
-                                        if (
-                                            "benchmarks"
-                                            in update_rule_yaml["platforms"][
-                                                "visionOS"
-                                            ][os_]
-                                        ):
-                                            update_rule_yaml["platforms"]["visionOS"][
-                                                os_
-                                            ]["benchmarks"].append("visionos_stig")
-                                        else:
-                                            update_rule_yaml["platforms"]["visionOS"][
-                                                os_
-                                            ].update({"benchmarks": ["visionos_stig"]})
 
-                                        if "visionos_stig" in update_rule_yaml["tags"]:
-                                            update_rule_yaml["tags"].remove(
-                                                "visionos_stig"
-                                            )
                                     if "ios_stig_byoad" in rule_yaml["tags"]:
                                         if (
                                             "benchmarks"
@@ -1400,19 +1402,7 @@ def main():
                                         {"benchmarks": ["ios_stig"]}
                                     )
                                 new_yaml["tags"].remove("ios_stig")
-                            if "visionos_stig" in rule_yaml["tags"]:
-                                if (
-                                    "benchmarks"
-                                    in new_yaml["platforms"]["visionOS"][os_]
-                                ):
-                                    new_yaml["platforms"]["visionOS"][os_][
-                                        "benchmarks"
-                                    ].append("visionos_stig")
-                                else:
-                                    new_yaml["platforms"]["visionOS"][os_].update(
-                                        {"benchmarks": ["visionos_stig"]}
-                                    )
-                                new_yaml["tags"].remove("visionos_stig")
+
                             if "ios_stig_byoad" in rule_yaml["tags"]:
                                 if "benchmarks" in new_yaml["platforms"]["iOS"][os_]:
                                     new_yaml["platforms"]["iOS"][os_][
@@ -1474,6 +1464,19 @@ def main():
                                 new_yaml["platforms"]["visionOS"][os_].update(
                                     {"supervised": rule_yaml["supervised"]}
                                 )
+                            if "visionos_stig" in rule_yaml["tags"]:
+                                if (
+                                    "benchmarks"
+                                    in new_yaml["platforms"]["visionOS"][os_]
+                                ):
+                                    new_yaml["platforms"]["visionOS"][os_][
+                                        "benchmarks"
+                                    ].append("visionos_stig")
+                                else:
+                                    new_yaml["platforms"]["visionOS"][os_].update(
+                                        {"benchmarks": ["visionos_stig"]}
+                                    )
+                                new_yaml["tags"].remove("visionos_stig")
 
                         if "800-53r5" in rule_yaml["references"]:
                             new_yaml["references"]["nist"].update(
