@@ -23,10 +23,12 @@ references:
 platforms:
   visionOS:
     '26.0':
+      benchmarks:
+        - name: visionos_stig
+          severity: medium
       supervised: false
     introduced: '2.0'
 tags:
-  - visionos_stig
   - 800-53r5_low
   - 800-53r5_moderate
   - 800-53r5_high

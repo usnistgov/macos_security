@@ -58,6 +58,9 @@ platforms:
   visionOS:
     '26.0':
       supervised: true
+      benchmarks:
+        - name: visionos_stig
+          severity: medium
     introduced: '2.4'
 tags:
   - cmmc_lvl1

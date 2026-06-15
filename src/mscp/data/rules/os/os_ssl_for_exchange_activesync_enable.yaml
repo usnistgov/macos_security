@@ -75,6 +75,9 @@ platforms:
   visionOS:
     '26.0':
       supervised: false
+      benchmarks:
+        - name: visionos_stig
+          severity: medium
     introduced: '-1'
 mobileconfig_info:
   - PayloadType: com.apple.eas.account

@@ -81,7 +81,10 @@ platforms:
           severity: high
     introduced: '4.0'
   visionOS:
-    '26.0': {}
+    '26.0':
+      benchmarks:
+        - name: visionos_stig
+          severity: high
     introduced: '2.0'
 tags:
   - cmmc_lvl2
