@@ -1,15 +1,17 @@
 ---
-name: Bug report
-description: Create a report to help us improve
+name: Bug Report
+description: Report a problem with the mSCP build tooling, scripts, or generated output
 title: '[Bug]: '
 labels: ["bug", "triage"]
 body:
   - type: markdown
     attributes:
       value: |
-        **Please read this!**
+        This template is for problems with the **mSCP tooling** itself — generating baselines, guidance, profiles, or compliance scripts.
 
-        Before opening a new issue, make sure to search for keywords in the issues filtered by the "regression" or "bug" label and verify the issue you're about to submit isn't a duplicate.
+        If your issue is about the content of a specific rule (a check or fix script that doesn't work, an incorrect control mapping, etc.), use the **Rule Content Issue** template instead.
+
+        Before opening a new issue, please search the existing issues to make sure it isn't a duplicate.
   - type: checkboxes
     attributes:
       label: Is there an existing issue for this?
@@ -17,63 +19,80 @@ body:
       options:
         - label: I have searched the existing issues
           required: true
-  - type: input
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      description: Which part of the project does this affect?
+      options:
+        - Build tooling (mscp / generate_*)
+        - Baselines
+        - Compliance scripts
+        - Documentation generation
+        - mSCP API
+        - GitHub Actions / CI
+        - Other
+    validations:
+      required: true
+  - type: textarea
     id: summary
     attributes:
       label: Summary
       description: Summarize the bug encountered concisely
-      placeholder: 'Enter a brief summary of the bug'
+      placeholder: What happened?
+    validations:
+      required: true
   - type: textarea
     id: steps-to-reproduce
     attributes:
       label: Steps to reproduce
-      description: How one can reproduce the issue - this is very important
-      placeholder: 'Describe the steps to reproduce the issue'
+      description: Include the exact command(s) you ran
+      placeholder: |
+        1. Ran `...`
+        2. ...
+    validations:
+      required: true
   - type: input
-    id: operating-system-version
+    id: mscp-version
     attributes:
-      label: Operating System version
-      description: macOS Version and build
-      placeholder: 'Enter the macOS version and build'
+      label: mSCP version, commit, or branch
+      placeholder: e.g. dev_2.0 @ 09e33b5c
+  - type: input
+    id: python-version
+    attributes:
+      label: Python version
+      placeholder: e.g. 3.13.2
   - type: dropdown
-    id: processor_type
+    id: run-environment
     attributes:
-      label: Intel or Apple Silicon
-      description: Intel based process or Apple Silicon Mac
-      multiple: false
+      label: Where did you run the tool?
       options:
-        - Apple Silicon
-        - Intel
-      default: 0
+        - macOS (native)
+        - Docker container
+        - Linux (native)
+        - Other
     validations:
       required: true
   - type: textarea
-    id: current-bug-behavior
+    id: current-behavior
     attributes:
-      label: What is the current *bug* behavior?
-      description: What actually happens
-      placeholder: 'Describe the current bug behavior'
+      label: What actually happened?
+    validations:
+      required: true
   - type: textarea
-    id: expected-correct-behavior
+    id: expected-behavior
     attributes:
-      label: What is the expected *correct* behavior?
-      description: What you should see instead
-      placeholder: 'Describe the expected correct behavior'
+      label: What did you expect to happen?
+    validations:
+      required: true
   - type: textarea
-    id: relevant-logs-and-screenshots
+    id: logs
     attributes:
       label: Relevant logs and/or screenshots
-      description: Paste any relevant logs - please use code blocks (```) to format console output, logs, and code as it's tough to read otherwise.
-      placeholder: 'Paste relevant logs or screenshots'
-  - type: textarea
-    id: output-of-checks
-    attributes:
-      label: Output of checks
-      description: Paste any output that occurs with the bug
-      placeholder: 'Paste the output of checks'
+      description: Console output, tracebacks, or screenshots.
+      render: shell
   - type: textarea
     id: possible-fixes
     attributes:
       label: Possible fixes
-      description: If you can, link to the line of code that might be responsible for the problem
-      placeholder: 'Suggest possible fixes'
+      description: If you can, link to the line of code that might be responsible for the problem.

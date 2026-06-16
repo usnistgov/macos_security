@@ -1,0 +1,101 @@
+---
+name: Rule Content Issue
+description: Report a problem with a specific rule's check, fix, or documentation
+title: '[Rule]: '
+labels: ["area/rules", "triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this template when something is wrong with a **specific rule** — its check script, fix script, control mappings, or written guidance.
+
+        Before opening a new issue, please search the existing issues to make sure it isn't a duplicate.
+  - type: checkboxes
+    attributes:
+      label: Is there an existing issue for this?
+      options:
+        - label: I have searched the existing issues
+          required: true
+  - type: input
+    id: rule-id
+    attributes:
+      label: Rule ID
+      description: The rule's `id` field, e.g. `audit_acls_files_configure`
+      placeholder: rule_id_here
+    validations:
+      required: true
+  - type: dropdown
+    id: platform
+    attributes:
+      label: Platform
+      options:
+        - macOS
+        - iOS/iPadOS
+        - visionOS
+    validations:
+      required: true
+  - type: input
+    id: os-version
+    attributes:
+      label: OS version(s) affected
+      placeholder: e.g. macOS 15.x, 26.0
+  - type: input
+    id: chip
+    attributes:
+      label: Apple Silicon or Intel (only if hardware-dependent)
+      placeholder: Leave blank if not applicable
+  - type: dropdown
+    id: baseline
+    attributes:
+      label: Framework / benchmark
+      description: Which baseline were you building or auditing against? Choose "All / not framework-specific" if the rule itself is wrong regardless of baseline.
+      options:
+        - All / not framework-specific
+        - NIST 800-53
+        - NIST 800-171
+        - CIS Benchmark
+        - CIS Controls v8
+        - CMMC
+        - DISA STIG
+        - CNSSI 1253
+        - BSI Indigo
+        - NLMAPGOV
+        - HICP
+        - Other
+  - type: dropdown
+    id: problem-type
+    attributes:
+      label: What's wrong?
+      options:
+        - Check script fails or gives a false result
+        - Fix script doesn't apply correctly
+        - Incorrect control/reference mapping (CCE, CCI, 800-53, etc.)
+        - Discussion / documentation text is inaccurate
+        - Rule is missing from a baseline it should be in
+        - Rule is present in a baseline it shouldn't be in
+        - Other
+    validations:
+      required: true
+  - type: textarea
+    id: current-behavior
+    attributes:
+      label: What is the current behavior?
+    validations:
+      required: true
+  - type: textarea
+    id: expected-behavior
+    attributes:
+      label: What is the expected behavior?
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Relevant output
+      description: Output of the check/fix script, or the relevant excerpt from the generated profile or document.
+      render: shell
+  - type: textarea
+    id: possible-fixes
+    attributes:
+      label: Suggested fix
+      description: If you have a proposed change to the check, fix, or mapping, share it here.
