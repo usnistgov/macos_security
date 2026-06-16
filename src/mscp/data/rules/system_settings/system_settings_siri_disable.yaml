@@ -22,7 +22,7 @@ references:
       ios_17:
         - CCE-93499-2
       visionos_26:
-        - CCE-95598-9        
+        - CCE-95598-9
     800-53r5:
       - AC-20
       - CM-7
