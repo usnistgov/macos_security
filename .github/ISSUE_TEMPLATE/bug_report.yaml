@@ -25,12 +25,10 @@ body:
       label: Area
       description: Which part of the project does this affect?
       options:
-        - Build tooling (mscp / generate_*)
+        - mSCP CLI
         - Baselines
         - Compliance scripts
-        - Documentation generation
         - mSCP API
-        - GitHub Actions / CI
         - Other
     validations:
       required: true
@@ -62,17 +60,6 @@ body:
     attributes:
       label: Python version
       placeholder: e.g. 3.13.2
-  - type: dropdown
-    id: run-environment
-    attributes:
-      label: Where did you run the tool?
-      options:
-        - macOS (native)
-        - Docker container
-        - Linux (native)
-        - Other
-    validations:
-      required: true
   - type: textarea
     id: current-behavior
     attributes:

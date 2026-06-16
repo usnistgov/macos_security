@@ -39,29 +39,6 @@ body:
     attributes:
       label: OS version(s) affected
       placeholder: e.g. macOS 15.x, 26.0
-  - type: input
-    id: chip
-    attributes:
-      label: Apple Silicon or Intel (only if hardware-dependent)
-      placeholder: Leave blank if not applicable
-  - type: dropdown
-    id: baseline
-    attributes:
-      label: Framework / benchmark
-      description: Which baseline were you building or auditing against? Choose "All / not framework-specific" if the rule itself is wrong regardless of baseline.
-      options:
-        - All / not framework-specific
-        - NIST 800-53
-        - NIST 800-171
-        - CIS Benchmark
-        - CIS Controls v8
-        - CMMC
-        - DISA STIG
-        - CNSSI 1253
-        - BSI Indigo
-        - NLMAPGOV
-        - HICP
-        - Other
   - type: dropdown
     id: problem-type
     attributes:

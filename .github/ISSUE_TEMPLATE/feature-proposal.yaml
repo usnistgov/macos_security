@@ -40,13 +40,11 @@ body:
     attributes:
       label: Area
       options:
-        - Build tooling (mscp / generate_*)
+        - mSCP CLI
         - Baselines
         - Rules
         - Compliance scripts
-        - Documentation generation
         - mSCP API
-        - GitHub Actions / CI
         - Other
   - type: checkboxes
     id: contribute
