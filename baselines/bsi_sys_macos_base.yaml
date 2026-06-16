@@ -1,6 +1,6 @@
-title: "DRAFT: macOS 26.0: Security Configuration - BSI SYS.2.4 Clients unter macOS (Basis-Absicherung)"
+title: "DRAFT - macOS 26.0: Security Configuration - BSI SYS.2.4 Clients unter macOS (Basis-Absicherung)"
 description: |
-  !!! DRAFT !!!
+  -- DRAFT --- 
 
   This guide describes the actions to take when securing a macOS 26.0 system using a technical baseline aligned with the BSI (Bundesamt für Sicherheit in der Informationstechnik, German Federal Office for Information Security) module SYS.2.4 Clients unter macOS.
 
