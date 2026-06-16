@@ -49,6 +49,7 @@ profile:
       - icloud_sync_disable
   - section: "macos"
     rules:
+      - os_airdrop_disable
       - os_anti_virus_installed
       - os_authenticated_root_enable
       - os_certificate_authority_trust
@@ -57,6 +58,7 @@ profile:
       - os_external_storage_access_defined
       - os_gatekeeper_enable
       - os_guest_folder_removed
+      - os_handoff_disable
       - os_home_folders_secure
       - os_httpd_disable
       - os_icloud_storage_prompt_disable
