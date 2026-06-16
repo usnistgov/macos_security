@@ -136,7 +136,7 @@ class Payload(BaseModel):
         Behavior depends on the file extension of ``output_path``:
 
         - ``.mobileconfig``: writes the full top-level profile dictionary
-          (identifier, scope, organisation, payload content, etc.).
+          (identifier, scope, organization, payload content, etc.).
         - ``.plist``: writes only the merged inner settings, with the
           MDM-only keys (``PayloadVersion``, ``PayloadUUID``,
           ``PayloadType``, ``PayloadIdentifier``) stripped, in *append*
