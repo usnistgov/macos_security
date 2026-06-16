@@ -30,7 +30,7 @@ def get_mscp_data() -> dict[str, Any]:
 
     Returns:
         dict[str, Any]: Parsed contents of the mSCP metadata file, or
-            an empty dict if the file is missing or unparseable.
+            an empty dict if the file is missing or unable to be parsed.
     """
 
     mscp_data_file: Path = Path(config["mscp_data"])

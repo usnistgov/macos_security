@@ -1,7 +1,7 @@
 # mscp/common_utils/customization.py
-"""Loader for per-rule customisation YAML overrides.
+"""Loader for per-rule customization YAML overrides.
 
-Customisation files live alongside the default rules but only contain
+Customization files live alongside the default rules but only contain
 the keys the user wants to override. `collect_overrides` walks a
 directory tree, gathers them, and returns a flat
 ``rule_id → override_dict`` mapping consumed by `Macsecurityrule.load_rules`.

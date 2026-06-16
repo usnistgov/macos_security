@@ -1,7 +1,7 @@
 # mscp/generate/guidance_support/manifest.py
 """JSON manifest generation for mSCP baselines.
 
-Provides `generate_manifest`, which serialises baseline metadata and
+Provides `generate_manifest`, which serializes baseline metadata and
 per-rule details (references, check command, fix payload) into a single
 JSON file used by downstream tooling to identify and audit rules.
 """
@@ -91,10 +91,10 @@ def generate_manifest(build_path: Path, baseline_name: str, baseline) -> None:
             rule_manifest["fix"] = {}
             if rule.mobileconfig_info:
                 rule_manifest["fix"]["mobile_config_info"] = []
-                for mcinfo in rule.mobileconfig_info:
+                for mc_info in rule.mobileconfig_info:
                     profile = {}
-                    for content in mcinfo.payload_content:
-                        profile["domain"] = mcinfo.payload_type
+                    for content in mc_info.payload_content:
+                        profile["domain"] = mc_info.payload_type
                         for k, v in content.items():
                             profile["key"] = k
                             profile["value"] = v

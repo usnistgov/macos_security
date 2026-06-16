@@ -1,7 +1,7 @@
 id: os_background_security_improvement_install_enable
 title: Enforce Background Security Improvements are Automatically Installed using DDM.
 discussion: |
-  Background Security Improments _MUST_ be configured to enforce automatic installation and that the user cannot modify the setting within Settings.
+  Background Security Improvements _MUST_ be configured to enforce automatic installation and that the user cannot modify the setting within Settings.
 references:
   nist:
     cce:

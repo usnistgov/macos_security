@@ -22,7 +22,7 @@ lxml==6.1.0
     # via mscp (pyproject.toml)
 markupsafe==3.0.3
     # via jinja2
-numpy==2.3.0
+numpy==2.4.6
     # via
     #   mscp (pyproject.toml)
     #   pandas

@@ -42,7 +42,7 @@ class Payload(BaseModel):
             Defaults to ``"System"``.
         payload_type (str): Top-level ``PayloadType``. Defaults to
             ``"Configuration"``.
-        consent_text (dict[str, str]): Localised consent strings keyed by
+        consent_text (dict[str, str]): Localized consent strings keyed by
             language code (e.g. ``"default"``, ``"en"``). Defaults to a
             built-in NIST disclaimer under ``"default"``.
         payload_content (list[dict[str, Any]]): Sub-payload dictionaries
@@ -133,10 +133,10 @@ class Payload(BaseModel):
     def save_to_plist(self, output_path: Path) -> None:
         """Write the assembled payload to disk.
 
-        Behaviour depends on the file extension of ``output_path``:
+        Behavior depends on the file extension of ``output_path``:
 
         - ``.mobileconfig``: writes the full top-level profile dictionary
-          (identifier, scope, organisation, payload content, etc.).
+          (identifier, scope, organization, payload content, etc.).
         - ``.plist``: writes only the merged inner settings, with the
           MDM-only keys (``PayloadVersion``, ``PayloadUUID``,
           ``PayloadType``, ``PayloadIdentifier``) stripped, in *append*

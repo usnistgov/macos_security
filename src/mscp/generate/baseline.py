@@ -131,7 +131,7 @@ def rule_has_benchmark_for_version(
         rule (Macsecurityrule): Rule to inspect.
         keyword (str): Benchmark name to look for.
         os_type (str): OS type string (e.g. ``"macos"``); ``"os"`` is
-            normalised to ``"OS"`` before the lookup.
+            normalized to ``"OS"`` before the lookup.
         os_version (str): OS version string (e.g. ``"15"``).
 
     Returns:

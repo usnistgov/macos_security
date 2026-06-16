@@ -52,7 +52,7 @@ def add_new_rule(args: argparse.Namespace) -> None:
     Prompts for a title and unique rule ID, builds a minimal
     `Macsecurityrule` populated with placeholder values (mechanism
     ``"Configuration Profile"``, section ``"auditing"``, NIST references
-    empty), and serialises it to
+    empty), and serializes it to
     ``<custom_rules_dir>/<rule_id>.yaml`` for the user to fill in.
 
     Args:
