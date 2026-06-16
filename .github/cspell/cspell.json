@@ -9,7 +9,10 @@
     "**/build/**",
     "**/scripts/**",
     "**/*.css",
-    "**/config/locales/**"
+    "**/src/mscp/data/locales/**",
+    "**/requirements.txt",
+    "**/pyproject.toml",
+    "**/Dockerfile"
   ],
   "dictionaryDefinitions":[
     {

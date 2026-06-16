@@ -5,7 +5,7 @@ if __name__ != "__main__":
     raise ImportError(
         "the referenced mscp.py is a direct-run script, not a module. "
         "this script is shadowing the installed 'mscp' package. "
-        "to resove this, remove or rename mscp.py."
+        "to resolve this, remove or rename mscp.py."
     )
 
 import sys

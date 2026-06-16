@@ -82,7 +82,7 @@ class Baseline(BaseModel):
     set).
 
     Attributes:
-        authors (list[Author]): Authors and/or owning organisations.
+        authors (list[Author]): Authors and/or owning organizations.
         profile (list[Profile]): Section profiles holding the baseline's
             rules.
         name (str): Short identifier, typically derived from the baseline
@@ -134,7 +134,7 @@ class Baseline(BaseModel):
         Args:
             file_path (Path): Path to the baseline YAML file.
             language (str): Language code passed through to the file
-                loader for localised strings. Defaults to ``"en"``.
+                loader for localized strings. Defaults to ``"en"``.
 
         Returns:
             Baseline: A fully populated baseline with all profiles and
@@ -223,21 +223,21 @@ class Baseline(BaseModel):
         Groups ``rules`` into profiles by their `section` (or by special
         section tags ``inherent``, ``permanent``, ``n_a``, ``supplemental``
         when present), loads section descriptions from
-        ``config["sections_dir"]``, and serialises the result via
+        ``config["sections_dir"]``, and serializes the result via
         `to_yaml`. If ``baseline_dict`` lacks a ``title`` or
-        ``description`` they're synthesised from the other arguments.
+        ``description`` they're synthesized from the other arguments.
 
         Args:
             output_file (Path): Destination YAML file for the new baseline.
             rules (list[Macsecurityrule]): Rules to include.
             baseline_name (str | None): Short identifier folded into the
-                synthesised title/description if those aren't supplied.
+                synthesized title/description if those aren't supplied.
             authors (list[Author]): Authors attributed to the baseline.
-            full_title (str): Long-form title prepended to the synthesised
+            full_title (str): Long-form title prepended to the synthesized
                 ``title`` and ``description`` when set.
             benchmark (str): Benchmark identifier (e.g. ``"recommended"``);
                 stored as ``parent_values`` and used to extend the
-                synthesised description when equal to ``"recommended"``.
+                synthesized description when equal to ``"recommended"``.
             os_type (str): Operating-system family (e.g. ``"macOS"``).
             os_version (float): Operating-system version (e.g. ``15.0``).
             baseline_dict (dict[str, Any]): Additional baseline metadata
@@ -364,9 +364,9 @@ class Baseline(BaseModel):
         return pd.DataFrame(rules)
 
     def to_yaml(self, output_path: Path) -> None:
-        """Serialise this baseline to YAML in canonical key order.
+        """Serialize this baseline to YAML in canonical key order.
 
-        The serialised document orders top-level keys as ``title``,
+        The serialized document orders top-level keys as ``title``,
         ``description``, ``authors``, ``parent_values``, ``platform``,
         ``profile`` (any other keys are dropped), and orders profiles by
         `_PROFILE_ORDER` (unknown sections sort to the end). Within each

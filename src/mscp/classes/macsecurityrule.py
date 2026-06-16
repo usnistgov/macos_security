@@ -68,16 +68,16 @@ class NistReferences(BaseModelWithAccessors):
     """NIST reference identifiers for a rule.
 
     Each list is sorted in ascending order on construction to keep the
-    serialised output stable.
+    serialized output stable.
 
     Attributes:
         cce (list[str] | None): CCE (Common Configuration Enumeration)
             identifiers, e.g. ``["CCE-94195-5"]``.
         nist_800_53r5 (list[str] | None): NIST SP 800-53 Rev. 5 control
             identifiers. Stored under the Python-friendly attribute name;
-            serialised to YAML as ``800-53r5``.
+            serialized to YAML as ``800-53r5``.
         nist_800_171r3 (list[str] | None): NIST SP 800-171 Rev. 3 control
-            identifiers. Serialised to YAML as ``800-171r3``.
+            identifiers. Serialized to YAML as ``800-171r3``.
     """
 
     cce: list[str] | None = None
@@ -412,7 +412,7 @@ class Macsecurityrule(BaseModelWithAccessors):
         ddm_info (dict[str, Any] | None): Declarative Device Management
             payload, when applicable.
         customized (list[str]): Field names that have been overridden by
-            customisation files.
+            customization files.
         mechanism (str): Enforcement mechanism — one of ``"Manual"``,
             ``"Script"``, ``"Configuration Profile"``, ``"Inherent"``,
             ``"Permanent"``, ``"N/A"``.
@@ -472,7 +472,7 @@ class Macsecurityrule(BaseModelWithAccessors):
 
         Resolves each rule ID against ``config["rules_dir"]`` (and the
         custom rules directory when not tailoring), parses the YAML, and
-        applies any matching customisations (references / tags / platforms
+        applies any matching customizations (references / tags / platforms
         merge; other keys overwrite). Rules whose YAML lacks the requested
         ``os_type`` / ``os_version`` are skipped with a debug log.
 
@@ -485,11 +485,11 @@ class Macsecurityrule(BaseModelWithAccessors):
             section (str): Section label assigned to the loaded rules
                 (used for logging and falls through into the rule when
                 no special-section override applies).
-            tailoring (bool): If true, suppresses loading of customisation
+            tailoring (bool): If true, suppresses loading of customization
                 overrides (used when the caller is producing a tailored
                 benchmark). Defaults to ``False``.
             language (str): Language code passed to `open_file` for
-                localised text. Defaults to ``"en"``.
+                localized text. Defaults to ``"en"``.
 
         Returns:
             list[Macsecurityrule]: Successfully loaded rules. Rules whose
@@ -819,7 +819,7 @@ class Macsecurityrule(BaseModelWithAccessors):
         Args:
             os_type (str): Operating system family (e.g. ``"macOS"``).
             os_version (int): Operating system version.
-            tailoring (bool): If true, skips customisation overrides.
+            tailoring (bool): If true, skips customization overrides.
                 Defaults to ``False``.
             parent_values (str): ODV lookup key forwarded to `load_rules`.
                 Defaults to ``"default"``.
@@ -1399,7 +1399,7 @@ class Macsecurityrule(BaseModelWithAccessors):
         return included_rules
 
     def to_yaml(self, output_path: Path, *fields) -> None:
-        """Serialise this rule to a YAML file in canonical key order.
+        """Serialize this rule to a YAML file in canonical key order.
 
         Top-level keys are written in the order ``id``, ``title``,
         ``discussion``, ``references``, ``customized``, ``platforms``,
@@ -1414,7 +1414,7 @@ class Macsecurityrule(BaseModelWithAccessors):
         If positional ``fields`` are supplied, only those keys are written
         (used by `write_odv_custom_rule` and
         `write_excluded_custom_rule_discussion` to write minimal
-        per-customisation files). When no ``fields`` are given, empty
+        per-customization files). When no ``fields`` are given, empty
         sections are dropped except for the always-required keys
         ``id`` / ``title`` / ``discussion`` / ``references`` /
         ``platforms``.
@@ -1506,7 +1506,7 @@ class Macsecurityrule(BaseModelWithAccessors):
         """Return a plain-dict representation of this rule.
 
         Thin wrapper around `model_dump` for callers that want a
-        non-Pydantic value (e.g. for JSON serialisation).
+        non-Pydantic value (e.g. for JSON serialization).
 
         Returns:
             dict[str, Any]: All declared fields, including their nested

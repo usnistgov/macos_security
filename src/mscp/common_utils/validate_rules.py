@@ -5,7 +5,7 @@ Wires up the ``mscp admin validate`` subcommand. `validate_yaml_file`
 walks the configured rules directory (plus any custom rules) and
 validates each file against ``schema/mscp_rule.json``;
 `validate_rule_folder_structure` is an `argparse` type validator that
-makes sure ``--rules_dir`` points at a properly organised tree.
+makes sure ``--rules_dir`` points at a properly organized tree.
 `get_rule_identifier` is a small helper that prefers a rule file's
 ``id`` field, falling back to its filename stem.
 """
