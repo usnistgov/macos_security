@@ -98,6 +98,8 @@ platforms:
           shell: /usr/sbin/spctl --status | /usr/bin/grep -c "assessments enabled"
           result:
             integer: 1
+        fix:
+          shell: /usr/sbin/spctl --global-enable
     enforcement_info:
       check:
         shell: |-
@@ -107,8 +109,6 @@ platforms:
           EOS
         result:
           string: 'true'
-      fix:
-        shell: /usr/sbin/spctl --global-enable
     introduced: '10.8'
 tags:
   - 800-53r5_low
