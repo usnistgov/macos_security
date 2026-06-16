@@ -50,3 +50,6 @@ profile:
       - pwpolicy_history_enforce
       - pwpolicy_minimum_length_enforce
       - pwpolicy_simple_sequence_disable
+  - section: System Settings
+    rules:
+      - system_settings_siri_disable

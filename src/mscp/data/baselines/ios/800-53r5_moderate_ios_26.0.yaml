@@ -101,7 +101,6 @@ profile:
       - os_show_control_center_lock_screen_disable
       - os_show_notification_center_lock_screen_disable
       - os_siri_allow_dictation_disable
-      - os_siri_assistant_disable
       - os_siri_server_logging_disable
       - os_siri_user_generated_content_disable
       - os_siri_when_locked_disabled
@@ -125,3 +124,6 @@ profile:
       - pwpolicy_max_inactivity_enforce
       - pwpolicy_minimum_length_enforce
       - pwpolicy_simple_sequence_disable
+  - section: System Settings
+    rules:
+      - system_settings_siri_disable

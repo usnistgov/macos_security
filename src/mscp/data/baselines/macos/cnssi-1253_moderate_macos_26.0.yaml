@@ -141,7 +141,6 @@ profile:
       - os_root_disable
       - os_safari_reader_summary_disable
       - os_screensaver_loginwindow_enforce
-      - os_screensaver_timeout_loginwindow_enforce
       - os_secure_boot_verify
       - os_setup_assistant_filevault_enforce
       - os_sip_enable
@@ -192,6 +191,7 @@ profile:
       - system_settings_apple_watch_unlock_disable
       - system_settings_automatic_login_disable
       - system_settings_automatic_logout_enforce
+      - system_settings_biometric_disable
       - system_settings_bluetooth_disable
       - system_settings_bluetooth_settings_disable
       - system_settings_bluetooth_sharing_disable
@@ -238,7 +238,6 @@ profile:
       - system_settings_time_server_enforce
       - system_settings_token_removal_enforce
       - system_settings_touch_id_settings_disable
-      - system_settings_touchid_unlock_disable
       - system_settings_usb_restricted_mode
       - system_settings_wallet_applepay_settings_disable
       - system_settings_wifi_disable
