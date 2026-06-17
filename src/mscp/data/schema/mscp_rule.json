@@ -127,6 +127,9 @@
                         },
                         "cmmc": {
                             "$ref": "#/$defs/ArrayOfStrings"
+                        },
+                        "sfr": {
+                            "$ref": "#/$defs/ArrayOfStrings"
                         }
                     }
                 },
@@ -266,9 +269,9 @@
                         },
                         "introduced": {
                             "type": "string"
-                        },
-                        "additionalProperties": false
-                    }
+                        }
+                    },
+                    "additionalProperties": false
                 },
                 "visionOS": {
                     "type": "object",
@@ -306,9 +309,9 @@
                         },
                         "introduced": {
                             "type": "string"
-                        },
-                        "additionalProperties": false
-                    }
+                        }
+                    },
+                    "additionalProperties": false
                 }
             }
         },
@@ -344,7 +347,6 @@
                     "type": "boolean"
                 },
                 {
-                    "type": "array",
                     "$ref": "#/$defs/ArrayOfStrings"
                 },
                 {
@@ -455,29 +457,29 @@
                 },
                 "ddm_value": {
                     "$ref": "#/$defs/AnyofStringIntegerBooleanArrayObject"
-                },
-                "if": {
-                    "properties": {
-                        "declaration_type": {
-                            "const": "com.apple.configuration.services.configuration-files"
-                        }
-                    }
-                },
-                "then": {
-                    "required": [
-                        "service",
-                        "config_file",
-                        "configuration_value",
-                        "configuration_key"
-                    ]
-                },
-                "else": {
-                    "required": [
-                        "declaration_type",
-                        "ddm_key",
-                        "ddm_value"
-                    ]
                 }
+            },
+            "if": {
+                "properties": {
+                    "declarationtype": {
+                        "const": "com.apple.configuration.services.configuration-files"
+                    }
+                }
+            },
+            "then": {
+                "required": [
+                    "service",
+                    "config_file",
+                    "configuration_value",
+                    "configuration_key"
+                ]
+            },
+            "else": {
+                "required": [
+                    "declarationtype",
+                    "ddm_key",
+                    "ddm_value"
+                ]
             },
             "additionalProperties": false
         },
@@ -524,10 +526,16 @@
                             "type": "string"
                         }
                     },
-                    "required": [
-                        "shell",
-                        "result"
-                    ]
+                    "anyOf": [
+                        { "required": ["shell"] },
+                        { "required": ["additional_info"] }
+                    ],
+                    "if": {
+                        "required": ["shell"]
+                    },
+                    "then": {
+                        "required": ["result"]
+                    }
                 },
                 "fix": {
                     "type": "object",
@@ -539,7 +547,11 @@
                         "additional_info": {
                             "type": "string"
                         }
-                    }
+                    },
+                    "anyOf": [
+                        { "required": ["shell"] },
+                        { "required": ["additional_info"] }
+                    ]
                 },
                 "default_state": {
                     "description": "Describes the means to return the system to a default state.",
@@ -552,7 +564,11 @@
                         "note": {
                             "type": "string"
                         }
-                    }
+                    },
+                    "anyOf": [
+                        { "required": ["shell"] },
+                        { "required": ["note"] }
+                    ]
                 }
             },
             "additionalProperties": false

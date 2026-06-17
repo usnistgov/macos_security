@@ -15,12 +15,13 @@ from typing import Any
 from uuid import uuid4
 
 # Additional python modules
-from pydantic import Field
+from pydantic import Field, ValidationError, field_validator
 
 # Local python modules
 from ._base import BaseModelWithAccessors
 from .enforcement_info import EnforcementInfo
 from .mobileconfig import Mobileconfigpayload, format_payload, mobileconfig_info_to_xml
+from .odv import OdvHint
 from .references import References
 from ..common_utils import (
     config,
@@ -138,6 +139,16 @@ class Macsecurityrule(BaseModelWithAccessors):
     enforcement_info: EnforcementInfo | None = None
     severity: str | None = None
     default_state: str | None = None
+
+    @field_validator("odv", mode="after")
+    @classmethod
+    def validate_odv_hint(cls, v: dict[str, Any] | None) -> dict[str, Any] | None:
+        if v is None:
+            return v
+        hint = v.get("hint")
+        if hint is not None and isinstance(hint, dict):
+            OdvHint(**hint)
+        return v
 
     @classmethod
     def load_rules(
@@ -438,22 +449,35 @@ class Macsecurityrule(BaseModelWithAccessors):
                 rule_yaml["references"]["custom_refs"] = {}
                 rule_yaml["references"]["custom_refs"]["references"] = [custom_refs]
 
-            rule = cls(
-                **rule_yaml,
-                result_value=result_value,
-                customized=customized_fields,
-                mobileconfig_info=payloads,
-                mechanism=mechanism,
-                section=section,
-                os_name=os_name,
-                os_type=os_type,
-                os_version=os_version,
-                check=check_value,
-                fix=fix_value,
-                enforcement_info=enforcement_info,
-                default_state=default_state_value,
-                severity=severity,
-            )
+            try:
+                rule = cls(
+                    **rule_yaml,
+                    result_value=result_value,
+                    customized=customized_fields,
+                    mobileconfig_info=payloads,
+                    mechanism=mechanism,
+                    section=section,
+                    os_name=os_name,
+                    os_type=os_type,
+                    os_version=os_version,
+                    check=check_value,
+                    fix=fix_value,
+                    enforcement_info=enforcement_info,
+                    default_state=default_state_value,
+                    severity=severity,
+                )
+            except ValidationError as e:
+                issues = "; ".join(
+                    "[{}] {}".format(
+                        " -> ".join(str(p) for p in err["loc"]) or "root",
+                        err["msg"],
+                    )
+                    for err in e.errors()
+                )
+                logger.error(
+                    "Rule {} failed validation and will be skipped: {}", rule_id, issues
+                )
+                continue
 
             if rule.odv is not None and parent_values is not None:
                 rule._fill_in_odv(parent_values)

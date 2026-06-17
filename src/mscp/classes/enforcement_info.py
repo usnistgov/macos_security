@@ -1,5 +1,5 @@
 from typing import Optional, Union, Literal
-from pydantic import Field, ConfigDict
+from pydantic import Field, ConfigDict, model_validator
 
 from ._base import BaseModelWithAccessors
 
@@ -11,20 +11,19 @@ class ResultDef(BaseModelWithAccessors):
 
     Holds the anticipated output value of a check command in exactly one
     of its three typed fields.  Only one field should be populated at a
-    time; the others remain ``None``.  Any field may be set to ``"$ODV"``
-    as a placeholder when the expected value is organization-defined.
+    time; the others remain ``None``.
 
     Attributes:
-        string: Expected string output, or ``"$ODV"`` for an ODV placeholder.
+        string: Expected string output of the check command.
         integer: Expected integer output, or ``"$ODV"`` for an ODV placeholder.
-        boolean: Expected boolean output, or ``"$ODV"`` for an ODV placeholder.
+        boolean: Expected boolean output of the check command.
     """
 
     model_config = ConfigDict(extra="ignore")
 
-    string: Optional[Union[str, ODV]] = None
+    string: Optional[str] = None
     integer: Optional[Union[int, ODV]] = None
-    boolean: Optional[Union[bool, ODV]] = None
+    boolean: Optional[bool] = None
 
 
 class ShellCheck(BaseModelWithAccessors):
@@ -47,6 +46,14 @@ class ShellCheck(BaseModelWithAccessors):
     result: Optional[ResultDef] = None
     additional_info: Optional[str] = ""
 
+    @model_validator(mode="after")
+    def validate_shell_or_additional_info(self) -> "ShellCheck":
+        if not self.shell and not self.additional_info:
+            raise ValueError("either 'shell' or 'additional_info' must be provided")
+        if self.shell and self.result is None:
+            raise ValueError("'result' is required when 'shell' is provided")
+        return self
+
 
 class ShellFix(BaseModelWithAccessors):
     """Shell command configuration for remediating a failing compliance check.
@@ -67,6 +74,12 @@ class ShellFix(BaseModelWithAccessors):
     )
     additional_info: Optional[str] = ""
 
+    @model_validator(mode="after")
+    def validate_shell_or_additional_info(self) -> "ShellFix":
+        if not self.shell and not self.additional_info:
+            raise ValueError("either 'shell' or 'additional_info' must be provided")
+        return self
+
 
 class DefaultStateShell(BaseModelWithAccessors):
     """Shell command configuration for restoring a setting to its factory default.
@@ -86,6 +99,12 @@ class DefaultStateShell(BaseModelWithAccessors):
         description="Shell command(s) to restore the system to a default factory state.",
     )
     note: Optional[str] = ""
+
+    @model_validator(mode="after")
+    def validate_shell_or_note(self) -> "DefaultStateShell":
+        if not self.shell and not self.note:
+            raise ValueError("either 'shell' or 'note' must be provided")
+        return self
 
 
 class EnforcementInfo(BaseModelWithAccessors):
