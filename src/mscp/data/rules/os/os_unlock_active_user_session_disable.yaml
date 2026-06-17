@@ -76,7 +76,6 @@ platforms:
         - name: cis_lvl2
         - name: disa_stig
           severity: medium
-      mobileconfig_info: {}
       enforcement_info:
         check:
           shell: /usr/bin/security authorizationdb read system.login.screensaver 2>&1 | /usr/bin/grep -c '<string>$ODV</string>'

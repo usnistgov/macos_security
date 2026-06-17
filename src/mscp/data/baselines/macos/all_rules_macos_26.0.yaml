@@ -96,7 +96,6 @@ profile:
       - os_disk_image_disable
       - os_dvdram_disable
       - os_erase_content_and_settings_disable
-      - os_ess_installed
       - os_external_apfs_hfs_volumes_encrypted
       - os_external_storage_access_defined
       - os_facetime_app_disable
@@ -160,7 +159,6 @@ profile:
       - os_safari_show_status_bar_enabled
       - os_safari_warn_fraudulent_website_enable
       - os_screensaver_loginwindow_enforce
-      - os_screensaver_timeout_loginwindow_enforce
       - os_secure_boot_verify
       - os_setup_assistant_filevault_enforce
       - os_sip_enable
@@ -221,6 +219,7 @@ profile:
       - system_settings_automatic_login_disable
       - system_settings_automatic_logout_enforce
       - system_settings_background_security_improvement_removal_disable
+      - system_settings_biometric_disable
       - system_settings_bluetooth_disable
       - system_settings_bluetooth_menu_enable
       - system_settings_bluetooth_settings_disable
@@ -279,7 +278,6 @@ profile:
       - system_settings_time_server_enforce
       - system_settings_token_removal_enforce
       - system_settings_touch_id_settings_disable
-      - system_settings_touchid_unlock_disable
       - system_settings_usb_restricted_mode
       - system_settings_wake_network_access_disable
       - system_settings_wallet_applepay_settings_disable

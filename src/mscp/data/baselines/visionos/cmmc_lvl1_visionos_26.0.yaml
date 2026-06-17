@@ -52,3 +52,6 @@ profile:
   - section: Password Policy
     rules:
       - pwpolicy_account_lockout_enforce
+  - section: System Settings
+    rules:
+      - system_settings_siri_disable

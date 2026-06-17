@@ -78,5 +78,5 @@ profile:
       - pwpolicy_simple_sequence_disable
   - section: System Settings
     rules:
-      - settings_opticid_unlock_disable
-      - settings_siri_disable
+      - system_settings_biometric_disable
+      - system_settings_siri_disable
