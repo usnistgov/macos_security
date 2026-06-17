@@ -1,7 +1,4 @@
 {% set check_tags = ["permanent", "inherent", "n_a", "not_applicable"] %}
-{% set additional_info = rule | get_nested(["platforms", rule.os_type, "enforcement_info", "fix", "additional_info"]) %}
-{% set check_shell = rule | get_nested(["platforms", rule.os_type, "enforcement_info", "check", "shell"]) %}
-{% set fix_shell = rule | get_nested(["platforms", rule.os_type, "enforcement_info", "fix", "shell"]) %}
 
 ### {{ rule.title }}
 
@@ -21,14 +18,10 @@
 {% trans %}To check the state of the system, run the following command(s){% endtrans %}:
 
 ```bash
-{% if check_shell is not none %}
-{{ check_shell }}
-{% else %}
-{{ rule.check | replace("\\\\", "\\") | replace('\\"', '"') | trim | safe }}
-{%- endif -%}
+{{ rule.enforcement_info.check.shell | replace("\\\\", "\\") | replace('\\"', '"') | trim | safe }}
 ```
 {% else %}
-{{ rule.check if rule.check is not none }}
+{{ rule.enforcement_info.check.additional_info if rule.enforcement_info.check.additional_info is not none }}
 {% endif %}
 
 {% if rule.os_type.lower() in NIX_OS %}
@@ -41,23 +34,21 @@
 <p>
 <strong>{% trans %}Remediation Description{% endtrans %}</strong><br /><br />
 
-{% if rule.fix is not none %}
+{% if rule.enforcement_info.fix is not none %}
 {% trans %}Perform the following to configure the system to meet the requirements{% endtrans %}:<br />
 {% endif %}
 
-{% if rule.mobileconfig_info is none and rule.fix is not none or fix_shell %}
+{% if rule.mobileconfig_info is none and rule.enforcement_info.fix is not none or rule.enforcement_info.fix.shell %}
 {% trans %}Run the following command(s){% endtrans %}:
 
 ```bash
-{{ rule.fix | asciidoc_to_markdown if rule.fix is not none else fix_shell }}
+{{ rule.enforcement_info.fix.shell if rule.enforcement_info.fix.shell is not none else rule.enforcement_info.fix.shell }}
 ```
 
-{% elif additional_info is not none %}
-{{ additional_info | asciidoc_to_markdown }}
-{% elif rule.mobileconfig_info is not none and fix_shell %}
-{% if fix_shell %}
+{% elif rule.mobileconfig_info is not none and rule.enforcement_info.fix.shell %}
+{% if rule.enforcement_info.fix.shell %}
 ```bash
-{{ fix_shell -}}
+{{ rule.enforcement_info.fix.shell -}}
 ```
 {% endif %}
 
@@ -68,7 +59,7 @@
 {% endif %}
 {% else %}
 {% if rule.os_name == "macos" %}
-{{ rule.fix | asciidoc_to_markdown }}
+{{ rule.enforcement_info.fix.shell }}
 {% else %}
 {% trans %}Deploy a configuration profile containing the following payload.{% endtrans %}
 
@@ -76,6 +67,9 @@
 {{ rule.mobileconfig_info | mobileconfig_payloads_to_xml -}}
 ```
 {% endif %}
+{% endif %}
+{% if rule.enforcement_info.fix.additional_info %}
+> **NOTE**: {{ rule.enforcement_info.fix.additional_info }}
 {% endif %}
 
 </p>

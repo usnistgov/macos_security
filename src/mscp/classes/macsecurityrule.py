@@ -23,6 +23,7 @@ from pydantic import BaseModel, ConfigDict, Field
 
 # Local python modules
 from ._base import BaseModelWithAccessors
+from .enforcement_info import EnforcementInfo
 from ..common_utils import (
     config,
     create_yaml,
@@ -37,6 +38,17 @@ from ..common_utils import (
 from ..common_utils.logger_instance import logger
 
 _SENTINEL = object()
+
+
+def deep_merge(a, b):
+    for key, value in b.items():
+        if key in a and isinstance(a[key], dict) and isinstance(value, dict):
+            # Recursively merge nested dictionaries
+            deep_merge(a[key], value)
+        else:
+            # Overwrite or add
+            a[key] = value
+    return a
 
 
 class Sectionmap(StrEnum):
@@ -454,6 +466,7 @@ class Macsecurityrule(BaseModelWithAccessors):
     os_version: float = Field(default_factory=float)
     check: str | None = None
     fix: str | None = None
+    enforcement_info: EnforcementInfo | None = None
     severity: str | None = None
     default_state: str | None = None
 
@@ -595,6 +608,13 @@ class Macsecurityrule(BaseModelWithAccessors):
             enforcement_info = rule_yaml["platforms"][os_type].get(
                 "enforcement_info", {}
             )
+
+            if enforcement_info:
+                platform_enforcement_info = rule_yaml["platforms"][os_type][
+                    os_version_str
+                ].get("enforcement_info", {})
+                deep_merge(enforcement_info, platform_enforcement_info)
+
             if enforcement_info and "n_a" not in tags:
                 check_shell = enforcement_info.get("check", {}).get("shell")
                 check_result = enforcement_info.get("check", {}).get("result")
@@ -605,9 +625,7 @@ class Macsecurityrule(BaseModelWithAccessors):
                 )
 
                 if check_result:
-                    for k, v in rule_yaml["platforms"][os_type]["enforcement_info"][
-                        "check"
-                    ]["result"].items():
+                    for k, v in enforcement_info["check"]["result"].items():
                         if isinstance(v, (int, bool, str)):
                             result_value = v
                             break
@@ -639,7 +657,11 @@ class Macsecurityrule(BaseModelWithAccessors):
             if "mobileconfig_info" in rule_yaml:
                 mechanism = "Configuration Profile"
 
-                for entry in rule_yaml["mobileconfig_info"]:
+                # get OS specific info if exists
+                mobileconfig_info = rule_yaml["platforms"][os_type][os_version_str].get(
+                    "mobileconfig_info", rule_yaml["mobileconfig_info"]
+                )
+                for entry in mobileconfig_info:
                     payload_type: str = str(
                         entry.get("PayloadType", entry.get("payload_type", ""))
                     )
@@ -779,6 +801,7 @@ class Macsecurityrule(BaseModelWithAccessors):
                 os_version=os_version,
                 check=check_value,
                 fix=fix_value,
+                enforcement_info=enforcement_info,
                 default_state=default_state_value,
                 severity=severity,
             )
@@ -1212,6 +1235,10 @@ class Macsecurityrule(BaseModelWithAccessors):
         if self.mobileconfig_info is not None:
             for payload in self.mobileconfig_info:
                 payload.payload_content = replace_odv_in_obj(payload.payload_content)
+
+        # Replace $ODV in enforcement_info
+        if self.enforcement_info is not None:
+            self.enforcement_info = replace_odv_in_obj(self.enforcement_info)
 
         # Replace $ODV in ddm_info
         if self.ddm_info is not None:
