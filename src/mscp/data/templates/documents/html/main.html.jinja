@@ -15,9 +15,81 @@
 #header .cover .details { color: #7a7a7a; font-size: 1.1em; margin-top: 0.5em; }
 #toc.toc { border: 1px solid #dddddd; border-radius: 4px; padding: 1em 1.25em;
   margin: 1.5em 0 2em; background: #f8f8f8; }
+
+/* --- Code-block copy button --- */
+.listingblock .content { position: relative; }
+.listingblock .content > pre { position: relative; }
+.copy-btn {
+  position: absolute; top: 8px; right: 8px;
+  padding: 3px 10px; font-size: 12px; line-height: 1.4;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  color: #444; background: rgba(255, 255, 255, .85);
+  border: 1px solid #c8c8c8; border-radius: 5px; cursor: pointer;
+  opacity: 0; transition: opacity .15s ease;
+}
+.listingblock:hover .copy-btn, .copy-btn:focus { opacity: 1; }
+.copy-btn:hover { background: #fff; }
+.copy-btn.copied { color: #0a7d27; border-color: #0a7d27; }
+
+/* --- Theme toggle --- */
+.theme-toggle {
+  position: fixed; top: 12px; right: 12px; z-index: 1000;
+  display: inline-flex; gap: 2px; padding: 3px;
+  background: rgba(255, 255, 255, .9); border: 1px solid #c8c8c8;
+  border-radius: 8px; box-shadow: 0 1px 4px rgba(0, 0, 0, .12);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+.theme-toggle button {
+  border: none; background: transparent; cursor: pointer;
+  padding: 4px 8px; font-size: 14px; line-height: 1; border-radius: 5px;
+  color: #555;
+}
+.theme-toggle button:hover { background: rgba(0, 0, 0, .06); }
+.theme-toggle button[aria-pressed="true"] { background: #d8d8d8; color: #000; }
+@media print { .theme-toggle, .copy-btn { display: none !important; } }
 </style>
+{% if dark_css_content %}
+<style id="mscp-dark-theme" media="(prefers-color-scheme: dark)">
+{{ dark_css_content }}
+/* Dark overrides for the Ruby-free cover/TOC + UI chrome */
+#header .cover .details { color: #9a9a9a; }
+#toc.toc { border-color: #3a3a3a; background: #252526; }
+.copy-btn { color: #ddd; background: rgba(45, 45, 48, .85); border-color: #444; }
+.copy-btn:hover { background: #2d2d30; }
+.copy-btn.copied { color: #6ccf7f; border-color: #6ccf7f; }
+.theme-toggle { background: rgba(37, 37, 38, .92); border-color: #444; }
+.theme-toggle button { color: #bbb; }
+.theme-toggle button:hover { background: rgba(255, 255, 255, .08); }
+.theme-toggle button[aria-pressed="true"] { background: #4a4a4a; color: #fff; }
+</style>
+<script>
+/* Apply the saved theme before first paint to avoid a flash of the wrong theme. */
+(function () {
+  var KEY = "mscp-theme";
+  var saved;
+  try { saved = localStorage.getItem(KEY); } catch (e) { saved = null; }
+  window.__mscpApplyTheme = function (mode) {
+    var dark = document.getElementById("mscp-dark-theme");
+    if (dark) {
+      dark.media = mode === "dark" ? "all"
+        : mode === "light" ? "not all"
+        : "(prefers-color-scheme: dark)";
+    }
+    document.documentElement.setAttribute("data-theme", mode);
+  };
+  window.__mscpApplyTheme(saved || "{{ default_theme }}");
+})();
+</script>
+{% endif %}
 </head>
 <body class="book">
+{% if dark_css_content %}
+<div class="theme-toggle" role="group" aria-label="{% trans %}Color theme{% endtrans %}">
+<button type="button" data-theme-mode="light" title="{% trans %}Light{% endtrans %}" aria-label="{% trans %}Light{% endtrans %}">☀️</button>
+<button type="button" data-theme-mode="dark" title="{% trans %}Dark{% endtrans %}" aria-label="{% trans %}Dark{% endtrans %}">🌙</button>
+<button type="button" data-theme-mode="system" title="{% trans %}System{% endtrans %}" aria-label="{% trans %}System{% endtrans %}">🖥️</button>
+</div>
+{% endif %}
 <div id="header">
 <div class="cover">
 <img class="title-logo" src="data:image/png;base64,{{ pdflogo }}" alt="macOS Security Compliance Project">
@@ -105,5 +177,68 @@
 {% endfor %}
 
 </div>
+<script>
+(function () {
+  /* --- Copy buttons on every code block --- */
+  var COPY = "{% trans %}Copy{% endtrans %}";
+  var COPIED = "{% trans %}Copied!{% endtrans %}";
+  var blocks = document.querySelectorAll(".listingblock pre");
+  Array.prototype.forEach.call(blocks, function (pre) {
+    var btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "copy-btn";
+    btn.textContent = COPY;
+    btn.setAttribute("aria-label", COPY);
+    btn.addEventListener("click", function () {
+      var code = pre.querySelector("code") || pre;
+      var text = code.innerText;
+      var done = function () {
+        btn.textContent = COPIED;
+        btn.classList.add("copied");
+        setTimeout(function () {
+          btn.textContent = COPY;
+          btn.classList.remove("copied");
+        }, 1500);
+      };
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(done, function () {});
+      } else {
+        var sel = document.createRange();
+        sel.selectNodeContents(code);
+        var s = window.getSelection();
+        s.removeAllRanges();
+        s.addRange(sel);
+        try { document.execCommand("copy"); done(); } catch (e) {}
+        s.removeAllRanges();
+      }
+    });
+    pre.appendChild(btn);
+  });
+
+  /* --- Theme toggle wiring --- */
+  var KEY = "mscp-theme";
+  var toggle = document.querySelector(".theme-toggle");
+  if (toggle && window.__mscpApplyTheme) {
+    var buttons = toggle.querySelectorAll("button[data-theme-mode]");
+    var current;
+    try { current = localStorage.getItem(KEY); } catch (e) { current = null; }
+    current = current || "{{ default_theme }}";
+    var sync = function (mode) {
+      Array.prototype.forEach.call(buttons, function (b) {
+        b.setAttribute("aria-pressed", b.getAttribute("data-theme-mode") === mode ? "true" : "false");
+      });
+    };
+    sync(current);
+    Array.prototype.forEach.call(buttons, function (b) {
+      b.addEventListener("click", function () {
+        var mode = b.getAttribute("data-theme-mode");
+        window.__mscpApplyTheme(mode);
+        try { localStorage.setItem(KEY, mode); } catch (e) {}
+        sync(mode);
+      });
+    });
+  }
+})();
+</script>
 </body>
 </html>

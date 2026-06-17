@@ -857,18 +857,37 @@ def render_template(
         env.filters["typst_escape"] = typst_escape
 
     css_content: str = ""
+    dark_css_content: str = ""
+    default_theme: str = "system"
     if output_format == "html":
         env.filters["group_ulify"] = group_ulify_html
         env.filters["render_rules"] = render_rules_html
         env.filters["render_references"] = render_references_html
         env.filters["asciidoc_to_html"] = asciidoc_to_html
-        # Inline the bundled AsciiDoctor stylesheet so the HTML is self-contained
-        # and visually matches today's output with no Ruby in the loop.
-        _css_path = Path(themes_dir, html_css)
+        # Inline BOTH the light and dark stylesheets so the HTML is self-contained
+        # and can switch theme at runtime with no network. The light sheet is the
+        # cascade base; the dark sheet is overlaid via a toggled ``media`` attribute
+        # in the template. ``html_css`` (set by ``--dark``) only picks the *initial*
+        # theme -- the in-page toggle can still override it and persists the choice.
+        if "-dark.css" in html_css:
+            light_name = html_css.replace("-dark.css", ".css")
+            dark_name = html_css
+            default_theme = "dark"
+        else:
+            light_name = html_css
+            dark_name = html_css.replace(".css", "-dark.css")
+
+        _css_path = Path(themes_dir, light_name)
         if _css_path.exists():
             css_content = _css_path.read_text()
         else:
             logger.warning(f"CSS not found for HTML output: {_css_path}")
+
+        _dark_css_path = Path(themes_dir, dark_name)
+        if _dark_css_path.exists():
+            dark_css_content = _dark_css_path.read_text()
+        else:
+            logger.warning(f"Dark CSS not found for HTML output: {_dark_css_path}")
 
     template: Template = env.get_template(template_name)
 
@@ -922,6 +941,8 @@ def render_template(
         terminology=acronyms_data.get("terminology", []),
         NIX_OS=NIX_OS,
         css_content=css_content,
+        dark_css_content=dark_css_content,
+        default_theme=default_theme,
     )
 
     output_file.write_text(rendered_output)
