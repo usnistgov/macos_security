@@ -8,7 +8,7 @@ wired up as `argparse` subcommands in `mscp.cli`.
 
 from .build_baselines import build_all_baselines
 from .release import update_mscp_release
-from .rule_utilities import add_new_rule, update_mscp_apple_release
+from .rule_utilities import add_new_rule, update_mscp_apple_release, remove_mscp_apple_release
 from .banner_generator import generate_mscp_banners
 
 
@@ -16,6 +16,7 @@ __all__ = [
     "build_all_baselines",
     "add_new_rule",
     "generate_mscp_banners",
+    "remove_mscp_apple_release",
     "update_mscp_apple_release",
     "update_mscp_release",
 ]

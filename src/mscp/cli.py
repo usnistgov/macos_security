@@ -21,6 +21,7 @@ from .admin_utils import (
     build_all_baselines,
     add_new_rule,
     generate_mscp_banners,
+    remove_mscp_apple_release,
     update_mscp_apple_release,
     update_mscp_release,
 )
@@ -641,7 +642,7 @@ compliance script (e.g. disa_stig, cis.benchmark)
     update_apple_release_parser.set_defaults(func=update_mscp_apple_release)
 
     update_apple_release_parser.add_argument(
-        "--new_version",
+        "--version",
         help="version number of Apple release to add to MSCP",
         type=float,
         required=True,
@@ -655,6 +656,23 @@ compliance script (e.g. disa_stig, cis.benchmark)
         required=True,
         action="store",
     )
+
+    remove_apple_release_parser = admin_subparsers.add_parser(
+        "remove",
+        parents=[parent_parser],
+        help="remove a platform version from the rule library, mscp_data, and schema",
+        add_help=False,
+    )
+    remove_apple_release_parser.set_defaults(func=remove_mscp_apple_release)
+
+    remove_apple_release_parser.add_argument(
+        "--version",
+        help="version number of Apple release to remove from MSCP",
+        type=float,
+        required=True,
+        action="store",
+    )
+
     update_mscp_release_parser = admin_subparsers.add_parser(
         "release",
         parents=[parent_parser],
