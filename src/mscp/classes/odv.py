@@ -6,8 +6,6 @@ only — the ``odv`` field on `Macsecurityrule` remains a plain dict to
 preserve dict-style access patterns used throughout the codebase.
 """
 
-from typing import Any
-
 from pydantic import ConfigDict
 
 from ._base import BaseModelWithAccessors

@@ -26,7 +26,7 @@ from yaspin.core import Yaspin
 from yaspin.spinners import Spinners
 
 # Local python modules
-from ...classes import Baseline, Macsecurityrule
+from ...classes import Baseline
 from ...classes.mobileconfig import mobileconfig_info_to_xml
 from ...common_utils import (
     config,

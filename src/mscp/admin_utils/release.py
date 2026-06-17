@@ -12,7 +12,6 @@ from pathlib import Path
 # Local python modules
 from ..common_utils import (
     config,
-    logger,
     mscp_data,
     create_file,
     conditional_inject_spinner,
@@ -30,7 +29,7 @@ def update_mscp_release(sp: Yaspin, args: argparse.Namespace) -> None:
     mscp_data_file: Path = Path(config["mscp_data"])
     mscp_data_file_updated = False
 
-    sp.text = f"Updating mscp_data.yaml with information for next release"
+    sp.text = "Updating mscp_data.yaml with information for next release"
     current_mscp_major, current_mscp_minor = mscp_data["mscp"].get("version").split(".")
 
     if args.major:
@@ -48,10 +47,10 @@ def update_mscp_release(sp: Yaspin, args: argparse.Namespace) -> None:
 
     if mscp_data_file_updated:
         create_file(mscp_data_file, mscp_data)
-        sp.text = f"DONE: mscp_data.yaml has been updated with release information"
+        sp.text = "DONE: mscp_data.yaml has been updated with release information"
         sp.ok("✔")
     else:
-        sp.text = f"No updates needed for release."
+        sp.text = "No updates needed for release."
         sp.ok("✔")
 
     return
