@@ -75,6 +75,7 @@ def validate_yaml_file(args: argparse.Namespace) -> None:
     logger.info(f"Validating {len(yaml_files)} YAML files in '{rules_path}'...\n")
 
     discovered_rules = []
+    error_found = False
     for yaml in yaml_files:
         data: dict = open_file(yaml)
         rule_id: str = data.get("id", yaml.stem)
@@ -95,6 +96,7 @@ def validate_yaml_file(args: argparse.Namespace) -> None:
             continue
 
         if errors:
+            error_found = True
             for e in errors:
                 path = " -> ".join(str(p) for p in e.path) if e.path else "root"
                 print(f"❌ INVALID: {yaml} → [{path}] {e.message}")
@@ -103,6 +105,10 @@ def validate_yaml_file(args: argparse.Namespace) -> None:
             if args.all_validation:
                 print(f"✅ VALID:   {yaml}")
                 logger.info(f"✅ VALID:   {yaml}")
+
+    if not error_found:
+        print(f"✅ All YAML files passed validation.")
+        logger.success(f"✅ All YAML files passed validation.")
 
 
 def validate_rule_folder_structure(path_str: str) -> Path:

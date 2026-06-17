@@ -274,30 +274,29 @@ def remove_mscp_apple_release(sp: Yaspin, args: argparse.Namespace) -> None:
     mscp_data_file: Path = Path(config["mscp_data"])
     mscp_data_file_updated = False
 
-    version_str = str(args.version)
     platforms = mscp_data.get("versions", {}).get("platforms", {})
 
-    sp.text = f"Removing version {version_str} from mscp_data.yaml"
+    sp.text = f"Removing version {args.version} from mscp_data.yaml"
     for platform_name, items in platforms.items():
-        match = next((d for d in items if d["os_version"] == version_str), None)
+        match = next((d for d in items if d["os_version"] == args.version), None)
         if match is None:
-            logger.warning(f"{version_str} not found for {platform_name}, skipping")
+            logger.warning(f"{args.version} not found for {platform_name}, skipping")
             continue
 
-        logger.info(f"Removing {version_str} from mscp_data.yaml for {platform_name}")
+        logger.info(f"Removing {args.version} from mscp_data.yaml for {platform_name}")
         mscp_data["versions"]["platforms"][platform_name].remove(match)
 
-        sp.text = f"Removing {version_str} from rules for {platform_name}"
+        sp.text = f"Removing {args.version} from rules for {platform_name}"
         remove_version_from_rules(platform_name, args.version)
         remove_version_from_schema(platform_name, args.version)
         mscp_data_file_updated = True
 
     if mscp_data_file_updated:
         create_file(mscp_data_file, mscp_data)
-        sp.text = f"DONE: version {version_str} has been removed"
+        sp.text = f"DONE: version {args.version} has been removed"
         sp.ok("✔")
     else:
-        sp.text = f"No updates needed for version {version_str}"
+        sp.text = f"No updates needed for version {args.version}"
         sp.ok("✔")
 
 
