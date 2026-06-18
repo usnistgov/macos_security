@@ -14,7 +14,7 @@ runner (`run_command`), and the spinner decorator
 """
 
 from .config import config, set_custom_dir, ensure_custom_dirs, search_paths
-from .constants import SCHEMA_PATH, APPLE_OS, NIX_OS
+from .constants import SCHEMA_PATH, APPLE_OS, NIX_OS, PLATFORM_MAP
 from .customization import collect_overrides
 from .file_handling import (
     append_text,
@@ -41,7 +41,7 @@ from .mscp_data import get_mscp_data, mscp_data
 from .run_command import run_command
 from .sanitize_input import sanitize_input
 from .prompt_for_odv import prompt_for_odv
-from .validate_rules import validate_rule_folder_structure
+from .validate_rules import validate_yaml_file, validate_rule_folder_structure
 from .version_data import get_version_data
 from .spinner_utils import conditional_inject_spinner
 
