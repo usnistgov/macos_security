@@ -515,7 +515,7 @@ def main():
         print("No rules found for the keyword provided, please verify from the following list:")
         available_tags(all_rules)
     else:
-        _established_benchmarks = ['stig', 'cis_lvl1', 'cis_lvl2']
+        _established_benchmarks = ['nlmapgov_base', 'nlmapgov_plus', 'stig', 'cis_lvl1', 'cis_lvl2']
         if any(bm in args.keyword for bm in _established_benchmarks):
             benchmark = args.keyword
         else:
