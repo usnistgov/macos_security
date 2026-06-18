@@ -8,7 +8,10 @@ RUN apk update && apk add --no-cache \
   py3-pip \
   ruby-dev \
   build-base \
-  git 
+  jpeg \
+  libpng \
+  freetype \
+  openblas
 
 RUN apk add --no-cache --virtual .build-deps \
     musl-dev \
