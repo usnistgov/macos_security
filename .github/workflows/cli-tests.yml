@@ -1,0 +1,100 @@
+---
+name: CLI Smoke Tests
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - dev_2.0
+    paths-ignore:
+      - 'archive/**'
+  pull_request:
+    branches:
+      - dev_2.0
+    paths-ignore:
+      - 'archive/**'
+
+jobs:
+  cli-smoke-tests:
+    name: CLI smoke tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: list_platforms flag
+        run: python mscp.py --list_platforms
+
+      - name: baseline list_tags (macos)
+        run: python mscp.py --os_name macos --os_version 26.0 baseline --list_tags
+
+      - name: baseline list_tags (ios)
+        run: python mscp.py --os_name ios --os_version 26.0 baseline --list_tags
+
+      - name: baseline generate (macos 800-53r5 moderate)
+        run: >
+          python mscp.py
+          --os_name macos --os_version 26.0
+          --output_dir /tmp/mscp-test-output
+          baseline --keyword 800-53r5_moderate
+
+      - name: baseline generate (macos cis_lvl1)
+        run: >
+          python mscp.py
+          --os_name macos --os_version 26.0
+          --output_dir /tmp/mscp-test-output
+          baseline --keyword cis_lvl1
+
+      - name: guidance markdown (macos 800-53r5 moderate)
+        run: >
+          python mscp.py
+          --os_name macos --os_version 26.0
+          --output_dir /tmp/mscp-test-output
+          guidance --markdown --no-docs
+          baselines/macos/800-53r5_moderate_macos_26.0.yaml
+
+      - name: guidance script (macos cis_lvl1)
+        run: >
+          python mscp.py
+          --os_name macos --os_version 26.0
+          --output_dir /tmp/mscp-test-output
+          guidance --script --no-docs
+          baselines/macos/cis_lvl1_macos_26.0.yaml
+
+      - name: scap list_tags
+        run: python mscp.py --os_name macos --os_version 26.0 scap --list_tags
+
+      - name: scap xccdf (macos 800-53r5 moderate)
+        run: >
+          python mscp.py
+          --os_name macos --os_version 26.0
+          --output_dir /tmp/mscp-test-output
+          scap --xccdf --baseline 800-53r5_moderate
+
+      - name: admin validate
+        run: python mscp.py admin validate
+
+  cli_tests_success:
+    needs:
+      - cli-smoke-tests
+    if: always()
+    name: CLI tests successful
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check job status
+        if: >-
+          ${{
+              (
+                contains(needs.*.result, 'failure') || contains(needs.*.result, 'cancelled')
+              )
+          }}
+        run: exit 1
