@@ -46,6 +46,8 @@ profile:
       - os_auto_dim_allow
       - os_auto_unlock_disable
       - os_automatic_app_download_disable
+      - os_background_security_improvement_install_enable
+      - os_background_security_improvement_removal_disable
       - os_bluetooth_modification_disable
       - os_call_recording_disable
       - os_camera_disable
@@ -137,6 +139,8 @@ profile:
       - os_siri_server_logging_disable
       - os_siri_user_generated_content_disable
       - os_siri_when_locked_disabled
+      - os_software_update_download_enforce
+      - os_software_update_install_enforce
       - os_spell_check_disable
       - os_ssl_for_exchange_activesync_enable
       - os_supervised_mdm_require
