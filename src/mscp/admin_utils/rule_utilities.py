@@ -186,12 +186,126 @@ def add_version_to_schema(
         logger.warning(f"{previous_version_str} not found in {schema_platforms.keys()}")
 
 
+def remove_version_from_rules(platform: str, version: float) -> None:
+    """Remove an OS version entry from every rule that carries it.
+
+    Scans all rule YAML files under ``config["rules_dir"]``.  For each rule
+    that targets ``platform`` and has ``version`` as a key, the entry is
+    deleted and the file is written back to disk.
+
+    Args:
+        platform (str): Short platform key (e.g. ``"macos"``); resolved
+            through ``PLATFORM_MAP`` before matching.
+        version (float): The version entry to remove from qualifying rules.
+    """
+    version_str = str(version)
+    rules_dir = config["rules_dir"]
+    platform = PLATFORM_MAP[platform]
+
+    logger.info(f"Removing {version_str} from rules for {platform}")
+
+    updated_rules = []
+    for rule in rules_dir.rglob("*.y*ml"):
+        rule_yaml = open_file(rule)
+        rule_platforms = rule_yaml.get("platforms", {})
+        if platform not in rule_platforms:
+            continue
+        if version_str in rule_platforms[platform]:
+            del rule_yaml["platforms"][platform][version_str]
+            updated_rules.append(rule)
+            create_file(rule, rule_yaml)
+
+    logger.info(f"Removed {version_str} from {len(updated_rules)} rules for {platform}")
+
+
+def remove_version_from_schema(platform: str, version: float) -> None:
+    """Remove an OS version entry from the MSCP JSON schema.
+
+    Reads the schema file at ``SCHEMA_PATH``, locates the properties block
+    for ``platform``, and deletes the entry for ``version`` if present.
+    The updated schema is written back to disk.
+
+    Args:
+        platform (str): Short platform key (e.g. ``"macos"``); resolved
+            through ``PLATFORM_MAP`` before matching.
+        version (float): The version to remove from the schema.
+    """
+    version_str = str(version)
+    schema_data_file: Path = Path(SCHEMA_PATH)
+    schema_data = open_file(schema_data_file)
+    platform = PLATFORM_MAP[platform]
+
+    schema_platforms = ensure_path(
+        schema_data, ["properties", "platforms", "properties", platform, "properties"]
+    )
+
+    if version_str in schema_platforms:
+        del schema_platforms[version_str]
+        create_file(schema_data_file, schema_data)
+    else:
+        logger.warning(f"{version_str} not found in schema for {platform}, skipping")
+
+
+@conditional_inject_spinner()
+def remove_mscp_apple_release(sp: Yaspin, args: argparse.Namespace) -> None:
+    """Remove an Apple OS release from mscp_data, rules, and the schema.
+
+    For each platform tracked in ``mscp_data["versions"]["platforms"]``, if
+    ``args.version`` is present, this function:
+
+    1. Removes the release entry from ``mscp_data.yaml``.
+    2. Calls ``remove_version_from_rules()`` to delete the version key from
+       every applicable rule file.
+    3. Calls ``remove_version_from_schema()`` to unregister the version from
+       the MSCP JSON schema.
+
+    Args:
+        sp (Yaspin): Spinner instance injected by ``@conditional_inject_spinner``.
+        args (argparse.Namespace): Parsed CLI arguments.  Consumed fields:
+
+            * ``version`` — the OS version string to remove (e.g. ``"15.5"``).
+
+    Side Effects:
+        May update ``mscp_data.yaml``, rule YAML files, and the schema file
+        on disk.
+    """
+    sp.spinner = Spinners.dots
+
+    mscp_data_file: Path = Path(config["mscp_data"])
+    mscp_data_file_updated = False
+
+    platforms = mscp_data.get("versions", {}).get("platforms", {})
+
+    sp.text = f"Removing version {args.version} from mscp_data.yaml"
+    for platform_name, items in platforms.items():
+        match = next((d for d in items if d["os_version"] == args.version), None)
+        if match is None:
+            logger.warning(f"{args.version} not found for {platform_name}, skipping")
+            continue
+
+        logger.info(f"Removing {args.version} from mscp_data.yaml for {platform_name}")
+        mscp_data["versions"]["platforms"][platform_name].remove(match)
+
+        sp.text = f"Removing {args.version} from rules for {platform_name}"
+        remove_version_from_rules(platform_name, args.version)
+        remove_version_from_schema(platform_name, args.version)
+        mscp_data_file_updated = True
+
+    if mscp_data_file_updated:
+        create_file(mscp_data_file, mscp_data)
+        sp.text = f"DONE: version {args.version} has been removed"
+        sp.ok("✔")
+    else:
+        sp.text = f"No updates needed for version {args.version}"
+        sp.ok("✔")
+
+
 @conditional_inject_spinner()
 def update_mscp_apple_release(sp: Yaspin, args: argparse.Namespace) -> None:
     """Register a new Apple OS release across mscp_data, rules, and the schema.
 
     For each platform tracked in ``mscp_data["versions"]["platforms"]``, if
-    ``args.new_version`` is not already listed, this function:
+    ``args.version`` is not already listed, this function:
 
     1. Prepends a new release entry to ``mscp_data.yaml``.
     2. Calls `add_version_to_rules()` to propagate the version into
@@ -206,7 +320,7 @@ def update_mscp_apple_release(sp: Yaspin, args: argparse.Namespace) -> None:
             used for progress text and completion status.
         args (argparse.Namespace): Parsed CLI arguments.  Consumed fields:
 
-            * ``new_version`` — the OS version string to add (e.g. ``"15.5"``).
+            * ``version`` — the OS version string to add (e.g. ``"15.5"``).
             * ``new_name`` — the human-readable name used for macOS releases
               (e.g. ``"Sequoia"``); other platforms derive their name
               automatically.
@@ -222,50 +336,50 @@ def update_mscp_apple_release(sp: Yaspin, args: argparse.Namespace) -> None:
 
     platforms = mscp_data.get("versions", {}).get("platforms", {})
 
-    sp.text = f"Updating mscp_data.yaml with information for version {args.new_version}"
+    sp.text = f"Updating mscp_data.yaml with information for version {args.version}"
     for platform_name, items in platforms.items():
         current_latest = max(items, key=lambda x: float(x["os_version"]))
 
         if platform_name == "macos":
             new_name = args.new_name
         else:
-            new_name = f"{platform_name}_{int(args.new_version)}"
+            new_name = f"{platform_name}_{int(args.version)}"
 
         new_release = {
-            "os_version": args.new_version,
+            "os_version": args.version,
             "os_name": new_name,
-            "cpe": f"o:apple:{platform_name}:{args.new_version}",
+            "cpe": f"o:apple:{platform_name}:{args.version}",
         }
 
         if not any(
-            d["os_version"] == args.new_version
+            d["os_version"] == args.version
             for d in mscp_data["versions"]["platforms"][platform_name]
         ):
             logger.info(
-                f"Updating mscp_data.yaml with {args.new_version} for {platform_name}"
+                f"Updating mscp_data.yaml with {args.version} for {platform_name}"
             )
 
             mscp_data["versions"]["platforms"][platform_name].insert(0, new_release)
 
-            sp.text = f"Updating MSCP rules with {args.new_version} for {platform_name}"
+            sp.text = f"Updating MSCP rules with {args.version} for {platform_name}"
             add_version_to_rules(
-                platform_name, current_latest["os_version"], args.new_version
+                platform_name, current_latest["os_version"], args.version
             )
             add_version_to_schema(
-                platform_name, current_latest["os_version"], args.new_version
+                platform_name, current_latest["os_version"], args.version
             )
             mscp_data_file_updated = True
         else:
             logger.warning(
-                f"{args.new_version} already exists for {platform_name}, skipping"
+                f"{args.version} already exists for {platform_name}, skipping"
             )
 
     if mscp_data_file_updated:
         create_file(mscp_data_file, mscp_data)
-        sp.text = f"DONE: mscp_data.yaml has been updated with information for version {args.new_version}"
+        sp.text = f"DONE: mscp_data.yaml has been updated with information for version {args.version}"
         sp.ok("✔")
     else:
-        sp.text = f"No updates needed for version {args.new_version}"
+        sp.text = f"No updates needed for version {args.version}"
         sp.ok("✔")
 
     return

@@ -115,6 +115,9 @@ versions:
       - os_version: 15.0
         os_name: sequoia
         cpe: o:apple:macos:15.0
+      - os_version: 14.0
+        os_name: sonoma
+        cpe: o:apple:macos:14.0
     ios:
       - os_version: 26.0
         os_name: ios_26

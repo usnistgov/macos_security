@@ -14,7 +14,7 @@ makes sure ``--rules_dir`` points at a properly organized tree.
 import argparse
 from pathlib import Path
 
-from jsonschema import Draft202012Validator, ValidationError
+from jsonschema import Draft202012Validator
 
 # Local python modules
 from . import SCHEMA_PATH, config, open_file
@@ -59,9 +59,11 @@ def validate_yaml_file(args: argparse.Namespace) -> None:
     validator = Draft202012Validator(schema)
 
     if args.rules_dir:
-        yaml_files: list = list(Path(args.rules_dir).rglob("*.y*ml"))
+        rules_path = Path(args.rules_dir)
+        yaml_files: list = list(rules_path.rglob("*.y*ml"))
     else:
-        yaml_files: list = list(Path(config["rules_dir"]).rglob("*.y*ml"))
+        rules_path = Path(config["rules_dir"])
+        yaml_files: list = list(rules_path.rglob("*.y*ml"))
         _custom_rules = Path(config["custom"]["rules_dir"])
         if _custom_rules.exists():
             yaml_files += list(_custom_rules.rglob("*.y*ml"))
@@ -70,31 +72,43 @@ def validate_yaml_file(args: argparse.Namespace) -> None:
         logger.error("No YAML files found in rules directory.")
         return
 
-    logger.info(
-        f"Validating {len(yaml_files)} YAML files in '{config['rules_dir']}'...\n"
-    )
+    logger.info(f"Validating {len(yaml_files)} YAML files in '{rules_path}'...\n")
 
     discovered_rules = []
+    error_found = False
     for yaml in yaml_files:
         data: dict = open_file(yaml)
-        if data["id"].startswith("supplemental"):
+        rule_id: str = data.get("id", yaml.stem)
+
+        if rule_id.startswith("supplemental"):
             continue
-        if get_rule_identifier(yaml) in discovered_rules:
+
+        if rule_id in discovered_rules:
             print(f"⚠️ WARNING:   {yaml} may be a duplicate rule")
         else:
-            discovered_rules.append(get_rule_identifier(yaml))
+            discovered_rules.append(rule_id)
 
         try:
-            validator.validate(data)
-            if args.all_validation:
-                print(f"✅ VALID:   {yaml}")
-                logger.info(f"✅ VALID:   {yaml}")
-        except ValidationError as e:
-            print(f"❌ INVALID: {yaml} → {e.message}")
-            logger.warning(f"❌ INVALID: {yaml} → {e.message}")
+            errors = list(validator.iter_errors(data))
         except Exception as e:
             print(f"⚠️ ERROR:   {yaml} → {e}")
             logger.error(f"⚠️ ERROR:   {yaml} → {e}")
+            continue
+
+        if errors:
+            error_found = True
+            for e in errors:
+                path = " -> ".join(str(p) for p in e.path) if e.path else "root"
+                print(f"❌ INVALID: {yaml} → [{path}] {e.message}")
+                logger.warning(f"❌ INVALID: {yaml} → [{path}] {e.message}")
+        else:
+            if args.all_validation:
+                print(f"✅ VALID:   {yaml}")
+                logger.info(f"✅ VALID:   {yaml}")
+
+    if not error_found:
+        print(f"✅ All YAML files passed validation.")
+        logger.success(f"✅ All YAML files passed validation.")
 
 
 def validate_rule_folder_structure(path_str: str) -> Path:

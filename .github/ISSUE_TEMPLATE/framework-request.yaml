@@ -1,0 +1,61 @@
+---
+name: New Framework / Baseline Request
+description: Ask for a new compliance framework or benchmark to be supported
+title: '[Framework Request]: '
+labels: ["area/baselines", "triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this template to request support for a compliance framework or benchmark that mSCP doesn't currently generate baselines for.
+
+        Before opening a new issue, please search the existing issues to make sure it isn't a duplicate.
+  - type: checkboxes
+    attributes:
+      label: Is there an existing issue for this?
+      options:
+        - label: I have searched the existing issues
+          required: true
+  - type: input
+    id: framework-name
+    attributes:
+      label: Framework / benchmark name
+      placeholder: e.g. ISO 27001
+    validations:
+      required: true
+  - type: input
+    id: issuing-org
+    attributes:
+      label: Issuing organization or authority
+      placeholder: e.g. a national standards body, regulator, or industry group
+    validations:
+      required: true
+  - type: input
+    id: reference-link
+    attributes:
+      label: Link to the published framework or benchmark document
+      placeholder: https://...
+  - type: dropdown
+    id: platforms
+    attributes:
+      label: Which platform(s) should this apply to?
+      multiple: true
+      options:
+        - macOS
+        - iOS/iPadOS
+        - visionOS
+    validations:
+      required: true
+  - type: textarea
+    id: why
+    attributes:
+      label: Why should mSCP support this framework?
+      description: Who needs it, and what gap does it fill that the existing supported frameworks don't?
+    validations:
+      required: true
+  - type: checkboxes
+    id: contribute
+    attributes:
+      label: Contribution
+      options:
+        - label: I am willing to help map this framework's requirements to existing or new rules

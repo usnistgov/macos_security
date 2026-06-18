@@ -12,12 +12,20 @@ Jinja filter helpers `group_ulify`, `generate_log_reference`, and
 from datetime import date
 from itertools import groupby
 from pathlib import Path
+
 # Additional python modules
 from jinja2 import Environment, FileSystemLoader
 
 # Local python modules
 from ...classes import Baseline, Macsecurityrule
-from ...common_utils import config, create_file, logger, make_dir, mscp_data, search_paths, NIX_OS
+from ...common_utils import (
+    create_file,
+    logger,
+    make_dir,
+    mscp_data,
+    search_paths,
+    NIX_OS,
+)
 
 
 def group_ulify(elements: list[str]) -> str:
@@ -223,11 +231,7 @@ def generate_restore_script(
     env.filters["log_reference"] = generate_log_reference
     env.filters["quotify"] = quotify
 
-    any_rendered = any(
-        rule.default_state
-        for p in baseline.profile
-        for rule in p.rules
-    )
+    any_rendered = any(rule.default_state for p in baseline.profile for rule in p.rules)
 
     rendered_output = script_template.render(
         baseline=baseline,

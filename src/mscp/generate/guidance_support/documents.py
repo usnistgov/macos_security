@@ -26,7 +26,8 @@ from yaspin.core import Yaspin
 from yaspin.spinners import Spinners
 
 # Local python modules
-from ...classes import Baseline, Macsecurityrule
+from ...classes import Baseline
+from ...classes.mobileconfig import mobileconfig_info_to_xml
 from ...common_utils import (
     config,
     logger,
@@ -460,9 +461,7 @@ def render_template(
     env.filters["render_rules"] = render_rules
     env.filters["render_references"] = render_references
     env.filters["get_nested"] = get_nested
-    env.filters["mobileconfig_payloads_to_xml"] = (
-        Macsecurityrule.mobileconfig_info_to_xml
-    )
+    env.filters["mobileconfig_payloads_to_xml"] = mobileconfig_info_to_xml
     env.install_gettext_translations(translations)
 
     if output_format == "markdown":
