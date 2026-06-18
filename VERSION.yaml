@@ -1,5 +1,5 @@
 os: "26.0"
 platform: iOS/iPadOS
-version: "iOS 26 Guidance, Revision 2.0"
+version: "iOS 26 Guidance, Revision 3.0"
 cpe: o:apple:ios:26.0
-date: "2025-12-18"
+date: "2026-06-XX"
