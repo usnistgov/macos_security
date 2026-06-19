@@ -1,6 +1,6 @@
-title: "visionOS 26.0: Security Configuration - Apple visionOS 2 Security Technical Implementation Guide Release 1"
+title: "visionOS 26.0: Security Configuration - Apple visionOS 26 Security Technical Implementation Guide Release 1"
 description: |
-  This guide describes the actions to take when securing a visionOS 26.0 system against the Apple visionOS 2 Security Technical Implementation Guide Release 1 security baseline.
+  This guide describes the actions to take when securing a visionOS 26.0 system against the Apple visionOS 26 Security Technical Implementation Guide Release 1 security baseline.
 authors: |
   *macOS Security Compliance Project*
 
