@@ -94,6 +94,7 @@ profile:
       - os_dvdram_disable
       - os_erase_content_and_settings_disable
       - os_ess_installed
+      - os_external_apfs_hfs_volumes_encrypted
       - os_external_storage_access_defined
       - os_facetime_app_disable
       - os_filevault_authorized_users
@@ -112,6 +113,7 @@ profile:
       - os_icloud_storage_prompt_disable
       - os_image_playground_disable
       - os_install_log_retention_configure
+      - os_internal_apfs_volumes_encrypted
       - os_iphone_mirroring_disable
       - os_ir_support_disable
       - os_library_validation_enabled
