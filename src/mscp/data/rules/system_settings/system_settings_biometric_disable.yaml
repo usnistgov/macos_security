@@ -18,7 +18,7 @@ references:
       macos_14:
         - CCE-93003-2
       visionos_26:
-        - CCE-95597-1        
+        - CCE-95597-1
     800-53r5:
       - IA-5
     800-171r3:
@@ -69,7 +69,7 @@ platforms:
   visionOS:
     '26.0':
       supervised: true
-    introduced: '2.0'    
+    introduced: '2.0'
 tags:
   - 800-53r5_low
   - 800-53r5_moderate
