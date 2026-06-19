@@ -19,6 +19,7 @@ from ..common_utils import (
     mscp_data,
     remove_dir_contents,
 )
+from ..common_utils import logging_config
 from ..classes import Macsecurityrule
 from ..generate import (
     generate_baseline,
@@ -52,6 +53,7 @@ def build_all_baselines(args: argparse.Namespace) -> None:
         new baseline YAML files into it.
     """
     logger.info("Building all supported baselines...")
+    logging_config.suppress_spinner = True
 
     # clear existing default baselines
     baselines_dir = Path(config.get("baseline_dir", ""))
@@ -75,7 +77,7 @@ def build_all_baselines(args: argparse.Namespace) -> None:
         "800-53r5_privacy",
     }
 
-    all_rules: list[Macsecurityrule] = Macsecurityrule.collect_all_rules(
+    all_rules: list[Macsecurityrule] = Macsecurityrule.collect_platform_rules(
         args.os_name, args.os_version, args.tailor, parent_values="Default"
     )
 

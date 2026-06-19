@@ -59,7 +59,7 @@ def generate_mapping(sp: Yaspin, args: argparse.Namespace) -> None:
     sp.spinner = Spinners.dots
     sp.text = "Collecting rule files"
     time.sleep(1)
-    rules: list[Macsecurityrule] = Macsecurityrule.collect_all_rules(
+    rules: list[Macsecurityrule] = Macsecurityrule.collect_platform_rules(
         args.os_name, args.os_version, tailoring=True
     )
 

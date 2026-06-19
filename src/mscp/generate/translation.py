@@ -97,7 +97,7 @@ def generate_localize_template(args: argparse.Namespace) -> None:
                 context=f"template.{template_file.stem}.{ctr}",
             )
 
-    rules: list[Macsecurityrule] = Macsecurityrule.collect_all_rules(
+    rules: list[Macsecurityrule] = Macsecurityrule.collect_platform_rules(
         args.os_name, args.os_version, tailoring=True
     )
 

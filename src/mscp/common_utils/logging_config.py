@@ -5,7 +5,7 @@
 ``-vv`` / ``--debug``, plus a rotating file sink under ``logs/mscp.log``.
 `function_filter` lets developers narrow stderr output to a single
 module via the ``MSCP_DEV_FILTER`` environment variable.
-The module-level `verbose_logging` flag is read by
+The module-level `verbose_logging` and `suppress_spinner` flags are read by
 `spinner_utils.conditional_inject_spinner` to decide whether to show a
 spinner.
 """
@@ -23,6 +23,7 @@ import loguru
 from .logger_instance import logger
 
 verbose_logging: bool = False
+suppress_spinner: bool = False
 
 
 def function_filter(record):
