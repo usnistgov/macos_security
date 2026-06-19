@@ -244,7 +244,12 @@ def migrate_legacy_baseline(args: argparse.Namespace) -> None:
 
 @logger.catch
 @conditional_inject_spinner()
-def generate_baseline(sp: Yaspin, args: argparse.Namespace, admin=False) -> None:
+def generate_baseline(
+    sp: Yaspin,
+    args: argparse.Namespace,
+    admin=False,
+    preloaded_rules: list[Macsecurityrule] | None = None,
+) -> None:
     """Generate a YAML baseline file for the specified OS and keyword.
 
     Collects all rules matching ``args.keyword`` (tag or benchmark name),
@@ -258,6 +263,10 @@ def generate_baseline(sp: Yaspin, args: argparse.Namespace, admin=False) -> None
         admin (bool): When ``True`` the output is written to the library's
             default baseline directory instead of the custom directory.
             Defaults to ``False``.
+        preloaded_rules: Pre-collected rules for ``args.os_name``. When
+            provided, skips the ``collect_platform_rules`` call. Useful
+            for bulk generation where the same platform rules are reused
+            across many calls.
     """
     sp.spinner = Spinners.dots
     if getattr(args, "migrate", None):
@@ -321,11 +330,14 @@ def generate_baseline(sp: Yaspin, args: argparse.Namespace, admin=False) -> None
         print_keyword_summary(all_tags, benchmark_map)
         sp.ok("✔")
 
-    sp.text = f"Loading rules for {args.os_name} {args.os_version}"
-    all_rules: list[Macsecurityrule] = Macsecurityrule.collect_platform_rules(
-        args.os_name, args.os_version, args.tailor, parent_values="Default"
-    )
-    sp.ok("✔")
+    if preloaded_rules is not None:
+        all_rules: list[Macsecurityrule] = preloaded_rules
+    else:
+        sp.text = f"Loading rules for {args.os_name} {args.os_version}"
+        all_rules = Macsecurityrule.collect_platform_rules(
+            args.os_name, args.os_version, args.tailor, parent_values="Default"
+        )
+        sp.ok("✔")
     all_tags, benchmark_map = collect_tags_and_benchmarks(all_rules)
 
     established_benchmarks: tuple[str, ...] = collect_established_benchmarks(all_rules)

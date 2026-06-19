@@ -20,7 +20,7 @@ from ..common_utils import (
     remove_dir_contents,
 )
 from ..common_utils import logging_config
-from ..classes import Macsecurityrule
+from ..classes.rule_library import RuleLibrary
 from ..generate import (
     generate_baseline,
 )
@@ -77,20 +77,23 @@ def build_all_baselines(args: argparse.Namespace) -> None:
         "800-53r5_privacy",
     }
 
-    all_rules: list[Macsecurityrule] = Macsecurityrule.collect_platform_rules(
-        args.os_name, args.os_version, args.tailor, parent_values="Default"
-    )
-
-    all_tags, benchmark_map = collect_tags_and_benchmarks(all_rules)
+    library = RuleLibrary.from_rules_dir()
+    all_tags, benchmark_map = collect_tags_and_benchmarks(list(library))
 
     all_tags[:] = [x for x in all_tags if x not in excluded_tags]
+
+    # cache rules per (platform, version) so generate_baseline doesn't re-collect on every call
+    platform_rules = {
+        platform: list(library.by_platform(platform).by_os(os_version=float(args.os_version)))
+        for platform in mscp_data["versions"]["platforms"]
+    }
 
     # process every discovered benchmark and generate a baseline file
     for keyword, platforms in benchmark_map.items():
         args.keyword = keyword
         for platform in platforms:
             args.os_name = platform.lower()
-            generate_baseline(args, admin=True)
+            generate_baseline(args, admin=True, preloaded_rules=platform_rules.get(args.os_name, []))
 
     # process every discovered tag and generate a baseline file for every supported platform
     for platform in mscp_data["versions"]["platforms"]:
@@ -98,4 +101,4 @@ def build_all_baselines(args: argparse.Namespace) -> None:
 
         for tag in all_tags:
             args.keyword = tag
-            generate_baseline(args, admin=True)
+            generate_baseline(args, admin=True, preloaded_rules=platform_rules[platform])
