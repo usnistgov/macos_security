@@ -61,7 +61,6 @@ profile:
       - os_guest_folder_removed
       - os_handoff_disable
       - os_home_folders_default
-      - os_home_folders_secure
       - os_httpd_disable
       - os_icloud_storage_prompt_disable
       - os_install_log_retention_configure
