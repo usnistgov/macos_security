@@ -1,0 +1,27 @@
+---
+title: 'iOS 26.0: Security Configuration - nlmapgov_base'
+description: This guide describes the actions to take when securing a iOS 26.0 system against the nlmapgov_base security benchmark.
+authors:
+  - name: Bob Gendler
+    organization: National Institute of Standards and Technology
+  - name: Dan Brodjieski
+    organization: National Aeronautics and Space Administration
+  - name: Allen Golbig
+    organization: Jamf
+  - name: Jordy Witteman
+    organization: Root3
+parent_values: nlmapgov_base
+platform:
+  os: iOS
+  version: 26.0
+profile:
+  - section: Operating System
+    rules:
+      - os_background_security_improvement_install_enable
+      - os_force_date_and_time_enable
+      - os_software_update_download_enforce
+      - os_software_update_install_enforce
+      - os_supervised_mdm_require
+  - section: Password Policy
+    rules:
+      - pwpolicy_force_pin_enable
