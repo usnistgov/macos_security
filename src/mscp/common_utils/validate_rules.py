@@ -12,6 +12,7 @@ makes sure ``--rules_dir`` points at a properly organized tree.
 
 # Standard python modules
 import argparse
+import sys
 from pathlib import Path
 
 from jsonschema import Draft202012Validator
@@ -106,9 +107,11 @@ def validate_yaml_file(args: argparse.Namespace) -> None:
                 print(f"✅ VALID:   {yaml}")
                 logger.info(f"✅ VALID:   {yaml}")
 
-    if not error_found:
-        print(f"✅ All YAML files passed validation.")
-        logger.success(f"✅ All YAML files passed validation.")
+    if error_found:
+        sys.exit(1)
+
+    print(f"✅ All YAML files passed validation.")
+    logger.success(f"✅ All YAML files passed validation.")
 
 
 def validate_rule_folder_structure(path_str: str) -> Path:

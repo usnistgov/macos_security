@@ -14,9 +14,14 @@ from collections import defaultdict
 from pathlib import Path
 from typing import Any
 
+from ..common_utils import conditional_inject_spinner
+from yaspin.core import Yaspin
+from yaspin.spinners import Spinners
+
 # Local python modules
 from ..classes import Author, Baseline, Macsecurityrule
 from ..classes.legacy_baseline import LegacyBaseline
+from ..classes.rule_library import RuleLibrary
 from ..common_utils import (
     config,
     logger,
@@ -238,7 +243,13 @@ def migrate_legacy_baseline(args: argparse.Namespace) -> None:
 
 
 @logger.catch
-def generate_baseline(args: argparse.Namespace, admin=False) -> None:
+@conditional_inject_spinner()
+def generate_baseline(
+    sp: Yaspin,
+    args: argparse.Namespace,
+    admin=False,
+    preloaded_rules: list[Macsecurityrule] | None = None,
+) -> None:
     """Generate a YAML baseline file for the specified OS and keyword.
 
     Collects all rules matching ``args.keyword`` (tag or benchmark name),
@@ -252,8 +263,14 @@ def generate_baseline(args: argparse.Namespace, admin=False) -> None:
         admin (bool): When ``True`` the output is written to the library's
             default baseline directory instead of the custom directory.
             Defaults to ``False``.
+        preloaded_rules: Pre-collected rules for ``args.os_name``. When
+            provided, skips the ``collect_platform_rules`` call. Useful
+            for bulk generation where the same platform rules are reused
+            across many calls.
     """
+    sp.spinner = Spinners.dots
     if getattr(args, "migrate", None):
+        sp.text("Migrating baseline from 1.0")
         migrate_legacy_baseline(args)
         return
 
@@ -306,15 +323,24 @@ def generate_baseline(args: argparse.Namespace, admin=False) -> None:
     if not build_path.exists():
         make_dir(build_path)
 
-    all_rules: list[Macsecurityrule] = Macsecurityrule.collect_all_rules(
-        args.os_name, args.os_version, args.tailor, parent_values="Default"
-    )
+    if args.list_tags:
+        sp.text = "Loading Rules from MSCP Library"
+        all_library_rules = list(RuleLibrary.from_rules_dir())
+        all_tags, benchmark_map = collect_tags_and_benchmarks(all_library_rules)
+        print_keyword_summary(all_tags, benchmark_map)
+        sp.ok("✔")
+
+    if preloaded_rules is not None:
+        all_rules: list[Macsecurityrule] = preloaded_rules
+    else:
+        sp.text = f"Loading rules for {args.os_name} {args.os_version}"
+        all_rules = Macsecurityrule.collect_platform_rules(
+            args.os_name, args.os_version, args.tailor, parent_values="Default"
+        )
+        sp.ok("✔")
     all_tags, benchmark_map = collect_tags_and_benchmarks(all_rules)
 
     established_benchmarks: tuple[str, ...] = collect_established_benchmarks(all_rules)
-
-    if args.list_tags:
-        print_keyword_summary(all_tags, benchmark_map)
 
     if args.controls:
         included_controls: list[str] = sorted(

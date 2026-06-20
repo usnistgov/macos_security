@@ -94,7 +94,7 @@ def generate_scap(sp: Yaspin, args: argparse.Namespace) -> None:
     sp.spinner = Spinners.dots
     sp.text = "Collecting rule files"
     output_file: Path = Path(config["output_dir"])
-    all_rules: list[Macsecurityrule] = Macsecurityrule.collect_all_rules(
+    all_rules: list[Macsecurityrule] = Macsecurityrule.collect_platform_rules(
         args.os_name, args.os_version
     )
     all_tags, benchmark_map = collect_tags_and_benchmarks(all_rules)

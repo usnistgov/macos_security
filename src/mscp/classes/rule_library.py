@@ -58,7 +58,7 @@ class RuleLibrary:
 
         Reads the platform/version matrix from the bundled
         ``mscp-data.yaml`` (via ``mscp_data``) and calls
-        ``Macsecurityrule.collect_all_rules`` once per combination. Use
+        ``Macsecurityrule.collect_platform_rules`` once per combination. Use
         ``by_platform`` or ``by_os`` to narrow the result to a specific
         platform.
 
@@ -76,7 +76,7 @@ class RuleLibrary:
                 if os_version is None:
                     continue
                 all_rules.extend(
-                    Macsecurityrule.collect_all_rules(
+                    Macsecurityrule.collect_platform_rules(
                         os_type=os_type,
                         os_version=os_version,
                     )

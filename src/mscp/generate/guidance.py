@@ -403,20 +403,21 @@ def generate_guidance(sp: Yaspin, args: argparse.Namespace) -> None:
         time.sleep(1)
         generate_manifest(build_path, baseline_name, baseline)
 
-    logger.info("Generating asciidoctor, PDF, and HTML documents")
-    generate_documents(
-        sp,
-        adoc_output_file,
-        baseline,
-        b64logo,
-        pdf_theme,
-        html_css,
-        logo_path,
-        baseline.platform["os"],
-        current_version_data,
-        show_all_tags,
-        language=args.language,
-    )
+    if not args.no_docs:
+        logger.info("Generating asciidoctor, PDF, and HTML documents")
+        generate_documents(
+            sp,
+            adoc_output_file,
+            baseline,
+            b64logo,
+            pdf_theme,
+            html_css,
+            logo_path,
+            baseline.platform["os"],
+            current_version_data,
+            show_all_tags,
+            language=args.language,
+        )
     try:
         display_path = Path(build_path).relative_to(Path.cwd())
     except ValueError:

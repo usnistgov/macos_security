@@ -290,9 +290,9 @@ class LegacyBaseline(BaseModel):
         )
 
         # 3. Load the current rule library for the target platform/version.
-        #    collect_all_rules assigns each rule its current section, so the
+        #    collect_platform_rules assigns each rule its current section, so the
         #    resulting baseline will reflect today's section structure.
-        all_current_rules = Macsecurityrule.collect_all_rules(
+        all_current_rules = Macsecurityrule.collect_platform_rules(
             os_type=os_type,
             os_version=int(os_version),
             parent_values=self.parent_values or "default",

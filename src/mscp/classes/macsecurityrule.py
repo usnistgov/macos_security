@@ -77,7 +77,7 @@ class Macsecurityrule(BaseModelWithAccessors):
     The top-level domain object for mSCP. Combines rule metadata (title,
     discussion, references), enforcement information (`check`, `fix`,
     `mechanism`), and platform / version targeting. Instances are normally
-    constructed via `load_rules` or `collect_all_rules` rather than
+    constructed via `load_rules` or `collect_platform_rules` rather than
     directly.
 
     Attributes:
@@ -492,22 +492,23 @@ class Macsecurityrule(BaseModelWithAccessors):
         return rules
 
     @classmethod
-    def collect_all_rules(
+    def collect_platform_rules(
         cls,
         os_type: str,
         os_version: int,
         tailoring: bool = False,
         parent_values: str = "default",
     ) -> list["Macsecurityrule"]:
-        """Load every rule under ``config["rules_dir"]`` for an OS/version.
+        """Load every rule under ``config["rules_dir"]`` for a specific OS type and version.
 
         Walks each subfolder of the rules directory (skipping
         ``sysprefs``), maps each folder name through `Sectionmap` to the
         matching section file, and delegates per-section loading to
-        `load_rules`.
+        `load_rules`. Rules that do not declare support for the requested
+        ``os_type`` / ``os_version`` are skipped.
 
         Args:
-            os_type: Operating system family (e.g. ``"macOS"``).
+            os_type: Operating system family (e.g. ``"macos"``).
             os_version: Operating system version.
             tailoring: If true, skips customization overrides. Defaults to
                 ``False``.
@@ -515,7 +516,7 @@ class Macsecurityrule(BaseModelWithAccessors):
                 Defaults to ``"default"``.
 
         Returns:
-            All rules across all sections that match the given platform.
+            All rules across all sections that match the given platform and version.
         """
 
         logger.info("=== LOADING ALL RULES ===")

@@ -478,6 +478,14 @@ compliance script (e.g. disa_stig, cis.benchmark)
         action="store_true",
     )
 
+    guidance_parser.add_argument(
+        "--no-docs",
+        dest="no_docs",
+        default=False,
+        help="skip generating the asciidoctor, PDF, and HTML documents",
+        action="store_true",
+    )
+
     mapping_parser: argparse.ArgumentParser = subparsers.add_parser(
         "mapping",
         help="generate custom rules from compliance framework mappings",
