@@ -1,0 +1,46 @@
+---
+# Mirrors the CI in .github/workflows/lint.yaml and spellcheck.yml so the same
+# checks run locally before a commit lands.
+# Run `prek install` (or `pre-commit install`)
+# Update with `prek autoupdate` (or `pre-commit autoupdate`)
+#
+# CI is still the source of truth, these hooks reuse the same config files
+# (.github/linters/*, .github/cspell/cspell.json) so that local and CI results match.
+
+default_install_hook_types: [pre-commit]
+
+repos:
+  - repo: https://github.com/pycqa/flake8
+    rev: 7.3.0
+    hooks:
+      - id: flake8
+        args: ['--config', '.github/linters/tox.ini']
+        additional_dependencies: ['flake8-bugbear==25.11.29']
+        files: ^src/mscp/.*\.py$
+
+  - repo: https://github.com/adrienverge/yamllint
+    rev: v1.38.0
+    hooks:
+      - id: yamllint
+        args: ['--config-file', '.github/linters/.yamllint.yaml', '--strict']
+
+  - repo: https://github.com/DavidAnson/markdownlint-cli2
+    rev: v0.22.1
+    hooks:
+      - id: markdownlint-cli2
+        args: ['--config', '.github/linters/.markdownlint.yaml']
+
+  # Spelling: cspell, same config as the `spellcheck` CI job.
+  # Disabled for now (run with `--hook-stage manual`)
+  - repo: https://github.com/streetsidesoftware/cspell-cli
+    rev: v10.0.1
+    hooks:
+      - id: cspell
+        stages: [manual]
+        args:
+          [
+            '--no-progress',
+            '--no-summary',
+            '--config',
+            '.github/cspell/cspell.json',
+          ]
