@@ -110,8 +110,8 @@ def validate_yaml_file(args: argparse.Namespace) -> None:
     if error_found:
         sys.exit(1)
 
-    print(f"✅ All YAML files passed validation.")
-    logger.success(f"✅ All YAML files passed validation.")
+    print("✅ All YAML files passed validation.")
+    logger.success("✅ All YAML files passed validation.")
 
 
 def validate_rule_folder_structure(path_str: str) -> Path:

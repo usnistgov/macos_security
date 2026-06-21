@@ -37,6 +37,7 @@ from ..common_utils import (
 from ..generate.guidance_support import (
     generate_ddm,
     generate_documents,
+    generate_markdown_tree,
     generate_excel,
     generate_profiles,
     generate_script,
@@ -155,8 +156,9 @@ def generate_guidance(sp: Yaspin, args: argparse.Namespace) -> None:
         args (argparse.Namespace): Parsed CLI arguments. Expected attributes:
             ``baseline``, ``os_name``, ``language``, ``dark``, ``hash``,
             ``reference``, ``logo``, ``audit_name``, ``profiles``, ``ddm``,
-            ``script``, ``xlsx``, ``gary``, ``markdown``, ``manifest``,
-            ``all``, ``consolidated_profile``, ``granular_profiles``.
+            ``script``, ``xlsx``, ``gary``, ``markdown``, ``markdown_tree``,
+            ``manifest``, ``all``, ``consolidated_profile``,
+            ``granular_profiles``.
     """
     # Transparently migrate legacy (pre-2.0) baselines before deriving any
     # paths. Updating args.baseline here means all subsequent path derivations
@@ -329,6 +331,18 @@ def generate_guidance(sp: Yaspin, args: argparse.Namespace) -> None:
             language=args.language,
         )
 
+    if args.markdown_tree:
+        logger.info("Generating paginated Markdown tree")
+        sp.text = "Generating Markdown tree"
+        time.sleep(1)
+        generate_markdown_tree(
+            build_path,
+            baseline,
+            current_version_data,
+            show_all_tags,
+            language=args.language,
+        )
+
     if args.manifest:
         logger.info("Generating JSON manifest")
         sp.text = "Generating JSON manifest"
@@ -380,23 +394,36 @@ def generate_guidance(sp: Yaspin, args: argparse.Namespace) -> None:
         time.sleep(1)
         generate_excel(spreadsheet_output_file, baseline)
 
-        logger.info("Generating markdown documents")
-        sp.text = "Generating markdown"
-        time.sleep(1)
-        generate_documents(
-            sp,
-            md_output_file,
-            baseline,
-            b64logo,
-            pdf_theme,
-            html_css,
-            logo_path,
-            baseline.platform["os"],
-            current_version_data,
-            show_all_tags,
-            output_format="markdown",
-            language=args.language,
-        )
+        if not args.markdown:
+            logger.info("Generating markdown documents")
+            sp.text = "Generating markdown"
+            time.sleep(1)
+            generate_documents(
+                sp,
+                md_output_file,
+                baseline,
+                b64logo,
+                pdf_theme,
+                html_css,
+                logo_path,
+                baseline.platform["os"],
+                current_version_data,
+                show_all_tags,
+                output_format="markdown",
+                language=args.language,
+            )
+
+        if not args.markdown_tree:
+            logger.info("Generating paginated Markdown tree")
+            sp.text = "Generating Markdown tree"
+            time.sleep(1)
+            generate_markdown_tree(
+                build_path,
+                baseline,
+                current_version_data,
+                show_all_tags,
+                language=args.language,
+            )
 
         logger.info("Generating JSON manifest")
         sp.text = "Generating JSON manifest"
