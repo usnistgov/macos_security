@@ -70,7 +70,7 @@ head: [
 				{
 					label: 'mSCP 2.0',
 					collapsed: false,
-					badge: { text: 'Beta', variant: 'success' },
+					badge: { text: 'New', variant: 'success' },
 					items: [
 						{ label: 'Overview', link: '/mscp-2/overview/' },
 					],
@@ -164,8 +164,8 @@ head: [
 				{
 					label: 'mSCP 2.0 API',
 					collapsed: true,
-					badge: { text: 'Beta', variant: 'success' },
-					autogenerate: { directory: 'api' },
+					badge: { text: 'New', variant: 'success' },
+					items: [{ autogenerate: { directory: 'api' } }],
 				},
 			],
 			editLink: {

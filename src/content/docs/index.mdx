@@ -26,10 +26,10 @@ export const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BAS
 
 <div class="mscp2-promo">
   <div class="mscp2-promo-eyebrow">
-    Coming Soon <span class="mscp2-promo-badge">Beta</span>
+    mSCP 2.0 Has Arrived <span class="mscp2-promo-badge">New</span>
   </div>
   <div class="mscp2-promo-title">mSCP 2.0 — The Next Generation</div>
-  <p class="mscp2-promo-desc">mSCP just got a whole lot better. One unified branch covers macOS, iOS/iPadOS, and visionOS. No more version juggling. Everything you need, in one place. Ready to test now.</p>
+  <p class="mscp2-promo-desc">mSCP just got a whole lot better. One unified branch covers macOS, iOS/iPadOS, and visionOS. No more version juggling. Everything you need, in one place. Now officially available on the main branch.</p>
   <ul class="mscp2-promo-features">
     <li>Unified branch for all Apple OS versions</li>
     <li>Container support (no more local dependencies)</li>
@@ -38,7 +38,7 @@ export const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BAS
   </ul>
   <div class="mscp2-promo-actions">
     <a href={`${base}mscp-2/overview/`} class="mscp2-promo-btn">What's New →</a>
-    <a href={`${base}welcome/getting-started/`} class="mscp2-promo-link">Try the Beta &rarr;</a>
+    <a href={`${base}welcome/getting-started/`} class="mscp2-promo-link">Get Started &rarr;</a>
   </div>
 </div>
 
@@ -55,10 +55,10 @@ export const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BAS
   var GITHUB_OWNER = 'usnistgov';
   var GITHUB_REPO = 'macos_security';
   var BRANCHES = [
-    { name: 'dev_2.0', display: 'mSCP 2.0', macOS: 'Unified Branch', current: false, beta: true },
-    { name: 'tahoe', display: 'Tahoe', macOS: 'macOS 26', current: true },
-    { name: 'sequoia', display: 'Sequoia', macOS: 'macOS 15', current: false },
-    { name: 'sonoma', display: 'Sonoma', macOS: 'macOS 14', current: false }
+    { name: 'main', display: 'Main', macOS: 'Unified Branch', current: true, version: '2.0' },
+    { name: 'tahoe', display: 'Tahoe', macOS: 'macOS 26', current: true, version: '1.0' },
+    { name: 'sequoia', display: 'Sequoia', macOS: 'macOS 15', current: false, version: '1.0' },
+    { name: 'sonoma', display: 'Sonoma', macOS: 'macOS 14', current: false, version: '1.0' }
   ];
 
   function formatDate(dateString) {
@@ -80,8 +80,10 @@ export const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BAS
 
   function renderBranches(branchData) {
     var items = branchData.map(function(b) {
-      var badge = b.current ? '<span style="background:#316431;color:#fff;font-size:0.65em;font-weight:600;padding:0.1em 0.4em;border-radius:3px;margin-left:0.4em;">Current</span>' :
-                  b.beta ? '<span style="background:#f5a623;color:#111;font-size:0.65em;font-weight:600;padding:0.1em 0.4em;border-radius:3px;margin-left:0.4em;">Beta</span>' : '';
+      var color = b.version === '2.0' ? '#316431' : '#2f6fb0';
+      var versionBadge = b.version ? '<span style="background:' + color + ';color:#fff;font-size:0.75em;font-weight:700;padding:0.15em 0.5em;border-radius:4px;margin-left:0.45em;letter-spacing:0.02em;">' + b.version + '</span>' : '';
+      var currentBadge = b.current ? '<span style="background:' + color + ';color:#fff;font-size:0.75em;font-weight:700;padding:0.15em 0.5em;border-radius:4px;margin-left:0.45em;letter-spacing:0.02em;">Current</span>' : '';
+      var badge = currentBadge + versionBadge;
       var date = b.info ? formatDate(b.info.lastCommit) : '...';
       return '<span class="branch-group"><a href="https://github.com/' + GITHUB_OWNER + '/' + GITHUB_REPO + '/tree/' + b.name + '" target="_blank" rel="noopener" class="branch-card"><span style="font-weight:600;color:var(--sl-color-white);">' + b.display + '</span>' + badge + '<span class="sep">·</span><span class="meta">' + b.macOS + '</span><span class="sep">·</span><span class="meta">' + date + '</span></a><a href="https://github.com/' + GITHUB_OWNER + '/' + GITHUB_REPO + '/commits/' + b.name + '" target="_blank" rel="noopener" class="changelog-btn" title="View changelog"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></a></span>';
     }).join('');
