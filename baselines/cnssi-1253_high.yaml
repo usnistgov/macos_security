@@ -130,8 +130,6 @@ profile:
       - os_policy_banner_ssh_enforce
       - os_power_nap_disable
       - os_privacy_setup_prompt_disable
-      - os_rapid_security_response_allow
-      - os_rapid_security_response_removal_disable
       - os_recovery_lock_enable
       - os_removable_media_disable
       - os_root_disable

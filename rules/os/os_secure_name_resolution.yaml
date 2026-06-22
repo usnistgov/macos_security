@@ -26,6 +26,8 @@ references:
       - N/A
     controls v8:
       - 4.9
+  hicp:
+    - 6.L.C
 macOS:
   - '26.0'
 tags:
@@ -40,5 +42,6 @@ tags:
   - cnssi-1253_low
   - cnssi-1253_high
   - cnssi-1253_moderate
+  - hicp_lp
 mobileconfig: false
-mobileconfig_info:
+mobileconfig_info: null

@@ -69,6 +69,8 @@ references:
   cmmc:
     - IA.L2-3.5.3
     - IA.L2-3.5.4
+  hicp:
+    - 3.L.C
 macOS:
   - '26.0'
 tags:
@@ -85,15 +87,16 @@ tags:
   - cmmc_lvl2
   - stig
   - cnssi-1253_moderate
+  - hicp_lp
 severity: medium
 mobileconfig: false
-mobileconfig_info:
+mobileconfig_info: null
 ddm_info:
   declarationtype: com.apple.configuration.services.configuration-files
   service: com.apple.pam
   config_file: sudo
   configuration_key: file
-  configuration_value: |
+  configuration_value: |-
     auth        sufficient    pam_smartcard.so
     auth        required      pam_opendirectory.so
     auth        required      pam_deny.so

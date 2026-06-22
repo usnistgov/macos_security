@@ -44,6 +44,12 @@ references:
     - AC.L1-3.1.20
     - CM.L2-3.4.6
     - CM.L2-3.4.7
+  bio:
+    - 8.12
+  hicp:
+    - 2.L.A
+    - 3.L.C
+    - 4.L.A
 macOS:
   - '26.0'
 tags:
@@ -62,8 +68,14 @@ tags:
   - cis_lvl2
   - cmmc_lvl1
   - cmmc_lvl2
+  - nlmapgov_plus
+  - hicp_lp
 severity: medium
 mobileconfig: true
 mobileconfig_info:
   com.apple.applicationaccess:
     allowExternalIntelligenceIntegrationsSignIn: false
+ddm_info:
+  declarationtype: com.apple.configuration.external-intelligence.settings
+  ddm_key: AllowSignIn
+  ddm_value: false

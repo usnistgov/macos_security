@@ -42,6 +42,8 @@ references:
       - 8.4
   cmmc:
     - AU.L2-3.3.7
+  bio:
+    - 8.17
 macOS:
   - '26.0'
 odv:
@@ -50,6 +52,8 @@ odv:
   cis_lvl1: time.apple.com
   cis_lvl2: time.apple.com
   stig: time.nist.gov
+  nlmapgov_base: time.apple.com
+  nlmapgov_plus: time.apple.com
 tags:
   - 800-171
   - 800-53r5_low
@@ -65,6 +69,8 @@ tags:
   - cmmc_lvl2
   - stig
   - cnssi-1253_moderate
+  - nlmapgov_base
+  - nlmapgov_plus
 severity: medium
 mobileconfig: true
 mobileconfig_info:

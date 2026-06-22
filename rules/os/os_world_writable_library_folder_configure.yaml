@@ -5,7 +5,7 @@ discussion: |
 
   NOTE: Some vendors are known to create world-writable folders to the System Library folder. You may need to add more exclusions to this check and fix to match your environment.
 check: |
-  /usr/bin/find /Library -type d -perm -002 ! -perm -1000 ! -xattrname com.apple.rootless 2>/dev/null | /usr/bin/wc -l | /usr/bin/xargs
+  /usr/bin/find /Library -type d -perm -002 ! -perm -1000 ! -xattrname com.apple.rootless 2>/dev/null | /usr/bin/grep -vE "/Library/AppStore" | /usr/bin/wc -l | /usr/bin/xargs
 result:
   integer: 0
 fix: |

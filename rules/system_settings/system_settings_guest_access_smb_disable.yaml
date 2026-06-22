@@ -5,9 +5,9 @@ discussion: |
 
   Turning off guest access prevents anonymous users from accessing files shared via SMB.
 check: |
-  /usr/bin/defaults read /Library/Preferences/SystemConfiguration/com.apple.smb.server AllowGuestAccess
+  /usr/sbin/sysadminctl -smbGuestAccess status 2>&1 | /usr/bin/grep -c "SMB guest access disabled"
 result:
-  boolean: 0
+  integer: 1
 fix: |
   [source,bash]
   ----

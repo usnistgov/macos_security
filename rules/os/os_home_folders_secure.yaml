@@ -43,6 +43,11 @@ references:
     - AC.L1-3.1.2
     - AC.L2-3.1.5
     - AC.L2-3.1.6
+  bio:
+    - 8.27
+  hicp:
+    - 2.L.A
+    - 3.L.C
 macOS:
   - '26.0'
 tags:
@@ -60,6 +65,8 @@ tags:
   - cmmc_lvl1
   - stig
   - cnssi-1253_moderate
+  - nlmapgov_plus
+  - hicp_lp
 severity: medium
 mobileconfig: false
-mobileconfig_info:
+mobileconfig_info: null

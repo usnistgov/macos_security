@@ -42,3 +42,8 @@ mobileconfig: true
 mobileconfig_info:
   com.apple.SoftwareUpdate:
     AutomaticDownload: true
+ddm_info:
+  declarationtype: com.apple.configuration.softwareupdate.settings
+  ddm_key: AutomaticActions
+  ddm_value:
+    Download: AlwaysOn
