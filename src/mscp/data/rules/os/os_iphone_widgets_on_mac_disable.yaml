@@ -1,0 +1,58 @@
+id: os_iphone_widgets_on_mac_disable
+title: Disable Use of iPhone Widgets on Mac
+discussion: |
+  iPhone widgets on Mac _MUST_ be disabled.
+references:
+  nist:
+    cce:
+      ios_26:
+        - CCE-95487-5
+      ios_18:
+        - CCE-94446-2
+      ios_17:
+        - CCE-93466-1
+    800-53r5:
+      - CM-7
+      - CM-7(1)
+  disa:
+    cci:
+      - CCI-000366
+    disa_stig:
+      ios_26:
+        - AIOS-26-010850
+      ios_18:
+        - AIOS-18-010850
+      ios_17:
+        - AIOS-17-010850
+    sfr:
+      - 'FMT_SMF_EXT.1.1 #8b'
+    cmmc:
+      - CM.L2-3.4.6
+      - CM.L2-3.4.7
+platforms:
+  iOS:
+    '26.0':
+      supervised: true
+      benchmarks:
+        - name: ios_stig
+          severity: low
+    '18.0':
+      supervised: true
+      benchmarks:
+        - name: ios_stig
+          severity: low
+    '17.0':
+      supervised: true
+      benchmarks:
+        - name: ios_stig
+    introduced: '17.0'
+tags:
+  - cmmc_lvl2
+  - cmmc_lvl3
+  - cnssi-1253_moderate
+  - cnssi-1253_low
+  - cnssi-1253_high
+mobileconfig_info:
+  - PayloadType: com.apple.applicationaccess
+    PayloadContent:
+      - allowiPhoneWidgetsOnMac: false

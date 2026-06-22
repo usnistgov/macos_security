@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+  }
+  th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+  }
+  th {
+    background-color: #f2f2f2;
+  }
+  tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+  tr:hover {
+    background-color: #f1f1f1;
+  }
+  .data_values table {
+    width: 25%;
+  }
+  .dataframe {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    overflow: hidden;
+  }
+  .dataframe th, .dataframe td {
+    padding: 10px;
+  }
+  .dataframe th {
+    background-color: #4CAF50;
+    color: white;
+  }
+</style>
+<html>
+<head>
+  <title>mSCP Compliance Scan Results</title>
+</head>
+<body>
+  <img src="data:image/png;base64,{{ encoded_image }}" alt="Compliance Pie Chart" />
+  <table class="data_values">
+    <thead>
+      <tr>
+        <th>Passed</th>
+        <th>Failed</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>{{ passed_value }}</td>
+        <td>{{ failed_value }}</td>
+      </tr>
+    </tbody>
+  </table>
+  </td>
+  {{ dataframe }}
+</body>
+</html>

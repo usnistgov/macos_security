@@ -1,0 +1,85 @@
+---
+name: Bug Report
+description: Report a problem with the mSCP build tooling, scripts, or generated output
+title: '[Bug]: '
+labels: ["bug", "triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        This template is for problems with the **mSCP tooling** itself — generating baselines, guidance, profiles, or compliance scripts.
+
+        If your issue is about the content of a specific rule (a check or fix script that doesn't work, an incorrect control mapping, etc.), use the **Rule Content Issue** template instead.
+
+        Before opening a new issue, please search the existing issues to make sure it isn't a duplicate.
+  - type: checkboxes
+    attributes:
+      label: Is there an existing issue for this?
+      description: Please search to see if an issue already exists for the bug you encountered.
+      options:
+        - label: I have searched the existing issues
+          required: true
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      description: Which part of the project does this affect?
+      options:
+        - mSCP CLI
+        - Baselines
+        - Compliance scripts
+        - mSCP API
+        - Other
+    validations:
+      required: true
+  - type: textarea
+    id: summary
+    attributes:
+      label: Summary
+      description: Summarize the bug encountered concisely
+      placeholder: What happened?
+    validations:
+      required: true
+  - type: textarea
+    id: steps-to-reproduce
+    attributes:
+      label: Steps to reproduce
+      description: Include the exact command(s) you ran
+      placeholder: |
+        1. Ran `...`
+        2. ...
+    validations:
+      required: true
+  - type: input
+    id: mscp-version
+    attributes:
+      label: mSCP version, commit, or branch
+      placeholder: e.g. dev_2.0 @ 09e33b5c
+  - type: input
+    id: python-version
+    attributes:
+      label: Python version
+      placeholder: e.g. 3.13.2
+  - type: textarea
+    id: current-behavior
+    attributes:
+      label: What actually happened?
+    validations:
+      required: true
+  - type: textarea
+    id: expected-behavior
+    attributes:
+      label: What did you expect to happen?
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Relevant logs and/or screenshots
+      description: Console output, tracebacks, or screenshots.
+      render: shell
+  - type: textarea
+    id: possible-fixes
+    attributes:
+      label: Possible fixes
+      description: If you can, link to the line of code that might be responsible for the problem.

@@ -1,0 +1,131 @@
+---
+mscp:
+  version: '2.0'
+  build: 29
+  build_date: '2026-06-11'
+  release_date: '2026-12-12'
+ddm:
+  services:
+    com.apple.bash: /etc/
+    com.apple.pam: /etc/pam.d/
+    com.apple.sshd: /etc/ssh/
+    com.apple.sudo: /etc/
+    com.apple.zsh: /etc/
+    com.apple.cups: /etc/cups/
+authors:
+  - name: Bob Gendler
+    organization: National Institute of Standards and Technology
+    benchmarks:
+      - mscp
+  - name: Dan Brodjieski
+    organization: National Aeronautics and Space Administration
+    benchmarks:
+      - mscp
+  - name: Allen Golbig
+    organization: Jamf
+    benchmarks:
+      - mscp
+  - name: Edward Byrd
+    organization: Center for Internet Security
+    benchmarks:
+      - cis_lvl1
+      - cis_lvl2
+      - cisv8
+  - name: John Mahlman
+    organization: Leidos
+    benchmarks:
+      - cmmc_lvl1
+      - cmmc_lvl2
+  - name: Rob Lamb
+    organization: Los Alamos National Laboratory
+    benchmarks:
+      - cnssi-1253_low
+      - cnssi-1253_moderate
+      - cnssi-1253_high
+  - name: Ekkehard Koch
+    organization: ''
+    benchmarks:
+      - cnssi-1253_low
+      - cnssi-1253_moderate
+      - cnssi-1253_high
+  - name: Aaron Kegerreis
+    organization: Defense Information Systems Agency
+    benchmarks:
+      - disa_stig
+  - name: Marco Piñeyro
+    organization: Department of State
+    benchmarks:
+      - ios_stig
+      - ios_byoad
+  - name: Henry Stamerjohann
+    organization: Declarative IT GmbH
+    benchmarks:
+      - indigo_base
+      - indigo_high
+  - name: Jordy Witteman
+    organization: Root3
+    benchmarks:
+      - nlmapgov_base
+      - nlmapgov_plus
+  - name: Elias G Kikano
+    organization: Emory University School of Medicine
+    benchmarks:
+      - hicp_lp
+  - name: Janessa Milsap
+    organization: Emory University School of Medicine
+    benchmarks:
+      - hicp_lp
+  - name: Ryan Ritchie
+    organization: Emory University School of Medicine
+    benchmarks:
+      - hicp_lp
+benchmarks:
+  - keyword: cis_lvl1
+    description: Center for Internet Security (CIS) Benchmark for the Level 1 Profile
+  - keyword: cis_lvl1_byod
+    description: Center for Internet Security (CIS) Bring Your Own Device (BYOD) Benchmark for the Level 1 Profile
+  - keyword: cis_lvl1_enterprise
+    description: Center for Internet Security (CIS) Enterprise Benchmark for the Level 1 Profile
+  - keyword: cis_lvl2
+    description: Center for Internet Security (CIS) Benchmark for the Level 2 Profile
+  - keyword: cis_lvl2_byod
+    description: Center for Internet Security (CIS) Bring Your Own Device (BYOD) Benchmark for the Level 2 Profile
+  - keyword: cis_lvl2_enterprise
+    description: Center for Internet Security (CIS) Enterprise Benchmark for the Level 2 Profile
+  - keyword: disa_stig
+    description: Defense Information Systems Agency (DISA) Security Technical Implementation Guide (STIG)
+  - keyword: indigo_base
+    description: Bundesamt für Sicherheit in der Informationstechnik (BSI) iOS Native Devices in Government Operations (iNDIGO) Base Settings
+  - keyword: indigo_high
+    description: Bundesamt für Sicherheit in der Informationstechnik (BSI) iOS Native Devices in Government Operations (iNDIGO) High Settings
+  - keyword: ios_stig
+    description: Defense Information Systems Agency (DISA) Security Technical Implementation Guide (STIG)
+  - keyword: ios_stig_byoad
+    description: Defense Information Systems Agency (DISA) Security Technical Implementation Guide (STIG) Bring Your Own Approved Device (BYOAD)
+  - keyword: nlmapgov_base
+    description: Nederlandse Maatregelenset Apple Platformen Overheid (NLMAPGOV) Base Settings
+  - keyword: nlmapgov_plus
+    description: Nederlandse Maatregelenset Apple Platformen Overheid (NLMAPGOV) Plus Settings
+versions:
+  platforms:
+    macos:
+      - os_version: 26.0
+        os_name: tahoe
+        cpe: o:apple:macos:26.0
+      - os_version: 15.0
+        os_name: sequoia
+        cpe: o:apple:macos:15.0
+      - os_version: 14.0
+        os_name: sonoma
+        cpe: o:apple:macos:14.0
+    ios:
+      - os_version: 26.0
+        os_name: ios_26
+        cpe: o:apple:ios:26.0
+      - os_version: 18.0
+        os_name: ios_18
+        cpe: o:apple:ios:18.0
+    visionos:
+      - os_version: 26.0
+        os_name: visionos_26
+        cpe: o:apple:visionos:26.0

@@ -1,0 +1,9 @@
+---
+blank_issues_enabled: false
+contact_links:
+  - name: Contributor Guidance
+    url: https://github.com/usnistgov/macos_security/blob/main/CONTRIBUTING.adoc
+    about: Read how contributions and feedback are handled before opening an issue.
+  - name: Project website
+    url: https://pages.nist.gov/macos_security/
+    about: General information about the macOS Security Compliance Project.

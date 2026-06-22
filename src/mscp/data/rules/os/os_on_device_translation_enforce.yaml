@@ -1,0 +1,96 @@
+id: os_on_device_translation_enforce
+title: Ensure On Device Translation is Enforced
+discussion: |
+  The device _MUST_ be configured for on device translation.
+
+  By enforcing on device translation this will mitigate the risk of unwanted data being sent to Apple.
+references:
+  nist:
+    cce:
+      ios_26:
+        - CCE-95673-0
+      ios_18:
+        - CCE-94453-8
+      ios_17:
+        - CCE-93437-2
+    800-53r5:
+      - SI-11
+      - AC-20
+      - SC-7(10)
+  disa:
+    cci:
+      - CCI-000366
+      - CCI-000097
+      - CCI-000370
+    disa_stig:
+      ios_26:
+        - AIOS-26-014500
+      ios_18:
+        - AIOS-18-014500
+      ios_17:
+        - AIOS-17-014500
+    sfr:
+      - 'FMT_SMF_EXT.1.1 #47'
+    cmmc:
+      - AC.L1-B.1.III
+      - AC.L2-3.1.20
+  bsi:
+    indigo:
+      ios_26:
+        - ANNEX K
+      ios_18:
+        - ANNEX K
+      ios_17:
+        - ANNEX K
+  bzk:
+    bio:
+      - 8.12
+platforms:
+  iOS:
+    '26.0':
+      supervised: false
+      benchmarks:
+        - name: ios_stig
+          severity: medium
+        - name: indigo_base
+          severity: medium
+        - name: indigo_high
+          severity: medium
+        - name: nlmapgov_plus
+    '18.0':
+      supervised: false
+      benchmarks:
+        - name: ios_stig
+          severity: medium
+        - name: indigo_base
+          severity: medium
+        - name: indigo_high
+          severity: medium
+    '17.0':
+      supervised: false
+      benchmarks:
+        - name: ios_stig
+          severity: medium
+        - name: indigo_base
+          severity: medium
+        - name: indigo_high
+          severity: medium
+    introduced: '15.0'
+tags:
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_high
+  - cmmc_lvl1
+  - cmmc_lvl2
+  - cmmc_lvl3
+  - cnssi-1253_moderate
+  - cnssi-1253_low
+  - cnssi-1253_high
+mobileconfig_info:
+  - PayloadType: com.apple.applicationaccess
+    PayloadContent:
+      - forceOnDeviceOnlyTranslation: true
+ddm_info:
+  declarationtype: com.apple.configuration.intelligence.settings
+  ddm_key: ForceOnDeviceOnlyTranslation
+  ddm_value: false

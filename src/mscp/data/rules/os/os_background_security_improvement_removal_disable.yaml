@@ -1,0 +1,23 @@
+id: os_background_security_improvement_removal_disable
+title: Disable rollback of Background Security Improvements using DDM.
+discussion: |
+  The ability for the user to roll back Background Security Improvements _MUST_ be disabled.
+references:
+  nist:
+    cce:
+      ios_26:
+        - CCE-96729-9
+  bzk:
+    bio:
+      - 8.08
+platforms:
+  iOS:
+    '26.0':
+      supervised: true
+      benchmarks:
+        - name: nlmapgov_plus
+ddm_info:
+  declarationtype: com.apple.configuration.softwareupdate.settings
+  ddm_key: RapidSecurityResponse
+  ddm_value:
+    EnableRollback: false

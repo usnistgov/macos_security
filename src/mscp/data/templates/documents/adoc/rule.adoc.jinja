@@ -1,0 +1,180 @@
+{% set check_tags = ["permanent", "inherent", "n_a", "not_applicable"] %}
+=== {{ rule.title }}
+
+{% if rule.tags is defined or rule.tags is not none  and "supplemental" in rule.tags %}
+{{ rule.discussion | include_replace }}
+{% else %}
+{{ rule.discussion }}
+{% endif %}
+
+{% if not "supplemental" in rule.tags %}
+
+{% if rule.mechanism == "manual" %}
+:grey_exclamation: {% trans %} This rule is marked as manual and may not be able to be automated. It is also excluded in the compliance scan and will not report any results. {% endtrans %}
+{% endif -%}
+
+{% if not rule.tags | select('in', check_tags) | list %}
+{% if rule.tags is not defined or rule.tags is none or "supplemental" not in rule.tags %}
+{% if rule.os_type.lower() in NIX_OS %}
+{% trans %}To check the state of the system, run the following command(s){% endtrans %}:
+[source,zsh,options="nowrap"]
+----
+{{ rule.enforcement_info.check.shell | replace("\\\\", "\\") | replace('\\"', '"') | trim | safe }}
+----
+{% else %}
+{{ rule.enforcement_info.check.additional_info if rule.enforcement_info.check.additional_info is not none }}
+{% endif %}
+
+{% if rule.os_type.lower() in NIX_OS %}
+{% trans %}If the result is not{% endtrans %} _{{ rule.result_value }}_, {% trans %}this is a finding{% endtrans %}.
+{% endif %}
+
+====
+**{% trans %}Remediation Description{% endtrans %}**
+
+{% if rule.enforcement_info.fix is not none %}
+{% trans %}Perform the following to configure the system to meet the requirements{% endtrans %}:
+{% endif %}
+
+{% if rule.mobileconfig_info is none and rule.enforcement_info.fix is not none or rule.enforcement_info.fix.shell %}
+{% trans %}Run the following command(s){% endtrans %}:
+
+[source,zsh,options="nowrap"]
+----
+{{ rule.enforcement_info.fix.shell if rule.enforcement_info.fix.shell is not none else rule.enforcement_info.fix.shell }}
+----
+
+{% elif rule.mobileconfig_info is not none and rule.enforcement_info.fix.shell %}
+{% if rule.enforcement_info.fix.shell %}
+[source,zsh,options="nowrap"]
+----
+{{ rule.enforcement_info.fix.shell -}}
+----
+{% endif %}
+
+{% if rule.mobileconfig_info %}
+[source,xml]
+----
+{{ rule.mobileconfig_info | mobileconfig_payloads_to_xml -}}
+----
+{% endif %}
+{% else %}
+{% if rule.os_name == "macos" %}
+{{ rule.enforcement_info.fix.shell }}
+{% else %}
+{% trans %}Deploy a configuration profile containing the following payload.{% endtrans %}
+
+[source,xml]
+----
+{{ rule.mobileconfig_info | mobileconfig_payloads_to_xml -}}
+----
+{% endif %}
+{% endif %}
+{% if rule.enforcement_info.fix.additional_info %}
+NOTE: {{ rule.enforcement_info.fix.additional_info }}
+{% endif %}
+{% endif %}
+====
+{% endif %}
+
+[cols="15%h, 85%a"]
+|===
+
+|ID
+|{{ rule.rule_id }} 
+
+{% if rule.severity is not none %}
+    |{% trans %}Severity{% endtrans %}
+    |{{ rule.severity }}
+{% endif %}
+
+
+|{% trans %}References{% endtrans %}
+|
+
+[cols="20%h,80%a"]
+[frame="none"]
+[grid="cols"]
+!===
+
+!800-53r5
+!
+{{ rule.references.nist.nist_800_53r5 | group_ulify if rule.references.nist.nist_800_53r5 is not none }}
+
+ifdef::show_171[]
+!800-171r3
+!
+{{ rule.references.nist.nist_800_171r3 | render_rules if rule.references.nist.nist_800_171r3 is not none }}
+endif::[]
+
+ifdef::show_STIG[]
+!DISA STIG(s)
+!
+{{ rule.references.disa.disa_stig | render_rules if rule.references.disa.disa_stig is not none }}
+{% if rule.references.disa.sfr is not none %}
+!SFR
+!
+{{ rule.references.disa.sfr | render_rules if rule.references.disa.sfr is not none }}
+{% endif %}
+endif::[]
+
+ifdef::show_CIS[]
+!CIS Benchmark
+!
+{{ rule.references.cis.benchmark | render_rules if rule.references.cis.benchmark is not none }}
+
+!CIS Controls V8
+!
+{{ rule.references.cis.controls_v8 | render_rules if rule.references.cis.controls_v8 is not none }}
+endif::[]
+
+ifdef::show_indigo[]
+!indigo
+!
+{{ rule.references.bsi.indigo | render_rules if rule.references.bsi.indigo is not none }}
+endif::[]
+
+ifdef::show_bio[]
+!BZK: BIO
+!
+{{ rule.references.bzk.bio | render_rules if rule.references.bzk.bio is not none }}
+endif::[]
+
+ifdef::show_CMMC[]
+!CMMC
+!
+{{ rule.references.disa.cmmc | render_rules if rule.references.disa.cmmc is not none }}
+endif::[]
+
+ifdef::show_HICP[]
+!HICP
+!
+{{ rule.references.hhs.hicp | render_rules if rule.references.hhs.hicp is not none }}
+endif::[]
+
+{% if rule.references.nist.cce is not none %}
+!CCE
+!
+{{ rule.references.nist.cce | render_rules if rule.references.nist.cce is not none }}
+{% endif %}
+
+{% if "references" in rule.customized %}
+{{ rule.references.custom_refs.references | render_references if rule.references.custom_refs is not none }}
+{% endif %}
+
+ifdef::show_tags[]
+!TAGS
+!
+{{ rule.tags | render_rules if rule.tags is not none }}
+endif::[]
+
+!===
+
+|
+|===
+
+{% else %}
+
+<<<
+
+{% endif %}

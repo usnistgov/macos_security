@@ -1,0 +1,74 @@
+id: icloud_photo_stream_disable
+title: Ensure Photo Stream is set to Disabled
+discussion: |
+  If a user is able to configure the security setting, the user could inadvertently or maliciously set it to a value that poses unacceptable risk to DoD information systems. An adversary could exploit vulnerabilities created by the weaker configuration to compromise DoD sensitive information.
+references:
+  nist:
+    cce:
+      ios_26:
+        - CCE-95634-2
+      ios_18:
+        - CCE-94418-1
+      ios_17:
+        - CCE-93404-2
+    800-53r5:
+      - AC-20
+      - AC-20(1)
+      - CM-7
+      - CM-7(1)
+      - SC-7(10)
+  disa:
+    cci:
+      - CCI-000097
+      - CCI-000366
+      - CCI-000370
+    sfr:
+      - 'FMT_MOF_EXT.1.2 #40'
+    cmmc:
+      - AC.L1-B.1.III
+      - AC.L2-3.1.20
+      - CM.L2-3.4.6
+      - CM.L2-3.4.7
+  bsi:
+    indigo:
+      ios_26:
+        - ANNEX D (Section 5.4 - iCloud restrictions)
+        - ANNEX K
+      ios_18:
+        - ANNEX D (Section 5.4 - iCloud restrictions)
+        - ANNEX K
+      ios_17:
+        - ANNEX D (Section 5.4 - iCloud restrictions)
+        - ANNEX K
+platforms:
+  iOS:
+    '26.0':
+      supervised: false
+      benchmarks:
+        - name: indigo_high
+          severity: medium
+    '18.0':
+      supervised: false
+      benchmarks:
+        - name: indigo_high
+          severity: medium
+    '17.0':
+      supervised: false
+      benchmarks:
+        - name: indigo_high
+          severity: medium
+    introduced: '5.0'
+tags:
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_high
+  - cmmc_lvl1
+  - cmmc_lvl2
+  - cmmc_lvl3
+  - cnssi-1253_moderate
+  - cnssi-1253_low
+  - cnssi-1253_high
+mobileconfig_info:
+  - PayloadType: com.apple.applicationaccess
+    PayloadContent:
+      - allowPhotoStream: false

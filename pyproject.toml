@@ -1,0 +1,78 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "mscp"
+dynamic = ["version"]
+description = 'The macOS Security Compliance Project is an open source effort to provide a programmatic approach to generating security guidance.'
+readme = "README.md"
+requires-python = ">=3.12"
+license = {text = "CC-BY-4.0"}
+license-files = ["LICEN[CS]E*"]
+authors = []
+keywords = ["macos", "security", "compliance", "nist", "scap", "baseline", "stig", "cis"]
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Programming Language :: Python",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Programming Language :: Python :: 3.14",
+  "Operating System :: MacOS :: MacOS X",
+  "Operating System :: POSIX :: Linux",
+  "Intended Audience :: System Administrators",
+  "Topic :: Security",
+]
+dependencies = [
+  "jinja2>=3.1.6,<4",
+  "loguru>=0.7.3,<1",
+  "lxml>=6.1.0,<7",
+  "openpyxl>=3.1.5,<4",
+  "numpy>=2.3.0,<3",
+  "pandas>=2.3.3,<3",
+  "pillow>=11.2.1,<12",
+  "pydantic>=2.12,<3",
+  "pyyaml>=6.0.2,<7",
+  "jsonschema>=4.23.0,<5",
+  "yaspin>=3.4.0,<4",
+  "babel>=2.18.0,<3",
+]
+
+[project.optional-dependencies]
+dev = [
+  "pytest>=8",
+  "pytest-cov",
+  "ruff",
+  "mypy",
+]
+
+[project.urls]
+Homepage = "https://pages.nist.gov/macos_security/"
+Issues = "https://github.com/usnistgov/macos_security/issues"
+Source = "https://github.com/usnistgov/macos_security"
+
+[project.scripts]
+mscp = "mscp.__main__:main"
+
+[tool.uv]
+# Dependency cooldown: the resolver ignores any release published less than a
+# week ago, so `uv lock` / `uv add` / `uv sync` won't adopt a brand-new (and
+# possibly compromised) version. Mirrors the 7-day cooldown in .renovaterc.json5.
+# Accepts a friendly duration ("1 week"), ISO 8601 ("P7D"), or an RFC 3339 date.
+# NOTE: this also delays security fixes — pair with an independent scanner.
+exclude-newer = "1 week"
+# Escape hatch: opt a single package OUT of the cooldown when you need a fix
+# immediately, e.g.  exclude-newer-package = { some-package = false }
+# Remove the override once the cooldown is acceptable for that package again.
+# exclude-newer-package = {}
+
+[tool.hatch.version]
+path = "src/mscp/__init__.py"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/mscp"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+addopts = "--import-mode=importlib"

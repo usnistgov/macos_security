@@ -1,0 +1,78 @@
+name: Generate Baselines and Increment Build
+
+on:
+  push:
+    branches:
+      - dev_2.0
+
+jobs:
+  build_baselines_and_increment_build:
+    # Skip if this is the action's own bump commit
+    if: "github.repository == 'usnistgov/macos_security' && !contains(github.event.head_commit.message, '[skip ci]')"
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref }}
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12.1'
+
+      - name: Install dependencies
+        run: |
+          python3 -m pip install --upgrade -r requirements.txt
+
+      - name: Generate Supported Baselines
+        id: generate
+        run: |
+          ./mscp.py admin baselines
+
+      - name: Bump build number and date
+        id: bump
+        run: |
+          NEW_BUILD=$(python3 - <<'EOF'
+          import re
+          from datetime import date
+
+          with open('src/mscp/data/includes/mscp-data.yaml', 'r') as f:
+              content = f.read()
+
+          new_build = None
+          def replacer(m):
+              global new_build
+              new_build = int(m.group(2)) + 1
+              return m.group(1) + str(new_build)
+
+          # Increment build number
+          content = re.sub(r'(  build:\s*)(\d+)', replacer, content)
+
+          # Update build date
+          content = re.sub(
+              r'(  build_date:\s*")[^"]*"',
+              f'  build_date: "{date.today()}"',
+              content
+          )
+
+          with open('src/mscp/data/includes/mscp-data.yaml', 'w') as f:
+              f.write(content)
+
+          print(new_build)
+          EOF
+          )
+          echo "build=$NEW_BUILD" >> $GITHUB_OUTPUT
+
+      - name: Commit updated build number
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add src/mscp/data/includes/mscp-data.yaml
+          git add src/mscp/data/baselines
+          git commit -m "chore: bump build number to ${{ steps.bump.outputs.build }} [skip ci]"
+          git push

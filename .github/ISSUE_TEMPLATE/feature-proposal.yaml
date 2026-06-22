@@ -1,0 +1,54 @@
+---
+name: Feature Proposal
+description: Suggest an improvement to mSCP's tooling, structure, or process
+title: '[Feature Proposal]: '
+labels: ["enhancement", "triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this template for proposals that aren't about a specific rule's content (use **Rule Content Issue**) or a new framework (use **New Framework / Baseline Request**) — for example, changes to the build tooling, repo structure, output formats, or contributor workflow.
+
+        Before opening a new issue, please search the existing issues to make sure it isn't a duplicate.
+  - type: checkboxes
+    attributes:
+      label: Is there an existing issue for this?
+      options:
+        - label: I have searched the existing issues
+          required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem to solve
+      description: What's the gap or pain point today?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed solution
+      description: How would you solve it?
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      description: Any other approaches you considered, and why you didn't pick them.
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      options:
+        - mSCP CLI
+        - Baselines
+        - Rules
+        - Compliance scripts
+        - mSCP API
+        - Other
+  - type: checkboxes
+    id: contribute
+    attributes:
+      label: Contribution
+      options:
+        - label: I am willing to help implement this

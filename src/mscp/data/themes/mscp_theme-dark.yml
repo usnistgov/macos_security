@@ -1,0 +1,165 @@
+extends: default
+page:
+  background_color: 1E1E2E
+  layout: portrait
+  margin: [0.5in, 0.67in, 0.67in, 0.67in]
+base:
+  font_color: CDD6F4
+  line_height: 1.4
+  border_color: 45475A
+link:
+  font_color: 89B4FA
+heading:
+  font_color: CDD6F4
+  font_style: bold
+  line_height: 1
+  margin_top: $vertical_rhythm * 1.4
+  margin_bottom: $vertical_rhythm * 0.9
+title_page:
+  background_color: 11111B
+  font_color: CDD6F4
+  title:
+    font_color: 89B4FA
+    font_style: bold
+    line_height: 0.9
+  subtitle:
+    font_color: A6ADC8
+    font_style: bold_italic
+    line_height: 1
+  authors:
+    font_color: CDD6F4
+  revision:
+    font_color: A6ADC8
+    margin_top: $base_font_size * 0.5
+toc:
+  font_color: CDD6F4
+  indent: $horizontal_rhythm
+  line_height: 1.4
+  dot_leader:
+    font_color: 6C7086
+prose:
+  margin_top: 0
+  margin_bottom: $vertical_rhythm
+header:
+  font_color: 6C7086
+  height: 0.5in
+  line_height: 1
+  recto:
+    columns: "<40% =20% >40%"
+    right:
+      content: ~
+    center:
+      content: ~
+  verso:
+    columns: $header_recto_columns
+    left:
+      content: $header_recto_right_content
+    center:
+      content: $header_recto_center_content
+footer:
+  font_color: 6C7086
+  height: 0.60in
+  line_height: 1
+  lines: 2
+  recto:
+    right:
+      content: |-
+        *{page-number}*
+    center:
+      content: |-
+        {proj-title} +
+        macOS Security Compliance Project - _{version}_
+  verso:
+    left:
+      content: |-
+        *{page-number}*
+    center:
+      content: |-
+        {proj-title} +
+        macOS Security Compliance Project - _{version}_
+block:
+  background_color: 181825
+  border_color: 45475A
+  border_radius: 4
+  border_width: 0.75
+  font_color: CDD6F4
+  padding: [4, 8, 4, 8]
+  line_gap: 3.8
+  line_height: 1.5
+code:
+  background_color: 181825
+  border_color: 45475A
+  border_radius: 4
+  border_width: 0.75
+  font_color: CDD6F4
+  padding: [4, 8, 4, 8]
+  line_gap: 3.8
+  line_height: 1.5
+codespan:
+  background_color: 313244
+  border_color: 45475A
+  border_radius: 3
+  border_width: 0.5
+  font_color: F38BA8
+table:
+  background_color: 1E1E2E
+  border_color: 45475A
+  border_width: 1.5
+  cell_padding: [3, 3, 6, 3]
+  font_color: CDD6F4
+  head:
+    background_color: 313244
+    font_color: 89B4FA
+    font_style: bold
+    border_bottom_width: 2.5
+  body:
+    stripe_background_color: 181825
+  foot:
+    background_color: 313244
+    font_color: A6ADC8
+admonition:
+  border_color: 45475A
+  border_width: 0.5
+  column_rule_color: 45475A
+  column_rule_width: 0.5
+  padding: [0, $horizontal_rhythm, 0, $horizontal_rhythm]
+  label:
+    font_style: bold
+    text_transform: uppercase
+sidebar:
+  background_color: 181825
+  border_color: 45475A
+  border_radius: 4
+  border_width: 1
+  font_color: CDD6F4
+  title:
+    font_color: 89B4FA
+    font_style: bold
+example:
+  background_color: 181825
+  border_color: 45475A
+  border_radius: 4
+  border_width: 0.75
+  font_color: CDD6F4
+  padding: [4, 8, 4, 8]
+quote:
+  border_color: 89B4FA
+  border_width: 5
+  cite:
+    font_color: 6C7086
+    font_style: italic
+  font_color: A6ADC8
+  font_style: italic
+verse:
+  border_color: 89B4FA
+  border_width: 5
+  cite:
+    font_color: 6C7086
+    font_style: italic
+  font_color: A6ADC8
+  font_style: italic
+image:
+  align: left
+role:
+  lead:
+    line_height: 1.4

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+{% if export_type == "oval" %}
+{% include "oval_prefix.xml.jinja" %}
+{% elif export_type == "xccdf" %}
+{% include "xccdf_prefix.xml.jinja" %}
+{% else %}
+{% include "scap_prefix.xml.jinja" %}
+{% endif %}
+{% if export_type != "oval" %}
+{% include "profile.xml.jinja" %}
+{% else %}
+{% include "oval.xml.jinja" %}
+{% endif %}

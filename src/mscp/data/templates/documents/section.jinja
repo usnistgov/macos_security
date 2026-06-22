@@ -1,0 +1,17 @@
+{% if format == "adoc" %}
+== {{ profile.section }}
+
+{{ profile.description }}
+
+{% for rule in profile.rules +%}
+{% include "adoc/rule.adoc.jinja" %}
+{% endfor %}
+{% elif format == "markdown" %}
+## {{ profile.section }}
+
+{{ profile.description | asciidoc_to_markdown | trim }}
+
+{% for rule in profile.rules %}
+{% include "markdown/rule.md.jinja" %}
+{% endfor %}
+{% endif %}

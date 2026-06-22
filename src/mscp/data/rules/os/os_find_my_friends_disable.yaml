@@ -1,0 +1,84 @@
+id: os_find_my_friends_disable
+title: Disable Find My Friends Service
+discussion: |
+  The Find My Friends service _MUST_ be disabled.
+
+  Sharing the location of a device may be an violation to an organization and potentially put users at risk.
+references:
+  nist:
+    cce:
+      ios_26:
+        - CCE-95631-8
+      ios_18:
+        - CCE-94440-5
+      ios_17:
+        - CCE-93425-7
+    800-53r5:
+      - AC-20
+      - CM-7
+      - CM-7(1)
+  disa:
+    cci:
+      - CCI-000366
+      - CCI-000097
+      - CCI-000370
+    disa_stig:
+      ios_26:
+        - AIOS-26-013100
+      ios_18:
+        - AIOS-18-013100
+      ios_17:
+        - AIOS-17-013100
+    sfr:
+      - 'FMT_SMF_EXT.1.1 #47'
+    cmmc:
+      - AC.L1-B.1.III
+      - AC.L2-3.1.20
+      - CM.L2-3.4.6
+      - CM.L2-3.4.7
+  bsi:
+    indigo:
+      ios_26:
+        - ANNEX K
+      ios_18:
+        - ANNEX K
+      ios_17:
+        - ANNEX K
+platforms:
+  iOS:
+    '26.0':
+      supervised: true
+      benchmarks:
+        - name: ios_stig
+          severity: low
+        - name: indigo_high
+          severity: low
+    '18.0':
+      supervised: true
+      benchmarks:
+        - name: ios_stig
+          severity: low
+        - name: indigo_high
+          severity: low
+    '17.0':
+      supervised: true
+      benchmarks:
+        - name: ios_stig
+          severity: low
+        - name: indigo_high
+          severity: low
+    introduced: '13.0'
+tags:
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_high
+  - cmmc_lvl1
+  - cmmc_lvl2
+  - cmmc_lvl3
+  - cnssi-1253_moderate
+  - cnssi-1253_low
+  - cnssi-1253_high
+mobileconfig_info:
+  - PayloadType: com.apple.applicationaccess
+    PayloadContent:
+      - allowFindMyFriends: false

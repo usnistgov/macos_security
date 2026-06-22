@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<data-stream-collection xmlns="http://scap.nist.gov/schema/scap/source/1.2" id="scap_gov.nist.mscp.content_collection_macOS_{{ os_version }}" schematron-version="1.3">
+  <data-stream timestamp="{{ date_time }}" id="scap_gov.nist.mscp.content_datastream_macOS_{{ os_version }}" scap-version="1.3" use-case="CONFIGURATION">
+    <dictionaries>
+      <component-ref xmlns:ns0="http://www.w3.org/1999/xlink" id="scap_gov.nist.mscp.content_cref_macOS_{{ os_version }}_macOS-cpe-dictionary.xml" ns0:type="simple" ns0:href="#scap_gov.nist.mscp.content_comp_macOS_{{ os_version }}_macOS-cpe-dictionary.xml">
+        <catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog">
+          <uri name="macOS-cpe-oval.xml" uri="#scap_gov.nist.mscp.content_cref_macOS_{{ os_version }}_macOS-cpe-oval.xml"/>
+        </catalog>
+      </component-ref>
+    </dictionaries>
+    <checklists>
+      <component-ref xmlns:ns0="http://www.w3.org/1999/xlink" id="scap_gov.nist.mscp.content_cref_macOS_{{ os_version }}_xccdf.xml" ns0:type="simple" ns0:href="#scap_gov.nist.mscp.content_comp_macOS_{{ os_version }}_xccdf.xml">
+        <catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog">
+            <uri name="oval.xml" uri="#scap_gov.nist.mscp.content_cref_macOS_{{ os_version }}_check_1"/>
+            <uri name="ocil.xml" uri="#scap_gov.nist.mscp.content_cref_macOS_{{ os_version }}_check_2"/>
+        </catalog>
+      </component-ref>
+    </checklists>
+    <checks>
+      <component-ref xmlns:ns0="http://www.w3.org/1999/xlink" id="scap_gov.nist.mscp.content_cref_macOS_{{ os_version }}_macOS-cpe-oval.xml" ns0:type="simple" ns0:href="#scap_gov.nist.mscp.content_comp_macOS_{{ os_version }}_macOS-cpe-oval.xml"/>
+      <component-ref xmlns:ns0="http://www.w3.org/1999/xlink" id="scap_gov.nist.mscp.content_cref_macOS_{{ os_version }}_check_1" ns0:type="simple" ns0:href="#scap_gov.nist.mscp.content_comp_macOS_{{ os_version }}_check_1"/>
+      <component-ref xmlns:ns0="http://www.w3.org/1999/xlink" id="scap_gov.nist.mscp.content_cref_macOS_{{ os_version }}_check_2" ns0:type="simple" ns0:href="#scap_gov.nist.mscp.content_comp_macOS_{{ os_version }}_check_2"/>
+    </checks>
+  </data-stream>
+  <component id="scap_gov.nist.mscp.content_comp_macOS_{{ os_version }}_xccdf.xml" timestamp="{{ date_time }}">
+    <Benchmark xmlns="http://checklists.nist.gov/xccdf/1.2" id="xccdf_gov.nist.mscp.content_benchmark_macOS_{{ os_version }}" style="SCAP_1.3" resolved="true" xml:lang="en">
+      <status date="{{ date_time.split('T')[0] + 'Z' }}">draft</status>
+      <title>macOS {{ os_version }}: Security Configuration</title>
+      <description>
+        macOS {{ os_version }}: Security Configuration
+      </description>
+      <reference href="https://csrc.nist.gov/projects/security-content-automation-protocol/scap-releases/scap-1-3">
+        <title xmlns="http://purl.org/dc/elements/1.1/">Security Content Automation Protocol</title>
+        <publisher xmlns="http://purl.org/dc/elements/1.1/">National Institute of Standards and Technology</publisher>
+      </reference>
+      <reference href="macOS-cpe-dictionary.xml">platform-cpe-dictionary</reference>
+      <reference href="macOS-cpe-oval.xml">platform-cpe-oval</reference>
+      <platform idref="cpe:2.3:{{ cpe }}:*:*:*:*:*:*:*"/>
+      <version time="{{ date_time }}" update="https://github.com/usnistgov/macos_security">{{ guidance }}</version>
+      <metadata>
+        <creator xmlns="http://purl.org/dc/elements/1.1/">National Institute of Standards and Technology</creator>
+        <publisher xmlns="http://purl.org/dc/elements/1.1/">National Institute of Standards and Technology</publisher>
+        <source xmlns="http://purl.org/dc/elements/1.1/">https://github.com/usnistgov/macos_security/releases/latest</source>
+        <contributor xmlns="http://purl.org/dc/elements/1.1/">Bob Gendler - National Institute of Standards and Technology</contributor>
+        <contributor xmlns="http://purl.org/dc/elements/1.1/">Dan Brodjieski - National Aeronautics and Space Administration</contributor>
+        <contributor xmlns="http://purl.org/dc/elements/1.1/">Allen Golbig - Jamf</contributor>
+      </metadata>
