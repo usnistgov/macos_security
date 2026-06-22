@@ -6,13 +6,13 @@ on:
   workflow_dispatch:
   push:
     branches:
-      - dev_2.0
+      - main
     paths: [".github/labels.yaml"]
 
   pull_request_target:
     types: [opened, synchronize, reopened]
     branches:
-      - dev_2.0
+      - man
     paths-ignore:
       - 'archive/**'
 jobs:

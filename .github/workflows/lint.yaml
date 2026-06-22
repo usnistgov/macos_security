@@ -5,12 +5,12 @@ on:
   workflow_dispatch:
   push:
     branches:
-      - dev_2.0
+      - main
     paths-ignore:
       - 'archive/**'
   pull_request:
     branches:
-      - dev_2.0
+      - main
     paths-ignore:
       - 'archive/**'
 

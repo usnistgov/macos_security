@@ -3,7 +3,7 @@ name: Generate Baselines and Increment Build
 on:
   push:
     branches:
-      - dev_2.0
+      - main
 
 jobs:
   build_baselines_and_increment_build:

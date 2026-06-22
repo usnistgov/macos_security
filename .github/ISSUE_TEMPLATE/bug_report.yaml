@@ -54,7 +54,7 @@ body:
     id: mscp-version
     attributes:
       label: mSCP version, commit, or branch
-      placeholder: e.g. dev_2.0 @ 09e33b5c
+      placeholder: e.g. main @ 09e33b5c
   - type: input
     id: python-version
     attributes:

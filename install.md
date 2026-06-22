@@ -49,7 +49,7 @@ bundle binstubs --all
 Installing mSCP as a python module will allow developers to leverage the API to work with the MSCP data.
 
 ```bash
-python3 -m pip install git+https://github.com/usnistgov/macos_security@dev_2.0
+python3 -m pip install git+https://github.com/usnistgov/macos_security@main
 ```
 
 You can now use the MSCP modules by way of `import mscp` in your own python tool.
