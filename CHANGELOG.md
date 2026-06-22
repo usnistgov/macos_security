@@ -1,7 +1,7 @@
 # Changelog
 
 This document provides a high-level view of the changes to the macOS Security Compliance Project.
-## [iOS 26, Revision 3.0] - 2026-06-XX
+## [iOS 26, Revision 3.0] - 2026-06-22
 * Rules
   * Added Rules
     * os_background_security_improvement_install_enable
