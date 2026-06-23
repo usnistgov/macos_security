@@ -30,6 +30,8 @@ references:
     - CM.L2-3.4.7
   800-171r3:
     - 03.04.06
+  bsi:
+    - SYS.2.4 Clients unter macOS
 macOS:
   - '26.0'
 tags:
@@ -39,6 +41,7 @@ tags:
   - cmmc_lvl2
   - stig
   - cnssi-1253_moderate
+  - bsi_sys_macos_high
 severity: low
 mobileconfig: true
 mobileconfig_info:

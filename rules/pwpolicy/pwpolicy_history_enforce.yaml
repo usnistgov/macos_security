@@ -50,6 +50,7 @@ odv:
   cis_lvl2: 15
   stig: 5
   bsi_sys_macos_base: 24
+  bsi_sys_macos_high: 24
 tags:
   - 800-171
   - 800-53r4_low
@@ -66,6 +67,7 @@ tags:
   - cmmc_lvl2
   - cnssi-1253_moderate
   - bsi_sys_macos_base
+  - bsi_sys_macos_high
 severity: medium
 mobileconfig: true
 mobileconfig_info:

@@ -25,11 +25,14 @@ references:
     - SRG-OS-000363-GPOS-00150
   cmmc:
     - N/A
+  bsi:
+    - SYS.2.4 Clients unter macOS
 macOS:
   - '26.0'
 tags:
   - permanent
   - cnssi-1253_high
   - srg
+  - bsi_sys_macos_high
 mobileconfig: false
 mobileconfig_info:

@@ -34,6 +34,8 @@ references:
     - N/A
   cmmc:
     - SC.L2-3.13.10
+  bsi:
+    - SYS.2.4 Clients unter macOS
 macOS:
   - '26.0'
 tags:
@@ -43,6 +45,7 @@ tags:
   - cnssi-1253_moderate
   - cnssi-1253_low
   - cmmc_lvl2
+  - bsi_sys_macos_high
 mobileconfig: true
 mobileconfig_info:
   com.apple.security.smartcard:

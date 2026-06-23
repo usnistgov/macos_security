@@ -32,10 +32,13 @@ references:
     controls v8:
       - 4.8
       - 12.6
+  bsi:
+    - SYS.2.4 Clients unter macOS
 macOS:
   - '26.0'
 tags:
   - cisv8
+  - bsi_sys_macos_base
 mobileconfig: true
 mobileconfig_info:
   com.apple.controlcenter:

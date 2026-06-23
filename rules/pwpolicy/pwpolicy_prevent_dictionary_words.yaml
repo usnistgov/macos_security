@@ -25,9 +25,12 @@ references:
     - N/A
   srg:
     - SRG-OS-000480-GPOS-00225
+  bsi:
+    - SYS.2.4 Clients unter macOS
 macOS:
   - '26.0'
 tags:
   - permanent
+  - bsi_sys_macos_high
 mobileconfig: false
 mobileconfig_info:

@@ -53,10 +53,13 @@ references:
   cmmc:
     - AC.L2-3.1.11
     - SC.L2-3.13.9
+  bsi:
+    - SYS.2.4 Clients unter macOS
 odv:
   hint: Number of seconds.
   recommended: 900
   stig: 900
+  bsi_sys_macos_high: 900
 macOS:
   - '26.0'
 tags:
@@ -70,6 +73,7 @@ tags:
   - cmmc_lvl2
   - stig
   - cnssi-1253_moderate
+  - bsi_sys_macos_high
 severity: medium
 mobileconfig: false
 mobileconfig_info:

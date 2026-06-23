@@ -25,10 +25,14 @@ references:
     - N/A
   cmmc:
     - N/A
+  bsi:
+    - SYS.2.4 Clients unter macOS
 macOS:
   - '26.0'
 tags:
   - none
+  - bsi_sys_macos_high
+  - bsi_sys_macos_base
 odv:
   hint: Allowed, ReadOnly, or Disallowed
   recommended: Allowed

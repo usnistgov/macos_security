@@ -46,11 +46,14 @@ references:
       - 2.10.1.2 (level 2)
     controls v8:
       - 4.1
+  bsi:
+    - SYS.2.4 Clients unter macOS
 macOS:
   - '26.0'
 tags:
   - cis_lvl2
   - cisv8
   - arm64
+  - bsi_sys_macos_high
 mobileconfig: false
 mobileconfig_info:

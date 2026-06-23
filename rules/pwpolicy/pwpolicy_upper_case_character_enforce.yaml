@@ -63,6 +63,8 @@ references:
     - IA.L2-3.5.7
     - IA.L2-3.5.8
     - IA.L2-3.5.9
+  bsi:
+    - SYS.2.4 Clients unter macOS
 macOS:
   - '26.0'
 odv:
@@ -73,5 +75,6 @@ tags:
   - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
+  - bsi_sys_macos_high
 mobileconfig: false
 mobileconfig_info:

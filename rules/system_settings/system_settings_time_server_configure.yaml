@@ -53,6 +53,7 @@ odv:
   cis_lvl2: time.apple.com
   stig: time.nist.gov
   bsi_sys_macos_base: time.apple.com
+  bsi_sys_macos_high: time.apple.com
 tags:
   - 800-171
   - 800-53r5_low
@@ -69,6 +70,7 @@ tags:
   - stig
   - cnssi-1253_moderate
   - bsi_sys_macos_base
+  - bsi_sys_macos_high
 severity: medium
 mobileconfig: true
 mobileconfig_info:

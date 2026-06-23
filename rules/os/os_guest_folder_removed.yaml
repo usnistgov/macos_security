@@ -39,5 +39,6 @@ tags:
   - cis_lvl1
   - cis_lvl2
   - bsi_sys_macos_base
+  - bsi_sys_macos_high
 mobileconfig: false
 mobileconfig_info:

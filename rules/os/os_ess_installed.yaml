@@ -22,11 +22,15 @@ references:
     - SRG-OS-000191-GPOS-00080
   disa_stig:
     - N/A
+  bsi:
+    - SYS.2.4 Clients unter macOS
 macOS:
   - '26.0'
 tags:
   - manual
   - cisv8
+  - bsi_sys_macos_high
+  - bsi_sys_macos_base
 severity: medium
 mobileconfig: false
 mobileconfig_info:

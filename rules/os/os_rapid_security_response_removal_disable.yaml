@@ -51,6 +51,7 @@ tags:
   - cmmc_lvl1
   - cnssi-1253_moderate
   - bsi_sys_macos_base
+  - bsi_sys_macos_high
 mobileconfig: true
 mobileconfig_info:
   com.apple.applicationaccess:

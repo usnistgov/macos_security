@@ -23,6 +23,8 @@ references:
     - SRG-OS-000134-GPOS-00068
   cmmc:
     - N/A
+  bsi:
+    - SYS.2.4 Clients unter macOS
 macOS:
   - '26.0'
 tags:
@@ -31,5 +33,6 @@ tags:
   - inherent
   - cnssi-1253_high
   - srg
+  - bsi_sys_macos_high
 mobileconfig: false
 mobileconfig_info:

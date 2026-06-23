@@ -56,6 +56,8 @@ references:
       - 4.1
   cmmc:
     - AC.L2-3.1.9
+  bsi:
+    - SYS.2.4 Clients unter macOS
 macOS:
   - '26.0'
 odv:
@@ -75,6 +77,16 @@ odv:
     -This IS includes security measures (e.g., authentication and access controls) to protect USG interests--not for your personal benefit or privacy.
 
     -Notwithstanding the above, using this IS does not constitute consent to PM, LE or CI investigative searching or monitoring of the content of privileged communications, or work product, related to personal representation or services by attorneys, psychotherapists, or clergy, and their assistants. Such communications and work product are private and confidential. See User Agreement for details.
+
+    Sie greifen auf ein dienstliches Informationssystem zu. Dieses System umfasst diesen Computer, verbundene Netzwerke, angeschlossene dienstliche Geräte sowie verwendete Speicher- und Kommunikationsmedien.
+  bsi_sys_macos_high: |-
+    Die Nutzung ist ausschließlich für autorisierte dienstliche Zwecke zulässig. Jede unbefugte Nutzung, Veränderung, Weitergabe, Speicherung oder Verarbeitung von Daten ist untersagt und kann arbeits-, dienst-, zivil- oder strafrechtliche Folgen haben.
+
+    -Zur Gewährleistung der Informationssicherheit, des ordnungsgemäßen Betriebs, der Nachvollziehbarkeit und der Erkennung von Sicherheitsvorfällen können Zugriffe, Systemereignisse und sicherheitsrelevante Aktivitäten im Rahmen der geltenden gesetzlichen, behördlichen und organisatorischen Vorgaben protokolliert, ausgewertet und überprüft werden.
+
+    -Auf diesem System können vertrauliche, personenbezogene, dienstliche oder anderweitig schutzbedürftige Informationen verarbeitet werden. Diese Informationen dürfen nur entsprechend ihrer Schutzbedürftigkeit, der geltenden Gesetze, internen Richtlinien und freigegebenen Verfahren verarbeitet, gespeichert, übertragen oder weitergegeben werden.
+
+    -Mit der Anmeldung bestätigen Sie, dass Sie zur Nutzung dieses Systems berechtigt sind, diese Hinweise verstanden haben und die geltenden Sicherheits-, Datenschutz- und Nutzungsregelungen einhalten.
 tags:
   - 800-53r5_low
   - 800-53r5_moderate
@@ -89,6 +101,7 @@ tags:
   - cmmc_lvl2
   - stig
   - cnssi-1253_moderate
+  - bsi_sys_macos_high
 severity: medium
 mobileconfig: false
 mobileconfig_info:

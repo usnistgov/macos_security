@@ -40,6 +40,8 @@ references:
     - IA.L2-3.5.7
     - IA.L2-3.5.8
     - IA.L2-3.5.9
+  bsi:
+    - SYS.2.4 Clients unter macOS
 macOS:
   - '26.0'
 odv:
@@ -47,6 +49,7 @@ odv:
   recommended: 1
   cis_lvl2: 1
   stig: 1
+  bsi_sys_macos_high: 1
 tags:
   - cis_lvl2
   - cisv8
@@ -55,6 +58,7 @@ tags:
   - cmmc_lvl2
   - stig
   - cnssi-1253_moderate
+  - bsi_sys_macos_high
 severity: medium
 mobileconfig: true
 mobileconfig_info:

@@ -38,6 +38,8 @@ references:
       - 3.11
   cmmc:
     - SC.L2-3.13.16
+  bsi:
+    - SYS.2.4 Clients unter macOS
 macOS:
   - '26.0'
 tags:
@@ -48,6 +50,7 @@ tags:
   - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
+  - bsi_sys_macos_high
 severity: high
 mobileconfig: true
 mobileconfig_info:

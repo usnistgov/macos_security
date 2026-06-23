@@ -21,6 +21,8 @@ references:
     - SRG-OS-000373-GPOS-00158
   800-171r3:
     - 03.05.01
+  bsi:
+    - SYS.2.4 Clients unter macOS
 macOS:
   - '26.0'
 tags:
@@ -33,5 +35,6 @@ tags:
   - cnssi-1253_high
   - srg
   - cnssi-1253_moderate
+  - bsi_sys_macos_high
 mobileconfig: false
 mobileconfig_info:

@@ -45,6 +45,7 @@ tags:
   - cis_lvl2
   - cisv8
   - bsi_sys_macos_base
+  - bsi_sys_macos_high
 severity: "high"
 mobileconfig: false
 mobileconfig_info:

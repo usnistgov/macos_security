@@ -67,6 +67,7 @@ tags:
   - cnssi-1253_moderate
   - cnssi-1253_high
   - bsi_sys_macos_base
+  - bsi_sys_macos_high
 severity: medium
 mobileconfig: false
 mobileconfig_info:

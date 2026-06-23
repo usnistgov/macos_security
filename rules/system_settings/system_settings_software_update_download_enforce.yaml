@@ -41,6 +41,7 @@ tags:
   - cis_lvl2
   - cisv8
   - bsi_sys_macos_base
+  - bsi_sys_macos_high
 mobileconfig: true
 mobileconfig_info:
   com.apple.SoftwareUpdate:

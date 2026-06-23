@@ -26,12 +26,15 @@ references:
     - N/A
   disa_stig:
     - N/A
+  bsi:
+    - SYS.2.4 Clients unter macOS
 macOS:
   - '26.0'
 tags:
   - 800-53r5_high
   - manual
   - cnssi-1253_high
+  - bsi_sys_macos_high
 severity: medium
 mobileconfig: false
 mobileconfig_info:

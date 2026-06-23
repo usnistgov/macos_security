@@ -29,6 +29,8 @@ references:
   cmmc:
     - CM.L2-3.4.6
     - CM.L2-3.4.7
+  bsi:
+    - SYS.2.4 Clients unter macOS
 macOS:
   - '26.0'
 tags:
@@ -42,6 +44,7 @@ tags:
   - cmmc_lvl2
   - cmmc_lvl1
   - cnssi-1253_moderate
+  - bsi_sys_macos_high
 mobileconfig: true
 mobileconfig_info:
   com.apple.applicationaccess:

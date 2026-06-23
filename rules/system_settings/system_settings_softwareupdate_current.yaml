@@ -62,6 +62,7 @@ tags:
   - cmmc_lvl2
   - cmmc_lvl1
   - bsi_sys_macos_base
+  - bsi_sys_macos_high
 severity: medium
 mobileconfig: false
 mobileconfig_info:

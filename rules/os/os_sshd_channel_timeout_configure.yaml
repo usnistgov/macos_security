@@ -55,6 +55,8 @@ references:
   cmmc:
     - AC.L2-3.1.11
     - SC.L2-3.13.9
+  bsi:
+    - SYS.2.4 Clients unter macOS
 odv:
   hint: Channel type and number of seconds.
   recommended: session:*=900
@@ -72,6 +74,7 @@ tags:
   - cmmc_lvl2
   - stig
   - cnssi-1253_moderate
+  - bsi_sys_macos_high
 severity: medium
 mobileconfig: false
 mobileconfig_info:

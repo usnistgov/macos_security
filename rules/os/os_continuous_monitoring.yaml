@@ -19,6 +19,8 @@ references:
     - SRG-OS-000191-GPOS-00080
   disa_stig:
     - N/A
+  bsi:
+    - SYS.2.4 Clients unter macOS
 macOS:
   - '26.0'
 tags:
@@ -31,5 +33,6 @@ tags:
   - cnssi-1253_high
   - srg
   - cnssi-1253_moderate
+  - bsi_sys_macos_high
 mobileconfig: false
 mobileconfig_info:

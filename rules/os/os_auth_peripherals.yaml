@@ -29,6 +29,8 @@ references:
       - 13.9
   cmmc:
     - IA.L1-3.5.2
+  bsi:
+    - SYS.2.4 Clients unter macOS
 macOS:
   - '26.0'
 tags:
@@ -44,5 +46,6 @@ tags:
   - cmmc_lvl1
   - srg
   - cnssi-1253_moderate
+  - bsi_sys_macos_high
 mobileconfig: false
 mobileconfig_info:

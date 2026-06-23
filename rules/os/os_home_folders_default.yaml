@@ -51,6 +51,8 @@ references:
       - N/A
     controls v8:
       - N/A
+  bsi:
+    - SYS.2.4 Clients unter macOS
 macOS:
   - '26.0'
 tags:
@@ -58,6 +60,7 @@ tags:
   - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
+  - bsi_sys_macos_base
 severity: medium
 mobileconfig: false
 mobileconfig_info:

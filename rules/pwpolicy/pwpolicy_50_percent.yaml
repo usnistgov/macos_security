@@ -27,6 +27,8 @@ references:
     - SRG-OS-000072-GPOS-00040
   800-171r3:
     - 03.05.07
+  bsi:
+    - SYS.2.4 Clients unter macOS
   macOS:
   - '26.0'
 tags:
@@ -35,5 +37,6 @@ tags:
   - 800-53r4_moderate
   - 800-53r4_high
   - permanent
+  - bsi_sys_macos_high
 mobileconfig: false
 mobileconfig_info:

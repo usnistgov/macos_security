@@ -41,11 +41,13 @@ odv:
   cis_lvl1: Center for Internet Security Test Message
   cis_lvl2: Center for Internet Security Test Message
   bsi_sys_macos_base: BSI Test Message
+  bsi_sys_macos_high: BSI Test Message
 tags:
   - cis_lvl1
   - cis_lvl2
   - cisv8
   - bsi_sys_macos_base
+  - bsi_sys_macos_high
 mobileconfig: true
 mobileconfig_info:
   com.apple.loginwindow:
