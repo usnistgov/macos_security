@@ -11,8 +11,8 @@ result:
 fix: |
   [source,bash]
   ----
-  /usr/bin/fdesetup remove -user root
   /usr/bin/dscl '/Local/Default' delete '/Users/root' AuthenticationAuthority
+  /usr/bin/dscl '/Local/Default' -create '/Users/root' Password "*"
   ----
 references:
   cce:
