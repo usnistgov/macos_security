@@ -71,7 +71,12 @@ plb="/usr/libexec/PlistBuddy"
 
 # get the currently logged in user and hostname
 CURRENT_USER=$( /usr/sbin/scutil <<< "show State:/Users/ConsoleUser" | /usr/bin/awk '/Name :/ && ! /loginwindow/ { print $3 }')
-CURR_USER_UID=$(/usr/bin/id -u $CURRENT_USER)
+# guard against an empty/root console user (e.g. at the login window) so id -u does not error
+if [[ -z "$CURRENT_USER" || "$CURRENT_USER" == "root" ]]; then
+  CURR_USER_UID=""
+else
+  CURR_USER_UID=$(/usr/bin/id -u "$CURRENT_USER")
+fi
 CURR_HOSTNAME=$(/usr/sbin/scutil --get HostName)
 
 # get system architecture
@@ -224,6 +229,11 @@ compliance_count(){
   rule_names=($(/usr/libexec/PlistBuddy -c "Print" $audit_plist | awk '/= Dict/ {print $1}'))
 
   for rule in ${rule_names[@]}; do
+    # Skip rules marked Not Applicable (e.g. user-dependent rules evaluated with no console user present)
+    not_applicable=$(/usr/libexec/PlistBuddy -c "Print $rule:not_applicable" $audit_plist 2>/dev/null)
+    if [[ $not_applicable == "true" ]]; then
+      continue
+    fi
     finding=$(/usr/libexec/PlistBuddy -c "Print $rule:finding" $audit_plist)
     if [[ $finding == "false" ]]; then
       compliant=$((compliant + 1))
@@ -289,10 +299,13 @@ generate_stats(){
 
 rule_fix(){
   local audit_score=$($plb -c "print $1:finding" $audit_plist)
+  local not_applicable=$($plb -c "print $1:not_applicable" $audit_plist 2>/dev/null)
   local exempt=$(/usr/bin/osascript -l JavaScript -e "ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.$baseline_name.audit').objectForKey('$1'))["exempt"]")
   local exempt_reason=$(/usr/bin/osascript -l JavaScript -e "ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.$baseline_name.audit').objectForKey('$1'))["exempt_reason"]")
 
-  if [[ ! $exempt == "1" ]] || [[ -z $exempt ]]; then
+  if [[ $not_applicable == "true" ]]; then
+    logmessage "$1 not_applicable - Requires a logged-in user, skipping remediation"
+  elif [[ ! $exempt == "1" ]] || [[ -z $exempt ]]; then
     if [[ $audit_score == "true" ]]; then
       ask "$1 - Run the command(s)-> $2" N
       if [[ $? == 0 ]]; then
@@ -317,8 +330,10 @@ run_scan(){
     logmessage "Beginning new compliance scan"
   fi
 
-  # run mcxrefresh
-  /usr/bin/mcxrefresh -u $CURR_USER_UID
+  # run mcxrefresh (only when a console user is present)
+  if [[ -n "$CURR_USER_UID" ]]; then
+    /usr/bin/mcxrefresh -u $CURR_USER_UID
+  fi
 
   # write timestamp of last compliance check
   /usr/bin/defaults write "$audit_plist" lastComplianceCheck "$timestamp"
@@ -362,8 +377,10 @@ run_fix(){
   # remove uchg on audit_control
   /usr/bin/chflags nouchg /etc/security/audit_control
 
-  # run mcxrefresh
-  /usr/bin/mcxrefresh -u $CURR_USER_UID
+  # run mcxrefresh (only when a console user is present)
+  if [[ -n "$CURR_USER_UID" ]]; then
+    /usr/bin/mcxrefresh -u $CURR_USER_UID
+  fi
 
   {% for profile in baseline.profile %}
   {% for rule in profile.rules %}
