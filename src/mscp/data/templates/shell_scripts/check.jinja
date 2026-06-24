@@ -26,10 +26,12 @@
     # (e.g. at the login window) it cannot be evaluated, so mark it Not
     # Applicable instead of letting the command error out and count as a pass.
     if [[ -z "$CURRENT_USER" || "$CURRENT_USER" == "root" ]]; then
-      logmessage "$rule_id not_applicable - Requires a logged-in user (no console user present)"
-      logcsv "$rule_id" "N/A" "" "" ""
+      na_reason="Requires a logged-in user (no console user present)"
+      logmessage "$rule_id not_applicable - $na_reason"
+      logcsv "$rule_id" "N/A" "" "" "$na_reason"
       /usr/bin/defaults write "$audit_plist" "$rule_id" -dict-add finding -bool NO
       /usr/bin/defaults write "$audit_plist" "$rule_id" -dict-add not_applicable -bool YES
+      /usr/bin/defaults write "$audit_plist" "$rule_id" -dict-add not_applicable_reason -string "$na_reason"
     else
 {% endif %}
     local result_value=$({{ rule.check }}
@@ -63,9 +65,12 @@
 {% endif %}
 
   else
-    logmessage "$rule_id does not apply to this architecture"
-    logcsv "$rule_id" "N/A" "" "" ""
+    na_reason="Does not apply to this architecture"
+    logmessage "$rule_id not_applicable - $na_reason"
+    logcsv "$rule_id" "N/A" "" "" "$na_reason"
     /usr/bin/defaults write "$audit_plist" "$rule_id" -dict-add finding -bool NO
+    /usr/bin/defaults write "$audit_plist" "$rule_id" -dict-add not_applicable -bool YES
+    /usr/bin/defaults write "$audit_plist" "$rule_id" -dict-add not_applicable_reason -string "$na_reason"
   fi
 
   
