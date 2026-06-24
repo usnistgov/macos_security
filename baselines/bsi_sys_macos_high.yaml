@@ -86,7 +86,6 @@ profile:
       - os_disk_image_disable
       - os_dvdram_disable
       - os_erase_content_and_settings_disable
-      - os_ess_installed
       - os_external_storage_access_defined
       - os_filevault_authorized_users
       - os_filevault_autologin_disable

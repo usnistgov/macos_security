@@ -55,7 +55,6 @@ profile:
       - os_config_data_install_enforce
       - os_config_profile_ui_install_disable
       - os_erase_content_and_settings_disable
-      - os_ess_installed
       - os_external_storage_access_defined
       - os_gatekeeper_enable
       - os_guest_folder_removed
