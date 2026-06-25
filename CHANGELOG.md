@@ -1,7 +1,7 @@
 # Changelog
 
 This document provides a high-level view of the changes to the macOS Security Compliance Project.
-## [Tahoe, Revision 3.0] - 2026-06-XX
+## [Tahoe, Revision 3.0] - 2026-06-22
 
 * Rules
   * Added Rules
