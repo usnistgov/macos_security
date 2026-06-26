@@ -788,6 +788,10 @@ compliance script (e.g. disa_stig, cis.benchmark)
         action="store_true",
         help="Enable the flag for fuzzy matches in translations.",
     )
+    _pre, _ = parent_parser.parse_known_args()
+    set_logger(
+        debug=getattr(_pre, "debug", False), verbosity=getattr(_pre, "verbose", 0)
+    )
     try:
         args = parser.parse_args()
 
