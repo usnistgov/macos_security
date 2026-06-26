@@ -85,7 +85,7 @@ class TestMdxEscape:
         result = mdx_escape("line<br />next")
         assert "<br />" in result
 
-    def test_br_normalised_to_self_closing(self):
+    def test_br_normalized_to_self_closing(self):
         result = mdx_escape("line<br>next")
         assert "<br />" in result
         assert "<br>" not in result
@@ -182,9 +182,7 @@ def _get_baseline_path() -> Path:
     for p in candidates:
         if p.exists():
             return p
-    pytest.fail(
-        f"Bundled baseline not found; checked: {[str(p) for p in candidates]}"
-    )
+    pytest.fail(f"Bundled baseline not found; checked: {[str(p) for p in candidates]}")
 
 
 @pytest.fixture(scope="module")
@@ -227,24 +225,18 @@ class TestMarkdownTreeIntegration:
         assert "title:" in content
 
     def test_section_dirs_exist(self, markdown_tree_output):
-        section_dirs = [
-            d for d in markdown_tree_output.iterdir() if d.is_dir()
-        ]
+        section_dirs = [d for d in markdown_tree_output.iterdir() if d.is_dir()]
         assert len(section_dirs) > 0
 
     def test_section_dirs_have_nn_prefix(self, markdown_tree_output):
-        section_dirs = [
-            d for d in markdown_tree_output.iterdir() if d.is_dir()
-        ]
+        section_dirs = [d for d in markdown_tree_output.iterdir() if d.is_dir()]
         for d in section_dirs:
             assert re.match(r"^\d{2}-", d.name), (
                 f"Section dir '{d.name}' missing NN- prefix"
             )
 
     def test_section_dirs_sorted_correctly(self, markdown_tree_output):
-        section_dirs = sorted(
-            d for d in markdown_tree_output.iterdir() if d.is_dir()
-        )
+        section_dirs = sorted(d for d in markdown_tree_output.iterdir() if d.is_dir())
         prefixes = [int(d.name[:2]) for d in section_dirs]
         assert prefixes == sorted(prefixes)
 
@@ -260,8 +252,7 @@ class TestMarkdownTreeIntegration:
             if not section_dir.is_dir():
                 continue
             rule_files = [
-                f for f in section_dir.iterdir()
-                if f.is_file() and f.name != "index.md"
+                f for f in section_dir.iterdir() if f.is_file() and f.name != "index.md"
             ]
             for rf in rule_files:
                 assert re.match(r"^\d{2}-", rf.name), (
@@ -273,9 +264,7 @@ class TestMarkdownTreeIntegration:
             if not section_dir.is_dir():
                 continue
             for f in section_dir.iterdir():
-                assert f.suffix == ".md", (
-                    f"Expected .md extension, got '{f.name}'"
-                )
+                assert f.suffix == ".md", f"Expected .md extension, got '{f.name}'"
 
     def test_rule_frontmatter_parses(self, markdown_tree_output):
         """All rule files must have valid YAML frontmatter with title only."""
@@ -286,14 +275,11 @@ class TestMarkdownTreeIntegration:
                 if rf.name == "index.md":
                     continue
                 content = rf.read_text()
-                assert content.startswith("---\n"), (
-                    f"{rf.name}: missing frontmatter"
-                )
+                assert content.startswith("---\n"), f"{rf.name}: missing frontmatter"
                 # Extract frontmatter block
                 end = content.index("---\n", 4)
                 fm_block = content[4:end]
                 assert "title:" in fm_block, f"{rf.name}: missing title"
-
 
     def test_no_raw_braces_outside_fences(self, markdown_tree_output):
         """No unescaped { or } should appear outside fenced blocks."""
@@ -304,7 +290,7 @@ class TestMarkdownTreeIntegration:
             # Strip frontmatter
             if stripped.startswith("---\n"):
                 end = stripped.index("---\n", 4)
-                stripped = stripped[end + 4:]
+                stripped = stripped[end + 4 :]
             assert "{" not in stripped, (
                 f"{md_file.name}: raw '{{' found outside fenced block"
             )
@@ -324,9 +310,7 @@ class TestMarkdownTreeIntegration:
     def test_no_category_json_files(self, markdown_tree_output):
         """No Docusaurus-specific _category_.json files should be present."""
         category_files = list(markdown_tree_output.rglob("_category_.json"))
-        assert category_files == [], (
-            f"Found _category_.json files: {category_files}"
-        )
+        assert category_files == [], f"Found _category_.json files: {category_files}"
 
     def test_single_file_markdown_unchanged(self, tmp_path):
         """The single-file --markdown output must not be affected by the tree changes.
