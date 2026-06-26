@@ -78,7 +78,7 @@ def get_version_data(
             )
         else:
             match["compliance_version"] = (
-                f"{OS_NAME_MAP.get(match['os_name'].lower(), match['os_name'])} Guidance, Revision {mscp_data['mscp'].get('version')}"
+                f"mSCP Release {mscp_data['mscp'].get('release')}"
             )
 
         return match

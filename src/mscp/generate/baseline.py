@@ -270,7 +270,7 @@ def generate_baseline(
     """
     sp.spinner = Spinners.dots
     if getattr(args, "migrate", None):
-        sp.text("Migrating baseline from 1.0")
+        sp.text = "Migrating baseline from legacy MSCP"
         migrate_legacy_baseline(args)
         return
 
