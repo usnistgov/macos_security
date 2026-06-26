@@ -127,7 +127,7 @@ class Macsecurityrule(BaseModelWithAccessors):
     mobileconfig_info: list[Mobileconfigpayload] | None = None
     ddm_info: dict[str, Any] | None = None
     customized: list[str] = Field(default_factory=list)
-    mechanism: str
+    mechanism: str | None = None
     section: str | None
     uuid: str = Field(default_factory=lambda: str(uuid4()))
     platforms: dict[str, dict[str, Any]] = Field(default_factory=dict)
@@ -202,6 +202,7 @@ class Macsecurityrule(BaseModelWithAccessors):
 
         rules_dirs: list[Path] = [
             Path(config["rules_dir"]),
+            Path(Path(config["custom"]["rules_dir"])),
         ]
 
         if tailoring:
@@ -277,8 +278,10 @@ class Macsecurityrule(BaseModelWithAccessors):
                             rule_yaml[custom_rule_key] += custom_rule_value
                         continue
                     if custom_rule_key == "platforms":
-                        rule_yaml[custom_rule_key] |= custom_rule_value
+                        platform_info = rule_yaml.get("platforms")
+                        deep_merge(platform_info, custom_rule_value)
                         continue
+
                     rule_yaml[custom_rule_key] = custom_rule_value
 
             enforcement_info = rule_yaml["platforms"][os_type].get(
@@ -531,6 +534,7 @@ class Macsecurityrule(BaseModelWithAccessors):
 
         rules_dirs: list[Path] = [
             Path(config["rules_dir"]),
+            Path(config["custom_dir"]) / "rules",
         ]
 
         section_data: dict[str, str] = {
@@ -946,31 +950,14 @@ class Macsecurityrule(BaseModelWithAccessors):
         )
 
         rule_file_path: Path = output_path
-        serialized_data: dict[str, Any] = self.model_dump(exclude_none=True)
+        serialized_data: dict[str, Any] = self.model_dump(
+            exclude_none=True, by_alias=True
+        )
         ordered_data = OrderedDict()
-
         self._clean_references()
 
-        refs = serialized_data.setdefault("references", {})
-        nist = refs.setdefault("nist", {})
-
-        if (v53 := nist.pop("nist_800_53r5", None)) is None:
-            v53 = refs.pop("nist_800_53r5", 0)
-        nist["800-53r5"] = v53
-
-        if (v171 := nist.pop("nist_800_171r3", None)) is None:
-            v171 = refs.pop("nist_800_171r3", 0)
-        nist["800-171r3"] = v171
-
-        for key in serialized_data["references"]:
-            if isinstance(serialized_data["references"][key], list):
-                serialized_data["references"][key] = sorted(
-                    [
-                        item
-                        for item in serialized_data["references"][key]
-                        if item not in [None, "NA", "N/A"]
-                    ]
-                )
+        # translate key "rule_id" to "id"
+        serialized_data["id"] = serialized_data["rule_id"]
 
         for key in key_order:
             if key in serialized_data:
@@ -992,7 +979,6 @@ class Macsecurityrule(BaseModelWithAccessors):
                 for key, value in ordered_data.items()
                 if value or key in required_keys
             }
-
         create_yaml(rule_file_path, clean_dict)
 
     def to_dict(self) -> dict[str, Any]:
