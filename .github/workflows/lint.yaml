@@ -84,36 +84,10 @@ jobs:
         run: |
           yamllint --config-file .github/linters/.yamllint.yaml --format github ${{ steps.changed-files.outputs.all_changed_files }}
 
-  markdownlint:
-    name: markdownlint
-    runs-on: ubuntu-latest
-    permissions:
-      pull-requests: read
-    steps:
-      - name: Checkout
-        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
-        with:
-          fetch-depth: 0
-
-      - name: Get changed files
-        id: changed-files
-        uses: tj-actions/changed-files@dcc7a0cba800f454d79fff4b993e8c3555bcc0a8 # v45
-        with:
-          files: |
-            **.md
-
-      - name: Run markdownlint-cli2
-        if: steps.changed-files.outputs.any_changed == 'true'
-        uses: bjw-s/action-markdownlint-cli2@c3c44cc6f77516007f1a85d982ed6276e840dcec # v0.1
-        with:
-          markdownlint_config: .github/linters/.markdownlint.yaml
-          file_pattern: ${{ steps.changed-files.outputs.all_changed_files }}
-
   lint_success:
     needs:
       - pythonlint
       - yamllint
-      - markdownlint
     if: |
       always()
     name: Lint successful

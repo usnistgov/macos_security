@@ -34,7 +34,7 @@ jobs:
       - name: list_platforms flag
         run: python mscp.py --list_platforms
 
-      - name: baseline list_tags 
+      - name: baseline list_tags
         run: python mscp.py baseline --list_tags
 
       - name: baseline generate (macos 800-53r5 moderate)
