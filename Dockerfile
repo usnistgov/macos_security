@@ -1,11 +1,11 @@
 FROM alpine:3.21@sha256:48b0309ca019d89d40f670aa1bc06e426dc0931948452e8491e3d65087abc07d
 
-# Install required packages
+COPY --from=ghcr.io/astral-sh/uv:latest /uv /usr/local/bin/uv
+
 RUN apk update && apk add --no-cache \
   python3 \
   ruby \
   git \
-  py3-pip \
   ruby-dev \
   build-base \
   libjpeg-turbo \
@@ -33,28 +33,23 @@ RUN apk add --no-cache --virtual .build-deps \
     rust \
     cargo
 
-# Set working directory
 WORKDIR /mscp
 
-# Copy MSCP code from build context
-COPY . .
-
-# Install Python dependencies
-RUN python3 -m venv /opt/venv
+# Install Python dependencies before copying source (layer cache is not invalidated by code changes)
+COPY requirements.txt ./
+RUN uv venv /opt/venv && \
+    uv pip install --no-cache --python /opt/venv/bin/python -r requirements.txt
 ENV PATH="/opt/venv/bin:$PATH"
-RUN pip install --no-cache-dir -r requirements.txt
 
-# Install Ruby dependencies
-#COPY Gemfile ./
+# Install Ruby dependencies before copying source
+COPY Gemfile ./
 RUN gem install bundler && bundle install
-RUN bundle add base64
 
-# Clean up build dependencies
 RUN apk del .build-deps
 
-# Run as non-root user
+COPY . .
+
 RUN adduser -D -u 1001 mscp && chown -R mscp:mscp /mscp
 USER mscp
 
-# Run a shell when container starts
 CMD ["sh"]
