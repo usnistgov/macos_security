@@ -1,9 +1,10 @@
 name: Build and Publish Container
 
 on:
-  push:
-    branches:
-      - main
+  workflow_run:
+    workflows: ["CLI Smoke Tests", "Generate Baselines and Increment Build"]
+    types: [completed]
+    branches: [main]
   workflow_dispatch:
 
 env:
@@ -13,14 +14,40 @@ env:
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
+    # On the primary repo: trigger after Generate Baselines completes on a real (non-bump) commit.
+    # On forks: trigger after CLI Smoke Tests completes (Generate Baselines is a no-op there).
+    if: >
+      github.event_name == 'workflow_dispatch' ||
+      (github.event.workflow_run.conclusion == 'success' && (
+        (github.event.workflow_run.name == 'Generate Baselines and Increment Build' &&
+         github.repository == 'usnistgov/macos_security' &&
+         !contains(github.event.workflow_run.head_commit.message, '[skip ci]')) ||
+        (github.event.workflow_run.name == 'CLI Smoke Tests' &&
+         github.repository != 'usnistgov/macos_security')
+      ))
 
     permissions:
       contents: read
       packages: write
       id-token: write   # required for cosign keyless signing via OIDC
       attestations: write
+      actions: read     # required to query workflow run status
 
     steps:
+      - name: Verify lint passed
+        if: github.event_name != 'workflow_dispatch' && github.event.workflow_run.name == 'CLI Smoke Tests'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SHA: ${{ github.event.workflow_run.head_sha }}
+        run: |
+          repo="${{ github.repository }}"
+          wf_id=$(gh api "repos/$repo/actions/workflows" --jq '.workflows[] | select(.name == "Lint Code Base") | .id')
+          result=$(gh api "repos/$repo/actions/workflows/$wf_id/runs?head_sha=$SHA&per_page=1" --jq '.workflow_runs[0].conclusion // empty')
+          if [[ "$result" != "success" ]]; then
+            echo "Lint Code Base did not pass (conclusion: ${result:-not found})"
+            exit 1
+          fi
+
       - name: Checkout repository
         uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5  # v4
 
