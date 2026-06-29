@@ -6,13 +6,12 @@ on:
   push:
     branches:
       - main
-    paths-ignore:
-      - 'archive/**'
   pull_request:
     branches:
       - main
-    paths-ignore:
-      - 'archive/**'
+
+permissions:
+  contents: read
 
 jobs:
   cli-smoke-tests:
@@ -25,7 +24,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
         with:
-          python-version: '3.12'
+          python-version: '3.12.1'
           cache: 'pip'
 
       - name: Install dependencies

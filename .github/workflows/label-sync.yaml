@@ -12,9 +12,8 @@ on:
   pull_request_target:
     types: [opened, synchronize, reopened]
     branches:
-      - man
-    paths-ignore:
-      - 'archive/**'
+      - main
+    paths: [".github/labels.yaml"]
 jobs:
   label-sync:
     name: Label Sync

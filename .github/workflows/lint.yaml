@@ -6,13 +6,9 @@ on:
   push:
     branches:
       - main
-    paths-ignore:
-      - 'archive/**'
   pull_request:
     branches:
       - main
-    paths-ignore:
-      - 'archive/**'
 
 jobs:
   pythonlint:
@@ -77,7 +73,7 @@ jobs:
         if: steps.changed-files.outputs.any_changed == 'true'
         shell: bash
         run: |
-          pip install --user yamllint
+          pip install yamllint
 
       - name: Run yamllint
         if: steps.changed-files.outputs.any_changed == 'true'
