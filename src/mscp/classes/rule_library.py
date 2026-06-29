@@ -317,6 +317,46 @@ class RuleLibrary:
         lower = platform.lower()
         return RuleLibrary([r for r in self._rules if r.os_type.lower() == lower])
 
+    # ------------------------------------------------------------------
+    # Mutations
+    # ------------------------------------------------------------------
+
+    def add_tag(self, tag: str) -> RuleLibrary:
+        """Add ``tag`` to every rule in this library and write each source file once.
+
+        Args:
+            tag (str): Tag to add.
+
+        Returns:
+            RuleLibrary: ``self``, for method chaining.
+        """
+        seen: set = set()
+        for rule in self._rules:
+            if tag not in rule.tags:
+                rule.tags.append(tag)
+            if rule.source_file and rule.source_file not in seen:
+                seen.add(rule.source_file)
+                rule.to_yaml(rule.source_file)
+        return self
+
+    def remove_tag(self, tag: str) -> RuleLibrary:
+        """Remove ``tag`` from every rule in this library and write each source file once.
+
+        Args:
+            tag (str): Tag to remove.
+
+        Returns:
+            RuleLibrary: ``self``, for method chaining.
+        """
+        seen: set = set()
+        for rule in self._rules:
+            if tag in rule.tags:
+                rule.tags.remove(tag)
+            if rule.source_file and rule.source_file not in seen:
+                seen.add(rule.source_file)
+                rule.to_yaml(rule.source_file)
+        return self
+
     def by_os(
         self,
         os_name: str | None = None,

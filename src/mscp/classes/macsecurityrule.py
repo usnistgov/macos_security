@@ -139,6 +139,7 @@ class Macsecurityrule(BaseModelWithAccessors):
     enforcement_info: EnforcementInfo | None = None
     severity: str | None = None
     default_state: str | None = None
+    source_file: Path | None = Field(default=None, exclude=True)
 
     @field_validator("odv", mode="after")
     @classmethod
@@ -481,6 +482,8 @@ class Macsecurityrule(BaseModelWithAccessors):
                     "Rule {} failed validation and will be skipped: {}", rule_id, issues
                 )
                 continue
+
+            rule.source_file = rule_file
 
             if rule.odv is not None and parent_values is not None:
                 rule._fill_in_odv(parent_values)
