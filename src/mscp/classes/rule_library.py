@@ -357,6 +357,66 @@ class RuleLibrary:
                 rule.to_yaml(rule.source_file)
         return self
 
+    def add_benchmark(self, name: str, severity: str | None = None) -> RuleLibrary:
+        """Add a benchmark entry to every rule in this library and write each source file once.
+
+        Benchmark entries are stored per OS version inside ``platforms``, so all
+        version-specific mutations for a file are applied to a single canonical
+        rule object before writing, ensuring no version entry is lost.
+
+        Args:
+            name (str): Benchmark name (e.g. ``"cis_lvl1"``).
+            severity (str | None): Optional severity string (e.g. ``"medium"``).
+
+        Returns:
+            RuleLibrary: ``self``, for method chaining.
+        """
+        by_file: dict = {}
+        for rule in self._rules:
+            if rule.source_file:
+                by_file.setdefault(rule.source_file, []).append(rule)
+
+        for source_file, rules in by_file.items():
+            canonical = rules[0]
+            for rule in rules:
+                version_str = str(float(rule.os_version))
+                version_data = canonical.platforms.setdefault(rule.os_type, {}).setdefault(version_str, {})
+                benchmarks: list = version_data.setdefault("benchmarks", [])
+                if not any(b.get("name") == name for b in benchmarks):
+                    entry: dict = {"name": name}
+                    if severity:
+                        entry["severity"] = severity
+                    benchmarks.append(entry)
+            canonical.to_yaml(source_file)
+
+        return self
+
+    def remove_benchmark(self, name: str) -> RuleLibrary:
+        """Remove a benchmark entry from every rule in this library and write each source file once.
+
+        Args:
+            name (str): Benchmark name to remove (e.g. ``"cis_lvl1"``).
+
+        Returns:
+            RuleLibrary: ``self``, for method chaining.
+        """
+        by_file: dict = {}
+        for rule in self._rules:
+            if rule.source_file:
+                by_file.setdefault(rule.source_file, []).append(rule)
+
+        for source_file, rules in by_file.items():
+            canonical = rules[0]
+            for rule in rules:
+                version_str = str(float(rule.os_version))
+                version_data = canonical.platforms.get(rule.os_type, {}).get(version_str, {})
+                version_data["benchmarks"] = [
+                    b for b in version_data.get("benchmarks", []) if b.get("name") != name
+                ]
+            canonical.to_yaml(source_file)
+
+        return self
+
     def by_os(
         self,
         os_name: str | None = None,
