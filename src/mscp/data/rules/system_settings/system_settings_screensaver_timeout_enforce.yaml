@@ -93,8 +93,8 @@ odv:
     validation:
       min: 1
   recommended: 1200
-  cis_lvl1: 1200
-  cis_lvl2: 1200
+  cis_lvl1: 900
+  cis_lvl2: 900
   nlmapgov_plus: 300
   disa_stig: 900
 tags:
