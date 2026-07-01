@@ -23,6 +23,7 @@ from .macsecurityrule import Macsecurityrule
 # per-version CCE/DISA dicts and renames YAML keys).
 # ------------------------------------------------------------------
 
+
 def _patch_list_remove(path: Path, value: str, item_indent: int) -> bool:
     """Remove every ``- {value}`` list item at ``item_indent`` spaces from a YAML file.
 
@@ -141,7 +142,11 @@ class RuleLibrary:
         for r in self._rules:
             self._index.setdefault(r.rule_id, []).append(r)
             version_str = str(float(r.os_version))
-            for b in r.platforms.get(r.os_type, {}).get(version_str, {}).get("benchmarks", []):
+            for b in (
+                r.platforms.get(r.os_type, {})
+                .get(version_str, {})
+                .get("benchmarks", [])
+            ):
                 name = b.get("name")
                 if name:
                     self._benchmarks.add(name)
@@ -239,7 +244,9 @@ class RuleLibrary:
             return self._rules[key]
         raise TypeError(f"indices must be int or str, not {type(key).__name__}")
 
-    def get(self, rule_id: str, default: Macsecurityrule | None = None) -> Macsecurityrule | None:
+    def get(
+        self, rule_id: str, default: Macsecurityrule | None = None
+    ) -> Macsecurityrule | None:
         """Return the rule with the given ``rule_id``, or ``default`` if absent.
 
         Raises ``KeyError`` if the ID matches rules from multiple platforms;
@@ -329,10 +336,16 @@ class RuleLibrary:
             RuleLibrary: Matching rules in their original order.
         """
         normalized = _normalize_control_id(control)
-        return RuleLibrary([
-            r for r in self._rules
-            if any(_normalize_control_id(c) == normalized for c in (r.references.nist.nist_800_53r5 or []))
-        ])
+        return RuleLibrary(
+            [
+                r
+                for r in self._rules
+                if any(
+                    _normalize_control_id(c) == normalized
+                    for c in (r.references.nist.nist_800_53r5 or [])
+                )
+            ]
+        )
 
     def by_tag(self, tag: str) -> RuleLibrary:
         """Return a new library containing only rules tagged with ``tag``.
@@ -384,8 +397,7 @@ class RuleLibrary:
         for r in self._rules:
             version_str = str(float(r.os_version))
             benchmarks = (
-                r.platforms
-                .get(r.os_type, {})
+                r.platforms.get(r.os_type, {})
                 .get(version_str, {})
                 .get("benchmarks", [])
             )
@@ -458,7 +470,7 @@ class RuleLibrary:
 
         Args:
             control (str): Control identifier to add (e.g. ``"AC-2"``).
-                Normalised to uppercase with no leading zeros before comparison.
+                Normalized to uppercase with no leading zeros before comparison.
 
         Returns:
             RuleLibrary: ``self``, for method chaining.
@@ -480,7 +492,7 @@ class RuleLibrary:
 
         Args:
             control (str): Control identifier to remove (e.g. ``"AC-20"``).
-                Normalised to uppercase with no leading zeros before comparison.
+                Normalized to uppercase with no leading zeros before comparison.
 
         Returns:
             RuleLibrary: ``self``, for method chaining.
@@ -489,8 +501,11 @@ class RuleLibrary:
         seen: set = set()
         for rule in self._rules:
             if rule.references.nist.nist_800_53r5:
-                remaining = [c for c in rule.references.nist.nist_800_53r5
-                             if _normalize_control_id(c) != normalized]
+                remaining = [
+                    c
+                    for c in rule.references.nist.nist_800_53r5
+                    if _normalize_control_id(c) != normalized
+                ]
                 rule.references.nist.nist_800_53r5 = remaining or None
             if rule.source_file and rule.source_file not in seen:
                 seen.add(rule.source_file)
@@ -531,7 +546,9 @@ class RuleLibrary:
                 )
                 if any(b.get("name") == name for b in benchmarks_list):
                     continue
-                rule.platforms.setdefault(os_type, {}).setdefault(version_str, {}).setdefault("benchmarks", []).append(
+                rule.platforms.setdefault(os_type, {}).setdefault(
+                    version_str, {}
+                ).setdefault("benchmarks", []).append(
                     {"name": name, **({"severity": severity} if severity else {})}
                 )
                 # Find the benchmarks: block within the version's section and append
@@ -544,7 +561,7 @@ class RuleLibrary:
                 entry_line = f"        - name: {name}{entry_suffix}\n"
                 text = re.sub(
                     version_pattern,
-                    lambda m: m.group(0) + entry_line,
+                    lambda m, entry_line=entry_line: m.group(0) + entry_line,
                     text,
                     flags=re.MULTILINE,
                 )
