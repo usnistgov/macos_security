@@ -30,18 +30,18 @@ def update_mscp_release(sp: Yaspin, args: argparse.Namespace) -> None:
     mscp_data_file_updated = False
 
     sp.text = "Updating mscp_data.yaml with information for next release"
-    current_mscp_major, current_mscp_minor = mscp_data["mscp"].get("version").split(".")
+    current_mscp_major, current_mscp_minor = mscp_data["mscp"].get("release").split(".")
 
     if args.major:
         new_major = int(current_mscp_major) + 1
         new_version = f"{new_major}.0"
-        mscp_data["mscp"]["version"] = new_version
+        mscp_data["mscp"]["release"] = new_version
         mscp_data["mscp"]["release_date"] = args.release_date
         mscp_data_file_updated = True
     if args.minor:
         new_minor = int(current_mscp_minor) + 1
         new_version = f"{current_mscp_major}.{new_minor}"
-        mscp_data["mscp"]["version"] = new_version
+        mscp_data["mscp"]["release"] = new_version
         mscp_data["mscp"]["release_date"] = args.release_date
         mscp_data_file_updated = True
 

@@ -59,15 +59,11 @@ def validate_yaml_file(args: argparse.Namespace) -> None:
     schema: dict = open_file(Path(SCHEMA_PATH))
     validator = Draft202012Validator(schema)
 
-    if args.rules_dir:
-        rules_path = Path(args.rules_dir)
-        yaml_files: list = list(rules_path.rglob("*.y*ml"))
-    else:
-        rules_path = Path(config["rules_dir"])
-        yaml_files: list = list(rules_path.rglob("*.y*ml"))
-        _custom_rules = Path(config["custom"]["rules_dir"])
-        if _custom_rules.exists():
-            yaml_files += list(_custom_rules.rglob("*.y*ml"))
+    rules_path = Path(config["rules_dir"])
+    yaml_files: list = list(rules_path.rglob("*.y*ml"))
+    _custom_rules = Path(config["custom"]["rules_dir"])
+    if _custom_rules.exists():
+        yaml_files += list(_custom_rules.rglob("*.y*ml"))
 
     if not yaml_files:
         logger.error("No YAML files found in rules directory.")
@@ -85,7 +81,7 @@ def validate_yaml_file(args: argparse.Namespace) -> None:
             continue
 
         if rule_id in discovered_rules:
-            print(f"⚠️ WARNING:   {yaml} may be a duplicate rule")
+            print(f"⚠️ WARNING:   {yaml} may be a duplicate or tailored rule")
         else:
             discovered_rules.append(rule_id)
 
@@ -132,7 +128,7 @@ def validate_rule_folder_structure(path_str: str) -> Path:
     if not p.is_dir():
         raise argparse.ArgumentTypeError(f"Path is not a directory: {p}")
 
-    # Inspect contents of root
+    # # Inspect contents of root
     root_entries = list(p.iterdir())
 
     # Root must contain only subdirectories (if you want to allow files, relax this).
@@ -152,6 +148,8 @@ def validate_rule_folder_structure(path_str: str) -> Path:
             )
 
         for child in sub.iterdir():
+            if child.name.startswith("."):
+                continue
             if child.is_dir():
                 raise argparse.ArgumentTypeError(
                     f"'{sub.name}' contains a nested directory '{child.name}'. "

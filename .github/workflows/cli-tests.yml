@@ -6,13 +6,12 @@ on:
   push:
     branches:
       - main
-    paths-ignore:
-      - 'archive/**'
   pull_request:
     branches:
       - main
-    paths-ignore:
-      - 'archive/**'
+
+permissions:
+  contents: read
 
 jobs:
   cli-smoke-tests:
@@ -20,12 +19,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0  # v7
 
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
         with:
-          python-version: '3.12'
+          python-version: '3.12.1'
           cache: 'pip'
 
       - name: Install dependencies
@@ -34,7 +33,7 @@ jobs:
       - name: list_platforms flag
         run: python mscp.py --list_platforms
 
-      - name: baseline list_tags 
+      - name: baseline list_tags
         run: python mscp.py baseline --list_tags
 
       - name: baseline generate (macos 800-53r5 moderate)

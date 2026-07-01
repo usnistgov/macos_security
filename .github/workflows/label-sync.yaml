@@ -12,19 +12,18 @@ on:
   pull_request_target:
     types: [opened, synchronize, reopened]
     branches:
-      - man
-    paths-ignore:
-      - 'archive/**'
+      - main
+    paths: [".github/labels.yaml"]
 jobs:
   label-sync:
     name: Label Sync
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0  # v7
 
       - name: Sync Labels
-        uses: EndBug/label-sync@v2
+        uses: EndBug/label-sync@52074158190acb45f3077f9099fea818aa43f97a # v2
         with:
           config-file: .github/labels.yaml
           delete-other-labels: true

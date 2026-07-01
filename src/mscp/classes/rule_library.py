@@ -9,9 +9,104 @@ and OS with method chaining.
 from __future__ import annotations
 
 import re
+from pathlib import Path
 from typing import Iterator
 
 from .macsecurityrule import Macsecurityrule
+
+
+# ------------------------------------------------------------------
+# File-level text patching helpers
+#
+# All mutation methods use these instead of rule.to_yaml() to avoid
+# the lossy round-trip through the Pydantic model (which flattens
+# per-version CCE/DISA dicts and renames YAML keys).
+# ------------------------------------------------------------------
+
+
+def _patch_list_remove(path: Path, value: str, item_indent: int) -> bool:
+    """Remove every ``- {value}`` list item at ``item_indent`` spaces from a YAML file.
+
+    Returns ``True`` if the file was modified.
+    """
+    text = path.read_text(encoding="utf-8")
+    prefix = " " * item_indent
+    new_text = re.sub(
+        rf"^{re.escape(prefix)}- {re.escape(value)}\s*\n",
+        "",
+        text,
+        flags=re.MULTILINE,
+    )
+    if new_text == text:
+        return False
+    path.write_text(new_text, encoding="utf-8")
+    return True
+
+
+def _patch_list_append(path: Path, list_key: str, value: str, key_indent: int) -> bool:
+    """Append ``- {value}`` to the list under ``list_key`` in a YAML file.
+
+    ``list_key`` must appear at exactly ``key_indent`` leading spaces.
+    Appends after the last existing item in the block. Returns ``True`` if
+    the file was modified.
+    """
+    text = path.read_text(encoding="utf-8")
+    item_prefix = " " * (key_indent + 2)
+    item_line = f"{item_prefix}- {value}\n"
+    pattern = (
+        rf"(^{re.escape(' ' * key_indent)}{re.escape(list_key)}:\n"
+        rf"(?:{re.escape(item_prefix)}- [^\n]*\n)*)"
+    )
+    new_text = re.sub(
+        pattern,
+        lambda m: m.group(1) + item_line,
+        text,
+        flags=re.MULTILINE,
+    )
+    if new_text == text:
+        return False
+    path.write_text(new_text, encoding="utf-8")
+    return True
+
+
+def _patch_nist_control_add_sorted(path: Path, control: str) -> bool:
+    """Add ``control`` to the ``800-53r5:`` list, keeping entries sorted.
+
+    Returns ``True`` if the file was modified.
+    """
+    text = path.read_text(encoding="utf-8")
+    match = re.search(r"(    800-53r5:\n)((?:      - [^\n]+\n)*)", text)
+    if not match:
+        return False
+    header = match.group(1)
+    items = re.findall(r"      - ([^\n]+)", match.group(2))
+    if control in items:
+        return False
+    items.append(control)
+    items.sort()
+    new_block = header + "".join(f"      - {item}\n" for item in items)
+    new_text = text[: match.start()] + new_block + text[match.end() :]
+    path.write_text(new_text, encoding="utf-8")
+    return True
+
+
+def _patch_benchmark_remove(path: Path, name: str) -> bool:
+    """Remove all benchmark entries with ``name`` from every ``benchmarks:`` block.
+
+    Handles both single-line entries (``- name: X``) and entries with an
+    optional ``severity:`` continuation line. Returns ``True`` if modified.
+    """
+    text = path.read_text(encoding="utf-8")
+    new_text = re.sub(
+        rf"^        - name: {re.escape(name)}\n(?:          severity: [^\n]+\n)?",
+        "",
+        text,
+        flags=re.MULTILINE,
+    )
+    if new_text == text:
+        return False
+    path.write_text(new_text, encoding="utf-8")
+    return True
 
 
 def _normalize_control_id(control: str) -> str:
@@ -47,7 +142,11 @@ class RuleLibrary:
         for r in self._rules:
             self._index.setdefault(r.rule_id, []).append(r)
             version_str = str(float(r.os_version))
-            for b in r.platforms.get(r.os_type, {}).get(version_str, {}).get("benchmarks", []):
+            for b in (
+                r.platforms.get(r.os_type, {})
+                .get(version_str, {})
+                .get("benchmarks", [])
+            ):
                 name = b.get("name")
                 if name:
                     self._benchmarks.add(name)
@@ -145,7 +244,9 @@ class RuleLibrary:
             return self._rules[key]
         raise TypeError(f"indices must be int or str, not {type(key).__name__}")
 
-    def get(self, rule_id: str, default: Macsecurityrule | None = None) -> Macsecurityrule | None:
+    def get(
+        self, rule_id: str, default: Macsecurityrule | None = None
+    ) -> Macsecurityrule | None:
         """Return the rule with the given ``rule_id``, or ``default`` if absent.
 
         Raises ``KeyError`` if the ID matches rules from multiple platforms;
@@ -235,10 +336,16 @@ class RuleLibrary:
             RuleLibrary: Matching rules in their original order.
         """
         normalized = _normalize_control_id(control)
-        return RuleLibrary([
-            r for r in self._rules
-            if any(_normalize_control_id(c) == normalized for c in (r.references.nist.nist_800_53r5 or []))
-        ])
+        return RuleLibrary(
+            [
+                r
+                for r in self._rules
+                if any(
+                    _normalize_control_id(c) == normalized
+                    for c in (r.references.nist.nist_800_53r5 or [])
+                )
+            ]
+        )
 
     def by_tag(self, tag: str) -> RuleLibrary:
         """Return a new library containing only rules tagged with ``tag``.
@@ -290,8 +397,7 @@ class RuleLibrary:
         for r in self._rules:
             version_str = str(float(r.os_version))
             benchmarks = (
-                r.platforms
-                .get(r.os_type, {})
+                r.platforms.get(r.os_type, {})
                 .get(version_str, {})
                 .get("benchmarks", [])
             )
@@ -316,6 +422,173 @@ class RuleLibrary:
         """
         lower = platform.lower()
         return RuleLibrary([r for r in self._rules if r.os_type.lower() == lower])
+
+    # ------------------------------------------------------------------
+    # Mutations
+    # ------------------------------------------------------------------
+
+    def add_tag(self, tag: str) -> RuleLibrary:
+        """Add ``tag`` to every rule in this library and write each source file once.
+
+        Args:
+            tag (str): Tag to add.
+
+        Returns:
+            RuleLibrary: ``self``, for method chaining.
+        """
+        seen: set = set()
+        for rule in self._rules:
+            if tag not in rule.tags:
+                rule.tags.append(tag)
+            if rule.source_file and rule.source_file not in seen:
+                seen.add(rule.source_file)
+                _patch_list_append(rule.source_file, "tags", tag, key_indent=0)
+        return self
+
+    def remove_tag(self, tag: str) -> RuleLibrary:
+        """Remove ``tag`` from every rule in this library and write each source file once.
+
+        Args:
+            tag (str): Tag to remove.
+
+        Returns:
+            RuleLibrary: ``self``, for method chaining.
+        """
+        seen: set = set()
+        for rule in self._rules:
+            if tag in rule.tags:
+                rule.tags.remove(tag)
+            if rule.source_file and rule.source_file not in seen:
+                seen.add(rule.source_file)
+                _patch_list_remove(rule.source_file, tag, item_indent=2)
+        return self
+
+    def add_nist_control(self, control: str) -> RuleLibrary:
+        """Add a NIST SP 800-53r5 control to every rule in this library and write each source file once.
+
+        The control is inserted in sorted order within the ``800-53r5:`` list.
+
+        Args:
+            control (str): Control identifier to add (e.g. ``"AC-2"``).
+                Normalized to uppercase with no leading zeros before comparison.
+
+        Returns:
+            RuleLibrary: ``self``, for method chaining.
+        """
+        normalized = _normalize_control_id(control)
+        canonical = control.upper()
+        seen: set = set()
+        for rule in self._rules:
+            controls = rule.references.nist.nist_800_53r5 or []
+            if not any(_normalize_control_id(c) == normalized for c in controls):
+                rule.references.nist.nist_800_53r5 = sorted(controls + [canonical])
+            if rule.source_file and rule.source_file not in seen:
+                seen.add(rule.source_file)
+                _patch_nist_control_add_sorted(rule.source_file, canonical)
+        return self
+
+    def remove_nist_control(self, control: str) -> RuleLibrary:
+        """Remove a NIST SP 800-53r5 control from every rule in this library and write each source file once.
+
+        Args:
+            control (str): Control identifier to remove (e.g. ``"AC-20"``).
+                Normalized to uppercase with no leading zeros before comparison.
+
+        Returns:
+            RuleLibrary: ``self``, for method chaining.
+        """
+        normalized = _normalize_control_id(control)
+        seen: set = set()
+        for rule in self._rules:
+            if rule.references.nist.nist_800_53r5:
+                remaining = [
+                    c
+                    for c in rule.references.nist.nist_800_53r5
+                    if _normalize_control_id(c) != normalized
+                ]
+                rule.references.nist.nist_800_53r5 = remaining or None
+            if rule.source_file and rule.source_file not in seen:
+                seen.add(rule.source_file)
+                _patch_list_remove(rule.source_file, control, item_indent=6)
+        return self
+
+    def add_benchmark(self, name: str, severity: str | None = None) -> RuleLibrary:
+        """Add a benchmark entry to every rule in this library and write each source file once.
+
+        Appends ``- name: {name}`` (and optionally ``severity: {severity}``) to
+        every ``benchmarks:`` block that corresponds to a version present in
+        this library. Entries are added only if the benchmark is not already
+        present.
+
+        Args:
+            name (str): Benchmark name (e.g. ``"cis_lvl1"``).
+            severity (str | None): Optional severity string (e.g. ``"medium"``).
+
+        Returns:
+            RuleLibrary: ``self``, for method chaining.
+        """
+        by_file: dict = {}
+        for rule in self._rules:
+            if rule.source_file:
+                by_file.setdefault(rule.source_file, []).append(rule)
+
+        entry_suffix = (f"\n          severity: {severity}") if severity else ""
+
+        for source_file, rules in by_file.items():
+            text = source_file.read_text(encoding="utf-8")
+            for rule in rules:
+                version_str = str(float(rule.os_version))
+                os_type = rule.os_type
+                benchmarks_list = (
+                    rule.platforms.get(os_type, {})
+                    .get(version_str, {})
+                    .get("benchmarks", [])
+                )
+                if any(b.get("name") == name for b in benchmarks_list):
+                    continue
+                rule.platforms.setdefault(os_type, {}).setdefault(
+                    version_str, {}
+                ).setdefault("benchmarks", []).append(
+                    {"name": name, **({"severity": severity} if severity else {})}
+                )
+                # Find the benchmarks: block within the version's section and append
+                version_pattern = (
+                    rf"(    '{re.escape(version_str)}':\n"
+                    rf"(?:(?!    (?:'[0-9]|[a-zA-Z]))[^\n]*\n)*?"
+                    rf"      benchmarks:\n"
+                    rf"(?:        - name: [^\n]+\n(?:          severity: [^\n]+\n)?)*)"
+                )
+                entry_line = f"        - name: {name}{entry_suffix}\n"
+                text = re.sub(
+                    version_pattern,
+                    lambda m, entry_line=entry_line: m.group(0) + entry_line,
+                    text,
+                    flags=re.MULTILINE,
+                )
+            source_file.write_text(text, encoding="utf-8")
+
+        return self
+
+    def remove_benchmark(self, name: str) -> RuleLibrary:
+        """Remove a benchmark entry from every rule in this library and write each source file once.
+
+        Args:
+            name (str): Benchmark name to remove (e.g. ``"cis_lvl1"``).
+
+        Returns:
+            RuleLibrary: ``self``, for method chaining.
+        """
+        seen: set = set()
+        for rule in self._rules:
+            version_str = str(float(rule.os_version))
+            version_data = rule.platforms.get(rule.os_type, {}).get(version_str, {})
+            version_data["benchmarks"] = [
+                b for b in version_data.get("benchmarks", []) if b.get("name") != name
+            ]
+            if rule.source_file and rule.source_file not in seen:
+                seen.add(rule.source_file)
+                _patch_benchmark_remove(rule.source_file, name)
+        return self
 
     def by_os(
         self,
