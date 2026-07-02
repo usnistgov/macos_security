@@ -33,6 +33,11 @@ RUN apk add --no-cache --virtual .build-deps \
     rust \
     cargo
 
+ARG BUILD_SHA=unknown
+ARG IMAGE_REPO=unknown
+ENV MSCP_BUILD_SHA=${BUILD_SHA}
+ENV MSCP_IMAGE_REPO=${IMAGE_REPO}
+
 WORKDIR /mscp
 
 # Install Python dependencies before copying source (layer cache is not invalidated by code changes)
@@ -49,7 +54,9 @@ RUN apk del .build-deps
 
 COPY . .
 
-RUN adduser -D -u 1001 mscp && chown -R mscp:mscp /mscp
+RUN adduser -D -u 1001 mscp && chown -R mscp:mscp /mscp && \
+    chmod +x /mscp/.github/container/entrypoint.sh
 USER mscp
 
+ENTRYPOINT ["/mscp/.github/container/entrypoint.sh"]
 CMD ["sh"]
