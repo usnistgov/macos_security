@@ -304,8 +304,8 @@ def generate_guidance(sp: Yaspin, args: argparse.Namespace) -> None:
         )
 
     if args.xlsx:
-        logger.info("Generating Excel document")
-        sp.text = "Generating Excel document"
+        logger.info("Generating excel file")
+        sp.text = "Generating excel file"
         time.sleep(1)
         generate_excel(spreadsheet_output_file, baseline)
 
@@ -313,8 +313,8 @@ def generate_guidance(sp: Yaspin, args: argparse.Namespace) -> None:
         show_all_tags = True
 
     if args.markdown:
-        logger.info("Generating markdown documents")
-        sp.text = "Generating markdown documents"
+        logger.info("Generating markdown file")
+        sp.text = "Generating markdown file"
         time.sleep(1)
         generate_documents(
             sp,
@@ -332,8 +332,8 @@ def generate_guidance(sp: Yaspin, args: argparse.Namespace) -> None:
         )
 
     if args.markdown_tree:
-        logger.info("Generating paginated Markdown tree")
-        sp.text = "Generating Markdown tree"
+        logger.info("Generating paginated markdown tree files")
+        sp.text = "Generating markdown tree files"
         time.sleep(1)
         generate_markdown_tree(
             build_path,
@@ -389,41 +389,39 @@ def generate_guidance(sp: Yaspin, args: argparse.Namespace) -> None:
             current_version_data,
         )
 
-        logger.info("Generating Excel document")
-        sp.text = "Generating Excel document"
+        logger.info("Generating excel file")
+        sp.text = "Generating excel file"
         time.sleep(1)
         generate_excel(spreadsheet_output_file, baseline)
 
-        if not args.markdown:
-            logger.info("Generating markdown documents")
-            sp.text = "Generating markdown"
-            time.sleep(1)
-            generate_documents(
-                sp,
-                md_output_file,
-                baseline,
-                b64logo,
-                pdf_theme,
-                html_css,
-                logo_path,
-                baseline.platform["os"],
-                current_version_data,
-                show_all_tags,
-                output_format="markdown",
-                language=args.language,
-            )
+        logger.info("Generating markdown file")
+        sp.text = "Generating markdown document"
+        time.sleep(1)
+        generate_documents(
+            sp,
+            md_output_file,
+            baseline,
+            b64logo,
+            pdf_theme,
+            html_css,
+            logo_path,
+            baseline.platform["os"],
+            current_version_data,
+            show_all_tags,
+            output_format="markdown",
+            language=args.language,
+        )
 
-        if not args.markdown_tree:
-            logger.info("Generating paginated Markdown tree")
-            sp.text = "Generating Markdown tree"
-            time.sleep(1)
-            generate_markdown_tree(
-                build_path,
-                baseline,
-                current_version_data,
-                show_all_tags,
-                language=args.language,
-            )
+        logger.info("Generating paginated markdown tree files")
+        sp.text = "Generating markdown tree files"
+        time.sleep(1)
+        generate_markdown_tree(
+            build_path,
+            baseline,
+            current_version_data,
+            show_all_tags,
+            language=args.language,
+        )
 
         logger.info("Generating JSON manifest")
         sp.text = "Generating JSON manifest"
