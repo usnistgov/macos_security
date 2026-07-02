@@ -61,9 +61,10 @@ PYEOF
 
     if [ -n "${remote_sha}" ] && [ "${MSCP_BUILD_SHA}" != "${remote_sha}" ]; then
         owner="${MSCP_IMAGE_REPO%%/*}"
-        printf '\n*** A newer version of the mscp container is available. ***\n'
-        printf '    docker:    docker pull ghcr.io/%s/mscp_2.0:latest\n' "${owner}"
-        printf '    container: container pull ghcr.io/%s/mscp_2.0:latest\n\n' "${owner}"
+        printf '\n*** A newer version of the mSCP container is available. ***\n'
+        printf 'Please update to the latest version to ensure you have the most recent rules and features.\n\n'
+        printf 'Exit the container and run the following command to update:\n'
+        printf '    container image pull ghcr.io/%s/mscp_2.0:latest\n\n' "${owner}"
     fi
 fi
 
