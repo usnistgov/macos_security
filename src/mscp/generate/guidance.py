@@ -10,6 +10,7 @@ before profile signing.
 
 # Standard python modules
 import argparse
+import shutil
 import sys
 import tempfile
 import time
@@ -128,9 +129,7 @@ def _auto_migrate_legacy(args: argparse.Namespace) -> Path:
 
     missing = lb.migrate(output_path, platform=platform_override)
 
-    logger.info(
-        "Auto-migrated legacy baseline {} → {}", source.name, output_path.name
-    )
+    logger.info("Auto-migrated legacy baseline {} → {}", source.name, output_path.name)
     if missing:
         logger.warning(
             "{} rule(s) from the legacy baseline were not found in the "
@@ -212,15 +211,19 @@ def generate_guidance(sp: Yaspin, args: argparse.Namespace) -> None:
     if args.audit_name:
         audit_name = args.audit_name
 
+    # process logo/banner for documents
+    logo_filename = f"mscp_banner_{baseline.platform['os'].lower()}_{'dark' if args.dark else 'light'}.png"
+    custom_logo = Path(config["custom"]["images_dir"], logo_filename)
+
     if args.logo:
-        logo_path = args.logo
-    else:
-        _logo_filename = f"mscp_banner_{baseline.platform['os'].lower()}_{'dark' if args.dark else 'light'}.png"
-        _custom_logo = Path(config["custom"]["images_dir"], _logo_filename)
-        logo_path = (
-            _custom_logo if _custom_logo.exists()
-            else Path(config["images_dir"], _logo_filename)
-        ).absolute()
+        logger.info(f"Copying custom logo file {args.logo} to {str(custom_logo)}")
+        shutil.copy(str(args.logo), str(custom_logo))
+
+    logo_path = (
+        custom_logo
+        if custom_logo.exists()
+        else Path(config["images_dir"], logo_filename)
+    ).absolute()
 
     if not logo_path.exists():
         logger.warning(f"Logo not found at {logo_path}, using default instead.")
