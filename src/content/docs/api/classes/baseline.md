@@ -16,44 +16,11 @@ the `Baseline`, `Profile`, and `Author` Pydantic models, along with class
 methods to load baselines from YAML and write them back out.
 
 
+## Re-exports (`__all__`)
+
+`Author`, `Profile`, `Baseline`
+
 ## Classes
-
-### BaseModelWithAccessors
-
-```python
-class BaseModelWithAccessors(BaseModel)
-```
-
-Pydantic base class with dict-style accessors.
-
-Adds `get` plus ``__getitem__`` / ``__setitem__`` so subclasses can be
-treated either as Pydantic models or as plain dict-like objects. Item
-access is restricted to declared model fields to keep typos from
-silently creating new attributes.
-
-
-#### Methods
-
-##### get
-
-```python
-get(self, attr: str, default: Any=None) -> Any
-```
-
-Return the value of `attr`, or `default` if it isn't set.
-
-Unlike ``__getitem__``, this never raises and is not restricted to
-declared model fields — it just delegates to `getattr`.
-
-**Args**
-
-- **`attr`** *(str)* — Attribute name to read.
-- **`default`** *(Any)* — Value returned when ``attr`` is absent. Defaults to ``None``.
-
-**Returns**
-
-- **`Any`** — The attribute value, or ``default`` if no such attribute exists on the instance.
-
 
 ### Author
 
