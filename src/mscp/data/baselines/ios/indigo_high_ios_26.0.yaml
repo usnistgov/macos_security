@@ -102,9 +102,12 @@ profile:
       - os_rcs_messaging_disable
       - os_require_managed_pasteboard_enforce
       - os_safari_JavaScript_disable
+      - os_safari_clear_history_disable
       - os_safari_cookies_set
+      - os_safari_disable
       - os_safari_force_fraud_warning_enable
       - os_safari_popups_disable
+      - os_safari_private_browsing_disable
       - os_safari_reader_summary_disable
       - os_screen_observation_remote_disable
       - os_screen_observation_unprompted_disable
@@ -113,6 +116,7 @@ profile:
       - os_show_notification_center_lock_screen_disable
       - os_siri_allow_dictation_disable
       - os_siri_server_logging_disable
+      - os_siri_service_disable
       - os_siri_user_generated_content_disable
       - os_siri_when_locked_disabled
       - os_spell_check_disable

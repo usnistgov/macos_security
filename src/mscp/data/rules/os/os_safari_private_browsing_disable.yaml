@@ -7,6 +7,10 @@ references:
     cce:
       macos_26:
         - CCE-95599-7
+  bsi:
+    indigo:
+      ios_26:
+        - ANNEX K
 platforms:
   macOS:
     '26.0': {}
@@ -19,6 +23,15 @@ platforms:
           EOS
         result:
           string: 'false'
+    introduced: '26.0'
+  iOS:
+    '26.0':
+      supervised: true
+      benchmarks:
+        - name: indigo_base
+          severity: high
+        - name: indigo_high
+          severity: high
     introduced: '26.0'
 tags:
   - none
