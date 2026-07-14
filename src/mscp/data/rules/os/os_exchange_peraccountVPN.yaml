@@ -47,4 +47,5 @@ odv:
 mobileconfig_info:
   - PayloadType: com.apple.mail.managed
     PayloadContent:
+      - EmailAccountType: EmailTypeIMAP
       - VPNUUID: $ODV

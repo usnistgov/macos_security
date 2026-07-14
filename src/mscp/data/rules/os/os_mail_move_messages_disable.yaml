@@ -96,6 +96,7 @@ platforms:
       mobileconfig_info:
         - PayloadType: com.apple.mail.managed
           PayloadContent:
+            - EmailAccountType: EmailTypeIMAP
             - PreventMove: false
     '17.0':
       supervised: false
@@ -115,6 +116,7 @@ platforms:
       mobileconfig_info:
         - PayloadType: com.apple.mail.managed
           PayloadContent:
+            - EmailAccountType: EmailTypeIMAP
             - PreventMove: false
     introduced: '5.0'
   visionOS:
@@ -137,4 +139,5 @@ tags:
 mobileconfig_info:
   - PayloadType: com.apple.mail.managed
     PayloadContent:
+      - EmailAccountType: EmailTypeIMAP
       - PreventMove: true
