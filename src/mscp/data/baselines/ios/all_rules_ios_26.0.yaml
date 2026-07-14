@@ -126,10 +126,13 @@ profile:
       - os_rcs_messaging_disable
       - os_require_managed_pasteboard_enforce
       - os_safari_JavaScript_disable
+      - os_safari_clear_history_disable
       - os_safari_cookies_set
+      - os_safari_disable
       - os_safari_force_fraud_warning_enable
       - os_safari_password_autofill_disable
       - os_safari_popups_disable
+      - os_safari_private_browsing_disable
       - os_safari_reader_summary_disable
       - os_screen_observation_remote_disable
       - os_screen_observation_unprompted_disable

@@ -116,7 +116,6 @@ profile:
       - os_show_notification_center_lock_screen_disable
       - os_siri_allow_dictation_disable
       - os_siri_server_logging_disable
-      - os_siri_service_disable
       - os_siri_user_generated_content_disable
       - os_siri_when_locked_disabled
       - os_spell_check_disable
