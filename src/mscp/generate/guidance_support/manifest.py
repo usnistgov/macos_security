@@ -92,13 +92,11 @@ def generate_manifest(build_path: Path, baseline_name: str, baseline) -> None:
             if rule.mobileconfig_info:
                 rule_manifest["fix"]["mobile_config_info"] = []
                 for mc_info in rule.mobileconfig_info:
-                    profile = {}
                     for content in mc_info.payload_content:
-                        profile["domain"] = mc_info.payload_type
                         for k, v in content.items():
-                            profile["key"] = k
-                            profile["value"] = v
-                    rule_manifest["fix"]["mobile_config_info"].append(profile)
+                            rule_manifest["fix"]["mobile_config_info"].append(
+                                {"domain": mc_info.payload_type, "key": k, "value": v}
+                            )
             if rule.ddm_info:
                 rule_manifest["fix"]["ddm_info"] = {}
                 for ddminfo, value in rule.ddm_info.items():

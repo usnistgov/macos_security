@@ -134,8 +134,8 @@ odv:
     validation:
       min: 0
   recommended: 5
-  cis_lvl1: 15
-  cis_lvl2: 15
+  cis_lvl1: 24
+  cis_lvl2: 24
   indigo_base: 2
   indigo_high: 2
   visionos_stig: 2

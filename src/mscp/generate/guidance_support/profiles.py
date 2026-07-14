@@ -9,6 +9,7 @@ preferences plists.  `get_payload_content_by_type` groups rule payloads;
 
 # Standard python modules
 from collections import defaultdict
+from datetime import date
 from pathlib import Path
 from typing import Any, Dict, List
 
@@ -153,7 +154,7 @@ def generate_profiles(
         identifier=f"consolidated.{baseline_name}",
         organization="macOS Security Compliance Project",
         displayname=f"{baseline_name} settings",
-        description=f"Consolidated configuration settings for {baseline_name}.",
+        description=f"Consolidated configuration settings for {baseline_name} - Created on {date.today()}.",
     )
 
     for payload_type, settings_list in grouped_payloads.items():
@@ -179,9 +180,7 @@ def generate_profiles(
             c if c.isalnum() or c in "._-" else "_" for c in payload_type
         )
         identifier = f"mscp.{sanitized_payload_type}.{baseline_name}"
-        description = (
-            f"Configuration settings for the {payload_type} preference domain."
-        )
+        description = f"Configuration settings for the {payload_type} preference domain - Created on {date.today()}."
         organization = "macOS Security Compliance Project"
         displayname = f"[{baseline_name}] {payload_type} settings"
 
@@ -203,13 +202,11 @@ def generate_profiles(
                             granular_profile = Payload(
                                 identifier=f"mscp.{domain}.{setting}",
                                 organization=organization,
-                                description=f"Configuration for {domain}:{setting}",
+                                description=f"Configuration for {domain}:{setting} - Created on {date.today()}",
                                 displayname=f"[{domain}] - {setting}",
                             )
 
-                            granular_profile.add_mcx_payload(
-                                domain, {setting: value}, setting
-                            )
+                            granular_profile.add_mcx_payload(domain, {setting: value})
                             granular_profile.save_to_plist(
                                 granular_output_path / f"{setting}.mobileconfig"
                             )
@@ -231,12 +228,10 @@ def generate_profiles(
                     granular_profile = Payload(
                         identifier=f"mscp.{payload_type}.{setting}",
                         organization=organization,
-                        description=f"Configuration for {payload_type}:{setting}",
+                        description=f"Configuration for {payload_type}:{setting} - Created on {date.today()}",
                         displayname=f"[{payload_type}] - {setting}",
                     )
-                    granular_profile.add_payload(
-                        payload_type, {setting: value}, setting
-                    )
+                    granular_profile.add_payload(payload_type, {setting: value})
                     granular_profile.save_to_plist(
                         granular_output_path / f"{setting}.mobileconfig"
                     )

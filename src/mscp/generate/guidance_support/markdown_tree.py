@@ -38,7 +38,7 @@ MDX-safety notes (Docusaurus / Starlight compile ``.md`` through MDX by
 default):
 - ``{``/``}`` are entity-encoded outside fenced blocks (JSX expression syntax).
 - Bare ``<`` not opening a known HTML tag is entity-encoded (JSX element syntax).
-- HTML void tags (``<br>``, ``<hr>``, ``<img>``) are normalised to self-closing
+- HTML void tags (``<br>``, ``<hr>``, ``<img>``) are normalized to self-closing
   form (``<br />``) so MDX does not flag unclosed elements.
 
 Known limitation: bare ``<https://…>`` autolinks in rule prose are
@@ -142,7 +142,7 @@ def mdx_escape(value: str) -> str:
 
         def _stash(m: re.Match) -> str:
             tag = m.group(0)
-            # Normalise allowlisted void tags to self-closing JSX form here -
+            # Normalize allowlisted void tags to self-closing JSX form here -
             # never on raw input, which would mutate fenced/inline code.
             tag = void_tag.sub(
                 lambda v: f"<{v.group(1)}{(v.group(2) or '').rstrip()} />", tag
@@ -217,8 +217,8 @@ def _frontmatter(fields: dict[str, Any]) -> str:
     lines = ["---"]
     for key, value in fields.items():
         if isinstance(value, str):
-            sanitised = value.replace("\r", "").replace("\n", " ")
-            quoted = sanitised.replace("'", "''")
+            sanitized = value.replace("\r", "").replace("\n", " ")
+            quoted = sanitized.replace("'", "''")
             lines.append(f"{key}: '{quoted}'")
         else:
             lines.append(f"{key}: {value}")
@@ -303,12 +303,12 @@ def generate_markdown_tree(
     Directory and file names carry ``NN-`` numeric prefixes so generators that
     sort alphabetically by filename display content in the correct order without
     extra configuration.  The ``index.md`` naming follows the category-index
-    convention recognised by Docusaurus, Starlight, and MkDocs.
+    convention recognized by Docusaurus, Starlight, and MkDocs.
 
     Frontmatter is minimal - ``title`` only - and is safe to use in any
     CommonMark-based static site generator.  The rendered text is MDX-
     and CommonMark-safe by construction: ``{``/``}`` and bare ``<`` outside
-    fenced code blocks are entity-encoded, and HTML void tags are normalised to
+    fenced code blocks are entity-encoded, and HTML void tags are normalized to
     self-closing form.
 
     Drop the entire ``markdown_tree/`` directory (or its contents) into the
@@ -362,9 +362,7 @@ def generate_markdown_tree(
     overview_template = env.get_template("markdown_tree/index.md.jinja")
     index_body = overview_template.render(**context)
     index_page = (
-        _frontmatter({"title": baseline.title})
-        + "\n\n"
-        + mdx_escape(index_body)
+        _frontmatter({"title": baseline.title}) + "\n\n" + mdx_escape(index_body)
     )
     (output_root / "index.md").write_text(index_page, encoding="utf-8")
 
@@ -390,11 +388,7 @@ def generate_markdown_tree(
         for rule_position, rule in enumerate(profile.rules, start=1):
             rule_dict = rule.model_dump()
             body = rule_template.render(rule=rule_dict, **context)
-            page = (
-                _frontmatter({"title": rule.title})
-                + "\n\n"
-                + mdx_escape(body)
-            )
+            page = _frontmatter({"title": rule.title}) + "\n\n" + mdx_escape(body)
             rule_file = (
                 section_dir / f"{rule_position:02d}-{create_slug(rule.title)}.md"
             )

@@ -58,15 +58,11 @@ platforms:
         - name: cis_lvl1
         - name: cis_lvl2
         - name: nlmapgov_plus
-      enforcement_info:
-        fix: {}
     '15.0':
       benchmarks:
         - name: cis_lvl1
         - name: cis_lvl2
         - name: nlmapgov_plus
-      enforcement_info:
-        fix: {}
     '14.0':
       benchmarks:
         - name: cis_lvl1

@@ -6,6 +6,8 @@ from lxml import etree
 
 from ._base import BaseModelWithAccessors
 
+from pydantic import Field
+
 
 class Mobileconfigpayload(BaseModelWithAccessors):
     """A single payload inside a configuration profile.
@@ -21,8 +23,8 @@ class Mobileconfigpayload(BaseModelWithAccessors):
             within the payload.
     """
 
-    payload_type: str
-    payload_content: list[dict[str, Any]]
+    payload_type: str = Field(serialization_alias="PayloadType")
+    payload_content: list[dict[str, Any]] = Field(serialization_alias="PayloadContent")
 
 
 def create_value_element(value: Any) -> etree._Element:

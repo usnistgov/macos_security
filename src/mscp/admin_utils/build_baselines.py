@@ -84,7 +84,9 @@ def build_all_baselines(args: argparse.Namespace) -> None:
 
     # cache rules per (platform, version) so generate_baseline doesn't re-collect on every call
     platform_rules = {
-        platform: list(library.by_platform(platform).by_os(os_version=float(args.os_version)))
+        platform: list(
+            library.by_platform(platform).by_os(os_version=float(args.os_version))
+        )
         for platform in mscp_data["versions"]["platforms"]
     }
 
@@ -93,12 +95,21 @@ def build_all_baselines(args: argparse.Namespace) -> None:
         args.keyword = keyword
         for platform in platforms:
             args.os_name = platform.lower()
-            generate_baseline(args, admin=True, preloaded_rules=platform_rules.get(args.os_name, []))
+            generate_baseline(
+                args, admin=True, preloaded_rules=platform_rules.get(args.os_name, [])
+            )
 
     # process every discovered tag and generate a baseline file for every supported platform
     for platform in mscp_data["versions"]["platforms"]:
         args.os_name = platform
 
         for tag in all_tags:
+            # TODO: filtering out cmmc_lvl3 for macos and hicp_lp for ios/visionOS. They are incomplete and shouldn't be included.
+            if tag == "cmmc_lvl3" and platform == "macos":
+                continue
+            if tag == "hicp_lp" and (platform == "ios" or platform == "visionos"):
+                continue
             args.keyword = tag
-            generate_baseline(args, admin=True, preloaded_rules=platform_rules[platform])
+            generate_baseline(
+                args, admin=True, preloaded_rules=platform_rules[platform]
+            )

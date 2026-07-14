@@ -36,7 +36,7 @@
 {% trans %}Perform the following to configure the system to meet the requirements{% endtrans %}:
 {% endif %}
 
-{% if rule.mobileconfig_info is none and rule.enforcement_info.fix is not none or rule.enforcement_info.fix.shell %}
+{% if rule.enforcement_info.fix.shell %}
 {% trans %}Run the following command(s){% endtrans %}:
 
 [source,zsh,options="nowrap"]
@@ -61,7 +61,7 @@
 {% else %}
 {% if rule.os_name == "macos" %}
 {{ rule.enforcement_info.fix.shell }}
-{% else %}
+{% elif rule.mobileconfig_info %}
 {% trans %}Deploy a configuration profile containing the following payload.{% endtrans %}
 
 [source,xml]

@@ -24,12 +24,6 @@ repos:
       - id: yamllint
         args: ['--config-file', '.github/linters/.yamllint.yaml', '--strict']
 
-  - repo: https://github.com/DavidAnson/markdownlint-cli2
-    rev: v0.22.1
-    hooks:
-      - id: markdownlint-cli2
-        args: ['--config', '.github/linters/.markdownlint.yaml']
-
   # Spelling: cspell, same config as the `spellcheck` CI job.
   # Disabled for now (run with `--hook-stage manual`)
   - repo: https://github.com/streetsidesoftware/cspell-cli

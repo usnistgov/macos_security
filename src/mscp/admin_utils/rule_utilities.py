@@ -24,7 +24,39 @@ from ..common_utils import (
 
 from yaspin.core import Yaspin
 from yaspin.spinners import Spinners
-from ..classes import Macsecurityrule
+from ..classes import Macsecurityrule, Sectionmap
+
+
+def choose_from_mapping(mapping):
+    """
+    Prompt the user to choose from either:
+    - an Enum (like Sectionmap)
+    - a dict (like PLATFORM_MAP)
+
+    Returns the selected key in lowercase.
+    """
+
+    # Normalize input into a list of keys
+    if isinstance(mapping, dict):
+        items = list(mapping.values())
+    else:
+        # Assume it's an Enum
+        items = [m.name for m in mapping]
+
+    print("Please choose an option:\n")
+    for idx, key in enumerate(items, start=1):
+        print(f"{idx}. {key}")
+
+    while True:
+        try:
+            choice = int(input("\nEnter the number of your choice: ").strip())
+            if 1 <= choice <= len(items):
+                selected_key = items[choice - 1]
+                return selected_key.lower()
+            else:
+                print("Invalid choice — try again.")
+        except ValueError:
+            print("Please enter a valid number.")
 
 
 def get_rule_file(rule_id: str, rules_dir: Path) -> Path | None:
@@ -68,25 +100,81 @@ def add_new_rule(args: argparse.Namespace) -> None:
 
     build_path: Path = Path(config["custom"].get("rules_dir", ""))
 
-    rule_title: str = sanitize_input("Enter a title for the new rule: ")
-    rule_id: str = sanitize_input("Enter a unique ID for the new rule: ")
+    # prompt for platform
+    rule_platform: str = choose_from_mapping(PLATFORM_MAP)
 
-    references = {"nist": {}}
+    if rule_platform == "macos":
+        platform_info = {
+            PLATFORM_MAP[rule_platform]: {
+                "enforcement_info": {
+                    "check": {"shell": "", "result": {}},
+                    "fix": {"shell": "", "additional_info": {}},
+                },
+                "introduced": "",
+            }
+        }
+    else:
+        platform_info = {PLATFORM_MAP[rule_platform]: {}}
+
+    has_ddm = sanitize_input(
+        "Does this rule have DDM settings? [y/N]: ",
+        str,
+        range_=("Y", "y", "n", "N"),
+        default_="n",
+    )
+    if has_ddm == "y":
+        ddm_info = {
+            "declarationtype": "fill in ddm type",
+            "ddm_key": "fill in ddm key",
+            "ddm_value": "fill in ddm value",
+        }
+    else:
+        ddm_info = {}
+
+    has_mdm = sanitize_input(
+        "Does this rule have MDM settings? [y/N]: ",
+        str,
+        range_=("Y", "y", "n", "N"),
+        default_="n",
+    )
+    if has_mdm == "y":
+        mdm_info = [
+            {
+                "payload_type": "fill in mdm payload type",
+                "payload_content": [{"payload key": "payload value"}],
+            }
+        ]
+    else:
+        mdm_info = []
+
+    # prompt for section
+    rule_section: str = choose_from_mapping(Sectionmap)
+
+    rule_title: str = sanitize_input("Enter a title for the new rule: ")
+
+    rule_id: str = sanitize_input(
+        f"Enter a unique ID for the new rule (cannot contain spaces, use '_'): {rule_section}_"
+    )
+
+    references = {"nist": {"cce": []}}
 
     new_rule_dict = {
         "title": rule_title,
-        "rule_id": rule_id,
-        "discussion": "discuss all the things",
+        "rule_id": f"{rule_section}_{rule_id}",
+        "discussion": "Replace with appropriate discussion.",
         "references": references,
-        "mechanism": "Configuration Profile",
-        "os_name": args.os_name,
-        "os_type": args.os_name,
-        "section": "auditing",
+        "os_name": rule_platform,
+        "os_type": rule_platform,
+        "section": rule_section,
+        "platforms": platform_info,
+        "tags": ["new_rule"],
+        "ddm_info": ddm_info,
+        "mobileconfig_info": mdm_info,
     }
 
     new_rule = Macsecurityrule(**new_rule_dict)
 
-    rule_output_file: Path = build_path / f"{rule_id}.yaml"
+    rule_output_file: Path = build_path / f"{rule_section}_{rule_id}.yaml"
     new_rule.to_yaml(rule_output_file)
 
 

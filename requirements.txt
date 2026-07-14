@@ -30,7 +30,7 @@ openpyxl==3.1.5
     # via mscp (pyproject.toml)
 pandas==2.3.3
     # via mscp (pyproject.toml)
-pillow==11.2.1
+pillow==12.2.0
     # via mscp (pyproject.toml)
 pydantic==2.12.0
     # via mscp (pyproject.toml)
