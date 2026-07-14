@@ -1,3 +1,4 @@
+---
 id: os_airprint_force_trusted_TLS
 title: Requires trusted certificates for TLS printing communication
 discussion: |
@@ -35,6 +36,7 @@ references:
         - ANNEX K
 platforms:
   iOS:
+    '27.0': {}
     '26.0':
       supervised: false
       benchmarks:

@@ -1,3 +1,4 @@
+---
 id: os_secure_name_resolution
 title: Secure Name Address Resolution Service
 discussion: |-
@@ -25,9 +26,9 @@ references:
       - 4.9
 platforms:
   macOS:
+    '27.0': {}
     '26.0': {}
     '15.0': {}
-    '14.0': {}
 tags:
   - 800-53r5_low
   - 800-53r5_moderate

@@ -1,3 +1,4 @@
+---
 id: os_allow_prerelease_disable
 title: Disable the Ability to Install PreRelease Software
 discussion: |
@@ -20,6 +21,7 @@ references:
       - 'FMT_MOF_EXT.1.2 #47'
 platforms:
   visionOS:
+    '27.0': {}
     '26.0':
       benchmarks:
         - name: visionos_stig

@@ -1,3 +1,4 @@
+---
 id: audit_off_load_records
 title: Off-Load Audit Records
 discussion: |-
@@ -32,6 +33,7 @@ references:
       - 8.9
 platforms:
   macOS:
+    '27.0': {}
     '26.0':
       benchmarks:
         - name: nlmapgov_plus
@@ -40,7 +42,6 @@ platforms:
       benchmarks:
         - name: nlmapgov_plus
         - name: nlmapgov_base
-    '14.0': {}
 tags:
   - permanent
   - cisv8

@@ -1,3 +1,4 @@
+---
 id: audit_flags_ad_configure
 title: Configure System to Audit All Administrative Action Events
 discussion: |
@@ -94,6 +95,7 @@ references:
       - 8.5
 platforms:
   macOS:
+    '27.0': {}
     '26.0':
       benchmarks:
         - name: cis_lvl2
@@ -108,11 +110,6 @@ platforms:
           severity: medium
         - name: nlmapgov_plus
         - name: nlmapgov_base
-    '14.0':
-      benchmarks:
-        - name: cis_lvl2
-        - name: disa_stig
-          severity: medium
     enforcement_info:
       check:
         shell: /usr/bin/awk -F':' '/^flags/ { print $NF }' /etc/security/audit_control | /usr/bin/tr ',' '\n' | /usr/bin/grep -Ec 'ad'

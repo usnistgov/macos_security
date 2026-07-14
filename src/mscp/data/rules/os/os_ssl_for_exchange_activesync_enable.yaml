@@ -1,3 +1,4 @@
+---
 id: os_ssl_for_exchange_activesync_enable
 title: Ensure SSL for Exchange ActiveSync
 discussion: |
@@ -41,6 +42,7 @@ references:
       - 8.12
 platforms:
   iOS:
+    '27.0': {}
     '26.0':
       supervised: false
       benchmarks:
@@ -73,6 +75,7 @@ platforms:
           severity: medium
     introduced: '-1'
   visionOS:
+    '27.0': {}
     '26.0':
       supervised: false
       benchmarks:

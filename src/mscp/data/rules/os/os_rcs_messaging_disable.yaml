@@ -1,3 +1,4 @@
+---
 id: os_rcs_messaging_disable
 title: Disable RCS messaging
 discussion: |
@@ -19,6 +20,7 @@ references:
         - Annex K
 platforms:
   iOS:
+    '27.0': {}
     '26.0':
       supervised: false
       benchmarks:

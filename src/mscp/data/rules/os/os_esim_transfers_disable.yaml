@@ -1,3 +1,4 @@
+---
 id: os_esim_transfers_disable
 title: Ensure the ability to transfer an eSIM is set to Disabled
 discussion: |
@@ -21,6 +22,7 @@ references:
       - 'FMT_MOF_EXT.1.2 #47'
 platforms:
   iOS:
+    '27.0': {}
     '26.0':
       supervised: false
       benchmarks:

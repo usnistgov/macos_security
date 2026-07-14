@@ -1,5 +1,6 @@
+---
 id: supplemental_cis_manual
-title: "CIS Manual Recommendations"
+title: CIS Manual Recommendations
 discussion: |
   List of CIS recommendations that are manual check in the CIS macOS Benchmark.
 
@@ -82,6 +83,7 @@ references:
   nist: {}
 platforms:
   macOS:
+    '27.0': {}
     '26.0':
       benchmarks:
         - name: cis_lvl1

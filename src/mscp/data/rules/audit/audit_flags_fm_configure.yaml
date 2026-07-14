@@ -1,3 +1,4 @@
+---
 id: audit_flags_fm_configure
 title: Configure System to Audit All Changes of Object Attributes
 discussion: |
@@ -75,6 +76,7 @@ references:
       - 8.L.A
 platforms:
   macOS:
+    '27.0': {}
     '26.0':
       benchmarks:
         - name: disa_stig
@@ -83,10 +85,6 @@ platforms:
         fix:
           shell: /usr/bin/grep -qE "^flags.*,\s*fm" /etc/security/audit_control || /usr/bin/sed -i.bak '/^flags/ s/$/,fm/' /etc/security/audit_control;/usr/sbin/audit -s
     '15.0':
-      benchmarks:
-        - name: disa_stig
-          severity: medium
-    '14.0':
       benchmarks:
         - name: disa_stig
           severity: medium

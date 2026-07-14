@@ -1,3 +1,4 @@
+---
 id: auth_smartcard_certificate_trust_enforce_moderate
 title: Set Smartcard Certificate Trust to Moderate
 discussion: |
@@ -48,15 +49,12 @@ references:
       - 3.L.C
 platforms:
   macOS:
+    '27.0': {}
     '26.0':
       benchmarks:
         - name: disa_stig
           severity: medium
     '15.0':
-      benchmarks:
-        - name: disa_stig
-          severity: medium
-    '14.0':
       benchmarks:
         - name: disa_stig
           severity: medium

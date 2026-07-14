@@ -1,3 +1,4 @@
+---
 id: os_unpaired_boot_disable
 title: Disable the Option to Recover the Device via an Unpaired Host
 discussion: |
@@ -24,6 +25,7 @@ references:
       - 8.27
 platforms:
   iOS:
+    '27.0': {}
     '26.0':
       supervised: true
       benchmarks:

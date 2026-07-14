@@ -1,3 +1,4 @@
+---
 id: os_disallow_enterprise_app_trust
 title: Disallow Apps to be Installed from Unauthorized Sources
 discussion: |
@@ -43,6 +44,7 @@ references:
       - 8.27
 platforms:
   iOS:
+    '27.0': {}
     '26.0':
       supervised: false
       benchmarks:
@@ -75,6 +77,7 @@ platforms:
           severity: low
     introduced: '9.0'
   visionOS:
+    '27.0': {}
     '26.0':
       supervised: false
     introduced: '2.0'

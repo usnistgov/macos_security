@@ -1,3 +1,4 @@
+---
 id: audit_enforce_dual_auth
 title: Enforce Dual Authorization for Movement and Deletion of Audit Information
 discussion: |-
@@ -24,9 +25,9 @@ references:
       - SRG-OS-000360-GPOS-00147
 platforms:
   macOS:
+    '27.0': {}
     '26.0': {}
     '15.0': {}
-    '14.0': {}
 tags:
   - permanent
   - cnssi-1253_high

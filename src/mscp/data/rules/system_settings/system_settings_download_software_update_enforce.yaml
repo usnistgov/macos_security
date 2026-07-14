@@ -1,3 +1,4 @@
+---
 id: system_settings_download_software_update_enforce
 title: Enforce Software Update Downloads Updates Automatically using DDM.
 discussion: |
@@ -16,6 +17,7 @@ references:
       - 7.4
 platforms:
   macOS:
+    '27.0': {}
     '26.0':
       benchmarks:
         - name: nlmapgov_plus

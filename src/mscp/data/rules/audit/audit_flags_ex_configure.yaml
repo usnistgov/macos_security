@@ -1,3 +1,4 @@
+---
 id: audit_flags_ex_configure
 title: Configure System to Audit All Failed Program Execution on the System
 discussion: |
@@ -63,17 +64,13 @@ references:
       - 8.5
 platforms:
   macOS:
+    '27.0': {}
     '26.0':
       benchmarks:
         - name: cis_lvl2
         - name: disa_stig
           severity: medium
     '15.0':
-      benchmarks:
-        - name: cis_lvl2
-        - name: disa_stig
-          severity: medium
-    '14.0':
       benchmarks:
         - name: cis_lvl2
         - name: disa_stig

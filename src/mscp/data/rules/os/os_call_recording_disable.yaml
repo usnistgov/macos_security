@@ -1,3 +1,4 @@
+---
 id: os_call_recording_disable
 title: Disable Call Recording
 discussion: |
@@ -35,6 +36,7 @@ references:
         - ANNEX K
 platforms:
   iOS:
+    '27.0': {}
     '26.0':
       supervised: false
       benchmarks:

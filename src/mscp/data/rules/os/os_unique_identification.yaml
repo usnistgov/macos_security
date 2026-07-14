@@ -1,3 +1,4 @@
+---
 id: os_unique_identification
 title: Uniquely Identify Users and Processes
 discussion: |-
@@ -26,9 +27,9 @@ references:
       - 6.1
 platforms:
   macOS:
+    '27.0': {}
     '26.0': {}
     '15.0': {}
-    '14.0': {}
     enforcement_info:
       fix:
         additional_info: The technology inherently meets this requirement. No fix is required.

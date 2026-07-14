@@ -1,3 +1,4 @@
+---
 id: os_application_allow_list
 title: Define Allowed Applications
 discussion: |
@@ -46,6 +47,7 @@ references:
         - ANNEX D (Section 5.8 - App-Installation)
 platforms:
   iOS:
+    '27.0': {}
     '26.0':
       supervised: true
       benchmarks:

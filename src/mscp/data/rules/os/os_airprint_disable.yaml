@@ -1,3 +1,4 @@
+---
 id: os_airprint_disable
 title: Disable AirPrint
 discussion: |
@@ -33,6 +34,7 @@ references:
         - ANNEX K
 platforms:
   iOS:
+    '27.0': {}
     '26.0':
       supervised: false
       benchmarks:

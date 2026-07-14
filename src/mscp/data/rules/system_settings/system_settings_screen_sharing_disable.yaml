@@ -1,3 +1,4 @@
+---
 id: system_settings_screen_sharing_disable
 title: Disable Screen Sharing and Apple Remote Desktop
 discussion: |
@@ -55,6 +56,7 @@ references:
       - 4.8
 platforms:
   macOS:
+    '27.0': {}
     '26.0':
       benchmarks:
         - name: cis_lvl1
@@ -75,17 +77,6 @@ platforms:
         - name: disa_stig
           severity: medium
         - name: nlmapgov_plus
-      enforcement_info:
-        check:
-          shell: /bin/launchctl print-disabled system | /usr/bin/grep -c '"com.apple.screensharing" => disabled'
-          result:
-            integer: 1
-    '14.0':
-      benchmarks:
-        - name: cis_lvl1
-        - name: cis_lvl2
-        - name: disa_stig
-          severity: medium
       enforcement_info:
         check:
           shell: /bin/launchctl print-disabled system | /usr/bin/grep -c '"com.apple.screensharing" => disabled'

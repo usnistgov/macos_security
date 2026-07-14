@@ -1,3 +1,4 @@
+---
 id: system_settings_improve_siri_dictation_disable
 title: Disable Improve Siri and Dictation Information to Apple
 discussion: |
@@ -58,6 +59,7 @@ references:
       - 4.8
 platforms:
   macOS:
+    '27.0': {}
     '26.0':
       benchmarks:
         - name: cis_lvl1
@@ -72,11 +74,6 @@ platforms:
         - name: disa_stig
           severity: medium
         - name: nlmapgov_plus
-    '14.0':
-      benchmarks:
-        - name: cis_lvl2
-        - name: disa_stig
-          severity: medium
     enforcement_info:
       check:
         shell: |-

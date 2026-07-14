@@ -1,3 +1,4 @@
+---
 id: os_on_device_dictation_enforce
 title: Enforce On Device Dictation
 discussion: |
@@ -82,6 +83,7 @@ references:
         - ANNEX K
 platforms:
   macOS:
+    '27.0': {}
     '26.0':
       benchmarks:
         - name: cis_lvl1
@@ -96,12 +98,6 @@ platforms:
         - name: disa_stig
           severity: medium
         - name: nlmapgov_plus
-    '14.0':
-      benchmarks:
-        - name: cis_lvl1
-        - name: cis_lvl2
-        - name: disa_stig
-          severity: medium
     enforcement_info:
       check:
         shell: |-
@@ -113,6 +109,7 @@ platforms:
           string: 'true'
     introduced: '14.0'
   iOS:
+    '27.0': {}
     '26.0':
       supervised: false
       benchmarks:
@@ -143,6 +140,7 @@ platforms:
           severity: medium
     introduced: '14.5'
   visionOS:
+    '27.0': {}
     '26.0':
       supervised: false
       benchmarks:

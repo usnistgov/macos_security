@@ -1,3 +1,4 @@
+---
 id: os_terminal_secure_keyboard_enable
 title: Ensure Secure Keyboard Entry Terminal.app is Enabled
 discussion: |
@@ -27,6 +28,7 @@ references:
       - 4.8
 platforms:
   macOS:
+    '27.0': {}
     '26.0':
       benchmarks:
         - name: cis_lvl1
@@ -37,10 +39,6 @@ platforms:
         - name: cis_lvl1
         - name: cis_lvl2
         - name: nlmapgov_plus
-    '14.0':
-      benchmarks:
-        - name: cis_lvl1
-        - name: cis_lvl2
     enforcement_info:
       check:
         shell: |-

@@ -1,3 +1,4 @@
+---
 id: os_messages_app_disable
 title: Disable Messages App
 discussion: |
@@ -41,9 +42,9 @@ references:
       - 4.8
 platforms:
   macOS:
+    '27.0': {}
     '26.0': {}
     '15.0': {}
-    '14.0': {}
     enforcement_info:
       check:
         shell: |-

@@ -1,3 +1,4 @@
+---
 id: os_system_settings_find_my_friends_modification_disable
 title: Disable Find My Friends Modification
 discussion: |
@@ -36,6 +37,7 @@ references:
         - ANNEX K
 platforms:
   iOS:
+    '27.0': {}
     '26.0':
       supervised: true
       benchmarks:

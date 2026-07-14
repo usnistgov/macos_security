@@ -1,3 +1,4 @@
+---
 id: os_siri_when_locked_disabled
 title: Ensure Allow Siri While Device is Locked is Set to Disabled
 discussion: |
@@ -56,6 +57,7 @@ references:
       - 4.3
 platforms:
   iOS:
+    '27.0': {}
     '26.0':
       supervised: false
       benchmarks:

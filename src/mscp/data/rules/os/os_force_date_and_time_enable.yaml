@@ -1,3 +1,4 @@
+---
 id: os_force_date_and_time_enable
 title: Ensure Force Automatic Date and Time is Set to Enabled
 discussion: |
@@ -45,6 +46,7 @@ references:
       - 8.4
 platforms:
   iOS:
+    '27.0': {}
     '26.0':
       supervised: false
       benchmarks:
@@ -76,6 +78,7 @@ platforms:
         - name: indigo_high
     introduced: '12.0'
   visionOS:
+    '27.0': {}
     '26.0':
       supervised: true
     introduced: '2.0'

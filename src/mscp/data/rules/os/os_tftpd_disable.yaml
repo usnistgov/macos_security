@@ -1,3 +1,4 @@
+---
 id: os_tftpd_disable
 title: Disable Trivial File Transfer Protocol Service
 discussion: |
@@ -59,6 +60,7 @@ references:
       - 5.2
 platforms:
   macOS:
+    '27.0': {}
     '26.0':
       benchmarks:
         - name: disa_stig
@@ -75,15 +77,6 @@ platforms:
         - name: disa_stig
           severity: high
         - name: nlmapgov_plus
-      enforcement_info:
-        check:
-          shell: /bin/launchctl print-disabled system | /usr/bin/grep -c '"com.apple.tftpd" => disabled'
-          result:
-            integer: 1
-    '14.0':
-      benchmarks:
-        - name: disa_stig
-          severity: high
       enforcement_info:
         check:
           shell: /bin/launchctl print-disabled system | /usr/bin/grep -c '"com.apple.tftpd" => disabled'

@@ -1,3 +1,4 @@
+---
 id: os_reauth_devices_change_authenticators
 title: Require Devices to Reauthenticate when Changing Authenticators
 discussion: |-
@@ -24,9 +25,9 @@ references:
       - SRG-OS-000374-GPOS-00159
 platforms:
   macOS:
+    '27.0': {}
     '26.0': {}
     '15.0': {}
-    '14.0': {}
 tags:
   - 800-171
   - 800-53r5_low

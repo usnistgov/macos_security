@@ -1,3 +1,4 @@
+---
 id: os_change_security_attributes
 title: Allow Administrators to Modify Security Settings and System Attributes
 discussion: |-
@@ -24,9 +25,9 @@ references:
       - SRG-OS-000312-GPOS-00123
 platforms:
   macOS:
+    '27.0': {}
     '26.0': {}
     '15.0': {}
-    '14.0': {}
     enforcement_info:
       fix:
         additional_info: The technology inherently meets this requirement. No fix is required.

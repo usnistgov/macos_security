@@ -1,3 +1,4 @@
+---
 id: os_mail_maildrop_disable
 title: Ensure Allow Mail Drop is Set to Disabled
 discussion: |
@@ -68,6 +69,7 @@ references:
       - 3.3
 platforms:
   iOS:
+    '27.0': {}
     '26.0':
       supervised: false
       benchmarks:
@@ -104,6 +106,7 @@ platforms:
           severity: medium
     introduced: '9.2'
   visionOS:
+    '27.0': {}
     '26.0':
       supervised: false
       benchmarks:

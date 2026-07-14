@@ -3,7 +3,7 @@ mscp:
   version: '2.0'
   build: 33
   build_date: '2026-06-11'
-  release_date: '2026-XX-XX'
+  release_date: 2026-XX-XX
   release: '27.0'
 ddm:
   services:
@@ -110,16 +110,19 @@ benchmarks:
 versions:
   platforms:
     macos:
+      - os_version: 27.0
+        os_name: golden gate
+        cpe: o:apple:macos:27.0
       - os_version: 26.0
         os_name: tahoe
         cpe: o:apple:macos:26.0
       - os_version: 15.0
         os_name: sequoia
         cpe: o:apple:macos:15.0
-      - os_version: 14.0
-        os_name: sonoma
-        cpe: o:apple:macos:14.0
     ios:
+      - os_version: 27.0
+        os_name: ios_27
+        cpe: o:apple:ios:27.0
       - os_version: 26.0
         os_name: ios_26
         cpe: o:apple:ios:26.0
@@ -127,6 +130,9 @@ versions:
         os_name: ios_18
         cpe: o:apple:ios:18.0
     visionos:
+      - os_version: 27.0
+        os_name: visionos_27
+        cpe: o:apple:visionos:27.0
       - os_version: 26.0
         os_name: visionos_26
         cpe: o:apple:visionos:26.0

@@ -1,3 +1,4 @@
+---
 id: os_prevent_priv_execution
 title: Prevent Software From Executing at Higher Privilege Levels than Users Executing The Software
 discussion: |-
@@ -26,9 +27,9 @@ references:
       - SRG-OS-000326-GPOS-00126
 platforms:
   macOS:
+    '27.0': {}
     '26.0': {}
     '15.0': {}
-    '14.0': {}
     enforcement_info:
       fix:
         additional_info: The technology inherently meets this requirement. No fix is required.

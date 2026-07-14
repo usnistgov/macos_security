@@ -1,3 +1,4 @@
+---
 id: os_iphone_mirroring_disable
 title: Disable iPhone Mirroring
 discussion: |
@@ -66,6 +67,7 @@ references:
       - 8.12
 platforms:
   macOS:
+    '27.0': {}
     '26.0':
       benchmarks:
         - name: disa_stig
@@ -85,6 +87,7 @@ platforms:
           string: 'false'
     introduced: '15.0'
   iOS:
+    '27.0': {}
     '26.0':
       supervised: false
       benchmarks:

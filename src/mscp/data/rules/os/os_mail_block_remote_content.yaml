@@ -1,3 +1,4 @@
+---
 id: os_mail_block_remote_content
 title: Block Remote Content
 discussion: |
@@ -21,6 +22,7 @@ references:
         - ANNEX K
 platforms:
   iOS:
+    '27.0': {}
     '26.0':
       benchmarks:
         - name: indigo_base

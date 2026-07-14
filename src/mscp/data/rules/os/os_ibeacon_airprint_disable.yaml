@@ -1,3 +1,4 @@
+---
 id: os_ibeacon_airprint_disable
 title: Disable Discovery of AirPrint Printers using iBeacons
 discussion: |
@@ -27,6 +28,7 @@ references:
       - CM.L2-3.4.2
 platforms:
   iOS:
+    '27.0': {}
     '26.0':
       supervised: true
       benchmarks:

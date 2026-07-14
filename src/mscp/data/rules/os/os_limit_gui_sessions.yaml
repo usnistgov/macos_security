@@ -1,3 +1,4 @@
+---
 id: os_limit_gui_sessions
 title: Limit Concurrent GUI Sessions to 10 for all Accounts
 discussion: |-
@@ -22,9 +23,9 @@ references:
       - SRG-OS-000027-GPOS-00008
 platforms:
   macOS:
+    '27.0': {}
     '26.0': {}
     '15.0': {}
-    '14.0': {}
     enforcement_info:
       fix:
         additional_info: The technology inherently meets this requirement. No fix is required.

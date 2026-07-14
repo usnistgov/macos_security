@@ -1,3 +1,4 @@
+---
 id: os_system_settings_find_my_device_disable
 title: Disable Find My Device
 discussion: |
@@ -35,6 +36,7 @@ references:
       - CM.L2-3.4.7
 platforms:
   iOS:
+    '27.0': {}
     '26.0':
       supervised: true
       benchmarks:

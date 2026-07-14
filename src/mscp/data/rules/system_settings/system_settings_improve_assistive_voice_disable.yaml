@@ -1,3 +1,4 @@
+---
 id: system_settings_improve_assistive_voice_disable
 title: Disable Sending Audio Recordings and Transcripts to Apple
 discussion: |
@@ -52,6 +53,7 @@ references:
       - 4.8
 platforms:
   macOS:
+    '27.0': {}
     '26.0':
       benchmarks:
         - name: cis_lvl1

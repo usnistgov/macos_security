@@ -1,3 +1,4 @@
+---
 id: os_calendar_app_disable
 title: Disable Calendar.app
 discussion: |
@@ -44,9 +45,9 @@ references:
       - 4.8
 platforms:
   macOS:
+    '27.0': {}
     '26.0': {}
     '15.0': {}
-    '14.0': {}
     enforcement_info:
       check:
         shell: |-

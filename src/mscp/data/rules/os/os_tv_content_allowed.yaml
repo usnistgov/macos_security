@@ -1,3 +1,4 @@
+---
 id: os_tv_content_allowed
 title: Disable TV Content
 discussion: |
@@ -36,6 +37,7 @@ references:
       - CM.L2-3.4.6
 platforms:
   iOS:
+    '27.0': {}
     '26.0':
       supervised: false
       benchmarks:

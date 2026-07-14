@@ -1,3 +1,4 @@
+---
 id: system_settings_time_machine_encrypted_configure
 title: Ensure Time Machine Volumes are Encrypted
 discussion: |
@@ -29,6 +30,7 @@ references:
       - 11.3
 platforms:
   macOS:
+    '27.0': {}
     '26.0':
       benchmarks:
         - name: cis_lvl1
@@ -39,10 +41,6 @@ platforms:
         - name: cis_lvl1
         - name: cis_lvl2
         - name: nlmapgov_plus
-    '14.0':
-      benchmarks:
-        - name: cis_lvl1
-        - name: cis_lvl2
     enforcement_info:
       check:
         shell: /usr/bin/sudo /usr/bin/defaults read /Library/Preferences/com.apple.TimeMachine.plist | grep -c NotEncrypted

@@ -1,3 +1,4 @@
+---
 id: os_parental_controls_enable
 title: Enable Parental Controls
 discussion: |
@@ -24,9 +25,9 @@ references:
       - 4.8
 platforms:
   macOS:
+    '27.0': {}
     '26.0': {}
     '15.0': {}
-    '14.0': {}
     enforcement_info:
       check:
         shell: |-

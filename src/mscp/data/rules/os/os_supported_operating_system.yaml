@@ -1,3 +1,4 @@
+---
 id: os_supported_operating_system
 title: The macOS Version Must Be Supported by the Vendor
 discussion: |-
@@ -23,6 +24,7 @@ references:
         - APPL-26-006000
 platforms:
   macOS:
+    '27.0': {}
     '26.0':
       benchmarks:
         - name: disa_stig

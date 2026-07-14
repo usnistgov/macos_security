@@ -1,3 +1,4 @@
+---
 id: icloud_managed_apps_store_data_disabled
 title: Ensure Managed Apps Storing Data in iCloud is Set to Disabled
 discussion: |
@@ -70,6 +71,7 @@ references:
       - 2.3
 platforms:
   iOS:
+    '27.0': {}
     '26.0':
       supervised: false
       benchmarks:
@@ -110,6 +112,7 @@ platforms:
         - name: indigo_high
     introduced: '8.0'
   visionOS:
+    '27.0': {}
     '26.0':
       supervised: false
       benchmarks:

@@ -1,3 +1,4 @@
+---
 id: os_limit_auditable_events
 title: Only allow authorized users to select auditable events
 discussion: |-
@@ -15,9 +16,9 @@ references:
         - CCE-92815-0
 platforms:
   macOS:
+    '27.0': {}
     '26.0': {}
     '15.0': {}
-    '14.0': {}
     enforcement_info:
       fix:
         additional_info: The technology inherently meets this requirement. No fix is required.

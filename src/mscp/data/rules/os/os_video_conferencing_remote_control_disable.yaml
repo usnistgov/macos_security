@@ -1,3 +1,4 @@
+---
 id: os_video_conferencing_remote_control_disable
 title: Ensure the Remote Control of a System via Videoconferencing is Set to Disabled
 discussion: |
@@ -17,6 +18,7 @@ references:
         - ANNEX K
 platforms:
   iOS:
+    '27.0': {}
     '26.0':
       supervised: false
       benchmarks:

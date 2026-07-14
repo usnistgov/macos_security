@@ -1,3 +1,4 @@
+---
 id: os_logical_access
 title: Enforce Approved Authorization for Logical Access
 discussion: |-
@@ -32,9 +33,9 @@ references:
       - 6.7
 platforms:
   macOS:
+    '27.0': {}
     '26.0': {}
     '15.0': {}
-    '14.0': {}
     enforcement_info:
       fix:
         additional_info: The technology inherently meets this requirement. No fix is required.

@@ -1,3 +1,4 @@
+---
 id: os_movie_content_allowed
 title: Disable Movie Content
 discussion: |
@@ -35,6 +36,7 @@ references:
       - CM.L2-3.4.6
 platforms:
   iOS:
+    '27.0': {}
     '26.0':
       supervised: false
       benchmarks:

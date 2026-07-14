@@ -1,3 +1,4 @@
+---
 id: os_force_encrypted_backups_enable
 title: Ensure Force Encrypted Backups is Enabled
 discussion: |
@@ -66,6 +67,7 @@ references:
       - 11.3
 platforms:
   iOS:
+    '27.0': {}
     '26.0':
       supervised: false
       benchmarks:

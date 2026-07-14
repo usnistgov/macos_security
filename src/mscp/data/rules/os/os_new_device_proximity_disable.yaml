@@ -1,3 +1,4 @@
+---
 id: os_new_device_proximity_disable
 title: Ensure Allow Setting Up New Nearby Devices is Set to Disabled
 discussion: |
@@ -55,6 +56,7 @@ references:
       - 3.13
 platforms:
   iOS:
+    '27.0': {}
     '26.0':
       supervised: true
       benchmarks:

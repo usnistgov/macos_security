@@ -1,3 +1,4 @@
+---
 id: os_gatekeeper_rearm
 title: Enforce Gatekeeper 30 Day Automatic Rearm
 discussion: |
@@ -22,7 +23,6 @@ references:
       - 10.5
 platforms:
   macOS:
-    '14.0': {}
     enforcement_info:
       check:
         shell: |-

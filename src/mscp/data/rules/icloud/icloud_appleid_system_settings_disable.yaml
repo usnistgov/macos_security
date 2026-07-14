@@ -1,3 +1,4 @@
+---
 id: icloud_appleid_system_settings_disable
 title: Disable the System Setting for Apple ID
 discussion: |
@@ -38,9 +39,9 @@ references:
       - 4.8
 platforms:
   macOS:
+    '27.0': {}
     '26.0': {}
     '15.0': {}
-    '14.0': {}
     enforcement_info:
       check:
         shell: /usr/bin/profiles show -output stdout-xml | /usr/bin/xmllint --xpath '//key[text()="DisabledSystemSettings"]/following-sibling::*[1]' - | /usr/bin/grep -c "com.apple.systempreferences.AppleIDSettings"

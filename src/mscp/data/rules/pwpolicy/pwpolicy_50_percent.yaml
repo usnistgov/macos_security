@@ -1,3 +1,4 @@
+---
 id: pwpolicy_50_percent
 title: Require a Minimum of Fifty Percent Character Change in New Passwords
 discussion: |-
@@ -24,9 +25,9 @@ references:
       - SRG-OS-000072-GPOS-00040
 platforms:
   macOS:
+    '27.0': {}
     '26.0': {}
     '15.0': {}
-    '14.0': {}
 tags:
   - 800-171
   - permanent

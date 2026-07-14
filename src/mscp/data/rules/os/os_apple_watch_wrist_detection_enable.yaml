@@ -1,3 +1,4 @@
+---
 id: os_apple_watch_wrist_detection_enable
 title: Ensure Force Apple Watch wrist detection is set to Enabled
 discussion: |
@@ -51,6 +52,7 @@ references:
       - 3.3
 platforms:
   iOS:
+    '27.0': {}
     '26.0':
       supervised: false
       benchmarks:

@@ -1,3 +1,4 @@
+---
 id: os_mfa_network_non-priv
 title: Enforce multifactor authentication for network access to non-privileged accounts
 discussion: |-
@@ -16,9 +17,9 @@ references:
         - CCE-92827-5
 platforms:
   macOS:
+    '27.0': {}
     '26.0': {}
     '15.0': {}
-    '14.0': {}
     enforcement_info:
       fix:
         additional_info: For directory bound systems, the technology inherently meets this requirement. No fix is required.

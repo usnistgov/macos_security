@@ -1,3 +1,4 @@
+---
 id: os_directory_services_configured
 title: Integrate System into a Directory Services Infrastructure
 discussion: |
@@ -18,9 +19,9 @@ references:
       - 6.7
 platforms:
   macOS:
+    '27.0': {}
     '26.0': {}
     '15.0': {}
-    '14.0': {}
     enforcement_info:
       check:
         shell: /usr/bin/dscl localhost -list . | /usr/bin/grep -qvE '(Contact|Search|Local|^$)'; /bin/echo $?

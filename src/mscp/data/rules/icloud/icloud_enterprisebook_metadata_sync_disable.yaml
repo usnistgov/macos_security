@@ -1,3 +1,4 @@
+---
 id: icloud_enterprisebook_metadata_sync_disable
 title: Preventing synchronization of enterprise book meta data.
 discussion: |
@@ -31,6 +32,7 @@ references:
       - CM.L2-3.4.7
 platforms:
   iOS:
+    '27.0': {}
     '26.0':
       benchmarks:
         - name: indigo_high

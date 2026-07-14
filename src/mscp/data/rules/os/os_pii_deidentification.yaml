@@ -1,3 +1,4 @@
+---
 id: os_pii_deidentification
 title: Remove Elements of Personally Identifiable Information from Datasets
 discussion: |-
@@ -19,9 +20,9 @@ references:
       - SI-19
 platforms:
   macOS:
+    '27.0': {}
     '26.0': {}
     '15.0': {}
-    '14.0': {}
     enforcement_info:
       fix:
         additional_info: The requirement is NA. No fix is required.

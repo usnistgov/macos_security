@@ -1,3 +1,4 @@
+---
 id: os_camera_disable
 title: Disable Camera
 discussion: |
@@ -44,15 +45,12 @@ references:
         - AIOS-26-018100
 platforms:
   macOS:
+    '27.0': {}
     '26.0':
       benchmarks:
         - name: disa_stig
           severity: medium
     '15.0':
-      benchmarks:
-        - name: disa_stig
-          severity: medium
-    '14.0':
       benchmarks:
         - name: disa_stig
           severity: medium
@@ -67,6 +65,7 @@ platforms:
           string: 'false'
     introduced: '10.11'
   iOS:
+    '27.0': {}
     '26.0':
       supervised: true
       benchmarks:
@@ -74,6 +73,7 @@ platforms:
           severity: medium
     introduced: '4.0'
   visionOS:
+    '27.0': {}
     '26.0':
       supervised: true
     introduced: '2.0'

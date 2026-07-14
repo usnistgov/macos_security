@@ -1,3 +1,4 @@
+---
 id: system_settings_gatekeeper_override_disallow
 title: Configure Gatekeeper to Disallow End User Override
 discussion: |
@@ -27,6 +28,7 @@ references:
       - 8.19.01
 platforms:
   macOS:
+    '27.0': {}
     '26.0':
       benchmarks:
         - name: nlmapgov_plus
@@ -35,7 +37,6 @@ platforms:
       benchmarks:
         - name: nlmapgov_plus
         - name: nlmapgov_base
-    '14.0': {}
     enforcement_info:
       check:
         shell: |-

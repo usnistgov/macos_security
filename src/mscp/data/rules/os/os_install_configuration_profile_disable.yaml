@@ -1,3 +1,4 @@
+---
 id: os_install_configuration_profile_disable
 title: Ensure Allow Installing Configuration Profiles is Set to Disabled
 discussion: |
@@ -52,6 +53,7 @@ references:
       - 4.1
 platforms:
   iOS:
+    '27.0': {}
     '26.0':
       supervised: true
       benchmarks:
@@ -84,6 +86,7 @@ platforms:
         - name: indigo_high
     introduced: '6.0'
   visionOS:
+    '27.0': {}
     '26.0':
       supervised: true
     introduced: '2.0'

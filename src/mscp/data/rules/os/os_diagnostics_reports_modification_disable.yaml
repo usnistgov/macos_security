@@ -1,3 +1,4 @@
+---
 id: os_diagnostics_reports_modification_disable
 title: Disable changing Sending Diagnostic and Usage Data to Apple
 discussion: |
@@ -31,6 +32,7 @@ references:
       - AC.L2-3.1.20
 platforms:
   iOS:
+    '27.0': {}
     '26.0':
       supervised: true
       benchmarks:

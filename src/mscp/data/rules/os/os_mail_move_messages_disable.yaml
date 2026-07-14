@@ -1,3 +1,4 @@
+---
 id: os_mail_move_messages_disable
 title: Ensure Allow User to Move Messages from This Account is Set to Disabled
 discussion: |
@@ -66,6 +67,7 @@ references:
       - 3.3
 platforms:
   iOS:
+    '27.0': {}
     '26.0':
       supervised: false
       benchmarks:
@@ -120,6 +122,7 @@ platforms:
             - PreventMove: false
     introduced: '5.0'
   visionOS:
+    '27.0': {}
     '26.0':
       supervised: false
       benchmarks:

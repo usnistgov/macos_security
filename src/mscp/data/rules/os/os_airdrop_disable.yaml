@@ -1,3 +1,4 @@
+---
 id: os_airdrop_disable
 title: Disable AirDrop
 discussion: |-
@@ -88,6 +89,7 @@ references:
         - ANNEX K
 platforms:
   macOS:
+    '27.0': {}
     '26.0':
       benchmarks:
         - name: cis_lvl1
@@ -95,12 +97,6 @@ platforms:
         - name: disa_stig
           severity: medium
     '15.0':
-      benchmarks:
-        - name: cis_lvl1
-        - name: cis_lvl2
-        - name: disa_stig
-          severity: medium
-    '14.0':
       benchmarks:
         - name: cis_lvl1
         - name: cis_lvl2
@@ -117,6 +113,7 @@ platforms:
           string: 'false'
     introduced: '10.13'
   iOS:
+    '27.0': {}
     '26.0':
       supervised: true
       benchmarks:
@@ -146,6 +143,7 @@ platforms:
           severity: medium
     introduced: '7.0'
   visionOS:
+    '27.0': {}
     '26.0':
       supervised: true
       benchmarks:

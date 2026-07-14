@@ -1,3 +1,4 @@
+---
 id: os_provide_disconnect_remote_access
 title: Provide Ability to Disconnect or Disable Remote Access
 discussion: |-
@@ -20,9 +21,9 @@ references:
       - SRG-OS-000298-GPOS-00116
 platforms:
   macOS:
+    '27.0': {}
     '26.0': {}
     '15.0': {}
-    '14.0': {}
     enforcement_info:
       fix:
         additional_info: The technology inherently meets this requirement. No fix is required.

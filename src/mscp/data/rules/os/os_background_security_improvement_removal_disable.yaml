@@ -1,3 +1,4 @@
+---
 id: os_background_security_improvement_removal_disable
 title: Disable rollback of Background Security Improvements using DDM.
 discussion: |
@@ -12,6 +13,7 @@ references:
       - 8.08
 platforms:
   iOS:
+    '27.0': {}
     '26.0':
       supervised: true
       benchmarks:

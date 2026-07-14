@@ -1,3 +1,4 @@
+---
 id: os_sshd_permit_root_login_configure
 title: Disable Root Login for SSH
 discussion: |
@@ -34,15 +35,12 @@ references:
         - APPL-14-001100
 platforms:
   macOS:
+    '27.0': {}
     '26.0':
       benchmarks:
         - name: disa_stig
           severity: medium
     '15.0':
-      benchmarks:
-        - name: disa_stig
-          severity: medium
-    '14.0':
       benchmarks:
         - name: disa_stig
           severity: medium

@@ -1,3 +1,4 @@
+---
 id: os_firewall_default_deny_require
 title: Control Connections to Other Systems via a Deny-All and Allow-by-Exception Firewall Policy
 discussion: |
@@ -38,14 +39,9 @@ references:
       - ''
 platforms:
   macOS:
+    '27.0': {}
     '26.0': {}
     '15.0':
-      enforcement_info:
-        check:
-          shell: /sbin/pfctl -a '*' -sr &> /dev/null | /usr/bin/grep -c "block drop in all"
-          result:
-            integer: 1
-    '14.0':
       enforcement_info:
         check:
           shell: /sbin/pfctl -a '*' -sr &> /dev/null | /usr/bin/grep -c "block drop in all"

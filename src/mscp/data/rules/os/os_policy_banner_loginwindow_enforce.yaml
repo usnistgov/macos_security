@@ -1,3 +1,4 @@
+---
 id: os_policy_banner_loginwindow_enforce
 title: Display Policy Banner at Login Window
 discussion: |
@@ -60,17 +61,13 @@ references:
       - 4.1
 platforms:
   macOS:
+    '27.0': {}
     '26.0':
       benchmarks:
         - name: cis_lvl2
         - name: disa_stig
           severity: medium
     '15.0':
-      benchmarks:
-        - name: cis_lvl2
-        - name: disa_stig
-          severity: medium
-    '14.0':
       benchmarks:
         - name: cis_lvl2
         - name: disa_stig

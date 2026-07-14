@@ -1,3 +1,4 @@
+---
 id: audit_configure_capacity_notify
 title: Configure Audit Capacity Warning
 discussion: |
@@ -31,15 +32,12 @@ references:
         - APPL-14-001030
 platforms:
   macOS:
+    '27.0': {}
     '26.0':
       benchmarks:
         - name: disa_stig
           severity: low
     '15.0':
-      benchmarks:
-        - name: disa_stig
-          severity: low
-    '14.0':
       benchmarks:
         - name: disa_stig
           severity: low

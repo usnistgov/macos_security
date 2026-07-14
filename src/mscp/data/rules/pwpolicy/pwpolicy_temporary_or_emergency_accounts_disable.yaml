@@ -1,3 +1,4 @@
+---
 id: pwpolicy_temporary_or_emergency_accounts_disable
 title: Automatically Remove or Disable Temporary or Emergency User Accounts within 72 Hours
 discussion: |
@@ -43,15 +44,12 @@ references:
         - APPL-14-000012
 platforms:
   macOS:
+    '27.0': {}
     '26.0':
       benchmarks:
         - name: disa_stig
           severity: medium
     '15.0':
-      benchmarks:
-        - name: disa_stig
-          severity: medium
-    '14.0':
       benchmarks:
         - name: disa_stig
           severity: medium
@@ -61,23 +59,23 @@ platforms:
         result:
           string: the user's applied password policy
         additional_info: |-
-            Verify if a password policy is enforced by a directory service by asking the System Administrator (SA) or Information System Security Officer (ISSO).
+          Verify if a password policy is enforced by a directory service by asking the System Administrator (SA) or Information System Security Officer (ISSO).
 
-            If no policy is enforced by a directory service, a password policy can be set with the "pwpolicy" utility. The variable names may vary depending on how the policy was set.
+          If no policy is enforced by a directory service, a password policy can be set with the "pwpolicy" utility. The variable names may vary depending on how the policy was set.
 
-            If there are no temporary or emergency accounts defined on the system, this is Not Applicable.
+          If there are no temporary or emergency accounts defined on the system, this is Not Applicable.
 
-            To check if the password policy is configured to disable a temporary or emergency account after 72 hours, run the following command to output the password policy to the screen, substituting the correct user name in place of username:
+          To check if the password policy is configured to disable a temporary or emergency account after 72 hours, run the following command to output the password policy to the screen, substituting the correct user name in place of username:
 
-            /usr/bin/pwpolicy -u username getaccountpolicies
+          /usr/bin/pwpolicy -u username getaccountpolicies
 
-            If there is no output, and password policy is not controlled by a directory service, this is a finding.
+          If there is no output, and password policy is not controlled by a directory service, this is a finding.
 
-            Otherwise, look for the line "<key>policyCategoryAuthentication</key>".
+          Otherwise, look for the line "<key>policyCategoryAuthentication</key>".
 
-            In the array that follows, there should be a <dict> section that contains a check <string> that allows users to log in if "policyAttributeCurrentTime" is less than the result of adding "policyAttributeCreationTime" to 72 hours (259299 seconds). The check might use a variable defined in its "policyParameters" section.
+          In the array that follows, there should be a <dict> section that contains a check <string> that allows users to log in if "policyAttributeCurrentTime" is less than the result of adding "policyAttributeCreationTime" to 72 hours (259299 seconds). The check might use a variable defined in its "policyParameters" section.
 
-            If the check does not exist or if the check adds too great an amount of time to "policyAttributeCreationTime", this is a finding.
+          If the check does not exist or if the check adds too great an amount of time to "policyAttributeCreationTime", this is a finding.
       fix:
         additional_info: |-
           This setting may be enforced using local policy or by a directory service.

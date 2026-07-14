@@ -1,3 +1,4 @@
+---
 id: os_airdrop_unmanaged_destination_enable
 title: Ensure Treat AirDrop as unmanaged destination is set to Enabled
 discussion: |
@@ -76,6 +77,7 @@ references:
       - 3.3
 platforms:
   iOS:
+    '27.0': {}
     '26.0':
       supervised: false
       benchmarks:
@@ -120,6 +122,7 @@ platforms:
           severity: medium
     introduced: '9.0'
   visionOS:
+    '27.0': {}
     '26.0':
       supervised: false
       benchmarks:

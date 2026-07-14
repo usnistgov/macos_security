@@ -1,3 +1,4 @@
+---
 id: os_secure_enclave
 title: Protected Storage for Cryptographic Keys
 discussion: |
@@ -34,6 +35,7 @@ references:
       - 3.L.C
 platforms:
   macOS:
+    '27.0': {}
     '26.0':
       benchmarks:
         - name: nlmapgov_plus
@@ -42,7 +44,6 @@ platforms:
       benchmarks:
         - name: nlmapgov_plus
         - name: nlmapgov_base
-    '14.0': {}
     enforcement_info:
       check:
         shell: /usr/sbin/ioreg -w 0 -c AppleSEPManager | /usr/bin/grep -q 'AppleSEPManager'; /bin/echo $?

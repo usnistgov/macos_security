@@ -1,3 +1,4 @@
+---
 id: os_burn_support_disable
 title: Disable Burn Support
 discussion: |
@@ -26,9 +27,9 @@ references:
       - MP.L2-3.8.8
 platforms:
   macOS:
+    '27.0': {}
     '26.0': {}
     '15.0': {}
-    '14.0': {}
     enforcement_info:
       check:
         shell: /usr/bin/profiles -P -o stdout | /usr/bin/grep -Ec '(BurnSupport = off;|ProhibitBurn = 1;)'

@@ -1,3 +1,4 @@
+---
 id: audit_settings_failure_notify
 title: Configure Audit Failure Notification
 discussion: |
@@ -36,15 +37,12 @@ references:
       - AU.L2-3.3.4
 platforms:
   macOS:
+    '27.0': {}
     '26.0':
       benchmarks:
         - name: disa_stig
           severity: medium
     '15.0':
-      benchmarks:
-        - name: disa_stig
-          severity: medium
-    '14.0':
       benchmarks:
         - name: disa_stig
           severity: medium

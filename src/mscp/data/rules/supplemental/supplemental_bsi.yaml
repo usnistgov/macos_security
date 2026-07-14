@@ -1,5 +1,6 @@
+---
 id: supplemental_bsi
-title: "BSI Supplemental"
+title: BSI Supplemental
 discussion: |
   These controls require additional considerations for your environment based on indigo,  in accordance with the recommendations of BSI (Bundesamt für Sicherheit in der Informationstechnik, German Federal Office for Information Security).
 
@@ -30,11 +31,11 @@ discussion: |
   |
   |os_update_auto_RSR_allow
   |===
-
 references:
   nist: {}
 platforms:
   iOS:
+    '27.0': {}
     '26.0':
       benchmarks:
         - name: indigo_base

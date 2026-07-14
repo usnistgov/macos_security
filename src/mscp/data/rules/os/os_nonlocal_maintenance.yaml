@@ -1,3 +1,4 @@
+---
 id: os_nonlocal_maintenance
 title: Configure the System for Non-local Maintenance
 discussion: |-
@@ -25,9 +26,9 @@ references:
       - 6.L.A
 platforms:
   macOS:
+    '27.0': {}
     '26.0': {}
     '15.0': {}
-    '14.0': {}
     enforcement_info:
       fix:
         additional_info: The requirement is NA. No fix is required.

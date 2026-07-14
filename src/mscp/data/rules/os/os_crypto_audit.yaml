@@ -1,3 +1,4 @@
+---
 id: os_crypto_audit
 title: Protect Audit Integrity with Cryptographic Mechanisms
 discussion: |-
@@ -26,9 +27,9 @@ references:
       - SRG-OS-000278-GPOS-00108
 platforms:
   macOS:
+    '27.0': {}
     '26.0': {}
     '15.0': {}
-    '14.0': {}
     enforcement_info:
       fix:
         additional_info: The technology inherently meets this requirement. No fix is required.

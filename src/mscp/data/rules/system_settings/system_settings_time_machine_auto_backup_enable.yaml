@@ -1,3 +1,4 @@
+---
 id: system_settings_time_machine_auto_backup_enable
 title: Configure Time Machine for Automatic Backups
 discussion: |
@@ -23,13 +24,11 @@ references:
       - 11.2
 platforms:
   macOS:
+    '27.0': {}
     '26.0':
       benchmarks:
         - name: cis_lvl2
     '15.0':
-      benchmarks:
-        - name: cis_lvl2
-    '14.0':
       benchmarks:
         - name: cis_lvl2
     enforcement_info:

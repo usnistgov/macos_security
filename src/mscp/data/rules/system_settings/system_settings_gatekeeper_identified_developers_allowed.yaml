@@ -1,3 +1,4 @@
+---
 id: system_settings_gatekeeper_identified_developers_allowed
 title: Apply Gatekeeper Settings to Block Applications from Unidentified Developers
 discussion: |
@@ -42,6 +43,7 @@ references:
       - 8.19.01
 platforms:
   macOS:
+    '27.0': {}
     '26.0':
       benchmarks:
         - name: disa_stig
@@ -54,15 +56,6 @@ platforms:
           severity: high
         - name: nlmapgov_plus
         - name: nlmapgov_base
-    '14.0':
-      benchmarks:
-        - name: disa_stig
-          severity: high
-      enforcement_info:
-        check:
-          shell: /usr/sbin/spctl --status --verbose | /usr/bin/grep -c "developer id enabled"
-          result:
-            integer: 1
     enforcement_info:
       check:
         shell: |-

@@ -1,3 +1,4 @@
+---
 id: os_update_enforced_software_update_delay
 title: Enforce Software Update Delay
 discussion: |
@@ -21,6 +22,7 @@ references:
         - ANNEX D (Section 6.3.1.2 - Update management)
 platforms:
   iOS:
+    '27.0': {}
     '26.0':
       supervised: true
       benchmarks:

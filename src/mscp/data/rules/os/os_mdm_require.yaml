@@ -1,3 +1,4 @@
+---
 id: os_mdm_require
 title: Enforce Enrollment in Mobile Device Management
 discussion: |
@@ -66,6 +67,7 @@ references:
       - 5.1
 platforms:
   macOS:
+    '27.0': {}
     '26.0':
       benchmarks:
         - name: disa_stig
@@ -80,12 +82,6 @@ platforms:
           severity: medium
         - name: nlmapgov_plus
         - name: nlmapgov_base
-    '14.0':
-      benchmarks:
-        - name: cis_lvl1
-        - name: cis_lvl2
-        - name: disa_stig
-          severity: medium
     enforcement_info:
       check:
         shell: '/usr/bin/profiles status -type enrollment | /usr/bin/awk -F: ''/MDM enrollment/ {print $2}'' | /usr/bin/grep -c "Yes (User Approved)"'

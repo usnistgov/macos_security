@@ -1,3 +1,4 @@
+---
 id: os_loginwindow_adminhostinfo_undefined
 title: Prevent AdminHostInfo from Being Available at LoginWindow
 discussion: |
@@ -26,10 +27,6 @@ references:
 platforms:
   macOS:
     '15.0':
-      benchmarks:
-        - name: disa_stig
-          severity: medium
-    '14.0':
       benchmarks:
         - name: disa_stig
           severity: medium

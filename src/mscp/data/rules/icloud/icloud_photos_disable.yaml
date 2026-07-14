@@ -1,3 +1,4 @@
+---
 id: icloud_photos_disable
 title: Disable iCloud Photo Library
 discussion: |
@@ -81,15 +82,12 @@ references:
         - ANNEX K
 platforms:
   macOS:
+    '27.0': {}
     '26.0':
       benchmarks:
         - name: disa_stig
           severity: medium
     '15.0':
-      benchmarks:
-        - name: disa_stig
-          severity: medium
-    '14.0':
       benchmarks:
         - name: disa_stig
           severity: medium
@@ -104,6 +102,7 @@ platforms:
           string: 'false'
     introduced: '10.12'
   iOS:
+    '27.0': {}
     '26.0':
       supervised: false
       benchmarks:
@@ -127,6 +126,7 @@ platforms:
           severity: medium
     introduced: '9.0'
   visionOS:
+    '27.0': {}
     '26.0':
       supervised: false
       benchmarks:

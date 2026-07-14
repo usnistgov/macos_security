@@ -1,3 +1,4 @@
+---
 id: icloud_shared_photo_stream_disable
 title: Ensure Shared Photo Stream is set to Disabled
 discussion: |
@@ -49,6 +50,7 @@ references:
         - ANNEX K
 platforms:
   iOS:
+    '27.0': {}
     '26.0':
       supervised: false
       benchmarks:

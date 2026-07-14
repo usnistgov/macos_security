@@ -1,3 +1,4 @@
+---
 id: os_hibernate_mode_destroyfvkeyonstandby_enable
 title: Enable DestroyFVKeyOnStandby on Hibernate
 discussion: |
@@ -13,9 +14,9 @@ references:
         - CCE-92801-0
 platforms:
   macOS:
+    '27.0': {}
     '26.0': {}
     '15.0': {}
-    '14.0': {}
     enforcement_info:
       check:
         shell: |-

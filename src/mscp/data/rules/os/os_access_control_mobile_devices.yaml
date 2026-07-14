@@ -1,3 +1,4 @@
+---
 id: os_access_control_mobile_devices
 title: Access Control for Mobile Devices
 discussion: |-
@@ -36,9 +37,9 @@ references:
       - 6.4
 platforms:
   macOS:
+    '27.0': {}
     '26.0': {}
     '15.0': {}
-    '14.0': {}
 tags:
   - 800-171
   - 800-53r5_low

@@ -1,3 +1,4 @@
+---
 id: os_erase_content_and_settings_disable
 title: Disable Erase Content and Settings
 discussion: |
@@ -38,15 +39,12 @@ references:
       - 2.L.A
 platforms:
   macOS:
+    '27.0': {}
     '26.0':
       benchmarks:
         - name: disa_stig
           severity: medium
     '15.0':
-      benchmarks:
-        - name: disa_stig
-          severity: medium
-    '14.0':
       benchmarks:
         - name: disa_stig
           severity: medium

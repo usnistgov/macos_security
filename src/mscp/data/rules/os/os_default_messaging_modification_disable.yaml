@@ -1,3 +1,4 @@
+---
 id: os_default_messaging_modification_disable
 title: Disable Modifying the Default Messaging Application
 discussion: |
@@ -22,6 +23,7 @@ references:
       - CM.L2-3.4.7
 platforms:
   iOS:
+    '27.0': {}
     '26.0':
       supervised: true
     '18.0':

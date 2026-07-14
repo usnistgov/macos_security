@@ -1,3 +1,4 @@
+---
 id: os_identify_non-org_users
 title: Configure the System to Uniquely Identify and Authenticate Non-Organizational Users
 discussion: |-
@@ -17,9 +18,9 @@ references:
       - IA-8
 platforms:
   macOS:
+    '27.0': {}
     '26.0': {}
     '15.0': {}
-    '14.0': {}
     enforcement_info:
       fix:
         additional_info: The requirement is NA. No fix is required.

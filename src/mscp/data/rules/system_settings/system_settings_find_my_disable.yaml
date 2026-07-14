@@ -1,3 +1,4 @@
+---
 id: system_settings_find_my_disable
 title: Disable Find My Service
 discussion: |
@@ -55,6 +56,7 @@ references:
       - 15.3
 platforms:
   macOS:
+    '27.0': {}
     '26.0':
       benchmarks:
         - name: disa_stig
@@ -67,10 +69,6 @@ platforms:
           severity: medium
         - name: nlmapgov_plus
         - name: nlmapgov_base
-    '14.0':
-      benchmarks:
-        - name: disa_stig
-          severity: medium
     enforcement_info:
       check:
         shell: |-

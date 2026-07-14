@@ -1,3 +1,4 @@
+---
 id: os_handoff_disable
 title: Disable Handoff
 discussion: |
@@ -88,15 +89,12 @@ references:
         - ANNEX K
 platforms:
   macOS:
+    '27.0': {}
     '26.0':
       benchmarks:
         - name: disa_stig
           severity: medium
     '15.0':
-      benchmarks:
-        - name: disa_stig
-          severity: medium
-    '14.0':
       benchmarks:
         - name: disa_stig
           severity: medium
@@ -111,6 +109,7 @@ platforms:
           string: 'false'
     introduced: '10.15'
   iOS:
+    '27.0': {}
     '26.0':
       supervised: false
       benchmarks:
@@ -146,6 +145,7 @@ platforms:
           severity: low
     introduced: '8.0'
   visionOS:
+    '27.0': {}
     '26.0':
       supervised: false
       benchmarks:

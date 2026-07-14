@@ -1,3 +1,4 @@
+---
 id: os_untrusted_tls_disable
 title: Ensure Allow Users to Accept Untrusted TLS Certificates is Set to Disabled
 discussion: |
@@ -39,6 +40,7 @@ references:
       - 4.1
 platforms:
   iOS:
+    '27.0': {}
     '26.0':
       supervised: false
       benchmarks:
@@ -60,6 +62,7 @@ platforms:
         - name: indigo_high
     introduced: '5.0'
   visionOS:
+    '27.0': {}
     '26.0':
       supervised: false
     introduced: '1.1'

@@ -1,3 +1,4 @@
+---
 id: os_safari_allow_javascript_disable
 title: Disable JavaScript in Safari
 discussion: |-
@@ -23,6 +24,7 @@ references:
       - SC.L2-3.13.15
 platforms:
   macOS:
+    '27.0': {}
     '26.0': {}
     enforcement_info:
       check:

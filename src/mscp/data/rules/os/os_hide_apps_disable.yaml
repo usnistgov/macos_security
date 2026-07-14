@@ -1,3 +1,4 @@
+---
 id: os_hide_apps_disable
 title: Disable Ability to Hide Apps
 discussion: |
@@ -24,6 +25,7 @@ references:
       - CM.L2-3.4.7
 platforms:
   iOS:
+    '27.0': {}
     '26.0':
       supervised: true
       benchmarks:

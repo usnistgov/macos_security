@@ -1,3 +1,4 @@
+---
 id: os_library_validation_enabled
 title: Enable Library Validation
 discussion: Library validation  _MUST_ be enabled.
@@ -16,9 +17,9 @@ references:
       - 2.6
 platforms:
   macOS:
+    '27.0': {}
     '26.0': {}
     '15.0': {}
-    '14.0': {}
     enforcement_info:
       check:
         shell: |-

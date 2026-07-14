@@ -1,3 +1,4 @@
+---
 id: system_settings_wifi_menu_enable
 title: Enable Wifi Menu
 discussion: |
@@ -22,12 +23,9 @@ references:
       - 12.6
 platforms:
   macOS:
+    '27.0': {}
     '26.0': {}
     '15.0':
-      benchmarks:
-        - name: cis_lvl1
-        - name: cis_lvl2
-    '14.0':
       benchmarks:
         - name: cis_lvl1
         - name: cis_lvl2

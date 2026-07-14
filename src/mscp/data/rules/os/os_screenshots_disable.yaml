@@ -1,3 +1,4 @@
+---
 id: os_screenshots_disable
 title: Ensure Allow Screenshots and Screen Recording is Set to Disabled
 discussion: |
@@ -50,6 +51,7 @@ references:
       - 3.3
 platforms:
   iOS:
+    '27.0': {}
     '26.0':
       supervised: false
       benchmarks:
@@ -71,6 +73,7 @@ platforms:
         - name: indigo_high
     introduced: '3.1'
   visionOS:
+    '27.0': {}
     '26.0':
       supervised: false
       benchmarks:

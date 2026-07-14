@@ -1,3 +1,4 @@
+---
 id: system_settings_system_wide_preferences_configure
 title: Require Administrator Password to Modify System-Wide Preferences
 discussion: |
@@ -57,6 +58,7 @@ references:
       - 4.1
 platforms:
   macOS:
+    '27.0': {}
     '26.0':
       benchmarks:
         - name: cis_lvl1
@@ -71,12 +73,6 @@ platforms:
         - name: disa_stig
           severity: high
         - name: nlmapgov_plus
-    '14.0':
-      benchmarks:
-        - name: cis_lvl1
-        - name: cis_lvl2
-        - name: disa_stig
-          severity: high
     enforcement_info:
       check:
         shell: |-

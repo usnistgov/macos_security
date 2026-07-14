@@ -1,3 +1,4 @@
+---
 id: os_allow_documents_managed_sources_unmanaged_destinations_disable
 title: Ensure Allow documents from managed sources in unmanaged destinations is set to Disabled
 discussion: |
@@ -71,6 +72,7 @@ references:
       - 3.3
 platforms:
   iOS:
+    '27.0': {}
     '26.0':
       supervised: false
       benchmarks:
@@ -115,6 +117,7 @@ platforms:
           severity: medium
     introduced: '7.0'
   visionOS:
+    '27.0': {}
     '26.0':
       supervised: false
       benchmarks:

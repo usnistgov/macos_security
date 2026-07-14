@@ -1,3 +1,4 @@
+---
 id: system_settings_security_update_install
 title: Enforce Automatic Installs of Available Security Updates using DDM.
 discussion: |
@@ -32,6 +33,7 @@ references:
       - 7.7
 platforms:
   macOS:
+    '27.0': {}
     '26.0':
       benchmarks:
         - name: nlmapgov_plus

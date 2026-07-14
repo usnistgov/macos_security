@@ -1,3 +1,4 @@
+---
 id: os_reauth_users_change_authenticators
 title: Require users to reauthenticate when changing authenticators
 discussion: |-
@@ -22,9 +23,9 @@ references:
       - SRG-OS-000373-GPOS-00158
 platforms:
   macOS:
+    '27.0': {}
     '26.0': {}
     '15.0': {}
-    '14.0': {}
     enforcement_info:
       fix:
         additional_info: The technology inherently meets this requirement. No fix is required.

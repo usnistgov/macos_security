@@ -1,3 +1,4 @@
+---
 id: os_application_deny_list
 title: Apps not allowed on the device
 discussion: |
@@ -24,6 +25,7 @@ references:
         - ANNEX N
 platforms:
   iOS:
+    '27.0': {}
     '26.0':
       supervised: true
       benchmarks:

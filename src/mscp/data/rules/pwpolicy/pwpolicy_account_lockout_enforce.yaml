@@ -1,3 +1,4 @@
+---
 id: pwpolicy_account_lockout_enforce
 title: Limit Consecutive Failed Login Attempts to $ODV
 discussion: |
@@ -82,6 +83,7 @@ references:
         - ANNEX K
 platforms:
   macOS:
+    '27.0': {}
     '26.0':
       benchmarks:
         - name: cis_lvl1
@@ -94,12 +96,6 @@ platforms:
         - name: cis_lvl2
         - name: disa_stig
           severity: medium
-    '14.0':
-      benchmarks:
-        - name: cis_lvl1
-        - name: cis_lvl2
-        - name: disa_stig
-          severity: medium
     enforcement_info:
       check:
         shell: /usr/bin/pwpolicy -getaccountpolicies 2> /dev/null | /usr/bin/tail +2 | /usr/bin/xmllint --xpath '//dict/key[text()="policyAttributeMaximumFailedAuthentications"]/following-sibling::integer[1]/text()' - | /usr/bin/awk '{ if ($1 <= $ODV) {print "pass"} else {print "fail"}}' | /usr/bin/uniq
@@ -107,6 +103,7 @@ platforms:
           string: pass
     introduced: '10.7'
   iOS:
+    '27.0': {}
     '26.0':
       supervised: false
       benchmarks:
@@ -150,6 +147,7 @@ platforms:
           severity: medium
     introduced: '4.0'
   visionOS:
+    '27.0': {}
     '26.0':
       supervised: false
       benchmarks:

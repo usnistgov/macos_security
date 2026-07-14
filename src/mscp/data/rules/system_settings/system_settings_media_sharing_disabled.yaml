@@ -1,3 +1,4 @@
+---
 id: system_settings_media_sharing_disabled
 title: Disable Media Sharing
 discussion: |
@@ -59,6 +60,7 @@ references:
       - 4.8
 platforms:
   macOS:
+    '27.0': {}
     '26.0':
       benchmarks:
         - name: cis_lvl2
@@ -71,37 +73,6 @@ platforms:
         - name: disa_stig
           severity: medium
         - name: nlmapgov_plus
-    '14.0':
-      benchmarks:
-        - name: cis_lvl2
-        - name: disa_stig
-          severity: medium
-      mobileconfig_info:
-        - PayloadType: com.apple.preferences.sharing.SharingPrefsExtension
-          PayloadContent:
-            - homeSharingUIStatus: 0
-            - legacySharingUIStatus: 0
-            - mediaSharingUIStatus: 0
-      enforcement_info:
-        check:
-          shell: |-
-            /usr/bin/osascript -l JavaScript << EOS
-            function run() {
-              let pref1 = ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('com.apple.preferences.sharing.SharingPrefsExtension')\
-              .objectForKey('homeSharingUIStatus'))
-              let pref2 = ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('com.apple.preferences.sharing.SharingPrefsExtension')\
-              .objectForKey('legacySharingUIStatus'))
-              let pref3 = ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('com.apple.preferences.sharing.SharingPrefsExtension')\
-              .objectForKey('mediaSharingUIStatus'))
-              if ( pref1 == 0 && pref2 == 0 && pref3 == 0 ) {
-                return("true")
-              } else {
-                return("false")
-              }
-            }
-            EOS
-          result:
-            string: 'true'
     enforcement_info:
       check:
         shell: |-

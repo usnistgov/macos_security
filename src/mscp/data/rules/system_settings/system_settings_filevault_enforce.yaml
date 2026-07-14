@@ -1,3 +1,4 @@
+---
 id: system_settings_filevault_enforce
 title: Enforce FileVault
 discussion: |
@@ -62,6 +63,7 @@ references:
       - 3.11
 platforms:
   macOS:
+    '27.0': {}
     '26.0':
       benchmarks:
         - name: cis_lvl1
@@ -78,12 +80,6 @@ platforms:
           severity: high
         - name: nlmapgov_plus
         - name: nlmapgov_base
-    '14.0':
-      benchmarks:
-        - name: cis_lvl1
-        - name: cis_lvl2
-        - name: disa_stig
-          severity: high
     enforcement_info:
       check:
         shell: |-

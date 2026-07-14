@@ -1,3 +1,4 @@
+---
 id: os_show_calendar_lock_screen_disable
 title: Ensure Calendar Notifications When the Device is Locked is Set to Disabled
 discussion: |
@@ -30,6 +31,7 @@ references:
       - AC.L2-3.1.10
 platforms:
   iOS:
+    '27.0': {}
     '26.0':
       supervised: false
       benchmarks:

@@ -1,3 +1,4 @@
+---
 id: os_limit_dos_attacks
 title: Limit Impact of Denial of Service Attacks
 discussion: |-
@@ -24,9 +25,9 @@ references:
       - SRG-OS-000142-GPOS-00071
 platforms:
   macOS:
+    '27.0': {}
     '26.0': {}
     '15.0': {}
-    '14.0': {}
 tags:
   - permanent
   - cnssi-1253_high

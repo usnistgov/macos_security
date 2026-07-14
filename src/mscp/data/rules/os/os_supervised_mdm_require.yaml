@@ -1,3 +1,4 @@
+---
 id: os_supervised_mdm_require
 title: Enforce Supervised Enrollment in Mobile Device Management
 discussion: |
@@ -39,6 +40,7 @@ references:
       - 8.18
 platforms:
   iOS:
+    '27.0': {}
     '26.0':
       benchmarks:
         - name: ios_stig

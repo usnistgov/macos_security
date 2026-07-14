@@ -1,3 +1,4 @@
+---
 id: os_sip_enable
 title: Ensure System Integrity Protection is Enabled
 discussion: |
@@ -97,6 +98,7 @@ references:
       - 10.5
 platforms:
   macOS:
+    '27.0': {}
     '26.0':
       benchmarks:
         - name: cis_lvl1
@@ -113,12 +115,6 @@ platforms:
           severity: high
         - name: nlmapgov_plus
         - name: nlmapgov_base
-    '14.0':
-      benchmarks:
-        - name: cis_lvl1
-        - name: cis_lvl2
-        - name: disa_stig
-          severity: high
     enforcement_info:
       check:
         shell: '/usr/bin/csrutil status | /usr/bin/grep -c ''System Integrity Protection status: enabled.'''

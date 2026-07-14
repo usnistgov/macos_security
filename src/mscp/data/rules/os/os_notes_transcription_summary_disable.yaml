@@ -1,3 +1,4 @@
+---
 id: os_notes_transcription_summary_disable
 title: Disable Apple Intelligence Notes Transcription Summary
 discussion: Apple Intelligence features such as Notes Transcription Summary that use off device AI _MUST_ be disabled.
@@ -51,6 +52,7 @@ references:
         - ANNEX K
 platforms:
   macOS:
+    '27.0': {}
     '26.0':
       benchmarks:
         - name: cis_lvl1
@@ -70,6 +72,7 @@ platforms:
           string: 'false'
     introduced: '15.3'
   iOS:
+    '27.0': {}
     '26.0':
       supervised: true
       benchmarks:

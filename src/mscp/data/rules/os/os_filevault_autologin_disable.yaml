@@ -1,3 +1,4 @@
+---
 id: os_filevault_autologin_disable
 title: Disable FileVault Automatic Login
 discussion: |
@@ -42,15 +43,12 @@ references:
       - 6.7
 platforms:
   macOS:
+    '27.0': {}
     '26.0':
       benchmarks:
         - name: disa_stig
           severity: medium
     '15.0':
-      benchmarks:
-        - name: disa_stig
-          severity: medium
-    '14.0':
       benchmarks:
         - name: disa_stig
           severity: medium

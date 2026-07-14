@@ -1,3 +1,4 @@
+---
 id: os_network_known_only
 title: Only Allow Known Networks
 discussion: |
@@ -21,6 +22,7 @@ references:
         - ANNEX D (Section 5.7 - Interfaces)
 platforms:
   iOS:
+    '27.0': {}
     '26.0':
       supervised: true
       benchmarks:

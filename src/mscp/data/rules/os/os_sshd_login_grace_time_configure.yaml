@@ -1,3 +1,4 @@
+---
 id: os_sshd_login_grace_time_configure
 title: Set Login Grace Time to $ODV
 discussion: |
@@ -33,15 +34,12 @@ references:
       - SC.L2-3.13.9
 platforms:
   macOS:
+    '27.0': {}
     '26.0':
       benchmarks:
         - name: disa_stig
           severity: medium
     '15.0':
-      benchmarks:
-        - name: disa_stig
-          severity: medium
-    '14.0':
       benchmarks:
         - name: disa_stig
           severity: medium

@@ -1,3 +1,4 @@
+---
 id: os_fail_secure_state
 title: Configure System to Fail to a Known Safe State if System Initialization, Shutdown, or Abort Fails
 discussion: |-
@@ -27,9 +28,9 @@ references:
       - SRG-OS-000184-GPOS-00078
 platforms:
   macOS:
+    '27.0': {}
     '26.0': {}
     '15.0': {}
-    '14.0': {}
     enforcement_info:
       fix:
         additional_info: The technology inherently meets this requirement. No fix is required.

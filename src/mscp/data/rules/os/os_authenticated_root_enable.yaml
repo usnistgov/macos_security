@@ -1,3 +1,4 @@
+---
 id: os_authenticated_root_enable
 title: Enable Authenticated Root
 discussion: |
@@ -66,6 +67,7 @@ references:
       - 3.11
 platforms:
   macOS:
+    '27.0': {}
     '26.0':
       benchmarks:
         - name: cis_lvl1
@@ -83,17 +85,6 @@ platforms:
       enforcement_info:
         check:
           shell: /usr/libexec/mdmclient QuerySecurityInfo 2>/dev/null | /usr/bin/grep -c "AuthenticatedRootVolumeEnabled = 1;"
-          result:
-            integer: 1
-    '14.0':
-      benchmarks:
-        - name: cis_lvl1
-        - name: cis_lvl2
-        - name: disa_stig
-          severity: medium
-      enforcement_info:
-        check:
-          shell: /usr/bin/csrutil authenticated-root | /usr/bin/grep -c 'enabled'
           result:
             integer: 1
     enforcement_info:

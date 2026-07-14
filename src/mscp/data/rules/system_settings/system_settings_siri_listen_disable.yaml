@@ -1,3 +1,4 @@
+---
 id: system_settings_siri_listen_disable
 title: Ensure Siri Listen For is Disabled
 discussion: |
@@ -17,9 +18,9 @@ references:
       - 4.8
 platforms:
   macOS:
+    '27.0': {}
     '26.0': {}
     '15.0': {}
-    '14.0': {}
     enforcement_info:
       check:
         shell: |-

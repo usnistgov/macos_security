@@ -1,3 +1,4 @@
+---
 id: os_safari_force_fraud_warning_enable
 title: Ensure Force Fraud Warning is Set to Enabled
 discussion: |
@@ -37,6 +38,7 @@ references:
       - 9.4
 platforms:
   iOS:
+    '27.0': {}
     '26.0':
       supervised: false
       benchmarks:

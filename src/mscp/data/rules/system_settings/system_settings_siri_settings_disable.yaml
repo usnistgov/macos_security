@@ -1,3 +1,4 @@
+---
 id: system_settings_siri_settings_disable
 title: Disable the System Settings Pane for Siri
 discussion: |
@@ -47,15 +48,12 @@ references:
       - 4.8
 platforms:
   macOS:
+    '27.0': {}
     '26.0':
       benchmarks:
         - name: disa_stig
           severity: medium
     '15.0':
-      benchmarks:
-        - name: disa_stig
-          severity: medium
-    '14.0':
       benchmarks:
         - name: disa_stig
           severity: medium

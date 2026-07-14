@@ -1,3 +1,4 @@
+---
 id: system_settings_hot_corners_secure
 title: Secure Hot Corners
 discussion: |
@@ -41,14 +42,12 @@ references:
       - 4.3
 platforms:
   macOS:
+    '27.0': {}
     '26.0':
       benchmarks:
         - name: cis_lvl1
         - name: cis_lvl2
     '15.0':
-      benchmarks:
-        - name: cis_lvl2
-    '14.0':
       benchmarks:
         - name: cis_lvl2
     enforcement_info:

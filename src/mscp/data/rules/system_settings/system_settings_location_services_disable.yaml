@@ -1,3 +1,4 @@
+---
 id: system_settings_location_services_disable
 title: Disable Location Services
 discussion: |
@@ -40,6 +41,7 @@ references:
       - 4.L.A
 platforms:
   macOS:
+    '27.0': {}
     '26.0':
       benchmarks:
         - name: disa_stig
@@ -51,10 +53,6 @@ platforms:
             pid=$(/bin/launchctl print system | /usr/bin/awk '/\tcom.apple.locationd/ {print $1}')
             kill -9 $pid
     '15.0':
-      benchmarks:
-        - name: disa_stig
-          severity: medium
-    '14.0':
       benchmarks:
         - name: disa_stig
           severity: medium

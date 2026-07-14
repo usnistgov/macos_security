@@ -1,3 +1,4 @@
+---
 id: os_exchange_peraccountVPN
 title: Enforce per account VPN for managed Mail accounts.
 discussion: |
@@ -23,6 +24,7 @@ references:
         - ANNEX D (Section 5.6.1 - Mail)
 platforms:
   iOS:
+    '27.0': {}
     '26.0':
       supervised: false
       benchmarks:

@@ -1,3 +1,4 @@
+---
 id: os_notify_account_removal
 title: Configure the System to Notify upon Account Removed Actions
 discussion: |-
@@ -29,8 +30,8 @@ references:
       - SRG-OS-000277-GPOS-00107
 platforms:
   macOS:
+    '27.0': {}
     '26.0': {}
     '15.0': {}
-    '14.0': {}
 tags:
   - permanent

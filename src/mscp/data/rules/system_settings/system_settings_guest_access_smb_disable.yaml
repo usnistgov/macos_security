@@ -1,3 +1,4 @@
+---
 id: system_settings_guest_access_smb_disable
 title: Disable Guest Access to Shared SMB Folders
 discussion: |
@@ -33,20 +34,12 @@ references:
       - 3.3
 platforms:
   macOS:
+    '27.0': {}
     '26.0':
       benchmarks:
         - name: cis_lvl1
         - name: cis_lvl2
     '15.0':
-      benchmarks:
-        - name: cis_lvl1
-        - name: cis_lvl2
-      enforcement_info:
-        check:
-          shell: /usr/bin/defaults read /Library/Preferences/SystemConfiguration/com.apple.smb.server AllowGuestAccess
-          result:
-            integer: 0
-    '14.0':
       benchmarks:
         - name: cis_lvl1
         - name: cis_lvl2

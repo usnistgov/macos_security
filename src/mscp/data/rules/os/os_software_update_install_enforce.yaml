@@ -1,3 +1,4 @@
+---
 id: os_software_update_install_enforce
 title: Enforce iOS/iPadOS Updates are Automatically Installed using DDM.
 discussion: |
@@ -12,6 +13,7 @@ references:
       - 8.08
 platforms:
   iOS:
+    '27.0': {}
     '26.0':
       supervised: true
       benchmarks:

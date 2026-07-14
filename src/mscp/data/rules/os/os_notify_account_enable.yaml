@@ -1,3 +1,4 @@
+---
 id: os_notify_account_enable
 title: 'Configure the System to Notify upon Account Enabled Actions '
 discussion: |-
@@ -31,8 +32,8 @@ references:
       - SRG-OS-000303-GPOS-00120
 platforms:
   macOS:
+    '27.0': {}
     '26.0': {}
     '15.0': {}
-    '14.0': {}
 tags:
   - permanent

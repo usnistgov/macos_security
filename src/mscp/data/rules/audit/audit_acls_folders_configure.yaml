@@ -1,3 +1,4 @@
+---
 id: audit_acls_folders_configure
 title: Configure Audit Log Folder to Not Contain Access Control Lists
 discussion: |
@@ -58,6 +59,7 @@ references:
       - 3.3
 platforms:
   macOS:
+    '27.0': {}
     '26.0':
       benchmarks:
         - name: cis_lvl1
@@ -74,12 +76,6 @@ platforms:
           severity: medium
         - name: nlmapgov_plus
         - name: nlmapgov_base
-    '14.0':
-      benchmarks:
-        - name: cis_lvl1
-        - name: cis_lvl2
-        - name: disa_stig
-          severity: medium
     enforcement_info:
       check:
         shell: /bin/ls -lde /var/audit | /usr/bin/awk '{print $1}' | /usr/bin/grep -c ":"

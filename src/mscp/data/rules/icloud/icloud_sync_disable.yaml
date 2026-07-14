@@ -1,3 +1,4 @@
+---
 id: icloud_sync_disable
 title: Disable iCloud Desktop and Document Folder Sync
 discussion: |
@@ -61,6 +62,7 @@ references:
       - 15.3
 platforms:
   macOS:
+    '27.0': {}
     '26.0':
       benchmarks:
         - name: cis_lvl2
@@ -73,11 +75,6 @@ platforms:
         - name: disa_stig
           severity: medium
         - name: nlmapgov_plus
-    '14.0':
-      benchmarks:
-        - name: cis_lvl2
-        - name: disa_stig
-          severity: medium
     enforcement_info:
       check:
         shell: |-

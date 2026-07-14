@@ -1,3 +1,4 @@
+---
 id: os_filevault_authorized_users
 title: FileVault Authorized Users
 discussion: |
@@ -15,9 +16,9 @@ references:
       - AC-2(11)
 platforms:
   macOS:
+    '27.0': {}
     '26.0': {}
     '15.0': {}
-    '14.0': {}
     enforcement_info:
       check:
         shell: /usr/bin/fdesetup list | /usr/bin/awk -F',' '{print $1}'

@@ -1,3 +1,4 @@
+---
 id: icloud_private_relay_disable
 title: Disable iCloud Private Relay
 discussion: |
@@ -51,15 +52,12 @@ references:
       - 15.3
 platforms:
   macOS:
+    '27.0': {}
     '26.0':
       benchmarks:
         - name: disa_stig
           severity: medium
     '15.0':
-      benchmarks:
-        - name: disa_stig
-          severity: medium
-    '14.0':
       benchmarks:
         - name: disa_stig
           severity: medium
@@ -74,6 +72,7 @@ platforms:
           string: 'false'
     introduced: '12.0'
   visionOS:
+    '27.0': {}
     '26.0':
       supervised: true
     introduced: '2.0'

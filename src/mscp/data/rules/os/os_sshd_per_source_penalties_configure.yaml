@@ -1,3 +1,4 @@
+---
 id: os_sshd_per_source_penalties_configure
 title: Configure SSHD PerSourcePenalties
 discussion: |
@@ -22,6 +23,7 @@ references:
       - 6.L.C
 platforms:
   macOS:
+    '27.0': {}
     '26.0': {}
     '15.0': {}
     enforcement_info:

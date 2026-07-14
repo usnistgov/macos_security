@@ -1,3 +1,4 @@
+---
 id: os_logoff_capability_and_message
 title: Display logoff capability and message to prevent exploitation
 discussion: |-
@@ -24,9 +25,9 @@ references:
       - SRG-OS-000281-GPOS-00111
 platforms:
   macOS:
+    '27.0': {}
     '26.0': {}
     '15.0': {}
-    '14.0': {}
     enforcement_info:
       fix:
         additional_info: The technology inherently meets this requirement. No fix is required.

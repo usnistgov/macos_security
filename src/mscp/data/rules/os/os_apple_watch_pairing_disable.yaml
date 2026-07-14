@@ -1,3 +1,4 @@
+---
 id: os_apple_watch_pairing_disable
 title: Ensure Apple Watch Pairing is Disabled
 discussion: |
@@ -43,6 +44,7 @@ references:
         - ANNEX K
 platforms:
   iOS:
+    '27.0': {}
     '26.0':
       supervised: true
       benchmarks:

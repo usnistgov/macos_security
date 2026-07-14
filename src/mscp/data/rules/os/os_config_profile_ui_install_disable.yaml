@@ -1,3 +1,4 @@
+---
 id: os_config_profile_ui_install_disable
 title: Disable Installation of Configuration Profiles through the User Interface
 discussion: |
@@ -20,9 +21,9 @@ references:
       - CM.L2-3.4.5
 platforms:
   macOS:
+    '27.0': {}
     '26.0': {}
     '15.0': {}
-    '14.0': {}
     enforcement_info:
       check:
         shell: |-

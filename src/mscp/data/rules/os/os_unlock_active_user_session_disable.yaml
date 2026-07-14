@@ -1,3 +1,4 @@
+---
 id: os_unlock_active_user_session_disable
 title: Disable Login to Other User's Active and Locked Sessions
 discussion: |
@@ -56,6 +57,7 @@ references:
       - 4.3
 platforms:
   macOS:
+    '27.0': {}
     '26.0':
       benchmarks:
         - name: cis_lvl1
@@ -70,19 +72,6 @@ platforms:
         - name: disa_stig
           severity: medium
         - name: nlmapgov_plus
-    '14.0':
-      benchmarks:
-        - name: cis_lvl1
-        - name: cis_lvl2
-        - name: disa_stig
-          severity: medium
-      enforcement_info:
-        check:
-          shell: /usr/bin/security authorizationdb read system.login.screensaver 2>&1 | /usr/bin/grep -c '<string>$ODV</string>'
-          result:
-            integer: 1
-        fix:
-          shell: /usr/bin/security authorizationdb write system.login.screensaver "$ODV"
     enforcement_info:
       check:
         shell: |-

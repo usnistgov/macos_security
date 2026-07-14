@@ -1,3 +1,4 @@
+---
 id: pwpolicy_alpha_numeric_enforce
 title: Require Passwords Contain a Minimum of One Numeric Character
 discussion: |
@@ -73,17 +74,13 @@ references:
         - ANNEX K
 platforms:
   macOS:
+    '27.0': {}
     '26.0':
       benchmarks:
         - name: cis_lvl2
         - name: disa_stig
           severity: medium
     '15.0':
-      benchmarks:
-        - name: cis_lvl2
-        - name: disa_stig
-          severity: medium
-    '14.0':
       benchmarks:
         - name: cis_lvl2
         - name: disa_stig
@@ -95,6 +92,7 @@ platforms:
           integer: 1
     introduced: '10.7'
   iOS:
+    '27.0': {}
     '26.0':
       supervised: false
       benchmarks:

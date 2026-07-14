@@ -1,3 +1,4 @@
+---
 id: os_exchange_reminders_disable
 title: Ensure Reminders service is disabled for Exchange ActiveSync
 discussion: 'Exchange ActiveSync system can disable the Reminders service for an account. Note: The user can reenable the Notes service unless the setting ''EnableRemindersUserOverridable'' is set to false.'
@@ -26,6 +27,7 @@ references:
         - ANNEX D (Section 5.6.1 - Mail)
 platforms:
   iOS:
+    '27.0': {}
     '26.0':
       supervised: false
       benchmarks:

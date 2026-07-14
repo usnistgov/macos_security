@@ -1,3 +1,4 @@
+---
 id: os_required_crypto_module
 title: Ensure all Federal Laws, Executive Orders, Directives, Policies, Regulations, Standards, and Guidance for Authentication to a Cryptographic Module are Met
 discussion: |-
@@ -29,9 +30,9 @@ references:
       - SRG-OS-000120-GPOS-00061
 platforms:
   macOS:
+    '27.0': {}
     '26.0': {}
     '15.0': {}
-    '14.0': {}
     enforcement_info:
       fix:
         additional_info: The technology inherently meets this requirement. No fix is required.

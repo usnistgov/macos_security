@@ -1,3 +1,4 @@
+---
 id: os_allow_info_passed
 title: Allow Information Transfer with Other Operating Systems
 discussion: |-
@@ -24,9 +25,9 @@ references:
       - SRG-OS-000312-GPOS-00122
 platforms:
   macOS:
+    '27.0': {}
     '26.0': {}
     '15.0': {}
-    '14.0': {}
     enforcement_info:
       fix:
         additional_info: The technology inherently meets this requirement. No fix is required.

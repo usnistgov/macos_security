@@ -1,3 +1,4 @@
+---
 id: pwpolicy_account_inactivity_enforce
 title: Disable Accounts after $ODV Days of Inactivity
 discussion: |
@@ -39,15 +40,12 @@ references:
       - 5.3
 platforms:
   macOS:
+    '27.0': {}
     '26.0':
       benchmarks:
         - name: disa_stig
           severity: medium
     '15.0':
-      benchmarks:
-        - name: disa_stig
-          severity: medium
-    '14.0':
       benchmarks:
         - name: disa_stig
           severity: medium

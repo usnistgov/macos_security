@@ -1,3 +1,4 @@
+---
 id: system_settings_wifi_disable_when_connected_to_ethernet
 title: Disable Wi-Fi When Connected to Ethernet
 discussion: |-
@@ -34,9 +35,9 @@ references:
       - 6.L.A
 platforms:
   macOS:
+    '27.0': {}
     '26.0': {}
     '15.0': {}
-    '14.0': {}
 tags:
   - 800-53r5_moderate
   - 800-53r5_high

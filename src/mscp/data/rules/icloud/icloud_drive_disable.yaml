@@ -1,3 +1,4 @@
+---
 id: icloud_drive_disable
 title: Disable iCloud Document Sync
 discussion: |
@@ -89,6 +90,7 @@ references:
         - ANNEX K
 platforms:
   macOS:
+    '27.0': {}
     '26.0':
       benchmarks:
         - name: disa_stig
@@ -99,10 +101,6 @@ platforms:
         - name: disa_stig
           severity: medium
         - name: nlmapgov_plus
-    '14.0':
-      benchmarks:
-        - name: disa_stig
-          severity: medium
     enforcement_info:
       check:
         shell: |-
@@ -114,6 +112,7 @@ platforms:
           string: 'false'
     introduced: '10.11'
   iOS:
+    '27.0': {}
     '26.0':
       supervised: true
       benchmarks:
@@ -143,6 +142,7 @@ platforms:
           severity: medium
     introduced: '5.0'
   visionOS:
+    '27.0': {}
     '26.0':
       supervised: true
       benchmarks:

@@ -1,3 +1,4 @@
+---
 id: audit_alert_processing_fail
 title: Alert Audit Processing Failure
 discussion: |-
@@ -15,8 +16,8 @@ references:
         - CCE-92703-8
 platforms:
   macOS:
+    '27.0': {}
     '26.0': {}
     '15.0': {}
-    '14.0': {}
 tags:
   - permanent

@@ -1,3 +1,4 @@
+---
 id: os_files_network_drive_access_disable
 title: Ensure Allow Network Drive Access in Files App is Set to Disabled
 discussion: |
@@ -53,6 +54,7 @@ references:
       - 1.2
 platforms:
   iOS:
+    '27.0': {}
     '26.0':
       supervised: true
       benchmarks:
@@ -81,6 +83,7 @@ platforms:
           severity: medium
     introduced: '13.1'
   visionOS:
+    '27.0': {}
     '26.0':
       supervised: true
       benchmarks:

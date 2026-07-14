@@ -1,3 +1,4 @@
+---
 id: os_external_intelligence_integration_sign_in_disable
 title: Sign In to External Intelligence Integrations Must Be Disabled
 discussion: |
@@ -54,6 +55,7 @@ references:
       - 15.3
 platforms:
   iOS:
+    '27.0': {}
     '26.0':
       supervised: true
       benchmarks:
@@ -75,6 +77,7 @@ platforms:
           severity: medium
     introduced: '18.2'
   visionOS:
+    '27.0': {}
     '26.0':
       supervised: true
       benchmarks:

@@ -1,3 +1,4 @@
+---
 id: os_ir_support_disable
 title: Disable Infrared (IR) support
 discussion: |
@@ -39,9 +40,9 @@ references:
       - 12.6
 platforms:
   macOS:
+    '27.0': {}
     '26.0': {}
     '15.0': {}
-    '14.0': {}
     enforcement_info:
       check:
         shell: |-

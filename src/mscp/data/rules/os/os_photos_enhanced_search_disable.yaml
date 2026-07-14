@@ -1,3 +1,4 @@
+---
 id: os_photos_enhanced_search_disable
 title: Disable Photos Enhanced Visual Search
 discussion: |-
@@ -32,6 +33,7 @@ references:
       - 4.L.B
 platforms:
   macOS:
+    '27.0': {}
     '26.0': {}
     '15.0': {}
     enforcement_info:

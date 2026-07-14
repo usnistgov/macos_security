@@ -1,3 +1,4 @@
+---
 id: os_system_read_only
 title: Ensure System Volume is Read Only
 discussion: |
@@ -22,9 +23,9 @@ references:
       - 2.L.C
 platforms:
   macOS:
+    '27.0': {}
     '26.0': {}
     '15.0': {}
-    '14.0': {}
     enforcement_info:
       check:
         shell: '/usr/sbin/system_profiler SPStorageDataType | /usr/bin/awk ''/Mount Point: \/$/{x=NR+2}(NR==x){print $2}'''

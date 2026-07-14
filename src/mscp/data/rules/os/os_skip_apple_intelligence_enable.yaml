@@ -1,3 +1,4 @@
+---
 id: os_skip_apple_intelligence_enable
 title: Disable Apple Intelligence During Setup Assistant
 discussion: |
@@ -34,6 +35,7 @@ references:
       - 4.1
 platforms:
   macOS:
+    '27.0': {}
     '26.0':
       benchmarks:
         - name: disa_stig

@@ -1,3 +1,4 @@
+---
 id: audit_flags_fm_failed_configure
 title: Configure System to Audit All Failed Change of Object Attributes
 discussion: |
@@ -52,6 +53,7 @@ references:
       - 8.5
 platforms:
   macOS:
+    '27.0': {}
     '26.0':
       benchmarks:
         - name: cis_lvl2
@@ -59,9 +61,6 @@ platforms:
         fix:
           shell: /usr/bin/grep -qE "^flags.*,\s*-fm" /etc/security/audit_control || /usr/bin/sed -i.bak '/^flags/ s/$/,-fm/' /etc/security/audit_control;/usr/sbin/audit -s
     '15.0':
-      benchmarks:
-        - name: cis_lvl2
-    '14.0':
       benchmarks:
         - name: cis_lvl2
     enforcement_info:

@@ -1,3 +1,4 @@
+---
 id: os_find_my_friends_disable
 title: Disable Find My Friends Service
 discussion: |
@@ -46,6 +47,7 @@ references:
         - ANNEX K
 platforms:
   iOS:
+    '27.0': {}
     '26.0':
       supervised: true
       benchmarks:

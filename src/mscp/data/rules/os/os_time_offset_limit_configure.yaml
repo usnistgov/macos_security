@@ -1,3 +1,4 @@
+---
 id: os_time_offset_limit_configure
 title: Ensure Time Offset Within Limits
 discussion: |
@@ -13,9 +14,9 @@ references:
         - CCE-92915-8
 platforms:
   macOS:
+    '27.0': {}
     '26.0': {}
     '15.0': {}
-    '14.0': {}
     enforcement_info:
       check:
         shell: /usr/bin/sntp $(/usr/sbin/systemsetup -getnetworktimeserver | /usr/bin/awk '{print $4}') | /usr/bin/awk -F'.' '/\+\/\-/{if (substr($1,2) >= 270) {print "No"} else {print "Yes"}}'

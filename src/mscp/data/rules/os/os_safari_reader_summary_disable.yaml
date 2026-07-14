@@ -1,3 +1,4 @@
+---
 id: os_safari_reader_summary_disable
 title: Disable Apple Intelligence Safari Reader Summary
 discussion: Apple Intelligence features such as Safari Reader Summary that use off device AI _MUST_ be disabled.
@@ -44,6 +45,7 @@ references:
         - ANNEX K
 platforms:
   macOS:
+    '27.0': {}
     '26.0': {}
     '15.0': {}
     enforcement_info:
@@ -57,6 +59,7 @@ platforms:
           string: 'false'
     introduced: '15.4'
   iOS:
+    '27.0': {}
     '26.0':
       supervised: true
       benchmarks:
@@ -66,6 +69,7 @@ platforms:
       supervised: true
     introduced: '18.4'
   visionOS:
+    '27.0': {}
     '26.0':
       supervised: true
     introduced: '2.4'

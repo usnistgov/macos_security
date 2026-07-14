@@ -1,3 +1,4 @@
+---
 id: system_settings_firewall_stealth_mode_enable
 title: Enable Firewall Stealth Mode
 discussion: |
@@ -53,6 +54,7 @@ references:
       - 4.8
 platforms:
   macOS:
+    '27.0': {}
     '26.0':
       benchmarks:
         - name: cis_lvl1
@@ -63,28 +65,6 @@ platforms:
         - name: cis_lvl1
         - name: cis_lvl2
         - name: nlmapgov_plus
-    '14.0':
-      benchmarks:
-        - name: cis_lvl1
-        - name: cis_lvl2
-      enforcement_info:
-        check:
-          shell: |-
-            profile="$(/usr/bin/osascript -l JavaScript << EOS
-            $.NSUserDefaults.alloc.initWithSuiteName('com.apple.security.firewall')\
-            .objectForKey('EnableStealthMode').js
-            EOS
-            )"
-
-            plist=$(/usr/bin/defaults read /Library/Preferences/com.apple.alf stealthenabled 2>/dev/null)
-
-            if [[ "$profile" == "true" ]] && [[ $plist == 1 ]]; then
-              echo "true"
-            else
-              echo "false"
-            fi
-          result:
-            string: 'true'
     enforcement_info:
       check:
         shell: |-

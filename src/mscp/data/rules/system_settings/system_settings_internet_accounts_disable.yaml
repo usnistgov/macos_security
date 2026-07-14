@@ -1,3 +1,4 @@
+---
 id: system_settings_internet_accounts_disable
 title: Disable the Internet Accounts System Preference Pane
 discussion: |
@@ -41,9 +42,9 @@ references:
       - 15.2
 platforms:
   macOS:
+    '27.0': {}
     '26.0': {}
     '15.0': {}
-    '14.0': {}
     enforcement_info:
       check:
         shell: /usr/bin/profiles show -output stdout-xml | /usr/bin/xmllint --xpath '//key[text()="DisabledSystemSettings"]/following-sibling::*[1]' - | /usr/bin/grep -c com.apple.Internet-Accounts-Settings.extension

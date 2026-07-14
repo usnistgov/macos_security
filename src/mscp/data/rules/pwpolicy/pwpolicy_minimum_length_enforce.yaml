@@ -1,3 +1,4 @@
+---
 id: pwpolicy_minimum_length_enforce
 title: Require a Minimum Password Length of $ODV Characters
 discussion: |
@@ -93,6 +94,7 @@ references:
         - ANNEX K
 platforms:
   macOS:
+    '27.0': {}
     '26.0':
       benchmarks:
         - name: cis_lvl1
@@ -109,12 +111,6 @@ platforms:
           severity: medium
         - name: nlmapgov_plus
         - name: nlmapgov_base
-    '14.0':
-      benchmarks:
-        - name: cis_lvl1
-        - name: cis_lvl2
-        - name: disa_stig
-          severity: medium
     enforcement_info:
       check:
         shell: '/usr/bin/pwpolicy -getaccountpolicies 2>/dev/null | tail +2 | grep -oE "policyAttributePassword matches ''.\{[0-9]+," | awk -F''[{,]'' -v ODV=$ODV ''{if ($2 > max) max=$2} END {print (max >= ODV) ? "pass" : "fail"}'''
@@ -122,6 +118,7 @@ platforms:
           string: pass
     introduced: '10.7'
   iOS:
+    '27.0': {}
     '26.0':
       supervised: false
       benchmarks:
@@ -166,6 +163,7 @@ platforms:
           severity: medium
     introduced: '4.0'
   visionOS:
+    '27.0': {}
     '26.0':
       supervised: false
       benchmarks:

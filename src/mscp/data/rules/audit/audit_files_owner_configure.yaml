@@ -1,3 +1,4 @@
+---
 id: audit_files_owner_configure
 title: Configure Audit Log Files to be Owned by Root
 discussion: |
@@ -59,6 +60,7 @@ references:
       - 3.3
 platforms:
   macOS:
+    '27.0': {}
     '26.0':
       benchmarks:
         - name: cis_lvl1
@@ -75,12 +77,6 @@ platforms:
           severity: medium
         - name: nlmapgov_plus
         - name: nlmapgov_base
-    '14.0':
-      benchmarks:
-        - name: cis_lvl1
-        - name: cis_lvl2
-        - name: disa_stig
-          severity: medium
     enforcement_info:
       check:
         shell: '/bin/ls -n $(/usr/bin/grep ''^dir'' /etc/security/audit_control | /usr/bin/awk -F: ''{print $2}'') | /usr/bin/awk ''{s+=$3} END {print s}'''

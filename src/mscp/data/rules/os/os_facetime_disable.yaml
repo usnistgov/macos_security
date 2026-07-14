@@ -1,3 +1,4 @@
+---
 id: os_facetime_disable
 title: Disable FaceTime App
 discussion: |
@@ -29,6 +30,7 @@ references:
       - CM.L2-3.4.6
 platforms:
   iOS:
+    '27.0': {}
     '26.0':
       supervised: true
       benchmarks:

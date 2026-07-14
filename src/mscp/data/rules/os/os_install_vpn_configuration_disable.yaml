@@ -1,3 +1,4 @@
+---
 id: os_install_vpn_configuration_disable
 title: Ensure Allow Adding VPN Configurations is Set to Disabled
 discussion: |
@@ -58,6 +59,7 @@ references:
       - 12.7
 platforms:
   iOS:
+    '27.0': {}
     '26.0':
       supervised: true
       benchmarks:
@@ -96,6 +98,7 @@ platforms:
           severity: low
     introduced: '11.0'
   visionOS:
+    '27.0': {}
     '26.0':
       supervised: true
     introduced: '2.0'

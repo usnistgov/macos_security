@@ -1,3 +1,4 @@
+---
 id: pwpolicy_history_enforce
 title: Prohibit Password Reuse for a Minimum of $ODV Generations
 discussion: |
@@ -77,15 +78,12 @@ references:
         - ANNEX K
 platforms:
   macOS:
+    '27.0': {}
     '26.0':
       benchmarks:
         - name: cis_lvl1
         - name: cis_lvl2
     '15.0':
-      benchmarks:
-        - name: cis_lvl1
-        - name: cis_lvl2
-    '14.0':
       benchmarks:
         - name: cis_lvl1
         - name: cis_lvl2
@@ -96,6 +94,7 @@ platforms:
           string: pass
     introduced: '10.7'
   iOS:
+    '27.0': {}
     '26.0':
       supervised: false
       benchmarks:
@@ -121,6 +120,7 @@ platforms:
         - name: indigo_high
     introduced: '4.0'
   visionOS:
+    '27.0': {}
     '26.0':
       supervised: false
       benchmarks:

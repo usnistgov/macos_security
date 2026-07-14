@@ -1,3 +1,4 @@
+---
 id: os_prohibit_remote_activation_collab_devices
 title: Prohibit Remote Activation of Collaborative Computing Devices
 discussion: |-
@@ -32,9 +33,9 @@ references:
       - SC.L2-3.13.12
 platforms:
   macOS:
+    '27.0': {}
     '26.0': {}
     '15.0': {}
-    '14.0': {}
     enforcement_info:
       fix:
         additional_info: The technology partially meets this requirement. An appropriate mitigation for the system must be implemented for full compliance.

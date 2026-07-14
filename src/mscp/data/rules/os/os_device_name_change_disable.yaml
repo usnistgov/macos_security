@@ -1,3 +1,4 @@
+---
 id: os_device_name_change_disable
 title: Disable Device Name Changes
 discussion: |
@@ -21,6 +22,7 @@ references:
         - ANNEX K
 platforms:
   iOS:
+    '27.0': {}
     '26.0':
       supervised: true
       benchmarks:

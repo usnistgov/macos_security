@@ -1,3 +1,4 @@
+---
 id: os_image_playground_disable
 title: Disable Apple Intelligence Image Playground
 discussion: Apple Intelligence features such as Image Playground _MUST_ be disabled.
@@ -40,6 +41,7 @@ references:
       - 2.L.A
 platforms:
   macOS:
+    '27.0': {}
     '26.0':
       benchmarks:
         - name: disa_stig
@@ -54,6 +56,7 @@ platforms:
           string: 'false'
     introduced: '15.0'
   iOS:
+    '27.0': {}
     '26.0':
       supervised: false
       benchmarks:
@@ -64,6 +67,7 @@ platforms:
         - name: ios_stig
     introduced: '18.0'
   visionOS:
+    '27.0': {}
     '26.0':
       supervised: true
       benchmarks:

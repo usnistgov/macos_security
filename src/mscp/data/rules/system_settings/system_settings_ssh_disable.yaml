@@ -1,3 +1,4 @@
+---
 id: system_settings_ssh_disable
 title: Disable SSH Server for Remote Access Sessions
 discussion: |
@@ -43,6 +44,7 @@ references:
       - 4.8
 platforms:
   macOS:
+    '27.0': {}
     '26.0':
       benchmarks:
         - name: cis_lvl1
@@ -53,15 +55,6 @@ platforms:
         - name: cis_lvl1
         - name: cis_lvl2
         - name: nlmapgov_plus
-      enforcement_info:
-        check:
-          shell: /bin/launchctl print-disabled system | /usr/bin/grep -c '"com.openssh.sshd" => disabled'
-          result:
-            integer: 1
-    '14.0':
-      benchmarks:
-        - name: cis_lvl1
-        - name: cis_lvl2
       enforcement_info:
         check:
           shell: /bin/launchctl print-disabled system | /usr/bin/grep -c '"com.openssh.sshd" => disabled'

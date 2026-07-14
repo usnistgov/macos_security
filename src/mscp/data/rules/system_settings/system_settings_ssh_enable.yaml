@@ -1,3 +1,4 @@
+---
 id: system_settings_ssh_enable
 title: Enable SSH Server for Remote Access Sessions
 discussion: |
@@ -34,9 +35,9 @@ references:
       - ''
 platforms:
   macOS:
+    '27.0': {}
     '26.0': {}
     '15.0': {}
-    '14.0': {}
     enforcement_info:
       check:
         shell: /bin/launchctl print-disabled system | /usr/bin/grep -c '"com.openssh.sshd" => enabled'

@@ -1,3 +1,4 @@
+---
 id: os_bluetooth_modification_disable
 title: Bluetooth Status Modification Disabled
 discussion: |
@@ -24,6 +25,7 @@ references:
       - CM.L2-3.4.7
 platforms:
   iOS:
+    '27.0': {}
     '26.0':
       supervised: false
       benchmarks:

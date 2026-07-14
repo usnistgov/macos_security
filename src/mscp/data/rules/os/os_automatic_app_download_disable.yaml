@@ -1,3 +1,4 @@
+---
 id: os_automatic_app_download_disable
 title: Disallow Automatic Downloads of Apps Purchased on other Apple Devices.
 discussion: |
@@ -27,6 +28,7 @@ references:
       - CM.L2-3.4.7
 platforms:
   iOS:
+    '27.0': {}
     '26.0':
       supervised: true
       benchmarks:

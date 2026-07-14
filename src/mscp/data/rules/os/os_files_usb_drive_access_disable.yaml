@@ -1,3 +1,4 @@
+---
 id: os_files_usb_drive_access_disable
 title: Ensure Allow USB Drive Access in Files App is Set to Disabled
 discussion: |
@@ -49,6 +50,7 @@ references:
       - 1.2
 platforms:
   iOS:
+    '27.0': {}
     '26.0':
       supervised: true
       benchmarks:

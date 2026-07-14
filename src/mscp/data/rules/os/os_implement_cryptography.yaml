@@ -1,3 +1,4 @@
+---
 id: os_implement_cryptography
 title: Configure the System to Implement Approved Cryptography to Protect Information
 discussion: |-
@@ -38,9 +39,9 @@ references:
       - 4.L.A
 platforms:
   macOS:
+    '27.0': {}
     '26.0': {}
     '15.0': {}
-    '14.0': {}
     enforcement_info:
       fix:
         additional_info: The technology inherently meets this requirement. No fix is required.

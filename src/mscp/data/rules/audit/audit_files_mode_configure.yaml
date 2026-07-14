@@ -1,3 +1,4 @@
+---
 id: audit_files_mode_configure
 title: Configure Audit Log Files to Mode 440 or Less Permissive
 discussion: |
@@ -55,6 +56,7 @@ references:
       - 3.3
 platforms:
   macOS:
+    '27.0': {}
     '26.0':
       benchmarks:
         - name: cis_lvl1
@@ -71,12 +73,6 @@ platforms:
           severity: medium
         - name: nlmapgov_plus
         - name: nlmapgov_base
-    '14.0':
-      benchmarks:
-        - name: cis_lvl1
-        - name: cis_lvl2
-        - name: disa_stig
-          severity: medium
     enforcement_info:
       check:
         shell: '/bin/ls -l $(/usr/bin/grep ''^dir'' /etc/security/audit_control | /usr/bin/awk -F: ''{print $2}'') | /usr/bin/awk ''!/-r--r-----|current|total/{print $1}'' | /usr/bin/wc -l | /usr/bin/tr -d '' '''

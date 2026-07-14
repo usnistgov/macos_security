@@ -1,3 +1,4 @@
+---
 id: system_settings_install_macos_updates_enforce
 title: Enforce macOS Updates are Automatically Installed
 discussion: |
@@ -27,6 +28,7 @@ references:
       - 8.08.01
 platforms:
   macOS:
+    '27.0': {}
     '26.0':
       benchmarks:
         - name: cis_lvl1
@@ -37,10 +39,6 @@ platforms:
         - name: cis_lvl2
         - name: nlmapgov_plus
         - name: nlmapgov_base
-    '14.0':
-      benchmarks:
-        - name: cis_lvl1
-        - name: cis_lvl2
     enforcement_info:
       check:
         shell: |-

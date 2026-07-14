@@ -1,3 +1,4 @@
+---
 id: os_image_wand_disable
 title: Disable Apple Intelligence ImageWand
 discussion: |
@@ -35,6 +36,7 @@ references:
         - ANNEX K
 platforms:
   iOS:
+    '27.0': {}
     '26.0':
       benchmarks:
         - name: ios_stig
@@ -45,6 +47,7 @@ platforms:
         - name: indigo_high
     introduced: '18.0'
   visionOS:
+    '27.0': {}
     '26.0': {}
     introduced: '2.4'
 tags:

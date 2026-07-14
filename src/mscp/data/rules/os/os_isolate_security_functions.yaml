@@ -1,3 +1,4 @@
+---
 id: os_isolate_security_functions
 title: Configure the System to Separate User and System Functionality
 discussion: |-
@@ -22,9 +23,9 @@ references:
       - SRG-OS-000134-GPOS-00068
 platforms:
   macOS:
+    '27.0': {}
     '26.0': {}
     '15.0': {}
-    '14.0': {}
     enforcement_info:
       fix:
         additional_info: The technology inherently meets this requirement. No fix is required.

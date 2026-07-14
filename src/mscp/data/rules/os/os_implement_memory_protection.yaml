@@ -1,3 +1,4 @@
+---
 id: os_implement_memory_protection
 title: Configure the System to Protect Memory from Unauthorized Code Execution
 discussion: |-
@@ -31,9 +32,9 @@ references:
       - SRG-OS-000433-GPOS-00192
 platforms:
   macOS:
+    '27.0': {}
     '26.0': {}
     '15.0': {}
-    '14.0': {}
     enforcement_info:
       fix:
         additional_info: The technology inherently meets this requirement. No fix is required.

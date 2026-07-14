@@ -1,3 +1,4 @@
+---
 id: os_firewall_log_enable
 title: Enable Firewall Logging
 discussion: |
@@ -31,10 +32,6 @@ references:
       - 8.5
 platforms:
   macOS:
-    '14.0':
-      benchmarks:
-        - name: cis_lvl1
-        - name: cis_lvl2
     enforcement_info:
       check:
         shell: |-

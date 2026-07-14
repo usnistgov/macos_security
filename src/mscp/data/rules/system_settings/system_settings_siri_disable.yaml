@@ -1,3 +1,4 @@
+---
 id: system_settings_siri_disable
 title: Disable Siri
 discussion: |
@@ -65,7 +66,6 @@ references:
         - ANNEX K
       ios_17:
         - ANNEX K
-
   hhs:
     hicp:
       - 2.L.A
@@ -82,6 +82,7 @@ references:
       - 4.8
 platforms:
   macOS:
+    '27.0': {}
     '26.0':
       benchmarks:
         - name: cis_lvl1
@@ -89,12 +90,6 @@ platforms:
         - name: disa_stig
           severity: medium
     '15.0':
-      benchmarks:
-        - name: cis_lvl1
-        - name: cis_lvl2
-        - name: disa_stig
-          severity: medium
-    '14.0':
       benchmarks:
         - name: cis_lvl1
         - name: cis_lvl2
@@ -111,6 +106,7 @@ platforms:
           string: 'false'
     introduced: '14.0'
   iOS:
+    '27.0': {}
     '26.0':
       supervised: false
       benchmarks:
@@ -138,6 +134,7 @@ platforms:
           severity: high
     introduced: '5.0'
   visionOS:
+    '27.0': {}
     '26.0':
       supervised: false
     introduced: '2.0'

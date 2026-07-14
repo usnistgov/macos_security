@@ -187,9 +187,6 @@
                         "13.0": {
                             "$ref": "#/$defs/osDef"
                         },
-                        "14.0": {
-                            "$ref": "#/$defs/osDef"
-                        },
                         "15.0": {
                             "$ref": "#/$defs/osDef"
                         },
@@ -199,6 +196,9 @@
                         "introduced": {
                             "type": "string",
                             "pattern": "^(\\d+(\\.\\d+){1,2}|-1)$"
+                        },
+                        "27.0": {
+                            "$ref": "#/$defs/osDef"
                         }
                     },
                     "additionalProperties": false
@@ -269,6 +269,9 @@
                         },
                         "introduced": {
                             "type": "string"
+                        },
+                        "27.0": {
+                            "$ref": "#/$defs/osDef"
                         }
                     },
                     "additionalProperties": false
@@ -309,6 +312,9 @@
                         },
                         "introduced": {
                             "type": "string"
+                        },
+                        "27.0": {
+                            "$ref": "#/$defs/osDef"
                         }
                     },
                     "additionalProperties": false
@@ -527,14 +533,26 @@
                         }
                     },
                     "anyOf": [
-                        { "required": ["shell"] },
-                        { "required": ["additional_info"] }
+                        {
+                            "required": [
+                                "shell"
+                            ]
+                        },
+                        {
+                            "required": [
+                                "additional_info"
+                            ]
+                        }
                     ],
                     "if": {
-                        "required": ["shell"]
+                        "required": [
+                            "shell"
+                        ]
                     },
                     "then": {
-                        "required": ["result"]
+                        "required": [
+                            "result"
+                        ]
                     }
                 },
                 "fix": {
@@ -549,8 +567,16 @@
                         }
                     },
                     "anyOf": [
-                        { "required": ["shell"] },
-                        { "required": ["additional_info"] }
+                        {
+                            "required": [
+                                "shell"
+                            ]
+                        },
+                        {
+                            "required": [
+                                "additional_info"
+                            ]
+                        }
                     ]
                 },
                 "default_state": {
@@ -566,8 +592,16 @@
                         }
                     },
                     "anyOf": [
-                        { "required": ["shell"] },
-                        { "required": ["note"] }
+                        {
+                            "required": [
+                                "shell"
+                            ]
+                        },
+                        {
+                            "required": [
+                                "note"
+                            ]
+                        }
                     ]
                 }
             },

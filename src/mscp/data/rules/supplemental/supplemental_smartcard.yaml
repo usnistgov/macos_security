@@ -1,5 +1,6 @@
+---
 id: supplemental_smartcard
-title: "Smartcard Supplemental"
+title: Smartcard Supplemental
 discussion: |
   The supplemental guidance found in this section is applicable for the following rules:
 
@@ -290,9 +291,9 @@ references:
   nist: {}
 platforms:
   macOS:
+    '27.0': {}
     '26.0': {}
     '15.0': {}
-    '14.0': {}
 tags:
   - 800-171
   - 800-53r5_high

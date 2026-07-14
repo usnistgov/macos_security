@@ -1,3 +1,4 @@
+---
 id: os_predictive_keyboard_disable
 title: Disable the Use of Predictable Keyboards
 discussion: |
@@ -21,6 +22,7 @@ references:
         - ANNEX K
 platforms:
   iOS:
+    '27.0': {}
     '26.0':
       supervised: true
       benchmarks:

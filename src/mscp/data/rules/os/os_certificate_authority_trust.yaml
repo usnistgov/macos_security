@@ -1,3 +1,4 @@
+---
 id: os_certificate_authority_trust
 title: Issue or Obtain Public Key Certificates from an Approved Service Provider
 discussion: |
@@ -37,15 +38,12 @@ references:
       - 3.L.C
 platforms:
   macOS:
+    '27.0': {}
     '26.0':
       benchmarks:
         - name: disa_stig
           severity: high
     '15.0':
-      benchmarks:
-        - name: disa_stig
-          severity: high
-    '14.0':
       benchmarks:
         - name: disa_stig
           severity: high

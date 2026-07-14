@@ -1,3 +1,4 @@
+---
 id: pwpolicy_force_pin_enable
 title: Ensure Force Pin is Set to Enabled
 discussion: |
@@ -51,6 +52,7 @@ references:
       - 8.24
 platforms:
   iOS:
+    '27.0': {}
     '26.0':
       benchmarks:
         - name: ios_stig
@@ -81,6 +83,7 @@ platforms:
           severity: high
     introduced: '4.0'
   visionOS:
+    '27.0': {}
     '26.0':
       benchmarks:
         - name: visionos_stig

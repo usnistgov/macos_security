@@ -1,3 +1,4 @@
+---
 id: os_remove_software_components_after_updates
 title: Must remove all software components after updated versions installed
 discussion: |-
@@ -20,9 +21,9 @@ references:
       - SRG-OS-000437-GPOS-00194
 platforms:
   macOS:
+    '27.0': {}
     '26.0': {}
     '15.0': {}
-    '14.0': {}
     enforcement_info:
       fix:
         additional_info: The technology inherently meets this requirement. No fix is required.

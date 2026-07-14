@@ -1,3 +1,4 @@
+---
 id: os_appleid_prompt_disable
 title: Disable Apple ID Setup during Setup Assistant
 discussion: |
@@ -37,28 +38,12 @@ references:
       - 4.8
 platforms:
   macOS:
+    '27.0': {}
     '26.0':
       benchmarks:
         - name: disa_stig
           severity: medium
     '15.0':
-      benchmarks:
-        - name: disa_stig
-          severity: medium
-      mobileconfig_info:
-        - PayloadType: com.apple.SetupAssistant.managed
-          PayloadContent:
-            - SkipCloudSetup: true
-      enforcement_info:
-        check:
-          shell: |-
-            /usr/bin/osascript -l JavaScript << EOS
-            $.NSUserDefaults.alloc.initWithSuiteName('com.apple.SetupAssistant.managed')\
-            .objectForKey('SkipCloudSetup').js
-            EOS
-          result:
-            string: 'true'
-    '14.0':
       benchmarks:
         - name: disa_stig
           severity: medium

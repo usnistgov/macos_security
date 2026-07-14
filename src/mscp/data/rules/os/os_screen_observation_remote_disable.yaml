@@ -1,3 +1,4 @@
+---
 id: os_screen_observation_remote_disable
 title: Prevent Remote Screen Observation
 discussion: |
@@ -21,6 +22,7 @@ references:
         - ANNEX K
 platforms:
   iOS:
+    '27.0': {}
     '26.0':
       supervised: false
       benchmarks:

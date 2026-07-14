@@ -1,3 +1,4 @@
+---
 id: audit_auditd_enabled
 title: Enable Security Auditing
 discussion: |
@@ -116,6 +117,7 @@ references:
       - 8.5
 platforms:
   macOS:
+    '27.0': {}
     '26.0':
       benchmarks:
         - name: cis_lvl1
@@ -132,24 +134,6 @@ platforms:
           severity: medium
         - name: nlmapgov_plus
         - name: nlmapgov_base
-      enforcement_info:
-        check:
-          shell: |-
-            LAUNCHD_RUNNING=$(/bin/launchctl list | /usr/bin/grep -c com.apple.auditd)
-            AUDITD_RUNNING=$(/usr/sbin/audit -c | /usr/bin/grep -c "AUC_AUDITING")
-            if [[ $LAUNCHD_RUNNING == 1 ]] && [[ -e /etc/security/audit_control ]] && [[ $AUDITD_RUNNING == 1 ]]; then
-              echo "pass"
-            else
-              echo "fail"
-            fi
-          result:
-            string: pass
-    '14.0':
-      benchmarks:
-        - name: cis_lvl1
-        - name: cis_lvl2
-        - name: disa_stig
-          severity: medium
       enforcement_info:
         check:
           shell: |-

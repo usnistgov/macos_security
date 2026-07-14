@@ -1,3 +1,4 @@
+---
 id: system_settings_location_services_enable
 title: Enable Location Services
 discussion: |
@@ -24,6 +25,7 @@ references:
       - 4.8
 platforms:
   macOS:
+    '27.0': {}
     '26.0':
       benchmarks:
         - name: cis_lvl2
@@ -34,9 +36,6 @@ platforms:
             pid=$(/bin/launchctl print system | /usr/bin/awk '/\tcom.apple.locationd/ {print $1}')
             kill -9 $pid
     '15.0':
-      benchmarks:
-        - name: cis_lvl2
-    '14.0':
       benchmarks:
         - name: cis_lvl2
     enforcement_info:

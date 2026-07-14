@@ -1,3 +1,4 @@
+---
 id: os_gatekeeper_enable
 title: Enable Gatekeeper
 discussion: |
@@ -67,6 +68,7 @@ references:
       - 10.5
 platforms:
   macOS:
+    '27.0': {}
     '26.0':
       benchmarks:
         - name: cis_lvl1
@@ -83,19 +85,6 @@ platforms:
           severity: high
         - name: nlmapgov_plus
         - name: nlmapgov_base
-    '14.0':
-      benchmarks:
-        - name: cis_lvl1
-        - name: cis_lvl2
-        - name: disa_stig
-          severity: high
-      enforcement_info:
-        check:
-          shell: /usr/sbin/spctl --status | /usr/bin/grep -c "assessments enabled"
-          result:
-            integer: 1
-        fix:
-          shell: /usr/sbin/spctl --global-enable
     enforcement_info:
       check:
         shell: |-

@@ -1,3 +1,4 @@
+---
 id: system_settings_hot_corners_disable
 title: Disable Hot Corners
 discussion: |
@@ -33,15 +34,12 @@ references:
       - AC.L2-3.1.10
 platforms:
   macOS:
+    '27.0': {}
     '26.0':
       benchmarks:
         - name: disa_stig
           severity: medium
     '15.0':
-      benchmarks:
-        - name: disa_stig
-          severity: medium
-    '14.0':
       benchmarks:
         - name: disa_stig
           severity: medium

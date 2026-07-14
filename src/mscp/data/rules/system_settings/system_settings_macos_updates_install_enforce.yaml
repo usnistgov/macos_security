@@ -1,3 +1,4 @@
+---
 id: system_settings_macos_updates_install_enforce
 title: Enforce macOS Updates are Automatically Installed using DDM.
 discussion: |
@@ -12,6 +13,7 @@ references:
       - 8.08
 platforms:
   macOS:
+    '27.0': {}
     '26.0':
       benchmarks:
         - name: nlmapgov_plus

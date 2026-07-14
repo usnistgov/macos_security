@@ -1,3 +1,4 @@
+---
 id: os_personalized_handwriting_disable
 title: Ensure the ability to Analyze Handwriting is Set to Disabled
 discussion: |
@@ -29,6 +30,7 @@ references:
         - ANNEX K
 platforms:
   iOS:
+    '27.0': {}
     '26.0':
       supervised: false
       benchmarks:

@@ -1,3 +1,4 @@
+---
 id: os_personalized_advertising_disable
 title: Disable Personalized Advertising
 discussion: |
@@ -51,6 +52,7 @@ references:
       - 4.8
 platforms:
   iOS:
+    '27.0': {}
     '26.0':
       supervised: false
       benchmarks:
@@ -78,6 +80,7 @@ platforms:
         - name: indigo_high
     introduced: '14.0'
   visionOS:
+    '27.0': {}
     '26.0':
       supervised: false
     introduced: '2.0'

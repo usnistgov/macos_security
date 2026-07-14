@@ -1,3 +1,4 @@
+---
 id: system_settings_softwareupdate_current
 title: Ensure Software Update is Updated and Current
 discussion: |
@@ -49,6 +50,7 @@ references:
       - 7.4
 platforms:
   macOS:
+    '27.0': {}
     '26.0':
       benchmarks:
         - name: cis_lvl1
@@ -68,22 +70,6 @@ platforms:
           severity: medium
         - name: nlmapgov_plus
         - name: nlmapgov_base
-      enforcement_info:
-        check:
-          shell: |-
-            softwareupdate_date_epoch=$(/bin/date -j -f "%Y-%m-%d" "$(/usr/bin/defaults read /Library/Preferences/com.apple.SoftwareUpdate.plist LastFullSuccessfulDate | /usr/bin/awk '{print $1}')" "+%s")
-            thirty_days_epoch=$(/bin/date -v -30d "+%s")
-            if [[ $softwareupdate_date_epoch -lt $thirty_days_epoch ]]; then
-              /bin/echo "0"
-            else
-              /bin/echo "1"
-            fi
-          result:
-            integer: 1
-    '14.0':
-      benchmarks:
-        - name: cis_lvl1
-        - name: cis_lvl2
       enforcement_info:
         check:
           shell: |-

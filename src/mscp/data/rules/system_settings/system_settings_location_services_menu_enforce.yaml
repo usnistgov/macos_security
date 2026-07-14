@@ -1,3 +1,4 @@
+---
 id: system_settings_location_services_menu_enforce
 title: Ensure Location Services Is In the Menu Bar
 discussion: |
@@ -24,6 +25,7 @@ references:
       - 4.8
 platforms:
   macOS:
+    '27.0': {}
     '26.0':
       benchmarks:
         - name: cis_lvl1
@@ -31,9 +33,6 @@ platforms:
     '15.0':
       benchmarks:
         - name: cis_lvl1
-        - name: cis_lvl2
-    '14.0':
-      benchmarks:
         - name: cis_lvl2
     enforcement_info:
       check:

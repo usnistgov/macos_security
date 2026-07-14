@@ -1,3 +1,4 @@
+---
 id: pwpolicy_max_inactivity_enforce
 title: Ensure Maximum Auto-Lock is Set to $ODV Minutes or Less
 discussion: |
@@ -59,6 +60,7 @@ references:
       - 4.3
 platforms:
   iOS:
+    '27.0': {}
     '26.0':
       supervised: false
       benchmarks:
@@ -102,6 +104,7 @@ platforms:
           severity: medium
     introduced: '4.0'
   visionOS:
+    '27.0': {}
     '26.0':
       supervised: false
       benchmarks:

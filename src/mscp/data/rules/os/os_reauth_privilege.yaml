@@ -1,3 +1,4 @@
+---
 id: os_reauth_privilege
 title: Require users to reauthenticate for privilege escalation
 discussion: |-
@@ -23,9 +24,9 @@ references:
       - SRG-OS-000373-GPOS-00156
 platforms:
   macOS:
+    '27.0': {}
     '26.0': {}
     '15.0': {}
-    '14.0': {}
     enforcement_info:
       fix:
         additional_info: The technology inherently meets this requirement. No fix is required.

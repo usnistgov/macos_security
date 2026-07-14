@@ -1,3 +1,4 @@
+---
 id: os_external_intelligence_integration_disable
 title: External Intelligence Integrations Must Be Disabled
 discussion: |
@@ -40,6 +41,7 @@ references:
         - ANNEX K
 platforms:
   iOS:
+    '27.0': {}
     '26.0':
       supervised: true
       benchmarks:
@@ -56,6 +58,7 @@ platforms:
           severity: medium
     introduced: '18.2'
   visionOS:
+    '27.0': {}
     '26.0':
       supervised: true
       benchmarks:

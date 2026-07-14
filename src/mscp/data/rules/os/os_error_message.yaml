@@ -1,3 +1,4 @@
+---
 id: os_error_message
 title: Generate Error Messages without Exploitable Information
 discussion: |-
@@ -15,9 +16,9 @@ references:
         - CCE-92786-3
 platforms:
   macOS:
+    '27.0': {}
     '26.0': {}
     '15.0': {}
-    '14.0': {}
     enforcement_info:
       fix:
         additional_info: The technology inherently meets this requirement. No fix is required.

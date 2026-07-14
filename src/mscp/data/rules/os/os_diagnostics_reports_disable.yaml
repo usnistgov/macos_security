@@ -1,3 +1,4 @@
+---
 id: os_diagnostics_reports_disable
 title: Disable Sending Diagnostic and Usage Data to Apple
 discussion: |
@@ -63,6 +64,7 @@ references:
       - 4.8
 platforms:
   iOS:
+    '27.0': {}
     '26.0':
       supervised: false
       benchmarks:
@@ -107,6 +109,7 @@ platforms:
           severity: medium
     introduced: '6.0'
   visionOS:
+    '27.0': {}
     '26.0':
       supervised: false
       benchmarks:

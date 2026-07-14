@@ -1,3 +1,4 @@
+---
 id: system_settings_improve_search_disable
 title: Disable Improve Search Information to Apple
 discussion: |
@@ -51,6 +52,7 @@ references:
       - 4.8
 platforms:
   macOS:
+    '27.0': {}
     '26.0':
       benchmarks:
         - name: cis_lvl1

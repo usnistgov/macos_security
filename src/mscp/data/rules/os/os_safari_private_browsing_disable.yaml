@@ -1,3 +1,4 @@
+---
 id: os_safari_private_browsing_disable
 title: Ensure Private Browsing in Safari Is Disabled
 discussion: |
@@ -13,6 +14,7 @@ references:
         - ANNEX K
 platforms:
   macOS:
+    '27.0': {}
     '26.0': {}
     enforcement_info:
       check:
@@ -25,6 +27,7 @@ platforms:
           string: 'false'
     introduced: '26.0'
   iOS:
+    '27.0': {}
     '26.0':
       supervised: true
       benchmarks:

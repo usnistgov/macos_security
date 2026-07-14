@@ -1,3 +1,4 @@
+---
 id: os_web_distribution_app_installation_disable
 title: Ensure the Ability to Install Apps Directly from the Web is Set to Disabled
 discussion: |
@@ -36,6 +37,7 @@ references:
       - 8.27
 platforms:
   iOS:
+    '27.0': {}
     '26.0':
       supervised: false
       benchmarks:

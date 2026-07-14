@@ -1,3 +1,4 @@
+---
 id: pwpolicy_max_grace_period_enforce
 title: Ensure Maximum Grace Period for Device Lock is Set to Immediately
 discussion: |
@@ -52,6 +53,7 @@ references:
       - 4.3
 platforms:
   iOS:
+    '27.0': {}
     '26.0':
       supervised: false
       benchmarks:
