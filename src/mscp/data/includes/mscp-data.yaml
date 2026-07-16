@@ -1,7 +1,7 @@
 ---
 mscp:
   version: '2.0'
-  build: 33
+  build: 34
   build_date: '2026-06-11'
   release_date: '2026-XX-XX'
   release: '27.0'
