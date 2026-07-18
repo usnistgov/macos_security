@@ -46,6 +46,10 @@ platforms:
       benchmarks:
         - name: indigo_high
     introduced: '5.0'
+  visionOS:
+    '27.0': {}
+      supervised: true
+    introduced: '27.0'
 tags:
   - 800-53r5_low
   - 800-53r5_moderate

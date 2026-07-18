@@ -27,10 +27,14 @@ platforms:
   iOS:
     '27.0': {}
     '26.0':
-      supervised: false
+      supervised: true
       benchmarks:
         - name: ios_stig
     introduced: '11.0'
+  visionOS:
+    '27.0': {}
+      supervised: true
+    introduced: '27.0'
 tags:
   - 800-53r5_low
   - 800-53r5_moderate
