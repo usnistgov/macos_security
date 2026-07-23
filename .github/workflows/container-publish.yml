@@ -64,6 +64,10 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Read mSCP build number
+        id: mscp_build
+        run: echo "build=$(sed -n 's/^ *build: *//p' src/mscp/data/includes/mscp-data.yaml | head -n 1)" >> "$GITHUB_OUTPUT"
+
       - name: Extract Docker metadata
         id: meta
         uses: docker/metadata-action@80c7e94dd9b9319bd5eb7a0e0fe9291e23a2a2e9  # v6.1.0
@@ -83,10 +87,13 @@ jobs:
           platforms: linux/amd64,linux/arm64
           push: true
           tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
+          labels: |
+            ${{ steps.meta.outputs.labels }}
+            org.mscp.build=${{ steps.mscp_build.outputs.build }}
           build-args: |
             BUILD_SHA=${{ github.sha }}
             IMAGE_REPO=${{ github.repository }}
+            BUILD_DATE=${{ fromJSON(steps.meta.outputs.json).labels['org.opencontainers.image.created'] }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
