@@ -1,0 +1,151 @@
+#!/bin/sh
+# Check whether a newer mSCP container image is published on ghcr.io.
+# Prints one of: update available / up to date / check skipped (offline).
+# Invoked automatically by entrypoint.sh on interactive startup, or
+# manually inside the container as `mscp_check`.
+# Exit status: 1 if an update is available, 0 otherwise (up to date,
+# offline, or no build metadata to compare).
+set -e
+
+line='=================================================================='
+
+if [ -z "${MSCP_BUILD_SHA:-}" ] || [ "${MSCP_BUILD_SHA}" = "unknown" ] || [ -z "${MSCP_IMAGE_REPO:-}" ]; then
+    printf '%s\n' "${line}"
+    printf '  mSCP update check unavailable - this image has no build metadata\n'
+    printf '  (locally built images cannot be compared against the registry)\n'
+    printf '%s\n' "${line}"
+    exit 0
+fi
+
+# describe <sha> <build-number> <date>  ->  "build 34 (11b5896, built 2026-07-16)"
+# Build number and date are optional; the format degrades gracefully.
+describe() {
+    _sha=$(printf '%.7s' "$1")
+    _build="$2"
+    _date="$3"
+    [ "${_date}" = "unknown" ] && _date=""
+    _date="${_date%%T*}"
+    if [ -n "${_build}" ] && [ -n "${_date}" ]; then
+        printf 'build %s (%s, built %s)' "${_build}" "${_sha}" "${_date}"
+    elif [ -n "${_build}" ]; then
+        printf 'build %s (%s)' "${_build}" "${_sha}"
+    elif [ -n "${_date}" ]; then
+        printf '%s (built %s)' "${_sha}" "${_date}"
+    else
+        printf '%s' "${_sha}"
+    fi
+}
+
+remote_info=$(python3 - 2>/dev/null <<'PYEOF'
+import json, os, re, sys, urllib.request
+
+owner_repo = os.environ.get("MSCP_IMAGE_REPO", "")
+owner = owner_repo.split("/")[0] if "/" in owner_repo else ""
+image = "mscp_2.0"
+
+def ghcr_get(path, accept, token=None):
+    req = urllib.request.Request(f"https://ghcr.io{path}")
+    req.add_header("Accept", accept)
+    req.add_header("User-Agent", "mscp-container")
+    if token:
+        req.add_header("Authorization", f"Bearer {token}")
+    try:
+        with urllib.request.urlopen(req, timeout=3) as r:
+            return json.load(r)
+    except Exception:
+        return None
+
+if not owner:
+    sys.exit(0)
+
+tok = ghcr_get(f"/token?scope=repository:{owner}/{image}:pull&service=ghcr.io", "application/json")
+if not tok:
+    sys.exit(0)
+token = tok.get("token", "")
+
+index = ghcr_get(
+    f"/v2/{owner}/{image}/manifests/latest",
+    "application/vnd.oci.image.index.v1+json,application/vnd.docker.distribution.manifest.list.v2+json",
+    token,
+)
+if not index or not index.get("manifests"):
+    sys.exit(0)
+
+plat = ghcr_get(
+    f"/v2/{owner}/{image}/manifests/{index['manifests'][0]['digest']}",
+    "application/vnd.oci.image.manifest.v1+json",
+    token,
+)
+if not plat:
+    sys.exit(0)
+
+cfg_digest = (plat.get("config") or {}).get("digest", "")
+if not cfg_digest:
+    sys.exit(0)
+
+cfg = ghcr_get(f"/v2/{owner}/{image}/blobs/{cfg_digest}", "application/json", token)
+if not cfg:
+    sys.exit(0)
+
+labels = (cfg.get("config") or {}).get("Labels") or {}
+revision = labels.get("org.opencontainers.image.revision", "")
+created = labels.get("org.opencontainers.image.created", "")
+build = labels.get("org.mscp.build", "")
+
+# Older images lack the org.mscp.build label; read the build number from
+# the repo's mscp-data.yaml at the image's exact commit instead.
+if not build and revision:
+    try:
+        req = urllib.request.Request(
+            f"https://raw.githubusercontent.com/{owner_repo}/{revision}/src/mscp/data/includes/mscp-data.yaml"
+        )
+        req.add_header("User-Agent", "mscp-container")
+        with urllib.request.urlopen(req, timeout=3) as r:
+            m = re.search(r"^\s*build:\s*'?(\d+)", r.read().decode(), re.M)
+            if m:
+                build = m.group(1)
+    except Exception:
+        pass
+
+if revision:
+    print(f"{revision}|{created}|{build}")
+PYEOF
+) || true
+
+# Local build number from the mSCP data baked into the image
+local_build=""
+data_file="/mscp/src/mscp/data/includes/mscp-data.yaml"
+[ -f "${data_file}" ] && local_build=$(sed -n 's/^ *build: *//p' "${data_file}" | head -n 1)
+
+local_desc=$(describe "${MSCP_BUILD_SHA}" "${local_build}" "${MSCP_BUILD_DATE:-}")
+
+if [ -z "${remote_info}" ]; then
+    printf '%s\n' "${line}"
+    printf '  mSCP update check skipped - offline or registry unreachable\n'
+    printf '  Running:  %s\n' "${local_desc}"
+    printf '%s\n' "${line}"
+else
+    remote_sha=${remote_info%%|*}
+    rest=${remote_info#*|}
+    remote_created=${rest%%|*}
+    remote_build=${rest#*|}
+
+    if [ "${MSCP_BUILD_SHA}" = "${remote_sha}" ]; then
+        printf '%s\n' "${line}"
+        printf '  mSCP container is up to date - %s\n' "${local_desc}"
+        printf '%s\n' "${line}"
+    else
+        remote_desc=$(describe "${remote_sha}" "${remote_build}" "${remote_created}")
+        owner="${MSCP_IMAGE_REPO%%/*}"
+        printf '%s\n' "${line}"
+        printf '  !!  Update available for the mSCP container\n'
+        printf '%s\n\n' "${line}"
+        printf '  Running:  %s\n' "${local_desc}"
+        printf '  Latest:   %s\n\n' "${remote_desc}"
+        printf '  To update, exit this container and run on your host:\n\n'
+        printf '    Docker            docker pull ghcr.io/%s/mscp_2.0:latest\n' "${owner}"
+        printf '    Apple container   container image pull ghcr.io/%s/mscp_2.0:latest\n\n' "${owner}"
+        printf '%s\n' "${line}"
+        exit 1
+    fi
+fi

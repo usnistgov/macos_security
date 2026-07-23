@@ -35,8 +35,10 @@ RUN apk add --no-cache --virtual .build-deps \
 
 ARG BUILD_SHA=unknown
 ARG IMAGE_REPO=unknown
+ARG BUILD_DATE=unknown
 ENV MSCP_BUILD_SHA=${BUILD_SHA}
 ENV MSCP_IMAGE_REPO=${IMAGE_REPO}
+ENV MSCP_BUILD_DATE=${BUILD_DATE}
 
 WORKDIR /mscp
 
@@ -55,7 +57,8 @@ RUN apk del .build-deps
 COPY . .
 
 RUN adduser -D -u 1001 mscp && chown -R mscp:mscp /mscp && \
-    chmod +x /mscp/.github/container/entrypoint.sh
+    chmod +x /mscp/.github/container/entrypoint.sh /mscp/.github/container/mscp_check && \
+    ln -s /mscp/.github/container/mscp_check /usr/local/bin/mscp_check
 USER mscp
 
 ENTRYPOINT ["/mscp/.github/container/entrypoint.sh"]
