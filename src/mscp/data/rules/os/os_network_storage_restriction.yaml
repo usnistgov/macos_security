@@ -1,4 +1,3 @@
----
 id: os_network_storage_restriction
 title: Network Storage Must Be Restricted
 discussion: |-
@@ -8,6 +7,8 @@ discussion: |-
 references:
   nist:
     cce:
+      macos_27:
+        - CCE-XXXXX-X
       macos_26:
         - CCE-95232-5
       macos_15:

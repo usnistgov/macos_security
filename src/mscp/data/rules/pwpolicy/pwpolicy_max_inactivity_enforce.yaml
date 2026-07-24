@@ -1,17 +1,20 @@
----
 id: pwpolicy_max_inactivity_enforce
 title: Ensure Maximum Auto-Lock is Set to $ODV Minutes or Less
 discussion: |
-  The iOS _MUST_ be configured to auto-lock after $ODV minutes.
+  The iOS or visionOS _MUST_ be configured to auto-lock after $ODV minutes.
 references:
   nist:
     cce:
+      ios_27:
+        - CCE-XXXXX-X
       ios_26:
         - CCE-96721-6
       ios_18:
         - CCE-94476-9
       ios_17:
         - CCE-93459-6
+      visionos_27:
+        - CCE-XXXXX-X
       visionos_26:
         - CCE-96718-2
     800-53r5:
@@ -60,7 +63,8 @@ references:
       - 4.3
 platforms:
   iOS:
-    '27.0': {}
+    '27.0':
+      supervised: false
     '26.0':
       supervised: false
       benchmarks:
@@ -104,7 +108,8 @@ platforms:
           severity: medium
     introduced: '4.0'
   visionOS:
-    '27.0': {}
+    '27.0':
+      supervised: false
     '26.0':
       supervised: false
       benchmarks:

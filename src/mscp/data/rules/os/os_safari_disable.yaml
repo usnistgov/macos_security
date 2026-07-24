@@ -1,4 +1,3 @@
----
 id: os_safari_disable
 title: Disable Safari
 discussion: |
@@ -8,8 +7,10 @@ discussion: |
 references:
   nist:
     cce:
+      ios_27:
+        - CCE-XXXX-X
       ios_26:
-        - N/A
+        - CCE-XXXX-X
     800-53r5:
       - CM-7
       - CM-7(1)
@@ -19,7 +20,8 @@ references:
         - ANNEX K
 platforms:
   iOS:
-    '27.0': {}
+    '27.0':
+      supervised: true
     '26.0':
       supervised: true
       benchmarks:

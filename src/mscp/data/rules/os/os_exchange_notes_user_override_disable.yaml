@@ -5,6 +5,8 @@ discussion: Exchange ActiveSync Notes service can be disabled for a user. Settin
 references:
   nist:
     cce:
+      ios_27:
+        - CCE-XXXXX-X
       ios_26:
         - CCE-95615-1
       ios_18:

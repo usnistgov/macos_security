@@ -1,4 +1,3 @@
----
 id: os_secure_enclave
 title: Protected Storage for Cryptographic Keys
 discussion: |
@@ -8,7 +7,8 @@ discussion: |
 
   link:https://support.apple.com/guide/security/secure-enclave-sec59b0b31ff/1/web/1[]
 
-  NOTE: This will only return a proper result on a T2 or Apple Silicon Macs.
+  NOTE: This will only return a proper result on a T2 or Apple Silicon Macs. 
+  NOTE: All iOS/iPadOS and visionOS devices meet this requirement.
 references:
   nist:
     cce:
@@ -18,6 +18,10 @@ references:
         - CCE-94289-6
       macos_14:
         - CCE-92884-6
+      ios_27:
+        - CCE-XXXXX-X
+      visionos_27:
+        - CCE-XXXXX-X
     800-53r5:
       - SC-28(3)
   disa:
@@ -51,6 +55,10 @@ platforms:
           integer: 0
       fix:
         additional_info: The hardware does not support the requirement.
+  iOS:
+    '27.0': {}
+  visionOS:
+    '27.0': {}
 tags:
   - inherent
   - cnssi-1253_low

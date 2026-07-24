@@ -1,4 +1,3 @@
----
 id: os_siri_when_locked_disabled
 title: Ensure Allow Siri While Device is Locked is Set to Disabled
 discussion: |
@@ -6,6 +5,8 @@ discussion: |
 references:
   nist:
     cce:
+      ios_27:
+        - CCE-XXXXX-X
       ios_26:
         - CCE-95690-4
       ios_18:

@@ -1,22 +1,33 @@
----
 id: os_image_playground_disable
 title: Disable Apple Intelligence Image Playground
-discussion: Apple Intelligence features such as Image Playground _MUST_ be disabled.
+discussion: Apple Intelligence features such as Image Playground _MUST_ be disabled due to the fact they use off device AI.
 references:
   nist:
     cce:
+      macos_27:
+        - CCE-XXXXX-X
       macos_26:
         - CCE-95207-7
+      macos_15:
+        - CCE-94208-6
+      ios_27:
+        - CCE-XXXXX-X        
       ios_26:
         - CCE-95482-6
       ios_18:
         - CCE-94536-0
+      visionos_27:
+        - CCE-XXXXX-X
       visionos_26:
         - CCE-95579-9
     800-53r5:
+      - AC-20
+      - AC-20(1)
       - CM-7
       - CM-7(1)
+      - SC-7(10)
     800-171r3:
+      - 03.01.20    
       - 03.04.06
   disa:
     cci:
@@ -27,6 +38,8 @@ references:
     disa_stig:
       macos_26:
         - APPL-26-005150
+      macos_15:
+        - APPL-15-005150        
       ios_26:
         - AIOS-26-017300
       ios_18:
@@ -34,6 +47,7 @@ references:
       visionos_26:
         - AVOS-26-017300
     cmmc:
+      - AC.L1-3.1.20    
       - CM.L2-3.4.6
       - CM.L2-3.4.7
   hhs:
@@ -45,6 +59,9 @@ platforms:
     '26.0':
       benchmarks:
         - name: disa_stig
+    '15.0':
+      benchmarks:
+        - name: disa_stig        
     enforcement_info:
       check:
         shell: |-
@@ -56,18 +73,20 @@ platforms:
           string: 'false'
     introduced: '15.0'
   iOS:
-    '27.0': {}
+    '27.0':
+      supervised: true
     '26.0':
-      supervised: false
+      supervised: true
       benchmarks:
         - name: ios_stig
     '18.0':
-      supervised: false
+      supervised: true
       benchmarks:
         - name: ios_stig
     introduced: '18.0'
   visionOS:
-    '27.0': {}
+    '27.0':
+      supervised: true
     '26.0':
       supervised: true
       benchmarks:

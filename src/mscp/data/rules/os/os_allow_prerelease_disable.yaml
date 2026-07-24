@@ -6,6 +6,8 @@ discussion: |
 references:
   nist:
     cce:
+      visionos_27:
+        - CCE-XXXXX-X
       visionos_26:
         - CCE-96711-7
     800-53r5:

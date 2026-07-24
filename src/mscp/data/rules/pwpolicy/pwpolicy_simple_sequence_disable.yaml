@@ -1,4 +1,3 @@
----
 id: pwpolicy_simple_sequence_disable
 title: Prohibit Repeating, Ascending, and Descending Character Sequences
 discussion: |
@@ -12,18 +11,24 @@ discussion: |
 references:
   nist:
     cce:
+      macos_27:
+        - CCE-XXXXX-X
       macos_26:
         - CCE-95349-7
       macos_15:
         - CCE-94343-1
       macos_14:
         - CCE-92939-8
+      ios_27:
+        - CCE-XXXXX-X
       ios_26:
         - CCE-96723-2
       ios_18:
         - CCE-94478-5
       ios_17:
         - CCE-93461-2
+      visionos_27:
+        - CCE-XXXXX-X
       visionos_26:
         - CCE-96720-8
     800-53r5:
@@ -88,7 +93,8 @@ platforms:
           integer: 1
     introduced: '10.7'
   iOS:
-    '27.0': {}
+    '27.0':
+      supervised: false
     '26.0':
       supervised: false
       benchmarks:
@@ -133,7 +139,8 @@ platforms:
           severity: medium
     introduced: '4.0'
   visionOS:
-    '27.0': {}
+    '27.0':
+      supervised: false
     '26.0':
       supervised: false
       benchmarks:

@@ -6,10 +6,14 @@ discussion: |
 references:
   nist:
     cce:
+      macos_27:
+        - CCE-XXXXX-X
       macos_26:
         - CCE-95212-7
       macos_15:
         - CCE-94213-6
+      ios_27:
+        - CCE-XXXXX-X
       ios_26:
         - CCE-95486-7
       ios_18:
@@ -87,16 +91,17 @@ platforms:
           string: 'false'
     introduced: '15.0'
   iOS:
-    '27.0': {}
+    '27.0':
+      supervised: true
     '26.0':
-      supervised: false
+      supervised: true
       benchmarks:
         - name: ios_stig
         - name: indigo_base
         - name: indigo_high
         - name: nlmapgov_plus
     '18.0':
-      supervised: false
+      supervised: true
       benchmarks:
         - name: indigo_base
         - name: indigo_high

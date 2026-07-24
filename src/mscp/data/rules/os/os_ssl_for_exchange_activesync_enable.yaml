@@ -1,4 +1,3 @@
----
 id: os_ssl_for_exchange_activesync_enable
 title: Ensure SSL for Exchange ActiveSync
 discussion: |
@@ -6,12 +5,16 @@ discussion: |
 references:
   nist:
     cce:
+      ios_27:
+        - CCE-XXXXX-X
       ios_26:
         - CCE-95692-0
       ios_18:
         - CCE-94468-6
       ios_17:
         - CCE-93452-1
+      visionos_27:
+        - CCE-XXXXX-X
       visionos_26:
         - CCE-96714-1
   disa:
@@ -42,7 +45,8 @@ references:
       - 8.12
 platforms:
   iOS:
-    '27.0': {}
+    '27.0':
+      supervised: false
     '26.0':
       supervised: false
       benchmarks:
@@ -75,7 +79,8 @@ platforms:
           severity: medium
     introduced: '-1'
   visionOS:
-    '27.0': {}
+    '27.0':
+      supervised: false
     '26.0':
       supervised: false
       benchmarks:

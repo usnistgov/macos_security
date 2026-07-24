@@ -1,4 +1,3 @@
----
 id: system_settings_bluetooth_settings_disable
 title: Disable the Bluetooth System Settings Pane
 discussion: |
@@ -6,6 +5,8 @@ discussion: |
 references:
   nist:
     cce:
+      macos_27:
+        - CCE-XXXXX-X
       macos_26:
         - CCE-95360-4
       macos_15:

@@ -1,4 +1,3 @@
----
 id: pwpolicy_minimum_lifetime_enforce
 title: Set Minimum Password Lifetime to $ODV Hours
 discussion: |
@@ -10,6 +9,8 @@ discussion: |
 references:
   nist:
     cce:
+      macos_27:
+        - CCE-XXXXX-X
       macos_26:
         - CCE-95347-1
       macos_15:

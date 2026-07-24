@@ -1,4 +1,3 @@
----
 id: os_personalized_advertising_disable
 title: Disable Personalized Advertising
 discussion: |
@@ -8,12 +7,16 @@ discussion: |
 references:
   nist:
     cce:
+      ios_27:
+        - CCE-XXXXX-X
       ios_26:
         - CCE-95507-0
       ios_18:
         - CCE-94458-7
       ios_17:
         - CCE-93442-2
+      visionos_27:
+        - CCE-XXXXX-X
       visionos_26:
         - CCE-95588-0
     800-53r5:
@@ -52,7 +55,8 @@ references:
       - 4.8
 platforms:
   iOS:
-    '27.0': {}
+    '27.0':
+      supervised: false
     '26.0':
       supervised: false
       benchmarks:
@@ -80,7 +84,8 @@ platforms:
         - name: indigo_high
     introduced: '14.0'
   visionOS:
-    '27.0': {}
+    '27.0':
+      supervised: false
     '26.0':
       supervised: false
     introduced: '2.0'

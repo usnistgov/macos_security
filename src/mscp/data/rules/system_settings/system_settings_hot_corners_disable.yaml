@@ -1,4 +1,3 @@
----
 id: system_settings_hot_corners_disable
 title: Disable Hot Corners
 discussion: |
@@ -8,6 +7,8 @@ discussion: |
 references:
   nist:
     cce:
+      macos_27:
+        - CCE-XXXXX-X
       macos_26:
         - CCE-95375-2
       macos_15:

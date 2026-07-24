@@ -1,4 +1,3 @@
----
 id: os_mail_move_messages_disable
 title: Ensure Allow User to Move Messages from This Account is Set to Disabled
 discussion: |
@@ -6,12 +5,16 @@ discussion: |
 references:
   nist:
     cce:
+      ios_27:
+        - CCE-XXXXX-X
       ios_26:
         - CCE-95667-2
       ios_18:
         - CCE-94449-6
       ios_17:
         - CCE-93433-1
+      visionos_27:
+        - CCE-XXXXX-X
       visionos_26:
         - CCE-96713-3
     800-53r5:

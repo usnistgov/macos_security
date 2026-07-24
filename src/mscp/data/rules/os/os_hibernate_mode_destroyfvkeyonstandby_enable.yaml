@@ -14,7 +14,6 @@ references:
         - CCE-92801-0
 platforms:
   macOS:
-    '27.0': {}
     '26.0': {}
     '15.0': {}
     enforcement_info:

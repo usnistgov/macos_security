@@ -1,4 +1,3 @@
----
 id: os_pairing_non_configurator_hosts_disable
 title: Ensure Allow Pairing with Non-Configurator Hosts is Set to Disabled
 discussion: |
@@ -52,7 +51,8 @@ references:
       - 4.8
 platforms:
   iOS:
-    '27.0': {}
+    '27.0':
+      supervised: true
     '26.0':
       supervised: true
       benchmarks:

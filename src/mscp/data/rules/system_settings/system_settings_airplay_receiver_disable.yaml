@@ -1,4 +1,3 @@
----
 id: system_settings_airplay_receiver_disable
 title: Disable Airplay Receiver
 discussion: |
@@ -10,6 +9,8 @@ discussion: |
 references:
   nist:
     cce:
+      macos_27:
+        - CCE-XXXXX-X
       macos_26:
         - CCE-95354-7
       macos_15:

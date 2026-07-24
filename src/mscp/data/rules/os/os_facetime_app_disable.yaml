@@ -13,6 +13,8 @@ discussion: |
 references:
   nist:
     cce:
+      macos_27:
+        - CCE-XXXXX-X
       macos_26:
         - CCE-95189-7
       macos_15:
@@ -85,9 +87,19 @@ tags:
   - cnssi-1253_high
   - cnssi-1253_moderate
   - hicp_lp
+  - teest
 mobileconfig_info:
   - PayloadType: com.apple.applicationaccess.new
     PayloadContent:
       - familyControlsEnabled: true
       - pathBlackList:
           - /Applications/FaceTime.app
+ddm_info:
+  declarationtype: com.apple.configuration.app.settings
+  configuration_key: Allowed
+  configuration_value: DeniedBinaries
+  signingid: com.apple.FaceTime
+# ddm_info:  
+#   declarationtype: com.apple.configuration.app.settings
+#   configuration_key: Allowed
+#   configuration_value: { 'DeniedBinaries': [ { "SigningID": "com.apple.iCal" } ] }

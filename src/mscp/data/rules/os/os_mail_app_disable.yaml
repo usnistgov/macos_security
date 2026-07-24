@@ -1,4 +1,3 @@
----
 id: os_mail_app_disable
 title: Disable Mail App
 discussion: |
@@ -81,3 +80,8 @@ mobileconfig_info:
       - familyControlsEnabled: true
       - pathBlackList:
           - /Applications/Mail.app
+ddm_info:
+  declarationtype: com.apple.configuration.app.settings
+  configuration_key: Allowed
+  configuration_value: DeniedBinaries
+  signingid: com.apple.Mail

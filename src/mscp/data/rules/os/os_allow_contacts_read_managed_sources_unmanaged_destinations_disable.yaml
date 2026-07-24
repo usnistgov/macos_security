@@ -6,12 +6,16 @@ discussion: |
 references:
   nist:
     cce:
+      ios_27:
+        - CCE-XXXXX-X
       ios_26:
         - CCE-95644-1
       ios_18:
         - CCE-94425-6
       ios_17:
         - CCE-93411-7
+      visionos_27:
+        - CCE-XXXXX-X        
       visionos_26:
         - CCE-95563-3
     800-53r5:

@@ -45,7 +45,6 @@ references:
       - 4.8
 platforms:
   macOS:
-    '27.0': {}
     '26.0': {}
     '15.0': {}
     enforcement_info:
@@ -79,3 +78,8 @@ mobileconfig_info:
       - familyControlsEnabled: true
       - pathBlackList:
           - /Applications/Calendar.app
+ddm_info:
+  declarationtype: com.apple.configuration.app.settings
+  configuration_key: Allowed
+  configuration_value: DeniedBinaries
+  signingid: com.apple.iCal

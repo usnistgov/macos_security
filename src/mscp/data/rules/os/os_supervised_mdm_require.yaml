@@ -1,4 +1,3 @@
----
 id: os_supervised_mdm_require
 title: Enforce Supervised Enrollment in Mobile Device Management
 discussion: |
@@ -6,6 +5,8 @@ discussion: |
 references:
   nist:
     cce:
+      ios_27:
+        - CCE-XXXXX-X
       ios_26:
         - CCE-95693-8
       ios_18:

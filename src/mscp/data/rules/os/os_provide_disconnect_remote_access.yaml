@@ -1,4 +1,3 @@
----
 id: os_provide_disconnect_remote_access
 title: Provide Ability to Disconnect or Disable Remote Access
 discussion: |-
@@ -8,6 +7,8 @@ discussion: |-
 references:
   nist:
     cce:
+      macos_27:
+        - CCE-XXXXX-X
       macos_26:
         - CCE-95271-3
       macos_15:

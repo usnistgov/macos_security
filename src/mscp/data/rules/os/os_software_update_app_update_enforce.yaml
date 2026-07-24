@@ -1,4 +1,3 @@
----
 id: os_software_update_app_update_enforce
 title: Enforce Software Update App Update Updates Automatically
 discussion: |
@@ -20,7 +19,6 @@ references:
       - 7.4
 platforms:
   macOS:
-    '27.0': {}
     '26.0':
       benchmarks:
         - name: cis_lvl1
