@@ -32,7 +32,7 @@
 
 /* Custom header styles */
 .header {
-  #position: fixed;
+  /* position: fixed; — intentionally disabled */
   top: 40px;
   left: 0;
   width: 100%;
