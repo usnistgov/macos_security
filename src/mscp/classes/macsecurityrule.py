@@ -310,7 +310,6 @@ class Macsecurityrule(BaseModelWithAccessors):
                 )
 
                 if check_result:
-                    print(enforcement_info["check"]["result"].items())
                     for k, v in enforcement_info["check"]["result"].items():
                         if isinstance(v, (int, bool, str)):
                             result_value = v
