@@ -51,31 +51,35 @@ platforms:
   macOS:
     '27.0': {}
     '26.0':
-    enforcement_info:
-      check:
-        shell: 
-          configprofile=$(/usr/bin/osascript -l JavaScript << EOS
-          $.NSUserDefaults.alloc.initWithSuiteName('com.apple.SoftwareUpdate')\
-          .objectForKey('CriticalUpdateInstall').js
-          EOS
-          )
+      enforcement_info:
+        check:
+          shell: 
+            configprofile=$(/usr/bin/osascript -l JavaScript << EOS
+            $.NSUserDefaults.alloc.initWithSuiteName('com.apple.SoftwareUpdate')\
+            .objectForKey('CriticalUpdateInstall').js
+            EOS
+            )
 
-          ddm=$(/usr/bin/plutil -convert json /var/db/softwareupdate/SoftwareUpdateDDMStatePersistence.plist -o - | /usr/bin/jq --raw-output .'SUCorePersistedStatePolicyFields.SUCoreDDMDeclarationGlobalSettings.automaticallyInstallSystemAndSecurityUpdates')
+            ddm=$(/usr/bin/plutil -convert json /var/db/softwareupdate/SoftwareUpdateDDMStatePersistence.plist -o - | /usr/bin/jq --raw-output .'SUCorePersistedStatePolicyFields.SUCoreDDMDeclarationGlobalSettings.automaticallyInstallSystemAndSecurityUpdates')
 
-          if [[ "$configprofile" == "true" ]] || [[ "$ddm" == "1" ]]; then
-            echo "true"
-          else
-            echo "false"
-          fi          
-        result:
-          string: 'true'
-      fix:
-        additional_info: This is implemented by Declarative Device Management (DDM) or by a configuration profile.
-      benchmarks:
-        - name: cis_lvl1
-        - name: cis_lvl2
-        - name: nlmapgov_plus
-        - name: nlmapgov_base
+            if [[ "$configprofile" == "true" ]] || [[ "$ddm" == "1" ]]; then
+              echo "true"
+            else
+              echo "false"
+            fi          
+          result:
+            string: 'true'
+        fix:
+          additional_info: This is implemented by Declarative Device Management (DDM) or by a configuration profile.
+        benchmarks:
+          - name: cis_lvl1
+          - name: cis_lvl2
+          - name: nlmapgov_plus
+          - name: nlmapgov_base
+      mobileconfig_info:
+        - PayloadType: com.apple.SoftwareUpdate
+          PayloadContent:
+          - CriticalUpdateInstall: true
     '15.0':
       enforcement_info:
         check:
@@ -86,6 +90,10 @@ platforms:
             EOS
           result:
             string: 'true'
+      mobileconfig_info:
+        - PayloadType: com.apple.SoftwareUpdate
+          PayloadContent:
+          - CriticalUpdateInstall: true            
       benchmarks:
         - name: cis_lvl1
         - name: cis_lvl2
@@ -111,10 +119,6 @@ tags:
   - cmmc_lvl1
   - cnssi-1253_moderate
   - hicp_lp
-mobileconfig_info:
-  - PayloadType: com.apple.SoftwareUpdate
-    PayloadContent:
-      - CriticalUpdateInstall: true
 ddm_info:
   declarationtype: com.apple.configuration.softwareupdate.settings
   ddm_key: AutomaticActions

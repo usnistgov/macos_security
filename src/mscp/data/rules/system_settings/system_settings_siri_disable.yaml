@@ -160,7 +160,3 @@ mobileconfig_info:
   - PayloadType: com.apple.applicationaccess
     PayloadContent:
       - allowAssistant: false
-ddm_info:
-  declarationtype: com.apple.configuration.siri.settings
-  ddm_key: Enabled
-  ddm_value: false

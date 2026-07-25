@@ -35,25 +35,29 @@ platforms:
     '27.0': {}
     '26.0':
       enforcement_info:
-      check:
-        shell: |-
-          configprofile=$(/usr/bin/osascript -l JavaScript << EOS
-          $.NSUserDefaults.alloc.initWithSuiteName('com.apple.SoftwareUpdate')\
-          .objectForKey('AutomaticallyInstallMacOSUpdates').js
-          EOS
-          )
+        check:
+          shell: |-
+            configprofile=$(/usr/bin/osascript -l JavaScript << EOS
+            $.NSUserDefaults.alloc.initWithSuiteName('com.apple.SoftwareUpdate')\
+            .objectForKey('AutomaticallyInstallMacOSUpdates').js
+            EOS
+            )
 
-          ddm=$(/usr/bin/plutil -convert json /var/db/softwareupdate/SoftwareUpdateDDMStatePersistence.plist -o - | /usr/bin/jq --raw-output .'SUCorePersistedStatePolicyFields.SUCoreDDMDeclarationGlobalSettings.automaticallyInstallOSUpdates')
+            ddm=$(/usr/bin/plutil -convert json /var/db/softwareupdate/SoftwareUpdateDDMStatePersistence.plist -o - | /usr/bin/jq --raw-output .'SUCorePersistedStatePolicyFields.SUCoreDDMDeclarationGlobalSettings.automaticallyInstallOSUpdates')
 
-          if [[ "$configprofile" == "true" ]] || [[ "$ddm" == "1" ]]; then
-            echo "true"
-          else
-            echo "false"
-          fi
-        result:
-          string: 'true'
-        fix:
-          additional_info: This is implemented by Declarative Device Management (DDM) or by a configuration profile.
+            if [[ "$configprofile" == "true" ]] || [[ "$ddm" == "1" ]]; then
+              echo "true"
+            else
+              echo "false"
+            fi
+          result:
+            string: 'true'
+          fix:
+            additional_info: This is implemented by Declarative Device Management (DDM) or by a configuration profile.
+      mobileconfig_info:
+        - PayloadType: com.apple.SoftwareUpdate
+          PayloadContent:
+            - AutomaticallyInstallMacOSUpdates: true            
       benchmarks:
         - name: cis_lvl1
         - name: cis_lvl2
@@ -61,14 +65,18 @@ platforms:
         - name: nlmapgov_base        
     '15.0':
       enforcement_info:
-      check:
-        shell: |-
-          /usr/bin/osascript -l JavaScript << EOS
-          $.NSUserDefaults.alloc.initWithSuiteName('com.apple.SoftwareUpdate')\
-          .objectForKey('AutomaticallyInstallMacOSUpdates').js
-          EOS
-        result:
-          string: 'true'        
+        check:
+          shell: |-
+            /usr/bin/osascript -l JavaScript << EOS
+            $.NSUserDefaults.alloc.initWithSuiteName('com.apple.SoftwareUpdate')\
+            .objectForKey('AutomaticallyInstallMacOSUpdates').js
+            EOS
+          result:
+            string: 'true'
+      mobileconfig_info:
+        - PayloadType: com.apple.SoftwareUpdate
+          PayloadContent:
+            - AutomaticallyInstallMacOSUpdates: true            
       benchmarks:
         - name: cis_lvl1
         - name: cis_lvl2
@@ -92,10 +100,6 @@ platforms:
         - name: nlmapgov_plus
 tags:
   - cisv8
-mobileconfig_info:
-  - PayloadType: com.apple.SoftwareUpdate
-    PayloadContent:
-      - AutomaticallyInstallMacOSUpdates: true
 ddm_info:
   declarationtype: com.apple.configuration.softwareupdate.settings
   ddm_key: AutomaticActions

@@ -1,4 +1,3 @@
----
 id: auth_pam_sudo_smartcard_enforce
 title: Enforce Multifactor Authentication for Privilege Escalation Through the sudo Command
 discussion: |
@@ -73,7 +72,12 @@ platforms:
           severity: medium
     enforcement_info:
       check:
-        shell: /usr/bin/grep -Ec '^(auth\s+sufficient\s+pam_smartcard.so|auth\s+required\s+pam_deny.so)' /etc/pam.d/sudo
+        shell: |-
+          if [[ -d /var/db/ManagedConfigurationFiles/com.apple.pam ]]; then
+            /usr/bin/grep -Ec '^(auth\s+sufficient\s+pam_smartcard.so|auth\s+required\s+pam_deny.so)' /var/db/ManagedConfigurationFiles/com.apple.pam/etc/pam.d/sudo
+          else
+            /usr/bin/grep -Ec '^(auth\s+sufficient\s+pam_smartcard.so|auth\s+required\s+pam_deny.so)' /etc/pam.d/sudo
+          fi
         result:
           integer: 2
       fix:

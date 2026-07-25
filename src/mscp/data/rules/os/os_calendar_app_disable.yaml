@@ -80,6 +80,5 @@ mobileconfig_info:
           - /Applications/Calendar.app
 ddm_info:
   declarationtype: com.apple.configuration.app.settings
-  configuration_key: Allowed
-  configuration_value: DeniedBinaries
-  signingid: com.apple.iCal
+  ddm_key: Allowed
+  ddm_value: { 'DeniedBinaries': [ { "SigningID": "com.apple.iCal" } ] }

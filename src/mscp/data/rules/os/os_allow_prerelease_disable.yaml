@@ -1,4 +1,3 @@
----
 id: os_allow_prerelease_disable
 title: Disable the Ability to Install PreRelease Software
 discussion: |
@@ -6,8 +5,6 @@ discussion: |
 references:
   nist:
     cce:
-      visionos_27:
-        - CCE-XXXXX-X
       visionos_26:
         - CCE-96711-7
     800-53r5:
@@ -23,7 +20,6 @@ references:
       - 'FMT_MOF_EXT.1.2 #47'
 platforms:
   visionOS:
-    '27.0': {}
     '26.0':
       benchmarks:
         - name: visionos_stig
