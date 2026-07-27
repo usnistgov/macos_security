@@ -71,11 +71,11 @@ platforms:
             string: 'true'
         fix:
           additional_info: This is implemented by Declarative Device Management (DDM) or by a configuration profile.
-        benchmarks:
-          - name: cis_lvl1
-          - name: cis_lvl2
-          - name: nlmapgov_plus
-          - name: nlmapgov_base
+      benchmarks:
+        - name: cis_lvl1
+        - name: cis_lvl2
+        - name: nlmapgov_plus
+        - name: nlmapgov_base
       mobileconfig_info:
         - PayloadType: com.apple.SoftwareUpdate
           PayloadContent:
