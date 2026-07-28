@@ -1,4 +1,3 @@
----
 id: pwpolicy_history_enforce
 title: Prohibit Password Reuse for a Minimum of $ODV Generations
 discussion: |
@@ -10,18 +9,24 @@ discussion: |
 references:
   nist:
     cce:
+      macos_27:
+        - CCE-XXXXX-X
       macos_26:
         - CCE-95343-0
       macos_15:
         - CCE-94337-3
       macos_14:
         - CCE-92932-3
+      ios_27:
+        - CCE-XXXXX-X
       ios_26:
         - CCE-95549-2
       ios_18:
         - CCE-94565-9
       ios_17:
         - CCE-93511-4
+      visionos_27:
+        - CCE-XXXXX-X
       visionos_26:
         - CCE-96717-4
     800-53r5:
@@ -92,7 +97,8 @@ platforms:
           string: pass
     introduced: '10.7'
   iOS:
-    '27.0': {}
+    '27.0':
+      supervised: false
     '26.0':
       supervised: false
       benchmarks:
@@ -118,7 +124,8 @@ platforms:
         - name: indigo_high
     introduced: '4.0'
   visionOS:
-    '27.0': {}
+    '27.0':
+      supervised: false
     '26.0':
       supervised: false
       benchmarks:

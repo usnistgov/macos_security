@@ -6,12 +6,16 @@ discussion: |
 references:
   nist:
     cce:
+      ios_27:
+        - CCE-XXXXX-X
       ios_26:
         - CCE-95606-0
       ios_18:
         - CCE-94520-4
       ios_17:
         - CCE-93473-7
+      visionos_27:
+        - CCE-XXXXX-X
     800-53r5:
       - AC-20
       - CM-7
@@ -32,7 +36,8 @@ references:
       - CM.L2-3.4.7
 platforms:
   iOS:
-    '27.0': {}
+    '27.0':
+      supervised: true
     '26.0':
       supervised: true
       benchmarks:
@@ -47,7 +52,7 @@ platforms:
         - name: indigo_high
     introduced: '5.0'
   visionOS:
-    '27.0': {}
+    '27.0':
       supervised: true
     introduced: '27.0'
 tags:

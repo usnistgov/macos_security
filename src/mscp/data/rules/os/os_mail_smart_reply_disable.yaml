@@ -1,18 +1,23 @@
----
 id: os_mail_smart_reply_disable
 title: Disable Apple Intelligence Mail Smart Replies
 discussion: Apple Intelligence features such as Mail Smart Replies that use off device AI _MUST_ be disabled.
 references:
   nist:
     cce:
+      macos_27:
+        - CCE-XXXXX-X
       macos_26:
         - CCE-95222-6
       macos_15:
         - CCE-94567-5
+      ios_27:
+        - CCE-XXXXX-X
       ios_26:
         - CCE-95493-3
       ios_18:
         - CCE-94574-1
+      visionos_27:
+        - CCE-XXXXX-X
       visionos_26:
         - CCE-95583-1
     800-53r5:
@@ -60,7 +65,8 @@ platforms:
           string: 'false'
     introduced: '15.4'
   iOS:
-    '27.0': {}
+    '27.0':
+      supervised: true
     '26.0':
       supervised: true
       benchmarks:
@@ -70,7 +76,8 @@ platforms:
       supervised: true
     introduced: '18.4'
   visionOS:
-    '27.0': {}
+    '27.0':
+      supervised: true
     '26.0':
       supervised: true
     introduced: '2.4'

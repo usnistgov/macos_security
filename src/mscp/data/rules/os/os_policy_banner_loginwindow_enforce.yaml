@@ -1,4 +1,3 @@
----
 id: os_policy_banner_loginwindow_enforce
 title: Display Policy Banner at Login Window
 discussion: |
@@ -17,6 +16,8 @@ discussion: |
 references:
   nist:
     cce:
+      macos_27:
+        - CCE-XXXXX-X
       macos_26:
         - CCE-95257-2
       macos_15:

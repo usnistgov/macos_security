@@ -6,16 +6,18 @@ discussion: |-
 
   macOS contains many open source projects that may use their own cryptographic libraries typically for the purposes of maintaining platform independence. These services are not covered by the Apple FIPS Validation of the CoreCrypto and CoreCrypto Kernel modules.
 
-  Apple is committed to the FIPS validation process and historically has always submitted and validated the cryptographic modules in macOS.
+  Apple is committed to the FIPS validation process and historically has always submitted and validated the cryptographic modules in their operating systems.
 
   link:https://csrc.nist.gov/Projects/cryptographic-module-validation-program/validated-modules[]
 
-  link:https://support.apple.com/en-us/HT201159[]
+  link:https://support.apple.com/guide/certifications/about-apple-security-certifications-apc30d0ed034/web[]
 
   NOTE: The technology supports this requirement and cannot be configured to be out of compliance. The technology inherently meets this requirement.
 references:
   nist:
     cce:
+      macos_27:
+        - CCE-XXXXX-X
       macos_26:
         - CCE-95281-2
       macos_15:

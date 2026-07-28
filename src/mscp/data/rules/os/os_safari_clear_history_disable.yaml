@@ -1,4 +1,3 @@
----
 id: os_safari_clear_history_disable
 title: Ensure Clearing of Browsing History in Safari Is Disabled
 discussion: |
@@ -6,8 +5,16 @@ discussion: |
 references:
   nist:
     cce:
+      macos_27:
+        - CCE-XXXXX-X
       macos_26:
         - CCE-95601-1
+      ios_27:
+        - CCE-XXXXX-X
+      ios_26:
+        - CCE-XXXXX-X
+      visionos_27:
+        - CCE-XXXXX-X
   bsi:
     indigo:
       ios_26:
@@ -27,7 +34,8 @@ platforms:
           string: 'false'
     introduced: '26.0'
   iOS:
-    '27.0': {}
+    '27.0':
+      supervised: true
     '26.0':
       supervised: true
       benchmarks:
@@ -36,8 +44,10 @@ platforms:
         - name: indigo_high
           severity: high
     introduced: '26.0'
-tags:
-  - none
+  visionOS:
+    '27.0':
+      supervised: true
+    introduced: '26.0'
 mobileconfig_info:
   - PayloadType: com.apple.applicationaccess
     PayloadContent:

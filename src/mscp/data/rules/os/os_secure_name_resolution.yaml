@@ -1,4 +1,3 @@
----
 id: os_secure_name_resolution
 title: Secure Name Address Resolution Service
 discussion: |-
@@ -10,12 +9,18 @@ discussion: |-
 references:
   nist:
     cce:
+      macos_27:
+        - CCE-XXXX-X
       macos_26:
         - CCE-95294-5
       macos_15:
         - CCE-94290-4
       macos_14:
         - CCE-92885-3
+      ios_27:
+        - CCE-XXXXX-X
+      visionos_27:
+        - CCE-XXXXX-X
     800-53r5:
       - SC-21
   hhs:
@@ -29,6 +34,10 @@ platforms:
     '27.0': {}
     '26.0': {}
     '15.0': {}
+  iOS:
+    '27.0': {}
+  visionOS:
+    '27.0': {}
 tags:
   - 800-53r5_low
   - 800-53r5_moderate

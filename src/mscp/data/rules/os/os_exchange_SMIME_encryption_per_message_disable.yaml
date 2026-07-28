@@ -8,6 +8,8 @@ discussion: |
 references:
   nist:
     cce:
+      ios_27:
+        - CCE-XXXXX-X
       ios_26:
         - CCE-95623-5
       ios_18:

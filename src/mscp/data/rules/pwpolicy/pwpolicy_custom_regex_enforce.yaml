@@ -1,4 +1,3 @@
----
 id: pwpolicy_custom_regex_enforce
 title: Require Passwords to Match the Defined Custom Regular Expression
 discussion: |
@@ -12,6 +11,8 @@ discussion: |
 references:
   nist:
     cce:
+      macos_27:
+        - CCE-XXXXX-X
       macos_26:
         - CCE-95340-6
       macos_15:

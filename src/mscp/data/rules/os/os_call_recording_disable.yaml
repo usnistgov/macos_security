@@ -1,4 +1,3 @@
----
 id: os_call_recording_disable
 title: Disable Call Recording
 discussion: |
@@ -53,7 +52,7 @@ platforms:
           EOS
         result:
           string: 'false'
-      introduced: '26.0'
+    introduced: '26.0'
   iOS:
     '27.0': {}
     '26.0':

@@ -1,4 +1,3 @@
----
 id: os_safari_allow_javascript_disable
 title: Disable JavaScript in Safari
 discussion: |-
@@ -8,8 +7,10 @@ discussion: |-
 references:
   nist:
     cce:
+      macos_27:
+        - CCE-XXXXX-X
       macos_26:
-        - CCE-TBD
+        - CCE-XXXXX-X
     800-53r5:
       - SC-18
       - SC-18(4)

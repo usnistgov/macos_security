@@ -1,4 +1,3 @@
----
 id: os_system_settings_find_my_device_disable
 title: Disable Find My Device
 discussion: |
@@ -10,6 +9,8 @@ discussion: |
 references:
   nist:
     cce:
+      ios_27:
+        - CCE-XXXXX-X
       ios_26:
         - CCE-95533-6
       ios_18:
@@ -36,7 +37,8 @@ references:
       - CM.L2-3.4.7
 platforms:
   iOS:
-    '27.0': {}
+    '27.0':
+      supervised: true
     '26.0':
       supervised: true
       benchmarks:

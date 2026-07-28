@@ -1,4 +1,3 @@
----
 id: os_limit_dos_attacks
 title: Limit Impact of Denial of Service Attacks
 discussion: |-
@@ -12,6 +11,8 @@ discussion: |-
 references:
   nist:
     cce:
+      macos_27:
+        - CCE-XXXXX-X
       macos_26:
         - CCE-95217-6
       macos_15:

@@ -1,4 +1,3 @@
----
 id: icloud_enterprisebook_metadata_sync_disable
 title: Preventing synchronization of enterprise book meta data.
 discussion: |
@@ -8,10 +7,14 @@ discussion: |
 references:
   nist:
     cce:
+      ios_27:
+        - CCE-XXXXX-X
       ios_26:
         - CCE-95633-4
       ios_18:
         - CCE-94566-7
+      ios_17:
+        - CCE-93467-9   
     800-53r5:
       - AC-20
       - AC-20(1)
@@ -24,6 +27,8 @@ references:
         - ANNEX K
       ios_18:
         - ANNEX K
+      ios_17:
+        - ANNEX K        
   disa:
     cmmc:
       - AC.L1-B.1.III
@@ -39,6 +44,9 @@ platforms:
     '18.0':
       benchmarks:
         - name: indigo_high
+    '17.0':
+      benchmarks:
+        - name: indigo_high        
     introduced: '8.0'
 tags:
   - 800-53r5_low

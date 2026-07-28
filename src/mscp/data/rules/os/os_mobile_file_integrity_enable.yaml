@@ -1,10 +1,11 @@
----
 id: os_mobile_file_integrity_enable
 title: Enable Apple Mobile File Integrity
 discussion: Mobile file integrity _MUST_ be enabled.
 references:
   nist:
     cce:
+      macos_27:
+        - CCE-XXXXX-X
       macos_26:
         - CCE-95231-7
       macos_15:

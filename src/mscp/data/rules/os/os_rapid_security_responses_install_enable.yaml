@@ -1,4 +1,3 @@
----
 id: os_rapid_security_responses_install_enable
 title: Allow to Install Rapid Security Responses
 discussion: |
@@ -36,7 +35,6 @@ references:
       - RA.L2-3.11.3
 platforms:
   iOS:
-    '27.0': {}
     '26.0':
       supervised: true
       benchmarks:

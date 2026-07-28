@@ -1,4 +1,3 @@
----
 id: os_tv_content_allowed
 title: Disable TV Content
 discussion: |
@@ -17,6 +16,8 @@ discussion: |
 references:
   nist:
     cce:
+      ios_27:
+        - CCE-XXXXX-X
       ios_26:
         - CCE-95694-6
       ios_18:
