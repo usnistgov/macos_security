@@ -1,4 +1,3 @@
----
 id: os_loginwindow_adminhostinfo_disabled
 title: Prevent AdminHostInfo from Being Available at Login Window
 discussion: |
@@ -10,6 +9,8 @@ discussion: |
 references:
   nist:
     cce:
+      macos_27:
+        - CCE-XXXXX-X
       macos_26:
         - CCE-95600-3
     800-53r5:

@@ -1,4 +1,3 @@
----
 id: os_uucp_disable
 title: Disable Unix-to-Unix Copy Protocol Service
 discussion: |
@@ -10,6 +9,8 @@ discussion: |
 references:
   nist:
     cce:
+      macos_27:
+        - CCE-XXXXX-X
       macos_26:
         - CCE-95330-7
       macos_15:
@@ -76,9 +77,9 @@ platforms:
           if [[ -z "$running" ]] && [[ -z "$enabled" ]]; then
             result="PASS"
           elif [[ -n "$running" ]]; then
-            result=result+" RUNNING"
+            result="${result}  RUNNING"
           elif [[ -n "$enabled" ]]; then
-            result=result+" ENABLED"
+            result="${result}  ENABLED"
           fi
           echo $result
         result:

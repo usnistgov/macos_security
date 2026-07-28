@@ -1,4 +1,3 @@
----
 id: system_settings_wake_network_access_disable
 title: Ensure Wake for Network Access Is Disabled
 discussion: |
@@ -6,6 +5,8 @@ discussion: |
 references:
   nist:
     cce:
+      macos_27:
+        - CCE-XXXXX-X
       macos_26:
         - CCE-95417-2
       macos_15:

@@ -1,4 +1,3 @@
----
 id: os_sleep_and_display_sleep_apple_silicon_enable
 title: Ensure Sleep and Display Sleep Is Enabled on Apple Silicon Devices
 discussion: |
@@ -6,6 +5,8 @@ discussion: |
 references:
   nist:
     cce:
+      macos_27:
+        - CCE-XXXXX-X
       macos_26:
         - CCE-95302-6
       macos_15:

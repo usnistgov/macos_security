@@ -1,11 +1,14 @@
----
 id: os_mail_block_remote_content
 title: Block Remote Content
 discussion: |
-  The user _MUST_ manually block remote content in Settings/Mail/Privacy/Block Remote Content.
+  The user _MUST_ manually block remote content in Apple Mail.
+
+  To disable, open the Settings app. Tap on Mail. Scroll down to the Messages section and tap Privacy Protection. Toggle off the Protect Mail Activity switch, then toggle On the Block All Remote Content switch.
 references:
   nist:
     cce:
+      ios_27:
+        - CCE-XXXXX-X
       ios_26:
         - CCE-95665-6
       ios_18:

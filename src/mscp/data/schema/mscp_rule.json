@@ -434,7 +434,8 @@
                         "com.apple.configuration.external-intelligence.settings",
                         "com.apple.configuration.softwareupdate.settings",
                         "com.apple.configuration.siri.settings",
-                        "com.apple.configuration.keyboard.settings"
+                        "com.apple.configuration.keyboard.settings",
+                        "com.apple.configuration.app.settings"
                     ]
                 },
                 "service": {

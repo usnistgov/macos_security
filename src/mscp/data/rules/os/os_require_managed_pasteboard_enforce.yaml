@@ -8,12 +8,16 @@ discussion: |
 references:
   nist:
     cce:
+      ios_27:
+        - CCE-XXXXX-X
       ios_26:
         - CCE-95679-7
       ios_18:
         - CCE-94459-5
       ios_17:
         - CCE-93443-0
+      visionos_27:
+        - CCE-XXXXX-X
       visionos_26:
         - CCE-95589-8
     800-53r5:
@@ -49,7 +53,8 @@ references:
       - 8.12
 platforms:
   iOS:
-    '27.0': {}
+    '27.0':
+      supervised: false
     '26.0':
       supervised: false
       benchmarks:
@@ -82,7 +87,8 @@ platforms:
           severity: medium
     introduced: '15.0'
   visionOS:
-    '27.0': {}
+    '27.0':
+      supervised: false
     '26.0':
       supervised: false
       benchmarks:

@@ -1,8 +1,7 @@
----
 id: system_settings_usb_restricted_mode
 title: USB Devices Must be Authorized Before Allowing
 discussion: |
-  USB devices connected to a Mac _MUST_ be authorized.
+  USB devices connected to a Mac _MUST_ be authorized and USB devices _MUST_ not be allowed to connect while the device is locked.
 
   [IMPORTANT]
   ====
@@ -11,21 +10,36 @@ discussion: |
 references:
   nist:
     cce:
+      macos_27:
+        - CCE-XXXXX-X
       macos_26:
         - CCE-95416-4
       macos_15:
         - CCE-94409-0
       macos_14:
         - CCE-93004-0
+      ios_27:
+        - CCE-XXXXX-X
+      ios_26:
+        - CCE-95700-1
+      ios_18:
+        - CCE-94471-0
+      ios_17:
+        - CCE-93454-7        
     800-53r5:
+      - CM-8(3)
       - MP-7
       - SC-41
+      - SC-7(10)
     800-171r3:
       - 03.08.07
   disa:
     cci:
       - CCI-001958
       - CCI-003959
+      - CCI-000366
+      - CCI-000097
+      - CCI-000370
     srg:
       - SRG-OS-000378-GPOS-00163
       - SRG-OS-000690-GPOS-00140
@@ -36,9 +50,30 @@ references:
         - APPL-15-005090
       macos_14:
         - APPL-14-005090
+      ios_26:
+        - AIOS-26-012200
+      ios_18:
+        - AIOS-18-012200
+      ios_17:
+        - AIOS-17-012200
+      sfr:
+        - 'FMT_SMF_EXT.1.1 #47' 
     cmmc:
       - MP.L2-3.8.7
       - MP.L2-3.8.8
+  bzk:
+    bio:
+      - 8.27
+  cis:
+    benchmark:
+      ios_26:
+        - 3.2.1.19 (level 1 - Institutionally-Owned Devices)
+      ios_18:
+        - 3.2.1.19 (level 1 - Institutionally-Owned Devices)
+      ios_17:
+        - 3.2.1.19 (level 1 - Institutionally-Owned Devices)
+    controls_v8:
+      - 1.2      
 platforms:
   macOS:
     '27.0': {}
@@ -67,6 +102,44 @@ platforms:
         result:
           string: 'true'
     introduced: '13.0'
+  iOS:
+    '27.0':
+      supervised: true
+    '26.0':
+      supervised: true
+      benchmarks:
+        - name: cis_lvl1_enterprise
+        - name: cis_lvl2_enterprise
+        - name: ios_stig
+          severity: medium
+        - name: indigo_base
+          severity: medium
+        - name: indigo_high
+          severity: medium
+        - name: nlmapgov_plus
+    '18.0':
+      supervised: true
+      benchmarks:
+        - name: cis_lvl1_enterprise
+        - name: cis_lvl2_enterprise
+        - name: ios_stig
+          severity: medium
+        - name: indigo_base
+          severity: medium
+        - name: indigo_high
+          severity: medium
+    '17.0':
+      supervised: true
+      benchmarks:
+        - name: cis_lvl1_enterprise
+        - name: cis_lvl2_enterprise
+        - name: ios_stig
+          severity: medium
+        - name: indigo_base
+          severity: medium
+        - name: indigo_high
+          severity: medium
+    introduced: 11.4.1    
 tags:
   - 800-53r5_low
   - 800-53r5_moderate
@@ -74,7 +147,9 @@ tags:
   - cnssi-1253_low
   - cnssi-1253_high
   - cmmc_lvl2
+  - cmmc_lvl3
   - cnssi-1253_moderate
+  - cisv8
 mobileconfig_info:
   - PayloadType: com.apple.applicationaccess
     PayloadContent:

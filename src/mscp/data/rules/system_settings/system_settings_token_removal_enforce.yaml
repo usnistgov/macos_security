@@ -1,4 +1,3 @@
----
 id: system_settings_token_removal_enforce
 title: Configure User Session Lock When a Smart Token is Removed
 discussion: |
@@ -13,6 +12,8 @@ discussion: |
 references:
   nist:
     cce:
+      macos_27:
+        - CCE-XXXXX-X
       macos_26:
         - CCE-95413-1
       macos_15:

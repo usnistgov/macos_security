@@ -1,4 +1,3 @@
----
 id: system_settings_siri_settings_disable
 title: Disable the System Settings Pane for Siri
 discussion: |
@@ -10,6 +9,8 @@ discussion: |
 references:
   nist:
     cce:
+      macos_27:
+        - CCE-XXXXX-X
       macos_26:
         - CCE-95400-8
       macos_15:

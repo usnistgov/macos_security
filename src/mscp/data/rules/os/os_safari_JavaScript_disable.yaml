@@ -1,4 +1,3 @@
----
 id: os_safari_JavaScript_disable
 title: Prevent JavaScript
 discussion: |
@@ -6,6 +5,8 @@ discussion: |
 references:
   nist:
     cce:
+      ios_27:
+        - CCE-XXXXX-X
       ios_26:
         - CCE-95680-5
       ios_18:

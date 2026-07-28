@@ -1,4 +1,3 @@
----
 id: pwpolicy_account_lockout_enforce
 title: Limit Consecutive Failed Login Attempts to $ODV
 discussion: |
@@ -8,18 +7,24 @@ discussion: |
 references:
   nist:
     cce:
+      macos_27:
+        - CCE-XXXXX-xpath
       macos_26:
         - CCE-95337-2
       macos_15:
         - CCE-94331-6
       macos_14:
         - CCE-92927-3
+      ios_27:
+        - CCE-XXXXX-X
       ios_26:
         - CCE-96704-2
       ios_18:
         - CCE-94473-6
       ios_17:
         - CCE-93456-2
+      visionos_27:
+        - CCE-XXXXX-X
       visionos_26:
         - CCE-96715-8
     800-53r5:
@@ -103,7 +108,8 @@ platforms:
           string: pass
     introduced: '10.7'
   iOS:
-    '27.0': {}
+    '27.0':
+      supervised: false
     '26.0':
       supervised: false
       benchmarks:
@@ -147,7 +153,8 @@ platforms:
           severity: medium
     introduced: '4.0'
   visionOS:
-    '27.0': {}
+    '27.0':
+      supervised: false
     '26.0':
       supervised: false
       benchmarks:

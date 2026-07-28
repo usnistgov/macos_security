@@ -1,4 +1,3 @@
----
 id: pwpolicy_prevent_dictionary_words
 title: Prevent the Use of Dictionary Words for Passwords
 discussion: |-
@@ -14,6 +13,8 @@ discussion: |-
 references:
   nist:
     cce:
+      macos_27:
+        - CCE-XXXXX-X
       macos_26:
         - CCE-95348-9
       macos_15:

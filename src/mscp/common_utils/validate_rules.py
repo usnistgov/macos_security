@@ -43,13 +43,69 @@ def get_rule_identifier(rule_file: Path) -> str:
         return rule_file.stem
 
 
+def get_benchmark_names(platforms: dict) -> set:
+    """Collect every benchmark ``name`` referenced across a rule's platforms.
+
+    Args:
+        platforms (dict): The rule's ``platforms`` mapping (e.g. macOS,
+            iOS, visionOS), each keyed by OS version.
+
+    Returns:
+        set: All benchmark names found under any platform/OS version.
+    """
+    names: set = set()
+    for platform_data in platforms.values():
+        if not isinstance(platform_data, dict):
+            continue
+        for os_data in platform_data.values():
+            if not isinstance(os_data, dict):
+                continue
+            for benchmark in os_data.get("benchmarks", []) or []:
+                if isinstance(benchmark, dict) and "name" in benchmark:
+                    names.add(benchmark["name"])
+    return names
+
+
+def validate_odv_benchmarks(data: dict) -> list:
+    """Check that non-``recommended`` odv keys map to a benchmark in platforms.
+
+    ``odv`` keys other than ``hint`` and ``recommended`` are expected to
+    correspond to a benchmark ``name`` listed somewhere under the rule's
+    ``platforms`` object (e.g. ``cis_lvl1``, ``disa_stig``). Keys that
+    don't match any benchmark usually indicate a typo or a stale odv
+    entry left over from a benchmark that was removed from ``platforms``.
+
+    Args:
+        data (dict): A parsed rule YAML document.
+
+    Returns:
+        list: Human-readable error messages, one per unmatched odv key.
+    """
+    odv = data.get("odv")
+    if not odv:
+        return []
+
+    benchmark_names = get_benchmark_names(data.get("platforms", {}))
+    unknown_keys = sorted(
+        key for key in odv if key not in ("hint", "recommended") and key not in benchmark_names
+    )
+
+    return [
+        f"odv key '{key}' does not match any benchmark name under platforms "
+        f"(available: {', '.join(sorted(benchmark_names)) or 'none'})"
+        for key in unknown_keys
+    ]
+
+
 def validate_yaml_file(args: argparse.Namespace) -> None:
     """Validate every rule YAML against ``schema/mscp_rule.json``.
 
     Loads the schema, then iterates either ``args.rules_dir`` (if set)
     or the default rules tree plus any custom rules. Prints / logs a
     line per file: ``✅ VALID``, ``❌ INVALID``, or ``⚠️ ERROR``. Files
-    with duplicate rule identifiers are flagged with a warning.
+    with duplicate rule identifiers are flagged with a warning. Also
+    cross-checks ``odv`` keys against the benchmark names declared under
+    ``platforms`` (see `validate_odv_benchmarks`).
 
     Args:
         args (argparse.Namespace): Parsed CLI arguments. Reads
@@ -92,12 +148,17 @@ def validate_yaml_file(args: argparse.Namespace) -> None:
             logger.error(f"⚠️ ERROR:   {yaml} → {e}")
             continue
 
-        if errors:
+        odv_issues = validate_odv_benchmarks(data)
+
+        if errors or odv_issues:
             error_found = True
             for e in errors:
                 path = " -> ".join(str(p) for p in e.path) if e.path else "root"
                 print(f"❌ INVALID: {yaml} → [{path}] {e.message}")
                 logger.warning(f"❌ INVALID: {yaml} → [{path}] {e.message}")
+            for msg in odv_issues:
+                print(f"❌ INVALID: {yaml} → [odv] {msg}")
+                logger.warning(f"❌ INVALID: {yaml} → [odv] {msg}")
         else:
             if args.all_validation:
                 print(f"✅ VALID:   {yaml}")

@@ -37,10 +37,13 @@ from ..common_utils import (
 from ..common_utils.logger_instance import logger
 
 
-def deep_merge(a, b):
+def deep_merge(a, b, preferred_key=None):
     for key, value in b.items():
+        if key == preferred_key:
+            a[key] = value
+            return a
         if key in a and isinstance(a[key], dict) and isinstance(value, dict):
-            deep_merge(a[key], value)
+            deep_merge(a[key], value, preferred_key)
         else:
             a[key] = value
     return a
@@ -293,7 +296,9 @@ class Macsecurityrule(BaseModelWithAccessors):
                 platform_enforcement_info = rule_yaml["platforms"][os_type][
                     os_version_str
                 ].get("enforcement_info", {})
-                deep_merge(enforcement_info, platform_enforcement_info)
+                deep_merge(
+                    enforcement_info, platform_enforcement_info, preferred_key="result"
+                )
 
             if enforcement_info and "n_a" not in tags:
                 check_shell = enforcement_info.get("check", {}).get("shell")
@@ -689,7 +694,10 @@ class Macsecurityrule(BaseModelWithAccessors):
         else:
             odv_value: str | int | bool | None = odv_lookup.get(parent_values)
         if odv_value is None:
-            return
+            logger.warning(
+                f"ODV value cannot be determined for {self.rule_id}, defaulting to recommended value: {odv_lookup.get('recommended')}"
+            )
+            odv_value: str | int | bool | None = odv_lookup.get("recommended")
 
         fields_to_process: tuple[str, ...] = (
             "title",

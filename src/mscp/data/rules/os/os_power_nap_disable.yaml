@@ -1,4 +1,3 @@
----
 id: os_power_nap_disable
 title: Disable Power Nap
 discussion: |
@@ -48,7 +47,6 @@ references:
       - 4.8
 platforms:
   macOS:
-    '27.0': {}
     '26.0':
       benchmarks:
         - name: cis_lvl1

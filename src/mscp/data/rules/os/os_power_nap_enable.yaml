@@ -1,4 +1,3 @@
----
 id: os_power_nap_enable
 title: Enable Power Nap
 discussion: |
@@ -25,7 +24,6 @@ references:
         - CCE-92854-9
 platforms:
   macOS:
-    '27.0': {}
     '26.0': {}
     '15.0': {}
     enforcement_info:

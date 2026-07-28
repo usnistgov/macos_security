@@ -34,7 +34,6 @@ references:
       - MP.L2-3.8.8
 platforms:
   macOS:
-    '27.0': {}
     '26.0': {}
     '15.0': {}
     enforcement_info:

@@ -1,4 +1,3 @@
----
 id: auth_pam_login_smartcard_enforce
 title: Enforce Multifactor Authentication for Login
 discussion: |
@@ -12,6 +11,8 @@ discussion: |
 references:
   nist:
     cce:
+      macos_27:
+        - CCE-XXXXX-X
       macos_26:
         - CCE-95132-7
       macos_15:
@@ -72,7 +73,12 @@ platforms:
           severity: medium
     enforcement_info:
       check:
-        shell: /usr/bin/grep -Ec '^(auth\s+sufficient\s+pam_smartcard.so|auth\s+required\s+pam_deny.so)' /etc/pam.d/login
+        shell: |-
+          if [[ -d /var/db/ManagedConfigurationFiles/com.apple.pam ]]; then
+            /usr/bin/grep -Ec '^(auth\s+sufficient\s+pam_smartcard.so|auth\s+required\s+pam_deny.so)' /var/db/ManagedConfigurationFiles/com.apple.pam/etc/pam.d/login
+          else
+            /usr/bin/grep -Ec '^(auth\s+sufficient\s+pam_smartcard.so|auth\s+required\s+pam_deny.so)' /etc/pam.d/login
+          fi
         result:
           integer: 2
       fix:

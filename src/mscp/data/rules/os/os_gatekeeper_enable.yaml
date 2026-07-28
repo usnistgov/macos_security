@@ -1,4 +1,3 @@
----
 id: os_gatekeeper_enable
 title: Enable Gatekeeper
 discussion: |
@@ -10,6 +9,8 @@ discussion: |
 references:
   nist:
     cce:
+      macos_27:
+        - CCE-XXXXX-X
       macos_26:
         - CCE-95195-4
       macos_15:

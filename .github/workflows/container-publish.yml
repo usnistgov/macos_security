@@ -101,7 +101,9 @@ jobs:
           platforms: linux/amd64,linux/arm64
           push: true
           tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
+          labels: |
+            ${{ steps.meta.outputs.labels }}
+            org.opencontainers.image.revision=${{ github.event.workflow_run.head_sha || github.sha }}
           build-args: |
             BUILD_SHA=${{ github.event.workflow_run.head_sha || github.sha }}
             IMAGE_REPO=${{ github.repository }}

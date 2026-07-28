@@ -1,4 +1,3 @@
----
 id: os_hibernate_mode_intel_enable
 title: Enable Hibernate Mode (Intel)
 discussion: |
@@ -16,7 +15,6 @@ references:
         - CCE-92802-8
 platforms:
   macOS:
-    '27.0': {}
     '26.0': {}
     '15.0':
       enforcement_info:

@@ -1,4 +1,3 @@
----
 id: os_safari_show_full_website_address_enable
 title: Ensure Show Full Website Address in Safari Is Enabled
 discussion: |
@@ -6,6 +5,8 @@ discussion: |
 references:
   nist:
     cce:
+      macos_27:
+        - CCE-XXXXX-X
       macos_26:
         - CCE-95287-9
       macos_15:

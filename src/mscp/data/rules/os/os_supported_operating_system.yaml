@@ -1,4 +1,3 @@
----
 id: os_supported_operating_system
 title: The macOS Version Must Be Supported by the Vendor
 discussion: |-
@@ -12,6 +11,8 @@ discussion: |-
 references:
   nist:
     cce:
+      macos_27:
+        - CCE-XXXXX-X
       macos_26:
         - CCE-95604-5
   disa:

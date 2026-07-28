@@ -1,4 +1,3 @@
----
 id: system_settings_siri_disable
 title: Disable Siri
 discussion: |
@@ -10,18 +9,24 @@ discussion: |
 references:
   nist:
     cce:
+      macos_27:
+        - CCE-XXXXX-X
       macos_26:
         - CCE-95398-4
       macos_15:
         - CCE-94391-0
       macos_14:
         - CCE-92987-7
+      ios_27:
+        - CCE-XXXXX-X
       ios_26:
         - CCE-95689-6
       ios_18:
         - CCE-94551-9
       ios_17:
         - CCE-93499-2
+      visionos_27:
+        - CCE-XXXXX-X
       visionos_26:
         - CCE-95598-9
     800-53r5:
@@ -89,21 +94,47 @@ platforms:
         - name: cis_lvl2
         - name: disa_stig
           severity: medium
+      enforcement_info:
+        check:
+          shell: |-
+            /usr/bin/osascript -l JavaScript << EOS
+            $.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess')\
+            .objectForKey('allowAssistant').js
+            EOS
+          result:
+            string: 'false'
+      mobileconfig_info:
+        - PayloadType: com.apple.applicationaccess
+          PayloadContent:
+            - allowAssistant: false
     '15.0':
       benchmarks:
         - name: cis_lvl1
         - name: cis_lvl2
         - name: disa_stig
           severity: medium
+      enforcement_info:
+        check:
+          shell: |-
+            /usr/bin/osascript -l JavaScript << EOS
+            $.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess')\
+            .objectForKey('allowAssistant').js
+            EOS
+          result:
+            string: 'false'
+      mobileconfig_info:
+        - PayloadType: com.apple.applicationaccess
+          PayloadContent:
+            - allowAssistant: false            
     enforcement_info:
       check:
         shell: |-
           /usr/bin/osascript -l JavaScript << EOS
-          $.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess')\
-          .objectForKey('allowAssistant').js
+          $.NSUserDefaults.alloc.initWithSuiteName('com.apple.ironwood.support')\
+          .objectForKey('Assistant Allowed').js
           EOS
         result:
-          string: 'false'
+          string: 'false'            
     introduced: '14.0'
   iOS:
     '27.0': {}
@@ -154,7 +185,7 @@ tags:
 mobileconfig_info:
   - PayloadType: com.apple.applicationaccess
     PayloadContent:
-      - allowAssistant: false
+      - allowAssistant: false   
 ddm_info:
   declarationtype: com.apple.configuration.siri.settings
   ddm_key: Enabled

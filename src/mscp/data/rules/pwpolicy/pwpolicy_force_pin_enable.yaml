@@ -1,4 +1,3 @@
----
 id: pwpolicy_force_pin_enable
 title: Ensure Force Pin is Set to Enabled
 discussion: |
@@ -8,12 +7,16 @@ discussion: |
 references:
   nist:
     cce:
+      ios_27:
+        - CCE-XXXXX-X
       ios_26:
         - CCE-96705-9
       ios_18:
         - CCE-94474-4
       ios_17:
         - CCE-93457-0
+      visionos_27:
+        - CCE-XXXXX-X
       visionos_26:
         - CCE-96716-6
     800-53r5:
@@ -52,8 +55,10 @@ references:
       - 8.24
 platforms:
   iOS:
-    '27.0': {}
+    '27.0':
+      supervised: false
     '26.0':
+      supervised: false
       benchmarks:
         - name: ios_stig
           severity: high
@@ -64,6 +69,7 @@ platforms:
         - name: nlmapgov_base
         - name: nlmapgov_plus
     '18.0':
+      supervised: false
       benchmarks:
         - name: ios_stig
           severity: high
@@ -72,6 +78,7 @@ platforms:
         - name: indigo_high
           severity: high
     '17.0':
+      supervised: false
       benchmarks:
         - name: ios_stig
           severity: high
@@ -83,8 +90,10 @@ platforms:
           severity: high
     introduced: '4.0'
   visionOS:
-    '27.0': {}
+    '27.0':
+      supervised: false
     '26.0':
+      supervised: false
       benchmarks:
         - name: visionos_stig
           severity: high

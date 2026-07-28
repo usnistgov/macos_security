@@ -6,14 +6,20 @@ discussion: |
 references:
   nist:
     cce:
+      macos_27:
+        - CCE-XXXXX-X
       macos_26:
         - CCE-95196-2
       macos_15:
         - CCE-94196-3
+      ios_27:
+        - CCE-XXXXX-X
       ios_26:
         - CCE-95480-0
       ios_18:
         - CCE-94535-2
+      visionos_27:
+        - CCE-XXXXX-X
       visionos_26:
         - CCE-95577-3
     800-53r5:
@@ -64,18 +70,20 @@ platforms:
           string: 'false'
     introduced: '15.0'
   iOS:
-    '27.0': {}
+    '27.0':
+      supervised: true
     '26.0':
-      supervised: false
+      supervised: true
       benchmarks:
         - name: ios_stig
     '18.0':
-      supervised: false
+      supervised: true
       benchmarks:
         - name: ios_stig
     introduced: '18.0'
   visionOS:
-    '27.0': {}
+    '27.0':
+      supervised: true
     '26.0':
       supervised: true
       benchmarks:
