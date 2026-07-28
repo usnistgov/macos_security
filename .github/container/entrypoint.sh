@@ -9,6 +9,7 @@ import json, os, sys, urllib.request
 owner_repo = os.environ.get("MSCP_IMAGE_REPO", "")
 owner = owner_repo.split("/")[0] if "/" in owner_repo else ""
 image = "mscp_2.0"
+tag = os.environ.get("MSCP_IMAGE_TAG") or "latest"
 
 def ghcr_get(path, accept, token=None):
     req = urllib.request.Request(f"https://ghcr.io{path}")
@@ -31,7 +32,7 @@ if not tok:
 token = tok.get("token", "")
 
 index = ghcr_get(
-    f"/v2/{owner}/{image}/manifests/latest",
+    f"/v2/{owner}/{image}/manifests/{tag}",
     "application/vnd.oci.image.index.v1+json,application/vnd.docker.distribution.manifest.list.v2+json",
     token,
 )
@@ -61,10 +62,11 @@ PYEOF
 
     if [ -n "${remote_sha}" ] && [ "${MSCP_BUILD_SHA}" != "${remote_sha}" ]; then
         owner="${MSCP_IMAGE_REPO%%/*}"
+        tag="${MSCP_IMAGE_TAG:-latest}"
         printf '\n*** A newer version of the mSCP container is available. ***\n'
         printf 'Please update to the latest version to ensure you have the most recent rules and features.\n\n'
         printf 'Exit the container and run the following command to update:\n'
-        printf '    container image pull ghcr.io/%s/mscp_2.0:latest\n\n' "${owner}"
+        printf '    container image pull ghcr.io/%s/mscp_2.0:%s\n\n' "${owner}" "${tag}"
     fi
 fi
 

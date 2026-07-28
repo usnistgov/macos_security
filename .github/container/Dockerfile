@@ -35,8 +35,10 @@ RUN apk add --no-cache --virtual .build-deps \
 
 ARG BUILD_SHA=unknown
 ARG IMAGE_REPO=unknown
+ARG IMAGE_TAG=latest
 ENV MSCP_BUILD_SHA=${BUILD_SHA}
 ENV MSCP_IMAGE_REPO=${IMAGE_REPO}
+ENV MSCP_IMAGE_TAG=${IMAGE_TAG}
 
 WORKDIR /mscp
 
