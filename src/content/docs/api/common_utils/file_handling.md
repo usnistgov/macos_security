@@ -77,7 +77,7 @@ open_csv(file_path: Path, *, dedupe=True) -> dict[str, list[str]]
 ```
 
 Return a dict mapping column header -> list of column values for any number of columns.
-- Empty/missing cells become "".
+- Empty/missing cells become `""`.
 - Whitespace around values is stripped.
 - If `dedupe=True`, duplicate headers are renamed: 'Header', 'Header_2', ...
 
