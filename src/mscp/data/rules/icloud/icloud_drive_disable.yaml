@@ -1,4 +1,3 @@
----
 id: icloud_drive_disable
 title: Disable iCloud Document Sync
 discussion: |
@@ -8,7 +7,7 @@ discussion: |
 references:
   nist:
     cce:
-      maocs_27:
+      macos_27:
         - CCE-XXXXX-X
       macos_26:
         - CCE-95144-2

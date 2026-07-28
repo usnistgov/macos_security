@@ -87,7 +87,7 @@ tags:
   - cnssi-1253_high
   - cnssi-1253_moderate
   - hicp_lp
-  - teest
+  - test
 mobileconfig_info:
   - PayloadType: com.apple.applicationaccess.new
     PayloadContent:
@@ -96,10 +96,5 @@ mobileconfig_info:
           - /Applications/FaceTime.app
 ddm_info:
   declarationtype: com.apple.configuration.app.settings
-  configuration_key: Allowed
-  configuration_value: DeniedBinaries
-  signingid: com.apple.FaceTime
-# ddm_info:  
-#   declarationtype: com.apple.configuration.app.settings
-#   configuration_key: Allowed
-#   configuration_value: { 'DeniedBinaries': [ { "SigningID": "com.apple.iCal" } ] }
+  ddm_key: Allowed
+  ddm_value: { 'DeniedBinaries': [ { "SigningID": "com.apple.FaceTime" } ] }

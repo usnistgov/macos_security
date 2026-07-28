@@ -1,4 +1,3 @@
----
 id: os_calendar_app_disable
 title: Disable Calendar.app
 discussion: |
@@ -16,6 +15,8 @@ discussion: |
 references:
   nist:
     cce:
+      macos_27:
+        - CCE-XXXXX-X
       macos_26:
         - CCE-95171-5
       macos_15:
@@ -45,6 +46,7 @@ references:
       - 4.8
 platforms:
   macOS:
+    '27.0': {}
     '26.0': {}
     '15.0': {}
     enforcement_info:
@@ -72,6 +74,7 @@ tags:
   - cnssi-1253_high
   - cnssi-1253_moderate
   - hicp_lp
+  - test
 mobileconfig_info:
   - PayloadType: com.apple.applicationaccess.new
     PayloadContent:

@@ -9,6 +9,10 @@ references:
         - CCE-XXXXX-X
       macos_26:
         - CCE-95601-1
+      ios_27:
+        - CCE-XXXXX-X
+      ios_26:
+        - CCE-XXXXX-X
   bsi:
     indigo:
       ios_26:

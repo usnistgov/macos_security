@@ -1,4 +1,3 @@
----
 id: os_install_configuration_profile_disable
 title: Ensure Allow Installing Configuration Profiles is Set to Disabled
 discussion: |
@@ -13,7 +12,9 @@ references:
       macos_15:
         - CCE-94177-3
       macos_14:
-        - CCE-92777-2    
+        - CCE-92777-2
+      ios_27:
+        - CCE-XXXXX-X 
       ios_26:
         - CCE-95484-2
       ios_18:

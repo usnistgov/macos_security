@@ -71,6 +71,7 @@ tags:
   - cnssi-1253_high
   - cnssi-1253_moderate
   - hicp_lp
+  - test
 mobileconfig_info:
   - PayloadType: com.apple.applicationaccess.new
     PayloadContent:
@@ -79,6 +80,5 @@ mobileconfig_info:
           - /Applications/Messages.app
 ddm_info:
   declarationtype: com.apple.configuration.app.settings
-  configuration_key: Allowed
-  configuration_value: DeniedBinaries
-  signingid: com.apple.Mail
+  ddm_key: Allowed
+  ddm_value: { 'DeniedBinaries': [ { "SigningID": "com.apple.Mail" } ] }

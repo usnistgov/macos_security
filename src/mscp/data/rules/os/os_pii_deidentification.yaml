@@ -1,4 +1,3 @@
----
 id: os_pii_deidentification
 title: Remove Elements of Personally Identifiable Information from Datasets
 discussion: |-
@@ -10,7 +9,7 @@ discussion: |-
 references:
   nist:
     cce:
-      macos_@7:
+      macos_27:
         - CCE-XXXXX-X
       macos_26:
         - CCE-95255-6

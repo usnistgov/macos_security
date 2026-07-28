@@ -54,7 +54,6 @@ platforms:
             string: 'true'
           fix:
             additional_info: This is implemented by Declarative Device Management (DDM) or by configuration profile.
-
       benchmarks:
         - name: cis_lvl1
         - name: cis_lvl2
