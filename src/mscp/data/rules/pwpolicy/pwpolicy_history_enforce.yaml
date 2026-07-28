@@ -34,8 +34,6 @@ references:
       - SRG-OS-000077-GPOS-00045
       - SRG-OS-000775-GPOS-00230
     disa_stig:
-      macos_26:
-        - APPL-15-003009
       macos_15:
         - APPL-15-003009
       macos_14:
@@ -138,8 +136,8 @@ odv:
   cis_lvl2: 24
   indigo_base: 2
   indigo_high: 2
+  ios_stig: 2
   visionos_stig: 2
-  disa_stig: 5
 tags:
   - 800-171
   - 800-53r5_low

@@ -4,7 +4,7 @@ on:
   workflow_run:
     workflows: ["CLI Smoke Tests", "Generate Baselines and Increment Build"]
     types: [completed]
-    branches: [main]
+    branches: [main, dev_27]
   workflow_dispatch:
 
 env:
@@ -50,6 +50,8 @@ jobs:
 
       - name: Checkout repository
         uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0  # v7
+        with:
+          ref: ${{ github.event.workflow_run.head_sha || github.sha }}
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@96fe6ef7f33517b61c61be40b68a1882f3264fb8  # v4.2.0
@@ -69,15 +71,31 @@ jobs:
         run: |
           echo "build=$(sed -n 's/^ *build: *//p' src/mscp/data/includes/mscp-data.yaml | head -n 1)" >> "$GITHUB_OUTPUT"
 
+      - name: Determine source branch
+        id: branch
+        env:
+          HEAD_BRANCH: ${{ github.event.workflow_run.head_branch }}
+        run: |
+          branch="${HEAD_BRANCH:-${{ github.ref_name }}}"
+          echo "branch=${branch}" >> "$GITHUB_OUTPUT"
+          if [[ "${branch}" == "main" ]]; then
+            echo "is_main=true" >> "$GITHUB_OUTPUT"
+            echo "image_tag=latest" >> "$GITHUB_OUTPUT"
+          else
+            echo "is_main=false" >> "$GITHUB_OUTPUT"
+            echo "image_tag=${branch}" >> "$GITHUB_OUTPUT"
+          fi
+
       - name: Extract Docker metadata
         id: meta
         uses: docker/metadata-action@80c7e94dd9b9319bd5eb7a0e0fe9291e23a2a2e9  # v6.1.0
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           tags: |
-            type=raw,value=main
+            type=raw,value=main,enable=${{ steps.branch.outputs.is_main == 'true' }}
+            type=raw,value=latest,enable=${{ steps.branch.outputs.is_main == 'true' }}
+            type=raw,value=${{ steps.branch.outputs.branch }},enable=${{ steps.branch.outputs.is_main != 'true' }}
             type=sha,prefix=sha-,format=short
-            type=raw,value=latest
 
       - name: Build and push Docker image
         id: build-push
@@ -91,9 +109,11 @@ jobs:
           labels: |
             ${{ steps.meta.outputs.labels }}
             org.mscp.build=${{ steps.mscp_build.outputs.build }}
+            org.opencontainers.image.revision=${{ github.event.workflow_run.head_sha || github.sha }}
           build-args: |
-            BUILD_SHA=${{ github.sha }}
+            BUILD_SHA=${{ github.event.workflow_run.head_sha || github.sha }}
             IMAGE_REPO=${{ github.repository }}
+            IMAGE_TAG=${{ steps.branch.outputs.image_tag }}
             BUILD_DATE=${{ fromJSON(steps.meta.outputs.json).labels['org.opencontainers.image.created'] }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
