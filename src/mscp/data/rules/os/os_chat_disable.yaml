@@ -14,6 +14,8 @@ references:
         - CCE-94520-4
       ios_17:
         - CCE-93473-7
+      visionos_27:
+        - CCE-XXXXX-X
     800-53r5:
       - AC-20
       - CM-7

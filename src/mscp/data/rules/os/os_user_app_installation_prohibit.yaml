@@ -22,8 +22,6 @@ references:
         - CCE-94323-3
       macos_14:
         - CCE-92920-8
-      visionos_26:
-        - CCE-95594-8
     800-53r5:
       - CM-11(2)
   disa:
@@ -76,15 +74,6 @@ platforms:
         result:
           string: 'true'
     introduced: '10.7'
-  visionOS:
-    '27.0': {}
-    '26.0':
-      supervised: true
-      mobileconfig_info:
-        - PayloadType: com.apple.applicationaccess
-          PayloadContent:
-            - allowAppInstallation: false
-    introduced: n/a
 tags:
   - cnssi-1253_low
   - cnssi-1253_high

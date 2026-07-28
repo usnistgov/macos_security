@@ -1,4 +1,3 @@
----
 id: os_diagnostics_reports_disable
 title: Disable Sending Diagnostic and Usage Data to Apple
 discussion: |
@@ -18,6 +17,8 @@ references:
         - CCE-93420-8
       visionos_26:
         - CCE-95570-8
+      visionos_27:
+        - CCE-XXXXX-X
     800-53r5:
       - AC-20
       - SC-7(10)

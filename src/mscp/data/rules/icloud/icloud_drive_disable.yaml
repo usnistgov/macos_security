@@ -27,6 +27,8 @@ references:
         - CCE-XXXXX-X
       visionos_26:
         - CCE-95555-9
+      visionos_27:
+        - CCE-XXXXX-X
     800-53r5:
       - AC-20
       - AC-20(1)
@@ -147,7 +149,8 @@ platforms:
           severity: medium
     introduced: '5.0'
   visionOS:
-    '27.0': {}
+    '27.0':
+      supervised: true
     '26.0':
       supervised: true
       benchmarks:

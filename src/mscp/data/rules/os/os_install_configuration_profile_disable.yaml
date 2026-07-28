@@ -23,6 +23,8 @@ references:
         - CCE-93429-9
       visionos_26:
         - CCE-95581-5
+      visionos_27:
+        - CCE-XXXXX-X
     800-53r5:
       - CM-5    
       - CM-6

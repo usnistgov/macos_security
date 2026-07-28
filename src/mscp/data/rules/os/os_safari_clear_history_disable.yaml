@@ -13,6 +13,8 @@ references:
         - CCE-XXXXX-X
       ios_26:
         - CCE-XXXXX-X
+      visionos_27:
+        - CCE-XXXXX-X
   bsi:
     indigo:
       ios_26:
@@ -46,8 +48,6 @@ platforms:
     '27.0':
       supervised: true
     introduced: '26.0'
-tags:
-  - none
 mobileconfig_info:
   - PayloadType: com.apple.applicationaccess
     PayloadContent:

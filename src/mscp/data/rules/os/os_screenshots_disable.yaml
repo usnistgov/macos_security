@@ -17,6 +17,8 @@ references:
         - CCE-93446-3
       visionos_26:
         - CCE-95592-2
+      visionos_27:
+        - CCE-XXXXX-X
     800-53r5:
       - CM-7
       - CM-7(1)
