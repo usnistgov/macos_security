@@ -144,19 +144,19 @@ def get_macos_version() -> float:
     """Return the running host's major macOS version as a float.
 
     Used as the default for the `--os_version` flag so the CLI assumes
-    the current host's version unless overridden. Falls back to `26.0`
+    the current host's version unless overridden. Falls back to `27.0`
     when `platform.mac_ver` returns an empty string (e.g. when run on a
     non-macOS host).
 
     Returns:
-        float: Major version (e.g. `15.0`), or `26.0` on a non-macOS host.
+        float: Major version (e.g. `15.0`), or `27.0` on a non-macOS host.
     """
     version_str, _, _ = platform.mac_ver()
     if version_str:
         major = int(version_str.split(".")[0])
         return float(major)
     else:
-        return 26.0
+        return 27.0
 
 
 def validate_file(arg: str) -> Path | None:
