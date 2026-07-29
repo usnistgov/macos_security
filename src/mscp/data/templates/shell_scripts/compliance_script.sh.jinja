@@ -116,6 +116,16 @@ logmessage(){
   fi
 }
 
+csv_escape(){
+  # Escape a field per RFC 4180: double any embedded double quotes, then wrap
+  # the whole field in double quotes so commas, quotes, CR and LF are literal.
+  local field="$1"
+  local quote='"'
+  field="${field//$quote/$quote$quote}"
+  field="$quote$field$quote"
+  printf '%s' "$field"
+}
+
 logcsv(){
   local rule_name="$1"
   local result_status="$2"
@@ -127,7 +137,7 @@ logcsv(){
     echo "Rule,Status,Result,Expected,Exemption" > "$audit_csv"
   fi
 
-  echo "$rule_name,$result_status,$result,$expected,$exemption" >> "$audit_csv"
+  echo "$(csv_escape "$rule_name"),$(csv_escape "$result_status"),$(csv_escape "$result"),$(csv_escape "$expected"),$(csv_escape "$exemption")" >> "$audit_csv"
 }
 
 ask() {
