@@ -1,10 +1,11 @@
----
 id: icloud_freeform_disable
 title: Disable the iCloud Freeform Services
 discussion: |
-  The macOS built-in Freeform.app connection to Apple's iCloud service _MUST_ be disabled.
+  The macOS built-in Freeform.app connection to Apple's iCloud service _MUST_ be disabled, if iCloud is not an authorized service.
 
-  Apple's iCloud service does not provide an organization with enough control over the storage and access of data and, therefore, automated calendar synchronization _MUST_ be controlled by an organization approved service.
+  Apple's iCloud service does not provide an organization with enough control over the storage and access of data, and, therefore, automated synchronization _MUST_ be controlled by an organization approved service.
+
+  This requirement helps ensure that organizational contact data is managed in accordance with established security, privacy, access-control, and data governance requirements.
 references:
   nist:
     cce:

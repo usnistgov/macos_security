@@ -1,4 +1,3 @@
----
 id: os_allow_documents_managed_sources_unmanaged_destinations_disable
 title: Ensure Allow documents from managed sources in unmanaged destinations is set to Disabled
 discussion: |

@@ -94,19 +94,6 @@ platforms:
         - name: cis_lvl2
         - name: disa_stig
           severity: medium
-      enforcement_info:
-        check:
-          shell: |-
-            /usr/bin/osascript -l JavaScript << EOS
-            $.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess')\
-            .objectForKey('allowAssistant').js
-            EOS
-          result:
-            string: 'false'
-      mobileconfig_info:
-        - PayloadType: com.apple.applicationaccess
-          PayloadContent:
-            - allowAssistant: false
     '15.0':
       benchmarks:
         - name: cis_lvl1

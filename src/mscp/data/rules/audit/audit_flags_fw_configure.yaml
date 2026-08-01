@@ -1,4 +1,3 @@
----
 id: audit_flags_fw_configure
 title: Configure System to Audit All Failed Write Actions on the System
 discussion: |

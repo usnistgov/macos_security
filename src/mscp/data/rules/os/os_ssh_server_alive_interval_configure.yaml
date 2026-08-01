@@ -1,4 +1,3 @@
----
 id: os_ssh_server_alive_interval_configure
 title: Configure SSH ServerAliveInterval option set to $ODV
 discussion: |

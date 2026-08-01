@@ -1,4 +1,3 @@
----
 id: os_require_managed_pasteboard_enforce
 title: Ensure Copy/Paste of Data from Managed to Unmanaged Applications is Disabled
 discussion: |

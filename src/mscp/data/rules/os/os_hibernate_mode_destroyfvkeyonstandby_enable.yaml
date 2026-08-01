@@ -1,4 +1,3 @@
----
 id: os_hibernate_mode_destroyfvkeyonstandby_enable
 title: Enable DestroyFVKeyOnStandby on Hibernate
 discussion: |

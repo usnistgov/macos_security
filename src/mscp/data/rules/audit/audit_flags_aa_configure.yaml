@@ -1,4 +1,3 @@
----
 id: audit_flags_aa_configure
 title: Configure System to Audit All Authorization and Authentication Events
 discussion: |
