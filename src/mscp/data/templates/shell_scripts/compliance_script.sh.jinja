@@ -134,10 +134,13 @@ logcsv(){
   local exemption="$5"
 
   if [[ ! -f "$audit_csv" ]]; then
-    echo "Rule,Status,Result,Expected,Exemption" > "$audit_csv"
+    printf '%s\n' "Rule,Status,Result,Expected,Exemption" > "$audit_csv"
   fi
 
-  echo "$(csv_escape "$rule_name"),$(csv_escape "$result_status"),$(csv_escape "$result"),$(csv_escape "$expected"),$(csv_escape "$exemption")" >> "$audit_csv"
+  # Use printf, not echo: under zsh `echo` interprets backslash escapes in the
+  # field values (e.g. an embedded `\c` truncates the line), which would corrupt
+  # the CSV even after csv_escape() has quoted each field.
+  printf '%s\n' "$(csv_escape "$rule_name"),$(csv_escape "$result_status"),$(csv_escape "$result"),$(csv_escape "$expected"),$(csv_escape "$exemption")" >> "$audit_csv"
 }
 
 ask() {
