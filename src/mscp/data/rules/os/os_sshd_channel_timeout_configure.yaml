@@ -80,7 +80,7 @@ platforms:
             done
     enforcement_info:
       check:
-        shell: /usr/sbin/sshd -G | /usr/bin/awk '/channeltimeout/{print $2}'
+        shell: /usr/sbin/sshd -G | /usr/bin/awk '/channeltimeout session:*/{print $2}'
         result:
           string: $ODV
       fix:
@@ -91,7 +91,7 @@ platforms:
             /usr/bin/sed -i.bk "1s/.*/Include \/etc\/ssh\/sshd_config.d\/\*/" /etc/ssh/sshd_config
           fi
 
-          /usr/bin/grep -qxF 'channeltimeout $ODV' "${include_dir}01-mscp-sshd.conf" 2>/dev/null || echo "channeltimeout $ODV" >> "${include_dir}01-mscp-sshd.conf"
+          /usr/bin/grep -qxF 'channeltimeout session:*=$ODV' "${include_dir}01-mscp-sshd.conf" 2>/dev/null || echo "channeltimeout session:*=$ODV" >> "${include_dir}01-mscp-sshd.conf"
 
           for file in $(ls ${include_dir}); do
             if [[ "$file" == "100-macos.conf" ]]; then
