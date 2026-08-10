@@ -106,12 +106,9 @@ platforms:
     enforcement_info:
       check:
         shell: |-
-          /usr/bin/osascript -l JavaScript << EOS
-          $.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess')\
-          .objectForKey('forceOnDeviceOnlyDictation').js
-          EOS
+          /usr/bin/osascript -l JavaScript -e 'var s = $.NSUserDefaults.alloc.initWithSuiteName("com.apple.applicationaccess"); (ObjC.unwrap(s.objectForKey("forceOnDeviceOnlyDictation")) == true && s.objectIsForcedForKey("forceOnDeviceOnlyDictation")) ? "PASS" : "FAIL"'
         result:
-          string: 'true'
+          string: 'PASS'
     introduced: '14.0'
   iOS:
     '27.0': {}

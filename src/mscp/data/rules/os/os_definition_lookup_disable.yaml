@@ -40,12 +40,9 @@ platforms:
     enforcement_info:
       check:
         shell: |-
-          /usr/bin/osascript -l JavaScript << EOS
-          $.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess')\
-          .objectForKey('allowDefinitionLookup').js
-          EOS
+          /usr/bin/osascript -l JavaScript -e 'var s = $.NSUserDefaults.alloc.initWithSuiteName("com.apple.applicationaccess"); (ObjC.unwrap(s.objectForKey("allowDefinitionLookup")) == false && s.objectIsForcedForKey("allowDefinitionLookup")) ? "PASS" : "FAIL"'
         result:
-          string: 'false'
+          string: 'PASS'
   iOS:
     '27.0': {}
     '26.0':

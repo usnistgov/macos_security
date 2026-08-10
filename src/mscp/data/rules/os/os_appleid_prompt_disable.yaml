@@ -64,10 +64,7 @@ platforms:
     enforcement_info:
       check:
         shell: |-
-          /usr/bin/osascript -l JavaScript 2>/dev/null << EOS
-          $.NSUserDefaults.alloc.initWithSuiteName('com.apple.SetupAssistant.managed')\
-          .objectForKey('SkipSetupItems').containsObject("AppleID")
-          EOS
+          /usr/bin/osascript -l JavaScript -e 'var s = $.NSUserDefaults.alloc.initWithSuiteName("com.apple.SetupAssistant.managed"); (ObjC.unwrap(s.objectForKey("SkipSetupItems").containsObject("AppleID")) == true && s.objectIsForcedForKey("SkipSetupItems")) ? "PASS" : "FAIL"'
         result:
           string: 'true'
     introduced: '15.0'

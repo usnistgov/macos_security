@@ -46,10 +46,7 @@ platforms:
     enforcement_info:
       check:
         shell: |-
-          /usr/bin/osascript -l JavaScript << EOS
-          $.NSUserDefaults.alloc.initWithSuiteName('com.apple.ironwood.support')\
-          .objectForKey('allowCallRecording').js
-          EOS
+          /usr/bin/osascript -l JavaScript -e 'var s = $.NSUserDefaults.alloc.initWithSuiteName("com.apple.ironwood.support"); (ObjC.unwrap(s.objectForKey("allowCallRecording")) == false && s.objectIsForcedForKey("allowCallRecording")) ? "PASS" : "FAIL"'
         result:
           string: 'false'
     introduced: '26.0'

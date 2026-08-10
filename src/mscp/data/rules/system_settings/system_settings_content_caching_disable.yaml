@@ -64,12 +64,9 @@ platforms:
     enforcement_info:
       check:
         shell: |-
-          /usr/bin/osascript -l JavaScript << EOS
-          $.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess')\
-          .objectForKey('allowContentCaching').js
-          EOS
+          /usr/bin/osascript -l JavaScript -e 'var s = $.NSUserDefaults.alloc.initWithSuiteName("com.apple.applicationaccess"); (ObjC.unwrap(s.objectForKey("allowContentCaching")) == false && s.objectIsForcedForKey("allowContentCaching")) ? "PASS" : "FAIL"'
         result:
-          string: 'false'
+          string: 'PASS'
     introduced: '10.13'
 tags:
   - 800-53r5_low

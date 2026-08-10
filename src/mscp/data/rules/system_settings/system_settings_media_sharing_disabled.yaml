@@ -77,21 +77,9 @@ platforms:
     enforcement_info:
       check:
         shell: |-
-          /usr/bin/osascript -l JavaScript << EOS
-          function run() {
-            let pref1 = ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess')\
-          .objectForKey('allowMediaSharing'))
-            let pref2 = ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess')\
-          .objectForKey('allowMediaSharingModification'))
-            if ( pref1 == false && pref2 == false ) {
-              return("true")
-            } else {
-              return("false")
-            }
-          }
-          EOS
+          /usr/bin/osascript -l JavaScript -e 'var s = $.NSUserDefaults.alloc.initWithSuiteName("com.apple.applicationaccess"); var v1 = ObjC.unwrap(s.objectForKey("allowMediaSharing")); var v2 = ObjC.unwrap(s.objectForKey("allowMediaSharingModification")); var f1 = s.objectIsForcedForKey("allowMediaSharing"); var f2 = s.objectIsForcedForKey("allowMediaSharingModification"); (v1 == false && v2 == false && f1 && f2) ? "PASS" : "FAIL"'
         result:
-          string: 'true'
+          string: 'PASS'
     introduced: '-1'
 tags:
   - 800-53r5_low
