@@ -1,0 +1,23 @@
+// Norwegian Nynorsk, courtesy of Karl Ove Hufthammer <karl@huftis.org>
+:appendix-caption: Vedlegg
+:appendix-refsig: {appendix-caption}
+:caution-caption: OBS
+:chapter-signifier: Kapittel
+:chapter-refsig: {chapter-signifier}
+:example-caption: Eksempel
+:figure-caption: Figur
+:important-caption: Viktig
+:last-update-label: Sist oppdatert
+ifdef::listing-caption[:listing-caption: Programkode]
+ifdef::manname-title[:manname-title: Namn]
+:note-caption: Merk
+//:part-signifier: ???
+//:part-refsig: {part-signifier}
+ifdef::preface-title[:preface-title: Forord]
+//:section-refsig: ???
+:table-caption: Tabell
+:tip-caption: Tips
+:toc-title: Innhald
+:untitled-label: Namnlaus
+:version-label: Versjon
+:warning-caption: Åtvaring

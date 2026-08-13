@@ -1,0 +1,23 @@
+// Arabic translation, courtesy of Aboullaite Mohammed <aboullaite.mohammed@gmail.com>
+:appendix-caption: ملحق
+:appendix-refsig: {appendix-caption}
+:caution-caption: تنبيه
+//:chapter-signifier: ???
+//:chapter-refsig: {chapter-signifier}
+:example-caption: مثال
+:figure-caption: الشكل
+:important-caption: مهم
+:last-update-label: اخر تحديث
+ifdef::listing-caption[:listing-caption: قائمة]
+ifdef::manname-title[:manname-title: اسم]
+:note-caption: ملاحظة
+//:part-signifier: ???
+//:part-refsig: {part-signifier}
+ifdef::preface-title[:preface-title: تمهيد]
+//:section-refsig: ???
+:table-caption: جدول
+:tip-caption: تلميح
+:toc-title: فهرس
+:untitled-label: بدون عنوان
+:version-label: نسخة
+:warning-caption: تحذير

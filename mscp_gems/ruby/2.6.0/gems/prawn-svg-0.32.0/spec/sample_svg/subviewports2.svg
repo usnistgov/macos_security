@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+
+<svg width="450px" height="300px" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <g transform="translate(100, 100)">
+    <rect x='.5' y='.5' width='199' height='149' fill='none' stroke='blue' />
+    <svg width="200" height="150" viewBox="0 0 100 100">
+      <rect x=".5" y=".5" width="99" height="99" fill='none' stroke='green' />
+
+      <rect x="25.5" y="25.5" width="49" height="49" fill='none' stroke='blue' />
+      <svg x="25%" y="25%" width="50%" height="50%" viewBox="0 0 100 100">
+        <rect x="5" y="5" width="90" height="90" fill='green' />
+      </svg>
+    </svg>
+  </g>
+</svg>

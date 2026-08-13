@@ -1,0 +1,1729 @@
+= {project-name} Changelog
+:project-name: Asciidoctor PDF
+:url-repo: https://github.com/asciidoctor/asciidoctor-pdf
+
+This document provides a high-level view of the changes to the {project-name} by release.
+For a detailed view of what has changed, refer to the {url-repo}/commits/main[commit history] on GitHub.
+
+== 2.3.5 (2023-03-31) - @mojavelinux
+
+Enhancements::
+
+* add `callout-list-marker-font-color` theme key to control color of conum marker in callout list (#2402)
+
+Bug Fixes::
+
+* catalog all footnotes found inside AsciiDoc table cells and render them in the footnotes list (#2410)
+* do not drop section that follows empty index (#2368)
+* restore bottom margin on table with `breakable` or `unbreakable` option (#2379)
+* honor theme settings for caption on table with `breakable` or `unbreakable` option (#2379)
+* use first recto page after toc when media is prepress and page numbering or running content start-at value is `after-toc` (#2398)
+
+=== Details
+
+{url-repo}/releases/tag/v2.3.5[git tag] | {url-repo}/compare/v2.3.4\...v2.3.5[full diff]
+
+== 2.3.4 (2022-10-29) - @mojavelinux
+
+Bug Fixes::
+
+* resolve attribute references in target of image in running content (#2361)
+* replace use of AbstractNode#role= method to ensure compatiblity with minimum supported version of Asciidoctor (Asciidoctor 2.0.10) (#2363)
+
+=== Details
+
+{url-repo}/releases/tag/v2.3.4[git tag] | {url-repo}/compare/v2.3.3\...v2.3.4[full diff]
+
+== 2.3.3 (2022-10-21) - @mojavelinux
+
+Bug Fixes::
+
+* fix crash if last fragment in TOC entry is not rendered (#2354)
+* pass `-dNEWPDF=false` to Ghostscript when optimizing PDF so it does not break internal links (#2355)
+
+=== Details
+
+{url-repo}/releases/tag/v2.3.3[git tag] | {url-repo}/compare/v2.3.2\...v2.3.3[full diff]
+
+== 2.3.2 (2022-09-17) - @mojavelinux
+
+Improvements::
+
+* provide fallback value for `base-font-size` theme key before processing keys (#2343)
+
+=== Details
+
+{url-repo}/releases/tag/v2.3.2[git tag] | {url-repo}/compare/v2.3.1\...v2.3.2[full diff]
+
+== 2.3.1 (2022-09-17) - @mojavelinux
+
+Improvements::
+
+* provide a fallback value for `base-font-size` when loading theme (#2343)
+
+Bug Fixes::
+
+* fix crash when smallcaps text transform is applied to a phrase (#2339)
+* don't add chapter signifier if `chapter-signifier` is unset (#2328)
+* don't add part signifier if `part-signifier` is unset (#2328)
+* don't include bottom margin when computing heading height if `heading-min-height-after` theme key is empty (#2326)
+* draw border on heading (section title or discrete heading) if it is advanced to next page (#2322)
+* arrange heading even if section is empty
+* ensure `heading-min-height-after` theme key is ignored if section is empty or discrete heading is last child
+* don't force justify first line of abstract if it ends with a hard break
+
+=== Details
+
+{url-repo}/releases/tag/v2.3.1[git tag] | {url-repo}/compare/v2.3.0\...v2.3.1[full diff]
+
+== 2.3.0 (2022-08-16) - @mojavelinux
+
+Enhancements::
+
+* place footnotes directly below last block of content if `footnotes-margin-top` theme key is 0 (#2291)
+* allow page / column break to be forced using `always` option (e.g., `[%always]`) (#2300)
+* insert column break instead of page break in multi-column layout if `column` role is specified on page break macro (#2293)
+* use relative font size for big and small roles (#2307)
+* use default-for-print theme by default if media is `print` or `prepress` (#2306)
+* support text alignment roles on all styled paragraphs
+* support text alignment roles on verse block
+
+Bug Fixes::
+
+* only indent text that starts at left margin (i.e., when text align is left or justify) (#2298)
+* apply text transform and formatting when checking height of heading for orphan prevention
+* apply text transform and formatting when computing height of background for caption
+* honor theme settings (`prose-margin-inner` and `prose-text-indent-inner`) for inner paragraphs in abstract
+* prevent footnote label from being split across lines (#2297)
+* keep footnote label with preceding text if adjacent (#2297)
+* strip formatting added to source block by custom subs when syntax highlighter is enabled (#2086)
+
+Compliance::
+
+* remove support for deprecated `spread` role on table
+
+=== Details
+
+{url-repo}/releases/tag/v2.3.0[git tag] | {url-repo}/compare/v2.2.0\...v2.3.0[full diff]
+
+== 2.2.0 (2022-07-22) - @mojavelinux
+
+Enhancements::
+
+* allow page background image to be specified per layout using `+{page-layout}+` attribute reference in path (#1739)
+* allow page margin for rotated page to be configured independently using `page-margin-rotated` theme key or `pdf-page-margin-rotated` document attribute (#1719)
+* allow orphan detection to be enabled for all section titles and discrete headings by setting `heading-min-height-after` to `auto` in theme (#2268)
+* set `docimagesdir` attribute when attribute substitutions are applied to value from theme (#2278)
+* start page numbering and running content on empty verso page before first chapter of prepress book if `start-at` value is 0 (#2252)
+* don't force page break after TOC with automatic placement in article if `title-page` attribute is set and value of `toc-break-after` theme key is `auto` (#1768)
+* add `--theme` option to CLI as shorthand for `-a pdf-theme` (#2250)
+* add `--sourcemap` option to CLI to enable `:sourcemap` option on processor (#2265)
+* broaden support for relative font sizes in theme to more than just inline elements; document support for relative font sizes
+* allow theme to control font properties of marker for ordered list using `olist-marker` category (#2279)
+* allow theme to control font style of marker (per marker or all markers) for unordered list
+
+Improvements::
+
+* add internal `Document#attr_unspecified?` method to simplify check for an attribute which has not been set or unset
+
+Bug Fixes::
+
+* always set `imagesdir` attribute to value of `themesdir` when resolving images from theme
+* allow `top` keys in `title-page` theme category to accept a fixed value (e.g., `1in`) (#2269)
+* prevent orphan detection for heading (section title or discrete heading) from modifying document state (#2288)
+
+Compliance::
+
+* configure table borders in way that is compatible with prawn-table > 0.2.2
+* don't coerce font size < 1 to relative font size; relative font size should be specified in units
+
+=== Details
+
+{url-repo}/releases/tag/v2.2.0[git tag] | {url-repo}/compare/v2.1.6\...v2.2.0[full diff]
+
+== 2.1.6 (2022-07-19) - @mojavelinux
+
+Bug Fixes::
+
+* resolve font size for monospaced cell when font size value on `codespan` key in theme is relative (#2281)
+
+== 2.1.5 (2022-07-10) - @mojavelinux
+
+Bug Fixes::
+
+* fix position of background color on caption with outside margin (#2271)
+* don't allow font scale to compound when entering nested table (#2276)
+
+== 2.1.4 (2022-06-26) - @mojavelinux
+
+Improvements::
+
+* include source location in warning message for truncated table cell if sourcemap is enabled (#2261)
+
+Bug Fixes::
+
+* allow alt text for block image, video, and audio to wrap to next line on same page (#2258)
+* apply text-tranform from custom role on phrase after attributes have been resolved (#2263)
+* make URL check more strict so image target containing a colon is not mistaken as a URL
+
+== 2.1.3 (2022-06-23) - @mojavelinux
+
+Bug Fixes::
+
+* interpret `start-at` theme keys with value `1` correctly (as `1` instead of `2`) (#2255)
+* restore column layout after importing page(s) from PDF (#2253)
+* fix crash when border color is transparent (`thematic-break-border-color`, `admonition-column-rule`, `quote-border-color`, `verse-border-color`)
+* ensure page margin is restored after imported page
+
+=== Details
+
+{url-repo}/releases/tag/v2.1.3[git tag] | {url-repo}/compare/v2.1.2\...v2.1.3[full diff]
+
+== 2.1.2 (2022-06-17) - @mojavelinux
+
+Bug Fixes::
+
+* apply page layout from main document to new page in scratch document (#2248)
+* use correct logic to insert page before TOC with automatic placement when doctype=book and media=prepress
+* use `get_entries_for_toc` to determine if the TOC is non-empty rather than `Document#sections?`
+
+=== Details
+
+{url-repo}/releases/tag/v2.1.2[git tag] | {url-repo}/compare/v2.1.1\...v2.1.2[full diff]
+
+== 2.1.1 (2022-06-15) - @mojavelinux
+
+Improvements::
+
+* store zero-based column on Extent for extensions to use to position cursor at start of extent
+
+Bug Fixes::
+
+* place block image in SVG format in correct column when align is left and page columns are enabled (#2241)
+* accurately trap LoadError from CodeRay if source language is not recognized on code block
+* only draw rounded rectangle around phrase if `border-radius` is > 0
+* use `base-border-color` value if border width is set on role for inline phrase but not border color
+
+=== Details
+
+{url-repo}/releases/tag/v2.1.1[git tag] | {url-repo}/compare/v2.1.0\...v2.1.1[full diff]
+
+== 2.1.0 (2022-06-11) - @mojavelinux
+
+Enhancements::
+
+* arrange body of article or manpage doctype into multiple columns if `page-columns` key is set in theme (#327)
+* allow column gap to be specified using `page-column-gap` key (#327)
+* introduce `convert_index_categories` method to handle rendering of categories for index inside column box (#327)
+* rename `convert_index_list` method to `convert_index_term` to make its purpose more clear (#327)
+* add `save_theme` helper to work with a copy of the theme within a scope (#2196)
+* add support for `scale` attribute or `iw` unit on `pdfwidth` attribute on image macros (#1933)
+* add backlink from bibref on bibliography entry to first reference to that entry in the document (#1737)
+* preserve text formatting on index term in index section (#897)
+* don't insert page break between part and first chapter if `heading-part-break-after` key in theme is `avoid` (#1795)
+
+=== Details
+
+{url-repo}/releases/tag/v2.1.0[git tag] | {url-repo}/compare/v2.0.8\...v2.1.0[full diff]
+
+== 2.0.8 (2022-06-08) - @mojavelinux
+
+Improvements::
+
+* encapsulate logic to adjust column box inside float and dry run
+* automatically set height on column box if not specified; update value automatically when reflowing margins
+
+Bug Fixes::
+
+* correctly compute value of to cursor on extent when column box starts below top of page (#2230)
+* fix crash in `ColumnBox#move_past_bottom` when `:reflow_margins` option is not set
+* fix x position of SVG when advanced to next column of column box
+* `at_page_top?` should consider top of column box to be top of page
+* prevent SVG image taller than column from being advanced to next column
+* don't push section that follows index section in article to new page if last page of index does not extend to bottom of page
+
+=== Details
+
+{url-repo}/releases/tag/v2.0.8[git tag] | {url-repo}/compare/v2.0.7\...v2.0.8[full diff]
+
+== 2.0.7 (2022-06-03) - @mojavelinux
+
+Improvements::
+
+* don't recommend prawn-gmagick if PNG or JPG is corrupt or incomplete
+* add helper method to determine when to recommend the prawn-gmagick gem
+
+Bug Fixes::
+
+* fix crash when doctitle or section title with automatic ID contains inline image without explicit width (#2228)
+* use prawn-gmagick, if available, to read raster image referenced by SVG (#2223)
+* allow image path in SVG to refer to any location within Asciidoctor jail (no restriction if safe mode is unsafe) (#1941)
+
+=== Details
+
+{url-repo}/releases/tag/v2.0.7[git tag] | {url-repo}/compare/v2.0.6\...v2.0.7[full diff]
+
+== 2.0.6 (2022-05-30) - @mojavelinux
+
+Bug Fixes::
+
+* indent content of collapsible block and apply bottom margin to match style of HTML output (#2219)
+* patch prawn-gmagick to reread bit depth of a PNG image if it extracts the wrong value (#2216)
+* interpret width of SVG correctly when width is defined in file using px units (#2215)
+* don't crash if inline role defines border width but not border color
+
+=== Details
+
+{url-repo}/releases/tag/v2.0.6[git tag] | {url-repo}/compare/v2.0.5\...v2.0.6[full diff]
+
+== 2.0.5 (2022-05-26) - @mojavelinux
+
+Bug Fixes::
+
+* do not filter TOC entries without an ID when computing the TOC extent (#2210)
+* fix width of multi-word phrase with background and border offset (#2059)
+
+=== Details
+
+{url-repo}/releases/tag/v2.0.5[git tag] | {url-repo}/compare/v2.0.4\...v2.0.5[full diff]
+
+== 2.0.4 (2022-05-25) - @mojavelinux
+
+Bug Fixes::
+
+* fix calculation of TOC extent when TOC entry has children but no ID (#2208)
+
+=== Details
+
+{url-repo}/releases/tag/v2.0.4[git tag] | {url-repo}/compare/v2.0.3\...v2.0.4[full diff]
+
+== 2.0.3 (2022-05-25) - @mojavelinux
+
+Improvements::
+
+* compute the optimize settings in init_pdf and store as Hash instead of after writing the PDF file
+
+Bug Fixes::
+
+* adjust TrimBox to fit inside of BleedBox when using optimizer and compliance is PDF/X (#2203)
+* set height of resized image to available height to avoid float precision error when scaling down image to fit page (#2205)
+* prevent content on title page from overrunning the bounds of a single page and warn; restriction applies to `ink_title_page`
+
+=== Details
+
+{url-repo}/releases/tag/v2.0.3[git tag] | {url-repo}/compare/v2.0.2\...v2.0.3[full diff]
+
+== 2.0.2 (2022-05-22) - @mojavelinux
+
+Bug Fixes::
+
+* use specified column widths to avoid bugs in column width calculation when using colspans (#1368)
+* advance table to next page if rowspan in first row does not fit in space remaining on current page (#403)
+
+=== Details
+
+{url-repo}/releases/tag/v2.0.2[git tag] | {url-repo}/compare/v2.0.1\...v2.0.2[full diff]
+
+== 2.0.1 (2022-05-21) - @mojavelinux
+
+Bug Fixes::
+
+* scale inline image to fit within available height of page, accounting for the top padding of the line height and the bottom gutter (#2193)
+* short-circuit formatted text routine and log error if fragments in first line cannot fit on an empty page
+* break and wrap long contiguous text in source block when linenums is enabled (#2198)
+
+=== Details
+
+{url-repo}/releases/tag/v2.0.1[git tag] | {url-repo}/compare/v2.0.0\...v2.0.1[full diff]
+
+== 2.0.0 (2022-05-18) - @mojavelinux
+
+Improvements::
+
+* use more stable approach to recreating current bounds in scratch document
+* add foundation to support multi-column layout for the body of an article (using an extended converter only)
+
+=== Details
+
+{url-repo}/releases/tag/v2.0.0[git tag] | {url-repo}/compare/v2.0.0.rc.1\...v2.0.0[full diff]
+
+== 2.0.0.rc.1 (2022-05-17) - @mojavelinux
+
+Enhancements::
+
+* allow theme to position caption for code and example blocks below block using `caption-end` key (#1730)
+* allow hyphenation to be turned on and configured using the `base-hyphens` key in the theme (#2161)
+* replace `docdir` attribute reference in value of `pdf-themesdir` and `pdf-fontsdir` attributes (if not already replaced) (#412)
+* split out `start_title_page` method from `ink_title_page` to make customization of the title page simpler using an extended converter
+* introduce `start_toc_page` method to handle positioning cursor at first page of TOC
+
+Improvements::
+
+* reclassify and mark which methods in the converter are private
+* organize methods in converter
+* add DOM traversal methods to simplify the logic in the converter
+* remove requirement to add dummy text to title page to preserve it
+
+Bug Fixes::
+
+* apply top line height padding to first line of text when text runs to top of next page (#2173)
+* don't add entry to outline for notitle section if no content follows it
+* don't add entry to TOC for notitle section if no content follows it
+* look for block align roles on image instead of text align roles (#2176)
+* use correct left value when creating bounding box
+* don't apply border on block images to logo image on title page
+
+=== Details
+
+{url-repo}/releases/tag/v2.0.0.rc.1[git tag] | {url-repo}/compare/v2.0.0.beta.2\...v2.0.0.rc.1[full diff]
+
+== 2.0.0.beta.2 (2022-05-14) - @mojavelinux
+
+Enhancements::
+
+* add support for float attribute on image; wrap ensuing paragraphs around image with `float` attribute (#353)
+* add `supports_float_wrapping?` method for extended converter to override to enlist other blocks in float wrapping; add example to docs (#353)
+* add `image-float-gap` key to theme to control space around image float (#353)
+* add support for `text-transform` property on first line of abstract in theme (#2141)
+* rename `resolve_alignment_from_role` to `resolve_text_align_from_role` to reflect proper terminology and purpose; alias old method name
+* add support for orphan avoidance to discrete headings to match behavior of section titles (using call to `arrange_heading`) (#2151)
+* rename `arrange_section` to `arrange_heading` to reflect proper terminology and purpose
+* add `index-column-gap` key to theme to control size of gap between columns
+* coerce `image-caption-max-width` to `fit-content` if `float` attribute is set on block image (#2150)
+* add support for text box with fixed height via `:height` option to `typeset_text` helper
+* configure `typeset_text` and `ink_prose` to return remaining fragments when `:height` option is specified
+* add support for `:indent_paragraphs` option to formatted text box (#353)
+* if `float` attribute is set on block image, set max width on caption to `fit-content` if max width not already set to a `fit-content` value
+* add built-in default-sans theme
+
+Improvements::
+
+* rename theme suffix with-fallback-font to with-font-fallbacks
+* rename sans-with-fallback-font theme to default-sans-with-font-fallbacks
+* configure spacing around thematic break using `thematic-break-padding` key instead of margin top and bottom (#2164)
+* rename `convert_listing_or_literal` to `convert_code` and alias old name
+* reify convert handler for STEM blocks (`convert_stem`)
+* reify convert handler for pass blocks (`convert_pass`) and remove block decoration
+
+Bug Fixes::
+
+* honor `caption-align` when element align is not `left` and `caption-max-width` is % of element width (e.g., `fit-content(50%)`) (#2156)
+* do not orphan sidebar title (#2158)
+* allow theme to set font style of first line of abstract to `normal_italic` (#2138)
+* add support for `:color` option to `Prawn::Text::Formatted::Box` directly and remove workarounds
+* preserve columns on subsequent pages in the index section (#2149)
+* fix return value of `cursor` method inside block for column box in index section
+* correctly detect preceding code block when determining whether to collapse top margin of colist
+* apply bottom margin to thematic break that falls at top of page (#2164)
+* allow extended converter to override `convert_code` method to handle `convert_listing` and `convert_literal` calls
+* restore margin below pass block
+* remove use of deprecated theme keys in default-for-print theme
+
+=== Details
+
+{url-repo}/releases/tag/v2.0.0.beta.2[git tag] | {url-repo}/compare/v2.0.0.beta.1\...v2.0.0.beta.2[full diff]
+
+== 2.0.0.beta.1 (2022-05-04) - @mojavelinux
+
+Enhancements::
+
+* introduce `index-pagenum-sequence-style` document attribute to control style of sequential page numbers in index when media=screen (#1656)
+* allow entry for document in outline to be controlled using `outline-title` attribute (#1789)
+* allow extended converter to insert or filter toc entries by overriding `get_entries_for_toc` method (#2097)
+* add `asciidoctor/pdf/nopngmagick` script to unregister Gmagick handler for PNG images only (#1687)
+* allow theme to configure which end the caption is placed for a block image (#2115)
+* add `Page#imported` method to mark page as imported (which suppresses running content)
+* add support for `smallcaps` text transform by replacing lowercase letters with small capital variants (#1192)
+* use `base-border-color` as default border color; control appearance of border using `border-width` value alone (#2134)
+* remove border colors in base theme so all border colors can be controlled using `base-border-color` when extending theme
+* enable running footer when using base theme
+* allow built-in optimizer to set PDF compliance flag (PDF/A and PDF/X) using value of `optimize` attribute (#125)
+
+Bug Fixes::
+
+* allow border width of block image to be specified as an array (1, 2, or 4 values) (#2119)
+* rename `delete_page` extension method to `delete_current_page` to avoid conflict with incompatible method on `Prawn::Document`
+* remap `table-caption-side` theme key to `table-caption-end` (#2125)
+* add missing glyph for `ÿ` in built-in fonts
+* remove use of deprecated keys in chronicles-dark-theme.yml
+
+=== Details
+
+{url-repo}/releases/tag/v2.0.0.beta.1[git tag] | {url-repo}/compare/v2.0.0.alpha.3\...v2.0.0.beta.1[full diff]
+
+== 2.0.0.alpha.3 (2022-05-01) - @mojavelinux
+
+Enhancements::
+
+* allow border width of block to be specified per edge using 4-value array (#2102)
+* allow padding on block to be specified using 2-value array for ends and sides or 3-value array with implied left side value (#2104)
+* allow margins in running content to be specified using 2-value array for ends and sides or 3-value array with implied left side value (#2104)
+* allow theme to set border and padding on headings per level (#434)
+
+Improvements::
+
+* reduce top and bottom padding on quote and verse blocks in base theme
+* use uniform top and bottom padding on quote blocks in default theme
+* change `inscribe_` method prefix in converter to `ink_`
+
+Bug Fixes::
+
+* allow `ink_toc` method in extended converter to insert page above TOC page
+* remap `layout_` methods contributed to converter by prepended module
+* neutralize padding hacks in themes designed before the converter had smart margins
+* allow the smallest ends or sides border width on block to be less than 1
+* cap border corners on block when width is defined using array (uniform or otherwise) (#2103)
+* fix crash in certain circumstances when theme does not define value for `base-border-width` key
+* use sensible fallbacks for table border and grid color and width (retains backwards compatibility)
+
+=== Details
+
+{url-repo}/releases/tag/v2.0.0.alpha.3[git tag] | {url-repo}/compare/v2.0.0.alpha.2\...v2.0.0.alpha.3[full diff]
+
+== 2.0.0.alpha.2 (2022-04-29) - @mojavelinux
+
+Enhancements::
+
+* separate `align` and `text-align` keys in theme schema; remap old keys for backwards compatibility (#2095)
+* allow theme to control the border on all sides of tables independently (#902)
+* keep section title with first block of content is `breakable` option is set on section (#2075, #38)
+* pass the `part` and `chapterlike` options to the `arrange_section` method for convenience
+* add support for `background-color` property on caption (#1995)
+* add support for image-based icons, resolved from `iconsdir` and having the `icontype` file extension (#1770)
+* add `asciidoctor/pdf/nogmagick` script to prevent loading prawn-gmagick gem (#1687)
+* change name of `untitled` option on special section to `notitle`
+* allow the title of any section to be hidden using the `notitle` option
+* allow imported PDF page to be referenced in TOC by enclosing in parent section with `notitle` option (#1213)
+* allow entry for preface to be added to TOC without adding title to body using the `notitle` option on the preface section (#1786)
+* automatically promote the `notitle` option from the first block in the preamble to preface section; restore lead role on opening paragraph (#1786)
+
+Improvements::
+
+* change "icon" to "icon image" in warning about missing admonition icon image
+* report admonition type in warning about missing implicit admonition icon image
+
+Bug Fixes::
+
+* set the base font of the front cover image is a PDF and the title page is not active (#2092)
+* pass through warnings in background SVG to logger (#1940)
+* keep closing quote with trailing ellipsis in text enclosed in typographic quotes (#321)
+* collapse space in front of hidden index term (#2061)
+* delete dests on page before deleting it (keeps generated PDF clean of obsolete destinations)
+* don't call `arrange_section` if section title is hidden
+* remove `theme_font` enclosure around call to `start_new_chapter` and `start_new_part`
+* change `layout_` method prefix in converter to `inscribe_` (#2099)
+
+=== Details
+
+{url-repo}/releases/tag/v2.0.0.alpha.2[git tag] | {url-repo}/compare/v2.0.0.alpha.1\...v2.0.0.alpha.2[full diff]
+
+== 2.0.0.alpha.1 (2022-04-20) - @mojavelinux
+
+Enhancements::
+
+* make delimited blocks breakable by default; require the `unbreakable` option on the block to retain the previous "`keep together`" behavior (#2004, #578, #509, #240)
+* add support for the `unbreakable` option on a table to prevent it from being split across pages (#2022, #871, #819, #331)
+* add support for the `breakable` option on a table (special case) to keep the caption and ID with the start of the table (#2022, #993)
+* implement smart bottom margins on blocks to prevent extra space below blocks, particularly nested blocks (#1515, #1513, #1845)
+* drop support for `top-margin` key on block and prose categories in theme; space between delimited blocks and lists now controlled using bottom margins only (#1515)
+* allow location of anchor for block to be positioned relative to content using `block-anchor-top` key in theme (#2013)
+* allow page numbering and running content to start after first page of a document without a title page by assigning an integer to the respective `start-at` theme key (#1644)
+* allow page numbering and running content to start after toc (wherever it's placed) by assigning the keyword `after-toc` to the respective `start-at` theme key (#1763)
+* allow theme to configure page numbering to start at cover (#1727)
+* allow the front and back cover images to be defined in the theme (#1584)
+* allow the front and back cover images to be specified as a data URI (#1584)
+* allow theme to control margin and content margin of running content per periphery (header or footer) and per side (recto or verso) (#994)
+* allow theme to control border style of delimited blocks (example, sidebar, code, admonition, verse, quote) (#1586)
+* allow theme to control font color of first line of abstract using `abstract-first-line-font-color` key
+* allow theme to control background color and border offset (only for background) of links (#1705)
+* support custom role on paragraph to allow theme to control font properties (#483)
+* change lead category in theme to built-in role named lead (#2031)
+* allow theme to control line height of blocks using line-height property where font properties are accepted (#2032)
+* don't render index section if index is empty (i.e., there are no index entries)
+* allow title of special section to be hidden by setting `untitled` option on section
+* stabilize font paths in built-in themes by prefixing paths with GEM_FONTS_DIR (#1568)
+* assign `page-layout` attribute in running content so it can be used to select a background per layout (#1570)
+* reset numbering of footnotes in each chapter (#1639)
+* add chapter xreftext to label of footnote reference that refers to previous chapter (#1639)
+* add support for assigning the same font file to all font variants (i.e., styles) using the wildcard key (`*`) (#1588)
+* bundle Noto Sans in addition to Noto Serif and add built-in theme sans-with-fallback-font (#2010)
+* allow caption max-width to be set to percentage of content by passing argument to fit-content function (#1494)
+* allow theme to control text alignment of caption independent of box alignment (#1493)
+* set `chapter-numeral` attribute in running content on pages in chapter if `sectnums` attribute is set (#1373)
+* set `part-numeral` attribute in running content on pages in part if `partnums` attribute is set (#1373)
+* add support for normal_italic font style (to reset font style to normal, then apply italic) (#1603)
+* honor text alignment roles (e.g., `text-left`) or `list-text-align` theme key on callout lists
+* honor text alignment roles (e.g., `text-center`) on block image (#1609)
+* honor role and inherited role on inline image (#1939, #1376)
+* disable running header and/or footer on toc pages if `noheader` and/or `nofooter` option is set on toc macro (#1378)
+* add support for preamble toc placement
+* only insert macro toc at location of first toc macro
+* ignore requested pages not found in imported PDF (#1616)
+* disable document outline if `outline` document attribute is unset (#1619)
+* keep temporary artifacts (for debugging) if KEEP_ARTIFACTS env var is set
+* define a dest name "toc" at the top of the default toc location
+* normalize space characters in authors content and drop lines with unresolved attribute references (#1642)
+* skip image block with missing image if computed alt text resolves to empty string (#1645)
+* custom theme does not inherit from base theme by default; must be specified explicitly using `extends: base` (#1640)
+* allow theme to configure number of index columns using `index-columns` key (#1663)
+* configure AsciiDoc table cell to inherit font properties from table and scale font size of nested blocks (#926)
+* scale font size of literal table cell (#1696)
+* add support for `id` attribute on link macro
+* add support for `link` attribute on icon macro (#1915)
+* allow theme to configure width of block border on ends separate from sides (#1693)
+* add additional glyphs to built-in fonts (heavy checkmark to fallback font; both checkmarks to monospaced font; numero sign to prose and fallback fonts) (#1625)
+* allow theme to specify text decoration style, color, and width for captions (globally)
+* allow admonition icon image to be remote (if allow-uri-read is set) or data URI (#1711)
+* allow theme to configure font color of unresolved footnote using unresolved role
+* show textual label on admonition if icon image fails to embed (#1741)
+* allow theme to disable title page by assigning false to `title-page` category key (#1754)
+* allow Rouge theme to be specified as theme class or instance (API only)
+* allow theme to control font size of dot leader in TOC
+* allow section to override `outlinelevels` for self and children using `outlinelevels` attribute on section
+* use value of `author` attribute for PDF info and pdfmark if locked by the API (#1778)
+* only extend theme in extends hierarchy once unless modified with `!important` (#1800)
+* add print-optimized themes (`default-for-print` and `default-for-print-with-fallback-font`) (#1699)
+* add support for power operator in theme (with same precedence as multiply and divide) (#1813)
+* include floor and ceil match characters in fallback font (#1832) (*@oddhack*)
+* allow horizontal and vertical lines of table grid to be styled independently (#1875) (*@hextremist*)
+* allow theme to define the characters for typographical quotation marks (#1880) (*@klonfish*)
+* allow theme to control top margin of callout lists that immediately follow a code block using `callout-list-margin-top-after-code` key (#1895)
+* introduce `layout_general_heading` to allow extended converter to access node (#1904)
+* use `Document#authors` to retrieve authors instead of extracting the information from the indexed document attributes
+* add support for character references that contain both uppercase and lowercase hexadecimal characters (#1990) (*@etiwnad*)
+* log error and skip table instead of raising error if cell content cannot fit into column width of table (#2009)
+* extract `arrange_section` method to compute whether section title should be advanced to next page (#2023)
+* introduce `callout-list` category in theme to control font properties and item spacing of callout lists (#1722)
+* only indent inner paragraphs (paragraphs that follow an adjacent paragraph) if `prose-text-indent-inner` key is set in theme (#2034)
+* stop and restart conversion in scratch document once the code determines the block does not fit in the available space (#2003)
+
+Bug Fixes::
+
+* reimplement arrange block logic by using scratch document to compute extent for content block in primary document instead of height (#2003, #2016, #789)
+* correctly compute height of delimited block attached to description of item in horizontal dlist (follow-up to #2003)
+* do not crash if item in horizontal description list has no desc
+* do not crash if item in unordered description list has no desc and do not append subject stop to term
+* ensure that `Time.parse` is loaded
+* resolve images in theme correctly when theme is loaded from classloader (JRuby only) (#1829)
+* log warning rather than crash if front cover image cannot be embedded (such as a broken SVG)
+* do not insert blank line in index when term is forced to break (#1665)
+* honor prepress page margins on subsequent pages in index (#1929)
+* use more robust strategy for line height normalization that accounts for case when line contains only monospaced text (#1650)
+* add support for `line-height` property on `lead` role as documented
+* prevent generator from allocating space for placeholder null char (used for anchors) if font is missing glyph (#1672)
+* ensure background and admonition icon image files are closed after being read (#1566)
+* ensure temporary images generated by running content are cleaned up (#1566)
+* fix encoding of indent in wrapped source blocks when font is AFM (#1934)
+* fix spacing after first line of indented paragraph (#1557)
+* fix crash if btn or kbd macro is used in section title (#1563)
+* fix crash when applying text transform to heading cell in table body (#1575)
+* allow custom inline role to control text transform when it's not the only role on the phrase
+* do not convert already converted intrinsic width for block and inline SVG
+* honor font style when looking for glyph in font
+* resolve character references in custom admonition label (as defined via caption attribute)
+* convert blocks inside abstract, not just the contents of the blocks
+* only suggest installing prawn-gmagick gem if not loaded (#1578)
+* applying double border style to thematic break should honor border width
+* warn once instead of crashing if page background image cannot be embedded (#1780)
+* warn once instead of crashing if `cache-uri` is set but library is not available
+* sanitize values of PDF info values (#1594)
+* configure headings to inherit font styles from theme (#1604)
+* use conum font family defined in theme for conum in verbatim block (#1611)
+* apply font color and text transform from theme to terms in horizontal dlist (#1994)
+* prevent content of AsciiDoc table cell from overrunning content on subsequent pages (#1623)
+* account for top/bottom padding when computing height of AsciiDoc table cell
+* log error message if table cell is truncated (#1626)
+* take hard line breaks into account when computing natural width of table cell (#1762)
+* use "toc" as the default dest name for the macro toc
+* position page split indicator correctly when block has transparent border
+* replace block macro with missing PDF target with alt text
+* consistently use default margin when page margin resolves to empty array
+* sort page numbers in index numerically instead of lexicographically; sort mixed page number types correctly (#1657)
+* use informal title prefixed with down indicator for collapsible block (#1660)
+* don't apply border, shading, or padding to collapsible block (#1660)
+* escape bare ampersand in attribution and citetitle of quote or verse block (#1662)
+* fix numeric assertions in test suite (#1542)
+* prevent converter for list item from inserting new page to position marker when next page is already instantiated (#2001)
+* keep block anchor with code block when block is moved to next page (#1897)
+* keep block anchor with admonition block when block is moved to next page
+* remove poorly-defined (and undocumented) border bottom property for caption
+* fix crash when theme specifies CMYK value for table border color (#1700)
+* fallback gracefully if unrecognized convert-time syntax highlighter is used
+* correctly process a sequence of two or more callouts separated by spaces in a source block (#1898)
+* allow callouts sub to be disabled on source blocks (#1704)
+* show missing footnote reference in superscript
+* fix crash when `icons=font` and `admonition_label_min_width` is set in theme
+* use oembed API over HTTPS to get thumbnail for Vimeo video
+* show link to Vimeo video if `allow-uri-read` attribute is not set
+* don't apply syntax highlighting if Rouge lexer fails to highlight source; show plain source instead
+* don't apply syntax highlighting to source block if `specialchars` sub is disabled
+* apply border bottom to correct table row when frame and grid are disabled (#1873)
+* allow caption max width to be set by theme to fixed value
+* fix crash when footnote is defined in section title with auto-generated ID
+* do not duplicate footnotes in desc of horizontal description list (#1775)
+* allow an index term to be defined in section title with auto-generated ID
+* fix alignment of link box for image in running content with numeric vertical alignment
+* fix vertical center alignment of normal table cell
+* short-circuit xreftext containing a circular reference path
+* prevent PDF page import from corrupting references in PDF (#1726)
+* display decimal list marker correctly when list is reversed (e.g., 10., 09., 08., etc.)
+* use correct spacing for dotted border dash on table (length and spacing should match width)
+* set color space on page with only image so font color is preserved in running content (#1742)
+* compute font size for superscript and subscript correctly when parent element uses `em` and `%` units (#1745)
+* respect hyphenation exceptions when word is adjacent to non-word character (#1715)
+* fix crash when TOC is enabled and index is empty
+* align TOC section properly when index exceeds one page and `section_indent` is positive (#1735)
+* fix left margin drift when indentation is active across a page break (#1735, #1949)
+* render image at end of section title in corresponding toc entry (#1752)
+* allow inline image to be enclosed in link macro (alt text was breaking parsing)
+* prevent inline image from rendering multiple times if fallback font is used for alt text (#1858)
+* allow theme to set font style of first line of abstract to normal
+* resize admonition label to fit if height exceeds height of content box
+* fix crash when underline style is used in Rouge theme
+* fix crash when Text token is not defined in custom Rouge theme
+* fix crash when Pygments style is not recognized; fall back to pastie style
+* avoid loss of precision in CMYK color value for conum or footnote font
+* use value of `untitled-label` attribute as fallback value for doctitle in running content (#1772)
+* use value of `untitled-label` attribute as fallback value for Title field in pdfmark (follow-up to #1772)
+* show sensible error message if background image cannot be loaded (e.g., data is corrupt)
+* honor alignment role when aligning alt text for missing block image
+* don't crash when rendering alt text for block image if value of align attribute is invalid (#1781)
+* correctly scale down SVG that only marginally exceeds bounds of page when `fit=scale-down`
+* prevent font scale from compounding for nested blocks in AsciiDoc table cell (#2007)
+* don't suppress actual error message when theme cannot be loaded; may contain information about theme being extended
+* force inline image to fit within table cell when width is larger than available space (#1798)
+* hide print annotation for bare email address (#1806)
+* patch float precision constant so prawn-table does not fail to arrange cells that span columns (#1835)
+* capture footnotes in AsciiDoc table cell and render them with other footnotes at end of article/chapter (#1777)
+* prevent PDF from being used as logo image on title page (since it cannot work properly anyway)
+* don't crash when generating TOC if section title is empty
+* escape closing square bracket around alt text of missing image so it doesn't get matched as part of a link macro
+* use value of `author` attribute in PDF info and pdfmark if `authors` attribute is not set (#1922)
+* honor `pdf-folio-placement` setting even when `media=prepress` (#1917)
+* honor `pre-wrap` role on phrase (#1927)
+* verify alignment of list marker in AsciiDoc table cell (#1965)
+* don't crash if value of `width` attribute on image has invalid format (#1970)
+* don't render borders and backgrounds in scratch document
+* don't insert blank page after document title if first block (chapter or toc macro) has `nonfacing` option (#1988)
+* coerce negated variable reference to number if value of variable is numeric
+* prepress page margins should honor value of `pdf-folio-placement` (#1918)
+* ensure callout number in callout list stays with primary text when item is advanced to next page (#1967)
+
+Compliance::
+
+* drop support for Ruby < 2.7 and JRuby < 9.2 (#1681, #2038)
+* declare the matrix gem as a dependency to fix compatibility with Ruby 3.1
+* use `YAML.safe_load` from Ruby stdlib instead of `safe_yaml gem`
+* drop deprecated Pdf module alias in API (leaving only PDF)
+* remove deprecated "ascii" fonts; only bundle the more complete "subset" fonts
+* remove support for `<color>` tag in passthrough content; use `<font color="...">` instead (may affect themes)
+* remove asciidoctor-pdf/converter and asciidoctor-pdf/version shim scripts; use asciidoctor/pdf/converter and asciidoctor/pdf/version instead
+* rename Optimizer#generate_file method to Optimizer#optimize_file
+* drop support for deprecated `pdf-style` and `pdf-stylesdir` attributes (#1827)
+* drop use of the undocumented `vertical-spacing` key from the built-in themes
+* rename the `outline-list` category in the theme to `list` and map the `outline-list-` keys to `list-` with warning if found (#1894)
+* rename the `literal` category in the theme to `codespan` and map the `literal-` keys to `codespan-` with warning if found (#1796)
+* rename the `blockquote` category key in the theme to `quote` and map the `blockquote-` prefix to `quote-` with warning if found (#2054)
+* rename the `key` category key in theme to `kbd` and map the `key-` prefix to `kbd-` with warning if found (#2052)
+* remove unneeded _mb functions (e.g., `uppercase_mb`); multibyte support for upcase, downcase, and capitalize is now provided by corelib
+
+Build / Infrastructure::
+
+* migrate Linux CI jobs to GitHub Actions (#1814)
+* enable CI job on macOS (#1817)
+* add Ruby 3.1 to CI matrix; use as primary Ruby
+* test against Asciidoctor upstream (#1821)
+* skip tests for unreadable files when euid is 0
+* use prawn-table release and drop recommendation to use the development version (converter now patches prawn-table)
+
+== 1.6.2 (2021-12-31) - @mojavelinux
+
+Enhancements::
+
+* show URL of link for any media type when show-link-uri is set (#951)
+* do not show URL of link when media type is screen or prepress when show-link-uri is unset (#951)
+
+Bug Fixes::
+
+* update patches for `PDF::Core.real` and `PDF::Core.real_params` to prevent scientific notation ending up in PDF (#1983) (@rillbert)
+
+== 1.6.1 (2021-09-04) - @mojavelinux
+
+Enhancements::
+
+* align footnotes block to the bottom of the page it is placed on (#1833)
+
+Bug Fixes::
+
+* patch Prawn to preserve leading null character when running on Ruby 3; preserves inline anchors when text is split by page (#1963)
+
+== 1.6.0 (2021-05-10) - @mojavelinux
+
+Enhancements::
+
+* allow path of ghostscript command to be controlled using `GS` env var (#1791)
+
+Bug Fixes::
+
+* do not hyphenate a hyphen when hyphenation is enabled (#1562)
+
+Compliance::
+
+* add support for Ruby 3 and drop support for Ruby < 2.5 and JRuby < 9.2 (#1681)
+* upgrade to Prawn 2.4.0 (adds support for Ruby 3 and OTF font support)
+* upgrade to prawn-svg 0.32 (adds support for Ruby 3 without a patch and for loading embedded images from a data URI)
+* upgrade to prawn-icon 3.0.x
+* release lock on ttfunk version (1.6 produces slightly different output from 1.5 for certain missing glyphs)
+* drop support for Asciidoctor < 2 (#1552)
+
+Build / Infrastructure::
+
+* run tests against pygments.rb 2.x in addition to pygments.rb 1.2.0
+
+== 1.5.3 (2020-02-28) - @mojavelinux
+
+Bug Fixes::
+
+* do not hyphen a hyphen when hyphenation is enabled (#1562)
+* fix crash when applying text transform to heading cell in table body (#1575)
+* honor font style when looking for glyph in font
+* only suggest installing prawn-gmagick gem if not loaded (#1578)
+
+== 1.5.2 (2020-02-21) - @mojavelinux
+
+Bug Fixes::
+
+* fix crash if btn or kbd macro is used in section title (#1563)
+* ensure background and admonition icon image files are closed after being read (#1566)
+* ensure temporary images generated by running content are cleaned up (#1566)
+
+== 1.5.1 (2020-02-16) - @mojavelinux
+
+Enhancements::
+
+* allow theme to control font color of first line of abstract
+
+Bug Fixes::
+
+* fix spacing after first line of indented paragraph (#1557)
+
+== 1.5.0 (2020-02-11) - @mojavelinux
+
+* support table with multiple head rows & decorate accordingly (#1539)
+* draw background and border around entire delimited block with wrapped text that appears inside an AsciiDoc table cell (#820)
+* fix crash when document has PDF cover page and SVG page background (#1546)
+* allow page mode to be fully configured using pdf-page-mode attribute or page_mode theme key (#840)
+* allow background image to be specified using a data URI
+* allow running content image to be specified using a data URI
+* support creating empty front or back cover by assigning empty value to front-cover-image or back-cover-image attribute
+* only warn once per missing character (#1545)
+* render pass block as listing block, using raw source as contents
+* prevent image placeholder from altering character spacing in inline SVG (#1550)
+
+== 1.5.0.rc.3 (2020-02-04) - @mojavelinux
+
+* reserve space for inline image correctly so it doesn't mangle the character spacing in the line when the image wraps (#1516)
+* allow custom theme to merge font catalog with theme being extended (#1505)
+* allow font path to be declared once for all font styles (#1507)
+* continue border, background, and column rule of admonition block on subsequent pages when block gets split (#1287)
+* allow max-width on caption be specified as a percentage (of the container width) (#1484)
+* add support for remote image in running content (if allow-uri-read attribute is set) (#1536)
+* add support for remote background images specified by theme (if allow-uri-read attribute is set) (#1536)
+* add support for remote title page logo image specified by theme (if allow-uri-read attribute is set) (#1536)
+* place dots on correct page when section title in TOC wraps across a page boundary (#1533)
+* add destination to top of imported PDF if ID is specified on image block
+* log reason if theme file cannot be parsed or compiled (#1491)
+* fix crash if background image in theme is not readable
+* bundle emoji font and use as fallback in default-with-fallback-font theme (#1129)
+* add dark theme for chronicles example
+* allow vertical-align key for header and footer categories to accept numeric offset as second value (e.g., [top, 10]) (#1488)
+* link font family for abstract and sidebar to heading font family if only latter is set
+* if path of missing font is absolute, don't suggest that it was not found in the fontsdir
+* allow use of style "regular" as alias for "normal" when defining font
+* emit warning in verbose mode if glyph cannot be found in fallback font (#1529)
+* don't crash if table is empty and emit warning (#607)
+* only emit warning when non-WINANSI character is used with AFM font if verbose mode is enabled
+* do not emit warning when non-WINANSI character is used with AFM font inside scratch document
+* do not emit log messages from scratch document
+* upgrade treetop to 1.6
+* reenable tests on Windows (#1499) *@slonopotamus*
+
+== 1.5.0.rc.2 (2020-01-09) - @mojavelinux
+
+* patch Prawn to fix incompatibility with Ruby 2.7 (to fix text wrapping)
+* fix crash when assigning font style to header cell in table body (#1468)
+* fix parsing of array value of pdf-page-margin attribute (#1475)
+* fix warning when reading data from a remote URL when running with Ruby 2.7 (#1477)
+* pass SVG warnings to logger (#1479)
+* compress streams if the compress attribute is set on the document (#1471)
+* don't set heading-font-family in default theme so it inherits from base
+
+== 1.5.0.rc.1 (2020-01-06) - @mojavelinux
+
+* support data URI for SVG image (#1423)
+* account for border offset in width of fragment (#1264)
+* ignore case when sorting index terms (#1405)
+* partition section title (title and subtitle) if `title-separator` document attribute or `separator` block attribute is set (#623)
+* allow page numbering to start after first page of body by assigning an integer to the page_numbering_start_at theme key (#560)
+* allow running content to start after first page of body by assigning an integer to the running_content_start_at theme key (#1455)
+* allow output file to be written to stdout (#1411)
+* implement line highlighting for source blocks when using Rouge as source highlighter (#681)
+* implement line highlighting for source blocks when using Pygments as source highlighter (#1444)
+* indent wrapped lines in source block beyond linenum gutter (#504)
+* don't mangle source block if linenums are enabled and language is not set
+* don't print line number if source block is empty
+* don't apply recto margin to title page if cover is absent unless value of front-cover-image attribute is `~` (#793)
+* expose theme as property on converter
+* add support for unbreakable option on open blocks (#1407) *@mogztter*
+* don't add mailto: prefix to revealed mailto URI when hide-uri-scheme is set (#920)
+* allow theme to set base text decoration width (#1414)
+* allow theme to set font-kerning per category (#1431)
+* allow theme to specify background image for running content (#356)
+* allow theme to specify border for admonition block (#444)
+* allow theme to specify background color for admonition block (#444)
+* allow theme to specify background color and full border for quote and verse blocks (#1309)
+* allow text alignment roles to be used to control alignment of discrete heading
+* allow theme to configure image caption align(ment) to inherit from image align(ment) (#1459)
+* allow theme to confine width of image caption to width of image (#1291)
+* don't apply border to block if border width is not set (or nil)
+* use font color from pygments style for unhighlighted text (#1441)
+* render stem block as raw literal block
+* render stem phrase as monospaced text
+* honor percentage unit on width attribute value on image (#1402)
+* fix crash when capitalizing text that does not contain markup
+* allow custom inline role to control text transform (#1379)
+* convert link macro enclosed in smart quotes
+* allow inline image to be fit within line using fit=line (#711)
+* fix fit=cover for background image when aspect ratio of image is taller than page (#1430)
+* compute and apply line metrics for cells in table head row (#1436)
+* compute and apply line metrics correctly for cells in table body and foot rows (#1436)
+* allow section to override toclevels for self and children using toclevels attribute on section (#734)
+* allocate space for pagenum in toc consistently (#1434)
+* fall back to default theme instead of crashing if specified theme cannot be resolved
+* allow font color to be set on nested span in passthrough content
+* move width and align attributes from font tag to width and align style properties on span tag
+* compute table cell padding correctly when specified as a 4 element array
+* preserve isolated callout on final line of source block
+* fix missing require in asciidoctor-pdf-optimize script (#1467)
+* lock version of ttfunk to 1.5.x
+
+== 1.5.0.beta.8 (2019-11-23) - @mojavelinux
+
+* automatically hyphenate prose using the text-hyphen gem if the `hyphens` document attribute is set (#20)
+* set hyphenation language using the `hyphens` attribute value, falling back to the `lang` attribute (#20)
+* add support for capitalize text transform (#1382)
+* fix AsciiDoc table cell from overflowing bounds of table and creating extra page (#1369)
+* don't double escape XML special characters in literal table cell (#1370)
+* allow theme to customize the width and color of text decoration (underline and line-through) (#812)
+* use same line height throughout abstract
+* don't mangle XML attribute values when applying lowercase text transform (#1391)
+* place toc at same position in outline as it is in the document (#1361)
+* log warning with error message if remote image cannot be retrieved
+* allow initial page mode to be set to fullscreen using pdf-page-mode=fullscreen attribute or page_mode=fullscreen theme key (#1357)
+* allow theme to configure content of entries in authors line on title page (#800)
+* allow theme to override styles of caption on admonition blocks (#561)
+* allow theme to configure hanging indent for titles in toc (#1153)
+* apply hanging indent to wrapped entries in index (#645)
+* allow theme to configure text decoration of headings (#811)
+* define line-through and underline roles as built-in custom roles so they can be customized (#1393)
+* allow top value of logo and title on title page to be specified in any measurement unit
+* don't set a top value for the logo on the title page if not set in theme
+* if value of scripts attribute is cjk, break lines between any two CJK characters except punctuation in table cells (#1359) (*gasol*)
+* ignore invalid cellbgcolor value (#1396)
+* recommend installing prawn-gmagick gem if image format is unsupported
+* set cache_images option on SVG interface if cache-uri attribute is set on document (#223)
+* upgrade prawn-svg to fix display of links in plantuml diagrams (#1105)
+* allow icon set to be specified as prefix on target of icon macro (#1365)
+* write Unix epoch dates to pdfmark file in UTC when reproducible is set
+* don't include software versions in PDF info if reproducible attribute is set
+* fix optimizer so it applies pdfmark after reading input file
+* allow converter instance to be reused
+
+== 1.5.0.beta.7 (2019-10-29) - @mojavelinux
+
+* fix value of implicit page-count attribute when page numbering and running content don't start on same page (#1334)
+* fix value of implicit chapter-title attribute on preface pages (#1340)
+* show value of untitled-label attribute in outline if doctitle is not set (#1348)
+* don't show entry for doctitle in outline if doctitle is not set and untitled-label attribute is unset (#1348)
+* generate outline if document has doctitle but no body (#1349)
+* allow elements on title page to be disabled from theme using display: none (#1346)
+* set chapter-title attribute to value of toc-title attribute on toc pages in book (#1338)
+* set section-title attribute to value of toc-title attribute on toc pages in article if page has no other sections (#1338)
+* allow ranges of pages from PDF file to be imported using image macro as specified by pages attribute (#1300)
+* set default footer content in base theme; remove logic to process `footer_<side>_content: none` key (#1320)
+* include doctitle in outline for article when article is only a single page (#1322)
+* allow custom (inline) role to control text decoration property (#1326)
+* point doctitle entry in outline to first page of content when doctype is article and document has front cover
+* fix asciidoctor-pdf-optimize script and register it as a bin script
+* rename `-q` CLI option of asciidoctor-pdf-optimize script to `--quality`
+* only promote first paragraph of preamble to lead paragraph (assuming it has no role) (#1332)
+* don't promote first paragraph of preamble to lead paragraph if it already has a role (#1332)
+* fix crash when document has no doctitle or sections and untitled-label attribute is unset
+* ignore invalid align value for title logo image (#1352)
+
+== 1.5.0.beta.6 (2019-10-11) - @mojavelinux
+
+* reorganize source files under asciidoctor/pdf folder (instead of asciidoctor-pdf)
+* reorganize monkeypatch files under asciidoctor/pdf/ext
+* allow toc to be positioned using toc macro (#1030)
+* extend dots leading up to page number from wrapped line in toc (#1152)
+* set fit=contain by default on cover and page background images (#1275)
+* implement fit=fill for cover, page background, and running content raster (non-SVG) images (#1276)
+* allow foreground image (e.g., watermark) to be added to each page using page-foreground-image attribute or theme key (#727)
+* allow section body to be indented using section_indent key in theme (#737)
+* add glyphs for built-in characters to bundled monospace font (M+ 1mn) (#1274)
+* look for "noborder" role on image even if other roles are defined
+* remove deprecated table_odd_row_background_color and table_even_row_background_color keys from theme
+* implement unordered and ordered description lists (#1280)
+* recognize transparent as valid value for cellbgcolor attribute
+* allow custom role to revert font style to normal (#1286)
+* allow theme to control font properties (font size, font color, etc) of description list term (#1289)
+* allow theme to override caption styles for specific block categories: blockquote, code, example, footnotes, image, listing, and table (#307)
+* allow theme to control style of verse block independently of a quote block (#40)
+* position list marker correctly when `media=prepress` and list item is advanced to next page or split across pages (#1303)
+* layout horizontal dlist in two columns (#310)
+* apply normal substitutions to content of manname section (#1294)
+* optimize PDF using quality specified in value of optimize attribute if optimize attribute is set (#535)
+* allow xref macro to override xrefstyle set on document
+* assume admonition icon in theme is a legacy FontAwesome icon if the icon set prefix is absent
+* rewrite optimize-pdf as a bin script named asciidoctor-pdf-optimize
+* allow image alt text formatting and arrangement to be controlled by theme (#730)
+* upgrade prawn-icon to 2.5.0 (which upgrades Font Awesome to 5.11.2)
+
+== 1.5.0.beta.5 (2019-09-13) - @mojavelinux
+
+* pass styles for inline elements downwards when parsing, allowing role to override default styles for element (#1219)
+* document title in outline should point to second page if document has cover page (#1268)
+* start at setting for running content and page numbering must account for disabled title page (book doctype) (#1263)
+* start at setting for running content and page numbering must account for front cover (#1266)
+* preserve indentation that uses tabs in verbatim blocks when tabsize is not set (#1258)
+* use consistent line height for list items and toc entries if text is entirely monospace (#1204)
+* fix spacing between items in qanda list
+* expand home directory reference in theme name when value ends with .yml and no themedir is specified
+
+== 1.5.0.beta.4 (2019-09-04) - @mojavelinux
+
+* always use ; as delimiter to separate multiple font dirs to be compatible with JAR paths (#1250)
+* preserve hyphens in role names in theme file (#1254)
+* allow second arg of outlinelevels attribute to control expand depth of outline (#1224)
+* allow font catalog and font fallbacks to be defined as flat keys in the theme file (#1243)
+* don't crash when adding indentation guards to source highlighted with Pygments (#1246)
+* don't override font color of formatted text in toc (#1247)
+* prevent toc from overrunning first page of content by reserving more space for the page number (#1242)
+* allow number of digits reserved for page number in the toc to be adjusted using toc-max-pagenum-digits attribute (#1242)
+
+== 1.5.0.beta.3 (2019-08-30) - @mojavelinux
+
+* allow multiple font dirs to be specified using the pdf-fontsdir attribute (#80)
+* fill and stroke bounds of example across all pages (#362)
+* allow page background color and background image to be used simultaneously (#1186)
+* allow theme to specify initial zoom (#305)
+* strip surrounding whitespace from text in normal table cells
+* allow attribute references to be used in image paths in theme (#588)
+* resolve variables in font catalog in theme file
+* honor the cellbgcolor attribute defined in a table cell to set the cell background color (#234) (*mch*)
+* add the .notdef glyph to the bundled fonts (a box which is used as the default glyph if the font is missing a character) (#1194)
+* don't drop headings if base font family is not set in theme
+* don't crash if heading margins are not set in theme
+* don't rely on base_line_height_length theme key in converter (should be internal to theme)
+* set fallback value for base (root) font size
+* reduce min font size in base theme
+* allow theme to configure the minimum height required after a section title for it to stay on same page (#1210)
+* convert hyphen to underscore in theme key for admonition icon type (#1217)
+* always resolve images in running content relative to `themesdir` (instead of document) (#1183)
+* fix placement of toc in article when doctitle is not set (#1240)
+* honor text alignment role on abstract paragraph(s)
+* don't insert blank page at start of document if `media=prepress` and document does not have a cover (#1181)
+* insert blank page after cover if `media=prepress` (#1181)
+* add support for stretch role on table (as preferred alias for spread) (#1225)
+* include revremark on title page if specified (#1198)
+* allow theme to configure border around block image (#767)
+* align first block of list item with marker if primary text is blank (#1196)
+* apply correct margin to list item if primary text is blank (#1196)
+* allow page break before and after part and before chapter to be configured by theme (#74)
+* allow page number of PDF to import to be specified using `page` attribute on image macro (#1202)
+* use value of theme key heading-margin-page-top as top margin for heading if cursor is at top of page (#576)
+* resolve icon image relative to docdir instead of current working directory
+* allow theme to style mark element; add default styles to built-in themes (#1226)
+* if value of scripts attribute is cjk, break lines between any two CJK characters (except punctuation) (#1206)
+* add support for role to font-based icon (to change font color) (#349)
+* use fallback size for admonition icon
+* allow attribute reference in running content to be escaped using a backslash
+* allow theme to configure text background and border on a phrase with a custom role (#1223)
+* fix crash if source-highlighter attribute is defined outside the header (#1231)
+* fix crash when aligning line numbers of source highlighted with Pygments (#1233)
+
+== 1.5.0.beta.2 (2019-07-30) - @mojavelinux
+
+* only apply title page background image to the title page (#1144)
+* make sure title page background or color (and only title page background or color) gets applied to title page even when page has already been created (#1144)
+* fix crash when image_width is defined in theme (#995)
+* fix crash when toc is enabled and `toc-title` attribute is unset
+* correctly map legacy Font Awesome icon names when icon set is not specified (#1157)
+* coerce color values in theme that contain uppercase letters (#1149)
+* prevent table alignment from modifying margins of subsequent pages; only align table if width is less than bounds (#1170)
+* ensure base font color is set
+* use more robust mechanism to detect an empty page; tare content stream after adding page background color or image
+* ignore `pdf-themesdir` unless pdf-theme is specified (#1167)
+* allow theme to control glyphs used for conums (#133)
+* allow theme to control background and border of inline kbd (#313, #1004)
+* add support for link on image in running content (#1002)
+* allow theme to disable font kerning
+* add support for default theme alignment for tables (#1164)
+* add theming support to (inline) roles on phrases (#368)
+* allow theme to customize style of titles in running content using `title-style` key (#1044)
+* add support for the built-in big and small roles on phrases (#459)
+* route AFM font warning through Asciidoctor logger
+* upgrade code font (M+ 1mn) to TESTFLIGHT-63a
+* include all alphanumeric characters in code font (mplus1mn) (#282)
+* report clearer error message when theme can't be found or loaded
+* document how to prepare a TTF font to work best with Asciidoctor PDF (#297)
+
+== 1.5.0.beta.1 (2019-07-08) - @mojavelinux
+
+* rename `pdf-style` and `pdf-stylesdir` attributes to `pdf-theme` and `pdf-themesdir`, respectively (while still honoring the old names for compatibility) (#1127)
+* don't load fallback font by default; move fallback font to `default-with-fallback-font` theme
+* apply cell padding to table cells in the head row (#1098)
+* allow the theme to control the padding of table cells in the head row using the `table_head_cell_padding` key (#1098)
+* fix position of table caption for reduced-width tables when caption align is center (#1138)
+* adjust width of table caption to match width of table unless `table_caption_max_width` is none in theme (#1138)
+* fix position of text in running header (#1087)
+* ignore start attribute on ordered list if marker is disabled
+* allow start value to be negative for ordered lists that use arabic or roman numbering (#498)
+* don't convert values in theme which are not color keys to a string (#1089)
+* apply page layout specified on page break even when break falls page boundary (#1091)
+* scale SVG background image to fit page in the same way raster image is scaled (#765)
+* allow page background size to be controlled using image macro attributes (#1117)
+* allow page background image position to be controlled using position attribute on image macro (#1124)
+* add support for `fit=cover` for cover, page background, and running content images (#1136)
+* change default background image position to center (#1124)
+* allow cover image position to be controlled using position attribute on image macro (#1134)
+* change default cover image position to center (#1134)
+* allow cover image size to be controlled using fit, pdfwidth, and width attributes; don't scale image by default (#1134)
+* set `enable_file_requests_with_root` and `enable_web_requests` options for all SVGs (#683)
+* automatically set `pdf-stylesdir` if `pdf-style` ends with .yml and `pdf-stylesdir` is not specified (#1126)
+* replace hyphens with underscores in top-level theme keys
+* allow hyphens to be used in variable references in theme (#1122)
+* allow theme to control background and border of inline code (literal) (#306)
+* allow theme to control background and border of inline button (#451)
+* resolve null color value in theme to nil (aka not set)
+* add support for cgi-style options on source language when syntax highlighting with Rouge (#1102)
+* apply custom theme to chronicles example to customize running content and demonstrate how to extend default theme
+* drop remapping of legacy running content keys in theme data
+* resize running content to fit page layout (#1036)
+* exclude border width from running content area (#1109)
+* support text-transform property in running content (#702)
+* make depth of section titles assigned to section-title attribute in running content configurable (#1141)
+* support width attribute on image in running content if no other dimension attribute is specified
+* apply correct scale-down logic to image in running content
+* allow image format to be specified using format attribute (cover page image, page background image, running content image) (#1132)
+* allow theme to set bottom border properties (color, style, and width) of table head row (#770)
+* allow column rule and spacing to be specified for running content when multiple columns are specified (#1093)
+* never load base theme when loading default theme; otherwise load base theme if extends isn't specified, but only if theme data hasn't been initialized
+* shorten text-alignment attribute to text-align
+* set PDF version to 1.4 by default (#302)
+* allow PDF version to be set using pdf-version document attribute (#302)
+
+== 1.5.0.alpha.18 (2019-06-01) - @mojavelinux
+
+* restore compatibility with Asciidoctor back to 1.5.3 and add verification to test matrix (#1038)
+* allow one theme to extend another theme using the top-level `extends` key (#367)
+* allow theme to set text indent for paragraphs using prose_text_indent (#191)
+* allow theme to set spacing between adjacent paragraphs using prose_margin_inner (#191)
+* show parts in toc when toclevels=0 (#783)
+* add support for autonumbered callouts in source blocks (#1076)
+* fix duplication of footnotes in keep together regions (#1047)
+* display standalone preamble in book normally (#1051)
+* allow outline depth to be set using outlinelevels attribute independent of toclevels (#1054)
+* fix compounding cell padding (#1053)
+* add support for qanda list (#1013)
+* fix parsing of bibref and link inside footnote text (#1061)
+* restore square brackets around ID of bibliography entry with custom ID (#1065)
+* add page_numbering_start_at key to theme to control start page for page numbering (#1041)
+* don't allow running_content_start_at key to affect page numbering (#1041)
+* substitute \{chapter-title} property on front matter pages (replace with doctitle and toc-title, respectively, when running content starts before first page of body) (#1040)
+* allow side margins to be set on elements on title page (#824)
+* don't promote preamble to preface if preface-title attribute is empty
+* expand padding value for running content (header and footer) to array
+* add support for unnumbered (and no-bullet) style on ordered list (#1073)
+* add visual regression capability to test suite (@beatchristen)
+* ensure index section doesn't get numbered when using Asciidoctor < 1.5.7
+* add part signifier and part number to part title if partnums is set; allow signifier to be customized using part-signifier attribute (#597)
+* add support for the chapter-signifier attribute as the preferred alternative to chapter-label
+* warn if the image referenced in the running content cannot be found (#731)
+
+== 1.5.0.alpha.17 (2019-04-23) - @mojavelinux
+
+* drop support for Ruby < 2.3 (and installation will fail for Ruby < 2.1)
+* add asciidoctor/pdf and asciidoctor/pdf/version require aliases (#262)
+* rename module to Asciidoctor::PDF and define Asciidoctor::Pdf alias for backwards compatibility (#262)
+* switch to tilde dependency versions (flexible patch number) instead of ranges
+* upgrade prawn-svg to 0.29.1; resolves numerous SVG rendering issues (#886, #430)
+* drop support for Rouge < 2
+* add a test suite (#37)
+* allow running content (header and footer) to be enabled on title and toc pages; controlled by running_content_start_at property in theme (#606)
+* add support for nbsp named entity (i.e., `+&nbsp;`); replace occurrences of nbsp named entity with a single space in outline
+* upgrade to FontAwesome 5; introduce the fas, far, and fab icon sets, now preferred over fa; drop support for octicons (#891) (@jessedoyle)
+* place footnotes at end of chapters in books or end of document otherwise (#85) (@bcourtine)
+* fix rendering of footnotes directly adjacent to text in a normal table cell (#927)
+* place toc directly after document title when doctype is not book (#233) (@ogmios-voice)
+* add page layout control to page break (#490) (@resort-diaper)
+* allow additional style properties to be set per heading level (#176) (@billybooth)
+* add support for hexadecimal character references, including in link href (#486)
+* force set data-uri attribute on document so Asciidoctor Diagram returns absolute image paths (#1033)
+* set line spacing for non-AsciiDoc table cells (#296)
+* consider all scripts when looking for leading alpha characters in index (#853)
+* don't create title page for article doctype unless title-page attribute is set (#105)
+* don't show article title if `notitle` attribute is set (#998)
+* generate name section for manpage doctype automatically (#882)
+* remove unprocessed passthroughs in literal cells
+* apply font style from theme to formatted text description list term (#854)
+* prevent tempfile for remote image from being deleted before it's used (#947)
+* handle case when uri to make breakable is empty (#936)
+* add support for `frame=ends` as alternative to `frame=topbot` on table
+* allow table frame and grid to be set globally using the `table-frame` and `table-grid` attributes (#822)
+* disable table stripes by default (#1049)
+* allow table stripes to be enabled globally using table-stripes attribute (#1049)
+* use new logging subsystem, if available; otherwise, use shim (#905)
+* allow alignment of list text to be controlled using roles (#182)
+* allow text alignment to be set for abstract (#893)
+* prevent text from overlapping page number in TOC (#839)
+* allow ulist marker to be controlled by theme (#798)
+* add support for reftext for bibliography entry (#864)
+* add support for fw (full-width) icons (#890)
+* decouple vw units with alignment (#948)
+* add align-to-page option for block images (#948)
+* add support for SVG admonition icons (#828) (@keith-packard)
+* rename pastie theme for Rouge to asciidoctor_pdf_default
+* add bw theme for Rouge (#1018)
+* reset top margin of index columns when overflowing to new page (#929)
+* add support for line numbers in source listings (#224)
+* add U+2060 (word joiner) character to built-in Noto Serif font and fallback font (#877)
+* add U+202F (narrow no-break space) character to fallback font (#807)
+* ensure callout number ends up on same page as item text (#914)
+* guard against pygments returning nil (#884)
+* encode quotes in alt text of inline image (#977)
+* fix crash when menu macro is used in a section or block title (#934)
+* remove duplicate message when syntax highlighter is unavailable; don't crash processor (#1078)
+* only look for the start attribute on the code block itself when highlighting with rouge
+* apply block styling to background for line-oriented tokens in rouge by default
+* detect pagenum ranges in index when media is print or prepress (#906)
+* ignore style when resolving icon font (#956, #874)
+* remove correct width method when overloading Prawn::Text::Formatted::Fragment
+* remove ZWSP from alt text of image to prevent fragment from being duplicated (#958)
+* avoid call to super in prepended module to fix Ruby 1.9.3
+* look for correct file to require in bin script
+* upgrade prawn-icon from 1.3.0 to 1.4.0
+* upgrade rouge to 2.2.1
+* add concurrent-ruby to runtime dependencies for compatibility w/ Asciidoctor 1.5.8
+
+== 1.5.0.alpha.16 (2017-07-30) - @mojavelinux
+
+* add support for xrefstyle attribute (#464)
+* allow page side to be based on physical page number and/or be inverted (#813) (@fap-)
+* fix layout error caused by nested keep together blocks (#791)
+* upgrade prawn-svg to allow generic font names to be mapped in SVG (#777)
+* upgrade prawn-svg to fix issue with dotted lines (#741)
+* upgrade prawn-svg to enable linear gradients (#228)
+* don't attempt to parse text in literal cell (#816)
+* warn if theme variable cannot be resolved; don't replace (#801)
+* number appendix subsections based on appendix number when doctype is book (#627)
+* don't add break hints to URI when using AFM font (#795)
+* add rescue check for scratch document when state is not initialized
+* allow page margin to be a single number; fixes regression introduced by #749
+* check for margin as array, then as numeric, then as string
+* extend version range for prawn-templates (#803)
+* add missing part-title attribute to theming guide (#827)
+* clarify in theming guide that variables are defined in document order
+* clarify that the fallback font is only used when the primary font is a TrueType font
+* add more information about prawn-gmagick to README
+* fix warnings and incompatibility when using Ruby 1.9.3
+* document in README how to install Asciidoctor PDF on Ruby 2.0.0
+* enable Travis CI; configure CI-based deployment to RubyGems.org
+
+{url-repo}/issues?q=milestone%3Av1.5.0.alpha.16[issues resolved] |
+{url-repo}/releases/tag/v1.5.0.alpha.16[git tag]
+
+== 1.5.0.alpha.15 (2017-03-27) - @mojavelinux
+
+* fix compatibility with Prawn 2.2.0 (#775)
+* add workaround for TTFunk bug when font table has empty data (#619, #651)
+* take fallback font into account when calculating width of string (#651)
+* fill and stroke bounds of sidebar across all pages (#259) (@TobiasHector)
+* allow page margin to be set using pdf-page-margin attribute (#749)
+* implement none, no-bullet and unstyled unordered list styles
+* add dots to all levels in TOC if toc_dot_leader_levels is all
+* use bold style for description list term by default (#776)
+* always escape index term text (#761)
+* don't crash if color value on text span is invalid
+* implement start line number for source listing (Rouge) (#752)
+* enable "start inline" option when highlighting PHP (#755)
+* persuade CodeRay to handle html+ source languages
+* introduce stripes attribute to table to control zebra striping (#724)
+* use theme key table_body_stripe_background_color to control color of table stripes (#724)
+* allow theme to set style of table border and grid (#766)
+* allow theme to set text transform on header cell in table body (#750)
+* set top border width of first body row to match bottom border width of header row
+* don't add TOC if empty (#747)
+* optimize code that generates outline level
+* don't recalculate header_cell_data for each row
+* use slightly more efficient way to find Pygments lexer
+* upgrade rouge to 2.0.7
+* upgrade prawn-templates to 0.0.5
+* revise information in theming guide pertaining to custom fonts
+* document in README how to get full support for CJK languages
+* document in theming guide that Asciidoctor PDF subsets font when embedding
+* document that background images are scaled to fit bounds of page
+* add note in theming guide about using double quoted strings
+
+{url-repo}/issues?q=milestone%3Av1.5.0.alpha.15[issues resolved] |
+{url-repo}/releases/tag/v1.5.0.alpha.15[git tag]
+
+== 1.5.0.alpha.14 (2017-02-05) - @mojavelinux
+
+* add support for AsciiDoc table cells (including nested tables) (#6)
+* patch text cell to remove cursor advancement
+* make header cell in body inherit styles from table head (#239)
+* don't crash if table is empty and cols are explicitly set (#610)
+* fix vertical centering for cells in table head row
+* implement converter for index (#386)
+* record page number for index term when writing anchor (#639)
+* support the underline and line-through roles on phrases (#339)
+* allow printed URI to break at break opportunities (#563)
+* don't drop subsequent images after inline image fails to load
+* don't crash if inline image is an unsupported format; issue warning instead (#587)
+* show alt text when image fails to embed (#693)
+* always show block image caption even if image fails to embed
+* delegate to method to handle missing image
+* permit use of GIF image format if prawn-gmagick is available (#573)
+* add support for image macros that have a data URI target (#318)
+* don't crash if format of image in running content is unrecognized
+* only fit image within bounds of running content if contain option is set
+* document fit attribute for image in running content
+* fix alignment for SVG image in running content
+* keep block image with caption (#690)
+* place destination for block image on same page as image
+* set color space when block image occurs on page by itself (#688)
+* resize SVG to fit page (#691)
+* backport resize method from prawn-svg and use it
+* disable system font scan in Prawn SVG
+* use character spacing to fine-tune width of placeholder for inline image (#686)
+* fix duplicate inline image rendering (@fap-) (#388)
+* constrain inline image to width of bounds
+* add support for pdfwidth to inline images (@fap-) (#620)
+* honor pdfwidth attribute for image in running content (#625)
+* add support for absolute measurement units to scaledwidth attribute (#674)
+* resize inline SVG without an explicit width (#684)
+* resize inline image to fit within content height (#700)
+* calculate height of inline image correctly in table cell (#295)
+* fix bug in calculation when image overflows page (#708)
+* simplify calculation of rendered width and height of images
+* add square brackets around alt text for inline image
+* don't surround alt text of block image with non-breaking spaces
+* specify width & height when embedding (inline) raster image to avoid recalc
+* resize title logo image to keep on page (#714)
+* don't leave blank page when importing PDF page (#614)
+* fix running content dimensions (#616)
+* introduce document attribute to control default text alignment (#396)
+* allow setting a default columns spec for running content on both recto and verso pages; set if not defined
+* show example of center column alignment in default theme
+* map dynamic section-title attribute in running content to current section if page has no section (#709)
+* assign dynamic part-title attribute for use in running content (#596)
+* don't set dynamic chapter-title attribute in running content for preface unless doctype is book
+* clear section and chapter title in running content when part changes (#910, #879)
+* clear section title in running content when chapter changes (#910)
+* assign page number label to each page (#641)
+* don't set dynamic page-number attribute in running content of pagenums is disabled
+* allow toc title properties to be controlled by theme (#701)
+* use correct number of dots when font style is applied to toc level (#621)
+* allow theme to control which toc levels have dot leaders; default to 2-3 (#631)
+* set font color of page number for parts in toc
+* don't crash when toc dot leader is empty string
+* list preface with title in table of contents (#732)
+* allow theme to apply text decoration to link text (#567)
+* allow page layout to be controlled from document (#565)
+* don't crash if image in running content fails to embed (#728)
+* treat abstract section as abstract block (#703)
+* set example block background to white by default
+* automatically wire unspecified code and conum font family to literal font family
+* add support for background colors when highlighting code with Rouge
+* add support underline style for token in Rouge theme (#665)
+* drop background colors on strings in rouge pastie theme
+* add support for image-based icons (#479) (@JBR69)
+* preliminary support for vertical alignment of admonition icon/label
+* allow side padding on admonition label to be controlled separately from admonition content
+* add more control over vertical rule in admonition block (#601)
+* allow theme to control font properties for admonition content (#592)
+* only add lead role to first paragraph of preamble (#654)
+* display poster image for video with link to video URI (#287)
+* add link to audio file (#475)
+* don't drop anchor within text that overruns page (#638)
+* display title for abstract (#582)
+* display title for open block (#577)
+* display block title on quote and verse blocks (#416)
+* don't draw border for quote/verse block on empty page or if border width is 0
+* allow delimiter between author names on title page to be configured in theme
+* coerce resolved value of content key in theme to String (#653)
+* honor background color from Pygments theme
+* set default inner/outer margins in base theme
+* document missing glyph encoding warning in theming guide; minor rewording
+* document how to configure fonts in SVG images (#739)
+* document how to use Asciidoctor Mathematical to enable STEM support (#45)
+* transform text containing multibyte characters (#363)
+* document in theming guide how to transform unicode letters with Ruby < 2.4
+* show unmodified text if text_transform is none (#584)
+* make performance optimization to formatted text transform
+* use reference_bounds instead of @margin_box to move past bottom
+* handle negative bottom padding properly at page boundary
+* use value of docdatetime & localdatetime attributes in PDF info (#590)
+* use truncate_to_precision instead of round to truncate floats; map to native method in Ruby >= 2.4
+* upgrade prawn-svg dependency to 0.26.x
+* upgrade prawn-icon to 1.3.0
+* document in the README how to use the autofit option on verbatim blocks
+* clarify in README how inline image are sized
+* clarify instructions in README about how to specify a page number range for printing
+* document in theming guide how to define and apply a custom Rouge theme
+* rename `pdfmarks` to `pdfmarks`; document pdfmark attribute in theming guide
+* describe the quoted string value type in the theming guide
+* add self-referencing anchor to each key prefix in theming guide
+* document `nonfacing` option for sections (@jnerlich)
+* fix documentation for `toc_dot_leader_font_color` in theming guide (@davidgamba)
+* document that dot leader inherits font properties from toc category
+* fill in missing defaults for keys in theming guide
+* rewrite intro to Keys section in theming guide
+* add keys for prose, menu, and conum categories to theming guide
+* document `outline_list_marker_font_color` key in theming guide
+* refactor measurement value helpers into module (#677)
+* add reproducible flag to examples
+* add inline ref and corresponding xref to chronicles example
+* fix Ruby warnings
+* update instructions and Gemfile config to use with Ruby 1.9.3
+* configure build as the default rake task
+
+{url-repo}/issues?q=milestone%3Av1.5.0.alpha.14[issues resolved] |
+{url-repo}/releases/tag/v1.5.0.alpha.14[git tag]
+
+== 1.5.0.alpha.13 (2016-09-19) - @mojavelinux
+
+* Add support for mirror (recto/verso) margins and facing pages when `media=prepress`
+* Add non-breaking hyphen glyph to built-in fonts so its intended behavior is honored (#462)
+* Add page break before a book part (#329)
+* Allow running (header/footer) content to be arranged in columns (#449)
+* Allow font properties to be set per element in running content (#454)
+* Prevent the SVG from modifying the document font (#494)
+* Implement decorative border for multipage quote and verse blocks (#270, #557, #558)
+* Encode anchors in hex that contain characters outside of ASCII range (#481, #301)
+* Size the line number gutter correctly (accounting for width of largest line number) (#402)
+* Allow theme to specify default value for pdfwidth attribute on image and document in README (#455)
+* Fix front matter page numbering by adding page labels for all front matter pages in outline (#458)
+* Allow image type to be specified explicitly using format attribute on image macro (#540)
+* Add support for literal and verse table cell styles
+* Preserve indentation in literal and verse table cells
+* Preserve paragraph breaks in normal table cells
+* Honor value of width attribute even when `autowidth` option is set on table (#519)
+* Align table title to left edge of table, regardless of table alignment (#469)
+* Add support for reversed option on ordered list (#491)
+* Don't drop whitespace in front of conum on final line of source block (#470)
+* Add more control over position of elements on title page, including support for vw units (#418)
+* Allow table caption position/side to be controlled by theme (#531)
+* Use base_align setting from theme as default alignment for headings
+* Resolve bare image-related attribute values relative to base_dir
+* Only allow Prawn SVG to fetch remote images if the allow-uri-read attribute is set (#548)
+* Introduce page_margin_inner and page_margin_outer keys to theme
+* Start title page, toc, main content, parts, and chapters on recto page when `media=prepress` and `doctype=book`
+* Allow default font style for table to be set via theme (`table_font_style`)
+* Use correct default bullet per nested unordered list level (#529)
+* Call `start_new_part` at start of each book part
+* Delegate to `layout_part_title` method to layout part title
+* Don't match a special section as a chapter unless the doctype is book
+* Fix list marker placement when list item touches bottom of page
+* Eliminate excessive spacing between list items that contain nested lists
+* Drop lines in running (header/footer) content with unresolved attributes (#522)
+* Ensure `start_new_chapter` is always executed at a chapter transition (#524)
+* Add support for root xref (e.g., &lt;&lt;included-doc#&gt;&gt;) (#521)
+* Prevent block from spilling to next page if there's no more content (#361)
+* Add support for px units to pdf-page-size attribute
+* Fix parsing error when value of pdf-page-size attribute is unitless
+* Don't crash if table is empty (#480)
+* Don't crash when deleting last remaining page; don't delete last page if empty (#317)
+* Don't orphan space between conums when extracting from verbatim block (#506)
+* Properly scope attr and attr? lookups
+* Rename internal page_start and page_end attributes to pdf-page-start and pdf-page-end, respectively
+* Fix settings for table header cell
+* Fix padding around content of quote block in default theme
+* Read theme file with UTF-8 encoding (#533)
+* Allow temporary image file to be deleted on Windows (#425)
+* Don't crash if theme file is empty (#551)
+* Don't crash if cover image can't be read; warn instead
+* Clarify in theming guide how to write numbers with 3 or more digits (#555)
+* Document how inline images are sized
+* Document how to disable default footer from theme
+* Update explanation of WINANSI encoding behavior in theming guide
+* Restore support for Ruby 1.9.3 (#528)
+* Upgrade prawn-icon to 1.2.0 (which upgrades Font Awesome to 4.6.3)
+* Upgrade prawn-svg to 0.25.2 (by way of more lenient version range)
+* Fix Ruby warnings
+* Document in README how image paths are resolved
+* Configure README for better preview on GitHub
+* Update chronicles example to modern AsciiDoc syntax; update content
+
+{url-repo}/issues?q=milestone%3Av1.5.0.alpha.13[issues resolved] |
+{url-repo}/releases/tag/v1.5.0.alpha.13[git tag]
+
+== 1.5.0.alpha.12 (2016-08-05) - @mojavelinux
+
+* Fix incompatibility with Rouge 2 source highlighter (#471)
+* Declare rouge gem in Gemfile for use with examples
+* Add option to make URLs visible in printed PDF using show-link-uri or media=print attributes (#435, #463)
+* Document options for scaling an image (#453)
+* Add support for images to span width of page (#424)
+* Fix embedding of remote images; fix case when imagesdir is a URI (#467)
+* Collapse non-significant whitespace (#465)
+* Document how to inherit font size for a given heading level (#460)
+* Decode character references in link URIs (#448)
+* Use arrow as caret for menu path instead of pipe (#441)
+* Document theme-related AsciiDoc attributes in theming guide (#428)
+* Section title alignment should be customizable via theme (#343)
+* Collapse all whitespace when normalizing (#355)
+* Require space on either side of math operator to avoid interpreting dates as math equations (#429)
+* Allow specifying a font style for a title on the title page (#423)
+* Fix Prawn SVG to support arrow heads on lines (#75)
+* Upgrade prawn-svg to 0.25.1
+* Upgrade prawn-icon to 1.1.0
+* Fix rendering of two images in header or footer (#421)
+* Allow table grid color and width to be controlled by theme (@ntfc)
+* Fix undefined local variable or method `dest_y' when adding auto-generated anchor to section (#419)
+* SVG files that include image elements are not rendered correctly improvement (@AlexanderZobkov) (#414)
+* Fix Prawn SVG to support currentColor keyword (#407)
+* Parser should recognize up to 6 digit character references (#404)
+* Properly convert a negative measurement value in theme
+* Coerce percentage value to float instead of integer in theme
+* Set minimum required Ruby version to 1.9.3 instead of 1.9
+* Use title capitalization for section titles in theming guide
+* Update and reorganize keys in theming guide; document numerous keys previous missing
+* Add hints to theming guide about how to apply styles when using Maven or Gradle (@fwilhe)
+* Fix gemspec to collect files when project is not a git repository or git is not available
+
+{url-repo}/issues?q=milestone%3Av1.5.0.alpha.12[issues resolved] |
+{url-repo}/releases/tag/v1.5.0.alpha.12[git tag]
+
+== 1.5.0.alpha.11 (2016-01-05) - @mojavelinux
+
+* Allow font style for first line of abstract to be controlled by theme (@nawroth) (#378)
+* Add option to make builds reproducible (@bk2204) (#338)
+* Set default page size to A4 (@stephenhay) (#319)
+* Preprocess all hex color values (#381)
+* Add note about preprocessing hex color values to theming guide (#381)
+* Honor base font style (#373)
+* Don't fail to delete tmp file (#369)
+* Lazy load icon fonts if detected (#364)
+* Reduce heading line height in default theme (#351)
+* Set default (fallback) SVG font from theme (#210)
+* Expand last column to fit width of table (#372)
+* Don't cache resolved imagesdir attribute value
+* Use fallback when merging icon data
+* Defer to built-in caching in prawn-icon
+* Document replacements and numeric character refs in header/footer content
+* Document base_font_size_min setting in theming guide
+* Document that page background colors & images do not currently work in AsciidoctorJ PDF
+* Use failproof relative require logic in bin script
+
+{url-repo}/issues?q=milestone%3Av1.5.0.alpha.11[issues resolved] |
+{url-repo}/releases/tag/v1.5.0.alpha.11[git tag]
+
+== 1.5.0.alpha.10 (2015-11-01) - @mojavelinux
+
+* Allow admonition icon to be customized by theme (#121) (@jessedoyle)
+* Update to prawn-icon 1.0.0 (#335) (@jessedoyle)
+* Only generate the pdfmarks file if the `pdfmarks` attribute is set
+* Honor table alignment (via align attribute or role) (#299)
+* Use Hash for ViewerPreferences; set initial magnification (#303)
+* Handle case when colpcwidth is unspecified (#314)
+* Show title for lists (olist, ulist, dlist) (#316)
+* Don't attempt to add running content if document has no content pages
+* Correctly calculate toc page range (#322)
+* Don't insert blank page after back cover (#328)
+* Document theme key that sets sidebar padding (#344)
+* Handle case when CodeRay passes nil text to text_token
+
+{url-repo}/issues?q=milestone%3Av1.5.0.alpha.10[issues resolved] |
+{url-repo}/releases/tag/v1.5.0.alpha.10[git tag]
+
+== 1.5.0.alpha.9 (2015-08-02) - @mojavelinux
+
+* Apply point conversion to image widths (#221)
+* Restore missing glyphs in Noto Serif font; adds support for Cyrillic languages (#72, #99)
+* Add support for the Rouge source highlighter (#247)
+* Fix parsing of style attribute in inline markup when it contains spaces; fixes Pygments highlighting
+* Expand tabs to spaces in source document (#236)
+* Scale down SVG if width is wider than page (#242)
+* Load a base theme with defaults for required keys (#132)
+* Enable PDF page import using block image macro (#177)
+* Restore method in PDF::Core needed to import PDF page (#237)
+* Restore text rendering mode after PDF import (#251)
+* Support writing to STDOUT and other IO objects (#254)
+* Enable pagenums by default; allow noheader & nofooter to control running header/footer (#205)
+* Implement explicit table width, including autowidth (#258)
+* Handle conversion to windows-1252 more gracefully when using built-in (AFM) fonts (#290)
+* Disable warning if using a built-in (AFM) font
+* Remove use of rhythm theme keys from converter (#289)
+* Allow font_style to be set on literal text (#291)
+* Parse inline image macro value of page_background_image (#222)
+* Allow theme to control header cells in table body (#272)
+* Make line height in running header/footer configurable (#274)
+* Normalize text content in running header/footer (#266)
+* Modify vertical alignment setting for running header/footer (#264)
+* Use table background color, even if white; upgrade to Prawn Table 0.2.2 (#214)
+* Delete trailing content page if empty (#147)
+* Fix dry run calculation of block height...again (#215)
+* Move footnotes to inline in a lighter shade
+* Fix for JRuby 1.7 running in 2.0 mode
+* Upgrade Prawn SVG to 0.21.0; fixes most badge SVGs
+* Upgrade thread_safe gem
+* Prevent crash if doc has no sections (@abatalev)
+
+{url-repo}/issues?q=milestone%3Av1.5.0.alpha.9[issues resolved] |
+{url-repo}/releases/tag/v1.5.0.alpha.9[git tag]
+
+== 1.5.0.alpha.8 (2015-06-23) - @mojavelinux
+
+* Support inline images (#9)
+* Support link attribute on inline images (#209)
+* Support inline icon macro (#97)
+* Allow fine-grained control over image width (#76)
+* Size conversion not yet applied to images on title page or in running header/footer
+* Enable checklists (#181)
+* Fix block height calculation when content is indented by propagating bounds to scratch document (#215)
+* Don't insert page break before content whose height exceeds a single page (#183)
+* Dash border of literal/listing block at page boundary when broken across pages (#190)
+* Don't crash if toc entry is too long (#200)
+* Add missing methods on OpenStruct to fix Rubinius compatibility (#81)
+* Autofit font size in listing & literal blocks if autofit option is specified (#185)
+* Support border style (e.g., double, dashed, dotted) (#196)
+* Allow font color of outline list marker to be set by theme (#170)
+* Allow use of hyphen in property names in the theme (#193)
+* Only include table of contents if toc attribute is defined in header (#187)
+* Improve parsing of pdf-page-size attribute
+* Handle case in colist converter when previous block isn't found (#173)
+* Print Asciidoctor PDF version in CLI output
+* Upgrade Prawn (< 3.0.0, >= 1.3.0) (#68)
+* Upgrade Prawn SVG to 0.20.0
+* Document gem installation in README (#112)
+* Perform code cleanups (#195)
+* Silence warning about toc block macro
+* Add -example suffix to example file names
+* Use CodeRay as syntax highlighter in examples (#207)
+* Use proper font names in default them to support custom fonts in SVGs
+* Rework parser to parse void elements
+* Apply first line formatting correctly (no dropped words)
+* Add support for text-center role on paragraphs
+* Update theming guide
+* Fix cross references in README
+
+{url-repo}/issues?q=milestone%3Av1.5.0.alpha.8[issues resolved] |
+{url-repo}/releases/tag/v1.5.0.alpha.8[git tag]
+
+== 1.5.0.alpha.7 (2015-05-31) - @mojavelinux
+
+* Add support for font-based icons (Jesse Doyle) (#15)
+* Enable font fallback support (Rei)
+* Support single value for font_fallbacks key in theme
+* Reenable M+ 1p as the fallback font
+* Add option to specify the background color for even table rows (Tord Heimdal) (#104)
+* Add block title for paragraphs (David Gamba) (#67)
+* Allow custom page size setting (Otavio Salvador) (#84)
+* Fix xref to sections (#56)
+* Fix xrefs to non-section content (#110)
+* Allow theme to control layout of title page (#135)
+* Allow theme to control style of table of contents (#167)
+* Allow running header & footer content to be customized (#89)
+* Tighten spacing between list items, make value configurable (#92)
+* Support CMYK color values (#155)
+* Add support for measurement values in theme (#156)
+* Name per-level heading theme keys consistently (e.g., heading_h<n>_font_size) (#157)
+* Preprocess theme data to allow # in front of hex colors (#158)
+* Support linkable images (#51)
+* Render table footer row (#123)
+* Don't crash if sectids attribute is disabled (#70)
+* Support text transform in theme (uppercase / lowercase) (#138)
+* Keep together shouldn't create blank pages (#150)
+* Properly resolve image target as system path (#87)
+* Show warning when image cannot be read (#148)
+* Allow page background image to be specified (#134)
+* Support PDF format as cover page (#113)
+* Accommodate numbered list with large numbers (#91)
+* Position list marker correctly (#140)
+* Allow theme to set font size & family of table cells (#139)
+* Unencode character entities in document title (#136)
+* Process callouts in listing & literal blocks (#31)
+* Use :center to vertically align table cell (#118)
+* Normalize endlines in table cell text (#116)
+* Support setting page size via attribute (#65)
+* Remove unused fonts; update version of NotoSerif font license file
+* Remove Asciidoctor theme until we're ready to fully implement
+* Restore source highlighting when nested inside block
+* Allow keys in theme to be nested to an arbitrary depth
+* Assign width to border for blockquote if not specified in theme
+* Add support for font family and style per heading level
+* Implement basic converter for inline_indexterm
+* Coerce negative values in theme if they slip through
+* Use preserve_indentation in layout_prose
+* Support remote images
+* Add warning about unsupported gif format
+* Abort cli if option parsing returns exit code
+* Use SafeYAML to load theme files
+* Handle transparent value for table background colors
+
+{url-repo}/issues?q=milestone%3Av1.5.0.alpha.7[issues resolved] |
+{url-repo}/releases/tag/v1.5.0.alpha.7[git tag]
+
+== 1.5.0.alpha.6 (2014-11-28) - @mojavelinux
+
+* Add pdf-fontsdir attributes to redefine fonts directory (andrey)
+* Use require_relative to load Asciidoctor PDF in asciidoctor-pdf script (Ryan Bigg)
+* Add example for specifying theme file (Leif Gruenwoldt) (#61)
+* Add thread_safe gem to remove warning when registering converter
+
+{url-repo}/issues?q=milestone%3Av1.5.0.alpha.6[issues resolved] |
+{url-repo}/releases/tag/v1.5.0.alpha.6[git tag]
+
+== 1.5.0.alpha.5 (2014-09-15) - @mojavelinux
+
+* Allow chapter label to be controlled using the `chapter-label` attribute (#47)
+* Prevent toc from overflowing content (#35)
+* Fix page numbering for various permutations of front matter
+* Don't activate implicit header include processor by default (#48, #25)
+* Draw box around listings and literal blocks than span more than one page (#11)
+
+{url-repo}/issues?q=milestone%3Av1.5.0.alpha.5[issues resolved] |
+{url-repo}/releases/tag/v1.5.0.alpha.5[git tag]
+
+== 1.5.0.alpha.4 (2014-09-09) - @mojavelinux
+
+* Fix yield statement so Asciidoctor PDF can be used with JRuby
+* Document that the coderay gem must be installed to run the examples (#42)
+
+{url-repo}/issues?q=milestone%3Av1.5.0.alpha.4[issues resolved] |
+{url-repo}/releases/tag/v1.5.0.alpha.4[git tag]
+
+== 1.5.0.alpha.3 (2014-09-08) - @mojavelinux
+
+* Remove unnecessary dependencies (tilt, slim, thread_safe)
+
+{url-repo}/issues?q=milestone%3Av1.5.0.alpha.3[issues resolved] |
+{url-repo}/releases/tag/v1.5.0.alpha.3[git tag]
+
+== 1.5.0.alpha.2 (2014-09-05) - @mojavelinux
+
+* Add magic encoding header to source file so Asciidoctor PDF can be used with Ruby 1.9.3 (#33, #36)
+
+{url-repo}/issues?q=milestone%3Av1.5.0.alpha.2[issues resolved] |
+{url-repo}/releases/tag/v1.5.0.alpha.2[git tag]
+
+== 1.5.0.alpha.1 (2014-09-04) - @mojavelinux
+
+* Rewrite as proper Asciidoctor converter (#29)
+* Initial pre-release
+
+{url-repo}/issues?q=milestone%3Av1.5.0.alpha.1[issues resolved] |
+{url-repo}/releases/tag/v1.5.0.alpha.1[git tag]

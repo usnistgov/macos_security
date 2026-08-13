@@ -1,0 +1,89 @@
+= Asciidoctor PDF
+OpenDevise Inc.; Asciidoctor Project
+
+Copyright (C) 2014-present OpenDevise Inc. and the Asciidoctor Project.
+
+Please visit the Asciidoctor project site for more information:
+
+  - http://asciidoctor.org
+
+OpenDevise Inc. and the Asciidoctor Project licenses this product to you under the MIT License (the "License").
+You may not use this product except in compliance with the License.
+You may obtain a copy of the License at:
+
+   http://opensource.org/licenses/MIT
+
+Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and limitations under the License.
+
+== Third-party licensed work
+
+M+ OUTLINE FONTS (M+ TESTFLIGHT 063a)::
+  The M+ OUTLINE FONTS are used for literal text, annotation numbers and fallback characters and are bundled in the PDF file.
+  These fonts are free software and are designed and maintained by Coji Morishita.
+  Unlimited permission is granted to use, copy, and distribute them, with or without modification, either commercially or noncommercially.
+  THESE FONTS ARE PROVIDED "AS IS" WITHOUT WARRANTY.
+  (Effectively the same as the Zero-Clause BSD License: https://opensource.org/licenses/0BSD).
+
+  - http://mplus-fonts.osdn.jp/about-en.html
+
+Noto Serif and Noto Sans Fonts (86b2e553c3e3e4d6614dadd1fa0a7a6dafd74552)::
+  Noto is font family developed by the Google Internationalization Team that aims to support all the world's languages.
+  The Noto Serif font is used for headings and body copy and is bundled in the PDF file.
+  The Noto Sans font is provided as an alternative for headings and body copy and is bundled in the PDF file.
+  The Noto fonts are licensed under the Apache 2.0 License.
+  You may obtain a copy of the license at:
+
+  http://www.apache.org/licenses/LICENSE-2.0
+
+  - https://github.com/googlefonts/noto-fonts
+
+Noto Emoji Font (16151a2312a1f8a7d79e91789d3cfe24559d61f7)::
+  Noto is font family developed by the Google Internationalization Team that aims to support all the world's languages.
+  The Noto Emoji font is used to support emoji characters encoded in the document.
+  The Noto fonts are licensed under the Apache 2.0 License.
+  You may obtain a copy of the license at:
+
+  http://www.apache.org/licenses/LICENSE-2.0
+
+  - https://github.com/googlefonts/noto-emoji
+
+Font Awesome Icon Font (v5.4)::
+  Font Awesome (@fontawesome), the iconic font designed for Bootstrap by David Gandy (@davegandy), is used for the admonition icons and other icons in author's content and bundled in the PDF file.
+  Font Awesome is fully open source and GPL compatible.
+  The font is licensed under the SIL Open Font 1.1 License (OFL).
+  You may obtain a copy of the license at:
+
+  http://scripts.sil.org/OFL
+
+  - http://fontawesome.io
+
+RomanNumeral class::
+  The RomanNumeral class, which is used for numbering of ordered lists, is borrowed from the roman-numerals RubyGem and modified for the purpose of this application.
+  The original RomanNumerals class was written by Andrew Vos and is licensed under the MIT License.
+
+  http://opensource.org/licenses/MIT
+
+  - https://github.com/AndrewVos/roman-numerals
+
+Asciidoctor::Prawn::CodeRayEncoder class::
+  The Asciidoctor::Prawn::CodeRayEncoder class, which is used for syntax highlighting source code for use with Prawn, is borrowed from the Prawn project and modified for the purpose of this application.
+  The PrawnEncoder was written by Felipe Doria and may be used under Matz's original licensing terms for Ruby, the GPLv2 license, or the GPLv3 license.
+
+  - https://github.com/prawnpdf/prawn
+
+Bootstrap (v3.0.3)::
+  The default theme is inspired by Bootstrap 3.0.3.
+
+  - http://getbootstrap.com
+
+spec/fixtures/cover.jpg::
+  Attribution: Dominicus Johannes Bergsma; License: Creative Commons Attribution-Share Alike 3.0 Unported
+  This file is licensed under the Creative Commons Attribution-Share Alike 3.0 Unported license.
+
+  - https://commons.wikimedia.org/wiki/File:Dahlia_%27Bishop_of_Auckland.JPG
+
+spec/fixtures/tux.png::
+  Attribution: Larry Ewing, Simon Budig, Garrett LeSage; License: Creative Commons CC0 1.0 Universal Public Domain Dedication
+
+  - https://commons.wikimedia.org/wiki/File:Tux.svg

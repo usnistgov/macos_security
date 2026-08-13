@@ -1,0 +1,32 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="4in" height="2in"
+     viewBox="0 0 4000 2000" version="1.1"
+     xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <g stroke="red" fill="cyan" stroke-dasharray="3 3" stroke-opacity="0.5">
+      <marker id="Triangle"
+        viewBox="0 0 20 20" refX="0" refY="5"
+        markerUnits="strokeWidth"
+        markerWidth="4" markerHeight="3"
+        stroke-width="4"
+        fill="blue"
+        orient="auto">
+        <path d="M 0 0 L 20 5 L 0 10 z" />
+      </marker>
+    </g>
+  </defs>
+  <rect x="10" y="10" width="3980" height="1980" fill="none" stroke="blue" stroke-width="10" />
+  <path d="M 1000 750 L 2000 750 L 2500 1250"
+        fill="none" stroke="green" stroke-width="100"
+        marker-mid="url(#Triangle)"  />
+
+  <g transform="scale(12) translate(50 40)">
+  <path d="M10 80 Q 52.5 10, 95 80 L 115 80 T 180 80" stroke="yellow" fill="none" stroke-width="8"
+  marker-start="url(#Triangle)"
+  marker-mid="url(#Triangle)"
+  marker-end="url(#Triangle)" />
+  </g>
+
+</svg>

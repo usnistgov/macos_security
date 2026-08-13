@@ -1,0 +1,40 @@
+<svg width="240" height="240" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+      <style type="text/css"><![CDATA[
+        #rect1 { fill: url(#Gradient1); }
+        .stop1 { stop-color: red; }
+        .stop2 { stop-color: black; stop-opacity: 0; }
+        .stop3 { stop-color: blue; }
+      ]]></style>
+      <linearGradient id="Gradient1">
+        <stop class="stop1" offset="0%"/>
+        <stop class="stop2" offset="50%"/>
+        <stop class="stop3" offset="100%"/>
+      </linearGradient>
+      <linearGradient id="Gradient2" x1="0" x2="0" y1="0" y2="1">
+        <stop offset="25%" stop-color="red"/>
+        <stop offset="50%" stop-color="black" stop-opacity="0"/>
+        <stop offset="75%" stop-color="blue"/>
+      </linearGradient>
+      <linearGradient id="Gradient3" x1="0" x2="1" y1="0" y2="1">
+        <stop offset="0%" stop-color="red"/>
+        <stop offset="30%" stop-color="yellow"/>
+        <stop offset="60%" stop-color="orange"/>
+        <stop offset="100%" stop-color="blue"/>
+      </linearGradient>
+      <linearGradient id="userspace" gradientUnits="userSpaceOnUse" x1="160" y1="90" x2="220" y2="90">
+        <stop offset="0" stop-color="red"/>
+        <stop offset="1" stop-color="blue"/>
+      </linearGradient>
+  </defs>
+
+  <rect id="rect1" x="10" y="10" rx="15" ry="15" width="50" height="100" stroke="black"/>
+  <rect x="10" y="120" rx="15" ry="15" width="50" height="100" fill="url(#Gradient2)" stroke="black"/>
+  <circle cx="110" cy="40" r="30" stroke="black" fill="url(#Gradient3)"/>
+  <ellipse cx="110" cy="100" rx="30" ry="20" stroke="black" fill="url(#Gradient1)"/>
+  <line x1="65" y1="120" x2="200" y2="200" stroke="url(#Gradient3)" stroke-width="5"/>
+  <path d="M80,140l0,50l30,20l0-40z" stroke="url(#Gradient3)" fill="url(#Gradient1)" stroke-width="3"/>
+  <polygon points="150,30 170,80 190,55 200,10" fill="url(#Gradient1)"/>
+  <rect x="150" y="90" width="80" height="30" fill="url(#userspace)" stroke="black"/>
+  <polyline points="150,130 170,170 190,155 200,110" stroke="url(#Gradient1)" stroke-width="3" fill="none"/>
+</svg>

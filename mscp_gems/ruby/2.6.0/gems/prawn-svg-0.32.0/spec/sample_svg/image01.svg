@@ -1,0 +1,130 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" 
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="210mm" height="297mm" viewBox="0 0 1050 1485"
+     xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1">
+
+  <g transform="translate(0 50)">
+    <text y="50" font-size="12pt">mid/mid</text>
+    <text y="200" font-size="12pt">mid/mid</text>
+    <text y="350" font-size="12pt">mid/mid</text>
+    <text y="550" font-size="12pt">min/min</text>
+    <text y="700" font-size="12pt">min/min</text>
+    <text y="900" font-size="12pt">max/max</text>
+    <text y="1050" font-size="12pt">max/max</text>
+  </g>
+
+  <g transform="translate(50 0)">
+    <text y="25" font-size="12pt">wide image, aspect ratio meet</text>
+
+    <rect y="50" width="100" height="100" fill="none" stroke="blue" stroke-width="2"/>
+    <image y="50" width="100" height="100" preserveAspectRatio="xMidYMid" xlink:href="https://raw.githubusercontent.com/mogest/prawn-svg/master/spec/sample_images/mushroom-wide.jpg"></image>
+
+    <rect y="200" width="150" height="100" fill="none" stroke="blue" stroke-width="2"/>
+    <image y="200" width="150" height="100" xlink:href="https://raw.githubusercontent.com/mogest/prawn-svg/master/spec/sample_images/mushroom-wide.jpg"></image>
+
+    <rect y="350" width="100" height="150" fill="none" stroke="blue" stroke-width="2"/>
+    <image y="350" width="100" height="150" xlink:href="https://raw.githubusercontent.com/mogest/prawn-svg/master/spec/sample_images/mushroom-wide.jpg"></image>
+
+    <rect y="550" width="150" height="100" fill="none" stroke="blue" stroke-width="2"/>
+    <image y="550" width="150" height="100" preserveAspectRatio="xMinYMin" xlink:href="https://raw.githubusercontent.com/mogest/prawn-svg/master/spec/sample_images/mushroom-wide.jpg"></image>
+
+    <rect y="700" width="100" height="150" fill="none" stroke="blue" stroke-width="2"/>
+    <image y="700" width="100" height="150" preserveAspectRatio="xMinYMin" xlink:href="https://raw.githubusercontent.com/mogest/prawn-svg/master/spec/sample_images/mushroom-wide.jpg"></image>
+
+    <rect y="900" width="150" height="100" fill="none" stroke="blue" stroke-width="2"/>
+    <image y="900" width="150" height="100" preserveAspectRatio="xMaxYMax" xlink:href="https://raw.githubusercontent.com/mogest/prawn-svg/master/spec/sample_images/mushroom-wide.jpg"></image>
+
+    <rect y="1050" width="100" height="150" fill="none" stroke="blue" stroke-width="2"/>
+    <image y="1050" width="100" height="150" preserveAspectRatio="xMaxYMax" xlink:href="https://raw.githubusercontent.com/mogest/prawn-svg/master/spec/sample_images/mushroom-wide.jpg"></image>
+  </g>
+
+  <g transform="translate(250 0)">
+    <text y="25" font-size="12pt">wide image, aspect ratio slice</text>
+
+    <rect y="50" width="100" height="100" fill="none" stroke="blue" stroke-width="2"/>
+    <image y="50" width="100" height="100" preserveAspectRatio="xMidYMid slice" xlink:href="https://raw.githubusercontent.com/mogest/prawn-svg/master/spec/sample_images/mushroom-wide.jpg"></image>
+
+    <rect y="200" width="150" height="100" fill="none" stroke="blue" stroke-width="2"/>
+    <image y="200" width="150" height="100" preserveAspectRatio="xMidYMid slice" xlink:href="https://raw.githubusercontent.com/mogest/prawn-svg/master/spec/sample_images/mushroom-wide.jpg"></image>
+
+    <rect y="350" width="100" height="150" fill="none" stroke="blue" stroke-width="2"/>
+    <image y="350" width="100" height="150" preserveAspectRatio="xMidYMid slice" xlink:href="https://raw.githubusercontent.com/mogest/prawn-svg/master/spec/sample_images/mushroom-wide.jpg"></image>
+
+    <rect y="550" width="150" height="100" fill="none" stroke="blue" stroke-width="2"/>
+    <image y="550" width="150" height="100" preserveAspectRatio="xMinYMin slice" xlink:href="https://raw.githubusercontent.com/mogest/prawn-svg/master/spec/sample_images/mushroom-wide.jpg"></image>
+
+    <rect y="700" width="100" height="150" fill="none" stroke="blue" stroke-width="2"/>
+    <image y="700" width="100" height="150" preserveAspectRatio="xMinYMin slice" xlink:href="https://raw.githubusercontent.com/mogest/prawn-svg/master/spec/sample_images/mushroom-wide.jpg"></image>
+
+    <rect y="900" width="150" height="100" fill="none" stroke="blue" stroke-width="2"/>
+    <image y="900" width="150" height="100" preserveAspectRatio="xMaxYMax slice" xlink:href="https://raw.githubusercontent.com/mogest/prawn-svg/master/spec/sample_images/mushroom-wide.jpg"></image>
+
+    <rect y="1050" width="100" height="150" fill="none" stroke="blue" stroke-width="2"/>
+    <image y="1050" width="100" height="150" preserveAspectRatio="xMaxYMax slice" xlink:href="https://raw.githubusercontent.com/mogest/prawn-svg/master/spec/sample_images/mushroom-wide.jpg"></image>
+  </g>
+
+  <g transform="translate(450 0)">
+    <text y="25" font-size="12pt">long image, aspect ratio meet</text>
+
+    <rect y="50" width="100" height="100" fill="none" stroke="blue" stroke-width="2"/>
+    <image y="50" width="100" height="100" xlink:href="https://raw.githubusercontent.com/mogest/prawn-svg/master/spec/sample_images/mushroom-long.jpg"></image>
+
+    <rect y="200" width="150" height="100" fill="none" stroke="blue" stroke-width="2"/>
+    <image y="200" width="150" height="100" xlink:href="https://raw.githubusercontent.com/mogest/prawn-svg/master/spec/sample_images/mushroom-long.jpg"></image>
+
+    <rect y="350" width="100" height="200" fill="none" stroke="blue" stroke-width="2"/>
+    <image y="350" width="100" height="200" xlink:href="https://raw.githubusercontent.com/mogest/prawn-svg/master/spec/sample_images/mushroom-long.jpg"></image>
+
+    <rect y="550" width="150" height="100" fill="none" stroke="blue" stroke-width="2"/>
+    <image y="550" width="150" height="100" preserveAspectRatio="xMinYMin" xlink:href="https://raw.githubusercontent.com/mogest/prawn-svg/master/spec/sample_images/mushroom-long.jpg"></image>
+
+    <rect y="700" width="100" height="200" fill="none" stroke="blue" stroke-width="2"/>
+    <image y="700" width="100" height="200" preserveAspectRatio="xMinYMin" xlink:href="https://raw.githubusercontent.com/mogest/prawn-svg/master/spec/sample_images/mushroom-long.jpg"></image>
+
+    <rect y="900" width="150" height="100" fill="none" stroke="blue" stroke-width="2"/>
+    <image y="900" width="150" height="100" preserveAspectRatio="xMaxYMax" xlink:href="https://raw.githubusercontent.com/mogest/prawn-svg/master/spec/sample_images/mushroom-long.jpg"></image>
+
+    <rect y="1050" width="100" height="200" fill="none" stroke="blue" stroke-width="2"/>
+    <image y="1050" width="100" height="200" preserveAspectRatio="xMaxYMax" xlink:href="https://raw.githubusercontent.com/mogest/prawn-svg/master/spec/sample_images/mushroom-long.jpg"></image>
+  </g>
+
+  <g transform="translate(650 0)">
+    <text y="25" font-size="12pt">long image, aspect ratio slice</text>
+
+    <rect y="50" width="100" height="100" fill="none" stroke="blue" stroke-width="2"/>
+    <image y="50" width="100" height="100" preserveAspectRatio="xMidYMid slice" xlink:href="https://raw.githubusercontent.com/mogest/prawn-svg/master/spec/sample_images/mushroom-long.jpg"></image>
+
+    <rect y="200" width="150" height="100" fill="none" stroke="blue" stroke-width="2"/>
+    <image y="200" width="150" height="100" preserveAspectRatio="xMidYMid slice" xlink:href="https://raw.githubusercontent.com/mogest/prawn-svg/master/spec/sample_images/mushroom-long.jpg"></image>
+
+    <rect y="350" width="100" height="200" fill="none" stroke="blue" stroke-width="2"/>
+    <image y="350" width="100" height="200" preserveAspectRatio="xMidYMid slice" xlink:href="https://raw.githubusercontent.com/mogest/prawn-svg/master/spec/sample_images/mushroom-long.jpg"></image>
+
+    <rect y="550" width="150" height="100" fill="none" stroke="blue" stroke-width="2"/>
+    <image y="550" width="150" height="100" preserveAspectRatio="xMinYMin slice" xlink:href="https://raw.githubusercontent.com/mogest/prawn-svg/master/spec/sample_images/mushroom-long.jpg"></image>
+
+    <rect y="700" width="100" height="200" fill="none" stroke="blue" stroke-width="2"/>
+    <image y="700" width="100" height="200" preserveAspectRatio="xMinYMin slice" xlink:href="https://raw.githubusercontent.com/mogest/prawn-svg/master/spec/sample_images/mushroom-long.jpg"></image>
+
+    <rect y="900" width="150" height="100" fill="none" stroke="blue" stroke-width="2"/>
+    <image y="900" width="150" height="100" preserveAspectRatio="xMaxYMax slice" xlink:href="https://raw.githubusercontent.com/mogest/prawn-svg/master/spec/sample_images/mushroom-long.jpg"></image>
+
+    <rect y="1050" width="100" height="200" fill="none" stroke="blue" stroke-width="2"/>
+    <image y="1050" width="100" height="200" preserveAspectRatio="xMaxYMax slice" xlink:href="https://raw.githubusercontent.com/mogest/prawn-svg/master/spec/sample_images/mushroom-long.jpg"></image>
+  </g>
+
+  <g transform="translate(850 0)">
+    <text y="25" font-size="12pt">aspect ratio preservation disabled</text>
+
+    <rect y="50" width="100" height="100" fill="none" stroke="blue" stroke-width="2"/>
+    <image y="50" width="100" height="100" preserveAspectRatio="none" xlink:href="https://raw.githubusercontent.com/mogest/prawn-svg/master/spec/sample_images/mushroom-long.jpg"></image>
+
+    <rect y="200" width="150" height="100" fill="none" stroke="blue" stroke-width="2"/>
+    <image y="200" width="150" height="100" preserveAspectRatio="none" xlink:href="https://raw.githubusercontent.com/mogest/prawn-svg/master/spec/sample_images/mushroom-long.jpg"></image>
+
+    <rect y="350" width="100" height="200" fill="none" stroke="blue" stroke-width="2"/>
+    <image y="350" width="100" height="200" preserveAspectRatio="none" xlink:href="https://raw.githubusercontent.com/mogest/prawn-svg/master/spec/sample_images/mushroom-long.jpg"></image>
+  </g>
+
+</svg>

@@ -1,0 +1,38 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" 
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="400px" height="120px" version="1.1"
+     xmlns="http://www.w3.org/2000/svg">
+  <desc>Example RotateScale - Rotate and scale transforms</desc>
+  <g fill="none" stroke="black" stroke-width="3" >
+    <!-- Draw the axes of the original coordinate system -->
+    <line x1="0" y1="1.5" x2="400" y2="1.5" />
+    <line x1="1.5" y1="0" x2="1.5" y2="120" />
+  </g>
+  <!-- Establish a new coordinate system whose origin is at (50,30)
+       in the initial coord. system and which is rotated by 30 degrees. -->
+  <g transform="translate(50,30)">
+    <g transform="rotate(30)">
+      <g fill="none" stroke="red" stroke-width="3" >
+        <line x1="0" y1="0" x2="50" y2="0" />
+        <line x1="0" y1="0" x2="0" y2="50" />
+      </g>
+      <text x="0" y="0" font-size="20" font-family="Verdana" fill="blue" >
+        ABC (rotate)
+      </text>
+    </g>
+  </g>
+  <!-- Establish a new coordinate system whose origin is at (200,40)
+       in the initial coord. system and which is scaled by 1.5. -->
+  <g transform="translate(200,40)">
+    <g transform="scale(1.5)">
+      <g fill="none" stroke="red" stroke-width="3" >
+        <line x1="0" y1="0" x2="50" y2="0" />
+        <line x1="0" y1="0" x2="0" y2="50" />
+      </g>
+      <text x="0" y="0" font-size="20" font-family="Verdana" fill="blue" >
+        ABC (scale)
+      </text>
+    </g>
+  </g>
+</svg>

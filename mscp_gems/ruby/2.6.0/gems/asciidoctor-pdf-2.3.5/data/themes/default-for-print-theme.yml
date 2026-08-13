@@ -1,0 +1,24 @@
+extends: default
+base_border_color: BBBBBB
+base_font_color: 000000
+role_subtitle_font_color: 666666
+link_font_color: ~
+codespan_font_color: ~
+mark_background_color: CCCCCC
+menu_caret_content: " <font size=\"1.15em\">\u203a</font> "
+heading_font_color: $base_font_color
+title_page_title_font_color: $role_subtitle_font_color
+abstract_font_color: 2C2C2C
+abstract_title_font_color: $heading_font_color
+admonition_column_rule_color: $base_border_color
+quote_border_color: $base_border_color
+quote_cite_font_color: $role_subtitle_font_color
+verse_border_color: $base_border_color
+verse_cite_font_color: $quote_cite_font_color
+code_font_color: $base_font_color
+conum_font_color: $base_font_color
+example_border_color: $base_border_color
+sidebar_title_font_color: $heading_font_color
+thematic_break_border_color: $base_border_color
+toc_dot_leader_font_color: ~
+footer_border_color: CCCCCC

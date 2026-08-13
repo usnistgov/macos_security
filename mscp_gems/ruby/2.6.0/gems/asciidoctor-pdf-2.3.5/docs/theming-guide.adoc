@@ -1,0 +1,8 @@
+= Asciidoctor PDF Theming Guide
+
+The documentation for Asciidoctor PDF has been relocated to https://docs.asciidoctor.org/pdf-converter/latest/[docs.asciidoctor.org].
+The theming guide has been split into two sections, https://docs.asciidoctor.org/pdf-converter/latest/theme/[Theming] and https://docs.asciidoctor.org/pdf-converter/latest/theme/keys/[Theme Keys Reference].
+Each theming topic and category key has a dedicated page.
+
+On the new documentation site, use the "`Search the docs`" box in the top navigation bar to help you find the theme key or feature you're looking for.
+Also, checkout the https://docs.asciidoctor.org/pdf-converter/latest/whats-new/[What's New] page to learn about the latest Asciidoctor PDF features.

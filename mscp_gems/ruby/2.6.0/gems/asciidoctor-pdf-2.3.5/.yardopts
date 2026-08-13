@@ -1,0 +1,12 @@
+--charset UTF-8
+--readme README.adoc
+--no-private
+--hide-api private
+--title "Asciidoctor PDF API Docs"
+--output-dir apidoc
+--exclude /(?:asciidoctor_ext|core_ext)(?:\.rb$|/)
+lib/**/*.rb
+-
+CHANGELOG.adoc
+LICENSE
+NOTICE.adoc

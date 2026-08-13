@@ -1,0 +1,181 @@
+<svg width="944" height="500" style="overflow-x: hidden; overflow-y: hidden;" xmlns="http://www.w3.org/2000/svg" version="1.1">
+  <defs id="defs">
+    <clipPath id="_ABSTRACT_RENDERER_ID_0">
+      <rect x="40" y="40" width="868" height="400"></rect>
+    </clipPath>
+  </defs>
+  <g>
+    <rect x="40" y="40" width="868" height="400" stroke="none" stroke-width="0" fill-opacity="0" fill="#ffffff"></rect>
+    <g clip-path="url(#_ABSTRACT_RENDERER_ID_0)">
+      <g>
+        <rect x="40" y="439" width="868" height="1" stroke="none" stroke-width="0" fill="#eeeeee"></rect>
+        <rect x="40" y="382" width="868" height="1" stroke="none" stroke-width="0" fill="#eeeeee"></rect>
+        <rect x="40" y="325" width="868" height="1" stroke="none" stroke-width="0" fill="#eeeeee"></rect>
+        <rect x="40" y="268" width="868" height="1" stroke="none" stroke-width="0" fill="#eeeeee"></rect>
+        <rect x="40" y="211" width="868" height="1" stroke="none" stroke-width="0" fill="#eeeeee"></rect>
+        <rect x="40" y="154" width="868" height="1" stroke="none" stroke-width="0" fill="#eeeeee"></rect>
+        <rect x="40" y="97" width="868" height="1" stroke="none" stroke-width="0" fill="#eeeeee"></rect>
+        <rect x="40" y="40" width="868" height="1" stroke="none" stroke-width="0" fill="#eeeeee"></rect>
+      </g>
+      <g>
+        <g>
+          <path d="M40.5,439.5L40.5,401.5L59.35,420.5L78.2,420.5L97.04,287.5L115.89,363.5L134.74,382.5L153.59,420.5L172.43,401.5L191.28,420.5L210.13,344.5L228.98,97.5L247.83,363.5L266.67,287.5L285.52,363.5L304.37,401.5L323.22,344.5L342.07,420.5L360.91,420.5L379.76,325.5L398.61,363.5L417.46,268.5L436.3,420.5L455.15,363.5L474,420.5L492.85,420.5L511.7,382.5L530.54,401.5L549.39,420.5L568.24,401.5L587.09,382.5L605.93,230.5L624.78,420.5L643.63,382.5L662.48,401.5L681.33,363.5L700.17,382.5L719.02,325.5L737.87,420.5L756.72,420.5L775.57,420.5L794.41,382.5L813.26,268.5L832.11,154.5L850.96,382.5L869.8,382.5L888.65,325.5L907.5,382.5L907.5,439.5Z" stroke="none" stroke-width="0" fill-opacity="0.1" fill="#0088cc"></path>
+        </g>
+      </g>
+      <g>
+        <rect x="40" y="439" width="868" height="1" stroke="none" stroke-width="0" fill="#333333"></rect>
+      </g>
+      <g>
+        <path d="M40.5,401.5L59.35,420.5L78.2,420.5L97.04,287.5L115.89,363.5L134.74,382.5L153.59,420.5L172.43,401.5L191.28,420.5L210.13,344.5L228.98,97.5L247.83,363.5L266.67,287.5L285.52,363.5L304.37,401.5L323.22,344.5L342.07,420.5L360.91,420.5L379.76,325.5L398.61,363.5L417.46,268.5L436.3,420.5L455.15,363.5L474,420.5L492.85,420.5L511.7,382.5L530.54,401.5L549.39,420.5L568.24,401.5L587.09,382.5L605.93,230.5L624.78,420.5L643.63,382.5L662.48,401.5L681.33,363.5L700.17,382.5L719.02,325.5L737.87,420.5L756.72,420.5L775.57,420.5L794.41,382.5L813.26,268.5L832.11,154.5L850.96,382.5L869.8,382.5L888.65,325.5L907.5,382.5" stroke="#0088cc" stroke-width="4" fill-opacity="1" fill="none"></path>
+      </g>
+    </g>
+    <g>
+      <circle cx="40.5" cy="401.5" r="5" stroke="none" stroke-width="0" fill="#0088cc"></circle>
+      <circle cx="59.34782608695652" cy="420.5" r="5" stroke="none" stroke-width="0" fill="#0088cc"></circle>
+      <circle cx="78.19565217391305" cy="420.5" r="5" stroke="none" stroke-width="0" fill="#0088cc"></circle>
+      <circle cx="97.04347826086956" cy="287.5" r="5" stroke="none" stroke-width="0" fill="#0088cc"></circle>
+      <circle cx="115.8913043478261" cy="363.5" r="5" stroke="none" stroke-width="0" fill="#0088cc"></circle>
+      <circle cx="134.73913043478262" cy="382.5" r="5" stroke="none" stroke-width="0" fill="#0088cc"></circle>
+      <circle cx="153.58695652173913" cy="420.5" r="5" stroke="none" stroke-width="0" fill="#0088cc"></circle>
+      <circle cx="172.43478260869566" cy="401.5" r="5" stroke="none" stroke-width="0" fill="#0088cc"></circle>
+      <circle cx="191.2826086956522" cy="420.5" r="5" stroke="none" stroke-width="0" fill="#0088cc"></circle>
+      <circle cx="210.13043478260872" cy="344.5" r="5" stroke="none" stroke-width="0" fill="#0088cc"></circle>
+      <circle cx="228.97826086956525" cy="97.5" r="5" stroke="none" stroke-width="0" fill="#0088cc"></circle>
+      <circle cx="247.82608695652175" cy="363.5" r="5" stroke="none" stroke-width="0" fill="#0088cc"></circle>
+      <circle cx="266.67391304347825" cy="287.5" r="5" stroke="none" stroke-width="0" fill="#0088cc"></circle>
+      <circle cx="285.5217391304348" cy="363.5" r="5" stroke="none" stroke-width="0" fill="#0088cc"></circle>
+      <circle cx="304.3695652173913" cy="401.5" r="5" stroke="none" stroke-width="0" fill="#0088cc"></circle>
+      <circle cx="323.21739130434787" cy="344.5" r="5" stroke="none" stroke-width="0" fill="#0088cc"></circle>
+      <circle cx="342.0652173913044" cy="420.5" r="5" stroke="none" stroke-width="0" fill="#0088cc"></circle>
+      <circle cx="360.9130434782609" cy="420.5" r="5" stroke="none" stroke-width="0" fill="#0088cc"></circle>
+      <circle cx="379.76086956521743" cy="325.5" r="5" stroke="none" stroke-width="0" fill="#0088cc"></circle>
+      <circle cx="398.60869565217394" cy="363.5" r="5" stroke="none" stroke-width="0" fill="#0088cc"></circle>
+      <circle cx="417.4565217391305" cy="268.5" r="5" stroke="none" stroke-width="0" fill="#0088cc"></circle>
+      <circle cx="436.304347826087" cy="420.5" r="5" stroke="none" stroke-width="0" fill="#0088cc"></circle>
+      <circle cx="455.1521739130435" cy="363.5" r="5" stroke="none" stroke-width="0" fill="#0088cc"></circle>
+      <circle cx="474.00000000000006" cy="420.5" r="5" stroke="none" stroke-width="0" fill="#0088cc"></circle>
+      <circle cx="492.84782608695656" cy="420.5" r="5" stroke="none" stroke-width="0" fill="#0088cc"></circle>
+      <circle cx="511.69565217391306" cy="382.5" r="5" stroke="none" stroke-width="0" fill="#0088cc"></circle>
+      <circle cx="530.5434782608696" cy="401.5" r="5" stroke="none" stroke-width="0" fill="#0088cc"></circle>
+      <circle cx="549.3913043478261" cy="420.5" r="5" stroke="none" stroke-width="0" fill="#0088cc"></circle>
+      <circle cx="568.2391304347826" cy="401.5" r="5" stroke="none" stroke-width="0" fill="#0088cc"></circle>
+      <circle cx="587.0869565217391" cy="382.5" r="5" stroke="none" stroke-width="0" fill="#0088cc"></circle>
+      <circle cx="605.9347826086957" cy="230.5" r="5" stroke="none" stroke-width="0" fill="#0088cc"></circle>
+      <circle cx="624.7826086956522" cy="420.5" r="5" stroke="none" stroke-width="0" fill="#0088cc"></circle>
+      <circle cx="643.6304347826087" cy="382.5" r="5" stroke="none" stroke-width="0" fill="#0088cc"></circle>
+      <circle cx="662.4782608695652" cy="401.5" r="5" stroke="none" stroke-width="0" fill="#0088cc"></circle>
+      <circle cx="681.3260869565217" cy="363.5" r="5" stroke="none" stroke-width="0" fill="#0088cc"></circle>
+      <circle cx="700.1739130434784" cy="382.5" r="5" stroke="none" stroke-width="0" fill="#0088cc"></circle>
+      <circle cx="719.0217391304349" cy="325.5" r="5" stroke="none" stroke-width="0" fill="#0088cc"></circle>
+      <circle cx="737.8695652173914" cy="420.5" r="5" stroke="none" stroke-width="0" fill="#0088cc"></circle>
+      <circle cx="756.7173913043479" cy="420.5" r="5" stroke="none" stroke-width="0" fill="#0088cc"></circle>
+      <circle cx="775.5652173913044" cy="420.5" r="5" stroke="none" stroke-width="0" fill="#0088cc"></circle>
+      <circle cx="794.413043478261" cy="382.5" r="5" stroke="none" stroke-width="0" fill="#0088cc"></circle>
+      <circle cx="813.2608695652175" cy="268.5" r="5" stroke="none" stroke-width="0" fill="#0088cc"></circle>
+      <circle cx="832.108695652174" cy="154.5" r="5" stroke="none" stroke-width="0" fill="#0088cc"></circle>
+      <circle cx="850.9565217391305" cy="382.5" r="5" stroke="none" stroke-width="0" fill="#0088cc"></circle>
+      <circle cx="869.804347826087" cy="382.5" r="5" stroke="none" stroke-width="0" fill="#0088cc"></circle>
+      <circle cx="888.6521739130435" cy="325.5" r="5" stroke="none" stroke-width="0" fill="#0088cc"></circle>
+      <circle cx="907.5000000000001" cy="382.5" r="5" stroke="none" stroke-width="0" fill="#0088cc"></circle>
+    </g>
+    <g>
+      <g>
+        <text text-anchor="end" x="45.6" y="455.8334591186013" font-size="12" transform="rotate(-30 45.6 455.8334591186013)" stroke="none" stroke-width="0" fill="#666666">03/03/12</text>
+      </g>
+      <g>
+        <text text-anchor="end" x="83.29565217391304" y="455.8334591186013" font-size="12" transform="rotate(-30 83.29565217391304 455.8334591186013)" stroke="none" stroke-width="0" fill="#666666">05/03/12</text>
+      </g>
+      <g>
+        <text text-anchor="end" x="120.99130434782609" y="455.8334591186013" font-size="12" transform="rotate(-30 120.99130434782609 455.8334591186013)" stroke="none" stroke-width="0" fill="#666666">07/03/12</text>
+      </g>
+      <g>
+        <text text-anchor="end" x="158.68695652173912" y="455.8334591186013" font-size="12" transform="rotate(-30 158.68695652173912 455.8334591186013)" stroke="none" stroke-width="0" fill="#666666">09/03/12</text>
+      </g>
+      <g>
+        <text text-anchor="end" x="196.38260869565218" y="455.8334591186013" font-size="12" transform="rotate(-30 196.38260869565218 455.8334591186013)" stroke="none" stroke-width="0" fill="#666666">11/03/12</text>
+      </g>
+      <g>
+        <text text-anchor="end" x="234.07826086956524" y="455.8334591186013" font-size="12" transform="rotate(-30 234.07826086956524 455.8334591186013)" stroke="none" stroke-width="0" fill="#666666">16/03/12</text>
+      </g>
+      <g>
+        <text text-anchor="end" x="271.7739130434783" y="455.8334591186013" font-size="12" transform="rotate(-30 271.7739130434783 455.8334591186013)" stroke="none" stroke-width="0" fill="#666666">20/03/12</text>
+      </g>
+      <g>
+        <text text-anchor="end" x="309.46956521739133" y="455.8334591186013" font-size="12" transform="rotate(-30 309.46956521739133 455.8334591186013)" stroke="none" stroke-width="0" fill="#666666">22/03/12</text>
+      </g>
+      <g>
+        <text text-anchor="end" x="347.1652173913044" y="455.8334591186013" font-size="12" transform="rotate(-30 347.1652173913044 455.8334591186013)" stroke="none" stroke-width="0" fill="#666666">24/03/12</text>
+      </g>
+      <g>
+        <text text-anchor="end" x="384.86086956521746" y="455.8334591186013" font-size="12" transform="rotate(-30 384.86086956521746 455.8334591186013)" stroke="none" stroke-width="0" fill="#666666">26/03/12</text>
+      </g>
+      <g>
+        <text text-anchor="end" x="422.5565217391305" y="455.8334591186013" font-size="12" transform="rotate(-30 422.5565217391305 455.8334591186013)" stroke="none" stroke-width="0" fill="#666666">28/03/12</text>
+      </g>
+      <g>
+        <text text-anchor="end" x="460.2521739130435" y="455.8334591186013" font-size="12" transform="rotate(-30 460.2521739130435 455.8334591186013)" stroke="none" stroke-width="0" fill="#666666">30/03/12</text>
+      </g>
+      <g>
+        <text text-anchor="end" x="497.9478260869566" y="455.8334591186013" font-size="12" transform="rotate(-30 497.9478260869566 455.8334591186013)" stroke="none" stroke-width="0" fill="#666666">02/04/12</text>
+      </g>
+      <g>
+        <text text-anchor="end" x="535.6434782608696" y="455.8334591186013" font-size="12" transform="rotate(-30 535.6434782608696 455.8334591186013)" stroke="none" stroke-width="0" fill="#666666">04/04/12</text>
+      </g>
+      <g>
+        <text text-anchor="end" x="573.3391304347826" y="455.8334591186013" font-size="12" transform="rotate(-30 573.3391304347826 455.8334591186013)" stroke="none" stroke-width="0" fill="#666666">11/04/12</text>
+      </g>
+      <g>
+        <text text-anchor="end" x="611.0347826086958" y="455.8334591186013" font-size="12" transform="rotate(-30 611.0347826086958 455.8334591186013)" stroke="none" stroke-width="0" fill="#666666">13/04/12</text>
+      </g>
+      <g>
+        <text text-anchor="end" x="648.7304347826088" y="455.8334591186013" font-size="12" transform="rotate(-30 648.7304347826088 455.8334591186013)" stroke="none" stroke-width="0" fill="#666666">16/04/12</text>
+      </g>
+      <g>
+        <text text-anchor="end" x="686.4260869565218" y="455.8334591186013" font-size="12" transform="rotate(-30 686.4260869565218 455.8334591186013)" stroke="none" stroke-width="0" fill="#666666">18/04/12</text>
+      </g>
+      <g>
+        <text text-anchor="end" x="724.1217391304349" y="455.8334591186013" font-size="12" transform="rotate(-30 724.1217391304349 455.8334591186013)" stroke="none" stroke-width="0" fill="#666666">20/04/12</text>
+      </g>
+      <g>
+        <text text-anchor="end" x="761.8173913043479" y="455.8334591186013" font-size="12" transform="rotate(-30 761.8173913043479 455.8334591186013)" stroke="none" stroke-width="0" fill="#666666">22/04/12</text>
+      </g>
+      <g>
+        <text text-anchor="end" x="799.513043478261" y="455.8334591186013" font-size="12" transform="rotate(-30 799.513043478261 455.8334591186013)" stroke="none" stroke-width="0" fill="#666666">25/04/12</text>
+      </g>
+      <g>
+        <text text-anchor="end" x="837.208695652174" y="455.8334591186013" font-size="12" transform="rotate(-30 837.208695652174 455.8334591186013)" stroke="none" stroke-width="0" fill="#666666">27/04/12</text>
+      </g>
+      <g>
+        <text text-anchor="end" x="874.904347826087" y="455.8334591186013" font-size="12" transform="rotate(-30 874.904347826087 455.8334591186013)" stroke="none" stroke-width="0" fill="#666666">01/05/12</text>
+      </g>
+      <g>
+        <text text-anchor="end" x="912.6000000000001" y="455.8334591186013" font-size="12" transform="rotate(-30 912.6000000000001 455.8334591186013)" stroke="none" stroke-width="0" fill="#666666">03/05/12</text>
+      </g>
+      <g>
+        <text text-anchor="end" x="28" y="443.7" font-size="12" stroke="none" stroke-width="0" fill="#666666">0</text>
+      </g>
+      <g>
+        <text text-anchor="end" x="28" y="386.7" font-size="12" stroke="none" stroke-width="0" fill="#666666">3</text>
+      </g>
+      <g>
+        <text text-anchor="end" x="28" y="329.7" font-size="12" stroke="none" stroke-width="0" fill="#666666">6</text>
+      </g>
+      <g>
+        <text text-anchor="end" x="28" y="272.7" font-size="12" stroke="none" stroke-width="0" fill="#666666">9</text>
+      </g>
+      <g>
+        <text text-anchor="end" x="28" y="215.7" font-size="12" stroke="none" stroke-width="0" fill="#666666">12</text>
+      </g>
+      <g>
+        <text text-anchor="end" x="28" y="158.7" font-size="12" stroke="none" stroke-width="0" fill="#666666">15</text>
+      </g>
+      <g>
+        <text text-anchor="end" x="28" y="101.7" font-size="12" stroke="none" stroke-width="0" fill="#666666">18</text>
+      </g>
+      <g>
+        <text text-anchor="end" x="28" y="44.7" stroke-width="0" fill="#666666">21</text>
+      </g>
+    </g>
+  </g>
+  <g></g>
+</svg>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" height="205pt" style="width:362px;height:205px;" version="1.1" viewBox="0 0 362 205" width="362pt">
+  <g>
+    <line style="stroke: blue; stroke-width: 1.0; stroke-dasharray: 20,40;" x1="146" x2="146" y1="35.4883" y2="204.041"/>
+    <line style="stroke: #A80036; stroke-width: 1.0; stroke-dasharray: 5.0,5.0;" x1="204" x2="204" y1="35.4883" y2="204.041"/>
+    <rect fill="#FEFECE" height="30.4883" style="stroke: #A80036; stroke-width: 1.5;" width="47" x="121" y="0"/>
+    <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="33" x="128" y="20.5352">Alice</text>
+    <rect fill="#FEFECE" height="30.4883" style="stroke: #A80036; stroke-width: 1.5;" width="40" x="182" y="0"/>
+    <text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="26" x="189" y="20.5352">Bob</text>
+    <polygon fill="#A80036" points="192,67.4883,202,71.4883,192,75.4883,196,71.4883" style="stroke: #A80036; stroke-width: 1.0;"/>
+    <line style="stroke: #A80036; stroke-width: 1.0;" x1="146.5" x2="198" y1="71.4883" y2="71.4883"/>
+    <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="31" x="153.5" y="67.0566">hello</text>
+    <polygon fill="#FBFB77" points="5,50.4883,5,75.4883,138,75.4883,138,60.4883,128,50.4883,5,50.4883" style="stroke: #A80036; stroke-width: 1.0;"/>
+    <line style="stroke: #A80036; stroke-width: 1.0;" x1="128" x2="128" y1="50.4883" y2="60.4883"/>
+    <line style="stroke: #A80036; stroke-width: 1.0;" x1="138" x2="128" y1="60.4883" y2="60.4883"/>
+    <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="112" x="11" y="68.0566">this is a first note</text>
+    <polygon fill="#A80036" points="157.5,106.7988,147.5,110.7988,157.5,114.7988,153.5,110.7988" style="stroke: #A80036; stroke-width: 1.0;"/>
+    <line style="stroke: #A80036; stroke-width: 1.0;" x1="151.5" x2="203" y1="110.7988" y2="110.7988"/>
+    <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="16" x="163.5" y="106.3672">ok</text>
+    <polygon fill="#FBFB77" points="209,89.7988,209,114.7988,353,114.7988,353,99.7988,343,89.7988,209,89.7988" style="stroke: #A80036; stroke-width: 1.0;"/>
+    <line style="stroke: #A80036; stroke-width: 1.0;" x1="343" x2="343" y1="89.7988" y2="99.7988"/>
+    <line style="stroke: #A80036; stroke-width: 1.0;" x1="353" x2="343" y1="99.7988" y2="99.7988"/>
+    <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="123" x="215" y="107.3672">this is another note</text>
+    <line style="stroke: #A80036; stroke-width: 1.0;" x1="204" x2="246" y1="159.2305" y2="159.2305"/>
+    <line style="stroke: #A80036; stroke-width: 1.0;" x1="246" x2="246" y1="159.2305" y2="172.2305"/>
+    <line style="stroke: #A80036; stroke-width: 1.0;" x1="205" x2="246" y1="172.2305" y2="172.2305"/>
+    <polygon fill="#A80036" points="215,168.2305,205,172.2305,215,176.2305,211,172.2305" style="stroke: #A80036; stroke-width: 1.0;"/>
+    <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="84" x="211" y="154.4883">I am thinking</text>
+    <polygon fill="#FBFB77" points="52,129.1094,52,184.1094,195,184.1094,195,139.1094,185,129.1094,52,129.1094" style="stroke: #A80036; stroke-width: 1.0;"/>
+    <line style="stroke: #A80036; stroke-width: 1.0;" x1="185" x2="185" y1="129.1094" y2="139.1094"/>
+    <line style="stroke: #A80036; stroke-width: 1.0;" x1="195" x2="185" y1="139.1094" y2="139.1094"/>
+    <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="39" x="58" y="146.6777">a note</text>
+    <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="122" x="58" y="161.9883">can also be defined</text>
+    <text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="98" x="58" y="177.2988">on several lines</text>
+  </g>
+</svg>

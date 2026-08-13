@@ -1,0 +1,48 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+if File.file? (asciidoctor_pdf = File.join (File.dirname __dir__), 'lib/asciidoctor/pdf.rb')
+  require asciidoctor_pdf
+else
+  require 'asciidoctor/pdf'
+end
+require 'asciidoctor/cli'
+
+# FIXME: provide an API in Asciidoctor for sub-projects to prepend version information
+options = (Asciidoctor::Cli::Options.new backend: 'pdf', header_footer: true).extend (Module.new do
+  def print_version os = $stdout
+    os.write %(Asciidoctor PDF #{Asciidoctor::PDF::VERSION} using )
+    super
+  end
+end)
+
+args = ARGV.dup
+
+if (theme_idx = args.index {|it| it == '--theme' || (it.start_with? '--theme=') })
+  if (theme_arg = args[theme_idx]).length > 7
+    args[theme_idx..theme_idx] = ['-a', %(pdf#{theme_arg.slice 1, theme_arg.length})]
+  elsif (val = args[theme_idx + 1]) && !(val.start_with? '-')
+    args[theme_idx] = '-a'
+    args[theme_idx + 1] = %(pdf-theme=#{val})
+  end
+end
+
+if (Gem::Version.new Asciidoctor::VERSION) < (Gem::Version.new '2.1.0') && (args.include? '--sourcemap')
+  args.delete '--sourcemap'
+  Asciidoctor::Extensions.register do
+    preprocessor do
+      process {|doc| (doc.sourcemap = true) && nil }
+    end
+  end
+end
+
+# FIXME: This is a really bizarre API. Please make me simpler.
+case (result = options.parse! args)
+when Integer
+  exit result
+else
+  invoker = Asciidoctor::Cli::Invoker.new options
+  GC.start
+  invoker.invoke!
+  exit invoker.code
+end

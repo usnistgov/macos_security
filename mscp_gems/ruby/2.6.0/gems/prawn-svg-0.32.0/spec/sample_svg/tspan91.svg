@@ -1,0 +1,34 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="10cm" height="6cm" viewBox="0 0 1000 600" xmlns="http://www.w3.org/2000/svg" version="1.1">
+  <g font-family="Verdana" font-size="45" >
+    <text x="10 30 50 70 90 110 130 150 800 800 800 460 480 500 520 540 560 580 600 620 640" y="150" fill="blue">
+      You are
+        <tspan font-weight="bold" fill="red" x="170 270 370">
+          hardly
+        </tspan>
+      a banana.
+    </text>
+
+    <text x="10 30 50 70 90 110 130 150 170 190 210 230 250 270 290 310 330 350 370 390" y="250">
+      Then
+      <tspan x="300 320 340 360 380 400 420 440 460 480" y="230" fill="red">
+        Start
+      </tspan>
+      as you mean to go on
+    </text>
+
+    <text x="10 30 50 70 90 110" y="450">
+      Then
+      <tspan x="300 320 340 360 380 400 420 440 460 480" y="430" fill="red">
+        Start
+      </tspan>
+      as you mean to go on
+      <tspan y="500">ok</tspan>
+    </text>
+  </g>
+
+  <!-- Show outline of canvas using 'rect' element -->
+  <rect x="1" y="1" width="998" height="598"
+        fill="none" stroke="blue" stroke-width="2" />
+</svg>

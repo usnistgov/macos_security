@@ -1,0 +1,13 @@
+<svg style="overflow: hidden; position: relative;" height="579.1447861965491" version="1.1" width="772" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <rect x="0" y="0" width="772" height="19" r="0" rx="0" ry="0" fill="#000000" stroke="#000000" transform="matrix(1,0,0,1,0,0.5)" stroke-width="1"></rect>
+  <rect x="0" y="560" width="772" height="19" r="0" rx="0" ry="0" fill="#000000" stroke="#000000" transform="matrix(1,0,0,1,0,0.5)" stroke-width="1"></rect>
+  <rect x="0" y="0" width="19" height="579" r="0" rx="0" ry="0" fill="#000000" stroke="#000000" transform="matrix(1,0,0,1,0,0.5)" stroke-width="1"></rect>
+  <rect x="753" y="0" width="19" height="579" r="0" rx="0" ry="0" fill="#000000" stroke="#000000" transform="matrix(1,0,0,1,0,0.5)" stroke-width="1"></rect>
+  <g style="text-anchor: middle; font-style: normal; font-variant: normal; font-size: 80px; line-height: normal; font-family: 'Open Sans';" transform="translate(186, 151)">
+    <text y="0" fill="black" style="font-weight: 100;">prawn-svg</text>
+    <text y="100" fill="black" style="font-weight: 400;">prawn-svg</text>
+    <text y="200" fill="black" style="font-weight: 600;">prawn-svg</text>
+    <text y="300" fill="black" style="font-weight: 800;">prawn-svg</text>
+    <text y="400" fill="black" style="font-style: italic;">prawn-svg</text>
+  </g>
+</svg>
