@@ -1,8 +1,9 @@
----
 id: os_facetime_disable
 title: Disable FaceTime App
 discussion: |
-  FaceTime _MUST_ be disabled.
+  The built-in FaceTime.app _MUST_ be disabled, unless FaceTime is an approved collaboration tool.
+
+  The FaceTime.app establishes a connection to Apple's iCloud service, even when security controls have been put in place to disable iCloud access.
 references:
   nist:
     cce:

@@ -1,4 +1,3 @@
----
 id: os_airprint_force_trusted_TLS
 title: Requires trusted certificates for TLS printing communication
 discussion: |

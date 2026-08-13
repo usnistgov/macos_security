@@ -1,4 +1,3 @@
----
 id: os_exchange_SMIME_encryption_default_certificate_overwrite_enable
 title: Enable selecting the appropriate S/MIME encryption certificate.
 discussion: |

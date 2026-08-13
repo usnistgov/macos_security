@@ -1,4 +1,3 @@
----
 id: os_asl_log_files_owner_group_configure
 title: Configure Apple System Log Files Owned by Root and Group to Wheel
 discussion: |

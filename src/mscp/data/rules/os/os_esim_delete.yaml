@@ -1,4 +1,3 @@
----
 id: os_esim_delete
 title: Ensure the eSIM Contents are Deleted When Device is Erased
 discussion: |

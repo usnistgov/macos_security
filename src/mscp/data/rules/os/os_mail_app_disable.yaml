@@ -1,9 +1,7 @@
 id: os_mail_app_disable
 title: Disable Mail App
 discussion: |
-  The macOS built-in Mail.app _MUST_ be disabled.
-
-  The Mail.app contains functionality that can establish connections to Apple's iCloud, even when security controls to disable iCloud access have been put in place.
+  The macOS built-in Mail.app _MUST_ be disabled, unless Mail is an approved emailtool.
 
   [IMPORTANT]
   ====
@@ -17,8 +15,6 @@ discussion: |
 references:
   nist:
     cce:
-      macos_27:
-        - CCE-XXXXX-X
       macos_26:
         - CCE-95221-8
       macos_15:
@@ -48,7 +44,6 @@ references:
       - 4.8
 platforms:
   macOS:
-    '27.0': {}
     '26.0': {}
     '15.0': {}
     enforcement_info:
@@ -82,7 +77,3 @@ mobileconfig_info:
       - familyControlsEnabled: true
       - pathBlackList:
           - /Applications/Mail.app
-ddm_info:
-  declarationtype: com.apple.configuration.app.settings
-  ddm_key: Allowed
-  ddm_value: { 'DeniedBinaries': [ { "SigningID": "com.apple.Messages" } ] }

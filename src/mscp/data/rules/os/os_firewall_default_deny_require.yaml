@@ -1,4 +1,3 @@
----
 id: os_firewall_default_deny_require
 title: Control Connections to Other Systems via a Deny-All and Allow-by-Exception Firewall Policy
 discussion: |

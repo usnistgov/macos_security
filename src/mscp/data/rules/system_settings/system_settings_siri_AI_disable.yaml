@@ -40,6 +40,8 @@ references:
   hhs:
     hicp:
       - 2.L.A
+      - 4.L.A
+      - 4.L.B"
   cis:
     controls_v8:
       - 4.1
@@ -50,12 +52,9 @@ platforms:
     enforcement_info:
       check:
         shell: |-
-          /usr/bin/osascript -l JavaScript << EOS
-          $.NSUserDefaults.alloc.initWithSuiteName('com.apple.ironwood.support')\
-          .objectForKey('allowSiri3489').js
-          EOS
+          /usr/bin/osascript -l JavaScript -e 'var s = $.NSUserDefaults.alloc.initWithSuiteName("apple.ironwood.support"); (ObjC.unwrap(s.objectForKey("allowSiri3489")) == false && s.objectIsForcedForKey("allowSiri3489")) ? "PASS" : "FAIL"'
         result:
-          string: 'false'
+          string: 'PASS'
     introduced: '27.0'
   iOS:
     '27.0': {}
@@ -76,6 +75,7 @@ tags:
   - cmmc_lvl1
   - cnssi-1253_moderate
   - hicp_lp
+  - new
 ddm_info:
   declarationtype: com.apple.configuration.siri.settings
   ddm_key: AllowSiriAI

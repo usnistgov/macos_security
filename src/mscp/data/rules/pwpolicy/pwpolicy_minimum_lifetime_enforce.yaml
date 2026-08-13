@@ -67,8 +67,7 @@ platforms:
           To set local policy to require a minimum password lifetime, edit the current password policy to contain the following <dict> within the "policyCategoryPasswordContent":
 
           [source,xml]
-          ----
-          <dict>
+          -          <dict>
           <key>policyContent</key>
           <string>policyAttributeLastPasswordChangeTime &lt; policyAttributeCurrentTime - (policyAttributeMinimumLifetimeHours * 60 * 60)</string>
           <key>policyIdentifier</key>
@@ -79,14 +78,11 @@ platforms:
           <integer>$ODV</integer>
           </dict>
           </dict>
-          ----
-          After saving the file and exiting to the command prompt, run the following command to load the new policy file, substituting the path to the file in place of "$pwpolicy_file".
+          -          After saving the file and exiting to the command prompt, run the following command to load the new policy file, substituting the path to the file in place of "$pwpolicy_file".
 
           [source,bash]
-          ----
-          /usr/bin/pwpolicy setaccountpolicies $pwpolicy_file
-          ----
-          NOTE: See the password policy supplemental on more information on how to implement password policies on macOS.
+          -          /usr/bin/pwpolicy setaccountpolicies $pwpolicy_file
+          -          NOTE: See the password policy supplemental on more information on how to implement password policies on macOS.
 odv:
   hint:
     datatype: number

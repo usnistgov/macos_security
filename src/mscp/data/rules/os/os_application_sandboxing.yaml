@@ -1,4 +1,3 @@
----
 id: os_application_sandboxing
 title: Ensure Separate Execution Domain for Processes
 discussion: |-

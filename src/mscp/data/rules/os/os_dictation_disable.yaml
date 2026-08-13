@@ -69,19 +69,6 @@ platforms:
       benchmarks:
         - name: disa_stig
           severity: medium
-      enforcement_info:
-        check:
-          shell: |-
-            /usr/bin/osascript -l JavaScript << EOS
-            $.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess')\
-            .objectForKey('allowDictation').js
-            EOS
-          result:
-            string: 'false'
-      mobileconfig_info:
-        - PayloadType: com.apple.applicationaccess
-          PayloadContent:
-            - allowDictation: false
     '15.0':
       benchmarks:
         - name: disa_stig
@@ -89,25 +76,15 @@ platforms:
       enforcement_info:
         check:
           shell: |-
-            /usr/bin/osascript -l JavaScript << EOS
-            $.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess')\
-            .objectForKey('allowDictation').js
-            EOS
+            /usr/bin/osascript -l JavaScript -e 'var s = $.NSUserDefaults.alloc.initWithSuiteName("com.apple.applicationaccess"); (ObjC.unwrap(s.objectForKey("allowDictation")) == false && s.objectIsForcedForKey("allowDictation")) ? "PASS" : "FAIL"'
           result:
-            string: 'false'
-      mobileconfig_info:
-        - PayloadType: com.apple.applicationaccess
-          PayloadContent:
-            - allowDictation: false            
+            string: 'PASS'
     enforcement_info:
       check:
         shell: |-
-          /usr/bin/osascript -l JavaScript << EOS
-          $.NSUserDefaults.alloc.initWithSuiteName('com.apple.ironwood.support')\
-          .objectForKey('Ironwood Allowed').js
-          EOS
+          /usr/bin/osascript -l JavaScript -e 'var s = $.NSUserDefaults.alloc.initWithSuiteName("com.apple.ironwood.support"); (ObjC.unwrap(s.objectForKey("Ironwood Allowed")) == false && s.objectIsForcedForKey("Ironwood Allowed")) ? "PASS" : "FAIL"'
         result:
-          string: 'false'
+          string: 'PASS'
     introduced: '10.13'
   iOS:
     '27.0':
