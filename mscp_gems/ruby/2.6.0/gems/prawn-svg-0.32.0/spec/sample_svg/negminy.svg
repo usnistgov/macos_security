@@ -1,0 +1,25 @@
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 -1329 4012.5722934428577 1964.1614245832113" xmlns="http://www.w3.org/2000/svg">
+<defs id="MathJax_SVG_glyphs">
+<path id="STIXWEBSIZE1-221A" stroke-width="10" d="M1089 1552l-562 -1847h-42l-231 751c-14 46 -30 68 -62 68c-19 0 -44 -8 -68 -27l-12 20l164 126h25l227 -737h4l500 1646h57Z"/>
+<path id="STIXWEBMAINI-78" stroke-width="10" d="M243 355l12 -57c70 107 107 143 151 143c24 0 41 -15 41 -37c0 -21 -14 -36 -34 -36c-19 0 -28 17 -52 17c-18 0 -54 -44 -98 -121c0 -7 2 -21 8 -45l32 -134c7 -28 16 -41 30 -41c13 0 24 10 47 40c9 12 13 18 21 28l15 -9c-58 -90 -84 -114 -122 -114 c-32 0 -47 18 -59 68l-29 119l-88 -119c-44 -59 -64 -68 -95 -68s-50 16 -50 42c0 20 14 36 34 36c9 0 19 -4 32 -11c10 -6 20 -9 26 -9c11 0 30 19 51 49l82 116l-28 124c-14 60 -21 68 -46 68c-8 0 -20 -2 -39 -7l-18 -5l-3 16l11 4c61 22 94 29 117 29 c25 0 37 -18 51 -86Z"/>
+<path id="STIXWEBMAIN-32" stroke-width="10" d="M474 137l-54 -137h-391v12l178 189c94 99 130 175 130 260c0 91 -54 141 -139 141c-72 0 -107 -32 -147 -130l-21 5c21 117 85 199 208 199c113 0 185 -77 185 -176c0 -79 -39 -154 -128 -248l-165 -176h234c42 0 63 11 96 67Z"/>
+<path id="STIXWEBMAIN-2B" stroke-width="10" d="M636 220h-261v-261h-66v261h-261v66h261v261h66v-261h261v-66Z"/>
+<path id="STIXWEBMAINI-79" stroke-width="10" d="M243 186l21 -110c85 141 122 213 122 257c0 14 -7 20 -26 32c-20 13 -26 23 -26 39c0 22 17 37 40 37c30 0 52 -25 52 -55c0 -57 -48 -167 -131 -305c-104 -172 -211 -287 -268 -287c-30 0 -51 17 -51 43c0 22 17 40 39 40c35 0 35 -28 61 -28c13 0 25 8 48 33 c18 19 63 78 71 91c6 12 10 24 10 35c0 40 -55 264 -82 332c-19 49 -37 64 -77 64c-11 0 -20 -1 -31 -4v17c11 2 22 4 32 6c20 4 53 10 107 18h4c15 0 68 -166 85 -255Z"/>
+</defs>
+<g transform="matrix(1 0 0 1 0 0)">
+<rect x="0" y="-1329" width="4012" height="1964" stroke="green" fill="none" stroke-width="5" />
+<g stroke="black" fill="black" stroke-width="0" transform="matrix(1 0 0 -1 0 0)">
+<use href="#STIXWEBSIZE1-221A" x="0" y="-312" xlink:href="#STIXWEBSIZE1-221A"/>
+<rect stroke="none" width="2950" height="60" x="1062" y="1190"/>
+<g transform="translate(1062,0)">
+<use href="#STIXWEBMAINI-78" xlink:href="#STIXWEBMAINI-78"/>
+<use transform="scale(0.7071067811865476)" href="#STIXWEBMAIN-32" x="640" y="583" xlink:href="#STIXWEBMAIN-32"/>
+<use href="#STIXWEBMAIN-2B" x="1132" y="0" xlink:href="#STIXWEBMAIN-2B"/>
+<g transform="translate(2044,0)">
+<use href="#STIXWEBMAINI-79" xlink:href="#STIXWEBMAINI-79"/>
+<use transform="scale(0.7071067811865476)" href="#STIXWEBMAIN-32" x="634" y="583" xlink:href="#STIXWEBMAIN-32"/>
+</g>
+</g>
+</g>
+</g>
+</svg>

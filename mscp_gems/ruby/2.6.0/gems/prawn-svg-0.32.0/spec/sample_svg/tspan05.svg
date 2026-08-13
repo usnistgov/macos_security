@@ -1,0 +1,40 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" viewBox="0 0 500 120"
+  xmlns="http://www.w3.org/2000/svg" version="1.1">
+  <desc>
+    Example tspan05 - propagation of rotation values to nested tspan elements.
+  </desc>
+  <text id="parent" font-family="Arial, sans-serif" font-size="32" fill="red" x="40" y="40"
+    rotate="5,15,25,35,45,55,55,55,55,55,55,55,55,55,55,55,55,55,55,55,55,55,55,55,55,55,55,55,55,55,55,55,55,55,55,55,55,55,55,55,55,55,55,55,55,0,0,0,0,0,0,-30">
+    <tspan>   </tspan>
+    Not
+
+    <tspan id="child1" rotate="-10,-20,-30,-40" fill="orange">
+      all characters
+
+      <tspan id="child2" rotate="0" fill="yellow">
+        in<tspan></tspan><tspan id="child3">the
+        </tspan>
+      </tspan>
+
+      <tspan id="child4" fill="orange" x="40" y="90">
+        text
+      </tspan>
+
+      have a
+    </tspan>
+
+    <tspan id="child5" rotate="-10" fill="blue">
+      specified
+    </tspan>
+
+    rotation
+    <tspan> </tspan>
+  </text>
+
+  <!-- Show outline of canvas using 'rect' element -->
+  <rect x="1" y="1" width="498" height="118" fill="none"
+        stroke="blue" stroke-width="2" />
+</svg>

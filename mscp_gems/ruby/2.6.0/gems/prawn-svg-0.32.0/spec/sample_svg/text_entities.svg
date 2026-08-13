@@ -1,0 +1,11 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="10cm" height="3cm" viewBox="0 0 1000 300" xmlns="http://www.w3.org/2000/svg" version="1.1">
+  <g font-family="Verdana" font-size="24">
+    <text x="200" y="150" fill="blue">
+      More &amp; more people say      &quot;Less is &lt; and
+      more is &gt;.&quot;
+    </text>
+  </g>
+  <rect x="1" y="1" width="998" height="298" fill="none" stroke="blue" stroke-width="2" />
+</svg>

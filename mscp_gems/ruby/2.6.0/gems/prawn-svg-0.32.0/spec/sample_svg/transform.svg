@@ -1,0 +1,20 @@
+<svg height="975" version="1.1" width="1275" xmlns="http://www.w3.org/2000/svg">
+  <rect x="0" y="0" width="200" height="100" fill="blue"/>
+  <rect x="0" y="0" width="200" height="100" fill="lightblue" transform="rotate(30 200 100) translate(200)"/>
+  <rect x="0" y="0" width="200" height="100" fill="lightblue" transform="rotate(-5) translate(400)"/>
+
+  <g transform="translate(0 200)">
+    <rect x="0" y="0" width="200" height="100" fill="green"/>
+    <rect x="0" y="0" width="200" height="100" fill="lightgreen" transform="skewX(35) translate(200)"/>
+  </g>
+
+  <g transform="translate(0 320)">
+    <rect x="0" y="0" width="200" height="100" fill="red"/>
+    <rect x="0" y="0" width="200" height="100" fill="pink" transform="skewY(5) translate(200)"/>
+  </g>
+
+  <g transform="translate(0 470)">
+    <rect x="0" y="0" width="200" height="100" fill="black"/>
+    <rect x="0" y="0" width="200" height="100" fill="grey" transform="translate(200) scale(1.5)"/>
+  </g>
+</svg>

@@ -1,0 +1,23 @@
+// Ukrainian translation, courtesy of Kyrylo Yatsenko <hedrok@gmail.com>
+:appendix-caption: Додаток
+:appendix-refsig: {appendix-caption}
+:caution-caption: Обережно
+:chapter-signifier: Розділ
+:chapter-refsig: {chapter-signifier}
+:example-caption: Приклад
+:figure-caption: Рисунок
+:important-caption: Важливо
+:last-update-label: Востаннє оновлено
+ifdef::listing-caption[:listing-caption: Лістинг]
+ifdef::manname-title[:manname-title: Назва]
+:note-caption: Зауваження
+:part-signifier: Частина
+:part-refsig: {part-signifier}
+ifdef::preface-title[:preface-title: Передмова]
+:section-refsig: Підрозділ
+:table-caption: Таблиця
+:tip-caption: Підказка
+:toc-title: Зміст
+:untitled-label: Без назви
+:version-label: Версія
+:warning-caption: Попередження

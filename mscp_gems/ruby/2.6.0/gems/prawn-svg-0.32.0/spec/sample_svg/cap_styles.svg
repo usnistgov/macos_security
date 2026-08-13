@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="1100" height="210">
+  <rect x="100" y="100" width="900" height="100" fill="none" stroke="blue" stroke-width="2" />
+
+  <g stroke="green" stroke-width="10">
+    <line x1="120" y1="110" x2="120" y2="190" />
+    <line x1="140" y1="110" x2="140" y2="190" stroke-linecap="butt" />
+    <line x1="160" y1="110" x2="160" y2="190" stroke-linecap="round" />
+    <line x1="180" y1="110" x2="180" y2="190" stroke-linecap="square" />
+    <line x1="200" y1="110" x2="200" y2="190" />
+    <line x1="220" y1="110" x2="220" y2="190" stroke-linecap="invalid" />
+  </g>
+</svg>
+

@@ -1,0 +1,23 @@
+// Hungarian translation, courtesy of István Pató <istvan.pato@gmail.com>
+:appendix-caption: függelék
+:appendix-refsig: {appendix-caption}
+:caution-caption: Figyelmeztetés
+//:chapter-signifier: ???
+//:chapter-refsig: {chapter-signifier}
+:example-caption: Példa
+:figure-caption: Ábra
+:important-caption: Fontos
+:last-update-label: Utolsó frissítés
+ifdef::listing-caption[:listing-caption: Lista]
+ifdef::manname-title[:manname-title: Név]
+:note-caption: Megjegyzés
+//:part-signifier: ???
+//:part-refsig: {part-signifier}
+ifdef::preface-title[:preface-title: Előszó]
+//:section-refsig: ???
+:table-caption: Táblázat
+:tip-caption: Tipp
+:toc-title: Tartalomjegyzék
+:untitled-label: Névtelen
+:version-label: Verzió
+:warning-caption: Figyelem

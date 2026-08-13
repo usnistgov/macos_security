@@ -1,0 +1,19 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+if File.file? (optimizer = File.join (File.dirname __dir__), 'lib/asciidoctor/pdf/optimizer.rb')
+  require optimizer
+else
+  require 'asciidoctor/pdf/optimizer'
+end
+
+args = ARGV.dup
+
+unless (filename = args.pop)
+  warn 'asciidoctor-pdf-optimize: Please specify a PDF file to optimize.'
+  exit 1
+end
+
+quality = args[0] == '--quality' ? args[1].to_s : ''
+
+(Asciidoctor::PDF::Optimizer.new quality).optimize_file filename

@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="800">
+  <text x="10" y="50" style="stroke: red; stroke-width: 2; font-size: 50pt; fill: none; font-family: sans-serif;">
+    Stroke only
+  </text>
+
+  <text x="10" y="100" style="stroke: black; stroke-width: 3; font-size: 50pt; fill: blue; font-family: sans-serif;">
+    Stroke and fill
+  </text>
+
+  <text x="10" y="150" style="stroke: none; font-size: 50pt; fill: none; font-family: sans-serif;">
+    No stroke or fill
+  </text>
+
+  <text x="10" y="200" style="stroke: none; stroke-width: 3; font-size: 50pt; fill: blue; font-family: sans-serif;">
+    Fill only
+  </text>
+
+  <g style="stroke: black; stroke-width: 3; fill: green;">
+    <text x="10" y="250" style="font-size: 50pt; font-family: sans-serif;">
+      Inherited
+    </text>
+  </g>
+
+  <text x="10" y="300" style="font-size: 50pt; font-family: sans-serif;">
+    Mixed
+    <tspan style="stroke: black; fill: none;">modes</tspan>
+    in a text
+  </text>
+
+  <text x="10" y="350" style="font-size: 50pt; font-family: sans-serif; stroke: black; fill: none;">
+    More mixed
+    <tspan style="fill: black; stroke: none;">modes</tspan>
+    in a text
+  </text>
+
+  <text x="10" y="400" style="font-size: 50pt; font-family: sans-serif; stroke: none; fill: none;">
+    Even more
+    <tspan style="fill: black; stroke: red;">mixed modes</tspan>
+    in a text
+  </text>
+</svg>

@@ -1,0 +1,23 @@
+// Catalan translation, courtesy of Abel Salgado Romero <abelromero@gmail.com> and Alex Soto
+:appendix-caption: Apèndix
+:appendix-refsig: {appendix-caption}
+:caution-caption: Atenció
+:chapter-signifier: Capítol
+:chapter-refsig: {chapter-signifier}
+:example-caption: Exemple
+:figure-caption: Figura
+:important-caption: Important
+:last-update-label: Última actualització
+ifdef::listing-caption[:listing-caption: Llista]
+ifdef::manname-title[:manname-title: Nom]
+:note-caption: Nota
+:part-signifier: Part
+:part-refsig: {part-signifier}
+ifdef::preface-title[:preface-title: Prefaci]
+:section-refsig: Secció
+:table-caption: Taula
+:tip-caption: Suggeriment
+:toc-title: Índex
+:untitled-label: Sense títol
+:version-label: Versió
+:warning-caption: Advertència

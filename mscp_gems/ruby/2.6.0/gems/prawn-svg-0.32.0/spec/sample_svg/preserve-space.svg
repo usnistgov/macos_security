@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="500" height="500">
+<text x="0" y="40" xml:space="preserve" font-size="30" letter-spacing="5">Text                (Far away text)</text>
+<text x="0" y="80" font-size="30" letter-spacing="5">Text                (Close text)</text>
+<text x="0" y="120" xml:space="preserve" font-size="30" letter-spacing="5">
+  Text
+  With
+  Newlines
+  And
+  Preserve
+</text>
+<text x="0" y="160" font-size="30" letter-spacing="5">
+  Text
+  With
+  Newlines
+  No
+  Preserve
+</text>
+</svg>

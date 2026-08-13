@@ -1,0 +1,52 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" version="1.1" width="700" height="700">
+<desc>Created with Highcharts 3.0.7</desc>
+<defs>
+    <clipPath id="highcharts-1">
+        <rect fill="none" x="0" y="0" width="680" height="675"/>
+    </clipPath>
+</defs>
+<rect rx="5" ry="5" fill="#FFFFFF" x="0" y="0" width="700" height="700"/>
+<g class="highcharts-series-group" zIndex="3">
+    <g class="highcharts-series highcharts-tracker" visibility="visible" zIndex="0.1" transform="translate(10,10) scale(1 1)" style="cursor:pointer;">
+        <path fill="none" d="M 398.21842343360134 47.01407539537521 C 393.21842343360134 47.01407539537521 391.6876463101181 54.86625479973296 389.5828277653285 65.66300148072486 L 387.47800922053887 76.45974816171676" stroke="#DF000D" stroke-width="1" visibility="visible"/>
+        <path fill="none" d="M 402.2770459083969 592.163288554881 C 397.2770459083969 592.163288554881 395.62952638563803 584.3347714908305 393.3641870418453 573.570560527761 L 391.09884769805257 562.8063495646916" stroke="#df424c" stroke-width="1" visibility="visible"/>
+        <path fill="none" d="M 226.7036279754776 63.82542782054614 C 231.7036279754776 63.82542782054614 234.81866968764356 71.19404472817988 239.10185204187187 81.32589297617625 L 243.38503439610017 91.45774122417262" stroke="#df878c" stroke-width="1" visibility="visible"/>
+        <path fill="#DF000D" d="M 339.94946358633314 71.87500514645669 A 248.125 248.125 0 0 1 432.9087444368945 89.92614048493073 L 405.3871617019353 158.07900164103185 A 174.625 174.625 0 0 0 339.96443356680476 145.37500362196474 Z" stroke="#FFFFFF" stroke-width="1" stroke-linejoin="round" transform="translate(0,0)"/>
+        <path fill="#df424c" d="M 433.13877180369553 90.01916425080302 A 248.125 248.125 0 1 1 161.76607819326867 147.3770445670913 L 214.56282681914172 198.51170340565568 A 174.625 174.625 0 1 0 405.5490499797293 158.14446975232838 Z" stroke="#FFFFFF" stroke-width="1" stroke-linejoin="round" transform="translate(0,0)"/>
+        <path fill="#df878c" d="M 161.93879023688453 147.19889698646077 A 248.125 248.125 0 0 1 339.65535935286596 71.87523934958779 L 339.7574493783142 145.375168449055 A 174.625 174.625 0 0 0 214.68437781406936 198.3863269975243 Z" stroke="#FFFFFF" stroke-width="1" stroke-linejoin="round" transform="translate(0,0)"/>
+    </g>
+    <g class="highcharts-markers" visibility="visible" zIndex="0.1" transform="translate(10,10) scale(1 1)"/>
+</g>
+<g class="highcharts-data-labels highcharts-tracker" visibility="visible" zIndex="6" transform="translate(10,10) scale(1 1)" style="cursor:pointer;">
+    <g zIndex="1" style="cursor:pointer;" transform="translate(403,37)" visibility="visible">
+        <text x="3" y="26" style="font-family:&quot;Open Sans&quot;, Verdana, Arial, Helvetica, sans-serif;font-size:24px;color:#000000;line-height:14px;fill:#000000;" zIndex="1">
+            <tspan x="3">Mobili&#xE8;re</tspan>
+        </text>
+    </g>
+    <g zIndex="1" style="cursor:pointer;" transform="translate(407,582)" visibility="visible">
+        <text x="3" y="26" style="font-family:&quot;Open Sans&quot;, Verdana, Arial, Helvetica, sans-serif;font-size:24px;color:#000000;line-height:14px;fill:#000000;" zIndex="1">
+            <tspan x="3">B&#xE2;loise</tspan>
+        </text>
+    </g>
+    <g zIndex="1" style="cursor:pointer;" transform="translate(130,54)" visibility="visible">
+        <text x="3" y="26" style="font-family:&quot;Open Sans&quot;, Verdana, Arial, Helvetica, sans-serif;font-size:24px;color:#000000;line-height:14px;fill:#000000;" zIndex="1">
+            <tspan x="3">Generali</tspan>
+        </text>
+    </g>
+</g>
+<g class="highcharts-legend" zIndex="7">
+    <rect rx="5" ry="5" fill="none" x="0.5" y="0.5" width="7" height="7" stroke="#909090" stroke-width="1" visibility="hidden"/>
+    <g zIndex="1">
+        <g/>
+    </g>
+</g>
+<g class="highcharts-tooltip" zIndex="8" style="cursor:default;padding:0;white-space:nowrap;" transform="translate(0,-999)">
+    <rect rx="3" ry="3" fill="none" x="0.5" y="0.5" width="16" height="16" fill-opacity="0.85" isShadow="true" stroke="black" stroke-width="5" transform="translate(1, 1)" opacity="0.049999999999999996"/>
+    <rect rx="3" ry="3" fill="none" x="0.5" y="0.5" width="16" height="16" fill-opacity="0.85" isShadow="true" stroke="black" stroke-width="3" transform="translate(1, 1)" opacity="0.09999999999999999"/>
+    <rect rx="3" ry="3" fill="none" x="0.5" y="0.5" width="16" height="16" fill-opacity="0.85" isShadow="true" stroke="black" stroke-width="1" transform="translate(1, 1)" opacity="0.15"/>
+    <rect rx="3" ry="3" fill="rgb(255,255,255)" x="0.5" y="0.5" width="16" height="16" fill-opacity="0.85"/>
+    <text x="8" y="21" style="font-family:&quot;Lucida Grande&quot;, &quot;Lucida Sans Unicode&quot;, Verdana, Arial, Helvetica, sans-serif;font-size:12px;color:#333333;fill:#333333;" zIndex="1"/>
+</g>
+</svg>

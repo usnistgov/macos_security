@@ -1,0 +1,23 @@
+// Danish translation, courtesy of Max Rydahl Andersen <manderse@redhat.com>, with updates from Morten Høfft <mhoefft@gbif.org>
+:appendix-caption: Appendix
+:appendix-refsig: {appendix-caption}
+:caution-caption: Forsigtig
+:chapter-signifier: Kapitel
+:chapter-refsig: {chapter-signifier}
+:example-caption: Eksempel
+:figure-caption: Figur
+:important-caption: Vigtig
+:last-update-label: Sidst opdateret
+ifdef::listing-caption[:listing-caption: List]
+ifdef::manname-title[:manname-title: Navn]
+:note-caption: Notat
+:part-signifier: Del
+:part-refsig: {part-signifier}
+ifdef::preface-title[:preface-title: Forord]
+:section-refsig: Sektion
+:table-caption: Tabel
+:tip-caption: Tips
+:toc-title: Indholdsfortegnelse
+:untitled-label: Unavngivet
+:version-label: Version
+:warning-caption: Advarsel

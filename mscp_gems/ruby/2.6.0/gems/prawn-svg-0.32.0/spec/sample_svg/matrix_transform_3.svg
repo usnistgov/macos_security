@@ -1,0 +1,33 @@
+<svg width="180" height="230" xmlns="http://www.w3.org/2000/svg">
+  <rect x="0" y="0" width="180" height="230" fill="#eee" stroke="green"/>
+
+  <g transform="translate(0, 0)">
+    <rect transform="matrix(1.1, 0.1, 0.3, 1.4, 0, 0)" width="20" height="20" fill="green"/>
+  </g>
+  <g transform="translate(30, 30)">
+    <rect transform="matrix(1.1, 0.1, 0.3, 1.4, 0, 0)" width="20" height="20" fill="green"/>
+  </g>
+  <g transform="translate(60, 60)">
+    <rect transform="matrix(1.1, 0.1, 0.3, 1.4, 0, 0)" width="20" height="20" fill="green"/>
+  </g>
+  <g transform="translate(90, 90)">
+    <rect transform="matrix(1.1, 0.1, 0.3, 1.4, 0, 0)" width="20" height="20" fill="green"/>
+  </g>
+  <g transform="translate(120, 120)">
+    <rect transform="matrix(1.1, 0.08, 0.05, 1.4, 0, 0)" width="20" height="20" fill="green"/>
+  </g>
+
+  <g transform="matrix(1,2,3,4,5,6)">
+    <!-- New coordinate system (thick blue line)
+         x1 = 10 | x2 = 30
+         y1 = 20 | y2 = 40
+      -->
+    <line x1="10" y1="20" x2="30" y2="40" style="stroke-width: 20px; stroke: blue;"/>
+  </g>
+
+  <!-- Previous coordinate system (thin red line)
+       x1 = 1 * 10 + 3 * 20 + 5 = 75  | x2 = 1 * 30 + 3 * 40 + 5 = 155
+       y1 = 2 * 10 + 4 * 20 + 6 = 106 | y2 = 2 * 30 + 4 * 40 + 6 = 226
+    -->
+  <line x1="75" y1="106" x2="155" y2="226" style="stroke-width: 1px; stroke: red;"/>
+</svg>

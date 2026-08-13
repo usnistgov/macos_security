@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xl="http://www.w3.org/1999/xlink" version="1.1" viewBox="39 70 318 312" width="318pt" height="26pc">
+  <metadata xmlns:dc="http://purl.org/dc/elements/1.1/">
+    <dc:date>2010-05-25 19:53Z</dc:date>
+    <!-- Produced by OmniGraffle Professional 5.2.1 -->
+  </metadata>
+  <defs>
+    <font-face font-family="Helvetica" font-size="7" units-per-em="1000" underline-position="-75.683594" underline-thickness="49.316406" slope="0" x-height="522.94922" cap-height="717.28516" ascent="770.01953" descent="-229.98047" font-weight="500">
+      <font-face-src>
+        <font-face-name name="Helvetica"/>
+      </font-face-src>
+    </font-face>
+    <font-face font-family="Helvetica" font-size="18" units-per-em="1000" underline-position="-75.683594" underline-thickness="49.316406" slope="0" x-height="522.94922" cap-height="717.28516" ascent="770.01953" descent="-229.98047" font-weight="500">
+      <font-face-src>
+        <font-face-name name="Helvetica"/>
+      </font-face-src>
+    </font-face>
+  </defs>
+  <g stroke="none" stroke-opacity="1" stroke-dasharray="none" fill="none" fill-opacity="1">
+    <title>Canvas 1</title>
+    <rect fill="white" width="559.2" height="782.8"/>
+    <g>
+      <title>Layer 1</title>
+      <rect x="43" y="146" width="208" height="205" fill="white"/>
+      <rect x="43" y="146" width="208" height="205" stroke="maroon" stroke-linecap="round" stroke-linejoin="round" stroke-width="6"/>
+      <ellipse cx="225.5" cy="179.99998" rx="114.50019" ry="108.000175" fill="yellow"/>
+      <ellipse cx="225.5" cy="179.99998" rx="114.50019" ry="108.000175" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      <text transform="translate(138.89999 172)" fill="#4c4c4c">
+        <tspan font-family="Helvetica" font-size="7" font-weight="500" fill="#4c4c4c" x="63.651756" y="6" textLength="45.896484">Tiny Grey Text</tspan>
+        <tspan font-family="Helvetica" font-size="7" font-weight="500" fill="#4c4c4c" x="61.50698" y="14" textLength="50.186035">on Yellow Circle</tspan>
+      </text>
+      <path d="M 107 380 L 231 243 L 355 380 Z" fill="red"/>
+      <path d="M 107 380 L 231 243 L 355 380 Z" stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"/>
+      <text transform="translate(174 316.9)" fill="blue">
+        <tspan font-family="Helvetica" font-size="18" font-weight="500" fill="blue" x="6.4716797" y="18" textLength="101.05664">Blue Text on</tspan>
+        <tspan font-family="Helvetica" font-size="18" font-weight="500" fill="blue" x="5.474121" y="40" textLength="103.05176">Red Triangle</tspan>
+      </text>
+    </g>
+  </g>
+</svg>

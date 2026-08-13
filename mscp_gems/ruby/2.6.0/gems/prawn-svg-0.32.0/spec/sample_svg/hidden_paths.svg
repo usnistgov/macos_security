@@ -1,0 +1,6 @@
+<svg style="fill: none;">
+  <g class="x axis" transform="translate(0,227.9359)">
+    <path class="domain" d="M0,0V0H470V0" style="fill: none; stroke: none;"></path>
+    <path d="M 44.82625 0 L 44.82625 -3 L 94 -3 L 94 0" class="cantilever" style="stroke: black; fill: none;"></path>
+  </g>
+</svg>

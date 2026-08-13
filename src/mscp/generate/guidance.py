@@ -176,15 +176,10 @@ def generate_guidance(sp: Yaspin, args: argparse.Namespace) -> None:
     sp.spinner = Spinners.dots
     signing: bool = False
     log_reference: str = "default"
-    if args.dark:
-        pdf_theme: str = "mscp_theme-dark.yml"
-        html_css: str = "asciidoctor-dark.css"
-    else:
-        pdf_theme: str = "mscp_theme.yml"
-        html_css: str = "asciidoctor.css"
+    # Light/dark is driven entirely by the stylesheet now that PDF (typst) and
+    # HTML (python) both derive their theme from ``html_css``.
+    html_css: str = "asciidoctor-dark.css" if args.dark else "asciidoctor.css"
 
-    _custom_root = Path(config["custom"]["root_dir"])
-    custom: bool = _custom_root.exists() and any(_custom_root.iterdir())
     show_all_tags: bool = False
 
     output_basename: str = args.baseline.name
@@ -196,8 +191,13 @@ def generate_guidance(sp: Yaspin, args: argparse.Namespace) -> None:
         )
     else:
         build_path: Path = Path(config.get("output_dir", ""), baseline_name)
-    adoc_output_file: Path = Path(build_path, f"{baseline_name}_{args.language}.adoc")
     md_output_file: Path = Path(build_path, f"{baseline_name}_{args.language}.md")
+    # Canonical guidance outputs: the .typ is the intermediate that compiles to
+    # the final .pdf; the .html is written directly. No more .adoc / Ruby.
+    typst_output_file: Path = Path(build_path, f"{baseline_name}_{args.language}.typ")
+    html_output_file: Path = Path(
+        build_path, f"{baseline_name}_{args.language}.html"
+    )
     spreadsheet_output_file: Path = Path(
         build_path, f"{baseline_name}_{args.language}.xlsx"
     )
@@ -252,18 +252,7 @@ def generate_guidance(sp: Yaspin, args: argparse.Namespace) -> None:
         remove_dir_contents(build_path)
 
     logger.info(f"Profile YAML: {output_basename}")
-    logger.info(f"Output path: {adoc_output_file.name}")
-
-    if custom:
-        themes = list(Path(config["custom"]["misc_dir"]).glob("*theme*.yml"))
-
-        if len(themes) > 1:
-            logger.warning(
-                "Found multiple custom themes in directory, only one can exist, using default"
-            )
-        elif len(themes) == 1:
-            logger.info(f"Found custom PDF theme: {themes[0]}")
-            pdf_theme = str(themes[0])
+    logger.info(f"Output path: {build_path}")
 
     if args.profiles:
         logger.info("Generating configuration profiles")
@@ -324,7 +313,6 @@ def generate_guidance(sp: Yaspin, args: argparse.Namespace) -> None:
             md_output_file,
             baseline,
             b64logo,
-            pdf_theme,
             html_css,
             logo_path,
             baseline.platform["os"],
@@ -405,7 +393,6 @@ def generate_guidance(sp: Yaspin, args: argparse.Namespace) -> None:
             md_output_file,
             baseline,
             b64logo,
-            pdf_theme,
             html_css,
             logo_path,
             baseline.platform["os"],
@@ -432,18 +419,35 @@ def generate_guidance(sp: Yaspin, args: argparse.Namespace) -> None:
         generate_manifest(build_path, baseline_name, baseline)
 
     if not args.no_docs:
-        logger.info("Generating asciidoctor, PDF, and HTML documents")
+        logger.info("Generating PDF document (typst)")
+        sp.text = "Generating PDF document (typst)"
         generate_documents(
             sp,
-            adoc_output_file,
+            typst_output_file,
             baseline,
             b64logo,
-            pdf_theme,
             html_css,
             logo_path,
             baseline.platform["os"],
             current_version_data,
             show_all_tags,
+            output_format="typst",
+            language=args.language,
+        )
+
+        logger.info("Generating HTML document (python)")
+        sp.text = "Generating HTML document (python)"
+        generate_documents(
+            sp,
+            html_output_file,
+            baseline,
+            b64logo,
+            html_css,
+            logo_path,
+            baseline.platform["os"],
+            current_version_data,
+            show_all_tags,
+            output_format="html",
             language=args.language,
         )
     try:
