@@ -280,6 +280,8 @@ def generate_excel(file_out: Path, baseline: Baseline) -> None:
         "disa",
         "cis",
         "bsi",
+        "hhs",
+        "bzk",
         "custom_refs",
     ]
 
