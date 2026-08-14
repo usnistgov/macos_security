@@ -101,7 +101,7 @@ platforms:
     enforcement_info:
       check:
         shell: |-
-          /usr/bin/osascript -l JavaScript -e 'var s = $.NSUserDefaults.alloc.initWithSuiteName("com.apple.applicationaccess"); (ObjC.unwrap(s.objectForKey("allowCloudPhotoLibrary")) == false && s.objectIsForcedForKey("allowCloudPhotoLibrary")) ? "PASS" : "FAIL"'          
+          /usr/bin/osascript -l JavaScript -e 'var s = $.NSUserDefaults.alloc.initWithSuiteName("com.apple.applicationaccess"); (ObjC.unwrap(s.objectForKey("allowCloudPhotoLibrary")) == false && s.objectIsForcedForKey("allowCloudPhotoLibrary")) ? "PASS" : "FAIL"'
         result:
           string: 'PASS'
     introduced: '10.12'
