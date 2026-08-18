@@ -52,7 +52,7 @@ platforms:
     enforcement_info:
       check:
         shell: |-
-          /usr/bin/osascript -l JavaScript -e 'var s = $.NSUserDefaults.alloc.initWithSuiteName("apple.ironwood.support"); (ObjC.unwrap(s.objectForKey("allowSiri3489")) == false && s.objectIsForcedForKey("allowSiri3489")) ? "PASS" : "FAIL"'
+          /usr/bin/osascript -l JavaScript -e 'var s = $.NSUserDefaults.alloc.initWithSuiteName("com.apple.ironwood.support"); (ObjC.unwrap(s.objectForKey("allowSiri3489")) == false && s.objectIsForcedForKey("allowSiri3489")) ? "PASS" : "FAIL"'
         result:
           string: 'PASS'
     introduced: '27.0'
