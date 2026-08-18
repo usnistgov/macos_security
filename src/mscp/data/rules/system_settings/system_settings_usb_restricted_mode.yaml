@@ -105,7 +105,7 @@ platforms:
             }
           EOS
         result:
-          string: 'true'
+          string: 'PASS'
     introduced: '13.0'
   iOS:
     '27.0':

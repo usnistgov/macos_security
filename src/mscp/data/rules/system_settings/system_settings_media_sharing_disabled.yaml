@@ -77,7 +77,7 @@ platforms:
     enforcement_info:
       check:
         shell: |-
-          /usr/bin/osascript -l JavaScript -e 'var s = $.NSUserDefaults.alloc.initWithSuiteName("com.apple.applicationaccess"); var v1 = ObjC.unwrap(s.objectForKey("allowMediaSharing")); var v2 = ObjC.unwrap(s.objectForKey("allowMediaSharingModification")); var f1 = s.objectIsForcedForKey("allowMediaSharing"); var f2 = s.objectIsForcedForKey("allowMediaSharingModification"); (v1 == false && v2 == false && f1 && f2) ? "PASS" : "FAIL"'
+          /usr/bin/osascript -l JavaScript -e 'var s = $.NSUserDefaults.alloc.initWithSuiteName("com.apple.applicationaccess"); (ObjC.unwrap(s.objectForKey("allowMediaSharingModification")) == false && s.objectIsForcedForKey("allowMediaSharingModification")) ? "PASS" : "FAIL"'
         result:
           string: 'PASS'
     introduced: '-1'
@@ -96,5 +96,4 @@ tags:
 mobileconfig_info:
   - PayloadType: com.apple.applicationaccess
     PayloadContent:
-      - allowMediaSharing: false
       - allowMediaSharingModification: false
