@@ -48,7 +48,7 @@ platforms:
         shell: |-
           /usr/bin/osascript -l JavaScript -e 'var s = $.NSUserDefaults.alloc.initWithSuiteName("com.apple.ironwood.support"); (ObjC.unwrap(s.objectForKey("allowCallRecording")) == false && s.objectIsForcedForKey("allowCallRecording")) ? "PASS" : "FAIL"'
         result:
-          string: 'false'
+          string: 'PASS'
     introduced: '26.0'
   iOS:
     '27.0': {}
