@@ -1,5 +1,5 @@
 id: os_sshd_channel_timeout_configure
-title: Configure SSHD Channel Timeout to $ODV
+title: Configure SSHD with Session Channel Timeout to $ODV
 discussion: |
   If SSHD is enabled it _MUST_ be configured with session ChannelTime out set to $ODV.
 
@@ -55,7 +55,7 @@ platforms:
           severity: medium
     enforcement_info:
       check:
-        shell: /usr/sbin/sshd -G | /usr/bin/awk '/channeltimeout/{print $2}'
+        shell: /usr/sbin/sshd -G | /usr/bin/awk -F"=" '/channeltimeout session:*/{print $2}'
         result:
           string: $ODV
       fix:
@@ -66,7 +66,7 @@ platforms:
             /usr/bin/sed -i.bk "1s/.*/Include \/etc\/ssh\/sshd_config.d\/\*/" /etc/ssh/sshd_config
           fi
 
-          /usr/bin/grep -qxF 'channeltimeout $ODV' "${include_dir}01-mscp-sshd.conf" 2>/dev/null || echo "channeltimeout $ODV" >> "${include_dir}01-mscp-sshd.conf"
+          /usr/bin/grep -qxF 'channeltimeout session:*=$ODV' "${include_dir}01-mscp-sshd.conf" 2>/dev/null || echo "channeltimeout session:*=$ODV" >> "${include_dir}01-mscp-sshd.conf"
 
           for file in $(ls ${include_dir}); do
             if [[ "$file" == "100-macos.conf" ]]; then
