@@ -5,8 +5,6 @@ discussion: |
 references:
   nist:
     cce:
-      macos_27:
-        - CCE-XXXXX-X
       ios_27:
         - CCE-XXXXX-X
       ios_26:
@@ -30,15 +28,6 @@ references:
       ios_26:
         - ANNEX K
 platforms:
-  macOS:
-    '27.0': {}
-    introduced: '27.0'
-    enforcement_info:
-      check:
-        shell: |-        
-          /usr/bin/osascript -l JavaScript -e 'var s = $.NSUserDefaults.alloc.initWithSuiteName("com.apple.applicationaccess"); (ObjC.unwrap(s.objectForKey("allowVisualIntelligenceSummary")) == false && s.objectIsForcedForKey("allowVisualIntelligenceSummary")) ? "PASS" : "FAIL"'
-        result:
-          string: 'PASS'    
   iOS:
     '27.0':
       supervised: true
