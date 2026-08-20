@@ -104,8 +104,8 @@ platforms:
           done
 odv:
   hint:
-    datatype: string
-    description: channel type=interval
+    datatype: integer
+    description: number of seconds
     validation:
       min: 0
   recommended: 900
