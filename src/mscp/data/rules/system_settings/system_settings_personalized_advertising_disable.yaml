@@ -76,12 +76,9 @@ platforms:
     enforcement_info:
       check:
         shell: |-
-          /usr/bin/osascript -l JavaScript << EOS
-          $.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess')\
-          .objectForKey('allowApplePersonalizedAdvertising').js
-          EOS
+          /usr/bin/osascript -l JavaScript -e 'var s = $.NSUserDefaults.alloc.initWithSuiteName("com.apple.applicationaccess"); (ObjC.unwrap(s.objectForKey("allowApplePersonalizedAdvertising")) == false && s.objectIsForcedForKey("allowApplePersonalizedAdvertising")) ? "PASS" : "FAIL"'
         result:
-          string: 'false'
+          string: 'PASS'
     introduced: '12.0'
 tags:
   - 800-53r5_low

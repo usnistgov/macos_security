@@ -62,12 +62,9 @@ platforms:
     enforcement_info:
       check:
         shell: |-
-          /usr/bin/osascript -l JavaScript 2>/dev/null << EOS
-          $.NSUserDefaults.alloc.initWithSuiteName('com.apple.SetupAssistant.managed')\
-          .objectForKey('SkipSetupItems').containsObject("ScreenTime")
-          EOS
+          /usr/bin/osascript -l JavaScript -e 'var s = $.NSUserDefaults.alloc.initWithSuiteName("com.apple.SetupAssistant.managed"); (ObjC.unwrap(s.objectForKey("SkipSetupItems").containsObject("ScreenTime")) == true && s.objectIsForcedForKey("SkipSetupItems")) ? "PASS" : "FAIL"'
         result:
-          string: 'true'
+          string: 'PASS'
     introduced: '15.0'
 tags:
   - 800-171

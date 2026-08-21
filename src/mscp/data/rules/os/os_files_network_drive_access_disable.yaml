@@ -1,4 +1,3 @@
----
 id: os_files_network_drive_access_disable
 title: Ensure Allow Network Drive Access in Files App is Set to Disabled
 discussion: |

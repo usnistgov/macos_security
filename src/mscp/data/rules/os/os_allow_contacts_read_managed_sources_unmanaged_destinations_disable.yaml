@@ -1,4 +1,3 @@
----
 id: os_allow_contacts_read_managed_sources_unmanaged_destinations_disable
 title: Ensure Managed Apps Cannot Read Unmanaged Contact Accounts
 discussion: |

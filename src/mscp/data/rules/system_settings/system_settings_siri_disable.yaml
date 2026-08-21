@@ -94,19 +94,6 @@ platforms:
         - name: cis_lvl2
         - name: disa_stig
           severity: medium
-      enforcement_info:
-        check:
-          shell: |-
-            /usr/bin/osascript -l JavaScript << EOS
-            $.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess')\
-            .objectForKey('allowAssistant').js
-            EOS
-          result:
-            string: 'false'
-      mobileconfig_info:
-        - PayloadType: com.apple.applicationaccess
-          PayloadContent:
-            - allowAssistant: false
     '15.0':
       benchmarks:
         - name: cis_lvl1
@@ -115,26 +102,20 @@ platforms:
           severity: medium
       enforcement_info:
         check:
-          shell: |-
-            /usr/bin/osascript -l JavaScript << EOS
-            $.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess')\
-            .objectForKey('allowAssistant').js
-            EOS
+          shell: |-            
+            /usr/bin/osascript -l JavaScript -e 'var s = $.NSUserDefaults.alloc.initWithSuiteName("com.apple.applicationaccess"); (ObjC.unwrap(s.objectForKey("allowAssistant")) == false && s.objectIsForcedForKey("allowAssistant")) ? "PASS" : "FAIL"'
           result:
-            string: 'false'
+            string: 'PASS'
       mobileconfig_info:
         - PayloadType: com.apple.applicationaccess
           PayloadContent:
-            - allowAssistant: false            
+            - allowAssistant: false
     enforcement_info:
       check:
         shell: |-
-          /usr/bin/osascript -l JavaScript << EOS
-          $.NSUserDefaults.alloc.initWithSuiteName('com.apple.ironwood.support')\
-          .objectForKey('Assistant Allowed').js
-          EOS
+          /usr/bin/osascript -l JavaScript -e 'var s = $.NSUserDefaults.alloc.initWithSuiteName("com.apple.ironwood.support"); (ObjC.unwrap(s.objectForKey("Assistant Allowed")) == false && s.objectIsForcedForKey("Assistant Allowed")) ? "PASS" : "FAIL"'
         result:
-          string: 'false'            
+          string: 'PASS'
     introduced: '14.0'
   iOS:
     '27.0': {}

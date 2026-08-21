@@ -60,12 +60,9 @@ platforms:
     enforcement_info:
       check:
         shell: |-
-          /usr/bin/osascript -l JavaScript << EOS
-          $.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess')\
-          .objectForKey('allowFingerprintForUnlock').js
-          EOS
+          /usr/bin/osascript -l JavaScript -e 'var s = $.NSUserDefaults.alloc.initWithSuiteName("com.apple.applicationaccess"); (ObjC.unwrap(s.objectForKey("allowFingerprintForUnlock")) == false && s.objectIsForcedForKey("allowFingerprintForUnlock")) ? "PASS" : "FAIL"'
         result:
-          string: 'false'
+          string: 'PASS'
     introduced: 10.12.4
   visionOS:
     '27.0': {}

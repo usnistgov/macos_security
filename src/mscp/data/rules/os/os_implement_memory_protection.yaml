@@ -1,4 +1,3 @@
----
 id: os_implement_memory_protection
 title: Configure the System to Protect Memory from Unauthorized Code Execution
 discussion: |-

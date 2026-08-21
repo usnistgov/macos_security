@@ -74,12 +74,9 @@ platforms:
     enforcement_info:
       check:
         shell: |-
-          /usr/bin/osascript -l JavaScript << EOS
-          $.NSUserDefaults.alloc.initWithSuiteName('com.apple.timed')\
-          .objectForKey('TMAutomaticTimeOnlyEnabled').js
-          EOS
+          /usr/bin/osascript -l JavaScript -e 'var s = $.NSUserDefaults.alloc.initWithSuiteName("com.apple.timed"); (ObjC.unwrap(s.objectForKey("TMAutomaticTimeOnlyEnabled")) == true && s.objectIsForcedForKey("TMAutomaticTimeOnlyEnabled")) ? "PASS" : "FAIL"'
         result:
-          string: 'true'
+          string: 'PASS'
     introduced: '-1'
 tags:
   - 800-171

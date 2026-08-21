@@ -1,4 +1,3 @@
----
 id: audit_enforce_dual_auth
 title: Enforce Dual Authorization for Movement and Deletion of Audit Information
 discussion: |-

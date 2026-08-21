@@ -1,9 +1,11 @@
 id: icloud_keychain_disable
 title: Disable iCloud Keychain Sync
 discussion: |
-  The system's ability to automatically synchronize a user's passwords to their iCloud account _MUST_ be disabled.
+  The system's ability to automatically synchronize a user's passwords to their iCloud account _MUST_ be disabled, unless the organization has explicitly authorized the use of iCloud as a approved password management service.
 
   Apple's iCloud service does not provide an organization with enough control over the storage and access of data and, therefore, password management and synchronization _MUST_ be controlled by an organization approved service.
+
+  This requirement helps ensure that organizational contact data is managed in accordance with established security, privacy, access-control, and data governance requirements.
 references:
   nist:
     cce:
@@ -110,12 +112,9 @@ platforms:
     enforcement_info:
       check:
         shell: |-
-          /usr/bin/osascript -l JavaScript << EOS
-          $.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess')\
-          .objectForKey('allowCloudKeychainSync').js
-          EOS
+          /usr/bin/osascript -l JavaScript -e 'var s = $.NSUserDefaults.alloc.initWithSuiteName("com.apple.applicationaccess"); (ObjC.unwrap(s.objectForKey("allowCloudKeychainSync")) == false && s.objectIsForcedForKey("allowCloudKeychainSync")) ? "PASS" : "FAIL"'          
         result:
-          string: 'false'
+          string: 'PASS'
     introduced: '10.12'
   iOS:
     '27.0': {}

@@ -1,4 +1,3 @@
----
 id: icloud_private_relay_disable
 title: Disable iCloud Private Relay
 discussion: |
@@ -68,12 +67,9 @@ platforms:
     enforcement_info:
       check:
         shell: |-
-          /usr/bin/osascript -l JavaScript << EOS
-          $.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess')\
-          .objectForKey('allowCloudPrivateRelay').js
-          EOS
+          /usr/bin/osascript -l JavaScript -e 'var s = $.NSUserDefaults.alloc.initWithSuiteName("com.apple.applicationaccess"); (ObjC.unwrap(s.objectForKey("allowCloudPrivateRelay")) == false && s.objectIsForcedForKey("allowCloudPrivateRelay")) ? "PASS" : "FAIL"'
         result:
-          string: 'false'
+          string: 'PASS'
     introduced: '12.0'
   visionOS:
     '27.0': {}

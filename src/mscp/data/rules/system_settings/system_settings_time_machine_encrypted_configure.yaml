@@ -44,7 +44,7 @@ platforms:
         - name: nlmapgov_plus
     enforcement_info:
       check:
-        shell: /usr/bin/sudo /usr/bin/defaults read /Library/Preferences/com.apple.TimeMachine.plist | grep -c NotEncrypted
+        shell: /usr/bin/defaults read /Library/Preferences/com.apple.TimeMachine.plist | /usr/bin/grep -c NotEncrypted
         result:
           integer: 0
       fix:

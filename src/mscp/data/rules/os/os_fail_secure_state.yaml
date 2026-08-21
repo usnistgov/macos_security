@@ -1,4 +1,3 @@
----
 id: os_fail_secure_state
 title: Configure System to Fail to a Known Safe State if System Initialization, Shutdown, or Abort Fails
 discussion: |-

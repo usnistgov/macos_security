@@ -1,8 +1,11 @@
----
 id: icloud_photo_stream_disable
 title: Ensure Photo Stream is set to Disabled
 discussion: |
-  If a user is able to configure the security setting, the user could inadvertently or maliciously set it to a value that poses unacceptable risk to DoD information systems. An adversary could exploit vulnerabilities created by the weaker configuration to compromise DoD sensitive information.
+  The built-in Photos.app's Photo Stream connection to Apple's iCloud service _MUST_ be disabled, unless the organization has explicitly authorized the use of iCloud as a approved photo management service.
+
+  Apple's iCloud service does not provide an organization with enough control over the storage and access of data and, therefore, automated photo synchronization _MUST_ be controlled by an organization approved service.
+  
+  This requirement helps ensure that organizational photo data is managed in accordance with established security, privacy, access-control, and data governance requirements.
 references:
   nist:
     cce:
