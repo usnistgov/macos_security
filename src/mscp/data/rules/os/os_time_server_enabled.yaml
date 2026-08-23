@@ -32,6 +32,8 @@ references:
       - SRG-OS-000356-GPOS-00144
       - SRG-OS-000785-GPOS-00250
     disa_stig:
+      macos_27:
+        - APPL-27-000180
       macos_26:
         - APPL-26-000180
       macos_15:
@@ -55,7 +57,10 @@ references:
       - 8.4
 platforms:
   macOS:
-    '27.0': {}
+    '27.0':
+      benchmarks:
+        - name: disa_stig
+          severity: medium
     '26.0':
       benchmarks:
         - name: cis_lvl1
