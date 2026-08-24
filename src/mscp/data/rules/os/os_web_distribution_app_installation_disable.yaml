@@ -7,8 +7,6 @@ references:
     cce:
       ios_27:
         - CCE-XXXXX-X
-      ios_27:
-        - CCE-XXXXX-X
       ios_26:
         - CCE-95544-3
       ios_18:
