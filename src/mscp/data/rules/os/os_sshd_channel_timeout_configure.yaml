@@ -82,7 +82,7 @@ platforms:
       check:
         shell: /usr/sbin/sshd -G | /usr/bin/awk -F "=" '/channeltimeout */{print $2}'
         result:
-          string: $ODV
+          integer: $ODV
       fix:
         shell: |-
           include_dir=$(/usr/bin/awk '/^Include/ {print $2}' /etc/ssh/sshd_config | /usr/bin/tr -d '*')
@@ -104,7 +104,7 @@ platforms:
           done
 odv:
   hint:
-    datatype: integer
+    datatype: number
     description: number of seconds
     validation:
       min: 0
