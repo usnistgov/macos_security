@@ -407,7 +407,6 @@ usage=(
     "                       2 - show minimal output"
   )
 
-set -- "$@" "${EOL:=$(printf '\1\3\3\7')}"
 
 # Look for managed arguments for compliance script
 if [[ $# -eq 0 ]];then
@@ -428,7 +427,7 @@ EOS
         set -- ${(z)compliance_args}
     fi
 fi
-  
+
 zparseopts -D -E -help=flag_help -check=check -fix=fix -stats=stats -compliant=compliant_opt -non_compliant=non_compliant_opt -reset=reset -reset-all=reset_all -cfc=cfc -quiet:=quiet || { print -l $usage && return }
 
 [[ -z "$flag_help" ]] || { print -l $usage && return }
