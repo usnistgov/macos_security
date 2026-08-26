@@ -29,6 +29,8 @@ references:
       - SRG-OS-000076-GPOS-00044
       - SRG-OS-000775-GPOS-00230
     disa_stig:
+      macos_27:
+        - APPL-27-003008
       macos_26:
         - APPL-26-003008
       macos_15:
@@ -54,7 +56,10 @@ references:
       - 5.3
 platforms:
   macOS:
-    '27.0': {}
+    '27.0':
+      benchmarks:
+        - name: disa_stig
+          severity: medium
     '26.0':
       benchmarks:
         - name: cis_lvl1
@@ -82,7 +87,7 @@ odv:
   recommended: 60
   cis_lvl1: 365
   cis_lvl2: 365
-  disa_stig: 60
+  disa_stig: 180
 tags:
   - cisv8
   - cnssi-1253_low
