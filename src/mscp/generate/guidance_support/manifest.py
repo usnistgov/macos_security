@@ -63,6 +63,8 @@ def generate_manifest(build_path: Path, baseline_name: str, baseline) -> None:
     manifest["rules"] = []
     for profile in baseline.profile:
         for rule in profile.rules:
+            if rule.section == "Excluded Rules":
+                continue
             rule_manifest = {}
             rule_manifest["id"] = rule.rule_id
             rule_manifest["title"] = rule.title
