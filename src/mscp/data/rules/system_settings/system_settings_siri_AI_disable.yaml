@@ -41,7 +41,7 @@ references:
     hicp:
       - 2.L.A
       - 4.L.A
-      - 4.L.B"
+      - 4.L.B
   cis:
     controls_v8:
       - 4.1
@@ -75,7 +75,6 @@ tags:
   - cmmc_lvl1
   - cnssi-1253_moderate
   - hicp_lp
-  - new
 ddm_info:
   declarationtype: com.apple.configuration.siri.settings
   ddm_key: AllowSiriAI
