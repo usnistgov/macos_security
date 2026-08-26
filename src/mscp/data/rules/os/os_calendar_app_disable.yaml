@@ -47,9 +47,8 @@ references:
 platforms:
   macOS:
     '27.0': {}
-    '26.0': {}
-    '15.0': {}
-    enforcement_info:
+    '26.0':
+      enforcement_info:
       check:
         shell: |-
           /usr/bin/osascript -l JavaScript << EOS
@@ -68,13 +67,38 @@ platforms:
           EOS
         result:
           string: 'true'
-    introduced: '10.7'
+    '15.0':
+      enforcement_info:
+      check:
+        shell: |-
+          /usr/bin/osascript -l JavaScript << EOS
+          function run() {
+            let pref1 = ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess.new')\
+            .objectForKey('familyControlsEnabled'))
+            let pathlist = $.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess.new')\
+            .objectForKey('pathBlackList').js
+            for ( let app in pathlist ) {
+                if ( ObjC.unwrap(pathlist[app]) == "/Applications/Calendar.app" && pref1 == true ){
+                    return("true")
+                }
+            }
+            return("false")
+            }
+          EOS
+        result:
+          string: 'true'
+    enforcement_info:
+      check:
+        shell: |-        
+          /usr/bin/osascript -l JavaScript -e 'var s = $.NSUserDefaults.alloc.initWithSuiteName("com.apple.alr"); var list = ObjC.unwrap(s.objectForKey("DenyList")) || []; (list.some(function(item) { return item.PathPrefix == "/System/Applications/Calendar.app"; }) && s.objectIsForcedForKey("DenyList")) ? "PASS" : "FAIL"'
+        result:
+          string: 'PASS'
+    introduced: '27.0'
 tags:
   - cnssi-1253_low
   - cnssi-1253_high
   - cnssi-1253_moderate
   - hicp_lp
-  - test
 mobileconfig_info:
   - PayloadType: com.apple.applicationaccess.new
     PayloadContent:
@@ -84,4 +108,4 @@ mobileconfig_info:
 ddm_info:
   declarationtype: com.apple.configuration.app.settings
   ddm_key: Allowed
-  ddm_value: { 'DeniedBinaries': [ { "SigningID": "com.apple.iCal" } ] }
+  ddm_value: { 'DeniedBinaries': [ {  "PathPrefix" : "/System/Applications/Calendar.app" } ] }
