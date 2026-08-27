@@ -75,6 +75,13 @@
 ```
 {% endif %}
 {% endif %}
+{% if rule.ddm_info %}
+{% trans %}Apply the following Declarative Device Management (DDM) configuration.{% endtrans %}
+
+```json
+{{ rule.ddm_info | ddm_info_to_json(baseline.name) }}
+```
+{% endif %}
 {% if rule.enforcement_info.fix.additional_info %}
 {{ rule.enforcement_info.fix.additional_info | asciidoc_to_markdown}}
 {% endif %}
@@ -159,6 +166,13 @@
 {{ rule.mobileconfig_info | mobileconfig_payloads_to_xml -}}
 ```
 {% endif %}
+{% endif %}
+{% if rule.ddm_info %}
+{% trans %}Apply the following Declarative Device Management (DDM) configuration.{% endtrans %}
+
+```json
+{{ rule.ddm_info | ddm_info_to_json(baseline.name) }}
+```
 {% endif %}
 {% if rule.enforcement_info.fix.additional_info %}
 {{ rule.enforcement_info.fix.additional_info | asciidoc_to_markdown}}

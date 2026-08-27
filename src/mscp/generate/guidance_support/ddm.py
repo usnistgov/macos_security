@@ -4,6 +4,11 @@
 Provides `generate_ddm`, which processes ``ddm_info`` fields from baseline
 rules and writes DDM JSON configurations, assets, activations, and service
 ZIP archives under a ``declarative/`` subdirectory of the build path.
+
+Also provides `ddm_info_to_json`, a Jinja-filter helper that renders a single
+rule's ``ddm_info`` as the configuration declaration JSON (mirroring what
+`generate_ddm` writes to ``declarative/configurations/``) for inline display
+in guidance documents.
 """
 
 # Standard python modules
@@ -24,6 +29,125 @@ from ...common_utils import (
     remove_dir,
     APPLE_OS,
 )
+
+
+def deep_merge(base: Any, incoming: Any) -> Any:
+    """Recursively merge *incoming* into *base* and return the combined value.
+
+    - Two dicts are merged key by key (recursing on shared keys).
+    - Two lists are concatenated, skipping entries already present in *base*.
+    - Any other combination: *incoming* replaces *base* (so a missing *base*,
+      passed as ``None``, simply yields *incoming*).
+
+    Used to combine the ``ddm_value`` payloads of multiple rules that target
+    the same declaration type and ``ddm_key`` - for example several
+    ``com.apple.configuration.app.settings`` rules that each contribute one
+    ``DeniedBinaries`` entry under the ``Allowed`` key, which must accumulate
+    into a single list rather than overwrite one another.
+
+    Args:
+        base (Any): Value accumulated so far (``None`` if nothing yet).
+        incoming (Any): Value from the current rule to merge in.
+
+    Returns:
+        Any: The merged value.
+    """
+    if isinstance(base, dict) and isinstance(incoming, dict):
+        merged: dict[Any, Any] = dict(base)
+        for key, value in incoming.items():
+            merged[key] = deep_merge(merged[key], value) if key in merged else value
+        return merged
+
+    if isinstance(base, list) and isinstance(incoming, list):
+        merged_list: list[Any] = list(base)
+        for item in incoming:
+            if item not in merged_list:
+                merged_list.append(item)
+        return merged_list
+
+    return incoming
+
+
+def ddm_declaration_identifier(baseline_name: str, kind: str, suffix: str) -> str:
+    """Build an mSCP DDM declaration identifier.
+
+    Args:
+        baseline_name (str): Baseline name embedded in the identifier.
+        kind (str): Declaration kind segment (``"config"``, ``"asset"`` or
+            ``"activation"``).
+        suffix (str): Trailing segment identifying the specific declaration.
+
+    Returns:
+        str: Identifier of the form ``org.mscp.<baseline_name>.<kind>.<suffix>``.
+    """
+    return f"org.mscp.{baseline_name}.{kind}.{suffix}"
+
+
+def build_ddm_declaration(
+    ddm_info: dict[str, Any], baseline_name: str = "baseline"
+) -> dict[str, Any]:
+    """Build the DDM configuration declaration dict for one rule's ``ddm_info``.
+
+    Mirrors the ``configuration`` declaration that `generate_ddm` writes for a
+    rule: a ``com.apple.configuration.services.configuration-files`` payload
+    referencing a data asset, or a standard configuration payload built from
+    the rule's ``ddm_key`` / ``ddm_value`` pair.
+
+    Args:
+        ddm_info (dict[str, Any]): A rule's ``ddm_info`` mapping.
+        baseline_name (str): Baseline name used to build the identifiers.
+
+    Returns:
+        dict[str, Any]: ``Identifier`` / ``Type`` / ``Payload`` declaration dict.
+    """
+    declaration_type: str = ddm_info.get("declarationtype", "")
+
+    if declaration_type == "com.apple.configuration.services.configuration-files":
+        service: str = ddm_info.get("service", "")
+        service_parts: list[str] = service.split(".")
+        suffix: str = service_parts[2] if len(service_parts) > 2 else service
+        return {
+            "Identifier": ddm_declaration_identifier(baseline_name, "config", suffix),
+            "Type": declaration_type,
+            "Payload": {
+                "ServiceType": service,
+                "DataAssetReference": ddm_declaration_identifier(
+                    baseline_name, "asset", suffix
+                ),
+            },
+        }
+
+    suffix = declaration_type.replace("com.apple.configuration.", "")
+    ddm_key: str = ddm_info.get("ddm_key", "")
+    ddm_value: Any = ddm_info.get("ddm_value", "")
+    return {
+        "Identifier": ddm_declaration_identifier(baseline_name, "config", suffix),
+        "Type": declaration_type,
+        "Payload": {ddm_key: ddm_value} if ddm_key else {},
+    }
+
+
+def ddm_info_to_json(
+    ddm_info: dict[str, Any] | None, baseline_name: str = "baseline"
+) -> str:
+    """Render a rule's ``ddm_info`` as a configuration declaration JSON string.
+
+    Jinja-filter convenience wrapper around `build_ddm_declaration`, analogous
+    to ``mobileconfig_info_to_xml`` for configuration profiles.  Callers
+    (typically templates) get the indented JSON without any surrounding
+    AsciiDoc/Markdown source-block delimiters.
+
+    Args:
+        ddm_info (dict[str, Any] | None): A rule's ``ddm_info`` mapping.
+        baseline_name (str): Baseline name used to build the identifiers.
+
+    Returns:
+        str: Pretty-printed declaration JSON, or ``""`` when *ddm_info* is empty.
+    """
+    if not ddm_info:
+        return ""
+
+    return json.dumps(build_ddm_declaration(ddm_info, baseline_name), indent=4)
 
 
 def generate_ddm_activation(output_path: Path, identifier: str) -> None:
@@ -155,7 +279,12 @@ def generate_ddm(build_path: Path, baseline: Baseline, baseline_name: str) -> No
         else:
             ddm_key = ddm_info.get("ddm_key", "")
             ddm_value = ddm_info.get("ddm_value", "")
-            ddm_dict[declaration_type][ddm_key] = ddm_value
+            # Merge rather than overwrite so multiple rules sharing a
+            # declaration type and key (e.g. app.settings / DeniedBinaries)
+            # accumulate their list entries instead of the last rule winning.
+            ddm_dict[declaration_type][ddm_key] = deep_merge(
+                ddm_dict[declaration_type].get(ddm_key), ddm_value
+            )
 
     sha256_hash = hashlib.sha256()
     for ddm_type in ddm_dict.keys():
