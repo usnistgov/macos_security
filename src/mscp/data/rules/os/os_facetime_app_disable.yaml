@@ -33,13 +33,7 @@ references:
       - SRG-OS-000095-GPOS-00049
     disa_stig:
       macos_27:
-        - APPL-27-002010
-      macos_26:
-        - APPL-26-002010
-      macos_15:
-        - APPL-15-002010
-      macos_14:
-        - APPL-14-002010
+        - APPL-27-002010      
     cmmc:
       - AC.L1-3.1.20
       - CM.L2-3.4.6
