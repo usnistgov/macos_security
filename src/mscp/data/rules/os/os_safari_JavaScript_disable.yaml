@@ -1,4 +1,4 @@
-id: os_safari_JavaScript_disable
+id: os_safari_javaScript_disable
 title: Prevent JavaScript
 discussion: |
   The iOS device _MUST_ be configured to prevent JavaScript support in Safari to prevent malicious code execution on the device.
