@@ -6,7 +6,7 @@ references:
   nist:
     cce:
       macos_27:
-        - CCE-XXXXX-X
+        - CCE-97176-2
       macos_26:
         - CCE-95403-2
       macos_15:
@@ -14,9 +14,9 @@ references:
       macos_14:
         - CCE-92991-9
       ios_27:
-        - CCE-XXXXX-X
+        - CCE-97416-2
       ios_26:
-        - CCE-96730-7        
+        - CCE-96730-7
   cis:
     benchmark:
       macos_26:
@@ -91,7 +91,7 @@ platforms:
       supervised: true
       benchmarks:
         - name: nlmapgov_base
-        - name: nlmapgov_plus    
+        - name: nlmapgov_plus
 tags:
   - cisv8
 mobileconfig_info:

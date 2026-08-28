@@ -17,7 +17,7 @@ references:
   nist:
     cce:
       macos_27:
-        - CCE-XXXXX-X
+        - CCE-97024-4
       macos_26:
         - CCE-95193-9
       macos_15:
@@ -37,7 +37,6 @@ references:
   hhs:
     hicp:
       - 6.L.A
-      - ''
 platforms:
   macOS:
     '27.0': {}

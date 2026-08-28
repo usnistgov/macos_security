@@ -18,7 +18,7 @@ references:
   nist:
     cce:
       macos_27:
-        - CCE-XXXXX-X
+        - CCE-97043-4
     800-53r5:
       - AC-20
       - CM-7
@@ -42,13 +42,13 @@ references:
       - 4.8
 platforms:
   macOS:
-    '27.0': {}    
+    '27.0': {}
     enforcement_info:
       check:
-        shell: |-        
+        shell: |-
           /usr/bin/osascript -l JavaScript -e 'var s = $.NSUserDefaults.alloc.initWithSuiteName("com.apple.alr"); var list = ObjC.unwrap(s.objectForKey("DenyList")) || []; (list.some(function(item) { return ObjC.unwrap(item.objectForKey("SigningID")) == "com.apple.MobileSMS"; }) && s.objectIsForcedForKey("DenyList")) ? "PASS" : "FAIL"'
         result:
-          string: 'PASS'        
+          string: 'PASS'
     introduced: '27.0'
 tags:
   - cnssi-1253_low
@@ -57,11 +57,11 @@ tags:
   - hicp_lp
 mobileconfig_info:
   - PayloadType: com.apple.alr
-    PayloadContent:      
+    PayloadContent:
       - DenyList:
-        - SigningID:
-          - com.apple.MobileSMS
+          - SigningID:
+              - com.apple.MobileSMS
 ddm_info:
   declarationtype: com.apple.configuration.app.settings
   ddm_key: Allowed
-  ddm_value: { 'DeniedBinaries': [ {  "SigningID" : "com.apple.MobileSMS" } ] }
+  ddm_value: {'DeniedBinaries': ["SigningID": "com.apple.MobileSMS"]}

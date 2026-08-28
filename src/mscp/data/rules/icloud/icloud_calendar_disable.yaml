@@ -10,7 +10,7 @@ references:
   nist:
     cce:
       macos_27:
-        - CCE-XXXXX-X
+        - CCE-96988-1
       macos_26:
         - CCE-95143-4
       macos_15:
@@ -34,7 +34,7 @@ references:
       - SRG-OS-000095-GPOS-00049
     disa_stig:
       macos_27:
-        - APPL-27-002012    
+        - APPL-27-002012
       macos_26:
         - APPL-26-002012
       macos_15:

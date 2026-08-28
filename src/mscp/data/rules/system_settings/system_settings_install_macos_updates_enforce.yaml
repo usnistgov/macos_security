@@ -6,7 +6,7 @@ references:
   nist:
     cce:
       macos_27:
-        - CCE-XXXXX-X
+        - CCE-97154-9
       macos_26:
         - CCE-XXXXX-X
       macos_15:
@@ -14,9 +14,9 @@ references:
       macos_14:
         - CCE-92968-7
       ios_27:
-        - CCE-XXXXX-X
+        - CCE-97413-9
       ios_26:
-        - CCE-96731-5        
+        - CCE-96731-5
   cis:
     benchmark:
       macos_26:
@@ -59,12 +59,12 @@ platforms:
       mobileconfig_info:
         - PayloadType: com.apple.SoftwareUpdate
           PayloadContent:
-            - AutomaticallyInstallMacOSUpdates: true            
+            - AutomaticallyInstallMacOSUpdates: true
       benchmarks:
         - name: cis_lvl1
         - name: cis_lvl2
         - name: nlmapgov_plus
-        - name: nlmapgov_base        
+        - name: nlmapgov_base
     '15.0':
       enforcement_info:
         check:
@@ -78,7 +78,7 @@ platforms:
       mobileconfig_info:
         - PayloadType: com.apple.SoftwareUpdate
           PayloadContent:
-            - AutomaticallyInstallMacOSUpdates: true            
+            - AutomaticallyInstallMacOSUpdates: true
       benchmarks:
         - name: cis_lvl1
         - name: cis_lvl2
@@ -90,8 +90,8 @@ platforms:
         result:
           integer: 1
       fix:
-        additional_info: This is implemented by Declarative Device Management (DDM).        
-    
+        additional_info: This is implemented by Declarative Device Management (DDM).
+
     introduced: '10.15'
   iOS:
     '27.0': {}

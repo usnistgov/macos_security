@@ -5,19 +5,19 @@ references:
   nist:
     cce:
       macos_27:
-        - CCE-XXXXX-X
+        - CCE-97041-8
       macos_26:
         - CCE-95223-4
       macos_15:
         - CCE-94521-2
       ios_27:
-        - CCE-XXXXX-X
+        - CCE-97346-1
       ios_26:
         - CCE-95668-0
       ios_18:
         - CCE-94520-4
       visionos_27:
-        - CCE-XXXXX-X
+        - CCE-97454-3
       visionos_26:
         - CCE-95584-9
     800-53r5:

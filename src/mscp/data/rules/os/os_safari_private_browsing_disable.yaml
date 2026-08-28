@@ -6,15 +6,15 @@ references:
   nist:
     cce:
       macos_27:
-        - CCE-XXXXX-X
+        - CCE-97070-7
       macos_26:
         - CCE-95599-7
       ios_26:
         - CCE-XXXXX-X
       ios_27:
-        - CCE-XXXXX-X
+        - CCE-97374-3
       visionos_27:
-        - CCE-XXXXX-X
+        - CCE-97463-4
   bsi:
     indigo:
       ios_26:

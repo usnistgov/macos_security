@@ -6,9 +6,9 @@ references:
   nist:
     cce:
       macos_27:
-        - CCE-XXXXX-X
+        - CCE-97076-4
       ios_27:
-        - CCE-XXXXX-X
+        - CCE-97378-4
       ios_26:
         - CCE-95521-1
       ios_18:
@@ -18,7 +18,7 @@ references:
       visionos_26:
         - CCE-95592-2
       visionos_27:
-        - CCE-XXXXX-X
+        - CCE-97465-9
     800-53r5:
       - CM-7
       - CM-7(1)
@@ -109,7 +109,7 @@ tags:
   - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
-  - hicp_lp  
+  - hicp_lp
 mobileconfig_info:
   - PayloadType: com.apple.applicationaccess
     PayloadContent:

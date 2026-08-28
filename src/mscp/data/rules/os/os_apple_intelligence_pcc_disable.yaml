@@ -14,7 +14,7 @@ references:
   nist:
     cce:
       macos_27:
-        - CCE-XXXXX-X      
+        - CCE-97002-0
     800-53r5:
       - AC-20
       - AC-20(1)
@@ -49,7 +49,7 @@ references:
       - 15.3
 platforms:
   macOS:
-    '27.0':    
+    '27.0':
       benchmarks:
         - name: disa_stig
           severity: medium
@@ -68,9 +68,9 @@ platforms:
         shell: |-
           note="### Apple Intelligence Private Cloud Compute is disabled by the organization (apple-relay, cp4.cloudflare.com, etc). Added by the mSCP ###"
           apple_intelligence_servers=("127.0.0.1 apple-relay.cloudflare.com" "127.0.0.1 apple-relay.fastly-edge.com" "127.0.0.1 cp4.cloudflare.com" "127.0.0.1 apple-relay.apple.com")
-          
+
           host_file=$(/bin/cat /etc/hosts)
-          
+
           if ! /usr/bin/grep -qxF "$note" "$hosts_file" 2>/dev/null; then
             echo "$note" >> "$hosts_file"
           fi

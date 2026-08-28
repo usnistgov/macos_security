@@ -8,11 +8,11 @@ references:
   nist:
     cce:
       macos_27:
-        - CCE-XXXXX-X
+        - CCE-97011-1
       macos_26:
         - CCE-XXXXX-X
       ios_27:
-        - CCE-XXXXX-X
+        - CCE-97295-0
       ios_26:
         - CCE-95449-5
       ios_18:

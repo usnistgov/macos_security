@@ -6,7 +6,7 @@ references:
   nist:
     cce:
       macos_27:
-        - CCE-XXXXX-X
+        - CCE-97016-0
       macos_26:
         - CCE-95180-6
       macos_15:
@@ -14,7 +14,7 @@ references:
       macos_14:
         - CCE-93017-2
       ios_27:
-        - CCE-XXXXX-X
+        - CCE-97305-7
       ios_26:
         - CCE-95525-2
       ios_18:
@@ -57,7 +57,6 @@ references:
   hhs:
     hicp:
       - 2.L.A
-      - ''
   cis:
     controls_v8:
       - 4.1

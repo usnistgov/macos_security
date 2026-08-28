@@ -21,7 +21,7 @@ references:
   nist:
     cce:
       macos_27:
-        - CCE-XXXXX-X      
+        - CCE-97010-3
     800-53r5:
       - AC-20
       - CM-7
@@ -48,7 +48,7 @@ platforms:
     '27.0': {}
     enforcement_info:
       check:
-        shell: |-                  
+        shell: |-
           /usr/bin/osascript -l JavaScript -e 'var s = $.NSUserDefaults.alloc.initWithSuiteName("com.apple.alr"); var list = ObjC.unwrap(s.objectForKey("DenyList")) || []; (list.some(function(item) { return ObjC.unwrap(item.objectForKey("SigningID")) == "com.apple.iCal"; }) && s.objectIsForcedForKey("DenyList")) ? "PASS" : "FAIL"'
         result:
           string: 'PASS'
@@ -60,11 +60,11 @@ tags:
   - hicp_lp
 mobileconfig_info:
   - PayloadType: com.apple.alr
-    PayloadContent:      
+    PayloadContent:
       - DenyList:
-        - SigningID:
-          - com.apple.FaceTime
+          - SigningID:
+              - com.apple.FaceTime
 ddm_info:
   declarationtype: com.apple.configuration.app.settings
   ddm_key: Allowed
-  ddm_value: { 'DeniedBinaries': [ {  "SigningID" : "com.apple.iCal" } ] }
+  ddm_value: {'DeniedBinaries': ["SigningID": "com.apple.iCal"]}

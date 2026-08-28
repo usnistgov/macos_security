@@ -18,7 +18,7 @@ references:
   nist:
     cce:
       macos_27:
-        - CCE-XXXXX-X      
+        - CCE-97021-0
     800-53r5:
       - AC-20
       - CM-7
@@ -33,7 +33,7 @@ references:
       - SRG-OS-000095-GPOS-00049
     disa_stig:
       macos_27:
-        - APPL-27-002010      
+        - APPL-27-002010
     cmmc:
       - AC.L1-3.1.20
       - CM.L2-3.4.6
@@ -50,13 +50,13 @@ platforms:
     '27.0':
       benchmarks:
         - name: disa_stig
-          severity: medium          
+          severity: medium
     enforcement_info:
       check:
-        shell: |-        
+        shell: |-
           /usr/bin/osascript -l JavaScript -e 'var s = $.NSUserDefaults.alloc.initWithSuiteName("com.apple.alr"); var list = ObjC.unwrap(s.objectForKey("DenyList")) || []; (list.some(function(item) { return ObjC.unwrap(item.objectForKey("SigningID")) == "com.apple.FaceTime"; }) && s.objectIsForcedForKey("DenyList")) ? "PASS" : "FAIL"'
         result:
-          string: 'PASS'        
+          string: 'PASS'
     introduced: '27.0'
 tags:
   - cnssi-1253_low
@@ -65,11 +65,11 @@ tags:
   - hicp_lp
 mobileconfig_info:
   - PayloadType: com.apple.alr
-    PayloadContent:      
+    PayloadContent:
       - DenyList:
-        - SigningID:
-          - com.apple.FaceTime  
+          - SigningID:
+              - com.apple.FaceTime
 ddm_info:
   declarationtype: com.apple.configuration.app.settings
   ddm_key: Allowed
-  ddm_value: { 'DeniedBinaries': [ {  "SigningID" : "com.apple.FaceTime" } ] }
+  ddm_value: {'DeniedBinaries': ["SigningID": "com.apple.FaceTime"]}
