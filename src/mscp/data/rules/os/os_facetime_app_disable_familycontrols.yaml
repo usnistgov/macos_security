@@ -31,8 +31,6 @@ references:
     srg:
       - SRG-OS-000095-GPOS-00049
     disa_stig:
-      macos_27:
-        - APPL-27-002010
       macos_26:
         - APPL-26-002010
       macos_15:
