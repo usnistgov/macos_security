@@ -7,23 +7,18 @@ discussion: |
 
   [IMPORTANT]
   ====
-  Apple has deprecated the use of link:https://github.com/apple/device-management/blob/eb51fb0cb9626cac4717858556912c257a734ce0/mdm/profiles/com.apple.applicationaccess.new.yaml#L67-L70[application restriction controls], using these controls may not work as expected. Third party software may be required to fulfill the compliance requirements.
+  Preventing the launch of any application using the DeniedBinaries key will also prevent the launching of Adhoc signed binaries and unsigned binaries.
   ====
 
-  [IMPORTANT] 
-  ====
-  macOS 27 Golden Gate uses Declarative Device Management (DDM) to manage application restrictions. The DDM key for this control is `Allowed` with the value of `DeniedBinaries` containing the signing ID of the application to be disabled. The signing ID for FaceTime.app is `com.apple.FaceTime`.
+  [NOTE]
+  =====
+  Apple officially supports installation through DDM of this configuration, however installation using a mobileconfig profile with the domain of com.apple.alr will also block the launching of binaries.
+  =====
 references:
   nist:
     cce:
       macos_27:
-        - CCE-XXXXX-X
-      macos_26:
-        - CCE-95189-7
-      macos_15:
-        - CCE-94189-8
-      macos_14:
-        - CCE-92788-9
+        - CCE-XXXXX-X      
     800-53r5:
       - AC-20
       - CM-7
@@ -61,57 +56,11 @@ platforms:
     '27.0':
       benchmarks:
         - name: disa_stig
-          severity: medium
-    '26.0':
-      benchmarks:
-        - name: disa_stig
-          severity: medium
-      enforcement_info:
-        check:
-          shell: |-
-            /usr/bin/osascript -l JavaScript << EOS
-            function run() {
-              let pref1 = ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess.new')\
-              .objectForKey('familyControlsEnabled'))
-              let pathlist = $.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess.new')\
-              .objectForKey('pathBlackList').js
-              for ( let app in pathlist ) {
-                  if ( ObjC.unwrap(pathlist[app]) == "/Applications/FaceTime.app" && pref1 == true ){
-                      return("true")
-                  }
-              }
-              return("false")
-              }
-            EOS
-          result:
-            string: 'true' 
-    '15.0':
-      benchmarks:
-        - name: disa_stig
-          severity: medium
-      enforcement_info:
-        check:
-          shell: |-
-            /usr/bin/osascript -l JavaScript << EOS
-            function run() {
-              let pref1 = ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess.new')\
-              .objectForKey('familyControlsEnabled'))
-              let pathlist = $.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess.new')\
-              .objectForKey('pathBlackList').js
-              for ( let app in pathlist ) {
-                  if ( ObjC.unwrap(pathlist[app]) == "/Applications/FaceTime.app" && pref1 == true ){
-                      return("true")
-                  }
-              }
-              return("false")
-              }
-            EOS
-          result:
-            string: 'true'          
+          severity: medium          
     enforcement_info:
       check:
         shell: |-        
-          /usr/bin/osascript -l JavaScript -e 'var s = $.NSUserDefaults.alloc.initWithSuiteName("com.apple.alr"); var list = ObjC.unwrap(s.objectForKey("DenyList")) || []; (list.some(function(item) { return item.PathPrefix == "/System/Applications/FaceTime.app"; }) && s.objectIsForcedForKey("DenyList")) ? "PASS" : "FAIL"'
+          /usr/bin/osascript -l JavaScript -e 'var s = $.NSUserDefaults.alloc.initWithSuiteName("com.apple.alr"); var list = ObjC.unwrap(s.objectForKey("DenyList")) || []; (list.some(function(item) { return ObjC.unwrap(item.objectForKey("SigningID")) == "com.apple.FaceTime"; }) && s.objectIsForcedForKey("DenyList")) ? "PASS" : "FAIL"'
         result:
           string: 'PASS'        
     introduced: '27.0'
@@ -121,12 +70,12 @@ tags:
   - cnssi-1253_moderate
   - hicp_lp
 mobileconfig_info:
-  - PayloadType: com.apple.applicationaccess.new
-    PayloadContent:
-      - familyControlsEnabled: true
-      - pathBlackList:
-          - /Applications/FaceTime.app
+  - PayloadType: com.apple.alr
+    PayloadContent:      
+      - DenyList:
+        - SigningID:
+          - com.apple.FaceTime  
 ddm_info:
   declarationtype: com.apple.configuration.app.settings
   ddm_key: Allowed
-  ddm_value: { 'DeniedBinaries': [ {  "PathPrefix" : "/System/Applications/FaceTime.app" } ] }
+  ddm_value: { 'DeniedBinaries': [ {  "SigningID" : "com.apple.FaceTime" } ] }

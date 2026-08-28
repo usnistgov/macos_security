@@ -6,6 +6,11 @@ discussion: |
   Apple's Siri service does not provide an organization with enough control over the storage and access of data, and, therefore, automated synchronization _MUST_ be controlled by an organization approved service. Apple Intelligence features such as Siri AI that use off device AI _MUST_ be disabled.
 
   The information system _MUST_ be configured to provide only essential capabilities.
+
+  [NOTE]
+  =====
+  Apple officially supports installation through DDM of this configuration, however installation using a mobileconfig profile with the domain of com.apple.ironwood.support with the key allowSiri3489 will also block the use of SiriAI.
+  =====
 references:
   nist:
     cce:
@@ -75,6 +80,10 @@ tags:
   - cmmc_lvl1
   - cnssi-1253_moderate
   - hicp_lp
+mobileconfig_info:
+  - PayloadType: com.apple.ironwood.support
+    PayloadContent:
+      - allowSiri3489: false
 ddm_info:
   declarationtype: com.apple.configuration.siri.settings
   ddm_key: AllowSiriAI
