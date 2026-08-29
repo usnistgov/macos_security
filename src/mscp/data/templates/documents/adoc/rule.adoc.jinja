@@ -70,6 +70,14 @@
 ----
 {% endif %}
 {% endif %}
+{% if rule.ddm_info %}
+{% trans %}Apply the following Declarative Device Management (DDM) configuration.{% endtrans %}
+
+[source,json]
+----
+{{ rule.ddm_info | ddm_info_to_json(baseline.name) }}
+----
+{% endif %}
 {% if rule.enforcement_info.fix.additional_info %}
 NOTE: {{ rule.enforcement_info.fix.additional_info }}
 {% endif %}
