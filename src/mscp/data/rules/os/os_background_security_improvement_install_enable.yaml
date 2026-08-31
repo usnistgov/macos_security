@@ -6,7 +6,7 @@ references:
   nist:
     cce:
       macos_27:
-        - CCE-XXXXX-X
+        - CCE-97265-3
       ios_27:
         - CCE-97293-5
       ios_26:
@@ -18,7 +18,7 @@ references:
     bio:
       - 8.08
 platforms:
-  macos:
+  macOS:
     '27.0': {}
     enforcement_info:
       check:

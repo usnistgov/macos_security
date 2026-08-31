@@ -44,53 +44,14 @@ references:
       - 4.8
 platforms:
   macOS:
-    '26.0':
-      enforcement_info:
-      check:
-        shell: |-
-          /usr/bin/osascript -l JavaScript << EOS
-          function run() {
-            let pref1 = ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess.new')\
-            .objectForKey('familyControlsEnabled'))
-            let pathlist = $.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess.new')\
-            .objectForKey('pathBlackList').js
-            for ( let app in pathlist ) {
-                if ( ObjC.unwrap(pathlist[app]) == "/Applications/Calendar.app" && pref1 == true ){
-                    return("true")
-                }
-            }
-            return("false")
-            }
-          EOS
-        result:
-          string: 'true'
-    '15.0':
-      enforcement_info:
-      check:
-        shell: |-
-          /usr/bin/osascript -l JavaScript << EOS
-          function run() {
-            let pref1 = ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess.new')\
-            .objectForKey('familyControlsEnabled'))
-            let pathlist = $.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess.new')\
-            .objectForKey('pathBlackList').js
-            for ( let app in pathlist ) {
-                if ( ObjC.unwrap(pathlist[app]) == "/Applications/Calendar.app" && pref1 == true ){
-                    return("true")
-                }
-            }
-            return("false")
-            }
-          EOS
-        result:
-          string: 'true'
+    '26.0': {}      
+    '15.0': {}      
     enforcement_info:
       check:
         shell: |-                  
           /usr/bin/osascript -l JavaScript -e 'var s = $.NSUserDefaults.alloc.initWithSuiteName("com.apple.alr"); var list = ObjC.unwrap(s.objectForKey("DenyList")) || []; (list.some(function(item) { return ObjC.unwrap(item.objectForKey("SigningID")) == "com.apple.iCal"; }) && s.objectIsForcedForKey("DenyList")) ? "PASS" : "FAIL"'
         result:
-          string: 'PASS'
-    introduced: '27.0'
+          string: 'PASS'    
 tags:
   - cnssi-1253_low
   - cnssi-1253_high

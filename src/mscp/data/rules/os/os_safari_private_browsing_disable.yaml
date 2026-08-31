@@ -10,7 +10,7 @@ references:
       macos_26:
         - CCE-95599-7
       ios_26:
-        - CCE-XXXXX-X
+        - CCE-96736-4
       ios_27:
         - CCE-97374-3
       visionos_27:

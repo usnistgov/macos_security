@@ -12,7 +12,7 @@ references:
       ios_27:
         - CCE-97367-7
       ios_26:
-        - CCE-XXXXX-X
+        - CCE-96734-9
       visionos_27:
         - CCE-97461-8
   bsi:

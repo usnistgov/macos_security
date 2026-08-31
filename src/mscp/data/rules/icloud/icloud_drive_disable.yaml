@@ -26,7 +26,7 @@ references:
       ios_17:
         - CCE-93407-5
       visionos:
-        - CCE-XXXXX-X
+        - CCE-94590-7
       visionos_26:
         - CCE-95555-9
       visionos_27:

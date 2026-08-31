@@ -6,7 +6,7 @@ references:
   nist:
     cce:
       macos_27:
-        - CCE-XXXXX-X
+        - CCE-97266-1
       macos_26:
         - CCE-95402-4
       macos_15:
@@ -29,6 +29,8 @@ references:
       - 7.4
 platforms:
   macOS:
+    '27.0': {}
+    '26.0': {}
     '15.0':
       benchmarks:
         - name: cis_lvl1
