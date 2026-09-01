@@ -8,7 +8,7 @@ SCHEMA_PATH = "schema/mscp_rule.json"
 APPLE_OS = ["macos", "ios", "visionos"]
 
 #: Subset of `APPLE_OS` whose tooling expects POSIX-style commands.
-NIX_OS = ["macos"]
+NIX_OS = ["macos", "ubuntu", "redhat"]
 
 #: Platform map for identifiers
-PLATFORM_MAP = {"macos": "macOS", "ios": "iOS", "visionos": "visionOS"}
+PLATFORM_MAP = {"macos": "macOS", "ios": "iOS", "visionos": "visionOS", "ubuntu": "Ubuntu", "redhat": "Red Hat"}
