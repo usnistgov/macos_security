@@ -35,7 +35,11 @@
 {% endif %}
 
 {% if rule.os_type.lower() in NIX_OS %}
+{% if rule.result_value is not none %}
 {% trans %}If the result is not{% endtrans %} _{{ rule.result_value }}_, {% trans %}this is a finding{% endtrans %}.
+{% elif rule.result_exit_code is not none %}
+{% trans %}If the command's exit code is not{% endtrans %} _{{ rule.result_exit_code }}_, {% trans %}this is a finding{% endtrans %}.
+{% endif %}
 {% endif %}
 
 {% if markdown_tree | default(false) %}
