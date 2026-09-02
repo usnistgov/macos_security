@@ -1,5 +1,5 @@
 ---
-id: supplemental_stig_visionos
+id: supplemental_stig_visionos_26
 title: DISA STIG Supplemental
 discussion: |
   These controls are controls that require additional considerations for your environment.
@@ -26,7 +26,6 @@ references:
   nist: {}
 platforms:
   visionOS:
-    '27.0': {}
     '26.0':
       benchmarks:
         - name: visionos_stig

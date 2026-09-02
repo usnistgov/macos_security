@@ -9,7 +9,7 @@ discussion: |
   |Section 5.8
   |Restrictions - App-Installation
 
-  |
+  | 
   |os_application_allow_list +
   os_application_deny_list
   |===
@@ -19,7 +19,7 @@ discussion: |
   |Section 6.1.6
   |Manual configuration - operational requirements
 
-  |
+  | 
   |os_live_text_disable
   |===
 
@@ -28,15 +28,15 @@ discussion: |
   |Section 6.3
   |Manual configuration - Update management
 
-  |
+  | 
   |os_update_auto_RSR_allow
   |===
+
 references:
   nist: {}
 platforms:
   iOS:
-    '27.0': {}
-    '26.0':
+    '18.0':    
       benchmarks:
         - name: indigo_base
         - name: indigo_high
