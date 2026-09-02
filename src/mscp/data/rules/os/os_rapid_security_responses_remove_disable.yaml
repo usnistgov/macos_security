@@ -6,7 +6,7 @@ references:
   nist:
     cce:
       ios_27:
-        - CCE-XXXXX-X
+        - CCE-97363-6
       ios_26:
         - CCE-95511-2
       ios_18:

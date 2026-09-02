@@ -6,11 +6,18 @@ discussion: |
   Apple Intelligence sends data to off device infrastructure, Private Cloud Compute (PCC), that is not directly controlled by the organization. Therefore, Apple Intelligence features that rely on off device processing _MUST_ be disabled unless explicitly approved by the organization.
 
   This requirement helps ensure that organizational data is managed in accordance with established security, privacy, access-control, and data governance requirements.
+  
+  [NOTE]
+  ====
+  The reviewer MUST manually verify that the Declarative Device Management (DDM) configuration has been applied to the system.
+
+  To verify the declaration: Open System Settings, click on General. Scroll down and click on Device Management. Double click on the MDM enrollment profile to examine it. Scroll down to Device Declarations within that window and verify the setting has been applied.
+  ====
 references:
   nist:
     cce:
       macos_27:
-        - CCE-XXXXX-X
+        - CCE-97045-9
     800-53r5:
       - AC-20
       - AC-20(1)
@@ -39,5 +46,7 @@ tags:
   - cnssi-1253_high
 ddm_info:
   declarationtype: com.apple.configuration.intelligence.settings
-  ddm_key: AllowNaturalLanguageEditing
-  ddm_value: false
+  ddm_key: Apps
+  ddm_value:
+    Calendar:
+      AllowNaturalLanguageEditing: false

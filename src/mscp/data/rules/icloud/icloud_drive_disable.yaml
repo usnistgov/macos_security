@@ -10,7 +10,7 @@ references:
   nist:
     cce:
       macos_27:
-        - CCE-XXXXX-X
+        - CCE-96989-9
       macos_26:
         - CCE-95144-2
       macos_15:
@@ -18,7 +18,7 @@ references:
       macos_14:
         - CCE-92745-9
       ios_27:
-        - CCE-XXXXX-X
+        - CCE-97265-3
       ios_26:
         - CCE-95632-6
       ios_18:
@@ -26,11 +26,11 @@ references:
       ios_17:
         - CCE-93407-5
       visionos:
-        - CCE-XXXXX-X
+        - CCE-94590-7
       visionos_26:
         - CCE-95555-9
       visionos_27:
-        - CCE-XXXXX-X
+        - CCE-97422-0
     800-53r5:
       - AC-20
       - AC-20(1)
@@ -46,7 +46,7 @@ references:
       - CCI-001774
     srg:
       - SRG-OS-000095-GPOS-00049
-    disa_stig:      
+    disa_stig:
       macos_27:
         - APPL-27-002041
       macos_26:

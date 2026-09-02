@@ -10,21 +10,21 @@ references:
   nist:
     cce:
       macos_27:
-        - CCE-XXXXX-X
+        - CCE-97139-0
       macos_26:
         - CCE-95365-3
       macos_15:
         - CCE-94523-8
       ios_27:
-        - CCE-XXXX-X
+        - CCE-97411-3
       ios_26:
         - CCE-95473-5
       ios_18:
         - CCE-94517-0
       visionos_27:
-        - CCE-XXXXX-X
+        - CCE-97478-2
       visionos_26:
-        - CCE-95573-2        
+        - CCE-95573-2
     800-53r5:
       - AC-20
       - CM-7
@@ -55,7 +55,7 @@ references:
       - AC.L1-3.1.20
       - AU.L2-3.3.3
       - CM.L2-3.4.1
-      - CM.L2-3.4.2      
+      - CM.L2-3.4.2
       - CM.L2-3.4.6
       - CM.L2-3.4.7
   hhs:
@@ -75,7 +75,7 @@ references:
   bsi:
     indigo:
       ios_26:
-        - ANNEX K      
+        - ANNEX K
 platforms:
   macOS:
     '27.0':
@@ -121,7 +121,7 @@ platforms:
       benchmarks:
         - name: visionos_stig
           severity: medium
-    introduced: '2.4'    
+    introduced: '2.4'
 tags:
   - 800-53r5_low
   - 800-53r5_moderate

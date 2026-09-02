@@ -10,7 +10,7 @@ references:
   nist:
     cce:
       macos_27:
-        - CCE-XXXXX-X
+        - CCE-97173-9
       macos_26:
         - CCE-95398-4
       macos_15:
@@ -18,7 +18,7 @@ references:
       macos_14:
         - CCE-92987-7
       ios_27:
-        - CCE-XXXXX-X
+        - CCE-97415-4
       ios_26:
         - CCE-95689-6
       ios_18:
@@ -26,7 +26,7 @@ references:
       ios_17:
         - CCE-93499-2
       visionos_27:
-        - CCE-XXXXX-X
+        - CCE-97481-6
       visionos_26:
         - CCE-95598-9
     800-53r5:
@@ -107,7 +107,7 @@ platforms:
           severity: medium
       enforcement_info:
         check:
-          shell: |-            
+          shell: |-
             /usr/bin/osascript -l JavaScript -e 'var s = $.NSUserDefaults.alloc.initWithSuiteName("com.apple.applicationaccess"); (ObjC.unwrap(s.objectForKey("allowAssistant")) == false && s.objectIsForcedForKey("allowAssistant")) ? "PASS" : "FAIL"'
           result:
             string: 'PASS'
@@ -171,7 +171,7 @@ tags:
 mobileconfig_info:
   - PayloadType: com.apple.applicationaccess
     PayloadContent:
-      - allowAssistant: false   
+      - allowAssistant: false
 ddm_info:
   declarationtype: com.apple.configuration.siri.settings
   ddm_key: Enabled
