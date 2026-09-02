@@ -18,7 +18,7 @@ references:
     bio:
       - 8.08
 platforms:
-  macos:
+  macOS:
     '27.0': {}
     enforcement_info:
       check:
