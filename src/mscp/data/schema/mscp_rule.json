@@ -550,6 +550,9 @@
                 },
                 "boolean": {
                     "type": "boolean"
+                },
+                "exit_code": {
+                    "type": "integer"
                 }
             }
         },
