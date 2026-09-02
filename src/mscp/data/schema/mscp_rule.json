@@ -394,6 +394,9 @@
                     "$ref": "#/$defs/ArrayOfStrings"
                 },
                 {
+                    "$ref": "#/$defs/ArrayOfObjects"
+                },
+                {
                     "type": "object",
                     "additionalProperties": true
                 }

@@ -13,6 +13,11 @@ discussion: |
 
   To verify the declaration: Open System Settings, click on General. Scroll down and click on Device Management. Double click on the MDM enrollment profile to examine it. Scroll down to Device Declarations within that window and verify the setting has been applied.
   ====
+
+  [NOTE]
+  ====
+  Disabling Siri or Siri AI also disables the use of Visual Intelligence and other Apple Intelligence features that use Siri or Siri AI.
+  ====
 references:
   nist:
     cce:

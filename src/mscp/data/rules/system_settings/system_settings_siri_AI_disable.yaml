@@ -11,6 +11,11 @@ discussion: |
   =====
   Apple officially supports installation through DDM of this configuration, however installation using a mobileconfig profile with the domain of com.apple.ironwood.support with the key allowSiri3489 will also block the use of SiriAI.
   =====
+  
+  [NOTE]
+  =====
+  Disabling the use of SiriAI may also disable the use of other Apple Intelligence features that use SiriAI.
+  =====
 references:
   nist:
     cce:

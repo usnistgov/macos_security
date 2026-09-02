@@ -71,7 +71,7 @@ platforms:
     enforcement_info:
       check:
         shell: |-
-          /usr/bin/osascript -l JavaScript -e 'var s = $.NSUserDefaults.alloc.initWithSuiteName("com.apple.applicationaccess"); (ObjC.unwrap(s.objectForKey("allowGameCenter")) == false && s.objectIsForcedForKey("allowGameCenter")) ? "PASS" : "FAIL"'          
+          /usr/bin/osascript -l JavaScript -e 'var s = $.NSUserDefaults.alloc.initWithSuiteName("com.apple.applicationaccess"); (ObjC.unwrap(s.objectForKey("allowGameCenter")) == false && s.objectIsForcedForKey("allowGameCenter")) ? "PASS" : "FAIL"'
         result:
           string: 'PASS'
     introduced: '10.13'

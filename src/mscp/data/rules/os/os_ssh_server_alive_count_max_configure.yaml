@@ -57,7 +57,7 @@ platforms:
             ssh_setting=$(echo $ssh_config | /usr/bin/cut -d " " -f1)
             /usr/bin/grep -qEi "^$ssh_setting" "${include_dir}01-mscp-ssh.conf" && /usr/bin/sed -i "" "s/^$ssh_setting.*/${ssh_config}/" "${include_dir}01-mscp-ssh.conf" || echo "$ssh_config" >> "${include_dir}01-mscp-ssh.conf"
             for u in $(/usr/bin/dscl . list /users shell | /usr/bin/egrep -v '(^_)|(root)|(/usr/bin/false)' | /usr/bin/awk '{print $1}'); do
-              config=$(/usr/bin/sudo -u $u /usr/bin/ssh -Gv . 2>&1)
+              config=$(/usr/bin/sudo -u $u /usr/bin/ssh -tt -Gv . 2>&1)
               configfiles=$(echo "$config" | /usr/bin/awk '/Reading configuration data/ {print $NF}'| /usr/bin/tr -d '\r')
               configarray=( ${(f)configfiles} )
               if ! echo $config | /usr/bin/grep -q -i "$ssh_config" ; then
@@ -91,7 +91,7 @@ platforms:
             ssh_setting=$(echo $ssh_config | /usr/bin/cut -d " " -f1)
             /usr/bin/grep -qEi "^$ssh_setting" "${include_dir}01-mscp-ssh.conf" && /usr/bin/sed -i "" "s/^$ssh_setting.*/${ssh_config}/" "${include_dir}01-mscp-ssh.conf" || echo "$ssh_config" >> "${include_dir}01-mscp-ssh.conf"
             for u in $(/usr/bin/dscl . list /users shell | /usr/bin/egrep -v '(^_)|(root)|(/usr/bin/false)' | /usr/bin/awk '{print $1}'); do
-              config=$(/usr/bin/sudo -u $u /usr/bin/ssh -Gv . 2>&1)
+              config=$(/usr/bin/sudo -u $u /usr/bin/ssh -tt -Gv . 2>&1)
               configfiles=$(echo "$config" | /usr/bin/awk '/Reading configuration data/ {print $NF}'| /usr/bin/tr -d '\r')
               configarray=( ${(f)configfiles} )
               if ! echo $config | /usr/bin/grep -q -i "$ssh_config" ; then
@@ -116,7 +116,7 @@ platforms:
         shell: |-
           ret="pass"
           for u in $(/usr/bin/dscl . -list /Users UniqueID | /usr/bin/awk '$2 > 500 {print $1}'); do
-            sshCheck=$(/usr/bin/sudo -u $u /usr/bin/ssh -G . | /usr/bin/grep -c "^serveralivecountmax $ODV")
+            sshCheck=$(/usr/bin/sudo -u $u /usr/bin/ssh -tt -G . | /usr/bin/grep -c "^serveralivecountmax $ODV")
             if [[ "$sshCheck" == "0" ]]; then
               ret="fail"
               break
@@ -134,7 +134,7 @@ platforms:
           ssh_setting=$(echo $ssh_config | /usr/bin/cut -d " " -f1)
           /usr/bin/grep -qEi "^$ssh_setting" "${include_dir}01-mscp-ssh.conf" && /usr/bin/sed -i "" "s/^$ssh_setting.*/${ssh_config}/" "${include_dir}01-mscp-ssh.conf" || echo "$ssh_config" >> "${include_dir}01-mscp-ssh.conf"
           for u in $(/usr/bin/dscl . list /users shell | /usr/bin/egrep -v '(^_)|(root)|(/usr/bin/false)' | /usr/bin/awk '{print $1}'); do
-            config=$(/usr/bin/sudo -u $u /usr/bin/ssh -Gv . 2>&1)
+            config=$(/usr/bin/sudo -u $u /usr/bin/ssh -tt -Gv . 2>&1)
             configfiles=$(echo "$config" | /usr/bin/awk '/Reading configuration data/ {print $NF}'| /usr/bin/tr -d '\r')
             configarray=( ${(f)configfiles} )
             if ! echo $config | /usr/bin/grep -q -i "$ssh_config" ; then

@@ -7,7 +7,7 @@ discussion: |
 
   link:https://support.apple.com/guide/security/secure-enclave-sec59b0b31ff/1/web/1[]
 
-  NOTE: This will only return a proper result on a T2 or Apple Silicon Macs. 
+  NOTE: This will only return a proper result on a T2 or Apple Silicon Macs.
   NOTE: All iOS/iPadOS and visionOS devices meet this requirement.
 references:
   nist:

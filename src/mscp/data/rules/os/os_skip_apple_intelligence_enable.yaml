@@ -49,7 +49,7 @@ platforms:
     enforcement_info:
       check:
         shell: |-
-          /usr/bin/osascript -l JavaScript -e 'var s = $.NSUserDefaults.alloc.initWithSuiteName("com.apple.SetupAssistant.managed"); (ObjC.unwrap(s.objectForKey("SkipSetupItems").containsObject("Intelligence")) == true && s.objectIsForcedForKey("SkipSetupItems")) ? "PASS" : "FAIL"'          
+          /usr/bin/osascript -l JavaScript -e 'var s = $.NSUserDefaults.alloc.initWithSuiteName("com.apple.SetupAssistant.managed"); (ObjC.unwrap(s.objectForKey("SkipSetupItems").containsObject("Intelligence")) == true && s.objectIsForcedForKey("SkipSetupItems")) ? "PASS" : "FAIL"'
         result:
           string: 'PASS'
     introduced: '15.0'

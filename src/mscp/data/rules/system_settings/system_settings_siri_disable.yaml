@@ -6,6 +6,11 @@ discussion: |
   Apple's Siri service does not provide an organization with enough control over the storage and access of data, and, therefore, automated synchronization _MUST_ be controlled by an organization approved service.
 
   The information system _MUST_ be configured to provide only essential capabilities.
+
+  [NOTE]
+  =====
+  Disabling the use of Siri also disables the use of Siri AI and other Apple Intelligence features that use Siri.
+  =====
 references:
   nist:
     cce:
