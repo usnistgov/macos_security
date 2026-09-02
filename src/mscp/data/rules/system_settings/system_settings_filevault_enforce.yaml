@@ -1,11 +1,11 @@
 id: system_settings_filevault_enforce
 title: Enforce FileVault
 discussion: |
-  FileVault _MUST_ be enabled. 
+  FileVault _MUST_ be enabled.
 
-  On Mac computers with Apple silicon or the Apple T2 Security Chip, internal storage is encrypted by default. Enabling FileVault provides additional protection by requiring an authorized user's credentials or a valid recovery key to unlock the data volume during the boot process. 
+  On Mac computers with Apple silicon or the Apple T2 Security Chip, internal storage is encrypted by default. Enabling FileVault provides additional protection by requiring an authorized user's credentials or a valid recovery key to unlock the data volume during the boot process.
 
-  When FileVault is enabled, the volume encryption key is protected by both the hardware UID and the user's credentials. This protects data at rest against unauthorized access if the device is lost, stolen, or otherwise removed from a controlled area. 
+  When FileVault is enabled, the volume encryption key is protected by both the hardware UID and the user's credentials. This protects data at rest against unauthorized access if the device is lost, stolen, or otherwise removed from a controlled area.
 
   NOTE: See the FileVault supplemental guidance for implementation and recovery-key escrow requirements.
 references:

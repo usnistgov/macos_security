@@ -44,14 +44,14 @@ references:
       - 4.8
 platforms:
   macOS:
-    '26.0': {}      
-    '15.0': {}      
+    '26.0': {}
+    '15.0': {}
     enforcement_info:
       check:
-        shell: |-                  
+        shell: |-
           /usr/bin/osascript -l JavaScript -e 'var s = $.NSUserDefaults.alloc.initWithSuiteName("com.apple.alr"); var list = ObjC.unwrap(s.objectForKey("DenyList")) || []; (list.some(function(item) { return ObjC.unwrap(item.objectForKey("SigningID")) == "com.apple.iCal"; }) && s.objectIsForcedForKey("DenyList")) ? "PASS" : "FAIL"'
         result:
-          string: 'PASS'    
+          string: 'PASS'
 tags:
   - cnssi-1253_low
   - cnssi-1253_high

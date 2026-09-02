@@ -124,4 +124,3 @@ ddm_info:
   declarationtype: com.apple.configuration.keyboard.settings
   ddm_key: AllowDictation
   ddm_value: false
-

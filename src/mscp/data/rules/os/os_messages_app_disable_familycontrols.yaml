@@ -11,7 +11,7 @@ discussion: |
   ====
 references:
   nist:
-    cce:      
+    cce:
       macos_26:
         - CCE-95228-3
       macos_15:
@@ -40,7 +40,7 @@ references:
       - 4.1
       - 4.8
 platforms:
-  macOS:    
+  macOS:
     '26.0':
       enforcement_info:
         check:
@@ -60,7 +60,7 @@ platforms:
               }
             EOS
           result:
-            string: 'true'     
+            string: 'true'
     '15.0':
       enforcement_info:
         check:

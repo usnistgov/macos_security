@@ -5,7 +5,7 @@ discussion: |
 
   This requirement helps ensure that organizational data is managed in accordance with established security, privacy, access-control, and data governance requirements.
 
-  Data may be sent to Apple Intelligence Private Cloud Compute even when Apple's provided controls around Apple Intelligence are disabled. Therefore, organizations should ensure that Apple Intelligence Private Cloud Compute is disabled by blocking access to the following domains: 
+  Data may be sent to Apple Intelligence Private Cloud Compute even when Apple's provided controls around Apple Intelligence are disabled. Therefore, organizations should ensure that Apple Intelligence Private Cloud Compute is disabled by blocking access to the following domains:
   - apple-relay.apple.com
   - apple-relay.fastly-edge.com
   - apple-relay.cloudflare.com
