@@ -136,3 +136,23 @@ versions:
       - os_version: 26.0
         os_name: visionos_26
         cpe: o:apple:visionos:26.0
+    ubuntu:
+      - os_version: 22.04
+        os_name: 22.04 LTS
+        cpe: o:canonical:ubuntu_linux:22.04
+      - os_version: 24.04
+        os_name: 24.04 LTS
+        cpe: o:canonical:ubuntu_linux:24.04
+      - os_version: 26.04
+        os_name: 26.04 LTS
+        cpe: o:canonical:ubuntu_linux:26.04
+    redhat:
+      - os_version: 8
+        os_name: "8"
+        cpe: o:redhat:enterprise_linux:8.0
+      - os_version: 9
+        os_name: "9"
+        cpe: o:redhat:enterprise_linux:9.0
+      - os_version: 10
+        os_name: "10"
+        cpe: o:redhat:enterprise_linux:10.0
