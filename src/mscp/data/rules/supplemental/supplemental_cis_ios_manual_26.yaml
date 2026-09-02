@@ -3,7 +3,7 @@ id: supplemental_cis_ios_manual_26
 title: CIS Manual Recommendations
 discussion: |
   List of CIS recommendations that are manual check in the CIS iOS Benchmark.
-  
+
   [cols="15%h, 85%a"]
   |===
   |Section
@@ -23,7 +23,7 @@ discussion: |
 
   |Recommendations
   |2.2.1.5  Ensure Allow personalized ads delivered by Apple is set to Disabled +
-  2.2.1.7 Ensure Force automatic date and time is set to Enabled + 
+  2.2.1.7 Ensure Force automatic date and time is set to Enabled +
   2.2.1.12 Ensure Allow sending diagnostic and usage data to Apple is set to Disabled
   |===
 

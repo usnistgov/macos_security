@@ -1,9 +1,9 @@
 ---
-id: supplemental_stig_ios
+id: supplemental_stig_ios_18
 title: DISA STIG Supplemental
 discussion: |
-  These controls are controls that require additional considerations for your environment. 
-  
+  These controls are controls that require additional considerations for your environment.
+
   [cols="20%h, 80%a"]
   |===
   |STIG ID

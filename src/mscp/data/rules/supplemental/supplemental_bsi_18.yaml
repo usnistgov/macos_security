@@ -1,5 +1,5 @@
 ---
-id: supplemental_bsi
+id: supplemental_bsi_18
 title: BSI Supplemental
 discussion: |
   These controls require additional considerations for your environment based on indigo,  in accordance with the recommendations of BSI (Bundesamt für Sicherheit in der Informationstechnik, German Federal Office for Information Security).
@@ -9,7 +9,7 @@ discussion: |
   |Section 5.8
   |Restrictions - App-Installation
 
-  | 
+  |
   |os_application_allow_list +
   os_application_deny_list
   |===
@@ -19,7 +19,7 @@ discussion: |
   |Section 6.1.6
   |Manual configuration - operational requirements
 
-  | 
+  |
   |os_live_text_disable
   |===
 
@@ -28,7 +28,7 @@ discussion: |
   |Section 6.3
   |Manual configuration - Update management
 
-  | 
+  |
   |os_update_auto_RSR_allow
   |===
 
@@ -36,7 +36,7 @@ references:
   nist: {}
 platforms:
   iOS:
-    '18.0':    
+    '18.0':
       benchmarks:
         - name: indigo_base
         - name: indigo_high

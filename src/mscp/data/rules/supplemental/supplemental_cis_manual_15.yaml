@@ -71,7 +71,7 @@ discussion: |
 references:
   nist: {}
 platforms:
-  macOS:    
+  macOS:
     '15.0':
       benchmarks:
         - name: cis_lvl1
