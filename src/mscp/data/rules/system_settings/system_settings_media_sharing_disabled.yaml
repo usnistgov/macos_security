@@ -58,6 +58,8 @@ references:
         - 2.3.3.9 (level 2)
       macos_14:
         - 2.3.3.9 (level 2)
+      macos_27:
+        - 2.3.3.9 (level 2)
     controls_v8:
       - 4.1
       - 4.8
@@ -65,6 +67,7 @@ platforms:
   macOS:
     '27.0':
       benchmarks:
+        - name: cis_lvl2
         - name: disa_stig
           severity: medium
     '26.0':

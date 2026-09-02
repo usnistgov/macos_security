@@ -46,13 +46,18 @@ references:
         - 2.5.1.4 (level 1)
       macos_15:
         - 2.5.1.4 (level 1)
+      macos_27:
+        - 2.5.1.4 (level 1)
   bsi:
     indigo:
       ios_26:
         - ANNEX K
 platforms:
   macOS:
-    '27.0': {}
+    '27.0':
+      benchmarks:
+        - name: cis_lvl1
+        - name: cis_lvl2
     '26.0':
       benchmarks:
         - name: cis_lvl1

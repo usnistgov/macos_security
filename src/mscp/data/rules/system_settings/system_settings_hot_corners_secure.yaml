@@ -37,11 +37,16 @@ references:
         - 2.7.1 (level 2)
       macos_14:
         - 2.7.1 (level 2)
+      macos_27:
+        - 2.7.1 (level 1)
     controls_v8:
       - 4.3
 platforms:
   macOS:
-    '27.0': {}
+    '27.0':
+      benchmarks:
+        - name: cis_lvl1
+        - name: cis_lvl2
     '26.0':
       benchmarks:
         - name: cis_lvl1

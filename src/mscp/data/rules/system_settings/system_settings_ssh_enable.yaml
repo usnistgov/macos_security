@@ -33,7 +33,6 @@ references:
       - 3.L.B
       - 3.L.C
       - 6.L.A
-      - ''
 platforms:
   macOS:
     '27.0': {}

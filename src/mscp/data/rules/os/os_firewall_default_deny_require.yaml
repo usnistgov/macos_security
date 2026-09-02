@@ -37,7 +37,6 @@ references:
   hhs:
     hicp:
       - 6.L.A
-      - ''
 platforms:
   macOS:
     '27.0': {}

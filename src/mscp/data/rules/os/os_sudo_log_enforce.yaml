@@ -41,10 +41,14 @@ references:
         - 5.11 (level 1)
       macos_15:
         - 5.11 (level 1)
+      macos_27:
+        - 5.11 (level 1)
 platforms:
   macOS:
     '27.0':
       benchmarks:
+        - name: cis_lvl1
+        - name: cis_lvl2
         - name: disa_stig
           severity: medium
     '26.0':
