@@ -14,7 +14,7 @@ references:
   nist:
     cce:
       macos_27:
-        - CCE-XXXXX-X
+        - CCE-97091-3
       macos_26:
         - CCE-95310-9
       macos_15:

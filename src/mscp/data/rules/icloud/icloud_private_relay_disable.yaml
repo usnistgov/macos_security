@@ -8,7 +8,7 @@ references:
   nist:
     cce:
       macos_27:
-        - CCE-XXXXX-X
+        - CCE-96996-4
       macos_26:
         - CCE-95151-7
       macos_15:
@@ -16,7 +16,7 @@ references:
       macos_14:
         - CCE-92752-5
       visionos_27:
-        - CCE-XXXXX-X
+        - CCE-97426-1
       visionos_26:
         - CCE-95559-1
     800-53r5:

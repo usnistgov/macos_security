@@ -24,6 +24,7 @@ class ResultDef(BaseModelWithAccessors):
     string: Optional[str] = None
     integer: Optional[Union[int, ODV]] = None
     boolean: Optional[bool] = None
+    exit_code: Optional[int] = None
 
 
 class ShellCheck(BaseModelWithAccessors):

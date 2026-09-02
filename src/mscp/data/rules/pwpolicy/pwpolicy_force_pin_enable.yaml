@@ -8,7 +8,7 @@ references:
   nist:
     cce:
       ios_27:
-        - CCE-XXXXX-X
+        - CCE-97404-8
       ios_26:
         - CCE-96705-9
       ios_18:
@@ -16,7 +16,7 @@ references:
       ios_17:
         - CCE-93457-0
       visionos_27:
-        - CCE-XXXXX-X
+        - CCE-97471-7
       visionos_26:
         - CCE-96716-6
     800-53r5:

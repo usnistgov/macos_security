@@ -6,15 +6,15 @@ references:
   nist:
     cce:
       macos_27:
-        - CCE-XXXXX-X
+        - CCE-97154-9
       macos_26:
-        - CCE-XXXXX-X
+        - CCE-96737-2
       macos_15:
         - CCE-94373-8
       macos_14:
         - CCE-92968-7
       ios_27:
-        - CCE-XXXXX-X
+        - CCE-97413-9
       ios_26:
         - CCE-96731-5
   cis:
