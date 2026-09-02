@@ -1,7 +1,7 @@
 id: system_settings_siri_AI_disable
 title: Disable Siri AI
 discussion: |
-  Support for Siri and Siri AI is non-essential and _MUST_ be disabled to prevent organizational data from being synchronized to Apple servers. 
+  Support for Siri and Siri AI is non-essential and _MUST_ be disabled to prevent organizational data from being synchronized to Apple servers.
 
   Apple's Siri service does not provide an organization with enough control over the storage and access of data, and, therefore, automated synchronization _MUST_ be controlled by an organization approved service. Apple Intelligence features such as Siri AI that use off device AI _MUST_ be disabled.
 
@@ -11,7 +11,7 @@ discussion: |
   =====
   Apple officially supports installation through DDM of this configuration, however installation using a mobileconfig profile with the domain of com.apple.ironwood.support with the key allowSiri3489 will also block the use of SiriAI.
   =====
-  
+
   [NOTE]
   =====
   Disabling the use of SiriAI may also disable the use of other Apple Intelligence features that use SiriAI.
