@@ -15,6 +15,7 @@ import gettext
 import re
 import shutil
 import sys
+import time
 from html import escape as html_escape
 from collections.abc import Mapping
 from itertools import groupby
@@ -984,6 +985,7 @@ def _generate_typst_pdf(spinner: Yaspin, output_file: Path, logo_path: Path) -> 
     pdf_file: Path = output_file.with_suffix(".pdf")
     spinner.spinner = Spinners.dots
     spinner.text = "Generating PDF file via typst"
+    time.sleep(.5)
     try:
         typst.compile(str(output_file), output=str(pdf_file), root=str(build_dir))
     except Exception as e:  # typst raises on compile errors

@@ -257,7 +257,7 @@ def generate_guidance(sp: Yaspin, args: argparse.Namespace) -> None:
     if args.profiles:
         logger.info("Generating configuration profiles")
         sp.text = "Generating configuration profiles"
-        time.sleep(1)
+        time.sleep(.5)
         generate_profiles(
             build_path,
             baseline_name,
@@ -271,13 +271,13 @@ def generate_guidance(sp: Yaspin, args: argparse.Namespace) -> None:
     if args.ddm:
         logger.info("Generating declarative components")
         sp.text = "Generating declarative components"
-        time.sleep(1)
+        time.sleep(.5)
         generate_ddm(build_path, baseline, baseline_name)
 
     if args.script:
         logger.info("Generating compliance scripts")
         sp.text = "Generating compliance scripts"
-        time.sleep(1)
+        time.sleep(.5)
         generate_script(
             build_path,
             baseline_name,
@@ -298,7 +298,7 @@ def generate_guidance(sp: Yaspin, args: argparse.Namespace) -> None:
     if args.xlsx:
         logger.info("Generating excel file")
         sp.text = "Generating excel file"
-        time.sleep(1)
+        time.sleep(.5)
         generate_excel(spreadsheet_output_file, baseline)
 
     if args.gary:
@@ -307,7 +307,7 @@ def generate_guidance(sp: Yaspin, args: argparse.Namespace) -> None:
     if args.markdown:
         logger.info("Generating markdown file")
         sp.text = "Generating markdown file"
-        time.sleep(1)
+        time.sleep(.5)
         generate_documents(
             sp,
             md_output_file,
@@ -325,7 +325,7 @@ def generate_guidance(sp: Yaspin, args: argparse.Namespace) -> None:
     if args.markdown_tree:
         logger.info("Generating paginated markdown tree files")
         sp.text = "Generating markdown tree files"
-        time.sleep(1)
+        time.sleep(.5)
         generate_markdown_tree(
             build_path,
             baseline,
@@ -337,14 +337,14 @@ def generate_guidance(sp: Yaspin, args: argparse.Namespace) -> None:
     if args.manifest:
         logger.info("Generating JSON manifest")
         sp.text = "Generating JSON manifest"
-        time.sleep(1)
+        time.sleep(.5)
         generate_manifest(build_path, baseline_name, baseline)
 
     if args.all:
         logger.info("Generating all support files")
         logger.info("Generating configuration profiles")
         sp.text = "Generating configuration profiles"
-        time.sleep(1)
+        time.sleep(.5)
         generate_profiles(
             build_path,
             baseline_name,
@@ -357,12 +357,12 @@ def generate_guidance(sp: Yaspin, args: argparse.Namespace) -> None:
 
         logger.info("Generating declarative components")
         sp.text = "Generating declarative components"
-        time.sleep(1)
+        time.sleep(.5)
         generate_ddm(build_path, baseline, baseline_name)
 
         logger.info("Generating compliance scripts")
         sp.text = "Generating compliance scripts"
-        time.sleep(1)
+        time.sleep(.5)
         generate_script(
             build_path,
             baseline_name,
@@ -382,12 +382,12 @@ def generate_guidance(sp: Yaspin, args: argparse.Namespace) -> None:
 
         logger.info("Generating excel file")
         sp.text = "Generating excel file"
-        time.sleep(1)
+        time.sleep(.5)
         generate_excel(spreadsheet_output_file, baseline)
 
         logger.info("Generating markdown file")
         sp.text = "Generating markdown document"
-        time.sleep(1)
+        time.sleep(.5)
         generate_documents(
             sp,
             md_output_file,
@@ -404,7 +404,7 @@ def generate_guidance(sp: Yaspin, args: argparse.Namespace) -> None:
 
         logger.info("Generating paginated markdown tree files")
         sp.text = "Generating markdown tree files"
-        time.sleep(1)
+        time.sleep(.5)
         generate_markdown_tree(
             build_path,
             baseline,
@@ -415,12 +415,13 @@ def generate_guidance(sp: Yaspin, args: argparse.Namespace) -> None:
 
         logger.info("Generating JSON manifest")
         sp.text = "Generating JSON manifest"
-        time.sleep(1)
+        time.sleep(.5)
         generate_manifest(build_path, baseline_name, baseline)
 
     if not args.no_docs:
         logger.info("Generating PDF document (typst)")
         sp.text = "Generating PDF document (typst)"
+        time.sleep(.5)
         generate_documents(
             sp,
             typst_output_file,
@@ -437,6 +438,7 @@ def generate_guidance(sp: Yaspin, args: argparse.Namespace) -> None:
 
         logger.info("Generating HTML document (python)")
         sp.text = "Generating HTML document (python)"
+        time.sleep(.5)
         generate_documents(
             sp,
             html_output_file,
