@@ -15,7 +15,7 @@ discussion: |
   2.1.1.4 Audit Security Keys Used With Apple Accounts +
   2.1.1.5 Audit Freeform Sync to iCloud +
   2.1.1.6 Audit Find My Mac +
-  2.1.2 Audit App Store Password Settings (macOS 27 only) +
+  2.1.2 Audit App Store Password Settings +
   2.3.3.11 Ensure Computer Name Does Not Contain PII or Protected Organizational Information +
   2.3.5.1 Ensure 'allowUIConfigurationProfileInstallation' Is Set to Disabled +
   2.4.1 Audit Menu Bar and Control Center Icons +
@@ -26,7 +26,6 @@ discussion: |
   2.6.7 Audit Lockdown Mode +
   2.7.2 Audit iPhone Mirroring +
   2.8.1 Audit Universal Control Settings +
-  2.10.1.1 Ensure the OS Is Not Active When Resuming from Standby (Intel) (macOS 26 and earlier) +
   2.12.2 Audit Touch ID +
   2.14.1 Audit Game Center Settings +
   2.15.1 Audit Notification Settings +
