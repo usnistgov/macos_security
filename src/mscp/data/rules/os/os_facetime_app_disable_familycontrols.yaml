@@ -64,7 +64,6 @@ platforms:
           /usr/bin/osascript -l JavaScript -e 'var s = $.NSUserDefaults.alloc.initWithSuiteName("com.apple.alr"); var list = ObjC.unwrap(s.objectForKey("DenyList")) || []; (list.some(function(item) { return item.PathPrefix == "/System/Applications/FaceTime.app"; }) && s.objectIsForcedForKey("DenyList")) ? "PASS" : "FAIL"'
         result:
           string: 'PASS'
-    introduced: '27.0'
 tags:
   - cnssi-1253_low
   - cnssi-1253_high

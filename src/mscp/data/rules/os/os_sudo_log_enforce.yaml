@@ -85,9 +85,3 @@ tags:
   - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
-ddm_info:
-  declarationtype: com.apple.configuration.services.configuration-files
-  service: com.apple.sudo
-  config_file: sudoers
-  configuration_key: Defaults
-  configuration_value: log_allowed
