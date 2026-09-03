@@ -50,6 +50,13 @@
 ```
 {% endif %}
 {% endif %}
+{% if rule.ddm_info %}
+{% trans %}If using Declarative Device Management (DDM), apply the following configuration.{% endtrans %}
+
+```json
+{{ rule.ddm_info | ddm_info_to_json(baseline.name) }}
+```
+{% endif %}
 {% if rule.enforcement_info.fix.additional_info %}
 #admonition("NOTE")[{{ rule.enforcement_info.fix.additional_info | asciidoc_to_typst }}]
 {% endif %}

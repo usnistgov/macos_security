@@ -40,6 +40,10 @@
 <div class="listingblock"><div class="content"><pre class="highlight"><code>{{ rule.mobileconfig_info | mobileconfig_payloads_to_xml | e }}</code></pre></div></div>
 {% endif %}
 {% endif %}
+{% if rule.ddm_info %}
+<div class="paragraph"><p></p>{% trans %}If deploying Declarative Device Management (DDM), use the following configuration.{% endtrans %}</p></div>
+<div class="listingblock"><div class="content"><pre class="highlight"><code>{{ rule.ddm_info | ddm_info_to_json(baseline.name) }}</code></pre></div></div>
+{% endif %}
 {% if rule.enforcement_info.fix.additional_info %}
 <div class="admonitionblock note"><table><tr><td class="icon"><div class="title">Note</div></td><td class="content">{{ rule.enforcement_info.fix.additional_info | asciidoc_to_html }}</td></tr></table></div>
 {% endif %}
