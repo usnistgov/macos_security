@@ -29,6 +29,8 @@ references:
       - SRG-OS-000206-GPOS-00084
       - SRG-OS-000205-GPOS-00083
     disa_stig:
+      macos_27:
+        - APPL-27-002021
       macos_26:
         - APPL-26-002021
       macos_15:
@@ -59,7 +61,10 @@ references:
       - 4.8
 platforms:
   macOS:
-    '27.0': {}
+    '27.0':
+      benchmarks:
+        - name: disa_stig
+          severity: medium
     '26.0':
       benchmarks:
         - name: cis_lvl1
@@ -77,21 +82,9 @@ platforms:
     enforcement_info:
       check:
         shell: |-
-          /usr/bin/osascript -l JavaScript << EOS
-          function run() {
-          let pref1 = $.NSUserDefaults.alloc.initWithSuiteName('com.apple.SubmitDiagInfo')\
-          .objectForKey('AutoSubmit').js
-          let pref2 = $.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess')\
-          .objectForKey('allowDiagnosticSubmission').js
-          if ( pref1 == false && pref2 == false ){
-              return("true")
-          } else {
-              return("false")
-          }
-          }
-          EOS
+          /usr/bin/osascript -l JavaScript -e 'var s1 = $.NSUserDefaults.alloc.initWithSuiteName("com.apple.SubmitDiagInfo"); var s2 = $.NSUserDefaults.alloc.initWithSuiteName("com.apple.applicationaccess"); var v1 = ObjC.unwrap(s1.objectForKey("AutoSubmit")); var v2 = ObjC.unwrap(s2.objectForKey("allowDiagnosticSubmission")); var f1 = s1.objectIsForcedForKey("AutoSubmit"); var f2 = s2.objectIsForcedForKey("allowDiagnosticSubmission"); (v1 == false && v2 == false && f1 && f2) ? "PASS" : "FAIL"'
         result:
-          string: 'true'
+          string: 'PASS'
     introduced: '10.13'
 tags:
   - 800-53r5_low

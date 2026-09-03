@@ -1,8 +1,7 @@
----
 id: os_facetime_app_disable
 title: Disable FaceTime.app
 discussion: |
-  The macOS built-in FaceTime.app _MUST_ be disabled.
+  The macOS built-in FaceTime.app _MUST_ be disabled, unless FaceTime is an approved collaboration tool.
 
   The FaceTime.app establishes a connection to Apple's iCloud service, even when security controls have been put in place to disable iCloud access.
 
@@ -10,6 +9,10 @@ discussion: |
   ====
   Apple has deprecated the use of link:https://github.com/apple/device-management/blob/eb51fb0cb9626cac4717858556912c257a734ce0/mdm/profiles/com.apple.applicationaccess.new.yaml#L67-L70[application restriction controls], using these controls may not work as expected. Third party software may be required to fulfill the compliance requirements.
   ====
+
+  [IMPORTANT] 
+  ====
+  macOS 27 Golden Gate uses Declarative Device Management (DDM) to manage application restrictions. The DDM key for this control is `Allowed` with the value of `DeniedBinaries` containing the signing ID of the application to be disabled. The signing ID for FaceTime.app is `com.apple.FaceTime`.
 references:
   nist:
     cce:
@@ -34,6 +37,8 @@ references:
     srg:
       - SRG-OS-000095-GPOS-00049
     disa_stig:
+      macos_27:
+        - APPL-27-002010
       macos_26:
         - APPL-26-002010
       macos_15:
@@ -53,7 +58,10 @@ references:
       - 4.8
 platforms:
   macOS:
-    '27.0': {}
+    '27.0':
+      benchmarks:
+        - name: disa_stig
+          severity: medium
     '26.0':
       benchmarks:
         - name: disa_stig

@@ -30,6 +30,8 @@ references:
     srg:
       - SRG-OS-000095-GPOS-00049
     disa_stig:
+      macos_27:
+        - APPL-27-002180
       macos_26:
         - APPL-26-002180
       macos_15:
@@ -57,7 +59,10 @@ references:
       - 15.3
 platforms:
   macOS:
-    '27.0': {}
+    '27.0':
+      benchmarks:
+        - name: disa_stig
+          severity: medium
     '26.0':
       benchmarks:
         - name: disa_stig
@@ -73,23 +78,9 @@ platforms:
     enforcement_info:
       check:
         shell: |-
-          /usr/bin/osascript -l JavaScript << EOS
-          function run() {
-            let pref1 = ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess')\
-          .objectForKey('allowFindMyDevice'))
-            let pref2 = ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess')\
-          .objectForKey('allowFindMyFriends'))
-            let pref3 = ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('com.apple.icloud.managed')\
-          .objectForKey('DisableFMMiCloudSetting'))
-            if ( pref1 == false && pref2 == false && pref3 == true ) {
-              return("true")
-            } else {
-              return("false")
-            }
-          }
-          EOS
+          /usr/bin/osascript -l JavaScript -e 'var s1 = $.NSUserDefaults.alloc.initWithSuiteName("com.apple.applicationaccess"); var s2 = $.NSUserDefaults.alloc.initWithSuiteName("com.apple.icloud.managed"); var v1 = ObjC.unwrap(s1.objectForKey("allowFindMyDevice")); var v2 = ObjC.unwrap(s1.objectForKey("allowFindMyFriends")); var v3 = ObjC.unwrap(s2.objectForKey("DisableFMMiCloudSetting")); var f1 = s1.objectIsForcedForKey("allowFindMyDevice"); var f2 = s1.objectIsForcedForKey("allowFindMyFriends"); var f3 = s2.objectIsForcedForKey("DisableFMMiCloudSetting"); (v1 == false && v2 == false && v3 == true && f1 && f2 && f3) ? "PASS" : "FAIL"'
         result:
-          string: 'true'
+          string: 'PASS'
     introduced: '-1'
 tags:
   - 800-53r5_low

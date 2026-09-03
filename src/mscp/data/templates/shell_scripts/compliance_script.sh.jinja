@@ -116,6 +116,16 @@ logmessage(){
   fi
 }
 
+csv_escape(){
+  # Escape a field per RFC 4180: double any embedded double quotes, then wrap
+  # the whole field in double quotes so commas, quotes, CR and LF are literal.
+  local field="$1"
+  local quote='"'
+  field="${field//$quote/$quote$quote}"
+  field="$quote$field$quote"
+  printf '%s' "$field"
+}
+
 logcsv(){
   local rule_name="$1"
   local result_status="$2"
@@ -124,10 +134,13 @@ logcsv(){
   local exemption="$5"
 
   if [[ ! -f "$audit_csv" ]]; then
-    echo "Rule,Status,Result,Expected,Exemption" > "$audit_csv"
+    printf '%s\n' "Rule,Status,Result,Expected,Exemption" > "$audit_csv"
   fi
 
-  echo "$rule_name,$result_status,$result,$expected,$exemption" >> "$audit_csv"
+  # Use printf, not echo: under zsh `echo` interprets backslash escapes in the
+  # field values (e.g. an embedded `\c` truncates the line), which would corrupt
+  # the CSV even after csv_escape() has quoted each field.
+  printf '%s\n' "$(csv_escape "$rule_name"),$(csv_escape "$result_status"),$(csv_escape "$result"),$(csv_escape "$expected"),$(csv_escape "$exemption")" >> "$audit_csv"
 }
 
 ask() {
@@ -393,7 +406,6 @@ usage=(
     "                       2 - show minimal output"
   )
 
-set -- "$@" "${EOL:=$(printf '\1\3\3\7')}"
 
 # Look for managed arguments for compliance script
 if [[ $# -eq 0 ]];then
@@ -414,7 +426,7 @@ EOS
         set -- ${(z)compliance_args}
     fi
 fi
-  
+
 zparseopts -D -E -help=flag_help -check=check -fix=fix -stats=stats -compliant=compliant_opt -non_compliant=non_compliant_opt -reset=reset -reset-all=reset_all -cfc=cfc -quiet:=quiet || { print -l $usage && return }
 
 [[ -z "$flag_help" ]] || { print -l $usage && return }

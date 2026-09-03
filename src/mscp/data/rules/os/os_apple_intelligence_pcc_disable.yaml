@@ -1,8 +1,15 @@
----
 id: os_apple_intelligence_pcc_disable
 title: Disable Apple Intelligence Private Cloud Compute
 discussion: |
-  Apple Intelligence Private Cloud Compute sends data to off-device infrastructure that is not directly controlled by the organization. Therefore, Apple Intelligence features that rely on off-device processing MUST be disabled unless explicitly approved by the organization.
+  Apple Intelligence Private Cloud Compute sends data to off-device infrastructure that is not directly controlled by the organization. Therefore, Apple Intelligence features that rely on off-device processing _MUST_ be disabled unless explicitly approved by the organization.
+
+  This requirement helps ensure that organizational data is managed in accordance with established security, privacy, access-control, and data governance requirements.
+
+  Data may be sent to Apple Intelligence Private Cloud Compute even when Apple's provided controls around Apple Intelligence are disabled. Therefore, organizations should ensure that Apple Intelligence Private Cloud Compute is disabled by blocking access to the following domains: 
+  - apple-relay.apple.com
+  - apple-relay.fastly-edge.com
+  - apple-relay.cloudflare.com
+  - cp4.cloudflare.com
 references:
   nist:
     cce:
@@ -23,6 +30,9 @@ references:
       - CCI-001774
     srg:
       - SRG-OS-000095-GPOS-00049
+    disa_stig:
+      macos_27:
+        - APPL-27-005180
     cmmc:
       - AC.L1-3.1.20
       - CM.L2-3.4.6
@@ -39,7 +49,10 @@ references:
       - 15.3
 platforms:
   macOS:
-    '27.0': {}    
+    '27.0':    
+      benchmarks:
+        - name: disa_stig
+          severity: medium
     enforcement_info:
       check:
         shell: |-
@@ -52,9 +65,15 @@ platforms:
         result:
           integer: 4
       fix:
-        shell: |-    
+        shell: |-
+          note="### Apple Intelligence Private Cloud Compute is disabled by the organization (apple-relay, cp4.cloudflare.com, etc). Added by the mSCP ###"
           apple_intelligence_servers=("127.0.0.1 apple-relay.cloudflare.com" "127.0.0.1 apple-relay.fastly-edge.com" "127.0.0.1 cp4.cloudflare.com" "127.0.0.1 apple-relay.apple.com")
+          
           host_file=$(/bin/cat /etc/hosts)
+          
+          if ! /usr/bin/grep -qxF "$note" "$hosts_file" 2>/dev/null; then
+            echo "$note" >> "$hosts_file"
+          fi
           for config in $apple_intelligence_servers; do
             if ! echo $host_file | /usr/bin/grep -q -i "^$config" 2>/dev/null; then
               /usr/bin/grep -qxF "^$config" "/etc/hosts" 2>/dev/null || echo "$config" >> "/etc/hosts"

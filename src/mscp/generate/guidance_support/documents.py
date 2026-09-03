@@ -7,7 +7,8 @@ output.  `render_template` performs the actual Jinja render.  Helper Jinja
 filters are also defined here: `group_ulify`, `group_ulify_md`,
 `render_references`, `render_rules`, `render_rules_md`,
 `replace_include_with_file_content`, `asciidoc_to_markdown`, and
-`get_nested`.
+`get_nested`.  The `ddm_info_to_json` filter is imported from `ddm` and
+registered here alongside `mobileconfig_payloads_to_xml`.
 """
 
 # Standard python modules
@@ -30,6 +31,7 @@ from jinja2 import Environment, FileSystemLoader, Template
 # Local python modules
 from ...classes import Baseline
 from ...classes.mobileconfig import mobileconfig_info_to_xml
+from .ddm import ddm_info_to_json
 from ...common_utils import (
     config,
     logger,
@@ -844,6 +846,7 @@ def render_template(
     env.filters["render_references"] = render_references
     env.filters["get_nested"] = get_nested
     env.filters["mobileconfig_payloads_to_xml"] = mobileconfig_info_to_xml
+    env.filters["ddm_info_to_json"] = ddm_info_to_json
     env.install_gettext_translations(translations)
 
     if output_format == "markdown":

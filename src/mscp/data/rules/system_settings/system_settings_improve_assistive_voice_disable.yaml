@@ -27,6 +27,8 @@ references:
     srg:
       - SRG-OS-000095-GPOS-00049
     disa_stig:
+      macos_27:
+        - APPL-27-002023
       macos_26:
         - APPL-26-002023
       macos_15:
@@ -54,7 +56,10 @@ references:
       - 4.8
 platforms:
   macOS:
-    '27.0': {}
+    '27.0':
+      benchmarks:
+        - name: disa_stig
+          severity: medium
     '26.0':
       benchmarks:
         - name: cis_lvl1
@@ -72,12 +77,9 @@ platforms:
     enforcement_info:
       check:
         shell: |-
-          /usr/bin/osascript -l JavaScript << EOS
-          $.NSUserDefaults.alloc.initWithSuiteName('com.apple.Accessibility')\
-          .objectForKey('AXSAudioDonationSiriImprovementEnabled').js
-          EOS
+          /usr/bin/osascript -l JavaScript -e 'var s = $.NSUserDefaults.alloc.initWithSuiteName("com.apple.Accessibility"); (ObjC.unwrap(s.objectForKey("AXSAudioDonationSiriImprovementEnabled")) == false && s.objectIsForcedForKey("AXSAudioDonationSiriImprovementEnabled")) ? "PASS" : "FAIL"'
         result:
-          string: 'false'
+          string: 'PASS'
     introduced: '-1'
 tags:
   - 800-53r5_low

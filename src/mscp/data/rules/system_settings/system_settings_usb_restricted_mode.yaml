@@ -44,6 +44,8 @@ references:
       - SRG-OS-000378-GPOS-00163
       - SRG-OS-000690-GPOS-00140
     disa_stig:
+      macos_27:
+        - APPL-27-005090
       macos_26:
         - APPL-26-005090
       macos_15:
@@ -76,7 +78,10 @@ references:
       - 1.2      
 platforms:
   macOS:
-    '27.0': {}
+    '27.0':
+      benchmarks:
+        - name: disa_stig
+          severity: medium
     '26.0':
       benchmarks:
         - name: disa_stig
@@ -93,14 +98,19 @@ platforms:
               let pref1 = ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess')\
             .objectForKey('allowUSBRestrictedMode'))
               if ( pref1 == false ) {
-                return("false")
+                let forced = ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName("com.apple.ironwood.support").objectIsForcedForKey("allowUSBRestrictedMode"))
+                if ( forced == true ) {
+                  return("FAIL")
+                } else {
+                  return("PASS")
+                }
               } else {
-                return("true")
+                return("PASS")
               }
             }
           EOS
         result:
-          string: 'true'
+          string: 'PASS'
     introduced: '13.0'
   iOS:
     '27.0':

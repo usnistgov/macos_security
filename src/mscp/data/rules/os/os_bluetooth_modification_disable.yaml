@@ -28,18 +28,20 @@ references:
     cmmc:
       - CM.L2-3.4.6
       - CM.L2-3.4.7
+  hhs:
+    hicp:
+      - 2.L.A
+      - 4.L.A
+      - 4.L.B      
 platforms:
   macOS:
     '27.0': {}
     enforcement_info:
       check:
         shell: |-
-          /usr/bin/osascript -l JavaScript << EOS
-          $.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess')\
-          .objectForKey('allowBluetoothModification').js
-          EOS
+          /usr/bin/osascript -l JavaScript -e 'var s = $.NSUserDefaults.alloc.initWithSuiteName("com.apple.applicationaccess"); (ObjC.unwrap(s.objectForKey("allowBluetoothModification")) == false && s.objectIsForcedForKey("allowBluetoothModification")) ? "PASS" : "FAIL"'
         result:
-          string: 'false'
+          string: 'PASS'
     introduced: '13.0'
   iOS:
     '27.0':
@@ -62,6 +64,7 @@ tags:
   - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
+  - hicp_lp
 mobileconfig_info:
   - PayloadType: com.apple.applicationaccess
     PayloadContent:

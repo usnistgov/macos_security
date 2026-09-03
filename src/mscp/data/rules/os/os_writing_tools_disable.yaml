@@ -37,6 +37,8 @@ references:
     srg:
       - SRG-OS-000095-GPOS-00049
     disa_stig:
+      macos_27:
+        - APPL-27-005160
       macos_26:
         - APPL-26-005160
       macos_15:
@@ -67,7 +69,10 @@ references:
         - ANNEX K
 platforms:
   macOS:
-    '27.0': {}
+    '27.0':
+      benchmarks:
+        - name: disa_stig
+          severity: medium
     '26.0':
       benchmarks:
         - name: cis_lvl1
@@ -80,13 +85,10 @@ platforms:
         - name: disa_stig
     enforcement_info:
       check:
-        shell: |-
-          /usr/bin/osascript -l JavaScript << EOS
-          $.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess')\
-          .objectForKey('allowWritingTools').js
-          EOS
+        shell: |-        
+          /usr/bin/osascript -l JavaScript -e 'var s = $.NSUserDefaults.alloc.initWithSuiteName("com.apple.applicationaccess"); (ObjC.unwrap(s.objectForKey("allowWritingTools")) == false && s.objectIsForcedForKey("allowWritingTools")) ? "PASS" : "FAIL"'
         result:
-          string: 'false'
+          string: 'PASS'
     introduced: '15.0'
   iOS:
     '27.0':

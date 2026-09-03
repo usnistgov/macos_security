@@ -1,4 +1,3 @@
----
 id: os_certificate_authority_trust
 title: Issue or Obtain Public Key Certificates from an Approved Service Provider
 discussion: |
@@ -26,6 +25,8 @@ references:
       - SRG-OS-000403-GPOS-00182
       - SRG-OS-000775-GPOS-00230
     disa_stig:
+      macos_27:
+        - APPL-27-003001
       macos_26:
         - APPL-26-003001
       macos_15:
@@ -40,7 +41,10 @@ references:
       - 3.L.C
 platforms:
   macOS:
-    '27.0': {}
+    '27.0':
+      benchmarks:
+        - name: disa_stig
+          severity: high
     '26.0':
       benchmarks:
         - name: disa_stig

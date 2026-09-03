@@ -1,4 +1,3 @@
----
 id: os_prevent_priv_functions
 title: Configure the System to Block Non-Privileged Users from Executing Privileged Functions
 discussion: |-

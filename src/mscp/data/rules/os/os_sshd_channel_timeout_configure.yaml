@@ -1,9 +1,9 @@
 id: os_sshd_channel_timeout_configure
-title: Configure SSHD Channel Timeout to $ODV
+title: Configure SSHD All Inactive Channel Timeout to $ODV
 discussion: |
-  If SSHD is enabled it _MUST_ be configured with session ChannelTime out set to $ODV.
+  If SSHD is enabled it _MUST_ be configured with session,agent-connection,direct-tcpip, direct-streamlocal@openssh.com,forwarded-tcpip, forwarded-streamlocal@openssh.com, tun-connection, x11-connection ChannelTimeout set to $ODV.
 
-  This will set the time out when the session is inactive.
+  This will set the time out any inactive channel connection.
 
   NOTE: /etc/ssh/sshd_config will be automatically modified to its original state following any update or major upgrade to the operating system.
 
@@ -33,6 +33,8 @@ references:
       - SRG-OS-000163-GPOS-00072
       - SRG-OS-000279-GPOS-00109
     disa_stig:
+      macos_27:
+        - APPL-27-000120
       macos_26:
         - APPL-26-000120
       macos_15:
@@ -44,7 +46,10 @@ references:
       - SC.L2-3.13.9
 platforms:
   macOS:
-    '27.0': {}
+    '27.0':
+      benchmarks:
+        - name: disa_stig
+          severity: medium
     '26.0':
       benchmarks:
         - name: disa_stig
@@ -55,9 +60,9 @@ platforms:
           severity: medium
     enforcement_info:
       check:
-        shell: /usr/sbin/sshd -G | /usr/bin/awk '/channeltimeout/{print $2}'
+        shell: /usr/sbin/sshd -G | /usr/bin/awk -F "=" '/channeltimeout */{print $2}'
         result:
-          string: $ODV
+          integer: $ODV
       fix:
         shell: |-
           include_dir=$(/usr/bin/awk '/^Include/ {print $2}' /etc/ssh/sshd_config | /usr/bin/tr -d '*')
@@ -66,7 +71,7 @@ platforms:
             /usr/bin/sed -i.bk "1s/.*/Include \/etc\/ssh\/sshd_config.d\/\*/" /etc/ssh/sshd_config
           fi
 
-          /usr/bin/grep -qxF 'channeltimeout $ODV' "${include_dir}01-mscp-sshd.conf" 2>/dev/null || echo "channeltimeout $ODV" >> "${include_dir}01-mscp-sshd.conf"
+          /usr/bin/grep -qxF 'channeltimeout *=$ODV' "${include_dir}01-mscp-sshd.conf" 2>/dev/null || echo "channeltimeout *=$ODV" >> "${include_dir}01-mscp-sshd.conf"
 
           for file in $(ls ${include_dir}); do
             if [[ "$file" == "100-macos.conf" ]]; then
@@ -80,7 +85,7 @@ platforms:
 odv:
   hint:
     datatype: number
-    description: Number of seconds, e.g. 900
+    description: number of seconds
     validation:
       min: 0
   recommended: 900

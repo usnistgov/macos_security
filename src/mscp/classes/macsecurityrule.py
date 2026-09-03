@@ -15,7 +15,7 @@ from typing import Any
 from uuid import uuid4
 
 # Additional python modules
-from pydantic import Field, ValidationError, field_validator
+from pydantic import BaseModel, Field, ValidationError, field_validator
 
 # Local python modules
 from ._base import BaseModelWithAccessors
@@ -264,7 +264,6 @@ class Macsecurityrule(BaseModelWithAccessors):
             rule_yaml["rule_id"] = rule_yaml.pop("id", rule_id)
 
             customized_fields = []
-
             if rule_yaml["rule_id"] in custom_rule_dict:
                 logger.info(f"Found customization for {rule_yaml['rule_id']}")
                 for custom_rule_key, custom_rule_value in custom_rule_dict[
@@ -283,7 +282,7 @@ class Macsecurityrule(BaseModelWithAccessors):
                         continue
                     if custom_rule_key == "platforms":
                         platform_info = rule_yaml.get("platforms")
-                        deep_merge(platform_info, custom_rule_value)
+                        deep_merge(platform_info, custom_rule_value, preferred_key="result")
                         continue
 
                     rule_yaml[custom_rule_key] = custom_rule_value
@@ -292,13 +291,6 @@ class Macsecurityrule(BaseModelWithAccessors):
                 "enforcement_info", {}
             )
 
-            if enforcement_info:
-                platform_enforcement_info = rule_yaml["platforms"][os_type][
-                    os_version_str
-                ].get("enforcement_info", {})
-                deep_merge(
-                    enforcement_info, platform_enforcement_info, preferred_key="result"
-                )
 
             if enforcement_info and "n_a" not in tags:
                 check_shell = enforcement_info.get("check", {}).get("shell")
@@ -395,6 +387,8 @@ class Macsecurityrule(BaseModelWithAccessors):
             disa: dict[str, Any] = {}
             cis: dict[str, Any] = {}
             bsi: dict[str, Any] = {}
+            bzk: dict[str, Any] = {}
+            hhs: dict[str, Any] = {}
             custom_refs: dict[str, Any] = {}
 
             for ref_key in reference_keys:
@@ -406,6 +400,10 @@ class Macsecurityrule(BaseModelWithAccessors):
                     cis: dict[str, Any] = rule_yaml["references"].get("cis", {})
                 elif ref_key == "bsi":
                     bsi: dict[str, Any] = rule_yaml["references"].get("bsi", {})
+                elif ref_key == "bzk":
+                    bzk: dict[str, Any] = rule_yaml["references"].get("bzk", {})
+                elif ref_key == "hhs":
+                    hhs: dict[str, Any] = rule_yaml["references"].get("hhs", {})
                 elif ref_key == "custom":  # support for 1.0 custom refs format
                     for custom_ref_key in rule_yaml["references"]["custom"]:
                         custom_refs[custom_ref_key] = rule_yaml["references"][
@@ -712,6 +710,10 @@ class Macsecurityrule(BaseModelWithAccessors):
                 if obj == "$ODV":
                     return odv_value
                 return obj.replace("$ODV", str(odv_value))
+            elif isinstance(obj, BaseModel):
+                return obj.__class__.model_validate(
+                    replace_odv_in_obj(obj.model_dump())
+                )
             elif isinstance(obj, dict):
                 return {k: replace_odv_in_obj(v) for k, v in obj.items()}
             elif isinstance(obj, list):

@@ -1,9 +1,11 @@
----
 id: icloud_game_center_disable
 title: Disable iCloud Game Center
 discussion: |
-  This works only with supervised devices (MDM) and allows to disable Apple Game Center. The rationale is Game Center is using Apple ID and will shared data on AppleID based services, therefore, Game Center _MUST_ be disabled.
+  This works only with supervised devices and allows to disable Apple Game Center. The rationale is Game Center is using Apple Account and will share data on iCloud based services, therefore, Game Center _MUST_ be disabled.
+  
   This setting also prohibits functionality of adding friends to Game Center.
+
+  This requirement helps ensure that organizational contact data is managed in accordance with established security, privacy, access-control, and data governance requirements.
 references:
   nist:
     cce:
@@ -30,6 +32,8 @@ references:
     srg:
       - SRG-OS-000095-GPOS-00049
     disa_stig:
+      macos_27:
+        - APPL-27-002160
       macos_26:
         - APPL-26-002160
       macos_15:
@@ -52,7 +56,10 @@ references:
       - 15.3
 platforms:
   macOS:
-    '27.0': {}
+    '27.0':
+      benchmarks:
+        - name: disa_stig
+          severity: medium
     '26.0':
       benchmarks:
         - name: disa_stig
@@ -64,12 +71,9 @@ platforms:
     enforcement_info:
       check:
         shell: |-
-          /usr/bin/osascript -l JavaScript << EOS
-          $.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess')\
-          .objectForKey('allowGameCenter').js
-          EOS
+          /usr/bin/osascript -l JavaScript -e 'var s = $.NSUserDefaults.alloc.initWithSuiteName("com.apple.applicationaccess"); (ObjC.unwrap(s.objectForKey("allowGameCenter")) == false && s.objectIsForcedForKey("allowGameCenter")) ? "PASS" : "FAIL"'          
         result:
-          string: 'false'
+          string: 'PASS'
     introduced: '10.13'
 tags:
   - 800-53r5_low
