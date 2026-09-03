@@ -49,13 +49,18 @@ references:
       ios_26:
         - 2.9.2 (level 1 - End-User Owned Devices)
         - 3.10.2 (level 1 - Institutionally-Owned Devices)
+      macos_27:
+        - 2.5.1.4 (level 1)
   bsi:
     indigo:
       ios_26:
         - ANNEX K
 platforms:
   macOS:
-    '27.0': {}
+    '27.0':
+      benchmarks:
+        - name: cis_lvl1
+        - name: cis_lvl2
     '26.0':
       benchmarks:
         - name: cis_lvl1

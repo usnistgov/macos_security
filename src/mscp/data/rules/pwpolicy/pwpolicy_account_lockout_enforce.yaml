@@ -75,6 +75,8 @@ references:
       ios_17:
         - 2.4.6 (level 1 - End-User Owned Devices)
         - 3.4.6 (level 1 - Institutionally-Owned Devices)
+      macos_27:
+        - 5.2.1 (level 1)
     controls_v8:
       - 6.2
   bsi:
@@ -92,6 +94,8 @@ platforms:
   macOS:
     '27.0':
       benchmarks:
+        - name: cis_lvl1
+        - name: cis_lvl2
         - name: disa_stig
           severity: medium
     '26.0':

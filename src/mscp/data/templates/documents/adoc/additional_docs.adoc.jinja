@@ -91,10 +91,14 @@
 |{% trans %}Document Title{% endtrans %}
 
 {% if os_name == "macos" %}
-{% if os_version == "15.0" %}
-|link:https://www.cisecurity.org/benchmark/apple_os/[Apple macOS 15.0]|_CIS Apple macOS 15.0 Benchmark version 1.0.0_
+{% if os_version == "27.0" %}
+|link:https://www.cisecurity.org/benchmark/apple_os/[Apple macOS 27.0]|_CIS Apple macOS 27.0 Benchmark version 1.0.0_
+{% elif os_version == "26.0" %}
+|link:https://www.cisecurity.org/benchmark/apple_os/[Apple macOS 26.0]|_CIS Apple macOS 26.0 Benchmark version 2.0.0_
+{% elif os_version == "15.0" %}
+|link:https://www.cisecurity.org/benchmark/apple_os/[Apple macOS 15.0]|_CIS Apple macOS 15.0 Benchmark version 2.1.0_
 {% elif os_version == "14.0" %}
-|link:https://www.cisecurity.org/benchmark/apple_os/[Apple macOS 14.0]|_CIS Apple macOS 14.0 Benchmark version 2.0.0_
+|link:https://www.cisecurity.org/benchmark/apple_os/[Apple macOS 14.0]|_CIS Apple macOS 14.0 Benchmark version 3.1.0_
 {% elif os_version == "13.0" %}
 |link:https://www.cisecurity.org/benchmark/apple_os/[Apple macOS 13.0]|_CIS Apple macOS 13.0 Benchmark version 3.0.0_
 {% elif os_version == "12.0" %}

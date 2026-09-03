@@ -58,6 +58,10 @@ references:
       - 8.27
   cis:
     benchmark:
+      macos_27:
+        - 2.3.5.1 (level 2)
+      macos_26:
+        - 2.3.5.1 (level 2)
       ios_26:
         - 3.2.1.15 (level 1 - Institutionally-Owned Devices)
       ios_18:
@@ -68,8 +72,12 @@ references:
       - 4.1
 platforms:
   macOS:
-    '27.0': {}
-    '26.0': {}
+    '27.0':
+      benchmarks:
+        - name: cis_lvl2
+    '26.0':
+      benchmarks:
+        - name: cis_lvl2
     '15.0': {}
     enforcement_info:
       check:
