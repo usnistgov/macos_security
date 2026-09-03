@@ -309,7 +309,6 @@ def generate_guidance(sp: Yaspin, args: argparse.Namespace) -> None:
         sp.text = "Generating markdown file"
         time.sleep(.5)
         generate_documents(
-            sp,
             md_output_file,
             baseline,
             b64logo,
@@ -389,7 +388,6 @@ def generate_guidance(sp: Yaspin, args: argparse.Namespace) -> None:
         sp.text = "Generating markdown document"
         time.sleep(.5)
         generate_documents(
-            sp,
             md_output_file,
             baseline,
             b64logo,
@@ -419,11 +417,10 @@ def generate_guidance(sp: Yaspin, args: argparse.Namespace) -> None:
         generate_manifest(build_path, baseline_name, baseline)
 
     if not args.no_docs:
-        logger.info("Generating PDF document (typst)")
-        sp.text = "Generating PDF document (typst)"
+        logger.info("Generating PDF document")
+        sp.text = "Generating PDF document"
         time.sleep(.5)
         generate_documents(
-            sp,
             typst_output_file,
             baseline,
             b64logo,
@@ -436,11 +433,10 @@ def generate_guidance(sp: Yaspin, args: argparse.Namespace) -> None:
             language=args.language,
         )
 
-        logger.info("Generating HTML document (python)")
-        sp.text = "Generating HTML document (python)"
+        logger.info("Generating HTML document")
+        sp.text = "Generating HTML document"
         time.sleep(.5)
         generate_documents(
-            sp,
             html_output_file,
             baseline,
             b64logo,

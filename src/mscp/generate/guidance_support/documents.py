@@ -24,8 +24,8 @@ from typing import Any, Sequence, Dict, List
 
 # Additional python modules
 from jinja2 import Environment, FileSystemLoader, Template
-from yaspin.core import Yaspin
-from yaspin.spinners import Spinners
+# from yaspin.core import Yaspin
+# from yaspin.spinners import Spinners
 
 # Local python modules
 from ...classes import Baseline
@@ -950,7 +950,7 @@ def render_template(
     output_file.write_text(rendered_output)
 
 
-def _generate_typst_pdf(spinner: Yaspin, output_file: Path, logo_path: Path) -> None:
+def _generate_typst_pdf(output_file: Path, logo_path: Path) -> None:
     """Compile a rendered ``.typ`` file to PDF using the ``typst`` package.
 
     typst is provided as a Python dependency (``uv sync``), so it is called via
@@ -959,7 +959,6 @@ def _generate_typst_pdf(spinner: Yaspin, output_file: Path, logo_path: Path) -> 
     actionable hint — there is no Ruby fallback.
 
     Args:
-        spinner (Yaspin): Spinner for progress feedback.
         output_file (Path): The rendered ``.typ`` file to compile.
         logo_path (Path): Absolute path to the title-page logo image.
     """
@@ -983,9 +982,6 @@ def _generate_typst_pdf(spinner: Yaspin, output_file: Path, logo_path: Path) -> 
         logger.warning(f"Could not stage logo for typst: {e}")
 
     pdf_file: Path = output_file.with_suffix(".pdf")
-    spinner.spinner = Spinners.dots
-    spinner.text = "Generating PDF file via typst"
-    time.sleep(.5)
     try:
         typst.compile(str(output_file), output=str(pdf_file), root=str(build_dir))
     except Exception as e:  # typst raises on compile errors
@@ -1000,7 +996,6 @@ def _generate_typst_pdf(spinner: Yaspin, output_file: Path, logo_path: Path) -> 
 
 
 def generate_documents(
-    spinner: Yaspin,
     output_file: Path,
     baseline: Baseline,
     b64logo: bytes,
@@ -1020,7 +1015,6 @@ def generate_documents(
     Markdown are produced by Jinja alone — no external tools, no Ruby.
 
     Args:
-        spinner (Yaspin): Spinner for progress feedback.
         output_file (Path): Destination file (``.typ`` / ``.html`` / ``.md``).
         baseline (Baseline): Baseline data model.
         b64logo (bytes): Base64-encoded logo image bytes.
@@ -1070,7 +1064,7 @@ def generate_documents(
     )
 
     if output_format == "typst":
-        _generate_typst_pdf(spinner, output_file, logo_path)
+        _generate_typst_pdf(output_file, logo_path)
 
     elif output_format == "html":
         # Pure-Python HTML: render_template already wrote the self-contained
