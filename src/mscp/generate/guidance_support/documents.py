@@ -33,6 +33,7 @@ from ...common_utils import (
     config,
     logger,
     mscp_data,
+    remove_file,
     open_file,
     search_paths,
     NIX_OS,
@@ -992,6 +993,8 @@ def _generate_typst_pdf(spinner: Yaspin, output_file: Path, logo_path: Path) -> 
         logger.error("typst compile produced no PDF.")
         sys.exit(1)
     logger.info(f"PDF generated: {pdf_file}")
+    remove_file(dest_logo)
+    remove_file(output_file)
 
 
 def generate_documents(

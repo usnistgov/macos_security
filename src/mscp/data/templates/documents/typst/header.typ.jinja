@@ -52,7 +52,7 @@
   numbering: "1",
   footer: body-footer,
 )
-#set text(size: 10pt, fill: fg)
+#set text(size: 10pt, font: "Arial", fill: fg)
 #set par(justify: false, leading: 0.62em, spacing: 1.05em)
 #set list(indent: 0.6em, spacing: 0.55em)
 // Number chapters like asciidoctor's :sectnums: -> "1. Foreword", "6.2. <rule>"
@@ -64,10 +64,10 @@
 #show raw.where(block: true): it => block(fill: code-bg, inset: 8pt, radius: 4pt, width: 100%, stroke: 0.5pt + border-col, text(size: 8.5pt, it))
 #show raw.where(block: false): it => box(fill: code-bg, inset: (x: 3pt), outset: (y: 2pt), radius: 2pt, text(it))
 
-// === Title page (logo top-left, title block bottom-right — matches asciidoctor) ===
+// === Title page ===
 #page(footer: none, numbering: none, fill: title-bg)[
-  #place(top + left)[
-    #image("{{ logo }}", width: 42%)
+  #place(center)[
+    #image("{{ logo }}", width: 100%)
   ]
   #place(bottom + right, dy: -2.6in)[
     #align(right)[
