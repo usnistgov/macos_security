@@ -10,7 +10,7 @@ references:
   nist:
     cce:
       macos_27:
-        - CCE-XXXXX-X
+        - CCE-96985-7
       macos_26:
         - CCE-95140-0
       macos_15:
@@ -71,7 +71,7 @@ platforms:
           severity: medium
     enforcement_info:
       check:
-        shell: |-          
+        shell: |-
           /usr/bin/osascript -l JavaScript -e 'var s = $.NSUserDefaults.alloc.initWithSuiteName("com.apple.applicationaccess"); (ObjC.unwrap(s.objectForKey("allowCloudAddressBook")) == false && s.objectIsForcedForKey("allowCloudAddressBook")) ? "PASS" : "FAIL"'
         result:
           string: 'PASS'

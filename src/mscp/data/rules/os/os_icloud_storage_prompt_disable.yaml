@@ -8,7 +8,7 @@ references:
   nist:
     cce:
       macos_27:
-        - CCE-XXXXX-X
+        - CCE-97032-7
       macos_26:
         - CCE-95205-1
       macos_15:
@@ -70,7 +70,7 @@ platforms:
     enforcement_info:
       check:
         shell: |-
-          /usr/bin/osascript -l JavaScript -e 'var s = $.NSUserDefaults.alloc.initWithSuiteName("com.apple.SetupAssistant.managed"); (ObjC.unwrap(s.objectForKey("SkipSetupItems").containsObject("iCloudStorage")) == true && s.objectIsForcedForKey("SkipSetupItems")) ? "PASS" : "FAIL"'          
+          /usr/bin/osascript -l JavaScript -e 'var s = $.NSUserDefaults.alloc.initWithSuiteName("com.apple.SetupAssistant.managed"); (ObjC.unwrap(s.objectForKey("SkipSetupItems").containsObject("iCloudStorage")) == true && s.objectIsForcedForKey("SkipSetupItems")) ? "PASS" : "FAIL"'
         result:
           string: 'PASS'
     introduced: '15.0'

@@ -127,6 +127,7 @@ class Macsecurityrule(BaseModelWithAccessors):
     odv: dict[str, Any] | None = None
     tags: list[str] = Field(default_factory=list)
     result_value: str | int | bool | None = None
+    result_exit_code: int | None = None
     mobileconfig_info: list[Mobileconfigpayload] | None = None
     ddm_info: dict[str, Any] | None = None
     customized: list[str] = Field(default_factory=list)
@@ -218,6 +219,7 @@ class Macsecurityrule(BaseModelWithAccessors):
             logger.debug("Transforming rule: {}", rule_id)
 
             result_value: str | int | bool | None = None
+            exit_code: int | None = None
             check_value: str | None = None
             fix_value: str | None = None
             default_state_value: str | None = None
@@ -303,7 +305,10 @@ class Macsecurityrule(BaseModelWithAccessors):
 
                 if check_result:
                     for k, v in enforcement_info["check"]["result"].items():
-                        if isinstance(v, (int, bool, str)):
+                        if k == "exit_code":
+                            exit_code = v
+                            break
+                        elif isinstance(v, (int, bool, str)):
                             result_value = v
                             break
                         elif k == "base64":
@@ -460,6 +465,7 @@ class Macsecurityrule(BaseModelWithAccessors):
                 rule = cls(
                     **rule_yaml,
                     result_value=result_value,
+                    result_exit_code=exit_code,
                     customized=customized_fields,
                     mobileconfig_info=payloads,
                     mechanism=mechanism,

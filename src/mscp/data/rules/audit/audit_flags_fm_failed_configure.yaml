@@ -12,7 +12,7 @@ references:
   nist:
     cce:
       macos_27:
-        - CCE-XXXXX-X
+        - CCE-96968-3
       macos_26:
         - CCE-95120-2
       macos_15:
@@ -48,13 +48,17 @@ references:
         - 3.2 (level 2)
       macos_14:
         - 3.2 (level 2)
+      macos_27:
+        - 3.2 (level 2)
     controls_v8:
       - 3.14
       - 8.2
       - 8.5
 platforms:
   macOS:
-    '27.0': {}
+    '27.0':
+      benchmarks:
+        - name: cis_lvl2
     '26.0':
       benchmarks:
         - name: cis_lvl2

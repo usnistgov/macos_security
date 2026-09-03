@@ -8,7 +8,7 @@ references:
   nist:
     cce:
       ios_27:
-        - CCE-XXXXX-X
+        - CCE-97284-4
       ios_26:
         - CCE-95610-2
       ios_18:
@@ -16,7 +16,7 @@ references:
       ios_17:
         - CCE-93463-8
       visionos_27:
-        - CCE-XXXXX-X    
+        - CCE-97434-5
       visionos_26:
         - CCE-96708-3
     800-53r5:
@@ -39,7 +39,7 @@ references:
     sfr:
       - 'FMT_SMF.1.1 #8'
     cmmc:
-      - CM.L2-3.4.9      
+      - CM.L2-3.4.9
   bsi:
     indigo:
       ios_26:
@@ -50,7 +50,7 @@ references:
         - ANNEX D - (Section 5.8.5)
   bzk:
     bio:
-      - 8.27      
+      - 8.27
 platforms:
   iOS:
     '27.0': {}

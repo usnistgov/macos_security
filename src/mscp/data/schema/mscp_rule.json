@@ -318,6 +318,44 @@
                         }
                     },
                     "additionalProperties": false
+                },
+                "ubuntu": {
+                    "type": "object",
+                    "description": "Schema for identifying components to support Ubuntu Linux",
+                    "properties": {
+                        "enforcement_info": {
+                            "$ref": "#/$defs/enforcement_infoDef"
+                        },
+                        "22.04": {
+                            "$ref": "#/$defs/osDef"
+                        },
+                        "24.04": {
+                            "$ref": "#/$defs/osDef"
+                        },
+                        "26.04": {
+                            "$ref": "#/$defs/osDef"
+                        }
+                    },
+                    "additionalProperties": false
+                },
+                "redhat": {
+                    "type": "object",
+                    "description": "Schema for identifying components to support Red Hat Enterprise Linux",
+                    "properties": {
+                        "enforcement_info": {
+                            "$ref": "#/$defs/enforcement_infoDef"
+                        },
+                        "8": {
+                            "$ref": "#/$defs/osDef"
+                        },
+                        "9": {
+                            "$ref": "#/$defs/osDef"
+                        },
+                        "10": {
+                            "$ref": "#/$defs/osDef"
+                        }
+                    },
+                    "additionalProperties": false
                 }
             }
         },
@@ -354,6 +392,9 @@
                 },
                 {
                     "$ref": "#/$defs/ArrayOfStrings"
+                },
+                {
+                    "$ref": "#/$defs/ArrayOfObjects"
                 },
                 {
                     "type": "object",
@@ -512,6 +553,9 @@
                 },
                 "boolean": {
                     "type": "boolean"
+                },
+                "exit_code": {
+                    "type": "integer"
                 }
             }
         },

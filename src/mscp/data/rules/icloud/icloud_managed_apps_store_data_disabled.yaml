@@ -2,7 +2,7 @@ id: icloud_managed_apps_store_data_disabled
 title: Ensure Managed Apps Storing Data in iCloud is Set to Disabled
 discussion: |
   Managed Apps _MUST_ not store data in iCloud, unless the organization has explicitly authorized the use of iCloud as a approved data management service.
-  
+
   Apple's iCloud service does not provide an organization with enough control over the storage and access of data, and, therefore, automated synchronization _MUST_ be controlled by an organization approved service.
 
   This requirement helps ensure that organizational contact data is managed in accordance with established security, privacy, access-control, and data governance requirements.
@@ -10,7 +10,7 @@ references:
   nist:
     cce:
       ios_27:
-        - CCE-XXXXX-X
+        - CCE-97268-7
       ios_26:
         - CCE-95426-3
       ios_18:
@@ -18,7 +18,7 @@ references:
       ios_17:
         - CCE-93403-4
       visionos_27:
-        - CCE-XXXXX-X
+        - CCE-97424-6
       visionos_26:
         - CCE-95557-5
     800-53r5:

@@ -6,19 +6,19 @@ references:
   nist:
     cce:
       macos_27:
-        - CCE-XXXXX-X
+        - CCE-97111-9
       macos_26:
         - CCE-95334-9
       macos_15:
         - CCE-94328-2
       ios_27:
-        - CCE-XXXXX-X
+        - CCE-97401-4
       ios_26:
         - CCE-96703-4
       ios_18:
         - CCE-94563-4
       visionos_27:
-        - CCE-XXXXX-X
+        - CCE-97469-1
       visionos_26:
         - CCE-95596-3
     800-53r5:
@@ -61,6 +61,8 @@ references:
       ios_26:
         - 2.9.4 (level 1 - End-User Owned Devices)
         - 3.10.4 (level 1 - Institutionally-Owned Devices)
+      macos_27:
+        - 2.5.1.2 (level 1)
   bsi:
     indigo:
       ios_26:
@@ -71,6 +73,8 @@ platforms:
   macOS:
     '27.0':
       benchmarks:
+        - name: cis_lvl1
+        - name: cis_lvl2
         - name: disa_stig
           severity: medium
     '26.0':
@@ -85,7 +89,7 @@ platforms:
         - name: disa_stig
     enforcement_info:
       check:
-        shell: |-        
+        shell: |-
           /usr/bin/osascript -l JavaScript -e 'var s = $.NSUserDefaults.alloc.initWithSuiteName("com.apple.applicationaccess"); (ObjC.unwrap(s.objectForKey("allowWritingTools")) == false && s.objectIsForcedForKey("allowWritingTools")) ? "PASS" : "FAIL"'
         result:
           string: 'PASS'

@@ -6,9 +6,9 @@ references:
   nist:
     cce:
       macos_27:
-        - CCE-XXXXX-X
+        - CCE-97265-3
       ios_27:
-        - CCE-XXXXX-X
+        - CCE-97293-5
       ios_26:
         - CCE-96728-1
     800-53r5:
@@ -18,7 +18,7 @@ references:
     bio:
       - 8.08
 platforms:
-  macos:
+  macOS:
     '27.0': {}
     enforcement_info:
       check:
@@ -37,7 +37,7 @@ platforms:
 tags:
   - 800-53r5_low
   - 800-53r5_moderate
-  - 800-53r5_high       
+  - 800-53r5_high
 ddm_info:
   declarationtype: com.apple.configuration.softwareupdate.settings
   ddm_key: RapidSecurityResponse

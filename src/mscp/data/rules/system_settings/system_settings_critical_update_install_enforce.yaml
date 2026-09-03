@@ -6,7 +6,7 @@ references:
   nist:
     cce:
       macos_27:
-        - CCE-XXXXX-X
+        - CCE-97137-4
       macos_26:
         - CCE-95363-8
       macos_15:
@@ -29,6 +29,8 @@ references:
         - 1.6 (level 1)
       macos_14:
         - 1.6 (level 1)
+      macos_27:
+        - 1.5 (level 1)
     controls_v8:
       - 7.3
       - 7.4
@@ -42,27 +44,17 @@ references:
       - 2.L.B
       - 3.L.C
       - 5.L.A
-      - 7.L.B      
+      - 7.L.B
 platforms:
   macOS:
-    '27.0': {}
+    '27.0':
+      benchmarks:
+        - name: cis_lvl1
+        - name: cis_lvl2
     '26.0':
       enforcement_info:
         check:
-          shell: 
-            configprofile=$(/usr/bin/osascript -l JavaScript << EOS
-            $.NSUserDefaults.alloc.initWithSuiteName('com.apple.SoftwareUpdate')\
-            .objectForKey('CriticalUpdateInstall').js
-            EOS
-            )
-
-            ddm=$(/usr/bin/plutil -convert json /var/db/softwareupdate/SoftwareUpdateDDMStatePersistence.plist -o - | /usr/bin/jq --raw-output .'SUCorePersistedStatePolicyFields.SUCoreDDMDeclarationGlobalSettings.automaticallyInstallSystemAndSecurityUpdates')
-
-            if [[ "$configprofile" == "true" ]] || [[ "$ddm" == "1" ]]; then
-              echo "true"
-            else
-              echo "false"
-            fi          
+          shell: "configprofile=$(/usr/bin/osascript -l JavaScript << EOS $.NSUserDefaults.alloc.initWithSuiteName('com.apple.SoftwareUpdate')\\ .objectForKey('CriticalUpdateInstall').js EOS )\nddm=$(/usr/bin/plutil -convert json /var/db/softwareupdate/SoftwareUpdateDDMStatePersistence.plist -o - | /usr/bin/jq --raw-output .'SUCorePersistedStatePolicyFields.SUCoreDDMDeclarationGlobalSettings.automaticallyInstallSystemAndSecurityUpdates')\nif [[ \"$configprofile\" == \"true\" ]] || [[ \"$ddm\" == \"1\" ]]; then echo \"true\" else echo \"false\" fi"
           result:
             string: 'true'
         fix:
@@ -75,7 +67,7 @@ platforms:
       mobileconfig_info:
         - PayloadType: com.apple.SoftwareUpdate
           PayloadContent:
-          - CriticalUpdateInstall: true
+            - CriticalUpdateInstall: true
     '15.0':
       enforcement_info:
         check:
@@ -89,7 +81,7 @@ platforms:
       mobileconfig_info:
         - PayloadType: com.apple.SoftwareUpdate
           PayloadContent:
-          - CriticalUpdateInstall: true            
+            - CriticalUpdateInstall: true
       benchmarks:
         - name: cis_lvl1
         - name: cis_lvl2
@@ -97,12 +89,11 @@ platforms:
         - name: nlmapgov_base
     enforcement_info:
       check:
-        shell: 
-          /usr/bin/plutil -convert json /var/db/softwareupdate/SoftwareUpdateDDMStatePersistence.plist -o - | /usr/bin/jq --raw-output .'SUCorePersistedStatePolicyFields.SUCoreDDMDeclarationGlobalSettings.automaticallyInstallSystemAndSecurityUpdates'
+        shell: /usr/bin/plutil -convert json /var/db/softwareupdate/SoftwareUpdateDDMStatePersistence.plist -o - | /usr/bin/jq --raw-output .'SUCorePersistedStatePolicyFields.SUCoreDDMDeclarationGlobalSettings.automaticallyInstallSystemAndSecurityUpdates'
         result:
           integer: 1
       fix:
-        additional_info: This is implemented by Declarative Device Management (DDM)      
+        additional_info: This is implemented by Declarative Device Management (DDM)
     introduced: '10.15'
 tags:
   - 800-53r5_low

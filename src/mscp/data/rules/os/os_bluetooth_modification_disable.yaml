@@ -6,13 +6,13 @@ references:
   nist:
     cce:
       macos_27:
-        - CCE-XXXXX-X
+        - CCE-97007-9
       ios_27:
-        - CCE-XXXXX-X
+        - CCE-97294-3
       ios_26:
         - CCE-95655-7
       visionos_27:
-        - CCE-XXXXX-X
+        - CCE-97436-0
     800-53r5:
       - CM-7
       - CM-7(1)
@@ -32,7 +32,7 @@ references:
     hicp:
       - 2.L.A
       - 4.L.A
-      - 4.L.B      
+      - 4.L.B
 platforms:
   macOS:
     '27.0': {}

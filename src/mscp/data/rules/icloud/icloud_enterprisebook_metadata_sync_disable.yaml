@@ -10,13 +10,13 @@ references:
   nist:
     cce:
       ios_27:
-        - CCE-XXXXX-X
+        - CCE-97266-1
       ios_26:
         - CCE-95633-4
       ios_18:
         - CCE-94566-7
       ios_17:
-        - CCE-93467-9   
+        - CCE-93467-9
     800-53r5:
       - AC-20
       - AC-20(1)
@@ -30,7 +30,7 @@ references:
       ios_18:
         - ANNEX K
       ios_17:
-        - ANNEX K        
+        - ANNEX K
   disa:
     cmmc:
       - AC.L1-B.1.III
@@ -48,7 +48,7 @@ platforms:
         - name: indigo_high
     '17.0':
       benchmarks:
-        - name: indigo_high        
+        - name: indigo_high
     introduced: '8.0'
 tags:
   - 800-53r5_low

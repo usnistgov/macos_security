@@ -50,6 +50,8 @@ rpds-py==0.30.0
     # via
     #   jsonschema
     #   referencing
+ruamel-yaml==0.19.1
+    # via mscp (pyproject.toml)
 six==1.17.0
     # via python-dateutil
 termcolor==3.3.0

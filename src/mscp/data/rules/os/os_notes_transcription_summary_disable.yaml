@@ -5,13 +5,13 @@ references:
   nist:
     cce:
       macos_27:
-        - CCE-XXXXX-X
+        - CCE-97051-7
       macos_26:
         - CCE-95239-0
       macos_15:
         - CCE-94569-1
       ios_27:
-        - CCE-XXXXX-X
+        - CCE-97353-7
       ios_26:
         - CCE-95500-5
       ios_18:
@@ -49,13 +49,18 @@ references:
       ios_26:
         - 2.9.2 (level 1 - End-User Owned Devices)
         - 3.10.2 (level 1 - Institutionally-Owned Devices)
+      macos_27:
+        - 2.5.1.4 (level 1)
   bsi:
     indigo:
       ios_26:
         - ANNEX K
 platforms:
   macOS:
-    '27.0': {}
+    '27.0':
+      benchmarks:
+        - name: cis_lvl1
+        - name: cis_lvl2
     '26.0':
       benchmarks:
         - name: cis_lvl1

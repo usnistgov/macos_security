@@ -10,7 +10,7 @@ references:
   nist:
     cce:
       macos_27:
-        - CCE-XXXXX-X
+        - CCE-97115-0
       macos_26:
         - CCE-95339-8
       macos_15:
@@ -18,7 +18,7 @@ references:
       macos_14:
         - CCE-92929-9
       ios_27:
-        - CCE-XXXXX-X
+        - CCE-97403-0
       ios_26:
         - CCE-95547-6
       ios_18:
@@ -64,6 +64,9 @@ references:
       macos_14:
         - 5.2.3 (level 2)
         - 5.2.4 (level 2)
+      macos_27:
+        - 5.2.3 (level 2)
+        - 5.2.4 (level 2)
     controls_v8:
       - 5.2
   bsi:
@@ -81,6 +84,7 @@ platforms:
   macOS:
     '27.0':
       benchmarks:
+        - name: cis_lvl2
         - name: disa_stig
           severity: medium
     '26.0':

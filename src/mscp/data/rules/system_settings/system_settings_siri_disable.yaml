@@ -6,11 +6,16 @@ discussion: |
   Apple's Siri service does not provide an organization with enough control over the storage and access of data, and, therefore, automated synchronization _MUST_ be controlled by an organization approved service.
 
   The information system _MUST_ be configured to provide only essential capabilities.
+
+  [NOTE]
+  =====
+  Disabling the use of Siri also disables the use of Siri AI and other Apple Intelligence features that use Siri.
+  =====
 references:
   nist:
     cce:
       macos_27:
-        - CCE-XXXXX-X
+        - CCE-97173-9
       macos_26:
         - CCE-95398-4
       macos_15:
@@ -18,7 +23,7 @@ references:
       macos_14:
         - CCE-92987-7
       ios_27:
-        - CCE-XXXXX-X
+        - CCE-97415-4
       ios_26:
         - CCE-95689-6
       ios_18:
@@ -26,7 +31,7 @@ references:
       ios_17:
         - CCE-93499-2
       visionos_27:
-        - CCE-XXXXX-X
+        - CCE-97481-6
       visionos_26:
         - CCE-95598-9
     800-53r5:
@@ -84,6 +89,8 @@ references:
         - 2.5.2.1 (level 1)
       macos_14:
         - 2.5.1 (level 1)
+      macos_27:
+        - 2.5.2.1 (level 1)
     controls_v8:
       - 4.1
       - 4.8
@@ -91,6 +98,8 @@ platforms:
   macOS:
     '27.0':
       benchmarks:
+        - name: cis_lvl1
+        - name: cis_lvl2
         - name: disa_stig
           severity: medium
     '26.0':
@@ -107,7 +116,7 @@ platforms:
           severity: medium
       enforcement_info:
         check:
-          shell: |-            
+          shell: |-
             /usr/bin/osascript -l JavaScript -e 'var s = $.NSUserDefaults.alloc.initWithSuiteName("com.apple.applicationaccess"); (ObjC.unwrap(s.objectForKey("allowAssistant")) == false && s.objectIsForcedForKey("allowAssistant")) ? "PASS" : "FAIL"'
           result:
             string: 'PASS'
@@ -171,7 +180,7 @@ tags:
 mobileconfig_info:
   - PayloadType: com.apple.applicationaccess
     PayloadContent:
-      - allowAssistant: false   
+      - allowAssistant: false
 ddm_info:
   declarationtype: com.apple.configuration.siri.settings
   ddm_key: Enabled

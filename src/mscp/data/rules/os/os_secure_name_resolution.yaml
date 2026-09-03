@@ -10,7 +10,7 @@ references:
   nist:
     cce:
       macos_27:
-        - CCE-XXXX-X
+        - CCE-97250-5
       macos_26:
         - CCE-95294-5
       macos_15:
@@ -18,9 +18,9 @@ references:
       macos_14:
         - CCE-92885-3
       ios_27:
-        - CCE-XXXXX-X
+        - CCE-97419-6
       visionos_27:
-        - CCE-XXXXX-X
+        - CCE-97483-2
     800-53r5:
       - SC-21
   hhs:
