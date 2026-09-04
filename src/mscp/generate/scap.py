@@ -181,7 +181,7 @@ def generate_scap(sp: Yaspin, args: argparse.Namespace) -> None:
     oval_counter = 1
 
     sp.text = "Parsing baselines for XCCDF content"
-    time.sleep(1)
+    time.sleep(.5)
 
     for baseline in all_the_baselines:
         for b, r in baseline.items():
@@ -732,7 +732,7 @@ def generate_scap(sp: Yaspin, args: argparse.Namespace) -> None:
     output_file = output_file / base_filename
 
     sp.text = "Writing output files"
-    time.sleep(1)
+    time.sleep(.5)
 
     create_file(output_file, totaloutput)
 

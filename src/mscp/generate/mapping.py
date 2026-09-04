@@ -58,7 +58,7 @@ def generate_mapping(sp: Yaspin, args: argparse.Namespace) -> None:
     """
     sp.spinner = Spinners.dots
     sp.text = "Collecting rule files"
-    time.sleep(1)
+    time.sleep(.5)
     rules: list[Macsecurityrule] = Macsecurityrule.collect_platform_rules(
         args.os_name, args.os_version, tailoring=True
     )
@@ -88,7 +88,7 @@ def generate_mapping(sp: Yaspin, args: argparse.Namespace) -> None:
             make_dir(dir_path)
 
         sp.text = "Mapping references and creating customized rule files"
-        time.sleep(1)
+        time.sleep(.5)
         for rule in rules:
             rule_file_path: Path = output_dir / "rules" / f"{rule.rule_id}.yaml"
             control_list: list = []
@@ -143,7 +143,7 @@ def generate_mapping(sp: Yaspin, args: argparse.Namespace) -> None:
         baseline_title: str = f"{args.os_name} {args.os_version}: Security Configuration - {args.framework}"
 
         sp.text = "Generating custom baseline for mapped rules"
-        time.sleep(1)
+        time.sleep(.5)
         Baseline.create_new(
             output_file=baseline_file_path,
             rules=custom_rules,

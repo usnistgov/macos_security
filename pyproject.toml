@@ -37,6 +37,7 @@ dependencies = [
   "jsonschema>=4.23.0,<5",
   "yaspin>=3.4.0,<4",
   "babel>=2.18.0,<3",
+  "typst>=0.14,<0.15",
 ]
 
 [project.optional-dependencies]
@@ -77,3 +78,6 @@ packages = ["src/mscp"]
 testpaths = ["tests"]
 pythonpath = ["src"]
 addopts = "--import-mode=importlib"
+markers = [
+  "integration: requires the typst package (deselect with '-m \"not integration\"')",
+]

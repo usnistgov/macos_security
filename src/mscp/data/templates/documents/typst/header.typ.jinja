@@ -1,0 +1,94 @@
+{% set dark = "dark" in html_css %}
+{% if dark %}
+{% set fg = 'rgb("#CDD6F4")' %}{% set bg = 'rgb("#1E1E2E")' %}{% set link_col = 'rgb("#89B4FA")' %}{% set muted = 'rgb("#6C7086")' %}{% set border_col = 'rgb("#45475A")' %}{% set code_bg = 'rgb("#181825")' %}{% set head_bg = 'rgb("#313244")' %}{% set title_bg = 'rgb("#11111B")' %}
+{% set note_col = 'rgb("#89B4FA")' %}{% set note_bg = 'rgb("#223047")' %}{% set imp_col = 'rgb("#F9E2AF")' %}{% set imp_bg = 'rgb("#2E2A1E")' %}{% set warn_col = 'rgb("#F38BA8")' %}{% set warn_bg = 'rgb("#2E1E26")' %}
+{% else %}
+{% set fg = 'rgb("#1A1A1A")' %}{% set bg = 'white' %}{% set link_col = 'rgb("#1565C0")' %}{% set muted = 'rgb("#7A7A7A")' %}{% set border_col = 'rgb("#B7B7B7")' %}{% set code_bg = 'rgb("#F5F5F5")' %}{% set head_bg = 'rgb("#EFEFEF")' %}{% set title_bg = 'white' %}
+{% set note_col = 'rgb("#1565C0")' %}{% set note_bg = 'rgb("#E8F1FB")' %}{% set imp_col = 'rgb("#B26A00")' %}{% set imp_bg = 'rgb("#FFF4E5")' %}{% set warn_col = 'rgb("#C62828")' %}{% set warn_bg = 'rgb("#FDECEA")' %}
+{% endif %}
+// === mSCP Typst theme ({{ "dark" if dark else "light" }}) — generated, do not edit ===
+#let fg = {{ fg }}
+#let bg = {{ bg }}
+#let link-col = {{ link_col }}
+#let muted = {{ muted }}
+#let border-col = {{ border_col }}
+#let code-bg = {{ code_bg }}
+#let head-bg = {{ head_bg }}
+#let title-bg = {{ title_bg }}
+#let note-col = {{ note_col }}
+#let note-bg = {{ note_bg }}
+#let imp-col = {{ imp_col }}
+#let imp-bg = {{ imp_bg }}
+#let warn-col = {{ warn_col }}
+#let warn-bg = {{ warn_bg }}
+
+// Admonition callout box (icon + tinted block) — mirrors asciidoctor's NOTE/IMPORTANT/WARNING
+#let admonition(kind, body) = {
+  let (col, bg-col, sym) = if kind == "IMPORTANT" { (imp-col, imp-bg, "!") } else if kind == "WARNING" { (warn-col, warn-bg, "!") } else { (note-col, note-bg, "i") }
+  block(width: 100%, inset: 8pt, radius: 4pt, fill: bg-col, stroke: (left: 3pt + col))[
+    #grid(columns: (auto, 1fr), column-gutter: 8pt, align: (top, top),
+      box(fill: col, radius: 50%, inset: 4pt, baseline: 25%)[#text(fill: white, weight: "bold", size: 8pt)[#sym]],
+      [#text(fill: col, weight: "bold")[#kind:] #body],
+    )
+  ]
+}
+
+#let body-footer = context [
+  #set text(size: 8pt, fill: muted)
+  #grid(
+    columns: (1fr, 2fr, 1fr),
+    align: (left + horizon, center + horizon, right + horizon),
+    [],
+    [{{ baseline.title | typst_escape }} \ macOS Security Compliance Project — #emph[{{ version | typst_escape }}]],
+    [#strong(counter(page).display())],
+  )
+]
+
+#set document(title: "{{ html_title | typst_escape }}", author: "macOS Security Compliance Project")
+#set page(
+  paper: "us-letter",
+  margin: (top: 0.6in, bottom: 0.85in, x: 0.67in),
+  fill: bg,
+  numbering: "1",
+  footer: body-footer,
+)
+#set text(size: 10pt, font: "Arial", fill: fg)
+#set par(justify: false, leading: 0.62em, spacing: 1.05em)
+#set list(indent: 0.6em, spacing: 0.55em)
+// Number chapters like asciidoctor's :sectnums: -> "1. Foreword", "6.2. <rule>"
+#set heading(numbering: "1.")
+#show link: it => text(fill: link-col, it)
+#show heading.where(level: 1): it => { pagebreak(weak: true); block(below: 0.8em, text(fill: fg, size: 17pt, weight: "bold", it)) }
+#show heading.where(level: 2): it => block(above: 1.25em, below: 0.6em, text(fill: fg, size: 13pt, weight: "bold", it))
+#show heading.where(level: 3): it => block(above: 1.0em, below: 0.5em, text(fill: fg, size: 11pt, weight: "bold", it))
+#show raw.where(block: true): it => block(fill: code-bg, inset: 8pt, radius: 4pt, width: 100%, stroke: 0.5pt + border-col, text(size: 8.5pt, it))
+#show raw.where(block: false): it => box(fill: code-bg, inset: (x: 3pt), outset: (y: 2pt), radius: 2pt, text(it))
+
+// === Title page ===
+#page(footer: none, numbering: none, fill: title-bg)[
+  #place(center)[
+    #image("{{ logo }}", width: 100%)
+  ]
+  #place(bottom + right, dy: -2.6in)[
+    #align(right)[
+      #text(size: 30pt, fill: muted)[{{ html_title | typst_escape }}]
+      {% if html_subtitle %}
+      #linebreak()
+      #text(size: 17pt, style: "italic", weight: "bold", fill: fg)[{{ html_subtitle | typst_escape }}]
+      {% endif %}
+      #linebreak()
+      #v(0.3em)
+      #text(size: 12pt, fill: muted)[{{ version | typst_escape }}{% if release_date %} ({{ release_date | typst_escape }}){% endif %}]
+    ]
+  ]
+]
+
+// Table of Contents — no footer / page number on front matter (like the reference).
+// Use scoped #set (not a wrapping #page[]) to avoid an empty page after the title.
+#set page(footer: none, numbering: none)
+#pagebreak()
+#outline(title: "Table of Contents", depth: 2)
+
+// Body: restore footer + numbering; restart the counter so Foreword = page 1.
+#set page(footer: body-footer, numbering: "1")
+#counter(page).update(1)
