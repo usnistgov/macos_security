@@ -5,10 +5,14 @@ discussion: |
 references:
   nist:
     cce:
+      ios_27:
+        - CCE-97298-4
       ios_26:
         - CCE-95451-1
       ios_18:
         - CCE-94571-7
+      visionos_27:
+        - CCE-97439-4
       visionos_26:
         - CCE-95569-0
     800-53r5:
@@ -24,12 +28,14 @@ references:
       - CM.L2-3.4.7
 platforms:
   iOS:
+    '27.0': {}
     '26.0':
       supervised: true
     '18.0':
       supervised: true
     introduced: '18.2'
   visionOS:
+    '27.0': {}
     '26.0':
       supervised: true
     introduced: n/a

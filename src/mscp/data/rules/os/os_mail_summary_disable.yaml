@@ -4,14 +4,20 @@ discussion: Apple Intelligence features such as Apple Mail Summary that use off 
 references:
   nist:
     cce:
+      macos_27:
+        - CCE-97041-8
       macos_26:
         - CCE-95223-4
       macos_15:
         - CCE-94521-2
+      ios_27:
+        - CCE-97346-1
       ios_26:
         - CCE-95668-0
       ios_18:
         - CCE-94520-4
+      visionos_27:
+        - CCE-97454-3
       visionos_26:
         - CCE-95584-9
     800-53r5:
@@ -43,6 +49,8 @@ references:
       ios_26:
         - 2.9.3 (level 1 - End-User Owned Devices)
         - 3.10.3 (level 1 - Institutionally-Owned Devices)
+      macos_27:
+        - 2.5.1.3 (level 1)
   bsi:
     indigo:
       ios_26:
@@ -51,6 +59,10 @@ references:
         - ANNEX K
 platforms:
   macOS:
+    '27.0':
+      benchmarks:
+        - name: cis_lvl1
+        - name: cis_lvl2
     '26.0':
       benchmarks:
         - name: cis_lvl1
@@ -62,14 +74,12 @@ platforms:
     enforcement_info:
       check:
         shell: |-
-          /usr/bin/osascript -l JavaScript << EOS
-          $.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess')\
-          .objectForKey('allowMailSummary').js
-          EOS
+          /usr/bin/osascript -l JavaScript -e 'var s = $.NSUserDefaults.alloc.initWithSuiteName("com.apple.applicationaccess"); (ObjC.unwrap(s.objectForKey("allowMailSummary")) == false && s.objectIsForcedForKey("allowMailSummary")) ? "PASS" : "FAIL"'
         result:
-          string: 'false'
+          string: 'PASS'
     introduced: '15.1'
   iOS:
+    '27.0': {}
     '26.0':
       benchmarks:
         - name: cis_lvl1_byod
@@ -84,6 +94,7 @@ platforms:
         - name: indigo_high
     introduced: '18.1'
   visionOS:
+    '27.0': {}
     '26.0': {}
     introduced: '2.4'
 tags:

@@ -5,6 +5,8 @@ discussion: |
 references:
   nist:
     cce:
+      ios_27:
+        - CCE-97327-1
       ios_26:
         - CCE-95478-4
       ios_18:
@@ -13,6 +15,8 @@ references:
         - CCE-93426-5
       visionos_26:
         - CCE-95576-5
+      visionos_27:
+        - CCE-97443-6
     800-53r5:
       - AU-12(1)
       - SC-45(1)
@@ -45,8 +49,10 @@ references:
       - 8.4
 platforms:
   iOS:
+    '27.0':
+      supervised: true
     '26.0':
-      supervised: false
+      supervised: true
       benchmarks:
         - name: cis_lvl1_byod
         - name: cis_lvl2_byod
@@ -57,7 +63,7 @@ platforms:
         - name: nlmapgov_base
         - name: nlmapgov_plus
     '18.0':
-      supervised: false
+      supervised: true
       benchmarks:
         - name: cis_lvl1_byod
         - name: cis_lvl2_byod
@@ -66,7 +72,7 @@ platforms:
         - name: indigo_base
         - name: indigo_high
     '17.0':
-      supervised: false
+      supervised: true
       benchmarks:
         - name: cis_lvl1_byod
         - name: cis_lvl2_byod
@@ -76,6 +82,8 @@ platforms:
         - name: indigo_high
     introduced: '12.0'
   visionOS:
+    '27.0':
+      supervised: true
     '26.0':
       supervised: true
     introduced: '2.0'

@@ -7,10 +7,8 @@ discussion: |
   ====
   The check and fix are for the currently logged in user. To get the currently logged in user, run the following.
   [source,bash]
-  ----
-  CURRENT_USER=$( /usr/bin/defaults read /Library/Preferences/com.apple.loginwindow lastUserName )
-  ----
-  ====
+  -  CURRENT_USER=$( /usr/bin/defaults read /Library/Preferences/com.apple.loginwindow lastUserName )
+  -  ====
 references:
   nist:
     cce:
@@ -29,10 +27,6 @@ references:
 platforms:
   macOS:
     '15.0':
-      benchmarks:
-        - name: cis_lvl1
-        - name: cis_lvl2
-    '14.0':
       benchmarks:
         - name: cis_lvl1
         - name: cis_lvl2

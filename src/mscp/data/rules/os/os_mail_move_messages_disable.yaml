@@ -5,12 +5,16 @@ discussion: |
 references:
   nist:
     cce:
+      ios_27:
+        - CCE-97344-6
       ios_26:
         - CCE-95667-2
       ios_18:
         - CCE-94449-6
       ios_17:
         - CCE-93433-1
+      visionos_27:
+        - CCE-97452-7
       visionos_26:
         - CCE-96713-3
     800-53r5:
@@ -66,6 +70,7 @@ references:
       - 3.3
 platforms:
   iOS:
+    '27.0': {}
     '26.0':
       supervised: false
       benchmarks:
@@ -120,6 +125,7 @@ platforms:
             - PreventMove: false
     introduced: '5.0'
   visionOS:
+    '27.0': {}
     '26.0':
       supervised: false
       benchmarks:

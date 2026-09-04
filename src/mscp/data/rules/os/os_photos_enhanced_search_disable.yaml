@@ -7,6 +7,8 @@ discussion: |-
 references:
   nist:
     cce:
+      macos_27:
+        - CCE-97058-2
       macos_26:
         - CCE-95254-9
       macos_15:
@@ -32,6 +34,7 @@ references:
       - 4.L.B
 platforms:
   macOS:
+    '27.0': {}
     '26.0': {}
     '15.0': {}
     enforcement_info:

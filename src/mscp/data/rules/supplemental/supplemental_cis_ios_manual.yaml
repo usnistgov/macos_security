@@ -1,5 +1,6 @@
+---
 id: supplemental_cis_ios_manual
-title: "CIS Manual Recommendations"
+title: CIS Manual Recommendations
 discussion: |
   List of CIS recommendations that are manual check in the CIS iOS Benchmark.
 
@@ -162,6 +163,7 @@ references:
   nist: {}
 platforms:
   iOS:
+    '27.0': {}
     '26.0':
       benchmarks:
         - name: cis_lvl1_byod

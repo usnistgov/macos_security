@@ -17,14 +17,20 @@ discussion: |
 references:
   nist:
     cce:
+      macos_27:
+        - CCE-97012-9
       macos_26:
         - CCE-95172-3
       macos_15:
         - CCE-94172-4
       macos_14:
         - CCE-92772-3
+      ios_27:
+        - CCE-97296-8
       ios_26:
         - CCE-95605-2
+      visionos_27:
+        - CCE-97437-8
       visionos_26:
         - CCE-95568-2
   disa:
@@ -34,6 +40,8 @@ references:
     srg:
       - SRG-OS-000095-GPOS-00049
     disa_stig:
+      macos_27:
+        - APPL-27-002017
       macos_26:
         - APPL-26-002017
       macos_15:
@@ -44,6 +52,10 @@ references:
         - AIOS-26-018100
 platforms:
   macOS:
+    '27.0':
+      benchmarks:
+        - name: disa_stig
+          severity: medium
     '26.0':
       benchmarks:
         - name: disa_stig
@@ -52,21 +64,15 @@ platforms:
       benchmarks:
         - name: disa_stig
           severity: medium
-    '14.0':
-      benchmarks:
-        - name: disa_stig
-          severity: medium
     enforcement_info:
       check:
         shell: |-
-          /usr/bin/osascript -l JavaScript << EOS
-          $.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess')\
-          .objectForKey('allowCamera').js
-          EOS
+          /usr/bin/osascript -l JavaScript -e 'var s = $.NSUserDefaults.alloc.initWithSuiteName("com.apple.applicationaccess"); (ObjC.unwrap(s.objectForKey("allowCamera")) == false && s.objectIsForcedForKey("allowCamera")) ? "PASS" : "FAIL"'
         result:
-          string: 'false'
+          string: 'PASS'
     introduced: '10.11'
   iOS:
+    '27.0': {}
     '26.0':
       supervised: true
       benchmarks:
@@ -74,6 +80,7 @@ platforms:
           severity: medium
     introduced: '4.0'
   visionOS:
+    '27.0': {}
     '26.0':
       supervised: true
     introduced: '2.0'

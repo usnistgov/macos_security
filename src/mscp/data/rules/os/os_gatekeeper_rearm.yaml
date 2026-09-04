@@ -22,7 +22,6 @@ references:
       - 10.5
 platforms:
   macOS:
-    '14.0': {}
     enforcement_info:
       check:
         shell: |-

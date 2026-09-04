@@ -4,6 +4,8 @@ discussion: Library validation  _MUST_ be enabled.
 references:
   nist:
     cce:
+      macos_27:
+        - CCE-97038-4
       macos_26:
         - CCE-95215-0
       macos_15:
@@ -16,9 +18,9 @@ references:
       - 2.6
 platforms:
   macOS:
+    '27.0': {}
     '26.0': {}
     '15.0': {}
-    '14.0': {}
     enforcement_info:
       check:
         shell: |-

@@ -11,6 +11,8 @@ discussion: |
 references:
   nist:
     cce:
+      macos_27:
+        - CCE-97118-4
       macos_26:
         - CCE-95344-8
       macos_15:
@@ -35,9 +37,9 @@ references:
       - 5.2
 platforms:
   macOS:
+    '27.0': {}
     '26.0': {}
     '15.0': {}
-    '14.0': {}
     enforcement_info:
       check:
         shell: /usr/bin/pwpolicy -getaccountpolicies 2> /dev/null | /usr/bin/tail +2 | /usr/bin/xmllint --xpath '//dict/key[text()="minimumAlphaCharactersLowerCase"]/following-sibling::integer[1]/text()' - | /usr/bin/awk '{ if ($1 >= $ODV ) {print "pass"} else {print "fail"}}'
@@ -50,8 +52,7 @@ platforms:
           To set local policy to require at least $ODV lowercase letter, edit the current password policy to contain the following <dict> within the "policyCategoryPasswordContent":
 
           [source,xml]
-          ----
-          <dict>
+          -          <dict>
           <key>policyContent</key>
           <string>policyAttributePassword matches &apos;(.*[a-z].*){$ODV,}+&apos;</string>
           <key>policyIdentifier</key>
@@ -62,14 +63,11 @@ platforms:
           <integer>$ODV</integer>
           </dict>
           </dict>
-          ----
-          After saving the file and exiting to the command prompt, run the following command to load the new policy file, substituting the path to the file in place of "$pwpolicy_file".
+          -          After saving the file and exiting to the command prompt, run the following command to load the new policy file, substituting the path to the file in place of "$pwpolicy_file".
 
           [source,bash]
-          ----
-          /usr/bin/pwpolicy setaccountpolicies $pwpolicy_file
-          ----
-          NOTE: See the password policy supplemental on more information on how to implement password policies on macOS.
+          -          /usr/bin/pwpolicy setaccountpolicies $pwpolicy_file
+          -          NOTE: See the password policy supplemental on more information on how to implement password policies on macOS.
 odv:
   hint:
     datatype: number

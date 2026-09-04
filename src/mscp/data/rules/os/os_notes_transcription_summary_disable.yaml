@@ -4,10 +4,14 @@ discussion: Apple Intelligence features such as Notes Transcription Summary that
 references:
   nist:
     cce:
+      macos_27:
+        - CCE-97051-7
       macos_26:
         - CCE-95239-0
       macos_15:
         - CCE-94569-1
+      ios_27:
+        - CCE-97353-7
       ios_26:
         - CCE-95500-5
       ios_18:
@@ -45,12 +49,18 @@ references:
       ios_26:
         - 2.9.2 (level 1 - End-User Owned Devices)
         - 3.10.2 (level 1 - Institutionally-Owned Devices)
+      macos_27:
+        - 2.5.1.4 (level 1)
   bsi:
     indigo:
       ios_26:
         - ANNEX K
 platforms:
   macOS:
+    '27.0':
+      benchmarks:
+        - name: cis_lvl1
+        - name: cis_lvl2
     '26.0':
       benchmarks:
         - name: cis_lvl1
@@ -62,14 +72,13 @@ platforms:
     enforcement_info:
       check:
         shell: |-
-          /usr/bin/osascript -l JavaScript << EOS
-          $.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess')\
-          .objectForKey('allowNotesTranscriptionSummary').js
-          EOS
+          /usr/bin/osascript -l JavaScript -e 'var s = $.NSUserDefaults.alloc.initWithSuiteName("com.apple.applicationaccess"); (ObjC.unwrap(s.objectForKey("allowNotesTranscriptionSummary")) == false && s.objectIsForcedForKey("allowNotesTranscriptionSummary")) ? "PASS" : "FAIL"'
         result:
-          string: 'false'
+          string: 'PASS'
     introduced: '15.3'
   iOS:
+    '27.0':
+      supervised: true
     '26.0':
       supervised: true
       benchmarks:

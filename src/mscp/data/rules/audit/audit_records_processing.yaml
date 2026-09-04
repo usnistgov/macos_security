@@ -9,6 +9,8 @@ discussion: |-
 references:
   nist:
     cce:
+      macos_27:
+        - CCE-97237-2
       macos_26:
         - CCE-95129-3
       macos_15:
@@ -25,9 +27,9 @@ references:
       - AU.L2-3.3.6
 platforms:
   macOS:
+    '27.0': {}
     '26.0': {}
     '15.0': {}
-    '14.0': {}
 tags:
   - 800-53r5_high
   - 800-53r5_moderate

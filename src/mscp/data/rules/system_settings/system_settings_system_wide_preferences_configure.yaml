@@ -7,6 +7,8 @@ discussion: |
 references:
   nist:
     cce:
+      macos_27:
+        - CCE-97180-4
       macos_26:
         - CCE-95408-1
       macos_15:
@@ -26,6 +28,8 @@ references:
       - SRG-OS-000324-GPOS-00125
       - SRG-OS-000480-GPOS-00228
     disa_stig:
+      macos_27:
+        - APPL-27-002069
       macos_26:
         - APPL-26-002069
       macos_15:
@@ -53,10 +57,18 @@ references:
         - 2.6.8 (level 1)
       macos_14:
         - 2.6.8 (level 1)
+      macos_27:
+        - 2.6.8 (level 1)
     controls_v8:
       - 4.1
 platforms:
   macOS:
+    '27.0':
+      benchmarks:
+        - name: cis_lvl1
+        - name: cis_lvl2
+        - name: disa_stig
+          severity: high
     '26.0':
       benchmarks:
         - name: cis_lvl1
@@ -71,12 +83,6 @@ platforms:
         - name: disa_stig
           severity: high
         - name: nlmapgov_plus
-    '14.0':
-      benchmarks:
-        - name: cis_lvl1
-        - name: cis_lvl2
-        - name: disa_stig
-          severity: high
     enforcement_info:
       check:
         shell: |-
@@ -100,7 +106,49 @@ platforms:
         result:
           integer: 1
       fix:
-        shell: "authDBs=(\"system.preferences\" \"system.preferences.energysaver\" \"system.preferences.network\" \"system.preferences.printing\" \"system.preferences.sharing\" \"system.preferences.softwareupdate\" \"system.preferences.startupdisk\" \"system.preferences.timemachine\")\n\nfor section in ${authDBs[@]}; do\n  /usr/bin/security -q authorizationdb read \"$section\" > \"/tmp/$section.plist\"\n\n  class_key_value=$(/usr/libexec/PlistBuddy -c \"Print :class\" \"/tmp/$section.plist\" 2>&1)\n  if [[ \"$class_key_value\" == *\"Does Not Exist\"* ]]; then\n    /usr/libexec/PlistBuddy -c \"Add :class string user\" \"/tmp/$section.plist\"\n  else\n    /usr/libexec/PlistBuddy -c \"Set :class user\" \"/tmp/$section.plist\"\n  fi\n\n  key_value=$(/usr/libexec/PlistBuddy -c \"Print :shared\" \"/tmp/$section.plist\" 2>&1)  \t\n  if [[ \"$key_value\" == *\"Does Not Exist\"* ]]; then\n    /usr/libexec/PlistBuddy -c \"Add :shared bool false\" \"/tmp/$section.plist\"\n  else\n    /usr/libexec/PlistBuddy -c \"Set :shared false\" \"/tmp/$section.plist\"\n  fi\n\n  auth_user_key=$(/usr/libexec/PlistBuddy -c \"Print :authenticate-user\" \"/tmp/$section.plist\" 2>&1)  \t\n  if [[ \"$auth_user_key\" == *\"Does Not Exist\"* ]]; then\n    /usr/libexec/PlistBuddy -c \"Add :authenticate-user bool true\" \"/tmp/$section.plist\"\n  else\n    /usr/libexec/PlistBuddy -c \"Set :authenticate-user true\" \"/tmp/$section.plist\"\n  fi\n\n  session_owner_key=$(/usr/libexec/PlistBuddy -c \"Print :session-owner\" \"/tmp/$section.plist\" 2>&1)  \t\n  if [[ \"$session_owner_key\" == *\"Does Not Exist\"* ]]; then\n    /usr/libexec/PlistBuddy -c \"Add :session-owner bool false\" \"/tmp/$section.plist\"\n  else\n    /usr/libexec/PlistBuddy -c \"Set :session-owner false\" \"/tmp/$section.plist\"\n  fi\n\n  group_key=$(/usr/libexec/PlistBuddy -c \"Print :group\" \"/tmp/$section.plist\" 2>&1)\n  if [[ \"$group_key\" == *\"Does Not Exist\"* ]]; then\n    /usr/libexec/PlistBuddy -c \"Add :group string admin\" \"/tmp/$section.plist\"\n  else\n    /usr/libexec/PlistBuddy -c \"Set :group admin\" \"/tmp/$section.plist\"\n  fi\n\n  /usr/bin/security -q authorizationdb write \"$section\" < \"/tmp/$section.plist\"\ndone"
+        shell: |-
+          authDBs=("system.preferences" "system.preferences.energysaver" "system.preferences.network" "system.preferences.printing" "system.preferences.sharing" "system.preferences.softwareupdate" "system.preferences.startupdisk" "system.preferences.timemachine")
+
+          for section in ${authDBs[@]}; do
+            /usr/bin/security -q authorizationdb read "$section" > "/tmp/$section.plist"
+
+            class_key_value=$(/usr/libexec/PlistBuddy -c "Print :class" "/tmp/$section.plist" 2>&1)
+            if [[ "$class_key_value" == *"Does Not Exist"* ]]; then
+              /usr/libexec/PlistBuddy -c "Add :class string user" "/tmp/$section.plist"
+            else
+              /usr/libexec/PlistBuddy -c "Set :class user" "/tmp/$section.plist"
+            fi
+
+            key_value=$(/usr/libexec/PlistBuddy -c "Print :shared" "/tmp/$section.plist" 2>&1)
+            if [[ "$key_value" == *"Does Not Exist"* ]]; then
+              /usr/libexec/PlistBuddy -c "Add :shared bool false" "/tmp/$section.plist"
+            else
+              /usr/libexec/PlistBuddy -c "Set :shared false" "/tmp/$section.plist"
+            fi
+
+            auth_user_key=$(/usr/libexec/PlistBuddy -c "Print :authenticate-user" "/tmp/$section.plist" 2>&1)
+            if [[ "$auth_user_key" == *"Does Not Exist"* ]]; then
+              /usr/libexec/PlistBuddy -c "Add :authenticate-user bool true" "/tmp/$section.plist"
+            else
+              /usr/libexec/PlistBuddy -c "Set :authenticate-user true" "/tmp/$section.plist"
+            fi
+
+            session_owner_key=$(/usr/libexec/PlistBuddy -c "Print :session-owner" "/tmp/$section.plist" 2>&1)
+            if [[ "$session_owner_key" == *"Does Not Exist"* ]]; then
+              /usr/libexec/PlistBuddy -c "Add :session-owner bool false" "/tmp/$section.plist"
+            else
+              /usr/libexec/PlistBuddy -c "Set :session-owner false" "/tmp/$section.plist"
+            fi
+
+            group_key=$(/usr/libexec/PlistBuddy -c "Print :group" "/tmp/$section.plist" 2>&1)
+            if [[ "$group_key" == *"Does Not Exist"* ]]; then
+              /usr/libexec/PlistBuddy -c "Add :group string admin" "/tmp/$section.plist"
+            else
+              /usr/libexec/PlistBuddy -c "Set :group admin" "/tmp/$section.plist"
+            fi
+
+            /usr/bin/security -q authorizationdb write "$section" < "/tmp/$section.plist"
+          done
 tags:
   - 800-53r5_moderate
   - 800-53r5_high

@@ -1,9 +1,9 @@
 ---
 mscp:
   version: '2.0'
-  build: 45
+  build: 40
   build_date: '2026-06-11'
-  release_date: '2026-XX-XX'
+  release_date: 2026-XX-XX
   release: '27.0'
 ddm:
   services:
@@ -110,16 +110,19 @@ benchmarks:
 versions:
   platforms:
     macos:
+      - os_version: 27.0
+        os_name: golden gate
+        cpe: o:apple:macos:27.0
       - os_version: 26.0
         os_name: tahoe
         cpe: o:apple:macos:26.0
       - os_version: 15.0
         os_name: sequoia
         cpe: o:apple:macos:15.0
-      - os_version: 14.0
-        os_name: sonoma
-        cpe: o:apple:macos:14.0
     ios:
+      - os_version: 27.0
+        os_name: ios_27
+        cpe: o:apple:ios:27.0
       - os_version: 26.0
         os_name: ios_26
         cpe: o:apple:ios:26.0
@@ -127,6 +130,29 @@ versions:
         os_name: ios_18
         cpe: o:apple:ios:18.0
     visionos:
+      - os_version: 27.0
+        os_name: visionos_27
+        cpe: o:apple:visionos:27.0
       - os_version: 26.0
         os_name: visionos_26
         cpe: o:apple:visionos:26.0
+    ubuntu:
+      - os_version: 22.04
+        os_name: 22.04 LTS
+        cpe: o:canonical:ubuntu_linux:22.04
+      - os_version: 24.04
+        os_name: 24.04 LTS
+        cpe: o:canonical:ubuntu_linux:24.04
+      - os_version: 26.04
+        os_name: 26.04 LTS
+        cpe: o:canonical:ubuntu_linux:26.04
+    redhat:
+      - os_version: 8
+        os_name: "8"
+        cpe: o:redhat:enterprise_linux:8.0
+      - os_version: 9
+        os_name: "9"
+        cpe: o:redhat:enterprise_linux:9.0
+      - os_version: 10
+        os_name: "10"
+        cpe: o:redhat:enterprise_linux:10.0

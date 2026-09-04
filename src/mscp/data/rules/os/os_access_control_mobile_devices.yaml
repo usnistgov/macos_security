@@ -11,6 +11,8 @@ discussion: |-
 references:
   nist:
     cce:
+      macos_27:
+        - CCE-97254-7
       macos_26:
         - CCE-95154-1
       macos_15:
@@ -36,9 +38,9 @@ references:
       - 6.4
 platforms:
   macOS:
+    '27.0': {}
     '26.0': {}
     '15.0': {}
-    '14.0': {}
 tags:
   - 800-171
   - 800-53r5_low

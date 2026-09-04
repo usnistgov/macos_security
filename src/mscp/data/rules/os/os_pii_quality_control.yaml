@@ -9,6 +9,8 @@ discussion: |-
 references:
   nist:
     cce:
+      macos_27:
+        - CCE-97261-2
       macos_26:
         - CCE-95256-4
       macos_15:
@@ -19,9 +21,9 @@ references:
       - SI-18
 platforms:
   macOS:
+    '27.0': {}
     '26.0': {}
     '15.0': {}
-    '14.0': {}
     enforcement_info:
       fix:
         additional_info: The requirement is NA. No fix is required.

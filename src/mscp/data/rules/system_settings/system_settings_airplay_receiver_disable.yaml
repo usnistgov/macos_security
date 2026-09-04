@@ -9,6 +9,8 @@ discussion: |
 references:
   nist:
     cce:
+      macos_27:
+        - CCE-97126-7
       macos_26:
         - CCE-95354-7
       macos_15:
@@ -28,6 +30,8 @@ references:
       - SRG-OS-000300-GPOS-00118
       - SRG-OS-000095-GPOS-00049
     disa_stig:
+      macos_27:
+        - APPL-27-002080
       macos_26:
         - APPL-26-002080
       macos_15:
@@ -50,11 +54,19 @@ references:
         - 2.3.1.2 (level 1)
       macos_14:
         - 2.3.1.2 (level 1)
+      macos_27:
+        - 2.3.1.2 (level 1)
     controls_v8:
       - 4.1
       - 4.8
 platforms:
   macOS:
+    '27.0':
+      benchmarks:
+        - name: cis_lvl1
+        - name: cis_lvl2
+        - name: disa_stig
+          severity: medium
     '26.0':
       benchmarks:
         - name: cis_lvl1
@@ -67,21 +79,12 @@ platforms:
         - name: cis_lvl2
         - name: disa_stig
           severity: medium
-    '14.0':
-      benchmarks:
-        - name: cis_lvl1
-        - name: cis_lvl2
-        - name: disa_stig
-          severity: medium
     enforcement_info:
       check:
         shell: |-
-          /usr/bin/osascript -l JavaScript << EOS
-          $.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess')\
-          .objectForKey('allowAirPlayIncomingRequests').js
-          EOS
+          /usr/bin/osascript -l JavaScript -e 'var s = $.NSUserDefaults.alloc.initWithSuiteName("com.apple.applicationaccess"); (ObjC.unwrap(s.objectForKey("allowAirPlayIncomingRequests")) == false && s.objectIsForcedForKey("allowAirPlayIncomingRequests")) ? "PASS" : "FAIL"'
         result:
-          string: 'false'
+          string: 'PASS'
     introduced: '12.3'
 tags:
   - 800-53r5_low

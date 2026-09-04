@@ -5,6 +5,10 @@ discussion: |
 references:
   nist:
     cce:
+      macos_27:
+        - CCE-97264-6
+      macos_26:
+        - CCE-96738-0
       macos_15:
         - CCE-94397-7
       macos_14:
@@ -29,16 +33,14 @@ references:
       - 7.4
 platforms:
   macOS:
+    '27.0': {}
+    '26.0': {}
     '15.0':
       benchmarks:
         - name: cis_lvl1
         - name: cis_lvl2
         - name: nlmapgov_plus
         - name: nlmapgov_base
-    '14.0':
-      benchmarks:
-        - name: cis_lvl1
-        - name: cis_lvl2
     enforcement_info:
       check:
         shell: |-

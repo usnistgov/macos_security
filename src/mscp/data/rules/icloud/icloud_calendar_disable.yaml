@@ -1,12 +1,16 @@
 id: icloud_calendar_disable
 title: Disable the iCloud Calendar Services
 discussion: |
-  The macOS built-in Calendar.app connection to Apple's iCloud service _MUST_ be disabled.
+  The macOS built-in Calendar.app connection to Apple's iCloud service _MUST_ be disabled, if iCloud is not an authorized service.
 
-  Apple's iCloud service does not provide an organization with enough control over the storage and access of data and, therefore, automated calendar synchronization _MUST_ be controlled by an organization approved service.
+  Apple's iCloud service does not provide an organization with enough control over the storage and access of data, and, therefore, automated calendar synchronization _MUST_ be controlled by an organization approved service.
+
+  This requirement helps ensure that organizational contact data is managed in accordance with established security, privacy, access-control, and data governance requirements.
 references:
   nist:
     cce:
+      macos_27:
+        - CCE-96988-1
       macos_26:
         - CCE-95143-4
       macos_15:
@@ -29,6 +33,8 @@ references:
     srg:
       - SRG-OS-000095-GPOS-00049
     disa_stig:
+      macos_27:
+        - APPL-27-002012
       macos_26:
         - APPL-26-002012
       macos_15:
@@ -51,6 +57,10 @@ references:
       - 15.3
 platforms:
   macOS:
+    '27.0':
+      benchmarks:
+        - name: disa_stig
+          severity: medium
     '26.0':
       benchmarks:
         - name: disa_stig
@@ -59,19 +69,12 @@ platforms:
       benchmarks:
         - name: disa_stig
           severity: medium
-    '14.0':
-      benchmarks:
-        - name: disa_stig
-          severity: medium
     enforcement_info:
       check:
         shell: |-
-          /usr/bin/osascript -l JavaScript << EOS
-          $.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess')\
-          .objectForKey('allowCloudCalendar').js
-          EOS
+          /usr/bin/osascript -l JavaScript -e 'var s = $.NSUserDefaults.alloc.initWithSuiteName("com.apple.applicationaccess"); (ObjC.unwrap(s.objectForKey("allowCloudCalendar")) == false && s.objectIsForcedForKey("allowCloudCalendar")) ? "PASS" : "FAIL"'
         result:
-          string: 'false'
+          string: 'PASS'
     introduced: '10.12'
 tags:
   - 800-53r5_low

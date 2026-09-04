@@ -5,18 +5,39 @@ discussion: |
 references:
   nist:
     cce:
+      macos_27:
+        - CCE-97265-3
+      ios_27:
+        - CCE-97293-5
       ios_26:
         - CCE-96728-1
+    800-53r5:
+      - CM-11
+      - SI-2
   bzk:
     bio:
       - 8.08
 platforms:
+  macOS:
+    '27.0': {}
+    enforcement_info:
+      check:
+        shell: /usr/bin/plutil -convert json /var/db/softwareupdate/SoftwareUpdateDDMStatePersistence.plist -o - | /usr/bin/jq --raw-output .'SUCorePersistedStatePolicyFields.SUCoreDDMDeclarationGlobalSettings.enableRapidSecurityResponse'
+        result:
+          string: 'false'
+      fix:
+        additional_info: This is implemented by Declarative Device Management (DDM).
   iOS:
+    '27.0': {}
     '26.0':
       supervised: true
       benchmarks:
         - name: nlmapgov_base
         - name: nlmapgov_plus
+tags:
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_high
 ddm_info:
   declarationtype: com.apple.configuration.softwareupdate.settings
   ddm_key: RapidSecurityResponse

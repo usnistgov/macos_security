@@ -7,6 +7,8 @@ discussion: |
 references:
   nist:
     cce:
+      macos_27:
+        - CCE-97171-3
       macos_26:
         - CCE-95397-6
       macos_15:
@@ -25,6 +27,8 @@ references:
     srg:
       - SRG-OS-000029-GPOS-00010
     disa_stig:
+      macos_27:
+        - APPL-27-000070
       macos_26:
         - APPL-26-000070
       macos_15:
@@ -45,10 +49,18 @@ references:
         - 2.11.1 (level 1)
       macos_14:
         - 2.10.1 (level 1)
+      macos_27:
+        - 2.11.1 (level 1)
     controls_v8:
       - 4.3
 platforms:
   macOS:
+    '27.0':
+      benchmarks:
+        - name: cis_lvl1
+        - name: cis_lvl2
+        - name: disa_stig
+          severity: medium
     '26.0':
       benchmarks:
         - name: cis_lvl1
@@ -63,12 +75,6 @@ platforms:
         - name: disa_stig
           severity: medium
         - name: nlmapgov_plus
-    '14.0':
-      benchmarks:
-        - name: cis_lvl1
-        - name: cis_lvl2
-        - name: disa_stig
-          severity: medium
     enforcement_info:
       check:
         shell: |-

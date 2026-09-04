@@ -5,26 +5,34 @@ discussion: |
 references:
   nist:
     cce:
+      macos_27:
+        - CCE-97067-3
       macos_26:
         - CCE-95601-1
+      ios_27:
+        - CCE-97367-7
+      ios_26:
+        - CCE-96734-9
+      visionos_27:
+        - CCE-97461-8
   bsi:
     indigo:
       ios_26:
         - ANNEX K
 platforms:
   macOS:
+    '27.0': {}
     '26.0': {}
     enforcement_info:
       check:
         shell: |-
-          /usr/bin/osascript -l JavaScript << EOS
-          $.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess')\
-          .objectForKey('allowSafariHistoryClearing').js
-          EOS
+          /usr/bin/osascript -l JavaScript -e 'var s = $.NSUserDefaults.alloc.initWithSuiteName("com.apple.applicationaccess"); (ObjC.unwrap(s.objectForKey("allowSafariHistoryClearing")) == false && s.objectIsForcedForKey("allowSafariHistoryClearing")) ? "PASS" : "FAIL"'
         result:
-          string: 'false'
+          string: 'PASS'
     introduced: '26.0'
   iOS:
+    '27.0':
+      supervised: true
     '26.0':
       supervised: true
       benchmarks:
@@ -33,8 +41,10 @@ platforms:
         - name: indigo_high
           severity: high
     introduced: '26.0'
-tags:
-  - none
+  visionOS:
+    '27.0':
+      supervised: true
+    introduced: '26.0'
 mobileconfig_info:
   - PayloadType: com.apple.applicationaccess
     PayloadContent:

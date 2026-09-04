@@ -1,10 +1,12 @@
 id: os_update_auto_RSR_allow
 title: Auto Install RSR Updates
 discussion: |
-  The user _MUST_ manually enable the automatic install of RSR updates in Settings/General/Updates/Automatic Updates/Block Remote Content.
+  The user _MUST_ manually enable the automatic install of RSR updates.
 references:
   nist:
     cce:
+      ios_27:
+        - CCE-97394-1
       ios_26:
         - CCE-95698-7
       ios_18:
@@ -21,6 +23,7 @@ references:
         - ANNEX K
 platforms:
   iOS:
+    '27.0': {}
     '26.0':
       benchmarks:
         - name: indigo_high
