@@ -100,12 +100,15 @@ Decide which version to set up with, then follow the steps below.
   </TabItem>
   <TabItem label="Manual Method (Optional)">
 
-Manual setup with Python and Ruby.
+Manual setup with Python.
 
 **Requirements:**
 - Python >= 3.12
   - Recommended: [Macadmins Python](https://github.com/macadmins/python)
-- Ruby (macOS built-in Ruby works)
+
+PDF guidance is rendered with [typst](https://typst.app), which ships as a Python
+dependency — there is nothing else to install. HTML and Markdown are generated in
+pure Python.
 
 <Steps>
 
@@ -128,16 +131,7 @@ Manual setup with Python and Ruby.
    python3 -m pip install --upgrade -r requirements.txt
    ```
 
-3. **Ruby Setup**
-
-   ```bash
-   bundle config path mscp_gems
-   bundle config bin mscp_gems/bin
-   bundle install
-   bundle binstubs --all
-   ```
-
-4. **Generate Content**
+3. **Generate Content**
 
    ```bash
    # Create a baseline
