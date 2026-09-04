@@ -7,7 +7,7 @@ discussion: |
 
   [IMPORTANT]
   ====
-  Preventing the launch of any application using the DeniedBinaries key will also prevent the launching of Adhoc signed binaries and unsigned binaries.
+  Preventing the launch of any application using the DeniedBinaries key will also prevent the launching of ad-hoc signed binaries and unsigned binaries.
   ====
 
   [NOTE]
