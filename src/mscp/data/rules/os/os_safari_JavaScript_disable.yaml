@@ -1,7 +1,9 @@
-id: os_safari_javaScript_disable
+id: os_safari_javascript_disable
 title: Prevent JavaScript
 discussion: |
   The iOS device _MUST_ be configured to prevent JavaScript support in Safari to prevent malicious code execution on the device.
+
+  JavaScript is a powerful scripting language that can be leveraged by malicious content to execute arbitrary code in the context of the browser, redirect users to malicious sites, or exfiltrate sensitive information. Disabling JavaScript reduces the attack surface associated with active mobile code in the web browser.
 references:
   nist:
     cce:
