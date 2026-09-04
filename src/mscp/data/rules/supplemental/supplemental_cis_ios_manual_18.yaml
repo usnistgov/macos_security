@@ -1,9 +1,9 @@
 ---
-id: supplemental_cis_ios_manual
+id: supplemental_cis_ios_manual_18
 title: CIS Manual Recommendations
 discussion: |
   List of CIS recommendations that are manual check in the CIS iOS Benchmark.
-
+  
   [cols="15%h, 85%a"]
   |===
   |Section
@@ -23,7 +23,7 @@ discussion: |
 
   |Recommendations
   |2.2.1.5  Ensure Allow personalized ads delivered by Apple is set to Disabled +
-  2.2.1.7 Ensure Force automatic date and time is set to Enabled +
+  2.2.1.7 Ensure Force automatic date and time is set to Enabled + 
   2.2.1.12 Ensure Allow sending diagnostic and usage data to Apple is set to Disabled
   |===
 
@@ -146,12 +146,12 @@ discussion: |
   |Recommendations
   |4.1.1 Review Manage Sharing & Access +
   4.1.2 Review Emergency Reset +
-  4.1.3 Review Lockdown Mode +
+  4.1.3 Review Lockdown Mode + 
   4.1.4 Ensure "App Privacy Report" is enabled +
   4.1.5 Review Airprint +
   4.2 Ensure device is not obviously jailbroken or compromised +
   4.3 Ensure Install iOS Updates of Automatic Updates is set to Enabled +
-  4.4 Ensure Software Update returns Your software is up to date +
+  4.4 Ensure Software Update returns Your software is up to date + 
   4.5 Review iCloud Private Relay settings +
   4.6 Review Mail Privacy Protection settings +
   4.7 Ensure Automatic Downloads of App Updates is set to Enabled +
@@ -163,8 +163,7 @@ references:
   nist: {}
 platforms:
   iOS:
-    '27.0': {}
-    '26.0':
+    '18.0':
       benchmarks:
         - name: cis_lvl1_byod
         - name: cis_lvl1_enterprise

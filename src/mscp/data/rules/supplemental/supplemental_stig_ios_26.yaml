@@ -1,5 +1,5 @@
 ---
-id: supplemental_stig_ios
+id: supplemental_stig_ios_26
 title: DISA STIG Supplemental
 discussion: |
   These are controls that require additional considerations for your environment.
@@ -49,7 +49,6 @@ references:
   nist: {}
 platforms:
   iOS:
-    '27.0': {}
     '26.0':
       benchmarks:
         - name: ios_stig

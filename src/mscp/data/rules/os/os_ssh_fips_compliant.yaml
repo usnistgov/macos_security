@@ -128,7 +128,7 @@ platforms:
                     if [[ "$c" == "/etc/ssh/crypto.conf" ]]; then
                       continue
                     fi
-            
+
                     /usr/bin/sudo -u $u /usr/bin/grep -qEi "^$ssh_setting" "$c" && /usr/bin/sed -i "" "s/^$ssh_setting.*/${ssh_config}/I" "$c"
                     if [[ "$c" =~ ".ssh/config" ]]; then
                       if /usr/bin/grep -qEi "$ssh_setting" "$c" 2> /dev/null; then
