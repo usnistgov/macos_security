@@ -213,14 +213,17 @@ The easiest way to get started — no local dependencies required.
 
 ---
 
-### Option 2: Manual Method (Python + Ruby)
+### Option 2: Manual Method (Python)
 
 Manual setup with virtual environment.
 
 **Requirements:**
 - Python >= 3.12
   - Recommended: [Macadmins Python](https://github.com/macadmins/python)
-- Ruby (macOS built-in Ruby works)
+
+No Ruby toolchain is required. Guidance documents are generated entirely in Python —
+PDF rendering uses [typst](https://typst.app), which installs as a regular Python
+dependency, so there is nothing extra to set up.
 
 <Steps>
 
@@ -275,16 +278,7 @@ Manual setup with virtual environment.
 
    </details>
 
-3. ### Ruby Setup
-
-   ```bash
-   bundle config path mscp_gems
-   bundle config bin mscp_gems/bin
-   bundle install
-   bundle binstubs --all
-   ```
-
-4. ### Generate Content
+3. ### Generate Content
 
    ```bash
    # Create a baseline

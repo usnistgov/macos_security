@@ -4,7 +4,7 @@
 import { Image } from 'astro:assets';
 // PAGE_TITLE_ID is '_top' per @astrojs/starlight/constants.ts
 const PAGE_TITLE_ID = '_top';
-import LinkButton from '../../node_modules/@astrojs/starlight/user-components/LinkButton.astro';
+import { LinkButton } from '@astrojs/starlight/components';
 
 const { data } = Astro.locals.starlightRoute.entry;
 const { title = data.title, tagline, image, actions = [] } = data.hero || {};
