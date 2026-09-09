@@ -2480,6 +2480,11 @@ table.grid-all {
   text-align: center;
 }
 
+.pre-release-note {
+  font-size: 1em;
+  font-style: italic;
+}
+
 .title-page {
   display: flex;
   flex-direction: column;

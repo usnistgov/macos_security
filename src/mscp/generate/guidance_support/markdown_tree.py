@@ -292,6 +292,7 @@ def _build_env(template_dirs: list[str], language: str) -> Environment:
 def generate_markdown_tree(
     build_path: Path,
     baseline: Baseline,
+    os_name: str,
     version_info: dict[str, Any],
     show_all_tags: bool = False,
     language: str = "en",
@@ -341,6 +342,12 @@ def generate_markdown_tree(
     )
     if any(author.is_additional for author in baseline.authors):
         baseline_dict["additional_authors"] = True
+    os_key = os_name.strip().lower()
+    baseline_dict["pre_release"] = benchmark in (
+        mscp_data.get("pre_release_benchmarks", {})
+        .get(os_key, {})
+        .get(version_info.get("os_version"), [])
+    )
 
     acronyms_file = Path(config["includes_dir"], "acronyms.yaml").absolute()
     acronyms_data: dict[str, Any] = open_file(acronyms_file, language)

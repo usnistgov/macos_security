@@ -10,19 +10,8 @@
 
 {% trans %}Any and all risk based decisions to tailor the content produced by this project in order to meet the needs of a specific organization shall be approved by the responsible Information System Owner (ISO) and Authorizing Official (AO) and formally documented in their System Security Plan (SSP). While the project attempts to provide settings to meet compliance requirements, it is recommended that each rule be reviewed by your organization's Information System Security Officer (ISSO) prior to implementation.{% endtrans %}
 
-= {% trans %}Scope{% endtrans %}
 
-{% if not baseline.tailored %}
-{% if baseline.parent_values == "recommended" %}
-{% trans %}This guide outlines the configuration settings that can be used on a{% endtrans %} {{ baseline.platform.os | typst_escape }} {{ baseline.platform.version | typst_escape }} {% trans %}system to meet security objectives recommended by {% endtrans %} {{ baseline.benchmark_description | typst_escape }}.
-
-{% trans %}Information System Security Officers and benchmark creators can use this catalog of settings in order to assist them in security benchmark creation. This list is a catalog, not a checklist or benchmark, and satisfaction of every item is not likely to be possible or sensible in many operational scenarios.{% endtrans %}
-{% else %}
-{% trans %}This guide describes the actions to take when securing a{% endtrans %} {{ baseline.platform.os | typst_escape }} {{ baseline.platform.version | typst_escape }} {% trans %}system against the configuration requirements outlined in the {% endtrans %} {{ baseline.benchmark_description | typst_escape }}.
-{% endif %}
-{% else %}
-{{ baseline.description | asciidoc_to_typst }}
-{% endif %}
+{% include "typst/scope.typ.jinja" %}
 
 = {% trans %}Maintainers and Contributors{% endtrans %}
 

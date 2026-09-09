@@ -107,6 +107,12 @@ benchmarks:
     description: Nederlandse Maatregelenset Apple Platformen Overheid (NLMAPGOV) Base Settings
   - keyword: nlmapgov_plus
     description: Nederlandse Maatregelenset Apple Platformen Overheid (NLMAPGOV) Plus Settings
+pre_release_benchmarks:
+  macos:
+    27.0:
+      - cis_lvl1
+      - cis_lvl2
+      - disa_stig
 versions:
   platforms:
     macos:
