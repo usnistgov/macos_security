@@ -5,6 +5,8 @@ discussion: |
 references:
   nist:
     cce:
+      ios_27:
+        - CCE-97395-8
       ios_26:
         - CCE-95699-5
       ios_18:
@@ -21,6 +23,8 @@ references:
         - ANNEX D (Section 6.3.1.2 - Update management)
 platforms:
   iOS:
+    '27.0':
+      supervised: true
     '26.0':
       supervised: true
       benchmarks:

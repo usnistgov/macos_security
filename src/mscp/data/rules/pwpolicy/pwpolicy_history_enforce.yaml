@@ -9,18 +9,24 @@ discussion: |
 references:
   nist:
     cce:
+      macos_27:
+        - CCE-97117-6
       macos_26:
         - CCE-95343-0
       macos_15:
         - CCE-94337-3
       macos_14:
         - CCE-92932-3
+      ios_27:
+        - CCE-97405-5
       ios_26:
         - CCE-95549-2
       ios_18:
         - CCE-94565-9
       ios_17:
         - CCE-93511-4
+      visionos_27:
+        - CCE-97472-5
       visionos_26:
         - CCE-96717-4
     800-53r5:
@@ -60,6 +66,8 @@ references:
         - 5.2.8 (level 1)
       macos_14:
         - 5.2.8 (level 1)
+      macos_27:
+        - 5.2.8 (level 1)
     controls_v8:
       - 5.2
   bsi:
@@ -75,15 +83,15 @@ references:
         - ANNEX K
 platforms:
   macOS:
+    '27.0':
+      benchmarks:
+        - name: cis_lvl1
+        - name: cis_lvl2
     '26.0':
       benchmarks:
         - name: cis_lvl1
         - name: cis_lvl2
     '15.0':
-      benchmarks:
-        - name: cis_lvl1
-        - name: cis_lvl2
-    '14.0':
       benchmarks:
         - name: cis_lvl1
         - name: cis_lvl2
@@ -94,6 +102,8 @@ platforms:
           string: pass
     introduced: '10.7'
   iOS:
+    '27.0':
+      supervised: false
     '26.0':
       supervised: false
       benchmarks:
@@ -119,6 +129,8 @@ platforms:
         - name: indigo_high
     introduced: '4.0'
   visionOS:
+    '27.0':
+      supervised: false
     '26.0':
       supervised: false
       benchmarks:

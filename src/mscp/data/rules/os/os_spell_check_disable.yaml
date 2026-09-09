@@ -5,6 +5,8 @@ discussion: |
 references:
   nist:
     cce:
+      ios_27:
+        - CCE-97385-9
       ios_26:
         - CCE-95691-2
       ios_18:
@@ -33,15 +35,20 @@ references:
       - CM.L2-3.4.7
 platforms:
   iOS:
+    '27.0':
+      supervised: true
     '26.0':
       benchmarks:
         - name: indigo_high
+      supervised: true
     '18.0':
       benchmarks:
         - name: indigo_high
+      supervised: true
     '17.0':
       benchmarks:
         - name: indigo_high
+      supervised: true
     introduced: 8.1.3
 tags:
   - 800-53r5_low
@@ -57,3 +64,7 @@ mobileconfig_info:
   - PayloadType: com.apple.applicationaccess
     PayloadContent:
       - allowSpellCheck: false
+ddm_info:
+  declarationtype: com.apple.configuration.keyboard.settings
+  ddm_key: AllowSpellCheck
+  ddm_value: false

@@ -7,6 +7,8 @@ discussion: |
 references:
   nist:
     cce:
+      macos_27:
+        - CCE-97184-6
       macos_26:
         - CCE-95412-3
       macos_15:
@@ -29,6 +31,8 @@ references:
       - SRG-OS-000355-GPOS-00143
       - SRG-OS-000356-GPOS-00144
     disa_stig:
+      macos_27:
+        - APPL-27-000014
       macos_26:
         - APPL-26-000014
       macos_15:
@@ -48,10 +52,18 @@ references:
         - 2.3.2.1 (level 1)
       macos_14:
         - 2.3.2.1 (level 1)
+      macos_27:
+        - 2.3.2.1 (level 1)
     controls_v8:
       - 8.4
 platforms:
   macOS:
+    '27.0':
+      benchmarks:
+        - name: cis_lvl1
+        - name: cis_lvl2
+        - name: disa_stig
+          severity: medium
     '26.0':
       benchmarks:
         - name: cis_lvl1
@@ -68,21 +80,12 @@ platforms:
           severity: medium
         - name: nlmapgov_plus
         - name: nlmapgov_base
-    '14.0':
-      benchmarks:
-        - name: cis_lvl1
-        - name: cis_lvl2
-        - name: disa_stig
-          severity: medium
     enforcement_info:
       check:
         shell: |-
-          /usr/bin/osascript -l JavaScript << EOS
-          $.NSUserDefaults.alloc.initWithSuiteName('com.apple.timed')\
-          .objectForKey('TMAutomaticTimeOnlyEnabled').js
-          EOS
+          /usr/bin/osascript -l JavaScript -e 'var s = $.NSUserDefaults.alloc.initWithSuiteName("com.apple.timed"); (ObjC.unwrap(s.objectForKey("TMAutomaticTimeOnlyEnabled")) == true && s.objectIsForcedForKey("TMAutomaticTimeOnlyEnabled")) ? "PASS" : "FAIL"'
         result:
-          string: 'true'
+          string: 'PASS'
     introduced: '-1'
 tags:
   - 800-171

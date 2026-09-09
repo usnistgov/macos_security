@@ -1,0 +1,15 @@
+---
+authors: []
+title: V164 manifest exclusion fixture
+description: Minimal included/excluded manifest fixture.
+platform:
+  os: macOS
+  version: 26.0
+parent_values: recommended
+profile:
+  - section: Operating System
+    rules:
+      - os_gatekeeper_enable
+  - section: Excluded
+    rules:
+      - os_airdrop_disable

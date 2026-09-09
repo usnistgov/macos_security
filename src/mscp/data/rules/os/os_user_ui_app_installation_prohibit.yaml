@@ -12,12 +12,21 @@ discussion: |
 references:
   nist:
     cce:
+      ios_27:
+        - CCE-97396-6
+      visionos_27:
+        - CCE-97468-3
       visionos_26:
         - CCE-95595-5
     800-53r5:
       - CM-11(2)
 platforms:
+  iOS:
+    '27.0':
+      supervised: true
   visionOS:
+    '27.0':
+      supervised: true
     '26.0':
       supervised: true
     introduced: '2.0'

@@ -7,6 +7,8 @@ discussion: |
 references:
   nist:
     cce:
+      macos_27:
+        - CCE-97031-9
       macos_26:
         - CCE-95204-4
       macos_15:
@@ -25,6 +27,8 @@ references:
     srg:
       - SRG-OS-000080-GPOS-00048
     disa_stig:
+      macos_27:
+        - APPL-27-002008
       macos_26:
         - APPL-26-002008
       macos_15:
@@ -48,11 +52,19 @@ references:
         - 4.2 (level 1)
       macos_14:
         - 4.2 (level 1)
+      macos_27:
+        - 4.2 (level 1)
     controls_v8:
       - 4.1
       - 4.8
 platforms:
   macOS:
+    '27.0':
+      benchmarks:
+        - name: cis_lvl1
+        - name: cis_lvl2
+        - name: disa_stig
+          severity: medium
     '26.0':
       benchmarks:
         - name: cis_lvl1
@@ -67,19 +79,6 @@ platforms:
         - name: disa_stig
           severity: medium
         - name: nlmapgov_plus
-    '14.0':
-      benchmarks:
-        - name: cis_lvl1
-        - name: cis_lvl2
-        - name: disa_stig
-          severity: medium
-      enforcement_info:
-        check:
-          shell: /bin/launchctl print-disabled system | /usr/bin/grep -c '"org.apache.httpd" => disabled'
-          result:
-            integer: 1
-        fix:
-          shell: /bin/launchctl disable system/org.apache.httpd
     enforcement_info:
       check:
         shell: |-

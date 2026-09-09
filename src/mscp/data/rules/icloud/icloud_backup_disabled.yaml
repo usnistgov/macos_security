@@ -1,16 +1,24 @@
 id: icloud_backup_disabled
 title: Ensure iCloud Backup is set to Disabled
 discussion: |
-  iCloud backup _MUST_ be disabled.
+  iCloud backup _MUST_ be disabled if iCloud is not an authorized service.
+
+  Apple's iCloud service does not provide an organization with enough control over the storage and access of data, and, therefore, automated backup synchronization _MUST_ be controlled by an organization approved service.
+
+  This requirement helps ensure that organizational contact data is managed in accordance with established security, privacy, access-control, and data governance requirements.
 references:
   nist:
     cce:
+      ios_27:
+        - CCE-97264-6
       ios_26:
         - CCE-95631-8
       ios_18:
         - CCE-94415-7
       ios_17:
         - CCE-93401-8
+      visionos_27:
+        - CCE-97421-2
       visionos_26:
         - CCE-95554-2
     800-53r5:
@@ -63,6 +71,7 @@ references:
       - 2.3
 platforms:
   iOS:
+    '27.0': {}
     '26.0':
       supervised: false
       benchmarks:
@@ -98,6 +107,7 @@ platforms:
           severity: medium
     introduced: '5.0'
   visionOS:
+    '27.0': {}
     '26.0':
       supervised: false
       benchmarks:

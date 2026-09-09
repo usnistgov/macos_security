@@ -194,7 +194,7 @@ usage=(
     "--rule <rule_id>   :   restore default state for rule_id"
   )
 
-set -- "$@" "${EOL:=$(printf '\1\3\3\7')}"
+# set -- "$@" "${EOL:=$(printf '\1\3\3\7')}"
 
 # Look for managed arguments for compliance script
 if [[ $# -eq 0 ]];then

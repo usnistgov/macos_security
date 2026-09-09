@@ -9,6 +9,8 @@ discussion: |
 references:
   nist:
     cce:
+      macos_27:
+        - CCE-97107-7
       macos_26:
         - CCE-95330-7
       macos_15:
@@ -27,6 +29,8 @@ references:
     srg:
       - SRG-OS-000080-GPOS-00048
     disa_stig:
+      macos_27:
+        - APPL-27-002006
       macos_26:
         - APPL-26-002006
       macos_15:
@@ -45,6 +49,10 @@ references:
       - 4.8
 platforms:
   macOS:
+    '27.0':
+      benchmarks:
+        - name: disa_stig
+          severity: medium
     '26.0':
       benchmarks:
         - name: disa_stig
@@ -56,15 +64,6 @@ platforms:
             /bin/launchctl disable system/com.apple.uucp
           additional_info: The system may need to be restarted for the update to take effect.
     '15.0':
-      benchmarks:
-        - name: disa_stig
-          severity: medium
-      enforcement_info:
-        check:
-          shell: /bin/launchctl print-disabled system | /usr/bin/grep -c '"com.apple.uucp" => disabled'
-          result:
-            integer: 1
-    '14.0':
       benchmarks:
         - name: disa_stig
           severity: medium

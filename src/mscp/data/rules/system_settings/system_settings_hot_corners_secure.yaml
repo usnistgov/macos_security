@@ -3,19 +3,19 @@ title: Secure Hot Corners
 discussion: |
   Hot corners _MUST_ be secured.
 
-  The information system conceals, via the session lock, information previously visible on the display with a publicly viewable image. Although hot comers can be used to initiate a session lock or to launch useful applications, they can also be configured to disable an automatic session lock from initiating. Such a configuration introduces the risk that a user might forget to manually lock the screen before stepping away from the computer.
+  The information system conceals, via the session lock, information previously visible on the display with a publicly viewable image. Although hot corners can be used to initiate a session lock or to launch useful applications, they can also be configured to disable an automatic session lock from initiating. Such a configuration introduces the risk that a user might forget to manually lock the screen before stepping away from the computer.
 
   [NOTE]
   ====
   The check and fix are for the last logged in user. To get the last logged in user, run the following.
   [source,bash]
-  ----
-  CURRENT_USER=$( /usr/bin/defaults read /Library/Preferences/com.apple.loginwindow lastUserName )
-  ----
-  ====
+  -  CURRENT_USER=$( /usr/bin/defaults read /Library/Preferences/com.apple.loginwindow lastUserName )
+  -  ====
 references:
   nist:
     cce:
+      macos_27:
+        - CCE-97150-7
       macos_26:
         - CCE-95376-0
       macos_15:
@@ -37,18 +37,21 @@ references:
         - 2.7.1 (level 2)
       macos_14:
         - 2.7.1 (level 2)
+      macos_27:
+        - 2.7.1 (level 1)
     controls_v8:
       - 4.3
 platforms:
   macOS:
+    '27.0':
+      benchmarks:
+        - name: cis_lvl1
+        - name: cis_lvl2
     '26.0':
       benchmarks:
         - name: cis_lvl1
         - name: cis_lvl2
     '15.0':
-      benchmarks:
-        - name: cis_lvl2
-    '14.0':
       benchmarks:
         - name: cis_lvl2
     enforcement_info:

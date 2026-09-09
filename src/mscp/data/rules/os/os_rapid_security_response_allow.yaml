@@ -24,16 +24,12 @@ references:
 platforms:
   macOS:
     '15.0': {}
-    '14.0': {}
     enforcement_info:
       check:
         shell: |-
-          /usr/bin/osascript -l JavaScript << EOS
-          $.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess')\
-          .objectForKey('allowRapidSecurityResponseInstallation').js
-          EOS
+          /usr/bin/osascript -l JavaScript -e 'var s = $.NSUserDefaults.alloc.initWithSuiteName("com.apple.applicationaccess"); (ObjC.unwrap(s.objectForKey("allowRapidSecurityResponseInstallation")) == true && s.objectIsForcedForKey("allowRapidSecurityResponseInstallation")) ? "PASS" : "FAIL"'
         result:
-          string: 'true'
+          string: 'PASS'
     introduced: '13.0'
 tags:
   - 800-53r5_low

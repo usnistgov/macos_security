@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="{{ baseline.platform.os }}">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="mscp (Python HTML backend)">
+<title>{{ html_title | e }}{% if html_subtitle %}: {{ html_subtitle | e }}{% endif %}</title>
+<style>
+{{ css_content }}
+/* Ruby-free backend: cover page + TOC tweaks (mirrors asciidoctor-pdf cover) */
+#header .cover { min-height: 88vh; display: flex; flex-direction: column;
+  align-items: center; justify-content: center; text-align: center; }
+#header .cover .title-logo { max-width: 1000px; margin-bottom: 2em; }
+#header .cover h1 { border: none; font-size: 1.7em; }
+#header .cover .details { color: #7a7a7a; font-size: 1.1em; margin-top: 0.5em; }
+#toc.toc { border: 1px solid #dddddd; border-radius: 4px; padding: 1em 1.25em;
+  margin: 1.5em 0 2em; background: #f8f8f8; }
+
+/* --- Code-block copy button --- */
+.listingblock .content { position: relative; }
+.listingblock .content > pre { position: relative; }
+.copy-btn {
+  position: absolute; top: 8px; right: 8px;
+  padding: 3px 10px; font-size: 12px; line-height: 1.4;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  color: #444; background: rgba(255, 255, 255, .85);
+  border: 1px solid #c8c8c8; border-radius: 5px; cursor: pointer;
+  opacity: 0; transition: opacity .15s ease;
+}
+.listingblock:hover .copy-btn, .copy-btn:focus { opacity: 1; }
+.copy-btn:hover { background: #fff; }
+.copy-btn.copied { color: #0a7d27; border-color: #0a7d27; }
+
+/* --- Theme toggle --- */
+.theme-toggle {
+  position: fixed; top: 12px; right: 12px; z-index: 1000;
+  display: inline-flex; gap: 2px; padding: 3px;
+  background: rgba(255, 255, 255, .9); border: 1px solid #c8c8c8;
+  border-radius: 8px; box-shadow: 0 1px 4px rgba(0, 0, 0, .12);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+.theme-toggle button {
+  border: none; background: transparent; cursor: pointer;
+  padding: 4px 8px; font-size: 14px; line-height: 1; border-radius: 5px;
+  color: #555;
+}
+.theme-toggle button:hover { background: rgba(0, 0, 0, .06); }
+.theme-toggle button[aria-pressed="true"] { background: #d8d8d8; color: #000; }
+@media print { .theme-toggle, .copy-btn { display: none !important; } }
+</style>
+{% if dark_css_content %}
+<style id="mscp-dark-theme" media="(prefers-color-scheme: dark)">
+{{ dark_css_content }}
+/* Dark overrides for the Ruby-free cover/TOC + UI chrome */
+#header .cover .details { color: #9a9a9a; }
+#toc.toc { border-color: #3a3a3a; background: #252526; }
+.copy-btn { color: #ddd; background: rgba(45, 45, 48, .85); border-color: #444; }
+.copy-btn:hover { background: #2d2d30; }
+.copy-btn.copied { color: #6ccf7f; border-color: #6ccf7f; }
+.theme-toggle { background: rgba(37, 37, 38, .92); border-color: #444; }
+.theme-toggle button { color: #bbb; }
+.theme-toggle button:hover { background: rgba(255, 255, 255, .08); }
+.theme-toggle button[aria-pressed="true"] { background: #4a4a4a; color: #fff; }
+</style>
+<script>
+/* Apply the saved theme before first paint to avoid a flash of the wrong theme. */
+(function () {
+  var KEY = "mscp-theme";
+  var saved;
+  try { saved = localStorage.getItem(KEY); } catch (e) { saved = null; }
+  window.__mscpApplyTheme = function (mode) {
+    var dark = document.getElementById("mscp-dark-theme");
+    if (dark) {
+      dark.media = mode === "dark" ? "all"
+        : mode === "light" ? "not all"
+        : "(prefers-color-scheme: dark)";
+    }
+    document.documentElement.setAttribute("data-theme", mode);
+  };
+  window.__mscpApplyTheme(saved || "{{ default_theme }}");
+})();
+</script>
+{% endif %}
+</head>
+<body class="book">
+{% if dark_css_content %}
+<div class="theme-toggle" role="group" aria-label="{% trans %}Color theme{% endtrans %}">
+<button type="button" data-theme-mode="light" title="{% trans %}Light{% endtrans %}" aria-label="{% trans %}Light{% endtrans %}">☀️</button>
+<button type="button" data-theme-mode="dark" title="{% trans %}Dark{% endtrans %}" aria-label="{% trans %}Dark{% endtrans %}">🌙</button>
+<button type="button" data-theme-mode="system" title="{% trans %}System{% endtrans %}" aria-label="{% trans %}System{% endtrans %}">🖥️</button>
+</div>
+{% endif %}
+<div id="header">
+<div class="cover">
+<img class="title-logo" src="data:image/png;base64,{{ pdflogo }}" alt="macOS Security Compliance Project">
+<h1>{{ html_title | e }}{% if html_subtitle %}: {{ html_subtitle | e }}{% endif %}</h1>
+<div class="details">
+<span id="revnumber">{{ version | e }}{% if release_date %} ({{ release_date | e }}){% endif %}</span>
+</div>
+</div>
+</div>
+<div id="content">
+<div id="toc" class="toc">
+<div id="toctitle">{% trans %}Table of Contents{% endtrans %}</div>
+<ul class="sectlevel1">
+<li><a href="#_foreword">1. {% trans %}Foreword{% endtrans %}</a></li>
+<li><a href="#_scope">2. {% trans %}Scope{% endtrans %}</a></li>
+<li><a href="#_maintainers">3. {% trans %}Maintainers and Contributors{% endtrans %}</a></li>
+<li><a href="#_acronyms">4. {% trans %}Acronyms and Definitions{% endtrans %}</a></li>
+<li><a href="#_applicable_documents">5. {% trans %}Applicable Documents{% endtrans %}</a></li>
+{% set ns = namespace(n=6) %}
+{% for profile in baseline.profile %}
+<li><a href="#sect_{{ loop.index }}">{{ ns.n }}. {{ profile.section | e }}</a>
+<ul class="sectlevel2">
+{% for rule in profile.rules %}<li><a href="#{{ rule.rule_id | e }}">{{ ns.n }}.{{ loop.index }}. {{ rule.title | e }}</a></li>
+{% endfor %}</ul>
+</li>
+{% set ns.n = ns.n + 1 %}
+{% endfor %}
+</ul>
+</div>
+
+<div class="sect1"><h2 id="_foreword">1. {% trans %}Foreword{% endtrans %}</h2><div class="sectionbody">
+<div class="paragraph"><p>{% trans %}The macOS Security Compliance Project is an open source effort to provide a programmatic approach to generating security guidance. The configuration settings in this document were derived from National Institute of Standards and Technology (NIST) Special Publication (SP) 800-53, Security and Privacy Controls for Information Systems and Organizations, Revision 5.{% endtrans %}</p></div>
+<div class="paragraph"><p>{% trans %}This project can be used as a resource to easily create customized security baselines of technical security controls by leveraging a library of atomic actions which are mapped to the compliance requirements defined in NIST SP 800-53 (Rev. 5).{% endtrans %}</p></div>
+<div class="paragraph"><p>{% trans %}Any and all risk based decisions to tailor the content produced by this project in order to meet the needs of a specific organization shall be approved by the responsible Information System Owner (ISO) and Authorizing Official (AO) and formally documented in their System Security Plan (SSP).{% endtrans %}</p></div>
+</div></div>
+
+<div class="sect1"><h2 id="_scope">2. {% trans %}Scope{% endtrans %}</h2><div class="sectionbody">
+{% if not baseline.tailored %}
+{% if baseline.parent_values == "recommended" %}
+<div class="paragraph"><p>{% trans %}This guide outlines the configuration settings that can be used on a{% endtrans %} {{ baseline.platform.os | e }} {{ baseline.platform.version | e }} {% trans %}system to meet security objectives recommended by{% endtrans %} {{ baseline.benchmark_description | e }}.</p></div>
+{% else %}
+<div class="paragraph"><p>{% trans %}This guide describes the actions to take when securing a{% endtrans %} {{ baseline.platform.os | e }} {{ baseline.platform.version | e }} {% trans %}system against the configuration requirements outlined in the{% endtrans %} {{ baseline.benchmark_description | e }}.</p></div>
+{% endif %}
+{% else %}
+{{ baseline.description | asciidoc_to_html }}
+{% endif %}
+</div></div>
+
+<div class="sect1"><h2 id="_maintainers">3. {% trans %}Maintainers and Contributors{% endtrans %}</h2><div class="sectionbody">
+<div class="paragraph"><p><strong>macOS Security Compliance Project</strong></p></div>
+<table class="tableblock frame-all grid-all stretch"><thead><tr><th class="tableblock halign-left valign-top">Name</th><th class="tableblock halign-left valign-top">Organization</th></tr></thead><tbody>
+{% for author in baseline.authors %}{% if not author.additional %}<tr><td class="tableblock halign-left valign-top">{{ author.name | e }}</td><td class="tableblock halign-left valign-top">{{ author.organization | e }}</td></tr>
+{% endif %}{% endfor %}</tbody></table>
+</div></div>
+
+<div class="sect1"><h2 id="_acronyms">4. {% trans %}Acronyms and Definitions{% endtrans %}</h2><div class="sectionbody">
+<div class="paragraph"><p><strong>{% trans %}Table 1. Acronyms and Abbreviations{% endtrans %}</strong></p></div>
+<table class="tableblock frame-all grid-all stretch"><tbody>
+{% for acronym in acronyms %}<tr><td class="tableblock halign-left valign-top">{{ acronym.term | e }}</td><td class="tableblock halign-left valign-top">{{ acronym.definition | e }}</td></tr>
+{% endfor %}</tbody></table>
+<div class="paragraph"><p><strong>{% trans %}Table 2. Definitions{% endtrans %}</strong></p></div>
+<table class="tableblock frame-all grid-all stretch"><tbody>
+{% for term in terminology %}<tr><td class="tableblock halign-left valign-top">{{ term.term | e }}</td><td class="tableblock halign-left valign-top">{{ term.definition | e }}</td></tr>
+{% endfor %}</tbody></table>
+</div></div>
+
+<div class="sect1"><h2 id="_applicable_documents">5. {% trans %}Applicable Documents{% endtrans %}</h2><div class="sectionbody">
+<div class="sect2"><h3 id="_government_documents">5.1. {% trans %}Government Documents{% endtrans %}</h3>
+<div class="paragraph"><p><strong>{% trans %}Table 3. National Institute of Standards and Technology (NIST){% endtrans %}</strong></p></div>
+<table class="tableblock frame-all grid-all stretch"><thead><tr><th class="tableblock halign-left valign-top">{% trans %}Document Number or Descriptor{% endtrans %}</th><th class="tableblock halign-left valign-top">{% trans %}Document Title{% endtrans %}</th></tr></thead><tbody>
+<tr><td class="tableblock halign-left valign-top"><a href="https://nvd.nist.gov/800-53">NIST Special Publication 800-53 Rev 5</a></td><td class="tableblock halign-left valign-top"><em>Security and Privacy Controls for Information Systems and Organizations</em></td></tr>
+<tr><td class="tableblock halign-left valign-top"><a href="https://csrc.nist.gov/pubs/sp/800/219/r1/final">NIST Special Publication 800-219 Rev 1</a></td><td class="tableblock halign-left valign-top"><em>Automated Secure Configuration Guidance from the macOS Security Compliance Project</em></td></tr>
+</tbody></table>
+</div></div></div>
+
+{% set ns2 = namespace(n=6) %}
+{% for profile in baseline.profile %}
+<div class="sect1" id="sect_{{ loop.index }}"><h2>{{ ns2.n }}. {{ profile.section | e }}</h2><div class="sectionbody">
+{{ profile.description | asciidoc_to_html }}
+{% for rule in profile.rules %}
+{% include "html/rule.html.jinja" %}
+{% endfor %}
+</div></div>
+{% set ns2.n = ns2.n + 1 %}
+{% endfor %}
+
+</div>
+<script>
+(function () {
+  /* --- Copy buttons on every code block --- */
+  var COPY = "{% trans %}Copy{% endtrans %}";
+  var COPIED = "{% trans %}Copied!{% endtrans %}";
+  var blocks = document.querySelectorAll(".listingblock pre");
+  Array.prototype.forEach.call(blocks, function (pre) {
+    var btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "copy-btn";
+    btn.textContent = COPY;
+    btn.setAttribute("aria-label", COPY);
+    btn.addEventListener("click", function () {
+      var code = pre.querySelector("code") || pre;
+      var text = code.innerText;
+      var done = function () {
+        btn.textContent = COPIED;
+        btn.classList.add("copied");
+        setTimeout(function () {
+          btn.textContent = COPY;
+          btn.classList.remove("copied");
+        }, 1500);
+      };
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(done, function () {});
+      } else {
+        var sel = document.createRange();
+        sel.selectNodeContents(code);
+        var s = window.getSelection();
+        s.removeAllRanges();
+        s.addRange(sel);
+        try { document.execCommand("copy"); done(); } catch (e) {}
+        s.removeAllRanges();
+      }
+    });
+    pre.appendChild(btn);
+  });
+
+  /* --- Theme toggle wiring --- */
+  var KEY = "mscp-theme";
+  var toggle = document.querySelector(".theme-toggle");
+  if (toggle && window.__mscpApplyTheme) {
+    var buttons = toggle.querySelectorAll("button[data-theme-mode]");
+    var current;
+    try { current = localStorage.getItem(KEY); } catch (e) { current = null; }
+    current = current || "{{ default_theme }}";
+    var sync = function (mode) {
+      Array.prototype.forEach.call(buttons, function (b) {
+        b.setAttribute("aria-pressed", b.getAttribute("data-theme-mode") === mode ? "true" : "false");
+      });
+    };
+    sync(current);
+    Array.prototype.forEach.call(buttons, function (b) {
+      b.addEventListener("click", function () {
+        var mode = b.getAttribute("data-theme-mode");
+        window.__mscpApplyTheme(mode);
+        try { localStorage.setItem(KEY, mode); } catch (e) {}
+        sync(mode);
+      });
+    });
+  }
+})();
+</script>
+</body>
+</html>

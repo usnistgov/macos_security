@@ -5,6 +5,8 @@ discussion: |
 references:
   nist:
     cce:
+      macos_27:
+        - CCE-97137-4
       macos_26:
         - CCE-95363-8
       macos_15:
@@ -19,12 +21,6 @@ references:
     cmmc:
       - SI.L1-3.14.1
       - SI.L1-3.14.4
-  hhs:
-    hicp:
-      - 2.L.A
-      - 2.L.B
-      - 5.L.A
-      - 7.L.B
   cis:
     benchmark:
       macos_26:
@@ -33,6 +29,8 @@ references:
         - 1.6 (level 1)
       macos_14:
         - 1.6 (level 1)
+      macos_27:
+        - 1.5 (level 1)
     controls_v8:
       - 7.3
       - 7.4
@@ -40,31 +38,62 @@ references:
   bzk:
     bio:
       - 8.08.01
+  hhs:
+    hicp:
+      - 2.L.A
+      - 2.L.B
+      - 3.L.C
+      - 5.L.A
+      - 7.L.B
 platforms:
   macOS:
-    '26.0':
+    '27.0':
       benchmarks:
         - name: cis_lvl1
         - name: cis_lvl2
-    '15.0':
+    '26.0':
+      enforcement_info:
+        check:
+          shell: "configprofile=$(/usr/bin/osascript -l JavaScript << EOS $.NSUserDefaults.alloc.initWithSuiteName('com.apple.SoftwareUpdate')\\ .objectForKey('CriticalUpdateInstall').js EOS )\nddm=$(/usr/bin/plutil -convert json /var/db/softwareupdate/SoftwareUpdateDDMStatePersistence.plist -o - | /usr/bin/jq --raw-output .'SUCorePersistedStatePolicyFields.SUCoreDDMDeclarationGlobalSettings.automaticallyInstallSystemAndSecurityUpdates')\nif [[ \"$configprofile\" == \"true\" ]] || [[ \"$ddm\" == \"1\" ]]; then echo \"true\" else echo \"false\" fi"
+          result:
+            string: 'true'
+        fix:
+          additional_info: This is implemented by Declarative Device Management (DDM) or by a configuration profile.
       benchmarks:
         - name: cis_lvl1
         - name: cis_lvl2
         - name: nlmapgov_plus
         - name: nlmapgov_base
-    '14.0':
+      mobileconfig_info:
+        - PayloadType: com.apple.SoftwareUpdate
+          PayloadContent:
+            - CriticalUpdateInstall: true
+    '15.0':
+      enforcement_info:
+        check:
+          shell: |-
+            /usr/bin/osascript -l JavaScript << EOS
+            $.NSUserDefaults.alloc.initWithSuiteName('com.apple.SoftwareUpdate')\
+            .objectForKey('CriticalUpdateInstall').js
+            EOS
+          result:
+            string: 'true'
+      mobileconfig_info:
+        - PayloadType: com.apple.SoftwareUpdate
+          PayloadContent:
+            - CriticalUpdateInstall: true
       benchmarks:
         - name: cis_lvl1
         - name: cis_lvl2
+        - name: nlmapgov_plus
+        - name: nlmapgov_base
     enforcement_info:
       check:
-        shell: |-
-          /usr/bin/osascript -l JavaScript << EOS
-          $.NSUserDefaults.alloc.initWithSuiteName('com.apple.SoftwareUpdate')\
-          .objectForKey('CriticalUpdateInstall').js
-          EOS
+        shell: /usr/bin/plutil -convert json /var/db/softwareupdate/SoftwareUpdateDDMStatePersistence.plist -o - | /usr/bin/jq --raw-output .'SUCorePersistedStatePolicyFields.SUCoreDDMDeclarationGlobalSettings.automaticallyInstallSystemAndSecurityUpdates'
         result:
-          string: 'true'
+          integer: 1
+      fix:
+        additional_info: This is implemented by Declarative Device Management (DDM)
     introduced: '10.15'
 tags:
   - 800-53r5_low
@@ -77,12 +106,8 @@ tags:
   - cmmc_lvl1
   - cnssi-1253_moderate
   - hicp_lp
-mobileconfig_info:
-  - PayloadType: com.apple.SoftwareUpdate
-    PayloadContent:
-      - CriticalUpdateInstall: true
 ddm_info:
   declarationtype: com.apple.configuration.softwareupdate.settings
   ddm_key: AutomaticActions
   ddm_value:
-    InstallSecurityUpdates: AlwaysOn
+    InstallSecurityUpdate: AlwaysOn

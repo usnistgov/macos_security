@@ -17,6 +17,10 @@ from .logger_instance import logger
 
 ENCODING: str = "utf-8"
 
+# Prefer the libyaml-backed C loader when available (roughly 10x faster than
+# the pure-Python parser); fall back gracefully if PyYAML was built without it.
+_YAML_LOADER = getattr(yaml, "CSafeLoader", yaml.SafeLoader)
+
 
 class MyDumper(yaml.Dumper):
     def increase_indent(self, flow=False, indentless=False):
@@ -122,7 +126,7 @@ def open_yaml(
 
         fields_to_translate = ["name", "description", "title", "discussion"]
 
-        data = yaml.safe_load(file_path.read_text(encoding=ENCODING))
+        data = yaml.load(file_path.read_text(encoding=ENCODING), Loader=_YAML_LOADER)
 
         for field in data:
             if field in fields_to_translate:

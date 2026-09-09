@@ -1,0 +1,93 @@
+{% include "typst/header.typ.jinja" %}
+
+= {% trans %}Foreword{% endtrans %}
+
+{% trans %}The macOS Security Compliance Project is an open source effort to provide a programmatic approach to generating security guidance. The configuration settings in this document were derived from National Institute of Standards and Technology (NIST) Special Publication (SP) 800-53, _Security and Privacy Controls for Information Systems and Organizations_, Revision 5.{% endtrans %}
+
+{% trans %}This project can be used as a resource to easily create customized security baselines of technical security controls by leveraging a library of atomic actions which are mapped to the compliance requirements defined in NIST SP 800-53 (Rev. 5). It can also be used to develop customized guidance to meet the particular cybersecurity needs of any organization.{% endtrans %}
+
+{% trans %}The objective of this effort was to simplify and radically accelerate the process of producing up-to-date macOS security guidance that is also accessible to any organization and tailorable to meet each organization's specific security needs.{% endtrans %}
+
+{% trans %}Any and all risk based decisions to tailor the content produced by this project in order to meet the needs of a specific organization shall be approved by the responsible Information System Owner (ISO) and Authorizing Official (AO) and formally documented in their System Security Plan (SSP). While the project attempts to provide settings to meet compliance requirements, it is recommended that each rule be reviewed by your organization's Information System Security Officer (ISSO) prior to implementation.{% endtrans %}
+
+= {% trans %}Scope{% endtrans %}
+
+{% if not baseline.tailored %}
+{% if baseline.parent_values == "recommended" %}
+{% trans %}This guide outlines the configuration settings that can be used on a{% endtrans %} {{ baseline.platform.os | typst_escape }} {{ baseline.platform.version | typst_escape }} {% trans %}system to meet security objectives recommended by {% endtrans %} {{ baseline.benchmark_description | typst_escape }}.
+
+{% trans %}Information System Security Officers and benchmark creators can use this catalog of settings in order to assist them in security benchmark creation. This list is a catalog, not a checklist or benchmark, and satisfaction of every item is not likely to be possible or sensible in many operational scenarios.{% endtrans %}
+{% else %}
+{% trans %}This guide describes the actions to take when securing a{% endtrans %} {{ baseline.platform.os | typst_escape }} {{ baseline.platform.version | typst_escape }} {% trans %}system against the configuration requirements outlined in the {% endtrans %} {{ baseline.benchmark_description | typst_escape }}.
+{% endif %}
+{% else %}
+{{ baseline.description | asciidoc_to_typst }}
+{% endif %}
+
+= {% trans %}Maintainers and Contributors{% endtrans %}
+
+*macOS Security Compliance Project*
+
+{% if "cis" in baseline.title.lower() %}
+CIS Critical Security Controls® (CIS Controls®) are referenced with the permission and support of the Center for Internet Security® (CIS®)
+{% endif %}
+
+#table(
+  columns: (1fr, 3fr),
+  stroke: 0.75pt + border-col,
+  inset: 6pt,
+  align: (left + top, left + top),
+  table.header([*Name*], [*Organization*]),
+  {% for author in baseline.authors %}{% if not author.additional %}[{{ author.name | typst_escape }}], [{{ author.organization | typst_escape }}],
+  {% endif %}{% endfor %}
+)
+
+{% if baseline.additional_authors %}
+In addition to the maintainers and contributors to the macOS Security Compliance Project, this document was customized and tailored for the organization by the individuals listed below.
+
+#table(
+  columns: (1fr, 3fr),
+  stroke: 0.75pt + border-col,
+  inset: 6pt,
+  align: (left + top, left + top),
+  table.header([*Name*], [*Organization*]),
+  {% for author in baseline.authors %}{% if author.additional %}[{{ author.name | typst_escape }}], [{{ author.organization | typst_escape }}],
+  {% endif %}{% endfor %}
+)
+{% endif %}
+
+= {% trans %}Acronyms and Definitions{% endtrans %}
+
+*{% trans %}Table 1. Acronyms and Abbreviations{% endtrans %}*
+
+#table(
+  columns: (1fr, 3fr),
+  stroke: 0.5pt + border-col,
+  inset: 5pt,
+  align: (left + top, left + top),
+  {% for acronym in acronyms %}[{{ acronym.term | typst_escape }}], [{{ acronym.definition | typst_escape }}],
+  {% endfor %}
+)
+
+*{% trans %}Table 2. Definitions{% endtrans %}*
+
+#table(
+  columns: (1fr, 3fr),
+  stroke: 0.5pt + border-col,
+  inset: 5pt,
+  align: (left + top, left + top),
+  {% for term in terminology %}[{{ term.term | typst_escape }}], [{{ term.definition | typst_escape }}],
+  {% endfor %}
+)
+
+{% include "typst/applicable_docs.typ.jinja" %}
+
+{% for profile in baseline.profile %}
+= {{ profile.section | typst_escape }}
+
+{{ profile.description | asciidoc_to_typst }}
+
+{% for rule in profile.rules %}
+{% include "typst/rule.typ.jinja" %}
+{% endfor %}
+{% endfor %}

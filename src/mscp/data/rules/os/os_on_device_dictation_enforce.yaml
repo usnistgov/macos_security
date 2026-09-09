@@ -7,12 +7,16 @@ discussion: |
 references:
   nist:
     cce:
+      macos_27:
+        - CCE-97052-5
       macos_26:
         - CCE-95247-3
       macos_15:
         - CCE-94245-8
       macos_14:
         - CCE-92841-6
+      ios_27:
+        - CCE-97354-5
       ios_26:
         - CCE-95672-2
       ios_18:
@@ -21,6 +25,8 @@ references:
         - CCE-93436-4
       visionos_26:
         - CCE-95585-6
+      visionos_27:
+        - CCE-97456-8
     800-53r5:
       - AC-20
       - CM-7
@@ -35,6 +41,8 @@ references:
     srg:
       - SRG-OS-000095-GPOS-00049
     disa_stig:
+      macos_27:
+        - APPL-27-002220
       macos_26:
         - APPL-26-002220
       macos_15:
@@ -69,6 +77,8 @@ references:
         - 2.18.1 (level 1)
       macos_14:
         - 2.18.1 (level 1)
+      macos_27:
+        - 2.18.1 (level 1)
     controls_v8:
       - 4.1
       - 4.8
@@ -82,6 +92,12 @@ references:
         - ANNEX K
 platforms:
   macOS:
+    '27.0':
+      benchmarks:
+        - name: cis_lvl1
+        - name: cis_lvl2
+        - name: disa_stig
+          severity: medium
     '26.0':
       benchmarks:
         - name: cis_lvl1
@@ -96,23 +112,15 @@ platforms:
         - name: disa_stig
           severity: medium
         - name: nlmapgov_plus
-    '14.0':
-      benchmarks:
-        - name: cis_lvl1
-        - name: cis_lvl2
-        - name: disa_stig
-          severity: medium
     enforcement_info:
       check:
         shell: |-
-          /usr/bin/osascript -l JavaScript << EOS
-          $.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess')\
-          .objectForKey('forceOnDeviceOnlyDictation').js
-          EOS
+          /usr/bin/osascript -l JavaScript -e 'var s = $.NSUserDefaults.alloc.initWithSuiteName("com.apple.applicationaccess"); (ObjC.unwrap(s.objectForKey("forceOnDeviceOnlyDictation")) == true && s.objectIsForcedForKey("forceOnDeviceOnlyDictation")) ? "PASS" : "FAIL"'
         result:
-          string: 'true'
+          string: 'PASS'
     introduced: '14.0'
   iOS:
+    '27.0': {}
     '26.0':
       supervised: false
       benchmarks:
@@ -143,6 +151,8 @@ platforms:
           severity: medium
     introduced: '14.5'
   visionOS:
+    '27.0':
+      supervised: false
     '26.0':
       supervised: false
       benchmarks:

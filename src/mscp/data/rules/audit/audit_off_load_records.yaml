@@ -11,6 +11,8 @@ discussion: |-
 references:
   nist:
     cce:
+      macos_27:
+        - CCE-97236-4
       macos_26:
         - CCE-95127-7
       macos_15:
@@ -32,6 +34,7 @@ references:
       - 8.9
 platforms:
   macOS:
+    '27.0': {}
     '26.0':
       benchmarks:
         - name: nlmapgov_plus
@@ -40,7 +43,6 @@ platforms:
       benchmarks:
         - name: nlmapgov_plus
         - name: nlmapgov_base
-    '14.0': {}
 tags:
   - permanent
   - cisv8

@@ -5,6 +5,8 @@ discussion: |
 references:
   nist:
     cce:
+      ios_27:
+        - CCE-97309-9
       ios_26:
         - CCE-95612-8
       ios_18:
@@ -21,6 +23,7 @@ references:
       - 'FMT_MOF_EXT.1.2 #47'
 platforms:
   iOS:
+    '27.0': {}
     '26.0':
       supervised: false
       benchmarks:

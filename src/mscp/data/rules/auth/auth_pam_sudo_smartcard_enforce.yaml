@@ -11,6 +11,8 @@ discussion: |
 references:
   nist:
     cce:
+      macos_27:
+        - CCE-96979-0
       macos_26:
         - CCE-95134-3
       macos_15:
@@ -40,6 +42,8 @@ references:
       - SRG-OS-000105-GPOS-00052
       - SRG-OS-000705-GPOS-00150
     disa_stig:
+      macos_27:
+        - APPL-27-003052
       macos_26:
         - APPL-26-003052
       macos_15:
@@ -59,6 +63,10 @@ references:
       - 6.5
 platforms:
   macOS:
+    '27.0':
+      benchmarks:
+        - name: disa_stig
+          severity: medium
     '26.0':
       benchmarks:
         - name: disa_stig
@@ -67,13 +75,14 @@ platforms:
       benchmarks:
         - name: disa_stig
           severity: medium
-    '14.0':
-      benchmarks:
-        - name: disa_stig
-          severity: medium
     enforcement_info:
       check:
-        shell: /usr/bin/grep -Ec '^(auth\s+sufficient\s+pam_smartcard.so|auth\s+required\s+pam_deny.so)' /etc/pam.d/sudo
+        shell: |-
+          if [[ -d /var/db/ManagedConfigurationFiles/com.apple.pam ]]; then
+            /usr/bin/grep -Ec '^(auth\s+sufficient\s+pam_smartcard.so|auth\s+required\s+pam_deny.so)' /var/db/ManagedConfigurationFiles/com.apple.pam/etc/pam.d/sudo
+          else
+            /usr/bin/grep -Ec '^(auth\s+sufficient\s+pam_smartcard.so|auth\s+required\s+pam_deny.so)' /etc/pam.d/sudo
+          fi
         result:
           integer: 2
       fix:

@@ -9,6 +9,8 @@ discussion: |
 references:
   nist:
     cce:
+      macos_27:
+        - CCE-97053-3
       macos_26:
         - CCE-95248-1
       macos_15:
@@ -24,18 +26,15 @@ references:
       - 4.8
 platforms:
   macOS:
+    '27.0': {}
     '26.0': {}
     '15.0': {}
-    '14.0': {}
     enforcement_info:
       check:
         shell: |-
-          /usr/bin/osascript -l JavaScript << EOS
-          $.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess.new')\
-          .objectForKey('familyControlsEnabled').js
-          EOS
+          /usr/bin/osascript -l JavaScript -e 'var s = $.NSUserDefaults.alloc.initWithSuiteName("com.apple.applicationaccess.new"); (ObjC.unwrap(s.objectForKey("familyControlsEnabled")) == true && s.objectIsForcedForKey("familyControlsEnabled")) ? "PASS" : "FAIL"'
         result:
-          string: 'true'
+          string: 'PASS'
     introduced: '10.7'
 tags:
   - cnssi-1253_low

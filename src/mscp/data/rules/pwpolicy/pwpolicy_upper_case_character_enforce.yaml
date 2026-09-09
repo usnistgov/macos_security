@@ -1,9 +1,18 @@
 id: pwpolicy_upper_case_character_enforce
 title: Require Passwords Contain a Minimum of One Uppercase Character
-discussion: "The macOS should be configured to forbid users to use dictionary words for passwords.\n\nIf the operating system allows users to select passwords based on dictionary words, this increases the window of opportunity for a malicious user to guess the password.\n\nTo prevent users from using dictionary words for passwords, many operating systems can be integrated with an enterprise-level directory service that meets or exceeds this requirement.\n\nNOTE: To comply with Executive Order 14028, \u201CImproving the Nation's Cybersecurity\u201D, OMB M-22-09, \u201CMoving the U.S. Government Toward Zero Trust Cybersecurity Principles\u201D, and NIST SP-800-63b, \u201CDigital Identity Guidelines: Authentication and Lifecycle Management\u201D federal, military, and intelligence communities must adopt the following configuration settings. Password policies must not require the use of complexity policies such as upper characters, lower characters, or special characters. Password policies must also not require the use of regular rotation. Password policies should define a minimum length. Multifactor authentication should be used where ever possible.\n"
+discussion: |
+  The macOS should be configured to forbid users to use dictionary words for passwords.
+
+  If the operating system allows users to select passwords based on dictionary words, this increases the window of opportunity for a malicious user to guess the password.
+
+  To prevent users from using dictionary words for passwords, many operating systems can be integrated with an enterprise-level directory service that meets or exceeds this requirement.
+
+  NOTE: To comply with Executive Order 14028, “Improving the Nation's Cybersecurity”, OMB M-22-09, “Moving the U.S. Government Toward Zero Trust Cybersecurity Principles”, and NIST SP-800-63b, “Digital Identity Guidelines: Authentication and Lifecycle Management” federal, military, and intelligence communities must adopt the following configuration settings. Password policies must not require the use of complexity policies such as upper characters, lower characters, or special characters. Password policies must also not require the use of regular rotation. Password policies should define a minimum length. Multifactor authentication should be used where ever possible.
 references:
   nist:
     cce:
+      macos_27:
+        - CCE-97125-9
       macos_26:
         - CCE-95353-9
       macos_15:
@@ -28,9 +37,9 @@ references:
       - 5.2
 platforms:
   macOS:
+    '27.0': {}
     '26.0': {}
     '15.0': {}
-    '14.0': {}
     enforcement_info:
       check:
         shell: /usr/bin/pwpolicy -getaccountpolicies 2> /dev/null | /usr/bin/tail +2 | /usr/bin/xmllint --xpath '//dict/key[text()="minimumAlphaCharactersUpperCase"]/following-sibling::integer[1]/text()' - | /usr/bin/awk '{ if ($1 >= $ODV ) {print "pass"} else {print "fail"}}'
@@ -43,8 +52,7 @@ platforms:
           To set local policy to require at least $ODV lowercase letter, edit the current password policy to contain the following <dict> within the "policyCategoryPasswordContent":
 
           [source,xml]
-          ----
-          <dict>
+          -          <dict>
           <key>policyContent</key>
           <string>policyAttributePassword matches &apos;(.*[A-Z].*){$ODV,}+&apos;</string>
           <key>policyIdentifier</key>
@@ -55,14 +63,11 @@ platforms:
           <integer>$ODV</integer>
           </dict>
           </dict>
-          ----
-          After saving the file and exiting to the command prompt, run the following command to load the new policy file, substituting the path to the file in place of "$pwpolicy_file".
+          -          After saving the file and exiting to the command prompt, run the following command to load the new policy file, substituting the path to the file in place of "$pwpolicy_file".
 
           [source,bash]
-          ----
-          /usr/bin/pwpolicy setaccountpolicies $pwpolicy_file
-          ----
-          NOTE: See the password policy supplemental on more information on how to implement password policies on macOS.
+          -          /usr/bin/pwpolicy setaccountpolicies $pwpolicy_file
+          -          NOTE: See the password policy supplemental on more information on how to implement password policies on macOS.
 odv:
   hint:
     datatype: number

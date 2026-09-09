@@ -4,6 +4,8 @@ discussion: 'Exchange ActiveSync Notes service can be disabled for an account. N
 references:
   nist:
     cce:
+      ios_27:
+        - CCE-97318-0
       ios_26:
         - CCE-95614-4
       ios_18:
@@ -26,6 +28,7 @@ references:
         - ANNEX D (Section 5.6.1 - Mail)
 platforms:
   iOS:
+    '27.0': {}
     '26.0':
       supervised: false
       benchmarks:

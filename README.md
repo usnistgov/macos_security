@@ -8,7 +8,7 @@
 
 <p align="center">
   <a href="https://www.apple.com/os/macos/"><img src="https://badgen.net/badge/icon/apple?icon=apple&label" alt="Apple"></a>
-  <a href="https://www.apple.com/os/macos/"><img src="https://badgen.net/badge/icon/26.0?icon=apple&label" alt="macOS 26.0"></a>
+  <a href="https://www.apple.com/os/macos/"><img src="https://badgen.net/badge/icon/27.0?icon=apple&label" alt="macOS 27.0"></a>
   <a href="http://pages.nist.gov/macos_security/"><img src="https://badgen.net/badge/website/pages.nist.gov/blue" alt="Website"></a>
   <a href="LICENSE.md"><img src="https://badgen.net/badge/license/CC%20BY%204.0/green" alt="License"></a>
   <a href="https://github.com/usnistgov/macos_security/stargazers"><img src="https://badgen.net/github/stars/usnistgov/macos_security" alt="Stars"></a>

@@ -102,7 +102,10 @@ def set_logger(debug: bool = False, verbosity: int = 0) -> loguru.Logger:
             },
             {
                 "sink": Path("logs", "mscp.log"),
-                "level": "DEBUG",
+                # DEBUG only when explicitly requested; otherwise INFO to
+                # keep the file sink from serializing thousands of per-rule
+                # debug records on every run.
+                "level": "DEBUG" if (debug or verbosity > 2) else "INFO",
                 "encoding": "utf-8",
                 "enqueue": True,
                 "serialize": True,

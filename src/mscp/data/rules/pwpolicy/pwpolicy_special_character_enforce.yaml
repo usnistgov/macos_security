@@ -11,6 +11,8 @@ discussion: |
 references:
   nist:
     cce:
+      macos_27:
+        - CCE-97123-4
       macos_26:
         - CCE-95350-5
       macos_15:
@@ -28,6 +30,8 @@ references:
     srg:
       - SRG-OS-000266-GPOS-00101
     disa_stig:
+      macos_27:
+        - APPL-27-003011
       macos_26:
         - APPL-26-003011
       macos_15:
@@ -50,10 +54,17 @@ references:
         - 5.2.5 (level 2)
       macos_14:
         - 5.2.5 (level 2)
+      macos_27:
+        - 5.2.5 (level 2)
     controls_v8:
       - 5.2
 platforms:
   macOS:
+    '27.0':
+      benchmarks:
+        - name: cis_lvl2
+        - name: disa_stig
+          severity: medium
     '26.0':
       benchmarks:
         - name: cis_lvl2
@@ -64,15 +75,6 @@ platforms:
         - name: cis_lvl2
         - name: disa_stig
           severity: medium
-    '14.0':
-      benchmarks:
-        - name: cis_lvl2
-        - name: disa_stig
-          severity: medium
-      mobileconfig_info:
-        - PayloadType: com.apple.mobiledevice.passwordpolicy
-          PayloadContent:
-            - minComplexChars: 1
     enforcement_info:
       check:
         shell: /usr/bin/pwpolicy -getaccountpolicies 2>/dev/null | /usr/bin/tail -n +2 | /usr/bin/xmllint --xpath "//string[contains(text(), \"policyAttributePassword matches '(.*[^a-zA-Z0-9].*){\")]" - 2>/dev/null | /usr/bin/awk -F"{|}" '{if ($2 >= $ODV) {print "pass"} else {print "fail"}}'
