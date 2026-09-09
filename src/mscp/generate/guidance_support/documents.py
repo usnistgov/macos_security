@@ -922,6 +922,13 @@ def render_template(
         baseline_dict["tailored"] = False
         baseline_dict["benchmark_description"] = benchmark_description
 
+        os_key = os_name.strip().lower()
+        baseline_dict["pre_release"] = benchmark in (
+            mscp_data.get("pre_release_benchmarks", {})
+            .get(os_key, {})
+            .get(version_info.get("os_version"), [])
+        )
+
     if any(author.is_additional for author in baseline.authors):
         baseline_dict["additional_authors"] = True
 

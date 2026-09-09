@@ -73,8 +73,16 @@
     #align(right)[
       #text(size: 30pt, fill: muted)[{{ html_title | typst_escape }}]
       {% if html_subtitle %}
+      {% if baseline.pre_release %}
+      #linebreak()
+      #text(size: 17pt, style: "italic", weight: "bold", fill: fg)[{{ html_subtitle | typst_escape }}\*]
+      #linebreak()
+      #v(0.3em)
+      #text(size: 10pt, style: "italic", fill:muted)[\*Pre-Release: - this benchmark has not yet been published.]
+      {% else %}
       #linebreak()
       #text(size: 17pt, style: "italic", weight: "bold", fill: fg)[{{ html_subtitle | typst_escape }}]
+      {% endif %}
       {% endif %}
       #linebreak()
       #v(0.3em)

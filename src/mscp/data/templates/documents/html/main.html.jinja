@@ -93,7 +93,13 @@
 <div id="header">
 <div class="cover">
 <img class="title-logo" src="data:image/png;base64,{{ pdflogo }}" alt="macOS Security Compliance Project">
+{% if baseline.pre_release %}
+<h1>{{ html_title | e }}{% if html_subtitle %}: {{ html_subtitle | e }}*{% endif %}</h1>
+<div class="pre-release-note">*Pre-Release - this benchmark has not yet been published.</div>
+{% else %}
 <h1>{{ html_title | e }}{% if html_subtitle %}: {{ html_subtitle | e }}{% endif %}</h1>
+{% endif %}
+
 <div class="details">
 <span id="revnumber">{{ version | e }}{% if release_date %} ({{ release_date | e }}){% endif %}</span>
 </div>
@@ -132,6 +138,10 @@
 <div class="paragraph"><p>{% trans %}This guide outlines the configuration settings that can be used on a{% endtrans %} {{ baseline.platform.os | e }} {{ baseline.platform.version | e }} {% trans %}system to meet security objectives recommended by{% endtrans %} {{ baseline.benchmark_description | e }}.</p></div>
 {% else %}
 <div class="paragraph"><p>{% trans %}This guide describes the actions to take when securing a{% endtrans %} {{ baseline.platform.os | e }} {{ baseline.platform.version | e }} {% trans %}system against the configuration requirements outlined in the{% endtrans %} {{ baseline.benchmark_description | e }}.</p></div>
+{% endif %}
+{% if baseline.pre_release %}
+
+<div class="admonitionblock note"><table><tr><td class="icon"><div class="title">Note</div></td><td class="content">{% trans %}The {% endtrans %} {{ baseline.benchmark_description }} {% trans %}has not yet been formally published for {% endtrans %} {{ baseline.platform.os }} {{ baseline.platform.version }}.{% trans %} Settings, rule mappings, and references in this guide are preliminary and subject to change once the official benchmark is released.{% endtrans %}</td></tr></table></div>
 {% endif %}
 {% else %}
 {{ baseline.description | asciidoc_to_html }}
