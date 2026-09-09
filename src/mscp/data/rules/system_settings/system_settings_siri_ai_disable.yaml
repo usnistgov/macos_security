@@ -1,4 +1,4 @@
-id: system_settings_siri_AI_disable
+id: system_settings_siri_ai_disable
 title: Disable Siri AI
 discussion: |
   Support for Siri and Siri AI is non-essential and _MUST_ be disabled to prevent organizational data from being synchronized to Apple servers.

@@ -1,19 +1,19 @@
-FROM alpine:3.21@sha256:48b0309ca019d89d40f670aa1bc06e426dc0931948452e8491e3d65087abc07d
+FROM alpine:3.24.0@sha256:a2d49ea686c2adfe3c992e47dc3b5e7fa6e6b5055609400dc2acaeb241c829f4
 
 COPY --from=ghcr.io/astral-sh/uv:latest /uv /usr/local/bin/uv
 
 RUN apk update && apk add --no-cache \
   python3 \
-  ruby \
   git \
-  ruby-dev \
   build-base \
   libjpeg-turbo \
   libpng \
   freetype \
   libxml2 \
   libxslt \
-  yaml
+  yaml \
+  perl \
+  openssl
 
 RUN apk add --no-cache --virtual .build-deps \
     musl-dev \
@@ -31,7 +31,9 @@ RUN apk add --no-cache --virtual .build-deps \
     libxslt-dev \
     yaml-dev \
     rust \
-    cargo
+    cargo \
+    openssl-dev \
+    pkgconfig
 
 ARG BUILD_SHA=unknown
 ARG IMAGE_REPO=unknown
@@ -47,10 +49,6 @@ COPY requirements.txt ./
 RUN uv venv /opt/venv && \
     uv pip install --no-cache --python /opt/venv/bin/python -r requirements.txt
 ENV PATH="/opt/venv/bin:$PATH"
-
-# Install Ruby dependencies before copying source
-COPY Gemfile ./
-RUN gem install bundler && bundle install
 
 RUN apk del .build-deps
 
