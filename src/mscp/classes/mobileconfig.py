@@ -64,7 +64,7 @@ def create_value_element(value: Any) -> etree._Element:
             array = etree.Element("array")
             for item in value:
                 array.append(create_value_element(item))
-            return array        
+            return array
         case dict():
             dict_elem = etree.Element("dict")
             for k, v in value.items():

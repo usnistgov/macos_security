@@ -292,8 +292,6 @@ class Macsecurityrule(BaseModelWithAccessors):
             enforcement_info = rule_yaml["platforms"][os_type].get(
                 "enforcement_info", {}
             )
-
-
             if enforcement_info and "n_a" not in tags:
                 check_shell = enforcement_info.get("check", {}).get("shell")
                 check_result = enforcement_info.get("check", {}).get("result")

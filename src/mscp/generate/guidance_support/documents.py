@@ -16,7 +16,6 @@ import gettext
 import re
 import shutil
 import sys
-import time
 from html import escape as html_escape
 from collections.abc import Mapping
 from itertools import groupby
@@ -207,6 +206,7 @@ _TYPST_ESCAPE: dict[str, str] = {
     "[": "\\[",
     "]": "\\]",
 }
+
 
 def typst_escape(value: Any) -> str:
     """Backslash-escape every Typst-significant character in *value*.

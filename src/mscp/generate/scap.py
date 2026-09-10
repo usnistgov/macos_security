@@ -318,7 +318,7 @@ def generate_scap(sp: Yaspin, args: argparse.Namespace) -> None:
                     if args.xccdf is None and args.oval is None:
                         check_content = """<check system="http://oval.mitre.org/XMLSchema/oval-definitions-5"><check-content-ref href="oval.xml" name="oval:mscp:def:{}"/></check>""".format(
                             oval_counter
-                        )                    
+                        )
                     newrule._fill_in_odv(k)
                     fix_value = "none" if newrule.fix is None else escape(newrule.fix)
                     check_value = (
@@ -368,7 +368,7 @@ def generate_scap(sp: Yaspin, args: argparse.Namespace) -> None:
 
                     if "$CURRENT_USER" in check_value:
                         check_value = """CURRENT_USER=$(/usr/bin/defaults read /Library/Preferences/com.apple.loginwindow.plist lastUserName)
-{}""".format(check_value)                    
+{}""".format(check_value)
                     if rule.severity is None:
                         rule.severity = "unknown"
                     xccdfrules = (
@@ -392,8 +392,8 @@ def generate_scap(sp: Yaspin, args: argparse.Namespace) -> None:
                             fix_value,
                             check_content,
                         )
-                    )                    
-                    if args.os_name == "macos":                        
+                    )
+                    if args.os_name == "macos":
                         oval_def = (
                             oval_def
                             + """<definition id="oval:mscp:def:{0}" version="1" class="compliance"><metadata><title>{1}</title><reference source="CCE" ref_id="{2}"/><reference source="macos_security" ref_id="{3}_{4}"/><description>{5}</description></metadata><criteria><criterion comment="{3}_{4}" test_ref="oval:mscp:tst:{0}"/></criteria></definition>""".format(
@@ -418,7 +418,7 @@ def generate_scap(sp: Yaspin, args: argparse.Namespace) -> None:
                             + """<shellcommand_object xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#independent" id="oval:mscp:obj:{0}" version="1" comment="{1}_{2}_object"><shell>zsh</shell><command>{3}</command></shellcommand_object>""".format(
                                 oval_counter, rule.rule_id, k, check_value
                             )
-                        )                        
+                        )
                         if count_found:
                             if check_existence != "none_exist":
                                 oval_states = (
@@ -436,14 +436,14 @@ def generate_scap(sp: Yaspin, args: argparse.Namespace) -> None:
                                 )
 
                         else:
-                            if "base64" in rule.platforms["macOS"]["enforcement_info"]["check"]["result"].keys():    
+                            if "base64" in rule.platforms["macOS"]["enforcement_info"]["check"]["result"].keys():
                                 base64_value = base64.b64encode(newrule.result_value.encode("utf-8")).decode("utf-8")
                                 oval_states = (
                                     oval_states
                                     + """<shellcommand_state xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#independent" id="oval:mscp:ste:{0}" version="1" comment="{1}_{2}state"><stdout_line operation="equals">{3}</stdout_line></shellcommand_state>""".format(
                                         oval_counter, rule.rule_id, k, base64_value
                                     )
-                                )   
+                                )
                             else:
                                 oval_states = (
                                     oval_states
@@ -576,7 +576,7 @@ def generate_scap(sp: Yaspin, args: argparse.Namespace) -> None:
                         + """<shellcommand_state xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#independent" id="oval:mscp:ste:{0}" version="1" comment="{1}_{2}state"><stdout_line operation="equals">{3}</stdout_line></shellcommand_state>""".format(
                             oval_counter, rule.rule_id, "recommended", rule.result_value
                         )
-                    )        
+                    )
         oval_counter += 1
 
     now = datetime.now()
@@ -585,7 +585,7 @@ def generate_scap(sp: Yaspin, args: argparse.Namespace) -> None:
     xccdf = """<?xml version="1.0" encoding="UTF-8"?>"""
     xccdfPrefix = """<Benchmark xmlns="http://checklists.nist.gov/xccdf/1.2" id="xccdf_gov.nist.mscp.content_benchmark_{1}_{2}" style="SCAP_1.4" resolved="true" xml:lang="en"><status date="{3}">draft</status><title>{1} {2}: Security Configuration</title><description>{1} {2}: Security Configuration</description><reference href="https://csrc.nist.gov/projects/security-content-automation-protocol/scap-releases/scap-1-3"><title xmlns="http://purl.org/dc/elements/1.1/">Security Content Automation Protocol</title><publisher xmlns="http://purl.org/dc/elements/1.1/">National Institute of Standards and Technology</publisher></reference><version time="{0}" update="https://github.com/usnistgov/macos_security">{4}</version><metadata><creator xmlns="http://purl.org/dc/elements/1.1/">National Institute of Standards and Technology</creator><publisher xmlns="http://purl.org/dc/elements/1.1/">National Institute of Standards and Technology</publisher><source xmlns="http://purl.org/dc/elements/1.1/">https://github.com/usnistgov/macos_security/releases/latest</source><contributor xmlns="http://purl.org/dc/elements/1.1/">Bob Gendler - National Institute of Standards and Technology</contributor><contributor xmlns="http://purl.org/dc/elements/1.1/">Dan Brodjieski - National Aeronautics and Space Administration</contributor><contributor xmlns="http://purl.org/dc/elements/1.1/">Allen Golbig - Jamf</contributor></metadata>""".format(
         date_time_string,
-        current_version_data["os_name"].replace(" ","_"),
+        current_version_data["os_name"].replace(" ","_"), 
         current_version_data["os_version"],
         date_time_string.split("T")[0] + "Z",
         current_version_data["compliance_version"]
