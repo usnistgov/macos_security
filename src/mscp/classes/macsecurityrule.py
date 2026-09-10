@@ -404,11 +404,7 @@ class Macsecurityrule(BaseModelWithAccessors):
                 elif ref_key == "cis":
                     cis: dict[str, Any] = rule_yaml["references"].get("cis", {})
                 elif ref_key == "bsi":
-                    bsi: dict[str, Any] = rule_yaml["references"].get("bsi", {})
-                elif ref_key == "bzk":
-                    bzk: dict[str, Any] = rule_yaml["references"].get("bzk", {})
-                elif ref_key == "hhs":
-                    hhs: dict[str, Any] = rule_yaml["references"].get("hhs", {})
+                    bsi: dict[str, Any] = rule_yaml["references"].get("bsi", {})                
                 elif ref_key == "custom":  # support for 1.0 custom refs format
                     for custom_ref_key in rule_yaml["references"]["custom"]:
                         custom_refs[custom_ref_key] = rule_yaml["references"][
