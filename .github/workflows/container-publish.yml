@@ -66,6 +66,11 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Read mSCP build number
+        id: mscp_build
+        run: |
+          echo "build=$(sed -n 's/^ *build: *//p' src/mscp/data/includes/mscp-data.yaml | head -n 1)" >> "$GITHUB_OUTPUT"
+
       - name: Determine source branch
         id: branch
         env:
@@ -103,11 +108,13 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           labels: |
             ${{ steps.meta.outputs.labels }}
+            org.mscp.build=${{ steps.mscp_build.outputs.build }}
             org.opencontainers.image.revision=${{ github.event.workflow_run.head_sha || github.sha }}
           build-args: |
             BUILD_SHA=${{ github.event.workflow_run.head_sha || github.sha }}
             IMAGE_REPO=${{ github.repository }}
             IMAGE_TAG=${{ steps.branch.outputs.image_tag }}
+            BUILD_DATE=${{ fromJSON(steps.meta.outputs.json).labels['org.opencontainers.image.created'] }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
