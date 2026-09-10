@@ -27,8 +27,10 @@
   table.header([*{% trans %}Document Number or Descriptor{% endtrans %}*], [*{% trans %}Document Title{% endtrans %}*]),
   {% if os_name == "macos" and os_version == "26.0" %}[#link("https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Apple_macOS_26_V1R3_STIG.zip")[STIG Ver 1, Rel 3]], [_Apple macOS 26 (Tahoe) STIG_],{% endif %}
   {% if os_name == "macos" and os_version == "15.0" %}[#link("https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Apple_macOS_15_V1R7_STIG.zip")[STIG Ver 1, Rel 7]], [_Apple macOS 15 (Sequoia) STIG_],{% endif %}
-  {% if os_name == "visionos_26" %}[#link("https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Apple_visionOS_26_Y26M05_STIG.zip")[STIG Ver 1, Rel 1]], [_Apple visionOS 2 STIG - Ver 1, Rel 1_],{% endif %}
-  {% if os_name == "visionos" %}[#link("https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Apple_visionOS_2_Y25M09_STIG.zip")[STIG Ver 1, Rel 1]], [_Apple visionOS 2 STIG - Ver 1, Rel 1_],{% endif %}
+  {% if os_name == "visionos" and os_version == "26.0" %}[#link("https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Apple_visionOS_26_Y26M05_STIG.zip")[STIG Ver 1, Rel 1]], [_Apple visionOS 2 STIG - Ver 1, Rel 1_],{% endif %}
+  {% if os_name == "visionos" and os_version == "2.0" %}[#link("https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Apple_visionOS_2_Y25M09_STIG.zip")[STIG Ver 1, Rel 1]], [_Apple visionOS 2 STIG - Ver 1, Rel 1_],{% endif %}
+  {% if os_name == "ios" and os_version == "18.0" %}[#link("https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Apple_iOS-iPadOS_18_V2R3_STIG.zip")[STIG Ver 2, Rel 3]], [_Apple iOS 18 STIG - Ver 2, Rel 3_],{% endif %}
+  {% if os_name == "ios" and os_version == "26.0" %}[#link("https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Apple_iOS-iPadOS_26_V1R3_STIG.zip")[STIG Ver 1, Rel 3]], [_Apple iOS 26 STIG - Ver 1, Rel 3_],{% endif %}
 )
 {% endif %}
 
@@ -72,8 +74,9 @@
   inset: 5pt,
   align: (left + top, left + top),
   table.header([*{% trans %}Document Number or Descriptor{% endtrans %}*], [*{% trans %}Document Title{% endtrans %}*]),
-  {% if os_name == "macos" and os_version == "15.0" %}[#link("https://www.cisecurity.org/benchmark/apple_os/")[Apple macOS 26.0]], [_CIS Apple macOS 26.0 Benchmark version 1.1.0_],{% endif %}
-  {% if os_name == "macos" and os_version == "15.0" %}[#link("https://www.cisecurity.org/benchmark/apple_os/")[Apple macOS 15.0]], [_CIS Apple macOS 15.0 Benchmark version 2.1.0_],{% endif %}
+  {% if os_name == "macos" and os_version == "26.0" %}[#link("https://www.cisecurity.org/benchmark/apple_os/")[Apple macOS 26.0]], [_CIS Apple macOS 26.0 Benchmark Version 1.1.0_],{% endif %}
+  {% if os_name == "macos" and os_version == "15.0" %}[#link("https://www.cisecurity.org/benchmark/apple_os/")[Apple macOS 15.0]], [_CIS Apple macOS 15.0 Benchmark Version 2.1.0_],{% endif %}
+  {% if os_name == "ios" and os_version == "26.0" %}[#link("https://www.cisecurity.org/benchmark/apple_ios/")[Apple iOS 26.0]], [_CIS Apple iOS 26.0 Benchmark Version 1.0.0_],{% endif %}
 )
 {% endif %}
 

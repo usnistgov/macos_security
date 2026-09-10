@@ -168,12 +168,75 @@
 
 <div class="sect1"><h2 id="_applicable_documents">5. {% trans %}Applicable Documents{% endtrans %}</h2><div class="sectionbody">
 <div class="sect2"><h3 id="_government_documents">5.1. {% trans %}Government Documents{% endtrans %}</h3>
-<div class="paragraph"><p><strong>{% trans %}Table 3. National Institute of Standards and Technology (NIST){% endtrans %}</strong></p></div>
+<div class="paragraph"><p><strong>{% trans %}National Institute of Standards and Technology (NIST){% endtrans %}</strong></p></div>
 <table class="tableblock frame-all grid-all stretch"><thead><tr><th class="tableblock halign-left valign-top">{% trans %}Document Number or Descriptor{% endtrans %}</th><th class="tableblock halign-left valign-top">{% trans %}Document Title{% endtrans %}</th></tr></thead><tbody>
 <tr><td class="tableblock halign-left valign-top"><a href="https://nvd.nist.gov/800-53">NIST Special Publication 800-53 Rev 5</a></td><td class="tableblock halign-left valign-top"><em>Security and Privacy Controls for Information Systems and Organizations</em></td></tr>
 <tr><td class="tableblock halign-left valign-top"><a href="https://csrc.nist.gov/pubs/sp/800/219/r1/final">NIST Special Publication 800-219 Rev 1</a></td><td class="tableblock halign-left valign-top"><em>Automated Secure Configuration Guidance from the macOS Security Compliance Project</em></td></tr>
+<tr><td class="tableblock halign-left valign-top"><a href="https://csrc.nist.gov/pubs/sp/800/171/r3/final">NIST Special Publication 800-171 Rev 3</a></td><td class="tableblock halign-left valign-top"><em>Protecting Controlled Unclassified Information in Nonfederal Systems and Organizations</em></td></tr>
+<tr><td class="tableblock halign-left valign-top"><a href="https://pages.nist.gov/800-63-4/">NIST Special Publication 800-63 Rev 4</a></td><td class="tableblock halign-left valign-top"><em>Digital Identity Guidelines</em></td></tr>
 </tbody></table>
-</div></div></div>
+</div>
+
+{% if "STIG" in baseline.title.upper() %}
+<div class="paragraph"><p><strong>{% trans %}Defense Information Systems Agency (DISA){% endtrans %}</strong></p></div>
+<table class="tableblock frame-all grid-all stretch"><thead><tr><th class="tableblock halign-left valign-top">{% trans %}Document Number or Descriptor{% endtrans %}</th><th class="tableblock halign-left valign-top">{% trans %}Document Title{% endtrans %}</th></tr></thead><tbody>
+{% if os_name == "macos" and os_version == "26.0" %}
+<tr><td class="tableblock halign-left valign-top"><a href="https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Apple_macOS_26_V1R3_STIG.zip">STIG Ver 1, Rel 3</a></td><td class="tableblock halign-left valign-top"><em>Apple macOS 26 (Tahoe) STIG</em></td></tr>
+{% endif %}
+{% if os_name == "macos" and os_version == "15.0" %}
+<tr><td class="tableblock halign-left valign-top"><a href="https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Apple_macOS_15_V1R7_STIG.zip">STIG Ver 1, Rel 7</a></td><td class="tableblock halign-left valign-top"><em>Apple macOS 15 (Sequoia) STIG</em></td></tr>
+{% endif %}
+{% if os_name == "visionos_26" %}
+<tr><td class="tableblock halign-left valign-top"><a href="https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Apple_visionOS_26_Y26M05_STIG.zip">STIG Ver 1, Rel 1</a></td><td class="tableblock halign-left valign-top"><em>Apple visionOS 26 STIG</em></td></tr>
+{% endif %}
+{% if os_name == "visionos_2" %}
+<tr><td class="tableblock halign-left valign-top"><a href="https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Apple_visionOS_2_Y25M09_STIG.zip">STIG Ver 1, Rel 1</a></td><td class="tableblock halign-left valign-top"><em>Apple visionOS 2 STIG</em></td></tr>
+{% endif %}
+{% if os_name == "ios" and os_version == "26.0" %}
+<tr><td class="tableblock halign-left valign-top"><a href="https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Apple_iOS-iPadOS_26_V1R3_STIG.zip">STIG Ver 1, Rel 3</a></td><td class="tableblock halign-left valign-top"><em>Apple iOS 26 STIG</em></td></tr>
+{% endif %}
+{% if os_name == "ios" and os_version == "18.0" %}
+<tr><td class="tableblock halign-left valign-top"><a href="https://dl.dod.cyber.mil/wp-content/uploads/stigs/zip/U_Apple_iOS-iPadOS_18_V2R3_STIG.zip">STIG Ver 2, Rel 3</a></td><td class="tableblock halign-left valign-top"><em>Apple iOS 18 STIG</em></td></tr>
+{% endif %}
+</tbody></table>
+{% endif %}
+
+{% if "CMMC" in baseline.title.upper() %}
+<div class="paragraph"><p><strong>{% trans %}Defense Information Systems Agency (DISA){% endtrans %}</strong></p></div>
+<table class="tableblock frame-all grid-all stretch"><thead><tr><th class="tableblock halign-left valign-top">{% trans %}Document Number or Descriptor{% endtrans %}</th><th class="tableblock halign-left valign-top">{% trans %}Document Title{% endtrans %}</th></tr></thead><tbody>
+<tr><td class="tableblock halign-left valign-top"><a href="https://dodcio.defense.gov/Portals/0/Documents/CMMC/ModelOverviewv2.pdf">CMMC Model Overview v2.13</a></td><td class="tableblock halign-left valign-top"><em>Cybersecurity Maturity Model Certification (CMMC) Model Overview v2.13</em></td></tr>
+</tbody></table>
+{% endif %}
+
+{% if "CIS_LVL" in baseline.title.upper() %}
+<div class="paragraph"><p><strong>{% trans %}Center for Internet Security (CIS){% endtrans %}</strong></p></div>
+<table class="tableblock frame-all grid-all stretch"><thead><tr><th class="tableblock halign-left valign-top">{% trans %}Document Number or Descriptor{% endtrans %}</th><th class="tableblock halign-left valign-top">{% trans %}Document Title{% endtrans %}</th></tr></thead><tbody>
+{% if os_name == "macos" and os_version == "26.0" %}
+<tr><td class="tableblock halign-left valign-top"><a href="https://www.cisecurity.org/benchmark/apple_os/">Apple macOS 26.0</a></td><td class="tableblock halign-left valign-top"><em>CIS Apple macOS 26.0 Benchmark Version 1.1.0</em></td></tr>
+{% endif %}
+{% if os_name == "macos" and os_version == "15.0" %}
+<tr><td class="tableblock halign-left valign-top"><a href="https://www.cisecurity.org/benchmark/apple_os/">Apple macOS 15.0</a></td><td class="tableblock halign-left valign-top"><em>CIS Apple macOS 15.0 Benchmark Version 2.1.0</em></td></tr>
+{% endif %}
+{% if os_name == "ios" and os_version == "26.0" %}
+<tr><td class="tableblock halign-left valign-top"><a href="https://www.cisecurity.org/benchmark/apple_ios">Apple iOS 26.0</a></td><td class="tableblock halign-left valign-top"><em>CIS Apple iOS 26.0 Benchmark Version 1.0.0</em></td></tr>
+{% endif %}
+</tbody></table>
+{% endif %}
+
+<div class="sect2"><h3 id="_non_government_documents">5.2. {% trans %}Non-Government Documents{% endtrans %}</h3>
+<div class="paragraph"><p><strong>{% trans %}Apple{% endtrans %}</strong></p></div>
+<table class="tableblock frame-all grid-all stretch"><thead><tr><th class="tableblock halign-left valign-top">{% trans %}Document Number or Descriptor{% endtrans %}</th><th class="tableblock halign-left valign-top">{% trans %}Document Title{% endtrans %}</th></tr></thead><tbody>
+<tr><td class="tableblock halign-left valign-top"><a href="hhttps://support.apple.com/guide/security/welcome/web">Apple Platform Security Guide</a></td><td class="tableblock halign-left valign-top"><em>Apple Platform Security Guide</em></td></tr>
+<tr><td class="tableblock halign-left valign-top"><a href="https://support.apple.com/guide/deployment/welcome/web">Apple Platform Deployment</a></td><td class="tableblock halign-left valign-top"><em>Apple Platform Deployment</em></td></tr>
+<tr><td class="tableblock halign-left valign-top"><a href="https://support.apple.com/guide/certifications/welcome/web">Apple Platform Certifications</a></td><td class="tableblock halign-left valign-top"><em>Apple Platform Certifications</em></td></tr>
+<tr><td class="tableblock halign-left valign-top"><a href="https://developer.apple.com/documentation/devicemanagement/profile-specific_payload_keys">Profile Specific Payload Keys</a></td><td class="tableblock halign-left valign-top"><em>Profile Specific Payload Keys</em></td></tr>
+</tbody></table>
+</div>
+
+</div></div>
+
+
+
 
 {% set ns2 = namespace(n=6) %}
 {% for profile in baseline.profile %}
