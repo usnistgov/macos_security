@@ -165,8 +165,7 @@ def generate_scap(sp: Yaspin, args: argparse.Namespace) -> None:
     for b in all_baseline_benchmark:
         found_rules = [
             rule
-            for rule in all_rules
-            
+            for rule in all_rules            
             if rule_has_benchmark_for_version(
                 rule, b, args.os_name, str(args.os_version)
             )
@@ -382,7 +381,7 @@ def generate_scap(sp: Yaspin, args: argparse.Namespace) -> None:
                         check_value = """CURRENT_USER=$(/usr/bin/defaults read /Library/Preferences/com.apple.loginwindow.plist lastUserName)
 {}""".format(check_value)
                     xccdf_severity = rule.severity
-                    if rule.severity == None:
+                    if rule.severity is None:
                         rule.severity = "unknown"
                     xccdfrules = (
                         xccdfrules
@@ -451,7 +450,7 @@ def generate_scap(sp: Yaspin, args: argparse.Namespace) -> None:
                         else:
                             if "base64" in rule.platforms["macOS"]["enforcement_info"]["check"]["result"].keys():
                             # if rule.result_type == "base64":
-                                base64_value = encoded = base64.b64encode(newrule.result_value.encode("utf-8")).decode("utf-8")
+                                base64_value = base64.b64encode(newrule.result_value.encode("utf-8")).decode("utf-8")
 
                                 oval_states = (
                                     oval_states
@@ -520,7 +519,7 @@ def generate_scap(sp: Yaspin, args: argparse.Namespace) -> None:
                 check_value = "|".join(new_test)
                 if rule.result_value == 0:
                     check_existence = "none_exist"
-            if rule.severity == None:
+            if rule.severity is None:
                 rule.severity = "unknown"
             xccdfrules = (
                 xccdfrules
@@ -603,7 +602,7 @@ def generate_scap(sp: Yaspin, args: argparse.Namespace) -> None:
         current_version_data["os_name"].replace(" ","_"),
         current_version_data["os_version"],
         date_time_string.split("T")[0] + "Z",
-        current_version_data["compliance_version"],
+        current_version_data["compliance_version"]
     )
 
     xccdf_group = """<Group id="xccdf_gov.nist.mscp.content_group_all_rules"><title>All rules</title><description>All the rules</description><warning category="general">The check/fix commands outlined in this section must be run with elevated privileges.</warning>"""
