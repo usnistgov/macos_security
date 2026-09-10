@@ -10,7 +10,6 @@ OVAL-only outputs are also supported.
 # Standard python modules
 import argparse
 import sys
-import time
 import re
 from datetime import datetime
 from pathlib import Path
@@ -301,7 +300,6 @@ def generate_scap(sp: Yaspin, args: argparse.Namespace) -> None:
             file = open(args.disa_stig, "r")
             stig = file.read()
             rule.title = disa_stig_rules(rule.references.get_ref("disa_stig")[0], stig)
-        
         if rule.odv is not None:
             if args.baseline == "all_rules":
                 selected_os_benchmark.append("recommended")
@@ -319,8 +317,7 @@ def generate_scap(sp: Yaspin, args: argparse.Namespace) -> None:
                     if args.xccdf is None and args.oval is None:
                         check_content = """<check system="http://oval.mitre.org/XMLSchema/oval-definitions-5"><check-content-ref href="oval.xml" name="oval:mscp:def:{}"/></check>""".format(
                             oval_counter
-                        )
-                    
+                        )                    
                     newrule._fill_in_odv(k)
                     fix_value = "none" if newrule.fix is None else escape(newrule.fix)
                     check_value = (
@@ -438,10 +435,8 @@ def generate_scap(sp: Yaspin, args: argparse.Namespace) -> None:
                                 )
 
                         else:
-                            if "base64" in rule.platforms["macOS"]["enforcement_info"]["check"]["result"].keys():
-                            # if rule.result_type == "base64":
+                            if "base64" in rule.platforms["macOS"]["enforcement_info"]["check"]["result"].keys():    
                                 base64_value = base64.b64encode(newrule.result_value.encode("utf-8")).decode("utf-8")
-
                                 oval_states = (
                                     oval_states
                                     + """<shellcommand_state xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#independent" id="oval:mscp:ste:{0}" version="1" comment="{1}_{2}state"><stdout_line operation="equals">{3}</stdout_line></shellcommand_state>""".format(
@@ -592,15 +587,11 @@ def generate_scap(sp: Yaspin, args: argparse.Namespace) -> None:
         current_version_data["os_name"].replace(" ","_"), 
         current_version_data["os_version"], 
         date_time_string.split("T")[0] + "Z", 
-        current_version_data["compliance_version"]
+        current_version_data["compliance_version"] 
     )
-
     xccdf_group = """<Group id="xccdf_gov.nist.mscp.content_group_all_rules"><title>All rules</title><description>All the rules</description><warning category="general">The check/fix commands outlined in this section must be run with elevated privileges.</warning>"""
-
     xccdf_closer = """</Group></Benchmark>"""
-
     oval = """<?xml version="1.0" encoding="UTF-8"?>"""
-
     oval_prefix = """<oval_definitions xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5" xmlns:oval="http://oval.mitre.org/XMLSchema/oval-common-5" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://oval.mitre.org/XMLSchema/oval-definitions-5 https://raw.githubusercontent.com/OVAL-Community/OVAL/master/oval-schemas/oval-definitions-schema.xsd http://oval.mitre.org/XMLSchema/oval-definitions-5#independent https://raw.githubusercontent.com/OVAL-Community/OVAL/master/oval-schemas/independent-definitions-schema.xsd http://oval.mitre.org/XMLSchema/oval-definitions-5#macos https://raw.githubusercontent.com/OVAL-Community/OVAL/master/oval-schemas/macos-definitions-schema.xsd http://oval.mitre.org/XMLSchema/oval-definitions-5#unix https://raw.githubusercontent.com/OVAL-Community/OVAL/master/oval-schemas/unix-definitions-schema.xsd"><generator><oval:schema_version>5.12.1</oval:schema_version><oval:timestamp xmlns:oval="http://oval.mitre.org/XMLSchema/oval-common-5">{}</oval:timestamp><terms_of_use>Copyright (c) 2025, NIST.</terms_of_use><oval:product_name xmlns:oval="http://oval.mitre.org/XMLSchema/oval-common-5">macOS Security Compliance Project</oval:product_name></generator>""".format(
         date_time_string
     )
