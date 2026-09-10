@@ -117,7 +117,7 @@ platforms:
     enforcement_info:
       check:
         shell: |-
-          /usr/bin/osascript -l JavaScript -e 'var s = $.NSUserDefaults.alloc.initWithSuiteName("com.apple.applicationaccess"); (ObjC.unwrap(s.objectForKey("allowCloudKeychainSync")) == false && s.objectIsForcedForKey("allowCloudKeychainSync")) ? "PASS" : "FAIL"'          
+          /usr/bin/osascript -l JavaScript -e 'var s = $.NSUserDefaults.alloc.initWithSuiteName("com.apple.applicationaccess"); (ObjC.unwrap(s.objectForKey("allowCloudKeychainSync")) == false && s.objectIsForcedForKey("allowCloudKeychainSync")) ? "PASS" : "FAIL"'
         result:
           string: 'PASS'
     introduced: '10.12'
