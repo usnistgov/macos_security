@@ -100,7 +100,7 @@ class Macsecurityrule(BaseModelWithAccessors):
         customized: Field names that have been overridden by customization
             files.
         mechanism: Enforcement mechanism — one of ``"Manual"``,
-            ``"Script"``, ``"Configuration Profile"``, ``"Inherent"``,
+            ``"Script"``, ``"Configuration Profile"``, ``"Declarative Device Management"``, ``"Inherent"``,
             ``"Permanent"``, ``"N/A"``.
         section: Section name the rule belongs to (e.g.
             ``"Operating System"``, ``"Inherent"``).
@@ -360,6 +360,8 @@ class Macsecurityrule(BaseModelWithAccessors):
                 rule_yaml.pop("mobileconfig_info", None)
             else:
                 payloads = None
+            if "ddm_info" in rule_yaml:
+                mechanism = "Declarative Device Management"
 
             benchmarks: list[dict[str, str]] = rule_yaml["platforms"][os_type][
                 os_version_str

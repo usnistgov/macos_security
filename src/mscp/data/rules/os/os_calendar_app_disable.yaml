@@ -63,7 +63,7 @@ mobileconfig_info:
     PayloadContent:
       - DenyList:
           - SigningID:
-              - com.apple.FaceTime
+              - com.apple.iCal
 ddm_info:
   declarationtype: com.apple.configuration.app.settings
   ddm_key: Allowed

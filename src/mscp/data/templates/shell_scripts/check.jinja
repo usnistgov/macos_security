@@ -36,6 +36,8 @@
         exemption_output="- Exemption Allowed (Reason: \"$exempt_reason\")"
       fi
     fi
+    
+    results_array[$rule_id]=$result_value
 
     logmessage "$log_reference_id $result_status (Result: $result_value, Expected: \"$expected_result\") $exemption_output"
     logcsv "$rule_id" "$result_status" "$result_value" "$expected_result" "$exemption_output"
