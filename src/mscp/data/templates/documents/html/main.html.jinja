@@ -208,6 +208,8 @@
 </tbody></table>
 {% endif %}
 
+<div class="sect2"><h3 id="_non_government_documents">5.2. {% trans %}Non-Government Documents{% endtrans %}</h3>
+
 {% if "CIS_LVL" in baseline.title.upper() %}
 <div class="paragraph"><p><strong>{% trans %}Center for Internet Security (CIS){% endtrans %}</strong></p></div>
 <table class="tableblock frame-all grid-all stretch"><thead><tr><th class="tableblock halign-left valign-top">{% trans %}Document Number or Descriptor{% endtrans %}</th><th class="tableblock halign-left valign-top">{% trans %}Document Title{% endtrans %}</th></tr></thead><tbody>
@@ -223,7 +225,6 @@
 </tbody></table>
 {% endif %}
 
-<div class="sect2"><h3 id="_non_government_documents">5.2. {% trans %}Non-Government Documents{% endtrans %}</h3>
 <div class="paragraph"><p><strong>{% trans %}Apple{% endtrans %}</strong></p></div>
 <table class="tableblock frame-all grid-all stretch"><thead><tr><th class="tableblock halign-left valign-top">{% trans %}Document Number or Descriptor{% endtrans %}</th><th class="tableblock halign-left valign-top">{% trans %}Document Title{% endtrans %}</th></tr></thead><tbody>
 <tr><td class="tableblock halign-left valign-top"><a href="hhttps://support.apple.com/guide/security/welcome/web">Apple Platform Security Guide</a></td><td class="tableblock halign-left valign-top"><em>Apple Platform Security Guide</em></td></tr>
@@ -232,11 +233,7 @@
 <tr><td class="tableblock halign-left valign-top"><a href="https://developer.apple.com/documentation/devicemanagement/profile-specific_payload_keys">Profile Specific Payload Keys</a></td><td class="tableblock halign-left valign-top"><em>Profile Specific Payload Keys</em></td></tr>
 </tbody></table>
 </div>
-
 </div></div>
-
-
-
 
 {% set ns2 = namespace(n=6) %}
 {% for profile in baseline.profile %}
