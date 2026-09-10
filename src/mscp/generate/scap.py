@@ -11,6 +11,7 @@ OVAL-only outputs are also supported.
 import argparse
 import sys
 import re
+import time
 from datetime import datetime
 from pathlib import Path
 from xml.sax.saxutils import escape
@@ -584,10 +585,10 @@ def generate_scap(sp: Yaspin, args: argparse.Namespace) -> None:
     xccdf = """<?xml version="1.0" encoding="UTF-8"?>"""
     xccdfPrefix = """<Benchmark xmlns="http://checklists.nist.gov/xccdf/1.2" id="xccdf_gov.nist.mscp.content_benchmark_{1}_{2}" style="SCAP_1.4" resolved="true" xml:lang="en"><status date="{3}">draft</status><title>{1} {2}: Security Configuration</title><description>{1} {2}: Security Configuration</description><reference href="https://csrc.nist.gov/projects/security-content-automation-protocol/scap-releases/scap-1-3"><title xmlns="http://purl.org/dc/elements/1.1/">Security Content Automation Protocol</title><publisher xmlns="http://purl.org/dc/elements/1.1/">National Institute of Standards and Technology</publisher></reference><version time="{0}" update="https://github.com/usnistgov/macos_security">{4}</version><metadata><creator xmlns="http://purl.org/dc/elements/1.1/">National Institute of Standards and Technology</creator><publisher xmlns="http://purl.org/dc/elements/1.1/">National Institute of Standards and Technology</publisher><source xmlns="http://purl.org/dc/elements/1.1/">https://github.com/usnistgov/macos_security/releases/latest</source><contributor xmlns="http://purl.org/dc/elements/1.1/">Bob Gendler - National Institute of Standards and Technology</contributor><contributor xmlns="http://purl.org/dc/elements/1.1/">Dan Brodjieski - National Aeronautics and Space Administration</contributor><contributor xmlns="http://purl.org/dc/elements/1.1/">Allen Golbig - Jamf</contributor></metadata>""".format(
         date_time_string,
-        current_version_data["os_name"].replace(" ","_"), 
-        current_version_data["os_version"], 
-        date_time_string.split("T")[0] + "Z", 
-        current_version_data["compliance_version"] 
+        current_version_data["os_name"].replace(" ","_"),
+        current_version_data["os_version"],
+        date_time_string.split("T")[0] + "Z",
+        current_version_data["compliance_version"]
     )
     xccdf_group = """<Group id="xccdf_gov.nist.mscp.content_group_all_rules"><title>All rules</title><description>All the rules</description><warning category="general">The check/fix commands outlined in this section must be run with elevated privileges.</warning>"""
     xccdf_closer = """</Group></Benchmark>"""
