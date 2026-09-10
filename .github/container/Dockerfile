@@ -40,7 +40,7 @@ RUN useradd -m -u 1001 -s /bin/bash mscp && \
     printf '%s\n' \
       "[ -f /usr/share/bash-completion/bash_completion ] && . /usr/share/bash-completion/bash_completion" \
       "export PATH=/opt/venv/bin:\$PATH" \
-      "PS1='mscp:\\w\\\$ '" \
+      "PS1='mscp \\\$ '" \
       > /home/mscp/.bashrc && \
     chown -R mscp:mscp /mscp /home/mscp && \
     chmod +x /mscp/.github/container/entrypoint.sh
