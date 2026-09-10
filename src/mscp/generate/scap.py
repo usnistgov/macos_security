@@ -165,7 +165,7 @@ def generate_scap(sp: Yaspin, args: argparse.Namespace) -> None:
     for b in all_baseline_benchmark:
         found_rules = [
             rule
-            for rule in all_rules            
+            for rule in all_rules
             if rule_has_benchmark_for_version(
                 rule, b, args.os_name, str(args.os_version)
             )
@@ -185,7 +185,7 @@ def generate_scap(sp: Yaspin, args: argparse.Namespace) -> None:
     time.sleep(.5)
 
     for baseline in all_the_baselines:
-        for b, r in baseline.items():                        
+        for b, r in baseline.items():
             xccdfrules = str()
             xccdfProfiles = (
                 xccdfProfiles
@@ -216,8 +216,8 @@ def generate_scap(sp: Yaspin, args: argparse.Namespace) -> None:
             xccdfProfiles = xccdfProfiles + "</Profile>"
 
     for rule in all_rules:
-        if "supplemental" in rule.tags:            
-            continue        
+        if "supplemental" in rule.tags:
+            continue
         if args.baseline != "all_rules":
             if (
                 not rule_has_benchmark_for_version(
@@ -281,23 +281,14 @@ def generate_scap(sp: Yaspin, args: argparse.Namespace) -> None:
             logger.warning(
                 f"Error when trying to build CIS benchmark references for {rule.rule_id}: {e}"
             )
-        
         try:
             if len(rule["references"].cis.controls_v8) > 0:
                 cisv8 = str()
                 for cis_ref in rule["references"].cis.controls_v8:
                     cisv8 = cisv8 + "{}, ".format(cis_ref)
-                xccdf_references = (
-                    xccdf_references
-                    + """<reference href="https://www.cisecurity.org/controls">CIS Controls V8: {0}</reference>""".format(
-                        cisv8[0:-2]
-                    )
-                )
+                xccdf_references = (xccdf_references + """<reference href="https://www.cisecurity.org/controls">CIS Controls V8: {0}</reference>""".format(cisv8[0:-2]))
         except (TypeError, KeyError, AttributeError) as e:
-            logger.warning(
-                f"Error when trying to build CIS Controls references for {rule.rule_id}: {e}"
-            )
-
+            logger.warning(f"Error when trying to build CIS Controls references for {rule.rule_id}: {e}")
         selected_os_benchmark = []
         for benchmark, v in benchmark_map.items():
             if list(v)[0].lower() == args.os_name.lower():
@@ -379,8 +370,7 @@ def generate_scap(sp: Yaspin, args: argparse.Namespace) -> None:
 
                     if "$CURRENT_USER" in check_value:
                         check_value = """CURRENT_USER=$(/usr/bin/defaults read /Library/Preferences/com.apple.loginwindow.plist lastUserName)
-{}""".format(check_value)
-                    xccdf_severity = rule.severity
+{}""".format(check_value)                    
                     if rule.severity is None:
                         rule.severity = "unknown"
                     xccdfrules = (
@@ -599,9 +589,9 @@ def generate_scap(sp: Yaspin, args: argparse.Namespace) -> None:
     xccdf = """<?xml version="1.0" encoding="UTF-8"?>"""
     xccdfPrefix = """<Benchmark xmlns="http://checklists.nist.gov/xccdf/1.2" id="xccdf_gov.nist.mscp.content_benchmark_{1}_{2}" style="SCAP_1.4" resolved="true" xml:lang="en"><status date="{3}">draft</status><title>{1} {2}: Security Configuration</title><description>{1} {2}: Security Configuration</description><reference href="https://csrc.nist.gov/projects/security-content-automation-protocol/scap-releases/scap-1-3"><title xmlns="http://purl.org/dc/elements/1.1/">Security Content Automation Protocol</title><publisher xmlns="http://purl.org/dc/elements/1.1/">National Institute of Standards and Technology</publisher></reference><version time="{0}" update="https://github.com/usnistgov/macos_security">{4}</version><metadata><creator xmlns="http://purl.org/dc/elements/1.1/">National Institute of Standards and Technology</creator><publisher xmlns="http://purl.org/dc/elements/1.1/">National Institute of Standards and Technology</publisher><source xmlns="http://purl.org/dc/elements/1.1/">https://github.com/usnistgov/macos_security/releases/latest</source><contributor xmlns="http://purl.org/dc/elements/1.1/">Bob Gendler - National Institute of Standards and Technology</contributor><contributor xmlns="http://purl.org/dc/elements/1.1/">Dan Brodjieski - National Aeronautics and Space Administration</contributor><contributor xmlns="http://purl.org/dc/elements/1.1/">Allen Golbig - Jamf</contributor></metadata>""".format(
         date_time_string,
-        current_version_data["os_name"].replace(" ","_"),
-        current_version_data["os_version"],
-        date_time_string.split("T")[0] + "Z",
+        current_version_data["os_name"].replace(" ","_"), 
+        current_version_data["os_version"], 
+        date_time_string.split("T")[0] + "Z", 
         current_version_data["compliance_version"]
     )
 
