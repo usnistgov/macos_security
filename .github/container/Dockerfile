@@ -9,9 +9,13 @@ FROM python:3.13-slim-bookworm@sha256:ed86c82274b3c69b52fb5820f358f0bd7df0b60333
 # Pinned uv (never :latest) so this layer is reproducible and cache-stable.
 COPY --from=ghcr.io/astral-sh/uv:0.9.5@sha256:f459f6f73a8c4ef5d69f4e6fbbdb8af751d6fa40ec34b39a1ab469acd6e289b7 /uv /usr/local/bin/uv
 
+# bash + bash-completion: Debian's /bin/sh is dash (no history, no tab
+# completion). This image is used interactively, so make bash the default shell.
 RUN apt-get update && apt-get install -y --no-install-recommends \
       git \
       ca-certificates \
+      bash \
+      bash-completion \
   && rm -rf /var/lib/apt/lists/*
 
 ARG BUILD_SHA=unknown
@@ -32,10 +36,15 @@ ENV PATH="/opt/venv/bin:$PATH"
 
 COPY . .
 
-RUN useradd -m -u 1001 -s /bin/sh mscp && \
-    chown -R mscp:mscp /mscp && \
+RUN useradd -m -u 1001 -s /bin/bash mscp && \
+    printf '%s\n' \
+      "[ -f /usr/share/bash-completion/bash_completion ] && . /usr/share/bash-completion/bash_completion" \
+      "export PATH=/opt/venv/bin:\$PATH" \
+      "PS1='mscp:\\w\\\$ '" \
+      > /home/mscp/.bashrc && \
+    chown -R mscp:mscp /mscp /home/mscp && \
     chmod +x /mscp/.github/container/entrypoint.sh
 USER mscp
 
 ENTRYPOINT ["/mscp/.github/container/entrypoint.sh"]
-CMD ["sh"]
+CMD ["bash"]
