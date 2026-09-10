@@ -97,4 +97,4 @@ mobileconfig_info:
 ddm_info:
   declarationtype: com.apple.configuration.intelligence.settings
   ddm_key: ForceOnDeviceOnlyTranslation
-  ddm_value: false
+  ddm_value: true

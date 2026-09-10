@@ -179,5 +179,5 @@ mobileconfig_info:
       - forceOnDeviceOnlyDictation: true
 ddm_info:
   declarationtype: com.apple.configuration.intelligence.settings
-  ddm_key: ForceOnDeviceOnlyTranslation
+  ddm_key: ForceOnDeviceOnlyDictation
   ddm_value: true
