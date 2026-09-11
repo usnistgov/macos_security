@@ -318,7 +318,7 @@ def asciidoc_to_typst(value: str) -> str:
     def _inline(text: str) -> str:
         # Protect links and *balanced* bold/italic as sentinels, then fully
         # escape everything else.  This keeps intentional ``*bold*`` / ``_italic_``
-        # markup while neutralising stray ``*`` ``_`` ``[`` ``]`` from regexes,
+        # markup while neutralizing stray ``*`` ``_`` ``[`` ``]`` from regexes,
         # shell examples, or AsciiDoc artifacts (``***``) that would otherwise
         # leave an unclosed Typst delimiter and fail compilation.
         stash: list[str] = []
