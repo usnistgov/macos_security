@@ -26,20 +26,20 @@ Generating guidance creates outputs from your baseline. By default it generates 
 
    Example:
    ```bash
-   ./mscp.py guidance custom/baselines/800-53r5_moderate_macos_26.0.yaml
+   ./mscp.py guidance custom/baselines/800-53r5_moderate_macos_27.0.yaml
    ```
 
 2. **Add flags for additional outputs**
 
    ```bash
-   ./mscp.py guidance custom/baselines/800-53r5_moderate_macos_26.0.yaml -s -p
+   ./mscp.py guidance custom/baselines/800-53r5_moderate_macos_27.0.yaml -s -p
    ```
 
    This generates guidance docs plus compliance script (`-s`) and configuration profiles (`-p`).
 
    Generate all outputs at once with `-A`:
    ```bash
-   ./mscp.py guidance custom/baselines/800-53r5_moderate_macos_26.0.yaml -A
+   ./mscp.py guidance custom/baselines/800-53r5_moderate_macos_27.0.yaml -A
    ```
 
 3. **Find your files**
@@ -48,13 +48,13 @@ Generating guidance creates outputs from your baseline. By default it generates 
 
    <FileTree>
    - build/
-       - 800-53r5_moderate_macos_26.0/
-           - **800-53r5_moderate_macos_26.0.adoc** AsciiDoc source
-           - **800-53r5_moderate_macos_26.0.html** Web documentation
-           - **800-53r5_moderate_macos_26.0.pdf** Printable documentation
-           - **800-53r5_moderate_macos_26.0.md** Markdown (if -m)
-           - **800-53r5_moderate_macos_26.0_compliance.sh** Compliance script (if -s)
-           - **800-53r5_moderate_macos_26.0.xlsx** Excel spreadsheet (if -x)
+       - 800-53r5_moderate_macos_27.0/
+           - **800-53r5_moderate_macos_27.0.adoc** AsciiDoc source
+           - **800-53r5_moderate_macos_27.0.html** Web documentation
+           - **800-53r5_moderate_macos_27.0.pdf** Printable documentation
+           - **800-53r5_moderate_macos_27.0.md** Markdown (if -m)
+           - **800-53r5_moderate_macos_27.0_compliance.sh** Compliance script (if -s)
+           - **800-53r5_moderate_macos_27.0.xlsx** Excel spreadsheet (if -x)
            - mobileconfigs/ Configuration profiles (if -p)
            - activations/ DDM components (if -d)
            - configurations/
@@ -191,37 +191,37 @@ The `main` branch is now used for **mSCP 2.0** and will generate content using t
 
 **Generate all outputs:**
 ```bash
-./mscp.py guidance custom/baselines/800-53r5_moderate_macos_26.0.yaml -A
+./mscp.py guidance custom/baselines/800-53r5_moderate_macos_27.0.yaml -A
 ```
 
 **Generate documentation only:**
 ```bash
-./mscp.py guidance custom/baselines/800-53r5_moderate_macos_26.0.yaml
+./mscp.py guidance custom/baselines/800-53r5_moderate_macos_27.0.yaml
 ```
 
 **Generate everything for MDM deployment:**
 ```bash
-./mscp.py guidance custom/baselines/DISA-STIG_macos_26.0.yaml -s -p -d
+./mscp.py guidance custom/baselines/DISA-STIG_macos_27.0.yaml -s -p -d
 ```
 
 **Generate with signed profiles:**
 ```bash
-./mscp.py guidance custom/baselines/cis_lvl2_macos_26.0.yaml -p -H YOUR_CERT_HASH
+./mscp.py guidance custom/baselines/cis_lvl2_macos_27.0.yaml -p -H YOUR_CERT_HASH
 ```
 
 **Generate documentation with custom logo:**
 ```bash
-./mscp.py guidance custom/baselines/800-53r5_moderate_macos_26.0.yaml -l /path/to/logo.png
+./mscp.py guidance custom/baselines/800-53r5_moderate_macos_27.0.yaml -l /path/to/logo.png
 ```
 
 **Generate Markdown output:**
 ```bash
-./mscp.py guidance custom/baselines/800-53r5_moderate_macos_26.0.yaml -m
+./mscp.py guidance custom/baselines/800-53r5_moderate_macos_27.0.yaml -m
 ```
 
 **Generate documentation in a specific language:**
 ```bash
-./mscp.py guidance custom/baselines/800-53r5_moderate_macos_26.0.yaml -L de
+./mscp.py guidance custom/baselines/800-53r5_moderate_macos_27.0.yaml -L de
 ```
 
 The default language is English (`en`). Available languages are determined by the locales present in `config/locales/`. See <a href={`${base}other/generate-localization/`}>Generate Localization</a> for how to create and compile translation files.

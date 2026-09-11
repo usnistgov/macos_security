@@ -22,7 +22,7 @@ mSCP 2.0 is a major architectural evolution — a **unified codebase** that elim
   <div class="feature-box" style="flex: 1 1 calc(50% - 0.5rem); min-width: 250px; padding: 1.25rem; background: linear-gradient(135deg, var(--sl-color-blue-low) 0%, var(--sl-color-blue-low) 100%); border-radius: 12px; border: 1px solid var(--sl-color-blue); margin: 0 !important;">
     <div style="font-size: 2rem; margin-bottom: 0.75rem;">📋</div>
     <strong style="display: block; margin-bottom: 0.5rem; font-size: 1.1rem; color: var(--sl-color-blue-high);">Multi-Version Rules</strong>
-    <span style="font-size: 0.9rem; line-height: 1.5;">Each rule contains configs for macOS 14, 15, 26+ in one file.</span>
+    <span style="font-size: 0.9rem; line-height: 1.5;">Each rule contains configs for macOS 15, 26, and 27 in one file.</span>
   </div>
   <div class="feature-box" style="flex: 1 1 calc(50% - 0.5rem); min-width: 250px; padding: 1.25rem; background: linear-gradient(135deg, var(--sl-color-purple-low) 0%, var(--sl-color-purple-low) 100%); border-radius: 12px; border: 1px solid var(--sl-color-purple); margin: 0 !important;">
     <div style="font-size: 2rem; margin-bottom: 0.75rem;">🗂️</div>
@@ -68,17 +68,21 @@ references:
 references:
   nist:
     cce:
+      macos_27: [CCE-97025-1]
       macos_26: [CCE-95195-4]
       macos_15: [CCE-94195-5]
-      macos_14: [CCE-92795-4]
   disa:
     disa_stig:
+      macos_27: [APPL-27-002064]
       macos_26: [APPL-26-002064]
       macos_15: [APPL-15-002064]
-      macos_14: [APPL-14-002064]
 
 platforms:
   macOS:
+    '27.0':
+      benchmarks:
+        - name: disa_stig
+          severity: high
     '26.0':
       benchmarks:
         - name: disa_stig
@@ -202,11 +206,11 @@ The easiest way to get started — no local dependencies required.
    ```bash
    # Create a baseline
    ./mscp.py baseline -k cis_lvl1
-   # Output: Generated new baseline file: config/custom/baselines/cis_lvl1_macos_26.0.yaml
+   # Output: Generated new baseline file: config/custom/baselines/cis_lvl1_macos_27.0.yaml
 
    # Generate guidance with all outputs
-   ./mscp.py guidance custom/baselines/cis_lvl1_macos_26.0.yaml -A
-   # Output: MSCP DOCUMENT GENERATION COMPLETE! All documents in: /build/cis_lvl1_macos_26.0/
+   ./mscp.py guidance custom/baselines/cis_lvl1_macos_27.0.yaml -A
+   # Output: MSCP DOCUMENT GENERATION COMPLETE! All documents in: /build/cis_lvl1_macos_27.0/
    ```
 
 </Steps>
@@ -285,7 +289,7 @@ dependency, so there is nothing extra to set up.
    ./mscp.py baseline -k cis_lvl1
 
    # Generate guidance with all outputs
-   ./mscp.py guidance custom/baselines/cis_lvl1_macos_26.0.yaml -A
+   ./mscp.py guidance custom/baselines/cis_lvl1_macos_27.0.yaml -A
 
    # When done, deactivate the virtual environment
    deactivate
