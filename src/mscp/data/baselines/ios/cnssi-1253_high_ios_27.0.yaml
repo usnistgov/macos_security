@@ -41,6 +41,7 @@ profile:
       - os_allow_contacts_write_managed_sources_unmanaged_destinations_disable
       - os_allow_documents_managed_sources_unmanaged_destinations_disable
       - os_allow_documents_unmanaged_sources_managed_destinations_disable
+      - os_allow_enterprise_trust_disabled
       - os_apple_watch_pairing_disable
       - os_apple_watch_wrist_detection_enable
       - os_application_allow_list
@@ -55,11 +56,9 @@ profile:
       - os_definition_lookup_disable
       - os_diagnostics_reports_disable
       - os_diagnostics_reports_modification_disable
-      - os_disallow_enterprise_app_trust
+      - os_dictation_disable
       - os_erase_contents_and_settings_disable
       - os_esim_delete
-      - os_external_intelligence_integration_disable
-      - os_external_intelligence_integration_sign_in_disable
       - os_files_network_drive_access_disable
       - os_files_usb_drive_access_disable
       - os_find_my_friends_disable
@@ -91,7 +90,6 @@ profile:
       - os_password_sharing_disable
       - os_personalized_advertising_disable
       - os_personalized_handwriting_disable
-      - os_rapid_security_responses_install_enable
       - os_rapid_security_responses_remove_disable
       - os_require_managed_pasteboard_enforce
       - os_safari_password_autofill_disable
@@ -100,7 +98,6 @@ profile:
       - os_show_calendar_lock_screen_disable
       - os_show_control_center_lock_screen_disable
       - os_show_notification_center_lock_screen_disable
-      - os_siri_allow_dictation_disable
       - os_siri_server_logging_disable
       - os_siri_user_generated_content_disable
       - os_siri_when_locked_disabled
@@ -108,7 +105,7 @@ profile:
       - os_supervised_mdm_require
       - os_system_settings_find_my_device_disable
       - os_system_settings_find_my_friends_modification_disable
-      - os_usb_accessories_when_locked_disable
+      - os_user_ui_app_installation_prohibit
       - os_visual_intelligence_summary
       - os_voice_dialing_when_locked_disabled
       - os_web_distribution_app_installation_disable
@@ -125,4 +122,15 @@ profile:
       - pwpolicy_simple_sequence_disable
   - section: System Settings
     rules:
+      - system_settings_background_security_improvement_removal_disable
+      - system_settings_external_intelligence_disable
+      - system_settings_external_intelligence_sign_in_disable
+      - system_settings_siri_ai_disable
       - system_settings_siri_disable
+      - system_settings_usb_restricted_mode
+  - section: Inherent
+    rules:
+      - os_secure_enclave
+  - section: Permanent
+    rules:
+      - os_secure_name_resolution

@@ -35,8 +35,8 @@ profile:
       - os_apple_watch_wrist_detection_enable
       - os_authentication_password_autofill_enable
       - os_diagnostics_reports_disable
+      - os_dictation_disable
       - os_erase_contents_and_settings_disable
-      - os_external_intelligence_integration_sign_in_disable
       - os_files_network_drive_access_disable
       - os_files_usb_drive_access_disable
       - os_force_date_and_time_enable
@@ -66,7 +66,6 @@ profile:
       - os_show_notification_center_lock_screen_disable
       - os_siri_when_locked_disabled
       - os_untrusted_tls_disable
-      - os_usb_accessories_when_locked_disable
       - os_voice_dialing_when_locked_disabled
       - os_writing_tools_disable
   - section: Password Policy
@@ -80,7 +79,13 @@ profile:
       - pwpolicy_simple_sequence_disable
   - section: System Settings
     rules:
+      - system_settings_external_intelligence_disable
+      - system_settings_external_intelligence_sign_in_disable
+      - system_settings_install_macos_updates_enforce
+      - system_settings_siri_ai_disable
       - system_settings_siri_disable
-  - section: Supplemental
+      - system_settings_software_update_download_enforce
+      - system_settings_usb_restricted_mode
+  - section: Permanent
     rules:
-      - supplemental_cis_ios_manual
+      - os_secure_name_resolution

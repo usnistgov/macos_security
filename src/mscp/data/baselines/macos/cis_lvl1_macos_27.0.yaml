@@ -120,4 +120,4 @@ profile:
       - system_settings_wake_network_access_disable
   - section: Supplemental
     rules:
-      - supplemental_cis_manual
+      - supplemental_cis_manual_27

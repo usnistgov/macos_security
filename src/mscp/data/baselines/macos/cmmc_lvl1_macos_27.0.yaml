@@ -43,12 +43,13 @@ profile:
     rules:
       - os_account_modification_disable
       - os_airdrop_disable
+      - os_apple_intelligence_pcc_disable
       - os_appleid_prompt_disable
       - os_authenticated_root_enable
       - os_config_data_install_enforce
+      - os_definition_lookup_disable
       - os_dictation_disable
       - os_filevault_autologin_disable
-      - os_firmware_password_require
       - os_gatekeeper_enable
       - os_genmoji_disable
       - os_handoff_disable
@@ -59,6 +60,7 @@ profile:
       - os_iphone_mirroring_disable
       - os_mail_smart_reply_disable
       - os_mail_summary_disable
+      - os_natural_language_editing_disable
       - os_nfsd_disable
       - os_notes_transcription_disable
       - os_notes_transcription_summary_disable
@@ -74,6 +76,7 @@ profile:
       - os_tftpd_disable
       - os_unlock_active_user_session_disable
       - os_uucp_disable
+      - os_visual_intelligence_disable
       - os_writing_tools_disable
   - section: Password Policy
     rules:
@@ -81,6 +84,7 @@ profile:
   - section: System Settings
     rules:
       - system_settings_automatic_login_disable
+      - system_settings_background_security_improvement_removal_disable
       - system_settings_bluetooth_sharing_disable
       - system_settings_critical_update_install_enforce
       - system_settings_diagnostics_reports_disable
@@ -101,7 +105,7 @@ profile:
       - system_settings_personalized_advertising_disable
       - system_settings_rae_disable
       - system_settings_screen_sharing_disable
-      - system_settings_security_update_install
+      - system_settings_siri_ai_disable
       - system_settings_siri_disable
       - system_settings_smbd_disable
       - system_settings_softwareupdate_current

@@ -26,9 +26,11 @@ profile:
     rules:
       - os_account_modification_disable
       - os_airdrop_disable
+      - os_erase_contents_and_settings_disable
       - os_genmoji_disable
       - os_handoff_disable
       - os_image_playground_disable
+      - os_install_configuration_profile_disable
       - os_mail_smart_reply_disable
       - os_mail_summary_disable
       - os_on_device_dictation_enforce
@@ -45,4 +47,7 @@ profile:
   - section: System Settings
     rules:
       - system_settings_biometric_disable
+      - system_settings_external_intelligence_disable
+      - system_settings_external_intelligence_sign_in_disable
+      - system_settings_siri_ai_disable
       - system_settings_siri_disable

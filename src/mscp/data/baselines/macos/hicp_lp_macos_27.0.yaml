@@ -64,16 +64,18 @@ profile:
     rules:
       - os_account_modification_disable
       - os_airdrop_disable
+      - os_apple_intelligence_pcc_disable
       - os_authenticated_root_enable
+      - os_bluetooth_modification_disable
       - os_bonjour_disable
       - os_calendar_app_disable
       - os_certificate_authority_trust
       - os_config_data_install_enforce
+      - os_definition_lookup_disable
       - os_dictation_disable
-      - os_erase_content_and_settings_disable
+      - os_erase_contents_and_settings_disable
       - os_facetime_app_disable
       - os_firewall_default_deny_require
-      - os_firmware_password_require
       - os_gatekeeper_enable
       - os_genmoji_disable
       - os_handoff_disable
@@ -82,8 +84,6 @@ profile:
       - os_httpd_disable
       - os_image_playground_disable
       - os_iphone_mirroring_disable
-      - os_ir_support_disable
-      - os_mail_app_disable
       - os_mail_smart_reply_disable
       - os_mail_summary_disable
       - os_mdm_require
@@ -95,10 +95,10 @@ profile:
       - os_password_proximity_disable
       - os_password_sharing_disable
       - os_photos_enhanced_search_disable
-      - os_power_nap_disable
       - os_privacy_setup_prompt_disable
       - os_recovery_lock_enable
       - os_safari_reader_summary_disable
+      - os_screenshots_disable
       - os_secure_boot_verify
       - os_setup_assistant_filevault_enforce
       - os_sip_enable
@@ -156,7 +156,7 @@ profile:
       - system_settings_rae_disable
       - system_settings_remote_management_disable
       - system_settings_screen_sharing_disable
-      - system_settings_security_update_install
+      - system_settings_siri_ai_disable
       - system_settings_siri_disable
       - system_settings_siri_settings_disable
       - system_settings_smbd_disable

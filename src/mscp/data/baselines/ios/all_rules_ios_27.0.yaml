@@ -40,17 +40,16 @@ profile:
       - os_allow_contacts_write_managed_sources_unmanaged_destinations_disable
       - os_allow_documents_managed_sources_unmanaged_destinations_disable
       - os_allow_documents_unmanaged_sources_managed_destinations_disable
+      - os_allow_enterprise_trust_disabled
       - os_apple_watch_pairing_disable
       - os_apple_watch_wrist_detection_enable
       - os_application_allow_list
       - os_application_deny_list
       - os_authentication_password_autofill_enable
       - os_auto_correction_disable
-      - os_auto_dim_allow
       - os_auto_unlock_disable
       - os_automatic_app_download_disable
       - os_background_security_improvement_install_enable
-      - os_background_security_improvement_removal_disable
       - os_bluetooth_modification_disable
       - os_call_recording_disable
       - os_camera_disable
@@ -62,7 +61,7 @@ profile:
       - os_device_name_change_disable
       - os_diagnostics_reports_disable
       - os_diagnostics_reports_modification_disable
-      - os_disallow_enterprise_app_trust
+      - os_dictation_disable
       - os_enterprise_books_disable
       - os_erase_contents_and_settings_disable
       - os_esim_delete
@@ -80,8 +79,6 @@ profile:
       - os_exchange_peraccountVPN
       - os_exchange_reminders_disable
       - os_exchange_reminders_user_override_disable
-      - os_external_intelligence_integration_disable
-      - os_external_intelligence_integration_sign_in_disable
       - os_facetime_disable
       - os_files_network_drive_access_disable
       - os_files_usb_drive_access_disable
@@ -100,6 +97,7 @@ profile:
       - os_iphone_widgets_on_mac_disable
       - os_limit_ad_tracking_enable
       - os_live_text_disable
+      - os_lock_screen_notification_disable
       - os_mail_block_remote_content
       - os_mail_maildrop_disable
       - os_mail_move_messages_disable
@@ -121,15 +119,14 @@ profile:
       - os_personalized_advertising_disable
       - os_personalized_handwriting_disable
       - os_predictive_keyboard_disable
-      - os_rapid_security_responses_install_enable
       - os_rapid_security_responses_remove_disable
       - os_rcs_messaging_disable
       - os_require_managed_pasteboard_enforce
-      - os_safari_JavaScript_disable
       - os_safari_clear_history_disable
       - os_safari_cookies_set
       - os_safari_disable
       - os_safari_force_fraud_warning_enable
+      - os_safari_javascript_disable
       - os_safari_password_autofill_disable
       - os_safari_popups_disable
       - os_safari_private_browsing_disable
@@ -140,12 +137,9 @@ profile:
       - os_show_calendar_lock_screen_disable
       - os_show_control_center_lock_screen_disable
       - os_show_notification_center_lock_screen_disable
-      - os_siri_allow_dictation_disable
       - os_siri_server_logging_disable
       - os_siri_user_generated_content_disable
       - os_siri_when_locked_disabled
-      - os_software_update_download_enforce
-      - os_software_update_install_enforce
       - os_spell_check_disable
       - os_ssl_for_exchange_activesync_enable
       - os_supervised_mdm_require
@@ -157,7 +151,7 @@ profile:
       - os_update_OTAPKI_allow
       - os_update_auto_RSR_allow
       - os_update_enforced_software_update_delay
-      - os_usb_accessories_when_locked_disable
+      - os_user_ui_app_installation_prohibit
       - os_video_conferencing_remote_control_disable
       - os_visual_intelligence_summary
       - os_voice_dialing_when_locked_disabled
@@ -175,9 +169,17 @@ profile:
       - pwpolicy_simple_sequence_disable
   - section: System Settings
     rules:
+      - system_settings_background_security_improvement_removal_disable
+      - system_settings_external_intelligence_disable
+      - system_settings_external_intelligence_sign_in_disable
+      - system_settings_install_macos_updates_enforce
+      - system_settings_siri_ai_disable
       - system_settings_siri_disable
-  - section: Supplemental
+      - system_settings_software_update_download_enforce
+      - system_settings_usb_restricted_mode
+  - section: Inherent
     rules:
-      - supplemental_bsi
-      - supplemental_cis_ios_manual
-      - supplemental_stig_ios
+      - os_secure_enclave
+  - section: Permanent
+    rules:
+      - os_secure_name_resolution

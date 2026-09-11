@@ -34,15 +34,13 @@ profile:
       - os_allow_documents_managed_sources_unmanaged_destinations_disable
       - os_allow_documents_unmanaged_sources_managed_destinations_disable
       - os_allow_enterprise_trust_disabled
-      - os_allow_prerelease_disable
       - os_authentication_password_autofill_enable
+      - os_bluetooth_modification_disable
       - os_camera_disable
+      - os_chat_disable
       - os_default_browser_modification_disable
       - os_diagnostics_reports_disable
-      - os_disallow_enterprise_app_trust
       - os_erase_contents_and_settings_disable
-      - os_external_intelligence_integration_disable
-      - os_external_intelligence_integration_sign_in_disable
       - os_files_network_drive_access_disable
       - os_force_date_and_time_enable
       - os_genmoji_disable
@@ -56,17 +54,19 @@ profile:
       - os_mail_move_messages_disable
       - os_mail_smart_reply_disable
       - os_mail_summary_disable
+      - os_network_known_only
       - os_on_device_dictation_enforce
       - os_password_autofill_disable
       - os_password_sharing_disable
       - os_personalized_advertising_disable
       - os_require_managed_pasteboard_enforce
+      - os_safari_clear_history_disable
       - os_safari_password_autofill_disable
+      - os_safari_private_browsing_disable
       - os_safari_reader_summary_disable
       - os_screenshots_disable
       - os_ssl_for_exchange_activesync_enable
       - os_untrusted_tls_disable
-      - os_user_app_installation_prohibit
       - os_user_ui_app_installation_prohibit
       - os_writing_tools_disable
   - section: Password Policy
@@ -74,13 +74,20 @@ profile:
       - pwpolicy_account_lockout_enforce
       - pwpolicy_force_pin_enable
       - pwpolicy_history_enforce
+      - pwpolicy_max_grace_period_enforce
       - pwpolicy_max_inactivity_enforce
       - pwpolicy_minimum_length_enforce
       - pwpolicy_simple_sequence_disable
   - section: System Settings
     rules:
       - system_settings_biometric_disable
+      - system_settings_external_intelligence_disable
+      - system_settings_external_intelligence_sign_in_disable
+      - system_settings_siri_ai_disable
       - system_settings_siri_disable
-  - section: Supplemental
+  - section: Inherent
     rules:
-      - supplemental_stig_visionos
+      - os_secure_enclave
+  - section: Permanent
+    rules:
+      - os_secure_name_resolution

@@ -66,12 +66,18 @@ profile:
     rules:
       - os_account_modification_disable
       - os_airdrop_disable
+      - os_allow_prerelease_disable
+      - os_apple_intelligence_pcc_disable
       - os_appleid_prompt_disable
       - os_authenticated_root_enable
+      - os_background_security_improvement_install_enable
+      - os_bluetooth_modification_disable
       - os_bonjour_disable
+      - os_call_recording_disable
       - os_config_data_install_enforce
-      - os_config_profile_ui_install_disable
+      - os_definition_lookup_disable
       - os_dictation_disable
+      - os_erase_contents_and_settings_disable
       - os_external_storage_access_defined
       - os_filevault_autologin_disable
       - os_gatekeeper_enable
@@ -80,11 +86,12 @@ profile:
       - os_httpd_disable
       - os_icloud_storage_prompt_disable
       - os_image_playground_disable
+      - os_install_configuration_profile_disable
       - os_iphone_mirroring_disable
-      - os_ir_support_disable
       - os_mail_smart_reply_disable
       - os_mail_summary_disable
       - os_mdm_require
+      - os_natural_language_editing_disable
       - os_nfsd_disable
       - os_notes_transcription_disable
       - os_notes_transcription_summary_disable
@@ -97,8 +104,8 @@ profile:
       - os_policy_banner_ssh_configure
       - os_policy_banner_ssh_enforce
       - os_root_disable
-      - os_safari_allow_javascript_disable
       - os_safari_reader_summary_disable
+      - os_screenshots_disable
       - os_sip_enable
       - os_siri_prompt_disable
       - os_skip_apple_intelligence_enable
@@ -113,6 +120,7 @@ profile:
       - os_touchid_prompt_disable
       - os_unlock_active_user_session_disable
       - os_uucp_disable
+      - os_visual_intelligence_disable
       - os_writing_tools_disable
   - section: Password Policy
     rules:
@@ -130,6 +138,7 @@ profile:
     rules:
       - system_settings_airplay_receiver_disable
       - system_settings_automatic_login_disable
+      - system_settings_background_security_improvement_removal_disable
       - system_settings_biometric_disable
       - system_settings_bluetooth_disable
       - system_settings_bluetooth_settings_disable
@@ -161,7 +170,7 @@ profile:
       - system_settings_remote_management_disable
       - system_settings_screen_sharing_disable
       - system_settings_screensaver_timeout_enforce
-      - system_settings_security_update_install
+      - system_settings_siri_ai_disable
       - system_settings_siri_disable
       - system_settings_siri_settings_disable
       - system_settings_smbd_disable

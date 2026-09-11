@@ -36,9 +36,8 @@ profile:
       - os_allow_documents_managed_sources_unmanaged_destinations_disable
       - os_allow_documents_unmanaged_sources_managed_destinations_disable
       - os_authentication_password_autofill_enable
+      - os_chat_disable
       - os_diagnostics_reports_disable
-      - os_external_intelligence_integration_disable
-      - os_external_intelligence_integration_sign_in_disable
       - os_genmoji_disable
       - os_handoff_disable
       - os_image_playground_disable
@@ -54,4 +53,7 @@ profile:
       - pwpolicy_account_lockout_enforce
   - section: System Settings
     rules:
+      - system_settings_external_intelligence_disable
+      - system_settings_external_intelligence_sign_in_disable
+      - system_settings_siri_ai_disable
       - system_settings_siri_disable

@@ -74,58 +74,53 @@ profile:
     rules:
       - os_account_modification_disable
       - os_airdrop_disable
+      - os_allow_prerelease_disable
       - os_anti_virus_installed
+      - os_apple_intelligence_pcc_disable
       - os_appleid_prompt_disable
       - os_asl_log_files_owner_group_configure
       - os_asl_log_files_permissions_configure
       - os_authenticated_root_enable
-      - os_blank_bluray_disable
-      - os_blank_cd_disable
-      - os_blank_dvd_disable
-      - os_bluray_read_only_enforce
+      - os_background_security_improvement_install_enable
+      - os_bluetooth_modification_disable
       - os_bonjour_disable
       - os_burn_support_disable
       - os_calendar_app_disable
+      - os_call_recording_disable
       - os_camera_disable
-      - os_cd_read_only_enforce
       - os_certificate_authority_trust
       - os_config_data_install_enforce
-      - os_config_profile_ui_install_disable
+      - os_definition_lookup_disable
       - os_dictation_disable
       - os_directory_services_configured
-      - os_disk_image_disable
-      - os_dvdram_disable
-      - os_erase_content_and_settings_disable
+      - os_erase_contents_and_settings_disable
       - os_external_apfs_hfs_volumes_encrypted
       - os_external_storage_access_defined
       - os_facetime_app_disable
       - os_filevault_authorized_users
       - os_filevault_autologin_disable
       - os_firewall_default_deny_require
-      - os_firmware_password_require
       - os_gatekeeper_enable
       - os_genmoji_disable
       - os_guest_folder_removed
       - os_handoff_disable
-      - os_hibernate_mode_destroyfvkeyonstandby_enable
-      - os_hibernate_mode_intel_enable
       - os_home_folders_default
       - os_home_folders_secure
       - os_httpd_disable
       - os_icloud_storage_prompt_disable
       - os_image_playground_disable
+      - os_install_configuration_profile_disable
       - os_install_log_retention_configure
       - os_internal_apfs_volumes_encrypted
       - os_iphone_mirroring_disable
-      - os_ir_support_disable
       - os_library_validation_enabled
       - os_loginwindow_adminhostinfo_disabled
-      - os_mail_app_disable
       - os_mail_smart_reply_disable
       - os_mail_summary_disable
       - os_mdm_require
       - os_messages_app_disable
       - os_mobile_file_integrity_enable
+      - os_natural_language_editing_disable
       - os_network_storage_restriction
       - os_newsyslog_files_owner_group_configure
       - os_newsyslog_files_permissions_configure
@@ -142,14 +137,10 @@ profile:
       - os_policy_banner_loginwindow_enforce
       - os_policy_banner_ssh_configure
       - os_policy_banner_ssh_enforce
-      - os_power_nap_disable
-      - os_power_nap_enable
       - os_privacy_setup_prompt_disable
       - os_recovery_lock_enable
-      - os_removable_media_disable
       - os_root_disable
       - os_safari_advertising_privacy_protection_enable
-      - os_safari_allow_javascript_disable
       - os_safari_clear_history_disable
       - os_safari_open_safe_downloads_disable
       - os_safari_prevent_cross-site_tracking_enable
@@ -159,6 +150,7 @@ profile:
       - os_safari_show_status_bar_enabled
       - os_safari_warn_fraudulent_website_enable
       - os_screensaver_loginwindow_enforce
+      - os_screenshots_disable
       - os_secure_boot_verify
       - os_setup_assistant_filevault_enforce
       - os_sip_enable
@@ -167,7 +159,6 @@ profile:
       - os_skip_screen_time_prompt_enable
       - os_skip_unlock_with_watch_enable
       - os_sleep_and_display_sleep_apple_silicon_enable
-      - os_software_update_app_update_enforce
       - os_software_update_deferral
       - os_ssh_fips_compliant
       - os_ssh_server_alive_count_max_configure
@@ -187,12 +178,12 @@ profile:
       - os_system_wide_applications_configure
       - os_terminal_secure_keyboard_enable
       - os_tftpd_disable
-      - os_time_offset_limit_configure
       - os_time_server_enabled
       - os_touchid_prompt_disable
       - os_unlock_active_user_session_disable
       - os_user_app_installation_prohibit
       - os_uucp_disable
+      - os_visual_intelligence_disable
       - os_world_writable_library_folder_configure
       - os_world_writable_system_folder_configure
       - os_writing_tools_disable
@@ -227,7 +218,6 @@ profile:
       - system_settings_content_caching_disable
       - system_settings_critical_update_install_enforce
       - system_settings_diagnostics_reports_disable
-      - system_settings_download_software_update_enforce
       - system_settings_external_intelligence_disable
       - system_settings_external_intelligence_sign_in_disable
       - system_settings_filevault_enforce
@@ -251,7 +241,6 @@ profile:
       - system_settings_location_services_menu_enforce
       - system_settings_loginwindow_loginwindowtext_enable
       - system_settings_loginwindow_prompt_username_password_enforce
-      - system_settings_macos_updates_install_enforce
       - system_settings_media_sharing_disabled
       - system_settings_password_hints_disable
       - system_settings_personalized_advertising_disable
@@ -262,12 +251,13 @@ profile:
       - system_settings_screensaver_ask_for_password_delay_enforce
       - system_settings_screensaver_password_enforce
       - system_settings_screensaver_timeout_enforce
-      - system_settings_security_update_install
+      - system_settings_siri_ai_disable
       - system_settings_siri_disable
-      - system_settings_siri_listen_disable
       - system_settings_siri_settings_disable
       - system_settings_smbd_disable
+      - system_settings_software_update_app_update_enforce
       - system_settings_software_update_download_enforce
+      - system_settings_software_update_enforce
       - system_settings_softwareupdate_current
       - system_settings_ssh_disable
       - system_settings_ssh_enable
@@ -282,7 +272,6 @@ profile:
       - system_settings_wake_network_access_disable
       - system_settings_wallet_applepay_settings_disable
       - system_settings_wifi_disable
-      - system_settings_wifi_menu_enable
   - section: Inherent
     rules:
       - audit_record_reduction_report_generation
@@ -363,7 +352,7 @@ profile:
       - os_privacy_principle_minimization
   - section: Supplemental
     rules:
-      - supplemental_cis_manual
+      - supplemental_cis_manual_27
       - supplemental_controls
       - supplemental_filevault
       - supplemental_firewall_pf
