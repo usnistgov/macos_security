@@ -7,20 +7,192 @@ const GITHUB_OWNER = 'usnistgov';
 const GITHUB_REPO = 'macos_security';
 const CONTAINER_ID = 'github-latest-release';
 
+// --- Minimal GitHub-flavored Markdown renderer for release notes ---
+
+const REPO_URL_PREFIX = `https://github.com/${GITHUB_OWNER}/${GITHUB_REPO}/`;
+const KEEP = '\u0000';
+
+function escapeHtml(text) {
+  return String(text)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+}
+
+// Shorten links back to this repo the way GitHub does: pull/751 -> #751
+function linkLabel(url) {
+  if (url.indexOf(REPO_URL_PREFIX) === 0) {
+    const rest = url.slice(REPO_URL_PREFIX.length);
+    const issue = rest.match(/^(?:pull|issues)\/(\d+)$/);
+    if (issue) return '#' + issue[1];
+    const compare = rest.match(/^compare\/(.+)$/);
+    if (compare) return compare[1];
+  }
+  return url;
+}
+
+function anchor(url, label) {
+  return `<a href="${url}" target="_blank" rel="noopener">${label}</a>`;
+}
+
+function renderInline(text) {
+  const kept = [];
+  const keep = (html) => KEEP + (kept.push(html) - 1) + KEEP;
+
+  let s = escapeHtml(text);
+
+  // `code` — protected first so nothing below rewrites its contents
+  s = s.replace(/`([^`]+)`/g, (_, code) => keep(`<code>${code}</code>`));
+
+  // [label](url) — keep only the tags so the label still picks up bold/italic
+  s = s.replace(
+    new RegExp('\\[([^\\]' + KEEP + ']+)\\]\\((https?:\\/\\/[^\\s)]+)\\)', 'g'),
+    (_, label, url) => keep(`<a href="${url}" target="_blank" rel="noopener">`) + label + keep('</a>')
+  );
+
+  // Bare URLs
+  s = s.replace(new RegExp('(^|[\\s(])(https?:\\/\\/[^\\s<>()' + KEEP + ']+)', 'g'), (_, before, url) => {
+    const trailing = (url.match(/[.,;:!?]+$/) || [''])[0];
+    if (trailing) url = url.slice(0, -trailing.length);
+    return before + keep(anchor(url, linkLabel(url))) + trailing;
+  });
+
+  s = s.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+  s = s.replace(/__([^_]+)__/g, '<strong>$1</strong>');
+  s = s.replace(/\*([^*\n]+)\*/g, '<em>$1</em>');
+  // Underscore italics need word boundaries so snake_case names survive
+  s = s.replace(/(^|[\s(])_([^_\n]+)_(?=$|[\s).,;:!?])/g, '$1<em>$2</em>');
+  s = s.replace(/~~([^~]+)~~/g, '<del>$1</del>');
+
+  // @mentions, including @dependabot[bot]
+  s = s.replace(
+    /(^|[^\w\/@])@([A-Za-z\d][A-Za-z\d-]{0,38})(\[bot\])?/g,
+    (_, before, user, bot) => before + anchor(`https://github.com/${user}`, '@' + user + (bot || ''))
+  );
+
+  return s.replace(new RegExp(KEEP + '(\\d+)' + KEEP, 'g'), (_, i) => kept[i]);
+}
+
+function renderMarkdown(md) {
+  const lines = String(md).replace(/\r\n?/g, '\n').split('\n');
+  const out = [];
+  const listStack = [];
+  let para = [];
+  let quote = [];
+  let fence = null;
+
+  const flushPara = () => {
+    if (!para.length) return;
+    out.push(`<p>${para.map(renderInline).join('<br>')}</p>`);
+    para = [];
+  };
+  const flushQuote = () => {
+    if (!quote.length) return;
+    out.push(`<blockquote>${renderMarkdown(quote.join('\n'))}</blockquote>`);
+    quote = [];
+  };
+  const closeLists = () => {
+    while (listStack.length) out.push(`</li></${listStack.pop().tag}>`);
+  };
+  const flushBlocks = () => {
+    flushPara();
+    flushQuote();
+    closeLists();
+  };
+
+  for (const line of lines) {
+    const fenceMark = /^\s*(?:```|~~~)/.test(line);
+    if (fence) {
+      if (fenceMark) {
+        out.push(`<pre><code>${escapeHtml(fence.join('\n'))}</code></pre>`);
+        fence = null;
+      } else {
+        fence.push(line);
+      }
+      continue;
+    }
+    if (fenceMark) {
+      flushBlocks();
+      fence = [];
+      continue;
+    }
+
+    if (!line.trim()) {
+      flushBlocks();
+      continue;
+    }
+
+    const quoted = line.match(/^\s*>\s?(.*)$/);
+    if (quoted) {
+      flushPara();
+      closeLists();
+      quote.push(quoted[1]);
+      continue;
+    }
+    flushQuote();
+
+    const heading = line.match(/^(#{1,6})\s+(.*)$/);
+    if (heading) {
+      flushBlocks();
+      // Offset so a release note's "## Section" sits under the page's own h2
+      const level = Math.min(heading[1].length + 2, 6);
+      out.push(`<h${level}>${renderInline(heading[2].replace(/\s+#+\s*$/, ''))}</h${level}>`);
+      continue;
+    }
+
+    if (/^\s*(?:[-*_]\s*){3,}$/.test(line)) {
+      flushBlocks();
+      out.push('<hr>');
+      continue;
+    }
+
+    const item = line.match(/^(\s*)(?:([-*+])|(\d+)[.)])\s+(.*)$/);
+    if (item) {
+      flushPara();
+      const indent = item[1].replace(/\t/g, '  ').length;
+      const tag = item[2] ? 'ul' : 'ol';
+      while (listStack.length && listStack[listStack.length - 1].indent > indent) {
+        out.push(`</li></${listStack.pop().tag}>`);
+      }
+      const top = listStack[listStack.length - 1];
+      if (top && top.indent === indent) {
+        out.push('</li>');
+        if (top.tag !== tag) {
+          out.push(`</${listStack.pop().tag}>`);
+          out.push(`<${tag}>`);
+          listStack.push({ tag, indent });
+        }
+      } else {
+        out.push(`<${tag}>`);
+        listStack.push({ tag, indent });
+      }
+      out.push(`<li>${renderInline(item[4])}`);
+      continue;
+    }
+
+    // A wrapped line inside a list item, otherwise ordinary paragraph text
+    if (listStack.length && /^\s{2,}/.test(line)) {
+      out.push(`<br>${renderInline(line.trim())}`);
+      continue;
+    }
+    closeLists();
+    para.push(line.trim());
+  }
+
+  if (fence) out.push(`<pre><code>${escapeHtml(fence.join('\n'))}</code></pre>`);
+  flushBlocks();
+  return out.join('');
+}
+
 function renderReleaseInfo({ tag_name, name, html_url, published_at, body }) {
   const date = published_at
     ? new Date(published_at).toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' })
     : '';
 
   let notes = '';
-  if (body) {
-    notes = body.replace(/</g, "&lt;");
-    notes = notes.replace(
-      /\*\*Full Changelog\*\*:\s*(https?:\/\/[^\s]+)/g,
-      (match, url) =>
-        `<a href="${url}" target="_blank" rel="noopener">Full Changelog</a>`
-    );
-    notes = `<div class="github-release-notes">${notes}</div>`;
+  if (body && body.trim()) {
+    notes = `<div class="github-release-notes">${renderMarkdown(body)}</div>`;
   }
   return `
     <div class="github-release-info">
@@ -32,9 +204,9 @@ function renderReleaseInfo({ tag_name, name, html_url, published_at, body }) {
         </svg>
         <div class="github-release-title-group">
           <a href="${html_url}" target="_blank" rel="noopener" class="github-release-title">
-            ${name || tag_name}
+            ${escapeHtml(name || tag_name)}
           </a>
-          <span class="github-release-tag">${tag_name}</span>
+          <span class="github-release-tag">${escapeHtml(tag_name)}</span>
         </div>
       </div>
       ${date ? `<div class="github-release-date">Released: <strong>${date}</strong></div>` : ''}
@@ -164,11 +336,11 @@ function injectReleaseBoxStyles() {
     .github-release-notes {
       margin-top: 0.75em;
       font-size: 0.95em;
+      line-height: 1.6;
       color: var(--sl-color-text, #444);
-      white-space: pre-line;
       overflow-wrap: anywhere;
       word-break: break-word;
-      padding: 0.75em;
+      padding: 0.75em 1em;
       background: rgba(0,0,0,0.015);
       border-radius: 6px;
       border: 1px solid rgba(0,0,0,0.04);
@@ -176,6 +348,86 @@ function injectReleaseBoxStyles() {
     [data-theme="dark"] .github-release-notes {
       background: rgba(255,255,255,0.02);
       border-color: rgba(255,255,255,0.05);
+    }
+    .github-release-notes > :first-child {
+      margin-top: 0;
+    }
+    .github-release-notes > :last-child {
+      margin-bottom: 0;
+    }
+    .github-release-notes :is(h3, h4, h5, h6) {
+      margin: 1.25em 0 0.5em;
+      font-size: 1em;
+      font-weight: 600;
+      line-height: 1.3;
+      color: var(--sl-color-white, #111);
+    }
+    .github-release-notes p {
+      margin: 0.6em 0;
+    }
+    .github-release-notes :is(ul, ol) {
+      margin: 0.5em 0;
+      padding-left: 1.4em;
+      list-style-position: outside;
+    }
+    .github-release-notes ul {
+      list-style-type: disc;
+    }
+    .github-release-notes ol {
+      list-style-type: decimal;
+    }
+    .github-release-notes li {
+      margin: 0.2em 0;
+    }
+    .github-release-notes :is(ul, ol) :is(ul, ol) {
+      margin: 0.2em 0;
+    }
+    .github-release-notes a {
+      color: var(--sl-color-accent, #316431);
+      text-decoration: none;
+    }
+    .github-release-notes a:hover {
+      text-decoration: underline;
+    }
+    [data-theme="dark"] .github-release-notes a {
+      color: var(--sl-color-accent-high, #6ab549);
+    }
+    .github-release-notes code {
+      font-size: 0.9em;
+      padding: 0.15em 0.4em;
+      border-radius: 4px;
+      background: rgba(0,0,0,0.06);
+    }
+    [data-theme="dark"] .github-release-notes code {
+      background: rgba(255,255,255,0.1);
+    }
+    .github-release-notes pre {
+      margin: 0.6em 0;
+      padding: 0.75em;
+      overflow-x: auto;
+      border-radius: 6px;
+      background: rgba(0,0,0,0.05);
+    }
+    [data-theme="dark"] .github-release-notes pre {
+      background: rgba(255,255,255,0.06);
+    }
+    .github-release-notes pre code {
+      padding: 0;
+      background: none;
+      white-space: pre;
+      overflow-wrap: normal;
+      word-break: normal;
+    }
+    .github-release-notes blockquote {
+      margin: 0.6em 0;
+      padding-left: 0.9em;
+      border-left: 3px solid var(--sl-color-gray-5, #ddd);
+      color: var(--sl-color-gray-2, #666);
+    }
+    .github-release-notes hr {
+      margin: 1em 0;
+      border: 0;
+      border-top: 1px solid var(--sl-color-gray-5, #ddd);
     }
     .github-release-links {
       display: flex;

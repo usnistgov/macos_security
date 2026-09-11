@@ -98,12 +98,14 @@ References are nested by source organization:
 references:
   nist:
     cce:
+      macos_27: [CCE-97006-1]
       macos_26: [CCE-95164-0]
       macos_15: [CCE-94164-1]
     800-53r5: [AC-3, CM-5, SI-7]
     800-171r3: [03.01.02, 03.04.05]
   disa:
     disa_stig:
+      macos_27: [APPL-27-002064]
       macos_26: [APPL-26-002064]
       macos_15: [APPL-15-002064]
     srg: [SRG-OS-000480-GPOS-00227]
@@ -155,16 +157,16 @@ discussion: |
 references:
   nist:
     cce:
+      macos_27: [CCE-97006-1]
       macos_26: [CCE-95164-0]
       macos_15: [CCE-94164-1]
-      macos_14: [CCE-92764-0]
     800-53r5: [AC-3, CM-5, SC-34, SI-7]
     800-171r3: [03.01.02, 03.04.05]
   disa:
     disa_stig:
+      macos_27: [APPL-27-002064]
       macos_26: [APPL-26-002064]
       macos_15: [APPL-15-002064]
-      macos_14: [APPL-14-002064]
 tags:
   - 800-53r5_moderate
   - 800-53r5_high
@@ -172,6 +174,12 @@ tags:
   - cnssi-1253_moderate
 platforms:
   macOS:
+    '27.0':
+      benchmarks:
+        - name: cis_lvl1
+        - name: cis_lvl2
+        - name: disa_stig
+          severity: medium
     '26.0':
       benchmarks:
         - name: cis_lvl1

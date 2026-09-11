@@ -137,7 +137,7 @@ Prefer to install manually with Python? See the <a href={`${base}welcome/getting
    ```bash
    # Example: Generate CIS Level 1 baseline
    ./mscp.py baseline -k cis_lvl1
-   # Output: Generated new baseline file: config/custom/baselines/cis_lvl1_macos_26.0.yaml
+   # Output: Generated new baseline file: config/custom/baselines/cis_lvl1_macos_27.0.yaml
    ```
 
 4. **Generate Outputs**
@@ -157,8 +157,8 @@ Prefer to install manually with Python? See the <a href={`${base}welcome/getting
 
    **Example — Generate all outputs:**
    ```bash
-   ./mscp.py guidance custom/baselines/cis_lvl1_macos_26.0.yaml -A
-   # Output: MSCP DOCUMENT GENERATION COMPLETE! All documents in: /build/cis_lvl1_macos_26.0/
+   ./mscp.py guidance custom/baselines/cis_lvl1_macos_27.0.yaml -A
+   # Output: MSCP DOCUMENT GENERATION COMPLETE! All documents in: /build/cis_lvl1_macos_27.0/
    ```
 
 5. **Use Your Files**
@@ -166,11 +166,11 @@ Prefer to install manually with Python? See the <a href={`${base}welcome/getting
    Everything goes to `build/BASELINE_NAME/`:
 
    ```
-   build/cis_lvl1_macos_26.0/
-   ├── cis_lvl1_macos_26.0.adoc
-   ├── cis_lvl1_macos_26.0.html
-   ├── cis_lvl1_macos_26.0.pdf
-   ├── cis_lvl1_macos_26.0_compliance.sh
+   build/cis_lvl1_macos_27.0/
+   ├── cis_lvl1_macos_27.0.adoc
+   ├── cis_lvl1_macos_27.0.html
+   ├── cis_lvl1_macos_27.0.pdf
+   ├── cis_lvl1_macos_27.0_compliance.sh
    ├── mobileconfigs/
    ├── preferences/
    ├── activations/
@@ -190,7 +190,7 @@ The script must run in **zsh** (default on macOS). Using `bash` or `sh` will cau
 
 **Interactive mode:**
 ```zsh
-sudo ./build/cis_lvl1_macos_26.0/cis_lvl1_macos_26.0_compliance.sh
+sudo ./build/cis_lvl1_macos_27.0/cis_lvl1_macos_27.0_compliance.sh
 ```
 
 **Automated mode:**
@@ -210,10 +210,10 @@ sudo ./build/cis_lvl1_macos_26.0/cis_lvl1_macos_26.0_compliance.sh
 
 ```zsh
 # Quick check
-sudo ./build/cis_lvl1_macos_26.0/cis_lvl1_macos_26.0_compliance.sh --check
+sudo ./build/cis_lvl1_macos_27.0/cis_lvl1_macos_27.0_compliance.sh --check
 
 # Full remediation
-sudo ./build/cis_lvl1_macos_26.0/cis_lvl1_macos_26.0_compliance.sh --cfc --quiet=2
+sudo ./build/cis_lvl1_macos_27.0/cis_lvl1_macos_27.0_compliance.sh --cfc --quiet=2
 ```
 
 ---
@@ -268,20 +268,20 @@ sudo ./build/cis_lvl1_macos_26.0/cis_lvl1_macos_26.0_compliance.sh --cfc --quiet
 **Compliance Check** — Scan a Mac for compliance issues:
 ```bash
 ./mscp.py baseline -k 800-53r5_moderate
-./mscp.py guidance custom/baselines/800-53r5_moderate_macos_26.0.yaml -s
-sudo ./build/800-53r5_moderate_macos_26.0/800-53r5_moderate_macos_26.0_compliance.sh --check
+./mscp.py guidance custom/baselines/800-53r5_moderate_macos_27.0.yaml -s
+sudo ./build/800-53r5_moderate_macos_27.0/800-53r5_moderate_macos_27.0_compliance.sh --check
 ```
 
 **MDM Deployment Package** — Generate profiles and DDM for device management:
 ```bash
 ./mscp.py baseline -k DISA-STIG
-./mscp.py guidance custom/baselines/DISA-STIG_macos_26.0.yaml -p -d -s
+./mscp.py guidance custom/baselines/DISA-STIG_macos_27.0.yaml -p -d -s
 ```
 
 **Full Documentation Set** — Create all outputs for documentation and audit:
 ```bash
 ./mscp.py baseline -k cis_lvl2
-./mscp.py guidance custom/baselines/cis_lvl2_macos_26.0.yaml -A
+./mscp.py guidance custom/baselines/cis_lvl2_macos_27.0.yaml -A
 ```
 
   </TabItem>
