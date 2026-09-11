@@ -1,0 +1,26 @@
+# Keep the build context small and the COPY . . layer cache stable.
+.git
+.gitignore
+.github/workflows
+.github/linters
+.github/cspell
+.github/ISSUE_TEMPLATE
+
+# Local-only working directories (never needed in the image)
+logs
+build
+mscp_gems
+.bundle
+dist
+*.egg-info
+
+# Python / editor cruft
+**/__pycache__
+**/*.pyc
+**/*.pyo
+.venv
+venv
+.mypy_cache
+.pytest_cache
+.ruff_cache
+.DS_Store

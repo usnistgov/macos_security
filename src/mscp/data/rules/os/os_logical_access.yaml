@@ -11,6 +11,8 @@ discussion: |-
 references:
   nist:
     cce:
+      macos_27:
+        - CCE-97205-9
       macos_26:
         - CCE-95219-2
       macos_15:
@@ -32,9 +34,9 @@ references:
       - 6.7
 platforms:
   macOS:
+    '27.0': {}
     '26.0': {}
     '15.0': {}
-    '14.0': {}
     enforcement_info:
       fix:
         additional_info: The technology inherently meets this requirement. No fix is required.

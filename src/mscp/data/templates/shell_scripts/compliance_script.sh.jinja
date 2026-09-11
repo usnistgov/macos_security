@@ -89,6 +89,8 @@ audit_csv="/Library/Logs/${CURR_HOSTNAME}_{{ audit_name }}_baseline.csv"
 
 baseline_name="{{ baseline_name }}"
 
+declare -A results_array
+
 # pause function
 pause(){
   vared -p "Press [Enter] key to continue..." -c fackEnterKey
@@ -225,7 +227,6 @@ reset_plist(){
     rm -f "$audit_log"
     rm -f "$audit_csv"
   fi
-  exit 0
 }
 
 # Generate the Compliant and Non-Compliant counts. Returns: Array (Compliant, Non-Compliant)
@@ -347,6 +348,28 @@ run_scan(){
 
 } 2>/dev/null
 
+print_json(){  
+  json_results="{"
+  for key in ${(k)results_array}; do
+    value="${results_array[$key]}"
+    if [[ "$value" == "true" ]] || [[ "$value" == "false" ]]; then    
+      json_results+="\"${key}\":${value},"
+    elif [[ "$value" =~ '^-?[0-9]+$' ]]; then
+      json_results+="\"${key}\":${value},"
+    elif [[ "$value" =~ '^-?[0-9]*\.[0-9]+$' ]]; then    
+      json_results+="\"${key}\":${value},"
+    else      
+      escaped_value=$(printf '%s' "$value" | /usr/bin/jq -Rs '.')
+      json_results+="\"${key}\":${escaped_value},"      
+    fi
+  done
+  
+  json_results="${json_results%,}"
+  json_results+="}"
+  
+  printf '%s\n' "$json_results" | /usr/bin/jq '.'
+}
+
 run_fix(){
   if [[ ! -e "$audit_plist" ]]; then
     logmessage "Audit plist doesn't exist, please run Audit Check First"
@@ -423,12 +446,14 @@ if (args && args.count > 0) {
 EOS
 )
     if [[ -n "$compliance_args" ]]; then
-        logmessage "Managed arguments found for compliance script, setting: $compliance_args"
+        if [[ "$compliance_args" != *"json"* ]]; then
+            logmessage "Managed arguments found for compliance script, setting: $compliance_args"
+        fi        
         set -- ${(z)compliance_args}
     fi
 fi
 
-zparseopts -D -E -help=flag_help -check=check -fix=fix -stats=stats -compliant=compliant_opt -non_compliant=non_compliant_opt -reset=reset -reset-all=reset_all -cfc=cfc -quiet:=quiet || { print -l $usage && return }
+zparseopts -D -E -help=flag_help -check=check -fix=fix -stats=stats -compliant=compliant_opt -non_compliant=non_compliant_opt -reset=reset -reset-all=reset_all -cfc=cfc -json=json -quiet:=quiet || { print -l $usage && return }
 
 [[ -z "$flag_help" ]] || { print -l $usage && return }
 
@@ -438,13 +463,14 @@ fi
 
 if [[ $reset ]] || [[ $reset_all ]]; then reset_plist; fi
 
-if [[ $check ]] || [[ $fix ]] || [[ $cfc ]] || [[ $stats ]] || [[ $compliant_opt ]] || [[ $non_compliant_opt ]]; then
+if [[ $check ]] || [[ $fix ]] || [[ $cfc ]] || [[ $stats ]] || [[ $compliant_opt ]] || [[ $non_compliant_opt ]] || [[ $json ]]; then
     if [[ $fix ]]; then run_fix; fi
     if [[ $check ]]; then run_scan; fi
     if [[ $cfc ]]; then run_scan; run_fix; run_scan; fi
     if [[ $stats ]];then generate_stats; fi
     if [[ $compliant_opt ]];then compliance_count "compliant"; fi
     if [[ $non_compliant_opt ]];then compliance_count "non-compliant"; fi
+    if [[ $json ]]; then print_json; fi
 else
     while true; do
         show_menus

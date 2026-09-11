@@ -7,6 +7,8 @@ discussion: |
 references:
   nist:
     cce:
+      macos_27:
+        - CCE-97152-3
       macos_26:
         - CCE-95378-6
       macos_15:
@@ -25,6 +27,8 @@ references:
     srg:
       - SRG-OS-000095-GPOS-00049
     disa_stig:
+      macos_27:
+        - APPL-27-002024
       macos_26:
         - APPL-26-002024
       macos_15:
@@ -43,14 +47,22 @@ references:
   cis:
     benchmark:
       macos_26:
-        - 2.9.1
+        - 2.9.1 (level 1)
       macos_15:
+        - 2.9.1 (level 1)
+      macos_27:
         - 2.9.1 (level 1)
     controls_v8:
       - 4.1
       - 4.8
 platforms:
   macOS:
+    '27.0':
+      benchmarks:
+        - name: cis_lvl1
+        - name: cis_lvl2
+        - name: disa_stig
+          severity: medium
     '26.0':
       benchmarks:
         - name: cis_lvl1
@@ -68,12 +80,9 @@ platforms:
     enforcement_info:
       check:
         shell: |-
-          /usr/bin/osascript -l JavaScript << EOS
-          $.NSUserDefaults.alloc.initWithSuiteName('com.apple.assistant.support')\
-          .objectForKey('Search Queries Data Sharing Status').js
-          EOS
+          /usr/bin/osascript -l JavaScript -e 'var s = $.NSUserDefaults.alloc.initWithSuiteName("com.apple.assistant.support"); var v = ObjC.unwrap(s.objectForKey("Search Queries Data Sharing Status")); (v == 2 && s.objectIsForcedForKey("Search Queries Data Sharing Status")) ? "PASS" : "FAIL"'
         result:
-          integer: 2
+          string: "PASS"
     introduced: '-1'
 tags:
   - 800-53r5_low

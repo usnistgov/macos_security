@@ -16,6 +16,8 @@ discussion: |
 references:
   nist:
     cce:
+      macos_27:
+        - CCE-97024-4
       macos_26:
         - CCE-95193-9
       macos_15:
@@ -35,17 +37,11 @@ references:
   hhs:
     hicp:
       - 6.L.A
-      - ''
 platforms:
   macOS:
+    '27.0': {}
     '26.0': {}
     '15.0':
-      enforcement_info:
-        check:
-          shell: /sbin/pfctl -a '*' -sr &> /dev/null | /usr/bin/grep -c "block drop in all"
-          result:
-            integer: 1
-    '14.0':
       enforcement_info:
         check:
           shell: /sbin/pfctl -a '*' -sr &> /dev/null | /usr/bin/grep -c "block drop in all"

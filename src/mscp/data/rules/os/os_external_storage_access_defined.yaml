@@ -7,6 +7,8 @@ discussion: |-
 references:
   nist:
     cce:
+      macos_27:
+        - CCE-97020-2
       macos_26:
         - CCE-95188-9
       macos_15:
@@ -24,6 +26,7 @@ references:
       - 8.12
 platforms:
   macOS:
+    '27.0': {}
     '26.0':
       benchmarks:
         - name: nlmapgov_plus
@@ -56,6 +59,7 @@ tags:
   - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
+  - 800-171
 ddm_info:
   declarationtype: com.apple.configuration.diskmanagement.settings
   ddm_key: ExternalStorage

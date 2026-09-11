@@ -7,6 +7,8 @@ discussion: |
 references:
   nist:
     cce:
+      macos_27:
+        - CCE-97103-6
       macos_26:
         - CCE-95325-7
       macos_15:
@@ -30,6 +32,8 @@ references:
       - SRG-OS-000356-GPOS-00144
       - SRG-OS-000785-GPOS-00250
     disa_stig:
+      macos_27:
+        - APPL-27-000180
       macos_26:
         - APPL-26-000180
       macos_15:
@@ -49,10 +53,18 @@ references:
         - 2.3.2.2 (level 1)
       macos_14:
         - 2.3.2.2 (level 1)
+      macos_27:
+        - 2.3.2.2 (level 1)
     controls_v8:
       - 8.4
 platforms:
   macOS:
+    '27.0':
+      benchmarks:
+        - name: cis_lvl1
+        - name: cis_lvl2
+        - name: disa_stig
+          severity: medium
     '26.0':
       benchmarks:
         - name: cis_lvl1
@@ -69,17 +81,6 @@ platforms:
           severity: medium
         - name: nlmapgov_plus
         - name: nlmapgov_base
-      enforcement_info:
-        check:
-          shell: /bin/launchctl list | /usr/bin/grep -c com.apple.timed
-          result:
-            integer: 1
-    '14.0':
-      benchmarks:
-        - name: cis_lvl1
-        - name: cis_lvl2
-        - name: disa_stig
-          severity: medium
       enforcement_info:
         check:
           shell: /bin/launchctl list | /usr/bin/grep -c com.apple.timed

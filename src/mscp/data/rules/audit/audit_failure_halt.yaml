@@ -7,6 +7,8 @@ discussion: |
 references:
   nist:
     cce:
+      macos_27:
+        - CCE-96959-2
       macos_26:
         - CCE-95111-1
       macos_15:
@@ -31,12 +33,9 @@ references:
       - AU.L2-3.3.4
 platforms:
   macOS:
+    '27.0': {}
     '26.0': {}
     '15.0':
-      benchmarks:
-        - name: disa_stig
-          severity: medium
-    '14.0':
       benchmarks:
         - name: disa_stig
           severity: medium

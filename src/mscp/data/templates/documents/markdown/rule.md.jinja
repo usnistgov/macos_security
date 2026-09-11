@@ -35,7 +35,11 @@
 {% endif %}
 
 {% if rule.os_type.lower() in NIX_OS %}
+{% if rule.result_value is not none %}
 {% trans %}If the result is not{% endtrans %} _{{ rule.result_value }}_, {% trans %}this is a finding{% endtrans %}.
+{% elif rule.result_exit_code is not none %}
+{% trans %}If the command's exit code is not{% endtrans %} _{{ rule.result_exit_code }}_, {% trans %}this is a finding{% endtrans %}.
+{% endif %}
 {% endif %}
 
 {% if markdown_tree | default(false) %}
@@ -74,6 +78,13 @@
 {{ rule.mobileconfig_info | mobileconfig_payloads_to_xml -}}
 ```
 {% endif %}
+{% endif %}
+{% if rule.ddm_info %}
+{% trans %}Apply the following Declarative Device Management (DDM) configuration.{% endtrans %}
+
+```json
+{{ rule.ddm_info | ddm_info_to_json(baseline.name) }}
+```
 {% endif %}
 {% if rule.enforcement_info.fix.additional_info %}
 {{ rule.enforcement_info.fix.additional_info | asciidoc_to_markdown}}
@@ -159,6 +170,13 @@
 {{ rule.mobileconfig_info | mobileconfig_payloads_to_xml -}}
 ```
 {% endif %}
+{% endif %}
+{% if rule.ddm_info %}
+{% trans %}Apply the following Declarative Device Management (DDM) configuration.{% endtrans %}
+
+```json
+{{ rule.ddm_info | ddm_info_to_json(baseline.name) }}
+```
 {% endif %}
 {% if rule.enforcement_info.fix.additional_info %}
 {{ rule.enforcement_info.fix.additional_info | asciidoc_to_markdown}}

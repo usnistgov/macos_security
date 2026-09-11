@@ -33,9 +33,11 @@ dependencies = [
   "pillow>=12.3.0,<13",
   "pydantic>=2.12,<3",
   "pyyaml>=6.0.2,<7",
+  "ruamel.yaml >= 0.19.0",
   "jsonschema>=4.23.0,<5",
   "yaspin>=3.4.0,<4",
   "babel>=2.18.0,<3",
+  "typst>=0.14,<0.15",
 ]
 
 [project.optional-dependencies]
@@ -76,3 +78,6 @@ packages = ["src/mscp"]
 testpaths = ["tests"]
 pythonpath = ["src"]
 addopts = "--import-mode=importlib"
+markers = [
+  "integration: requires the typst package (deselect with '-m \"not integration\"')",
+]

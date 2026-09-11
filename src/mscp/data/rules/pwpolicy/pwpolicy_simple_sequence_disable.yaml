@@ -1,21 +1,34 @@
 id: pwpolicy_simple_sequence_disable
 title: Prohibit Repeating, Ascending, and Descending Character Sequences
-discussion: "The system _MUST_ be configured to prohibit the use of repeating, ascending, and descending character sequences when a password is created.\n\nThis rule enforces password complexity by requiring users to set passwords that are less vulnerable to malicious users.\n\nNOTE: To comply with Executive Order 14028, \u201CImproving the Nation's Cybersecurity\u201D, OMB M-22-09, \u201CMoving the U.S. Government Toward Zero Trust Cybersecurity Principles\u201D, and NIST SP-800-63b, \u201CDigital Identity Guidelines: Authentication and Lifecycle Management\u201D federal, military, and intelligence communities must adopt the following configuration settings. Password policies must not require the use of complexity policies such as upper characters, lower characters, or special characters. Password policies must also not require the use of regular rotation. Password policies should define a minimum length. Multifactor authentication should be used where ever possible.\n\nNOTE: pwpolicy_simple_sequence_disable prevents use of passwords which are regularly found in compromised password lists.\n"
+discussion: |
+  The system _MUST_ be configured to prohibit the use of repeating, ascending, and descending character sequences when a password is created.
+
+  This rule enforces password complexity by requiring users to set passwords that are less vulnerable to malicious users.
+
+  NOTE: To comply with Executive Order 14028, “Improving the Nation's Cybersecurity”, OMB M-22-09, “Moving the U.S. Government Toward Zero Trust Cybersecurity Principles”, and NIST SP-800-63b, “Digital Identity Guidelines: Authentication and Lifecycle Management” federal, military, and intelligence communities must adopt the following configuration settings. Password policies must not require the use of complexity policies such as upper characters, lower characters, or special characters. Password policies must also not require the use of regular rotation. Password policies should define a minimum length. Multifactor authentication should be used where ever possible.
+
+  NOTE: pwpolicy_simple_sequence_disable prevents use of passwords which are regularly found in compromised password lists.
 references:
   nist:
     cce:
+      macos_27:
+        - CCE-97122-6
       macos_26:
         - CCE-95349-7
       macos_15:
         - CCE-94343-1
       macos_14:
         - CCE-92939-8
+      ios_27:
+        - CCE-97409-7
       ios_26:
         - CCE-96723-2
       ios_18:
         - CCE-94478-5
       ios_17:
         - CCE-93461-2
+      visionos_27:
+        - CCE-97476-6
       visionos_26:
         - CCE-96720-8
     800-53r5:
@@ -70,9 +83,9 @@ references:
       - 5.17
 platforms:
   macOS:
+    '27.0': {}
     '26.0': {}
     '15.0': {}
-    '14.0': {}
     enforcement_info:
       check:
         shell: /usr/bin/pwpolicy -getaccountpolicies 2> /dev/null | /usr/bin/tail +2 | /usr/bin/xmllint --xpath '//dict/key[text()="policyIdentifier"]/following-sibling::*[1]/text()' - | /usr/bin/grep "allowSimple" -c
@@ -80,6 +93,8 @@ platforms:
           integer: 1
     introduced: '10.7'
   iOS:
+    '27.0':
+      supervised: false
     '26.0':
       supervised: false
       benchmarks:
@@ -124,6 +139,8 @@ platforms:
           severity: medium
     introduced: '4.0'
   visionOS:
+    '27.0':
+      supervised: false
     '26.0':
       supervised: false
       benchmarks:

@@ -15,7 +15,7 @@ from typing import Any
 from uuid import uuid4
 
 # Additional python modules
-from pydantic import Field, ValidationError, field_validator
+from pydantic import BaseModel, Field, ValidationError, field_validator
 
 # Local python modules
 from ._base import BaseModelWithAccessors
@@ -100,7 +100,7 @@ class Macsecurityrule(BaseModelWithAccessors):
         customized: Field names that have been overridden by customization
             files.
         mechanism: Enforcement mechanism — one of ``"Manual"``,
-            ``"Script"``, ``"Configuration Profile"``, ``"Inherent"``,
+            ``"Script"``, ``"Configuration Profile"``, ``"Declarative Device Management"``, ``"Inherent"``,
             ``"Permanent"``, ``"N/A"``.
         section: Section name the rule belongs to (e.g.
             ``"Operating System"``, ``"Inherent"``).
@@ -127,6 +127,7 @@ class Macsecurityrule(BaseModelWithAccessors):
     odv: dict[str, Any] | None = None
     tags: list[str] = Field(default_factory=list)
     result_value: str | int | bool | None = None
+    result_exit_code: int | None = None
     mobileconfig_info: list[Mobileconfigpayload] | None = None
     ddm_info: dict[str, Any] | None = None
     customized: list[str] = Field(default_factory=list)
@@ -218,6 +219,7 @@ class Macsecurityrule(BaseModelWithAccessors):
             logger.debug("Transforming rule: {}", rule_id)
 
             result_value: str | int | bool | None = None
+            exit_code: int | None = None
             check_value: str | None = None
             fix_value: str | None = None
             default_state_value: str | None = None
@@ -264,7 +266,6 @@ class Macsecurityrule(BaseModelWithAccessors):
             rule_yaml["rule_id"] = rule_yaml.pop("id", rule_id)
 
             customized_fields = []
-
             if rule_yaml["rule_id"] in custom_rule_dict:
                 logger.info(f"Found customization for {rule_yaml['rule_id']}")
                 for custom_rule_key, custom_rule_value in custom_rule_dict[
@@ -283,7 +284,7 @@ class Macsecurityrule(BaseModelWithAccessors):
                         continue
                     if custom_rule_key == "platforms":
                         platform_info = rule_yaml.get("platforms")
-                        deep_merge(platform_info, custom_rule_value)
+                        deep_merge(platform_info, custom_rule_value, preferred_key="result")
                         continue
 
                     rule_yaml[custom_rule_key] = custom_rule_value
@@ -291,15 +292,6 @@ class Macsecurityrule(BaseModelWithAccessors):
             enforcement_info = rule_yaml["platforms"][os_type].get(
                 "enforcement_info", {}
             )
-
-            if enforcement_info:
-                platform_enforcement_info = rule_yaml["platforms"][os_type][
-                    os_version_str
-                ].get("enforcement_info", {})
-                deep_merge(
-                    enforcement_info, platform_enforcement_info, preferred_key="result"
-                )
-
             if enforcement_info and "n_a" not in tags:
                 check_shell = enforcement_info.get("check", {}).get("shell")
                 check_result = enforcement_info.get("check", {}).get("result")
@@ -311,7 +303,10 @@ class Macsecurityrule(BaseModelWithAccessors):
 
                 if check_result:
                     for k, v in enforcement_info["check"]["result"].items():
-                        if isinstance(v, (int, bool, str)):
+                        if k == "exit_code":
+                            exit_code = v
+                            break
+                        elif isinstance(v, (int, bool, str)):
                             result_value = v
                             break
                         elif k == "base64":
@@ -363,6 +358,8 @@ class Macsecurityrule(BaseModelWithAccessors):
                 rule_yaml.pop("mobileconfig_info", None)
             else:
                 payloads = None
+            if "ddm_info" in rule_yaml:
+                mechanism = "Declarative Device Management"
 
             benchmarks: list[dict[str, str]] = rule_yaml["platforms"][os_type][
                 os_version_str
@@ -395,8 +392,6 @@ class Macsecurityrule(BaseModelWithAccessors):
             disa: dict[str, Any] = {}
             cis: dict[str, Any] = {}
             bsi: dict[str, Any] = {}
-            bzk: dict[str, Any] = {}
-            hhs: dict[str, Any] = {}
             custom_refs: dict[str, Any] = {}
 
             for ref_key in reference_keys:
@@ -408,11 +403,7 @@ class Macsecurityrule(BaseModelWithAccessors):
                     cis: dict[str, Any] = rule_yaml["references"].get("cis", {})
                 elif ref_key == "bsi":
                     bsi: dict[str, Any] = rule_yaml["references"].get("bsi", {})
-                elif ref_key == "bzk":
-                    bzk: dict[str, Any] = rule_yaml["references"].get("bzk", {})
-                elif ref_key == "hhs":
-                    hhs: dict[str, Any] = rule_yaml["references"].get("hhs", {})
-                elif ref_key == "custom":  # support for 1.0 custom refs format
+                elif ref_key == "custom":
                     for custom_ref_key in rule_yaml["references"]["custom"]:
                         custom_refs[custom_ref_key] = rule_yaml["references"][
                             "custom"
@@ -468,6 +459,7 @@ class Macsecurityrule(BaseModelWithAccessors):
                 rule = cls(
                     **rule_yaml,
                     result_value=result_value,
+                    result_exit_code=exit_code,
                     customized=customized_fields,
                     mobileconfig_info=payloads,
                     mechanism=mechanism,
@@ -718,6 +710,10 @@ class Macsecurityrule(BaseModelWithAccessors):
                 if obj == "$ODV":
                     return odv_value
                 return obj.replace("$ODV", str(odv_value))
+            elif isinstance(obj, BaseModel):
+                return obj.__class__.model_validate(
+                    replace_odv_in_obj(obj.model_dump())
+                )
             elif isinstance(obj, dict):
                 return {k: replace_odv_in_obj(v) for k, v in obj.items()}
             elif isinstance(obj, list):

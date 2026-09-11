@@ -7,6 +7,8 @@ discussion: |
 references:
   nist:
     cce:
+      macos_27:
+        - CCE-97083-0
       macos_26:
         - CCE-95301-8
       macos_15:
@@ -24,6 +26,8 @@ references:
     srg:
       - SRG-OS-000095-GPOS-00049
     disa_stig:
+      macos_27:
+        - APPL-27-005056
       macos_26:
         - APPL-26-005056
       macos_15:
@@ -37,6 +41,10 @@ references:
       - 4.1
 platforms:
   macOS:
+    '27.0':
+      benchmarks:
+        - name: disa_stig
+          severity: medium
     '26.0':
       benchmarks:
         - name: disa_stig
@@ -58,32 +66,12 @@ platforms:
             EOS
           result:
             string: 'true'
-    '14.0':
-      benchmarks:
-        - name: disa_stig
-          severity: medium
-      mobileconfig_info:
-        - PayloadType: com.apple.SetupAssistant.managed
-          PayloadContent:
-            - SkipUnlockWithWatch: true
-      enforcement_info:
-        check:
-          shell: |-
-            /usr/bin/osascript -l JavaScript << EOS
-            $.NSUserDefaults.alloc.initWithSuiteName('com.apple.SetupAssistant.managed')\
-            .objectForKey('SkipUnlockWithWatch').js
-            EOS
-          result:
-            string: 'true'
     enforcement_info:
       check:
         shell: |-
-          /usr/bin/osascript -l JavaScript 2>/dev/null << EOS
-          $.NSUserDefaults.alloc.initWithSuiteName('com.apple.SetupAssistant.managed')\
-          .objectForKey('SkipSetupItems').containsObject("WatchMigration")
-          EOS
+          /usr/bin/osascript -l JavaScript -e 'var s = $.NSUserDefaults.alloc.initWithSuiteName("com.apple.SetupAssistant.managed"); (ObjC.unwrap(s.objectForKey("SkipSetupItems").containsObject("WatchMigration")) == true && s.objectIsForcedForKey("SkipSetupItems")) ? "PASS" : "FAIL"'
         result:
-          string: 'true'
+          string: 'PASS'
     introduced: '15.0'
 tags:
   - 800-53r5_low

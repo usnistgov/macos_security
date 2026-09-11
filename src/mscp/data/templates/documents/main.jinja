@@ -1,6 +1,4 @@
-{% if format == "adoc" %}
-{% include "adoc/header.adoc.jinja" %}
-{% elif format == "markdown" %}
+{% if format == "markdown" %}
 {% include "markdown/header.md.jinja" %}
 {% endif %}
 
@@ -12,9 +10,7 @@
 
 {% include "acronyms.jinja" %}
 
-{% if format == "adoc" %}
-{% include "adoc/additional_docs.adoc.jinja" %}
-{% elif format == "markdown" %}
+{% if format == "markdown" %}
 {% include "markdown/additional_docs.md.jinja" %}
 {% endif %}
 

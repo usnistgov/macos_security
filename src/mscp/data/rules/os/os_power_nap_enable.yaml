@@ -26,7 +26,6 @@ platforms:
   macOS:
     '26.0': {}
     '15.0': {}
-    '14.0': {}
     enforcement_info:
       check:
         shell: /usr/bin/pmset -g custom | /usr/bin/awk '/powernap/ { sum+=$2 } END {print sum}'
