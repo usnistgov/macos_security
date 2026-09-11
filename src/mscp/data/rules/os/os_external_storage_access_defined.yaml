@@ -59,6 +59,7 @@ tags:
   - cnssi-1253_moderate
   - cnssi-1253_low
   - cnssi-1253_high
+  - 800-171
 ddm_info:
   declarationtype: com.apple.configuration.diskmanagement.settings
   ddm_key: ExternalStorage
