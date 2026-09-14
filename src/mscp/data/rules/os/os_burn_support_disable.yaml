@@ -10,6 +10,8 @@ discussion: |
 references:
   nist:
     cce:
+      macos_27:
+        - CCE-97009-5
       macos_26:
         - CCE-95170-7
       macos_15:
@@ -26,9 +28,9 @@ references:
       - MP.L2-3.8.8
 platforms:
   macOS:
+    '27.0': {}
     '26.0': {}
     '15.0': {}
-    '14.0': {}
     enforcement_info:
       check:
         shell: /usr/bin/profiles -P -o stdout | /usr/bin/grep -Ec '(BurnSupport = off;|ProhibitBurn = 1;)'

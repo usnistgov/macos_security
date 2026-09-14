@@ -7,21 +7,86 @@ discussion: |
 references:
   nist:
     cce:
+      ios_27:
+        - CCE-97284-4
+      ios_26:
+        - CCE-95610-2
+      ios_18:
+        - CCE-94435-5
+      ios_17:
+        - CCE-93463-8
+      visionos_27:
+        - CCE-97434-5
       visionos_26:
         - CCE-96708-3
     800-53r5:
       - AC-19
       - SI-7(5)
+      - CM-11
   disa:
     cci:
       - CCI-000366
     disa_stig:
+      ios_26:
+        - AIOS-26-007000
+      ios_18:
+        - AIOS-18-007000
+      ios_17:
+        - AIOS-17-007000
+        - AIOS-17-707000
       visionos_26:
         - AVOS-26-007000
     sfr:
       - 'FMT_SMF.1.1 #8'
+    cmmc:
+      - CM.L2-3.4.9
+  bsi:
+    indigo:
+      ios_26:
+        - ANNEX D - (Section 5.8.5)
+      ios_18:
+        - ANNEX D - (Section 5.8.5)
+      ios_17:
+        - ANNEX D - (Section 5.8.5)
+  bzk:
+    bio:
+      - 8.27
 platforms:
+  iOS:
+    '27.0': {}
+    '26.0':
+      supervised: false
+      benchmarks:
+        - name: ios_stig
+          severity: low
+        - name: indigo_base
+          severity: low
+        - name: indigo_high
+          severity: low
+        - name: nlmapgov_plus
+    '18.0':
+      supervised: false
+      benchmarks:
+        - name: ios_stig
+          severity: low
+        - name: indigo_base
+          severity: low
+        - name: indigo_high
+          severity: low
+    '17.0':
+      supervised: false
+      benchmarks:
+        - name: ios_stig
+          severity: low
+        - name: ios_stig_byoad
+          severity: low
+        - name: indigo_base
+          severity: low
+        - name: indigo_high
+          severity: low
+    introduced: '9.0'
   visionOS:
+    '27.0': {}
     '26.0':
       benchmarks:
         - name: visionos_stig
@@ -32,6 +97,11 @@ tags:
   - 800-53r5_low
   - 800-53r5_moderate
   - 800-53r5_high
+  - cmmc_lvl2
+  - cmmc_lvl3
+  - cnssi-1253_moderate
+  - cnssi-1253_low
+  - cnssi-1253_high
 mobileconfig_info:
   - PayloadType: com.apple.applicationaccess
     PayloadContent:

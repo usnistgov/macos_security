@@ -43,6 +43,8 @@ from .generate import (
     generate_scap,
     generate_localize_template,
     generate_mo_from_json,
+    generate_spreadsheet_export,
+    generate_spreadsheet_import,
 )
 
 
@@ -144,19 +146,19 @@ def get_macos_version() -> float:
     """Return the running host's major macOS version as a float.
 
     Used as the default for the `--os_version` flag so the CLI assumes
-    the current host's version unless overridden. Falls back to `26.0`
+    the current host's version unless overridden. Falls back to `27.0`
     when `platform.mac_ver` returns an empty string (e.g. when run on a
     non-macOS host).
 
     Returns:
-        float: Major version (e.g. `15.0`), or `26.0` on a non-macOS host.
+        float: Major version (e.g. `15.0`), or `27.0` on a non-macOS host.
     """
     version_str, _, _ = platform.mac_ver()
     if version_str:
         major = int(version_str.split(".")[0])
         return float(major)
     else:
-        return 26.0
+        return 27.0
 
 
 def validate_file(arg: str) -> Path | None:
@@ -788,6 +790,54 @@ compliance script (e.g. disa_stig, cis.benchmark)
         action="store_true",
         help="Enable the flag for fuzzy matches in translations.",
     )
+
+    export_parser = admin_subparsers.add_parser(
+        "export",
+        parents=[parent_parser],
+        help="export a baseline to CSV or XLSX for bulk editing",
+        add_help=False,
+    )
+    export_parser.set_defaults(func=generate_spreadsheet_export)
+    export_parser.add_argument(
+        "baseline",
+        nargs="?",
+        default=None,
+        help="baseline YAML file to export; omit to export a blank rule template",
+        type=validate_file,
+    )
+    export_parser.add_argument(
+        "-o",
+        "--output",
+        help="output file path (default: <output_dir>/<baseline_name>.csv or rule_template_<os>_<ver>.csv)",
+        type=Path,
+        action="store",
+    )
+    export_parser.add_argument(
+        "-x",
+        "--xlsx",
+        help="export as XLSX instead of CSV",
+        action="store_true",
+    )
+
+    import_parser = admin_subparsers.add_parser(
+        "import",
+        parents=[parent_parser],
+        help="import an edited spreadsheet and update source rule YAML files",
+        add_help=False,
+    )
+    import_parser.set_defaults(func=generate_spreadsheet_import)
+    import_parser.add_argument(
+        "input",
+        help="CSV or XLSX file previously exported with 'mscp admin export'",
+        type=validate_file,
+    )
+    import_parser.add_argument(
+        "--dry-run",
+        dest="dry_run",
+        help="show what would change without writing any files",
+        action="store_true",
+    )
+
     _pre, _ = parent_parser.parse_known_args()
     set_logger(
         debug=getattr(_pre, "debug", False), verbosity=getattr(_pre, "verbose", 0)

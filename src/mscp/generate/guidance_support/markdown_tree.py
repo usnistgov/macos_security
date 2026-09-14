@@ -59,6 +59,7 @@ from jinja2 import Environment, FileSystemLoader
 # Local python modules
 from ...classes import Baseline
 from ...classes.mobileconfig import mobileconfig_info_to_xml
+from .ddm import ddm_info_to_json
 from ...common_utils import (
     NIX_OS,
     config,
@@ -274,6 +275,7 @@ def _build_env(template_dirs: list[str], language: str) -> Environment:
     env.filters["render_references"] = render_references_md
     env.filters["get_nested"] = get_nested
     env.filters["mobileconfig_payloads_to_xml"] = mobileconfig_info_to_xml
+    env.filters["ddm_info_to_json"] = ddm_info_to_json
     env.filters["asciidoc_to_markdown"] = asciidoc_to_markdown
     # Registered for template compatibility; whole-page escaping is done in
     # Python rather than per-field to ensure complete coverage.
@@ -290,6 +292,7 @@ def _build_env(template_dirs: list[str], language: str) -> Environment:
 def generate_markdown_tree(
     build_path: Path,
     baseline: Baseline,
+    os_name: str,
     version_info: dict[str, Any],
     show_all_tags: bool = False,
     language: str = "en",
@@ -339,6 +342,12 @@ def generate_markdown_tree(
     )
     if any(author.is_additional for author in baseline.authors):
         baseline_dict["additional_authors"] = True
+    os_key = os_name.strip().lower()
+    baseline_dict["pre_release"] = benchmark in (
+        mscp_data.get("pre_release_benchmarks", {})
+        .get(os_key, {})
+        .get(version_info.get("os_version"), [])
+    )
 
     acronyms_file = Path(config["includes_dir"], "acronyms.yaml").absolute()
     acronyms_data: dict[str, Any] = open_file(acronyms_file, language)

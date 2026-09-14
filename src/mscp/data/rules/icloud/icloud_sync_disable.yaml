@@ -1,12 +1,16 @@
 id: icloud_sync_disable
 title: Disable iCloud Desktop and Document Folder Sync
 discussion: |
-  The macOS system's ability to automatically synchronize a user's desktop and documents folder to their iCloud Drive _MUST_ be disabled.
+  The macOS system's ability to automatically synchronize a user's desktop and documents folder to their iCloud Drive _MUST_ be disabled, unless the organization has explicitly authorized the use of iCloud as a approved file management service.
 
   Apple's iCloud service does not provide an organization with enough control over the storage and access of data and, therefore, automated file synchronization _MUST_ be controlled by an organization approved service.
+
+  This requirement helps ensure that organizational file data is managed in accordance with established security, privacy, access-control, and data governance requirements.
 references:
   nist:
     cce:
+      macos_27:
+        - CCE-96998-0
       macos_26:
         - CCE-95153-3
       macos_15:
@@ -28,6 +32,8 @@ references:
     srg:
       - SRG-OS-000095-GPOS-00049
     disa_stig:
+      macos_27:
+        - APPL-27-002150
       macos_26:
         - APPL-26-002150
       macos_15:
@@ -55,12 +61,19 @@ references:
         - 2.1.1.3 (level 2)
       macos_14:
         - 2.1.1.3 (level 2)
+      macos_27:
+        - 2.1.1.3 (level 2)
     controls_v8:
       - 4.1
       - 4.8
       - 15.3
 platforms:
   macOS:
+    '27.0':
+      benchmarks:
+        - name: cis_lvl2
+        - name: disa_stig
+          severity: medium
     '26.0':
       benchmarks:
         - name: cis_lvl2
@@ -73,20 +86,12 @@ platforms:
         - name: disa_stig
           severity: medium
         - name: nlmapgov_plus
-    '14.0':
-      benchmarks:
-        - name: cis_lvl2
-        - name: disa_stig
-          severity: medium
     enforcement_info:
       check:
         shell: |-
-          /usr/bin/osascript -l JavaScript << EOS
-          $.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess')\
-          .objectForKey('allowCloudDesktopAndDocuments').js
-          EOS
+          /usr/bin/osascript -l JavaScript -e 'var s = $.NSUserDefaults.alloc.initWithSuiteName("com.apple.applicationaccess"); (ObjC.unwrap(s.objectForKey("allowCloudDesktopAndDocuments")) == false && s.objectIsForcedForKey("allowCloudDesktopAndDocuments")) ? "PASS" : "FAIL"'
         result:
-          string: 'false'
+          string: 'PASS'
     introduced: 10.12.4
 tags:
   - 800-53r5_low

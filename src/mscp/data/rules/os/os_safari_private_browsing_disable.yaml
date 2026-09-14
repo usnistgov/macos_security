@@ -5,26 +5,34 @@ discussion: |
 references:
   nist:
     cce:
+      macos_27:
+        - CCE-97070-7
       macos_26:
         - CCE-95599-7
+      ios_26:
+        - CCE-96736-4
+      ios_27:
+        - CCE-97374-3
+      visionos_27:
+        - CCE-97463-4
   bsi:
     indigo:
       ios_26:
         - ANNEX K
 platforms:
   macOS:
+    '27.0': {}
     '26.0': {}
     enforcement_info:
       check:
         shell: |-
-          /usr/bin/osascript -l JavaScript << EOS
-          $.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess')\
-          .objectForKey('allowSafariPrivateBrowsing').js
-          EOS
+          /usr/bin/osascript -l JavaScript -e 'var s = $.NSUserDefaults.alloc.initWithSuiteName("com.apple.applicationaccess"); (ObjC.unwrap(s.objectForKey("allowSafariPrivateBrowsing")) == false && s.objectIsForcedForKey("allowSafariPrivateBrowsing")) ? "PASS" : "FAIL"'
         result:
-          string: 'false'
+          string: 'PASS'
     introduced: '26.0'
   iOS:
+    '27.0':
+      supervised: true
     '26.0':
       supervised: true
       benchmarks:
@@ -32,6 +40,10 @@ platforms:
           severity: high
         - name: indigo_high
           severity: high
+    introduced: '26.0'
+  visionOS:
+    '27.0':
+      supervised: true
     introduced: '26.0'
 tags:
   - none

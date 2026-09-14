@@ -3,7 +3,7 @@ title: Enforce Enrollment in Mobile Device Management
 discussion: |
   You _MUST_ enroll your Mac in a Mobile Device Management (MDM) software.
 
-  User Approved MDM (UAMDM) enrollment or enrollment via Apple Business Manager (ABM)/Apple School Manager (ASM) is required to manage certain security settings. Currently these include:
+  User Approved MDM (UAMDM) enrollment or enrollment via Apple Business/Apple School Manager (ASM) is required to manage certain security settings. Currently these include:
 
   * Allowed Kernel Extensions
   * Allowed Approved System Extensions
@@ -20,6 +20,8 @@ discussion: |
 references:
   nist:
     cce:
+      macos_27:
+        - CCE-97042-6
       macos_26:
         - CCE-95227-5
       macos_15:
@@ -38,6 +40,8 @@ references:
     srg:
       - SRG-OS-000480-GPOS-00227
     disa_stig:
+      macos_27:
+        - APPL-27-005110
       macos_26:
         - APPL-26-005110
       macos_15:
@@ -66,6 +70,10 @@ references:
       - 5.1
 platforms:
   macOS:
+    '27.0':
+      benchmarks:
+        - name: disa_stig
+          severity: medium
     '26.0':
       benchmarks:
         - name: disa_stig
@@ -80,12 +88,6 @@ platforms:
           severity: medium
         - name: nlmapgov_plus
         - name: nlmapgov_base
-    '14.0':
-      benchmarks:
-        - name: cis_lvl1
-        - name: cis_lvl2
-        - name: disa_stig
-          severity: medium
     enforcement_info:
       check:
         shell: '/usr/bin/profiles status -type enrollment | /usr/bin/awk -F: ''/MDM enrollment/ {print $2}'' | /usr/bin/grep -c "Yes (User Approved)"'

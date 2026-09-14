@@ -5,6 +5,8 @@ discussion: |
 references:
   nist:
     cce:
+      ios_27:
+        - CCE-97400-6
       ios_26:
         - CCE-95544-3
       ios_18:
@@ -36,8 +38,10 @@ references:
       - 8.27
 platforms:
   iOS:
+    '27.0':
+      supervised: true
     '26.0':
-      supervised: false
+      supervised: true
       benchmarks:
         - name: ios_stig
           severity: medium
@@ -47,7 +51,7 @@ platforms:
           severity: medium
         - name: nlmapgov_plus
     '18.0':
-      supervised: false
+      supervised: true
       benchmarks:
         - name: ios_stig
           severity: medium

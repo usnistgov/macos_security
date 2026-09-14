@@ -13,6 +13,8 @@ discussion: |
 references:
   nist:
     cce:
+      ios_27:
+        - CCE-97287-7
       ios_26:
         - CCE-95649-0
       ios_18:
@@ -46,6 +48,7 @@ references:
         - ANNEX D (Section 5.8 - App-Installation)
 platforms:
   iOS:
+    '27.0': {}
     '26.0':
       supervised: true
       benchmarks:

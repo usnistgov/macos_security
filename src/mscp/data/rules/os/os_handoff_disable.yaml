@@ -7,18 +7,24 @@ discussion: |
 references:
   nist:
     cce:
+      macos_27:
+        - CCE-97028-5
       macos_26:
         - CCE-95199-6
       macos_15:
         - CCE-94199-7
       macos_14:
         - CCE-92799-6
+      ios_27:
+        - CCE-97330-5
       ios_26:
         - CCE-95659-9
       ios_18:
         - CCE-94443-9
       ios_17:
         - CCE-93428-1
+      visionos_27:
+        - CCE-97445-1
       visionos_26:
         - CCE-95578-1
     800-53r5:
@@ -40,6 +46,8 @@ references:
       - SRG-OS-000080-GPOS-00048
       - SRG-OS-000095-GPOS-00049
     disa_stig:
+      macos_27:
+        - APPL-27-005058
       macos_26:
         - APPL-26-005058
       macos_15:
@@ -88,6 +96,10 @@ references:
         - ANNEX K
 platforms:
   macOS:
+    '27.0':
+      benchmarks:
+        - name: disa_stig
+          severity: medium
     '26.0':
       benchmarks:
         - name: disa_stig
@@ -96,21 +108,16 @@ platforms:
       benchmarks:
         - name: disa_stig
           severity: medium
-    '14.0':
-      benchmarks:
-        - name: disa_stig
-          severity: medium
     enforcement_info:
       check:
         shell: |-
-          /usr/bin/osascript -l JavaScript << EOS
-          $.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess')\
-          .objectForKey('allowActivityContinuation').js
-          EOS
+          /usr/bin/osascript -l JavaScript -e 'var s = $.NSUserDefaults.alloc.initWithSuiteName("com.apple.applicationaccess"); (ObjC.unwrap(s.objectForKey("allowActivityContinuation")) == false && s.objectIsForcedForKey("allowActivityContinuation")) ? "PASS" : "FAIL"'
         result:
-          string: 'false'
+          string: 'PASS'
     introduced: '10.15'
   iOS:
+    '27.0':
+      supervised: false
     '26.0':
       supervised: false
       benchmarks:
@@ -146,6 +153,8 @@ platforms:
           severity: low
     introduced: '8.0'
   visionOS:
+    '27.0':
+      supervised: false
     '26.0':
       supervised: false
       benchmarks:

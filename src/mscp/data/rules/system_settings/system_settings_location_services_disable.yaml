@@ -7,6 +7,8 @@ discussion: |
 references:
   nist:
     cce:
+      macos_27:
+        - CCE-97157-2
       macos_26:
         - CCE-95383-6
       macos_15:
@@ -25,6 +27,8 @@ references:
     srg:
       - SRG-OS-000095-GPOS-00049
     disa_stig:
+      macos_27:
+        - APPL-27-002004
       macos_26:
         - APPL-26-002004
       macos_15:
@@ -40,6 +44,10 @@ references:
       - 4.L.A
 platforms:
   macOS:
+    '27.0':
+      benchmarks:
+        - name: disa_stig
+          severity: medium
     '26.0':
       benchmarks:
         - name: disa_stig
@@ -51,10 +59,6 @@ platforms:
             pid=$(/bin/launchctl print system | /usr/bin/awk '/\tcom.apple.locationd/ {print $1}')
             kill -9 $pid
     '15.0':
-      benchmarks:
-        - name: disa_stig
-          severity: medium
-    '14.0':
       benchmarks:
         - name: disa_stig
           severity: medium

@@ -5,12 +5,16 @@ discussion: |
 references:
   nist:
     cce:
+      ios_27:
+        - CCE-97392-5
       ios_26:
         - CCE-95696-1
       ios_18:
         - CCE-94470-2
       ios_17:
         - CCE-93465-3
+      visionos_27:
+        - CCE-97467-5
       visionos_26:
         - CCE-95593-0
   bsi:
@@ -39,6 +43,7 @@ references:
       - 4.1
 platforms:
   iOS:
+    '27.0': {}
     '26.0':
       supervised: false
       benchmarks:
@@ -60,6 +65,8 @@ platforms:
         - name: indigo_high
     introduced: '5.0'
   visionOS:
+    '27.0':
+      supervised: false
     '26.0':
       supervised: false
     introduced: '1.1'

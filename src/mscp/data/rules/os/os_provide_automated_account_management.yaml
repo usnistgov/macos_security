@@ -11,6 +11,8 @@ discussion: |-
 references:
   nist:
     cce:
+      macos_27:
+        - CCE-97248-9
       macos_26:
         - CCE-95270-5
       macos_15:
@@ -28,13 +30,13 @@ references:
       - 5.16
 platforms:
   macOS:
+    '27.0': {}
     '26.0':
       benchmarks:
         - name: nlmapgov_plus
     '15.0':
       benchmarks:
         - name: nlmapgov_plus
-    '14.0': {}
 tags:
   - 800-53r5_moderate
   - 800-53r5_high

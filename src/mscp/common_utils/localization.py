@@ -100,6 +100,11 @@ def register_yaml_constructors() -> None:
     """
     yaml.add_constructor("!localize", localize_constructor)
     yaml.SafeLoader.add_constructor("!localize", localize_constructor)
+    # open_file() loads YAML with the libyaml-backed loader when available;
+    # keep the tag working there too.
+    from .file_handling import _YAML_LOADER
+
+    _YAML_LOADER.add_constructor("!localize", localize_constructor)
 
 
 def configure_localization_for_yaml(

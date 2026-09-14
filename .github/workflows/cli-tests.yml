@@ -40,37 +40,37 @@ jobs:
       - name: baseline generate (macos 800-53r5 moderate)
         run: >
           python mscp.py
-          --os_name macos --os_version 26.0
+          --os_name macos --os_version 27.0
           --output_dir /tmp/mscp-test-output
           baseline --keyword 800-53r5_moderate
 
       - name: baseline generate (macos cis_lvl1)
         run: >
           python mscp.py
-          --os_name macos --os_version 26.0
+          --os_name macos --os_version 27.0
           --output_dir /tmp/mscp-test-output
           baseline --keyword cis_lvl1
 
       - name: guidance markdown (macos 800-53r5 moderate)
         run: >
           python mscp.py
-          --os_name macos --os_version 26.0
+          --os_name macos --os_version 27.0
           --output_dir /tmp/mscp-test-output
           guidance --markdown --no-docs
-          baselines/macos/800-53r5_moderate_macos_26.0.yaml
+          baselines/macos/800-53r5_moderate_macos_27.0.yaml
 
       - name: guidance script (macos cis_lvl1)
         run: >
           python mscp.py
-          --os_name macos --os_version 26.0
+          --os_name macos --os_version 27.0
           --output_dir /tmp/mscp-test-output
           guidance --script --no-docs
-          baselines/macos/cis_lvl1_macos_26.0.yaml
+          baselines/macos/cis_lvl1_macos_27.0.yaml
 
       - name: scap xccdf (macos 800-53r5 moderate)
         run: >
           python mscp.py
-          --os_name macos --os_version 26.0
+          --os_name macos --os_version 27.0
           --output_dir /tmp/mscp-test-output
           scap --xccdf --baseline 800-53r5_moderate
 

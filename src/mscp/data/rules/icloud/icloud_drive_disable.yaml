@@ -3,24 +3,34 @@ title: Disable iCloud Document Sync
 discussion: |
   The macOS built-in iCloud document synchronization service _MUST_ be disabled to prevent organizational data from being synchronized to personal or non-approved storage.
 
-  Apple's iCloud service does not provide an organization with enough control over the storage and access of data and, therefore, automated document synchronization _MUST_ be controlled by an organization approved service.
+  Apple's iCloud service does not provide an organization with enough control over the storage and access of data, and, therefore, automated document synchronization _MUST_ be controlled by an organization approved service.
+
+  This requirement helps ensure that organizational contact data is managed in accordance with established security, privacy, access-control, and data governance requirements.
 references:
   nist:
     cce:
+      macos_27:
+        - CCE-96989-9
       macos_26:
         - CCE-95144-2
       macos_15:
         - CCE-94144-3
       macos_14:
         - CCE-92745-9
+      ios_27:
+        - CCE-97265-3
       ios_26:
         - CCE-95632-6
       ios_18:
         - CCE-94421-5
       ios_17:
         - CCE-93407-5
+      visionos:
+        - CCE-94590-7
       visionos_26:
         - CCE-95555-9
+      visionos_27:
+        - CCE-97422-0
     800-53r5:
       - AC-20
       - AC-20(1)
@@ -37,6 +47,8 @@ references:
     srg:
       - SRG-OS-000095-GPOS-00049
     disa_stig:
+      macos_27:
+        - APPL-27-002041
       macos_26:
         - APPL-26-002041
       macos_15:
@@ -89,6 +101,10 @@ references:
         - ANNEX K
 platforms:
   macOS:
+    '27.0':
+      benchmarks:
+        - name: disa_stig
+          severity: medium
     '26.0':
       benchmarks:
         - name: disa_stig
@@ -99,21 +115,15 @@ platforms:
         - name: disa_stig
           severity: medium
         - name: nlmapgov_plus
-    '14.0':
-      benchmarks:
-        - name: disa_stig
-          severity: medium
     enforcement_info:
       check:
         shell: |-
-          /usr/bin/osascript -l JavaScript << EOS
-          $.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess')\
-          .objectForKey('allowCloudDocumentSync').js
-          EOS
+          /usr/bin/osascript -l JavaScript -e 'var s = $.NSUserDefaults.alloc.initWithSuiteName("com.apple.applicationaccess"); (ObjC.unwrap(s.objectForKey("allowCloudDocumentSync")) == false && s.objectIsForcedForKey("allowCloudDocumentSync")) ? "PASS" : "FAIL"'
         result:
-          string: 'false'
+          string: 'PASS'
     introduced: '10.11'
   iOS:
+    '27.0': {}
     '26.0':
       supervised: true
       benchmarks:
@@ -143,6 +153,8 @@ platforms:
           severity: medium
     introduced: '5.0'
   visionOS:
+    '27.0':
+      supervised: true
     '26.0':
       supervised: true
       benchmarks:

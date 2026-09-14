@@ -1,16 +1,22 @@
 id: icloud_enterprisebook_metadata_sync_disable
 title: Preventing synchronization of enterprise book meta data.
 discussion: |
-  The iOS device _MUST_ be configured to prevent the synchronization of enterprise book meta data to Apple iCloud servers.
+  The iOS device _MUST_ be configured to prevent the synchronization of enterprise book meta data to Apple iCloud servers, if iCloud is not an authorized service.
 
-  Apple's iCloud service does not provide an organization with enough control over the storage and access of data and, therefore, password management and synchronization _MUST_ be controlled by an organization approved service.
+  Apple's iCloud service does not provide an organization with enough control over the storage and access of data, and, therefore, password management and synchronization _MUST_ be controlled by an organization approved service.
+
+  This requirement helps ensure that organizational contact data is managed in accordance with established security, privacy, access-control, and data governance requirements.
 references:
   nist:
     cce:
+      ios_27:
+        - CCE-97266-1
       ios_26:
         - CCE-95633-4
       ios_18:
         - CCE-94566-7
+      ios_17:
+        - CCE-93467-9
     800-53r5:
       - AC-20
       - AC-20(1)
@@ -23,6 +29,8 @@ references:
         - ANNEX K
       ios_18:
         - ANNEX K
+      ios_17:
+        - ANNEX K
   disa:
     cmmc:
       - AC.L1-B.1.III
@@ -31,10 +39,14 @@ references:
       - CM.L2-3.4.7
 platforms:
   iOS:
+    '27.0': {}
     '26.0':
       benchmarks:
         - name: indigo_high
     '18.0':
+      benchmarks:
+        - name: indigo_high
+    '17.0':
       benchmarks:
         - name: indigo_high
     introduced: '8.0'

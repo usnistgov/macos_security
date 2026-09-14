@@ -59,11 +59,12 @@ jobs:
           # Increment build number
           content = re.sub(r'(  build:\s*)(\d+)', replacer, content)
 
-          # Update build date
+          # Update build date (quote-agnostic; file currently uses single quotes)
           content = re.sub(
-              r'(  build_date:\s*")[^"]*"',
-              f'  build_date: "{date.today()}"',
-              content
+              r'(^  build_date:).*$',
+              f"  build_date: '{date.today()}'",
+              content,
+              flags=re.MULTILINE
           )
 
           with open('src/mscp/data/includes/mscp-data.yaml', 'w') as f:

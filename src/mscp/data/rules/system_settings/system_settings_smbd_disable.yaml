@@ -7,6 +7,8 @@ discussion: |
 references:
   nist:
     cce:
+      macos_27:
+        - CCE-97175-4
       macos_26:
         - CCE-95401-6
       macos_15:
@@ -25,6 +27,8 @@ references:
     srg:
       - SRG-OS-000080-GPOS-00048
     disa_stig:
+      macos_27:
+        - APPL-27-002001
       macos_26:
         - APPL-26-002001
       macos_15:
@@ -50,12 +54,20 @@ references:
         - 2.3.3.2 (level 1)
       macos_14:
         - 2.3.3.2 (level 1)
+      macos_27:
+        - 2.3.3.2 (level 1)
     controls_v8:
       - 4.1
       - 4.8
       - 5.4
 platforms:
   macOS:
+    '27.0':
+      benchmarks:
+        - name: cis_lvl1
+        - name: cis_lvl2
+        - name: disa_stig
+          severity: medium
     '26.0':
       benchmarks:
         - name: cis_lvl1
@@ -70,12 +82,6 @@ platforms:
         - name: disa_stig
           severity: medium
         - name: nlmapgov_plus
-    '14.0':
-      benchmarks:
-        - name: cis_lvl1
-        - name: cis_lvl2
-        - name: disa_stig
-          severity: medium
     enforcement_info:
       check:
         shell: /bin/launchctl print-disabled system | /usr/bin/grep -c '"com.apple.smbd" => disabled'

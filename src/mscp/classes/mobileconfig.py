@@ -63,8 +63,7 @@ def create_value_element(value: Any) -> etree._Element:
         case list():
             array = etree.Element("array")
             for item in value:
-                item_elem = etree.SubElement(array, "string")
-                item_elem.text = item
+                array.append(create_value_element(item))
             return array
         case dict():
             dict_elem = etree.Element("dict")
