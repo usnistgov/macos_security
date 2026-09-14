@@ -153,6 +153,14 @@
 <table class="tableblock frame-all grid-all stretch"><thead><tr><th class="tableblock halign-left valign-top">Name</th><th class="tableblock halign-left valign-top">Organization</th></tr></thead><tbody>
 {% for author in baseline.authors %}{% if not author.additional %}<tr><td class="tableblock halign-left valign-top">{{ author.name | e }}</td><td class="tableblock halign-left valign-top">{{ author.organization | e }}</td></tr>
 {% endif %}{% endfor %}</tbody></table>
+
+{% if baseline.additional_authors %}
+<div class="paragraph"><p>{% trans %}In addition to the maintainers and contributors to the macOS Security Compliance Project, this document was customized and tailored for the organization by the individuals listed below.{% endtrans %}
+</p></div>
+<table class="tableblock frame-all grid-all stretch"><thead><tr><th class="tableblock halign-left valign-top">Name</th><th class="tableblock halign-left valign-top">Organization</th></tr></thead><tbody>
+{% for author in baseline.authors %}{% if author.additional %}<tr><td class="tableblock halign-left valign-top">{{ author.name | e }}</td><td class="tableblock halign-left valign-top">{{ author.organization | e }}</td></tr>
+{% endif %}{% endfor %}</tbody></table>
+{% endif %}
 </div></div>
 
 <div class="sect1"><h2 id="_acronyms">4. {% trans %}Acronyms and Definitions{% endtrans %}</h2><div class="sectionbody">
