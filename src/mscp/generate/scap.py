@@ -26,7 +26,7 @@ from yaspin.spinners import Spinners
 
 
 # Local python modules
-from ..classes import Macsecurityrule
+from ..classes import Macsecurityrule, resolve_enforcement_info
 from ..common_utils import config, get_version_data, logger, mscp_data
 
 from .baseline import (
@@ -436,7 +436,13 @@ def generate_scap(sp: Yaspin, args: argparse.Namespace) -> None:
                                 )
 
                         else:
-                            if "base64" in rule.platforms["macOS"]["enforcement_info"]["check"]["result"].keys():
+                            rule_enforcement_info = resolve_enforcement_info(
+                                rule.platforms.get("macOS", {}),
+                                str(float(rule.os_version)),
+                            )
+                            if "base64" in rule_enforcement_info.get("check", {}).get(
+                                "result", {}
+                            ).keys():
                                 base64_value = base64.b64encode(newrule.result_value.encode("utf-8")).decode("utf-8")
                                 oval_states = (
                                     oval_states
