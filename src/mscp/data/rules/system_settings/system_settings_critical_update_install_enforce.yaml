@@ -54,7 +54,18 @@ platforms:
     '26.0':
       enforcement_info:
         check:
-          shell: "configprofile=$(/usr/bin/osascript -l JavaScript << EOS $.NSUserDefaults.alloc.initWithSuiteName('com.apple.SoftwareUpdate')\\ .objectForKey('CriticalUpdateInstall').js EOS )\nddm=$(/usr/bin/plutil -convert json /var/db/softwareupdate/SoftwareUpdateDDMStatePersistence.plist -o - | /usr/bin/jq --raw-output .'SUCorePersistedStatePolicyFields.SUCoreDDMDeclarationGlobalSettings.automaticallyInstallSystemAndSecurityUpdates')\nif [[ \"$configprofile\" == \"true\" ]] || [[ \"$ddm\" == \"1\" ]]; then echo \"true\" else echo \"false\" fi"
+          shell: |-
+            configprofile=$(/usr/bin/osascript -l JavaScript << EOS
+            $.NSUserDefaults.alloc.initWithSuiteName('com.apple.SoftwareUpdate')\
+            .objectForKey('CriticalUpdateInstall').js
+            EOS
+            )
+            ddm=$(/usr/bin/plutil -convert json /var/db/softwareupdate/SoftwareUpdateDDMStatePersistence.plist -o - | /usr/bin/jq --raw-output .'SUCorePersistedStatePolicyFields.SUCoreDDMDeclarationGlobalSettings.automaticallyInstallSystemAndSecurityUpdates')
+            if [[ "$configprofile" == "true" ]] || [[ "$ddm" == "1" ]]; then
+              echo "true"
+            else
+              echo "false"
+            fi
           result:
             string: 'true'
         fix:
