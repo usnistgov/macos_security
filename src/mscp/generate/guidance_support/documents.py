@@ -17,7 +17,7 @@ import re
 import shutil
 import sys
 from html import escape as html_escape
-from collections.abc import Mapping
+from collections.abc import Callable, Mapping
 from itertools import groupby
 from pathlib import Path
 from typing import Any, Sequence, Dict, List
@@ -285,14 +285,271 @@ def render_references_typst(reference_set: Sequence[Dict[str, Any]]) -> str:
     return "\n".join(lines)
 
 
+# --------------------------------------------------------------------------- #
+# Shared AsciiDoc PSV table parsing (`|===` blocks), used by all three prose
+# converters below.  mSCP's supplemental rule discussions lean on a small,
+# consistent subset of AsciiDoctor's table syntax: a `[cols="W%h, W%a"]` (or
+# `[%header,cols="..."]`) attribute line, one cell per `|`-prefixed line
+# (optionally prefixed with an alignment spec like `^.^` or a cell style
+# letter like `a`), multi-line cells continued until the next cell or the
+# closing delimiter, and `+`-terminated lines for an explicit line break
+# within a cell.  This only extracts structure (rows/cells/styles); each
+# backend below renders that structure with its own markup.
+# --------------------------------------------------------------------------- #
+_TABLE_ATTR_RE = re.compile(r'^\[([^\]]*\bcols="[^"]*"[^\]]*)\]$')
+_TABLE_COLS_RE = re.compile(r'cols="([^"]*)"')
+_TABLE_CELL_START_RE = re.compile(
+    r"^(?:(?P<spec>(?:[<^>]?\.[<^>]?)|[a-z]))?\|(?P<content>.*)$"
+)
+
+
+def _table_colspecs(attrs: str) -> list[str]:
+    """Return each column's AsciiDoctor cell-style letter from a `cols="..."` attribute.
+
+    E.g. ``cols="15%h, 85%a"`` -> ``["h", "a"]``. A column with no style
+    letter (just a width/proportion like ``"7"``) defaults to ``"d"``
+    (AsciiDoctor's literal/folded default style).
+
+    Args:
+        attrs (str): Captured contents of a `[...]` attribute line.
+
+    Returns:
+        list[str]: One style letter per column, in order.
+    """
+    m = _TABLE_COLS_RE.search(attrs)
+    if not m:
+        return []
+    styles: list[str] = []
+    for spec in m.group(1).split(","):
+        spec = spec.strip()
+        styles.append(spec[-1] if spec and spec[-1].isalpha() else "d")
+    return styles
+
+
+_TABLE_COLWIDTH_RE = re.compile(r"^(\d+(?:\.\d+)?)")
+
+
+def _table_colwidths(attrs: str) -> list[float]:
+    """Return each column's relative width from a `cols="..."` attribute.
+
+    AsciiDoctor treats a leading number the same way whether or not it's
+    followed by ``%`` -- both a percentage (``"15%h, 85%a"`` -> ``[15, 85]``)
+    and a bare relative weight (``"3,7"`` -> ``[3, 7]``) just mean "size
+    columns proportional to these numbers". A column with no leading number
+    defaults to a weight of ``1``. Without this, every `|===` table in a
+    discussion renders as an independent table with no width hints, so HTML
+    (browser auto-layout) and Typst (default `auto` columns) each size every
+    table from its own content -- drifting inconsistently between tables
+    that share one `[cols=...]` spec.
+
+    Args:
+        attrs (str): Captured contents of a `[...]` attribute line.
+
+    Returns:
+        list[float]: One relative width per column, in order. Empty if
+            *attrs* has no `cols="..."`.
+    """
+    m = _TABLE_COLS_RE.search(attrs)
+    if not m:
+        return []
+    widths: list[float] = []
+    for spec in m.group(1).split(","):
+        spec = spec.strip()
+        wm = _TABLE_COLWIDTH_RE.match(spec)
+        widths.append(float(wm.group(1)) if wm else 1.0)
+    return widths
+
+
+def _parse_asciidoc_table(
+    lines: list[str], i: int, attrs: str
+) -> tuple[list[list[dict[str, str]]], bool, int]:
+    """Parse a `|===` PSV table block starting at *i* (the opening delimiter).
+
+    Each parsed cell is ``{"style": <letter>, "text": <raw multi-line text>}``.
+    A cell's style is an explicit per-cell override (e.g. ``a|...``) when
+    present, otherwise it falls back to that column's style from *attrs*
+    (default ``"d"``). Blank lines between cells are visual-only separators
+    and are dropped; blank lines *inside* a cell's own text are preserved
+    (they matter for `a`-style cells, which are recursively parsed as
+    AsciiDoc prose and treat a blank line as a paragraph break).
+
+    Args:
+        lines (list[str]): Full source, split into lines.
+        i (int): Index of the opening ``|===`` line.
+        attrs (str): Captured contents of the preceding `[...]` attribute
+            line (``""`` if the table had none).
+
+    Returns:
+        tuple[list[list[dict[str, str]]], bool, int]: Rows of cells, whether
+            row 0 is a header row (AsciiDoctor's ``%header``), and the index
+            of the closing ``|===`` line.
+    """
+    colspecs = _table_colspecs(attrs)
+    header_row = "%header" in attrs
+    ncols = len(colspecs) or 1
+
+    i += 1  # step past the opening |===
+    flat: list[dict[str, str]] = []
+    spec: str | None = None
+    text_lines: list[str] = []
+
+    def flush() -> None:
+        nonlocal spec, text_lines
+        if spec is None and not text_lines:
+            return
+        col = len(flat) % ncols
+        style = (
+            spec
+            if spec and "." not in spec
+            else (colspecs[col] if col < len(colspecs) else "d")
+        )
+        flat.append({"style": style, "text": "\n".join(text_lines).strip("\n")})
+        spec, text_lines = None, []
+
+    while i < len(lines) and lines[i].strip() != "|===":
+        raw = lines[i].strip()
+        m = _TABLE_CELL_START_RE.match(raw)
+        if m:
+            flush()
+            spec = m.group("spec")
+            text_lines = [m.group("content")]
+        elif spec is not None or text_lines:
+            text_lines.append(raw)
+        i += 1
+    flush()
+
+    rows = [flat[j : j + ncols] for j in range(0, len(flat), ncols)]
+    return rows, header_row, i
+
+
+def _fold_table_cell_lines(
+    lines: list[str],
+    inline: Callable[[str], str],
+    break_token: str,
+    join_token: str = " ",
+) -> str:
+    """Join a non-`a`-style cell's physical lines, honoring `+`-at-end hard breaks.
+
+    Each line is rendered individually with *inline*; consecutive lines are
+    then joined with *break_token* where the source line ended in `` +``
+    (AsciiDoc's forced line break) or *join_token* for an ordinary fold.
+
+    Args:
+        lines (list[str]): Non-blank physical lines making up the cell.
+        inline (Callable[[str], str]): Backend-specific inline renderer.
+        break_token (str): Separator where the source forced a break.
+        join_token (str): Separator for an ordinary fold.
+
+    Returns:
+        str: The rendered, joined cell content.
+    """
+    if not lines:
+        return ""
+    segments: list[str] = []
+    seps: list[str] = []
+    for ln in lines:
+        s = ln.rstrip()
+        hard = s.endswith(" +") or s == "+"
+        if hard:
+            s = s[:-1].rstrip()
+        segments.append(inline(s))
+        seps.append(break_token if hard else join_token)
+    out = segments[0]
+    for seg, sep in zip(segments[1:], seps[:-1]):
+        out += sep + seg
+    return out
+
+
+_TYPST_LINK_RE = re.compile(r"(?:link:)?(https?://\S+?)\[(.*?)\]")
+_TYPST_BOLD_RE = re.compile(r"\*{1,2}([^*\n]+?)\*{1,2}")
+_TYPST_ITALIC_RE = re.compile(r"(?<![\w\\])_{1,2}([^_\n]+?)_{1,2}(?![\w])")
+_TYPST_SENTINEL_RE = re.compile("\x00(\\d+)\x00")
+
+
+def _typst_full_escape(text: str) -> str:
+    return "".join(_TYPST_ESCAPE.get(ch, ch) for ch in text)
+
+
+def _typst_inline(text: str) -> str:
+    # Protect links and *balanced* bold/italic as sentinels, then fully
+    # escape everything else.  This keeps intentional ``*bold*`` / ``_italic_``
+    # markup while neutralizing stray ``*`` ``_`` ``[`` ``]`` from regexes,
+    # shell examples, or AsciiDoc artifacts (``***``) that would otherwise
+    # leave an unclosed Typst delimiter and fail compilation.
+    stash: list[str] = []
+
+    def _put(rendered: str) -> str:
+        stash.append(rendered)
+        return f"\x00{len(stash) - 1}\x00"
+
+    def _link(m: "re.Match[str]") -> str:
+        url, label = m.group(1), m.group(2).strip()
+        if label:
+            return _put(f'#link("{url}")[{_typst_full_escape(label)}]')
+        return _put(f'#link("{url}")')
+
+    text = _TYPST_LINK_RE.sub(_link, text)
+    text = _TYPST_BOLD_RE.sub(lambda m: _put(f"*{_typst_full_escape(m.group(1))}*"), text)
+    text = _TYPST_ITALIC_RE.sub(
+        lambda m: _put(f"_{_typst_full_escape(m.group(1))}_"), text
+    )
+    escaped = _typst_full_escape(text)
+    return _TYPST_SENTINEL_RE.sub(lambda m: stash[int(m.group(1))], escaped)
+
+
+def _render_table_typst(
+    rows: list[list[dict[str, str]]],
+    header_row: bool,
+    colwidths: list[float] | None = None,
+) -> str:
+    """Render parsed table *rows* as a Typst ``#table(...)`` call.
+
+    `a`-style cells are recursively rendered via `asciidoc_to_typst` (they
+    may contain lists, admonitions, or nested prose); other cells are folded
+    to a single line, honoring `+`-forced breaks.
+
+    *colwidths* (from `_table_colwidths`), when it covers every column, is
+    emitted as explicit ``Nfr`` column widths so proportions match the
+    source's `[cols=...]` spec -- without it, `columns: <count>` sizes each
+    table from its own content, and sibling tables sharing one `cols=` spec
+    can drift to different widths from each other.
+    """
+    if not rows:
+        return ""
+    ncols = len(rows[0])
+
+    def cell_content(cell: dict[str, str]) -> str:
+        if cell["style"] == "a":
+            return asciidoc_to_typst(cell["text"])
+        lines = [ln for ln in cell["text"].splitlines() if ln.strip()]
+        return _fold_table_cell_lines(lines, _typst_inline, " \\\n", " ")
+
+    if colwidths and len(colwidths) == ncols:
+        columns = "(" + ", ".join(f"{w:.4g}fr" for w in colwidths) + ")"
+    else:
+        columns = str(ncols)
+
+    body_rows = rows
+    parts = [f"#table(\n  columns: {columns},"]
+    if header_row:
+        header_cells = ", ".join(f"[{cell_content(c)}]" for c in rows[0])
+        parts.append(f"  table.header({header_cells}),")
+        body_rows = rows[1:]
+    for row in body_rows:
+        parts.append("  " + ", ".join(f"[{cell_content(c)}]" for c in row) + ",")
+    parts.append(")")
+    return "\n".join(parts)
+
+
 def asciidoc_to_typst(value: str) -> str:
     """Convert a subset of AsciiDoc to Typst markup.
 
     Handles source/code blocks (emitted as Typst raw fences, contents left
     verbatim), ``NOTE:``/``[IMPORTANT]`` admonitions, block titles,
-    unordered/ordered lists, and ``link:url[text]`` macros.  Remaining prose
-    is escaped for Typst while preserving ``*bold*`` / ``_italic_`` (shared
-    between AsciiDoc and Typst).
+    unordered/ordered lists, `` +``-terminated hard line breaks, `|===` PSV
+    tables (rendered as a Typst ``#table(...)``), and ``link:url[text]``
+    macros.  Remaining prose is escaped for Typst while preserving
+    ``*bold*`` / ``_italic_`` (shared between AsciiDoc and Typst).
 
     Args:
         value (str): AsciiDoc source text.
@@ -306,40 +563,6 @@ def asciidoc_to_typst(value: str) -> str:
     lines = str(value).splitlines()
     result: list[str] = []
     i = 0
-
-    link_pattern = re.compile(r"(?:link:)?(https?://\S+?)\[(.*?)\]")
-    bold_pattern = re.compile(r"\*{1,2}([^*\n]+?)\*{1,2}")
-    italic_pattern = re.compile(r"(?<![\w\\])_{1,2}([^_\n]+?)_{1,2}(?![\w])")
-    sentinel_pattern = re.compile("\x00(\\d+)\x00")
-
-    def _full_escape(text: str) -> str:
-        return "".join(_TYPST_ESCAPE.get(ch, ch) for ch in text)
-
-    def _inline(text: str) -> str:
-        # Protect links and *balanced* bold/italic as sentinels, then fully
-        # escape everything else.  This keeps intentional ``*bold*`` / ``_italic_``
-        # markup while neutralizing stray ``*`` ``_`` ``[`` ``]`` from regexes,
-        # shell examples, or AsciiDoc artifacts (``***``) that would otherwise
-        # leave an unclosed Typst delimiter and fail compilation.
-        stash: list[str] = []
-
-        def _put(rendered: str) -> str:
-            stash.append(rendered)
-            return f"\x00{len(stash) - 1}\x00"
-
-        def _link(m: "re.Match[str]") -> str:
-            url, label = m.group(1), m.group(2).strip()
-            if label:
-                return _put(f'#link("{url}")[{_full_escape(label)}]')
-            return _put(f'#link("{url}")')
-
-        text = link_pattern.sub(_link, text)
-        text = bold_pattern.sub(lambda m: _put(f"*{_full_escape(m.group(1))}*"), text)
-        text = italic_pattern.sub(
-            lambda m: _put(f"_{_full_escape(m.group(1))}_"), text
-        )
-        escaped = _full_escape(text)
-        return sentinel_pattern.sub(lambda m: stash[int(m.group(1))], escaped)
 
     while i < len(lines):
         line = lines[i].rstrip()
@@ -373,7 +596,7 @@ def asciidoc_to_typst(value: str) -> str:
 
         # NOTE: admonition -> tinted callout box (see admonition() in header.typ.jinja)
         elif line.startswith("NOTE:"):
-            result.append(f'#admonition("NOTE")[{_inline(line[5:].strip())}]')
+            result.append(f'#admonition("NOTE")[{_typst_inline(line[5:].strip())}]')
 
         # [IMPORTANT] admonition block -> tinted callout box
         elif (
@@ -387,28 +610,54 @@ def asciidoc_to_typst(value: str) -> str:
                 important_lines.append(lines[i].strip())
                 i += 1
             result.append(
-                f'#admonition("IMPORTANT")[{_inline(" ".join(important_lines))}]'
+                f'#admonition("IMPORTANT")[{_typst_inline(" ".join(important_lines))}]'
             )
 
-        # Skip AsciiDoc block attribute lines, e.g. [cols=...], [width=...]
+        # `[cols=...]` (+ optional `%header`) immediately followed by `|===`: a table.
+        elif (
+            _TABLE_ATTR_RE.match(line)
+            and i + 1 < len(lines)
+            and lines[i + 1].strip() == "|==="
+        ):
+            attrs = _TABLE_ATTR_RE.match(line).group(1)
+            rows, header_row, i = _parse_asciidoc_table(lines, i + 1, attrs)
+            result.append(_render_table_typst(rows, header_row, _table_colwidths(attrs)))
+
+        # Bare `|===` table with no preceding attribute line.
+        elif line.strip() == "|===":
+            rows, header_row, i = _parse_asciidoc_table(lines, i, "")
+            result.append(_render_table_typst(rows, header_row))
+
+        # Skip AsciiDoc block attribute lines, e.g. [width=...], [options=...]
         elif re.match(r"^\[(cols|width|options|grid|frame|stripes|%|role).*\]$", line):
             pass
 
         # Block title `.Some Title`
         elif re.match(r"^\.(?!\d+\s)(.+)$", line):
             title_text = re.match(r"^\.(.+)$", line).group(1).strip()
-            result.append(f"*{_full_escape(title_text)}*")
+            result.append(f"*{_typst_full_escape(title_text)}*")
 
-        # Unordered list `* item` -> `- item`
-        elif line.strip().startswith("* "):
-            result.append("- " + _inline(line.strip()[2:]))
+        # Unordered list `* item` / `- item` -> `- item`
+        elif line.strip().startswith("* ") or line.strip().startswith("- "):
+            result.append("- " + _typst_inline(line.strip()[2:]))
 
         # Ordered list `. item` -> `+ item`
         elif re.match(r"^\.\s+.+", line):
-            result.append("+ " + _inline(line.strip()[2:]))
+            result.append("+ " + _typst_inline(line.strip()[2:]))
 
         else:
-            result.append(_inline(line.strip()))
+            stripped = line.strip()
+            # AsciiDoc's " +" at line end forces a line break within the
+            # paragraph; Typst's equivalent is a trailing backslash, but only
+            # when a following line actually exists to break into -- a
+            # trailing backslash with nothing after it is a dangling/invalid
+            # delimiter in Typst.
+            is_break_marker = stripped.endswith(" +") or stripped == "+"
+            if is_break_marker:
+                stripped = stripped[:-1].rstrip()
+            hard_break = is_break_marker and i + 1 < len(lines)
+            text = _typst_inline(stripped)
+            result.append(text + " \\" if hard_break else text)
 
         i += 1
 
@@ -454,11 +703,123 @@ def render_references_html(reference_set: Sequence[Dict[str, Any]]) -> str:
     return f'<ul class="ulist"><ul>{"".join(lines)}</ul></ul>' if lines else ""
 
 
+_HTML_LINK_RE = re.compile(r"(?:link:)?(https?://\S+?)\[(.*?)\]")
+_HTML_BREAK_SENTINEL = "\x00BR\x00"
+
+
+def _html_inline(text: str) -> str:
+    # Escape first, then re-introduce the small set of markup we support so
+    # user text can never inject tags.
+    out: list[str] = []
+    last = 0
+    for m in _HTML_LINK_RE.finditer(text):
+        out.append(html_escape(text[last : m.start()]))
+        url, label = m.group(1), m.group(2).strip()
+        out.append(f'<a href="{html_escape(url)}">{html_escape(label or url)}</a>')
+        last = m.end()
+    out.append(html_escape(text[last:]))
+    joined = "".join(out)
+    joined = re.sub(r"\*([^*]+)\*", r"<strong>\1</strong>", joined)
+    joined = re.sub(r"(?<![\w/])_([^_]+)_(?![\w/])", r"<em>\1</em>", joined)
+    return joined
+
+
+def _html_admonition(kind: str, body: str) -> str:
+    return (
+        f'<div class="admonitionblock {kind.lower()}"><table><tr>'
+        f'<td class="icon"><div class="title">{kind.title()}</div></td>'
+        f'<td class="content">{body}</td></tr></table></div>'
+    )
+
+
+def _fold_para_lines(lines: list[str]) -> str:
+    """Join paragraph *lines*, marking `` +``-forced breaks with a sentinel.
+
+    Run before `_html_inline` so bold/italic/link matching can still span a
+    forced break; the sentinel is swapped for a real ``<br>`` only *after*
+    escaping, so it can never itself be escaped or mistaken for markup.
+    """
+    if not lines:
+        return ""
+    segments: list[str] = []
+    seps: list[str] = []
+    for ln in lines:
+        s = ln.rstrip()
+        hard = s.endswith(" +") or s == "+"
+        if hard:
+            s = s[:-1].rstrip()
+        segments.append(s)
+        seps.append(_HTML_BREAK_SENTINEL if hard else " ")
+    out = segments[0]
+    for seg, sep in zip(segments[1:], seps[:-1]):
+        out += sep + seg
+    return out
+
+
+def _render_table_html(
+    rows: list[list[dict[str, str]]],
+    header_row: bool,
+    colwidths: list[float] | None = None,
+) -> str:
+    """Render parsed table *rows* reusing AsciiDoctor's `tableblock` classes.
+
+    `a`-style cells are recursively rendered via `asciidoc_to_html` (they may
+    contain lists, admonitions, or nested prose); other cells are folded to a
+    single line, honoring `+`-forced breaks. A cell renders as `<th>` when
+    its column style is `h`, or when *header_row* marks row 0 as a header.
+
+    *colwidths* (from `_table_colwidths`), when it covers every column, is
+    emitted as an explicit `<colgroup>` so the table's proportions match the
+    source's `[cols=...]` spec instead of the browser's per-table,
+    content-based auto-layout -- without it, sibling tables sharing one
+    `cols=` spec (e.g. a discussion with several label/value tables) can end
+    up with visibly different column widths from each other.
+    """
+    if not rows:
+        return ""
+
+    def cell_inner(cell: dict[str, str]) -> str:
+        if cell["style"] == "a":
+            return asciidoc_to_html(cell["text"])
+        lines = [ln for ln in cell["text"].splitlines() if ln.strip()]
+        return _fold_table_cell_lines(lines, _html_inline, "<br>", " ")
+
+    def tr(row: list[dict[str, str]], force_th: bool) -> str:
+        cells = []
+        for c in row:
+            tag = "th" if force_th or c["style"] == "h" else "td"
+            cells.append(
+                f'<{tag} class="tableblock halign-left valign-top">'
+                f"{cell_inner(c)}</{tag}>"
+            )
+        return f"<tr>{''.join(cells)}</tr>"
+
+    colgroup = ""
+    if colwidths and len(colwidths) == len(rows[0]):
+        total = sum(colwidths) or 1.0
+        cols = "".join(
+            f'<col style="width:{w / total * 100:.4g}%">' for w in colwidths
+        )
+        colgroup = f"<colgroup>{cols}</colgroup>"
+
+    body_rows = rows
+    thead = ""
+    if header_row:
+        thead = f"<thead>{tr(rows[0], True)}</thead>"
+        body_rows = rows[1:]
+    tbody = "".join(tr(r, False) for r in body_rows)
+    return (
+        '<table class="tableblock frame-all grid-all stretch">'
+        f"{colgroup}{thead}<tbody>{tbody}</tbody></table>"
+    )
+
+
 def asciidoc_to_html(value: str) -> str:
     """Convert a subset of AsciiDoc to HTML.
 
     Handles source/code blocks (``listingblock``), ``NOTE:``/``[IMPORTANT]``
     admonitions (``admonitionblock``), block titles, unordered/ordered lists,
+    `` +``-terminated hard line breaks, `|===` PSV tables (``tableblock``),
     ``link:url[text]`` macros, and ``*bold*`` / ``_italic_`` inline markup.
     Prose is HTML-escaped; the emitted tags reuse AsciiDoctor's class names so
     the existing CSS applies.
@@ -472,31 +833,6 @@ def asciidoc_to_html(value: str) -> str:
     if value is None:
         return ""
 
-    link_pattern = re.compile(r"(?:link:)?(https?://\S+?)\[(.*?)\]")
-
-    def _inline(text: str) -> str:
-        # Escape first, then re-introduce the small set of markup we support so
-        # user text can never inject tags.
-        out: list[str] = []
-        last = 0
-        for m in link_pattern.finditer(text):
-            out.append(html_escape(text[last : m.start()]))
-            url, label = m.group(1), m.group(2).strip()
-            out.append(f'<a href="{html_escape(url)}">{html_escape(label or url)}</a>')
-            last = m.end()
-        out.append(html_escape(text[last:]))
-        joined = "".join(out)
-        joined = re.sub(r"\*([^*]+)\*", r"<strong>\1</strong>", joined)
-        joined = re.sub(r"(?<![\w/])_([^_]+)_(?![\w/])", r"<em>\1</em>", joined)
-        return joined
-
-    def _admonition(kind: str, body: str) -> str:
-        return (
-            f'<div class="admonitionblock {kind.lower()}"><table><tr>'
-            f'<td class="icon"><div class="title">{kind.title()}</div></td>'
-            f'<td class="content">{body}</td></tr></table></div>'
-        )
-
     lines = str(value).splitlines()
     result: list[str] = []
     para: list[str] = []
@@ -504,7 +840,10 @@ def asciidoc_to_html(value: str) -> str:
 
     def flush_para() -> None:
         if para:
-            result.append(f'<div class="paragraph"><p>{_inline(" ".join(para))}</p></div>')
+            text = _html_inline(_fold_para_lines(para)).replace(
+                _HTML_BREAK_SENTINEL, "<br>"
+            )
+            result.append(f'<div class="paragraph"><p>{text}</p></div>')
             para.clear()
 
     def flush_list() -> None:
@@ -536,7 +875,7 @@ def asciidoc_to_html(value: str) -> str:
             )
         elif line.startswith("NOTE:"):
             flush_blocks()
-            result.append(_admonition("NOTE", _inline(line[5:].strip())))
+            result.append(_html_admonition("NOTE", _html_inline(line[5:].strip())))
         elif (
             line.strip() == "[IMPORTANT]"
             and i + 1 < len(lines)
@@ -548,12 +887,25 @@ def asciidoc_to_html(value: str) -> str:
             while i < len(lines) and lines[i].strip() != "====":
                 imp.append(lines[i].strip())
                 i += 1
-            result.append(_admonition("IMPORTANT", _inline(" ".join(imp))))
+            result.append(_html_admonition("IMPORTANT", _html_inline(" ".join(imp))))
+        elif (
+            _TABLE_ATTR_RE.match(line)
+            and i + 1 < len(lines)
+            and lines[i + 1].strip() == "|==="
+        ):
+            flush_blocks()
+            attrs = _TABLE_ATTR_RE.match(line).group(1)
+            rows, header_row, i = _parse_asciidoc_table(lines, i + 1, attrs)
+            result.append(_render_table_html(rows, header_row, _table_colwidths(attrs)))
+        elif line.strip() == "|===":
+            flush_blocks()
+            rows, header_row, i = _parse_asciidoc_table(lines, i, "")
+            result.append(_render_table_html(rows, header_row))
         elif re.match(r"^\[(cols|width|options|grid|frame|stripes|%|role).*\]$", line):
             pass
-        elif line.strip().startswith("* "):
+        elif line.strip().startswith("* ") or line.strip().startswith("- "):
             flush_para()
-            list_items.append(_inline(line.strip()[2:]))
+            list_items.append(_html_inline(line.strip()[2:]))
         elif not line.strip():
             flush_blocks()
         else:
@@ -596,11 +948,56 @@ def replace_include_with_file_content(text: str) -> str:
     return pattern.sub(replace_block, text)
 
 
+_MD_LINK_RE = re.compile(r"link:(\S+)\[(.*?)\]")
+
+
+def _md_link_replacer(match: "re.Match[str]") -> str:
+    url, text = match.group(1), match.group(2)
+    return f"[{text if text else url}]({url})"
+
+
+def _md_inline(text: str) -> str:
+    return _MD_LINK_RE.sub(_md_link_replacer, text)
+
+
+def _render_table_markdown(rows: list[list[dict[str, str]]], header_row: bool) -> str:
+    """Render parsed table *rows* as a GitHub-flavoured Markdown pipe table.
+
+    GFM tables require a header row syntactically, so row 0 is always used
+    as the header line even when the source table set no explicit
+    ``%header`` (most of mSCP's label/value tables don't). `a`-style cells
+    are recursively rendered via `asciidoc_to_markdown`, with embedded
+    newlines collapsed to ``<br>`` since a pipe-table cell must be one line;
+    other cells are folded the same way, honoring `+`-forced breaks. Literal
+    ``|`` in cell content is escaped so it can't be read as a column break.
+    """
+    if not rows:
+        return ""
+    ncols = len(rows[0])
+
+    def cell_md(cell: dict[str, str]) -> str:
+        if cell["style"] == "a":
+            # Forced breaks already became explicit "<br>" (see the hard-break
+            # handling below); a plain "\n" here is just a block separator
+            # (e.g. between two paragraphs), so fold it to a space.
+            text = asciidoc_to_markdown(cell["text"]).replace("\n", " ")
+        else:
+            lines = [ln for ln in cell["text"].splitlines() if ln.strip()]
+            text = _fold_table_cell_lines(lines, _md_inline, "<br>", " ")
+        return text.replace("|", "\\|")
+
+    header = "| " + " | ".join(cell_md(c) for c in rows[0]) + " |"
+    separator = "| " + " | ".join(["---"] * ncols) + " |"
+    body_lines = ["| " + " | ".join(cell_md(c) for c in row) + " |" for row in rows[1:]]
+    return "\n".join([header, separator, *body_lines])
+
+
 def asciidoc_to_markdown(value: str) -> str:
     """Convert a subset of AsciiDoc syntax to GitHub-flavoured Markdown.
 
     Handles headers, NOTE/IMPORTANT admonitions, source code blocks,
-    tables (``|===``), unordered/ordered lists, block titles, and
+    `|===` PSV tables (rendered as GFM pipe tables), `` +``-terminated hard
+    line breaks, unordered/ordered lists, block titles, and
     ``link:url[text]`` macros.  Unsupported constructs are passed through
     with links replaced and trailing whitespace stripped.
 
@@ -614,12 +1011,6 @@ def asciidoc_to_markdown(value: str) -> str:
     result = []
     i = 0
 
-    link_pattern = re.compile(r"link:(\S+)\[(.*?)\]")
-
-    def link_replacer(match):
-        url, text = match.group(1), match.group(2)
-        return f"[{text if text else url}]({url})"
-
     while i < len(lines):
         line = lines[i].rstrip()
 
@@ -630,9 +1021,7 @@ def asciidoc_to_markdown(value: str) -> str:
 
         # NOTE block
         elif line.startswith("NOTE:"):
-            result.append(
-                f"> **NOTE:** {link_pattern.sub(link_replacer, line[5:].strip())}"
-            )
+            result.append(f"> **NOTE:** {_md_inline(line[5:].strip())}")
 
         # [IMPORTANT] block
         elif (
@@ -679,24 +1068,20 @@ def asciidoc_to_markdown(value: str) -> str:
             result.extend(code_lines)
             result.append("```")
 
-        # Table with |===
-        elif line.strip() == "|===":
-            i += 1
-            table_rows = []
-            while i < len(lines) and lines[i].strip() != "|===":
-                table_line = lines[i].strip()
-                if table_line.startswith("|"):
-                    cells = [cell.strip() for cell in table_line.lstrip("|").split("|")]
-                    table_rows.append(cells)
-                i += 1
+        # `[cols=...]` (+ optional `%header`) immediately followed by `|===`: a table.
+        elif (
+            _TABLE_ATTR_RE.match(line)
+            and i + 1 < len(lines)
+            and lines[i + 1].strip() == "|==="
+        ):
+            attrs = _TABLE_ATTR_RE.match(line).group(1)
+            rows, header_row, i = _parse_asciidoc_table(lines, i + 1, attrs)
+            result.append(_render_table_markdown(rows, header_row))
 
-            if table_rows:
-                header = "| " + " | ".join(table_rows[0]) + " |"
-                separator = "| " + " | ".join(["---"] * len(table_rows[0])) + " |"
-                result.append(header)
-                result.append(separator)
-                for row in table_rows[1:]:
-                    result.append("| " + " | ".join(row) + " |")
+        # Bare `|===` table with no preceding attribute line.
+        elif line.strip() == "|===":
+            rows, header_row, i = _parse_asciidoc_table(lines, i, "")
+            result.append(_render_table_markdown(rows, header_row))
 
         # Skip AsciiDoc block attributes like [cols=...], [width=...], [options=...], etc.
         elif re.match(
@@ -721,7 +1106,13 @@ def asciidoc_to_markdown(value: str) -> str:
             result.append(line.strip())
 
         else:
-            result.append(link_pattern.sub(link_replacer, line.strip()))
+            stripped = line.strip()
+            # AsciiDoc's " +" at line end forces a line break; GFM's is <br>.
+            hard_break = stripped.endswith(" +") or stripped == "+"
+            if hard_break:
+                stripped = stripped[:-1].rstrip()
+            text = _md_inline(stripped)
+            result.append(text + "<br>" if hard_break else text)
 
         i += 1
 
