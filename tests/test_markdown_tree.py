@@ -176,9 +176,7 @@ class TestFrontmatter:
 def _get_baseline_path() -> Path:
     """Return a bundled baseline YAML for testing."""
     root = Path(__file__).parent.parent
-    candidates = [
-        root / "src/mscp/data/baselines/macos/cis_lvl1_macos_26.0.yaml",
-    ]
+    candidates = sorted((root / "src/mscp/data/baselines/macos").glob("cis_lvl1_macos_*.yaml"))
     for p in candidates:
         if p.exists():
             return p
@@ -205,6 +203,7 @@ def markdown_tree_output(tmp_path_factory):
     generate_markdown_tree(
         build_path=tmp,
         baseline=baseline,
+        os_name=baseline.platform["os"],
         version_info=version_data,
         show_all_tags=False,
         language="en",
