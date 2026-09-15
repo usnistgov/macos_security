@@ -52,10 +52,13 @@ def deep_merge(a, b, preferred_key=None):
 def resolve_enforcement_info(platform_data: dict, os_version_str: str) -> dict:
     """Resolve the enforcement_info that applies to a specific OS version.
 
-    An OS-version-specific ``enforcement_info`` block (e.g.
-    ``platforms.macOS.26.0.enforcement_info``) overrides the platform-level
-    one when both are present; the platform-level block is the default used
-    when no version-specific override exists.
+    The platform-level ``enforcement_info`` (e.g.
+    ``platforms.macOS.enforcement_info``) is the default. An OS-version-specific
+    block (e.g. ``platforms.macOS.26.0.enforcement_info``) augments that
+    default rather than replacing it wholesale: only the top-level keys it
+    actually specifies (``check``, ``fix``, ``default_state``) override the
+    default's corresponding key, so a version override that defines only
+    ``fix`` still gets the default's ``check``, and vice versa.
 
     Args:
         platform_data (dict): The rule's data for one OS family (e.g.
@@ -65,13 +68,18 @@ def resolve_enforcement_info(platform_data: dict, os_version_str: str) -> dict:
             ``"26.0"``).
 
     Returns:
-        dict: The version-specific ``enforcement_info`` if defined,
-            otherwise the platform-level one, otherwise ``{}``.
+        dict: The merged enforcement_info, or ``{}`` if neither a
+            platform-level nor a version-specific block is defined.
     """
+    merged = dict(platform_data.get("enforcement_info") or {})
+
     version_data = platform_data.get(os_version_str) or {}
-    if isinstance(version_data, dict) and "enforcement_info" in version_data:
-        return version_data["enforcement_info"]
-    return platform_data.get("enforcement_info", {})
+    if isinstance(version_data, dict):
+        override = version_data.get("enforcement_info")
+        if override:
+            merged.update(override)
+
+    return merged
 
 
 class Sectionmap(StrEnum):
