@@ -41,46 +41,25 @@ references:
       - 4.8
 platforms:
   macOS:
-    '26.0':
-      enforcement_info:
-        check:
-          shell: |-
-            /usr/bin/osascript -l JavaScript << EOS
-            function run() {
-              let pref1 = ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess.new')\
-              .objectForKey('familyControlsEnabled'))
-              let pathlist = $.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess.new')\
-              .objectForKey('pathBlackList').js
-              for ( let app in pathlist ) {
-                  if ( ObjC.unwrap(pathlist[app]) == "/Applications/Messages.app" && pref1 == true ){
-                      return("true")
-                  }
-              }
-              return("false")
-              }
-            EOS
-          result:
-            string: 'true'
-    '15.0':
-      enforcement_info:
-        check:
-          shell: |-
-            /usr/bin/osascript -l JavaScript << EOS
-            function run() {
-              let pref1 = ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess.new')\
-              .objectForKey('familyControlsEnabled'))
-              let pathlist = $.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess.new')\
-              .objectForKey('pathBlackList').js
-              for ( let app in pathlist ) {
-                  if ( ObjC.unwrap(pathlist[app]) == "/Applications/Messages.app" && pref1 == true ){
-                      return("true")
-                  }
-              }
-              return("false")
-              }
-            EOS
-          result:
-            string: 'true'
+    enforcement_info:
+      check:
+        shell: |-
+          /usr/bin/osascript -l JavaScript << EOS
+          function run() {
+            let pref1 = ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess.new')\
+            .objectForKey('familyControlsEnabled'))
+            let pathlist = $.NSUserDefaults.alloc.initWithSuiteName('com.apple.applicationaccess.new')\
+            .objectForKey('pathBlackList').js
+            for ( let app in pathlist ) {
+                if ( ObjC.unwrap(pathlist[app]) == "/Applications/Messages.app" && pref1 == true ){
+                    return("true")
+                }
+            }
+            return("false")
+            }
+          EOS
+        result:
+          string: 'true'
 tags:
   - cnssi-1253_low
   - cnssi-1253_high

@@ -49,6 +49,31 @@ def deep_merge(a, b, preferred_key=None):
     return a
 
 
+def resolve_enforcement_info(platform_data: dict, os_version_str: str) -> dict:
+    """Resolve the enforcement_info that applies to a specific OS version.
+
+    An OS-version-specific ``enforcement_info`` block (e.g.
+    ``platforms.macOS.26.0.enforcement_info``) overrides the platform-level
+    one when both are present; the platform-level block is the default used
+    when no version-specific override exists.
+
+    Args:
+        platform_data (dict): The rule's data for one OS family (e.g.
+            ``rule_yaml["platforms"]["macOS"]``), keyed by OS version plus
+            top-level keys like ``enforcement_info``/``introduced``.
+        os_version_str (str): The OS version being processed (e.g.
+            ``"26.0"``).
+
+    Returns:
+        dict: The version-specific ``enforcement_info`` if defined,
+            otherwise the platform-level one, otherwise ``{}``.
+    """
+    version_data = platform_data.get(os_version_str) or {}
+    if isinstance(version_data, dict) and "enforcement_info" in version_data:
+        return version_data["enforcement_info"]
+    return platform_data.get("enforcement_info", {})
+
+
 class Sectionmap(StrEnum):
     """Mapping from rule directory names to canonical section filenames.
 
@@ -289,8 +314,8 @@ class Macsecurityrule(BaseModelWithAccessors):
 
                     rule_yaml[custom_rule_key] = custom_rule_value
 
-            enforcement_info = rule_yaml["platforms"][os_type].get(
-                "enforcement_info", {}
+            enforcement_info = resolve_enforcement_info(
+                rule_yaml["platforms"][os_type], os_version_str
             )
             if enforcement_info and "n_a" not in tags:
                 check_shell = enforcement_info.get("check", {}).get("shell")
@@ -651,11 +676,12 @@ class Macsecurityrule(BaseModelWithAccessors):
     def _update_fix_for_configuration_profile(self) -> None:
         """Update ``self.fix`` or enforcement info for configuration profile rules."""
         if self.mechanism == "Configuration Profile":
-            if (
-                not self.platforms.get(self.os_type, {})
-                .get("enforcement_info", {})
-                .get("fix")
-            ):
+            os_version_str = str(float(self.os_version))
+            enforcement_info = resolve_enforcement_info(
+                self.platforms.get(self.os_type, {}), os_version_str
+            )
+
+            if not enforcement_info.get("fix"):
                 if self.mobileconfig_info and len(self.mobileconfig_info) > 0:
                     self.fix = (
                         f"Create a configuration profile containing the following keys in the "
@@ -667,11 +693,9 @@ class Macsecurityrule(BaseModelWithAccessors):
                     )
             else:
                 if self.mobileconfig_info and len(self.mobileconfig_info) > 0:
-                    self.platforms[self.os_type]["enforcement_info"]["fix"] = (
-                        format_payload(
-                            self.mobileconfig_info[0].payload_type,
-                            self.mobileconfig_info[0].payload_content,
-                        )
+                    enforcement_info["fix"] = format_payload(
+                        self.mobileconfig_info[0].payload_type,
+                        self.mobileconfig_info[0].payload_content,
                     )
 
     def _fill_in_odv(self, parent_values: str) -> None:
