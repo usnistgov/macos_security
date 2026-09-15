@@ -215,7 +215,7 @@ class TestTypstRequired:
         with mock.patch.dict(sys.modules, {"typst": None}):
             with pytest.raises(SystemExit) as exc:
                 _generate_typst_pdf(
-                    mock.MagicMock(), tmp_path / "x.typ", tmp_path / "logo.png"
+                    tmp_path / "x.typ", tmp_path / "logo.png"
                 )
         assert exc.value.code != 0
 
