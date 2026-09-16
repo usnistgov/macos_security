@@ -1,0 +1,28 @@
+id: test_version_specific_check
+title: Version-specific check fixture
+discussion: Fixture rule
+references:
+  nist:
+    cce:
+      macos_26:
+        - CCE-00000-0
+platforms:
+  macOS:
+    enforcement_info:
+      check:
+        shell: echo generic
+        result:
+          integer: 1
+    '27.0': {}
+    '15.0':
+      benchmarks:
+        - name: cis_lvl1
+    '26.0':
+      enforcement_info:
+        check:
+          shell: echo version-specific
+          result:
+            string: 'true'
+      benchmarks:
+        - name: cis_lvl1
+tags: []
