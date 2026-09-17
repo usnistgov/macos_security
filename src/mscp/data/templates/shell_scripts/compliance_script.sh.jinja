@@ -303,22 +303,21 @@ generate_stats(){
 
 rule_fix(){
   local audit_score=$($plb -c "print $1:finding" $audit_plist)
-  local exempt=$(/usr/bin/osascript -l JavaScript -e "ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.$baseline_name.audit').objectForKey('$1'))["exempt"]")
-  local exempt_reason=$(/usr/bin/osascript -l JavaScript -e "ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.$baseline_name.audit').objectForKey('$1'))["exempt_reason"]")
+  local exempt=$(/usr/bin/osascript -l JavaScript -e "ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.$baseline_name.audit').objectForKey('$1'))['exempt']")
+  local exempt_reason=$(/usr/bin/osascript -l JavaScript -e "ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.$baseline_name.audit').objectForKey('$1'))['exempt_reason']")
 
-  if [[ ! $exempt == "1" ]] || [[ -z $exempt ]]; then
-    if [[ $audit_score == "true" ]]; then
-      ask "$1 - Run the command(s)-> $2" N
-      if [[ $? == 0 ]]; then
-        logmessage "Running the command to configure the settings for: $1 ..."
-        eval "$2"
-      fi
-    else
-      logmessage "Settings for: $1 already configured, continuing..."
-    fi
-  elif [[ ! -z "$exempt_reason" ]]; then
+  if [[ $exempt == "1" ]]; then
     logmessage "$1 has an exemption, remediation skipped (Reason: \"$exempt_reason\")"
+  elif [[ $audit_score == "true" ]]; then
+    ask "$1 - Run the command(s)-> $2" N
+    if [[ $? == 0 ]]; then
+      logmessage "Running the command to configure the settings for: $1 ..."
+      eval "$2"
+    fi
+  else
+    logmessage "Settings for: $1 already configured, continuing..."
   fi
+
 }
 
 run_scan(){

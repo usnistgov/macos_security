@@ -43,3 +43,19 @@ python3 -m pip install git+https://github.com/usnistgov/macos_security@main
 ```
 
 You can now use the MSCP modules by way of `import mscp` in your own python tool.
+
+## Running the tests (development)
+
+Install the development dependencies, which include pytest:
+
+```bash
+python3 -m pip install --upgrade -r requirements-dev.txt
+```
+
+Then run the suite from the repository root:
+
+```bash
+python3 -m pytest
+```
+
+Tests marked `integration` compile PDFs with typst and can be skipped with `python3 -m pytest -m "not integration"`.
