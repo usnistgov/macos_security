@@ -81,3 +81,26 @@ addopts = "--import-mode=importlib"
 markers = [
   "integration: requires the typst package (deselect with '-m \"not integration\"')",
 ]
+
+[tool.coverage.run]
+source = ["mscp"]
+branch = true
+omit = [
+  "*/tests/*",
+]
+
+[tool.coverage.report]
+# Show missing line numbers in the terminal report
+show_missing = true
+# Do not list files that are already fully covered
+skip_covered = true
+# Round to whole percentages
+precision = 0
+# Lines/patterns to exclude from coverage accounting
+exclude_lines = [
+  "pragma: no cover",
+  "raise NotImplementedError",
+  "if __name__ == .__main__.:",
+  "if TYPE_CHECKING:",
+  "@(abc\\.)?abstractmethod",
+]
