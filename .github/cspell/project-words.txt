@@ -193,6 +193,7 @@ psso
 PSSO
 pwpolicy
 pydantic
+pytest
 pyyaml
 reauthentication
 Remediator
