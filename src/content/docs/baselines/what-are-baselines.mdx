@@ -52,30 +52,30 @@ Each baseline is specific to an **operating system** (macOS, iOS/iPadOS, or visi
 
 <div class="baseline-tables">
 
-### Government Frameworks
+### U.S. Government Frameworks
 
-| Framework | Baseline Files |
-|:----------|:---------------|
-| **NIST 800-53 Rev 5** | `800-53r5_high`, `800-53r5_moderate`, `800-53r5_low`, `800-53r5_privacy` |
-| **NIST 800-171** | `800-171` |
-| **DISA STIG** | macOS: `disa_stig`<br/>iOS: `ios_stig` |
-| **CMMC 2.0** | `cmmc_lvl1`, `cmmc_lvl2` |
-| **CNSSI 1253** | `cnssi-1253_high`, `cnssi-1253_moderate`, `cnssi-1253_low` |
-| **NLM APGOV** | `nlmapgov_base`, `nlmapgov_plus` |
+| Framework | Platforms | Baseline Files |
+|:----------|:----------|:---------------|
+| **NIST SP 800-53 Rev 5** | macOS, iOS/iPadOS, visionOS | `800-53r5_high`, `800-53r5_moderate`, `800-53r5_low`, `800-53r5_privacy` |
+| **NIST SP 800-171 Rev 3** | macOS, iOS/iPadOS, visionOS | `800-171` |
+| **NIST SP 800-171 Rev 2 (CMMC)** | macOS, iOS/iPadOS, visionOS | `cmmc_lvl1`, `cmmc_lvl2`, `cmmc_lvl3` |
+| **CNSSI 1253** | macOS, iOS/iPadOS, visionOS | `cnssi-1253_high`, `cnssi-1253_moderate`, `cnssi-1253_low` |
+| **DISA STIG** | macOS, iOS/iPadOS, visionOS | macOS: `disa_stig`<br/>iOS: `ios_stig`, `ios_stig_byoad`<br/>visionOS: `visionos_stig` |
 
 ### Industry Frameworks
 
-| Framework | Baseline Files |
-|:----------|:---------------|
-| **CIS Benchmarks (macOS)** | `cis_lvl1`, `cis_lvl2` |
-| **CIS Benchmarks (iOS)** | `cis_lvl1_byod`, `cis_lvl2_byod`<br/>`cis_lvl1_enterprise`, `cis_lvl2_enterprise` |
-| **CIS Controls v8** | `cisv8` |
+| Framework | Platforms | Baseline Files |
+|:----------|:----------|:---------------|
+| **CIS Benchmarks (Level 1 & 2)** | macOS, iOS/iPadOS | macOS: `cis_lvl1`, `cis_lvl2`<br/>iOS: `cis_lvl1_byod`, `cis_lvl2_byod`, `cis_lvl1_enterprise`, `cis_lvl2_enterprise` |
+| **CIS Controls v8** | macOS, iOS/iPadOS, visionOS | `cisv8` |
+| **HICP — Health Industry Cybersecurity Practices (Large Organizations)** | macOS | `hicp_lp` |
 
 ### International
 
-| Framework | Baseline Files |
-|:----------|:---------------|
-| **Indigo (iOS only)** | `indigo_base`, `indigo_high` |
+| Framework | Platforms | Baseline Files |
+|:----------|:----------|:---------------|
+| **BSI Indigo** | iOS/iPadOS | `indigo_base`, `indigo_high` |
+| **NLMAPGOV (Base and Plus)** | macOS, iOS/iPadOS | `nlmapgov_base`, `nlmapgov_plus` |
 
 </div>
 
@@ -105,19 +105,31 @@ Tags (applicable to all platforms):
   800-53r5_low
   800-53r5_moderate
   800-53r5_privacy
+  all_rules
   cisv8
   cmmc_lvl1
   cmmc_lvl2
+  cmmc_lvl3
   cnssi-1253_high
   cnssi-1253_low
   cnssi-1253_moderate
-  all_rules
+  hicp_lp
 
 Benchmarks (platform-specific):
   cis_lvl1 (Platforms: macOS)
+  cis_lvl1_byod (Platforms: iOS)
+  cis_lvl1_enterprise (Platforms: iOS)
   cis_lvl2 (Platforms: macOS)
+  cis_lvl2_byod (Platforms: iOS)
+  cis_lvl2_enterprise (Platforms: iOS)
   disa_stig (Platforms: macOS)
-  nlmapgov_plus (Platforms: macOS)
+  indigo_base (Platforms: iOS)
+  indigo_high (Platforms: iOS)
+  ios_stig (Platforms: iOS)
+  ios_stig_byoad (Platforms: iOS)
+  nlmapgov_base (Platforms: iOS, macOS)
+  nlmapgov_plus (Platforms: iOS, macOS)
+  visionos_stig (Platforms: visionOS)
 ```
 
   </TabItem>
