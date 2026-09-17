@@ -284,7 +284,9 @@ class Macsecurityrule(BaseModelWithAccessors):
                         continue
                     if custom_rule_key == "platforms":
                         platform_info = rule_yaml.get("platforms")
-                        deep_merge(platform_info, custom_rule_value, preferred_key="result")
+                        deep_merge(
+                            platform_info, custom_rule_value, preferred_key="result"
+                        )
                         continue
 
                     rule_yaml[custom_rule_key] = custom_rule_value
@@ -392,6 +394,8 @@ class Macsecurityrule(BaseModelWithAccessors):
             disa: dict[str, Any] = {}
             cis: dict[str, Any] = {}
             bsi: dict[str, Any] = {}
+            bzk: dict[str, Any] = {}
+            hhs: dict[str, Any] = {}
             custom_refs: dict[str, Any] = {}
 
             for ref_key in reference_keys:
@@ -403,6 +407,10 @@ class Macsecurityrule(BaseModelWithAccessors):
                     cis: dict[str, Any] = rule_yaml["references"].get("cis", {})
                 elif ref_key == "bsi":
                     bsi: dict[str, Any] = rule_yaml["references"].get("bsi", {})
+                elif ref_key == "bzk":
+                    bzk: dict[str, Any] = rule_yaml["references"].get("bzk", {})
+                elif ref_key == "hhs":
+                    hhs: dict[str, Any] = rule_yaml["references"].get("hhs", {})
                 elif ref_key == "custom":
                     for custom_ref_key in rule_yaml["references"]["custom"]:
                         custom_refs[custom_ref_key] = rule_yaml["references"][
@@ -450,6 +458,17 @@ class Macsecurityrule(BaseModelWithAccessors):
                         bsi["indigo"], list
                     ):
                         bsi["indigo"] = [bsi["indigo"]]
+            if bzk:
+                if "bio" in bzk and isinstance(bzk["bio"], dict):
+                    bzk["bio"] = bzk["bio"].get(os_typeversion)
+                    if bzk["bio"] is not None and not isinstance(bzk["bio"], list):
+                        bzk["bio"] = [bzk["bio"]]
+
+            if hhs:
+                if "hicp" in hhs and isinstance(hhs["hicp"], dict):
+                    hhs["hicp"] = hhs["hicp"].get(os_typeversion)
+                    if hhs["hicp"] is not None and not isinstance(hhs["hicp"], list):
+                        hhs["hicp"] = [hhs["hicp"]]
 
             if custom_refs:
                 rule_yaml["references"]["custom_refs"] = {}

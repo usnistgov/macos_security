@@ -182,7 +182,7 @@ def generate_scap(sp: Yaspin, args: argparse.Namespace) -> None:
     oval_counter = 1
 
     sp.text = "Parsing baselines for XCCDF content"
-    time.sleep(.5)
+    time.sleep(0.5)
 
     for baseline in all_the_baselines:
         for b, r in baseline.items():
@@ -260,7 +260,7 @@ def generate_scap(sp: Yaspin, args: argparse.Namespace) -> None:
             if len(rule["references"].disa.disa_stig) > 0:
                 xccdf_references = (
                     xccdf_references
-                    + """<reference href="https://www.cyber.mil/stigs/downloads/">DISA STIG(s): {0}</reference>""".format(
+                    + """<reference href="https://www.cyber.mil/stigs/downloads/">DISA STIG: {0}</reference>""".format(
                         separator.join(rule["references"].disa.disa_stig)
                     )
                 )
@@ -286,9 +286,16 @@ def generate_scap(sp: Yaspin, args: argparse.Namespace) -> None:
                 cisv8 = str()
                 for cis_ref in rule["references"].cis.controls_v8:
                     cisv8 = cisv8 + "{}, ".format(cis_ref)
-                xccdf_references = (xccdf_references + """<reference href="https://www.cisecurity.org/controls">CIS Controls V8: {0}</reference>""".format(cisv8[0:-2]))
+                xccdf_references = (
+                    xccdf_references
+                    + """<reference href="https://www.cisecurity.org/controls">CIS Controls V8: {0}</reference>""".format(
+                        cisv8[0:-2]
+                    )
+                )
         except (TypeError, KeyError, AttributeError) as e:
-            logger.warning(f"Error when trying to build CIS Controls references for {rule.rule_id}: {e}")
+            logger.warning(
+                f"Error when trying to build CIS Controls references for {rule.rule_id}: {e}"
+            )
         selected_os_benchmark = []
         for benchmark, v in benchmark_map.items():
             if list(v)[0].lower() == args.os_name.lower():
@@ -436,8 +443,15 @@ def generate_scap(sp: Yaspin, args: argparse.Namespace) -> None:
                                 )
 
                         else:
-                            if "base64" in rule.platforms["macOS"]["enforcement_info"]["check"]["result"].keys():
-                                base64_value = base64.b64encode(newrule.result_value.encode("utf-8")).decode("utf-8")
+                            if (
+                                "base64"
+                                in rule.platforms["macOS"]["enforcement_info"]["check"][
+                                    "result"
+                                ].keys()
+                            ):
+                                base64_value = base64.b64encode(
+                                    newrule.result_value.encode("utf-8")
+                                ).decode("utf-8")
                                 oval_states = (
                                     oval_states
                                     + """<shellcommand_state xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#independent" id="oval:mscp:ste:{0}" version="1" comment="{1}_{2}state"><stdout_line operation="equals">{3}</stdout_line></shellcommand_state>""".format(
@@ -448,7 +462,10 @@ def generate_scap(sp: Yaspin, args: argparse.Namespace) -> None:
                                 oval_states = (
                                     oval_states
                                     + """<shellcommand_state xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#independent" id="oval:mscp:ste:{0}" version="1" comment="{1}_{2}state"><stdout_line operation="equals">{3}</stdout_line></shellcommand_state>""".format(
-                                        oval_counter, rule.rule_id, k, newrule.result_value
+                                        oval_counter,
+                                        rule.rule_id,
+                                        k,
+                                        newrule.result_value,
                                     )
                                 )
                         oval_counter += 1
@@ -588,7 +605,7 @@ def generate_scap(sp: Yaspin, args: argparse.Namespace) -> None:
         current_version_data["os_name"].replace(" ", "_"),
         current_version_data["os_version"],
         date_time_string.split("T")[0] + "Z",
-        current_version_data["compliance_version"]
+        current_version_data["compliance_version"],
     )
     xccdf_group = """<Group id="xccdf_gov.nist.mscp.content_group_all_rules"><title>All rules</title><description>All the rules</description><warning category="general">The check/fix commands outlined in this section must be run with elevated privileges.</warning>"""
     xccdf_closer = """</Group></Benchmark>"""
@@ -635,14 +652,13 @@ def generate_scap(sp: Yaspin, args: argparse.Namespace) -> None:
         )
 
         ocil = """<component id="scap_gov.nist.mscp.content_comp_macOS_{1}_check_2" timestamp="{0}"><ocil xmlns="http://scap.nist.gov/schema/ocil/2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://scap.nist.gov/schema/ocil/2.0 ocil-2.0.xsd"><generator><product_name>Manual Labor</product_name><product_version>1</product_version><schema_version>2.0</schema_version><timestamp>{0}</timestamp></generator><questionnaires><questionnaire id="ocil:gov.nist.mscp.content:questionnaire:1">  <title>Obtain a pass or a fail</title>  <actions>    <test_action_ref>ocil:gov.nist.mscp.content:testaction:1</test_action_ref>  </actions></questionnaire></questionnaires><test_actions><boolean_question_test_action id="ocil:gov.nist.mscp.content:testaction:1" question_ref="ocil:gov.nist.mscp.content:question:1">  <when_true>    <result>PASS</result>  </when_true>  <when_false>    <result>FAIL</result>  </when_false></boolean_question_test_action></test_actions><questions><boolean_question id="ocil:gov.nist.mscp.content:question:1">  <question_text>Do you wish this checklist item to be considered to have passed?</question_text></boolean_question></questions></ocil></component>""".format(
-            date_time_string,
-            current_version_data["os_version"]
+            date_time_string, current_version_data["os_version"]
         )
 
         cpe = """<component id="scap_gov.nist.mscp.content_comp_macOS_{0}_macOS-cpe-dictionary.xml" timestamp="{1}"><?xml-model href="https://scap.nist.gov/schema/cpe/2.3/cpe-dictionary_2.3.xsd" schematypens="http://www.w3.org/2001/XMLSchema" title="CPE XML schema"?><cpe-list xmlns="http://cpe.mitre.org/dictionary/2.0" xmlns:cpe-23="http://scap.nist.gov/schema/cpe-extension/2.3"><generator><product_name>macOS Security Compliance Project</product_name><schema_version>2.3</schema_version><timestamp>{1}</timestamp></generator><cpe-item name="cpe:/{2}"><title xml:lang="en-US">Apple macOS {0}</title><notes xml:lang="en-US">  <note>This CPE Name represents macOS {0}</note></notes><check href="macOS-cpe-oval.xml" system="http://oval.mitre.org/XMLSchema/oval-definitions-5">oval:gov.nist.mscp.content.cpe.oval:def:1</check><cpe-23:cpe23-item name="cpe:2.3:{2}:*:*:*:*:*:*:*"/></cpe-item></cpe-list></component><component id="scap_gov.nist.mscp.content_comp_macOS_{0}_macOS-cpe-oval.xml" timestamp="{1}"><oval_definitions xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5" xmlns:oval="http://oval.mitre.org/XMLSchema/oval-common-5" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://oval.mitre.org/XMLSchema/oval-definitions-5 https://raw.githubusercontent.com/OVAL-Community/OVAL/master/oval-schemas/oval-definitions-schema.xsd http://oval.mitre.org/XMLSchema/oval-definitions-5#independent https://raw.githubusercontent.com/OVAL-Community/OVAL/master/oval-schemas/independent-definitions-schema.xsd http://oval.mitre.org/XMLSchema/oval-definitions-5#macos https://raw.githubusercontent.com/OVAL-Community/OVAL/master/oval-schemas/macos-definitions-schema.xsd http://oval.mitre.org/XMLSchema/oval-definitions-5#unix https://raw.githubusercontent.com/OVAL-Community/OVAL/master/oval-schemas/unix-definitions-schema.xsd"><generator><oval:product_name>macOS Security Compliance Project</oval:product_name><oval:schema_version>5.12.1</oval:schema_version><oval:timestamp>{1}</oval:timestamp></generator><definitions><definition id="oval:gov.nist.mscp.content.cpe.oval:def:1" version="1" class="inventory">  <metadata>    <title>Apple macOS {0} is installed</title>    <affected family="macos">      <platform>macOS</platform>    </affected>    <reference source="CPE" ref_id="cpe:/{2}"/>    <description>The operating system installed on the system is Apple macOS ({0}).</description>  </metadata>  <criteria operator="AND">    <criterion comment="The Installed Operating System is Part of the Mac OS Family" test_ref="oval:gov.nist.mscp.content.cpe:tst:1"/>    <criterion comment="Apple macOS version is greater than or equal to {0}" test_ref="oval:gov.nist.mscp.content.cpe:tst:2"/>  </criteria></definition></definitions><tests><family_test xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#independent" check="all" check_existence="only_one_exists" comment="The Installed Operating System is Part of the macOS Family" id="oval:gov.nist.mscp.content.cpe:tst:1" version="1">  <object object_ref="oval:gov.nist.mscp.content.cpe:obj:1"/>  <state state_ref="oval:gov.nist.mscp.content.cpe:ste:1"/></family_test><plist511_test xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" check="all" check_existence="only_one_exists" comment="Apple macOS version is greater than {0}" id="oval:gov.nist.mscp.content.cpe:tst:2" version="2">  <object object_ref="oval:gov.nist.mscp.content.cpe:obj:2"/>  <state state_ref="oval:gov.nist.mscp.content.cpe:ste:2"/></plist511_test></tests><objects><family_object xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#independent" id="oval:gov.nist.mscp.content.cpe:obj:1" version="1" comment="This variable_object represents the family that the operating system belongs to."/><plist511_object xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" comment="The macOS product version plist object." id="oval:gov.nist.mscp.content.cpe:obj:2" version="1">  <filepath>/System/Library/CoreServices/SystemVersion.plist</filepath>  <xpath>//*[contains(text(), "ProductVersion")]/following-sibling::*[1]/text()</xpath></plist511_object></objects><states><family_state xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#independent" id="oval:gov.nist.mscp.content.cpe:ste:1" version="1" comment="The OS is part of the macOS Family.">  <family>macos</family></family_state><plist511_state xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#macos" comment="Is the value is greater than or equal to {0}" id="oval:gov.nist.mscp.content.cpe:ste:2" version="1"><value_of datatype="version" operation="greater than or equal">{0}</value_of></plist511_state></states></oval_definitions></component>""".format(
             current_version_data["os_version"],
             date_time_string,
-            current_version_data["cpe"]
+            current_version_data["cpe"],
         )
 
         scap = scap + xccdf + oval + ocil + cpe + "</data-stream-collection>"
@@ -731,7 +747,7 @@ def generate_scap(sp: Yaspin, args: argparse.Namespace) -> None:
     output_file = output_file / base_filename
 
     sp.text = "Writing output files"
-    time.sleep(.5)
+    time.sleep(0.5)
 
     create_file(output_file, totaloutput)
 

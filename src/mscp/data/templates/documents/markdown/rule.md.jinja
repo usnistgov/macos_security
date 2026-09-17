@@ -103,7 +103,7 @@
 | **800-171r3** | {{ rule.references.nist.nist_800_171r3 | render_rules if rule.references.nist.nist_800_171r3 is not none }} |
 {% endif %}
 {% if "STIG" in baseline.title | upper or show_all_tags %}
-| **DISA STIG(s)** | {{ rule.references.disa.disa_stig | render_rules if rule.references.disa.disa_stig is not none }} |
+| **DISA STIG** | {{ rule.references.disa.disa_stig | render_rules if rule.references.disa.disa_stig is not none }} |
 {% if rule.references.disa.sfr is not none %}
 | **SFR** | {{ rule.references.disa.sfr | render_rules if rule.references.disa.sfr is not none }} |
 {% endif %}
@@ -125,7 +125,7 @@
 | **CCE** | {{ rule.references.nist.cce | render_rules }} |
 {% endif %}
 {% if "references" in rule.customized %}
-| **Custom References** | {{ rule.references.custom_refs.references | render_references if rule.references.custom_refs is not none }} |
+{{ rule.references.custom_refs.references | render_references if rule.references.custom_refs is not none }}
 {% endif %}
 {% if show_all_tags %}
 | **TAGS** | {{ rule.tags | render_rules }} |
@@ -214,7 +214,7 @@
         {% endif %}
         {% if "STIG" in baseline.title | upper or show_all_tags %}
         <tr>
-          <td><strong>DISA STIG(s)</strong></td>
+          <td><strong>DISA STIG</strong></td>
           <td>{{ rule.references.disa.disa_stig | render_rules if rule.references.disa.disa_stig is not none }}</td>
         </tr>
         {% if rule.references.disa.sfr is not none %}
@@ -259,10 +259,7 @@
         </tr>
         {% endif %}
         {% if "references" in rule.customized %}
-        <tr>
-          <td><strong>Custom References</strong></td>
-          <td>{{ rule.references.custom_refs.references | render_references if rule.references.custom_refs is not none }}</td>
-        </tr>
+        {{ rule.references.custom_refs.references | render_references if rule.references.custom_refs is not none }}
         {% endif %}
         {% if show_all_tags %}
         <tr>

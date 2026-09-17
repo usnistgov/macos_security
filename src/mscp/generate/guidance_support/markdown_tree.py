@@ -178,29 +178,38 @@ def mdx_escape(value: str) -> str:
 
 
 def render_references_md(reference_set) -> str:
-    """Render custom-reference dicts as a single GFM-table-safe cell string.
+    """Render reference dictionaries as GFM pipe-table-safe cell content.
 
-    The shared ``render_references`` emits AsciiDoc cell rows (newlines + ``!``
-    markers), which terminate a GFM pipe-table row.  This variant flattens each
-    dict to ``**key**: value`` pairs joined with ``<br />`` and escapes ``|``.
+    Converts each dictionary in reference_set into markdown-formatted key-value
+    pairs suitable for embedding in GitHub Flavored Markdown pipe tables. Each
+    key-value pair is formatted as ``**key**: value`` and joined with ``<br />``.
+    Pipe characters (``|``) are escaped to prevent table cell termination.
+
+    Unlike ``render_references``, which emits AsciiDoc-style rows with newlines
+    and ``!`` markers (incompatible with GFM tables), this variant flattens the
+    output into a single cell-safe string.
 
     Args:
-        reference_set: Sequence of dicts (same contract as ``render_references``).
+        reference_set: Sequence of dicts, where each dict represents a reference
+            with string keys and values that are either strings or sequences of strings.
 
     Returns:
-        str: ``<br />``-joined cell content, or ``""`` when empty.
+        str: Markdown-formatted key-value pairs joined with ``<br />``, or ``""``
+            if reference_set is empty.
+
     """
     if not reference_set:
         return ""
     parts: list[str] = []
     for d in reference_set:
         for key, val in d.items():
+            parts.append(f"| **{key}** |")
             if isinstance(val, (list, tuple)):
-                rendered = ", ".join(str(v) for v in val)
+                rendered = "<br />".join([f" - {item}" for item in val]) + " |\n"
             else:
-                rendered = str(val)
-            parts.append(f"**{key}**: {rendered}".replace("|", r"\|"))
-    return "<br />".join(parts)
+                rendered = f" - {str(val)} |"
+            parts.append(f"{rendered}")
+    return "".join(parts)
 
 
 def _frontmatter(fields: dict[str, Any]) -> str:

@@ -20,17 +20,16 @@ from html import escape as html_escape
 from collections.abc import Callable, Mapping
 from itertools import groupby
 from pathlib import Path
-from typing import Any, Sequence, Dict, List
+from typing import Any, Sequence, Dict
 
 # Additional python modules
 from jinja2 import Environment, FileSystemLoader, Template
-# from yaspin.core import Yaspin
-# from yaspin.spinners import Spinners
 
 # Local python modules
 from ...classes import Baseline
 from ...classes.mobileconfig import mobileconfig_info_to_xml
 from .ddm import ddm_info_to_json
+
 from ...common_utils import (
     config,
     logger,
@@ -104,50 +103,43 @@ def extract_from_title(title: str) -> str:
     )
 
 
-def render_references(reference_set: Sequence[Dict[str, Any]]) -> str:
-    """Convert a sequence of dicts into AsciiDoc table rows (no header, no ``|===``).
+def render_references(reference_set) -> str:
+    """Render a sequence of reference dictionaries as HTML table rows.
+
+    Converts each dictionary in the reference_set into HTML table rows (<tr>),
+    where each key-value pair becomes a row with the key in a bold <td> and
+    the value(s) in a second <td>. List/tuple values are joined with <br />
+    separators; scalar values are prefixed with "- ".
 
     Args:
-        reference_set (Sequence[Dict[str, Any]]): Dicts to render; list values
-            are joined with ``"\\n- "``.
+        reference_set: Sequence of dicts, where each dict represents a reference
+            with string keys and values that are either strings or sequences of strings.
 
     Returns:
-        str: Newline-separated AsciiDoc cell rows, or ``""`` if *reference_set* is empty.
+        str: Concatenated HTML table rows (<tr>...</tr>), or "" if reference_set
+            is empty or contains no dictionaries.
 
     Raises:
-        TypeError: If any element of *reference_set* is not a dict.
+        TypeError: If any element in reference_set is not a dictionary.
+
     """
-
-    def _escape_cell(text: Any) -> str:
-        s = str(text)
-        return s.replace("|", r"\|")
-
-    rows: List[List[str]] = []
-
-    def _walk(path: List[str], value: Any) -> None:
-        if isinstance(value, (list, tuple)):
-            # Join list elements; str() for non-scalar reference_set
-            joined = "\n- ".join(map(str, value))
-            rows.append(path + [_escape_cell(joined)])
-        else:
-            rows.append(path + [_escape_cell(value)])
-
-    # Validate and traverse each input dict
+    lines: list[str] = []
     for d in reference_set:
+        if not reference_set:
+            return ""
+        lines: list[str] = []
         if not isinstance(d, dict):
             raise TypeError("All elements of 'reference_set' must be dictionaries.")
-        for k in d.keys():
-            _walk([str(k)], d[k])
-
-    if not rows:
-        return ""  # nothing to emit
-
-    # Determine deepest path and pad each row to keep a rectangular table
-    max_cols = max(len(r) for r in rows)
-    padded = [r + [""] * (max_cols - len(r)) for r in rows]
-
-    # Assemble rows (each line starts with '| ')
-    return "\n".join("!" + "\n!\n- ".join(r) for r in padded)
+        for key, value in d.items():
+            lines.append(f"<tr><td><strong>{key}</strong></td>")
+            if isinstance(value, (list, tuple)):
+                joined = (
+                    "<td>" + "<br />".join([f"- {item}" for item in value]) + "</td>"
+                )
+            else:
+                joined = f"<td>- {str(value)}</td>"
+            lines.append(f"{joined}</tr>")
+    return f"{''.join(lines)}" if lines else ""
 
 
 def render_rules(rule_set: list[str] | None) -> str:
@@ -278,10 +270,10 @@ def render_references_typst(reference_set: Sequence[Dict[str, Any]]) -> str:
             raise TypeError("All elements of 'reference_set' must be dictionaries.")
         for key, value in d.items():
             if isinstance(value, (list, tuple)):
-                joined = ", ".join(map(str, value))
+                joined = "\n".join([f"- {item}" for item in value])
             else:
-                joined = str(value)
-            lines.append(f"- {typst_escape(key)}: {typst_escape(joined)}")
+                joined = f"- {str(value)}"
+            lines.append(f"[*{typst_escape(key)}*], [{typst_escape(joined)}],")
     return "\n".join(lines)
 
 
@@ -489,7 +481,9 @@ def _typst_inline(text: str) -> str:
         return _put(f'#link("{url}")')
 
     text = _TYPST_LINK_RE.sub(_link, text)
-    text = _TYPST_BOLD_RE.sub(lambda m: _put(f"*{_typst_full_escape(m.group(1))}*"), text)
+    text = _TYPST_BOLD_RE.sub(
+        lambda m: _put(f"*{_typst_full_escape(m.group(1))}*"), text
+    )
     text = _TYPST_ITALIC_RE.sub(
         lambda m: _put(f"_{_typst_full_escape(m.group(1))}_"), text
     )
@@ -621,7 +615,9 @@ def asciidoc_to_typst(value: str) -> str:
         ):
             attrs = _TABLE_ATTR_RE.match(line).group(1)
             rows, header_row, i = _parse_asciidoc_table(lines, i + 1, attrs)
-            result.append(_render_table_typst(rows, header_row, _table_colwidths(attrs)))
+            result.append(
+                _render_table_typst(rows, header_row, _table_colwidths(attrs))
+            )
 
         # Bare `|===` table with no preceding attribute line.
         elif line.strip() == "|===":
@@ -698,9 +694,15 @@ def render_references_html(reference_set: Sequence[Dict[str, Any]]) -> str:
         if not isinstance(d, dict):
             raise TypeError("All elements of 'reference_set' must be dictionaries.")
         for key, value in d.items():
-            joined = ", ".join(map(str, value)) if isinstance(value, (list, tuple)) else str(value)
-            lines.append(f"<li>{html_escape(str(key))}: {html_escape(joined)}</li>")
-    return f'<ul class="ulist"><ul>{"".join(lines)}</ul></ul>' if lines else ""
+            lines.append(
+                f'<tr><td class="tableblock halign-left valign-top"><strong>{key}</strong></td><td class="tableblock halign-left valign-top">'
+            )
+            if isinstance(value, (list, tuple)):
+                joined = "".join([f"<li>{item}</li>" for item in value])
+            else:
+                joined = f"<li>{str(html_escape(value))}</li>"
+            lines.append(f'<ul class="ulist"><ul>{joined}</ul></ul>')
+    return f"{''.join(lines)}" if lines else ""
 
 
 _HTML_LINK_RE = re.compile(r"(?:link:)?(https?://\S+?)\[(.*?)\]")
@@ -797,9 +799,7 @@ def _render_table_html(
     colgroup = ""
     if colwidths and len(colwidths) == len(rows[0]):
         total = sum(colwidths) or 1.0
-        cols = "".join(
-            f'<col style="width:{w / total * 100:.4g}%">' for w in colwidths
-        )
+        cols = "".join(f'<col style="width:{w / total * 100:.4g}%">' for w in colwidths)
         colgroup = f"<colgroup>{cols}</colgroup>"
 
     body_rows = rows
