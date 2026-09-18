@@ -700,7 +700,7 @@ def render_references_html(reference_set: Sequence[Dict[str, Any]]) -> str:
             if isinstance(value, (list, tuple)):
                 joined = "".join([f"<li>{item}</li>" for item in value])
             else:
-                joined = f"<li>{str(html_escape(value))}</li>"
+                joined = f"<li>{html_escape(str(value))}</li>"
             lines.append(f'<ul class="ulist"><ul>{joined}</ul></ul>')
     return f"{''.join(lines)}" if lines else ""
 

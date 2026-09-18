@@ -178,38 +178,40 @@ def mdx_escape(value: str) -> str:
 
 
 def render_references_md(reference_set) -> str:
-    """Render reference dictionaries as GFM pipe-table-safe cell content.
+    """Render reference dictionaries as GFM pipe-table rows.
 
-    Converts each dictionary in reference_set into markdown-formatted key-value
-    pairs suitable for embedding in GitHub Flavored Markdown pipe tables. Each
-    key-value pair is formatted as ``**key**: value`` and joined with ``<br />``.
-    Pipe characters (``|``) are escaped to prevent table cell termination.
+    Converts each dictionary in reference_set into one markdown pipe-table row
+    per key, formatted as ``| **key** | value |``. List/tuple values are
+    rendered as a bulleted list joined with ``<br />``; scalar values are
+    prefixed with ``- ``. Pipe characters (``|``) in values are escaped so
+    they don't terminate the table cell, and rows are newline-separated so
+    multiple keys (or multiple dicts) each land on their own table row.
 
-    Unlike ``render_references``, which emits AsciiDoc-style rows with newlines
-    and ``!`` markers (incompatible with GFM tables), this variant flattens the
-    output into a single cell-safe string.
+    Unlike ``render_references``, which emits AsciiDoc-style rows with ``!``
+    markers (incompatible with GFM tables), this variant emits GFM-safe rows
+    directly.
 
     Args:
         reference_set: Sequence of dicts, where each dict represents a reference
             with string keys and values that are either strings or sequences of strings.
 
     Returns:
-        str: Markdown-formatted key-value pairs joined with ``<br />``, or ``""``
-            if reference_set is empty.
+        str: Newline-separated ``| **key** | value |`` rows, or ``""`` if
+            reference_set is empty.
 
     """
     if not reference_set:
         return ""
-    parts: list[str] = []
+    rows: list[str] = []
     for d in reference_set:
         for key, val in d.items():
-            parts.append(f"| **{key}** |")
             if isinstance(val, (list, tuple)):
-                rendered = "<br />".join([f" - {item}" for item in val]) + " |\n"
+                rendered = "<br />".join(f"- {item}" for item in val)
             else:
-                rendered = f" - {str(val)} |"
-            parts.append(f"{rendered}")
-    return "".join(parts)
+                rendered = f"- {val}"
+            rendered = rendered.replace("|", r"\|")
+            rows.append(f"| **{key}** | {rendered} |")
+    return "\n".join(rows)
 
 
 def _frontmatter(fields: dict[str, Any]) -> str:

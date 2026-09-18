@@ -292,7 +292,10 @@ class TestRenderHelpers:
         assert render_rules_typst([]) == ""
 
     def test_render_references_flattens_lists(self):
-        assert render_references_typst([{"cce": ["a", "b"]}]) == "- cce: a, b"
+        assert (
+            render_references_typst([{"cce": ["a", "b"]}])
+            == "[*cce*], [- a\n- b],"
+        )
 
     def test_render_references_rejects_non_dict(self):
         with pytest.raises(TypeError):
@@ -536,7 +539,10 @@ class TestHtmlRenderHelpers:
         assert render_rules_html([]) == ""
 
     def test_render_references_flattens(self):
-        assert "cce: a, b" in render_references_html([{"cce": ["a", "b"]}])
+        result = render_references_html([{"cce": ["a", "b"]}])
+        assert "<strong>cce</strong>" in result
+        assert "<li>a</li>" in result
+        assert "<li>b</li>" in result
 
     def test_render_references_rejects_non_dict(self):
         with pytest.raises(TypeError):
