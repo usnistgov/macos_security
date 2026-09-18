@@ -38,35 +38,20 @@ references:
     cmmc:
       - AC.L2-3.1.8
   cis:
-    benchmark:
-      macos_26:
-        - 5.2.1 (level 1)
-      macos_15:
-        - 5.2.1 (level 1)
-      macos_14:
-        - 5.2.1 (level 1)
-      macos_27:
-        - 5.2.1 (level 1)
     controls_v8:
       - 6.2
 platforms:
   macOS:
     '27.0':
       benchmarks:
-        - name: cis_lvl1
-        - name: cis_lvl2
         - name: disa_stig
           severity: medium
     '26.0':
       benchmarks:
-        - name: cis_lvl1
-        - name: cis_lvl2
         - name: disa_stig
           severity: medium
     '15.0':
       benchmarks:
-        - name: cis_lvl1
-        - name: cis_lvl2
         - name: disa_stig
           severity: medium
     enforcement_info:
@@ -82,8 +67,6 @@ odv:
     validation:
       min: 1
   recommended: 15
-  cis_lvl1: 15
-  cis_lvl2: 15
   disa_stig: 15
 tags:
   - 800-171
