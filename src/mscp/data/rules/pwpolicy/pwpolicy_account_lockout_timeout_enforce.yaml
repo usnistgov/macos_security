@@ -38,9 +38,6 @@ references:
     cmmc:
       - AC.L2-3.1.8
   cis:
-    benchmark:
-      macos_14:
-        - 5.2.1 (level 1)
     controls_v8:
       - 6.2
 platforms:
