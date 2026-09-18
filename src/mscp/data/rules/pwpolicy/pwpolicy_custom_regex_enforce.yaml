@@ -116,4 +116,5 @@ ddm_info:
   ddm_key: CustomRegex
   ddm_value:
     Regex: $ODV
-    Description: Password must match custom regex.
+    Description:
+      default: Password must match custom regex.
