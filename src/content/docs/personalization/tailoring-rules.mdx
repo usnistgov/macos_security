@@ -55,6 +55,13 @@ Tailoring lets you create a customized baseline by choosing which rules to inclu
    | `all` | Include all remaining rules |
    | `?` | Show rule details |
 
+   If you choose to skip any given rule, you will be prompted for a reason for the exclusion.
+   ```
+   Enter a reason for excluding this rule from your organization's benchmark (the reason will be added to the rule discussion):
+   ```
+
+   This reason will be included in the generated guidance in an `Excluded Rules` section of the documentation.
+
 4. **Set ODV values**
 
    For rules with ODVs, enter your value or press Enter for the default:
@@ -112,6 +119,7 @@ The `main` branch is now used for **mSCP 2.0** and will generate content using t
    | `n` | Skip this rule |
    | `all` | Include all remaining rules |
    | `?` | Show rule details |
+
 
 4. **Set ODV values**
 
@@ -178,7 +186,6 @@ These files are stored in `custom/rules/` and contain only your custom values.
 ## Next Steps
 
 - <a href={`${base}personalization/customize-rules/`}>Customize Rules</a> — Modify rule behavior beyond ODVs
-- <a href={`${base}personalization/exempting-rules/`}>Exempting Rules</a> — Exclude rules from compliance checks
 
 <style>{`
   .sl-markdown-content th {
