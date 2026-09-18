@@ -1,16 +1,24 @@
 ---
 title: Exempting Rules
-description: Mark rules as approved exceptions for your organization.
+description: Mark rules as approved deviations from the organization's baseline.
 ---
 
 import { Steps, Aside, Tabs, TabItem } from '@astrojs/starlight/components';
 
 export const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : import.meta.env.BASE_URL + '/';
 
-Exemptions let you mark rules as approved exceptions. When a rule is exempt, the compliance script reports it as an exemption rather than a failure, and skips remediation for that rule.
+Exemptions let you mark rules as approved deviations from the organization's approved baseline. When a rule is exempt, the compliance script reports it as an exemption and skips remediation for that rule.
+
+An example of this would be an organization has a requirement to enforce smart cards for login to the Mac. As part of the baseline created by mSCP, the `auth_smartcard_enforce` rule is included and deployed to all systems in the organization. If a user reports a lost smartcard and requires their password for authentciation. The configuration can be relaxed for `auth_smartcard_enforce` on the system to allow for passsword authentication.
+
+The next time a compliance scan runs, it will be a finding, and that system may then be flagged for review. With an exemption to this rule deployed, the compliance scan can include the exemption information in the results. This will give your security team awareness that this system, while not compliant, is allowed to have this deviation.
 
 <Aside type="note">
-Exempt rules still log as findings, but the script displays "Exemption Allowed" with your reason instead of prompting for remediation.
+Exempt rules still log as not compliant findings but will include the "Exemption Allowed" status along with the reason for the exemption in the output.
+</Aside>
+
+<Aside type="tip">
+Exemptions are not intended to be used as global exclusions from compliance scans. They should be deployed on a per-system or group basis. If complete exclusion of a rule is necessary, it should be tailored out as part of the baseline creation process. See <a href={`${base}personalization/tailoring-rules/`}>Tailoring Rules</a> for more information.
 </Aside>
 
 ---
@@ -107,8 +115,10 @@ When generating compliance outputs with `./scripts/generate_guidance.py -s`, the
 
 ## Next Steps
 
-- <a href={`${base}personalization/tailoring-rules/`}>Tailoring Rules</a> - Select rules and set ODV values
-- <a href={`${base}personalization/customize-rules/`}>Customize Rules</a> - Modify rule behavior beyond ODVs
+- <a href={`${base}compliance-scripts/how-to-generate-compliance-scripts/`}>How to Generate Compliance Scripts</a> - Create a script from your baseline
+- <a href={`${base}compliance-scripts/what-are-compliance-scripts/`}>What Are Compliance Scripts?</a> - Learn more about compliance scripts
+- <a href={`${base}compliance-scripts/compliance-script-layout/`}>Compliance Script Layout</a> - Understand the script structure
+
 
 <style>{`
   .sl-markdown-content th {

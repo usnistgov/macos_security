@@ -119,6 +119,7 @@ head: [
 						{ label: 'What Are Compliance Scripts?', link: '/compliance-scripts/what-are-compliance-scripts/' },
 						{ label: 'How to Generate Compliance Scripts', link: '/compliance-scripts/how-to-generate-compliance-scripts/' },
 						{ label: 'Compliance Script Layout', link: '/compliance-scripts/compliance-script-layout/' },
+						{ label: 'Exemptions', link: '/compliance-scripts/exempting-rules/' },
 					],
 				},
 				{
@@ -135,8 +136,7 @@ head: [
 					collapsed: true,
 					items: [
 						{ label: 'Tailoring Rules', link: '/personalization/tailoring-rules/' },
-						{ label: 'Customize Rules', link: '/personalization/customize-rules/' },
-						{ label: 'Exempting Rules', link: '/personalization/exempting-rules/' },
+						{ label: 'Customizing Rules', link: '/personalization/customize-rules/' },
 					],
 				},
 				{

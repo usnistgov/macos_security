@@ -1,5 +1,5 @@
 ---
-title: Customize Rules
+title: Customizing Rules
 description: Modify existing rules or add new rules to meet your organization's requirements.
 ---
 
@@ -40,46 +40,119 @@ When you create a custom rule file, the project:
    Add only the fields you want to change:
 
    ```yaml
+   discussion: Customized discussion 
    references:
      custom:
-       MSCP:
-         - MSCP-OS-001
-       URL:
-         - https://example.com/policy
+       CIO_Policy: refID-123
+   tags:
+     - CIO_Policy
    ```
 
 3. **Generate your outputs** (see command below)
+    <Tabs syncKey="mscp-version">
+      <TabItem label="mSCP 2.0">
+
+
+    ```bash
+    ./mscp.py guidance custom/baselines/YOUR_BASELINE.yaml
+    ```
+
+      </TabItem>
+      <TabItem label="mSCP 1.0">
+
+    <Aside type="caution" title="Always Use the Correct Branch">
+    The `main` branch is now used for **mSCP 2.0** and will generate content using the mSCP 2.0 methods. For mSCP 1.0, each macOS version has its own branch (`sequoia`, `sonoma`, `ventura`, etc.) — check out the branch that matches your target OS.
+    </Aside>
+
+
+    ```bash
+    ./scripts/generate_guidance.py baselines/YOUR_BASELINE.yaml
+    ```
+
+      </TabItem>
+    </Tabs>
+
+    The custom values merge with the original rule automatically.
 
 </Steps>
 
-<Tabs syncKey="mscp-version">
-  <TabItem label="mSCP 2.0">
-
-
-```bash
-./mscp.py guidance custom/baselines/YOUR_BASELINE.yaml
-```
-
-  </TabItem>
-  <TabItem label="mSCP 1.0">
-
-<Aside type="caution" title="Always Use the Correct Branch">
-The `main` branch is now used for **mSCP 2.0** and will generate content using the mSCP 2.0 methods. For mSCP 1.0, each macOS version has its own branch (`sequoia`, `sonoma`, `ventura`, etc.) — check out the branch that matches your target OS.
-</Aside>
-
-
-```bash
-./scripts/generate_guidance.py baselines/YOUR_BASELINE.yaml
-```
-
-  </TabItem>
-</Tabs>
-
-The custom values merge with the original rule automatically.
 
 ---
 
 ## Add a New Rule
+
+
+<Tabs syncKey="mscp-version">
+<TabItem label="mSCP 2.0">
+
+<Steps>
+
+1. **Create your rule file**
+
+   Create a new YAML file in `custom/rules/<section>` with your rule ID as the filename (e.g., `os_my_org_custom_rule.yaml`).
+
+   New rule files must be placed in a section subfolder in order for mSCP to see them correctly.
+
+2. **Define the required fields**
+   
+   There are a number of required fields in order for mSCP to recognize a valid rule file.
+
+   | Field | Description |
+   |:------|:------------|
+   | `id` | Unique rule identifier |
+   | `title` | Human-readable name |
+   | `discussion` | Why this rule matters |
+   | `references` | References to policy documents |
+   | `references.nise.cce` | This field is required, but can be a blank dictionary '\{\}' |
+   | `platforms` | Platform specific information |
+   | `platforms.<OS>` | OS can be macOS, iOS, visionOS |
+   | `platforms.<OS>.<VERSION>` | Version should be in the form of '27.0', this can be a blank dictionary '\{\}' |
+   | `tags` | Include your baseline tag |
+
+3. **Validate the rule files**
+  
+   This command will review all of the rule yaml files in the mSCP library and any found in the custom folders.
+
+    ```bash
+    # Validate Rules
+    ./mscp.py admin validate
+    ```
+
+
+4. **Generate your baseline and outputs**
+    ```bash
+    # Generate baseline
+    ./mscp.py baseline -k YOUR_TAG
+
+    # Generate outputs
+    ./mscp.py guidance custom/baselines/YOUR_BASELINE.yaml
+    ```
+</Steps>
+
+Basic rule file structure
+```yaml
+id: my_org_policy_statement
+title: Organization Security Policy
+discussion: |
+  This control documents the organization's security policy requirements.
+references:
+  nist:
+    cce: {}
+platforms:
+  macOS:
+    '27.0': {}
+tags:
+  - my_org_baseline
+```
+
+
+  </TabItem>
+
+<TabItem label="mSCP 1.0">
+
+<Aside type="caution" title="Always Use the Correct Branch">
+The `main` branch is now used for **mSCP 2.0** and will generate content using the mSCP 2.0 methods. For mSCP 1.0, each macOS version has its own branch (`sequoia`, `sonoma`, `ventura`, etc.) — check out the branch that matches your target OS.
+</Aside>
 
 <Steps>
 
@@ -99,41 +172,21 @@ The custom values merge with the original rule automatically.
    | `fix` | Remediation instructions |
    | `tags` | Include your baseline tag |
 
-3. **Add payload support (if needed, mSCP 1.0 only)**
+3. **Add payload support**
 
    If your rule uses a configuration profile payload not in the project, add it to `includes/supported_payloads.yaml`.
 
-4. **Generate your baseline and outputs** (see commands below)
+4. **Generate your baseline and outputs**
+    ```bash
+    # Generate baseline
+    ./scripts/generate_baseline.py -k YOUR_TAG
 
+    # Generate outputs
+    ./scripts/generate_guidance.py baselines/YOUR_BASELINE.yaml
+    ```
 </Steps>
 
-<Tabs syncKey="mscp-version">
-  <TabItem label="mSCP 2.0">
 
-
-```bash
-# Generate baseline
-./mscp.py baseline -k YOUR_TAG
-
-# Generate outputs
-./mscp.py guidance custom/baselines/YOUR_BASELINE.yaml
-```
-
-  </TabItem>
-  <TabItem label="mSCP 1.0">
-
-<Aside type="caution" title="Always Use the Correct Branch">
-The `main` branch is now used for **mSCP 2.0** and will generate content using the mSCP 2.0 methods. For mSCP 1.0, each macOS version has its own branch (`sequoia`, `sonoma`, `ventura`, etc.) — check out the branch that matches your target OS.
-</Aside>
-
-
-```bash
-# Generate baseline
-./scripts/generate_baseline.py -k YOUR_TAG
-
-# Generate outputs
-./scripts/generate_guidance.py baselines/YOUR_BASELINE.yaml
-```
 
   </TabItem>
 </Tabs>
@@ -142,16 +195,13 @@ The `main` branch is now used for **mSCP 2.0** and will generate content using t
 
 ## Informational Rules (No Check/Fix)
 
-For rules that explain a control but don't require compliance checking, use the `manual` tag. These rules appear in guidance documents but not in compliance scripts.
+For rules that explain a control but don't require compliance checking, use the `manual` tag. These rules appear in guidance documents but do not get evaluated in compliance scripts.
 
 ```yaml
 id: my_org_policy_statement
 title: Organization Security Policy
 discussion: |
   This control documents the organization's security policy requirements.
-check: |
-result: |
-fix: |
 tags:
   - manual
   - my_org_baseline
@@ -163,9 +213,13 @@ tags:
 
 <FileTree>
 - custom/
-    - rules/
-        - os_authenticated_root_enable.yaml - Override existing rule
-        - my_org_custom_rule.yaml - New custom rule
+    - rules/  
+      - os/ - Section folder for new custom rule
+        - os_my_org_custom_rule.yaml - New custom rule
+      - systemsettings/ - Section folder for new custom rule
+        - system_settings_org_custom_rule.yaml - New custom rule
+      - icloud_drive_disable.yaml - Override existing rule
+      - os_authenticated_root_enable.yaml - Override existing rule
 </FileTree>
 
 ---
@@ -173,7 +227,6 @@ tags:
 ## Next Steps
 
 - <a href={`${base}personalization/tailoring-rules/`}>Tailoring Rules</a> - Select rules and set ODV values
-- <a href={`${base}personalization/exempting-rules/`}>Exempting Rules</a> - Exclude rules from compliance checks
 
 <style>{`
   .sl-markdown-content th {
