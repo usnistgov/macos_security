@@ -22,6 +22,7 @@ This document provides a high-level view of the changes to the macOS Security Co
   * Removed Rules
     * os_auto_dim_allow
     * os_safari_popups_disabled
+    * os_show_filename_extensions_enable
     * os_time_offset_limit_configure
   * Merged Rules
     * icloud_enterprisebook_sync → icloud_enterprisebook_metadata_sync_disable
