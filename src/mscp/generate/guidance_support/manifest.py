@@ -85,6 +85,8 @@ def generate_manifest(build_path: Path, baseline_name: str, baseline) -> None:
                                 ref_parts.append(f"{k}|{vals}")
                         except ValueError:
                             continue
+                        except TypeError:
+                            continue
             rule_manifest["references"] = ";".join(str(x) for x in ref_parts)
             rule_manifest["tags"] = ",".join(str(x) for x in rule.tags)
             if rule.check:
