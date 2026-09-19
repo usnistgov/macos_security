@@ -137,10 +137,14 @@ class TestRenderReferencesMd:
         assert "ID-1" in result
         assert "ID-2" in result
 
-    def test_multiple_dicts_joined_with_br(self):
+    def test_multiple_dicts_become_separate_rows(self):
         refs = [{"A": "1"}, {"B": "2"}]
         result = render_references_md(refs)
-        assert "<br />" in result
+        assert result == "| **A** | - 1 |\n| **B** | - 2 |"
+
+    def test_list_value_joined_with_br(self):
+        result = render_references_md([{"IDs": ["ID-1", "ID-2"]}])
+        assert "ID-1<br />- ID-2" in result
 
 
 # ---------------------------------------------------------------------------
