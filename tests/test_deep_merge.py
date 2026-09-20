@@ -18,7 +18,7 @@ def _stock() -> dict:
 
 
 def test_preferred_key_is_replaced_whole_not_merged() -> None:
-    """#736's behaviour: the override's result replaces the stock one entirely."""
+    """#736's behavior: the override's result replaces the stock one entirely."""
     merged = deep_merge(_stock(), {"check": {"result": {"integer": 1}}}, preferred_key="result")
 
     assert merged["check"]["result"] == {"integer": 1}
