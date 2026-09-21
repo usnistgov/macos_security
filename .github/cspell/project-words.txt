@@ -368,3 +368,6 @@ ulist
 Segoe
 toctitle
 emph
+dsmemberutil
+jdoe
+asmith
