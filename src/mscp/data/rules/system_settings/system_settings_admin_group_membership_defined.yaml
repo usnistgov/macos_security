@@ -1,4 +1,4 @@
-id: os_admin_group_membership_defined
+id: system_settings_admin_group_membership_defined
 title: Restrict Membership in the Admin Group to Documented and Authorized Accounts
 discussion: |-
   Membership in the admin group _MUST_ be restricted to only those accounts that have been documented and explicitly authorized to receive privileged access.
@@ -10,11 +10,11 @@ references:
   nist:
     cce:
       macos_27:
-        - CCE-PENDING
+        - CCE-XXXXXX-X
       macos_26:
-        - CCE-PENDING
+        - CCE-XXXXXX-X
       macos_15:
-        - CCE-PENDING
+        - CCE-XXXXXX-X
     800-53r5:
       - AC-6(5)
 platforms:
