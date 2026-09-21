@@ -24,7 +24,7 @@ platforms:
       check:
         shell: /usr/bin/plutil -convert json /var/db/softwareupdate/SoftwareUpdateDDMStatePersistence.plist -o - | /usr/bin/jq --raw-output .'SUCorePersistedStatePolicyFields.SUCoreDDMDeclarationGlobalSettings.enableRapidSecurityResponse'
         result:
-          string: 'false'
+          string: 'true'
       fix:
         additional_info: This is implemented by Declarative Device Management (DDM).
   iOS:
