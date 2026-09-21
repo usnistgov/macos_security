@@ -1,0 +1,89 @@
+id: os_ssh_pqc_configure
+title: Configure SSH for Post Quantum Cryptographic Connections.
+discussion: |
+  If SSH is used then it _MUST_ be configured for a hybrid Post Quantum Cryptographic (PQC) key exchange.
+
+  NOTE: On macOS 15.2 and higher the SSH configuration can be reset to the macOS default by running /usr/libexec/reset-ssh-configuration.
+references:
+  nist:
+    cce:
+      macos_27:
+        - CCE-XXXXX-X
+    800-53r5:
+      - SC-13
+      - SC-8
+      - SC-8(1)
+      - SC-12
+    800-171r3:
+      - 03.13.08
+      - 03.13.10
+      - 03.13.11
+  disa:
+    cmmc:
+      - SC.L2-3.13.10
+      - SC.L2-3.13.11
+      - SC.L2-3.13.1
+  cis:
+    controls_v8:
+      - 3.10
+      - 4.1
+platforms:
+  macOS:
+    '27.0': {}
+    enforcement_info:
+      check:
+        shell: |-
+          ret="pass"
+            for u in $(/usr/bin/dscl . list /users shell | /usr/bin/egrep -v '(^_)|(root)|(/usr/bin/false)' | /usr/bin/awk '{print $1}'); do
+              sshCheck=$(/usr/bin/sudo -u $u /usr/bin/ssh -tt -G . | /usr/bin/grep -i -c '^[[:space:]]*KexAlgorithms[[:space:]]*.*mlkem768x25519-sha256')
+              if [[ "$sshCheck" == "0" ]]; then
+                ret="fail"
+                break
+              fi
+            done
+          done
+          echo $ret
+        result:
+          string: pass
+      fix:
+        shell: |-
+          if [ -f /etc/ssh/crypto.conf ] && /usr/bin/grep -q "Include /etc/ssh/crypto.conf" /etc/ssh/ssh_config.d/100-macos.conf 2>/dev/null; then
+            /bin/ln -fs /etc/ssh/crypto/fips.conf /etc/ssh/crypto.conf
+          fi
+          include_dir=$(/usr/bin/awk '/^Include/ {print $2}' /etc/ssh/ssh_config | /usr/bin/tr -d '*')
+
+          for u in $(/usr/bin/dscl . list /users shell | /usr/bin/egrep -v '(^_)|(root)|(/usr/bin/false)' | /usr/bin/awk '{print $1}'); do
+            config=$(/usr/bin/sudo -u $u /usr/bin/ssh -tt -Gv . 2>&1)
+            currentkex=$(echo "$config" | /usr/bin/awk '/kexalgorithms/{print $2}')
+            configfiles=$(echo "$config" | /usr/bin/awk '/Reading configuration data/ {print $NF}'| /usr/bin/tr -d '\r')
+            configarray=( ${(f)configfiles} )
+            if ! echo $config | /usr/bin/grep -q -i "mlkem768x25519-sha256" ; then
+              for c in $configarray; do
+                if [[ "$c" == "/etc/ssh/crypto.conf" ]]; then
+                  continue
+                fi
+
+                if /usr/bin/grep -qEi '^[[:space:]]*KexAlgorithms[[:space:]]' "$c"; then
+                  /usr/bin/sed -i '' '/^[[:space:]]*KexAlgorithms[[:space:]]/I s/$/,mlkem768x25519-sha256/' "$c"
+                  break
+                fi
+                if [[ "$c" =~ ".ssh/config" ]]; then
+                  if /usr/bin/grep -qEi '^[[:space:]]*KexAlgorithms[[:space:]]*mlkem768x25519-sha256' "$c" 2> /dev/null; then
+                    old_file=$(cat ~$u/.ssh/config)
+                    echo "kexalgorithms $currentkex,mlkem768x25519-sha256" > ~$u/.ssh/config
+                    echo "$old_file" >> ~$u/.ssh/config
+                  fi
+                fi
+              done
+            fi
+          done
+tags:
+  - 800-53r5_moderate
+  - 800-53r5_high
+  - 800-53r5_low
+  - 800-171
+  - cnssi-1253_low
+  - cnssi-1253_high
+  - cnssi-1253_moderate
+  - cmmc_lvl2
+  - cmmc_lvl3
