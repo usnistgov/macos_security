@@ -1,0 +1,61 @@
+id: os_mcx_disable_disable
+title: Disable the Ability for an Admin to Disable Managed Preferences
+discussion: |-
+  A local adminisator can bypass or disable managed preferences for their login session by holding down the shift key if the key AdminMayDisableMCX is set to true. This setting _MUST_ be disabled to ensure that managed preferences are enforced for all users on the system.
+references:
+  nist:
+    cce:
+      macos_27:
+        - CCE-XXXXX-X
+      macos_26:
+        - CCE-XXXXX-X
+      macos_15:
+        - CCE-XXXXX-X
+    800-53r5:
+      - CM-5
+      - CM-5(1)
+      - CM-6
+      - CM-6(1)
+    800-171r3:
+      - 03.04.02
+      - 03.04.05
+      - 03.04.06
+  disa:
+    cci:
+      - CCI-000366
+      - CCI-000370
+    cmmc:
+      - CM.L2-3.4.2
+      - AC.L1-3.4.5
+  cis:
+    controls_v8:
+      - 4.1
+      - 4.6
+platforms:
+  macOS:
+    '27.0': {}
+    '26.0': {}
+    '15.0': {}
+    enforcement_info:
+      check:
+        shell: |-
+          /usr/bin/osascript -l JavaScript -e 'var s = $.NSUserDefaults.alloc.initWithSuiteName("com.apple.loginwindow"); (ObjC.unwrap(s.objectForKey("AdminMayDisableMCX")) == false && s.objectIsForcedForKey("AdminMayDisableMCX")) ? "PASS" : "FAIL"'
+        result:
+          string: 'PASS'
+    introduced: '10.7'
+tags:
+  - 800-53r5_low
+  - 800-53r5_moderate
+  - 800-53r5_high
+  - 800-171
+  - cisv8
+  - cnssi-1253_low
+  - cnssi-1253_moderate
+  - cnssi-1253_high
+  - cmmc_lvl2
+  - cmmc_lvl1
+  - cmmc_lvl3
+mobileconfig_info:
+  - PayloadType: com.apple.loginwindow
+    PayloadContent:
+      - AdminMayDisableMCX: false

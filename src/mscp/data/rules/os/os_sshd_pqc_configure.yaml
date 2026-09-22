@@ -1,0 +1,75 @@
+id: os_sshd_pqc_configure
+title: Configure SSHD for Post Quantum Cryptographic Connections.
+discussion: |
+  If SSHD is enabled then it _MUST_ be configured for a hybrid Post Quantum Cryptographic (PQC) key exchange.
+
+  NOTE: On macOS 15.2 and higher the SSH configuration can be reset to the macOS default by running /usr/libexec/reset-ssh-configuration.
+references:
+  nist:
+    cce:
+      macos_27:
+        - CCE-XXXXX-X
+    800-53r5:
+      - SC-13
+      - SC-8
+      - SC-8(1)
+      - SC-12
+    800-171r3:
+      - 03.13.08
+      - 03.13.10
+      - 03.13.11
+  disa:
+    cmmc:
+      - SC.L2-3.13.10
+      - SC.L2-3.13.11
+      - SC.L2-3.13.1
+  cis:
+    controls_v8:
+      - 3.10
+      - 4.1
+platforms:
+  macOS:
+    '27.0': {}
+    enforcement_info:
+      check:
+        shell: |-
+          /usr/sbin/sshd -G | /usr/bin/awk '/kexalgorithms/{print $2}' | /usr/bin/grep -i -c 'mlkem768x25519-sha256'
+        result:
+          integer: 1
+      fix:
+        shell: |-
+          include_dir=$(/usr/bin/awk '/^Include/ {print $2}' /etc/ssh/sshd_config | /usr/bin/tr -d '*')
+
+          if [[ -z $include_dir ]]; then
+            /usr/bin/sed -i.bk "1s/.*/Include \/etc\/ssh\/sshd_config.d\/\*/" /etc/ssh/sshd_config
+            include_dir=$(/usr/bin/awk '/^Include/ {print $2}' /etc/ssh/sshd_config | /usr/bin/tr -d '*')
+          fi
+
+          sshd_config_kex="$(/usr/sbin/sshd -G | /usr/bin/awk '/kexalgorithms/{print $2}')"
+          if [[ "$sshd_config_kex" != *"mlkem768x25519-sha256"* ]]; then
+            if /usr/bin/grep -qi '^[[:space:]]*KexAlgorithms[[:space:]]' "${include_dir}01-mscp-sshd.conf"; then
+              /usr/bin/sed -i '' '/^[[:space:]]*KexAlgorithms[[:space:]]/I s/$/,mlkem768x25519-sha256/' "${include_dir}01-mscp-sshd.conf"
+            else
+              echo "kexalgorithms $sshd_config_kex,mlkem768x25519-sha256" >> "${include_dir}01-mscp-sshd.conf"
+            fi
+          fi
+
+          for file in $(ls ${include_dir}); do
+            if [[ "$file" == "100-macos.conf" ]]; then
+                continue
+            fi
+            if [[ "$file" == "01-mscp-sshd.conf" ]]; then
+                break
+            fi
+            /bin/mv ${include_dir}${file} ${include_dir}20-${file}
+          done
+tags:
+  - 800-53r5_moderate
+  - 800-53r5_high
+  - 800-53r5_low
+  - 800-171
+  - cnssi-1253_low
+  - cnssi-1253_high
+  - cnssi-1253_moderate
+  - cmmc_lvl2
+  - cmmc_lvl3
