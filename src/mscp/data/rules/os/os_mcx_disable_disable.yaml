@@ -28,14 +28,30 @@ references:
       - CM.L2-3.4.2
       - AC.L1-3.4.5
   cis:
+    benchmark:
+      macos_27:
+        - 2.13.4 (level 2)
+      macos_26:
+        - 2.13.4 (level 2)
+      macos_15:
+        - 2.13.4 (level 2)
     controls_v8:
       - 4.1
       - 4.6
 platforms:
   macOS:
-    '27.0': {}
-    '26.0': {}
-    '15.0': {}
+    '27.0':
+      benchmarks:
+        - name: cis_lvl1
+        - name: cis_lvl2
+    '26.0':
+      benchmarks:
+        - name: cis_lvl1
+        - name: cis_lvl2
+    '15.0':
+      benchmarks:
+        - name: cis_lvl1
+        - name: cis_lvl2
     enforcement_info:
       check:
         shell: |-
