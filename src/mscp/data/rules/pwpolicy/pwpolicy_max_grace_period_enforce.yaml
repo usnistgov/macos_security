@@ -109,7 +109,7 @@ odv:
     datatype: number
     description: Maximum grace period in minutes, e.g. 5
     validation:
-      min: 1
+      min: 0
   recommended: 0
   cis_lvl1_byod: 0
   cis_lvl2_byod: 0
