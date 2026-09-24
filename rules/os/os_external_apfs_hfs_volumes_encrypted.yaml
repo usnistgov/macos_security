@@ -13,6 +13,43 @@ check: |
       }
     }
     END{print list}')
+  fail=$(/usr/sbin/diskutil list external | \
+  /usr/bin/grep -E "APFS Volume|Apple_HFS|Logical Volume" | \
+  /usr/bin/awk '{print $NF}' | \
+  /usr/bin/xargs -n1 /usr/sbin/diskutil info 2>/dev/null | \
+  /usr/bin/awk '
+    /Volume Name:/{
+      name=$0
+      sub(/^[ \t]*Volume Name:[ \t]*/,"",name)
+  
+      protocol=""
+      volro=0
+      medro=0
+    }
+  
+    /Protocol:/ {
+      protocol = ($0 ~ /Disk Image/)
+    }
+  
+    /Volume Read-Only:/ {
+      volro = ($0 ~ /Yes/)
+    }
+  
+    /Media Read-Only:/ {
+      medro = ($0 ~ /Yes/)
+    }
+  
+    /FileVault:/{
+      if ($2=="No" && !(protocol && volro && medro)) {
+        if (list=="")
+          list=name
+        else
+          list=list ", " name
+      }
+    }
+  
+    END{print list}
+  ')
   if [ -z "$fail" ]; then
     /bin/echo "Yes"
   else
