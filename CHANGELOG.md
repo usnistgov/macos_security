@@ -24,6 +24,8 @@ This document provides a high-level view of the changes to the macOS Security Co
     * os_safari_popups_disabled
     * os_show_filename_extensions_enable
     * os_time_offset_limit_configure
+    * system_settings_bluetooth_menu_enable
+    * system_settings_wifi_menu_enable
   * Merged Rules
     * icloud_enterprisebook_sync → icloud_enterprisebook_metadata_sync_disable
     * os_airplay_password_require → os_airplay_outgoing_password_require
