@@ -53,7 +53,6 @@ profile:
       - os_guest_folder_removed
       - os_home_folders_secure
       - os_httpd_disable
-      - os_install_configuration_profile_disable
       - os_install_log_retention_configure
       - os_internal_apfs_volumes_encrypted
       - os_mail_summary_disable
