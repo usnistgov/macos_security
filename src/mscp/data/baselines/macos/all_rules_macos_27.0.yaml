@@ -212,7 +212,6 @@ profile:
       - system_settings_background_security_improvement_removal_disable
       - system_settings_biometric_disable
       - system_settings_bluetooth_disable
-      - system_settings_bluetooth_menu_enable
       - system_settings_bluetooth_settings_disable
       - system_settings_bluetooth_sharing_disable
       - system_settings_content_caching_disable
