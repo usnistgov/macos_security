@@ -34,19 +34,7 @@ platforms:
     enforcement_info:
       check:
         shell: |-
-          fail=$(/usr/sbin/diskutil list external | /usr/bin/grep -E "APFS Volume|Apple_HFS|Logical Volume" | /usr/bin/awk '{print $NF}' | /usr/bin/xargs -n1 /usr/sbin/diskutil info 2>/dev/null | /usr/bin/awk '
-            /Volume Name:/{name=$0; sub(/^[ \t]*Volume Name:[ \t]*/,"",name)}
-            /FileVault:/{
-              if ($2=="No") {
-                if (list=="") list=name; else list=list ", " name
-              }
-            }
-            END{print list}')
-          if [ -z "$fail" ]; then
-            /bin/echo "Yes"
-          else
-            /bin/echo "Unencrypted external volumes: $fail"
-          fi
+          /usr/sbin/diskutil list external | /usr/bin/grep -E "APFS Volume|Apple_HFS|Logical Volume" | /usr/bin/awk '{print $NF}' | /usr/bin/xargs -n1 /usr/sbin/diskutil info 2>/dev/null | /usr/bin/awk '/Volume Name:/{ volume_name=$0; sub(/^[ \t]*Volume Name:[ \t]*/,"",volume_name); is_disk_image=""; is_vol_readonly=0; is_media_readonly=0 } /Protocol:/{ is_disk_image=($0 ~ /Disk Image/) } /Volume Read-Only:/{ is_vol_readonly=($0 ~ /Yes/) } /Media Read-Only:/{ is_media_readonly=($0 ~ /Yes/) } /FileVault:/{ if(is_disk_image && is_vol_readonly && is_media_readonly) next; encryption_status=($2=="Yes") ? "Encrypted" : "NOT ENCRYPTED"; printf "%-40s %s\n", volume_name, encryption_status }'
         result:
           string: 'Yes'
       fix:
