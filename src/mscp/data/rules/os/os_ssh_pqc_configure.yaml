@@ -40,7 +40,6 @@ platforms:
                 ret="fail"
                 break
               fi
-            done
           done
           echo $ret
         result:
