@@ -108,7 +108,7 @@ platforms:
       fix:
         shell: |-
           authDBs=("system.preferences" "system.preferences.energysaver" "system.preferences.network" "system.preferences.printing" "system.preferences.sharing" "system.preferences.softwareupdate" "system.preferences.startupdisk" "system.preferences.timemachine")
-          tmpdir=$(/usr/bin/mktemp -d)
+          tmpdir=$(/usr/bin/mktemp -d) || return 1
           /bin/chmod 700 "$tmpdir"
           for section in ${authDBs[@]}; do
             /usr/bin/security -q authorizationdb read "$section" > "$tmpdir/$section.plist"
