@@ -21,7 +21,7 @@ references:
       macos_26:
         - 1.4 (level 1)
       macos_15:
-        - 1.5 (level 1)
+        - 1.4 (level 1)
       macos_14:
         - 1.5 (level 1)
       macos_27:

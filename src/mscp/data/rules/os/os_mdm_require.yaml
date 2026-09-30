@@ -60,11 +60,6 @@ references:
     hicp:
       - 2.L.B
   cis:
-    benchmark:
-      macos_15:
-        - 1.8 (level 1)
-      macos_14:
-        - 1.8 (level 1)
     controls_v8:
       - 4.1
       - 5.1
@@ -82,8 +77,6 @@ platforms:
         - name: nlmapgov_base
     '15.0':
       benchmarks:
-        - name: cis_lvl1
-        - name: cis_lvl2
         - name: disa_stig
           severity: medium
         - name: nlmapgov_plus

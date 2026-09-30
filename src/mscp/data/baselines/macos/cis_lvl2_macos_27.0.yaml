@@ -53,7 +53,6 @@ profile:
       - os_guest_folder_removed
       - os_home_folders_secure
       - os_httpd_disable
-      - os_install_configuration_profile_disable
       - os_install_log_retention_configure
       - os_internal_apfs_volumes_encrypted
       - os_mail_summary_disable
@@ -87,12 +86,9 @@ profile:
   - section: Password Policy
     rules:
       - pwpolicy_account_lockout_enforce
-      - pwpolicy_alpha_numeric_enforce
-      - pwpolicy_custom_regex_enforce
       - pwpolicy_history_enforce
       - pwpolicy_max_lifetime_enforce
       - pwpolicy_minimum_length_enforce
-      - pwpolicy_special_character_enforce
   - section: System Settings
     rules:
       - system_settings_airplay_receiver_disable
