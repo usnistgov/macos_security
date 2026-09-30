@@ -83,7 +83,7 @@ platforms:
         - name: cis_lvl2
         - name: disa_stig
           severity: medium
-        - name: nlmapgov_pluså
+        - name: nlmapgov_plus
         - name: nlmapgov_base
     enforcement_info:
       check:
