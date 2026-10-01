@@ -41,7 +41,7 @@ def deep_merge(a, b, preferred_key=None):
     for key, value in b.items():
         if key == preferred_key:
             a[key] = value
-            return a
+            continue
         if key in a and isinstance(a[key], dict) and isinstance(value, dict):
             deep_merge(a[key], value, preferred_key)
         else:
@@ -317,7 +317,9 @@ class Macsecurityrule(BaseModelWithAccessors):
                         continue
                     if custom_rule_key == "platforms":
                         platform_info = rule_yaml.get("platforms")
-                        deep_merge(platform_info, custom_rule_value, preferred_key="result")
+                        deep_merge(
+                            platform_info, custom_rule_value, preferred_key="result"
+                        )
                         continue
 
                     rule_yaml[custom_rule_key] = custom_rule_value
