@@ -44,6 +44,8 @@ jobs:
       image_tag: ${{ steps.branch.outputs.image_tag }}
       revision: ${{ steps.branch.outputs.revision }}
       revision_short: ${{ steps.branch.outputs.revision_short }}
+      mscp_build: ${{ steps.mscp_build.outputs.build }}
+      build_date: ${{ steps.branch.outputs.build_date }}
 
     steps:
       - name: Verify lint passed
@@ -60,6 +62,18 @@ jobs:
             exit 1
           fi
 
+      - name: Checkout repository
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0  # v7
+        with:
+          ref: ${{ github.event.workflow_run.head_sha || github.sha }}
+          sparse-checkout: src/mscp/data/includes/mscp-data.yaml
+          sparse-checkout-cone-mode: false
+
+      - name: Read mSCP build number
+        id: mscp_build
+        run: |
+          echo "build=$(sed -n 's/^ *build: *//p' src/mscp/data/includes/mscp-data.yaml | head -n 1)" >> "$GITHUB_OUTPUT"
+
       - name: Determine source branch and revision
         id: branch
         env:
@@ -72,6 +86,7 @@ jobs:
             echo "branch=${branch}"
             echo "revision=${revision}"
             echo "revision_short=${revision:0:7}"
+            echo "build_date=$(date -u +%Y-%m-%dT%H:%M:%SZ)"
           } >> "$GITHUB_OUTPUT"
           if [[ "${branch}" == "main" ]]; then
             echo "is_main=true"    >> "$GITHUB_OUTPUT"
@@ -125,12 +140,17 @@ jobs:
           context: .
           file: .github/container/Dockerfile
           platforms: ${{ matrix.platform }}
+          # These labels live on each per-arch image config, which is what
+          # mscp_check reads from the registry to compare against the running image.
           labels: |
             org.opencontainers.image.revision=${{ needs.prepare.outputs.revision }}
+            org.opencontainers.image.created=${{ needs.prepare.outputs.build_date }}
+            org.mscp.build=${{ needs.prepare.outputs.mscp_build }}
           build-args: |
             BUILD_SHA=${{ needs.prepare.outputs.revision }}
             IMAGE_REPO=${{ github.repository }}
             IMAGE_TAG=${{ needs.prepare.outputs.image_tag }}
+            BUILD_DATE=${{ needs.prepare.outputs.build_date }}
           outputs: type=image,name=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }},push-by-digest=true,name-canonical=true,push=true
           # Separate cache scope per arch so the two builds do not evict each other.
           cache-from: type=gha,scope=buildkit-${{ matrix.arch }}
