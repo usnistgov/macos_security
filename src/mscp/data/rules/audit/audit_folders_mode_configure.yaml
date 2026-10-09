@@ -87,7 +87,7 @@ platforms:
         - name: nlmapgov_base
     enforcement_info:
       check:
-        shell: '/usr/bin/stat -f %A $(/usr/bin/grep ''^dir'' /etc/security/audit_control | /usr/bin/awk -F: ''{print $2}'')'
+        shell: '/usr/bin/stat -f %A "/var/audit"'
         result:
           integer: 700
       fix:

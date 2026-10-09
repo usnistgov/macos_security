@@ -89,7 +89,7 @@ platforms:
         - name: nlmapgov_base
     enforcement_info:
       check:
-        shell: '/bin/ls -dn $(/usr/bin/grep ''^dir'' /etc/security/audit_control | /usr/bin/awk -F: ''{print $2}'') | /usr/bin/awk ''{print $3}'''
+        shell: '/bin/ls -dn "/var/audit" | /usr/bin/awk ''{print $3}'''
         result:
           integer: 0
       fix:

@@ -103,12 +103,14 @@ platforms:
       fix:
         shell: |-
           SS_RULE=$(/usr/bin/security -q authorizationdb read system.login.screensaver 2>&1 | /usr/bin/xmllint --xpath "//dict/key[.='rule']/following-sibling::array[1]/string/text()" -)
-
           if [[ "$SS_RULE" == *psso* ]]; then
-              /usr/bin/security -q authorizationdb read psso-screensaver > "/tmp/psso-screensaver-mscp.plist"
-              /usr/bin/sed -i.bak 's/<string>authenticate-session-owner-or-admin<\/string>/<string>$ODV<\/string>/' /tmp/psso-screensaver-mscp.plist
-              /usr/bin/security -q authorizationdb write psso-screensaver-mscp < /tmp/psso-screensaver-mscp.plist
+              tmpdir=$(/usr/bin/mktemp -d) || return 1
+              /bin/chmod 700 "$tmpdir"
+              /usr/bin/security -q authorizationdb read psso-screensaver > "$tmpdir/psso-screensaver-mscp.plist"
+              /usr/bin/sed -i'' 's/<string>authenticate-session-owner-or-admin<\/string>/<string>$ODV<\/string>/' "$tmpdir/psso-screensaver-mscp.plist"
+              /usr/bin/security -q authorizationdb write psso-screensaver-mscp < "$tmpdir/psso-screensaver-mscp.plist"
               /usr/bin/security -q authorizationdb write system.login.screensaver psso-screensaver-mscp 2>&1
+              /bin/rm -rf "$tmpdir"
           else
               /usr/bin/security -q authorizationdb write system.login.screensaver "$ODV" 2>&1
           fi
