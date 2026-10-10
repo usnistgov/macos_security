@@ -203,8 +203,10 @@ def parse_cli() -> None:
         global `config` dict for `output_dir` / `rules_dir`; may call
         `sys.exit` on validation failure.
     """
-    parent_parser = Customparser()
-    parent_parser.add_argument(
+    # The logging flags live on a parser without -h/--help so they can be
+    # pre-parsed below without intercepting --help meant for the full parser.
+    logging_parser = Customparser(add_help=False)
+    logging_parser.add_argument(
         "-D",
         "--debug",
         required=False,
@@ -212,13 +214,15 @@ def parse_cli() -> None:
         action="store_true",
     )
 
-    parent_parser.add_argument(
+    logging_parser.add_argument(
         "-v",
         "--verbose",
         action="count",
         default=0,
         help="increase the amount of logging to stdout (-v, -vv)",
     )
+
+    parent_parser = Customparser(parents=[logging_parser])
 
     parser = Customparser(
         description="command-line interface for generating baseline and compliance documents for the macOS Security Compliance Project",
@@ -838,7 +842,7 @@ compliance script (e.g. disa_stig, cis.benchmark)
         action="store_true",
     )
 
-    _pre, _ = parent_parser.parse_known_args()
+    _pre, _ = logging_parser.parse_known_args()
     set_logger(
         debug=getattr(_pre, "debug", False), verbosity=getattr(_pre, "verbose", 0)
     )
