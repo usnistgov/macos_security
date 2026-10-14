@@ -53,6 +53,8 @@
     logmessage "$rule_id does not apply to this architecture"
     logcsv "$rule_id" "N/A" "" "" ""
     /usr/bin/defaults write "$audit_plist" "$rule_id" -dict-add finding -bool NO
+    /usr/bin/defaults write "$audit_plist" "$rule_id" -dict-add not_applicable -bool YES
+    /usr/bin/defaults write "$audit_plist" "$rule_id" -dict-add not_applicable_reason -string "Does not apply to this architecture ($rule_arch only)"
   fi
 
   

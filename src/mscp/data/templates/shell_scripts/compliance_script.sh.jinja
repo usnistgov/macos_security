@@ -234,10 +234,18 @@ compliance_count(){
   compliant=0
   non_compliant=0
   exempt_count=0
+  not_applicable_count=0
 
   rule_names=($(/usr/libexec/PlistBuddy -c "Print" $audit_plist | awk '/= Dict/ {print $1}'))
 
   for rule in ${rule_names[@]}; do
+    # Rules the check could not evaluate on this Mac (e.g. wrong architecture) are marked
+    # not_applicable by the check; they count as neither compliant nor non-compliant.
+    not_applicable=$(/usr/libexec/PlistBuddy -c "Print $rule:not_applicable" $audit_plist 2>/dev/null)
+    if [[ $not_applicable == "true" ]]; then
+      not_applicable_count=$((not_applicable_count + 1))
+      continue
+    fi
     finding=$(/usr/libexec/PlistBuddy -c "Print $rule:finding" $audit_plist)
     if [[ $finding == "false" ]]; then
       compliant=$((compliant + 1))
@@ -259,7 +267,7 @@ compliance_count(){
   elif [[ $1 = "non-compliant" ]]; then
     echo $non_compliant
   else # no matching args output the array
-    array=($compliant $non_compliant $exempt_count)
+    array=($compliant $non_compliant $exempt_count $not_applicable_count)
     echo ${array[@]}
   fi
 }
@@ -269,6 +277,7 @@ generate_report(){
   compliant=${count[1]}
   non_compliant=${count[2]}
   exempt_rules=${count[3]}
+  not_applicable_rules=${count[4]}
 
   total=$((non_compliant + compliant))
   percentage=$(printf %.2f $(( (compliant + exempt_rules) * 100. / total )) )
@@ -276,6 +285,7 @@ generate_report(){
   echo "Number of tests passed: ${GREEN}$compliant${STD}"
   echo "Number of test FAILED: ${RED}$non_compliant${STD}"
   echo "Number of exempt rules: ${YELLOW}$exempt_rules${STD}"
+  echo "Number of not applicable rules: ${YELLOW}$not_applicable_rules${STD}"
   echo "You are ${YELLOW}$percentage%${STD} percent compliant!"
   pause
 }
@@ -303,10 +313,13 @@ generate_stats(){
 
 rule_fix(){
   local audit_score=$($plb -c "print $1:finding" $audit_plist)
+  local not_applicable=$($plb -c "print $1:not_applicable" $audit_plist 2>/dev/null)
   local exempt=$(/usr/bin/osascript -l JavaScript -e "ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.$baseline_name.audit').objectForKey('$1'))['exempt']")
   local exempt_reason=$(/usr/bin/osascript -l JavaScript -e "ObjC.unwrap($.NSUserDefaults.alloc.initWithSuiteName('org.$baseline_name.audit').objectForKey('$1'))['exempt_reason']")
 
-  if [[ $exempt == "1" ]]; then
+  if [[ $not_applicable == "true" ]]; then
+    logmessage "$1 not applicable on this Mac, remediation skipped"
+  elif [[ $exempt == "1" ]]; then
     logmessage "$1 has an exemption, remediation skipped (Reason: \"$exempt_reason\")"
   elif [[ $audit_score == "true" ]]; then
     ask "$1 - Run the command(s)-> $2" N
