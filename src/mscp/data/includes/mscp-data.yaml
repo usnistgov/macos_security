@@ -63,6 +63,11 @@ authors:
     benchmarks:
       - indigo_base
       - indigo_high
+  - name: Aron van den Herik
+    organization: Root3
+    benchmarks:
+      - nlmapgov_base
+      - nlmapgov_plus
   - name: Jordy Witteman
     organization: Root3
     benchmarks:
