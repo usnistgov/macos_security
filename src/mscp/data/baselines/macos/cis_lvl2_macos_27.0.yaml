@@ -55,6 +55,7 @@ profile:
       - os_httpd_disable
       - os_install_log_retention_configure
       - os_internal_apfs_volumes_encrypted
+      - os_mail_smart_reply_disable
       - os_mail_summary_disable
       - os_mobile_file_integrity_enable
       - os_nfsd_disable
@@ -67,6 +68,7 @@ profile:
       - os_safari_advertising_privacy_protection_enable
       - os_safari_open_safe_downloads_disable
       - os_safari_prevent_cross-site_tracking_enable
+      - os_safari_reader_summary_disable
       - os_safari_show_full_website_address_enable
       - os_safari_show_status_bar_enabled
       - os_safari_warn_fraudulent_website_enable
