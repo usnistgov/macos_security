@@ -17,7 +17,9 @@ discussion: |
   2.1.1.6 Audit Find My Mac +
   2.1.2 Audit App Store Password Settings +
   2.3.3.11 Ensure Computer Name Does Not Contain PII or Protected Organizational Information +
+  2.3.5.1 Ensure 'allowUIConfigurationProfileInstallation' Is Set to Disabled +
   2.4.1 Audit Menu Bar and Control Center Icons +
+  2.5.1.1 Configure Access Apple Private Cloud Compute for Organizational Compliance +
   2.5.2.2 Ensure Listen for (Siri) Is Disabled +
   2.6.1.3 Audit Location Services Access +
   2.6.2.1 Audit Full Disk Access for Applications +
