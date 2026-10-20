@@ -57,6 +57,7 @@ profile:
       - os_internal_apfs_volumes_encrypted
       - os_mail_smart_reply_disable
       - os_mail_summary_disable
+      - os_mcx_disable_disable
       - os_mobile_file_integrity_enable
       - os_nfsd_disable
       - os_notes_transcription_disable
