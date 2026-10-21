@@ -43,11 +43,11 @@ references:
   cis:
     benchmark:
       macos_26:
-        - 2.5.1.4 (level 1)
+        - 2.5.1.5 (level 1)
       macos_15:
-        - 2.5.1.4 (level 1)
+        - 2.5.1.5 (level 1)
       macos_27:
-        - 2.5.1.4 (level 1)
+        - 2.5.1.5 (level 1)
   bsi:
     indigo:
       ios_26:
