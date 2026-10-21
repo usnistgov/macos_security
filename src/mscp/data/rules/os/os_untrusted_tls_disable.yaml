@@ -30,6 +30,9 @@ references:
       - 8.27
   cis:
     benchmark:
+      ios_27:
+        - 2.2.1.5 (level 2 - End-User Owned Devices)
+        - 3.2.1.12 (level 2 - Institutionally-Owned Devices)
       ios_26:
         - 2.2.1.6 (level 2 - End-User Owned Devices)
         - 3.2.1.13 (level 2 - Institutionally-Owned Devices)
@@ -43,7 +46,10 @@ references:
       - 4.1
 platforms:
   iOS:
-    '27.0': {}
+    '27.0':
+      benchmarks:
+        - name: cis_lvl2_byod
+        - name: cis_lvl2_enterprise
     '26.0':
       supervised: false
       benchmarks:

@@ -47,6 +47,8 @@ references:
         - ANNEX K
   cis:
     benchmark:
+      ios_27:
+        - 3.2.1.27 (level 1 - Institutionally-Owned Devices)
       ios_26:
         - 3.2.1.28 (level 1 - Institutionally-Owned Devices)
       ios_18:
@@ -59,6 +61,9 @@ platforms:
   iOS:
     '27.0':
       supervised: true
+      benchmarks:
+        - name: cis_lvl1_enterprise
+        - name: cis_lvl2_enterprise
     '26.0':
       supervised: true
       benchmarks:

@@ -74,6 +74,9 @@ references:
         - 2.5.1.2 (level 1)
       macos_15:
         - 2.5.1.2 (level 1)
+      ios_27:
+        - 2.9.1 (level 1 - End-User Owned Devices)
+        - 3.10.1 (level 1 - Institutionally-Owned Devices)
       ios_26:
         - 2.9.1 (level 1 - End-User Owned Devices)
         - 3.10.1 (level 1 - Institutionally-Owned Devices)
@@ -109,7 +112,12 @@ platforms:
           string: 'PASS'
     introduced: '15.2'
   iOS:
-    '27.0': {}
+    '27.0':
+      benchmarks:
+        - name: cis_lvl1_byod
+        - name: cis_lvl2_byod
+        - name: cis_lvl1_enterprise
+        - name: cis_lvl2_enterprise
     '26.0':
       supervised: true
       benchmarks:

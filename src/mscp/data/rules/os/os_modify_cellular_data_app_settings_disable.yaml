@@ -22,6 +22,8 @@ references:
       - CM.L2-3.4.7
   cis:
     benchmark:
+      ios_27:
+        - 3.2.1.17 (level 2 - Institutionally-Owned Devices)
       ios_26:
         - 3.2.1.18 (level 2 - Institutionally-Owned Devices)
       ios_18:
@@ -34,6 +36,8 @@ platforms:
   iOS:
     '27.0':
       supervised: true
+      benchmarks:
+        - name: cis_lvl2_enterprise
     '26.0':
       supervised: true
       benchmarks:
